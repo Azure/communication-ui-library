@@ -1,0 +1,42 @@
+import { useCamera } from '../hooks';
+
+<Meta title="Hooks/Calling/useCamera" />
+
+# useCamera
+
+The `useCamera` hook provides functionality around the camera, specifically around local video streams.
+This hook helps to retrieve/set the current local video stream and how to share and how to stop sharing your local stream
+with other participants on the call. This hook also exposes if the hook is busy creating a local video stream. If you want
+to share your camera, this hook is necessary. If you are just doing an audio call, this hook is not necessary.
+
+## Importing
+
+```javascript
+import { useCamera } from '@azure/acs-ui-sdk';
+```
+
+## Dependencies
+
+- CallingProvider
+
+## Usage
+
+```jsx
+import React from 'react';
+import {
+  CallingProvider,
+  useCamera
+} from '@azure/acs-ui-sdk';
+
+const Example = () => (
+  <CallingProvider token="<TOKEN>", displayName="<DISPLAYNAME>", groupId="<GROUPID>">
+      <App />
+  </CallingProvider>
+);
+
+const App = () => {
+  const { isLocalVideoOn } = useCamera();
+
+  return <>{isLocalVideoOn}</>
+}
+```

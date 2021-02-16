@@ -1,0 +1,42 @@
+import { useVideoDevices } from '../hooks';
+
+<Meta title="Hooks/Calling/useVideoDevices" />
+
+# useVideoDevices
+
+The `useVideoDevices` hook allows users retrieve their video device list, their currently selected video device, and allows you to select a different
+video device. This hook is used if you want to be able to choose another video device (e.g camera). This hook is technically optional.
+If you don't use this hook, the first video device is selected. It will also trigger a permission dialog if the user has not granted camera
+permission to the application. If the user denies access, the list of "video devices" will be empty and thus no video device info can be selected.
+
+## Importing
+
+```javascript
+import { useVideoDevices } from '@azure/acs-ui-sdk';
+```
+
+## Dependencies
+
+- CallingProvider
+
+## Usage
+
+```jsx
+import React from 'react';
+import {
+  CallingProvider,
+  useVideoDevices
+} from '@azure/acs-ui-sdk';
+
+const Example = () => (
+  <CallingProvider token="<TOKEN>", displayName="<DISPLAYNAME>", groupId="<GROUPID>">
+      <App />
+  </CallingProvider>
+);
+
+const App = () => {
+  const { videoDeviceInfo, videoDeviceList, setVideoDeviceInfo } = useVideoDevices();
+
+  return <>{videoDeviceInfo}</>
+}
+```

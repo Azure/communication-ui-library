@@ -1,0 +1,42 @@
+import { useScreenShare } from '../hooks';
+
+<Meta title="Hooks/Calling/useScreenShare" />
+
+# useScreenShare
+
+The `useScreenShare` hook allows users to get the current state of their screen sharing, start, and stop their screen sharing.
+To help developers, we have also added the ability to toggle on and off their current screen sharing state. This hook accounts for
+debouncing in the case users continually activate/disable screen sharing in a short span of time. This hook is only necessary if you
+want to have screen sharing capabilities exposed via the calling sdk. If you don't need screensharing, you don't need this hook.
+
+## Importing
+
+```javascript
+import { useScreenShare } from '@azure/acs-ui-sdk';
+```
+
+## Dependencies
+
+- CallingProvider
+
+## Usage
+
+```jsx
+import React from 'react';
+import {
+  CallingProvider,
+  useScreenShare
+} from '@azure/acs-ui-sdk';
+
+const Example = () => (
+  <CallingProvider token="<TOKEN>", displayName="<DISPLAYNAME>", groupId="<GROUPID>">
+      <App />
+  </CallingProvider>
+);
+
+const App = () => {
+  const { localScreenShareActive } = useScreenShare();
+
+  return <>{localScreenShareActive}</>
+}
+```

@@ -1,0 +1,44 @@
+import { useAudioDevices } from '../hooks';
+
+<Meta title="Hooks/Calling/useAudioDevices" />
+
+# useAudioDevices
+
+The `useAudioDevices` hook allows users retrieve their audio device list, their currently selected audio device, and allows you to select a different
+audio device. This hook is used if you want to be able to choose another audio device (e.g microphone). This hook is technically optional.
+If you don't use this hook, the first audio device is selected. It will also trigger a permission dialog if the user has not granted microphone
+permission to the application. If the user denies access, the list of "audio devices" will be empty and thus no audio device info can be selected.
+
+## Importing
+
+```javascript
+import { useAudioDevices } from '@azure/acs-ui-sdk';
+```
+
+## Dependencies
+
+- CallingProvider
+
+## Usage
+
+```jsx
+import React from 'react';
+import {
+  CallingProvider
+  useAudioDevices
+} from '@azure/acs-ui-sdk';
+
+const Example = () => (
+  <CallingProvider token="<TOKEN>", displayName="<DISPLAYNAME>", groupId="<GROUPID>">
+      <App />
+  </CallingProvider>
+);
+
+const App = () => {
+  const { audioDeviceInfo, audioDeviceList, setAudioDeviceInfo } = useAudioDevices();
+
+  return <>{audioDeviceInfo}</>
+}
+```
+
+##

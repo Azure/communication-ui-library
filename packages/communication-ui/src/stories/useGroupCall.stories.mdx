@@ -1,0 +1,40 @@
+import { useGroupCall } from '../hooks';
+
+<Meta title="Hooks/Calling/useGroupCall" />
+
+# useGroupCall
+
+The `useGroupCall` hook allows components to leverage the underlying Calling JS SDK to join a ACS group call.
+This hook is absolutely necessary if you want to join/leave a group call.
+
+## Importing
+
+```javascript
+import { useGroupCall } from '@azure/acs-ui-sdk';
+```
+
+## Dependencies
+
+- CallingProvider
+
+## Usage
+
+```jsx
+import React from 'react';
+import {
+  CallingProvider,
+  useGroupCall
+} from '@azure/acs-ui-sdk';
+
+const Example = () => (
+  <CallingProvider token="<TOKEN>", displayName="<DISPLAYNAME>", groupId="<GROUPID>">
+      <App />
+  </CallingProvider>
+);
+
+const App = () => {
+  const { join, leave } = useGroupCall();
+  join('98885c40-4a29-11eb-a3e9-c9e18c4b8e10' /* sample group id */);
+  ...
+}
+```

@@ -1,0 +1,44 @@
+import { useDevicePermission } from '../hooks';
+
+<Meta title="Hooks/Calling/useDevicePermission" />
+
+# useDevicePermission
+
+The `useDevicePermission` hook abstracts away how to handle permissions. You just indicate what
+you want to get access to (Camera or Microphone). The client will ask for permission from the user.
+If the user rejects the permission request, they will need to re-enable in their browser settings.
+If you feel you don't need to explicitly get the permission value for your device, this hook is not necessary.
+
+This hook takes in a permission type as input `'Microphone' | 'Camera'`;
+
+## Importing
+
+```javascript
+import { useDevicePermission } from '@azure/acs-ui-sdk';
+```
+
+## Dependencies
+
+- CallingProvider
+
+## Usage
+
+```jsx
+import React from 'react';
+import {
+  CallingProvider,
+  useMicrophone
+} from '@azure/acs-ui-sdk';
+
+const Example = () => (
+  <CallingProvider token="<TOKEN>", displayName="<DISPLAYNAME>", groupId="<GROUPID>">
+      <App />
+  </CallingProvider>
+);
+
+const App = () => {
+  const { permissionState } = useDevicePermission('Camera');
+
+  return <>{permissionState}</>
+}
+```

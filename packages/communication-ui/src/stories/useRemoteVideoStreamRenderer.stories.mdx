@@ -1,0 +1,42 @@
+import { useRemoteVideoStreamRenderer } from '../hooks';
+
+<Meta title="Hooks/Calling/useRemoteVideoStreamRenderer" />
+
+# useRemoteVideoStreamRenderer
+
+The `useRemoteVideoStreamRenderer` hook takes in a remote video stream and provides the HTML element
+representing the video stream and if a render of the stream is available for
+applying to your UI. This hook exposes a non-null render when the stream is available for rendering.
+Since audio calls don't require video streams, you will not need to use this hook in audio calls.
+
+## Importing
+
+```javascript
+import { useRemoteVideoStreamRenderer } from '@azure/acs-ui-sdk';
+```
+
+## Dependencies
+
+- CallingProvider
+
+## Usage
+
+```jsx
+import React from 'react';
+import {
+  CallingProvider,
+  useRemoteVideoStreamRenderer
+} from '@azure/acs-ui-sdk';
+
+const Example = () => (
+  <CallingProvider token="<TOKEN>", displayName="<DISPLAYNAME>", groupId="<GROUPID>">
+      <App />
+  </CallingProvider>
+);
+
+const App = () => {
+  const { isAvailable } = useRemoteVideoStreamRenderer(remoteStream);
+
+  return <>{isAvailable}</>
+}
+```

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush.schema.json",
+  "rushVersion": "5.39.1",
+  "pnpmVersion": "5.15.2",
+  "pnpmOptions": {
+    "strictPeerDependencies": true
+  },
+  "nodeSupportedVersionRange": ">=12.13.0 <13.0.0 || >=14.15.0 <15.0.0",
+  "ensureConsistentVersions": true,
+  "gitPolicy": {
+    "versionBumpCommitMessage": "Applying package updates. [skip-ci]",
+    "changeLogUpdateCommitMessage": "Applying package updates. [skip-ci]"
+  },
+  "repository": {
+    "url": "https://github.com/Azure/communication-ui-sdk",
+    "defaultBranch": "main"
+  },
+  "telemetryEnabled": false,
+  "projects": [
+    {
+      "packageName": "@azure/communication-ui",
+      "projectFolder": "packages/communication-ui",
+      "reviewCategory": "production"
+    }
+  ]
+}

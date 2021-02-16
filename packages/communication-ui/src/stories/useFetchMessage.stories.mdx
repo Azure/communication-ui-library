@@ -1,0 +1,44 @@
+import { useFetchMessage } from '../hooks';
+
+<Meta title="Hooks/Chat/useFetchMessage" />
+
+# useFetchMessage
+
+The `useFetchMessage` hook allows components to fetch a particular message by messageId from ACS resource for the
+current thread managed by ChatThreadProvider. The hook returns a function of the form
+`(messageId: string) => Promise<ChatMessage | undefined>`.
+
+## Importing
+
+```javascript
+import { useFetchMessage } from '@azure/acs-ui-sdk';
+```
+
+## Dependencies
+
+- ChatProvider
+- ChatThreadProvider
+
+## Usage
+
+```jsx
+import React from 'react';
+import {
+  ChatProvider,
+  ChatThreadProvider,
+  useFetchMessage
+} from '@azure/acs-ui-sdk';
+
+const Example = () => (
+  <ChatProvider config={token: <TOKEN>, displayName: <DISPLAYNAME>, endpointUrl: <URL>, threadId: <THREADID>}>
+    <ChatThreadProvider>
+      <App />
+    </ChatThreadProvider>
+  </ChatProvider>
+);
+
+const App = () => {
+  const fetchMessage = useFetchMessage();
+  const message = fetchMessage('messageId');
+}
+```

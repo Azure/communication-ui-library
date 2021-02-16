@@ -1,0 +1,33 @@
+// © Microsoft Corporation. All rights reserved.
+
+import { RemoteParticipant as RemoteParticipantFromSDK } from '@azure/communication-calling';
+import { ListParticipant } from '../types/ListParticipant';
+import { GalleryParticipant } from '../types/GalleryParticipant';
+import { getACSId } from '../utils';
+
+export const convertSdkRemoteParticipantToGalleryParticipant = (
+  remoteParticipantFromSDK: RemoteParticipantFromSDK
+): GalleryParticipant => {
+  return {
+    displayName: remoteParticipantFromSDK.displayName ?? getACSId(remoteParticipantFromSDK.identifier),
+    videoStream: remoteParticipantFromSDK.videoStreams[0]
+  };
+};
+
+export const convertSdkRemoteParticipantToListParticipant = (
+  participant: RemoteParticipantFromSDK,
+  onRemove?: () => void,
+  onMute?: () => void
+): ListParticipant => {
+  const isScreenSharing = participant.videoStreams.some((vs) => vs.type === 'ScreenSharing' && vs.isAvailable);
+  const identifier = getACSId(participant.identifier);
+  return {
+    key: identifier,
+    displayName: participant.displayName ?? identifier,
+    state: participant.state,
+    isScreenSharing: isScreenSharing,
+    isMuted: participant.isMuted,
+    onRemove: onRemove,
+    onMute: onMute
+  };
+};

@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build_and_test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
+      - uses: actions/checkout@v2
+
+      # Ensure node version is great enough
+      - name: Use Node.js v12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+
+      # Install dependencies
+      - name: Install dependencies
+        run: rush update
+
+      # Builds
+      - name: Build @azure/communications-ui
+        run: rushx build
+        working-directory: ./packages/communication-ui
+
+      - name: Build Storybook
+        run: rushx build:storybook
+        working-directory: ./packages/communication-ui
+
+      # Run tests
+      - name: Run Tests
+        run: rushx test
+        working-directory: ./packages/communication-ui
+        env:
+          CI: true

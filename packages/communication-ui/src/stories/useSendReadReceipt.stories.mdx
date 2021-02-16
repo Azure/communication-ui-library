@@ -1,0 +1,37 @@
+import { useSendReadReceipt } from '../hooks';
+
+<Meta title="Hooks/Chat/useSendReadReceipt" />
+
+# useSendReadReceipt
+
+The `useSendReadReceipt` hook allows components to send a read receipt for a given message in the current thread. The
+hook returns a function of the form `(messageId: string) => Promise<void>` which should be called when the read receipt
+should be sent. The current thread refers to the current thread managed by ChatThreadProvider.
+
+## Importing
+
+```javascript
+import { useSendReadReceipt } from '@azure/acs-ui-sdk';
+```
+
+## Dependencies
+
+- ChatThreadProvider
+
+## Usage
+
+```jsx
+import React from 'react';
+import { ChatThreadProvider, useSendReadReceipt } from '@azure/acs-ui-sdk';
+
+const Example = () => (
+  <ChatThreadProvider>
+    <App />
+  </ChatThreadProvider>
+);
+
+const App = () => {
+  const sendReadReceipt = useSendReadReceipt();
+  sendReadReceipt('messageId');
+};
+```
