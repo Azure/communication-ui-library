@@ -26,6 +26,8 @@ jobs:
           node-version: '12.x'
 
       # Install dependencies
+      - name: Install rush
+        run: node ./common/scripts/install-run-rush.js install
       - name: Install dependencies
         run: rush install
 
