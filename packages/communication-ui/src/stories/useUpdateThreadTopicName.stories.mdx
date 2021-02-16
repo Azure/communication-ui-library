@@ -1,0 +1,44 @@
+import { useUpdateThreadTopicName } from '../hooks';
+
+<Meta title="Hooks/Chat/useUpdateThreadTopicName" />
+
+# useUpdateThreadTopicName
+
+The `useUpdateThreadTopicName` hook returns a callback of the form `(topicName: string) => Promise<boolean>`. The
+callback should be stored and then invoked when you want to change the topic name of a chat thread. The callback will
+invoke the underlying Chat SDK which means the change will be persisted to the ACS resource.
+
+## Importing
+
+```javascript
+import { useUpdateThreadTopicName } from '@azure/acs-ui-sdk';
+```
+
+## Dependencies
+
+- ChatProvider
+- ChatThreadProvider
+
+## Usage
+
+```jsx
+import React from 'react';
+import {
+  ChatProvider,
+  ChatThreadProvider,
+  useUpdateThreadTopicName
+} from '@azure/acs-ui-sdk';
+
+const Example = () => (
+  <ChatProvider config={token: <TOKEN>, displayName: <DISPLAYNAME>, endpointUrl: <URL>, threadId: <THREADID>}>
+    <ChatThreadProvider>
+      <App />
+    </ChatThreadProvider>
+  </ChatProvider>
+);
+
+const App = () => {
+  const updateThreadTopicName = useUpdateThreadTopicName();
+  updateThreadTopicName('new thread topic name');
+}
+```

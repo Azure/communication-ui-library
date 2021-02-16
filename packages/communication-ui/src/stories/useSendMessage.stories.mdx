@@ -1,0 +1,43 @@
+import { useSendMessage } from '../hooks';
+
+<Meta title="Hooks/Chat/useSendMessage" />
+
+# useSendMessage
+
+The `useSendMessage` hook allows components to send a message to the current thread. The hook returns a function of the
+form `(displayName: string, userId: string, messageContent: string) => Promise<void>` which should be called when the
+message is sent. The current thread refers to the current thread managed by ChatThreadProvider. Internally the hook will
+manage sending the message to the ACS resource. It will automatically retry for a maximum of 3 attempts if a 412 status
+code was returned from the server. It will also automatically retry after a waiting for one minute if the server
+returned a 429. For any other error case the message will be added to the failedMessageIds list of ChatThreadProvider.
+When initially called, the message will be immediately added to chatMessages in ChatThreadProvider. The message will
+have an undefined id and undefined createdOn date. On success of sending to server, the message in chatMessages in
+ChatThreadProvider will be updated with an id received from the server as well as a createdOn date.
+
+## Importing
+
+```javascript
+import { useSendMessage } from '@azure/acs-ui-sdk';
+```
+
+## Dependencies
+
+- ChatThreadProvider
+
+## Usage
+
+```jsx
+import React from 'react';
+import { ChatThreadProvider, useSendMessage } from '@azure/acs-ui-sdk';
+
+const Example = () => (
+  <ChatThreadProvider>
+    <App />
+  </ChatThreadProvider>
+);
+
+const App = () => {
+  const sendMessage = useSendMessage();
+  sendMessage('userName', 'userId', 'messageContent');
+};
+```

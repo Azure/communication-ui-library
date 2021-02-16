@@ -1,0 +1,39 @@
+// © Microsoft Corporation. All rights reserved.
+
+import React from 'react';
+import { boolean, text } from '@storybook/addon-knobs';
+import { getDocs } from './docs/SendBoxDocs';
+import { SendBoxComponent } from '../components';
+import { COMPONENT_FOLDER_PREFIX } from './constants';
+import { Meta } from '@storybook/react/types-6-0';
+
+export default {
+  title: `${COMPONENT_FOLDER_PREFIX}/SendBox`,
+  component: SendBoxComponent,
+  parameters: {
+    docs: {
+      page: () => getDocs()
+    }
+  }
+} as Meta;
+
+export const SendBoxStoryBookComponent = (): JSX.Element => {
+  return (
+    <div style={{ width: '480px' }}>
+      <SendBoxComponent
+        disabled={boolean('Block button from sending', false, 'Injected by ACS Context')}
+        sendMessage={async (displayname, userId, message) =>
+          console.log(`sendMessage: Id ${userId} with displayName ${displayname} send a message - ${message} `)
+        }
+        userId={text("Sender's ACS UserId", 'ACS_ID PLACEHOLDER', 'required')}
+        displayName={text("Sender's UserName", 'User Name', 'required')}
+        onSendTypingNotification={() => console.log(`sending typing notifications`)}
+        systemMessage={text(
+          'Warning/information message for sendBox',
+          'Please wait 30 seconds to send new messages',
+          'Injected by ACS Context'
+        )}
+      />
+    </div>
+  );
+};

@@ -1,0 +1,37 @@
+import { useRemoveThreadMember } from '../hooks';
+
+<Meta title="Hooks/Chat/useRemoveThreadMember" />
+
+# useRemoveThreadMember
+
+The `useRemoveThreadMember` hook allows components to remove a participant from the current thread. The hook returns a
+function of the form `(userId: string) => Promise<void>` which should be with the userId of the user that should be
+removed. The current thread refers to the current thread managed by ChatThreadProvider.
+
+## Importing
+
+```javascript
+import { useRemoveThreadMember } from '@azure/acs-ui-sdk';
+```
+
+## Dependencies
+
+- ChatThreadProvider
+
+## Usage
+
+```jsx
+import React from 'react';
+import { ChatThreadProvider, useRemoveThreadMember } from '@azure/acs-ui-sdk';
+
+const Example = () => (
+  <ChatThreadProvider>
+    <App />
+  </ChatThreadProvider>
+);
+
+const App = () => {
+  const removeThreadMember = useRemoveThreadMember();
+  removeThreadMember('userId');
+};
+```

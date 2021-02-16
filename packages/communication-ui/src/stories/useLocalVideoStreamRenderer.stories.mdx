@@ -1,0 +1,43 @@
+import { useLocalVideoStreamRenderer } from '../hooks';
+
+<Meta title="Hooks/Calling/useLocalVideoStreamRenderer" />
+
+# useLocalVideoStreamRenderer
+
+The `useLocalVideoStreamRenderer` hook takes in a local video stream and provides the HTML element
+representing the video stream and if a render of the stream is available for
+applying to your UI. We added an availability flag despite the stream already being ready for render.
+This helps us align local video stream with remote video streams so at higher layers, a stream is just a stream.
+Since audio calls don't require video streams, you will not need to use this hook in audio calls.
+
+## Importing
+
+```javascript
+import { useLocalVideoStreamRenderer } from '@azure/acs-ui-sdk';
+```
+
+## Dependencies
+
+- CallingProvider
+
+## Usage
+
+```jsx
+import React from 'react';
+import {
+  CallingProvider,
+  useLocalVideoStreamRenderer
+} from '@azure/acs-ui-sdk';
+
+const Example = () => (
+  <CallingProvider token="<TOKEN>", displayName="<DISPLAYNAME>", groupId="<GROUPID>">
+      <App />
+  </CallingProvider>
+);
+
+const App = () => {
+  const { isAvailable } = useLocalVideoStreamRenderer(remoteStream);
+
+  return <>{isAvailable}</>
+}
+```

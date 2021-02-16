@@ -1,0 +1,43 @@
+import { useFetchThread } from '../hooks';
+
+<Meta title="Hooks/Chat/useFetchThread" />
+
+# useFetchThread
+
+The `useFetchThread` hook allows components to fetch thread id from ACS resource and store it in ChatThreadProvider. The
+hook returns a function of the form `() => Promise<void>)`.
+
+## Importing
+
+```javascript
+import { useFetchThread } from '@azure/acs-ui-sdk';
+```
+
+## Dependencies
+
+- ChatProvider
+- ChatThreadProvider
+
+## Usage
+
+```jsx
+import React from 'react';
+import {
+  ChatProvider,
+  ChatThreadProvider,
+  useFetchThread
+} from '@azure/acs-ui-sdk';
+
+const Example = () => (
+  <ChatProvider config={token: <TOKEN>, displayName: <DISPLAYNAME>, endpointUrl: <URL>, threadId: <THREADID>}>
+    <ChatThreadProvider>
+      <App />
+    </ChatThreadProvider>
+  </ChatProvider>
+);
+
+const App = () => {
+  const fetchThread = useFetchThread();
+  fetchThread();
+}
+```
