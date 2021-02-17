@@ -1,0 +1,18 @@
+// © Microsoft Corporation. All rights reserved.
+
+import { AbortSignalLike } from '@azure/core-http';
+
+const postRefreshTokenParameters = {
+  method: 'POST'
+};
+
+export const refreshTokenAsync = (userIdentity: string): ((abortSignal?: AbortSignalLike) => Promise<string>) => {
+  return async (): Promise<string> => {
+    const response = await fetch(`/refreshToken/${userIdentity}`, postRefreshTokenParameters);
+    if (response.ok) {
+      return (await response.json()).token;
+    } else {
+      throw new Error('could not refresh token');
+    }
+  };
+};

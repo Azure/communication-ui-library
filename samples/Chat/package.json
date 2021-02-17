@@ -1,0 +1,102 @@
+{
+  "name": "acs-chat-sample",
+  "version": "0.0.1",
+  "private": true,
+  "description": "This is a sample application to show how the ACS Chat Web SDK can be used to build a group chat experience. The client-side application is a React based user interface which uses React Hooks for handling complex state while leveraging Microsoft Fluent UI for how things look.",
+  "scripts": {
+    "build": "react-scripts build",
+    "build:prod": "npm run build && copyfiles -u 3 ../Server/dist/**/* dist && copyfiles ./build/**/* dist",
+    "start": "concurrently \"cd ../Server && npm run start:dev\" \"npm run start:app\"",
+    "start:app": "rimraf ./build && react-scripts start",
+    "start:debug": "concurrently \"cd ../Server && npm run start:debug\" \"npm run start\"",
+    "start:prod": "node dist/server.js",
+    "test": "react-scripts test --env=jsdom --watchAll=false",
+    "test:watch": "react-scripts test --env=jsdom",
+    "test:coverage": "react-scripts test --env=jsdom --coverage",
+    "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache",
+    "prettier": "prettier --write --config .prettierrc **/*.js **/*.ts",
+    "prettier:check": "prettier --check --config .prettierrc **/*.js **/*.ts",
+    "lint": "eslint */**/*.{ts,tsx}",
+    "lint:fix": "eslint */**/*.{ts,tsx} --fix",
+    "lint:quiet": "eslint */**/*.{ts,tsx} --quiet",
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
+    "eject": "react-scripts eject"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!/node_modules/",
+      "!src/mocks/**/*"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "dependencies": {
+    "@azure/communication-administration": "^1.0.0-beta.3",
+    "@azure/communication-chat": "1.0.0-beta.3",
+    "@azure/communication-common": "^1.0.0-beta.3",
+    "@azure/communication-signaling": "1.0.0-beta.1",
+    "@azure/communication-ui": "^0.1.0",
+    "@azure/core-http": "^1.2.3",
+    "@fluentui/react": "^7.117.1",
+    "@fluentui/react-icons-northstar": "^0.51.2",
+    "@fluentui/react-northstar": "^0.51.2",
+    "@fluentui/react-theme-provider": "^0.18.0",
+    "@storybook/addon-knobs": "^6.1.11",
+    "@storybook/theming": "^6.1.11",
+    "@types/react-aria-live": "^2.0.0",
+    "@types/react-linkify": "^1.0.0",
+    "json-stringify-safe": "^5.0.1",
+    "office-ui-fabric-react": "^7.160.2",
+    "preval.macro": "^5.0.0",
+    "react": "^16.13.1",
+    "react-aria-live": "^2.0.5",
+    "react-dom": "^16.13.1",
+    "react-linkify": "^1.0.0-alpha",
+    "react-scripts": "^3.4.3"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react-hooks": "^3.4.2",
+    "@types/jest": "^26.0.14",
+    "@types/json-stringify-safe": "^5.0.0",
+    "@types/preval.macro": "^3.0.0",
+    "@types/react": "^16.9.49",
+    "@types/react-dom": "^16.9.8",
+    "acs-server-sample": "0.0.1",
+    "concurrently": "^5.3.0",
+    "copyfiles": "^2.4.1",
+    "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.12.0",
+    "eslint-config-react-app": "^5.2.1",
+    "eslint-plugin-header": "^3.1.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.21.3",
+    "eslint-plugin-react-hooks": "^4.1.2",
+    "husky": "^4.3.0",
+    "jest": "^24.9.0",
+    "jest-fetch-mock": "^3.0.3",
+    "jest-junit": "^12.0.0",
+    "prettier": "2.1.0",
+    "pretty-quick": "^3.1.0",
+    "react-test-renderer": "^16.13.1",
+    "typescript": "^3.9.2",
+    "rimraf": "^2.6.2"
+  },
+  "proxy": "http://localhost:8080/"
+}
