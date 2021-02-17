@@ -4,14 +4,14 @@
   "private": true,
   "description": "This is a sample application to show how the ACS Chat Web SDK can be used to build a group chat experience. The client-side application is a React based user interface which uses React Hooks for handling complex state while leveraging Microsoft Fluent UI for how things look.",
   "scripts": {
-    "build": "cd ../Server && npm run build && cd ../Chat && npm run build:app",
-    "build:app": "react-scripts build",
+    "build": "react-scripts build",
     "build:prod": "npm run build && copyfiles -u 3 ../Server/dist/**/* dist && copyfiles ./build/**/* dist",
     "start": "concurrently \"cd ../Server && npm run start:dev\" \"npm run start:app\"",
     "start:app": "rimraf ./build && react-scripts start",
     "start:debug": "concurrently \"cd ../Server && npm run start:debug\" \"npm run start\"",
     "start:prod": "node dist/server.js",
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test --env=jsdom --watchAll=false",
+    "test:watch": "react-scripts test --env=jsdom",
     "test:coverage": "react-scripts test --env=jsdom --coverage",
     "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache",
     "prettier": "prettier --write --config .prettierrc **/*.js **/*.ts",
@@ -52,6 +52,7 @@
     "@azure/communication-common": "^1.0.0-beta.3",
     "@azure/communication-signaling": "1.0.0-beta.1",
     "@azure/communication-ui": "^0.1.0",
+    "@azure/core-http": "^1.2.3",
     "@fluentui/react": "^7.117.1",
     "@fluentui/react-icons-northstar": "^0.51.2",
     "@fluentui/react-northstar": "^0.51.2",
@@ -67,8 +68,7 @@
     "react-aria-live": "^2.0.5",
     "react-dom": "^16.13.1",
     "react-linkify": "^1.0.0-alpha",
-    "react-scripts": "^3.4.3",
-    "@azure/core-http": "^1.2.3"
+    "react-scripts": "^3.4.3"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.4",
@@ -78,6 +78,7 @@
     "@types/preval.macro": "^3.0.0",
     "@types/react": "^16.9.49",
     "@types/react-dom": "^16.9.8",
+    "acs-server-sample": "0.0.1",
     "concurrently": "^5.3.0",
     "copyfiles": "^2.4.1",
     "eslint": "^6.6.0",

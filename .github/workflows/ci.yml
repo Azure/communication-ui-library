@@ -33,8 +33,7 @@ jobs:
 
       # Builds
       - name: Build @azure/communications-ui
-        run: rushx build
-        working-directory: ./packages/communication-ui
+        run: rush build
 
       - name: Build Storybook
         run: rushx build:storybook
@@ -42,7 +41,6 @@ jobs:
 
       # Run tests
       - name: Run Tests
-        run: rushx test
-        working-directory: ./packages/communication-ui
+        run: rush test
         env:
           CI: true
