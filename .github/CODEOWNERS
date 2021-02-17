@@ -1,0 +1,8 @@
+# Approval for at least one *code owner* is required all packages.
+
+# Lines starting with '#' are comments.
+# Each line is a file pattern followed by one or more *code owners*.
+# The last matching pattern has the most precendence.
+
+# These *code owners* will be the default owners for everything in the repository.
+* @alex-kwan @jamesburnside
