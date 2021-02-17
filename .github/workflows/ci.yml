@@ -32,7 +32,7 @@ jobs:
         run: rush install
 
       # Builds
-      - name: Build @azure/communications-ui
+      - name: Build Packages and Samples
         run: rush build
 
       - name: Build Storybook
