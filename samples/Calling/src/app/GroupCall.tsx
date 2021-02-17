@@ -19,7 +19,7 @@ import {
   connectFuncsToContext,
   GroupCallContainerProps,
   MapToGroupCallProps
-} from '@azure/acs-ui-sdk';
+} from '@azure/communication-ui';
 import { isInCall } from './utils/AppUtils';
 import { MINI_HEADER_WINDOW_WIDTH } from './utils/constants';
 

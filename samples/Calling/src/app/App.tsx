@@ -8,7 +8,7 @@ import ConfigurationScreen from './ConfigurationScreen';
 import GroupCall from './GroupCall';
 import HomeScreen from './HomeScreen';
 import { v1 as createGUID } from 'uuid';
-import { CallingProvider, CallProvider } from '@azure/acs-ui-sdk';
+import { CallingProvider, CallProvider } from '@azure/communication-ui';
 import {
   createRandomDisplayName,
   fetchTokenResponse,

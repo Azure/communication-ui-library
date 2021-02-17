@@ -1,8 +1,7 @@
-import * as webpack from 'webpack';
 import path from 'path';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 
-const config: webpack.Configuration = {
+const config = {
   name: 'server',
   entry: './bin/www.ts',
   target: 'node',

@@ -68,7 +68,8 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.4.3",
     "reactstrap": "^8.4.1",
-    "uuid": "^8.1.0"
+    "uuid": "^8.1.0",
+    "@azure/core-http": "~1.2.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.7",
