@@ -26,8 +26,10 @@ jobs:
           node-version: '12.x'
 
       # Install dependencies
+      - name: Install rush
+        run: npm install -g @microsoft/rush
       - name: Install dependencies
-        run: rush update
+        run: rush install
 
       # Builds
       - name: Build @azure/communications-ui
