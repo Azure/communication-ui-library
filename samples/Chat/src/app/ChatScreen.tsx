@@ -10,7 +10,7 @@ import {
   connectFuncsToContext,
   ErrorsPropsFromContext,
   MapToErrorsProps
-} from '@azure/acs-ui-sdk';
+} from '@azure/communication-ui';
 import ChatHeader from './ChatHeader';
 import ChatArea from './ChatArea';
 import SidePanel, { SidePanelTypes } from './SidePanel';

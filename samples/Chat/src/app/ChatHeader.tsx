@@ -25,7 +25,7 @@ import {
   MapToChatTopicProps,
   MapToUserIdProps,
   UserIdPropsFromContext
-} from '@azure/acs-ui-sdk';
+} from '@azure/communication-ui';
 
 export type ChatHeaderProps = UserIdPropsFromContext &
   ChatTopicPropsFromContext &

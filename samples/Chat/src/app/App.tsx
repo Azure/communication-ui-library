@@ -10,7 +10,7 @@ import ErrorScreen from './ErrorScreen';
 import HomeScreen from './HomeScreen';
 import ConfigurationScreen from './ConfigurationScreen';
 import { getThreadId } from './utils/getThreadId';
-import { ChatProvider } from '@azure/acs-ui-sdk';
+import { ChatProvider } from '@azure/communication-ui';
 import { refreshTokenAsync } from './utils/refreshToken';
 
 console.info(`Thread chat sample using @azure/communication-chat : ${getChatSDKVersion()}`);

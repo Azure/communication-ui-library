@@ -27,11 +27,11 @@
       "projectFolder": "samples/Calling",
       "reviewCategory": "prototypes"
     },
-    // {
-    //   "packageName": "acs-chat-sample",
-    //   "projectFolder": "samples/Chat",
-    //   "reviewCategory": "prototypes"
-    // },
+    {
+      "packageName": "acs-chat-sample",
+      "projectFolder": "samples/Chat",
+      "reviewCategory": "prototypes"
+    },
     {
       "packageName": "acs-server-sample",
       "projectFolder": "samples/Server",

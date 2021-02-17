@@ -19,7 +19,7 @@ import {
 } from './styles/ConfigurationScreen.styles';
 
 import { ChatIcon } from '@fluentui/react-icons-northstar';
-import { DisplayNameField } from '@azure/acs-ui-sdk';
+import { DisplayNameField } from '@azure/communication-ui';
 import { sendEmojiRequest } from './utils/setEmoji';
 import { getToken } from 'app/utils/getToken';
 import { getThreadId } from './utils/getThreadId';

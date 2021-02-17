@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { ChatThread, SendBox, TypingIndicator } from '@azure/acs-ui-sdk';
+import { ChatThread, SendBox, TypingIndicator } from '@azure/communication-ui';
 import { Stack } from '@fluentui/react';
 import React from 'react';
 import { chatAreaContainerStyle, sendBoxParentStyle } from './styles/ChatArea.styles';
