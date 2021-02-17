@@ -21,7 +21,6 @@ dependencies:
   '@storybook/addon-links': 6.1.18_react-dom@16.14.0+react@16.14.0
   '@storybook/addon-storyshots': 6.1.18_c9bef1887d47b90a7b2f322919b46cf5
   '@storybook/node-logger': 6.1.18
-  '@storybook/preset-create-react-app': 3.1.6_40702727b93335bb483e1fd242485646
   '@storybook/react': 6.1.18_c3e7a0fd3fc76152d02ade980ea4ca41
   '@storybook/theming': 6.1.18_react-dom@16.14.0+react@16.14.0
   '@testing-library/jest-dom': 5.11.9
@@ -41,6 +40,7 @@ dependencies:
   classnames: 2.2.6
   concurrently: 5.3.0
   copyfiles: 2.4.1
+  core-js: 3.8.3
   eslint: 7.20.0
   eslint-config-prettier: 6.15.0_eslint@7.20.0
   eslint-plugin-header: 3.1.1_eslint@7.20.0
@@ -64,6 +64,7 @@ dependencies:
   react-linkify: 1.0.0-alpha
   react-scripts: 3.4.4_typescript@3.9.9
   react-test-renderer: 16.14.0_react@16.14.0
+  regenerator-runtime: 0.13.7
   source-map-explorer: 2.5.2
   ts-jest: 26.5.1_jest@26.6.3+typescript@3.9.9
   ts-node: 9.1.1_typescript@3.9.9
@@ -19407,6 +19408,7 @@ packages:
       classnames: 2.2.6
       concurrently: 5.3.0
       copyfiles: 2.4.1
+      core-js: 3.8.3
       eslint: 7.20.0
       eslint-config-prettier: 6.15.0_eslint@7.20.0
       eslint-plugin-header: 3.1.1_eslint@7.20.0
@@ -19430,6 +19432,7 @@ packages:
       react-linkify: 1.0.0-alpha
       react-scripts: 3.4.4_typescript@3.9.9
       react-test-renderer: 16.14.0_react@16.14.0
+      regenerator-runtime: 0.13.7
       source-map-explorer: 2.5.2
       ts-jest: 26.5.1_jest@26.6.3+typescript@3.9.9
       ts-node: 9.1.1_typescript@3.9.9
@@ -19439,7 +19442,7 @@ packages:
     dev: false
     name: '@rush-temp/communication-ui'
     resolution:
-      integrity: sha512-yyGY1DZU0NTQFJ3dFVidKnE98cDdaW9IOBAFxIXoYDu+6/68qZURT4se+ngM5osu4o4ll03K8z/a4N23YyfAZw==
+      integrity: sha512-VJLB5pc9dTtNSvYL+/IyZWviV6ajrt4NMiMNTXvzjs5BCQ+MXog1+uaHbpzXZkZiX8ljUghn/kYpWSkVivk5eg==
       tarball: file:projects/communication-ui.tgz
     version: 0.0.0
 registry: ''
@@ -19466,7 +19469,6 @@ specifiers:
   '@storybook/addon-links': ^6.1.1
   '@storybook/addon-storyshots': ^6.1.6
   '@storybook/node-logger': ^6.1.1
-  '@storybook/preset-create-react-app': ^3.1.5
   '@storybook/react': ^6.1.1
   '@storybook/theming': ^6.1.10
   '@testing-library/jest-dom': ^5.11.4
@@ -19486,6 +19488,7 @@ specifiers:
   classnames: ^2.2.6
   concurrently: ^5.3.0
   copyfiles: ^2.4.1
+  core-js: ~3.8.3
   eslint: ^7.7.0
   eslint-config-prettier: ^6.12.0
   eslint-plugin-header: ^3.1.0
@@ -19509,6 +19512,7 @@ specifiers:
   react-linkify: ^1.0.0-alpha
   react-scripts: ^3.4.3
   react-test-renderer: ^16.14.0
+  regenerator-runtime: ~0.13.7
   source-map-explorer: ^2.5.0
   ts-jest: ^26.4.4
   ts-node: ^9.1.1

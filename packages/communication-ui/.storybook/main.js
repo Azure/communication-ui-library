@@ -9,7 +9,6 @@ module.exports = {
         controls: false
       }
     },
-    '@storybook/preset-create-react-app',
     '@storybook/addon-knobs'
   ]
 };
