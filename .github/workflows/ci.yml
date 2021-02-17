@@ -27,7 +27,9 @@ jobs:
 
       # Install dependencies
       - name: Install rush
-        run: node common/scripts/install-run-rush.js install
+        run: npm install -g @microsoft/rush
+      - name: Install dependencies
+        run: rush install
 
       # Builds
       - name: Build @azure/communications-ui
