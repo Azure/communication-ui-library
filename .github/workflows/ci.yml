@@ -45,8 +45,9 @@ jobs:
         env:
           CI: true
 
-      # Deploy Storybook
+      # Deploy Storybook - only perform this step on main branch CI
       - name: Deploy Storybook
-        run: npm run deploy-storybook -- --ci
+        # if: success() && github.ref == 'refs/heads/main'
+        run: npm run deploy-storybook -- --ci --host-token-env-variable=GITHUB_TOKEN
         working-directory: ./packages/communication-ui
 
