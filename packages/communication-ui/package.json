@@ -53,7 +53,9 @@
     "@fluentui/react-theme-provider": "^0.18.0",
     "classnames": "^2.2.6",
     "react-aria-live": "^2.0.5",
-    "react-linkify": "^1.0.0-alpha"
+    "react-linkify": "^1.0.0-alpha",
+    "@uifabric/react-hooks": "~7.13.11",
+    "copy-to-clipboard": "~3.3.1"
   },
   "peerDependencies": {
     "react": "^16.8.0",

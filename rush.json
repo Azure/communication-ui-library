@@ -33,6 +33,11 @@
       "reviewCategory": "prototypes"
     },
     {
+      "packageName": "acs-one-to-one-call-sample",
+      "projectFolder": "samples/OneToOneCall",
+      "reviewCategory": "prototypes"
+    },
+    {
       "packageName": "acs-server-sample",
       "projectFolder": "samples/Server",
       "reviewCategory": "prototypes"
