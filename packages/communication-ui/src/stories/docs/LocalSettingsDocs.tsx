@@ -6,7 +6,7 @@ import { LocalDeviceSettingsComponent } from '../../components';
 import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
 
 const importStatement = `
-import { LocalDeviceSettingsComponent } from '@azure/acs-ui-sdk';
+import { LocalDeviceSettingsComponent } from '@azure/communication-ui';
 import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
 `;
 

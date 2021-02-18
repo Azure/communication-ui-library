@@ -3,8 +3,8 @@ import { Title, Description, Props, Heading, Source } from '@storybook/addon-doc
 import { GroupChat } from '../../composites/GroupChat';
 import React from 'react';
 
-const importStatement = `import { GroupChat } from '@azure/acs-ui-sdk';`;
-const usageCode = `import { GroupChat } from '@azure/acs-ui-sdk';
+const importStatement = `import { GroupChat } from '@azure/communication-ui';`;
+const usageCode = `import { GroupChat } from '@azure/communication-ui';
 import { AzureCommunicationUserCredential } from '@azure/communication-common';
 import { CommunicationIdentityClient } from "@azure/communication-administration";
 import { ChatClient } from '@azure/communication-chat';

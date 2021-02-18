@@ -12,7 +12,7 @@ import * as siteVariables from '@fluentui/react-northstar/dist/commonjs/themes/t
 import { ChatThreadComponent as ChatThread } from '../../components';
 import { MessageStatus } from '../../types';
 
-const importStatement = `import { ChatThread } from '@azure/acs-ui-sdk';`;
+const importStatement = `import { ChatThread } from '@azure/communication-ui';`;
 const usageCode = `<ChatThread
     userId={'1'}
     chatMessages={[

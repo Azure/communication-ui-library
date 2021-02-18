@@ -11,7 +11,7 @@ import { svgIconVariables } from '@fluentui/react-northstar/dist/commonjs/themes
 import * as siteVariables from '@fluentui/react-northstar/dist/commonjs/themes/teams/siteVariables';
 import { ParticipantManagementComponent as ParticipantManagement } from '../../components';
 
-const importStatement = `import { ParticipantManagement } from '@azure/acs-ui-sdk';`;
+const importStatement = `import { ParticipantManagement } from '@azure/communication-ui';`;
 const usageCode = `<ParticipantManagement
     userId={userId}
     threadMembers={threadMembers}

@@ -11,7 +11,7 @@ import { svgIconVariables } from '@fluentui/react-northstar/dist/commonjs/themes
 import * as siteVariables from '@fluentui/react-northstar/dist/commonjs/themes/teams/siteVariables';
 import { SendBoxComponent } from '../../components';
 
-const importStatement = `import { SendBoxComponent } from '@azure/acs-ui-sdk';`;
+const importStatement = `import { SendBoxComponent } from '@azure/communication-ui';`;
 const usageCode = `<SendBoxComponent
 disabled={false}
 sendMessage={async () => { return }}

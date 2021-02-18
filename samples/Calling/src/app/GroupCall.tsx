@@ -11,7 +11,7 @@ import {
   paneStyles,
   subContainerStyles
 } from './styles/GroupCall.styles';
-import { CommandPanel, CommandPanelTypes, Header, connectFuncsToContext, ErrorBar } from '@azure/acs-ui-sdk';
+import { CommandPanel, CommandPanelTypes, Header, connectFuncsToContext, ErrorBar } from '@azure/communication-ui';
 import { isInCall } from './utils/AppUtils';
 import { MINI_HEADER_WINDOW_WIDTH } from './utils/constants';
 import MediaGallery from './MediaGallery';

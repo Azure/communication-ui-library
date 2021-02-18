@@ -27,7 +27,7 @@
     "lint:quiet": "eslint */**/*.{ts,tsx} --quiet",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "eject": "react-scripts eject",
-    "update-sdk": "cd ../SDK && npm run build && npm pack && cd ../OneToOneCall && npm install ../SDK/azure-acs-ui-sdk-0.1.0.tgz"
+    "update-sdk": "cd ../SDK && npm run build && npm pack && cd ../OneToOneCall && npm install ../SDK/azure-communication-ui-0.1.0.tgz"
   },
   "husky": {
     "hooks": {
@@ -54,7 +54,7 @@
     ]
   },
   "dependencies": {
-    "@azure/acs-ui-sdk": "file:../SDK/azure-acs-ui-sdk-0.1.0.tgz",
+    "@azure/communication-ui": "file:../SDK/azure-communication-ui-0.1.0.tgz",
     "@azure/communication-administration": "^1.0.0-beta.3",
     "@azure/communication-calling": "1.0.0-beta.2",
     "@azure/communication-common": "1.0.0-beta.3",

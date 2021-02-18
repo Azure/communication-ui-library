@@ -5,7 +5,7 @@ import React from 'react';
 import { OneToOneCall } from '../../composites/OneToOneCall/';
 
 const importStatement = `
-import { OneToOneCall } from '@azure/acs-ui-sdk';
+import { OneToOneCall } from '@azure/communication-ui';
 import { Provider } from '@fluentui/react-northstar';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-administration';
 import { svgIconStyles } from '@fluentui/react-northstar/dist/commonjs/themes/teams/components/SvgIcon/svgIconStyles';

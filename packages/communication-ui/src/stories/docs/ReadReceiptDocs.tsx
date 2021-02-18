@@ -12,7 +12,7 @@ import { svgIconVariables } from '@fluentui/react-northstar/dist/commonjs/themes
 // @ts-ignore
 import * as siteVariables from '@fluentui/react-northstar/dist/commonjs/themes/teams/siteVariables';
 
-const importStatement = `import { ReadReceiptComponent, MessageStatus } from '@azure/acs-ui-sdk';`;
+const importStatement = `import { ReadReceiptComponent, MessageStatus } from '@azure/communication-ui';`;
 const usageCode = `<ReadReceiptComponent messageStatus={MessageStatus.DELIVERED} />
 <ReadReceiptComponent messageStatus={MessageStatus.SEEN} />
 <ReadReceiptComponent messageStatus={MessageStatus.SENDING} />

@@ -10,7 +10,7 @@ import { svgIconVariables } from '@fluentui/react-northstar/dist/commonjs/themes
 import * as siteVariables from '@fluentui/react-northstar/dist/commonjs/themes/teams/siteVariables';
 
 const importStatement = `
-import { IncomingCallToast } from '@azure/acs-ui-sdk';
+import { IncomingCallToast } from '@azure/communication-ui';
 `;
 
 const iconTheme = {

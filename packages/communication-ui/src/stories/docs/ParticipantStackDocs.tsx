@@ -5,7 +5,7 @@ import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/a
 import { ParticipantStackComponent } from '../../components';
 import { ListParticipant } from '../../types';
 
-const importStatement = `import { ParticipantStackComponent, ListParticipant } from '@azure/acs-ui-sdk';`;
+const importStatement = `import { ParticipantStackComponent, ListParticipant } from '@azure/communication-ui';`;
 
 const ParticipantStackExample: () => JSX.Element = () => {
   const remoteParticipants: ListParticipant[] = [

@@ -11,7 +11,7 @@ import * as siteVariables from '@fluentui/react-northstar/dist/commonjs/themes/t
 import { VideoContainerProps } from '../../consumers';
 
 const importStatement = `
-import { IncomingCallModal } from '@azure/acs-ui-sdk';
+import { IncomingCallModal } from '@azure/communication-ui';
 `;
 
 const iconTheme = {

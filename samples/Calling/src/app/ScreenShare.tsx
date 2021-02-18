@@ -4,9 +4,9 @@ import React from 'react';
 import { Spinner, SpinnerSize } from '@fluentui/react';
 import { loadingStyle, videoStreamStyle } from './styles/ScreenShare.styles';
 
-import { connectFuncsToContext } from '@azure/acs-ui-sdk';
+import { connectFuncsToContext } from '@azure/communication-ui';
 import { MapToScreenShareProps, ScreenShareContainerProps } from './consumers/MapToScreenShareProps';
-import { MediaGalleryTileComponent } from '@azure/acs-ui-sdk';
+import { MediaGalleryTileComponent } from '@azure/communication-ui';
 
 const ScreenShareComponent = (props: ScreenShareContainerProps): JSX.Element => {
   const { displayName, videoRender, isVideoRenderAvailable, screenShareRender, isScreenShareRenderAvailable } = props;

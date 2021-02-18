@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
 import { CallState, HangupCallOptions } from '@azure/communication-calling';
-import { useCallAgent, useGroupCall, useCallContext, useCallingContext } from '@azure/acs-ui-sdk';
+import { useCallAgent, useGroupCall, useCallContext, useCallingContext } from '@azure/communication-ui';
 
 export type GroupCallContainerProps = {
   isCallInitialized: boolean;

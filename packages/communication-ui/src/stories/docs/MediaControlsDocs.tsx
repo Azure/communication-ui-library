@@ -11,7 +11,7 @@ import { Provider } from '@fluentui/react-northstar';
 import { MediaControlsComponent } from '../../components';
 
 const importStatement = `
-import { MediaControlsComponent } from '@azure/acs-ui-sdk';
+import { MediaControlsComponent } from '@azure/communication-ui';
 import { svgIconStyles } from '@fluentui/react-northstar/dist/commonjs/themes/teams/components/SvgIcon/svgIconStyles';
 import { svgIconVariables } from '@fluentui/react-northstar/dist/commonjs/themes/teams/components/SvgIcon/svgIconVariables';
 import * as siteVariables from '@fluentui/react-northstar/dist/commonjs/themes/teams/siteVariables';

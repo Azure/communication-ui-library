@@ -4,7 +4,7 @@ import React from 'react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
 import { MediaGalleryTileComponent } from '../../components';
 
-const importStatement = `import { MediaGalleryTileComponent } from '@azure/acs-ui-sdk';`;
+const importStatement = `import { MediaGalleryTileComponent } from '@azure/communication-ui';`;
 
 const MediaGalleryTile: () => JSX.Element = () => {
   return (

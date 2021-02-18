@@ -5,7 +5,7 @@ import {
   convertSdkRemoteParticipantToGalleryParticipant,
   useRemoteVideoStreamRenderer,
   ParticipantStream
-} from '@azure/acs-ui-sdk';
+} from '@azure/communication-ui';
 import { ScalingMode } from '@azure/communication-calling';
 
 export type ScreenShareContainerProps = {

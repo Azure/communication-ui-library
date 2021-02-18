@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { initializeIcons, loadTheme, Spinner, Stack } from '@fluentui/react';
-import { OneToOneCall } from '@azure/acs-ui-sdk';
+import { OneToOneCall } from '@azure/communication-ui';
 import { createRandomDisplayName, fetchTokenResponse, getBuildTime, supportedBrowser } from './utils/AppUtils';
 
 const sdkVersion = require('../../package.json').dependencies['@azure/communication-calling'];

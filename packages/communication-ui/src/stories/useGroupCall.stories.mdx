@@ -10,7 +10,7 @@ This hook is absolutely necessary if you want to join/leave a group call.
 ## Importing
 
 ```javascript
-import { useGroupCall } from '@azure/acs-ui-sdk';
+import { useGroupCall } from '@azure/communication-ui';
 ```
 
 ## Dependencies
@@ -24,7 +24,7 @@ import React from 'react';
 import {
   CallingProvider,
   useGroupCall
-} from '@azure/acs-ui-sdk';
+} from '@azure/communication-ui';
 
 const Example = () => (
   <CallingProvider token="<TOKEN>", displayName="<DISPLAYNAME>", groupId="<GROUPID>">

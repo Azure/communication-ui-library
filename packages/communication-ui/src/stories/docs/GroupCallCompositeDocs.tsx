@@ -5,7 +5,7 @@ import { Title, Description, Heading, Source, Props } from '@storybook/addon-doc
 import { GroupCall } from '../../composites/GroupCall';
 
 const importStatement = `
-import { GroupCall } from '@azure/acs-ui-sdk';
+import { GroupCall } from '@azure/communication-ui';
 import { v1 as createGUID } from 'uuid';
 import { AzureCommunicationUserCredential } from '@azure/communication-common';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-administration';

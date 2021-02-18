@@ -1,16 +1,16 @@
 // © Microsoft Corporation. All rights reserved.
 
 import React, { useMemo } from 'react';
-import { connectFuncsToContext } from '@azure/acs-ui-sdk';
+import { connectFuncsToContext } from '@azure/communication-ui';
 import { MapToMediaGalleryProps, MediaGalleryContainerProps } from './consumers/MapToMediaGalleryProps';
-import { GridLayoutComponent } from '@azure/acs-ui-sdk';
-import { convertSdkRemoteParticipantToGalleryParticipant } from '@azure/acs-ui-sdk';
-import { MediaGalleryTileComponent } from '@azure/acs-ui-sdk';
-import { MapToRemoteVideoProps, MapToLocalVideoProps } from '@azure/acs-ui-sdk';
+import { GridLayoutComponent } from '@azure/communication-ui';
+import { convertSdkRemoteParticipantToGalleryParticipant } from '@azure/communication-ui';
+import { MediaGalleryTileComponent } from '@azure/communication-ui';
+import { MapToRemoteVideoProps, MapToLocalVideoProps } from '@azure/communication-ui';
 import { mergeStyles, Stack } from '@fluentui/react';
 import ScreenShareComponent from './ScreenShare';
 import { gridStyle } from './styles/MediaGallery.styles';
-import { ErrorHandlingProps, WithErrorHandling } from '@azure/acs-ui-sdk';
+import { ErrorHandlingProps, WithErrorHandling } from '@azure/communication-ui';
 
 export const MediaGalleryComponentBase = (props: MediaGalleryContainerProps): JSX.Element => {
   const { localParticipant, remoteParticipants, screenShareStream } = props;

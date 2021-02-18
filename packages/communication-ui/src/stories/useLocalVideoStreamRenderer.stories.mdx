@@ -13,7 +13,7 @@ Since audio calls don't require video streams, you will not need to use this hoo
 ## Importing
 
 ```javascript
-import { useLocalVideoStreamRenderer } from '@azure/acs-ui-sdk';
+import { useLocalVideoStreamRenderer } from '@azure/communication-ui';
 ```
 
 ## Dependencies
@@ -27,7 +27,7 @@ import React from 'react';
 import {
   CallingProvider,
   useLocalVideoStreamRenderer
-} from '@azure/acs-ui-sdk';
+} from '@azure/communication-ui';
 
 const Example = () => (
   <CallingProvider token="<TOKEN>", displayName="<DISPLAYNAME>", groupId="<GROUPID>">

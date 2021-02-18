@@ -6,7 +6,7 @@ import { GridLayoutComponent } from '../../components/GridLayout';
 import { MediaGalleryTileComponent } from '../../components';
 
 const importStatement = `
-import { GridLayoutComponent, MediaGalleryTileComponent } from '@azure/acs-ui-sdk';
+import { GridLayoutComponent, MediaGalleryTileComponent } from '@azure/communication-ui';
 `;
 
 const GridLayoutExample: () => JSX.Element = () => {

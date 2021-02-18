@@ -7,9 +7,9 @@ import { VideoContainerProps, RemoteVideoContainerOwnProps } from '../../consume
 import { MediaGallery1To1Component as MediaGallery1To1 } from '../../components';
 
 const importStatement = `
-import { MediaGallery1To1Component as MediaGallery1To1 } from '@azure/acs-ui-sdk';
+import { MediaGallery1To1Component as MediaGallery1To1 } from '@azure/communication-ui';
 // import below if you want to customize the data mapping functions to the remote and local media tile.
-import { LocalVideoContainerOwnProps, RemoteVideoContainerOwnProps, VideoContainerProps } from '@azure/acs-ui-sdk';
+import { LocalVideoContainerOwnProps, RemoteVideoContainerOwnProps, VideoContainerProps } from '@azure/communication-ui';
 import { MediaStreamType } from '@azure/communication-calling';
 `;
 
