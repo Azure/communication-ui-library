@@ -2102,12 +2102,12 @@ exports[`storybook snapshot tests Storyshots ACS Components/ReadReceipt Read Rec
       >
         <span
           aria-hidden={true}
-          className="root_02b12b2b css-59"
+          className="root_de478240 css-59"
           role="presentation"
           style={Object {}}
         >
           <svg
-            className="svg_02b12b2b"
+            className="svg_de478240"
             viewBox="0 0 2048 2048"
             xmlns="http://www.w3.org/2000/svg"
           >
