@@ -50,4 +50,6 @@ jobs:
         # if: success() && github.ref == 'refs/heads/main'
         run: npm run deploy-storybook -- --ci --host-token-env-variable=GITHUB_TOKEN
         working-directory: ./packages/communication-ui
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
