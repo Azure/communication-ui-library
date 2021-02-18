@@ -1,6 +1,9 @@
 // © Microsoft Corporation. All rights reserved.
 import { RemoteVideoStream, Renderer, RendererOptions, RendererView } from '@azure/communication-calling';
 import { useEffect, useState, useRef } from 'react';
+import { CommunicationUiErrorCode, CommunicationUiError } from '../types/CommunicationUiError';
+import { useTriggerOnErrorCallback } from '../providers/ErrorProvider';
+import { propagateError } from '../utils/SDKUtils';
 
 export type UseRemoteVideoStreamType = {
   render: HTMLElement | null;
@@ -13,6 +16,7 @@ export default (
   stream: RemoteVideoStream | undefined,
   options?: RendererOptions | undefined
 ): UseRemoteVideoStreamType => {
+  const onErrorCallback = useTriggerOnErrorCallback();
   const [render, setRender] = useState<HTMLElement | null>(null);
   const [isAvailable, setIsAvailable] = useState<boolean>(false);
   const rendererViewRef: React.MutableRefObject<RendererView | null> = useRef(null);
@@ -29,7 +33,15 @@ export default (
       if (stream && stream.isAvailable) {
         if (render === null) {
           const renderer = new Renderer(stream);
-          renderViewRef = await renderer.createView(options);
+          try {
+            renderViewRef = await renderer.createView(options);
+          } catch (error) {
+            throw new CommunicationUiError({
+              message: 'Error rendering remove video',
+              code: CommunicationUiErrorCode.RENDER_REMOTE_VIDEO_ERROR,
+              error
+            });
+          }
           setRender(renderViewRef.target);
         }
         setIsAvailable(true);
@@ -48,16 +60,24 @@ export default (
     }
 
     if (stream?.isAvailable) {
-      renderStream(stream, rendererViewRef.current);
+      renderStream(stream, rendererViewRef.current).catch((error) => {
+        propagateError(error, onErrorCallback);
+      });
     }
 
-    const onAvailabilityChanged = async (): Promise<void> => await renderStream(stream, rendererViewRef.current);
+    const onAvailabilityChanged = async (): Promise<void> => {
+      try {
+        await renderStream(stream, rendererViewRef.current);
+      } catch (error) {
+        propagateError(error, onErrorCallback);
+      }
+    };
     stream?.on('availabilityChanged', onAvailabilityChanged);
 
     return () => {
       stream?.off('availabilityChanged', onAvailabilityChanged);
     };
-  }, [stream, options, render, rendererViewRef]);
+  }, [stream, options, render, rendererViewRef, onErrorCallback]);
 
   return { render, isAvailable };
 };

@@ -2,6 +2,9 @@
 import { LocalVideoStream, Renderer, RendererOptions, RendererView } from '@azure/communication-calling';
 import { useCallContext } from '../providers';
 import { useEffect, useRef, useState } from 'react';
+import { CommunicationUiErrorCode, CommunicationUiError } from '../types/CommunicationUiError';
+import { useTriggerOnErrorCallback } from '../providers/ErrorProvider';
+import { propagateError } from '../utils/SDKUtils';
 
 export type UseLocalVideoStreamType = {
   render: HTMLElement | null;
@@ -14,6 +17,7 @@ export default (
   stream: LocalVideoStream | undefined,
   rendererOptions: RendererOptions | undefined
 ): UseLocalVideoStreamType => {
+  const onErrorCallback = useTriggerOnErrorCallback();
   const { setLocalVideoRendererBusy } = useCallContext();
   const [render, setRender] = useState<HTMLElement | null>(null);
   const [isAvailable, setIsAvailable] = useState<boolean>(false);
@@ -31,21 +35,31 @@ export default (
     const renderStream = async (stream: LocalVideoStream): Promise<void> => {
       setLocalVideoRendererBusy(true);
       const renderer = new Renderer(stream);
-      rendererViewRef.current = await renderer.createView(options);
+      try {
+        rendererViewRef.current = await renderer.createView(options);
+      } catch (error) {
+        throw new CommunicationUiError({
+          message: 'Error rendering remove video',
+          code: CommunicationUiErrorCode.RENDER_LOCAL_VIDEO_ERROR,
+          error: error
+        });
+      }
       setRender(rendererViewRef.current.target);
       setIsAvailable(true);
       setLocalVideoRendererBusy(false);
     };
 
     if (stream) {
-      renderStream(stream);
+      renderStream(stream).catch((error) => {
+        propagateError(error, onErrorCallback);
+      });
     } else {
       cleanUp();
       setIsAvailable(false);
     }
 
     return cleanUp;
-  }, [stream, options, setLocalVideoRendererBusy]);
+  }, [stream, options, setLocalVideoRendererBusy, onErrorCallback]);
 
   return { render, isAvailable };
 };

@@ -1,15 +1,18 @@
 // © Microsoft Corporation. All rights reserved.
 
+import { ErrorHandlingProps } from '../providers/ErrorProvider';
 import React, { useEffect, useRef } from 'react';
-import { mediaContainer } from './styles/MediaGalleryTile.styles';
+import { invertedVideoStyle, mediaContainer } from './styles/MediaGalleryTile.styles';
+import { WithErrorHandling } from '../utils/WithErrorHandling';
 
 export interface StreamMediaProps {
   videoStreamElement: HTMLElement | null;
+  invertVideo?: boolean;
 }
 
-export const StreamMediaComponent = (props: StreamMediaProps): JSX.Element => {
+const StreamMediaComponentBase = (props: StreamMediaProps & ErrorHandlingProps): JSX.Element => {
   const containerEl = useRef<HTMLDivElement>(null);
-  const { videoStreamElement } = props;
+  const { invertVideo, videoStreamElement } = props;
 
   useEffect(() => {
     const container = containerEl.current;
@@ -18,5 +21,8 @@ export const StreamMediaComponent = (props: StreamMediaProps): JSX.Element => {
     }
   }, [videoStreamElement]);
 
-  return <div className={mediaContainer} ref={containerEl} />;
+  return <div className={invertVideo ? invertedVideoStyle : mediaContainer} ref={containerEl} />;
 };
+
+export const StreamMediaComponent = (props: StreamMediaProps & ErrorHandlingProps): JSX.Element =>
+  WithErrorHandling(StreamMediaComponentBase, props);

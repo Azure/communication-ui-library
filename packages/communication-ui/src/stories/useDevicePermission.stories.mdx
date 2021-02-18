@@ -14,7 +14,7 @@ This hook takes in a permission type as input `'Microphone' | 'Camera'`;
 ## Importing
 
 ```javascript
-import { useDevicePermission } from '@azure/acs-ui-sdk';
+import { useDevicePermission } from '@azure/communication-ui';
 ```
 
 ## Dependencies
@@ -28,7 +28,7 @@ import React from 'react';
 import {
   CallingProvider,
   useMicrophone
-} from '@azure/acs-ui-sdk';
+} from '@azure/communication-ui';
 
 const Example = () => (
   <CallingProvider token="<TOKEN>", displayName="<DISPLAYNAME>", groupId="<GROUPID>">

@@ -8,6 +8,13 @@ import { AbortSignalLike } from '@azure/core-http';
 import { createAzureCommunicationUserCredential } from '../utils/chatUtils';
 import { Spinner } from '@fluentui/react';
 import { getIdFromToken } from '../utils';
+import { WithErrorHandling } from '../utils/WithErrorHandling';
+import { ErrorHandlingProps } from './ErrorProvider';
+import {
+  CommunicationUiErrorCode,
+  CommunicationUiErrorFromError,
+  CommunicationUiError
+} from '../types/CommunicationUiError';
 
 export type ChatContextType = {
   chatClient?: ChatClient;
@@ -29,20 +36,22 @@ export const ChatContext = createContext<ChatContextType | undefined>(undefined)
 const CHATPROVIDER_LOADING_STATE = 1;
 const CHATPROVIDER_LOADED_STATE = 2;
 
-/**
- * ChatProvider requires valid token, userId (ACS communication userId), displayName, threadId, and endpointUrl. Its
- * expected that threadId is already created and user is already added to the thread.
- *
- * @param props
- */
-export const ChatProvider = (props: {
+type ChatProviderProps = {
   children: React.ReactNode;
   token: string;
   displayName: string;
   threadId: string;
   endpointUrl: string;
   refreshTokenCallback?: (abortSignal?: AbortSignalLike) => Promise<string>;
-}): JSX.Element => {
+};
+
+/**
+ * ChatProvider requires valid token, userId (ACS communication userId), displayName, threadId, and endpointUrl. Its
+ * expected that threadId is already created and user is already added to the thread.
+ *
+ * @param props
+ */
+const ChatProviderBase = (props: ChatProviderProps & ErrorHandlingProps): JSX.Element => {
   const { token } = props;
   const idFromToken = getIdFromToken(token);
   const [userId, setUserId] = useState<string>(idFromToken);
@@ -54,10 +63,24 @@ export const ChatProvider = (props: {
 
   useEffect(() => {
     const setupChatProvider = async (): Promise<void> => {
-      await chatClient.startRealtimeNotifications();
-      setChatProviderState(CHATPROVIDER_LOADED_STATE);
+      try {
+        await chatClient.startRealtimeNotifications();
+        setChatProviderState(CHATPROVIDER_LOADED_STATE);
+      } catch (error) {
+        throw new CommunicationUiError({
+          message: 'Error starting realtime notifications',
+          code: CommunicationUiErrorCode.START_REALTIME_NOTIFICATIONS_ERROR,
+          error: error
+        });
+      }
     };
-    setupChatProvider();
+    setupChatProvider().catch((error) => {
+      if (props.onErrorCallback) {
+        props.onErrorCallback(CommunicationUiErrorFromError(error));
+      } else {
+        throw error;
+      }
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -80,17 +103,29 @@ export const ChatProvider = (props: {
       </ChatContext.Provider>
     );
   } else {
-    throw new Error('chatProviderState ' + chatProviderState.toString() + ' is invalid');
+    throw new CommunicationUiError({
+      message: 'ChatProviderState ' + chatProviderState.toString() + ' is invalid',
+      code: CommunicationUiErrorCode.CONFIGURATION_ERROR
+    });
   }
 };
+
+export const ChatProvider = (props: ChatProviderProps & ErrorHandlingProps): JSX.Element =>
+  WithErrorHandling(ChatProviderBase, props);
 
 export const useChatClient = (): ChatClient => {
   const chatContext = useContext<ChatContextType | undefined>(ChatContext);
   if (chatContext === undefined) {
-    throw new Error('Use chat client invoked when chatContext not initialized yet');
+    throw new CommunicationUiError({
+      message: 'UseChatClient invoked when ChatContext not initialized',
+      code: CommunicationUiErrorCode.CONFIGURATION_ERROR
+    });
   }
   if (chatContext.chatClient === undefined) {
-    throw new Error('useSetup must be called first before useChatClient');
+    throw new CommunicationUiError({
+      message: 'UseChatClient invoked with ChatClient not initialized',
+      code: CommunicationUiErrorCode.CONFIGURATION_ERROR
+    });
   }
   return chatContext.chatClient;
 };
@@ -98,7 +133,10 @@ export const useChatClient = (): ChatClient => {
 export const useSetChatClient = (): ((chatClient: ChatClient) => void) => {
   const chatContext = useContext<ChatContextType | undefined>(ChatContext);
   if (chatContext === undefined) {
-    throw new Error('Use chat client invoked when chatContext not initialized yet');
+    throw new CommunicationUiError({
+      message: 'UseSetChatClient invoked when ChatContext not initialized',
+      code: CommunicationUiErrorCode.CONFIGURATION_ERROR
+    });
   }
   return chatContext.setChatClient;
 };
@@ -106,10 +144,10 @@ export const useSetChatClient = (): ((chatClient: ChatClient) => void) => {
 export const useUserId = (): string => {
   const chatContext = useContext<ChatContextType | undefined>(ChatContext);
   if (chatContext === undefined) {
-    throw new Error('Use chat client invoked when chatContext not initialized yet');
-  }
-  if (chatContext.chatClient === undefined) {
-    throw new Error('useSetup must be called first before useChatClient');
+    throw new CommunicationUiError({
+      message: 'UseUserId invoked when ChatContext not initialized',
+      code: CommunicationUiErrorCode.CONFIGURATION_ERROR
+    });
   }
   return chatContext.userId;
 };
@@ -117,10 +155,10 @@ export const useUserId = (): string => {
 export const useDisplayName = (): string => {
   const chatContext = useContext<ChatContextType | undefined>(ChatContext);
   if (chatContext === undefined) {
-    throw new Error('Use chat client invoked when chatContext not initialized yet');
-  }
-  if (chatContext.chatClient === undefined) {
-    throw new Error('useSetup must be called first before useChatClient');
+    throw new CommunicationUiError({
+      message: 'UseDisplayName invoked when ChatContext not initialized',
+      code: CommunicationUiErrorCode.CONFIGURATION_ERROR
+    });
   }
   return chatContext.displayName;
 };

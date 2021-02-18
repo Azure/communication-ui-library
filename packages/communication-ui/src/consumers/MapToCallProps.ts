@@ -2,11 +2,11 @@
 
 import { CallState, HangupCallOptions } from '@azure/communication-calling';
 import { useCallAgent } from '../hooks';
-import { useGroupCall } from '../hooks/useGroupCall';
 import { useCallContext, useCallingContext } from '../providers';
 import { ParticipantStream } from '../types/ParticipantStream';
+import { useOutgoingCall } from '../hooks';
 
-export type GroupCallContainerProps = {
+export type CallContainerProps = {
   isCallInitialized: boolean;
   callState: CallState;
   screenShareStream: ParticipantStream | undefined;
@@ -14,20 +14,19 @@ export type GroupCallContainerProps = {
   leaveCall: (hangupCallOptions: HangupCallOptions) => Promise<void>;
 };
 
-export const MapToGroupCallProps = (): GroupCallContainerProps => {
+export const MapToOneToOneCallProps = (): CallContainerProps => {
   const { callAgent, deviceManager } = useCallingContext();
-  const { call, localScreenShareActive, screenShareStream } = useCallContext();
-  const { leave } = useGroupCall();
+  const { callState, screenShareStream, localScreenShareActive } = useCallContext();
+  const { endCall } = useOutgoingCall();
+
   // Call useCallAgent to subscribe to events.
   useCallAgent();
 
   return {
     isCallInitialized: !!(callAgent && deviceManager),
-    callState: call?.state ?? 'None',
+    callState: callState,
     screenShareStream,
     isLocalScreenSharingOn: localScreenShareActive,
-    leaveCall: async (hangupCallOptions: HangupCallOptions) => {
-      await leave(hangupCallOptions);
-    }
+    leaveCall: endCall
   };
 };

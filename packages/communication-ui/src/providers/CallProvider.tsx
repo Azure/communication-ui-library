@@ -4,6 +4,8 @@ import React, { createContext, useState, Dispatch, SetStateAction, useEffect } f
 import { Call, CallState, LocalVideoStream, RemoteParticipant } from '@azure/communication-calling';
 import { ParticipantStream } from '../types/ParticipantStream';
 import { useValidContext } from '../utils';
+import { WithErrorHandling } from '../utils/WithErrorHandling';
+import { ErrorHandlingProps } from './ErrorProvider';
 import { useCallingContext } from './CallingProvider';
 
 export type CallContextType = {
@@ -36,7 +38,7 @@ export interface CallProvider {
 
 export const CallContext = createContext<CallContextType | undefined>(undefined);
 
-export const CallProvider = (props: CallProvider): JSX.Element => {
+const CallProviderBase = (props: CallProvider): JSX.Element => {
   const { displayName: defaultDisplayName, children } = props;
 
   const [call, setCall] = useState<Call | undefined>(undefined);
@@ -81,5 +83,8 @@ export const CallProvider = (props: CallProvider): JSX.Element => {
 
   return <CallContext.Provider value={initialState}>{children}</CallContext.Provider>;
 };
+
+export const CallProvider = (props: CallProvider & ErrorHandlingProps): JSX.Element =>
+  WithErrorHandling(CallProviderBase, props);
 
 export const useCallContext = (): CallContextType => useValidContext(CallContext);

@@ -8,8 +8,12 @@ import {
 } from '../consumers/MapToLocalDeviceSettingsProps';
 import { connectFuncsToContext } from '../consumers/ConnectContext';
 import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
+import { ErrorHandlingProps } from '../providers/ErrorProvider';
+import { WithErrorHandling } from '../utils/WithErrorHandling';
 
-export const LocalDeviceSettingsComponent = (props: LocalDeviceSettingsContainerProps): JSX.Element => {
+const LocalDeviceSettingsComponentBase = (
+  props: LocalDeviceSettingsContainerProps & ErrorHandlingProps
+): JSX.Element => {
   const defaultPlaceHolder = 'Select an option';
   const cameraLabel = 'Camera';
   const micLabel = 'Microphone';
@@ -56,5 +60,9 @@ export const LocalDeviceSettingsComponent = (props: LocalDeviceSettingsContainer
     </Stack>
   );
 };
+
+export const LocalDeviceSettingsComponent = (
+  props: LocalDeviceSettingsContainerProps & ErrorHandlingProps
+): JSX.Element => WithErrorHandling(LocalDeviceSettingsComponentBase, props);
 
 export default connectFuncsToContext(LocalDeviceSettingsComponent, MapToLocalDeviceSettingsProps);

@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { CallingProvider, CallProvider } from '../../providers';
+import { CallingProvider, CallProvider, ErrorProvider } from '../../providers';
 import React, { useEffect, useState } from 'react';
 import GroupCallScreen from './GroupCallScreen';
 import ConfigurationScreen from './ConfigurationScreen';
@@ -13,6 +13,7 @@ import { svgIconVariables } from '@fluentui/react-northstar/dist/commonjs/themes
 import * as siteVariables from '@fluentui/react-northstar/dist/commonjs/themes/teams/siteVariables';
 import { groupCallContainer } from './styles/GroupCall.styles';
 import { Stack } from '@fluentui/react';
+import { CommunicationUiErrorInfo } from '../../types';
 
 export type GroupCallCompositeProps = {
   /** Display name in the group call */
@@ -29,6 +30,8 @@ export type GroupCallCompositeProps = {
   refreshTokenCallback?: (abortSignal?: AbortSignalLike) => Promise<string>;
   /** Optional callback when call is ended */
   onEndCall?: () => void;
+  /** Optional callback to call when error is detected */
+  onErrorCallback?: (error: CommunicationUiErrorInfo) => void;
 };
 
 type compositePageSubType = 'configuration' | 'groupcall';
@@ -56,38 +59,40 @@ export default (props: GroupCallCompositeProps): JSX.Element => {
     return () => window.removeEventListener('resize', setWindowWidth);
   }, []);
 
-  const { displayName, groupId, token, callClientOptions, refreshTokenCallback, onEndCall } = props;
+  const { displayName, groupId, token, callClientOptions, refreshTokenCallback, onEndCall, onErrorCallback } = props;
 
   return (
-    <CallingProvider token={token} callClientOptions={callClientOptions} refreshTokenCallback={refreshTokenCallback}>
-      <CallProvider displayName={displayName}>
-        <Provider theme={mergeThemes(iconTheme, teamsTheme)} style={{ height: '100%', width: '100%' }}>
-          <Stack className={groupCallContainer} grow>
-            {(() => {
-              switch (page) {
-                case 'configuration': {
-                  return (
-                    <ConfigurationScreen
-                      screenWidth={screenWidth}
-                      startCallHandler={(): void => setPage('groupcall')}
-                      groupId={groupId}
-                    />
-                  );
+    <ErrorProvider onErrorCallback={onErrorCallback}>
+      <CallingProvider token={token} callClientOptions={callClientOptions} refreshTokenCallback={refreshTokenCallback}>
+        <CallProvider displayName={displayName}>
+          <Provider theme={mergeThemes(iconTheme, teamsTheme)} style={{ height: '100%', width: '100%' }}>
+            <Stack className={groupCallContainer} grow>
+              {(() => {
+                switch (page) {
+                  case 'configuration': {
+                    return (
+                      <ConfigurationScreen
+                        screenWidth={screenWidth}
+                        startCallHandler={(): void => setPage('groupcall')}
+                        groupId={groupId}
+                      />
+                    );
+                  }
+                  case 'groupcall': {
+                    return (
+                      <GroupCallScreen
+                        endCallHandler={(): void => (onEndCall ? onEndCall() : setPage('configuration'))}
+                        screenWidth={screenWidth}
+                        groupId={groupId}
+                      />
+                    );
+                  }
                 }
-                case 'groupcall': {
-                  return (
-                    <GroupCallScreen
-                      endCallHandler={(): void => (onEndCall ? onEndCall() : setPage('configuration'))}
-                      screenWidth={screenWidth}
-                      groupId={groupId}
-                    />
-                  );
-                }
-              }
-            })()}
-          </Stack>
-        </Provider>
-      </CallProvider>
-    </CallingProvider>
+              })()}
+            </Stack>
+          </Provider>
+        </CallProvider>
+      </CallingProvider>
+    </ErrorProvider>
   );
 };

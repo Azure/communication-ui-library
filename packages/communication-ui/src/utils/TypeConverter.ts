@@ -8,8 +8,10 @@ import { getACSId } from '../utils';
 export const convertSdkRemoteParticipantToGalleryParticipant = (
   remoteParticipantFromSDK: RemoteParticipantFromSDK
 ): GalleryParticipant => {
+  const identifier = getACSId(remoteParticipantFromSDK.identifier);
   return {
-    displayName: remoteParticipantFromSDK.displayName ?? getACSId(remoteParticipantFromSDK.identifier),
+    userId: identifier,
+    displayName: remoteParticipantFromSDK.displayName ?? identifier,
     videoStream: remoteParticipantFromSDK.videoStreams[0]
   };
 };

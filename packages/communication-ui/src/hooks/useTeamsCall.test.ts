@@ -16,8 +16,8 @@ const mockLeaveOptions = {
   forEveryone: false
 };
 
-let isJoinExecuted: jest.Mock<any, any>;
-let isHangUpExecuted: jest.Mock<any, any>;
+let joinExecutedCallback: jest.Mock<any, any>;
+let hangUpExecutedCallback: jest.Mock<any, any>;
 
 let mockCallContext: () => MockCallContextType;
 let mockCallingContext: () => MockCallingContextType;
@@ -39,12 +39,12 @@ jest.mock('../providers', () => {
 
 describe('useTeamsCall tests', () => {
   beforeEach(() => {
-    isJoinExecuted = jest.fn();
-    isHangUpExecuted = jest.fn();
+    joinExecutedCallback = jest.fn();
+    hangUpExecutedCallback = jest.fn();
 
     mockCallContext = (): MockCallContextType => {
       return {
-        call: mockCall({ ...defaultMockCallProps, isJoinExecuted, isHangUpExecuted })
+        call: mockCall({ ...defaultMockCallProps, joinExecutedCallback, hangUpExecutedCallback })
       };
     };
 
@@ -52,8 +52,8 @@ describe('useTeamsCall tests', () => {
       return {
         callAgent: mockCallAgent({
           ...defaultMockCallProps,
-          isJoinExecuted: isJoinExecuted,
-          isHangUpExecuted: isHangUpExecuted
+          joinExecutedCallback: joinExecutedCallback,
+          hangUpExecutedCallback: hangUpExecutedCallback
         })
       };
     };
@@ -64,8 +64,8 @@ describe('useTeamsCall tests', () => {
     renderHook(() => useTeamsCall());
 
     // Assert
-    expect(isJoinExecuted).not.toHaveBeenCalled();
-    expect(isHangUpExecuted).not.toHaveBeenCalled();
+    expect(joinExecutedCallback).not.toHaveBeenCalled();
+    expect(hangUpExecutedCallback).not.toHaveBeenCalled();
   });
 
   test('if use useTeamsCall hook, after leaving the call, hangup function in the CallAgent should be called', async () => {
@@ -79,12 +79,12 @@ describe('useTeamsCall tests', () => {
     await leave(mockLeaveOptions);
 
     // Assert
-    expect(isHangUpExecuted).toHaveBeenCalledTimes(1);
+    expect(hangUpExecutedCallback).toHaveBeenCalledTimes(1);
   });
 
   test('if hangup in the call throws an error, leave from the useTeamsCall hook is expected to throw an error', async () => {
     // mock the hangup function in the sdk throwing an error
-    isHangUpExecuted.mockImplementation(() => {
+    hangUpExecutedCallback.mockImplementation(() => {
       throw new Error('hangUp failed');
     });
 

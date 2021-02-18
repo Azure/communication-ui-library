@@ -5,7 +5,7 @@ import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 import { CLICK_TO_LOAD_MORE_MESSAGES, NEW_MESSAGES, UNABLE_TO_LOAD_MORE_MESSAGES } from '../constants';
 import { MessageStatus, ChatMessage } from '../types/ChatMessage';
-import { ChatThreadComponent } from './ChatThread';
+import { ChatThreadComponent, ChatThreadComponentBase } from './ChatThread';
 
 const originalClientHeight = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'clientHeight');
 const originalClientWidth = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'clientWidth');
@@ -33,7 +33,7 @@ afterEach(() => {
   }
 });
 
-const mockSendReadReceipt = jest.fn();
+const mockSendReadReceipt = jest.fn((): Promise<void> => Promise.resolve());
 
 const userId = '1';
 const emptyChatMessages: ChatMessage[] = [];
@@ -245,7 +245,7 @@ describe('ChatThread tests', () => {
     expect(mockSendReadReceipt).toHaveBeenCalled();
   });
 
-  test('ChatThread will only display a limited number of messages (for this test is 15) based on client height', () => {
+  test('ChatThread will only display a limited number of messages (for this test is default 100)', () => {
     const oneThousandMessages = generateMessages(1000);
     act(() => {
       render(
@@ -261,7 +261,7 @@ describe('ChatThread tests', () => {
 
     const renderedChat = container.querySelector('ul');
     expect(renderedChat).toBeDefined();
-    expect(renderedChat?.children.length).toBe(15);
+    expect(renderedChat?.children.length).toBe(100);
     expect(mockSendReadReceipt).toHaveBeenCalled();
   });
 
@@ -289,7 +289,7 @@ describe('ChatThread tests', () => {
 
     const renderedChat = container.querySelector('ul');
     expect(renderedChat).toBeDefined();
-    expect(renderedChat?.children.length).toBe(15);
+    expect(renderedChat?.children.length).toBe(100);
     const loadMoreMessagesButton = container.querySelector('button');
     expect(loadMoreMessagesButton).toBeDefined();
     const loadMoreMessagesChildSpans = loadMoreMessagesButton?.getElementsByTagName('span');
@@ -329,7 +329,7 @@ describe('ChatThread tests', () => {
 
     const renderedChat = container.querySelector('ul');
     expect(renderedChat).toBeDefined();
-    expect(renderedChat?.children.length).toBe(25); // Should be 15 but is 25 after loading more messages
+    expect(renderedChat?.children.length).toBe(200); // Should be 15 but is 25 after loading more messages
     expect(mockSendReadReceipt).toHaveBeenCalled();
   });
 
@@ -368,14 +368,14 @@ describe('ChatThread tests', () => {
   });
 
   test('ChatThread show NewMessages button when user is scrolled up and got new message', () => {
-    const tenMessages = generateMessages(20);
-    const elevenMessages = generateMessages(21);
+    const twentyMessages = generateMessages(20);
+    const twentyOneMessages = generateMessages(21);
 
     act(() => {
       render(
-        <ChatThreadComponent
+        <ChatThreadComponentBase
           userId={userId}
-          chatMessages={tenMessages}
+          chatMessages={twentyMessages}
           disableReadReceipt={false}
           sendReadReceipt={mockSendReadReceipt}
         />,
@@ -385,6 +385,7 @@ describe('ChatThread tests', () => {
 
     act(() => {
       const renderedChat = container.querySelector('ul');
+
       if (renderedChat !== null) {
         renderedChat.scrollTop = -1000;
         renderedChat.dispatchEvent(new Event('scroll'));
@@ -393,9 +394,9 @@ describe('ChatThread tests', () => {
 
     act(() => {
       render(
-        <ChatThreadComponent
+        <ChatThreadComponentBase
           userId={userId}
-          chatMessages={elevenMessages}
+          chatMessages={twentyOneMessages}
           disableReadReceipt={false}
           sendReadReceipt={mockSendReadReceipt}
         />,
@@ -405,7 +406,7 @@ describe('ChatThread tests', () => {
 
     const renderedChat = container.querySelector('ul');
     expect(renderedChat).toBeDefined();
-    expect(renderedChat?.children.length).toBe(16);
+    expect(renderedChat?.children.length).toBe(21);
     const newMessagesButton = container.querySelector('button');
     expect(newMessagesButton).toBeDefined();
     const newMessagesChildSpans = newMessagesButton?.getElementsByTagName('span');

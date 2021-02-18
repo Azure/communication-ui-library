@@ -12,7 +12,7 @@ permission to the application. If the user denies access, the list of "audio dev
 ## Importing
 
 ```javascript
-import { useAudioDevices } from '@azure/acs-ui-sdk';
+import { useAudioDevices } from '@azure/communication-ui';
 ```
 
 ## Dependencies
@@ -26,7 +26,7 @@ import React from 'react';
 import {
   CallingProvider
   useAudioDevices
-} from '@azure/acs-ui-sdk';
+} from '@azure/communication-ui';
 
 const Example = () => (
   <CallingProvider token="<TOKEN>", displayName="<DISPLAYNAME>", groupId="<GROUPID>">

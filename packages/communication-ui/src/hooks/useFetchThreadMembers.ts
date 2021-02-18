@@ -10,7 +10,10 @@ import {
   useThreadId,
   useSetGetThreadMembersError
 } from '../providers/ChatThreadProvider';
+import { CommunicationUiErrorCode, CommunicationUiError } from '../types/CommunicationUiError';
 
+// TODO: A lot of the code here is specific to Sample App such as the 'setThreadMembersError' which is used to show
+// the 'you have been removed' screen in Sample App. This file requires some refactoring.
 export const useFetchThreadMembers = (): (() => Promise<void>) => {
   const chatThreadClient = useChatThreadClient();
   const setUpdateThreadMembersError = useSetUpdateThreadMembersError();
@@ -20,7 +23,10 @@ export const useFetchThreadMembers = (): (() => Promise<void>) => {
   const threadId = useThreadId();
   const userId = useUserId();
   if (chatThreadClient === undefined) {
-    throw new Error('thread client is not set up yet');
+    throw new CommunicationUiError({
+      message: 'ChatThreadClient is undefined',
+      code: CommunicationUiErrorCode.CONFIGURATION_ERROR
+    });
   }
   const useFetchThreadMembersInternal = useCallback(async (): Promise<void> => {
     const threadMembers: ChatThreadMember[] = [];

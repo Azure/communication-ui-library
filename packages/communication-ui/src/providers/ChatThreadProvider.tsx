@@ -2,8 +2,15 @@
 
 import { ChatMessage, ChatThread, ChatThreadClient, ChatThreadMember, ReadReceipt } from '@azure/communication-chat';
 import { Spinner } from '@fluentui/react';
+import { WithErrorHandling } from '../utils/WithErrorHandling';
 import React, { Dispatch, SetStateAction, createContext, useContext, useState, useEffect } from 'react';
 import { useChatClient } from './ChatProvider';
+import { ErrorHandlingProps } from './ErrorProvider';
+import {
+  CommunicationUiErrorCode,
+  CommunicationUiErrorFromError,
+  CommunicationUiError
+} from '../types/CommunicationUiError';
 
 export type ThreadProviderContextType = {
   chatThreadClient?: ChatThreadClient;
@@ -26,8 +33,6 @@ export type ThreadProviderContextType = {
   setUpdateThreadMembersError: Dispatch<SetStateAction<boolean | undefined>>;
   failedMessageIds: string[];
   setFailedMessageIds: Dispatch<SetStateAction<string[]>>;
-  removeThreadMemberError: boolean;
-  setRemoveThreadMemberError: Dispatch<SetStateAction<boolean>>;
 };
 
 let contextState: ThreadProviderContextType;
@@ -41,7 +46,12 @@ export const ThreadContext = createContext<ThreadProviderContextType | undefined
 const CHATTHREADPROVIDER_LOADING_STATE = 1;
 const CHATTHREADPROVIDER_LOADED_STATE = 2;
 
-export const ChatThreadProvider = (props: { children: React.ReactNode; threadId: string }): JSX.Element => {
+type ChatThreadProviderProps = {
+  children: React.ReactNode;
+  threadId: string;
+};
+
+const ChatThreadProviderBase = (props: ChatThreadProviderProps & ErrorHandlingProps): JSX.Element => {
   const [chatThreadClient, setChatThreadClient] = useState<ChatThreadClient | undefined>();
   const [chatMessages, setChatMessages] = useState<ChatMessage[] | undefined>(undefined);
   const [threadId, setThreadId] = useState<string>(props.threadId);
@@ -52,7 +62,6 @@ export const ChatThreadProvider = (props: { children: React.ReactNode; threadId:
   const [updateThreadMembersError, setUpdateThreadMembersError] = useState<boolean | undefined>(undefined);
   const [coolPeriod, setCoolPeriod] = useState<Date>();
   const [failedMessageIds, setFailedMessageIds] = useState<string[]>([]);
-  const [removeThreadMemberError, setRemoveThreadMemberError] = useState<boolean>(false);
   const [chatThreadProviderState, setChatThreadProviderState] = useState<number>(CHATTHREADPROVIDER_LOADING_STATE);
 
   contextState = {
@@ -75,19 +84,31 @@ export const ChatThreadProvider = (props: { children: React.ReactNode; threadId:
     updateThreadMembersError,
     setUpdateThreadMembersError,
     failedMessageIds,
-    setFailedMessageIds,
-    removeThreadMemberError,
-    setRemoveThreadMemberError
+    setFailedMessageIds
   };
 
   const chatClient = useChatClient();
   useEffect(() => {
     const setupChatThreadProvider = async (): Promise<void> => {
-      const newChatThreadClient = await chatClient.getChatThreadClient(threadId);
-      setChatThreadClient(newChatThreadClient);
-      setChatThreadProviderState(CHATTHREADPROVIDER_LOADED_STATE);
+      try {
+        const newChatThreadClient = await chatClient.getChatThreadClient(threadId);
+        setChatThreadClient(newChatThreadClient);
+        setChatThreadProviderState(CHATTHREADPROVIDER_LOADED_STATE);
+      } catch (error) {
+        throw new CommunicationUiError({
+          message: 'Error creating chat thread client',
+          code: CommunicationUiErrorCode.CREATE_CHAT_THREAD_CLIENT_ERROR,
+          error: error
+        });
+      }
     };
-    setupChatThreadProvider();
+    setupChatThreadProvider().catch((error) => {
+      if (props.onErrorCallback) {
+        props.onErrorCallback(CommunicationUiErrorFromError(error));
+      } else {
+        throw error;
+      }
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -98,14 +119,23 @@ export const ChatThreadProvider = (props: { children: React.ReactNode; threadId:
   } else if (chatThreadProviderState === CHATTHREADPROVIDER_LOADED_STATE) {
     return <ThreadContext.Provider value={contextState}>{props.children}</ThreadContext.Provider>;
   } else {
-    throw new Error('chatThreadProviderState ' + chatThreadProviderState.toString() + ' is invalid');
+    throw new CommunicationUiError({
+      message: 'ChatThreadProviderState ' + chatThreadProviderState.toString() + ' is invalid',
+      code: CommunicationUiErrorCode.CONFIGURATION_ERROR
+    });
   }
 };
+
+export const ChatThreadProvider = (props: ChatThreadProviderProps & ErrorHandlingProps): JSX.Element =>
+  WithErrorHandling(ChatThreadProviderBase, props);
 
 const useValidateAndGetThreadContext = (): ThreadProviderContextType => {
   const threadContext = useContext<ThreadProviderContextType | undefined>(ThreadContext);
   if (!threadContext) {
-    throw new Error('Thread context not initialized');
+    throw new CommunicationUiError({
+      message: 'ChatThreadProvider context not initialized',
+      code: CommunicationUiErrorCode.CONFIGURATION_ERROR
+    });
   }
   return threadContext;
 };
@@ -208,14 +238,4 @@ export const useFailedMessageIds = (): string[] => {
 export const useSetFailedMessageIds = (): Dispatch<SetStateAction<string[]>> => {
   const threadContext = useValidateAndGetThreadContext();
   return threadContext.setFailedMessageIds;
-};
-
-export const useRemoveThreadMemberError = (): boolean => {
-  const threadContext = useValidateAndGetThreadContext();
-  return threadContext.removeThreadMemberError;
-};
-
-export const useSetRemoveThreadMemberError = (): ((removeThreadMemberError: boolean) => void) => {
-  const threadContext = useValidateAndGetThreadContext();
-  return threadContext.setRemoveThreadMemberError;
 };

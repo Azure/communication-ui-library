@@ -11,15 +11,15 @@ import { svgIconVariables } from '@fluentui/react-northstar/dist/commonjs/themes
 import * as siteVariables from '@fluentui/react-northstar/dist/commonjs/themes/teams/siteVariables';
 import { SendBoxComponent } from '../../components';
 
-const importStatement = `import { SendBox } from '@azure/acs-ui-sdk';`;
-const usageCode = `<SendBox
+const importStatement = `import { SendBoxComponent } from '@azure/communication-ui';`;
+const usageCode = `<SendBoxComponent
 disabled={false}
 sendMessage={async () => { return }}
 userId='ACS_ID PLACEHOLDER'
 displayName='User Name'
 onSendTypingNotification={() => { return }}
 />
-<SendBox
+<SendBoxComponent
 disabled={false}
 sendMessage={async () => { return }}
 userId='ACS_ID PLACEHOLDER'
@@ -38,8 +38,8 @@ const ExampleSendBox: () => JSX.Element = () => (
         }}
         userId="UserId1"
         displayName="User Name"
-        onSendTypingNotification={() => {
-          return;
+        onSendTypingNotification={(): Promise<void> => {
+          return Promise.resolve();
         }}
       />
     </span>
@@ -51,8 +51,8 @@ const ExampleSendBox: () => JSX.Element = () => (
         }}
         userId="UserId2"
         displayName="User Name"
-        onSendTypingNotification={() => {
-          return;
+        onSendTypingNotification={(): Promise<void> => {
+          return Promise.resolve();
         }}
         systemMessage="Please wait 30 seconds to send new messages"
       />

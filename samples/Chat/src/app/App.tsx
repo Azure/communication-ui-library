@@ -10,7 +10,7 @@ import ErrorScreen from './ErrorScreen';
 import HomeScreen from './HomeScreen';
 import ConfigurationScreen from './ConfigurationScreen';
 import { getThreadId } from './utils/getThreadId';
-import { ChatProvider } from '@azure/communication-ui';
+import { ChatProvider, ErrorProvider, CommunicationUiErrorInfo } from '@azure/communication-ui';
 import { refreshTokenAsync } from './utils/refreshToken';
 
 console.info(`Thread chat sample using @azure/communication-chat : ${getChatSDKVersion()}`);
@@ -45,24 +45,28 @@ export default (): JSX.Element => {
       );
     } else if (page === 'chat') {
       return (
-        <ChatProvider
-          token={token}
-          displayName={displayName}
-          threadId={threadId}
-          endpointUrl={endpointUrl}
-          refreshTokenCallback={refreshTokenAsync(userId)}
+        <ErrorProvider
+          onErrorCallback={(error: CommunicationUiErrorInfo) => console.error('onErrorCallback received error:', error)}
         >
-          <ChatScreen
-            endChatHandler={() => {
-              setPage('end');
-              // Send up signal that the user wants to leave the chat
-              // Move to to next screen on success
-            }}
-            errorHandler={() => {
-              setPage('error');
-            }}
-          />
-        </ChatProvider>
+          <ChatProvider
+            token={token}
+            displayName={displayName}
+            threadId={threadId}
+            endpointUrl={endpointUrl}
+            refreshTokenCallback={refreshTokenAsync(userId)}
+          >
+            <ChatScreen
+              endChatHandler={() => {
+                setPage('end');
+                // Send up signal that the user wants to leave the chat
+                // Move to to next screen on success
+              }}
+              errorHandler={() => {
+                setPage('error');
+              }}
+            />
+          </ChatProvider>
+        </ErrorProvider>
       );
     } else if (page === 'end') {
       return (

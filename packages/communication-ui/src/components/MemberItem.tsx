@@ -4,17 +4,20 @@ import { memberItemContainerStyle, memberItemIsYouStyle, memberItemNameStyle } f
 
 import { ContextualMenu, DirectionalHint, IContextualMenuItem, Persona, PersonaSize } from '@fluentui/react';
 import React, { useRef, useState } from 'react';
+import { WithErrorHandling } from '../utils/WithErrorHandling';
+import { ErrorHandlingProps } from '../providers/ErrorProvider';
+import { propagateError } from '../utils/SDKUtils';
 
 interface MemberItemProps {
   name: string;
   userId: string;
   isYou: boolean;
-  removeThreadMemberByUserId?(userId: string): void;
+  removeThreadMemberByUserId?: (userId: string) => Promise<void>;
   onRenderAvatar?: (userId: string) => JSX.Element;
 }
 
-export default (props: MemberItemProps): JSX.Element => {
-  const { name, userId, isYou, removeThreadMemberByUserId, onRenderAvatar } = props;
+const MemberItemComponentBase = (props: MemberItemProps & ErrorHandlingProps): JSX.Element => {
+  const { name, userId, isYou, removeThreadMemberByUserId, onRenderAvatar, onErrorCallback } = props;
   const [clickEvent, setClickEvent] = useState<MouseEvent | undefined>();
   const [menuHidden, setMenuHidden] = useState<boolean>(true);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -23,7 +26,9 @@ export default (props: MemberItemProps): JSX.Element => {
       key: 'Remove',
       text: 'Remove',
       onClick: () => {
-        removeThreadMemberByUserId && removeThreadMemberByUserId(userId);
+        removeThreadMemberByUserId?.(userId).catch((error) => {
+          propagateError(error, onErrorCallback);
+        });
       }
     }
   ];
@@ -65,3 +70,6 @@ export default (props: MemberItemProps): JSX.Element => {
     </div>
   );
 };
+
+export default (props: MemberItemProps & ErrorHandlingProps): JSX.Element =>
+  WithErrorHandling(MemberItemComponentBase, props);

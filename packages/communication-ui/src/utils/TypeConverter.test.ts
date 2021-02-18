@@ -17,6 +17,7 @@ describe('convertSdkRemoteParticipantToGalleryParticipant tests', () => {
     // Assert
     expect(remoteParticipants).toEqual({
       displayName: 'displayName',
+      userId: 'id',
       videoStream: undefined
     });
   });
@@ -32,6 +33,7 @@ describe('convertSdkRemoteParticipantToGalleryParticipant tests', () => {
     // Assert
     expect(remoteParticipant).toEqual({
       displayName: 'displayName',
+      userId: 'id',
       videoStream: mockVideoStream
     });
   });

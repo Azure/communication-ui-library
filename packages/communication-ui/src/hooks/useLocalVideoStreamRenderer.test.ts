@@ -25,6 +25,7 @@ jest.mock('@azure/communication-calling', () => {
     })
   };
 });
+
 jest.mock('../providers', () => {
   return {
     useCallContext: jest.fn().mockImplementation(
@@ -32,6 +33,12 @@ jest.mock('../providers', () => {
         return mockCallContext();
       }
     )
+  };
+});
+
+jest.mock('../providers/ErrorProvider', () => {
+  return {
+    useTriggerOnErrorCallback: jest.fn()
   };
 });
 

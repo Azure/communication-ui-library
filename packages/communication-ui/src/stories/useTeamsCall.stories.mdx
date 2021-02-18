@@ -16,7 +16,7 @@ There is a call state that is used here since the user needs to be invited in. D
 ## Importing
 
 ```javascript
-import { useTeamsCall } from '@azure/acs-ui-sdk';
+import { useTeamsCall } from '@azure/communication-ui';
 ```
 
 ## Dependencies
@@ -30,7 +30,7 @@ import React from 'react';
 import {
   CallingProvider,
   useTeamsCall
-} from '@azure/acs-ui-sdk';
+} from '@azure/communication-ui';
 
 const Example = () => (
   <CallingProvider token="<TOKEN>", displayName="<DISPLAYNAME>", groupId="<GROUPID>">

@@ -15,12 +15,15 @@ type MockCallProps = {
   isStartScreenSharingExecuted: jest.Mock<any, any>;
   isStopScreenSharingExecuted: jest.Mock<any, any>;
   isScreenSharingOn: boolean;
+  acceptExecutedCallback: jest.Mock<any, any>;
   rejectExecutedCallback: jest.Mock<any, any>;
-  isHangUpExecuted: jest.Mock<any, any>;
-  isJoinExecuted: jest.Mock<any, any>;
+  hangUpExecutedCallback: jest.Mock<any, any>;
+  outgoingCallExecutedCallback: jest.Mock<any, any>;
+  joinExecutedCallback: jest.Mock<any, any>;
   startVideo?: jest.Mock<any, any>;
   stopVideo?: jest.Mock<any, any>;
   localVideoStreams?: Array<LocalVideoStream>;
+  isIncoming: boolean;
 };
 
 export const defaultMockCallProps = {
@@ -30,12 +33,15 @@ export const defaultMockCallProps = {
   isStartScreenSharingExecuted: jest.fn(),
   isStopScreenSharingExecuted: jest.fn(),
   isScreenSharingOn: false,
+  outgoingCallExecutedCallback: jest.fn(),
+  acceptExecutedCallback: jest.fn(),
   rejectExecutedCallback: jest.fn(),
-  isHangUpExecuted: jest.fn(),
-  isJoinExecuted: jest.fn(),
+  hangUpExecutedCallback: jest.fn(),
+  joinExecutedCallback: jest.fn(),
   startVideo: jest.fn(),
   stopVideo: jest.fn(),
-  localVideoStreams: []
+  localVideoStreams: [],
+  isIncoming: false
 };
 
 export function mockCall(mockProps?: MockCallProps): MockCall {
@@ -44,7 +50,7 @@ export function mockCall(mockProps?: MockCallProps): MockCall {
     id: 'call id',
     callerIdentity: undefined,
     state: 'None',
-    isIncoming: false,
+    isIncoming: props.isIncoming,
     isMicrophoneMuted: props.isMicrophoneMuted,
     isRecordingActive: false,
     isScreenSharingOn: props.isScreenSharingOn,
@@ -61,7 +67,9 @@ export function mockCall(mockProps?: MockCallProps): MockCall {
       });
     },
     accept: async () => {
-      return await new Promise((resolve) => resolve());
+      return await new Promise<void>((resolve) => resolve()).then(() => {
+        props.acceptExecutedCallback(true);
+      });
     },
     reject: async () => {
       return await new Promise<void>((resolve) => resolve()).then(() => {
@@ -70,7 +78,7 @@ export function mockCall(mockProps?: MockCallProps): MockCall {
     },
     hangUp: async () => {
       return await new Promise<void>((resolve) => resolve()).then(() => {
-        props.isHangUpExecuted();
+        props.hangUpExecutedCallback();
       });
     },
     startVideo: async () => {
@@ -133,10 +141,11 @@ export function mockCallAgent(props?: MockCallProps): MockCallAgent {
   return {
     calls: [call],
     call: () => {
+      props?.outgoingCallExecutedCallback();
       return call;
     },
     join: () => {
-      props?.isJoinExecuted();
+      props?.joinExecutedCallback();
       return call;
     },
     on: () => {

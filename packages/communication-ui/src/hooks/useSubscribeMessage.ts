@@ -35,21 +35,16 @@ export const useSubscribeMessage = (addMessage?: (messageEvent: ChatMessageRecei
   );
 
   const onMessageReceived = useCallback(
-    async (event: ChatMessageReceivedEvent): Promise<void> => {
+    (event: ChatMessageReceivedEvent): void => {
       addMessage ? addMessage(event) : defaultAddMessage(event);
     },
     [addMessage, defaultAddMessage]
   );
 
   useEffect(() => {
-    const subscribeMessage = async (): Promise<void> => {
-      chatClient.on('chatMessageReceived', onMessageReceived);
-    };
+    chatClient.on('chatMessageReceived', onMessageReceived);
 
-    if (addMessage) {
-      subscribeMessage();
-    } else if (threadId && !subscribedTheadIdSet.has(threadId)) {
-      subscribeMessage();
+    if (!addMessage && threadId && !subscribedTheadIdSet.has(threadId)) {
       subscribedTheadIdSet.add(threadId);
     }
 

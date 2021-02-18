@@ -21,7 +21,7 @@ export const useSubscribeTypingNotification = (
   const chatClient = useChatClient();
 
   const onTypingIndicatorReceived = useCallback(
-    async (event: TypingIndicatorReceivedEvent): Promise<void> => {
+    (event: TypingIndicatorReceivedEvent): void => {
       const notification: TypingNotification = {
         from: event.sender.communicationUserId,
         originalArrivalTime: Date.parse(event.receivedOn),
@@ -35,11 +35,7 @@ export const useSubscribeTypingNotification = (
   );
 
   useEffect(() => {
-    const subscribeForTypingIndicator = async (): Promise<void> => {
-      chatClient.on('typingIndicatorReceived', onTypingIndicatorReceived);
-    };
-
-    subscribeForTypingIndicator();
+    chatClient.on('typingIndicatorReceived', onTypingIndicatorReceived);
     return () => {
       chatClient.off('typingIndicatorReceived', onTypingIndicatorReceived);
     };

@@ -2,10 +2,9 @@
 
 export * from './ConnectContext';
 
-export * from './MapToGroupCallProps';
+export * from './MapToCallProps';
 export * from './MapToLocalDeviceSettingsProps';
 export * from './MapToMediaControlsProps';
-export * from './MapToMediaGalleryProps';
 export * from './MapToParticipantListProps';
 export * from './MapToCallConfigurationProps';
 export * from './MapToVideoProps';

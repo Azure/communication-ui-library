@@ -21,7 +21,7 @@ const iconTheme = {
   siteVariables
 };
 
-const importStatement = `import { TypingIndicatorComponent } from '@azure/acs-ui-sdk';`;
+const importStatement = `import { TypingIndicatorComponent } from '@azure/communication-ui';`;
 const usageCode = `
 const oneTypingUsers = [{ displayName: 'User1', prefixImageUrl: '' }];
 const twoTypingUsers = [
@@ -45,7 +45,7 @@ const importStatementwithACS = `import { ChatProvider,
           useThreadMembers, 
           useTypingUsers, 
           TypingIndicatorComponent } 
-from '@azure/acs-ui-sdk';`;
+from '@azure/communication-ui';`;
 const usageCodeWithACS = `
 function CustomTypingIndicator() {
   const currentUserId = useUserId();
