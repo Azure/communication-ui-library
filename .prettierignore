@@ -1,0 +1,22 @@
+# Project files
+package.json
+package-lock.json
+dist/
+docs/
+node_modules/
+.storybook/
+
+# Rush files
+common/changes/
+common/scripts/
+common/config/
+CHANGELOG.*
+
+# Package manager files
+pnpm-lock.yaml
+yarn.lock
+package-lock.json
+shrinkwrap.json
+
+# Prettier reformats code blocks inside Markdown, which affects rendered output
+*.md
