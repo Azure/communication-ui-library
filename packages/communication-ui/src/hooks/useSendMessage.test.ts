@@ -3,18 +3,35 @@
 
 import { BaseClientMock, createBaseClientMock } from '../mocks/ChatClientMocks';
 import {
-  COOL_PERIOD_THRESHOLD,
   CREATED,
   MAXIMUM_RETRY_COUNT,
   OK,
-  PRECONDITION_FAILED_RETRY_INTERVAL,
   PRECONDITION_FAILED_STATUS_CODE,
   TOO_MANY_REQUESTS_STATUS_CODE
 } from '../constants';
-import { act, renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react-hooks';
 
 import { SendChatMessageResult } from '@azure/communication-chat';
 import { useSendMessage } from './useSendMessage';
+import { CommunicationUiError } from '../types/CommunicationUiError';
+
+/**
+ * Unfortunately could not just mock single exported variable in chatConstants in Jest so we have to mock every since
+ * constant used by useSendMessage. If you find this test breaking and you made a change to chatConstants see if this
+ * mock has values that needs to be updated. If you find this test breaking and you made a change to useSendMessage see
+ * if this mock needs to be updated with any new constants.
+ */
+jest.mock('../constants/chatConstants', () => {
+  return {
+    COOL_PERIOD_THRESHOLD: 1,
+    PRECONDITION_FAILED_RETRY_INTERVAL: 1,
+    CREATED: 201,
+    MAXIMUM_INT64: 9223372036854775807,
+    MAXIMUM_RETRY_COUNT: 3,
+    PRECONDITION_FAILED_STATUS_CODE: 412,
+    TOO_MANY_REQUESTS_STATUS_CODE: 429
+  };
+});
 
 export type ThreadClientMock = {
   getMessage: () => void;
@@ -36,8 +53,20 @@ const mockSendMessageWithCreatedResponse = (): SendMessageResponseWithStatus => 
   return { _response: { status: CREATED }, id: '1' };
 };
 
+/**
+ * Note current behavior of TOO_MANY_REQUESTS is to resend the message after a cool down period. This means in a test
+ * scenario where we alreays return TOO_MANY_REQUESTS this leads to infinite loop. So this counter is added to break
+ * the infinite loop by stop returning TOO_MANY_REQUESTS. Maybe we should look into having a MAX_RETRY similar to
+ * PRECONDITION_FAILED scenario.
+ */
+let tooManyRequestsCounter = 0;
 const mockSendMessageWithTooManyRequestsResponse = (): SendMessageResponseWithStatus => {
-  return { _response: { status: TOO_MANY_REQUESTS_STATUS_CODE } };
+  if (tooManyRequestsCounter < 1) {
+    tooManyRequestsCounter++;
+    return { _response: { status: TOO_MANY_REQUESTS_STATUS_CODE } };
+  } else {
+    return { _response: { status: CREATED }, id: '1' };
+  }
 };
 
 const mockSendMessageWithPreConditionFaileResponse = (): SendMessageResponseWithStatus => {
@@ -107,55 +136,49 @@ afterEach(() => {
   mockSetFailedMessageIds.mockClear();
 });
 
-jest.useFakeTimers();
 describe('useSendMessage tests', () => {
-  test('should be able to call useSendMessage', async (): Promise<void> => {
+  test('should be able to call useSendMessage', async () => {
     sendMessageResponseStatus = OK;
     const { result } = renderHook(() => useSendMessage());
-    await act(async () => {
-      await result.current('mockDisplayName', 'mockUserId', 'mockMessage');
-    });
+    await result.current('mockDisplayName', 'mockUserId', 'mockMessage');
     expect(threadClientMock.sendMessage).toBeCalledTimes(1);
     expect(threadClientMock.sendMessage).toBeCalledWith(expect.objectContaining({ content: 'mockMessage' }));
     expect(mockSetFailedMessageIds).toBeCalledTimes(0);
   });
-  test('should be able to retry sending message for MAXIMUM_RETRY_COUNT times after encountering PRECONDITION_FAILED_STATUS_CODE status', async (): Promise<
-    void
-  > => {
+  test('should be able to retry sending message for MAXIMUM_RETRY_COUNT times after encountering PRECONDITION_FAILED_STATUS_CODE status and after max retry throw an error', async () => {
     sendMessageResponseStatus = PRECONDITION_FAILED_STATUS_CODE;
     const { result } = renderHook(() => useSendMessage());
-    await act(async () => {
+    let caughtError;
+    try {
       await result.current('mockDisplayName', 'mockUserId', 'mockMessage');
-      for (let i = 0; i < 100; i++) {
-        jest.advanceTimersByTime(PRECONDITION_FAILED_RETRY_INTERVAL);
-        await Promise.resolve(); // allow any pending jobs in the PromiseJobs queue to run
-      }
-    });
+    } catch (error) {
+      caughtError = error;
+    }
     expect(threadClientMock.sendMessage).toBeCalledTimes(MAXIMUM_RETRY_COUNT + 1);
     expect(threadClientMock.sendMessage).toBeCalledWith(expect.objectContaining({ content: 'mockMessage' }));
+    expect(caughtError).toBeDefined();
+    expect(caughtError instanceof CommunicationUiError).toBe(true);
   });
-  test('should be able to call retry sending message after COOL_PERIOD_THRESHOLD', async (): Promise<void> => {
+  test('should be able to call retry sending message after COOL_PERIOD_THRESHOLD', async () => {
     sendMessageResponseStatus = TOO_MANY_REQUESTS_STATUS_CODE;
+    tooManyRequestsCounter = 0;
     const { result } = renderHook(() => useSendMessage());
-    const retryTimes = 5;
-    await act(async () => {
-      await result.current('mockDisplayName', 'mockUserId', 'mockMessage');
-      for (let i = 0; i < retryTimes; i++) {
-        jest.advanceTimersByTime(COOL_PERIOD_THRESHOLD);
-        await Promise.resolve(); // allow any pending jobs in the PromiseJobs queue to run
-      }
-    });
-    expect(threadClientMock.sendMessage).toBeCalledTimes(retryTimes + 1);
+    await result.current('mockDisplayName', 'mockUserId', 'mockMessage');
+    expect(threadClientMock.sendMessage).toBeCalledTimes(tooManyRequestsCounter + 1);
     expect(threadClientMock.sendMessage).toBeCalledWith(expect.objectContaining({ content: 'mockMessage' }));
   });
-  test('should add message to failed message if there was network or other error', async (): Promise<void> => {
+  test('should throw an error and update failedIds if chat client send message threw an error', async () => {
     sendMessageResponseStatus = UNIT_TEST_THROW_ERROR_FLAG;
     const { result } = renderHook(() => useSendMessage());
-    await act(async () => {
+    let caughtError;
+    try {
       await result.current('mockDisplayName', 'mockUserId', 'mockMessage');
-      await Promise.resolve(); // allow any pending jobs in the PromiseJobs queue to run
-    });
+    } catch (error) {
+      caughtError = error;
+    }
     expect(threadClientMock.sendMessage).toBeCalledTimes(1);
     expect(mockSetFailedMessageIds).toBeCalledTimes(1);
+    expect(caughtError).toBeDefined();
+    expect(caughtError instanceof CommunicationUiError).toBe(true);
   });
 });

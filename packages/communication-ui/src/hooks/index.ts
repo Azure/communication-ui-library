@@ -29,6 +29,7 @@ export { useFetchThreadMembers } from './useFetchThreadMembers';
 export { useGroupCall } from './useGroupCall';
 export { useIsMessageSeen } from './useIsMessageSeen';
 export { useMicrophone } from './useMicrophone';
+export { useOutgoingCall } from './useOutgoingCall';
 export { useRemoveThreadMember } from './useRemoveThreadMember';
 export { useSendMessage } from './useSendMessage';
 export { useSendReadReceipt } from './useSendReadReceipt';
@@ -39,3 +40,4 @@ export { useSubscribeTypingNotification } from './useSubscribeTypingNotification
 export { useTeamsCall } from './useTeamsCall';
 export { useTypingUsers } from './useTypingUsers';
 export { useUpdateThreadTopicName } from './useUpdateThreadTopicName';
+export { useIncomingCall } from './useIncomingCall';

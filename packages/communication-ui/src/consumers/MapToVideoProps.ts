@@ -1,8 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { RemoteVideoStream, ScalingMode } from '@azure/communication-calling';
+import { LocalVideoStream, RemoteVideoStream, ScalingMode } from '@azure/communication-calling';
 import { useRemoteVideoStreamRenderer, useLocalVideoStreamRenderer } from '../hooks';
-import { useCallContext } from '../providers';
 
 export interface VideoContainerProps {
   isVideoReady: boolean;
@@ -14,6 +13,7 @@ export interface RemoteVideoContainerOwnProps {
   scalingMode?: ScalingMode;
 }
 export interface LocalVideoContainerOwnProps {
+  stream: LocalVideoStream | undefined;
   scalingMode?: ScalingMode;
 }
 
@@ -29,9 +29,7 @@ export const MapToRemoteVideoProps = (ownProps: RemoteVideoContainerOwnProps): V
 };
 
 export const MapToLocalVideoProps = (ownProps: LocalVideoContainerOwnProps): VideoContainerProps => {
-  const { localVideoStream } = useCallContext();
-
-  const { isAvailable, render } = useLocalVideoStreamRenderer(localVideoStream, {
+  const { isAvailable, render } = useLocalVideoStreamRenderer(ownProps.stream, {
     scalingMode: ownProps.scalingMode ?? 'Crop'
   });
 

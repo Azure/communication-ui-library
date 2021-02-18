@@ -10,28 +10,43 @@ import { COMPONENT_FOLDER_PREFIX } from './constants';
 
 export const MediaControlsComponent: () => JSX.Element = () => {
   const [localVideoEnabled, setLocalVideoEnabled] = useState(false);
-  const toggleLocalVideo = (): void => setLocalVideoEnabled(!localVideoEnabled);
-  const startLocalVideo = (): void => {
-    !localVideoEnabled && toggleLocalVideo();
+  const toggleLocalVideo = (): Promise<void> => {
+    setLocalVideoEnabled(!localVideoEnabled);
+    return Promise.resolve();
   };
-  const stopLocalVideo = (): void => {
+  const startLocalVideo = (): Promise<void> => {
+    !localVideoEnabled && toggleLocalVideo();
+    return Promise.resolve();
+  };
+  const stopLocalVideo = (): Promise<void> => {
     localVideoEnabled && toggleLocalVideo();
+    return Promise.resolve();
   };
   const [isMicrophoneActive, setIsMicrophoneActive] = useState(false);
-  const toggleMicrophone = (): void => setIsMicrophoneActive(!isMicrophoneActive);
-  const muteMicrophone = (): void => {
-    isMicrophoneActive && toggleMicrophone();
+  const toggleMicrophone = (): Promise<void> => {
+    setIsMicrophoneActive(!isMicrophoneActive);
+    return Promise.resolve();
   };
-  const unmuteMicrophone = (): void => {
+  const muteMicrophone = (): Promise<void> => {
+    isMicrophoneActive && toggleMicrophone();
+    return Promise.resolve();
+  };
+  const unmuteMicrophone = (): Promise<void> => {
     !isMicrophoneActive && toggleMicrophone();
+    return Promise.resolve();
   };
   const [isLocalScreenShareActive, setIsLocalScreenShareActive] = useState(false);
-  const toggleScreenShare = (): void => setIsLocalScreenShareActive(!isLocalScreenShareActive);
-  const startScreenShare = (): void => {
-    !isLocalScreenShareActive && toggleScreenShare();
+  const toggleScreenShare = (): Promise<void> => {
+    setIsLocalScreenShareActive(!isLocalScreenShareActive);
+    return Promise.resolve();
   };
-  const stopScreenShare = (): void => {
+  const startScreenShare = (): Promise<void> => {
+    !isLocalScreenShareActive && toggleScreenShare();
+    return Promise.resolve();
+  };
+  const stopScreenShare = (): Promise<void> => {
     isLocalScreenShareActive && toggleScreenShare();
+    return Promise.resolve();
   };
   const onEndCallClick = (): void => {
     muteMicrophone();

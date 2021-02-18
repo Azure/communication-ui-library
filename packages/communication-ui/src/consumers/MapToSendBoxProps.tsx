@@ -17,7 +17,7 @@ export type SendBoxPropsFromContext = {
   displayName: string;
   userId: string;
   sendMessage: (displayName: string, userId: string, messageContent: string) => Promise<void>;
-  onSendTypingNotification: () => void;
+  onSendTypingNotification: () => Promise<void>;
 };
 
 const calculateCoolPeriodCountDownInSecond = (coolPeriod: Date | undefined): number => {
@@ -26,16 +26,18 @@ const calculateCoolPeriodCountDownInSecond = (coolPeriod: Date | undefined): num
   return Math.ceil((COOL_PERIOD_THRESHOLD - countDownInMs) / 1000);
 };
 
-const onSendTypingNotification = (
+const onSendTypingNotification = async (
   lastSentTypingNotificationDate: number,
-  sendTypingNotification: () => void,
+  sendTypingNotification: () => Promise<boolean>,
   setLastSentTypingNotificationDate: Dispatch<number>
-): void => {
+): Promise<void> => {
   const currentDate = new Date();
   const timeSinceLastSentTypingNotificationMs = currentDate.getTime() - lastSentTypingNotificationDate;
   if (timeSinceLastSentTypingNotificationMs >= MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS) {
-    sendTypingNotification();
-    setLastSentTypingNotificationDate(currentDate.getTime());
+    const sent = await sendTypingNotification();
+    if (sent) {
+      setLastSentTypingNotificationDate(currentDate.getTime());
+    }
   }
 };
 
@@ -79,8 +81,8 @@ export const MapToSendBoxProps = (): SendBoxPropsFromContext => {
     sendMessage: useSendMessage(),
     userId: useUserId(),
     displayName: useDisplayName(),
-    onSendTypingNotification: useCallback(() => {
-      onSendTypingNotification(
+    onSendTypingNotification: useCallback((): Promise<void> => {
+      return onSendTypingNotification(
         lastSentTypingNotificationDate,
         sendTypingNotification,
         setLastSentTypingNotificationDate

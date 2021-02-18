@@ -19,15 +19,27 @@ export const containerStyles: IStackStyles = {
   }
 };
 
+export const subContainerStyles: IStackStyles = {
+  root: {
+    overflow: 'hidden',
+    width: '100%',
+    flexDirection: 'column',
+    display: 'flex'
+  }
+};
+
 export const activeContainerClassName: IStackItemStyles = {
   root: {
     border: `solid 1px ${palette.neutralLighterAlt}`,
-    display: 'flex'
+    display: 'flex',
+    height: '100%',
+    position: 'relative'
   }
 };
 
 export const loadingStyle = mergeStyles({
   height: '100%',
+  width: '100%',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center'

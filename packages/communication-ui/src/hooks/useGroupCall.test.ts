@@ -15,8 +15,8 @@ const mockLeaveOptions = {
   forEveryone: false
 };
 
-let isJoinExecuted: jest.Mock<any, any>;
-let isHangUpExecuted: jest.Mock<any, any>;
+let joinExecutedCallback: jest.Mock<any, any>;
+let hangUpExecutedCallback: jest.Mock<any, any>;
 
 let mockCallContext: () => MockCallContextType;
 let mockCallingContext: () => MockCallingContextType;
@@ -38,12 +38,12 @@ jest.mock('../providers', () => {
 
 describe('useGroupCall tests', () => {
   beforeEach(() => {
-    isJoinExecuted = jest.fn();
-    isHangUpExecuted = jest.fn();
+    joinExecutedCallback = jest.fn();
+    hangUpExecutedCallback = jest.fn();
 
     mockCallContext = (): MockCallContextType => {
       return {
-        call: mockCall({ ...defaultMockCallProps, isJoinExecuted, isHangUpExecuted })
+        call: mockCall({ ...defaultMockCallProps, joinExecutedCallback, hangUpExecutedCallback })
       };
     };
 
@@ -51,8 +51,8 @@ describe('useGroupCall tests', () => {
       return {
         callAgent: mockCallAgent({
           ...defaultMockCallProps,
-          isJoinExecuted: isJoinExecuted,
-          isHangUpExecuted: isHangUpExecuted
+          joinExecutedCallback: joinExecutedCallback,
+          hangUpExecutedCallback: hangUpExecutedCallback
         })
       };
     };
@@ -67,8 +67,8 @@ describe('useGroupCall tests', () => {
     renderHook(() => join({ groupId: mockGroupId })).waitForNextUpdate();
 
     // Assert
-    expect(isJoinExecuted).toHaveBeenCalledTimes(1);
-    expect(isHangUpExecuted).not.toHaveBeenCalled();
+    expect(joinExecutedCallback).toHaveBeenCalledTimes(1);
+    expect(hangUpExecutedCallback).not.toHaveBeenCalled();
   });
 
   test('if use useGroupCall hook, after leaving the call, hangup function in the CallAgent should be called', async () => {
@@ -80,14 +80,14 @@ describe('useGroupCall tests', () => {
     await leave(mockLeaveOptions);
 
     // Assert
-    expect(isHangUpExecuted).toHaveBeenCalledTimes(1);
+    expect(hangUpExecutedCallback).toHaveBeenCalledTimes(1);
   });
 
   test('if join in the callAgent throws an error, join from the useGroupCall hook is expected to throw an error', async () => {
     const mockErrorMessage = 'join failed';
 
     // mock the join function in the sdk throwing an error
-    isJoinExecuted.mockImplementation(() => {
+    joinExecutedCallback.mockImplementation(() => {
       throw new Error(mockErrorMessage);
     });
 
@@ -99,12 +99,12 @@ describe('useGroupCall tests', () => {
     renderHook(() => join({ groupId: mockGroupId })).waitForNextUpdate();
 
     // Assert
-    expect(isJoinExecuted).toThrowError(mockErrorMessage);
+    expect(joinExecutedCallback).toThrowError(mockErrorMessage);
   });
 
   test('if hangup in the call throws an error, leave from the useGroupCall hook is expected to throw an error', async () => {
     // mock the hangup function in the sdk throwing an error
-    isHangUpExecuted.mockImplementation(() => {
+    hangUpExecutedCallback.mockImplementation(() => {
       throw new Error('hangUp failed');
     });
 

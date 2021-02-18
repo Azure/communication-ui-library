@@ -1,6 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
 import { useCallback } from 'react';
+import { CommunicationUiErrorCode, CommunicationUiError } from '../types/CommunicationUiError';
 import { useCallContext, useCallingContext } from '../providers';
 
 type UseMicrophoneType = {
@@ -16,8 +17,10 @@ export const useMicrophone = (): UseMicrophoneType => {
 
   const unmute = useCallback(async (): Promise<void> => {
     if (audioDevicePermission !== 'Granted') {
-      console.error('Cannot unmute microphone - microphone permission has not been granted.');
-      return;
+      throw new CommunicationUiError({
+        message: 'Cannot unmute microphone - microphone permission has not been granted.',
+        code: CommunicationUiErrorCode.UNMUTE_ERROR
+      });
     }
 
     try {
@@ -26,7 +29,11 @@ export const useMicrophone = (): UseMicrophoneType => {
       }
       setIsMicrophoneEnabled(true);
     } catch (e) {
-      console.error(e);
+      throw new CommunicationUiError({
+        message: 'Error unmuting microphone',
+        code: CommunicationUiErrorCode.UNMUTE_ERROR,
+        error: e
+      });
     }
   }, [audioDevicePermission, call, setIsMicrophoneEnabled]);
 
@@ -37,7 +44,11 @@ export const useMicrophone = (): UseMicrophoneType => {
       }
       setIsMicrophoneEnabled(false);
     } catch (e) {
-      console.error(e);
+      throw new CommunicationUiError({
+        message: 'Error muting microphone',
+        code: CommunicationUiErrorCode.MUTE_ERROR,
+        error: e
+      });
     }
   }, [call, setIsMicrophoneEnabled]);
 

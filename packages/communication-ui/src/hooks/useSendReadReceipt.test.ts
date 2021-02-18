@@ -22,6 +22,12 @@ jest.mock('../providers/ChatThreadProvider', () => {
   };
 });
 
+jest.mock('../providers/ErrorProvider', () => {
+  return {
+    useTriggerOnErrorCallback: jest.fn()
+  };
+});
+
 describe('useSendReadReceipt test', () => {
   test('should be able to call sendReadReceipt inside useSendReadReceipt', async (): Promise<void> => {
     renderHook(() => {

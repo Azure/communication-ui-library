@@ -1,6 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 import React from 'react';
-import { LocalSettings, CallConfiguration, StartCallButton } from '../../components';
+import { ErrorHandlingProps } from '../../providers/ErrorProvider';
+import { LocalSettings, CallConfiguration, StartCallButton, WithErrorHandling } from '../../components';
 import { connectFuncsToContext, MapToCallConfigurationProps, SetupContainerProps } from '../../consumers';
 
 export interface ConfigurationScreenProps extends SetupContainerProps {
@@ -9,7 +10,7 @@ export interface ConfigurationScreenProps extends SetupContainerProps {
   groupId: string;
 }
 
-export const ConfigurationComponent = (props: ConfigurationScreenProps): JSX.Element => {
+const ConfigurationComponentBase = (props: ConfigurationScreenProps): JSX.Element => {
   const { startCallHandler, joinCall, groupId } = props;
 
   return (
@@ -29,5 +30,8 @@ export const ConfigurationComponent = (props: ConfigurationScreenProps): JSX.Ele
     </CallConfiguration>
   );
 };
+
+const ConfigurationComponent = (props: ConfigurationScreenProps & ErrorHandlingProps): JSX.Element =>
+  WithErrorHandling(ConfigurationComponentBase, props);
 
 export default connectFuncsToContext(ConfigurationComponent, MapToCallConfigurationProps);

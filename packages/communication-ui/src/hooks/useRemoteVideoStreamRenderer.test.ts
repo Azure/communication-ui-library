@@ -18,6 +18,12 @@ jest.mock('@azure/communication-calling', () => {
   };
 });
 
+jest.mock('../providers/ErrorProvider', () => {
+  return {
+    useTriggerOnErrorCallback: jest.fn()
+  };
+});
+
 const getRemoteVideoStreamStub = (isAvailable: boolean): RemoteVideoStream => {
   return {
     id: 1,

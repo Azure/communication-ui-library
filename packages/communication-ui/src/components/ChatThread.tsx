@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { Button, Chat, Flex, Ref } from '@fluentui/react-northstar';
+import { Button, Chat, ChatItemProps, Flex, Ref } from '@fluentui/react-northstar';
 import {
   DownIconStyle,
   bottomRightPopupStyle,
@@ -18,10 +18,10 @@ import { LiveAnnouncer, LiveMessage } from 'react-aria-live';
 import {
   CLICK_TO_LOAD_MORE_MESSAGES,
   NEW_MESSAGES,
-  NUMBER_OF_MESSAGES_TO_LOAD,
+  DEFAULT_NUMBER_OF_MESSAGES_TO_LOAD,
   UNABLE_TO_LOAD_MORE_MESSAGES
 } from '../constants';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { MapToChatMessageProps } from '../consumers/MapToChatMessageProps';
 import { connectFuncsToContext } from '../consumers/ConnectContext';
 import Linkify from 'react-linkify';
@@ -29,6 +29,9 @@ import { compareMessages } from '../utils/chatUtils';
 import { ReadReceiptComponent, ReadReceiptProps } from './ReadReceipt';
 import { ChatMessage, MessageStatus } from '../types/ChatMessage';
 import { formatTimestampForChatMessage } from '../utils/Datetime';
+import { WithErrorHandling } from '../utils/WithErrorHandling';
+import { ErrorHandlingProps } from '../providers/ErrorProvider';
+import { propagateError } from '../utils/SDKUtils';
 
 const updateMessagesWithAttached = (
   chatMessagesWithStatus: ChatMessage[],
@@ -240,12 +243,23 @@ export type ChatThreadProps = {
   sendReadReceipt: (messageId: string) => Promise<void>;
   onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element;
   onRenderAvatar?: (userId: string) => JSX.Element;
+  messageNumberPerPage?: number;
 };
 
 //  A Chatthread will be fed many messages so it will try to map out the messages out of the props and feed them into a
 //  Chat item. We need to be smarter and figure out for the last N messages are they all of the same person or not?
-export const ChatThreadComponent = (props: ChatThreadProps): JSX.Element => {
-  const { chatMessages, userId, disableReadReceipt, sendReadReceipt, onRenderReadReceipt, onRenderAvatar } = props;
+export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingProps): JSX.Element => {
+  const {
+    chatMessages,
+    userId,
+    disableReadReceipt,
+    sendReadReceipt,
+    onRenderReadReceipt,
+    onRenderAvatar,
+    messageNumberPerPage,
+    onErrorCallback
+  } = props;
+
   const [clientHeightInitialized, setClientHeightInitialized] = useState<boolean>(false);
   const [indexOfFirstMessageInitialized, setIndexOfFirstMessageInitialized] = useState<boolean>(false);
   const [messagesWithAttached, setMessagesWithAttached] = useState<any[]>([]);
@@ -258,6 +272,8 @@ export const ChatThreadComponent = (props: ChatThreadProps): JSX.Element => {
   const [latestMessageId, setLatestMessageId] = useState<string>();
   const [latestPreviousMessage, setLatestPreviousMessage] = useState<ChatMessage | undefined>(undefined);
   const [latestCurrentMessage, setLatestCurrentMessage] = useState<ChatMessage | undefined>(undefined);
+
+  const messagesPerPage = messageNumberPerPage ?? DEFAULT_NUMBER_OF_MESSAGES_TO_LOAD;
 
   const chatScrollDivRef: any = useRef();
   const chatThreadRef: any = useRef();
@@ -302,9 +318,11 @@ export const ChatThreadComponent = (props: ChatThreadProps): JSX.Element => {
 
     const latestMessageId = getLatestMessageId(messagesWithAttachedRef.current, userId, false, true);
     if (latestMessageId !== undefined) {
-      sendReadReceipt(latestMessageId);
+      sendReadReceipt(latestMessageId).catch((error) => {
+        propagateError(error, onErrorCallback);
+      });
     }
-  }, [disableReadReceipt, sendReadReceipt, userId]);
+  }, [disableReadReceipt, onErrorCallback, sendReadReceipt, userId]);
 
   const scrollToBottom = useCallback((): void => {
     chatScrollDivRef.current.scrollTop = chatScrollDivRef.current.scrollHeight;
@@ -356,9 +374,12 @@ export const ChatThreadComponent = (props: ChatThreadProps): JSX.Element => {
       setForceUpdate(forceUpdate + 1);
       return;
     }
-    setNumberOfMessagesToRenderRef(Math.ceil(clientHeight / 34)); //34 px is the minimum height of the chat bubble
+    const messageNumOfScreen = Math.ceil(clientHeight / 34);
+    // Initial message number should be either fill the current screen or match the  number of messages per page
+    // Whichever is larger
+    setNumberOfMessagesToRenderRef(messageNumOfScreen > messagesPerPage ? messageNumOfScreen : messagesPerPage);
     setClientHeightInitialized(true);
-  }, [clientHeight, forceUpdate]);
+  }, [clientHeight, forceUpdate, messagesPerPage]);
 
   /**
    * After ClientHeight is initialized and we have some message then we can set the index of the first message. We must
@@ -419,12 +440,73 @@ export const ChatThreadComponent = (props: ChatThreadProps): JSX.Element => {
   }, [messagesWithAttached, indexOfFirstMessageInitialized]);
 
   const loadMoreMessages = (): void => {
-    setIndexOfTheFirstMessage(
-      indexOfTheFirstMessage > NUMBER_OF_MESSAGES_TO_LOAD ? indexOfTheFirstMessage - NUMBER_OF_MESSAGES_TO_LOAD : 0
-    );
+    setIndexOfTheFirstMessage(indexOfTheFirstMessage > messagesPerPage ? indexOfTheFirstMessage - messagesPerPage : 0);
   };
 
-  const todayDate = new Date();
+  // To rerender the messages if app running across days(every new day chat time stamp need to be regenerated)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const todayDate = useMemo(() => new Date(), [new Date().toDateString()]);
+  const messagesToDisplay = useMemo(
+    () =>
+      messagesWithAttached.map(
+        (message: any): ChatItemProps => {
+          const chatStyle = chatMessageStyle(message.mine);
+          const liveAuthor = `${message.senderDisplayName} says `;
+          const messageContentItem = (
+            <div>
+              <LiveMessage message={`${message.mine ? '' : liveAuthor} ${message.content}`} aria-live="polite" />
+              <Linkify>{message.content}</Linkify>
+            </div>
+          );
+          const showReadReceipt =
+            !disableReadReceipt && showReadReceiptIcon(message, latestSeenMessageId, latestMessageId);
+          return {
+            gutter: message.mine ? (
+              ''
+            ) : onRenderAvatar ? (
+              onRenderAvatar(message.senderId)
+            ) : (
+              <Persona text={message.senderDisplayName} size={PersonaSize.size32} />
+            ),
+            contentPosition: message.mine ? 'end' : 'start',
+            message: (
+              <Flex vAlign="end">
+                <Chat.Message
+                  styles={chatStyle}
+                  content={messageContentItem}
+                  author={message.senderDisplayName}
+                  mine={message.mine}
+                  timestamp={
+                    message.createdOn ? formatTimestampForChatMessage(message.createdOn, todayDate) : undefined
+                  }
+                />
+                <div className={readReceiptStyle(message.mine)}>
+                  {showReadReceipt ? (
+                    onRenderReadReceipt ? (
+                      onRenderReadReceipt({ messageStatus: message.status })
+                    ) : (
+                      ReadReceiptComponent({ messageStatus: message.status })
+                    )
+                  ) : (
+                    <div className={noReadReceiptStyle} />
+                  )}
+                </div>
+              </Flex>
+            ),
+            attached: message.attached
+          };
+        }
+      ),
+    [
+      disableReadReceipt,
+      latestMessageId,
+      latestSeenMessageId,
+      messagesWithAttached,
+      onRenderAvatar,
+      onRenderReadReceipt,
+      todayDate
+    ]
+  );
 
   return (
     <Ref innerRef={chatThreadRef}>
@@ -443,56 +525,7 @@ export const ChatThreadComponent = (props: ChatThreadProps): JSX.Element => {
         </div>
         <Ref innerRef={chatScrollDivRef}>
           <LiveAnnouncer>
-            <Chat
-              styles={chatStyle}
-              items={messagesWithAttached.map((message: any, index: number) => {
-                const liveAuthor = `${message.senderDisplayName} says `;
-                const messageContentItem = (
-                  <div>
-                    <LiveMessage message={`${message.mine ? '' : liveAuthor} ${message.content}`} aria-live="polite" />
-                    <Linkify>{message.content}</Linkify>
-                  </div>
-                );
-                const showReadReceipt =
-                  !disableReadReceipt && showReadReceiptIcon(message, latestSeenMessageId, latestMessageId);
-                return {
-                  gutter: message.mine ? (
-                    ''
-                  ) : onRenderAvatar ? (
-                    onRenderAvatar(message.senderId)
-                  ) : (
-                    <Persona text={message.senderDisplayName} size={PersonaSize.size32} />
-                  ),
-                  key: index,
-                  contentPosition: message.mine ? 'end' : 'start',
-                  message: (
-                    <Flex vAlign="end">
-                      <Chat.Message
-                        styles={chatMessageStyle(message.mine)}
-                        content={messageContentItem}
-                        author={message.senderDisplayName}
-                        mine={message.mine}
-                        timestamp={
-                          message.createdOn ? formatTimestampForChatMessage(message.createdOn, todayDate) : undefined
-                        }
-                      />
-                      <div className={readReceiptStyle(message.mine)}>
-                        {showReadReceipt ? (
-                          onRenderReadReceipt ? (
-                            onRenderReadReceipt({ messageStatus: message.status })
-                          ) : (
-                            ReadReceiptComponent({ messageStatus: message.status })
-                          )
-                        ) : (
-                          <div className={noReadReceiptStyle} />
-                        )}
-                      </div>
-                    </Flex>
-                  ),
-                  attached: message.attached
-                };
-              })}
-            />
+            <Chat styles={chatStyle} items={messagesToDisplay} />
           </LiveAnnouncer>
         </Ref>
         {existsNewMessage && (
@@ -507,5 +540,8 @@ export const ChatThreadComponent = (props: ChatThreadProps): JSX.Element => {
     </Ref>
   );
 };
+
+export const ChatThreadComponent = (props: ChatThreadProps & ErrorHandlingProps): JSX.Element =>
+  WithErrorHandling(ChatThreadComponentBase, props);
 
 export default connectFuncsToContext(ChatThreadComponent, MapToChatMessageProps);

@@ -10,8 +10,11 @@ import {
   AudioDeviceInfo,
   CallClientOptions
 } from '@azure/communication-calling';
-import { createAzureCommunicationUserCredential, getIdFromToken, useValidContext } from '../utils';
+import { createAzureCommunicationUserCredential, getIdFromToken, propagateError, useValidContext } from '../utils';
 import { AbortSignalLike } from '@azure/core-http';
+import { ErrorHandlingProps } from './ErrorProvider';
+import { WithErrorHandling } from '../utils/WithErrorHandling';
+import { CommunicationUiError, CommunicationUiErrorCode } from '../types/CommunicationUiError';
 
 export type CallingContextType = {
   userId: string;
@@ -38,13 +41,15 @@ export type CallingContextType = {
 
 export const CallingContext = createContext<CallingContextType | undefined>(undefined);
 
-export const CallingProvider = (props: {
+interface CallingProviderProps {
   children: React.ReactNode;
   token: string;
   callClientOptions?: CallClientOptions;
   refreshTokenCallback?: (abortSignal?: AbortSignalLike) => Promise<string>;
-}): JSX.Element => {
-  const { token, callClientOptions, refreshTokenCallback } = props;
+}
+
+const CallingProviderBase = (props: CallingProviderProps & ErrorHandlingProps): JSX.Element => {
+  const { token, callClientOptions, refreshTokenCallback, onErrorCallback } = props;
 
   // if there is no valid token then there is no valid userId
   const userIdFromToken = token ? getIdFromToken(token) : '';
@@ -71,17 +76,23 @@ export const CallingProvider = (props: {
     (async () => {
       try {
         setCallClient(new CallClient(callClientOptions));
-
         const callAgent = await callClient.createCallAgent(
           createAzureCommunicationUserCredential(token, refreshTokenCallbackRefContainer.current)
         );
         setCallAgent(callAgent);
+
         const deviceManager = await callClient.getDeviceManager();
         setDeviceManager(deviceManager);
-      } catch (e) {
-        throw new Error('UseSetup failed to create CallAgent or DeviceManager: ' + e);
+      } catch (error) {
+        throw new CommunicationUiError({
+          message: 'Error creating call agent',
+          code: CommunicationUiErrorCode.CREATE_CALL_AGENT_ERROR,
+          error: error
+        });
       }
-    })();
+    })().catch((error) => {
+      propagateError(error, onErrorCallback);
+    });
   }, [
     token,
     callClient,
@@ -89,17 +100,25 @@ export const CallingProvider = (props: {
     setDeviceManager,
     callClientOptions,
     setCallClient,
-    refreshTokenCallbackRefContainer
+    refreshTokenCallbackRefContainer,
+    onErrorCallback
   ]);
 
   // Clean up callAgent whenever the callAgent or userTokenCredential is changed. This is required because callAgent itself is a singleton.
   // We need to clean up before creating another one.
   useEffect(() => {
     return () => {
-      callAgent?.dispose();
+      callAgent?.dispose().catch((error) => {
+        const communicationError = new CommunicationUiError({
+          message: 'Error disposing call agent',
+          code: CommunicationUiErrorCode.DISPOSE_CALL_AGENT_ERROR,
+          error: error
+        });
+        propagateError(communicationError, onErrorCallback);
+      });
     };
     // Add CallAgent as part of the dependency list because we need the closure for callAgent
-  }, [callAgent, token]);
+  }, [callAgent, token, onErrorCallback]);
 
   const initialState: CallingContextType = {
     callClient,
@@ -126,5 +145,8 @@ export const CallingProvider = (props: {
 
   return <CallingContext.Provider value={initialState}>{props.children}</CallingContext.Provider>;
 };
+
+export const CallingProvider = (props: CallingProviderProps & ErrorHandlingProps): JSX.Element =>
+  WithErrorHandling(CallingProviderBase, props);
 
 export const useCallingContext = (): CallingContextType => useValidContext(CallingContext);

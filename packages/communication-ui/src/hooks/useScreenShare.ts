@@ -2,6 +2,7 @@
 
 import { useCallContext, useCallingContext } from '../providers';
 import { useCallback, useEffect } from 'react';
+import { CommunicationUiErrorCode, CommunicationUiError } from '../types/CommunicationUiError';
 
 type useScreenShareType = {
   startScreenShare: () => Promise<void>;
@@ -33,8 +34,12 @@ export default (): useScreenShareType => {
         await call?.startScreenSharing();
       }
       setLocalScreenShare(true);
-    } catch (e) {
-      console.error(e);
+    } catch (error) {
+      throw new CommunicationUiError({
+        message: 'Error starting screen share',
+        code: CommunicationUiErrorCode.START_SCREEN_SHARE_ERROR,
+        error: error
+      });
     }
   }, [call, setLocalScreenShare]);
 
@@ -44,8 +49,12 @@ export default (): useScreenShareType => {
         await call?.stopScreenSharing();
       }
       setLocalScreenShare(false);
-    } catch (e) {
-      console.error(e);
+    } catch (error) {
+      throw new CommunicationUiError({
+        message: 'Error stopping screen share',
+        code: CommunicationUiErrorCode.STOP_SCREEN_SHARE_ERROR,
+        error: error
+      });
     }
   }, [call, setLocalScreenShare]);
 

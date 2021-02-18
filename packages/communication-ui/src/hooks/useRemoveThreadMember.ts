@@ -1,25 +1,41 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { useChatThreadClient, useSetUpdateThreadMembersError } from '../providers/ChatThreadProvider';
-import { TOO_MANY_REQUESTS_STATUS_CODE } from '../constants';
+import { useChatThreadClient } from '../providers/ChatThreadProvider';
 import { useCallback } from 'react';
+import { CommunicationUiErrorCode, CommunicationUiError } from '../types/CommunicationUiError';
+import { getErrorFromAcsResponseCode } from '../utils/SDKUtils';
 
 export const useRemoveThreadMember = (): ((userId: string) => Promise<void>) => {
   const chatThreadClient = useChatThreadClient();
-  const setUpdateThreadMemberError = useSetUpdateThreadMembersError();
   const useRemoveThreadMemberInternal = useCallback(
     async (userId: string): Promise<void> => {
       if (chatThreadClient === undefined) {
-        throw new Error('thread client is not set up yet');
+        throw new CommunicationUiError({
+          message: 'ChatThreadClient is undefined',
+          code: CommunicationUiErrorCode.CONFIGURATION_ERROR
+        });
       }
-      const response = await chatThreadClient.removeMember({
-        communicationUserId: userId
-      });
-      if (response._response.status === TOO_MANY_REQUESTS_STATUS_CODE) {
-        setUpdateThreadMemberError(true);
+      let response;
+      try {
+        response = await chatThreadClient.removeMember({
+          communicationUserId: userId
+        });
+      } catch (error) {
+        throw new CommunicationUiError({
+          message: 'Error removing thread member',
+          code: CommunicationUiErrorCode.REMOVE_THREAD_MEMBER_ERROR,
+          error: error
+        });
+      }
+      const error = getErrorFromAcsResponseCode(
+        'Error removing thread member, status code: ',
+        response._response.status
+      );
+      if (error) {
+        throw error;
       }
     },
-    [chatThreadClient, setUpdateThreadMemberError]
+    [chatThreadClient]
   );
   return useRemoveThreadMemberInternal;
 };

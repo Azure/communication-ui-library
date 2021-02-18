@@ -8,7 +8,7 @@ import ConfigurationScreen from './ConfigurationScreen';
 import GroupCall from './GroupCall';
 import HomeScreen from './HomeScreen';
 import { v1 as createGUID } from 'uuid';
-import { CallingProvider, CallProvider } from '@azure/communication-ui';
+import { CallingProvider, CallProvider, CommunicationUiErrorInfo, ErrorProvider } from '@azure/acs-ui-sdk';
 import {
   createRandomDisplayName,
   fetchTokenResponse,
@@ -82,38 +82,44 @@ const App = (): JSX.Element => {
         }
         case 'call': {
           return (
-            <CallingProvider token={token} refreshTokenCallback={refreshTokenAsync(userId)}>
-              <CallProvider displayName={defaultDisplayName}>
-                {(() => {
-                  switch (subpage) {
-                    case 'configuration': {
-                      return (
-                        <ConfigurationScreen
-                          screenWidth={screenWidth}
-                          startCallHandler={(): void => setSubpage('groupcall')}
-                          groupId={getGroupId()}
-                        />
-                      );
+            <ErrorProvider
+              onErrorCallback={(error: CommunicationUiErrorInfo) =>
+                console.error('onErrorCallback received error:', error)
+              }
+            >
+              <CallingProvider token={token} refreshTokenCallback={refreshTokenAsync(userId)}>
+                <CallProvider displayName={defaultDisplayName}>
+                  {(() => {
+                    switch (subpage) {
+                      case 'configuration': {
+                        return (
+                          <ConfigurationScreen
+                            screenWidth={screenWidth}
+                            startCallHandler={(): void => setSubpage('groupcall')}
+                            groupId={getGroupId()}
+                          />
+                        );
+                      }
+                      case 'groupcall': {
+                        return (
+                          <GroupCall
+                            endCallHandler={(): void => {
+                              setPage('endCall');
+                              setSubpage('configuration');
+                            }}
+                            screenWidth={screenWidth}
+                            groupId={getGroupId()}
+                          />
+                        );
+                      }
+                      default: {
+                        return <>Please set a valid subpage</>;
+                      }
                     }
-                    case 'groupcall': {
-                      return (
-                        <GroupCall
-                          endCallHandler={(): void => {
-                            setPage('endCall');
-                            setSubpage('configuration');
-                          }}
-                          screenWidth={screenWidth}
-                          groupId={getGroupId()}
-                        />
-                      );
-                    }
-                    default: {
-                      return <>Please set a valid subpage</>;
-                    }
-                  }
-                })()}
-              </CallProvider>
-            </CallingProvider>
+                  })()}
+                </CallProvider>
+              </CallingProvider>
+            </ErrorProvider>
           );
         }
         case 'endCall': {

@@ -5,12 +5,18 @@ import { mediaContainer, videoHint, disabledVideoHint, mediaPersonaStyle } from 
 
 import { Label, Persona, PersonaSize, Stack } from '@fluentui/react';
 import { StreamMediaComponent } from './StreamMedia';
+import { ErrorHandlingProps } from '../providers/ErrorProvider';
+import { WithErrorHandling } from '../utils/WithErrorHandling';
 
 export interface MediaGalleryTileProps {
   /** Optional label for the media gallery tile. */
   label?: string;
+  /** Optional avatar name for the media gallery tile. */
+  avatarName?: string;
   /** Determines if the static image or video stream should be rendered. */
   isVideoReady: boolean;
+  /** Determines if the video is mirrored or not */
+  invertVideo?: boolean;
   /** Determines the actual video stream element to render. */
   videoStreamElement: HTMLElement | null;
   /** Optional property to set the aria label of the media gallery tile if there is no available stream. */
@@ -21,14 +27,16 @@ export interface MediaGalleryTileProps {
   fallbackElement?: JSX.Element;
 }
 
-export const MediaGalleryTileComponent = (props: MediaGalleryTileProps): JSX.Element => {
+const MediaGalleryTileComponentBase = (props: MediaGalleryTileProps & ErrorHandlingProps): JSX.Element => {
   const {
     label,
+    avatarName,
     onRenderStreamMedia,
     isVideoReady,
     videoStreamElement,
     fallbackElement,
-    noVideoAvailableAriaLabel
+    noVideoAvailableAriaLabel,
+    invertVideo
   } = props;
 
   return (
@@ -36,13 +44,13 @@ export const MediaGalleryTileComponent = (props: MediaGalleryTileProps): JSX.Ele
       {onRenderStreamMedia ? (
         onRenderStreamMedia(isVideoReady, videoStreamElement)
       ) : isVideoReady ? (
-        <StreamMediaComponent videoStreamElement={videoStreamElement} />
+        <StreamMediaComponent invertVideo={invertVideo} videoStreamElement={videoStreamElement} />
       ) : fallbackElement ? (
         { ...fallbackElement }
       ) : (
         <Stack className={mediaPersonaStyle}>
           <Persona
-            text={label}
+            text={avatarName}
             size={PersonaSize.size100}
             hidePersonaDetails={true}
             aria-label={noVideoAvailableAriaLabel}
@@ -53,3 +61,6 @@ export const MediaGalleryTileComponent = (props: MediaGalleryTileProps): JSX.Ele
     </Stack>
   );
 };
+
+export const MediaGalleryTileComponent = (props: MediaGalleryTileProps & ErrorHandlingProps): JSX.Element =>
+  WithErrorHandling(MediaGalleryTileComponentBase, props);

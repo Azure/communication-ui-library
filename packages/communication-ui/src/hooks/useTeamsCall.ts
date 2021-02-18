@@ -2,6 +2,7 @@
 
 import { AudioOptions, Call, HangupCallOptions, JoinCallOptions } from '@azure/communication-calling';
 import { useCallback } from 'react';
+import { CommunicationUiErrorCode, CommunicationUiError } from '../types/CommunicationUiError';
 import { useCallingContext, useCallContext } from '../providers';
 
 export type UseTeamsCallType = {
@@ -16,7 +17,10 @@ export const useTeamsCall = (): UseTeamsCallType => {
   const join = useCallback(
     (meetingLink: string, joinCallOptions?: JoinCallOptions): Call => {
       if (!callAgent) {
-        throw new Error('CallAgent is invalid');
+        throw new CommunicationUiError({
+          message: 'CallAgent is undefined',
+          code: CommunicationUiErrorCode.CONFIGURATION_ERROR
+        });
       }
 
       const audioOptions: AudioOptions = joinCallOptions?.audioOptions || { muted: !isMicrophoneEnabled };
@@ -24,7 +28,15 @@ export const useTeamsCall = (): UseTeamsCallType => {
         localVideoStreams: localVideoStream ? [localVideoStream] : undefined
       };
 
-      return callAgent.join({ meetingLink: meetingLink }, { videoOptions, audioOptions });
+      try {
+        return callAgent.join({ meetingLink: meetingLink }, { videoOptions, audioOptions });
+      } catch (error) {
+        throw new CommunicationUiError({
+          message: 'Error joining call',
+          code: CommunicationUiErrorCode.JOIN_CALL_ERROR,
+          error: error
+        });
+      }
     },
     [callAgent, isMicrophoneEnabled, localVideoStream]
   );
@@ -32,9 +44,20 @@ export const useTeamsCall = (): UseTeamsCallType => {
   const leave = useCallback(
     async (hangupCallOptions: HangupCallOptions): Promise<void> => {
       if (!call) {
-        throw new Error('Call is invalid');
+        throw new CommunicationUiError({
+          message: 'Call is invalid',
+          code: CommunicationUiErrorCode.LEAVE_CALL_ERROR
+        });
       }
-      await call.hangUp(hangupCallOptions);
+      try {
+        await call.hangUp(hangupCallOptions);
+      } catch (error) {
+        throw new CommunicationUiError({
+          message: 'Error hanging up call',
+          code: CommunicationUiErrorCode.LEAVE_CALL_ERROR,
+          error: error
+        });
+      }
     },
     [call]
   );

@@ -2,13 +2,24 @@
 
 import { Label, Spinner, Stack } from '@fluentui/react';
 import React, { useEffect } from 'react';
-import { activeContainerClassName, containerStyles, headerStyles, loadingStyle } from './styles/GroupCallScreen.styles';
+import {
+  activeContainerClassName,
+  containerStyles,
+  headerStyles,
+  loadingStyle,
+  subContainerStyles
+} from './styles/GroupCallScreen.styles';
 
-import { MediaFullScreen, MediaGallery, MediaControls } from '../../components';
-import { isInCall } from '../../utils';
-import { connectFuncsToContext, GroupCallContainerProps, MapToGroupCallProps } from '../../consumers';
+import MediaGallery from './MediaGallery';
+import { connectFuncsToContext } from '../../consumers/ConnectContext';
+import { isInCall } from '../../utils/SDKUtils';
+import { GroupCallContainerProps, MapToGroupCallProps } from './consumers/MapToGroupCallProps';
+import MediaControls from '../../components/MediaControls';
 import { headerCenteredContainer, headerContainer } from '../../components/styles/Header.styles';
 import { MINI_HEADER_WINDOW_WIDTH } from '../../constants';
+import { ErrorHandlingProps } from '../../providers/ErrorProvider';
+import { WithErrorHandling } from '../../utils/WithErrorHandling';
+import ErrorBar from '../../components/ErrorBar';
 
 export interface GroupCallProps extends GroupCallContainerProps {
   screenWidth: number;
@@ -18,16 +29,8 @@ export interface GroupCallProps extends GroupCallContainerProps {
 
 const spinnerLabel = 'Initializing call client...';
 
-const GroupCallComponent = (props: GroupCallProps): JSX.Element => {
-  const {
-    isCallInitialized,
-    callState,
-    screenShareStream,
-    isLocalScreenSharingOn,
-    groupId,
-    screenWidth,
-    endCallHandler
-  } = props;
+const GroupCallComponentBase = (props: GroupCallProps & ErrorHandlingProps): JSX.Element => {
+  const { isCallInitialized, callState, isLocalScreenSharingOn, groupId, screenWidth, endCallHandler } = props;
 
   useEffect(() => {
     if (isInCall(callState)) {
@@ -43,20 +46,15 @@ const GroupCallComponent = (props: GroupCallProps): JSX.Element => {
             <Stack className={props.screenWidth > MINI_HEADER_WINDOW_WIDTH ? headerContainer : headerCenteredContainer}>
               <MediaControls onEndCallClick={endCallHandler} compressedMode={screenWidth <= MINI_HEADER_WINDOW_WIDTH} />
             </Stack>
+            <ErrorBar />
           </Stack.Item>
-          <Stack.Item styles={containerStyles} grow>
+          <Stack.Item styles={subContainerStyles} grow>
             {!isLocalScreenSharingOn ? (
               callState === 'Connected' && (
                 <Stack styles={containerStyles} grow>
-                  {screenShareStream ? (
-                    <Stack.Item grow styles={activeContainerClassName}>
-                      <MediaFullScreen activeScreenShareStream={screenShareStream} />
-                    </Stack.Item>
-                  ) : (
-                    <Stack.Item grow styles={activeContainerClassName}>
-                      <MediaGallery />
-                    </Stack.Item>
-                  )}
+                  <Stack.Item grow styles={activeContainerClassName}>
+                    <MediaGallery />
+                  </Stack.Item>
                 </Stack>
               )
             ) : (
@@ -72,5 +70,8 @@ const GroupCallComponent = (props: GroupCallProps): JSX.Element => {
     </>
   );
 };
+
+const GroupCallComponent = (props: GroupCallProps & ErrorHandlingProps): JSX.Element =>
+  WithErrorHandling(GroupCallComponentBase, props);
 
 export default connectFuncsToContext(GroupCallComponent, MapToGroupCallProps);

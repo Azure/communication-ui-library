@@ -3,14 +3,14 @@
 import React, { useEffect, useState } from 'react';
 import { chatScreenBottomContainerStyle, chatScreenContainerStyle } from './styles/ChatScreen.styles';
 import { Stack } from '@fluentui/react';
-import { onRenderAvatar } from 'app/utils/avatarComponent';
+import { onRenderAvatar } from 'app/Avatar';
 import {
   ChatThreadPropsFromContext,
   MapToChatThreadProps,
   connectFuncsToContext,
   ErrorsPropsFromContext,
   MapToErrorsProps
-} from '@azure/communication-ui';
+} from '@azure/acs-ui-sdk';
 import ChatHeader from './ChatHeader';
 import ChatArea from './ChatArea';
 import SidePanel, { SidePanelTypes } from './SidePanel';

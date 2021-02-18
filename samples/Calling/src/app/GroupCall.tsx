@@ -8,20 +8,14 @@ import {
   headerStyles,
   loadingStyle,
   overlayStyles,
-  paneStyles
+  paneStyles,
+  subContainerStyles
 } from './styles/GroupCall.styles';
-import {
-  CommandPanel,
-  CommandPanelTypes,
-  Header,
-  MediaFullScreen,
-  MediaGallery,
-  connectFuncsToContext,
-  GroupCallContainerProps,
-  MapToGroupCallProps
-} from '@azure/communication-ui';
+import { CommandPanel, CommandPanelTypes, Header, connectFuncsToContext, ErrorBar } from '@azure/acs-ui-sdk';
 import { isInCall } from './utils/AppUtils';
 import { MINI_HEADER_WINDOW_WIDTH } from './utils/constants';
+import MediaGallery from './MediaGallery';
+import { GroupCallContainerProps, MapToGroupCallProps } from './consumers/MapToCallProps';
 
 export interface GroupCallProps extends GroupCallContainerProps {
   screenWidth: number;
@@ -33,15 +27,7 @@ const spinnerLabel = 'Initializing call client...';
 
 const GroupCallComponent = (props: GroupCallProps): JSX.Element => {
   const [selectedPane, setSelectedPane] = useState(CommandPanelTypes.None);
-  const {
-    isCallInitialized,
-    callState,
-    screenShareStream,
-    isLocalScreenSharingOn,
-    groupId,
-    screenWidth,
-    endCallHandler
-  } = props;
+  const { isCallInitialized, callState, isLocalScreenSharingOn, groupId, screenWidth, endCallHandler } = props;
 
   useEffect(() => {
     if (isInCall(callState)) {
@@ -60,20 +46,15 @@ const GroupCallComponent = (props: GroupCallProps): JSX.Element => {
               endCallHandler={endCallHandler}
               screenWidth={screenWidth}
             />
+            <ErrorBar />
           </Stack.Item>
-          <Stack styles={containerStyles} grow horizontal={true}>
+          <Stack styles={subContainerStyles} grow horizontal>
             {!isLocalScreenSharingOn ? (
               callState === 'Connected' && (
                 <>
-                  {screenShareStream ? (
-                    <Stack.Item grow styles={activeContainerClassName}>
-                      <MediaFullScreen activeScreenShareStream={screenShareStream} />
-                    </Stack.Item>
-                  ) : (
-                    <Stack.Item grow styles={activeContainerClassName}>
-                      <MediaGallery />
-                    </Stack.Item>
-                  )}
+                  <Stack.Item grow styles={activeContainerClassName}>
+                    <MediaGallery />
+                  </Stack.Item>
                   {selectedPane !== CommandPanelTypes.None &&
                     (window.innerWidth > MINI_HEADER_WINDOW_WIDTH ? (
                       <Stack.Item disableShrink styles={paneStyles}>
@@ -87,9 +68,9 @@ const GroupCallComponent = (props: GroupCallProps): JSX.Element => {
                 </>
               )
             ) : (
-              <div className={loadingStyle}>
+              <Stack horizontalAlign="center" verticalAlign="center" styles={loadingStyle}>
                 <Label>Your screen is being shared</Label>
-              </div>
+              </Stack>
             )}
           </Stack>
         </Stack>

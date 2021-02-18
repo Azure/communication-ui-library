@@ -2,3 +2,4 @@
 
 export * from './GroupChat';
 export * from './GroupCall';
+export * from './OneToOneCall';

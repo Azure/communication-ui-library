@@ -1,15 +1,16 @@
 // © Microsoft Corporation. All rights reserved.
 import { LocalVideoStream, VideoDeviceInfo } from '@azure/communication-calling';
 import { useCallback } from 'react';
+import { CommunicationUiErrorCode, CommunicationUiError } from '../types/CommunicationUiError';
 import { useCallContext } from '../providers';
 import { areStreamsEqual } from '../utils';
 
-export type UseCameraType = {
+export type useLocalVideoType = {
   startLocalVideo: (videoDeviceInfo: VideoDeviceInfo) => Promise<void>;
   stopLocalVideo: (localVideoStream: LocalVideoStream | undefined) => Promise<void>;
 };
 
-export default (): UseCameraType => {
+export default (): useLocalVideoType => {
   const {
     call,
     setLocalVideoStream,
@@ -21,7 +22,10 @@ export default (): UseCameraType => {
   const startLocalVideo = useCallback(
     async (videoDeviceInfo: VideoDeviceInfo): Promise<void> => {
       if (isLocalVideoRendererBusy) {
-        throw new Error(`Failed to start local video: local video renderer is busy`);
+        throw new CommunicationUiError({
+          message: 'Failed to start local video: local video renderer is busy',
+          code: CommunicationUiErrorCode.START_VIDEO_ERROR
+        });
       }
       const stream = new LocalVideoStream(videoDeviceInfo);
 
@@ -36,10 +40,14 @@ export default (): UseCameraType => {
         setLocalVideoRendererBusy(false);
         setLocalVideoStream(stream);
         setLocalVideoOn(true);
-      } catch (e) {
+      } catch (error) {
         // Ensure flag is released before throwing error.
         setLocalVideoRendererBusy(false);
-        throw new Error(`Failed to start local video: ${e}`);
+        throw new CommunicationUiError({
+          message: 'Failed to start local video',
+          code: CommunicationUiErrorCode.START_VIDEO_ERROR,
+          error: error
+        });
       }
     },
     [isLocalVideoRendererBusy, setLocalVideoRendererBusy, call, setLocalVideoStream, setLocalVideoOn]
@@ -48,9 +56,10 @@ export default (): UseCameraType => {
   const stopLocalVideo = useCallback(
     async (stream: LocalVideoStream | undefined): Promise<void> => {
       if (!stream || isLocalVideoRendererBusy) {
-        throw new Error(
-          `Failed to stop local video: ${stream ? 'local video renderer is busy' : 'stream is not valid'}`
-        );
+        throw new CommunicationUiError({
+          message: `Failed to stop local video: ${stream ? 'local video renderer is busy' : 'stream is not valid'}`,
+          code: CommunicationUiErrorCode.STOP_VIDEO_ERROR
+        });
       }
 
       // Set flag to busy while video is being started.
@@ -64,10 +73,14 @@ export default (): UseCameraType => {
         setLocalVideoRendererBusy(false);
         setLocalVideoStream(undefined);
         setLocalVideoOn(false);
-      } catch (e) {
+      } catch (error) {
         // Ensure flag is released before throwing error.
         setLocalVideoRendererBusy(false);
-        throw new Error(`Failed to stop local video: ${e}`);
+        throw new CommunicationUiError({
+          message: 'Failed to stop local video',
+          code: CommunicationUiErrorCode.STOP_VIDEO_ERROR,
+          error: error
+        });
       }
     },
     [isLocalVideoRendererBusy, setLocalVideoRendererBusy, call, setLocalVideoStream, setLocalVideoOn]

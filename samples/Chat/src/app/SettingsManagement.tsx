@@ -14,8 +14,8 @@ import {
   settingsTopicWarningStyle
 } from './styles/SettingsManagement.styles';
 import { inputBoxTextStyle } from './styles/SidePanel.styles';
-import { ChatTopicPropsFromContext, MapToChatTopicProps, connectFuncsToContext } from '@azure/communication-ui';
-import { ENTER_KEY, MAXIMUM_LENGTH_OF_TOPIC } from '@azure/communication-ui';
+import { ChatTopicPropsFromContext, MapToChatTopicProps, connectFuncsToContext } from '@azure/acs-ui-sdk';
+import { ENTER_KEY, MAXIMUM_LENGTH_OF_TOPIC } from '@azure/acs-ui-sdk';
 
 export type SettingsManagementProps = {
   updateThreadTopicName: (topicName: string) => Promise<boolean>;

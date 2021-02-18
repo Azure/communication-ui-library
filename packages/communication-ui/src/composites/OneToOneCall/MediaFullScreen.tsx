@@ -5,8 +5,8 @@ import { RemoteVideoStream, Renderer, RendererView } from '@azure/communication-
 import { Spinner, SpinnerSize } from '@fluentui/react';
 import { fullScreenStyle, hiddenFullScreenStyle, loadingStyle } from './styles/MediaFullScreen.styles';
 
-import { ParticipantStream } from '../types/ParticipantStream';
-import { getACSId } from '../utils';
+import { ParticipantStream } from '../../types/ParticipantStream';
+import { getACSId } from '../../utils';
 
 export interface MediaFullScreenProps {
   activeScreenShareStream: ParticipantStream;

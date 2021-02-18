@@ -3,6 +3,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import { useMicrophone } from './useMicrophone';
 import { CallAgent, PermissionState } from '@azure/communication-calling';
 import { defaultMockCallProps, mockCallAgent } from '../mocks';
+import { CommunicationUiError } from '../types/CommunicationUiError';
 
 type MockCallingContextType = {
   callAgent: CallAgent;
@@ -35,6 +36,12 @@ jest.mock('../providers', () => {
         return mockCallContext();
       }
     )
+  };
+});
+
+jest.mock('../providers/ErrorProvider', () => {
+  return {
+    useTriggerOnErrorCallback: jest.fn()
   };
 });
 
@@ -202,28 +209,29 @@ describe('useMicrophone tests', () => {
     expect(setIsMicrophoneEnabledMock).toHaveBeenCalledTimes(1);
   });
 
-  test('if microphone unmute is called without microphone permission, an error should be logged and sdk unmute call should not be made', async () => {
+  test('if microphone unmute is called without microphone permission, an error should be thrown and sdk unmute call should not be made', async () => {
     // Arrange
-    console.error = jest.fn();
     microphoneMutedInitialState = false;
     microphonePermissionInitialState = 'Denied';
     const { result } = renderHook(() => useMicrophone());
 
+    let caughtError;
     // Act
-    await result.current.unmute();
+    try {
+      await result.current.unmute();
+    } catch (error) {
+      caughtError = error;
+    }
 
     // Assert
     expect(muteExecuted).not.toHaveBeenCalledTimes(1);
     expect(setIsMicrophoneEnabledMock).not.toHaveBeenLastCalledWith(1);
-    expect(console.error).toHaveBeenCalledWith(
-      'Cannot unmute microphone - microphone permission has not been granted.'
-    );
-    expect(console.error).toHaveBeenCalledTimes(1);
+    expect(caughtError).toBeDefined();
+    expect(caughtError.message).toBe('Cannot unmute microphone - microphone permission has not been granted.');
   });
 
-  test('if call unmute throws an error, useMicrophone is expected to console error when calling unmute', async () => {
+  test('if call unmute throws an error, useMicrophone is expected wrap it in CommunicationUiError and rethrow', async () => {
     // Arrange
-    console.error = jest.fn();
     microphoneMutedInitialState = true;
     const callAgent = mockCallAgent({
       ...defaultMockCallProps,
@@ -250,15 +258,21 @@ describe('useMicrophone tests', () => {
     const { result } = renderHook(() => useMicrophone());
 
     // Act
-    await result.current.unmute();
+    let caughtError;
+    try {
+      await result.current.unmute();
+    } catch (error) {
+      caughtError = error;
+    }
 
     // Assert
-    expect(console.error).toHaveBeenCalledTimes(1);
+    expect(caughtError).toBeDefined();
+    expect(caughtError instanceof CommunicationUiError).toBe(true);
+    expect(caughtError.message).toBe('Error unmuting microphone');
   });
 
-  test('if call mute throws an error, useMicrophone is expected to console error when calling mute', async () => {
+  test('if call mute throws an error, useMicrophone is expected to wrap it in CommunicationUiError and rethrow', async () => {
     // Arrange
-    console.error = jest.fn();
     const callAgent = mockCallAgent({
       ...defaultMockCallProps,
       muteExecutedCallback: muteExecuted,
@@ -284,9 +298,16 @@ describe('useMicrophone tests', () => {
     const { result } = renderHook(() => useMicrophone());
 
     // Act
-    await result.current.mute();
+    let caughtError;
+    try {
+      await result.current.mute();
+    } catch (error) {
+      caughtError = error;
+    }
 
     // Assert
-    expect(console.error).toHaveBeenCalledTimes(1);
+    expect(caughtError).toBeDefined();
+    expect(caughtError instanceof CommunicationUiError).toBe(true);
+    expect(caughtError.message).toBe('Error muting microphone');
   });
 });

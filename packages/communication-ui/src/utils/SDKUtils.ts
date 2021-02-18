@@ -12,6 +12,24 @@ import {
   isCommunicationUser,
   isPhoneNumber
 } from '@azure/communication-common';
+import {
+  CommunicationUiErrorCode,
+  CommunicationUiError,
+  CommunicationUiErrorSeverity,
+  CommunicationUiErrorFromError,
+  CommunicationUiErrorInfo
+} from '../types/CommunicationUiError';
+import {
+  TOO_MANY_REQUESTS_STATUS_CODE,
+  UNAUTHORIZED_STATUS_CODE,
+  FORBIDDEN_STATUS_CODE,
+  SERVICE_UNAVAILABLE_STATUS_CODE,
+  INTERNAL_SERVER_ERROR_STATUS_CODE,
+  MULTI_STATUS,
+  OK,
+  NO_CONTENT,
+  CREATED
+} from '../constants/chatConstants';
 
 export const getACSId = (
   identifier: CommunicationUser | CallingApplication | UnknownIdentifier | PhoneNumber
@@ -73,15 +91,62 @@ export const getIdFromToken = (jwtToken: string): string => {
 
   const jwtTokenParts = jwtToken.split('.');
   if (jwtTokenParts.length !== 3) {
-    throw new Error('invalid jwt token');
+    throw new CommunicationUiError({
+      message: 'Invalid jwt token',
+      code: CommunicationUiErrorCode.CONFIGURATION_ERROR
+    });
   }
 
-  const base64DecodedClaims = atob(jwtTokenParts[1]);
-  const base64DecodedClaimsAsJson = JSON.parse(base64DecodedClaims);
+  let base64DecodedClaims;
+  let base64DecodedClaimsAsJson;
+  try {
+    base64DecodedClaims = atob(jwtTokenParts[1]);
+    base64DecodedClaimsAsJson = JSON.parse(base64DecodedClaims);
+  } catch (error) {
+    throw new CommunicationUiError({
+      message: 'Invalid access token',
+      code: CommunicationUiErrorCode.CONFIGURATION_ERROR,
+      error: error
+    });
+  }
 
   if (Object.prototype.hasOwnProperty.call(base64DecodedClaimsAsJson, claimName)) {
     return `8:${base64DecodedClaimsAsJson[claimName]}`;
   }
 
-  throw new Error('invalid access token');
+  throw new CommunicationUiError({
+    message: 'Invalid access token',
+    code: CommunicationUiErrorCode.CONFIGURATION_ERROR
+  });
+};
+
+// Helper function to get CommunicationUiError from ACS resource server response status code since we need to do this
+// in many places. Returns a CommunicationUiError or undefined if the statusCode is success.
+export const getErrorFromAcsResponseCode = (message: string, statusCode: number): CommunicationUiError | undefined => {
+  let errorCode: CommunicationUiErrorCode = CommunicationUiErrorCode.UNKNOWN_STATUS_CODE_ERROR;
+  let severity: CommunicationUiErrorSeverity = CommunicationUiErrorSeverity.WARNING;
+  if (statusCode === OK || statusCode === NO_CONTENT || statusCode === MULTI_STATUS || statusCode === CREATED) {
+    return undefined;
+  } else if (statusCode === UNAUTHORIZED_STATUS_CODE) {
+    severity = CommunicationUiErrorSeverity.ERROR;
+    errorCode = CommunicationUiErrorCode.UNAUTHORIZED_ERROR;
+  } else if (statusCode === FORBIDDEN_STATUS_CODE) {
+    severity = CommunicationUiErrorSeverity.ERROR;
+    errorCode = CommunicationUiErrorCode.FORBIDDEN_ERROR;
+  } else if (statusCode === TOO_MANY_REQUESTS_STATUS_CODE) {
+    errorCode = CommunicationUiErrorCode.TOO_MANY_REQUESTS_ERROR;
+  } else if (statusCode === SERVICE_UNAVAILABLE_STATUS_CODE) {
+    errorCode = CommunicationUiErrorCode.SERVICE_UNAVAILABLE_ERROR;
+  } else if (statusCode === INTERNAL_SERVER_ERROR_STATUS_CODE) {
+    errorCode = CommunicationUiErrorCode.INTERNAL_SERVER_ERROR;
+  }
+  return new CommunicationUiError({ message: message + statusCode, code: errorCode, severity: severity });
+};
+
+export const propagateError = (error: Error, onErrorCallback?: (error: CommunicationUiErrorInfo) => void): void => {
+  if (onErrorCallback) {
+    onErrorCallback(CommunicationUiErrorFromError(error));
+  } else {
+    throw error;
+  }
 };

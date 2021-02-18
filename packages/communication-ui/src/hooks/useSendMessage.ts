@@ -22,6 +22,12 @@ import { compareMessages } from '../utils/chatUtils';
 import { useFetchMessage } from './useFetchMessage';
 import { useFailedMessageIds, useSetFailedMessageIds } from '../providers/ChatThreadProvider';
 import { useCallback } from 'react';
+import { getErrorFromAcsResponseCode } from '../utils/SDKUtils';
+import {
+  CommunicationUiErrorCode,
+  CommunicationUiError,
+  CommunicationUiErrorSeverity
+} from '../types/CommunicationUiError';
 
 export interface ChatMessageWithClientMessageId extends ChatMessage {
   clientMessageId?: string;
@@ -64,10 +70,29 @@ const sendMessageWithClient = async (
     senderDisplayName: displayName
   };
   try {
-    const sendMessageResponse = await chatThreadClient.sendMessage(sendMessageRequest);
+    let sendMessageResponse;
+    try {
+      sendMessageResponse = await chatThreadClient.sendMessage(sendMessageRequest);
+    } catch (error) {
+      throw new CommunicationUiError({
+        message: 'Error sending message',
+        code: CommunicationUiErrorCode.SEND_MESSAGE_ERROR,
+        error: error
+      });
+    }
     if (sendMessageResponse._response.status === CREATED) {
       if (sendMessageResponse.id) {
-        const message: ChatMessage | undefined = await getMessage(sendMessageResponse.id);
+        let message;
+        try {
+          message = await getMessage(sendMessageResponse.id);
+        } catch (error) {
+          throw new CommunicationUiError({
+            message: 'Error getting message',
+            code: CommunicationUiErrorCode.GET_MESSAGE_ERROR,
+            severity: CommunicationUiErrorSeverity.IGNORE,
+            error: error
+          });
+        }
         if (message) {
           updateMessagesArray({ ...message, clientMessageId }, setChatMessages);
         } else {
@@ -80,52 +105,70 @@ const sendMessageWithClient = async (
     } else if (sendMessageResponse._response.status === TOO_MANY_REQUESTS_STATUS_CODE) {
       setCoolPeriod(new Date());
       // retry after cool period
-      setTimeout(() => {
-        sendMessageWithClient(
-          chatThreadClient,
-          messageContent,
-          displayName,
-          clientMessageId,
-          retryCount,
-          setChatMessages,
-          getMessage,
-          setCoolPeriod,
-          failedMessageIds,
-          setFailedMessageIds
-        );
-      }, COOL_PERIOD_THRESHOLD);
+
+      // We are awaiting the setTimeout and then also the sendMessageWithClient so it doesn't execute in separate async
+      // function and will execute inside the current async function so if sendMessageWithClient throws it can be caught
+      // in the surrounding try catch.
+      await new Promise<void>((resolve) => {
+        setTimeout(resolve, COOL_PERIOD_THRESHOLD);
+      });
+
+      await sendMessageWithClient(
+        chatThreadClient,
+        messageContent,
+        displayName,
+        clientMessageId,
+        retryCount,
+        setChatMessages,
+        getMessage,
+        setCoolPeriod,
+        failedMessageIds,
+        setFailedMessageIds
+      );
     } else if (sendMessageResponse._response.status === PRECONDITION_FAILED_STATUS_CODE) {
       if (retryCount >= MAXIMUM_RETRY_COUNT) {
-        console.error('Failed at sending message and reached max retry count');
         setFailedMessageIds((failedMessageIds) => {
           return [...failedMessageIds, clientMessageId];
         });
-        return;
+        throw new CommunicationUiError({
+          message: 'Failed at sending message and reached max retry count',
+          code: CommunicationUiErrorCode.MESSAGE_EXCEEDED_RETRY_ERROR
+        });
       }
       // retry in 0.2s
-      setTimeout(() => {
-        sendMessageWithClient(
-          chatThreadClient,
-          messageContent,
-          displayName,
-          clientMessageId,
-          retryCount + 1,
-          setChatMessages,
-          getMessage,
-          setCoolPeriod,
-          failedMessageIds,
-          setFailedMessageIds
-        );
-      }, PRECONDITION_FAILED_RETRY_INTERVAL);
+      await new Promise<void>((resolve) => {
+        setTimeout(resolve, PRECONDITION_FAILED_RETRY_INTERVAL);
+      });
+
+      await sendMessageWithClient(
+        chatThreadClient,
+        messageContent,
+        displayName,
+        clientMessageId,
+        retryCount + 1,
+        setChatMessages,
+        getMessage,
+        setCoolPeriod,
+        failedMessageIds,
+        setFailedMessageIds
+      );
     } else {
       setFailedMessageIds((failedMessageIds) => {
         return [...failedMessageIds, clientMessageId];
       });
+      const error = getErrorFromAcsResponseCode(
+        'Error sending message, status code:',
+        sendMessageResponse._response.status
+      );
+      if (error) {
+        throw error;
+      }
     }
   } catch (error) {
     setFailedMessageIds((failedMessageIds) => {
       return [...failedMessageIds, clientMessageId];
     });
+    throw error;
   }
 };
 
@@ -175,12 +218,18 @@ export const useSendMessage = (): ((displayName: string, userId: string, message
   const setCoolPeriod = useSetCoolPeriod();
 
   if (threadId === undefined) {
-    throw new Error('Thread Id not created yet');
+    throw new CommunicationUiError({
+      message: 'ThreadId is undefined',
+      code: CommunicationUiErrorCode.CONFIGURATION_ERROR
+    });
   }
 
   const chatThreadClient = useChatThreadClient();
   if (!chatThreadClient) {
-    throw new Error('chatThreadClient is undefined');
+    throw new CommunicationUiError({
+      message: 'ChatThreadClient is undefined',
+      code: CommunicationUiErrorCode.CONFIGURATION_ERROR
+    });
   }
 
   const setChatMessages: Dispatch<SetStateAction<ChatMessage[] | undefined>> = useSetChatMessages();
@@ -191,7 +240,7 @@ export const useSendMessage = (): ((displayName: string, userId: string, message
 
   const sendMessage = useCallback(
     async (displayName: string, userId: string, messageContent: string): Promise<void> => {
-      processSendMessage(
+      await processSendMessage(
         displayName,
         userId,
         chatThreadClient,

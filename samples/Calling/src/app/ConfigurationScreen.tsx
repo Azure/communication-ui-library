@@ -9,7 +9,7 @@ import {
   LocalSettings,
   CallConfiguration,
   StartCallButton
-} from '@azure/communication-ui';
+} from '@azure/acs-ui-sdk';
 import { localStorageAvailable } from './utils/constants';
 import { saveDisplayNameToLocalStorage } from './utils/AppUtils';
 

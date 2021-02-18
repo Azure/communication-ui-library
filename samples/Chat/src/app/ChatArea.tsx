@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { ChatThread, SendBox, TypingIndicator } from '@azure/communication-ui';
+import { ChatThread, ErrorBar, SendBox, TypingIndicator } from '@azure/acs-ui-sdk';
 import { Stack } from '@fluentui/react';
 import React from 'react';
 import { chatAreaContainerStyle, sendBoxParentStyle } from './styles/ChatArea.styles';
@@ -16,8 +16,11 @@ export default (props: ChatAreaProps): JSX.Element => {
   return (
     <Stack className={chatAreaContainerStyle}>
       <ChatThread onRenderAvatar={props.onRenderAvatar} />
-      <TypingIndicator />
       <Stack.Item align="center" className={sendBoxParentStyle}>
+        <div style={{ paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>
+          <TypingIndicator />
+        </div>
+        <ErrorBar />
         <SendBox />
       </Stack.Item>
     </Stack>

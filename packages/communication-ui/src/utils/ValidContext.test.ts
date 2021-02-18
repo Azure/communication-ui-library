@@ -34,6 +34,6 @@ describe('useValidContext tests', () => {
 
     // Assert
     expect(useValidContextResult.result.error).toBeTruthy();
-    expect(useValidContextResult.result.error.message).toEqual('context is undefined');
+    expect(useValidContextResult.result.error.message).toEqual('Context is undefined');
   });
 });

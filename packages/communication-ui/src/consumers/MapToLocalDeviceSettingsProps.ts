@@ -6,6 +6,9 @@ import useSubscribeToAudioDeviceList from '../hooks/useSubscribeToAudioDeviceLis
 import useSubscribeToVideoDeviceList from '../hooks/useSubscribeToVideoDeviceList';
 import { useCallingContext } from '../providers/CallingProvider';
 import { useCallContext } from '../providers';
+import { CommunicationUiErrorCode, CommunicationUiError } from '../types/CommunicationUiError';
+import { useTriggerOnErrorCallback } from '../providers/ErrorProvider';
+import { propagateError } from '../utils/SDKUtils';
 
 export type LocalDeviceSettingsContainerProps = {
   /** List of video devices from which to select */
@@ -38,6 +41,7 @@ export const MapToLocalDeviceSettingsProps = (): LocalDeviceSettingsContainerPro
   useSubscribeToDevicePermission('Microphone');
   useSubscribeToVideoDeviceList();
   useSubscribeToAudioDeviceList();
+  const onErrorCallback = useTriggerOnErrorCallback();
 
   const updateLocalVideoStream = (source: VideoDeviceInfo): void => {
     setVideoDeviceInfo(source);
@@ -46,7 +50,14 @@ export const MapToLocalDeviceSettingsProps = (): LocalDeviceSettingsContainerPro
       setLocalVideoStream(newLocalVideoStream);
       // if we have a call we want to switch the source and associate the video device info to the call's localVideoStream
       // I am assuming we only have one localVideoStream for this call
-      call?.localVideoStreams[0].switchSource(source);
+      call?.localVideoStreams[0].switchSource(source).catch((error) => {
+        const uiError = new CommunicationUiError({
+          message: 'Error switching local video source',
+          code: CommunicationUiErrorCode.SWITCH_VIDEO_SOURCE_ERROR,
+          error: error
+        });
+        propagateError(uiError, onErrorCallback);
+      });
     }
   };
 

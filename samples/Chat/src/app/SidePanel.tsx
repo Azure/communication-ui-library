@@ -2,7 +2,7 @@
 
 import React, { Dispatch } from 'react';
 import InviteFooter from './InviteFooter';
-import { ParticipantManagement } from '@azure/communication-ui';
+import { ParticipantManagement } from '@azure/acs-ui-sdk';
 import SettingsManagement from './SettingsManagement';
 import { SlideOutPanelComponent } from './SlideOutPanel';
 

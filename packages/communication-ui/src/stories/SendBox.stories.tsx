@@ -27,7 +27,10 @@ export const SendBoxStoryBookComponent = (): JSX.Element => {
         }
         userId={text("Sender's ACS UserId", 'ACS_ID PLACEHOLDER', 'required')}
         displayName={text("Sender's UserName", 'User Name', 'required')}
-        onSendTypingNotification={() => console.log(`sending typing notifications`)}
+        onSendTypingNotification={(): Promise<void> => {
+          console.log(`sending typing notifications`);
+          return Promise.resolve();
+        }}
         systemMessage={text(
           'Warning/information message for sendBox',
           'Please wait 30 seconds to send new messages',

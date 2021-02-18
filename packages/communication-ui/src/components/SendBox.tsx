@@ -15,8 +15,11 @@ import { connectFuncsToContext } from '../consumers/ConnectContext';
 import { MapToSendBoxProps, SendBoxPropsFromContext } from '../consumers/MapToSendBoxProps';
 import classNames from 'classnames';
 import { Alert } from '@fluentui/react-northstar/dist/commonjs/components/Alert/Alert';
+import { WithErrorHandling } from '../utils/WithErrorHandling';
+import { ErrorHandlingProps } from '../providers/ErrorProvider';
+import { propagateError } from '../utils/SDKUtils';
 
-type SendboxProps = {
+type SendBoxProps = {
   onRenderSystemMessage?: (systemMessage: string | undefined) => React.ReactElement;
   supportNewline?: boolean;
 } & SendBoxPropsFromContext;
@@ -24,23 +27,35 @@ type SendboxProps = {
 const defaultOnRenderSystemMessage = (systemMessage: string | undefined): JSX.Element | undefined =>
   systemMessage ? <Alert attached="bottom" content={systemMessage} /> : undefined;
 
-export const SendBoxComponent = (props: SendboxProps): JSX.Element => {
+const SendBoxComponentBase = (props: SendBoxProps & ErrorHandlingProps): JSX.Element => {
+  const {
+    disabled,
+    displayName,
+    userId,
+    systemMessage,
+    supportNewline: supportMultiline,
+    sendMessage,
+    onErrorCallback,
+    onSendTypingNotification
+  } = props;
+
   const [textValue, setTextValue] = useState('');
   const [textValueOverflow, setTextValueOverflow] = useState(false);
 
-  const { disabled, displayName, userId, supportNewline: supportMultiline } = props;
   const sendTextFieldRef = React.useRef<ITextField>(null);
 
   const onRenderSystemMessage = props.onRenderSystemMessage ?? defaultOnRenderSystemMessage;
 
-  const sendMessage = (): void => {
+  const sendMessageOnClick = (): void => {
     // don't send a message when disabled
     if (disabled || textValueOverflow) {
       return;
     }
     // we dont want to send empty messages including spaces, newlines, tabs
     if (!EMPTY_MESSAGE_REGEX.test(textValue)) {
-      props.sendMessage(displayName, userId, textValue);
+      sendMessage(displayName, userId, textValue).catch((error) => {
+        propagateError(error, onErrorCallback);
+      });
       setTextValue('');
     }
     sendTextFieldRef.current?.focus();
@@ -77,9 +92,11 @@ export const SendBoxComponent = (props: SendboxProps): JSX.Element => {
           onKeyDown={(ev) => {
             if (ev.key === 'Enter' && (ev.shiftKey === false || !supportMultiline) && !textValueOverflow) {
               ev.preventDefault();
-              sendMessage();
+              sendMessageOnClick();
             }
-            props.onSendTypingNotification();
+            onSendTypingNotification().catch((error) => {
+              propagateError(error, onErrorCallback);
+            });
           }}
           styles={TextFieldStyleProps}
         />
@@ -88,7 +105,7 @@ export const SendBoxComponent = (props: SendboxProps): JSX.Element => {
           className={classNames(sendButtonStyle, 'sendIconWrapper')}
           onClick={(e) => {
             if (!textValueOverflow) {
-              sendMessage();
+              sendMessageOnClick();
             }
             e.stopPropagation();
           }}
@@ -96,9 +113,12 @@ export const SendBoxComponent = (props: SendboxProps): JSX.Element => {
           <div className={sendIconDiv} />
         </div>
       </Stack>
-      {onRenderSystemMessage(props.systemMessage ? props.systemMessage : textTooLongMessage)}
+      {onRenderSystemMessage(systemMessage ? systemMessage : textTooLongMessage)}
     </>
   );
 };
+
+export const SendBoxComponent = (props: SendBoxProps & ErrorHandlingProps): JSX.Element =>
+  WithErrorHandling(SendBoxComponentBase, props);
 
 export default connectFuncsToContext(SendBoxComponent, MapToSendBoxProps);

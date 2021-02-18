@@ -13,7 +13,7 @@ import { ChatMessage as WebUiChatMessage } from '../types/ChatMessage';
 import { useSubscribeReadReceipt } from '../hooks/useSubscribeReadReceipt';
 import { useSubscribeMessage } from '../hooks/useSubscribeMessage';
 import { useFetchMessages } from '../hooks/useFetchMessages';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 const isLargeParticipantsGroup = (threadMembers: ChatThreadMember[]): boolean => {
   return threadMembers.length >= PARTICIPANTS_THRESHOLD;
@@ -96,13 +96,15 @@ export const MapToChatMessageProps = (): ChatMessagePropsFromContext => {
   const isMessageSeen = useIsMessageSeen();
   const userId = useUserId();
   const isLargeGroup = isLargeParticipantsGroup(threadMembers);
-  const chatMessages = convertSdkChatMessagesToWebUiChatMessages(
-    sdkChatMessages ?? [],
-    failedMessageIds,
-    isLargeGroup,
-    userId,
-    isMessageSeen
-  );
+  const chatMessages = useMemo(() => {
+    return convertSdkChatMessagesToWebUiChatMessages(
+      sdkChatMessages ?? [],
+      failedMessageIds,
+      isLargeGroup,
+      userId,
+      isMessageSeen
+    );
+  }, [failedMessageIds, isLargeGroup, isMessageSeen, sdkChatMessages, userId]);
 
   const fetchMessages = useFetchMessages();
   useEffect(() => {

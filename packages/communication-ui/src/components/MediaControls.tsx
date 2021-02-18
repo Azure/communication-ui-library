@@ -22,6 +22,9 @@ import {
 } from './styles/MediaControls.styles';
 import { connectFuncsToContext } from '../consumers/ConnectContext';
 import { MapToMediaControlsProps, MediaControlsContainerProps } from '../consumers/MapToMediaControlsProps';
+import { ErrorHandlingProps } from '../providers/ErrorProvider';
+import { WithErrorHandling } from '../utils/WithErrorHandling';
+import { propagateError } from '../utils/SDKUtils';
 
 export interface MediaControlsProps extends MediaControlsContainerProps {
   /** Determines media control button layout. */
@@ -30,7 +33,7 @@ export interface MediaControlsProps extends MediaControlsContainerProps {
   onEndCallClick(): void;
 }
 
-export const MediaControlsComponent = (props: MediaControlsProps): JSX.Element => {
+const MediaControlsComponentBase = (props: MediaControlsProps & ErrorHandlingProps): JSX.Element => {
   const {
     muteMicrophone,
     stopScreenShare,
@@ -48,13 +51,14 @@ export const MediaControlsComponent = (props: MediaControlsProps): JSX.Element =
     isLocalScreenShareSupportedInBrowser,
     toggleScreenShare,
     isLocalScreenShareActive,
-    compressedMode
+    compressedMode,
+    onErrorCallback
   } = props;
 
   const endCallClick = useCallback(async (): Promise<void> => {
-    muteMicrophone();
-    stopScreenShare();
-    localVideoEnabled && stopLocalVideo();
+    await muteMicrophone();
+    await stopScreenShare();
+    await (localVideoEnabled && stopLocalVideo());
     await leaveCall({ forEveryone: false });
     onEndCallClick();
   }, [muteMicrophone, stopScreenShare, localVideoEnabled, stopLocalVideo, leaveCall, onEndCallClick]);
@@ -71,7 +75,11 @@ export const MediaControlsComponent = (props: MediaControlsProps): JSX.Element =
           }
         }}
         disabled={cameraDisabled || localVideoBusy}
-        onClick={toggleLocalVideo}
+        onClick={() => {
+          toggleLocalVideo().catch((error) => {
+            propagateError(error, onErrorCallback);
+          });
+        }}
         className={localVideoBusy || cameraDisabled ? controlButtonDisabledStyle : controlButtonStyle}
       >
         <div className={fullWidth}>
@@ -79,7 +87,11 @@ export const MediaControlsComponent = (props: MediaControlsProps): JSX.Element =
         </div>
       </CommandButton>
       <CommandButton
-        onClick={toggleMicrophone}
+        onClick={() => {
+          toggleMicrophone().catch((error) => {
+            propagateError(error, onErrorCallback);
+          });
+        }}
         disabled={micDisabled}
         className={micDisabled ? controlButtonDisabledStyle : controlButtonStyle}
       >
@@ -88,7 +100,11 @@ export const MediaControlsComponent = (props: MediaControlsProps): JSX.Element =
       {isLocalScreenShareSupportedInBrowser() && (
         <CommandButton
           disabled={screenShareDisabled}
-          onClick={toggleScreenShare}
+          onClick={() => {
+            toggleScreenShare().catch((error) => {
+              propagateError(error, onErrorCallback);
+            });
+          }}
           className={screenShareDisabled ? controlButtonDisabledStyle : controlButtonStyle}
         >
           <div className={fullWidth}>
@@ -101,7 +117,11 @@ export const MediaControlsComponent = (props: MediaControlsProps): JSX.Element =
         </CommandButton>
       )}
       <CommandButton
-        onClick={endCallClick}
+        onClick={() => {
+          endCallClick().catch((error) => {
+            propagateError(error, onErrorCallback);
+          });
+        }}
         className={compressedMode ? controlButtonStyle : endCallButtonStyle}
         styles={leaveButtonStyle}
       >
@@ -113,5 +133,8 @@ export const MediaControlsComponent = (props: MediaControlsProps): JSX.Element =
     </Stack>
   );
 };
+
+export const MediaControlsComponent = (props: MediaControlsProps & ErrorHandlingProps): JSX.Element =>
+  WithErrorHandling(MediaControlsComponentBase, props);
 
 export default connectFuncsToContext(MediaControlsComponent, MapToMediaControlsProps);

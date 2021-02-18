@@ -23,7 +23,7 @@ jest.mock('../providers/ChatThreadProvider', () => {
 
 describe('useSendTypingNotification test', () => {
   test('should be able to call sendTypingNotification inside useSendTypingNotification', async (): Promise<void> => {
-    let sendTypingNotification: (() => Promise<void>) | undefined = undefined;
+    let sendTypingNotification: (() => Promise<boolean>) | undefined = undefined;
     renderHook(() => {
       sendTypingNotification = useSendTypingNotification();
       sendTypingNotification();

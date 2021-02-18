@@ -17,6 +17,12 @@ jest.mock('@azure/communication-calling', () => {
   };
 });
 
+jest.mock('../providers/ErrorProvider', () => {
+  return {
+    useTriggerOnErrorCallback: jest.fn()
+  };
+});
+
 let setAudioDevicePermissionCallback: jest.Mock<any, any>;
 let setVideoDevicePermissionCallback: jest.Mock<any, any>;
 const ReactUseContext = React.useContext;
@@ -70,7 +76,7 @@ describe('useSubscribeToDevicePermission tests', () => {
       renderHook(() => useSubscribeToDevicePermission('Camera'), {
         wrapper: CallingProvider
       }).result.current;
-    }).toThrowError(new Error('Calling Context does not exist'));
+    }).toThrowError(new Error('CallingContext is undefined'));
   });
 
   test('useSubscribeToDevicePermission hook should ask user for permission if permission state is unknown', async () => {

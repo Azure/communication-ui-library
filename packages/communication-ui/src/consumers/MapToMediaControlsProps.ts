@@ -9,36 +9,38 @@ import useScreenShare from '../hooks/useScreenShare';
 import useSubscribeToVideoDeviceList from '../hooks/useSubscribeToVideoDeviceList';
 import { isMobileSession } from '../utils';
 import { useGroupCall } from '../hooks';
+import { CommunicationUiErrorCode, CommunicationUiError } from '../types/CommunicationUiError';
+import { useCallback } from 'react';
 
 export type MediaControlsContainerProps = {
   /** Determines icon for mic toggle button. */
   isMicrophoneActive: boolean;
   /** Callback when microphone is unmuted. */
-  unmuteMicrophone: () => void;
+  unmuteMicrophone: () => Promise<void>;
   /** Callback when microphone is muted. */
-  muteMicrophone: () => void;
+  muteMicrophone: () => Promise<void>;
   /** Callback when microphone is toggled. */
-  toggleMicrophone: () => void;
+  toggleMicrophone: () => Promise<void>;
   /** Determines icon for video toggle button. */
   localVideoEnabled: boolean;
   /** Determines if video toggle button should be disabled. */
   localVideoBusy: boolean;
   /** Callback when video is turned on. */
-  startLocalVideo: () => void;
+  startLocalVideo: () => Promise<void>;
   /** Callback when video is turned off. */
-  stopLocalVideo: () => void;
+  stopLocalVideo: () => Promise<void>;
   /** Callback when video is toggled. */
-  toggleLocalVideo: () => void;
+  toggleLocalVideo: () => Promise<void>;
   /** Determines icon for screen share button. */
   isLocalScreenShareActive: boolean;
   /** Determines if screen share toggle button should be shown. */
   isRemoteScreenShareActive: boolean;
   /** Callback when screen share is turned on. */
-  startScreenShare: () => void;
+  startScreenShare: () => Promise<void>;
   /** Callback when screen share is turned off. */
-  stopScreenShare: () => void;
+  stopScreenShare: () => Promise<void>;
   /** Callback when screen share is toggled. */
-  toggleScreenShare: () => void;
+  toggleScreenShare: () => Promise<void>;
   /** Determines camera permission. */
   cameraPermission: DevicePermissionState;
   /** Determines mic permission. */
@@ -76,8 +78,19 @@ export const MapToMediaControlsProps = (): MediaControlsContainerProps => {
     );
   };
 
+  const startLocalVideoInternal = useCallback((): Promise<void> => {
+    if (videoDeviceInfo) {
+      return startLocalVideo(videoDeviceInfo);
+    } else {
+      throw new CommunicationUiError({
+        message: 'Cannot start local video - no video device info',
+        code: CommunicationUiErrorCode.START_VIDEO_ERROR
+      });
+    }
+  }, [startLocalVideo, videoDeviceInfo]);
+
   const toggleLocalVideo = async (): Promise<void> =>
-    await (isLocalVideoOn ? stopLocalVideo(localVideoStream) : videoDeviceInfo && startLocalVideo(videoDeviceInfo));
+    await (isLocalVideoOn ? stopLocalVideo(localVideoStream) : startLocalVideoInternal());
 
   return {
     isMicrophoneActive: isMicrophoneEnabled,
@@ -86,8 +99,8 @@ export const MapToMediaControlsProps = (): MediaControlsContainerProps => {
     toggleMicrophone: toggle,
     localVideoEnabled: isLocalVideoOn,
     localVideoBusy: isLocalVideoRendererBusy,
-    startLocalVideo: () => videoDeviceInfo && startLocalVideo(videoDeviceInfo),
-    stopLocalVideo: () => stopLocalVideo(localVideoStream),
+    startLocalVideo: startLocalVideoInternal,
+    stopLocalVideo: (): Promise<void> => stopLocalVideo(localVideoStream),
     toggleLocalVideo,
     isLocalScreenShareActive: localScreenShareActive,
     isRemoteScreenShareActive: isRemoteScreenShareActive,
@@ -97,7 +110,7 @@ export const MapToMediaControlsProps = (): MediaControlsContainerProps => {
     cameraPermission: videoDevicePermission,
     micPermission: audioDevicePermission,
     isLocalScreenShareSupportedInBrowser,
-    leaveCall: async (hangupCallOptions: HangupCallOptions) => {
+    leaveCall: async (hangupCallOptions: HangupCallOptions): Promise<void> => {
       await leave(hangupCallOptions);
     }
   };

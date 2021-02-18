@@ -1,5 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 import { useContext } from 'react';
+import { CommunicationUiErrorCode, CommunicationUiError } from '../types/CommunicationUiError';
 
 /**
  * Generic function to ensure the retreived context is valid.
@@ -8,7 +9,10 @@ import { useContext } from 'react';
 export const useValidContext = <T extends unknown>(ReactContext: React.Context<T | undefined>): T => {
   const context = useContext<T | undefined>(ReactContext);
   if (context === undefined) {
-    throw new Error('context is undefined');
+    throw new CommunicationUiError({
+      message: 'Context is undefined',
+      code: CommunicationUiErrorCode.CONFIGURATION_ERROR
+    });
   }
   return context;
 };

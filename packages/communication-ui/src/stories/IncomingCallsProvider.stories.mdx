@@ -1,0 +1,34 @@
+import { IncomingCallsProvider } from '../providers/IncomingCallsProvider';
+
+<Meta title="Providers/Calling/IncomingCallsProvider" />
+
+# IncomingCallsProvider
+
+The IncomingCallsProvider holds the context for a all the incoming ACS calls. It allows
+components to listen to incoming calls.
+
+```jsx
+<CallingProvider token="<TOKEN>">
+  <CallProvider displayName={displayName}>
+    <IncomingCallsProvider>
+      <App />
+    </IncomingCallsProvider>
+  </CallProvider>
+</CallingProvider>
+```
+
+## Importing
+
+```javascript
+import { IncomingCallsProvider } from '@azure/acs-ui-sdk';
+```
+
+## Hooks
+
+These hooks are dependant on the CallingProvider and a IncomingCallsProvider
+
+- useIncomingCall
+
+## Caveats
+
+- Must be a used as a descendant of CallingProvider and CallProvider

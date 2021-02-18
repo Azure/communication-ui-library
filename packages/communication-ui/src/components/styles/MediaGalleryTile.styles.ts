@@ -31,10 +31,15 @@ export const disabledVideoHint = mergeStyles(videoHint, {
 export const mediaContainer = mergeStyles({
   position: 'relative',
   height: '100%',
+  width: '100%',
   background: 'transparent',
   display: 'flex'
 });
 
 export const mediaPersonaStyle = mergeStyles({
   margin: 'auto'
+});
+
+export const invertedVideoStyle = mergeStyles(mediaContainer, {
+  transform: 'rotateY(180deg)'
 });

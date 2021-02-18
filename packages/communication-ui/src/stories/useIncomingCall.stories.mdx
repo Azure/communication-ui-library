@@ -1,0 +1,47 @@
+import { useIncomingCall } from '../hooks';
+
+<Meta title="Hooks/Calling/useIncomingCall" />
+
+# useIncomingCall
+
+The `useIncomingCall` hook allows components to leverage the underlying ACS SDK
+to `accept` or `reject` an incoming call.
+
+## Importing
+
+```javascript
+import { useIncomingCall } from '@azure/acs-ui-sdk';
+```
+
+## Dependencies
+
+- CallingProvider
+- CallProvider
+- IncomingCallsProvider
+
+## Usage
+
+```jsx
+import React from 'react';
+import { CallingProvider, useIncomingCall } from '@azure/acs-ui-sdk';
+
+const Example = () => (
+  <CallingProvider token="<TOKEN>">
+    <CallProvider displayName={displayName}>
+      <IncomingCallsProvider>
+        <App />
+      </IncomingCallsProvider>
+    </CallProvider>
+  </CallingProvider>
+);
+
+const App = () => {
+  const { incomingCalls } = useIncomingCallsContext();
+  const { accept, reject } = useIncomingCall();
+  if (incomingCalls && incomingCalls.length > 0) {
+    accept(incomingCalls[0]);
+    // OR
+    reject(incomingCalls[0]);
+  }
+};
+```

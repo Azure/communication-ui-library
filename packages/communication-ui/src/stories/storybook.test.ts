@@ -2,6 +2,17 @@
 
 import { Stylesheet } from '@fluentui/react';
 import initStoryshots from '@storybook/addon-storyshots';
+import ReactDom from 'react-dom';
+
+jest.mock('@azure/communication-calling', () => {
+  return {
+    CallClient: jest.fn().mockImplementation(() => {
+      return {};
+    })
+  };
+});
+
+ReactDom.createPortal = (node: any) => node;
 
 // Reset the stylesheet classname generator for the snapshot tests.
 // Classnames are of the format css-#, where # is an integer that is
