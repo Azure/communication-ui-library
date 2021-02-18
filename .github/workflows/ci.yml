@@ -44,3 +44,9 @@ jobs:
         run: rush test
         env:
           CI: true
+
+      # Deploy Storybook
+      - name: Deploy Storybook
+        run: npm run deploy-storybook -- --ci
+        working-directory: ./packages/communication-ui
+
