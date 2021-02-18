@@ -3,12 +3,12 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
     paths-ignore:
       # Don't run if only basic markdown files have changed.
-      - '**.md'
+      - "**.md"
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -26,13 +26,17 @@ jobs:
       - name: Use Node.js v12.x
         uses: actions/setup-node@v1
         with:
-          node-version: '12.x'
+          node-version: "12.x"
 
       # Install dependencies
       - name: Install rush
         run: npm install -g @microsoft/rush
       - name: Install dependencies
         run: rush install
+
+      # Perform lint check
+      - name: Run linter
+        run: rush lint
 
       # Builds
       - name: Build Packages and Samples
@@ -55,4 +59,3 @@ jobs:
         working-directory: ./packages/communication-ui
         env:
           GH_TOKEN: ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
-
