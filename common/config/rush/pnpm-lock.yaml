@@ -10,7 +10,7 @@ dependencies:
   '@fluentui/react-theme-provider': 0.18.4_a85364de7422667fc63c94d350e88226
   '@mdx-js/react': 1.6.22
   '@rush-temp/acs-calling-sample': file:projects/acs-calling-sample.tgz_1a495b6c725bd40f034dfca0486a03b3
-  '@rush-temp/acs-chat-sample': file:projects/acs-chat-sample.tgz_d4fad8b5e8e7f64e75877fb0364ad4ee
+  '@rush-temp/acs-chat-sample': file:projects/acs-chat-sample.tgz_760cd8baeb4cbab808be72611b1d6041
   '@rush-temp/acs-server-sample': file:projects/acs-server-sample.tgz
   '@rush-temp/communication-ui': file:projects/communication-ui.tgz_webpack-cli@4.5.0
   '@storybook/addon-actions': 6.1.18_@types+react@16.14.4
@@ -20,6 +20,7 @@ dependencies:
   '@storybook/addon-storyshots': 6.1.18_a41b7a4d293c3890b7495f16b634435d
   '@storybook/node-logger': 6.1.18
   '@storybook/react': 6.1.18_e1dedac27389deb08fce08061f4ddd51
+  '@storybook/storybook-deployer': 2.8.7
   '@testing-library/jest-dom': 5.11.9
   '@testing-library/react-hooks': 3.7.0
   '@types/classnames': 2.2.11
@@ -4862,6 +4863,17 @@ packages:
       react-dom: ^16.8.0 || ^17.0.0
     resolution:
       integrity: sha512-Fca8gGqQ5rosXLZpBdqpwItbl7iQ4QZZ5MqJkt7FyEqVX7n4O8WjIiAqNbeCGJnc1keohoGIPWOMt1gXvwZQkA==
+  /@storybook/storybook-deployer/2.8.7:
+    dependencies:
+      git-url-parse: 11.4.4
+      glob: 7.1.6
+      parse-repo: 1.0.4
+      shelljs: 0.8.4
+      yargs: 15.4.1
+    dev: false
+    hasBin: true
+    resolution:
+      integrity: sha512-O0hKHV6hg93fPMvKGC5M/sd7KTL473+SzMKm+WZNVEyLEfXXcVU+Ts9/VL1IhmC1P2A8Bg9oBnkcPqAqjAN46w==
   /@storybook/theming/6.1.18:
     dependencies:
       '@emotion/core': 10.1.1
@@ -11340,6 +11352,12 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ==
+  /filter-obj/1.1.0:
+    dev: false
+    engines:
+      node: '>=0.10.0'
+    resolution:
+      integrity: sha1-mzERErxsYSehbgFsbF1/GeCAXFs=
   /finalhandler/1.1.1:
     dependencies:
       debug: 2.6.9
@@ -11843,6 +11861,19 @@ packages:
     dev: false
     resolution:
       integrity: sha1-Xv+OPmhNVprkyysSgmBOi6YhSfo=
+  /git-up/4.0.2:
+    dependencies:
+      is-ssh: 1.3.2
+      parse-url: 5.0.2
+    dev: false
+    resolution:
+      integrity: sha512-kbuvus1dWQB2sSW4cbfTeGpCMd8ge9jx9RKnhXhuJ7tnvT+NIrTVfYZxjtflZddQYcmdOTlkAcjmx7bor+15AQ==
+  /git-url-parse/11.4.4:
+    dependencies:
+      git-up: 4.0.2
+    dev: false
+    resolution:
+      integrity: sha512-Y4o9o7vQngQDIU9IjyCmRJBin5iYjI5u9ZITnddRZpD7dcCFQj2sL2XuMNbLRE4b4B/4ENPsp2Q8P44fjAZ0Pw==
   /github-slugger/1.3.0:
     dependencies:
       emoji-regex: 6.1.1
@@ -13166,6 +13197,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-+2cnTEZeY5z/iXGbLhPrOAaK/Mau5k5eXq9j14CpRTftq0pAJu2MwVRSZhyZWBzx3o6X795Lz6Bpb6R0GKf37g==
+  /is-ssh/1.3.2:
+    dependencies:
+      protocols: 1.4.8
+    dev: false
+    resolution:
+      integrity: sha512-elEw0/0c2UscLrNG+OAorbP539E3rhliKPg+hDMWN9VwrDXfYK+4PBEykDPfxlYYtQvl84TascnQyobfQLHEhQ==
   /is-stream/1.1.0:
     dev: false
     engines:
@@ -16242,6 +16279,28 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-ayCKvm/phCGxOkYRSCM82iDwct8/EonSEgCSxWxD7ve6jHggsFl4fZVQBPRNgQoKiuV/odhFrGzQXZwbifC8Rg==
+  /parse-path/4.0.3:
+    dependencies:
+      is-ssh: 1.3.2
+      protocols: 1.4.8
+      qs: 6.9.6
+      query-string: 6.14.0
+    dev: false
+    resolution:
+      integrity: sha512-9Cepbp2asKnWTJ9x2kpw6Fe8y9JDbqwahGCTvklzd/cEq5C5JC59x2Xb0Kx+x0QZ8bvNquGO8/BWP0cwBHzSAA==
+  /parse-repo/1.0.4:
+    dev: false
+    resolution:
+      integrity: sha1-dLkdLLhnXRG5mXagBl9s4X+hvMg=
+  /parse-url/5.0.2:
+    dependencies:
+      is-ssh: 1.3.2
+      normalize-url: 3.3.0
+      parse-path: 4.0.3
+      protocols: 1.4.8
+    dev: false
+    resolution:
+      integrity: sha512-Czj+GIit4cdWtxo3ISZCvLiUjErSo0iI3wJ+q9Oi3QuMYTI6OZu+7cewMWZ+C1YAnKhYTk6/TLuhIgCypLthPA==
   /parse5/4.0.0:
     dev: false
     resolution:
@@ -17507,6 +17566,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-YUHSPk+A30YPv+0Qf8i9Mbfe/C0hdPXk1s1jPVToV8pk8BQtpw10ct89Eo7OWkutrwqvT0eicAxlOg3dOAu8JA==
+  /protocols/1.4.8:
+    dev: false
+    resolution:
+      integrity: sha512-IgjKyaUSjsROSO8/D49Ab7hP8mJgTYcqApOqdPhLoPxAplXmkp+zRvsrSQjFn5by0rhm4VH0GAUELIPpx7B1yg==
   /proxy-addr/2.0.6:
     dependencies:
       forwarded: 0.1.2
@@ -17605,6 +17668,17 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-u7aTucqRXCMlFbIosaArYJBD2+s=
+  /query-string/6.14.0:
+    dependencies:
+      decode-uri-component: 0.2.0
+      filter-obj: 1.1.0
+      split-on-first: 1.1.0
+      strict-uri-encode: 2.0.0
+    dev: false
+    engines:
+      node: '>=6'
+    resolution:
+      integrity: sha512-In3o+lUxlgejoVJgwEdYtdxrmlL0cQWJXj0+kkI7RWVo7hg5AhFtybeKlC9Dpgbr8eOC4ydpEh8017WwyfzqVQ==
   /querystring-es3/0.2.1:
     dev: false
     engines:
@@ -19803,6 +19877,12 @@ packages:
       supports-color: '*'
     resolution:
       integrity: sha512-r46gZQZQV+Kl9oItvl1JZZqJKGr+oEkB08A6BzkiR7593/7IbtuncXHd2YoYeTsG4157ZssMu9KYvUHLcjcDoA==
+  /split-on-first/1.1.0:
+    dev: false
+    engines:
+      node: '>=6'
+    resolution:
+      integrity: sha512-43ZssAJaMusuKWL8sKUBQXHWOpq8d6CfN/u1p4gUzfJkM05C8rxTmYrkIPTXapZpORA6LkkzcUulJ8FqA7Uudw==
   /split-string/3.1.0:
     dependencies:
       extend-shallow: 3.0.2
@@ -19948,6 +20028,12 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-J5siXfHVgrH1TmWt3UNS4Y+qBxM=
+  /strict-uri-encode/2.0.0:
+    dev: false
+    engines:
+      node: '>=4'
+    resolution:
+      integrity: sha1-ucczDHBChi9rFC3CdLvMWGbONUY=
   /string-length/2.0.0:
     dependencies:
       astral-regex: 1.0.0
@@ -22552,15 +22638,16 @@ packages:
       webpack: '*'
       webpack-cli: '*'
     resolution:
-      integrity: sha512-QNWyTSOMhahmMxSGgWTqawYX6BcAWGx+oj47N+gLnq0n5wUllk50tdKl0XViz4AAEaAmurwsJPnTIGX+0boupw==
+      integrity: sha512-K+rZW0GcgIvrO7sE9K4k9y8ER19tf7qbIMEtYlVL68JIaqZ3nwuolqWlPWd8wAZAXUY42zkjNUb26vLaDDYodg==
       tarball: file:projects/acs-calling-sample.tgz
     version: 0.0.0
-  file:projects/acs-chat-sample.tgz_d4fad8b5e8e7f64e75877fb0364ad4ee:
+  file:projects/acs-chat-sample.tgz_760cd8baeb4cbab808be72611b1d6041:
     dependencies:
       '@azure/communication-administration': 1.0.0-beta.4
       '@azure/communication-chat': 1.0.0-beta.3
       '@azure/communication-common': 1.0.0-beta.4
       '@azure/communication-signaling': 1.0.0-beta.1
+      '@azure/core-http': 1.2.3
       '@fluentui/react': 7.160.2_7780220a916877297c987d702313b31d
       '@fluentui/react-icons-northstar': 0.51.7_7780220a916877297c987d702313b31d
       '@fluentui/react-northstar': 0.51.7_7780220a916877297c987d702313b31d
@@ -22572,6 +22659,7 @@ packages:
       '@types/jest': 26.0.20
       '@types/json-stringify-safe': 5.0.0
       '@types/preval.macro': 3.0.0
+      '@types/react': 16.14.4
       '@types/react-aria-live': 2.0.0
       '@types/react-dom': 16.9.11
       '@types/react-linkify': 1.0.0
@@ -22605,7 +22693,6 @@ packages:
     id: file:projects/acs-chat-sample.tgz
     name: '@rush-temp/acs-chat-sample'
     peerDependencies:
-      '@types/react': '*'
       '@typescript-eslint/eslint-plugin': '*'
       '@typescript-eslint/parser': '*'
       eslint-plugin-flowtype: '*'
@@ -22613,7 +22700,7 @@ packages:
       eslint-plugin-jsx-a11y: '*'
       webpack-cli: '*'
     resolution:
-      integrity: sha512-68F8Qesg662n2trYJj5NI4uwxD+9dP7AAF/iipBlNMCdztCxac/rxv+AUmT4MreZM2QKjs76wF4B6gG0Mnm3Ag==
+      integrity: sha512-CS8+M2whuHFrtwM5NscaTZHXozNhbNzTLOHR5YdoG8cTmxTIMygyghtcUmlseLw1J8nJtXi6uxp+H3gnIh0WuQ==
       tarball: file:projects/acs-chat-sample.tgz
     version: 0.0.0
   file:projects/acs-server-sample.tgz:
@@ -22626,6 +22713,7 @@ packages:
       '@types/cors': 2.8.10
       '@types/express': 4.17.11
       '@types/http-errors': 1.8.0
+      '@types/jest': 26.0.20
       '@types/morgan': 1.9.2
       '@types/node': 14.14.28
       '@types/supertest': 2.0.10
@@ -22662,7 +22750,7 @@ packages:
     dev: false
     name: '@rush-temp/acs-server-sample'
     resolution:
-      integrity: sha512-tqGsTZMuKSPs2DJjWCzlbiqXjm68XcojjoCZrEJupJlRQ9roVT4LMNad7o18Qc5h+AOe60kw8ZgL+UpjoJs6XQ==
+      integrity: sha512-Ot5w65Mq675B9gvgyxunD5onaCZh/0P61qN3VKibrTkMxvxznfMCndiKf30CwiVZutrQnCeMI+Q7E2lTHxOhcw==
       tarball: file:projects/acs-server-sample.tgz
     version: 0.0.0
   file:projects/communication-ui.tgz_webpack-cli@4.5.0:
@@ -22689,6 +22777,7 @@ packages:
       '@storybook/addon-storyshots': 6.1.18_5d3722ce815194449f35d4fdf2e6cc9b
       '@storybook/node-logger': 6.1.18
       '@storybook/react': 6.1.18_6782804588680bfc4ec5dd0c4f1f5402
+      '@storybook/storybook-deployer': 2.8.7
       '@storybook/theming': 6.1.18_react-dom@16.14.0+react@16.14.0
       '@testing-library/jest-dom': 5.11.9
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
@@ -22744,7 +22833,7 @@ packages:
     peerDependencies:
       webpack-cli: '*'
     resolution:
-      integrity: sha512-AXzPuZL/NKFwI/NCjG+4o3UOTb1AIp5iBR142hr1A2yBkG7UpXztIShY0/6zPBa/Gi4XcNoW1QhM/NKNaPU4gw==
+      integrity: sha512-chHAnhxumoIJG0M9TFrbCwUbdQHMfvKr9IVVBowE3pSXCdOxYPC3xNvk/s5icSycdrzcOrKXUM4+e06q9ylUbQ==
       tarball: file:projects/communication-ui.tgz
     version: 0.0.0
 registry: ''
@@ -22770,6 +22859,7 @@ specifiers:
   '@storybook/addon-storyshots': ^6.1.6
   '@storybook/node-logger': ^6.1.1
   '@storybook/react': ^6.1.1
+  '@storybook/storybook-deployer': ~2.8.7
   '@testing-library/jest-dom': ^5.11.4
   '@testing-library/react-hooks': ^3.4.2
   '@types/classnames': ^2.2.11
@@ -22822,7 +22912,7 @@ specifiers:
   morgan: ~1.9.1
   nan: ^2.14.1
   node-forge: 0.10.0
-  office-ui-fabric-react: ~7.160.2
+  office-ui-fabric-react: ^7.160.2
   pretty-quick: ^3.1.0
   preval.macro: ^5.0.0
   react-aria-live: ^2.0.5
