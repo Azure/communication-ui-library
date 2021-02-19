@@ -1,0 +1,35 @@
+# Framework Design Principles
+
+## Useful
+
+The raison d’etre of the UI framework is to provide robust, generic solutions to common UI problems in order to ease the integration of communication functionality into 3rd party applications. A good example for such a common problem is laying out video call participants with non-uniform dimensions in a grid.
+
+## Flexible
+
+Each component should be individually useful and composable, to enable developers to only take what they need and extend and customize as necessary. Components are easily composable and can be used in any visual layout that framework users can come up with. This includes that the UI framework is not tied to Azure Communication Services in any way and it can be used for any communication app. Developers can choose to use the UI framework with a communication solution of their choice, like raw WebRtc or another non-Microsoft Chat or Calling library.
+
+## Unbiased
+
+The UI framework is great for building new application from ground up but it is also great to fit into **any existing architecture**. To achieve this we embrace state-of-the-art best practices:
+
+* declarative and pure rendering
+* unidirectional data flow
+* strong typing
+* immutability
+
+## Customizable
+
+Every app developer or company has their own visual style. The framework components allow rich customizations. Customization spans choosing own icons and color theming over to how to compose components to achieve a desired layout.
+
+## Controllable
+
+While customizability regards the visual aspects, controllability is the equivalent for functional aspects. The UI framework fully enables developers to implement their own business logic. The developer has full control to define behavior. Richer composites may provide default behavior but the developer can always override that behavior, intercept and drop or reroute flows, or decide to use the more granular layers for full control.
+
+
+## Debuggable
+
+The UI framework is deterministic and thanks to controllability provides many hooks for the developer to analyze its behavior. The framework is easy to reason about thanks to its declarative and unidirectional nature. A change during execution time can be easily observed and debugged or logged by the developer.
+
+## Accessible
+
+The framework passes accessibility tests and follows best practices so that applications built with it are accessible for users of all abilities. Equally, the framework supports internationalization and localization to serve the entire planet and not just a dominant subset.
