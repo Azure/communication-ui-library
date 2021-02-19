@@ -1,8 +1,9 @@
 {
-    "eslint.workingDirectories": [
-        "packages/communication-ui",
-        "samples/Calling",
-        "samples/Chat",
-        "samples/OneToOne",
-    ]
+  "eslint.workingDirectories": [
+    "./packages/communication-ui",
+    "./samples/Calling",
+    "./samples/Chat",
+    "./samples/OneToOne",
+    "./samples/Server"
+  ]
 }
