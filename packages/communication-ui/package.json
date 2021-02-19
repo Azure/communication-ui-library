@@ -119,7 +119,7 @@
     "typescript": "^4.0.5",
     "uuid": "^8.1.0",
     "webpack": "4.44.2",
-    "@typescript-eslint/parser": "~4.15.1",
-    "@typescript-eslint/eslint-plugin": "~4.15.1"
+    "@typescript-eslint/parser": "^4.12.0",
+    "@typescript-eslint/eslint-plugin": "^4.12.0"
   }
 }
