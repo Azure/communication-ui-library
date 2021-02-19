@@ -48,8 +48,8 @@
     "@azure/core-http": "^1.2.3",
     "@fluentui/react": "^7.117.1",
     "@fluentui/react-icons": "^0.3.9",
-    "@fluentui/react-icons-northstar": "^0.51.0",
-    "@fluentui/react-northstar": "^0.51.0",
+    "@fluentui/react-icons-northstar": "^0.51.2",
+    "@fluentui/react-northstar": "^0.51.2",
     "@fluentui/react-theme-provider": "^0.18.0",
     "classnames": "^2.2.6",
     "react-aria-live": "^2.0.5",
@@ -58,8 +58,8 @@
     "copy-to-clipboard": "~3.3.1"
   },
   "peerDependencies": {
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.7",
@@ -86,9 +86,11 @@
     "@types/react-dom": "^16.9.8",
     "@types/react-linkify": "^1.0.0",
     "@types/uuid": "^8.3.0",
+    "@typescript-eslint/eslint-plugin": "^4.12.0",
+    "@typescript-eslint/parser": "^4.12.0",
     "ajv": "^6.9.1",
-    "babel-jest": "^24.9.0",
-    "babel-loader": "^8.0.0",
+    "babel-jest": "^26.6.0",
+    "babel-loader": "8.1.0",
     "core-js": "^3.8.3",
     "concurrently": "^5.3.0",
     "copyfiles": "^2.4.1",
@@ -101,7 +103,7 @@
     "eslint-plugin-react": "^7.18.3",
     "eslint-plugin-react-hooks": "^4.1.2",
     "husky": "^4.3.0",
-    "jest": "^26.6.3",
+    "jest": "26.6.0",
     "jest-fetch-mock": "^3.0.3",
     "jest-junit": "^12.0.0",
     "json-stringify-safe": "^5.0.1",
@@ -109,16 +111,15 @@
     "node-forge": "0.10.0",
     "prettier": "2.0.5",
     "pretty-quick": "^3.1.0",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0",
-    "react-scripts": "^3.4.3",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "react-test-renderer": "^16.14.0",
     "regenerator-runtime": "^0.13.7",
     "source-map-explorer": "^2.5.0",
     "ts-jest": "^26.4.4",
     "ts-node": "^9.1.1",
-    "typescript": "^3.9.2",
+    "typescript": "^4.0.5",
     "uuid": "^8.1.0",
-    "webpack": "4.42.0"
+    "webpack": "4.44.2"
   }
 }

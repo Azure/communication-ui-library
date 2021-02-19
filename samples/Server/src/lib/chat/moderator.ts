@@ -1,5 +1,5 @@
 import { createUserToken } from '../createUserToken';
-import { AzureCommunicationTokenCredential } from '@azure/communication-common';
+import { AzureCommunicationUserCredential } from '@azure/communication-common';
 import { ChatClient, CreateChatThreadRequest, ChatThreadClient } from '@azure/communication-chat';
 import { getEnvUrl } from '../envHelper';
 import { GUID_FOR_INITIAL_TOPIC_NAME } from '../constants';
@@ -19,12 +19,12 @@ export const moderatorConfig: ModeratorConfig = {
 
 export const initModerator = async (): Promise<void> => {
   moderatorConfig.token = await createUserToken();
-  const credential = new AzureCommunicationTokenCredential(moderatorConfig.token.token);
+  const credential = new AzureCommunicationUserCredential(moderatorConfig.token.token);
   moderatorConfig.chatClient = new ChatClient(getEnvUrl(), credential);
 };
 
 export const getChatClientFromUserToken = async (token: CommunicationUserToken): Promise<ChatClient> => {
-  const credential = new AzureCommunicationTokenCredential(token.token);
+  const credential = new AzureCommunicationUserCredential(token.token);
   const chatClient = new ChatClient(getEnvUrl(), credential);
   return chatClient;
 };
