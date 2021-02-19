@@ -17,7 +17,7 @@ export const aspectRatioBoxStyle = mergeStyles(videoBaseStyle, {
   width: '100%',
   height: 0,
   position: 'relative',
-  paddingTop: '56.25%' /* defualt to 16:9 Aspect Ratio for now*/
+  paddingTop: '56.25%' /* default to 16:9 Aspect Ratio for now*/
 });
 
 export const aspectRatioBoxContentStyle = mergeStyles({
