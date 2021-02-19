@@ -1,17 +1,49 @@
 // © Microsoft Corporation. All rights reserved.
 
 module.exports = {
-  extends: ["../../.eslintrc.js"],
+  env: {
+    browser: true,
+    node: true,
+    es6: true
+  },
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended'],
+  parser: '@typescript-eslint/parser',
+  plugins: ['@typescript-eslint', 'header'],
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true
+    },
+    ecmaVersion: 2020,
+    sourceType: 'module'
+  },
   rules: {
+    '@typescript-eslint/explicit-function-return-type': [
+      'warn',
+      {
+        allowExpressions: true,
+        allowTypedFunctionExpressions: true
+      }
+    ],
+    '@typescript-eslint/no-explicit-any': 'off',
+    eqeqeq: 'warn',
+    'header/header': ['error', 'line', ' © Microsoft Corporation. All rights reserved.'],
+    'react/display-name': 'off',
+
     // Allow unused vars for routing funtions
     '@typescript-eslint/no-unused-vars': ['off']
   },
   overrides: [
     {
-      "files": ["envHelper.ts"],
-      "rules": {
+      files: ['**/*.test.ts', '**/*.test.tsx', '**/*.spec.ts', '**/*.spec.tsx', '**/mocks/*'],
+      env: {
+        jest: true
+      }
+    },
+    {
+      files: ['envHelper.ts'],
+      rules: {
         // Allow requiring the appsettings.json
-        "@typescript-eslint/no-var-requires": "off"
+        '@typescript-eslint/no-var-requires': 'off'
       }
     }
   ]
