@@ -10,7 +10,6 @@ import { ThemeProvider } from '@fluentui/react-theme-provider';
 import { darkTheme, lightTheme } from './themes';
 import { initializeIcons, loadTheme } from '@fluentui/react';
 
-loadTheme({});
 initializeIcons();
 
 const iconTheme = {
@@ -31,7 +30,9 @@ const centerStoryStyle = {
 };
 
 const getAdditionalStyles = (context: any): any => {
-  const additionalStyles: any = {};
+  const additionalStyles: any = {
+    background: 'none'
+  };
   if (context.parameters !== undefined) {
     additionalStyles.display = 'flex';
     if (context.parameters.useMaxHeightParent) {
