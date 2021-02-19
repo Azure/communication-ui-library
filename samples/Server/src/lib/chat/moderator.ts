@@ -1,3 +1,5 @@
+// © Microsoft Corporation. All rights reserved.
+
 import { createUserToken } from '../createUserToken';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { ChatClient, CreateChatThreadRequest, ChatThreadClient } from '@azure/communication-chat';

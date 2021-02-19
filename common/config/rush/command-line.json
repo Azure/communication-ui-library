@@ -18,6 +18,12 @@
       "allowWarningsInSuccessfulBuild": true,
       "ignoreDependencyOrder": true,
       "incremental": false
+    },
+    {
+      "commandKind": "global",
+      "name": "prettier",
+      "summary": "Used by the pre-commit Git hook. This command invokes Prettier to reformat staged changes.",
+      "shellCommand": "echo 'hello'"
     }
     // {
     //   "commandKind": "global",

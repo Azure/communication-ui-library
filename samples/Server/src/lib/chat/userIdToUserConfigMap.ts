@@ -1,3 +1,5 @@
+// © Microsoft Corporation. All rights reserved.
+
 interface UserConfig {
   emoji: string;
   displayName?: string;

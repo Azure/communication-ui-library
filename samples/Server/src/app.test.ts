@@ -1,3 +1,5 @@
+// © Microsoft Corporation. All rights reserved.
+
 import request from 'supertest';
 import app from './app';
 import * as createUserTokenModule from './lib/createUserToken';

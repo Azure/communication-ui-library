@@ -1,39 +1,12 @@
+// © Microsoft Corporation. All rights reserved.
+
 module.exports = {
-  env: {
-    browser: true,
-    node: true,
-    es6: true
-  },
   extends: [
-    'eslint:recommended',
+    "../../.eslintrc.js",
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended'
   ],
-  parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'header'],
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true
-    },
-    ecmaVersion: 2020,
-    sourceType: 'module'
-  },
   rules: {
-    '@typescript-eslint/explicit-function-return-type': [
-      'warn',
-      {
-        allowExpressions: true,
-        allowTypedFunctionExpressions: true
-      }
-    ],
-    '@typescript-eslint/no-explicit-any': 'off',
-    eqeqeq: 'warn',
-    'header/header': ['error', 'line', ' © Microsoft Corporation. All rights reserved.'],
-    'react/display-name': 'off',
-    '@typescript-eslint/no-unused-vars': ['error', { ignoreRestSiblings: true }],
-
     'no-restricted-imports': [
       'error',
       {
@@ -45,8 +18,11 @@ module.exports = {
           '**/lib/**/es/*'
         ]
       }
-    ]
+    ],
+    // todo: re-enable this rule
+    'react/display-name': 'off'
   },
+  root: true,
   settings: {
     react: {
       version: 'detect'
@@ -55,9 +31,16 @@ module.exports = {
   overrides: [
     {
       files: ['**/*.test.ts', '**/*.test.tsx', '**/*.spec.ts', '**/*.spec.tsx', '**/mocks/*'],
-      env: {
-        jest: true
+      rules: {
+        '@typescript-eslint/ban-ts-comment': 'off'
+      }
+    },
+    {
+      // remove the ban on certain types due to the complexity of this file
+      files: ['ConnectContext.tsx'],
+      rules: {
+        '@typescript-eslint/ban-types': 'off'
       }
     }
-  ]
+  ],
 };
