@@ -24,6 +24,7 @@ import { localStorageAvailable } from './utils/constants';
 const isMobileSession = (): boolean =>
   !!window.navigator.userAgent.match(/(iPad|iPhone|iPod|Android|webOS|BlackBerry|Windows Phone)/g);
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const sdkVersion = require('../../package.json').dependencies['@azure/communication-calling'];
 const lastUpdated = `Last Updated ${getBuildTime()} with @azure/communication-calling:${sdkVersion}`;
 

@@ -5,6 +5,7 @@ import { initializeIcons, loadTheme, Spinner, Stack } from '@fluentui/react';
 import { OneToOneCall } from '@azure/communication-ui';
 import { createRandomDisplayName, fetchTokenResponse, getBuildTime, supportedBrowser } from './utils/AppUtils';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const sdkVersion = require('../../package.json').dependencies['@azure/communication-calling'];
 const lastUpdated = `Last Updated ${getBuildTime()} with @azure/communication-calling:${sdkVersion}`;
 

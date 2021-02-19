@@ -8,6 +8,7 @@ export const getBuildTime = (): string => {
 };
 
 export function getChatSDKVersion(): string {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   return require('../../../package.json')['dependencies']['@azure/communication-chat'];
 }
 
