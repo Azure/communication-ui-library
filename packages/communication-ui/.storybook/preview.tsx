@@ -10,6 +10,8 @@ import { ThemeProvider } from '@fluentui/react-theme-provider';
 import { darkTheme, lightTheme } from './themes';
 import { initializeIcons, loadTheme } from '@fluentui/react';
 
+// Removing `loadTheme({})` causes storybook declaration exception.
+loadTheme({});
 initializeIcons();
 
 const iconTheme = {

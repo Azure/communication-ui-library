@@ -54,7 +54,7 @@ const controlButtonStyles: IStyle = {
 const controlButtonLabelStyles: IStyle = {
   fontSize: '0.75rem',
   color: palette.blackTranslucent40,
-  lineHeight: '1rem'
+  lineHeight: '1.25rem'
 };
 
 export interface CustomStylesProps {
@@ -213,7 +213,6 @@ export interface ControlBarProps {
   children?: React.ReactNode;
   styles?: CustomStylesProps;
   vertical?: boolean;
-  isFloating?: boolean;
 }
 
 /**
