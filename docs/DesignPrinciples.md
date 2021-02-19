@@ -17,11 +17,13 @@ The UI framework is great for building a new application from ground up but it i
 * strong typing
 * immutability
 
-The basic UI framework is not tied to Azure Communication Services in any way and it can be used for any communication app. Developers can choose to use the UI framework with a communication solution of their choice, like raw WebRtc or another non-Microsoft chat or calling library. We will provide adapter libraries, however, to make ACS the most convenient solution to integrate.
+We welcome developers to come with their own state management systems, such as Redux/Flux/MobX, and don't inhibit them when using our framework.
+
+The basic UI framework is not tied to Azure Communication Services in any way and it can be used for any communication app. Developers can choose to use the UI framework with a communication solution of their choice, like plain WebRTC or alternative chat or calling libraries. We will provide adapter libraries, however, to make Azure Communication Services the most convenient solution to integrate.
 
 ## Customizable
 
-Every app developer or company has their own visual style. The framework components allow rich customizations. Customization spans choosing own icons and color theming over to how to compose components to achieve a desired layout.
+Every app developer or company has their own visual style. The framework components allow rich customizations. Customization ranges from choosing own icons and color theming to how to compose components to achieve a desired layout.
 
 ## Controllable
 
