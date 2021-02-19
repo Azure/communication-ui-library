@@ -6,7 +6,7 @@ The raison d’etre of the UI framework is to provide robust, generic solutions 
 
 ## Flexible
 
-Each component should be individually useful and composable, to enable developers to only take what they need and extend and customize as necessary. Components can be composed to create any visual layout that framework users can come up with. This includes that the UI framework is not tied to Azure Communication Services in any way and it can be used for any communication app. Developers can choose to use the UI framework with a communication solution of their choice, like raw WebRtc or another non-Microsoft Chat or Calling library.
+Each component should be individually useful and composable, to enable developers to only take what they need and extend and customize as necessary. Components can be composed to create any visual layout that framework users can come up with.
 
 ## Unbiased
 
@@ -16,6 +16,8 @@ The UI framework is great for building a new application from ground up but it i
 * unidirectional data flow
 * strong typing
 * immutability
+
+The UI framework is not tied to Azure Communication Services in any way and it can be used for any communication app. Developers can choose to use the UI framework with a communication solution of their choice, like raw WebRtc or another non-Microsoft Chat or Calling library.
 
 ## Customizable
 
