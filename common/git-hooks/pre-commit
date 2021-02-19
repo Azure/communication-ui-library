@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# TO LEARN MORE ABOUT GIT HOOKS
+#
+# The Git documentation is here: https://git-scm.com/docs/githooks
+# Some helpful resources: https://githooks.com
+#
+# Invoke the "rush prettier" custom command to reformat files whenever they
+# are committed. The command is defined in common/config/rush/command-line.json
+# and uses the "rush-prettier" autoinstaller.
+node common/scripts/install-run-rush.js prettier || exit $?

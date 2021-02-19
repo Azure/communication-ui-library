@@ -10,6 +10,13 @@
       "allowWarningsInSuccessfulBuild": true
     },
     {
+      "commandKind": "global",
+      "name": "prettier",
+      "summary": "Used by the pre-commit Git hook. This command invokes Prettier to reformat staged changes.",
+      "autoinstallerName": "rush-prettier",
+      "shellCommand": "pretty-quick --staged"
+    },
+    {
       "commandKind": "bulk",
       "name": "lint",
       "summary": "Run linting in each project.",
@@ -18,12 +25,6 @@
       "allowWarningsInSuccessfulBuild": true,
       "ignoreDependencyOrder": true,
       "incremental": false
-    },
-    {
-      "commandKind": "global",
-      "name": "prettier",
-      "summary": "Used by the pre-commit Git hook. This command invokes Prettier to reformat staged changes.",
-      "shellCommand": "echo 'hello'"
     }
     // {
     //   "commandKind": "global",
