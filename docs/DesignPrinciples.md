@@ -6,11 +6,11 @@ The raison d’etre of the UI framework is to provide robust, generic solutions 
 
 ## Flexible
 
-Each component should be individually useful and composable, to enable developers to only take what they need and extend and customize as necessary. Components are easily composable and can be used in any visual layout that framework users can come up with. This includes that the UI framework is not tied to Azure Communication Services in any way and it can be used for any communication app. Developers can choose to use the UI framework with a communication solution of their choice, like raw WebRtc or another non-Microsoft Chat or Calling library.
+Each component should be individually useful and composable, to enable developers to only take what they need and extend and customize as necessary. Components can be composed to create any visual layout that framework users can come up with. This includes that the UI framework is not tied to Azure Communication Services in any way and it can be used for any communication app. Developers can choose to use the UI framework with a communication solution of their choice, like raw WebRtc or another non-Microsoft Chat or Calling library.
 
 ## Unbiased
 
-The UI framework is great for building new application from ground up but it is also great to fit into **any existing architecture**. To achieve this we embrace state-of-the-art best practices:
+The UI framework is great for building a new application from ground up but it is also great to fit into **any existing architecture**. To achieve this we embrace state-of-the-art best practices:
 
 * declarative and pure rendering
 * unidirectional data flow
@@ -25,10 +25,9 @@ Every app developer or company has their own visual style. The framework compone
 
 While customizability regards the visual aspects, controllability is the equivalent for functional aspects. The UI framework fully enables developers to implement their own business logic. The developer has full control to define behavior. Richer composites may provide default behavior but the developer can always override that behavior, intercept and drop or reroute flows, or decide to use the more granular layers for full control.
 
-
 ## Debuggable
 
-The UI framework is deterministic and thanks to controllability provides many hooks for the developer to analyze its behavior. The framework is easy to reason about thanks to its declarative and unidirectional nature. A change during execution time can be easily observed and debugged or logged by the developer.
+The UI framework is deterministic and thanks to controllability provides many hooks for the developer to analyze its behavior. The framework is easy to reason about thanks to its declarative and unidirectional nature. A change during execution time can be easily observed and debugged or logged by the developer. The framework works with popular developer tools out of the box, such as the React developer tools or Redux tools if the developer chooses a Redux archictecture.
 
 ## Accessible
 
