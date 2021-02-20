@@ -5,6 +5,7 @@
 import app from '../src/app';
 import http from 'http';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const debug = require('debug')('calling-sample-server:server');
 
 /**
