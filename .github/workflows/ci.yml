@@ -59,7 +59,7 @@ jobs:
         if: failure()
         uses: JasonEtco/create-an-issue@v2.4.0
         with:
-          filename: .github/failed-ci-build-template.md
+          filename: .github/failed_ci_build_template.md
           update_existing: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
