@@ -29,34 +29,33 @@ jobs:
       - name: Install rush
         run: npm install -g @microsoft/rush
       - name: Install dependencies
-        run: this should fail...
-        # run: rush install
+        run: rush install
 
-      # # Builds
-      # - name: Build Packages and Samples
-      #   run: rush build
+      # Builds
+      - name: Build Packages and Samples
+        run: rush build
 
-      # - name: Build Storybook
-      #   run: rushx build:storybook
-      #   working-directory: ./packages/communication-ui
+      - name: Build Storybook
+        run: rushx build:storybook
+        working-directory: ./packages/communication-ui
 
-      # # Run tests
-      # - name: Run Tests
-      #   run: rush test
-      #   env:
-      #     CI: true
+      # Run tests
+      - name: Run Tests
+        run: rush test
+        env:
+          CI: true
 
-      # # Deploy Storybook - only perform this step on main branch CI
-      # - name: Deploy Storybook
-      #   if: github.ref == 'refs/heads/main'
-      #   run: npm run deploy-storybook -- --ci
-      #   working-directory: ./packages/communication-ui
-      #   env:
-      #     GH_TOKEN: ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
+      # Deploy Storybook - only perform this step on main branch CI
+      - name: Deploy Storybook
+        if: github.ref == 'refs/heads/main'
+        run: npm run deploy-storybook -- --ci
+        working-directory: ./packages/communication-ui
+        env:
+          GH_TOKEN: ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
 
       - name: Create issue if CI failed
         id: create-issue
-        if: failure()
+        if: failure() && github.ref == 'refs/heads/main'
         uses: JasonEtco/create-an-issue@v2.4.0
         with:
           filename: .github/failed_ci_build_template.md
