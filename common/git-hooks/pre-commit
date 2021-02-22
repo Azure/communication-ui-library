@@ -9,6 +9,7 @@ if git diff --cached --name-only | grep -qE 'appsettings.json'; then
   echo 'appsettings.json has been staged for commit.' >&2
   echo 'This often contains the resource connection string which should not be checked in to source control.' >&2
   echo 'If you do want to check in changes to this file use `git commit --no-verify`.' >&2
+  echo 'Otherwise unstage this file.' >&2
   echo '============================' >&2
   exit 1;
 fi
