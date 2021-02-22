@@ -26,10 +26,11 @@ jobs:
           node-version: '12.x'
 
       # Install dependencies
-      # - name: Install rush
-      #   run: npm install -g @microsoft/rush
-      # - name: Install dependencies
-      #   run: rush install
+      - name: Install rush
+        run: npm install -g @microsoft/rush
+      - name: Install dependencies
+        run: this should fail...
+        # run: rush install
 
       # # Builds
       # - name: Build Packages and Samples
@@ -55,13 +56,10 @@ jobs:
 
       - name: Create issue if CI failed
         id: create-issue
-        if: success()
+        if: failed()
         uses: JasonEtco/create-an-issue@v2.4.0
         with:
-          filename: .github/ISSUE_TEMPLATE/report-a-bug.md
+          filename: .github/failed-ci-build-template.md
           update_existing: true
-          title: 'Main CI Failed'
-          labels: 'status:CI_FAILURE'
-          body: 'Main CI Pipeline has failed. Please investigate.'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
