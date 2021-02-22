@@ -56,7 +56,7 @@ jobs:
 
       - name: Create issue if CI failed
         id: create-issue
-        if: failed()
+        if: failure()
         uses: JasonEtco/create-an-issue@v2.4.0
         with:
           filename: .github/failed-ci-build-template.md
