@@ -3,9 +3,9 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -26,30 +26,42 @@ jobs:
           node-version: '12.x'
 
       # Install dependencies
-      - name: Install rush
-        run: npm install -g @microsoft/rush
-      - name: Install dependencies
-        run: rush install
+      # - name: Install rush
+      #   run: npm install -g @microsoft/rush
+      # - name: Install dependencies
+      #   run: rush install
 
-      # Builds
-      - name: Build Packages and Samples
-        run: rush build
+      # # Builds
+      # - name: Build Packages and Samples
+      #   run: rush build
 
-      - name: Build Storybook
-        run: rushx build:storybook
-        working-directory: ./packages/communication-ui
+      # - name: Build Storybook
+      #   run: rushx build:storybook
+      #   working-directory: ./packages/communication-ui
 
-      # Run tests
-      - name: Run Tests
-        run: rush test
+      # # Run tests
+      # - name: Run Tests
+      #   run: rush test
+      #   env:
+      #     CI: true
+
+      # # Deploy Storybook - only perform this step on main branch CI
+      # - name: Deploy Storybook
+      #   if: github.ref == 'refs/heads/main'
+      #   run: npm run deploy-storybook -- --ci
+      #   working-directory: ./packages/communication-ui
+      #   env:
+      #     GH_TOKEN: ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create issue if CI failed
+        id: create-issue
+        if: success() && github.ref == 'refs/head/jaburnsi/issue-from-failure'
+        uses: JasonEtco/create-an-issue@v2.4.0
+        with:
+          filename: .github/ISSUE_TEMPLATE/report-a-bug.md
+          update_existing: true
+          title: 'Main CI Failed'
+          labels: 'status:CI_FAILURE'
+          body: 'Main CI Pipeline has failed. Please investigate.'
         env:
-          CI: true
-
-      # Deploy Storybook - only perform this step on main branch CI
-      - name: Deploy Storybook
-        if: github.ref == 'refs/heads/main'
-        run: npm run deploy-storybook -- --ci
-        working-directory: ./packages/communication-ui
-        env:
-          GH_TOKEN: ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
-
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
