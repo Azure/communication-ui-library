@@ -55,7 +55,7 @@ jobs:
 
       - name: Create issue if CI failed
         id: create-issue
-        if: success() && github.ref == 'refs/head/jaburnsi/issue-from-failure'
+        if: success()
         uses: JasonEtco/create-an-issue@v2.4.0
         with:
           filename: .github/ISSUE_TEMPLATE/report-a-bug.md
