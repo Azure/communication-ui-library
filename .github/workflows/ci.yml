@@ -53,7 +53,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create issue if CI failed
+      - name: Create issue if main branch CI failed
         id: create-issue
         if: failure() && github.ref == 'refs/heads/main'
         uses: JasonEtco/create-an-issue@v2.4.0
