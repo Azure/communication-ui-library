@@ -5,7 +5,7 @@
   "description": "This is a sample application to show how the ACS Calling Web SDK can be used to build a group calling experience. The client-side application is a React based user interface which uses React Hooks for handling complex state while leveraging Microsoft Fluent UI for how things look.",
   "scripts": {
     "build": "react-scripts build",
-    "package": "copyfiles -u 3 ../Server/dist/**/* dist && copyfiles ./build/**/* dist",
+    "package": "copyfiles ./build/**/* dist && copyfiles -u 3 ../Server/dist/**/* dist",
     "start": "concurrently \"cd ../Server && npm run start:dev\" \"npm run start:app\"",
     "start:app": "rimraf ./build && react-scripts start",
     "start:debug": "concurrently \"cd ../Server && npm run start:debug\" \"npm run start\"",
