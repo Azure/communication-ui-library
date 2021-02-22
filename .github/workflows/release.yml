@@ -38,22 +38,19 @@ jobs:
       # Package Chat build
       - name: Package Chat build
         shell: bash
-        run: |
-          tag=$(git describe --tags --abbrev=0)
-          release_name=Chat-$tag
-          unset CI
-          7z a -tzip "${release_name}.zip" "./dist/*"
+        run: 7z a -tzip "${release_name}.zip" "./dist/*"
         working-directory: ./samples/Chat
       - name: Publish
         uses: softprops/action-gh-release@v1
         with:
-          files: '${release_name}.zip'
+          files: 'Chat.zip'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # Generate Calling build
       - name: Generate Calling build
-        run: npm run package
+        run: |
+          npm run package
         working-directory: ./samples/Calling
         env:
           GH_TOKEN: ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
@@ -61,15 +58,11 @@ jobs:
       # Package Calling build
       - name: Package Calling build
         shell: bash
-        run: |
-          tag=$(git describe --tags --abbrev=0)
-          release_name=Calling-$tag
-          unset CI
-          7z a -tzip "${release_name}.zip" "./dist/*"
+        run: 7z a -tzip "Calling.zip" "./dist/*"
         working-directory: ./samples/Calling
       - name: Publish
         uses: softprops/action-gh-release@v1
         with:
-          files: '${release_name}.zip'
+          files: 'Calling.zip'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
