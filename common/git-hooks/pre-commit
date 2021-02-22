@@ -11,9 +11,6 @@ if git diff --cached --name-only | grep -qE 'appsettings.json'; then
   echo 'If you do want to check in changes to this file use `git commit --no-verify`.' >&2
   echo '============================' >&2
   exit 1;
-else
-  echo 'check passed'
-  exit 0;
 fi
 
 # Invoke the "rush prettier" custom command to reformat files whenever they
