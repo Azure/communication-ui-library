@@ -36,6 +36,7 @@ export const MediaGalleryComponentBase = (props: MediaGalleryContainerProps): JS
           </Stack>
         );
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [remoteParticipants, screenShareStream]);
 
   const gridLayoutRemoteParticipants = useMemo(() => {
@@ -49,6 +50,7 @@ export const MediaGalleryComponentBase = (props: MediaGalleryContainerProps): JS
         </Stack>
       );
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [remoteParticipants]);
 
   const layoutLocalParticipant = useMemo(() => {
@@ -61,6 +63,7 @@ export const MediaGalleryComponentBase = (props: MediaGalleryContainerProps): JS
         />
       </Stack>
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localParticipant]);
 
   return screenShareStream !== undefined ? (

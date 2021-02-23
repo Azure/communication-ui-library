@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
 import React, { Dispatch } from 'react';
-import InviteFooter from './InviteFooter';
+import { InviteFooter } from './InviteFooter';
 import { ParticipantManagement } from '@azure/communication-ui';
 import SettingsManagement from './SettingsManagement';
 import { SlideOutPanelComponent } from './SlideOutPanel';
@@ -18,7 +18,7 @@ export interface SelectedPaneProps {
   onRenderAvatar?: (userId: string) => JSX.Element;
 }
 
-export default (props: SelectedPaneProps): JSX.Element => {
+export const SidePanel = (props: SelectedPaneProps): JSX.Element => {
   const { selectedPane, setSelectedPane, onRenderAvatar } = props;
   return (
     <>

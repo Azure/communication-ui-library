@@ -12,8 +12,8 @@ import {
   MapToErrorsProps
 } from '@azure/communication-ui';
 import ChatHeader from './ChatHeader';
-import ChatArea from './ChatArea';
-import SidePanel, { SidePanelTypes } from './SidePanel';
+import { ChatArea } from './ChatArea';
+import { SidePanel, SidePanelTypes } from './SidePanel';
 
 // These props are passed in when this component is referenced in JSX and not found in context
 interface ChatScreenProps {

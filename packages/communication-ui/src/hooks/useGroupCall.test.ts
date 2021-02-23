@@ -7,6 +7,8 @@ import { useGroupCall } from './useGroupCall';
 type MockCallContextType = {
   call: Call;
 };
+
+// eslint-disable-next-line @typescript-eslint/ban-types
 type MockCallingContextType = {};
 
 const mockGroupId = 'b9d25c49-f430-4cd8-91c4-2e79ebfee59f'; // random GUID

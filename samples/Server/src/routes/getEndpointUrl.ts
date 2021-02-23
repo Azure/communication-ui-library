@@ -1,3 +1,5 @@
+// © Microsoft Corporation. All rights reserved.
+
 import * as express from 'express';
 import { getEnvUrl } from '../lib/envHelper';
 

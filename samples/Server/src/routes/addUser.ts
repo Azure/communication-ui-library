@@ -1,3 +1,5 @@
+// © Microsoft Corporation. All rights reserved.
+
 import { CommunicationUserToken } from '@azure/communication-administration';
 import * as express from 'express';
 import { refreshUserToken } from '../lib/createUserToken';

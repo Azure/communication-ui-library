@@ -1,3 +1,5 @@
+// © Microsoft Corporation. All rights reserved.
+
 module.exports = {
   env: {
     browser: true,
@@ -6,7 +8,11 @@ module.exports = {
   },
   extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended'],
   parser: '@typescript-eslint/parser',
+  plugins: ['@typescript-eslint', 'header'],
   parserOptions: {
+    ecmaFeatures: {
+      jsx: true
+    },
     ecmaVersion: 2020,
     sourceType: 'module'
   },
@@ -18,14 +24,26 @@ module.exports = {
         allowTypedFunctionExpressions: true
       }
     ],
+    '@typescript-eslint/no-explicit-any': 'off',
     eqeqeq: 'warn',
-    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: 'next' }]
+    'header/header': ['error', 'line', ' © Microsoft Corporation. All rights reserved.'],
+    'react/display-name': 'off',
+
+    // Allow unused vars for routing funtions
+    '@typescript-eslint/no-unused-vars': ['off']
   },
   overrides: [
     {
       files: ['**/*.test.ts', '**/*.test.tsx', '**/*.spec.ts', '**/*.spec.tsx', '**/mocks/*'],
       env: {
         jest: true
+      }
+    },
+    {
+      files: ['envHelper.ts'],
+      rules: {
+        // Allow requiring the appsettings.json
+        '@typescript-eslint/no-var-requires': 'off'
       }
     }
   ]
