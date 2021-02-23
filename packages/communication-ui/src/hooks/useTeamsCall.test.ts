@@ -7,6 +7,8 @@ import { useTeamsCall } from './useTeamsCall';
 type MockCallContextType = {
   call: Call;
 };
+
+// eslint-disable-next-line @typescript-eslint/ban-types
 type MockCallingContextType = {};
 
 const mockTeamsLink =

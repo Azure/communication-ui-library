@@ -31,6 +31,10 @@ jobs:
       - name: Install dependencies
         run: rush install
 
+      # Perform lint check
+      - name: Run linter
+        run: rush lint
+
       # Builds
       - name: Build Packages and Samples
         run: rush build
@@ -53,6 +57,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
 
+      # Create a GitHub issue if the CI failed when running on the `main` branch
       - name: Create issue if main branch CI failed
         id: create-issue
         if: failure() && github.ref == 'refs/heads/main'

@@ -5,8 +5,8 @@ import { getBuildTime, getChatSDKVersion } from './utils/utils';
 import { initializeIcons, loadTheme } from '@fluentui/react';
 
 import ChatScreen from './ChatScreen';
-import EndScreen from './EndScreen';
-import ErrorScreen from './ErrorScreen';
+import { EndScreen } from './EndScreen';
+import { ErrorScreen } from './ErrorScreen';
 import HomeScreen from './HomeScreen';
 import ConfigurationScreen from './ConfigurationScreen';
 import { getThreadId } from './utils/getThreadId';

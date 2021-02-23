@@ -1,3 +1,5 @@
+// © Microsoft Corporation. All rights reserved.
+
 import * as express from 'express';
 import { createThread } from '../lib/chat/moderator';
 
