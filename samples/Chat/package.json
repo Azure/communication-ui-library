@@ -66,8 +66,7 @@
     "react-aria-live": "^2.0.5",
     "react-dom": "^16.13.1",
     "react-linkify": "^1.0.0-alpha",
-    "react-scripts": "^4.0.2",
-    "package": "~1.0.1"
+    "react-scripts": "^4.0.2"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.4",
