@@ -35,14 +35,6 @@ export const topicNameLabelStyle = mergeStyles({
   overflowY: 'hidden'
 });
 
-export const topicNameEditTextStyle1 = mergeStyles({
-  color: '#A19F9D',
-  fontSize: '1rem', // 16px
-  fontWeight: 600,
-  width: '100%',
-  height: '100%'
-});
-
 export const leaveButtonContainerStyle = mergeStyles({
   height: '100%',
   display: 'flex',
