@@ -21,7 +21,7 @@ app.use(logger('tiny'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static('build'));
 
 app.use('/createThread', cors(), createThread);
 app.use('/addUser', cors(), addUser);
