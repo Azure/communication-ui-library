@@ -3,9 +3,9 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -31,6 +31,10 @@ jobs:
       - name: Install dependencies
         run: rush install
 
+      # Perform lint check
+      - name: Run linter
+        run: rush lint
+
       # Builds
       - name: Build Packages and Samples
         run: rush build
@@ -52,4 +56,3 @@ jobs:
         working-directory: ./packages/communication-ui
         env:
           GH_TOKEN: ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
-

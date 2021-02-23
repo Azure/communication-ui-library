@@ -116,5 +116,6 @@ export class CommunicationUiError extends Error implements CommunicationUiErrorI
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const CommunicationUiErrorFromError = (error: any): CommunicationUiError =>
   error instanceof CommunicationUiError ? error : new CommunicationUiError({ error });

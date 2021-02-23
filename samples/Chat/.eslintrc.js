@@ -3,15 +3,15 @@
 module.exports = {
   env: {
     browser: true,
-    es2020: true,
-    node: true
+    node: true,
+    es6: true
   },
   extends: [
     'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended'
+    'plugin:prettier/recommended',
+    'plugin:react/recommended',
+    'plugin:react-hooks/recommended'
   ],
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint', 'header'],
@@ -43,9 +43,16 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['**/*.test.ts', '**/*.test.tsx', '**/*.spec.ts', '**/*.spec.tsx'],
+      files: ['**/*.test.ts', '**/*.test.tsx', '**/*.spec.ts', '**/*.spec.tsx', '**/mocks/*'],
       env: {
         jest: true
+      }
+    },
+    {
+      files: ['utils.ts'],
+      rules: {
+        // Allow requiring the package.json
+        '@typescript-eslint/no-var-requires': 'off'
       }
     }
   ]

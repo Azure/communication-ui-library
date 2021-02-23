@@ -1,3 +1,5 @@
+// © Microsoft Corporation. All rights reserved.
+
 module.exports = {
   env: {
     browser: true,
@@ -6,10 +8,10 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended'
+    'plugin:prettier/recommended',
+    'plugin:react/recommended',
+    'plugin:react-hooks/recommended'
   ],
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint', 'header'],
@@ -32,8 +34,7 @@ module.exports = {
     eqeqeq: 'warn',
     'header/header': ['error', 'line', ' © Microsoft Corporation. All rights reserved.'],
     'react/display-name': 'off',
-    '@typescript-eslint/no-unused-vars': ['error', { ignoreRestSiblings: true }],
-
+    '@typescript-eslint/no-unused-vars': ['warn', { varsIgnorePattern: '^_' }],
     'no-restricted-imports': [
       'error',
       {
@@ -47,6 +48,7 @@ module.exports = {
       }
     ]
   },
+  root: true,
   settings: {
     react: {
       version: 'detect'
@@ -55,8 +57,18 @@ module.exports = {
   overrides: [
     {
       files: ['**/*.test.ts', '**/*.test.tsx', '**/*.spec.ts', '**/*.spec.tsx', '**/mocks/*'],
+      rules: {
+        '@typescript-eslint/ban-ts-comment': 'off'
+      },
       env: {
         jest: true
+      }
+    },
+    {
+      // remove the ban on certain types due to the complexity of this file
+      files: ['ConnectContext.tsx'],
+      rules: {
+        '@typescript-eslint/ban-types': 'off'
       }
     }
   ]
