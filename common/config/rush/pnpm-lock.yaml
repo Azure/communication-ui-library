@@ -16,6 +16,7 @@ dependencies:
   '@mdx-js/react': 1.6.22_react@16.14.0
   '@rush-temp/acs-calling-sample': file:projects/acs-calling-sample.tgz_570bf42e92a70fb216c5cd4d5ed668ef
   '@rush-temp/acs-chat-sample': file:projects/acs-chat-sample.tgz_40b0c9f7a7a0fac66e4b6fcf06de2a42
+  '@rush-temp/acs-declarative-sample': file:projects/acs-declarative-sample.tgz_40b0c9f7a7a0fac66e4b6fcf06de2a42
   '@rush-temp/acs-one-to-one-call-sample': file:projects/acs-one-to-one-call-sample.tgz_570bf42e92a70fb216c5cd4d5ed668ef
   '@rush-temp/acs-server-sample': file:projects/acs-server-sample.tgz
   '@rush-temp/communication-ui': file:projects/communication-ui.tgz_webpack-cli@4.5.0
@@ -81,6 +82,7 @@ dependencies:
   express: 4.16.4
   http-errors: 1.6.3
   husky: 4.3.8
+  immer: 8.0.1
   jest: 26.6.0_ts-node@9.1.1
   jest-fetch-mock: 3.0.3
   jest-junit: 12.0.0
@@ -10917,6 +10919,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-Vs/gxoM4DqNAYR7pugIxi0Xc8XAun/uy7AQu4fLLqaTBHxjOP9pJ266Q9MWA/ly4z6rAFZbvViOtihxUZ7O28A==
+  /immer/8.0.1:
+    dev: false
+    resolution:
+      integrity: sha512-aqXhGP7//Gui2+UrEtvxZxSquQVXTpZ7KDxfCcKAF3Vysvw0CViVaW9RZ1j1xlIYqaaaipBoqdqeibkc18PNvA==
   /import-cwd/2.1.0:
     dependencies:
       import-from: 2.1.0
@@ -19607,6 +19613,44 @@ packages:
       integrity: sha512-vmmINqIkjizvJYOXhB3AM4n1se2UQ5Y3pSGtbXlI1inrBZ76uy/5R59AtBGAxWwgdlErMP4GyP+U8c1i58aErA==
       tarball: file:projects/acs-chat-sample.tgz
     version: 0.0.0
+  file:projects/acs-declarative-sample.tgz_40b0c9f7a7a0fac66e4b6fcf06de2a42:
+    dependencies:
+      '@azure/communication-administration': 1.0.0-beta.4
+      '@azure/communication-chat': 1.0.0-beta.3
+      '@azure/communication-common': 1.0.0-beta.3
+      '@azure/communication-signaling': 1.0.0-beta.1
+      '@azure/core-http': 1.2.3
+      '@types/react': 16.14.4
+      '@types/react-dom': 16.9.11
+      '@typescript-eslint/eslint-plugin': 4.15.1_dd080f2a8fb4d0ac76cfb4c7062ee728
+      '@typescript-eslint/parser': 4.15.1_eslint@7.20.0+typescript@4.1.5
+      babel-eslint: 10.1.0_eslint@7.20.0
+      eslint: 7.20.0
+      eslint-config-prettier: 6.15.0_eslint@7.20.0
+      eslint-config-react-app: 6.0.0_bb21781ea843b2df39e59af8c25c1dec
+      eslint-plugin-flowtype: 5.2.2_eslint@7.20.0
+      eslint-plugin-header: 3.1.1_eslint@7.20.0
+      eslint-plugin-prettier: 3.3.1_822b4c7c304ad0fbad34b397ba6938a8
+      eslint-plugin-react: 7.22.0_eslint@7.20.0
+      eslint-plugin-react-hooks: 4.2.0_eslint@7.20.0
+      prettier: 2.0.5
+      pretty-quick: 3.1.0_prettier@2.0.5
+      react: 16.14.0
+      react-scripts: 4.0.2_a9e99724ada6035f86b48f9bda330596
+      rimraf: 2.7.1
+      typescript: 4.1.5
+    dev: false
+    id: file:projects/acs-declarative-sample.tgz
+    name: '@rush-temp/acs-declarative-sample'
+    peerDependencies:
+      eslint-plugin-import: '*'
+      eslint-plugin-jsx-a11y: '*'
+      ts-node: '*'
+      webpack-cli: '*'
+    resolution:
+      integrity: sha512-PZ+BMVM+FdJmR/aWUBVK6Fw5/MDdLeDSjOXFTtAivovqwUc1teYBNF6otCA7hxWSymc0NdpEXJnBODIA8LoN3w==
+      tarball: file:projects/acs-declarative-sample.tgz
+    version: 0.0.0
   file:projects/acs-one-to-one-call-sample.tgz_570bf42e92a70fb216c5cd4d5ed668ef:
     dependencies:
       '@azure/communication-administration': 1.0.0-beta.4
@@ -19783,6 +19827,7 @@ packages:
       eslint-plugin-react: 7.22.0_eslint@7.20.0
       eslint-plugin-react-hooks: 4.2.0_eslint@7.20.0
       husky: 4.3.8
+      immer: 8.0.1
       jest: 26.6.0_ts-node@9.1.1
       jest-fetch-mock: 3.0.3
       jest-junit: 12.0.0
@@ -19809,9 +19854,10 @@ packages:
     peerDependencies:
       webpack-cli: '*'
     resolution:
-      integrity: sha512-KQhUWooRgKl3PN6bK9wKmUstwltjF2q5XbBnz/SkdwOuzvruMhjdD+dMMJfiILIxz+K++6+1xN9UITZD8kQNjg==
+      integrity: sha512-FWdlo6963+pQ4PEbmgnk/ohVGn2+HSlyTaSiDmTdOnBZm0qrYQp7V1KO/w5+E8Qko7XWMlaRLkFXgJ9u9hhXKw==
       tarball: file:projects/communication-ui.tgz
     version: 0.0.0
+registry: ''
 specifiers:
   '@azure/communication-administration': ^1.0.0-beta.3
   '@azure/communication-calling': 1.0.0-beta.2
@@ -19830,6 +19876,7 @@ specifiers:
   '@mdx-js/react': ^1.6.22
   '@rush-temp/acs-calling-sample': file:./projects/acs-calling-sample.tgz
   '@rush-temp/acs-chat-sample': file:./projects/acs-chat-sample.tgz
+  '@rush-temp/acs-declarative-sample': file:./projects/acs-declarative-sample.tgz
   '@rush-temp/acs-one-to-one-call-sample': file:./projects/acs-one-to-one-call-sample.tgz
   '@rush-temp/acs-server-sample': file:./projects/acs-server-sample.tgz
   '@rush-temp/communication-ui': file:./projects/communication-ui.tgz
@@ -19895,6 +19942,7 @@ specifiers:
   express: ~4.16.1
   http-errors: ~1.6.3
   husky: ^4.3.0
+  immer: ^8.0.1
   jest: 26.6.0
   jest-fetch-mock: ^3.0.3
   jest-junit: ^12.0.0

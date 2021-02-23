@@ -41,6 +41,11 @@
       "packageName": "acs-server-sample",
       "projectFolder": "samples/Server",
       "reviewCategory": "prototypes"
+    },
+    {
+      "packageName": "acs-declarative-sample",
+      "projectFolder": "samples/Declarative",
+      "reviewCategory": "prototypes"
     }
   ]
 }
