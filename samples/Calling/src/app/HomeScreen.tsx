@@ -29,7 +29,7 @@ const imageStyleProps: IImageStyles = {
   root: {}
 };
 
-export default (props: HomeScreenProps): JSX.Element => {
+export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const iconName = 'SkypeCircleCheck';
   const imageProps = { src: heroSVG.toString() };
   const headerTitle = 'Exceptionally simple video calling';

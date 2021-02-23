@@ -24,7 +24,7 @@ const copyJoinLink = (): void => {
   document.getElementById('copyLinkButton')?.focus();
 };
 
-export default (): JSX.Element => {
+export const InviteFooter = (): JSX.Element => {
   const invitePeopleString = 'Invite people to join';
   const copyJoinInfoString = 'Copy invite link';
 

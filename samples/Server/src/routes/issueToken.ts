@@ -1,3 +1,5 @@
+// © Microsoft Corporation. All rights reserved.
+
 import { CommunicationUserToken, TokenScope } from '@azure/communication-administration';
 import * as express from 'express';
 import { createUserToken, createUserTokenWithScope } from '../lib/createUserToken';

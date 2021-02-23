@@ -25,7 +25,7 @@ export interface EndCallProps {
   homeHandler(): void;
 }
 
-export default (props: EndCallProps): JSX.Element => {
+export const EndScreen = (props: EndCallProps): JSX.Element => {
   const leftCall = 'You left the chat';
   const goHomePage = 'Go to homepage';
   const rejoinChat = 'Rejoin chat';
