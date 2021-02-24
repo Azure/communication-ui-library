@@ -42,10 +42,10 @@ jobs:
 
       - name: Archive builds
         run: |
-          zip -r group-calling.zip ./samples/Calling/dist
-          zip -r group-chat.zip ./samples/Chat/dist
-          zip -r one-to-one-calling.zip ./samples/OneToOneCall/dist
-          zip -r private-preview.zip ./packages/communication-ui/dist
+          7z a group-calling.zip ./samples/Calling/dist/*
+          7z a group-chat.zip ./samples/Chat/dist/*
+          7z a one-to-one-calling.zip ./samples/OneToOneCall/dist/*
+          7z a private-preview.zip ./packages/communication-ui/dist/*
 
       - name: Publish Group Calling Artifact
         uses: softprops/action-gh-release@v1
