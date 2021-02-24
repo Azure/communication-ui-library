@@ -28,7 +28,7 @@ jobs:
       - name: Build Packages and Samples
         run: rush build
 
-      - name: Upload Group Calling Sample Artifact
+      - name: Package Group Calling Sample Artifact
         run: npm run package
         working-directory: ./samples/Calling
 
@@ -47,42 +47,30 @@ jobs:
           zip -r one-to-one-calling.zip ./samples/OneToOneCall/dist
           zip -r private-preview.zip ./packages/communication-ui/dist
 
-      - name: Upload Group-Calling Asset
-        uses: actions/upload-release-asset@v1
+      - name: Publish Group Calling Artifact
+        uses: softprops/action-gh-release@v1
+        with:
+          files: 'group-calling.zip'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.upload_release.outputs.upload_url }}
-          asset_path: ./group-calling.zip
-          asset_name: group-calling.zip
-          asset_content_type: application/zip
 
-      - name: Upload Group-Chat Asset
-        uses: actions/upload-release-asset@v1
+      - name: Publish Group Chat Artifact
+        uses: softprops/action-gh-release@v1
+        with:
+          files: 'group-chat.zip'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.upload_release.outputs.upload_url }}
-          asset_path: ./group-chat.zip
-          asset_name: group-chat.zip
-          asset_content_type: application/zip
 
-      - name: Upload One-To-One-Calling Asset
-        uses: actions/upload-release-asset@v1
+      - name: Publish One to One Calling Artifact
+        uses: softprops/action-gh-release@v1
+        with:
+          files: 'one-to-one-calling.zip'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.upload_release.outputs.upload_url }}
-          asset_path: ./one-to-one-calling.zip
-          asset_name: one-to-one-calling.zip
-          asset_content_type: application/zip
 
-      - name: Upload Private-Preview Asset
-        uses: actions/upload-release-asset@v1
+      - name: Publish Private Preview Artifact
+        uses: softprops/action-gh-release@v1
+        with:
+          files: 'private-preview.zip'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.upload_release.outputs.upload_url }}
-          asset_path: ./private-preview.zip
-          asset_name: private-preview.zip
-          asset_content_type: application/zip
