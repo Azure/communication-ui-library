@@ -5,13 +5,13 @@ import {
   connectFuncsToContext,
   MapToCallConfigurationProps,
   SetupContainerProps,
-  DisplayNameField,
   LocalSettings,
-  CallConfiguration,
-  StartCallButton
+  CallConfiguration
 } from '@azure/communication-ui';
 import { localStorageAvailable } from './utils/constants';
 import { saveDisplayNameToLocalStorage } from './utils/AppUtils';
+import { DisplayNameField } from './DisplayNameField';
+import { StartCallButton } from './StartCallButton';
 
 export interface ConfigurationScreenProps extends SetupContainerProps {
   screenWidth: number;

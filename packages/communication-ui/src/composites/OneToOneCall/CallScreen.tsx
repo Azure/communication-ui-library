@@ -2,13 +2,18 @@
 
 import { Label, Spinner, Stack } from '@fluentui/react';
 import React from 'react';
-import { activeContainerClassName, containerStyles, headerStyles, loadingStyle } from './styles/CallScreen.styles';
-
+import {
+  activeContainerClassName,
+  containerStyles,
+  headerStyles,
+  loadingStyle,
+  headerCenteredContainer,
+  headerContainer
+} from './styles/CallScreen.styles';
 import MediaFullScreen from './MediaFullScreen';
 import { connectFuncsToContext } from '../../consumers/ConnectContext';
 import { CallContainerProps, MapToOneToOneCallProps } from '../../consumers/MapToCallProps';
 import MediaControls from '../../components/MediaControls';
-import { headerCenteredContainer, headerContainer } from '../../components/styles/Header.styles';
 import { MINI_HEADER_WINDOW_WIDTH } from '../../constants';
 import { MediaGallery1To1 } from '../../components';
 

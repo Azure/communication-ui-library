@@ -8,7 +8,7 @@ import {
   paneFooterStyles,
   paneFooterTokens,
   textFieldStyles
-} from './styles/CommandPanel.styles';
+} from './styles/Footer.styles';
 
 import React from 'react';
 

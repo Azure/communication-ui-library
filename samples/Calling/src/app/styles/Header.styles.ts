@@ -20,10 +20,6 @@ export const pivotItemStyles: Partial<IPivotStyles> = {
   root: { width: '5.25rem', height: '3.75rem', display: 'inline-block', verticalAlign: 'top' }
 };
 
-export const pivotContainerStyle = mergeStyles({
-  display: 'inline-block'
-});
-
 export const headerContainer = mergeStyles({
   width: '100%',
   height: '3.875rem',
