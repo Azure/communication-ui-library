@@ -1,8 +1,11 @@
 // © Microsoft Corporation. All rights reserved.
 import React from 'react';
 import { ErrorHandlingProps } from '../../providers/ErrorProvider';
-import { LocalSettings, CallConfiguration, StartCallButton, WithErrorHandling } from '../../components';
+import { WithErrorHandling } from '../../components';
 import { connectFuncsToContext, MapToCallConfigurationProps, SetupContainerProps } from '../../consumers';
+import { CallConfiguration } from '../../components';
+import { LocalSettings } from '../../components';
+import { StartCallButton } from './StartCallButton';
 
 export interface ConfigurationScreenProps extends SetupContainerProps {
   screenWidth: number;

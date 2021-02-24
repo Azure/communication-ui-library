@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 import { PrimaryButton } from '@fluentui/react';
 import React from 'react';
-import { buttonStyle, videoCameraIconStyle } from './styles/Configuration.styles';
+import { buttonStyle, videoCameraIconStyle } from './styles/StartCallButton.styles';
 import { VideoCameraEmphasisIcon } from '@fluentui/react-icons-northstar';
 
 export interface StartCallButtonProps {
