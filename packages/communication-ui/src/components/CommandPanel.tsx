@@ -7,7 +7,7 @@ import {
   settingsContainerStyle
 } from './styles/CommandPanel.styles';
 
-import Footer from './Footer';
+import Footer from '../composites/GroupCall/Footer';
 import LocalSettings from './LocalSettings';
 import { ParticipantStack } from '../components';
 import React from 'react';

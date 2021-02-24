@@ -7,15 +7,16 @@ import {
   containerStyles,
   headerStyles,
   loadingStyle,
-  subContainerStyles
+  subContainerStyles,
+  headerCenteredContainer,
+  headerContainer
 } from './styles/GroupCallScreen.styles';
 
 import MediaGallery from './MediaGallery';
 import { connectFuncsToContext } from '../../consumers/ConnectContext';
 import { isInCall } from '../../utils/SDKUtils';
 import { GroupCallContainerProps, MapToGroupCallProps } from './consumers/MapToGroupCallProps';
-import MediaControls from '../../components/MediaControls';
-import { headerCenteredContainer, headerContainer } from '../../components/styles/Header.styles';
+import { MediaControls } from '../../components';
 import { MINI_HEADER_WINDOW_WIDTH } from '../../constants';
 import { ErrorHandlingProps } from '../../providers/ErrorProvider';
 import { WithErrorHandling } from '../../utils/WithErrorHandling';
