@@ -1,31 +1,48 @@
 // © Microsoft Corporation. All rights reserved.
+import { Call } from '@azure/communication-calling';
 import { Stack } from '@fluentui/react';
-import { useCallingContext } from '../../index';
-import { IncomingCallsProvider, useIncomingCallsContext } from '../../providers';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { IncomingCallToast } from '../../components';
-import { useMicrophone, useIncomingCall } from '../../hooks';
+import { IncomingCallToastProps } from '../../components/IncomingCallAlerts';
+import { useIncomingCall, useMicrophone } from '../../hooks';
+import { useCallingContext } from '../../index';
+import { IncomingCallsProvider } from '../../providers';
 
 export type IncomingCallProps = {
   onIncomingCallAccepted?: () => void;
   onIncomingCallRejected?: () => void;
 };
 
+const IncomingCallAlertACSWrapper = (props: IncomingCallToastProps & { call: Call }): JSX.Element => {
+  const { call } = props;
+  const [callerName, setCallerName] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    call.on('remoteParticipantsUpdated', (e): void => {
+      e.added.forEach((participant) => {
+        participant.on('participantStateChanged', () => {
+          setCallerName(participant.displayName);
+        });
+      });
+    });
+  }, [call]);
+
+  return <IncomingCallToast {...props} callerName={callerName} />;
+};
+
 const IncomingCallContainer = (props: IncomingCallProps): JSX.Element => {
   // todo: move to mapper:
-  const { incomingCalls } = useIncomingCallsContext();
-  const { accept, reject } = useIncomingCall();
+  const { accept, reject, incomingCalls } = useIncomingCall();
   const { unmute } = useMicrophone();
 
-  if (!(incomingCalls && incomingCalls.length > 0)) {
-    return <></>;
-  } else {
+  if (!(incomingCalls && incomingCalls.length > 0)) return <></>;
+  else {
     return (
       <Stack>
         {incomingCalls.map((call) => (
           <div style={{ marginTop: '8px', marginBottom: '8px' }} key={call.id}>
-            <IncomingCallToast
-              callerName={call.remoteParticipants[0]?.displayName}
+            <IncomingCallAlertACSWrapper
+              call={call}
               onClickReject={async () => {
                 await reject(call);
                 props.onIncomingCallRejected && props.onIncomingCallRejected();

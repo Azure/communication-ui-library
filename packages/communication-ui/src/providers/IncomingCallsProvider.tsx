@@ -4,7 +4,7 @@ import { Call, CollectionUpdatedEvent } from '@azure/communication-calling';
 import React, { createContext, useState } from 'react';
 import { useValidContext } from '../utils';
 import { useEffect } from 'react';
-import { useCallContext, useCallingContext } from '../providers';
+import { useCallingContext } from '../providers';
 
 export type IncomingCallsContextType = {
   incomingCalls: Call[];
@@ -15,24 +15,27 @@ export const IncomingCallsContext = createContext<IncomingCallsContextType | und
 export const IncomingCallsProvider = (props: { children: React.ReactNode }): JSX.Element => {
   const [incomingCalls, setIncomingCalls] = useState<Call[]>([]);
   const { callAgent } = useCallingContext();
-  const { call } = useCallContext();
 
-  // Update incomingCalls whenever a new call is added or removed.
+  // Update `incomingCalls` whenever a new call is added or removed.
+  // Also configures an event on each call so that it removes itself from
+  // active calls.
   useEffect(() => {
     const onCallsUpdate: CollectionUpdatedEvent<Call> = () => {
-      setIncomingCalls(callAgent?.calls.filter((c: Call) => c.isIncoming) ?? []);
+      const validCalls = callAgent?.calls.filter((c: Call) => c.isIncoming) ?? [];
+      setIncomingCalls(validCalls);
+      validCalls.forEach((c) => {
+        c.on('callStateChanged', () => {
+          if (c.state !== 'Incoming') {
+            validCalls.splice(validCalls.indexOf(c), 1);
+            setIncomingCalls(validCalls);
+          }
+        });
+      });
     };
 
     callAgent?.on('callsUpdated', onCallsUpdate);
     return () => callAgent?.off('callsUpdated', onCallsUpdate);
   }, [callAgent, setIncomingCalls]);
-
-  // Remove the active call from incomingCalls.
-  useEffect(() => {
-    if (call) {
-      setIncomingCalls(callAgent?.calls.filter((c: Call) => c.isIncoming && c !== call) ?? []);
-    }
-  }, [call, callAgent, setIncomingCalls]);
 
   return <IncomingCallsContext.Provider value={{ incomingCalls }}>{props.children}</IncomingCallsContext.Provider>;
 };
