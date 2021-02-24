@@ -57,13 +57,45 @@ jobs:
         env:
           GH_TOKEN: ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
 
-      # Create a GitHub issue if the CI failed when running on the `main` branch
-      - name: Create issue if main branch CI failed
-        id: create-issue
-        if: failure() && github.ref == 'refs/heads/main'
-        uses: JasonEtco/create-an-issue@v2.4.0
+      - name: Package Group Calling Sample Artifact
+        if: github.ref == 'refs/heads/main'
+        run: npm run package
+        working-directory: ./samples/Calling
+
+      - name: Upload Group Calling Sample Artifact
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v2
         with:
-          filename: .github/failed_ci_build_template.md
-          update_existing: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          name: group-calling-sample
+          path: samples/Calling/dist
+
+      - name: Package One To One Calling Sample Artifact
+        if: github.ref == 'refs/heads/main'
+        run: npm run package
+        working-directory: ./samples/OneToOneCall
+
+      - name: Upload One To One Calling Sample Artifact
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v2
+        with:
+          name: group-calling-sample
+          path: samples/OneToOneCall/dist
+
+      - name: Package Group Chat Sample Artifact
+        if: github.ref == 'refs/heads/main'
+        run: npm run package
+        working-directory: ./samples/Chat
+
+      - name: Upload Group Chat Sample Artifact
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v2
+        with:
+          name: group-chat-sample
+          path: samples/Chat/dist
+
+      - name: Upload Private Preview Drop
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v2
+        with:
+          name: private-preview-drop
+          path: packages/communication-ui/dist

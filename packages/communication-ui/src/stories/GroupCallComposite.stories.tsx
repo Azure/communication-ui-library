@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
 import { Meta } from '@storybook/react/types-6-0';
 import { text } from '@storybook/addon-knobs';
-// import { v1 as createGUID } from 'uuid';
+import { v1 as createGUID } from 'uuid';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-administration';
 import { getDocs } from './docs/GroupCallCompositeDocs';
 import { GroupCall } from '../composites';
@@ -46,7 +46,7 @@ export const GroupCallComposite: () => JSX.Element = () => {
         const tokenResponse = await createUserToken(connectionString);
         setToken(tokenResponse.token);
         setUserId(tokenResponse.user.communicationUserId);
-        setGroupId('2753ec70-6aad-11eb-ac47-379f0e371aa6');
+        setGroupId(createGUID());
       } catch (e) {
         console.log('Please provide your connection string');
       }
