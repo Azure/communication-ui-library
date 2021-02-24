@@ -78,7 +78,7 @@ jobs:
         if: github.ref == 'refs/heads/main'
         uses: actions/upload-artifact@v2
         with:
-          name: group-calling-sample
+          name: one-to-one-calling-sample
           path: samples/OneToOneCall/dist
 
       - name: Package Group Chat Sample Artifact

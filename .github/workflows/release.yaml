@@ -1,0 +1,30 @@
+name: Release
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Group Calling Sample Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: group-calling-sample
+
+      - name: Download Group Chat Sample Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: group-chat-sample
+
+      - name: Download One To One Calling Sample Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: one-to-one-calling-sample
+
+      - name: Private Preview Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: private-preview-drop
