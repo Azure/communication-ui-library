@@ -1,21 +1,12 @@
 // © Microsoft Corporation. All rights reserved.
 import React, { useState } from 'react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
-// @ts-ignore silence the typescript error, we can only use commonjs to make storybook use this icon correctly
-import { svgIconStyles } from '@fluentui/react-northstar/dist/commonjs/themes/teams/components/SvgIcon/svgIconStyles';
-// @ts-ignore
-import { svgIconVariables } from '@fluentui/react-northstar/dist/commonjs/themes/teams/components/SvgIcon/svgIconVariables';
-// @ts-ignore
-import * as siteVariables from '@fluentui/react-northstar/dist/commonjs/themes/teams/siteVariables';
-import { Provider } from '@fluentui/react-northstar';
+import { Provider, teamsTheme } from '@fluentui/react-northstar';
 import { MediaControlsComponent } from '../../components';
 
 const importStatement = `
 import { MediaControlsComponent } from '@azure/communication-ui';
-import { svgIconStyles } from '@fluentui/react-northstar/dist/commonjs/themes/teams/components/SvgIcon/svgIconStyles';
-import { svgIconVariables } from '@fluentui/react-northstar/dist/commonjs/themes/teams/components/SvgIcon/svgIconVariables';
-import * as siteVariables from '@fluentui/react-northstar/dist/commonjs/themes/teams/siteVariables';
-import { Provider } from '@fluentui/react-northstar';
+import { Provider, teamsTheme } from '@fluentui/react-northstar';
 `;
 
 const MediaControlsExample: () => JSX.Element = () => {
@@ -156,18 +147,8 @@ const leaveCall = async (): Promise<void> => {
   console.log('leaveCall');
 };
 
-const iconTheme = {
-  componentStyles: {
-    SvgIcon: svgIconStyles
-  },
-  componentVariables: {
-    SvgIcon: svgIconVariables
-  },
-  siteVariables
-};
-
 return (
-  <Provider theme={iconTheme}>
+  <Provider theme={teamsTheme}>
     <MediaControlsComponent
       toggleMicrophone={toggleMicrophone}
       muteMicrophone={muteMicrophone}
@@ -193,20 +174,10 @@ return (
   </Provider>
 );`;
 
-const iconTheme = {
-  componentStyles: {
-    SvgIcon: svgIconStyles
-  },
-  componentVariables: {
-    SvgIcon: svgIconVariables
-  },
-  siteVariables
-};
-
 export const getDocs: () => JSX.Element = () => {
   return (
     <>
-      <Title>MediaControls</Title>
+      <Title>MediaControls!</Title>
       <Description>
         The MediaControls component displays buttons to toggle video, audio, screenshare, as well as a button to leave
         the call. Callbacks for each change are also passed in.
@@ -215,7 +186,7 @@ export const getDocs: () => JSX.Element = () => {
       <Source code={importStatement} />
       <Heading>Example</Heading>
       <Canvas>
-        <Provider theme={iconTheme}>
+        <Provider theme={teamsTheme}>
           <MediaControlsExample />
         </Provider>
       </Canvas>
