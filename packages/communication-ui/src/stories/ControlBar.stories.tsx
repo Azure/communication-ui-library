@@ -12,7 +12,7 @@ import {
   videoButtonProps
 } from '../components/ControlBar';
 import { boolean, object } from '@storybook/addon-knobs';
-// import { getDocs } from './docs/IncomingCallToastDocs';
+import { getDocs } from './docs/ControlBarDocs';
 
 const defaultOptionsMenuProps = {
   items: [
@@ -22,7 +22,7 @@ const defaultOptionsMenuProps = {
       iconProps: { iconName: 'LocationCircle' },
       subMenuProps: {
         items: [
-          { key: 'camera1', text: 'Full HD Webcam', title: 'Full HD Webcam', iconProps: { iconName: 'CheckMark' } },
+          { key: 'camera1', text: 'Full HD Webcam', title: 'Full HD Webcam', canCheck: true, isChecked: true },
           { key: 'camera2', text: 'Macbook Pro Webcam', title: 'Macbook Pro Webcam' }
         ]
       }
@@ -34,7 +34,7 @@ const defaultOptionsMenuProps = {
       subMenuProps: {
         items: [
           { key: 'mic1', text: 'Realtek HD Audio', title: 'Realtek HD Audio' },
-          { key: 'mic2', text: 'Macbook Pro Mic', title: 'Macbook Pro Mic', iconProps: { iconName: 'CheckMark' } }
+          { key: 'mic2', text: 'Macbook Pro Mic', title: 'Macbook Pro Mic', canCheck: true, isChecked: true }
         ]
       }
     }
@@ -62,8 +62,8 @@ export default {
   title: 'ACS Components/ControlBar',
   component: ControlBarComponent,
   parameters: {
-    // docs: {
-    //   page: () => getDocs()
-    // }
+    docs: {
+      page: () => getDocs()
+    }
   }
 } as Meta;

@@ -53,3 +53,14 @@ export { ParticipantStackItemComponent } from './ParticipantStackItem';
 export { CallConfiguration } from './CallConfiguration';
 export { StartCallButton } from './StartCallButton';
 export { IncomingCallModal, IncomingCallToast } from './IncomingCallAlerts';
+export {
+  ControlBar,
+  ControlButton,
+  CallControlBar,
+  videoButtonProps,
+  audioButtonProps,
+  screenShareButtonProps,
+  optionsButtonProps,
+  answerButtonProps,
+  hangupButtonProps
+} from './ControlBar';

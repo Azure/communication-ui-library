@@ -1,13 +1,13 @@
 // © Microsoft Corporation. All rights reserved.
 import {
+  createTheme,
   DefaultButton,
   getTheme,
-  loadTheme,
-  createTheme,
-  ITheme,
   IContextualMenuProps,
   IIconProps,
   IStyle,
+  ITheme,
+  loadTheme,
   mergeStyles,
   Stack
 } from '@fluentui/react';
@@ -22,7 +22,15 @@ import {
   MicOffIcon,
   MoreIcon
 } from '@fluentui/react-northstar';
-import React, { MouseEventHandler } from 'react';
+import React, { MouseEventHandler, useCallback } from 'react';
+import { connectFuncsToContext } from '../consumers/ConnectContext';
+import {
+  LocalDeviceSettingsContainerProps,
+  MapToLocalDeviceSettingsProps
+} from '../consumers/MapToLocalDeviceSettingsProps';
+import { MapToMediaControlsProps, MediaControlsContainerProps } from '../consumers/MapToMediaControlsProps';
+import { ErrorHandlingProps } from '../providers/ErrorProvider';
+import { propagateError } from '../utils/SDKUtils';
 
 const lightTheme: ITheme = createTheme({
   palette: {
@@ -62,7 +70,13 @@ export interface CustomStylesProps {
 }
 
 export interface ControlButtonStylesProps extends CustomStylesProps {
+  /**
+   * The flex container containing the elements inside a button.
+   */
   flexContainer?: IStyle;
+  /**
+   * Text label styles.
+   */
   label?: IStyle;
 }
 
@@ -240,3 +254,142 @@ export const ControlBar = (props: ControlBarProps): JSX.Element => {
     </Stack>
   );
 };
+
+export interface CallControlBarProps extends MediaControlsContainerProps {
+  /** Determines media control button layout. */
+  compressedMode: boolean;
+  /** Callback when call ends */
+  onEndCallClick(): void;
+}
+
+/**
+ * An Azure Calling Services Call Control Bar with built in call handling.
+ * @param props CallControlBarProps & ErrorHandlingProps & LocalDeviceSettingsContainerProps
+ */
+export const CallControlBar = (
+  props: CallControlBarProps & ErrorHandlingProps & LocalDeviceSettingsContainerProps
+): JSX.Element => {
+  const {
+    muteMicrophone,
+    stopScreenShare,
+    localVideoEnabled,
+    stopLocalVideo,
+    leaveCall,
+    onEndCallClick,
+    cameraPermission,
+    micPermission,
+    isRemoteScreenShareActive,
+    localVideoBusy,
+    toggleLocalVideo,
+    toggleMicrophone,
+    isMicrophoneActive,
+    isLocalScreenShareSupportedInBrowser,
+    toggleScreenShare,
+    isLocalScreenShareActive,
+    onErrorCallback,
+    videoDeviceList,
+    audioDeviceList,
+    videoDeviceInfo,
+    audioDeviceInfo,
+    updateLocalVideoStream,
+    updateAudioDeviceInfo
+  } = props;
+  const cameraDisabled = cameraPermission === 'Denied';
+  const micDisabled = micPermission === 'Denied';
+  const screenShareDisabled = isRemoteScreenShareActive;
+  const hangup = useCallback(async (): Promise<void> => {
+    await muteMicrophone();
+    await stopScreenShare();
+    await (localVideoEnabled && stopLocalVideo());
+    await leaveCall({ forEveryone: false });
+    onEndCallClick();
+  }, [muteMicrophone, stopScreenShare, localVideoEnabled, stopLocalVideo, leaveCall, onEndCallClick]);
+
+  const callOptionsMenu: IContextualMenuProps = {
+    items: [
+      {
+        key: '1',
+        name: 'Choose Camera',
+        iconProps: { iconName: 'LocationCircle' },
+        subMenuProps: {
+          items: videoDeviceList.map((item) => ({
+            key: item.id,
+            text: item.name,
+            title: item.name,
+            canCheck: true,
+            isChecked: videoDeviceInfo?.id === item.id,
+            onClick: () => updateLocalVideoStream(item)
+          }))
+        }
+      },
+      {
+        key: '2',
+        name: 'Choose Microphone',
+        iconProps: { iconName: 'LocationCircle' },
+        subMenuProps: {
+          items: audioDeviceList.map((item) => ({
+            key: item.id,
+            text: item.name,
+            title: item.name,
+            canCheck: true,
+            isChecked: audioDeviceInfo?.id === item.id,
+            onClick: () => updateAudioDeviceInfo(item)
+          }))
+        }
+      }
+    ]
+  };
+
+  return (
+    <ControlBar>
+      <ControlButton
+        {...videoButtonProps}
+        isToggled={!localVideoEnabled}
+        disabled={cameraDisabled || localVideoBusy}
+        onClick={() => {
+          toggleLocalVideo().catch((error) => {
+            propagateError(error, onErrorCallback);
+          });
+        }}
+      />
+      <ControlButton
+        {...audioButtonProps}
+        isToggled={!isMicrophoneActive}
+        disabled={micDisabled}
+        onClick={() => {
+          toggleMicrophone().catch((error) => {
+            propagateError(error, onErrorCallback);
+          });
+        }}
+      />
+      {isLocalScreenShareSupportedInBrowser() && (
+        <ControlButton
+          {...screenShareButtonProps}
+          isToggled={isLocalScreenShareActive}
+          disabled={screenShareDisabled}
+          onClick={() => {
+            toggleScreenShare().catch((error) => {
+              propagateError(error, onErrorCallback);
+            });
+          }}
+        />
+      )}
+      <ControlButton {...optionsButtonProps} isToggled={false} menuProps={callOptionsMenu} />
+      <ControlButton
+        {...hangupButtonProps}
+        isToggled={false}
+        onClick={() => {
+          hangup().catch((error) => {
+            propagateError(error, onErrorCallback);
+          });
+        }}
+      />
+    </ControlBar>
+  );
+};
+
+export const CallControlBarComponent = connectFuncsToContext(
+  CallControlBar,
+  MapToMediaControlsProps,
+  MapToLocalDeviceSettingsProps
+);
