@@ -6,25 +6,83 @@ on:
 
 jobs:
   release:
-    name: Release
+    name: upload_release
     runs-on: ubuntu-latest
     steps:
-      - name: Download Group Calling Sample Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: group-calling-sample
+      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
+      - uses: actions/checkout@v2
 
-      - name: Download Group Chat Sample Artifact
-        uses: actions/upload-artifact@v2
+      # Ensure node version is great enough
+      - name: Use Node.js v12.x
+        uses: actions/setup-node@v1
         with:
-          name: group-chat-sample
+          node-version: '12.x'
 
-      - name: Download One To One Calling Sample Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: one-to-one-calling-sample
+      # Install dependencies
+      - name: Install rush
+        run: npm install -g @microsoft/rush
+      - name: Install dependencies
+        run: rush install
 
-      - name: Private Preview Artifact
-        uses: actions/upload-artifact@v2
+      # Builds
+      - name: Build Packages and Samples
+        run: rush build
+
+      - name: Upload Group Calling Sample Artifact
+        run: npm run package
+        working-directory: ./samples/Calling
+
+      - name: Package One To One Calling Sample Artifact
+        run: npm run package
+        working-directory: ./samples/OneToOneCall
+
+      - name: Package Group Chat Sample Artifact
+        run: npm run package
+        working-directory: ./samples/Chat
+
+      - name: Archive builds
+        run: |
+          zip -r group-calling.zip ./samples/Calling/dist
+          zip -r group-chat.zip ./samples/Chat/dist
+          zip -r one-to-one-calling.zip ./samples/OneToOneCall/dist
+          zip -r private-preview.zip ./packages/communication-ui/dist
+
+      - name: Upload Group-Calling Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: private-preview-drop
+          upload_url: ${{ steps.upload_release.outputs.upload_url }}
+          asset_path: ./group-calling.zip
+          asset_name: group-calling.zip
+          asset_content_type: application/zip
+
+      - name: Upload Group-Chat Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.upload_release.outputs.upload_url }}
+          asset_path: ./group-chat.zip
+          asset_name: group-chat.zip
+          asset_content_type: application/zip
+
+      - name: Upload One-To-One-Calling Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.upload_release.outputs.upload_url }}
+          asset_path: ./one-to-one-calling.zip
+          asset_name: one-to-one-calling.zip
+          asset_content_type: application/zip
+
+      - name: Upload Private-Preview Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.upload_release.outputs.upload_url }}
+          asset_path: ./private-preview.zip
+          asset_name: private-preview.zip
+          asset_content_type: application/zip
