@@ -18,7 +18,7 @@ export interface EndCallProps {
   homeHandler(): void;
 }
 
-export default (props: EndCallProps): JSX.Element => {
+export default function EndCall(props: EndCallProps): JSX.Element {
   const leftCall = 'You left the call';
   const goHomePage = 'Go to homepage';
   const rejoinCall = 'Rejoin call';
@@ -42,4 +42,4 @@ export default (props: EndCallProps): JSX.Element => {
       </Stack>
     </Stack>
   );
-};
+}

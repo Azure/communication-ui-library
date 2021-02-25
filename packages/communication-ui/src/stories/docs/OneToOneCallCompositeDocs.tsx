@@ -6,27 +6,14 @@ import { OneToOneCall } from '../../composites/OneToOneCall/';
 
 const importStatement = `
 import { OneToOneCall } from '@azure/communication-ui';
-import { Provider } from '@fluentui/react-northstar';
+import { Provider, teamsTheme } from '@fluentui/react-northstar';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-administration';
-import { svgIconStyles } from '@fluentui/react-northstar/dist/commonjs/themes/teams/components/SvgIcon/svgIconStyles';
-import { svgIconVariables } from '@fluentui/react-northstar/dist/commonjs/themes/teams/components/SvgIcon/svgIconVariables';
-import * as siteVariables from '@fluentui/react-northstar/dist/commonjs/themes/teams/siteVariables';
 `;
 
 const exampleCode = `
 const containerStyle = {
   width: '90vw',
   height: '90vh'
-};
-
-const iconTheme = {
-  componentStyles: {
-    SvgIcon: svgIconStyles
-  },
-  componentVariables: {
-    SvgIcon: svgIconVariables
-  },
-  siteVariables
 };
 
 /**
@@ -49,7 +36,7 @@ export const OneToOneCallCompositeComponent: () => JSX.Element = () => {
   const [userId, setUserId] = useState<string>('CALLEE_ID');
 
   return (
-    <Provider theme={iconTheme} style={containerStyle}>
+    <Provider theme={teamsTheme} style={containerStyle}>
       <OneToOneCall displayName={'YOUR_DISPLAY_NAME'} calleeId={userId} token={token} />
     </Provider>
   )

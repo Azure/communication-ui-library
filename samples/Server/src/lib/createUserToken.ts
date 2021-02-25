@@ -1,3 +1,5 @@
+// © Microsoft Corporation. All rights reserved.
+
 import { CommunicationIdentityClient, CommunicationUserToken, TokenScope } from '@azure/communication-administration';
 import { getResourceConnectionString } from './envHelper';
 

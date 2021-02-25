@@ -1,3 +1,5 @@
+// © Microsoft Corporation. All rights reserved.
+
 import express from 'express';
 import cors from 'cors';
 import createError from 'http-errors';
@@ -19,7 +21,7 @@ app.use(logger('tiny'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static('build'));
 
 app.use('/createThread', cors(), createThread);
 app.use('/addUser', cors(), addUser);

@@ -9,7 +9,7 @@ import { MediaGalleryTileComponent } from '@azure/communication-ui';
 import { MapToRemoteVideoProps, MapToLocalVideoProps } from '@azure/communication-ui';
 import { mergeStyles, Stack } from '@fluentui/react';
 import ScreenShareComponent from './ScreenShare';
-import { gridStyle } from './styles/MediaGallery.styles';
+import { aspectRatioBoxContentStyle, aspectRatioBoxStyle, gridStyle } from './styles/MediaGallery.styles';
 import { ErrorHandlingProps, WithErrorHandling } from '@azure/communication-ui';
 
 export const MediaGalleryComponentBase = (props: MediaGalleryContainerProps): JSX.Element => {
@@ -31,11 +31,14 @@ export const MediaGalleryComponentBase = (props: MediaGalleryContainerProps): JS
         const stream = participant.videoStream;
 
         return (
-          <Stack horizontalAlign="center" verticalAlign="center" className={gridStyle} key={key} grow>
-            <RemoteGridLayoutTileWithData label={label} stream={stream} scalingMode={'Crop'} />
+          <Stack horizontalAlign="center" verticalAlign="center" className={mergeStyles(aspectRatioBoxStyle)} key={key}>
+            <Stack className={mergeStyles(aspectRatioBoxContentStyle)}>
+              <RemoteGridLayoutTileWithData label={label} avatarName={label} stream={stream} scalingMode={'Crop'} />
+            </Stack>
           </Stack>
         );
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [remoteParticipants, screenShareStream]);
 
   const gridLayoutRemoteParticipants = useMemo(() => {
@@ -45,22 +48,23 @@ export const MediaGalleryComponentBase = (props: MediaGalleryContainerProps): JS
 
       return (
         <Stack horizontalAlign="center" verticalAlign="center" className={gridStyle} key={key} grow>
-          <RemoteGridLayoutTileWithData label={label} stream={stream} scalingMode={'Crop'} />
+          <RemoteGridLayoutTileWithData label={label} avatarName={label} stream={stream} scalingMode={'Crop'} />
         </Stack>
       );
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [remoteParticipants]);
 
   const layoutLocalParticipant = useMemo(() => {
     return (
-      <Stack horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
-        <LocalGridLayoutTileWithData
-          label={localParticipant.displayName}
-          stream={localParticipant.videoStream}
-          scalingMode={'Crop'}
-        />
-      </Stack>
+      <LocalGridLayoutTileWithData
+        label={localParticipant.displayName}
+        stream={localParticipant.videoStream}
+        scalingMode={'Crop'}
+        avatarName={localParticipant.displayName}
+      />
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localParticipant]);
 
   return screenShareStream !== undefined ? (
@@ -71,15 +75,18 @@ export const MediaGalleryComponentBase = (props: MediaGalleryContainerProps): JS
           width: '25%'
         })}
       >
-        <Stack grow className={mergeStyles({ height: '100%' })}>
-          {layoutLocalParticipant}
+        <Stack grow className={mergeStyles({ height: '100%', overflow: 'auto' })}>
+          <Stack horizontalAlign="center" verticalAlign="center" className={mergeStyles(aspectRatioBoxStyle)}>
+            <Stack className={mergeStyles(aspectRatioBoxContentStyle)}>{layoutLocalParticipant}</Stack>
+          </Stack>
           {sidePanelRemoteParticipants}
         </Stack>
       </div>
       <div
         className={mergeStyles({
           height: '100%',
-          width: '75%'
+          width: '75%',
+          position: 'relative'
         })}
       >
         <ScreenShareComponent screenShareScalingMode={'Fit'} screenShareStream={screenShareStream} />
@@ -87,7 +94,9 @@ export const MediaGalleryComponentBase = (props: MediaGalleryContainerProps): JS
     </>
   ) : (
     <GridLayoutComponent>
-      {layoutLocalParticipant}
+      <Stack horizontalAlign="center" verticalAlign="center" className={mergeStyles(gridStyle)} grow>
+        {layoutLocalParticipant}
+      </Stack>
       {gridLayoutRemoteParticipants}
     </GridLayoutComponent>
   );

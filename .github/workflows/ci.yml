@@ -3,9 +3,9 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -31,6 +31,10 @@ jobs:
       - name: Install dependencies
         run: rush install
 
+      # Perform lint check
+      - name: Run linter
+        run: rush lint
+
       # Builds
       - name: Build Packages and Samples
         run: rush build
@@ -53,3 +57,45 @@ jobs:
         env:
           GH_TOKEN: ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
 
+      - name: Package Group Calling Sample Artifact
+        if: github.ref == 'refs/heads/main'
+        run: npm run package
+        working-directory: ./samples/Calling
+
+      - name: Upload Group Calling Sample Artifact
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v2
+        with:
+          name: group-calling-sample
+          path: samples/Calling/dist
+
+      - name: Package One To One Calling Sample Artifact
+        if: github.ref == 'refs/heads/main'
+        run: npm run package
+        working-directory: ./samples/OneToOneCall
+
+      - name: Upload One To One Calling Sample Artifact
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v2
+        with:
+          name: group-calling-sample
+          path: samples/OneToOneCall/dist
+
+      - name: Package Group Chat Sample Artifact
+        if: github.ref == 'refs/heads/main'
+        run: npm run package
+        working-directory: ./samples/Chat
+
+      - name: Upload Group Chat Sample Artifact
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v2
+        with:
+          name: group-chat-sample
+          path: samples/Chat/dist
+
+      - name: Upload Private Preview Drop
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v2
+        with:
+          name: private-preview-drop
+          path: packages/communication-ui/dist

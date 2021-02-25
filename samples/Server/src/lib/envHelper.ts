@@ -1,4 +1,5 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// © Microsoft Corporation. All rights reserved.
+
 const appSettings = require('../../appsettings.json');
 
 export const getResourceConnectionString = (): string => {

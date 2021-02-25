@@ -1,12 +1,12 @@
 // © Microsoft Corporation. All rights reserved.
 
 import React, { useEffect, useState } from 'react';
-import { initializeIcons, loadTheme } from '@fluentui/react';
+import { initializeIcons } from '@fluentui/react';
 
 import EndCall from './EndCall';
 import ConfigurationScreen from './ConfigurationScreen';
 import GroupCall from './GroupCall';
-import HomeScreen from './HomeScreen';
+import { HomeScreen } from './HomeScreen';
 import { v1 as createGUID } from 'uuid';
 import { CallingProvider, CallProvider, CommunicationUiErrorInfo, ErrorProvider } from '@azure/communication-ui';
 import {
@@ -28,7 +28,6 @@ const isMobileSession = (): boolean =>
 const sdkVersion = require('../../package.json').dependencies['@azure/communication-calling'];
 const lastUpdated = `Last Updated ${getBuildTime()} with @azure/communication-calling:${sdkVersion}`;
 
-loadTheme({});
 initializeIcons();
 
 // Get display name from local storage or generate a new random display name

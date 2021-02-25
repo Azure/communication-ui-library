@@ -12,9 +12,7 @@ import {
   separatorStyles
 } from './styles/Header.styles';
 
-import { CommandPanelTypes } from './CommandPanel';
-import { MINI_HEADER_WINDOW_WIDTH } from '../constants';
-import MediaControls from './MediaControls';
+import { CommandPanelTypes, MediaControls, MINI_HEADER_WINDOW_WIDTH } from '@azure/communication-ui';
 
 export interface HeaderProps {
   selectedPane: CommandPanelTypes;
@@ -23,7 +21,7 @@ export interface HeaderProps {
   screenWidth: number;
 }
 
-export default (props: HeaderProps): JSX.Element => {
+export const Header = (props: HeaderProps): JSX.Element => {
   const togglePeople = (selectedPane: string, setSelectedPane: (pane: CommandPanelTypes) => void): void => {
     return selectedPane !== CommandPanelTypes.People
       ? setSelectedPane(CommandPanelTypes.People)
