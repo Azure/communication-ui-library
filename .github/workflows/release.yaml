@@ -41,7 +41,7 @@ jobs:
         working-directory: ./samples/Chat
 
       - name: Package Private-Preview Artifact
-        run: npm package
+        run: npm pack
         working-directory: ./packages/communication-ui/
 
       - name: Archive builds
