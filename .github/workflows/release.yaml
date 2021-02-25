@@ -29,15 +29,15 @@ jobs:
         run: rush build
 
       - name: Package Group Calling Sample Artifact
-        run: npm run package
+        run: rushx package
         working-directory: ./samples/Calling
 
       - name: Package One To One Calling Sample Artifact
-        run: npm run package
+        run: rushx package
         working-directory: ./samples/OneToOneCall
 
       - name: Package Group Chat Sample Artifact
-        run: npm run package
+        run: rushx package
         working-directory: ./samples/Chat
 
       - name: Package Private-Preview Artifact

@@ -4,29 +4,11 @@ Welcome! Thank you in advance for trying out the private preview of the Azure AC
 
 ## UI SDK Storybook
 
-We recommend running the storybook first to get an overview of the goodness available inside the npm package.
+We recommend looking at the storybook first to get an overview of the goodness available inside the npm package.
 
 ### Viewing the Storybook
 
-There are two ways to view the storybook:
-
-1. Simple: double click the `index.html` storybook file inside `storybook-static/` folder.
-   **Note:** Due to limitations with the SDK, some features will not work inside the Storybook because the ACS SDK requires the webpage to be served over https.
-2. Serve over https:
-   - Ensure [Node.Js](https://nodejs.org/en/) and [npm](https://www.npmjs.com/) is installed in your system. You can check by running `npm -v` and ensure a version is returned.
-   - Navigate to where you have downloaded this folder
-     ```
-     cd <PATH_TO_FOLDER>
-     ```
-   - Install [https-localhost](https://www.npmjs.com/package/https-localhost) npm package that will be used to serve the storybook over https.
-     ```
-     npm i -g --only=prod https-localhost
-     ```
-   - Start the server
-     ```
-     serve ./storybook-static/
-     ```
-   - View the storybook at: https://localhost/
+It is available publicly here [storybook](https://azure.github.io/communication-ui-sdk)
 
 ### Using the Storybook
 
