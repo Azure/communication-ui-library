@@ -5,7 +5,6 @@ import SendBox from './SendBox';
 import CommandPanel, { CommandPanelTypes } from './CommandPanel';
 import LocalPreview from './LocalPreview';
 import LocalSettings, { LocalDeviceSettingsComponent } from './LocalSettings';
-import MediaControls, { MediaControlsComponent } from './MediaControls';
 import MediaGallery1To1, { MediaGallery1To1Component } from './MediaGallery1To1';
 import MemberItem from './MemberItem';
 import ParticipantStack, { ParticipantStackComponent } from './ParticipantStack';
@@ -23,8 +22,6 @@ export {
   LocalDeviceSettingsComponent,
   LocalPreview,
   LocalSettings,
-  MediaControls,
-  MediaControlsComponent,
   MediaGallery1To1,
   MediaGallery1To1Component,
   MemberItem,
