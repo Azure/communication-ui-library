@@ -18,13 +18,7 @@ const IncomingCallAlertACSWrapper = (props: IncomingCallToastProps & { call: Cal
   const [callerName, setCallerName] = useState<string | undefined>(undefined);
 
   useEffect(() => {
-    call.on('remoteParticipantsUpdated', (e): void => {
-      e.added.forEach((participant) => {
-        participant.on('participantStateChanged', () => {
-          setCallerName(participant.displayName);
-        });
-      });
-    });
+    setCallerName(call.remoteParticipants[0]?.displayName);
   }, [call]);
 
   return <IncomingCallToast {...props} callerName={callerName} />;

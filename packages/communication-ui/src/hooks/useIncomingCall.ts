@@ -11,7 +11,7 @@ export type UseIncomingCallType = {
 
 export const useIncomingCall = (): UseIncomingCallType => {
   const { incomingCalls } = useIncomingCallsContext();
-  const { setCall, localVideoStream, setScreenShareStream } = useCallContext();
+  const { setCall, localVideoStream, setScreenShareStream, screenShareStream } = useCallContext();
 
   /** Accept an incoming calls and set it as the active call. */
   const accept = async (incomingCall: Call, acceptCallOptions?: AcceptCallOptions): Promise<void> => {
@@ -36,7 +36,13 @@ export const useIncomingCall = (): UseIncomingCallType => {
             if (addedStream.isAvailable) {
               setScreenShareStream({ stream: addedStream, user: participant });
             } else {
-              setScreenShareStream(undefined);
+              // Prevents race condition when participant A turns on screen sharing
+              // and participant B turns off screen sharing at the same time.
+              // Ensures that the screen sharing stream is turned off only when
+              // the current screen sharing participant turns it off.
+              if (screenShareStream?.user.identifier === participant.identifier) {
+                setScreenShareStream(undefined);
+              }
             }
           });
           if (addedStream.isAvailable) {

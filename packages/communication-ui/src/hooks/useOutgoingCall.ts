@@ -12,7 +12,7 @@ export type UseOutgoingCallType = {
 
 export const useOutgoingCall = (): UseOutgoingCallType => {
   const { callAgent } = useCallingContext();
-  const { call, setCall, setCallState, localVideoStream, setScreenShareStream } = useCallContext();
+  const { call, setCall, setCallState, localVideoStream, setScreenShareStream, screenShareStream } = useCallContext();
 
   useEffect(() => {
     const updateCallState = (): void => {
@@ -56,7 +56,13 @@ export const useOutgoingCall = (): UseOutgoingCallType => {
             if (addedStream.isAvailable) {
               setScreenShareStream({ stream: addedStream, user: participant });
             } else {
-              setScreenShareStream(undefined);
+              // Prevents race condition when participant A turns on screen sharing
+              // and participant B turns off screen sharing at the same time.
+              // Ensures that the screen sharing stream is turned off only when
+              // the current screen sharing participant turns it off.
+              if (screenShareStream?.user.identifier === participant.identifier) {
+                setScreenShareStream(undefined);
+              }
             }
           });
           if (addedStream.isAvailable) {
