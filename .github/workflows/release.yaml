@@ -40,12 +40,16 @@ jobs:
         run: npm run package
         working-directory: ./samples/Chat
 
+      - name: Package Private-Preview Artifact
+        run: npm package
+        working-directory: ./packages/communication-ui/
+
       - name: Archive builds
         run: |
           7z a group-calling.zip ./samples/Calling/dist/*
           7z a group-chat.zip ./samples/Chat/dist/*
           7z a one-to-one-calling.zip ./samples/OneToOneCall/dist/*
-          7z a private-preview.zip ./packages/communication-ui/dist/*
+          7z a private-preview.zip ./packages/communication-ui/private-preview/*
 
       - name: Publish Group Calling Artifact
         uses: softprops/action-gh-release@v1
