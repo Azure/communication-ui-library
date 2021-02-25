@@ -49,7 +49,7 @@ export const useOutgoingCall = (): UseOutgoingCallType => {
     // Listen to Remote Participant screen share stream
     // Should we move this logic to CallProvider ?
     newCall.remoteParticipants.forEach((participant) => {
-      newCall.remoteParticipants[0].on('videoStreamsUpdated', (e) => {
+      participant.on('videoStreamsUpdated', (e) => {
         e.added.forEach((addedStream) => {
           if (addedStream.type === 'Video') return;
           addedStream.on('availabilityChanged', () => {
