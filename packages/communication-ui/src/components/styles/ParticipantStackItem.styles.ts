@@ -1,5 +1,5 @@
 // © Microsoft Corporation. All rights reserved.
-import { getTheme, IPersonaStyles, mergeStyles } from '@fluentui/react';
+import { IPersonaStyles, mergeStyles } from '@fluentui/react';
 import { CSSProperties } from 'react';
 
 export const itemStyles: Partial<IPersonaStyles> = {
@@ -9,9 +9,6 @@ export const itemStyles: Partial<IPersonaStyles> = {
     alignSelf: 'stretch',
     height: 'auto',
     width: '12.5rem'
-  },
-  primaryText: {
-    color: getTheme().palette.black
   }
 };
 
