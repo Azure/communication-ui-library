@@ -12,22 +12,17 @@ exports[`storybook snapshot tests Storyshots ACS Components/CameraSettings Camer
   }
 >
   <div
-    className="root-0"
+    className="wrapper root-0"
     style={
       Object {
-        "display": "flex",
+        "display": "inherit",
       }
     }
   >
     <div
-      className="ui-provider a b c d e f g h i j k l m n o p q r s t u v w x y z ab ac ae af ag ah ai aj ak"
+      className="wrapper"
       data-uses-unhanded-props={true}
       dir="ltr"
-      style={
-        Object {
-          "display": "flex",
-        }
-      }
     >
       <div
         className="ms-Dropdown-container"
@@ -98,22 +93,17 @@ exports[`storybook snapshot tests Storyshots ACS Components/ErrorBar Error Bar C
   }
 >
   <div
-    className="root-0"
+    className="wrapper root-0"
     style={
       Object {
-        "display": "flex",
+        "display": "inherit",
       }
     }
   >
     <div
-      className="ui-provider a b c d e f g h i j k l m n o p q r s t u v w x y z ab ac ae af ag ah ai aj ak"
+      className="wrapper"
       data-uses-unhanded-props={true}
       dir="ltr"
-      style={
-        Object {
-          "display": "flex",
-        }
-      }
     >
       <div
         aria-describedby="MessageBar0"
@@ -200,22 +190,17 @@ exports[`storybook snapshot tests Storyshots ACS Components/GridLayout Grid Layo
   }
 >
   <div
-    className="root-0"
+    className="wrapper root-0"
     style={
       Object {
-        "display": "flex",
+        "display": "inherit",
       }
     }
   >
     <div
-      className="ui-provider a b c d e f g h i j k l m n o p q r s t u v w x y z ab ac ae af ag ah ai aj ak"
+      className="wrapper"
       data-uses-unhanded-props={true}
       dir="ltr"
-      style={
-        Object {
-          "display": "flex",
-        }
-      }
     >
       <div
         style={
@@ -409,22 +394,17 @@ exports[`storybook snapshot tests Storyshots ACS Components/IncomingCallModal In
   }
 >
   <div
-    className="root-0"
+    className="wrapper root-0"
     style={
       Object {
-        "display": "flex",
+        "display": "inherit",
       }
     }
   >
     <div
-      className="ui-provider a b c d e f g h i j k l m n o p q r s t u v w x y z ab ac ae af ag ah ai aj ak"
+      className="wrapper"
       data-uses-unhanded-props={true}
       dir="ltr"
-      style={
-        Object {
-          "display": "flex",
-        }
-      }
     >
       <span
         className="ms-layer"
@@ -829,22 +809,17 @@ exports[`storybook snapshot tests Storyshots ACS Components/IncomingCallToast In
   }
 >
   <div
-    className="root-0"
+    className="wrapper root-0"
     style={
       Object {
-        "display": "flex",
+        "display": "inherit",
       }
     }
   >
     <div
-      className="ui-provider a b c d e f g h i j k l m n o p q r s t u v w x y z ab ac ae af ag ah ai aj ak"
+      className="wrapper"
       data-uses-unhanded-props={true}
       dir="ltr"
-      style={
-        Object {
-          "display": "flex",
-        }
-      }
     >
       <div
         className="ms-Stack css-95 css-2"
@@ -1010,22 +985,17 @@ exports[`storybook snapshot tests Storyshots ACS Components/LocalDeviceSettings 
   }
 >
   <div
-    className="root-0"
+    className="wrapper root-0"
     style={
       Object {
-        "display": "flex",
+        "display": "inherit",
       }
     }
   >
     <div
-      className="ui-provider a b c d e f g h i j k l m n o p q r s t u v w x y z ab ac ae af ag ah ai aj ak"
+      className="wrapper"
       data-uses-unhanded-props={true}
       dir="ltr"
-      style={
-        Object {
-          "display": "flex",
-        }
-      }
     >
       <div
         className="ms-Stack css-52 css-2"
@@ -1154,22 +1124,17 @@ exports[`storybook snapshot tests Storyshots ACS Components/MediaGallery1To1 Med
   }
 >
   <div
-    className="root-0"
+    className="wrapper root-0"
     style={
       Object {
-        "display": "flex",
+        "display": "inherit",
       }
     }
   >
     <div
-      className="ui-provider a b c d e f g h i j k l m n o p q r s t u v w x y z ab ac ae af ag ah ai aj ak"
+      className="wrapper"
       data-uses-unhanded-props={true}
       dir="ltr"
-      style={
-        Object {
-          "display": "flex",
-        }
-      }
     >
       <div
         style={
@@ -1278,22 +1243,17 @@ exports[`storybook snapshot tests Storyshots ACS Components/MediaGalleryTile Med
   }
 >
   <div
-    className="root-0"
+    className="wrapper root-0"
     style={
       Object {
-        "display": "flex",
+        "display": "inherit",
       }
     }
   >
     <div
-      className="ui-provider a b c d e f g h i j k l m n o p q r s t u v w x y z ab ac ae af ag ah ai aj ak"
+      className="wrapper"
       data-uses-unhanded-props={true}
       dir="ltr"
-      style={
-        Object {
-          "display": "flex",
-        }
-      }
     >
       <div
         style={
@@ -1360,22 +1320,17 @@ exports[`storybook snapshot tests Storyshots ACS Components/MicrophoneSettings M
   }
 >
   <div
-    className="root-0"
+    className="wrapper root-0"
     style={
       Object {
-        "display": "flex",
+        "display": "inherit",
       }
     }
   >
     <div
-      className="ui-provider a b c d e f g h i j k l m n o p q r s t u v w x y z ab ac ae af ag ah ai aj ak"
+      className="wrapper"
       data-uses-unhanded-props={true}
       dir="ltr"
-      style={
-        Object {
-          "display": "flex",
-        }
-      }
     >
       <div
         className="ms-Dropdown-container"
@@ -1446,22 +1401,17 @@ exports[`storybook snapshot tests Storyshots ACS Components/ParticipantStack Par
   }
 >
   <div
-    className="root-0"
+    className="wrapper root-0"
     style={
       Object {
-        "display": "flex",
+        "display": "inherit",
       }
     }
   >
     <div
-      className="ui-provider a b c d e f g h i j k l m n o p q r s t u v w x y z ab ac ae af ag ah ai aj ak"
+      className="wrapper"
       data-uses-unhanded-props={true}
       dir="ltr"
-      style={
-        Object {
-          "display": "flex",
-        }
-      }
     >
       <div
         className="ms-Stack css-85 css-2"
@@ -1724,22 +1674,17 @@ exports[`storybook snapshot tests Storyshots ACS Components/ParticipantStackItem
   }
 >
   <div
-    className="root-0"
+    className="wrapper root-0"
     style={
       Object {
-        "display": "flex",
+        "display": "inherit",
       }
     }
   >
     <div
-      className="ui-provider a b c d e f g h i j k l m n o p q r s t u v w x y z ab ac ae af ag ah ai aj ak"
+      className="wrapper"
       data-uses-unhanded-props={true}
       dir="ltr"
-      style={
-        Object {
-          "display": "flex",
-        }
-      }
     >
       <div
         onContextMenu={[Function]}
@@ -1824,22 +1769,17 @@ exports[`storybook snapshot tests Storyshots ACS Components/ReadReceipt Read Rec
   }
 >
   <div
-    className="root-0"
+    className="wrapper root-0"
     style={
       Object {
-        "display": "flex",
+        "display": "inherit",
       }
     }
   >
     <div
-      className="ui-provider a b c d e f g h i j k l m n o p q r s t u v w x y z ab ac ae af ag ah ai aj ak"
+      className="wrapper"
       data-uses-unhanded-props={true}
       dir="ltr"
-      style={
-        Object {
-          "display": "flex",
-        }
-      }
     >
       <div
         className="ms-TooltipHost root-2"
@@ -1883,22 +1823,17 @@ exports[`storybook snapshot tests Storyshots ACS Components/SendBox Send Box Sto
   }
 >
   <div
-    className="root-0"
+    className="wrapper root-0"
     style={
       Object {
-        "display": "flex",
+        "display": "inherit",
       }
     }
   >
     <div
-      className="ui-provider a b c d e f g h i j k l m n o p q r s t u v w x y z ab ac ae af ag ah ai aj ak"
+      className="wrapper"
       data-uses-unhanded-props={true}
       dir="ltr"
-      style={
-        Object {
-          "display": "flex",
-        }
-      }
     >
       <div
         style={
@@ -1981,22 +1916,17 @@ exports[`storybook snapshot tests Storyshots ACS Components/TypingIndicator Typi
   }
 >
   <div
-    className="root-0"
+    className="wrapper root-0"
     style={
       Object {
-        "display": "flex",
+        "display": "inherit",
       }
     }
   >
     <div
-      className="ui-provider a b c d e f g h i j k l m n o p q r s t u v w x y z ab ac ae af ag ah ai aj ak"
+      className="wrapper"
       data-uses-unhanded-props={true}
       dir="ltr"
-      style={
-        Object {
-          "display": "flex",
-        }
-      }
     >
       <div
         className="css-87"
@@ -2034,22 +1964,17 @@ exports[`storybook snapshot tests Storyshots ACS Composites/GroupCall Group Call
   }
 >
   <div
-    className="root-0"
+    className="wrapper root-0"
     style={
       Object {
-        "display": "flex",
+        "display": "inherit",
       }
     }
   >
     <div
-      className="ui-provider a b c d e f g h i j k l m n o p q r s t u v w x y z ab ac ae af ag ah ai aj ak"
+      className="wrapper"
       data-uses-unhanded-props={true}
       dir="ltr"
-      style={
-        Object {
-          "display": "flex",
-        }
-      }
     >
       <div
         style={
@@ -2082,26 +2007,17 @@ exports[`storybook snapshot tests Storyshots ACS Composites/GroupChat Group Chat
   }
 >
   <div
-    className="root-0"
+    className="wrapper root-0"
     style={
       Object {
-        "display": "flex",
-        "height": "100%",
-        "width": "100%",
+        "display": "inherit",
       }
     }
   >
     <div
-      className="ui-provider a b c d e f g h i j k l m n o p q r s t u v w x y z ab ac ae af ag ah ai aj ak"
+      className="wrapper"
       data-uses-unhanded-props={true}
       dir="ltr"
-      style={
-        Object {
-          "display": "flex",
-          "height": "100%",
-          "width": "100%",
-        }
-      }
     >
       <div
         style={
@@ -2135,26 +2051,19 @@ exports[`storybook snapshot tests Storyshots ACS Composites/OneToOneCall One To 
   }
 >
   <div
-    className="root-0"
+    className="wrapper root-0"
     style={
       Object {
-        "display": "flex",
+        "display": "inherit",
       }
     }
   >
     <div
-      className="ui-provider a b c d e f g h i j k l m n o p q r s t u v w x y z ab ac ae af ag ah ai aj ak"
+      className="wrapper"
       data-uses-unhanded-props={true}
       dir="ltr"
-      style={
-        Object {
-          "display": "flex",
-        }
-      }
     >
       <div
-        className="ui-provider a b c d e f g h i j k l m n o p q r s t u v w x y z ab ac ae af ag ah ai aj ak"
-        data-uses-unhanded-props={true}
         style={
           Object {
             "height": "90vh",
