@@ -1,15 +1,15 @@
 // © Microsoft Corporation. All rights reserved.
 
 import { HangupCallOptions, PermissionState as DevicePermissionState } from '@azure/communication-calling';
-import { useCallContext, useCallingContext } from '../providers';
-import useSubscribeToDevicePermission from '../hooks/useSubscribeToDevicePermission';
-import useLocalVideo from '../hooks/useLocalVideo';
-import { useMicrophone } from '../hooks/useMicrophone';
-import useScreenShare from '../hooks/useScreenShare';
-import useSubscribeToVideoDeviceList from '../hooks/useSubscribeToVideoDeviceList';
-import { isMobileSession } from '../utils';
-import { useGroupCall } from '../hooks';
-import { CommunicationUiErrorCode, CommunicationUiError } from '../types/CommunicationUiError';
+import { useCallContext, useCallingContext } from '../../../providers';
+import useSubscribeToDevicePermission from '../../../hooks/useSubscribeToDevicePermission';
+import useLocalVideo from '../../../hooks/useLocalVideo';
+import { useMicrophone } from '../../../hooks/useMicrophone';
+import useScreenShare from '../../../hooks/useScreenShare';
+import useSubscribeToVideoDeviceList from '../../../hooks/useSubscribeToVideoDeviceList';
+import { isMobileSession } from '../../../utils';
+import { useGroupCall } from '../../../hooks';
+import { CommunicationUiErrorCode, CommunicationUiError } from '../../../types/CommunicationUiError';
 import { useCallback } from 'react';
 
 export type MediaControlsContainerProps = {
