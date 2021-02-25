@@ -8,7 +8,7 @@ import {
   mainContainerStyle,
   verticalStackStyle
 } from './styles/CallConfiguration.styles';
-import { LocalPreview } from '../../components';
+import { LocalPreview } from './LocalPreview';
 import { SetupContainerProps } from '../../consumers';
 
 export interface CallConfigurationProps extends SetupContainerProps {
