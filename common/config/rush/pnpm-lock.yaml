@@ -15,6 +15,7 @@ dependencies:
   '@fluentui/react-theme-provider': 0.18.4_7780220a916877297c987d702313b31d
   '@mdx-js/react': 1.6.22_react@16.14.0
   '@rush-temp/acs-calling-sample': file:projects/acs-calling-sample.tgz_570bf42e92a70fb216c5cd4d5ed668ef
+  '@rush-temp/acs-chat-declarative': file:projects/acs-chat-declarative.tgz
   '@rush-temp/acs-chat-sample': file:projects/acs-chat-sample.tgz_40b0c9f7a7a0fac66e4b6fcf06de2a42
   '@rush-temp/acs-one-to-one-call-sample': file:projects/acs-one-to-one-call-sample.tgz_570bf42e92a70fb216c5cd4d5ed668ef
   '@rush-temp/acs-server-sample': file:projects/acs-server-sample.tgz
@@ -81,6 +82,7 @@ dependencies:
   express: 4.16.4
   http-errors: 1.6.3
   husky: 4.3.8
+  immer: 8.0.1
   jest: 26.6.0_ts-node@9.1.1
   jest-fetch-mock: 3.0.3
   jest-junit: 12.0.0
@@ -10917,6 +10919,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-Vs/gxoM4DqNAYR7pugIxi0Xc8XAun/uy7AQu4fLLqaTBHxjOP9pJ266Q9MWA/ly4z6rAFZbvViOtihxUZ7O28A==
+  /immer/8.0.1:
+    dev: false
+    resolution:
+      integrity: sha512-aqXhGP7//Gui2+UrEtvxZxSquQVXTpZ7KDxfCcKAF3Vysvw0CViVaW9RZ1j1xlIYqaaaipBoqdqeibkc18PNvA==
   /import-cwd/2.1.0:
     dependencies:
       import-from: 2.1.0
@@ -19545,6 +19551,21 @@ packages:
       integrity: sha512-frCRK5HbcVhDaPdL+OQl65Hy2c8RlCPoIhMVOLaTmQv2KlGc+jgIIce07pCvdimczuFfnMDTomy5G3TelU0Dcw==
       tarball: file:projects/acs-calling-sample.tgz
     version: 0.0.0
+  file:projects/acs-chat-declarative.tgz:
+    dependencies:
+      '@azure/communication-administration': 1.0.0-beta.4
+      '@azure/communication-chat': 1.0.0-beta.3
+      '@azure/communication-common': 1.0.0-beta.3
+      '@azure/communication-signaling': 1.0.0-beta.1
+      immer: 8.0.1
+      react: 16.14.0
+      react-dom: 16.14.0_react@16.14.0
+    dev: false
+    name: '@rush-temp/acs-chat-declarative'
+    resolution:
+      integrity: sha512-cZ/N+udqSxsHBrbGJyd76snm7FBHad1zKI/M9w+ZXjZFRUwMGUrFcRFEKeF9ZN0wiqxgLHl6p170uOwJR2fx4w==
+      tarball: file:projects/acs-chat-declarative.tgz
+    version: 0.0.0
   file:projects/acs-chat-sample.tgz_40b0c9f7a7a0fac66e4b6fcf06de2a42:
     dependencies:
       '@azure/communication-administration': 1.0.0-beta.4
@@ -19701,6 +19722,7 @@ packages:
       eslint: 7.20.0
       eslint-config-prettier: 6.15.0_eslint@7.20.0
       eslint-plugin-flowtype: 5.2.2_eslint@7.20.0
+      eslint-plugin-header: 3.1.1_eslint@7.20.0
       eslint-plugin-import: 2.22.1_eslint@7.20.0
       eslint-plugin-prettier: 3.3.1_822b4c7c304ad0fbad34b397ba6938a8
       express: 4.16.4
@@ -19723,7 +19745,7 @@ packages:
     dev: false
     name: '@rush-temp/acs-server-sample'
     resolution:
-      integrity: sha512-qLoZgFeqPVTzednN8Ja+Mk4RoSCtwSVaogcuIgM8M0/ToRsqNX4J/w4uvDAT24hA3+ujHtCQOmwRSp7kAlp00A==
+      integrity: sha512-S+NvYFv4Q0gquwWqm8LEXQga1gtRAGlTq+Qu0ftLAIsERHxZ+w2c8IALZ0pveS+HsUseEd7sqOFnL8K5ElBzwA==
       tarball: file:projects/acs-server-sample.tgz
     version: 0.0.0
   file:projects/communication-ui.tgz_webpack-cli@4.5.0:
@@ -19812,6 +19834,7 @@ packages:
       integrity: sha512-KQhUWooRgKl3PN6bK9wKmUstwltjF2q5XbBnz/SkdwOuzvruMhjdD+dMMJfiILIxz+K++6+1xN9UITZD8kQNjg==
       tarball: file:projects/communication-ui.tgz
     version: 0.0.0
+registry: ''
 specifiers:
   '@azure/communication-administration': ^1.0.0-beta.3
   '@azure/communication-calling': 1.0.0-beta.2
@@ -19829,6 +19852,7 @@ specifiers:
   '@fluentui/react-theme-provider': ^0.18.0
   '@mdx-js/react': ^1.6.22
   '@rush-temp/acs-calling-sample': file:./projects/acs-calling-sample.tgz
+  '@rush-temp/acs-chat-declarative': file:./projects/acs-chat-declarative.tgz
   '@rush-temp/acs-chat-sample': file:./projects/acs-chat-sample.tgz
   '@rush-temp/acs-one-to-one-call-sample': file:./projects/acs-one-to-one-call-sample.tgz
   '@rush-temp/acs-server-sample': file:./projects/acs-server-sample.tgz
@@ -19895,6 +19919,7 @@ specifiers:
   express: ~4.16.1
   http-errors: ~1.6.3
   husky: ^4.3.0
+  immer: ~8.0.1
   jest: 26.6.0
   jest-fetch-mock: ^3.0.3
   jest-junit: ^12.0.0
