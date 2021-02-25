@@ -3,7 +3,7 @@ import React from 'react';
 import { ErrorHandlingProps } from '../../providers/ErrorProvider';
 import { WithErrorHandling } from '../../components';
 import { connectFuncsToContext, MapToCallConfigurationProps, SetupContainerProps } from '../../consumers';
-import { CallConfiguration } from '../../components';
+import { CallConfiguration } from './CallConfiguration';
 import { LocalSettings } from '../../components';
 import { StartCallButton } from './StartCallButton';
 

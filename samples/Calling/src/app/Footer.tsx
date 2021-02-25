@@ -21,7 +21,7 @@ const copyJoinLink = (): void => {
   document.execCommand('copy');
 };
 
-export default (): JSX.Element => {
+export const Footer = (): JSX.Element => {
   return (
     <Stack styles={paneFooterStyles} tokens={paneFooterTokens}>
       <Separator />
