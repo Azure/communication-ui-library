@@ -4,25 +4,12 @@ import React from 'react';
 
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
 import { IncomingCallModal } from '../../components/IncomingCallAlerts';
-import { mergeThemes, Provider, teamsTheme } from '@fluentui/react-northstar';
-import { svgIconStyles } from '@fluentui/react-northstar/dist/commonjs/themes/teams/components/SvgIcon/svgIconStyles';
-import { svgIconVariables } from '@fluentui/react-northstar/dist/commonjs/themes/teams/components/SvgIcon/svgIconVariables';
-import * as siteVariables from '@fluentui/react-northstar/dist/commonjs/themes/teams/siteVariables';
+import { Provider, teamsTheme } from '@fluentui/react-northstar';
 import { VideoContainerProps } from '../../consumers';
 
 const importStatement = `
 import { IncomingCallModal } from '@azure/communication-ui';
 `;
-
-const iconTheme = {
-  componentStyles: {
-    SvgIcon: svgIconStyles
-  },
-  componentVariables: {
-    SvgIcon: svgIconVariables
-  },
-  siteVariables
-};
 
 const IncomingCallModalExample: () => JSX.Element = () => {
   const defaultIncomingCall = {
@@ -41,7 +28,7 @@ const IncomingCallModalExample: () => JSX.Element = () => {
   };
 
   return (
-    <Provider theme={mergeThemes(iconTheme, teamsTheme)}>
+    <Provider theme={teamsTheme}>
       <IncomingCallModal
         {...defaultIncomingCall}
         connectLocalMediaGalleryTileWithData={

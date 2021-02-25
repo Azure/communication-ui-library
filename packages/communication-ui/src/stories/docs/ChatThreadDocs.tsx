@@ -1,14 +1,8 @@
 // © Microsoft Corporation. All rights reserved.
 import React from 'react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
-import { mergeThemes, Provider, teamsTheme } from '@fluentui/react-northstar';
+import { Provider, teamsTheme } from '@fluentui/react-northstar';
 
-// @ts-ignore silence the typescript error, we can only use commonjsto make storybook use this icon correctly
-import { svgIconStyles } from '@fluentui/react-northstar/dist/commonjs/themes/teams/components/SvgIcon/svgIconStyles';
-// @ts-ignore
-import { svgIconVariables } from '@fluentui/react-northstar/dist/commonjs/themes/teams/components/SvgIcon/svgIconVariables';
-// @ts-ignore
-import * as siteVariables from '@fluentui/react-northstar/dist/commonjs/themes/teams/siteVariables';
 import { ChatThreadComponent as ChatThread } from '../../components';
 import { MessageStatus } from '../../types';
 
@@ -65,16 +59,6 @@ const ChatThreadExample: () => JSX.Element = () => (
   </>
 );
 
-const iconTheme = {
-  componentStyles: {
-    SvgIcon: svgIconStyles
-  },
-  componentVariables: {
-    SvgIcon: svgIconVariables
-  },
-  siteVariables
-};
-
 export const getDocs: () => JSX.Element = () => {
   return (
     <>
@@ -85,7 +69,7 @@ export const getDocs: () => JSX.Element = () => {
       <Heading>Example</Heading>
       <Canvas>
         <Provider
-          theme={mergeThemes(iconTheme, teamsTheme)}
+          theme={teamsTheme}
           style={{ display: 'flex', height: '200px', width: '100%' }}
         >
           <ChatThreadExample />

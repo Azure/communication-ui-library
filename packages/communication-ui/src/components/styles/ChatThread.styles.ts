@@ -32,7 +32,6 @@ export const noReadReceiptStyle = mergeStyles({
 
 export const chatStyle: ComponentSlotStyle = {
   paddingBottom: '0.5rem',
-  backgroundColor: 'white',
   border: 'none',
   overflow: 'auto'
 };
