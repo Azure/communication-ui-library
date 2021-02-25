@@ -52,7 +52,7 @@ const defaultOptionsMenuProps = {
 
 const ControlBarExample: () => JSX.Element = () => {
   return (
-    <Stack style={{ flexFlow: 'none' }}>
+    <Stack style={{ flexFlow: 'row' }}>
       <Provider theme={mergeThemes(iconTheme, teamsTheme)}>
         <ControlBar vertical={false}>
           <ControlButton {...videoButtonProps} />
