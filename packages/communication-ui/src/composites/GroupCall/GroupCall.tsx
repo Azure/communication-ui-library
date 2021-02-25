@@ -6,6 +6,11 @@ import GroupCallScreen from './GroupCallScreen';
 import ConfigurationScreen from './ConfigurationScreen';
 import { CallClientOptions } from '@azure/communication-calling';
 import { AbortSignalLike } from '@azure/core-http';
+import { mergeThemes, teamsTheme } from '@fluentui/react-northstar';
+import { Provider } from '@fluentui/react-northstar/dist/commonjs/components/Provider/Provider';
+import { svgIconStyles } from '@fluentui/react-northstar/dist/commonjs/themes/teams/components/SvgIcon/svgIconStyles';
+import { svgIconVariables } from '@fluentui/react-northstar/dist/commonjs/themes/teams/components/SvgIcon/svgIconVariables';
+import * as siteVariables from '@fluentui/react-northstar/dist/commonjs/themes/teams/siteVariables';
 import { groupCallContainer } from './styles/GroupCall.styles';
 import { Stack } from '@fluentui/react';
 import { CommunicationUiErrorInfo } from '../../types';
@@ -31,6 +36,16 @@ export type GroupCallCompositeProps = {
 
 type compositePageSubType = 'configuration' | 'groupcall';
 
+const iconTheme = {
+  componentStyles: {
+    SvgIcon: svgIconStyles
+  },
+  componentVariables: {
+    SvgIcon: svgIconVariables
+  },
+  siteVariables
+};
+
 export default (props: GroupCallCompositeProps): JSX.Element => {
   const [page, setPage] = useState<compositePageSubType>('configuration');
   const [screenWidth, setScreenWidth] = useState(window?.innerWidth ?? 0);
@@ -50,30 +65,36 @@ export default (props: GroupCallCompositeProps): JSX.Element => {
     <ErrorProvider onErrorCallback={onErrorCallback}>
       <CallingProvider token={token} callClientOptions={callClientOptions} refreshTokenCallback={refreshTokenCallback}>
         <CallProvider displayName={displayName}>
-          <Stack className={groupCallContainer} grow>
-            {(() => {
-              switch (page) {
-                case 'configuration': {
-                  return (
-                    <ConfigurationScreen
-                      screenWidth={screenWidth}
-                      startCallHandler={(): void => setPage('groupcall')}
-                      groupId={groupId}
-                    />
-                  );
+          <Provider
+            theme={mergeThemes(iconTheme, teamsTheme)}
+            className="wrapper"
+            style={{ height: '100%', width: '100%' }}
+          >
+            <Stack className={groupCallContainer} grow>
+              {(() => {
+                switch (page) {
+                  case 'configuration': {
+                    return (
+                      <ConfigurationScreen
+                        screenWidth={screenWidth}
+                        startCallHandler={(): void => setPage('groupcall')}
+                        groupId={groupId}
+                      />
+                    );
+                  }
+                  case 'groupcall': {
+                    return (
+                      <GroupCallScreen
+                        endCallHandler={(): void => (onEndCall ? onEndCall() : setPage('configuration'))}
+                        screenWidth={screenWidth}
+                        groupId={groupId}
+                      />
+                    );
+                  }
                 }
-                case 'groupcall': {
-                  return (
-                    <GroupCallScreen
-                      endCallHandler={(): void => (onEndCall ? onEndCall() : setPage('configuration'))}
-                      screenWidth={screenWidth}
-                      groupId={groupId}
-                    />
-                  );
-                }
-              }
-            })()}
-          </Stack>
+              })()}
+            </Stack>
+          </Provider>
         </CallProvider>
       </CallingProvider>
     </ErrorProvider>

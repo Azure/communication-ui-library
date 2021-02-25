@@ -177,7 +177,7 @@ return (
 export const getDocs: () => JSX.Element = () => {
   return (
     <>
-      <Title>MediaControls!</Title>
+      <Title>MediaControls</Title>
       <Description>
         The MediaControls component displays buttons to toggle video, audio, screenshare, as well as a button to leave
         the call. Callbacks for each change are also passed in.
