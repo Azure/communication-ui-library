@@ -2,7 +2,6 @@
 
 import ChatThread from './ChatThread';
 import SendBox from './SendBox';
-import CommandPanel, { CommandPanelTypes } from './CommandPanel';
 import LocalPreview from './LocalPreview';
 import LocalSettings, { LocalDeviceSettingsComponent } from './LocalSettings';
 import MediaGallery1To1, { MediaGallery1To1Component } from './MediaGallery1To1';
@@ -17,8 +16,6 @@ import { WithErrorHandling } from '../utils/WithErrorHandling';
 export {
   ChatThread,
   SendBox,
-  CommandPanel,
-  CommandPanelTypes,
   LocalDeviceSettingsComponent,
   LocalPreview,
   LocalSettings,
@@ -43,5 +40,4 @@ export { ReadReceiptComponent } from './ReadReceipt';
 export { MediaGalleryTileComponent } from './MediaGalleryTile';
 export { StreamMediaComponent } from './StreamMedia';
 export { ParticipantStackItemComponent } from './ParticipantStackItem';
-export { CallConfiguration } from './CallConfiguration';
 export { IncomingCallModal, IncomingCallToast } from './IncomingCallAlerts';

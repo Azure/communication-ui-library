@@ -11,12 +11,13 @@ import {
   paneStyles,
   subContainerStyles
 } from './styles/GroupCall.styles';
-import { CommandPanel, CommandPanelTypes, connectFuncsToContext, ErrorBar } from '@azure/communication-ui';
+import { connectFuncsToContext, ErrorBar } from '@azure/communication-ui';
 import { isInCall } from './utils/AppUtils';
 import { MINI_HEADER_WINDOW_WIDTH } from './utils/constants';
 import MediaGallery from './MediaGallery';
 import { GroupCallContainerProps, MapToGroupCallProps } from './consumers/MapToCallProps';
 import { Header } from './Header';
+import { CommandPanel, CommandPanelTypes } from './CommandPanel';
 
 export interface GroupCallProps extends GroupCallContainerProps {
   screenWidth: number;

@@ -5,11 +5,10 @@ import {
   paneHeaderStyle,
   paneHeaderTextStyle,
   settingsContainerStyle
-} from './styles/CommandPanel.styles';
+} from 'app/styles/CommandPanel.styles';
 
-import Footer from '../composites/GroupCall/Footer';
-import LocalSettings from './LocalSettings';
-import { ParticipantStack } from '../components';
+import { Footer } from './Footer';
+import { LocalSettings, ParticipantStack } from '@azure/communication-ui';
 import React from 'react';
 import { Stack } from '@fluentui/react';
 
@@ -23,7 +22,7 @@ export interface CommandPanelProps {
   selectedPane: string;
 }
 
-export default (props: CommandPanelProps): JSX.Element => {
+export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
   return (
     <Stack styles={fullHeightStyles}>
       <Stack.Item className={paneHeaderStyle}>
