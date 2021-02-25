@@ -8,8 +8,8 @@ import {
   mainContainerStyle,
   verticalStackStyle
 } from './styles/CallConfiguration.styles';
-import { LocalPreview } from '.';
-import { SetupContainerProps } from '../consumers';
+import { LocalPreview } from '../../components';
+import { SetupContainerProps } from '../../consumers';
 
 export interface CallConfigurationProps extends SetupContainerProps {
   screenWidth: number;
