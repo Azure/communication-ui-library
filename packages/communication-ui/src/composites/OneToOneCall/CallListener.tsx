@@ -3,7 +3,7 @@ import { Call } from '@azure/communication-calling';
 import { Stack } from '@fluentui/react';
 import React, { useEffect, useState } from 'react';
 import { IncomingCallToast } from '../../components';
-import { IncomingCallToastProps } from '../../components/IncomingCallAlerts';
+import { IncomingCallToastProps } from '../../components';
 import { useIncomingCall, useMicrophone } from '../../hooks';
 import { useCallingContext } from '../../index';
 import { IncomingCallsProvider } from '../../providers';

@@ -53,3 +53,4 @@ export { ParticipantStackItemComponent } from './ParticipantStackItem';
 export { CallConfiguration } from './CallConfiguration';
 export { StartCallButton } from './StartCallButton';
 export { IncomingCallModal, IncomingCallToast } from './IncomingCallAlerts';
+export type { IncomingCallModalProps, IncomingCallToastProps } from './IncomingCallAlerts';
