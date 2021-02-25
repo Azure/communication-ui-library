@@ -13,7 +13,7 @@ import {
 import MediaFullScreen from './MediaFullScreen';
 import { connectFuncsToContext } from '../../consumers/ConnectContext';
 import { CallContainerProps, MapToOneToOneCallProps } from '../../consumers/MapToCallProps';
-import MediaControls from '../../components/MediaControls';
+import { MediaControls } from './MediaControls';
 import { MINI_HEADER_WINDOW_WIDTH } from '../../constants';
 import { MediaGallery1To1 } from '../../components';
 

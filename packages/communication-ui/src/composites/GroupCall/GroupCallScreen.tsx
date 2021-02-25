@@ -16,7 +16,7 @@ import MediaGallery from './MediaGallery';
 import { connectFuncsToContext } from '../../consumers/ConnectContext';
 import { isInCall } from '../../utils/SDKUtils';
 import { GroupCallContainerProps, MapToGroupCallProps } from './consumers/MapToGroupCallProps';
-import { MediaControls } from '../../components';
+import { MediaControls } from './MediaControls';
 import { MINI_HEADER_WINDOW_WIDTH } from '../../constants';
 import { ErrorHandlingProps } from '../../providers/ErrorProvider';
 import { WithErrorHandling } from '../../utils/WithErrorHandling';

@@ -9,7 +9,10 @@ import {
   toggleButtonsBarToken,
   toggleStyle
 } from './styles/LocalPreview.styles';
-import { MapToMediaControlsProps, MediaControlsContainerProps } from '../consumers/MapToMediaControlsProps';
+import {
+  MapToMediaControlsProps,
+  MediaControlsContainerProps
+} from '../composites/GroupCall/consumers/MapToMediaControlsProps';
 import {
   MapToLocalDeviceSettingsProps,
   LocalDeviceSettingsContainerProps
