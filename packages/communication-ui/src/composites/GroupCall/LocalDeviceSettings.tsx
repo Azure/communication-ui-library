@@ -1,15 +1,15 @@
 // © Microsoft Corporation. All rights reserved.
 import React from 'react';
 import { IDropdownOption, Dropdown, Stack } from '@fluentui/react';
-import { dropDownStyles, localSettingsContainer, mainStackTokens } from './styles/LocalSettings.styles';
+import { dropDownStyles, localSettingsContainer, mainStackTokens } from './styles/LocalDeviceSettings.styles';
 import {
   LocalDeviceSettingsContainerProps,
   MapToLocalDeviceSettingsProps
-} from '../consumers/MapToLocalDeviceSettingsProps';
-import { connectFuncsToContext } from '../consumers/ConnectContext';
+} from './consumers/MapToLocalDeviceSettingsProps';
+import { connectFuncsToContext } from '../../consumers/ConnectContext';
 import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
-import { ErrorHandlingProps } from '../providers/ErrorProvider';
-import { WithErrorHandling } from '../utils/WithErrorHandling';
+import { ErrorHandlingProps } from '../../providers/ErrorProvider';
+import { WithErrorHandling } from '../../utils/WithErrorHandling';
 
 const LocalDeviceSettingsComponentBase = (
   props: LocalDeviceSettingsContainerProps & ErrorHandlingProps
@@ -65,4 +65,4 @@ export const LocalDeviceSettingsComponent = (
   props: LocalDeviceSettingsContainerProps & ErrorHandlingProps
 ): JSX.Element => WithErrorHandling(LocalDeviceSettingsComponentBase, props);
 
-export default connectFuncsToContext(LocalDeviceSettingsComponent, MapToLocalDeviceSettingsProps);
+export const LocalDeviceSettings = connectFuncsToContext(LocalDeviceSettingsComponent, MapToLocalDeviceSettingsProps);

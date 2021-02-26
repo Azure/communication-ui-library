@@ -211,7 +211,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/GridLayout Grid Layo
         }
       >
         <div
-          className="css-82"
+          className="css-81"
           style={
             Object {
               "gridTemplateColumns": "repeat(2, 1fr)",
@@ -220,10 +220,10 @@ exports[`storybook snapshot tests Storyshots ACS Components/GridLayout Grid Layo
           }
         >
           <div
-            className="ms-Stack css-68 css-2"
+            className="ms-Stack css-67 css-2"
           >
             <div
-              className="ms-Stack css-69 css-3"
+              className="ms-Stack css-68 css-3"
             >
               <div
                 className="ms-Persona ms-Persona--size100 root-4"
@@ -253,16 +253,16 @@ exports[`storybook snapshot tests Storyshots ACS Components/GridLayout Grid Layo
               </div>
             </div>
             <label
-              className="ms-Label css-67 root-21"
+              className="ms-Label css-66 root-21"
             >
               Michael
             </label>
           </div>
           <div
-            className="ms-Stack css-68 css-2"
+            className="ms-Stack css-67 css-2"
           >
             <div
-              className="ms-Stack css-69 css-3"
+              className="ms-Stack css-68 css-3"
             >
               <div
                 className="ms-Persona ms-Persona--size100 root-4"
@@ -292,16 +292,16 @@ exports[`storybook snapshot tests Storyshots ACS Components/GridLayout Grid Layo
               </div>
             </div>
             <label
-              className="ms-Label css-67 root-21"
+              className="ms-Label css-66 root-21"
             >
               Jim
             </label>
           </div>
           <div
-            className="ms-Stack css-68 css-2"
+            className="ms-Stack css-67 css-2"
           >
             <div
-              className="ms-Stack css-69 css-3"
+              className="ms-Stack css-68 css-3"
             >
               <div
                 className="ms-Persona ms-Persona--size100 root-4"
@@ -331,16 +331,16 @@ exports[`storybook snapshot tests Storyshots ACS Components/GridLayout Grid Layo
               </div>
             </div>
             <label
-              className="ms-Label css-67 root-21"
+              className="ms-Label css-66 root-21"
             >
               Pam
             </label>
           </div>
           <div
-            className="ms-Stack css-68 css-2"
+            className="ms-Stack css-67 css-2"
           >
             <div
-              className="ms-Stack css-69 css-3"
+              className="ms-Stack css-68 css-3"
             >
               <div
                 className="ms-Persona ms-Persona--size100 root-4"
@@ -370,7 +370,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/GridLayout Grid Layo
               </div>
             </div>
             <label
-              className="ms-Label css-67 root-21"
+              className="ms-Label css-66 root-21"
             >
               Dweight
             </label>
@@ -625,13 +625,13 @@ exports[`storybook snapshot tests Storyshots ACS Components/IncomingCallModal In
                           </div>
                         </div>
                         <div
-                          className="ms-Stack css-87 css-48"
+                          className="ms-Stack css-86 css-48"
                         >
                           <div
-                            className="ms-Stack css-68 css-49"
+                            className="ms-Stack css-67 css-49"
                           >
                             <div
-                              className="css-70"
+                              className="css-69"
                             />
                           </div>
                         </div>
@@ -822,10 +822,10 @@ exports[`storybook snapshot tests Storyshots ACS Components/IncomingCallToast In
       dir="ltr"
     >
       <div
-        className="ms-Stack css-83 css-2"
+        className="ms-Stack css-82 css-2"
       >
         <div
-          className="ms-Stack css-84 css-3"
+          className="ms-Stack css-83 css-3"
         >
           <div
             aria-label="John Doe"
@@ -891,7 +891,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/IncomingCallToast In
           className="ms-Stack css-21"
         >
           <button
-            className="ms-Button ms-Button--default css-86 root-22"
+            className="ms-Button ms-Button--default css-85 root-22"
             data-is-focusable={true}
             onClick={[Function]}
             onKeyDown={[Function]}
@@ -929,7 +929,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/IncomingCallToast In
             </span>
           </button>
           <button
-            className="ms-Button ms-Button--default css-85 root-22"
+            className="ms-Button ms-Button--default css-84 root-22"
             data-is-focusable={true}
             onClick={[Function]}
             onKeyDown={[Function]}
@@ -973,145 +973,6 @@ exports[`storybook snapshot tests Storyshots ACS Components/IncomingCallToast In
 </div>
 `;
 
-exports[`storybook snapshot tests Storyshots ACS Components/LocalDeviceSettings Local Device Settings Component 1`] = `
-<div
-  style={
-    Object {
-      "alignItems": "center",
-      "display": "flex",
-      "height": "100vh",
-      "justifyContent": "center",
-    }
-  }
->
-  <div
-    className="wrapper root-0"
-    style={
-      Object {
-        "display": "inherit",
-      }
-    }
-  >
-    <div
-      className="wrapper"
-      data-uses-unhanded-props={true}
-      dir="ltr"
-    >
-      <div
-        className="ms-Stack css-52 css-2"
-      >
-        <div
-          className="ms-Dropdown-container"
-        >
-          <label
-            className="ms-Label ms-Dropdown-label label-20"
-            id="Dropdown0-label"
-          >
-            Camera
-          </label>
-          <div
-            aria-disabled={false}
-            aria-expanded="false"
-            aria-haspopup="listbox"
-            aria-labelledby="Dropdown0-label Dropdown0-option"
-            className="ms-Dropdown dropdown-4"
-            data-is-focusable={true}
-            id="Dropdown0"
-            onBlur={[Function]}
-            onChange={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onKeyDown={[Function]}
-            onKeyUp={[Function]}
-            onMouseDown={[Function]}
-            role="listbox"
-            tabIndex={0}
-          >
-            <span
-              aria-atomic={true}
-              aria-invalid={false}
-              aria-live="polite"
-              aria-posinset={1}
-              aria-selected={true}
-              aria-setsize={3}
-              className="ms-Dropdown-title title-5"
-              id="Dropdown0-option"
-              role="option"
-            >
-              Logitech WebCam
-            </span>
-            <span
-              className="ms-Dropdown-caretDownWrapper caretDownWrapper-6"
-            >
-              <i
-                aria-hidden={true}
-                className="root-37 ms-Dropdown-caretDown caretDown-22"
-                data-icon-name="ChevronDown"
-              >
-                
-              </i>
-            </span>
-          </div>
-        </div>
-        <div
-          className="ms-Dropdown-container"
-        >
-          <label
-            className="ms-Label ms-Dropdown-label label-20"
-            id="Dropdown1-label"
-          >
-            Microphone
-          </label>
-          <div
-            aria-disabled={false}
-            aria-expanded="false"
-            aria-haspopup="listbox"
-            aria-labelledby="Dropdown1-label Dropdown1-option"
-            className="ms-Dropdown dropdown-4"
-            data-is-focusable={true}
-            id="Dropdown1"
-            onBlur={[Function]}
-            onChange={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onKeyDown={[Function]}
-            onKeyUp={[Function]}
-            onMouseDown={[Function]}
-            role="listbox"
-            tabIndex={0}
-          >
-            <span
-              aria-atomic={true}
-              aria-invalid={false}
-              aria-live="polite"
-              aria-posinset={1}
-              aria-selected={true}
-              aria-setsize={3}
-              className="ms-Dropdown-title title-5"
-              id="Dropdown1-option"
-              role="option"
-            >
-              Headphones (Buy More Brand)
-            </span>
-            <span
-              className="ms-Dropdown-caretDownWrapper caretDownWrapper-6"
-            >
-              <i
-                aria-hidden={true}
-                className="root-37 ms-Dropdown-caretDown caretDown-22"
-                data-icon-name="ChevronDown"
-              >
-                
-              </i>
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
 exports[`storybook snapshot tests Storyshots ACS Components/MediaGallery1To1 Media Gallery 1 To 1 Component 1`] = `
 <div
   style={
@@ -1145,16 +1006,16 @@ exports[`storybook snapshot tests Storyshots ACS Components/MediaGallery1To1 Med
         }
       >
         <div
-          className="ms-Stack css-71 css-2"
+          className="ms-Stack css-70 css-2"
         >
           <div
-            className="ms-Stack css-73 css-2"
+            className="ms-Stack css-72 css-2"
           >
             <div
-              className="ms-Stack css-68 css-3"
+              className="ms-Stack css-67 css-3"
             >
               <div
-                className="ms-Stack css-69 css-2"
+                className="ms-Stack css-68 css-2"
               >
                 <div
                   className="ms-Persona ms-Persona--size100 root-4"
@@ -1180,7 +1041,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/MediaGallery1To1 Med
                 </div>
               </div>
               <label
-                className="ms-Label css-67 root-19"
+                className="ms-Label css-66 root-19"
               >
                 Remote
               </label>
@@ -1190,13 +1051,13 @@ exports[`storybook snapshot tests Storyshots ACS Components/MediaGallery1To1 Med
             className="ms-StackItem css-20"
           >
             <div
-              className="ms-Stack css-72 css-2"
+              className="ms-Stack css-71 css-2"
             >
               <div
-                className="ms-Stack css-68 css-3"
+                className="ms-Stack css-67 css-3"
               >
                 <div
-                  className="ms-Stack css-69 css-2"
+                  className="ms-Stack css-68 css-2"
                 >
                   <div
                     className="ms-Persona ms-Persona--size100 root-4"
@@ -1264,10 +1125,10 @@ exports[`storybook snapshot tests Storyshots ACS Components/MediaGalleryTile Med
         }
       >
         <div
-          className="ms-Stack css-68 css-2"
+          className="ms-Stack css-67 css-2"
         >
           <div
-            className="ms-Stack css-69 css-3"
+            className="ms-Stack css-68 css-3"
           >
             <div
               className="ms-Persona ms-Persona--size100 root-4"
@@ -1297,7 +1158,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/MediaGalleryTile Med
             </div>
           </div>
           <label
-            className="ms-Label css-67 root-21"
+            className="ms-Label css-66 root-21"
           >
             hello
           </label>
@@ -1414,7 +1275,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/ParticipantStack Par
       dir="ltr"
     >
       <div
-        className="ms-Stack css-77 css-2"
+        className="ms-Stack css-76 css-2"
       >
         <div
           aria-orientation="horizontal"
@@ -1791,7 +1652,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/ReadReceipt Read Rec
       >
         <span
           aria-hidden={true}
-          className="root_de478240 css-59"
+          className="root_de478240 css-58"
           role="presentation"
           style={Object {}}
         >
@@ -1843,10 +1704,10 @@ exports[`storybook snapshot tests Storyshots ACS Components/SendBox Send Box Sto
         }
       >
         <div
-          className="ms-Stack css-61 css-2"
+          className="ms-Stack css-60 css-2"
         >
           <div
-            className="ms-TextField ms-TextField--multiline ms-TextField--borderless css-60 root-4"
+            className="ms-TextField ms-TextField--multiline ms-TextField--borderless css-59 root-4"
           >
             <div
               className="ms-TextField-wrapper wrapper-5"
@@ -1857,7 +1718,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/SendBox Send Box Sto
                 <textarea
                   aria-invalid={false}
                   aria-label="Type"
-                  className="ms-TextField-field ms-TextField--unresizable css-62 field-7"
+                  className="ms-TextField-field ms-TextField--unresizable css-61 field-7"
                   id="sendbox"
                   onBlur={[Function]}
                   onChange={[Function]}
@@ -1871,11 +1732,11 @@ exports[`storybook snapshot tests Storyshots ACS Components/SendBox Send Box Sto
             </div>
           </div>
           <div
-            className="css-64 sendIconWrapper"
+            className="css-63 sendIconWrapper"
             onClick={[Function]}
           >
             <div
-              className="css-65"
+              className="css-64"
             />
           </div>
         </div>
@@ -1929,20 +1790,20 @@ exports[`storybook snapshot tests Storyshots ACS Components/TypingIndicator Typi
       dir="ltr"
     >
       <div
-        className="css-79"
+        className="css-78"
       >
         <span
-          className="css-80"
+          className="css-79"
         >
           User1, 
         </span>
         <span
-          className="css-80"
+          className="css-79"
         >
           User2
         </span>
         <span
-          className="css-80"
+          className="css-79"
         >
            and 5 others are typing...
         </span>
