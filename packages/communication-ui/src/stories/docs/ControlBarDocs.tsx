@@ -54,7 +54,7 @@ const ControlBarExample: () => JSX.Element = () => {
   return (
     <Stack style={{ flexFlow: 'row' }}>
       <Provider theme={mergeThemes(iconTheme, teamsTheme)}>
-        <ControlBar vertical={false}>
+        <ControlBar layout={'horizontal'}>
           <ControlButton {...videoButtonProps} />
           <ControlButton {...audioButtonProps} />
           <ControlButton {...screenShareButtonProps} />
@@ -96,7 +96,7 @@ const defaultOptionsMenuProps = {
 
 const ControlBarExample: () => JSX.Element = () => {
   return (
-    <ControlBar vertical={false}>
+    <ControlBar layout={'horizontal'}>
       <ControlButton {...videoButtonProps} />
       <ControlButton {...videoButtonProps} />
       <ControlButton {...screenShareButtonProps} />
@@ -121,8 +121,10 @@ export const getDocs: () => JSX.Element = () => {
         <ControlBarExample />
       </Canvas>
       <Source code={exampleCode} />
-      <Heading>Props</Heading>
+      <Heading>ControlBar Props</Heading>
       <Props of={ControlBar} />
+      <Heading>ControlButton Props</Heading>
+      <Props of={ControlButton} />
     </>
   );
 };

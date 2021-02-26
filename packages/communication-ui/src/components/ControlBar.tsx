@@ -124,12 +124,16 @@ export interface CallControlButtonProps {
   toggledLabel?: JSX.Element;
   /**
    * The props for the icon shown when providing a menu dropdown.
+   * Uses `IIconProps` from FluentUI.
+   * Visit https://developer.microsoft.com/en-us/fluentui#/controls/web/icon#IIconProps for more info.
    */
   menuIconProps?: IIconProps;
   /**
    * Props for button menu. Providing this will default to showing the menu icon. See menuIconProps for overriding
    * how the default icon looks. Providing this in addition of onClick and setting the split property to true will
    * render a SplitButton.
+   * Uses `IContextualMenuProps` from FluentUI
+   * Visit https://developer.microsoft.com/en-us/fluentui#/controls/web/contextualmenu#IContextualMenuProps for more info.
    */
   menuProps?: IContextualMenuProps;
 }
@@ -225,8 +229,20 @@ export const hangupButtonProps: CallControlButtonProps = {
 
 export interface ControlBarProps {
   children?: React.ReactNode;
+  /**
+   * Allows users to pass in an object contains custom CSS styles.
+   * Example
+   * ```
+   * <ControlBar styles={{ root: { background: 'blue' } }} />
+   * ```
+   */
   styles?: CustomStylesProps;
-  vertical?: boolean;
+  /**
+   * Changes the layout of the control bar.
+   * Available layouts are `horizontal`, `vertical`.
+   * Defaults to a `horizontal` layout.
+   */
+  layout?: 'horizontal' | 'vertical';
 }
 
 /**
@@ -235,13 +251,10 @@ export interface ControlBarProps {
  * @returns JSX.Element
  */
 export const ControlBar = (props: ControlBarProps): JSX.Element => {
-  const { styles, vertical } = props;
+  const { styles, layout } = props;
+  const isHorizontal = layout === 'vertical' ? false : true;
   return (
-    <Stack
-      horizontal={vertical ? false : true}
-      verticalAlign="center"
-      className={mergeStyles(controlBarStyle, styles?.root)}
-    >
+    <Stack horizontal={isHorizontal} verticalAlign="center" className={mergeStyles(controlBarStyle, styles?.root)}>
       {props.children ?? (
         <>
           <ControlButton {...videoButtonProps} isToggled={false} />
