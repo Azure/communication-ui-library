@@ -1,14 +1,17 @@
 // © Microsoft Corporation. All rights reserved.
 
 import { AudioDeviceInfo, LocalVideoStream, VideoDeviceInfo } from '@azure/communication-calling';
-import useSubscribeToDevicePermission from '../hooks/useSubscribeToDevicePermission';
-import useSubscribeToAudioDeviceList from '../hooks/useSubscribeToAudioDeviceList';
-import useSubscribeToVideoDeviceList from '../hooks/useSubscribeToVideoDeviceList';
-import { useCallingContext } from '../providers/CallingProvider';
-import { useCallContext } from '../providers';
-import { CommunicationUiErrorCode, CommunicationUiError } from '../types/CommunicationUiError';
-import { useTriggerOnErrorCallback } from '../providers/ErrorProvider';
-import { propagateError } from '../utils/SDKUtils';
+import {
+  useSubscribeToDevicePermission,
+  useSubscribeToAudioDeviceList,
+  useSubscribeToVideoDeviceList,
+  useCallingContext,
+  useCallContext,
+  CommunicationUiErrorCode,
+  CommunicationUiError,
+  useTriggerOnErrorCallback,
+  propagateError
+} from '@azure/communication-ui';
 
 export type LocalDeviceSettingsContainerProps = {
   /** List of video devices from which to select */

@@ -4,10 +4,34 @@ import React from 'react';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
 import { Meta } from '@storybook/react/types-6-0';
 import { text, object, select } from '@storybook/addon-knobs';
-import { Dropdown } from '@fluentui/react';
-import { dropDownStyles } from '../components/styles/LocalSettings.styles';
+import { Dropdown, IDropdownStyles } from '@fluentui/react';
 import { getDocs } from './docs/MicrophoneSettingsDocs';
 import { COMPONENT_FOLDER_PREFIX } from './constants';
+
+const dropDownStyles: Partial<IDropdownStyles> = {
+  caretDownWrapper: {
+    height: '2.5rem',
+    lineHeight: '2.5rem'
+  },
+  dropdownItem: {
+    fontSize: '0.875rem',
+    height: '2.5rem'
+  },
+  dropdown: {
+    height: '2.5rem',
+    maxWidth: '20.75rem',
+    minWidth: '12.5rem'
+  },
+  title: {
+    fontSize: '0.875rem',
+    height: '2.5rem',
+    lineHeight: '2.3125rem'
+  },
+  label: {
+    fontWeight: 600,
+    fontSize: '0.875rem'
+  }
+};
 
 export const MicrophoneSettings: () => JSX.Element = () => {
   const label = text('Label', 'Microphone');

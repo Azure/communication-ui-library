@@ -4,7 +4,7 @@ import { ErrorHandlingProps } from '../../providers/ErrorProvider';
 import { WithErrorHandling } from '../../components';
 import { connectFuncsToContext, MapToCallConfigurationProps, SetupContainerProps } from '../../consumers';
 import { CallConfiguration } from './CallConfiguration';
-import { LocalSettings } from '../../components';
+import { LocalDeviceSettings } from './LocalDeviceSettings';
 import { StartCallButton } from './StartCallButton';
 
 export interface ConfigurationScreenProps extends SetupContainerProps {
@@ -19,7 +19,7 @@ const ConfigurationComponentBase = (props: ConfigurationScreenProps): JSX.Elemen
   return (
     <CallConfiguration {...props}>
       <div>
-        <LocalSettings />
+        <LocalDeviceSettings />
       </div>
       <div>
         <StartCallButton

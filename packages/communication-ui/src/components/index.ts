@@ -2,7 +2,6 @@
 
 import ChatThread from './ChatThread';
 import SendBox from './SendBox';
-import LocalSettings, { LocalDeviceSettingsComponent } from './LocalSettings';
 import MediaGallery1To1, { MediaGallery1To1Component } from './MediaGallery1To1';
 import MemberItem from './MemberItem';
 import ParticipantStack, { ParticipantStackComponent } from './ParticipantStack';
@@ -15,8 +14,6 @@ import { WithErrorHandling } from '../utils/WithErrorHandling';
 export {
   ChatThread,
   SendBox,
-  LocalDeviceSettingsComponent,
-  LocalSettings,
   MediaGallery1To1,
   MediaGallery1To1Component,
   MemberItem,
