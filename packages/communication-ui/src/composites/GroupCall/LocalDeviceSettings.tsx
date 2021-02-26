@@ -5,7 +5,7 @@ import { dropDownStyles, localSettingsContainer, mainStackTokens } from './style
 import {
   LocalDeviceSettingsContainerProps,
   MapToLocalDeviceSettingsProps
-} from './consumers/MapToLocalDeviceSettingsProps';
+} from '../../consumers/MapToLocalDeviceSettingsProps';
 import { connectFuncsToContext } from '../../consumers/ConnectContext';
 import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
 import { ErrorHandlingProps } from '../../providers/ErrorProvider';
