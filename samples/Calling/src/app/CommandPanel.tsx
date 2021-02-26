@@ -9,8 +9,8 @@ import {
   settingsContainerStyle
 } from 'app/styles/CommandPanel.styles';
 import { Footer } from './Footer';
-import { ParticipantStack } from '@azure/communication-ui';
 import { LocalDeviceSettings } from './LocalDeviceSettings';
+import { ParticipantStack } from './ParticipantStack';
 
 export enum CommandPanelTypes {
   None = 'none',
