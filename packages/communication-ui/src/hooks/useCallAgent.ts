@@ -123,5 +123,14 @@ export default (): void => {
     return () => {
       callAgent?.off('callsUpdated', onCallsUpdated);
     };
-  }, [call, callAgent, setCallState, setParticipants, setScreenShareStream, setCall, setLocalScreenShare]);
+  }, [
+    call,
+    callAgent,
+    setCallState,
+    setParticipants,
+    setScreenShareStream,
+    setCall,
+    setLocalScreenShare,
+    screenShareStream
+  ]);
 };
