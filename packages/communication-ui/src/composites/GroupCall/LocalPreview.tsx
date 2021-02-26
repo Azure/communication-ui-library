@@ -9,23 +9,20 @@ import {
   toggleButtonsBarToken,
   toggleStyle
 } from './styles/LocalPreview.styles';
-import {
-  MapToMediaControlsProps,
-  MediaControlsContainerProps
-} from '../composites/GroupCall/consumers/MapToMediaControlsProps';
+import { MapToMediaControlsProps, MediaControlsContainerProps } from './consumers/MapToMediaControlsProps';
 import {
   MapToLocalDeviceSettingsProps,
   LocalDeviceSettingsContainerProps
-} from '../consumers/MapToLocalDeviceSettingsProps';
-import { connectFuncsToContext } from '../consumers';
-import { MediaGalleryTileComponent } from './MediaGalleryTile';
-import { MapToLocalVideoProps } from '../consumers/MapToVideoProps';
-import staticMediaSVG from '../assets/staticmedia.svg';
-import { useCallContext } from '../providers';
-import { ErrorHandlingProps } from '../providers/ErrorProvider';
-import { WithErrorHandling } from '../utils/WithErrorHandling';
-import { CommunicationUiErrorFromError } from '../types/CommunicationUiError';
-import ErrorBar from './ErrorBar';
+} from '../../consumers/MapToLocalDeviceSettingsProps';
+import { connectFuncsToContext } from '../../consumers';
+import { MediaGalleryTileComponent } from '../../components/MediaGalleryTile';
+import { MapToLocalVideoProps } from '../../consumers/MapToVideoProps';
+import staticMediaSVG from './assets/staticmedia.svg';
+import { useCallContext } from '../../providers';
+import { ErrorHandlingProps } from '../../providers/ErrorProvider';
+import { WithErrorHandling } from '../../utils/WithErrorHandling';
+import { CommunicationUiErrorFromError } from '../../types/CommunicationUiError';
+import ErrorBar from '../../components/ErrorBar';
 
 const staticAvatarStyle: Partial<IImageStyles> = {
   image: { maxWidth: '10rem', maxHeight: '10rem', width: '100%', height: '100%' },
@@ -104,4 +101,8 @@ export const LocalPreviewComponent = (
   props: MediaControlsContainerProps & LocalDeviceSettingsContainerProps & ErrorHandlingProps
 ): JSX.Element => WithErrorHandling(LocalPreviewComponentBase, props);
 
-export default connectFuncsToContext(LocalPreviewComponent, MapToLocalDeviceSettingsProps, MapToMediaControlsProps);
+export const LocalPreview = connectFuncsToContext(
+  LocalPreviewComponent,
+  MapToLocalDeviceSettingsProps,
+  MapToMediaControlsProps
+);
