@@ -36,16 +36,13 @@ jobs:
       with:
         node-version: 12.x
     
-    # Install dependencies
+    # Install dependencies and Build Projects
     - name: Install rush
       run: |
         npm install -g @microsoft/rush
         rush install
-        rush update
-
-    - name: Rush install and build
-      run: rushx build
-      working-directory: ./samples/OneToOneCall
+        rush update --full
+        rush build
 
     - name: 'Deploy to Azure WebApp'
       uses: azure/webapps-deploy@v2
