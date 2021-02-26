@@ -39,3 +39,4 @@ export { MediaGalleryTileComponent } from './MediaGalleryTile';
 export { StreamMediaComponent } from './StreamMedia';
 export { ParticipantStackItemComponent } from './ParticipantStackItem';
 export { IncomingCallModal, IncomingCallToast } from './IncomingCallAlerts';
+export type { IncomingCallModalProps, IncomingCallToastProps } from './IncomingCallAlerts';
