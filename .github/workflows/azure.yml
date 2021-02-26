@@ -25,22 +25,23 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js 12.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: 12.x
+      - uses: actions/checkout@v2
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
 
-    - name: Rush install and build
-      run: |
-        # Build the project, then deploy to Azure Web App.
-        rush install
-        rushx build
-        working-directory: ./samples/OneToOneCall
+      - name: Install Rush
+        run: |
+          rush install
+          rush update --full
 
-    - name: 'Deploy to Azure WebApp'
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: 1To1Calling
-        publish-profile: ${{ secrets.AZURE_1TO1CALLING_WEBAPP_PUBLISH_PROFILE }}
-        package: ./samples/OneToOneCall/build
+      - name: Build Projects
+        run: rush build
+
+      - name: 'Deploy to Azure WebApp'
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 1To1Calling
+          publish-profile: ${{ secrets.AZURE_1TO1CALLING_WEBAPP_PUBLISH_PROFILE }}
+          package: ./samples/OneToOneCall/build
