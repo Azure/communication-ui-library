@@ -6,7 +6,6 @@ import GroupCallScreen from './GroupCallScreen';
 import ConfigurationScreen from './ConfigurationScreen';
 import { CallClientOptions } from '@azure/communication-calling';
 import { AbortSignalLike } from '@azure/core-http';
-import { Provider, teamsTheme } from '@fluentui/react-northstar';
 import { groupCallContainer } from './styles/GroupCall.styles';
 import { Stack } from '@fluentui/react';
 import { CommunicationUiErrorInfo } from '../../types';
@@ -51,32 +50,30 @@ export default (props: GroupCallCompositeProps): JSX.Element => {
     <ErrorProvider onErrorCallback={onErrorCallback}>
       <CallingProvider token={token} callClientOptions={callClientOptions} refreshTokenCallback={refreshTokenCallback}>
         <CallProvider displayName={displayName}>
-          <Provider theme={teamsTheme} className="wrapper" style={{ height: '100%', width: '100%' }}>
-            <Stack className={groupCallContainer} grow>
-              {(() => {
-                switch (page) {
-                  case 'configuration': {
-                    return (
-                      <ConfigurationScreen
-                        screenWidth={screenWidth}
-                        startCallHandler={(): void => setPage('groupcall')}
-                        groupId={groupId}
-                      />
-                    );
-                  }
-                  case 'groupcall': {
-                    return (
-                      <GroupCallScreen
-                        endCallHandler={(): void => (onEndCall ? onEndCall() : setPage('configuration'))}
-                        screenWidth={screenWidth}
-                        groupId={groupId}
-                      />
-                    );
-                  }
+          <Stack className={groupCallContainer} grow>
+            {(() => {
+              switch (page) {
+                case 'configuration': {
+                  return (
+                    <ConfigurationScreen
+                      screenWidth={screenWidth}
+                      startCallHandler={(): void => setPage('groupcall')}
+                      groupId={groupId}
+                    />
+                  );
                 }
-              })()}
-            </Stack>
-          </Provider>
+                case 'groupcall': {
+                  return (
+                    <GroupCallScreen
+                      endCallHandler={(): void => (onEndCall ? onEndCall() : setPage('configuration'))}
+                      screenWidth={screenWidth}
+                      groupId={groupId}
+                    />
+                  );
+                }
+              }
+            })()}
+          </Stack>
         </CallProvider>
       </CallingProvider>
     </ErrorProvider>
