@@ -18,7 +18,15 @@ export type UseCallAgentType = {
 
 export default (): void => {
   const { callAgent } = useCallingContext();
-  const { call, setCall, setScreenShareStream, setCallState, setParticipants, setLocalScreenShare } = useCallContext();
+  const {
+    call,
+    setCall,
+    screenShareStream,
+    setScreenShareStream,
+    setCallState,
+    setParticipants,
+    setLocalScreenShare
+  } = useCallContext();
 
   useEffect(() => {
     const subscribeToParticipant = (participant: RemoteParticipant, call: Call): void => {
@@ -53,7 +61,13 @@ export default (): void => {
             if (addedStream.isAvailable) {
               setScreenShareStream({ stream: addedStream, user: participant });
             } else {
-              setScreenShareStream(undefined);
+              // Prevents race condition when participant A turns on screen sharing
+              // and participant B turns off screen sharing at the same time.
+              // Ensures that the screen sharing stream is turned off only when
+              // the current screen sharing participant turns it off.
+              if (!screenShareStream || screenShareStream?.stream?.id === addedStream.id) {
+                setScreenShareStream(undefined);
+              }
             }
           });
 
@@ -109,5 +123,14 @@ export default (): void => {
     return () => {
       callAgent?.off('callsUpdated', onCallsUpdated);
     };
-  }, [call, callAgent, setCallState, setParticipants, setScreenShareStream, setCall, setLocalScreenShare]);
+  }, [
+    call,
+    callAgent,
+    setCallState,
+    setParticipants,
+    setScreenShareStream,
+    setCall,
+    setLocalScreenShare,
+    screenShareStream
+  ]);
 };
