@@ -13,7 +13,7 @@ import { MapToMediaControlsProps, MediaControlsContainerProps } from './consumer
 import {
   MapToLocalDeviceSettingsProps,
   LocalDeviceSettingsContainerProps
-} from './consumers/MapToLocalDeviceSettingsProps';
+} from '../../consumers/MapToLocalDeviceSettingsProps';
 import { connectFuncsToContext } from '../../consumers';
 import { MediaGalleryTileComponent } from '../../components/MediaGalleryTile';
 import { MapToLocalVideoProps } from '../../consumers/MapToVideoProps';

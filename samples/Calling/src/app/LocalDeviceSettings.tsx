@@ -3,10 +3,12 @@ import React from 'react';
 import { IDropdownOption, Dropdown, Stack } from '@fluentui/react';
 import { dropDownStyles, localSettingsContainer, mainStackTokens } from './styles/LocalDeviceSettings.styles';
 import {
+  connectFuncsToContext,
+  ErrorHandlingProps,
+  WithErrorHandling,
   LocalDeviceSettingsContainerProps,
   MapToLocalDeviceSettingsProps
-} from './consumers/MapToLocalDeviceSettingsProps';
-import { connectFuncsToContext, ErrorHandlingProps, WithErrorHandling } from '@azure/communication-ui';
+} from '@azure/communication-ui';
 import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
 
 const LocalDeviceSettingsComponentBase = (

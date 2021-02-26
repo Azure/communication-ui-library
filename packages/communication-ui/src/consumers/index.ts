@@ -6,6 +6,7 @@ export * from './MapToCallProps';
 export * from './MapToParticipantListProps';
 export * from './MapToCallConfigurationProps';
 export * from './MapToVideoProps';
+export * from './MapToLocalDeviceSettingsProps';
 
 export * from './MapToChatMessageProps';
 export * from './MapToChatThreadMemberProps';
