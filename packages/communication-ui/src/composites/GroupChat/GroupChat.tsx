@@ -1,6 +1,8 @@
 // © Microsoft Corporation. All rights reserved.
 import { Stack } from '@fluentui/react';
 import { mergeStyles } from '@fluentui/react';
+import { Provider, teamsTheme, mergeThemes } from '@fluentui/react-northstar';
+import { useTheme } from '@fluentui/react-theme-provider';
 import { ChatProvider } from '../../providers';
 import React from 'react';
 import { ChatThread, SendBox, TypingIndicator } from '../../components';
@@ -34,6 +36,14 @@ export default (props: GroupChatProps): JSX.Element => {
     width: '100%'
   });
 
+  const northstarTheme = {
+    componentVariables: {
+      Chat: {
+        backgroundColor: useTheme().palette?.white
+      }
+    }
+  };
+
   return (
     <ErrorProvider onErrorCallback={onErrorCallback}>
       <ChatProvider
@@ -43,19 +53,25 @@ export default (props: GroupChatProps): JSX.Element => {
         endpointUrl={endpointUrl}
         refreshTokenCallback={props.refreshTokenCallback}
       >
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
-        <Stack className={chatContainer} grow>
-          <Stack className={chatWrapper} grow>
-            <ChatThread onRenderAvatar={onRenderAvatar} messageNumberPerPage={options?.messagesPerPage} />
-            <Stack.Item align="center" className={sendBoxParentStyle}>
-              <div style={{ paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>
-                <TypingIndicator />
-              </div>
-              <ErrorBar />
-              <SendBox />
-            </Stack.Item>
+        <Provider
+          theme={mergeThemes(teamsTheme, northstarTheme)}
+          className="wrapper"
+          style={{ height: '100%', width: '100%' }}
+        >
+          <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+          <Stack className={chatContainer} grow>
+            <Stack className={chatWrapper} grow>
+              <ChatThread onRenderAvatar={onRenderAvatar} messageNumberPerPage={options?.messagesPerPage} />
+              <Stack.Item align="center" className={sendBoxParentStyle}>
+                <div style={{ paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>
+                  <TypingIndicator />
+                </div>
+                <ErrorBar />
+                <SendBox />
+              </Stack.Item>
+            </Stack>
           </Stack>
-        </Stack>
+        </Provider>
       </ChatProvider>
     </ErrorProvider>
   );
