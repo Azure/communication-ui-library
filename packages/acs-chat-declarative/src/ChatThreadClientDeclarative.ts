@@ -4,6 +4,7 @@ import { MessageStatus } from './types/ChatMessage';
 import { Constants } from './Constants';
 import { ChatMessageWithLocalId } from './ChatClientState';
 import { ChatContext } from './ChatContext';
+import { nanoid } from 'nanoid';
 
 let context: ChatContext;
 
@@ -43,7 +44,7 @@ const proxyChatThreadClient: ProxyHandler<ChatThreadClient> = {
         // Retry logic?
         return async function (...args: Parameters<ChatThreadClient['sendMessage']>) {
           const { content } = args[0];
-          const clientMessageId = (Math.floor(Math.random() * Constants.MAXIMUM_INT64) + 1).toString(); //generate a random unsigned Int64 number
+          const clientMessageId = nanoid(); // Generate a local short uuid for message
           const newMessage = {
             content,
             clientMessageId,
@@ -55,12 +56,14 @@ const proxyChatThreadClient: ProxyHandler<ChatThreadClient> = {
           const result = await target.sendMessage(...args);
           if (result._response.status === Constants.CREATED) {
             if (result.id) {
+              context.startBatch();
               context.setChatMessage(target.threadId, {
                 ...newMessage,
                 status: MessageStatus.DELIVERED,
                 messageId: result.id
               });
               context.setLocalMessageSynced(target.threadId, clientMessageId);
+              context.endBatch();
             }
           } else if (result._response.status === Constants.PRECONDITION_FAILED_STATUS_CODE) {
             context.setChatMessage(target.threadId, { ...newMessage, status: MessageStatus.FAILED });
