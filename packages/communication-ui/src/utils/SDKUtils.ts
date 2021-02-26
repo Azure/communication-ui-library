@@ -150,3 +150,11 @@ export const propagateError = (error: Error, onErrorCallback?: (error: Communica
     throw error;
   }
 };
+
+// Only support Desktop -- Chrome | Edge (Chromium) | Safari
+export const isLocalScreenShareSupportedInBrowser = (): boolean => {
+  return (
+    !isMobileSession() &&
+    (/chrome/i.test(navigator.userAgent.toLowerCase()) || /safari/i.test(navigator.userAgent.toLowerCase()))
+  );
+};
