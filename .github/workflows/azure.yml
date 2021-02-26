@@ -43,8 +43,7 @@ jobs:
         rush install
 
     - name: Rush install and build
-      run: rushx build
-      working-directory: ./samples/OneToOneCall
+      run: rush build
 
     - name: 'Deploy to Azure WebApp'
       uses: azure/webapps-deploy@v2
