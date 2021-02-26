@@ -32,7 +32,7 @@ jobs:
         run: rushx package
         working-directory: ./samples/OneToOneCall
 
-      - name: 'Deploy to Azure WebApp'
+      - name: 'Deploy Sample WebApps'
         uses: azure/webapps-deploy@v2
         with:
           app-name: 1To1Calling
