@@ -35,7 +35,11 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 12.x
-
+    
+    # Install dependencies
+    - name: Install rush
+      run: npm install -g @microsoft/rush
+  
     - name: Rush install and build
       run: |
         # Build the project, then deploy to Azure Web App.
