@@ -32,15 +32,6 @@ import { MapToMediaControlsProps, MediaControlsContainerProps } from '../consume
 import { ErrorHandlingProps } from '../providers/ErrorProvider';
 import { propagateError } from '../utils/SDKUtils';
 
-const lightTheme: ITheme = createTheme({
-  palette: {
-    themeLight: 'white',
-    themeDark: 'black'
-  }
-});
-
-loadTheme(lightTheme);
-
 const theme = getTheme();
 const palette = theme.palette;
 
