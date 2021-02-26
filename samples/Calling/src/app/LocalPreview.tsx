@@ -11,8 +11,6 @@ import {
 } from './styles/LocalPreview.styles';
 import { MapToMediaControlsProps, MediaControlsContainerProps } from './consumers/MapToMediaControlsProps';
 import {
-  MapToLocalDeviceSettingsProps,
-  LocalDeviceSettingsContainerProps,
   connectFuncsToContext,
   MediaGalleryTileComponent,
   MapToLocalVideoProps,
@@ -23,6 +21,10 @@ import {
   ErrorBar
 } from '@azure/communication-ui';
 import staticMediaSVG from '../assets/staticmedia.svg';
+import {
+  MapToLocalDeviceSettingsProps,
+  LocalDeviceSettingsContainerProps
+} from './consumers/MapToLocalDeviceSettingsProps';
 
 const staticAvatarStyle: Partial<IImageStyles> = {
   image: { maxWidth: '10rem', maxHeight: '10rem', width: '100%', height: '100%' },

@@ -1,16 +1,16 @@
 // © Microsoft Corporation. All rights reserved.
 
+import React from 'react';
+import { Stack } from '@fluentui/react';
 import {
   fullHeightStyles,
   paneHeaderStyle,
   paneHeaderTextStyle,
   settingsContainerStyle
 } from 'app/styles/CommandPanel.styles';
-
 import { Footer } from './Footer';
-import { LocalSettings, ParticipantStack } from '@azure/communication-ui';
-import React from 'react';
-import { Stack } from '@fluentui/react';
+import { ParticipantStack } from '@azure/communication-ui';
+import { LocalDeviceSettings } from './LocalDeviceSettings';
 
 export enum CommandPanelTypes {
   None = 'none',
@@ -41,7 +41,7 @@ export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
       {props.selectedPane === CommandPanelTypes.Settings && (
         <Stack.Item>
           <div className={settingsContainerStyle}>
-            <LocalSettings />
+            <LocalDeviceSettings />
           </div>
         </Stack.Item>
       )}
