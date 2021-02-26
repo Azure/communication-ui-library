@@ -18,13 +18,11 @@ import {
   ErrorHandlingProps,
   WithErrorHandling,
   CommunicationUiErrorFromError,
-  ErrorBar
-} from '@azure/communication-ui';
-import staticMediaSVG from '../assets/staticmedia.svg';
-import {
+  ErrorBar,
   MapToLocalDeviceSettingsProps,
   LocalDeviceSettingsContainerProps
-} from './consumers/MapToLocalDeviceSettingsProps';
+} from '@azure/communication-ui';
+import staticMediaSVG from '../assets/staticmedia.svg';
 
 const staticAvatarStyle: Partial<IImageStyles> = {
   image: { maxWidth: '10rem', maxHeight: '10rem', width: '100%', height: '100%' },
