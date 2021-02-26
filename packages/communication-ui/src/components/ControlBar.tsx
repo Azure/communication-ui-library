@@ -26,6 +26,7 @@ import {
   controlButtonLabelStyles,
   hangUpControlButtonStyles
 } from './styles/ControlBar.styles';
+import { isLocalScreenShareSupportedInBrowser } from '../utils/SDKUtils';
 
 export interface CustomStylesProps {
   root?: IStyle;
@@ -246,7 +247,6 @@ export const CallControlBar = (
     toggleLocalVideo,
     toggleMicrophone,
     isMicrophoneActive,
-    isLocalScreenShareSupportedInBrowser,
     toggleScreenShare,
     isLocalScreenShareActive,
     onErrorCallback,

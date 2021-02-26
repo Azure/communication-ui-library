@@ -9,7 +9,6 @@ import {
   useMicrophone,
   useScreenShare,
   useSubscribeToVideoDeviceList,
-  isMobileSession,
   useGroupCall,
   CommunicationUiErrorCode,
   CommunicationUiError
@@ -49,8 +48,6 @@ export type CallControlBarContainerProps = {
   cameraPermission: DevicePermissionState;
   /** Determines mic permission. */
   micPermission: DevicePermissionState;
-  /** Determines if screen share is supported by browser. */
-  isLocalScreenShareSupportedInBrowser(): boolean;
   /** Callback when leaving the call.  */
   leaveCall: (hangupCallOptions: HangupCallOptions) => Promise<void>;
 };
@@ -73,14 +70,6 @@ export const MapToCallControlBarProps = (): CallControlBarContainerProps => {
   useSubscribeToDevicePermission('Camera');
   useSubscribeToDevicePermission('Microphone');
   useSubscribeToVideoDeviceList();
-
-  // Only support Desktop -- Chrome | Edge (Chromium) | Safari
-  const isLocalScreenShareSupportedInBrowser = (): boolean => {
-    return (
-      !isMobileSession() &&
-      (/chrome/i.test(navigator.userAgent.toLowerCase()) || /safari/i.test(navigator.userAgent.toLowerCase()))
-    );
-  };
 
   const startLocalVideoInternal = useCallback((): Promise<void> => {
     if (videoDeviceInfo) {
@@ -113,7 +102,6 @@ export const MapToCallControlBarProps = (): CallControlBarContainerProps => {
     toggleScreenShare,
     cameraPermission: videoDevicePermission,
     micPermission: audioDevicePermission,
-    isLocalScreenShareSupportedInBrowser,
     leaveCall: async (hangupCallOptions: HangupCallOptions): Promise<void> => {
       await leave(hangupCallOptions);
     }
