@@ -1,9 +1,12 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { useCallingContext, useCallContext } from '../providers';
 import { useState, useEffect } from 'react';
-import { ListParticipant } from '../types/ListParticipant';
-import { convertSdkRemoteParticipantToListParticipant } from '../utils/TypeConverter';
+import {
+  useCallingContext,
+  useCallContext,
+  ListParticipant,
+  convertSdkRemoteParticipantToListParticipant
+} from '@azure/communication-ui';
 
 type ParticipantListContainerProps = {
   remoteParticipants: ListParticipant[];

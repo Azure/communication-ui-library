@@ -5,10 +5,8 @@ import * as React from 'react';
 import { IContextualMenuItem, IOverflowSetItemProps, IconButton, OverflowSet, Stack } from '@fluentui/react';
 import { overFlowButtonStyles, participantStackStyle, participantStackTokens } from './styles/ParticipantStack.styles';
 
-import { connectFuncsToContext } from '../consumers/ConnectContext';
-import { ListParticipant } from '../types/ListParticipant';
-import { MapToParticipantListProps } from '../consumers/MapToParticipantListProps';
-import { ParticipantStackItemComponent } from './ParticipantStackItem';
+import { connectFuncsToContext, ListParticipant, ParticipantStackItemComponent } from '@azure/communication-ui';
+import { MapToParticipantListProps } from './consumers/MapToParticipantListProps';
 
 export type ParticipantStackProps = {
   /** User ID of user */
@@ -91,4 +89,4 @@ export const ParticipantStackComponent = (props: ParticipantStackProps): JSX.Ele
   );
 };
 
-export default connectFuncsToContext(ParticipantStackComponent, MapToParticipantListProps);
+export const ParticipantStack = connectFuncsToContext(ParticipantStackComponent, MapToParticipantListProps);
