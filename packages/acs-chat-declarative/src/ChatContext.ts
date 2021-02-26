@@ -10,10 +10,13 @@ export class ChatContext {
     displayName: '',
     threads: new Map()
   };
+  private batchMode = false;
   private _emitter: EventEmitter = new EventEmitter();
   public setState(state: ChatClientState): void {
     this._state = state;
-    this._emitter.emit('stateChanged', this._state);
+    if (!this.batchMode) {
+      this._emitter.emit('stateChanged', this._state);
+    }
   }
 
   public getState(): ChatClientState {
@@ -68,6 +71,16 @@ export class ChatContext {
       );
     }
   };
+
+  // Batch mode for multiple updates in one action(to trigger just on event), similar to redux batch() function
+  public startBatch() {
+    this.batchMode = true;
+  }
+
+  public endBatch() {
+    this.batchMode = false;
+    this._emitter.emit('stateChanged', this._state);
+  }
 
   public onStateChange(handler: (state: ChatClientState) => void): void {
     this._emitter.on('stateChanged', handler);
