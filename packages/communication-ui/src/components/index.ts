@@ -2,7 +2,6 @@
 
 import ChatThread from './ChatThread';
 import SendBox from './SendBox';
-import LocalPreview from './LocalPreview';
 import LocalSettings, { LocalDeviceSettingsComponent } from './LocalSettings';
 import MediaGallery1To1, { MediaGallery1To1Component } from './MediaGallery1To1';
 import MemberItem from './MemberItem';
@@ -17,7 +16,6 @@ export {
   ChatThread,
   SendBox,
   LocalDeviceSettingsComponent,
-  LocalPreview,
   LocalSettings,
   MediaGallery1To1,
   MediaGallery1To1Component,
@@ -52,3 +50,4 @@ export {
   answerButtonProps,
   hangupButtonProps
 } from './ControlBar';
+export type { IncomingCallModalProps, IncomingCallToastProps } from './IncomingCallAlerts';

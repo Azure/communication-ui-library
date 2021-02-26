@@ -8,7 +8,7 @@ import {
   mainContainerStyle,
   verticalStackStyle
 } from './styles/CallConfiguration.styles';
-import { LocalPreview } from '@azure/communication-ui';
+import { LocalPreview } from './LocalPreview';
 import { SetupContainerProps } from '@azure/communication-ui';
 
 export interface CallConfigurationProps extends SetupContainerProps {
