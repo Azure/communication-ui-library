@@ -12,7 +12,9 @@ import {
   separatorStyles
 } from './styles/Header.styles';
 
-import { CommandPanelTypes, MediaControls, MINI_HEADER_WINDOW_WIDTH } from '@azure/communication-ui';
+import { MINI_HEADER_WINDOW_WIDTH } from '@azure/communication-ui';
+import { MediaControls } from './MediaControls';
+import { CommandPanelTypes } from './CommandPanel';
 
 export interface HeaderProps {
   selectedPane: CommandPanelTypes;
