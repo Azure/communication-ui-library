@@ -1,15 +1,17 @@
 // © Microsoft Corporation. All rights reserved.
 import { ChatMessage, ChatThreadClient, ListPageSettings } from '@azure/communication-chat';
 import { ChatMessage as WebUiChatMessage, MessageStatus } from '../types/ChatMessage';
-import { produce } from 'immer';
+import { produce, enableMapSet } from 'immer';
 import EventEmitter from 'events';
+
+enableMapSet();
 
 /**
  * Implementation agnostic state, not associated with ACS types.
  */
 export interface ChatThreadState {
   // Use a map for efficient updating but should output iterator or array (maybe change to class and add getMessages())
-  chatMessages: { [key: string]: WebUiChatMessage };
+  chatMessages: Map<string, WebUiChatMessage>;
 }
 
 /**
@@ -21,10 +23,10 @@ export interface Declarative<T> {
 }
 
 /**
- * Interface that extends ChatThreadClient and WithState. This provides a type that contains both the ChatThreadClient
+ * Interface that extends ChatThreadClient and Declarative. This provides a type that contains both the ChatThreadClient
  * methods and also getState and onStateChange.
  */
-export interface DeclarativeChatThreadClient extends ChatThreadClient, Declarative<ChatThreadState> {}
+export type DeclarativeChatThreadClient = ChatThreadClient & Declarative<ChatThreadState>;
 
 /**
  * Proxies chatThreadClient.listMessages() and updates the proxied state via getState and setState by wrapping the
@@ -43,59 +45,63 @@ const proxyListMessages = (
     const messages = chatThreadClient.listMessages(...args);
     return {
       next() {
-        return new Promise<IteratorResult<ChatMessage, ChatMessage>>(() => {
-          return messages.next().then((result) => {
+        return new Promise<IteratorResult<ChatMessage, ChatMessage>>((resolve) => {
+          messages.next().then((result) => {
             if (!result.done && result.value) {
               const message: ChatMessage = result.value;
               setState(
                 produce(getState(), (draft) => {
                   if (message.id) {
-                    draft.chatMessages[message.id] = {
+                    draft.chatMessages.set(message.id, {
                       messageId: message.id,
                       content: message.content,
                       createdOn: message.createdOn,
                       senderId: message.sender?.communicationUserId,
                       senderDisplayName: message.senderDisplayName,
                       status: MessageStatus.DELIVERED // TODO: need to merge with read receipts for proper status
-                    };
+                    });
                   }
                 })
               );
             }
-            return result;
+            resolve(result);
           });
         });
       },
       [Symbol.asyncIterator]() {
         return this;
       },
-      byPage: (settings: ListPageSettings = {}) => {
+      byPage: (settings: ListPageSettings = {}): AsyncIterableIterator<ChatMessage[]> => {
         const pages = messages.byPage(settings);
         return {
           next() {
-            return new Promise<IteratorResult<ChatMessage, any>>(() => {
-              return pages.next().then((result) => {
+            return new Promise<IteratorResult<ChatMessage[], any>>((resolve) => {
+              pages.next().then((result) => {
                 const page: any = result.value;
                 if (!result.done && result.value) {
                   for (const message of page) {
                     if (message.id) {
                       setState(
                         produce(getState(), (draft) => {
-                          draft.chatMessages[message.id] = {
+                          draft.chatMessages.set(message.id, {
                             messageId: message.id,
                             content: message.content,
                             createdOn: message.createdOn,
                             senderId: message.sender?.communicationUserId,
                             senderDisplayName: message.senderDisplayName,
                             status: MessageStatus.DELIVERED // TODO: need to merge with read receipts for proper status
-                          };
+                          });
                         })
                       );
                     }
                   }
                 }
+                resolve(result);
               });
             });
+          },
+          [Symbol.asyncIterator]() {
+            return this;
           }
         };
       }
@@ -112,13 +118,13 @@ class ProxyChatThreadClientDeclarative implements ProxyHandler<ChatThreadClient>
 
   constructor() {
     this._state = {
-      chatMessages: {}
+      chatMessages: new Map<string, WebUiChatMessage>()
     };
   }
 
   private setState(state: ChatThreadState): void {
     this._state = state;
-    this._emitter.emit('stateChanged');
+    this._emitter.emit('stateChanged', this._state);
   }
 
   public getState(): ChatThreadState {
@@ -132,7 +138,7 @@ class ProxyChatThreadClientDeclarative implements ProxyHandler<ChatThreadClient>
   public get<P extends keyof ChatThreadClient>(target: ChatThreadClient, prop: P): any {
     switch (prop) {
       case 'listMessages': {
-        return proxyListMessages(target, this.getState, this.setState);
+        return proxyListMessages(target, this.getState.bind(this), this.setState.bind(this));
       }
       default:
         return Reflect.get(target, prop);
@@ -146,7 +152,14 @@ class ProxyChatThreadClientDeclarative implements ProxyHandler<ChatThreadClient>
  * @param chatThreadClient
  */
 export const createDeclarativeChatThreadClient = (chatThreadClient: ChatThreadClient): DeclarativeChatThreadClient => {
-  return new Proxy(chatThreadClient, new ProxyChatThreadClientDeclarative()) as DeclarativeChatThreadClient;
+  const proxyChatThreadClient = new ProxyChatThreadClientDeclarative();
+  Object.defineProperty(chatThreadClient, 'getState', {
+    value: () => proxyChatThreadClient.getState()
+  });
+  Object.defineProperty(chatThreadClient, 'onStateChange', {
+    value: (handler: (state: ChatThreadState) => void) => proxyChatThreadClient.onStateChange(handler)
+  });
+  return new Proxy(chatThreadClient, proxyChatThreadClient) as DeclarativeChatThreadClient;
 };
 
 /**
