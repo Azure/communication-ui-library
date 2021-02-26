@@ -1,27 +1,14 @@
 // © Microsoft Corporation. All rights reserved.
 
+import { Stack } from '@fluentui/react';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import React from 'react';
-import { audioButtonProps, ControlBar, ControlButton, hangupButtonProps, optionsButtonProps, screenShareButtonProps, videoButtonProps } from '../../components/ControlBar';
-import { mergeThemes, Provider, teamsTheme } from '@fluentui/react-northstar';
-import { svgIconStyles } from '@fluentui/react-northstar/dist/commonjs/themes/teams/components/SvgIcon/svgIconStyles';
-import { svgIconVariables } from '@fluentui/react-northstar/dist/commonjs/themes/teams/components/SvgIcon/svgIconVariables';
-import * as siteVariables from '@fluentui/react-northstar/dist/commonjs/themes/teams/siteVariables';
-import { Stack } from '@fluentui/react';
+import { audioButtonProps, ControlBar, ControlButton, hangupButtonProps, optionsButtonProps, screenShareButtonProps, videoButtonProps } from '../../components';
+import { FluentThemeProvider } from '../../providers';
 
 const importStatement = `
 import { ControlBar } from '@azure/communication-ui';
 `;
-
-const iconTheme = {
-  componentStyles: {
-    SvgIcon: svgIconStyles
-  },
-  componentVariables: {
-    SvgIcon: svgIconVariables
-  },
-  siteVariables
-};
 
 const defaultOptionsMenuProps = {
   items: [
@@ -53,7 +40,7 @@ const defaultOptionsMenuProps = {
 const ControlBarExample: () => JSX.Element = () => {
   return (
     <Stack style={{ flexFlow: 'row' }}>
-      <Provider theme={mergeThemes(iconTheme, teamsTheme)}>
+      <FluentThemeProvider>
         <ControlBar layout={'horizontal'}>
           <ControlButton {...videoButtonProps} />
           <ControlButton {...audioButtonProps} />
@@ -61,7 +48,7 @@ const ControlBarExample: () => JSX.Element = () => {
           <ControlButton {...optionsButtonProps} menuProps={defaultOptionsMenuProps} />
           <ControlButton {...hangupButtonProps} />
         </ControlBar>
-      </Provider>
+      </FluentThemeProvider>
     </Stack>
   );
 };

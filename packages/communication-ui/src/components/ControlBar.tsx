@@ -1,16 +1,5 @@
 // © Microsoft Corporation. All rights reserved.
-import {
-  createTheme,
-  DefaultButton,
-  getTheme,
-  IContextualMenuProps,
-  IIconProps,
-  IStyle,
-  ITheme,
-  loadTheme,
-  mergeStyles,
-  Stack
-} from '@fluentui/react';
+import { DefaultButton, IContextualMenuProps, IIconProps, IStyle, mergeStyles, Stack } from '@fluentui/react';
 import {
   CallControlCloseTrayIcon,
   CallControlPresentNewIcon,
@@ -28,33 +17,15 @@ import {
   LocalDeviceSettingsContainerProps,
   MapToLocalDeviceSettingsProps
 } from '../consumers/MapToLocalDeviceSettingsProps';
-import { MapToMediaControlsProps, MediaControlsContainerProps } from '../consumers/MapToMediaControlsProps';
+import { MapToCallControlBarProps, CallControlBarContainerProps } from '../consumers/MapToCallControlBarProps';
 import { ErrorHandlingProps } from '../providers/ErrorProvider';
 import { propagateError } from '../utils/SDKUtils';
-
-const theme = getTheme();
-const palette = theme.palette;
-
-const controlBarStyle: IStyle = {
-  borderRadius: '0.5rem',
-  boxShadow: theme.effects.elevation4,
-  overflow: 'hidden',
-  background: palette.themeLight
-};
-
-const controlButtonStyles: IStyle = {
-  background: 'none',
-  border: 'none',
-  borderRadius: 0,
-  minHeight: '56px',
-  minWidth: '56px'
-};
-
-const controlButtonLabelStyles: IStyle = {
-  fontSize: '0.75rem',
-  color: palette.blackTranslucent40,
-  lineHeight: '1.25rem'
-};
+import {
+  controlBarStyle,
+  controlButtonStyles,
+  controlButtonLabelStyles,
+  hangUpControlButtonStyles
+} from './styles/ControlBar.styles';
 
 export interface CustomStylesProps {
   root?: IStyle;
@@ -203,19 +174,7 @@ export const answerButtonProps: CallControlButtonProps = {
 export const hangupButtonProps: CallControlButtonProps = {
   defaultIcon: <CallEndIcon />,
   defaultLabel: <Stack>Hangup</Stack>,
-  styles: {
-    root: {
-      background: palette.redDark,
-      color: palette.white,
-      ':hover': {
-        background: palette.red,
-        color: palette.white
-      }
-    },
-    label: {
-      color: palette.whiteTranslucent40
-    }
-  }
+  styles: hangUpControlButtonStyles
 };
 
 export interface ControlBarProps {
@@ -259,7 +218,7 @@ export const ControlBar = (props: ControlBarProps): JSX.Element => {
   );
 };
 
-export interface CallControlBarProps extends MediaControlsContainerProps {
+export interface CallControlBarProps extends CallControlBarContainerProps {
   /** Determines media control button layout. */
   compressedMode: boolean;
   /** Callback when call ends */
@@ -394,6 +353,6 @@ export const CallControlBar = (
 
 export const CallControlBarComponent = connectFuncsToContext(
   CallControlBar,
-  MapToMediaControlsProps,
+  MapToCallControlBarProps,
   MapToLocalDeviceSettingsProps
 );
