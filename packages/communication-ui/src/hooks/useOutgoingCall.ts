@@ -60,7 +60,7 @@ export const useOutgoingCall = (): UseOutgoingCallType => {
               // and participant B turns off screen sharing at the same time.
               // Ensures that the screen sharing stream is turned off only when
               // the current screen sharing participant turns it off.
-              if (screenShareStream?.user.identifier === participant.identifier) {
+              if (!screenShareStream || screenShareStream?.stream?.id === addedStream.id) {
                 setScreenShareStream(undefined);
               }
             }
