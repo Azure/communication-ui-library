@@ -1,7 +1,8 @@
 // © Microsoft Corporation. All rights reserved.
 import EventEmitter from 'events';
 import produce from 'immer';
-import { ChatClientState, ChatMessageWithLocalId, ChatThreadClientState } from './ChatClientState';
+import { ChatClientState, ChatThreadClientState } from './ChatClientState';
+import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 
 // have separated ClientState and ChatThreadState?
 export class ChatContext {
@@ -31,7 +32,7 @@ export class ChatContext {
     );
   }
 
-  public setChatMessages(threadId: string, messages: Map<string, ChatMessageWithLocalId>): void {
+  public setChatMessages(threadId: string, messages: Map<string, ChatMessageWithStatus>): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         const threadState = draft.threads.get(threadId);
@@ -47,17 +48,17 @@ export class ChatContext {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         const chatMessages = draft.threads.get(threadId)?.chatMessages;
-        const message: ChatMessageWithLocalId | undefined = chatMessages ? chatMessages.get(localId) : undefined;
-        if (chatMessages && message && message.clientMessageId && message.messageId) {
+        const message: ChatMessageWithStatus | undefined = chatMessages ? chatMessages.get(localId) : undefined;
+        if (chatMessages && message && message.clientMessageId && message.id) {
           chatMessages.delete(message.clientMessageId);
-          chatMessages.set(message.messageId, message);
+          chatMessages.set(message.id, message);
         }
       })
     );
   };
 
-  setChatMessage = (threadId: string, message: ChatMessageWithLocalId): void => {
-    const { messageId, clientMessageId } = message;
+  setChatMessage = (threadId: string, message: ChatMessageWithStatus): void => {
+    const { id: messageId, clientMessageId } = message;
     if (messageId || clientMessageId) {
       this.setState(
         produce(this._state, (draft: ChatClientState) => {

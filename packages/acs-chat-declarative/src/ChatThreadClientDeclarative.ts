@@ -1,8 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 import { ChatMessage, ChatThreadClient } from '@azure/communication-chat';
-import { MessageStatus } from './types/ChatMessage';
+import { ChatMessageWithStatus, MessageStatus } from './types/ChatMessageWithStatus';
 import { Constants } from './Constants';
-import { ChatMessageWithLocalId } from './ChatClientState';
 import { ChatContext } from './ChatContext';
 import { nanoid } from 'nanoid';
 
@@ -10,15 +9,12 @@ let context: ChatContext;
 
 export const convertChatMessage = (
   message: ChatMessage,
-  status: MessageStatus = MessageStatus.DELIVERED,
+  status: MessageStatus = 'delivered',
   clientMessageId?: string
-): ChatMessageWithLocalId => {
+): ChatMessageWithStatus => {
   return {
     ...message,
-    senderId: message.sender?.communicationUserId,
-    senderDisplayName: message.senderDisplayName,
     clientMessageId: clientMessageId,
-    messageId: message.id,
     status
   };
 };
@@ -45,11 +41,11 @@ const proxyChatThreadClient: ProxyHandler<ChatThreadClient> = {
         return async function (...args: Parameters<ChatThreadClient['sendMessage']>) {
           const { content } = args[0];
           const clientMessageId = nanoid(); // Generate a local short uuid for message
-          const newMessage = {
+          const newMessage: ChatMessageWithStatus = {
             content,
             clientMessageId,
             createdOn: undefined,
-            status: MessageStatus.SENDING
+            status: 'sending'
           };
           context.setChatMessage(target.threadId, newMessage);
 
@@ -59,14 +55,14 @@ const proxyChatThreadClient: ProxyHandler<ChatThreadClient> = {
               context.startBatch();
               context.setChatMessage(target.threadId, {
                 ...newMessage,
-                status: MessageStatus.DELIVERED,
-                messageId: result.id
+                status: 'delivered',
+                id: result.id
               });
               context.setLocalMessageSynced(target.threadId, clientMessageId);
               context.endBatch();
             }
           } else if (result._response.status === Constants.PRECONDITION_FAILED_STATUS_CODE) {
-            context.setChatMessage(target.threadId, { ...newMessage, status: MessageStatus.FAILED });
+            context.setChatMessage(target.threadId, { ...newMessage, status: 'failed' });
           }
           return result;
         };
