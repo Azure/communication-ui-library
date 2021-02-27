@@ -1,0 +1,11 @@
+{
+  "name": "release-tools",
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
+    "@octokit/rest": "^18.0.6",
+    "@types/node": "^14.14.10",
+    "beachball": "^1.53.0",
+    "ts-node": "^9.1.1"
+  }
+}
