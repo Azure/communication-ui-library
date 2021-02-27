@@ -1,7 +1,6 @@
 {
   "name": "acs-server-sample",
   "version": "0.0.1",
-  "private": true,
   "scripts": {
     "build": "webpack",
     "start": "ts-node ./bin/www",
@@ -64,5 +63,8 @@
     "hooks": {
       "pre-commit": "pretty-quick --staged"
     }
+  },
+  "beachball": {
+    "shouldPublish": false
   }
 }

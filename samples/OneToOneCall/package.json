@@ -1,7 +1,6 @@
 {
   "name": "acs-one-to-one-call-sample",
   "version": "0.0.1",
-  "private": true,
   "description": "",
   "scripts": {
     "build": "react-scripts build",
@@ -109,5 +108,8 @@
     "source-map-explorer": "^2.5.0",
     "typescript": "^4.0.5"
   },
-  "proxy": "http://localhost:8080/"
+  "proxy": "http://localhost:8080/",
+  "beachball": {
+    "shouldPublish": false
+  }
 }
