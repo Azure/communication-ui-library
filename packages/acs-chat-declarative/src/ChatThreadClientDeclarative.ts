@@ -52,14 +52,14 @@ const proxyChatThreadClient: ProxyHandler<ChatThreadClient> = {
           const result = await target.sendMessage(...args);
           if (result._response.status === Constants.CREATED) {
             if (result.id) {
-              context.startBatch();
-              context.setChatMessage(target.threadId, {
-                ...newMessage,
-                status: 'delivered',
-                id: result.id
+              context.batch(() => {
+                context.setChatMessage(target.threadId, {
+                  ...newMessage,
+                  status: 'delivered',
+                  id: result.id
+                });
+                context.setLocalMessageSynced(target.threadId, clientMessageId);
               });
-              context.setLocalMessageSynced(target.threadId, clientMessageId);
-              context.endBatch();
             }
           } else if (result._response.status === Constants.PRECONDITION_FAILED_STATUS_CODE) {
             context.setChatMessage(target.threadId, { ...newMessage, status: 'failed' });

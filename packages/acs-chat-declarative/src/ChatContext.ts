@@ -13,6 +13,7 @@ export class ChatContext {
   };
   private batchMode = false;
   private _emitter: EventEmitter = new EventEmitter();
+
   public setState(state: ChatClientState): void {
     this._state = state;
     if (!this.batchMode) {
@@ -44,7 +45,7 @@ export class ChatContext {
   }
 
   // This function changes messageKey from localId to remoteId, which indicates message synced with server successfully
-  setLocalMessageSynced = (threadId: string, localId: string): void => {
+  public setLocalMessageSynced(threadId: string, localId: string): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         const chatMessages = draft.threads.get(threadId)?.chatMessages;
@@ -55,9 +56,9 @@ export class ChatContext {
         }
       })
     );
-  };
+  }
 
-  setChatMessage = (threadId: string, message: ChatMessageWithStatus): void => {
+  public setChatMessage(threadId: string, message: ChatMessageWithStatus): void {
     const { id: messageId, clientMessageId } = message;
     if (messageId || clientMessageId) {
       this.setState(
@@ -71,16 +72,28 @@ export class ChatContext {
         })
       );
     }
-  };
+  }
 
   // Batch mode for multiple updates in one action(to trigger just on event), similar to redux batch() function
-  public startBatch() {
+  private startBatch() {
     this.batchMode = true;
   }
 
-  public endBatch() {
+  private endBatch() {
     this.batchMode = false;
     this._emitter.emit('stateChanged', this._state);
+  }
+
+  public batch(batchFunc: () => void) {
+    this.startBatch();
+    const backupState = this._state;
+    try {
+      batchFunc();
+    } catch (e) {
+      this._state = backupState;
+    } finally {
+      this.endBatch();
+    }
   }
 
   public onStateChange(handler: (state: ChatClientState) => void): void {
