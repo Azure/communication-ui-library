@@ -84,6 +84,7 @@ export class ChatContext {
     this._emitter.emit('stateChanged', this._state);
   }
 
+  // All operations finished in this batch should be sync call(only context related)
   public batch(batchFunc: () => void) {
     this.startBatch();
     const backupState = this._state;
