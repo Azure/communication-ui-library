@@ -1,7 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
 import { CallState, HangupCallOptions } from '@azure/communication-calling';
-import { useCallAgent } from '../hooks';
 import { useCallContext, useCallingContext } from '../providers';
 import { ParticipantStream } from '../types/ParticipantStream';
 import { useOutgoingCall } from '../hooks';
@@ -18,9 +17,6 @@ export const MapToOneToOneCallProps = (): CallContainerProps => {
   const { callAgent, deviceManager } = useCallingContext();
   const { callState, screenShareStream, localScreenShareActive } = useCallContext();
   const { endCall } = useOutgoingCall();
-
-  // Call useCallAgent to subscribe to events.
-  useCallAgent();
 
   return {
     isCallInitialized: !!(callAgent && deviceManager),

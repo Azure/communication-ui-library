@@ -4,24 +4,11 @@ import React from 'react';
 
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
 import { IncomingCallToast } from '../../components/IncomingCallAlerts';
-import { mergeThemes, Provider, teamsTheme } from '@fluentui/react-northstar';
-import { svgIconStyles } from '@fluentui/react-northstar/dist/commonjs/themes/teams/components/SvgIcon/svgIconStyles';
-import { svgIconVariables } from '@fluentui/react-northstar/dist/commonjs/themes/teams/components/SvgIcon/svgIconVariables';
-import * as siteVariables from '@fluentui/react-northstar/dist/commonjs/themes/teams/siteVariables';
+import { Provider, teamsTheme } from '@fluentui/react-northstar';
 
 const importStatement = `
 import { IncomingCallToast } from '@azure/communication-ui';
 `;
-
-const iconTheme = {
-  componentStyles: {
-    SvgIcon: svgIconStyles
-  },
-  componentVariables: {
-    SvgIcon: svgIconVariables
-  },
-  siteVariables
-};
 
 const IncomingCallToastExample: () => JSX.Element = () => {
   const defaultIncomingCall = {
@@ -33,7 +20,7 @@ const IncomingCallToastExample: () => JSX.Element = () => {
   };
 
   return (
-    <Provider theme={mergeThemes(iconTheme, teamsTheme)}>
+    <Provider theme={teamsTheme}>
       <IncomingCallToast {...defaultIncomingCall} />
     </Provider>
   );
