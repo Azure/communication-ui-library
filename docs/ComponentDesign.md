@@ -56,7 +56,7 @@ The `Counter` React component is quite simple, it accepts an `initialValue` as a
 
 We model all events as props where its name starts with `on*` and its type is a function of `(newValue) => void`, or if there is no value to observe `() => void`. Events only get raised when the underlying value has actually changed. A common pattern for this is shown in `changeCount`: first we check for equality with the current value and return if the new value is equal, then we commit the new value and finally we call the event handler passing the new value. Technically this isn't needed for the Counter component because we never try to set the same value, but hey this is demonstration code.
 
-In our example, the Counter has **local state**, i.e. the `count`. Admittingly, it's awkward to not expose the count direcly and only expose it via an event. But this is only an example for the purpose of demonstration. In general, counter to some popular beliefs, local state is okay. Just make sure that it truly is local to the component and doesn't need to be exposed to the component user. If local state gets too complicated, it's a sign that the component itself does too many things and should be broken up into smaller components.
+In our example, the Counter has **local state**, i.e. the `count`. Admittingly, it's awkward to not expose the count directly and only expose it via an event. But this is only an example for the purpose of demonstration. In general, contrary to some popular beliefs, local state is okay. Just make sure that it truly is local to the component and doesn't need to be exposed to the component user. If local state gets too complicated, it's a sign that the component itself does too many things and should be broken up into smaller components.
 
 This example uses a *function component* and the `useState` hook. This produces shorter code and is functionally equivalent to a *class component* in most cases. For a comparison around these two types of component styles, see the [React documentation on hooks](https://reactjs.org/docs/hooks-state.html).
 
@@ -80,9 +80,9 @@ See how nothing really changed in the logic? All we did is rename a property but
 
 ## Don't use React Context
 
-[Context](https://reactjs.org/docs/context.html) is a mechanism to allow components access to state without having to rely on props passing. It is primarily an optimization because multi-layer *"prop drilling"* causes re-renderings in a complete component subtree even for components that don't care about specific properties that have changed.
+[Context](https://reactjs.org/docs/context.html) is a mechanism to allow components access to state without having to rely on props passing. It is primarily a convenience to avoid multi-layer *"prop drilling"*.
 
-While context can be a powerful performance optimization tool in an *application* it goes against many of the principles for a reusable *library*.
+While context can be a powerful tool in an *application* it goes against many of the principles for a reusable *library*.
 
 Example:
 
@@ -98,8 +98,9 @@ Example:
   </A>
 </MyContext.Provider>
 ```
-* It is not clear what the contract of `MyComponent` is, all props are hidden away
-* The data flow direction is inverted, instead of pushing data to the `MyComponent`, the component is actively pulling data
+
+* It is not clear what the contract of `MyComponent` is, all props are hidden away.
+* The data flow direction is inverted, instead of pushing data to the `MyComponent`, the component is actively pulling data.
 * `MyComponent` has a dependency on `MyContext` appearing somewhere as a parent in the visual tree. By definition `MyComponent` is not reusable then, because it makes assumptions about the visual layout of the app that uses it and it cannot be used without `MyContext`.
 * Usually multiple components share the same context. If `MyContext` holds state not only for `MyComponent` but also for `C`, then `MyContext` is indirectly coupled to `C`.
 
@@ -118,15 +119,15 @@ There are few notable exceptions where Context is okay:
 
 In the *composite* case, the composite user would not instantiate their own context but context is entirely hidden from them and just an implementation detail.
 
-Even then, context should not be the first approach for performance optimization. There are multiple more basic techniques that solve prop drilling and even lead to overall better decoupled component design. The most prominent is to pass React components as props or children directly. The passed component does not change when state changes, which avoids unnecessary re-renderings. On top, it makes it explicit that other components are merely containers and don't even need to know about how to render their children.
+Even then, context should not be the first approach. There are multiple more basic techniques that solve prop drilling and even lead to overall better decoupled component design. The most prominent is to pass React components as props or children directly. The passed component does not change when state changes, which avoids unnecessary re-renderings. On top, it makes it explicit that other components are merely containers and don't even need to know about how to render their children.
 
-There are great blog posts explaining this principle of component passing aka lifting content up.
+There are great articles explaining this principle of component passing aka lifting content up.
 
+[React docs on component composition](https://reactjs.org/docs/composition-vs-inheritance.html)
 
 [Kent C. Dodd's "One simple trick to optimize React re-renders"](https://kentcdodds.com/blog/optimize-react-re-renders)
 
 [Dan Abramov's  "Before you memo()"](https://overreacted.io/before-you-memo/#solution-2-lift-content-up)
-
 
 ## Don't use hooks for side-effects or access to global state
 
