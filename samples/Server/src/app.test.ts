@@ -3,7 +3,7 @@
 import request from 'supertest';
 import app from './app';
 import * as createUserTokenModule from './lib/createUserToken';
-import { CommunicationUserToken } from '@azure/communication-administration';
+import { CommunicationUserToken } from '@azure/communication-identity';
 
 // Setup mocks
 const mockUserToken: CommunicationUserToken = {

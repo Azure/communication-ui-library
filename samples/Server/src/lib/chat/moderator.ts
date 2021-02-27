@@ -1,44 +1,25 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { createUserToken } from '../createUserToken';
 import { AzureCommunicationUserCredential } from '@azure/communication-common';
-import { ChatClient, CreateChatThreadRequest, ChatThreadClient } from '@azure/communication-chat';
-import { getEnvUrl } from '../envHelper';
+import { CommunicationIdentityClient } from '@azure/communication-identity';
+import { ChatClient, CreateChatThreadRequest } from '@azure/communication-chat';
+import { getEnvUrl, getResourceConnectionString } from '../envHelper';
 import { GUID_FOR_INITIAL_TOPIC_NAME } from '../constants';
-import { threadIdToModeratorTokenMap } from './threadIdToModeratorTokenMap';
-import { CommunicationUserToken } from '@azure/communication-administration';
-
-export type ModeratorConfig = {
-  token: CommunicationUserToken;
-  chatClient: ChatClient | undefined;
-  chatThreadClient: ChatThreadClient | undefined;
-};
-export const moderatorConfig: ModeratorConfig = {
-  token: undefined,
-  chatClient: undefined,
-  chatThreadClient: undefined
-};
-
-export const initModerator = async (): Promise<void> => {
-  moderatorConfig.token = await createUserToken();
-  const credential = new AzureCommunicationUserCredential(moderatorConfig.token.token);
-  moderatorConfig.chatClient = new ChatClient(getEnvUrl(), credential);
-};
-
-export const getChatClientFromUserToken = async (token: CommunicationUserToken): Promise<ChatClient> => {
-  const credential = new AzureCommunicationUserCredential(token.token);
-  const chatClient = new ChatClient(getEnvUrl(), credential);
-  return chatClient;
-};
+import { threadIdToModeratorCredentialMap } from './threadIdToModeratorTokenMap';
 
 export const createThread = async (topicName?: string): Promise<string> => {
-  const token: CommunicationUserToken = await createUserToken();
-  const chatClient = await getChatClientFromUserToken(token);
+  const identityClient = new CommunicationIdentityClient(getResourceConnectionString());
+  const user = await identityClient.createUser();
+  // create an on-demand auto-refreshing credential and store it
+  const credential = new AzureCommunicationUserCredential({
+    tokenRefresher: async () => (await identityClient.issueToken(user, ['chat', 'voip'])).token
+  });
+  const chatClient = new ChatClient(getEnvUrl(), credential);
   const request: CreateChatThreadRequest = {
     topic: topicName ?? GUID_FOR_INITIAL_TOPIC_NAME,
-    members: [{ user: { communicationUserId: token.user.communicationUserId } }]
+    members: [{ user }]
   };
   const chatThreadClient = await chatClient.createChatThread(request);
-  threadIdToModeratorTokenMap.set(chatThreadClient.threadId, token);
+  threadIdToModeratorCredentialMap.set(chatThreadClient.threadId, credential);
   return chatThreadClient.threadId;
 };

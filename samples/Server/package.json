@@ -15,9 +15,9 @@
     "lint:quiet": "eslint src src --ext .ts --quiet"
   },
   "dependencies": {
-    "@azure/communication-administration": "^1.0.0-beta.3",
     "@azure/communication-chat": "1.0.0-beta.3",
     "@azure/communication-common": "1.0.0-beta.3",
+    "@azure/communication-identity": "~1.0.0-beta.4",
     "@types/cors": "^2.8.8",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",

@@ -1,8 +1,8 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { CommunicationUserToken, TokenScope } from '@azure/communication-administration';
+import { CommunicationIdentityClient, CommunicationUserToken, TokenScope } from '@azure/communication-identity';
 import * as express from 'express';
-import { createUserToken, createUserTokenWithScope } from '../lib/createUserToken';
+import { getResourceConnectionString } from '../lib/envHelper';
 
 const router = express.Router();
 
@@ -10,8 +10,11 @@ const router = express.Router();
  * handleUserTokenRequest will return a default scoped token if no scopes are provided.
  * @param requestedScope [optional] string from the request, this should be a comma seperated list of scopes.
  */
-const handleUserTokenRequest = async (requestedScope?: string): Promise<CommunicationUserToken> =>
-  requestedScope ? await createUserTokenWithScope(requestedScope.split(',') as TokenScope[]) : await createUserToken();
+const handleUserTokenRequest = async (requestedScope?: string): Promise<CommunicationUserToken> => {
+  const identityClient = new CommunicationIdentityClient(getResourceConnectionString());
+  const scopes: TokenScope[] = requestedScope ? (requestedScope.split(',') as TokenScope[]) : ['chat', 'voip'];
+  return await identityClient.createUserWithToken(scopes);
+};
 
 /**
  * By default the get and post routes will return a token with scopes ['chat', 'voip'].
