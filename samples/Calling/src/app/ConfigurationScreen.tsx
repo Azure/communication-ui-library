@@ -1,17 +1,13 @@
 // © Microsoft Corporation. All rights reserved.
 
 import React, { useState } from 'react';
-import {
-  connectFuncsToContext,
-  MapToCallConfigurationProps,
-  SetupContainerProps,
-  DisplayNameField,
-  LocalSettings,
-  CallConfiguration,
-  StartCallButton
-} from '@azure/communication-ui';
+import { connectFuncsToContext, MapToCallConfigurationProps, SetupContainerProps } from '@azure/communication-ui';
 import { localStorageAvailable } from './utils/constants';
 import { saveDisplayNameToLocalStorage } from './utils/AppUtils';
+import { DisplayNameField } from './DisplayNameField';
+import { StartCallButton } from './StartCallButton';
+import { CallConfiguration } from './CallConfiguration';
+import { LocalDeviceSettings } from './LocalDeviceSettings';
 
 export interface ConfigurationScreenProps extends SetupContainerProps {
   screenWidth: number;
@@ -35,7 +31,7 @@ export const ConfigurationComponent = (props: ConfigurationScreenProps): JSX.Ele
         setNameLengthExceedLimit={setNameTooLongWarning}
       />
       <div>
-        <LocalSettings />
+        <LocalDeviceSettings />
       </div>
       <div>
         <StartCallButton
