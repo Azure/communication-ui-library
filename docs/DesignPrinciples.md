@@ -31,8 +31,8 @@ While customizability regards the visual aspects, controllability is the equival
 
 ## Debuggable
 
-The UI framework is deterministic and thanks to controllability provides many hooks for the developer to analyze its behavior. The framework is easy to reason about thanks to its declarative and unidirectional nature. A change during execution time can be easily observed and debugged or logged by the developer. The framework works with popular developer tools out of the box, such as the React developer tools or Redux tools if the developer chooses a Redux archictecture.
+The UI framework is deterministic and thanks to controllability provides many hooks for the developer to analyze its behavior. The framework is easy to reason about thanks to its declarative and unidirectional nature. A change during execution time can be easily observed and debugged or logged by the developer. The framework works with popular developer tools out of the box, such as the React developer tools or Redux tools if the developer chooses a Redux architecture.
 
 ## Accessible
 
-The framework passes accessibility tests and follows best practices so that applications built with it are accessible for users of all abilities. Equally, the framework supports internationalization and localization to serve the entire planet and not just a dominant subset.
+The framework passes accessibility tests and follows best practices so that applications built with it are accessible for users of all abilities. Equally, the framework supports internationalization and localization to serve the entire planet and not just a subset.
