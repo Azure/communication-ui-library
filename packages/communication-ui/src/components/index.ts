@@ -5,7 +5,6 @@ import SendBox from './SendBox';
 import MediaGallery1To1, { MediaGallery1To1Component } from './MediaGallery1To1';
 import MemberItem from './MemberItem';
 import TypingIndicator, { TypingIndicatorComponent } from './TypingIndicator';
-import ParticipantManagement, { ParticipantManagementComponent } from './ParticipantManagement';
 import { GridLayoutComponent } from './GridLayout';
 import ErrorBar, { ErrorBarComponent } from './ErrorBar';
 import { WithErrorHandling } from '../utils/WithErrorHandling';
@@ -18,8 +17,6 @@ export {
   MemberItem,
   TypingIndicator,
   TypingIndicatorComponent,
-  ParticipantManagement,
-  ParticipantManagementComponent,
   GridLayoutComponent,
   ErrorBar,
   ErrorBarComponent,
