@@ -41,6 +41,12 @@
       "packageName": "acs-server-sample",
       "projectFolder": "samples/Server",
       "reviewCategory": "prototypes"
+    },
+    {
+      "packageName": "release-tools",
+      "projectFolder": "common/release",
+      "reviewCategory": "tools",
+      "shouldPublish": false
     }
   ]
 }

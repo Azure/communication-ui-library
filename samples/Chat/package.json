@@ -1,6 +1,6 @@
 {
   "name": "acs-chat-sample",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "This is a sample application to show how the ACS Chat Web SDK can be used to build a group chat experience. The client-side application is a React based user interface which uses React Hooks for handling complex state while leveraging Microsoft Fluent UI for how things look.",
   "scripts": {
     "build": "react-scripts build",
@@ -99,8 +99,5 @@
     "typescript": "^4.0.5",
     "rimraf": "^2.6.2"
   },
-  "proxy": "http://localhost:8080/",
-  "beachball": {
-    "shouldPublish": false
-  }
+  "proxy": "http://localhost:8080/"
 }
