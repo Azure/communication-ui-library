@@ -50,8 +50,7 @@
     {
       "packageName": "release-tools",
       "projectFolder": "common/release",
-      "reviewCategory": "tools",
-      "shouldPublish": false
+      "reviewCategory": "tools"
     }
   ]
 }

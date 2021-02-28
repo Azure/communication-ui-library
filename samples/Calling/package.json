@@ -1,6 +1,7 @@
 {
   "name": "acs-calling-sample",
-  "version": "0.1.0",
+  "version": "0.0.1",
+  "private": true,
   "description": "This is a sample application to show how the ACS Calling Web SDK can be used to build a group calling experience. The client-side application is a React based user interface which uses React Hooks for handling complex state while leveraging Microsoft Fluent UI for how things look.",
   "scripts": {
     "build": "react-scripts build",
@@ -49,7 +50,7 @@
     "@azure/communication-administration": "^1.0.0-beta.3",
     "@azure/communication-calling": "1.0.0-beta.2",
     "@azure/communication-common": "1.0.0-beta.3",
-    "@azure/communication-ui": "^0.1.0",
+    "@azure/communication-ui": "0.0.1",
     "@azure/core-http": "^1.2.3",
     "@babel/preset-react": "^7.12.7",
     "@fluentui/react": "^7.117.1",
