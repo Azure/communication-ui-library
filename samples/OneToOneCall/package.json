@@ -6,9 +6,9 @@
   "scripts": {
     "build": "react-scripts build",
     "package": "copyfiles -E \"build/**/*\" dist && copyfiles -E -u 3 \"../Server/dist/**/*\" dist",
-    "start": "concurrently \"cd ../Server && npm run start:dev\" \"npm run start:app\"",
+    "start": "concurrently \"cd ../Server && npm run start:dev\" \"rush build:watch -T acs-one-to-one-call-sample\" \"npm run start:app\"",
     "start:app": "rimraf ./build && react-scripts start",
-    "start:debug": "concurrently \"cd ../Server && npm run start:debug\" \"npm run start\"",
+    "start:debug": "concurrently \"cd ../Server && npm run start:debug\" \"rush build:watch -T acs-one-to-one-call-sample\" \"npm run start\"",
     "start:prod": "node dist/server.js",
     "build:storybook": "build-storybook -s public",
     "storybook": "start-storybook -p 6006 -s public --no-manager-cache",
