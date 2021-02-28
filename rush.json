@@ -23,6 +23,11 @@
       "reviewCategory": "production"
     },
     {
+      "packageName": "@azure/acs-chat-declarative",
+      "projectFolder": "packages/acs-chat-declarative",
+      "reviewCategory": "prototypes"
+    },
+    {
       "packageName": "acs-calling-sample",
       "projectFolder": "samples/Calling",
       "reviewCategory": "prototypes"

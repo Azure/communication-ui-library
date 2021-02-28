@@ -16,6 +16,7 @@ dependencies:
   '@mdx-js/react': 1.6.22_react@16.14.0
   '@octokit/rest': 18.3.0
   '@rush-temp/acs-calling-sample': file:projects/acs-calling-sample.tgz_570bf42e92a70fb216c5cd4d5ed668ef
+  '@rush-temp/acs-chat-declarative': file:projects/acs-chat-declarative.tgz_prettier@2.0.5
   '@rush-temp/acs-chat-sample': file:projects/acs-chat-sample.tgz_40b0c9f7a7a0fac66e4b6fcf06de2a42
   '@rush-temp/acs-one-to-one-call-sample': file:projects/acs-one-to-one-call-sample.tgz_570bf42e92a70fb216c5cd4d5ed668ef
   '@rush-temp/acs-server-sample': file:projects/acs-server-sample.tgz
@@ -84,6 +85,7 @@ dependencies:
   express: 4.16.4
   http-errors: 1.6.3
   husky: 4.3.8
+  immer: 8.0.1
   jest: 26.6.0_ts-node@9.1.1
   jest-fetch-mock: 3.0.3
   jest-junit: 12.0.0
@@ -92,6 +94,7 @@ dependencies:
   merge: 1.2.1
   morgan: 1.9.1
   nan: 2.14.2
+  nanoid: 3.1.20
   node-forge: 0.10.0
   office-ui-fabric-react: 7.161.0_7780220a916877297c987d702313b31d
   prettier: 2.0.5
@@ -11161,6 +11164,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-Vs/gxoM4DqNAYR7pugIxi0Xc8XAun/uy7AQu4fLLqaTBHxjOP9pJ266Q9MWA/ly4z6rAFZbvViOtihxUZ7O28A==
+  /immer/8.0.1:
+    dev: false
+    resolution:
+      integrity: sha512-aqXhGP7//Gui2+UrEtvxZxSquQVXTpZ7KDxfCcKAF3Vysvw0CViVaW9RZ1j1xlIYqaaaipBoqdqeibkc18PNvA==
   /import-cwd/2.1.0:
     dependencies:
       import-from: 2.1.0
@@ -19900,6 +19907,26 @@ packages:
       integrity: sha512-frCRK5HbcVhDaPdL+OQl65Hy2c8RlCPoIhMVOLaTmQv2KlGc+jgIIce07pCvdimczuFfnMDTomy5G3TelU0Dcw==
       tarball: file:projects/acs-calling-sample.tgz
     version: 0.0.0
+  file:projects/acs-chat-declarative.tgz_prettier@2.0.5:
+    dependencies:
+      '@azure/communication-chat': 1.0.0-beta.3
+      eslint: 7.20.0
+      eslint-config-prettier: 6.15.0_eslint@7.20.0
+      eslint-plugin-header: 3.1.1_eslint@7.20.0
+      eslint-plugin-import: 2.22.1_eslint@7.20.0
+      eslint-plugin-prettier: 3.3.1_822b4c7c304ad0fbad34b397ba6938a8
+      immer: 8.0.1
+      nanoid: 3.1.20
+      typescript: 4.1.5
+    dev: false
+    id: file:projects/acs-chat-declarative.tgz
+    name: '@rush-temp/acs-chat-declarative'
+    peerDependencies:
+      prettier: '*'
+    resolution:
+      integrity: sha512-o0CDpWAY5HnAP8bKuvQlTAxDQLJ6JbIkSlK+zHWqESTprAXVDivG+f1HVYvDXfN6iFAyNGUW8lfxGyxHTbVAaw==
+      tarball: file:projects/acs-chat-declarative.tgz
+    version: 0.0.0
   file:projects/acs-chat-sample.tgz_40b0c9f7a7a0fac66e4b6fcf06de2a42:
     dependencies:
       '@azure/communication-administration': 1.0.0-beta.4
@@ -20203,6 +20230,7 @@ specifiers:
   '@mdx-js/react': ^1.6.22
   '@octokit/rest': ^18.0.6
   '@rush-temp/acs-calling-sample': file:./projects/acs-calling-sample.tgz
+  '@rush-temp/acs-chat-declarative': file:./projects/acs-chat-declarative.tgz
   '@rush-temp/acs-chat-sample': file:./projects/acs-chat-sample.tgz
   '@rush-temp/acs-one-to-one-call-sample': file:./projects/acs-one-to-one-call-sample.tgz
   '@rush-temp/acs-server-sample': file:./projects/acs-server-sample.tgz
@@ -20271,6 +20299,7 @@ specifiers:
   express: ~4.16.1
   http-errors: ~1.6.3
   husky: ^4.3.0
+  immer: ~8.0.1
   jest: 26.6.0
   jest-fetch-mock: ^3.0.3
   jest-junit: ^12.0.0
@@ -20279,6 +20308,7 @@ specifiers:
   merge: ^1.2.1
   morgan: ~1.9.1
   nan: ^2.14.1
+  nanoid: ~3.1.20
   node-forge: 0.10.0
   office-ui-fabric-react: ^7.160.2
   prettier: 2.0.5

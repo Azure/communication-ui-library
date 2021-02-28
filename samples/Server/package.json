@@ -1,6 +1,6 @@
 {
   "name": "acs-server-sample",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "scripts": {
     "build": "webpack",
     "start": "ts-node ./bin/www",
