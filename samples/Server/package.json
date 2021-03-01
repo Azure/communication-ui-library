@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "build": "webpack",
-    "build:watch": "",
     "start": "ts-node ./bin/www",
     "start:dev": "ts-node-dev ./bin/www",
     "start:debug": "node --inspect=9229 -r ts-node/register ./bin/www",
