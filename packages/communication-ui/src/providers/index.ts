@@ -6,3 +6,4 @@ export * from './ChatProvider';
 export * from './ChatThreadProvider';
 export * from './IncomingCallsProvider';
 export * from './ErrorProvider';
+export * from './FluentThemeProvider';

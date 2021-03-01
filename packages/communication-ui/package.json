@@ -7,7 +7,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc && copyfiles -u 1 src/assets/**/* dist",
+    "build": "tsc && copyfiles -u 1 src/**/assets/**/* dist",
     "build:storybook": "build-storybook -s src",
     "storybook": "start-storybook -p 6006 -s src --no-manager-cache",
     "deploy-storybook": "storybook-to-ghpages",
@@ -20,7 +20,7 @@
     "lint:fix": "npm run lint -- --fix",
     "lint:quiet": "npm run lint -- --quiet",
     "prepack": "node scripts/cleanse-pkg \"prepublish,build,build:storybook,test,test:coverage,snapshot:update\"",
-    "postpack": "node scripts/restore-pkg"
+    "postpack": "node scripts/restore-pkg && copyfiles -E \"./*.tgz\" private-preview && copyfiles -u 2 -E \"docs/private-preview/README.md\" private-preview"
   },
   "husky": {
     "hooks": {

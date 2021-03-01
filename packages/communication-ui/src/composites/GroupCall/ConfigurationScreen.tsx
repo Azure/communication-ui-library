@@ -1,8 +1,11 @@
 // © Microsoft Corporation. All rights reserved.
 import React from 'react';
 import { ErrorHandlingProps } from '../../providers/ErrorProvider';
-import { LocalSettings, CallConfiguration, StartCallButton, WithErrorHandling } from '../../components';
+import { WithErrorHandling } from '../../components';
 import { connectFuncsToContext, MapToCallConfigurationProps, SetupContainerProps } from '../../consumers';
+import { CallConfiguration } from './CallConfiguration';
+import { LocalDeviceSettings } from './LocalDeviceSettings';
+import { StartCallButton } from './StartCallButton';
 
 export interface ConfigurationScreenProps extends SetupContainerProps {
   screenWidth: number;
@@ -16,7 +19,7 @@ const ConfigurationComponentBase = (props: ConfigurationScreenProps): JSX.Elemen
   return (
     <CallConfiguration {...props}>
       <div>
-        <LocalSettings />
+        <LocalDeviceSettings />
       </div>
       <div>
         <StartCallButton

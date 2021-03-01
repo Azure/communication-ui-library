@@ -262,7 +262,7 @@ describe('useCallAgent tests', () => {
     expect(setScreenShareStreamCallback).not.toHaveBeenCalled();
   });
 
-  test('if availabilityChanged of addedRemoteVideoStream is called and addedRemoteVideoStream is not available, setScreenShareStream should have been called with undefined', async () => {
+  test('if availabilityChanged of addedRemoteVideoStream and addedRemoteVideoStream is not available, setScreenShareStream should have been called with undefined', async () => {
     addedRemoteVideoStream.type = 'ScreenSharing';
     addedRemoteVideoStream.isAvailable = false;
     renderHook(() => useCallAgent());

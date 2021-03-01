@@ -36,7 +36,7 @@ export const darkTheme = {
     themeDarkAlt: '#20c320',
     themeDark: '#3ccd3c',
     themeDarker: '#68da68',
-    neutralLighterAlt: '#323232',
+    neutralLighterAlt: '#666666',
     neutralLighter: '#313131',
     neutralLight: '#2f2f2f',
     neutralQuaternaryAlt: '#2c2c2c',
