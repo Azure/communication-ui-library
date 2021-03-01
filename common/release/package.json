@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "beachball": "beachball"
+    "beachball": "beachball",
+    "lint": "",
+    "build": "",
+    "test": ""
   },
   "devDependencies": {
     "@octokit/rest": "^18.0.6",

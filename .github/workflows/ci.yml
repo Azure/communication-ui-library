@@ -32,7 +32,7 @@ jobs:
         run: rush install
 
       # Perform changelog check
-      - name: Check a changes file has been submitted
+      - name: Check the necessary change file has been submitted
         run: npx beachball check
 
       # Perform lint check
