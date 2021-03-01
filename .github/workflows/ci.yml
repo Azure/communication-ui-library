@@ -60,3 +60,14 @@ jobs:
         working-directory: ./packages/communication-ui
         env:
           GH_TOKEN: ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
+
+      # Create a GitHub issue if the CI failed when running on the `main` branch
+      - name: Create issue if main branch CI failed
+        id: create-issue
+        if: failure() && github.ref == 'refs/heads/main'
+        uses: JasonEtco/create-an-issue@v2.4.0
+        with:
+          filename: .github/failed_ci_build_template.md
+          update_existing: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
