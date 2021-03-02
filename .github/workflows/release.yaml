@@ -27,6 +27,7 @@ jobs:
         # Note: we ignore commits made by the bot account that commits the auto version bump changes.
         # Then get the timestamp date for the first commit and check if it was over a day old.
         run: |
+          echo Fetching commit
           curl -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' -sL https://api.github.com/repos/${{ github.repository }}/commits | jq -r '[.[] | select(.author.login != "github-action-bot")][0]' $HOME/commit.json > $HOME/commit.json
 
           commitdate=$(jq -r '.commit.author.date' $HOME/commit.json)
@@ -52,7 +53,7 @@ jobs:
   release:
     name: Upload Releases
     needs: checkForChanges
-    if: ${{ needs.checkForChanges.outputs.hasChanged }} = 'false'
+    if: ${{ needs.checkForChanges.outputs.hasChanged == 'true'}}
     runs-on: ubuntu-latest
     steps:
       # Check-out repo
