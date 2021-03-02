@@ -1,0 +1,33 @@
+name: Test PR Bot
+
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  pull_request:
+    branches: [jaburnsi/test-github-action-push]
+
+jobs:
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
+      - uses: actions/checkout@v2
+
+      - name: Create PR
+        run: |
+          curl \
+            -X POST \
+            -H 'Accept: application/vnd.github.v3+json' \
+            -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+            -d '{"title": "Test PR -- ignore", "head": "head", "base", "jaburnsi/test-github-action-push", "body", "This is just a test PR -- ignore and do not complete."}' \
+            https://api.github.com/repos/Azure/communication-ui-sdk/pulls/
+
+      - name: Approve PR
+        run: |
+          curl \
+            -X POST \
+            -H 'Accept: application/vnd.github.v3+json' \
+            -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+            -d '{"event": "APPROVE"}' \
+            https://api.github.com/repos/Azure/communication-ui-sdk/pulls/48/reviews
