@@ -29,13 +29,13 @@ jobs:
         run: |
           curl -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' -sL https://api.github.com/repos/${{ github.repository }}/commits | jq -r '[.[] | select(.author.login != "github-action-bot")][0]' $HOME/commit.json > $HOME/commit.json
           date="$(jq -r '.commit.author.date' $HOME/commit.json)"
-          url="$(jq -r '.commit.url' $HOME/commit.json)"
+          url="$(jq -r '.url' $HOME/commit.json)"
           echo Last commit: $url
           echo Last commit date \(UTC\): $date
           timestamp=$(date --utc -d "$date" +%s)
           days=$(( ( $(date --utc +%s) - $timestamp ) / 86400 ))
           echo Days since last commit: $days
-          if [ $first -eq 0 ]
+          if [ $first -eq "0" ]
           then
             echo "::set-output name=hasChanged::true"
           else
@@ -51,17 +51,6 @@ jobs:
       # Check-out repo
       - uses: actions/checkout@v2
 
-      # Get datetime to mark the releases. This will become the version number when version bumping is fully implemented.
-      - name: Get Release names
-        id: releasenames
-        run: |
-          echo "::set-output name=tagname::$(date +' %Y-%m-%d-%H%M')"
-          echo "::set-output name=releasename::$(TZ=":America/Vancouver" date +' %Y-%m-%d %H%M')"
-
-      - name: Test retreived date
-        run: |
-          echo ${{ steps.releasenames.outputs.tagname }}
-          echo ${{ steps.releasenames.outputs.releasename }}
       # Ensure node version is great enough
       # - name: Use Node.js v12.x
       #   uses: actions/setup-node@v1
@@ -102,12 +91,19 @@ jobs:
       #     7z a one-to-one-calling.zip ./samples/OneToOneCall/dist/*
       #     7z a private-preview.zip ./packages/communication-ui/private-preview/*
 
+      # Get datetime to mark the releases. This will become the version number when version bumping is fully implemented.
+      # - name: Get Release names
+      #   id: releasenames
+      #   run: |
+      #     echo "::set-output name=tagname::$(date +' %Y-%m-%d-%H%M')"
+      #     echo "::set-output name=releasename::$(TZ=":America/Vancouver" date +' %Y-%m-%d %H%M')"
+
       # # Upload releases
       # - name: Publish Samples and PrivatePreview Releases
       #   uses: softprops/action-gh-release@v1
       #   with:
-      #     name: Release ${{ steps.date.outputs.date }} ${{ steps.date.outputs.hour }}:${{ steps.date.outputs.minute }}
-      #     tag_name: Release/${{ steps.date.outputs.date }}-${{ steps.date.outputs.hour }}${{ steps.date.outputs.minute }}
+      #     name: Release ${{ steps.releasenames.outputs.releasename }}
+      #     tag_name: Release/${{ steps.releasenames.outputs.tagname }}
       #     files: |
       #       group-calling.zip
       #       group-chat.zip
