@@ -23,18 +23,16 @@ jobs:
       # Check if any changes have been pushed to main since last release
       - name: Just default to true for now
         id: checkChange
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         # Default to true for now
         run: |
-          curl -sL https://api.github.com/repos/Azure/communication-ui-sdk/commits > $HOME/commit.json
+          curl -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' -L https://api.github.com/repos/${{ github.repository }}/commits > $HOME/commit.json
           cat $HOME/commit.json
           date="$(jq -r '.commit.author.date' $HOME/commit.json)"
-          echo date
+          echo $date
           timestamp=$(date --utc -d "$date" +%s)
-          echo timestamp
+          echo $timestamp
           days=$(( ( $(date --utc +%s) - $timestamp ) / 86400 ))
-          echo days
+          echo $days
           echo "::set-output name=hasChanged::true"
 
   release:
