@@ -9,8 +9,6 @@ on:
     # if we want to support only Mon - Fri we need to change the check how we look for new changes. Currently we
     # check for any new changes in the last 24 hours regardless of day)
     - cron: '0 14 * * *'
-  pull_request:
-    branches: [main]
 
 jobs:
   checkForChanges:
