@@ -27,7 +27,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         # Default to true for now
         run: |
-          curl -sL https://api.github.com/repos/$GITHUB_REPOSITORY/commits > $HOME/commit.json
+          curl -sL https://api.github.com/repos/Azure/communication-ui-sdk/commits > $HOME/commit.json
           cat $HOME/commit.json
           date="$(jq -r '.commit.author.date' $HOME/commit.json)"
           echo date
