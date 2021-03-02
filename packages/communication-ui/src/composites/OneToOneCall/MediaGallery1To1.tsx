@@ -1,7 +1,10 @@
 // © Microsoft Corporation. All rights reserved.
 import React from 'react';
 import { Stack } from '@fluentui/react';
-import { MediaGalleryTileComponent as MediaGalleryTile, MediaGalleryTileProps } from '../components/MediaGalleryTile';
+import {
+  MediaGalleryTileComponent as MediaGalleryTile,
+  MediaGalleryTileProps
+} from '../../components/MediaGalleryTile';
 import {
   localMediaGalleryTileStyle,
   mediaGallery1To1Style,
@@ -15,9 +18,9 @@ import {
   MapToLocalVideoProps,
   MapToRemoteVideoProps,
   RemoteVideoContainerOwnProps
-} from '../consumers';
-import { GalleryParticipant } from '../types/GalleryParticipant';
-import { MapToMediaGallery1To1Props, MediaGallery1To1ContainerProps } from '../consumers/MapToMediaGallery1To1Props';
+} from '../../consumers';
+import { GalleryParticipant } from '../../types/GalleryParticipant';
+import { MapToMediaGallery1To1Props, MediaGallery1To1ContainerProps } from './consumers/MapToMediaGallery1To1Props';
 
 export interface MediaGallery1To1Props extends MediaGallery1To1ContainerProps {
   /** Determines the remote participant in the media gallery. */
@@ -111,4 +114,4 @@ export const MediaGallery1To1Component = (props: MediaGallery1To1Props): JSX.Ele
   );
 };
 
-export default connectFuncsToContext(MediaGallery1To1Component, MapToMediaGallery1To1Props);
+export const MediaGallery1To1 = connectFuncsToContext(MediaGallery1To1Component, MapToMediaGallery1To1Props);
