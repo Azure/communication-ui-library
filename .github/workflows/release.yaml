@@ -12,7 +12,7 @@ on:
 
 jobs:
   checkForChanges:
-    name: Check for Changes since last release
+    name: Check for new changes
     outputs:
       hasChanged: ${{ steps.checkChange.outputs.hasChanged }}
     runs-on: ubuntu-latest
@@ -24,7 +24,15 @@ jobs:
       - name: Just default to true for now
         id: checkChange
         # Default to true for now
-        run: echo "::set-output name=hasChanged::true"
+        run: |
+          curl -sL https://api.github.com/repos/$GITHUB_REPOSITORY/commits | jq -r '[.[]][0]' > $HOME/commit.json
+          date="$(jq -r '.commit.author.date' $HOME/commit.json)"
+          echo date
+          timestamp=$(date --utc -d "$date" +%s)
+          echo timestamp
+          days=$(( ( $(date --utc +%s) - $timestamp ) / 86400 ))
+          echo days
+          echo "::set-output name=hasChanged::true"
 
   release:
     name: Upload Releases
@@ -39,9 +47,9 @@ jobs:
       - name: Get current date
         id: date
         run: |
-          echo "::set-output name=date::$(date +'TZ="PST" %Y-%m-%d')"
-          echo "::set-output name=hour::$(date +'TZ="PST" %H')"
-          echo "::set-output name=minute::$(date +'TZ="PST" %M')"
+          TZ="PST" echo "::set-output name=date::$(date +' %Y-%m-%d')"
+          TZ="PST" echo "::set-output name=hour::$(date +' %H')"
+          TZ="PST" echo "::set-output name=minute::$(date +' %M')"
 
       - name: Test retreived date
         run: echo ${{ steps.date.outputs.date }} ${{ steps.date.outputs.hour }}:${{ steps.date.outputs.minute }}
