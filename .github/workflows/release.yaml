@@ -104,8 +104,8 @@ jobs:
       - name: Get Release names
         id: releasenames
         run: |
-          echo "::set-output name=tagname::$(date +' %Y-%m-%d-%H%M')"
-          echo "::set-output name=releasename::$(TZ=":America/Vancouver" date +' %Y-%m-%d %H%M')"
+          echo "::set-output name=tagname::$(date +'%Y-%m-%d-%H%M')"
+          echo "::set-output name=releasename::$(TZ=":America/Vancouver" date +'%Y-%m-%d %H%M')"
 
       # Upload releases
       - name: Publish Samples and PrivatePreview Releases
