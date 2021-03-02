@@ -1,8 +1,8 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { CommunicationIdentityClient, CommunicationUserToken, TokenScope } from '@azure/communication-identity';
+import { CommunicationUserToken, TokenScope } from '@azure/communication-identity';
 import * as express from 'express';
-import { getResourceConnectionString } from '../lib/envHelper';
+import { createUserWithToken } from '../lib/identityClient';
 
 const router = express.Router();
 
@@ -11,9 +11,8 @@ const router = express.Router();
  * @param requestedScope [optional] string from the request, this should be a comma seperated list of scopes.
  */
 const handleUserTokenRequest = async (requestedScope?: string): Promise<CommunicationUserToken> => {
-  const identityClient = new CommunicationIdentityClient(getResourceConnectionString());
   const scopes: TokenScope[] = requestedScope ? (requestedScope.split(',') as TokenScope[]) : ['chat', 'voip'];
-  return await identityClient.createUserWithToken(scopes);
+  return await createUserWithToken(scopes);
 };
 
 /**
