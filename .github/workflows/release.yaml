@@ -35,9 +35,12 @@ jobs:
           timestamp=$(date --utc -d "$date" +%s)
           days=$(( ( $(date --utc +%s) - $timestamp ) / 86400 ))
           echo Days since last commit: $days
-          changedInLastDay=$days -eq 0
-          echo Changed in last day: $changedInLastDay
-          echo "::set-output name=hasChanged::$changedInLastDay"
+          if [ $first -eq 0 ]
+          then
+            echo "::set-output name=hasChanged::true"
+          else
+            echo "::set-output name=hasChanged::false"
+          fi
 
   release:
     name: Upload Releases
@@ -49,15 +52,16 @@ jobs:
       - uses: actions/checkout@v2
 
       # Get datetime to mark the releases. This will become the version number when version bumping is fully implemented.
-      - name: Get current date
-        id: date
+      - name: Get Release names
+        id: releasenames
         run: |
-          TZ="PST" echo "::set-output name=date::$(date +' %Y-%m-%d')"
-          TZ="PST" echo "::set-output name=hour::$(date +' %H')"
-          TZ="PST" echo "::set-output name=minute::$(date +' %M')"
+          echo "::set-output name=tagname::$(date +' %Y-%m-%d-%H%M')"
+          echo "::set-output name=releasename::$(TZ=":America/Vancouver" date +' %Y-%m-%d %H%M')"
 
       - name: Test retreived date
-        run: echo ${{ steps.date.outputs.date }} ${{ steps.date.outputs.hour }}:${{ steps.date.outputs.minute }}
+        run: |
+          echo ${{ steps.releasenames.outputs.tagname }}
+          echo ${{ steps.releasenames.outputs.releasename }}
       # Ensure node version is great enough
       # - name: Use Node.js v12.x
       #   uses: actions/setup-node@v1
