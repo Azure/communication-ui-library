@@ -3,6 +3,7 @@ dependencies:
   '@azure/communication-calling': 1.0.0-beta.2
   '@azure/communication-chat': 1.0.0-beta.3
   '@azure/communication-common': 1.0.0-beta.3
+  '@azure/communication-identity': 1.0.0-beta.4
   '@azure/communication-signaling': 1.0.0-beta.1
   '@azure/core-http': 1.2.3
   '@babel/core': 7.13.8
@@ -196,6 +197,38 @@ packages:
       node: '>=8.0.0'
     resolution:
       integrity: sha512-HPLwM6EaQ8Grc+smncr4t/Q/I0TnhAS3Ql/z9Zuju7hXDcSBCYjINmaYNQ76LCdhDQ62Akzye7vYak4eOuit9w==
+  /@azure/communication-common/1.0.0-beta.5:
+    dependencies:
+      '@azure/abort-controller': 1.0.3
+      '@azure/core-auth': 1.2.0
+      '@azure/core-http': 1.2.3
+      '@opentelemetry/api': 0.10.2
+      events: 3.2.0
+      jwt-decode: 2.2.0
+      tslib: 2.1.0
+    dev: false
+    engines:
+      node: '>=8.0.0'
+    resolution:
+      integrity: sha512-wNaw43z+7YoOyIDnhlDtqVgIK0rPl8bgv7vV0oBizw4+CinaUrG8EtYv0nZ7tH6Rr8R+ys9UhoPaS5d+JUVoJw==
+  /@azure/communication-identity/1.0.0-beta.4:
+    dependencies:
+      '@azure/abort-controller': 1.0.3
+      '@azure/communication-common': 1.0.0-beta.5
+      '@azure/core-auth': 1.2.0
+      '@azure/core-http': 1.2.3
+      '@azure/core-lro': 1.0.3
+      '@azure/core-paging': 1.1.3
+      '@azure/core-tracing': 1.0.0-preview.9
+      '@azure/logger': 1.0.1
+      '@opentelemetry/api': 0.10.2
+      events: 3.2.0
+      tslib: 2.1.0
+    dev: false
+    engines:
+      node: '>=8.0.0'
+    resolution:
+      integrity: sha512-qd0N66bR16Xrjc0wSaUrUQDTZDNiabk+MWqfT+oNpTIPM5yvu78bjz4aMH7rFYxIOWWW4k6lxwB91ZdBXXn1/A==
   /@azure/communication-signaling/1.0.0-beta.1:
     dependencies:
       '@azure/core-http': 1.2.3
@@ -19416,7 +19449,7 @@ packages:
       webpack: '*'
       webpack-cli: '*'
     resolution:
-      integrity: sha512-Be2SBh/M39sl8lz81HIoqXhAEzvD8zXJvdZHQoFHozXNqlGpZQJSB9SaEKwL8FUY7xFWtGXh8JEn0HxEWCp6HQ==
+      integrity: sha512-frCRK5HbcVhDaPdL+OQl65Hy2c8RlCPoIhMVOLaTmQv2KlGc+jgIIce07pCvdimczuFfnMDTomy5G3TelU0Dcw==
       tarball: file:projects/acs-calling-sample.tgz
     version: 0.0.0
   file:projects/acs-chat-declarative.tgz_prettier@2.0.5:
@@ -19436,7 +19469,7 @@ packages:
     peerDependencies:
       prettier: '*'
     resolution:
-      integrity: sha512-TCg/a9yzpbrJQZkd26TgWF9EzzIMlTGjCWjs75Fq1TrdoIRIJOjKZA6VPpJA6MWSjtxPZek4OhuGN1tYCopI1Q==
+      integrity: sha512-o0CDpWAY5HnAP8bKuvQlTAxDQLJ6JbIkSlK+zHWqESTprAXVDivG+f1HVYvDXfN6iFAyNGUW8lfxGyxHTbVAaw==
       tarball: file:projects/acs-chat-declarative.tgz
     version: 0.0.0
   file:projects/acs-chat-sample.tgz_40b0c9f7a7a0fac66e4b6fcf06de2a42:
@@ -19444,6 +19477,7 @@ packages:
       '@azure/communication-administration': 1.0.0-beta.4
       '@azure/communication-chat': 1.0.0-beta.3
       '@azure/communication-common': 1.0.0-beta.3
+      '@azure/communication-identity': 1.0.0-beta.4
       '@azure/communication-signaling': 1.0.0-beta.1
       '@azure/core-http': 1.2.3
       '@fluentui/react': 7.162.0_7780220a916877297c987d702313b31d
@@ -19498,7 +19532,7 @@ packages:
       ts-node: '*'
       webpack-cli: '*'
     resolution:
-      integrity: sha512-yH8f6Uf7+4IZomF2L6uw6wlj7a8ZKySnsZ3pTxrQ+yf5H95MKEK2hXCfhJ2cYOFwJFQbEb9RittgGxhFxmst1Q==
+      integrity: sha512-EfLABFcuQwg5O6EvefZultMSl2Mq6NqQdohM95VlvE+tcADJlwml8wmBE9dH+uleli3N/evdIgshNRABHoWbaA==
       tarball: file:projects/acs-chat-sample.tgz
     version: 0.0.0
   file:projects/acs-one-to-one-call-sample.tgz_570bf42e92a70fb216c5cd4d5ed668ef:
@@ -19568,7 +19602,7 @@ packages:
       webpack: '*'
       webpack-cli: '*'
     resolution:
-      integrity: sha512-n1G6GtoT9C0Ld3aha3zp8GjzyIYKxHNGYPvNVPhrNE2noxJutb6rHgSxfyG4eDnERTcltznrX6duriQD/oOhaA==
+      integrity: sha512-OkggT74wSMp3CljBAXHdeUo6LL8TILVijH/IJwyNoZf4m3Tot7tmqtiCUPoGCQ4el0moTSZRQCE8IRxjaklRZQ==
       tarball: file:projects/acs-one-to-one-call-sample.tgz
     version: 0.0.0
   file:projects/acs-server-sample.tgz:
@@ -19618,7 +19652,7 @@ packages:
     dev: false
     name: '@rush-temp/acs-server-sample'
     resolution:
-      integrity: sha512-q3fnzxnJT1QHLuGBDkhd/Bibh3ynOtxCqnVjfujEVA4lDeas+KeedhHPA8IFRz9Ep4MUaIcf7ex/JOAx30nN5A==
+      integrity: sha512-S+NvYFv4Q0gquwWqm8LEXQga1gtRAGlTq+Qu0ftLAIsERHxZ+w2c8IALZ0pveS+HsUseEd7sqOFnL8K5ElBzwA==
       tarball: file:projects/acs-server-sample.tgz
     version: 0.0.0
   file:projects/communication-ui.tgz_webpack-cli@4.5.0:
@@ -19704,14 +19738,16 @@ packages:
     peerDependencies:
       webpack-cli: '*'
     resolution:
-      integrity: sha512-OdvFhUZML983os2Qez7VwLh4yLlynMT0+gH24HrunZubFQn07NpLxA2LSJWAKBJj5T+ORMcUifKSFNR9Shsh8g==
+      integrity: sha512-KQhUWooRgKl3PN6bK9wKmUstwltjF2q5XbBnz/SkdwOuzvruMhjdD+dMMJfiILIxz+K++6+1xN9UITZD8kQNjg==
       tarball: file:projects/communication-ui.tgz
     version: 0.0.0
+registry: ''
 specifiers:
   '@azure/communication-administration': ^1.0.0-beta.3
   '@azure/communication-calling': 1.0.0-beta.2
   '@azure/communication-chat': 1.0.0-beta.3
   '@azure/communication-common': 1.0.0-beta.3
+  '@azure/communication-identity': ~1.0.0-beta.4
   '@azure/communication-signaling': 1.0.0-beta.1
   '@azure/core-http': ^1.2.3
   '@babel/core': ^7.12.7
@@ -19822,7 +19858,7 @@ specifiers:
   ts-loader: ^8.0.12
   ts-node: ^9.1.1
   ts-node-dev: ^1.0.0
-  typescript: 4.1.5
+  typescript: ^4.0.5
   uuid: ^8.1.0
   webpack: 4.44.2
   webpack-cli: ^4.2.0
