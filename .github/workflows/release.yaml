@@ -44,7 +44,6 @@ jobs:
           echo "::set-output name=minute::$(date +'TZ="PST" %M')"
 
       - name: Test retreived date
-        id: date
         run: echo ${{ steps.date.outputs.date }} ${{ steps.date.outputs.hour }}:${{ steps.date.outputs.minute }}
 
       # Ensure node version is great enough
