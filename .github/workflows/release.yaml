@@ -25,7 +25,8 @@ jobs:
         id: checkChange
         # Default to true for now
         run: |
-          curl -sL https://api.github.com/repos/$GITHUB_REPOSITORY/commits | jq -r '[.[]][0]' > $HOME/commit.json
+          curl -sL https://api.github.com/repos/$GITHUB_REPOSITORY/commits > $HOME/commit.json
+          cat $HOME/commit.json
           date="$(jq -r '.commit.author.date' $HOME/commit.json)"
           echo date
           timestamp=$(date --utc -d "$date" +%s)
