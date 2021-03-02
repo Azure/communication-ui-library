@@ -29,18 +29,25 @@ jobs:
         run: |
           curl -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' -sL https://api.github.com/repos/${{ github.repository }}/commits | jq -r '[.[] | select(.author.login != "github-action-bot")][0]' $HOME/commit.json > $HOME/commit.json
           cat $HOME/commit.json
-          date="$(jq -r '.commit.author.date' $HOME/commit.json)"
-          url="$(jq -r '.url' $HOME/commit.json)"
-          echo Last commit: $url
-          echo Last commit date \(UTC\): $date
-          timestamp=$(date --utc -d "$date" +%s)
+
+          commitdate="$(jq -r '.commit.author.date' $HOME/commit.json)"
+          commiturl="$(jq -r '.url' $HOME/commit.json)"
+          echo Last commit: $commiturl
+          echo Last commit date \(UTC\): $commitdate
+
+          timestamp=$(date --utc -d "$commitdate" +%s)
           echo Commit timestamp: $timestamp
-          days=$(( ( $(date --utc +%s) - $timestamp ) / 86400 ))
+
+          currentTimestamp=$(date --utc +%s)
+          echo Current timestamp: $currentTimestamp
+
+          days=$(( ($currentTimestamp - $timestamp ) / 86400 ))
           echo Days since last commit: $days
+
           if [ $days = "0" ]; then
-            echo "::set-output name=hasChanged::true"
+            echo "::set-output name=hasChanged::apples"
           else
-            echo "::set-output name=hasChanged::false"
+            echo "::set-output name=hasChanged::bananas"
           fi
 
   release:
@@ -93,11 +100,11 @@ jobs:
       #     7z a private-preview.zip ./packages/communication-ui/private-preview/*
 
       # Get datetime to mark the releases. This will become the version number when version bumping is fully implemented.
-      # - name: Get Release names
-      #   id: releasenames
-      #   run: |
-      #     echo "::set-output name=tagname::$(date +' %Y-%m-%d-%H%M')"
-      #     echo "::set-output name=releasename::$(TZ=":America/Vancouver" date +' %Y-%m-%d %H%M')"
+      - name: Get Release names
+        id: releasenames
+        run: |
+          echo "::set-output name=tagname::$(date +' %Y-%m-%d-%H%M')"
+          echo "::set-output name=releasename::$(TZ=":America/Vancouver" date +' %Y-%m-%d %H%M')"
 
       # # Upload releases
       # - name: Publish Samples and PrivatePreview Releases
