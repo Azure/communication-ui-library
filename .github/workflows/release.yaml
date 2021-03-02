@@ -7,8 +7,9 @@ on:
   pull_request:
     branches: [main]
   # schedule:
-  # minute 0, hour 15 UTC which is 8am in PST (9am in PDT), any day of month, any month, days 1-5 of week (M-F)
-  # - cron: "0 15 * * 1-5"
+  # minute 0, hour 15 UTC which is 8am in PST (9am in PDT), any day of month, any month, any day of the week
+  # if we want to support only Mon - Fri we need to change the check where we look for changes in the last 24 hours regardless of day
+  # - cron: "0 15 * * *"
 
 jobs:
   checkForChanges:
@@ -27,7 +28,7 @@ jobs:
         # Note: we ignore commits made by the bot account that commits the auto version bump changes.
         # Then get the timestamp date for the first commit and check if it was over a day old.
         run: |
-          curl -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' -sL https://api.github.com/repos/${{ github.repository }}/commits | jq -r '[.[] | select(.author.login != "ytyeason" && .author.login != "jamesburnside")][0]' $HOME/commit.json > $HOME/commit.json
+          curl -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' -sL https://api.github.com/repos/${{ github.repository }}/commits | jq -r '[.[] | select(.author.login != "ytyeason") | select(.author.login != "jamesburnside")][0]' $HOME/commit.json > $HOME/commit.json
 
           commitdate=$(jq -r '.commit.author.date' $HOME/commit.json)
           commiturl=$(jq -r '.url' $HOME/commit.json)
