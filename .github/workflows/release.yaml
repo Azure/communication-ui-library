@@ -35,8 +35,7 @@ jobs:
           timestamp=$(date --utc -d "$date" +%s)
           days=$(( ( $(date --utc +%s) - $timestamp ) / 86400 ))
           echo Days since last commit: $days
-          if [ $first -eq "0" ]
-          then
+          if [ $first = "0" ]; then
             echo "::set-output name=hasChanged::true"
           else
             echo "::set-output name=hasChanged::false"
