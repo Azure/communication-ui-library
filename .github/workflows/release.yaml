@@ -53,7 +53,7 @@ jobs:
   release:
     name: Upload Releases
     needs: checkForChanges
-    if: ${{ needs.checkForChanges.outputs.hasChanged }} == 'false'
+    if: ${{ needs.checkForChanges.outputs.hasChanged }} == 'no'
     runs-on: ubuntu-latest
     steps:
       # Check-out repo
