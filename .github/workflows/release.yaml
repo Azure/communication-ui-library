@@ -28,10 +28,9 @@ jobs:
         # Then get the timestamp date for the first commit and check if it was over a day old.
         run: |
           curl -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' -sL https://api.github.com/repos/${{ github.repository }}/commits | jq -r '[.[] | select(.author.login != "github-action-bot")][0]' $HOME/commit.json > $HOME/commit.json
-          cat $HOME/commit.json
 
-          commitdate="$(jq -r '.commit.author.date' $HOME/commit.json)"
-          commiturl="$(jq -r '.url' $HOME/commit.json)"
+          commitdate=$(jq -r '.commit.author.date' $HOME/commit.json)
+          commiturl=$(jq -r '.url' $HOME/commit.json)
           echo Last commit: $commiturl
           echo Last commit date \(UTC\): $commitdate
 
@@ -53,7 +52,7 @@ jobs:
   release:
     name: Upload Releases
     needs: checkForChanges
-    if: ${{ needs.checkForChanges.outputs.hasChanged }} == 'no'
+    if: ${{ needs.checkForChanges.outputs.hasChanged }} = 'false'
     runs-on: ubuntu-latest
     steps:
       # Check-out repo
