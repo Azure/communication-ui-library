@@ -11,59 +11,47 @@ on:
   workflow_dispatch:
 
 jobs:
-  build_and_test:
-    name: Build and Test
+  tests:
+    name: Tests
     runs-on: ubuntu-latest
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v2
 
-      # Ensure node version is great enough
-      - name: Use Node.js v12.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: '12.x'
+      - name: Setup bot git information
+        run: |
+          git config user.email "github-action-bot@example.com"
+          git config user.name "github-action-bot"
 
-      # Install dependencies
-      - name: Install rush
-        run: npm install -g @microsoft/rush
-      - name: Install dependencies
-        run: rush install
+      - name: Switch branch
+        run: git checkout -b "bot/new-branch"
 
-      # Perform lint check
-      - name: Run linter
-        run: rush lint
+      - name: Create change
+        run: touch newfile
 
-      # Builds
-      - name: Build Packages and Samples
-        run: rush build
+      - name: Commit change
+        run: |
+          git add .
+          git commit -m "bot change"
 
-      - name: Build Storybook
-        run: rushx build:storybook
-        working-directory: ./packages/communication-ui
+      - name: Push branch
+        run: git push --set-upstream origin bot/new-branch
 
-      # Run tests
-      - name: Run Tests
-        run: rush test
-        env:
-          CI: true
+      - name: Create PR
+        run: |
+          curl \
+            -X POST \
+            -H 'Accept: application/vnd.github.v3+json' \
+            -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+            -d '{"title": "Test PR -- ignore", "head": "bot/new-branch", "base", "jaburnsi/test-github-action-push", "body", "This is just a test PR -- ignore and do not complete."}' \
+            https://api.github.com/repos/Azure/communication-ui-sdk/pulls/
 
-      # Deploy Storybook - only perform this step on main branch CI
-      - name: Deploy Storybook
-        if: github.ref == 'refs/heads/main'
-        run: npm run deploy-storybook -- --ci
-        working-directory: ./packages/communication-ui
-        env:
-          GH_TOKEN: ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
-
-      # Create a GitHub issue if the CI failed when running on the `main` branch
-      - name: Create issue if main branch CI failed
-        id: create-issue
-        if: failure() && github.ref == 'refs/heads/main'
-        uses: JasonEtco/create-an-issue@v2.4.0
-        with:
-          filename: .github/failed_ci_build_template.md
-          update_existing: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Approve PR
+        run: |
+          curl \
+            -X POST \
+            -H 'Accept: application/vnd.github.v3+json' \
+            -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+            -d '{"event": "APPROVE"}' \
+            https://api.github.com/repos/Azure/communication-ui-sdk/pulls/49/reviews
