@@ -28,6 +28,7 @@ jobs:
         # Then get the timestamp date for the first commit and check if it was over a day old.
         run: |
           curl -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' -sL https://api.github.com/repos/${{ github.repository }}/commits | jq -r '[.[] | select(.author.login != "github-action-bot")][0]' $HOME/commit.json > $HOME/commit.json
+          cat $HOME/commit.json
           date="$(jq -r '.commit.author.date' $HOME/commit.json)"
           url="$(jq -r '.url' $HOME/commit.json)"
           echo Last commit: $url
@@ -35,7 +36,7 @@ jobs:
           timestamp=$(date --utc -d "$date" +%s)
           days=$(( ( $(date --utc +%s) - $timestamp ) / 86400 ))
           echo Days since last commit: $days
-          if [ $first = "0" ]; then
+          if [ $days = "0" ]; then
             echo "::set-output name=hasChanged::true"
           else
             echo "::set-output name=hasChanged::false"
