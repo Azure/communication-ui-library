@@ -23,9 +23,11 @@ jobs:
       # Check if any changes have been pushed to main since last release
       - name: Just default to true for now
         id: checkChange
-        # Default to true for now
+        # Here we query the github rest api for the commits, use jq (json parser) to grab the first commit and put contents into $HOME/commit.json
+        # Then get the timestamp date for the first commit and check if it was over a day old.
+        # TODO: ignore commits made by the bot account when we enable auto versioning.
         run: |
-          curl -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' -L https://api.github.com/repos/${{ github.repository }}/commits > $HOME/commit.json
+          curl -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' -sL https://api.github.com/repos/${{ github.repository }}/commits | jq -r '[.[]][0]' > $HOME/commit.json > $HOME/commit.json
           cat $HOME/commit.json
           date="$(jq -r '.commit.author.date' $HOME/commit.json)"
           echo $date
