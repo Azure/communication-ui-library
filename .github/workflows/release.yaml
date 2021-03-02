@@ -31,7 +31,7 @@ jobs:
           date="$(jq -r '.commit.author.date' $HOME/commit.json)"
           url="$(jq -r '.commit.url' $HOME/commit.json)"
           echo Last commit: $url
-          echo Last commit date (UTC): $date
+          echo Last commit date \(UTC\): $date
           timestamp=$(date --utc -d "$date" +%s)
           days=$(( ( $(date --utc +%s) - $timestamp ) / 86400 ))
           echo Days since last commit: $days
@@ -99,23 +99,15 @@ jobs:
       #     7z a private-preview.zip ./packages/communication-ui/private-preview/*
 
       # # Upload releases
-      # - name: Publish Private Preview Release
+      # - name: Publish Samples and PrivatePreview Releases
       #   uses: softprops/action-gh-release@v1
       #   with:
-      #     name: PrivatePreview ${{ steps.date.outputs.date }} ${{ steps.date.outputs.hour }}:${{ steps.date.outputs.minute }}
-      #     tag_name: PrivatePreview/${{ steps.date.outputs.date }}-${{ steps.date.outputs.hour }}${{ steps.date.outputs.minute }}
-      #     files: private-preview.zip
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # - name: Publish Samples Release
-      #   uses: softprops/action-gh-release@v1
-      #   with:
-      #     name: Samples ${{ steps.date.outputs.date }} ${{ steps.date.outputs.hour }}:${{ steps.date.outputs.minute }}
-      #     tag_name: Samples/${{ steps.date.outputs.date }}-${{ steps.date.outputs.hour }}${{ steps.date.outputs.minute }}
+      #     name: Release ${{ steps.date.outputs.date }} ${{ steps.date.outputs.hour }}:${{ steps.date.outputs.minute }}
+      #     tag_name: Release/${{ steps.date.outputs.date }}-${{ steps.date.outputs.hour }}${{ steps.date.outputs.minute }}
       #     files: |
       #       group-calling.zip
       #       group-chat.zip
       #       one-to-one-calling.zip
+      #       private-preview.zip
       #   env:
       #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
