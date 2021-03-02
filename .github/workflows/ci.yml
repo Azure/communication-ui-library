@@ -31,7 +31,9 @@ jobs:
         run: touch newfile
 
       - name: Commit change
-        run: git commit -am "bot change"
+        run: |
+          git add .
+          git commit -m "bot change"
 
       - name: Push branch
         run: git push --set-upstream origin bot/new-branch
