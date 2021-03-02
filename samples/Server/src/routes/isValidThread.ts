@@ -6,7 +6,6 @@ import { threadIdToModeratorCredentialMap } from '../lib/chat/threadIdToModerato
 const router = express.Router();
 
 router.get('/:threadId', async function (req, res, next) {
-  console.log(threadIdToModeratorCredentialMap);
   if (threadIdToModeratorCredentialMap.has(req.params['threadId'])) {
     res.sendStatus(200);
   } else {
