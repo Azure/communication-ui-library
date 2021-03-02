@@ -9,6 +9,8 @@ on:
     # if we want to support only Mon - Fri we need to change the check how we look for new changes. Currently we
     # check for any new changes in the last 24 hours regardless of day)
     - cron: '0 14 * * *'
+  pull_request:
+    branches: [main]
 
 jobs:
   checkForChanges:
@@ -59,44 +61,44 @@ jobs:
       - uses: actions/checkout@v2
 
       # Ensure node version is great enough
-      # - name: Use Node.js v12.x
-      #   uses: actions/setup-node@v1
-      #   with:
-      #     node-version: '12.x'
+      - name: Use Node.js v12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
 
-      # # Install dependencies
-      # - name: Install rush
-      #   run: npm install -g @microsoft/rush
-      # - name: Install dependencies
-      #   run: rush install
+      # Install dependencies
+      - name: Install rush
+        run: npm install -g @microsoft/rush
+      - name: Install dependencies
+        run: rush install
 
-      # # Builds
-      # - name: Build Packages and Samples
-      #   run: rush build
+      # Builds
+      - name: Build Packages and Samples
+        run: rush build
 
-      # # Package up artifacts for release
-      # - name: Package Group Calling Sample Artifact
-      #   run: rushx package
-      #   working-directory: ./samples/Calling
+      # Package up artifacts for release
+      - name: Package Group Calling Sample Artifact
+        run: rushx package
+        working-directory: ./samples/Calling
 
-      # - name: Package One To One Calling Sample Artifact
-      #   run: rushx package
-      #   working-directory: ./samples/OneToOneCall
+      - name: Package One To One Calling Sample Artifact
+        run: rushx package
+        working-directory: ./samples/OneToOneCall
 
-      # - name: Package Group Chat Sample Artifact
-      #   run: rushx package
-      #   working-directory: ./samples/Chat
+      - name: Package Group Chat Sample Artifact
+        run: rushx package
+        working-directory: ./samples/Chat
 
-      # - name: Package Private-Preview Artifact
-      #   run: npm pack
-      #   working-directory: ./packages/communication-ui/
+      - name: Package Private-Preview Artifact
+        run: npm pack
+        working-directory: ./packages/communication-ui/
 
-      # - name: Archive builds
-      #   run: |
-      #     7z a group-calling.zip ./samples/Calling/dist/*
-      #     7z a group-chat.zip ./samples/Chat/dist/*
-      #     7z a one-to-one-calling.zip ./samples/OneToOneCall/dist/*
-      #     7z a private-preview.zip ./packages/communication-ui/private-preview/*
+      - name: Archive builds
+        run: |
+          7z a group-calling.zip ./samples/Calling/dist/*
+          7z a group-chat.zip ./samples/Chat/dist/*
+          7z a one-to-one-calling.zip ./samples/OneToOneCall/dist/*
+          7z a private-preview.zip ./packages/communication-ui/private-preview/*
 
       # Get datetime to mark the releases. This will become the version number when version bumping is fully implemented.
       - name: Get Release names
@@ -105,16 +107,16 @@ jobs:
           echo "::set-output name=tagname::$(date +' %Y-%m-%d-%H%M')"
           echo "::set-output name=releasename::$(TZ=":America/Vancouver" date +' %Y-%m-%d %H%M')"
 
-      # # Upload releases
-      # - name: Publish Samples and PrivatePreview Releases
-      #   uses: softprops/action-gh-release@v1
-      #   with:
-      #     name: Release ${{ steps.releasenames.outputs.releasename }}
-      #     tag_name: Release/${{ steps.releasenames.outputs.tagname }}
-      #     files: |
-      #       group-calling.zip
-      #       group-chat.zip
-      #       one-to-one-calling.zip
-      #       private-preview.zip
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Upload releases
+      - name: Publish Samples and PrivatePreview Releases
+        uses: softprops/action-gh-release@v1
+        with:
+          name: Release ${{ steps.releasenames.outputs.releasename }}
+          tag_name: Release/${{ steps.releasenames.outputs.tagname }}
+          files: |
+            group-calling.zip
+            group-chat.zip
+            one-to-one-calling.zip
+            private-preview.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
