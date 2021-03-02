@@ -4,66 +4,35 @@ on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches: [main]
-  # pull_request:
-  #   branches: [main]
+  pull_request:
+    branches: [main]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
-  build_and_test:
-    name: Build and Test
+  tests:
+    name: Tests
     runs-on: ubuntu-latest
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v2
 
-      # Ensure node version is great enough
-      - name: Use Node.js v12.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: '12.x'
+      - name: Create PR
+        run: |
+          curl \
+            -X POST \
+            -H 'Accept: application/vnd.github.v3+json' \
+            -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+            -d '{"title": "Test PR -- ignore", "head": "head", "base", "jaburnsi/test-github-action-push", "body", "This is just a test PR -- ignore and do not complete."}' \
+            https://api.github.com/repos/Azure/communication-ui-sdk/pulls/
 
-      # Install dependencies
-      - name: Install rush
-        run: npm install -g @microsoft/rush
-      - name: Install dependencies
-        run: rush install
-
-      # Perform lint check
-      - name: Run linter
-        run: rush lint
-
-      # Builds
-      - name: Build Packages and Samples
-        run: rush build
-
-      - name: Build Storybook
-        run: rushx build:storybook
-        working-directory: ./packages/communication-ui
-
-      # Run tests
-      - name: Run Tests
-        run: rush test
-        env:
-          CI: true
-
-      # Deploy Storybook - only perform this step on main branch CI
-      - name: Deploy Storybook
-        if: github.ref == 'refs/heads/main'
-        run: npm run deploy-storybook -- --ci
-        working-directory: ./packages/communication-ui
-        env:
-          GH_TOKEN: ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
-
-      # Create a GitHub issue if the CI failed when running on the `main` branch
-      - name: Create issue if main branch CI failed
-        id: create-issue
-        if: failure() && github.ref == 'refs/heads/main'
-        uses: JasonEtco/create-an-issue@v2.4.0
-        with:
-          filename: .github/failed_ci_build_template.md
-          update_existing: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Approve PR
+        run: |
+          curl \
+            -X POST \
+            -H 'Accept: application/vnd.github.v3+json' \
+            -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+            -d '{"event": "APPROVE"}' \
+            https://api.github.com/repos/Azure/communication-ui-sdk/pulls/49/reviews
