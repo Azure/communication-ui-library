@@ -11,11 +11,28 @@ on:
   # - cron: "0 15 * * 1-5"
 
 jobs:
-  release:
-    name: upload_release
+  checkForChanges:
+    name: Check for Changes since last release
+    outputs:
+      hasChanged: ${{ steps.checkChange.outputs.hasChanged }}
     runs-on: ubuntu-latest
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
+      # Check-out repo
+      - uses: actions/checkout@v2
+
+      # Check if any changes have been pushed to main since last release
+      - name: Just default to true for now
+        id: checkChange
+        # Default to true for now
+        run: echo "::set-output name=hasChanged::true"
+
+  release:
+    name: Upload Releases
+    needs: checkForChanges
+    if: ${{ needs.checkForChanges.outputs.hasChanged }} == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      # Check-out repo
       - uses: actions/checkout@v2
 
       # Get datetime to mark the releases. This will become the version number when version bumping is fully implemented.
@@ -65,6 +82,7 @@ jobs:
           7z a group-chat.zip ./samples/Chat/dist/*
           7z a one-to-one-calling.zip ./samples/OneToOneCall/dist/*
           7z a private-preview.zip ./packages/communication-ui/private-preview/*
+          ls
 
       # Upload releases
       - name: Publish Private Preview Release
@@ -72,7 +90,7 @@ jobs:
         with:
           name: PrivatePreview ${{ steps.date.outputs.date }} ${{ steps.date.outputs.hour }}:${{ steps.date.outputs.minute }}
           tag_name: PrivatePreview/${{ steps.date.outputs.date }}-${{ steps.date.outputs.hour }}${{ steps.date.outputs.minute }}
-          files: 'private-preview.zip'
+          files: private-preview.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -82,8 +100,8 @@ jobs:
           name: Samples ${{ steps.date.outputs.date }} ${{ steps.date.outputs.hour }}:${{ steps.date.outputs.minute }}
           tag_name: Samples/${{ steps.date.outputs.date }}-${{ steps.date.outputs.hour }}${{ steps.date.outputs.minute }}
           files: |
-            'group-calling.zip'
-            'group-chat.zip'
-            'one-to-one-calling.zip'
+            group-calling.zip
+            group-chat.zip
+            one-to-one-calling.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
