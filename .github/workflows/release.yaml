@@ -28,7 +28,7 @@ jobs:
         # Note: we ignore commits made by the bot account that commits the auto version bump changes.
         # Then get the timestamp date for the first commit and check if it was over a day old.
         run: |
-          curl -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' -sL https://api.github.com/repos/${{ github.repository }}/commits | jq -r '[.[] | select(.author.login != "ytyeason") | select(.author.login != "jamesburnside")][0]' $HOME/commit.json > $HOME/commit.json
+          curl -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' -sL https://api.github.com/repos/${{ github.repository }}/commits | jq -r '[.[] | select(.author.login != "ytyeason") | select(.author.login != "JamesBurnside")][0]' $HOME/commit.json > $HOME/commit.json
 
           commitdate=$(jq -r '.commit.author.date' $HOME/commit.json)
           commiturl=$(jq -r '.url' $HOME/commit.json)
