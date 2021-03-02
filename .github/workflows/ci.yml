@@ -19,13 +19,25 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v2
 
+      - name: Switch branch
+        run: git checkout -b "bot/new-branch"
+
+      - name: Create change
+        run: touch newfile
+
+      - name: Commit change
+        run: git commit -am "bot change"
+
+      - name: Push branch
+        run: git push --set-upstream origin bot/new-branch
+
       - name: Create PR
         run: |
           curl \
             -X POST \
             -H 'Accept: application/vnd.github.v3+json' \
             -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
-            -d '{"title": "Test PR -- ignore", "head": "head", "base", "jaburnsi/test-github-action-push", "body", "This is just a test PR -- ignore and do not complete."}' \
+            -d '{"title": "Test PR -- ignore", "head": "bot/new-branch", "base", "jaburnsi/test-github-action-push", "body", "This is just a test PR -- ignore and do not complete."}' \
             https://api.github.com/repos/Azure/communication-ui-sdk/pulls/
 
       - name: Approve PR
