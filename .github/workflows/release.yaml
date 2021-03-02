@@ -3,6 +3,9 @@ name: Release
 on:
   release:
     types: [created]
+  # remove once tested:
+  pull_request:
+    branches: [main]
 
 jobs:
   release:
@@ -11,6 +14,11 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v2
+
+      # Get datetime to mark the releases. This will become the version number when version bumping is fully implemented.
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
 
       # Ensure node version is great enough
       - name: Use Node.js v12.x
@@ -54,6 +62,8 @@ jobs:
       - name: Publish Group Calling Artifact
         uses: softprops/action-gh-release@v1
         with:
+          name: Samples-${{ steps.date.outputs.date }}
+          tag_name: ${{ steps.date.outputs.date }}
           files: 'group-calling.zip'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -61,6 +71,8 @@ jobs:
       - name: Publish Group Chat Artifact
         uses: softprops/action-gh-release@v1
         with:
+          name: Samples-${{ steps.date.outputs.date }}
+          tag_name: ${{ steps.date.outputs.date }}
           files: 'group-chat.zip'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -68,6 +80,8 @@ jobs:
       - name: Publish One to One Calling Artifact
         uses: softprops/action-gh-release@v1
         with:
+          name: Samples-${{ steps.date.outputs.date }}
+          tag_name: ${{ steps.date.outputs.date }}
           files: 'one-to-one-calling.zip'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -75,6 +89,8 @@ jobs:
       - name: Publish Private Preview Artifact
         uses: softprops/action-gh-release@v1
         with:
+          name: Samples-${{ steps.date.outputs.date }}
+          tag_name: ${{ steps.date.outputs.date }}
           files: 'private-preview.zip'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
