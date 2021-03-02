@@ -18,7 +18,7 @@ jobs:
       # Get datetime to mark the releases. This will become the version number when version bumping is fully implemented.
       - name: Get current date
         id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d-%H%M')"
 
       # Ensure node version is great enough
       - name: Use Node.js v12.x
@@ -36,6 +36,7 @@ jobs:
       - name: Build Packages and Samples
         run: rush build
 
+      # Package up artifacts for release
       - name: Package Group Calling Sample Artifact
         run: rushx package
         working-directory: ./samples/Calling
@@ -59,37 +60,23 @@ jobs:
           7z a one-to-one-calling.zip ./samples/OneToOneCall/dist/*
           7z a private-preview.zip ./packages/communication-ui/private-preview/*
 
-      - name: Publish Group Calling Artifact
+      # Upload releases
+      - name: Publish Samples Release
         uses: softprops/action-gh-release@v1
         with:
           name: Samples-${{ steps.date.outputs.date }}
           tag_name: ${{ steps.date.outputs.date }}
-          files: 'group-calling.zip'
+          files: |
+            'group-calling.zip'
+            'group-chat.zip'
+            'one-to-one-calling.zip'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Publish Group Chat Artifact
+      - name: Publish Private Preview Release
         uses: softprops/action-gh-release@v1
         with:
-          name: Samples-${{ steps.date.outputs.date }}
-          tag_name: ${{ steps.date.outputs.date }}
-          files: 'group-chat.zip'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Publish One to One Calling Artifact
-        uses: softprops/action-gh-release@v1
-        with:
-          name: Samples-${{ steps.date.outputs.date }}
-          tag_name: ${{ steps.date.outputs.date }}
-          files: 'one-to-one-calling.zip'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Publish Private Preview Artifact
-        uses: softprops/action-gh-release@v1
-        with:
-          name: Samples-${{ steps.date.outputs.date }}
+          name: PrivatePreview-${{ steps.date.outputs.date }}
           tag_name: ${{ steps.date.outputs.date }}
           files: 'private-preview.zip'
         env:
