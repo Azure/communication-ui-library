@@ -11,12 +11,12 @@ export class ChatContext {
     displayName: '',
     threads: new Map()
   };
-  private batchMode = false;
+  private _batchMode = false;
   private _emitter: EventEmitter = new EventEmitter();
 
   public setState(state: ChatClientState): void {
     this._state = state;
-    if (!this.batchMode) {
+    if (!this._batchMode) {
       this._emitter.emit('stateChanged', this._state);
     }
   }
@@ -75,17 +75,17 @@ export class ChatContext {
   }
 
   // Batch mode for multiple updates in one action(to trigger just on event), similar to redux batch() function
-  private startBatch() {
-    this.batchMode = true;
+  private startBatch(): void {
+    this._batchMode = true;
   }
 
-  private endBatch() {
-    this.batchMode = false;
+  private endBatch(): void {
+    this._batchMode = false;
     this._emitter.emit('stateChanged', this._state);
   }
 
   // All operations finished in this batch should be sync call(only context related)
-  public batch(batchFunc: () => void) {
+  public batch(batchFunc: () => void): void {
     this.startBatch();
     const backupState = this._state;
     try {

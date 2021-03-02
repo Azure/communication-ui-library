@@ -9,7 +9,7 @@ export type ChatClientState = {
 };
 
 export type ChatThreadClientState = {
-  chatMessages?: Map<string, ChatMessageWithStatus>;
+  chatMessages: Map<string, ChatMessageWithStatus>;
   threadId: string;
   thread?: ChatThread;
   receipts?: ReadReceipt[];

@@ -2,7 +2,8 @@
 
 import { ChatMessage, ChatThreadClient } from '@azure/communication-chat';
 import { AzureCommunicationUserCredential } from '@azure/communication-common';
-import { createDeclarativeChatThreadClient } from './Prototype';
+import { ChatContext } from './ChatContext';
+import { chatThreadClientDeclaratify } from './ChatThreadClientDeclarative';
 
 const mockMessages = [
   {
@@ -95,25 +96,31 @@ const mockListMessages = (): any => {
 jest.mock('@azure/communication-common');
 jest.mock('@azure/communication-chat');
 
+const threadId = '1';
+
+function createMockChatClientAndDeclaratify(context: ChatContext): ChatThreadClient {
+  const mockChatThreadClient = new ChatThreadClient(threadId, '', new AzureCommunicationUserCredential(''));
+  mockChatThreadClient.listMessages = mockListMessages;
+  Object.defineProperty(mockChatThreadClient, 'threadId', { value: threadId });
+  const declarativeChatThreadClient = chatThreadClientDeclaratify(mockChatThreadClient, context);
+  return declarativeChatThreadClient;
+}
+
 describe('declarative listMessage', () => {
   test('declarative listMessage should proxy listMessages iterator and store it in internal state', async () => {
-    const mockChatThreadClient = new ChatThreadClient('', '', new AzureCommunicationUserCredential(''));
-    mockChatThreadClient.listMessages = mockListMessages;
-    const declarativeChatThreadClient = createDeclarativeChatThreadClient(mockChatThreadClient);
-    const messages = declarativeChatThreadClient.listMessages();
+    const context = new ChatContext();
+    const messages = createMockChatClientAndDeclaratify(context).listMessages();
     const proxiedMessages: ChatMessage[] = [];
     for await (const message of messages) {
       proxiedMessages.push(message);
     }
     expect(proxiedMessages.length).toBe(mockMessages.length);
-    expect(declarativeChatThreadClient.getState().chatMessages.size).toBe(mockMessages.length);
+    expect(context.getState().threads.get(threadId)?.chatMessages.size).toBe(mockMessages.length);
   });
 
   test('declarative listMessage should proxy listMessages paged iterator and store it in internal state', async () => {
-    const mockChatThreadClient = new ChatThreadClient('', '', new AzureCommunicationUserCredential(''));
-    mockChatThreadClient.listMessages = mockListMessages;
-    const declarativeChatThreadClient = createDeclarativeChatThreadClient(mockChatThreadClient);
-    const pages = declarativeChatThreadClient.listMessages().byPage();
+    const context = new ChatContext();
+    const pages = createMockChatClientAndDeclaratify(context).listMessages().byPage();
     const proxiedMessages: ChatMessage[] = [];
     for await (const page of pages) {
       for (const message of page) {
@@ -121,6 +128,6 @@ describe('declarative listMessage', () => {
       }
     }
     expect(proxiedMessages.length).toBe(mockMessages.length);
-    expect(declarativeChatThreadClient.getState().chatMessages.size).toBe(mockMessages.length);
+    expect(context.getState().threads.get(threadId)?.chatMessages.size).toBe(mockMessages.length);
   });
 });
