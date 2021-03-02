@@ -23,6 +23,8 @@ jobs:
       # Check if any changes have been pushed to main since last release
       - name: Just default to true for now
         id: checkChange
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         # Default to true for now
         run: |
           curl -sL https://api.github.com/repos/$GITHUB_REPOSITORY/commits > $HOME/commit.json
@@ -54,7 +56,6 @@ jobs:
 
       - name: Test retreived date
         run: echo ${{ steps.date.outputs.date }} ${{ steps.date.outputs.hour }}:${{ steps.date.outputs.minute }}
-
       # Ensure node version is great enough
       # - name: Use Node.js v12.x
       #   uses: actions/setup-node@v1
