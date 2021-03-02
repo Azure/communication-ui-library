@@ -34,6 +34,7 @@ jobs:
           echo Last commit: $url
           echo Last commit date \(UTC\): $date
           timestamp=$(date --utc -d "$date" +%s)
+          echo Commit timestamp: $timestamp
           days=$(( ( $(date --utc +%s) - $timestamp ) / 86400 ))
           echo Days since last commit: $days
           if [ $days = "0" ]; then
@@ -45,7 +46,7 @@ jobs:
   release:
     name: Upload Releases
     needs: checkForChanges
-    if: ${{ needs.checkForChanges.outputs.hasChanged }} == 'true'
+    if: ${{ needs.checkForChanges.outputs.hasChanged }} == 'false'
     runs-on: ubuntu-latest
     steps:
       # Check-out repo
