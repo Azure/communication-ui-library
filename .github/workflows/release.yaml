@@ -39,69 +39,72 @@ jobs:
       - name: Get current date
         id: date
         run: |
-          echo "::set-output name=date::$(date +'%Y-%m-%d')"
-          echo "::set-output name=hour::$(date +'%H')"
-          echo "::set-output name=minute::$(date +'%M')"
+          echo "::set-output name=date::$(date +'TZ="PST" %Y-%m-%d')"
+          echo "::set-output name=hour::$(date +'TZ="PST" %H')"
+          echo "::set-output name=minute::$(date +'TZ="PST" %M')"
+
+      - name: Test retreived date
+        id: date
+        run: echo ${{ steps.date.outputs.date }} ${{ steps.date.outputs.hour }}:${{ steps.date.outputs.minute }}
 
       # Ensure node version is great enough
-      - name: Use Node.js v12.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: '12.x'
+      # - name: Use Node.js v12.x
+      #   uses: actions/setup-node@v1
+      #   with:
+      #     node-version: '12.x'
 
-      # Install dependencies
-      - name: Install rush
-        run: npm install -g @microsoft/rush
-      - name: Install dependencies
-        run: rush install
+      # # Install dependencies
+      # - name: Install rush
+      #   run: npm install -g @microsoft/rush
+      # - name: Install dependencies
+      #   run: rush install
 
-      # Builds
-      - name: Build Packages and Samples
-        run: rush build
+      # # Builds
+      # - name: Build Packages and Samples
+      #   run: rush build
 
-      # Package up artifacts for release
-      - name: Package Group Calling Sample Artifact
-        run: rushx package
-        working-directory: ./samples/Calling
+      # # Package up artifacts for release
+      # - name: Package Group Calling Sample Artifact
+      #   run: rushx package
+      #   working-directory: ./samples/Calling
 
-      - name: Package One To One Calling Sample Artifact
-        run: rushx package
-        working-directory: ./samples/OneToOneCall
+      # - name: Package One To One Calling Sample Artifact
+      #   run: rushx package
+      #   working-directory: ./samples/OneToOneCall
 
-      - name: Package Group Chat Sample Artifact
-        run: rushx package
-        working-directory: ./samples/Chat
+      # - name: Package Group Chat Sample Artifact
+      #   run: rushx package
+      #   working-directory: ./samples/Chat
 
-      - name: Package Private-Preview Artifact
-        run: npm pack
-        working-directory: ./packages/communication-ui/
+      # - name: Package Private-Preview Artifact
+      #   run: npm pack
+      #   working-directory: ./packages/communication-ui/
 
-      - name: Archive builds
-        run: |
-          7z a group-calling.zip ./samples/Calling/dist/*
-          7z a group-chat.zip ./samples/Chat/dist/*
-          7z a one-to-one-calling.zip ./samples/OneToOneCall/dist/*
-          7z a private-preview.zip ./packages/communication-ui/private-preview/*
-          ls
+      # - name: Archive builds
+      #   run: |
+      #     7z a group-calling.zip ./samples/Calling/dist/*
+      #     7z a group-chat.zip ./samples/Chat/dist/*
+      #     7z a one-to-one-calling.zip ./samples/OneToOneCall/dist/*
+      #     7z a private-preview.zip ./packages/communication-ui/private-preview/*
 
-      # Upload releases
-      - name: Publish Private Preview Release
-        uses: softprops/action-gh-release@v1
-        with:
-          name: PrivatePreview ${{ steps.date.outputs.date }} ${{ steps.date.outputs.hour }}:${{ steps.date.outputs.minute }}
-          tag_name: PrivatePreview/${{ steps.date.outputs.date }}-${{ steps.date.outputs.hour }}${{ steps.date.outputs.minute }}
-          files: private-preview.zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # # Upload releases
+      # - name: Publish Private Preview Release
+      #   uses: softprops/action-gh-release@v1
+      #   with:
+      #     name: PrivatePreview ${{ steps.date.outputs.date }} ${{ steps.date.outputs.hour }}:${{ steps.date.outputs.minute }}
+      #     tag_name: PrivatePreview/${{ steps.date.outputs.date }}-${{ steps.date.outputs.hour }}${{ steps.date.outputs.minute }}
+      #     files: private-preview.zip
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Publish Samples Release
-        uses: softprops/action-gh-release@v1
-        with:
-          name: Samples ${{ steps.date.outputs.date }} ${{ steps.date.outputs.hour }}:${{ steps.date.outputs.minute }}
-          tag_name: Samples/${{ steps.date.outputs.date }}-${{ steps.date.outputs.hour }}${{ steps.date.outputs.minute }}
-          files: |
-            group-calling.zip
-            group-chat.zip
-            one-to-one-calling.zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Publish Samples Release
+      #   uses: softprops/action-gh-release@v1
+      #   with:
+      #     name: Samples ${{ steps.date.outputs.date }} ${{ steps.date.outputs.hour }}:${{ steps.date.outputs.minute }}
+      #     tag_name: Samples/${{ steps.date.outputs.date }}-${{ steps.date.outputs.hour }}${{ steps.date.outputs.minute }}
+      #     files: |
+      #       group-calling.zip
+      #       group-chat.zip
+      #       one-to-one-calling.zip
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
