@@ -15,7 +15,7 @@ import {
 } from '../components';
 import { text, boolean, number } from '@storybook/addon-knobs';
 import { renderVideoStream } from './utils';
-// import { getDocs } from './docs/IncomingCallToastDocs';
+import { getDocs } from './docs/VideoTileDocs';
 
 export const VideoTileComponent: () => JSX.Element = () => {
   const avatarName = text('Avatar Name', 'John Krasinski');
@@ -61,8 +61,8 @@ export default {
   title: 'ACS Components/VideoTile',
   component: VideoTileComponent,
   parameters: {
-    // docs: {
-    //   page: () => getDocs()
-    // }
+    docs: {
+      page: () => getDocs()
+    }
   }
 } as Meta;
