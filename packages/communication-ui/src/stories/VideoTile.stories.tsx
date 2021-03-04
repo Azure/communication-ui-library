@@ -16,6 +16,7 @@ import {
 import { text, boolean, number } from '@storybook/addon-knobs';
 import { renderVideoStream } from './utils';
 import { getDocs } from './docs/VideoTileDocs';
+import { COMPONENT_FOLDER_PREFIX } from './constants';
 
 export const VideoTileComponent: () => JSX.Element = () => {
   const avatarName = text('Avatar Name', 'John Krasinski');
@@ -43,7 +44,7 @@ export const VideoTileComponent: () => JSX.Element = () => {
         root: { height: height, width: width }
       }}
     >
-      {showControlBar ? (
+      {showControlBar && (
         <Stack style={{ position: 'absolute', left: '50%', bottom: '1rem' }}>
           <ControlBar styles={{ root: { position: 'relative', left: '-50%' } }}>
             <ControlButton {...videoButtonProps} />
@@ -52,13 +53,13 @@ export const VideoTileComponent: () => JSX.Element = () => {
             <ControlButton {...hangupButtonProps} />
           </ControlBar>
         </Stack>
-      ) : null}
+      )}
     </VideoTile>
   );
 };
 
 export default {
-  title: 'ACS Components/VideoTile',
+  title: `${COMPONENT_FOLDER_PREFIX}/VideoTile`,
   component: VideoTileComponent,
   parameters: {
     docs: {
