@@ -22,6 +22,7 @@ export const VideoTileComponent: () => JSX.Element = () => {
   const avatarName = text('Avatar Name', 'John Krasinski');
   const isVideoReady = boolean('Is Video Ready', false);
   const showControlBar = boolean('Show Control Bar (Not a part of this component)', false);
+  const invertVideo = boolean('Invert Video', false);
   const width = number('Width', 400, {
     range: true,
     min: 400,
@@ -38,10 +39,11 @@ export const VideoTileComponent: () => JSX.Element = () => {
   return (
     <VideoTile
       isVideoReady={isVideoReady}
-      videoProvider={() => <StreamMediaComponent videoStreamElement={renderVideoStream()} />}
+      videoProvider={<StreamMediaComponent videoStreamElement={renderVideoStream()} />}
       avatarName={avatarName}
+      invertVideo={invertVideo}
       styles={{
-        root: { height: height, width: width }
+        root: { height: height, width: width, border: '1px solid #ddd' }
       }}
     >
       {showControlBar && (

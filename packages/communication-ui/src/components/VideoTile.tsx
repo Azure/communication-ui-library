@@ -20,12 +20,12 @@ export interface VideoTileProps {
   styles?: VideoTileStylesProps;
   /** Determines if the static image or video stream should be rendered. */
   isVideoReady?: boolean;
-  /** Determines the actual video stream element to render. */
-  videoProvider: () => JSX.Element | null;
+  /** Component with the video stream */
+  videoProvider?: JSX.Element | null;
   /** Determines if the video is mirrored or not */
   invertVideo?: boolean;
   /** Custom Component to render when no video is available. Defaults to a Persona Icon */
-  placeholderProvider?: () => JSX.Element | null;
+  placeholderProvider?: JSX.Element | null;
 }
 
 interface PlaceholderProps {
@@ -51,12 +51,22 @@ const DefaultPlaceholder = (props: PlaceholderProps): JSX.Element => {
 };
 
 export const VideoTile = (props: VideoTileProps & PlaceholderProps): JSX.Element => {
-  const { styles, isVideoReady, videoProvider, placeholderProvider } = props;
-  const placeholder = (placeholderProvider && placeholderProvider()) ?? <DefaultPlaceholder {...props} />;
+  const { styles, isVideoReady, videoProvider, placeholderProvider, invertVideo } = props;
+  const placeholder = placeholderProvider ?? <DefaultPlaceholder {...props} />;
   return (
     <Stack className={mergeStyles(rootStyles, styles?.root)}>
       {isVideoReady ? (
-        <Stack className={mergeStyles(videoContainerStyles, styles?.videoContainer)}>{videoProvider()}</Stack>
+        <Stack
+          className={mergeStyles(
+            videoContainerStyles,
+            invertVideo && {
+              transform: 'scaleX(-1)'
+            },
+            styles?.videoContainer
+          )}
+        >
+          {videoProvider}
+        </Stack>
       ) : (
         placeholder
       )}

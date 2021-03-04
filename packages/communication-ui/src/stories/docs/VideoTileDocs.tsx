@@ -16,8 +16,9 @@ const VideoTileExample: () => JSX.Element = () => {
     <FluentThemeProvider>
       <VideoTile 
         avatarName={'Maximus Aurelius'}
-        videoProvider={() => <StreamMediaComponent videoStreamElement={renderVideoStream()} />}
+        videoProvider={<StreamMediaComponent videoStreamElement={renderVideoStream()} />}
         isVideoReady={false}
+        invertVideo={false}
        styles={{ root: {minHeight: '300px', minWidth: '400px'} }} />
     </FluentThemeProvider>
   );
@@ -29,8 +30,9 @@ const VideoTileExample: () => JSX.Element = () => {
     <FluentThemeProvider>
       <VideoTile 
         avatarName={'Maximus Aurelius'}
-        videoProvider={() => <StreamMediaComponent videoStreamElement={renderVideoStream()} />}
+        videoProvider={<StreamMediaComponent videoStreamElement={renderVideoStream()} />}
         isVideoReady={false}
+        invertVideo={false}
        styles={{ root: {minHeight: '300px', minWidth: '400px'} }} />
     </FluentThemeProvider>
   );
