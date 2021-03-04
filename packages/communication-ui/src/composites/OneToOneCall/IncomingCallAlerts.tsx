@@ -21,13 +21,16 @@ import {
   incomingCallModalContainerStyle
 } from './styles/IncomingCallAlerts.styles';
 import { useBoolean } from '@uifabric/react-hooks';
-import { MediaGalleryTileComponent as MediaGalleryTile, MediaGalleryTileProps } from '../components/MediaGalleryTile';
+import {
+  MediaGalleryTileComponent as MediaGalleryTile,
+  MediaGalleryTileProps
+} from '../../components/MediaGalleryTile';
 import {
   connectFuncsToContext,
   LocalVideoContainerOwnProps,
   VideoContainerProps,
   MapToLocalVideoProps
-} from '../consumers';
+} from '../../consumers';
 import { LocalVideoStream, ScalingMode } from '@azure/communication-calling';
 
 export type IncomingCallToastProps = {

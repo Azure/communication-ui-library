@@ -26,7 +26,6 @@ export { ReadReceiptComponent } from './ReadReceipt';
 export { MediaGalleryTileComponent } from './MediaGalleryTile';
 export { StreamMediaComponent } from './StreamMedia';
 export { ParticipantStackItemComponent } from './ParticipantStackItem';
-export { IncomingCallModal, IncomingCallToast } from './IncomingCallAlerts';
 export {
   ControlBar,
   ControlButton,
@@ -38,4 +37,4 @@ export {
   answerButtonProps,
   hangupButtonProps
 } from './ControlBar';
-export type { IncomingCallModalProps, IncomingCallToastProps } from './IncomingCallAlerts';
+export type { IncomingCallModalProps, IncomingCallToastProps } from '../composites/OneToOneCall/IncomingCallAlerts';
