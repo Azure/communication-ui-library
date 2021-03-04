@@ -15,7 +15,7 @@ import { connectFuncsToContext } from '../../consumers/ConnectContext';
 import { CallContainerProps, MapToOneToOneCallProps } from '../../consumers/MapToCallProps';
 import { MediaControls } from './MediaControls';
 import { MINI_HEADER_WINDOW_WIDTH } from '../../constants';
-import { MediaGallery1To1 } from '../../components';
+import { MediaGallery1To1 } from './MediaGallery1To1';
 
 export interface OneToOneCallProps extends CallContainerProps {
   screenWidth: number;

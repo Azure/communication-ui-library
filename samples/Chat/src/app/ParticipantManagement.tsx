@@ -1,14 +1,16 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { ChatThreadMember } from '../types/ChatThreadMember';
 import React from 'react';
-import MemberItem from './MemberItem';
-import { connectFuncsToContext } from '../consumers/ConnectContext';
-import { MapToChatThreadMemberProps } from '../consumers/MapToChatThreadMemberProps';
-import { MapToUserIdProps } from '../consumers/MapToUserIdProps';
+import {
+  ChatThreadMember,
+  MemberItem,
+  connectFuncsToContext,
+  MapToChatThreadMemberProps,
+  MapToUserIdProps,
+  WithErrorHandling,
+  ErrorHandlingProps
+} from '@azure/communication-ui';
 import { Stack } from '@fluentui/react';
-import { WithErrorHandling } from '../utils/WithErrorHandling';
-import { ErrorHandlingProps } from '../providers/ErrorProvider';
 
 export type ParticipantManagementProps = {
   userId: string;
@@ -44,4 +46,8 @@ const ParticipantManagementComponentBase = (props: ParticipantManagementProps & 
 export const ParticipantManagementComponent = (props: ParticipantManagementProps & ErrorHandlingProps): JSX.Element =>
   WithErrorHandling(ParticipantManagementComponentBase, props);
 
-export default connectFuncsToContext(ParticipantManagementComponent, MapToChatThreadMemberProps, MapToUserIdProps);
+export const ParticipantManagement = connectFuncsToContext(
+  ParticipantManagementComponent,
+  MapToChatThreadMemberProps,
+  MapToUserIdProps
+);
