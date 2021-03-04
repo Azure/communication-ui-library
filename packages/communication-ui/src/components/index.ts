@@ -39,3 +39,6 @@ export {
   hangupButtonProps
 } from './ControlBar';
 export type { IncomingCallModalProps, IncomingCallToastProps } from './IncomingCallAlerts';
+
+export { VideoTile } from './VideoTile';
+export type { VideoTileProps, VideoTileStylesProps } from './VideoTile';
