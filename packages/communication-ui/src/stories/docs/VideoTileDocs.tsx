@@ -3,7 +3,7 @@
 import { Canvas, Description, Heading, Props, Source, Title,  } from '@storybook/addon-docs/blocks';
 import React from 'react';
 import { StreamMediaComponent } from '../../components';
-import { VideoTile } from '../../components/VideoTile';
+import { VideoTile } from '../../components';
 import { FluentThemeProvider } from '../../providers/FluentThemeProvider';
 import { renderVideoStream } from '../utils';
 

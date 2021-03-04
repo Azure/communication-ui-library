@@ -3,7 +3,7 @@
 import React from 'react';
 import { Meta } from '@storybook/react/types-6-0';
 import { Stack } from '@fluentui/react';
-import { VideoTile } from '../components/VideoTile';
+import { VideoTile } from '../components';
 import {
   StreamMediaComponent,
   ControlBar,
