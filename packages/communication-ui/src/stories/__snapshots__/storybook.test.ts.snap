@@ -1862,10 +1862,10 @@ exports[`storybook snapshot tests Storyshots ACS Components/VideoTile Video Tile
       dir="ltr"
     >
       <div
-        className="ms-Stack css-3"
+        className="ms-Stack css-4"
       >
         <div
-          className="ms-Stack css-4"
+          className="ms-Stack css-5"
           style={
             Object {
               "bottom": "50%",
@@ -1875,19 +1875,19 @@ exports[`storybook snapshot tests Storyshots ACS Components/VideoTile Video Tile
           }
         >
           <div
-            className="ms-Persona ms-Persona--size100 root-5"
+            className="ms-Persona ms-Persona--size100 root-6"
           >
             <div
-              className="ms-Persona-coin ms-Persona--size100 coin-12"
+              className="ms-Persona-coin ms-Persona--size100 coin-13"
               role="presentation"
             >
               <div
-                className="ms-Persona-imageArea imageArea-14"
+                className="ms-Persona-imageArea imageArea-15"
                 role="presentation"
               >
                 <div
                   aria-hidden="true"
-                  className="ms-Persona-initials initials-17"
+                  className="ms-Persona-initials initials-18"
                 >
                   <span>
                     JK
@@ -1898,7 +1898,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/VideoTile Video Tile
           </div>
         </div>
         <div
-          className="ms-Stack css-4"
+          className="ms-Stack css-21"
         />
       </div>
     </div>

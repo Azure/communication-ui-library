@@ -2,7 +2,7 @@
 
 import { IStyle, mergeStyles, Persona, PersonaSize, Stack } from '@fluentui/react';
 import React from 'react';
-import { rootStyles, videoContainerStyles } from './styles/VideoTile.styles';
+import { rootStyles, videoContainerStyles, overlayContainerStyles } from './styles/VideoTile.styles';
 
 export interface VideoTileStylesProps {
   /** Styles for the root container */
@@ -60,7 +60,7 @@ export const VideoTile = (props: VideoTileProps & PlaceholderProps): JSX.Element
       ) : (
         placeholder
       )}
-      <Stack className={mergeStyles(styles?.overlayContainer)}>{props.children}</Stack>
+      <Stack className={mergeStyles(overlayContainerStyles, styles?.overlayContainer)}>{props.children}</Stack>
     </Stack>
   );
 };

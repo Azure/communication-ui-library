@@ -206,15 +206,7 @@ export const ControlBar = (props: ControlBarProps): JSX.Element => {
   const isHorizontal = layout === 'vertical' ? false : true;
   return (
     <Stack horizontal={isHorizontal} verticalAlign="center" className={mergeStyles(controlBarStyle, styles?.root)}>
-      {props.children ?? (
-        <>
-          <ControlButton {...videoButtonProps} isToggled={false} />
-          <ControlButton {...audioButtonProps} isToggled={false} />
-          <ControlButton {...screenShareButtonProps} isToggled={false} />
-          <ControlButton {...optionsButtonProps} isToggled={false} />
-          <ControlButton {...hangupButtonProps} isToggled={false} />
-        </>
-      )}
+      {props.children}
     </Stack>
   );
 };
