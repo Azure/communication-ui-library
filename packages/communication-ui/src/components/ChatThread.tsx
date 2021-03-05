@@ -450,7 +450,6 @@ export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingPr
     () =>
       messagesWithAttached.map(
         (message: any): ChatItemProps => {
-          const chatStyle = chatMessageStyle(message.mine);
           const liveAuthor = `${message.senderDisplayName} says `;
           const messageContentItem = (
             <div>
@@ -472,7 +471,7 @@ export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingPr
             message: (
               <Flex vAlign="end">
                 <Chat.Message
-                  styles={chatStyle}
+                  styles={chatMessageStyle}
                   content={messageContentItem}
                   author={message.senderDisplayName}
                   mine={message.mine}
