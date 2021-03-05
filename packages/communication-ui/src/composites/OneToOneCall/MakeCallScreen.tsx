@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { IconButton, PrimaryButton, Stack, TextField } from '@fluentui/react';
+import { IconButton, DefaultButton, Stack, TextField } from '@fluentui/react';
 import React, { useState } from 'react';
 
 import { CallIcon, VideoCameraEmphasisIcon } from '@fluentui/react-icons-northstar';
@@ -26,7 +26,7 @@ export interface MakeCallScreenProps {
 const audioCallButtonText = 'Audio call';
 const videoCallButtonText = 'Video call';
 
-export default (props: MakeCallScreenProps): JSX.Element => {
+export const MakeCallScreen = (props: MakeCallScreenProps): JSX.Element => {
   const { callerId, startAudioCallHandler, startVideoCallHandler } = props;
   const [calleeId, setCalleeId] = useState(props.calleeId ?? '');
 
@@ -72,7 +72,7 @@ export default (props: MakeCallScreenProps): JSX.Element => {
         />
       </Stack>
       <Stack horizontal tokens={buttonStackTokens}>
-        <PrimaryButton
+        <DefaultButton
           disabled={!calleeId}
           className={buttonStyle}
           onClick={() => {
@@ -82,8 +82,8 @@ export default (props: MakeCallScreenProps): JSX.Element => {
         >
           <CallIcon className={buttonIconStyle} size="medium" />
           {audioCallButtonText}
-        </PrimaryButton>
-        <PrimaryButton
+        </DefaultButton>
+        <DefaultButton
           disabled={!calleeId}
           className={buttonStyle}
           onClick={() => {
@@ -93,7 +93,7 @@ export default (props: MakeCallScreenProps): JSX.Element => {
         >
           <VideoCameraEmphasisIcon className={buttonIconStyle} size="medium" />
           {videoCallButtonText}
-        </PrimaryButton>
+        </DefaultButton>
       </Stack>
     </Stack>
   );

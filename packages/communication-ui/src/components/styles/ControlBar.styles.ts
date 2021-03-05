@@ -2,7 +2,6 @@
 import { getTheme, IStyle } from '@fluentui/react';
 import { ControlButtonStylesProps } from '../ControlBar';
 
-// © Microsoft Corporation. All rights reserved.
 const theme = getTheme();
 const palette = theme.palette;
 
@@ -10,7 +9,9 @@ export const controlBarStyle: IStyle = {
   borderRadius: '0.5rem',
   boxShadow: theme.effects.elevation4,
   overflow: 'hidden',
-  background: palette.white
+  ':hover': {
+    color: palette.white
+  }
 };
 
 export const controlButtonStyles: IStyle = {

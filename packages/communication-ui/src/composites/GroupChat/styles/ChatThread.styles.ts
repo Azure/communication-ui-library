@@ -47,10 +47,9 @@ export const bottomRightPopupStyle: CSSProperties = {
   right: '1.5rem'
 };
 
-export const chatMessageStyle = (mine: boolean): ComponentSlotStyle => ({
-  backgroundColor: mine ? 'rgba(42, 161,255, 0.25)' : 'rgba(243,242,241)',
+export const chatMessageStyle: CSSProperties = {
   overflowY: 'hidden'
-});
+};
 
 export const readReceiptStyle = (mine: boolean): string =>
   mergeStyles({

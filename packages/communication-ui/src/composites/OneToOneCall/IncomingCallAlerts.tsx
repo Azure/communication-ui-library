@@ -1,15 +1,5 @@
 // © Microsoft Corporation. All rights reserved.
-import {
-  DefaultButton,
-  getTheme,
-  Persona,
-  PersonaSize,
-  Stack,
-  Dialog,
-  DialogType,
-  PrimaryButton,
-  DialogFooter
-} from '@fluentui/react';
+import { DefaultButton, Persona, PersonaSize, Stack, Dialog, DialogType, DialogFooter } from '@fluentui/react';
 import { CallEndIcon, CallIcon, CallVideoIcon, CallVideoOffIcon } from '@fluentui/react-northstar';
 import React from 'react';
 import {
@@ -32,6 +22,7 @@ import {
   MapToLocalVideoProps
 } from '../../consumers';
 import { LocalVideoStream, ScalingMode } from '@azure/communication-calling';
+import { WithTheme, withThemeContext } from '../../providers/WithTheme';
 
 export type IncomingCallToastProps = {
   /** Caller's Name */
@@ -47,9 +38,8 @@ export type IncomingCallToastProps = {
 };
 
 export const IncomingCallToast = (props: IncomingCallToastProps): JSX.Element => {
-  const theme = getTheme();
-  const palette = theme.palette;
   const { callerName, alertText, avatar, onClickAccept, onClickReject } = props;
+
   return (
     <Stack horizontal verticalAlign="center" className={incomingCallToastStyle}>
       <Stack horizontalAlign="start" className={incomingCallToastAvatarContainerStyle}>
@@ -63,10 +53,10 @@ export const IncomingCallToast = (props: IncomingCallToastProps): JSX.Element =>
       </Stack>
 
       <Stack grow={1} horizontalAlign="center" style={{ alignItems: 'flex-start', fontFamily: 'Segoe UI' }}>
-        <Stack style={{ fontSize: '0.875rem', color: palette.black }}>
+        <Stack style={{ fontSize: '0.875rem' }}>
           <b>{callerName ?? 'No display name'}</b>
         </Stack>
-        <Stack style={{ fontSize: '0.75rem', color: palette.black }}>
+        <Stack style={{ fontSize: '0.75rem' }}>
           <span>{alertText ?? 'Incoming call'}</span>
         </Stack>
       </Stack>
@@ -109,9 +99,7 @@ export interface IncomingCallModalProps extends IncomingCallToastProps {
   onClickVideoToggle: () => void;
 }
 
-export const IncomingCallModal = (props: IncomingCallModalProps): JSX.Element => {
-  const theme = getTheme();
-  const palette = theme.palette;
+const IncomingCallModal = (props: WithTheme<IncomingCallModalProps>): JSX.Element => {
   const {
     alertText,
     avatar,
@@ -128,8 +116,10 @@ export const IncomingCallModal = (props: IncomingCallModalProps): JSX.Element =>
     onClickVideoToggle,
     onRenderLocalMediaGalleryTile,
     showLocalVideo,
-    localVideoStream
+    localVideoStream,
+    theme
   } = props;
+  const palette = theme.palette;
   const [hideDialog, { toggle: toggleHideDialog }] = useBoolean(false);
   const dialogContentProps = { type: DialogType.normal, title: alertText ?? 'Incoming Video Call' };
 
@@ -193,17 +183,22 @@ export const IncomingCallModal = (props: IncomingCallModalProps): JSX.Element =>
             {showLocalVideo ? <CallVideoIcon size="small" /> : <CallVideoOffIcon size="small" />}
           </DefaultButton>
 
-          <PrimaryButton onClick={() => onClickAccept()} style={{ background: palette.green, border: 'none' }}>
-            <span style={{ fontFamily: 'Segoe UI Semibold' }}>Accept</span>
-          </PrimaryButton>
+          <DefaultButton
+            onClick={() => onClickAccept()}
+            text="Accept"
+            style={{ background: palette.green, border: 'none' }}
+          />
 
           <DefaultButton
             onClick={() => onClickReject()}
             text="Decline"
-            style={{ background: palette.redDark, color: palette.white, border: 'none' }}
+            style={{ background: palette.redDark, border: 'none' }}
           />
         </DialogFooter>
       </Dialog>
     </>
   );
 };
+
+export const IncomingCallModalWithTheme = withThemeContext(IncomingCallModal);
+export { IncomingCallModalWithTheme as IncomingCallModal };
