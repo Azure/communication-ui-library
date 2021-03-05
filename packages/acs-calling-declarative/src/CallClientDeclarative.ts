@@ -25,7 +25,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
     this._context = context;
   }
 
-  private refreshState(): void {
+  private refreshState = (): void => {
     if (!this._callAgent) {
       return;
     }
@@ -35,70 +35,70 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
         draft.calls = calls;
       })
     );
-  }
+  };
 
-  private subscribeToParticipant(participant: RemoteParticipant): void {
-    participant.on('participantStateChanged', this.refreshState.bind(this));
-    participant.on('isMutedChanged', this.refreshState.bind(this));
-    participant.on('displayNameChanged', this.refreshState.bind(this));
-    participant.on('isSpeakingChanged', this.refreshState.bind(this));
-    participant.on('videoStreamsUpdated', this.refreshState.bind(this));
-  }
+  private subscribeToParticipant = (participant: RemoteParticipant): void => {
+    participant.on('participantStateChanged', this.refreshState);
+    participant.on('isMutedChanged', this.refreshState);
+    participant.on('displayNameChanged', this.refreshState);
+    participant.on('isSpeakingChanged', this.refreshState);
+    participant.on('videoStreamsUpdated', this.refreshState);
+  };
 
-  private unsubscribeToParticipant(participant: RemoteParticipant): void {
-    participant.off('participantStateChanged', this.refreshState.bind(this));
-    participant.off('isMutedChanged', this.refreshState.bind(this));
-    participant.off('displayNameChanged', this.refreshState.bind(this));
-    participant.off('isSpeakingChanged', this.refreshState.bind(this));
-    participant.off('videoStreamsUpdated', this.refreshState.bind(this));
-  }
+  private unsubscribeFromParticipant = (participant: RemoteParticipant): void => {
+    participant.off('participantStateChanged', this.refreshState);
+    participant.off('isMutedChanged', this.refreshState);
+    participant.off('displayNameChanged', this.refreshState);
+    participant.off('isSpeakingChanged', this.refreshState);
+    participant.off('videoStreamsUpdated', this.refreshState);
+  };
 
-  private onParticipantsUpdated(event: { added: RemoteParticipant[]; removed: RemoteParticipant[] }): void {
+  private onParticipantsUpdated = (event: { added: RemoteParticipant[]; removed: RemoteParticipant[] }): void => {
     for (const participant of event.added) {
       this.subscribeToParticipant(participant);
     }
     for (const participant of event.removed) {
-      this.unsubscribeToParticipant(participant);
+      this.unsubscribeFromParticipant(participant);
     }
-  }
+  };
 
-  private subscribeToCall(call: Call): void {
-    call.on('callStateChanged', this.refreshState.bind(this));
-    call.on('callIdChanged', this.refreshState.bind(this));
-    call.on('isScreenSharingOnChanged', this.refreshState.bind(this));
-    call.on('remoteParticipantsUpdated', this.onParticipantsUpdated.bind(this));
-    call.on('localVideoStreamsUpdated', this.refreshState.bind(this));
-    call.on('isRecordingActiveChanged', this.refreshState.bind(this));
-  }
+  private subscribeToCall = (call: Call): void => {
+    call.on('callStateChanged', this.refreshState);
+    call.on('callIdChanged', this.refreshState);
+    call.on('isScreenSharingOnChanged', this.refreshState);
+    call.on('remoteParticipantsUpdated', this.onParticipantsUpdated);
+    call.on('localVideoStreamsUpdated', this.refreshState);
+    call.on('isRecordingActiveChanged', this.refreshState);
+  };
 
-  private unsubscribeToCall(call: Call): void {
-    call.off('callStateChanged', this.refreshState.bind(this));
-    call.off('callIdChanged', this.refreshState.bind(this));
-    call.off('isScreenSharingOnChanged', this.refreshState.bind(this));
-    call.off('remoteParticipantsUpdated', this.onParticipantsUpdated.bind(this));
-    call.off('localVideoStreamsUpdated', this.refreshState.bind(this));
-    call.off('isRecordingActiveChanged', this.refreshState.bind(this));
+  private unsubscribeFromCall = (call: Call): void => {
+    call.off('callStateChanged', this.refreshState);
+    call.off('callIdChanged', this.refreshState);
+    call.off('isScreenSharingOnChanged', this.refreshState);
+    call.off('remoteParticipantsUpdated', this.onParticipantsUpdated);
+    call.off('localVideoStreamsUpdated', this.refreshState);
+    call.off('isRecordingActiveChanged', this.refreshState);
 
     for (const participant of call.remoteParticipants) {
-      this.unsubscribeToParticipant(participant);
+      this.unsubscribeFromParticipant(participant);
     }
-  }
+  };
 
-  private onCallsUpdated(event: { added: Call[]; removed: Call[] }): void {
+  private onCallsUpdated = (event: { added: Call[]; removed: Call[] }): void => {
     for (const call of event.added) {
       this.subscribeToCall(call);
     }
     for (const call of event.removed) {
-      this.unsubscribeToCall(call);
+      this.unsubscribeFromCall(call);
     }
-  }
+  };
 
   public get<P extends keyof CallClient>(target: CallClient, prop: P): any {
     switch (prop) {
       case 'createCallAgent': {
         return async (...args: Parameters<CallClient['createCallAgent']>) => {
           this._callAgent = await target.createCallAgent(...args);
-          this._callAgent.on('callsUpdated', this.onCallsUpdated.bind(this));
+          this._callAgent.on('callsUpdated', this.onCallsUpdated);
           return this._callAgent;
         };
       }
