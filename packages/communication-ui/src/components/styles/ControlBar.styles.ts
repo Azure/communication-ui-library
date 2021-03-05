@@ -24,7 +24,6 @@ export const controlButtonStyles: IStyle = {
 
 export const controlButtonLabelStyles: IStyle = {
   fontSize: '0.75rem',
-  color: palette.blackTranslucent40,
   lineHeight: '1.25rem'
 };
 
