@@ -25,17 +25,19 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
     this._context = context;
   }
 
-  private refreshState(e?: any): void {
+  private refreshState(): void {
     if (!this._callAgent) {
       return;
     }
     const calls: Call[] = this._callAgent.calls;
-    this._context.setState(produce(this._context.getState(), (draft: CallClientState) => {
-      draft.calls = calls;
-    }));
+    this._context.setState(
+      produce(this._context.getState(), (draft: CallClientState) => {
+        draft.calls = calls;
+      })
+    );
   }
 
-  private subscribeToParticipant(participant: RemoteParticipant) {
+  private subscribeToParticipant(participant: RemoteParticipant): void {
     participant.on('participantStateChanged', this.refreshState.bind(this));
     participant.on('isMutedChanged', this.refreshState.bind(this));
     participant.on('displayNameChanged', this.refreshState.bind(this));
@@ -43,7 +45,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
     participant.on('videoStreamsUpdated', this.refreshState.bind(this));
   }
 
-  private unsubscribeToParticipant(participant: RemoteParticipant) {
+  private unsubscribeToParticipant(participant: RemoteParticipant): void {
     participant.off('participantStateChanged', this.refreshState.bind(this));
     participant.off('isMutedChanged', this.refreshState.bind(this));
     participant.off('displayNameChanged', this.refreshState.bind(this));
@@ -51,7 +53,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
     participant.off('videoStreamsUpdated', this.refreshState.bind(this));
   }
 
-  private onParticipantsUpdated(event: { added: RemoteParticipant[], removed: RemoteParticipant[] }): void {
+  private onParticipantsUpdated(event: { added: RemoteParticipant[]; removed: RemoteParticipant[] }): void {
     for (const participant of event.added) {
       this.subscribeToParticipant(participant);
     }
@@ -82,7 +84,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
     }
   }
 
-  private onCallsUpdated(event: { added: Call[], removed: Call[] }): void {
+  private onCallsUpdated(event: { added: Call[]; removed: Call[] }): void {
     for (const call of event.added) {
       this.subscribeToCall(call);
     }
@@ -91,7 +93,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
     }
   }
 
-  public get<P extends keyof CallClient>(target: CallClient, prop: P) {
+  public get<P extends keyof CallClient>(target: CallClient, prop: P): any {
     switch (prop) {
       case 'createCallAgent': {
         return async (...args: Parameters<CallClient['createCallAgent']>) => {
@@ -104,13 +106,13 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
         return Reflect.get(target, prop);
     }
   }
-};
+}
 
 /**
  * Creates a declarative CallClient by proxying CallClient with ProxyCallClient which then allows access to state in a
  * declarative way.
  *
- * @param callClient 
+ * @param callClient
  */
 export const callClientDeclaratify = (callClient: CallClient): DeclarativeCallClient => {
   const context: CallContext = new CallContext();
