@@ -997,7 +997,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/IncomingCallModal In
                             className="ms-Dialog-action action-51"
                           >
                             <button
-                              className="ms-Button ms-Button--primary root-55"
+                              className="ms-Button ms-Button--default root-53"
                               data-is-focusable={true}
                               onClick={[Function]}
                               onKeyDown={[Function]}
@@ -1018,13 +1018,14 @@ exports[`storybook snapshot tests Storyshots ACS Components/IncomingCallModal In
                                 data-automationid="splitbuttonprimary"
                               >
                                 <span
-                                  style={
-                                    Object {
-                                      "fontFamily": "Segoe UI Semibold",
-                                    }
-                                  }
+                                  className="ms-Button-textContainer textContainer-23"
                                 >
-                                  Accept
+                                  <span
+                                    className="ms-Button-label label-54"
+                                    id="id__8"
+                                  >
+                                    Accept
+                                  </span>
                                 </span>
                               </span>
                             </button>
@@ -1045,7 +1046,6 @@ exports[`storybook snapshot tests Storyshots ACS Components/IncomingCallModal In
                                 Object {
                                   "background": "#a4262c",
                                   "border": "none",
-                                  "color": "#ffffff",
                                 }
                               }
                               type="button"
@@ -1161,7 +1161,6 @@ exports[`storybook snapshot tests Storyshots ACS Components/IncomingCallToast In
             className="ms-Stack css-20"
             style={
               Object {
-                "color": "#000000",
                 "fontSize": "0.875rem",
               }
             }
@@ -1174,7 +1173,6 @@ exports[`storybook snapshot tests Storyshots ACS Components/IncomingCallToast In
             className="ms-Stack css-20"
             style={
               Object {
-                "color": "#000000",
                 "fontSize": "0.75rem",
               }
             }
