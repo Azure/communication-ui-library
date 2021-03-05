@@ -20,18 +20,18 @@ import {
   NEW_MESSAGES,
   DEFAULT_NUMBER_OF_MESSAGES_TO_LOAD,
   UNABLE_TO_LOAD_MORE_MESSAGES
-} from '../constants';
+} from '../../constants';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { MapToChatMessageProps } from '../consumers/MapToChatMessageProps';
-import { connectFuncsToContext } from '../consumers/ConnectContext';
+import { MapToChatMessageProps } from '../../consumers/MapToChatMessageProps';
+import { connectFuncsToContext } from '../../consumers/ConnectContext';
 import Linkify from 'react-linkify';
-import { compareMessages } from '../utils/chatUtils';
-import { ReadReceiptComponent, ReadReceiptProps } from './ReadReceipt';
-import { ChatMessage, MessageStatus } from '../types/ChatMessage';
-import { formatTimestampForChatMessage } from '../utils/Datetime';
-import { WithErrorHandling } from '../utils/WithErrorHandling';
-import { ErrorHandlingProps } from '../providers/ErrorProvider';
-import { propagateError } from '../utils/SDKUtils';
+import { compareMessages } from '../../utils/chatUtils';
+import { ReadReceiptComponent, ReadReceiptProps } from '../../components/ReadReceipt';
+import { ChatMessage, MessageStatus } from '../../types/ChatMessage';
+import { formatTimestampForChatMessage } from '../../utils/Datetime';
+import { WithErrorHandling } from '../../utils/WithErrorHandling';
+import { ErrorHandlingProps } from '../../providers/ErrorProvider';
+import { propagateError } from '../../utils/SDKUtils';
 
 const updateMessagesWithAttached = (
   chatMessagesWithStatus: ChatMessage[],
@@ -544,4 +544,4 @@ export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingPr
 export const ChatThreadComponent = (props: ChatThreadProps & ErrorHandlingProps): JSX.Element =>
   WithErrorHandling(ChatThreadComponentBase, props);
 
-export default connectFuncsToContext(ChatThreadComponent, MapToChatMessageProps);
+export const ChatThread = connectFuncsToContext(ChatThreadComponent, MapToChatMessageProps);

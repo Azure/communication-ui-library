@@ -1,6 +1,5 @@
 // © Microsoft Corporation. All rights reserved.
 
-import ChatThread from './ChatThread';
 import SendBox from './SendBox';
 import MemberItem from './MemberItem';
 import TypingIndicator, { TypingIndicatorComponent } from './TypingIndicator';
@@ -9,7 +8,6 @@ import ErrorBar, { ErrorBarComponent } from './ErrorBar';
 import { WithErrorHandling } from '../utils/WithErrorHandling';
 
 export {
-  ChatThread,
   SendBox,
   MemberItem,
   TypingIndicator,
@@ -20,9 +18,9 @@ export {
   WithErrorHandling
 };
 
-export { ChatThreadComponent } from './ChatThread';
 export { SendBoxComponent } from './SendBox';
 export { ReadReceiptComponent } from './ReadReceipt';
+export type { ReadReceiptProps } from './ReadReceipt';
 export { MediaGalleryTileComponent } from './MediaGalleryTile';
 export { StreamMediaComponent } from './StreamMedia';
 export { ParticipantStackItemComponent } from './ParticipantStackItem';
@@ -37,4 +35,3 @@ export {
   answerButtonProps,
   hangupButtonProps
 } from './ControlBar';
-export type { IncomingCallModalProps, IncomingCallToastProps } from '../composites/OneToOneCall/IncomingCallAlerts';
