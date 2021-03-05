@@ -219,11 +219,7 @@ export interface ControlBarProps {
 export const ControlBar = (props: ControlBarProps): JSX.Element => {
   const { styles, layout } = props;
   const controlBarStyle = controlBarStyles[layout ?? 'horizontal'];
-  return (
-    <Stack style={{}}>
-      <Stack className={mergeStyles(controlBarStyle, styles?.root)}>{props.children}</Stack>
-    </Stack>
-  );
+  return <Stack className={mergeStyles(controlBarStyle, styles?.root)}>{props.children}</Stack>;
 };
 
 export interface CallControlBarProps extends CallControlBarContainerProps {
