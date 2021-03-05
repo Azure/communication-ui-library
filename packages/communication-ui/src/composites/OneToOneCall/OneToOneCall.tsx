@@ -4,7 +4,7 @@ import { CallingProvider, CallProvider } from '../../providers';
 import React, { useCallback, useEffect, useState } from 'react';
 import { CallClientOptions } from '@azure/communication-calling';
 import { AbortSignalLike } from '@azure/core-http';
-import MakeCallScreen from './MakeCallScreen';
+import { MakeCallScreen } from './MakeCallScreen';
 import CallScreen from './CallScreen';
 import { CallEndScreen } from './CallEndScreen';
 import { getIdFromToken } from '../../utils';

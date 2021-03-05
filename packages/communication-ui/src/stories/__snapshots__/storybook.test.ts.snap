@@ -508,7 +508,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/GridLayout Grid Layo
         }
       >
         <div
-          className="css-79"
+          className="css-71"
           style={
             Object {
               "gridTemplateColumns": "repeat(2, 1fr)",
@@ -517,10 +517,10 @@ exports[`storybook snapshot tests Storyshots ACS Components/GridLayout Grid Layo
           }
         >
           <div
-            className="ms-Stack css-67 css-2"
+            className="ms-Stack css-74 css-2"
           >
             <div
-              className="ms-Stack css-68 css-3"
+              className="ms-Stack css-75 css-3"
             >
               <div
                 className="ms-Persona ms-Persona--size100 root-4"
@@ -550,16 +550,16 @@ exports[`storybook snapshot tests Storyshots ACS Components/GridLayout Grid Layo
               </div>
             </div>
             <label
-              className="ms-Label css-66 root-21"
+              className="ms-Label css-73 root-21"
             >
               Michael
             </label>
           </div>
           <div
-            className="ms-Stack css-67 css-2"
+            className="ms-Stack css-74 css-2"
           >
             <div
-              className="ms-Stack css-68 css-3"
+              className="ms-Stack css-75 css-3"
             >
               <div
                 className="ms-Persona ms-Persona--size100 root-4"
@@ -589,16 +589,16 @@ exports[`storybook snapshot tests Storyshots ACS Components/GridLayout Grid Layo
               </div>
             </div>
             <label
-              className="ms-Label css-66 root-21"
+              className="ms-Label css-73 root-21"
             >
               Jim
             </label>
           </div>
           <div
-            className="ms-Stack css-67 css-2"
+            className="ms-Stack css-74 css-2"
           >
             <div
-              className="ms-Stack css-68 css-3"
+              className="ms-Stack css-75 css-3"
             >
               <div
                 className="ms-Persona ms-Persona--size100 root-4"
@@ -628,16 +628,16 @@ exports[`storybook snapshot tests Storyshots ACS Components/GridLayout Grid Layo
               </div>
             </div>
             <label
-              className="ms-Label css-66 root-21"
+              className="ms-Label css-73 root-21"
             >
               Pam
             </label>
           </div>
           <div
-            className="ms-Stack css-67 css-2"
+            className="ms-Stack css-74 css-2"
           >
             <div
-              className="ms-Stack css-68 css-3"
+              className="ms-Stack css-75 css-3"
             >
               <div
                 className="ms-Persona ms-Persona--size100 root-4"
@@ -667,7 +667,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/GridLayout Grid Layo
               </div>
             </div>
             <label
-              className="ms-Label css-66 root-21"
+              className="ms-Label css-73 root-21"
             >
               Dweight
             </label>
@@ -922,13 +922,13 @@ exports[`storybook snapshot tests Storyshots ACS Components/IncomingCallModal In
                           </div>
                         </div>
                         <div
-                          className="ms-Stack css-85 css-48"
+                          className="ms-Stack css-82 css-48"
                         >
                           <div
-                            className="ms-Stack css-67 css-49"
+                            className="ms-Stack css-74 css-49"
                           >
                             <div
-                              className="css-69"
+                              className="css-76"
                             />
                           </div>
                         </div>
@@ -997,7 +997,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/IncomingCallModal In
                             className="ms-Dialog-action action-51"
                           >
                             <button
-                              className="ms-Button ms-Button--primary root-55"
+                              className="ms-Button ms-Button--default root-53"
                               data-is-focusable={true}
                               onClick={[Function]}
                               onKeyDown={[Function]}
@@ -1018,13 +1018,14 @@ exports[`storybook snapshot tests Storyshots ACS Components/IncomingCallModal In
                                 data-automationid="splitbuttonprimary"
                               >
                                 <span
-                                  style={
-                                    Object {
-                                      "fontFamily": "Segoe UI Semibold",
-                                    }
-                                  }
+                                  className="ms-Button-textContainer textContainer-23"
                                 >
-                                  Accept
+                                  <span
+                                    className="ms-Button-label label-54"
+                                    id="id__8"
+                                  >
+                                    Accept
+                                  </span>
                                 </span>
                               </span>
                             </button>
@@ -1045,7 +1046,6 @@ exports[`storybook snapshot tests Storyshots ACS Components/IncomingCallModal In
                                 Object {
                                   "background": "#a4262c",
                                   "border": "none",
-                                  "color": "#ffffff",
                                 }
                               }
                               type="button"
@@ -1119,10 +1119,10 @@ exports[`storybook snapshot tests Storyshots ACS Components/IncomingCallToast In
       dir="ltr"
     >
       <div
-        className="ms-Stack css-81 css-2"
+        className="ms-Stack css-78 css-2"
       >
         <div
-          className="ms-Stack css-82 css-3"
+          className="ms-Stack css-79 css-3"
         >
           <div
             aria-label="John Doe"
@@ -1161,7 +1161,6 @@ exports[`storybook snapshot tests Storyshots ACS Components/IncomingCallToast In
             className="ms-Stack css-20"
             style={
               Object {
-                "color": "#000000",
                 "fontSize": "0.875rem",
               }
             }
@@ -1174,7 +1173,6 @@ exports[`storybook snapshot tests Storyshots ACS Components/IncomingCallToast In
             className="ms-Stack css-20"
             style={
               Object {
-                "color": "#000000",
                 "fontSize": "0.75rem",
               }
             }
@@ -1188,7 +1186,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/IncomingCallToast In
           className="ms-Stack css-21"
         >
           <button
-            className="ms-Button ms-Button--default css-84 root-22"
+            className="ms-Button ms-Button--default css-81 root-22"
             data-is-focusable={true}
             onClick={[Function]}
             onKeyDown={[Function]}
@@ -1226,7 +1224,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/IncomingCallToast In
             </span>
           </button>
           <button
-            className="ms-Button ms-Button--default css-83 root-22"
+            className="ms-Button ms-Button--default css-80 root-22"
             data-is-focusable={true}
             onClick={[Function]}
             onKeyDown={[Function]}
@@ -1270,125 +1268,6 @@ exports[`storybook snapshot tests Storyshots ACS Components/IncomingCallToast In
 </div>
 `;
 
-exports[`storybook snapshot tests Storyshots ACS Components/MediaGallery1To1 Media Gallery 1 To 1 Component 1`] = `
-<div
-  style={
-    Object {
-      "alignItems": "center",
-      "display": "flex",
-      "height": "100vh",
-      "justifyContent": "center",
-    }
-  }
->
-  <div
-    className="wrapper root-0"
-    style={
-      Object {
-        "display": "inherit",
-      }
-    }
-  >
-    <div
-      className="wrapper"
-      data-uses-unhanded-props={true}
-      dir="ltr"
-    >
-      <div
-        style={
-          Object {
-            "height": "530px",
-            "width": "830px",
-          }
-        }
-      >
-        <div
-          className="ms-Stack css-70 css-2"
-        >
-          <div
-            className="ms-Stack css-72 css-2"
-          >
-            <div
-              className="ms-Stack css-67 css-3"
-            >
-              <div
-                className="ms-Stack css-68 css-2"
-              >
-                <div
-                  className="ms-Persona ms-Persona--size100 root-4"
-                >
-                  <div
-                    className="ms-Persona-coin ms-Persona--size100 coin-11"
-                    role="presentation"
-                  >
-                    <div
-                      className="ms-Persona-imageArea imageArea-13"
-                      role="presentation"
-                    >
-                      <div
-                        aria-hidden="true"
-                        className="ms-Persona-initials initials-16"
-                      >
-                        <span>
-                          R
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <label
-                className="ms-Label css-66 root-19"
-              >
-                Remote
-              </label>
-            </div>
-          </div>
-          <div
-            className="ms-StackItem css-20"
-          >
-            <div
-              className="ms-Stack css-71 css-2"
-            >
-              <div
-                className="ms-Stack css-67 css-3"
-              >
-                <div
-                  className="ms-Stack css-68 css-2"
-                >
-                  <div
-                    className="ms-Persona ms-Persona--size100 root-4"
-                  >
-                    <div
-                      className="ms-Persona-coin ms-Persona--size100 coin-11"
-                      role="presentation"
-                    >
-                      <div
-                        className="ms-Persona-imageArea imageArea-13"
-                        role="presentation"
-                      >
-                        <div
-                          aria-hidden="true"
-                          className="ms-Persona-initials initials-21"
-                        >
-                          <span>
-                            L
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
 exports[`storybook snapshot tests Storyshots ACS Components/MediaGalleryTile Media Gallery Tile Component 1`] = `
 <div
   style={
@@ -1422,10 +1301,10 @@ exports[`storybook snapshot tests Storyshots ACS Components/MediaGalleryTile Med
         }
       >
         <div
-          className="ms-Stack css-67 css-2"
+          className="ms-Stack css-74 css-2"
         >
           <div
-            className="ms-Stack css-68 css-3"
+            className="ms-Stack css-75 css-3"
           >
             <div
               className="ms-Persona ms-Persona--size100 root-4"
@@ -1455,7 +1334,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/MediaGalleryTile Med
             </div>
           </div>
           <label
-            className="ms-Label css-66 root-21"
+            className="ms-Label css-73 root-21"
           >
             hello
           </label>
@@ -1814,20 +1693,20 @@ exports[`storybook snapshot tests Storyshots ACS Components/TypingIndicator Typi
       dir="ltr"
     >
       <div
-        className="css-76"
+        className="css-68"
       >
         <span
-          className="css-77"
+          className="css-69"
         >
           User1, 
         </span>
         <span
-          className="css-77"
+          className="css-69"
         >
           User2
         </span>
         <span
-          className="css-77"
+          className="css-69"
         >
            and 5 others are typing...
         </span>
