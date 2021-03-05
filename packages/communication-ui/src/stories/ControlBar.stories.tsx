@@ -3,6 +3,7 @@
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import {
+  CONTROL_BAR_LAYOUTS,
   audioButtonProps,
   ControlBar,
   ControlButton,
@@ -42,7 +43,7 @@ const defaultOptionsMenuProps = {
 };
 
 export const ControlBarComponent: () => JSX.Element = () => {
-  const layout = select('Layout', ['horizontal', 'vertical'], 'horizontal');
+  const layout = select('Layout', CONTROL_BAR_LAYOUTS, 'floatingBottom');
   const toggleButtons = boolean('Toggle Buttons', false);
   const showLabels = boolean('Show Labels', false);
   const optionsMenuProps = object('Options Menu', defaultOptionsMenuProps);

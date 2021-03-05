@@ -28,6 +28,7 @@ export { StreamMediaComponent } from './StreamMedia';
 export { ParticipantStackItemComponent } from './ParticipantStackItem';
 export { IncomingCallModal, IncomingCallToast } from './IncomingCallAlerts';
 export {
+  CONTROL_BAR_LAYOUTS,
   ControlBar,
   ControlButton,
   CallControlBar,
