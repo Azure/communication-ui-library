@@ -1,3 +1,5 @@
+// © Microsoft Corporation. All rights reserved.
+
 import React from 'react';
 import { Theme, useTheme } from '@fluentui/react-theme-provider';
 
