@@ -21,7 +21,7 @@ import { MapToCallControlBarProps, CallControlBarContainerProps } from '../consu
 import { ErrorHandlingProps } from '../providers/ErrorProvider';
 import { propagateError } from '../utils/SDKUtils';
 import {
-  controlBarStyle,
+  controlBarStyles,
   controlButtonStyles,
   controlButtonLabelStyles,
   hangUpControlButtonStyles
@@ -178,6 +178,19 @@ export const hangupButtonProps: CallControlButtonProps = {
   styles: hangUpControlButtonStyles
 };
 
+export const CONTROL_BAR_LAYOUTS = [
+  'horizontal',
+  'vertical',
+  'dockedTop',
+  'dockedBottom',
+  'dockedLeft',
+  'dockedRight',
+  'floatingTop',
+  'floatingBottom',
+  'floatingLeft',
+  'floatingRight'
+] as const;
+
 export interface ControlBarProps {
   children?: React.ReactNode;
   /**
@@ -190,10 +203,12 @@ export interface ControlBarProps {
   styles?: CustomStylesProps;
   /**
    * Changes the layout of the control bar.
-   * Available layouts are `horizontal`, `vertical`.
+   * Available layouts are `horizontal`, `vertical`, `dockedTop`, `dockedBottom`,
+   * `dockedLeft`, `dockedRight`, `floatingTop`, `floatingBottom`, `floatingLeft`,
+   * `floatingRight`
    * Defaults to a `horizontal` layout.
    */
-  layout?: 'horizontal' | 'vertical';
+  layout?: typeof CONTROL_BAR_LAYOUTS[number];
 }
 
 /**
@@ -203,12 +218,8 @@ export interface ControlBarProps {
  */
 export const ControlBar = (props: ControlBarProps): JSX.Element => {
   const { styles, layout } = props;
-  const isHorizontal = layout === 'vertical' ? false : true;
-  return (
-    <Stack horizontal={isHorizontal} verticalAlign="center" className={mergeStyles(controlBarStyle, styles?.root)}>
-      {props.children}
-    </Stack>
-  );
+  const controlBarStyle = controlBarStyles[layout ?? 'horizontal'];
+  return <Stack className={mergeStyles(controlBarStyle, styles?.root)}>{props.children}</Stack>;
 };
 
 export interface CallControlBarProps extends CallControlBarContainerProps {

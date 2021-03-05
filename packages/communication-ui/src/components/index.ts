@@ -25,6 +25,7 @@ export { MediaGalleryTileComponent } from './MediaGalleryTile';
 export { StreamMediaComponent } from './StreamMedia';
 export { ParticipantStackItemComponent } from './ParticipantStackItem';
 export {
+  CONTROL_BAR_LAYOUTS,
   ControlBar,
   ControlButton,
   CallControlBar,
