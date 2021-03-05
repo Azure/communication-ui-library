@@ -9,7 +9,6 @@ export class CallContext {
   private _emitter: EventEmitter = new EventEmitter();
 
   public setState(state: CallClientState): void {
-    console.log('setState called');
     this._state = state;
     this._emitter.emit('stateChanged', this._state);
   }
@@ -19,7 +18,6 @@ export class CallContext {
   }
 
   public onStateChange(handler: (state: CallClientState) => void): void {
-    console.log('register handler', handler);
     this._emitter.on('stateChanged', handler);
   }
 }
