@@ -109,5 +109,6 @@ describe('declarative call client', () => {
     await waitWithBreakCondition(() => declarativeCallClient.state.calls.length === 0);
     expect(mockCall.emitter.eventNames().length).toBe(0);
     expect(mockRemoteParticipant.emitter.eventNames().length).toBe(0);
+    expect(declarativeCallClient.state.calls.length).toBe(0);
   });
 });
