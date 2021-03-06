@@ -60,6 +60,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
     for (const participant of event.removed) {
       this.unsubscribeFromParticipant(participant);
     }
+    this.refreshState();
   };
 
   private subscribeToCall = (call: Call): void => {
@@ -91,6 +92,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
     for (const call of event.removed) {
       this.unsubscribeFromCall(call);
     }
+    this.refreshState();
   };
 
   public get<P extends keyof CallClient>(target: CallClient, prop: P): any {
