@@ -24,6 +24,7 @@ export type { ReadReceiptProps } from './ReadReceipt';
 export { StreamMediaComponent } from './StreamMedia';
 export { ParticipantStackItemComponent } from './ParticipantStackItem';
 export {
+  CONTROL_BAR_LAYOUTS,
   ControlBar,
   ControlButton,
   CallControlBar,
