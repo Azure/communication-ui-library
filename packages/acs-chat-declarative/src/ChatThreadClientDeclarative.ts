@@ -4,10 +4,6 @@ import { ChatMessageWithStatus, MessageStatus } from './types/ChatMessageWithSta
 import { Constants } from './Constants';
 import { ChatContext } from './ChatContext';
 import { nanoid } from 'nanoid';
-import produce from 'immer';
-import { enableMapSet } from 'immer';
-
-enableMapSet();
 
 export const convertChatMessage = (
   message: ChatMessage,
@@ -37,16 +33,7 @@ const proxyListMessages = (chatThreadClient: ChatThreadClient, context: ChatCont
         return new Promise<IteratorResult<ChatMessage, ChatMessage>>((resolve) => {
           messages.next().then((result) => {
             if (!result.done && result.value) {
-              const message: ChatMessage = result.value;
-              context.setState(
-                produce(context.getState(), (draft) => {
-                  if (message.id) {
-                    draft.threads
-                      .get(chatThreadClient.threadId)
-                      ?.chatMessages?.set(message.id, convertChatMessage(message));
-                  }
-                })
-              );
+              context.setChatMessage(chatThreadClient.threadId, convertChatMessage(result.value));
             }
             resolve(result);
           });
@@ -63,17 +50,11 @@ const proxyListMessages = (chatThreadClient: ChatThreadClient, context: ChatCont
               pages.next().then((result) => {
                 const page: any = result.value;
                 if (!result.done && result.value) {
-                  for (const message of page) {
-                    if (message.id) {
-                      context.setState(
-                        produce(context.getState(), (draft) => {
-                          draft.threads
-                            .get(chatThreadClient.threadId)
-                            ?.chatMessages?.set(message.id, convertChatMessage(message));
-                        })
-                      );
+                  context.batch(() => {
+                    for (const message of page) {
+                      context.setChatMessage(chatThreadClient.threadId, convertChatMessage(message));
                     }
-                  }
+                  });
                 }
                 resolve(result);
               });
@@ -101,17 +82,15 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
         return proxyListMessages(target, this._context);
       }
       case 'getMessage': {
-        const context = this._context;
-        return async function (...args: Parameters<ChatThreadClient['getMessage']>) {
+        return async (...args: Parameters<ChatThreadClient['getMessage']>) => {
           const message = await target.getMessage(...args);
-          context.setChatMessage(target.threadId, convertChatMessage(message));
+          this._context.setChatMessage(target.threadId, convertChatMessage(message));
           return message;
         };
       }
       case 'sendMessage': {
         // Retry logic?
-        const context = this._context;
-        return async function (...args: Parameters<ChatThreadClient['sendMessage']>) {
+        return async (...args: Parameters<ChatThreadClient['sendMessage']>) => {
           const { content } = args[0];
           const clientMessageId = nanoid(); // Generate a local short uuid for message
           const newMessage: ChatMessageWithStatus = {
@@ -120,22 +99,22 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
             createdOn: undefined,
             status: 'sending'
           };
-          context.setChatMessage(target.threadId, newMessage);
+          this._context.setChatMessage(target.threadId, newMessage);
 
           const result = await target.sendMessage(...args);
           if (result._response.status === Constants.CREATED) {
             if (result.id) {
-              context.batch(() => {
-                context.setChatMessage(target.threadId, {
+              this._context.batch(() => {
+                this._context.setChatMessage(target.threadId, {
                   ...newMessage,
                   status: 'delivered',
                   id: result.id
                 });
-                context.setLocalMessageSynced(target.threadId, clientMessageId);
+                this._context.setLocalMessageSynced(target.threadId, clientMessageId);
               });
             }
           } else if (result._response.status === Constants.PRECONDITION_FAILED_STATUS_CODE) {
-            context.setChatMessage(target.threadId, { ...newMessage, status: 'failed' });
+            this._context.setChatMessage(target.threadId, { ...newMessage, status: 'failed' });
           }
           return result;
         };

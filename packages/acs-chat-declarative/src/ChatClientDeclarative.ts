@@ -4,9 +4,6 @@ import { ChatContext } from './ChatContext';
 import { ChatClientState } from './ChatClientState';
 import { EventSubscriber } from './EventSubscriber';
 import { chatThreadClientDeclaratify } from './ChatThreadClientDeclarative';
-import { enableMapSet } from 'immer';
-
-enableMapSet();
 
 export interface DeclarativeChatClient extends ChatClient {
   state: ChatClientState;

@@ -3,6 +3,9 @@ import EventEmitter from 'events';
 import produce from 'immer';
 import { ChatClientState, ChatThreadClientState } from './ChatClientState';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
+import { enableMapSet } from 'immer';
+
+enableMapSet();
 
 // have separated ClientState and ChatThreadState?
 export class ChatContext {
