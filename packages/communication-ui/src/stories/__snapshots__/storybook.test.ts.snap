@@ -517,238 +517,181 @@ exports[`storybook snapshot tests Storyshots ACS Components/GridLayout Grid Layo
           }
         >
           <div
-            className="ms-Stack css-69 css-2"
+            className="ms-Stack css-4"
           >
             <div
-              className="ms-Stack css-70 css-3"
+              className="ms-Stack css-5"
+              style={
+                Object {
+                  "height": "100%",
+                  "position": "absolute",
+                  "width": "100%",
+                }
+              }
             >
               <div
-                className="ms-Persona ms-Persona--size100 root-4"
+                className="ms-Persona ms-Persona--size100 root-6"
               >
                 <div
-                  className="ms-Persona-coin ms-Persona--size100 coin-11"
+                  className="ms-Persona-coin ms-Persona--size100 coin-13"
                   role="presentation"
                 >
                   <div
-                    className="ms-Persona-imageArea imageArea-13"
+                    className="ms-Persona-imageArea imageArea-15"
                     role="presentation"
                   >
                     <div
                       aria-hidden="true"
-                      className="ms-Persona-initials initials-16"
+                      className="ms-Persona-initials initials-18"
                     >
-                      <i
-                        aria-hidden={true}
-                        className="root-37 root-18"
-                        data-icon-name="Contact"
-                      >
-                        
-                      </i>
+                      <span>
+                        M
+                      </span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <label
-              className="ms-Label css-68 root-21"
+            <div
+              className="ms-Stack css-21"
             >
-              Michael
-            </label>
+              <label>
+                Michael
+              </label>
+            </div>
           </div>
           <div
-            className="ms-Stack css-69 css-2"
+            className="ms-Stack css-4"
           >
             <div
-              className="ms-Stack css-70 css-3"
+              className="ms-Stack css-5"
+              style={
+                Object {
+                  "height": "100%",
+                  "position": "absolute",
+                  "width": "100%",
+                }
+              }
             >
               <div
-                className="ms-Persona ms-Persona--size100 root-4"
+                className="ms-Persona ms-Persona--size100 root-6"
               >
                 <div
-                  className="ms-Persona-coin ms-Persona--size100 coin-11"
+                  className="ms-Persona-coin ms-Persona--size100 coin-13"
                   role="presentation"
                 >
                   <div
-                    className="ms-Persona-imageArea imageArea-13"
+                    className="ms-Persona-imageArea imageArea-15"
                     role="presentation"
                   >
                     <div
                       aria-hidden="true"
-                      className="ms-Persona-initials initials-16"
+                      className="ms-Persona-initials initials-22"
                     >
-                      <i
-                        aria-hidden={true}
-                        className="root-37 root-18"
-                        data-icon-name="Contact"
-                      >
-                        
-                      </i>
+                      <span>
+                        J
+                      </span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <label
-              className="ms-Label css-68 root-21"
+            <div
+              className="ms-Stack css-21"
             >
-              Jim
-            </label>
+              <label>
+                Jim
+              </label>
+            </div>
           </div>
           <div
-            className="ms-Stack css-69 css-2"
+            className="ms-Stack css-4"
           >
             <div
-              className="ms-Stack css-70 css-3"
+              className="ms-Stack css-5"
+              style={
+                Object {
+                  "height": "100%",
+                  "position": "absolute",
+                  "width": "100%",
+                }
+              }
             >
               <div
-                className="ms-Persona ms-Persona--size100 root-4"
+                className="ms-Persona ms-Persona--size100 root-6"
               >
                 <div
-                  className="ms-Persona-coin ms-Persona--size100 coin-11"
+                  className="ms-Persona-coin ms-Persona--size100 coin-13"
                   role="presentation"
                 >
                   <div
-                    className="ms-Persona-imageArea imageArea-13"
+                    className="ms-Persona-imageArea imageArea-15"
                     role="presentation"
                   >
                     <div
                       aria-hidden="true"
-                      className="ms-Persona-initials initials-16"
+                      className="ms-Persona-initials initials-23"
                     >
-                      <i
-                        aria-hidden={true}
-                        className="root-37 root-18"
-                        data-icon-name="Contact"
-                      >
-                        
-                      </i>
+                      <span>
+                        P
+                      </span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <label
-              className="ms-Label css-68 root-21"
+            <div
+              className="ms-Stack css-21"
             >
-              Pam
-            </label>
+              <label>
+                Pam
+              </label>
+            </div>
           </div>
           <div
-            className="ms-Stack css-69 css-2"
+            className="ms-Stack css-4"
           >
             <div
-              className="ms-Stack css-70 css-3"
+              className="ms-Stack css-5"
+              style={
+                Object {
+                  "height": "100%",
+                  "position": "absolute",
+                  "width": "100%",
+                }
+              }
             >
               <div
-                className="ms-Persona ms-Persona--size100 root-4"
+                className="ms-Persona ms-Persona--size100 root-6"
               >
                 <div
-                  className="ms-Persona-coin ms-Persona--size100 coin-11"
+                  className="ms-Persona-coin ms-Persona--size100 coin-13"
                   role="presentation"
                 >
                   <div
-                    className="ms-Persona-imageArea imageArea-13"
+                    className="ms-Persona-imageArea imageArea-15"
                     role="presentation"
                   >
                     <div
                       aria-hidden="true"
-                      className="ms-Persona-initials initials-16"
+                      className="ms-Persona-initials initials-24"
                     >
-                      <i
-                        aria-hidden={true}
-                        className="root-37 root-18"
-                        data-icon-name="Contact"
-                      >
-                        
-                      </i>
+                      <span>
+                        D
+                      </span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <label
-              className="ms-Label css-68 root-21"
-            >
-              Dweight
-            </label>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`storybook snapshot tests Storyshots ACS Components/MediaGalleryTile Media Gallery Tile Component 1`] = `
-<div
-  style={
-    Object {
-      "alignItems": "center",
-      "display": "flex",
-      "height": "100vh",
-      "justifyContent": "center",
-    }
-  }
->
-  <div
-    className="wrapper root-0"
-    style={
-      Object {
-        "display": "inherit",
-      }
-    }
-  >
-    <div
-      className="wrapper"
-      data-uses-unhanded-props={true}
-      dir="ltr"
-    >
-      <div
-        style={
-          Object {
-            "height": "250px",
-            "width": "400px",
-          }
-        }
-      >
-        <div
-          className="ms-Stack css-69 css-2"
-        >
-          <div
-            className="ms-Stack css-70 css-3"
-          >
             <div
-              className="ms-Persona ms-Persona--size100 root-4"
+              className="ms-Stack css-21"
             >
-              <div
-                className="ms-Persona-coin ms-Persona--size100 coin-11"
-                role="presentation"
-              >
-                <div
-                  className="ms-Persona-imageArea imageArea-13"
-                  role="presentation"
-                >
-                  <div
-                    aria-hidden="true"
-                    className="ms-Persona-initials initials-16"
-                  >
-                    <i
-                      aria-hidden={true}
-                      className="root-37 root-18"
-                      data-icon-name="Contact"
-                    >
-                      
-                    </i>
-                  </div>
-                </div>
-              </div>
+              <label>
+                Dweight
+              </label>
             </div>
           </div>
-          <label
-            className="ms-Label css-68 root-21"
-          >
-            hello
-          </label>
         </div>
       </div>
     </div>
@@ -1152,32 +1095,32 @@ exports[`storybook snapshot tests Storyshots ACS Components/VideoTile Video Tile
       dir="ltr"
     >
       <div
-        className="ms-Stack css-4"
+        className="ms-Stack css-3"
       >
         <div
-          className="ms-Stack css-5"
+          className="ms-Stack css-4"
           style={
             Object {
-              "bottom": "50%",
-              "left": "50%",
+              "height": "100%",
               "position": "absolute",
+              "width": "100%",
             }
           }
         >
           <div
-            className="ms-Persona ms-Persona--size100 root-6"
+            className="ms-Persona ms-Persona--size100 root-5"
           >
             <div
-              className="ms-Persona-coin ms-Persona--size100 coin-13"
+              className="ms-Persona-coin ms-Persona--size100 coin-12"
               role="presentation"
             >
               <div
-                className="ms-Persona-imageArea imageArea-15"
+                className="ms-Persona-imageArea imageArea-14"
                 role="presentation"
               >
                 <div
                   aria-hidden="true"
-                  className="ms-Persona-initials initials-18"
+                  className="ms-Persona-initials initials-17"
                 >
                   <span>
                     JK
@@ -1187,9 +1130,6 @@ exports[`storybook snapshot tests Storyshots ACS Components/VideoTile Video Tile
             </div>
           </div>
         </div>
-        <div
-          className="ms-Stack css-21"
-        />
       </div>
     </div>
   </div>

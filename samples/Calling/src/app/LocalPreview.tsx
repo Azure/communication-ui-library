@@ -12,7 +12,6 @@ import {
 import { MapToMediaControlsProps, MediaControlsContainerProps } from './consumers/MapToMediaControlsProps';
 import {
   connectFuncsToContext,
-  MediaGalleryTileComponent,
   MapToLocalVideoProps,
   useCallContext,
   ErrorHandlingProps,
@@ -20,7 +19,9 @@ import {
   CommunicationUiErrorFromError,
   ErrorBar,
   MapToLocalDeviceSettingsProps,
-  LocalDeviceSettingsContainerProps
+  LocalDeviceSettingsContainerProps,
+  StreamMediaComponent,
+  VideoTile
 } from '@azure/communication-ui';
 import staticMediaSVG from '../assets/staticmedia.svg';
 
@@ -45,15 +46,20 @@ const LocalPreviewComponentBase = (
   // we should create a MapToLocalPreviewProps, instead of using MapToMediaControlsProps and MapToLocalDeviceSettingsProps
   const { localVideoStream } = useCallContext();
 
+  const { isVideoReady, videoStreamElement } = MapToLocalVideoProps({
+    stream: localVideoStream,
+    scalingMode: 'Crop'
+  });
+
   return (
     <Stack className={localPreviewContainerStyle}>
-      {connectFuncsToContext(
-        MediaGalleryTileComponent,
-        MapToLocalVideoProps
-      )({
-        fallbackElement: <Image styles={staticAvatarStyle} aria-label="Local video preview image" {...imageProps} />,
-        stream: localVideoStream
-      })}
+      <VideoTile
+        isVideoReady={isVideoReady}
+        videoProvider={<StreamMediaComponent videoStreamElement={videoStreamElement} />}
+        placeholderProvider={
+          <Image styles={staticAvatarStyle} aria-label="Local video preview image" {...imageProps} />
+        }
+      />
       <Stack
         horizontal
         horizontalAlign="center"

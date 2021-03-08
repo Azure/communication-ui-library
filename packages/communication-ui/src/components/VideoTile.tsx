@@ -28,7 +28,7 @@ export interface VideoTileProps {
   placeholderProvider?: JSX.Element | null;
 }
 
-interface PlaceholderProps {
+export interface PlaceholderProps {
   /** Optional participant avatar name for the VideoTile default placeholder. */
   avatarName?: string;
   /** Optional property to set the aria label of the video tile if there is no available stream. */
@@ -38,9 +38,9 @@ interface PlaceholderProps {
 const DefaultPlaceholder = (props: PlaceholderProps): JSX.Element => {
   const { avatarName, noVideoAvailableAriaLabel } = props;
   return (
-    <Stack style={{ position: 'absolute', left: '50%', bottom: '50%' }}>
+    <Stack style={{ position: 'absolute', height: '100%', width: '100%' }}>
       <Persona
-        styles={{ root: { position: 'relative', left: '-50%', bottom: '-50%' } }}
+        styles={{ root: { margin: 'auto' } }}
         size={PersonaSize.size100}
         hidePersonaDetails={true}
         text={avatarName}
@@ -51,7 +51,7 @@ const DefaultPlaceholder = (props: PlaceholderProps): JSX.Element => {
 };
 
 export const VideoTile = (props: VideoTileProps & PlaceholderProps): JSX.Element => {
-  const { styles, isVideoReady, videoProvider, placeholderProvider, invertVideo } = props;
+  const { styles, isVideoReady, videoProvider, placeholderProvider, invertVideo, children } = props;
   const placeholder = placeholderProvider ?? <DefaultPlaceholder {...props} />;
   return (
     <Stack className={mergeStyles(rootStyles, styles?.root)}>
@@ -70,7 +70,7 @@ export const VideoTile = (props: VideoTileProps & PlaceholderProps): JSX.Element
       ) : (
         placeholder
       )}
-      <Stack className={mergeStyles(overlayContainerStyles, styles?.overlayContainer)}>{props.children}</Stack>
+      {children && <Stack className={mergeStyles(overlayContainerStyles, styles?.overlayContainer)}>{children}</Stack>}
     </Stack>
   );
 };

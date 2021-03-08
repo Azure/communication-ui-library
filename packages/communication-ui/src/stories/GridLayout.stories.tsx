@@ -12,8 +12,7 @@ import {
   mediaGalleryHeightOptions,
   COMPONENT_FOLDER_PREFIX
 } from './constants';
-import { GridLayoutComponent as GridLayout } from '../components/GridLayout';
-import { MediaGalleryTileComponent } from '../components/MediaGalleryTile';
+import { GridLayoutComponent as GridLayout, VideoTile, StreamMediaComponent } from '../components';
 import { renderVideoStream } from './utils';
 
 export const GridLayoutComponent: () => JSX.Element = () => {
@@ -43,12 +42,16 @@ export const GridLayoutComponent: () => JSX.Element = () => {
 
   const participantsComponents = participants.map((participant, index) => {
     return (
-      <MediaGalleryTileComponent
-        label={participant.displayName}
+      <VideoTile
         isVideoReady={participant.isVideoReady}
-        videoStreamElement={participant.isVideoReady ? renderVideoStream() : null}
+        videoProvider={
+          <StreamMediaComponent videoStreamElement={participant.isVideoReady ? renderVideoStream() : null} />
+        }
+        avatarName={participant.displayName}
         key={index}
-      />
+      >
+        <label>{participant.displayName}</label>
+      </VideoTile>
     );
   });
 

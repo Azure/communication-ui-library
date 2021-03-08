@@ -2,7 +2,7 @@
 
 import { ErrorHandlingProps } from '../providers/ErrorProvider';
 import React, { useEffect, useRef } from 'react';
-import { invertedVideoStyle, mediaContainer } from './styles/MediaGalleryTile.styles';
+import { invertedVideoStyle, mediaContainer } from './styles/StreamMedia.styles';
 import { WithErrorHandling } from '../utils/WithErrorHandling';
 
 export interface StreamMediaProps {
