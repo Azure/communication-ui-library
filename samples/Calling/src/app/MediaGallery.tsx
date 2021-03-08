@@ -3,7 +3,7 @@
 import React, { useMemo } from 'react';
 import {
   connectFuncsToContext,
-  StreamMediaComponent,
+  StreamMedia,
   VideoTile,
   GridLayoutComponent,
   MapToLocalVideoProps,
@@ -73,7 +73,7 @@ export const MediaGalleryComponentBase = (props: MediaGalleryContainerProps): JS
     return (
       <VideoTile
         isVideoReady={localVideoStream.isVideoReady}
-        videoProvider={<StreamMediaComponent videoStreamElement={localVideoStream.videoStreamElement} />}
+        videoProvider={<StreamMedia videoStreamElement={localVideoStream.videoStreamElement} />}
         avatarName={localParticipant.displayName}
       >
         <Label className={localVideoStream.isVideoReady ? videoHint : disabledVideoHint}>

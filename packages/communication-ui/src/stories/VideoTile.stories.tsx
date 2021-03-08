@@ -5,7 +5,7 @@ import { Meta } from '@storybook/react/types-6-0';
 import { Stack } from '@fluentui/react';
 import { VideoTile } from '../components';
 import {
-  StreamMediaComponent,
+  StreamMedia,
   ControlBar,
   ControlButton,
   videoButtonProps,
@@ -39,7 +39,7 @@ export const VideoTileComponent: () => JSX.Element = () => {
   return (
     <VideoTile
       isVideoReady={isVideoReady}
-      videoProvider={<StreamMediaComponent videoStreamElement={renderVideoStream()} />}
+      videoProvider={<StreamMedia videoStreamElement={renderVideoStream()} />}
       avatarName={avatarName}
       invertVideo={invertVideo}
       styles={{

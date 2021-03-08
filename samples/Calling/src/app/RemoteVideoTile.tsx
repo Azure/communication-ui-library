@@ -3,7 +3,7 @@
 import { Label } from '@fluentui/react';
 import React from 'react';
 import {
-  StreamMediaComponent,
+  StreamMedia,
   VideoTile,
   WithErrorHandling,
   connectFuncsToContext,
@@ -25,7 +25,7 @@ const RemoteVideoTileComponentBase = (props: RemoteVideoTileProps): JSX.Element 
   return (
     <VideoTile
       isVideoReady={isVideoReady}
-      videoProvider={<StreamMediaComponent videoStreamElement={videoStreamElement} />}
+      videoProvider={<StreamMedia videoStreamElement={videoStreamElement} />}
       avatarName={label}
     >
       <Label className={isVideoReady ? videoHint : disabledVideoHint}>{label}</Label>

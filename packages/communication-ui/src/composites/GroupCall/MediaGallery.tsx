@@ -5,7 +5,7 @@ import { connectFuncsToContext, MapToLocalVideoProps } from '../../consumers';
 import { MapToMediaGalleryProps, MediaGalleryContainerProps } from './consumers/MapToMediaGalleryProps';
 import { GridLayoutComponent } from '../../components/GridLayout';
 import { convertSdkRemoteParticipantToGalleryParticipant } from '../../utils';
-import { StreamMediaComponent, VideoTile } from '../../components';
+import { StreamMedia, VideoTile } from '../../components';
 import { Label, mergeStyles, Stack } from '@fluentui/react';
 import ScreenShareComponent from './ScreenShare';
 import {
@@ -69,7 +69,7 @@ export const MediaGalleryComponentBase = (props: MediaGalleryContainerProps): JS
     return (
       <VideoTile
         isVideoReady={localVideoStream.isVideoReady}
-        videoProvider={<StreamMediaComponent videoStreamElement={localVideoStream.videoStreamElement} />}
+        videoProvider={<StreamMedia videoStreamElement={localVideoStream.videoStreamElement} />}
         avatarName={localParticipant.displayName}
       >
         <Label className={localVideoStream.isVideoReady ? videoHint : disabledVideoHint}>

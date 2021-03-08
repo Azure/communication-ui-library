@@ -21,7 +21,7 @@ export {
 export { SendBoxComponent } from './SendBox';
 export { ReadReceiptComponent } from './ReadReceipt';
 export type { ReadReceiptProps } from './ReadReceipt';
-export { StreamMediaComponent } from './StreamMedia';
+export { StreamMedia } from './StreamMedia';
 export { ParticipantStackItemComponent } from './ParticipantStackItem';
 export {
   CONTROL_BAR_LAYOUTS,

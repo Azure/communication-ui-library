@@ -14,7 +14,7 @@ import { useBoolean } from '@uifabric/react-hooks';
 import { MapToLocalVideoProps } from '../../consumers';
 import { LocalVideoStream, ScalingMode } from '@azure/communication-calling';
 import { WithTheme, withThemeContext } from '../../providers/WithTheme';
-import { StreamMediaComponent, VideoTile } from '../../components';
+import { StreamMedia, VideoTile } from '../../components';
 
 export type IncomingCallToastProps = {
   /** Caller's Name */
@@ -113,7 +113,7 @@ const IncomingCallModal = (props: WithTheme<IncomingCallModalProps>): JSX.Elemen
   const mediaGalleryLocalParticipant: JSX.Element = (
     <VideoTile
       isVideoReady={isVideoReady}
-      videoProvider={<StreamMediaComponent videoStreamElement={videoStreamElement} />}
+      videoProvider={<StreamMedia videoStreamElement={videoStreamElement} />}
       avatarName={localParticipantName}
       invertVideo={localVideoInverted}
     />

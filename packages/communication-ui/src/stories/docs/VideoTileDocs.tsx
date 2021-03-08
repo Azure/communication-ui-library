@@ -2,7 +2,7 @@
 
 import { Canvas, Description, Heading, Props, Source, Title,  } from '@storybook/addon-docs/blocks';
 import React from 'react';
-import { StreamMediaComponent } from '../../components';
+import { StreamMedia } from '../../components';
 import { VideoTile } from '../../components';
 import { FluentThemeProvider } from '../../providers/FluentThemeProvider';
 import { renderVideoStream } from '../utils';
@@ -16,7 +16,7 @@ const VideoTileExample: () => JSX.Element = () => {
     <FluentThemeProvider>
       <VideoTile 
         avatarName={'Maximus Aurelius'}
-        videoProvider={<StreamMediaComponent videoStreamElement={renderVideoStream()} />}
+        videoProvider={<StreamMedia videoStreamElement={renderVideoStream()} />}
         isVideoReady={false}
         invertVideo={false}
        styles={{ root: {minHeight: '300px', minWidth: '400px'} }} />
@@ -30,7 +30,7 @@ const VideoTileExample: () => JSX.Element = () => {
     <FluentThemeProvider>
       <VideoTile 
         avatarName={'Maximus Aurelius'}
-        videoProvider={<StreamMediaComponent videoStreamElement={renderVideoStream()} />}
+        videoProvider={<StreamMedia videoStreamElement={renderVideoStream()} />}
         isVideoReady={false}
         invertVideo={false}
        styles={{ root: {minHeight: '300px', minWidth: '400px'} }} />

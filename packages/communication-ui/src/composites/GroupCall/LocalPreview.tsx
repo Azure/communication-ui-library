@@ -15,7 +15,7 @@ import {
   LocalDeviceSettingsContainerProps
 } from '../../consumers/MapToLocalDeviceSettingsProps';
 import { connectFuncsToContext } from '../../consumers';
-import { StreamMediaComponent, VideoTile } from '../../components';
+import { StreamMedia, VideoTile } from '../../components';
 import { MapToLocalVideoProps } from '../../consumers/MapToVideoProps';
 import staticMediaSVG from './assets/staticmedia.svg';
 import { useCallContext } from '../../providers';
@@ -54,7 +54,7 @@ const LocalPreviewComponentBase = (
     <Stack className={localPreviewContainerStyle}>
       <VideoTile
         isVideoReady={isVideoReady}
-        videoProvider={<StreamMediaComponent videoStreamElement={videoStreamElement} />}
+        videoProvider={<StreamMedia videoStreamElement={videoStreamElement} />}
         placeholderProvider={
           <Image styles={staticAvatarStyle} aria-label="Local video preview image" {...imageProps} />
         }

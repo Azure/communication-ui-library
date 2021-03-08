@@ -20,7 +20,7 @@ import {
   ErrorBar,
   MapToLocalDeviceSettingsProps,
   LocalDeviceSettingsContainerProps,
-  StreamMediaComponent,
+  StreamMedia,
   VideoTile
 } from '@azure/communication-ui';
 import staticMediaSVG from '../assets/staticmedia.svg';
@@ -55,7 +55,7 @@ const LocalPreviewComponentBase = (
     <Stack className={localPreviewContainerStyle}>
       <VideoTile
         isVideoReady={isVideoReady}
-        videoProvider={<StreamMediaComponent videoStreamElement={videoStreamElement} />}
+        videoProvider={<StreamMedia videoStreamElement={videoStreamElement} />}
         placeholderProvider={
           <Image styles={staticAvatarStyle} aria-label="Local video preview image" {...imageProps} />
         }

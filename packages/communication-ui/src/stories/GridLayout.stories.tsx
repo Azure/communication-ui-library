@@ -12,7 +12,7 @@ import {
   mediaGalleryHeightOptions,
   COMPONENT_FOLDER_PREFIX
 } from './constants';
-import { GridLayoutComponent as GridLayout, VideoTile, StreamMediaComponent } from '../components';
+import { GridLayoutComponent as GridLayout, VideoTile, StreamMedia } from '../components';
 import { renderVideoStream } from './utils';
 
 export const GridLayoutComponent: () => JSX.Element = () => {
@@ -44,9 +44,7 @@ export const GridLayoutComponent: () => JSX.Element = () => {
     return (
       <VideoTile
         isVideoReady={participant.isVideoReady}
-        videoProvider={
-          <StreamMediaComponent videoStreamElement={participant.isVideoReady ? renderVideoStream() : null} />
-        }
+        videoProvider={<StreamMedia videoStreamElement={participant.isVideoReady ? renderVideoStream() : null} />}
         avatarName={participant.displayName}
         key={index}
       >

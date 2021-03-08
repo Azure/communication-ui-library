@@ -10,7 +10,7 @@ export interface StreamMediaProps {
   invertVideo?: boolean;
 }
 
-const StreamMediaComponentBase = (props: StreamMediaProps & ErrorHandlingProps): JSX.Element => {
+const StreamMediaComponent = (props: StreamMediaProps & ErrorHandlingProps): JSX.Element => {
   const containerEl = useRef<HTMLDivElement>(null);
   const { invertVideo, videoStreamElement } = props;
 
@@ -24,5 +24,5 @@ const StreamMediaComponentBase = (props: StreamMediaProps & ErrorHandlingProps):
   return <div className={invertVideo ? invertedVideoStyle : mediaContainer} ref={containerEl} />;
 };
 
-export const StreamMediaComponent = (props: StreamMediaProps & ErrorHandlingProps): JSX.Element =>
-  WithErrorHandling(StreamMediaComponentBase, props);
+export const StreamMedia = (props: StreamMediaProps & ErrorHandlingProps): JSX.Element =>
+  WithErrorHandling(StreamMediaComponent, props);
