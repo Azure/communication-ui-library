@@ -1021,7 +1021,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/SendBox Send Box Sto
           className="ms-Stack css-53 css-2"
         >
           <div
-            className="ms-TextField ms-TextField--multiline ms-TextField--borderless css-52 root-4"
+            className="ms-TextField ms-TextField--multiline css-52 root-4"
           >
             <div
               className="ms-TextField-wrapper wrapper-5"
