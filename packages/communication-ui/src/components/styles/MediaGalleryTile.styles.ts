@@ -1,15 +1,11 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { getTheme, mergeStyles } from '@fluentui/react';
-
-const palette = getTheme().palette;
+import { mergeStyles } from '@fluentui/react';
 
 export const videoHint = mergeStyles({
-  backgroundColor: palette.neutralSecondary,
   bottom: '5%',
   height: '1.75rem',
   boxShadow: '0 0 1px 0 rgba(0,0,0,.16)',
-  color: palette.neutralLighter,
   fontSize: '1.25rem',
   lineHeight: '1.0625rem',
   textAlign: 'left',
@@ -24,7 +20,6 @@ export const videoHint = mergeStyles({
 
 export const disabledVideoHint = mergeStyles(videoHint, {
   backgroundColor: 'transparent',
-  color: palette.neutralSecondary,
   boxShadow: 'none'
 });
 
