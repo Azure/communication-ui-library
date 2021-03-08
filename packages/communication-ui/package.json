@@ -7,6 +7,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc && copyfiles -u 1 src/**/assets/**/* dist",
+    "build:watch": "tsc -w",
     "build:storybook": "build-storybook -s src",
     "storybook": "start-storybook -p 6006 -s src --no-manager-cache",
     "deploy-storybook": "storybook-to-ghpages",

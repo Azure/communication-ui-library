@@ -25,14 +25,13 @@
       "allowWarningsInSuccessfulBuild": true,
       "ignoreDependencyOrder": true,
       "incremental": false
+    },
+    {
+      "commandKind": "bulk",
+      "name": "build:watch",
+      "summary": "Trigger incremental build with watch command.",
+      "enableParallelism": false
     }
-    // {
-    //   "commandKind": "global",
-    //   "name": "storybook",
-    //   "summary": "Run storybook.",
-    //   "description": "Run storybook CLI command.",
-    //   "shellCommand": ""
-    // }
   ],
   "parameters": []
 }
