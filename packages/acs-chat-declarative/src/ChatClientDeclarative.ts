@@ -16,14 +16,11 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
   get: function <P extends keyof ChatClient>(target: ChatClient, prop: P) {
     switch (prop) {
       case 'createChatThread': {
-        // Do we want to let developer to declaratify this?
         return async function (...args: Parameters<ChatClient['createChatThread']>) {
-          const chatThreadClient = await target.createChatThread(...args);
-          return chatThreadClientDeclaratify(chatThreadClient, context);
+          return target.createChatThread(...args);
         };
       }
       case 'getChatThreadClient': {
-        // Do we want to let developer to declaratify this?
         return async function (...args: Parameters<ChatClient['getChatThreadClient']>) {
           const chatThreadClient = await target.getChatThreadClient(...args);
           return chatThreadClientDeclaratify(chatThreadClient, context);

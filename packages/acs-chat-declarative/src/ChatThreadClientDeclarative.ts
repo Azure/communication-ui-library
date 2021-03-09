@@ -94,9 +94,13 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
           const { content } = args[0];
           const clientMessageId = nanoid(); // Generate a local short uuid for message
           const newMessage: ChatMessageWithStatus = {
-            content,
+            content: { message: content },
             clientMessageId,
-            createdOn: undefined,
+            id: '',
+            type: 'text',
+            sequenceId: '',
+            version: '',
+            createdOn: new Date(),
             status: 'sending'
           };
           this._context.setChatMessage(target.threadId, newMessage);
@@ -104,13 +108,14 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
           const result = await target.sendMessage(...args);
           if (result._response.status === Constants.CREATED) {
             if (result.id) {
+              const message = await target.getMessage(result.id);
               this._context.batch(() => {
                 this._context.setChatMessage(target.threadId, {
-                  ...newMessage,
+                  ...message,
                   status: 'delivered',
                   id: result.id
                 });
-                this._context.setLocalMessageSynced(target.threadId, clientMessageId);
+                this._context.deleteLocalMessage(target.threadId, clientMessageId);
               });
             }
           } else if (result._response.status === Constants.PRECONDITION_FAILED_STATUS_CODE) {
@@ -132,8 +137,7 @@ export const chatThreadClientDeclaratify = (
   context.setThread(chatThreadClient.threadId, {
     failedMessageIds: [],
     chatMessages: new Map(),
-    threadId: chatThreadClient.threadId,
-    threadMembers: []
+    threadId: chatThreadClient.threadId
   });
   return new Proxy(chatThreadClient, new ProxyChatThreadClient(context)) as ChatThreadClient;
 };

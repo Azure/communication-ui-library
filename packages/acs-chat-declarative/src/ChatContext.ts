@@ -47,15 +47,13 @@ export class ChatContext {
     );
   }
 
-  // This function changes messageKey from localId to remoteId, which indicates message synced with server successfully
-  public setLocalMessageSynced(threadId: string, localId: string): void {
+  public deleteLocalMessage(threadId: string, localId: string): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         const chatMessages = draft.threads.get(threadId)?.chatMessages;
         const message: ChatMessageWithStatus | undefined = chatMessages ? chatMessages.get(localId) : undefined;
-        if (chatMessages && message && message.clientMessageId && message.id) {
+        if (chatMessages && message && message.clientMessageId) {
           chatMessages.delete(message.clientMessageId);
-          chatMessages.set(message.id, message);
         }
       })
     );

@@ -8,39 +8,51 @@ import { chatThreadClientDeclaratify } from './ChatThreadClientDeclarative';
 const mockMessages = [
   {
     id: 'MessageId1',
-    content: 'MessageContent1',
+    content: { message: 'MessageContent1' },
     createdOn: new Date(),
     sender: {
       communicationUserId: 'UserId1'
     },
-    senderDisplayName: 'User1'
+    senderDisplayName: 'User1',
+    type: 'text',
+    sequenceId: '',
+    version: ''
   },
   {
     id: 'MessageId2',
-    content: 'MessageContent2',
+    content: { message: 'MessageContent2' },
     createdOn: new Date(),
     sender: {
       communicationUserId: 'UserId1'
     },
-    senderDisplayName: 'User1'
+    senderDisplayName: 'User1',
+    type: 'text',
+    sequenceId: '',
+    version: ''
   },
   {
     id: 'MessageId3',
-    content: 'MessageContent3',
+    content: { message: 'MessageContent3' },
     createdOn: new Date(),
     sender: {
       communicationUserId: 'UserId1'
     },
-    senderDisplayName: 'User1'
+    senderDisplayName: 'User1',
+    type: 'text',
+    sequenceId: '',
+    version: ''
   },
   {
     id: 'MessageId4',
-    content: 'MessageContent4',
+    content: { message: 'MessageContent4' },
     createdOn: new Date(),
     sender: {
       communicationUserId: 'UserId1'
     },
-    senderDisplayName: 'User1'
+    senderDisplayName: 'User1',
+    type: 'text',
+    sequenceId: '',
+    version: ''
   }
 ];
 
