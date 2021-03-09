@@ -1,24 +1,33 @@
 // © Microsoft Corporation. All rights reserved.
 
 import React, { useMemo } from 'react';
-import { connectFuncsToContext } from '../../consumers/ConnectContext';
+import { connectFuncsToContext, MapToLocalVideoProps } from '../../consumers';
 import { MapToMediaGalleryProps, MediaGalleryContainerProps } from './consumers/MapToMediaGalleryProps';
 import { GridLayoutComponent } from '../../components/GridLayout';
 import { convertSdkRemoteParticipantToGalleryParticipant } from '../../utils';
-import { MediaGalleryTileComponent } from '../../components';
-import { MapToRemoteVideoProps, MapToLocalVideoProps } from '../..';
-import { mergeStyles, Stack } from '@fluentui/react';
+import { StreamMedia, VideoTile } from '../../components';
+import { Label, mergeStyles, Stack } from '@fluentui/react';
 import ScreenShareComponent from './ScreenShare';
-import { aspectRatioBoxContentStyle, aspectRatioBoxStyle, gridStyle } from './styles/MediaGallery.styles';
+import {
+  aspectRatioBoxContentStyle,
+  aspectRatioBoxStyle,
+  gridStyle,
+  stackContainerStyle,
+  screenShareContainerStyle,
+  videoHint,
+  disabledVideoHint
+} from './styles/MediaGallery.styles';
 import { ErrorHandlingProps } from '../../providers/ErrorProvider';
 import { WithErrorHandling } from '../../utils/WithErrorHandling';
+import { RemoteVideoTile } from './RemoteVideoTile';
 
 export const MediaGalleryComponentBase = (props: MediaGalleryContainerProps): JSX.Element => {
   const { localParticipant, remoteParticipants, screenShareStream } = props;
 
-  const RemoteGridLayoutTileWithData = connectFuncsToContext(MediaGalleryTileComponent, MapToRemoteVideoProps);
-
-  const LocalGridLayoutTileWithData = connectFuncsToContext(MediaGalleryTileComponent, MapToLocalVideoProps);
+  const localVideoStream = MapToLocalVideoProps({
+    stream: localParticipant.videoStream,
+    scalingMode: 'Crop'
+  });
 
   const sidePanelRemoteParticipants = useMemo(() => {
     return remoteParticipants
@@ -32,9 +41,9 @@ export const MediaGalleryComponentBase = (props: MediaGalleryContainerProps): JS
         const stream = participant.videoStream;
 
         return (
-          <Stack horizontalAlign="center" verticalAlign="center" className={mergeStyles(aspectRatioBoxStyle)} key={key}>
-            <Stack className={mergeStyles(aspectRatioBoxContentStyle)}>
-              <RemoteGridLayoutTileWithData label={label} stream={stream} scalingMode={'Crop'} />
+          <Stack horizontalAlign="center" verticalAlign="center" className={aspectRatioBoxStyle} key={key}>
+            <Stack className={aspectRatioBoxContentStyle}>
+              <RemoteVideoTile stream={stream} scalingMode={'Crop'} label={label} />
             </Stack>
           </Stack>
         );
@@ -49,7 +58,7 @@ export const MediaGalleryComponentBase = (props: MediaGalleryContainerProps): JS
 
       return (
         <Stack className={gridStyle} key={key} grow>
-          <RemoteGridLayoutTileWithData label={label} avatarName={label} stream={stream} scalingMode={'Crop'} />
+          <RemoteVideoTile stream={stream} scalingMode={'Crop'} label={label} avatarName={label} />
         </Stack>
       );
     });
@@ -58,44 +67,36 @@ export const MediaGalleryComponentBase = (props: MediaGalleryContainerProps): JS
 
   const layoutLocalParticipant = useMemo(() => {
     return (
-      <LocalGridLayoutTileWithData
-        label={localParticipant.displayName}
-        stream={localParticipant.videoStream}
-        scalingMode={'Crop'}
+      <VideoTile
+        isVideoReady={localVideoStream.isVideoReady}
+        videoProvider={<StreamMedia videoStreamElement={localVideoStream.videoStreamElement} />}
         avatarName={localParticipant.displayName}
-      />
+      >
+        <Label className={localVideoStream.isVideoReady ? videoHint : disabledVideoHint}>
+          {localParticipant.displayName}
+        </Label>
+      </VideoTile>
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [localParticipant]);
+  }, [localParticipant, localVideoStream]);
 
   return screenShareStream !== undefined ? (
     <>
-      <div
-        className={mergeStyles({
-          height: '100%',
-          width: '25%'
-        })}
-      >
+      <div className={stackContainerStyle}>
         <Stack grow className={mergeStyles({ height: '100%', overflow: 'auto' })}>
-          <Stack horizontalAlign="center" verticalAlign="center" className={mergeStyles(aspectRatioBoxStyle)}>
-            <Stack className={mergeStyles(aspectRatioBoxContentStyle)}>{layoutLocalParticipant}</Stack>
+          <Stack horizontalAlign="center" verticalAlign="center" className={aspectRatioBoxStyle}>
+            <Stack className={aspectRatioBoxContentStyle}>{layoutLocalParticipant}</Stack>
           </Stack>
           {sidePanelRemoteParticipants}
         </Stack>
       </div>
-      <div
-        className={mergeStyles({
-          height: '100%',
-          width: '75%',
-          position: 'relative'
-        })}
-      >
+      <div className={screenShareContainerStyle}>
         <ScreenShareComponent screenShareScalingMode={'Fit'} screenShareStream={screenShareStream} />
       </div>
     </>
   ) : (
     <GridLayoutComponent>
-      <Stack horizontalAlign="center" verticalAlign="center" className={mergeStyles(gridStyle)} grow>
+      <Stack horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
         {layoutLocalParticipant}
       </Stack>
       {gridLayoutRemoteParticipants}
