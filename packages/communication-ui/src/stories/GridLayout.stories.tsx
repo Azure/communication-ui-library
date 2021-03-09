@@ -33,7 +33,7 @@ export const GridLayoutComponent: () => JSX.Element = () => {
       isVideoReady: false
     },
     {
-      displayName: 'Dweight',
+      displayName: 'Dwight',
       isVideoReady: false
     }
   ];

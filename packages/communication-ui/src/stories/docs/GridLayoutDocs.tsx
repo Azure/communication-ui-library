@@ -42,9 +42,9 @@ const GridLayoutExample: () => JSX.Element = () => {
         <VideoTile
           isVideoReady={false}
           videoProvider={null}
-          avatarName={'Dweight'}
+          avatarName={'Dwight'}
         >
-          <label>Dweight</label>
+          <label>Dwight</label>
         </VideoTile>
       </GridLayoutComponent>
     </div>
@@ -85,9 +85,9 @@ const GridLayoutExample: () => JSX.Element = () => {
         <VideoTile
           isVideoReady={false}
           videoProvider={null}
-          avatarName={'Dweight'}
+          avatarName={'Dwight'}
         >
-          <label>Dweight</label>
+          <label>Dwight</label>
         </VideoTile>
       </GridLayoutComponent>
     </div>
