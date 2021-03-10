@@ -41,11 +41,10 @@ const ParticipantManagementComponentBase = (props: ParticipantManagementProps & 
           return (
             <ParticipantItem
               key={member.userId}
-              userId={member.userId}
               name={member.displayName as string}
               isYou={member.userId === (userId as string)}
               menuItems={menuItems}
-              avatarToUse={onRenderAvatar ? onRenderAvatar(member.userId) : undefined}
+              avatar={onRenderAvatar ? onRenderAvatar(member.userId) : undefined}
             />
           );
         }

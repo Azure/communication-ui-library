@@ -5,15 +5,31 @@ import React from 'react';
 import { Meta } from '@storybook/react/types-6-0';
 import { boolean, text } from '@storybook/addon-knobs';
 import { ParticipantItem } from '../components';
-import { getDocs } from './docs/ParticipantStackItemDocs';
+import { getDocs } from './docs/ParticipantItemDocs';
 import { MicOffIcon, CallControlPresentNewIcon } from '@fluentui/react-northstar';
 import { COMPONENT_FOLDER_PREFIX } from './constants';
 
-export const ParticipantStackItemComponent: () => JSX.Element = () => {
-  const name = text('Name', 'James');
+const onlyUnique = (value: string, index: number, self: string[]): boolean => {
+  return self.indexOf(value) === index;
+};
+
+export const ParticipantItemComponent: () => JSX.Element = () => {
+  const name = text('Name', 'Jim');
   const isScreenSharing = boolean('Is screen sharing', false);
   const isMuted = boolean('Is muted', false);
   const isYou = boolean('Is You', false);
+  const menuItemsStr = text('Menu items (comma separated)', 'Mute, Remove');
+
+  const menuItems = menuItemsStr
+    .split(',')
+    .map((menuItem) => menuItem.trim())
+    .filter(onlyUnique)
+    .map((menuItem) => {
+      return {
+        key: menuItem,
+        text: menuItem
+      };
+    });
 
   const icons: JSX.Element[] = [];
   if (isScreenSharing) {
@@ -23,30 +39,7 @@ export const ParticipantStackItemComponent: () => JSX.Element = () => {
     icons.push(<MicOffIcon size="small" />);
   }
 
-  return (
-    <ParticipantItem
-      name={name}
-      userId={Math.random().toString()}
-      isYou={isYou}
-      menuItems={[
-        {
-          key: 'Mute',
-          text: 'Mute',
-          onClick: () => {
-            console.log('mute');
-          }
-        },
-        {
-          key: 'Remove',
-          text: 'Remove',
-          onClick: () => {
-            console.log('remove');
-          }
-        }
-      ]}
-      icons={icons}
-    />
-  );
+  return <ParticipantItem name={name} isYou={isYou} menuItems={menuItems} icons={icons} />;
 };
 
 export default {

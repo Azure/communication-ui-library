@@ -8,7 +8,8 @@ import {
   IconButton,
   OverflowSet,
   IOverflowSetStyles,
-  Stack
+  Stack,
+  PersonaPresence
 } from '@fluentui/react';
 import { connectFuncsToContext, ListParticipant, ParticipantItem } from '@azure/communication-ui';
 import { MicOffIcon, CallControlPresentNewIcon } from '@fluentui/react-northstar';
@@ -52,7 +53,16 @@ const defaultRenderer = (item: IOverflowSetItemProps): JSX.Element => {
     icons.push(<MicOffIcon size="small" />);
   }
 
-  return <ParticipantItem userId={item.key} name={item.name} isYou={item.isYou} menuItems={menuItems} icons={icons} />;
+  let presence = undefined;
+  if (item.state === 'Connected') {
+    presence = PersonaPresence.online;
+  } else if (item.state === 'Idle') {
+    presence = PersonaPresence.away;
+  }
+
+  return (
+    <ParticipantItem name={item.name} isYou={item.isYou} menuItems={menuItems} icons={icons} presence={presence} />
+  );
 };
 
 const onRenderOverflowButton = (overflowItems: unknown): JSX.Element => (
