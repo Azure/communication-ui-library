@@ -2,7 +2,7 @@
 
 import { Stack } from '@fluentui/react';
 import React, { useEffect } from 'react';
-import { StreamMediaComponent, VideoTile } from '../../components';
+import { StreamMedia, VideoTile } from '../../components';
 import { OutgoingCallControlBarComponent } from '../common/CallControls';
 import { MapToLocalVideoProps } from '../../consumers';
 import { useCallContext, useCallingContext } from '../../providers';
@@ -41,7 +41,7 @@ export const OutgoingCallScreen = (props: OutgoingCallScreenProps): JSX.Element 
   return (
     <VideoTile
       styles={{ root: { height: '100%', width: '100%' } }}
-      videoProvider={<StreamMediaComponent videoStreamElement={videoStreamElement} />}
+      videoProvider={<StreamMedia videoStreamElement={videoStreamElement} />}
       isVideoReady={isVideoReady}
       placeholderProvider={<></>}
     >
