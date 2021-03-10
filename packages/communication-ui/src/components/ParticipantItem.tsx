@@ -4,7 +4,8 @@ import {
   memberItemContainerStyle,
   memberItemIsYouStyle,
   memberItemNameStyle,
-  iconsDivStyle
+  iconsDivStyle,
+  iconStyle
 } from './styles/MemberItem.styles';
 
 import { ContextualMenu, DirectionalHint, IContextualMenuItem, Persona, PersonaSize } from '@fluentui/react';
@@ -52,7 +53,13 @@ const ParticipantItemBase = (props: ParticipantItemProps & ErrorHandlingProps): 
     <div ref={containerRef} className={memberItemContainerStyle} onClick={showMenu}>
       {avatar}
       {isYou && <span className={memberItemIsYouStyle}>(you)</span>}
-      {icons && icons.length > 0 && <div style={iconsDivStyle}>{icons}</div>}
+      {icons && (
+        <div style={iconsDivStyle}>
+          {icons.map((icon) => (
+            <div style={iconStyle}>{icon}</div>
+          ))}
+        </div>
+      )}
       <ContextualMenu
         items={menuItems}
         hidden={menuHidden || isYou}

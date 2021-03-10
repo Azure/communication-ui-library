@@ -10,6 +10,7 @@ export const memberItemContainerStyle = mergeStyles({
   paddingBottom: '0.25rem',
   display: 'flex',
   position: 'relative',
+  width: '100%',
   cursor: 'pointer',
   selectors: {
     '&:hover': { background: palette.neutralLight }
@@ -34,6 +35,14 @@ export const memberItemIsYouStyle = mergeStyles({
 });
 
 export const iconsDivStyle: CSSProperties = {
+  position: 'absolute',
   display: 'flex',
-  margin: 'auto'
+  right: '10%',
+  top: '50%',
+  msTransform: 'translateY(-50%)',
+  transform: 'translateY(-50%)'
+};
+
+export const iconStyle: CSSProperties = {
+  margin: '0.3125rem'
 };
