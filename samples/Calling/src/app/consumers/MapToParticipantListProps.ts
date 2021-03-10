@@ -1,6 +1,5 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { useState, useEffect } from 'react';
 import {
   useCallingContext,
   useCallContext,
@@ -19,15 +18,10 @@ type ParticipantListContainerProps = {
 export const MapToParticipantListProps = (): ParticipantListContainerProps => {
   const { userId } = useCallingContext();
   const { call, participants, displayName } = useCallContext();
-  const [remoteParticipants, setRemoteParticipants] = useState<ListParticipant[]>([]);
 
-  useEffect(() => {
-    setRemoteParticipants([
-      ...participants.map((p) =>
-        convertSdkRemoteParticipantToListParticipant(p, call ? () => call.removeParticipant(p.identifier) : undefined)
-      )
-    ]);
-  }, [participants, call]);
+  const remoteParticipants = participants.map((p) =>
+    convertSdkRemoteParticipantToListParticipant(p, call ? () => call.removeParticipant(p.identifier) : undefined)
+  );
 
   return {
     remoteParticipants: remoteParticipants,

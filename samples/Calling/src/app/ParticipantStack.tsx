@@ -2,10 +2,17 @@
 
 import React from 'react';
 
-import { IContextualMenuItem, IOverflowSetItemProps, IconButton, OverflowSet, Stack } from '@fluentui/react';
+import {
+  IContextualMenuItem,
+  IOverflowSetItemProps,
+  IconButton,
+  OverflowSet,
+  IOverflowSetStyles,
+  Stack
+} from '@fluentui/react';
 import { connectFuncsToContext, ListParticipant, ParticipantItem } from '@azure/communication-ui';
 import { MicOffIcon, CallControlPresentNewIcon } from '@fluentui/react-northstar';
-import { overFlowButtonStyles, participantStackStyle, participantStackTokens } from './styles/ParticipantStack.styles';
+import { overFlowButtonStyles, participantStackStyle } from './styles/ParticipantStack.styles';
 import { MapToParticipantListProps } from './consumers/MapToParticipantListProps';
 
 export type ParticipantStackProps = {
@@ -59,6 +66,7 @@ const onRenderOverflowButton = (overflowItems: unknown): JSX.Element => (
 );
 
 const renderParticipants = (
+  userId: string,
   participants: ListParticipant[],
   participantRenderer?: (participant: ListParticipant) => JSX.Element
 ): JSX.Element[] => {
@@ -78,30 +86,34 @@ const renderParticipants = (
   return participants.map((item, i) => (
     <OverflowSet
       key={i}
-      items={[{ name: item.displayName, ...item }]}
+      items={[{ name: item.displayName, isYou: item.key === userId, ...item }]}
       role="menubar"
       vertical={false}
       onRenderOverflowButton={onRenderOverflowButton}
       onRenderItem={onRenderItem}
+      styles={overflowSetStyle}
     />
   ));
 };
 
+const overflowSetStyle: IOverflowSetStyles = {
+  item: {
+    width: '100%'
+  }
+};
+
 export const ParticipantStackComponent = (props: ParticipantStackProps): JSX.Element => {
-  const allParticipants: any[] = props.remoteParticipants.map((p) => {
-    return { isYou: false, ...p };
-  });
+  const allParticipants: ListParticipant[] = Array.from(props.remoteParticipants);
   allParticipants.push({
     key: props.userId,
     displayName: props.displayName,
     state: 'Connected',
     isScreenSharing: props.isScreenSharingOn,
-    isMuted: props.isMuted,
-    isYou: true
+    isMuted: props.isMuted
   });
   return (
-    <Stack className={participantStackStyle} tokens={participantStackTokens}>
-      {renderParticipants(allParticipants, props.onRenderParticipant)}
+    <Stack className={participantStackStyle}>
+      {renderParticipants(props.userId, allParticipants, props.onRenderParticipant)}
     </Stack>
   );
 };
