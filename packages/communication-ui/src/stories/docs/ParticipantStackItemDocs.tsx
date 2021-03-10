@@ -9,6 +9,7 @@ const importStatement = `import { ParticipantStackItem } from '@azure/communicat
 const ParticipantStackItemExample: () => JSX.Element = () => {
   return (
     <ParticipantStackItemComponent
+      key='Johnny Bravo'
       name="Johnny Bravo"
       state="Connected"
       isScreenSharing={false}

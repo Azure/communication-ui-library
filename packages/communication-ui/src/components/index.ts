@@ -24,6 +24,7 @@ export type { ReadReceiptProps } from './ReadReceipt';
 export { MediaGalleryTileComponent } from './MediaGalleryTile';
 export { StreamMediaComponent } from './StreamMedia';
 export { ParticipantStackItemComponent } from './ParticipantStackItem';
+export { ParticipantItem } from './ParticipantItem';
 export {
   CONTROL_BAR_LAYOUTS,
   ControlBar,

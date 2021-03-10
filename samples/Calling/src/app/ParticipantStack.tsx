@@ -1,11 +1,11 @@
 // © Microsoft Corporation. All rights reserved.
 
-import * as React from 'react';
+import React from 'react';
 
 import { IContextualMenuItem, IOverflowSetItemProps, IconButton, OverflowSet, Stack } from '@fluentui/react';
+import { connectFuncsToContext, ListParticipant, ParticipantItem } from '@azure/communication-ui';
+import { MicOffIcon, CallControlPresentNewIcon } from '@fluentui/react-northstar';
 import { overFlowButtonStyles, participantStackStyle, participantStackTokens } from './styles/ParticipantStack.styles';
-
-import { connectFuncsToContext, ListParticipant, ParticipantStackItemComponent } from '@azure/communication-ui';
 import { MapToParticipantListProps } from './consumers/MapToParticipantListProps';
 
 export type ParticipantStackProps = {
@@ -23,16 +23,30 @@ export type ParticipantStackProps = {
   onRenderParticipant?: (participant: ListParticipant) => JSX.Element;
 };
 
-const defaultRenderer = (item: IOverflowSetItemProps): JSX.Element => (
-  <ParticipantStackItemComponent
-    name={item.name}
-    state={item.state}
-    isScreenSharing={item.isScreenSharing}
-    isMuted={item.isMuted}
-    onRemove={item.onRemove}
-    onMute={item.onMute}
-  />
-);
+const defaultRenderer = (item: IOverflowSetItemProps): JSX.Element => {
+  const menuItems: IContextualMenuItem[] = [
+    {
+      key: 'Mute',
+      text: 'Mute',
+      onClick: item.onMute
+    },
+    {
+      key: 'Remove',
+      text: 'Remove',
+      onClick: item.onRemove
+    }
+  ];
+
+  const icons: JSX.Element[] = [];
+  if (item.isScreenSharing) {
+    icons.push(<CallControlPresentNewIcon size="small" />);
+  }
+  if (item.isMuted) {
+    icons.push(<MicOffIcon size="small" />);
+  }
+
+  return <ParticipantItem userId={item.key} name={item.name} isYou={item.isYou} menuItems={menuItems} icons={icons} />;
+};
 
 const onRenderOverflowButton = (overflowItems: unknown): JSX.Element => (
   <IconButton
@@ -74,13 +88,16 @@ const renderParticipants = (
 };
 
 export const ParticipantStackComponent = (props: ParticipantStackProps): JSX.Element => {
-  const allParticipants: ListParticipant[] = Array.from(props.remoteParticipants);
+  const allParticipants: any[] = props.remoteParticipants.map((p) => {
+    return { isYou: false, ...p };
+  });
   allParticipants.push({
-    key: `${props.userId}`,
-    displayName: `${props.displayName} (You)`,
+    key: props.userId,
+    displayName: props.displayName,
     state: 'Connected',
     isScreenSharing: props.isScreenSharingOn,
-    isMuted: props.isMuted
+    isMuted: props.isMuted,
+    isYou: true
   });
   return (
     <Stack className={participantStackStyle} tokens={participantStackTokens}>

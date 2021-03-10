@@ -14,10 +14,18 @@ export const ParticipantStackItemComponent: () => JSX.Element = () => {
     ['Idle', 'Connecting', 'Connected', 'OnHold', 'InLobby', 'EarlyMedia', 'Disconnected'],
     'Connected'
   );
-  const name = text('Name', 'Jim');
+  const name = text('Name', 'James');
   const isScreenSharing = boolean('Is screen sharing', false);
   const isMuted = boolean('Is muted', false);
-  return <ParticipantStackItem state={state} name={name} isScreenSharing={isScreenSharing} isMuted={isMuted} />;
+  return (
+    <ParticipantStackItem
+      key={Math.random().toString()}
+      state={state}
+      name={name}
+      isScreenSharing={isScreenSharing}
+      isMuted={isMuted}
+    />
+  );
 };
 
 export default {
