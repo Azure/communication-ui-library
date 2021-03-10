@@ -4,6 +4,9 @@ import { Call, CallAgent, CallClient, RemoteParticipant } from '@azure/communica
 import { callClientDeclaratify } from './CallClientDeclarative';
 import { AzureCommunicationUserCredential } from '@azure/communication-common';
 
+jest.mock('@azure/communication-common');
+jest.mock('@azure/communication-calling');
+
 interface MockEmitter {
   emitter: EventEmitter;
   on(event: any, listener: any);
@@ -11,8 +14,11 @@ interface MockEmitter {
   emit(event: any, data: any);
 }
 
-type MockCallAgent = CallAgent & MockEmitter;
-type MockCall = Call & MockEmitter;
+type Mutable<T> = {
+  -readonly [k in keyof T]: T[k];
+};
+type MockCall = Mutable<Call> & MockEmitter;
+type MockCallAgent = Mutable<CallAgent> & MockEmitter;
 type MockRemoteParticipant = RemoteParticipant & MockEmitter;
 
 function addMockEmitter(object: any): any {
@@ -31,13 +37,11 @@ function addMockEmitter(object: any): any {
 
 function createMockCallAgent(): MockCallAgent {
   const mockCallAgent = {} as MockCallAgent;
-  Object.defineProperty(mockCallAgent, 'calls', { value: [], configurable: true });
   return addMockEmitter(mockCallAgent);
 }
 
 function createMockCall(): MockCall {
-  const mockCall = {} as MockCall;
-  Object.defineProperty(mockCall, 'remoteParticipants', { value: [], configurable: true });
+  const mockCall = ({ remoteParticipants: [] } as unknown) as MockCall;
   return addMockEmitter(mockCall);
 }
 
@@ -63,9 +67,6 @@ async function waitWithBreakCondition(breakCondition: () => boolean): Promise<vo
   }
 }
 
-jest.mock('@azure/communication-common');
-jest.mock('@azure/communication-calling');
-
 describe('declarative call client', () => {
   test('declarative should correctly subscribe and unsubcribe to events and update state on events', async () => {
     // 1. Create mock objects and declarative call client
@@ -79,8 +80,8 @@ describe('declarative call client', () => {
 
     // 2. Call createCallAgent, subscribe to callsUpdated event, create new call.
     await declarativeCallClient.createCallAgent(new AzureCommunicationUserCredential(''));
-    const mockCall = createMockCall();
-    mockCallAgent.calls.push(mockCall);
+    let mockCall: MockCall = createMockCall();
+    mockCallAgent.calls = [mockCall];
 
     // 3. Emit callsUpdated event from callAgent and check declarative client for updated state
     mockCallAgent.emit('callsUpdated', {
@@ -92,7 +93,23 @@ describe('declarative call client', () => {
 
     // 4. Add remote participant, emit ParticipantsUpdated event, and check declarative client for updated state
     const mockRemoteParticipant = createMockRemoteParticipant();
-    mockCall.remoteParticipants.push(mockRemoteParticipant);
+    // Note the reason to re-create mock call and reset it in mockCallAgent is that after it is set in callAgent the
+    // first time, it somehow makes mockCall readonly and cannot then it cannot be mutated afterwards so we'll have to
+    // remove the previous call, re-create mock call, add the participant, then re-trigger the events.
+    mockCallAgent.calls = [];
+    mockCallAgent.emit('callsUpdated', {
+      added: [],
+      removed: [mockCall]
+    });
+    await waitWithBreakCondition(() => declarativeCallClient.state.calls.length === 0);
+    mockCall = createMockCall();
+    mockCall.remoteParticipants = [mockRemoteParticipant];
+    mockCallAgent.calls = [mockCall];
+    mockCallAgent.emit('callsUpdated', {
+      added: [mockCall],
+      removed: []
+    });
+    await waitWithBreakCondition(() => declarativeCallClient.state.calls.length !== 0);
     mockCall.emit('remoteParticipantsUpdated', {
       added: [mockRemoteParticipant],
       removed: []
@@ -101,7 +118,7 @@ describe('declarative call client', () => {
     expect(declarativeCallClient.state.calls[0].remoteParticipants.length).toBe(1);
 
     // 5. Remove call, check that all listeners are unsubscribed, and check declarative client for updated state
-    Object.defineProperty(mockCallAgent, 'calls', { value: [], configurable: true });
+    mockCallAgent.calls = [];
     mockCallAgent.emit('callsUpdated', {
       added: [],
       removed: [mockCall]

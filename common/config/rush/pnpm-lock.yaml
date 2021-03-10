@@ -1,7 +1,5 @@
 dependencies:
   '@azure/communication-administration': 1.0.0-beta.4
-  '@azure/communication-calling': 1.0.0-beta.2
-  '@azure/communication-chat': 1.0.0-beta.3
   '@azure/communication-common': 1.0.0-beta.3
   '@azure/communication-identity': 1.0.0-beta.4
   '@azure/communication-signaling': 1.0.0-beta.1
@@ -15,12 +13,13 @@ dependencies:
   '@fluentui/react-northstar': 0.51.7_7780220a916877297c987d702313b31d
   '@fluentui/react-theme-provider': 0.18.5_7780220a916877297c987d702313b31d
   '@mdx-js/react': 1.6.22_react@16.14.0
-  '@rush-temp/acs-calling-declarative': file:projects/acs-calling-declarative.tgz_prettier@2.0.5
+  '@rush-temp/acs-calling-declarative': file:projects/acs-calling-declarative.tgz_prettier@2.0.5+ts-node@9.1.1
   '@rush-temp/acs-calling-sample': file:projects/acs-calling-sample.tgz_570bf42e92a70fb216c5cd4d5ed668ef
   '@rush-temp/acs-chat-declarative': file:projects/acs-chat-declarative.tgz_prettier@2.0.5
   '@rush-temp/acs-chat-sample': file:projects/acs-chat-sample.tgz_40b0c9f7a7a0fac66e4b6fcf06de2a42
   '@rush-temp/acs-one-to-one-call-sample': file:projects/acs-one-to-one-call-sample.tgz_570bf42e92a70fb216c5cd4d5ed668ef
   '@rush-temp/acs-server-sample': file:projects/acs-server-sample.tgz
+  '@rush-temp/allen': file:projects/allen.tgz_40b0c9f7a7a0fac66e4b6fcf06de2a42
   '@rush-temp/communication-ui': file:projects/communication-ui.tgz_webpack-cli@4.5.0
   '@storybook/addon-actions': 6.1.20_d8fb7aa42245a00bdcf553a41381ecb2
   '@storybook/addon-docs': 6.1.20_3bb4089fa3a89c8b50285dabc43418ad
@@ -152,6 +151,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-PF33xuq1FGYDd09+IiQKJ/g/ATQGx1GFLflXJ9V0cErrIvSnhwtqd2f5j/1CeJ6fqhqfZ8RzcOepV2R7gP4BtA==
+  /@azure/communication-calling/1.0.0-beta.9:
+    dependencies:
+      '@azure/communication-common': 1.0.0-beta.4
+      '@azure/logger': 1.0.1
+    dev: false
+    resolution:
+      integrity: sha512-dQ2lIrB+XlNtYKSVUBleM17nQYdckqA369X0/WFq89DVRRHhjZ+nscayC006eBtubFbe0zYwpEZmZN4Il7C6kw==
   /@azure/communication-chat/1.0.0-beta.3:
     dependencies:
       '@azure/abort-controller': 1.0.3
@@ -170,6 +176,24 @@ packages:
       node: '>=8.0.0'
     resolution:
       integrity: sha512-hhS9pI+cwh1omq8HnzB6aM10jInwZAYoyghJJihVAdg3nv3DqgV5DLi+cmPwHXrKteBEn5lIgR2MMCyQ4M4mxA==
+  /@azure/communication-chat/1.0.0-beta.4:
+    dependencies:
+      '@azure/abort-controller': 1.0.3
+      '@azure/communication-common': 1.0.0-beta.5
+      '@azure/communication-signaling': 1.0.0-beta.2
+      '@azure/core-auth': 1.2.0
+      '@azure/core-http': 1.2.3
+      '@azure/core-paging': 1.1.3
+      '@azure/core-tracing': 1.0.0-preview.9
+      '@azure/logger': 1.0.1
+      '@opentelemetry/api': 0.10.2
+      events: 3.2.0
+      tslib: 2.1.0
+    dev: false
+    engines:
+      node: '>=8.0.0'
+    resolution:
+      integrity: sha512-SLdpTkoJTE1LE5IVj/fJH7oYmWXNxmEmeMIHVvPoHAbEqvjOIN0DrG0m5D4afYUl3BgL3QQJ4hG+lDDbi1XT/w==
   /@azure/communication-common/1.0.0-beta.3:
     dependencies:
       '@azure/abort-controller': 1.0.3
@@ -242,6 +266,19 @@ packages:
       node: '>=8.0.0'
     resolution:
       integrity: sha512-xxlGwbbTkEZAline8wrP75FLaOsT23nMukzIg5X/Cs6cQSQ/JKj7Uxq5Idxp9GgAYT+g+PAj+BJ929/jaselBQ==
+  /@azure/communication-signaling/1.0.0-beta.2:
+    dependencies:
+      '@azure/core-http': 1.2.3
+      '@azure/core-tracing': 1.0.0-preview.9
+      '@azure/logger': 1.0.1
+      '@opentelemetry/api': 0.10.2
+      events: 3.2.0
+      tslib: 1.14.1
+    dev: false
+    engines:
+      node: '>=8.0.0'
+    resolution:
+      integrity: sha512-2Nbm6OEtouz94kWiWu40VhG2ckTwAI4Ng7ji77yCha1obrVhzxA1wfveMZmEmXk4s7YGN5L7xAj/hFATe7WknQ==
   /@azure/core-asynciterator-polyfill/1.0.0:
     dev: false
     resolution:
@@ -19386,24 +19423,32 @@ packages:
     dev: false
     resolution:
       integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==
-  file:projects/acs-calling-declarative.tgz_prettier@2.0.5:
+  file:projects/acs-calling-declarative.tgz_prettier@2.0.5+ts-node@9.1.1:
     dependencies:
-      '@azure/communication-calling': 1.0.0-beta.2
+      '@azure/communication-calling': 1.0.0-beta.9
+      '@azure/communication-common': 1.0.0-beta.3
+      '@types/jest': 26.0.20
+      '@typescript-eslint/eslint-plugin': 4.15.2_bd37cc6d9e4ef1f78f94a852ca0107ce
+      '@typescript-eslint/parser': 4.15.2_eslint@7.20.0+typescript@4.1.5
       eslint: 7.20.0
       eslint-config-prettier: 6.15.0_eslint@7.20.0
       eslint-plugin-header: 3.1.1_eslint@7.20.0
       eslint-plugin-import: 2.22.1_eslint@7.20.0
       eslint-plugin-prettier: 3.3.1_822b4c7c304ad0fbad34b397ba6938a8
+      eslint-plugin-react: 7.22.0_eslint@7.20.0
+      eslint-plugin-react-hooks: 4.2.0_eslint@7.20.0
       immer: 8.0.1
-      nanoid: 3.1.20
+      jest: 26.6.0_ts-node@9.1.1
+      ts-jest: 26.5.2_jest@26.6.0+typescript@4.1.5
       typescript: 4.1.5
     dev: false
     id: file:projects/acs-calling-declarative.tgz
     name: '@rush-temp/acs-calling-declarative'
     peerDependencies:
       prettier: '*'
+      ts-node: '*'
     resolution:
-      integrity: sha512-0gX/UtjhiMIMtEl4GUmsTpUlmOMHqL7UCkGCBTfRwC2dV5mvposom54TAw0h9SkiFCrSZ7m1RYt424SBzDjsRg==
+      integrity: sha512-v6uykCJypUOFucT63peDNriZxbO/PKtwlkFBBmZ6qTAdlmyGzjqNpevAhjuDiq/ENF6GGHu3Dv0+SukUFUfkaA==
       tarball: file:projects/acs-calling-declarative.tgz
     version: 0.0.0
   file:projects/acs-calling-sample.tgz_570bf42e92a70fb216c5cd4d5ed668ef:
@@ -19677,6 +19722,71 @@ packages:
       integrity: sha512-2e1LJDLAgV0ce5Zw4U19w2wLxGejJN9rVM313AGGRgylJwFoFB3TWAYI9lD3Rtkd5X86023CjiQplDPfjA0VqA==
       tarball: file:projects/acs-server-sample.tgz
     version: 0.0.0
+  file:projects/allen.tgz_40b0c9f7a7a0fac66e4b6fcf06de2a42:
+    dependencies:
+      '@azure/communication-administration': 1.0.0-beta.4
+      '@azure/communication-calling': 1.0.0-beta.9
+      '@azure/communication-chat': 1.0.0-beta.4
+      '@azure/communication-common': 1.0.0-beta.3
+      '@azure/communication-signaling': 1.0.0-beta.1
+      '@azure/core-http': 1.2.3
+      '@fluentui/react': 7.162.0_7780220a916877297c987d702313b31d
+      '@fluentui/react-icons-northstar': 0.51.7_7780220a916877297c987d702313b31d
+      '@fluentui/react-northstar': 0.51.7_7780220a916877297c987d702313b31d
+      '@fluentui/react-theme-provider': 0.18.5_7780220a916877297c987d702313b31d
+      '@testing-library/jest-dom': 5.11.9
+      '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
+      '@types/jest': 26.0.20
+      '@types/json-stringify-safe': 5.0.0
+      '@types/preval.macro': 3.0.0
+      '@types/react': 16.14.4
+      '@types/react-aria-live': 2.0.0
+      '@types/react-dom': 16.9.11
+      '@types/react-linkify': 1.0.0
+      '@types/uuid': 8.3.0
+      '@typescript-eslint/eslint-plugin': 4.15.2_bd37cc6d9e4ef1f78f94a852ca0107ce
+      '@typescript-eslint/parser': 4.15.2_eslint@7.20.0+typescript@4.1.5
+      babel-eslint: 10.1.0_eslint@7.20.0
+      concurrently: 5.3.0
+      copyfiles: 2.4.1
+      eslint: 7.20.0
+      eslint-config-prettier: 6.15.0_eslint@7.20.0
+      eslint-config-react-app: 6.0.0_f7c3ec5ad201cfa592e9dfe45b8b9832
+      eslint-plugin-flowtype: 5.3.1_eslint@7.20.0
+      eslint-plugin-header: 3.1.1_eslint@7.20.0
+      eslint-plugin-prettier: 3.3.1_822b4c7c304ad0fbad34b397ba6938a8
+      eslint-plugin-react: 7.22.0_eslint@7.20.0
+      eslint-plugin-react-hooks: 4.2.0_eslint@7.20.0
+      husky: 4.3.8
+      jest: 26.6.0_ts-node@9.1.1
+      jest-fetch-mock: 3.0.3
+      jest-junit: 12.0.0
+      json-stringify-safe: 5.0.1
+      office-ui-fabric-react: 7.162.0_7780220a916877297c987d702313b31d
+      prettier: 2.0.5
+      pretty-quick: 3.1.0_prettier@2.0.5
+      preval.macro: 5.0.0
+      react: 16.14.0
+      react-aria-live: 2.0.5_react@16.14.0
+      react-dom: 16.14.0_react@16.14.0
+      react-linkify: 1.0.0-alpha
+      react-scripts: 4.0.3_a9e99724ada6035f86b48f9bda330596
+      react-test-renderer: 16.14.0_react@16.14.0
+      rimraf: 2.7.1
+      typescript: 4.1.5
+      uuid: 8.3.2
+    dev: false
+    id: file:projects/allen.tgz
+    name: '@rush-temp/allen'
+    peerDependencies:
+      eslint-plugin-import: '*'
+      eslint-plugin-jsx-a11y: '*'
+      ts-node: '*'
+      webpack-cli: '*'
+    resolution:
+      integrity: sha512-55qgSXeoxJ0uuY4FQ+x9jP97Fn7CVPran2aB1U5bz5Zh+bUdt2ry1IzdsDqbcW3SX20K1/PT0Tuu7MAOsa9omg==
+      tarball: file:projects/allen.tgz
+    version: 0.0.0
   file:projects/communication-ui.tgz_webpack-cli@4.5.0:
     dependencies:
       '@azure/communication-administration': 1.0.0-beta.4
@@ -19766,8 +19876,6 @@ packages:
 registry: ''
 specifiers:
   '@azure/communication-administration': ^1.0.0-beta.3
-  '@azure/communication-calling': 1.0.0-beta.2
-  '@azure/communication-chat': 1.0.0-beta.3
   '@azure/communication-common': 1.0.0-beta.3
   '@azure/communication-identity': ~1.0.0-beta.4
   '@azure/communication-signaling': 1.0.0-beta.1
@@ -19787,6 +19895,7 @@ specifiers:
   '@rush-temp/acs-chat-sample': file:./projects/acs-chat-sample.tgz
   '@rush-temp/acs-one-to-one-call-sample': file:./projects/acs-one-to-one-call-sample.tgz
   '@rush-temp/acs-server-sample': file:./projects/acs-server-sample.tgz
+  '@rush-temp/allen': file:./projects/allen.tgz
   '@rush-temp/communication-ui': file:./projects/communication-ui.tgz
   '@storybook/addon-actions': ^6.1.1
   '@storybook/addon-docs': ^6.1.18

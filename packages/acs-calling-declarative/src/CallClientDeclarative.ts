@@ -1,5 +1,5 @@
 // © Microsoft Corporation. All rights reserved.
-import { Call, CallAgent, CallClient, RemoteParticipant } from '@azure/communication-calling';
+import { Call, CallAgent, CallClient, IncomingCall, RemoteParticipant } from '@azure/communication-calling';
 import { produce } from 'immer';
 import { CallClientState } from './CallClientState';
 import { CallContext } from './CallContext';
@@ -29,7 +29,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
     if (!this._callAgent) {
       return;
     }
-    const calls: Call[] = this._callAgent.calls;
+    const calls: Call[] = [...this._callAgent.calls];
     this._context.setState(
       produce(this._context.getState(), (draft: CallClientState) => {
         draft.calls = calls;
@@ -38,7 +38,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
   };
 
   private subscribeToParticipant = (participant: RemoteParticipant): void => {
-    participant.on('participantStateChanged', this.refreshState);
+    participant.on('stateChanged', this.refreshState);
     participant.on('isMutedChanged', this.refreshState);
     participant.on('displayNameChanged', this.refreshState);
     participant.on('isSpeakingChanged', this.refreshState);
@@ -46,7 +46,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
   };
 
   private unsubscribeFromParticipant = (participant: RemoteParticipant): void => {
-    participant.off('participantStateChanged', this.refreshState);
+    participant.off('stateChanged', this.refreshState);
     participant.off('isMutedChanged', this.refreshState);
     participant.off('displayNameChanged', this.refreshState);
     participant.off('isSpeakingChanged', this.refreshState);
@@ -64,21 +64,19 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
   };
 
   private subscribeToCall = (call: Call): void => {
-    call.on('callStateChanged', this.refreshState);
-    call.on('callIdChanged', this.refreshState);
+    call.on('stateChanged', this.refreshState);
+    call.on('idChanged', this.refreshState);
     call.on('isScreenSharingOnChanged', this.refreshState);
     call.on('remoteParticipantsUpdated', this.onParticipantsUpdated);
     call.on('localVideoStreamsUpdated', this.refreshState);
-    call.on('isRecordingActiveChanged', this.refreshState);
   };
 
   private unsubscribeFromCall = (call: Call): void => {
-    call.off('callStateChanged', this.refreshState);
-    call.off('callIdChanged', this.refreshState);
+    call.off('stateChanged', this.refreshState);
+    call.off('idChanged', this.refreshState);
     call.off('isScreenSharingOnChanged', this.refreshState);
     call.off('remoteParticipantsUpdated', this.onParticipantsUpdated);
     call.off('localVideoStreamsUpdated', this.refreshState);
-    call.off('isRecordingActiveChanged', this.refreshState);
 
     for (const participant of call.remoteParticipants) {
       this.unsubscribeFromParticipant(participant);
@@ -95,12 +93,18 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
     this.refreshState();
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  private onIncomingCall = (event: { incomingCall: IncomingCall }): void => {
+    // TODO: We need to add this incoming call to state and also subscribe to its callEnded event
+  };
+
   public get<P extends keyof CallClient>(target: CallClient, prop: P): any {
     switch (prop) {
       case 'createCallAgent': {
         return async (...args: Parameters<CallClient['createCallAgent']>) => {
           this._callAgent = await target.createCallAgent(...args);
           this._callAgent.on('callsUpdated', this.onCallsUpdated);
+          this._callAgent.on('incomingCall', this.onIncomingCall);
           return this._callAgent;
         };
       }

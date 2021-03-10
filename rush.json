@@ -6,7 +6,7 @@
     "strictPeerDependencies": true
   },
   "nodeSupportedVersionRange": ">=12.13.0 <13.0.0 || >=14.15.0 <15.0.0",
-  "ensureConsistentVersions": true,
+  "ensureConsistentVersions": false,
   "gitPolicy": {
     "versionBumpCommitMessage": "Applying package updates. [skip-ci]",
     "changeLogUpdateCommitMessage": "Applying package updates. [skip-ci]"
@@ -50,6 +50,11 @@
     {
       "packageName": "acs-server-sample",
       "projectFolder": "samples/Server",
+      "reviewCategory": "prototypes"
+    },
+    {
+      "packageName": "allen",
+      "projectFolder": "samples/Allen",
       "reviewCategory": "prototypes"
     }
   ]
