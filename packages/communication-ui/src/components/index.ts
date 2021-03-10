@@ -28,7 +28,6 @@ export {
   CONTROL_BAR_LAYOUTS,
   ControlBar,
   ControlButton,
-  CallControlBar,
   videoButtonProps,
   audioButtonProps,
   screenShareButtonProps,
