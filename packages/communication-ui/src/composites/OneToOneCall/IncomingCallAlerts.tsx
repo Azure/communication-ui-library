@@ -11,18 +11,10 @@ import {
   incomingCallModalContainerStyle
 } from './styles/IncomingCallAlerts.styles';
 import { useBoolean } from '@uifabric/react-hooks';
-import {
-  MediaGalleryTileComponent as MediaGalleryTile,
-  MediaGalleryTileProps
-} from '../../components/MediaGalleryTile';
-import {
-  connectFuncsToContext,
-  LocalVideoContainerOwnProps,
-  VideoContainerProps,
-  MapToLocalVideoProps
-} from '../../consumers';
+import { MapToLocalVideoProps } from '../../consumers';
 import { LocalVideoStream, ScalingMode } from '@azure/communication-calling';
 import { WithTheme, withThemeContext } from '../../providers/WithTheme';
+import { StreamMedia, VideoTile } from '../../components';
 
 export type IncomingCallToastProps = {
   /** Caller's Name */
@@ -88,13 +80,6 @@ export interface IncomingCallModalProps extends IncomingCallToastProps {
   showLocalVideo?: boolean;
   /** Local Video Stream */
   localVideoStream: LocalVideoStream | undefined;
-  /** Optional callback to render local media gallery tile. */
-  onRenderLocalMediaGalleryTile?: (props: MediaGalleryTileProps) => JSX.Element;
-  /** Optional connection function to map the ACS stream data to the local media gallery tile. This is only needed
-   * if MapLocalVideoContextToProps from ACS data layer is not suited for you.
-   */
-  connectLocalMediaGalleryTileWithData?: (ownProps: LocalVideoContainerOwnProps) => VideoContainerProps;
-  noLocalVideoAvailableAriaLabel?: string;
   /** Provide a function that handles the call behavior when Video Toggle Button is clicked */
   onClickVideoToggle: () => void;
 }
@@ -106,15 +91,12 @@ const IncomingCallModal = (props: WithTheme<IncomingCallModalProps>): JSX.Elemen
     callerName,
     callerNameAlt,
     callerTitle,
-    connectLocalMediaGalleryTileWithData,
     localParticipantName,
     localVideoInverted,
     localVideoScalingMode,
-    noLocalVideoAvailableAriaLabel,
     onClickAccept,
     onClickReject,
     onClickVideoToggle,
-    onRenderLocalMediaGalleryTile,
     showLocalVideo,
     localVideoStream,
     theme
@@ -123,17 +105,19 @@ const IncomingCallModal = (props: WithTheme<IncomingCallModalProps>): JSX.Elemen
   const [hideDialog, { toggle: toggleHideDialog }] = useBoolean(false);
   const dialogContentProps = { type: DialogType.normal, title: alertText ?? 'Incoming Video Call' };
 
-  const mediaGalleryLocalParticipant: JSX.Element = connectFuncsToContext(
-    onRenderLocalMediaGalleryTile ?? MediaGalleryTile,
-    connectLocalMediaGalleryTileWithData ?? MapToLocalVideoProps
-  )({
-    label: undefined,
-    avatarName: localParticipantName,
+  const { isVideoReady, videoStreamElement } = MapToLocalVideoProps({
     stream: localVideoStream,
-    scalingMode: localVideoScalingMode,
-    noVideoAvailableAriaLabel: noLocalVideoAvailableAriaLabel,
-    invertVideo: localVideoInverted
+    scalingMode: localVideoScalingMode ?? 'Crop'
   });
+
+  const mediaGalleryLocalParticipant: JSX.Element = (
+    <VideoTile
+      isVideoReady={isVideoReady}
+      videoProvider={<StreamMedia videoStreamElement={videoStreamElement} />}
+      avatarName={localParticipantName}
+      invertVideo={localVideoInverted}
+    />
+  );
 
   return (
     <>
