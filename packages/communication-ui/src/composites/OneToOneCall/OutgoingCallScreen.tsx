@@ -30,7 +30,6 @@ export const OutgoingCallScreen = (props: OutgoingCallScreenProps): JSX.Element 
   }, [audioDeviceInfo]);
 
   useEffect(() => {
-    console.log('Camera', isLocalVideoOn, videoDeviceInfo);
     isLocalVideoOn && videoDeviceInfo && startLocalVideo();
     return () => {
       isVideoReady && stopLocalVideo();
