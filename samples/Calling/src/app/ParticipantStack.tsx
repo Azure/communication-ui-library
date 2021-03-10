@@ -7,13 +7,12 @@ import {
   IOverflowSetItemProps,
   IconButton,
   OverflowSet,
-  IOverflowSetStyles,
   Stack,
   PersonaPresence
 } from '@fluentui/react';
 import { connectFuncsToContext, ListParticipant, ParticipantItem } from '@azure/communication-ui';
 import { MicOffIcon, CallControlPresentNewIcon } from '@fluentui/react-northstar';
-import { overFlowButtonStyles, participantStackStyle } from './styles/ParticipantStack.styles';
+import { participantStackStyle, overFlowButtonStyles, overflowSetStyle } from './styles/ParticipantStack.styles';
 import { MapToParticipantListProps } from './consumers/MapToParticipantListProps';
 
 export type ParticipantStackProps = {
@@ -104,12 +103,6 @@ const renderParticipants = (
       styles={overflowSetStyle}
     />
   ));
-};
-
-const overflowSetStyle: IOverflowSetStyles = {
-  item: {
-    width: '100%'
-  }
 };
 
 export const ParticipantStackComponent = (props: ParticipantStackProps): JSX.Element => {
