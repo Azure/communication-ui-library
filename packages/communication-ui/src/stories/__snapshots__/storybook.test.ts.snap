@@ -508,7 +508,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/GridLayout Grid Layo
         }
       >
         <div
-          className="css-64"
+          className="css-61"
           style={
             Object {
               "gridTemplateColumns": "repeat(2, 1fr)",
@@ -517,10 +517,10 @@ exports[`storybook snapshot tests Storyshots ACS Components/GridLayout Grid Layo
           }
         >
           <div
-            className="ms-Stack css-69 css-2"
+            className="ms-Stack css-66 css-2"
           >
             <div
-              className="ms-Stack css-70 css-3"
+              className="ms-Stack css-67 css-3"
             >
               <div
                 className="ms-Persona ms-Persona--size100 root-4"
@@ -550,16 +550,16 @@ exports[`storybook snapshot tests Storyshots ACS Components/GridLayout Grid Layo
               </div>
             </div>
             <label
-              className="ms-Label css-68 root-21"
+              className="ms-Label css-65 root-21"
             >
               Michael
             </label>
           </div>
           <div
-            className="ms-Stack css-69 css-2"
+            className="ms-Stack css-66 css-2"
           >
             <div
-              className="ms-Stack css-70 css-3"
+              className="ms-Stack css-67 css-3"
             >
               <div
                 className="ms-Persona ms-Persona--size100 root-4"
@@ -589,16 +589,16 @@ exports[`storybook snapshot tests Storyshots ACS Components/GridLayout Grid Layo
               </div>
             </div>
             <label
-              className="ms-Label css-68 root-21"
+              className="ms-Label css-65 root-21"
             >
               Jim
             </label>
           </div>
           <div
-            className="ms-Stack css-69 css-2"
+            className="ms-Stack css-66 css-2"
           >
             <div
-              className="ms-Stack css-70 css-3"
+              className="ms-Stack css-67 css-3"
             >
               <div
                 className="ms-Persona ms-Persona--size100 root-4"
@@ -628,16 +628,16 @@ exports[`storybook snapshot tests Storyshots ACS Components/GridLayout Grid Layo
               </div>
             </div>
             <label
-              className="ms-Label css-68 root-21"
+              className="ms-Label css-65 root-21"
             >
               Pam
             </label>
           </div>
           <div
-            className="ms-Stack css-69 css-2"
+            className="ms-Stack css-66 css-2"
           >
             <div
-              className="ms-Stack css-70 css-3"
+              className="ms-Stack css-67 css-3"
             >
               <div
                 className="ms-Persona ms-Persona--size100 root-4"
@@ -667,7 +667,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/GridLayout Grid Layo
               </div>
             </div>
             <label
-              className="ms-Label css-68 root-21"
+              className="ms-Label css-65 root-21"
             >
               Dweight
             </label>
@@ -712,10 +712,10 @@ exports[`storybook snapshot tests Storyshots ACS Components/MediaGalleryTile Med
         }
       >
         <div
-          className="ms-Stack css-69 css-2"
+          className="ms-Stack css-66 css-2"
         >
           <div
-            className="ms-Stack css-70 css-3"
+            className="ms-Stack css-67 css-3"
           >
             <div
               className="ms-Persona ms-Persona--size100 root-4"
@@ -745,7 +745,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/MediaGalleryTile Med
             </div>
           </div>
           <label
-            className="ms-Label css-68 root-21"
+            className="ms-Label css-65 root-21"
           >
             hello
           </label>
@@ -837,7 +837,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/MicrophoneSettings M
 </div>
 `;
 
-exports[`storybook snapshot tests Storyshots ACS Components/ParticipantStackItem Participant Stack Item Component 1`] = `
+exports[`storybook snapshot tests Storyshots ACS Components/ParticipantItem Participant Item Component 1`] = `
 <div
   style={
     Object {
@@ -862,15 +862,11 @@ exports[`storybook snapshot tests Storyshots ACS Components/ParticipantStackItem
       dir="ltr"
     >
       <div
-        onContextMenu={[Function]}
-        style={
-          Object {
-            "position": "relative",
-          }
-        }
+        className="css-69"
+        onClick={[Function]}
       >
         <div
-          className="ms-Persona ms-Persona--size32 ms-Persona--online root-2"
+          className="ms-Persona ms-Persona--size32 root-2"
         >
           <div
             className="ms-Persona-coin ms-Persona--size32 coin-9"
@@ -888,10 +884,6 @@ exports[`storybook snapshot tests Storyshots ACS Components/ParticipantStackItem
                   J
                 </span>
               </div>
-              <div
-                className="ms-Persona-presence presence-15"
-                role="presentation"
-              />
             </div>
           </div>
           <div
@@ -926,6 +918,171 @@ exports[`storybook snapshot tests Storyshots ACS Components/ParticipantStackItem
             />
           </div>
         </div>
+        <div
+          style={
+            Object {
+              "display": "flex",
+              "msTransform": "translateY(-50%)",
+              "position": "absolute",
+              "right": "10%",
+              "top": "50%",
+              "transform": "translateY(-50%)",
+            }
+          }
+        />
+        <span
+          className="ms-layer"
+        >
+          <div
+            className="ms-Fabric ms-Layer-content content-41"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onClick={[Function]}
+            onContextMenu={[Function]}
+            onDoubleClick={[Function]}
+            onDrag={[Function]}
+            onDragEnd={[Function]}
+            onDragEnter={[Function]}
+            onDragExit={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            onFocus={[Function]}
+            onInput={[Function]}
+            onKeyDown={[Function]}
+            onKeyPress={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            onMouseMove={[Function]}
+            onMouseOut={[Function]}
+            onMouseOver={[Function]}
+            onMouseUp={[Function]}
+            onSubmit={[Function]}
+            onTouchCancel={[Function]}
+            onTouchEnd={[Function]}
+            onTouchMove={[Function]}
+            onTouchStart={[Function]}
+          >
+            <div
+              className="ms-Callout-container container-43"
+              style={
+                Object {
+                  "visibility": "hidden",
+                }
+              }
+            >
+              <div
+                className="ms-Callout ms-ContextualMenu-Callout root-44"
+                hidden={true}
+                onScroll={[Function]}
+                style={
+                  Object {
+                    "filter": "opacity(0)",
+                    "opacity": 0,
+                    "pointerEvents": "none",
+                  }
+                }
+                tabIndex={-1}
+              >
+                <div
+                  className="ms-Callout-main calloutMain-47"
+                  onKeyDown={[Function]}
+                  onMouseDown={[Function]}
+                  onMouseUp={[Function]}
+                  onScroll={[Function]}
+                  style={
+                    Object {
+                      "maxHeight": 752,
+                      "outline": "none",
+                      "overflowY": undefined,
+                    }
+                  }
+                >
+                  <div
+                    className="ms-ContextualMenu-container container-19"
+                    onFocusCapture={[Function]}
+                    onKeyDown={[Function]}
+                    onKeyUp={[Function]}
+                    tabIndex={-1}
+                  >
+                    <div
+                      className="ms-FocusZone css-48 ms-ContextualMenu is-open root-18"
+                      data-focuszone-id="FocusZone3"
+                      onFocus={[Function]}
+                      onKeyDown={[Function]}
+                      onMouseDownCapture={[Function]}
+                    >
+                      <ul
+                        className="ms-ContextualMenu-list is-open list-20"
+                        onKeyDown={[Function]}
+                        onKeyUp={[Function]}
+                        role="menu"
+                      >
+                        <li
+                          className="ms-ContextualMenu-item item-23"
+                          role="presentation"
+                        >
+                          <button
+                            aria-disabled={false}
+                            aria-posinset={1}
+                            aria-setsize={2}
+                            className="ms-ContextualMenu-link root-25"
+                            onClick={[Function]}
+                            onMouseDown={[Function]}
+                            onMouseEnter={[Function]}
+                            onMouseLeave={[Function]}
+                            onMouseMove={[Function]}
+                            role="menuitem"
+                          >
+                            <div
+                              className="ms-ContextualMenu-linkContent linkContent-29"
+                            >
+                              <span
+                                className="ms-ContextualMenu-itemText label-35"
+                              >
+                                Mute
+                              </span>
+                            </div>
+                          </button>
+                        </li>
+                        <li
+                          className="ms-ContextualMenu-item item-23"
+                          role="presentation"
+                        >
+                          <button
+                            aria-disabled={false}
+                            aria-posinset={2}
+                            aria-setsize={2}
+                            className="ms-ContextualMenu-link root-25"
+                            onClick={[Function]}
+                            onMouseDown={[Function]}
+                            onMouseEnter={[Function]}
+                            onMouseLeave={[Function]}
+                            onMouseMove={[Function]}
+                            role="menuitem"
+                          >
+                            <div
+                              className="ms-ContextualMenu-linkContent linkContent-29"
+                            >
+                              <span
+                                className="ms-ContextualMenu-itemText label-35"
+                              >
+                                Remove
+                              </span>
+                            </div>
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </span>
       </div>
     </div>
   </div>
@@ -966,7 +1123,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/ReadReceipt Read Rec
       >
         <span
           aria-hidden={true}
-          className="root_de478240 css-66"
+          className="root_de478240 css-63"
           role="presentation"
           style={Object {}}
         >
@@ -1104,20 +1261,20 @@ exports[`storybook snapshot tests Storyshots ACS Components/TypingIndicator Typi
       dir="ltr"
     >
       <div
-        className="css-61"
+        className="css-58"
       >
         <span
-          className="css-62"
+          className="css-59"
         >
           User1, 
         </span>
         <span
-          className="css-62"
+          className="css-59"
         >
           User2
         </span>
         <span
-          className="css-62"
+          className="css-59"
         >
            and 5 others are typing...
         </span>

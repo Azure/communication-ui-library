@@ -6,25 +6,37 @@ import {
   memberItemNameStyle,
   iconsDivStyle,
   iconStyle
-} from './styles/MemberItem.styles';
+} from './styles/ParticipantItem.styles';
 
-import { ContextualMenu, DirectionalHint, IContextualMenuItem, Persona, PersonaSize } from '@fluentui/react';
+import {
+  ContextualMenu,
+  DirectionalHint,
+  IContextualMenuItem,
+  Persona,
+  PersonaSize,
+  PersonaPresence
+} from '@fluentui/react';
 import React, { useRef, useState } from 'react';
 import { WithErrorHandling } from '../utils/WithErrorHandling';
 import { ErrorHandlingProps } from '../providers/ErrorProvider';
 
 interface ParticipantItemProps {
+  /** Name of participant */
   name: string;
-  userId: string;
-  isYou: boolean;
-  removeThreadMemberByUserId?: (userId: string) => Promise<void>;
-  avatarToUse?: JSX.Element;
-  menuItems: IContextualMenuItem[];
+  /** Optional indicator to show participant is the user */
+  isYou?: boolean;
+  /** Optional JSX element to override avatar */
+  avatar?: JSX.Element;
+  /** Optional array of IContextualMenuItem to for contextual menu */
+  menuItems?: IContextualMenuItem[];
+  /** Optional array of JSX elements to add to component */
   icons?: JSX.Element[];
+  /** Optional PersonaPresence to show participant presence. This won't have an effect if property avatar has a value */
+  presence?: PersonaPresence;
 }
 
 const ParticipantItemBase = (props: ParticipantItemProps & ErrorHandlingProps): JSX.Element => {
-  const { name, isYou, avatarToUse, menuItems, icons } = props;
+  const { name, isYou, avatar, menuItems, icons, presence } = props;
   const [clickEvent, setClickEvent] = useState<MouseEvent | undefined>();
   const [menuHidden, setMenuHidden] = useState<boolean>(true);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -39,11 +51,11 @@ const ParticipantItemBase = (props: ParticipantItemProps & ErrorHandlingProps): 
     setMenuHidden(true);
   };
 
-  let avatar = <Persona text={name} size={PersonaSize.size32} />;
-  if (avatarToUse) {
-    avatar = (
+  let avatarToUse = <Persona text={name} size={PersonaSize.size32} presence={presence} />;
+  if (avatar) {
+    avatarToUse = (
       <div style={{ display: 'flex' }}>
-        {avatarToUse}
+        {avatar}
         <span className={memberItemNameStyle}>{name}</span>
       </div>
     );
@@ -51,23 +63,27 @@ const ParticipantItemBase = (props: ParticipantItemProps & ErrorHandlingProps): 
 
   return (
     <div ref={containerRef} className={memberItemContainerStyle} onClick={showMenu}>
-      {avatar}
+      {avatarToUse}
       {isYou && <span className={memberItemIsYouStyle}>(you)</span>}
       {icons && (
         <div style={iconsDivStyle}>
-          {icons.map((icon) => (
-            <div style={iconStyle}>{icon}</div>
+          {icons.map((icon, index) => (
+            <div key={index} style={iconStyle}>
+              {icon}
+            </div>
           ))}
         </div>
       )}
-      <ContextualMenu
-        items={menuItems}
-        hidden={menuHidden || isYou}
-        target={clickEvent ?? containerRef}
-        onItemClick={hideMenu}
-        onDismiss={hideMenu}
-        directionalHint={DirectionalHint.bottomLeftEdge}
-      />
+      {menuItems && (
+        <ContextualMenu
+          items={menuItems}
+          hidden={menuHidden || isYou}
+          target={clickEvent ?? containerRef}
+          onItemClick={hideMenu}
+          onDismiss={hideMenu}
+          directionalHint={DirectionalHint.bottomLeftEdge}
+        />
+      )}
     </div>
   );
 };
