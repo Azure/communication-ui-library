@@ -23,6 +23,7 @@ export { ReadReceiptComponent } from './ReadReceipt';
 export type { ReadReceiptProps } from './ReadReceipt';
 export { StreamMedia } from './StreamMedia';
 export { ParticipantStackItemComponent } from './ParticipantStackItem';
+export { ParticipantItem } from './ParticipantItem';
 export {
   CONTROL_BAR_LAYOUTS,
   ControlBar,

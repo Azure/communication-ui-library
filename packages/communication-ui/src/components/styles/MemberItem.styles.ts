@@ -1,6 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
 import { getTheme, mergeStyles } from '@fluentui/react';
+import { CSSProperties } from 'react';
 
 const palette = getTheme().palette;
 
@@ -31,3 +32,8 @@ export const memberItemIsYouStyle = mergeStyles({
   marginTop: '0.3125rem',
   marginLeft: '0.3125rem'
 });
+
+export const iconsDivStyle: CSSProperties = {
+  display: 'flex',
+  margin: 'auto'
+};

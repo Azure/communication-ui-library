@@ -13,6 +13,8 @@ import { itemStyles, iconsDivStyle, iconStyle, participantStackItemStyle } from 
 import { MicOffIcon, CallControlPresentNewIcon } from '@fluentui/react-northstar';
 
 export interface ParticipantStackItemProps {
+  /** Participant key */
+  key: string;
   /** Participant name */
   name: string;
   /** Participant state */
@@ -65,7 +67,7 @@ export const ParticipantStackItemComponent = (props: ParticipantStackItemProps):
 
   return (
     <div style={participantStackItemStyle} onContextMenu={onShowContextualMenu}>
-      <Persona text={name} styles={itemStyles} size={PersonaSize.size32} presence={personaPresence} />
+      <Persona id={props.key} text={name} styles={itemStyles} size={PersonaSize.size32} presence={personaPresence} />
       {(isScreenSharing || isMuted) && (
         <div style={iconsDivStyle}>
           {isScreenSharing && <CallControlPresentNewIcon size="small" className={iconStyle} />}
