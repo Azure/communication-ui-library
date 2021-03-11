@@ -1,5 +1,5 @@
 {
-  "type": "minor",
+  "type": "prerelease",
   "comment": "Initial changelog setup",
   "packageName": "@azure/communication-ui",
   "email": "mail@jamesburnside.com",
