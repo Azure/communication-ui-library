@@ -28,11 +28,6 @@
       "reviewCategory": "prototypes"
     },
     {
-      "packageName": "@azure/acs-chat-react-component",
-      "projectFolder": "packages/acs-chat-react-component",
-      "reviewCategory": "prototypes"
-    },
-    {
       "packageName": "@azure/acs-chat-selector",
       "projectFolder": "packages/acs-chat-selector",
       "reviewCategory": "prototypes"
