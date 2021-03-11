@@ -7,6 +7,9 @@ on:
       release-branch:
         description: 'Branch to create release from'
         required: true
+      npm-tag:
+        description: '(Optional) Npm tag for the release, e.g. latest, next, dev'
+        required: false
 
 jobs:
   publish:
@@ -18,7 +21,7 @@ jobs:
 
       # Check out onto desired branch to publish release from
       - name: Checkout tag/branch
-        run: git checkout ${{ github.event.inputs.branch }}
+        run: git checkout ${{ github.event.inputs.release-branch }}
 
       # Ensure node version is great enough
       - name: Use Node.js v12.x
@@ -52,4 +55,4 @@ jobs:
 
       # Publish
       - name: Publish to npm
-        run: echo Publishing not setup yet
+        run: echo Publishing not setup yet. Tag=${{ github.event.inputs.npm-tag }}
