@@ -1,7 +1,6 @@
 {
   "name": "@azure/acs-chat-declarative",
-  "version": "0.0.1",
-  "private": true,
+  "version": "1.0.0-beta.0",
   "description": "ACS UI SDK",
   "module": "dist/index.js",
   "main": "dist/index.js",
@@ -39,5 +38,13 @@
     "eslint-plugin-header": "^3.1.0",
     "eslint-plugin-import": "^2.20.1",
     "typescript": "^4.0.5"
+  },
+  "beachball": {
+    "tag": "next",
+    "disallowedChangeTypes": [
+      "major",
+      "minor",
+      "patch"
+    ]
   }
 }
