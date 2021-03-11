@@ -12,7 +12,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/CameraSettings Camer
   }
 >
   <div
-    className="wrapper root-0"
+    className="wrapper root-22"
     style={
       Object {
         "display": "inherit",
@@ -29,7 +29,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/CameraSettings Camer
       >
         <label
           className="ms-Label ms-Dropdown-label label-19"
-          id="Dropdown2-label"
+          id="Dropdown1-label"
         >
           Camera
         </label>
@@ -37,10 +37,10 @@ exports[`storybook snapshot tests Storyshots ACS Components/CameraSettings Camer
           aria-disabled={false}
           aria-expanded="false"
           aria-haspopup="listbox"
-          aria-labelledby="Dropdown2-label Dropdown2-option"
+          aria-labelledby="Dropdown1-label Dropdown1-option"
           className="ms-Dropdown dropdown-3"
           data-is-focusable={true}
-          id="Dropdown2"
+          id="Dropdown1"
           onBlur={[Function]}
           onClick={[Function]}
           onFocus={[Function]}
@@ -58,7 +58,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/CameraSettings Camer
             aria-selected={true}
             aria-setsize={3}
             className="ms-Dropdown-title title-4"
-            id="Dropdown2-option"
+            id="Dropdown1-option"
             role="option"
           >
             Logitech WebCam
