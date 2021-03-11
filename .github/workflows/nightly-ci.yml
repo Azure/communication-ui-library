@@ -1,0 +1,95 @@
+name: Nightly CI/CD
+
+on:
+  schedule:
+    # minute 0, hour 1 UTC which is 5pm in PST (4pm PDT), any day of month, any month, any day of the week
+    # if we want to support only Mon - Fri we need to change the check how we look for new changes. Currently we
+    # check for any new changes in the last 24 hours regardless of day)
+    - cron: '0 1 * * *'
+
+  # Support triggering manually
+  workflow_dispatch:
+
+  # for testing PR -- remove before completing PR!
+  pull_request:
+    branches: [jaburnsi/beachball]
+
+jobs:
+  checkForChanges:
+    name: Check for new changes
+    outputs:
+      hasChanged: ${{ steps.checkChange.outputs.hasChanged }}
+    runs-on: ubuntu-latest
+    steps:
+      # Check-out repo
+      - uses: actions/checkout@v2
+
+      # Check if any changes have been pushed to main since last release
+      - name: Check latest commit age
+        id: checkChange
+        # Here we query the github rest api for the commits, use jq (json parser) to grab the first commit and put contents into $HOME/commit.json
+        # Note: we ignore commits made by the bot account that commits the auto version bump changes.
+        # Then get the timestamp date for the first commit and check if it was over a day old.
+        run: |
+          curl -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' -sL https://api.github.com/repos/${{ github.repository }}/commits | jq -r '[.[] | select(.author.login != "github-action-bot")][0]' > $HOME/commit.json
+
+          commitdate=$(jq -r '.commit.author.date' $HOME/commit.json)
+          commiturl=$(jq -r '.url' $HOME/commit.json)
+          echo Last commit: $commiturl
+          echo Last commit date \(UTC\): $commitdate
+
+          timestamp=$(date --utc -d "$commitdate" +%s)
+          echo Commit timestamp: $timestamp
+
+          currentTimestamp=$(date --utc +%s)
+          echo Current timestamp: $currentTimestamp
+
+          days=$(( ($currentTimestamp - $timestamp ) / 86400 ))
+          echo Days since last commit: $days
+
+          if [ $days = "0" ]; then
+            echo "::set-output name=hasChanged::true"
+          else
+            echo "::set-output name=hasChanged::false"
+          fi
+
+  release:
+    name: Create alpha releases
+    needs: checkForChanges
+    if: needs.checkForChanges.outputs.hasChanged == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      # Check-out repo
+      - uses: actions/checkout@v2
+
+      # Ensure node version is great enough
+      - name: Use Node.js v12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+
+      # Install dependencies
+      - name: Install rush
+        run: npm install -g @microsoft/rush
+      - name: Install dependencies
+        run: rush install
+
+      # Get datetime
+      - name: Get datetime for alpha release name
+        id: datetime
+        run: |
+          echo "::set-output name=datetime::$(date +'%Y-%m-%d-%H%M')"
+
+      # Bump alpha package versions
+      - name: Bump alpha package versions
+        run: npx beachball canary --canary-name alpha+${{ steps.datetime.outputs.datetime }} --tag dev
+
+      # Build packages
+      - name: Build @azure/communication-ui package
+        run: rush build -T @azure/communication-ui
+      - name: Build @azure/acs-calling-declarative package
+        run: rush build -T @azure/acs-calling-declarative
+
+      # Publish package
+      - name: Publish alpha packages
+        run: echo "No endpoint to publish to yet..."
