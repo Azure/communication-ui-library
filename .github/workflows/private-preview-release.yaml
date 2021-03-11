@@ -33,10 +33,6 @@ jobs:
         run: rushx package
         working-directory: ./samples/Calling
 
-      - name: Package One To One Calling Sample Artifact
-        run: rushx package
-        working-directory: ./samples/OneToOneCall
-
       - name: Package Group Chat Sample Artifact
         run: rushx package
         working-directory: ./samples/Chat
