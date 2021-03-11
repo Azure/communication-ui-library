@@ -792,7 +792,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/ParticipantItem Part
   }
 >
   <div
-    className="wrapper root-0"
+    className="wrapper root-41"
     style={
       Object {
         "display": "inherit",
@@ -877,7 +877,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/ParticipantItem Part
           className="ms-layer"
         >
           <div
-            className="ms-Fabric ms-Layer-content content-41"
+            className="ms-Fabric ms-Layer-content content-42"
             onBlur={[Function]}
             onChange={[Function]}
             onClick={[Function]}
@@ -910,7 +910,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/ParticipantItem Part
             onTouchStart={[Function]}
           >
             <div
-              className="ms-Callout-container container-43"
+              className="ms-Callout-container container-44"
               style={
                 Object {
                   "visibility": "hidden",
@@ -918,7 +918,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/ParticipantItem Part
               }
             >
               <div
-                className="ms-Callout ms-ContextualMenu-Callout root-44"
+                className="ms-Callout ms-ContextualMenu-Callout root-45"
                 hidden={true}
                 onScroll={[Function]}
                 style={
@@ -931,7 +931,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/ParticipantItem Part
                 tabIndex={-1}
               >
                 <div
-                  className="ms-Callout-main calloutMain-47"
+                  className="ms-Callout-main calloutMain-48"
                   onKeyDown={[Function]}
                   onMouseDown={[Function]}
                   onMouseUp={[Function]}
@@ -952,7 +952,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/ParticipantItem Part
                     tabIndex={-1}
                   >
                     <div
-                      className="ms-FocusZone css-48 ms-ContextualMenu is-open root-18"
+                      className="ms-FocusZone css-49 ms-ContextualMenu is-open root-18"
                       data-focuszone-id="FocusZone3"
                       onFocus={[Function]}
                       onKeyDown={[Function]}
