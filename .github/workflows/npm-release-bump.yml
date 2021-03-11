@@ -11,7 +11,7 @@ on:
 
 jobs:
   release:
-    name: Create release
+    name: Bump versions and create changelog PR
     runs-on: ubuntu-latest
     steps:
       # Setup bot information for creating pull request
