@@ -12,11 +12,11 @@ interface FluentThemeProviderProps {
 export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Element => {
   const { theme, children } = props;
   const [fluentTheme, setFluentTheme] = useState<PartialTheme | Theme | undefined>(undefined);
-  const [northstarTheme, setNorthstarTheme] = useState<ThemeInput<any>>({});
+  const [fluentNorthStarTheme, setFluentNorthStarTheme] = useState<ThemeInput<any>>({});
 
   useEffect(() => {
     setFluentTheme(theme);
-    setNorthstarTheme({
+    setFluentNorthStarTheme({
       componentVariables: {
         Chat: {
           backgroundColor: theme?.palette?.white
@@ -34,7 +34,7 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
 
   return (
     <ThemeProvider theme={fluentTheme} className="wrapper" applyTo="body" style={{ display: 'inherit' }}>
-      <Provider theme={mergeThemes(teamsTheme, northstarTheme)} className="wrapper">
+      <Provider theme={mergeThemes(teamsTheme, fluentNorthStarTheme)} className="wrapper">
         {children}
       </Provider>
     </ThemeProvider>
