@@ -2,7 +2,9 @@
 import { IStyle } from '@fluentui/react';
 
 export const rootStyles: IStyle = {
-  position: 'relative'
+  position: 'relative',
+  height: '100%',
+  width: '100%'
 };
 
 export const videoContainerStyles: IStyle = {
@@ -13,14 +15,11 @@ export const videoContainerStyles: IStyle = {
   height: '100%',
   minWidth: '100%',
   minHeight: '100%',
-  zIndex: -1,
   objectPosition: 'center',
   objectFit: 'cover'
 };
 
 export const overlayContainerStyles: IStyle = {
   width: '100%',
-  height: '100%',
-  minWidth: '100%',
-  minHeight: '100%'
+  height: '100%'
 };
