@@ -75,11 +75,11 @@ jobs:
       - name: Get datetime for alpha release name
         id: datetime
         run: |
-          echo "::set-output name=datetime::$(date +'%Y-%m-%d-%H%M')"
+          echo "::set-output name=datetime::$(date +'%Y%m%.d%H%M')"
 
       # Bump alpha package versions
-      - name: Bump alpha package versions
-        run: npx beachball canary --canary-name alpha+${{ steps.datetime.outputs.datetime }} --tag dev
+      # - name: Bump alpha package versions
+      #   run: npx beachball canary --canary-name alpha+${{ steps.datetime.outputs.datetime }} --tag dev
 
       # Build packages
       - name: Build @azure/communication-ui package
