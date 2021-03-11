@@ -47,7 +47,7 @@ jobs:
           if [ $days = "0" ]; then
             echo "::set-output name=hasChanged::true"
           else
-            echo "::set-output name=hasChanged::false"
+            echo "::set-output name=hasChanged::true"
           fi
 
   release:
