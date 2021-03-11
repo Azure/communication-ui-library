@@ -7,9 +7,8 @@ on:
     # check for any new changes in the last 24 hours regardless of day)
     - cron: '0 1 * * *'
 
-  # for testing PR -- remove before completing PR!
-  pull_request:
-    branches: [jaburnsi/beachball]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
 jobs:
   checkForChanges:
@@ -47,7 +46,7 @@ jobs:
           if [ $days = "0" ]; then
             echo "::set-output name=hasChanged::true"
           else
-            echo "::set-output name=hasChanged::true"
+            echo "::set-output name=hasChanged::false"
           fi
 
   release:
@@ -79,7 +78,7 @@ jobs:
 
       # Bump alpha package versions
       - name: Bump alpha package versions
-        run: echo alpha+${{ steps.datetime.outputs.datetime }}
+        run: npx beachball canary --canary-name alpha+${{ steps.datetime.outputs.datetime }} --tag dev
 
       # Build packages
       - name: Build @azure/communication-ui package
