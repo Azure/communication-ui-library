@@ -33,6 +33,11 @@
       "reviewCategory": "prototypes"
     },
     {
+      "packageName": "@azure/acs-calling-declarative",
+      "projectFolder": "packages/acs-calling-declarative",
+      "reviewCategory": "prototypes"
+    },
+    {
       "packageName": "acs-calling-sample",
       "projectFolder": "samples/Calling",
       "reviewCategory": "prototypes"

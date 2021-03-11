@@ -16,6 +16,12 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
     componentVariables: {
       Chat: {
         backgroundColor: theme?.palette?.white
+      },
+      ChatMessage: {
+        authorColor: theme?.palette?.neutralDark,
+        contentColor: theme?.palette?.neutralDark,
+        backgroundColor: theme?.palette?.neutralLight,
+        backgroundColorMine: theme?.palette?.themeLight
       }
       // add more here to align theme for northstar components
     }

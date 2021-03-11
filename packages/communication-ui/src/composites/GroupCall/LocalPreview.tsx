@@ -15,7 +15,7 @@ import {
   LocalDeviceSettingsContainerProps
 } from '../../consumers/MapToLocalDeviceSettingsProps';
 import { connectFuncsToContext } from '../../consumers';
-import { MediaGalleryTileComponent } from '../../components/MediaGalleryTile';
+import { StreamMedia, VideoTile } from '../../components';
 import { MapToLocalVideoProps } from '../../consumers/MapToVideoProps';
 import staticMediaSVG from './assets/staticmedia.svg';
 import { useCallContext } from '../../providers';
@@ -45,15 +45,20 @@ const LocalPreviewComponentBase = (
   // we should create a MapToLocalPreviewProps, instead of using MapToMediaControlsProps and MapToLocalDeviceSettingsProps
   const { localVideoStream } = useCallContext();
 
+  const { isVideoReady, videoStreamElement } = MapToLocalVideoProps({
+    stream: localVideoStream,
+    scalingMode: 'Crop'
+  });
+
   return (
     <Stack className={localPreviewContainerStyle}>
-      {connectFuncsToContext(
-        MediaGalleryTileComponent,
-        MapToLocalVideoProps
-      )({
-        fallbackElement: <Image styles={staticAvatarStyle} aria-label="Local video preview image" {...imageProps} />,
-        stream: localVideoStream
-      })}
+      <VideoTile
+        isVideoReady={isVideoReady}
+        videoProvider={<StreamMedia videoStreamElement={videoStreamElement} />}
+        placeholderProvider={
+          <Image styles={staticAvatarStyle} aria-label="Local video preview image" {...imageProps} />
+        }
+      />
       <Stack
         horizontal
         horizontalAlign="center"

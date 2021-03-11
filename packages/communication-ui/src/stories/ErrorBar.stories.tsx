@@ -3,7 +3,6 @@
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
 import { ErrorBarComponent as ErrorBar } from '../components/ErrorBar';
-import { getDocs } from './docs/ChatThreadDocs';
 import { text, select } from '@storybook/addon-knobs';
 import { CommunicationUiErrorSeverity } from '../types/CommunicationUiError';
 import { COMPONENT_FOLDER_PREFIX } from './constants';
@@ -29,10 +28,5 @@ export const ErrorBarComponent: () => JSX.Element = () => {
 
 export default {
   title: `${COMPONENT_FOLDER_PREFIX}/ErrorBar`,
-  component: ErrorBar,
-  parameters: {
-    docs: {
-      page: () => getDocs()
-    }
-  }
+  component: ErrorBar
 } as Meta;

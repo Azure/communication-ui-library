@@ -1,0 +1,14 @@
+public/
+node_modules/
+.vs/
+.vscode/
+jest/
+src/
+tests/
+scripts/
+tsconfig.json
+.eslintignore
+.prettierignore
+.prettierrc
+.eslintrc.js
+jest.config.js
