@@ -1,4 +1,4 @@
-name: Publish release
+name: Publish npm packages
 
 on:
   # Allows you to run this workflow manually from the Actions tab
@@ -31,6 +31,10 @@ jobs:
         run: npm install -g @microsoft/rush
       - name: Install dependencies
         run: rush install
+
+      # Perform changelog check
+      - name: Guard check - ensure no new changes were introduced
+        run: npx beachball check
 
       # Builds
       - name: Build Packages and Samples

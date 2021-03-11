@@ -1,4 +1,4 @@
-name: Bump npm packages and create changelog
+name: Bump npm packages and create changelogs
 
 on:
   # Allows you to run this workflow manually from the Actions tab
