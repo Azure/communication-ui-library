@@ -5,7 +5,7 @@ import React, { Dispatch, SetStateAction, createContext, useContext, useState, u
 import { ChatClient } from '@azure/communication-chat';
 import { ChatThreadProvider } from './ChatThreadProvider';
 import { AbortSignalLike } from '@azure/core-http';
-import { createAzureCommunicationUserCredential } from '../utils/chatUtils';
+import { createAzureCommunicationUserCredential } from '../utils';
 import { Spinner } from '@fluentui/react';
 import { getIdFromToken } from '../utils';
 import { WithErrorHandling } from '../utils/WithErrorHandling';
