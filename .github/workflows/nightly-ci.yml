@@ -7,9 +7,6 @@ on:
     # check for any new changes in the last 24 hours regardless of day)
     - cron: '0 1 * * *'
 
-  # Support triggering manually
-  workflow_dispatch:
-
   # for testing PR -- remove before completing PR!
   pull_request:
     branches: [jaburnsi/beachball]
@@ -86,9 +83,9 @@ jobs:
 
       # Build packages
       - name: Build @azure/communication-ui package
-        run: rush build -T @azure/communication-ui
+        run: rush build -t @azure/communication-ui
       - name: Build @azure/acs-calling-declarative package
-        run: rush build -T @azure/acs-calling-declarative
+        run: rush build -t @azure/acs-calling-declarative
 
       # Publish package
       - name: Publish alpha packages
