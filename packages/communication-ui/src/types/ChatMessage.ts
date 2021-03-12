@@ -7,6 +7,11 @@ export enum MessageStatus {
   FAILED = 'failed'
 }
 
+export enum MessageAttachedStatus {
+  BOTTOM = 'bottom',
+  TOP = 'top'
+}
+
 export type ChatMessage = {
   messageId?: string;
   content?: string;
@@ -15,4 +20,6 @@ export type ChatMessage = {
   senderId?: string;
   senderDisplayName?: string;
   status: MessageStatus;
+  attached?: MessageAttachedStatus;
+  mine?: boolean;
 };
