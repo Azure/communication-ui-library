@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy-1To1Calling:
+  build-and-deploy-Samples:
     name: Build and Deploy Hero Samples
     runs-on: ubuntu-latest
     environment: production
