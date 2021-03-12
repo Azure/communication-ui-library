@@ -792,7 +792,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/ParticipantItem Part
   }
 >
   <div
-    className="wrapper root-41"
+    className="wrapper root-42"
     style={
       Object {
         "display": "inherit",
@@ -862,22 +862,13 @@ exports[`storybook snapshot tests Storyshots ACS Components/ParticipantItem Part
           </div>
         </div>
         <div
-          style={
-            Object {
-              "display": "flex",
-              "msTransform": "translateY(-50%)",
-              "position": "absolute",
-              "right": "10%",
-              "top": "50%",
-              "transform": "translateY(-50%)",
-            }
-          }
+          className="ms-Stack css-69 css-18"
         />
         <span
           className="ms-layer"
         >
           <div
-            className="ms-Fabric ms-Layer-content content-42"
+            className="ms-Fabric ms-Layer-content content-43"
             onBlur={[Function]}
             onChange={[Function]}
             onClick={[Function]}
@@ -910,7 +901,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/ParticipantItem Part
             onTouchStart={[Function]}
           >
             <div
-              className="ms-Callout-container container-44"
+              className="ms-Callout-container container-45"
               style={
                 Object {
                   "visibility": "hidden",
@@ -918,7 +909,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/ParticipantItem Part
               }
             >
               <div
-                className="ms-Callout ms-ContextualMenu-Callout root-45"
+                className="ms-Callout ms-ContextualMenu-Callout root-46"
                 hidden={true}
                 onScroll={[Function]}
                 style={
@@ -931,7 +922,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/ParticipantItem Part
                 tabIndex={-1}
               >
                 <div
-                  className="ms-Callout-main calloutMain-48"
+                  className="ms-Callout-main calloutMain-49"
                   onKeyDown={[Function]}
                   onMouseDown={[Function]}
                   onMouseUp={[Function]}
@@ -945,34 +936,34 @@ exports[`storybook snapshot tests Storyshots ACS Components/ParticipantItem Part
                   }
                 >
                   <div
-                    className="ms-ContextualMenu-container container-19"
+                    className="ms-ContextualMenu-container container-20"
                     onFocusCapture={[Function]}
                     onKeyDown={[Function]}
                     onKeyUp={[Function]}
                     tabIndex={-1}
                   >
                     <div
-                      className="ms-FocusZone css-49 ms-ContextualMenu is-open root-18"
+                      className="ms-FocusZone css-50 ms-ContextualMenu is-open root-19"
                       data-focuszone-id="FocusZone3"
                       onFocus={[Function]}
                       onKeyDown={[Function]}
                       onMouseDownCapture={[Function]}
                     >
                       <ul
-                        className="ms-ContextualMenu-list is-open list-20"
+                        className="ms-ContextualMenu-list is-open list-21"
                         onKeyDown={[Function]}
                         onKeyUp={[Function]}
                         role="menu"
                       >
                         <li
-                          className="ms-ContextualMenu-item item-23"
+                          className="ms-ContextualMenu-item item-24"
                           role="presentation"
                         >
                           <button
                             aria-disabled={false}
                             aria-posinset={1}
                             aria-setsize={2}
-                            className="ms-ContextualMenu-link root-25"
+                            className="ms-ContextualMenu-link root-26"
                             onClick={[Function]}
                             onMouseDown={[Function]}
                             onMouseEnter={[Function]}
@@ -981,10 +972,10 @@ exports[`storybook snapshot tests Storyshots ACS Components/ParticipantItem Part
                             role="menuitem"
                           >
                             <div
-                              className="ms-ContextualMenu-linkContent linkContent-29"
+                              className="ms-ContextualMenu-linkContent linkContent-30"
                             >
                               <span
-                                className="ms-ContextualMenu-itemText label-35"
+                                className="ms-ContextualMenu-itemText label-36"
                               >
                                 Mute
                               </span>
@@ -992,14 +983,14 @@ exports[`storybook snapshot tests Storyshots ACS Components/ParticipantItem Part
                           </button>
                         </li>
                         <li
-                          className="ms-ContextualMenu-item item-23"
+                          className="ms-ContextualMenu-item item-24"
                           role="presentation"
                         >
                           <button
                             aria-disabled={false}
                             aria-posinset={2}
                             aria-setsize={2}
-                            className="ms-ContextualMenu-link root-25"
+                            className="ms-ContextualMenu-link root-26"
                             onClick={[Function]}
                             onMouseDown={[Function]}
                             onMouseEnter={[Function]}
@@ -1008,10 +999,10 @@ exports[`storybook snapshot tests Storyshots ACS Components/ParticipantItem Part
                             role="menuitem"
                           >
                             <div
-                              className="ms-ContextualMenu-linkContent linkContent-29"
+                              className="ms-ContextualMenu-linkContent linkContent-30"
                             >
                               <span
-                                className="ms-ContextualMenu-itemText label-35"
+                                className="ms-ContextualMenu-itemText label-36"
                               >
                                 Remove
                               </span>

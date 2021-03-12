@@ -4,8 +4,8 @@ import {
   memberItemContainerStyle,
   memberItemIsYouStyle,
   memberItemNameStyle,
-  iconsDivStyle,
-  iconStyle
+  iconStackStyle,
+  iconStackTokens
 } from './styles/ParticipantItem.styles';
 
 import {
@@ -14,7 +14,8 @@ import {
   IContextualMenuItem,
   Persona,
   PersonaSize,
-  PersonaPresence
+  PersonaPresence,
+  Stack
 } from '@fluentui/react';
 import React, { useRef, useState } from 'react';
 import { WithErrorHandling } from '../utils/WithErrorHandling';
@@ -29,14 +30,14 @@ interface ParticipantItemProps {
   avatar?: JSX.Element;
   /** Optional array of IContextualMenuItem to for contextual menu */
   menuItems?: IContextualMenuItem[];
-  /** Optional array of JSX elements to add to component */
-  icons?: JSX.Element[];
+  /** Optional children to component such as icons */
+  children?: React.ReactNode;
   /** Optional PersonaPresence to show participant presence. This won't have an effect if property avatar has a value */
   presence?: PersonaPresence;
 }
 
 const ParticipantItemBase = (props: ParticipantItemProps & ErrorHandlingProps): JSX.Element => {
-  const { name, isYou, avatar, menuItems, icons, presence } = props;
+  const { name, isYou, avatar, menuItems, children, presence } = props;
   const [clickEvent, setClickEvent] = useState<MouseEvent | undefined>();
   const [menuHidden, setMenuHidden] = useState<boolean>(true);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -65,15 +66,9 @@ const ParticipantItemBase = (props: ParticipantItemProps & ErrorHandlingProps): 
     <div ref={containerRef} className={memberItemContainerStyle} onClick={showMenu}>
       {avatarToUse}
       {isYou && <span className={memberItemIsYouStyle}>(you)</span>}
-      {icons && (
-        <div style={iconsDivStyle}>
-          {icons.map((icon, index) => (
-            <div key={index} style={iconStyle}>
-              {icon}
-            </div>
-          ))}
-        </div>
-      )}
+      <Stack horizontal={true} className={iconStackStyle} tokens={iconStackTokens}>
+        {children}
+      </Stack>
       {menuItems && (
         <ContextualMenu
           items={menuItems}

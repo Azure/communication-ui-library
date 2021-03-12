@@ -31,15 +31,12 @@ export const ParticipantItemComponent: () => JSX.Element = () => {
       };
     });
 
-  const icons: JSX.Element[] = [];
-  if (isScreenSharing) {
-    icons.push(<CallControlPresentNewIcon size="small" />);
-  }
-  if (isMuted) {
-    icons.push(<MicOffIcon size="small" />);
-  }
-
-  return <ParticipantItem name={name} isYou={isYou} menuItems={menuItems} icons={icons} />;
+  return (
+    <ParticipantItem name={name} isYou={isYou} menuItems={menuItems}>
+      {isScreenSharing && <CallControlPresentNewIcon size="small" />}
+      {isMuted && <MicOffIcon size="small" />}
+    </ParticipantItem>
+  );
 };
 
 export default {

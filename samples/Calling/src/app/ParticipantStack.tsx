@@ -44,14 +44,6 @@ const defaultRenderer = (item: IOverflowSetItemProps): JSX.Element => {
     }
   ];
 
-  const icons: JSX.Element[] = [];
-  if (item.isScreenSharing) {
-    icons.push(<CallControlPresentNewIcon size="small" />);
-  }
-  if (item.isMuted) {
-    icons.push(<MicOffIcon size="small" />);
-  }
-
   let presence = undefined;
   if (item.state === 'Connected') {
     presence = PersonaPresence.online;
@@ -60,7 +52,10 @@ const defaultRenderer = (item: IOverflowSetItemProps): JSX.Element => {
   }
 
   return (
-    <ParticipantItem name={item.name} isYou={item.isYou} menuItems={menuItems} icons={icons} presence={presence} />
+    <ParticipantItem name={item.name} isYou={item.isYou} menuItems={menuItems} presence={presence}>
+      {item.isScreenSharing && <CallControlPresentNewIcon size="small" />}
+      {item.isMuted && <MicOffIcon size="small" />}
+    </ParticipantItem>
   );
 };
 
