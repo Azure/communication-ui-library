@@ -3,6 +3,9 @@ import EventEmitter from 'events';
 import produce from 'immer';
 import { ChatClientState, ChatThreadClientState } from './ChatClientState';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
+import { enableMapSet } from 'immer';
+
+enableMapSet();
 
 // have separated ClientState and ChatThreadState?
 export class ChatContext {
@@ -11,12 +14,12 @@ export class ChatContext {
     displayName: '',
     threads: new Map()
   };
-  private batchMode = false;
+  private _batchMode = false;
   private _emitter: EventEmitter = new EventEmitter();
 
   public setState(state: ChatClientState): void {
     this._state = state;
-    if (!this.batchMode) {
+    if (!this._batchMode) {
       this._emitter.emit('stateChanged', this._state);
     }
   }
@@ -44,15 +47,13 @@ export class ChatContext {
     );
   }
 
-  // This function changes messageKey from localId to remoteId, which indicates message synced with server successfully
-  public setLocalMessageSynced(threadId: string, localId: string): void {
+  public deleteLocalMessage(threadId: string, localId: string): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         const chatMessages = draft.threads.get(threadId)?.chatMessages;
         const message: ChatMessageWithStatus | undefined = chatMessages ? chatMessages.get(localId) : undefined;
-        if (chatMessages && message && message.clientMessageId && message.id) {
+        if (chatMessages && message && message.clientMessageId) {
           chatMessages.delete(message.clientMessageId);
-          chatMessages.set(message.id, message);
         }
       })
     );
@@ -75,17 +76,17 @@ export class ChatContext {
   }
 
   // Batch mode for multiple updates in one action(to trigger just on event), similar to redux batch() function
-  private startBatch() {
-    this.batchMode = true;
+  private startBatch(): void {
+    this._batchMode = true;
   }
 
-  private endBatch() {
-    this.batchMode = false;
+  private endBatch(): void {
+    this._batchMode = false;
     this._emitter.emit('stateChanged', this._state);
   }
 
   // All operations finished in this batch should be sync call(only context related)
-  public batch(batchFunc: () => void) {
+  public batch(batchFunc: () => void): void {
     this.startBatch();
     const backupState = this._state;
     try {
