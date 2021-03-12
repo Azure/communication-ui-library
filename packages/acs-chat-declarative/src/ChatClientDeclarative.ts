@@ -4,9 +4,6 @@ import { ChatContext } from './ChatContext';
 import { ChatClientState } from './ChatClientState';
 import { EventSubscriber } from './EventSubscriber';
 import { chatThreadClientDeclaratify } from './ChatThreadClientDeclarative';
-import { enableMapSet } from 'immer';
-
-enableMapSet();
 
 export interface DeclarativeChatClient extends ChatClient {
   state: ChatClientState;
@@ -16,31 +13,28 @@ export interface DeclarativeChatClient extends ChatClient {
 const context: ChatContext = new ChatContext();
 
 const proxyChatClient: ProxyHandler<ChatClient> = {
-  get: function <P extends keyof ChatClient>(target: ChatClient, prop: P) {
+  get: function <P extends keyof ChatClient>(chatClient: ChatClient, prop: P) {
     switch (prop) {
       case 'createChatThread': {
-        // Do we want to let developer to declaratify this?
         return async function (...args: Parameters<ChatClient['createChatThread']>) {
-          const chatThreadClient = await target.createChatThread(...args);
-          return chatThreadClientDeclaratify(chatThreadClient, context);
+          return chatClient.createChatThread(...args);
         };
       }
       case 'getChatThreadClient': {
-        // Do we want to let developer to declaratify this?
         return async function (...args: Parameters<ChatClient['getChatThreadClient']>) {
-          const chatThreadClient = await target.getChatThreadClient(...args);
+          const chatThreadClient = await chatClient.getChatThreadClient(...args);
           return chatThreadClientDeclaratify(chatThreadClient, context);
         };
       }
       case 'startRealtimeNotifications': {
         return async function (...args: Parameters<ChatClient['startRealtimeNotifications']>) {
-          const ret = await target.startRealtimeNotifications(...args);
-          new EventSubscriber(target, context);
+          const ret = await chatClient.startRealtimeNotifications(...args);
+          new EventSubscriber(chatClient, context);
           return ret;
         };
       }
       default:
-        return Reflect.get(target, prop);
+        return Reflect.get(chatClient, prop);
     }
   }
 };

@@ -3,14 +3,15 @@
 import React from 'react';
 import {
   ChatThreadMember,
-  MemberItem,
+  ParticipantItem,
   connectFuncsToContext,
   MapToChatThreadMemberProps,
   MapToUserIdProps,
   WithErrorHandling,
-  ErrorHandlingProps
+  ErrorHandlingProps,
+  propagateError
 } from '@azure/communication-ui';
-import { Stack } from '@fluentui/react';
+import { Stack, IContextualMenuItem } from '@fluentui/react';
 
 export type ParticipantManagementProps = {
   userId: string;
@@ -20,20 +21,30 @@ export type ParticipantManagementProps = {
 };
 
 const ParticipantManagementComponentBase = (props: ParticipantManagementProps & ErrorHandlingProps): JSX.Element => {
-  const { userId, threadMembers, removeThreadMember, onRenderAvatar } = props;
+  const { userId, threadMembers, removeThreadMember, onRenderAvatar, onErrorCallback } = props;
 
   return (
     <Stack>
       {threadMembers.map((member) => {
         if (member.displayName !== undefined) {
+          const menuItems: IContextualMenuItem[] = [];
+          menuItems.push({
+            key: 'Remove',
+            text: 'Remove',
+            onClick: () => {
+              removeThreadMember?.(member.userId).catch((error) => {
+                propagateError(error, onErrorCallback);
+              });
+            }
+          });
+
           return (
-            <MemberItem
+            <ParticipantItem
               key={member.userId}
-              userId={member.userId}
               name={member.displayName as string}
               isYou={member.userId === (userId as string)}
-              removeThreadMemberByUserId={removeThreadMember}
-              onRenderAvatar={onRenderAvatar}
+              menuItems={menuItems}
+              avatar={onRenderAvatar ? onRenderAvatar(member.userId) : undefined}
             />
           );
         }

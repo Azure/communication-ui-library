@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { getTheme, mergeStyles } from '@fluentui/react';
+import { getTheme, mergeStyles, IStackTokens } from '@fluentui/react';
 
 const palette = getTheme().palette;
 
@@ -9,6 +9,8 @@ export const memberItemContainerStyle = mergeStyles({
   paddingBottom: '0.25rem',
   display: 'flex',
   position: 'relative',
+  width: '100%',
+  minWidth: '12rem',
   cursor: 'pointer',
   selectors: {
     '&:hover': { background: palette.neutralLight }
@@ -31,3 +33,16 @@ export const memberItemIsYouStyle = mergeStyles({
   marginTop: '0.3125rem',
   marginLeft: '0.3125rem'
 });
+
+export const iconStackStyle = mergeStyles({
+  position: 'absolute',
+  display: 'flex',
+  right: '1rem',
+  top: '50%',
+  msTransform: 'translateY(-50%)',
+  transform: 'translateY(-50%)'
+});
+
+export const iconStackTokens: IStackTokens = {
+  childrenGap: '0.5rem'
+};
