@@ -1,11 +1,9 @@
 // © Microsoft Corporation. All rights reserved.
-import { ChatMessage, ChatThreadClient } from '@azure/communication-chat';
+import { ChatMessage, ChatThreadClient, ListPageSettings } from '@azure/communication-chat';
 import { ChatMessageWithStatus, MessageStatus } from './types/ChatMessageWithStatus';
 import { Constants } from './Constants';
 import { ChatContext } from './ChatContext';
 import { nanoid } from 'nanoid';
-
-let context: ChatContext;
 
 export const convertChatMessage = (
   message: ChatMessage,
@@ -19,70 +17,127 @@ export const convertChatMessage = (
   };
 };
 
-const proxyChatThreadClient: ProxyHandler<ChatThreadClient> = {
-  get: function <P extends keyof ChatThreadClient>(target: ChatThreadClient, prop: P) {
-    switch (prop) {
-      case 'listMessages': {
-        // TODO: wrap the async iterator with another async iterator
-        // every time we call/user calls this function, it will update state in context
-        return function (...args: Parameters<ChatThreadClient['listMessages']>) {
-          return target.listMessages(...args);
+/**
+ * Proxies chatThreadClient.listMessages() and updates the proxied state via getState and setState by wrapping the
+ * returned iterators.
+ *
+ * @param chatThreadClient
+ * @param getState
+ * @param setState
+ */
+const proxyListMessages = (chatThreadClient: ChatThreadClient, context: ChatContext) => {
+  return (...args: Parameters<ChatThreadClient['listMessages']>) => {
+    const messages = chatThreadClient.listMessages(...args);
+    return {
+      next() {
+        return new Promise<IteratorResult<ChatMessage, ChatMessage>>((resolve) => {
+          messages.next().then((result) => {
+            if (!result.done && result.value) {
+              context.setChatMessage(chatThreadClient.threadId, convertChatMessage(result.value));
+            }
+            resolve(result);
+          });
+        });
+      },
+      [Symbol.asyncIterator]() {
+        return this;
+      },
+      byPage: (settings: ListPageSettings = {}): AsyncIterableIterator<ChatMessage[]> => {
+        const pages = messages.byPage(settings);
+        return {
+          next() {
+            return new Promise<IteratorResult<ChatMessage[], any>>((resolve) => {
+              pages.next().then((result) => {
+                const page: any = result.value;
+                if (!result.done && result.value) {
+                  context.batch(() => {
+                    for (const message of page) {
+                      context.setChatMessage(chatThreadClient.threadId, convertChatMessage(message));
+                    }
+                  });
+                }
+                resolve(result);
+              });
+            });
+          },
+          [Symbol.asyncIterator]() {
+            return this;
+          }
         };
       }
+    };
+  };
+};
+
+class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
+  private _context: ChatContext;
+
+  constructor(context: ChatContext) {
+    this._context = context;
+  }
+
+  public get<P extends keyof ChatThreadClient>(chatThreadClient: ChatThreadClient, prop: P): any {
+    switch (prop) {
+      case 'listMessages': {
+        return proxyListMessages(chatThreadClient, this._context);
+      }
       case 'getMessage': {
-        return async function (...args: Parameters<ChatThreadClient['getMessage']>) {
-          const message = await target.getMessage(...args);
-          context.setChatMessage(target.threadId, convertChatMessage(message));
+        return async (...args: Parameters<ChatThreadClient['getMessage']>) => {
+          const message = await chatThreadClient.getMessage(...args);
+          this._context.setChatMessage(chatThreadClient.threadId, convertChatMessage(message));
           return message;
         };
       }
       case 'sendMessage': {
         // Retry logic?
-        return async function (...args: Parameters<ChatThreadClient['sendMessage']>) {
+        return async (...args: Parameters<ChatThreadClient['sendMessage']>) => {
           const { content } = args[0];
           const clientMessageId = nanoid(); // Generate a local short uuid for message
           const newMessage: ChatMessageWithStatus = {
-            content,
+            content: { message: content },
             clientMessageId,
-            createdOn: undefined,
+            id: '',
+            type: 'text',
+            sequenceId: '',
+            version: '',
+            createdOn: new Date(),
             status: 'sending'
           };
-          context.setChatMessage(target.threadId, newMessage);
+          this._context.setChatMessage(chatThreadClient.threadId, newMessage);
 
-          const result = await target.sendMessage(...args);
+          const result = await chatThreadClient.sendMessage(...args);
           if (result._response.status === Constants.CREATED) {
             if (result.id) {
-              context.batch(() => {
-                context.setChatMessage(target.threadId, {
-                  ...newMessage,
+              const message = await chatThreadClient.getMessage(result.id);
+              this._context.batch(() => {
+                this._context.setChatMessage(chatThreadClient.threadId, {
+                  ...message,
                   status: 'delivered',
                   id: result.id
                 });
-                context.setLocalMessageSynced(target.threadId, clientMessageId);
+                this._context.deleteLocalMessage(chatThreadClient.threadId, clientMessageId);
               });
             }
           } else if (result._response.status === Constants.PRECONDITION_FAILED_STATUS_CODE) {
-            context.setChatMessage(target.threadId, { ...newMessage, status: 'failed' });
+            this._context.setChatMessage(chatThreadClient.threadId, { ...newMessage, status: 'failed' });
           }
           return result;
         };
       }
       default:
-        return Reflect.get(target, prop);
+        return Reflect.get(chatThreadClient, prop);
     }
   }
-};
+}
 
 export const chatThreadClientDeclaratify = (
   chatThreadClient: ChatThreadClient,
-  chatContext: ChatContext
+  context: ChatContext
 ): ChatThreadClient => {
-  context = chatContext;
   context.setThread(chatThreadClient.threadId, {
     failedMessageIds: [],
     chatMessages: new Map(),
-    threadId: chatThreadClient.threadId,
-    threadMembers: []
+    threadId: chatThreadClient.threadId
   });
-  return new Proxy(chatThreadClient, proxyChatThreadClient) as ChatThreadClient;
+  return new Proxy(chatThreadClient, new ProxyChatThreadClient(context)) as ChatThreadClient;
 };

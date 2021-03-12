@@ -3,8 +3,8 @@
 import React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
-import { CLICK_TO_LOAD_MORE_MESSAGES, NEW_MESSAGES, UNABLE_TO_LOAD_MORE_MESSAGES } from '../constants';
-import { MessageStatus, ChatMessage } from '../types/ChatMessage';
+import { CLICK_TO_LOAD_MORE_MESSAGES, NEW_MESSAGES, UNABLE_TO_LOAD_MORE_MESSAGES } from '../../constants';
+import { MessageStatus, ChatMessage } from '../../types/ChatMessage';
 import { ChatThreadComponent, ChatThreadComponentBase } from './ChatThread';
 
 const originalClientHeight = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'clientHeight');

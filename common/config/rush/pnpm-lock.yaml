@@ -1,8 +1,8 @@
 dependencies:
   '@azure/communication-administration': 1.0.0-beta.4
   '@azure/communication-calling': 1.0.0-beta.2
-  '@azure/communication-chat': 1.0.0-beta.3
   '@azure/communication-common': 1.0.0-beta.3
+  '@azure/communication-identity': 1.0.0-beta.4
   '@azure/communication-signaling': 1.0.0-beta.1
   '@azure/core-http': 1.2.3
   '@babel/core': 7.13.8
@@ -14,8 +14,9 @@ dependencies:
   '@fluentui/react-northstar': 0.51.7_7780220a916877297c987d702313b31d
   '@fluentui/react-theme-provider': 0.18.5_7780220a916877297c987d702313b31d
   '@mdx-js/react': 1.6.22_react@16.14.0
+  '@rush-temp/acs-calling-declarative': file:projects/acs-calling-declarative.tgz_prettier@2.0.5+ts-node@9.1.1
   '@rush-temp/acs-calling-sample': file:projects/acs-calling-sample.tgz_570bf42e92a70fb216c5cd4d5ed668ef
-  '@rush-temp/acs-chat-declarative': file:projects/acs-chat-declarative.tgz_prettier@2.0.5
+  '@rush-temp/acs-chat-declarative': file:projects/acs-chat-declarative.tgz_prettier@2.0.5+ts-node@9.1.1
   '@rush-temp/acs-chat-sample': file:projects/acs-chat-sample.tgz_40b0c9f7a7a0fac66e4b6fcf06de2a42
   '@rush-temp/acs-one-to-one-call-sample': file:projects/acs-one-to-one-call-sample.tgz_570bf42e92a70fb216c5cd4d5ed668ef
   '@rush-temp/acs-server-sample': file:projects/acs-server-sample.tgz
@@ -86,7 +87,7 @@ dependencies:
   jest: 26.6.0_ts-node@9.1.1
   jest-fetch-mock: 3.0.3
   jest-junit: 12.0.0
-  jquery: 3.5.1
+  jquery: 3.6.0
   json-stringify-safe: 5.0.1
   merge: 1.2.1
   morgan: 1.9.1
@@ -110,7 +111,7 @@ dependencies:
   source-map-explorer: 2.5.2
   supertest: 6.1.3
   ts-jest: 26.5.2_jest@26.6.0+typescript@4.1.5
-  ts-loader: 8.0.17_typescript@4.1.5+webpack@4.44.2
+  ts-loader: 8.0.18_typescript@4.1.5+webpack@4.44.2
   ts-node: 9.1.1_typescript@4.1.5
   ts-node-dev: 1.1.6_typescript@4.1.5
   typescript: 4.1.5
@@ -168,6 +169,24 @@ packages:
       node: '>=8.0.0'
     resolution:
       integrity: sha512-hhS9pI+cwh1omq8HnzB6aM10jInwZAYoyghJJihVAdg3nv3DqgV5DLi+cmPwHXrKteBEn5lIgR2MMCyQ4M4mxA==
+  /@azure/communication-chat/1.0.0-beta.4:
+    dependencies:
+      '@azure/abort-controller': 1.0.3
+      '@azure/communication-common': 1.0.0-beta.5
+      '@azure/communication-signaling': 1.0.0-beta.2
+      '@azure/core-auth': 1.2.0
+      '@azure/core-http': 1.2.3
+      '@azure/core-paging': 1.1.3
+      '@azure/core-tracing': 1.0.0-preview.9
+      '@azure/logger': 1.0.1
+      '@opentelemetry/api': 0.10.2
+      events: 3.2.0
+      tslib: 2.1.0
+    dev: false
+    engines:
+      node: '>=8.0.0'
+    resolution:
+      integrity: sha512-SLdpTkoJTE1LE5IVj/fJH7oYmWXNxmEmeMIHVvPoHAbEqvjOIN0DrG0m5D4afYUl3BgL3QQJ4hG+lDDbi1XT/w==
   /@azure/communication-common/1.0.0-beta.3:
     dependencies:
       '@azure/abort-controller': 1.0.3
@@ -196,6 +215,38 @@ packages:
       node: '>=8.0.0'
     resolution:
       integrity: sha512-HPLwM6EaQ8Grc+smncr4t/Q/I0TnhAS3Ql/z9Zuju7hXDcSBCYjINmaYNQ76LCdhDQ62Akzye7vYak4eOuit9w==
+  /@azure/communication-common/1.0.0-beta.5:
+    dependencies:
+      '@azure/abort-controller': 1.0.3
+      '@azure/core-auth': 1.2.0
+      '@azure/core-http': 1.2.3
+      '@opentelemetry/api': 0.10.2
+      events: 3.2.0
+      jwt-decode: 2.2.0
+      tslib: 2.1.0
+    dev: false
+    engines:
+      node: '>=8.0.0'
+    resolution:
+      integrity: sha512-wNaw43z+7YoOyIDnhlDtqVgIK0rPl8bgv7vV0oBizw4+CinaUrG8EtYv0nZ7tH6Rr8R+ys9UhoPaS5d+JUVoJw==
+  /@azure/communication-identity/1.0.0-beta.4:
+    dependencies:
+      '@azure/abort-controller': 1.0.3
+      '@azure/communication-common': 1.0.0-beta.5
+      '@azure/core-auth': 1.2.0
+      '@azure/core-http': 1.2.3
+      '@azure/core-lro': 1.0.3
+      '@azure/core-paging': 1.1.3
+      '@azure/core-tracing': 1.0.0-preview.9
+      '@azure/logger': 1.0.1
+      '@opentelemetry/api': 0.10.2
+      events: 3.2.0
+      tslib: 2.1.0
+    dev: false
+    engines:
+      node: '>=8.0.0'
+    resolution:
+      integrity: sha512-qd0N66bR16Xrjc0wSaUrUQDTZDNiabk+MWqfT+oNpTIPM5yvu78bjz4aMH7rFYxIOWWW4k6lxwB91ZdBXXn1/A==
   /@azure/communication-signaling/1.0.0-beta.1:
     dependencies:
       '@azure/core-http': 1.2.3
@@ -208,6 +259,19 @@ packages:
       node: '>=8.0.0'
     resolution:
       integrity: sha512-xxlGwbbTkEZAline8wrP75FLaOsT23nMukzIg5X/Cs6cQSQ/JKj7Uxq5Idxp9GgAYT+g+PAj+BJ929/jaselBQ==
+  /@azure/communication-signaling/1.0.0-beta.2:
+    dependencies:
+      '@azure/core-http': 1.2.3
+      '@azure/core-tracing': 1.0.0-preview.9
+      '@azure/logger': 1.0.1
+      '@opentelemetry/api': 0.10.2
+      events: 3.2.0
+      tslib: 1.14.1
+    dev: false
+    engines:
+      node: '>=8.0.0'
+    resolution:
+      integrity: sha512-2Nbm6OEtouz94kWiWu40VhG2ckTwAI4Ng7ji77yCha1obrVhzxA1wfveMZmEmXk4s7YGN5L7xAj/hFATe7WknQ==
   /@azure/core-asynciterator-polyfill/1.0.0:
     dev: false
     resolution:
@@ -4439,12 +4503,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-TbH79tcyi9FHwbyboOKeRachRq63mSuWYXOflsNO9ZyE5ClQ/JaozNKl+aWUq87qPNsXasXxi2AbgfwIJ+8GQw==
-  /@types/cheerio/0.22.24:
+  /@types/cheerio/0.22.26:
     dependencies:
       '@types/node': 14.14.31
     dev: false
     resolution:
-      integrity: sha512-iKXt/cwltGvN06Dd6zwQG1U35edPwId9lmcSeYfcxSNvvNg4vysnFB+iBQNjj06tSVV7MBj0GWMQ7dwb4Z+p8Q==
+      integrity: sha512-ckxG5bCHk803zCbeq3GO4wbFan8AyVP8BuYynR0E0d/CD0N8I92kXyvikDWsbG14onoKTXR6B+sboxwjnTMSRg==
   /@types/classnames/2.2.11:
     dev: false
     resolution:
@@ -6887,7 +6951,7 @@ packages:
       css-what: 4.0.0
       domelementtype: 2.1.0
       domhandler: 4.0.0
-      domutils: 2.4.4
+      domutils: 2.5.0
     deprecated: Use cheerio-select instead
     dev: false
     resolution:
@@ -6898,7 +6962,7 @@ packages:
       dom-serializer: 1.2.0
       domhandler: 4.0.0
       entities: 2.1.0
-      htmlparser2: 6.0.0
+      htmlparser2: 6.0.1
       parse5: 6.0.1
       parse5-htmlparser2-tree-adapter: 6.0.1
     dev: false
@@ -7739,7 +7803,7 @@ packages:
       boolbase: 1.0.0
       css-what: 4.0.0
       domhandler: 4.0.0
-      domutils: 2.4.4
+      domutils: 2.5.0
       nth-check: 2.0.0
     dev: false
     resolution:
@@ -8306,7 +8370,7 @@ packages:
     dependencies:
       domelementtype: 2.1.0
       domhandler: 4.0.0
-      entities: 2.1.0
+      entities: 2.2.0
     dev: false
     resolution:
       integrity: sha512-n6kZFH/KlCrqs/1GHMOd5i2fd/beQHuehKdWvNNffbGHTr/almdhuVvTVFb3V7fglz+nC50fFusu3lY33h12pA==
@@ -8358,14 +8422,14 @@ packages:
     dev: false
     resolution:
       integrity: sha512-Lgd2XcJ/NjEw+7tFvfKxOzCYKZsdct5lczQ2ZaQY8Djz7pfAD3Gbp8ySJWtreII/vDlMVmxwa6pHmdxIYgttDg==
-  /domutils/2.4.4:
+  /domutils/2.5.0:
     dependencies:
       dom-serializer: 1.2.0
       domelementtype: 2.1.0
       domhandler: 4.0.0
     dev: false
     resolution:
-      integrity: sha512-jBC0vOsECI4OMdD0GC9mGn7NXPLb+Qt6KW1YDQzeQYRUFKmNG8lh7mO5HiELfr+lLQE7loDVI4QcAxV80HS+RA==
+      integrity: sha512-Ho16rzNMOFk2fPwChGh3D2D9OEHAfG19HgmRR2l+WLSsIstNsAYBzePH412bL0y5T44ejABIVfTHQ8nqi/tBCg==
   /dot-case/3.0.4:
     dependencies:
       no-case: 3.0.4
@@ -8617,7 +8681,7 @@ packages:
       integrity: sha512-MttIwB8kKxypwHvRynuC3ahyNc+cFbR8mjVIltnmzQ0uKGqmsfO4bfBuLxb0beLNPhjblUEYvEbsg+VSygvF1Q==
   /enzyme-to-json/3.6.1_enzyme@3.11.0:
     dependencies:
-      '@types/cheerio': 0.22.24
+      '@types/cheerio': 0.22.26
       enzyme: 3.11.0
       lodash: 4.17.21
       react-is: 16.13.1
@@ -10691,15 +10755,15 @@ packages:
     dev: false
     resolution:
       integrity: sha512-IgieNijUMbkDovyoKObU1DUhm1iwNYE/fuifEoEHfd1oZKZDaONBSkal7Y01shxsM49R4XaMdGez3WnF9UfiCQ==
-  /htmlparser2/6.0.0:
+  /htmlparser2/6.0.1:
     dependencies:
       domelementtype: 2.1.0
       domhandler: 4.0.0
-      domutils: 2.4.4
-      entities: 2.1.0
+      domutils: 2.5.0
+      entities: 2.2.0
     dev: false
     resolution:
-      integrity: sha512-numTQtDZMoh78zJpaNdJ9MXb2cv5G3jwUoe3dMQODubZvLoGvTE/Ofp6sHvH8OGKcN/8A47pGLi/k58xHP/Tfw==
+      integrity: sha512-GDKPd+vk4jvSuvCbyuzx/unmXkk090Azec7LovXP8as1Hn8q9p3hbjmDGbUqqhknw0ajwit6LiiWqfiTUPMK7w==
   /http-deceiver/1.2.7:
     dev: false
     resolution:
@@ -12200,10 +12264,10 @@ packages:
       ts-node: '*'
     resolution:
       integrity: sha512-jxTmrvuecVISvKFFhOkjsWRZV7sFqdSUAd1ajOKY+/QE/aLBVstsJ/dX8GczLzwiT6ZEwwmZqtCUHLHHQVzcfA==
-  /jquery/3.5.1:
+  /jquery/3.6.0:
     dev: false
     resolution:
-      integrity: sha512-XwIBPqcMn57FxfT+Go5pzySnm4KWkT1Tv7gjrpT1srtf8Weynl6R273VJ5GjkRb51IzMp5nbaPjJXMWeju2MKg==
+      integrity: sha512-JVzAR/AjBvVt2BmYhxRCSYysDsPcssdmTFnzyLEts9qNwmjmu4JTAMYubEfwVOSwpQ1I1sKKFcxhZCI2buerfw==
   /js-string-escape/1.0.1:
     dev: false
     engines:
@@ -15565,10 +15629,11 @@ packages:
       react-dom: ^16.6.0 || ^17.0.0
     resolution:
       integrity: sha512-EnERAnnKRptQBJyaee5GJScWNUKQPDD2ywvzZyUjst/wj5U64C8/CnSYLNEmP2hG0IJ3ZhtDxE8oDN+KOyavXQ==
-  /react-popper/1.3.10_react@16.14.0:
+  /react-popper/1.3.11_react@16.14.0:
     dependencies:
       '@babel/runtime': 7.13.8
       '@hypnosphi/create-react-context': 0.3.1_prop-types@15.7.2+react@16.14.0
+      deep-equal: 1.1.1
       popper.js: 1.16.1
       prop-types: 15.7.2
       react: 16.14.0
@@ -15578,7 +15643,7 @@ packages:
     peerDependencies:
       react: 0.14.x || ^15.0.0 || ^16.0.0 || ^17.0.0
     resolution:
-      integrity: sha512-sZfwHtHCMst0L0G/c83/Y/K1f9fNWMEKsk/cGAor68rQBHB75WuDQ7k95tkce8QNaUHhg9uFXIJbZO0eWRvJbw==
+      integrity: sha512-VSA/bS+pSndSF2fiasHK/PTEEAyOpX60+H5EPAjoArr8JGm+oihu4UbrqcEBpQibJxBVCpYyjAX7abJ+7DoYVg==
   /react-popper/2.2.4_fc940af2cbc447bd24f967be17e93f49:
     dependencies:
       '@popperjs/core': 2.8.6
@@ -15830,7 +15895,7 @@ packages:
       prop-types: 15.7.2
       react: 16.14.0
       react-dom: 16.14.0_react@16.14.0
-      react-popper: 1.3.10_react@16.14.0
+      react-popper: 1.3.11_react@16.14.0
       react-transition-group: 2.9.0_react-dom@16.14.0+react@16.14.0
     dev: false
     peerDependencies:
@@ -18002,7 +18067,7 @@ packages:
       typescript: '>=3.8 <5.0'
     resolution:
       integrity: sha512-bwyJ2zJieSugf7RB+o8fgkMeoMVMM2KPDE0UklRLuACxjwJsOrZNo6chrcScmK33YavPSwhARffy8dZx5LJdUQ==
-  /ts-loader/8.0.17_typescript@4.1.5+webpack@4.44.2:
+  /ts-loader/8.0.18_typescript@4.1.5+webpack@4.44.2:
     dependencies:
       chalk: 4.1.0
       enhanced-resolve: 4.5.0
@@ -18018,7 +18083,7 @@ packages:
       typescript: '*'
       webpack: '*'
     resolution:
-      integrity: sha512-OeVfSshx6ot/TCxRwpBHQ/4lRzfgyTkvi7ghDVrLXOHzTbSK413ROgu/xNqM72i3AFeAIJgQy78FwSMKmOW68w==
+      integrity: sha512-hRZzkydPX30XkLaQwJTDcWDoxZHK6IrEMDQpNd7tgcakFruFkeUp/aY+9hBb7BUGb+ZWKI0jiOGMo0MckwzdDQ==
   /ts-node-dev/1.1.6_typescript@4.1.5:
     dependencies:
       chokidar: 3.5.1
@@ -19351,6 +19416,34 @@ packages:
     dev: false
     resolution:
       integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==
+  file:projects/acs-calling-declarative.tgz_prettier@2.0.5+ts-node@9.1.1:
+    dependencies:
+      '@azure/communication-calling': 1.0.0-beta.2
+      '@azure/communication-common': 1.0.0-beta.3
+      '@types/jest': 26.0.20
+      '@typescript-eslint/eslint-plugin': 4.15.2_bd37cc6d9e4ef1f78f94a852ca0107ce
+      '@typescript-eslint/parser': 4.15.2_eslint@7.20.0+typescript@4.1.5
+      eslint: 7.20.0
+      eslint-config-prettier: 6.15.0_eslint@7.20.0
+      eslint-plugin-header: 3.1.1_eslint@7.20.0
+      eslint-plugin-import: 2.22.1_eslint@7.20.0
+      eslint-plugin-prettier: 3.3.1_822b4c7c304ad0fbad34b397ba6938a8
+      eslint-plugin-react: 7.22.0_eslint@7.20.0
+      eslint-plugin-react-hooks: 4.2.0_eslint@7.20.0
+      immer: 8.0.1
+      jest: 26.6.0_ts-node@9.1.1
+      ts-jest: 26.5.2_jest@26.6.0+typescript@4.1.5
+      typescript: 4.1.5
+    dev: false
+    id: file:projects/acs-calling-declarative.tgz
+    name: '@rush-temp/acs-calling-declarative'
+    peerDependencies:
+      prettier: '*'
+      ts-node: '*'
+    resolution:
+      integrity: sha512-CtxJEsgRZAJQjPLxt+ZWxReYxUpd5aclAH1BChAmXq2hM703LBgB0mcSnxfvOqYGJ7IrcCll191TS63Dn4LpiQ==
+      tarball: file:projects/acs-calling-declarative.tgz
+    version: 0.0.0
   file:projects/acs-calling-sample.tgz_570bf42e92a70fb216c5cd4d5ed668ef:
     dependencies:
       '@azure/communication-administration': 1.0.0-beta.4
@@ -19391,7 +19484,7 @@ packages:
       husky: 4.3.8
       jest: 26.6.0_ts-node@9.1.1
       jest-junit: 12.0.0
-      jquery: 3.5.1
+      jquery: 3.6.0
       merge: 1.2.1
       prettier: 2.0.5
       pretty-quick: 3.1.0_prettier@2.0.5
@@ -19416,27 +19509,36 @@ packages:
       webpack: '*'
       webpack-cli: '*'
     resolution:
-      integrity: sha512-Be2SBh/M39sl8lz81HIoqXhAEzvD8zXJvdZHQoFHozXNqlGpZQJSB9SaEKwL8FUY7xFWtGXh8JEn0HxEWCp6HQ==
+      integrity: sha512-bFo1/RgutkX/40YjDrUZWin1lcuRw754xCujKLe4o/UCJrPvY3JEgxrtkIEG7G4AjAiEz5M6uG5Do1w/Hvl6pg==
       tarball: file:projects/acs-calling-sample.tgz
     version: 0.0.0
-  file:projects/acs-chat-declarative.tgz_prettier@2.0.5:
+  file:projects/acs-chat-declarative.tgz_prettier@2.0.5+ts-node@9.1.1:
     dependencies:
-      '@azure/communication-chat': 1.0.0-beta.3
+      '@azure/communication-chat': 1.0.0-beta.4
+      '@azure/communication-common': 1.0.0-beta.3
+      '@types/jest': 26.0.20
+      '@typescript-eslint/eslint-plugin': 4.15.2_bd37cc6d9e4ef1f78f94a852ca0107ce
+      '@typescript-eslint/parser': 4.15.2_eslint@7.20.0+typescript@4.1.5
       eslint: 7.20.0
       eslint-config-prettier: 6.15.0_eslint@7.20.0
       eslint-plugin-header: 3.1.1_eslint@7.20.0
       eslint-plugin-import: 2.22.1_eslint@7.20.0
       eslint-plugin-prettier: 3.3.1_822b4c7c304ad0fbad34b397ba6938a8
+      eslint-plugin-react: 7.22.0_eslint@7.20.0
+      eslint-plugin-react-hooks: 4.2.0_eslint@7.20.0
       immer: 8.0.1
+      jest: 26.6.0_ts-node@9.1.1
       nanoid: 3.1.20
+      ts-jest: 26.5.2_jest@26.6.0+typescript@4.1.5
       typescript: 4.1.5
     dev: false
     id: file:projects/acs-chat-declarative.tgz
     name: '@rush-temp/acs-chat-declarative'
     peerDependencies:
       prettier: '*'
+      ts-node: '*'
     resolution:
-      integrity: sha512-TCg/a9yzpbrJQZkd26TgWF9EzzIMlTGjCWjs75Fq1TrdoIRIJOjKZA6VPpJA6MWSjtxPZek4OhuGN1tYCopI1Q==
+      integrity: sha512-hxzaDcVxC0NWu0U5pLw6Ti/CVJTWrSGNJTRWv5Yvz4fIxvv9gf0wdPB6LwYttFak7ezOW5CODT+OdeEailIQvQ==
       tarball: file:projects/acs-chat-declarative.tgz
     version: 0.0.0
   file:projects/acs-chat-sample.tgz_40b0c9f7a7a0fac66e4b6fcf06de2a42:
@@ -19498,7 +19600,7 @@ packages:
       ts-node: '*'
       webpack-cli: '*'
     resolution:
-      integrity: sha512-yH8f6Uf7+4IZomF2L6uw6wlj7a8ZKySnsZ3pTxrQ+yf5H95MKEK2hXCfhJ2cYOFwJFQbEb9RittgGxhFxmst1Q==
+      integrity: sha512-lOVM8bFVmubCo32GN1VaezrvTQqizABmpWyACLyBC/OtsR91dYD8qtvjW+2GvP4kuv3OmhuqTdtfODr6EdgODw==
       tarball: file:projects/acs-chat-sample.tgz
     version: 0.0.0
   file:projects/acs-one-to-one-call-sample.tgz_570bf42e92a70fb216c5cd4d5ed668ef:
@@ -19543,7 +19645,7 @@ packages:
       husky: 4.3.8
       jest: 26.6.0_ts-node@9.1.1
       jest-junit: 12.0.0
-      jquery: 3.5.1
+      jquery: 3.6.0
       merge: 1.2.1
       prettier: 2.0.5
       pretty-quick: 3.1.0_prettier@2.0.5
@@ -19568,14 +19670,14 @@ packages:
       webpack: '*'
       webpack-cli: '*'
     resolution:
-      integrity: sha512-n1G6GtoT9C0Ld3aha3zp8GjzyIYKxHNGYPvNVPhrNE2noxJutb6rHgSxfyG4eDnERTcltznrX6duriQD/oOhaA==
+      integrity: sha512-oGXgdbIfNtTM9jpIy/iBAVa+tD9tWVDk7bQvGIeniVfwQP869L/f25OKZ3a0IuFU1FsJ9WtprqmI9HC6qTZSoA==
       tarball: file:projects/acs-one-to-one-call-sample.tgz
     version: 0.0.0
   file:projects/acs-server-sample.tgz:
     dependencies:
-      '@azure/communication-administration': 1.0.0-beta.4
       '@azure/communication-chat': 1.0.0-beta.3
       '@azure/communication-common': 1.0.0-beta.3
+      '@azure/communication-identity': 1.0.0-beta.4
       '@types/cookie-parser': 1.4.2
       '@types/copy-webpack-plugin': 6.4.0
       '@types/cors': 2.8.10
@@ -19608,7 +19710,7 @@ packages:
       pretty-quick: 3.1.0_prettier@2.0.5
       supertest: 6.1.3
       ts-jest: 26.5.2_jest@26.6.0+typescript@4.1.5
-      ts-loader: 8.0.17_typescript@4.1.5+webpack@4.44.2
+      ts-loader: 8.0.18_typescript@4.1.5+webpack@4.44.2
       ts-node: 9.1.1_typescript@4.1.5
       ts-node-dev: 1.1.6_typescript@4.1.5
       typescript: 4.1.5
@@ -19618,7 +19720,7 @@ packages:
     dev: false
     name: '@rush-temp/acs-server-sample'
     resolution:
-      integrity: sha512-q3fnzxnJT1QHLuGBDkhd/Bibh3ynOtxCqnVjfujEVA4lDeas+KeedhHPA8IFRz9Ep4MUaIcf7ex/JOAx30nN5A==
+      integrity: sha512-ryN6Z+SB1dv6HmTS8Bgof0ulmW4VUr9w+Ox2wGBg7sHapgI6gtBWsYvXOp5NZdjZYsMQLFDgTuL+ELm+fOt4YA==
       tarball: file:projects/acs-server-sample.tgz
     version: 0.0.0
   file:projects/communication-ui.tgz_webpack-cli@4.5.0:
@@ -19704,14 +19806,15 @@ packages:
     peerDependencies:
       webpack-cli: '*'
     resolution:
-      integrity: sha512-OdvFhUZML983os2Qez7VwLh4yLlynMT0+gH24HrunZubFQn07NpLxA2LSJWAKBJj5T+ORMcUifKSFNR9Shsh8g==
+      integrity: sha512-KQhUWooRgKl3PN6bK9wKmUstwltjF2q5XbBnz/SkdwOuzvruMhjdD+dMMJfiILIxz+K++6+1xN9UITZD8kQNjg==
       tarball: file:projects/communication-ui.tgz
     version: 0.0.0
+registry: ''
 specifiers:
   '@azure/communication-administration': ^1.0.0-beta.3
   '@azure/communication-calling': 1.0.0-beta.2
-  '@azure/communication-chat': 1.0.0-beta.3
   '@azure/communication-common': 1.0.0-beta.3
+  '@azure/communication-identity': 1.0.0-beta.4
   '@azure/communication-signaling': 1.0.0-beta.1
   '@azure/core-http': ^1.2.3
   '@babel/core': ^7.12.7
@@ -19723,6 +19826,7 @@ specifiers:
   '@fluentui/react-northstar': ^0.51.2
   '@fluentui/react-theme-provider': ^0.18.0
   '@mdx-js/react': ^1.6.22
+  '@rush-temp/acs-calling-declarative': file:./projects/acs-calling-declarative.tgz
   '@rush-temp/acs-calling-sample': file:./projects/acs-calling-sample.tgz
   '@rush-temp/acs-chat-declarative': file:./projects/acs-chat-declarative.tgz
   '@rush-temp/acs-chat-sample': file:./projects/acs-chat-sample.tgz
@@ -19822,7 +19926,7 @@ specifiers:
   ts-loader: ^8.0.12
   ts-node: ^9.1.1
   ts-node-dev: ^1.0.0
-  typescript: 4.1.5
+  typescript: ^4.0.5
   uuid: ^8.1.0
   webpack: 4.44.2
   webpack-cli: ^4.2.0
