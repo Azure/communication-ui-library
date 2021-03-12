@@ -1,6 +1,5 @@
 // © Microsoft Corporation. All rights reserved.
 
-import ChatThread from './ChatThread';
 import SendBox from './SendBox';
 import MemberItem from './MemberItem';
 import TypingIndicator, { TypingIndicatorComponent } from './TypingIndicator';
@@ -9,7 +8,6 @@ import ErrorBar, { ErrorBarComponent } from './ErrorBar';
 import { WithErrorHandling } from '../utils/WithErrorHandling';
 
 export {
-  ChatThread,
   SendBox,
   MemberItem,
   TypingIndicator,
@@ -20,17 +18,15 @@ export {
   WithErrorHandling
 };
 
-export { ChatThreadComponent } from './ChatThread';
 export { SendBoxComponent } from './SendBox';
 export { ReadReceiptComponent } from './ReadReceipt';
-export { MediaGalleryTileComponent } from './MediaGalleryTile';
-export { StreamMediaComponent } from './StreamMedia';
+export type { ReadReceiptProps } from './ReadReceipt';
+export { StreamMedia } from './StreamMedia';
 export { ParticipantStackItemComponent } from './ParticipantStackItem';
-export { IncomingCallModal, IncomingCallToast } from './IncomingCallAlerts';
 export {
+  CONTROL_BAR_LAYOUTS,
   ControlBar,
   ControlButton,
-  CallControlBar,
   videoButtonProps,
   audioButtonProps,
   screenShareButtonProps,
@@ -38,4 +34,6 @@ export {
   answerButtonProps,
   hangupButtonProps
 } from './ControlBar';
-export type { IncomingCallModalProps, IncomingCallToastProps } from './IncomingCallAlerts';
+
+export { VideoTile } from './VideoTile';
+export type { VideoTileProps, VideoTileStylesProps } from './VideoTile';

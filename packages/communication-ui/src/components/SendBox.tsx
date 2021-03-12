@@ -82,7 +82,6 @@ const SendBoxComponentBase = (props: SendBoxProps & ErrorHandlingProps): JSX.Ele
           componentRef={sendTextFieldRef}
           className={textFieldStyle}
           id="sendbox"
-          borderless={true}
           ariaLabel={'Type'}
           inputClassName={sendBoxStyle}
           placeholder="Type a new message"

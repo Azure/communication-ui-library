@@ -3,10 +3,10 @@
 import React from 'react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
 import { GridLayoutComponent } from '../../components/GridLayout';
-import { MediaGalleryTileComponent } from '../../components';
+import { VideoTile } from '../../components';
 
 const importStatement = `
-import { GridLayoutComponent, MediaGalleryTileComponent } from '@azure/communication-ui';
+import { GridLayoutComponent, VideoTile } from '@azure/communication-ui';
 `;
 
 const GridLayoutExample: () => JSX.Element = () => {
@@ -18,26 +18,34 @@ const GridLayoutExample: () => JSX.Element = () => {
       }}
     >
       <GridLayoutComponent>
-        <MediaGalleryTileComponent
-          label={'Michael'}
+        <VideoTile
           isVideoReady={false}
-          videoStreamElement={null}
-        />
-        <MediaGalleryTileComponent
-          label={'Jim'}
+          videoProvider={null}
+          avatarName={'Michael'}
+        >
+          <label>Michael</label>
+        </VideoTile>
+        <VideoTile
           isVideoReady={false}
-          videoStreamElement={null}
-        />
-        <MediaGalleryTileComponent
-          label={'Pam'}
+          videoProvider={null}
+          avatarName={'Jim'}
+        >
+          <label>Jim</label>
+        </VideoTile>
+        <VideoTile
           isVideoReady={false}
-          videoStreamElement={null}
-        />
-        <MediaGalleryTileComponent
-          label={'Dweight'}
+          videoProvider={null}
+          avatarName={'Pam'}
+        >
+          <label>Pam</label>
+        </VideoTile>
+        <VideoTile
           isVideoReady={false}
-          videoStreamElement={null}
-        />
+          videoProvider={null}
+          avatarName={'Dwight'}
+        >
+          <label>Dwight</label>
+        </VideoTile>
       </GridLayoutComponent>
     </div>
   );
@@ -53,26 +61,34 @@ const GridLayoutExample: () => JSX.Element = () => {
       }}
     >
       <GridLayoutComponent>
-        <MediaGalleryTileComponent
-          label={'Michael'}
+        <VideoTile
           isVideoReady={false}
-          videoStreamElement={null}
-        />
-        <MediaGalleryTileComponent
-          label={'Jim'}
+          videoProvider={null}
+          avatarName={'Michael'}
+        >
+          <label>Michael</label>
+        </VideoTile>
+        <VideoTile
           isVideoReady={false}
-          videoStreamElement={null}
-        />
-        <MediaGalleryTileComponent
-          label={'Pam'}
+          videoProvider={null}
+          avatarName={'Jim'}
+        >
+          <label>Jim</label>
+        </VideoTile>
+        <VideoTile
           isVideoReady={false}
-          videoStreamElement={null}
-        />
-        <MediaGalleryTileComponent
-          label={'Dweight'}
+          videoProvider={null}
+          avatarName={'Pam'}
+        >
+          <label>Pam</label>
+        </VideoTile>
+        <VideoTile
           isVideoReady={false}
-          videoStreamElement={null}
-        />
+          videoProvider={null}
+          avatarName={'Dwight'}
+        >
+          <label>Dwight</label>
+        </VideoTile>
       </GridLayoutComponent>
     </div>
   );

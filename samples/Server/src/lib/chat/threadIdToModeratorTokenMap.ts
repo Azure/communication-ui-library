@@ -1,5 +1,5 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { CommunicationUserToken } from '@azure/communication-administration';
+import { CommunicationUserCredential } from '@azure/communication-common';
 
-export const threadIdToModeratorTokenMap = new Map<string, CommunicationUserToken>();
+export const threadIdToModeratorCredentialMap = new Map<string, CommunicationUserCredential>();

@@ -1,9 +1,11 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { IconButton, PrimaryButton, Stack, TextField } from '@fluentui/react';
-import React, { useState } from 'react';
-
+import { DefaultButton, IconButton, Stack, TextField } from '@fluentui/react';
 import { CallIcon, VideoCameraEmphasisIcon } from '@fluentui/react-icons-northstar';
+import copy from 'copy-to-clipboard';
+import React, { useState } from 'react';
+import { useCallContext } from '../..';
+import { useOutgoingCall, useSubscribeToDevicePermission } from '../../hooks';
 import {
   buttonIconStyle,
   buttonStackTokens,
@@ -12,40 +14,28 @@ import {
   inputBoxTextStyle,
   mainContainerStyle
 } from './styles/MakeCall.styles';
-import { useLocalVideo, useMicrophone, useOutgoingCall, useSubscribeToDevicePermission } from '../../hooks';
-import copy from 'copy-to-clipboard';
-import { useCallingContext } from '../../providers';
 
 export interface MakeCallScreenProps {
   callerId: string;
   calleeId?: string;
-  startAudioCallHandler(callId: string): void;
-  startVideoCallHandler(callId: string): void;
+  onStartCall(): void;
 }
 
-const audioCallButtonText = 'Audio call';
-const videoCallButtonText = 'Video call';
-
-export default (props: MakeCallScreenProps): JSX.Element => {
-  const { callerId, startAudioCallHandler, startVideoCallHandler } = props;
+export const MakeCallScreen = (props: MakeCallScreenProps): JSX.Element => {
+  const { callerId, onStartCall } = props;
   const [calleeId, setCalleeId] = useState(props.calleeId ?? '');
 
   // todo: this should be handled by a mapper of a component
   useSubscribeToDevicePermission('Microphone');
   useSubscribeToDevicePermission('Camera');
-  const { unmute } = useMicrophone();
-  const { startLocalVideo } = useLocalVideo();
-  const { videoDeviceInfo } = useCallingContext();
-  const { makeCall } = useOutgoingCall();
 
-  const startCall: (calleeId: string, videoEnabled: boolean) => Promise<void> = async (
-    calleeId: string,
-    videoEnabled: boolean
-  ) => {
-    if (videoEnabled && videoDeviceInfo) {
-      await startLocalVideo(videoDeviceInfo);
-    }
-    await unmute();
+  const { makeCall } = useOutgoingCall();
+  const { setLocalVideoOn, setIsMicrophoneEnabled } = useCallContext();
+
+  const startCall = (calleeId: string, videoEnabled: boolean): void => {
+    if (!videoEnabled) setLocalVideoOn(false);
+    else setLocalVideoOn(true);
+    setIsMicrophoneEnabled(true);
     makeCall({ communicationUserId: calleeId });
   };
 
@@ -72,28 +62,28 @@ export default (props: MakeCallScreenProps): JSX.Element => {
         />
       </Stack>
       <Stack horizontal tokens={buttonStackTokens}>
-        <PrimaryButton
+        <DefaultButton
           disabled={!calleeId}
           className={buttonStyle}
           onClick={() => {
-            startAudioCallHandler(calleeId);
+            onStartCall();
             startCall(calleeId, false);
           }}
         >
           <CallIcon className={buttonIconStyle} size="medium" />
-          {audioCallButtonText}
-        </PrimaryButton>
-        <PrimaryButton
+          Audio Call
+        </DefaultButton>
+        <DefaultButton
           disabled={!calleeId}
           className={buttonStyle}
           onClick={() => {
-            startVideoCallHandler(calleeId);
+            onStartCall();
             startCall(calleeId, true);
           }}
         >
           <VideoCameraEmphasisIcon className={buttonIconStyle} size="medium" />
-          {videoCallButtonText}
-        </PrimaryButton>
+          Video Call
+        </DefaultButton>
       </Stack>
     </Stack>
   );

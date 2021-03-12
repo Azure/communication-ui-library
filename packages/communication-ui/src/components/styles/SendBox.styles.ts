@@ -17,20 +17,13 @@ export const TextFieldStyleProps = {
 };
 
 export const sendBoxWrapperStyle = mergeStyles({
-  padding: '0.0625rem',
-  backgroundColor: '#EEF2F5',
-  ':focus-within': {
-    outline: '0.0625rem solid #106EBE',
-    outlineOffset: '-0.0625rem'
-  }
+  padding: '0.0625rem'
 });
 
 export const sendBoxStyle = mergeStyles({
   minHeight: '0',
   maxHeight: '8.25rem',
   outline: 'red 5px',
-  color: 'black',
-  backgroundColor: '#EEF2F5',
   fontWeight: 400,
   fontSize: '0.875rem',
   width: '100%',
@@ -48,7 +41,6 @@ export const sendBoxStyle = mergeStyles({
 });
 
 export const sendIconStyle = mergeStyles({
-  backgroundColor: '#EEF2F5',
   width: '2.25rem',
   height: '2.25rem',
   color: 'grey',
@@ -58,7 +50,6 @@ export const sendIconStyle = mergeStyles({
 });
 
 export const sendButtonStyle = mergeStyles({
-  backgroundColor: '#EEF2F5',
   width: '2.25rem',
   color: 'grey',
   paddingLeft: '0.5rem',

@@ -4,7 +4,7 @@ import { CallingProvider, CallProvider } from '../../providers';
 import React, { useCallback, useEffect, useState } from 'react';
 import { CallClientOptions } from '@azure/communication-calling';
 import { AbortSignalLike } from '@azure/core-http';
-import MakeCallScreen from './MakeCallScreen';
+import { MakeCallScreen } from './MakeCallScreen';
 import CallScreen from './CallScreen';
 import { CallEndScreen } from './CallEndScreen';
 import { getIdFromToken } from '../../utils';
@@ -49,7 +49,7 @@ export const OneToOneCall = (props: OneToOneCallCompositeProps): JSX.Element => 
     return () => window.removeEventListener('resize', setWindowWidth);
   }, []);
 
-  const startCallCallback: () => void = () => {
+  const goToCall: () => void = () => {
     setPage('call');
   };
 
@@ -64,14 +64,7 @@ export const OneToOneCall = (props: OneToOneCallCompositeProps): JSX.Element => 
           {(() => {
             switch (page) {
               case 'landing': {
-                return (
-                  <MakeCallScreen
-                    callerId={callerId}
-                    calleeId={calleeId}
-                    startAudioCallHandler={startCallCallback}
-                    startVideoCallHandler={startCallCallback}
-                  />
-                );
+                return <MakeCallScreen callerId={callerId} calleeId={calleeId} onStartCall={goToCall} />;
               }
               case 'callEnd': {
                 return <CallEndScreen acknowledgeCallback={goToLanding} />;
