@@ -1,11 +1,18 @@
 // © Microsoft Corporation. All rights reserved.
 
-import * as React from 'react';
+import React from 'react';
 
-import { IContextualMenuItem, IOverflowSetItemProps, IconButton, OverflowSet, Stack } from '@fluentui/react';
-import { overFlowButtonStyles, participantStackStyle, participantStackTokens } from './styles/ParticipantStack.styles';
-
-import { connectFuncsToContext, ListParticipant, ParticipantStackItemComponent } from '@azure/communication-ui';
+import {
+  IContextualMenuItem,
+  IOverflowSetItemProps,
+  IconButton,
+  OverflowSet,
+  Stack,
+  PersonaPresence
+} from '@fluentui/react';
+import { connectFuncsToContext, ListParticipant, ParticipantItem } from '@azure/communication-ui';
+import { MicOffIcon, CallControlPresentNewIcon } from '@fluentui/react-northstar';
+import { participantStackStyle, overFlowButtonStyles, overflowSetStyle } from './styles/ParticipantStack.styles';
 import { MapToParticipantListProps } from './consumers/MapToParticipantListProps';
 
 export type ParticipantStackProps = {
@@ -23,16 +30,34 @@ export type ParticipantStackProps = {
   onRenderParticipant?: (participant: ListParticipant) => JSX.Element;
 };
 
-const defaultRenderer = (item: IOverflowSetItemProps): JSX.Element => (
-  <ParticipantStackItemComponent
-    name={item.name}
-    state={item.state}
-    isScreenSharing={item.isScreenSharing}
-    isMuted={item.isMuted}
-    onRemove={item.onRemove}
-    onMute={item.onMute}
-  />
-);
+const defaultRenderer = (item: IOverflowSetItemProps): JSX.Element => {
+  const menuItems: IContextualMenuItem[] = [
+    {
+      key: 'Mute',
+      text: 'Mute',
+      onClick: item.onMute
+    },
+    {
+      key: 'Remove',
+      text: 'Remove',
+      onClick: item.onRemove
+    }
+  ];
+
+  let presence = undefined;
+  if (item.state === 'Connected') {
+    presence = PersonaPresence.online;
+  } else if (item.state === 'Idle') {
+    presence = PersonaPresence.away;
+  }
+
+  return (
+    <ParticipantItem name={item.name} isYou={item.isYou} menuItems={menuItems} presence={presence}>
+      {item.isScreenSharing && <CallControlPresentNewIcon size="small" />}
+      {item.isMuted && <MicOffIcon size="small" />}
+    </ParticipantItem>
+  );
+};
 
 const onRenderOverflowButton = (overflowItems: unknown): JSX.Element => (
   <IconButton
@@ -45,6 +70,7 @@ const onRenderOverflowButton = (overflowItems: unknown): JSX.Element => (
 );
 
 const renderParticipants = (
+  userId: string,
   participants: ListParticipant[],
   participantRenderer?: (participant: ListParticipant) => JSX.Element
 ): JSX.Element[] => {
@@ -64,11 +90,12 @@ const renderParticipants = (
   return participants.map((item, i) => (
     <OverflowSet
       key={i}
-      items={[{ name: item.displayName, ...item }]}
+      items={[{ name: item.displayName, isYou: item.key === userId, ...item }]}
       role="menubar"
       vertical={false}
       onRenderOverflowButton={onRenderOverflowButton}
       onRenderItem={onRenderItem}
+      styles={overflowSetStyle}
     />
   ));
 };
@@ -76,15 +103,15 @@ const renderParticipants = (
 export const ParticipantStackComponent = (props: ParticipantStackProps): JSX.Element => {
   const allParticipants: ListParticipant[] = Array.from(props.remoteParticipants);
   allParticipants.push({
-    key: `${props.userId}`,
-    displayName: `${props.displayName} (You)`,
+    key: props.userId,
+    displayName: props.displayName,
     state: 'Connected',
     isScreenSharing: props.isScreenSharingOn,
     isMuted: props.isMuted
   });
   return (
-    <Stack className={participantStackStyle} tokens={participantStackTokens}>
-      {renderParticipants(allParticipants, props.onRenderParticipant)}
+    <Stack className={participantStackStyle}>
+      {renderParticipants(props.userId, allParticipants, props.onRenderParticipant)}
     </Stack>
   );
 };
