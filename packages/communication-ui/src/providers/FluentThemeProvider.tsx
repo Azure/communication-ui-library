@@ -32,6 +32,7 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
         }
       })
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [theme]);
 
   return (
