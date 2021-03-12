@@ -2,7 +2,7 @@ dependencies:
   '@azure/communication-administration': 1.0.0-beta.3
   '@azure/communication-calling': 1.0.0-beta.2
   '@azure/communication-common': 1.0.0-beta.3
-  '@azure/communication-identity': 1.0.0-beta.5
+  '@azure/communication-identity': 1.0.0-beta.4
   '@azure/communication-signaling': 1.0.0-beta.1
   '@azure/core-http': 1.2.3
   '@babel/core': 7.13.10
@@ -218,29 +218,15 @@ packages:
       node: '>=8.0.0'
     resolution:
       integrity: sha512-wNaw43z+7YoOyIDnhlDtqVgIK0rPl8bgv7vV0oBizw4+CinaUrG8EtYv0nZ7tH6Rr8R+ys9UhoPaS5d+JUVoJw==
-  /@azure/communication-common/1.0.0-beta.6:
+  /@azure/communication-identity/1.0.0-beta.4:
     dependencies:
       '@azure/abort-controller': 1.0.4
-      '@azure/core-auth': 1.2.0
-      '@azure/core-http': 1.2.3
-      '@opentelemetry/api': 0.10.2
-      events: 3.3.0
-      jwt-decode: 2.2.0
-      tslib: 2.1.0
-    dev: false
-    engines:
-      node: '>=8.0.0'
-    resolution:
-      integrity: sha512-Xkm+g6bjZj75kafYBGejuY+TaIFwIyXHt9AcgHXnt+gzpU4c/6GIKpIyOnDJSgjt/BZLX49Zs66fGH7mBb82AQ==
-  /@azure/communication-identity/1.0.0-beta.5:
-    dependencies:
-      '@azure/abort-controller': 1.0.4
-      '@azure/communication-common': 1.0.0-beta.6
+      '@azure/communication-common': 1.0.0-beta.5
       '@azure/core-auth': 1.2.0
       '@azure/core-http': 1.2.3
       '@azure/core-lro': 1.0.3
       '@azure/core-paging': 1.1.3
-      '@azure/core-tracing': 1.0.0-preview.10
+      '@azure/core-tracing': 1.0.0-preview.9
       '@azure/logger': 1.0.2
       '@opentelemetry/api': 0.10.2
       events: 3.3.0
@@ -249,7 +235,7 @@ packages:
     engines:
       node: '>=8.0.0'
     resolution:
-      integrity: sha512-/Q66I3hoR/7UjxRfv4eIfPv0z7GAblycAE9G1z9JDOghbDiZJk3JPW0YSuVyujU0QNDqG1l9q2RSOlcQkTjR1g==
+      integrity: sha512-qd0N66bR16Xrjc0wSaUrUQDTZDNiabk+MWqfT+oNpTIPM5yvu78bjz4aMH7rFYxIOWWW4k6lxwB91ZdBXXn1/A==
   /@azure/communication-signaling/1.0.0-beta.1:
     dependencies:
       '@azure/core-http': 1.2.3
@@ -329,16 +315,6 @@ packages:
       node: '>=8.0.0'
     resolution:
       integrity: sha512-his7Ah40ThEYORSpIAwuh6B8wkGwO/zG7gqVtmSE4WAJ46e36zUDXTKReUCLBDc6HmjjApQQxxcRFy5FruG79A==
-  /@azure/core-tracing/1.0.0-preview.10:
-    dependencies:
-      '@opencensus/web-types': 0.0.7
-      '@opentelemetry/api': 0.10.2
-      tslib: 2.1.0
-    dev: false
-    engines:
-      node: '>=8.0.0'
-    resolution:
-      integrity: sha512-iIwjtMwQnsxB7cYkugMx+s4W1nfy3+pT/ceo+uW1fv4YDgYe84nh+QP0fEC9IH/3UATLSWbIBemdMHzk2APUrw==
   /@azure/core-tracing/1.0.0-preview.9:
     dependencies:
       '@opencensus/web-types': 0.0.7
@@ -20053,7 +20029,7 @@ packages:
     dependencies:
       '@azure/communication-chat': 1.0.0-beta.3
       '@azure/communication-common': 1.0.0-beta.3
-      '@azure/communication-identity': 1.0.0-beta.5
+      '@azure/communication-identity': 1.0.0-beta.4
       '@types/cookie-parser': 1.4.2
       '@types/copy-webpack-plugin': 6.4.0
       '@types/cors': 2.8.10
@@ -20096,7 +20072,7 @@ packages:
     dev: false
     name: '@rush-temp/acs-server-sample'
     resolution:
-      integrity: sha512-ulqEwd3xb7yOWOnPz+Rndbg7I6rmv6RI+0dO9vCsG8y2MgvWBcjbkXvOiurM6/BP/qL6E4gHKfYqOPlKvAy1BA==
+      integrity: sha512-j4Ck8vGlOM7/2P8+HX2HafvmLRhmgjCyipETF/lDQhg+tuknAt/lhRfvG0W3DV7aQDCKaXGCPlaX4LL6pRQOgg==
       tarball: file:projects/acs-server-sample.tgz
     version: 0.0.0
   file:projects/communication-ui.tgz_webpack-cli@4.5.0:
@@ -20205,7 +20181,7 @@ specifiers:
   '@azure/communication-administration': 1.0.0-beta.3
   '@azure/communication-calling': 1.0.0-beta.2
   '@azure/communication-common': 1.0.0-beta.3
-  '@azure/communication-identity': ~1.0.0-beta.4
+  '@azure/communication-identity': 1.0.0-beta.4
   '@azure/communication-signaling': 1.0.0-beta.1
   '@azure/core-http': ^1.2.3
   '@babel/core': ^7.12.7
