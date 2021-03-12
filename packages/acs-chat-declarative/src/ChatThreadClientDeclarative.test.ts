@@ -60,7 +60,6 @@ const mockListMessages = (): any => {
   return createMockMessagesIterator(mockMessages);
 };
 
-jest.mock('@azure/communication-common');
 jest.mock('@azure/communication-chat');
 
 const threadId = '1';
