@@ -25,15 +25,21 @@ jobs:
         run: rush install
 
       - name: Build Packages and Samples
-        run: rush build
+        run: rush build -t "@azure/communication-ui"
 
       - name: Package Private-Preview Artifact
         run: npm pack
         working-directory: ./packages/communication-ui/
 
-      # Todo: move chat and groupcall samples to deploy in the same way as one-to-one
       - name: Archive builds
         run: 7z a private-preview.zip ./packages/communication-ui/private-preview/*
+
+      # Get datetime to name and tag the releases with.
+      - name: Get Release names
+        id: releasenames
+        run: |
+          echo "::set-output name=tagname::$(TZ=":America/Vancouver" date +'%Y-%m-%d-%H%M')"
+          echo "::set-output name=releasename::$(TZ=":America/Vancouver" date +'%Y-%m-%d-%H%M')"
 
       # Upload releases
       - name: Upload Private Preview Release
@@ -41,10 +47,6 @@ jobs:
         with:
           name: PrivatePreview ${{ steps.releasenames.outputs.releasename }}
           tag_name: Release/${{ steps.releasenames.outputs.tagname }}
-          # Todo: move chat and groupcall samples to deploy in the same way as one-to-one
-          files: |
-            group-calling.zip
-            group-chat.zip
-            private-preview.zip
+          files: private-preview.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
