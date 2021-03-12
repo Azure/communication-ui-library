@@ -1,9 +1,9 @@
 // © Microsoft Corporation. All rights reserved.
 
 import { ChatMessage, ChatThreadClient } from '@azure/communication-chat';
-import { AzureCommunicationUserCredential } from '@azure/communication-common';
 import { ChatContext } from './ChatContext';
 import { chatThreadClientDeclaratify } from './ChatThreadClientDeclarative';
+import { createMockMessagesIterator } from './TestUtils';
 
 const mockMessages = [
   {
@@ -56,53 +56,8 @@ const mockMessages = [
   }
 ];
 
-const createMockMessagesIterator = (): any => {
-  let i = 0;
-  const end = mockMessages.length;
-  return {
-    next() {
-      if (i < end) {
-        const iteration = Promise.resolve({ value: mockMessages[i], done: false });
-        i++;
-        return iteration;
-      } else {
-        return Promise.resolve({ done: true });
-      }
-    },
-    [Symbol.asyncIterator]() {
-      return this;
-    },
-    byPage() {
-      let i = 0;
-      const end = mockMessages.length;
-      // Hardcode page size this since its just for test purposes
-      const pageSize = 2;
-      return {
-        next() {
-          if (i < end) {
-            const page: ChatMessage[] = [];
-            for (let j = 0; j < pageSize; j++) {
-              if (i >= end) {
-                break;
-              }
-              page.push(mockMessages[i]);
-              i++;
-            }
-            return Promise.resolve({ value: page, done: false });
-          } else {
-            return Promise.resolve({ done: true });
-          }
-        },
-        [Symbol.asyncIterator]() {
-          return this;
-        }
-      };
-    }
-  };
-};
-
 const mockListMessages = (): any => {
-  return createMockMessagesIterator();
+  return createMockMessagesIterator(mockMessages);
 };
 
 jest.mock('@azure/communication-common');
@@ -110,8 +65,15 @@ jest.mock('@azure/communication-chat');
 
 const threadId = '1';
 
+class MockCommunicationUserCredential {
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  public getToken(): any {}
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  public dispose(): void {}
+}
+
 function createMockChatClientAndDeclaratify(context: ChatContext): ChatThreadClient {
-  const mockChatThreadClient = new ChatThreadClient(threadId, '', new AzureCommunicationUserCredential(''));
+  const mockChatThreadClient = new ChatThreadClient(threadId, '', new MockCommunicationUserCredential());
   mockChatThreadClient.listMessages = mockListMessages;
   Object.defineProperty(mockChatThreadClient, 'threadId', { value: threadId });
   const declarativeChatThreadClient = chatThreadClientDeclaratify(mockChatThreadClient, context);

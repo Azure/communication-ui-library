@@ -76,15 +76,15 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
     this._context = context;
   }
 
-  public get<P extends keyof ChatThreadClient>(target: ChatThreadClient, prop: P): any {
+  public get<P extends keyof ChatThreadClient>(chatThreadClient: ChatThreadClient, prop: P): any {
     switch (prop) {
       case 'listMessages': {
-        return proxyListMessages(target, this._context);
+        return proxyListMessages(chatThreadClient, this._context);
       }
       case 'getMessage': {
         return async (...args: Parameters<ChatThreadClient['getMessage']>) => {
-          const message = await target.getMessage(...args);
-          this._context.setChatMessage(target.threadId, convertChatMessage(message));
+          const message = await chatThreadClient.getMessage(...args);
+          this._context.setChatMessage(chatThreadClient.threadId, convertChatMessage(message));
           return message;
         };
       }
@@ -103,29 +103,29 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
             createdOn: new Date(),
             status: 'sending'
           };
-          this._context.setChatMessage(target.threadId, newMessage);
+          this._context.setChatMessage(chatThreadClient.threadId, newMessage);
 
-          const result = await target.sendMessage(...args);
+          const result = await chatThreadClient.sendMessage(...args);
           if (result._response.status === Constants.CREATED) {
             if (result.id) {
-              const message = await target.getMessage(result.id);
+              const message = await chatThreadClient.getMessage(result.id);
               this._context.batch(() => {
-                this._context.setChatMessage(target.threadId, {
+                this._context.setChatMessage(chatThreadClient.threadId, {
                   ...message,
                   status: 'delivered',
                   id: result.id
                 });
-                this._context.deleteLocalMessage(target.threadId, clientMessageId);
+                this._context.deleteLocalMessage(chatThreadClient.threadId, clientMessageId);
               });
             }
           } else if (result._response.status === Constants.PRECONDITION_FAILED_STATUS_CODE) {
-            this._context.setChatMessage(target.threadId, { ...newMessage, status: 'failed' });
+            this._context.setChatMessage(chatThreadClient.threadId, { ...newMessage, status: 'failed' });
           }
           return result;
         };
       }
       default:
-        return Reflect.get(target, prop);
+        return Reflect.get(chatThreadClient, prop);
     }
   }
 }
