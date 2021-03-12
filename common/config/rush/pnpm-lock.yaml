@@ -14,7 +14,7 @@ dependencies:
   '@fluentui/react-northstar': 0.51.7_b0d7ca8a0459a1df1ff516252688d92a
   '@fluentui/react-theme-provider': 0.18.5_b0d7ca8a0459a1df1ff516252688d92a
   '@mdx-js/react': 1.6.22_react@16.14.0
-  '@octokit/rest': 18.3.5
+  '@octokit/rest': 18.0.15
   '@rush-temp/acs-calling-declarative': file:projects/acs-calling-declarative.tgz_prettier@2.0.5+ts-node@9.1.1
   '@rush-temp/acs-calling-sample': file:projects/acs-calling-sample.tgz_570bf42e92a70fb216c5cd4d5ed668ef
   '@rush-temp/acs-chat-declarative': file:projects/acs-chat-declarative.tgz_prettier@2.0.5+ts-node@9.1.1
@@ -3410,7 +3410,7 @@ packages:
       '@octokit/core': '>=3'
     resolution:
       integrity: sha512-4RFU4li238jMJAzLgAwkBAw+4Loile5haQMQr+uhFq27BmyJXcXSKvoQKqh0agsZEiUlW6iSv3FAgvmGkur7OQ==
-  /@octokit/plugin-rest-endpoint-methods/4.13.5_@octokit+core@3.3.0:
+  /@octokit/plugin-rest-endpoint-methods/4.8.0_@octokit+core@3.3.0:
     dependencies:
       '@octokit/core': 3.3.0
       '@octokit/types': 6.12.2
@@ -3419,7 +3419,7 @@ packages:
     peerDependencies:
       '@octokit/core': '>=3'
     resolution:
-      integrity: sha512-kYKcWkFm4Ldk8bZai2RVEP1z97k1C/Ay2FN9FNTBg7JIyKoiiJjks4OtT6cuKeZX39tqa+C3J9xeYc6G+6g8uQ==
+      integrity: sha512-2zRpXDveJH8HsXkeeMtRW21do8wuSxVn1xXFdvhILyxlLWqGQrdJUA1/dk5DM7iAAYvwT/P3bDOLs90yL4S2AA==
   /@octokit/request-error/2.0.5:
     dependencies:
       '@octokit/types': 6.12.2
@@ -3441,15 +3441,15 @@ packages:
     dev: false
     resolution:
       integrity: sha512-VkmtacOIQp9daSnBmDI92xNIeLuSRDOIuplp/CJomkvzt7M18NXgG044Cx/LFKLgjKt9T2tZR6AtJayba9GTSA==
-  /@octokit/rest/18.3.5:
+  /@octokit/rest/18.0.15:
     dependencies:
       '@octokit/core': 3.3.0
       '@octokit/plugin-paginate-rest': 2.13.2_@octokit+core@3.3.0
       '@octokit/plugin-request-log': 1.0.3_@octokit+core@3.3.0
-      '@octokit/plugin-rest-endpoint-methods': 4.13.5_@octokit+core@3.3.0
+      '@octokit/plugin-rest-endpoint-methods': 4.8.0_@octokit+core@3.3.0
     dev: false
     resolution:
-      integrity: sha512-ZPeRms3WhWxQBEvoIh0zzf8xdU2FX0Capa7+lTca8YHmRsO3QNJzf1H3PcuKKsfgp91/xVDRtX91sTe1kexlbw==
+      integrity: sha512-MBlZl0KeuvFMJ3210hG5xhh/jtYmMDLd5WmO49Wg4Rfg0odeivntWAyq3KofJDP2G8jskCaaOaZBKo0TeO9tFA==
   /@octokit/types/6.12.2:
     dependencies:
       '@octokit/openapi-types': 5.3.2
@@ -20201,7 +20201,7 @@ packages:
     version: 0.0.0
   file:projects/release-tools.tgz_typescript@4.1.5:
     dependencies:
-      '@octokit/rest': 18.3.5
+      '@octokit/rest': 18.0.15
       '@types/node': 14.14.34
       beachball: 1.53.1
       ts-node: 9.1.1_typescript@4.1.5
@@ -20211,9 +20211,10 @@ packages:
     peerDependencies:
       typescript: '*'
     resolution:
-      integrity: sha512-MP2nngt0xaBUQTBHd1FOowejcdtStyX+l1rPWAtN8eLvY7F0Iiz4aghgsNHtW2aaYXBWwbawLA1/rsHd9Bw/5Q==
+      integrity: sha512-UQumbwoolIDKZIpwIeuHgTpS5NHC09Mouev09oIQPNYzmj3cRie0bbR0C5UTmMQ+zJ00n5EhKy5G9dEN4/F24w==
       tarball: file:projects/release-tools.tgz
     version: 0.0.0
+registry: ''
 specifiers:
   '@azure/communication-administration': ^1.0.0-beta.3
   '@azure/communication-calling': 1.0.0-beta.2
@@ -20230,7 +20231,7 @@ specifiers:
   '@fluentui/react-northstar': ^0.51.2
   '@fluentui/react-theme-provider': ^0.18.0
   '@mdx-js/react': ^1.6.22
-  '@octokit/rest': ^18.0.6
+  '@octokit/rest': ~18.0.6
   '@rush-temp/acs-calling-declarative': file:./projects/acs-calling-declarative.tgz
   '@rush-temp/acs-calling-sample': file:./projects/acs-calling-sample.tgz
   '@rush-temp/acs-chat-declarative': file:./projects/acs-chat-declarative.tgz
@@ -20276,7 +20277,7 @@ specifiers:
   babel-eslint: ^10.0.0
   babel-jest: ^26.6.0
   babel-loader: 8.1.0
-  beachball: ^1.53.0
+  beachball: ~1.53.0
   classnames: ^2.2.6
   concurrently: ^5.3.0
   cookie-parser: ~1.4.4
