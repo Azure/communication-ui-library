@@ -28,11 +28,11 @@ interface ParticipantItemProps {
   isYou?: boolean;
   /** Optional JSX element to override avatar */
   avatar?: JSX.Element;
-  /** Optional array of IContextualMenuItem to for contextual menu */
+  /** Optional array of IContextualMenuItem for contextual menu */
   menuItems?: IContextualMenuItem[];
   /** Optional children to component such as icons */
   children?: React.ReactNode;
-  /** Optional PersonaPresence to show participant presence. This won't have an effect if property avatar has a value */
+  /** Optional PersonaPresence to show participant presence. This will not have an effect if property avatar is assigned */
   presence?: PersonaPresence;
 }
 
