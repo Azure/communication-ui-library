@@ -24,29 +24,15 @@ jobs:
       - name: Install dependencies
         run: rush install
 
-      # Builds
       - name: Build Packages and Samples
-        run: rush build
-
-      # Package up artifacts for release
-      - name: Package Group Calling Sample Artifact
-        run: rushx package
-        working-directory: ./samples/Calling
-
-      - name: Package Group Chat Sample Artifact
-        run: rushx package
-        working-directory: ./samples/Chat
+        run: rush build -t "@azure/communication-ui"
 
       - name: Package Private-Preview Artifact
         run: npm pack
         working-directory: ./packages/communication-ui/
 
-      # Todo: move chat and groupcall samples to deploy in the same way as one-to-one
       - name: Archive builds
-        run: |
-          7z a group-calling.zip ./samples/Calling/dist/*
-          7z a group-chat.zip ./samples/Chat/dist/*
-          7z a private-preview.zip ./packages/communication-ui/private-preview/*
+        run: 7z a private-preview.zip ./packages/communication-ui/private-preview/*
 
       # Get datetime to name and tag the releases with.
       - name: Get Release names
@@ -61,10 +47,6 @@ jobs:
         with:
           name: PrivatePreview ${{ steps.releasenames.outputs.releasename }}
           tag_name: Release/${{ steps.releasenames.outputs.tagname }}
-          # Todo: move chat and groupcall samples to deploy in the same way as one-to-one
-          files: |
-            group-calling.zip
-            group-chat.zip
-            private-preview.zip
+          files: private-preview.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
