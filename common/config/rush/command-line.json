@@ -15,6 +15,12 @@
       "shellCommand": "node common/release/node_modules/beachball/bin/beachball"
     },
     {
+      "commandKind": "global",
+      "name": "changelog:check",
+      "summary": "Checks change files have been generated",
+      "shellCommand": "node common/release/node_modules/beachball/bin/beachball check"
+    },
+    {
       "commandKind": "bulk",
       "name": "test",
       "summary": "Run tests in each project.",
