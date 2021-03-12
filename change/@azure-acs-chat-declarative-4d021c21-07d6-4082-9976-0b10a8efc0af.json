@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Initial changelog setup",
-  "packageName": "@azure/acs-chat-declarative",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "patch"
-}
