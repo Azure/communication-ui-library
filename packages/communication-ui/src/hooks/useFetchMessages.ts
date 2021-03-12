@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { ChatMessage, ChatThreadClient, ListMessagesOptions } from '@azure/communication-chat';
+import { ChatMessage, ChatThreadClient, RestListMessagesOptions } from '@azure/communication-chat';
 import { useChatThreadClient, useSetChatMessages } from '../providers/ChatThreadProvider';
 
 import { TEXT_MESSAGE } from '../constants';
@@ -9,7 +9,7 @@ import { CommunicationUiErrorCode, CommunicationUiError } from '../types/Communi
 
 const fetchMessagesInternal = async (
   chatThreadClient: ChatThreadClient,
-  options?: ListMessagesOptions
+  options?: RestListMessagesOptions
 ): Promise<ChatMessage[]> => {
   let messages: ChatMessage[] = [];
   let getMessagesResponse;
@@ -30,7 +30,7 @@ const fetchMessagesInternal = async (
   return messages.reverse();
 };
 
-export const useFetchMessages = (): ((options?: ListMessagesOptions) => Promise<ChatMessage[]>) => {
+export const useFetchMessages = (): ((options?: RestListMessagesOptions) => Promise<ChatMessage[]>) => {
   const chatThreadClient = useChatThreadClient();
   const setChatMessages = useSetChatMessages();
   if (!chatThreadClient) {
@@ -40,7 +40,7 @@ export const useFetchMessages = (): ((options?: ListMessagesOptions) => Promise<
     });
   }
   const fetchMessages = useCallback(
-    async (options?: ListMessagesOptions): Promise<ChatMessage[]> => {
+    async (options?: RestListMessagesOptions): Promise<ChatMessage[]> => {
       const messages = await fetchMessagesInternal(chatThreadClient, options);
       setChatMessages(messages);
       return messages;
