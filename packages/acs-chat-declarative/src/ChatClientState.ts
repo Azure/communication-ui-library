@@ -1,5 +1,5 @@
 // © Microsoft Corporation. All rights reserved.
-import { ChatThread, ReadReceipt, ChatThreadMember } from '@azure/communication-chat';
+import { ChatThread } from '@azure/communication-chat';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 
 export type ChatClientState = {
@@ -9,11 +9,9 @@ export type ChatClientState = {
 };
 
 export type ChatThreadClientState = {
-  chatMessages?: Map<string, ChatMessageWithStatus>;
+  chatMessages: Map<string, ChatMessageWithStatus>;
   threadId: string;
   thread?: ChatThread;
-  receipts?: ReadReceipt[];
-  threadMembers: ChatThreadMember[];
   coolPeriod?: Date;
   getThreadMembersError?: boolean;
   updateThreadMembersError?: boolean;
