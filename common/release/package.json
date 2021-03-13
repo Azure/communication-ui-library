@@ -5,6 +5,7 @@
   "scripts": {
     "beachball": "beachball",
     "lint": "",
+    "lint:fix": "",
     "build": "",
     "test": ""
   },

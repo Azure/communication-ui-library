@@ -1,0 +1,70 @@
+name: Bump npm packages and create changelogs
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch or tag to create release from'
+        required: true
+        default: 'main'
+
+jobs:
+  release:
+    name: Bump versions and create changelog PR
+    runs-on: ubuntu-latest
+    steps:
+      # Setup bot information for creating pull request
+      - name: Setup bot git information
+        run: |
+          git config user.email "github-action-bot@service.microsoft.com"
+          git config user.name "github-action-bot"
+
+      # Check-out repo
+      - uses: actions/checkout@v2
+
+      # Check out onto desired branch or tag to create release from
+      - name: Checkout tag/branch
+        run: git checkout ${{ github.event.inputs.branch }}
+
+      # Ensure node version is great enough
+      - name: Use Node.js v12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+
+      # Install dependencies
+      - name: Install rush
+        run: npm install -g @microsoft/rush
+      - name: Install dependencies
+        run: rush install
+
+      # Bump package versions
+      - name: Bump package versions
+        run: npx beachball bump
+
+      # Get datetime for branch name
+      - name: Create datetime
+        id: datetime
+        run: |
+          echo "::set-output name=datetime::$(TZ=":America/Vancouver" date +'%Y-%m-%d-%H%M')"
+
+      # Commit and push changes
+      - name: Hop into new branch
+        run: git checkout -b versionbump/${{ steps.datetime.outputs.datetime }}
+      - name: Commit changes
+        run: |
+          git add .
+          git commit -m "Version bump"
+      - name: Push branch
+        run: push --set-upstream origin versionbump/${{ steps.datetime.outputs.datetime }}
+
+      # Create a PR from the changes
+      - name: Create PR
+        run: |
+          curl \
+            -X POST \
+            -H 'Accept: application/vnd.github.v3+json' \
+            -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+            -d '{"title": "Package Version Bump", "head": "versionbump/${{ steps.datetime.outputs.datetime }}", "base", "main", "body", "Package Version Bump."}' \
+            https://api.github.com/repos/Azure/communication-ui-sdk/pulls/

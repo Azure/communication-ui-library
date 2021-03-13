@@ -1,0 +1,58 @@
+name: Publish npm packages
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      release-branch:
+        description: 'Branch to create release from'
+        required: true
+      npm-tag:
+        description: '(Optional) Npm tag for the release, e.g. latest, next, dev'
+        required: false
+
+jobs:
+  publish:
+    name: Publish release
+    runs-on: ubuntu-latest
+    steps:
+      # Check-out repo
+      - uses: actions/checkout@v2
+
+      # Check out onto desired branch to publish release from
+      - name: Checkout tag/branch
+        run: git checkout ${{ github.event.inputs.release-branch }}
+
+      # Ensure node version is great enough
+      - name: Use Node.js v12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+
+      # Install dependencies
+      - name: Install rush
+        run: npm install -g @microsoft/rush
+      - name: Install dependencies
+        run: rush install
+
+      # Perform changelog check
+      - name: Guard check - ensure no new changes were introduced
+        run: npx beachball check
+
+      # Builds
+      - name: Build Packages and Samples
+        run: rush build
+
+      - name: Build Storybook
+        run: rushx build:storybook
+        working-directory: ./packages/communication-ui
+
+      # Run tests
+      - name: Run Tests
+        run: rush test
+        env:
+          CI: true
+
+      # Publish
+      - name: Publish to npm
+        run: echo Publishing not setup yet. Tag=${{ github.event.inputs.npm-tag }}
