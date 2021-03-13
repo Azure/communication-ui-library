@@ -8,8 +8,6 @@ import { ChatClient } from '@azure/communication-chat';
 import { ChatMessage } from '@azure/communication-chat';
 import { ChatThread } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
-import { ChatThreadMember } from '@azure/communication-chat';
-import { ReadReceipt } from '@azure/communication-chat';
 
 // Warning: (ae-forgotten-export) The symbol "DeclarativeChatClient" needs to be exported by the entry point index.d.ts
 //
@@ -19,7 +17,7 @@ export const chatClientDeclaratify: (chatClient: ChatClient) => DeclarativeChatC
 // Warning: (ae-forgotten-export) The symbol "ChatContext" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
-export const chatThreadClientDeclaratify: (chatThreadClient: ChatThreadClient, chatContext: ChatContext) => ChatThreadClient;
+export const chatThreadClientDeclaratify: (chatThreadClient: ChatThreadClient, context: ChatContext) => ChatThreadClient;
 
 
 // (No @packageDocumentation comment for this package)
