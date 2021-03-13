@@ -49,7 +49,7 @@ export const OneToOneCall = (props: OneToOneCallCompositeProps): JSX.Element => 
     return () => window.removeEventListener('resize', setWindowWidth);
   }, []);
 
-  const startCallCallback: () => void = () => {
+  const goToCall: () => void = () => {
     setPage('call');
   };
 
@@ -64,14 +64,7 @@ export const OneToOneCall = (props: OneToOneCallCompositeProps): JSX.Element => 
           {(() => {
             switch (page) {
               case 'landing': {
-                return (
-                  <MakeCallScreen
-                    callerId={callerId}
-                    calleeId={calleeId}
-                    startAudioCallHandler={startCallCallback}
-                    startVideoCallHandler={startCallCallback}
-                  />
-                );
+                return <MakeCallScreen callerId={callerId} calleeId={calleeId} onStartCall={goToCall} />;
               }
               case 'callEnd': {
                 return <CallEndScreen acknowledgeCallback={goToLanding} />;

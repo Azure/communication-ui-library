@@ -9,5 +9,5 @@ if (!githubPAT && (process.argv.includes('bump') || process.argv.includes('publi
 // Octokit is used to access the GitHub REST API
 export const github = new Octokit({
   ...repoDetails,
-  ...(githubPAT && { auth: 'token ' + githubPAT })
+  ...(githubPAT && { auth: `token ${githubPAT}` })
 });

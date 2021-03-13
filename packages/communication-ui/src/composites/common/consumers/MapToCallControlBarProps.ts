@@ -1,18 +1,22 @@
 // © Microsoft Corporation. All rights reserved.
 
 import { HangupCallOptions, PermissionState as DevicePermissionState } from '@azure/communication-calling';
-import { useCallContext, useCallingContext } from '../../../providers';
-import useSubscribeToDevicePermission from '../../../hooks/useSubscribeToDevicePermission';
-import useLocalVideo from '../../../hooks/useLocalVideo';
-import { useMicrophone } from '../../../hooks/useMicrophone';
-import useScreenShare from '../../../hooks/useScreenShare';
-import useSubscribeToVideoDeviceList from '../../../hooks/useSubscribeToVideoDeviceList';
-import { isMobileSession } from '../../../utils';
-import { useGroupCall } from '../../../hooks';
-import { CommunicationUiErrorCode, CommunicationUiError } from '../../../types/CommunicationUiError';
+import {
+  useCallContext,
+  useCallingContext,
+  useSubscribeToDevicePermission,
+  useLocalVideo,
+  useMicrophone,
+  useScreenShare,
+  useSubscribeToVideoDeviceList,
+  useGroupCall,
+  CommunicationUiErrorCode,
+  CommunicationUiError
+} from '../../../';
+
 import { useCallback } from 'react';
 
-export type MediaControlsContainerProps = {
+export type CallControlBarContainerProps = {
   /** Determines icon for mic toggle button. */
   isMicrophoneActive: boolean;
   /** Callback when microphone is unmuted. */
@@ -45,13 +49,11 @@ export type MediaControlsContainerProps = {
   cameraPermission: DevicePermissionState;
   /** Determines mic permission. */
   micPermission: DevicePermissionState;
-  /** Determines if screen share is supported by browser. */
-  isLocalScreenShareSupportedInBrowser(): boolean;
   /** Callback when leaving the call.  */
   leaveCall: (hangupCallOptions: HangupCallOptions) => Promise<void>;
 };
 
-export const MapToMediaControlsProps = (): MediaControlsContainerProps => {
+export const MapToCallControlBarProps = (): CallControlBarContainerProps => {
   const { videoDevicePermission, audioDevicePermission, videoDeviceInfo } = useCallingContext();
   const {
     localVideoStream,
@@ -69,14 +71,6 @@ export const MapToMediaControlsProps = (): MediaControlsContainerProps => {
   useSubscribeToDevicePermission('Camera');
   useSubscribeToDevicePermission('Microphone');
   useSubscribeToVideoDeviceList();
-
-  // Only support Desktop -- Chrome | Edge (Chromium) | Safari
-  const isLocalScreenShareSupportedInBrowser = (): boolean => {
-    return (
-      !isMobileSession() &&
-      (/chrome/i.test(navigator.userAgent.toLowerCase()) || /safari/i.test(navigator.userAgent.toLowerCase()))
-    );
-  };
 
   const startLocalVideoInternal = useCallback((): Promise<void> => {
     if (videoDeviceInfo) {
@@ -109,7 +103,6 @@ export const MapToMediaControlsProps = (): MediaControlsContainerProps => {
     toggleScreenShare,
     cameraPermission: videoDevicePermission,
     micPermission: audioDevicePermission,
-    isLocalScreenShareSupportedInBrowser,
     leaveCall: async (hangupCallOptions: HangupCallOptions): Promise<void> => {
       await leave(hangupCallOptions);
     }
