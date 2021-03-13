@@ -27,6 +27,7 @@ import { Dispatch } from 'react';
 import { ErrorInfo } from 'react';
 import { GroupCallContext } from '@azure/communication-calling';
 import { HangupCallOptions } from '@azure/communication-calling';
+import { IContextualMenuItem } from '@fluentui/react';
 import { IContextualMenuProps } from '@fluentui/react';
 import { IIconProps } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
@@ -36,6 +37,7 @@ import { MouseEventHandler } from 'react';
 import { PartialTheme } from '@fluentui/react-theme-provider';
 import { PermissionState as PermissionState_2 } from '@azure/communication-calling';
 import { PermissionType } from '@azure/communication-calling';
+import { PersonaPresence } from '@fluentui/react';
 import { PhoneNumber } from '@azure/communication-common';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
@@ -97,11 +99,6 @@ export type CallContextType = {
     isLocalVideoOn: boolean;
     setLocalVideoOn: Dispatch<SetStateAction<boolean>>;
 };
-
-// Warning: (ae-forgotten-export) The symbol "CallControlBarProps" needs to be exported by the entry point index.d.ts
-//
-// @public
-export const CallControlBar: (props: CallControlBarProps & ErrorHandlingProps & LocalDeviceSettingsContainerProps) => JSX.Element;
 
 // @public (undocumented)
 export const CallingContext: React_2.Context<CallingContextType | undefined>;
@@ -667,11 +664,6 @@ export const MAXIMUM_LENGTH_OF_TYPING_USERS = 35;
 // @public (undocumented)
 export const MAXIMUM_RETRY_COUNT = 3;
 
-// Warning: (ae-forgotten-export) The symbol "MemberItemProps" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export const MemberItem: (props: MemberItemProps & ErrorHandlingProps) => JSX.Element;
-
 // @public (undocumented)
 export enum MessageStatus {
     // (undocumented)
@@ -713,13 +705,13 @@ export const optionsButtonProps: CallControlButtonProps;
 // @public (undocumented)
 export const PAGE_SIZE = 200;
 
-// @public (undocumented)
-export const PARTICIPANTS_THRESHOLD = 20;
-
-// Warning: (ae-forgotten-export) The symbol "ParticipantStackItemProps" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "ParticipantItemProps" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
-export const ParticipantStackItemComponent: (props: ParticipantStackItemProps) => JSX.Element;
+export const ParticipantItem: (props: ParticipantItemProps & ErrorHandlingProps) => JSX.Element;
+
+// @public (undocumented)
+export const PARTICIPANTS_THRESHOLD = 20;
 
 // @public (undocumented)
 export type ParticipantStream = {
@@ -849,7 +841,7 @@ export type ThreadProviderContextType = {
 };
 
 // @public (undocumented)
-export const TOO_MANY_REQUESTS_STATUS_CODE = 429;
+export const TOO_MANY_REQUESTS_STATUS_CODE = 430;
 
 // @public (undocumented)
 export const TypingIndicator: (props: Pick<TypingIndicatorProps & ErrorHandlingProps, "onErrorCallback">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;

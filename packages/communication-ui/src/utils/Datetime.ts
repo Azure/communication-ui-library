@@ -48,8 +48,8 @@ export const formatDateForChatMessage = (messageDate: Date): string => {
  *   - We consider start of the week as Sunday. If current day is Sunday, then any time before that is in previous week.
  * If message is in previous or older weeks, then show date string plus the time.
  *
- * @param messageDate
- * @param currentDate
+ * @param messageDate - date of message
+ * @param currentDate - date used as offset to create the user friendly timestamp (e.g. to create 'Yesterday' instead of an absolute date)
  */
 export const formatTimestampForChatMessage = (messageDate: Date, todayDate: Date): string => {
   // If message was in the same day timestamp string is just the time like '1:30 p.m.'.

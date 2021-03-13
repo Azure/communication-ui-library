@@ -21,8 +21,6 @@ const errorBarSeverityToMessageBarType = new Map<CommunicationUiErrorSeverity, M
 /**
  * Displays a message on screen based on message and severity. If message is undefined or if severity is IGNORE, then
  * nothing will be displayed.
- *
- * @param props
  */
 export const ErrorBarComponent = (props: ErrorBarProps): JSX.Element => {
   const { message, severity, onClose } = props;
