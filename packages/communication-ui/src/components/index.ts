@@ -1,7 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
 import SendBox from './SendBox';
-import MemberItem from './MemberItem';
 import TypingIndicator, { TypingIndicatorComponent } from './TypingIndicator';
 import { GridLayoutComponent } from './GridLayout';
 import ErrorBar, { ErrorBarComponent } from './ErrorBar';
@@ -9,7 +8,6 @@ import { WithErrorHandling } from '../utils/WithErrorHandling';
 
 export {
   SendBox,
-  MemberItem,
   TypingIndicator,
   TypingIndicatorComponent,
   GridLayoutComponent,
@@ -22,12 +20,11 @@ export { SendBoxComponent } from './SendBox';
 export { ReadReceiptComponent } from './ReadReceipt';
 export type { ReadReceiptProps } from './ReadReceipt';
 export { StreamMedia } from './StreamMedia';
-export { ParticipantStackItemComponent } from './ParticipantStackItem';
+export { ParticipantItem } from './ParticipantItem';
 export {
   CONTROL_BAR_LAYOUTS,
   ControlBar,
   ControlButton,
-  CallControlBar,
   videoButtonProps,
   audioButtonProps,
   screenShareButtonProps,
