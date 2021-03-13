@@ -17,7 +17,7 @@
   "dependencies": {
     "@azure/communication-chat": "1.0.0-beta.3",
     "@azure/communication-common": "1.0.0-beta.3",
-    "@azure/communication-identity": "~1.0.0-beta.4",
+    "@azure/communication-identity": "1.0.0-beta.4",
     "@types/cors": "^2.8.8",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
@@ -55,7 +55,7 @@
     "ts-loader": "^8.0.12",
     "ts-node": "^9.1.1",
     "ts-node-dev": "^1.0.0",
-    "typescript": "^4.0.5",
+    "typescript": "4.1.5",
     "webpack": "4.44.2",
     "webpack-cli": "^4.2.0",
     "webpack-node-externals": "^2.5.2"

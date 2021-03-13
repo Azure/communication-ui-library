@@ -16,7 +16,8 @@ export const containerStyles: IStackStyles = {
   root: {
     height: '100%',
     minHeight: '9.375rem',
-    width: '100%'
+    width: '100%',
+    position: 'relative'
   }
 };
 

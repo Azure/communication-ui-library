@@ -14,7 +14,7 @@ export interface RemoteVideoTileProps {
   avatarName?: string;
 }
 
-const RemoteVideoTileComponentBase = (props: RemoteVideoTileProps) => {
+const RemoteVideoTileComponentBase = (props: RemoteVideoTileProps): JSX.Element => {
   const { isVideoReady, videoStreamElement, label } = props;
 
   return (

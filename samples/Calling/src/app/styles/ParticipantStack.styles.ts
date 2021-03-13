@@ -1,6 +1,13 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { IButtonStyles, IStackTokens, mergeStyles } from '@fluentui/react';
+import { IButtonStyles, IOverflowSetStyles, mergeStyles } from '@fluentui/react';
+
+export const participantStackStyle = mergeStyles({
+  maxHeight: '21.875rem',
+  overflow: 'auto',
+  paddingLeft: '1.125rem',
+  paddingRight: '1.125rem'
+});
 
 export const overFlowButtonStyles: IButtonStyles = {
   root: {
@@ -11,14 +18,8 @@ export const overFlowButtonStyles: IButtonStyles = {
   }
 };
 
-export const participantStackStyle = mergeStyles({
-  maxHeight: '21.875rem',
-  overflow: 'auto',
-  paddingLeft: '1.125rem',
-  paddingRight: '1.125rem'
-});
-
-export const participantStackTokens: IStackTokens = {
-  childrenGap: '0.625rem',
-  padding: '0.625rem'
+export const overflowSetStyle: IOverflowSetStyles = {
+  item: {
+    width: '100%'
+  }
 };

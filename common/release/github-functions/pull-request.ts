@@ -81,7 +81,7 @@ export async function getPrNumber(commit: string): Promise<number | undefined> {
       }
     }
   } catch (ex) {
-    console.log(`Could not get commit message for ${commit} to find PR number (trying another method):`, ex);
+    console.warn(`Could not get commit message for ${commit} to find PR number (trying another method):`, ex);
   }
 
   // Or fetch from GitHub API
