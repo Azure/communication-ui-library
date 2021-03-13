@@ -31,10 +31,6 @@ jobs:
       - name: Install dependencies
         run: rush install
 
-      # Perform changelog check
-      - name: Check the necessary change file has been submitted
-        run: rush changelog:check
-
       # Perform lint check
       - name: Run linter
         run: rush lint
@@ -63,6 +59,10 @@ jobs:
           else
             echo "Success, no new api changes found.""
           fi
+
+      # Perform changelog check
+      - name: Check the necessary change file has been submitted
+        run: rush changelog:check
 
       # Run tests
       - name: Run Tests
