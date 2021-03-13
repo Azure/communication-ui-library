@@ -40,6 +40,15 @@
     },
     {
       "commandKind": "bulk",
+      "name": "lint:fix",
+      "summary": "Run lint:fix in each project.",
+      "enableParallelism": true,
+      "allowWarningsInSuccessfulBuild": true,
+      "ignoreDependencyOrder": true,
+      "incremental": false
+    },
+    {
+      "commandKind": "bulk",
       "name": "build:watch",
       "summary": "Trigger incremental build with watch command.",
       "enableParallelism": false
