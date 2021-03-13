@@ -7,10 +7,6 @@ import { text } from '@storybook/addon-knobs';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-administration';
 import { getDocs } from './docs/OneToOneCallCompositeDocs';
 import { OneToOneCall } from '../composites';
-import { Provider } from '@fluentui/react-northstar';
-import { svgIconStyles } from '@fluentui/react-northstar/dist/commonjs/themes/teams/components/SvgIcon/svgIconStyles';
-import { svgIconVariables } from '@fluentui/react-northstar/dist/commonjs/themes/teams/components/SvgIcon/svgIconVariables';
-import * as siteVariables from '@fluentui/react-northstar/dist/commonjs/themes/teams/siteVariables';
 import { Stack } from '@fluentui/react';
 import { COMPOSITE_FOLDER_PREFIX } from './constants';
 
@@ -27,16 +23,6 @@ export default {
 const experienceContainerStyle = {
   width: '90vw',
   height: '90vh'
-};
-
-const iconTheme = {
-  componentStyles: {
-    SvgIcon: svgIconStyles
-  },
-  componentVariables: {
-    SvgIcon: svgIconVariables
-  },
-  siteVariables
 };
 
 const errMessage: () => JSX.Element = () => (
@@ -73,12 +59,12 @@ const OneToOneCallCompositeInstance: (token: string, calleeId?: string) => JSX.E
   const requiredInformationObtained = token;
 
   return (
-    <Provider theme={iconTheme} style={experienceContainerStyle}>
+    <div style={experienceContainerStyle}>
       {requiredInformationObtained && (
         <OneToOneCall displayName={randomCallerName()} calleeId={calleeId} token={token} />
       )}
       {!requiredInformationObtained && errMessage()}
-    </Provider>
+    </div>
   );
 };
 

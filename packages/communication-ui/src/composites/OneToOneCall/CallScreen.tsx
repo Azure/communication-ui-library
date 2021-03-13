@@ -1,16 +1,14 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { Label, Spinner, Stack } from '@fluentui/react';
+import { Label, Stack } from '@fluentui/react';
 import React from 'react';
-import { activeContainerClassName, containerStyles, headerStyles, loadingStyle } from './styles/CallScreen.styles';
-
+import { activeContainerClassName, containerStyles, loadingStyle } from './styles/CallScreen.styles';
 import MediaFullScreen from './MediaFullScreen';
 import { connectFuncsToContext } from '../../consumers/ConnectContext';
 import { CallContainerProps, MapToOneToOneCallProps } from '../../consumers/MapToCallProps';
-import MediaControls from '../../components/MediaControls';
-import { headerCenteredContainer, headerContainer } from '../../components/styles/Header.styles';
-import { MINI_HEADER_WINDOW_WIDTH } from '../../constants';
-import { MediaGallery1To1 } from '../../components';
+import { CallControlBarComponent } from '../common/CallControls';
+import { MediaGallery1To1 } from './MediaGallery1To1';
+import { OutgoingCallScreen } from './OutgoingCallScreen';
 
 export interface OneToOneCallProps extends CallContainerProps {
   screenWidth: number;
@@ -18,35 +16,25 @@ export interface OneToOneCallProps extends CallContainerProps {
   callFailedHandler(): void;
 }
 
-const SpinnerWith: (spinnerText: string) => JSX.Element = (spinnerText: string) => (
-  <Stack horizontalAlign="center" verticalAlign="center" style={{ height: '100%', width: '100%' }}>
-    <Spinner label={spinnerText} ariaLive="assertive" labelPosition="top" />
-  </Stack>
-);
-
 const CallScreenComponent = (props: OneToOneCallProps): JSX.Element => {
-  const {
-    callState,
-    isCallInitialized,
-    screenShareStream,
-    isLocalScreenSharingOn,
-    screenWidth,
-    endCallHandler
-  } = props;
+  const { callState, isCallInitialized, screenShareStream, isLocalScreenSharingOn, endCallHandler } = props;
 
-  if (!isCallInitialized || callState === 'None' || callState === 'Connecting')
-    return SpinnerWith('Setting up call...');
-  if (callState === 'Ringing') return SpinnerWith('Calling...');
+  if (!isCallInitialized || callState === 'None' || callState === 'Connecting' || callState === 'Ringing') {
+    return <OutgoingCallScreen endCallHandler={endCallHandler} />;
+  }
+
   if (!callState || callState === 'Disconnected') props.callFailedHandler();
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles}>
-      <Stack.Item styles={headerStyles}>
-        <Stack className={props.screenWidth > MINI_HEADER_WINDOW_WIDTH ? headerContainer : headerCenteredContainer}>
-          <MediaControls onEndCallClick={endCallHandler} compressedMode={screenWidth <= MINI_HEADER_WINDOW_WIDTH} />
-        </Stack>
-      </Stack.Item>
-      <Stack.Item styles={containerStyles}>
+      <CallControlBarComponent
+        layout={'floatingBottom'}
+        styles={{
+          root: { background: 'white' }
+        }}
+        onEndCallClick={endCallHandler}
+      />
+      <Stack.Item styles={containerStyles} style={{ zIndex: -1 }}>
         {!isLocalScreenSharingOn ? (
           callState === 'Connected' && (
             <Stack horizontal styles={containerStyles}>

@@ -2,19 +2,31 @@
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/command-line.schema.json",
   "commands": [
     {
+      "commandKind": "global",
+      "name": "prettier",
+      "summary": "Used by the pre-commit Git hook. This command invokes Prettier to reformat staged changes.",
+      "autoinstallerName": "rush-prettier",
+      "shellCommand": "pretty-quick --staged"
+    },
+    {
+      "commandKind": "global",
+      "name": "changelog",
+      "summary": "Runs beachball change",
+      "shellCommand": "node common/release/node_modules/beachball/bin/beachball"
+    },
+    {
+      "commandKind": "global",
+      "name": "changelog:check",
+      "summary": "Checks change files have been generated",
+      "shellCommand": "node common/release/node_modules/beachball/bin/beachball check"
+    },
+    {
       "commandKind": "bulk",
       "name": "test",
       "summary": "Run tests in each project.",
       "description": "Run jest tests in each project.",
       "enableParallelism": true,
       "allowWarningsInSuccessfulBuild": true
-    },
-    {
-      "commandKind": "global",
-      "name": "prettier",
-      "summary": "Used by the pre-commit Git hook. This command invokes Prettier to reformat staged changes.",
-      "autoinstallerName": "rush-prettier",
-      "shellCommand": "pretty-quick --staged"
     },
     {
       "commandKind": "bulk",
@@ -25,14 +37,13 @@
       "allowWarningsInSuccessfulBuild": true,
       "ignoreDependencyOrder": true,
       "incremental": false
+    },
+    {
+      "commandKind": "bulk",
+      "name": "build:watch",
+      "summary": "Trigger incremental build with watch command.",
+      "enableParallelism": false
     }
-    // {
-    //   "commandKind": "global",
-    //   "name": "storybook",
-    //   "summary": "Run storybook.",
-    //   "description": "Run storybook CLI command.",
-    //   "shellCommand": ""
-    // }
   ],
   "parameters": []
 }

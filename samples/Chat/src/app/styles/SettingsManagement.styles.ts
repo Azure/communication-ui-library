@@ -55,7 +55,6 @@ export const settingsGroupNameInputBoxWarningStyle = mergeStyles({
 
 export const settingsTopicWarningStyle = mergeStyles({
   height: '1.75rem',
-  backgroundColor: '#FFFFFF',
   color: 'red',
   fontSize: '0.75rem',
   paddingLeft: '1rem',

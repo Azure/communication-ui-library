@@ -6,7 +6,7 @@
     "strictPeerDependencies": true
   },
   "nodeSupportedVersionRange": ">=12.13.0 <13.0.0 || >=14.15.0 <15.0.0",
-  "ensureConsistentVersions": true,
+  "ensureConsistentVersions": false,
   "gitPolicy": {
     "versionBumpCommitMessage": "Applying package updates. [skip-ci]",
     "changeLogUpdateCommitMessage": "Applying package updates. [skip-ci]"
@@ -21,6 +21,16 @@
       "packageName": "@azure/communication-ui",
       "projectFolder": "packages/communication-ui",
       "reviewCategory": "production"
+    },
+    {
+      "packageName": "@azure/acs-chat-declarative",
+      "projectFolder": "packages/acs-chat-declarative",
+      "reviewCategory": "prototypes"
+    },
+    {
+      "packageName": "@azure/acs-calling-declarative",
+      "projectFolder": "packages/acs-calling-declarative",
+      "reviewCategory": "prototypes"
     },
     {
       "packageName": "acs-calling-sample",
@@ -41,6 +51,11 @@
       "packageName": "acs-server-sample",
       "projectFolder": "samples/Server",
       "reviewCategory": "prototypes"
+    },
+    {
+      "packageName": "release-tools",
+      "projectFolder": "common/release",
+      "reviewCategory": "tools"
     }
   ]
 }

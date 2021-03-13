@@ -3,14 +3,7 @@ import React from 'react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
 import { ReadReceiptComponent } from '../../components';
 import { MessageStatus } from '../../types';
-import { Provider } from '@fluentui/react-northstar';
-
-// @ts-ignore silence the typescript error, we can only use commonjsto make storybook use this icon correctly
-import { svgIconStyles } from '@fluentui/react-northstar/dist/commonjs/themes/teams/components/SvgIcon/svgIconStyles';
-// @ts-ignore
-import { svgIconVariables } from '@fluentui/react-northstar/dist/commonjs/themes/teams/components/SvgIcon/svgIconVariables';
-// @ts-ignore
-import * as siteVariables from '@fluentui/react-northstar/dist/commonjs/themes/teams/siteVariables';
+import { Provider, teamsTheme } from '@fluentui/react-northstar';
 
 const importStatement = `import { ReadReceiptComponent, MessageStatus } from '@azure/communication-ui';`;
 const usageCode = `<ReadReceiptComponent messageStatus={MessageStatus.DELIVERED} />
@@ -35,20 +28,10 @@ const ExampleReadReceipts: () => JSX.Element = () => (
   </>
 );
 
-const iconTheme = {
-  componentStyles: {
-    SvgIcon: svgIconStyles
-  },
-  componentVariables: {
-    SvgIcon: svgIconVariables
-  },
-  siteVariables
-};
-
 export const getDocs: () => JSX.Element = () => {
   return (
     <>
-      <Title>ReadReceipt</Title>
+      <Title>ReadReceipts</Title>
       <Description>
         Read Receipt is used to indicate whether a message has been read, delivered, currently sending, or failed to
         send.
@@ -57,7 +40,7 @@ export const getDocs: () => JSX.Element = () => {
       <Source code={importStatement} />
       <Heading>Example</Heading>
       <Canvas>
-        <Provider theme={iconTheme}>
+        <Provider theme={teamsTheme}>
           <ExampleReadReceipts />
         </Provider>
       </Canvas>

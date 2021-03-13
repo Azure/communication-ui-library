@@ -1,5 +1,4 @@
 // © Microsoft Corporation. All rights reserved.
-
 module.exports = {
   env: {
     browser: true,

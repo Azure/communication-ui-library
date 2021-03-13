@@ -2,6 +2,8 @@
 
 import { IStackItemStyles, IStackStyles, getTheme, mergeStyles } from '@fluentui/react';
 
+const headerShadow = 'rgba(0, 0, 0, 0.133) 0px 1.6px 3.6px 0px, rgba(0, 0, 0, 0.11) 0px 0.3px 0.9px 0px';
+
 const palette = getTheme().palette;
 
 export const headerStyles: IStackItemStyles = {
@@ -14,7 +16,8 @@ export const containerStyles: IStackStyles = {
   root: {
     height: '100%',
     minHeight: '9.375rem',
-    width: '100%'
+    width: '100%',
+    position: 'relative'
   }
 };
 
@@ -31,4 +34,20 @@ export const loadingStyle = mergeStyles({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center'
+});
+
+export const headerContainer = mergeStyles({
+  width: '100%',
+  height: '3.875rem',
+  padding: '0.0625rem 0',
+  boxShadow: headerShadow,
+  overflow: 'hidden',
+  flexDirection: 'row',
+  justifyContent: 'flex-end',
+  alignItems: 'center',
+  marginBottom: 2
+});
+
+export const headerCenteredContainer = mergeStyles(headerContainer, {
+  justifyContent: 'center'
 });
