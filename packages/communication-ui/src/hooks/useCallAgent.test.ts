@@ -179,8 +179,13 @@ describe('useCallAgent tests', () => {
     renderHook(() => useCallAgent());
     await events.callsUpdated({ added: [addedCall], removed: [] });
 
-    const remoteParticipantsUpdatedCallback = addedCallEvents.remoteParticipantsUpdated as CollectionUpdatedEvent<RemoteParticipant>;
-    remoteParticipantsUpdatedCallback({ added: [remoteParticipant], removed: [] });
+    const remoteParticipantsUpdatedCallback = addedCallEvents.remoteParticipantsUpdated as CollectionUpdatedEvent<
+      RemoteParticipant
+    >;
+    remoteParticipantsUpdatedCallback({
+      added: [remoteParticipant],
+      removed: []
+    });
 
     expect(setParticipantsCallback).toHaveBeenCalled();
   });
@@ -189,7 +194,9 @@ describe('useCallAgent tests', () => {
     renderHook(() => useCallAgent());
     await events.callsUpdated({ added: [addedCall], removed: [] });
 
-    const remoteParticipantsUpdatedCallback = addedCallEvents.remoteParticipantsUpdated as CollectionUpdatedEvent<RemoteParticipant>;
+    const remoteParticipantsUpdatedCallback = addedCallEvents.remoteParticipantsUpdated as CollectionUpdatedEvent<
+      RemoteParticipant
+    >;
     remoteParticipantsUpdatedCallback({ added: [], removed: [remoteParticipant] });
 
     expect(setParticipantsCallback).toHaveBeenCalled();
@@ -209,7 +216,9 @@ describe('useCallAgent tests', () => {
     renderHook(() => useCallAgent());
     await events.callsUpdated({ added: [addedCall], removed: [] });
 
-    const videoStreamsUpdatedCallback = remoteParticipantEvents.videoStreamsUpdated as CollectionUpdatedEvent<RemoteVideoStream>;
+    const videoStreamsUpdatedCallback = remoteParticipantEvents.videoStreamsUpdated as CollectionUpdatedEvent<
+      RemoteVideoStream
+    >;
     videoStreamsUpdatedCallback({ added: [addedRemoteVideoStream], removed: [] });
 
     expect(addedRemoteVideoStreamEvents).toStrictEqual({});
@@ -220,7 +229,9 @@ describe('useCallAgent tests', () => {
     renderHook(() => useCallAgent());
     await events.callsUpdated({ added: [addedCall], removed: [] });
 
-    const videoStreamsUpdatedCallback = remoteParticipantEvents.videoStreamsUpdated as CollectionUpdatedEvent<RemoteVideoStream>;
+    const videoStreamsUpdatedCallback = remoteParticipantEvents.videoStreamsUpdated as CollectionUpdatedEvent<
+      RemoteVideoStream
+    >;
     videoStreamsUpdatedCallback({ added: [addedRemoteVideoStream], removed: [] });
 
     expect(addedRemoteVideoStreamEvents.availabilityChanged).toBeDefined();
@@ -232,7 +243,9 @@ describe('useCallAgent tests', () => {
     renderHook(() => useCallAgent());
     await events.callsUpdated({ added: [addedCall], removed: [] });
 
-    const videoStreamsUpdatedCallback = remoteParticipantEvents.videoStreamsUpdated as CollectionUpdatedEvent<RemoteVideoStream>;
+    const videoStreamsUpdatedCallback = remoteParticipantEvents.videoStreamsUpdated as CollectionUpdatedEvent<
+      RemoteVideoStream
+    >;
     videoStreamsUpdatedCallback({ added: [addedRemoteVideoStream], removed: [] });
 
     expect(setScreenShareStreamCallback).toHaveBeenCalled();
@@ -244,7 +257,9 @@ describe('useCallAgent tests', () => {
     renderHook(() => useCallAgent());
     await events.callsUpdated({ added: [addedCall], removed: [] });
 
-    const videoStreamsUpdatedCallback = remoteParticipantEvents.videoStreamsUpdated as CollectionUpdatedEvent<RemoteVideoStream>;
+    const videoStreamsUpdatedCallback = remoteParticipantEvents.videoStreamsUpdated as CollectionUpdatedEvent<
+      RemoteVideoStream
+    >;
     videoStreamsUpdatedCallback({ added: [addedRemoteVideoStream], removed: [] });
 
     expect(setScreenShareStreamCallback).not.toHaveBeenCalled();
@@ -256,7 +271,9 @@ describe('useCallAgent tests', () => {
     renderHook(() => useCallAgent());
     await events.callsUpdated({ added: [addedCall], removed: [] });
 
-    const videoStreamsUpdatedCallback = remoteParticipantEvents.videoStreamsUpdated as CollectionUpdatedEvent<RemoteVideoStream>;
+    const videoStreamsUpdatedCallback = remoteParticipantEvents.videoStreamsUpdated as CollectionUpdatedEvent<
+      RemoteVideoStream
+    >;
     videoStreamsUpdatedCallback({ added: [addedRemoteVideoStream], removed: [] });
 
     addedRemoteVideoStreamEvents.availabilityChanged();
@@ -270,7 +287,9 @@ describe('useCallAgent tests', () => {
     renderHook(() => useCallAgent());
     await events.callsUpdated({ added: [addedCall], removed: [] });
 
-    const videoStreamsUpdatedCallback = remoteParticipantEvents.videoStreamsUpdated as CollectionUpdatedEvent<RemoteVideoStream>;
+    const videoStreamsUpdatedCallback = remoteParticipantEvents.videoStreamsUpdated as CollectionUpdatedEvent<
+      RemoteVideoStream
+    >;
     videoStreamsUpdatedCallback({ added: [addedRemoteVideoStream], removed: [] });
     addedRemoteVideoStream.isAvailable = true;
 
