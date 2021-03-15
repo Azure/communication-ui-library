@@ -841,7 +841,7 @@ export type ThreadProviderContextType = {
 };
 
 // @public (undocumented)
-export const TOO_MANY_REQUESTS_STATUS_CODE = 430;
+export const TOO_MANY_REQUESTS_STATUS_CODE = 429;
 
 // @public (undocumented)
 export const TypingIndicator: (props: Pick<TypingIndicatorProps & ErrorHandlingProps, "onErrorCallback">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
