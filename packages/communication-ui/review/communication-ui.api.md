@@ -552,7 +552,7 @@ export const INITIAL_MESSAGES_SIZE = 2000;
 export const INTERNAL_SERVER_ERROR_STATUS_CODE = 500;
 
 // @public
-export const isGUID: (s: string) => boolean;
+export const isGUID: (str: string) => boolean;
 
 // @public (undocumented)
 export const isInCall: (callState: CallState) => boolean;
