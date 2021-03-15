@@ -1,6 +1,6 @@
 dependencies:
-  prettier: 2.2.1
-  pretty-quick: 3.1.0_prettier@2.2.1
+  prettier: 2.0.5
+  pretty-quick: 3.1.0_prettier@2.0.5
 lockfileVersion: 5.2
 packages:
   /@types/minimatch/3.0.3:
@@ -244,14 +244,14 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-ojmeN0qd+y0jszEtoY48r0Peq5dwMEkIlCOu6Q5f41lfkswXuKtYrhgoTpLnyIcHm24Uhqx+5Tqm2InSwLhE6Q==
-  /prettier/2.2.1:
+  /prettier/2.0.5:
     dev: false
     engines:
       node: '>=10.13.0'
     hasBin: true
     resolution:
-      integrity: sha512-PqyhM2yCjg/oKkFPtTGUojv7gnZAoG80ttl45O6x2Ug/rMJw4wcc9k6aaf2hibP7BGVCCM33gZoGjyvt9mm16Q==
-  /pretty-quick/3.1.0_prettier@2.2.1:
+      integrity: sha512-7PtVymN48hGcO4fGjybyBSIWDsLU4H4XlvOHfq91pz9kkGlonzwTfYkaIEwiRg/dAJF9YlbsduBAgtYLi+8cFg==
+  /pretty-quick/3.1.0_prettier@2.0.5:
     dependencies:
       chalk: 3.0.0
       execa: 4.1.0
@@ -259,7 +259,7 @@ packages:
       ignore: 5.1.8
       mri: 1.1.6
       multimatch: 4.0.0
-      prettier: 2.2.1
+      prettier: 2.0.5
     dev: false
     engines:
       node: '>=10.13'
@@ -321,5 +321,5 @@ packages:
     resolution:
       integrity: sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=
 specifiers:
-  prettier: ^2.2.1
-  pretty-quick: ^3.1.0
+  prettier: 2.0.5
+  pretty-quick: ~3.1.0
