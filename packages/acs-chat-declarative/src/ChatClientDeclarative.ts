@@ -5,6 +5,7 @@ import { ChatClientState } from './ChatClientState';
 import { EventSubscriber } from './EventSubscriber';
 import { chatThreadClientDeclaratify } from './ChatThreadClientDeclarative';
 
+// wow new comment
 export interface DeclarativeChatClient extends ChatClient {
   state: ChatClientState;
   onStateChange(handler: (state: ChatClientState) => void): void;
