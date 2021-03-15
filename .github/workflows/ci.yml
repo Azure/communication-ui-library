@@ -31,10 +31,6 @@ jobs:
       - name: Install dependencies
         run: rush install
 
-      # Perform changelog check
-      - name: Check the necessary change file has been submitted
-        run: rush changelog:check
-
       # Perform lint check
       - name: Run linter
         run: rush lint
@@ -42,6 +38,10 @@ jobs:
       # Builds
       - name: Build Packages and Samples
         run: rush build
+
+      # Perform changelog check
+      - name: Check the necessary change file has been submitted
+        run: rush changelog:check
 
       - name: Build Storybook
         run: rushx build:storybook
