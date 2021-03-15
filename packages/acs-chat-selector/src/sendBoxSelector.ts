@@ -1,8 +1,11 @@
 import { createSelector } from 'reselect';
-import { getSelectorProps, SelectorProps } from './baseSelectors';
+import { getCoolPeriod, getSelectorProps } from './baseSelectors';
 
-export const sendBoxSelector = createSelector([getSelectorProps], ({ displayName, userId }: SelectorProps) => ({
-  displayName: displayName ?? '',
-  userId: userId ?? '',
-  disabled: false
-}));
+export const sendBoxSelector = createSelector(
+  [getCoolPeriod, getSelectorProps],
+  (coolPeriod, { displayName, userId }) => ({
+    displayName: displayName,
+    userId: userId,
+    disabled: coolPeriod > 0
+  })
+);

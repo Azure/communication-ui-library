@@ -30,6 +30,13 @@ type CommonProperties<A, B> = {
 
 type Common<A, B> = Pick<A, CommonProperties<A, B>>;
 
+// These could be shared functions between Chat and Calling
+export const defaultHandlerCreator = (chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient) => <Props>(
+  _component: (props: Props) => ReactElement | null
+): Common<DefaultHandlers, Props> => {
+  return createDefaultHandlers(chatClient, chatThreadClient);
+};
+
 export const createDefaultHandlersForComponent = <Props>(
   chatClient: DeclarativeChatClient,
   chatThreadClient: ChatThreadClient,
