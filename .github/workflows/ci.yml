@@ -53,7 +53,7 @@ jobs:
       - name: API Extractor Check
         run: |
           DIFF_FILE="APIChanges.diff"
-          git diff --output=$DIFF_FILE --exit-code packages/**/etc/**.md
+          git diff --output=$DIFF_FILE --exit-code **/review/**.md
           DIFF_STATUS=$?
           echo "Exit code for git diff for changes in api review files: $DIFF_STATUS"
           if [$DIFF_STATUS -ne 0]
