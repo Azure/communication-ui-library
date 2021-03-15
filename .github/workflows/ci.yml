@@ -57,7 +57,7 @@ jobs:
               cat $DIFF_FILE
               exit 1
           else
-            echo "Success, no new api changes found.""
+            echo "Success, no new api changes found."
           fi
 
       # Perform changelog check
