@@ -20,7 +20,7 @@ const CallScreenComponent = (props: OneToOneCallProps): JSX.Element => {
   const { callState, isCallInitialized, screenShareStream, isLocalScreenSharingOn, endCallHandler } = props;
 
   if (!isCallInitialized || callState === 'None' || callState === 'Connecting' || callState === 'Ringing') {
-    return <OutgoingCallScreen endCallHandler={endCallHandler} />;
+    return <OutgoingCallScreen callState={callState} endCallHandler={endCallHandler} />;
   }
 
   if (!callState || callState === 'Disconnected') props.callFailedHandler();
