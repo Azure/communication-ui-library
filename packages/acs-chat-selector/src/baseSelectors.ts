@@ -6,7 +6,6 @@ export type BaseChatConfigProps = {
   threadId: string;
 };
 
-export const getDisplayName = (state: ChatClientState): string => state.displayName;
 export const getSelectorProps = <T>(_: ChatClientState, props: T): T => props;
 export const getChatMessages = (
   state: ChatClientState,
