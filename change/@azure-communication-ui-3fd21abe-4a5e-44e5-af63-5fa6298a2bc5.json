@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix for FluentThemeProvider useEffect block to start from original teams theme. ParticipantItem component menu items no longer affected by isYou property. Storybook document background changes when theme is changed.",
+  "packageName": "@azure/communication-ui",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
