@@ -10,11 +10,12 @@ import { MapToCallControlBarProps } from '../common/consumers/MapToCallControlBa
 import { useMicrophone } from '../../hooks';
 
 export interface OutgoingCallScreenProps {
+  callState: string;
   endCallHandler: () => void;
 }
 
 export const OutgoingCallScreen = (props: OutgoingCallScreenProps): JSX.Element => {
-  const { endCallHandler } = props;
+  const { callState, endCallHandler } = props;
   const { localVideoStream, isLocalVideoOn, isMicrophoneEnabled } = useCallContext();
   const { videoDeviceInfo, audioDeviceInfo } = useCallingContext();
   const { unmute } = useMicrophone();
@@ -39,7 +40,7 @@ export const OutgoingCallScreen = (props: OutgoingCallScreenProps): JSX.Element 
 
   return (
     <VideoTile
-      styles={{ root: { height: '100%', width: '100%' } }}
+      styles={{ root: { height: '100%', width: '100%' }, videoContainer: { zIndex: -1 } }}
       videoProvider={<StreamMedia videoStreamElement={videoStreamElement} />}
       isVideoReady={isVideoReady}
       placeholderProvider={<></>}
@@ -53,7 +54,7 @@ export const OutgoingCallScreen = (props: OutgoingCallScreenProps): JSX.Element 
             fontWeight: 500
           }}
         >
-          Calling...
+          {callState}...
         </p>
         <OutgoingCallControlBarComponent
           layout={'floatingBottom'}
