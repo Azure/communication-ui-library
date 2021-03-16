@@ -43,23 +43,12 @@ import { ChatMessageWithClientMessageId } from '@azure/communication-ui/dist/hoo
 export const updateMessagesWithAttached = (
   chatMessagesWithStatus: any[],
   indexOfTheFirstMessage: number,
-  userId: string,
-  failedMessageIds: string[],
-  isLargeGroup: boolean,
-  isMessageSeen: (userId: string, clientMessageId: string, messages: any[]) => boolean
+  userId: string
 ): WebUiChatMessage[] => {
   chatMessagesWithStatus.sort(compareMessages);
   const newChatMessages: WebUiChatMessage[] = [];
   const messagesToRender = chatMessagesWithStatus.slice(indexOfTheFirstMessage, chatMessagesWithStatus.length);
   messagesToRender.map((message: any, index: number, messagesList: any) => {
-    // message = {
-    //   messageId: message.id,
-    //   content: message.content,
-    //   createdOn: message.createdOn,
-    //   senderId: message.sender?.communicationUserId,
-    //   senderDisplayName: message.senderDisplayName,
-    //   status: getMessageStatus(message, chatMessagesWithStatus, failedMessageIds, isLargeGroup, userId, isMessageSeen)
-    // };
     const mine = message.senderId === userId;
     let attached: string | boolean = false;
     if (index === 0) {
@@ -235,7 +224,6 @@ const didUserSendTheLatestMessage = (
   latestMessageFromNewMessages: any,
   userId: string
 ): boolean => {
-  console.log(latestMessageFromPreviousMessages, latestMessageFromNewMessages);
   if (latestMessageFromNewMessages === undefined) {
     return false;
   } else {
@@ -272,19 +260,25 @@ export const ChatThreadComponentBase = (
     onErrorCallback,
     onRenderMorePreviousMessages,
     latestSeenMessageId,
-    latestMessageId
+    latestMessageId,
+    latestIncomingMessageId: newLatestIncomingMessageId
   } = props;
 
   const [chatMessages, setChatMessages] = useState<WebUiChatMessage[]>([]);
-
-  const [isAtBottomOfScroll, setIsAtBottomOfScroll] = useState(true);
-  const [isAtTopOfScroll, setIsAtTopOfScroll] = useState(false);
+  // We need this state to wait for one tick and scroll to bottom after chatMessages have been initialized.
+  // Otherwise chatScrollDivRef.current.clientHeight is wrong if we scroll to bottom before chatMessages are initialized.
+  const [chatMessagesInitialized, setChatMessagesInitialized] = useState<boolean>(false);
+  const [isAtBottomOfScroll, setIsAtBottomOfScroll] = useState<boolean>(true);
+  const [isAtTopOfScroll, setIsAtTopOfScroll] = useState<boolean>(false);
+  const [latestIncomingMessageId, setLatestIncomingMessageId] = useState<string | undefined>(
+    newLatestIncomingMessageId
+  );
+  const [forceUpdate, setForceUpdate] = useState<number>(0);
 
   // Used to decide if should auto scroll to bottom or show "new message" button
   const [latestPreviousMessage, setLatestPreviousMessage] = useState<WebUiChatMessage | undefined>(undefined);
   const [latestCurrentMessage, setLatestCurrentMessage] = useState<WebUiChatMessage | undefined>(undefined);
-  // Used to decide if show "new message" button
-  const [existsNewMessage, setExistsNewMessage] = useState(false);
+  const [existsNewMessage, setExistsNewMessage] = useState<boolean>(false);
 
   const chatScrollDivRef: any = useRef();
   const chatThreadRef: any = useRef();
@@ -307,7 +301,17 @@ export const ChatThreadComponentBase = (
     setIsAtTopOfScroll(isAtTopOfScrollValue);
   };
 
-  const [forceUpdate, setForceUpdate] = useState<number>(0);
+  const latestIncomingMessageIdRef = useRef(latestIncomingMessageId);
+  const setLatestIncomingMessageIdRef = (latestIncomingMessageId: string | undefined): void => {
+    latestIncomingMessageIdRef.current = latestIncomingMessageId;
+    setLatestIncomingMessageId(latestIncomingMessageId);
+  };
+
+  const chatMessagesInitializedRef = useRef(chatMessagesInitialized);
+  const setChatMessagesInitializedRef = (chatMessagesInitialized: boolean): void => {
+    chatMessagesInitializedRef.current = chatMessagesInitialized;
+    setChatMessagesInitialized(chatMessagesInitialized);
+  };
 
   // we try to only send those read receipt if user is scrolled to the bottom.
   const sendReadReceiptIfAtBottom = useCallback((): void => {
@@ -321,13 +325,11 @@ export const ChatThreadComponentBase = (
       return;
     }
 
-    const latestMessageId = getLatestMessageId(chatMessagesRef.current, userId, false, true);
-    if (latestMessageId !== undefined) {
-      sendReadReceipt(latestMessageId).catch((error) => {
+    latestIncomingMessageIdRef.current &&
+      sendReadReceipt(latestIncomingMessageIdRef.current).catch((error) => {
         propagateError(error, onErrorCallback);
       });
-    }
-  }, [disableReadReceipt, onErrorCallback, sendReadReceipt, userId]);
+  }, [disableReadReceipt, onErrorCallback, sendReadReceipt]);
 
   const scrollToBottom = useCallback((): void => {
     chatScrollDivRef.current.scrollTop = chatScrollDivRef.current.scrollHeight;
@@ -379,8 +381,8 @@ export const ChatThreadComponentBase = (
       setForceUpdate(forceUpdate + 1);
       return;
     }
-    setIsAtBottomOfScrollRef(true);
-  }, [clientHeight, forceUpdate]);
+    scrollToBottom();
+  }, [clientHeight, forceUpdate, scrollToBottom, chatMessagesInitialized]);
 
   /**
    * This needs to run to update latestPreviousMessage & latestCurrentMessage.
@@ -394,13 +396,13 @@ export const ChatThreadComponentBase = (
     setLatestPreviousMessage(latestMessagesOldAndNew[0]);
     setLatestCurrentMessage(latestMessagesOldAndNew[1]);
     setChatMessagesRef(newChatMessages);
+    !chatMessagesInitializedRef.current && setChatMessagesInitializedRef(true);
   }, [newChatMessages]);
 
   /**
    * This needs to run after messages are rendererd so we can manipulate the scroll bar.
    */
   useEffect(() => {
-    console.log(latestPreviousMessage, latestCurrentMessage);
     // If user just sent the latest message then we assume we can move user to bottom of scroll.
     if (
       isThereNewMessageNotFromCurrentUser(latestPreviousMessage, latestCurrentMessage, userId) &&
@@ -414,7 +416,11 @@ export const ChatThreadComponentBase = (
       scrollToBottom();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [newChatMessages]);
+  }, [chatMessages]);
+
+  useEffect(() => {
+    setLatestIncomingMessageIdRef(newLatestIncomingMessageId);
+  }, [newLatestIncomingMessageId]);
 
   const loadMorePreviousMessages = (): void => {
     onRenderMorePreviousMessages && onRenderMorePreviousMessages();
@@ -425,7 +431,7 @@ export const ChatThreadComponentBase = (
   const todayDate = useMemo(() => new Date(), [new Date().toDateString()]);
   const messagesToDisplay = useMemo(
     () =>
-      chatMessagesRef.current.map(
+      chatMessages.map(
         (message: any): ChatItemProps => {
           const liveAuthor = `${message.senderDisplayName} says `;
           const messageContentItem = (
@@ -477,7 +483,7 @@ export const ChatThreadComponentBase = (
       disableReadReceipt,
       latestMessageId,
       latestSeenMessageId,
-      chatMessagesRef.current,
+      chatMessages,
       onRenderAvatar,
       onRenderReadReceipt,
       todayDate

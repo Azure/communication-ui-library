@@ -114,6 +114,7 @@ export type ChatMessagePropsFromContext = {
   sendReadReceipt: (messageId: string) => Promise<void>;
   latestSeenMessageId?: string;
   latestMessageId?: string;
+  latestIncomingMessageId?: string;
   onRenderMorePreviousMessages: () => void;
 };
 
@@ -141,15 +142,8 @@ export const MapToChatMessageProps = (): ChatMessagePropsFromContext => {
   }, [failedMessageIds, isLargeGroup, isMessageSeen, sdkChatMessages, userId]);
 
   const chatMessages = useMemo(() => {
-    return updateMessagesWithAttached(
-      originalChatMessages ?? [],
-      0,
-      userId,
-      failedMessageIds,
-      isLargeGroup,
-      isMessageSeen
-    );
-  }, [originalChatMessages, userId, isMessageSeen, isLargeGroup, failedMessageIds]);
+    return updateMessagesWithAttached(originalChatMessages ?? [], 0, userId);
+  }, [originalChatMessages, userId]);
 
   const latestMessageId = useMemo(() => {
     return getLatestMessageId(chatMessages, userId);
@@ -157,6 +151,10 @@ export const MapToChatMessageProps = (): ChatMessagePropsFromContext => {
 
   const latestSeenMessageId = useMemo(() => {
     return getLatestMessageId(chatMessages, userId, true);
+  }, [chatMessages, userId]);
+
+  const latestIncomingMessageId = useMemo(() => {
+    return getLatestMessageId(chatMessages, userId, false, true);
   }, [chatMessages, userId]);
 
   const fetchMessages = useFetchMessages();
@@ -175,6 +173,7 @@ export const MapToChatMessageProps = (): ChatMessagePropsFromContext => {
     sendReadReceipt: sendReadReceipt,
     latestMessageId: latestMessageId,
     latestSeenMessageId: latestSeenMessageId,
+    latestIncomingMessageId: latestIncomingMessageId,
     onRenderMorePreviousMessages: onRenderMorePreviousMessages
   };
 };
