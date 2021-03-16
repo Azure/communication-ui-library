@@ -10,8 +10,5 @@ export const getSelectorProps = <T>(_: ChatClientState, props: T) => props;
 export const getChatMessages = (state: ChatClientState, props: BaseChatConfigProps) =>
   (props.threadId && state.threads.get(props.threadId)?.chatMessages) || new Map();
 
-export const getChatParticipants = (state: ChatClientState, props: BaseChatConfigProps) =>
-  (props.threadId && state.threads.get(props.threadId)?.threadMembers) || [];
-
 export const getCoolPeriod = (state: ChatClientState, props: BaseChatConfigProps) =>
   (props.threadId && state.threads.get(props.threadId)?.coolPeriod) || -1;
