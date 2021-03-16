@@ -1,7 +1,6 @@
 {
   "name": "@azure/acs-chat-selector",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0-beta",
   "description": "ACS UI SDK",
   "module": "dist/index.js",
   "main": "dist/index.js",
