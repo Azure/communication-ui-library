@@ -6,9 +6,9 @@ import {
   newMessageButtonContainerStyle,
   chatThreadContainerStyle,
   chatMessageStyle,
-  chatHistoryDivStyle,
+  loadPreviousMessagesButtonContainerStyle,
   chatStyle,
-  loadMoreMessageButtonStyle,
+  loadPreviousMessageButtonStyle,
   newMessageButtonStyle,
   readReceiptContainerStyle,
   noReadReceiptStyle
@@ -159,19 +159,19 @@ const didUserSendTheLatestMessage = (
 export interface ChatThreadStylesProps {
   /** Styles for the root container */
   root?: IStyle;
-  /** Styles for load more previous messages container */
-  loadMorePreviousMessagesContainer?: IStyle;
+  /** Styles for load previous messages container */
+  loadPreviousMessagesButtonContainer?: IStyle;
   /** Styles for new message container */
-  newMessageContainer?: IStyle;
+  newMessageButtonContainer?: IStyle;
   /** Styles for chat container */
   chatContainer?: ComponentSlotStyle;
   /** Styles for chat message container */
   chatMessageContainer?: ComponentSlotStyle;
   /** Styles for read receipt container */
-  readReceiptContainer?: IStyle;
+  readReceiptContainer?: (mine: boolean) => IStyle;
 }
 
-export interface NewMessageButtonProps {
+interface NewMessageButtonProps {
   onClick: () => void;
 }
 
@@ -185,14 +185,20 @@ const DefaultNewMessageButton = (props: NewMessageButtonProps): JSX.Element => {
   );
 };
 
-export interface LoadMorePreviousMessageButtonProps {
+interface LoadPreviousMessagesButtonProps {
   onClick: () => void;
 }
 
-const DefaultLoadMorePreviousMessageButton = (props: LoadMorePreviousMessageButtonProps): JSX.Element => {
+const DefaultLoadPreviousMessagesButton = (props: LoadPreviousMessagesButtonProps): JSX.Element => {
   const { onClick } = props;
   return (
-    <Button text fluid className={loadMoreMessageButtonStyle} content={CLICK_TO_LOAD_MORE_MESSAGES} onClick={onClick} />
+    <Button
+      text
+      fluid
+      className={loadPreviousMessageButtonStyle}
+      content={CLICK_TO_LOAD_MORE_MESSAGES}
+      onClick={onClick}
+    />
   );
 };
 
@@ -201,7 +207,7 @@ export type ChatThreadProps = {
   chatMessages: WebUiChatMessage[];
   styles?: ChatThreadStylesProps;
   disableNewMessageButton?: boolean;
-  disableLoadMorePreviousMessage?: boolean;
+  disableLoadPreviousMessage?: boolean;
   disableReadReceipt?: boolean;
   latestSeenMessageId?: string;
   latestMessageId?: string;
@@ -210,10 +216,8 @@ export type ChatThreadProps = {
   onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element;
   onRenderAvatar?: (userId: string) => JSX.Element;
   onRenderNewMessageButton?: (newMessageButtonProps: NewMessageButtonProps) => JSX.Element;
-  loadMorePreviousMessages?: () => void;
-  onRenderLoadMorePreviousMessagesButton?: (
-    loadMorePreviousMessagesButton: LoadMorePreviousMessageButtonProps
-  ) => JSX.Element;
+  loadPreviousMessages?: () => void;
+  onRenderLoadPreviousMessagesButton?: (loadPreviousMessagesButton: LoadPreviousMessagesButtonProps) => JSX.Element;
 };
 
 //  A Chatthread will be fed many messages so it will try to map out the messages out of the props and feed them into a
@@ -225,7 +229,7 @@ export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingPr
     styles,
     disableNewMessageButton = false,
     disableReadReceipt = true,
-    disableLoadMorePreviousMessage = true,
+    disableLoadPreviousMessage = true,
     latestSeenMessageId,
     latestMessageId,
     latestIncomingMessageId: newLatestIncomingMessageId,
@@ -233,8 +237,8 @@ export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingPr
     onRenderReadReceipt,
     onRenderAvatar,
     onErrorCallback,
-    loadMorePreviousMessages,
-    onRenderLoadMorePreviousMessagesButton,
+    loadPreviousMessages,
+    onRenderLoadPreviousMessagesButton,
     onRenderNewMessageButton
   } = props;
 
@@ -433,7 +437,12 @@ export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingPr
                     message.createdOn ? formatTimestampForChatMessage(message.createdOn, todayDate) : undefined
                   }
                 />
-                <div className={mergeStyles(readReceiptContainerStyle(message.mine), styles?.readReceiptContainer)}>
+                <div
+                  className={mergeStyles(
+                    readReceiptContainerStyle(message.mine),
+                    styles?.readReceiptContainer ? styles.readReceiptContainer(message.mine) : ''
+                  )}
+                >
                   {showReadReceipt ? (
                     onRenderReadReceipt ? (
                       onRenderReadReceipt({ messageStatus: message.status })
@@ -465,14 +474,19 @@ export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingPr
   return (
     <Ref innerRef={chatThreadRef}>
       <Stack className={mergeStyles(chatThreadContainerStyle, styles?.root)} grow>
-        {!disableLoadMorePreviousMessage && (
-          <div style={chatHistoryDivStyle}>
-            {loadMorePreviousMessages &&
+        {!disableLoadPreviousMessage && (
+          <div
+            className={mergeStyles(
+              loadPreviousMessagesButtonContainerStyle,
+              styles?.loadPreviousMessagesButtonContainer
+            )}
+          >
+            {loadPreviousMessages &&
               isAtTopOfScrollRef.current &&
-              (onRenderLoadMorePreviousMessagesButton ? (
-                onRenderLoadMorePreviousMessagesButton({ onClick: loadMorePreviousMessages })
+              (onRenderLoadPreviousMessagesButton ? (
+                onRenderLoadPreviousMessagesButton({ onClick: loadPreviousMessages })
               ) : (
-                <DefaultLoadMorePreviousMessageButton onClick={loadMorePreviousMessages} />
+                <DefaultLoadPreviousMessagesButton onClick={loadPreviousMessages} />
               ))}
           </div>
         )}
@@ -482,7 +496,7 @@ export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingPr
           </LiveAnnouncer>
         </Ref>
         {existsNewMessage && !disableNewMessageButton && (
-          <div className={mergeStyles(newMessageButtonContainerStyle, styles?.newMessageContainer)}>
+          <div className={mergeStyles(newMessageButtonContainerStyle, styles?.newMessageButtonContainer)}>
             {onRenderNewMessageButton ? (
               onRenderNewMessageButton({ onClick: scrollToBottom })
             ) : (

@@ -2,7 +2,6 @@
 
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { mergeStyles } from '@fluentui/react';
-import { CSSProperties } from 'react';
 
 export const messageAvatarContainerStyle = (backgroundColor: string): string =>
   mergeStyles({
@@ -36,9 +35,9 @@ export const chatStyle: ComponentSlotStyle = {
   overflow: 'auto'
 };
 
-export const chatHistoryDivStyle: CSSProperties = {
+export const loadPreviousMessagesButtonContainerStyle = mergeStyles({
   minHeight: '2rem'
-};
+});
 
 export const newMessageButtonContainerStyle = mergeStyles({
   position: 'absolute',
@@ -62,7 +61,7 @@ export const newMessageButtonStyle = mergeStyles({
   width: 'fit-content'
 });
 
-export const loadMoreMessageButtonStyle = mergeStyles({
+export const loadPreviousMessageButtonStyle = mergeStyles({
   minHeight: '1.5rem'
 });
 
