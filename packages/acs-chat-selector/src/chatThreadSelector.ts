@@ -1,3 +1,4 @@
+// © Microsoft Corporation. All rights reserved.
 import { createSelector } from 'reselect';
 import { BaseChatConfigProps, getChatMessages, getSelectorProps } from './baseSelectors';
 import { ChatMessageWithStatus } from '@azure/acs-chat-declarative';

@@ -1,3 +1,4 @@
+// © Microsoft Corporation. All rights reserved.
 import { ReactElement } from 'react';
 import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
 import { ChatThreadClient } from '@azure/communication-chat';
@@ -32,7 +33,7 @@ type Common<A, B> = Pick<A, CommonProperties<A, B>>;
 
 // These could be shared functions between Chat and Calling
 export const defaultHandlerCreator = (chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient) => <Props>(
-  _component: (props: Props) => ReactElement | null
+  _: (props: Props) => ReactElement | null
 ): Common<DefaultHandlers, Props> => {
   return createDefaultHandlers(chatClient, chatThreadClient);
 };
@@ -40,7 +41,7 @@ export const defaultHandlerCreator = (chatClient: DeclarativeChatClient, chatThr
 export const createDefaultHandlersForComponent = <Props>(
   chatClient: DeclarativeChatClient,
   chatThreadClient: ChatThreadClient,
-  _component: (props: Props) => ReactElement | null
+  _: (props: Props) => ReactElement | null
 ): Common<DefaultHandlers, Props> => {
   return createDefaultHandlers(chatClient, chatThreadClient);
 };

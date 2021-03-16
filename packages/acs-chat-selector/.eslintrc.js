@@ -27,7 +27,7 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     eqeqeq: 'warn',
     'header/header': ['error', 'line', ' © Microsoft Corporation. All rights reserved.'],
-    '@typescript-eslint/no-unused-vars': ['warn', { varsIgnorePattern: '^_' }],
+    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
     'no-restricted-imports': [
       'error',
       {
