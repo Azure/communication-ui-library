@@ -4,15 +4,17 @@
   "description": "ACS UI SDK",
   "module": "dist/index.js",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/acs-calling-declarative.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && api-extractor run --local",
     "build:watch": "tsc -w",
     "test": "jest",
     "test:coverage": "npm run test -- --coverage",
     "lint": "eslint \"*/**/*.{ts,tsx}\"",
     "lint:fix": "npm run lint -- --fix",
-    "lint:quiet": "npm run lint -- --quiet"
+    "lint:quiet": "npm run lint -- --quiet",
+    "api-extractor": "tsc && api-extractor run --local",
+    "generate-doc": "api-documenter markdown -i temp -o docGen"
   },
   "browserslist": {
     "production": [
@@ -32,6 +34,8 @@
   },
   "devDependencies": {
     "@azure/communication-common": "1.0.0-beta.3",
+    "@microsoft/api-documenter": "~7.12.11",
+    "@microsoft/api-extractor": "~7.13.2",
     "@types/jest": "^26.0.20",
     "@typescript-eslint/eslint-plugin": "^4.12.0",
     "@typescript-eslint/parser": "^4.12.0",

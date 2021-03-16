@@ -23,6 +23,8 @@ export const parameters = {
 
 const withThemeProvider = (Story: any, context: any) => {
   const theme = context.globals.theme === 'light' ? lightTheme : darkTheme;
+  document.body.style.background = context.globals.theme === 'light' ? '#ffffff' : '#070707';
+
   return (
     <FluentThemeProvider theme={theme}>
       <Story {...context} />

@@ -20,6 +20,7 @@ import {
 import React, { useRef, useState } from 'react';
 import { WithErrorHandling } from '../utils/WithErrorHandling';
 import { ErrorHandlingProps } from '../providers/ErrorProvider';
+import { useTheme } from '@fluentui/react-theme-provider';
 
 interface ParticipantItemProps {
   /** Name of participant */
@@ -41,6 +42,7 @@ const ParticipantItemBase = (props: ParticipantItemProps & ErrorHandlingProps): 
   const [clickEvent, setClickEvent] = useState<MouseEvent | undefined>();
   const [menuHidden, setMenuHidden] = useState<boolean>(true);
   const containerRef = useRef<HTMLDivElement>(null);
+  const theme = useTheme();
 
   const showMenu = (clickEvent: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
     setClickEvent(clickEvent.nativeEvent);
@@ -63,7 +65,7 @@ const ParticipantItemBase = (props: ParticipantItemProps & ErrorHandlingProps): 
   }
 
   return (
-    <div ref={containerRef} className={memberItemContainerStyle} onClick={showMenu}>
+    <div ref={containerRef} className={memberItemContainerStyle(theme)} onClick={showMenu}>
       {avatarToUse}
       {isYou && <span className={memberItemIsYouStyle}>(you)</span>}
       <Stack horizontal={true} className={iconStackStyle} tokens={iconStackTokens}>
@@ -72,7 +74,7 @@ const ParticipantItemBase = (props: ParticipantItemProps & ErrorHandlingProps): 
       {menuItems && (
         <ContextualMenu
           items={menuItems}
-          hidden={menuHidden || isYou}
+          hidden={menuHidden}
           target={clickEvent ?? containerRef}
           onItemClick={hideMenu}
           onDismiss={hideMenu}
