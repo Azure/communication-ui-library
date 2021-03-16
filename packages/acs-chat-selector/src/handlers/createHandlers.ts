@@ -12,7 +12,7 @@ type DefaultHandlers = {
 // Keep all these handlers the same instance(unless client changed) to avoid re-render
 const createDefaultHandlers = memoizeOne((chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient) => {
   return {
-    onSendMessage: async (content: string) => {
+    onMessageSend: async (content: string) => {
       await chatThreadClient.sendMessage({ content });
     },
     onMessageSeen: async (chatMessageId: string) => {
