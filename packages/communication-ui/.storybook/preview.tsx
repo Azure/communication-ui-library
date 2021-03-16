@@ -23,6 +23,8 @@ export const parameters = {
 
 const withThemeProvider = (Story: any, context: any) => {
   const theme = context.globals.theme === 'light' ? lightTheme : darkTheme;
+  document.body.style.background = context.globals.theme === 'light' ? '#ffffff' : '#070707';
+
   return (
     <FluentThemeProvider theme={theme}>
       <Story {...context} />
@@ -46,7 +48,7 @@ export const globalTypes = {
     description: 'Global theme for components',
     defaultValue: 'light',
     toolbar: {
-      icon: 'circlehollow',
+      icon: 'paintbrush',
       items: ['light', 'dark']
     }
   }
