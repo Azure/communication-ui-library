@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush.schema.json",
-  "rushVersion": "5.39.1",
-  "pnpmVersion": "5.15.2",
+  "rushVersion": "5.40.5",
+  "pnpmVersion": "5.17.3",
   "pnpmOptions": {
     "strictPeerDependencies": true
   },
@@ -28,6 +28,11 @@
       "reviewCategory": "prototypes"
     },
     {
+      "packageName": "@azure/acs-chat-selector",
+      "projectFolder": "packages/acs-chat-selector",
+      "reviewCategory": "prototypes"
+    },
+    {
       "packageName": "@azure/acs-calling-declarative",
       "projectFolder": "packages/acs-calling-declarative",
       "reviewCategory": "prototypes"
@@ -51,6 +56,11 @@
       "packageName": "acs-server-sample",
       "projectFolder": "samples/Server",
       "reviewCategory": "prototypes"
+    },
+    {
+      "packageName": "release-tools",
+      "projectFolder": "common/release",
+      "reviewCategory": "tools"
     }
   ]
 }

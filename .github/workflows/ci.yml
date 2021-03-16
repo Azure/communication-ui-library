@@ -18,6 +18,8 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       # Ensure node version is great enough
       - name: Use Node.js v12.x
@@ -30,6 +32,10 @@ jobs:
         run: npm install -g @microsoft/rush
       - name: Install dependencies
         run: rush install
+
+      # Perform changelog check
+      - name: Check the necessary change file has been submitted
+        run: rush changelog:check
 
       # Perform lint check
       - name: Run linter
