@@ -18,7 +18,7 @@ export const messageAvatarContainerStyle = (backgroundColor: string): string =>
     fontSize: '1rem' // 16px
   });
 
-export const chatContainerStyle = mergeStyles({
+export const chatThreadContainerStyle = mergeStyles({
   height: '100%',
   width: '100%',
   maxHeight: '100%',
@@ -40,19 +40,19 @@ export const chatHistoryDivStyle: CSSProperties = {
   minHeight: '2rem'
 };
 
-export const bottomRightPopupStyle: CSSProperties = {
+export const newMessageButtonContainerStyle = mergeStyles({
   position: 'absolute',
   zIndex: 1,
   bottom: 0,
   right: '1.5rem'
-};
+});
 
 export const chatMessageStyle = (mine: boolean): ComponentSlotStyle => ({
   backgroundColor: mine ? 'rgba(42, 161,255, 0.25)' : 'rgba(243,242,241)',
   overflowY: 'hidden'
 });
 
-export const readReceiptStyle = (mine: boolean): string =>
+export const readReceiptContainerStyle = (mine: boolean): string =>
   mergeStyles({
     marginLeft: mine ? '1rem' : '0rem'
   });

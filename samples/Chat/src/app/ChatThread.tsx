@@ -3,25 +3,23 @@
 import { Button, Chat, ChatItemProps, Flex, Ref } from '@fluentui/react-northstar';
 import {
   DownIconStyle,
-  bottomRightPopupStyle,
-  chatContainerStyle,
+  newMessageButtonContainerStyle,
+  chatThreadContainerStyle,
   chatMessageStyle,
   chatHistoryDivStyle,
   chatStyle,
   loadMoreMessageButtonStyle,
   newMessageButtonStyle,
-  readReceiptStyle,
+  readReceiptContainerStyle,
   noReadReceiptStyle
 } from './styles/ChatThread.styles';
-import { Icon, Persona, PersonaSize, PrimaryButton, Stack } from '@fluentui/react';
+import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack } from '@fluentui/react';
+import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { LiveAnnouncer, LiveMessage } from 'react-aria-live';
 import {
   CLICK_TO_LOAD_MORE_MESSAGES,
   NEW_MESSAGES,
-  DEFAULT_NUMBER_OF_MESSAGES_TO_LOAD,
-  UNABLE_TO_LOAD_MORE_MESSAGES,
   connectFuncsToContext,
-  compareMessages,
   ReadReceiptComponent,
   ReadReceiptProps,
   ChatMessage as WebUiChatMessage,
@@ -33,95 +31,13 @@ import {
 } from '@azure/communication-ui';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Linkify from 'react-linkify';
-import {
-  ChatMessagePropsFromContext,
-  getMessageStatus,
-  MapToChatMessageProps
-} from './consumers/MapToChatMessageProps';
-import { ChatMessageWithClientMessageId } from '@azure/communication-ui/dist/hooks/useSendMessage';
-
-export const updateMessagesWithAttached = (
-  chatMessagesWithStatus: any[],
-  indexOfTheFirstMessage: number,
-  userId: string
-): WebUiChatMessage[] => {
-  chatMessagesWithStatus.sort(compareMessages);
-  const newChatMessages: WebUiChatMessage[] = [];
-  const messagesToRender = chatMessagesWithStatus.slice(indexOfTheFirstMessage, chatMessagesWithStatus.length);
-  messagesToRender.map((message: any, index: number, messagesList: any) => {
-    const mine = message.senderId === userId;
-    let attached: string | boolean = false;
-    if (index === 0) {
-      if (index !== messagesList.length - 1) {
-        //the next message has the same sender
-        if (messagesList[index].senderId === messagesList[index + 1].senderId) {
-          attached = 'top';
-        }
-      }
-    } else {
-      if (messagesList[index].senderId === messagesList[index - 1].senderId) {
-        //the previous message has the same sender
-        if (index !== messagesList.length - 1) {
-          if (messagesList[index].senderId === messagesList[index + 1].senderId) {
-            //the next message has the same sender
-            attached = true;
-          } else {
-            //the next message has a different sender
-            attached = 'bottom';
-          }
-        } else {
-          // this is the last message of the whole messages list
-          attached = 'bottom';
-        }
-      } else {
-        //the previous message has a different sender
-        if (index !== messagesList.length - 1) {
-          if (messagesList[index].senderId === messagesList[index + 1].senderId) {
-            //the next message has the same sender
-            attached = 'top';
-          }
-        }
-      }
-    }
-    const messageWithAttached = { ...message, attached, mine };
-    newChatMessages.push(messageWithAttached);
-    return message;
-  });
-  return newChatMessages;
-};
+import { ChatMessagePropsFromContext, MapToChatMessageProps } from './consumers/MapToChatMessageProps';
 
 const isLatestMessage = (latestMessageId?: string, messageId?: string): boolean =>
   !!messageId && messageId === latestMessageId;
 
 const isLatestSeenMessage = (latestSeenMessageId?: string, messageId?: string): boolean =>
   !!messageId && messageId === latestSeenMessageId;
-
-export const getLatestMessageId = (
-  chatMessageWithStatus: WebUiChatMessage[],
-  userId: string,
-  isLatestSeen = false, // set it to true to get latest message being seen
-  latestIncoming = false // set it to true to get latest message for others
-): string | undefined => {
-  const lastSeenChatMessage = chatMessageWithStatus
-    .filter(
-      (message) =>
-        message.createdOn &&
-        (message.status === MessageStatus.SEEN || !isLatestSeen) &&
-        latestIncoming !== (message.senderId === userId)
-    )
-    .map((message) => ({ createdOn: message.createdOn, id: message.messageId }))
-    .reduce(
-      (message1, message2) => {
-        if (!message1.createdOn || !message2.createdOn) {
-          return message1.createdOn ? message1 : message2;
-        } else {
-          return compareMessages(message1, message2) > 0 ? message1 : message2;
-        }
-      },
-      { createdOn: undefined, id: undefined }
-    );
-  return lastSeenChatMessage.id;
-};
 
 const showReadReceiptIcon = (message: any, latestSeenMessageId?: string, latestMessageId?: string): boolean => {
   if (message.status === MessageStatus.FAILED) {
@@ -240,28 +156,86 @@ const didUserSendTheLatestMessage = (
   }
 };
 
+export interface ChatThreadStylesProps {
+  /** Styles for the root container */
+  root?: IStyle;
+  /** Styles for load more previous messages container */
+  loadMorePreviousMessagesContainer?: IStyle;
+  /** Styles for new message container */
+  newMessageContainer?: IStyle;
+  /** Styles for chat container */
+  chatContainer?: ComponentSlotStyle;
+  /** Styles for chat message container */
+  chatMessageContainer?: ComponentSlotStyle;
+  /** Styles for read receipt container */
+  readReceiptContainer?: IStyle;
+}
+
+export interface NewMessageButtonProps {
+  onClick: () => void;
+}
+
+const DefaultNewMessageButton = (props: NewMessageButtonProps): JSX.Element => {
+  const { onClick } = props;
+  return (
+    <PrimaryButton className={newMessageButtonStyle} onClick={onClick}>
+      <Icon iconName="Down" className={DownIconStyle} />
+      {NEW_MESSAGES}
+    </PrimaryButton>
+  );
+};
+
+export interface LoadMorePreviousMessageButtonProps {
+  onClick: () => void;
+}
+
+const DefaultLoadMorePreviousMessageButton = (props: LoadMorePreviousMessageButtonProps): JSX.Element => {
+  const { onClick } = props;
+  return (
+    <Button text fluid className={loadMoreMessageButtonStyle} content={CLICK_TO_LOAD_MORE_MESSAGES} onClick={onClick} />
+  );
+};
+
 export type ChatThreadProps = {
+  userId: string;
+  chatMessages: WebUiChatMessage[];
+  styles?: ChatThreadStylesProps;
+  disableNewMessageButton?: boolean;
+  disableLoadMorePreviousMessage?: boolean;
+  disableReadReceipt?: boolean;
+  latestSeenMessageId?: string;
+  latestMessageId?: string;
+  latestIncomingMessageId?: string;
+  sendReadReceipt?: (messageId: string) => Promise<void>;
   onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element;
   onRenderAvatar?: (userId: string) => JSX.Element;
+  onRenderNewMessageButton?: (newMessageButtonProps: NewMessageButtonProps) => JSX.Element;
+  loadMorePreviousMessages?: () => void;
+  onRenderLoadMorePreviousMessagesButton?: (
+    loadMorePreviousMessagesButton: LoadMorePreviousMessageButtonProps
+  ) => JSX.Element;
 };
 
 //  A Chatthread will be fed many messages so it will try to map out the messages out of the props and feed them into a
 //  Chat item. We need to be smarter and figure out for the last N messages are they all of the same person or not?
-export const ChatThreadComponentBase = (
-  props: ChatThreadProps & ErrorHandlingProps & ChatMessagePropsFromContext
-): JSX.Element => {
+export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingProps): JSX.Element => {
   const {
     chatMessages: newChatMessages,
     userId,
-    disableReadReceipt,
+    styles,
+    disableNewMessageButton = false,
+    disableReadReceipt = true,
+    disableLoadMorePreviousMessage = true,
+    latestSeenMessageId,
+    latestMessageId,
+    latestIncomingMessageId: newLatestIncomingMessageId,
     sendReadReceipt,
     onRenderReadReceipt,
     onRenderAvatar,
     onErrorCallback,
-    onRenderMorePreviousMessages,
-    latestSeenMessageId,
-    latestMessageId,
-    latestIncomingMessageId: newLatestIncomingMessageId
+    loadMorePreviousMessages,
+    onRenderLoadMorePreviousMessagesButton,
+    onRenderNewMessageButton
   } = props;
 
   const [chatMessages, setChatMessages] = useState<WebUiChatMessage[]>([]);
@@ -326,6 +300,7 @@ export const ChatThreadComponentBase = (
     }
 
     latestIncomingMessageIdRef.current &&
+      sendReadReceipt &&
       sendReadReceipt(latestIncomingMessageIdRef.current).catch((error) => {
         propagateError(error, onErrorCallback);
       });
@@ -422,10 +397,6 @@ export const ChatThreadComponentBase = (
     setLatestIncomingMessageIdRef(newLatestIncomingMessageId);
   }, [newLatestIncomingMessageId]);
 
-  const loadMorePreviousMessages = (): void => {
-    onRenderMorePreviousMessages && onRenderMorePreviousMessages();
-  };
-
   // To rerender the messages if app running across days(every new day chat time stamp need to be regenerated)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const todayDate = useMemo(() => new Date(), [new Date().toDateString()]);
@@ -454,7 +425,7 @@ export const ChatThreadComponentBase = (
             message: (
               <Flex vAlign="end">
                 <Chat.Message
-                  styles={chatMessageStyle}
+                  styles={styles?.chatMessageContainer ?? chatMessageStyle}
                   content={messageContentItem}
                   author={message.senderDisplayName}
                   mine={message.mine}
@@ -462,7 +433,7 @@ export const ChatThreadComponentBase = (
                     message.createdOn ? formatTimestampForChatMessage(message.createdOn, todayDate) : undefined
                   }
                 />
-                <div className={readReceiptStyle(message.mine)}>
+                <div className={mergeStyles(readReceiptContainerStyle(message.mine), styles?.readReceiptContainer)}>
                   {showReadReceipt ? (
                     onRenderReadReceipt ? (
                       onRenderReadReceipt({ messageStatus: message.status })
@@ -470,7 +441,7 @@ export const ChatThreadComponentBase = (
                       ReadReceiptComponent({ messageStatus: message.status })
                     )
                   ) : (
-                    <div className={noReadReceiptStyle} />
+                    <div className={mergeStyles(noReadReceiptStyle)} />
                   )}
                 </div>
               </Flex>
@@ -480,6 +451,7 @@ export const ChatThreadComponentBase = (
         }
       ),
     [
+      styles,
       disableReadReceipt,
       latestMessageId,
       latestSeenMessageId,
@@ -492,29 +464,30 @@ export const ChatThreadComponentBase = (
 
   return (
     <Ref innerRef={chatThreadRef}>
-      <Stack className={chatContainerStyle} grow>
-        <div style={chatHistoryDivStyle}>
-          {isAtTopOfScrollRef.current && (
-            <Button
-              text
-              fluid
-              className={loadMoreMessageButtonStyle}
-              content={CLICK_TO_LOAD_MORE_MESSAGES}
-              onClick={loadMorePreviousMessages}
-            />
-          )}
-        </div>
+      <Stack className={mergeStyles(chatThreadContainerStyle, styles?.root)} grow>
+        {!disableLoadMorePreviousMessage && (
+          <div style={chatHistoryDivStyle}>
+            {loadMorePreviousMessages &&
+              isAtTopOfScrollRef.current &&
+              (onRenderLoadMorePreviousMessagesButton ? (
+                onRenderLoadMorePreviousMessagesButton({ onClick: loadMorePreviousMessages })
+              ) : (
+                <DefaultLoadMorePreviousMessageButton onClick={loadMorePreviousMessages} />
+              ))}
+          </div>
+        )}
         <Ref innerRef={chatScrollDivRef}>
           <LiveAnnouncer>
-            <Chat styles={chatStyle} items={messagesToDisplay} />
+            <Chat styles={styles?.chatContainer ?? chatStyle} items={messagesToDisplay} />
           </LiveAnnouncer>
         </Ref>
-        {existsNewMessage && (
-          <div style={bottomRightPopupStyle}>
-            <PrimaryButton className={newMessageButtonStyle} onClick={scrollToBottom}>
-              <Icon iconName="Down" className={DownIconStyle} />
-              {NEW_MESSAGES}
-            </PrimaryButton>
+        {existsNewMessage && !disableNewMessageButton && (
+          <div className={mergeStyles(newMessageButtonContainerStyle, styles?.newMessageContainer)}>
+            {onRenderNewMessageButton ? (
+              onRenderNewMessageButton({ onClick: scrollToBottom })
+            ) : (
+              <DefaultNewMessageButton onClick={scrollToBottom} />
+            )}
           </div>
         )}
       </Stack>

@@ -15,35 +15,86 @@ import {
   useSubscribeReadReceipt,
   useSubscribeMessage,
   useFetchMessages,
-  useSetChatMessages
+  compareMessages
 } from '@azure/communication-ui';
 import { ChatMessage, ChatThreadMember } from '@azure/communication-chat';
-import { useCallback, useEffect, useMemo } from 'react';
-import { getLatestMessageId, updateMessagesWithAttached } from '../ChatThread';
+import { useEffect, useMemo } from 'react';
 
-const mockPreviousMessages = (): any[] => {
-  return [
-    {
-      content: 'This is a past message',
-      createdOn: new Date('2020-04-13T00:00:00.000+08:00'),
-      id: '1615528414092',
-      senderId: { sender: '8:acs:740e917b-1ae0-47aa-bc68-ae95600ba1e3_00000008-c4e0-b199-570c-113a0d0074666' },
-      senderDisplayName: '11',
-      status: 'delivered' as MessageStatus
-    },
-    {
-      content: 'This is a past message2',
-      createdOn: new Date('2020-04-13T00:00:00.000+08:00'),
-      id: '1615528414092',
-      senderId: { sender: '8:acs:740e917b-1ae0-47aa-bc68-ae95600ba1e3_00000008-c4e0-b199-570c-113a0d0074666' },
-      senderDisplayName: '11',
-      status: 'delivered' as MessageStatus
+export const updateMessagesWithAttached = (
+  chatMessagesWithStatus: any[],
+  indexOfTheFirstMessage: number,
+  userId: string
+): WebUiChatMessage[] => {
+  chatMessagesWithStatus.sort(compareMessages);
+  const newChatMessages: WebUiChatMessage[] = [];
+  const messagesToRender = chatMessagesWithStatus.slice(indexOfTheFirstMessage, chatMessagesWithStatus.length);
+  messagesToRender.map((message: any, index: number, messagesList: any) => {
+    const mine = message.senderId === userId;
+    let attached: string | boolean = false;
+    if (index === 0) {
+      if (index !== messagesList.length - 1) {
+        //the next message has the same sender
+        if (messagesList[index].senderId === messagesList[index + 1].senderId) {
+          attached = 'top';
+        }
+      }
+    } else {
+      if (messagesList[index].senderId === messagesList[index - 1].senderId) {
+        //the previous message has the same sender
+        if (index !== messagesList.length - 1) {
+          if (messagesList[index].senderId === messagesList[index + 1].senderId) {
+            //the next message has the same sender
+            attached = true;
+          } else {
+            //the next message has a different sender
+            attached = 'bottom';
+          }
+        } else {
+          // this is the last message of the whole messages list
+          attached = 'bottom';
+        }
+      } else {
+        //the previous message has a different sender
+        if (index !== messagesList.length - 1) {
+          if (messagesList[index].senderId === messagesList[index + 1].senderId) {
+            //the next message has the same sender
+            attached = 'top';
+          }
+        }
+      }
     }
-  ];
+    const messageWithAttached = { ...message, attached, mine };
+    newChatMessages.push(messageWithAttached);
+    return message;
+  });
+  return newChatMessages;
 };
 
-const isLargeParticipantsGroup = (threadMembers: ChatThreadMember[]): boolean => {
-  return threadMembers.length >= PARTICIPANTS_THRESHOLD;
+export const getLatestMessageId = (
+  chatMessageWithStatus: WebUiChatMessage[],
+  userId: string,
+  isLatestSeen = false, // set it to true to get latest message being seen
+  latestIncoming = false // set it to true to get latest message for others
+): string | undefined => {
+  const lastSeenChatMessage = chatMessageWithStatus
+    .filter(
+      (message) =>
+        message.createdOn &&
+        (message.status === MessageStatus.SEEN || !isLatestSeen) &&
+        latestIncoming !== (message.senderId === userId)
+    )
+    .map((message) => ({ createdOn: message.createdOn, id: message.messageId }))
+    .reduce(
+      (message1, message2) => {
+        if (!message1.createdOn || !message2.createdOn) {
+          return message1.createdOn ? message1 : message2;
+        } else {
+          return compareMessages(message1, message2) > 0 ? message1 : message2;
+        }
+      },
+      { createdOn: undefined, id: undefined }
+    );
+  return lastSeenChatMessage.id;
 };
 
 export const getMessageStatus = (
@@ -70,6 +121,10 @@ export const getMessageStatus = (
       return MessageStatus.DELIVERED;
     }
   }
+};
+
+const isLargeParticipantsGroup = (threadMembers: ChatThreadMember[]): boolean => {
+  return threadMembers.length >= PARTICIPANTS_THRESHOLD;
 };
 
 /**
@@ -115,7 +170,7 @@ export type ChatMessagePropsFromContext = {
   latestSeenMessageId?: string;
   latestMessageId?: string;
   latestIncomingMessageId?: string;
-  onRenderMorePreviousMessages: () => void;
+  loadMorePreviousMessages?: () => void;
 };
 
 export const MapToChatMessageProps = (): ChatMessagePropsFromContext => {
@@ -129,7 +184,6 @@ export const MapToChatMessageProps = (): ChatMessagePropsFromContext => {
   const isLargeGroup = useMemo(() => {
     return isLargeParticipantsGroup(threadMembers);
   }, [threadMembers]);
-  const setChatMessages = useSetChatMessages();
   const sendReadReceipt = useSendReadReceipt();
   const originalChatMessages = useMemo(() => {
     return convertSdkChatMessagesToWebUiChatMessages(
@@ -162,10 +216,6 @@ export const MapToChatMessageProps = (): ChatMessagePropsFromContext => {
     fetchMessages({ maxPageSize: PAGE_SIZE });
   }, [fetchMessages]);
 
-  const onRenderMorePreviousMessages = useCallback(() => {
-    setChatMessages(mockPreviousMessages().concat(sdkChatMessages));
-  }, [sdkChatMessages, setChatMessages]);
-
   return {
     userId: userId,
     chatMessages: chatMessages,
@@ -173,7 +223,6 @@ export const MapToChatMessageProps = (): ChatMessagePropsFromContext => {
     sendReadReceipt: sendReadReceipt,
     latestMessageId: latestMessageId,
     latestSeenMessageId: latestSeenMessageId,
-    latestIncomingMessageId: latestIncomingMessageId,
-    onRenderMorePreviousMessages: onRenderMorePreviousMessages
+    latestIncomingMessageId: latestIncomingMessageId
   };
 };
