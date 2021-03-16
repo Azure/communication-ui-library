@@ -1,15 +1,20 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { ChatMessage, ChatThreadClient, RestListMessagesOptions } from '@azure/communication-chat';
+import { ChatMessage, ChatThreadClient, ListMessagesOptions } from '@azure/communication-chat';
 import { useChatThreadClient, useSetChatMessages } from '../providers/ChatThreadProvider';
 
 import { TEXT_MESSAGE } from '../constants';
 import { useCallback } from 'react';
 import { CommunicationUiErrorCode, CommunicationUiError } from '../types/CommunicationUiError';
 
+// The following need explicitly imported to avoid api-extractor issues.
+// These can be removed once https://github.com/microsoft/rushstack/pull/1916 is fixed.
+// @ts-ignore
+import { RestListMessagesOptions } from '@azure/communication-chat';
+
 const fetchMessagesInternal = async (
   chatThreadClient: ChatThreadClient,
-  options?: RestListMessagesOptions
+  options?: ListMessagesOptions
 ): Promise<ChatMessage[]> => {
   let messages: ChatMessage[] = [];
   let getMessagesResponse;
@@ -30,7 +35,7 @@ const fetchMessagesInternal = async (
   return messages.reverse();
 };
 
-export const useFetchMessages = (): ((options?: RestListMessagesOptions) => Promise<ChatMessage[]>) => {
+export const useFetchMessages = (): ((options?: ListMessagesOptions) => Promise<ChatMessage[]>) => {
   const chatThreadClient = useChatThreadClient();
   const setChatMessages = useSetChatMessages();
   if (!chatThreadClient) {
@@ -40,7 +45,7 @@ export const useFetchMessages = (): ((options?: RestListMessagesOptions) => Prom
     });
   }
   const fetchMessages = useCallback(
-    async (options?: RestListMessagesOptions): Promise<ChatMessage[]> => {
+    async (options?: ListMessagesOptions): Promise<ChatMessage[]> => {
       const messages = await fetchMessagesInternal(chatThreadClient, options);
       setChatMessages(messages);
       return messages;
