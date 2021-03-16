@@ -4,7 +4,7 @@ import { ChatThreadClient } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
 
 type DefaultHandlers = {
-  onSendMessage: (content: string) => Promise<void>;
+  onMessageSend: (content: string) => Promise<void>;
   onMessageSeen: (chatMessageId: string) => Promise<void>;
   onTyping: () => Promise<void>;
 };
