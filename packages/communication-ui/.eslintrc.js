@@ -69,6 +69,15 @@ module.exports = {
       rules: {
         '@typescript-eslint/ban-types': 'off'
       }
+    },
+    {
+      // remove ban on files affected by https://github.com/microsoft/rushstack/pull/1916 is fixed.
+      // This should be removed once this issue is fixed
+      files: ['useFetchMessages.ts'],
+      rules: {
+        '@typescript-eslint/ban-ts-comment': 'off',
+        '@typescript-eslint/no-unused-vars': 'off'
+      }
     }
   ]
 };
