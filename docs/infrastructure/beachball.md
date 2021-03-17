@@ -1,3 +1,5 @@
+# Beachball
+
 ## What is Beachball?
 [Beachball](https://microsoft.github.io/beachball/) is a semantic version bumping tool and changelog generator.
 
@@ -16,6 +18,8 @@ Along with regular package verion updates, we also produce alpha releases nightl
 * Nightly Alpha versions follow the following syntax: v.#.#.#-alpha+yyyymmdd-HHMM
 * Beta versions follow the following syntax: v.#.#.#-beta.#
 
+See [creating a release](./creating-a-release.md) for more information.
+
 ## What does Beachball do
 
 We use beachball for three main functions:
@@ -23,18 +27,22 @@ We use beachball for three main functions:
 1. Bump our package versions and update sample package dependencies
 1. Generate changelogs
 
-## How do I run beachball
-
 ### Generate change files
 `rushx changelog`
 
 ### Package version bumping
 This is done by our github actions. If this needs to be down manually you can run `npm run beachball -- bump` under `common/release`.
+See [creating a release](./creating-a-release.md) for more information.
 
 ### Changelog Generation
+This happens as part of the `beachball bump` command. In our repo however we have custom changelog renderers to create a feature rich changelog with links to PRs and authors.
 
-
+These custom renderers are located here: [common/release/changelog-custom-renders.ts](https://github.com/Azure/communication-ui-sdk/blob/main/common/release/changelog-custom-renders.ts).
 ## Gating PRs
 Pull Request builds check that the necessary change file(s) have been included in the PR and will fail if they were not checked in.
+To see all PR gates, view [pull requests](./pull-requests.md) docs.
 
 ## Configuration Files
+The primary beachball configuration file is at: [common/release/changelog-config.ts](https://github.com/Azure/communication-ui-sdk/blob/main/common/release/changelog-config.ts). This is picked up by the root level `beachball.config.js`.
+
+Each `package.json` must also not be marked `private:true` or beachball will ignore it and may optionally contain a `beachball:` section that contains package specfic configuration.

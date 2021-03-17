@@ -1,3 +1,5 @@
+# API Extractor
+
 ## What is API Extractor?
 
 [API Extractor](https://api-extractor.com/) is used for all npm packages we create (everything under `packages/`).
