@@ -10,7 +10,7 @@ import { ErrorScreen } from './ErrorScreen';
 import HomeScreen from './HomeScreen';
 import ConfigurationScreen from './ConfigurationScreen';
 import { getThreadId } from './utils/getThreadId';
-import { ChatProvider, ErrorProvider, CommunicationUiErrorInfo } from '@azure/communication-ui';
+import { ChatProvider, ErrorProvider, CommunicationUiErrorInfo, ThemeSelector } from '@azure/communication-ui';
 import { refreshTokenAsync } from './utils/refreshToken';
 
 console.info(`Thread chat sample using @azure/communication-chat : ${getChatSDKVersion()}`);
@@ -28,19 +28,27 @@ export default (): JSX.Element => {
 
   const getComponent = (): JSX.Element => {
     if (page === 'home') {
-      return <HomeScreen />;
+      return (
+        <>
+          <HomeScreen />
+          <ThemeSelector />
+        </>
+      );
     } else if (page === 'configuration') {
       return (
-        <ConfigurationScreen
-          joinChatHandler={() => {
-            setPage('chat');
-          }}
-          setToken={setToken}
-          setUserId={setUserId}
-          setDisplayName={setDisplayName}
-          setThreadId={setThreadId}
-          setEndpointUrl={setEndpointUrl}
-        />
+        <>
+          <ConfigurationScreen
+            joinChatHandler={() => {
+              setPage('chat');
+            }}
+            setToken={setToken}
+            setUserId={setUserId}
+            setDisplayName={setDisplayName}
+            setThreadId={setThreadId}
+            setEndpointUrl={setEndpointUrl}
+          />
+          <ThemeSelector />
+        </>
       );
     } else if (page === 'chat') {
       return (

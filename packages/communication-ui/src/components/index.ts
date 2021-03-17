@@ -35,3 +35,4 @@ export {
 
 export { VideoTile } from './VideoTile';
 export type { VideoTileProps, VideoTileStylesProps } from './VideoTile';
+export { ThemeSelector } from './ThemeSelector';
