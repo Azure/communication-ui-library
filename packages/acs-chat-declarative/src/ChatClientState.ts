@@ -11,7 +11,7 @@ export type ChatClientState = {
 export type ChatThreadClientState = {
   chatMessages: Map<string, ChatMessageWithStatus>;
   threadId: string;
-  thread?: ChatThread;
+  threadinfo?: ChatThread;
   coolPeriod?: Date;
   getThreadMembersError?: boolean;
   updateThreadMembersError?: boolean;

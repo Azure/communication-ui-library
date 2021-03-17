@@ -134,10 +134,6 @@ export const chatThreadClientDeclaratify = (
   chatThreadClient: ChatThreadClient,
   context: ChatContext
 ): ChatThreadClient => {
-  context.setThread(chatThreadClient.threadId, {
-    failedMessageIds: [],
-    chatMessages: new Map(),
-    threadId: chatThreadClient.threadId
-  });
+  context.createThreadIfNotExist(chatThreadClient.threadId);
   return new Proxy(chatThreadClient, new ProxyChatThreadClient(context)) as ChatThreadClient;
 };

@@ -4,6 +4,7 @@ import produce from 'immer';
 import { ChatClientState, ChatThreadClientState } from './ChatClientState';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 import { enableMapSet } from 'immer';
+import { ChatThread } from '@azure/communication-chat';
 
 enableMapSet();
 
@@ -32,6 +33,49 @@ export class ChatContext {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         draft.threads.set(threadId, threadState);
+      })
+    );
+  }
+
+  public createThread(threadId: string, threadInfo?: ChatThread): void {
+    this.setState(
+      produce(this._state, (draft: ChatClientState) => {
+        draft.threads.set(threadId, {
+          failedMessageIds: [],
+          chatMessages: new Map(),
+          threadId: threadId,
+          threadinfo: threadInfo
+        });
+      })
+    );
+  }
+
+  public createThreadIfNotExist(threadId: string, thread?: ChatThread): boolean {
+    const threadNotExist = !!this.getState().threads.get(threadId);
+    if (threadNotExist) {
+      this.createThread(threadId, thread);
+    }
+    return threadNotExist;
+  }
+
+  public updateThread(threadId: string, threadInfo?: ChatThread): void {
+    this.setState(
+      produce(this._state, (draft: ChatClientState) => {
+        const thread = draft.threads.get(threadId);
+        if (thread) {
+          thread.threadinfo = threadInfo;
+        }
+      })
+    );
+  }
+
+  public removeThread(threadId: string): void {
+    this.setState(
+      produce(this._state, (draft: ChatClientState) => {
+        const thread = draft.threads.get(threadId);
+        if (thread) {
+          draft.threads.delete(threadId);
+        }
       })
     );
   }
