@@ -16,6 +16,7 @@ import {
   upperStackStyle,
   listItemStyle
 } from './styles/HomeScreen.styles';
+import { ThemeSelector } from '@azure/communication-ui';
 
 export interface HomeScreenProps {
   startCallHandler(): void;
@@ -61,6 +62,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
             </li>
           </ul>
         </Stack>
+        <ThemeSelector />
         <PrimaryButton className={buttonStyle} onClick={props.startCallHandler}>
           <VideoCameraEmphasisIcon className={videoCameraIconStyle} size="medium" />
           {startCallButtonText}

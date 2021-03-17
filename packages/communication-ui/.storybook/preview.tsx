@@ -3,7 +3,7 @@
 import React from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { FluentThemeProvider } from '../src/providers/FluentThemeProvider';
-import { darkTheme, lightTheme } from './themes';
+import { lightTheme, darkTheme } from '../src/constants/themes';
 import { initializeIcons, loadTheme } from '@fluentui/react';
 
 // Removing `loadTheme({})` causes storybook declaration exception.

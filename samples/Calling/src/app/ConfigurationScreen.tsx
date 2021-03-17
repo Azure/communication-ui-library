@@ -1,7 +1,12 @@
 // © Microsoft Corporation. All rights reserved.
 
 import React, { useState } from 'react';
-import { connectFuncsToContext, MapToCallConfigurationProps, SetupContainerProps } from '@azure/communication-ui';
+import {
+  connectFuncsToContext,
+  MapToCallConfigurationProps,
+  SetupContainerProps,
+  ThemeSelector
+} from '@azure/communication-ui';
 import { localStorageAvailable } from './utils/constants';
 import { saveDisplayNameToLocalStorage } from './utils/AppUtils';
 import { DisplayNameField } from './DisplayNameField';
@@ -32,6 +37,9 @@ export const ConfigurationComponent = (props: ConfigurationScreenProps): JSX.Ele
       />
       <div>
         <LocalDeviceSettings />
+      </div>
+      <div>
+        <ThemeSelector />
       </div>
       <div>
         <StartCallButton

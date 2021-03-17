@@ -1,17 +1,20 @@
+// © Microsoft Corporation. All rights reserved.
+
 import React, { useCallback } from 'react';
-import { Dropdown, IDropdownOption, mergeStyles } from '@fluentui/react';
-import { lightTheme, darkTheme, useFluentTheme } from '../providers/FluentThemeProvider';
+import { Dropdown, IDropdownOption } from '@fluentui/react';
+import { lightTheme, darkTheme } from '../constants/themes';
+import { useFluentTheme } from '../providers/FluentThemeProvider';
+import { themeSelectorContainer } from './styles/ThemeSelector.styles';
 
-export const languageSelectorContainer = mergeStyles({
-  width: '100%',
-  maxWidth: '18.75rem',
-  minWidth: '12.5rem',
-  maxHeight: '14.125rem',
-  marginTop: '2.125rem'
-});
+const THEME = 'Theme';
 
-export const ThemeSelector = () => {
+const getThemeFromLocalStorage = (): string | null => window.localStorage.getItem(THEME);
+
+const saveThemeToLocalStorage = (theme: string): void => window.localStorage.setItem(THEME, theme);
+
+export const ThemeSelector = (): JSX.Element => {
   const { fluentTheme, setTheme } = useFluentTheme();
+  setTheme(getThemeFromLocalStorage() === 'dark' ? darkTheme : lightTheme);
 
   const onChange = useCallback(
     (event: React.FormEvent<HTMLDivElement>, option?: IDropdownOption | undefined) => {
@@ -19,13 +22,16 @@ export const ThemeSelector = () => {
         const themeName = option.key.toString();
         const theme = themeName === 'dark' ? darkTheme : lightTheme;
         setTheme(theme);
+        if (typeof Storage !== 'undefined') {
+          saveThemeToLocalStorage(themeName);
+        }
       }
     },
     [fluentTheme, setTheme]
   );
 
   return (
-    <div className={languageSelectorContainer}>
+    <div className={themeSelectorContainer}>
       <Dropdown
         options={['light', 'dark'].map((theme) => ({
           key: theme,
@@ -33,6 +39,7 @@ export const ThemeSelector = () => {
         }))}
         onChange={onChange}
         label="Theme"
+        selectedKey={getThemeFromLocalStorage()}
       />
     </div>
   );
