@@ -51,7 +51,7 @@ export class ChatContext {
   }
 
   public createThreadIfNotExist(threadId: string, thread?: ChatThread): boolean {
-    const threadNotExist = !!this.getState().threads.get(threadId);
+    const threadNotExist = !this.getState().threads.get(threadId);
     if (threadNotExist) {
       this.createThread(threadId, thread);
     }

@@ -108,15 +108,28 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
           const result = await chatThreadClient.sendMessage(...args);
           if (result._response.status === Constants.CREATED) {
             if (result.id) {
-              const message = await chatThreadClient.getMessage(result.id);
               this._context.batch(() => {
                 this._context.setChatMessage(chatThreadClient.threadId, {
-                  ...message,
+                  ...newMessage,
+                  clientMessageId: undefined,
                   status: 'delivered',
                   id: result.id
                 });
                 this._context.deleteLocalMessage(chatThreadClient.threadId, clientMessageId);
               });
+
+              const message = await chatThreadClient.getMessage(result.id);
+              const messageInState = this._context
+                .getState()
+                .threads.get(chatThreadClient.threadId)
+                ?.chatMessages.get(result.id);
+
+              if (!messageInState?.version) {
+                this._context.setChatMessage(chatThreadClient.threadId, {
+                  ...message,
+                  status: 'delivered'
+                });
+              }
             }
           } else if (result._response.status === Constants.PRECONDITION_FAILED_STATUS_CODE) {
             this._context.setChatMessage(chatThreadClient.threadId, { ...newMessage, status: 'failed' });
