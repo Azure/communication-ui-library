@@ -3,10 +3,15 @@
 import React, { createContext, useState, Dispatch, SetStateAction, useEffect } from 'react';
 import { Call, CallState, LocalVideoStream, RemoteParticipant } from '@azure/communication-calling';
 import { ParticipantStream } from '../types/ParticipantStream';
-import { useValidContext } from '../utils';
+import { getACSId, useValidContext } from '../utils';
 import { WithErrorHandling } from '../utils/WithErrorHandling';
 import { ErrorHandlingProps } from './ErrorProvider';
 import { useCallingContext } from './CallingProvider';
+import {
+  customParticipantDataHandlerType,
+  ParticipantData,
+  useParticipantDataContext
+} from './ParticipantDataProvider';
 
 export type CallContextType = {
   call: Call | undefined;
@@ -29,6 +34,8 @@ export type CallContextType = {
   setLocalVideoRendererBusy: Dispatch<SetStateAction<boolean>>;
   isLocalVideoOn: boolean;
   setLocalVideoOn: Dispatch<SetStateAction<boolean>>;
+  customParticipantDataHandler?: customParticipantDataHandlerType | undefined;
+  setCustomParticipantDataHandler?: Dispatch<SetStateAction<customParticipantDataHandlerType | undefined>>;
 };
 
 export interface CallProvider {
@@ -52,11 +59,29 @@ const CallProviderBase = (props: CallProvider): JSX.Element => {
   const [displayName, setDisplayName] = useState<string>(defaultDisplayName); // can remove when we update to 1.0.0-beta.3
   const [isLocalVideoOn, setLocalVideoOn] = useState<boolean>(false);
   const { callAgent } = useCallingContext();
+  const {
+    remoteParticipantsData,
+    setRemoteParticipantsData,
+    customParticipantDataHandler
+  } = useParticipantDataContext();
 
   // this will be not needed once we update to beta3, a little bit ugly now that we have two useEffect
   useEffect(() => {
     callAgent?.updateDisplayName(displayName);
   }, [displayName, callAgent]);
+
+  useEffect(() => {
+    if (call && customParticipantDataHandler) {
+      call.on('remoteParticipantsUpdated', async ({ added }) => {
+        for (const participant of added) {
+          const participantId = getACSId(participant.identifier);
+          const customParticipantData = await customParticipantDataHandler(participantId);
+          setRemoteParticipantsData([...remoteParticipantsData, customParticipantData]);
+        }
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [call, customParticipantDataHandler]);
 
   const initialState: CallContextType = {
     call,
@@ -78,7 +103,9 @@ const CallProviderBase = (props: CallProvider): JSX.Element => {
     isLocalVideoRendererBusy,
     setLocalVideoRendererBusy,
     isLocalVideoOn,
-    setLocalVideoOn
+    setLocalVideoOn,
+    customParticipantDataHandler,
+    setCustomParticipantDataHandler
   };
 
   return <CallContext.Provider value={initialState}>{children}</CallContext.Provider>;

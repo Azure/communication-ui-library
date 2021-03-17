@@ -9,6 +9,7 @@ import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/comm
 import { getDocs } from './docs/GroupCallCompositeDocs';
 import { GroupCall } from '../composites';
 import { COMPOSITE_FOLDER_PREFIX } from './constants';
+import { ParticipantData } from '../providers/ParticipantDataProvider';
 
 export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/GroupCall`,
@@ -54,6 +55,16 @@ export const GroupCallComposite: () => JSX.Element = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [connectionString]);
 
+  const localParticipantData: ParticipantData = {
+    userId: '',
+    externalId: '',
+    displayName: ''
+  };
+
+  const remoteParticipantsData = [localParticipantData, localParticipantData];
+
+  const customParticipantDataHandler = async (userId): Promise<any> => userId;
+
   return (
     <div style={{ width: '100%', height: '100%', maxWidth: '50rem', maxHeight: '35rem', margin: '20px auto' }}>
       {connectionString && (
@@ -62,6 +73,9 @@ export const GroupCallComposite: () => JSX.Element = () => {
           userId={userId}
           groupId={groupId}
           token={token}
+          localParticipantData={localParticipantData}
+          remoteParticipantsData={remoteParticipantsData}
+          customParticipantDataHandler={customParticipantDataHandler}
         />
       )}
       {!connectionString && emptyConfigTips}

@@ -9,6 +9,11 @@ import { AbortSignalLike } from '@azure/core-http';
 import { groupCallContainer } from './styles/GroupCall.styles';
 import { Stack } from '@fluentui/react';
 import { CommunicationUiErrorInfo } from '../../types';
+import {
+  customParticipantDataHandlerType,
+  ParticipantData,
+  ParticipantDataProvider
+} from '../../providers/ParticipantDataProvider';
 
 export type GroupCallCompositeProps = {
   /** Display name in the group call */
@@ -27,6 +32,9 @@ export type GroupCallCompositeProps = {
   onEndCall?: () => void;
   /** Optional callback to call when error is detected */
   onErrorCallback?: (error: CommunicationUiErrorInfo) => void;
+  localParticipantData: ParticipantData | undefined;
+  remoteParticipantsData: ParticipantData[] | [];
+  customParticipantDataHandler: customParticipantDataHandlerType | undefined;
 };
 
 type compositePageSubType = 'configuration' | 'groupcall';
@@ -44,38 +52,59 @@ export default (props: GroupCallCompositeProps): JSX.Element => {
     return () => window.removeEventListener('resize', setWindowWidth);
   }, []);
 
-  const { displayName, groupId, token, callClientOptions, refreshTokenCallback, onEndCall, onErrorCallback } = props;
+  const {
+    displayName,
+    groupId,
+    token,
+    callClientOptions,
+    refreshTokenCallback,
+    onEndCall,
+    onErrorCallback,
+    localParticipantData,
+    remoteParticipantsData,
+    customParticipantDataHandler
+  } = props;
 
   return (
     <ErrorProvider onErrorCallback={onErrorCallback}>
-      <CallingProvider token={token} callClientOptions={callClientOptions} refreshTokenCallback={refreshTokenCallback}>
-        <CallProvider displayName={displayName}>
-          <Stack className={groupCallContainer} grow>
-            {(() => {
-              switch (page) {
-                case 'configuration': {
-                  return (
-                    <ConfigurationScreen
-                      screenWidth={screenWidth}
-                      startCallHandler={(): void => setPage('groupcall')}
-                      groupId={groupId}
-                    />
-                  );
+      <ParticipantDataProvider
+        localParticipantData={localParticipantData}
+        remoteParticipantsData={remoteParticipantsData}
+        customParticipantDataHandler={customParticipantDataHandler}
+      >
+        <CallingProvider
+          token={token}
+          callClientOptions={callClientOptions}
+          refreshTokenCallback={refreshTokenCallback}
+        >
+          <CallProvider displayName={displayName}>
+            <Stack className={groupCallContainer} grow>
+              {(() => {
+                switch (page) {
+                  case 'configuration': {
+                    return (
+                      <ConfigurationScreen
+                        screenWidth={screenWidth}
+                        startCallHandler={(): void => setPage('groupcall')}
+                        groupId={groupId}
+                      />
+                    );
+                  }
+                  case 'groupcall': {
+                    return (
+                      <GroupCallScreen
+                        endCallHandler={(): void => (onEndCall ? onEndCall() : setPage('configuration'))}
+                        screenWidth={screenWidth}
+                        groupId={groupId}
+                      />
+                    );
+                  }
                 }
-                case 'groupcall': {
-                  return (
-                    <GroupCallScreen
-                      endCallHandler={(): void => (onEndCall ? onEndCall() : setPage('configuration'))}
-                      screenWidth={screenWidth}
-                      groupId={groupId}
-                    />
-                  );
-                }
-              }
-            })()}
-          </Stack>
-        </CallProvider>
-      </CallingProvider>
+              })()}
+            </Stack>
+          </CallProvider>
+        </CallingProvider>
+      </ParticipantDataProvider>
     </ErrorProvider>
   );
 };
