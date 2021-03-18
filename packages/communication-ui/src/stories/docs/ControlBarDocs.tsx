@@ -7,7 +7,16 @@ import { audioButtonProps, ControlBar, ControlButton, hangupButtonProps, options
 import { FluentThemeProvider } from '../../providers';
 
 const importStatement = `
-import { ControlBar } from '@azure/communication-ui';
+import { ControlBar, ControlButton } from '@azure/communication-ui';
+
+// Import Helper Props for quickly creating common call control buttons.
+import { 
+  videoButtonProps,
+  audioButtonProps,
+  screenShareButtonProps,
+  optionsButtonProps,
+  hangupButtonProps 
+} from '@azure/communication-ui';
 `;
 
 const defaultOptionsMenuProps = {
@@ -85,7 +94,7 @@ const ControlBarExample: () => JSX.Element = () => {
   return (
     <ControlBar layout={'horizontal'}>
       <ControlButton {...videoButtonProps} />
-      <ControlButton {...videoButtonProps} />
+      <ControlButton {...audioButtonProps} />
       <ControlButton {...screenShareButtonProps} />
       <ControlButton {...optionsButtonProps} menuProps={defaultOptionsMenuProps} />
       <ControlButton {...hangupButtonProps} />
@@ -97,13 +106,11 @@ const ControlBarExample: () => JSX.Element = () => {
 export const getDocs: () => JSX.Element = () => {
   return (
     <>
-      <Title>ControlBar</Title>
-      <Description>
-        The ControlBar Component provides allows you to handle a call.
-      </Description>
+      <Title>ControlBar & ControlButton</Title>
+      <Description of={ControlBar} />
       <Heading>Importing</Heading>
       <Source code={importStatement} />
-      <Heading>Example</Heading>
+      <Heading>Example - Control Bar with Default Buttons</Heading>
       <Canvas>
         <ControlBarExample />
       </Canvas>

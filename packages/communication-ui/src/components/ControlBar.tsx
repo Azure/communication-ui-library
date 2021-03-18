@@ -182,6 +182,18 @@ export const CONTROL_BAR_LAYOUTS = [
   'floatingRight'
 ] as const;
 
+export type ControlBarLayoutsType =
+  | 'horizontal'
+  | 'vertical'
+  | 'dockedTop'
+  | 'dockedBottom'
+  | 'dockedLeft'
+  | 'dockedRight'
+  | 'floatingTop'
+  | 'floatingBottom'
+  | 'floatingLeft'
+  | 'floatingRight';
+
 export interface ControlBarProps {
   children?: React.ReactNode;
   /**
@@ -199,13 +211,13 @@ export interface ControlBarProps {
    * `floatingRight`
    * Defaults to a `horizontal` layout.
    */
-  layout?: typeof CONTROL_BAR_LAYOUTS[number];
+  layout?: ControlBarLayoutsType;
 }
 
 /**
- * A Call Control Bar used for handling a call state. Contains actions like
- * toggle video, audo, device settings etc.
- * @returns JSX.Element
+ * `ControlBar` allows you to easily create a component for call controls using `ControlButtons`.
+ * Users will need to provide methods to `ControlButton` components used inside `ControlBar` for altering
+ * call behavior.
  */
 export const ControlBar = (props: ControlBarProps): JSX.Element => {
   const { styles, layout } = props;
