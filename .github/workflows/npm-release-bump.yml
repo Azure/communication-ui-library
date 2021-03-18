@@ -64,11 +64,12 @@ jobs:
       # Create a PR from the changes
       - name: Create PR
         run: |
+          curl --version
           curl \
             -X POST \
             -H 'Accept: application/vnd.github.v3+json' \
             -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
-            https://api.github.com/repos/Azure/communication-ui-sdk/pulls/ \
+            https://api.github.com/repos/Azure/communication-ui-sdk/pulls \
             -d ' { \
               "owner": "Azure", \
               "repo": "communication-ui-sdk", \
@@ -76,4 +77,4 @@ jobs:
               "head": "release/${{ steps.datetime.outputs.datetime }}", \
               "base": "main", \
               "body": "PR setup by the automated version bump github action. Please review." \
-            }' \
+            }'
