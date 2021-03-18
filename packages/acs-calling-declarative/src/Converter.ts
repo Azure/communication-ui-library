@@ -67,29 +67,29 @@ export function getRemoteParticipantKey(
     | MicrosoftTeamsUserKind
     | UnknownIdentifierKind
 ): string {
-  let id = identifier.kind + '_';
+  let id = identifier.id;
   switch (identifier.kind) {
     case 'communicationUser': {
-      id += identifier.communicationUserId;
+      id = identifier.communicationUserId;
       break;
     }
     case 'phoneNumber': {
-      id += identifier.phoneNumber;
+      id = identifier.phoneNumber;
       break;
     }
     case 'callingApplication': {
-      id += identifier.callingApplicationId;
+      id = identifier.callingApplicationId;
       break;
     }
     case 'microsoftTeamsUser': {
-      id += identifier.microsoftTeamsUserId;
+      id = identifier.microsoftTeamsUserId;
       break;
     }
     default: {
-      id += identifier.id;
+      id = identifier.id;
     }
   }
-  return id;
+  return `${identifier.kind}_${id}`;
 }
 
 export function convertSdkCallToDeclarativeCall(call: SdkCall): DeclarativeCall {
