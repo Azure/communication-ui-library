@@ -1,3 +1,5 @@
+// © Microsoft Corporation. All rights reserved.
+
 export const lightTheme = {
   palette: {
     themePrimary: '#0078d4',
