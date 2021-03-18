@@ -1,6 +1,7 @@
 # Jest Unit Tests
 
 ## What is jest?
+
 [Jest](https://jestjs.io/) is a JavaScript testing framework that we use in this repo to run our unit tests.
 
 - Jest CLI: <https://jestjs.io/docs/en/cli.html>
