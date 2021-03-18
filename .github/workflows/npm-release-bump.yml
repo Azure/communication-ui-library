@@ -59,7 +59,7 @@ jobs:
           git add .
           git commit -m "Version bump"
       - name: Push branch
-        run: push --set-upstream origin versionbump/${{ steps.datetime.outputs.datetime }}
+        run: git push --set-upstream origin versionbump/${{ steps.datetime.outputs.datetime }}
 
       # Create a PR from the changes
       - name: Create PR
