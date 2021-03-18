@@ -2,18 +2,18 @@
 
 import React from 'react';
 import { Dropdown, IDropdownOption } from '@fluentui/react';
-import { THEMES, getThemeFromLocalStorage, saveThemeToLocalStorage } from '../constants/themes';
+import { THEMES, saveThemeToLocalStorage } from '../constants/themes';
 import { useFluentTheme } from '../providers/FluentThemeProvider';
 import { themeSelectorContainer } from './styles/ThemeSelector.styles';
 
 export const ThemeSelector = (): JSX.Element => {
-  const { setFluentTheme } = useFluentTheme();
+  const { fluentTheme, setFluentTheme } = useFluentTheme();
 
   const onChange = (event: React.FormEvent<HTMLDivElement>, option?: IDropdownOption | undefined): void => {
     if (option) {
       const themeName = option.key.toString();
       const theme = THEMES[themeName];
-      setFluentTheme(theme);
+      setFluentTheme({ name: themeName, theme: theme });
       if (typeof Storage !== 'undefined') {
         saveThemeToLocalStorage(themeName);
       }
@@ -29,7 +29,7 @@ export const ThemeSelector = (): JSX.Element => {
         }))}
         onChange={onChange}
         label="Theme"
-        selectedKey={getThemeFromLocalStorage()}
+        selectedKey={fluentTheme.name}
       />
     </div>
   );

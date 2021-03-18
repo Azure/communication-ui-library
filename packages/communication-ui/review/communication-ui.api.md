@@ -469,6 +469,12 @@ export type ErrorsPropsFromContext = {
     setUpdateThreadMembersError: (error: boolean | undefined) => void;
 };
 
+// @public (undocumented)
+export type FluentTheme = {
+    name: string;
+    theme: PartialTheme | Theme;
+};
+
 // Warning: (ae-forgotten-export) The symbol "IFluentThemeContext" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)

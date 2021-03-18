@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Toggle } from '@fluentui/react';
-import { THEMES, LIGHT, DARK, getThemeFromLocalStorage, saveThemeToLocalStorage } from '../constants/themes';
+import { THEMES, LIGHT, DARK, saveThemeToLocalStorage } from '../constants/themes';
 import { useFluentTheme } from '../providers/FluentThemeProvider';
 import { themeSelectorContainer } from './styles/ThemeSelector.styles';
 
@@ -13,26 +13,24 @@ export type ThemeTogglerProps = {
 
 export const ThemeToggler = (props: ThemeTogglerProps): JSX.Element => {
   const { onTheme, offTheme } = props;
-  const { setFluentTheme } = useFluentTheme();
+  const { fluentTheme, setFluentTheme } = useFluentTheme();
 
   const _onTheme = onTheme ? onTheme : DARK;
   const _offTheme = offTheme ? offTheme : LIGHT;
 
   const onChange = (ev: React.MouseEvent<HTMLElement>, checked?: boolean): void => {
     if (checked) {
-      setFluentTheme(THEMES[_onTheme]);
+      setFluentTheme({ name: _onTheme, theme: THEMES[_onTheme] });
       if (typeof Storage !== 'undefined') {
         saveThemeToLocalStorage(_onTheme);
       }
     } else {
-      setFluentTheme(THEMES[_offTheme]);
+      setFluentTheme({ name: _offTheme, theme: THEMES[_offTheme] });
       if (typeof Storage !== 'undefined') {
         saveThemeToLocalStorage(_offTheme);
       }
     }
   };
-
-  const themeFromStorage = getThemeFromLocalStorage();
 
   return (
     <div className={themeSelectorContainer}>
@@ -41,7 +39,7 @@ export const ThemeToggler = (props: ThemeTogglerProps): JSX.Element => {
         onText={_onTheme}
         offText={_offTheme}
         onChange={onChange}
-        defaultChecked={themeFromStorage === _onTheme}
+        defaultChecked={fluentTheme.name === _onTheme}
       />
     </div>
   );

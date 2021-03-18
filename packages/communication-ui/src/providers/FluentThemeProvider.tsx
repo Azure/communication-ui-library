@@ -3,35 +3,43 @@
 import React, { useState, useEffect, useMemo, createContext, useContext } from 'react';
 import { ThemeProvider, Theme, PartialTheme } from '@fluentui/react-theme-provider';
 import { mergeThemes, Provider, teamsTheme, ThemeInput } from '@fluentui/react-northstar';
-import { THEMES, lightTheme, getThemeFromLocalStorage } from '../constants/themes';
+import { THEMES, LIGHT, lightTheme, getThemeFromLocalStorage } from '../constants/themes';
+
+export type FluentTheme = {
+  name: string;
+  theme: PartialTheme | Theme;
+};
 
 interface IFluentThemeContext {
-  fluentTheme: PartialTheme | Theme;
-  setFluentTheme: (theme: PartialTheme | Theme) => void;
+  fluentTheme: FluentTheme;
+  setFluentTheme: (fluentTheme: FluentTheme) => void;
 }
 
+const defaultTheme: FluentTheme = { name: LIGHT, theme: lightTheme };
+
 export const FluentThemeContext = createContext<IFluentThemeContext>({
-  fluentTheme: lightTheme,
+  fluentTheme: defaultTheme,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
-  setFluentTheme: (theme: PartialTheme | Theme) => {}
+  setFluentTheme: (fluentTheme: FluentTheme) => {}
 });
 
 interface FluentThemeProviderProps {
   children: React.ReactNode;
-  theme?: PartialTheme | Theme;
+  theme?: FluentTheme;
 }
 
 export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Element => {
   const { theme, children } = props;
   const themeFromStorage = getThemeFromLocalStorage();
-  const defaultTheme = themeFromStorage && THEMES[themeFromStorage] ? THEMES[themeFromStorage] : lightTheme;
-  const [fluentTheme, _setFluentTheme] = useState<PartialTheme | Theme>(theme ?? defaultTheme);
+  const [fluentTheme, _setFluentTheme] = useState<FluentTheme>(
+    theme ? theme : themeFromStorage && THEMES[themeFromStorage] ? THEMES[themeFromStorage] : defaultTheme
+  );
   const [fluentNorthStarTheme, setFluentNorthStarTheme] = useState<ThemeInput<any>>(teamsTheme);
 
   const themeMemo = useMemo<IFluentThemeContext>(
     () => ({
       fluentTheme: fluentTheme,
-      setFluentTheme: (theme: PartialTheme | Theme): void => _setFluentTheme(theme)
+      setFluentTheme: (fluentTheme: FluentTheme): void => _setFluentTheme(fluentTheme)
     }),
     [fluentTheme]
   );
@@ -48,13 +56,13 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
       mergeThemes(teamsTheme, {
         componentVariables: {
           Chat: {
-            backgroundColor: fluentTheme?.palette?.white
+            backgroundColor: fluentTheme.theme?.palette?.white
           },
           ChatMessage: {
-            authorColor: fluentTheme?.palette?.neutralDark,
-            contentColor: fluentTheme?.palette?.neutralDark,
-            backgroundColor: fluentTheme?.palette?.neutralLight,
-            backgroundColorMine: fluentTheme?.palette?.themeLight
+            authorColor: fluentTheme.theme?.palette?.neutralDark,
+            contentColor: fluentTheme.theme?.palette?.neutralDark,
+            backgroundColor: fluentTheme.theme?.palette?.neutralLight,
+            backgroundColorMine: fluentTheme.theme?.palette?.themeLight
           }
           // add more here to align theme for northstar components
         }
@@ -65,7 +73,7 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
 
   return (
     <FluentThemeContext.Provider value={themeMemo}>
-      <ThemeProvider theme={fluentTheme} className="wrapper" applyTo="body" style={{ display: 'inherit' }}>
+      <ThemeProvider theme={fluentTheme.theme} className="wrapper" applyTo="body" style={{ display: 'inherit' }}>
         <Provider theme={fluentNorthStarTheme} className="wrapper">
           {children}
         </Provider>
