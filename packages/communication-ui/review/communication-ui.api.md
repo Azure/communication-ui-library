@@ -401,34 +401,6 @@ export const CREATED = 201;
 export const CROP_MEDIA = "Crop";
 
 // @public (undocumented)
-export const darkTheme: {
-    palette: {
-        themePrimary: string;
-        themeLighterAlt: string;
-        themeLighter: string;
-        themeLight: string;
-        themeTertiary: string;
-        themeSecondary: string;
-        themeDarkAlt: string;
-        themeDark: string;
-        themeDarker: string;
-        neutralLighterAlt: string;
-        neutralLighter: string;
-        neutralLight: string;
-        neutralQuaternaryAlt: string;
-        neutralQuaternary: string;
-        neutralTertiaryAlt: string;
-        neutralTertiary: string;
-        neutralSecondary: string;
-        neutralPrimaryAlt: string;
-        neutralPrimary: string;
-        neutralDark: string;
-        black: string;
-        white: string;
-    };
-};
-
-// @public (undocumented)
 export const DEFAULT_IMG_WIDTH = 200;
 
 // @public (undocumented)
@@ -598,34 +570,6 @@ export const isMobileSession: () => boolean;
 
 // @public (undocumented)
 export function isSelectedDeviceInList<T extends AudioDeviceInfo | VideoDeviceInfo>(device: T, list: T[]): boolean;
-
-// @public (undocumented)
-export const lightTheme: {
-    palette: {
-        themePrimary: string;
-        themeLighterAlt: string;
-        themeLighter: string;
-        themeLight: string;
-        themeTertiary: string;
-        themeSecondary: string;
-        themeDarkAlt: string;
-        themeDark: string;
-        themeDarker: string;
-        neutralLighterAlt: string;
-        neutralLighter: string;
-        neutralLight: string;
-        neutralQuaternaryAlt: string;
-        neutralQuaternary: string;
-        neutralTertiaryAlt: string;
-        neutralTertiary: string;
-        neutralSecondary: string;
-        neutralPrimaryAlt: string;
-        neutralPrimary: string;
-        neutralDark: string;
-        black: string;
-        white: string;
-    };
-};
 
 // @public (undocumented)
 export type ListParticipant = {
@@ -874,6 +818,11 @@ export const TEXT_MESSAGE = "Text";
 // @public (undocumented)
 export const ThemeSelector: () => JSX.Element;
 
+// Warning: (ae-forgotten-export) The symbol "ThemeTogglerProps" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export const ThemeToggler: (props: ThemeTogglerProps) => JSX.Element;
+
 // @public (undocumented)
 export const THREAD_INFO_FETCH_INVERVAL = 2000;
 
@@ -972,6 +921,9 @@ export const useFetchThread: () => (() => Promise<void>);
 
 // @public (undocumented)
 export const useFetchThreadMembers: () => (() => Promise<void>);
+
+// @public (undocumented)
+export const useFluentTheme: () => IFluentThemeContext;
 
 // @public (undocumented)
 export const useGetThreadMembersError: () => boolean | undefined;
@@ -1111,9 +1063,6 @@ export const useSubscribeTypingNotification: (addTypingNotifications: (notificat
 //
 // @public (undocumented)
 export const useTeamsCall: () => UseTeamsCallType;
-
-// @public (undocumented)
-export const useTheme: () => IFluentThemeContext;
 
 // @public (undocumented)
 export const useThread: () => ChatThread | undefined;

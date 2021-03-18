@@ -54,9 +54,12 @@ export const darkTheme = {
   }
 };
 
+export const LIGHT = 'light';
+export const DARK = 'dark';
+
 export const THEMES = {
-  light: lightTheme,
-  dark: darkTheme
+  [LIGHT]: lightTheme,
+  [DARK]: darkTheme
 };
 
 const THEME = 'Theme';

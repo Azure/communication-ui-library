@@ -3,12 +3,7 @@
 import React, { useState, useEffect, useMemo, createContext, useContext } from 'react';
 import { ThemeProvider, Theme, PartialTheme } from '@fluentui/react-theme-provider';
 import { mergeThemes, Provider, teamsTheme, ThemeInput } from '@fluentui/react-northstar';
-import { lightTheme, darkTheme, getThemeFromLocalStorage } from '../constants/themes';
-
-interface FluentThemeProviderProps {
-  children: React.ReactNode;
-  theme?: PartialTheme | Theme;
-}
+import { THEMES, lightTheme, getThemeFromLocalStorage } from '../constants/themes';
 
 interface IFluentThemeContext {
   fluentTheme: PartialTheme | Theme;
@@ -21,10 +16,15 @@ export const FluentThemeContext = createContext<IFluentThemeContext>({
   setFluentTheme: (theme: PartialTheme | Theme) => {}
 });
 
+interface FluentThemeProviderProps {
+  children: React.ReactNode;
+  theme?: PartialTheme | Theme;
+}
+
 export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Element => {
   const { theme, children } = props;
   const themeFromStorage = getThemeFromLocalStorage();
-  const defaultTheme = themeFromStorage === 'dark' ? darkTheme : lightTheme;
+  const defaultTheme = themeFromStorage && THEMES[themeFromStorage] ? THEMES[themeFromStorage] : lightTheme;
   const [fluentTheme, _setFluentTheme] = useState<PartialTheme | Theme>(theme ?? defaultTheme);
   const [fluentNorthStarTheme, setFluentNorthStarTheme] = useState<ThemeInput<any>>(teamsTheme);
 
