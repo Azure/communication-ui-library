@@ -70,8 +70,10 @@ jobs:
             -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
             https://api.github.com/repos/Azure/communication-ui-sdk/pulls/ \
             -d ' { \
+              "owner": "Azure", \
+              "repo": "communication-ui-sdk", \
               "title": "Package Version Bump - ${{ steps.datetime.outputs.datetime }}", \
               "head": "release/${{ steps.datetime.outputs.datetime }}", \
               "base": "main", \
-              "body": "Automated Package Version Bump." \
+              "body": "PR setup by the automated version bump github action. Please review." \
             }' \
