@@ -33,7 +33,6 @@ export const ThemeToggler = (props: ThemeTogglerProps): JSX.Element => {
   };
 
   const themeFromStorage = getThemeFromLocalStorage();
-  console.log('themeFromStorage: ' + themeFromStorage);
 
   return (
     <div className={themeSelectorContainer}>
