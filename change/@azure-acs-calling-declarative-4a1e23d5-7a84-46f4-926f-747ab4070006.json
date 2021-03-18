@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Upgrade calling version for declarative, add types for calling declarative, and add selective state updates for calling declarative",
+  "packageName": "@azure/acs-calling-declarative",
+  "email": "allenhwang@microsoft.com",
+  "dependentChangeType": "patch"
+}
