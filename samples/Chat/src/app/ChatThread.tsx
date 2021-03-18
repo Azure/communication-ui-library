@@ -33,30 +33,6 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Linkify from 'react-linkify';
 import { ChatMessagePropsFromContext, MapToChatMessageProps } from './consumers/MapToChatMessageProps';
 
-const isLatestMessage = (latestMessageId?: string, messageId?: string): boolean =>
-  !!messageId && messageId === latestMessageId;
-
-const isLatestSeenMessage = (latestSeenMessageId?: string, messageId?: string): boolean =>
-  !!messageId && messageId === latestSeenMessageId;
-
-const showReadReceiptIcon = (message: any, latestSeenMessageId?: string, latestMessageId?: string): boolean => {
-  if (message.status === MessageStatus.FAILED) {
-    return true;
-  } else if (message.status === MessageStatus.SENDING) {
-    return true;
-  } else {
-    if (isLatestSeenMessage(latestSeenMessageId, message.messageId)) {
-      return true;
-    }
-
-    if (isLatestMessage(latestMessageId, message.messageId)) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-};
-
 const isMessageSame = (first: WebUiChatMessage, second: WebUiChatMessage): boolean => {
   return (
     first.messageId === second.messageId &&
@@ -209,14 +185,11 @@ export type ChatThreadProps = {
   disableNewMessageButton?: boolean;
   disableLoadPreviousMessage?: boolean;
   disableReadReceipt?: boolean;
-  latestSeenMessageId?: string;
-  latestMessageId?: string;
-  latestIncomingMessageId?: string;
-  sendReadReceipt?: (messageId: string) => Promise<void>;
+  onSendReadReceipt?: () => Promise<void>;
   onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element;
   onRenderAvatar?: (userId: string) => JSX.Element;
   onRenderNewMessageButton?: (newMessageButtonProps: NewMessageButtonProps) => JSX.Element;
-  loadPreviousMessages?: () => void;
+  onLoadPreviousMessages?: () => void;
   onRenderLoadPreviousMessagesButton?: (loadPreviousMessagesButton: LoadPreviousMessagesButtonProps) => JSX.Element;
 };
 
@@ -230,14 +203,11 @@ export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingPr
     disableNewMessageButton = false,
     disableReadReceipt = true,
     disableLoadPreviousMessage = true,
-    latestSeenMessageId,
-    latestMessageId,
-    latestIncomingMessageId: newLatestIncomingMessageId,
-    sendReadReceipt,
+    onSendReadReceipt,
     onRenderReadReceipt,
     onRenderAvatar,
     onErrorCallback,
-    loadPreviousMessages,
+    onLoadPreviousMessages,
     onRenderLoadPreviousMessagesButton,
     onRenderNewMessageButton
   } = props;
@@ -248,9 +218,6 @@ export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingPr
   const [chatMessagesInitialized, setChatMessagesInitialized] = useState<boolean>(false);
   const [isAtBottomOfScroll, setIsAtBottomOfScroll] = useState<boolean>(true);
   const [isAtTopOfScroll, setIsAtTopOfScroll] = useState<boolean>(false);
-  const [latestIncomingMessageId, setLatestIncomingMessageId] = useState<string | undefined>(
-    newLatestIncomingMessageId
-  );
   const [forceUpdate, setForceUpdate] = useState<number>(0);
 
   // Used to decide if should auto scroll to bottom or show "new message" button
@@ -279,12 +246,6 @@ export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingPr
     setIsAtTopOfScroll(isAtTopOfScrollValue);
   };
 
-  const latestIncomingMessageIdRef = useRef(latestIncomingMessageId);
-  const setLatestIncomingMessageIdRef = (latestIncomingMessageId: string | undefined): void => {
-    latestIncomingMessageIdRef.current = latestIncomingMessageId;
-    setLatestIncomingMessageId(latestIncomingMessageId);
-  };
-
   const chatMessagesInitializedRef = useRef(chatMessagesInitialized);
   const setChatMessagesInitializedRef = (chatMessagesInitialized: boolean): void => {
     chatMessagesInitializedRef.current = chatMessagesInitialized;
@@ -303,12 +264,11 @@ export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingPr
       return;
     }
 
-    latestIncomingMessageIdRef.current &&
-      sendReadReceipt &&
-      sendReadReceipt(latestIncomingMessageIdRef.current).catch((error) => {
+    onSendReadReceipt &&
+      onSendReadReceipt().catch((error: any) => {
         propagateError(error, onErrorCallback);
       });
-  }, [disableReadReceipt, onErrorCallback, sendReadReceipt]);
+  }, [disableReadReceipt, onErrorCallback, onSendReadReceipt]);
 
   const scrollToBottom = useCallback((): void => {
     chatScrollDivRef.current.scrollTop = chatScrollDivRef.current.scrollHeight;
@@ -397,10 +357,6 @@ export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingPr
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chatMessages]);
 
-  useEffect(() => {
-    setLatestIncomingMessageIdRef(newLatestIncomingMessageId);
-  }, [newLatestIncomingMessageId]);
-
   // To rerender the messages if app running across days(every new day chat time stamp need to be regenerated)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const todayDate = useMemo(() => new Date(), [new Date().toDateString()]);
@@ -415,8 +371,7 @@ export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingPr
               <Linkify>{message.content}</Linkify>
             </div>
           );
-          const showReadReceipt =
-            !disableReadReceipt && showReadReceiptIcon(message, latestSeenMessageId, latestMessageId);
+          const showReadReceipt = !disableReadReceipt && message.status;
           return {
             gutter: message.mine ? (
               ''
@@ -459,16 +414,7 @@ export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingPr
           };
         }
       ),
-    [
-      styles,
-      disableReadReceipt,
-      latestMessageId,
-      latestSeenMessageId,
-      chatMessages,
-      onRenderAvatar,
-      onRenderReadReceipt,
-      todayDate
-    ]
+    [styles, disableReadReceipt, chatMessages, onRenderAvatar, onRenderReadReceipt, todayDate]
   );
 
   return (
@@ -481,12 +427,12 @@ export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingPr
               styles?.loadPreviousMessagesButtonContainer
             )}
           >
-            {loadPreviousMessages &&
+            {onLoadPreviousMessages &&
               isAtTopOfScrollRef.current &&
               (onRenderLoadPreviousMessagesButton ? (
-                onRenderLoadPreviousMessagesButton({ onClick: loadPreviousMessages })
+                onRenderLoadPreviousMessagesButton({ onClick: onLoadPreviousMessages })
               ) : (
-                <DefaultLoadPreviousMessagesButton onClick={loadPreviousMessages} />
+                <DefaultLoadPreviousMessagesButton onClick={onLoadPreviousMessages} />
               ))}
           </div>
         )}

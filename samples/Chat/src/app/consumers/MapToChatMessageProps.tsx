@@ -1,7 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
 import {
-  useIsMessageSeen,
   useChatMessages,
   useFailedMessageIds,
   useThreadMembers,
@@ -11,6 +10,7 @@ import {
   PARTICIPANTS_THRESHOLD,
   useUserId,
   MessageStatus,
+  useIsMessageSeen,
   ChatMessage as WebUiChatMessage,
   useSubscribeReadReceipt,
   useSubscribeMessage,
@@ -18,17 +18,27 @@ import {
   compareMessages
 } from '@azure/communication-ui';
 import { ChatMessage, ChatThreadMember } from '@azure/communication-chat';
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 
 export const updateMessagesWithAttached = (
-  chatMessagesWithStatus: any[],
-  indexOfTheFirstMessage: number,
-  userId: string
+  chatMessagesWithStatus: WebUiChatMessage[],
+  userId: string,
+  failedMessageIds: string[],
+  isLargeGroup: boolean,
+  isMessageSeen: (userId: string, message: WebUiChatMessage) => boolean
 ): WebUiChatMessage[] => {
-  chatMessagesWithStatus.sort(compareMessages);
+  /**
+   * A block of messages: continuous messages that belong to the same sender and not intercepted by other senders.
+   *
+   * This is the index of the last message in the previous block of messages that are mine.
+   * This message's status will be reset when there's a new block of messages that are mine. (Because
+   * in this case, we only want to show the read status of last message of the new messages block)
+   */
+  let IndexOfMyLastMassage: number | undefined = undefined;
   const newChatMessages: WebUiChatMessage[] = [];
-  const messagesToRender = chatMessagesWithStatus.slice(indexOfTheFirstMessage, chatMessagesWithStatus.length);
-  messagesToRender.map((message: any, index: number, messagesList: any) => {
+
+  chatMessagesWithStatus.sort(compareMessages);
+  chatMessagesWithStatus.map((message: any, index: number, messagesList: any) => {
     const mine = message.senderId === userId;
     let attached: string | boolean = false;
     if (index === 0) {
@@ -63,26 +73,41 @@ export const updateMessagesWithAttached = (
         }
       }
     }
-    const messageWithAttached = { ...message, attached, mine };
+
+    let status = undefined;
+    if (mine) {
+      status = getMessageStatus(message, failedMessageIds, isLargeGroup, userId, isMessageSeen);
+
+      // Clean the status of the previous message in the same message block of mine.
+      if (newChatMessages.length > 0) {
+        const prevMsg = newChatMessages[newChatMessages.length - 1];
+        if (prevMsg.status === status || prevMsg.status === 'failed') {
+          prevMsg.status = undefined;
+        }
+      }
+
+      // If there's a previous block of messages that are mine, clean the read status on the last message
+      if (IndexOfMyLastMassage) {
+        newChatMessages[IndexOfMyLastMassage].status = undefined;
+        IndexOfMyLastMassage = undefined;
+      }
+
+      // Update IndexOfMyLastMassage to be the index of last message in this block.
+      if (messagesList[index + 1]?.senderId !== userId) {
+        IndexOfMyLastMassage = index;
+      }
+    }
+
+    const messageWithAttached = { ...message, attached, mine, status };
     newChatMessages.push(messageWithAttached);
     return message;
   });
   return newChatMessages;
 };
 
-export const getLatestMessageId = (
-  chatMessageWithStatus: WebUiChatMessage[],
-  userId: string,
-  isLatestSeen = false, // set it to true to get latest message being seen
-  latestIncoming = false // set it to true to get latest message for others
-): string | undefined => {
-  const lastSeenChatMessage = chatMessageWithStatus
-    .filter(
-      (message) =>
-        message.createdOn &&
-        (message.status === MessageStatus.SEEN || !isLatestSeen) &&
-        latestIncoming !== (message.senderId === userId)
-    )
+export const getLatestIncomingMessageId = (chatMessages: WebUiChatMessage[], userId: string): string | undefined => {
+  const lastSeenChatMessage = chatMessages
+    .filter((message) => message.createdOn && message.senderId !== userId)
     .map((message) => ({ createdOn: message.createdOn, id: message.messageId }))
     .reduce(
       (message1, message2) => {
@@ -98,12 +123,11 @@ export const getLatestMessageId = (
 };
 
 export const getMessageStatus = (
-  message: ChatMessageWithClientMessageId,
-  messages: ChatMessage[],
+  message: WebUiChatMessage,
   failedMessageIds: string[],
   isLargeParticipantsGroup: boolean,
   userId: string,
-  isMessageSeen?: ((userId: string, messageId: string, messages: any[]) => boolean) | undefined
+  isMessageSeen?: ((userId: string, message: WebUiChatMessage) => boolean) | undefined
 ): MessageStatus => {
   // message is pending send or is failed to be sent
   if (message.createdOn === undefined) {
@@ -111,12 +135,10 @@ export const getMessageStatus = (
       failedMessageIds.find((failedMessageId: string) => failedMessageId === message.clientMessageId) !== undefined;
     return messageFailed ? MessageStatus.FAILED : MessageStatus.SENDING;
   } else {
-    if (message.id === undefined) return MessageStatus.DELIVERED;
+    if (message.messageId === undefined) return MessageStatus.DELIVERED;
     // show read receipt if it's not a large participant group
     if (!isLargeParticipantsGroup) {
-      return isMessageSeen && isMessageSeen(userId, message.clientMessageId ?? '', messages)
-        ? MessageStatus.SEEN
-        : MessageStatus.DELIVERED;
+      return isMessageSeen && isMessageSeen(userId, message) ? MessageStatus.SEEN : MessageStatus.DELIVERED;
     } else {
       return MessageStatus.DELIVERED;
     }
@@ -146,9 +168,9 @@ const convertSdkChatMessagesToWebUiChatMessages = (
   failedMessageIds: string[],
   isLargeGroup: boolean,
   userId: string,
-  isMessageSeen: (userId: string, clientMessageId: string, messages: any[]) => boolean
+  isMessageSeen: (userId: string, message: WebUiChatMessage) => boolean
 ): WebUiChatMessage[] => {
-  return (
+  const convertedChatMessages =
     chatMessages?.map<WebUiChatMessage>((chatMessage: ChatMessageWithClientMessageId) => {
       return {
         messageId: chatMessage.id,
@@ -156,21 +178,17 @@ const convertSdkChatMessagesToWebUiChatMessages = (
         createdOn: chatMessage.createdOn,
         senderId: chatMessage.sender?.communicationUserId,
         senderDisplayName: chatMessage.senderDisplayName,
-        status: getMessageStatus(chatMessage, chatMessages, failedMessageIds, isLargeGroup, userId, isMessageSeen)
+        clientMessageId: chatMessage.clientMessageId
       };
-    }) ?? []
-  );
+    }) ?? [];
+  return updateMessagesWithAttached(convertedChatMessages ?? [], userId, failedMessageIds, isLargeGroup, isMessageSeen);
 };
 
 export type ChatMessagePropsFromContext = {
   userId: string;
   chatMessages: WebUiChatMessage[];
   disableReadReceipt: boolean;
-  sendReadReceipt: (messageId: string) => Promise<void>;
-  latestSeenMessageId?: string;
-  latestMessageId?: string;
-  latestIncomingMessageId?: string;
-  loadMorePreviousMessages?: () => void;
+  onSendReadReceipt: () => Promise<void>;
 };
 
 export const MapToChatMessageProps = (): ChatMessagePropsFromContext => {
@@ -185,7 +203,7 @@ export const MapToChatMessageProps = (): ChatMessagePropsFromContext => {
     return isLargeParticipantsGroup(threadMembers);
   }, [threadMembers]);
   const sendReadReceipt = useSendReadReceipt();
-  const originalChatMessages = useMemo(() => {
+  const chatMessages = useMemo(() => {
     return convertSdkChatMessagesToWebUiChatMessages(
       sdkChatMessages ?? [],
       failedMessageIds,
@@ -195,20 +213,9 @@ export const MapToChatMessageProps = (): ChatMessagePropsFromContext => {
     );
   }, [failedMessageIds, isLargeGroup, isMessageSeen, sdkChatMessages, userId]);
 
-  const chatMessages = useMemo(() => {
-    return updateMessagesWithAttached(originalChatMessages ?? [], 0, userId);
-  }, [originalChatMessages, userId]);
-
-  const latestMessageId = useMemo(() => {
-    return getLatestMessageId(chatMessages, userId);
-  }, [chatMessages, userId]);
-
-  const latestSeenMessageId = useMemo(() => {
-    return getLatestMessageId(chatMessages, userId, true);
-  }, [chatMessages, userId]);
-
-  const latestIncomingMessageId = useMemo(() => {
-    return getLatestMessageId(chatMessages, userId, false, true);
+  const onSendReadReceipt = useCallback(async () => {
+    const messageId = getLatestIncomingMessageId(chatMessages, userId);
+    await sendReadReceipt(messageId ?? '');
   }, [chatMessages, userId]);
 
   const fetchMessages = useFetchMessages();
@@ -220,9 +227,6 @@ export const MapToChatMessageProps = (): ChatMessagePropsFromContext => {
     userId: userId,
     chatMessages: chatMessages,
     disableReadReceipt: isLargeGroup,
-    sendReadReceipt: sendReadReceipt,
-    latestMessageId: latestMessageId,
-    latestSeenMessageId: latestSeenMessageId,
-    latestIncomingMessageId: latestIncomingMessageId
+    onSendReadReceipt
   };
 };

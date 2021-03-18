@@ -25,7 +25,7 @@ const getMessageStatus = (
   failedMessageIds: string[],
   isLargeParticipantsGroup: boolean,
   userId: string,
-  isMessageSeen?: ((userId: string, messageId: string, messages: any[]) => boolean) | undefined
+  isMessageSeen?: ((userId: string, message: WebUiChatMessage) => boolean) | undefined
 ): MessageStatus => {
   // message is pending send or is failed to be sent
   if (message.createdOn === undefined) {
@@ -36,9 +36,7 @@ const getMessageStatus = (
     if (message.id === undefined) return MessageStatus.DELIVERED;
     // show read receipt if it's not a large participant group
     if (!isLargeParticipantsGroup) {
-      return isMessageSeen && isMessageSeen(userId, message.clientMessageId ?? '', messages)
-        ? MessageStatus.SEEN
-        : MessageStatus.DELIVERED;
+      return isMessageSeen && isMessageSeen(userId, message) ? MessageStatus.SEEN : MessageStatus.DELIVERED;
     } else {
       return MessageStatus.DELIVERED;
     }
@@ -64,7 +62,7 @@ const convertSdkChatMessagesToWebUiChatMessages = (
   failedMessageIds: string[],
   isLargeGroup: boolean,
   userId: string,
-  isMessageSeen: (userId: string, clientMessageId: string, messages: any[]) => boolean
+  isMessageSeen: (userId: string, message: WebUiChatMessage) => boolean
 ): WebUiChatMessage[] => {
   return (
     chatMessages?.map<WebUiChatMessage>((chatMessage: ChatMessageWithClientMessageId) => {
