@@ -16,6 +16,8 @@ jobs:
     steps:
       # Check-out repo
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       # Setup bot information for creating pull request
       - name: Setup bot git information
