@@ -95,6 +95,7 @@ const createChatConfig = async (resourceConnectionString: string): Promise<ChatC
       topic: 'DemoThread'
     })
   ).threadId;
+  console.log(`threadId: ${threadId}`);
 
   createMessageBot(bot.token, endpointUrl, threadId, bot.userId);
 
