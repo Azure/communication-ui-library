@@ -23,7 +23,7 @@ Hot reloading is where when a sample or storybook is running and changes are mad
 To achieve this we use a mix of webpack-dev-server that hosts the samples, and a custom Rush command `build:watch`. This command is defined in [common/config/rush/command-line.json](https://github.com/Azure/communication-ui-sdk/blob/main/common/config/rush/command-line.json).
 
 ## Why Rush
-We explored a number of options for managing our monorepo:
+We explored a number of options for managing our monorepo ([Yarn workspaces](https://classic.yarnpkg.com/en/docs/workspaces/), [Lerna](https://lerna.js.org/), [Lage](https://microsoft.github.io/lage/)):
 
  &nbsp;            | Rush   | Yarn Workspaces | Lerna & Yarn Wrokspaces | Lage & Yarn Workspaces |
  ----------------- | ------ | --------------- | --------------- | -------------- |
@@ -35,5 +35,4 @@ Package publishing | ✅    |  ✅             | ✅             | ✅          
 Pros               | All in one solution. Force consistent dependency versions.| Familiar dev env for developers, most lightweight. | Used frequently in OSS projects. | Lage behind yarn commands – creates familiar dev env |
 Cons               | Tied into Rush quite tightly. Unfamiliar global rush commands. Symlinks don't work with git clean. | No incremental builds. Needs custom implementation for hot reloading. | Lerna doesn't add value except for publishing - which we are using beachball for. | Lage is new and largely untested. No hot reloading support out-of-box. Definitely an option for the future.
 
-
-Ultimately with Rush we could get all the features we were looking for in our repo. Yarn workspaces with Lage is an exciting prospect for the future however.
+Ultimately with Rush we could get all the features we were looking for in our repo. Yarn workspaces with Lage is an exciting prospect for the future however. Npm workspaces are only available in node v15+ so we did not explore this option to keep our repo more accessible.
