@@ -31,18 +31,16 @@ export default (): JSX.Element => {
       return <HomeScreen />;
     } else if (page === 'configuration') {
       return (
-        <>
-          <ConfigurationScreen
-            joinChatHandler={() => {
-              setPage('chat');
-            }}
-            setToken={setToken}
-            setUserId={setUserId}
-            setDisplayName={setDisplayName}
-            setThreadId={setThreadId}
-            setEndpointUrl={setEndpointUrl}
-          />
-        </>
+        <ConfigurationScreen
+          joinChatHandler={() => {
+            setPage('chat');
+          }}
+          setToken={setToken}
+          setUserId={setUserId}
+          setDisplayName={setDisplayName}
+          setThreadId={setThreadId}
+          setEndpointUrl={setEndpointUrl}
+        />
       );
     } else if (page === 'chat') {
       return (
