@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { DefaultButton, Icon, IconButton, Pivot, PivotItem, Stack } from '@fluentui/react';
+import { DefaultButton, Icon, IconButton, Pivot, PivotItem, Stack, Label } from '@fluentui/react';
 import React, { Dispatch } from 'react';
 import { SettingsIcon, UserFriendsIcon } from '@fluentui/react-icons-northstar';
 import {
@@ -85,9 +85,9 @@ const ChatHeader = (props: ChatHeaderProps): JSX.Element => {
   return (
     <Stack className={chatHeaderContainerStyle} horizontal={true} horizontalAlign="space-between">
       <Stack.Item align="center">
-        <div className={topicNameLabelStyle}>
+        <Label className={topicNameLabelStyle}>
           {props.existsTopicName ? props.topicName : generateDefaultHeaderMessage(props.threadMembers, userId)}
-        </div>
+        </Label>
       </Stack.Item>
       <Stack.Item align="center">
         <Stack horizontal={true}>

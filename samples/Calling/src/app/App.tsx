@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
 import React, { useEffect, useState } from 'react';
-import { initializeIcons } from '@fluentui/react';
+import { Link, initializeIcons } from '@fluentui/react';
 
 import EndCall from './EndCall';
 import ConfigurationScreen from './ConfigurationScreen';
@@ -144,8 +144,8 @@ const App = (): JSX.Element => {
     window.document.title = 'Unsupported browser';
     return (
       <>
-        <a href="https://aka.ms/ACS-CallingSupport#calling-client-library-browser-support">Learn more</a>&nbsp;about
-        browsers and platforms supported by the web calling sdk
+        <Link href="https://aka.ms/ACS-CallingSupport#calling-client-library-browser-support">Learn more</Link>
+        &nbsp;about browsers and platforms supported by the web calling sdk
       </>
     );
   };

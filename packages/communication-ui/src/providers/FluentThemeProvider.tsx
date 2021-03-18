@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useMemo, createContext, useContext } from 'react';
 import { ThemeProvider, Theme, PartialTheme } from '@fluentui/react-theme-provider';
 import { mergeThemes, Provider, teamsTheme, ThemeInput } from '@fluentui/react-northstar';
-import { lightTheme } from '../constants/themes';
+import { lightTheme, darkTheme, getThemeFromLocalStorage } from '../constants/themes';
 
 interface FluentThemeProviderProps {
   children: React.ReactNode;
@@ -12,33 +12,34 @@ interface FluentThemeProviderProps {
 
 interface IFluentThemeContext {
   fluentTheme: PartialTheme | Theme;
-  setTheme: (theme: PartialTheme | Theme) => void;
+  setFluentTheme: (theme: PartialTheme | Theme) => void;
 }
 
 export const FluentThemeContext = createContext<IFluentThemeContext>({
   fluentTheme: lightTheme,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
-  setTheme: (theme: PartialTheme | Theme) => {}
+  setFluentTheme: (theme: PartialTheme | Theme) => {}
 });
 
 export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Element => {
   const { theme, children } = props;
-  const [fluentTheme, setFluentTheme] = useState<PartialTheme | Theme>(theme ?? lightTheme);
+  const themeFromStorage = getThemeFromLocalStorage();
+  const defaultTheme = themeFromStorage === 'dark' ? darkTheme : lightTheme;
+  const [fluentTheme, _setFluentTheme] = useState<PartialTheme | Theme>(theme ?? defaultTheme);
   const [fluentNorthStarTheme, setFluentNorthStarTheme] = useState<ThemeInput<any>>(teamsTheme);
 
   const themeMemo = useMemo<IFluentThemeContext>(
     () => ({
       fluentTheme: fluentTheme,
-      setTheme: (theme: PartialTheme | Theme): void => setFluentTheme(theme)
+      setFluentTheme: (theme: PartialTheme | Theme): void => _setFluentTheme(theme)
     }),
     [fluentTheme]
   );
 
   useEffect(() => {
-    if (theme === undefined) {
-      return;
+    if (theme !== undefined) {
+      _setFluentTheme(theme);
     }
-    setFluentTheme(theme);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [theme]);
 
@@ -47,13 +48,13 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
       mergeThemes(teamsTheme, {
         componentVariables: {
           Chat: {
-            backgroundColor: theme?.palette?.white
+            backgroundColor: fluentTheme?.palette?.white
           },
           ChatMessage: {
-            authorColor: theme?.palette?.neutralDark,
-            contentColor: theme?.palette?.neutralDark,
-            backgroundColor: theme?.palette?.neutralLight,
-            backgroundColorMine: theme?.palette?.themeLight
+            authorColor: fluentTheme?.palette?.neutralDark,
+            contentColor: fluentTheme?.palette?.neutralDark,
+            backgroundColor: fluentTheme?.palette?.neutralLight,
+            backgroundColorMine: fluentTheme?.palette?.themeLight
           }
           // add more here to align theme for northstar components
         }

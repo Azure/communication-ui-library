@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 import React from 'react';
-import { Stack, PrimaryButton, Icon, Image, IImageStyles } from '@fluentui/react';
+import { Stack, PrimaryButton, Icon, Image, IImageStyles, Link } from '@fluentui/react';
 import { VideoCameraEmphasisIcon } from '@fluentui/react-icons-northstar';
 import heroSVG from '../assets/hero.svg';
 import {
@@ -58,7 +58,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
             </li>
             <li className={listItemStyle}>
               <Icon className={iconStyle} iconName={iconName} /> {listItems[3]}{' '}
-              <a href="https://aka.ms/ACS-CallingSample">sample</a>
+              <Link href="https://aka.ms/ACS-CallingSample">sample</Link>
             </li>
           </ul>
         </Stack>

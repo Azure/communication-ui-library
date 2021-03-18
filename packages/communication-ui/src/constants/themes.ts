@@ -51,3 +51,14 @@ export const darkTheme = {
     white: '#1b1a19'
   }
 };
+
+export const THEMES = {
+  light: lightTheme,
+  dark: darkTheme
+};
+
+const THEME = 'Theme';
+
+export const getThemeFromLocalStorage = (): string | null => window.localStorage.getItem(THEME);
+
+export const saveThemeToLocalStorage = (theme: string): void => window.localStorage.setItem(THEME, theme);

@@ -15,9 +15,7 @@ export const inputBoxStyle = mergeStyles({
   boxSizing: 'border-box',
   height: '2.5rem',
   width: '18.75rem',
-  border: '1px solid #605e5c',
-  borderRadius: '2px',
-  backgroundColor: '#FFFFFF'
+  borderRadius: '2px'
 });
 
 export const inputBoxTextStyle = mergeStyles({
@@ -42,16 +40,13 @@ export const inputBoxWarningStyle = mergeStyles({
   boxSizing: 'border-box',
   height: '2.5rem',
   width: '18.75rem',
-  border: '1px solid #e81123',
   borderRadius: '2px',
-  backgroundColor: '#FFFFFF',
   fontSize: '0.875rem'
 });
 
 export const labelFontStyle = mergeStyles({
   fontSize: '0.875rem',
   fontWeight: 600,
-  color: 'rgb(50, 49, 48)',
   boxSizing: 'border-box',
   boxShadow: 'none',
   margin: 0,
@@ -62,7 +57,6 @@ export const labelFontStyle = mergeStyles({
 
 export const warningStyle = mergeStyles({
   width: '18.75rem',
-  backgroundColor: '#FFFFFF',
   marginTop: '0.188rem',
   marginBottom: '0.188rem',
   marginLeft: '0.188rem',
