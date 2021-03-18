@@ -32,7 +32,6 @@
     "immer": "~8.0.1"
   },
   "devDependencies": {
-    "@azure/communication-common": "1.0.0-beta.3",
     "@types/jest": "^26.0.20",
     "@typescript-eslint/eslint-plugin": "^4.12.0",
     "@typescript-eslint/parser": "^4.12.0",

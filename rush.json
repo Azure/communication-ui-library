@@ -51,11 +51,6 @@
       "packageName": "acs-server-sample",
       "projectFolder": "samples/Server",
       "reviewCategory": "prototypes"
-    },
-    {
-      "packageName": "allen",
-      "projectFolder": "samples/Allen",
-      "reviewCategory": "prototypes"
     }
   ]
 }
