@@ -32,7 +32,11 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
   const { theme, children } = props;
   const themeFromStorage = getThemeFromLocalStorage();
   const [fluentTheme, _setFluentTheme] = useState<FluentTheme>(
-    theme ? theme : themeFromStorage && THEMES[themeFromStorage] ? THEMES[themeFromStorage] : defaultTheme
+    theme
+      ? theme
+      : themeFromStorage && THEMES[themeFromStorage]
+      ? { name: themeFromStorage, theme: THEMES[themeFromStorage] }
+      : defaultTheme
   );
   const [fluentNorthStarTheme, setFluentNorthStarTheme] = useState<ThemeInput<any>>(teamsTheme);
 
