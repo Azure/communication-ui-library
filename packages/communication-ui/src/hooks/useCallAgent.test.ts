@@ -182,7 +182,10 @@ describe('useCallAgent tests', () => {
     const remoteParticipantsUpdatedCallback = addedCallEvents.remoteParticipantsUpdated as CollectionUpdatedEvent<
       RemoteParticipant
     >;
-    remoteParticipantsUpdatedCallback({ added: [remoteParticipant], removed: [] });
+    remoteParticipantsUpdatedCallback({
+      added: [remoteParticipant],
+      removed: []
+    });
 
     expect(setParticipantsCallback).toHaveBeenCalled();
   });

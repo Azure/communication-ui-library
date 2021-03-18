@@ -1,0 +1,18 @@
+{
+  "name": "release-tools",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "beachball": "beachball",
+    "lint": "",
+    "lint:fix": "",
+    "build": "",
+    "test": ""
+  },
+  "devDependencies": {
+    "@octokit/rest": "~18.0.6",
+    "@types/node": "^14.14.10",
+    "beachball": "~1.53.0",
+    "ts-node": "^9.1.1"
+  }
+}

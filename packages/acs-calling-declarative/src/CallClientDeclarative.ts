@@ -305,7 +305,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
  * Creates a declarative CallClient by proxying CallClient with ProxyCallClient which then allows access to state in a
  * declarative way.
  *
- * @param callClient
+ * @param callClient - call client to declaratify
  */
 export const callClientDeclaratify = (callClient: CallClient): DeclarativeCallClient => {
   const context: CallContext = new CallContext();
