@@ -12,7 +12,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/CameraSettings Camer
   }
 >
   <div
-    className="wrapper root-22"
+    className="wrapper root-0"
     style={
       Object {
         "display": "inherit",
@@ -29,7 +29,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/CameraSettings Camer
       >
         <label
           className="ms-Label ms-Dropdown-label label-19"
-          id="Dropdown1-label"
+          id="Dropdown2-label"
         >
           Camera
         </label>
@@ -37,10 +37,10 @@ exports[`storybook snapshot tests Storyshots ACS Components/CameraSettings Camer
           aria-disabled={false}
           aria-expanded="false"
           aria-haspopup="listbox"
-          aria-labelledby="Dropdown1-label Dropdown1-option"
+          aria-labelledby="Dropdown2-label Dropdown2-option"
           className="ms-Dropdown dropdown-3"
           data-is-focusable={true}
-          id="Dropdown1"
+          id="Dropdown2"
           onBlur={[Function]}
           onClick={[Function]}
           onFocus={[Function]}
@@ -58,7 +58,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/CameraSettings Camer
             aria-selected={true}
             aria-setsize={3}
             className="ms-Dropdown-title title-4"
-            id="Dropdown1-option"
+            id="Dropdown2-option"
             role="option"
           >
             Logitech WebCam
@@ -792,7 +792,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/ParticipantItem Part
   }
 >
   <div
-    className="wrapper root-43"
+    className="wrapper root-0"
     style={
       Object {
         "display": "inherit",
@@ -868,7 +868,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/ParticipantItem Part
           className="ms-layer"
         >
           <div
-            className="ms-Fabric ms-Layer-content content-44"
+            className="ms-Fabric ms-Layer-content content-43"
             onBlur={[Function]}
             onChange={[Function]}
             onClick={[Function]}
@@ -901,7 +901,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/ParticipantItem Part
             onTouchStart={[Function]}
           >
             <div
-              className="ms-Callout-container container-46"
+              className="ms-Callout-container container-45"
               style={
                 Object {
                   "visibility": "hidden",
@@ -909,7 +909,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/ParticipantItem Part
               }
             >
               <div
-                className="ms-Callout ms-ContextualMenu-Callout root-47"
+                className="ms-Callout ms-ContextualMenu-Callout root-46"
                 hidden={true}
                 onScroll={[Function]}
                 style={
@@ -922,7 +922,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/ParticipantItem Part
                 tabIndex={-1}
               >
                 <div
-                  className="ms-Callout-main calloutMain-50"
+                  className="ms-Callout-main calloutMain-49"
                   onKeyDown={[Function]}
                   onMouseDown={[Function]}
                   onMouseUp={[Function]}
@@ -943,7 +943,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/ParticipantItem Part
                     tabIndex={-1}
                   >
                     <div
-                      className="ms-FocusZone css-51 ms-ContextualMenu is-open root-20"
+                      className="ms-FocusZone css-50 ms-ContextualMenu is-open root-20"
                       data-focuszone-id="FocusZone3"
                       onFocus={[Function]}
                       onKeyDown={[Function]}
