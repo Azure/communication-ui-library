@@ -18,7 +18,7 @@ import {
   ChatTopicPropsFromContext,
   MapToChatTopicProps,
   connectFuncsToContext,
-  ThemeSelector
+  ThemeToggler
 } from '@azure/communication-ui';
 import { ENTER_KEY, MAXIMUM_LENGTH_OF_TOPIC } from '@azure/communication-ui';
 
@@ -126,7 +126,7 @@ export const SettingsManagementComponent = (
           <Icon iconName="Save" className={settingsTextFieldIconStyle} />
           <div className={settingsSaveButtonTextStyle}>{isSavingTopicName ? 'Saving...' : 'Save'}</div>
         </PrimaryButton>
-        <ThemeSelector />
+        <ThemeToggler />
       </div>
     </Panel>
   );

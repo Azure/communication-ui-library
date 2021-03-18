@@ -5,7 +5,7 @@ import {
   connectFuncsToContext,
   MapToCallConfigurationProps,
   SetupContainerProps,
-  ThemeSelector
+  ThemeToggler
 } from '@azure/communication-ui';
 import { localStorageAvailable } from './utils/constants';
 import { saveDisplayNameToLocalStorage } from './utils/AppUtils';
@@ -39,7 +39,7 @@ export const ConfigurationComponent = (props: ConfigurationScreenProps): JSX.Ele
         <LocalDeviceSettings />
       </div>
       <div>
-        <ThemeSelector />
+        <ThemeToggler />
       </div>
       <div>
         <StartCallButton
