@@ -171,8 +171,17 @@ export type ChatMessage = {
     createdOn?: Date;
     senderId?: string;
     senderDisplayName?: string;
-    status: MessageStatus;
+    status?: MessageStatus;
+    attached?: MessageAttachedStatus;
+    mine?: boolean;
+    clientMessageId?: string;
 };
+
+// @public (undocumented)
+export interface ChatMessageWithClientMessageId extends ChatMessage_2 {
+    // (undocumented)
+    clientMessageId?: string;
+}
 
 // Warning: (ae-forgotten-export) The symbol "ChatProviderProps" needs to be exported by the entry point index.d.ts
 //
@@ -665,6 +674,14 @@ export const MAXIMUM_LENGTH_OF_TYPING_USERS = 35;
 export const MAXIMUM_RETRY_COUNT = 3;
 
 // @public (undocumented)
+export enum MessageAttachedStatus {
+    // (undocumented)
+    BOTTOM = "bottom",
+    // (undocumented)
+    TOP = "top"
+}
+
+// @public (undocumented)
 export enum MessageStatus {
     // (undocumented)
     DELIVERED = "delivered",
@@ -929,7 +946,7 @@ export const useIncomingCall: () => UseIncomingCallType;
 export const useIncomingCallsContext: () => IncomingCallsContextType;
 
 // @public (undocumented)
-export const useIsMessageSeen: () => (userId: string, clientMessageId: string, messages: any[]) => boolean;
+export const useIsMessageSeen: () => (userId: string, message: ChatMessage) => boolean;
 
 // @public (undocumented)
 export const useLastError: () => CommunicationUiError | undefined;

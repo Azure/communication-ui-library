@@ -18,7 +18,7 @@ import {
   compareMessages
 } from '@azure/communication-ui';
 import { ChatMessage, ChatThreadMember } from '@azure/communication-chat';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 export const updateMessagesWithAttached = (
   chatMessagesWithStatus: WebUiChatMessage[],
@@ -74,6 +74,7 @@ export const updateMessagesWithAttached = (
       }
     }
 
+    // We only set the status of a message if the message is mine
     let status = undefined;
     if (mine) {
       status = getMessageStatus(message, failedMessageIds, isLargeGroup, userId, isMessageSeen);
@@ -189,6 +190,8 @@ export type ChatMessagePropsFromContext = {
   chatMessages: WebUiChatMessage[];
   disableReadReceipt: boolean;
   onSendReadReceipt: () => Promise<void>;
+  disableLoadPreviousMessage?: boolean;
+  onLoadPreviousMessages?: () => void;
 };
 
 export const MapToChatMessageProps = (): ChatMessagePropsFromContext => {
@@ -203,15 +206,16 @@ export const MapToChatMessageProps = (): ChatMessagePropsFromContext => {
     return isLargeParticipantsGroup(threadMembers);
   }, [threadMembers]);
   const sendReadReceipt = useSendReadReceipt();
+  const [pageNumber, setPageNumber] = useState<number>(1);
   const chatMessages = useMemo(() => {
     return convertSdkChatMessagesToWebUiChatMessages(
-      sdkChatMessages ?? [],
+      sdkChatMessages?.slice(Math.max(sdkChatMessages.length - pageNumber * 20, 0)) ?? [],
       failedMessageIds,
       isLargeGroup,
       userId,
       isMessageSeen
     );
-  }, [failedMessageIds, isLargeGroup, isMessageSeen, sdkChatMessages, userId]);
+  }, [failedMessageIds, isLargeGroup, isMessageSeen, sdkChatMessages, userId, pageNumber]);
 
   const onSendReadReceipt = useCallback(async () => {
     const messageId = getLatestIncomingMessageId(chatMessages, userId);
@@ -223,10 +227,16 @@ export const MapToChatMessageProps = (): ChatMessagePropsFromContext => {
     fetchMessages({ maxPageSize: PAGE_SIZE });
   }, [fetchMessages]);
 
+  const onLoadPreviousMessages = () => {
+    setPageNumber(pageNumber * 1.5);
+  };
+
   return {
     userId: userId,
     chatMessages: chatMessages,
     disableReadReceipt: isLargeGroup,
-    onSendReadReceipt
+    onSendReadReceipt,
+    disableLoadPreviousMessage: false,
+    onLoadPreviousMessages
   };
 };

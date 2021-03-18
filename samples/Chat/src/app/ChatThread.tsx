@@ -320,7 +320,8 @@ export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingPr
       setForceUpdate(forceUpdate + 1);
       return;
     }
-    scrollToBottom();
+    // Only scroll to bottom if isAtBottomOfScrollRef is true
+    isAtBottomOfScrollRef.current && scrollToBottom();
   }, [clientHeight, forceUpdate, scrollToBottom, chatMessagesInitialized]);
 
   /**
