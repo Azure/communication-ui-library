@@ -34,7 +34,7 @@ export const chatThreadClientDeclaratify: (chatThreadClient: ChatThreadClient, c
 export type ChatThreadClientState = {
     chatMessages: Map<string, ChatMessageWithStatus>;
     threadId: string;
-    threadinfo?: ChatThread;
+    threadInfo?: ChatThread;
     coolPeriod?: Date;
     getThreadMembersError?: boolean;
     updateThreadMembersError?: boolean;
