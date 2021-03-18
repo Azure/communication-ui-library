@@ -69,4 +69,5 @@ jobs:
             -H 'Accept: application/vnd.github.v3+json' \
             -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
             -d '{"title": "Package Version Bump", "head": "versionbump/${{ steps.datetime.outputs.datetime }}", "base", "main", "body", "Package Version Bump."}' \
-            https://api.github.com/repos/Azure/communication-ui-sdk/pulls/
+            https://api.github.com/repos/Azure/communication-ui-sdk/pulls/ \
+            --fail
