@@ -3,7 +3,6 @@ dependencies:
   '@azure/communication-calling': 1.0.0-beta.2
   '@azure/communication-common': 1.0.0-beta.3
   '@azure/communication-identity': 1.0.0-beta.4
-  '@azure/communication-signaling': 1.0.0-beta.1
   '@azure/core-http': 1.2.3
   '@babel/core': 7.13.10
   '@babel/preset-env': 7.13.10_@babel+core@7.13.10
@@ -266,6 +265,19 @@ packages:
       node: '>=8.0.0'
     resolution:
       integrity: sha512-2Nbm6OEtouz94kWiWu40VhG2ckTwAI4Ng7ji77yCha1obrVhzxA1wfveMZmEmXk4s7YGN5L7xAj/hFATe7WknQ==
+  /@azure/communication-signaling/1.0.0-beta.3:
+    dependencies:
+      '@azure/core-http': 1.2.3
+      '@azure/core-tracing': 1.0.0-preview.9
+      '@azure/logger': 1.0.2
+      '@opentelemetry/api': 0.10.2
+      events: 3.3.0
+      tslib: 1.14.1
+    dev: false
+    engines:
+      node: '>=8.0.0'
+    resolution:
+      integrity: sha512-WargzA8PMc9SEvQpjhM0vVq/HB0wGUScplW8Us9nEFLHy/ZvgVjbRHlCALCa/tlU/Pv3RgZhk7XuPfwip17MCQ==
   /@azure/core-asynciterator-polyfill/1.0.0:
     dev: false
     resolution:
@@ -20044,6 +20056,7 @@ packages:
   file:projects/acs-chat-declarative.tgz_prettier@2.0.5+ts-node@9.1.1:
     dependencies:
       '@azure/communication-chat': 1.0.0-beta.4
+      '@azure/communication-signaling': 1.0.0-beta.3
       '@microsoft/api-documenter': 7.12.12
       '@microsoft/api-extractor': 7.13.2
       '@types/jest': 26.0.20
@@ -20066,7 +20079,7 @@ packages:
       prettier: '*'
       ts-node: '*'
     resolution:
-      integrity: sha512-g1H3VwI6oFUu4Xqlfcfp9ux/pB8y/xbfW1IfvT/AKf/yrY6v489hXvKZJC0WEnje49w8nVq/spBoGCzbjj8kTg==
+      integrity: sha512-uTmSdy51haXEn5ZwOHPz6YwG/hLBHyHMGOhAIfEf+Av1BSA6AroF0z1enBdF1sadhhaVG9gD62/hiCEsHbdcjQ==
       tarball: file:projects/acs-chat-declarative.tgz
     version: 0.0.0
   file:projects/acs-chat-sample.tgz_40b0c9f7a7a0fac66e4b6fcf06de2a42:
@@ -20134,6 +20147,8 @@ packages:
   file:projects/acs-chat-selector.tgz_prettier@2.0.5:
     dependencies:
       '@azure/communication-chat': 1.0.0-beta.4
+      '@microsoft/api-documenter': 7.12.12
+      '@microsoft/api-extractor': 7.13.2
       '@types/react': 16.14.5
       eslint: 7.22.0
       eslint-config-prettier: 6.15.0_eslint@7.22.0
@@ -20149,7 +20164,7 @@ packages:
     peerDependencies:
       prettier: '*'
     resolution:
-      integrity: sha512-cIADMprzNvKypT/2HQ4PCSYq0aMxwJdXBABEd8HzMjoEIoCwNe2N9p4IVGwjEz9yHALjEQwTocGMrmgbO/n+SQ==
+      integrity: sha512-vgq6DDxDUEWYFZ87cBH4q1E92dgwgtbVsPUf6YVIrtITro9kA+YrR7CmgI5smLDwJbCau5vxd9UIEASkg8cXCA==
       tarball: file:projects/acs-chat-selector.tgz
     version: 0.0.0
   file:projects/acs-one-to-one-call-sample.tgz_570bf42e92a70fb216c5cd4d5ed668ef:
@@ -20375,12 +20390,12 @@ packages:
       integrity: sha512-UQumbwoolIDKZIpwIeuHgTpS5NHC09Mouev09oIQPNYzmj3cRie0bbR0C5UTmMQ+zJ00n5EhKy5G9dEN4/F24w==
       tarball: file:projects/release-tools.tgz
     version: 0.0.0
+registry: ''
 specifiers:
   '@azure/communication-administration': 1.0.0-beta.3
   '@azure/communication-calling': 1.0.0-beta.2
   '@azure/communication-common': 1.0.0-beta.3
   '@azure/communication-identity': 1.0.0-beta.4
-  '@azure/communication-signaling': 1.0.0-beta.1
   '@azure/core-http': ^1.2.3
   '@babel/core': ^7.12.7
   '@babel/preset-env': ^7.12.7
