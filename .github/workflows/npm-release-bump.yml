@@ -14,14 +14,14 @@ jobs:
     name: Bump versions and create changelog PR
     runs-on: ubuntu-latest
     steps:
+      # Check-out repo
+      - uses: actions/checkout@v2
+
       # Setup bot information for creating pull request
       - name: Setup bot git information
         run: |
           git config user.email "github-action-bot@service.microsoft.com"
           git config user.name "github-action-bot"
-
-      # Check-out repo
-      - uses: actions/checkout@v2
 
       # Check out onto desired branch or tag to create release from
       - name: Checkout tag/branch
