@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Using browser storage to store theme state in FluentThemeProvider.\n Added components ThemeSelector and ThemeToggler.\n Added ThemeToggler component to Calling and Chat sample application.\n",
+  "packageName": "@azure/communication-ui",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
