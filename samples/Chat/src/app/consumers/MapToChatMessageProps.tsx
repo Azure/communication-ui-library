@@ -17,7 +17,7 @@ import {
   useFetchMessages,
   compareMessages
 } from '@azure/communication-ui';
-import { ChatMessage, ChatThreadMember } from '@azure/communication-chat';
+import { ChatThreadMember } from '@azure/communication-chat';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 export const updateMessagesWithAttached = (
