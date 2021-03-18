@@ -70,11 +70,4 @@ jobs:
             -H 'Accept: application/vnd.github.v3+json' \
             -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
             https://api.github.com/repos/Azure/communication-ui-sdk/pulls \
-            -d \"{ \
-              'owner':'Azure', \
-              'repo':'communication-ui-sdk', \
-              'title':'Package Version Bump - 123', \
-              'head':'release/${{ steps.datetime.outputs.datetime }}', \
-              'base':'jaburnsi/fix-github-actions', \
-              'body':'PR setup by the automated version bump github action. Please review.' \
-            }\"
+            -d '{ "title":"Package Version Bump - ${{ steps.datetime.outputs.datetime }}", "head":"release/${{ steps.datetime.outputs.datetime }}", "base":"jaburnsi/fix-github-actions", "body":"PR setup by the automated version bump github action. Please review." }'
