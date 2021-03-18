@@ -10,10 +10,18 @@ export interface DeclarativeChatClient extends ChatClient {
   onStateChange(handler: (state: ChatClientState) => void): void;
 }
 
-const context: ChatContext = new ChatContext();
+export interface DeclarativeChatClientWithPrivateProps extends DeclarativeChatClient {
+  context: ChatContext;
+  eventSubscriber: EventSubscriber;
+}
 
 const proxyChatClient: ProxyHandler<ChatClient> = {
-  get: function <P extends keyof ChatClient>(chatClient: ChatClient, prop: P) {
+  get: function <P extends keyof ChatClient>(
+    chatClient: ChatClient,
+    prop: P,
+    receiver: DeclarativeChatClientWithPrivateProps
+  ) {
+    const context = receiver.context;
     switch (prop) {
       case 'createChatThread': {
         return async function (...args: Parameters<ChatClient['createChatThread']>) {
@@ -29,7 +37,14 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
       case 'startRealtimeNotifications': {
         return async function (...args: Parameters<ChatClient['startRealtimeNotifications']>) {
           const ret = await chatClient.startRealtimeNotifications(...args);
-          new EventSubscriber(chatClient, context);
+          receiver.eventSubscriber = new EventSubscriber(chatClient, context);
+          return ret;
+        };
+      }
+      case 'stopRealtimeNotifications': {
+        return async function (...args: Parameters<ChatClient['stopRealtimeNotifications']>) {
+          const ret = await chatClient.stopRealtimeNotifications(...args);
+          receiver.eventSubscriber.unsubscribe();
           return ret;
         };
       }
@@ -40,6 +55,22 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
 };
 
 export const chatClientDeclaratify = (chatClient: ChatClient): DeclarativeChatClient => {
+  const context = new ChatContext();
+  let eventSubscriber: EventSubscriber;
+
+  Object.defineProperty(chatClient, 'context', {
+    configurable: false,
+    get: () => context
+  });
+
+  Object.defineProperty(chatClient, 'eventSubscriber', {
+    configurable: false,
+    get: () => eventSubscriber,
+    set: (val: EventSubscriber) => {
+      eventSubscriber = val;
+    }
+  });
+
   Object.defineProperty(chatClient, 'state', {
     configurable: false,
     get: () => context?.getState()
