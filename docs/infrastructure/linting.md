@@ -2,7 +2,7 @@
 
 This repo uses [ESLint](https://eslint.org/) for linting alongside [Prettier](https://prettier.io/) for automatic style enforcement.
 
-## What is eslint?
+## What is ESLint?
 [ESLint](https://eslint.org/) is a static code anaylzer that helps protect against coding anti-patterns and help highlight issues in code before they become bugs. It also enforces styling that can't be auto-fixed by prettier.
 
 ### ESLint commands
