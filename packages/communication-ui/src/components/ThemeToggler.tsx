@@ -4,6 +4,7 @@ import React from 'react';
 import { Toggle } from '@fluentui/react';
 import { THEMES, LIGHT, DARK, getThemeFromLocalStorage, saveThemeToLocalStorage } from '../constants/themes';
 import { useFluentTheme } from '../providers/FluentThemeProvider';
+import { themeSelectorContainer } from './styles/ThemeSelector.styles';
 
 export type ThemeTogglerProps = {
   onTheme?: string;
@@ -31,13 +32,18 @@ export const ThemeToggler = (props: ThemeTogglerProps): JSX.Element => {
     }
   };
 
+  const themeFromStorage = getThemeFromLocalStorage();
+  console.log('themeFromStorage: ' + themeFromStorage);
+
   return (
-    <Toggle
-      label="Theme"
-      onText={_onTheme}
-      offText={_offTheme}
-      onChange={onChange}
-      defaultValue={getThemeFromLocalStorage() ?? undefined}
-    />
+    <div className={themeSelectorContainer}>
+      <Toggle
+        label="Theme"
+        onText={_onTheme}
+        offText={_offTheme}
+        onChange={onChange}
+        defaultChecked={themeFromStorage === _onTheme}
+      />
+    </div>
   );
 };
