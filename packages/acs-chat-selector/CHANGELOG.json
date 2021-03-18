@@ -1,0 +1,28 @@
+{
+  "name": "@azure/acs-chat-selector",
+  "entries": [
+    {
+      "date": "Thu, 18 Mar 2021 19:50:59 GMT",
+      "tag": "@azure/acs-chat-selector_v1.0.0-beta.0",
+      "version": "1.0.0-beta.0",
+      "comments": {
+        "none": [
+          {
+            "comment": "Initial package check in for selectors",
+            "author": "jinan@microsoft.com",
+            "commit": "65bee316c8248055f757cbe9e9779f1db4281fa0",
+            "package": "@azure/acs-chat-selector"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Add api extractor for package",
+            "author": "mail@jamesburnside.com",
+            "commit": "55d164f6ce51618385dabcefd10e2f6ac65daa9e",
+            "package": "@azure/acs-chat-selector"
+          }
+        ]
+      }
+    }
+  ]
+}

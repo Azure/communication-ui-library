@@ -1,0 +1,20 @@
+{
+  "name": "acs-one-to-one-call-sample",
+  "entries": [
+    {
+      "date": "Thu, 18 Mar 2021 19:50:59 GMT",
+      "tag": "acs-one-to-one-call-sample_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump @azure/communication-ui to v1.0.0-beta.0",
+            "author": "mail@jamesburnside.com",
+            "commit": "55d164f6ce51618385dabcefd10e2f6ac65daa9e",
+            "package": "acs-one-to-one-call-sample"
+          }
+        ]
+      }
+    }
+  ]
+}

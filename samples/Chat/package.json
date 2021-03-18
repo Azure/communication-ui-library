@@ -51,7 +51,7 @@
     "@azure/communication-chat": "1.0.0-beta.3",
     "@azure/communication-common": "1.0.0-beta.3",
     "@azure/communication-signaling": "1.0.0-beta.1",
-    "@azure/communication-ui": "1.0.0-beta",
+    "@azure/communication-ui": "1.0.0-beta.0",
     "@azure/core-http": "^1.2.3",
     "@fluentui/react": "^7.117.1",
     "@fluentui/react-icons-northstar": "^0.51.2",

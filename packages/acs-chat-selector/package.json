@@ -1,6 +1,6 @@
 {
   "name": "@azure/acs-chat-selector",
-  "version": "1.0.0-beta",
+  "version": "1.0.0-beta.0",
   "description": "ACS UI SDK",
   "module": "dist/index.js",
   "main": "dist/index.js",
@@ -31,7 +31,7 @@
   "dependencies": {
     "@azure/communication-chat": "1.0.0-beta.4",
     "reselect": "~4.0.0",
-    "@azure/acs-chat-declarative": "~1.0.0-beta",
+    "@azure/acs-chat-declarative": "~1.0.0-beta.0",
     "memoize-one": "~5.1.1"
   },
   "devDependencies": {

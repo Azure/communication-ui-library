@@ -1,0 +1,26 @@
+{
+  "name": "@azure/acs-calling-declarative",
+  "entries": [
+    {
+      "date": "Thu, 18 Mar 2021 19:50:59 GMT",
+      "tag": "@azure/acs-calling-declarative_v1.0.0-beta.0",
+      "version": "1.0.0-beta.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add api extractor for package",
+            "author": "mail@jamesburnside.com",
+            "commit": "55d164f6ce51618385dabcefd10e2f6ac65daa9e",
+            "package": "@azure/acs-calling-declarative"
+          },
+          {
+            "comment": "Initial changelog setup",
+            "author": "mail@jamesburnside.com",
+            "commit": "b1004c47c0da5b5ba8e04aef9370851031ef3dc2",
+            "package": "@azure/acs-calling-declarative"
+          }
+        ]
+      }
+    }
+  ]
+}

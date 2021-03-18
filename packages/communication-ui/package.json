@@ -1,6 +1,6 @@
 {
   "name": "@azure/communication-ui",
-  "version": "1.0.0-beta",
+  "version": "1.0.0-beta.0",
   "description": "ACS UI SDK",
   "module": "dist/index.js",
   "main": "dist/index.js",
