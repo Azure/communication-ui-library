@@ -4,16 +4,34 @@
 
 ```ts
 
-import { Call } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';
+import { CallDirection } from '@azure/communication-calling';
+import { CallEndReason } from '@azure/communication-calling';
+import { CallerInfo } from '@azure/communication-calling';
+import { CallingApplicationKind } from '@azure/communication-common';
+import { CallState } from '@azure/communication-calling';
+import { CommunicationUserKind } from '@azure/communication-common';
+import { MediaStreamType } from '@azure/communication-calling';
+import { MicrosoftTeamsUserKind } from '@azure/communication-common';
+import { PhoneNumberKind } from '@azure/communication-common';
+import { RemoteParticipantState } from '@azure/communication-calling';
+import { UnknownIdentifierKind } from '@azure/communication-common';
+import { VideoDeviceInfo } from '@azure/communication-calling';
 
 // @public
 export const callClientDeclaratify: (callClient: CallClient) => DeclarativeCallClient;
 
-// @public (undocumented)
-export type CallClientState = {
-    calls: Call[];
-};
+// @public
+export interface CallClientState {
+    // Warning: (ae-forgotten-export) The symbol "Call" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    calls: Map<string, Call>;
+    // Warning: (ae-forgotten-export) The symbol "IncomingCall" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    incomingCalls: Map<string, IncomingCall>;
+}
 
 // @public
 export interface DeclarativeCallClient extends CallClient {

@@ -29,6 +29,7 @@
     ]
   },
   "dependencies": {
+    "@azure/communication-common": "1.0.0-beta.4",
     "@azure/communication-calling": "1.0.0-beta.9",
     "immer": "~8.0.1"
   },
