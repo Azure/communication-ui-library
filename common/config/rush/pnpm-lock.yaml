@@ -265,19 +265,6 @@ packages:
       node: '>=8.0.0'
     resolution:
       integrity: sha512-2Nbm6OEtouz94kWiWu40VhG2ckTwAI4Ng7ji77yCha1obrVhzxA1wfveMZmEmXk4s7YGN5L7xAj/hFATe7WknQ==
-  /@azure/communication-signaling/1.0.0-beta.3:
-    dependencies:
-      '@azure/core-http': 1.2.3
-      '@azure/core-tracing': 1.0.0-preview.9
-      '@azure/logger': 1.0.2
-      '@opentelemetry/api': 0.10.2
-      events: 3.3.0
-      tslib: 1.14.1
-    dev: false
-    engines:
-      node: '>=8.0.0'
-    resolution:
-      integrity: sha512-WargzA8PMc9SEvQpjhM0vVq/HB0wGUScplW8Us9nEFLHy/ZvgVjbRHlCALCa/tlU/Pv3RgZhk7XuPfwip17MCQ==
   /@azure/core-asynciterator-polyfill/1.0.0:
     dev: false
     resolution:
@@ -20056,7 +20043,7 @@ packages:
   file:projects/acs-chat-declarative.tgz_prettier@2.0.5+ts-node@9.1.1:
     dependencies:
       '@azure/communication-chat': 1.0.0-beta.4
-      '@azure/communication-signaling': 1.0.0-beta.3
+      '@azure/communication-signaling': 1.0.0-beta.2
       '@microsoft/api-documenter': 7.12.12
       '@microsoft/api-extractor': 7.13.2
       '@types/jest': 26.0.20
@@ -20079,7 +20066,7 @@ packages:
       prettier: '*'
       ts-node: '*'
     resolution:
-      integrity: sha512-uTmSdy51haXEn5ZwOHPz6YwG/hLBHyHMGOhAIfEf+Av1BSA6AroF0z1enBdF1sadhhaVG9gD62/hiCEsHbdcjQ==
+      integrity: sha512-yS3iBC8KTy5gjPkPVv0TkKzcJMEzVi7CxgT6gmNIqVYJkHlmWmskzKNliG/1ly3fYUkcVgXFb4Th6igScOCKUw==
       tarball: file:projects/acs-chat-declarative.tgz
     version: 0.0.0
   file:projects/acs-chat-sample.tgz_40b0c9f7a7a0fac66e4b6fcf06de2a42:
