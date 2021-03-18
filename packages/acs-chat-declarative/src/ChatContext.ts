@@ -44,7 +44,7 @@ export class ChatContext {
           failedMessageIds: [],
           chatMessages: new Map(),
           threadId: threadId,
-          threadinfo: threadInfo
+          threadInfo: threadInfo
         });
       })
     );
@@ -63,7 +63,7 @@ export class ChatContext {
       produce(this._state, (draft: ChatClientState) => {
         const thread = draft.threads.get(threadId);
         if (thread) {
-          thread.threadinfo = threadInfo;
+          thread.threadInfo = threadInfo;
         }
       })
     );
