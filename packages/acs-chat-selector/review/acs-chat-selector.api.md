@@ -19,7 +19,7 @@ export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientSta
     disableReadReceipt: boolean;
     chatMessages: {
         createdOn: Date;
-        content: string;
+        content: string | undefined;
         status: "delivered" | "sending" | "seen" | "failed";
         senderDisplayName: string | undefined;
         senderId: string;
@@ -30,7 +30,7 @@ export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientSta
     disableReadReceipt: boolean;
     chatMessages: {
         createdOn: Date;
-        content: string;
+        content: string | undefined;
         status: "delivered" | "sending" | "seen" | "failed";
         senderDisplayName: string | undefined;
         senderId: string;
