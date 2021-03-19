@@ -85,13 +85,6 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
   );
 
   useEffect(() => {
-    if (theme !== undefined) {
-      _setFluentTheme(theme);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [theme]);
-
-  useEffect(() => {
     setFluentNorthStarTheme(
       mergeThemes(teamsTheme, {
         componentVariables: {
@@ -125,4 +118,4 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
 /**
  * React hook for programmatically accessing the theme.
  */
-export const useSettableFluentTheme = (): SettableFluentThemeContext => useContext(FluentThemeContext);
+export const useFluentTheme = (): SettableFluentThemeContext => useContext(FluentThemeContext);
