@@ -171,7 +171,7 @@ export type ChatMessage = {
     createdOn?: Date;
     senderId?: string;
     senderDisplayName?: string;
-    status?: MessageStatus;
+    statusToRender?: MessageStatus;
     attached?: MessageAttachedStatus;
     mine?: boolean;
     clientMessageId?: string;

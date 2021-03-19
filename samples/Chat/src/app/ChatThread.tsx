@@ -40,7 +40,7 @@ const isMessageSame = (first: WebUiChatMessage, second: WebUiChatMessage): boole
     JSON.stringify(first.createdOn) === JSON.stringify(second.createdOn) &&
     first.senderId === second.senderId &&
     first.senderDisplayName === second.senderDisplayName &&
-    first.status === second.status
+    first.statusToRender === second.statusToRender
   );
 };
 
@@ -125,8 +125,8 @@ const didUserSendTheLatestMessage = (
       return (
         !isMessageSame(latestMessageFromNewMessages, latestMessageFromPreviousMessages) &&
         latestMessageFromNewMessages.senderId === userId &&
-        latestMessageFromNewMessages.status !== MessageStatus.SEEN &&
-        latestMessageFromNewMessages.status !== MessageStatus.FAILED
+        latestMessageFromNewMessages.statusToRender !== MessageStatus.SEEN &&
+        latestMessageFromNewMessages.statusToRender !== MessageStatus.FAILED
       );
     }
   }
@@ -372,7 +372,7 @@ export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingPr
               <Linkify>{message.content}</Linkify>
             </div>
           );
-          const showReadReceipt = !disableReadReceipt && message.status;
+          const showReadReceipt = !disableReadReceipt && message.statusToRender;
           return {
             gutter: message.mine ? (
               ''
@@ -401,9 +401,9 @@ export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingPr
                 >
                   {showReadReceipt ? (
                     onRenderReadReceipt ? (
-                      onRenderReadReceipt({ messageStatus: message.status })
+                      onRenderReadReceipt({ messageStatus: message.statusToRender })
                     ) : (
-                      ReadReceiptComponent({ messageStatus: message.status })
+                      ReadReceiptComponent({ messageStatus: message.statusToRender })
                     )
                   ) : (
                     <div className={mergeStyles(noReadReceiptStyle)} />

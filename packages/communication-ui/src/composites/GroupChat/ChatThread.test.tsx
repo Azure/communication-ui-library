@@ -44,7 +44,7 @@ const oneSameUserChatMessagesDelivered: ChatMessage[] = [
     createdOn: new Date('2020-12-15T00:00:00Z'),
     senderId: '1',
     senderDisplayName: 'User1',
-    status: MessageStatus.DELIVERED
+    statusToRender: MessageStatus.DELIVERED
   }
 ];
 const oneDifferentUserChatMessagesUnseen: ChatMessage[] = [
@@ -54,7 +54,7 @@ const oneDifferentUserChatMessagesUnseen: ChatMessage[] = [
     createdOn: new Date('2020-12-15T00:00:00Z'),
     senderId: '2',
     senderDisplayName: 'User2',
-    status: MessageStatus.DELIVERED
+    statusToRender: MessageStatus.DELIVERED
   }
 ];
 const multipleChatMessages: ChatMessage[] = [
@@ -64,7 +64,7 @@ const multipleChatMessages: ChatMessage[] = [
     createdOn: new Date('2020-12-15T00:00:00Z'),
     senderId: '1',
     senderDisplayName: 'User1',
-    status: MessageStatus.SEEN
+    statusToRender: MessageStatus.SEEN
   },
   {
     messageId: '2',
@@ -72,7 +72,7 @@ const multipleChatMessages: ChatMessage[] = [
     createdOn: new Date('2020-12-15T00:01:01Z'),
     senderId: '2',
     senderDisplayName: 'User2',
-    status: MessageStatus.DELIVERED
+    statusToRender: MessageStatus.DELIVERED
   },
   {
     messageId: '3',
@@ -80,7 +80,7 @@ const multipleChatMessages: ChatMessage[] = [
     createdOn: new Date('2020-12-15T00:02:01Z'),
     senderId: '2',
     senderDisplayName: 'User2',
-    status: MessageStatus.DELIVERED
+    statusToRender: MessageStatus.DELIVERED
   },
   {
     messageId: '4',
@@ -88,7 +88,7 @@ const multipleChatMessages: ChatMessage[] = [
     createdOn: new Date('2020-12-15T00:03:01Z'),
     senderId: '3',
     senderDisplayName: 'User3',
-    status: MessageStatus.DELIVERED
+    statusToRender: MessageStatus.DELIVERED
   },
   {
     messageId: '5',
@@ -96,7 +96,7 @@ const multipleChatMessages: ChatMessage[] = [
     createdOn: new Date('2020-12-15T00:04:01Z'),
     senderId: '1',
     senderDisplayName: 'User1',
-    status: MessageStatus.DELIVERED
+    statusToRender: MessageStatus.DELIVERED
   },
   {
     messageId: '6',
@@ -104,7 +104,7 @@ const multipleChatMessages: ChatMessage[] = [
     createdOn: new Date('2020-12-15T00:05:01Z'),
     senderId: '1',
     senderDisplayName: 'User1',
-    status: MessageStatus.SEEN
+    statusToRender: MessageStatus.SEEN
   },
   {
     messageId: '7',
@@ -112,7 +112,7 @@ const multipleChatMessages: ChatMessage[] = [
     createdOn: new Date('2020-12-15T00:06:01Z'),
     senderId: '2',
     senderDisplayName: 'User2',
-    status: MessageStatus.SEEN
+    statusToRender: MessageStatus.SEEN
   },
   {
     messageId: '8',
@@ -120,7 +120,7 @@ const multipleChatMessages: ChatMessage[] = [
     createdOn: new Date('2020-12-15T00:07:01Z'),
     senderId: '1',
     senderDisplayName: 'User1',
-    status: MessageStatus.DELIVERED
+    statusToRender: MessageStatus.DELIVERED
   },
   {
     messageId: '9',
@@ -128,7 +128,7 @@ const multipleChatMessages: ChatMessage[] = [
     createdOn: undefined,
     senderId: '1',
     senderDisplayName: 'User1',
-    status: MessageStatus.FAILED
+    statusToRender: MessageStatus.FAILED
   }
 ];
 
@@ -143,7 +143,7 @@ const generateMessages = (amount: number): ChatMessage[] => {
       createdOn: date,
       senderId: i.toString(),
       senderDisplayName: 'User' + i.toString(),
-      status: MessageStatus.DELIVERED
+      statusToRender: MessageStatus.DELIVERED
     });
   }
   return messages;
@@ -226,7 +226,7 @@ describe('ChatThread tests', () => {
     expect(mockSendReadReceipt).toHaveBeenCalled();
   });
 
-  test('ChatThread should be able to render multiple messages with variety of status from multiple users', () => {
+  test('ChatThread should be able to render multiple messages with variety of statusToRender from multiple users', () => {
     act(() => {
       render(
         <ChatThreadComponent

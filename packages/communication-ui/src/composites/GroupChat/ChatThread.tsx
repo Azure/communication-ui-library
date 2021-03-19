@@ -99,7 +99,7 @@ const getLatestMessageId = (
     .filter(
       (message) =>
         message.createdOn &&
-        (message.status === MessageStatus.SEEN || !isLatestSeen) &&
+        (message.statusToRender === MessageStatus.SEEN || !isLatestSeen) &&
         latestIncoming !== (message.senderId === userId)
     )
     .map((message) => ({ createdOn: message.createdOn, id: message.messageId }))
@@ -117,9 +117,9 @@ const getLatestMessageId = (
 };
 
 const showReadReceiptIcon = (message: any, latestSeenMessageId?: string, latestMessageId?: string): boolean => {
-  if (message.status === MessageStatus.FAILED) {
+  if (message.statusToRender === MessageStatus.FAILED) {
     return true;
-  } else if (message.status === MessageStatus.SENDING) {
+  } else if (message.statusToRender === MessageStatus.SENDING) {
     return true;
   } else {
     if (isLatestSeenMessage(latestSeenMessageId, message.messageId)) {
@@ -141,7 +141,7 @@ const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
     first.createdOn === second.createdOn &&
     first.senderId === second.senderId &&
     first.senderDisplayName === second.senderDisplayName &&
-    first.status === second.status
+    first.statusToRender === second.statusToRender
   );
 };
 
@@ -229,8 +229,8 @@ const didUserSendTheLatestMessage = (
       return (
         !isMessageSame(latestMessageFromNewMessages, latestMessageFromPreviousMessages) &&
         latestMessageFromNewMessages.senderId === userId &&
-        latestMessageFromNewMessages.status !== MessageStatus.SEEN &&
-        latestMessageFromNewMessages.status !== MessageStatus.FAILED
+        latestMessageFromNewMessages.statusToRender !== MessageStatus.SEEN &&
+        latestMessageFromNewMessages.statusToRender !== MessageStatus.FAILED
       );
     }
   }
@@ -482,9 +482,9 @@ export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingPr
                 <div className={readReceiptStyle(message.mine)}>
                   {showReadReceipt ? (
                     onRenderReadReceipt ? (
-                      onRenderReadReceipt({ messageStatus: message.status })
+                      onRenderReadReceipt({ messageStatus: message.statusToRender })
                     ) : (
-                      ReadReceiptComponent({ messageStatus: message.status })
+                      ReadReceiptComponent({ messageStatus: message.statusToRender })
                     )
                   ) : (
                     <div className={noReadReceiptStyle} />

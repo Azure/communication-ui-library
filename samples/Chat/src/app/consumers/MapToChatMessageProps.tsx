@@ -31,8 +31,8 @@ export const updateMessagesWithAttached = (
    * A block of messages: continuous messages that belong to the same sender and not intercepted by other senders.
    *
    * This is the index of the last message in the previous block of messages that are mine.
-   * This message's status will be reset when there's a new block of messages that are mine. (Because
-   * in this case, we only want to show the read status of last message of the new messages block)
+   * This message's statusToRender will be reset when there's a new block of messages that are mine. (Because
+   * in this case, we only want to show the read statusToRender of last message of the new messages block)
    */
   let IndexOfMyLastMassage: number | undefined = undefined;
   const newChatMessages: WebUiChatMessage[] = [];
@@ -74,22 +74,22 @@ export const updateMessagesWithAttached = (
       }
     }
 
-    // We only set the status of a message if the message is mine
-    let status = undefined;
+    // We only set the statusToRender of a message if the message is mine
+    let statusToRender = undefined;
     if (mine) {
-      status = getMessageStatus(message, failedMessageIds, isLargeGroup, userId, isMessageSeen);
+      statusToRender = getMessageStatus(message, failedMessageIds, isLargeGroup, userId, isMessageSeen);
 
-      // Clean the status of the previous message in the same message block of mine.
+      // Clean the statusToRender of the previous message in the same message block of mine.
       if (newChatMessages.length > 0) {
         const prevMsg = newChatMessages[newChatMessages.length - 1];
-        if (prevMsg.status === status || prevMsg.status === 'failed') {
-          prevMsg.status = undefined;
+        if (prevMsg.statusToRender === statusToRender || prevMsg.statusToRender === 'failed') {
+          prevMsg.statusToRender = undefined;
         }
       }
 
-      // If there's a previous block of messages that are mine, clean the read status on the last message
+      // If there's a previous block of messages that are mine, clean the read statusToRender on the last message
       if (IndexOfMyLastMassage) {
-        newChatMessages[IndexOfMyLastMassage].status = undefined;
+        newChatMessages[IndexOfMyLastMassage].statusToRender = undefined;
         IndexOfMyLastMassage = undefined;
       }
 
@@ -99,7 +99,7 @@ export const updateMessagesWithAttached = (
       }
     }
 
-    const messageWithAttached = { ...message, attached, mine, status };
+    const messageWithAttached = { ...message, attached, mine, statusToRender };
     newChatMessages.push(messageWithAttached);
     return message;
   });
@@ -220,16 +220,16 @@ export const MapToChatMessageProps = (): ChatMessagePropsFromContext => {
   const onSendReadReceipt = useCallback(async () => {
     const messageId = getLatestIncomingMessageId(chatMessages, userId);
     await sendReadReceipt(messageId ?? '');
-  }, [chatMessages, userId]);
+  }, [chatMessages, userId, sendReadReceipt]);
 
   const fetchMessages = useFetchMessages();
   useEffect(() => {
     fetchMessages({ maxPageSize: PAGE_SIZE });
   }, [fetchMessages]);
 
-  const onLoadPreviousMessages = () => {
+  const onLoadPreviousMessages: () => void = useCallback(() => {
     setPageNumber(pageNumber * 1.5);
-  };
+  }, [pageNumber]);
 
   return {
     userId: userId,
