@@ -7,6 +7,11 @@ import { TEXT_MESSAGE } from '../constants';
 import { useCallback } from 'react';
 import { CommunicationUiErrorCode, CommunicationUiError } from '../types/CommunicationUiError';
 
+// The following need explicitly imported to avoid api-extractor issues.
+// These can be removed once https://github.com/microsoft/rushstack/pull/1916 is fixed.
+// @ts-ignore
+import { RestListMessagesOptions } from '@azure/communication-chat';
+
 const fetchMessagesInternal = async (
   chatThreadClient: ChatThreadClient,
   options?: ListMessagesOptions

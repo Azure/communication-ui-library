@@ -54,10 +54,10 @@ export const isInCall = (callState: CallState): boolean => !!(callState !== 'Non
 /**
  * Check if a given string is a GUID.
  * Regex expression from: https://stackoverflow.com/a/13653180
- * @param s string to check
+ * @param str - string to check
  */
-export const isGUID = (s: string): boolean =>
-  !!s.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
+export const isGUID = (str: string): boolean =>
+  !!str.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
 
 export const areStreamsEqual = (prevStream: LocalVideoStream, newStream: LocalVideoStream): boolean => {
   return !!prevStream && !!newStream && prevStream.getSource().id === newStream.getSource().id;

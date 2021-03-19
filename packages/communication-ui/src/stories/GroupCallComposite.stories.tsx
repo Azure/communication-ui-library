@@ -46,7 +46,9 @@ export const GroupCallComposite: () => JSX.Element = () => {
         const tokenResponse = await createUserToken(connectionString);
         setToken(tokenResponse.token);
         setUserId(tokenResponse.user.communicationUserId);
-        setGroupId(createGUID());
+        const groupId = createGUID();
+        console.log(`groupId: ${groupId}`);
+        setGroupId(groupId);
       } catch (e) {
         console.log('Please provide your connection string');
       }

@@ -24,8 +24,8 @@ type ExpandArgTypes<T extends any[]> = InteractTuple<ContextMapFuncArgs<T>>;
  * This function allows react components to make use of the Composable SDK functionality.
  * By passing in an element to connect and mapToComponentProps functions the element is able to
  * utilize the Composable SDK by simply calling this.props.<function>.
- * @param ElementToConnect React class or component that wants to make use of context functionality.
- * @param mapToComponentProps Functions that map context functionality to element props.
+ * @param ElementToConnect - React class or component that wants to make use of context functionality.
+ * @param mapToComponentProps - Functions that map context functionality to element props.
  */
 export const connectFuncsToContext = <
   FuncTypes extends ((ownProps: any) => any)[],

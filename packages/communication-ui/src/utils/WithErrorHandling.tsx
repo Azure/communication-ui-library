@@ -36,9 +36,6 @@ const ErrorBoundary = class extends React.Component<ErrorHandlingProps> {
  *    to the wrapped component.
  * 2. Pure Standalone Component. The wrapper takes in an optional props.onErrorCallback. Since ErrorProvider is not
  *    defined, the passed in props.onErrorCallback will be used.
- *
- * @param Component
- * @param props
  */
 export const WithErrorHandling = (
   Component: (props: any & ErrorHandlingProps) => JSX.Element,

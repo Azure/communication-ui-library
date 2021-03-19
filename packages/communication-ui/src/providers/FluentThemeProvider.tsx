@@ -17,7 +17,7 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
   useEffect(() => {
     setFluentTheme(theme);
     setFluentNorthStarTheme(
-      mergeThemes(fluentNorthStarTheme, {
+      mergeThemes(teamsTheme, {
         componentVariables: {
           Chat: {
             backgroundColor: theme?.palette?.white

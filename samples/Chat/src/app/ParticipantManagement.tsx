@@ -38,12 +38,14 @@ const ParticipantManagementComponentBase = (props: ParticipantManagementProps & 
             }
           });
 
+          const isYou = member.userId === (userId as string);
+
           return (
             <ParticipantItem
               key={member.userId}
               name={member.displayName as string}
-              isYou={member.userId === (userId as string)}
-              menuItems={menuItems}
+              isYou={isYou}
+              menuItems={isYou ? undefined : menuItems}
               avatar={onRenderAvatar ? onRenderAvatar(member.userId) : undefined}
             />
           );
