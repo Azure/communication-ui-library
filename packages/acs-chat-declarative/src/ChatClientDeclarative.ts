@@ -12,7 +12,7 @@ export interface DeclarativeChatClient extends ChatClient {
 
 export interface DeclarativeChatClientWithPrivateProps extends DeclarativeChatClient {
   context: ChatContext;
-  eventSubscriber: EventSubscriber;
+  eventSubscriber: EventSubscriber | undefined;
 }
 
 const proxyChatClient: ProxyHandler<ChatClient> = {
@@ -37,14 +37,21 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
       case 'startRealtimeNotifications': {
         return async function (...args: Parameters<ChatClient['startRealtimeNotifications']>) {
           const ret = await chatClient.startRealtimeNotifications(...args);
-          receiver.eventSubscriber = new EventSubscriber(chatClient, context);
+          if (!receiver.eventSubscriber) {
+            receiver.eventSubscriber = new EventSubscriber(chatClient, context);
+          }
+
           return ret;
         };
       }
       case 'stopRealtimeNotifications': {
         return async function (...args: Parameters<ChatClient['stopRealtimeNotifications']>) {
           const ret = await chatClient.stopRealtimeNotifications(...args);
-          receiver.eventSubscriber.unsubscribe();
+          if (receiver.eventSubscriber) {
+            receiver.eventSubscriber.unsubscribe();
+            receiver.eventSubscriber = undefined;
+          }
+
           return ret;
         };
       }
