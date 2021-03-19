@@ -71,6 +71,9 @@ export const LIGHT = 'light';
  */
 export const DARK = 'dark';
 
+/**
+ * Map of themes
+ */
 export type ThemeMap = {
   [key: string]: Theme | PartialTheme;
 };
@@ -86,12 +89,12 @@ export const THEMES: ThemeMap = {
 const LocalStorageKey_Theme = 'AzureCommunicationUI_Theme';
 
 /**
- * Method to get theme for ACS UI SDK components from LocalStorage
+ * Function to get theme for ACS UI SDK components from LocalStorage
  */
 export const getThemeFromLocalStorage = (): string | null => window.localStorage.getItem(LocalStorageKey_Theme);
 
 /**
- * Method to save theme for ACS UI SDK components from LocalStorage
+ * Function to save theme for ACS UI SDK components from LocalStorage
  */
 export const saveThemeToLocalStorage = (theme: string): void =>
   window.localStorage.setItem(LocalStorageKey_Theme, theme);

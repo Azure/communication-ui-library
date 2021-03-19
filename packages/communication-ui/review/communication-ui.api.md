@@ -400,6 +400,12 @@ export const CREATED = 201;
 // @public (undocumented)
 export const CROP_MEDIA = "Crop";
 
+// @public
+export const DARK = "dark";
+
+// @public
+export const darkTheme: PartialTheme;
+
 // @public (undocumented)
 export const DEFAULT_IMG_WIDTH = 200;
 
@@ -478,7 +484,7 @@ export type FluentTheme = {
 // @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface FluentThemeProviderProps {
     children: React_2.ReactNode;
     theme?: FluentTheme;
@@ -514,6 +520,9 @@ export const getErrorFromAcsResponseCode: (message: string, statusCode: number) 
 
 // @public (undocumented)
 export const getIdFromToken: (jwtToken: string) => string;
+
+// @public
+export const getThemeFromLocalStorage: () => string | null;
 
 // @public (undocumented)
 export const getThreadContextState: () => ThreadProviderContextType;
@@ -575,6 +584,12 @@ export const isMobileSession: () => boolean;
 
 // @public (undocumented)
 export function isSelectedDeviceInList<T extends AudioDeviceInfo | VideoDeviceInfo>(device: T, list: T[]): boolean;
+
+// @public
+export const LIGHT = "light";
+
+// @public
+export const lightTheme: PartialTheme;
 
 // @public (undocumented)
 export type ListParticipant = {
@@ -762,6 +777,9 @@ export interface RemoteVideoContainerOwnProps {
 // @public (undocumented)
 export const RINGING = "Ringing";
 
+// @public
+export const saveThemeToLocalStorage: (theme: string) => void;
+
 // @public (undocumented)
 export const screenShareButtonProps: CallControlButtonProps;
 
@@ -788,6 +806,12 @@ export type SendBoxPropsFromContext = {
 
 // @public (undocumented)
 export const SERVICE_UNAVAILABLE_STATUS_CODE = 503;
+
+// @public
+export interface SettableFluentThemeContext {
+    fluentTheme: FluentTheme;
+    setFluentTheme: (fluentTheme: FluentTheme) => void;
+}
 
 // @public (undocumented)
 export type SetupContainerProps = {
@@ -820,15 +844,30 @@ export const TEXT_EXCEEDS_LIMIT: string;
 // @public (undocumented)
 export const TEXT_MESSAGE = "Text";
 
-// Warning: (ae-forgotten-export) The symbol "ThemeSelectorProps" needs to be exported by the entry point index.d.ts
-//
+// @public
+export type ThemeMap = {
+    [key: string]: Theme | PartialTheme;
+};
+
+// @public
+export const THEMES: ThemeMap;
+
 // @public
 export const ThemeSelector: (props: ThemeSelectorProps) => JSX.Element;
 
-// Warning: (ae-forgotten-export) The symbol "ThemeTogglerProps" needs to be exported by the entry point index.d.ts
-//
+// @public
+export interface ThemeSelectorProps {
+    themeMap?: ThemeMap;
+}
+
 // @public
 export const ThemeToggler: (props: ThemeTogglerProps) => JSX.Element;
+
+// @public
+export interface ThemeTogglerProps {
+    offTheme?: string;
+    onTheme?: string;
+}
 
 // @public (undocumented)
 export const THREAD_INFO_FETCH_INVERVAL = 2000;
@@ -928,11 +967,6 @@ export const useFetchThread: () => (() => Promise<void>);
 
 // @public (undocumented)
 export const useFetchThreadMembers: () => (() => Promise<void>);
-
-// Warning: (ae-forgotten-export) The symbol "IFluentThemeContext" needs to be exported by the entry point index.d.ts
-//
-// @public
-export const useFluentTheme: () => IFluentThemeContext;
 
 // @public (undocumented)
 export const useGetThreadMembersError: () => boolean | undefined;
@@ -1035,6 +1069,9 @@ export const useSetOnErrorCallback: () => (callback: (error: CommunicationUiErro
 
 // @public (undocumented)
 export const useSetReceipts: () => (receipts: ReadReceipt[]) => void;
+
+// @public
+export const useSettableFluentTheme: () => SettableFluentThemeContext;
 
 // @public (undocumented)
 export const useSetThread: () => (thread: ChatThread) => void;

@@ -7,18 +7,22 @@ import { mergeThemes, Provider, teamsTheme, ThemeInput } from '@fluentui/react-n
 import { THEMES, LIGHT, lightTheme, getThemeFromLocalStorage, saveThemeToLocalStorage } from '../constants/themes';
 
 /**
- * type for theme state of FluentThemeProvider
+ * type for theme state of FluentThemeProvider. Simply contains \@fluentui/react PartialTheme | Theme and an assigned name
  */
 export type FluentTheme = {
+  /** assigned name of theme */
   name: string;
+  /** theme used for applying to all ACS UI SDK components */
   theme: PartialTheme | Theme;
 };
 
 /**
  * interface for React useContext hook containing the FluentTheme and a setter
  */
-interface IFluentThemeContext {
+export interface SettableFluentThemeContext {
+  /** FluentTheme state context used for FluentThemeProvider */
   fluentTheme: FluentTheme;
+  /** setter for FluentTheme */
   setFluentTheme: (fluentTheme: FluentTheme) => void;
 }
 
@@ -27,12 +31,15 @@ const defaultTheme: FluentTheme = { name: LIGHT, theme: lightTheme };
 /**
  * React useContext for FluentTheme state of FluentThemeProvider
  */
-const FluentThemeContext = createContext<IFluentThemeContext>({
+const FluentThemeContext = createContext<SettableFluentThemeContext>({
   fluentTheme: defaultTheme,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
   setFluentTheme: (fluentTheme: FluentTheme) => {}
 });
 
+/**
+ * Props for FluentThemeProvider
+ */
 export interface FluentThemeProviderProps {
   /** Children to be themed */
   children: React.ReactNode;
@@ -47,9 +54,9 @@ const wrapper = mergeStyles({
 });
 
 /**
- * @description Provider to theme UI SDK core components. Since UI SDK core components are built with components
- * both from \@fluentui/react and \@fluentui/react-northstar, provider from these respective libraries are aligned
- * based on an assigned theme from \@fluentui/react
+ * @description Provider to theme ACS UI SDK core components. Since ACS UI SDK core components are built with components
+ * mostly from \@fluentui/react and a few from \@fluentui/react-northstar, a PartialTheme | Theme from \@fluentui/react is
+ * used to align the few components from \@fluentui/react-northstar.
  * @param props - FluentThemeProviderProps
  */
 export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Element => {
@@ -64,7 +71,7 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
   );
   const [fluentNorthStarTheme, setFluentNorthStarTheme] = useState<ThemeInput<any>>(teamsTheme);
 
-  const themeMemo = useMemo<IFluentThemeContext>(
+  const themeMemo = useMemo<SettableFluentThemeContext>(
     () => ({
       fluentTheme: fluentTheme,
       setFluentTheme: (fluentTheme: FluentTheme): void => {
@@ -118,4 +125,4 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
 /**
  * React hook for programmatically accessing the theme.
  */
-export const useFluentTheme = (): IFluentThemeContext => useContext(FluentThemeContext);
+export const useSettableFluentTheme = (): SettableFluentThemeContext => useContext(FluentThemeContext);
