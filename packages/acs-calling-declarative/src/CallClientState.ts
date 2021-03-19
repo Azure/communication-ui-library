@@ -68,6 +68,9 @@ export interface Call {
   remoteParticipants: Map<string, RemoteParticipant>;
 }
 
+/**
+ * State only version of Call. CallEnded and callEndReason are added by the declarative layer based on received events.
+ */
 export interface IncomingCall {
   id: string;
   callerInfo: CallerInfo;

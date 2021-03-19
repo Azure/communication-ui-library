@@ -19,16 +19,34 @@ import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 
 // @public
+export interface Call {
+    // (undocumented)
+    callEndReason?: CallEndReason;
+    // (undocumented)
+    callerInfo: CallerInfo;
+    // (undocumented)
+    direction: CallDirection;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    isMicrophoneMuted: boolean;
+    // (undocumented)
+    isScreenSharingOn: boolean;
+    // (undocumented)
+    localVideoStreams: ReadonlyArray<LocalVideoStream>;
+    // (undocumented)
+    remoteParticipants: Map<string, RemoteParticipant>;
+    // (undocumented)
+    state: CallState;
+}
+
+// @public
 export const callClientDeclaratify: (callClient: CallClient) => DeclarativeCallClient;
 
 // @public
 export interface CallClientState {
-    // Warning: (ae-forgotten-export) The symbol "Call" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
     calls: Map<string, Call>;
-    // Warning: (ae-forgotten-export) The symbol "IncomingCall" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
     incomingCalls: Map<string, IncomingCall>;
 }
@@ -39,6 +57,54 @@ export interface DeclarativeCallClient extends CallClient {
     onStateChange(handler: (state: CallClientState) => void): void;
     // (undocumented)
     state: CallClientState;
+}
+
+// @public
+export interface IncomingCall {
+    // (undocumented)
+    callEnded: boolean;
+    // (undocumented)
+    callEndReason?: CallEndReason;
+    // (undocumented)
+    callerInfo: CallerInfo;
+    // (undocumented)
+    id: string;
+}
+
+// @public
+export interface LocalVideoStream {
+    // (undocumented)
+    mediaStreamType: MediaStreamType;
+    // (undocumented)
+    source: VideoDeviceInfo;
+}
+
+// @public
+export interface RemoteParticipant {
+    // (undocumented)
+    callEndReason?: CallEndReason;
+    // (undocumented)
+    displayName?: string;
+    // (undocumented)
+    identifier: CommunicationUserKind | PhoneNumberKind | CallingApplicationKind | MicrosoftTeamsUserKind | UnknownIdentifierKind;
+    // (undocumented)
+    isMuted: boolean;
+    // (undocumented)
+    isSpeaking: boolean;
+    // (undocumented)
+    state: RemoteParticipantState;
+    // (undocumented)
+    videoStreams: ReadonlyArray<RemoteVideoStream>;
+}
+
+// @public
+export interface RemoteVideoStream {
+    // (undocumented)
+    id: number;
+    // (undocumented)
+    isAvailable: boolean;
+    // (undocumented)
+    mediaStreamType: MediaStreamType;
 }
 
 

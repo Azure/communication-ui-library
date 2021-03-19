@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Upgrade calling version for declarative, add types for calling declarative, and add selective state updates for calling declarative",
+  "comment": "Update `DeclarativeCallClient` with calling SDK version beta.9 and add types. Improve performance by only updating changed state.",
   "packageName": "@azure/acs-calling-declarative",
   "email": "allenhwang@microsoft.com",
   "dependentChangeType": "patch"
