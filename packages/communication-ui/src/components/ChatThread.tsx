@@ -1,5 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import Linkify from 'react-linkify';
 import { Button, Chat, ChatItemProps, Flex, Ref } from '@fluentui/react-northstar';
 import {
   DownIconStyle,
@@ -16,22 +18,12 @@ import {
 import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack } from '@fluentui/react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { LiveAnnouncer, LiveMessage } from 'react-aria-live';
-import {
-  CLICK_TO_LOAD_MORE_MESSAGES,
-  NEW_MESSAGES,
-  connectFuncsToContext,
-  ReadReceiptComponent,
-  ReadReceiptProps,
-  ChatMessage as WebUiChatMessage,
-  MessageStatus,
-  formatTimestampForChatMessage,
-  WithErrorHandling,
-  ErrorHandlingProps,
-  propagateError
-} from '@azure/communication-ui';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import Linkify from 'react-linkify';
-import { ChatMessagePropsFromContext, MapToChatMessageProps } from './consumers/MapToChatMessageProps';
+import { ErrorHandlingProps } from '../providers';
+import { formatTimestampForChatMessage, propagateError, WithErrorHandling } from '../utils';
+import { CLICK_TO_LOAD_MORE_MESSAGES, NEW_MESSAGES } from '../constants';
+import { ChatMessage as WebUiChatMessage, MessageStatus } from '../types';
+import { ReadReceiptComponent, ReadReceiptProps } from './ReadReceipt';
+import { connectFuncsToContext, ChatMessagePropsFromContext, MapToChatMessageProps } from '../consumers';
 
 const isMessageSame = (first: WebUiChatMessage, second: WebUiChatMessage): boolean => {
   return (
@@ -147,7 +139,7 @@ export interface ChatThreadStylesProps {
   readReceiptContainer?: (mine: boolean) => IStyle;
 }
 
-interface NewMessageButtonProps {
+export interface NewMessageButtonProps {
   onClick: () => void;
 }
 
@@ -161,7 +153,7 @@ const DefaultNewMessageButton = (props: NewMessageButtonProps): JSX.Element => {
   );
 };
 
-interface LoadPreviousMessagesButtonProps {
+export interface LoadPreviousMessagesButtonProps {
   onClick: () => void;
 }
 
@@ -379,7 +371,7 @@ export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingPr
             ) : onRenderAvatar ? (
               onRenderAvatar(message.senderId)
             ) : (
-              <Persona text={message.senderDisplayName} size={PersonaSize.size32} />
+              <Persona text={message.senderDisplayName} hidePersonaDetails={true} size={PersonaSize.size32} />
             ),
             contentPosition: message.mine ? 'end' : 'start',
             message: (
