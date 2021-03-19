@@ -1,6 +1,6 @@
 {
   "type": "none",
-  "comment": "thread functions & states for declarative fix a small bug for duplicate message receive",
+  "comment": "Add thread related functions & states for declarative, and fix a small bug for duplicate message receive",
   "packageName": "@azure/acs-chat-declarative",
   "email": "jinan@microsoft.com",
   "dependentChangeType": "none"
