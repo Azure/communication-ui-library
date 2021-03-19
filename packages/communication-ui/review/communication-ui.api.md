@@ -469,21 +469,20 @@ export type ErrorsPropsFromContext = {
     setUpdateThreadMembersError: (error: boolean | undefined) => void;
 };
 
-// @public (undocumented)
+// @public
 export type FluentTheme = {
     name: string;
     theme: PartialTheme | Theme;
 };
 
-// Warning: (ae-forgotten-export) The symbol "IFluentThemeContext" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export const FluentThemeContext: React_2.Context<IFluentThemeContext>;
-
-// Warning: (ae-forgotten-export) The symbol "FluentThemeProviderProps" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
+// @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
+
+// @public (undocumented)
+export interface FluentThemeProviderProps {
+    children: React_2.ReactNode;
+    theme?: FluentTheme;
+}
 
 // @public (undocumented)
 export const FORBIDDEN_STATUS_CODE = 403;
@@ -821,12 +820,14 @@ export const TEXT_EXCEEDS_LIMIT: string;
 // @public (undocumented)
 export const TEXT_MESSAGE = "Text";
 
-// @public (undocumented)
-export const ThemeSelector: () => JSX.Element;
+// Warning: (ae-forgotten-export) The symbol "ThemeSelectorProps" needs to be exported by the entry point index.d.ts
+//
+// @public
+export const ThemeSelector: (props: ThemeSelectorProps) => JSX.Element;
 
 // Warning: (ae-forgotten-export) The symbol "ThemeTogglerProps" needs to be exported by the entry point index.d.ts
 //
-// @public (undocumented)
+// @public
 export const ThemeToggler: (props: ThemeTogglerProps) => JSX.Element;
 
 // @public (undocumented)
@@ -928,7 +929,9 @@ export const useFetchThread: () => (() => Promise<void>);
 // @public (undocumented)
 export const useFetchThreadMembers: () => (() => Promise<void>);
 
-// @public (undocumented)
+// Warning: (ae-forgotten-export) The symbol "IFluentThemeContext" needs to be exported by the entry point index.d.ts
+//
+// @public
 export const useFluentTheme: () => IFluentThemeContext;
 
 // @public (undocumented)

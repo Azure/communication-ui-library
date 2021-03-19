@@ -2,15 +2,24 @@
 
 import React from 'react';
 import { Toggle } from '@fluentui/react';
-import { THEMES, LIGHT, DARK, saveThemeToLocalStorage } from '../constants/themes';
+import { THEMES, LIGHT, DARK } from '../constants/themes';
 import { useFluentTheme } from '../providers/FluentThemeProvider';
 import { themeSelectorContainer } from './styles/ThemeSelector.styles';
 
+/**
+ * Props for ThemeToggler component
+ */
 export type ThemeTogglerProps = {
+  /** Optional theme name for the on state of the toggler. Default is 'dark' theme. */
   onTheme?: string;
+  /** Optional theme name of off state of the toggler. Default is 'light' theme. */
   offTheme?: string;
 };
 
+/**
+ * @description Toggler component for switching the theme context with respect to components inside FluentThemeProvider.
+ * @param props - ThemeTogglerProps
+ */
 export const ThemeToggler = (props: ThemeTogglerProps): JSX.Element => {
   const { onTheme, offTheme } = props;
   const { fluentTheme, setFluentTheme } = useFluentTheme();
@@ -21,14 +30,8 @@ export const ThemeToggler = (props: ThemeTogglerProps): JSX.Element => {
   const onChange = (ev: React.MouseEvent<HTMLElement>, checked?: boolean): void => {
     if (checked) {
       setFluentTheme({ name: _onTheme, theme: THEMES[_onTheme] });
-      if (typeof Storage !== 'undefined') {
-        saveThemeToLocalStorage(_onTheme);
-      }
     } else {
       setFluentTheme({ name: _offTheme, theme: THEMES[_offTheme] });
-      if (typeof Storage !== 'undefined') {
-        saveThemeToLocalStorage(_offTheme);
-      }
     }
   };
 

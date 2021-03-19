@@ -144,7 +144,9 @@ const App = (): JSX.Element => {
     window.document.title = 'Unsupported browser';
     return (
       <>
-        <Link href="https://aka.ms/ACS-CallingSupport#calling-client-library-browser-support">Learn more</Link>
+        <Link href="https://docs.microsoft.com/en-us/azure/communication-services/concepts/voice-video-calling/calling-sdk-features#calling-client-library-browser-support">
+          Learn more
+        </Link>
         &nbsp;about browsers and platforms supported by the web calling sdk
       </>
     );

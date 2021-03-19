@@ -58,7 +58,9 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
             </li>
             <li className={listItemStyle}>
               <Icon className={iconStyle} iconName={iconName} /> {listItems[3]}{' '}
-              <Link href="https://aka.ms/ACS-CallingSample">sample</Link>
+              <Link href="https://docs.microsoft.com/en-us/azure/communication-services/samples/calling-hero-sample">
+                sample
+              </Link>
             </li>
           </ul>
         </Stack>

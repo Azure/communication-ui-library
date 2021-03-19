@@ -15,7 +15,7 @@ export const inputBoxStyle = mergeStyles({
   boxSizing: 'border-box',
   height: '2.5rem',
   width: '18.75rem',
-  borderRadius: '2px'
+  borderRadius: '0.125rem'
 });
 
 export const inputBoxTextStyle = mergeStyles({

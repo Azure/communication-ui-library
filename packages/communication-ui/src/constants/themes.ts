@@ -1,8 +1,11 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { ThemeProvider, Theme, PartialTheme } from '@fluentui/react-theme-provider';
+import { Theme, PartialTheme } from '@fluentui/react-theme-provider';
 
-export const lightTheme = {
+/**
+ * Light theme designed ACS UI SDK components
+ */
+export const lightTheme: PartialTheme = {
   palette: {
     themePrimary: '#0078d4',
     themeLighterAlt: '#f3f9fd',
@@ -29,7 +32,10 @@ export const lightTheme = {
   }
 };
 
-export const darkTheme = {
+/**
+ * Dark theme designed ACS UI SDK components
+ */
+export const darkTheme: PartialTheme = {
   palette: {
     themePrimary: '#2899F5',
     themeLighterAlt: '#f6fbff',
@@ -56,17 +62,36 @@ export const darkTheme = {
   }
 };
 
+/**
+ * Light theme name for ACS UI SDK components
+ */
 export const LIGHT = 'light';
+/**
+ * Dark theme name for ACS UI SDK components
+ */
 export const DARK = 'dark';
 
-export const THEMES = {
+export type ThemeMap = {
+  [key: string]: Theme | PartialTheme;
+};
+
+/**
+ * Default themes map for ACS UI SDK components
+ */
+export const THEMES: ThemeMap = {
   [LIGHT]: lightTheme,
   [DARK]: darkTheme
 };
 
 const LocalStorageKey_Theme = 'AzureCommunicationUI_Theme';
 
+/**
+ * Method to get theme for ACS UI SDK components from LocalStorage
+ */
 export const getThemeFromLocalStorage = (): string | null => window.localStorage.getItem(LocalStorageKey_Theme);
 
+/**
+ * Method to save theme for ACS UI SDK components from LocalStorage
+ */
 export const saveThemeToLocalStorage = (theme: string): void =>
   window.localStorage.setItem(LocalStorageKey_Theme, theme);
