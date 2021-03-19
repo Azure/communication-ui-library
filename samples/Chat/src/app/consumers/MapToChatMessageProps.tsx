@@ -182,7 +182,9 @@ const convertSdkChatMessagesToWebUiChatMessages = (
         clientMessageId: chatMessage.clientMessageId
       };
     }) ?? [];
-  return updateMessagesWithAttached(convertedChatMessages ?? [], userId, failedMessageIds, isLargeGroup, isMessageSeen);
+  return convertedChatMessages.length > 0
+    ? updateMessagesWithAttached(convertedChatMessages, userId, failedMessageIds, isLargeGroup, isMessageSeen)
+    : [];
 };
 
 export type ChatMessagePropsFromContext = {
@@ -206,20 +208,22 @@ export const MapToChatMessageProps = (): ChatMessagePropsFromContext => {
     return isLargeParticipantsGroup(threadMembers);
   }, [threadMembers]);
   const sendReadReceipt = useSendReadReceipt();
-  const [pageNumber, setPageNumber] = useState<number>(1);
+  const [messagesNumber, setMessagesNumber] = useState<number>(20);
+  const [disableLoadPreviousMessage, setDisableLoadPreviousMessage] = useState<boolean>(false);
   const chatMessages = useMemo(() => {
+    sdkChatMessages && messagesNumber >= sdkChatMessages.length && setDisableLoadPreviousMessage(true);
     return convertSdkChatMessagesToWebUiChatMessages(
-      sdkChatMessages?.slice(Math.max(sdkChatMessages.length - pageNumber * 20, 0)) ?? [],
+      sdkChatMessages?.slice(Math.max(sdkChatMessages.length - messagesNumber, 0)) ?? [],
       failedMessageIds,
       isLargeGroup,
       userId,
       isMessageSeen
     );
-  }, [failedMessageIds, isLargeGroup, isMessageSeen, sdkChatMessages, userId, pageNumber]);
+  }, [failedMessageIds, isLargeGroup, isMessageSeen, sdkChatMessages, userId, messagesNumber]);
 
   const onSendReadReceipt = useCallback(async () => {
     const messageId = getLatestIncomingMessageId(chatMessages, userId);
-    await sendReadReceipt(messageId ?? '');
+    messageId && (await sendReadReceipt(messageId));
   }, [chatMessages, userId, sendReadReceipt]);
 
   const fetchMessages = useFetchMessages();
@@ -228,15 +232,15 @@ export const MapToChatMessageProps = (): ChatMessagePropsFromContext => {
   }, [fetchMessages]);
 
   const onLoadPreviousMessages: () => void = useCallback(() => {
-    setPageNumber(pageNumber * 1.5);
-  }, [pageNumber]);
+    setMessagesNumber(messagesNumber + 10);
+  }, [messagesNumber]);
 
   return {
     userId: userId,
     chatMessages: chatMessages,
     disableReadReceipt: isLargeGroup,
     onSendReadReceipt,
-    disableLoadPreviousMessage: false,
+    disableLoadPreviousMessage,
     onLoadPreviousMessages
   };
 };
