@@ -69,7 +69,7 @@ Responsiveness can be tested using Edge Dev Tools - Device Toolbar.
 
 ### Observable
 
-A UI component should expose properties that allow a developer to observe events such as `muteClicked`, `screenShareStarted` etc.
+A UI component should expose properties that allow a developer to observe events such as `buttonClicked`.
 
 ## Implementation
 
