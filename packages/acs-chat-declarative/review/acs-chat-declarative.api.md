@@ -6,8 +6,8 @@
 
 import { ChatClient } from '@azure/communication-chat';
 import { ChatMessage } from '@azure/communication-chat';
-import { ChatThread } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
+import { ChatThreadInfo } from '@azure/communication-chat';
 
 // @public (undocumented)
 export const chatClientDeclaratify: (chatClient: ChatClient) => DeclarativeChatClient;
@@ -34,7 +34,7 @@ export const chatThreadClientDeclaratify: (chatThreadClient: ChatThreadClient, c
 export type ChatThreadClientState = {
     chatMessages: Map<string, ChatMessageWithStatus>;
     threadId: string;
-    threadInfo?: ChatThread;
+    threadInfo?: ChatThreadInfo;
     coolPeriod?: Date;
     getThreadMembersError?: boolean;
     updateThreadMembersError?: boolean;
