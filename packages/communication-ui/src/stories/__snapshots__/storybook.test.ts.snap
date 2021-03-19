@@ -862,7 +862,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/ParticipantItem Part
           </div>
         </div>
         <div
-          className="ms-Stack css-68 css-19"
+          className="ms-Stack css-75 css-19"
         />
         <span
           className="ms-layer"
