@@ -116,6 +116,6 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
 };
 
 /**
- * React hook for programmatically accessing the theme.
+ * React hook for programmatically accessing the settable fluent theme.
  */
-export const useFluentTheme = (): SettableFluentThemeContext => useContext(FluentThemeContext);
+export const useSettableFluentTheme = (): SettableFluentThemeContext => useContext(FluentThemeContext);
