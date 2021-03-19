@@ -1,5 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
+import { ThemeProvider, Theme, PartialTheme } from '@fluentui/react-theme-provider';
+
 export const lightTheme = {
   palette: {
     themePrimary: '#0078d4',
@@ -62,8 +64,9 @@ export const THEMES = {
   [DARK]: darkTheme
 };
 
-const THEME = 'Theme';
+const LocalStorageKey_Theme = 'AzureCommunicationUI_Theme';
 
-export const getThemeFromLocalStorage = (): string | null => window.localStorage.getItem(THEME);
+export const getThemeFromLocalStorage = (): string | null => window.localStorage.getItem(LocalStorageKey_Theme);
 
-export const saveThemeToLocalStorage = (theme: string): void => window.localStorage.setItem(THEME, theme);
+export const saveThemeToLocalStorage = (theme: string): void =>
+  window.localStorage.setItem(LocalStorageKey_Theme, theme);
