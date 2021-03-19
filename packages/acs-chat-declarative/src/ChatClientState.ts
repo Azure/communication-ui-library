@@ -1,5 +1,5 @@
 // © Microsoft Corporation. All rights reserved.
-import { ChatThread } from '@azure/communication-chat';
+import { ChatThreadInfo } from '@azure/communication-chat';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 
 export type ChatClientState = {
@@ -11,7 +11,7 @@ export type ChatClientState = {
 export type ChatThreadClientState = {
   chatMessages: Map<string, ChatMessageWithStatus>;
   threadId: string;
-  threadInfo?: ChatThread;
+  threadInfo?: ChatThreadInfo;
   coolPeriod?: Date;
   getThreadMembersError?: boolean;
   updateThreadMembersError?: boolean;

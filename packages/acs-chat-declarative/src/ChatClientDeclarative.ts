@@ -1,5 +1,5 @@
 // © Microsoft Corporation. All rights reserved.
-import { ChatClient, ChatThread, ChatThreadInfo, ListPageSettings } from '@azure/communication-chat';
+import { ChatClient, ChatThreadInfo, ListPageSettings } from '@azure/communication-chat';
 import { ChatContext } from './ChatContext';
 import { ChatClientState } from './ChatClientState';
 import { EventSubscriber } from './EventSubscriber';
@@ -13,14 +13,6 @@ export interface DeclarativeChatClient extends ChatClient {
 
 const context: ChatContext = new ChatContext();
 
-const convertChatThreadInfo = (chatThreadInfo: ChatThreadInfo): ChatThread => {
-  return {
-    id: chatThreadInfo.id,
-    createdOn: Constants.DUMMY_DATE,
-    topic: chatThreadInfo.topic
-  };
-};
-
 const proxyListThreads = (chatClient: ChatClient, context: ChatContext) => {
   return (...args: Parameters<ChatClient['listChatThreads']>) => {
     const threadsIterator = chatClient.listChatThreads(...args);
@@ -28,8 +20,9 @@ const proxyListThreads = (chatClient: ChatClient, context: ChatContext) => {
       async next() {
         const result = await threadsIterator.next();
         if (!result.done && result.value) {
-          const chatThread = convertChatThreadInfo(result.value);
-          context.createThreadIfNotExist(chatThread.id, chatThread) || context.updateThread(chatThread.id, chatThread);
+          const chatThreadInfo = result.value;
+          context.createThreadIfNotExist(chatThreadInfo.id, chatThreadInfo) ||
+            context.updateThread(chatThreadInfo.id, chatThreadInfo);
         }
         return result;
       },
@@ -45,9 +38,8 @@ const proxyListThreads = (chatClient: ChatClient, context: ChatContext) => {
             if (!result.done && result.value) {
               context.batch(() => {
                 for (const threadInfo of page) {
-                  const chatThread = convertChatThreadInfo(threadInfo);
-                  context.createThreadIfNotExist(chatThread.id, chatThread) ||
-                    context.updateThread(chatThread.id, chatThread);
+                  context.createThreadIfNotExist(threadInfo.id, threadInfo) ||
+                    context.updateThread(threadInfo.id, threadInfo);
                 }
               });
             }
@@ -71,7 +63,7 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
           const thread = response.chatThread;
 
           if (thread) {
-            const threadInfo = { ...thread, createdBy: { communicationUserId: thread.id } };
+            const threadInfo = { ...thread, createdBy: { communicationUserId: thread.createdBy } };
             context.createThread(thread.id, threadInfo);
           }
           return response;
@@ -79,10 +71,12 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
       }
       case 'getChatThread': {
         return async function (...args: Parameters<ChatClient['getChatThread']>) {
-          const { _response: _, ...thread } = await chatClient.getChatThread(...args);
+          const result = await chatClient.getChatThread(...args);
+          const { _response: _, ...thread } = result;
           if (thread) {
             context.createThreadIfNotExist(thread.id, thread) || context.updateThread(thread.id, thread);
           }
+          return result;
         };
       }
       case 'deleteChatThread': {

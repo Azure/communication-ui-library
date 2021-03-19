@@ -4,7 +4,7 @@ import produce from 'immer';
 import { ChatClientState, ChatThreadClientState } from './ChatClientState';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 import { enableMapSet } from 'immer';
-import { ChatThread } from '@azure/communication-chat';
+import { ChatThreadInfo } from '@azure/communication-chat';
 
 enableMapSet();
 
@@ -37,7 +37,7 @@ export class ChatContext {
     );
   }
 
-  public createThread(threadId: string, threadInfo?: ChatThread): void {
+  public createThread(threadId: string, threadInfo?: ChatThreadInfo): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         draft.threads.set(threadId, {
@@ -50,7 +50,7 @@ export class ChatContext {
     );
   }
 
-  public createThreadIfNotExist(threadId: string, thread?: ChatThread): boolean {
+  public createThreadIfNotExist(threadId: string, thread?: ChatThreadInfo): boolean {
     const threadNotExist = !this.getState().threads.get(threadId);
     if (threadNotExist) {
       this.createThread(threadId, thread);
@@ -58,7 +58,7 @@ export class ChatContext {
     return threadNotExist;
   }
 
-  public updateThread(threadId: string, threadInfo?: ChatThread): void {
+  public updateThread(threadId: string, threadInfo?: ChatThreadInfo): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         const thread = draft.threads.get(threadId);
