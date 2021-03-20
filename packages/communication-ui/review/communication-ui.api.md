@@ -539,7 +539,7 @@ export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Eleme
 // @public
 export interface FluentThemeProviderProps {
     children: React_2.ReactNode;
-    theme?: FluentTheme;
+    fluentTheme?: PartialTheme | Theme;
 }
 
 // @public (undocumented)
@@ -580,7 +580,7 @@ export const getLatestIncomingMessageId: (chatMessages: ChatMessage[], userId: s
 export const getMessageStatus: (message: ChatMessage, failedMessageIds: string[], isLargeParticipantsGroup: boolean, userId: string, isMessageSeen?: ((userId: string, message: ChatMessage) => boolean) | undefined) => MessageStatus;
 
 // @public
-export const getThemeFromLocalStorage: () => string | null;
+export const getThemeFromLocalStorage: (scopeId: string) => string | null;
 
 // @public (undocumented)
 export const getThreadContextState: () => ThreadProviderContextType;
@@ -842,7 +842,7 @@ export interface RemoteVideoContainerOwnProps {
 export const RINGING = "Ringing";
 
 // @public
-export const saveThemeToLocalStorage: (theme: string) => void;
+export const saveThemeToLocalStorage: (theme: string, scopeId: string) => void;
 
 // @public (undocumented)
 export const screenShareButtonProps: CallControlButtonProps;
@@ -871,12 +871,6 @@ export type SendBoxPropsFromContext = {
 // @public (undocumented)
 export const SERVICE_UNAVAILABLE_STATUS_CODE = 503;
 
-// @public
-export interface SettableFluentThemeContext {
-    fluentTheme: FluentTheme;
-    setFluentTheme: (fluentTheme: FluentTheme) => void;
-}
-
 // @public (undocumented)
 export type SetupContainerProps = {
     isCallInitialized: boolean;
@@ -901,6 +895,21 @@ export const SPACE_KEY = 32;
 //
 // @public (undocumented)
 export const StreamMedia: (props: StreamMediaProps & ErrorHandlingProps) => JSX.Element;
+
+// @public
+export interface SwitchableFluentThemeContext {
+    fluentTheme: FluentTheme;
+    setFluentTheme: (fluentTheme: FluentTheme) => void;
+}
+
+// @public (undocumented)
+export const SwitchableFluentThemeProvider: (props: SwitchableFluentThemeProviderProps) => JSX.Element;
+
+// @public
+export interface SwitchableFluentThemeProviderProps {
+    children: React_2.ReactNode;
+    scopeId: string;
+}
 
 // @public (undocumented)
 export const TEXT_EXCEEDS_LIMIT: string;
@@ -1137,9 +1146,6 @@ export const useSetOnErrorCallback: () => (callback: (error: CommunicationUiErro
 // @public (undocumented)
 export const useSetReceipts: () => (receipts: ReadReceipt[]) => void;
 
-// @public
-export const useSettableFluentTheme: () => SettableFluentThemeContext;
-
 // @public (undocumented)
 export const useSetThread: () => (thread: ChatThread_2) => void;
 
@@ -1171,6 +1177,9 @@ export const useSubscribeToVideoDeviceList: () => void;
 //
 // @public (undocumented)
 export const useSubscribeTypingNotification: (addTypingNotifications: (notification: TypingNotification) => void) => void;
+
+// @public
+export const useSwitchableFluentTheme: () => SwitchableFluentThemeContext;
 
 // Warning: (ae-forgotten-export) The symbol "UseTeamsCallType" needs to be exported by the entry point index.d.ts
 //

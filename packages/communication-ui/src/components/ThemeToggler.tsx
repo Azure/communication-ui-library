@@ -2,8 +2,8 @@
 
 import React from 'react';
 import { Toggle } from '@fluentui/react';
-import { THEMES, LIGHT, DARK } from '../constants/themes';
-import { useSettableFluentTheme } from '../providers/FluentThemeProvider';
+import { LIGHT, DARK, lightTheme, darkTheme } from '../constants/themes';
+import { useSwitchableFluentTheme, FluentTheme } from '../providers/SwitchableFluentThemeProvider';
 import { themeSelectorContainer } from './styles/ThemeSelector.styles';
 
 /**
@@ -11,9 +11,9 @@ import { themeSelectorContainer } from './styles/ThemeSelector.styles';
  */
 export interface ThemeTogglerProps {
   /** Optional theme name for the on state of the toggler. Default is 'dark' theme. */
-  onTheme?: string;
+  onTheme?: FluentTheme;
   /** Optional theme name of off state of the toggler. Default is 'light' theme. */
-  offTheme?: string;
+  offTheme?: FluentTheme;
 }
 
 /**
@@ -22,16 +22,16 @@ export interface ThemeTogglerProps {
  */
 export const ThemeToggler = (props: ThemeTogglerProps): JSX.Element => {
   const { onTheme, offTheme } = props;
-  const { fluentTheme, setFluentTheme } = useSettableFluentTheme();
+  const { fluentTheme, setFluentTheme } = useSwitchableFluentTheme();
 
-  const _onTheme = onTheme ? onTheme : DARK;
-  const _offTheme = offTheme ? offTheme : LIGHT;
+  const _onTheme: FluentTheme = onTheme ? onTheme : { name: DARK, theme: darkTheme };
+  const _offTheme: FluentTheme = offTheme ? offTheme : { name: LIGHT, theme: lightTheme };
 
   const onChange = (ev: React.MouseEvent<HTMLElement>, checked?: boolean): void => {
     if (checked) {
-      setFluentTheme({ name: _onTheme, theme: THEMES[_onTheme] });
+      setFluentTheme(_onTheme);
     } else {
-      setFluentTheme({ name: _offTheme, theme: THEMES[_offTheme] });
+      setFluentTheme(_offTheme);
     }
   };
 
@@ -39,10 +39,10 @@ export const ThemeToggler = (props: ThemeTogglerProps): JSX.Element => {
     <div className={themeSelectorContainer}>
       <Toggle
         label="Theme"
-        onText={_onTheme}
-        offText={_offTheme}
+        onText={_onTheme.name}
+        offText={_offTheme.name}
         onChange={onChange}
-        defaultChecked={fluentTheme.name === _onTheme}
+        defaultChecked={fluentTheme.name === _onTheme.name}
       />
     </div>
   );

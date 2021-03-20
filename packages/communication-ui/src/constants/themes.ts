@@ -91,10 +91,11 @@ const LocalStorageKey_Theme = 'AzureCommunicationUI_Theme';
 /**
  * Function to get theme for ACS UI SDK components from LocalStorage
  */
-export const getThemeFromLocalStorage = (): string | null => window.localStorage.getItem(LocalStorageKey_Theme);
+export const getThemeFromLocalStorage = (scopeId: string): string | null =>
+  window.localStorage.getItem(LocalStorageKey_Theme + '_' + scopeId);
 
 /**
  * Function to save theme for ACS UI SDK components from LocalStorage
  */
-export const saveThemeToLocalStorage = (theme: string): void =>
-  window.localStorage.setItem(LocalStorageKey_Theme, theme);
+export const saveThemeToLocalStorage = (theme: string, scopeId: string): void =>
+  window.localStorage.setItem(LocalStorageKey_Theme + '_' + scopeId, theme);

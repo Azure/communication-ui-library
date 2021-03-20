@@ -3,7 +3,7 @@
 import React from 'react';
 import { Dropdown, IDropdownOption } from '@fluentui/react';
 import { THEMES, ThemeMap } from '../constants/themes';
-import { useSettableFluentTheme } from '../providers/FluentThemeProvider';
+import { useSwitchableFluentTheme } from '../providers/SwitchableFluentThemeProvider';
 import { themeSelectorContainer } from './styles/ThemeSelector.styles';
 
 /**
@@ -20,7 +20,7 @@ export interface ThemeSelectorProps {
  */
 export const ThemeSelector = (props: ThemeSelectorProps): JSX.Element => {
   const { themeMap } = props;
-  const { fluentTheme, setFluentTheme } = useSettableFluentTheme();
+  const { fluentTheme, setFluentTheme } = useSwitchableFluentTheme();
 
   const themes = themeMap ? themeMap : THEMES;
 
