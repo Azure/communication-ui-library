@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { chatScreenBottomContainerStyle, chatScreenContainerStyle } from './styles/ChatScreen.styles';
 import { Stack } from '@fluentui/react';
-import { onRenderAvatar } from 'app/Avatar';
+import { onRenderAvatar } from './Avatar';
 import {
   ChatThreadPropsFromContext,
   MapToChatThreadProps,
