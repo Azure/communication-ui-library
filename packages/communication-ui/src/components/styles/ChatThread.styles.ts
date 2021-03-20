@@ -1,8 +1,8 @@
 // © Microsoft Corporation. All rights reserved.
 
+import { CSSProperties } from 'react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { mergeStyles } from '@fluentui/react';
-import { CSSProperties } from 'react';
 
 export const messageAvatarContainerStyle = (backgroundColor: string): string =>
   mergeStyles({
@@ -18,7 +18,7 @@ export const messageAvatarContainerStyle = (backgroundColor: string): string =>
     fontSize: '1rem' // 16px
   });
 
-export const chatContainerStyle = mergeStyles({
+export const chatThreadContainerStyle = mergeStyles({
   height: '100%',
   width: '100%',
   maxHeight: '100%',
@@ -36,22 +36,22 @@ export const chatStyle: ComponentSlotStyle = {
   overflow: 'auto'
 };
 
-export const chatHistoryDivStyle: CSSProperties = {
+export const loadPreviousMessagesButtonContainerStyle = mergeStyles({
   minHeight: '2rem'
-};
+});
 
-export const bottomRightPopupStyle: CSSProperties = {
+export const newMessageButtonContainerStyle = mergeStyles({
   position: 'absolute',
   zIndex: 1,
   bottom: 0,
   right: '1.5rem'
-};
+});
 
 export const chatMessageStyle: CSSProperties = {
   overflowY: 'hidden'
 };
 
-export const readReceiptStyle = (mine: boolean): string =>
+export const readReceiptContainerStyle = (mine: boolean): string =>
   mergeStyles({
     marginLeft: mine ? '1rem' : '0rem'
   });
@@ -61,7 +61,7 @@ export const newMessageButtonStyle = mergeStyles({
   width: 'fit-content'
 });
 
-export const loadMoreMessageButtonStyle = mergeStyles({
+export const loadPreviousMessageButtonStyle = mergeStyles({
   minHeight: '1.5rem'
 });
 

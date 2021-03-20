@@ -17,11 +17,12 @@ import { CallState } from '@azure/communication-calling';
 import { ChatClient } from '@azure/communication-chat';
 import { ChatMessage as ChatMessage_2 } from '@azure/communication-chat';
 import { ChatMessageReceivedEvent } from '@azure/communication-signaling';
-import { ChatThread } from '@azure/communication-chat';
+import { ChatThread as ChatThread_2 } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { ChatThreadMember as ChatThreadMember_2 } from '@azure/communication-chat';
 import { CommunicationUser } from '@azure/communication-signaling';
 import { CommunicationUser as CommunicationUser_2 } from '@azure/communication-common';
+import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { DeviceManager } from '@azure/communication-calling';
 import { Dispatch } from 'react';
 import { ErrorInfo } from 'react';
@@ -171,13 +172,38 @@ export type ChatMessage = {
     createdOn?: Date;
     senderId?: string;
     senderDisplayName?: string;
-    status: MessageStatus;
+    statusToRender?: MessageStatus;
+    attached?: MessageAttachedStatus;
+    mine?: boolean;
+    clientMessageId?: string;
 };
+
+// @public (undocumented)
+export type ChatMessagePropsFromContext = {
+    userId: string;
+    chatMessages: ChatMessage[];
+    disableReadReceipt: boolean;
+    onSendReadReceipt: () => Promise<void>;
+    disableLoadPreviousMessage?: boolean;
+    onLoadPreviousMessages?: () => void;
+};
+
+// @public (undocumented)
+export interface ChatMessageWithClientMessageId extends ChatMessage_2 {
+    // (undocumented)
+    clientMessageId?: string;
+}
 
 // Warning: (ae-forgotten-export) The symbol "ChatProviderProps" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
 export const ChatProvider: (props: ChatProviderProps & ErrorHandlingProps) => JSX.Element;
+
+// @public (undocumented)
+export const ChatThread: (props: Pick<ChatThreadProps & ErrorHandlingProps & ChatMessagePropsFromContext, "onErrorCallback" | "styles" | "disableNewMessageButton" | "onRenderReadReceipt" | "onRenderAvatar" | "onRenderLoadPreviousMessagesButton" | "onRenderNewMessageButton">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+
+// @public (undocumented)
+export const ChatThreadComponent: (props: ChatThreadProps & ErrorHandlingProps & ChatMessagePropsFromContext) => JSX.Element;
 
 // @public
 export type ChatThreadMember = {
@@ -192,9 +218,25 @@ export type ChatThreadMemberPropsFromContext = {
 };
 
 // @public (undocumented)
+export type ChatThreadProps = {
+    userId: string;
+    chatMessages: ChatMessage[];
+    styles?: ChatThreadStylesProps;
+    disableNewMessageButton?: boolean;
+    disableLoadPreviousMessage?: boolean;
+    disableReadReceipt?: boolean;
+    onSendReadReceipt?: () => Promise<void>;
+    onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element;
+    onRenderAvatar?: (userId: string) => JSX.Element;
+    onRenderNewMessageButton?: (newMessageButtonProps: NewMessageButtonProps) => JSX.Element;
+    onLoadPreviousMessages?: () => void;
+    onRenderLoadPreviousMessagesButton?: (loadPreviousMessagesButton: LoadPreviousMessagesButtonProps) => JSX.Element;
+};
+
+// @public (undocumented)
 export type ChatThreadPropsFromContext = {
     userId: string;
-    thread: ChatThread | undefined;
+    thread: ChatThread_2 | undefined;
     sendTypingNotification: () => void;
     getThread: () => void;
     updateThreadTopicName: (topicName: string) => Promise<boolean>;
@@ -204,6 +246,16 @@ export type ChatThreadPropsFromContext = {
 //
 // @public (undocumented)
 export const ChatThreadProvider: (props: ChatThreadProviderProps & ErrorHandlingProps) => JSX.Element;
+
+// @public (undocumented)
+export interface ChatThreadStylesProps {
+    chatContainer?: ComponentSlotStyle;
+    chatMessageContainer?: ComponentSlotStyle;
+    loadPreviousMessagesButtonContainer?: IStyle;
+    newMessageButtonContainer?: IStyle;
+    readReceiptContainer?: (mine: boolean) => IStyle;
+    root?: IStyle;
+}
 
 // @public (undocumented)
 export type ChatTopicPropsFromContext = {
@@ -521,6 +573,12 @@ export const getErrorFromAcsResponseCode: (message: string, statusCode: number) 
 // @public (undocumented)
 export const getIdFromToken: (jwtToken: string) => string;
 
+// @public (undocumented)
+export const getLatestIncomingMessageId: (chatMessages: ChatMessage[], userId: string) => string | undefined;
+
+// @public (undocumented)
+export const getMessageStatus: (message: ChatMessage, failedMessageIds: string[], isLargeParticipantsGroup: boolean, userId: string, isMessageSeen?: ((userId: string, message: ChatMessage) => boolean) | undefined) => MessageStatus;
+
 // @public
 export const getThemeFromLocalStorage: () => string | null;
 
@@ -630,8 +688,6 @@ export interface LocalVideoContainerOwnProps {
 // @public (undocumented)
 export const MapToCallConfigurationProps: () => SetupContainerProps;
 
-// Warning: (ae-forgotten-export) The symbol "ChatMessagePropsFromContext" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export const MapToChatMessageProps: () => ChatMessagePropsFromContext;
 
@@ -688,6 +744,14 @@ export const MAXIMUM_LENGTH_OF_TYPING_USERS = 35;
 
 // @public (undocumented)
 export const MAXIMUM_RETRY_COUNT = 3;
+
+// @public (undocumented)
+export enum MessageAttachedStatus {
+    // (undocumented)
+    BOTTOM = "bottom",
+    // (undocumented)
+    TOP = "top"
+}
 
 // @public (undocumented)
 export enum MessageStatus {
@@ -824,7 +888,7 @@ export type SetupContainerProps = {
 // @public (undocumented)
 export type SidePanelPropsFromContext = {
     threadMembers: ChatThreadMember_2[];
-    thread: ChatThread | undefined;
+    thread: ChatThread_2 | undefined;
     existsTopicName: boolean | undefined;
     updateThreadTopicName: (topicName: string) => Promise<boolean>;
     removeThreadMemberByUserId: (userId: string) => void;
@@ -883,8 +947,8 @@ export type ThreadProviderContextType = {
     setChatMessages: Dispatch<SetStateAction<ChatMessage_2[] | undefined>>;
     threadId: string;
     setThreadId: Dispatch<SetStateAction<string>>;
-    thread: ChatThread | undefined;
-    setThread: Dispatch<SetStateAction<ChatThread | undefined>>;
+    thread: ChatThread_2 | undefined;
+    setThread: Dispatch<SetStateAction<ChatThread_2 | undefined>>;
     receipts: ReadReceipt[] | undefined;
     setReceipts: Dispatch<SetStateAction<ReadReceipt[] | undefined>>;
     threadMembers: ChatThreadMember_2[];
@@ -925,6 +989,9 @@ export const UNABLE_TO_LOAD_MORE_MESSAGES = "You have reached the beginning of t
 
 // @public (undocumented)
 export const UNAUTHORIZED_STATUS_CODE = 401;
+
+// @public (undocumented)
+export const updateMessagesWithAttached: (chatMessagesWithStatus: ChatMessage[], userId: string, failedMessageIds: string[], isLargeGroup: boolean, isMessageSeen: (userId: string, message: ChatMessage) => boolean) => ChatMessage[];
 
 // @public (undocumented)
 export const useCallAgent: () => void;
@@ -988,7 +1055,7 @@ export const useIncomingCall: () => UseIncomingCallType;
 export const useIncomingCallsContext: () => IncomingCallsContextType;
 
 // @public (undocumented)
-export const useIsMessageSeen: () => (userId: string, clientMessageId: string, messages: any[]) => boolean;
+export const useIsMessageSeen: () => (userId: string, message: ChatMessage) => boolean;
 
 // @public (undocumented)
 export const useLastError: () => CommunicationUiError | undefined;
@@ -1074,7 +1141,7 @@ export const useSetReceipts: () => (receipts: ReadReceipt[]) => void;
 export const useSettableFluentTheme: () => SettableFluentThemeContext;
 
 // @public (undocumented)
-export const useSetThread: () => (thread: ChatThread) => void;
+export const useSetThread: () => (thread: ChatThread_2) => void;
 
 // @public (undocumented)
 export const useSetThreadId: () => (threadId: string) => void;
@@ -1111,7 +1178,7 @@ export const useSubscribeTypingNotification: (addTypingNotifications: (notificat
 export const useTeamsCall: () => UseTeamsCallType;
 
 // @public (undocumented)
-export const useThread: () => ChatThread | undefined;
+export const useThread: () => ChatThread_2 | undefined;
 
 // @public (undocumented)
 export const useThreadId: () => string;
@@ -1170,6 +1237,11 @@ export interface VideoTileStylesProps {
 // @public
 export const WithErrorHandling: (Component: (props: any & ErrorHandlingProps) => JSX.Element, props: any & ErrorHandlingProps) => JSX.Element;
 
+
+// Warnings were encountered during analysis:
+//
+// src/components/ChatThread.tsx:183:3 - (ae-forgotten-export) The symbol "NewMessageButtonProps" needs to be exported by the entry point index.d.ts
+// src/components/ChatThread.tsx:185:3 - (ae-forgotten-export) The symbol "LoadPreviousMessagesButtonProps" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 
