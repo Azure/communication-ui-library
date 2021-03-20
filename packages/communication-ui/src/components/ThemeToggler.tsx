@@ -4,7 +4,7 @@ import React from 'react';
 import { Toggle } from '@fluentui/react';
 import { LIGHT, DARK, lightTheme, darkTheme } from '../constants/themes';
 import { useSwitchableFluentTheme, FluentTheme } from '../providers/SwitchableFluentThemeProvider';
-import { themeSelectorContainer } from './styles/ThemeSelector.styles';
+import { dockedBottom } from './styles/Docked.styles';
 
 /**
  * Props for ThemeToggler component
@@ -14,6 +14,8 @@ export interface ThemeTogglerProps {
   onTheme?: FluentTheme;
   /** Optional theme name of off state of the toggler. Default is 'light' theme. */
   offTheme?: FluentTheme;
+  /** Optional label for toggler component */
+  label?: string;
 }
 
 /**
@@ -21,7 +23,7 @@ export interface ThemeTogglerProps {
  * @param props - ThemeTogglerProps
  */
 export const ThemeToggler = (props: ThemeTogglerProps): JSX.Element => {
-  const { onTheme, offTheme } = props;
+  const { onTheme, offTheme, label } = props;
   const { fluentTheme, setFluentTheme } = useSwitchableFluentTheme();
 
   const _onTheme: FluentTheme = onTheme ? onTheme : { name: DARK, theme: darkTheme };
@@ -36,13 +38,13 @@ export const ThemeToggler = (props: ThemeTogglerProps): JSX.Element => {
   };
 
   return (
-    <div className={themeSelectorContainer}>
+    <div className={dockedBottom}>
       <Toggle
-        label="Theme"
+        label={label}
         onText={_onTheme.name}
         offText={_offTheme.name}
         onChange={onChange}
-        defaultChecked={fluentTheme.name === _onTheme.name}
+        checked={fluentTheme.name === _onTheme.name}
       />
     </div>
   );

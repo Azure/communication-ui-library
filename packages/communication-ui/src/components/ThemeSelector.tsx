@@ -4,7 +4,7 @@ import React from 'react';
 import { Dropdown, IDropdownOption } from '@fluentui/react';
 import { THEMES, ThemeMap } from '../constants/themes';
 import { useSwitchableFluentTheme } from '../providers/SwitchableFluentThemeProvider';
-import { themeSelectorContainer } from './styles/ThemeSelector.styles';
+import { dockedBottom } from './styles/Docked.styles';
 
 /**
  * Props for ThemeSelector component
@@ -12,6 +12,8 @@ import { themeSelectorContainer } from './styles/ThemeSelector.styles';
 export interface ThemeSelectorProps {
   /** Optional map of themes with theme as the key. Defaults to map of light and dark themes. */
   themeMap?: ThemeMap;
+  /** Optional label for selector component */
+  label?: string;
 }
 
 /**
@@ -19,7 +21,7 @@ export interface ThemeSelectorProps {
  * @param props - ThemeSelectorProps
  */
 export const ThemeSelector = (props: ThemeSelectorProps): JSX.Element => {
-  const { themeMap } = props;
+  const { themeMap, label } = props;
   const { fluentTheme, setFluentTheme } = useSwitchableFluentTheme();
 
   const themes = themeMap ? themeMap : THEMES;
@@ -33,14 +35,14 @@ export const ThemeSelector = (props: ThemeSelectorProps): JSX.Element => {
   };
 
   return (
-    <div className={themeSelectorContainer}>
+    <div className={dockedBottom}>
       <Dropdown
+        label={label}
         options={Object.keys(themes).map((theme) => ({
           key: theme,
           text: theme
         }))}
         onChange={onChange}
-        label="Theme"
         selectedKey={fluentTheme.name}
       />
     </div>

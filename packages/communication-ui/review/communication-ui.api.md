@@ -902,7 +902,7 @@ export interface SwitchableFluentThemeContext {
     setFluentTheme: (fluentTheme: FluentTheme) => void;
 }
 
-// @public (undocumented)
+// @public
 export const SwitchableFluentThemeProvider: (props: SwitchableFluentThemeProviderProps) => JSX.Element;
 
 // @public
@@ -930,6 +930,7 @@ export const ThemeSelector: (props: ThemeSelectorProps) => JSX.Element;
 
 // @public
 export interface ThemeSelectorProps {
+    label?: string;
     themeMap?: ThemeMap;
 }
 
@@ -938,8 +939,9 @@ export const ThemeToggler: (props: ThemeTogglerProps) => JSX.Element;
 
 // @public
 export interface ThemeTogglerProps {
-    offTheme?: string;
-    onTheme?: string;
+    label?: string;
+    offTheme?: FluentTheme;
+    onTheme?: FluentTheme;
 }
 
 // @public (undocumented)

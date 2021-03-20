@@ -5,7 +5,6 @@ import { FocusZone, FocusZoneDirection } from 'office-ui-fabric-react/lib/FocusZ
 import { PrimaryButton, Spinner, Stack } from '@fluentui/react';
 import React, { useCallback, useEffect, useState } from 'react';
 import { buttonStyle, chatIconStyle, mainContainerStyle } from './styles/ConfigurationScreen.styles';
-import { ThemeToggler } from '@azure/communication-ui';
 import {
   labelFontStyle,
   largeAvatarContainerStyle,
@@ -190,7 +189,6 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
               isEmpty={emptyWarning}
               isNameLengthExceedLimit={isNameLengthExceedLimit}
             />
-            <ThemeToggler />
             <div>
               <PrimaryButton disabled={disableJoinChatButton} className={buttonStyle} onClick={validateName}>
                 <ChatIcon className={chatIconStyle} size="medium" />

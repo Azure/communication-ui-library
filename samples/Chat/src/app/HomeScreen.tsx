@@ -16,7 +16,6 @@ import {
   upperStackTokens,
   videoCameraIconStyle
 } from './styles/HomeScreen.styles';
-import { ThemeToggler } from '@azure/communication-ui';
 
 import { ChatIcon } from '@fluentui/react-icons-northstar';
 import heroSVG from '../assets/hero.svg';
@@ -97,7 +96,6 @@ export default (): JSX.Element => {
                 </li>
               </ul>
             </Stack>
-            <ThemeToggler />
             <PrimaryButton
               id="startChat"
               role="main"

@@ -8,7 +8,13 @@ import ConfigurationScreen from './ConfigurationScreen';
 import GroupCall from './GroupCall';
 import { HomeScreen } from './HomeScreen';
 import { v1 as createGUID } from 'uuid';
-import { CallingProvider, CallProvider, CommunicationUiErrorInfo, ErrorProvider } from '@azure/communication-ui';
+import {
+  CallingProvider,
+  CallProvider,
+  CommunicationUiErrorInfo,
+  ErrorProvider,
+  ThemeToggler
+} from '@azure/communication-ui';
 import {
   createRandomDisplayName,
   fetchTokenResponse,
@@ -161,7 +167,12 @@ const App = (): JSX.Element => {
     console.log('ACS Calling sample: This is experimental behaviour');
   }
 
-  return getContent();
+  return (
+    <>
+      {getContent()}
+      <ThemeToggler />
+    </>
+  );
 };
 
 window.setTimeout(() => {
