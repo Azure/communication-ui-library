@@ -65,12 +65,14 @@ export const chatClientDeclaratify = (chatClient: ChatClient): DeclarativeChatCl
   const context = new ChatContext();
   let eventSubscriber: EventSubscriber;
 
-  Object.defineProperty(chatClient, 'context', {
+  const proxy = new Proxy(chatClient, proxyChatClient);
+
+  Object.defineProperty(proxy, 'context', {
     configurable: false,
     get: () => context
   });
 
-  Object.defineProperty(chatClient, 'eventSubscriber', {
+  Object.defineProperty(proxy, 'eventSubscriber', {
     configurable: false,
     get: () => eventSubscriber,
     set: (val: EventSubscriber) => {
@@ -78,13 +80,13 @@ export const chatClientDeclaratify = (chatClient: ChatClient): DeclarativeChatCl
     }
   });
 
-  Object.defineProperty(chatClient, 'state', {
+  Object.defineProperty(proxy, 'state', {
     configurable: false,
     get: () => context?.getState()
   });
-  Object.defineProperty(chatClient, 'onStateChange', {
+  Object.defineProperty(proxy, 'onStateChange', {
     configurable: false,
     value: (handler: (state: ChatClientState) => void) => context?.onStateChange(handler)
   });
-  return new Proxy(chatClient, proxyChatClient) as DeclarativeChatClient;
+  return proxy as DeclarativeChatClient;
 };
