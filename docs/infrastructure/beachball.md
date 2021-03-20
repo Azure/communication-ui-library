@@ -33,7 +33,11 @@ We use beachball for three main functions:
 
 ### Generate change files
 
-`rushx changelog`
+Change files are short json files created after running `beachball change`. We have aliased this in our repo to simply be `rush changelog`. They detail if the change was major/minor/patch/prerelease/none and also include a short description of the change that was made.
+
+For more information on change files see: <https://microsoft.github.io/beachball/concepts/change-files.html>
+
+For writing a good changelog entry for the change file see: [Tips for writing meaningful changelog entries](../references/tips-for-writing-changelog-entries).
 
 ### Package version bumping
 

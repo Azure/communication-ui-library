@@ -7,7 +7,7 @@ Releases can be created manually or by using the created GitHub actions (preferr
 1. Trigger the "Bump npm packages and create changelogs" GitHub action
     Enter the branch or tag you are looking to create a release off. Likely this will be a tag of an alpha build that has been well tested.
 1. This will bump the package versions, generate the changelog and put up a PR into main.
-1. Next, review the changelog in the PR and prune the changelog as necessary -- ensure the changelog looks good and changelog lines that equate to small PRs for the same feature are combined.
+1. Next, review the changelog in the PR and prune the changelog as necessary -- ensure the changelog looks good and changelog lines that equate to small PRs for the same feature are combined. For more information see: [Pruning a Changelog](../references/pruning-a-changelog.md)
 1. Also double check the package versions are as expected.
 1. Complete the PR into main _without deleting the branch_ (or restore the branch if you accidentally forget to not delete it on completion)
 1. Run the "Publish npm packages" GitHub action and enter the branch name from the previous step
@@ -34,7 +34,7 @@ To manually create a release:
     ```
 
     This will bump the package versions, as well as delete the change files and generate the changelog.
-1. Prune the changelog (see "Creating a release through GitHub actions" for details except do this locally instead of in a PR)
+1. Prune the changelog (see [Pruning a Changelog](../references/pruning-a-changelog.md))
 1. Put up a PR of the changes into main
 1. When the PR is completed, _on your release branch_, upload the packages to azure publishing pipelines - more details to follow once the publishing is set up.
 1. Once the action has completed, verify on <https://www.npmjs.com/> that the package(s) published successfully.
