@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Added ThemeSelector and ThemeToggler. Updated FluentThemeProvider to store theme state in LocalStorage.",
+  "comment": "Added ThemeSelector and ThemeToggler. Created SwitchableFluentThemeProvider to allow switching of themes.",
   "packageName": "@azure/communication-ui",
   "email": "miguelgamis@microsoft.com",
   "dependentChangeType": "patch"
