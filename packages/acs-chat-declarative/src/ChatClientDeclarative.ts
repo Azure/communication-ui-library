@@ -4,7 +4,6 @@ import { ChatContext } from './ChatContext';
 import { ChatClientState } from './ChatClientState';
 import { EventSubscriber } from './EventSubscriber';
 import { chatThreadClientDeclaratify } from './ChatThreadClientDeclarative';
-import { Constants } from './Constants';
 
 export interface DeclarativeChatClient extends ChatClient {
   state: ChatClientState;
@@ -59,14 +58,14 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
     switch (prop) {
       case 'createChatThread': {
         return async function (...args: Parameters<ChatClient['createChatThread']>) {
-          const response = await chatClient.createChatThread(...args);
-          const thread = response.chatThread;
+          const result = await chatClient.createChatThread(...args);
+          const thread = result.chatThread;
 
           if (thread) {
             const threadInfo = { ...thread, createdBy: { communicationUserId: thread.createdBy } };
             context.createThread(thread.id, threadInfo);
           }
-          return response;
+          return result;
         };
       }
       case 'getChatThread': {
@@ -82,10 +81,7 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
       case 'deleteChatThread': {
         return async function (...args: Parameters<ChatClient['deleteChatThread']>) {
           const result = await chatClient.deleteChatThread(...args);
-          const { _response } = result;
-          if (_response.status === Constants.OK || _response.status === Constants.DELETED) {
-            context.removeThread(args[0]);
-          }
+          context.removeThread(args[0]);
           return result;
         };
       }
