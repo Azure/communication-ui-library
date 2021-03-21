@@ -4,13 +4,18 @@ import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import {
   CONTROL_BAR_LAYOUTS,
-  audioButtonProps,
   ControlBar,
   ControlButton,
+  audioButtonProps,
   hangupButtonProps,
   optionsButtonProps,
   screenShareButtonProps,
-  videoButtonProps
+  videoButtonProps,
+  audioButtonWithLabelProps,
+  hangupButtonWithLabelProps,
+  optionsButtonWithLabelProps,
+  screenShareButtonWithLabelProps,
+  videoButtonWithLabelProps
 } from '../components/ControlBar';
 import { boolean, object, select } from '@storybook/addon-knobs';
 import { getDocs } from './docs/ControlBarDocs';
@@ -50,11 +55,27 @@ export const ControlBarComponent: () => JSX.Element = () => {
 
   return (
     <ControlBar layout={layout}>
-      <ControlButton {...videoButtonProps} isToggled={toggleButtons} showLabel={showLabels} />
-      <ControlButton {...audioButtonProps} isToggled={toggleButtons} showLabel={showLabels} />
-      <ControlButton {...screenShareButtonProps} isToggled={toggleButtons} showLabel={showLabels} />
-      <ControlButton {...optionsButtonProps} menuProps={optionsMenuProps} showLabel={showLabels} />
-      <ControlButton {...hangupButtonProps} showLabel={showLabels} />
+      <ControlButton
+        {...(showLabels ? videoButtonWithLabelProps : videoButtonProps)}
+        isToggled={toggleButtons}
+        showLabel={showLabels}
+      />
+      <ControlButton
+        {...(showLabels ? audioButtonWithLabelProps : audioButtonProps)}
+        isToggled={toggleButtons}
+        showLabel={showLabels}
+      />
+      <ControlButton
+        {...(showLabels ? screenShareButtonWithLabelProps : screenShareButtonProps)}
+        isToggled={toggleButtons}
+        showLabel={showLabels}
+      />
+      <ControlButton
+        {...(showLabels ? optionsButtonWithLabelProps : optionsButtonProps)}
+        menuProps={optionsMenuProps}
+        showLabel={showLabels}
+      />
+      <ControlButton {...(showLabels ? hangupButtonWithLabelProps : hangupButtonProps)} showLabel={showLabels} />
     </ControlBar>
   );
 };
