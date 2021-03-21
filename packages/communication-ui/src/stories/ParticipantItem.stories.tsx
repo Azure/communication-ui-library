@@ -6,6 +6,7 @@ import { Meta } from '@storybook/react/types-6-0';
 import { boolean, text } from '@storybook/addon-knobs';
 import { ParticipantItem } from '../components';
 import { getDocs } from './docs/ParticipantItemDocs';
+import { Stack } from '@fluentui/react';
 import { MicOffIcon, CallControlPresentNewIcon } from '@fluentui/react-northstar';
 import { COMPONENT_FOLDER_PREFIX } from './constants';
 
@@ -32,10 +33,17 @@ export const ParticipantItemComponent: () => JSX.Element = () => {
     });
 
   return (
-    <ParticipantItem name={name} isYou={isYou} menuItems={menuItems}>
-      {isScreenSharing && <CallControlPresentNewIcon size="small" />}
-      {isMuted && <MicOffIcon size="small" />}
-    </ParticipantItem>
+    <ParticipantItem
+      name={name}
+      isYou={isYou}
+      menuItems={menuItems}
+      onRenderIcon={() => (
+        <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
+          {isScreenSharing && <CallControlPresentNewIcon size="small" />}
+          {isMuted && <MicOffIcon size="small" />}
+        </Stack>
+      )}
+    />
   );
 };
 
