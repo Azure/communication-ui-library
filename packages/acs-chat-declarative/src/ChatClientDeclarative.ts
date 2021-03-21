@@ -20,8 +20,9 @@ const proxyListThreads = (chatClient: ChatClient, context: ChatContext) => {
         const result = await threadsIterator.next();
         if (!result.done && result.value) {
           const chatThreadInfo = result.value;
-          context.createThreadIfNotExist(chatThreadInfo.id, chatThreadInfo) ||
+          if (!context.createThreadIfNotExist(chatThreadInfo.id, chatThreadInfo)) {
             context.updateThread(chatThreadInfo.id, chatThreadInfo);
+          }
         }
         return result;
       },
@@ -37,8 +38,9 @@ const proxyListThreads = (chatClient: ChatClient, context: ChatContext) => {
             if (!result.done && result.value) {
               context.batch(() => {
                 for (const threadInfo of page) {
-                  context.createThreadIfNotExist(threadInfo.id, threadInfo) ||
+                  if (context.createThreadIfNotExist(threadInfo.id, threadInfo)) {
                     context.updateThread(threadInfo.id, threadInfo);
+                  }
                 }
               });
             }
@@ -73,7 +75,9 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
           const result = await chatClient.getChatThread(...args);
           const { _response: _, ...thread } = result;
           if (thread) {
-            context.createThreadIfNotExist(thread.id, thread) || context.updateThread(thread.id, thread);
+            if (context.createThreadIfNotExist(thread.id, thread)) {
+              context.updateThread(thread.id, thread);
+            }
           }
           return result;
         };
