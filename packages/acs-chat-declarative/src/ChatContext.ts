@@ -54,10 +54,10 @@ export class ChatContext {
     const exists = this.getState().threads.has(threadId);
     if (!exists) {
       this.createThread(threadId, thread);
+      return true;
     }
 
-    // return true when a thread is created
-    return !exists;
+    return false;
   }
 
   public updateThread(threadId: string, threadInfo?: ChatThreadInfo): void {
