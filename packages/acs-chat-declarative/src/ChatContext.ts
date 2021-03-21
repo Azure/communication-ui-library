@@ -56,7 +56,6 @@ export class ChatContext {
       this.createThread(threadId, thread);
       return true;
     }
-
     return false;
   }
 
