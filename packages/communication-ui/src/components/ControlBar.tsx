@@ -81,20 +81,20 @@ export interface CallControlButtonProps {
  * @returns JSX.Element
  */
 export const ControlButton = (props: CallControlButtonProps): JSX.Element => {
-  const { onRenderIcon } = props;
+  const { menuIconProps, menuProps, disabled, isToggled, onClick, onRenderIcon, styles } = props;
   return (
     <DefaultButton
-      disabled={props.disabled}
-      onClick={props.onClick}
-      className={mergeStyles(controlButtonStyles, props.styles?.root)}
+      disabled={disabled}
+      onClick={onClick}
+      className={mergeStyles(controlButtonStyles, styles?.root)}
       styles={{
-        flexContainer: props.styles?.flexContainer ?? {
+        flexContainer: styles?.flexContainer ?? {
           flexDirection: 'column'
         }
       }}
-      menuIconProps={props.menuIconProps}
-      menuProps={props.menuProps}
-      checked={props.isToggled}
+      menuIconProps={menuIconProps}
+      menuProps={menuProps}
+      checked={isToggled}
     >
       {onRenderIcon && onRenderIcon(props)}
     </DefaultButton>

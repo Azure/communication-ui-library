@@ -55,7 +55,7 @@ const defaultRenderer = (item: IOverflowSetItemProps): JSX.Element => {
     <ParticipantItem
       name={item.name}
       isYou={item.isYou}
-      menuItems={menuItems}
+      menuItems={item.isYou ? undefined : menuItems}
       presence={presence}
       onRenderIcon={() => (
         <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
