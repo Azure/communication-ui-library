@@ -1,13 +1,5 @@
 // © Microsoft Corporation. All rights reserved.
-import {
-  DefaultButton,
-  IContextualMenuProps,
-  IIconProps,
-  IStyle,
-  mergeStyles,
-  Stack,
-  IRenderFunction
-} from '@fluentui/react';
+import { DefaultButton, IContextualMenuProps, IIconProps, IStyle, mergeStyles, Stack } from '@fluentui/react';
 import {
   CallControlCloseTrayIcon,
   CallControlPresentNewIcon,
@@ -65,13 +57,9 @@ export interface CallControlButtonProps {
    */
   onClick?: MouseEventHandler<HTMLElement>;
   /**
-   * Display the `defaultLabel` and `toggledLabel` when set to true.
+   * Optional callback function to render icon of control button
    */
-  showLabel?: boolean;
-  /**
-   * Default Icon element to display.
-   */
-  onRenderIcon?: IRenderFunction<CallControlButtonProps>;
+  onRenderIcon?: (props?: CallControlButtonProps) => JSX.Element | null;
   /**
    * The props for the icon shown when providing a menu dropdown.
    * Uses `IIconProps` from FluentUI.

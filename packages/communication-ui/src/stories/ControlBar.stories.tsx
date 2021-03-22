@@ -55,27 +55,17 @@ export const ControlBarComponent: () => JSX.Element = () => {
 
   return (
     <ControlBar layout={layout}>
-      <ControlButton
-        {...(showLabels ? videoButtonWithLabelProps : videoButtonProps)}
-        isToggled={toggleButtons}
-        showLabel={showLabels}
-      />
-      <ControlButton
-        {...(showLabels ? audioButtonWithLabelProps : audioButtonProps)}
-        isToggled={toggleButtons}
-        showLabel={showLabels}
-      />
+      <ControlButton {...(showLabels ? videoButtonWithLabelProps : videoButtonProps)} isToggled={toggleButtons} />
+      <ControlButton {...(showLabels ? audioButtonWithLabelProps : audioButtonProps)} isToggled={toggleButtons} />
       <ControlButton
         {...(showLabels ? screenShareButtonWithLabelProps : screenShareButtonProps)}
         isToggled={toggleButtons}
-        showLabel={showLabels}
       />
       <ControlButton
         {...(showLabels ? optionsButtonWithLabelProps : optionsButtonProps)}
         menuProps={optionsMenuProps}
-        showLabel={showLabels}
       />
-      <ControlButton {...(showLabels ? hangupButtonWithLabelProps : hangupButtonProps)} showLabel={showLabels} />
+      <ControlButton {...(showLabels ? hangupButtonWithLabelProps : hangupButtonProps)} />
     </ControlBar>
   );
 };
