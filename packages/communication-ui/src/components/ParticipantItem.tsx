@@ -26,11 +26,11 @@ interface ParticipantItemProps {
   /** Optional indicator to show participant is the user */
   isYou?: boolean;
   /** Optional callback returning a JSX element to override avatar */
-  onRenderAvatar?: () => JSX.Element;
+  onRenderAvatar?: () => JSX.Element | null;
   /** Optional array of IContextualMenuItem for contextual menu */
   menuItems?: IContextualMenuItem[];
   /** Optional children to component such as icons */
-  onRenderIcon?: () => JSX.Element;
+  onRenderIcon?: () => JSX.Element | null;
   /** Optional PersonaPresence to show participant presence. This will not have an effect if property avatar is assigned */
   presence?: PersonaPresence;
 }
