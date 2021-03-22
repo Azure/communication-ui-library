@@ -131,6 +131,9 @@ const controlBarLayoutCode = `
 `;
 
 const customControlButtonUsage = `
+import { CallEndIcon } from '@fluentui/react-northstar';
+import { FluentThemeProvider } from '@azure/communication-ui';
+
 const HangUpButton: () => JSX.Element = () => {
   const styles = {
     root: {
@@ -146,61 +149,58 @@ const HangUpButton: () => JSX.Element = () => {
   return (
     <ControlButton 
       defaultIcon={<CallEndIcon />} 
-      defaultLabel={<Stack>End Call</Stack>} 
-      showLabel={true} 
-      styles={styles} 
-      onClick={hangUpCall}
+      defaultLabel={<>End Call</>} 
+      showLabel={true}
+      styles={styles}
+      onClick={() => {// handle hangup}}
     />
   );
 };
 
 const CustomControlButtonExample: () => JSX.Element = () => {
   return (
-    <Stack style={{ flexFlow: 'row' }}>
-      <FluentThemeProvider>
-        <ControlBar layout={'horizontal'}>
-          <ControlButton {...videoButtonProps} />
-          <ControlButton {...audioButtonProps} />
-          <HangUpButton />
-        </ControlBar>
-      </FluentThemeProvider>
-    </Stack>
+    <FluentThemeProvider>
+      <ControlBar layout={'horizontal'}>
+        <ControlButton {...videoButtonProps} />
+        <ControlButton {...audioButtonProps} />
+        <HangUpButton />
+      </ControlBar>
+    </FluentThemeProvider>
   );
 };
 `;
 
 const HangUpButton: () => JSX.Element = () => {
+  const styles = {
+    root: {
+      marginTop: '10px !important',
+      minHeight: '1rem',
+      background: 'firebrick',
+      color: 'white',
+      ':hover': { background: 'red', color: 'white' }
+    },
+    flexContainer: { flexFlow: 'row' },
+    label: { color: 'white', paddingLeft: '0.5rem' }
+  };
   return (
     <ControlButton 
       defaultIcon={<CallEndIcon />}
-      defaultLabel={<Stack>End Call</Stack>}
+      defaultLabel={<>End Call</>}
       showLabel={true}
-      styles={{
-        root: {
-          marginTop: '10px !important',
-          minHeight: '1rem',
-          background: 'firebrick',
-          color: 'white',
-          ':hover': { background: 'red', color: 'white' }
-        },
-        flexContainer: { flexFlow: 'row' },
-        label: { color: 'white', paddingLeft: '0.5rem' }
-      }}
+      styles={styles}
     />
   );
 };
 
 const CustomControlButtonExample: () => JSX.Element = () => {
   return (
-    <Stack style={{ flexFlow: 'row' }}>
-      <FluentThemeProvider>
-        <ControlBar layout={'horizontal'}>
-          <ControlButton {...videoButtonProps} />
-          <ControlButton {...audioButtonProps} />
-          <HangUpButton />
-        </ControlBar>
-      </FluentThemeProvider>
-    </Stack>
+    <FluentThemeProvider>
+      <ControlBar layout={'horizontal'}>
+        <ControlButton {...videoButtonProps} />
+        <ControlButton {...audioButtonProps} />
+        <HangUpButton />
+      </ControlBar>
+    </FluentThemeProvider>
   );
 };
 
