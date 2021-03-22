@@ -2,7 +2,7 @@
 
 ## Useful
 
-The raison d’etre of the UI framework is to provide robust, generic solutions to common UI problems in order to ease the integration of communication functionality into 3rd party applications. A good example for such a common problem is laying out video call participants with non-uniform dimensions in a grid.
+The raison d'être of the UI framework is to provide robust, generic solutions to common UI problems in order to ease the integration of communication functionality into 3rd party applications. A good example for such a common problem is laying out video call participants with non-uniform dimensions in a grid.
 
 ## Flexible
 

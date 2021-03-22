@@ -56,7 +56,7 @@ The `Counter` React component is quite simple, it accepts an `initialValue` as a
 
 We model all events as props where its name starts with `on*` and its type is a function of `(newValue) => void`, or if there is no value to observe `() => void`. Events only get raised when the underlying value has actually changed. A common pattern for this is shown in `changeCount`: first we check for equality with the current value and return if the new value is equal, then we commit the new value and finally we call the event handler passing the new value. Technically this isn't needed for the Counter component because we never try to set the same value, but hey this is demonstration code.
 
-In our example, the Counter has **local state**, i.e. the `count`. Admittingly, it's awkward to not expose the count directly and only expose it via an event. But this is only an example for the purpose of demonstration. In general, contrary to some popular beliefs, local state is okay. Just make sure that it truly is local to the component and doesn't need to be exposed to the component user. If local state gets too complicated, it's a sign that the component itself does too many things and should be broken up into smaller components.
+In our example, the Counter has **local state**, i.e. the `count`. Admittedly, it's awkward to not expose the count directly and only expose it via an event. But this is only an example for the purpose of demonstration. In general, contrary to some popular beliefs, local state is okay. Just make sure that it truly is local to the component and doesn't need to be exposed to the component user. If local state gets too complicated, it's a sign that the component itself does too many things and should be broken up into smaller components.
 
 This example uses a *function component* and the `useState` hook. This produces shorter code and is functionally equivalent to a *class component* in most cases. For a comparison around these two types of component styles, see the [React documentation on hooks](https://reactjs.org/docs/hooks-state.html).
 
@@ -64,7 +64,7 @@ To summarize, a properly designed component takes **all** of its input data as p
 
 ## Be deliberate in naming
 
-In this declarative, pure, unidirectional world it is very important how we name properties. And their name exposes how we think about data flow and if we really grasped the different responsibilites of the architecture.
+In this declarative, pure, unidirectional world it is very important how we name properties. And their name exposes how we think about data flow and if we really grasped the different responsibilities of the architecture.
 
 A UI component *receives* data and *notifies* about changes. It never tells any other part of the system what to do. It's only a meek informant about its own local state changes.
 
