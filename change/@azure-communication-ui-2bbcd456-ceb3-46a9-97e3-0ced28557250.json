@@ -1,6 +1,6 @@
 {
   "type": "none",
-  "comment": "[#2397386] Adding more samples around ControlBar and ControlButton to storybook docs",
+  "comment": "Add code samples for ControlBar and ControlButton to storybook docs",
   "packageName": "@azure/communication-ui",
   "email": "anjulgarg@live.com",
   "dependentChangeType": "none"
