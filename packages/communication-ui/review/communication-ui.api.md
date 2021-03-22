@@ -769,10 +769,18 @@ export const optionsButtonProps: CallControlButtonProps;
 // @public (undocumented)
 export const PAGE_SIZE = 200;
 
-// Warning: (ae-forgotten-export) The symbol "ParticipantItemProps" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
+// @public
 export const ParticipantItem: (props: ParticipantItemProps & ErrorHandlingProps) => JSX.Element;
+
+// @public
+export type ParticipantItemProps = {
+    name: string;
+    isYou?: boolean;
+    onRenderAvatar?: (props?: ParticipantItemProps) => JSX.Element | null;
+    menuItems?: IContextualMenuItem[];
+    onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
+    presence?: PersonaPresence;
+};
 
 // @public (undocumented)
 export const PARTICIPANTS_THRESHOLD = 20;
