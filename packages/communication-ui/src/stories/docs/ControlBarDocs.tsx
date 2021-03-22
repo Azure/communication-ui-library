@@ -1,13 +1,23 @@
 // © Microsoft Corporation. All rights reserved.
 
 import { Stack } from '@fluentui/react';
+import { CallEndIcon } from '@fluentui/react-northstar';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import React from 'react';
 import { audioButtonProps, ControlBar, ControlButton, hangupButtonProps, optionsButtonProps, screenShareButtonProps, videoButtonProps } from '../../components';
 import { FluentThemeProvider } from '../../providers';
 
 const importStatement = `
-import { ControlBar } from '@azure/communication-ui';
+import { ControlBar, ControlButton } from '@azure/communication-ui';
+
+// Import Helper Props for quickly creating common call control buttons.
+import { 
+  videoButtonProps,
+  audioButtonProps,
+  screenShareButtonProps,
+  optionsButtonProps,
+  hangupButtonProps 
+} from '@azure/communication-ui';
 `;
 
 const defaultOptionsMenuProps = {
@@ -18,8 +28,8 @@ const defaultOptionsMenuProps = {
       iconProps: { iconName: 'LocationCircle' },
       subMenuProps: {
         items: [
-          { key: 'camera1', text: 'Full HD Webcam', title: 'Full HD Webcam', canCheck: true, isChecked: true },
-          { key: 'camera2', text: 'Macbook Pro Webcam', title: 'Macbook Pro Webcam' }
+          { key: 'cam1', text: 'Full Webcam', title: 'Full Webcam', canCheck: true, isChecked: true },
+          { key: 'cam2', text: 'Macbook Webcam', title: 'Macbook Webcam' }
         ]
       }
     },
@@ -29,8 +39,8 @@ const defaultOptionsMenuProps = {
       iconProps: { iconName: 'LocationCircle' },
       subMenuProps: {
         items: [
-          { key: 'mic1', text: 'Realtek HD Audio', title: 'Realtek HD Audio' },
-          { key: 'mic2', text: 'Macbook Pro Mic', title: 'Macbook Pro Mic', canCheck: true, isChecked: true }
+          { key: 'mic1', text: 'Realtek Audio', title: 'Realtek Audio' },
+          { key: 'mic2', text: 'Macbook Mic', title: 'Macbook Mic', canCheck: true, isChecked: true }
         ]
       }
     }
@@ -62,8 +72,8 @@ const defaultOptionsMenuProps = {
       iconProps: { iconName: 'LocationCircle' },
       subMenuProps: {
         items: [
-          { key: 'camera1', text: 'Full HD Webcam', title: 'Full HD Webcam', canCheck: true, isChecked: true },
-          { key: 'camera2', text: 'Macbook Pro Webcam', title: 'Macbook Pro Webcam' }
+          { key: 'cam1', text: 'HD Webcam', title: 'HD Webcam', canCheck: true, isChecked: true, onClick: handleClick('cam1') },
+          { key: 'cam2', text: 'Macbook Webcam', title: 'Macbook Webcam', onClick: handleClick('cam2') }
         ]
       }
     },
@@ -73,8 +83,8 @@ const defaultOptionsMenuProps = {
       iconProps: { iconName: 'LocationCircle' },
       subMenuProps: {
         items: [
-          { key: 'mic1', text: 'Realtek HD Audio', title: 'Realtek HD Audio' },
-          { key: 'mic2', text: 'Macbook Pro Mic', title: 'Macbook Pro Mic', canCheck: true, isChecked: true }
+          { key: 'mic1', text: 'Realtek Audio', title: 'Realtek Audio', onClick: handleClick('mic1') },
+          { key: 'mic2', text: 'Macbook Mic', title: 'Macbook Mic', canCheck: true, isChecked: true, onClick: handleClick('mic2') }
         ]
       }
     }
@@ -84,32 +94,150 @@ const defaultOptionsMenuProps = {
 const ControlBarExample: () => JSX.Element = () => {
   return (
     <ControlBar layout={'horizontal'}>
-      <ControlButton {...videoButtonProps} />
-      <ControlButton {...videoButtonProps} />
-      <ControlButton {...screenShareButtonProps} />
-      <ControlButton {...optionsButtonProps} menuProps={defaultOptionsMenuProps} />
-      <ControlButton {...hangupButtonProps} />
+      <ControlButton {...videoButtonProps} onClick={toggleVideo} showLabel={false} />
+      <ControlButton {...audioButtonProps} onClick={toggleAudio} showLabel={false} />
+      <ControlButton {...screenShareButtonProps} onClick={toggleScreenShare} showLabel={false} />
+      <ControlButton {...optionsButtonProps} menuProps={defaultOptionsMenuProps} showLabel={false} />
+      <ControlButton {...hangupButtonProps} onClick={hangUpCall} showLabel={false} />
     </ControlBar>
   );
 };
 `;
 
+const ControlBarLayoutExample: () => JSX.Element = () => {
+  return (
+    <Stack style={{ flexFlow: 'row', minHeight: '250px' }}>
+      <FluentThemeProvider>
+        <ControlBar layout='floatingLeft'>
+          <ControlButton {...videoButtonProps} />
+          <ControlButton {...audioButtonProps} />
+          <ControlButton {...screenShareButtonProps} />
+          <ControlButton {...optionsButtonProps} menuProps={defaultOptionsMenuProps} />
+          <ControlButton {...hangupButtonProps} />
+        </ControlBar>
+      </FluentThemeProvider>
+    </Stack>
+  );
+};
+
+const controlBarLayoutCode = `
+<ControlBar layout='floatingLeft'>
+  <ControlButton {...videoButtonProps} />
+  <ControlButton {...audioButtonProps} />
+  <ControlButton {...screenShareButtonProps} />
+  <ControlButton {...optionsButtonProps} menuProps={defaultOptionsMenuProps} />
+  <ControlButton {...hangupButtonProps} />
+</ControlBar>
+`;
+
+const customControlButtonUsage = `
+import { CallEndIcon } from '@fluentui/react-northstar';
+import { FluentThemeProvider } from '@azure/communication-ui';
+
+const HangUpButton: () => JSX.Element = () => {
+  const styles = {
+    root: {
+      marginTop: '10px !important',
+      minHeight: '1rem',
+      background: 'firebrick',
+      color: 'white',
+      ':hover': { background: 'red', color: 'white' }
+    },
+    flexContainer: { flexFlow: 'row' },
+    label: { color: 'white', paddingLeft: '0.5rem' }
+  };
+  return (
+    <ControlButton 
+      defaultIcon={<CallEndIcon />} 
+      defaultLabel={<>End Call</>} 
+      showLabel={true}
+      styles={styles}
+      onClick={() => {// handle hangup}}
+    />
+  );
+};
+
+const CustomControlButtonExample: () => JSX.Element = () => {
+  return (
+    <FluentThemeProvider>
+      <ControlBar layout={'horizontal'}>
+        <ControlButton {...videoButtonProps} />
+        <ControlButton {...audioButtonProps} />
+        <HangUpButton />
+      </ControlBar>
+    </FluentThemeProvider>
+  );
+};
+`;
+
+const HangUpButton: () => JSX.Element = () => {
+  const styles = {
+    root: {
+      marginTop: '10px !important',
+      minHeight: '1rem',
+      background: 'firebrick',
+      color: 'white',
+      ':hover': { background: 'red', color: 'white' }
+    },
+    flexContainer: { flexFlow: 'row' },
+    label: { color: 'white', paddingLeft: '0.5rem' }
+  };
+  return (
+    <ControlButton 
+      defaultIcon={<CallEndIcon />}
+      defaultLabel={<>End Call</>}
+      showLabel={true}
+      styles={styles}
+    />
+  );
+};
+
+const CustomControlButtonExample: () => JSX.Element = () => {
+  return (
+    <FluentThemeProvider>
+      <ControlBar layout={'horizontal'}>
+        <ControlButton {...videoButtonProps} />
+        <ControlButton {...audioButtonProps} />
+        <HangUpButton />
+      </ControlBar>
+    </FluentThemeProvider>
+  );
+};
+
+
 export const getDocs: () => JSX.Element = () => {
   return (
     <>
-      <Title>ControlBar</Title>
-      <Description>
-        The ControlBar Component provides allows you to handle a call.
-      </Description>
+      <Title>ControlBar & ControlButton</Title>
+      <Description of={ControlBar} />
+      <Canvas>
+        <ControlBarExample />
+      </Canvas>
+
       <Heading>Importing</Heading>
       <Source code={importStatement} />
-      <Heading>Example</Heading>
+
+      <Heading>Default Usage</Heading>
       <Canvas>
         <ControlBarExample />
       </Canvas>
       <Source code={exampleCode} />
+
+      <Heading>Control Bar Layouts</Heading>
+      <Canvas>
+        <ControlBarLayoutExample />
+      </Canvas>
+      <Source code={controlBarLayoutCode} />
+
+      <Heading>Custom ControlButton</Heading>
+      <Canvas>
+        <CustomControlButtonExample />
+      </Canvas>
+      <Source code={customControlButtonUsage} />
+
       <Heading>ControlBar Props</Heading>
       <Props of={ControlBar} />
+
       <Heading>ControlButton Props</Heading>
       <Props of={ControlButton} />
     </>
