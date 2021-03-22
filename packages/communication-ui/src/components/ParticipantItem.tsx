@@ -13,7 +13,8 @@ import {
   Persona,
   PersonaSize,
   PersonaPresence,
-  Stack
+  Stack,
+  IRenderFunction
 } from '@fluentui/react';
 import React, { useRef, useState } from 'react';
 import { WithErrorHandling } from '../utils/WithErrorHandling';
@@ -26,11 +27,11 @@ interface ParticipantItemProps {
   /** Optional indicator to show participant is the user */
   isYou?: boolean;
   /** Optional callback returning a JSX element to override avatar */
-  onRenderAvatar?: () => JSX.Element | null;
+  onRenderAvatar?: IRenderFunction<ParticipantItemProps>;
   /** Optional array of IContextualMenuItem for contextual menu */
   menuItems?: IContextualMenuItem[];
   /** Optional children to component such as icons */
-  onRenderIcon?: () => JSX.Element | null;
+  onRenderIcon?: IRenderFunction<ParticipantItemProps>;
   /** Optional PersonaPresence to show participant presence. This will not have an effect if property avatar is assigned */
   presence?: PersonaPresence;
 }
