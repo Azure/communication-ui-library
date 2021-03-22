@@ -16,11 +16,16 @@ export interface DeclarativeChatClientWithPrivateProps extends DeclarativeChatCl
 }
 
 const proxyChatClient: ProxyHandler<ChatClient> = {
-  get: function <P extends keyof ChatClient>(
+  get: function <P extends keyof DeclarativeChatClientWithPrivateProps>(
     chatClient: ChatClient,
     prop: P,
     receiver: DeclarativeChatClientWithPrivateProps
   ) {
+    // skip receiver.context call to avoid recursive bugs
+    if (prop === 'context') {
+      return Reflect.get(chatClient, prop);
+    }
+
     const context = receiver.context;
     switch (prop) {
       case 'createChatThread': {
