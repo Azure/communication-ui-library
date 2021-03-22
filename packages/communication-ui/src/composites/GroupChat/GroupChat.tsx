@@ -4,7 +4,7 @@ import { mergeStyles } from '@fluentui/react';
 import { ChatProvider } from '../../providers';
 import React from 'react';
 import { SendBox, TypingIndicator } from '../../components';
-import { ChatThread } from './ChatThread';
+import { ChatThread } from '../../components';
 import { chatContainer, chatWrapper } from './styles/GroupChat.styles';
 import { AbortSignalLike } from '@azure/core-http';
 import { ErrorProvider } from '../../providers/ErrorProvider';
@@ -24,7 +24,7 @@ export type GroupChatProps = {
 
 type GroupChatOptions = {
   sendBoxMaxLength?: number; // Limit max send box length, when change viewport size
-  messagesPerPage?: number; // Number of messages per page - smaller for better perf
+  // messagesPerPage?: number; // Number of messages per page - smaller for better perf
   // supportNewline: boolean; // Whether to support new line (shift+enter) in textArea, disable until ACS backend supports line switch
 };
 
@@ -47,7 +47,7 @@ export default (props: GroupChatProps): JSX.Element => {
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
         <Stack className={chatContainer} grow>
           <Stack className={chatWrapper} grow>
-            <ChatThread onRenderAvatar={onRenderAvatar} messageNumberPerPage={options?.messagesPerPage} />
+            <ChatThread onRenderAvatar={onRenderAvatar} />
             <Stack.Item align="center" className={sendBoxParentStyle}>
               <div style={{ paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>
                 <TypingIndicator />

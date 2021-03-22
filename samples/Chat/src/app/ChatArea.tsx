@@ -1,10 +1,9 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { ErrorBar, SendBox, TypingIndicator } from '@azure/communication-ui';
+import { ErrorBar, SendBox, TypingIndicator, ChatThread } from '@azure/communication-ui';
 import { Stack } from '@fluentui/react';
 import React from 'react';
 import { chatAreaContainerStyle, sendBoxParentStyle } from './styles/ChatArea.styles';
-import { ChatThread } from './ChatThread';
 
 export interface ChatAreaProps {
   onRenderAvatar?: (userId: string) => JSX.Element;
