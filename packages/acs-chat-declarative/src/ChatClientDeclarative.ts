@@ -10,10 +10,23 @@ export interface DeclarativeChatClient extends ChatClient {
   onStateChange(handler: (state: ChatClientState) => void): void;
 }
 
-const context: ChatContext = new ChatContext();
+export interface DeclarativeChatClientWithPrivateProps extends DeclarativeChatClient {
+  context: ChatContext;
+  eventSubscriber: EventSubscriber | undefined;
+}
 
 const proxyChatClient: ProxyHandler<ChatClient> = {
-  get: function <P extends keyof ChatClient>(chatClient: ChatClient, prop: P) {
+  get: function <P extends keyof DeclarativeChatClientWithPrivateProps>(
+    chatClient: ChatClient,
+    prop: P,
+    receiver: DeclarativeChatClientWithPrivateProps
+  ) {
+    // skip receiver.context call to avoid recursive bugs
+    if (prop === 'context') {
+      return Reflect.get(chatClient, prop);
+    }
+
+    const context = receiver.context;
     switch (prop) {
       case 'createChatThread': {
         return async function (...args: Parameters<ChatClient['createChatThread']>) {
@@ -29,7 +42,21 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
       case 'startRealtimeNotifications': {
         return async function (...args: Parameters<ChatClient['startRealtimeNotifications']>) {
           const ret = await chatClient.startRealtimeNotifications(...args);
-          new EventSubscriber(chatClient, context);
+          if (!receiver.eventSubscriber) {
+            receiver.eventSubscriber = new EventSubscriber(chatClient, context);
+          }
+
+          return ret;
+        };
+      }
+      case 'stopRealtimeNotifications': {
+        return async function (...args: Parameters<ChatClient['stopRealtimeNotifications']>) {
+          const ret = await chatClient.stopRealtimeNotifications(...args);
+          if (receiver.eventSubscriber) {
+            receiver.eventSubscriber.unsubscribe();
+            receiver.eventSubscriber = undefined;
+          }
+
           return ret;
         };
       }
@@ -40,13 +67,31 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
 };
 
 export const chatClientDeclaratify = (chatClient: ChatClient): DeclarativeChatClient => {
-  Object.defineProperty(chatClient, 'state', {
+  const context = new ChatContext();
+  let eventSubscriber: EventSubscriber;
+
+  const proxy = new Proxy(chatClient, proxyChatClient);
+
+  Object.defineProperty(proxy, 'context', {
+    configurable: false,
+    get: () => context
+  });
+
+  Object.defineProperty(proxy, 'eventSubscriber', {
+    configurable: false,
+    get: () => eventSubscriber,
+    set: (val: EventSubscriber) => {
+      eventSubscriber = val;
+    }
+  });
+
+  Object.defineProperty(proxy, 'state', {
     configurable: false,
     get: () => context?.getState()
   });
-  Object.defineProperty(chatClient, 'onStateChange', {
+  Object.defineProperty(proxy, 'onStateChange', {
     configurable: false,
     value: (handler: (state: ChatClientState) => void) => context?.onStateChange(handler)
   });
-  return new Proxy(chatClient, proxyChatClient) as DeclarativeChatClient;
+  return proxy as DeclarativeChatClient;
 };
