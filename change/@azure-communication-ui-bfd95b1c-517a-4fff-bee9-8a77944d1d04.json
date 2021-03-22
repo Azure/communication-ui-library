@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "onRender callback properties added for ControlButton and ParticipantItem to enable icon customization.",
+  "packageName": "@azure/communication-ui",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
