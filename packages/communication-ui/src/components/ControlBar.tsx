@@ -6,8 +6,7 @@ import {
   IStyle,
   mergeStyles,
   Stack,
-  IRenderFunction,
-  IButtonProps
+  IRenderFunction
 } from '@fluentui/react';
 import {
   CallControlCloseTrayIcon,
@@ -72,7 +71,7 @@ export interface CallControlButtonProps {
   /**
    * Default Icon element to display.
    */
-  onRenderIcon?: IRenderFunction<IButtonProps>;
+  onRenderIcon?: IRenderFunction<CallControlButtonProps>;
   /**
    * The props for the icon shown when providing a menu dropdown.
    * Uses `IIconProps` from FluentUI.
@@ -107,15 +106,16 @@ export const ControlButton = (props: CallControlButtonProps): JSX.Element => {
       }}
       menuIconProps={props.menuIconProps}
       menuProps={props.menuProps}
-      onRenderIcon={onRenderIcon}
       checked={props.isToggled}
-    />
+    >
+      {onRenderIcon && onRenderIcon(props)}
+    </DefaultButton>
   );
 };
 
 export const videoButtonWithLabelProps: CallControlButtonProps = {
-  onRenderIcon: (props?: IButtonProps): JSX.Element => {
-    if (props?.checked) {
+  onRenderIcon: (props?: CallControlButtonProps): JSX.Element => {
+    if (props?.isToggled) {
       return (
         <>
           <CallVideoIcon />
@@ -138,8 +138,8 @@ export const videoButtonWithLabelProps: CallControlButtonProps = {
 };
 
 export const videoButtonProps: CallControlButtonProps = {
-  onRenderIcon: (props?: IButtonProps): JSX.Element => {
-    if (props?.checked) {
+  onRenderIcon: (props?: CallControlButtonProps): JSX.Element => {
+    if (props?.isToggled) {
       return <CallVideoIcon />;
     } else {
       return <CallVideoOffIcon />;
@@ -148,8 +148,8 @@ export const videoButtonProps: CallControlButtonProps = {
 };
 
 export const audioButtonWithLabelProps: CallControlButtonProps = {
-  onRenderIcon: (props?: IButtonProps): JSX.Element => {
-    if (props?.checked) {
+  onRenderIcon: (props?: CallControlButtonProps): JSX.Element => {
+    if (props?.isToggled) {
       return (
         <>
           <MicIcon />
@@ -172,8 +172,8 @@ export const audioButtonWithLabelProps: CallControlButtonProps = {
 };
 
 export const audioButtonProps: CallControlButtonProps = {
-  onRenderIcon: (props?: IButtonProps): JSX.Element => {
-    if (props?.checked) {
+  onRenderIcon: (props?: CallControlButtonProps): JSX.Element => {
+    if (props?.isToggled) {
       return <MicIcon />;
     } else {
       return <MicOffIcon />;
@@ -182,8 +182,8 @@ export const audioButtonProps: CallControlButtonProps = {
 };
 
 export const screenShareButtonWithLabelProps: CallControlButtonProps = {
-  onRenderIcon: (props?: IButtonProps): JSX.Element => {
-    if (props?.checked) {
+  onRenderIcon: (props?: CallControlButtonProps): JSX.Element => {
+    if (props?.isToggled) {
       return (
         <>
           <CallControlPresentNewIcon bordered={false} />
@@ -206,8 +206,8 @@ export const screenShareButtonWithLabelProps: CallControlButtonProps = {
 };
 
 export const screenShareButtonProps: CallControlButtonProps = {
-  onRenderIcon: (props?: IButtonProps): JSX.Element => {
-    if (props?.checked) {
+  onRenderIcon: (props?: CallControlButtonProps): JSX.Element => {
+    if (props?.isToggled) {
       return <CallControlPresentNewIcon bordered={false} />;
     } else {
       return <CallControlCloseTrayIcon />;
