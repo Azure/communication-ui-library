@@ -33,7 +33,7 @@ export type ParticipantItemProps = {
   onRenderAvatar?: IRenderFunction<ParticipantItemProps>;
   /** Optional array of IContextualMenuItem for contextual menu */
   menuItems?: IContextualMenuItem[];
-  /** Optional callback returning a JSX element rendered on the right portion of the ParticipantItem*/
+  /** Optional callback returning a JSX element rendered on the right portion of the ParticipantItem. Intended for adding icons. */
   onRenderIcon?: IRenderFunction<ParticipantItemProps>;
   /** Optional PersonaPresence to show participant presence. This will not have an effect if property avatar is assigned */
   presence?: PersonaPresence;
@@ -84,5 +84,9 @@ const ParticipantItemBase = (props: ParticipantItemProps & ErrorHandlingProps): 
   );
 };
 
+/**
+ * Participant Item component representing a participant in Calling or Chat
+ * @param props - ParticipantItemProps & ErrorHandlingProps
+ */
 export const ParticipantItem = (props: ParticipantItemProps & ErrorHandlingProps): JSX.Element =>
   WithErrorHandling(ParticipantItemBase, props);
