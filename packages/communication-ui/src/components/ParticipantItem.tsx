@@ -21,7 +21,10 @@ import { WithErrorHandling } from '../utils/WithErrorHandling';
 import { ErrorHandlingProps } from '../providers/ErrorProvider';
 import { useTheme } from '@fluentui/react-theme-provider';
 
-interface ParticipantItemProps {
+/**
+ * Props for ParticipantItem component
+ */
+export type ParticipantItemProps = {
   /** Name of participant */
   name: string;
   /** Optional indicator to show participant is the user */
@@ -30,11 +33,11 @@ interface ParticipantItemProps {
   onRenderAvatar?: IRenderFunction<ParticipantItemProps>;
   /** Optional array of IContextualMenuItem for contextual menu */
   menuItems?: IContextualMenuItem[];
-  /** Optional children to component such as icons */
+  /** Optional callback returning a JSX element rendered on the right portion of the ParticipantItem*/
   onRenderIcon?: IRenderFunction<ParticipantItemProps>;
   /** Optional PersonaPresence to show participant presence. This will not have an effect if property avatar is assigned */
   presence?: PersonaPresence;
-}
+};
 
 const ParticipantItemBase = (props: ParticipantItemProps & ErrorHandlingProps): JSX.Element => {
   const { name, isYou, onRenderAvatar, menuItems, onRenderIcon, presence } = props;
