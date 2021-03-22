@@ -452,6 +452,12 @@ export const CREATED = 201;
 // @public (undocumented)
 export const CROP_MEDIA = "Crop";
 
+// @public
+export const DARK = "dark";
+
+// @public
+export const darkTheme: PartialTheme;
+
 // @public (undocumented)
 export const DEFAULT_IMG_WIDTH = 200;
 
@@ -521,10 +527,20 @@ export type ErrorsPropsFromContext = {
     setUpdateThreadMembersError: (error: boolean | undefined) => void;
 };
 
-// Warning: (ae-forgotten-export) The symbol "FluentThemeProviderProps" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
+// @public
+export type FluentTheme = {
+    name: string;
+    theme: PartialTheme | Theme;
+};
+
+// @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
+
+// @public
+export interface FluentThemeProviderProps {
+    children: React_2.ReactNode;
+    fluentTheme?: PartialTheme | Theme;
+}
 
 // @public (undocumented)
 export const FORBIDDEN_STATUS_CODE = 403;
@@ -562,6 +578,9 @@ export const getLatestIncomingMessageId: (chatMessages: ChatMessage[], userId: s
 
 // @public (undocumented)
 export const getMessageStatus: (message: ChatMessage, failedMessageIds: string[], isLargeParticipantsGroup: boolean, userId: string, isMessageSeen?: ((userId: string, message: ChatMessage) => boolean) | undefined) => MessageStatus;
+
+// @public
+export const getThemeFromLocalStorage: (scopeId: string) => string | null;
 
 // @public (undocumented)
 export const getThreadContextState: () => ThreadProviderContextType;
@@ -623,6 +642,12 @@ export const isMobileSession: () => boolean;
 
 // @public (undocumented)
 export function isSelectedDeviceInList<T extends AudioDeviceInfo | VideoDeviceInfo>(device: T, list: T[]): boolean;
+
+// @public
+export const LIGHT = "light";
+
+// @public
+export const lightTheme: PartialTheme;
 
 // @public (undocumented)
 export type ListParticipant = {
@@ -816,6 +841,9 @@ export interface RemoteVideoContainerOwnProps {
 // @public (undocumented)
 export const RINGING = "Ringing";
 
+// @public
+export const saveThemeToLocalStorage: (theme: string, scopeId: string) => void;
+
 // @public (undocumented)
 export const screenShareButtonProps: CallControlButtonProps;
 
@@ -868,11 +896,55 @@ export const SPACE_KEY = 32;
 // @public (undocumented)
 export const StreamMedia: (props: StreamMediaProps & ErrorHandlingProps) => JSX.Element;
 
+// @public
+export interface SwitchableFluentThemeContext {
+    fluentTheme: FluentTheme;
+    setFluentTheme: (fluentTheme: FluentTheme) => void;
+}
+
+// @public
+export const SwitchableFluentThemeProvider: (props: SwitchableFluentThemeProviderProps) => JSX.Element;
+
+// @public
+export interface SwitchableFluentThemeProviderProps {
+    children: React_2.ReactNode;
+    scopeId: string;
+}
+
 // @public (undocumented)
 export const TEXT_EXCEEDS_LIMIT: string;
 
 // @public (undocumented)
 export const TEXT_MESSAGE = "Text";
+
+// @public
+export type ThemeMap = {
+    [key: string]: Theme | PartialTheme;
+};
+
+// @public
+export const THEMES: ThemeMap;
+
+// @public
+export const ThemeSelector: (props: ThemeSelectorProps) => JSX.Element;
+
+// @public
+export interface ThemeSelectorProps {
+    label?: string;
+    layout?: string;
+    themeMap?: ThemeMap;
+}
+
+// @public
+export const ThemeToggler: (props: ThemeTogglerProps) => JSX.Element;
+
+// @public
+export interface ThemeTogglerProps {
+    label?: string;
+    layout?: string;
+    offTheme?: FluentTheme;
+    onTheme?: FluentTheme;
+}
 
 // @public (undocumented)
 export const THREAD_INFO_FETCH_INVERVAL = 2000;
@@ -1109,6 +1181,9 @@ export const useSubscribeToVideoDeviceList: () => void;
 //
 // @public (undocumented)
 export const useSubscribeTypingNotification: (addTypingNotifications: (notification: TypingNotification) => void) => void;
+
+// @public
+export const useSwitchableFluentTheme: () => SwitchableFluentThemeContext;
 
 // Warning: (ae-forgotten-export) The symbol "UseTeamsCallType" needs to be exported by the entry point index.d.ts
 //

@@ -54,7 +54,6 @@ const DisplayNameFieldComponent = (props: DisplayNameFieldProps & ErrorHandlingP
         defaultValue={defaultName}
         inputClassName={inputBoxTextStyle}
         ariaLabel="Choose your name"
-        borderless={true}
         className={isEmpty || isNameLengthExceedLimit ? inputBoxWarningStyle : inputBoxStyle}
         onChange={onNameTextChange}
         id="name"
@@ -65,19 +64,20 @@ const DisplayNameFieldComponent = (props: DisplayNameFieldProps & ErrorHandlingP
           }
         }}
         styles={TextFieldStyleProps}
+        errorMessage={
+          isEmpty ? (
+            <div role="alert" className={warningStyle}>
+              {' '}
+              Name cannot be empty{' '}
+            </div>
+          ) : isNameLengthExceedLimit ? (
+            <div role="alert" className={warningStyle}>
+              {' '}
+              Name cannot be over 10 characters{' '}
+            </div>
+          ) : undefined
+        }
       />
-      {(isEmpty && (
-        <div role="alert" className={warningStyle}>
-          {' '}
-          Name cannot be empty{' '}
-        </div>
-      )) ||
-        (isNameLengthExceedLimit && (
-          <div role="alert" className={warningStyle}>
-            {' '}
-            Name cannot be over 10 characters{' '}
-          </div>
-        ))}
     </div>
   );
 };

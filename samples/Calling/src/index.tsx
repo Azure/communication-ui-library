@@ -3,11 +3,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './app/App';
-import { FluentThemeProvider } from '@azure/communication-ui';
+import { SwitchableFluentThemeProvider } from '@azure/communication-ui';
 
 ReactDOM.render(
-  <FluentThemeProvider>
+  <SwitchableFluentThemeProvider scopeId="SampleCallingApp">
     <App />
-  </FluentThemeProvider>,
+  </SwitchableFluentThemeProvider>,
   document.getElementById('root')
 );

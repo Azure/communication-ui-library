@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { DefaultButton, PrimaryButton, Stack } from '@fluentui/react';
+import { DefaultButton, PrimaryButton, Stack, Link } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';
 import {
   bottomStackFooterStyle,
@@ -73,7 +73,7 @@ export const EndScreen = (props: EndCallProps): JSX.Element => {
         </Stack>
       </Stack>
       <div className={bottomStackFooterStyle}>
-        <a href="https://github.com/Azure/Communication/issues">Give Feedback</a>
+        <Link href="https://github.com/Azure/Communication/issues">Give Feedback</Link>
         &nbsp;on this sample app on Github
       </div>
     </Stack>
