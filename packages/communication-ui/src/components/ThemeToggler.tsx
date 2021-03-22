@@ -1,10 +1,10 @@
 // © Microsoft Corporation. All rights reserved.
 
 import React from 'react';
-import { Toggle } from '@fluentui/react';
+import { Toggle, mergeStyles } from '@fluentui/react';
 import { LIGHT, DARK, lightTheme, darkTheme } from '../constants/themes';
 import { useSwitchableFluentTheme, FluentTheme } from '../providers/SwitchableFluentThemeProvider';
-import { dockedBottom } from './styles/Docked.styles';
+import { themeComponentStyles } from './styles/ThemeComponent.styles';
 
 /**
  * Props for ThemeToggler component
@@ -16,6 +16,8 @@ export interface ThemeTogglerProps {
   offTheme?: FluentTheme;
   /** Optional label for toggler component */
   label?: string;
+  /** Optional layout styling for toggler component */
+  layout?: string;
 }
 
 /**
@@ -23,7 +25,7 @@ export interface ThemeTogglerProps {
  * @param props - ThemeTogglerProps
  */
 export const ThemeToggler = (props: ThemeTogglerProps): JSX.Element => {
-  const { onTheme, offTheme, label } = props;
+  const { onTheme, offTheme, label, layout } = props;
   const { fluentTheme, setFluentTheme } = useSwitchableFluentTheme();
 
   const _onTheme: FluentTheme = onTheme ? onTheme : { name: DARK, theme: darkTheme };
@@ -37,8 +39,10 @@ export const ThemeToggler = (props: ThemeTogglerProps): JSX.Element => {
     }
   };
 
+  const themeComponentStyle = layout && themeComponentStyles[layout] ? themeComponentStyles[layout] : {};
+
   return (
-    <div className={dockedBottom}>
+    <div className={mergeStyles(themeComponentStyle)}>
       <Toggle
         label={label}
         onText={_onTheme.name}

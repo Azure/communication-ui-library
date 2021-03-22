@@ -1,10 +1,10 @@
 // © Microsoft Corporation. All rights reserved.
 
 import React from 'react';
-import { Dropdown, IDropdownOption } from '@fluentui/react';
+import { Dropdown, IDropdownOption, mergeStyles } from '@fluentui/react';
 import { THEMES, ThemeMap } from '../constants/themes';
 import { useSwitchableFluentTheme } from '../providers/SwitchableFluentThemeProvider';
-import { dockedBottom } from './styles/Docked.styles';
+import { themeComponentStyles } from './styles/ThemeComponent.styles';
 
 /**
  * Props for ThemeSelector component
@@ -14,6 +14,8 @@ export interface ThemeSelectorProps {
   themeMap?: ThemeMap;
   /** Optional label for selector component */
   label?: string;
+  /** Optional layout styling for selector component */
+  layout?: string;
 }
 
 /**
@@ -21,7 +23,7 @@ export interface ThemeSelectorProps {
  * @param props - ThemeSelectorProps
  */
 export const ThemeSelector = (props: ThemeSelectorProps): JSX.Element => {
-  const { themeMap, label } = props;
+  const { themeMap, label, layout } = props;
   const { fluentTheme, setFluentTheme } = useSwitchableFluentTheme();
 
   const themes = themeMap ? themeMap : THEMES;
@@ -34,8 +36,10 @@ export const ThemeSelector = (props: ThemeSelectorProps): JSX.Element => {
     }
   };
 
+  const themeComponentStyle = layout && themeComponentStyles[layout] ? themeComponentStyles[layout] : {};
+
   return (
-    <div className={dockedBottom}>
+    <div className={mergeStyles(themeComponentStyle)}>
       <Dropdown
         label={label}
         options={Object.keys(themes).map((theme) => ({

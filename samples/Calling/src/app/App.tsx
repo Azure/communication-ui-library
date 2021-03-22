@@ -79,11 +79,14 @@ const App = (): JSX.Element => {
       switch (page) {
         case 'home': {
           return (
-            <HomeScreen
-              startCallHandler={(): void => {
-                window.history.pushState({}, document.title, window.location.href + '?groupId=' + getGroupId());
-              }}
-            />
+            <>
+              <HomeScreen
+                startCallHandler={(): void => {
+                  window.history.pushState({}, document.title, window.location.href + '?groupId=' + getGroupId());
+                }}
+              />
+              <ThemeToggler layout="dockedBottom" />
+            </>
           );
         }
         case 'call': {
@@ -99,11 +102,14 @@ const App = (): JSX.Element => {
                     switch (subpage) {
                       case 'configuration': {
                         return (
-                          <ConfigurationScreen
-                            screenWidth={screenWidth}
-                            startCallHandler={(): void => setSubpage('groupcall')}
-                            groupId={getGroupId()}
-                          />
+                          <>
+                            <ConfigurationScreen
+                              screenWidth={screenWidth}
+                              startCallHandler={(): void => setSubpage('groupcall')}
+                              groupId={getGroupId()}
+                            />
+                            <ThemeToggler layout="dockedBottom" />
+                          </>
                         );
                       }
                       case 'groupcall': {
@@ -167,12 +173,7 @@ const App = (): JSX.Element => {
     console.log('ACS Calling sample: This is experimental behaviour');
   }
 
-  return (
-    <>
-      {getContent()}
-      <ThemeToggler />
-    </>
-  );
+  return getContent();
 };
 
 window.setTimeout(() => {

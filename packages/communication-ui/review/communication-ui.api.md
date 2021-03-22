@@ -931,6 +931,7 @@ export const ThemeSelector: (props: ThemeSelectorProps) => JSX.Element;
 // @public
 export interface ThemeSelectorProps {
     label?: string;
+    layout?: string;
     themeMap?: ThemeMap;
 }
 
@@ -940,6 +941,7 @@ export const ThemeToggler: (props: ThemeTogglerProps) => JSX.Element;
 // @public
 export interface ThemeTogglerProps {
     label?: string;
+    layout?: string;
     offTheme?: FluentTheme;
     onTheme?: FluentTheme;
 }

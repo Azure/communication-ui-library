@@ -28,19 +28,27 @@ export default (): JSX.Element => {
 
   const getComponent = (): JSX.Element => {
     if (page === 'home') {
-      return <HomeScreen />;
+      return (
+        <>
+          <HomeScreen />
+          <ThemeToggler layout="dockedBottom" />
+        </>
+      );
     } else if (page === 'configuration') {
       return (
-        <ConfigurationScreen
-          joinChatHandler={() => {
-            setPage('chat');
-          }}
-          setToken={setToken}
-          setUserId={setUserId}
-          setDisplayName={setDisplayName}
-          setThreadId={setThreadId}
-          setEndpointUrl={setEndpointUrl}
-        />
+        <>
+          <ConfigurationScreen
+            joinChatHandler={() => {
+              setPage('chat');
+            }}
+            setToken={setToken}
+            setUserId={setUserId}
+            setDisplayName={setDisplayName}
+            setThreadId={setThreadId}
+            setEndpointUrl={setEndpointUrl}
+          />
+          <ThemeToggler layout="dockedBottom" />
+        </>
       );
     } else if (page === 'chat') {
       return (
@@ -97,10 +105,5 @@ export default (): JSX.Element => {
     setPage('configuration');
   }
 
-  return (
-    <>
-      {getComponent()}
-      <ThemeToggler />
-    </>
-  );
+  return getComponent();
 };

@@ -70,7 +70,7 @@ export const SwitchableFluentThemeProvider = (props: SwitchableFluentThemeProvid
         }
       }
     }),
-    [fluentTheme]
+    [fluentTheme, scopeId]
   );
 
   return (
