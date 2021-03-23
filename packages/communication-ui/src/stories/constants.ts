@@ -36,5 +36,6 @@ export const mediaGalleryHeightOptions = {
 
 export const mediaGalleryHeightDefault = 500;
 
-export const COMPONENT_FOLDER_PREFIX = 'ACS Components';
-export const COMPOSITE_FOLDER_PREFIX = 'ACS Composites';
+export const COMPONENT_FOLDER_PREFIX = 'UI Components';
+export const COMPOSITE_FOLDER_PREFIX = 'Composites';
+export const EXAMPLES_FOLDER_PREFIX = 'Examples';

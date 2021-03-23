@@ -5,20 +5,30 @@ import { withKnobs } from '@storybook/addon-knobs';
 import { FluentThemeProvider } from '../src/providers/FluentThemeProvider';
 import { darkTheme, lightTheme } from './themes';
 import { initializeIcons, loadTheme } from '@fluentui/react';
+import { addParameters } from '@storybook/react';
+import { DocsContainer } from '@storybook/addon-docs/blocks';
+import { BackToTop, TableOfContents } from 'storybook-docs-toc';
 
 // Removing `loadTheme({})` causes storybook declaration exception.
 loadTheme({});
 initializeIcons();
 
-const centerStoryStyle = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  height: '100vh'
-};
-
 export const parameters = {
-  layout: 'fullscreen'
+  layout: 'fullscreen',
+  docs: {
+    container: props => (
+      <React.Fragment>
+        <TableOfContents />
+        <DocsContainer {...props} />
+        <BackToTop />
+      </React.Fragment>
+    ),          
+  },
+  options: {
+    storySort: {
+      order: ['Introduction', 'Quickstart', 'Styling', 'Composites', 'UI Components']
+    }
+  }
 };
 
 const withThemeProvider = (Story: any, context: any) => {
@@ -34,7 +44,12 @@ const withThemeProvider = (Story: any, context: any) => {
 
 const withCenterStory = (Story: any) => {
   return (
-    <div style={centerStoryStyle}>
+    <div style={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: '100vh'
+    }}>
       <Story />
     </div>
   );
