@@ -62,7 +62,7 @@ dependencies:
   babel-eslint: 10.1.0_eslint@7.22.0
   babel-jest: 26.6.3_@babel+core@7.13.10
   babel-loader: 8.1.0_6d2d9db439f797dbe04a64efdbcf144a
-  beachball: 1.53.1
+  beachball: 1.53.2
   classnames: 2.2.6
   concurrently: 5.3.0
   cookie-parser: 1.4.5
@@ -6719,7 +6719,7 @@ packages:
     dev: false
     resolution:
       integrity: sha1-pDAdOJtqQ/m2f/PKEaP2Y342Dp4=
-  /beachball/1.53.1:
+  /beachball/1.53.2:
     dependencies:
       cosmiconfig: 6.0.0
       execa: 4.1.0
@@ -6738,7 +6738,7 @@ packages:
     dev: false
     hasBin: true
     resolution:
-      integrity: sha512-hkptrmsPhZ1vXM2uMJrtT/2EhKvu8zQEc/hKCVdwOmYKEi9jxFDOXEere87955EssgFkkp5WU7rhQE2luueN8w==
+      integrity: sha512-TFZrO82gCZwAC+tFZQ0cPPEG7YCif4W0FnPT8AsqkE5kotMtU6mhfrQqCOq3jcRjX7CCv4UultI83zY4NY73JA==
   /before-after-hook/2.2.0:
     dev: false
     resolution:
@@ -20475,7 +20475,7 @@ packages:
     dependencies:
       '@octokit/rest': 18.0.15
       '@types/node': 14.14.35
-      beachball: 1.53.1
+      beachball: 1.53.2
       ts-node: 9.1.1_typescript@4.1.5
     dev: false
     id: file:projects/release-tools.tgz
@@ -20483,7 +20483,7 @@ packages:
     peerDependencies:
       typescript: '*'
     resolution:
-      integrity: sha512-UQumbwoolIDKZIpwIeuHgTpS5NHC09Mouev09oIQPNYzmj3cRie0bbR0C5UTmMQ+zJ00n5EhKy5G9dEN4/F24w==
+      integrity: sha512-z8gCO5dSCyziWJ+KCb64AK7YSaU+hep4QQ9rcswo/dTE2JpMHkrACkdV/jjOKrx0wtUHIH6BmypWIROVzaf7Zw==
       tarball: file:projects/release-tools.tgz
     version: 0.0.0
 registry: ''
@@ -20551,7 +20551,7 @@ specifiers:
   babel-eslint: ^10.0.0
   babel-jest: ^26.6.0
   babel-loader: 8.1.0
-  beachball: ~1.53.0
+  beachball: ~1.53.2
   classnames: ^2.2.6
   concurrently: ^5.3.0
   cookie-parser: ~1.4.4
