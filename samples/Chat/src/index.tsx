@@ -5,14 +5,14 @@ import './index.css';
 import App from './app/App';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { FluentThemeProvider } from '@azure/communication-ui';
+import { SwitchableFluentThemeProvider } from '@azure/communication-ui';
 
 if (document.getElementById('root') !== undefined) {
   ReactDOM.render(
-    <FluentThemeProvider>
+    <SwitchableFluentThemeProvider scopeId="SampleChatApp">
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
       <App />
-    </FluentThemeProvider>,
+    </SwitchableFluentThemeProvider>,
     document.getElementById('root')
   );
 }

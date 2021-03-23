@@ -36,7 +36,6 @@ export const videoCameraIconStyle = mergeStyles({
 });
 
 export const bottomStackFooterStyle = mergeStyles({
-  color: 'rgb(0,0,0)',
   fontSize: '0.875rem' // 14px
 });
 

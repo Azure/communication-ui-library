@@ -32,6 +32,7 @@ export { useMicrophone } from './useMicrophone';
 export { useOutgoingCall } from './useOutgoingCall';
 export { useRemoveThreadMember } from './useRemoveThreadMember';
 export { useSendMessage } from './useSendMessage';
+export type { ChatMessageWithClientMessageId } from './useSendMessage';
 export { useSendReadReceipt } from './useSendReadReceipt';
 export { useSendTypingNotification } from './useSendTypingNotification';
 export { useSubscribeMessage } from './useSubscribeMessage';

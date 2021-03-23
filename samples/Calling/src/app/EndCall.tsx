@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 import React from 'react';
-import { DefaultButton, PrimaryButton, Stack } from '@fluentui/react';
+import { DefaultButton, PrimaryButton, Stack, Link } from '@fluentui/react';
 import { VideoCameraEmphasisIcon } from '@fluentui/react-icons-northstar';
 import {
   endCallContainerStyle,
@@ -37,7 +37,8 @@ export default function EndCall(props: EndCallProps): JSX.Element {
           </DefaultButton>
         </Stack>
         <div className={bottomStackFooterStyle}>
-          <a href="https://github.com/Azure/Communication/issues">Give Feedback</a>&nbsp;on this sample app on Github
+          <Link href="https://github.com/Azure/Communication/issues">Give Feedback</Link>&nbsp;on this sample app on
+          Github
         </div>
       </Stack>
     </Stack>

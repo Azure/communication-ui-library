@@ -26,7 +26,6 @@ export const topicNameContainerStyle = mergeStyles({
 });
 
 export const topicNameLabelStyle = mergeStyles({
-  color: '#323130',
   fontSize: '1rem', // 16px
   fontWeight: 600,
   marginRight: '0.125rem',
@@ -45,8 +44,6 @@ export const leaveButtonStyle = mergeStyles({
   marginRight: '0.625rem',
   width: '6.688rem',
   borderWidth: '0.125rem',
-  borderColor: '#CCCCCC',
-  color: '#323130',
   fontSize: '0.875rem', // 14px
   fontWeight: 600
 });

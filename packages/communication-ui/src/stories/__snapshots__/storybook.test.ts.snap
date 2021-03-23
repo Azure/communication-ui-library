@@ -12,7 +12,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/CameraSettings Camer
   }
 >
   <div
-    className="wrapper root-22"
+    className="css-52 root-0"
     style={
       Object {
         "display": "inherit",
@@ -20,16 +20,21 @@ exports[`storybook snapshot tests Storyshots ACS Components/CameraSettings Camer
     }
   >
     <div
-      className="wrapper"
+      className="css-52"
       data-uses-unhanded-props={true}
       dir="ltr"
+      style={
+        Object {
+          "display": "flex",
+        }
+      }
     >
       <div
         className="ms-Dropdown-container"
       >
         <label
           className="ms-Label ms-Dropdown-label label-19"
-          id="Dropdown1-label"
+          id="Dropdown2-label"
         >
           Camera
         </label>
@@ -37,10 +42,10 @@ exports[`storybook snapshot tests Storyshots ACS Components/CameraSettings Camer
           aria-disabled={false}
           aria-expanded="false"
           aria-haspopup="listbox"
-          aria-labelledby="Dropdown1-label Dropdown1-option"
+          aria-labelledby="Dropdown2-label Dropdown2-option"
           className="ms-Dropdown dropdown-3"
           data-is-focusable={true}
-          id="Dropdown1"
+          id="Dropdown2"
           onBlur={[Function]}
           onClick={[Function]}
           onFocus={[Function]}
@@ -58,7 +63,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/CameraSettings Camer
             aria-selected={true}
             aria-setsize={3}
             className="ms-Dropdown-title title-4"
-            id="Dropdown1-option"
+            id="Dropdown2-option"
             role="option"
           >
             Logitech WebCam
@@ -93,7 +98,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/ControlBar Control B
   }
 >
   <div
-    className="wrapper root-0"
+    className="css-52 root-0"
     style={
       Object {
         "display": "inherit",
@@ -101,9 +106,14 @@ exports[`storybook snapshot tests Storyshots ACS Components/ControlBar Control B
     }
   >
     <div
-      className="wrapper"
+      className="css-52"
       data-uses-unhanded-props={true}
       dir="ltr"
+      style={
+        Object {
+          "display": "flex",
+        }
+      }
     >
       <div
         className="ms-Stack css-3"
@@ -390,7 +400,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/ErrorBar Error Bar C
   }
 >
   <div
-    className="wrapper root-0"
+    className="css-52 root-0"
     style={
       Object {
         "display": "inherit",
@@ -398,9 +408,14 @@ exports[`storybook snapshot tests Storyshots ACS Components/ErrorBar Error Bar C
     }
   >
     <div
-      className="wrapper"
+      className="css-52"
       data-uses-unhanded-props={true}
       dir="ltr"
+      style={
+        Object {
+          "display": "flex",
+        }
+      }
     >
       <div
         aria-describedby="MessageBar0"
@@ -487,7 +502,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/GridLayout Grid Layo
   }
 >
   <div
-    className="wrapper root-0"
+    className="css-52 root-0"
     style={
       Object {
         "display": "inherit",
@@ -495,9 +510,14 @@ exports[`storybook snapshot tests Storyshots ACS Components/GridLayout Grid Layo
     }
   >
     <div
-      className="wrapper"
+      className="css-52"
       data-uses-unhanded-props={true}
       dir="ltr"
+      style={
+        Object {
+          "display": "flex",
+        }
+      }
     >
       <div
         style={
@@ -508,7 +528,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/GridLayout Grid Layo
         }
       >
         <div
-          className="css-61"
+          className="css-62"
           style={
             Object {
               "gridTemplateColumns": "repeat(2, 1fr)",
@@ -711,7 +731,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/MicrophoneSettings M
   }
 >
   <div
-    className="wrapper root-0"
+    className="css-52 root-0"
     style={
       Object {
         "display": "inherit",
@@ -719,9 +739,14 @@ exports[`storybook snapshot tests Storyshots ACS Components/MicrophoneSettings M
     }
   >
     <div
-      className="wrapper"
+      className="css-52"
       data-uses-unhanded-props={true}
       dir="ltr"
+      style={
+        Object {
+          "display": "flex",
+        }
+      }
     >
       <div
         className="ms-Dropdown-container"
@@ -792,7 +817,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/ParticipantItem Part
   }
 >
   <div
-    className="wrapper root-43"
+    className="css-52 root-0"
     style={
       Object {
         "display": "inherit",
@@ -800,9 +825,14 @@ exports[`storybook snapshot tests Storyshots ACS Components/ParticipantItem Part
     }
   >
     <div
-      className="wrapper"
+      className="css-52"
       data-uses-unhanded-props={true}
       dir="ltr"
+      style={
+        Object {
+          "display": "flex",
+        }
+      }
     >
       <div
         className="css-2"
@@ -862,13 +892,13 @@ exports[`storybook snapshot tests Storyshots ACS Components/ParticipantItem Part
           </div>
         </div>
         <div
-          className="ms-Stack css-68 css-19"
+          className="ms-Stack css-76 css-19"
         />
         <span
           className="ms-layer"
         >
           <div
-            className="ms-Fabric ms-Layer-content content-44"
+            className="ms-Fabric ms-Layer-content content-43"
             onBlur={[Function]}
             onChange={[Function]}
             onClick={[Function]}
@@ -901,7 +931,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/ParticipantItem Part
             onTouchStart={[Function]}
           >
             <div
-              className="ms-Callout-container container-46"
+              className="ms-Callout-container container-45"
               style={
                 Object {
                   "visibility": "hidden",
@@ -909,7 +939,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/ParticipantItem Part
               }
             >
               <div
-                className="ms-Callout ms-ContextualMenu-Callout root-47"
+                className="ms-Callout ms-ContextualMenu-Callout root-46"
                 hidden={true}
                 onScroll={[Function]}
                 style={
@@ -922,7 +952,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/ParticipantItem Part
                 tabIndex={-1}
               >
                 <div
-                  className="ms-Callout-main calloutMain-50"
+                  className="ms-Callout-main calloutMain-49"
                   onKeyDown={[Function]}
                   onMouseDown={[Function]}
                   onMouseUp={[Function]}
@@ -943,7 +973,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/ParticipantItem Part
                     tabIndex={-1}
                   >
                     <div
-                      className="ms-FocusZone css-51 ms-ContextualMenu is-open root-20"
+                      className="ms-FocusZone css-50 ms-ContextualMenu is-open root-20"
                       data-focuszone-id="FocusZone3"
                       onFocus={[Function]}
                       onKeyDown={[Function]}
@@ -1035,7 +1065,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/ReadReceipt Read Rec
   }
 >
   <div
-    className="wrapper root-0"
+    className="css-52 root-0"
     style={
       Object {
         "display": "inherit",
@@ -1043,9 +1073,14 @@ exports[`storybook snapshot tests Storyshots ACS Components/ReadReceipt Read Rec
     }
   >
     <div
-      className="wrapper"
+      className="css-52"
       data-uses-unhanded-props={true}
       dir="ltr"
+      style={
+        Object {
+          "display": "flex",
+        }
+      }
     >
       <div
         className="ms-TooltipHost root-2"
@@ -1057,7 +1092,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/ReadReceipt Read Rec
       >
         <span
           aria-hidden={true}
-          className="root_de478240 css-63"
+          className="root_de478240 css-64"
           role="presentation"
           style={Object {}}
         >
@@ -1089,7 +1124,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/SendBox Send Box Sto
   }
 >
   <div
-    className="wrapper root-0"
+    className="css-52 root-0"
     style={
       Object {
         "display": "inherit",
@@ -1097,9 +1132,14 @@ exports[`storybook snapshot tests Storyshots ACS Components/SendBox Send Box Sto
     }
   >
     <div
-      className="wrapper"
+      className="css-52"
       data-uses-unhanded-props={true}
       dir="ltr"
+      style={
+        Object {
+          "display": "flex",
+        }
+      }
     >
       <div
         style={
@@ -1109,10 +1149,10 @@ exports[`storybook snapshot tests Storyshots ACS Components/SendBox Send Box Sto
         }
       >
         <div
-          className="ms-Stack css-53 css-2"
+          className="ms-Stack css-54 css-2"
         >
           <div
-            className="ms-TextField ms-TextField--multiline css-52 root-4"
+            className="ms-TextField ms-TextField--multiline css-53 root-4"
           >
             <div
               className="ms-TextField-wrapper wrapper-5"
@@ -1123,7 +1163,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/SendBox Send Box Sto
                 <textarea
                   aria-invalid={false}
                   aria-label="Type"
-                  className="ms-TextField-field ms-TextField--unresizable css-54 field-7"
+                  className="ms-TextField-field ms-TextField--unresizable css-55 field-7"
                   id="sendbox"
                   onBlur={[Function]}
                   onChange={[Function]}
@@ -1137,11 +1177,11 @@ exports[`storybook snapshot tests Storyshots ACS Components/SendBox Send Box Sto
             </div>
           </div>
           <div
-            className="css-56 sendIconWrapper"
+            className="css-57 sendIconWrapper"
             onClick={[Function]}
           >
             <div
-              className="css-57"
+              className="css-58"
             />
           </div>
         </div>
@@ -1182,7 +1222,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/TypingIndicator Typi
   }
 >
   <div
-    className="wrapper root-0"
+    className="css-52 root-0"
     style={
       Object {
         "display": "inherit",
@@ -1190,25 +1230,30 @@ exports[`storybook snapshot tests Storyshots ACS Components/TypingIndicator Typi
     }
   >
     <div
-      className="wrapper"
+      className="css-52"
       data-uses-unhanded-props={true}
       dir="ltr"
+      style={
+        Object {
+          "display": "flex",
+        }
+      }
     >
       <div
-        className="css-58"
+        className="css-59"
       >
         <span
-          className="css-59"
+          className="css-60"
         >
           User1, 
         </span>
         <span
-          className="css-59"
+          className="css-60"
         >
           User2
         </span>
         <span
-          className="css-59"
+          className="css-60"
         >
            and 5 others are typing...
         </span>
@@ -1230,7 +1275,7 @@ exports[`storybook snapshot tests Storyshots ACS Components/VideoTile Video Tile
   }
 >
   <div
-    className="wrapper root-0"
+    className="css-52 root-0"
     style={
       Object {
         "display": "inherit",
@@ -1238,9 +1283,14 @@ exports[`storybook snapshot tests Storyshots ACS Components/VideoTile Video Tile
     }
   >
     <div
-      className="wrapper"
+      className="css-52"
       data-uses-unhanded-props={true}
       dir="ltr"
+      style={
+        Object {
+          "display": "flex",
+        }
+      }
     >
       <div
         className="ms-Stack css-3"
@@ -1296,7 +1346,7 @@ exports[`storybook snapshot tests Storyshots ACS Composites/GroupCall Group Call
   }
 >
   <div
-    className="wrapper root-0"
+    className="css-52 root-0"
     style={
       Object {
         "display": "inherit",
@@ -1304,9 +1354,14 @@ exports[`storybook snapshot tests Storyshots ACS Composites/GroupCall Group Call
     }
   >
     <div
-      className="wrapper"
+      className="css-52"
       data-uses-unhanded-props={true}
       dir="ltr"
+      style={
+        Object {
+          "display": "flex",
+        }
+      }
     >
       <div
         style={
@@ -1339,7 +1394,7 @@ exports[`storybook snapshot tests Storyshots ACS Composites/GroupChat Group Chat
   }
 >
   <div
-    className="wrapper root-0"
+    className="css-52 root-0"
     style={
       Object {
         "display": "inherit",
@@ -1347,9 +1402,14 @@ exports[`storybook snapshot tests Storyshots ACS Composites/GroupChat Group Chat
     }
   >
     <div
-      className="wrapper"
+      className="css-52"
       data-uses-unhanded-props={true}
       dir="ltr"
+      style={
+        Object {
+          "display": "flex",
+        }
+      }
     >
       <div
         style={
@@ -1383,7 +1443,7 @@ exports[`storybook snapshot tests Storyshots ACS Composites/OneToOneCall One To 
   }
 >
   <div
-    className="wrapper root-0"
+    className="css-52 root-0"
     style={
       Object {
         "display": "inherit",
@@ -1391,9 +1451,14 @@ exports[`storybook snapshot tests Storyshots ACS Composites/OneToOneCall One To 
     }
   >
     <div
-      className="wrapper"
+      className="css-52"
       data-uses-unhanded-props={true}
       dir="ltr"
+      style={
+        Object {
+          "display": "flex",
+        }
+      }
     >
       <div
         style={

@@ -1,14 +1,20 @@
 // © Microsoft Corporation. All rights reserved.
 
 import React, { useEffect, useState } from 'react';
-import { initializeIcons } from '@fluentui/react';
+import { Link, initializeIcons } from '@fluentui/react';
 
 import EndCall from './EndCall';
 import ConfigurationScreen from './ConfigurationScreen';
 import GroupCall from './GroupCall';
 import { HomeScreen } from './HomeScreen';
 import { v1 as createGUID } from 'uuid';
-import { CallingProvider, CallProvider, CommunicationUiErrorInfo, ErrorProvider } from '@azure/communication-ui';
+import {
+  CallingProvider,
+  CallProvider,
+  CommunicationUiErrorInfo,
+  ErrorProvider,
+  ThemeToggler
+} from '@azure/communication-ui';
 import {
   createRandomDisplayName,
   fetchTokenResponse,
@@ -73,11 +79,14 @@ const App = (): JSX.Element => {
       switch (page) {
         case 'home': {
           return (
-            <HomeScreen
-              startCallHandler={(): void => {
-                window.history.pushState({}, document.title, window.location.href + '?groupId=' + getGroupId());
-              }}
-            />
+            <>
+              <HomeScreen
+                startCallHandler={(): void => {
+                  window.history.pushState({}, document.title, window.location.href + '?groupId=' + getGroupId());
+                }}
+              />
+              <ThemeToggler layout="dockedBottom" />
+            </>
           );
         }
         case 'call': {
@@ -93,11 +102,14 @@ const App = (): JSX.Element => {
                     switch (subpage) {
                       case 'configuration': {
                         return (
-                          <ConfigurationScreen
-                            screenWidth={screenWidth}
-                            startCallHandler={(): void => setSubpage('groupcall')}
-                            groupId={getGroupId()}
-                          />
+                          <>
+                            <ConfigurationScreen
+                              screenWidth={screenWidth}
+                              startCallHandler={(): void => setSubpage('groupcall')}
+                              groupId={getGroupId()}
+                            />
+                            <ThemeToggler layout="dockedBottom" />
+                          </>
                         );
                       }
                       case 'groupcall': {
@@ -144,8 +156,10 @@ const App = (): JSX.Element => {
     window.document.title = 'Unsupported browser';
     return (
       <>
-        <a href="https://aka.ms/ACS-CallingSupport#calling-client-library-browser-support">Learn more</a>&nbsp;about
-        browsers and platforms supported by the web calling sdk
+        <Link href="https://docs.microsoft.com/en-us/azure/communication-services/concepts/voice-video-calling/calling-sdk-features#calling-client-library-browser-support">
+          Learn more
+        </Link>
+        &nbsp;about browsers and platforms supported by the web calling sdk
       </>
     );
   };
