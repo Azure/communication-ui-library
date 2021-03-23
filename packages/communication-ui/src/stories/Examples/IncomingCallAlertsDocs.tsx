@@ -103,6 +103,14 @@ const IncomingCallToast = (props: IncomingCallToastProps): JSX.Element => {
 `;
 
 const exampleIncomingCallModal = `
+import { StreamMedia, VideoTile } from '@azure/communication-ui';
+import { DefaultButton, Persona, PersonaSize, Stack, Dialog, DialogType, DialogFooter } from '@fluentui/react';
+import { CallEndIcon, CallIcon, CallVideoIcon, CallVideoOffIcon } from '@fluentui/react-northstar';
+import { getTheme, mergeStyles } from '@fluentui/react';
+
+const theme = getTheme();
+const palette = theme.palette;
+
 const incomingCallModalContainerStyle = {
   borderRadius: '0.75rem'
 };
