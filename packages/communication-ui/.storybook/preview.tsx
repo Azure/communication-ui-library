@@ -3,7 +3,7 @@
 import React from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { FluentThemeProvider } from '../src/providers/FluentThemeProvider';
-import { darkTheme, lightTheme } from './themes';
+import { LIGHT, DARK, THEMES } from '../src/constants/themes';
 import { initializeIcons, loadTheme } from '@fluentui/react';
 import { addParameters } from '@storybook/react';
 import { DocsContainer } from '@storybook/addon-docs/blocks';
@@ -32,11 +32,16 @@ export const parameters = {
 };
 
 const withThemeProvider = (Story: any, context: any) => {
-  const theme = context.globals.theme === 'light' ? lightTheme : darkTheme;
-  document.body.style.background = context.globals.theme === 'light' ? '#ffffff' : '#070707';
+  const themeName = context.globals.theme;
+  const theme = THEMES[themeName];
+  if (themeName === DARK) {
+    document.body.style.background = '#070707';
+  } else if (themeName === LIGHT) {
+    document.body.style.background = '#ffffff';
+  }
 
   return (
-    <FluentThemeProvider theme={theme}>
+    <FluentThemeProvider fluentTheme={theme}>
       <Story {...context} />
     </FluentThemeProvider>
   );
@@ -61,10 +66,10 @@ export const globalTypes = {
   theme: {
     name: 'Theme',
     description: 'Global theme for components',
-    defaultValue: 'light',
+    defaultValue: LIGHT,
     toolbar: {
       icon: 'paintbrush',
-      items: ['light', 'dark']
+      items: [LIGHT, DARK]
     }
   }
 };

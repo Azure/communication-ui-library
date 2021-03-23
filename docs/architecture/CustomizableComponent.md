@@ -1,6 +1,6 @@
 # Customizable Component Design
 
-This document outlines the design principles followed by components in UI Toolkit that makes them easily customizable. Implemetation guidelines are discussed in detail below.
+This document outlines the design principles followed by components in UI Toolkit that makes them easily customizable. Implementation guidelines are discussed in detail below.
 
 ## Qualities of a *delightful* Customizable UI Component
 
@@ -77,7 +77,7 @@ To implement a customizable UI component we recommend creating a component on to
 
 ### Custom CSS Styling
 
-The UI Toolkit has adapted a custom syling mechanism similar to what Fluent UI uses.
+The UI Toolkit has adapted a custom styling mechanism similar to what Fluent UI uses.
 
 Each component should expose a `styles` property that allows users to provide custom CSS rules to the `root` component and `children` components (when applicable).
 
@@ -89,7 +89,7 @@ interface VideoTileStylesProps {
   root?: IStyle;
   /** Styles for video container */
   videoContainer?: IStyle;
-  /** Styles for container overlayed on the video container */
+  /** Styles for container overlaid on the video container */
   overlayContainer?: IStyle;
 }
 

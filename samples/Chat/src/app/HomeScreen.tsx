@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { IImageStyles, Icon, Image, PrimaryButton, Spinner, Stack } from '@fluentui/react';
+import { IImageStyles, Icon, Image, PrimaryButton, Spinner, Stack, Link } from '@fluentui/react';
 import React, { useState } from 'react';
 import {
   buttonStyle,
@@ -117,9 +117,9 @@ export default (): JSX.Element => {
           />
         </Stack>
         <div className={moreInfoStyle}>
-          <a href="https://docs.microsoft.com/en-us/azure/communication-services/overview">
+          <Link href="https://docs.microsoft.com/en-us/azure/communication-services/overview">
             Learn more about this sample
-          </a>
+          </Link>
         </div>
       </div>
     );

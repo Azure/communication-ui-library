@@ -3,7 +3,7 @@
 import { mergeStyles, IStackTokens } from '@fluentui/react';
 import { Theme } from '@fluentui/react-theme-provider';
 
-export const memberItemContainerStyle = (theme: Theme) =>
+export const memberItemContainerStyle = (theme: Theme): string =>
   mergeStyles({
     paddingTop: '0.25rem',
     paddingBottom: '0.25rem',

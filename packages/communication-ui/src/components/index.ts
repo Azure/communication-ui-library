@@ -37,3 +37,7 @@ export {
 
 export { VideoTile } from './VideoTile';
 export type { VideoTileProps, VideoTileStylesProps } from './VideoTile';
+export { ThemeSelector } from './ThemeSelector';
+export type { ThemeSelectorProps } from './ThemeSelector';
+export { ThemeToggler } from './ThemeToggler';
+export type { ThemeTogglerProps } from './ThemeToggler';
