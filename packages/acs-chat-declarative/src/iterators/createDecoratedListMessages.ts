@@ -1,3 +1,4 @@
+// © Microsoft Corporation. All rights reserved.
 import { ChatMessage, ChatThreadClient } from '@azure/communication-chat';
 import { ChatContext } from '../ChatContext';
 import { convertChatMessage } from '../ChatThreadClientDeclarative';
@@ -7,5 +8,5 @@ export const createDecoratedListMessages = (chatThreadClient: ChatThreadClient, 
   const setMessage = (message: ChatMessage, context: ChatContext) => {
     context.setChatMessage(chatThreadClient.threadId, convertChatMessage(message));
   };
-  return createDecoratedIterator(chatThreadClient.listMessages, context, setMessage);
+  return createDecoratedIterator(chatThreadClient.listMessages.bind(chatThreadClient), context, setMessage);
 };

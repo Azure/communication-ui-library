@@ -1,3 +1,4 @@
+// © Microsoft Corporation. All rights reserved.
 import { ChatThreadClient, ChatMessageReadReceipt } from '@azure/communication-chat';
 import { ChatContext } from '../ChatContext';
 import { createDecoratedIterator } from './createDecoratedIterator';
@@ -9,5 +10,5 @@ export const createDecoratedListReadReceipts = (chatThreadClient: ChatThreadClie
       senderId: readReceipt.sender.communicationUserId
     });
   };
-  return createDecoratedIterator(chatThreadClient.listReadReceipts, context, setReadReceipt);
+  return createDecoratedIterator(chatThreadClient.listReadReceipts.bind(chatThreadClient), context, setReadReceipt);
 };

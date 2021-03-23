@@ -1,3 +1,4 @@
+// © Microsoft Corporation. All rights reserved.
 import { ListPageSettings } from '@azure/communication-chat';
 import { ChatContext } from '../ChatContext';
 
@@ -27,7 +28,7 @@ export const createDecoratedIterator = <ItemType>(
   context: ChatContext,
   decorateFn: (item: ItemType, context: ChatContext) => void
 ) => {
-  return (...args: Parameters<IteratorCreatorFn<ItemType>>) => {
+  return (...args: Parameters<IteratorCreatorFn<ItemType>>): PagedAsyncIterableIterator<ItemType> => {
     const threadsIterator = iteratorCreator(...args);
     return {
       async next() {

@@ -1,3 +1,4 @@
+// © Microsoft Corporation. All rights reserved.
 import { ChatThreadInfo, ChatClient } from '@azure/communication-chat';
 import { ChatContext } from '../ChatContext';
 import { createDecoratedIterator } from './createDecoratedIterator';
@@ -8,5 +9,5 @@ export const createDecoratedListThreads = (chatClient: ChatClient, context: Chat
       context.updateThread(chatThreadInfo.id, chatThreadInfo);
     }
   };
-  return createDecoratedIterator(chatClient.listChatThreads, context, setThreadInfo);
+  return createDecoratedIterator(chatClient.listChatThreads.bind(chatClient), context, setThreadInfo);
 };
