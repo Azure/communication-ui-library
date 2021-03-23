@@ -1,10 +1,13 @@
 // © Microsoft Corporation. All rights reserved.
-import { ChatThreadClient, ChatMessageReadReceipt } from '@azure/communication-chat';
+import { ChatThreadClient, ChatMessageReadReceipt, RestListReadReceiptsOptions } from '@azure/communication-chat';
 import { ChatContext } from '../ChatContext';
-import { createDecoratedIterator } from './createDecoratedIterator';
+import { createDecoratedIterator, PagedAsyncIterableIterator } from './createDecoratedIterator';
 
-export const createDecoratedListReadReceipts = (chatThreadClient: ChatThreadClient, context: ChatContext) => {
-  const setReadReceipt = (readReceipt: ChatMessageReadReceipt, context: ChatContext) => {
+export const createDecoratedListReadReceipts = (
+  chatThreadClient: ChatThreadClient,
+  context: ChatContext
+): ((options?: RestListReadReceiptsOptions | undefined) => PagedAsyncIterableIterator<ChatMessageReadReceipt>) => {
+  const setReadReceipt = (readReceipt: ChatMessageReadReceipt, context: ChatContext): void => {
     context.addReadReceipt(chatThreadClient.threadId, {
       ...readReceipt,
       senderId: readReceipt.sender.communicationUserId

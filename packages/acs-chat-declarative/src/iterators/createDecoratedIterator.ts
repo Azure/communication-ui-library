@@ -13,7 +13,9 @@ export interface PageSettings {
   maxPageSize?: number;
 }
 
-type IteratorCreatorFn<T, PageT = T[]> = (options?: any | undefined) => PagedAsyncIterableIterator<T, PageT>;
+type IteratorCreatorFn<T, OptionsType, PageT = T[]> = (
+  options?: OptionsType | undefined
+) => PagedAsyncIterableIterator<T, PageT>;
 
 /**
  * Create a decorated iterator
@@ -23,12 +25,12 @@ type IteratorCreatorFn<T, PageT = T[]> = (options?: any | undefined) => PagedAsy
  * @param context chatContext
  * @param decorateFn the function for the decorating behavior
  */
-export const createDecoratedIterator = <ItemType>(
-  iteratorCreator: IteratorCreatorFn<ItemType>,
+export const createDecoratedIterator = <ItemType, OptionsType>(
+  iteratorCreator: IteratorCreatorFn<ItemType, OptionsType>,
   context: ChatContext,
   decorateFn: (item: ItemType, context: ChatContext) => void
 ) => {
-  return (...args: Parameters<IteratorCreatorFn<ItemType>>): PagedAsyncIterableIterator<ItemType> => {
+  return (...args: Parameters<IteratorCreatorFn<ItemType, OptionsType>>): PagedAsyncIterableIterator<ItemType> => {
     const threadsIterator = iteratorCreator(...args);
     return {
       async next() {

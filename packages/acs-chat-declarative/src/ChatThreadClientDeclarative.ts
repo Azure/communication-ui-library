@@ -121,15 +121,6 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
           return result;
         };
       }
-      case 'updateMessage': {
-        return async (...args: Parameters<ChatThreadClient['updateMessage']>) => {
-          const result = await chatThreadClient.updateMessage(...args);
-          const [messageId, updateOption] = args;
-
-          this._context.updateChatMessagesContent(chatThreadClient.threadId, messageId, updateOption?.content);
-          return result;
-        };
-      }
       case 'updateThread': {
         return async (...args: Parameters<ChatThreadClient['updateThread']>) => {
           const result = await chatThreadClient.updateThread(...args);
