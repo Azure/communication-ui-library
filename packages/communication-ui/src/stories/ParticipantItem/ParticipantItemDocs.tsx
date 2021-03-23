@@ -54,7 +54,7 @@ export const getDocs: () => JSX.Element = () => {
     <>
       <Title>ParticipantStackItem</Title>
       <Description>
-        The ParticipantStackItem component displays a user's avatar, name, as well as presence, muted, and screenshare
+        The ParticipantStackItem component displays a user avatar, name, as well as presence, muted, and screenshare
         state.
       </Description>
       <Heading>Importing</Heading>

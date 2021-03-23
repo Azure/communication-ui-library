@@ -85,7 +85,7 @@ export const getDocs: () => JSX.Element = () => {
       <Title>GridLayout</Title>
       <Description>
         The GridLayout component displays all participants in a call including the user in a gallery. Each tile will
-        display participant's available stream or a static image.
+        display participant available stream or a static image.
       </Description>
       <Heading>Importing</Heading>
       <Source code={importStatement} />
