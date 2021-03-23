@@ -17,7 +17,7 @@ import {
   screenShareButtonWithLabelProps,
   videoButtonWithLabelProps
 } from '../components/ControlBar';
-import { boolean, object, select } from '@storybook/addon-knobs';
+import { boolean, select } from '@storybook/addon-knobs';
 import { getDocs } from './docs/ControlBarDocs';
 
 const defaultOptionsMenuProps = {
@@ -51,7 +51,6 @@ export const ControlBarComponent: () => JSX.Element = () => {
   const layout = select('Layout', CONTROL_BAR_LAYOUTS, 'floatingBottom');
   const toggleButtons = boolean('Toggle Buttons', false);
   const showLabels = boolean('Show Labels', false);
-  const optionsMenuProps = object('Options Menu', defaultOptionsMenuProps);
 
   return (
     <ControlBar layout={layout}>
@@ -63,7 +62,7 @@ export const ControlBarComponent: () => JSX.Element = () => {
       />
       <ControlButton
         {...(showLabels ? optionsButtonWithLabelProps : optionsButtonProps)}
-        menuProps={optionsMenuProps}
+        menuProps={defaultOptionsMenuProps}
       />
       <ControlButton {...(showLabels ? hangupButtonWithLabelProps : hangupButtonProps)} />
     </ControlBar>

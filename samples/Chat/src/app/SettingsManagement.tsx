@@ -15,7 +15,7 @@ import {
 } from './styles/SettingsManagement.styles';
 import { inputBoxTextStyle } from './styles/SidePanel.styles';
 import { ChatTopicPropsFromContext, MapToChatTopicProps, connectFuncsToContext } from '@azure/communication-ui';
-import { ENTER_KEY, MAXIMUM_LENGTH_OF_TOPIC } from '@azure/communication-ui';
+import { ENTER_KEY, MAXIMUM_LENGTH_OF_TOPIC, ThemeToggler } from '@azure/communication-ui';
 
 export type SettingsManagementProps = {
   updateThreadTopicName: (topicName: string) => Promise<boolean>;
@@ -121,6 +121,9 @@ export const SettingsManagementComponent = (
           <Icon iconName="Save" className={settingsTextFieldIconStyle} />
           <div className={settingsSaveButtonTextStyle}>{isSavingTopicName ? 'Saving...' : 'Save'}</div>
         </PrimaryButton>
+        <div className={settingsGroupNameStyle}>
+          <ThemeToggler label="Theme" />
+        </div>
       </div>
     </Panel>
   );
