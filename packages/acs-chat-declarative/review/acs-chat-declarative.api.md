@@ -6,8 +6,11 @@
 
 import { ChatClient } from '@azure/communication-chat';
 import { ChatMessage } from '@azure/communication-chat';
+import { ChatMessageReadReceipt } from '@azure/communication-chat';
+import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { ChatThreadInfo } from '@azure/communication-chat';
+import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 
 // @public (undocumented)
 export const chatClientDeclaratify: (chatClient: ChatClient) => DeclarativeChatClient;
@@ -33,12 +36,15 @@ export const chatThreadClientDeclaratify: (chatThreadClient: ChatThreadClient, c
 // @public (undocumented)
 export type ChatThreadClientState = {
     chatMessages: Map<string, ChatMessageWithStatus>;
+    participants: Map<string, ChatParticipant>;
     threadId: string;
     threadInfo?: ChatThreadInfo;
     coolPeriod?: Date;
     getThreadMembersError?: boolean;
     updateThreadMembersError?: boolean;
     failedMessageIds: string[];
+    readReceipts: ReadReceipt[];
+    typingIndicators: TypingIndicator[];
 };
 
 // @public (undocumented)
@@ -52,6 +58,8 @@ export interface DeclarativeChatClient extends ChatClient {
 
 // Warnings were encountered during analysis:
 //
+// src/ChatClientState.ts:22:3 - (ae-forgotten-export) The symbol "ReadReceipt" needs to be exported by the entry point index.d.ts
+// src/ChatClientState.ts:23:3 - (ae-forgotten-export) The symbol "TypingIndicator" needs to be exported by the entry point index.d.ts
 // src/types/ChatMessageWithStatus.ts:8:3 - (ae-forgotten-export) The symbol "MessageStatus" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)

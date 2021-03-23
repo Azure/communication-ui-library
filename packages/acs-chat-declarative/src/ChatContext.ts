@@ -4,7 +4,10 @@ import produce from 'immer';
 import { ChatClientState, ChatThreadClientState } from './ChatClientState';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 import { enableMapSet } from 'immer';
-import { ChatThreadInfo } from '@azure/communication-chat';
+import { ChatThreadInfo, ChatParticipant } from '@azure/communication-chat';
+import { ReadReceipt } from './types/ReadReceipt';
+import { Constants } from './Constants';
+import { TypingIndicator } from './types/TypingIndicator';
 
 enableMapSet();
 
@@ -44,7 +47,10 @@ export class ChatContext {
           failedMessageIds: [],
           chatMessages: new Map(),
           threadId: threadId,
-          threadInfo: threadInfo
+          threadInfo: threadInfo,
+          participants: new Map(),
+          readReceipts: [],
+          typingIndicators: []
         });
       })
     );
@@ -70,7 +76,24 @@ export class ChatContext {
     );
   }
 
-  public removeThread(threadId: string): void {
+  public updateThreadTopic(threadId: string, topic?: string): void {
+    this.setState(
+      produce(this._state, (draft: ChatClientState) => {
+        if (!topic) {
+          return;
+        }
+        const thread = draft.threads.get(threadId);
+        if (thread && !thread.threadInfo) {
+          thread.threadInfo = { id: threadId, topic: topic };
+        }
+        if (thread && thread.threadInfo) {
+          thread.threadInfo.topic = topic;
+        }
+      })
+    );
+  }
+
+  public deleteThread(threadId: string): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         const thread = draft.threads.get(threadId);
@@ -92,13 +115,117 @@ export class ChatContext {
     );
   }
 
-  public deleteLocalMessage(threadId: string, localId: string): void {
+  public updateChatMessagesContent(threadId: string, messagesId: string, content: string | undefined): void {
+    this.setState(
+      produce(this._state, (draft: ChatClientState) => {
+        const chatMessage = draft.threads.get(threadId)?.chatMessages.get(messagesId);
+        if (chatMessage && chatMessage.content?.message) {
+          chatMessage.content.message = content;
+        }
+      })
+    );
+  }
+
+  public deleteLocalMessage(threadId: string, localId: string): boolean {
+    let localMessageDeleted = false;
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         const chatMessages = draft.threads.get(threadId)?.chatMessages;
         const message: ChatMessageWithStatus | undefined = chatMessages ? chatMessages.get(localId) : undefined;
         if (chatMessages && message && message.clientMessageId) {
           chatMessages.delete(message.clientMessageId);
+          localMessageDeleted = true;
+        }
+      })
+    );
+    return localMessageDeleted;
+  }
+
+  public deleteMessage(threadId: string, id: string): void {
+    this.setState(
+      produce(this._state, (draft: ChatClientState) => {
+        const chatMessages = draft.threads.get(threadId)?.chatMessages;
+        if (chatMessages?.has(id)) {
+          chatMessages.delete(id);
+        }
+      })
+    );
+  }
+
+  public setParticipant(threadId: string, participant: ChatParticipant): void {
+    this.setState(
+      produce(this._state, (draft: ChatClientState) => {
+        const participants = draft.threads.get(threadId)?.participants;
+        if (participants) {
+          participants.set(participant.user.communicationUserId, participant);
+        }
+      })
+    );
+  }
+
+  public setParticipants(threadId: string, participants: ChatParticipant[]): void {
+    this.setState(
+      produce(this._state, (draft: ChatClientState) => {
+        const participantsMap = draft.threads.get(threadId)?.participants;
+        if (participantsMap) {
+          for (const participant of participants) {
+            participantsMap.set(participant.user.communicationUserId, participant);
+          }
+        }
+      })
+    );
+  }
+
+  public deleteParticipants(threadId: string, participantIds: string[]): void {
+    this.setState(
+      produce(this._state, (draft: ChatClientState) => {
+        const participants = draft.threads.get(threadId)?.participants;
+        if (participants) {
+          for (const participantId of participantIds) {
+            if (participants.has(participantId)) {
+              participants.delete(participantId);
+            }
+          }
+        }
+      })
+    );
+  }
+
+  public deleteParticipant(threadId: string, participantId: string): void {
+    this.setState(
+      produce(this._state, (draft: ChatClientState) => {
+        const participants = draft.threads.get(threadId)?.participants;
+        if (participants && participants.has(participantId)) {
+          participants.delete(participantId);
+        }
+      })
+    );
+  }
+
+  public addReadReceipt(threadId: string, readReceipt: ReadReceipt): void {
+    this.setState(
+      produce(this._state, (draft: ChatClientState) => {
+        const readReceipts = draft.threads.get(threadId)?.readReceipts;
+        if (readReceipts) {
+          readReceipts.push(readReceipt);
+        }
+      })
+    );
+  }
+
+  public addTypingIndicator(threadId: string, typingIndicator: TypingIndicator): void {
+    this.setState(
+      produce(this._state, (draft: ChatClientState) => {
+        let thread = draft.threads.get(threadId);
+        if (thread) {
+          const typingIndicators = thread.typingIndicators;
+          typingIndicators.push(typingIndicator);
+
+          // Make sure we only maintain a period of typing indicator for perf purposes
+          thread.typingIndicators = typingIndicators.filter((typingIndicator) => {
+            const timeGap = Date.now() - typingIndicator.receivedOn.getTime();
+            return timeGap < Constants.TYPING_INDICATOR_MAINTAIN_TIME;
+          });
         }
       })
     );

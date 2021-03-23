@@ -1,14 +1,11 @@
 // © Microsoft Corporation. All rights reserved.
-import {
-  ChatMessage,
-  ChatThreadClient,
-  ListPageSettings,
-  SendChatMessageResult,
-  WithResponse
-} from '@azure/communication-chat';
+import { ChatMessage, ChatThreadClient, SendChatMessageResult, WithResponse } from '@azure/communication-chat';
 import { ChatMessageWithStatus, MessageStatus } from './types/ChatMessageWithStatus';
 import { ChatContext } from './ChatContext';
 import { nanoid } from 'nanoid';
+import { createDecoratedListMessages } from './iterators/createDecoratedListMessages';
+import { createDecoratedListReadReceipts } from './iterators/createDecoratedListReadReceipts';
+import { createDecoratedListParticipants } from './iterators/createDecoratedListParticipants';
 
 export const convertChatMessage = (
   message: ChatMessage,
@@ -22,58 +19,6 @@ export const convertChatMessage = (
   };
 };
 
-/**
- * Proxies chatThreadClient.listMessages() and updates the proxied state via getState and setState by wrapping the
- * returned iterators.
- *
- * @param chatThreadClient
- * @param getState
- * @param setState
- */
-const proxyListMessages = (chatThreadClient: ChatThreadClient, context: ChatContext) => {
-  return (...args: Parameters<ChatThreadClient['listMessages']>) => {
-    const messages = chatThreadClient.listMessages(...args);
-    return {
-      next() {
-        return new Promise<IteratorResult<ChatMessage, ChatMessage>>((resolve) => {
-          messages.next().then((result) => {
-            if (!result.done && result.value) {
-              context.setChatMessage(chatThreadClient.threadId, convertChatMessage(result.value));
-            }
-            resolve(result);
-          });
-        });
-      },
-      [Symbol.asyncIterator]() {
-        return this;
-      },
-      byPage: (settings: ListPageSettings = {}): AsyncIterableIterator<ChatMessage[]> => {
-        const pages = messages.byPage(settings);
-        return {
-          next() {
-            return new Promise<IteratorResult<ChatMessage[], any>>((resolve) => {
-              pages.next().then((result) => {
-                const page: any = result.value;
-                if (!result.done && result.value) {
-                  context.batch(() => {
-                    for (const message of page) {
-                      context.setChatMessage(chatThreadClient.threadId, convertChatMessage(message));
-                    }
-                  });
-                }
-                resolve(result);
-              });
-            });
-          },
-          [Symbol.asyncIterator]() {
-            return this;
-          }
-        };
-      }
-    };
-  };
-};
-
 class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
   private _context: ChatContext;
 
@@ -84,7 +29,7 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
   public get<P extends keyof ChatThreadClient>(chatThreadClient: ChatThreadClient, prop: P): any {
     switch (prop) {
       case 'listMessages': {
-        return proxyListMessages(chatThreadClient, this._context);
+        return createDecoratedListMessages(chatThreadClient, this._context);
       }
       case 'getMessage': {
         return async (...args: Parameters<ChatThreadClient['getMessage']>) => {
@@ -132,6 +77,65 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
               this._context.deleteLocalMessage(chatThreadClient.threadId, clientMessageId);
             });
           }
+          return result;
+        };
+      }
+      case 'addParticipants': {
+        return async (...args: Parameters<ChatThreadClient['addParticipants']>) => {
+          const result = await chatThreadClient.addParticipants(...args);
+          const participantsToAdd = args[0].participants;
+          this._context.setParticipants(chatThreadClient.threadId, participantsToAdd);
+          return result;
+        };
+      }
+      case 'deleteMessage': {
+        return async (...args: Parameters<ChatThreadClient['deleteMessage']>) => {
+          // DeleteMessage is able to either delete local one(for failed message) or synced message
+          if (this._context.deleteLocalMessage(chatThreadClient.threadId, args[0])) {
+            return {};
+          }
+          const result = await chatThreadClient.deleteMessage(...args);
+          this._context.deleteMessage(chatThreadClient.threadId, args[0]);
+          return result;
+        };
+      }
+      case 'listParticipants': {
+        return createDecoratedListParticipants(chatThreadClient, this._context);
+      }
+      case 'listReadReceipts': {
+        return createDecoratedListReadReceipts(chatThreadClient, this._context);
+      }
+      case 'removeParticipant': {
+        return async (...args: Parameters<ChatThreadClient['removeParticipant']>) => {
+          const result = await chatThreadClient.removeParticipant(...args);
+          this._context.deleteParticipant(chatThreadClient.threadId, args[0].communicationUserId);
+          return result;
+        };
+      }
+      case 'updateMessage': {
+        return async (...args: Parameters<ChatThreadClient['updateMessage']>) => {
+          const result = await chatThreadClient.updateMessage(...args);
+          const [messageId, updateOption] = args;
+
+          this._context.updateChatMessagesContent(chatThreadClient.threadId, messageId, updateOption?.content);
+          return result;
+        };
+      }
+      case 'updateMessage': {
+        return async (...args: Parameters<ChatThreadClient['updateMessage']>) => {
+          const result = await chatThreadClient.updateMessage(...args);
+          const [messageId, updateOption] = args;
+
+          this._context.updateChatMessagesContent(chatThreadClient.threadId, messageId, updateOption?.content);
+          return result;
+        };
+      }
+      case 'updateThread': {
+        return async (...args: Parameters<ChatThreadClient['updateThread']>) => {
+          const result = await chatThreadClient.updateThread(...args);
+          const [updateOption] = args;
+
+          this._context.updateThreadTopic(chatThreadClient.threadId, updateOption?.topic);
           return result;
         };
       }
