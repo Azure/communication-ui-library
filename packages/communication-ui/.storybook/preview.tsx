@@ -5,7 +5,6 @@ import { withKnobs } from '@storybook/addon-knobs';
 import { FluentThemeProvider } from '../src/providers/FluentThemeProvider';
 import { LIGHT, DARK, THEMES } from '../src/constants/themes';
 import { initializeIcons, loadTheme } from '@fluentui/react';
-import { addParameters } from '@storybook/react';
 import { DocsContainer } from '@storybook/addon-docs/blocks';
 import { BackToTop, TableOfContents } from 'storybook-docs-toc';
 
@@ -26,7 +25,7 @@ export const parameters = {
   },
   options: {
     storySort: {
-      order: ['Introduction', 'Quickstart', 'Styling', 'Composites', 'UI Components']
+      order: ['Introduction', 'Quickstart', 'Styling', 'Theming', 'Localization', 'Composites', 'UI Components']
     }
   }
 };

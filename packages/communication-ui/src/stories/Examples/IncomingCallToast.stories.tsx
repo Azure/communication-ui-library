@@ -4,8 +4,9 @@ import React from 'react';
 import { Meta } from '@storybook/react/types-6-0';
 import { IncomingCallToast } from '../../composites/OneToOneCall/IncomingCallAlerts';
 import { text, files } from '@storybook/addon-knobs';
-import { getDocs } from './IncomingCallToastDocs';
+import { getDocs } from './IncomingCallAlertsDocs';
 import { EXAMPLES_FOLDER_PREFIX } from '../constants';
+import { Stack } from '@fluentui/react';
 
 export const IncomingCallToastComponent: () => JSX.Element = () => {
   const callerName = text('Caller Name', 'John Doe');
@@ -13,18 +14,20 @@ export const IncomingCallToastComponent: () => JSX.Element = () => {
   const images = files('Avatar', '.jpeg, .jpg, .png', []);
 
   return (
-    <IncomingCallToast
-      callerName={callerName}
-      alertText={alertText}
-      avatar={images.length > 0 ? images[0] : undefined}
-      onClickAccept={() => null}
-      onClickReject={() => null}
-    />
+    <Stack>
+      <IncomingCallToast
+        callerName={callerName}
+        alertText={alertText}
+        avatar={images.length > 0 ? images[0] : undefined}
+        onClickAccept={() => null}
+        onClickReject={() => null}
+      />
+    </Stack>
   );
 };
 
 export default {
-  title: `${EXAMPLES_FOLDER_PREFIX}/IncomingCallToast`,
+  title: `${EXAMPLES_FOLDER_PREFIX}/IncomingCallAlerts`,
   component: IncomingCallToast,
   parameters: {
     docs: {

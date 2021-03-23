@@ -28,7 +28,7 @@ import {
 } from '@azure/communication-ui';
 `;
 
-const defaultOptionsMenuProps = {
+const exampleOptionsMenuProps = {
   items: [
     {
       key: '1',
@@ -63,7 +63,7 @@ const ControlBarExample: () => JSX.Element = () => {
           <ControlButton {...videoButtonProps} />
           <ControlButton {...audioButtonProps} />
           <ControlButton {...screenShareButtonProps} />
-          <ControlButton {...optionsButtonProps} menuProps={defaultOptionsMenuProps} />
+          <ControlButton {...optionsButtonProps} menuProps={exampleOptionsMenuProps} />
           <ControlButton {...hangupButtonProps} />
         </ControlBar>
       </FluentThemeProvider>
@@ -72,40 +72,12 @@ const ControlBarExample: () => JSX.Element = () => {
 };
 
 const exampleCode = `
-const defaultOptionsMenuProps = {
-  items: [
-    {
-      key: '1',
-      name: 'Choose Camera',
-      iconProps: { iconName: 'LocationCircle' },
-      subMenuProps: {
-        items: [
-          { key: 'cam1', text: 'HD Webcam', title: 'HD Webcam', canCheck: true, isChecked: true, onClick: handleClick('cam1') },
-          { key: 'cam2', text: 'Macbook Webcam', title: 'Macbook Webcam', onClick: handleClick('cam2') }
-        ]
-      }
-    },
-    {
-      key: '2',
-      name: 'Choose Microphone',
-      iconProps: { iconName: 'LocationCircle' },
-      subMenuProps: {
-        items: [
-          { key: 'mic1', text: 'Realtek Audio', title: 'Realtek Audio', onClick: handleClick('mic1') },
-          { key: 'mic2', text: 'Macbook Mic', title: 'Macbook Mic', canCheck: true, isChecked: true, onClick: handleClick('mic2') }
-        ]
-      }
-    }
-  ]
-};
-
 const ControlBarExample: () => JSX.Element = () => {
   return (
     <ControlBar layout={'horizontal'}>
       <ControlButton {...videoButtonProps} onClick={toggleVideo} showLabel={false} />
       <ControlButton {...audioButtonProps} onClick={toggleAudio} showLabel={false} />
       <ControlButton {...screenShareButtonProps} onClick={toggleScreenShare} showLabel={false} />
-      <ControlButton {...optionsButtonProps} menuProps={defaultOptionsMenuProps} showLabel={false} />
       <ControlButton {...hangupButtonProps} onClick={hangUpCall} showLabel={false} />
     </ControlBar>
   );
@@ -120,7 +92,7 @@ const ControlBarLayoutExample: () => JSX.Element = () => {
           <ControlButton {...videoButtonProps} />
           <ControlButton {...audioButtonProps} />
           <ControlButton {...screenShareButtonProps} />
-          <ControlButton {...optionsButtonProps} menuProps={defaultOptionsMenuProps} />
+          <ControlButton {...optionsButtonProps} menuProps={exampleOptionsMenuProps} />
           <ControlButton {...hangupButtonProps} />
         </ControlBar>
       </FluentThemeProvider>
@@ -133,7 +105,7 @@ const controlBarLayoutCode = `
   <ControlButton {...videoButtonProps} />
   <ControlButton {...audioButtonProps} />
   <ControlButton {...screenShareButtonProps} />
-  <ControlButton {...optionsButtonProps} menuProps={defaultOptionsMenuProps} />
+  <ControlButton {...optionsButtonProps} menuProps={exampleOptionsMenuProps} />
   <ControlButton {...hangupButtonProps} />
 </ControlBar>
 `;
@@ -217,19 +189,22 @@ export const getDocs: () => JSX.Element = () => {
       <Heading>Importing</Heading>
       <Source code={importStatement} />
 
-      <Heading>Default Usage</Heading>
+      <Heading>Usage</Heading>
       <Canvas>
         <ControlBarExample />
       </Canvas>
       <Source code={exampleCode} />
 
-      <Heading>Control Bar Layouts</Heading>
+      <Heading>Layouts</Heading>
+      <Description>
+        You can change the layout of Control Bar by providing a preset layout to the `layout` prop.
+      </Description>
       <Canvas>
         <ControlBarLayoutExample />
       </Canvas>
       <Source code={controlBarLayoutCode} />
 
-      <Heading>Custom ControlButton</Heading>
+      <Heading>Custom Button</Heading>
       <Canvas>
         <CustomControlButtonExample />
       </Canvas>

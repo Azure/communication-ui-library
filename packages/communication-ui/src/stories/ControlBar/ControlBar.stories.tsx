@@ -16,7 +16,7 @@ import { boolean, select } from '@storybook/addon-knobs';
 import { getDocs } from './ControlBarDocs';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 
-const defaultOptionsMenuProps = {
+const exampleOptionsMenuProps = {
   items: [
     {
       key: '1',
@@ -53,7 +53,7 @@ export const ControlBarComponent: () => JSX.Element = () => {
       <ControlButton {...videoButtonProps} isToggled={toggleButtons} showLabel={showLabels} />
       <ControlButton {...audioButtonProps} isToggled={toggleButtons} showLabel={showLabels} />
       <ControlButton {...screenShareButtonProps} isToggled={toggleButtons} showLabel={showLabels} />
-      <ControlButton {...optionsButtonProps} menuProps={defaultOptionsMenuProps} showLabel={showLabels} />
+      <ControlButton {...optionsButtonProps} menuProps={exampleOptionsMenuProps} showLabel={showLabels} />
       <ControlButton {...hangupButtonProps} showLabel={showLabels} />
     </ControlBar>
   );
