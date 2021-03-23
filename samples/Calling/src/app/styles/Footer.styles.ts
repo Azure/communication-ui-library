@@ -1,8 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { IStackStyles, IStackTokens, ITextFieldStyles, getTheme, mergeStyles } from '@fluentui/react';
-
-const palette = getTheme().palette;
+import { IStackStyles, IStackTokens, ITextFieldStyles, mergeStyles } from '@fluentui/react';
 
 export const paneFooterStyles: IStackStyles = {
   root: {
@@ -16,7 +14,6 @@ export const paneFooterTokens: IStackTokens = {
 
 export const textFieldStyles: Partial<ITextFieldStyles> = {
   field: {
-    color: palette.neutralSecondary,
     padding: 0
   },
   root: {

@@ -89,7 +89,6 @@ export const namePreviewStyle = (isEmpty: boolean): string => {
     lineHeight: '1.5rem',
     textAlign: 'center',
     opacity: isEmpty ? 1 : 0.34,
-    color: isEmpty ? '#000000' : '#A19F9D',
     wordWrap: 'break-word',
     overflowY: 'hidden'
   });
@@ -97,8 +96,6 @@ export const namePreviewStyle = (isEmpty: boolean): string => {
 
 export const labelFontStyle = mergeStyles({
   height: '1.188rem',
-  width: '2.625rem',
-  color: '#444444',
   fontSize: '1rem', // 16px
   fontWeight: 600,
   letterSpacing: '0',
