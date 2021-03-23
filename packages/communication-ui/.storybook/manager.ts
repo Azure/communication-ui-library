@@ -4,6 +4,6 @@ import { addons } from '@storybook/addons';
 addons.setConfig({
   theme: create({
     base: 'light',
-    brandTitle: 'ACS UI SDK'
+    brandTitle: 'Azure Communication Services - UI Toolkit'
   })
 });

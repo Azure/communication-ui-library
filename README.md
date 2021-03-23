@@ -1,4 +1,4 @@
-# Azure Communication Services UI SDK
+# Azure Communication Services UI Toolkit
 <a href="https://azure.github.com/communication-ui-sdk" target="_blank"><img src="https://raw.githubusercontent.com/storybooks/brand/master/badge/badge-storybook.svg"></a>
 ![CI](https://github.com/Azure/communication-ui-sdk/workflows/CI/badge.svg?branch=main)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
