@@ -20,7 +20,7 @@ export const chatThreadSelector = createSelector(
     disableReadReceipt: false,
     chatMessages: Array.from(chatMessages.values()).map((chatMessage: ChatMessageWithStatus) => ({
       createdOn: chatMessage.createdOn,
-      content: chatMessage.content,
+      content: chatMessage.content?.message,
       status: chatMessage.status,
       senderDisplayName: chatMessage.senderDisplayName,
       senderId: chatMessage.sender?.communicationUserId || userId,
