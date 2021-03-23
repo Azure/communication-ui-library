@@ -118,7 +118,7 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
             throw e;
           }
 
-          if (result != undefined && result.id) {
+          if (result?.id) {
             this._context.batch(() => {
               if (!result) {
                 return;
