@@ -5,20 +5,16 @@ import React from 'react';
 import {
   CONTROL_BAR_LAYOUTS,
   ControlBar,
-  ControlButton,
   audioButtonProps,
   hangupButtonProps,
   optionsButtonProps,
   screenShareButtonProps,
-  videoButtonProps,
-  audioButtonWithLabelProps,
-  hangupButtonWithLabelProps,
-  optionsButtonWithLabelProps,
-  screenShareButtonWithLabelProps,
-  videoButtonWithLabelProps
+  videoButtonProps
 } from '../components/ControlBar';
 import { boolean, select } from '@storybook/addon-knobs';
 import { getDocs } from './docs/ControlBarDocs';
+import { DefaultButton, IButtonProps, Icon, concatStyleSets, Persona, PersonaSize } from '@fluentui/react';
+import { controlButtonStyles, hangUpControlButtonStyles } from '../components/styles/ControlBar.styles';
 
 const defaultOptionsMenuProps = {
   items: [
@@ -52,19 +48,66 @@ export const ControlBarComponent: () => JSX.Element = () => {
   const toggleButtons = boolean('Toggle Buttons', false);
   const showLabels = boolean('Show Labels', false);
 
+  const showLabel = showLabels ? {} : { onRenderText: () => null };
+
+  const otherUserScreenSharing = boolean('Other user screen sharing', false);
+
   return (
+    // <ControlBar layout={layout}>
+    //   <DefaultButton {...videoButtonProps} {...showLabel} checked={toggleButtons} />
+    //   <DefaultButton {...audioButtonProps} {...showLabel} checked={toggleButtons} />
+    //   <DefaultButton {...screenShareButtonProps} {...showLabel} checked={toggleButtons} />
+    //   <DefaultButton {...optionsButtonProps} {...showLabel} menuProps={defaultOptionsMenuProps} />
+    //   <DefaultButton {...hangupButtonProps} {...showLabel} />
+    // </ControlBar>
     <ControlBar layout={layout}>
-      <ControlButton {...(showLabels ? videoButtonWithLabelProps : videoButtonProps)} isToggled={toggleButtons} />
-      <ControlButton {...(showLabels ? audioButtonWithLabelProps : audioButtonProps)} isToggled={toggleButtons} />
-      <ControlButton
-        {...(showLabels ? screenShareButtonWithLabelProps : screenShareButtonProps)}
-        isToggled={toggleButtons}
+      <DefaultButton
+        onRenderIcon={(props?: IButtonProps): JSX.Element => {
+          if (props?.checked) {
+            return <Icon iconName="Video" />;
+          } else {
+            return <Icon iconName="VideoOff" />;
+          }
+        }}
+        styles={controlButtonStyles}
+        checked={toggleButtons}
       />
-      <ControlButton
-        {...(showLabels ? optionsButtonWithLabelProps : optionsButtonProps)}
-        menuProps={defaultOptionsMenuProps}
+      <DefaultButton
+        onRenderIcon={(props?: IButtonProps): JSX.Element => {
+          if (props?.checked) {
+            return <Icon iconName="Microphone" />;
+          } else {
+            return <Icon iconName="MicOff" />;
+          }
+        }}
+        styles={controlButtonStyles}
+        checked={toggleButtons}
       />
-      <ControlButton {...(showLabels ? hangupButtonWithLabelProps : hangupButtonProps)} />
+      <DefaultButton
+        onRenderIcon={(props?: IButtonProps): JSX.Element => {
+          if (otherUserScreenSharing) {
+            return <Persona text="Other user" size={PersonaSize.size24} hidePersonaDetails={true} />;
+          } else if (props?.checked) {
+            return <Icon iconName="Screencast" />;
+          } else {
+            return <Icon iconName="ShareiOS" />;
+          }
+        }}
+        styles={controlButtonStyles}
+        disabled={otherUserScreenSharing}
+        checked={toggleButtons}
+      />
+      <DefaultButton
+        onRenderIcon={() => <Icon iconName="DeclineCall" />}
+        onRenderText={() => <span style={{ margin: '0.250rem' }}>Leave</span>}
+        styles={concatStyleSets(hangUpControlButtonStyles, {
+          root: {
+            background: '#d74654',
+            width: '6.5625rem'
+          },
+          flexContainer: { flexFlow: 'flex' }
+        })}
+      />
     </ControlBar>
   );
 };

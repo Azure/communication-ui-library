@@ -1,5 +1,14 @@
 // © Microsoft Corporation. All rights reserved.
-import { DefaultButton, IContextualMenuProps, IIconProps, IStyle, mergeStyles, Stack } from '@fluentui/react';
+import {
+  DefaultButton,
+  IContextualMenuProps,
+  IIconProps,
+  IStyle,
+  mergeStyles,
+  Stack,
+  IButtonProps,
+  concatStyleSets
+} from '@fluentui/react';
 import {
   CallControlCloseTrayIcon,
   CallControlPresentNewIcon,
@@ -101,159 +110,110 @@ export const ControlButton = (props: CallControlButtonProps): JSX.Element => {
   );
 };
 
-export const videoButtonWithLabelProps: CallControlButtonProps = {
-  onRenderIcon: (props?: CallControlButtonProps): JSX.Element => {
-    if (props?.isToggled) {
-      return (
-        <>
-          <CallVideoIcon />
-          <Stack className={mergeStyles(controlButtonLabelStyles)}>
-            <Stack>Camera</Stack>
-          </Stack>
-        </>
-      );
-    } else {
-      return (
-        <>
-          <CallVideoOffIcon />
-          <Stack className={mergeStyles(controlButtonLabelStyles)}>
-            <Stack>Camera</Stack>
-          </Stack>
-        </>
-      );
-    }
-  }
-};
-
-export const videoButtonProps: CallControlButtonProps = {
-  onRenderIcon: (props?: CallControlButtonProps): JSX.Element => {
-    if (props?.isToggled) {
+export const videoButtonProps: IButtonProps = {
+  onRenderIcon: (props?: IButtonProps): JSX.Element => {
+    if (props?.checked) {
       return <CallVideoIcon />;
     } else {
       return <CallVideoOffIcon />;
     }
-  }
+  },
+  onRenderText: () => (
+    <Stack className={mergeStyles(controlButtonLabelStyles)}>
+      <Stack>Camera</Stack>
+    </Stack>
+  ),
+  styles: controlButtonStyles
 };
 
-export const audioButtonWithLabelProps: CallControlButtonProps = {
-  onRenderIcon: (props?: CallControlButtonProps): JSX.Element => {
-    if (props?.isToggled) {
-      return (
-        <>
-          <MicIcon />
-          <Stack className={mergeStyles(controlButtonLabelStyles)}>
-            <Stack>Mute</Stack>
-          </Stack>
-        </>
-      );
-    } else {
-      return (
-        <>
-          <MicOffIcon />
-          <Stack className={mergeStyles(controlButtonLabelStyles)}>
-            <Stack>Unmute</Stack>
-          </Stack>
-        </>
-      );
-    }
-  }
-};
-
-export const audioButtonProps: CallControlButtonProps = {
-  onRenderIcon: (props?: CallControlButtonProps): JSX.Element => {
-    if (props?.isToggled) {
+export const audioButtonProps: IButtonProps = {
+  onRenderIcon: (props?: IButtonProps): JSX.Element => {
+    if (props?.checked) {
       return <MicIcon />;
     } else {
       return <MicOffIcon />;
     }
-  }
-};
-
-export const screenShareButtonWithLabelProps: CallControlButtonProps = {
-  onRenderIcon: (props?: CallControlButtonProps): JSX.Element => {
-    if (props?.isToggled) {
+  },
+  onRenderText: (props?: IButtonProps): JSX.Element => {
+    if (props?.checked) {
       return (
-        <>
-          <CallControlPresentNewIcon bordered={false} />
-          <Stack className={mergeStyles(controlButtonLabelStyles)}>
-            <Stack>Share</Stack>
-          </Stack>
-        </>
+        <Stack className={mergeStyles(controlButtonLabelStyles)}>
+          <Stack>Mute</Stack>
+        </Stack>
       );
     } else {
       return (
-        <>
-          <CallControlCloseTrayIcon />
-          <Stack className={mergeStyles(controlButtonLabelStyles)}>
-            <Stack>Stop</Stack>
-          </Stack>
-        </>
+        <Stack className={mergeStyles(controlButtonLabelStyles)}>
+          <Stack>Unmute</Stack>
+        </Stack>
       );
     }
-  }
+  },
+  styles: controlButtonStyles
 };
 
-export const screenShareButtonProps: CallControlButtonProps = {
-  onRenderIcon: (props?: CallControlButtonProps): JSX.Element => {
-    if (props?.isToggled) {
+export const screenShareButtonProps: IButtonProps = {
+  onRenderIcon: (props?: IButtonProps): JSX.Element => {
+    if (props?.checked) {
       return <CallControlPresentNewIcon bordered={false} />;
     } else {
       return <CallControlCloseTrayIcon />;
     }
-  }
+  },
+  onRenderText: (props?: IButtonProps): JSX.Element => {
+    if (props?.checked) {
+      return (
+        <Stack className={mergeStyles(controlButtonLabelStyles)}>
+          <Stack>Share</Stack>
+        </Stack>
+      );
+    } else {
+      return (
+        <Stack className={mergeStyles(controlButtonLabelStyles)}>
+          <Stack>Stop</Stack>
+        </Stack>
+      );
+    }
+  },
+  styles: controlButtonStyles
 };
 
-export const optionsButtonWithLabelProps: CallControlButtonProps = {
-  onRenderIcon: (): JSX.Element => (
-    <>
-      <MoreIcon />
+export const optionsButtonProps: IButtonProps = {
+  onRenderIcon: (): JSX.Element => <MoreIcon />,
+  onRenderText: (): JSX.Element => {
+    return (
       <Stack className={mergeStyles(controlButtonLabelStyles)}>
         <Stack>Options</Stack>
       </Stack>
-    </>
-  ),
+    );
+  },
   menuIconProps: {
     hidden: true
-  }
+  },
+  styles: controlButtonStyles
 };
 
-export const optionsButtonProps: CallControlButtonProps = {
-  onRenderIcon: (): JSX.Element => <MoreIcon />,
-  menuIconProps: {
-    hidden: true
-  }
-};
-
-export const answerButtonWithLabelProps: CallControlButtonProps = {
-  onRenderIcon: (): JSX.Element => (
-    <>
-      <CallIcon />
+export const answerButtonProps: IButtonProps = {
+  onRenderIcon: (): JSX.Element => <CallIcon />,
+  onRenderText: (): JSX.Element => {
+    return (
       <Stack className={mergeStyles(controlButtonLabelStyles)}>
         <Stack>Answer</Stack>
       </Stack>
-    </>
-  )
+    );
+  }
 };
 
-export const answerButtonProps: CallControlButtonProps = {
-  onRenderIcon: (): JSX.Element => <CallIcon />
-};
-
-export const hangupButtonWithLabelProps: CallControlButtonProps = {
-  onRenderIcon: (): JSX.Element => (
-    <>
-      <CallEndIcon />
+export const hangupButtonProps: IButtonProps = {
+  onRenderIcon: (): JSX.Element => <CallEndIcon />,
+  onRenderText: (): JSX.Element => {
+    return (
       <Stack className={mergeStyles(controlButtonLabelStyles)}>
         <Stack>Hangup</Stack>
       </Stack>
-    </>
-  ),
-  styles: hangUpControlButtonStyles
-};
-
-export const hangupButtonProps: CallControlButtonProps = {
-  onRenderIcon: (): JSX.Element => <CallEndIcon />,
-  styles: hangUpControlButtonStyles
+    );
+  },
+  styles: concatStyleSets(controlButtonStyles, hangUpControlButtonStyles)
 };
 
 export const CONTROL_BAR_LAYOUTS = [
@@ -268,18 +228,6 @@ export const CONTROL_BAR_LAYOUTS = [
   'floatingLeft',
   'floatingRight'
 ] as const;
-
-export type ControlBarLayoutsType =
-  | 'horizontal'
-  | 'vertical'
-  | 'dockedTop'
-  | 'dockedBottom'
-  | 'dockedLeft'
-  | 'dockedRight'
-  | 'floatingTop'
-  | 'floatingBottom'
-  | 'floatingLeft'
-  | 'floatingRight';
 
 export interface ControlBarProps {
   children?: React.ReactNode;
@@ -298,13 +246,13 @@ export interface ControlBarProps {
    * `floatingRight`
    * Defaults to a `horizontal` layout.
    */
-  layout?: ControlBarLayoutsType;
+  layout?: typeof CONTROL_BAR_LAYOUTS[number];
 }
 
 /**
- * `ControlBar` allows you to easily create a component for call controls using `ControlButtons`.
- * Users will need to provide methods to `ControlButton` components used inside `ControlBar` for altering
- * call behavior.
+ * A Call Control Bar used for handling a call state. Contains actions like
+ * toggle video, audo, device settings etc.
+ * @returns JSX.Element
  */
 export const ControlBar = (props: ControlBarProps): JSX.Element => {
   const { styles, layout } = props;
