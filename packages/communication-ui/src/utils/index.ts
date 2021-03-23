@@ -5,3 +5,4 @@ export * from './TypeConverter';
 export * from './ValidContext';
 export * from './chatUtils';
 export * from './Datetime';
+export * from './WithErrorHandling';

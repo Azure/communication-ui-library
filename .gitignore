@@ -86,3 +86,5 @@ junit.xml
 # Common build folders
 dist/
 build/
+temp/
+docGen/

@@ -9,5 +9,6 @@ export const config: BeachballConfig = {
       renderHeader,
       renderEntry
     }
-  }
+  },
+  changehint: 'Run "rush changelog" to create required change files'
 };

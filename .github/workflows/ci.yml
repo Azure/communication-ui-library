@@ -18,6 +18,8 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       # Ensure node version is great enough
       - name: Use Node.js v12.x
@@ -46,6 +48,23 @@ jobs:
       - name: Build Storybook
         run: rushx build:storybook
         working-directory: ./packages/communication-ui
+
+      # Verify no uncommitted api extractor changes
+      - name: API Extractor Check
+        run: |
+          DIFF_FILE="APIChanges.diff"
+          git diff --output=$DIFF_FILE --exit-code **/review/**.md
+          DIFF_STATUS=$?
+          echo "Exit code for git diff for changes in api review files: $DIFF_STATUS"
+          if [$DIFF_STATUS -ne 0]
+          then
+              echo "API CHANGES FOUND - PLEASE RUN 'rushx api-extractor' IN THE APPROPRIATE PACKAGE(S)"
+              echo "Changes:"
+              cat $DIFF_FILE
+              exit 1
+          else
+            echo "Success, no new api changes found."
+          fi
 
       # Run tests
       - name: Run Tests

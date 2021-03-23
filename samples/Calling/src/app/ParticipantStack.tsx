@@ -52,7 +52,12 @@ const defaultRenderer = (item: IOverflowSetItemProps): JSX.Element => {
   }
 
   return (
-    <ParticipantItem name={item.name} isYou={item.isYou} menuItems={menuItems} presence={presence}>
+    <ParticipantItem
+      name={item.name}
+      isYou={item.isYou}
+      menuItems={item.isYou ? undefined : menuItems}
+      presence={presence}
+    >
       {item.isScreenSharing && <CallControlPresentNewIcon size="small" />}
       {item.isMuted && <MicOffIcon size="small" />}
     </ParticipantItem>

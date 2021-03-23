@@ -1,0 +1,3 @@
+{
+  "extends": "../../common/api-extractor/api-extractor.json"
+}

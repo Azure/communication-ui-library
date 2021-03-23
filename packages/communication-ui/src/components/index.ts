@@ -19,6 +19,8 @@ export {
 export { SendBoxComponent } from './SendBox';
 export { ReadReceiptComponent } from './ReadReceipt';
 export type { ReadReceiptProps } from './ReadReceipt';
+export { ChatThreadComponent, ChatThread } from './ChatThread';
+export type { ChatThreadProps, ChatThreadStylesProps } from './ChatThread';
 export { StreamMedia } from './StreamMedia';
 export { ParticipantItem } from './ParticipantItem';
 export {
@@ -35,3 +37,7 @@ export {
 
 export { VideoTile } from './VideoTile';
 export type { VideoTileProps, VideoTileStylesProps } from './VideoTile';
+export { ThemeSelector } from './ThemeSelector';
+export type { ThemeSelectorProps } from './ThemeSelector';
+export { ThemeToggler } from './ThemeToggler';
+export type { ThemeTogglerProps } from './ThemeToggler';

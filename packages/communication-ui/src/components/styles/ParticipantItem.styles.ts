@@ -1,21 +1,21 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { getTheme, mergeStyles, IStackTokens } from '@fluentui/react';
+import { mergeStyles, IStackTokens } from '@fluentui/react';
+import { Theme } from '@fluentui/react-theme-provider';
 
-const palette = getTheme().palette;
-
-export const memberItemContainerStyle = mergeStyles({
-  paddingTop: '0.25rem',
-  paddingBottom: '0.25rem',
-  display: 'flex',
-  position: 'relative',
-  width: '100%',
-  minWidth: '12rem',
-  cursor: 'pointer',
-  selectors: {
-    '&:hover': { background: palette.neutralLight }
-  }
-});
+export const memberItemContainerStyle = (theme: Theme): string =>
+  mergeStyles({
+    paddingTop: '0.25rem',
+    paddingBottom: '0.25rem',
+    display: 'flex',
+    position: 'relative',
+    width: '100%',
+    minWidth: '12rem',
+    cursor: 'pointer',
+    selectors: {
+      '&:hover': { background: theme.palette.neutralLight }
+    }
+  });
 
 export const memberItemNameStyle = mergeStyles({
   fontSize: '0.875rem', // 14px

@@ -42,8 +42,6 @@ type ErrorProviderProps = {
  * ErrorProvider provides access to 'lastError' which is used by the ErrorBar component and 'onErrorCallback' used by
  * the WithErrorHandling component. Takes in an optional 'onErrorCallback' which if provided will be called in the
  * function returned by useTriggerOnErrorCallback().
- *
- * @param props
  */
 export const ErrorProvider = (props: ErrorProviderProps & ErrorHandlingProps): JSX.Element => {
   const [lastError, setLastError] = useState<CommunicationUiError | undefined>();
