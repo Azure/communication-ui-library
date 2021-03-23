@@ -14,9 +14,9 @@ We also have a number of samples to try out features and get your development ki
 If you're wondering where to get started, here are a few scenarios to help you get going:
 
 * "I want to see what this library can do!"
-  * Check out our [Samples](#samples), our [Storybook](https://azure.github.io/communication-ui-sdk) and read more about the [features and benefits](#features-and-benefits) of the toolkit
+  * Check out our [Samples](#samples), our [Storybook](https://azure.github.io/communication-ui-sdk), and read more about the [features and benefits](#features-and-benefits) of the toolkit
 * "I want to write my own communication application"
-  * Todo: _link to comprehensive documentation_
+  * We recommend checking out our more comprehensive documentation here first to make the best decision for your application: <https://docs.microsoft.com/en-us/azure/communication-services/concepts/ui-framework/ui-sdk-overview>
 * "I want more information on the packages available to use"
   * Check out the [packages](#packages) on offer
 * "I want to submit a fix for a package in this repo"
@@ -28,9 +28,9 @@ Check out our samples or deploy your own version of the sample to see how easy i
 
 Sample | Description | Deploy to Azure | Run locally
 ------ | ----------- | ------ | ---------- |
-Chat | A group chat application you can invite your friends and colleagues to. | [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure-Samples%2Fcommunication-services-web-calling-hero%2Fmain%2Fdeploy%2Fazuredeploy.json) | [samples/Calling](./samples/Chat/README.md)
-Group Call | A group calling application you can invite your friends and colleagues to. | [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure-Samples%2Fcommunication-services-web-calling-hero%2Fmain%2Fdeploy%2Fazuredeploy.json) | [samples/Chat](./samples/Calling/README.md)
-One to One Call | A one-to-one calling application where you can make a direct call to a friend or colleague. | [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure-Samples%2Fcommunication-services-web-calling-hero%2Fmain%2Fdeploy%2Fazuredeploy.json) | [samples/OneToOne](./samples/OneToOne/README.md)
+Chat | A group chat application you can invite your friends and colleagues to. | [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure-Samples%2Fcommunication-services-web-calling-hero%2Fmain%2Fdeploy%2Fazuredeploy.json) | [Calling instructions](./samples/Chat/README.md)
+Group Call | A group calling application you can invite your friends and colleagues to. | [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure-Samples%2Fcommunication-services-web-calling-hero%2Fmain%2Fdeploy%2Fazuredeploy.json) | [Chat instructions](./samples/Calling/README.md)
+One to One Call | A one-to-one calling application where you can make a direct call to a friend or colleague. | [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure-Samples%2Fcommunication-services-web-calling-hero%2Fmain%2Fdeploy%2Fazuredeploy.json) | [One-To-One instructions](./samples/OneToOne/README.md)
 
 ## Features and Benefits
 
@@ -44,11 +44,11 @@ Explore and play around with the UI components on the [![Storybook](https://raw.
 
 Package | Description | License | Latest Version
 ------- | ----------- | ------- | --------------
-`@Azure/communication-ui` | Todo: _Package description_ | [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) | [![@Azure/communication-ui npm version](https://badge.fury.io/js/%40fluentui%2Freact.svg)](https://www.npmjs.com/)
-`@Azure/acs-calling-declarative` | Todo: _Package description_ | [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) | [![@Azure/communication-ui npm version](https://badge.fury.io/js/%40fluentui%2Freact.svg)](https://www.npmjs.com/)
-`@Azure/acs-calling-selector` | Todo: _Package description_ | [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) | [![@Azure/communication-ui npm version](https://badge.fury.io/js/%40fluentui%2Freact.svg)](https://www.npmjs.com/)
-`@Azure/acs-chat-declarative` | Todo: _Package description_ | [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) | [![@Azure/communication-ui npm version](https://badge.fury.io/js/%40fluentui%2Freact.svg)](https://www.npmjs.com/)
-`@Azure/acs-chat-selector` | Todo: _Package description_ | [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) | [![@Azure/communication-ui npm version](https://badge.fury.io/js/%40fluentui%2Freact.svg)](https://www.npmjs.com/)
+[`@Azure/communication-ui`](packages/communication-ui/README.md) | Todo: _Package description_ | [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) | [![@Azure/communication-ui npm version](https://badge.fury.io/js/UPDATE-WHEN-RELEASED.svg)](https://www.npmjs.com/)
+[`@Azure/acs-calling-declarative`](packages/acs-calling-declarative/README.md) | Todo: _Package description_ | [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) | [![@Azure/communication-ui npm version](https://badge.fury.io/js/%UPDATE-WHEN-RELEASED.svg)](https://www.npmjs.com/)
+[`@Azure/acs-calling-selector`](packages/acs-calling-selector/README.md) | Todo: _Package description_ | [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) | [![@Azure/communication-ui npm version](https://badge.fury.io/js/UPDATE-WHEN-RELEASED.svg)](https://www.npmjs.com/)
+[`@Azure/acs-chat-declarative`](packages/acs-chat-declarative/README.md) | Todo: _Package description_ | [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) | [![@Azure/communication-ui npm version](https://badge.fury.io/js/UPDATE-WHEN-RELEASED.svg)](https://www.npmjs.com/)
+[`@Azure/acs-chat-selector`](packages/acs-chat-selector/README.md) | Todo: _Package description_ | [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) | [![@Azure/communication-ui npm version](https://badge.fury.io/js/UPDATE-WHEN-RELEASED.svg)](https://www.npmjs.com/)
 
 ## Contributing to the Packages or Samples
 
