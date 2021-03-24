@@ -32,13 +32,9 @@ const wrapper = mergeStyles({
  */
 export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Element => {
   const { fluentTheme, children } = props;
-  const [fluentUITheme, setFluentUITheme] = useState<PartialTheme | Theme>(lightTheme);
+  // if fluentTheme is not provided, default to light theme
+  const fluentUITheme = fluentTheme ?? lightTheme;
   const [fluentNorthStarTheme, setFluentNorthStarTheme] = useState<ThemeInput<any>>(teamsTheme);
-
-  useEffect(() => {
-    setFluentUITheme(fluentTheme ?? lightTheme);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fluentTheme]);
 
   useEffect(() => {
     setFluentNorthStarTheme(
