@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "onRender callback properties added for ControlButton and ParticipantItem to enable icon customization.",
+  "comment": "ParticipantItem now has onRenderIcon and onRenderAvatar properties. ControlButton deleted and replaced with Fluent UI DefaultButton.",
   "packageName": "@azure/communication-ui",
   "email": "miguelgamis@microsoft.com",
   "dependentChangeType": "patch"
