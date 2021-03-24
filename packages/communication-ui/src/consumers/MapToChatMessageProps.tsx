@@ -221,7 +221,15 @@ export const MapToChatMessageProps = (): ChatMessagePropsFromContext => {
       userId,
       isMessageSeen
     );
-  }, [failedMessageIds, isLargeGroup, isMessageSeen, sdkChatMessages, userId, messagesNumber]);
+  }, [
+    failedMessageIds,
+    isLargeGroup,
+    isMessageSeen,
+    sdkChatMessages,
+    userId,
+    messagesNumber,
+    disableLoadPreviousMessage
+  ]);
 
   const onSendReadReceipt = useCallback(async () => {
     const messageId = getLatestIncomingMessageId(chatMessages, userId);

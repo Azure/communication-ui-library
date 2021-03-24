@@ -22,7 +22,7 @@ export const ChatThreadComponent: () => JSX.Element = () => {
   const loadMoreMessages = boolean('Enable Load More Messages', true);
   const enableJumpToNewMessageButton = boolean('Enable Jump To New Message', true);
 
-  const onSendNewMessage = () => {
+  const onSendNewMessage = (): void => {
     const existingChatMessages = chatMessages;
     // We dont want to render the status for previous messages
     existingChatMessages.forEach((message) => {
@@ -31,11 +31,11 @@ export const ChatThreadComponent: () => JSX.Element = () => {
     setChatMessages([...existingChatMessages, GetNewChatMessage()]);
   };
 
-  const onSendNewMessageFromOthers = () => {
+  const onSendNewMessageFromOthers = (): void => {
     setChatMessages([...chatMessages, GetNewChatMessageFromOthers()]);
   };
 
-  const onLoadPreviousMessages = () => {
+  const onLoadPreviousMessages = (): void => {
     setChatMessages([...GetHistoryChatMessages(), ...chatMessages]);
   };
 

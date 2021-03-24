@@ -41,7 +41,7 @@ const GetHistoryChatMessages = (): WebUiChatMessage[] => {
       senderId: '3',
       senderDisplayName: 'User3',
       messageId: Math.random().toString(),
-      content: 'Yeah agree, let\'s chat here from now on!',
+      content: 'Yeah agree, let's chat here from now on!',
       createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
       mine: false,
       attached: false
