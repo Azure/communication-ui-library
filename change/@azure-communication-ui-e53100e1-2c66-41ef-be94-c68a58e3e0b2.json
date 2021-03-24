@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Wrote theming documentation page in storybook",
+  "packageName": "@azure/communication-ui",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
