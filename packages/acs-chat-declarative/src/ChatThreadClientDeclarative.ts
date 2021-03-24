@@ -1,7 +1,12 @@
 // © Microsoft Corporation. All rights reserved.
-import { ChatMessage, ChatThreadClient, ListPageSettings } from '@azure/communication-chat';
+import {
+  ChatMessage,
+  ChatThreadClient,
+  ListPageSettings,
+  SendChatMessageResult,
+  WithResponse
+} from '@azure/communication-chat';
 import { ChatMessageWithStatus, MessageStatus } from './types/ChatMessageWithStatus';
-import { Constants } from './Constants';
 import { ChatContext } from './ChatContext';
 import { nanoid } from 'nanoid';
 
@@ -105,21 +110,27 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
           };
           this._context.setChatMessage(chatThreadClient.threadId, newMessage);
 
-          const result = await chatThreadClient.sendMessage(...args);
-          if (result._response.status === Constants.CREATED) {
-            if (result.id) {
-              const message = await chatThreadClient.getMessage(result.id);
-              this._context.batch(() => {
-                this._context.setChatMessage(chatThreadClient.threadId, {
-                  ...message,
-                  status: 'delivered',
-                  id: result.id
-                });
-                this._context.deleteLocalMessage(chatThreadClient.threadId, clientMessageId);
-              });
-            }
-          } else if (result._response.status === Constants.PRECONDITION_FAILED_STATUS_CODE) {
+          let result: WithResponse<SendChatMessageResult> | undefined = undefined;
+          try {
+            result = await chatThreadClient.sendMessage(...args);
+          } catch (e) {
             this._context.setChatMessage(chatThreadClient.threadId, { ...newMessage, status: 'failed' });
+            throw e;
+          }
+
+          if (result?.id) {
+            this._context.batch(() => {
+              if (!result) {
+                return;
+              }
+              this._context.setChatMessage(chatThreadClient.threadId, {
+                ...newMessage,
+                clientMessageId: undefined,
+                status: 'delivered',
+                id: result.id
+              });
+              this._context.deleteLocalMessage(chatThreadClient.threadId, clientMessageId);
+            });
           }
           return result;
         };
@@ -134,10 +145,6 @@ export const chatThreadClientDeclaratify = (
   chatThreadClient: ChatThreadClient,
   context: ChatContext
 ): ChatThreadClient => {
-  context.setThread(chatThreadClient.threadId, {
-    failedMessageIds: [],
-    chatMessages: new Map(),
-    threadId: chatThreadClient.threadId
-  });
+  context.createThreadIfNotExist(chatThreadClient.threadId);
   return new Proxy(chatThreadClient, new ProxyChatThreadClient(context)) as ChatThreadClient;
 };
