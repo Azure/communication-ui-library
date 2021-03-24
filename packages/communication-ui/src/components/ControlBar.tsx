@@ -6,8 +6,7 @@ import {
   IStyle,
   mergeStyles,
   Stack,
-  IButtonProps,
-  concatStyleSets
+  IButtonProps
 } from '@fluentui/react';
 import {
   CallControlCloseTrayIcon,
@@ -118,12 +117,16 @@ export const videoButtonProps: IButtonProps = {
       return <CallVideoOffIcon />;
     }
   },
+  styles: controlButtonStyles
+};
+
+export const labeledVideoButtonProps: IButtonProps = {
+  ...videoButtonProps,
   onRenderText: () => (
     <Stack className={mergeStyles(controlButtonLabelStyles)}>
       <Stack>Camera</Stack>
     </Stack>
-  ),
-  styles: controlButtonStyles
+  )
 };
 
 export const audioButtonProps: IButtonProps = {
@@ -134,22 +137,16 @@ export const audioButtonProps: IButtonProps = {
       return <MicOffIcon />;
     }
   },
-  onRenderText: (props?: IButtonProps): JSX.Element => {
-    if (props?.checked) {
-      return (
-        <Stack className={mergeStyles(controlButtonLabelStyles)}>
-          <Stack>Mute</Stack>
-        </Stack>
-      );
-    } else {
-      return (
-        <Stack className={mergeStyles(controlButtonLabelStyles)}>
-          <Stack>Unmute</Stack>
-        </Stack>
-      );
-    }
-  },
   styles: controlButtonStyles
+};
+
+export const labeledAudioButtonProps: IButtonProps = {
+  ...audioButtonProps,
+  onRenderText: () => (
+    <Stack className={mergeStyles(controlButtonLabelStyles)}>
+      <Stack>Camera</Stack>
+    </Stack>
+  )
 };
 
 export const screenShareButtonProps: IButtonProps = {
@@ -160,37 +157,35 @@ export const screenShareButtonProps: IButtonProps = {
       return <CallControlCloseTrayIcon />;
     }
   },
-  onRenderText: (props?: IButtonProps): JSX.Element => {
-    if (props?.checked) {
-      return (
-        <Stack className={mergeStyles(controlButtonLabelStyles)}>
-          <Stack>Share</Stack>
-        </Stack>
-      );
-    } else {
-      return (
-        <Stack className={mergeStyles(controlButtonLabelStyles)}>
-          <Stack>Stop</Stack>
-        </Stack>
-      );
-    }
-  },
   styles: controlButtonStyles
+};
+
+export const labeledScreenShareButtonProps: IButtonProps = {
+  ...audioButtonProps,
+  onRenderText: () => (
+    <Stack className={mergeStyles(controlButtonLabelStyles)}>
+      <Stack>Camera</Stack>
+    </Stack>
+  )
 };
 
 export const optionsButtonProps: IButtonProps = {
   onRenderIcon: (): JSX.Element => <MoreIcon />,
+  menuIconProps: {
+    hidden: true
+  },
+  styles: controlButtonStyles
+};
+
+export const labeledOptionsButtonProps: IButtonProps = {
+  ...optionsButtonProps,
   onRenderText: (): JSX.Element => {
     return (
       <Stack className={mergeStyles(controlButtonLabelStyles)}>
         <Stack>Options</Stack>
       </Stack>
     );
-  },
-  menuIconProps: {
-    hidden: true
-  },
-  styles: controlButtonStyles
+  }
 };
 
 export const answerButtonProps: IButtonProps = {
@@ -206,14 +201,18 @@ export const answerButtonProps: IButtonProps = {
 
 export const hangupButtonProps: IButtonProps = {
   onRenderIcon: (): JSX.Element => <CallEndIcon />,
+  styles: hangUpControlButtonStyles
+};
+
+export const labeledHangupButtonProps: IButtonProps = {
+  ...hangupButtonProps,
   onRenderText: (): JSX.Element => {
     return (
       <Stack className={mergeStyles(controlButtonLabelStyles)}>
         <Stack>Hangup</Stack>
       </Stack>
     );
-  },
-  styles: concatStyleSets(controlButtonStyles, hangUpControlButtonStyles)
+  }
 };
 
 export const CONTROL_BAR_LAYOUTS = [
@@ -228,6 +227,18 @@ export const CONTROL_BAR_LAYOUTS = [
   'floatingLeft',
   'floatingRight'
 ] as const;
+
+export type ControlBarLayoutsType =
+  | 'horizontal'
+  | 'vertical'
+  | 'dockedTop'
+  | 'dockedBottom'
+  | 'dockedLeft'
+  | 'dockedRight'
+  | 'floatingTop'
+  | 'floatingBottom'
+  | 'floatingLeft'
+  | 'floatingRight';
 
 export interface ControlBarProps {
   children?: React.ReactNode;
@@ -246,13 +257,13 @@ export interface ControlBarProps {
    * `floatingRight`
    * Defaults to a `horizontal` layout.
    */
-  layout?: typeof CONTROL_BAR_LAYOUTS[number];
+  layout?: ControlBarLayoutsType;
 }
 
 /**
- * A Call Control Bar used for handling a call state. Contains actions like
- * toggle video, audo, device settings etc.
- * @returns JSX.Element
+ * `ControlBar` allows you to easily create a component for call controls using `ControlButtons`.
+ * Users will need to provide methods to `ControlButton` components used inside `ControlBar` for altering
+ * call behavior.
  */
 export const ControlBar = (props: ControlBarProps): JSX.Element => {
   const { styles, layout } = props;
