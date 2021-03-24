@@ -1,8 +1,97 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
+import { FluentThemeProvider } from '../providers';
 
 <Meta title="Theming" />
 
 # Theming
 
-TBD
+ACS UI SDK use components and icons from both [Fluent UI](https://developer.microsoft.com/en-us/fluentui#/controls/web)
+and [Fluent React Northstar](https://fluentsite.z22.web.core.windows.net/0.53.0). The FluentThemeProvider ensures:
+
+1. ACS UI SDK and Fluent UI components are themed together
+2. Fluent React Northstar icons are provided
+
+## Usage
+
+To use the FluentThemeProvider, simply import it from '@azure/communication-ui' and wrap it around your React
+application like shown in this example:
+
+```typescript
+import React from 'react';
+import { FluentThemeProvider } from '@azure/communication-ui';
+
+if (document.getElementById('root') !== undefined) {
+  ReactDOM.render(
+    <FluentThemeProvider fluentTheme={myTheme}>
+      <App />
+    </FluentThemeProvider>,
+    document.getElementById('root')
+  );
+}
+```
+
+The property fluentTheme is optional. A light theme will be used if no theme is provided.
+
+## FluentThemeProvider Props
+
+<Props of={FluentThemeProvider} />
+
+## Creating your own theme
+
+If you wish to use your own theme, we strongly advise using Microsoft's [Fluent UI Theme Designer](https://fabricweb.z5.web.core.windows.net/pr-deploy-site/refs/heads/7.0/theming-designer/index.html).
+Please ensure, that the Accessibility checker passes. The default light theme we export looks like this:
+
+```typescript
+export const lightTheme = {
+  palette: {
+    themePrimary: '#0078d4',
+    themeLighterAlt: '#f3f9fd',
+    themeLighter: '#d0e7f8',
+    themeLight: '#a9d3f2',
+    themeTertiary: '#5ca9e5',
+    themeSecondary: '#1a86d9',
+    themeDarkAlt: '#006cbe',
+    themeDark: '#005ba1',
+    themeDarker: '#004377',
+    neutralLighterAlt: '#faf9f8',
+    neutralLighter: '#f3f2f1',
+    neutralLight: '#edebe9',
+    neutralQuaternaryAlt: '#e1dfdd',
+    neutralQuaternary: '#d0d0d0',
+    neutralTertiaryAlt: '#c8c6c4',
+    neutralTertiary: '#a19f9d',
+    neutralSecondary: '#605e5c',
+    neutralPrimaryAlt: '#3b3a39',
+    neutralPrimary: '#323130',
+    neutralDark: '#201f1e',
+    black: '#000000',
+    white: '#ffffff'
+  }
+};
+```
+
+## Custom theme mapping
+
+The FluentThemeProvider automatically handles the mapping of palette slots to components. If you wish to
+override this mapping, we advise that you use the useTheme hook provided by Fluent UI.
+
+```typescript
+import React from 'react';
+import { useTheme, DefaultButton } from '@fluentui/react';
+
+const MyButton = () => JSX.Element {
+    const { theme } = useTheme();
+    return (
+        <DefaultButton
+            text="exampleButton"
+            styles={{root: {background: theme.palette.neutralLight}}}
+        />
+    );
+}
+
+```
+
+Should you override your own mappings, please note that ACS SDK UI components abide by the general Fluent UI
+mappings. Primary colors are used for some component background and icons, foreground colors for text and icons
+while background colors for background of components.
