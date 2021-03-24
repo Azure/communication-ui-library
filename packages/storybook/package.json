@@ -1,25 +1,21 @@
 {
-  "name": "@azure/communication-ui",
-  "version": "1.0.0-beta",
-  "description": "ACS UI SDK",
-  "module": "dist/index.js",
-  "main": "dist/index.js",
-  "types": "dist/communication-ui.d.ts",
+  "name": "storybook",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Azure Communication Services UI Toolkit Storybook",
   "scripts": {
-    "build": "tsc && copyfiles -u 1 src/**/assets/**/* dist && api-extractor run --local",
-    "build:watch": "tsc -w",
+    "build": "build-storybook -s stories",
+    "start": "concurrently \"rush build:watch -T storybook\" \"npm run start:storybook\"",
+    "start:storybook": "start-storybook -p 6006 -s stories --no-manager-cache",
+    "deploy-storybook": "storybook-to-ghpages",
     "test": "jest",
     "test:coverage": "npm run test -- --coverage",
     "snapshot:update": "npm run test -- --update-snapshot",
-    "api-extractor": "tsc && api-extractor run --local",
-    "generate-doc": "api-documenter markdown -i temp -o docGen",
     "prettier": "prettier --write --config ../../.prettierrc \"**/*.js\" \"**/*.ts\"",
     "prettier:check": "prettier --check --config ../../.prettierrc \"**/*.js\" \"**/*.ts\"",
     "lint": "eslint \"*/**/*.{ts,tsx}\"",
     "lint:fix": "npm run lint -- --fix",
-    "lint:quiet": "npm run lint -- --quiet",
-    "prepack": "node scripts/cleanse-pkg \"prepublish,build,test,test:coverage,snapshot:update\"",
-    "postpack": "node scripts/restore-pkg && copyfiles -E \"./*.tgz\" private-preview && copyfiles -u 2 -E \"docs/private-preview/README.md\" private-preview"
+    "lint:quiet": "npm run lint -- --quiet"
   },
   "dependencies": {
     "@azure/communication-administration": "1.0.0-beta.3",
@@ -27,17 +23,18 @@
     "@azure/communication-chat": "1.0.0-beta.3",
     "@azure/communication-common": "1.0.0-beta.3",
     "@azure/communication-signaling": "1.0.0-beta.1",
+    "@azure/communication-ui": "1.0.0-beta",
     "@azure/core-http": "^1.2.3",
     "@fluentui/react": "^7.117.1",
     "@fluentui/react-icons": "^0.3.9",
     "@fluentui/react-icons-northstar": "^0.51.2",
     "@fluentui/react-northstar": "^0.51.2",
     "@fluentui/react-theme-provider": "^0.18.0",
-    "@uifabric/react-hooks": "~7.13.11",
-    "copy-to-clipboard": "~3.3.1",
     "classnames": "^2.2.6",
     "react-aria-live": "^2.0.5",
-    "react-linkify": "^1.0.0-alpha"
+    "react-linkify": "^1.0.0-alpha",
+    "@uifabric/react-hooks": "~7.13.11",
+    "copy-to-clipboard": "~3.3.1"
   },
   "peerDependencies": {
     "react": "^16.13.1",
@@ -49,6 +46,16 @@
     "@mdx-js/react": "^1.6.22",
     "@microsoft/api-documenter": "~7.12.11",
     "@microsoft/api-extractor": "~7.13.2",
+    "@storybook/addon-actions": "^6.1.1",
+    "@storybook/addon-docs": "^6.1.18",
+    "@storybook/addon-essentials": "^6.1.1",
+    "@storybook/addon-knobs": "^6.1.9",
+    "@storybook/addon-links": "^6.1.1",
+    "@storybook/addon-storyshots": "^6.1.6",
+    "@storybook/node-logger": "^6.1.1",
+    "@storybook/react": "^6.1.1",
+    "@storybook/storybook-deployer": "^2.8.7",
+    "@storybook/theming": "^6.1.10",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react-hooks": "^3.4.2",
     "@types/classnames": "^2.2.11",
@@ -91,19 +98,12 @@
     "react": "^16.13.1",
     "regenerator-runtime": "^0.13.7",
     "source-map-explorer": "^2.5.0",
+    "storybook-docs-toc": "~1.3.1",
     "styled-components": "~5.2.1",
     "ts-jest": "^26.4.4",
     "ts-node": "^9.1.1",
     "typescript": "4.1.5",
     "uuid": "^8.1.0",
     "webpack": "4.44.2"
-  },
-  "beachball": {
-    "tag": "next",
-    "disallowedChangeTypes": [
-      "major",
-      "minor",
-      "patch"
-    ]
   }
 }

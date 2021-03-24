@@ -609,6 +609,11 @@ export const hangupButtonProps: CallControlButtonProps;
 // @public (undocumented)
 export const INCOMING = "Incoming";
 
+// Warning: (ae-forgotten-export) The symbol "IncomingCallModalProps" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export const IncomingCallModal: React_2.ComponentType<IncomingCallModalProps>;
+
 // @public (undocumented)
 export const IncomingCallsContext: React_2.Context<IncomingCallsContextType | undefined>;
 
@@ -621,6 +626,11 @@ export type IncomingCallsContextType = {
 export const IncomingCallsProvider: (props: {
     children: React_2.ReactNode;
 }) => JSX.Element;
+
+// Warning: (ae-forgotten-export) The symbol "IncomingCallToastProps" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export const IncomingCallToast: (props: IncomingCallToastProps) => JSX.Element;
 
 // @public (undocumented)
 export const INITIAL_MESSAGES_SIZE = 2000;
