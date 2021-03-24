@@ -13,13 +13,20 @@ import { ChatThreadInfo } from '@azure/communication-chat';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 
 // @public (undocumented)
-export const chatClientDeclaratify: (chatClient: ChatClient) => DeclarativeChatClient;
+export const chatClientDeclaratify: (chatClient: ChatClient, chatConfig: ChatConfig) => DeclarativeChatClient;
 
 // @public (undocumented)
 export type ChatClientState = {
     userId: string;
     displayName: string;
     threads: Map<string, ChatThreadClientState>;
+};
+
+// @public (undocumented)
+export type ChatConfig = {
+    userId: string;
+    displayName: string;
+    threadId: string;
 };
 
 // @public (undocumented)

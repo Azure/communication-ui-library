@@ -5,6 +5,7 @@ import { ChatClientState } from './ChatClientState';
 import { EventSubscriber } from './EventSubscriber';
 import { chatThreadClientDeclaratify } from './ChatThreadClientDeclarative';
 import { createDecoratedListThreads } from './iterators/createDecoratedListThreads';
+import { ChatConfig } from './types/ChatConfig';
 
 export interface DeclarativeChatClient extends ChatClient {
   state: ChatClientState;
@@ -96,9 +97,11 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
   }
 };
 
-export const chatClientDeclaratify = (chatClient: ChatClient): DeclarativeChatClient => {
+export const chatClientDeclaratify = (chatClient: ChatClient, chatConfig: ChatConfig): DeclarativeChatClient => {
   const context = new ChatContext();
   let eventSubscriber: EventSubscriber;
+
+  context.updateChatConig(chatConfig);
 
   const proxy = new Proxy(chatClient, proxyChatClient);
 

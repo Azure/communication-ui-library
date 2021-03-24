@@ -8,6 +8,7 @@ import { ChatThreadInfo, ChatParticipant } from '@azure/communication-chat';
 import { ReadReceipt } from './types/ReadReceipt';
 import { Constants } from './Constants';
 import { TypingIndicator } from './types/TypingIndicator';
+import { ChatConfig } from './types/ChatConfig';
 
 enableMapSet();
 
@@ -52,6 +53,15 @@ export class ChatContext {
           readReceipts: [],
           typingIndicators: []
         });
+      })
+    );
+  }
+
+  public updateChatConig(config: ChatConfig): void {
+    this.setState(
+      produce(this._state, (draft: ChatClientState) => {
+        draft.displayName = config.displayName;
+        draft.userId = config.userId;
       })
     );
   }
@@ -216,7 +226,7 @@ export class ChatContext {
   public addTypingIndicator(threadId: string, typingIndicator: TypingIndicator): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
-        let thread = draft.threads.get(threadId);
+        const thread = draft.threads.get(threadId);
         if (thread) {
           const typingIndicators = thread.typingIndicators;
           typingIndicators.push(typingIndicator);
