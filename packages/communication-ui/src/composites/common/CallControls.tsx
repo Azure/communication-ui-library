@@ -1,10 +1,9 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { IContextualMenuProps } from '@fluentui/react';
+import { DefaultButton, IContextualMenuProps } from '@fluentui/react';
 import React, { useCallback } from 'react';
 import {
   ControlBar,
-  ControlButton,
   videoButtonProps,
   audioButtonProps,
   optionsButtonProps,
@@ -63,7 +62,7 @@ const CallOptionsButton = (props: LocalDeviceSettingsContainerProps): JSX.Elemen
       }
     ]
   };
-  return <ControlButton {...optionsButtonProps} menuProps={callOptionsMenu} />;
+  return <DefaultButton {...optionsButtonProps} menuProps={callOptionsMenu} />;
 };
 
 const CallOptionsButtonComponent = connectFuncsToContext(CallOptionsButton, MapToLocalDeviceSettingsProps);
@@ -92,9 +91,9 @@ const HangupButton = (props: HangupButtonProps): JSX.Element => {
   }, [muteMicrophone, stopScreenShare, localVideoEnabled, stopLocalVideo, leaveCall, onEndCallClick]);
 
   return (
-    <ControlButton
+    <DefaultButton
       {...hangupButtonProps}
-      isToggled={false}
+      checked={false}
       onClick={() => {
         hangup().catch((error) => {
           propagateError(error, onErrorCallback);
@@ -128,9 +127,9 @@ export const OutgoingCallControlBar = (props: OutgoingCallControlBarProps & Erro
 
   return (
     <ControlBar {...props}>
-      <ControlButton
+      <DefaultButton
         {...videoButtonProps}
-        isToggled={!localVideoEnabled}
+        checked={!localVideoEnabled}
         disabled={cameraDisabled || localVideoBusy}
         onClick={() => {
           toggleLocalVideo().catch((error) => {
@@ -138,9 +137,9 @@ export const OutgoingCallControlBar = (props: OutgoingCallControlBarProps & Erro
           });
         }}
       />
-      <ControlButton
+      <DefaultButton
         {...audioButtonProps}
-        isToggled={!isMicrophoneActive}
+        checked={!isMicrophoneActive}
         disabled={micDisabled}
         onClick={() => {
           toggleMicrophone().catch((error) => {
@@ -174,9 +173,9 @@ export const IncomingCallControlBar = (
 
   return (
     <ControlBar {...props}>
-      <ControlButton
+      <DefaultButton
         {...videoButtonProps}
-        isToggled={!localVideoEnabled}
+        checked={!localVideoEnabled}
         disabled={cameraDisabled || localVideoBusy}
         onClick={() => {
           toggleLocalVideo().catch((error) => {
@@ -184,9 +183,9 @@ export const IncomingCallControlBar = (
           });
         }}
       />
-      <ControlButton
+      <DefaultButton
         {...audioButtonProps}
-        isToggled={!isMicrophoneActive}
+        checked={!isMicrophoneActive}
         disabled={micDisabled}
         onClick={() => {
           toggleMicrophone().catch((error) => {
@@ -231,9 +230,9 @@ export const CallControlBar = (props: ControlBarProps & CallControlBarProps & Er
 
   return (
     <ControlBar {...props}>
-      <ControlButton
+      <DefaultButton
         {...videoButtonProps}
-        isToggled={!localVideoEnabled}
+        checked={!localVideoEnabled}
         disabled={cameraDisabled || localVideoBusy}
         onClick={() => {
           toggleLocalVideo().catch((error) => {
@@ -241,9 +240,9 @@ export const CallControlBar = (props: ControlBarProps & CallControlBarProps & Er
           });
         }}
       />
-      <ControlButton
+      <DefaultButton
         {...audioButtonProps}
-        isToggled={!isMicrophoneActive}
+        checked={!isMicrophoneActive}
         disabled={micDisabled}
         onClick={() => {
           toggleMicrophone().catch((error) => {
@@ -252,9 +251,9 @@ export const CallControlBar = (props: ControlBarProps & CallControlBarProps & Er
         }}
       />
       {isLocalScreenShareSupportedInBrowser() && (
-        <ControlButton
+        <DefaultButton
           {...screenShareButtonProps}
-          isToggled={isLocalScreenShareActive}
+          checked={isLocalScreenShareActive}
           disabled={screenShareDisabled}
           onClick={() => {
             toggleScreenShare().catch((error) => {

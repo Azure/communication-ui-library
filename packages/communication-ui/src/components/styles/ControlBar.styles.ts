@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
-import { getTheme, IStyle } from '@fluentui/react';
-import { ControlButtonStylesProps } from '../ControlBar';
+
+import { getTheme, IStyle, IButtonStyles, concatStyleSets } from '@fluentui/react';
 
 const theme = getTheme();
 const palette = theme.palette;
@@ -109,12 +109,17 @@ export const controlBarStyles: IControlBarStyles = {
   }
 };
 
-export const controlButtonStyles: IStyle = {
-  background: 'none',
-  border: 'none',
-  borderRadius: 0,
-  minHeight: '56px',
-  minWidth: '56px'
+export const controlButtonStyles: IButtonStyles = {
+  root: {
+    background: 'none',
+    border: 'none',
+    borderRadius: 0,
+    minHeight: '56px',
+    minWidth: '56px'
+  },
+  flexContainer: {
+    flexFlow: 'column'
+  }
 };
 
 export const controlButtonLabelStyles: IStyle = {
@@ -122,16 +127,16 @@ export const controlButtonLabelStyles: IStyle = {
   lineHeight: '1.25rem'
 };
 
-export const hangUpControlButtonStyles: ControlButtonStylesProps = {
+export const hangUpControlButtonStyles: IButtonStyles = concatStyleSets(controlButtonStyles, {
   root: {
     background: palette.redDark,
-    color: palette.white,
-    ':hover': {
-      background: palette.red,
-      color: palette.white
-    }
+    color: palette.white
+  },
+  rootHovered: {
+    background: palette.red,
+    color: palette.white
   },
   label: {
     color: palette.whiteTranslucent40
   }
-};
+});
