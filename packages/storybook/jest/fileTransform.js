@@ -1,3 +1,5 @@
+// © Microsoft Corporation. All rights reserved.
+
 'use strict';
 
 const path = require('path');

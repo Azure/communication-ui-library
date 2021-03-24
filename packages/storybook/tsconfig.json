@@ -25,6 +25,6 @@
     "isolatedModules": true,
     "moduleResolution": "node"
   },
-  "include": ["src/**/*"],
+  "include": ["stories/**/*"],
   "exclude": ["dist", "node_modules"]
 }
