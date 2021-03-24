@@ -4,6 +4,7 @@
   "description": "ACS UI SDK",
   "module": "dist/index.js",
   "main": "dist/index.js",
+  "type": "module",
   "types": "dist/communication-ui.d.ts",
   "scripts": {
     "build": "tsc && copyfiles -u 1 src/**/assets/**/* dist && api-extractor run --local",

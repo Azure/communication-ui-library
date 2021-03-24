@@ -46,7 +46,7 @@ const ParticipantManagementComponentBase = (props: ParticipantManagementProps & 
               name={member.displayName as string}
               isYou={isYou}
               menuItems={isYou ? undefined : menuItems}
-              avatar={onRenderAvatar ? onRenderAvatar(member.userId) : undefined}
+              onRenderAvatar={onRenderAvatar ? () => onRenderAvatar(member.userId) : undefined}
             />
           );
         }

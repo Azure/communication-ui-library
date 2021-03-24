@@ -23,16 +23,21 @@ export { ChatThreadComponent, ChatThread } from './ChatThread';
 export type { ChatThreadProps, ChatThreadStylesProps } from './ChatThread';
 export { StreamMedia } from './StreamMedia';
 export { ParticipantItem } from './ParticipantItem';
+export type { ParticipantItemProps } from './ParticipantItem';
 export {
   CONTROL_BAR_LAYOUTS,
   ControlBar,
-  ControlButton,
   videoButtonProps,
   audioButtonProps,
   screenShareButtonProps,
   optionsButtonProps,
   answerButtonProps,
-  hangupButtonProps
+  hangupButtonProps,
+  labeledVideoButtonProps,
+  labeledAudioButtonProps,
+  labeledScreenShareButtonProps,
+  labeledHangupButtonProps,
+  labeledOptionsButtonProps
 } from './ControlBar';
 
 export { VideoTile } from './VideoTile';

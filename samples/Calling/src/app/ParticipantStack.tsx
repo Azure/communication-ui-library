@@ -57,10 +57,13 @@ const defaultRenderer = (item: IOverflowSetItemProps): JSX.Element => {
       isYou={item.isYou}
       menuItems={item.isYou ? undefined : menuItems}
       presence={presence}
-    >
-      {item.isScreenSharing && <CallControlPresentNewIcon size="small" />}
-      {item.isMuted && <MicOffIcon size="small" />}
-    </ParticipantItem>
+      onRenderIcon={() => (
+        <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
+          {item.isScreenSharing && <CallControlPresentNewIcon size="small" />}
+          {item.isMuted && <MicOffIcon size="small" />}
+        </Stack>
+      )}
+    />
   );
 };
 
