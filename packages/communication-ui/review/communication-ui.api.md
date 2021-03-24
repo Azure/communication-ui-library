@@ -28,13 +28,11 @@ import { Dispatch } from 'react';
 import { ErrorInfo } from 'react';
 import { GroupCallContext } from '@azure/communication-calling';
 import { HangupCallOptions } from '@azure/communication-calling';
+import { IButtonProps } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
-import { IContextualMenuProps } from '@fluentui/react';
-import { IIconProps } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { JoinCallOptions } from '@azure/communication-calling';
 import { LocalVideoStream } from '@azure/communication-calling';
-import { MouseEventHandler } from 'react';
 import { PartialTheme } from '@fluentui/react-theme-provider';
 import { PermissionState as PermissionState_2 } from '@azure/communication-calling';
 import { PermissionType } from '@azure/communication-calling';
@@ -54,16 +52,14 @@ import { Theme } from '@fluentui/react-theme-provider';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 
-// Warning: (ae-forgotten-export) The symbol "CallControlButtonProps" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
-export const answerButtonProps: CallControlButtonProps;
+export const answerButtonProps: IButtonProps;
 
 // @public (undocumented)
 export const areStreamsEqual: (prevStream: LocalVideoStream, newStream: LocalVideoStream) => boolean;
 
 // @public (undocumented)
-export const audioButtonProps: CallControlButtonProps;
+export const audioButtonProps: IButtonProps;
 
 // @public (undocumented)
 export type CallContainerProps = {
@@ -428,9 +424,6 @@ export const CONTROL_BAR_LAYOUTS: readonly ["horizontal", "vertical", "dockedTop
 // @public
 export const ControlBar: (props: ControlBarProps) => JSX.Element;
 
-// @public
-export const ControlButton: (props: CallControlButtonProps) => JSX.Element;
-
 // @public (undocumented)
 export const convertSdkRemoteParticipantToGalleryParticipant: (remoteParticipantFromSDK: RemoteParticipant) => GalleryParticipant;
 
@@ -604,7 +597,7 @@ export const GroupChat: (props: GroupChatProps) => JSX.Element;
 export const GUID_FOR_INITIAL_TOPIC_NAME = "c774da81-94d5-4652-85c7-6ed0e8dc67e6";
 
 // @public (undocumented)
-export const hangupButtonProps: CallControlButtonProps;
+export const hangupButtonProps: IButtonProps;
 
 // @public (undocumented)
 export const INCOMING = "Incoming";
@@ -789,7 +782,7 @@ export const OK = 200;
 export const OneToOneCall: (props: OneToOneCallCompositeProps) => JSX.Element;
 
 // @public (undocumented)
-export const optionsButtonProps: CallControlButtonProps;
+export const optionsButtonProps: IButtonProps;
 
 // @public (undocumented)
 export const PAGE_SIZE = 200;
@@ -853,7 +846,7 @@ export const RINGING = "Ringing";
 export const saveThemeToLocalStorage: (theme: string, scopeId: string) => void;
 
 // @public (undocumented)
-export const screenShareButtonProps: CallControlButtonProps;
+export const screenShareButtonProps: IButtonProps;
 
 // @public (undocumented)
 export const SendBox: (props: Pick<{
@@ -1223,7 +1216,7 @@ export const useUserId: () => string;
 export const useValidContext: <T extends unknown>(ReactContext: React_2.Context<T | undefined>) => T;
 
 // @public (undocumented)
-export const videoButtonProps: CallControlButtonProps;
+export const videoButtonProps: IButtonProps;
 
 // @public (undocumented)
 export interface VideoContainerProps {
