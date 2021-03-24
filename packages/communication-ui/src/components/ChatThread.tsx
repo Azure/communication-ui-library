@@ -117,8 +117,6 @@ const didUserSendTheLatestMessage = (
       return (
         !isMessageSame(latestMessageFromNewMessages, latestMessageFromPreviousMessages) &&
         latestMessageFromNewMessages.senderId === userId
-        // && latestMessageFromNewMessages.statusToRender !== MessageStatus.SEEN &&
-        // latestMessageFromNewMessages.statusToRender !== MessageStatus.FAILED
       );
     }
   }
@@ -139,11 +137,11 @@ export interface ChatThreadStylesProps {
   readReceiptContainer?: (mine: boolean) => IStyle;
 }
 
-export interface NewMessageButtonProps {
+export interface JumpToNewMessageButtonProps {
   onClick: () => void;
 }
 
-const DefaultNewMessageButton = (props: NewMessageButtonProps): JSX.Element => {
+const DefaultJumpToNewMessageButton = (props: JumpToNewMessageButtonProps): JSX.Element => {
   const { onClick } = props;
   return (
     <PrimaryButton className={newMessageButtonStyle} onClick={onClick}>
@@ -186,7 +184,7 @@ export type ChatThreadProps = {
   /**
    * Whether the new message button is disabled. Default to false.
    */
-  disableNewMessageButton?: boolean;
+  disableJumpToNewMessageButton?: boolean;
   /**
    * Whether the load previous message button is disabled. Default to true.
    */
@@ -208,9 +206,9 @@ export type ChatThreadProps = {
    */
   onRenderAvatar?: (userId: string) => JSX.Element;
   /**
-   * onRenderNewMessageButton event handler.
+   * onRenderJumpToNewMessageButton event handler.
    */
-  onRenderNewMessageButton?: (newMessageButtonProps: NewMessageButtonProps) => JSX.Element;
+  onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
   /**
    * onLoadPreviousMessages event handler.
    */
@@ -226,14 +224,14 @@ export type ChatThreadProps = {
 /**
  * `ChatThread` allows you to easily create a component for rendering chat messages.
  * Users will need to provide at least chat messages and userId to render the `ChatThread` component.
- * Users can also customize `ChatThread` by passing in their own Avatar, `ReadReceipt` icon, `NewMessageButton`, `LoadPreviousMessagesButton` and the behavior of these controls.
+ * Users can also customize `ChatThread` by passing in their own Avatar, `ReadReceipt` icon, `JumpToNewMessageButton`, `LoadPreviousMessagesButton` and the behavior of these controls.
  */
 export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingProps): JSX.Element => {
   const {
     chatMessages: newChatMessages,
     userId,
     styles,
-    disableNewMessageButton = false,
+    disableJumpToNewMessageButton = false,
     disableReadReceipt = true,
     disableLoadPreviousMessage = true,
     onSendReadReceipt,
@@ -242,7 +240,7 @@ export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingPr
     onErrorCallback,
     onLoadPreviousMessages,
     onRenderLoadPreviousMessagesButton,
-    onRenderNewMessageButton
+    onRenderJumpToNewMessageButton
   } = props;
 
   const [chatMessages, setChatMessages] = useState<WebUiChatMessage[]>([]);
@@ -475,12 +473,12 @@ export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingPr
             <Chat styles={styles?.chatContainer ?? chatStyle} items={messagesToDisplay} />
           </LiveAnnouncer>
         </Ref>
-        {existsNewMessage && !disableNewMessageButton && (
+        {existsNewMessage && !disableJumpToNewMessageButton && (
           <div className={mergeStyles(newMessageButtonContainerStyle, styles?.newMessageButtonContainer)}>
-            {onRenderNewMessageButton ? (
-              onRenderNewMessageButton({ onClick: scrollToBottom })
+            {onRenderJumpToNewMessageButton ? (
+              onRenderJumpToNewMessageButton({ onClick: scrollToBottom })
             ) : (
-              <DefaultNewMessageButton onClick={scrollToBottom} />
+              <DefaultJumpToNewMessageButton onClick={scrollToBottom} />
             )}
           </div>
         )}

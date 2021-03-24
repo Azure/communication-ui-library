@@ -20,7 +20,7 @@ export const ChatThreadComponent: () => JSX.Element = () => {
   const [chatMessages, setChatMessages] = useState<WebUiChatMessage[]>(GetChatThreadMessages());
   const showReadReceipt = boolean('Enable Message Read Receipt', true);
   const loadMoreMessages = boolean('Enable Load More Messages', true);
-  const enableNewMessageButton = boolean('Enable New Message Button', true);
+  const enableJumpToNewMessageButton = boolean('Enable Jump To New Message', true);
 
   const onSendNewMessage = () => {
     const existingChatMessages = chatMessages;
@@ -60,7 +60,7 @@ export const ChatThreadComponent: () => JSX.Element = () => {
         chatMessages={chatMessages}
         disableReadReceipt={!showReadReceipt}
         disableLoadPreviousMessage={!loadMoreMessages}
-        disableNewMessageButton={!enableNewMessageButton}
+        disableJumpToNewMessageButton={!enableJumpToNewMessageButton}
         onLoadPreviousMessages={onLoadPreviousMessages}
       />
       {/* We need to use these two buttons to render more messages in the chat thread and showcase the "new message" button.

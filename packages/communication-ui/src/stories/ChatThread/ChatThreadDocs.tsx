@@ -1,7 +1,5 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { Stack } from '@fluentui/react';
-import { CallEndIcon } from '@fluentui/react-northstar';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import React from 'react';
 import { ChatThreadComponentBase } from '../../components/ChatThread';

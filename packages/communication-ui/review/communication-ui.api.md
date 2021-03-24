@@ -200,7 +200,7 @@ export interface ChatMessageWithClientMessageId extends ChatMessage_2 {
 export const ChatProvider: (props: ChatProviderProps & ErrorHandlingProps) => JSX.Element;
 
 // @public (undocumented)
-export const ChatThread: (props: Pick<ChatThreadProps & ErrorHandlingProps & ChatMessagePropsFromContext, "onErrorCallback" | "styles" | "disableNewMessageButton" | "onRenderReadReceipt" | "onRenderAvatar" | "onRenderLoadPreviousMessagesButton" | "onRenderNewMessageButton">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+export const ChatThread: (props: Pick<ChatThreadProps & ErrorHandlingProps & ChatMessagePropsFromContext, "onErrorCallback" | "styles" | "disableJumpToNewMessageButton" | "onRenderReadReceipt" | "onRenderAvatar" | "onRenderLoadPreviousMessagesButton" | "onRenderJumpToNewMessageButton">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
 
 // @public (undocumented)
 export const ChatThreadComponent: (props: ChatThreadProps & ErrorHandlingProps & ChatMessagePropsFromContext) => JSX.Element;
@@ -222,13 +222,13 @@ export type ChatThreadProps = {
     userId: string;
     chatMessages: ChatMessage[];
     styles?: ChatThreadStylesProps;
-    disableNewMessageButton?: boolean;
+    disableJumpToNewMessageButton?: boolean;
     disableLoadPreviousMessage?: boolean;
     disableReadReceipt?: boolean;
     onSendReadReceipt?: () => Promise<void>;
     onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element;
     onRenderAvatar?: (userId: string) => JSX.Element;
-    onRenderNewMessageButton?: (newMessageButtonProps: NewMessageButtonProps) => JSX.Element;
+    onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousMessages?: () => void;
     onRenderLoadPreviousMessagesButton?: (loadPreviousMessagesButton: LoadPreviousMessagesButtonProps) => JSX.Element;
 };
@@ -1253,8 +1253,8 @@ export const WithErrorHandling: (Component: (props: any & ErrorHandlingProps) =>
 
 // Warnings were encountered during analysis:
 //
-// src/components/ChatThread.tsx:183:3 - (ae-forgotten-export) The symbol "NewMessageButtonProps" needs to be exported by the entry point index.d.ts
-// src/components/ChatThread.tsx:185:3 - (ae-forgotten-export) The symbol "LoadPreviousMessagesButtonProps" needs to be exported by the entry point index.d.ts
+// src/components/ChatThread.tsx:211:3 - (ae-forgotten-export) The symbol "JumpToNewMessageButtonProps" needs to be exported by the entry point index.d.ts
+// src/components/ChatThread.tsx:219:3 - (ae-forgotten-export) The symbol "LoadPreviousMessagesButtonProps" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 
