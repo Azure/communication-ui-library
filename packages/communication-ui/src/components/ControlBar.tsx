@@ -1,13 +1,5 @@
 // © Microsoft Corporation. All rights reserved.
-import {
-  DefaultButton,
-  IContextualMenuProps,
-  IIconProps,
-  IStyle,
-  mergeStyles,
-  Stack,
-  IButtonProps
-} from '@fluentui/react';
+import { IStyle, mergeStyles, Stack, IButtonProps } from '@fluentui/react';
 import {
   CallControlCloseTrayIcon,
   CallControlPresentNewIcon,
@@ -19,7 +11,7 @@ import {
   MicOffIcon,
   MoreIcon
 } from '@fluentui/react-northstar';
-import React, { MouseEventHandler } from 'react';
+import React from 'react';
 import {
   controlBarStyles,
   controlButtonLabelStyles,
@@ -30,84 +22,6 @@ import {
 export interface CustomStylesProps {
   root?: IStyle;
 }
-
-export interface ControlButtonStylesProps extends CustomStylesProps {
-  /**
-   * The flex container containing the elements inside a button.
-   */
-  flexContainer?: IStyle;
-  /**
-   * Text label styles.
-   */
-  label?: IStyle;
-}
-
-export interface CallControlButtonProps {
-  /**
-   * React Child components.
-   */
-  children?: React.ReactNode;
-  /**
-   * Whether the button is in a toggled state. Will render the toggled Icon if
-   * set to `true`.
-   */
-  isToggled?: boolean;
-  /**
-   * Custom CSS Styling.
-   */
-  styles?: ControlButtonStylesProps;
-  /**
-   * Whether the button is disabled
-   */
-  disabled?: boolean;
-  /**
-   * OnClick event handler.
-   */
-  onClick?: MouseEventHandler<HTMLElement>;
-  /**
-   * Optional callback function to render icon of control button
-   */
-  onRenderIcon?: (props?: CallControlButtonProps) => JSX.Element | null;
-  /**
-   * The props for the icon shown when providing a menu dropdown.
-   * Uses `IIconProps` from FluentUI.
-   * Visit https://developer.microsoft.com/en-us/fluentui#/controls/web/icon#IIconProps for more info.
-   */
-  menuIconProps?: IIconProps;
-  /**
-   * Props for button menu. Providing this will default to showing the menu icon. See menuIconProps for overriding
-   * how the default icon looks. Providing this in addition of onClick and setting the split property to true will
-   * render a SplitButton.
-   * Uses `IContextualMenuProps` from FluentUI
-   * Visit https://developer.microsoft.com/en-us/fluentui#/controls/web/contextualmenu#IContextualMenuProps for more info.
-   */
-  menuProps?: IContextualMenuProps;
-}
-
-/**
- * A Button component that can be rendered inside a Control Bar
- * @returns JSX.Element
- */
-export const ControlButton = (props: CallControlButtonProps): JSX.Element => {
-  const { menuIconProps, menuProps, disabled, isToggled, onClick, onRenderIcon, styles } = props;
-  return (
-    <DefaultButton
-      disabled={disabled}
-      onClick={onClick}
-      className={mergeStyles(controlButtonStyles, styles?.root)}
-      styles={{
-        flexContainer: styles?.flexContainer ?? {
-          flexDirection: 'column'
-        }
-      }}
-      menuIconProps={menuIconProps}
-      menuProps={menuProps}
-      checked={isToggled}
-    >
-      {onRenderIcon && onRenderIcon(props)}
-    </DefaultButton>
-  );
-};
 
 export const videoButtonProps: IButtonProps = {
   onRenderIcon: (props?: IButtonProps): JSX.Element => {

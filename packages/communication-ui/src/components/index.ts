@@ -27,7 +27,6 @@ export type { ParticipantItemProps } from './ParticipantItem';
 export {
   CONTROL_BAR_LAYOUTS,
   ControlBar,
-  ControlButton,
   videoButtonProps,
   audioButtonProps,
   screenShareButtonProps,
