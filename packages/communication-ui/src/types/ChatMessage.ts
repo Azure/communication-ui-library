@@ -20,7 +20,7 @@ export type ChatMessage = {
   senderId?: string;
   senderDisplayName?: string;
   statusToRender?: MessageStatus;
-  attached?: MessageAttachedStatus;
+  attached?: MessageAttachedStatus | boolean;
   mine?: boolean;
   clientMessageId?: string;
 };

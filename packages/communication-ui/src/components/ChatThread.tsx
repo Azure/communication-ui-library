@@ -21,7 +21,7 @@ import { LiveAnnouncer, LiveMessage } from 'react-aria-live';
 import { ErrorHandlingProps } from '../providers';
 import { formatTimestampForChatMessage, propagateError, WithErrorHandling } from '../utils';
 import { CLICK_TO_LOAD_MORE_MESSAGES, NEW_MESSAGES } from '../constants';
-import { ChatMessage as WebUiChatMessage, MessageStatus } from '../types';
+import { ChatMessage as WebUiChatMessage } from '../types';
 import { ReadReceiptComponent, ReadReceiptProps } from './ReadReceipt';
 import { connectFuncsToContext, ChatMessagePropsFromContext, MapToChatMessageProps } from '../consumers';
 
@@ -116,9 +116,9 @@ const didUserSendTheLatestMessage = (
     } else {
       return (
         !isMessageSame(latestMessageFromNewMessages, latestMessageFromPreviousMessages) &&
-        latestMessageFromNewMessages.senderId === userId &&
-        latestMessageFromNewMessages.statusToRender !== MessageStatus.SEEN &&
-        latestMessageFromNewMessages.statusToRender !== MessageStatus.FAILED
+        latestMessageFromNewMessages.senderId === userId
+        // && latestMessageFromNewMessages.statusToRender !== MessageStatus.SEEN &&
+        // latestMessageFromNewMessages.statusToRender !== MessageStatus.FAILED
       );
     }
   }
@@ -171,22 +171,63 @@ const DefaultLoadPreviousMessagesButton = (props: LoadPreviousMessagesButtonProp
 };
 
 export type ChatThreadProps = {
+  /**
+   * The userId of the current user.
+   */
   userId: string;
+  /**
+   * The chat messages to render in chat thread.
+   */
   chatMessages: WebUiChatMessage[];
+  /**
+   * Custom CSS Styling.
+   */
   styles?: ChatThreadStylesProps;
+  /**
+   * Whether the new message button is disabled. Default to false.
+   */
   disableNewMessageButton?: boolean;
+  /**
+   * Whether the load previous message button is disabled. Default to true.
+   */
   disableLoadPreviousMessage?: boolean;
+  /**
+   * Whether the read receipt for each message is disabled. Default to true.
+   */
   disableReadReceipt?: boolean;
+  /**
+   * onSendReadReceipt event handler.
+   */
   onSendReadReceipt?: () => Promise<void>;
+  /**
+   * onRenderReadReceipt event handler. `(readReceiptProps: ReadReceiptProps) => JSX.Element`
+   */
   onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element;
+  /**
+   * onRenderAvatar event handler.
+   */
   onRenderAvatar?: (userId: string) => JSX.Element;
+  /**
+   * onRenderNewMessageButton event handler.
+   */
   onRenderNewMessageButton?: (newMessageButtonProps: NewMessageButtonProps) => JSX.Element;
+  /**
+   * onLoadPreviousMessages event handler.
+   */
   onLoadPreviousMessages?: () => void;
+  /**
+   * onRenderLoadPreviousMessagesButton event handler.
+   */
   onRenderLoadPreviousMessagesButton?: (loadPreviousMessagesButton: LoadPreviousMessagesButtonProps) => JSX.Element;
 };
 
 //  A Chatthread will be fed many messages so it will try to map out the messages out of the props and feed them into a
 //  Chat item. We need to be smarter and figure out for the last N messages are they all of the same person or not?
+/**
+ * `ChatThread` allows you to easily create a component for rendering chat messages.
+ * Users will need to provide at least chat messages and userId to render the `ChatThread` component.
+ * Users can also customize `ChatThread` by passing in their own Avatar, `ReadReceipt` icon, `NewMessageButton`, `LoadPreviousMessagesButton` and the behavior of these controls.
+ */
 export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingProps): JSX.Element => {
   const {
     chatMessages: newChatMessages,

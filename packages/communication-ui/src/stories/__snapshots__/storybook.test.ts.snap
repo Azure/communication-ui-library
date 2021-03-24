@@ -1,53 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`storybook snapshot tests Storyshots Composites/GroupCall Group Call Composite 1`] = `
-<div
-  style={
-    Object {
-      "alignItems": "center",
-      "display": "flex",
-      "height": "100vh",
-      "justifyContent": "center",
-    }
-  }
->
-  <div
-    className="css-52 root-0"
-    style={
-      Object {
-        "display": "inherit",
-      }
-    }
-  >
-    <div
-      className="css-52"
-      data-uses-unhanded-props={true}
-      dir="ltr"
-      style={
-        Object {
-          "display": "flex",
-        }
-      }
-    >
-      <div
-        style={
-          Object {
-            "height": "100%",
-            "margin": "20px auto",
-            "maxHeight": "35rem",
-            "maxWidth": "50rem",
-            "width": "100%",
-          }
-        }
-      >
-        
-        Please fill in Connection String to run group call widget.
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
 exports[`storybook snapshot tests Storyshots Composites/GroupChat Group Chat Composite 1`] = `
 <div
   style={
@@ -1201,7 +1153,7 @@ exports[`storybook snapshot tests Storyshots UI Components/GridLayout Grid Layou
         }
       >
         <div
-          className="css-62"
+          className="css-71"
           style={
             Object {
               "gridTemplateColumns": "repeat(2, 1fr)",
@@ -1679,7 +1631,7 @@ exports[`storybook snapshot tests Storyshots UI Components/ReadReceipt Read Reci
       >
         <span
           aria-hidden={true}
-          className="root_de478240 css-64"
+          className="root_de478240 css-61"
           role="presentation"
           style={Object {}}
         >
@@ -1736,10 +1688,10 @@ exports[`storybook snapshot tests Storyshots UI Components/SendBox Send Box Stor
         }
       >
         <div
-          className="ms-Stack css-54 css-2"
+          className="ms-Stack css-63 css-2"
         >
           <div
-            className="ms-TextField ms-TextField--multiline css-53 root-4"
+            className="ms-TextField ms-TextField--multiline css-62 root-4"
           >
             <div
               className="ms-TextField-wrapper wrapper-5"
@@ -1750,7 +1702,7 @@ exports[`storybook snapshot tests Storyshots UI Components/SendBox Send Box Stor
                 <textarea
                   aria-invalid={false}
                   aria-label="Type"
-                  className="ms-TextField-field ms-TextField--unresizable css-55 field-7"
+                  className="ms-TextField-field ms-TextField--unresizable css-64 field-7"
                   id="sendbox"
                   onBlur={[Function]}
                   onChange={[Function]}
@@ -1764,11 +1716,11 @@ exports[`storybook snapshot tests Storyshots UI Components/SendBox Send Box Stor
             </div>
           </div>
           <div
-            className="css-57 sendIconWrapper"
+            className="css-66 sendIconWrapper"
             onClick={[Function]}
           >
             <div
-              className="css-58"
+              className="css-67"
             />
           </div>
         </div>
@@ -1827,20 +1779,20 @@ exports[`storybook snapshot tests Storyshots UI Components/TypingIndicator Typin
       }
     >
       <div
-        className="css-59"
+        className="css-68"
       >
         <span
-          className="css-60"
+          className="css-69"
         >
           User1, 
         </span>
         <span
-          className="css-60"
+          className="css-69"
         >
           User2
         </span>
         <span
-          className="css-60"
+          className="css-69"
         >
            and 5 others are typing...
         </span>
