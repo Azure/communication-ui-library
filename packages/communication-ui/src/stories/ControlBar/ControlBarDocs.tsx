@@ -73,11 +73,11 @@ const exampleCode = `
 const ControlBarExample: () => JSX.Element = () => {
   return (
     <ControlBar layout={'horizontal'}>
-      <DefaultButton {...videoButtonProps} onClick={toggleVideo} />
-      <DefaultButton {...audioButtonProps} onClick={toggleAudio} />
-      <DefaultButton {...screenShareButtonProps} onClick={toggleScreenShare} />
-      <DefaultButton {...optionsButtonProps} menuProps={defaultOptionsMenuProps} />
-      <DefaultButton {...hangupButtonProps} onClick={hangUpCall} />
+      <DefaultButton {...videoButtonProps} onClick={() => {/*handle onClick*/ }} />
+      <DefaultButton {...audioButtonProps} onClick={() => {/*handle onClick*/ }} />
+      <DefaultButton {...screenShareButtonProps} onClick={() => {/*handle onClick*/ }} />
+      <DefaultButton {...optionsButtonProps} menuProps={/*some IContextualMenuProps*/} />
+      <DefaultButton {...hangupButtonProps} onClick={() => {/*handle onClick*/ }} />
     </ControlBar>
   );
 };
@@ -104,7 +104,7 @@ const controlBarLayoutCode = `
   <DefaultButton {...videoButtonProps} />
   <DefaultButton {...audioButtonProps} />
   <DefaultButton {...screenShareButtonProps} />
-  <DefaultButton {...optionsButtonProps} menuProps={defaultOptionsMenuProps} />
+  <DefaultButton {...optionsButtonProps} />
   <DefaultButton {...hangupButtonProps} />
 </ControlBar>
 `;
@@ -113,25 +113,28 @@ const customControlBarUsage = `
 import { CallEndIcon } from '@fluentui/react-northstar';
 import { FluentThemeProvider } from '@azure/communication-ui';
 
-const CustomHangUpButton: () => JSX.Element = () => {
+const CustomHangupButton: () => JSX.Element = () => {
   const styles = concatStyleSets(hangupButtonProps.styles, {
     root: {
       height: 'inherit',
       background: '#d74747',
       color: 'white',
+      width: '10rem'
     },
-    rootHovered: { 
-      background: 'red', 
-      color: 'white' 
+    rootHovered: {
+      background: 'red',
+      color: 'white'
     },
     flexContainer: { flexFlow: 'row' }
   });
   return (
-    <DefaultButton 
+    <DefaultButton
       onRenderIcon={() => <CallEndIcon />}
       onRenderText={() => <span style={{ marginLeft: '0.250rem' }}>End Call</span>}
       styles={styles}
-      onClick={() => {/* handle hangup */}}
+      onClick={() => {
+        /* handle hangup */
+      }}
     />
   );
 };
@@ -142,7 +145,7 @@ const CustomControlBarExample: () => JSX.Element = () => {
       <ControlBar layout={'horizontal'}>
         <DefaultButton {...videoButtonProps} />
         <DefaultButton {...audioButtonProps} />
-        <CustomHangUpButton />
+        <CustomHangupButton />
       </ControlBar>
     </FluentThemeProvider>
   );
@@ -154,7 +157,8 @@ const CustomHangupButton: () => JSX.Element = () => {
     root: {
       height: 'inherit',
       background: '#d74747',
-      color: 'white'
+      color: 'white',
+      width: '10rem'
     },
     rootHovered: {
       background: 'red',
@@ -199,10 +203,18 @@ export const getDocs: () => JSX.Element = () => {
       <Source code={importStatement} />
 
       <Heading>Usage</Heading>
+      <Description>
+        ControlBar can be rendered with `DefaultButton`, a
+        [Button](https://developer.microsoft.com/en-us/fluentui#/controls/web/button) component from Fluent UI.
+      </Description>
       <Canvas>
         <ControlBarExample />
       </Canvas>
       <Source code={exampleCode} />
+      <Description>
+        Note: In the example below, menuProps is a property of `Button`. The property type is
+        [IContextualMenuProps](https://developer.microsoft.com/en-us/fluentui#/controls/web/contextualmenu#IContextualMenuProps).
+      </Description>
 
       <Heading>Layouts</Heading>
       <Description>

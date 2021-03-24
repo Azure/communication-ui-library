@@ -175,9 +175,10 @@ export interface ControlBarProps {
 }
 
 /**
- * `ControlBar` allows you to easily create a component for call controls using `ControlButtons`.
- * Users will need to provide methods to `ControlButton` components used inside `ControlBar` for altering
- * call behavior.
+ * `ControlBar` allows you to easily create a component for call controls using
+ * [Button](https://developer.microsoft.com/en-us/fluentui#/controls/web/button) component from
+ * Fluent UI. Users will need to provide methods to Button components used inside `ControlBar`
+ * for altering call behavior.
  */
 export const ControlBar = (props: ControlBarProps): JSX.Element => {
   const { styles, layout } = props;
