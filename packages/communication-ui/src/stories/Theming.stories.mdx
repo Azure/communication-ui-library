@@ -15,23 +15,18 @@ and [Fluent React Northstar](https://fluentsite.z22.web.core.windows.net/0.53.0)
 ## Usage
 
 To use the FluentThemeProvider, simply import it from '@azure/communication-ui' and wrap it around your React
-application like shown in this example:
+application and rendering it as shown in this example:
 
 ```typescript
 import React from 'react';
 import { FluentThemeProvider } from '@azure/communication-ui';
 
-if (document.getElementById('root') !== undefined) {
-  ReactDOM.render(
-    <FluentThemeProvider fluentTheme={myTheme}>
-      <App />
-    </FluentThemeProvider>,
-    document.getElementById('root')
-  );
-}
+<FluentThemeProvider fluentTheme={exampleTheme}>
+  <App />
+</FluentThemeProvider>;
 ```
 
-The property fluentTheme is optional. A light theme will be used if no theme is provided.
+The property `fluentTheme` is optional. A light theme will be used if no theme is provided.
 
 ## FluentThemeProvider Props
 
@@ -40,7 +35,7 @@ The property fluentTheme is optional. A light theme will be used if no theme is 
 ## Creating your own theme
 
 If you wish to use your own theme, we strongly advise using Microsoft's [Fluent UI Theme Designer](https://fabricweb.z5.web.core.windows.net/pr-deploy-site/refs/heads/7.0/theming-designer/index.html).
-Please ensure, that the Accessibility checker passes. The default light theme we export looks like this:
+The default light theme we export looks like this:
 
 ```typescript
 export const lightTheme = {
@@ -71,6 +66,10 @@ export const lightTheme = {
 };
 ```
 
+Note: Please ensure that the Accessibility checker passes when creating your own theme.
+
+![Accessibility checker pass](/stories/images/accessibility_checker_pass.png)
+
 ## Custom theme mapping
 
 The FluentThemeProvider automatically handles the mapping of palette slots to components. If you wish to
@@ -78,7 +77,8 @@ override this mapping, we advise that you use the useTheme hook provided by Flue
 
 ```typescript
 import React from 'react';
-import { useTheme, DefaultButton } from '@fluentui/react';
+import { useTheme } from '@fluentui/react-theme-provider';
+import { DefaultButton } from '@fluentui/react';
 
 const MyButton = () => JSX.Element {
     const { theme } = useTheme();
@@ -93,5 +93,5 @@ const MyButton = () => JSX.Element {
 ```
 
 Should you override your own mappings, please note that ACS SDK UI components abide by the general Fluent UI
-mappings. Primary colors are used for some component background and icons, foreground colors for text and icons
-while background colors for background of components.
+mappings. Primary colors are used for component backgrounds and icons, foreground colors for text, icons, and
+outlines and background colors for component backgrounds.
