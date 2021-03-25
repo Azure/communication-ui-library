@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
 import React from 'react';
-import { ChoiceGroup, IChoiceGroupOption } from '@fluentui/react';
+import { ChoiceGroup, IChoiceGroupOption, concatStyleSets } from '@fluentui/react';
 import { THEMES, ThemeMap } from '../constants/themes';
 import { useSwitchableFluentTheme } from '../providers/SwitchableFluentThemeProvider';
 
@@ -44,11 +44,17 @@ export const ThemeSelector = (props: ThemeSelectorProps): JSX.Element => {
       options={Object.keys(themes).map((theme) => ({
         key: theme,
         text: theme,
-        styles: horizontal ? { choiceFieldWrapper: { marginRight: '1rem' } } : undefined
+        styles: concatStyleSets(
+          { root: { marginTop: '0' } },
+          horizontal ? { choiceFieldWrapper: { marginRight: '1rem' } } : undefined
+        )
       }))}
       onChange={onChange}
       selectedKey={fluentTheme.name}
-      styles={horizontal ? { flexContainer: { display: 'flex' } } : undefined}
+      styles={concatStyleSets(
+        { label: { padding: '0' } },
+        horizontal ? { flexContainer: { display: 'flex' } } : undefined
+      )}
     />
   );
 };
