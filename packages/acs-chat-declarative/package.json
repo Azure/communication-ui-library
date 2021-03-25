@@ -7,12 +7,12 @@
   "types": "dist/acs-chat-declarative.d.ts",
   "scripts": {
     "build": "tsc && api-extractor run --local",
-    "build:watch": "tsc -w",
+    "build:watch": "rushx build",
     "test": "jest",
-    "test:coverage": "npm run test -- --coverage",
+    "test:coverage": "rushx test -- --coverage",
     "lint": "eslint \"*/**/*.{ts,tsx}\"",
-    "lint:fix": "npm run lint -- --fix",
-    "lint:quiet": "npm run lint -- --quiet",
+    "lint:fix": "rushx lint -- --fix",
+    "lint:quiet": "rushx lint -- --quiet",
     "api-extractor": "tsc && api-extractor run --local",
     "generate-doc": "api-documenter markdown -i temp -o docGen"
   },

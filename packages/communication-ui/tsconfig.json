@@ -6,7 +6,7 @@
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
-    "outDir": "./dist/",
+    "outDir": "./dist/dist-esm",
     "strict": true,
     "noImplicitAny": false, // disable for now for storybook
     "strictFunctionTypes": true,

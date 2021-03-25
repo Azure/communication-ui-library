@@ -2,25 +2,28 @@
   "name": "@azure/communication-ui",
   "version": "1.0.0-beta",
   "description": "ACS UI SDK",
-  "module": "dist/index.js",
-  "main": "dist/index.js",
+  "module": "dist/dist-esm/index.js",
+  "main": "dist/dist-commonjs/index.js",
   "types": "dist/communication-ui.d.ts",
+  "files": [
+    "dist/"
+  ],
   "scripts": {
-    "build": "tsc && copyfiles -u 1 src/**/assets/**/* dist && api-extractor run --local",
-    "build:watch": "tsc -w",
+    "build": "tsc && copyfiles -u 1 src/**/assets/**/* dist/dist-esm && api-extractor run --local",
+    "build:watch": "rushx build",
     "build:storybook": "build-storybook -s src",
     "storybook": "start-storybook -p 6006 -s src --no-manager-cache",
     "deploy-storybook": "storybook-to-ghpages",
     "test": "jest",
-    "test:coverage": "npm run test -- --coverage",
-    "snapshot:update": "npm run test -- --update-snapshot",
+    "test:coverage": "rushx test -- --coverage",
+    "snapshot:update": "rushx test -- --update-snapshot",
     "api-extractor": "tsc && api-extractor run --local",
     "generate-doc": "api-documenter markdown -i temp -o docGen",
     "prettier": "prettier --write --config ../../.prettierrc \"**/*.js\" \"**/*.ts\"",
     "prettier:check": "prettier --check --config ../../.prettierrc \"**/*.js\" \"**/*.ts\"",
     "lint": "eslint \"*/**/*.{ts,tsx}\"",
-    "lint:fix": "npm run lint -- --fix",
-    "lint:quiet": "npm run lint -- --quiet",
+    "lint:fix": "rushx lint -- --fix",
+    "lint:quiet": "rushx lint -- --quiet",
     "prepack": "node scripts/cleanse-pkg \"prepublish,build,build:storybook,test,test:coverage,snapshot:update\"",
     "postpack": "node scripts/restore-pkg && copyfiles -E \"./*.tgz\" private-preview && copyfiles -u 2 -E \"docs/private-preview/README.md\" private-preview"
   },
@@ -127,7 +130,8 @@
     "ts-node": "^9.1.1",
     "typescript": "4.1.5",
     "uuid": "^8.1.0",
-    "webpack": "4.44.2"
+    "webpack": "4.44.2",
+    "rollup": "~2.42.4"
   },
   "beachball": {
     "tag": "next",
