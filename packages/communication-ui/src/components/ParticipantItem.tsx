@@ -4,10 +4,8 @@ import {
   memberItemContainerStyle,
   memberItemIsYouStyle,
   memberItemNameStyle,
-  iconStackStyle,
-  iconStackTokens
+  iconsContainerStyle
 } from './styles/ParticipantItem.styles';
-
 import {
   ContextualMenu,
   DirectionalHint,
@@ -22,23 +20,26 @@ import { WithErrorHandling } from '../utils/WithErrorHandling';
 import { ErrorHandlingProps } from '../providers/ErrorProvider';
 import { useTheme } from '@fluentui/react-theme-provider';
 
-interface ParticipantItemProps {
+/**
+ * Props for ParticipantItem component
+ */
+export type ParticipantItemProps = {
   /** Name of participant */
   name: string;
   /** Optional indicator to show participant is the user */
   isYou?: boolean;
-  /** Optional JSX element to override avatar */
-  avatar?: JSX.Element;
+  /** Optional callback returning a JSX element to override avatar */
+  onRenderAvatar?: (props?: ParticipantItemProps) => JSX.Element | null;
   /** Optional array of IContextualMenuItem for contextual menu */
   menuItems?: IContextualMenuItem[];
-  /** Optional children to component such as icons */
-  children?: React.ReactNode;
+  /** Optional callback returning a JSX element rendered on the right portion of the ParticipantItem. Intended for adding icons. */
+  onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
   /** Optional PersonaPresence to show participant presence. This will not have an effect if property avatar is assigned */
   presence?: PersonaPresence;
-}
+};
 
 const ParticipantItemBase = (props: ParticipantItemProps & ErrorHandlingProps): JSX.Element => {
-  const { name, isYou, avatar, menuItems, children, presence } = props;
+  const { name, isYou, onRenderAvatar, menuItems, onRenderIcon, presence } = props;
   const [clickEvent, setClickEvent] = useState<MouseEvent | undefined>();
   const [menuHidden, setMenuHidden] = useState<boolean>(true);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -54,23 +55,20 @@ const ParticipantItemBase = (props: ParticipantItemProps & ErrorHandlingProps): 
     setMenuHidden(true);
   };
 
-  let avatarToUse = <Persona text={name} size={PersonaSize.size32} presence={presence} />;
-  if (avatar) {
-    avatarToUse = (
-      <div style={{ display: 'flex' }}>
-        {avatar}
-        <span className={memberItemNameStyle}>{name}</span>
-      </div>
-    );
-  }
+  const avatarToUse = onRenderAvatar ? (
+    <div style={{ display: 'flex' }}>
+      {onRenderAvatar()}
+      <span className={memberItemNameStyle}>{name}</span>
+    </div>
+  ) : (
+    <Persona text={name} size={PersonaSize.size32} presence={presence} />
+  );
 
   return (
     <div ref={containerRef} className={memberItemContainerStyle(theme)} onClick={showMenu}>
       {avatarToUse}
       {isYou && <span className={memberItemIsYouStyle}>(you)</span>}
-      <Stack horizontal={true} className={iconStackStyle} tokens={iconStackTokens}>
-        {children}
-      </Stack>
+      {onRenderIcon && <Stack className={iconsContainerStyle}>{onRenderIcon()}</Stack>}
       {menuItems && (
         <ContextualMenu
           items={menuItems}
@@ -85,5 +83,9 @@ const ParticipantItemBase = (props: ParticipantItemProps & ErrorHandlingProps): 
   );
 };
 
+/**
+ * Participant Item component representing a participant in Calling or Chat
+ * @param props - ParticipantItemProps & ErrorHandlingProps
+ */
 export const ParticipantItem = (props: ParticipantItemProps & ErrorHandlingProps): JSX.Element =>
   WithErrorHandling(ParticipantItemBase, props);

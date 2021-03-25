@@ -4,16 +4,21 @@ import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import {
   CONTROL_BAR_LAYOUTS,
-  audioButtonProps,
   ControlBar,
-  ControlButton,
+  audioButtonProps,
   hangupButtonProps,
   optionsButtonProps,
   screenShareButtonProps,
-  videoButtonProps
+  videoButtonProps,
+  labeledVideoButtonProps,
+  labeledAudioButtonProps,
+  labeledScreenShareButtonProps,
+  labeledOptionsButtonProps,
+  labeledHangupButtonProps
 } from '../../components/ControlBar';
 import { boolean, select } from '@storybook/addon-knobs';
 import { getDocs } from './ControlBarDocs';
+import { DefaultButton } from '@fluentui/react';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 
 const exampleOptionsMenuProps = {
@@ -50,11 +55,17 @@ export const ControlBarComponent: () => JSX.Element = () => {
 
   return (
     <ControlBar layout={layout}>
-      <ControlButton {...videoButtonProps} isToggled={toggleButtons} showLabel={showLabels} />
-      <ControlButton {...audioButtonProps} isToggled={toggleButtons} showLabel={showLabels} />
-      <ControlButton {...screenShareButtonProps} isToggled={toggleButtons} showLabel={showLabels} />
-      <ControlButton {...optionsButtonProps} menuProps={exampleOptionsMenuProps} showLabel={showLabels} />
-      <ControlButton {...hangupButtonProps} showLabel={showLabels} />
+      <DefaultButton {...(showLabels ? labeledVideoButtonProps : videoButtonProps)} checked={toggleButtons} />
+      <DefaultButton {...(showLabels ? labeledAudioButtonProps : audioButtonProps)} checked={toggleButtons} />
+      <DefaultButton
+        {...(showLabels ? labeledScreenShareButtonProps : screenShareButtonProps)}
+        checked={toggleButtons}
+      />
+      <DefaultButton
+        {...(showLabels ? labeledOptionsButtonProps : optionsButtonProps)}
+        menuProps={exampleOptionsMenuProps}
+      />
+      <DefaultButton {...(showLabels ? labeledHangupButtonProps : hangupButtonProps)} />
     </ControlBar>
   );
 };
