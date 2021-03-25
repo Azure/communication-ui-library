@@ -10,6 +10,7 @@ import { ChatConfig } from './types/ChatConfig';
 export interface DeclarativeChatClient extends ChatClient {
   state: ChatClientState;
   onStateChange(handler: (state: ChatClientState) => void): void;
+  unsubscribeStateChange(handler: (state: ChatClientState) => void): void;
 }
 
 export interface DeclarativeChatClientWithPrivateProps extends DeclarativeChatClient {
