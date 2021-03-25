@@ -25,20 +25,6 @@
     "isolatedModules": true,
     "moduleResolution": "node"
   },
-  "typedocOptions": {
-    "mode": "files",
-    "inputFiles": ["./dist/publicSDK.d.ts"],
-    "out": "docs/typedoc",
-    "includeDeclarations": true,
-    "excludeExternals": true,
-    "excludePrivate": true,
-    "excludeProtected": true,
-    "ignoreCompilerErrors": true,
-    "stripInternal": true,
-    "excludeNotExported": true,
-    "name": "UI SDK",
-    "readme": "none"
-  },
   "include": ["src/**/*"],
   "exclude": ["dist", "node_modules"]
 }
