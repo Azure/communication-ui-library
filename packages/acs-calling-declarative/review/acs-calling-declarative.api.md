@@ -4,8 +4,11 @@
 
 ```ts
 
+import { AudioDeviceInfo } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';
+import { DeviceAccess } from '@azure/communication-calling';
+import { VideoDeviceInfo } from '@azure/communication-calling';
 
 // @public
 export const callClientDeclaratify: (callClient: CallClient) => DeclarativeCallClient;
@@ -13,6 +16,7 @@ export const callClientDeclaratify: (callClient: CallClient) => DeclarativeCallC
 // @public (undocumented)
 export type CallClientState = {
     calls: Call[];
+    deviceManagerState: DeviceManagerState;
 };
 
 // @public
@@ -23,6 +27,10 @@ export interface DeclarativeCallClient extends CallClient {
     state: CallClientState;
 }
 
+
+// Warnings were encountered during analysis:
+//
+// src/CallClientState.ts:21:3 - (ae-forgotten-export) The symbol "DeviceManagerState" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

@@ -1,7 +1,5 @@
 dependencies:
   '@azure/communication-administration': 1.0.0-beta.3
-  '@azure/communication-calling': 1.0.0-beta.2
-  '@azure/communication-common': 1.0.0-beta.3
   '@azure/communication-identity': 1.0.0-beta.4
   '@azure/core-http': 1.2.3
   '@babel/core': 7.13.10
@@ -161,6 +159,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-PF33xuq1FGYDd09+IiQKJ/g/ATQGx1GFLflXJ9V0cErrIvSnhwtqd2f5j/1CeJ6fqhqfZ8RzcOepV2R7gP4BtA==
+  /@azure/communication-calling/1.0.0-beta.9:
+    dependencies:
+      '@azure/communication-common': 1.0.0-beta.4
+      '@azure/logger': 1.0.2
+    dev: false
+    resolution:
+      integrity: sha512-dQ2lIrB+XlNtYKSVUBleM17nQYdckqA369X0/WFq89DVRRHhjZ+nscayC006eBtubFbe0zYwpEZmZN4Il7C6kw==
   /@azure/communication-chat/1.0.0-beta.3:
     dependencies:
       '@azure/abort-controller': 1.0.4
@@ -211,6 +216,20 @@ packages:
       node: '>=8.0.0'
     resolution:
       integrity: sha512-2Yxr/wrbObcy2xcEp9b4tBv8KhFEpieYfEhf+jSYzoqAfX49WUiCNBt2u2HmwSTm81sr4ppDS7w8qWioVpUgJw==
+  /@azure/communication-common/1.0.0-beta.4:
+    dependencies:
+      '@azure/abort-controller': 1.0.4
+      '@azure/core-auth': 1.2.0
+      '@azure/core-http': 1.2.3
+      '@opentelemetry/api': 0.10.2
+      events: 3.3.0
+      jwt-decode: 2.2.0
+      tslib: 2.1.0
+    dev: false
+    engines:
+      node: '>=8.0.0'
+    resolution:
+      integrity: sha512-HPLwM6EaQ8Grc+smncr4t/Q/I0TnhAS3Ql/z9Zuju7hXDcSBCYjINmaYNQ76LCdhDQ62Akzye7vYak4eOuit9w==
   /@azure/communication-common/1.0.0-beta.5:
     dependencies:
       '@azure/abort-controller': 1.0.4
@@ -20052,8 +20071,8 @@ packages:
       integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==
   file:projects/acs-calling-declarative.tgz_prettier@2.0.5+ts-node@9.1.1:
     dependencies:
-      '@azure/communication-calling': 1.0.0-beta.2
-      '@azure/communication-common': 1.0.0-beta.3
+      '@azure/communication-calling': 1.0.0-beta.9
+      '@azure/communication-common': 1.0.0-beta.4
       '@microsoft/api-documenter': 7.12.12
       '@microsoft/api-extractor': 7.13.2
       '@types/jest': 26.0.20
@@ -20075,7 +20094,7 @@ packages:
       prettier: '*'
       ts-node: '*'
     resolution:
-      integrity: sha512-txAH969cxBbODK/K7IFU64QUs3RQWw8Jm76yuqUKf/qDrKYLD4+wnF7/Gv/OxGHFrBolDGXgIR3kvD+OXQK15g==
+      integrity: sha512-j/YlLgpbKaE1AONs8mg+X5jproZ0m5zSpMRPv8uxSOGFkmBTYAqF5fFqVJbhTP2+gMFUqWqM0FV9RVCyKeIKSg==
       tarball: file:projects/acs-calling-declarative.tgz
     version: 0.0.0
   file:projects/acs-calling-sample.tgz_570bf42e92a70fb216c5cd4d5ed668ef:
@@ -20489,8 +20508,6 @@ packages:
 registry: ''
 specifiers:
   '@azure/communication-administration': 1.0.0-beta.3
-  '@azure/communication-calling': 1.0.0-beta.2
-  '@azure/communication-common': 1.0.0-beta.3
   '@azure/communication-identity': 1.0.0-beta.4
   '@azure/core-http': ^1.2.3
   '@babel/core': ^7.12.7

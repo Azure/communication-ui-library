@@ -1,8 +1,8 @@
 // © Microsoft Corporation. All rights reserved.
-import { Call, CallAgent, CallClient, RemoteParticipant } from '@azure/communication-calling';
-import { produce } from 'immer';
+import { CallClient } from '@azure/communication-calling';
 import { CallClientState } from './CallClientState';
 import { CallContext } from './CallContext';
+import { DeclarativeDeviceManager, deviceManagerDeclaratify } from './DeviceManagerDeclarative';
 
 /**
  * Defines the methods that allow CallClient to be used declaratively.
@@ -19,12 +19,14 @@ export interface DeclarativeCallClient extends CallClient {
  */
 class ProxyCallClient implements ProxyHandler<CallClient> {
   private _context: CallContext;
-  private _callAgent: CallAgent | undefined;
+  // private _callAgent: CallAgent | undefined; Commented out while waiting for another PR
+  private _deviceManager: DeclarativeDeviceManager | undefined;
 
   constructor(context: CallContext) {
     this._context = context;
   }
 
+  /* Commented out while waiting for another PR
   private refreshState = (): void => {
     if (!this._callAgent) {
       return;
@@ -94,14 +96,31 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
     }
     this.refreshState();
   };
+  */
 
   public get<P extends keyof CallClient>(target: CallClient, prop: P): any {
     switch (prop) {
+      /* Commented out while waiting for another PR
       case 'createCallAgent': {
         return async (...args: Parameters<CallClient['createCallAgent']>) => {
           this._callAgent = await target.createCallAgent(...args);
           this._callAgent.on('callsUpdated', this.onCallsUpdated);
           return this._callAgent;
+        };
+      }
+      */
+      case 'getDeviceManager': {
+        return async () => {
+          if (this._deviceManager) {
+            this._deviceManager.destructor();
+            this._deviceManager = undefined;
+          }
+          const deviceManager = await target.getDeviceManager();
+          this._context.setDeviceManagerIsSpeakerSelectionAvailable(deviceManager.isSpeakerSelectionAvailable);
+          this._context.setDeviceManagerSelectedMicrophone(deviceManager.selectedMicrophone);
+          this._context.setDeviceManagerSelectedSpeaker(deviceManager.selectedSpeaker);
+          this._deviceManager = deviceManagerDeclaratify(deviceManager, this._context);
+          return this._deviceManager;
         };
       }
       default:
