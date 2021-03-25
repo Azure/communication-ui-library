@@ -6,7 +6,7 @@ import { ChatThreadComponentBase } from '../../components/ChatThread';
 import { boolean } from '@storybook/addon-knobs';
 import { PrimaryButton, Stack } from '@fluentui/react';
 import { getDocs } from './ChatThreadDocs';
-import { ChatMessage as WebUiChatMessage } from '../../types';
+import { ChatMessage as WebUiChatMessage, MessageStatus } from '../../types';
 import {
   GenerateMockNewChatMessage,
   UserOne,
@@ -19,7 +19,22 @@ import {
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 
 export const ChatThreadComponent: () => JSX.Element = () => {
-  const [chatMessages, setChatMessages] = useState<WebUiChatMessage[]>(GenerateMockChatMessages());
+  const [chatMessages, setChatMessages] = useState<WebUiChatMessage[]>(
+    process.env.NODE_ENV === 'test'
+      ? [
+          {
+            senderId: '1',
+            senderDisplayName: 'User1',
+            messageId: Math.random().toString(),
+            content: 'Hi everyone, I created this awesome group chat for us!',
+            createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
+            mine: true,
+            attached: false,
+            statusToRender: 'seen' as MessageStatus
+          }
+        ]
+      : GenerateMockChatMessages()
+  );
   const showReadReceipt = boolean('Enable Message Read Receipt', true);
   const loadMoreMessages = boolean('Enable Load More Messages', true);
   const enableJumpToNewMessageButton = boolean('Enable Jump To New Message', true);
