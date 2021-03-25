@@ -16,6 +16,9 @@ dependencies:
   '@microsoft/api-documenter': 7.12.12
   '@microsoft/api-extractor': 7.13.2
   '@octokit/rest': 18.0.15
+  '@rollup/plugin-commonjs': 17.1.0_rollup@2.42.4
+  '@rollup/plugin-json': 4.1.0_rollup@2.42.4
+  '@rollup/plugin-node-resolve': 11.2.0_rollup@2.42.4
   '@rush-temp/acs-calling-declarative': file:projects/acs-calling-declarative.tgz_prettier@2.0.5+ts-node@9.1.1
   '@rush-temp/acs-chat-declarative': file:projects/acs-chat-declarative.tgz_prettier@2.0.5+ts-node@9.1.1
   '@rush-temp/acs-chat-selector': file:projects/acs-chat-selector.tgz_prettier@2.0.5
@@ -117,6 +120,7 @@ dependencies:
   reselect: 4.0.0
   rimraf: 2.7.1
   rollup: 2.42.4
+  rollup-plugin-svg: 2.0.0
   source-map-explorer: 2.5.2
   storybook-docs-toc: 1.3.1_55ac82b1aedfe80ed374987a417300da
   styled-components: 5.2.1_9debf3d425c3eafb0518d6c329d076f5
@@ -3679,6 +3683,48 @@ packages:
       react-dom: 15.x || 16.x || 16.4.0-alpha.0911da3
     resolution:
       integrity: sha512-+mtn9wjlB9NN2CNnnC/BRYtwdKBfSyyasPYraNAyvaV1occr/5NnB4CVzjEZipNHwYebQwcndGUmpFzxAUoqSA==
+  /@rollup/plugin-commonjs/17.1.0_rollup@2.42.4:
+    dependencies:
+      '@rollup/pluginutils': 3.1.0_rollup@2.42.4
+      commondir: 1.0.1
+      estree-walker: 2.0.2
+      glob: 7.1.6
+      is-reference: 1.2.1
+      magic-string: 0.25.7
+      resolve: 1.20.0
+      rollup: 2.42.4
+    dev: false
+    engines:
+      node: '>= 8.0.0'
+    peerDependencies:
+      rollup: ^2.30.0
+    resolution:
+      integrity: sha512-PoMdXCw0ZyvjpCMT5aV4nkL0QywxP29sODQsSGeDpr/oI49Qq9tRtAsb/LbYbDzFlOydVEqHmmZWFtXJEAX9ew==
+  /@rollup/plugin-json/4.1.0_rollup@2.42.4:
+    dependencies:
+      '@rollup/pluginutils': 3.1.0_rollup@2.42.4
+      rollup: 2.42.4
+    dev: false
+    peerDependencies:
+      rollup: ^1.20.0 || ^2.0.0
+    resolution:
+      integrity: sha512-yfLbTdNS6amI/2OpmbiBoW12vngr5NW2jCJVZSBEz+H5KfUJZ2M7sDjk0U6GOOdCWFVScShte29o9NezJ53TPw==
+  /@rollup/plugin-node-resolve/11.2.0_rollup@2.42.4:
+    dependencies:
+      '@rollup/pluginutils': 3.1.0_rollup@2.42.4
+      '@types/resolve': 1.17.1
+      builtin-modules: 3.2.0
+      deepmerge: 4.2.2
+      is-module: 1.0.0
+      resolve: 1.20.0
+      rollup: 2.42.4
+    dev: false
+    engines:
+      node: '>= 10.0.0'
+    peerDependencies:
+      rollup: ^1.20.0||^2.0.0
+    resolution:
+      integrity: sha512-qHjNIKYt5pCcn+5RUBQxK8krhRvf1HnyVgUCcFFcweDS7fhkOLZeYh0mhHK6Ery8/bb9tvN/ubPzmfF0qjDCTA==
   /@rollup/plugin-node-resolve/7.1.3_rollup@1.32.1:
     dependencies:
       '@rollup/pluginutils': 3.1.0_rollup@1.32.1
@@ -3710,6 +3756,19 @@ packages:
       estree-walker: 1.0.1
       picomatch: 2.2.2
       rollup: 1.32.1
+    dev: false
+    engines:
+      node: '>= 8.0.0'
+    peerDependencies:
+      rollup: ^1.20.0||^2.0.0
+    resolution:
+      integrity: sha512-GksZ6pr6TpIjHm8h9lSQ8pi8BE9VeubNT0OMJ3B5uZJ8pz73NPiqOtCog/x2/QzM1ENChPKxMDhiQuRHsqc+lg==
+  /@rollup/pluginutils/3.1.0_rollup@2.42.4:
+    dependencies:
+      '@types/estree': 0.0.39
+      estree-walker: 1.0.1
+      picomatch: 2.2.2
+      rollup: 2.42.4
     dev: false
     engines:
       node: '>= 8.0.0'
@@ -5068,6 +5127,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-auApPaJf3NPfe18hSoJkp8EbZzer2ISk7o8mCC3M9he/a04+gbMF97NkpD2S8riMGvm4BMRI59/SZQSaLTKpsQ==
+  /@types/resolve/1.17.1:
+    dependencies:
+      '@types/node': 14.14.35
+    dev: false
+    resolution:
+      integrity: sha512-yy7HuzQhj0dhGpD8RLXSZWEkLsV9ibvxvi6EiJ3bkqLAO1RGo0WbkWQiwpRlSFymTJRz0d3k5LM3kkx8ArDbLw==
   /@types/scheduler/0.16.1:
     dev: false
     resolution:
@@ -9631,6 +9696,10 @@ packages:
       node: '>=4.0'
     resolution:
       integrity: sha512-BxbNGGNm0RyRYvUdHpIwv9IWzeM9XClbOxwoATuFdOE7ZE6wHL+HQ5T8hoPM+zHvmKzzsEqhgy0GrQ5X13afiQ==
+  /estree-walker/0.2.1:
+    dev: false
+    resolution:
+      integrity: sha1-va/oCVOD2EFNXcLs9MkXO225QS4=
   /estree-walker/0.6.1:
     dev: false
     resolution:
@@ -9639,6 +9708,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-1fMXF3YP4pZZVozF8j/ZLfvnR8NSIljt56UhbZ5PeeDmmGHpgpdwQt7ITlGvYaQukCvuBRMLEiKiYC+oeIg4cg==
+  /estree-walker/2.0.2:
+    dev: false
+    resolution:
+      integrity: sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==
   /esutils/2.0.3:
     dev: false
     engines:
@@ -11931,6 +12004,12 @@ packages:
     dev: false
     resolution:
       integrity: sha1-DFLlS8yjkbssSUsh6GJtczbG45c=
+  /is-reference/1.2.1:
+    dependencies:
+      '@types/estree': 0.0.46
+    dev: false
+    resolution:
+      integrity: sha512-U82MsXXiFIrjCK4otLT+o2NA2Cd2g5MLoOVXUZjIOhLurrRxpEXzI8O0KZHr3IjLvlAH1kTPYSuqer5T9ZVBKQ==
   /is-regex/1.1.2:
     dependencies:
       call-bind: 1.0.2
@@ -16997,6 +17076,12 @@ packages:
       rollup: '>=0.60.0 <3'
     resolution:
       integrity: sha512-Lek/TYp1+7g7I+uMfJnnSJ7YWoD58ajo6Oarhlex7lvUce+RCKRuGRSgztDO3/MF/PuGKmUL5iTHKf208UNszw==
+  /rollup-plugin-svg/2.0.0:
+    dependencies:
+      rollup-pluginutils: 1.5.2
+    dev: false
+    resolution:
+      integrity: sha512-DmE7dSQHo1SC5L2uH2qul3Mjyd5oV6U1aVVkyvTLX/mUsRink7f1b1zaIm+32GEBA6EHu8H/JJi3DdWqM53ySQ==
   /rollup-plugin-terser/5.3.1_rollup@1.32.1:
     dependencies:
       '@babel/code-frame': 7.12.13
@@ -17010,6 +17095,13 @@ packages:
       rollup: '>=0.66.0 <3'
     resolution:
       integrity: sha512-1pkwkervMJQGFYvM9nscrUoncPwiKR/K+bHdjv6PFgRo3cgPHoRT83y2Aa3GvINj4539S15t/tpFPb775TDs6w==
+  /rollup-pluginutils/1.5.2:
+    dependencies:
+      estree-walker: 0.2.1
+      minimatch: 3.0.4
+    dev: false
+    resolution:
+      integrity: sha1-HhVud4+UtyVb+hs9AXi+j1xVJAg=
   /rollup-pluginutils/2.8.2:
     dependencies:
       estree-walker: 0.6.1
@@ -20288,6 +20380,9 @@ packages:
       '@mdx-js/react': 1.6.22_react@16.14.0
       '@microsoft/api-documenter': 7.12.12
       '@microsoft/api-extractor': 7.13.2
+      '@rollup/plugin-commonjs': 17.1.0_rollup@2.42.4
+      '@rollup/plugin-json': 4.1.0_rollup@2.42.4
+      '@rollup/plugin-node-resolve': 11.2.0_rollup@2.42.4
       '@storybook/addon-actions': 6.1.21_30bc4764d4ba778218056aab0be8023f
       '@storybook/addon-docs': 6.1.21_025c95869cb55e8d142f5246a0455b6d
       '@storybook/addon-essentials': 6.1.21_489c05363155b6add536e1fef5b4fe59
@@ -20345,6 +20440,7 @@ packages:
       react-test-renderer: 16.14.0_react@16.14.0
       regenerator-runtime: 0.13.7
       rollup: 2.42.4
+      rollup-plugin-svg: 2.0.0
       source-map-explorer: 2.5.2
       storybook-docs-toc: 1.3.1_55ac82b1aedfe80ed374987a417300da
       styled-components: 5.2.1_9debf3d425c3eafb0518d6c329d076f5
@@ -20359,7 +20455,7 @@ packages:
     peerDependencies:
       webpack-cli: '*'
     resolution:
-      integrity: sha512-3A/ijbJuOre8HGpkAZQlmx23dz4fybyPYTvYjgTaSdbsUm6FWolkDugyvYA23D2KcMNPDV7oNdJSZPG0pnH+YA==
+      integrity: sha512-1iVM+wR2xqB2rGQcOICTCE2aVvwuTNVIXDSF2FPXzrYMdjEyjq8jdtnwyxxKEGmf1LYypvKWOcyrVdhSZfgjCg==
       tarball: file:projects/communication-ui.tgz
     version: 0.0.0
   file:projects/one-to-one-call.tgz_570bf42e92a70fb216c5cd4d5ed668ef:
@@ -20516,6 +20612,9 @@ specifiers:
   '@microsoft/api-documenter': ~7.12.11
   '@microsoft/api-extractor': ~7.13.2
   '@octokit/rest': ~18.0.6
+  '@rollup/plugin-commonjs': ~17.1.0
+  '@rollup/plugin-json': ~4.1.0
+  '@rollup/plugin-node-resolve': ~11.2.0
   '@rush-temp/acs-calling-declarative': file:./projects/acs-calling-declarative.tgz
   '@rush-temp/acs-chat-declarative': file:./projects/acs-chat-declarative.tgz
   '@rush-temp/acs-chat-selector': file:./projects/acs-chat-selector.tgz
@@ -20617,6 +20716,7 @@ specifiers:
   reselect: ~4.0.0
   rimraf: ^2.6.2
   rollup: ~2.42.4
+  rollup-plugin-svg: ~2.0.0
   source-map-explorer: ^2.5.0
   storybook-docs-toc: ~1.3.1
   styled-components: ~5.2.1

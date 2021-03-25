@@ -4,7 +4,7 @@ import { DefaultButton, IconButton, Stack, TextField } from '@fluentui/react';
 import { CallIcon, VideoCameraEmphasisIcon } from '@fluentui/react-icons-northstar';
 import copy from 'copy-to-clipboard';
 import React, { useState } from 'react';
-import { useCallContext } from '../..';
+import { useCallContext } from '../../providers';
 import { useOutgoingCall, useSubscribeToDevicePermission } from '../../hooks';
 import {
   buttonIconStyle,

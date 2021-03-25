@@ -7,7 +7,7 @@ import {
 } from '../types/CommunicationUiError';
 import { getErrorFromAcsResponseCode } from '../utils/SDKUtils';
 import { OK } from '../constants';
-import { useChatClient } from '../providers/ChatProvider';
+import { useChatClient } from '../providers/ChatProviderHelper';
 import { useChatThreadClient, useSetThread, useThreadId } from '../providers/ChatThreadProvider';
 
 export const useUpdateThreadTopicName = (): ((topicName: string) => Promise<boolean>) => {

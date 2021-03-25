@@ -4,17 +4,8 @@ import SendBox from './SendBox';
 import TypingIndicator, { TypingIndicatorComponent } from './TypingIndicator';
 import { GridLayoutComponent } from './GridLayout';
 import ErrorBar, { ErrorBarComponent } from './ErrorBar';
-import { WithErrorHandling } from '../utils/WithErrorHandling';
 
-export {
-  SendBox,
-  TypingIndicator,
-  TypingIndicatorComponent,
-  GridLayoutComponent,
-  ErrorBar,
-  ErrorBarComponent,
-  WithErrorHandling
-};
+export { SendBox, TypingIndicator, TypingIndicatorComponent, GridLayoutComponent, ErrorBar, ErrorBarComponent };
 
 export { SendBoxComponent } from './SendBox';
 export { ReadReceiptComponent } from './ReadReceipt';
