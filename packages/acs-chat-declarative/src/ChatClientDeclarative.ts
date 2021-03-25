@@ -126,5 +126,9 @@ export const chatClientDeclaratify = (chatClient: ChatClient, chatConfig: ChatCo
     configurable: false,
     value: (handler: (state: ChatClientState) => void) => context?.onStateChange(handler)
   });
+  Object.defineProperty(proxy, 'unsubscribeStateChange', {
+    configurable: false,
+    value: (handler: (state: ChatClientState) => void) => context?.unsubscribeStateChange(handler)
+  });
   return proxy as DeclarativeChatClient;
 };

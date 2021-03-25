@@ -283,4 +283,8 @@ export class ChatContext {
   public onStateChange(handler: (state: ChatClientState) => void): void {
     this._emitter.on('stateChanged', handler);
   }
+
+  public unsubscribeStateChange(handler: (state: ChatClientState) => void): void {
+    this._emitter.off('stateChanged', handler);
+  }
 }
