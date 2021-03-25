@@ -8,13 +8,7 @@ import ConfigurationScreen from './ConfigurationScreen';
 import GroupCall from './GroupCall';
 import { HomeScreen } from './HomeScreen';
 import { v1 as createGUID } from 'uuid';
-import {
-  CallingProvider,
-  CallProvider,
-  CommunicationUiErrorInfo,
-  ErrorProvider,
-  ThemeToggler
-} from '@azure/communication-ui';
+import { CallingProvider, CallProvider, CommunicationUiErrorInfo, ErrorProvider } from '@azure/communication-ui';
 import {
   createRandomDisplayName,
   fetchTokenResponse,
@@ -79,14 +73,11 @@ const App = (): JSX.Element => {
       switch (page) {
         case 'home': {
           return (
-            <>
-              <HomeScreen
-                startCallHandler={(): void => {
-                  window.history.pushState({}, document.title, window.location.href + '?groupId=' + getGroupId());
-                }}
-              />
-              <ThemeToggler layout="dockedBottom" />
-            </>
+            <HomeScreen
+              startCallHandler={(): void => {
+                window.history.pushState({}, document.title, window.location.href + '?groupId=' + getGroupId());
+              }}
+            />
           );
         }
         case 'call': {
@@ -102,14 +93,11 @@ const App = (): JSX.Element => {
                     switch (subpage) {
                       case 'configuration': {
                         return (
-                          <>
-                            <ConfigurationScreen
-                              screenWidth={screenWidth}
-                              startCallHandler={(): void => setSubpage('groupcall')}
-                              groupId={getGroupId()}
-                            />
-                            <ThemeToggler layout="dockedBottom" />
-                          </>
+                          <ConfigurationScreen
+                            screenWidth={screenWidth}
+                            startCallHandler={(): void => setSubpage('groupcall')}
+                            groupId={getGroupId()}
+                          />
                         );
                       }
                       case 'groupcall': {

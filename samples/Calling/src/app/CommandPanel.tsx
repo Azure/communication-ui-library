@@ -11,7 +11,7 @@ import {
 import { Footer } from './Footer';
 import { LocalDeviceSettings } from './LocalDeviceSettings';
 import { ParticipantStack } from './ParticipantStack';
-import { ThemeToggler } from '@azure/communication-ui';
+import { ThemeSelector } from '@azure/communication-ui';
 
 export enum CommandPanelTypes {
   None = 'none',
@@ -49,7 +49,7 @@ export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
       {props.selectedPane === CommandPanelTypes.Settings && (
         <Stack.Item style={{ marginTop: '1.5rem' }}>
           <div className={settingsContainerStyle}>
-            <ThemeToggler label="Theme" />
+            <ThemeSelector label="Theme" />
           </div>
         </Stack.Item>
       )}

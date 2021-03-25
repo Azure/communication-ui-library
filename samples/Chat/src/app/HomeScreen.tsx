@@ -21,6 +21,7 @@ import { ChatIcon } from '@fluentui/react-icons-northstar';
 import heroSVG from '../assets/hero.svg';
 import { getThreadId } from './utils/getThreadId';
 import { createThread } from './utils/createThread';
+import { ThemeSelector } from '@azure/communication-ui';
 
 const imageStyleProps: IImageStyles = {
   image: {
@@ -108,6 +109,7 @@ export default (): JSX.Element => {
               <ChatIcon className={videoCameraIconStyle} size="medium" />
               <div className={startChatTextStyle}>{startChatButtonText}</div>
             </PrimaryButton>
+            <ThemeSelector label="Theme" horizontal={true} />
           </Stack>
           <Image
             styles={imageStyleProps}
