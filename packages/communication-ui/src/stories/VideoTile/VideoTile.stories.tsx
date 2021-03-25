@@ -2,12 +2,11 @@
 
 import React from 'react';
 import { Meta } from '@storybook/react/types-6-0';
-import { Stack } from '@fluentui/react';
+import { Stack, DefaultButton } from '@fluentui/react';
 import { VideoTile } from '../../components';
 import {
   StreamMedia,
   ControlBar,
-  ControlButton,
   videoButtonProps,
   audioButtonProps,
   optionsButtonProps,
@@ -49,10 +48,10 @@ export const VideoTileComponent: () => JSX.Element = () => {
       {showControlBar && (
         <Stack style={{ position: 'absolute', left: '50%', bottom: '1rem' }}>
           <ControlBar styles={{ root: { position: 'relative', left: '-50%' } }}>
-            <ControlButton {...videoButtonProps} />
-            <ControlButton {...audioButtonProps} />
-            <ControlButton {...optionsButtonProps} />
-            <ControlButton {...hangupButtonProps} />
+            <DefaultButton {...videoButtonProps} />
+            <DefaultButton {...audioButtonProps} />
+            <DefaultButton {...optionsButtonProps} />
+            <DefaultButton {...hangupButtonProps} />
           </ControlBar>
         </Stack>
       )}
