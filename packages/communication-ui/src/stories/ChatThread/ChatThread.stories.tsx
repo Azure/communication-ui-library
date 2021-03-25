@@ -6,7 +6,7 @@ import { ChatThreadComponentBase } from '../../components/ChatThread';
 import { boolean } from '@storybook/addon-knobs';
 import { PrimaryButton, Stack } from '@fluentui/react';
 import { getDocs } from './ChatThreadDocs';
-import { ChatMessage as WebUiChatMessage, MessageStatus } from '../../types';
+import { ChatMessage as WebUiChatMessage } from '../../types';
 import {
   GenerateMockNewChatMessage,
   UserOne,
