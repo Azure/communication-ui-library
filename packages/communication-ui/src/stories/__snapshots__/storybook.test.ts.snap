@@ -1193,7 +1193,7 @@ exports[`storybook snapshot tests Storyshots UI Components/GridLayout Grid Layou
         }
       >
         <div
-          className="css-71"
+          className="css-62"
           style={
             Object {
               "gridTemplateColumns": "repeat(2, 1fr)",
@@ -1675,7 +1675,7 @@ exports[`storybook snapshot tests Storyshots UI Components/ReadReceipt Read Reci
       >
         <span
           aria-hidden={true}
-          className="root_de478240 css-61"
+          className="root_de478240 css-64"
           role="presentation"
           style={Object {}}
         >
@@ -1732,10 +1732,10 @@ exports[`storybook snapshot tests Storyshots UI Components/SendBox Send Box Stor
         }
       >
         <div
-          className="ms-Stack css-63 css-2"
+          className="ms-Stack css-54 css-2"
         >
           <div
-            className="ms-TextField ms-TextField--multiline css-62 root-4"
+            className="ms-TextField ms-TextField--multiline css-53 root-4"
           >
             <div
               className="ms-TextField-wrapper wrapper-5"
@@ -1746,7 +1746,7 @@ exports[`storybook snapshot tests Storyshots UI Components/SendBox Send Box Stor
                 <textarea
                   aria-invalid={false}
                   aria-label="Type"
-                  className="ms-TextField-field ms-TextField--unresizable css-64 field-7"
+                  className="ms-TextField-field ms-TextField--unresizable css-55 field-7"
                   id="sendbox"
                   onBlur={[Function]}
                   onChange={[Function]}
@@ -1760,11 +1760,11 @@ exports[`storybook snapshot tests Storyshots UI Components/SendBox Send Box Stor
             </div>
           </div>
           <div
-            className="css-66 sendIconWrapper"
+            className="css-57 sendIconWrapper"
             onClick={[Function]}
           >
             <div
-              className="css-67"
+              className="css-58"
             />
           </div>
         </div>
@@ -1823,20 +1823,20 @@ exports[`storybook snapshot tests Storyshots UI Components/TypingIndicator Typin
       }
     >
       <div
-        className="css-68"
+        className="css-59"
       >
         <span
-          className="css-69"
+          className="css-60"
         >
           User1, 
         </span>
         <span
-          className="css-69"
+          className="css-60"
         >
           User2
         </span>
         <span
-          className="css-69"
+          className="css-60"
         >
            and 5 others are typing...
         </span>

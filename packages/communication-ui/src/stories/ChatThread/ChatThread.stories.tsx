@@ -19,22 +19,7 @@ import {
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 
 export const ChatThreadComponent: () => JSX.Element = () => {
-  const [chatMessages, setChatMessages] = useState<WebUiChatMessage[]>(
-    process.env.NODE_ENV === 'test'
-      ? [
-          {
-            senderId: '1',
-            senderDisplayName: 'User1',
-            messageId: Math.random().toString(),
-            content: 'Hi everyone, I created this awesome group chat for us!',
-            createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
-            mine: true,
-            attached: false,
-            statusToRender: 'seen' as MessageStatus
-          }
-        ]
-      : GenerateMockChatMessages()
-  );
+  const [chatMessages, setChatMessages] = useState<WebUiChatMessage[]>(GenerateMockChatMessages());
   const showReadReceipt = boolean('Enable Message Read Receipt', true);
   const loadMoreMessages = boolean('Enable Load More Messages', true);
   const enableJumpToNewMessageButton = boolean('Enable Jump To New Message', true);
