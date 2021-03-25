@@ -4,7 +4,7 @@ import React from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { FluentThemeProvider } from '../src/providers/FluentThemeProvider';
 import { LIGHT, DARK, THEMES } from '../src/constants/themes';
-import { initializeIcons, loadTheme } from '@fluentui/react';
+import { initializeIcons, loadTheme, mergeStyles } from '@fluentui/react';
 import { DocsContainer } from '@storybook/addon-docs/blocks';
 import { BackToTop, TableOfContents } from 'storybook-docs-toc';
 
@@ -17,9 +17,13 @@ export const parameters = {
   docs: {
     container: props => (
       <React.Fragment>
-        <TableOfContents />
+        <div className={mergeStyles({'& nav': { right: 0 }})}>
+          <TableOfContents />
+        </div>
         <DocsContainer {...props} />
-        <BackToTop />
+        <div className={mergeStyles({'> button': { right: 0 }})}>
+          <BackToTop />
+        </div>
       </React.Fragment>
     ),          
   },

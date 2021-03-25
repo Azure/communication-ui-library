@@ -95,6 +95,9 @@ export const updateMessagesWithAttached = (
     }
 
     const messageWithAttached = { ...message, attached, mine, statusToRender };
+    // Remove the clientMessageId field as it's only needed to getMessageStatus, not needed by ChatThread component
+    // When we migrate to declarative, ideally we should remove the clientMessageId from the WebUiChatMessage type.
+    delete messageWithAttached.clientMessageId;
     newChatMessages.push(messageWithAttached);
     return message;
   });
@@ -174,6 +177,8 @@ const convertSdkChatMessagesToWebUiChatMessages = (
         createdOn: chatMessage.createdOn,
         senderId: chatMessage.sender?.communicationUserId,
         senderDisplayName: chatMessage.senderDisplayName,
+        // clientMessageId field is attached by useSendMessage hooks,
+        // and it's needed to filter out failed messages, will not used by ChatThread component.
         clientMessageId: chatMessage.clientMessageId
       };
     }) ?? [];
@@ -203,10 +208,12 @@ export const MapToChatMessageProps = (): ChatMessagePropsFromContext => {
     return isLargeParticipantsGroup(threadMembers);
   }, [threadMembers]);
   const sendReadReceipt = useSendReadReceipt();
-  const [messagesNumber, setMessagesNumber] = useState<number>(20);
+  const [messagesNumber, setMessagesNumber] = useState<number>(25);
   const [disableLoadPreviousMessage, setDisableLoadPreviousMessage] = useState<boolean>(false);
   const chatMessages = useMemo(() => {
-    sdkChatMessages && messagesNumber >= sdkChatMessages.length && setDisableLoadPreviousMessage(true);
+    sdkChatMessages && messagesNumber >= sdkChatMessages.length
+      ? !disableLoadPreviousMessage && setDisableLoadPreviousMessage(true)
+      : disableLoadPreviousMessage && setDisableLoadPreviousMessage(false);
     return convertSdkChatMessagesToWebUiChatMessages(
       sdkChatMessages?.slice(Math.max(sdkChatMessages.length - messagesNumber, 0)) ?? [],
       failedMessageIds,
@@ -214,7 +221,15 @@ export const MapToChatMessageProps = (): ChatMessagePropsFromContext => {
       userId,
       isMessageSeen
     );
-  }, [failedMessageIds, isLargeGroup, isMessageSeen, sdkChatMessages, userId, messagesNumber]);
+  }, [
+    failedMessageIds,
+    isLargeGroup,
+    isMessageSeen,
+    sdkChatMessages,
+    userId,
+    messagesNumber,
+    disableLoadPreviousMessage
+  ]);
 
   const onSendReadReceipt = useCallback(async () => {
     const messageId = getLatestIncomingMessageId(chatMessages, userId);
