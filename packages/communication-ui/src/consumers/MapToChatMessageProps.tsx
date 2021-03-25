@@ -96,7 +96,7 @@ export const updateMessagesWithAttached = (
 
     const messageWithAttached = { ...message, attached, mine, statusToRender };
     // Remove the clientMessageId field as it's only needed to getMessageStatus, not needed by ChatThread component
-    // When we migrate to decalritive, ideally we should remove the clientMessageId from the WebUiChatMessage type.
+    // When we migrate to declarative, ideally we should remove the clientMessageId from the WebUiChatMessage type.
     delete messageWithAttached.clientMessageId;
     newChatMessages.push(messageWithAttached);
     return message;

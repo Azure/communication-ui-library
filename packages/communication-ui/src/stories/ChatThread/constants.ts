@@ -2,6 +2,21 @@
 
 import { ChatMessage as WebUiChatMessage, MessageStatus, MessageAttachedStatus } from '../../types';
 
+export const ChatThreadContainerStyles = {
+  width: '100%',
+  height: '100%',
+  maxWidth: '50rem',
+  maxHeight: '30rem'
+};
+
+export const ChatThreadStyles = {
+  root: {
+    margin: '20px auto',
+    border: '1px solid',
+    padding: '0 10px'
+  }
+};
+
 export const UserOne = {
   senderId: '1',
   senderDisplayName: 'User1'
@@ -15,30 +30,30 @@ const UserThree = {
   senderDisplayName: 'User3'
 };
 
-export const GetNewChatMessage = (): WebUiChatMessage => {
+export const GenerateMockNewChatMessage = (): WebUiChatMessage => {
   return {
     ...UserOne,
     messageId: Math.random().toString(),
     content: 'I just sent a new Message!',
-    createdOn: new Date(),
+    createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
     mine: true,
     attached: false,
     statusToRender: 'seen' as MessageStatus
   };
 };
 
-export const GetNewChatMessageFromOthers = (): WebUiChatMessage => {
+export const GenerateMockNewChatMessageFromOthers = (): WebUiChatMessage => {
   return {
     ...UserThree,
     messageId: Math.random().toString(),
     content: "Sure! Let's checkout calling UI components as well!",
-    createdOn: new Date(),
+    createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
     mine: false,
     attached: false
   };
 };
 
-export const GetHistoryChatMessages = (): WebUiChatMessage[] => {
+export const GenerateMockHistoryChatMessages = (): WebUiChatMessage[] => {
   return [
     {
       ...UserOne,
@@ -67,7 +82,7 @@ export const GetHistoryChatMessages = (): WebUiChatMessage[] => {
   ];
 };
 
-export const GetChatThreadMessages = (): WebUiChatMessage[] => {
+export const GenerateMockChatMessages = (): WebUiChatMessage[] => {
   return [
     {
       ...UserOne,

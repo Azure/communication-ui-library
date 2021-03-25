@@ -643,6 +643,12 @@ export const isMobileSession: () => boolean;
 // @public (undocumented)
 export function isSelectedDeviceInList<T extends AudioDeviceInfo | VideoDeviceInfo>(device: T, list: T[]): boolean;
 
+// @public (undocumented)
+export interface JumpToNewMessageButtonProps {
+    // (undocumented)
+    onClick: () => void;
+}
+
 // @public
 export const LIGHT = "light";
 
@@ -659,6 +665,12 @@ export type ListParticipant = {
     onRemove?: () => void;
     onMute?: () => void;
 };
+
+// @public (undocumented)
+export interface LoadPreviousMessagesButtonProps {
+    // (undocumented)
+    onClick: () => void;
+}
 
 // @public (undocumented)
 export type LocalDeviceSettingsContainerProps = {
@@ -1250,11 +1262,6 @@ export interface VideoTileStylesProps {
 // @public
 export const WithErrorHandling: (Component: (props: any & ErrorHandlingProps) => JSX.Element, props: any & ErrorHandlingProps) => JSX.Element;
 
-
-// Warnings were encountered during analysis:
-//
-// src/components/ChatThread.tsx:211:3 - (ae-forgotten-export) The symbol "JumpToNewMessageButtonProps" needs to be exported by the entry point index.d.ts
-// src/components/ChatThread.tsx:219:3 - (ae-forgotten-export) The symbol "LoadPreviousMessagesButtonProps" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

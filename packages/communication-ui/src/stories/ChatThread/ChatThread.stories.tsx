@@ -8,16 +8,18 @@ import { PrimaryButton, Stack } from '@fluentui/react';
 import { getDocs } from './ChatThreadDocs';
 import { ChatMessage as WebUiChatMessage } from '../../types';
 import {
-  GetChatThreadMessages,
+  GenerateMockNewChatMessage,
   UserOne,
-  GetNewChatMessage,
-  GetNewChatMessageFromOthers,
-  GetHistoryChatMessages
+  GenerateMockNewChatMessageFromOthers,
+  GenerateMockHistoryChatMessages,
+  GenerateMockChatMessages,
+  ChatThreadContainerStyles,
+  ChatThreadStyles
 } from './constants';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 
 export const ChatThreadComponent: () => JSX.Element = () => {
-  const [chatMessages, setChatMessages] = useState<WebUiChatMessage[]>(GetChatThreadMessages());
+  const [chatMessages, setChatMessages] = useState<WebUiChatMessage[]>(GenerateMockChatMessages());
   const showReadReceipt = boolean('Enable Message Read Receipt', true);
   const loadMoreMessages = boolean('Enable Load More Messages', true);
   const enableJumpToNewMessageButton = boolean('Enable Jump To New Message', true);
@@ -28,34 +30,21 @@ export const ChatThreadComponent: () => JSX.Element = () => {
     existingChatMessages.forEach((message) => {
       message.statusToRender = undefined;
     });
-    setChatMessages([...existingChatMessages, GetNewChatMessage()]);
+    setChatMessages([...existingChatMessages, GenerateMockNewChatMessage()]);
   };
 
   const onSendNewMessageFromOthers = (): void => {
-    setChatMessages([...chatMessages, GetNewChatMessageFromOthers()]);
+    setChatMessages([...chatMessages, GenerateMockNewChatMessageFromOthers()]);
   };
 
   const onLoadPreviousMessages = (): void => {
-    setChatMessages([...GetHistoryChatMessages(), ...chatMessages]);
+    setChatMessages([...GenerateMockHistoryChatMessages(), ...chatMessages]);
   };
 
   return (
-    <Stack
-      style={{
-        width: '100%',
-        height: '100%',
-        maxWidth: '50rem',
-        maxHeight: '30rem'
-      }}
-    >
+    <Stack style={ChatThreadContainerStyles}>
       <ChatThreadComponentBase
-        styles={{
-          root: {
-            margin: '20px auto',
-            border: '1px solid',
-            padding: '0 10px'
-          }
-        }}
+        styles={ChatThreadStyles}
         userId={UserOne.senderId}
         chatMessages={chatMessages}
         disableReadReceipt={!showReadReceipt}
@@ -79,6 +68,7 @@ export default {
   parameters: {
     docs: {
       page: () => getDocs()
-    }
+    },
+    storyshots: { disable: true }
   }
 } as Meta;
