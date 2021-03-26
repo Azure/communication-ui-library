@@ -169,7 +169,7 @@ export type ChatMessage = {
     senderId?: string;
     senderDisplayName?: string;
     statusToRender?: MessageStatus;
-    attached?: MessageAttachedStatus;
+    attached?: MessageAttachedStatus | boolean;
     mine?: boolean;
     clientMessageId?: string;
 };
@@ -196,7 +196,7 @@ export interface ChatMessageWithClientMessageId extends ChatMessage_2 {
 export const ChatProvider: (props: ChatProviderProps & ErrorHandlingProps) => JSX.Element;
 
 // @public (undocumented)
-export const ChatThread: (props: Pick<ChatThreadProps & ErrorHandlingProps & ChatMessagePropsFromContext, "onErrorCallback" | "styles" | "disableNewMessageButton" | "onRenderReadReceipt" | "onRenderAvatar" | "onRenderLoadPreviousMessagesButton" | "onRenderNewMessageButton">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+export const ChatThread: (props: Pick<ChatThreadProps & ErrorHandlingProps & ChatMessagePropsFromContext, "onErrorCallback" | "styles" | "disableJumpToNewMessageButton" | "onRenderReadReceipt" | "onRenderAvatar" | "onRenderLoadPreviousMessagesButton" | "onRenderJumpToNewMessageButton">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
 
 // @public (undocumented)
 export const ChatThreadComponent: (props: ChatThreadProps & ErrorHandlingProps & ChatMessagePropsFromContext) => JSX.Element;
@@ -218,13 +218,13 @@ export type ChatThreadProps = {
     userId: string;
     chatMessages: ChatMessage[];
     styles?: ChatThreadStylesProps;
-    disableNewMessageButton?: boolean;
+    disableJumpToNewMessageButton?: boolean;
     disableLoadPreviousMessage?: boolean;
     disableReadReceipt?: boolean;
     onSendReadReceipt?: () => Promise<void>;
     onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element | null;
     onRenderAvatar?: (userId: string) => JSX.Element;
-    onRenderNewMessageButton?: (newMessageButtonProps: NewMessageButtonProps) => JSX.Element;
+    onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousMessages?: () => void;
     onRenderLoadPreviousMessagesButton?: (loadPreviousMessagesButton: LoadPreviousMessagesButtonProps) => JSX.Element;
 };
@@ -636,6 +636,12 @@ export const isMobileSession: () => boolean;
 // @public (undocumented)
 export function isSelectedDeviceInList<T extends AudioDeviceInfo | VideoDeviceInfo>(device: T, list: T[]): boolean;
 
+// @public (undocumented)
+export interface JumpToNewMessageButtonProps {
+    // (undocumented)
+    onClick: () => void;
+}
+
 // @public
 export const LIGHT = "light";
 
@@ -652,6 +658,12 @@ export type ListParticipant = {
     onRemove?: () => void;
     onMute?: () => void;
 };
+
+// @public (undocumented)
+export interface LoadPreviousMessagesButtonProps {
+    // (undocumented)
+    onClick: () => void;
+}
 
 // @public (undocumented)
 export type LocalDeviceSettingsContainerProps = {
@@ -1253,8 +1265,6 @@ export const WithErrorHandling: (Component: (props: any & ErrorHandlingProps) =>
 
 // Warnings were encountered during analysis:
 //
-// src/components/ChatThread.tsx:183:3 - (ae-forgotten-export) The symbol "NewMessageButtonProps" needs to be exported by the entry point index.d.ts
-// src/components/ChatThread.tsx:185:3 - (ae-forgotten-export) The symbol "LoadPreviousMessagesButtonProps" needs to be exported by the entry point index.d.ts
 // src/components/SendBox.tsx:123:50 - (ae-forgotten-export) The symbol "SendBoxProps" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
