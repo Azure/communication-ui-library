@@ -3,6 +3,7 @@
 import { IStyle, mergeStyles, Persona, PersonaSize, Stack } from '@fluentui/react';
 import React from 'react';
 import { rootStyles, videoContainerStyles, overlayContainerStyles } from './styles/VideoTile.styles';
+import { useTheme } from '@fluentui/react-theme-provider';
 
 export interface VideoTileStylesProps {
   /** Styles for the root container */
@@ -44,6 +45,7 @@ const DefaultPlaceholder = (props: PlaceholderProps): JSX.Element => {
         size={PersonaSize.size100}
         hidePersonaDetails={true}
         text={avatarName}
+        initialsTextColor="white"
         aria-label={noVideoAvailableAriaLabel}
       />
     </Stack>
@@ -52,9 +54,10 @@ const DefaultPlaceholder = (props: PlaceholderProps): JSX.Element => {
 
 export const VideoTile = (props: VideoTileProps & PlaceholderProps): JSX.Element => {
   const { styles, isVideoReady, videoProvider, placeholderProvider, invertVideo, children } = props;
+  const theme = useTheme();
   const placeholder = placeholderProvider ?? <DefaultPlaceholder {...props} />;
   return (
-    <Stack className={mergeStyles(rootStyles, styles?.root)}>
+    <Stack className={mergeStyles(rootStyles, { background: theme.palette.neutralLighter }, styles?.root)}>
       {isVideoReady ? (
         <Stack
           className={mergeStyles(
