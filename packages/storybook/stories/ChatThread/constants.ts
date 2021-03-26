@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { ChatMessage as WebUiChatMessage, MessageStatus, MessageAttachedStatus } from '../../types';
+import { ChatMessage as WebUiChatMessage, MessageStatus, MessageAttachedStatus } from '@azure/communication-ui';
 
 export const ChatThreadContainerStyles = {
   width: '100%',

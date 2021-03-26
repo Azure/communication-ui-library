@@ -9,13 +9,13 @@
     "start:storybook": "start-storybook -p 6006 -s stories --no-manager-cache --quiet --loglevel warn",
     "deploy-storybook": "storybook-to-ghpages",
     "test": "jest",
-    "test:coverage": "rushx test -- --coverage",
-    "snapshot:update": "rushx test -- --update-snapshot",
+    "test:coverage": "npm run test -- --coverage",
+    "snapshot:update": "npm run test -- --update-snapshot",
     "prettier": "prettier --write --config ../../.prettierrc \"**/*.js\" \"**/*.ts\"",
     "prettier:check": "prettier --check --config ../../.prettierrc \"**/*.js\" \"**/*.ts\"",
     "lint": "eslint \"*/**/*.{ts,tsx}\"",
-    "lint:fix": "rushx lint -- --fix",
-    "lint:quiet": "rushx lint -- --quiet"
+    "lint:fix": "npm run lint -- --fix",
+    "lint:quiet": "npm run lint -- --quiet"
   },
   "dependencies": {
     "@azure/communication-administration": "1.0.0-beta.3",

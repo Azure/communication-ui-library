@@ -9,10 +9,10 @@
     "build": "tsc && api-extractor run --local",
     "build:watch": "rushx build",
     "test": "jest --passWithNoTests",
-    "test:coverage": "rushx test -- --coverage",
+    "test:coverage": "npm run test -- --coverage",
     "lint": "eslint \"*/**/*.{ts,tsx}\"",
-    "lint:fix": "rushx lint -- --fix",
-    "lint:quiet": "rushx lint -- --quiet",
+    "lint:fix": "npm run lint -- --fix",
+    "lint:quiet": "npm run lint -- --quiet",
     "api-extractor": "tsc && api-extractor run --local",
     "generate-doc": "api-documenter markdown -i temp -o docGen"
   },

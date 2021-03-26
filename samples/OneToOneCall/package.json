@@ -15,7 +15,7 @@
     "test": "react-scripts test --env=jsdom --watchAll=false",
     "test:coverage": "react-scripts test --env=jsdom --coverage",
     "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache",
-    "snapshot:update": "rushx test -- --update-snapshot",
+    "snapshot:update": "npm run test -- --update-snapshot",
     "prettier": "prettier --write --config ../../.prettierrc **/*.js **/*.ts",
     "prettier:check": "prettier --check --config ../../.prettierrc **/*.js **/*.ts",
     "lint": "eslint */**/*.{ts,tsx}",
