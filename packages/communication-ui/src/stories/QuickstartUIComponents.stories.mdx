@@ -79,15 +79,14 @@ The following classes and interfaces handle some of the major features of the Az
 The `FluentThemeProvider` is a required wrapper around the UI Toolkit components to provide theming that makes the components look amazing!
 It is in charge of allowing developer customize the theme of the components as well. Check out [Theming](/?path=/story/theming--page) for more information. `FluentThemeProvider` defaults to using light theme.
 
-`App.js`
+`App.tsx`
 
-```javascript
+```typescript
+import React from 'react';
+import { FluentThemeProvider } from '@azure/communication-ui';
+
 function App(props) {
-  return(
-    <FluentThemeProvider>
-      //Add Components!
-    </FluentThemeProvider>;
-  );
+  return <FluentThemeProvider>{/*Add Components!*/}</FluentThemeProvider>;
 }
 
 export default App;
@@ -100,25 +99,35 @@ You can customize the layout of these components and add any other custom compon
 ## Add Calling UI Components
 
 For Calling, we'll use the [`GridLayout`](/?path=/story/ui-components-gridlayout--grid-layout-component) and [`ControlBar`](/?path=/story/ui-components-controlbar--control-bar-component) Components.
-To start, in the `src` folder, create a new file called `CallingComponents.js`.
-Here we'll initialize a function component that will hold our base components to then import in `app.js`.
+To start, in the `src` folder, create a new file called `CallingComponents.tsx`.
+Here we'll initialize a function component that will hold our base components to then import in `app.tsx`.
 You can add extra layout and styling around the components.
 
-`CallingComponents.js`
+`CallingComponents.tsx`
 
-```javascript
-import { GridLayoutComponent, VideoTile, ControlBar } from '@azure/acs-ui-sdk';
+```typescript
+import {
+  GridLayoutComponent,
+  VideoTile,
+  ControlBar,
+  videoButtonProps,
+  audioButtonProps,
+  screenShareButtonProps,
+  hangupButtonProps
+} from '@azure/communication-ui';
 import { DefaultButton } from '@fluentui/react';
 
-export function CallingComponents(props) {
+function CallingComponents() {
   return (
     <div style={{ height: '35rem', width: '30rem', float: 'left' }}>
+      {/*Control Bar with default set up*/}
       <GridLayoutComponent>
         <VideoTile isVideoReady={false} videoProvider={null} avatarName={'Michael'}>
           <label>Michael</label>
         </VideoTile>
       </GridLayoutComponent>
-      //Control Bar with default set up
+
+      {/*Control Bar with default set up*/}
       <ControlBar layout={'horizontal'}>
         <DefaultButton
           {...videoButtonProps}
@@ -138,7 +147,6 @@ export function CallingComponents(props) {
             /*handle onClick*/
           }}
         />
-        <DefaultButton {...optionsButtonProps} menuProps={/*some IContextualMenuProps*/} />
         <DefaultButton
           {...hangupButtonProps}
           onClick={() => {
@@ -149,6 +157,8 @@ export function CallingComponents(props) {
     </div>
   );
 }
+
+export default CallingComponents;
 ```
 
 For this example we added a single `Video Tile` to the grid, but additional can be added.
@@ -156,17 +166,20 @@ For this example we added a single `Video Tile` to the grid, but additional can 
 ## Add Chat UI Components
 
 For Chat, we will use the [`ChatThread`](/?path=/docs/ui-components-chatthread--chat-thread-component) and [`SendBox`](/?path=/docs/ui-components-sendbox--send-box-story-book-component) components.
-To start, in the `src` folder, create a new file called `ChatComponents.js`.
-Here we'll initialize a function component that will hold our base components to then import in `app.js`.
+To start, in the `src` folder, create a new file called `ChatComponents.tsx`.
+Here we'll initialize a function component that will hold our base components to then import in `app.tsx`.
 
-`ChatComponents.js`
+`ChatComponents.tsx`
 
-```javascript
-
-import {ChatThreadComponentBase, ChatMessage as WebUiChatMessage, SendBox} from '@azure/acs-ui-sdk'
+```typescript
+import {
+  ChatThreadComponent,
+  ChatMessage as WebUiChatMessage,
+  SendBoxComponent,
+  MessageStatus
+} from '@azure/communication-ui';
 
 function ChatComponents() {
-
   //A sample chat history
   const GetHistoryChatMessages = (): WebUiChatMessage[] => {
     return [
@@ -202,34 +215,41 @@ function ChatComponents() {
   };
 
   return (
-    <div style = {{height: '35rem', width: '30rem', float: 'left'}}>
-      <ChatThreadComponentBase
+    <div style={{ height: '35rem', width: '30rem', float: 'left' }}>
+      <ChatThreadComponent
         userId={'1'}
         chatMessages={GetHistoryChatMessages()}
+        disableReadReceipt={false}
+        onSendReadReceipt={() => {
+          return;
+        }}
       />
 
       <SendBoxComponent
         disabled={false}
-        sendMessage={async () => { return }}
-        userId='ACS_ID PLACEHOLDER'
-        displayName='User Name'
-        onSendTypingNotification={() => { return }}
+        sendMessage={async () => {
+          return;
+        }}
+        userId="ACS_ID PLACEHOLDER"
+        displayName="User Name"
+        onSendTypingNotification={() => {
+          return;
+        }}
       />
-    </div >
+    </div>
   );
 }
 
 export default ChatComponents;
-
 ```
 
 ## Add Calling and Chat Components to the main application
 
-Back in the `app.js` file, we will now add the components to the `CallingProvider` and `ChatProvider` like shown below.
+Back in the `app.tsx` file, we will now add the components to the `FluentThemeProvider` like shown below.
 
-`App.js`
+`App.tsx`
 
-```javascript
+```typescript
 import ChatComponents from './ChatComponents';
 import CallingComponents from './CallingComponents';
 
