@@ -21,7 +21,7 @@ import { LiveAnnouncer, LiveMessage } from 'react-aria-live';
 import { ErrorHandlingProps } from '../providers';
 import { formatTimestampForChatMessage, propagateError, WithErrorHandling } from '../utils';
 import { CLICK_TO_LOAD_MORE_MESSAGES, NEW_MESSAGES } from '../constants';
-import { ChatMessage as WebUiChatMessage, MessageStatus } from '../types';
+import { ChatMessage as WebUiChatMessage } from '../types';
 import { ReadReceiptComponent, ReadReceiptProps } from './ReadReceipt';
 import { connectFuncsToContext, ChatMessagePropsFromContext, MapToChatMessageProps } from '../consumers';
 
@@ -116,9 +116,7 @@ const didUserSendTheLatestMessage = (
     } else {
       return (
         !isMessageSame(latestMessageFromNewMessages, latestMessageFromPreviousMessages) &&
-        latestMessageFromNewMessages.senderId === userId &&
-        latestMessageFromNewMessages.statusToRender !== MessageStatus.SEEN &&
-        latestMessageFromNewMessages.statusToRender !== MessageStatus.FAILED
+        latestMessageFromNewMessages.senderId === userId
       );
     }
   }
@@ -139,11 +137,11 @@ export interface ChatThreadStylesProps {
   readReceiptContainer?: (mine: boolean) => IStyle;
 }
 
-export interface NewMessageButtonProps {
+export interface JumpToNewMessageButtonProps {
   onClick: () => void;
 }
 
-const DefaultNewMessageButton = (props: NewMessageButtonProps): JSX.Element => {
+const DefaultJumpToNewMessageButton = (props: JumpToNewMessageButtonProps): JSX.Element => {
   const { onClick } = props;
   return (
     <PrimaryButton className={newMessageButtonStyle} onClick={onClick}>
@@ -171,28 +169,73 @@ const DefaultLoadPreviousMessagesButton = (props: LoadPreviousMessagesButtonProp
 };
 
 export type ChatThreadProps = {
+  /**
+   * The userId of the current user.
+   */
   userId: string;
+  /**
+   * The chat messages to render in chat thread. Chat messages need to have type `WebUiChatMessage`
+   */
   chatMessages: WebUiChatMessage[];
+  /**
+   * Custom CSS Styling.
+   */
   styles?: ChatThreadStylesProps;
-  disableNewMessageButton?: boolean;
+  /**
+   * Whether the new message button is disabled.
+   * @defaultValue `false`
+   */
+  disableJumpToNewMessageButton?: boolean;
+  /**
+   * Whether the load previous message button is disabled.
+   * @defaultValue `true`
+   */
   disableLoadPreviousMessage?: boolean;
+  /**
+   * Whether the read receipt for each message is disabled.
+   * @defaultValue `true`
+   */
   disableReadReceipt?: boolean;
+  /**
+   * onSendReadReceipt event handler. `() => Promise<void>`
+   */
   onSendReadReceipt?: () => Promise<void>;
+  /**
+   * onRenderReadReceipt event handler. `(readReceiptProps: ReadReceiptProps) => JSX.Element`
+   */
   onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element;
+  /**
+   * onRenderAvatar event handler. `(userId: string) => JSX.Element`
+   */
   onRenderAvatar?: (userId: string) => JSX.Element;
-  onRenderNewMessageButton?: (newMessageButtonProps: NewMessageButtonProps) => JSX.Element;
+  /**
+   * onRenderJumpToNewMessageButton event handler. `(newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element`
+   */
+  onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
+  /**
+   * onLoadPreviousMessages event handler.
+   */
   onLoadPreviousMessages?: () => void;
+  /**
+   * onRenderLoadPreviousMessagesButton event handler. `(loadPreviousMessagesButton: LoadPreviousMessagesButtonProps) => JSX.Element`
+   */
   onRenderLoadPreviousMessagesButton?: (loadPreviousMessagesButton: LoadPreviousMessagesButtonProps) => JSX.Element;
 };
 
-//  A Chatthread will be fed many messages so it will try to map out the messages out of the props and feed them into a
-//  Chat item. We need to be smarter and figure out for the last N messages are they all of the same person or not?
+/**
+ * `ChatThread` allows you to easily create a component for rendering chat messages, handling scrolling behavior of new/old messages and customizing icons & controls inside the chat thread.
+ *
+ * Users will need to provide at least chat messages and userId to render the `ChatThread` component.
+ * Users can also customize `ChatThread` by passing in their own Avatar, `ReadReceipt` icon, `JumpToNewMessageButton`, `LoadPreviousMessagesButton` and the behavior of these controls.
+ *
+ * `ChatThread` internally uses the `Chat` & `Chat.Message` component from `@fluentui/react-northstar`. You can checkout the details about these [two components](https://fluentsite.z22.web.core.windows.net/0.53.0/components/chat/props).
+ */
 export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingProps): JSX.Element => {
   const {
     chatMessages: newChatMessages,
     userId,
     styles,
-    disableNewMessageButton = false,
+    disableJumpToNewMessageButton = false,
     disableReadReceipt = true,
     disableLoadPreviousMessage = true,
     onSendReadReceipt,
@@ -201,7 +244,7 @@ export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingPr
     onErrorCallback,
     onLoadPreviousMessages,
     onRenderLoadPreviousMessagesButton,
-    onRenderNewMessageButton
+    onRenderJumpToNewMessageButton
   } = props;
 
   const [chatMessages, setChatMessages] = useState<WebUiChatMessage[]>([]);
@@ -289,14 +332,14 @@ export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingPr
    * unmounts.
    */
   useEffect(() => {
-    window.addEventListener('click', sendReadReceiptIfAtBottom);
-    window.addEventListener('focus', sendReadReceiptIfAtBottom);
-    chatScrollDivRef.current.addEventListener('scroll', handleScroll);
+    window && window.addEventListener('click', sendReadReceiptIfAtBottom);
+    window && window.addEventListener('focus', sendReadReceiptIfAtBottom);
+    chatScrollDivRef.current && chatScrollDivRef.current.addEventListener('scroll', handleScroll);
     const chatScrollDiv = chatScrollDivRef.current;
     return () => {
-      window.removeEventListener('click', sendReadReceiptIfAtBottom);
-      window.removeEventListener('focus', sendReadReceiptIfAtBottom);
-      chatScrollDiv.removeEventListener('scroll', handleScroll);
+      window && window.removeEventListener('click', sendReadReceiptIfAtBottom);
+      window && window.removeEventListener('focus', sendReadReceiptIfAtBottom);
+      chatScrollDiv && chatScrollDiv.removeEventListener('scroll', handleScroll);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -434,12 +477,12 @@ export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingPr
             <Chat styles={styles?.chatContainer ?? chatStyle} items={messagesToDisplay} />
           </LiveAnnouncer>
         </Ref>
-        {existsNewMessage && !disableNewMessageButton && (
+        {existsNewMessage && !disableJumpToNewMessageButton && (
           <div className={mergeStyles(newMessageButtonContainerStyle, styles?.newMessageButtonContainer)}>
-            {onRenderNewMessageButton ? (
-              onRenderNewMessageButton({ onClick: scrollToBottom })
+            {onRenderJumpToNewMessageButton ? (
+              onRenderJumpToNewMessageButton({ onClick: scrollToBottom })
             ) : (
-              <DefaultNewMessageButton onClick={scrollToBottom} />
+              <DefaultJumpToNewMessageButton onClick={scrollToBottom} />
             )}
           </div>
         )}

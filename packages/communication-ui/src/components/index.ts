@@ -20,7 +20,12 @@ export { SendBoxComponent } from './SendBox';
 export { ReadReceiptComponent } from './ReadReceipt';
 export type { ReadReceiptProps } from './ReadReceipt';
 export { ChatThreadComponent, ChatThread } from './ChatThread';
-export type { ChatThreadProps, ChatThreadStylesProps } from './ChatThread';
+export type {
+  ChatThreadProps,
+  ChatThreadStylesProps,
+  JumpToNewMessageButtonProps,
+  LoadPreviousMessagesButtonProps
+} from './ChatThread';
 export { StreamMedia } from './StreamMedia';
 export { ParticipantItem } from './ParticipantItem';
 export type { ParticipantItemProps } from './ParticipantItem';
