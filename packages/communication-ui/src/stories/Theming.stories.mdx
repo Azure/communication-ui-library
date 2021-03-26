@@ -1,32 +1,106 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
+
 import { FluentThemeProvider } from '../providers';
+import {
+  ControlBar,
+  audioButtonProps,
+  hangupButtonProps,
+  optionsButtonProps,
+  screenShareButtonProps,
+  videoButtonProps
+} from '../components';
+import { darkTheme } from '../constants/themes';
+import { DefaultButton } from '@fluentui/react';
 
 <Meta title="Theming" />
 
 # Theming
 
 ACS UI SDK use components and icons from both [Fluent UI](https://developer.microsoft.com/en-us/fluentui#/controls/web)
-and [Fluent React Northstar](https://fluentsite.z22.web.core.windows.net/0.53.0). The FluentThemeProvider ensures:
+and [Fluent React Northstar](https://fluentsite.z22.web.core.windows.net/0.53.0). The `FluentThemeProvider`
+component ensures:
 
-1. ACS UI SDK and Fluent UI components are themed together
+1. ACS UI SDK and Fluent UI components and icons are themed together
 2. Fluent React Northstar icons are provided
 
 ## Usage
 
-To use the FluentThemeProvider, simply import it from '@azure/communication-ui' and wrap it around your React
-application and rendering it as shown in this example:
+To use the FluentThemeProvider, simply import it from '@azure/communication-ui' and wrap it around
+ACS UI SDK components and Fluent UI components. For the example below we will provide theming and icons to
+the `ControlBar`.
 
 ```typescript
 import React from 'react';
-import { FluentThemeProvider } from '@azure/communication-ui';
+import {
+  FluentThemeProvider,
+  ControlBar,
+  audioButtonProps,
+  hangupButtonProps,
+  screenShareButtonProps,
+  videoButtonProps
+} from '@azure/communication-ui';
+import { DefaultButton } from '@fluentui/react';
 
-<FluentThemeProvider fluentTheme={exampleTheme}>
-  <App />
+<FluentThemeProvider>
+  <ControlBar>
+    <DefaultButton {...videoButtonProps} />
+    <DefaultButton {...audioButtonProps} />
+    <DefaultButton {...screenShareButtonProps} />
+    <DefaultButton {...optionsButtonProps} />
+    <DefaultButton {...hangupButtonProps} />
+  </ControlBar>
 </FluentThemeProvider>;
 ```
 
-The property `fluentTheme` is optional. A light theme will be used if no theme is provided.
+<Canvas withSource="none">
+  <FluentThemeProvider>
+    <ControlBar>
+      <DefaultButton {...videoButtonProps} />
+      <DefaultButton {...audioButtonProps} />
+      <DefaultButton {...screenShareButtonProps} />
+      <DefaultButton {...optionsButtonProps} />
+      <DefaultButton {...hangupButtonProps} />
+    </ControlBar>
+  </FluentThemeProvider>
+</Canvas>
+
+`FluentThemeProvider` does two things :
+
+1. `FluentThemeProvider` loads the icons defined in props such `videoButtonProps`
+2. `FluentThemeProvider` applies theme (light theme by default) to the `ControlBar` and `DefaultButton`.
+
+To illustrate how another theme can be applied, import `darkTheme` from `@azure/communication-ui`
+and assign it to the `fluentTheme` property.
+
+```typescript
+import { darkTheme } from '@azure/communication-ui';
+
+<FluentThemeProvider fluentTheme={darkTheme}>
+  <ControlBar>
+    <DefaultButton {...videoButtonProps} />
+    <DefaultButton {...audioButtonProps} />
+    <DefaultButton {...screenShareButtonProps} />
+    <DefaultButton {...optionsButtonProps} />
+    <DefaultButton {...hangupButtonProps} />
+  </ControlBar>
+</FluentThemeProvider>;
+```
+
+<Canvas withSource="none">
+  <FluentThemeProvider fluentTheme={darkTheme}>
+    <ControlBar>
+      <DefaultButton {...videoButtonProps} />
+      <DefaultButton {...audioButtonProps} />
+      <DefaultButton {...screenShareButtonProps} />
+      <DefaultButton {...optionsButtonProps} />
+      <DefaultButton {...hangupButtonProps} />
+    </ControlBar>
+  </FluentThemeProvider>
+</Canvas>
+
+The dark theme is applied to the `ControlBar` and its buttons. The icon colors in the button are handled
+because `DefaultButton` is themed.
 
 ## FluentThemeProvider Props
 
@@ -81,7 +155,7 @@ import { useTheme } from '@fluentui/react-theme-provider';
 import { DefaultButton } from '@fluentui/react';
 
 const MyButton = () => JSX.Element {
-    const { theme } = useTheme();
+    const theme = useTheme();
     return (
         <DefaultButton
             text="exampleButton"
