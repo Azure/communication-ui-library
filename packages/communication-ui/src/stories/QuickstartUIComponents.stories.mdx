@@ -81,7 +81,7 @@ It is in charge of allowing developer customize the theme of the components as w
 
 `App.tsx`
 
-```typescript
+```jsx
 import React from 'react';
 import { FluentThemeProvider } from '@azure/communication-ui';
 
@@ -105,7 +105,7 @@ You can add extra layout and styling around the components.
 
 `CallingComponents.tsx`
 
-```typescript
+```jsx
 import {
   GridLayoutComponent,
   VideoTile,
@@ -113,52 +113,61 @@ import {
   videoButtonProps,
   audioButtonProps,
   screenShareButtonProps,
+  optionsButtonProps,
   hangupButtonProps
 } from '@azure/communication-ui';
-import { DefaultButton } from '@fluentui/react';
+import { DefaultButton, Stack, IContextualMenuProps } from '@fluentui/react';
+import { useState } from 'react';
 
-function CallingComponents() {
+export function CallingComponents() {
+  const exampleOptionsMenuProps: IContextualMenuProps = {
+    items: [
+      {
+        key: '1',
+        name: 'Choose Camera',
+        iconProps: { iconName: 'LocationCircle' },
+        onClick: () => alert('Choose Camera Menu Item Clicked!')
+      }
+    ]
+  };
+  const [videoButtonChecked, setVideoButtonChecked] = useState < boolean > false;
+  const [audioButtonChecked, setAudioButtonChecked] = useState < boolean > false;
+  const [screenshareButtonChecked, setScreenshareButtonChecked] = useState < boolean > false;
+
   return (
-    <div style={{ height: '35rem', width: '30rem', float: 'left' }}>
-      {/*Control Bar with default set up*/}
-      <GridLayoutComponent>
-        <VideoTile isVideoReady={false} videoProvider={null} avatarName={'Michael'}>
-          <label>Michael</label>
-        </VideoTile>
-      </GridLayoutComponent>
+    <Stack>
+      {/* GridLayout Component relies on the parent's height and width, so it's required to set the height and width on its parent. */}
+      <div style={{ height: '30rem', width: '30rem', border: '1px solid' }}>
+        <GridLayoutComponent>
+          <VideoTile isVideoReady={false} videoProvider={null} avatarName={'Michael'}>
+            <label>Michael</label>
+          </VideoTile>
+        </GridLayoutComponent>
+      </div>
 
-      {/*Control Bar with default set up*/}
-      <ControlBar layout={'horizontal'}>
+      {/* Control Bar with default set up */}
+      <ControlBar styles={{ root: { justifyContent: 'center' } }}>
         <DefaultButton
           {...videoButtonProps}
-          onClick={() => {
-            /*handle onClick*/
-          }}
+          checked={videoButtonChecked}
+          onClick={() => setVideoButtonChecked(!videoButtonChecked)}
         />
         <DefaultButton
           {...audioButtonProps}
-          onClick={() => {
-            /*handle onClick*/
-          }}
+          checked={audioButtonChecked}
+          onClick={() => setAudioButtonChecked(!audioButtonChecked)}
         />
         <DefaultButton
           {...screenShareButtonProps}
-          onClick={() => {
-            /*handle onClick*/
-          }}
+          checked={screenshareButtonChecked}
+          onClick={() => setScreenshareButtonChecked(!screenshareButtonChecked)}
         />
-        <DefaultButton
-          {...hangupButtonProps}
-          onClick={() => {
-            /*handle onClick*/
-          }}
-        />
+        <DefaultButton {...optionsButtonProps} menuProps={exampleOptionsMenuProps} />
+        <DefaultButton {...hangupButtonProps} />
       </ControlBar>
-    </div>
+    </Stack>
   );
 }
-
-export default CallingComponents;
 ```
 
 For this example we added a single `Video Tile` to the grid, but additional can be added.
@@ -171,15 +180,10 @@ Here we'll initialize a function component that will hold our base components to
 
 `ChatComponents.tsx`
 
-```typescript
-import {
-  ChatThreadComponent,
-  ChatMessage as WebUiChatMessage,
-  SendBoxComponent,
-  MessageStatus
-} from '@azure/communication-ui';
+```jsx
+import {ChatThreadComponentBase, ChatMessage as WebUiChatMessage, SendBoxComponent, MessageStatus } from '@azure/communication-ui'
 
-function ChatComponents() {
+export const ChatComponents = () => {
   //A sample chat history
   const GetHistoryChatMessages = (): WebUiChatMessage[] => {
     return [
@@ -215,32 +219,24 @@ function ChatComponents() {
   };
 
   return (
-    <div style={{ height: '35rem', width: '30rem', float: 'left' }}>
-      <ChatThreadComponent
+    <div style = {{height: '30rem', width: '30rem'}}>
+      {/* Chat thread component with read receipt feature enabled */}
+      <ChatThreadComponentBase
         userId={'1'}
         chatMessages={GetHistoryChatMessages()}
         disableReadReceipt={false}
-        onSendReadReceipt={() => {
-          return;
-        }}
       />
 
       <SendBoxComponent
         disabled={false}
-        sendMessage={async () => {
-          return;
-        }}
-        userId="ACS_ID PLACEHOLDER"
-        displayName="User Name"
-        onSendTypingNotification={() => {
-          return;
-        }}
+        sendMessage={async () => { return }}
+        userId='ACS_ID PLACEHOLDER'
+        displayName='User Name'
+        onSendTypingNotification={async () => { return }}
       />
-    </div>
+    </div >
   );
 }
-
-export default ChatComponents;
 ```
 
 ## Add Calling and Chat Components to the main application
@@ -249,15 +245,25 @@ Back in the `app.tsx` file, we will now add the components to the `FluentThemePr
 
 `App.tsx`
 
-```typescript
-import ChatComponents from './ChatComponents';
-import CallingComponents from './CallingComponents';
+```jsx
+import { FluentThemeProvider } from '@azure/communication-ui';
+import { Stack } from '@fluentui/react';
+import { CallingComponents } from './CallingComponents';
+import { ChatComponents } from './ChatComponents';
 
-function App(props) {
+function App() {
   return (
     <FluentThemeProvider>
-      <CallingComponents />
-      <ChatComponents />
+      <Stack
+        horizontal
+        horizontalAlign="space-evenly"
+        styles={{
+          root: { width: '100%' }
+        }}
+      >
+        <CallingComponents />
+        <ChatComponents />
+      </Stack>
     </FluentThemeProvider>
   );
 }

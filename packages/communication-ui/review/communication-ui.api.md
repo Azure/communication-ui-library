@@ -202,6 +202,9 @@ export const ChatThread: (props: Pick<ChatThreadProps & ErrorHandlingProps & Cha
 export const ChatThreadComponent: (props: ChatThreadProps & ErrorHandlingProps & ChatMessagePropsFromContext) => JSX.Element;
 
 // @public
+export const ChatThreadComponentBase: (props: ChatThreadProps & ErrorHandlingProps) => JSX.Element;
+
+// @public
 export type ChatThreadMember = {
     userId: string;
     displayName?: string;

@@ -2,10 +2,7 @@
 
 import React from 'react';
 import { Meta } from '@storybook/react/types-6-0';
-import { IncomingCallModal } from '../../composites/OneToOneCall/IncomingCallAlerts';
-import { text, files, boolean } from '@storybook/addon-knobs';
 import { getDocs } from './ThemesDocs';
-import { renderVideoStream } from '../utils';
 import { EXAMPLES_FOLDER_PREFIX } from '../constants';
 
 export const TeamsThemeComponent: () => JSX.Element = () => {
