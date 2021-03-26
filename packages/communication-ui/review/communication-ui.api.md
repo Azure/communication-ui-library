@@ -1265,7 +1265,7 @@ export const WithErrorHandling: (Component: (props: any & ErrorHandlingProps) =>
 
 // Warnings were encountered during analysis:
 //
-// src/components/SendBox.tsx:123:50 - (ae-forgotten-export) The symbol "SendBoxProps" needs to be exported by the entry point index.d.ts
+// src/components/SendBox.tsx:31:3 - (ae-forgotten-export) The symbol "SendBoxProps" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 
