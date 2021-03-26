@@ -30,8 +30,7 @@ export const memberItemIsYouStyle = mergeStyles({
   fontSize: '0.875rem', // 14px
   fontWeight: 400,
   color: '#A19F9D',
-  marginTop: '0.3125rem',
-  marginLeft: '0.3125rem'
+  marginTop: '0.3125rem'
 });
 
 export const iconsContainerStyle = mergeStyles({

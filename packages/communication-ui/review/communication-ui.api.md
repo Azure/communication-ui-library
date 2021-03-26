@@ -222,7 +222,7 @@ export type ChatThreadProps = {
     disableLoadPreviousMessage?: boolean;
     disableReadReceipt?: boolean;
     onSendReadReceipt?: () => Promise<void>;
-    onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element;
+    onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element | null;
     onRenderAvatar?: (userId: string) => JSX.Element;
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousMessages?: () => void;
@@ -803,14 +803,14 @@ export const PAGE_SIZE = 200;
 export const ParticipantItem: (props: ParticipantItemProps & ErrorHandlingProps) => JSX.Element;
 
 // @public
-export type ParticipantItemProps = {
-    name: string;
+export interface ParticipantItemProps {
     isYou?: boolean;
-    onRenderAvatar?: (props?: ParticipantItemProps) => JSX.Element | null;
     menuItems?: IContextualMenuItem[];
+    name: string;
+    onRenderAvatar?: (props?: ParticipantItemProps) => JSX.Element | null;
     onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
     presence?: PersonaPresence;
-};
+}
 
 // @public (undocumented)
 export const PARTICIPANTS_THRESHOLD = 20;
@@ -864,10 +864,9 @@ export const screenShareButtonProps: IButtonProps;
 export const SendBox: (props: Pick<{
     onRenderSystemMessage?: ((systemMessage: string | undefined) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>) | undefined;
     supportNewline?: boolean | undefined;
-} & SendBoxPropsFromContext & ErrorHandlingProps, "onErrorCallback" | "supportNewline" | "onRenderSystemMessage">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+    onRenderIcon?: ((props: SendBoxProps) => JSX.Element | null) | undefined;
+} & SendBoxPropsFromContext & ErrorHandlingProps, "onErrorCallback" | "supportNewline" | "onRenderIcon" | "onRenderSystemMessage">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
 
-// Warning: (ae-forgotten-export) The symbol "SendBoxProps" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export const SendBoxComponent: (props: SendBoxProps & ErrorHandlingProps) => JSX.Element;
 
@@ -1263,6 +1262,10 @@ export interface VideoTileStylesProps {
 // @public
 export const WithErrorHandling: (Component: (props: any & ErrorHandlingProps) => JSX.Element, props: any & ErrorHandlingProps) => JSX.Element;
 
+
+// Warnings were encountered during analysis:
+//
+// src/components/SendBox.tsx:31:3 - (ae-forgotten-export) The symbol "SendBoxProps" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 
