@@ -57,7 +57,7 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
   }, [fluentUITheme]);
 
   return (
-    <ThemeProvider theme={fluentUITheme} className={wrapper} style={{ display: 'inherit' }} applyTo="body">
+    <ThemeProvider theme={fluentUITheme} className={wrapper} style={{ display: 'inherit' }}>
       <Provider theme={fluentNorthStarTheme} className={wrapper} style={{ display: 'flex' }}>
         {children}
       </Provider>
