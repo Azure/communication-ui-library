@@ -26,9 +26,10 @@ UI Framework requires a React environment to be setup. Next we will do that. If 
 
 We'll use the create-react-app template for this quickstart. For more information, see: [Get Started with React](https://reactjs.org/docs/create-a-new-react-app.html)
 
-```console
+```bash
 
-npx create-react-app my-app
+# Build app in typescript:
+npx create-react-app my-app --template typescript
 
 cd my-app
 
@@ -38,11 +39,11 @@ At the end of this process, you should have a full application inside of the fol
 
 ### Install the package
 
-Use the `npm install` command to install the Azure Communication Services Calling client library for JavaScript. Move the provided tarball (Private Preview) over to the my-app directory.
+Use the `npm install` command to install the Azure Communication Services UI Toolkit for JavaScript. Move the provided tarball (Private Preview) over to the my-app directory.
 
-```console
+```bash
 
-//For Private Preview install tarball
+#For Private Preview install tarball
 
 npm install --save ./{path for tarball}
 
@@ -54,7 +55,7 @@ The `--save` option lists the library as a dependency in your **package.json** f
 
 Let's test the Create React App installation by running:
 
-```console
+```bash
 
 npm run start
 
@@ -67,7 +68,8 @@ The following classes and interfaces handle some of the major features of the Az
 | Name                                                                          | Description                                                                              |
 | ----------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
 | [FluentThemeProvider](/?path=/story/theming--page)                            | Provider that controls Theming on the components. Can be used to override theme          |
-| [GridLayout](/?path=/story/ui-components-gridlayout--grid-layout-component)   | Base component that shows call participants and their remote video streams               |
+| [GridLayout](/?path=/story/ui-components-gridlayout--grid-layout-component)   | Base component that organizes video tiles into a grid                                    |
+| [Video Tile](/?path=/story/ui-components-videotile--video-tile-component)     | Base component to render participants either with or without video                       |
 | [ControlBar](/?path=/story/ui-components-controlbar--control-bar-component)   | Base component to control call including mute, video, share screen                       |
 | [ChatThread](/?path=/docs/ui-components-chatthread--chat-thread-component)    | Base component that renders a chat thread with typing indicators, read receipts, etc.    |
 | [SendBox](/?path=/story/ui-components-sendbox--send-box-story-book-component) | Base component that allows user to input messages that will be sent to the joined thread |
@@ -81,7 +83,11 @@ It is in charge of allowing developer customize the theme of the components as w
 
 ```javascript
 function App(props) {
-  return <FluentThemeProvider>//Add Components!</FluentThemeProvider>;
+  return(
+    <FluentThemeProvider>
+      //Add Components!
+    </FluentThemeProvider>;
+  );
 }
 
 export default App;
@@ -197,18 +203,18 @@ function ChatComponents() {
 
   return (
     <div style = {{height: '35rem', width: '30rem', float: 'left'}}>
-        <ChatThreadComponentBase
-          userId={'1'}
-          chatMessages={GetHistoryChatMessages()}
-        />
+      <ChatThreadComponentBase
+        userId={'1'}
+        chatMessages={GetHistoryChatMessages()}
+      />
 
-        <SendBoxComponent
+      <SendBoxComponent
         disabled={false}
         sendMessage={async () => { return }}
         userId='ACS_ID PLACEHOLDER'
         displayName='User Name'
         onSendTypingNotification={() => { return }}
-        />
+      />
     </div >
   );
 }
@@ -249,17 +255,16 @@ npm run start
 
 ```
 
-To fully test the capabilities, you will need a second client with calling and chat functionality to join the call and chat thread. See our [Calling Hero Sample](./../../samples/calling-hero-sample.md) and [Chat Hero Sample](./../../samples/chat-hero-sample.md) as potential options.
-
 ## Clean up resources
 
 If you want to clean up and remove a Communication Services subscription, you can delete the resource or resource group. Deleting the resource group also deletes any other resources associated with it. Learn more about [cleaning up resources](../create-communication-resource.md#clean-up-resources).
 
 ## Next steps
 
-> [!div class="nextstepaction"][try ui framework composite components](./get-started-with-composites.md)
+[Try UI Toolkit Composite Components](/?path=/story/quickstart-composites--page)
 
 For more information, see the following resources:
 
-- [UI Framework Overview](../../concepts/ui-framework/ui-sdk-overview.md)
-- [UI Framework Capabilities](./../../concepts/ui-framework/ui-sdk-features.md)
+- [UI Toolkit Use Cases](/?path=/story/use-cases--page
+- [UI Toolkit Styling](/?path=/story/styling--page)
+- [UI Toolkit Theming](/?path=/story/theming--page)
