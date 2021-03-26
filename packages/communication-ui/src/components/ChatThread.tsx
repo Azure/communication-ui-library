@@ -178,7 +178,7 @@ export type ChatThreadProps = {
   disableLoadPreviousMessage?: boolean;
   disableReadReceipt?: boolean;
   onSendReadReceipt?: () => Promise<void>;
-  onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element;
+  onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element | null;
   onRenderAvatar?: (userId: string) => JSX.Element;
   onRenderNewMessageButton?: (newMessageButtonProps: NewMessageButtonProps) => JSX.Element;
   onLoadPreviousMessages?: () => void;

@@ -22,6 +22,7 @@ import { propagateError } from '../utils/SDKUtils';
 type SendBoxProps = {
   onRenderSystemMessage?: (systemMessage: string | undefined) => React.ReactElement;
   supportNewline?: boolean;
+  onRenderIcon?: (props: SendBoxProps & SendBoxPropsFromContext) => JSX.Element | null;
 } & SendBoxPropsFromContext;
 
 const defaultOnRenderSystemMessage = (systemMessage: string | undefined): JSX.Element | undefined =>
@@ -36,7 +37,8 @@ const SendBoxComponentBase = (props: SendBoxProps & ErrorHandlingProps): JSX.Ele
     supportNewline: supportMultiline,
     sendMessage,
     onErrorCallback,
-    onSendTypingNotification
+    onSendTypingNotification,
+    onRenderIcon
   } = props;
 
   const [textValue, setTextValue] = useState('');
@@ -109,7 +111,7 @@ const SendBoxComponentBase = (props: SendBoxProps & ErrorHandlingProps): JSX.Ele
             e.stopPropagation();
           }}
         >
-          <div className={sendIconDiv} />
+          {onRenderIcon ? onRenderIcon(props) : <div className={sendIconDiv} />}
         </div>
       </Stack>
       {onRenderSystemMessage(systemMessage ? systemMessage : textTooLongMessage)}
