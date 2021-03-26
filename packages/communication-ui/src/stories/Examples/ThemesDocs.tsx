@@ -1,3 +1,5 @@
+// © Microsoft Corporation. All rights reserved.
+
 import { Description, Heading, Source, Title } from '@storybook/addon-docs/blocks';
 import React from 'react';
 
