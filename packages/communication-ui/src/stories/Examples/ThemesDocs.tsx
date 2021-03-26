@@ -72,11 +72,18 @@ export const getDocs: () => JSX.Element = () => {
             />
           </ControlBar>
           {/*Control Bar with default set up*/}
+          <div
+          style={{
+            height: '530px',
+            width: '830px'
+          }}
+        >
           <GridLayoutComponent>
-                <VideoTile isVideoReady={false} videoProvider={null} avatarName={'Michael'}>
-                    <label>Michael</label>
-                </VideoTile>
+            <VideoTile isVideoReady={false} videoProvider={null} avatarName={'Michael'}>
+              <label>Michael</label>
+            </VideoTile>
           </GridLayoutComponent>
+        </div>
         </FluentThemeProvider>
       );
     }
