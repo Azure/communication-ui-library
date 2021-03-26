@@ -2,7 +2,8 @@
 
 import { ChatThreadMember } from '../types/ChatThreadMember';
 import { useCallback } from 'react';
-import { useChatClient, useUserId } from '../providers/ChatProvider';
+import { useUserId } from '../providers/ChatProvider';
+import { useChatClient } from '../providers/ChatProviderHelper';
 import {
   useChatThreadClient,
   useSetThreadMembers,

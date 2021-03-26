@@ -1,5 +1,5 @@
 {
-  "name": "acs-server-sample",
+  "name": "server",
   "version": "0.0.1",
   "private": true,
   "scripts": {
