@@ -19,15 +19,26 @@ import { WithErrorHandling } from '../utils/WithErrorHandling';
 import { ErrorHandlingProps } from '../providers/ErrorProvider';
 import { propagateError } from '../utils/SDKUtils';
 
-type SendBoxProps = {
+/**
+ * Properties for component SendBox
+ */
+export type SendBoxProps = {
+  /** Optional callback to render system message below the SendBox */
   onRenderSystemMessage?: (systemMessage: string | undefined) => React.ReactElement;
+  /** Optional boolean to support new line in SendBox */
   supportNewline?: boolean;
+  /** Optional callback to render send button icon to the right of the SendBox*/
   onRenderIcon?: (props: SendBoxProps & SendBoxPropsFromContext) => JSX.Element | null;
 } & SendBoxPropsFromContext;
 
 const defaultOnRenderSystemMessage = (systemMessage: string | undefined): JSX.Element | undefined =>
   systemMessage ? <Alert attached="bottom" content={systemMessage} /> : undefined;
 
+/**
+ * @description `SendBox` is a component for users to type and send messages. An optional message can also be
+ * added below the `SendBox`
+ * @param props - SendBoxProps
+ */
 const SendBoxComponentBase = (props: SendBoxProps & ErrorHandlingProps): JSX.Element => {
   const {
     disabled,
