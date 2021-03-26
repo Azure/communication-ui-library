@@ -65,10 +65,10 @@ import { DefaultButton } from '@fluentui/react';
   </FluentThemeProvider>
 </Canvas>
 
-`FluentThemeProvider` does two things :
+`FluentThemeProvider` does two things here:
 
-1. `FluentThemeProvider` loads the icons defined in props such `videoButtonProps`
-2. `FluentThemeProvider` applies theme (light theme by default) to the `ControlBar` and `DefaultButton`.
+1. `FluentThemeProvider` loads the icons defined by the props such `videoButtonProps`
+2. `FluentThemeProvider` applies theme (light theme by default) to the `ControlBar`
 
 To illustrate how another theme can be applied, import `darkTheme` from `@azure/communication-ui`
 and assign it to the `fluentTheme` property.
@@ -99,8 +99,8 @@ import { darkTheme } from '@azure/communication-ui';
   </FluentThemeProvider>
 </Canvas>
 
-The dark theme is applied to the `ControlBar` and its buttons. The icon colors in the button are handled
-because `DefaultButton` is themed.
+The dark theme is applied to the `ControlBar`. The icon colors in `DefaultButton` are themed
+corectly because it is a Fluent UI component.
 
 ## FluentThemeProvider Props
 
