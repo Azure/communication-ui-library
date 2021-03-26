@@ -2,8 +2,8 @@
   "name": "@azure/acs-chat-selector",
   "version": "1.0.0-beta",
   "description": "ACS UI SDK",
-  "module": "dist/index.js",
-  "main": "dist/index.js",
+  "module": "dist/dist-esm/index.js",
+  "main": "dist/dist-esm/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc && api-extractor run --local",
