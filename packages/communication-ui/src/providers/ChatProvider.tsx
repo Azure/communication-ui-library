@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import React, { Dispatch, SetStateAction, createContext, useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 
 import { ChatClient } from '@azure/communication-chat';
 import { ChatThreadProvider } from './ChatThreadProvider';
@@ -15,23 +15,13 @@ import {
   CommunicationUiErrorFromError,
   CommunicationUiError
 } from '../types/CommunicationUiError';
-
-export type ChatContextType = {
-  chatClient?: ChatClient;
-  setChatClient: Dispatch<SetStateAction<ChatClient>>;
-  userId: string;
-  setUserId: Dispatch<SetStateAction<string>>;
-  displayName: string;
-  setDisplayName: Dispatch<SetStateAction<string>>;
-};
+import { ChatContext, ChatContextType } from './ChatProviderHelper';
 
 let contextState: ChatContextType;
 
 export const getChatContextState = (): ChatContextType => {
   return contextState;
 };
-
-export const ChatContext = createContext<ChatContextType | undefined>(undefined);
 
 const CHATPROVIDER_LOADING_STATE = 1;
 const CHATPROVIDER_LOADED_STATE = 2;
@@ -112,23 +102,6 @@ const ChatProviderBase = (props: ChatProviderProps & ErrorHandlingProps): JSX.El
 
 export const ChatProvider = (props: ChatProviderProps & ErrorHandlingProps): JSX.Element =>
   WithErrorHandling(ChatProviderBase, props);
-
-export const useChatClient = (): ChatClient => {
-  const chatContext = useContext<ChatContextType | undefined>(ChatContext);
-  if (chatContext === undefined) {
-    throw new CommunicationUiError({
-      message: 'UseChatClient invoked when ChatContext not initialized',
-      code: CommunicationUiErrorCode.CONFIGURATION_ERROR
-    });
-  }
-  if (chatContext.chatClient === undefined) {
-    throw new CommunicationUiError({
-      message: 'UseChatClient invoked with ChatClient not initialized',
-      code: CommunicationUiErrorCode.CONFIGURATION_ERROR
-    });
-  }
-  return chatContext.chatClient;
-};
 
 export const useSetChatClient = (): ((chatClient: ChatClient) => void) => {
   const chatContext = useContext<ChatContextType | undefined>(ChatContext);
