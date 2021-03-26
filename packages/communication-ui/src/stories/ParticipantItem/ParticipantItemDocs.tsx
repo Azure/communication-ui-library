@@ -53,7 +53,7 @@ const CustomAvatarExample: () => JSX.Element = () => {
   const onRenderAvatar = (): JSX.Element => {
     return (
       <img
-        src="./stories/ParticipantItem/johnny_bravo.png"
+        src="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/persona-female.png"
         width="32px"
         height="32px"
         style={{
@@ -65,20 +65,27 @@ const CustomAvatarExample: () => JSX.Element = () => {
   };
   return (
     <div style={{ width: '200px' }}>
-      <ParticipantItem name="Johnny Bravo" onRenderAvatar={onRenderAvatar} />
+      <ParticipantItem name="Annie Lindqvist" onRenderAvatar={onRenderAvatar} />
     </div>
   );
 };
 
 const customAvatarCode = `
 const onRenderAvatar = (): JSX.Element => {
-  return <img src="./path/to/johnny_bravo.png" width="32px" height="32px" style={{
-    borderRadius: 20,
-    display: 'block',
-  }}/>;
-}
+  return (
+    <img
+      src="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/persona-female.png"
+      width="32px"
+      height="32px"
+      style={{
+        borderRadius: 20,
+        display: 'block'
+      }}
+    />
+  );
+};
 <div style={{ width: '200px' }}>
-  <ParticipantItem name="Johnny Bravo" onRenderAvatar={onRenderAvatar} />
+  <ParticipantItem name="Annie Lindqvist" onRenderAvatar={onRenderAvatar} />
 </div>
 `;
 
@@ -136,14 +143,14 @@ export const getDocs: () => JSX.Element = () => {
       </Canvas>
       <Source code={exampleCode} />
       <Heading>Custom avatar</Heading>
-      To customize the avatar of `ParticipantItem`, use the onRenderAvatar property like in the example below. Note: the
-      avatar element is recommended to be within 32 by 32 pixels.
+      To customize the avatar, use the onRenderAvatar property like in the example below. Note: the avatar element is
+      recommended to be within 32 by 32 pixels.
       <Source code={customAvatarCode} />
       <Canvas>
         <CustomAvatarExample />
       </Canvas>
       <Heading>Add icon</Heading>
-      To add an icon to `ParticipantItem`, use the onRenderIcon property like in the example below.
+      To add an icon, use the onRenderIcon property like in the example below.
       <Source code={customIconCode} />
       <Canvas>
         <CustomIconExample />
