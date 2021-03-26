@@ -248,6 +248,7 @@ export const getDocs: () => JSX.Element = () => {
       <Heading>Incoming Call Modal</Heading>
       <Source code={exampleIncomingCallModal} />
       <Heading>Incoming Call Toast</Heading>
+      <Source code={exampleIncomingCallToast} />
     </>
   );
 };
