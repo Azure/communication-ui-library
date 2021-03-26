@@ -1,11 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import {
-  memberItemContainerStyle,
-  memberItemIsYouStyle,
-  memberItemNameStyle,
-  iconsContainerStyle
-} from './styles/ParticipantItem.styles';
+import { memberItemContainerStyle, memberItemIsYouStyle, iconsContainerStyle } from './styles/ParticipantItem.styles';
 import {
   ContextualMenu,
   DirectionalHint,
@@ -23,7 +18,7 @@ import { useTheme } from '@fluentui/react-theme-provider';
 /**
  * Props for ParticipantItem component
  */
-export type ParticipantItemProps = {
+export interface ParticipantItemProps {
   /** Name of participant */
   name: string;
   /** Optional indicator to show participant is the user */
@@ -36,7 +31,7 @@ export type ParticipantItemProps = {
   onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
   /** Optional PersonaPresence to show participant presence. This will not have an effect if property avatar is assigned */
   presence?: PersonaPresence;
-};
+}
 
 const ParticipantItemBase = (props: ParticipantItemProps & ErrorHandlingProps): JSX.Element => {
   const { name, isYou, onRenderAvatar, menuItems, onRenderIcon, presence } = props;
@@ -55,20 +50,19 @@ const ParticipantItemBase = (props: ParticipantItemProps & ErrorHandlingProps): 
     setMenuHidden(true);
   };
 
-  const avatarToUse = onRenderAvatar ? (
-    <div style={{ display: 'flex' }}>
-      {onRenderAvatar()}
-      <span className={memberItemNameStyle}>{name}</span>
-    </div>
-  ) : (
-    <Persona text={name} size={PersonaSize.size32} presence={presence} />
+  const avatarToUse = (
+    <Persona
+      text={name}
+      size={PersonaSize.size32}
+      presence={presence}
+      onRenderPersonaCoin={onRenderAvatar ? () => onRenderAvatar(props) : undefined}
+    />
   );
-
   return (
     <div ref={containerRef} className={memberItemContainerStyle(theme)} onClick={showMenu}>
       {avatarToUse}
       {isYou && <span className={memberItemIsYouStyle}>(you)</span>}
-      {onRenderIcon && <Stack className={iconsContainerStyle}>{onRenderIcon()}</Stack>}
+      {onRenderIcon && <Stack className={iconsContainerStyle}>{onRenderIcon(props)}</Stack>}
       {menuItems && (
         <ContextualMenu
           items={menuItems}

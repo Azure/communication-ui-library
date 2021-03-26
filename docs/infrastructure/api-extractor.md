@@ -17,7 +17,6 @@ The api-extractor used for a number of useful features:
 ## How to run API Extractor
 
 API Extractor is run as part of the build commands for each package. Running `rush build -t "package-name"` will trigger the api-extractor to run.
-> note: as of writing projects that perform hot reloading such as Storybook or running any sample do not trigger the api extractor. If these run methods are being used for development, once you are satisfied with your changes, you will need to run `rush build -t "package-name"` for each package to ensure the api extractor file is updated.
 
 ## Configuration Files
 

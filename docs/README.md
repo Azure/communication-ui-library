@@ -27,6 +27,7 @@ Looking to make a contribution to this repo? Check out our guide for a walk-thro
 - [GitHub Issue templates](./infrastructure/issue-templates.md) - GitHub bug and feature request templates
 - [Jest](./infrastructure/jest.md) - Unit test framework
 - [Pull Request Gates and Templates](./infrastructure/pull-requests.md) - Gates blocking PRs and the PR template
+- [Rollup](./infrastructure/rollup.md) - Used to create hybrid npm package (generates commonjs bundle)
 - [Rush monorepo manager](./infrastructure/rush.md) - Why Rush is used and useful Rush commands
 
 ## References

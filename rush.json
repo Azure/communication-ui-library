@@ -1,6 +1,6 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush.schema.json",
-  "rushVersion": "5.40.5",
+  "rushVersion": "5.40.7",
   "pnpmVersion": "5.17.3",
   "pnpmOptions": {
     "strictPeerDependencies": true
@@ -38,22 +38,22 @@
       "reviewCategory": "prototypes"
     },
     {
-      "packageName": "acs-calling-sample",
+      "packageName": "calling",
       "projectFolder": "samples/Calling",
       "reviewCategory": "prototypes"
     },
     {
-      "packageName": "acs-chat-sample",
+      "packageName": "chat",
       "projectFolder": "samples/Chat",
       "reviewCategory": "prototypes"
     },
     {
-      "packageName": "acs-one-to-one-call-sample",
+      "packageName": "one-to-one-call",
       "projectFolder": "samples/OneToOneCall",
       "reviewCategory": "prototypes"
     },
     {
-      "packageName": "acs-server-sample",
+      "packageName": "server",
       "projectFolder": "samples/Server",
       "reviewCategory": "prototypes"
     },
