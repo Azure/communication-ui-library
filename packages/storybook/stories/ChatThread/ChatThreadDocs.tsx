@@ -2,10 +2,13 @@
 
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import React from 'react';
-import { ChatThreadComponentBase } from '../../components/ChatThread';
-import { FluentThemeProvider } from '../../providers';
-import { ChatMessage as WebUiChatMessage, MessageStatus } from '../../types';
-import { THEMES } from '../../constants/themes';
+import {
+  FluentThemeProvider,
+  THEMES,
+  ChatThreadComponentBase,
+  ChatMessage as WebUiChatMessage,
+  MessageStatus
+} from '@azure/communication-ui';
 import { Persona, PersonaPresence, PersonaSize } from '@fluentui/react';
 
 const importStatement = `

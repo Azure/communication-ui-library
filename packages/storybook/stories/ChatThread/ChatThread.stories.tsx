@@ -2,11 +2,10 @@
 
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
-import { ChatThreadComponentBase } from '../../components/ChatThread';
+import { ChatThreadComponentBase, ChatMessage as WebUiChatMessage } from '@azure/communication-ui';
 import { boolean } from '@storybook/addon-knobs';
 import { PrimaryButton, Stack } from '@fluentui/react';
 import { getDocs } from './ChatThreadDocs';
-import { ChatMessage as WebUiChatMessage } from '../../types';
 import {
   GenerateMockNewChatMessage,
   UserOne,
