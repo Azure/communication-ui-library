@@ -10,6 +10,7 @@ import { connectFuncsToContext } from '../../consumers/ConnectContext';
 import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
 import { ErrorHandlingProps } from '../../providers/ErrorProvider';
 import { WithErrorHandling } from '../../utils/WithErrorHandling';
+import { useTheme } from '@fluentui/react-theme-provider';
 
 const LocalDeviceSettingsComponentBase = (
   props: LocalDeviceSettingsContainerProps & ErrorHandlingProps
@@ -17,6 +18,7 @@ const LocalDeviceSettingsComponentBase = (
   const defaultPlaceHolder = 'Select an option';
   const cameraLabel = 'Camera';
   const micLabel = 'Microphone';
+  const theme = useTheme();
 
   const getDropDownList = (list: Array<VideoDeviceInfo | AudioDeviceInfo>): IDropdownOption[] => {
     return list.map((item) => ({
@@ -31,7 +33,7 @@ const LocalDeviceSettingsComponentBase = (
         placeholder={defaultPlaceHolder}
         label={cameraLabel}
         options={getDropDownList(props.videoDeviceList)}
-        styles={dropDownStyles}
+        styles={dropDownStyles(theme)}
         disabled={props.videoDeviceList.length === 0}
         defaultSelectedKey={props.videoDeviceInfo ? props.videoDeviceInfo.id : ''}
         onChange={(
@@ -45,7 +47,7 @@ const LocalDeviceSettingsComponentBase = (
       <Dropdown
         placeholder={defaultPlaceHolder}
         label={micLabel}
-        styles={dropDownStyles}
+        styles={dropDownStyles(theme)}
         disabled={props.audioDeviceList.length === 0}
         options={getDropDownList(props.audioDeviceList)}
         defaultSelectedKey={props.audioDeviceInfo ? props.audioDeviceInfo.id : ''}

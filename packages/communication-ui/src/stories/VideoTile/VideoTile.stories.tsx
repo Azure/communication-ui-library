@@ -42,7 +42,7 @@ export const VideoTileComponent: () => JSX.Element = () => {
       avatarName={avatarName}
       invertVideo={invertVideo}
       styles={{
-        root: { height: height, width: width, border: '1px solid #ddd' }
+        root: { height: height, width: width }
       }}
     >
       {showControlBar && (
