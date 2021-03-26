@@ -5,9 +5,27 @@ import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/a
 
 # Azure Communication Services - UI Toolkit
 
-Azure Communication Services - UI Toolkit makes it easy for you to build modern communications user experiences. It gives you a library of production-ready UI components that you can drop into your applications:
+Azure Communication Services - UI Toolkit makes it easy for you to build modern communications user experiences using Azure Communication Services. It gives you a library of production-ready UI components that you can drop into your applications:
 
 - **Composites** - These are turn-key solutions that implement common communication scenarios. You can quickly add video calling or chat experiences to your applications. Composites are open-source higher order components built using UI components.
 
 - **UI Components** - These components are open-source building blocks that let you build custom communications experience. Components are offered for both calling and chat capabilities that can be combined to build experiences.
   These UI client libraries all use Microsoft's Fluent design language and assets. Fluent UI provides a foundational layer for the UI Framework that has been battle tested across Microsoft products.
+
+These UI client libraries all use [Microsoft's Fluent design language](https://developer.microsoft.com/fluentui/) and assets. Fluent UI provides a foundational layer for the UI Framework that has been battle tested across Microsoft products.
+
+## What UI artifact is best for my project?
+
+Understanding these requirements will help you choose the right client library:
+
+- **How much customization do you desire?** Azure Communication core client libraries don't have a UX and are designed so you can build whatever UX you want. UI Framework components provide UI assets at the cost of reduced customization.
+- **Do you require Meeting features?** The Meeting system has several unique capabilities not currently available in the core Azure Communication Services client libraries, such as blurred background and raised hand.
+- **What platforms are you targeting?** Different platforms have different capabilities.
+
+Details about feature availability in the varied [UI SDKs is available here](ui-sdk-features.md), but key trade-offs are summarized below.
+
+| Client library / SDK  | Implementation Complexity | Customization Ability | Calling | Chat | [Teams Interop](./../teams-interop.md) |
+| --------------------- | ------------------------- | --------------------- | ------- | ---- | -------------------------------------- |
+| Composite Components  | Low                       | Low                   | ✔       | ✔    | ✕                                      |
+| Base Components       | Medium                    | Medium                | ✔       | ✔    | ✕                                      |
+| Core client libraries | High                      | High                  | ✔       | ✔    | ✔                                      |

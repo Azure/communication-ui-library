@@ -25,7 +25,7 @@ export const parameters = {
   },
   options: {
     storySort: {
-      order: ['Introduction', 'Quickstart', 'Styling', 'Theming', 'Localization', 'Composites', 'UI Components']
+      order: ['Introduction', 'Use Cases', 'Quickstart: UI Components', 'Quickstart: Composites',  'Styling', 'Theming', 'Localization', 'Composites', 'UI Components']
     }
   }
 };

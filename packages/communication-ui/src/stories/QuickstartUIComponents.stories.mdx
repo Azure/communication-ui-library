@@ -1,0 +1,265 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
+
+<Meta title="Quickstart: UI Components" />
+
+# Quickstart: Get started with UI Components
+
+Get started with Azure Communication Services by using the UI Framework to quickly integrate communication experiences into your applications. In this quickstart, you'll learn how integrate UI Framework base components into your application to build communication experiences.
+
+UI Framework components come in two flavors: Base and Composite.
+
+- **Base components** represent discrete communication capabilities; they're the basic building blocks that can be used to build complex communication experiences.
+- **Composite components** are turn-key experiences for common communication scenarios that have been built using **base components** as building blocks and packaged to be easily integrated into applications.
+
+## Prerequisites
+
+- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
+- [Node.js](https://nodejs.org/) Active LTS and Maintenance LTS versions (Node 12 Recommended).
+- An active Communication Services resource. [Create a Communication Services resource](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp).
+
+## Setting up
+
+UI Framework requires a React environment to be setup. Next we will do that. If you already have a React App, you can skip this section.
+
+### Set Up React App
+
+We'll use the create-react-app template for this quickstart. For more information, see: [Get Started with React](https://reactjs.org/docs/create-a-new-react-app.html)
+
+```console
+
+npx create-react-app my-app
+
+cd my-app
+
+```
+
+At the end of this process, you should have a full application inside of the folder `my-app`. For this quickstart, we'll be modifying files inside of the `src` folder.
+
+### Install the package
+
+Use the `npm install` command to install the Azure Communication Services Calling client library for JavaScript. Move the provided tarball (Private Preview) over to the my-app directory.
+
+```console
+
+//For Private Preview install tarball
+
+npm install --save ./{path for tarball}
+
+```
+
+The `--save` option lists the library as a dependency in your **package.json** file.
+
+### Run Create React App
+
+Let's test the Create React App installation by running:
+
+```console
+
+npm run start
+
+```
+
+## Object model
+
+The following classes and interfaces handle some of the major features of the Azure Communication Services UI client library:
+
+| Name                                                                          | Description                                                                              |
+| ----------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| [FluentThemeProvider](/?path=/story/theming--page)                            | Provider that controls Theming on the components. Can be used to override theme          |
+| [GridLayout](/?path=/story/ui-components-gridlayout--grid-layout-component)   | Base component that shows call participants and their remote video streams               |
+| [ControlBar](/?path=/story/ui-components-controlbar--control-bar-component)   | Base component to control call including mute, video, share screen                       |
+| [ChatThread](/?path=/docs/ui-components-chatthread--chat-thread-component)    | Base component that renders a chat thread with typing indicators, read receipts, etc.    |
+| [SendBox](/?path=/story/ui-components-sendbox--send-box-story-book-component) | Base component that allows user to input messages that will be sent to the joined thread |
+
+## Set Up Fluent Theme Provider
+
+The `FluentThemeProvider` is a required wrapper around the UI Toolkit components to provide theming that makes the components look amazing!
+It is in charge of allowing developer customize the theme of the components as well. Check out [Theming](/?path=/story/theming--page) for more information. `FluentThemeProvider` defaults to using light theme.
+
+`App.js`
+
+```javascript
+function App(props) {
+  return <FluentThemeProvider>//Add Components!</FluentThemeProvider>;
+}
+
+export default App;
+```
+
+Inside the `FluentThemeProvider`, you can add additional components.
+Next we'll use various UI components to showcase a sample experience.
+You can customize the layout of these components and add any other custom components that you want to render with them.
+
+## Add Calling UI Components
+
+For Calling, we'll use the [`GridLayout`](/?path=/story/ui-components-gridlayout--grid-layout-component) and [`ControlBar`](/?path=/story/ui-components-controlbar--control-bar-component) Components.
+To start, in the `src` folder, create a new file called `CallingComponents.js`.
+Here we'll initialize a function component that will hold our base components to then import in `app.js`.
+You can add extra layout and styling around the components.
+
+`CallingComponents.js`
+
+```javascript
+import { GridLayoutComponent, VideoTile, ControlBar } from '@azure/acs-ui-sdk';
+import { DefaultButton } from '@fluentui/react';
+
+export function CallingComponents(props) {
+  return (
+    <div style={{ height: '35rem', width: '30rem', float: 'left' }}>
+      <GridLayoutComponent>
+        <VideoTile isVideoReady={false} videoProvider={null} avatarName={'Michael'}>
+          <label>Michael</label>
+        </VideoTile>
+      </GridLayoutComponent>
+      //Control Bar with default set up
+      <ControlBar layout={'horizontal'}>
+        <DefaultButton
+          {...videoButtonProps}
+          onClick={() => {
+            /*handle onClick*/
+          }}
+        />
+        <DefaultButton
+          {...audioButtonProps}
+          onClick={() => {
+            /*handle onClick*/
+          }}
+        />
+        <DefaultButton
+          {...screenShareButtonProps}
+          onClick={() => {
+            /*handle onClick*/
+          }}
+        />
+        <DefaultButton {...optionsButtonProps} menuProps={/*some IContextualMenuProps*/} />
+        <DefaultButton
+          {...hangupButtonProps}
+          onClick={() => {
+            /*handle onClick*/
+          }}
+        />
+      </ControlBar>
+    </div>
+  );
+}
+```
+
+For this example we added a single `Video Tile` to the grid, but additional can be added.
+
+## Add Chat UI Components
+
+For Chat, we will use the [`ChatThread`](/?path=/docs/ui-components-chatthread--chat-thread-component) and [`SendBox`](/?path=/docs/ui-components-sendbox--send-box-story-book-component) components.
+To start, in the `src` folder, create a new file called `ChatComponents.js`.
+Here we'll initialize a function component that will hold our base components to then import in `app.js`.
+
+`ChatComponents.js`
+
+```javascript
+
+import {ChatThreadComponentBase, ChatMessage as WebUiChatMessage, SendBox} from '@azure/acs-ui-sdk'
+
+function ChatComponents() {
+
+  //A sample chat history
+  const GetHistoryChatMessages = (): WebUiChatMessage[] => {
+    return [
+      {
+        senderId: '1',
+        senderDisplayName: 'User1',
+        messageId: Math.random().toString(),
+        content: 'Hi everyone, I created this awesome group chat for us!',
+        createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
+        mine: true,
+        attached: false,
+        statusToRender: 'seen' as MessageStatus
+      },
+      {
+        senderId: '2',
+        senderDisplayName: 'User2',
+        messageId: Math.random().toString(),
+        content: 'Nice! This looks great!',
+        createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
+        mine: false,
+        attached: false
+      },
+      {
+        senderId: '3',
+        senderDisplayName: 'User3',
+        messageId: Math.random().toString(),
+        content: "Yeah agree, let's chat here from now on!",
+        createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
+        mine: false,
+        attached: false
+      }
+    ];
+  };
+
+  return (
+    <div style = {{height: '35rem', width: '30rem', float: 'left'}}>
+        <ChatThreadComponentBase
+          userId={'1'}
+          chatMessages={GetHistoryChatMessages()}
+        />
+
+        <SendBoxComponent
+        disabled={false}
+        sendMessage={async () => { return }}
+        userId='ACS_ID PLACEHOLDER'
+        displayName='User Name'
+        onSendTypingNotification={() => { return }}
+        />
+    </div >
+  );
+}
+
+export default ChatComponents;
+
+```
+
+## Add Calling and Chat Components to the main application
+
+Back in the `app.js` file, we will now add the components to the `CallingProvider` and `ChatProvider` like shown below.
+
+`App.js`
+
+```javascript
+import ChatComponents from './ChatComponents';
+import CallingComponents from './CallingComponents';
+
+function App(props) {
+  return (
+    <FluentThemeProvider>
+      <CallingComponents />
+      <ChatComponents />
+    </FluentThemeProvider>
+  );
+}
+
+export default App;
+```
+
+## Run quickstart
+
+To run the code above use the command:
+
+```console
+
+npm run start
+
+```
+
+To fully test the capabilities, you will need a second client with calling and chat functionality to join the call and chat thread. See our [Calling Hero Sample](./../../samples/calling-hero-sample.md) and [Chat Hero Sample](./../../samples/chat-hero-sample.md) as potential options.
+
+## Clean up resources
+
+If you want to clean up and remove a Communication Services subscription, you can delete the resource or resource group. Deleting the resource group also deletes any other resources associated with it. Learn more about [cleaning up resources](../create-communication-resource.md#clean-up-resources).
+
+## Next steps
+
+> [!div class="nextstepaction"][try ui framework composite components](./get-started-with-composites.md)
+
+For more information, see the following resources:
+
+- [UI Framework Overview](../../concepts/ui-framework/ui-sdk-overview.md)
+- [UI Framework Capabilities](./../../concepts/ui-framework/ui-sdk-features.md)
