@@ -130,10 +130,9 @@ return (
 export const getDocs: () => JSX.Element = () => {
   return (
     <>
-      <Title>ParticipantStackItem</Title>
+      <Title>ParticipantItem</Title>
       <Description>
-        The ParticipantStackItem component represents a user, displays their avatar, name, status and optionally
-        additional icons.
+        The ParticipantItem component represents a user and displays their avatar, name, status and additional icons.
       </Description>
       <Heading>Importing</Heading>
       <Source code={importStatement} />
