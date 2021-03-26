@@ -18,7 +18,7 @@ import { DefaultButton } from '@fluentui/react';
 # Theming
 
 ACS UI SDK use components and icons from both [Fluent UI](https://developer.microsoft.com/en-us/fluentui#/controls/web)
-and [Fluent React Northstar](https://fluentsite.z22.web.core.windows.net/0.53.0). The `FluentThemeProvider`
+and [Fluent React Northstar](https://fluentsite.z22.web.core.windows.net). The `FluentThemeProvider`
 component ensures:
 
 1. ACS UI SDK and Fluent UI components and icons are themed together
@@ -26,7 +26,7 @@ component ensures:
 
 ## Usage
 
-To use the FluentThemeProvider, simply import it from '@azure/communication-ui' and wrap it around
+To use the FluentThemeProvider, simply import it from `@azure/communication-ui` and wrap it around
 ACS UI SDK components and Fluent UI components. For the example below we will provide theming and icons to
 the `ControlBar`.
 
@@ -67,7 +67,7 @@ import { DefaultButton } from '@fluentui/react';
 
 `FluentThemeProvider` does two things here:
 
-1. `FluentThemeProvider` loads the icons defined by the props such `videoButtonProps`
+1. `FluentThemeProvider` loads the icons defined by the props such as `videoButtonProps`
 2. `FluentThemeProvider` applies theme (light theme by default) to the `ControlBar`
 
 To illustrate how another theme can be applied, import `darkTheme` from `@azure/communication-ui`
@@ -100,7 +100,7 @@ import { darkTheme } from '@azure/communication-ui';
 </Canvas>
 
 The dark theme is applied to the `ControlBar`. The icon colors in `DefaultButton` are themed
-corectly because it is a Fluent UI component.
+correctly because it is a Fluent UI component.
 
 ## FluentThemeProvider Props
 
@@ -108,7 +108,11 @@ corectly because it is a Fluent UI component.
 
 ## Creating your own theme
 
-If you wish to use your own theme, we strongly advise using Microsoft's [Fluent UI Theme Designer](https://fabricweb.z5.web.core.windows.net/pr-deploy-site/refs/heads/7.0/theming-designer/index.html).
+If you wish to use your own theme, we strongly advise using Microsoft's [Fluent UI Theme Designer](https://aka.ms/themedesigner).
+Please ensure that the Accessibility checker on the same page passes when creating your own theme.
+
+![Accessibility checker pass](/stories/images/accessibility_checker_pass.png)
+
 The default light theme we export looks like this:
 
 ```typescript
@@ -140,14 +144,10 @@ export const lightTheme = {
 };
 ```
 
-Note: Please ensure that the Accessibility checker passes when creating your own theme.
-
-![Accessibility checker pass](/stories/images/accessibility_checker_pass.png)
-
 ## Custom theme mapping
 
-The FluentThemeProvider automatically handles the mapping of palette slots to components. If you wish to
-override this mapping, we advise that you use the useTheme hook provided by Fluent UI.
+The ACS UI SDK and Fluent UI components automatically handles the mapping of palette slots to components.
+If you wish to override the mapping, we advise that you use the `useTheme` hook provided by Fluent UI.
 
 ```typescript
 import React from 'react';
@@ -167,5 +167,5 @@ const MyButton = () => JSX.Element {
 ```
 
 Should you override your own mappings, please note that ACS SDK UI components abide by the general Fluent UI
-mappings. Primary colors are used for component backgrounds and icons, foreground colors for text, icons, and
-outlines and background colors for component backgrounds.
+mappings. Foreground colors are used for text, icons, and outlines while background colors for component
+backgrounds. Primary colors are also used for component backgrounds or icons,
