@@ -1,30 +1,44 @@
 // © Microsoft Corporation. All rights reserved.
 import React from 'react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
-import { Provider, teamsTheme } from '@fluentui/react-northstar';
+import { Icon } from '@fluentui/react';
 
 import { SendBoxComponent } from '../../components';
+import { FluentThemeProvider } from '../../providers';
 
 const importStatement = `import { SendBoxComponent } from '@azure/communication-ui';`;
-const usageCode = `<SendBoxComponent
-disabled={false}
-sendMessage={async () => { return }}
-userId='ACS_ID PLACEHOLDER'
-displayName='User Name'
-onSendTypingNotification={() => { return }}
-/>
-<SendBoxComponent
-disabled={false}
-sendMessage={async () => { return }}
-userId='ACS_ID PLACEHOLDER'
-displayName='User Name'
-onSendTypingNotification={() => { return }}
-systemMessage='Please wait 30 seconds to send new messages'
-/>`;
+const usageCode = `
+<div style={{ width: '400px', margin: '0 5px' }}>
+  <SendBoxComponent
+    disabled={false}
+    sendMessage={async () => {
+      return;
+    }}
+    userId="UserId1"
+    displayName="User Name"
+    onSendTypingNotification={(): Promise<void> => {
+      return Promise.resolve();
+    }}
+  />
+</div>
+<div style={{ width: '400px', margin: '0 5px' }}>
+  <SendBoxComponent
+    disabled={false}
+    sendMessage={async () => {
+      return;
+    }}
+    userId="UserId2"
+    displayName="User Name"
+    onSendTypingNotification={(): Promise<void> => {
+      return Promise.resolve();
+    }}
+    systemMessage="Please wait 30 seconds to send new messages"
+  />
+</div>`;
 
 const ExampleSendBox: () => JSX.Element = () => (
   <>
-    <span style={{ margin: '0 5px' }}>
+    <div style={{ width: '400px', margin: '0 5px' }}>
       <SendBoxComponent
         disabled={false}
         sendMessage={async () => {
@@ -36,8 +50,8 @@ const ExampleSendBox: () => JSX.Element = () => (
           return Promise.resolve();
         }}
       />
-    </span>
-    <span style={{ margin: '0 5px' }}>
+    </div>
+    <div style={{ width: '400px', margin: '0 5px' }}>
       <SendBoxComponent
         disabled={false}
         sendMessage={async () => {
@@ -50,9 +64,42 @@ const ExampleSendBox: () => JSX.Element = () => (
         }}
         systemMessage="Please wait 30 seconds to send new messages"
       />
-    </span>
+    </div>
   </>
 );
+
+const CustomIconExample: () => JSX.Element = () => (
+  <div style={{ width: '400px' }}>
+    <SendBoxComponent
+      disabled={false}
+      sendMessage={async () => {
+        return;
+      }}
+      userId="UserId3"
+      displayName="User Name"
+      onSendTypingNotification={(): Promise<void> => {
+        return Promise.resolve();
+      }}
+      onRenderIcon={() => <Icon iconName="AirplaneSolid" />}
+    />
+  </div>
+);
+
+const customIconCode = `
+<div style={{ width: '400px' }}>
+  <SendBoxComponent
+    disabled={false}
+    sendMessage={async () => {
+      return;
+    }}
+    userId="UserId3"
+    displayName="User Name"
+    onSendTypingNotification={(): Promise<void> => {
+      return Promise.resolve();
+    }}
+    onRenderIcon={() => <Icon iconName="AirplaneSolid" />}
+  />
+</div>`;
 
 export const getDocs: () => JSX.Element = () => {
   return (
@@ -66,11 +113,19 @@ export const getDocs: () => JSX.Element = () => {
       <Source code={importStatement} />
       <Heading>Example</Heading>
       <Canvas>
-        <Provider theme={teamsTheme}>
+        <FluentThemeProvider>
           <ExampleSendBox />
-        </Provider>
+        </FluentThemeProvider>
       </Canvas>
       <Source code={usageCode} />
+      <Heading>Custom send icon</Heading>
+      To customize the send icon, use the onRenderIcon property like in the example below.
+      <Source code={customIconCode} />
+      <Canvas>
+        <FluentThemeProvider>
+          <CustomIconExample />
+        </FluentThemeProvider>
+      </Canvas>
       <Heading>Props</Heading>
       <Props of={SendBoxComponent} />
     </>

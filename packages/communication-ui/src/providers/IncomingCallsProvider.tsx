@@ -4,7 +4,7 @@ import { Call, CollectionUpdatedEvent } from '@azure/communication-calling';
 import React, { createContext, useState } from 'react';
 import { useValidContext } from '../utils';
 import { useEffect } from 'react';
-import { useCallingContext } from '../providers';
+import { useCallingContext } from './CallingProvider';
 
 export type IncomingCallsContextType = {
   incomingCalls: Call[];
