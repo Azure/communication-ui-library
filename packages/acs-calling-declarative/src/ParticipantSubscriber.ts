@@ -9,7 +9,7 @@ import { convertSdkRemoteStreamToDeclarativeRemoteStream, getRemoteParticipantKe
  * the container contents without needing to update the closure since the closure is referencing this object otherwise
  * if the closure contains a primitive the updating of the primitive does not get picked up by the closure.
  */
-interface CallIdContainer {
+interface CallIdRef {
   callId: string;
 }
 
@@ -19,13 +19,13 @@ interface CallIdContainer {
  * an update and also which property of that participant. Also we can use this when unregistering to a participant.
  */
 export class ParticipantSubscriber {
-  private _callIdContainer: CallIdContainer;
+  private _callIdRef: CallIdRef;
   private _participant: RemoteParticipant;
   private _context: CallContext;
   private _participantKey: string;
 
   constructor(callId: string, participant: RemoteParticipant, context: CallContext) {
-    this._callIdContainer = { callId: callId };
+    this._callIdRef = { callId: callId };
     this._participant = participant;
     this._context = context;
     this._participantKey = getRemoteParticipantKey(this._participant.identifier);
@@ -49,31 +49,27 @@ export class ParticipantSubscriber {
   };
 
   public setCallId = (callId: string): void => {
-    this._callIdContainer.callId = callId;
+    this._callIdRef.callId = callId;
   };
 
   private stateChanged = (): void => {
-    this._context.setParticipantState(this._callIdContainer.callId, this._participantKey, this._participant.state);
+    this._context.setParticipantState(this._callIdRef.callId, this._participantKey, this._participant.state);
   };
 
   private isMutedChanged = (): void => {
-    this._context.setParticipantIsMuted(this._callIdContainer.callId, this._participantKey, this._participant.isMuted);
+    this._context.setParticipantIsMuted(this._callIdRef.callId, this._participantKey, this._participant.isMuted);
   };
 
   private displayNameChanged = (): void => {
     this._context.setParticipantDisplayName(
-      this._callIdContainer.callId,
+      this._callIdRef.callId,
       this._participantKey,
       this._participant.displayName || ''
     );
   };
 
   private isSpeakingChanged = (): void => {
-    this._context.setParticipantIsSpeaking(
-      this._callIdContainer.callId,
-      this._participantKey,
-      this._participant.isSpeaking
-    );
+    this._context.setParticipantIsSpeaking(this._callIdRef.callId, this._participantKey, this._participant.isSpeaking);
   };
 
   private videoStreamsUpdated = (): void => {
@@ -81,7 +77,7 @@ export class ParticipantSubscriber {
     // create the remote video streams again from scratch. TODO: do we want to be more selective on adding/removing
     // streams?
     this._context.setParticipantVideoStreams(
-      this._callIdContainer.callId,
+      this._callIdRef.callId,
       this._participantKey,
       this._participant.videoStreams.map(convertSdkRemoteStreamToDeclarativeRemoteStream)
     );

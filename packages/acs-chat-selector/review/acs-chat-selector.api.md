@@ -5,7 +5,6 @@
 ```ts
 
 import { ChatClientState } from '@azure/acs-chat-declarative';
-import { ChatMessageContent } from '@azure/communication-chat';
 import { ChatMessageWithStatus } from '@azure/acs-chat-declarative';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
@@ -20,7 +19,7 @@ export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientSta
     disableReadReceipt: boolean;
     chatMessages: {
         createdOn: Date;
-        content: ChatMessageContent | undefined;
+        content: string | undefined;
         status: "delivered" | "sending" | "seen" | "failed";
         senderDisplayName: string | undefined;
         senderId: string;
@@ -31,7 +30,7 @@ export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientSta
     disableReadReceipt: boolean;
     chatMessages: {
         createdOn: Date;
-        content: ChatMessageContent | undefined;
+        content: string | undefined;
         status: "delivered" | "sending" | "seen" | "failed";
         senderDisplayName: string | undefined;
         senderId: string;

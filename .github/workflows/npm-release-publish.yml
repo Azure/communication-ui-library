@@ -18,6 +18,8 @@ jobs:
     steps:
       # Check-out repo
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       # Check out onto desired branch to publish release from
       - name: Checkout tag/branch
@@ -37,7 +39,7 @@ jobs:
 
       # Perform changelog check
       - name: Guard check - ensure no new changes were introduced
-        run: npx beachball check
+        run: node common/release/node_modules/beachball/bin/beachball check
 
       # Builds
       - name: Build Packages and Samples

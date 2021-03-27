@@ -1,43 +1,64 @@
 // © Microsoft Corporation. All rights reserved.
 
 import React, { useState, useEffect } from 'react';
+import { mergeStyles } from '@fluentui/react';
 import { ThemeProvider, Theme, PartialTheme } from '@fluentui/react-theme-provider';
 import { mergeThemes, Provider, teamsTheme, ThemeInput } from '@fluentui/react-northstar';
+import { lightTheme } from '../constants/themes';
 
-interface FluentThemeProviderProps {
+/**
+ * Props for FluentThemeProvider
+ */
+export interface FluentThemeProviderProps {
+  /** Children to be themed. */
   children: React.ReactNode;
-  theme?: PartialTheme | Theme;
+  /** Optional theme state for FluentThemeProvider. Defaults to a light theme if not provided. */
+  fluentTheme?: PartialTheme | Theme;
 }
 
+const wrapper = mergeStyles({
+  height: '100%',
+  width: '100%',
+  alignItems: 'center',
+  justifyContent: 'center'
+});
+
+/**
+ * @description Provider to apply theme ACS UI SDK core components. ACS UI SDK core components are built
+ * with components mostly from [Fluent UI](https://developer.microsoft.com/en-us/fluentui#/controls/web)
+ * and a few from [Fluent React Northstar](https://fluentsite.z22.web.core.windows.net/0.53.0). So we
+ * theme from Fluent UI is used to align the few components from Fluent React Northstar.
+ * @param props - FluentThemeProviderProps
+ */
 export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Element => {
-  const { theme, children } = props;
-  const [fluentTheme, setFluentTheme] = useState<PartialTheme | Theme | undefined>(undefined);
+  const { fluentTheme, children } = props;
+  // if fluentTheme is not provided, default to light theme
+  const fluentUITheme = fluentTheme ?? lightTheme;
   const [fluentNorthStarTheme, setFluentNorthStarTheme] = useState<ThemeInput<any>>(teamsTheme);
 
   useEffect(() => {
-    setFluentTheme(theme);
     setFluentNorthStarTheme(
       mergeThemes(teamsTheme, {
         componentVariables: {
           Chat: {
-            backgroundColor: theme?.palette?.white
+            backgroundColor: fluentUITheme?.palette?.white
           },
           ChatMessage: {
-            authorColor: theme?.palette?.neutralDark,
-            contentColor: theme?.palette?.neutralDark,
-            backgroundColor: theme?.palette?.neutralLight,
-            backgroundColorMine: theme?.palette?.themeLight
+            authorColor: fluentUITheme?.palette?.neutralDark,
+            contentColor: fluentUITheme?.palette?.neutralDark,
+            backgroundColor: fluentUITheme?.palette?.neutralLight,
+            backgroundColorMine: fluentUITheme?.palette?.themeLight
           }
-          // add more here to align theme for northstar components
+          // add more northstar components to align with Fluent UI theme
         }
       })
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [theme]);
+  }, [fluentUITheme]);
 
   return (
-    <ThemeProvider theme={fluentTheme} className="wrapper" applyTo="body" style={{ display: 'inherit' }}>
-      <Provider theme={fluentNorthStarTheme} className="wrapper">
+    <ThemeProvider theme={fluentUITheme} className={wrapper} style={{ display: 'inherit' }}>
+      <Provider theme={fluentNorthStarTheme} className={wrapper} style={{ display: 'flex' }}>
         {children}
       </Provider>
     </ThemeProvider>

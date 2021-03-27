@@ -14,7 +14,7 @@ import { ParticipantSubscriber } from './ParticipantSubscriber';
  * the container contents without needing to update the closure since the closure is referencing this object otherwise
  * if the closure contains a primitive the updating of the primitive does not get picked up by the closure.
  */
-interface CallIdContainer {
+interface CallIdRef {
   callId: string;
 }
 
@@ -25,13 +25,13 @@ interface CallIdContainer {
  */
 export class CallSubscriber {
   private _call: Call;
-  private _callIdContainer: CallIdContainer; // Cache id because it could change so we know old and new id for updating.
+  private _callIdRef: CallIdRef; // Cache id because it could change so we know old and new id for updating.
   private _context: CallContext;
   private _participantSubscribers: Map<string, ParticipantSubscriber>;
 
   constructor(call: Call, context: CallContext) {
     this._call = call;
-    this._callIdContainer = { callId: call.id };
+    this._callIdRef = { callId: call.id };
     this._context = context;
     this._participantSubscribers = new Map<string, ParticipantSubscriber>();
 
@@ -59,7 +59,7 @@ export class CallSubscriber {
     this._participantSubscribers.forEach((participantSubscriber: ParticipantSubscriber) => {
       participantSubscriber.unsubscribe();
     });
-    this._participantSubscribers = new Map<string, ParticipantSubscriber>();
+    this._participantSubscribers.clear();
   };
 
   private addParticipantListener(participant: RemoteParticipant): void {
@@ -67,7 +67,7 @@ export class CallSubscriber {
     if (!this._participantSubscribers.get(participantKey)) {
       this._participantSubscribers.set(
         participantKey,
-        new ParticipantSubscriber(this._callIdContainer.callId, participant, this._context)
+        new ParticipantSubscriber(this._callIdRef.callId, participant, this._context)
       );
     }
   }
@@ -82,19 +82,19 @@ export class CallSubscriber {
   }
 
   private stateChanged = (): void => {
-    this._context.setCallState(this._callIdContainer.callId, this._call.state);
+    this._context.setCallState(this._callIdRef.callId, this._call.state);
   };
 
   private idChanged = (): void => {
     this._participantSubscribers.forEach((participantSubscriber: ParticipantSubscriber) => {
       participantSubscriber.setCallId(this._call.id);
     });
-    this._context.setCallId(this._call.id, this._callIdContainer.callId);
-    this._callIdContainer.callId = this._call.id;
+    this._context.setCallId(this._call.id, this._callIdRef.callId);
+    this._callIdRef.callId = this._call.id;
   };
 
   private isScreenSharingOnChanged = (): void => {
-    this._context.setCallIsScreenSharingOn(this._callIdContainer.callId, this._call.isScreenSharingOn);
+    this._context.setCallIsScreenSharingOn(this._callIdRef.callId, this._call.isScreenSharingOn);
   };
 
   private remoteParticipantsUpdated = (event: { added: RemoteParticipant[]; removed: RemoteParticipant[] }): void => {
@@ -105,7 +105,7 @@ export class CallSubscriber {
       this.removeParticipantListener(participant);
     });
     this._context.setCallRemoteParticipants(
-      this._callIdContainer.callId,
+      this._callIdRef.callId,
       event.added.map(convertSdkParticipantToDeclarativeParticipant),
       event.removed.map((participant: RemoteParticipant) => {
         return getRemoteParticipantKey(participant.identifier);
@@ -117,7 +117,7 @@ export class CallSubscriber {
     // We don't have an easy way to distinguish different local video streams so a quick way to handle this is to create
     // the local video streams again from scratch. TODO: do we want to be more selective on adding/removing streams?
     this._context.setCallLocalVideoStreams(
-      this._callIdContainer.callId,
+      this._callIdRef.callId,
       this._call.localVideoStreams.map(convertSdkLocalStreamToDeclarativeLocalStream)
     );
   };
