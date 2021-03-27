@@ -771,7 +771,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes Teams Theme Compone
   }
 >
   <div
-    className="css-52 root-0 body-1"
+    className="css-71 root-0 body-1"
     style={
       Object {
         "display": "inherit",
@@ -779,7 +779,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes Teams Theme Compone
     }
   >
     <div
-      className="css-52"
+      className="css-71"
       data-uses-unhanded-props={true}
       dir="ltr"
       style={
@@ -790,7 +790,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes Teams Theme Compone
     >
       <div>
         <div
-          className="css-52 root-2 body-1"
+          className="css-71 root-2 body-1"
           style={
             Object {
               "display": "inherit",
@@ -798,7 +798,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes Teams Theme Compone
           }
         >
           <div
-            className="css-52"
+            className="css-71"
             data-uses-unhanded-props={true}
             style={
               Object {
@@ -1002,7 +1002,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes Teams Theme Compone
               }
             >
               <div
-                className="css-71"
+                className="css-61"
                 style={
                   Object {
                     "gridTemplateColumns": "repeat(1, 1fr)",
