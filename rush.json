@@ -58,6 +58,11 @@
       "reviewCategory": "prototypes"
     },
     {
+      "packageName": "storybook",
+      "projectFolder": "packages/storybook",
+      "reviewCategory": "tools"
+    },
+    {
       "packageName": "release-tools",
       "projectFolder": "common/release",
       "reviewCategory": "tools"
