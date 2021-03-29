@@ -1,5 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 import { IStyle, mergeStyles, Stack, IButtonProps } from '@fluentui/react';
+import { useTheme } from '@fluentui/react-theme-provider';
 import {
   CallControlCloseTrayIcon,
   CallControlPresentNewIcon,
@@ -182,6 +183,11 @@ export interface ControlBarProps {
  */
 export const ControlBar = (props: ControlBarProps): JSX.Element => {
   const { styles, layout } = props;
+  const theme = useTheme();
   const controlBarStyle = controlBarStyles[layout ?? 'horizontal'];
-  return <Stack className={mergeStyles(controlBarStyle, styles?.root)}>{props.children}</Stack>;
+  return (
+    <Stack className={mergeStyles(controlBarStyle, { background: theme.palette.neutralLight }, styles?.root)}>
+      {props.children}
+    </Stack>
+  );
 };

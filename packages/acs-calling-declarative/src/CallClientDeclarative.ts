@@ -1,8 +1,11 @@
 // © Microsoft Corporation. All rights reserved.
-import { CallClient } from '@azure/communication-calling';
+import { DeclarativeDeviceManager, deviceManagerDeclaratify } from './DeviceManagerDeclarative';
+import { Call, CallAgent, CallClient, IncomingCall } from '@azure/communication-calling';
 import { CallClientState } from './CallClientState';
 import { CallContext } from './CallContext';
-import { DeclarativeDeviceManager, deviceManagerDeclaratify } from './DeviceManagerDeclarative';
+import { CallSubscriber } from './CallSubscriber';
+import { convertSdkCallToDeclarativeCall, convertSdkIncomingCallToDeclarativeIncomingCall } from './Converter';
+import { IncomingCallSubscriber } from './IncomingCallSubscriber';
 
 /**
  * Defines the methods that allow CallClient to be used declaratively.
@@ -13,102 +16,56 @@ export interface DeclarativeCallClient extends CallClient {
 }
 
 /**
- * ProxyCallClient proxies CallClient and subscribes to all events that affect state. When state is updated,
- * ProxyCallClient emits the event 'stateChanged'. Since CallClient contains its own state, when state is updated,
- * ProxyCallClient only queries the CallClient state and this same state is surfaced in getState.
+ * ProxyCallClient proxies CallClient and subscribes to all events that affect state. ProxyCallClient keeps its own copy
+ * of the call state and when state is updated, ProxyCallClient emits the event 'stateChanged'.
  */
 class ProxyCallClient implements ProxyHandler<CallClient> {
   private _context: CallContext;
-  // private _callAgent: CallAgent | undefined; Commented out while waiting for another PR
+  private _callAgent: CallAgent | undefined;
   private _deviceManager: DeclarativeDeviceManager | undefined;
+  private _callSubscribers: Map<Call, CallSubscriber>;
+  private _incomingCallSubscribers: Map<string, IncomingCallSubscriber>;
 
   constructor(context: CallContext) {
     this._context = context;
+    this._callSubscribers = new Map<Call, CallSubscriber>();
+    this._incomingCallSubscribers = new Map<string, IncomingCallSubscriber>();
   }
 
-  /* Commented out while waiting for another PR
-  private refreshState = (): void => {
-    if (!this._callAgent) {
-      return;
+  private callsUpdated = (event: { added: Call[]; removed: Call[] }): void => {
+    for (const call of event.added) {
+      this._callSubscribers.set(call, new CallSubscriber(call, this._context));
+      this._context.setCall(convertSdkCallToDeclarativeCall(call));
     }
-    const calls: Call[] = this._callAgent.calls;
-    this._context.setState(
-      produce(this._context.getState(), (draft: CallClientState) => {
-        draft.calls = calls;
-      })
+    for (const call of event.removed) {
+      const callSubscriber = this._callSubscribers.get(call);
+      if (callSubscriber) {
+        callSubscriber.unsubscribe();
+        this._callSubscribers.delete(call);
+      }
+      this._context.removeCall(call.id);
+    }
+  };
+
+  private incomingCall = (event: { incomingCall: IncomingCall }): void => {
+    this._context.setIncomingCall(convertSdkIncomingCallToDeclarativeIncomingCall(event.incomingCall));
+    this._incomingCallSubscribers.set(
+      event.incomingCall.id,
+      new IncomingCallSubscriber(event.incomingCall, this._context)
     );
   };
 
-  private subscribeToParticipant = (participant: RemoteParticipant): void => {
-    participant.on('participantStateChanged', this.refreshState);
-    participant.on('isMutedChanged', this.refreshState);
-    participant.on('displayNameChanged', this.refreshState);
-    participant.on('isSpeakingChanged', this.refreshState);
-    participant.on('videoStreamsUpdated', this.refreshState);
-  };
-
-  private unsubscribeFromParticipant = (participant: RemoteParticipant): void => {
-    participant.off('participantStateChanged', this.refreshState);
-    participant.off('isMutedChanged', this.refreshState);
-    participant.off('displayNameChanged', this.refreshState);
-    participant.off('isSpeakingChanged', this.refreshState);
-    participant.off('videoStreamsUpdated', this.refreshState);
-  };
-
-  private onParticipantsUpdated = (event: { added: RemoteParticipant[]; removed: RemoteParticipant[] }): void => {
-    for (const participant of event.added) {
-      this.subscribeToParticipant(participant);
-    }
-    for (const participant of event.removed) {
-      this.unsubscribeFromParticipant(participant);
-    }
-    this.refreshState();
-  };
-
-  private subscribeToCall = (call: Call): void => {
-    call.on('callStateChanged', this.refreshState);
-    call.on('callIdChanged', this.refreshState);
-    call.on('isScreenSharingOnChanged', this.refreshState);
-    call.on('remoteParticipantsUpdated', this.onParticipantsUpdated);
-    call.on('localVideoStreamsUpdated', this.refreshState);
-    call.on('isRecordingActiveChanged', this.refreshState);
-  };
-
-  private unsubscribeFromCall = (call: Call): void => {
-    call.off('callStateChanged', this.refreshState);
-    call.off('callIdChanged', this.refreshState);
-    call.off('isScreenSharingOnChanged', this.refreshState);
-    call.off('remoteParticipantsUpdated', this.onParticipantsUpdated);
-    call.off('localVideoStreamsUpdated', this.refreshState);
-    call.off('isRecordingActiveChanged', this.refreshState);
-
-    for (const participant of call.remoteParticipants) {
-      this.unsubscribeFromParticipant(participant);
-    }
-  };
-
-  private onCallsUpdated = (event: { added: Call[]; removed: Call[] }): void => {
-    for (const call of event.added) {
-      this.subscribeToCall(call);
-    }
-    for (const call of event.removed) {
-      this.unsubscribeFromCall(call);
-    }
-    this.refreshState();
-  };
-  */
-
   public get<P extends keyof CallClient>(target: CallClient, prop: P): any {
     switch (prop) {
-      /* Commented out while waiting for another PR
       case 'createCallAgent': {
         return async (...args: Parameters<CallClient['createCallAgent']>) => {
           this._callAgent = await target.createCallAgent(...args);
-          this._callAgent.on('callsUpdated', this.onCallsUpdated);
+          this._callAgent.on('callsUpdated', this.callsUpdated);
+          this._callAgent.on('incomingCall', this.incomingCall);
+          // TODO: We need to proxy callAgent so when it is disposed we can unsubscribe from the events
           return this._callAgent;
         };
       }
-      */
       case 'getDeviceManager': {
         return async () => {
           if (this._deviceManager) {

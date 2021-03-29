@@ -14,15 +14,17 @@ dependencies:
   '@microsoft/api-documenter': 7.12.12
   '@microsoft/api-extractor': 7.13.2
   '@octokit/rest': 18.0.15
+  '@rollup/plugin-commonjs': 17.1.0_rollup@2.42.4
   '@rush-temp/acs-calling-declarative': file:projects/acs-calling-declarative.tgz_prettier@2.0.5+ts-node@9.1.1
-  '@rush-temp/acs-calling-sample': file:projects/acs-calling-sample.tgz_570bf42e92a70fb216c5cd4d5ed668ef
   '@rush-temp/acs-chat-declarative': file:projects/acs-chat-declarative.tgz_prettier@2.0.5+ts-node@9.1.1
-  '@rush-temp/acs-chat-sample': file:projects/acs-chat-sample.tgz_40b0c9f7a7a0fac66e4b6fcf06de2a42
   '@rush-temp/acs-chat-selector': file:projects/acs-chat-selector.tgz_prettier@2.0.5
-  '@rush-temp/acs-one-to-one-call-sample': file:projects/acs-one-to-one-call-sample.tgz_570bf42e92a70fb216c5cd4d5ed668ef
-  '@rush-temp/acs-server-sample': file:projects/acs-server-sample.tgz
+  '@rush-temp/calling': file:projects/calling.tgz_570bf42e92a70fb216c5cd4d5ed668ef
+  '@rush-temp/chat': file:projects/chat.tgz_40b0c9f7a7a0fac66e4b6fcf06de2a42
   '@rush-temp/communication-ui': file:projects/communication-ui.tgz_webpack-cli@4.5.0
+  '@rush-temp/one-to-one-call': file:projects/one-to-one-call.tgz_570bf42e92a70fb216c5cd4d5ed668ef
   '@rush-temp/release-tools': file:projects/release-tools.tgz_typescript@4.1.5
+  '@rush-temp/server': file:projects/server.tgz
+  '@rush-temp/storybook': file:projects/storybook.tgz_webpack-cli@4.5.0
   '@storybook/addon-actions': 6.1.21_30bc4764d4ba778218056aab0be8023f
   '@storybook/addon-docs': 6.1.21_025c95869cb55e8d142f5246a0455b6d
   '@storybook/addon-essentials': 6.1.21_489c05363155b6add536e1fef5b4fe59
@@ -114,6 +116,9 @@ dependencies:
   regenerator-runtime: 0.13.7
   reselect: 4.0.0
   rimraf: 2.7.1
+  rollup: 2.42.4
+  rollup-plugin-sourcemaps: 0.6.3_9135ee81d9218d0e99b56082525729b5
+  rollup-plugin-svg: 2.0.0
   source-map-explorer: 2.5.2
   storybook-docs-toc: 1.3.1_55ac82b1aedfe80ed374987a417300da
   styled-components: 5.2.1_9debf3d425c3eafb0518d6c329d076f5
@@ -156,6 +161,7 @@ packages:
     resolution:
       integrity: sha512-JqGWH19PZKtW49Y4RfyOxmm+iPLOYZ5xP8bQ8ZhoAJ9aDzfY/UEEbmjaVPYFdso4UVKgPP6y0lOmy73xpwKTVg==
   /@azure/communication-calling/1.0.0-beta.2:
+    deprecated: This version is deprecated. Please update to the latest @azure/communication-calling@1.0.0-beta.9
     dev: false
     resolution:
       integrity: sha512-PF33xuq1FGYDd09+IiQKJ/g/ATQGx1GFLflXJ9V0cErrIvSnhwtqd2f5j/1CeJ6fqhqfZ8RzcOepV2R7gP4BtA==
@@ -3697,6 +3703,23 @@ packages:
       react-dom: 15.x || 16.x || 16.4.0-alpha.0911da3
     resolution:
       integrity: sha512-+mtn9wjlB9NN2CNnnC/BRYtwdKBfSyyasPYraNAyvaV1occr/5NnB4CVzjEZipNHwYebQwcndGUmpFzxAUoqSA==
+  /@rollup/plugin-commonjs/17.1.0_rollup@2.42.4:
+    dependencies:
+      '@rollup/pluginutils': 3.1.0_rollup@2.42.4
+      commondir: 1.0.1
+      estree-walker: 2.0.2
+      glob: 7.1.6
+      is-reference: 1.2.1
+      magic-string: 0.25.7
+      resolve: 1.20.0
+      rollup: 2.42.4
+    dev: false
+    engines:
+      node: '>= 8.0.0'
+    peerDependencies:
+      rollup: ^2.30.0
+    resolution:
+      integrity: sha512-PoMdXCw0ZyvjpCMT5aV4nkL0QywxP29sODQsSGeDpr/oI49Qq9tRtAsb/LbYbDzFlOydVEqHmmZWFtXJEAX9ew==
   /@rollup/plugin-node-resolve/7.1.3_rollup@1.32.1:
     dependencies:
       '@rollup/pluginutils': 3.1.0_rollup@1.32.1
@@ -3728,6 +3751,19 @@ packages:
       estree-walker: 1.0.1
       picomatch: 2.2.2
       rollup: 1.32.1
+    dev: false
+    engines:
+      node: '>= 8.0.0'
+    peerDependencies:
+      rollup: ^1.20.0||^2.0.0
+    resolution:
+      integrity: sha512-GksZ6pr6TpIjHm8h9lSQ8pi8BE9VeubNT0OMJ3B5uZJ8pz73NPiqOtCog/x2/QzM1ENChPKxMDhiQuRHsqc+lg==
+  /@rollup/pluginutils/3.1.0_rollup@2.42.4:
+    dependencies:
+      '@types/estree': 0.0.39
+      estree-walker: 1.0.1
+      picomatch: 2.2.2
+      rollup: 2.42.4
     dev: false
     engines:
       node: '>= 8.0.0'
@@ -9649,6 +9685,10 @@ packages:
       node: '>=4.0'
     resolution:
       integrity: sha512-BxbNGGNm0RyRYvUdHpIwv9IWzeM9XClbOxwoATuFdOE7ZE6wHL+HQ5T8hoPM+zHvmKzzsEqhgy0GrQ5X13afiQ==
+  /estree-walker/0.2.1:
+    dev: false
+    resolution:
+      integrity: sha1-va/oCVOD2EFNXcLs9MkXO225QS4=
   /estree-walker/0.6.1:
     dev: false
     resolution:
@@ -9657,6 +9697,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-1fMXF3YP4pZZVozF8j/ZLfvnR8NSIljt56UhbZ5PeeDmmGHpgpdwQt7ITlGvYaQukCvuBRMLEiKiYC+oeIg4cg==
+  /estree-walker/2.0.2:
+    dev: false
+    resolution:
+      integrity: sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==
   /esutils/2.0.3:
     dev: false
     engines:
@@ -11949,6 +11993,12 @@ packages:
     dev: false
     resolution:
       integrity: sha1-DFLlS8yjkbssSUsh6GJtczbG45c=
+  /is-reference/1.2.1:
+    dependencies:
+      '@types/estree': 0.0.46
+    dev: false
+    resolution:
+      integrity: sha512-U82MsXXiFIrjCK4otLT+o2NA2Cd2g5MLoOVXUZjIOhLurrRxpEXzI8O0KZHr3IjLvlAH1kTPYSuqer5T9ZVBKQ==
   /is-regex/1.1.2:
     dependencies:
       call-bind: 1.0.2
@@ -17015,6 +17065,29 @@ packages:
       rollup: '>=0.60.0 <3'
     resolution:
       integrity: sha512-Lek/TYp1+7g7I+uMfJnnSJ7YWoD58ajo6Oarhlex7lvUce+RCKRuGRSgztDO3/MF/PuGKmUL5iTHKf208UNszw==
+  /rollup-plugin-sourcemaps/0.6.3_9135ee81d9218d0e99b56082525729b5:
+    dependencies:
+      '@rollup/pluginutils': 3.1.0_rollup@2.42.4
+      '@types/node': 14.14.35
+      rollup: 2.42.4
+      source-map-resolve: 0.6.0
+    dev: false
+    engines:
+      node: '>=10.0.0'
+    peerDependencies:
+      '@types/node': '>=10.0.0'
+      rollup: '>=0.31.2'
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+    resolution:
+      integrity: sha512-paFu+nT1xvuO1tPFYXGe+XnQvg4Hjqv/eIhG8i5EspfYYPBKL57X7iVbfv55aNVASg3dzWvES9dmWsL2KhfByw==
+  /rollup-plugin-svg/2.0.0:
+    dependencies:
+      rollup-pluginutils: 1.5.2
+    dev: false
+    resolution:
+      integrity: sha512-DmE7dSQHo1SC5L2uH2qul3Mjyd5oV6U1aVVkyvTLX/mUsRink7f1b1zaIm+32GEBA6EHu8H/JJi3DdWqM53ySQ==
   /rollup-plugin-terser/5.3.1_rollup@1.32.1:
     dependencies:
       '@babel/code-frame': 7.12.13
@@ -17028,6 +17101,13 @@ packages:
       rollup: '>=0.66.0 <3'
     resolution:
       integrity: sha512-1pkwkervMJQGFYvM9nscrUoncPwiKR/K+bHdjv6PFgRo3cgPHoRT83y2Aa3GvINj4539S15t/tpFPb775TDs6w==
+  /rollup-pluginutils/1.5.2:
+    dependencies:
+      estree-walker: 0.2.1
+      minimatch: 3.0.4
+    dev: false
+    resolution:
+      integrity: sha1-HhVud4+UtyVb+hs9AXi+j1xVJAg=
   /rollup-pluginutils/2.8.2:
     dependencies:
       estree-walker: 0.6.1
@@ -17043,6 +17123,15 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-/2HA0Ec70TvQnXdzynFffkjA6XN+1e2pEv/uKS5Ulca40g2L7KuOE3riasHoNVHOsFD5KKZgDsMk1CP3Tw9s+A==
+  /rollup/2.42.4:
+    dev: false
+    engines:
+      node: '>=10.0.0'
+    hasBin: true
+    optionalDependencies:
+      fsevents: 2.3.2
+    resolution:
+      integrity: sha512-Zqv3EvNfcllBHyyEUM754npqsZw82VIjK34cDQMwrQ1d6aqxzeYu5yFb7smGkPU4C1Bj7HupIMeT6WU7uIdnMw==
   /rst-selector-parser/2.2.3:
     dependencies:
       lodash.flattendeep: 4.4.0
@@ -20097,7 +20186,59 @@ packages:
       integrity: sha512-j/YlLgpbKaE1AONs8mg+X5jproZ0m5zSpMRPv8uxSOGFkmBTYAqF5fFqVJbhTP2+gMFUqWqM0FV9RVCyKeIKSg==
       tarball: file:projects/acs-calling-declarative.tgz
     version: 0.0.0
-  file:projects/acs-calling-sample.tgz_570bf42e92a70fb216c5cd4d5ed668ef:
+  file:projects/acs-chat-declarative.tgz_prettier@2.0.5+ts-node@9.1.1:
+    dependencies:
+      '@azure/communication-chat': 1.0.0-beta.4
+      '@azure/communication-signaling': 1.0.0-beta.2
+      '@microsoft/api-documenter': 7.12.12
+      '@microsoft/api-extractor': 7.13.2
+      '@types/jest': 26.0.20
+      '@typescript-eslint/eslint-plugin': 4.18.0_e9e1aa536ec0b34179456e3b69e4968e
+      '@typescript-eslint/parser': 4.18.0_eslint@7.22.0+typescript@4.1.5
+      eslint: 7.22.0
+      eslint-config-prettier: 6.15.0_eslint@7.22.0
+      eslint-plugin-header: 3.1.1_eslint@7.22.0
+      eslint-plugin-import: 2.22.1_eslint@7.22.0
+      eslint-plugin-prettier: 3.3.1_cdac37046eab2e8d6fb794f34ed825c2
+      immer: 8.0.1
+      jest: 26.6.0_ts-node@9.1.1
+      nanoid: 3.1.22
+      ts-jest: 26.5.3_jest@26.6.0+typescript@4.1.5
+      typescript: 4.1.5
+    dev: false
+    id: file:projects/acs-chat-declarative.tgz
+    name: '@rush-temp/acs-chat-declarative'
+    peerDependencies:
+      prettier: '*'
+      ts-node: '*'
+    resolution:
+      integrity: sha512-yS3iBC8KTy5gjPkPVv0TkKzcJMEzVi7CxgT6gmNIqVYJkHlmWmskzKNliG/1ly3fYUkcVgXFb4Th6igScOCKUw==
+      tarball: file:projects/acs-chat-declarative.tgz
+    version: 0.0.0
+  file:projects/acs-chat-selector.tgz_prettier@2.0.5:
+    dependencies:
+      '@azure/communication-chat': 1.0.0-beta.4
+      '@microsoft/api-documenter': 7.12.12
+      '@microsoft/api-extractor': 7.13.2
+      '@types/react': 16.14.5
+      eslint: 7.22.0
+      eslint-config-prettier: 6.15.0_eslint@7.22.0
+      eslint-plugin-header: 3.1.1_eslint@7.22.0
+      eslint-plugin-import: 2.22.1_eslint@7.22.0
+      eslint-plugin-prettier: 3.3.1_cdac37046eab2e8d6fb794f34ed825c2
+      memoize-one: 5.1.1
+      reselect: 4.0.0
+      typescript: 4.1.5
+    dev: false
+    id: file:projects/acs-chat-selector.tgz
+    name: '@rush-temp/acs-chat-selector'
+    peerDependencies:
+      prettier: '*'
+    resolution:
+      integrity: sha512-vgq6DDxDUEWYFZ87cBH4q1E92dgwgtbVsPUf6YVIrtITro9kA+YrR7CmgI5smLDwJbCau5vxd9UIEASkg8cXCA==
+      tarball: file:projects/acs-chat-selector.tgz
+    version: 0.0.0
+  file:projects/calling.tgz_570bf42e92a70fb216c5cd4d5ed668ef:
     dependencies:
       '@azure/communication-administration': 1.0.0-beta.3
       '@azure/communication-calling': 1.0.0-beta.2
@@ -20153,8 +20294,8 @@ packages:
       typescript: 4.1.5
       uuid: 8.3.2
     dev: false
-    id: file:projects/acs-calling-sample.tgz
-    name: '@rush-temp/acs-calling-sample'
+    id: file:projects/calling.tgz
+    name: '@rush-temp/calling'
     peerDependencies:
       eslint-plugin-import: '*'
       eslint-plugin-jsx-a11y: '*'
@@ -20162,39 +20303,10 @@ packages:
       webpack: '*'
       webpack-cli: '*'
     resolution:
-      integrity: sha512-5E76VQJnnmZv7C+QRuzmjP2NQgKU1yvkmVrk1uy88fHJJVl8G1+9F4NyRo+mU7oSPK88urYJ23G8qXpftXD2Bg==
-      tarball: file:projects/acs-calling-sample.tgz
+      integrity: sha512-PYwlIGfcB/u+Jv4BePuPKciDw4bnKNnSzu8ayjoITq0Gt2v1SATcTJX9vaLzHIFKI4CRbOzu/KRFovJg757XCg==
+      tarball: file:projects/calling.tgz
     version: 0.0.0
-  file:projects/acs-chat-declarative.tgz_prettier@2.0.5+ts-node@9.1.1:
-    dependencies:
-      '@azure/communication-chat': 1.0.0-beta.4
-      '@azure/communication-signaling': 1.0.0-beta.2
-      '@microsoft/api-documenter': 7.12.12
-      '@microsoft/api-extractor': 7.13.2
-      '@types/jest': 26.0.20
-      '@typescript-eslint/eslint-plugin': 4.18.0_e9e1aa536ec0b34179456e3b69e4968e
-      '@typescript-eslint/parser': 4.18.0_eslint@7.22.0+typescript@4.1.5
-      eslint: 7.22.0
-      eslint-config-prettier: 6.15.0_eslint@7.22.0
-      eslint-plugin-header: 3.1.1_eslint@7.22.0
-      eslint-plugin-import: 2.22.1_eslint@7.22.0
-      eslint-plugin-prettier: 3.3.1_cdac37046eab2e8d6fb794f34ed825c2
-      immer: 8.0.1
-      jest: 26.6.0_ts-node@9.1.1
-      nanoid: 3.1.22
-      ts-jest: 26.5.3_jest@26.6.0+typescript@4.1.5
-      typescript: 4.1.5
-    dev: false
-    id: file:projects/acs-chat-declarative.tgz
-    name: '@rush-temp/acs-chat-declarative'
-    peerDependencies:
-      prettier: '*'
-      ts-node: '*'
-    resolution:
-      integrity: sha512-yS3iBC8KTy5gjPkPVv0TkKzcJMEzVi7CxgT6gmNIqVYJkHlmWmskzKNliG/1ly3fYUkcVgXFb4Th6igScOCKUw==
-      tarball: file:projects/acs-chat-declarative.tgz
-    version: 0.0.0
-  file:projects/acs-chat-sample.tgz_40b0c9f7a7a0fac66e4b6fcf06de2a42:
+  file:projects/chat.tgz_40b0c9f7a7a0fac66e4b6fcf06de2a42:
     dependencies:
       '@azure/communication-administration': 1.0.0-beta.3
       '@azure/communication-chat': 1.0.0-beta.3
@@ -20245,41 +20357,113 @@ packages:
       rimraf: 2.7.1
       typescript: 4.1.5
     dev: false
-    id: file:projects/acs-chat-sample.tgz
-    name: '@rush-temp/acs-chat-sample'
+    id: file:projects/chat.tgz
+    name: '@rush-temp/chat'
     peerDependencies:
       eslint-plugin-import: '*'
       eslint-plugin-jsx-a11y: '*'
       ts-node: '*'
       webpack-cli: '*'
     resolution:
-      integrity: sha512-ik/XLHRZJUbJ0X6LZFwF5Yf7XVAqfijRfTWaLtAnkrK/MIQMMaWYncEW1kNC92JU6I5ecWD6ir6cYqXOdOwK7Q==
-      tarball: file:projects/acs-chat-sample.tgz
+      integrity: sha512-hEVS1AAJYKpfHhHGM/eoNlr2amTjGg2C0Jb9I3/uK+83I4kNjvN7AuwzCguxphFmH4mcseHXadMRt/0bjueFQg==
+      tarball: file:projects/chat.tgz
     version: 0.0.0
-  file:projects/acs-chat-selector.tgz_prettier@2.0.5:
+  file:projects/communication-ui.tgz_webpack-cli@4.5.0:
     dependencies:
-      '@azure/communication-chat': 1.0.0-beta.4
+      '@azure/communication-administration': 1.0.0-beta.3
+      '@azure/communication-calling': 1.0.0-beta.2
+      '@azure/communication-chat': 1.0.0-beta.3
+      '@azure/communication-common': 1.0.0-beta.3
+      '@azure/communication-signaling': 1.0.0-beta.1
+      '@azure/core-http': 1.2.3
+      '@babel/core': 7.13.10
+      '@babel/preset-env': 7.13.10_@babel+core@7.13.10
+      '@fluentui/react': 7.164.1_b0d7ca8a0459a1df1ff516252688d92a
+      '@fluentui/react-icons': 0.3.10_b0d7ca8a0459a1df1ff516252688d92a
+      '@fluentui/react-icons-northstar': 0.51.7_b0d7ca8a0459a1df1ff516252688d92a
+      '@fluentui/react-northstar': 0.51.7_b0d7ca8a0459a1df1ff516252688d92a
+      '@fluentui/react-theme-provider': 0.18.5_b0d7ca8a0459a1df1ff516252688d92a
+      '@mdx-js/react': 1.6.22_react@16.14.0
       '@microsoft/api-documenter': 7.12.12
       '@microsoft/api-extractor': 7.13.2
+      '@rollup/plugin-commonjs': 17.1.0_rollup@2.42.4
+      '@storybook/addon-actions': 6.1.21_30bc4764d4ba778218056aab0be8023f
+      '@storybook/addon-docs': 6.1.21_025c95869cb55e8d142f5246a0455b6d
+      '@storybook/addon-essentials': 6.1.21_489c05363155b6add536e1fef5b4fe59
+      '@storybook/addon-knobs': 6.1.21_30bc4764d4ba778218056aab0be8023f
+      '@storybook/addon-links': 6.1.21_react-dom@16.14.0+react@16.14.0
+      '@storybook/addon-storyshots': 6.1.21_bf4eba619a81a338b8fdba9794ec01fe
+      '@storybook/node-logger': 6.1.21
+      '@storybook/react': 6.1.21_4afa15f3c90940bbd828a24f4067472e
+      '@storybook/storybook-deployer': 2.8.7
+      '@storybook/theming': 6.1.21_react-dom@16.14.0+react@16.14.0
+      '@testing-library/jest-dom': 5.11.9
+      '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
+      '@types/classnames': 2.2.11
+      '@types/jest': 26.0.20
+      '@types/json-stringify-safe': 5.0.0
+      '@types/node': 14.14.35
       '@types/react': 16.14.5
+      '@types/react-aria-live': 2.0.0
+      '@types/react-dom': 16.9.11
+      '@types/react-linkify': 1.0.0
+      '@types/uuid': 8.3.0
+      '@typescript-eslint/eslint-plugin': 4.18.0_e9e1aa536ec0b34179456e3b69e4968e
+      '@typescript-eslint/parser': 4.18.0_eslint@7.22.0+typescript@4.1.5
+      '@uifabric/react-hooks': 7.13.12_b0d7ca8a0459a1df1ff516252688d92a
+      ajv: 6.12.6
+      babel-jest: 26.6.3_@babel+core@7.13.10
+      babel-loader: 8.1.0_6d2d9db439f797dbe04a64efdbcf144a
+      classnames: 2.2.6
+      concurrently: 5.3.0
+      copy-to-clipboard: 3.3.1
+      copyfiles: 2.4.1
+      core-js: 3.9.1
       eslint: 7.22.0
       eslint-config-prettier: 6.15.0_eslint@7.22.0
       eslint-plugin-header: 3.1.1_eslint@7.22.0
       eslint-plugin-import: 2.22.1_eslint@7.22.0
+      eslint-plugin-jsx-a11y: 6.4.1_eslint@7.22.0
       eslint-plugin-prettier: 3.3.1_cdac37046eab2e8d6fb794f34ed825c2
-      memoize-one: 5.1.1
-      reselect: 4.0.0
+      eslint-plugin-react: 7.22.0_eslint@7.22.0
+      eslint-plugin-react-hooks: 4.2.0_eslint@7.22.0
+      husky: 4.3.8
+      jest: 26.6.0_ts-node@9.1.1
+      jest-fetch-mock: 3.0.3
+      jest-junit: 12.0.0
+      json-stringify-safe: 5.0.1
+      nan: 2.14.2
+      node-forge: 0.10.0
+      prettier: 2.0.5
+      pretty-quick: 3.1.0_prettier@2.0.5
+      react: 16.14.0
+      react-aria-live: 2.0.5_react@16.14.0
+      react-dom: 16.14.0_react@16.14.0
+      react-is: 17.0.1
+      react-linkify: 1.0.0-alpha
+      react-test-renderer: 16.14.0_react@16.14.0
+      regenerator-runtime: 0.13.7
+      rollup: 2.42.4
+      rollup-plugin-sourcemaps: 0.6.3_9135ee81d9218d0e99b56082525729b5
+      rollup-plugin-svg: 2.0.0
+      source-map-explorer: 2.5.2
+      storybook-docs-toc: 1.3.1_55ac82b1aedfe80ed374987a417300da
+      styled-components: 5.2.1_9debf3d425c3eafb0518d6c329d076f5
+      ts-jest: 26.5.3_jest@26.6.0+typescript@4.1.5
+      ts-node: 9.1.1_typescript@4.1.5
       typescript: 4.1.5
+      uuid: 8.3.2
+      webpack: 4.44.2_webpack-cli@4.5.0
     dev: false
-    id: file:projects/acs-chat-selector.tgz
-    name: '@rush-temp/acs-chat-selector'
+    id: file:projects/communication-ui.tgz
+    name: '@rush-temp/communication-ui'
     peerDependencies:
-      prettier: '*'
+      webpack-cli: '*'
     resolution:
-      integrity: sha512-vgq6DDxDUEWYFZ87cBH4q1E92dgwgtbVsPUf6YVIrtITro9kA+YrR7CmgI5smLDwJbCau5vxd9UIEASkg8cXCA==
-      tarball: file:projects/acs-chat-selector.tgz
+      integrity: sha512-muoyrGvzz7WDz/T9IZKeYsqfAHpTb0qOdNzNGbuH/gsYyhH9f92WCWxD03ix4jFO2BZaAXsfUDFNhQ5vCsMWQA==
+      tarball: file:projects/communication-ui.tgz
     version: 0.0.0
-  file:projects/acs-one-to-one-call-sample.tgz_570bf42e92a70fb216c5cd4d5ed668ef:
+  file:projects/one-to-one-call.tgz_570bf42e92a70fb216c5cd4d5ed668ef:
     dependencies:
       '@azure/communication-administration': 1.0.0-beta.3
       '@azure/communication-calling': 1.0.0-beta.2
@@ -20337,8 +20521,8 @@ packages:
       typescript: 4.1.5
       uuid: 8.3.2
     dev: false
-    id: file:projects/acs-one-to-one-call-sample.tgz
-    name: '@rush-temp/acs-one-to-one-call-sample'
+    id: file:projects/one-to-one-call.tgz
+    name: '@rush-temp/one-to-one-call'
     peerDependencies:
       eslint-plugin-import: '*'
       eslint-plugin-jsx-a11y: '*'
@@ -20346,10 +20530,25 @@ packages:
       webpack: '*'
       webpack-cli: '*'
     resolution:
-      integrity: sha512-p207/qepY7DDslsvLIKF5va4/PpIB/zlq+GjhPhxWxiTalJ6GSR+YdFL7EBUOkd2noIvmc/eNyQ2TMYVSqy9Jw==
-      tarball: file:projects/acs-one-to-one-call-sample.tgz
+      integrity: sha512-7Eei6TVL74VGNBmON8HLssHISzQr8G8ImvnnvLBOTTGUat72KR7QjO16GHMr4QUYlKFLFd/+hvFFiwjvu6u/hw==
+      tarball: file:projects/one-to-one-call.tgz
     version: 0.0.0
-  file:projects/acs-server-sample.tgz:
+  file:projects/release-tools.tgz_typescript@4.1.5:
+    dependencies:
+      '@octokit/rest': 18.0.15
+      '@types/node': 14.14.35
+      beachball: 1.53.2
+      ts-node: 9.1.1_typescript@4.1.5
+    dev: false
+    id: file:projects/release-tools.tgz
+    name: '@rush-temp/release-tools'
+    peerDependencies:
+      typescript: '*'
+    resolution:
+      integrity: sha512-z8gCO5dSCyziWJ+KCb64AK7YSaU+hep4QQ9rcswo/dTE2JpMHkrACkdV/jjOKrx0wtUHIH6BmypWIROVzaf7Zw==
+      tarball: file:projects/release-tools.tgz
+    version: 0.0.0
+  file:projects/server.tgz:
     dependencies:
       '@azure/communication-chat': 1.0.0-beta.3
       '@azure/communication-common': 1.0.0-beta.3
@@ -20394,12 +20593,12 @@ packages:
       webpack-cli: 4.5.0_webpack@4.44.2
       webpack-node-externals: 2.5.2
     dev: false
-    name: '@rush-temp/acs-server-sample'
+    name: '@rush-temp/server'
     resolution:
-      integrity: sha512-j4Ck8vGlOM7/2P8+HX2HafvmLRhmgjCyipETF/lDQhg+tuknAt/lhRfvG0W3DV7aQDCKaXGCPlaX4LL6pRQOgg==
-      tarball: file:projects/acs-server-sample.tgz
+      integrity: sha512-ackzCLGN0wbDuoKMywSTx9Ge31TF5jHC+O4F6zRMnOm8p2hCNvwcwojGnnkRiYyJc2w6eHuUBp9yLwJ3wAh9hw==
+      tarball: file:projects/server.tgz
     version: 0.0.0
-  file:projects/communication-ui.tgz_webpack-cli@4.5.0:
+  file:projects/storybook.tgz_webpack-cli@4.5.0:
     dependencies:
       '@azure/communication-administration': 1.0.0-beta.3
       '@azure/communication-calling': 1.0.0-beta.2
@@ -20482,28 +20681,13 @@ packages:
       uuid: 8.3.2
       webpack: 4.44.2_webpack-cli@4.5.0
     dev: false
-    id: file:projects/communication-ui.tgz
-    name: '@rush-temp/communication-ui'
+    id: file:projects/storybook.tgz
+    name: '@rush-temp/storybook'
     peerDependencies:
       webpack-cli: '*'
     resolution:
-      integrity: sha512-fp1yMAMuub4NKtwICfLd5P1z6wCkDA+LjfTDvsMM9VLROgDrzsmR0JznDJvlR0zsBKyeRh9sSLqPzujJcnLPpQ==
-      tarball: file:projects/communication-ui.tgz
-    version: 0.0.0
-  file:projects/release-tools.tgz_typescript@4.1.5:
-    dependencies:
-      '@octokit/rest': 18.0.15
-      '@types/node': 14.14.35
-      beachball: 1.53.2
-      ts-node: 9.1.1_typescript@4.1.5
-    dev: false
-    id: file:projects/release-tools.tgz
-    name: '@rush-temp/release-tools'
-    peerDependencies:
-      typescript: '*'
-    resolution:
-      integrity: sha512-z8gCO5dSCyziWJ+KCb64AK7YSaU+hep4QQ9rcswo/dTE2JpMHkrACkdV/jjOKrx0wtUHIH6BmypWIROVzaf7Zw==
-      tarball: file:projects/release-tools.tgz
+      integrity: sha512-jXZ+r6MWu3XZC4Icu49RDSsZShaf7hZHTWabZf1BRs63zK6gX5ZLZF/wLh6mrA2P6Dvw1Huyz7Gmpjp0jA0ttA==
+      tarball: file:projects/storybook.tgz
     version: 0.0.0
 registry: ''
 specifiers:
@@ -20522,15 +20706,17 @@ specifiers:
   '@microsoft/api-documenter': ~7.12.11
   '@microsoft/api-extractor': ~7.13.2
   '@octokit/rest': ~18.0.6
+  '@rollup/plugin-commonjs': ~17.1.0
   '@rush-temp/acs-calling-declarative': file:./projects/acs-calling-declarative.tgz
-  '@rush-temp/acs-calling-sample': file:./projects/acs-calling-sample.tgz
   '@rush-temp/acs-chat-declarative': file:./projects/acs-chat-declarative.tgz
-  '@rush-temp/acs-chat-sample': file:./projects/acs-chat-sample.tgz
   '@rush-temp/acs-chat-selector': file:./projects/acs-chat-selector.tgz
-  '@rush-temp/acs-one-to-one-call-sample': file:./projects/acs-one-to-one-call-sample.tgz
-  '@rush-temp/acs-server-sample': file:./projects/acs-server-sample.tgz
+  '@rush-temp/calling': file:./projects/calling.tgz
+  '@rush-temp/chat': file:./projects/chat.tgz
   '@rush-temp/communication-ui': file:./projects/communication-ui.tgz
+  '@rush-temp/one-to-one-call': file:./projects/one-to-one-call.tgz
   '@rush-temp/release-tools': file:./projects/release-tools.tgz
+  '@rush-temp/server': file:./projects/server.tgz
+  '@rush-temp/storybook': file:./projects/storybook.tgz
   '@storybook/addon-actions': ^6.1.1
   '@storybook/addon-docs': ^6.1.18
   '@storybook/addon-essentials': ^6.1.1
@@ -20622,6 +20808,9 @@ specifiers:
   regenerator-runtime: ^0.13.7
   reselect: ~4.0.0
   rimraf: ^2.6.2
+  rollup: ~2.42.4
+  rollup-plugin-sourcemaps: ~0.6.3
+  rollup-plugin-svg: ~2.0.0
   source-map-explorer: ^2.5.0
   storybook-docs-toc: ~1.3.1
   styled-components: ~5.2.1

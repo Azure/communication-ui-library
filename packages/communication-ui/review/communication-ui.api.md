@@ -169,7 +169,7 @@ export type ChatMessage = {
     senderId?: string;
     senderDisplayName?: string;
     statusToRender?: MessageStatus;
-    attached?: MessageAttachedStatus;
+    attached?: MessageAttachedStatus | boolean;
     mine?: boolean;
     clientMessageId?: string;
 };
@@ -196,10 +196,13 @@ export interface ChatMessageWithClientMessageId extends ChatMessage_2 {
 export const ChatProvider: (props: ChatProviderProps & ErrorHandlingProps) => JSX.Element;
 
 // @public (undocumented)
-export const ChatThread: (props: Pick<ChatThreadProps & ErrorHandlingProps & ChatMessagePropsFromContext, "onErrorCallback" | "styles" | "disableNewMessageButton" | "onRenderReadReceipt" | "onRenderAvatar" | "onRenderLoadPreviousMessagesButton" | "onRenderNewMessageButton">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+export const ChatThread: (props: Pick<ChatThreadProps & ErrorHandlingProps & ChatMessagePropsFromContext, "onErrorCallback" | "styles" | "disableJumpToNewMessageButton" | "onRenderReadReceipt" | "onRenderAvatar" | "onRenderLoadPreviousMessagesButton" | "onRenderJumpToNewMessageButton">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
 
 // @public (undocumented)
 export const ChatThreadComponent: (props: ChatThreadProps & ErrorHandlingProps & ChatMessagePropsFromContext) => JSX.Element;
+
+// @public
+export const ChatThreadComponentBase: (props: ChatThreadProps & ErrorHandlingProps) => JSX.Element;
 
 // @public
 export type ChatThreadMember = {
@@ -218,13 +221,13 @@ export type ChatThreadProps = {
     userId: string;
     chatMessages: ChatMessage[];
     styles?: ChatThreadStylesProps;
-    disableNewMessageButton?: boolean;
+    disableJumpToNewMessageButton?: boolean;
     disableLoadPreviousMessage?: boolean;
     disableReadReceipt?: boolean;
     onSendReadReceipt?: () => Promise<void>;
-    onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element;
+    onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element | null;
     onRenderAvatar?: (userId: string) => JSX.Element;
-    onRenderNewMessageButton?: (newMessageButtonProps: NewMessageButtonProps) => JSX.Element;
+    onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousMessages?: () => void;
     onRenderLoadPreviousMessagesButton?: (loadPreviousMessagesButton: LoadPreviousMessagesButtonProps) => JSX.Element;
 };
@@ -602,6 +605,11 @@ export const hangupButtonProps: IButtonProps;
 // @public (undocumented)
 export const INCOMING = "Incoming";
 
+// Warning: (ae-forgotten-export) The symbol "IncomingCallModalProps" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export const IncomingCallModal: React_2.ComponentType<IncomingCallModalProps>;
+
 // @public (undocumented)
 export const IncomingCallsContext: React_2.Context<IncomingCallsContextType | undefined>;
 
@@ -614,6 +622,11 @@ export type IncomingCallsContextType = {
 export const IncomingCallsProvider: (props: {
     children: React_2.ReactNode;
 }) => JSX.Element;
+
+// Warning: (ae-forgotten-export) The symbol "IncomingCallToastProps" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export const IncomingCallToast: (props: IncomingCallToastProps) => JSX.Element;
 
 // @public (undocumented)
 export const INITIAL_MESSAGES_SIZE = 2000;
@@ -636,6 +649,27 @@ export const isMobileSession: () => boolean;
 // @public (undocumented)
 export function isSelectedDeviceInList<T extends AudioDeviceInfo | VideoDeviceInfo>(device: T, list: T[]): boolean;
 
+// @public (undocumented)
+export interface JumpToNewMessageButtonProps {
+    // (undocumented)
+    onClick: () => void;
+}
+
+// @public (undocumented)
+export const labeledAudioButtonProps: IButtonProps;
+
+// @public (undocumented)
+export const labeledHangupButtonProps: IButtonProps;
+
+// @public (undocumented)
+export const labeledOptionsButtonProps: IButtonProps;
+
+// @public (undocumented)
+export const labeledScreenShareButtonProps: IButtonProps;
+
+// @public (undocumented)
+export const labeledVideoButtonProps: IButtonProps;
+
 // @public
 export const LIGHT = "light";
 
@@ -652,6 +686,12 @@ export type ListParticipant = {
     onRemove?: () => void;
     onMute?: () => void;
 };
+
+// @public (undocumented)
+export interface LoadPreviousMessagesButtonProps {
+    // (undocumented)
+    onClick: () => void;
+}
 
 // @public (undocumented)
 export type LocalDeviceSettingsContainerProps = {
@@ -791,14 +831,14 @@ export const PAGE_SIZE = 200;
 export const ParticipantItem: (props: ParticipantItemProps & ErrorHandlingProps) => JSX.Element;
 
 // @public
-export type ParticipantItemProps = {
-    name: string;
+export interface ParticipantItemProps {
     isYou?: boolean;
-    onRenderAvatar?: (props?: ParticipantItemProps) => JSX.Element | null;
     menuItems?: IContextualMenuItem[];
+    name: string;
+    onRenderAvatar?: (props?: ParticipantItemProps) => JSX.Element | null;
     onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
     presence?: PersonaPresence;
-};
+}
 
 // @public (undocumented)
 export const PARTICIPANTS_THRESHOLD = 20;
@@ -852,10 +892,9 @@ export const screenShareButtonProps: IButtonProps;
 export const SendBox: (props: Pick<{
     onRenderSystemMessage?: ((systemMessage: string | undefined) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>) | undefined;
     supportNewline?: boolean | undefined;
-} & SendBoxPropsFromContext & ErrorHandlingProps, "onErrorCallback" | "supportNewline" | "onRenderSystemMessage">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+    onRenderIcon?: ((props: SendBoxProps) => JSX.Element | null) | undefined;
+} & SendBoxPropsFromContext & ErrorHandlingProps, "onErrorCallback" | "supportNewline" | "onRenderIcon" | "onRenderSystemMessage">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
 
-// Warning: (ae-forgotten-export) The symbol "SendBoxProps" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export const SendBoxComponent: (props: SendBoxProps & ErrorHandlingProps) => JSX.Element;
 
@@ -1254,8 +1293,7 @@ export const WithErrorHandling: (Component: (props: any & ErrorHandlingProps) =>
 
 // Warnings were encountered during analysis:
 //
-// src/components/ChatThread.tsx:183:3 - (ae-forgotten-export) The symbol "NewMessageButtonProps" needs to be exported by the entry point index.d.ts
-// src/components/ChatThread.tsx:185:3 - (ae-forgotten-export) The symbol "LoadPreviousMessagesButtonProps" needs to be exported by the entry point index.d.ts
+// src/components/SendBox.tsx:31:3 - (ae-forgotten-export) The symbol "SendBoxProps" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

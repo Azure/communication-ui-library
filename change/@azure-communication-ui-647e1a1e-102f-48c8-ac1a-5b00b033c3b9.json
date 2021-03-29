@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fixed default theming when no theme is given to FluentThemeProvider.",
+  "packageName": "@azure/communication-ui",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}

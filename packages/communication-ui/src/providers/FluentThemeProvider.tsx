@@ -4,31 +4,36 @@ import React, { useState, useEffect } from 'react';
 import { mergeStyles } from '@fluentui/react';
 import { ThemeProvider, Theme, PartialTheme } from '@fluentui/react-theme-provider';
 import { mergeThemes, Provider, teamsTheme, ThemeInput } from '@fluentui/react-northstar';
+import { lightTheme } from '../constants/themes';
 
 /**
  * Props for FluentThemeProvider
  */
 export interface FluentThemeProviderProps {
-  /** Children to be themed */
+  /** Children to be themed. */
   children: React.ReactNode;
-  /** Optional theme state for FluentThemeProvider */
+  /** Optional theme state for FluentThemeProvider. Defaults to a light theme if not provided. */
   fluentTheme?: PartialTheme | Theme;
 }
 
 const wrapper = mergeStyles({
   height: '100%',
+  width: '100%',
   alignItems: 'center',
   justifyContent: 'center'
 });
 
 /**
- * @description Provider to theme ACS UI SDK core components. Since ACS UI SDK core components are built with components
- * mostly from \@fluentui/react and a few from \@fluentui/react-northstar, a PartialTheme | Theme from \@fluentui/react is
- * used to align the few components from \@fluentui/react-northstar.
+ * @description Provider to apply theme ACS UI SDK core components. ACS UI SDK core components are built
+ * with components mostly from [Fluent UI](https://developer.microsoft.com/en-us/fluentui#/controls/web)
+ * and a few from [Fluent React Northstar](https://fluentsite.z22.web.core.windows.net/0.53.0). So we
+ * theme from Fluent UI is used to align the few components from Fluent React Northstar.
  * @param props - FluentThemeProviderProps
  */
 export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Element => {
   const { fluentTheme, children } = props;
+  // if fluentTheme is not provided, default to light theme
+  const fluentUITheme = fluentTheme ?? lightTheme;
   const [fluentNorthStarTheme, setFluentNorthStarTheme] = useState<ThemeInput<any>>(teamsTheme);
 
   useEffect(() => {
@@ -36,23 +41,23 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
       mergeThemes(teamsTheme, {
         componentVariables: {
           Chat: {
-            backgroundColor: fluentTheme?.palette?.white
+            backgroundColor: fluentUITheme?.palette?.white
           },
           ChatMessage: {
-            authorColor: fluentTheme?.palette?.neutralDark,
-            contentColor: fluentTheme?.palette?.neutralDark,
-            backgroundColor: fluentTheme?.palette?.neutralLight,
-            backgroundColorMine: fluentTheme?.palette?.themeLight
+            authorColor: fluentUITheme?.palette?.neutralDark,
+            contentColor: fluentUITheme?.palette?.neutralDark,
+            backgroundColor: fluentUITheme?.palette?.neutralLight,
+            backgroundColorMine: fluentUITheme?.palette?.themeLight
           }
-          // add more here to align theme for northstar components
+          // add more northstar components to align with Fluent UI theme
         }
       })
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fluentTheme]);
+  }, [fluentUITheme]);
 
   return (
-    <ThemeProvider theme={fluentTheme} className={wrapper} style={{ display: 'inherit' }} applyTo="body">
+    <ThemeProvider theme={fluentUITheme} className={wrapper} style={{ display: 'inherit' }}>
       <Provider theme={fluentNorthStarTheme} className={wrapper} style={{ display: 'flex' }}>
         {children}
       </Provider>

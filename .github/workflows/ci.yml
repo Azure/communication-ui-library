@@ -45,10 +45,6 @@ jobs:
       - name: Build Packages and Samples
         run: rush build
 
-      - name: Build Storybook
-        run: rushx build:storybook
-        working-directory: ./packages/communication-ui
-
       # Verify no uncommitted api extractor changes
       - name: API Extractor Check
         run: |
@@ -75,8 +71,8 @@ jobs:
       # Deploy Storybook - only perform this step on main branch CI
       - name: Deploy Storybook
         if: github.ref == 'refs/heads/main'
-        run: npm run deploy-storybook -- --ci
-        working-directory: ./packages/communication-ui
+        run: rushx deploy-storybook -- --ci
+        working-directory: ./packages/storybook
         env:
           GH_TOKEN: ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
 
