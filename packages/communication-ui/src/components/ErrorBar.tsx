@@ -1,8 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
 import React from 'react';
-import { connectFuncsToContext } from '../consumers/ConnectContext';
-import { MapToErrorBarProps } from '../consumers/MapToErrorBarProps';
 import { MessageBar, MessageBarType } from '@fluentui/react';
 import { CommunicationUiErrorSeverity } from '../types/CommunicationUiError';
 
@@ -37,4 +35,5 @@ export const ErrorBarComponent = (props: ErrorBarProps): JSX.Element => {
   }
 };
 
-export default connectFuncsToContext(ErrorBarComponent, MapToErrorBarProps);
+// export default connectFuncsToContext(ErrorBarComponent, MapToErrorBarProps);
+export default ErrorBarComponent;

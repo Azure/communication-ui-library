@@ -20,8 +20,7 @@ import {
   mediaControlStyles,
   leaveButtonStyle
 } from './styles/MediaControls.styles';
-import { connectFuncsToContext } from '../../consumers/ConnectContext';
-import { MapToMediaControlsProps, MediaControlsContainerProps } from './consumers/MapToMediaControlsProps';
+import { MediaControlsContainerProps } from './consumers/MapToMediaControlsProps';
 import { ErrorHandlingProps } from '../../providers/ErrorProvider';
 import { WithErrorHandling } from '../../utils/WithErrorHandling';
 import { propagateError } from '../../utils/SDKUtils';
@@ -137,4 +136,5 @@ const MediaControlsComponentBase = (props: MediaControlsProps & ErrorHandlingPro
 export const MediaControlsComponent = (props: MediaControlsProps & ErrorHandlingProps): JSX.Element =>
   WithErrorHandling(MediaControlsComponentBase, props);
 
-export const MediaControls = connectFuncsToContext(MediaControlsComponent, MapToMediaControlsProps);
+// export const MediaControls = connectFuncsToContext(MediaControlsComponent, MapToMediaControlsProps);
+export default MediaControlsComponent;

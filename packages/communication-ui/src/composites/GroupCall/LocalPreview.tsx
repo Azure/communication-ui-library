@@ -2,7 +2,8 @@
 
 import { CallVideoIcon, MicIcon } from '@fluentui/react-icons-northstar';
 import { Stack, Toggle, Image, ImageFit, IImageStyles } from '@fluentui/react';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { LocalVideoStream } from '@azure/communication-calling';
 import {
   localPreviewContainerStyle,
   toggleButtonsBarStyle,
@@ -35,26 +36,57 @@ const imageProps = {
   maximizeFrame: true
 };
 
+export interface LocalPreviewProps extends LocalDeviceSettingsContainerProps, ErrorHandlingProps {
+  localVideoElement: HTMLElement | undefined;
+  localVideoStream: LocalVideoStream | undefined;
+  /** Determines if video toggle button should be disabled. */
+  localVideoBusy: boolean;
+  /** Callback when video is toggled. */
+  toggleLocalVideo: () => Promise<void>;
+  /** Callback when microphone is toggled. */
+  toggleMicrophone: () => Promise<void>;
+  renderLocalVideo: () => Promise<void>;
+}
+
 const LocalPreviewComponentBase = (
-  props: MediaControlsContainerProps & LocalDeviceSettingsContainerProps & ErrorHandlingProps
+  // props: MediaControlsContainerProps & LocalDeviceSettingsContainerProps & ErrorHandlingProps
+  props: LocalPreviewProps
 ): JSX.Element => {
-  const isAudioDisabled = !props.audioDeviceInfo || props.audioDeviceList.length === 0;
-  const isVideoDisabled = !props.videoDeviceInfo || props.videoDeviceList.length === 0 || props.localVideoBusy;
+  const {
+    localVideoElement,
+    localVideoStream,
+    audioDeviceList,
+    audioDeviceInfo,
+    videoDeviceList,
+    videoDeviceInfo,
+    renderLocalVideo,
+    localVideoBusy
+  } = props;
+  const isAudioDisabled = !audioDeviceInfo || audioDeviceList.length === 0;
+  const isVideoDisabled = !videoDeviceInfo || videoDeviceList.length === 0 || localVideoBusy;
   // get the stream in here instead of the mapper for now
   // we haven't properly properly exported this component to make it re-usable
   // we should create a MapToLocalPreviewProps, instead of using MapToMediaControlsProps and MapToLocalDeviceSettingsProps
-  const { localVideoStream } = useCallContext();
+  // const { localVideoStream } = useCallContext();
 
-  const { isVideoReady, videoStreamElement } = MapToLocalVideoProps({
-    stream: localVideoStream,
-    scalingMode: 'Crop'
-  });
+  // const { isVideoReady, videoStreamElement } = MapToLocalVideoProps({
+  //   stream: localVideoStream,
+  //   scalingMode: 'Crop'
+  // });
+
+  useEffect(() => {
+    // fire and forget
+    renderLocalVideo();
+
+    // fake depedency on localVideoStream
+    const _triggerMe = !!localVideoStream;
+  }, [localVideoStream, renderLocalVideo]);
 
   return (
     <Stack className={localPreviewContainerStyle}>
       <VideoTile
-        isVideoReady={isVideoReady}
-        videoProvider={<StreamMedia videoStreamElement={videoStreamElement} />}
+        isVideoReady={!!localVideoElement} //{isVideoReady}
+        videoProvider={<StreamMedia videoStreamElement={localVideoElement!} />}
         placeholderProvider={
           <Image styles={staticAvatarStyle} aria-label="Local video preview image" {...imageProps} />
         }
@@ -103,11 +135,14 @@ const LocalPreviewComponentBase = (
 };
 
 export const LocalPreviewComponent = (
-  props: MediaControlsContainerProps & LocalDeviceSettingsContainerProps & ErrorHandlingProps
+  // props: MediaControlsContainerProps & LocalDeviceSettingsContainerProps & ErrorHandlingProps
+  props: LocalPreviewProps
 ): JSX.Element => WithErrorHandling(LocalPreviewComponentBase, props);
 
-export const LocalPreview = connectFuncsToContext(
-  LocalPreviewComponent,
-  MapToLocalDeviceSettingsProps,
-  MapToMediaControlsProps
-);
+// export const LocalPreview = connectFuncsToContext(
+//   LocalPreviewComponent,
+//   MapToLocalDeviceSettingsProps,
+//   MapToMediaControlsProps
+// );
+
+export const LocalPreview = LocalPreviewComponent;

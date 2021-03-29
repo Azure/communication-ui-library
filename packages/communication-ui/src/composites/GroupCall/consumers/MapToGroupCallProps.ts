@@ -15,9 +15,10 @@ export type GroupCallContainerProps = {
 export const MapToGroupCallProps = (): GroupCallContainerProps => {
   const { callAgent, deviceManager } = useCallingContext();
   const { call, localScreenShareActive } = useCallContext();
+  const callContext = useCallContext();
   const { leave } = useGroupCall();
   // Call useCallAgent to subscribe to events.
-  useCallAgent();
+  useCallAgent(callContext);
   return {
     isCallInitialized: !!(callAgent && deviceManager),
     callState: call?.state ?? 'None',

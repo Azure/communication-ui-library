@@ -8,12 +8,12 @@ import {
   mainContainerStyle,
   verticalStackStyle
 } from './styles/CallConfiguration.styles';
-import { LocalPreview } from './LocalPreview';
 import { SetupContainerProps } from '../../consumers';
 
 export interface CallConfigurationProps extends SetupContainerProps {
   screenWidth: number;
   startCallHandler(): void;
+  localPreviewElement: JSX.Element;
   children: React.ReactNode;
 }
 
@@ -33,7 +33,7 @@ export const CallConfiguration = (props: CallConfigurationProps): JSX.Element =>
           tokens={screenWidth > 750 ? configurationStackTokens : undefined}
           grow
         >
-          <LocalPreview />
+          {props.localPreviewElement}
           <Stack className={localSettingsContainerStyle}>{props.children}</Stack>
         </Stack>
       ) : (

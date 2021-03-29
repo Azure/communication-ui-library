@@ -5,6 +5,7 @@ dependencies:
   '@azure/communication-identity': 1.0.0-beta.4
   '@azure/communication-signaling': 1.0.0-beta.1
   '@azure/core-http': 1.2.3
+  '@azure/logger': 1.0.2
   '@babel/core': 7.13.10
   '@babel/preset-env': 7.13.10_@babel+core@7.13.10
   '@babel/preset-react': 7.12.13_@babel+core@7.13.10
@@ -25,7 +26,7 @@ dependencies:
   '@rush-temp/acs-one-to-one-call-sample': file:projects/acs-one-to-one-call-sample.tgz_570bf42e92a70fb216c5cd4d5ed668ef
   '@rush-temp/acs-server-sample': file:projects/acs-server-sample.tgz
   '@rush-temp/communication-ui': file:projects/communication-ui.tgz_webpack-cli@4.5.0
-  '@rush-temp/release-tools': file:projects/release-tools.tgz_typescript@4.1.5
+  '@rush-temp/release-tools': file:projects/release-tools.tgz
   '@storybook/addon-actions': 6.1.21_30bc4764d4ba778218056aab0be8023f
   '@storybook/addon-docs': 6.1.21_025c95869cb55e8d142f5246a0455b6d
   '@storybook/addon-essentials': 6.1.21_489c05363155b6add536e1fef5b4fe59
@@ -20134,6 +20135,8 @@ packages:
   file:projects/acs-chat-selector.tgz_prettier@2.0.5:
     dependencies:
       '@azure/communication-chat': 1.0.0-beta.4
+      '@microsoft/api-documenter': 7.12.12
+      '@microsoft/api-extractor': 7.13.2
       '@types/react': 16.14.5
       eslint: 7.22.0
       eslint-config-prettier: 6.15.0_eslint@7.22.0
@@ -20149,7 +20152,7 @@ packages:
     peerDependencies:
       prettier: '*'
     resolution:
-      integrity: sha512-cIADMprzNvKypT/2HQ4PCSYq0aMxwJdXBABEd8HzMjoEIoCwNe2N9p4IVGwjEz9yHALjEQwTocGMrmgbO/n+SQ==
+      integrity: sha512-vgq6DDxDUEWYFZ87cBH4q1E92dgwgtbVsPUf6YVIrtITro9kA+YrR7CmgI5smLDwJbCau5vxd9UIEASkg8cXCA==
       tarball: file:projects/acs-chat-selector.tgz
     version: 0.0.0
   file:projects/acs-one-to-one-call-sample.tgz_570bf42e92a70fb216c5cd4d5ed668ef:
@@ -20280,6 +20283,7 @@ packages:
       '@azure/communication-common': 1.0.0-beta.3
       '@azure/communication-signaling': 1.0.0-beta.1
       '@azure/core-http': 1.2.3
+      '@azure/logger': 1.0.2
       '@babel/core': 7.13.10
       '@babel/preset-env': 7.13.10_@babel+core@7.13.10
       '@fluentui/react': 7.164.1_b0d7ca8a0459a1df1ff516252688d92a
@@ -20357,24 +20361,23 @@ packages:
     peerDependencies:
       webpack-cli: '*'
     resolution:
-      integrity: sha512-2zNxQ0gNyIidBQtz2Obl1ft3C2EY2L8c6ZDymbPl8cn5THTDBV77WA2V676nL/QBXqND8QbMe4VaaUWTTH/xyQ==
+      integrity: sha512-B8oMpSZ8Gb9Ky/m8rNE/va4fUMq1lFxp59TdeBoPySXmAbZmLxXAsffMu2trAZJtM3Tubr8Zv2aPZCls/V+6Aw==
       tarball: file:projects/communication-ui.tgz
     version: 0.0.0
-  file:projects/release-tools.tgz_typescript@4.1.5:
+  file:projects/release-tools.tgz:
     dependencies:
       '@octokit/rest': 18.0.15
       '@types/node': 14.14.35
       beachball: 1.53.1
       ts-node: 9.1.1_typescript@4.1.5
+      typescript: 4.1.5
     dev: false
-    id: file:projects/release-tools.tgz
     name: '@rush-temp/release-tools'
-    peerDependencies:
-      typescript: '*'
     resolution:
-      integrity: sha512-UQumbwoolIDKZIpwIeuHgTpS5NHC09Mouev09oIQPNYzmj3cRie0bbR0C5UTmMQ+zJ00n5EhKy5G9dEN4/F24w==
+      integrity: sha512-BLCf9WZmsZavVWZzaxK1DRoBcMR45b9Dr1I963rxsJBeyyUP+hqv6d8epS2h4W0u7FkEtIgEEl6gvKRd02GF6g==
       tarball: file:projects/release-tools.tgz
     version: 0.0.0
+registry: ''
 specifiers:
   '@azure/communication-administration': 1.0.0-beta.3
   '@azure/communication-calling': 1.0.0-beta.2
@@ -20382,6 +20385,7 @@ specifiers:
   '@azure/communication-identity': 1.0.0-beta.4
   '@azure/communication-signaling': 1.0.0-beta.1
   '@azure/core-http': ^1.2.3
+  '@azure/logger': ~1.0.2
   '@babel/core': ^7.12.7
   '@babel/preset-env': ^7.12.7
   '@babel/preset-react': ^7.12.7

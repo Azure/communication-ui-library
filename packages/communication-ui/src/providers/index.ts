@@ -2,6 +2,7 @@
 
 export * from './CallProvider';
 export * from './CallingProvider';
+export * from './CallBridgeProvider';
 export * from './ChatProvider';
 export * from './ChatThreadProvider';
 export * from './IncomingCallsProvider';

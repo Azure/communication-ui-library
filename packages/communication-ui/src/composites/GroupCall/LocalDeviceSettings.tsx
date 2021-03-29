@@ -1,22 +1,32 @@
 // © Microsoft Corporation. All rights reserved.
-import React from 'react';
+import React, { useEffect } from 'react';
 import { IDropdownOption, Dropdown, Stack } from '@fluentui/react';
 import { dropDownStyles, localSettingsContainer, mainStackTokens } from './styles/LocalDeviceSettings.styles';
 import {
   LocalDeviceSettingsContainerProps,
   MapToLocalDeviceSettingsProps
 } from '../../consumers/MapToLocalDeviceSettingsProps';
-import { connectFuncsToContext } from '../../consumers/ConnectContext';
+// import { connectFuncsToContext } from '../../consumers/ConnectContext';
 import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
 import { ErrorHandlingProps } from '../../providers/ErrorProvider';
 import { WithErrorHandling } from '../../utils/WithErrorHandling';
 
-const LocalDeviceSettingsComponentBase = (
-  props: LocalDeviceSettingsContainerProps & ErrorHandlingProps
-): JSX.Element => {
+type LocalDeviceSettingsProps = LocalDeviceSettingsContainerProps &
+  ErrorHandlingProps & {
+    queryMicrophones: () => void;
+    queryCameras: () => void;
+  };
+
+const LocalDeviceSettingsComponentBase = (props: LocalDeviceSettingsProps): JSX.Element => {
+  const { queryCameras, queryMicrophones } = props;
   const defaultPlaceHolder = 'Select an option';
   const cameraLabel = 'Camera';
   const micLabel = 'Microphone';
+
+  useEffect(() => {
+    queryCameras();
+    queryMicrophones();
+  }, [queryCameras, queryMicrophones]);
 
   const getDropDownList = (list: Array<VideoDeviceInfo | AudioDeviceInfo>): IDropdownOption[] => {
     return list.map((item) => ({
@@ -61,8 +71,8 @@ const LocalDeviceSettingsComponentBase = (
   );
 };
 
-export const LocalDeviceSettingsComponent = (
-  props: LocalDeviceSettingsContainerProps & ErrorHandlingProps
-): JSX.Element => WithErrorHandling(LocalDeviceSettingsComponentBase, props);
+export const LocalDeviceSettingsComponent = (props: LocalDeviceSettingsProps): JSX.Element =>
+  WithErrorHandling(LocalDeviceSettingsComponentBase, props);
 
-export const LocalDeviceSettings = connectFuncsToContext(LocalDeviceSettingsComponent, MapToLocalDeviceSettingsProps);
+// export const LocalDeviceSettings = connectFuncsToContext(LocalDeviceSettingsComponent, MapToLocalDeviceSettingsProps);
+export const LocalDeviceSettings = LocalDeviceSettingsComponent;

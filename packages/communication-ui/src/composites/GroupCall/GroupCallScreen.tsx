@@ -16,7 +16,10 @@ import MediaGallery from './MediaGallery';
 import { connectFuncsToContext } from '../../consumers/ConnectContext';
 import { isInCall } from '../../utils/SDKUtils';
 import { GroupCallContainerProps, MapToGroupCallProps } from './consumers/MapToGroupCallProps';
-import { MediaControls } from './MediaControls';
+import { MapToMediaGalleryProps } from './consumers/MapToMediaGalleryProps';
+import { MapToMediaControlsProps } from './consumers/MapToMediaControlsProps';
+import { MapToErrorBarProps } from '../../consumers/MapToErrorBarProps';
+import MediaControls from './MediaControls';
 import { MINI_HEADER_WINDOW_WIDTH } from '../../constants';
 import { ErrorHandlingProps } from '../../providers/ErrorProvider';
 import { WithErrorHandling } from '../../utils/WithErrorHandling';
@@ -39,22 +42,30 @@ const GroupCallComponentBase = (props: GroupCallProps & ErrorHandlingProps): JSX
     }
   }, [callState, groupId]);
 
+  const mediaControlProps = MapToMediaControlsProps();
+  const mediaGalleryProps = MapToMediaGalleryProps();
+  const errorBarProps = MapToErrorBarProps();
+
   return (
     <>
       {isCallInitialized ? (
         <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow>
           <Stack.Item styles={headerStyles}>
             <Stack className={props.screenWidth > MINI_HEADER_WINDOW_WIDTH ? headerContainer : headerCenteredContainer}>
-              <MediaControls onEndCallClick={endCallHandler} compressedMode={screenWidth <= MINI_HEADER_WINDOW_WIDTH} />
+              <MediaControls
+                {...mediaControlProps}
+                onEndCallClick={endCallHandler}
+                compressedMode={screenWidth <= MINI_HEADER_WINDOW_WIDTH}
+              />
             </Stack>
-            <ErrorBar />
+            <ErrorBar {...errorBarProps} />
           </Stack.Item>
           <Stack.Item styles={subContainerStyles} grow>
             {!isLocalScreenSharingOn ? (
               callState === 'Connected' && (
                 <Stack styles={containerStyles} grow>
                   <Stack.Item grow styles={activeContainerClassName}>
-                    <MediaGallery />
+                    <MediaGallery {...mediaGalleryProps} />
                   </Stack.Item>
                 </Stack>
               )
