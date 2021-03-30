@@ -10,7 +10,7 @@ import * as reselect from 'reselect';
 // @ts-ignore
 import { ChatMessageContent } from '@azure/communication-chat';
 // @ts-ignore
-import { ChatClientState } from '@azure/acs-chat-declarative';
+import { ChatClientState, MessageStatus } from '@azure/acs-chat-declarative';
 
 export const chatThreadSelector = createSelector(
   [getSelectorProps, getChatMessages],

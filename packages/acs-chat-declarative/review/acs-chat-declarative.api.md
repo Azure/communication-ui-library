@@ -26,7 +26,6 @@ export type ChatClientState = {
 export type ChatConfig = {
     userId: string;
     displayName: string;
-    threadId: string;
 };
 
 // @public (undocumented)
@@ -58,11 +57,11 @@ export type ChatThreadClientState = {
 // @public (undocumented)
 export interface DeclarativeChatClient extends ChatClient {
     // (undocumented)
+    offStateChange(handler: (state: ChatClientState) => void): void;
+    // (undocumented)
     onStateChange(handler: (state: ChatClientState) => void): void;
     // (undocumented)
     state: ChatClientState;
-    // (undocumented)
-    unsubscribeStateChange(handler: (state: ChatClientState) => void): void;
 }
 
 // @public (undocumented)
