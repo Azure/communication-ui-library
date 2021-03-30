@@ -466,13 +466,18 @@ export const EMPTY_MESSAGE_REGEX: RegExp;
 // @public (undocumented)
 export const ENTER_KEY = 13;
 
-// Warning: (ae-forgotten-export) The symbol "ErrorBarProps" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export const ErrorBar: (props: Pick<ErrorBarProps, never>) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
 
 // @public
-export const ErrorBarComponent: (props: ErrorBarProps) => JSX.Element;
+export const ErrorBarComponent: (props: ErrorBarProps) => JSX.Element | null;
+
+// @public
+export type ErrorBarProps = {
+    message?: string;
+    severity?: CommunicationUiErrorSeverity;
+    onClose?: () => void;
+};
 
 // @public (undocumented)
 export const ErrorContextLastError: React_2.Context<ErrorContextLastErrorType | undefined>;

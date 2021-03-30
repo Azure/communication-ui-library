@@ -4,9 +4,10 @@ import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
 import { CommunicationUiErrorSeverity, ErrorBarComponent as ErrorBar } from '@azure/communication-ui';
 import { text, select } from '@storybook/addon-knobs';
+import { getDocs } from './ErrorBarDocs';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 
-export const ErrorBarComponent: () => JSX.Element = () => {
+export const ErrorBarComponent = (): JSX.Element | null => {
   const [closed, setClosed] = useState<boolean>(false);
   const message = text('Message', 'This is a sample error message.');
   const severity = select<CommunicationUiErrorSeverity>(
@@ -21,11 +22,16 @@ export const ErrorBarComponent: () => JSX.Element = () => {
   if (!closed) {
     return <ErrorBar message={message} severity={severity} onClose={onClearError} />;
   } else {
-    return <></>;
+    return null;
   }
 };
 
 export default {
   title: `${COMPONENT_FOLDER_PREFIX}/ErrorBar`,
-  component: ErrorBar
+  component: ErrorBar,
+  parameters: {
+    docs: {
+      page: () => getDocs()
+    }
+  }
 } as Meta;

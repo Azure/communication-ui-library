@@ -6,7 +6,7 @@ import { GridLayoutComponent } from './GridLayout';
 import ErrorBar, { ErrorBarComponent } from './ErrorBar';
 
 export { SendBox, TypingIndicator, TypingIndicatorComponent, GridLayoutComponent, ErrorBar, ErrorBarComponent };
-
+export type { ErrorBarProps } from './ErrorBar';
 export { SendBoxComponent } from './SendBox';
 export { ReadReceiptComponent } from './ReadReceipt';
 export type { ReadReceiptProps } from './ReadReceipt';
