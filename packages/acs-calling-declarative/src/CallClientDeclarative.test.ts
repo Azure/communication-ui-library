@@ -1,64 +1,25 @@
 // © Microsoft Corporation. All rights reserved.
-import EventEmitter from 'events';
-import {
-  Call,
-  CallAgent,
-  CallClient,
-  LocalVideoStream,
-  RemoteParticipant,
-  RemoteVideoStream
-} from '@azure/communication-calling';
+import { Call, CallAgent, CallClient, LocalVideoStream, RemoteVideoStream } from '@azure/communication-calling';
 import { callClientDeclaratify, DeclarativeCallClient } from './CallClientDeclarative';
 import { getRemoteParticipantKey } from './Converter';
+import {
+  addMockEmitter,
+  createMockCall,
+  createMockRemoteParticipant,
+  MockCall,
+  MockCallAgent,
+  MockCommunicationUserCredential,
+  mockoutObjectFreeze,
+  MockRemoteParticipant
+} from './TestUtils';
 
-let backupFreezeFunction;
-beforeEach(() => {
-  backupFreezeFunction = Object.freeze;
-  Object.freeze = function (obj) {
-    return obj;
-  };
-});
-
-afterEach(() => {
-  Object.freeze = backupFreezeFunction;
-});
+mockoutObjectFreeze();
 
 jest.mock('@azure/communication-calling');
 
-interface MockEmitter {
-  emitter: EventEmitter;
-  on(event: any, listener: any);
-  off(event: any, listener: any);
-  emit(event: any, data?: any);
-}
-
-type Mutable<T> = {
-  -readonly [k in keyof T]: T[k];
-};
-type MockCall = Mutable<Call> & MockEmitter;
-type MockCallAgent = Mutable<CallAgent> & MockEmitter;
-type MockRemoteParticipant = Mutable<RemoteParticipant> & MockEmitter;
-
-class MockCommunicationUserCredential {
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  public getToken(): any {}
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  public dispose(): void {}
-}
-
-function addMockEmitter(object: any): any {
-  object.emitter = new EventEmitter();
-  object.on = (event: any, listener: any): void => {
-    object.emitter.on(event, listener);
-  };
-  object.off = (event: any, listener: any): void => {
-    object.emitter.off(event, listener);
-  };
-  object.emit = (event: any, payload?: any): void => {
-    object.emitter.emit(event, payload);
-  };
-  return object;
-}
+const mockCallId = 'a';
+const mockCallId2 = 'b';
+const mockParticipantCommunicationUserId = 'c';
 
 interface TestData {
   mockCallClient: any;
@@ -68,29 +29,9 @@ interface TestData {
   declarativeCallClient: DeclarativeCallClient;
 }
 
-const mockCallId = 'a';
-const mockCallId2 = 'b';
-
-function createMockCall(testData: TestData): void {
-  const mockCall = {
-    id: mockCallId,
-    remoteParticipants: [] as ReadonlyArray<RemoteParticipant>,
-    localVideoStreams: [] as ReadonlyArray<LocalVideoStream>
-  } as MockCall;
-  testData.mockCall = addMockEmitter(mockCall);
-}
-
-function createMockRemoteParticipant(testData: TestData): void {
-  const mockRemoteParticipant = {
-    identifier: { kind: 'communicationUser', communicationUserId: 'a' },
-    videoStreams: [] as ReadonlyArray<RemoteVideoStream>
-  } as MockRemoteParticipant;
-  testData.mockRemoteParticipant = addMockEmitter(mockRemoteParticipant);
-}
-
 function createClientAndAgentMocks(testData: TestData): void {
   const mockCallClient = new CallClient();
-  const mockCallAgent = {} as MockCallAgent;
+  const mockCallAgent = { calls: [] as ReadonlyArray<Call> } as MockCallAgent;
   addMockEmitter(mockCallAgent);
   mockCallClient.createCallAgent = (): Promise<CallAgent> => {
     return Promise.resolve(mockCallAgent);
@@ -105,7 +46,7 @@ function createDeclarativeClient(testData: TestData): void {
 
 async function createMockCallAndEmitCallsUpdated(testData: TestData, waitCondition?: () => boolean): Promise<void> {
   await testData.declarativeCallClient.createCallAgent(new MockCommunicationUserCredential());
-  createMockCall(testData);
+  testData.mockCall = createMockCall(mockCallId);
   testData.mockCallAgent.calls = [testData.mockCall];
   testData.mockCallAgent.emit('callsUpdated', {
     added: [testData.mockCall],
@@ -120,7 +61,7 @@ async function createMockParticipantAndEmitParticipantUpdated(
   testData: TestData,
   waitCondition?: () => boolean
 ): Promise<void> {
-  createMockRemoteParticipant(testData);
+  testData.mockRemoteParticipant = createMockRemoteParticipant(mockParticipantCommunicationUserId);
   testData.mockCall.remoteParticipants = [testData.mockRemoteParticipant];
   testData.mockCall.emit('remoteParticipantsUpdated', {
     added: [testData.mockRemoteParticipant],

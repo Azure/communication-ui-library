@@ -1,11 +1,9 @@
 // © Microsoft Corporation. All rights reserved.
 import { DeclarativeDeviceManager, deviceManagerDeclaratify } from './DeviceManagerDeclarative';
-import { Call, CallAgent, CallClient, IncomingCall } from '@azure/communication-calling';
+import { CallAgent, CallClient } from '@azure/communication-calling';
 import { CallClientState } from './CallClientState';
 import { CallContext } from './CallContext';
-import { CallSubscriber } from './CallSubscriber';
-import { convertSdkCallToDeclarativeCall, convertSdkIncomingCallToDeclarativeIncomingCall } from './Converter';
-import { IncomingCallSubscriber } from './IncomingCallSubscriber';
+import { callAgentDeclaratify } from './CallAgentDeclarative';
 
 /**
  * Defines the methods that allow CallClient to be used declaratively.
@@ -23,59 +21,33 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
   private _context: CallContext;
   private _callAgent: CallAgent | undefined;
   private _deviceManager: DeclarativeDeviceManager | undefined;
-  private _callSubscribers: Map<Call, CallSubscriber>;
-  private _incomingCallSubscribers: Map<string, IncomingCallSubscriber>;
 
   constructor(context: CallContext) {
     this._context = context;
-    this._callSubscribers = new Map<Call, CallSubscriber>();
-    this._incomingCallSubscribers = new Map<string, IncomingCallSubscriber>();
   }
-
-  private callsUpdated = (event: { added: Call[]; removed: Call[] }): void => {
-    for (const call of event.added) {
-      this._callSubscribers.set(call, new CallSubscriber(call, this._context));
-      this._context.setCall(convertSdkCallToDeclarativeCall(call));
-    }
-    for (const call of event.removed) {
-      const callSubscriber = this._callSubscribers.get(call);
-      if (callSubscriber) {
-        callSubscriber.unsubscribe();
-        this._callSubscribers.delete(call);
-      }
-      this._context.removeCall(call.id);
-    }
-  };
-
-  private incomingCall = (event: { incomingCall: IncomingCall }): void => {
-    this._context.setIncomingCall(convertSdkIncomingCallToDeclarativeIncomingCall(event.incomingCall));
-    this._incomingCallSubscribers.set(
-      event.incomingCall.id,
-      new IncomingCallSubscriber(event.incomingCall, this._context)
-    );
-  };
 
   public get<P extends keyof CallClient>(target: CallClient, prop: P): any {
     switch (prop) {
       case 'createCallAgent': {
         return async (...args: Parameters<CallClient['createCallAgent']>) => {
-          this._callAgent = await target.createCallAgent(...args);
-          this._callAgent.on('callsUpdated', this.callsUpdated);
-          this._callAgent.on('incomingCall', this.incomingCall);
-          // TODO: We need to proxy callAgent so when it is disposed we can unsubscribe from the events
+          // createCallAgent will throw an exception if the previous callAgent was not disposed. If the previous
+          // callAgent was disposed then it would have unsubscribed to events so we can just create a new declarative
+          // callAgent if the createCallAgent succeeds.
+          const callAgent = await target.createCallAgent(...args);
+          this._callAgent = callAgentDeclaratify(callAgent, this._context);
           return this._callAgent;
         };
       }
       case 'getDeviceManager': {
         return async () => {
+          // We don't want to have duplicate deviceManagers with duplicate subscriptions and we want to allow user to
+          // retrieve new deviceManager so we keep a cache, and destruct the old deviceManager to allow the creation of
+          // a new one without any duplicate subscriptions happening.
           if (this._deviceManager) {
             this._deviceManager.destructor();
             this._deviceManager = undefined;
           }
           const deviceManager = await target.getDeviceManager();
-          this._context.setDeviceManagerIsSpeakerSelectionAvailable(deviceManager.isSpeakerSelectionAvailable);
-          this._context.setDeviceManagerSelectedMicrophone(deviceManager.selectedMicrophone);
-          this._context.setDeviceManagerSelectedSpeaker(deviceManager.selectedSpeaker);
           this._deviceManager = deviceManagerDeclaratify(deviceManager, this._context);
           return this._deviceManager;
         };

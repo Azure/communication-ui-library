@@ -4,13 +4,7 @@
 
 ```ts
 
-<<<<<<< HEAD
 import { AudioDeviceInfo } from '@azure/communication-calling';
-import { Call } from '@azure/communication-calling';
-import { CallClient } from '@azure/communication-calling';
-import { DeviceAccess } from '@azure/communication-calling';
-import { VideoDeviceInfo } from '@azure/communication-calling';
-=======
 import { CallClient } from '@azure/communication-calling';
 import { CallDirection } from '@azure/communication-calling';
 import { CallEndReason } from '@azure/communication-calling';
@@ -18,6 +12,7 @@ import { CallerInfo } from '@azure/communication-calling';
 import { CallingApplicationKind } from '@azure/communication-common';
 import { CallState } from '@azure/communication-calling';
 import { CommunicationUserKind } from '@azure/communication-common';
+import { DeviceAccess } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { PhoneNumberKind } from '@azure/communication-common';
@@ -46,26 +41,21 @@ export interface Call {
     // (undocumented)
     state: CallState;
 }
->>>>>>> origin/main
 
 // @public
 export const callClientDeclaratify: (callClient: CallClient) => DeclarativeCallClient;
 
-<<<<<<< HEAD
-// @public (undocumented)
-export type CallClientState = {
-    calls: Call[];
-    deviceManagerState: DeviceManagerState;
-};
-=======
 // @public
 export interface CallClientState {
     // (undocumented)
     calls: Map<string, Call>;
+    // Warning: (ae-forgotten-export) The symbol "DeviceManagerState" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    deviceManagerState: DeviceManagerState;
     // (undocumented)
     incomingCalls: Map<string, IncomingCall>;
 }
->>>>>>> origin/main
 
 // @public
 export interface DeclarativeCallClient extends CallClient {
@@ -123,10 +113,6 @@ export interface RemoteVideoStream {
     mediaStreamType: MediaStreamType;
 }
 
-
-// Warnings were encountered during analysis:
-//
-// src/CallClientState.ts:21:3 - (ae-forgotten-export) The symbol "DeviceManagerState" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

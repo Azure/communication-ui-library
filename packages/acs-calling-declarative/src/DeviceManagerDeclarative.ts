@@ -1,10 +1,10 @@
 // © Microsoft Corporation. All rights reserved.
-import { AudioDeviceInfo, DeviceManager, VideoDeviceInfo } from '@azure/communication-calling';
+import { AudioDeviceInfo, DeviceAccess, DeviceManager, VideoDeviceInfo } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
 
 /**
  * DeclarativeDeviceManager type adds a destructor which should be called to unsubscribe the DeclarativeDeviceManager
- * from all events.
+ * from all events so we can replace it with new DeclarativeDeviceManager.
  */
 export interface DeclarativeDeviceManager extends DeviceManager {
   destructor: () => void;
@@ -21,9 +21,17 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
   private _deviceManager: DeviceManager;
   private _context: CallContext;
 
-  constructor(context: CallContext, deviceManager: DeviceManager) {
-    this._context = context;
+  constructor(deviceManager: DeviceManager, context: CallContext) {
     this._deviceManager = deviceManager;
+    this._context = context;
+
+    // isSpeakerSelectionAvailable, selectedMicrophone, and selectedSpeaker are properties on DeviceManager. Since they
+    // are not functions we can't proxy them so we'll update them in the context when ProxyDeviceManager is created.
+    // Then afterwards they should be updated via events or other function calls.
+    this._context.setDeviceManagerIsSpeakerSelectionAvailable(deviceManager.isSpeakerSelectionAvailable);
+    this._context.setDeviceManagerSelectedMicrophone(deviceManager.selectedMicrophone);
+    this._context.setDeviceManagerSelectedSpeaker(deviceManager.selectedSpeaker);
+
     this.subscribe();
   }
 
@@ -65,7 +73,7 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
   public get<P extends keyof DeviceManager>(target: DeviceManager, prop: P): any {
     switch (prop) {
       case 'getCameras': {
-        return () => {
+        return (): Promise<VideoDeviceInfo[]> => {
           return target.getCameras().then((cameras: VideoDeviceInfo[]) => {
             this._context.setDeviceManagerCameras(cameras);
             return cameras;
@@ -73,7 +81,7 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
         };
       }
       case 'getMicrophones': {
-        return () => {
+        return (): Promise<AudioDeviceInfo[]> => {
           return target.getMicrophones().then((microphones: AudioDeviceInfo[]) => {
             this._context.setDeviceManagerMicrophones(microphones);
             return microphones;
@@ -81,7 +89,7 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
         };
       }
       case 'getSpeakers': {
-        return () => {
+        return (): Promise<AudioDeviceInfo[]> => {
           return target.getSpeakers().then((speakers: AudioDeviceInfo[]) => {
             this._context.setDeviceManagerSpeakers(speakers);
             return speakers;
@@ -89,22 +97,25 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
         };
       }
       case 'selectMicrophone': {
-        return async (...args: Parameters<DeviceManager['selectMicrophone']>) => {
-          await target.selectMicrophone(...args);
-          this._context.setDeviceManagerSelectedMicrophone(target.selectedMicrophone);
+        return (...args: Parameters<DeviceManager['selectMicrophone']>): Promise<void> => {
+          return target.selectMicrophone(...args).then(() => {
+            this._context.setDeviceManagerSelectedMicrophone(target.selectedMicrophone);
+          });
         };
       }
       case 'selectSpeaker': {
-        return async (...args: Parameters<DeviceManager['selectSpeaker']>) => {
-          await target.selectSpeaker(...args);
-          this._context.setDeviceManagerSelectedSpeaker(target.selectedSpeaker);
+        return (...args: Parameters<DeviceManager['selectSpeaker']>): Promise<void> => {
+          return target.selectSpeaker(...args).then(() => {
+            this._context.setDeviceManagerSelectedSpeaker(target.selectedSpeaker);
+          });
         };
       }
       case 'askDevicePermission': {
-        return async (...args: Parameters<DeviceManager['askDevicePermission']>) => {
-          const deviceAccess = await target.askDevicePermission(...args);
-          this._context.setDeviceManagerDeviceAccess(deviceAccess);
-          return deviceAccess;
+        return (...args: Parameters<DeviceManager['askDevicePermission']>): Promise<DeviceAccess> => {
+          return target.askDevicePermission(...args).then((deviceAccess: DeviceAccess) => {
+            this._context.setDeviceManagerDeviceAccess(deviceAccess);
+            return deviceAccess;
+          });
         };
       }
       default:
@@ -124,7 +135,7 @@ export const deviceManagerDeclaratify = (
   deviceManager: DeviceManager,
   context: CallContext
 ): DeclarativeDeviceManager => {
-  const proxyDeviceManager = new ProxyDeviceManager(context, deviceManager);
+  const proxyDeviceManager = new ProxyDeviceManager(deviceManager, context);
   Object.defineProperty(deviceManager, 'destructor', {
     configurable: false,
     value: () => proxyDeviceManager.destructor()
