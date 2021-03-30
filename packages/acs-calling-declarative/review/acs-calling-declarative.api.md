@@ -22,23 +22,14 @@ import { VideoDeviceInfo } from '@azure/communication-calling';
 
 // @public
 export interface Call {
-    // (undocumented)
     callEndReason?: CallEndReason;
-    // (undocumented)
     callerInfo: CallerInfo;
-    // (undocumented)
     direction: CallDirection;
-    // (undocumented)
     id: string;
-    // (undocumented)
     isMicrophoneMuted: boolean;
-    // (undocumented)
     isScreenSharingOn: boolean;
-    // (undocumented)
     localVideoStreams: ReadonlyArray<LocalVideoStream>;
-    // (undocumented)
     remoteParticipants: Map<string, RemoteParticipant>;
-    // (undocumented)
     state: CallState;
 }
 
@@ -47,19 +38,14 @@ export const callClientDeclaratify: (callClient: CallClient) => DeclarativeCallC
 
 // @public
 export interface CallClientState {
-    // (undocumented)
     calls: Map<string, Call>;
-    // (undocumented)
     deviceManagerState: DeviceManagerState;
-    // (undocumented)
     incomingCalls: Map<string, IncomingCall>;
 }
 
 // @public
 export interface DeclarativeCallClient extends CallClient {
-    // (undocumented)
     onStateChange(handler: (state: CallClientState) => void): void;
-    // (undocumented)
     state: CallClientState;
 }
 
@@ -76,49 +62,33 @@ export type DeviceManagerState = {
 
 // @public
 export interface IncomingCall {
-    // (undocumented)
     callEnded: boolean;
-    // (undocumented)
     callEndReason?: CallEndReason;
-    // (undocumented)
     callerInfo: CallerInfo;
-    // (undocumented)
     id: string;
 }
 
 // @public
 export interface LocalVideoStream {
-    // (undocumented)
     mediaStreamType: MediaStreamType;
-    // (undocumented)
     source: VideoDeviceInfo;
 }
 
 // @public
 export interface RemoteParticipant {
-    // (undocumented)
     callEndReason?: CallEndReason;
-    // (undocumented)
     displayName?: string;
-    // (undocumented)
     identifier: CommunicationUserKind | PhoneNumberKind | CallingApplicationKind | MicrosoftTeamsUserKind | UnknownIdentifierKind;
-    // (undocumented)
     isMuted: boolean;
-    // (undocumented)
     isSpeaking: boolean;
-    // (undocumented)
     state: RemoteParticipantState;
-    // (undocumented)
     videoStreams: ReadonlyArray<RemoteVideoStream>;
 }
 
 // @public
 export interface RemoteVideoStream {
-    // (undocumented)
     id: number;
-    // (undocumented)
     isAvailable: boolean;
-    // (undocumented)
     mediaStreamType: MediaStreamType;
 }
 

@@ -113,8 +113,8 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
  * Creates a declarative CallAgent by proxying CallAgent with ProxyCallAgent which will track state updates by updating
  * the given context.
  *
- * @param callAgent
- * @param context
+ * @param callAgent - CallAgent from SDK
+ * @param context - CallContext from CallClientDeclarative
  */
 export const callAgentDeclaratify = (callAgent: CallAgent, context: CallContext): CallAgent => {
   return new Proxy(callAgent, new ProxyCallAgent(callAgent, context)) as CallAgent;

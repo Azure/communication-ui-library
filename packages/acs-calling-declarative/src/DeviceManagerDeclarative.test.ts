@@ -12,7 +12,7 @@ import {
   VideoDeviceType
 } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
-import { DeclarativeDeviceManager, deviceManagerDeclaratify } from './DeviceManagerDeclarative';
+import { deviceManagerDeclaratify } from './DeviceManagerDeclarative';
 import EventEmitter from 'events';
 
 jest.mock('@azure/communication-calling');
@@ -112,7 +112,7 @@ class MockDeviceManager implements DeviceManager {
 }
 
 function createDeclarativeDeviceManager(): {
-  declarativeDeviceManager: DeclarativeDeviceManager;
+  declarativeDeviceManager: DeviceManager;
   mockDeviceManager: MockDeviceManager;
   callContext: CallContext;
 } {
@@ -247,11 +247,5 @@ describe('declarative device manager', () => {
     await waitWithBreakCondition(() => callContext.getState().deviceManagerState.selectedSpeaker !== undefined);
     expect(callContext.getState().deviceManagerState.selectedSpeaker).toBeDefined();
     expect(callContext.getState().deviceManagerState.selectedSpeaker?.name).toBe('selected_speaker');
-  });
-
-  test('should unsubscribe from events when destructor called', async () => {
-    const { declarativeDeviceManager, mockDeviceManager } = createDeclarativeDeviceManager();
-    declarativeDeviceManager.destructor();
-    expect(mockDeviceManager.emitter.eventNames().length).toBe(0);
   });
 });

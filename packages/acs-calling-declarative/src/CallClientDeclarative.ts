@@ -1,26 +1,38 @@
 // © Microsoft Corporation. All rights reserved.
-import { DeclarativeDeviceManager, deviceManagerDeclaratify } from './DeviceManagerDeclarative';
-import { CallAgent, CallClient } from '@azure/communication-calling';
+import { deviceManagerDeclaratify } from './DeviceManagerDeclarative';
+import { CallAgent, CallClient, DeviceManager } from '@azure/communication-calling';
 import { CallClientState } from './CallClientState';
 import { CallContext } from './CallContext';
 import { callAgentDeclaratify } from './CallAgentDeclarative';
 
 /**
- * Defines the methods that allow CallClient to be used declaratively.
+ * Defines the methods that allow CallClient {@Link @azure/communication-calling#CallClient} to be used declaratively.
+ * The interface provides access to proxied state and also allows registering a handler for state change events.
  */
 export interface DeclarativeCallClient extends CallClient {
+  /**
+   * Holds all the state that we could proxy from CallClient {@Link @azure/communication-calling#CallClient} as
+   * CallClientState {@Link CallClientState}.
+   */
   state: CallClientState;
+  /**
+   * Allows a handler to be registered for 'stateChanged' events.
+   *
+   * @param handler - Callback to receive the state.
+   */
   onStateChange(handler: (state: CallClientState) => void): void;
 }
 
 /**
- * ProxyCallClient proxies CallClient and subscribes to all events that affect state. ProxyCallClient keeps its own copy
- * of the call state and when state is updated, ProxyCallClient emits the event 'stateChanged'.
+ * ProxyCallClient proxies CallClient {@Link @azure/communication-calling#CallClient} and subscribes to all events that
+ * affect state. ProxyCallClient keeps its own copy of the call state and when state is updated, ProxyCallClient emits
+ * the event 'stateChanged'.
  */
 class ProxyCallClient implements ProxyHandler<CallClient> {
   private _context: CallContext;
   private _callAgent: CallAgent | undefined;
-  private _deviceManager: DeclarativeDeviceManager | undefined;
+  private _deviceManager: DeviceManager | undefined;
+  private _sdkDeviceManager: DeviceManager | undefined;
 
   constructor(context: CallContext) {
     this._context = context;
@@ -40,14 +52,22 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
       }
       case 'getDeviceManager': {
         return async () => {
-          // We don't want to have duplicate deviceManagers with duplicate subscriptions and we want to allow user to
-          // retrieve new deviceManager so we keep a cache, and destruct the old deviceManager to allow the creation of
-          // a new one without any duplicate subscriptions happening.
-          if (this._deviceManager) {
-            this._deviceManager.destructor();
-            this._deviceManager = undefined;
-          }
+          // As of writing, the SDK always returns the same instance of DeviceManager so we keep a reference of
+          // DeviceManager and if it does not change we return the cached DeclarativeDeviceManager. If it does not we'll
+          // throw an error that indicate we need to fix this issue as our implementation has diverged from the SDK.
           const deviceManager = await target.getDeviceManager();
+          if (this._sdkDeviceManager) {
+            if (this._sdkDeviceManager === deviceManager) {
+              return this._deviceManager;
+            } else {
+              throw new Error(
+                'Multiple DeviceManager not supported. This means a incompatible version of communication-calling is ' +
+                  'used OR calling declarative was not properly updated to communication-calling version.'
+              );
+            }
+          } else {
+            this._sdkDeviceManager = deviceManager;
+          }
           this._deviceManager = deviceManagerDeclaratify(deviceManager, this._context);
           return this._deviceManager;
         };
@@ -59,10 +79,11 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
 }
 
 /**
- * Creates a declarative CallClient by proxying CallClient with ProxyCallClient which then allows access to state in a
- * declarative way.
+ * Creates a declarative CallClient {@Link DeclarativeCallClient} by proxying CallClient
+ * {@Link @azure/communication-calling#CallClient} with ProxyCallClient {@Link ProxyCallClient} which then allows access
+ * to state in a declarative way.
  *
- * @param callClient - call client to declaratify
+ * @param callClient - CallClient from SDK to declaratify
  */
 export const callClientDeclaratify = (callClient: CallClient): DeclarativeCallClient => {
   const context: CallContext = new CallContext();

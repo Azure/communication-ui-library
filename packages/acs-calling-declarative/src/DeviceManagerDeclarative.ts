@@ -3,14 +3,6 @@ import { AudioDeviceInfo, DeviceAccess, DeviceManager, VideoDeviceInfo } from '@
 import { CallContext } from './CallContext';
 
 /**
- * DeclarativeDeviceManager type adds a destructor which should be called to unsubscribe the DeclarativeDeviceManager
- * from all events so we can replace it with new DeclarativeDeviceManager.
- */
-export interface DeclarativeDeviceManager extends DeviceManager {
-  destructor: () => void;
-}
-
-/**
  * ProxyDeviceManager proxies DeviceManager and subscribes to all events that affect device manager state. State updates
  * are set on the provided context. Also any queries for state are proxied and stored in state as well. Only one device
  * manager should exist for a given CallClient so if CallClient.getDeviceManager is called multiple times, either a
@@ -25,15 +17,18 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
     this._deviceManager = deviceManager;
     this._context = context;
 
-    // isSpeakerSelectionAvailable, selectedMicrophone, and selectedSpeaker are properties on DeviceManager. Since they
-    // are not functions we can't proxy them so we'll update them in the context when ProxyDeviceManager is created.
-    // Then afterwards they should be updated via events or other function calls.
-    this._context.setDeviceManagerIsSpeakerSelectionAvailable(deviceManager.isSpeakerSelectionAvailable);
-    this._context.setDeviceManagerSelectedMicrophone(deviceManager.selectedMicrophone);
-    this._context.setDeviceManagerSelectedSpeaker(deviceManager.selectedSpeaker);
-
+    this.setDeviceManagerState();
     this.subscribe();
   }
+
+  private setDeviceManagerState = (): void => {
+    // isSpeakerSelectionAvailable, selectedMicrophone, and selectedSpeaker are properties on DeviceManager. Since they
+    // are not functions we can't proxy them so we'll update whenever we think they may need updating such as at
+    // construction time or when certain events happen.
+    this._context.setDeviceManagerIsSpeakerSelectionAvailable(this._deviceManager.isSpeakerSelectionAvailable);
+    this._context.setDeviceManagerSelectedMicrophone(this._deviceManager.selectedMicrophone);
+    this._context.setDeviceManagerSelectedSpeaker(this._deviceManager.selectedSpeaker);
+  };
 
   private subscribe = (): void => {
     this._deviceManager.on('videoDevicesUpdated', this.videoDevicesUpdated);
@@ -42,7 +37,10 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
     this._deviceManager.on('selectedSpeakerChanged', this.selectedSpeakerChanged);
   };
 
-  private unsubscribe = (): void => {
+  /**
+   * This is used to unsubscribe DeclarativeDeviceManager from the DeviceManager events.
+   */
+  public unsubscribe = (): void => {
     this._deviceManager.off('videoDevicesUpdated', this.videoDevicesUpdated);
     this._deviceManager.off('audioDevicesUpdated', this.audioDevicesUpdated);
     this._deviceManager.off('selectedMicrophoneChanged', this.selectedMicrophoneChanged);
@@ -64,10 +62,6 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
 
   private selectedSpeakerChanged = (): void => {
     this._context.setDeviceManagerSelectedSpeaker(this._deviceManager.selectedSpeaker);
-  };
-
-  public destructor = (): void => {
-    this.unsubscribe();
   };
 
   public get<P extends keyof DeviceManager>(target: DeviceManager, prop: P): any {
@@ -114,6 +108,7 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
         return (...args: Parameters<DeviceManager['askDevicePermission']>): Promise<DeviceAccess> => {
           return target.askDevicePermission(...args).then((deviceAccess: DeviceAccess) => {
             this._context.setDeviceManagerDeviceAccess(deviceAccess);
+            this.setDeviceManagerState();
             return deviceAccess;
           });
         };
@@ -128,17 +123,14 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
  * Creates a declarative DeviceManager by proxying DeviceManager with ProxyDeviceManager. The declarative DeviceManager
  * will put state updates in the given context.
  *
- * @param deviceManager
- * @param context
+ * @param deviceManager - DeviceManager from SDK
+ * @param context - CallContext from CallClientDeclarative
  */
-export const deviceManagerDeclaratify = (
-  deviceManager: DeviceManager,
-  context: CallContext
-): DeclarativeDeviceManager => {
+export const deviceManagerDeclaratify = (deviceManager: DeviceManager, context: CallContext): DeviceManager => {
   const proxyDeviceManager = new ProxyDeviceManager(deviceManager, context);
-  Object.defineProperty(deviceManager, 'destructor', {
+  Object.defineProperty(deviceManager, 'unsubscribe', {
     configurable: false,
-    value: () => proxyDeviceManager.destructor()
+    value: () => proxyDeviceManager.unsubscribe()
   });
-  return new Proxy(deviceManager, proxyDeviceManager) as DeclarativeDeviceManager;
+  return new Proxy(deviceManager, proxyDeviceManager) as DeviceManager;
 };
