@@ -51,7 +51,8 @@
       "commandKind": "bulk",
       "name": "build:watch",
       "summary": "Trigger incremental build with watch command.",
-      "enableParallelism": false
+      "enableParallelism": false,
+      "watchForChanges": true
     }
   ],
   "parameters": []

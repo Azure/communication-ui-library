@@ -203,7 +203,7 @@ export type ChatThreadProps = {
   /**
    * onRenderReadReceipt event handler. `(readReceiptProps: ReadReceiptProps) => JSX.Element`
    */
-  onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element;
+  onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element | null;
   /**
    * onRenderAvatar event handler. `(userId: string) => JSX.Element`
    */

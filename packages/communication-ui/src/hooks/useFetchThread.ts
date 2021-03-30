@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
 import { useSetThread, useThreadId } from '../providers/ChatThreadProvider';
-import { useChatClient } from '../providers/ChatProvider';
+import { useChatClient } from '../providers/ChatProviderHelper';
 import { useCallback } from 'react';
 import { CommunicationUiErrorCode, CommunicationUiError } from '../types/CommunicationUiError';
 

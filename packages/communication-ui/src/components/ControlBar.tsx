@@ -1,5 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 import { IStyle, mergeStyles, Stack, IButtonProps } from '@fluentui/react';
+import { useTheme } from '@fluentui/react-theme-provider';
 import {
   CallControlCloseTrayIcon,
   CallControlPresentNewIcon,
@@ -56,31 +57,51 @@ export const audioButtonProps: IButtonProps = {
 
 export const labeledAudioButtonProps: IButtonProps = {
   ...audioButtonProps,
-  onRenderText: () => (
-    <Stack className={mergeStyles(controlButtonLabelStyles)}>
-      <Stack>Camera</Stack>
-    </Stack>
-  )
+  onRenderText: (props?: IButtonProps): JSX.Element => {
+    if (props?.checked) {
+      return (
+        <Stack className={mergeStyles(controlButtonLabelStyles)}>
+          <Stack>Mute</Stack>
+        </Stack>
+      );
+    } else {
+      return (
+        <Stack className={mergeStyles(controlButtonLabelStyles)}>
+          <Stack>Unmute</Stack>
+        </Stack>
+      );
+    }
+  }
 };
 
 export const screenShareButtonProps: IButtonProps = {
   onRenderIcon: (props?: IButtonProps): JSX.Element => {
     if (props?.checked) {
-      return <CallControlPresentNewIcon bordered={false} />;
-    } else {
       return <CallControlCloseTrayIcon />;
+    } else {
+      return <CallControlPresentNewIcon bordered={false} />;
     }
   },
   styles: controlButtonStyles
 };
 
 export const labeledScreenShareButtonProps: IButtonProps = {
-  ...audioButtonProps,
-  onRenderText: () => (
-    <Stack className={mergeStyles(controlButtonLabelStyles)}>
-      <Stack>Camera</Stack>
-    </Stack>
-  )
+  ...screenShareButtonProps,
+  onRenderText: (props?: IButtonProps): JSX.Element => {
+    if (props?.checked) {
+      return (
+        <Stack className={mergeStyles(controlButtonLabelStyles)}>
+          <Stack>Stop</Stack>
+        </Stack>
+      );
+    } else {
+      return (
+        <Stack className={mergeStyles(controlButtonLabelStyles)}>
+          <Stack>Share</Stack>
+        </Stack>
+      );
+    }
+  }
 };
 
 export const optionsButtonProps: IButtonProps = {
@@ -182,6 +203,11 @@ export interface ControlBarProps {
  */
 export const ControlBar = (props: ControlBarProps): JSX.Element => {
   const { styles, layout } = props;
+  const theme = useTheme();
   const controlBarStyle = controlBarStyles[layout ?? 'horizontal'];
-  return <Stack className={mergeStyles(controlBarStyle, styles?.root)}>{props.children}</Stack>;
+  return (
+    <Stack className={mergeStyles(controlBarStyle, { background: theme.palette.neutralLight }, styles?.root)}>
+      {props.children}
+    </Stack>
+  );
 };

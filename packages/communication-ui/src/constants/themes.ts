@@ -37,7 +37,7 @@ export const lightTheme: PartialTheme = {
  */
 export const darkTheme: PartialTheme = {
   palette: {
-    themePrimary: '#2899F5',
+    themePrimary: '#2899f5',
     themeLighterAlt: '#f6fbff',
     themeLighter: '#dbeefd',
     themeLight: '#bcdffc',
@@ -47,9 +47,9 @@ export const darkTheme: PartialTheme = {
     themeDark: '#1e74ba',
     themeDarker: '#165589',
     neutralLighterAlt: '#262523',
-    neutralLighter: '#2f2d2c',
-    neutralLight: '#3d3b39',
-    neutralQuaternaryAlt: '#464442',
+    neutralLighter: '#302e2d',
+    neutralLight: '#464443',
+    neutralQuaternaryAlt: '#4E4d4b',
     neutralQuaternary: '#4d4b49',
     neutralTertiaryAlt: '#6b6966',
     neutralTertiary: '#f6f6f5',
@@ -58,7 +58,7 @@ export const darkTheme: PartialTheme = {
     neutralPrimary: '#f3f3f1',
     neutralDark: '#fcfcfb',
     black: '#fdfdfd',
-    white: '#1b1a19'
+    white: '#252423'
   }
 };
 

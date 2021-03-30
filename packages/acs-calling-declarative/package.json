@@ -2,12 +2,12 @@
   "name": "@azure/acs-calling-declarative",
   "version": "1.0.0-beta",
   "description": "ACS UI SDK",
-  "module": "dist/index.js",
-  "main": "dist/index.js",
+  "module": "dist/dist-esm/index.js",
+  "main": "dist/dist-esm/index.js",
   "types": "dist/acs-calling-declarative.d.ts",
   "scripts": {
     "build": "tsc && api-extractor run --local",
-    "build:watch": "tsc -w",
+    "build:watch": "rushx build",
     "test": "jest",
     "test:coverage": "npm run test -- --coverage",
     "lint": "eslint \"*/**/*.{ts,tsx}\"",
@@ -29,11 +29,11 @@
     ]
   },
   "dependencies": {
-    "@azure/communication-calling": "1.0.0-beta.2",
+    "@azure/communication-common": "1.0.0-beta.4",
+    "@azure/communication-calling": "1.0.0-beta.9",
     "immer": "~8.0.1"
   },
   "devDependencies": {
-    "@azure/communication-common": "1.0.0-beta.3",
     "@microsoft/api-documenter": "~7.12.11",
     "@microsoft/api-extractor": "~7.13.2",
     "@types/jest": "^26.0.20",
