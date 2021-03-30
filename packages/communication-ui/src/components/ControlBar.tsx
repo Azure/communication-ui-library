@@ -57,31 +57,51 @@ export const audioButtonProps: IButtonProps = {
 
 export const labeledAudioButtonProps: IButtonProps = {
   ...audioButtonProps,
-  onRenderText: () => (
-    <Stack className={mergeStyles(controlButtonLabelStyles)}>
-      <Stack>Camera</Stack>
-    </Stack>
-  )
+  onRenderText: (props?: IButtonProps): JSX.Element => {
+    if (props?.checked) {
+      return (
+        <Stack className={mergeStyles(controlButtonLabelStyles)}>
+          <Stack>Mute</Stack>
+        </Stack>
+      );
+    } else {
+      return (
+        <Stack className={mergeStyles(controlButtonLabelStyles)}>
+          <Stack>Unmute</Stack>
+        </Stack>
+      );
+    }
+  }
 };
 
 export const screenShareButtonProps: IButtonProps = {
   onRenderIcon: (props?: IButtonProps): JSX.Element => {
     if (props?.checked) {
-      return <CallControlPresentNewIcon bordered={false} />;
-    } else {
       return <CallControlCloseTrayIcon />;
+    } else {
+      return <CallControlPresentNewIcon bordered={false} />;
     }
   },
   styles: controlButtonStyles
 };
 
 export const labeledScreenShareButtonProps: IButtonProps = {
-  ...audioButtonProps,
-  onRenderText: () => (
-    <Stack className={mergeStyles(controlButtonLabelStyles)}>
-      <Stack>Camera</Stack>
-    </Stack>
-  )
+  ...screenShareButtonProps,
+  onRenderText: (props?: IButtonProps): JSX.Element => {
+    if (props?.checked) {
+      return (
+        <Stack className={mergeStyles(controlButtonLabelStyles)}>
+          <Stack>Stop</Stack>
+        </Stack>
+      );
+    } else {
+      return (
+        <Stack className={mergeStyles(controlButtonLabelStyles)}>
+          <Stack>Share</Stack>
+        </Stack>
+      );
+    }
+  }
 };
 
 export const optionsButtonProps: IButtonProps = {

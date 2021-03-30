@@ -1,5 +1,5 @@
 ---
 title: Main CI Failed
-labels: status:CI_FAILURE
+labels: CI_FAILURE
 ---
 Main CI Pipeline has failed. Please investigate.
