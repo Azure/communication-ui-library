@@ -49,8 +49,6 @@ export const callClientDeclaratify: (callClient: CallClient) => DeclarativeCallC
 export interface CallClientState {
     // (undocumented)
     calls: Map<string, Call>;
-    // Warning: (ae-forgotten-export) The symbol "DeviceManagerState" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
     deviceManagerState: DeviceManagerState;
     // (undocumented)
@@ -64,6 +62,17 @@ export interface DeclarativeCallClient extends CallClient {
     // (undocumented)
     state: CallClientState;
 }
+
+// @public
+export type DeviceManagerState = {
+    isSpeakerSelectionAvailable: boolean;
+    selectedMicrophone?: AudioDeviceInfo;
+    selectedSpeaker?: AudioDeviceInfo;
+    cameras: VideoDeviceInfo[];
+    microphones: AudioDeviceInfo[];
+    speakers: AudioDeviceInfo[];
+    deviceAccess?: DeviceAccess;
+};
 
 // @public
 export interface IncomingCall {
