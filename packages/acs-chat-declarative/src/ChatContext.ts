@@ -58,7 +58,7 @@ export class ChatContext {
     );
   }
 
-  public updateChatConig(config: ChatConfig): void {
+  public updateChatConfig(config: ChatConfig): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         draft.displayName = config.displayName;
@@ -90,14 +90,13 @@ export class ChatContext {
   public updateThreadTopic(threadId: string, topic?: string): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
-        if (!topic) {
+        if (topic === undefined) {
           return;
         }
         const thread = draft.threads.get(threadId);
         if (thread && !thread.threadInfo) {
           thread.threadInfo = { id: threadId, topic: topic };
-        }
-        if (thread && thread.threadInfo) {
+        } else if (thread && thread.threadInfo) {
           thread.threadInfo.topic = topic;
         }
       })
@@ -130,7 +129,10 @@ export class ChatContext {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         const chatMessage = draft.threads.get(threadId)?.chatMessages.get(messagesId);
-        if (chatMessage && chatMessage.content?.message) {
+        if (chatMessage) {
+          if (!chatMessage.content) {
+            chatMessage.content = {};
+          }
           chatMessage.content.message = content;
         }
       })
@@ -156,9 +158,7 @@ export class ChatContext {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         const chatMessages = draft.threads.get(threadId)?.chatMessages;
-        if (chatMessages?.has(id)) {
-          chatMessages.delete(id);
-        }
+        chatMessages?.delete(id);
       })
     );
   }
@@ -192,11 +192,9 @@ export class ChatContext {
       produce(this._state, (draft: ChatClientState) => {
         const participants = draft.threads.get(threadId)?.participants;
         if (participants) {
-          for (const participantId of participantIds) {
-            if (participants.has(participantId)) {
-              participants.delete(participantId);
-            }
-          }
+          participantIds.forEach((id) => {
+            participants.delete(id);
+          });
         }
       })
     );
@@ -206,9 +204,7 @@ export class ChatContext {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         const participants = draft.threads.get(threadId)?.participants;
-        if (participants && participants.has(participantId)) {
-          participants.delete(participantId);
-        }
+        participants?.delete(participantId);
       })
     );
   }
@@ -289,7 +285,7 @@ export class ChatContext {
     this._emitter.on('stateChanged', handler);
   }
 
-  public unsubscribeStateChange(handler: (state: ChatClientState) => void): void {
+  public offStateChange(handler: (state: ChatClientState) => void): void {
     this._emitter.off('stateChanged', handler);
   }
 }

@@ -10,7 +10,7 @@ import { ChatConfig } from './types/ChatConfig';
 export interface DeclarativeChatClient extends ChatClient {
   state: ChatClientState;
   onStateChange(handler: (state: ChatClientState) => void): void;
-  unsubscribeStateChange(handler: (state: ChatClientState) => void): void;
+  offStateChange(handler: (state: ChatClientState) => void): void;
 }
 
 export interface DeclarativeChatClientWithPrivateProps extends DeclarativeChatClient {
@@ -102,7 +102,7 @@ export const chatClientDeclaratify = (chatClient: ChatClient, chatConfig: ChatCo
   const context = new ChatContext();
   let eventSubscriber: EventSubscriber;
 
-  context.updateChatConig(chatConfig);
+  context.updateChatConfig(chatConfig);
 
   const proxy = new Proxy(chatClient, proxyChatClient);
 
@@ -127,9 +127,9 @@ export const chatClientDeclaratify = (chatClient: ChatClient, chatConfig: ChatCo
     configurable: false,
     value: (handler: (state: ChatClientState) => void) => context?.onStateChange(handler)
   });
-  Object.defineProperty(proxy, 'unsubscribeStateChange', {
+  Object.defineProperty(proxy, 'offStateChange', {
     configurable: false,
-    value: (handler: (state: ChatClientState) => void) => context?.unsubscribeStateChange(handler)
+    value: (handler: (state: ChatClientState) => void) => context?.offStateChange(handler)
   });
   return proxy as DeclarativeChatClient;
 };

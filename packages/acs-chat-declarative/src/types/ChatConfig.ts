@@ -3,5 +3,4 @@
 export type ChatConfig = {
   userId: string;
   displayName: string;
-  threadId: string;
 };
