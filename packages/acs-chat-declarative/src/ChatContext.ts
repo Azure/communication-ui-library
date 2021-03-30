@@ -51,7 +51,8 @@ export class ChatContext {
           threadInfo: threadInfo,
           participants: new Map(),
           readReceipts: [],
-          typingIndicators: []
+          typingIndicators: [],
+          latestReadtime: new Date(0)
         });
       })
     );
@@ -215,8 +216,12 @@ export class ChatContext {
   public addReadReceipt(threadId: string, readReceipt: ReadReceipt): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
-        const readReceipts = draft.threads.get(threadId)?.readReceipts;
-        if (readReceipts) {
+        const thread = draft.threads.get(threadId);
+        const readReceipts = thread?.readReceipts;
+        if (thread && readReceipts) {
+          if (readReceipt.senderId !== this.getState().userId && thread.latestReadtime < readReceipt.readOn) {
+            thread.latestReadtime = readReceipt.readOn;
+          }
           readReceipts.push(readReceipt);
         }
       })

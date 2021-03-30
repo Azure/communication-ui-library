@@ -81,7 +81,7 @@ export class EventSubscriber {
       ...event,
       sender: { communicationUserId: event.sender.user.communicationUserId },
       readOn: new Date(event.readOn),
-      senderId: event.recipient.communicationUserId
+      senderId: event.sender.user.communicationUserId
     };
     this.chatContext.addReadReceipt(event.threadId, readReceipt);
   };
