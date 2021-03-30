@@ -78,7 +78,7 @@ const ExampleTypingIndicators: () => JSX.Element = () => {
 export const getDocs: () => JSX.Element = () => {
   return (
     <>
-      <Title>TypingIndicator</Title>
+      <Title>TypingIndicatorComponent</Title>
       <Description>
         Typing Indicator is used to notify users if there are any other users typing in the thread.
       </Description>

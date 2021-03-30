@@ -7,7 +7,7 @@ import React from 'react';
 import {
   FluentThemeProvider,
   audioButtonProps,
-  ControlBar,
+  ControlBarComponent,
   hangupButtonProps,
   optionsButtonProps,
   screenShareButtonProps,
@@ -15,7 +15,7 @@ import {
 } from '@azure/communication-ui';
 
 const importStatement = `
-import { ControlBar } from '@azure/communication-ui';
+import { ControlBarComponent } from '@azure/communication-ui';
 import { DefaultButton } from '@fluentui/react';
 
 // Import Helper Props for quickly creating common call control buttons.
@@ -55,61 +55,61 @@ const exampleOptionsMenuProps = {
   ]
 };
 
-const ControlBarExample: () => JSX.Element = () => {
+const ControlBarComponentExample: () => JSX.Element = () => {
   return (
     <FluentThemeProvider>
-      <ControlBar layout={'horizontal'}>
+      <ControlBarComponent layout={'horizontal'}>
         <DefaultButton {...videoButtonProps} />
         <DefaultButton {...audioButtonProps} />
         <DefaultButton {...screenShareButtonProps} />
         <DefaultButton {...optionsButtonProps} menuProps={exampleOptionsMenuProps} />
         <DefaultButton {...hangupButtonProps} />
-      </ControlBar>
+      </ControlBarComponent>
     </FluentThemeProvider>
   );
 };
 
 const exampleCode = `
-const ControlBarExample: () => JSX.Element = () => {
+const ControlBarComponentExample: () => JSX.Element = () => {
   return (
-    <ControlBar layout={'horizontal'}>
+    <ControlBarComponent layout={'horizontal'}>
       <DefaultButton {...videoButtonProps} onClick={() => {/*handle onClick*/ }} />
       <DefaultButton {...audioButtonProps} onClick={() => {/*handle onClick*/ }} />
       <DefaultButton {...screenShareButtonProps} onClick={() => {/*handle onClick*/ }} />
       <DefaultButton {...optionsButtonProps} menuProps={/*some IContextualMenuProps*/} />
       <DefaultButton {...hangupButtonProps} onClick={() => {/*handle onClick*/ }} />
-    </ControlBar>
+    </ControlBarComponent>
   );
 };
 `;
 
-const ControlBarLayoutExample: () => JSX.Element = () => {
+const ControlBarComponentLayoutExample: () => JSX.Element = () => {
   return (
     <Stack style={{ flexFlow: 'row', minHeight: '250px' }}>
       <FluentThemeProvider>
-        <ControlBar layout="floatingLeft">
+        <ControlBarComponent layout="floatingLeft">
           <DefaultButton {...videoButtonProps} />
           <DefaultButton {...audioButtonProps} />
           <DefaultButton {...screenShareButtonProps} />
           <DefaultButton {...optionsButtonProps} menuProps={exampleOptionsMenuProps} />
           <DefaultButton {...hangupButtonProps} />
-        </ControlBar>
+        </ControlBarComponent>
       </FluentThemeProvider>
     </Stack>
   );
 };
 
-const controlBarLayoutCode = `
-<ControlBar layout='floatingLeft'>
+const ControlBarComponentLayoutCode = `
+<ControlBarComponent layout='floatingLeft'>
   <DefaultButton {...videoButtonProps} />
   <DefaultButton {...audioButtonProps} />
   <DefaultButton {...screenShareButtonProps} />
   <DefaultButton {...optionsButtonProps} />
   <DefaultButton {...hangupButtonProps} />
-</ControlBar>
+</ControlBarComponent>
 `;
 
-const customControlBarUsage = `
+const customControlBarComponentUsage = `
 import { CallEndIcon } from '@fluentui/react-northstar';
 import { FluentThemeProvider } from '@azure/communication-ui';
 
@@ -139,14 +139,14 @@ const CustomHangupButton: () => JSX.Element = () => {
   );
 };
 
-const CustomControlBarExample: () => JSX.Element = () => {
+const CustomControlBarComponentExample: () => JSX.Element = () => {
   return (
     <FluentThemeProvider>
-      <ControlBar layout={'horizontal'}>
+      <ControlBarComponent layout={'horizontal'}>
         <DefaultButton {...videoButtonProps} />
         <DefaultButton {...audioButtonProps} />
         <CustomHangupButton />
-      </ControlBar>
+      </ControlBarComponent>
     </FluentThemeProvider>
   );
 };
@@ -178,14 +178,14 @@ const CustomHangupButton: () => JSX.Element = () => {
   );
 };
 
-const CustomControlBarExample: () => JSX.Element = () => {
+const CustomControlBarComponentExample: () => JSX.Element = () => {
   return (
     <FluentThemeProvider>
-      <ControlBar layout={'horizontal'}>
+      <ControlBarComponent layout={'horizontal'}>
         <DefaultButton {...videoButtonProps} />
         <DefaultButton {...audioButtonProps} />
         <CustomHangupButton />
-      </ControlBar>
+      </ControlBarComponent>
     </FluentThemeProvider>
   );
 };
@@ -193,10 +193,10 @@ const CustomControlBarExample: () => JSX.Element = () => {
 export const getDocs: () => JSX.Element = () => {
   return (
     <>
-      <Title>ControlBar</Title>
-      <Description of={ControlBar} />
+      <Title>ControlBarComponent</Title>
+      <Description of={ControlBarComponent} />
       <Canvas>
-        <ControlBarExample />
+        <ControlBarComponentExample />
       </Canvas>
 
       <Heading>Importing</Heading>
@@ -204,11 +204,11 @@ export const getDocs: () => JSX.Element = () => {
 
       <Heading>Usage</Heading>
       <Description>
-        ControlBar can be rendered with `DefaultButton`, a
+        ControlBarComponent can be rendered with `DefaultButton`, a
         [Button](https://developer.microsoft.com/en-us/fluentui#/controls/web/button) component from Fluent UI.
       </Description>
       <Canvas>
-        <ControlBarExample />
+        <ControlBarComponentExample />
       </Canvas>
       <Source code={exampleCode} />
       <Description>
@@ -221,18 +221,18 @@ export const getDocs: () => JSX.Element = () => {
         You can change the layout of Control Bar by providing a preset layout to the `layout` prop.
       </Description>
       <Canvas>
-        <ControlBarLayoutExample />
+        <ControlBarComponentLayoutExample />
       </Canvas>
-      <Source code={controlBarLayoutCode} />
+      <Source code={ControlBarComponentLayoutCode} />
 
       <Heading>Custom Control Bar</Heading>
       <Canvas>
-        <CustomControlBarExample />
+        <CustomControlBarComponentExample />
       </Canvas>
-      <Source code={customControlBarUsage} />
+      <Source code={customControlBarComponentUsage} />
 
-      <Heading>ControlBar Props</Heading>
-      <Props of={ControlBar} />
+      <Heading>ControlBarComponent Props</Heading>
+      <Props of={ControlBarComponent} />
     </>
   );
 };

@@ -4,13 +4,13 @@ import React from 'react';
 import { Meta } from '@storybook/react/types-6-0';
 import { Stack, DefaultButton } from '@fluentui/react';
 import {
-  StreamMedia,
-  ControlBar,
+  StreamMediaComponent,
+  ControlBarComponent,
   videoButtonProps,
   audioButtonProps,
   optionsButtonProps,
   hangupButtonProps,
-  VideoTile
+  VideoTileComponent as VideoTile
 } from '@azure/communication-ui';
 import { text, boolean, number } from '@storybook/addon-knobs';
 import { renderVideoStream } from '../utils';
@@ -20,7 +20,7 @@ import { COMPONENT_FOLDER_PREFIX } from '../constants';
 export const VideoTileComponent: () => JSX.Element = () => {
   const avatarName = text('Avatar Name', 'John Krasinski');
   const isVideoReady = boolean('Is Video Ready', false);
-  const showControlBar = boolean('Show Control Bar (Not a part of this component)', false);
+  const showControlBarComponent = boolean('Show Control Bar (Not a part of this component)', false);
   const invertVideo = boolean('Invert Video', false);
   const width = number('Width', 400, {
     range: true,
@@ -38,21 +38,21 @@ export const VideoTileComponent: () => JSX.Element = () => {
   return (
     <VideoTile
       isVideoReady={isVideoReady}
-      videoProvider={<StreamMedia videoStreamElement={renderVideoStream()} />}
+      videoProvider={<StreamMediaComponent videoStreamElement={renderVideoStream()} />}
       avatarName={avatarName}
       invertVideo={invertVideo}
       styles={{
         root: { height: height, width: width }
       }}
     >
-      {showControlBar && (
+      {showControlBarComponent && (
         <Stack style={{ position: 'absolute', left: '50%', bottom: '1rem' }}>
-          <ControlBar styles={{ root: { position: 'relative', left: '-50%' } }}>
+          <ControlBarComponent styles={{ root: { position: 'relative', left: '-50%' } }}>
             <DefaultButton {...videoButtonProps} />
             <DefaultButton {...audioButtonProps} />
             <DefaultButton {...optionsButtonProps} />
             <DefaultButton {...hangupButtonProps} />
-          </ControlBar>
+          </ControlBarComponent>
         </Stack>
       )}
     </VideoTile>
@@ -61,7 +61,7 @@ export const VideoTileComponent: () => JSX.Element = () => {
 
 export default {
   title: `${COMPONENT_FOLDER_PREFIX}/VideoTile`,
-  component: VideoTileComponent,
+  component: VideoTile,
   parameters: {
     docs: {
       page: () => getDocs()

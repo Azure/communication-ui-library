@@ -6,16 +6,16 @@ import { loadingStyle, videoStreamStyle } from './styles/ScreenShare.styles';
 
 import { connectFuncsToContext } from '../../consumers';
 import { MapToScreenShareProps, ScreenShareContainerProps } from './consumers/MapToScreenShareProps';
-import { StreamMedia, VideoTile } from '../../components';
+import { StreamMediaComponent, VideoTileComponent } from '../../components';
 
 const ScreenShareComponent = (props: ScreenShareContainerProps): JSX.Element => {
   const { displayName, videoRender, isVideoRenderAvailable, screenShareRender, isScreenShareRenderAvailable } = props;
 
   return (
     <>
-      <VideoTile
+      <VideoTileComponent
         isVideoReady={isScreenShareRenderAvailable}
-        videoProvider={<StreamMedia videoStreamElement={screenShareRender} />}
+        videoProvider={<StreamMediaComponent videoStreamElement={screenShareRender} />}
         placeholderProvider={
           <div className={loadingStyle}>
             <Spinner label={`Loading ${displayName}'s screen`} size={SpinnerSize.xSmall} />
@@ -26,12 +26,12 @@ const ScreenShareComponent = (props: ScreenShareContainerProps): JSX.Element => 
         }}
       >
         {isVideoRenderAvailable && isScreenShareRenderAvailable && (
-          <VideoTile
+          <VideoTileComponent
             isVideoReady={isVideoRenderAvailable}
-            videoProvider={<StreamMedia videoStreamElement={videoRender} />}
+            videoProvider={<StreamMediaComponent videoStreamElement={videoRender} />}
           />
         )}
-      </VideoTile>
+      </VideoTileComponent>
     </>
   );
 };

@@ -19,11 +19,11 @@ import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack }
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { LiveAnnouncer, LiveMessage } from 'react-aria-live';
 import { ErrorHandlingProps } from '../providers';
-import { formatTimestampForChatMessage, propagateError, WithErrorHandling } from '../utils';
+import { formatTimestampForChatMessage, propagateError } from '../utils';
 import { CLICK_TO_LOAD_MORE_MESSAGES, NEW_MESSAGES } from '../constants';
 import { ChatMessage as WebUiChatMessage } from '../types';
-import { ReadReceiptComponent, ReadReceiptProps } from './ReadReceipt';
-import { connectFuncsToContext, ChatMessagePropsFromContext, MapToChatMessageProps } from '../consumers';
+import { ReadReceiptComponent, ReadReceiptComponentProps } from './ReadReceipt';
+import { ChatMessagePropsFromContext } from '../consumers';
 
 const isMessageSame = (first: WebUiChatMessage, second: WebUiChatMessage): boolean => {
   return (
@@ -122,7 +122,7 @@ const didUserSendTheLatestMessage = (
   }
 };
 
-export interface ChatThreadStylesProps {
+export interface ChatThreadComponentStylesProps {
   /** Styles for the root container */
   root?: IStyle;
   /** Styles for load previous messages container */
@@ -168,7 +168,7 @@ const DefaultLoadPreviousMessagesButton = (props: LoadPreviousMessagesButtonProp
   );
 };
 
-export type ChatThreadProps = {
+export type ChatThreadComponentProps = {
   /**
    * The userId of the current user.
    */
@@ -180,7 +180,7 @@ export type ChatThreadProps = {
   /**
    * Custom CSS Styling.
    */
-  styles?: ChatThreadStylesProps;
+  styles?: ChatThreadComponentStylesProps;
   /**
    * Whether the new message button is disabled.
    * @defaultValue `false`
@@ -201,9 +201,9 @@ export type ChatThreadProps = {
    */
   onSendReadReceipt?: () => Promise<void>;
   /**
-   * onRenderReadReceipt event handler. `(readReceiptProps: ReadReceiptProps) => JSX.Element`
+   * onRenderReadReceipt event handler. `(readReceiptComponentProps: ReadReceiptComponentProps) => JSX.Element`
    */
-  onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element | null;
+  onRenderReadReceipt?: (readReceiptComponentProps: ReadReceiptComponentProps) => JSX.Element | null;
   /**
    * onRenderAvatar event handler. `(userId: string) => JSX.Element`
    */
@@ -230,7 +230,9 @@ export type ChatThreadProps = {
  *
  * `ChatThread` internally uses the `Chat` & `Chat.Message` component from `@fluentui/react-northstar`. You can checkout the details about these [two components](https://fluentsite.z22.web.core.windows.net/0.53.0/components/chat/props).
  */
-export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingProps): JSX.Element => {
+export const ChatThreadComponent = (
+  props: ChatThreadComponentProps & ErrorHandlingProps & ChatMessagePropsFromContext
+): JSX.Element => {
   const {
     chatMessages: newChatMessages,
     userId,
@@ -490,9 +492,3 @@ export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingPr
     </Ref>
   );
 };
-
-export const ChatThreadComponent = (
-  props: ChatThreadProps & ErrorHandlingProps & ChatMessagePropsFromContext
-): JSX.Element => WithErrorHandling(ChatThreadComponentBase, props);
-
-export const ChatThread = connectFuncsToContext(ChatThreadComponent, MapToChatMessageProps);

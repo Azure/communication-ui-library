@@ -5,7 +5,7 @@ import { connectFuncsToContext, MapToLocalVideoProps } from '../../consumers';
 import { MapToMediaGalleryProps, MediaGalleryContainerProps } from './consumers/MapToMediaGalleryProps';
 import { GridLayoutComponent } from '../../components/GridLayout';
 import { convertSdkRemoteParticipantToGalleryParticipant } from '../../utils';
-import { StreamMedia, VideoTile } from '../../components';
+import { StreamMediaComponent, VideoTileComponent } from '../../components';
 import { Label, mergeStyles, Stack } from '@fluentui/react';
 import ScreenShareComponent from './ScreenShare';
 import {
@@ -67,15 +67,15 @@ export const MediaGalleryComponentBase = (props: MediaGalleryContainerProps): JS
 
   const layoutLocalParticipant = useMemo(() => {
     return (
-      <VideoTile
+      <VideoTileComponent
         isVideoReady={localVideoStream.isVideoReady}
-        videoProvider={<StreamMedia videoStreamElement={localVideoStream.videoStreamElement} />}
+        videoProvider={<StreamMediaComponent videoStreamElement={localVideoStream.videoStreamElement} />}
         avatarName={localParticipant.displayName}
       >
         <Label className={localVideoStream.isVideoReady ? videoHint : disabledVideoHint}>
           {localParticipant.displayName}
         </Label>
-      </VideoTile>
+      </VideoTileComponent>
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localParticipant, localVideoStream]);

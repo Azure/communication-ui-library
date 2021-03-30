@@ -17,7 +17,7 @@ import { CallState } from '@azure/communication-calling';
 import { ChatClient } from '@azure/communication-chat';
 import { ChatMessage as ChatMessage_2 } from '@azure/communication-chat';
 import { ChatMessageReceivedEvent } from '@azure/communication-signaling';
-import { ChatThread as ChatThread_2 } from '@azure/communication-chat';
+import { ChatThread } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { ChatThreadMember as ChatThreadMember_2 } from '@azure/communication-chat';
 import { CommunicationUser } from '@azure/communication-signaling';
@@ -178,8 +178,8 @@ export type ChatMessage = {
 export type ChatMessagePropsFromContext = {
     userId: string;
     chatMessages: ChatMessage[];
-    disableReadReceipt: boolean;
-    onSendReadReceipt: () => Promise<void>;
+    disableReadReceipt?: boolean;
+    onSendReadReceipt?: () => Promise<void>;
     disableLoadPreviousMessage?: boolean;
     onLoadPreviousMessages?: () => void;
 };
@@ -195,14 +195,34 @@ export interface ChatMessageWithClientMessageId extends ChatMessage_2 {
 // @public (undocumented)
 export const ChatProvider: (props: ChatProviderProps & ErrorHandlingProps) => JSX.Element;
 
-// @public (undocumented)
-export const ChatThread: (props: Pick<ChatThreadProps & ErrorHandlingProps & ChatMessagePropsFromContext, "onErrorCallback" | "styles" | "disableJumpToNewMessageButton" | "onRenderReadReceipt" | "onRenderAvatar" | "onRenderLoadPreviousMessagesButton" | "onRenderJumpToNewMessageButton">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
-
-// @public (undocumented)
-export const ChatThreadComponent: (props: ChatThreadProps & ErrorHandlingProps & ChatMessagePropsFromContext) => JSX.Element;
-
 // @public
-export const ChatThreadComponentBase: (props: ChatThreadProps & ErrorHandlingProps) => JSX.Element;
+export const ChatThreadComponent: (props: ChatThreadComponentProps & ErrorHandlingProps & ChatMessagePropsFromContext) => JSX.Element;
+
+// @public (undocumented)
+export type ChatThreadComponentProps = {
+    userId: string;
+    chatMessages: ChatMessage[];
+    styles?: ChatThreadComponentStylesProps;
+    disableJumpToNewMessageButton?: boolean;
+    disableLoadPreviousMessage?: boolean;
+    disableReadReceipt?: boolean;
+    onSendReadReceipt?: () => Promise<void>;
+    onRenderReadReceipt?: (readReceiptComponentProps: ReadReceiptComponentProps) => JSX.Element | null;
+    onRenderAvatar?: (userId: string) => JSX.Element;
+    onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
+    onLoadPreviousMessages?: () => void;
+    onRenderLoadPreviousMessagesButton?: (loadPreviousMessagesButton: LoadPreviousMessagesButtonProps) => JSX.Element;
+};
+
+// @public (undocumented)
+export interface ChatThreadComponentStylesProps {
+    chatContainer?: ComponentSlotStyle;
+    chatMessageContainer?: ComponentSlotStyle;
+    loadPreviousMessagesButtonContainer?: IStyle;
+    newMessageButtonContainer?: IStyle;
+    readReceiptContainer?: (mine: boolean) => IStyle;
+    root?: IStyle;
+}
 
 // @public
 export type ChatThreadMember = {
@@ -217,25 +237,9 @@ export type ChatThreadMemberPropsFromContext = {
 };
 
 // @public (undocumented)
-export type ChatThreadProps = {
-    userId: string;
-    chatMessages: ChatMessage[];
-    styles?: ChatThreadStylesProps;
-    disableJumpToNewMessageButton?: boolean;
-    disableLoadPreviousMessage?: boolean;
-    disableReadReceipt?: boolean;
-    onSendReadReceipt?: () => Promise<void>;
-    onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element | null;
-    onRenderAvatar?: (userId: string) => JSX.Element;
-    onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
-    onLoadPreviousMessages?: () => void;
-    onRenderLoadPreviousMessagesButton?: (loadPreviousMessagesButton: LoadPreviousMessagesButtonProps) => JSX.Element;
-};
-
-// @public (undocumented)
 export type ChatThreadPropsFromContext = {
     userId: string;
-    thread: ChatThread_2 | undefined;
+    thread: ChatThread | undefined;
     sendTypingNotification: () => void;
     getThread: () => void;
     updateThreadTopicName: (topicName: string) => Promise<boolean>;
@@ -245,16 +249,6 @@ export type ChatThreadPropsFromContext = {
 //
 // @public (undocumented)
 export const ChatThreadProvider: (props: ChatThreadProviderProps & ErrorHandlingProps) => JSX.Element;
-
-// @public (undocumented)
-export interface ChatThreadStylesProps {
-    chatContainer?: ComponentSlotStyle;
-    chatMessageContainer?: ComponentSlotStyle;
-    loadPreviousMessagesButtonContainer?: IStyle;
-    newMessageButtonContainer?: IStyle;
-    readReceiptContainer?: (mine: boolean) => IStyle;
-    root?: IStyle;
-}
 
 // @public (undocumented)
 export type ChatTopicPropsFromContext = {
@@ -422,10 +416,19 @@ export const CONNECTING = "Connecting";
 // @public (undocumented)
 export const CONTROL_BAR_LAYOUTS: readonly ["horizontal", "vertical", "dockedTop", "dockedBottom", "dockedLeft", "dockedRight", "floatingTop", "floatingBottom", "floatingLeft", "floatingRight"];
 
-// Warning: (ae-forgotten-export) The symbol "ControlBarProps" needs to be exported by the entry point index.d.ts
-//
 // @public
-export const ControlBar: (props: ControlBarProps) => JSX.Element;
+export const ControlBarComponent: (props: ControlBarComponentProps) => JSX.Element;
+
+// @public (undocumented)
+export type ControlBarComponentLayoutsType = 'horizontal' | 'vertical' | 'dockedTop' | 'dockedBottom' | 'dockedLeft' | 'dockedRight' | 'floatingTop' | 'floatingBottom' | 'floatingLeft' | 'floatingRight';
+
+// @public (undocumented)
+export interface ControlBarComponentProps {
+    // (undocumented)
+    children?: React_2.ReactNode;
+    layout?: ControlBarComponentLayoutsType;
+    styles?: CustomStylesProps;
+}
 
 // @public (undocumented)
 export const convertSdkRemoteParticipantToGalleryParticipant: (remoteParticipantFromSDK: RemoteParticipant) => GalleryParticipant;
@@ -448,6 +451,12 @@ export const CREATED = 201;
 // @public (undocumented)
 export const CROP_MEDIA = "Crop";
 
+// @public (undocumented)
+export interface CustomStylesProps {
+    // (undocumented)
+    root?: IStyle;
+}
+
 // @public
 export const DARK = "dark";
 
@@ -466,13 +475,15 @@ export const EMPTY_MESSAGE_REGEX: RegExp;
 // @public (undocumented)
 export const ENTER_KEY = 13;
 
-// Warning: (ae-forgotten-export) The symbol "ErrorBarProps" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export const ErrorBar: (props: Pick<ErrorBarProps, never>) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
-
 // @public
-export const ErrorBarComponent: (props: ErrorBarProps) => JSX.Element;
+export const ErrorBarComponent: (props: ErrorBarComponentProps) => JSX.Element;
+
+// @public (undocumented)
+export type ErrorBarComponentProps = {
+    message?: string;
+    severity?: CommunicationUiErrorSeverity;
+    onClose?: () => void;
+};
 
 // @public (undocumented)
 export const ErrorContextLastError: React_2.Context<ErrorContextLastErrorType | undefined>;
@@ -581,10 +592,18 @@ export const getThemeFromLocalStorage: (scopeId: string) => string | null;
 // @public (undocumented)
 export const getThreadContextState: () => ThreadProviderContextType;
 
-// Warning: (ae-forgotten-export) The symbol "GridLayoutProps" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
-export const GridLayoutComponent: (props: GridLayoutProps) => JSX.Element;
+export const GridLayoutComponent: (props: GridLayoutComponentProps) => JSX.Element;
+
+// @public (undocumented)
+export interface GridLayoutComponentProps {
+    // (undocumented)
+    children: React_2.ReactNode;
+    // Warning: (ae-forgotten-export) The symbol "GridLayout" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    layout?: GridLayout;
+}
 
 // Warning: (ae-forgotten-export) The symbol "GroupCallCompositeProps" needs to be exported by the entry point index.d.ts
 //
@@ -734,6 +753,9 @@ export const MapToChatThreadProps: () => ChatThreadPropsFromContext;
 export const MapToChatTopicProps: () => ChatTopicPropsFromContext;
 
 // @public (undocumented)
+export const MapToErrorBarProps: () => ErrorBarComponentProps;
+
+// @public (undocumented)
 export const MapToErrorsProps: () => ErrorsPropsFromContext;
 
 // @public (undocumented)
@@ -755,7 +777,7 @@ export const MapToSendBoxProps: () => SendBoxPropsFromContext;
 export const MapToSidePanelProps: () => SidePanelPropsFromContext;
 
 // @public (undocumented)
-export const MapToTypingIndicatorProps: () => TypingIndicatorProps;
+export const MapToTypingIndicatorProps: () => TypingIndicatorComponentProps;
 
 // @public (undocumented)
 export const MapToUserIdProps: () => UserIdPropsFromContext;
@@ -828,15 +850,15 @@ export const optionsButtonProps: IButtonProps;
 export const PAGE_SIZE = 200;
 
 // @public
-export const ParticipantItem: (props: ParticipantItemProps & ErrorHandlingProps) => JSX.Element;
+export const ParticipantItemComponent: (props: ParticipantItemComponentProps & ErrorHandlingProps) => JSX.Element;
 
 // @public
-export interface ParticipantItemProps {
+export interface ParticipantItemComponentProps {
     isYou?: boolean;
     menuItems?: IContextualMenuItem[];
     name: string;
-    onRenderAvatar?: (props?: ParticipantItemProps) => JSX.Element | null;
-    onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
+    onRenderAvatar?: (props?: ParticipantItemComponentProps) => JSX.Element | null;
+    onRenderIcon?: (props?: ParticipantItemComponentProps) => JSX.Element | null;
     presence?: PersonaPresence;
 }
 
@@ -858,11 +880,11 @@ export const PRECONDITION_FAILED_STATUS_CODE = 412;
 // @public (undocumented)
 export const propagateError: (error: Error, onErrorCallback?: ((error: CommunicationUiErrorInfo) => void) | undefined) => void;
 
-// @public (undocumented)
-export const ReadReceiptComponent: (props: ReadReceiptProps & ErrorHandlingProps) => JSX.Element;
+// @public
+export const ReadReceiptComponent: ({ messageStatus, deliveredTooltipText, seenTooltipText, sendingTooltipText, failedToSendTooltipText, size }: ReadReceiptComponentProps & ErrorHandlingProps) => JSX.Element;
 
 // @public (undocumented)
-export interface ReadReceiptProps {
+export interface ReadReceiptComponentProps {
     deliveredTooltipText?: string;
     failedToSendTooltipText?: string;
     messageStatus: MessageStatus;
@@ -888,15 +910,15 @@ export const saveThemeToLocalStorage: (theme: string, scopeId: string) => void;
 // @public (undocumented)
 export const screenShareButtonProps: IButtonProps;
 
-// @public (undocumented)
-export const SendBox: (props: Pick<{
-    onRenderSystemMessage?: ((systemMessage: string | undefined) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>) | undefined;
-    supportNewline?: boolean | undefined;
-    onRenderIcon?: ((props: SendBoxProps) => JSX.Element | null) | undefined;
-} & SendBoxPropsFromContext & ErrorHandlingProps, "onErrorCallback" | "supportNewline" | "onRenderIcon" | "onRenderSystemMessage">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+// @public
+export const SendBoxComponent: (props: SendBoxComponentProps & ErrorHandlingProps) => JSX.Element;
 
-// @public (undocumented)
-export const SendBoxComponent: (props: SendBoxProps & ErrorHandlingProps) => JSX.Element;
+// @public
+export type SendBoxComponentProps = {
+    onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
+    supportNewline?: boolean;
+    onRenderIcon?: (props: SendBoxComponentProps & SendBoxPropsFromContext) => JSX.Element | null;
+} & SendBoxPropsFromContext;
 
 // @public (undocumented)
 export type SendBoxPropsFromContext = {
@@ -922,7 +944,7 @@ export type SetupContainerProps = {
 // @public (undocumented)
 export type SidePanelPropsFromContext = {
     threadMembers: ChatThreadMember_2[];
-    thread: ChatThread_2 | undefined;
+    thread: ChatThread | undefined;
     existsTopicName: boolean | undefined;
     updateThreadTopicName: (topicName: string) => Promise<boolean>;
     removeThreadMemberByUserId: (userId: string) => void;
@@ -931,10 +953,16 @@ export type SidePanelPropsFromContext = {
 // @public (undocumented)
 export const SPACE_KEY = 32;
 
-// Warning: (ae-forgotten-export) The symbol "StreamMediaProps" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
-export const StreamMedia: (props: StreamMediaProps & ErrorHandlingProps) => JSX.Element;
+export const StreamMediaComponent: (props: StreamMediaComponentProps & ErrorHandlingProps) => JSX.Element;
+
+// @public (undocumented)
+export interface StreamMediaComponentProps {
+    // (undocumented)
+    invertVideo?: boolean;
+    // (undocumented)
+    videoStreamElement: HTMLElement | null;
+}
 
 // @public
 export interface SwitchableFluentThemeContext {
@@ -1000,8 +1028,8 @@ export type ThreadProviderContextType = {
     setChatMessages: Dispatch<SetStateAction<ChatMessage_2[] | undefined>>;
     threadId: string;
     setThreadId: Dispatch<SetStateAction<string>>;
-    thread: ChatThread_2 | undefined;
-    setThread: Dispatch<SetStateAction<ChatThread_2 | undefined>>;
+    thread: ChatThread | undefined;
+    setThread: Dispatch<SetStateAction<ChatThread | undefined>>;
     receipts: ReadReceipt[] | undefined;
     setReceipts: Dispatch<SetStateAction<ReadReceipt[] | undefined>>;
     threadMembers: ChatThreadMember_2[];
@@ -1019,14 +1047,11 @@ export type ThreadProviderContextType = {
 // @public (undocumented)
 export const TOO_MANY_REQUESTS_STATUS_CODE = 429;
 
-// @public (undocumented)
-export const TypingIndicator: (props: Pick<TypingIndicatorProps & ErrorHandlingProps, "onErrorCallback">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+// @public
+export const TypingIndicatorComponent: (props: TypingIndicatorComponentProps & ErrorHandlingProps) => JSX.Element;
 
 // @public (undocumented)
-export const TypingIndicatorComponent: (props: TypingIndicatorProps & ErrorHandlingProps) => JSX.Element;
-
-// @public (undocumented)
-export type TypingIndicatorProps = {
+export type TypingIndicatorComponentProps = {
     typingUsers: TypingUser[];
     typingString: string;
 };
@@ -1191,7 +1216,7 @@ export const useSetOnErrorCallback: () => (callback: (error: CommunicationUiErro
 export const useSetReceipts: () => (receipts: ReadReceipt[]) => void;
 
 // @public (undocumented)
-export const useSetThread: () => (thread: ChatThread_2) => void;
+export const useSetThread: () => (thread: ChatThread) => void;
 
 // @public (undocumented)
 export const useSetThreadId: () => (threadId: string) => void;
@@ -1231,7 +1256,7 @@ export const useSwitchableFluentTheme: () => SwitchableFluentThemeContext;
 export const useTeamsCall: () => UseTeamsCallType;
 
 // @public (undocumented)
-export const useThread: () => ChatThread_2 | undefined;
+export const useThread: () => ChatThread | undefined;
 
 // @public (undocumented)
 export const useThreadId: () => string;
@@ -1268,20 +1293,20 @@ export interface VideoContainerProps {
 // Warning: (ae-forgotten-export) The symbol "PlaceholderProps" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
-export const VideoTile: (props: VideoTileProps & PlaceholderProps) => JSX.Element;
+export const VideoTileComponent: (props: VideoTileComponentProps & PlaceholderProps) => JSX.Element;
 
 // @public (undocumented)
-export interface VideoTileProps {
+export interface VideoTileComponentProps {
     children?: React_2.ReactNode;
     invertVideo?: boolean;
     isVideoReady?: boolean;
     placeholderProvider?: JSX.Element | null;
-    styles?: VideoTileStylesProps;
+    styles?: VideoTileComponentStylesProps;
     videoProvider?: JSX.Element | null;
 }
 
 // @public (undocumented)
-export interface VideoTileStylesProps {
+export interface VideoTileComponentStylesProps {
     overlayContainer?: IStyle;
     root?: IStyle;
     videoContainer?: IStyle;
@@ -1290,10 +1315,6 @@ export interface VideoTileStylesProps {
 // @public
 export const WithErrorHandling: (Component: (props: any & ErrorHandlingProps) => JSX.Element, props: any & ErrorHandlingProps) => JSX.Element;
 
-
-// Warnings were encountered during analysis:
-//
-// src/components/SendBox.tsx:31:3 - (ae-forgotten-export) The symbol "SendBoxProps" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

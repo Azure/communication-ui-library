@@ -4,7 +4,7 @@ import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import {
   CONTROL_BAR_LAYOUTS,
-  ControlBar,
+  ControlBarComponent as ControlBar,
   audioButtonProps,
   hangupButtonProps,
   labeledVideoButtonProps,

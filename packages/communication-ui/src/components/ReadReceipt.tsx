@@ -8,9 +8,8 @@ import { readReceiptIconErrorStyle, readReceiptIconMessageStyle } from './styles
 import { CircleRingIcon, CompletedIcon, ErrorIcon } from '@fluentui/react-icons';
 import { MessageSeenIcon } from '@fluentui/react-icons-northstar';
 import { ErrorHandlingProps } from '../providers/ErrorProvider';
-import { WithErrorHandling } from '../utils/WithErrorHandling';
 
-export interface ReadReceiptProps {
+export interface ReadReceiptComponentProps {
   /** Message status that determines the read receipt icon to show. */
   messageStatus: MessageStatus;
   /** Text to display in the delivered read receipt icon tooltip. */
@@ -28,14 +27,14 @@ export interface ReadReceiptProps {
 /**
  * ReadReciptIcon component.
  */
-const ReadReceiptComponentBase = ({
+export const ReadReceiptComponent = ({
   messageStatus,
   deliveredTooltipText = 'Sent',
   seenTooltipText = 'Seen',
   sendingTooltipText = 'Sending',
   failedToSendTooltipText = 'Failed to send',
   size = 'medium'
-}: ReadReceiptProps & ErrorHandlingProps): JSX.Element => {
+}: ReadReceiptComponentProps & ErrorHandlingProps): JSX.Element => {
   switch (messageStatus) {
     case MessageStatus.FAILED:
       return (
@@ -67,6 +66,3 @@ const ReadReceiptComponentBase = ({
       return <></>;
   }
 };
-
-export const ReadReceiptComponent = (props: ReadReceiptProps & ErrorHandlingProps): JSX.Element =>
-  WithErrorHandling(ReadReceiptComponentBase, props);

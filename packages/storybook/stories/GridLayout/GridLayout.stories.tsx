@@ -12,7 +12,7 @@ import {
   mediaGalleryHeightOptions,
   COMPONENT_FOLDER_PREFIX
 } from '../constants';
-import { GridLayoutComponent as GridLayout, VideoTile, StreamMedia } from '@azure/communication-ui';
+import { GridLayoutComponent as GridLayout, VideoTileComponent, StreamMediaComponent } from '@azure/communication-ui';
 import { renderVideoStream } from '../utils';
 
 export const GridLayoutComponent: () => JSX.Element = () => {
@@ -42,14 +42,16 @@ export const GridLayoutComponent: () => JSX.Element = () => {
 
   const participantsComponents = participants.map((participant, index) => {
     return (
-      <VideoTile
+      <VideoTileComponent
         isVideoReady={participant.isVideoReady}
-        videoProvider={<StreamMedia videoStreamElement={participant.isVideoReady ? renderVideoStream() : null} />}
+        videoProvider={
+          <StreamMediaComponent videoStreamElement={participant.isVideoReady ? renderVideoStream() : null} />
+        }
         avatarName={participant.displayName}
         key={index}
       >
         <label>{participant.displayName}</label>
-      </VideoTile>
+      </VideoTileComponent>
     );
   });
 

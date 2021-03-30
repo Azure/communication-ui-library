@@ -2,10 +2,10 @@
 
 import React from 'react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
-import { GridLayoutComponent, VideoTile } from '@azure/communication-ui';
+import { GridLayoutComponent, VideoTileComponent } from '@azure/communication-ui';
 
 const importStatement = `
-import { GridLayoutComponent, VideoTile } from '@azure/communication-ui';
+import { GridLayoutComponent, VideoTileComponent } from '@azure/communication-ui';
 `;
 
 const GridLayoutExample: () => JSX.Element = () => {
@@ -17,18 +17,18 @@ const GridLayoutExample: () => JSX.Element = () => {
       }}
     >
       <GridLayoutComponent>
-        <VideoTile isVideoReady={false} videoProvider={null} avatarName={'Michael'}>
+        <VideoTileComponent isVideoReady={false} videoProvider={null} avatarName={'Michael'}>
           <label>Michael</label>
-        </VideoTile>
-        <VideoTile isVideoReady={false} videoProvider={null} avatarName={'Jim'}>
+        </VideoTileComponent>
+        <VideoTileComponent isVideoReady={false} videoProvider={null} avatarName={'Jim'}>
           <label>Jim</label>
-        </VideoTile>
-        <VideoTile isVideoReady={false} videoProvider={null} avatarName={'Pam'}>
+        </VideoTileComponent>
+        <VideoTileComponent isVideoReady={false} videoProvider={null} avatarName={'Pam'}>
           <label>Pam</label>
-        </VideoTile>
-        <VideoTile isVideoReady={false} videoProvider={null} avatarName={'Dwight'}>
+        </VideoTileComponent>
+        <VideoTileComponent isVideoReady={false} videoProvider={null} avatarName={'Dwight'}>
           <label>Dwight</label>
-        </VideoTile>
+        </VideoTileComponent>
       </GridLayoutComponent>
     </div>
   );
@@ -44,34 +44,34 @@ const GridLayoutExample: () => JSX.Element = () => {
       }}
     >
       <GridLayoutComponent>
-        <VideoTile
+        <VideoTileComponent
           isVideoReady={false}
           videoProvider={null}
           avatarName={'Michael'}
         >
           <label>Michael</label>
-        </VideoTile>
-        <VideoTile
+        </VideoTileComponent>
+        <VideoTileComponent
           isVideoReady={false}
           videoProvider={null}
           avatarName={'Jim'}
         >
           <label>Jim</label>
-        </VideoTile>
-        <VideoTile
+        </VideoTileComponent>
+        <VideoTileComponent
           isVideoReady={false}
           videoProvider={null}
           avatarName={'Pam'}
         >
           <label>Pam</label>
-        </VideoTile>
-        <VideoTile
+        </VideoTileComponent>
+        <VideoTileComponent
           isVideoReady={false}
           videoProvider={null}
           avatarName={'Dwight'}
         >
           <label>Dwight</label>
-        </VideoTile>
+        </VideoTileComponent>
       </GridLayoutComponent>
     </div>
   );

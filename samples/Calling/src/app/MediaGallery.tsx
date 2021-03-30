@@ -3,8 +3,8 @@
 import React, { useMemo } from 'react';
 import {
   connectFuncsToContext,
-  StreamMedia,
-  VideoTile,
+  StreamMediaComponent,
+  VideoTileComponent,
   GridLayoutComponent,
   MapToLocalVideoProps,
   convertSdkRemoteParticipantToGalleryParticipant,
@@ -71,15 +71,15 @@ export const MediaGalleryComponentBase = (props: MediaGalleryContainerProps): JS
 
   const layoutLocalParticipant = useMemo(() => {
     return (
-      <VideoTile
+      <VideoTileComponent
         isVideoReady={localVideoStream.isVideoReady}
-        videoProvider={<StreamMedia videoStreamElement={localVideoStream.videoStreamElement} />}
+        videoProvider={<StreamMediaComponent videoStreamElement={localVideoStream.videoStreamElement} />}
         avatarName={localParticipant.displayName}
       >
         <Label className={localVideoStream.isVideoReady ? videoHint : disabledVideoHint}>
           {localParticipant.displayName}
         </Label>
-      </VideoTile>
+      </VideoTileComponent>
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localParticipant, localVideoStream]);

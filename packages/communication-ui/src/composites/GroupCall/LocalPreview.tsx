@@ -11,18 +11,18 @@ import {
 } from './styles/LocalPreview.styles';
 import { MapToMediaControlsProps, MediaControlsContainerProps } from './consumers/MapToMediaControlsProps';
 import {
+  connectFuncsToContext,
   MapToLocalDeviceSettingsProps,
-  LocalDeviceSettingsContainerProps
-} from '../../consumers/MapToLocalDeviceSettingsProps';
-import { connectFuncsToContext } from '../../consumers';
-import { StreamMedia, VideoTile } from '../../components';
-import { MapToLocalVideoProps } from '../../consumers/MapToVideoProps';
+  LocalDeviceSettingsContainerProps,
+  MapToErrorBarProps,
+  MapToLocalVideoProps
+} from '../../consumers';
+import { StreamMediaComponent, VideoTileComponent, ErrorBarComponent } from '../../components';
 import staticMediaSVG from './assets/staticmedia.svg';
 import { useCallContext } from '../../providers';
 import { ErrorHandlingProps } from '../../providers/ErrorProvider';
 import { WithErrorHandling } from '../../utils/WithErrorHandling';
 import { CommunicationUiErrorFromError } from '../../types/CommunicationUiError';
-import ErrorBar from '../../components/ErrorBar';
 
 const staticAvatarStyle: Partial<IImageStyles> = {
   image: { maxWidth: '10rem', maxHeight: '10rem', width: '100%', height: '100%' },
@@ -49,12 +49,13 @@ const LocalPreviewComponentBase = (
     stream: localVideoStream,
     scalingMode: 'Crop'
   });
+  const ErrorBar = connectFuncsToContext(ErrorBarComponent, MapToErrorBarProps);
 
   return (
     <Stack className={localPreviewContainerStyle}>
-      <VideoTile
+      <VideoTileComponent
         isVideoReady={isVideoReady}
-        videoProvider={<StreamMedia videoStreamElement={videoStreamElement} />}
+        videoProvider={<StreamMediaComponent videoStreamElement={videoStreamElement} />}
         placeholderProvider={
           <Image styles={staticAvatarStyle} aria-label="Local video preview image" {...imageProps} />
         }

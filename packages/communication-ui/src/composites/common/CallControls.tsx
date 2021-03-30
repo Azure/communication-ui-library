@@ -3,13 +3,13 @@
 import { DefaultButton, IContextualMenuProps } from '@fluentui/react';
 import React, { useCallback } from 'react';
 import {
-  ControlBar,
+  ControlBarComponent,
   videoButtonProps,
   audioButtonProps,
   optionsButtonProps,
   hangupButtonProps
 } from '../../components';
-import { ControlBarProps, screenShareButtonProps } from '../../components/ControlBar';
+import { ControlBarComponentProps, screenShareButtonProps } from '../../components/ControlBar';
 import {
   connectFuncsToContext,
   LocalDeviceSettingsContainerProps,
@@ -105,7 +105,7 @@ const HangupButton = (props: HangupButtonProps): JSX.Element => {
 
 export const HangupButtonComponent = connectFuncsToContext(HangupButton, MapToCallControlBarProps);
 
-export interface OutgoingCallControlBarProps extends ControlBarProps, CallControlBarContainerProps {
+export interface OutgoingCallControlBarProps extends ControlBarComponentProps, CallControlBarContainerProps {
   /** Callback when call ends */
   onEndCallClick(): void;
 }
@@ -126,7 +126,7 @@ export const OutgoingCallControlBar = (props: OutgoingCallControlBarProps & Erro
   const micDisabled = micPermission === 'Denied';
 
   return (
-    <ControlBar {...props}>
+    <ControlBarComponent {...props}>
       <DefaultButton
         {...videoButtonProps}
         checked={!localVideoEnabled}
@@ -149,14 +149,14 @@ export const OutgoingCallControlBar = (props: OutgoingCallControlBarProps & Erro
       />
       <CallOptionsButtonComponent />
       <HangupButtonComponent onEndCallClick={onEndCallClick} />
-    </ControlBar>
+    </ControlBarComponent>
   );
 };
 
 export const OutgoingCallControlBarComponent = connectFuncsToContext(OutgoingCallControlBar, MapToCallControlBarProps);
 
 export const IncomingCallControlBar = (
-  props: ControlBarProps & CallControlBarContainerProps & ErrorHandlingProps
+  props: ControlBarComponentProps & CallControlBarContainerProps & ErrorHandlingProps
 ): JSX.Element => {
   const {
     localVideoEnabled,
@@ -172,7 +172,7 @@ export const IncomingCallControlBar = (
   const micDisabled = micPermission === 'Denied';
 
   return (
-    <ControlBar {...props}>
+    <ControlBarComponent {...props}>
       <DefaultButton
         {...videoButtonProps}
         checked={!localVideoEnabled}
@@ -194,7 +194,7 @@ export const IncomingCallControlBar = (
         }}
       />
       <CallOptionsButtonComponent />
-    </ControlBar>
+    </ControlBarComponent>
   );
 };
 
@@ -209,7 +209,9 @@ export interface CallControlBarProps extends CallControlBarContainerProps {
  * An Azure Calling Services Call Control Bar with built in call handling.
  * @param props CallControlBarProps & ErrorHandlingProps & LocalDeviceSettingsContainerProps
  */
-export const CallControlBar = (props: ControlBarProps & CallControlBarProps & ErrorHandlingProps): JSX.Element => {
+export const CallControlBar = (
+  props: ControlBarComponentProps & CallControlBarProps & ErrorHandlingProps
+): JSX.Element => {
   const {
     localVideoEnabled,
     onEndCallClick,
@@ -229,7 +231,7 @@ export const CallControlBar = (props: ControlBarProps & CallControlBarProps & Er
   const screenShareDisabled = isRemoteScreenShareActive;
 
   return (
-    <ControlBar {...props}>
+    <ControlBarComponent {...props}>
       <DefaultButton
         {...videoButtonProps}
         checked={!localVideoEnabled}
@@ -264,7 +266,7 @@ export const CallControlBar = (props: ControlBarProps & CallControlBarProps & Er
       )}
       <CallOptionsButtonComponent />
       <HangupButtonComponent onEndCallClick={onEndCallClick} />
-    </ControlBar>
+    </ControlBarComponent>
   );
 };
 

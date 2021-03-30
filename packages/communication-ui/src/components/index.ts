@@ -1,28 +1,37 @@
 // © Microsoft Corporation. All rights reserved.
 
-import SendBox from './SendBox';
-import TypingIndicator, { TypingIndicatorComponent } from './TypingIndicator';
-import { GridLayoutComponent } from './GridLayout';
-import ErrorBar, { ErrorBarComponent } from './ErrorBar';
+export { TypingIndicatorComponent } from './TypingIndicator';
+export type { TypingIndicatorComponentProps } from './TypingIndicator';
 
-export { SendBox, TypingIndicator, TypingIndicatorComponent, GridLayoutComponent, ErrorBar, ErrorBarComponent };
+export { GridLayoutComponent } from './GridLayout';
+export type { GridLayoutComponentProps } from './GridLayout';
+
+export { ErrorBarComponent } from './ErrorBar';
+export type { ErrorBarComponentProps } from './ErrorBar';
 
 export { SendBoxComponent } from './SendBox';
+export type { SendBoxComponentProps } from './SendBox';
+
 export { ReadReceiptComponent } from './ReadReceipt';
-export type { ReadReceiptProps } from './ReadReceipt';
-export { ChatThreadComponent, ChatThreadComponentBase, ChatThread } from './ChatThread';
+export type { ReadReceiptComponentProps } from './ReadReceipt';
+
+export { ChatThreadComponent } from './ChatThread';
 export type {
-  ChatThreadProps,
-  ChatThreadStylesProps,
+  ChatThreadComponentProps,
+  ChatThreadComponentStylesProps,
   JumpToNewMessageButtonProps,
   LoadPreviousMessagesButtonProps
 } from './ChatThread';
-export { StreamMedia } from './StreamMedia';
-export { ParticipantItem } from './ParticipantItem';
-export type { ParticipantItemProps } from './ParticipantItem';
+
+export { StreamMediaComponent } from './StreamMedia';
+export type { StreamMediaComponentProps } from './StreamMedia';
+
+export { ParticipantItemComponent } from './ParticipantItem';
+export type { ParticipantItemComponentProps } from './ParticipantItem';
+
 export {
   CONTROL_BAR_LAYOUTS,
-  ControlBar,
+  ControlBarComponent,
   videoButtonProps,
   audioButtonProps,
   screenShareButtonProps,
@@ -35,10 +44,13 @@ export {
   labeledHangupButtonProps,
   labeledOptionsButtonProps
 } from './ControlBar';
+export type { ControlBarComponentProps, ControlBarComponentLayoutsType, CustomStylesProps } from './ControlBar';
 
-export { VideoTile } from './VideoTile';
-export type { VideoTileProps, VideoTileStylesProps } from './VideoTile';
+export { VideoTileComponent } from './VideoTile';
+export type { VideoTileComponentProps, VideoTileComponentStylesProps } from './VideoTile';
+
 export { ThemeSelector } from './ThemeSelector';
 export type { ThemeSelectorProps } from './ThemeSelector';
+
 export { ThemeToggler } from './ThemeToggler';
 export type { ThemeTogglerProps } from './ThemeToggler';

@@ -11,35 +11,33 @@ import {
   sendButtonStyle,
   sendIconDiv
 } from './styles/SendBox.styles';
-import { connectFuncsToContext } from '../consumers/ConnectContext';
-import { MapToSendBoxProps, SendBoxPropsFromContext } from '../consumers/MapToSendBoxProps';
+import { SendBoxPropsFromContext } from '../consumers/MapToSendBoxProps';
 import classNames from 'classnames';
 import { Alert } from '@fluentui/react-northstar/dist/commonjs/components/Alert/Alert';
-import { WithErrorHandling } from '../utils/WithErrorHandling';
 import { ErrorHandlingProps } from '../providers/ErrorProvider';
 import { propagateError } from '../utils/SDKUtils';
 
 /**
- * Properties for component SendBox
+ * Properties for component SendBoxComponent
  */
-export type SendBoxProps = {
-  /** Optional callback to render system message below the SendBox */
+export type SendBoxComponentProps = {
+  /** Optional callback to render system message below the SendBoxComponent */
   onRenderSystemMessage?: (systemMessage: string | undefined) => React.ReactElement;
-  /** Optional boolean to support new line in SendBox */
+  /** Optional boolean to support new line in SendBoxComponent */
   supportNewline?: boolean;
-  /** Optional callback to render send button icon to the right of the SendBox*/
-  onRenderIcon?: (props: SendBoxProps & SendBoxPropsFromContext) => JSX.Element | null;
+  /** Optional callback to render send button icon to the right of the SendBoxComponent*/
+  onRenderIcon?: (props: SendBoxComponentProps & SendBoxPropsFromContext) => JSX.Element | null;
 } & SendBoxPropsFromContext;
 
 const defaultOnRenderSystemMessage = (systemMessage: string | undefined): JSX.Element | undefined =>
   systemMessage ? <Alert attached="bottom" content={systemMessage} /> : undefined;
 
 /**
- * @description `SendBox` is a component for users to type and send messages. An optional message can also be
- * added below the `SendBox`
- * @param props - SendBoxProps
+ * @description `SendBoxComponent` is a component for users to type and send messages. An optional message can also be
+ * added below the `SendBoxComponent`
+ * @param props - SendBoxComponentProps
  */
-const SendBoxComponentBase = (props: SendBoxProps & ErrorHandlingProps): JSX.Element => {
+export const SendBoxComponent = (props: SendBoxComponentProps & ErrorHandlingProps): JSX.Element => {
   const {
     disabled,
     displayName,
@@ -129,8 +127,3 @@ const SendBoxComponentBase = (props: SendBoxProps & ErrorHandlingProps): JSX.Ele
     </>
   );
 };
-
-export const SendBoxComponent = (props: SendBoxProps & ErrorHandlingProps): JSX.Element =>
-  WithErrorHandling(SendBoxComponentBase, props);
-
-export default connectFuncsToContext(SendBoxComponent, MapToSendBoxProps);

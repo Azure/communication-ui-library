@@ -5,7 +5,7 @@ import React from 'react';
 import {
   FluentThemeProvider,
   THEMES,
-  ChatThreadComponentBase,
+  ChatThreadComponent,
   ChatMessage as WebUiChatMessage,
   MessageStatus
 } from '@azure/communication-ui';
@@ -15,7 +15,7 @@ const importStatement = `
 import React from 'react';
 // We need to wrap ChatThread component with the FluentThemeProvider and pass the THEMES you'd like to use to the provider.
 import {
-  ChatThreadComponentBase,
+  ChatThreadComponent,
   ChatMessage as WebUiChatMessage,
   MessageStatus,
   FluentThemeProvider,
@@ -65,7 +65,7 @@ const DefaultChatThreadExample: () => JSX.Element = () => {
   // userId and chatMessages are required props.
   return (
     <FluentThemeProvider fluentTheme={THEMES['light']}>
-      <ChatThreadComponentBase
+      <ChatThreadComponent
         userId={'1'}
         chatMessages={GetHistoryChatMessages()}
       />
@@ -77,10 +77,10 @@ const DefaultChatThreadExample: () => JSX.Element = () => {
 const chatThreadWithReadReceiptUsageCode = `
 const ChatThreadWithReadReceiptExample: () => JSX.Element = () => {
   // Show the read receipt of messages that I sent by setting 'disableReadReceipt' prop to be false.
-  // You can also set your own read receipt component by passing in onRenderReadReceipt of type (readReceiptProps: ReadReceiptProps) => JSX.Element.
+  // You can also set your own read receipt component by passing in onRenderReadReceipt of type (readReceiptComponentProps: ReadReceiptComponentProps) => JSX.Element.
   return (
     <FluentThemeProvider fluentTheme={THEMES['light']}>
-      <ChatThreadComponentBase userId={'1'} chatMessages={GetHistoryChatMessages()} disableReadReceipt={false}/>
+      <ChatThreadComponent userId={'1'} chatMessages={GetHistoryChatMessages()} disableReadReceipt={false}/>
     </FluentThemeProvider>
   );
 };
@@ -93,7 +93,7 @@ const ChatThreadWithCustomAvatarExample: () => JSX.Element = () => {
   // Customize the Avatar of other participants to be a Persona component from Fluent and show the presence status on the avatar.
   return (
     <FluentThemeProvider fluentTheme={THEMES['light']}>
-      <ChatThreadComponentBase
+      <ChatThreadComponent
         userId={'1'}
         chatMessages={GetHistoryChatMessages()}
         onRenderAvatar={(userId: string) => {
@@ -148,7 +148,7 @@ export const GetHistoryChatMessages = (): WebUiChatMessage[] => {
 const DefaultChatThreadExample: () => JSX.Element = () => {
   return (
     <FluentThemeProvider fluentTheme={THEMES['light']}>
-      <ChatThreadComponentBase userId={'1'} chatMessages={GetHistoryChatMessages()} />
+      <ChatThreadComponent userId={'1'} chatMessages={GetHistoryChatMessages()} />
     </FluentThemeProvider>
   );
 };
@@ -157,7 +157,7 @@ const ChatThreadWithReadReceiptExample: () => JSX.Element = () => {
   // Show the read receipt of messages that I sent by setting 'disableReadReceipt' prop to be false.
   return (
     <FluentThemeProvider fluentTheme={THEMES['light']}>
-      <ChatThreadComponentBase userId={'1'} chatMessages={GetHistoryChatMessages()} disableReadReceipt={false} />
+      <ChatThreadComponent userId={'1'} chatMessages={GetHistoryChatMessages()} disableReadReceipt={false} />
     </FluentThemeProvider>
   );
 };
@@ -166,7 +166,7 @@ const ChatThreadWithCustomAvatarExample: () => JSX.Element = () => {
   // Customize the Avatar of other participants to be a Persona component from Fluent and show the presence status on the avatar.
   return (
     <FluentThemeProvider fluentTheme={THEMES['light']}>
-      <ChatThreadComponentBase
+      <ChatThreadComponent
         userId={'1'}
         chatMessages={GetHistoryChatMessages()}
         onRenderAvatar={(userId: string) => {
@@ -183,7 +183,7 @@ export const getDocs: () => JSX.Element = () => {
   return (
     <>
       <Title>ChatThread</Title>
-      <Description of={ChatThreadComponentBase} />
+      <Description of={ChatThreadComponent} />
       <Heading>Importing</Heading>
       <Source code={importStatement} />
       <Heading>Sample Messages</Heading>
@@ -208,7 +208,7 @@ export const getDocs: () => JSX.Element = () => {
         [Persona](https://developer.microsoft.com/en-us/fluentui#/controls/web/persona) component
       </Description>
       <Heading>Props</Heading>
-      <Props of={ChatThreadComponentBase} />
+      <Props of={ChatThreadComponent} />
     </>
   );
 };

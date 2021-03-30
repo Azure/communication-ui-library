@@ -103,7 +103,7 @@ const IncomingCallToast = (props: IncomingCallToastProps): JSX.Element => {
 `;
 
 const exampleIncomingCallModal = `
-import { StreamMedia, VideoTile } from '@azure/communication-ui';
+import { StreamMediaComponent, VideoTileComponent } from '@azure/communication-ui';
 import { DefaultButton, Persona, PersonaSize, Stack, Dialog, DialogType, DialogFooter } from '@fluentui/react';
 import { CallEndIcon, CallIcon, CallVideoIcon, CallVideoOffIcon } from '@fluentui/react-northstar';
 import { getTheme, mergeStyles } from '@fluentui/react';
@@ -163,9 +163,9 @@ const IncomingCallModal = (props: WithTheme<IncomingCallModalProps>): JSX.Elemen
   const dialogContentProps = { type: DialogType.normal, title: alertText ?? 'Incoming Video Call' };
 
   const mediaGalleryLocalParticipant: JSX.Element = (
-    <VideoTile
+    <VideoTileComponent
       isVideoReady={showLocalVideo}
-      videoProvider={<StreamMedia videoStreamElement={localVideoStreamElement} />}
+      videoProvider={<StreamMediaComponent videoStreamElement={localVideoStreamElement} />}
       avatarName={localParticipantName}
       invertVideo={localVideoInverted}
     />

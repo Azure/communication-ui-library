@@ -5,7 +5,7 @@ import React from 'react';
 import { rootStyles, videoContainerStyles, overlayContainerStyles } from './styles/VideoTile.styles';
 import { useTheme } from '@fluentui/react-theme-provider';
 
-export interface VideoTileStylesProps {
+export interface VideoTileComponentStylesProps {
   /** Styles for the root container */
   root?: IStyle;
   /** Styles for video container */
@@ -14,11 +14,11 @@ export interface VideoTileStylesProps {
   overlayContainer?: IStyle;
 }
 
-export interface VideoTileProps {
+export interface VideoTileComponentProps {
   /** React Child components. */
   children?: React.ReactNode;
   /** Custom styles */
-  styles?: VideoTileStylesProps;
+  styles?: VideoTileComponentStylesProps;
   /** Determines if the static image or video stream should be rendered. */
   isVideoReady?: boolean;
   /** Component with the video stream */
@@ -30,7 +30,7 @@ export interface VideoTileProps {
 }
 
 export interface PlaceholderProps {
-  /** Optional participant avatar name for the VideoTile default placeholder. */
+  /** Optional participant avatar name for the VideoTileComponent default placeholder. */
   avatarName?: string;
   /** Optional property to set the aria label of the video tile if there is no available stream. */
   noVideoAvailableAriaLabel?: string;
@@ -52,7 +52,7 @@ const DefaultPlaceholder = (props: PlaceholderProps): JSX.Element => {
   );
 };
 
-export const VideoTile = (props: VideoTileProps & PlaceholderProps): JSX.Element => {
+export const VideoTileComponent = (props: VideoTileComponentProps & PlaceholderProps): JSX.Element => {
   const { styles, isVideoReady, videoProvider, placeholderProvider, invertVideo, children } = props;
   const theme = useTheme();
   const placeholder = placeholderProvider ?? <DefaultPlaceholder {...props} />;

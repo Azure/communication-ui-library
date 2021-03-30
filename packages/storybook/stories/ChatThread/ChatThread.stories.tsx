@@ -2,7 +2,7 @@
 
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
-import { ChatThreadComponentBase, ChatMessage as WebUiChatMessage } from '@azure/communication-ui';
+import { ChatThreadComponent as ChatThread, ChatMessage as WebUiChatMessage } from '@azure/communication-ui';
 import { boolean } from '@storybook/addon-knobs';
 import { PrimaryButton, Stack } from '@fluentui/react';
 import { getDocs } from './ChatThreadDocs';
@@ -42,7 +42,7 @@ export const ChatThreadComponent: () => JSX.Element = () => {
 
   return (
     <Stack style={ChatThreadContainerStyles}>
-      <ChatThreadComponentBase
+      <ChatThread
         styles={ChatThreadStyles}
         userId={UserOne.senderId}
         chatMessages={chatMessages}
@@ -63,7 +63,7 @@ export const ChatThreadComponent: () => JSX.Element = () => {
 
 export default {
   title: `${COMPONENT_FOLDER_PREFIX}/ChatThread`,
-  component: ChatThreadComponentBase,
+  component: ChatThread,
   parameters: {
     docs: {
       page: () => getDocs()

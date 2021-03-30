@@ -5,7 +5,7 @@ import { gridLayoutStyle } from './styles/GridLayout.styles';
 
 export type GridLayout = 'standard';
 
-export interface GridLayoutProps {
+export interface GridLayoutComponentProps {
   children: React.ReactNode;
   layout?: GridLayout;
 }
@@ -16,7 +16,7 @@ const calculateStandardLayoutRows = (numberOfItems: number, gridCol: number): nu
 const calculateStandardLayoutColumns = (numberOfItems: number): number =>
   numberOfItems > 0 ? Math.ceil(Math.sqrt(numberOfItems)) : 1;
 
-export const GridLayoutComponent = (props: GridLayoutProps): JSX.Element => {
+export const GridLayoutComponent = (props: GridLayoutComponentProps): JSX.Element => {
   const [gridCol, setGridCol] = useState(1);
   const [gridRow, setGridRow] = useState(1);
 

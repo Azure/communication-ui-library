@@ -2,14 +2,28 @@
 import { Stack } from '@fluentui/react';
 import { mergeStyles } from '@fluentui/react';
 import { ChatProvider } from '../../providers';
-import React from 'react';
-import { SendBox, TypingIndicator } from '../../components';
-import { ChatThread } from '../../components';
+import React, { useMemo } from 'react';
+import {
+  SendBoxComponent,
+  TypingIndicatorComponent,
+  ErrorBarComponent,
+  ChatThreadComponent,
+  ChatThreadComponentProps,
+  SendBoxComponentProps,
+  TypingIndicatorComponentProps
+} from '../../components';
 import { chatContainer, chatWrapper } from './styles/GroupChat.styles';
 import { AbortSignalLike } from '@azure/core-http';
-import { ErrorProvider } from '../../providers/ErrorProvider';
+import { ErrorHandlingProps, ErrorProvider } from '../../providers/ErrorProvider';
 import { CommunicationUiErrorInfo } from '../../types/CommunicationUiError';
-import ErrorBar from '../../components/ErrorBar';
+import {
+  connectFuncsToContext,
+  MapToChatMessageProps,
+  MapToErrorBarProps,
+  MapToSendBoxProps,
+  MapToTypingIndicatorProps
+} from '../../consumers';
+import { WithErrorHandling } from '../../utils';
 
 export type GroupChatProps = {
   displayName: string;
@@ -34,6 +48,28 @@ export default (props: GroupChatProps): JSX.Element => {
     maxWidth: options?.sendBoxMaxLength ? `${options?.sendBoxMaxLength / 16}rem` : 'unset',
     width: '100%'
   });
+
+  const ChatThread = useMemo(() => {
+    return connectFuncsToContext(
+      (props: ChatThreadComponentProps & ErrorHandlingProps) => WithErrorHandling(ChatThreadComponent, props),
+      MapToChatMessageProps
+    );
+  }, []);
+  const ErrorBar = useMemo(() => {
+    return connectFuncsToContext(ErrorBarComponent, MapToErrorBarProps);
+  }, []);
+  const SendBox = useMemo(() => {
+    return connectFuncsToContext(
+      (props: SendBoxComponentProps & ErrorHandlingProps) => WithErrorHandling(SendBoxComponent, props),
+      MapToSendBoxProps
+    );
+  }, []);
+  const TypingIndicator = useMemo(() => {
+    return connectFuncsToContext(
+      (props: TypingIndicatorComponentProps & ErrorHandlingProps) => WithErrorHandling(TypingIndicatorComponent, props),
+      MapToTypingIndicatorProps
+    );
+  }, []);
 
   return (
     <ErrorProvider onErrorCallback={onErrorCallback}>

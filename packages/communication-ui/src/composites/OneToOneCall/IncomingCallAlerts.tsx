@@ -12,7 +12,7 @@ import {
 } from './styles/IncomingCallAlerts.styles';
 import { useBoolean } from '@uifabric/react-hooks';
 import { WithTheme, withThemeContext } from '../../providers/WithTheme';
-import { StreamMedia, VideoTile } from '../../components';
+import { StreamMediaComponent, VideoTileComponent } from '../../components';
 
 export type IncomingCallToastProps = {
   /** Caller's Name */
@@ -101,9 +101,9 @@ const IncomingCallModal = (props: WithTheme<IncomingCallModalProps>): JSX.Elemen
   const dialogContentProps = { type: DialogType.normal, title: alertText ?? 'Incoming Video Call' };
 
   const mediaGalleryLocalParticipant: JSX.Element = (
-    <VideoTile
+    <VideoTileComponent
       isVideoReady={showLocalVideo}
-      videoProvider={<StreamMedia videoStreamElement={localVideoStreamElement} />}
+      videoProvider={<StreamMediaComponent videoStreamElement={localVideoStreamElement} />}
       avatarName={localParticipantName}
       invertVideo={localVideoInverted}
     />

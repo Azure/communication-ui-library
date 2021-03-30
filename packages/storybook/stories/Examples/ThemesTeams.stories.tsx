@@ -7,8 +7,8 @@ import { EXAMPLES_FOLDER_PREFIX } from '../constants';
 import {
   FluentThemeProvider,
   GridLayoutComponent,
-  VideoTile,
-  ControlBar,
+  VideoTileComponent,
+  ControlBarComponent,
   videoButtonProps,
   audioButtonProps,
   screenShareButtonProps,
@@ -48,7 +48,7 @@ export const TeamsThemeComponent: () => JSX.Element = () => {
     <div>
       <FluentThemeProvider fluentTheme={TeamsTheme}>
         {/*Control Bar with default set up*/}
-        <ControlBar layout={'dockedTop'}>
+        <ControlBarComponent layout={'dockedTop'}>
           <DefaultButton
             {...videoButtonProps}
             onClick={() => {
@@ -73,7 +73,7 @@ export const TeamsThemeComponent: () => JSX.Element = () => {
               /*handle onClick*/
             }}
           />
-        </ControlBar>
+        </ControlBarComponent>
         {/*Control Bar with default set up*/}
         <div
           style={{
@@ -82,9 +82,9 @@ export const TeamsThemeComponent: () => JSX.Element = () => {
           }}
         >
           <GridLayoutComponent>
-            <VideoTile isVideoReady={false} videoProvider={null} avatarName={'Michael'}>
+            <VideoTileComponent isVideoReady={false} videoProvider={null} avatarName={'Michael'}>
               <label>Michael</label>
-            </VideoTile>
+            </VideoTileComponent>
           </GridLayoutComponent>
         </div>
       </FluentThemeProvider>

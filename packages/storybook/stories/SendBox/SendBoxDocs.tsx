@@ -103,10 +103,10 @@ const customIconCode = `
 export const getDocs: () => JSX.Element = () => {
   return (
     <>
-      <Title>SendBox</Title>
+      <Title>SendBoxComponent</Title>
       <Description>
-        SendBox is component used for message/typing notification sending, it is also able to show system messages
-        related to message sending
+        SendBoxComponent is component used for message/typing notification sending, it is also able to show system
+        messages related to message sending
       </Description>
       <Heading>Importing</Heading>
       <Source code={importStatement} />

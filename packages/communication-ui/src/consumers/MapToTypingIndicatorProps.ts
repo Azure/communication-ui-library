@@ -6,11 +6,7 @@ import { useTypingUsers } from '../hooks/useTypingUsers';
 import { useThreadMembers } from '../providers/ChatThreadProvider';
 import { useUserId } from '../providers/ChatProvider';
 import { TypingUser } from '../types/TypingUser';
-
-export type TypingIndicatorProps = {
-  typingUsers: TypingUser[];
-  typingString: string;
-};
+import { TypingIndicatorComponentProps } from '../components/TypingIndicator';
 
 const appendTypingLabel = (
   typingString: string,
@@ -122,7 +118,7 @@ const convertSdkTypingUsersDataToTypingUsersData = (
   return { typingUsers: typingUserDatas, typingString: typingString };
 };
 
-export const MapToTypingIndicatorProps = (): TypingIndicatorProps => {
+export const MapToTypingIndicatorProps = (): TypingIndicatorComponentProps => {
   const currentUserId: string = useUserId();
   const threadMembersList = useThreadMembers();
   const typingUsers = useTypingUsers(threadMembersList);

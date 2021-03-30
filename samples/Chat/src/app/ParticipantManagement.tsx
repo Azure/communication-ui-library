@@ -3,7 +3,7 @@
 import React from 'react';
 import {
   ChatThreadMember,
-  ParticipantItem,
+  ParticipantItemComponent,
   connectFuncsToContext,
   MapToChatThreadMemberProps,
   MapToUserIdProps,
@@ -41,7 +41,7 @@ const ParticipantManagementComponentBase = (props: ParticipantManagementProps & 
           const isYou = member.userId === (userId as string);
 
           return (
-            <ParticipantItem
+            <ParticipantItemComponent
               key={member.userId}
               name={member.displayName as string}
               isYou={isYou}

@@ -190,8 +190,8 @@ const convertSdkChatMessagesToWebUiChatMessages = (
 export type ChatMessagePropsFromContext = {
   userId: string;
   chatMessages: WebUiChatMessage[];
-  disableReadReceipt: boolean;
-  onSendReadReceipt: () => Promise<void>;
+  disableReadReceipt?: boolean;
+  onSendReadReceipt?: () => Promise<void>;
   disableLoadPreviousMessage?: boolean;
   onLoadPreviousMessages?: () => void;
 };
