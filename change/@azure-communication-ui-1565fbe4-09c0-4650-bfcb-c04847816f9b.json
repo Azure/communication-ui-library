@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "[bugfix] 1To1Calling Composite styling issues fixed",
+  "packageName": "@azure/communication-ui",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "none"
+}
