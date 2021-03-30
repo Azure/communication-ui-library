@@ -11,12 +11,17 @@ import { useCoolPeriod, useSetCoolPeriod } from '../providers/ChatThreadProvider
 import { useSendTypingNotification } from '../hooks/useSendTypingNotification';
 import { useDisplayName, useUserId } from '../providers/ChatProvider';
 
+/**
+ * Properties for component SendBox supplied from ACS context
+ */
 export type SendBoxPropsFromContext = {
-  disabled: boolean;
+  /** Optional boolean to disable text box */
+  disabled?: boolean;
+  /** Optional text for system message below text box*/
   systemMessage?: string;
-  displayName: string;
-  userId: string;
-  sendMessage: (displayName: string, userId: string, messageContent: string) => Promise<void>;
+  /** Optional callback called when message is sent */
+  onSendMessage: (messageContent: string) => Promise<void>;
+  /** Optional callback called when user is typing */
   onSendTypingNotification: () => Promise<void>;
 };
 
@@ -78,9 +83,7 @@ export const MapToSendBoxProps = (): SendBoxPropsFromContext => {
   return {
     disabled: coolPeriodCountDownInSecond !== -1 && coolPeriodCountDownInSecond < COOL_PERIOD_THRESHOLD,
     systemMessage: coolPeriodMessage,
-    sendMessage: useSendMessage(),
-    userId: useUserId(),
-    displayName: useDisplayName(),
+    onSendMessage: useSendMessage(useDisplayName(), useUserId()),
     onSendTypingNotification: useCallback((): Promise<void> => {
       return onSendTypingNotification(
         lastSentTypingNotificationDate,

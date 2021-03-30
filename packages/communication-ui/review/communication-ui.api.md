@@ -895,16 +895,14 @@ export const SendBox: (props: Pick<{
     onRenderIcon?: ((props: SendBoxProps) => JSX.Element | null) | undefined;
 } & SendBoxPropsFromContext & ErrorHandlingProps, "onErrorCallback" | "supportNewline" | "onRenderIcon" | "onRenderSystemMessage">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
 
-// @public (undocumented)
+// @public
 export const SendBoxComponent: (props: SendBoxProps & ErrorHandlingProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export type SendBoxPropsFromContext = {
-    disabled: boolean;
+    disabled?: boolean;
     systemMessage?: string;
-    displayName: string;
-    userId: string;
-    sendMessage: (displayName: string, userId: string, messageContent: string) => Promise<void>;
+    onSendMessage: (messageContent: string) => Promise<void>;
     onSendTypingNotification: () => Promise<void>;
 };
 
@@ -1155,7 +1153,7 @@ export type UserIdPropsFromContext = {
 export const useScreenShare: () => useScreenShareType;
 
 // @public (undocumented)
-export const useSendMessage: () => (displayName: string, userId: string, messageContent: string) => Promise<void>;
+export const useSendMessage: (displayName: string, userId: string) => (messageContent: string) => Promise<void>;
 
 // @public (undocumented)
 export const useSendReadReceipt: () => (messageId: string) => Promise<void>;

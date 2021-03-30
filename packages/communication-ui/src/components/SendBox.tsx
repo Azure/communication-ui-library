@@ -34,19 +34,12 @@ export type SendBoxProps = {
 const defaultOnRenderSystemMessage = (systemMessage: string | undefined): JSX.Element | undefined =>
   systemMessage ? <Alert attached="bottom" content={systemMessage} /> : undefined;
 
-/**
- * @description `SendBox` is a component for users to type and send messages. An optional message can also be
- * added below the `SendBox`
- * @param props - SendBoxProps
- */
 const SendBoxComponentBase = (props: SendBoxProps & ErrorHandlingProps): JSX.Element => {
   const {
     disabled,
-    displayName,
-    userId,
     systemMessage,
-    supportNewline: supportMultiline,
-    sendMessage,
+    supportNewline,
+    onSendMessage,
     onErrorCallback,
     onSendTypingNotification,
     onRenderIcon
@@ -66,7 +59,7 @@ const SendBoxComponentBase = (props: SendBoxProps & ErrorHandlingProps): JSX.Ele
     }
     // we dont want to send empty messages including spaces, newlines, tabs
     if (!EMPTY_MESSAGE_REGEX.test(textValue)) {
-      sendMessage(displayName, userId, textValue).catch((error) => {
+      onSendMessage(textValue).catch((error) => {
         propagateError(error, onErrorCallback);
       });
       setTextValue('');
@@ -102,7 +95,7 @@ const SendBoxComponentBase = (props: SendBoxProps & ErrorHandlingProps): JSX.Ele
           onChange={setText}
           autoComplete="off"
           onKeyDown={(ev) => {
-            if (ev.key === 'Enter' && (ev.shiftKey === false || !supportMultiline) && !textValueOverflow) {
+            if (ev.key === 'Enter' && (ev.shiftKey === false || !supportNewline) && !textValueOverflow) {
               ev.preventDefault();
               sendMessageOnClick();
             }
@@ -130,6 +123,10 @@ const SendBoxComponentBase = (props: SendBoxProps & ErrorHandlingProps): JSX.Ele
   );
 };
 
+/**
+ * `SendBox` is a component for users to send messages and typing notifications. An optional message
+ * can also be shown below the `SendBox`.
+ */
 export const SendBoxComponent = (props: SendBoxProps & ErrorHandlingProps): JSX.Element =>
   WithErrorHandling(SendBoxComponentBase, props);
 

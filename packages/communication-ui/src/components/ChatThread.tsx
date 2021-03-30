@@ -201,7 +201,7 @@ export type ChatThreadProps = {
    */
   onSendReadReceipt?: () => Promise<void>;
   /**
-   * onRenderReadReceipt event handler. `(readReceiptProps: ReadReceiptProps) => JSX.Element`
+   * onRenderReadReceipt event handler. `(readReceiptProps: ReadReceiptProps) => JSX.Element | null`
    */
   onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element | null;
   /**

@@ -22,11 +22,7 @@ export const SendBoxStoryBookComponent = (): JSX.Element => {
     <div style={{ width: '480px' }}>
       <SendBoxComponent
         disabled={boolean('Block button from sending', false, 'Injected by ACS Context')}
-        sendMessage={async (displayname, userId, message) =>
-          console.log(`sendMessage: Id ${userId} with displayName ${displayname} send a message - ${message} `)
-        }
-        userId={text("Sender's ACS UserId", 'ACS_ID PLACEHOLDER', 'required')}
-        displayName={text("Sender's UserName", 'User Name', 'required')}
+        onSendMessage={async (message) => console.log(`sent a message - ${message} `)}
         onSendTypingNotification={(): Promise<void> => {
           console.log(`sending typing notifications`);
           return Promise.resolve();
