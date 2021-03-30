@@ -30,11 +30,11 @@ const CallScreenComponent = (props: OneToOneCallProps): JSX.Element => {
       <CallControlBarComponent
         layout={'floatingBottom'}
         styles={{
-          root: { background: 'white', zIndex: 99 }
+          root: { background: 'white' }
         }}
         onEndCallClick={endCallHandler}
       />
-      <Stack.Item styles={containerStyles} style={{ zIndex: 0 }}>
+      <Stack.Item styles={containerStyles}>
         {!isLocalScreenSharingOn ? (
           callState === 'Connected' && (
             <Stack horizontal styles={containerStyles}>
