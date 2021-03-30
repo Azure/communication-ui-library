@@ -74,10 +74,12 @@ export type ReadReceipt = ChatMessageReadReceipt & {
     chatMessageId: string;
 };
 
+// @public (undocumented)
+export type TypingIndicator = Omit<TypingIndicatorReceivedEvent, 'receivedOn'> & {
+    senderId: string;
+    receivedOn: Date;
+};
 
-// Warnings were encountered during analysis:
-//
-// src/ChatClientState.ts:23:3 - (ae-forgotten-export) The symbol "TypingIndicator" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 
