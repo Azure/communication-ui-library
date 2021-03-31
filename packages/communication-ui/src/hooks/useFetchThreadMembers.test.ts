@@ -45,11 +45,6 @@ jest.mock('../providers/ChatThreadProvider', () => {
         return mockThreadClient();
       }
     ),
-    useChatClient: jest.fn().mockImplementation(
-      (): ChatClientMock => {
-        return mockChatClient();
-      }
-    ),
     useSetUpdateThreadMembersError: jest.fn(() => jest.fn()),
     useSetThreadMembers: () => mockSetThreadMembers,
     useThreadId: () => 'abcde',
@@ -57,13 +52,18 @@ jest.mock('../providers/ChatThreadProvider', () => {
   };
 });
 
-jest.mock('../providers/ChatProvider', () => {
+jest.mock('../providers/ChatProviderHelper', () => {
   return {
     useChatClient: jest.fn().mockImplementation(
       (): ChatClientMock => {
         return mockChatClient();
       }
-    ),
+    )
+  };
+});
+
+jest.mock('../providers/ChatProvider', () => {
+  return {
     useUserId: () => mockCurrentUser
   };
 });

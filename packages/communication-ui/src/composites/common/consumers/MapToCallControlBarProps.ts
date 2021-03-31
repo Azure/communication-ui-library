@@ -1,18 +1,16 @@
 // © Microsoft Corporation. All rights reserved.
 
 import { HangupCallOptions, PermissionState as DevicePermissionState } from '@azure/communication-calling';
+import { useCallContext, useCallingContext } from '../../../providers';
+import { CommunicationUiErrorCode, CommunicationUiError } from '../../../types';
 import {
-  useCallContext,
-  useCallingContext,
   useSubscribeToDevicePermission,
   useLocalVideo,
   useMicrophone,
   useScreenShare,
   useSubscribeToVideoDeviceList,
-  useGroupCall,
-  CommunicationUiErrorCode,
-  CommunicationUiError
-} from '../../../';
+  useGroupCall
+} from '../../../hooks';
 
 import { useCallback } from 'react';
 

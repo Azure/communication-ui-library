@@ -11,7 +11,7 @@ const mockChatClient = (): ChatClientMock => {
   return createChatClient();
 };
 
-jest.mock('../providers/ChatProvider', () => {
+jest.mock('../providers/ChatProviderHelper', () => {
   return {
     useChatClient: jest.fn().mockImplementation(
       (): ChatClientMock => {

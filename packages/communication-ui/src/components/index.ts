@@ -4,22 +4,13 @@ import SendBox from './SendBox';
 import TypingIndicator, { TypingIndicatorComponent } from './TypingIndicator';
 import { GridLayoutComponent } from './GridLayout';
 import ErrorBar, { ErrorBarComponent } from './ErrorBar';
-import { WithErrorHandling } from '../utils/WithErrorHandling';
 
-export {
-  SendBox,
-  TypingIndicator,
-  TypingIndicatorComponent,
-  GridLayoutComponent,
-  ErrorBar,
-  ErrorBarComponent,
-  WithErrorHandling
-};
+export { SendBox, TypingIndicator, TypingIndicatorComponent, GridLayoutComponent, ErrorBar, ErrorBarComponent };
 
 export { SendBoxComponent } from './SendBox';
 export { ReadReceiptComponent } from './ReadReceipt';
 export type { ReadReceiptProps } from './ReadReceipt';
-export { ChatThreadComponent, ChatThread } from './ChatThread';
+export { ChatThreadComponent, ChatThreadComponentBase, ChatThread } from './ChatThread';
 export type {
   ChatThreadProps,
   ChatThreadStylesProps,
@@ -37,7 +28,12 @@ export {
   screenShareButtonProps,
   optionsButtonProps,
   answerButtonProps,
-  hangupButtonProps
+  hangupButtonProps,
+  labeledVideoButtonProps,
+  labeledAudioButtonProps,
+  labeledScreenShareButtonProps,
+  labeledHangupButtonProps,
+  labeledOptionsButtonProps
 } from './ControlBar';
 
 export { VideoTile } from './VideoTile';

@@ -1,14 +1,14 @@
 {
-  "name": "acs-chat-sample",
+  "name": "chat",
   "version": "0.0.1",
   "private": true,
   "description": "This is a sample application to show how the ACS Chat Web SDK can be used to build a group chat experience. The client-side application is a React based user interface which uses React Hooks for handling complex state while leveraging Microsoft Fluent UI for how things look.",
   "scripts": {
     "build": "react-scripts build",
     "package": "copyfiles -E \"build/**/*\" dist && copyfiles -E -u 3 \"../Server/dist/**/*\" dist",
-    "start": "concurrently \"cd ../Server && npm run start:dev\" \"rush build:watch -T acs-chat-sample\" \"npm run start:app\"",
+    "start": "concurrently \"cd ../Server && rushx start:dev\" \"rush build:watch -T chat\" \"rushx start:app\"",
     "start:app": "rimraf ./build && react-scripts start",
-    "start:debug": "concurrently \"cd ../Server && npm run start:debug\" \"rush build:watch -T acs-chat-sample\" \"npm run start\"",
+    "start:debug": "concurrently \"cd ../Server && rushx start:debug\" \"rush build:watch -T chat\" \"rushx start\"",
     "start:prod": "node dist/server.js",
     "test": "react-scripts test --env=jsdom --watchAll=false",
     "test:watch": "react-scripts test --env=jsdom",

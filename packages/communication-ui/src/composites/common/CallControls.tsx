@@ -129,7 +129,7 @@ export const OutgoingCallControlBar = (props: OutgoingCallControlBarProps & Erro
     <ControlBar {...props}>
       <DefaultButton
         {...videoButtonProps}
-        checked={!localVideoEnabled}
+        checked={localVideoEnabled}
         disabled={cameraDisabled || localVideoBusy}
         onClick={() => {
           toggleLocalVideo().catch((error) => {
@@ -139,7 +139,7 @@ export const OutgoingCallControlBar = (props: OutgoingCallControlBarProps & Erro
       />
       <DefaultButton
         {...audioButtonProps}
-        checked={!isMicrophoneActive}
+        checked={isMicrophoneActive}
         disabled={micDisabled}
         onClick={() => {
           toggleMicrophone().catch((error) => {
@@ -175,7 +175,7 @@ export const IncomingCallControlBar = (
     <ControlBar {...props}>
       <DefaultButton
         {...videoButtonProps}
-        checked={!localVideoEnabled}
+        checked={localVideoEnabled}
         disabled={cameraDisabled || localVideoBusy}
         onClick={() => {
           toggleLocalVideo().catch((error) => {
@@ -185,7 +185,7 @@ export const IncomingCallControlBar = (
       />
       <DefaultButton
         {...audioButtonProps}
-        checked={!isMicrophoneActive}
+        checked={isMicrophoneActive}
         disabled={micDisabled}
         onClick={() => {
           toggleMicrophone().catch((error) => {
@@ -232,7 +232,7 @@ export const CallControlBar = (props: ControlBarProps & CallControlBarProps & Er
     <ControlBar {...props}>
       <DefaultButton
         {...videoButtonProps}
-        checked={!localVideoEnabled}
+        checked={localVideoEnabled}
         disabled={cameraDisabled || localVideoBusy}
         onClick={() => {
           toggleLocalVideo().catch((error) => {
@@ -242,7 +242,7 @@ export const CallControlBar = (props: ControlBarProps & CallControlBarProps & Er
       />
       <DefaultButton
         {...audioButtonProps}
-        checked={!isMicrophoneActive}
+        checked={isMicrophoneActive}
         disabled={micDisabled}
         onClick={() => {
           toggleMicrophone().catch((error) => {
