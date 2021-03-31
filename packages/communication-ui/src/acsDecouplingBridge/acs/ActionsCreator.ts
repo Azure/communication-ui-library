@@ -6,29 +6,7 @@ import { updateDisplayName } from './CallClientReducers';
 import { joinCall, startCamera, stopCamera, toggleCameraOnOff, mute, unmute, toggleMute } from './CallAgentReducers';
 import { setMicrophone, setCamera, queryCameras, queryMicrophones } from './DeviceManagerReducers';
 import { renderLocalVideo } from './RendererReducers';
-import { ChangeEmitter } from './AcsCallingAdapter';
-
-export type CallingStateUpdate = (state: CallingState) => void;
-export type CallingStateUpdateAsync = (state: CallingState) => Promise<void>;
-
-export const isPromise = <T>(obj: any): obj is Promise<T> => {
-  return obj && 'then' in obj;
-};
-
-export const concatCallingStateUpdate = async (
-  updates: (((draft: CallingState) => Promise<CallingStateUpdate | undefined>) | CallingStateUpdate)[]
-): Promise<CallingStateUpdateAsync> => {
-  const concatenated = async (draft: CallingState): Promise<void> => {
-    for (const apply of updates) {
-      const applied = apply(draft);
-      const update = isPromise(applied) ? await applied : applied;
-      if (update) {
-        update(draft);
-      }
-    }
-  };
-  return concatenated;
-};
+import { ChangeEmitter } from './StateUpdates';
 
 // todo fix all async actions to pass statehook so that they can avoid the promise overhead
 export function createActions(

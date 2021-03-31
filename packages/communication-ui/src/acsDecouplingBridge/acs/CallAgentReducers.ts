@@ -3,7 +3,7 @@
 import { AudioOptions, CallAgent, LocalVideoStream } from '@azure/communication-calling';
 import { CallingState } from '../CallingState';
 import { disposeLocalVideo } from './RendererReducers';
-import { CallingStateUpdate } from './ActionsCreator';
+import { CallingStateUpdate } from './StateUpdates';
 
 export const joinCall = async (
   state: Readonly<CallingState>,

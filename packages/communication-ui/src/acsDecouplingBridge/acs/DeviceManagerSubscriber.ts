@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 import { DeviceManager } from '@azure/communication-calling';
-import { ChangeEmitter, UnsubscribeFunction } from './AcsCallingAdapter';
-import { CallingStateUpdate } from './ActionsCreator';
+import { UnsubscribeFunction } from './AzureCommunicationCallingAdapter';
+import { CallingStateUpdate, ChangeEmitter } from './StateUpdates';
 import { CallingState } from '../CallingState';
 import { queryMicrophones, queryCameras } from './DeviceManagerReducers';
 

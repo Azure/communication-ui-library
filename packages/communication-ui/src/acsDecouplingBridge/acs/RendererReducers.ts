@@ -2,7 +2,7 @@
 
 import { Renderer, RendererView, ScalingMode } from '@azure/communication-calling';
 import { CallingState } from '../CallingState';
-import { CallingStateUpdate } from './ActionsCreator';
+import { CallingStateUpdate } from './StateUpdates';
 
 // we might need to keep track of ACS renderers for things like dispose()?
 // maybe React takes care of that for us and we don't need DOM detach logic

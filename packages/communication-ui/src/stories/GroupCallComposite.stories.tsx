@@ -7,7 +7,7 @@ import { text } from '@storybook/addon-knobs';
 import { v1 as createGUID } from 'uuid';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-administration';
 import { CallingAdapter } from '../acsDecouplingBridge/CallingAdapter';
-import { AcsCallingAdapter } from '../acsDecouplingBridge/acs/AcsCallingAdapter';
+import { AzureCommunicationCallingAdapter } from '../acsDecouplingBridge/acs/AzureCommunicationCallingAdapter';
 import { getDocs } from './docs/GroupCallCompositeDocs';
 import { GroupCall } from '../composites';
 import { COMPOSITE_FOLDER_PREFIX } from './constants';
@@ -52,7 +52,7 @@ export const GroupCallComposite: () => JSX.Element = () => {
         const groupId = createGUID();
         console.log(`groupId: ${groupId}`);
         setGroupId(groupId);
-        setCallingAdapter(new AcsCallingAdapter(tokenResponse.token));
+        setCallingAdapter(new AzureCommunicationCallingAdapter(tokenResponse.token));
       } catch (e) {
         console.log('Please provide your connection string');
       }

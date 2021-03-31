@@ -3,11 +3,6 @@
 import { CallingState } from './CallingState';
 import { CallingActions } from './CallingActions';
 
-export interface CallingStateHook {
-  getState: () => Readonly<CallingState>;
-  setState: (state: CallingState) => void;
-}
-
 /**
  * Implement this to hook a calling libary up with composites.
  * Works out of the box with @azure/communication-calling and @azure/communication-ui-selectors

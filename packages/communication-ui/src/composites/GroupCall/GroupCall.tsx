@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { CallBridgeProvider, ErrorProvider, CallBridgeContext } from '../../providers';
+import { CallBridgeProvider, useSelector, useActions, ErrorProvider } from '../../providers';
 import React, { useEffect, useState } from 'react';
 import GroupCallScreen from './GroupCallScreen';
 import ConfigurationScreen from './ConfigurationScreen';
@@ -41,42 +41,52 @@ export default (props: GroupCallCompositeProps): JSX.Element => {
 
   const { userId, displayName, groupId, callingAdapter, onEndCall, onErrorCallback } = props;
 
+  const ConfigOrCall = ({ page: compositePageSubType }): JSX.Element => {
+    const configurationScreenProps = useSelector(({ call }) => {
+      return {
+        isCallInitialized: call.isInitialized,
+        displayName: call.displayName
+      };
+    });
+
+    const configurationScreenActions = useActions((actions) => {
+      return {
+        joinCall: actions.joinCall,
+        updateDisplayName: actions.setDisplayName
+      };
+    });
+
+    switch (page) {
+      case 'configuration': {
+        return (
+          <ConfigurationScreen
+            {...configurationScreenProps}
+            {...configurationScreenActions}
+            screenWidth={screenWidth}
+            startCallHandler={(): void => setPage('groupcall')}
+            groupId={groupId}
+          />
+        );
+      }
+      case 'groupcall': {
+        return (
+          <GroupCallScreen
+            endCallHandler={(): void => (onEndCall ? onEndCall() : setPage('configuration'))}
+            screenWidth={screenWidth}
+            groupId={groupId}
+          />
+        );
+      }
+    }
+  };
+
   return (
     <ErrorProvider onErrorCallback={onErrorCallback}>
       {/* <CallingProvider token={token} callClientOptions={callClientOptions} refreshTokenCallback={refreshTokenCallback}>
         <CallProvider displayName={displayName}> */}
       <CallBridgeProvider userId={userId} callingAdapter={callingAdapter} displayName={displayName}>
         <Stack className={groupCallContainer} grow>
-          {(() => {
-            switch (page) {
-              case 'configuration': {
-                return (
-                  <CallBridgeContext.Consumer>
-                    {({ state: { call }, actions }) => (
-                      <ConfigurationScreen
-                        isCallInitialized={call.isInitialized}
-                        displayName={call.displayName}
-                        joinCall={actions.joinCall}
-                        updateDisplayName={actions.setDisplayName}
-                        screenWidth={screenWidth}
-                        startCallHandler={(): void => setPage('groupcall')}
-                        groupId={groupId}
-                      />
-                    )}
-                  </CallBridgeContext.Consumer>
-                );
-              }
-              case 'groupcall': {
-                return (
-                  <GroupCallScreen
-                    endCallHandler={(): void => (onEndCall ? onEndCall() : setPage('configuration'))}
-                    screenWidth={screenWidth}
-                    groupId={groupId}
-                  />
-                );
-              }
-            }
-          })()}
+          <ConfigOrCall page={page} />
         </Stack>
       </CallBridgeProvider>
       {/* </CallProvider>

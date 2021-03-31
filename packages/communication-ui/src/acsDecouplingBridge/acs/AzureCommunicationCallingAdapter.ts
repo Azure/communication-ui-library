@@ -5,24 +5,24 @@ import { AzureCommunicationUserCredential, CommunicationUserCredential } from '@
 import { AzureLogger } from '@azure/logger';
 import { CallingAdapter } from '../CallingAdapter';
 import { CallingState } from '../CallingState';
-import { createActions, CallingStateUpdate, CallingStateUpdateAsync, isPromise } from './ActionsCreator';
+import { createActions } from './ActionsCreator';
+import { CallingStateUpdate, CallingStateUpdateAsync, ChangeEmitter, isPromise } from './StateUpdates';
 import { CallingActions } from '../CallingActions';
 import { subscribeToDeviceManager } from './DeviceManagerSubscriber';
 import { EventEmitter } from 'events';
 import { createDraft, finishDraft } from 'immer';
 
-export interface AcsCallingAdapterOptions {
+export interface AzureCommunicationCallingAdapterOptions {
   tokenRefresher?: () => Promise<string>;
   logger?: AzureLogger;
 }
 
 export type UnsubscribeFunction = () => void;
-export type ChangeEmitter = (update: CallingStateUpdate | CallingStateUpdateAsync | undefined) => Promise<void>;
 
 /**
  * CallingAdapter for @azure/communication-calling.
  */
-export class AcsCallingAdapter implements CallingAdapter {
+export class AzureCommunicationCallingAdapter implements CallingAdapter {
   private readonly credential: CommunicationUserCredential;
   private callClient!: CallClient;
   private callAgent!: CallAgent;
@@ -41,7 +41,7 @@ export class AcsCallingAdapter implements CallingAdapter {
 
   private unsubscribeFromDeviceManager!: UnsubscribeFunction;
 
-  constructor(token: string, options?: AcsCallingAdapterOptions) {
+  constructor(token: string, options?: AzureCommunicationCallingAdapterOptions) {
     this.logger = options?.logger;
     this.credential = options?.tokenRefresher
       ? new AzureCommunicationUserCredential({

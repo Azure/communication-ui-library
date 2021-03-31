@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 import React from 'react';
 import { ErrorHandlingProps } from '../../providers/ErrorProvider';
-import { CallBridgeContext } from '../../providers/CallBridgeProvider';
+import { useSelector, useActions } from '../../providers/CallBridgeProvider';
 import { WithErrorHandling } from '../../components';
 import { SetupContainerProps } from '../../consumers';
 import { CallConfiguration } from './CallConfiguration';
@@ -16,58 +16,73 @@ export interface ConfigurationScreenProps extends SetupContainerProps {
 }
 
 const ConfigurationComponentBase = (props: ConfigurationScreenProps): JSX.Element => {
-  const { startCallHandler, joinCall, groupId } = props;
+  const { startCallHandler, joinCall, groupId, isCallInitialized, screenWidth, displayName, updateDisplayName } = props;
+  const localPreviewProps = useSelector(({ devices, call }) => {
+    // obviously, LocalPreview demands more props than it actually needs
+    // todo: fix
+    return {
+      audioDeviceInfo: devices.selectedMicrophone,
+      audioDeviceList: devices.microphones,
+      videoDeviceInfo: devices.selectedCamera,
+      videoDeviceList: devices.cameras,
+      localVideoBusy: false, // I don't think this flag should be in the global state
+      localVideoElement: call.localVideoElement,
+      localVideoStream: call.localVideoStream
+      // do we need to specify onErrorCallback here?
+    };
+  });
+
+  const localPreviewActions = useActions((actions) => {
+    return {
+      updateAudioDeviceInfo: actions.setMicrophone,
+      updateLocalVideoStream: actions.setCamera,
+      toggleLocalVideo: actions.toggleCameraOnOff,
+      toggleMicrophone: actions.toggleMute,
+      renderLocalVideo: actions.renderLocalVideo
+    };
+  });
+
+  const localDeviceSettingsProps = useSelector(({ devices }) => {
+    return {
+      audioDeviceList: devices.microphones,
+      audioDeviceInfo: devices.selectedMicrophone,
+      videoDeviceList: devices.cameras,
+      videoDeviceInfo: devices.selectedCamera
+    };
+  });
+
+  const localDeviceSettingsActions = useActions((actions) => {
+    return {
+      updateLocalVideoStream: actions.setCamera,
+      updateAudioDeviceInfo: actions.setMicrophone,
+      queryCameras: actions.queryCameras,
+      queryMicrophones: actions.queryMicrophones
+    };
+  });
 
   return (
-    <CallBridgeContext.Consumer>
-      {({ state: { devices, call }, actions }) => (
-        <CallConfiguration
-          // {...useSelector(callConfigSelector)}
-          {...props}
-          localPreviewElement={
-            // obviously, LocalPreview demands more props than it actually needs
-            // todo: fix
-            <LocalPreview
-              audioDeviceInfo={devices.selectedMicrophone}
-              audioDeviceList={devices.microphones}
-              videoDeviceInfo={devices.selectedCamera}
-              videoDeviceList={devices.cameras}
-              updateAudioDeviceInfo={actions.setMicrophone}
-              updateLocalVideoStream={actions.setCamera}
-              toggleLocalVideo={actions.toggleCameraOnOff}
-              toggleMicrophone={actions.toggleMute}
-              localVideoBusy={false} // I don't think this flag should be in the global state
-              renderLocalVideo={actions.renderLocalVideo}
-              localVideoElement={call.localVideoElement}
-              localVideoStream={call.localVideoStream}
-              // do we need to specify onErrorCallback here?
-            />
-          }
-        >
-          <div>
-            <LocalDeviceSettings
-              audioDeviceList={devices.microphones}
-              audioDeviceInfo={devices.selectedMicrophone}
-              videoDeviceList={devices.cameras}
-              videoDeviceInfo={devices.selectedCamera}
-              updateLocalVideoStream={actions.setCamera}
-              updateAudioDeviceInfo={actions.setMicrophone}
-              queryCameras={actions.queryCameras}
-              queryMicrophones={actions.queryMicrophones}
-            />
-          </div>
-          <div>
-            <StartCallButton
-              onClickHandler={() => {
-                startCallHandler();
-                joinCall(groupId);
-              }}
-              isDisabled={false}
-            />
-          </div>
-        </CallConfiguration>
-      )}
-    </CallBridgeContext.Consumer>
+    <CallConfiguration
+      isCallInitialized={isCallInitialized}
+      screenWidth={screenWidth}
+      startCallHandler={startCallHandler}
+      displayName={displayName}
+      updateDisplayName={updateDisplayName}
+      joinCall={joinCall}
+      localPreviewElement={<LocalPreview {...localPreviewProps} {...localPreviewActions} />}
+    >
+      <div>
+        <LocalDeviceSettings {...localDeviceSettingsProps} {...localDeviceSettingsActions} />
+      </div>
+      <div>
+        <StartCallButton
+          onClickHandler={() => {
+            startCallHandler();
+            joinCall(groupId);
+          }}
+          isDisabled={false}
+        />
+      </div>
+    </CallConfiguration>
   );
 };
 

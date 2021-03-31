@@ -3,7 +3,7 @@
 import { AudioDeviceInfo, VideoDeviceInfo, CallAgent, DeviceManager } from '@azure/communication-calling';
 import { CallingState } from '../CallingState';
 import { startCamera, stopCamera } from './CallAgentReducers';
-import { CallingStateUpdate, concatCallingStateUpdate } from './ActionsCreator';
+import { CallingStateUpdate, concatCallingStateUpdate } from './StateUpdates';
 
 export const setCamera = async (
   state: Readonly<CallingState>,

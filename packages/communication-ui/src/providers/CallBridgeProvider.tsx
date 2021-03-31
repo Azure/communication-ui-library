@@ -1,12 +1,13 @@
 // © Microsoft Corporation. All rights reserved.
 
-import React, { createContext, useEffect, useState, useRef } from 'react';
+import React, { createContext, useEffect, useState, useRef, useContext } from 'react';
 import { CallingState, emptyCallingState } from '../acsDecouplingBridge/CallingState';
 import { CallingActions, noopCallingActions } from '../acsDecouplingBridge/CallingActions';
 import { CallingAdapter } from '../acsDecouplingBridge/CallingAdapter';
 import { ErrorHandlingProps } from './ErrorProvider';
 import { WithErrorHandling } from '../utils/WithErrorHandling';
 import { produce } from 'immer';
+import { StateStore } from './StateStore';
 
 export interface CallBridgeProviderProps {
   children: React.ReactNode;
@@ -16,59 +17,20 @@ export interface CallBridgeProviderProps {
   transformStateBeforeUpdate?: (state: CallingState) => CallingState;
 }
 
-const isCallingState = (obj: CallingState | ((prev: CallingState) => CallingState)): obj is CallingState => {
-  return typeof obj === 'object';
-};
-
-class CallingStateStore {
-  private state: CallingState;
-  private readonly triggerRender: (state: CallingState) => void;
-  private readonly transform: ((state: CallingState) => CallingState) | undefined;
-
-  constructor(
-    state: CallingState,
-    triggerRender: (state: CallingState) => void,
-    transform?: (state: CallingState) => CallingState
-  ) {
-    this.state = state;
-    this.triggerRender = triggerRender;
-    this.transform = transform;
-  }
-
-  getCallingState = (): CallingState => {
-    return this.state;
-  };
-
-  setCallingState = (newState: CallingState | ((prev: CallingState) => CallingState)): void => {
-    const value = isCallingState(newState) ? newState : newState(this.state);
-    const transformedValue = this.transform ? this.transform(value) : value;
-
-    if (this.state === transformedValue) return;
-
-    this.state = transformedValue;
-    this.triggerRender(transformedValue);
-  };
-}
-
 export interface CallBridgeContextValue {
-  state: CallingState;
+  store: StateStore<CallingState>;
   actions: CallingActions;
 }
 
-export const CallBridgeContext = createContext<CallBridgeContextValue>({
-  state: emptyCallingState,
-  actions: noopCallingActions
-});
+export const CallBridgeContext = createContext<CallBridgeContextValue | undefined>(undefined);
 
 const CallProviderBase = (props: CallBridgeProviderProps): JSX.Element => {
   const { userId, displayName, callingAdapter, transformStateBeforeUpdate: transformState, children } = props;
-  const [state, setState] = useState<CallingState>(emptyCallingState);
   const [actions, setActions] = useState<CallingActions>(noopCallingActions);
-  const store = useRef(new CallingStateStore(emptyCallingState, setState, transformState));
-  // do this to fix stale state dependencies when effects run in the same render cycle
-  // can we avoid useState for the state, and only trigger a render and always retrieve from the store?
-  const readState = store.current.getCallingState;
-  const writeState = store.current.setCallingState;
+  const store = useRef(new StateStore(emptyCallingState, transformState));
+
+  const readState = store.current.getState;
+  const writeState = store.current.setState;
   const isInitializing = useRef(false);
 
   useEffect(() => {
@@ -90,7 +52,6 @@ const CallProviderBase = (props: CallBridgeProviderProps): JSX.Element => {
       isInitializing.current = false;
     })();
     return () => {
-      // ToDo gets called all the time, find out why or find better place to tear down the calling stack
       console.log('unmount CallBridgeContext');
       writeState((prev) =>
         produce(prev, (draft) => {
@@ -114,10 +75,33 @@ const CallProviderBase = (props: CallBridgeProviderProps): JSX.Element => {
   }, [userId, actions, readState, writeState]);
 
   // {declarative callstate, default handlers, composite state}
-  return <CallBridgeContext.Provider value={{ state, actions }}>{children}</CallBridgeContext.Provider>;
+  return <CallBridgeContext.Provider value={{ store: store.current, actions }}>{children}</CallBridgeContext.Provider>;
 };
 
 export const CallBridgeProvider = (props: CallBridgeProviderProps & ErrorHandlingProps): JSX.Element =>
   WithErrorHandling(CallProviderBase, props);
 
-// export const useCallBridgeContext = (): CallingState => useContext(CallBridgeContext)!;
+export const useSelector = <T extends Record<string, unknown>>(select: (state: CallingState) => T): T => {
+  const store = useContext(CallBridgeContext)?.store;
+  if (!store) {
+    console.warn('Using context before initialized');
+  }
+  const [state, setState] = useState(store?.getState());
+
+  useEffect(() => {
+    const unsubscribe = store?.onStateChange((state: CallingState) => {
+      setState(state);
+    });
+    return unsubscribe;
+  }, [store, setState]);
+
+  return select(state ?? emptyCallingState);
+};
+
+export const useActions = <T extends Record<string, any>>(createActions: (actions: CallingActions) => T): T => {
+  const context = useContext(CallBridgeContext);
+  if (!context) {
+    console.warn('Using context before initialized');
+  }
+  return createActions(context?.actions ?? noopCallingActions);
+};
