@@ -16,10 +16,12 @@ export const videoContainerStyles: IStyle = {
   minWidth: '100%',
   minHeight: '100%',
   objectPosition: 'center',
-  objectFit: 'cover'
+  objectFit: 'cover',
+  zIndex: 0
 };
 
 export const overlayContainerStyles: IStyle = {
   width: '100%',
-  height: '100%'
+  height: '100%',
+  zIndex: 5
 };
