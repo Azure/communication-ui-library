@@ -72,7 +72,7 @@ export const ControlBarComponent: () => JSX.Element = () => {
 
 export default {
   title: `${COMPONENT_FOLDER_PREFIX}/ControlBar`,
-  component: ControlBarComponent,
+  component: ControlBar,
   parameters: {
     docs: {
       page: () => getDocs()

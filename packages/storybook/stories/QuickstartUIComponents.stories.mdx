@@ -71,9 +71,9 @@ The following classes and interfaces handle some of the major features of the Az
 | ----------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
 | [FluentThemeProvider](/?path=/story/theming--page)                            | Provider that controls Theming on the components. Can be used to override theme          |
 | [GridLayout](/?path=/story/ui-components-gridlayout--grid-layout-component)   | Base component that organizes video tiles into a grid                                    |
-| [Video Tile](/?path=/story/ui-components-videotile--video-tile-component)     | Base component to render participants either with or without video                       |
+| [Video Tile](/?path=/story/ui-components-VideoTile--video-tile-component)     | Base component to render participants either with or without video                       |
 | [ControlBar](/?path=/story/ui-components-controlbar--control-bar-component)   | Base component to control call including mute, video, share screen                       |
-| [ChatThread](/?path=/docs/ui-components-chatthread--chat-thread-component)    | Base component that renders a chat thread with typing indicators, read receipts, etc.    |
+| [MessageThread](/?path=/docs/ui-components-chatthread--chat-thread-component) | Base component that renders a chat thread with typing indicators, read receipts, etc.    |
 | [SendBox](/?path=/story/ui-components-sendbox--send-box-story-book-component) | Base component that allows user to input messages that will be sent to the joined thread |
 
 ## Set Up Fluent Theme Provider
@@ -109,7 +109,7 @@ You can add extra layout and styling around the components.
 
 ```jsx
 import {
-  GridLayoutComponent,
+  GridLayout,
   VideoTile,
   ControlBar,
   videoButtonProps,
@@ -140,11 +140,11 @@ export function CallingComponents() {
     <Stack>
       {/* GridLayout Component relies on the parent's height and width, so it's required to set the height and width on its parent. */}
       <div style={{ height: '30rem', width: '30rem', border: '1px solid' }}>
-        <GridLayoutComponent>
+        <GridLayout>
           <VideoTile isVideoReady={false} videoProvider={null} avatarName={'Michael'}>
             <label>Michael</label>
           </VideoTile>
-        </GridLayoutComponent>
+        </GridLayout>
       </div>
 
       {/* Control Bar with default set up */}
@@ -176,14 +176,14 @@ For this example we added a single `Video Tile` to the grid, but additional can 
 
 ## Add Chat UI Components
 
-For Chat, we will use the [`ChatThread`](/?path=/docs/ui-components-chatthread--chat-thread-component) and [`SendBox`](/?path=/docs/ui-components-sendbox--send-box-story-book-component) components.
+For Chat, we will use the [`MessageThread`](/?path=/docs/ui-components-chatthread--chat-thread-component) and [`SendBox`](/?path=/docs/ui-components-sendbox--send-box-story-book-component) components.
 To start, in the `src` folder, create a new file called `ChatComponents.tsx`.
 Here we'll initialize a function component that will hold our base components to then import in `app.tsx`.
 
 `ChatComponents.tsx`
 
 ```jsx
-import {ChatThreadComponentBase, ChatMessage as WebUiChatMessage, SendBoxComponent, MessageStatus } from '@azure/communication-ui'
+import {MessageThread, ChatMessage as WebUiChatMessage, SendBox, MessageStatus } from '@azure/communication-ui'
 
 export const ChatComponents = () => {
   //A sample chat history
@@ -223,13 +223,13 @@ export const ChatComponents = () => {
   return (
     <div style = {{height: '30rem', width: '30rem'}}>
       {/* Chat thread component with read receipt feature enabled */}
-      <ChatThreadComponentBase
+      <MessageThread
         userId={'1'}
         chatMessages={GetHistoryChatMessages()}
         disableReadReceipt={false}
       />
 
-      <SendBoxComponent
+      <SendBox
         disabled={false}
         sendMessage={async () => { return }}
         userId='ACS_ID PLACEHOLDER'

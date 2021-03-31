@@ -18,7 +18,7 @@ export const messageAvatarContainerStyle = (backgroundColor: string): string =>
     fontSize: '1rem' // 16px
   });
 
-export const chatThreadContainerStyle = mergeStyles({
+export const messageThreadContainerStyle = mergeStyles({
   height: '100%',
   width: '100%',
   maxHeight: '100%',

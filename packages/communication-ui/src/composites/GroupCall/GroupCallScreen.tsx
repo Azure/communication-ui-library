@@ -13,14 +13,14 @@ import {
 } from './styles/GroupCallScreen.styles';
 
 import MediaGallery from './MediaGallery';
-import { connectFuncsToContext } from '../../consumers/ConnectContext';
+import { connectFuncsToContext, MapToErrorBarProps } from '../../consumers';
 import { isInCall } from '../../utils/SDKUtils';
 import { GroupCallContainerProps, MapToGroupCallProps } from './consumers/MapToGroupCallProps';
 import { MediaControls } from './MediaControls';
 import { MINI_HEADER_WINDOW_WIDTH } from '../../constants';
 import { ErrorHandlingProps } from '../../providers/ErrorProvider';
 import { WithErrorHandling } from '../../utils/WithErrorHandling';
-import ErrorBar from '../../components/ErrorBar';
+import { ErrorBar as ErrorBarComponent } from '../../components/ErrorBar';
 
 export interface GroupCallProps extends GroupCallContainerProps {
   screenWidth: number;
@@ -32,6 +32,8 @@ const spinnerLabel = 'Initializing call client...';
 
 const GroupCallComponentBase = (props: GroupCallProps & ErrorHandlingProps): JSX.Element => {
   const { isCallInitialized, callState, isLocalScreenSharingOn, groupId, screenWidth, endCallHandler } = props;
+
+  const ErrorBar = connectFuncsToContext(ErrorBarComponent, MapToErrorBarProps);
 
   useEffect(() => {
     if (isInCall(callState)) {

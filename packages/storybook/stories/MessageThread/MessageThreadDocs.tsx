@@ -5,7 +5,7 @@ import React from 'react';
 import {
   FluentThemeProvider,
   THEMES,
-  ChatThreadComponentBase,
+  MessageThread,
   ChatMessage as WebUiChatMessage,
   MessageStatus
 } from '@azure/communication-ui';
@@ -13,9 +13,9 @@ import { Persona, PersonaPresence, PersonaSize } from '@fluentui/react';
 
 const importStatement = `
 import React from 'react';
-// We need to wrap ChatThread component with the FluentThemeProvider and pass the THEMES you'd like to use to the provider.
+// We need to wrap MessageThread component with the FluentThemeProvider and pass the THEMES you'd like to use to the provider.
 import {
-  ChatThreadComponentBase,
+  MessageThread,
   ChatMessage as WebUiChatMessage,
   MessageStatus,
   FluentThemeProvider,
@@ -60,12 +60,12 @@ const GetHistoryChatMessages = (): WebUiChatMessage[] => {
 };
 `;
 
-const defaultChatThreadUsageCode = `
-const DefaultChatThreadExample: () => JSX.Element = () => {
+const defaultMessageThreadUsageCode = `
+const DefaultMessageThreadExample: () => JSX.Element = () => {
   // userId and chatMessages are required props.
   return (
     <FluentThemeProvider fluentTheme={THEMES['light']}>
-      <ChatThreadComponentBase
+      <MessageThread
         userId={'1'}
         chatMessages={GetHistoryChatMessages()}
       />
@@ -75,12 +75,12 @@ const DefaultChatThreadExample: () => JSX.Element = () => {
 `;
 
 const chatThreadWithReadReceiptUsageCode = `
-const ChatThreadWithReadReceiptExample: () => JSX.Element = () => {
+const MessageThreadWithReadReceiptExample: () => JSX.Element = () => {
   // Show the read receipt of messages that I sent by setting 'disableReadReceipt' prop to be false.
-  // You can also set your own read receipt component by passing in onRenderReadReceipt of type (readReceiptProps: ReadReceiptProps) => JSX.Element.
+  // You can also set your own read receipt component by passing in onRenderReadReceipt of type (readReceiptComponentProps: ReadReceiptProps) => JSX.Element.
   return (
     <FluentThemeProvider fluentTheme={THEMES['light']}>
-      <ChatThreadComponentBase userId={'1'} chatMessages={GetHistoryChatMessages()} disableReadReceipt={false}/>
+      <MessageThread userId={'1'} chatMessages={GetHistoryChatMessages()} disableReadReceipt={false}/>
     </FluentThemeProvider>
   );
 };
@@ -89,11 +89,11 @@ const ChatThreadWithReadReceiptExample: () => JSX.Element = () => {
 const chatThreadWithCustomAvatarExample = `
 import { Persona, PersonaPresence, PersonaSize } from '@fluentui/react';
 
-const ChatThreadWithCustomAvatarExample: () => JSX.Element = () => {
+const MessageThreadWithCustomAvatarExample: () => JSX.Element = () => {
   // Customize the Avatar of other participants to be a Persona component from Fluent and show the presence status on the avatar.
   return (
     <FluentThemeProvider fluentTheme={THEMES['light']}>
-      <ChatThreadComponentBase
+      <MessageThread
         userId={'1'}
         chatMessages={GetHistoryChatMessages()}
         onRenderAvatar={(userId: string) => {
@@ -145,28 +145,28 @@ export const GetHistoryChatMessages = (): WebUiChatMessage[] => {
   ];
 };
 
-const DefaultChatThreadExample: () => JSX.Element = () => {
+const DefaultMessageThreadExample: () => JSX.Element = () => {
   return (
     <FluentThemeProvider fluentTheme={THEMES['light']}>
-      <ChatThreadComponentBase userId={'1'} chatMessages={GetHistoryChatMessages()} />
+      <MessageThread userId={'1'} chatMessages={GetHistoryChatMessages()} />
     </FluentThemeProvider>
   );
 };
 
-const ChatThreadWithReadReceiptExample: () => JSX.Element = () => {
+const MessageThreadWithReadReceiptExample: () => JSX.Element = () => {
   // Show the read receipt of messages that I sent by setting 'disableReadReceipt' prop to be false.
   return (
     <FluentThemeProvider fluentTheme={THEMES['light']}>
-      <ChatThreadComponentBase userId={'1'} chatMessages={GetHistoryChatMessages()} disableReadReceipt={false} />
+      <MessageThread userId={'1'} chatMessages={GetHistoryChatMessages()} disableReadReceipt={false} />
     </FluentThemeProvider>
   );
 };
 
-const ChatThreadWithCustomAvatarExample: () => JSX.Element = () => {
+const MessageThreadWithCustomAvatarExample: () => JSX.Element = () => {
   // Customize the Avatar of other participants to be a Persona component from Fluent and show the presence status on the avatar.
   return (
     <FluentThemeProvider fluentTheme={THEMES['light']}>
-      <ChatThreadComponentBase
+      <MessageThread
         userId={'1'}
         chatMessages={GetHistoryChatMessages()}
         onRenderAvatar={(userId: string) => {
@@ -182,25 +182,25 @@ const ChatThreadWithCustomAvatarExample: () => JSX.Element = () => {
 export const getDocs: () => JSX.Element = () => {
   return (
     <>
-      <Title>ChatThread</Title>
-      <Description of={ChatThreadComponentBase} />
+      <Title>MessageThread</Title>
+      <Description of={MessageThread} />
       <Heading>Importing</Heading>
       <Source code={importStatement} />
       <Heading>Sample Messages</Heading>
       <Source code={dataStatement} />
-      <Heading>Default ChatThread</Heading>
+      <Heading>Default MessageThread</Heading>
       <Canvas>
-        <DefaultChatThreadExample />
+        <DefaultMessageThreadExample />
       </Canvas>
-      <Source code={defaultChatThreadUsageCode} />
+      <Source code={defaultMessageThreadUsageCode} />
       <Heading>Read Receipt</Heading>
       <Canvas>
-        <ChatThreadWithReadReceiptExample />
+        <MessageThreadWithReadReceiptExample />
       </Canvas>
       <Source code={chatThreadWithReadReceiptUsageCode} />
       <Heading>Customized Avatar</Heading>
       <Canvas>
-        <ChatThreadWithCustomAvatarExample />
+        <MessageThreadWithCustomAvatarExample />
       </Canvas>
       <Source code={chatThreadWithCustomAvatarExample} />
       <Description>
@@ -208,7 +208,7 @@ export const getDocs: () => JSX.Element = () => {
         [Persona](https://developer.microsoft.com/en-us/fluentui#/controls/web/persona) component
       </Description>
       <Heading>Props</Heading>
-      <Props of={ChatThreadComponentBase} />
+      <Props of={MessageThread} />
     </>
   );
 };

@@ -8,7 +8,7 @@ export const getDocs: () => JSX.Element = () => {
   import React from 'react';
   import {
     FluentThemeProvider,
-    GridLayoutComponent,
+    GridLayout,
     VideoTile,
     ControlBar,
     videoButtonProps, audioButtonProps, screenShareButtonProps, hangupButtonProps
@@ -78,11 +78,11 @@ export const getDocs: () => JSX.Element = () => {
             width: '830px'
           }}
         >
-          <GridLayoutComponent>
+          <GridLayout>
             <VideoTile isVideoReady={false} videoProvider={null} avatarName={'Michael'}>
               <label>Michael</label>
             </VideoTile>
-          </GridLayoutComponent>
+          </GridLayout>
         </div>
         </FluentThemeProvider>
       );
