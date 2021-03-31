@@ -9,7 +9,6 @@ import {
   iconStyle,
   imgStyle,
   listStyle,
-  moreInfoStyle,
   nestedStackTokens,
   startChatTextStyle,
   upperStackStyle,
@@ -49,7 +48,8 @@ export default (): JSX.Element => {
   const listItems = [
     'Launch a conversation with a single click',
     'Real-time messaging with indicators',
-    'Invite up to 250 participants'
+    'Invite up to 250 participants',
+    'Learn more about this'
   ];
 
   const [homeScreenState, setHomeScreenState] = useState<number>(HOMESCREEN_SHOWING_START_CHAT_BUTTON);
@@ -95,6 +95,10 @@ export default (): JSX.Element => {
                 <li tabIndex={0}>
                   <Icon className={iconStyle} iconName={iconName} /> {listItems[2]}
                 </li>
+                <li tabIndex={0}>
+                  <Icon className={iconStyle} iconName={iconName} /> {listItems[3]}{' '}
+                  <Link href="https://docs.microsoft.com/en-us/azure/communication-services/overview">sample</Link>
+                </li>
               </ul>
             </Stack>
             <PrimaryButton
@@ -118,11 +122,6 @@ export default (): JSX.Element => {
             {...imageProps}
           />
         </Stack>
-        <div className={moreInfoStyle}>
-          <Link href="https://docs.microsoft.com/en-us/azure/communication-services/overview">
-            Learn more about this sample
-          </Link>
-        </div>
       </div>
     );
   };

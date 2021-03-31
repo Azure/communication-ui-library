@@ -69,14 +69,6 @@ export const upperStackStyle = mergeStyles({
   }
 });
 
-export const moreInfoStyle = mergeStyles({
-  color: '#303030',
-  opacity: 0.8,
-  marginTop: '0.625rem',
-  fontSize: '0.75rem', // 12px
-  fontWeight: 400
-});
-
 export const startChatTextStyle = mergeStyles({
   fontSize: '0.875rem' // 14px
 });

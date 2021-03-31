@@ -25,7 +25,7 @@ export interface CommandPanelProps {
 
 export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
   return (
-    <Stack styles={fullHeightStyles}>
+    <Stack styles={fullHeightStyles} tokens={{ childrenGap: '1.5rem' }}>
       <Stack.Item className={paneHeaderStyle}>
         <div className={paneHeaderTextStyle}>{props.selectedPane}</div>
       </Stack.Item>
@@ -47,7 +47,7 @@ export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
         </Stack.Item>
       )}
       {props.selectedPane === CommandPanelTypes.Settings && (
-        <Stack.Item style={{ marginTop: '1.5rem' }}>
+        <Stack.Item>
           <div className={settingsContainerStyle}>
             <ThemeSelector label="Theme" />
           </div>
