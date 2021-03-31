@@ -2,11 +2,11 @@
 
 import React from 'react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
-import { ParticipantItemComponent, ParticipantItemComponentProps } from '@azure/communication-ui';
+import { ParticipantItem, ParticipantItemProps } from '@azure/communication-ui';
 import { IContextualMenuItem, PersonaPresence, Icon } from '@fluentui/react';
 
 const importStatement = `
-import { ParticipantItemComponent } from '@azure/communication-ui';
+import { ParticipantItem } from '@azure/communication-ui';
 import { IContextualMenuItem, PersonaPresence } from '@fluentui/react';`;
 
 const ParticipantItemComponentExample: () => JSX.Element = () => {
@@ -23,7 +23,7 @@ const ParticipantItemComponentExample: () => JSX.Element = () => {
     }
   ];
 
-  return <ParticipantItemComponent name="Johnny Bravo" menuItems={menuItems} presence={PersonaPresence.online} />;
+  return <ParticipantItem name="Johnny Bravo" menuItems={menuItems} presence={PersonaPresence.online} />;
 };
 
 const exampleCode = `
@@ -41,7 +41,7 @@ const menuItems: IContextualMenuItem[] = [
 ];
 
 return (
-  <ParticipantItemComponent
+  <ParticipantItem
     name="Johnny Bravo"
     menuItems={menuItems}
     presence={PersonaPresence.online}
@@ -65,7 +65,7 @@ const CustomAvatarExample: () => JSX.Element = () => {
   };
   return (
     <div style={{ width: '200px' }}>
-      <ParticipantItemComponent name="Annie Lindqvist" onRenderAvatar={onRenderAvatar} />
+      <ParticipantItem name="Annie Lindqvist" onRenderAvatar={onRenderAvatar} />
     </div>
   );
 };
@@ -85,12 +85,12 @@ const onRenderAvatar = (): JSX.Element => {
   );
 };
 <div style={{ width: '200px' }}>
-  <ParticipantItemComponent name="Annie Lindqvist" onRenderAvatar={onRenderAvatar} />
+  <ParticipantItem name="Annie Lindqvist" onRenderAvatar={onRenderAvatar} />
 </div>
 `;
 
 const CustomIconExample: () => JSX.Element = () => {
-  const onRenderIcon = (props?: ParticipantItemComponentProps): JSX.Element | null => {
+  const onRenderIcon = (props?: ParticipantItemProps): JSX.Element | null => {
     // eslint-disable-next-line react/prop-types
     if (props?.name === 'Patrick') {
       return <Icon iconName="FavoriteStar" />;
@@ -102,15 +102,15 @@ const CustomIconExample: () => JSX.Element = () => {
   };
   return (
     <div style={{ width: '200px' }}>
-      <ParticipantItemComponent name="Spongebob" isYou={true} onRenderIcon={onRenderIcon} />
-      <ParticipantItemComponent name="Patrick" onRenderIcon={onRenderIcon} />
-      <ParticipantItemComponent name="Sandy" onRenderIcon={onRenderIcon} />
+      <ParticipantItem name="Spongebob" isYou={true} onRenderIcon={onRenderIcon} />
+      <ParticipantItem name="Patrick" onRenderIcon={onRenderIcon} />
+      <ParticipantItem name="Sandy" onRenderIcon={onRenderIcon} />
     </div>
   );
 };
 
 const customIconCode = `
-const onRenderIcon = (props?: ParticipantItemComponentProps): JSX.Element | null => {
+const onRenderIcon = (props?: ParticipantItemProps): JSX.Element | null => {
   if (props?.name === 'Patrick') {
     return <Icon iconName="FavoriteStar" />;
   } else if (props?.isYou) {
@@ -120,9 +120,9 @@ const onRenderIcon = (props?: ParticipantItemComponentProps): JSX.Element | null
 };
 return (
   <div style={{ width: '200px' }}>
-    <ParticipantItemComponent name="Spongebob" isYou={true} onRenderIcon={onRenderIcon} />
-    <ParticipantItemComponent name="Patrick" onRenderIcon={onRenderIcon} />
-    <ParticipantItemComponent name="Sandy" onRenderIcon={onRenderIcon} />
+    <ParticipantItem name="Spongebob" isYou={true} onRenderIcon={onRenderIcon} />
+    <ParticipantItem name="Patrick" onRenderIcon={onRenderIcon} />
+    <ParticipantItem name="Sandy" onRenderIcon={onRenderIcon} />
   </div>
 );
 `;
@@ -130,10 +130,9 @@ return (
 export const getDocs: () => JSX.Element = () => {
   return (
     <>
-      <Title>ParticipantItemComponent</Title>
+      <Title>ParticipantItem</Title>
       <Description>
-        The ParticipantItemComponent component represents a user and displays their avatar, name, status and additional
-        icons.
+        The ParticipantItem component represents a user and displays their avatar, name, status and additional icons.
       </Description>
       <Heading>Importing</Heading>
       <Source code={importStatement} />
@@ -156,7 +155,7 @@ export const getDocs: () => JSX.Element = () => {
         <CustomIconExample />
       </Canvas>
       <Heading>Props</Heading>
-      <Props of={ParticipantItemComponent} />
+      <Props of={ParticipantItem} />
     </>
   );
 };

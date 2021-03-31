@@ -8,9 +8,9 @@ export const getDocs: () => JSX.Element = () => {
   import React from 'react';
   import {
     FluentThemeProvider,
-    GridLayoutComponent,
-    VideoTileComponent,
-    ControlBarComponent,
+    GridLayout,
+    VideoTile,
+    ControlBar,
     videoButtonProps, audioButtonProps, screenShareButtonProps, hangupButtonProps
   } from '@azure/communication-ui';
   import { DefaultButton } from '@fluentui/react';
@@ -45,7 +45,7 @@ export const getDocs: () => JSX.Element = () => {
       return (
         <FluentThemeProvider fluentTheme={ TeamsTheme } >
           {/*Control Bar with default set up*/}
-          <ControlBarComponent layout={'dockedTop'}>
+          <ControlBar layout={'dockedTop'}>
             <DefaultButton
                 {...videoButtonProps}
                 onClick={() => {
@@ -70,7 +70,7 @@ export const getDocs: () => JSX.Element = () => {
                     /*handle onClick*/
                 }}
             />
-          </ControlBarComponent>
+          </ControlBar>
           {/*Control Bar with default set up*/}
           <div
           style={{
@@ -78,11 +78,11 @@ export const getDocs: () => JSX.Element = () => {
             width: '830px'
           }}
         >
-          <GridLayoutComponent>
-            <VideoTileComponent isVideoReady={false} videoProvider={null} avatarName={'Michael'}>
+          <GridLayout>
+            <VideoTile isVideoReady={false} videoProvider={null} avatarName={'Michael'}>
               <label>Michael</label>
-            </VideoTileComponent>
-          </GridLayoutComponent>
+            </VideoTile>
+          </GridLayout>
         </div>
         </FluentThemeProvider>
       );

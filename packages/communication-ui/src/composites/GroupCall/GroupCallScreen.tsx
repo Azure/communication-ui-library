@@ -20,7 +20,7 @@ import { MediaControls } from './MediaControls';
 import { MINI_HEADER_WINDOW_WIDTH } from '../../constants';
 import { ErrorHandlingProps } from '../../providers/ErrorProvider';
 import { WithErrorHandling } from '../../utils/WithErrorHandling';
-import { ErrorBarComponent } from '../../components/ErrorBar';
+import { ErrorBar as ErrorBarComponent } from '../../components/ErrorBar';
 
 export interface GroupCallProps extends GroupCallContainerProps {
   screenWidth: number;

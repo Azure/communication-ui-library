@@ -4,12 +4,12 @@ import { ErrorHandlingProps } from '../providers/ErrorProvider';
 import React, { useEffect, useRef } from 'react';
 import { invertedVideoStyle, mediaContainer } from './styles/StreamMedia.styles';
 
-export interface StreamMediaComponentProps {
+export interface StreamMediaProps {
   videoStreamElement: HTMLElement | null;
   invertVideo?: boolean;
 }
 
-export const StreamMediaComponent = (props: StreamMediaComponentProps & ErrorHandlingProps): JSX.Element => {
+export const StreamMedia = (props: StreamMediaProps & ErrorHandlingProps): JSX.Element => {
   const containerEl = useRef<HTMLDivElement>(null);
   const { invertVideo, videoStreamElement } = props;
 

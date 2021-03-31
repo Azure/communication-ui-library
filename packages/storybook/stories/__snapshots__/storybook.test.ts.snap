@@ -32,9 +32,10 @@ exports[`storybook snapshot tests Storyshots Composites/GroupCall Group Call Com
       <div
         style={
           Object {
+            "border": "1px solid",
             "height": "100%",
             "margin": "20px auto",
-            "maxHeight": "35rem",
+            "maxHeight": "30rem",
             "maxWidth": "50rem",
             "width": "100%",
           }
@@ -2016,7 +2017,7 @@ exports[`storybook snapshot tests Storyshots UI Components/ReadReceipt Read Reci
 </div>
 `;
 
-exports[`storybook snapshot tests Storyshots UI Components/SendBox Send Box Story Book Component 1`] = `
+exports[`storybook snapshot tests Storyshots UI Components/SendBox Send Box Component 1`] = `
 <div
   style={
     Object {

@@ -6,9 +6,9 @@ import { getDocs } from './ThemesDocs';
 import { EXAMPLES_FOLDER_PREFIX } from '../constants';
 import {
   FluentThemeProvider,
-  GridLayoutComponent,
-  VideoTileComponent,
-  ControlBarComponent,
+  GridLayout,
+  VideoTile,
+  ControlBar,
   videoButtonProps,
   audioButtonProps,
   screenShareButtonProps,
@@ -48,7 +48,7 @@ export const TeamsThemeComponent: () => JSX.Element = () => {
     <div>
       <FluentThemeProvider fluentTheme={TeamsTheme}>
         {/*Control Bar with default set up*/}
-        <ControlBarComponent layout={'dockedTop'}>
+        <ControlBar layout={'dockedTop'}>
           <DefaultButton
             {...videoButtonProps}
             onClick={() => {
@@ -73,7 +73,7 @@ export const TeamsThemeComponent: () => JSX.Element = () => {
               /*handle onClick*/
             }}
           />
-        </ControlBarComponent>
+        </ControlBar>
         {/*Control Bar with default set up*/}
         <div
           style={{
@@ -81,11 +81,11 @@ export const TeamsThemeComponent: () => JSX.Element = () => {
             width: '830px'
           }}
         >
-          <GridLayoutComponent>
-            <VideoTileComponent isVideoReady={false} videoProvider={null} avatarName={'Michael'}>
+          <GridLayout>
+            <VideoTile isVideoReady={false} videoProvider={null} avatarName={'Michael'}>
               <label>Michael</label>
-            </VideoTileComponent>
-          </GridLayoutComponent>
+            </VideoTile>
+          </GridLayout>
         </div>
       </FluentThemeProvider>
     </div>

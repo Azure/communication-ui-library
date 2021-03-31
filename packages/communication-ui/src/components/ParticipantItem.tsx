@@ -15,28 +15,28 @@ import { ErrorHandlingProps } from '../providers/ErrorProvider';
 import { useTheme } from '@fluentui/react-theme-provider';
 
 /**
- * Props for ParticipantItemComponent component
+ * Props for ParticipantItem component
  */
-export interface ParticipantItemComponentProps {
+export interface ParticipantItemProps {
   /** Name of participant */
   name: string;
   /** Optional indicator to show participant is the user */
   isYou?: boolean;
   /** Optional callback returning a JSX element to override avatar */
-  onRenderAvatar?: (props?: ParticipantItemComponentProps) => JSX.Element | null;
+  onRenderAvatar?: (props?: ParticipantItemProps) => JSX.Element | null;
   /** Optional array of IContextualMenuItem for contextual menu */
   menuItems?: IContextualMenuItem[];
-  /** Optional callback returning a JSX element rendered on the right portion of the ParticipantItemComponent. Intended for adding icons. */
-  onRenderIcon?: (props?: ParticipantItemComponentProps) => JSX.Element | null;
+  /** Optional callback returning a JSX element rendered on the right portion of the ParticipantItem. Intended for adding icons. */
+  onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
   /** Optional PersonaPresence to show participant presence. This will not have an effect if property avatar is assigned */
   presence?: PersonaPresence;
 }
 
 /**
  * Participant Item component representing a participant in Calling or Chat
- * @param props - ParticipantItemComponentProps & ErrorHandlingProps
+ * @param props - ParticipantItemProps & ErrorHandlingProps
  */
-export const ParticipantItemComponent = (props: ParticipantItemComponentProps & ErrorHandlingProps): JSX.Element => {
+export const ParticipantItem = (props: ParticipantItemProps & ErrorHandlingProps): JSX.Element => {
   const { name, isYou, onRenderAvatar, menuItems, onRenderIcon, presence } = props;
   const [clickEvent, setClickEvent] = useState<MouseEvent | undefined>();
   const [menuHidden, setMenuHidden] = useState<boolean>(true);

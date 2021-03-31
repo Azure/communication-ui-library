@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { ErrorBarComponentProps } from '../components/ErrorBar';
+import { ErrorBarProps } from '../components/ErrorBar';
 import { CommunicationUiErrorCode, CommunicationUiErrorSeverity } from '../types/CommunicationUiError';
 import { useLastError, useSetLastError } from '../providers/ErrorProvider';
 
@@ -45,7 +45,7 @@ const errorCodeToMessage = new Map<CommunicationUiErrorCode, string>([
   [CommunicationUiErrorCode.LEAVE_CALL_ERROR, 'Failed to leave call']
 ]);
 
-export const MapToErrorBarProps = (): ErrorBarComponentProps => {
+export const MapToErrorBarProps = (): ErrorBarProps => {
   const lastError = useLastError();
   let severity: CommunicationUiErrorSeverity | undefined = undefined;
   let message: string | undefined = undefined;

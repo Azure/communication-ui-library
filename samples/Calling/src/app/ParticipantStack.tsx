@@ -10,7 +10,7 @@ import {
   Stack,
   PersonaPresence
 } from '@fluentui/react';
-import { connectFuncsToContext, ListParticipant, ParticipantItemComponent } from '@azure/communication-ui';
+import { connectFuncsToContext, ListParticipant, ParticipantItem } from '@azure/communication-ui';
 import { MicOffIcon, CallControlPresentNewIcon } from '@fluentui/react-northstar';
 import { participantStackStyle, overFlowButtonStyles, overflowSetStyle } from './styles/ParticipantStack.styles';
 import { MapToParticipantListProps } from './consumers/MapToParticipantListProps';
@@ -52,7 +52,7 @@ const defaultRenderer = (item: IOverflowSetItemProps): JSX.Element => {
   }
 
   return (
-    <ParticipantItemComponent
+    <ParticipantItem
       name={item.name}
       isYou={item.isYou}
       menuItems={item.isYou ? undefined : menuItems}

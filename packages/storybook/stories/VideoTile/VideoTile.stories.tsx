@@ -4,13 +4,13 @@ import React from 'react';
 import { Meta } from '@storybook/react/types-6-0';
 import { Stack, DefaultButton } from '@fluentui/react';
 import {
-  StreamMediaComponent,
-  ControlBarComponent,
+  StreamMedia,
+  ControlBar,
   videoButtonProps,
   audioButtonProps,
   optionsButtonProps,
   hangupButtonProps,
-  VideoTileComponent as VideoTile
+  VideoTile
 } from '@azure/communication-ui';
 import { text, boolean, number } from '@storybook/addon-knobs';
 import { renderVideoStream } from '../utils';
@@ -38,7 +38,7 @@ export const VideoTileComponent: () => JSX.Element = () => {
   return (
     <VideoTile
       isVideoReady={isVideoReady}
-      videoProvider={<StreamMediaComponent videoStreamElement={renderVideoStream()} />}
+      videoProvider={<StreamMedia videoStreamElement={renderVideoStream()} />}
       avatarName={avatarName}
       invertVideo={invertVideo}
       styles={{
@@ -47,12 +47,12 @@ export const VideoTileComponent: () => JSX.Element = () => {
     >
       {showControlBarComponent && (
         <Stack style={{ position: 'absolute', left: '50%', bottom: '1rem' }}>
-          <ControlBarComponent styles={{ root: { position: 'relative', left: '-50%' } }}>
+          <ControlBar styles={{ root: { position: 'relative', left: '-50%' } }}>
             <DefaultButton {...videoButtonProps} />
             <DefaultButton {...audioButtonProps} />
             <DefaultButton {...optionsButtonProps} />
             <DefaultButton {...hangupButtonProps} />
-          </ControlBarComponent>
+          </ControlBar>
         </Stack>
       )}
     </VideoTile>

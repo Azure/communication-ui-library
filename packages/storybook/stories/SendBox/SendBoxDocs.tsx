@@ -3,12 +3,12 @@ import React from 'react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
 import { Icon } from '@fluentui/react';
 
-import { FluentThemeProvider, SendBoxComponent } from '@azure/communication-ui';
+import { FluentThemeProvider, SendBox } from '@azure/communication-ui';
 
-const importStatement = `import { SendBoxComponent } from '@azure/communication-ui';`;
+const importStatement = `import { SendBox } from '@azure/communication-ui';`;
 const usageCode = `
 <div style={{ width: '400px', margin: '0 5px' }}>
-  <SendBoxComponent
+  <SendBox
     disabled={false}
     sendMessage={async () => {
       return;
@@ -21,7 +21,7 @@ const usageCode = `
   />
 </div>
 <div style={{ width: '400px', margin: '0 5px' }}>
-  <SendBoxComponent
+  <SendBox
     disabled={false}
     sendMessage={async () => {
       return;
@@ -38,7 +38,7 @@ const usageCode = `
 const ExampleSendBox: () => JSX.Element = () => (
   <>
     <div style={{ width: '400px', margin: '0 5px' }}>
-      <SendBoxComponent
+      <SendBox
         disabled={false}
         sendMessage={async () => {
           return;
@@ -51,7 +51,7 @@ const ExampleSendBox: () => JSX.Element = () => (
       />
     </div>
     <div style={{ width: '400px', margin: '0 5px' }}>
-      <SendBoxComponent
+      <SendBox
         disabled={false}
         sendMessage={async () => {
           return;
@@ -69,7 +69,7 @@ const ExampleSendBox: () => JSX.Element = () => (
 
 const CustomIconExample: () => JSX.Element = () => (
   <div style={{ width: '400px' }}>
-    <SendBoxComponent
+    <SendBox
       disabled={false}
       sendMessage={async () => {
         return;
@@ -86,7 +86,7 @@ const CustomIconExample: () => JSX.Element = () => (
 
 const customIconCode = `
 <div style={{ width: '400px' }}>
-  <SendBoxComponent
+  <SendBox
     disabled={false}
     sendMessage={async () => {
       return;
@@ -103,10 +103,10 @@ const customIconCode = `
 export const getDocs: () => JSX.Element = () => {
   return (
     <>
-      <Title>SendBoxComponent</Title>
+      <Title>SendBox</Title>
       <Description>
-        SendBoxComponent is component used for message/typing notification sending, it is also able to show system
-        messages related to message sending
+        SendBox is component used for message/typing notification sending, it is also able to show system messages
+        related to message sending
       </Description>
       <Heading>Importing</Heading>
       <Source code={importStatement} />
@@ -126,7 +126,7 @@ export const getDocs: () => JSX.Element = () => {
         </FluentThemeProvider>
       </Canvas>
       <Heading>Props</Heading>
-      <Props of={SendBoxComponent} />
+      <Props of={SendBox} />
     </>
   );
 };

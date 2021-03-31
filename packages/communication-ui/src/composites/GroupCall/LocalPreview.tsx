@@ -17,7 +17,7 @@ import {
   MapToErrorBarProps,
   MapToLocalVideoProps
 } from '../../consumers';
-import { StreamMediaComponent, VideoTileComponent, ErrorBarComponent } from '../../components';
+import { StreamMedia, VideoTile, ErrorBar as ErrorBarComponent } from '../../components';
 import staticMediaSVG from './assets/staticmedia.svg';
 import { useCallContext } from '../../providers';
 import { ErrorHandlingProps } from '../../providers/ErrorProvider';
@@ -53,9 +53,9 @@ const LocalPreviewComponentBase = (
 
   return (
     <Stack className={localPreviewContainerStyle}>
-      <VideoTileComponent
+      <VideoTile
         isVideoReady={isVideoReady}
-        videoProvider={<StreamMediaComponent videoStreamElement={videoStreamElement} />}
+        videoProvider={<StreamMedia videoStreamElement={videoStreamElement} />}
         placeholderProvider={
           <Image styles={staticAvatarStyle} aria-label="Local video preview image" {...imageProps} />
         }

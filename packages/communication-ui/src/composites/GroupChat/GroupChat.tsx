@@ -4,13 +4,13 @@ import { mergeStyles } from '@fluentui/react';
 import { ChatProvider } from '../../providers';
 import React, { useMemo } from 'react';
 import {
-  SendBoxComponent,
-  TypingIndicatorComponent,
-  ErrorBarComponent,
-  ChatThreadComponent,
-  ChatThreadComponentProps,
-  SendBoxComponentProps,
-  TypingIndicatorComponentProps
+  SendBox as SendBoxComponent,
+  TypingIndicator as TypingIndicatorComponent,
+  ErrorBar as ErrorBarComponent,
+  MessageThread,
+  MessageThreadProps,
+  SendBoxProps,
+  TypingIndicatorProps
 } from '../../components';
 import { chatContainer, chatWrapper } from './styles/GroupChat.styles';
 import { AbortSignalLike } from '@azure/core-http';
@@ -51,7 +51,7 @@ export default (props: GroupChatProps): JSX.Element => {
 
   const ChatThread = useMemo(() => {
     return connectFuncsToContext(
-      (props: ChatThreadComponentProps & ErrorHandlingProps) => WithErrorHandling(ChatThreadComponent, props),
+      (props: MessageThreadProps & ErrorHandlingProps) => WithErrorHandling(MessageThread, props),
       MapToChatMessageProps
     );
   }, []);
@@ -60,13 +60,13 @@ export default (props: GroupChatProps): JSX.Element => {
   }, []);
   const SendBox = useMemo(() => {
     return connectFuncsToContext(
-      (props: SendBoxComponentProps & ErrorHandlingProps) => WithErrorHandling(SendBoxComponent, props),
+      (props: SendBoxProps & ErrorHandlingProps) => WithErrorHandling(SendBoxComponent, props),
       MapToSendBoxProps
     );
   }, []);
   const TypingIndicator = useMemo(() => {
     return connectFuncsToContext(
-      (props: TypingIndicatorComponentProps & ErrorHandlingProps) => WithErrorHandling(TypingIndicatorComponent, props),
+      (props: TypingIndicatorProps & ErrorHandlingProps) => WithErrorHandling(TypingIndicatorComponent, props),
       MapToTypingIndicatorProps
     );
   }, []);

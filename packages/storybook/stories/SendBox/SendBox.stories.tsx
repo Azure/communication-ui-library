@@ -3,13 +3,13 @@
 import React from 'react';
 import { boolean, text } from '@storybook/addon-knobs';
 import { getDocs } from './SendBoxDocs';
-import { SendBoxComponent } from '@azure/communication-ui';
+import { SendBox } from '@azure/communication-ui';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { Meta } from '@storybook/react/types-6-0';
 
 export default {
   title: `${COMPONENT_FOLDER_PREFIX}/SendBox`,
-  component: SendBoxComponent,
+  component: SendBox,
   parameters: {
     docs: {
       page: () => getDocs()
@@ -17,10 +17,10 @@ export default {
   }
 } as Meta;
 
-export const SendBoxStoryBookComponent = (): JSX.Element => {
+export const SendBoxComponent = (): JSX.Element => {
   return (
     <div style={{ width: '480px' }}>
-      <SendBoxComponent
+      <SendBox
         disabled={boolean('Block button from sending', false, 'Injected by ACS Context')}
         sendMessage={async (displayname, userId, message) =>
           console.log(`sendMessage: Id ${userId} with displayName ${displayname} send a message - ${message} `)

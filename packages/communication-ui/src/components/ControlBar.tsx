@@ -163,7 +163,7 @@ export const CONTROL_BAR_LAYOUTS = [
   'floatingRight'
 ] as const;
 
-export type ControlBarComponentLayoutsType =
+export type ControlBarLayoutType =
   | 'horizontal'
   | 'vertical'
   | 'dockedTop'
@@ -175,13 +175,13 @@ export type ControlBarComponentLayoutsType =
   | 'floatingLeft'
   | 'floatingRight';
 
-export interface ControlBarComponentProps {
+export interface ControlBarProps {
   children?: React.ReactNode;
   /**
    * Allows users to pass in an object contains custom CSS styles.
    * Example
    * ```
-   * <ControlBarComponent styles={{ root: { background: 'blue' } }} />
+   * <ControlBar styles={{ root: { background: 'blue' } }} />
    * ```
    */
   styles?: CustomStylesProps;
@@ -192,16 +192,16 @@ export interface ControlBarComponentProps {
    * `floatingRight`
    * Defaults to a `horizontal` layout.
    */
-  layout?: ControlBarComponentLayoutsType;
+  layout?: ControlBarLayoutType;
 }
 
 /**
- * `ControlBarComponent` allows you to easily create a component for call controls using
+ * `ControlBar` allows you to easily create a component for call controls using
  * [Button](https://developer.microsoft.com/en-us/fluentui#/controls/web/button) component from
- * Fluent UI. Users will need to provide methods to Button components used inside `ControlBarComponent`
+ * Fluent UI. Users will need to provide methods to Button components used inside `ControlBar`
  * for altering call behavior.
  */
-export const ControlBarComponent = (props: ControlBarComponentProps): JSX.Element => {
+export const ControlBar = (props: ControlBarProps): JSX.Element => {
   const { styles, layout } = props;
   const theme = useTheme();
   const controlBarStyle = controlBarStyles[layout ?? 'horizontal'];

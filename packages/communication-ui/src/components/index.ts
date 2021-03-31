@@ -1,37 +1,37 @@
 // © Microsoft Corporation. All rights reserved.
 
-export { TypingIndicatorComponent } from './TypingIndicator';
-export type { TypingIndicatorComponentProps } from './TypingIndicator';
+export { TypingIndicator } from './TypingIndicator';
+export type { TypingIndicatorProps } from './TypingIndicator';
 
-export { GridLayoutComponent } from './GridLayout';
-export type { GridLayoutComponentProps } from './GridLayout';
+export { GridLayout } from './GridLayout';
+export type { GridLayoutProps, GridLayoutType } from './GridLayout';
 
-export { ErrorBarComponent } from './ErrorBar';
-export type { ErrorBarComponentProps } from './ErrorBar';
+export { ErrorBar } from './ErrorBar';
+export type { ErrorBarProps } from './ErrorBar';
 
-export { SendBoxComponent } from './SendBox';
-export type { SendBoxComponentProps } from './SendBox';
+export { SendBox } from './SendBox';
+export type { SendBoxProps } from './SendBox';
 
-export { ReadReceiptComponent } from './ReadReceipt';
-export type { ReadReceiptComponentProps } from './ReadReceipt';
+export { ReadReceipt } from './ReadReceipt';
+export type { ReadReceiptProps } from './ReadReceipt';
 
-export { ChatThreadComponent } from './ChatThread';
+export { MessageThread } from './MessageThread';
 export type {
-  ChatThreadComponentProps,
-  ChatThreadComponentStylesProps,
+  MessageThreadProps,
+  MessageThreadStylesProps,
   JumpToNewMessageButtonProps,
   LoadPreviousMessagesButtonProps
-} from './ChatThread';
+} from './MessageThread';
 
-export { StreamMediaComponent } from './StreamMedia';
-export type { StreamMediaComponentProps } from './StreamMedia';
+export { StreamMedia } from './StreamMedia';
+export type { StreamMediaProps } from './StreamMedia';
 
-export { ParticipantItemComponent } from './ParticipantItem';
-export type { ParticipantItemComponentProps } from './ParticipantItem';
+export { ParticipantItem } from './ParticipantItem';
+export type { ParticipantItemProps } from './ParticipantItem';
 
 export {
   CONTROL_BAR_LAYOUTS,
-  ControlBarComponent,
+  ControlBar,
   videoButtonProps,
   audioButtonProps,
   screenShareButtonProps,
@@ -44,10 +44,10 @@ export {
   labeledHangupButtonProps,
   labeledOptionsButtonProps
 } from './ControlBar';
-export type { ControlBarComponentProps, ControlBarComponentLayoutsType, CustomStylesProps } from './ControlBar';
+export type { ControlBarProps, ControlBarLayoutType, CustomStylesProps } from './ControlBar';
 
-export { VideoTileComponent } from './VideoTile';
-export type { VideoTileComponentProps, VideoTileComponentStylesProps } from './VideoTile';
+export { VideoTile } from './VideoTile';
+export type { VideoTileProps, VideoTileStylesProps, PlaceholderProps } from './VideoTile';
 
 export { ThemeSelector } from './ThemeSelector';
 export type { ThemeSelectorProps } from './ThemeSelector';

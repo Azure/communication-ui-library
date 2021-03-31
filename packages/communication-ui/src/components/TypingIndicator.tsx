@@ -11,7 +11,7 @@ import React from 'react';
 import { TypingUser } from '../types/TypingUser';
 import { ErrorHandlingProps } from '../providers/ErrorProvider';
 
-export type TypingIndicatorComponentProps = {
+export type TypingIndicatorProps = {
   typingUsers: TypingUser[];
   typingString: string;
 };
@@ -25,13 +25,13 @@ export type TypingIndicatorComponentProps = {
  * 'Username1, Username2 and 5 others are typing...'
  * '100 participants are typing...'
  *
- * TypingIndicatorComponent can be customized. TODO: See the parameters in
+ * TypingIndicator can be customized. TODO: See the parameters in
  * MapToTypingUsers.convertSdkTypingUsersDataToTypingUsersData. We need to design a way for users to provide this.
  *
- * @param props - An object of TypingIndicatorComponentProps type that contains all data and functions needed
+ * @param props - An object of TypingIndicatorProps type that contains all data and functions needed
  * @returns ReactElement
  */
-export const TypingIndicatorComponent = (props: TypingIndicatorComponentProps & ErrorHandlingProps): JSX.Element => {
+export const TypingIndicator = (props: TypingIndicatorProps & ErrorHandlingProps): JSX.Element => {
   const displayComponents: JSX.Element[] = [];
   props.typingUsers.map((typingUser: TypingUser, index: number) => {
     if (typingUser.prefixImageUrl.length !== 0) {

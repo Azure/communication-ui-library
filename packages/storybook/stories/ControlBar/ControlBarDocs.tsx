@@ -7,7 +7,7 @@ import React from 'react';
 import {
   FluentThemeProvider,
   audioButtonProps,
-  ControlBarComponent,
+  ControlBar,
   hangupButtonProps,
   optionsButtonProps,
   screenShareButtonProps,
@@ -15,7 +15,7 @@ import {
 } from '@azure/communication-ui';
 
 const importStatement = `
-import { ControlBarComponent } from '@azure/communication-ui';
+import { ControlBar } from '@azure/communication-ui';
 import { DefaultButton } from '@fluentui/react';
 
 // Import Helper Props for quickly creating common call control buttons.
@@ -55,30 +55,30 @@ const exampleOptionsMenuProps = {
   ]
 };
 
-const ControlBarComponentExample: () => JSX.Element = () => {
+const ControlBarExample: () => JSX.Element = () => {
   return (
     <FluentThemeProvider>
-      <ControlBarComponent layout={'horizontal'}>
+      <ControlBar layout={'horizontal'}>
         <DefaultButton {...videoButtonProps} />
         <DefaultButton {...audioButtonProps} />
         <DefaultButton {...screenShareButtonProps} />
         <DefaultButton {...optionsButtonProps} menuProps={exampleOptionsMenuProps} />
         <DefaultButton {...hangupButtonProps} />
-      </ControlBarComponent>
+      </ControlBar>
     </FluentThemeProvider>
   );
 };
 
 const exampleCode = `
-const ControlBarComponentExample: () => JSX.Element = () => {
+const ControlBarExample: () => JSX.Element = () => {
   return (
-    <ControlBarComponent layout={'horizontal'}>
+    <ControlBar layout={'horizontal'}>
       <DefaultButton {...videoButtonProps} onClick={() => {/*handle onClick*/ }} />
       <DefaultButton {...audioButtonProps} onClick={() => {/*handle onClick*/ }} />
       <DefaultButton {...screenShareButtonProps} onClick={() => {/*handle onClick*/ }} />
       <DefaultButton {...optionsButtonProps} menuProps={/*some IContextualMenuProps*/} />
       <DefaultButton {...hangupButtonProps} onClick={() => {/*handle onClick*/ }} />
-    </ControlBarComponent>
+    </ControlBar>
   );
 };
 `;
@@ -87,26 +87,26 @@ const ControlBarComponentLayoutExample: () => JSX.Element = () => {
   return (
     <Stack style={{ flexFlow: 'row', minHeight: '250px' }}>
       <FluentThemeProvider>
-        <ControlBarComponent layout="floatingLeft">
+        <ControlBar layout="floatingLeft">
           <DefaultButton {...videoButtonProps} />
           <DefaultButton {...audioButtonProps} />
           <DefaultButton {...screenShareButtonProps} />
           <DefaultButton {...optionsButtonProps} menuProps={exampleOptionsMenuProps} />
           <DefaultButton {...hangupButtonProps} />
-        </ControlBarComponent>
+        </ControlBar>
       </FluentThemeProvider>
     </Stack>
   );
 };
 
 const ControlBarComponentLayoutCode = `
-<ControlBarComponent layout='floatingLeft'>
+<ControlBar layout='floatingLeft'>
   <DefaultButton {...videoButtonProps} />
   <DefaultButton {...audioButtonProps} />
   <DefaultButton {...screenShareButtonProps} />
   <DefaultButton {...optionsButtonProps} />
   <DefaultButton {...hangupButtonProps} />
-</ControlBarComponent>
+</ControlBar>
 `;
 
 const customControlBarComponentUsage = `
@@ -139,14 +139,14 @@ const CustomHangupButton: () => JSX.Element = () => {
   );
 };
 
-const CustomControlBarComponentExample: () => JSX.Element = () => {
+const CustomControlBarExample: () => JSX.Element = () => {
   return (
     <FluentThemeProvider>
-      <ControlBarComponent layout={'horizontal'}>
+      <ControlBar layout={'horizontal'}>
         <DefaultButton {...videoButtonProps} />
         <DefaultButton {...audioButtonProps} />
         <CustomHangupButton />
-      </ControlBarComponent>
+      </ControlBar>
     </FluentThemeProvider>
   );
 };
@@ -178,14 +178,14 @@ const CustomHangupButton: () => JSX.Element = () => {
   );
 };
 
-const CustomControlBarComponentExample: () => JSX.Element = () => {
+const CustomControlBarExample: () => JSX.Element = () => {
   return (
     <FluentThemeProvider>
-      <ControlBarComponent layout={'horizontal'}>
+      <ControlBar layout={'horizontal'}>
         <DefaultButton {...videoButtonProps} />
         <DefaultButton {...audioButtonProps} />
         <CustomHangupButton />
-      </ControlBarComponent>
+      </ControlBar>
     </FluentThemeProvider>
   );
 };
@@ -193,10 +193,10 @@ const CustomControlBarComponentExample: () => JSX.Element = () => {
 export const getDocs: () => JSX.Element = () => {
   return (
     <>
-      <Title>ControlBarComponent</Title>
-      <Description of={ControlBarComponent} />
+      <Title>ControlBar</Title>
+      <Description of={ControlBar} />
       <Canvas>
-        <ControlBarComponentExample />
+        <ControlBarExample />
       </Canvas>
 
       <Heading>Importing</Heading>
@@ -204,11 +204,11 @@ export const getDocs: () => JSX.Element = () => {
 
       <Heading>Usage</Heading>
       <Description>
-        ControlBarComponent can be rendered with `DefaultButton`, a
+        ControlBar can be rendered with `DefaultButton`, a
         [Button](https://developer.microsoft.com/en-us/fluentui#/controls/web/button) component from Fluent UI.
       </Description>
       <Canvas>
-        <ControlBarComponentExample />
+        <ControlBarExample />
       </Canvas>
       <Source code={exampleCode} />
       <Description>
@@ -227,12 +227,12 @@ export const getDocs: () => JSX.Element = () => {
 
       <Heading>Custom Control Bar</Heading>
       <Canvas>
-        <CustomControlBarComponentExample />
+        <CustomControlBarExample />
       </Canvas>
       <Source code={customControlBarComponentUsage} />
 
-      <Heading>ControlBarComponent Props</Heading>
-      <Props of={ControlBarComponent} />
+      <Heading>ControlBar Props</Heading>
+      <Props of={ControlBar} />
     </>
   );
 };

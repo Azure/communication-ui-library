@@ -1,20 +1,20 @@
 // © Microsoft Corporation. All rights reserved.
 
 import {
-  ErrorBarComponent,
-  SendBoxComponent,
-  TypingIndicatorComponent,
+  ErrorBar as ErrorBarComponent,
+  SendBox as SendBoxComponent,
+  TypingIndicator as TypingIndicatorComponent,
   MapToTypingIndicatorProps,
-  ChatThreadComponent,
+  MessageThread,
   connectFuncsToContext,
   MapToChatMessageProps,
   MapToErrorBarProps,
   MapToSendBoxProps,
   WithErrorHandling,
-  ChatThreadComponentProps,
+  MessageThreadProps,
   ErrorHandlingProps,
-  SendBoxComponentProps,
-  TypingIndicatorComponentProps
+  SendBoxProps,
+  TypingIndicatorProps
 } from '@azure/communication-ui';
 import { Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
@@ -27,7 +27,7 @@ export interface ChatAreaProps {
 export const ChatArea = (props: ChatAreaProps): JSX.Element => {
   const ChatThread = useMemo(() => {
     return connectFuncsToContext(
-      (props: ChatThreadComponentProps & ErrorHandlingProps) => WithErrorHandling(ChatThreadComponent, props),
+      (props: MessageThreadProps & ErrorHandlingProps) => WithErrorHandling(MessageThread, props),
       MapToChatMessageProps
     );
   }, []);
@@ -36,13 +36,13 @@ export const ChatArea = (props: ChatAreaProps): JSX.Element => {
   }, []);
   const SendBox = useMemo(() => {
     return connectFuncsToContext(
-      (props: SendBoxComponentProps & ErrorHandlingProps) => WithErrorHandling(SendBoxComponent, props),
+      (props: SendBoxProps & ErrorHandlingProps) => WithErrorHandling(SendBoxComponent, props),
       MapToSendBoxProps
     );
   }, []);
   const TypingIndicator = useMemo(() => {
     return connectFuncsToContext(
-      (props: TypingIndicatorComponentProps & ErrorHandlingProps) => WithErrorHandling(TypingIndicatorComponent, props),
+      (props: TypingIndicatorProps & ErrorHandlingProps) => WithErrorHandling(TypingIndicatorComponent, props),
       MapToTypingIndicatorProps
     );
   }, []);

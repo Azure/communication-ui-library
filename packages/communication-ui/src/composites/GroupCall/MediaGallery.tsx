@@ -3,9 +3,9 @@
 import React, { useMemo } from 'react';
 import { connectFuncsToContext, MapToLocalVideoProps } from '../../consumers';
 import { MapToMediaGalleryProps, MediaGalleryContainerProps } from './consumers/MapToMediaGalleryProps';
-import { GridLayoutComponent } from '../../components/GridLayout';
+import { GridLayout } from '../../components/GridLayout';
 import { convertSdkRemoteParticipantToGalleryParticipant } from '../../utils';
-import { StreamMediaComponent, VideoTileComponent } from '../../components';
+import { StreamMedia, VideoTile } from '../../components';
 import { Label, mergeStyles, Stack } from '@fluentui/react';
 import ScreenShareComponent from './ScreenShare';
 import {
@@ -67,15 +67,15 @@ export const MediaGalleryComponentBase = (props: MediaGalleryContainerProps): JS
 
   const layoutLocalParticipant = useMemo(() => {
     return (
-      <VideoTileComponent
+      <VideoTile
         isVideoReady={localVideoStream.isVideoReady}
-        videoProvider={<StreamMediaComponent videoStreamElement={localVideoStream.videoStreamElement} />}
+        videoProvider={<StreamMedia videoStreamElement={localVideoStream.videoStreamElement} />}
         avatarName={localParticipant.displayName}
       >
         <Label className={localVideoStream.isVideoReady ? videoHint : disabledVideoHint}>
           {localParticipant.displayName}
         </Label>
-      </VideoTileComponent>
+      </VideoTile>
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localParticipant, localVideoStream]);
@@ -95,12 +95,12 @@ export const MediaGalleryComponentBase = (props: MediaGalleryContainerProps): JS
       </div>
     </>
   ) : (
-    <GridLayoutComponent>
+    <GridLayout>
       <Stack horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
         {layoutLocalParticipant}
       </Stack>
       {gridLayoutRemoteParticipants}
-    </GridLayoutComponent>
+    </GridLayout>
   );
 };
 

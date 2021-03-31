@@ -6,16 +6,16 @@ import { loadingStyle, videoStreamStyle } from './styles/ScreenShare.styles';
 
 import { connectFuncsToContext } from '@azure/communication-ui';
 import { MapToScreenShareProps, ScreenShareContainerProps } from './consumers/MapToScreenShareProps';
-import { StreamMediaComponent, VideoTileComponent } from '@azure/communication-ui';
+import { StreamMedia, VideoTile } from '@azure/communication-ui';
 
 const ScreenShareComponent = (props: ScreenShareContainerProps): JSX.Element => {
   const { displayName, videoRender, isVideoRenderAvailable, screenShareRender, isScreenShareRenderAvailable } = props;
 
   return (
     <>
-      <VideoTileComponent
+      <VideoTile
         isVideoReady={isScreenShareRenderAvailable}
-        videoProvider={<StreamMediaComponent videoStreamElement={screenShareRender} />}
+        videoProvider={<StreamMedia videoStreamElement={screenShareRender} />}
         placeholderProvider={
           <div className={loadingStyle}>
             <Spinner label={`Loading ${displayName}'s screen`} size={SpinnerSize.xSmall} />
@@ -26,12 +26,12 @@ const ScreenShareComponent = (props: ScreenShareContainerProps): JSX.Element => 
         }}
       >
         {isVideoRenderAvailable && isScreenShareRenderAvailable && (
-          <VideoTileComponent
+          <VideoTile
             isVideoReady={isVideoRenderAvailable}
-            videoProvider={<StreamMediaComponent videoStreamElement={videoRender} />}
+            videoProvider={<StreamMedia videoStreamElement={videoRender} />}
           />
         )}
-      </VideoTileComponent>
+      </VideoTile>
     </>
   );
 };

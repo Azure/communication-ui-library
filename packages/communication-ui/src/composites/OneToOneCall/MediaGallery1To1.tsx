@@ -13,7 +13,7 @@ import { connectFuncsToContext, MapToLocalVideoProps } from '../../consumers';
 import { GalleryParticipant } from '../../types/GalleryParticipant';
 import { MapToMediaGallery1To1Props, MediaGallery1To1ContainerProps } from './consumers/MapToMediaGallery1To1Props';
 import { RemoteVideoTile } from './RemoteVideoTile';
-import { StreamMediaComponent, VideoTileComponent } from '../../components';
+import { StreamMedia, VideoTile } from '../../components';
 
 export interface MediaGallery1To1Props extends MediaGallery1To1ContainerProps {
   /** Determines the remote participant in the media gallery. */
@@ -63,16 +63,16 @@ export const MediaGallery1To1Component = (props: MediaGallery1To1Props): JSX.Ele
   const mediaGalleryLocalParticipant: JSX.Element = (
     <Stack.Item align="end">
       <Stack className={localMediaGalleryTileStyle}>
-        <VideoTileComponent
+        <VideoTile
           isVideoReady={isLocalVideoReady}
-          videoProvider={<StreamMediaComponent videoStreamElement={localVideoStreamElement} />}
+          videoProvider={<StreamMedia videoStreamElement={localVideoStreamElement} />}
           avatarName={localParticipantName}
           invertVideo={localVideoInverted}
         >
           {showLocalParticipantName && (
             <Label className={isLocalVideoReady ? videoHint : disabledVideoHint}>{localParticipantName}</Label>
           )}
-        </VideoTileComponent>
+        </VideoTile>
       </Stack>
     </Stack.Item>
   );

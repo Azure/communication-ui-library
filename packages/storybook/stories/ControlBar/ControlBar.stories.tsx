@@ -4,7 +4,7 @@ import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import {
   CONTROL_BAR_LAYOUTS,
-  ControlBarComponent as ControlBar,
+  ControlBar,
   audioButtonProps,
   hangupButtonProps,
   labeledVideoButtonProps,
@@ -72,7 +72,7 @@ export const ControlBarComponent: () => JSX.Element = () => {
 
 export default {
   title: `${COMPONENT_FOLDER_PREFIX}/ControlBar`,
-  component: ControlBarComponent,
+  component: ControlBar,
   parameters: {
     docs: {
       page: () => getDocs()

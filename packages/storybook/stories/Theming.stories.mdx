@@ -3,7 +3,7 @@ import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/a
 
 import {
   FluentThemeProvider,
-  ControlBarComponent,
+  ControlBar,
   audioButtonProps,
   hangupButtonProps,
   optionsButtonProps,
@@ -28,13 +28,13 @@ component ensures:
 
 To use the FluentThemeProvider, simply import it from `@azure/communication-ui` and wrap it around
 ACS UI SDK components and Fluent UI components. For the example below we will provide theming and icons to
-the `ControlBarComponent`.
+the `ControlBar`.
 
 ```typescript
 import React from 'react';
 import {
   FluentThemeProvider,
-  ControlBarComponent,
+  ControlBar,
   audioButtonProps,
   hangupButtonProps,
   screenShareButtonProps,
@@ -43,32 +43,32 @@ import {
 import { DefaultButton } from '@fluentui/react';
 
 <FluentThemeProvider>
-  <ControlBarComponent>
+  <ControlBar>
     <DefaultButton {...videoButtonProps} />
     <DefaultButton {...audioButtonProps} />
     <DefaultButton {...screenShareButtonProps} />
     <DefaultButton {...optionsButtonProps} />
     <DefaultButton {...hangupButtonProps} />
-  </ControlBarComponent>
+  </ControlBar>
 </FluentThemeProvider>;
 ```
 
 <Canvas withSource="none">
   <FluentThemeProvider>
-    <ControlBarComponent>
+    <ControlBar>
       <DefaultButton {...videoButtonProps} />
       <DefaultButton {...audioButtonProps} />
       <DefaultButton {...screenShareButtonProps} />
       <DefaultButton {...optionsButtonProps} />
       <DefaultButton {...hangupButtonProps} />
-    </ControlBarComponent>
+    </ControlBar>
   </FluentThemeProvider>
 </Canvas>
 
 `FluentThemeProvider` does two things here:
 
 1. `FluentThemeProvider` loads the icons defined by the props such as `videoButtonProps`
-2. `FluentThemeProvider` applies theme (light theme by default) to the `ControlBarComponent`
+2. `FluentThemeProvider` applies theme (light theme by default) to the `ControlBar`
 
 To illustrate how another theme can be applied, import `darkTheme` from `@azure/communication-ui`
 and assign it to the `fluentTheme` property.
@@ -77,29 +77,29 @@ and assign it to the `fluentTheme` property.
 import { darkTheme } from '@azure/communication-ui';
 
 <FluentThemeProvider fluentTheme={darkTheme}>
-  <ControlBarComponent>
+  <ControlBar>
     <DefaultButton {...videoButtonProps} />
     <DefaultButton {...audioButtonProps} />
     <DefaultButton {...screenShareButtonProps} />
     <DefaultButton {...optionsButtonProps} />
     <DefaultButton {...hangupButtonProps} />
-  </ControlBarComponent>
+  </ControlBar>
 </FluentThemeProvider>;
 ```
 
 <Canvas withSource="none">
   <FluentThemeProvider fluentTheme={darkTheme}>
-    <ControlBarComponent>
+    <ControlBar>
       <DefaultButton {...videoButtonProps} />
       <DefaultButton {...audioButtonProps} />
       <DefaultButton {...screenShareButtonProps} />
       <DefaultButton {...optionsButtonProps} />
       <DefaultButton {...hangupButtonProps} />
-    </ControlBarComponent>
+    </ControlBar>
   </FluentThemeProvider>
 </Canvas>
 
-The dark theme is applied to the `ControlBarComponent`. The icon colors in `DefaultButton` are themed
+The dark theme is applied to the `ControlBar`. The icon colors in `DefaultButton` are themed
 correctly because it is a Fluent UI component.
 
 ## FluentThemeProvider Props

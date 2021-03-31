@@ -1,7 +1,7 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import {
-  ControlBarComponent,
+  ControlBar,
   FluentThemeProvider,
   audioButtonProps,
   hangupButtonProps,
@@ -28,12 +28,12 @@ All the UI Components have complete CSS support and provide complex styling capa
 
 ### Example
 
-Let's style the `ControlBarComponent` component and `DefaultButton` components inside it using the `root` styles property.
+Let's style the `ControlBar` component and `DefaultButton` components inside it using the `root` styles property.
 
 ```tsx
-import { ControlBarComponent } from '@azure/communication-ui';
+import { ControlBar } from '@azure/communication-ui';
 
-// ControlBarComponent accepts a `styles` prop with only the `root` key as a valid property.
+// ControlBar accepts a `styles` prop with only the `root` key as a valid property.
 const styles = {
   root: {
     background: 'white',
@@ -48,18 +48,18 @@ const styles = {
 }
 
 <FluentThemeProvider>
-  <ControlBarComponent styles={styles}>
+  <ControlBar styles={styles}>
     <DefaultButton {...videoButtonProps} />
     <DefaultButton {...audioButtonProps} />
     <DefaultButton {...optionsButtonProps} />
     <DefaultButton {...hangupButtonProps} />
-  </ControlBarComponent>
+  </ControlBar>
 </FluentThemeProvider>
 ```
 
 <Canvas withSource="none">
   <FluentThemeProvider>
-    <ControlBarComponent
+    <ControlBar
       styles={{
         root: {
           background: 'white',
@@ -77,6 +77,6 @@ const styles = {
       <DefaultButton {...audioButtonProps} />
       <DefaultButton {...optionsButtonProps} />
       <DefaultButton {...hangupButtonProps} />
-    </ControlBarComponent>
+    </ControlBar>
   </FluentThemeProvider>
 </Canvas>

@@ -95,7 +95,7 @@ export const updateMessagesWithAttached = (
     }
 
     const messageWithAttached = { ...message, attached, mine, statusToRender };
-    // Remove the clientMessageId field as it's only needed to getMessageStatus, not needed by ChatThread component
+    // Remove the clientMessageId field as it's only needed to getMessageStatus, not needed by MessageThread component
     // When we migrate to declarative, ideally we should remove the clientMessageId from the WebUiChatMessage type.
     delete messageWithAttached.clientMessageId;
     newChatMessages.push(messageWithAttached);
@@ -152,8 +152,8 @@ const isLargeParticipantsGroup = (threadMembers: ChatThreadMember[]): boolean =>
  * In order to display chat message on screen with all necessary components like message ordering, read receipt, failed
  * messages, etc., we need information from many different places in Chat SDK. But to provide a nice clean interface for
  * developers, we hide all of that by combining all different sources of info before passing it down as a prop to
- * ChatThread. This way we keep the Chat SDK parts internal and if developer wants to use this component with their own
- * data source, they only need to provide one stream of formatted WebUIChatMessage[] for ChatThread to be able to render
+ * MessageThread. This way we keep the Chat SDK parts internal and if developer wants to use this component with their own
+ * data source, they only need to provide one stream of formatted WebUIChatMessage[] for MessageThread to be able to render
  * everything properly.
  *
  * @param chatMessages
@@ -178,7 +178,7 @@ const convertSdkChatMessagesToWebUiChatMessages = (
         senderId: chatMessage.sender?.communicationUserId,
         senderDisplayName: chatMessage.senderDisplayName,
         // clientMessageId field is attached by useSendMessage hooks,
-        // and it's needed to filter out failed messages, will not used by ChatThread component.
+        // and it's needed to filter out failed messages, will not used by MessageThread component.
         clientMessageId: chatMessage.clientMessageId
       };
     }) ?? [];
