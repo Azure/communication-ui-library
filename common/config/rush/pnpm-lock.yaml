@@ -104,6 +104,7 @@ dependencies:
   prettier: 2.0.5
   pretty-quick: 3.1.0_prettier@2.0.5
   preval.macro: 5.0.0
+  raw-loader: 4.0.2_webpack@4.44.2
   react: 16.14.0
   react-aria-live: 2.0.5_react@16.14.0
   react-dom: 16.14.0_react@16.14.0
@@ -20617,6 +20618,7 @@ packages:
       node-forge: 0.10.0
       prettier: 2.0.5
       pretty-quick: 3.1.0_prettier@2.0.5
+      raw-loader: 4.0.2_webpack@4.44.2
       react: 16.14.0
       react-aria-live: 2.0.5_react@16.14.0
       react-dom: 16.14.0_react@16.14.0
@@ -20638,7 +20640,7 @@ packages:
     peerDependencies:
       webpack-cli: '*'
     resolution:
-      integrity: sha512-jXZ+r6MWu3XZC4Icu49RDSsZShaf7hZHTWabZf1BRs63zK6gX5ZLZF/wLh6mrA2P6Dvw1Huyz7Gmpjp0jA0ttA==
+      integrity: sha512-OGk5WmNz5SZQe7OyGHpnENmNpPJXnakYDoDsXioHAFVPDfvjXt/jLBa9EXlF0PjwW6samC4ZJqvRxNuU/IjhJw==
       tarball: file:projects/storybook.tgz
     version: 0.0.0
 registry: ''
@@ -20748,6 +20750,7 @@ specifiers:
   prettier: 2.0.5
   pretty-quick: ^3.1.0
   preval.macro: ^5.0.0
+  raw-loader: ~4.0.2
   react: ^16.13.1
   react-aria-live: ^2.0.5
   react-dom: ^16.13.1
