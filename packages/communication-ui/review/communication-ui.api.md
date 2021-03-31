@@ -29,6 +29,7 @@ import { ErrorInfo } from 'react';
 import { GroupCallContext } from '@azure/communication-calling';
 import { HangupCallOptions } from '@azure/communication-calling';
 import { IButtonProps } from '@fluentui/react';
+import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { JoinCallOptions } from '@azure/communication-calling';
@@ -96,6 +97,19 @@ export type CallContextType = {
     isLocalVideoOn: boolean;
     setLocalVideoOn: Dispatch<SetStateAction<boolean>>;
 };
+
+// @public
+export const CallControlBar: (props: ControlBarProps & CallControlBarProps & ErrorHandlingProps) => JSX.Element;
+
+// @public (undocumented)
+export const CallControlBarComponent: (props: Pick<ControlBarProps & CallControlBarProps & ErrorHandlingProps, "onErrorCallback" | "children" | "layout" | "styles" | "onEndCallClick">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+
+// Warning: (ae-forgotten-export) The symbol "CallControlBarContainerProps" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export interface CallControlBarProps extends CallControlBarContainerProps {
+    onEndCallClick(): void;
+}
 
 // @public (undocumented)
 export const CallingContext: React_2.Context<CallingContextType | undefined>;
@@ -582,6 +596,18 @@ export type GridLayoutType = 'standard';
 // @public (undocumented)
 export const GroupCall: (props: GroupCallCompositeProps) => JSX.Element;
 
+// @public (undocumented)
+export const GroupCallControlBar: (props: ControlBarProps & GroupCallControlBarProps & ErrorHandlingProps) => JSX.Element;
+
+// @public (undocumented)
+export const GroupCallControlBarComponent: (props: Pick<ControlBarProps & GroupCallControlBarProps & ErrorHandlingProps, "onErrorCallback" | "children" | "layout" | "styles" | "onEndCallClick" | "compressedMode">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+
+// @public (undocumented)
+export interface GroupCallControlBarProps extends CallControlBarContainerProps {
+    compressedMode: boolean;
+    onEndCallClick(): void;
+}
+
 // Warning: (ae-forgotten-export) The symbol "GroupChatProps" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
@@ -590,11 +616,22 @@ export const GroupChat: (props: GroupChatProps) => JSX.Element;
 // @public (undocumented)
 export const GUID_FOR_INITIAL_TOPIC_NAME = "c774da81-94d5-4652-85c7-6ed0e8dc67e6";
 
+// Warning: (ae-forgotten-export) The symbol "HangupButtonProps" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export const HangupButtonComponent: (props: Pick<HangupButtonProps, "onErrorCallback" | "text" | "styles" | "onEndCallClick">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+
 // @public (undocumented)
 export const hangupButtonProps: IButtonProps;
 
 // @public (undocumented)
 export const INCOMING = "Incoming";
+
+// @public (undocumented)
+export const IncomingCallControlBar: (props: ControlBarProps & CallControlBarContainerProps & ErrorHandlingProps) => JSX.Element;
+
+// @public (undocumented)
+export const IncomingCallControlBarComponent: (props: Pick<ControlBarProps & CallControlBarContainerProps & ErrorHandlingProps, "onErrorCallback" | "children" | "layout" | "styles">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
 
 // Warning: (ae-forgotten-export) The symbol "IncomingCallModalProps" needs to be exported by the entry point index.d.ts
 //
@@ -822,7 +859,7 @@ export interface MessageThreadStylesProps {
 }
 
 // @public (undocumented)
-export const MINI_HEADER_WINDOW_WIDTH = 360;
+export const MINI_HEADER_WINDOW_WIDTH = 450;
 
 // @public (undocumented)
 export const MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS = 8000;
@@ -846,6 +883,17 @@ export const OneToOneCall: (props: OneToOneCallCompositeProps) => JSX.Element;
 
 // @public (undocumented)
 export const optionsButtonProps: IButtonProps;
+
+// @public (undocumented)
+export const OutgoingCallControlBar: (props: OutgoingCallControlBarProps & ErrorHandlingProps) => JSX.Element;
+
+// @public (undocumented)
+export const OutgoingCallControlBarComponent: (props: Pick<OutgoingCallControlBarProps & ErrorHandlingProps, "onErrorCallback" | "children" | "layout" | "styles" | "onEndCallClick">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+
+// @public (undocumented)
+export interface OutgoingCallControlBarProps extends ControlBarProps, CallControlBarContainerProps {
+    onEndCallClick(): void;
+}
 
 // @public (undocumented)
 export const PAGE_SIZE = 200;

@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { DefaultButton, IContextualMenuProps } from '@fluentui/react';
+import { DefaultButton, IButtonStyles, IContextualMenuProps } from '@fluentui/react';
 import React, { useCallback } from 'react';
 import {
   ControlBar,
@@ -17,7 +17,8 @@ import {
 } from '../../consumers';
 import { CallControlBarContainerProps, MapToCallControlBarProps } from '../common/consumers/MapToCallControlBarProps';
 import { ErrorHandlingProps } from '../../providers';
-import { isLocalScreenShareSupportedInBrowser, propagateError } from '../../utils';
+import { isLocalScreenShareSupportedInBrowser, propagateError, WithErrorHandling } from '../../utils';
+import { groupCallLeaveButtonCompressedStyle, groupCallLeaveButtonStyle } from './styles/CallControls.styles';
 
 const CallOptionsButton = (props: LocalDeviceSettingsContainerProps): JSX.Element => {
   const {
@@ -69,6 +70,8 @@ const CallOptionsButtonComponent = connectFuncsToContext(CallOptionsButton, MapT
 
 interface HangupButtonProps extends CallControlBarContainerProps, ErrorHandlingProps {
   onEndCallClick(): void;
+  styles?: IButtonStyles;
+  text?: string;
 }
 
 const HangupButton = (props: HangupButtonProps): JSX.Element => {
@@ -79,7 +82,9 @@ const HangupButton = (props: HangupButtonProps): JSX.Element => {
     stopLocalVideo,
     leaveCall,
     onEndCallClick,
-    onErrorCallback
+    onErrorCallback,
+    styles,
+    text
   } = props;
 
   const hangup = useCallback(async (): Promise<void> => {
@@ -92,13 +97,15 @@ const HangupButton = (props: HangupButtonProps): JSX.Element => {
 
   return (
     <DefaultButton
-      {...hangupButtonProps}
+      onRenderIcon={hangupButtonProps.onRenderIcon}
       checked={false}
       onClick={() => {
         hangup().catch((error) => {
           propagateError(error, onErrorCallback);
         });
       }}
+      styles={styles ?? hangupButtonProps.styles}
+      text={text}
     />
   );
 };
@@ -269,3 +276,82 @@ export const CallControlBar = (props: ControlBarProps & CallControlBarProps & Er
 };
 
 export const CallControlBarComponent = connectFuncsToContext(CallControlBar, MapToCallControlBarProps);
+
+export interface GroupCallControlBarProps extends CallControlBarContainerProps {
+  /** Determines media control button layout. */
+  compressedMode: boolean;
+  /** Callback when call ends */
+  onEndCallClick(): void;
+}
+
+export const GroupCallControlBar = (props: ControlBarProps & GroupCallControlBarProps & ErrorHandlingProps) => {
+  const {
+    localVideoEnabled,
+    onEndCallClick,
+    cameraPermission,
+    micPermission,
+    isRemoteScreenShareActive,
+    localVideoBusy,
+    toggleLocalVideo,
+    toggleMicrophone,
+    isMicrophoneActive,
+    toggleScreenShare,
+    isLocalScreenShareActive,
+    compressedMode,
+    onErrorCallback
+  } = props;
+
+  const cameraDisabled = cameraPermission === 'Denied';
+  const micDisabled = micPermission === 'Denied';
+  const screenShareDisabled = isRemoteScreenShareActive;
+
+  return (
+    <ControlBar {...props}>
+      <DefaultButton
+        {...videoButtonProps}
+        checked={localVideoEnabled}
+        disabled={cameraDisabled || localVideoBusy}
+        onClick={() => {
+          toggleLocalVideo().catch((error) => {
+            propagateError(error, onErrorCallback);
+          });
+        }}
+      />
+      <DefaultButton
+        {...audioButtonProps}
+        checked={isMicrophoneActive}
+        disabled={micDisabled}
+        onClick={() => {
+          toggleMicrophone().catch((error) => {
+            propagateError(error, onErrorCallback);
+          });
+        }}
+      />
+      {isLocalScreenShareSupportedInBrowser() && (
+        <DefaultButton
+          {...screenShareButtonProps}
+          checked={isLocalScreenShareActive}
+          disabled={screenShareDisabled}
+          onClick={() => {
+            toggleScreenShare().catch((error) => {
+              propagateError(error, onErrorCallback);
+            });
+          }}
+        />
+      )}
+      <div>
+        <HangupButtonComponent
+          onEndCallClick={onEndCallClick}
+          text={!compressedMode ? 'Leave' : ''}
+          styles={!compressedMode ? groupCallLeaveButtonStyle : groupCallLeaveButtonCompressedStyle}
+        />
+      </div>
+    </ControlBar>
+  );
+};
+
+export const GroupCallControlBarComponent = connectFuncsToContext(
+  (props: ControlBarProps & GroupCallControlBarProps & ErrorHandlingProps) =>
+    WithErrorHandling(GroupCallControlBar, props),
+  MapToCallControlBarProps
+);
