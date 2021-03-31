@@ -11,11 +11,9 @@ import {
   sendButtonStyle,
   sendIconDiv
 } from './styles/SendBox.styles';
-import { connectFuncsToContext } from '../consumers/ConnectContext';
-import { MapToSendBoxProps, SendBoxPropsFromContext } from '../consumers/MapToSendBoxProps';
+import { SendBoxPropsFromContext } from '../consumers/MapToSendBoxProps';
 import classNames from 'classnames';
 import { Alert } from '@fluentui/react-northstar/dist/commonjs/components/Alert/Alert';
-import { WithErrorHandling } from '../utils/WithErrorHandling';
 import { ErrorHandlingProps } from '../providers/ErrorProvider';
 import { propagateError } from '../utils/SDKUtils';
 
@@ -39,7 +37,7 @@ const defaultOnRenderSystemMessage = (systemMessage: string | undefined): JSX.El
  * added below the `SendBox`
  * @param props - SendBoxProps
  */
-const SendBoxComponentBase = (props: SendBoxProps & ErrorHandlingProps): JSX.Element => {
+export const SendBox = (props: SendBoxProps & ErrorHandlingProps): JSX.Element => {
   const {
     disabled,
     displayName,
@@ -129,8 +127,3 @@ const SendBoxComponentBase = (props: SendBoxProps & ErrorHandlingProps): JSX.Ele
     </>
   );
 };
-
-export const SendBoxComponent = (props: SendBoxProps & ErrorHandlingProps): JSX.Element =>
-  WithErrorHandling(SendBoxComponentBase, props);
-
-export default connectFuncsToContext(SendBoxComponent, MapToSendBoxProps);

@@ -2,14 +2,14 @@
 
 import { ChatMessage as WebUiChatMessage, MessageStatus, MessageAttachedStatus } from '@azure/communication-ui';
 
-export const ChatThreadContainerStyles = {
+export const MessageThreadContainerStyles = {
   width: '100%',
   height: '100%',
   maxWidth: '50rem',
   maxHeight: '30rem'
 };
 
-export const ChatThreadStyles = {
+export const MessageThreadStyles = {
   root: {
     margin: '20px auto',
     border: '1px solid',

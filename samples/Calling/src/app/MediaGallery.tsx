@@ -5,7 +5,7 @@ import {
   connectFuncsToContext,
   StreamMedia,
   VideoTile,
-  GridLayoutComponent,
+  GridLayout,
   MapToLocalVideoProps,
   convertSdkRemoteParticipantToGalleryParticipant,
   ErrorHandlingProps,
@@ -99,12 +99,12 @@ export const MediaGalleryComponentBase = (props: MediaGalleryContainerProps): JS
       </div>
     </>
   ) : (
-    <GridLayoutComponent>
+    <GridLayout>
       <Stack horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
         {layoutLocalParticipant}
       </Stack>
       {gridLayoutRemoteParticipants}
-    </GridLayoutComponent>
+    </GridLayout>
   );
 };
 

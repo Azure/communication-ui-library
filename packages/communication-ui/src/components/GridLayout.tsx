@@ -3,11 +3,11 @@
 import React, { useState } from 'react';
 import { gridLayoutStyle } from './styles/GridLayout.styles';
 
-export type GridLayout = 'standard';
+export type GridLayoutType = 'standard';
 
 export interface GridLayoutProps {
   children: React.ReactNode;
-  layout?: GridLayout;
+  layout?: GridLayoutType;
 }
 
 const calculateStandardLayoutRows = (numberOfItems: number, gridCol: number): number =>
@@ -16,7 +16,7 @@ const calculateStandardLayoutRows = (numberOfItems: number, gridCol: number): nu
 const calculateStandardLayoutColumns = (numberOfItems: number): number =>
   numberOfItems > 0 ? Math.ceil(Math.sqrt(numberOfItems)) : 1;
 
-export const GridLayoutComponent = (props: GridLayoutProps): JSX.Element => {
+export const GridLayout = (props: GridLayoutProps): JSX.Element => {
   const [gridCol, setGridCol] = useState(1);
   const [gridRow, setGridRow] = useState(1);
 

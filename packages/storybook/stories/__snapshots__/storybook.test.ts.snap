@@ -12,7 +12,7 @@ exports[`storybook snapshot tests Storyshots Composites/GroupCall Group Call Com
   }
 >
   <div
-    className="css-71 root-0 body-1"
+    className="css-76 root-0 body-1"
     style={
       Object {
         "display": "inherit",
@@ -20,7 +20,7 @@ exports[`storybook snapshot tests Storyshots Composites/GroupCall Group Call Com
     }
   >
     <div
-      className="css-71"
+      className="css-76"
       data-uses-unhanded-props={true}
       dir="ltr"
       style={
@@ -32,9 +32,10 @@ exports[`storybook snapshot tests Storyshots Composites/GroupCall Group Call Com
       <div
         style={
           Object {
+            "border": "1px solid",
             "height": "100%",
             "margin": "20px auto",
-            "maxHeight": "35rem",
+            "maxHeight": "30rem",
             "maxWidth": "50rem",
             "width": "100%",
           }
@@ -60,7 +61,7 @@ exports[`storybook snapshot tests Storyshots Composites/GroupChat Group Chat Com
   }
 >
   <div
-    className="css-71 root-0 body-1"
+    className="css-76 root-0 body-1"
     style={
       Object {
         "display": "inherit",
@@ -68,7 +69,7 @@ exports[`storybook snapshot tests Storyshots Composites/GroupChat Group Chat Com
     }
   >
     <div
-      className="css-71"
+      className="css-76"
       data-uses-unhanded-props={true}
       dir="ltr"
       style={
@@ -109,7 +110,7 @@ exports[`storybook snapshot tests Storyshots Composites/OneToOneCall One To One 
   }
 >
   <div
-    className="css-71 root-0 body-1"
+    className="css-76 root-0 body-1"
     style={
       Object {
         "display": "inherit",
@@ -117,7 +118,7 @@ exports[`storybook snapshot tests Storyshots Composites/OneToOneCall One To One 
     }
   >
     <div
-      className="css-71"
+      className="css-76"
       data-uses-unhanded-props={true}
       dir="ltr"
       style={
@@ -164,7 +165,7 @@ exports[`storybook snapshot tests Storyshots Examples/IncomingCallAlerts Incomin
   }
 >
   <div
-    className="css-71 root-0 body-1"
+    className="css-76 root-0 body-1"
     style={
       Object {
         "display": "inherit",
@@ -172,7 +173,7 @@ exports[`storybook snapshot tests Storyshots Examples/IncomingCallAlerts Incomin
     }
   >
     <div
-      className="css-71"
+      className="css-76"
       data-uses-unhanded-props={true}
       dir="ltr"
       style={
@@ -409,7 +410,7 @@ exports[`storybook snapshot tests Storyshots Examples/IncomingCallAlerts Incomin
                               className="ms-Stack css-52"
                             >
                               <div
-                                className="css-72"
+                                className="css-71"
                               />
                             </div>
                           </div>
@@ -588,7 +589,7 @@ exports[`storybook snapshot tests Storyshots Examples/IncomingCallAlerts Incomin
   }
 >
   <div
-    className="css-71 root-0 body-1"
+    className="css-76 root-0 body-1"
     style={
       Object {
         "display": "inherit",
@@ -596,7 +597,7 @@ exports[`storybook snapshot tests Storyshots Examples/IncomingCallAlerts Incomin
     }
   >
     <div
-      className="css-71"
+      className="css-76"
       data-uses-unhanded-props={true}
       dir="ltr"
       style={
@@ -771,7 +772,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes Teams Theme Compone
   }
 >
   <div
-    className="css-71 root-0 body-1"
+    className="css-76 root-0 body-1"
     style={
       Object {
         "display": "inherit",
@@ -779,7 +780,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes Teams Theme Compone
     }
   >
     <div
-      className="css-71"
+      className="css-76"
       data-uses-unhanded-props={true}
       dir="ltr"
       style={
@@ -790,7 +791,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes Teams Theme Compone
     >
       <div>
         <div
-          className="css-71 root-2 body-1"
+          className="css-76 root-2 body-1"
           style={
             Object {
               "display": "inherit",
@@ -798,7 +799,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes Teams Theme Compone
           }
         >
           <div
-            className="css-71"
+            className="css-76"
             data-uses-unhanded-props={true}
             style={
               Object {
@@ -1010,7 +1011,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes Teams Theme Compone
               }
             >
               <div
-                className="css-61"
+                className="css-55"
                 style={
                   Object {
                     "gridTemplateColumns": "repeat(1, 1fr)",
@@ -1084,7 +1085,7 @@ exports[`storybook snapshot tests Storyshots UI Components/ControlBar Control Ba
   }
 >
   <div
-    className="css-71 root-0 body-1"
+    className="css-76 root-0 body-1"
     style={
       Object {
         "display": "inherit",
@@ -1092,7 +1093,7 @@ exports[`storybook snapshot tests Storyshots UI Components/ControlBar Control Ba
     }
   >
     <div
-      className="css-71"
+      className="css-76"
       data-uses-unhanded-props={true}
       dir="ltr"
       style={
@@ -1386,7 +1387,7 @@ exports[`storybook snapshot tests Storyshots UI Components/ErrorBar Error Bar Co
   }
 >
   <div
-    className="css-71 root-0 body-1"
+    className="css-76 root-0 body-1"
     style={
       Object {
         "display": "inherit",
@@ -1394,7 +1395,7 @@ exports[`storybook snapshot tests Storyshots UI Components/ErrorBar Error Bar Co
     }
   >
     <div
-      className="css-71"
+      className="css-76"
       data-uses-unhanded-props={true}
       dir="ltr"
       style={
@@ -1488,7 +1489,7 @@ exports[`storybook snapshot tests Storyshots UI Components/GridLayout Grid Layou
   }
 >
   <div
-    className="css-71 root-0 body-1"
+    className="css-76 root-0 body-1"
     style={
       Object {
         "display": "inherit",
@@ -1496,7 +1497,7 @@ exports[`storybook snapshot tests Storyshots UI Components/GridLayout Grid Layou
     }
   >
     <div
-      className="css-71"
+      className="css-76"
       data-uses-unhanded-props={true}
       dir="ltr"
       style={
@@ -1514,7 +1515,7 @@ exports[`storybook snapshot tests Storyshots UI Components/GridLayout Grid Layou
         }
       >
         <div
-          className="css-61"
+          className="css-55"
           style={
             Object {
               "gridTemplateColumns": "repeat(2, 1fr)",
@@ -1717,7 +1718,7 @@ exports[`storybook snapshot tests Storyshots UI Components/ParticipantItem Parti
   }
 >
   <div
-    className="css-71 root-0 body-1"
+    className="css-76 root-0 body-1"
     style={
       Object {
         "display": "inherit",
@@ -1725,7 +1726,7 @@ exports[`storybook snapshot tests Storyshots UI Components/ParticipantItem Parti
     }
   >
     <div
-      className="css-71"
+      className="css-76"
       data-uses-unhanded-props={true}
       dir="ltr"
       style={
@@ -1792,7 +1793,7 @@ exports[`storybook snapshot tests Storyshots UI Components/ParticipantItem Parti
           </div>
         </div>
         <div
-          className="ms-Stack css-76 css-19"
+          className="ms-Stack css-75 css-19"
         >
           <div
             className="ms-Stack css-20"
@@ -1969,7 +1970,7 @@ exports[`storybook snapshot tests Storyshots UI Components/ReadReceipt Read Reci
   }
 >
   <div
-    className="css-71 root-0 body-1"
+    className="css-76 root-0 body-1"
     style={
       Object {
         "display": "inherit",
@@ -1977,7 +1978,7 @@ exports[`storybook snapshot tests Storyshots UI Components/ReadReceipt Read Reci
     }
   >
     <div
-      className="css-71"
+      className="css-76"
       data-uses-unhanded-props={true}
       dir="ltr"
       style={
@@ -2016,7 +2017,7 @@ exports[`storybook snapshot tests Storyshots UI Components/ReadReceipt Read Reci
 </div>
 `;
 
-exports[`storybook snapshot tests Storyshots UI Components/SendBox Send Box Story Book Component 1`] = `
+exports[`storybook snapshot tests Storyshots UI Components/SendBox Send Box Component 1`] = `
 <div
   style={
     Object {
@@ -2028,7 +2029,7 @@ exports[`storybook snapshot tests Storyshots UI Components/SendBox Send Box Stor
   }
 >
   <div
-    className="css-71 root-0 body-1"
+    className="css-76 root-0 body-1"
     style={
       Object {
         "display": "inherit",
@@ -2036,7 +2037,7 @@ exports[`storybook snapshot tests Storyshots UI Components/SendBox Send Box Stor
     }
   >
     <div
-      className="css-71"
+      className="css-76"
       data-uses-unhanded-props={true}
       dir="ltr"
       style={
@@ -2053,10 +2054,10 @@ exports[`storybook snapshot tests Storyshots UI Components/SendBox Send Box Stor
         }
       >
         <div
-          className="ms-Stack css-53 css-2"
+          className="ms-Stack css-57 css-2"
         >
           <div
-            className="ms-TextField ms-TextField--multiline css-52 root-4"
+            className="ms-TextField ms-TextField--multiline css-56 root-4"
           >
             <div
               className="ms-TextField-wrapper wrapper-5"
@@ -2067,7 +2068,7 @@ exports[`storybook snapshot tests Storyshots UI Components/SendBox Send Box Stor
                 <textarea
                   aria-invalid={false}
                   aria-label="Type"
-                  className="ms-TextField-field ms-TextField--unresizable css-54 field-7"
+                  className="ms-TextField-field ms-TextField--unresizable css-58 field-7"
                   id="sendbox"
                   onBlur={[Function]}
                   onChange={[Function]}
@@ -2081,11 +2082,11 @@ exports[`storybook snapshot tests Storyshots UI Components/SendBox Send Box Stor
             </div>
           </div>
           <div
-            className="css-56 sendIconWrapper"
+            className="css-60 sendIconWrapper"
             onClick={[Function]}
           >
             <div
-              className="css-57"
+              className="css-61"
             />
           </div>
         </div>
@@ -2126,7 +2127,7 @@ exports[`storybook snapshot tests Storyshots UI Components/TypingIndicator Typin
   }
 >
   <div
-    className="css-71 root-0 body-1"
+    className="css-76 root-0 body-1"
     style={
       Object {
         "display": "inherit",
@@ -2134,7 +2135,7 @@ exports[`storybook snapshot tests Storyshots UI Components/TypingIndicator Typin
     }
   >
     <div
-      className="css-71"
+      className="css-76"
       data-uses-unhanded-props={true}
       dir="ltr"
       style={
@@ -2144,20 +2145,20 @@ exports[`storybook snapshot tests Storyshots UI Components/TypingIndicator Typin
       }
     >
       <div
-        className="css-58"
+        className="css-52"
       >
         <span
-          className="css-59"
+          className="css-53"
         >
           User1, 
         </span>
         <span
-          className="css-59"
+          className="css-53"
         >
           User2
         </span>
         <span
-          className="css-59"
+          className="css-53"
         >
            and 5 others are typing...
         </span>
@@ -2179,7 +2180,7 @@ exports[`storybook snapshot tests Storyshots UI Components/VideoTile Video Tile 
   }
 >
   <div
-    className="css-71 root-0 body-1"
+    className="css-76 root-0 body-1"
     style={
       Object {
         "display": "inherit",
@@ -2187,7 +2188,7 @@ exports[`storybook snapshot tests Storyshots UI Components/VideoTile Video Tile 
     }
   >
     <div
-      className="css-71"
+      className="css-76"
       data-uses-unhanded-props={true}
       dir="ltr"
       style={
