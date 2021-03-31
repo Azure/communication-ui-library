@@ -49,9 +49,6 @@ const GroupCallComponentBase = (props: GroupCallProps & ErrorHandlingProps): JSX
             <Stack className={props.screenWidth > MINI_HEADER_WINDOW_WIDTH ? headerContainer : headerCenteredContainer}>
               <GroupCallControlBarComponent
                 onEndCallClick={endCallHandler}
-                styles={{
-                  root: { background: 'white' }
-                }}
                 compressedMode={screenWidth <= MINI_HEADER_WINDOW_WIDTH}
               />
             </Stack>

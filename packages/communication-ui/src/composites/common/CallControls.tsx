@@ -214,7 +214,7 @@ export interface CallControlBarProps extends CallControlBarContainerProps {
 
 /**
  * An Azure Calling Services Call Control Bar with built in call handling.
- * @param props CallControlBarProps & ErrorHandlingProps & LocalDeviceSettingsContainerProps
+ * @param props - CallControlBarProps & ErrorHandlingProps & LocalDeviceSettingsContainerProps
  */
 export const CallControlBar = (props: ControlBarProps & CallControlBarProps & ErrorHandlingProps): JSX.Element => {
   const {

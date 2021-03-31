@@ -77,9 +77,6 @@ export const Header = (props: HeaderProps): JSX.Element => {
       )}
       <GroupCallControlBarComponent
         onEndCallClick={props.endCallHandler}
-        styles={{
-          root: { background: 'white' }
-        }}
         compressedMode={props.screenWidth <= MINI_HEADER_WINDOW_WIDTH}
       />
     </Stack>

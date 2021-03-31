@@ -2,14 +2,11 @@
 
 import { getTheme } from '@fluentui/react';
 
-const MODERATE_RED = '#d74654';
-const DARK_RED = '#94102a';
-const DARKER_RED = '#790d23';
 const palette = getTheme().palette;
 
 export const groupCallLeaveButtonStyle = {
   root: {
-    background: MODERATE_RED,
+    background: palette.red,
     border: '0.125rem',
     borderRadius: 2,
     margin: '.75rem',
@@ -21,11 +18,11 @@ export const groupCallLeaveButtonStyle = {
     flexFlow: 'row'
   },
   rootHovered: {
-    backgroundColor: DARK_RED,
+    backgroundColor: palette.redDark,
     color: palette.white
   },
   rootPressed: {
-    backgroundColor: DARKER_RED,
+    backgroundColor: palette.redDark,
     color: palette.white
   }
 };
