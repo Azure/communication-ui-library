@@ -3,14 +3,13 @@
 import { ErrorHandlingProps } from '../providers/ErrorProvider';
 import React, { useEffect, useRef } from 'react';
 import { invertedVideoStyle, mediaContainer } from './styles/StreamMedia.styles';
-import { WithErrorHandling } from '../utils/WithErrorHandling';
 
 export interface StreamMediaProps {
   videoStreamElement: HTMLElement | null;
   invertVideo?: boolean;
 }
 
-const StreamMediaComponent = (props: StreamMediaProps & ErrorHandlingProps): JSX.Element => {
+export const StreamMedia = (props: StreamMediaProps & ErrorHandlingProps): JSX.Element => {
   const containerEl = useRef<HTMLDivElement>(null);
   const { invertVideo, videoStreamElement } = props;
 
@@ -23,6 +22,3 @@ const StreamMediaComponent = (props: StreamMediaProps & ErrorHandlingProps): JSX
 
   return <div className={invertVideo ? invertedVideoStyle : mediaContainer} ref={containerEl} />;
 };
-
-export const StreamMedia = (props: StreamMediaProps & ErrorHandlingProps): JSX.Element =>
-  WithErrorHandling(StreamMediaComponent, props);

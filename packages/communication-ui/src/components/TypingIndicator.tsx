@@ -8,11 +8,13 @@ import {
 } from './styles/TypingIndicator.styles';
 
 import React from 'react';
-import { connectFuncsToContext } from '../consumers/ConnectContext';
-import { MapToTypingIndicatorProps, TypingIndicatorProps } from '../consumers/MapToTypingIndicatorProps';
 import { TypingUser } from '../types/TypingUser';
-import { WithErrorHandling } from '../utils/WithErrorHandling';
 import { ErrorHandlingProps } from '../providers/ErrorProvider';
+
+export type TypingIndicatorProps = {
+  typingUsers: TypingUser[];
+  typingString: string;
+};
 
 /**
  * React component that handles displaying a typing indicator on the screen.
@@ -29,7 +31,7 @@ import { ErrorHandlingProps } from '../providers/ErrorProvider';
  * @param props - An object of TypingIndicatorProps type that contains all data and functions needed
  * @returns ReactElement
  */
-export const TypingIndicatorComponentBase = (props: TypingIndicatorProps & ErrorHandlingProps): JSX.Element => {
+export const TypingIndicator = (props: TypingIndicatorProps & ErrorHandlingProps): JSX.Element => {
   const displayComponents: JSX.Element[] = [];
   props.typingUsers.map((typingUser: TypingUser, index: number) => {
     if (typingUser.prefixImageUrl.length !== 0) {
@@ -57,8 +59,3 @@ export const TypingIndicatorComponentBase = (props: TypingIndicatorProps & Error
     </div>
   );
 };
-
-export const TypingIndicatorComponent = (props: TypingIndicatorProps & ErrorHandlingProps): JSX.Element =>
-  WithErrorHandling(TypingIndicatorComponentBase, props);
-
-export default connectFuncsToContext(TypingIndicatorComponent, MapToTypingIndicatorProps);

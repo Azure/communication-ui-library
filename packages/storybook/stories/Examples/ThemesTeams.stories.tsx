@@ -6,7 +6,7 @@ import { getDocs } from './ThemesDocs';
 import { EXAMPLES_FOLDER_PREFIX } from '../constants';
 import {
   FluentThemeProvider,
-  GridLayoutComponent,
+  GridLayout,
   VideoTile,
   ControlBar,
   videoButtonProps,
@@ -81,11 +81,11 @@ export const TeamsThemeComponent: () => JSX.Element = () => {
             width: '830px'
           }}
         >
-          <GridLayoutComponent>
+          <GridLayout>
             <VideoTile isVideoReady={false} videoProvider={null} avatarName={'Michael'}>
               <label>Michael</label>
             </VideoTile>
-          </GridLayoutComponent>
+          </GridLayout>
         </div>
       </FluentThemeProvider>
     </div>

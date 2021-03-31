@@ -83,7 +83,7 @@ const ControlBarExample: () => JSX.Element = () => {
 };
 `;
 
-const ControlBarLayoutExample: () => JSX.Element = () => {
+const ControlBarComponentLayoutExample: () => JSX.Element = () => {
   return (
     <Stack style={{ flexFlow: 'row', minHeight: '250px' }}>
       <FluentThemeProvider>
@@ -99,7 +99,7 @@ const ControlBarLayoutExample: () => JSX.Element = () => {
   );
 };
 
-const controlBarLayoutCode = `
+const ControlBarComponentLayoutCode = `
 <ControlBar layout='floatingLeft'>
   <DefaultButton {...videoButtonProps} />
   <DefaultButton {...audioButtonProps} />
@@ -109,7 +109,7 @@ const controlBarLayoutCode = `
 </ControlBar>
 `;
 
-const customControlBarUsage = `
+const customControlBarComponentUsage = `
 import { CallEndIcon } from '@fluentui/react-northstar';
 import { FluentThemeProvider } from '@azure/communication-ui';
 
@@ -221,15 +221,15 @@ export const getDocs: () => JSX.Element = () => {
         You can change the layout of Control Bar by providing a preset layout to the `layout` prop.
       </Description>
       <Canvas>
-        <ControlBarLayoutExample />
+        <ControlBarComponentLayoutExample />
       </Canvas>
-      <Source code={controlBarLayoutCode} />
+      <Source code={ControlBarComponentLayoutCode} />
 
       <Heading>Custom Control Bar</Heading>
       <Canvas>
         <CustomControlBarExample />
       </Canvas>
-      <Source code={customControlBarUsage} />
+      <Source code={customControlBarComponentUsage} />
 
       <Heading>ControlBar Props</Heading>
       <Props of={ControlBar} />

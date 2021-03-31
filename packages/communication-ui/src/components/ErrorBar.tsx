@@ -1,8 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
 import React from 'react';
-import { connectFuncsToContext } from '../consumers/ConnectContext';
-import { MapToErrorBarProps } from '../consumers/MapToErrorBarProps';
 import { MessageBar, MessageBarType } from '@fluentui/react';
 import { CommunicationUiErrorSeverity } from '../types/CommunicationUiError';
 
@@ -28,7 +26,7 @@ const errorBarSeverityToMessageBarType = new Map<CommunicationUiErrorSeverity, M
  * Displays a message on screen based on message and severity. If message is undefined or if severity is IGNORE,
  * then nothing will be displayed.
  */
-export const ErrorBarComponent = (props: ErrorBarProps): JSX.Element | null => {
+export const ErrorBar = (props: ErrorBarProps): JSX.Element | null => {
   const { message, severity, onClose } = props;
   const type = severity
     ? errorBarSeverityToMessageBarType.has(severity)
@@ -46,5 +44,3 @@ export const ErrorBarComponent = (props: ErrorBarProps): JSX.Element | null => {
     );
   }
 };
-
-export default connectFuncsToContext(ErrorBarComponent, MapToErrorBarProps);

@@ -11,7 +11,6 @@ import {
   Stack
 } from '@fluentui/react';
 import React, { useRef, useState } from 'react';
-import { WithErrorHandling } from '../utils/WithErrorHandling';
 import { ErrorHandlingProps } from '../providers/ErrorProvider';
 import { useTheme } from '@fluentui/react-theme-provider';
 
@@ -33,7 +32,11 @@ export interface ParticipantItemProps {
   presence?: PersonaPresence;
 }
 
-const ParticipantItemBase = (props: ParticipantItemProps & ErrorHandlingProps): JSX.Element => {
+/**
+ * Participant Item component representing a participant in Calling or Chat
+ * @param props - ParticipantItemProps & ErrorHandlingProps
+ */
+export const ParticipantItem = (props: ParticipantItemProps & ErrorHandlingProps): JSX.Element => {
   const { name, isYou, onRenderAvatar, menuItems, onRenderIcon, presence } = props;
   const [clickEvent, setClickEvent] = useState<MouseEvent | undefined>();
   const [menuHidden, setMenuHidden] = useState<boolean>(true);
@@ -76,10 +79,3 @@ const ParticipantItemBase = (props: ParticipantItemProps & ErrorHandlingProps): 
     </div>
   );
 };
-
-/**
- * Participant Item component representing a participant in Calling or Chat
- * @param props - ParticipantItemProps & ErrorHandlingProps
- */
-export const ParticipantItem = (props: ParticipantItemProps & ErrorHandlingProps): JSX.Element =>
-  WithErrorHandling(ParticipantItemBase, props);
