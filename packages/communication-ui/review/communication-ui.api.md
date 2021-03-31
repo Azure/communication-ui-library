@@ -447,9 +447,9 @@ export const EMPTY_MESSAGE_REGEX: RegExp;
 export const ENTER_KEY = 13;
 
 // @public
-export const ErrorBar: (props: ErrorBarProps) => JSX.Element;
+export const ErrorBar: (props: ErrorBarProps) => JSX.Element | null;
 
-// @public (undocumented)
+// @public
 export type ErrorBarProps = {
     message?: string;
     severity?: CommunicationUiErrorSeverity;
