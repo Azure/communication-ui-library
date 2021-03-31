@@ -33,9 +33,8 @@ const defaultOnRenderSystemMessage = (systemMessage: string | undefined): JSX.El
   systemMessage ? <Alert attached="bottom" content={systemMessage} /> : undefined;
 
 /**
- * @description `SendBox` is a component for users to send messages and typing notifications. An optional message
+ * `SendBox` is a component for users to send messages and typing notifications. An optional message
  * can also be shown below the `SendBox`.
- * @param props - SendBoxProps
  */
 export const SendBox = (props: SendBoxProps & ErrorHandlingProps): JSX.Element => {
   const {
