@@ -20,7 +20,7 @@ import { COMPONENT_FOLDER_PREFIX } from '../constants';
 export const VideoTileComponent: () => JSX.Element = () => {
   const avatarName = text('Avatar Name', 'John Krasinski');
   const isVideoReady = boolean('Is Video Ready', false);
-  const showControlBar = boolean('Show Control Bar (Not a part of this component)', false);
+  const showControlBarComponent = boolean('Show Control Bar (Not a part of this component)', false);
   const invertVideo = boolean('Invert Video', false);
   const width = number('Width', 400, {
     range: true,
@@ -45,7 +45,7 @@ export const VideoTileComponent: () => JSX.Element = () => {
         root: { height: height, width: width }
       }}
     >
-      {showControlBar && (
+      {showControlBarComponent && (
         <Stack style={{ position: 'absolute', left: '50%', bottom: '1rem' }}>
           <ControlBar styles={{ root: { position: 'relative', left: '-50%' } }}>
             <DefaultButton {...videoButtonProps} />
@@ -61,7 +61,7 @@ export const VideoTileComponent: () => JSX.Element = () => {
 
 export default {
   title: `${COMPONENT_FOLDER_PREFIX}/VideoTile`,
-  component: VideoTileComponent,
+  component: VideoTile,
   parameters: {
     docs: {
       page: () => getDocs()

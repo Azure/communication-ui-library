@@ -31,7 +31,6 @@ module.exports = {
     ],
     '@typescript-eslint/no-explicit-any': 'off',
     eqeqeq: 'warn',
-    'header/header': ['error', 'line', ' © Microsoft Corporation. All rights reserved.'],
     'react/display-name': 'off',
     '@typescript-eslint/no-unused-vars': ['warn', { varsIgnorePattern: '^_' }]
   },

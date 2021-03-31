@@ -11,11 +11,9 @@ import {
   sendButtonStyle,
   sendIconDiv
 } from './styles/SendBox.styles';
-import { connectFuncsToContext } from '../consumers/ConnectContext';
-import { MapToSendBoxProps, SendBoxPropsFromContext } from '../consumers/MapToSendBoxProps';
+import { SendBoxPropsFromContext } from '../consumers/MapToSendBoxProps';
 import classNames from 'classnames';
 import { Alert } from '@fluentui/react-northstar/dist/commonjs/components/Alert/Alert';
-import { WithErrorHandling } from '../utils/WithErrorHandling';
 import { ErrorHandlingProps } from '../providers/ErrorProvider';
 import { propagateError } from '../utils/SDKUtils';
 
@@ -34,7 +32,12 @@ export type SendBoxProps = {
 const defaultOnRenderSystemMessage = (systemMessage: string | undefined): JSX.Element | undefined =>
   systemMessage ? <Alert attached="bottom" content={systemMessage} /> : undefined;
 
-const SendBoxComponentBase = (props: SendBoxProps & ErrorHandlingProps): JSX.Element => {
+/**
+ * @description `SendBox` is a component for users to send messages and typing notifications. An optional message
+ * can also be shown below the `SendBox`.
+ * @param props - SendBoxProps
+ */
+export const SendBox = (props: SendBoxProps & ErrorHandlingProps): JSX.Element => {
   const {
     disabled,
     systemMessage,
@@ -122,12 +125,3 @@ const SendBoxComponentBase = (props: SendBoxProps & ErrorHandlingProps): JSX.Ele
     </>
   );
 };
-
-/**
- * `SendBox` is a component for users to send messages and typing notifications. An optional message
- * can also be shown below the `SendBox`.
- */
-export const SendBoxComponent = (props: SendBoxProps & ErrorHandlingProps): JSX.Element =>
-  WithErrorHandling(SendBoxComponentBase, props);
-
-export default connectFuncsToContext(SendBoxComponent, MapToSendBoxProps);

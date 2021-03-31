@@ -6,7 +6,7 @@ import { Button, Chat, ChatItemProps, Flex, Ref } from '@fluentui/react-northsta
 import {
   DownIconStyle,
   newMessageButtonContainerStyle,
-  chatThreadContainerStyle,
+  messageThreadContainerStyle,
   chatMessageStyle,
   loadPreviousMessagesButtonContainerStyle,
   chatStyle,
@@ -14,16 +14,16 @@ import {
   newMessageButtonStyle,
   readReceiptContainerStyle,
   noReadReceiptStyle
-} from './styles/ChatThread.styles';
+} from './styles/MessageThread.styles';
 import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack } from '@fluentui/react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { LiveAnnouncer, LiveMessage } from 'react-aria-live';
 import { ErrorHandlingProps } from '../providers';
-import { formatTimestampForChatMessage, propagateError, WithErrorHandling } from '../utils';
+import { formatTimestampForChatMessage, propagateError } from '../utils';
 import { CLICK_TO_LOAD_MORE_MESSAGES, NEW_MESSAGES } from '../constants';
 import { ChatMessage as WebUiChatMessage } from '../types';
-import { ReadReceiptComponent, ReadReceiptProps } from './ReadReceipt';
-import { connectFuncsToContext, ChatMessagePropsFromContext, MapToChatMessageProps } from '../consumers';
+import { ReadReceipt, ReadReceiptProps } from './ReadReceipt';
+import { ChatMessagePropsFromContext } from '../consumers';
 
 const isMessageSame = (first: WebUiChatMessage, second: WebUiChatMessage): boolean => {
   return (
@@ -122,7 +122,7 @@ const didUserSendTheLatestMessage = (
   }
 };
 
-export interface ChatThreadStylesProps {
+export interface MessageThreadStylesProps {
   /** Styles for the root container */
   root?: IStyle;
   /** Styles for load previous messages container */
@@ -168,7 +168,7 @@ const DefaultLoadPreviousMessagesButton = (props: LoadPreviousMessagesButtonProp
   );
 };
 
-export type ChatThreadProps = {
+export type MessageThreadProps = {
   /**
    * The userId of the current user.
    */
@@ -180,7 +180,7 @@ export type ChatThreadProps = {
   /**
    * Custom CSS Styling.
    */
-  styles?: ChatThreadStylesProps;
+  styles?: MessageThreadStylesProps;
   /**
    * Whether the new message button is disabled.
    * @defaultValue `false`
@@ -223,14 +223,16 @@ export type ChatThreadProps = {
 };
 
 /**
- * `ChatThread` allows you to easily create a component for rendering chat messages, handling scrolling behavior of new/old messages and customizing icons & controls inside the chat thread.
+ * `MessageThread` allows you to easily create a component for rendering chat messages, handling scrolling behavior of new/old messages and customizing icons & controls inside the chat thread.
  *
- * Users will need to provide at least chat messages and userId to render the `ChatThread` component.
- * Users can also customize `ChatThread` by passing in their own Avatar, `ReadReceipt` icon, `JumpToNewMessageButton`, `LoadPreviousMessagesButton` and the behavior of these controls.
+ * Users will need to provide at least chat messages and userId to render the `MessageThread` component.
+ * Users can also customize `MessageThread` by passing in their own Avatar, `ReadReceipt` icon, `JumpToNewMessageButton`, `LoadPreviousMessagesButton` and the behavior of these controls.
  *
- * `ChatThread` internally uses the `Chat` & `Chat.Message` component from `@fluentui/react-northstar`. You can checkout the details about these [two components](https://fluentsite.z22.web.core.windows.net/0.53.0/components/chat/props).
+ * `MessageThread` internally uses the `Chat` & `Chat.Message` component from `@fluentui/react-northstar`. You can checkout the details about these [two components](https://fluentsite.z22.web.core.windows.net/0.53.0/components/chat/props).
  */
-export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingProps): JSX.Element => {
+export const MessageThread = (
+  props: MessageThreadProps & ErrorHandlingProps & ChatMessagePropsFromContext
+): JSX.Element => {
   const {
     chatMessages: newChatMessages,
     userId,
@@ -438,7 +440,7 @@ export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingPr
                     onRenderReadReceipt ? (
                       onRenderReadReceipt({ messageStatus: message.statusToRender })
                     ) : (
-                      ReadReceiptComponent({ messageStatus: message.statusToRender })
+                      ReadReceipt({ messageStatus: message.statusToRender })
                     )
                   ) : (
                     <div className={mergeStyles(noReadReceiptStyle)} />
@@ -455,7 +457,7 @@ export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingPr
 
   return (
     <Ref innerRef={chatThreadRef}>
-      <Stack className={mergeStyles(chatThreadContainerStyle, styles?.root)} grow>
+      <Stack className={mergeStyles(messageThreadContainerStyle, styles?.root)} grow>
         {!disableLoadPreviousMessage && (
           <div
             className={mergeStyles(
@@ -490,9 +492,3 @@ export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingPr
     </Ref>
   );
 };
-
-export const ChatThreadComponent = (
-  props: ChatThreadProps & ErrorHandlingProps & ChatMessagePropsFromContext
-): JSX.Element => WithErrorHandling(ChatThreadComponentBase, props);
-
-export const ChatThread = connectFuncsToContext(ChatThreadComponent, MapToChatMessageProps);

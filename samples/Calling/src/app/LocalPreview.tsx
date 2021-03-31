@@ -17,7 +17,8 @@ import {
   ErrorHandlingProps,
   WithErrorHandling,
   CommunicationUiErrorFromError,
-  ErrorBar,
+  ErrorBar as ErrorBarComponent,
+  MapToErrorBarProps,
   MapToLocalDeviceSettingsProps,
   LocalDeviceSettingsContainerProps,
   StreamMedia,
@@ -50,6 +51,7 @@ const LocalPreviewComponentBase = (
     stream: localVideoStream,
     scalingMode: 'Crop'
   });
+  const ErrorBar = connectFuncsToContext(ErrorBarComponent, MapToErrorBarProps);
 
   return (
     <Stack className={localPreviewContainerStyle}>

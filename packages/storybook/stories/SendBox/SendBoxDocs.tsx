@@ -3,13 +3,13 @@ import React from 'react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
 import { Icon } from '@fluentui/react';
 
-import { FluentThemeProvider, SendBoxComponent } from '@azure/communication-ui';
+import { FluentThemeProvider, SendBox } from '@azure/communication-ui';
 
 const importStatement = `import { SendBoxComponent } from '@azure/communication-ui';`;
 
 const ExampleSendBox: () => JSX.Element = () => (
   <div style={{ width: '400px', margin: '0 5px' }}>
-    <SendBoxComponent
+    <SendBox
       onSendMessage={async () => {
         return;
       }}
@@ -35,7 +35,7 @@ const exampleSendBoxCode = `
 
 const SendBoxWithSystemMessage: () => JSX.Element = () => (
   <div style={{ width: '400px', margin: '0 5px' }}>
-    <SendBoxComponent
+    <SendBox
       onSendMessage={async () => {
         return;
       }}
@@ -49,7 +49,7 @@ const SendBoxWithSystemMessage: () => JSX.Element = () => (
 
 const sendBoxWithSystemMessageCode = `
 <div style={{ width: '400px', margin: '0 5px' }}>
-<SendBoxComponent
+<SendBox
   onSendMessage={async () => {
     return;
   }}
@@ -63,7 +63,7 @@ const sendBoxWithSystemMessageCode = `
 
 const CustomIconExample: () => JSX.Element = () => (
   <div style={{ width: '400px' }}>
-    <SendBoxComponent
+    <SendBox
       onSendMessage={async () => {
         return;
       }}
@@ -79,7 +79,7 @@ const customIconCode = `
 import { Icon } from '@fluentui/react';
 
 <div style={{ width: '400px' }}>
-  <SendBoxComponent
+  <SendBox
     onSendMessage={async () => {
       return;
     }}
@@ -128,7 +128,7 @@ export const getDocs: () => JSX.Element = () => {
         </FluentThemeProvider>
       </Canvas>
       <Heading>Props</Heading>
-      <Props of={SendBoxComponent} />
+      <Props of={SendBox} />
     </>
   );
 };

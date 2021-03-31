@@ -3,7 +3,7 @@
 import React, { useMemo } from 'react';
 import { connectFuncsToContext, MapToLocalVideoProps } from '../../consumers';
 import { MapToMediaGalleryProps, MediaGalleryContainerProps } from './consumers/MapToMediaGalleryProps';
-import { GridLayoutComponent } from '../../components/GridLayout';
+import { GridLayout } from '../../components/GridLayout';
 import { convertSdkRemoteParticipantToGalleryParticipant } from '../../utils';
 import { StreamMedia, VideoTile } from '../../components';
 import { Label, mergeStyles, Stack } from '@fluentui/react';
@@ -95,12 +95,12 @@ export const MediaGalleryComponentBase = (props: MediaGalleryContainerProps): JS
       </div>
     </>
   ) : (
-    <GridLayoutComponent>
+    <GridLayout>
       <Stack horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
         {layoutLocalParticipant}
       </Stack>
       {gridLayoutRemoteParticipants}
-    </GridLayoutComponent>
+    </GridLayout>
   );
 };
 

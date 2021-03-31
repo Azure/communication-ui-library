@@ -6,6 +6,6 @@ export const groupCallContainer = mergeStyles({
   height: '100%',
   width: '100%',
   overflow: 'auto',
-  minHeight: '35rem',
+  minHeight: '30rem',
   minWidth: '50rem'
 });

@@ -163,7 +163,7 @@ export const CONTROL_BAR_LAYOUTS = [
   'floatingRight'
 ] as const;
 
-export type ControlBarLayoutsType =
+export type ControlBarLayoutType =
   | 'horizontal'
   | 'vertical'
   | 'dockedTop'
@@ -192,7 +192,7 @@ export interface ControlBarProps {
    * `floatingRight`
    * Defaults to a `horizontal` layout.
    */
-  layout?: ControlBarLayoutsType;
+  layout?: ControlBarLayoutType;
 }
 
 /**
