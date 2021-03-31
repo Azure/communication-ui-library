@@ -9,7 +9,7 @@ const importStatement = `
 import { ParticipantItem } from '@azure/communication-ui';
 import { IContextualMenuItem, PersonaPresence } from '@fluentui/react';`;
 
-const ParticipantItemComponentExample: () => JSX.Element = () => {
+const ParticipantItemExample: () => JSX.Element = () => {
   const menuItems: IContextualMenuItem[] = [
     {
       key: 'Mute',
@@ -138,7 +138,7 @@ export const getDocs: () => JSX.Element = () => {
       <Source code={importStatement} />
       <Heading>Example</Heading>
       <Canvas>
-        <ParticipantItemComponentExample />
+        <ParticipantItemExample />
       </Canvas>
       <Source code={exampleCode} />
       <Heading>Custom avatar</Heading>
