@@ -28,11 +28,10 @@ const errorBarSeverityToMessageBarType = new Map<CommunicationUiErrorSeverity, M
  */
 export const ErrorBar = (props: ErrorBarProps): JSX.Element | null => {
   const { message, severity, onClose } = props;
-  const type = severity
-    ? errorBarSeverityToMessageBarType.has(severity)
+  const type =
+    severity && errorBarSeverityToMessageBarType.has(severity)
       ? errorBarSeverityToMessageBarType.get(severity)
-      : MessageBarType.error
-    : MessageBarType.error;
+      : MessageBarType.error;
   const label = severity ? severity.toString() : CommunicationUiErrorSeverity.ERROR.toString();
   if (!message || severity === CommunicationUiErrorSeverity.IGNORE) {
     return null;
