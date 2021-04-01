@@ -16,11 +16,11 @@ import MediaGallery from './MediaGallery';
 import { connectFuncsToContext, MapToErrorBarProps } from '../../consumers';
 import { isInCall } from '../../utils/SDKUtils';
 import { GroupCallContainerProps, MapToGroupCallProps } from './consumers/MapToGroupCallProps';
-import { MediaControls } from './MediaControls';
 import { MINI_HEADER_WINDOW_WIDTH } from '../../constants';
 import { ErrorHandlingProps } from '../../providers/ErrorProvider';
 import { WithErrorHandling } from '../../utils/WithErrorHandling';
 import { ErrorBar as ErrorBarComponent } from '../../components/ErrorBar';
+import { GroupCallControlBarComponent } from '../common/CallControls';
 
 export interface GroupCallProps extends GroupCallContainerProps {
   screenWidth: number;
@@ -47,7 +47,10 @@ const GroupCallComponentBase = (props: GroupCallProps & ErrorHandlingProps): JSX
         <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow>
           <Stack.Item styles={headerStyles}>
             <Stack className={props.screenWidth > MINI_HEADER_WINDOW_WIDTH ? headerContainer : headerCenteredContainer}>
-              <MediaControls onEndCallClick={endCallHandler} compressedMode={screenWidth <= MINI_HEADER_WINDOW_WIDTH} />
+              <GroupCallControlBarComponent
+                onEndCallClick={endCallHandler}
+                compressedMode={screenWidth <= MINI_HEADER_WINDOW_WIDTH}
+              />
             </Stack>
             <ErrorBar />
           </Stack.Item>
