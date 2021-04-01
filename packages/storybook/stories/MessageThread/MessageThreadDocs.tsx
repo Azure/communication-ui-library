@@ -8,7 +8,7 @@ import {
   MessageThread,
   ChatMessage as WebUiChatMessage,
   MessageStatus
-} from '@azure/communication-ui';
+} from '../../../communication-ui/src';
 import { Persona, PersonaPresence, PersonaSize } from '@fluentui/react';
 
 const importStatement = `

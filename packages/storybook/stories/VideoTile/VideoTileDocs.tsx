@@ -2,7 +2,7 @@
 
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import React from 'react';
-import { FluentThemeProvider, StreamMedia, VideoTile } from '@azure/communication-ui';
+import { FluentThemeProvider, StreamMedia, VideoTile } from '../../../communication-ui/src';
 import { renderVideoStream } from '../utils';
 
 const importStatement = `

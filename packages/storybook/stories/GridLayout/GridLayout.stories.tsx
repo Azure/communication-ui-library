@@ -12,7 +12,7 @@ import {
   mediaGalleryHeightOptions,
   COMPONENT_FOLDER_PREFIX
 } from '../constants';
-import { GridLayout, VideoTile, StreamMedia } from '@azure/communication-ui';
+import { GridLayout, VideoTile, StreamMedia } from '../../../communication-ui/src';
 import { renderVideoStream } from '../utils';
 
 export const GridLayoutComponent: () => JSX.Element = () => {

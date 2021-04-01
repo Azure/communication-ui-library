@@ -2,7 +2,7 @@
 import { Provider, teamsTheme } from '@fluentui/react-northstar';
 import { Title, Description, Props, Heading, Source, Canvas, Subheading } from '@storybook/addon-docs/blocks';
 import React from 'react';
-import { TypingIndicator } from '@azure/communication-ui';
+import { TypingIndicator } from '../../../communication-ui/src';
 
 const importStatement = `import { TypingIndicator } from '@azure/communication-ui';`;
 const usageCode = `

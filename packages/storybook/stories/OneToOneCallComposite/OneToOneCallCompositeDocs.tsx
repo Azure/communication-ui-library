@@ -2,7 +2,7 @@
 
 import { Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import React from 'react';
-import { OneToOneCall } from '@azure/communication-ui';
+import { OneToOneCall } from '../../../communication-ui/src';
 
 const importStatement = `
 import { OneToOneCall } from '@azure/communication-ui';

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
-import { GridLayout, VideoTile } from '@azure/communication-ui';
+import { GridLayout, VideoTile } from '../../../communication-ui/src';
 
 const importStatement = `
 import { GridLayout, VideoTile } from '@azure/communication-ui';

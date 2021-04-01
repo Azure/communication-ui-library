@@ -2,7 +2,7 @@
 
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
-import { MessageThread, ChatMessage as WebUiChatMessage } from '@azure/communication-ui';
+import { MessageThread, ChatMessage as WebUiChatMessage } from '../../../communication-ui/src';
 import { boolean } from '@storybook/addon-knobs';
 import { PrimaryButton, Stack } from '@fluentui/react';
 import { getDocs } from './MessageThreadDocs';

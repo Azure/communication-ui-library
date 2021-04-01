@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 import { Title, Description, Props, Heading, Source } from '@storybook/addon-docs/blocks';
-import { GroupChat } from '@azure/communication-ui';
+import { GroupChat } from '../../../communication-ui/src';
 import React from 'react';
 
 const importStatement = `import { GroupChat } from '@azure/communication-ui';`;

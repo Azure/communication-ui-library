@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
-import { FluentThemeProvider, LIGHT, DARK, THEMES } from '@azure/communication-ui';
+import { FluentThemeProvider, LIGHT, DARK, THEMES } from '../../communication-ui/src';
 import { initializeIcons, loadTheme, mergeStyles } from '@fluentui/react';
 import { DocsContainer } from '@storybook/addon-docs/blocks';
 import { BackToTop, TableOfContents } from 'storybook-docs-toc';

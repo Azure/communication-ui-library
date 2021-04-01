@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
-import { ParticipantItem, ParticipantItemProps } from '@azure/communication-ui';
+import { ParticipantItem, ParticipantItemProps } from '../../../communication-ui/src';
 import { IContextualMenuItem, PersonaPresence, Icon } from '@fluentui/react';
 
 const importStatement = `

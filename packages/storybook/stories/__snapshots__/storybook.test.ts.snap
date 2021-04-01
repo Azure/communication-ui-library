@@ -410,7 +410,7 @@ exports[`storybook snapshot tests Storyshots Examples/IncomingCallAlerts Incomin
                               className="ms-Stack css-52"
                             >
                               <div
-                                className="css-71"
+                                className="css-59"
                               />
                             </div>
                           </div>
@@ -1011,7 +1011,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes Teams Theme Compone
               }
             >
               <div
-                className="css-55"
+                className="css-43"
                 style={
                   Object {
                     "gridTemplateColumns": "repeat(1, 1fr)",
@@ -1413,7 +1413,7 @@ exports[`storybook snapshot tests Storyshots UI Components/GridLayout Grid Layou
         }
       >
         <div
-          className="css-55"
+          className="css-43"
           style={
             Object {
               "gridTemplateColumns": "repeat(2, 1fr)",
@@ -1691,7 +1691,7 @@ exports[`storybook snapshot tests Storyshots UI Components/ParticipantItem Parti
           </div>
         </div>
         <div
-          className="ms-Stack css-75 css-19"
+          className="ms-Stack css-63 css-19"
         >
           <div
             className="ms-Stack css-20"
@@ -1895,7 +1895,7 @@ exports[`storybook snapshot tests Storyshots UI Components/ReadReceipt Read Reci
       >
         <span
           aria-hidden={true}
-          className="root_de478240 css-63"
+          className="root_de478240 css-51"
           role="presentation"
           style={Object {}}
         >
@@ -1952,10 +1952,10 @@ exports[`storybook snapshot tests Storyshots UI Components/SendBox Send Box Comp
         }
       >
         <div
-          className="ms-Stack css-57 css-2"
+          className="ms-Stack css-45 css-2"
         >
           <div
-            className="ms-TextField ms-TextField--multiline css-56 root-4"
+            className="ms-TextField ms-TextField--multiline css-44 root-4"
           >
             <div
               className="ms-TextField-wrapper wrapper-5"
@@ -1966,7 +1966,7 @@ exports[`storybook snapshot tests Storyshots UI Components/SendBox Send Box Comp
                 <textarea
                   aria-invalid={false}
                   aria-label="Type"
-                  className="ms-TextField-field ms-TextField--unresizable css-58 field-7"
+                  className="ms-TextField-field ms-TextField--unresizable css-46 field-7"
                   id="sendbox"
                   onBlur={[Function]}
                   onChange={[Function]}
@@ -1980,11 +1980,11 @@ exports[`storybook snapshot tests Storyshots UI Components/SendBox Send Box Comp
             </div>
           </div>
           <div
-            className="css-60 sendIconWrapper"
+            className="css-48 sendIconWrapper"
             onClick={[Function]}
           >
             <div
-              className="css-61"
+              className="css-49"
             />
           </div>
         </div>
@@ -2043,20 +2043,20 @@ exports[`storybook snapshot tests Storyshots UI Components/TypingIndicator Typin
       }
     >
       <div
-        className="css-52"
+        className="css-40"
       >
         <span
-          className="css-53"
+          className="css-41"
         >
           User1, 
         </span>
         <span
-          className="css-53"
+          className="css-41"
         >
           User2
         </span>
         <span
-          className="css-53"
+          className="css-41"
         >
            and 5 others are typing...
         </span>

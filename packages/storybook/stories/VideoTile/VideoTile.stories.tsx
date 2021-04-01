@@ -11,7 +11,7 @@ import {
   optionsButtonProps,
   hangupButtonProps,
   VideoTile
-} from '@azure/communication-ui';
+} from '../../../communication-ui/src';
 import { text, boolean, number } from '@storybook/addon-knobs';
 import { renderVideoStream } from '../utils';
 import { getDocs } from './VideoTileDocs';

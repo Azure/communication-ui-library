@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 import React from 'react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
-import { MessageStatus, ReadReceipt } from '@azure/communication-ui';
+import { MessageStatus, ReadReceipt } from '../../../communication-ui/src';
 import { Provider, teamsTheme } from '@fluentui/react-northstar';
 
 const importStatement = `import { ReadReceipt, MessageStatus } from '@azure/communication-ui';`;

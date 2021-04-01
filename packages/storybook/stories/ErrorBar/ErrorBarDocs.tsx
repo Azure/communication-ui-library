@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
-import { ErrorBar } from '@azure/communication-ui';
+import { ErrorBar } from '../../../communication-ui/src';
 import { ErrorBarExample } from './examples/ErrorBarExample';
 import ErrorBarExampleText from '!!raw-loader!./examples/ErrorBarExample.tsx';
 import { OtherSeverityErrorBarExample } from './examples/OtherSeverityErrorBarExample';

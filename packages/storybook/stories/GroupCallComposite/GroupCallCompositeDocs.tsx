@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Title, Description, Heading, Source, Props } from '@storybook/addon-docs/blocks';
-import { GroupCall } from '@azure/communication-ui';
+import { GroupCall } from '../../../communication-ui/src';
 
 const importStatement = `
 import { GroupCall } from '@azure/communication-ui';

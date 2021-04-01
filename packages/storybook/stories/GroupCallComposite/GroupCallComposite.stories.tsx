@@ -7,7 +7,7 @@ import { text } from '@storybook/addon-knobs';
 import { v1 as createGUID } from 'uuid';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-administration';
 import { getDocs } from './GroupCallCompositeDocs';
-import { GroupCall } from '@azure/communication-ui';
+import { GroupCall } from '../../../communication-ui/src';
 import { COMPOSITE_FOLDER_PREFIX } from '../constants';
 
 export default {

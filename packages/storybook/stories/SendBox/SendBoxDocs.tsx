@@ -3,7 +3,7 @@ import React from 'react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
 import { Icon } from '@fluentui/react';
 
-import { FluentThemeProvider, SendBox } from '@azure/communication-ui';
+import { FluentThemeProvider, SendBox } from '../../../communication-ui/src';
 
 const importStatement = `import { SendBox } from '@azure/communication-ui';`;
 const usageCode = `

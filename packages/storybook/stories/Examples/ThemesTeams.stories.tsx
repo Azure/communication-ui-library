@@ -13,7 +13,7 @@ import {
   audioButtonProps,
   screenShareButtonProps,
   hangupButtonProps
-} from '@azure/communication-ui';
+} from '../../../communication-ui/src';
 import { DefaultButton } from '@fluentui/react';
 
 const TeamsTheme = {

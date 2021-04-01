@@ -12,7 +12,7 @@ import {
   optionsButtonProps,
   screenShareButtonProps,
   videoButtonProps
-} from '@azure/communication-ui';
+} from '../../../communication-ui/src';
 
 const importStatement = `
 import { ControlBar } from '@azure/communication-ui';

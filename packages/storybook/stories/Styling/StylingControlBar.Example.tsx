@@ -4,7 +4,7 @@ import {
   FluentThemeProvider,
   hangupButtonProps,
   videoButtonProps
-} from '@azure/communication-ui';
+} from '../../../communication-ui/src';
 import { DefaultButton } from '@fluentui/react';
 import React from 'react';
 
