@@ -3,7 +3,16 @@ import { CallAgent, DeviceManager, ScalingMode } from '@azure/communication-call
 import { CallingState } from '../CallingState';
 import { CallingActions } from '../CallingActions';
 import { updateDisplayName } from './CallClientReducers';
-import { joinCall, startCamera, stopCamera, toggleCameraOnOff, mute, unmute, toggleMute } from './CallAgentReducers';
+import {
+  joinCall,
+  leaveCall,
+  startCamera,
+  stopCamera,
+  toggleCameraOnOff,
+  mute,
+  unmute,
+  toggleMute
+} from './CallAgentReducers';
 import { setMicrophone, setCamera, queryCameras, queryMicrophones } from './DeviceManagerReducers';
 import { renderLocalVideo } from './RendererReducers';
 import { ChangeEmitter } from './StateUpdates';
@@ -21,6 +30,7 @@ export function createActions(
     joinCall: async (groupId) => {
       emit(await joinCall(getState(), callAgent, groupId));
     },
+    leaveCall: async (forEveryone) => emit(await leaveCall(getState(), callAgent, forEveryone ?? false)),
     setCamera: async (source) => emit(await setCamera(getState(), callAgent, source)),
     setMicrophone: (source) => emit(setMicrophone(deviceManager, source)),
     queryCameras: () => emit(queryCameras(deviceManager)), // set (queryCameras(get)) | declarative: queryCameras() -> onStateChange
@@ -31,6 +41,9 @@ export function createActions(
     mute: async () => emit(await mute(getState(), callAgent)),
     unmute: async () => emit(await unmute(getState(), callAgent)),
     toggleMute: async () => emit(await toggleMute(getState(), callAgent)),
+    startScreenShare: async () => emit(await startScreenShare(getState(), callAgent)),
+    stopScreenShare: async () => emit(await stopScreenShare(getState(), callAgent)),
+    toggleScreenShare: async () => emit(await toggleScreenShare(getState(), callAgent)),
     renderLocalVideo: async (scalingMode?: ScalingMode, mirrored?: boolean) =>
       emit(await renderLocalVideo(getState(), scalingMode, mirrored))
   };

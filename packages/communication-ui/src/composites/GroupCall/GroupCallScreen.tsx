@@ -12,18 +12,18 @@ import {
   headerContainer
 } from './styles/GroupCallScreen.styles';
 
+import { HangupCallOptions } from '@azure/communication-calling';
 import MediaGallery from './MediaGallery';
-import { connectFuncsToContext } from '../../consumers/ConnectContext';
-import { isInCall } from '../../utils/SDKUtils';
-import { GroupCallContainerProps, MapToGroupCallProps } from './consumers/MapToGroupCallProps';
+import { isInCall, isLocalScreenShareSupportedInBrowser } from '../../utils/SDKUtils';
+import { GroupCallContainerProps } from './consumers/MapToGroupCallProps';
 import { MapToMediaGalleryProps } from './consumers/MapToMediaGalleryProps';
-import { MapToMediaControlsProps } from './consumers/MapToMediaControlsProps';
 import { MapToErrorBarProps } from '../../consumers/MapToErrorBarProps';
 import MediaControls from './MediaControls';
 import { MINI_HEADER_WINDOW_WIDTH } from '../../constants';
 import { ErrorHandlingProps } from '../../providers/ErrorProvider';
 import { WithErrorHandling } from '../../utils/WithErrorHandling';
 import ErrorBar from '../../components/ErrorBar';
+import { useActions, useSelector } from '../../providers';
 
 export interface GroupCallProps extends GroupCallContainerProps {
   screenWidth: number;
@@ -42,7 +42,34 @@ const GroupCallComponentBase = (props: GroupCallProps & ErrorHandlingProps): JSX
     }
   }, [callState, groupId]);
 
-  const mediaControlProps = MapToMediaControlsProps();
+  // const mediaControlProps = MapToMediaControlsProps();
+  const mediaControlProps = useSelector(({ call, devices }) => {
+    return {
+      isMicrophoneActive: call.isMicrophoneEnabled,
+      localVideoEnabled: call.isLocalVideoOn,
+      localVideoBusy: false, // todo or delete?
+      isLocalScreenShareActive: call.localScreenShareActive,
+      isRemoteScreenShareActive: false, //todo
+      cameraPermission: devices.videoDevicePermission,
+      micPermission: devices.audioDevicePermission
+    };
+  });
+
+  const mediaControlActions = useActions((actions) => {
+    return {
+      unmuteMicrophone: actions.unmute,
+      muteMicrophone: actions.mute,
+      toggleMicrophone: actions.toggleMute,
+      startLocalVideo: actions.startCamera,
+      stopLocalVideo: actions.stopCamera,
+      toggleLocalVideo: actions.toggleCameraOnOff,
+      startScreenShare: actions.startScreenShare,
+      stopScreenShare: actions.stopScreenShare,
+      toggleScreenShare: actions.toggleScreenShare,
+      leaveCall: (options?: HangupCallOptions) => actions.leaveCall(options?.forEveryone)
+    };
+  });
+
   const mediaGalleryProps = MapToMediaGalleryProps();
   const errorBarProps = MapToErrorBarProps();
 
@@ -54,6 +81,8 @@ const GroupCallComponentBase = (props: GroupCallProps & ErrorHandlingProps): JSX
             <Stack className={props.screenWidth > MINI_HEADER_WINDOW_WIDTH ? headerContainer : headerCenteredContainer}>
               <MediaControls
                 {...mediaControlProps}
+                {...mediaControlActions}
+                isLocalScreenShareSupportedInBrowser={isLocalScreenShareSupportedInBrowser}
                 onEndCallClick={endCallHandler}
                 compressedMode={screenWidth <= MINI_HEADER_WINDOW_WIDTH}
               />
@@ -86,4 +115,4 @@ const GroupCallComponentBase = (props: GroupCallProps & ErrorHandlingProps): JSX
 const GroupCallComponent = (props: GroupCallProps & ErrorHandlingProps): JSX.Element =>
   WithErrorHandling(GroupCallComponentBase, props);
 
-export default connectFuncsToContext(GroupCallComponent, MapToGroupCallProps);
+export default GroupCallComponent;

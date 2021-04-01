@@ -98,7 +98,7 @@ export const useSelector = <T extends Record<string, unknown>>(select: (state: C
   return select(state ?? emptyCallingState);
 };
 
-export const useActions = <T extends Record<string, any>>(createActions: (actions: CallingActions) => T): T => {
+export const useActions = <T extends Record<string, unknown>>(createActions: (actions: CallingActions) => T): T => {
   const context = useContext(CallBridgeContext);
   if (!context) {
     console.warn('Using context before initialized');

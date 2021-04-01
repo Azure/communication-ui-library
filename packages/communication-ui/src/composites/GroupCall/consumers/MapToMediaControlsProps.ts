@@ -7,7 +7,7 @@ import useLocalVideo from '../../../hooks/useLocalVideo';
 import { useMicrophone } from '../../../hooks/useMicrophone';
 import useScreenShare from '../../../hooks/useScreenShare';
 import useSubscribeToVideoDeviceList from '../../../hooks/useSubscribeToVideoDeviceList';
-import { isMobileSession } from '../../../utils';
+import { isLocalScreenShareSupportedInBrowser } from '../../../utils';
 import { useGroupCall } from '../../../hooks';
 import { CommunicationUiErrorCode, CommunicationUiError } from '../../../types/CommunicationUiError';
 import { useCallback } from 'react';
@@ -69,14 +69,6 @@ export const MapToMediaControlsProps = (): MediaControlsContainerProps => {
   useSubscribeToDevicePermission('Camera');
   useSubscribeToDevicePermission('Microphone');
   useSubscribeToVideoDeviceList();
-
-  // Only support Desktop -- Chrome | Edge (Chromium) | Safari
-  const isLocalScreenShareSupportedInBrowser = (): boolean => {
-    return (
-      !isMobileSession() &&
-      (/chrome/i.test(navigator.userAgent.toLowerCase()) || /safari/i.test(navigator.userAgent.toLowerCase()))
-    );
-  };
 
   const startLocalVideoInternal = useCallback((): Promise<void> => {
     if (videoDeviceInfo) {

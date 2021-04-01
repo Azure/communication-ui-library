@@ -1,0 +1,6 @@
+GroupCall callingAdapter todos:
+
+- device permissions (useSubscribeToDevicePermission)
+- remote screen share
+- figure out localvideorenderbusy if necessary
+- listen to call and stream events (useCallAgent)

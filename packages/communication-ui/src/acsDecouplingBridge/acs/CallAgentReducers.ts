@@ -27,6 +27,24 @@ export const joinCall = async (
   };
 };
 
+export const leaveCall = async (
+  state: Readonly<CallingState>,
+  callAgent: CallAgent,
+  forEveryone: boolean
+): Promise<CallingStateUpdate | undefined> => {
+  // ToDo: check call.status before calling hangup?
+
+  // ToDo fix hard-coded!
+  const call = callAgent.calls[0];
+  if (!call) return;
+  await call.hangUp({ forEveryone });
+
+  return (draft) => {
+    draft.call.status = call.state;
+    // more things to set on call or wait for events to come in?
+  };
+};
+
 export const startCamera = async (
   state: Readonly<CallingState>,
   callAgent: CallAgent
@@ -119,5 +137,31 @@ export const toggleMute = (
   return state.call.isMicrophoneEnabled ? mute(state, callAgent) : unmute(state, callAgent);
 };
 
-// export const leaveCall = async (state: CallingState, groupId: string): Promise<CallingState> => {
-// }
+export const startScreenShare = async (callAgent: CallAgent): Promise<CallingStateUpdate | undefined> => {
+  // ToDo fix hard-coded!
+  const call = callAgent.calls[0];
+
+  // hook used to query call.isScreenSharingOn first, why?
+  await call?.startScreenSharing();
+  return (draft) => {
+    draft.call.localScreenShareActive = true;
+  };
+};
+
+export const stopScreenShare = async (callAgent: CallAgent): Promise<CallingStateUpdate | undefined> => {
+  // ToDo fix hard-coded!
+  const call = callAgent.calls[0];
+
+  // hook used to query call.isScreenSharingOn first, why?
+  await call?.stopScreenSharing();
+  return (draft) => {
+    draft.call.localScreenShareActive = true;
+  };
+};
+
+export const toggleScreenShare = (
+  state: Readonly<CallingState>,
+  callAgent: CallAgent
+): Promise<CallingStateUpdate | undefined> => {
+  return state.call.localScreenShareActive ? startScreenShare(callAgent) : stopScreenShare(callAgent);
+};

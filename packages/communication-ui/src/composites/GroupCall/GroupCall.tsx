@@ -1,5 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
+import { HangupCallOptions } from '@azure/communication-calling';
 import { CallBridgeProvider, useSelector, useActions, ErrorProvider } from '../../providers';
 import React, { useEffect, useState } from 'react';
 import GroupCallScreen from './GroupCallScreen';
@@ -56,6 +57,20 @@ export default (props: GroupCallCompositeProps): JSX.Element => {
       };
     });
 
+    const groupCallScreenProps = useSelector(({ call }) => {
+      return {
+        isCallInitialized: call.isInitialized,
+        callState: call.status,
+        isLocalScreenSharingOn: call.localScreenShareActive
+      };
+    });
+
+    const groupCallScreenActions = useActions((actions) => {
+      return {
+        leaveCall: (options?: HangupCallOptions) => actions.leaveCall(options?.forEveryone)
+      };
+    });
+
     switch (page) {
       case 'configuration': {
         return (
@@ -71,6 +86,8 @@ export default (props: GroupCallCompositeProps): JSX.Element => {
       case 'groupcall': {
         return (
           <GroupCallScreen
+            {...groupCallScreenProps}
+            {...groupCallScreenActions}
             endCallHandler={(): void => (onEndCall ? onEndCall() : setPage('configuration'))}
             screenWidth={screenWidth}
             groupId={groupId}
