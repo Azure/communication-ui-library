@@ -2,6 +2,7 @@ dependencies:
   '@azure/communication-administration': 1.0.0-beta.3
   '@azure/communication-identity': 1.0.0-beta.4
   '@azure/core-http': 1.2.3
+  '@azure/core-paging': 1.1.3
   '@babel/core': 7.13.8
   '@babel/preset-env': 7.13.8_@babel+core@7.13.8
   '@babel/preset-react': 7.12.13_@babel+core@7.13.8
@@ -8899,7 +8900,7 @@ packages:
   /downshift/5.0.5_react@16.14.0:
     dependencies:
       '@babel/runtime': 7.13.8
-      compute-scroll-into-view: 1.0.11
+      compute-scroll-into-view: 1.0.17
       prop-types: 15.7.2
       react: 16.14.0
       react-is: 16.13.1
@@ -20140,8 +20141,8 @@ packages:
   file:projects/acs-chat-declarative.tgz_prettier@2.0.5+ts-node@9.1.1:
     dependencies:
       '@azure/communication-chat': 1.0.0-beta.4
-      '@azure/communication-common': 1.0.0-beta.3
       '@azure/communication-signaling': 1.0.0-beta.2
+      '@azure/core-paging': 1.1.3
       '@microsoft/api-documenter': 7.12.13
       '@microsoft/api-extractor': 7.13.2
       '@types/jest': 26.0.20
@@ -20152,8 +20153,6 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.20.0
       eslint-plugin-import: 2.22.1_eslint@7.20.0
       eslint-plugin-prettier: 3.3.1_822b4c7c304ad0fbad34b397ba6938a8
-      eslint-plugin-react: 7.22.0_eslint@7.20.0
-      eslint-plugin-react-hooks: 4.2.0_eslint@7.20.0
       immer: 8.0.1
       jest: 26.6.0_ts-node@9.1.1
       nanoid: 3.1.20
@@ -20166,7 +20165,7 @@ packages:
       prettier: '*'
       ts-node: '*'
     resolution:
-      integrity: sha512-yS3iBC8KTy5gjPkPVv0TkKzcJMEzVi7CxgT6gmNIqVYJkHlmWmskzKNliG/1ly3fYUkcVgXFb4Th6igScOCKUw==
+      integrity: sha512-27XkTAtdMHzfP28mzzTk9lQbSTO88/bWqBTcw5NDTHatpi6gWVmtKt7TLmIT/LoCFZLWJh2xk6wAqq+KKqtbpQ==
       tarball: file:projects/acs-chat-declarative.tgz
     version: 0.0.0
   file:projects/acs-chat-selector.tgz_prettier@2.0.5:
@@ -20648,6 +20647,7 @@ specifiers:
   '@azure/communication-administration': 1.0.0-beta.3
   '@azure/communication-identity': 1.0.0-beta.4
   '@azure/core-http': ^1.2.3
+  '@azure/core-paging': ~1.1.3
   '@babel/core': ^7.12.7
   '@babel/preset-env': ^7.12.7
   '@babel/preset-react': ^7.12.7
