@@ -30,7 +30,7 @@ export const getDocs: () => JSX.Element = () => {
       <Heading>Other severity types</Heading>
       <Description>
         The default severity type is ERROR. There are 3 other severity types that can be set on the severity property
-        shown in the example below. No element is rendered when severity is set to IGNORE.
+        shown in the example below. `ErrorBar` is not rendered when severity is set to IGNORE.
       </Description>
       <Source code={OtherSeverityErrorBarExampleText} />
       <Canvas>

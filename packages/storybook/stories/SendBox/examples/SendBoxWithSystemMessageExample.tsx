@@ -8,8 +8,8 @@ export const SendBoxWithSystemMessageExample: () => JSX.Element = () => (
         onSendMessage={async () => {
           return;
         }}
-        onSendTypingNotification={(): Promise<void> => {
-          return Promise.resolve();
+        onSendTypingNotification={async () => {
+          return;
         }}
         systemMessage="Please wait 30 seconds to send new messages"
       />

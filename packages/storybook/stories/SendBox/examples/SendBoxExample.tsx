@@ -8,8 +8,8 @@ export const SendBoxExample: () => JSX.Element = () => (
         onSendMessage={async () => {
           return;
         }}
-        onSendTypingNotification={(): Promise<void> => {
-          return Promise.resolve();
+        onSendTypingNotification={async () => {
+          return;
         }}
       />
     </div>

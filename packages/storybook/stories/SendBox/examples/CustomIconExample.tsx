@@ -9,8 +9,8 @@ export const CustomIconExample: () => JSX.Element = () => (
         onSendMessage={async () => {
           return;
         }}
-        onSendTypingNotification={(): Promise<void> => {
-          return Promise.resolve();
+        onSendTypingNotification={async () => {
+          return;
         }}
         onRenderIcon={() => <Icon iconName="AirplaneSolid" />}
       />

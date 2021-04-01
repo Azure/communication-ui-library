@@ -19,14 +19,14 @@ export const getDocs: () => JSX.Element = () => {
       <Heading>Importing</Heading>
       <Source code={importStatement} />
       <Heading>Example</Heading>
-      <Canvas>
+      <Canvas withSource="none">
         <SendBoxExample />
       </Canvas>
       <Source code={SendBoxExampleText} />
       <Heading>Add a system message</Heading>
       <Description>To add a system message, use the systemMessage property like in the example below.</Description>
       <Source code={SendBoxWithSystemMessageExampleText} />
-      <Canvas>
+      <Canvas withSource="none">
         <SendBoxWithSystemMessageExample />
       </Canvas>
       <Heading>Customize send icon</Heading>
@@ -36,7 +36,7 @@ export const getDocs: () => JSX.Element = () => {
         any `JSX.Element`.
       </Description>
       <Source code={CustomIconExampleText} />
-      <Canvas>
+      <Canvas withSource="none">
         <CustomIconExample />
       </Canvas>
       <Heading>Props</Heading>
