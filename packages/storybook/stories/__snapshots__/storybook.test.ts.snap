@@ -436,7 +436,7 @@ exports[`storybook snapshot tests Storyshots Examples/IncomingCallAlerts Incomin
                               onMouseUp={[Function]}
                               style={
                                 Object {
-                                  "background": "#faf9f8",
+                                  "background": "#fAf9f8",
                                   "border": "none",
                                 }
                               }
