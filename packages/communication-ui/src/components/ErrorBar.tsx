@@ -13,11 +13,11 @@ export type ErrorBarProps = {
   message?: string;
   /** Severity of error to determine type and color of ErrorBar. Defaults to 'Error' type and color red. */
   severity?: CommunicationUiErrorSeverity;
-  /** Oprional callback called when ErrorBar is closed. */
+  /** Optional callback called when ErrorBar is closed. */
   onClose?: () => void;
   /**
    * Allows users to pass in an object contains custom CSS styles.
-   * Example
+   * @Example
    * ```
    * <ErrorBar styles={{ root: { background: 'blue' } }} />
    * ```

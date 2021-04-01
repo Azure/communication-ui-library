@@ -179,7 +179,11 @@ export type MessageThreadProps = {
    */
   chatMessages: WebUiChatMessage[];
   /**
-   * Custom CSS Styling.
+   * Allows users to pass in an object contains custom CSS styles.
+   * @Example
+   * ```
+   * <MessageThread styles={{ root: { background: 'blue' } }} />
+   * ```
    */
   styles?: MessageThreadStylesProps;
   /**

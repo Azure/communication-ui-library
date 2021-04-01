@@ -12,7 +12,7 @@ export interface GridLayoutProps {
   layout?: GridLayoutType;
   /**
    * Allows users to pass in an object contains custom CSS styles.
-   * Example
+   * @Example
    * ```
    * <GridLayout styles={{ root: { background: 'blue' } }} />
    * ```

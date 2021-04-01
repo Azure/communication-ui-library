@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Merge branch 'main' of https://github.com/Azure/communication-ui-sdk into easony/refactorMediaControls2",
+  "comment": "Fix styling props for all components to have the same format. Add more comments to the interfaces.",
   "packageName": "@azure/communication-ui",
   "email": "easony@microsoft.com",
   "dependentChangeType": "patch"

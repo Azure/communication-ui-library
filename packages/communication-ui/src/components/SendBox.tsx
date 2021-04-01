@@ -3,6 +3,7 @@
 import { EMPTY_MESSAGE_REGEX, MAXIMUM_LENGTH_OF_MESSAGE, TEXT_EXCEEDS_LIMIT } from '../constants';
 import React, { useState } from 'react';
 import { IStyle, ITextField, mergeStyles, Stack, TextField } from '@fluentui/react';
+import { SendIcon } from '@fluentui/react-northstar';
 import {
   TextFieldStyleProps,
   sendBoxStyle,
@@ -12,7 +13,6 @@ import {
   sendIconDiv
 } from './styles/SendBox.styles';
 import { SendBoxPropsFromContext } from '../consumers/MapToSendBoxProps';
-import classNames from 'classnames';
 import { Alert } from '@fluentui/react-northstar/dist/commonjs/components/Alert/Alert';
 import { ErrorHandlingProps } from '../providers/ErrorProvider';
 import { propagateError } from '../utils/SDKUtils';
@@ -38,10 +38,10 @@ export interface SendBoxProps {
   /** Optional boolean to support new line in SendBox. */
   supportNewline?: boolean;
   /** Optional callback to render send button icon to the right of the SendBox. */
-  onRenderIcon?: (props: SendBoxProps & SendBoxPropsFromContext) => JSX.Element | null;
+  onRenderIcon?: (props: SendBoxProps & SendBoxPropsFromContext, isMouseOverSendIcon: boolean) => JSX.Element | null;
   /**
    * Allows users to pass in an object contains custom CSS styles.
-   * Example
+   * @Example
    * ```
    * <SendBox styles={{ root: { background: 'blue' } }} />
    * ```
@@ -76,6 +76,7 @@ export const SendBox = (props: SendBoxProps & SendBoxPropsFromContext & ErrorHan
 
   const [textValue, setTextValue] = useState('');
   const [textValueOverflow, setTextValueOverflow] = useState(false);
+  const [isMouseOverSendIcon, setIsMouseOverSendIcon] = useState(false);
 
   const sendTextFieldRef = React.useRef<ITextField>(null);
 
@@ -136,18 +137,28 @@ export const SendBox = (props: SendBoxProps & SendBoxPropsFromContext & ErrorHan
         />
 
         <div
-          className={mergeStyles(classNames(sendButtonStyle, 'sendIconWrapper'), styles?.sendMessageIconContainer)}
+          className={mergeStyles(sendButtonStyle, styles?.sendMessageIconContainer)}
           onClick={(e) => {
             if (!textValueOverflow) {
               sendMessageOnClick();
             }
             e.stopPropagation();
           }}
+          id={'sendIconWrapper'}
+          onMouseEnter={() => {
+            setIsMouseOverSendIcon(true);
+          }}
+          onMouseLeave={() => {
+            setIsMouseOverSendIcon(false);
+          }}
         >
           {onRenderIcon ? (
-            onRenderIcon(props)
+            onRenderIcon(props, isMouseOverSendIcon)
           ) : (
-            <div className={mergeStyles(sendIconDiv, styles?.defaultSendMessageIcon)} />
+            <SendIcon
+              className={mergeStyles(sendIconDiv, styles?.defaultSendMessageIcon)}
+              outline={!isMouseOverSendIcon}
+            />
           )}
         </div>
       </Stack>

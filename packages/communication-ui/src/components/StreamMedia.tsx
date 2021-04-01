@@ -16,7 +16,7 @@ export interface StreamMediaProps {
   invertVideo?: boolean;
   /**
    * Allows users to pass in an object contains custom CSS styles.
-   * Example
+   * @Example
    * ```
    * <StreamMedia styles={{ root: { background: 'blue' } }} />
    * ```

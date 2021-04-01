@@ -32,7 +32,7 @@ export interface TypingIndicatorProps {
   typingString: string;
   /**
    * Allows users to pass in an object contains custom CSS styles.
-   * Example
+   * @Example
    * ```
    * <TypingIndicator styles={{ root: { background: 'blue' } }} />
    * ```

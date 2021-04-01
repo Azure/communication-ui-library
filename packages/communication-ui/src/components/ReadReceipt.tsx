@@ -28,7 +28,7 @@ export interface ReadReceiptProps {
   size?: SizeValue;
   /**
    * Allows users to pass in an object contains custom CSS styles.
-   * Example
+   * @Example
    * ```
    * <ReadReceipt styles={{ root: { background: 'blue' } }} />
    * ```

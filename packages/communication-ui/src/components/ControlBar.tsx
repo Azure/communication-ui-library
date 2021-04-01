@@ -179,7 +179,7 @@ export interface ControlBarProps {
   children?: React.ReactNode;
   /**
    * Allows users to pass in an object contains custom CSS styles.
-   * Example
+   * @Example
    * ```
    * <ControlBar styles={{ root: { background: 'blue' } }} />
    * ```

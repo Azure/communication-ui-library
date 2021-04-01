@@ -46,7 +46,7 @@ export interface ParticipantItemProps {
   presence?: PersonaPresence;
   /**
    * Allows users to pass in an object contains custom CSS styles.
-   * Example
+   * @Example
    * ```
    * <ParticipantItem styles={{ root: { background: 'blue' } }} />
    * ```

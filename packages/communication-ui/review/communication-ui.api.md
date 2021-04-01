@@ -979,7 +979,7 @@ export const SendBox: (props: SendBoxProps & SendBoxPropsFromContext & ErrorHand
 
 // @public
 export interface SendBoxProps {
-    onRenderIcon?: (props: SendBoxProps & SendBoxPropsFromContext) => JSX.Element | null;
+    onRenderIcon?: (props: SendBoxProps & SendBoxPropsFromContext, isMouseOverSendIcon: boolean) => JSX.Element | null;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
     styles?: SendBoxStylesProps;
     supportNewline?: boolean;
@@ -1384,9 +1384,8 @@ export interface VideoTileProps {
 }
 
 // @public (undocumented)
-export interface VideoTileStylesProps {
+export interface VideoTileStylesProps extends BaseCustomStylesProps {
     overlayContainer?: IStyle;
-    root?: IStyle;
     videoContainer?: IStyle;
 }
 

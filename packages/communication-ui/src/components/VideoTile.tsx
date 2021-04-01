@@ -4,10 +4,9 @@ import { IStyle, mergeStyles, Persona, PersonaSize, Stack } from '@fluentui/reac
 import React from 'react';
 import { rootStyles, videoContainerStyles, overlayContainerStyles } from './styles/VideoTile.styles';
 import { useTheme } from '@fluentui/react-theme-provider';
+import { BaseCustomStylesProps } from '../types';
 
-export interface VideoTileStylesProps {
-  /** Styles for the root container. */
-  root?: IStyle;
+export interface VideoTileStylesProps extends BaseCustomStylesProps {
   /** Styles for video container. */
   videoContainer?: IStyle;
   /** Styles for container overlayed on the video container. */
@@ -20,7 +19,13 @@ export interface VideoTileStylesProps {
 export interface VideoTileProps {
   /** React Child components. Child Components will show as overlay component in the VideoTile. */
   children?: React.ReactNode;
-  /** Custom styles. */
+  /**
+   * Allows users to pass in an object contains custom CSS styles.
+   * @Example
+   * ```
+   * <VideoTile styles={{ root: { background: 'blue' } }} />
+   * ```
+   */
   styles?: VideoTileStylesProps;
   /** Determines if the static image or video stream should be rendered. */
   isVideoReady?: boolean;
