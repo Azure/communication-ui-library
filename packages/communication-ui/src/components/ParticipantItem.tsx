@@ -82,6 +82,7 @@ export const ParticipantItem = (props: ParticipantItemProps & ErrorHandlingProps
       presence={presence}
       onRenderPersonaCoin={onRenderAvatar ? () => onRenderAvatar(props) : undefined}
       className={mergeStyles(styles?.avatar)}
+      initialsTextColor="white"
     />
   );
   return (
