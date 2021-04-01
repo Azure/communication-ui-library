@@ -4,6 +4,7 @@ dependencies:
   '@azure/communication-common': 1.0.0-beta.3
   '@azure/communication-identity': 1.0.0-beta.4
   '@azure/core-http': 1.2.3
+  '@azure/core-paging': 1.1.3
   '@babel/core': 7.13.10
   '@babel/preset-env': 7.13.10_@babel+core@7.13.10
   '@babel/preset-react': 7.12.13_@babel+core@7.13.10
@@ -20044,6 +20045,7 @@ packages:
     dependencies:
       '@azure/communication-chat': 1.0.0-beta.4
       '@azure/communication-signaling': 1.0.0-beta.2
+      '@azure/core-paging': 1.1.3
       '@microsoft/api-documenter': 7.12.12
       '@microsoft/api-extractor': 7.13.2
       '@types/jest': 26.0.20
@@ -20066,7 +20068,7 @@ packages:
       prettier: '*'
       ts-node: '*'
     resolution:
-      integrity: sha512-yS3iBC8KTy5gjPkPVv0TkKzcJMEzVi7CxgT6gmNIqVYJkHlmWmskzKNliG/1ly3fYUkcVgXFb4Th6igScOCKUw==
+      integrity: sha512-27XkTAtdMHzfP28mzzTk9lQbSTO88/bWqBTcw5NDTHatpi6gWVmtKt7TLmIT/LoCFZLWJh2xk6wAqq+KKqtbpQ==
       tarball: file:projects/acs-chat-declarative.tgz
     version: 0.0.0
   file:projects/acs-chat-sample.tgz_40b0c9f7a7a0fac66e4b6fcf06de2a42:
@@ -20384,6 +20386,7 @@ specifiers:
   '@azure/communication-common': 1.0.0-beta.3
   '@azure/communication-identity': 1.0.0-beta.4
   '@azure/core-http': ^1.2.3
+  '@azure/core-paging': ~1.1.3
   '@babel/core': ^7.12.7
   '@babel/preset-env': ^7.12.7
   '@babel/preset-react': ^7.12.7

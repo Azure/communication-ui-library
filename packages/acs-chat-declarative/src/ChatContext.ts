@@ -125,7 +125,7 @@ export class ChatContext {
     );
   }
 
-  public updateChatMessagesContent(threadId: string, messagesId: string, content: string | undefined): void {
+  public updateChatMessageContent(threadId: string, messagesId: string, content: string | undefined): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         const chatMessage = draft.threads.get(threadId)?.chatMessages.get(messagesId);
@@ -215,7 +215,10 @@ export class ChatContext {
         const thread = draft.threads.get(threadId);
         const readReceipts = thread?.readReceipts;
         if (thread && readReceipts) {
-          if (readReceipt.senderId !== this.getState().userId && thread.latestReadtime < readReceipt.readOn) {
+          if (
+            readReceipt.sender.communicationUserId !== this.getState().userId &&
+            thread.latestReadtime < readReceipt.readOn
+          ) {
             thread.latestReadtime = readReceipt.readOn;
           }
           readReceipts.push(readReceipt);

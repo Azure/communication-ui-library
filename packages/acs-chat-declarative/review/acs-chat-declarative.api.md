@@ -68,14 +68,10 @@ export interface DeclarativeChatClient extends ChatClient {
 export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
 
 // @public (undocumented)
-export type ReadReceipt = ChatMessageReadReceipt & {
-    senderId: string;
-    chatMessageId: string;
-};
+export type ReadReceipt = ChatMessageReadReceipt;
 
 // @public (undocumented)
 export type TypingIndicator = Omit<TypingIndicatorReceivedEvent, 'receivedOn'> & {
-    senderId: string;
     receivedOn: Date;
 };
 

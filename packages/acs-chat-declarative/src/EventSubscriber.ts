@@ -82,8 +82,7 @@ export class EventSubscriber {
     const readReceipt: ReadReceipt = {
       ...event,
       sender: { communicationUserId: event.sender.user.communicationUserId },
-      readOn: new Date(event.readOn),
-      senderId: event.sender.user.communicationUserId
+      readOn: new Date(event.readOn)
     };
     this.chatContext.addReadReceipt(event.threadId, readReceipt);
   };
@@ -91,8 +90,7 @@ export class EventSubscriber {
   private onTypingIndicatorReceived = (event: TypingIndicatorReceivedEvent): void => {
     const typingIndicator: TypingIndicator = {
       ...event,
-      receivedOn: new Date(event.receivedOn),
-      senderId: event.sender.user.communicationUserId
+      receivedOn: new Date(event.receivedOn)
     };
     this.chatContext.addTypingIndicator(event.threadId, typingIndicator);
   };

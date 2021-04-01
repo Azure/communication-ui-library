@@ -1,21 +1,9 @@
 // © Microsoft Corporation. All rights reserved.
 import { ListPageSettings } from '@azure/communication-chat';
 import { ChatContext } from '../ChatContext';
+import { PagedAsyncIterableIterator } from '@azure/core-paging';
 
-export interface PagedAsyncIterableIterator<T, PageT = T[], PageSettingsT = PageSettings> {
-  next(): Promise<IteratorResult<T, T>>;
-  [Symbol.asyncIterator](): PagedAsyncIterableIterator<T, PageT, PageSettingsT>;
-  byPage: (settings?: PageSettingsT) => AsyncIterableIterator<PageT>;
-}
-
-export interface PageSettings {
-  continuationToken?: string;
-  maxPageSize?: number;
-}
-
-type IteratorCreatorFn<T, OptionsType, PageT = T[]> = (
-  options?: OptionsType | undefined
-) => PagedAsyncIterableIterator<T, PageT>;
+type IteratorCreatorFn<T, OptionsType, PageT = T[]> = (options?: OptionsType) => PagedAsyncIterableIterator<T, PageT>;
 
 /**
  * Create a decorated iterator

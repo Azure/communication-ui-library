@@ -2,7 +2,4 @@
 
 import { ChatMessageReadReceipt } from '@azure/communication-chat';
 
-export type ReadReceipt = ChatMessageReadReceipt & {
-  senderId: string;
-  chatMessageId: string;
-};
+export type ReadReceipt = ChatMessageReadReceipt;
