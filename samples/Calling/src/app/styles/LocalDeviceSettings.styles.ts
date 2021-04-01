@@ -18,7 +18,9 @@ export const dropDownStyles = (theme: Theme): Partial<IDropdownStyles> => ({
   },
   dropdownItem: {
     fontSize: '0.875rem',
-    height: '2.5rem',
+    height: '2.5rem'
+  },
+  dropdownItemSelected: {
     background: theme.palette.neutralQuaternaryAlt
   },
   dropdown: {
