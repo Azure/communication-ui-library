@@ -1,25 +1,34 @@
 // © Microsoft Corporation. All rights reserved.
 
-import SendBox from './SendBox';
-import TypingIndicator, { TypingIndicatorComponent } from './TypingIndicator';
-import { GridLayoutComponent } from './GridLayout';
-import ErrorBar, { ErrorBarComponent } from './ErrorBar';
+export { TypingIndicator } from './TypingIndicator';
+export type { TypingIndicatorProps } from './TypingIndicator';
 
-export { SendBox, TypingIndicator, TypingIndicatorComponent, GridLayoutComponent, ErrorBar, ErrorBarComponent };
+export { GridLayout } from './GridLayout';
+export type { GridLayoutProps, GridLayoutType } from './GridLayout';
 
-export { SendBoxComponent } from './SendBox';
-export { ReadReceiptComponent } from './ReadReceipt';
+export { ErrorBar } from './ErrorBar';
+export type { ErrorBarProps } from './ErrorBar';
+
+export { SendBox } from './SendBox';
+export type { SendBoxProps } from './SendBox';
+
+export { ReadReceipt } from './ReadReceipt';
 export type { ReadReceiptProps } from './ReadReceipt';
-export { ChatThreadComponent, ChatThreadComponentBase, ChatThread } from './ChatThread';
+
+export { MessageThread } from './MessageThread';
 export type {
-  ChatThreadProps,
-  ChatThreadStylesProps,
+  MessageThreadProps,
+  MessageThreadStylesProps,
   JumpToNewMessageButtonProps,
   LoadPreviousMessagesButtonProps
-} from './ChatThread';
+} from './MessageThread';
+
 export { StreamMedia } from './StreamMedia';
+export type { StreamMediaProps } from './StreamMedia';
+
 export { ParticipantItem } from './ParticipantItem';
 export type { ParticipantItemProps } from './ParticipantItem';
+
 export {
   CONTROL_BAR_LAYOUTS,
   ControlBar,
@@ -35,10 +44,13 @@ export {
   labeledHangupButtonProps,
   labeledOptionsButtonProps
 } from './ControlBar';
+export type { ControlBarProps, ControlBarLayoutType, CustomStylesProps } from './ControlBar';
 
 export { VideoTile } from './VideoTile';
-export type { VideoTileProps, VideoTileStylesProps } from './VideoTile';
+export type { VideoTileProps, VideoTileStylesProps, PlaceholderProps } from './VideoTile';
+
 export { ThemeSelector } from './ThemeSelector';
 export type { ThemeSelectorProps } from './ThemeSelector';
+
 export { ThemeToggler } from './ThemeToggler';
 export type { ThemeTogglerProps } from './ThemeToggler';
