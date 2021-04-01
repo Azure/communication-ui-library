@@ -6,17 +6,26 @@
 
 import { ChatClient } from '@azure/communication-chat';
 import { ChatMessage } from '@azure/communication-chat';
+import { ChatMessageReadReceipt } from '@azure/communication-chat';
+import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { ChatThreadInfo } from '@azure/communication-chat';
+import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 
 // @public (undocumented)
-export const chatClientDeclaratify: (chatClient: ChatClient) => DeclarativeChatClient;
+export const chatClientDeclaratify: (chatClient: ChatClient, chatConfig: ChatConfig) => DeclarativeChatClient;
 
 // @public (undocumented)
 export type ChatClientState = {
     userId: string;
     displayName: string;
     threads: Map<string, ChatThreadClientState>;
+};
+
+// @public (undocumented)
+export type ChatConfig = {
+    userId: string;
+    displayName: string;
 };
 
 // @public (undocumented)
@@ -33,26 +42,39 @@ export const chatThreadClientDeclaratify: (chatThreadClient: ChatThreadClient, c
 // @public (undocumented)
 export type ChatThreadClientState = {
     chatMessages: Map<string, ChatMessageWithStatus>;
+    participants: Map<string, ChatParticipant>;
     threadId: string;
     threadInfo?: ChatThreadInfo;
     coolPeriod?: Date;
     getThreadMembersError?: boolean;
     updateThreadMembersError?: boolean;
     failedMessageIds: string[];
+    readReceipts: ReadReceipt[];
+    typingIndicators: TypingIndicator[];
+    latestReadtime: Date;
 };
 
 // @public (undocumented)
 export interface DeclarativeChatClient extends ChatClient {
+    // (undocumented)
+    offStateChange(handler: (state: ChatClientState) => void): void;
     // (undocumented)
     onStateChange(handler: (state: ChatClientState) => void): void;
     // (undocumented)
     state: ChatClientState;
 }
 
+// @public (undocumented)
+export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
 
-// Warnings were encountered during analysis:
-//
-// src/types/ChatMessageWithStatus.ts:8:3 - (ae-forgotten-export) The symbol "MessageStatus" needs to be exported by the entry point index.d.ts
+// @public (undocumented)
+export type ReadReceipt = ChatMessageReadReceipt;
+
+// @public (undocumented)
+export type TypingIndicator = Omit<TypingIndicatorReceivedEvent, 'receivedOn'> & {
+    receivedOn: Date;
+};
+
 
 // (No @packageDocumentation comment for this package)
 
