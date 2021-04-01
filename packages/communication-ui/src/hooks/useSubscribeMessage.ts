@@ -4,7 +4,8 @@ import { ChatMessage, ChatMessagePriority } from '@azure/communication-chat';
 import { useCallback, useEffect } from 'react';
 
 import { ChatMessageReceivedEvent } from '@azure/communication-signaling';
-import { useChatClient, useUserId } from '../providers/ChatProvider';
+import { useUserId } from '../providers/ChatProvider';
+import { useChatClient } from '../providers/ChatProviderHelper';
 import { useSetChatMessages, useThreadId } from '../providers/ChatThreadProvider';
 
 const subscribedTheadIdSet = new Set<string>();

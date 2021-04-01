@@ -3,7 +3,7 @@
 import { RemoteParticipant as RemoteParticipantFromSDK } from '@azure/communication-calling';
 import { ListParticipant } from '../types/ListParticipant';
 import { GalleryParticipant } from '../types/GalleryParticipant';
-import { getACSId } from '../utils';
+import { getACSId } from './SDKUtils';
 
 export const convertSdkRemoteParticipantToGalleryParticipant = (
   remoteParticipantFromSDK: RemoteParticipantFromSDK

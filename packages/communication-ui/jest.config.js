@@ -160,14 +160,12 @@ module.exports = {
 
   // A map from regular expressions to paths to transformers
   transform: {
-    '^.+\\.(ts)x?$': 'ts-jest',
-    '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': '<rootDir>/../jest/fileTransform.js'
+    '^.+\\.(ts)x?$': 'ts-jest'
   },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   transformIgnorePatterns: [
-    '/node_modules/',
-    'node_modules/(?!(@storybook/addon-storyshots)/)'
+    '/node_modules/'
     // "\\.pnp\\.[^\\/]+$"
   ]
 

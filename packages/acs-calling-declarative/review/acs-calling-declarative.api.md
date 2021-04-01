@@ -4,16 +4,52 @@
 
 ```ts
 
-import { Call } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';
+import { CallDirection } from '@azure/communication-calling';
+import { CallEndReason } from '@azure/communication-calling';
+import { CallerInfo } from '@azure/communication-calling';
+import { CallingApplicationKind } from '@azure/communication-common';
+import { CallState } from '@azure/communication-calling';
+import { CommunicationUserKind } from '@azure/communication-common';
+import { MediaStreamType } from '@azure/communication-calling';
+import { MicrosoftTeamsUserKind } from '@azure/communication-common';
+import { PhoneNumberKind } from '@azure/communication-common';
+import { RemoteParticipantState } from '@azure/communication-calling';
+import { UnknownIdentifierKind } from '@azure/communication-common';
+import { VideoDeviceInfo } from '@azure/communication-calling';
+
+// @public
+export interface Call {
+    // (undocumented)
+    callEndReason?: CallEndReason;
+    // (undocumented)
+    callerInfo: CallerInfo;
+    // (undocumented)
+    direction: CallDirection;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    isMicrophoneMuted: boolean;
+    // (undocumented)
+    isScreenSharingOn: boolean;
+    // (undocumented)
+    localVideoStreams: ReadonlyArray<LocalVideoStream>;
+    // (undocumented)
+    remoteParticipants: Map<string, RemoteParticipant>;
+    // (undocumented)
+    state: CallState;
+}
 
 // @public
 export const callClientDeclaratify: (callClient: CallClient) => DeclarativeCallClient;
 
-// @public (undocumented)
-export type CallClientState = {
-    calls: Call[];
-};
+// @public
+export interface CallClientState {
+    // (undocumented)
+    calls: Map<string, Call>;
+    // (undocumented)
+    incomingCalls: Map<string, IncomingCall>;
+}
 
 // @public
 export interface DeclarativeCallClient extends CallClient {
@@ -21,6 +57,54 @@ export interface DeclarativeCallClient extends CallClient {
     onStateChange(handler: (state: CallClientState) => void): void;
     // (undocumented)
     state: CallClientState;
+}
+
+// @public
+export interface IncomingCall {
+    // (undocumented)
+    callEnded: boolean;
+    // (undocumented)
+    callEndReason?: CallEndReason;
+    // (undocumented)
+    callerInfo: CallerInfo;
+    // (undocumented)
+    id: string;
+}
+
+// @public
+export interface LocalVideoStream {
+    // (undocumented)
+    mediaStreamType: MediaStreamType;
+    // (undocumented)
+    source: VideoDeviceInfo;
+}
+
+// @public
+export interface RemoteParticipant {
+    // (undocumented)
+    callEndReason?: CallEndReason;
+    // (undocumented)
+    displayName?: string;
+    // (undocumented)
+    identifier: CommunicationUserKind | PhoneNumberKind | CallingApplicationKind | MicrosoftTeamsUserKind | UnknownIdentifierKind;
+    // (undocumented)
+    isMuted: boolean;
+    // (undocumented)
+    isSpeaking: boolean;
+    // (undocumented)
+    state: RemoteParticipantState;
+    // (undocumented)
+    videoStreams: ReadonlyArray<RemoteVideoStream>;
+}
+
+// @public
+export interface RemoteVideoStream {
+    // (undocumented)
+    id: number;
+    // (undocumented)
+    isAvailable: boolean;
+    // (undocumented)
+    mediaStreamType: MediaStreamType;
 }
 
 

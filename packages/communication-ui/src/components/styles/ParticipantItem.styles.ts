@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { mergeStyles, IStackTokens } from '@fluentui/react';
+import { mergeStyles } from '@fluentui/react';
 import { Theme } from '@fluentui/react-theme-provider';
 
 export const memberItemContainerStyle = (theme: Theme): string =>
@@ -30,11 +30,10 @@ export const memberItemIsYouStyle = mergeStyles({
   fontSize: '0.875rem', // 14px
   fontWeight: 400,
   color: '#A19F9D',
-  marginTop: '0.3125rem',
-  marginLeft: '0.3125rem'
+  marginTop: '0.3125rem'
 });
 
-export const iconStackStyle = mergeStyles({
+export const iconsContainerStyle = mergeStyles({
   position: 'absolute',
   display: 'flex',
   right: '1rem',
@@ -42,7 +41,3 @@ export const iconStackStyle = mergeStyles({
   msTransform: 'translateY(-50%)',
   transform: 'translateY(-50%)'
 });
-
-export const iconStackTokens: IStackTokens = {
-  childrenGap: '0.5rem'
-};

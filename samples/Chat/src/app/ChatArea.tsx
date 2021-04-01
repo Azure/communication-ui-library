@@ -1,8 +1,23 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { ErrorBar, SendBox, TypingIndicator, ChatThread } from '@azure/communication-ui';
+import {
+  ErrorBar as ErrorBarComponent,
+  SendBox as SendBoxComponent,
+  TypingIndicator as TypingIndicatorComponent,
+  MapToTypingIndicatorProps,
+  MessageThread,
+  connectFuncsToContext,
+  MapToChatMessageProps,
+  MapToErrorBarProps,
+  MapToSendBoxProps,
+  WithErrorHandling,
+  MessageThreadProps,
+  ErrorHandlingProps,
+  SendBoxProps,
+  TypingIndicatorProps
+} from '@azure/communication-ui';
 import { Stack } from '@fluentui/react';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { chatAreaContainerStyle, sendBoxParentStyle } from './styles/ChatArea.styles';
 
 export interface ChatAreaProps {
@@ -10,6 +25,28 @@ export interface ChatAreaProps {
 }
 
 export const ChatArea = (props: ChatAreaProps): JSX.Element => {
+  const ChatThread = useMemo(() => {
+    return connectFuncsToContext(
+      (props: MessageThreadProps & ErrorHandlingProps) => WithErrorHandling(MessageThread, props),
+      MapToChatMessageProps
+    );
+  }, []);
+  const ErrorBar = useMemo(() => {
+    return connectFuncsToContext(ErrorBarComponent, MapToErrorBarProps);
+  }, []);
+  const SendBox = useMemo(() => {
+    return connectFuncsToContext(
+      (props: SendBoxProps & ErrorHandlingProps) => WithErrorHandling(SendBoxComponent, props),
+      MapToSendBoxProps
+    );
+  }, []);
+  const TypingIndicator = useMemo(() => {
+    return connectFuncsToContext(
+      (props: TypingIndicatorProps & ErrorHandlingProps) => WithErrorHandling(TypingIndicatorComponent, props),
+      MapToTypingIndicatorProps
+    );
+  }, []);
+
   // onRenderAvatar is a contoso callback. We need it to support emoji in Sample App. Sample App is currently on
   // components v0 so we're passing the callback at the component level. This might need further refactoring if this
   // ChatArea is to become a component or if Sample App is to move to composite

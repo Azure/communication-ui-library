@@ -11,23 +11,33 @@ import {
   sendButtonStyle,
   sendIconDiv
 } from './styles/SendBox.styles';
-import { connectFuncsToContext } from '../consumers/ConnectContext';
-import { MapToSendBoxProps, SendBoxPropsFromContext } from '../consumers/MapToSendBoxProps';
+import { SendBoxPropsFromContext } from '../consumers/MapToSendBoxProps';
 import classNames from 'classnames';
 import { Alert } from '@fluentui/react-northstar/dist/commonjs/components/Alert/Alert';
-import { WithErrorHandling } from '../utils/WithErrorHandling';
 import { ErrorHandlingProps } from '../providers/ErrorProvider';
 import { propagateError } from '../utils/SDKUtils';
 
-type SendBoxProps = {
+/**
+ * Properties for component SendBox
+ */
+export type SendBoxProps = {
+  /** Optional callback to render system message below the SendBox */
   onRenderSystemMessage?: (systemMessage: string | undefined) => React.ReactElement;
+  /** Optional boolean to support new line in SendBox */
   supportNewline?: boolean;
+  /** Optional callback to render send button icon to the right of the SendBox*/
+  onRenderIcon?: (props: SendBoxProps & SendBoxPropsFromContext) => JSX.Element | null;
 } & SendBoxPropsFromContext;
 
 const defaultOnRenderSystemMessage = (systemMessage: string | undefined): JSX.Element | undefined =>
   systemMessage ? <Alert attached="bottom" content={systemMessage} /> : undefined;
 
-const SendBoxComponentBase = (props: SendBoxProps & ErrorHandlingProps): JSX.Element => {
+/**
+ * @description `SendBox` is a component for users to type and send messages. An optional message can also be
+ * added below the `SendBox`
+ * @param props - SendBoxProps
+ */
+export const SendBox = (props: SendBoxProps & ErrorHandlingProps): JSX.Element => {
   const {
     disabled,
     displayName,
@@ -36,7 +46,8 @@ const SendBoxComponentBase = (props: SendBoxProps & ErrorHandlingProps): JSX.Ele
     supportNewline: supportMultiline,
     sendMessage,
     onErrorCallback,
-    onSendTypingNotification
+    onSendTypingNotification,
+    onRenderIcon
   } = props;
 
   const [textValue, setTextValue] = useState('');
@@ -109,15 +120,10 @@ const SendBoxComponentBase = (props: SendBoxProps & ErrorHandlingProps): JSX.Ele
             e.stopPropagation();
           }}
         >
-          <div className={sendIconDiv} />
+          {onRenderIcon ? onRenderIcon(props) : <div className={sendIconDiv} />}
         </div>
       </Stack>
       {onRenderSystemMessage(systemMessage ? systemMessage : textTooLongMessage)}
     </>
   );
 };
-
-export const SendBoxComponent = (props: SendBoxProps & ErrorHandlingProps): JSX.Element =>
-  WithErrorHandling(SendBoxComponentBase, props);
-
-export default connectFuncsToContext(SendBoxComponent, MapToSendBoxProps);

@@ -12,6 +12,7 @@ export * from './MapToChatThreadMemberProps';
 export * from './MapToChatThreadProps';
 export * from './MapToChatTopicProps';
 export * from './MapToErrorsProps';
+export * from './MapToErrorBarProps';
 export * from './MapToSendBoxProps';
 export * from './MapToSidePanelProps';
 export * from './MapToTypingIndicatorProps';

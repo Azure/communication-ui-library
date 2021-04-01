@@ -34,7 +34,7 @@ const CallScreenComponent = (props: OneToOneCallProps): JSX.Element => {
         }}
         onEndCallClick={endCallHandler}
       />
-      <Stack.Item styles={containerStyles} style={{ zIndex: -1 }}>
+      <Stack.Item styles={containerStyles}>
         {!isLocalScreenSharingOn ? (
           callState === 'Connected' && (
             <Stack horizontal styles={containerStyles}>
