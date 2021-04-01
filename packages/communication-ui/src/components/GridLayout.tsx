@@ -1,6 +1,8 @@
 // © Microsoft Corporation. All rights reserved.
 
+import { mergeStyles } from '@fluentui/react';
 import React, { useState } from 'react';
+import { BaseCustomStylesProps } from '../types';
 import { gridLayoutStyle } from './styles/GridLayout.styles';
 
 export type GridLayoutType = 'standard';
@@ -8,6 +10,14 @@ export type GridLayoutType = 'standard';
 export interface GridLayoutProps {
   children: React.ReactNode;
   layout?: GridLayoutType;
+  /**
+   * Allows users to pass in an object contains custom CSS styles.
+   * Example
+   * ```
+   * <GridLayout styles={{ root: { background: 'blue' } }} />
+   * ```
+   */
+  styles?: BaseCustomStylesProps;
 }
 
 const calculateStandardLayoutRows = (numberOfItems: number, gridCol: number): number =>
@@ -20,7 +30,7 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
   const [gridCol, setGridCol] = useState(1);
   const [gridRow, setGridRow] = useState(1);
 
-  const { children, layout = 'standard' } = props;
+  const { children, layout = 'standard', styles } = props;
   const numberOfChildren = React.Children.count(children);
 
   switch (layout) {
@@ -35,7 +45,7 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
 
   return (
     <div
-      className={gridLayoutStyle}
+      className={mergeStyles(gridLayoutStyle, styles?.root)}
       style={{
         gridTemplateRows: `repeat(${gridRow}, minmax(0, 1fr))`,
         gridTemplateColumns: `repeat(${gridCol}, 1fr)`

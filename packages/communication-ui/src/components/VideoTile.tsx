@@ -6,26 +6,29 @@ import { rootStyles, videoContainerStyles, overlayContainerStyles } from './styl
 import { useTheme } from '@fluentui/react-theme-provider';
 
 export interface VideoTileStylesProps {
-  /** Styles for the root container */
+  /** Styles for the root container. */
   root?: IStyle;
-  /** Styles for video container */
+  /** Styles for video container. */
   videoContainer?: IStyle;
-  /** Styles for container overlayed on the video container */
+  /** Styles for container overlayed on the video container. */
   overlayContainer?: IStyle;
 }
 
+/**
+ * Props for VideoTile component
+ */
 export interface VideoTileProps {
-  /** React Child components. */
+  /** React Child components. Child Components will show as overlay component in the VideoTile. */
   children?: React.ReactNode;
-  /** Custom styles */
+  /** Custom styles. */
   styles?: VideoTileStylesProps;
   /** Determines if the static image or video stream should be rendered. */
   isVideoReady?: boolean;
-  /** Component with the video stream */
+  /** Component with the video stream. */
   videoProvider?: JSX.Element | null;
-  /** Determines if the video is mirrored or not */
+  /** Determines if the video is mirrored or not. */
   invertVideo?: boolean;
-  /** Custom Component to render when no video is available. Defaults to a Persona Icon */
+  /** Custom Component to render when no video is available. Defaults to a Persona Icon. */
   placeholderProvider?: JSX.Element | null;
 }
 

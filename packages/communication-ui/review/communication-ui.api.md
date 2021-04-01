@@ -63,6 +63,11 @@ export const areStreamsEqual: (prevStream: LocalVideoStream, newStream: LocalVid
 export const audioButtonProps: IButtonProps;
 
 // @public (undocumented)
+export interface BaseCustomStylesProps {
+    root?: IStyle;
+}
+
+// @public (undocumented)
 export type CallContainerProps = {
     isCallInitialized: boolean;
     callState: CallState;
@@ -102,7 +107,7 @@ export type CallContextType = {
 export const CallControlBar: (props: ControlBarProps & CallControlBarProps & ErrorHandlingProps) => JSX.Element;
 
 // @public (undocumented)
-export const CallControlBarComponent: (props: Pick<ControlBarProps & CallControlBarProps & ErrorHandlingProps, "onErrorCallback" | "children" | "layout" | "styles" | "onEndCallClick">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+export const CallControlBarComponent: (props: Pick<ControlBarProps & CallControlBarProps & ErrorHandlingProps, "onErrorCallback" | "children" | "styles" | "layout" | "onEndCallClick">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
 
 // Warning: (ae-forgotten-export) The symbol "CallControlBarContainerProps" needs to be exported by the entry point index.d.ts
 //
@@ -407,12 +412,11 @@ export const ControlBar: (props: ControlBarProps) => JSX.Element;
 // @public (undocumented)
 export type ControlBarLayoutType = 'horizontal' | 'vertical' | 'dockedTop' | 'dockedBottom' | 'dockedLeft' | 'dockedRight' | 'floatingTop' | 'floatingBottom' | 'floatingLeft' | 'floatingRight';
 
-// @public (undocumented)
+// @public
 export interface ControlBarProps {
-    // (undocumented)
     children?: React_2.ReactNode;
     layout?: ControlBarLayoutType;
-    styles?: CustomStylesProps;
+    styles?: BaseCustomStylesProps;
 }
 
 // @public (undocumented)
@@ -435,12 +439,6 @@ export const CREATED = 201;
 
 // @public (undocumented)
 export const CROP_MEDIA = "Crop";
-
-// @public (undocumented)
-export interface CustomStylesProps {
-    // (undocumented)
-    root?: IStyle;
-}
 
 // @public
 export const DARK = "dark";
@@ -468,6 +466,7 @@ export type ErrorBarProps = {
     message?: string;
     severity?: CommunicationUiErrorSeverity;
     onClose?: () => void;
+    styles?: BaseCustomStylesProps;
 };
 
 // @public (undocumented)
@@ -586,6 +585,7 @@ export interface GridLayoutProps {
     children: React_2.ReactNode;
     // (undocumented)
     layout?: GridLayoutType;
+    styles?: BaseCustomStylesProps;
 }
 
 // @public (undocumented)
@@ -600,7 +600,7 @@ export const GroupCall: (props: GroupCallCompositeProps) => JSX.Element;
 export const GroupCallControlBar: (props: ControlBarProps & GroupCallControlBarProps & ErrorHandlingProps) => JSX.Element;
 
 // @public (undocumented)
-export const GroupCallControlBarComponent: (props: Pick<ControlBarProps & GroupCallControlBarProps & ErrorHandlingProps, "onErrorCallback" | "children" | "layout" | "styles" | "onEndCallClick" | "compressedMode">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+export const GroupCallControlBarComponent: (props: Pick<ControlBarProps & GroupCallControlBarProps & ErrorHandlingProps, "onErrorCallback" | "children" | "styles" | "layout" | "onEndCallClick" | "compressedMode">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
 
 // @public (undocumented)
 export interface GroupCallControlBarProps extends CallControlBarContainerProps {
@@ -631,7 +631,7 @@ export const INCOMING = "Incoming";
 export const IncomingCallControlBar: (props: ControlBarProps & CallControlBarContainerProps & ErrorHandlingProps) => JSX.Element;
 
 // @public (undocumented)
-export const IncomingCallControlBarComponent: (props: Pick<ControlBarProps & CallControlBarContainerProps & ErrorHandlingProps, "onErrorCallback" | "children" | "layout" | "styles">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+export const IncomingCallControlBarComponent: (props: Pick<ControlBarProps & CallControlBarContainerProps & ErrorHandlingProps, "onErrorCallback" | "children" | "styles" | "layout">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
 
 // Warning: (ae-forgotten-export) The symbol "IncomingCallModalProps" needs to be exported by the entry point index.d.ts
 //
@@ -832,7 +832,7 @@ export enum MessageStatus {
 // @public
 export const MessageThread: (props: MessageThreadProps & ErrorHandlingProps & ChatMessagePropsFromContext) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export type MessageThreadProps = {
     userId: string;
     chatMessages: ChatMessage[];
@@ -849,13 +849,12 @@ export type MessageThreadProps = {
 };
 
 // @public (undocumented)
-export interface MessageThreadStylesProps {
+export interface MessageThreadStylesProps extends BaseCustomStylesProps {
     chatContainer?: ComponentSlotStyle;
     chatMessageContainer?: ComponentSlotStyle;
     loadPreviousMessagesButtonContainer?: IStyle;
     newMessageButtonContainer?: IStyle;
     readReceiptContainer?: (mine: boolean) => IStyle;
-    root?: IStyle;
 }
 
 // @public (undocumented)
@@ -888,7 +887,7 @@ export const optionsButtonProps: IButtonProps;
 export const OutgoingCallControlBar: (props: OutgoingCallControlBarProps & ErrorHandlingProps) => JSX.Element;
 
 // @public (undocumented)
-export const OutgoingCallControlBarComponent: (props: Pick<OutgoingCallControlBarProps & ErrorHandlingProps, "onErrorCallback" | "children" | "layout" | "styles" | "onEndCallClick">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+export const OutgoingCallControlBarComponent: (props: Pick<OutgoingCallControlBarProps & ErrorHandlingProps, "onErrorCallback" | "children" | "styles" | "layout" | "onEndCallClick">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
 
 // @public (undocumented)
 export interface OutgoingCallControlBarProps extends ControlBarProps, CallControlBarContainerProps {
@@ -909,6 +908,15 @@ export interface ParticipantItemProps {
     onRenderAvatar?: (props?: ParticipantItemProps) => JSX.Element | null;
     onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
     presence?: PersonaPresence;
+    styles?: ParticipantItemStylesProps;
+}
+
+// @public (undocumented)
+export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
+    avatar?: IStyle;
+    iconContainer?: IStyle;
+    isYou?: IStyle;
+    menu?: IStyle;
 }
 
 // @public (undocumented)
@@ -936,9 +944,9 @@ export const PRECONDITION_FAILED_STATUS_CODE = 412;
 export const propagateError: (error: Error, onErrorCallback?: ((error: CommunicationUiErrorInfo) => void) | undefined) => void;
 
 // @public
-export const ReadReceipt: ({ messageStatus, deliveredTooltipText, seenTooltipText, sendingTooltipText, failedToSendTooltipText, size }: ReadReceiptProps & ErrorHandlingProps) => JSX.Element;
+export const ReadReceipt: (props: ReadReceiptProps & ErrorHandlingProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface ReadReceiptProps {
     deliveredTooltipText?: string;
     failedToSendTooltipText?: string;
@@ -946,6 +954,7 @@ export interface ReadReceiptProps {
     seenTooltipText?: string;
     sendingTooltipText?: string;
     size?: SizeValue;
+    styles?: BaseCustomStylesProps;
 }
 
 // @public (undocumented)
@@ -966,14 +975,15 @@ export const saveThemeToLocalStorage: (theme: string, scopeId: string) => void;
 export const screenShareButtonProps: IButtonProps;
 
 // @public
-export const SendBox: (props: SendBoxProps & ErrorHandlingProps) => JSX.Element;
+export const SendBox: (props: SendBoxProps & SendBoxPropsFromContext & ErrorHandlingProps) => JSX.Element;
 
 // @public
-export type SendBoxProps = {
-    onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
-    supportNewline?: boolean;
+export interface SendBoxProps {
     onRenderIcon?: (props: SendBoxProps & SendBoxPropsFromContext) => JSX.Element | null;
-} & SendBoxPropsFromContext;
+    onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
+    styles?: SendBoxStylesProps;
+    supportNewline?: boolean;
+}
 
 // @public (undocumented)
 export type SendBoxPropsFromContext = {
@@ -984,6 +994,14 @@ export type SendBoxPropsFromContext = {
     sendMessage: (displayName: string, userId: string, messageContent: string) => Promise<void>;
     onSendTypingNotification: () => Promise<void>;
 };
+
+// @public (undocumented)
+export interface SendBoxStylesProps extends BaseCustomStylesProps {
+    defaultSendMessageIcon?: IStyle;
+    defaultSystemMessage?: IStyle;
+    sendMessageIconContainer?: IStyle;
+    textField?: IStyle;
+}
 
 // @public (undocumented)
 export const SERVICE_UNAVAILABLE_STATUS_CODE = 503;
@@ -1008,14 +1026,13 @@ export type SidePanelPropsFromContext = {
 // @public (undocumented)
 export const SPACE_KEY = 32;
 
-// @public (undocumented)
+// @public
 export const StreamMedia: (props: StreamMediaProps & ErrorHandlingProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface StreamMediaProps {
-    // (undocumented)
     invertVideo?: boolean;
-    // (undocumented)
+    styles?: BaseCustomStylesProps;
     videoStreamElement: HTMLElement | null;
 }
 
@@ -1105,11 +1122,19 @@ export const TOO_MANY_REQUESTS_STATUS_CODE = 429;
 // @public
 export const TypingIndicator: (props: TypingIndicatorProps & ErrorHandlingProps) => JSX.Element;
 
-// @public (undocumented)
-export type TypingIndicatorProps = {
-    typingUsers: TypingUser[];
+// @public
+export interface TypingIndicatorProps {
+    styles?: TypingIndicatorStylesProps;
     typingString: string;
-};
+    typingUsers: TypingUser[];
+}
+
+// @public (undocumented)
+export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
+    typingString?: IStyle;
+    typingUserDisplayName?: IStyle;
+    typingUserImage?: IStyle;
+}
 
 // @public (undocumented)
 export type TypingUser = {
@@ -1348,7 +1373,7 @@ export interface VideoContainerProps {
 // @public (undocumented)
 export const VideoTile: (props: VideoTileProps & PlaceholderProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface VideoTileProps {
     children?: React_2.ReactNode;
     invertVideo?: boolean;
