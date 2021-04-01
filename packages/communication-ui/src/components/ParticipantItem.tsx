@@ -59,6 +59,7 @@ export const ParticipantItem = (props: ParticipantItemProps & ErrorHandlingProps
       size={PersonaSize.size32}
       presence={presence}
       onRenderPersonaCoin={onRenderAvatar ? () => onRenderAvatar(props) : undefined}
+      initialsTextColor="white"
     />
   );
   return (
