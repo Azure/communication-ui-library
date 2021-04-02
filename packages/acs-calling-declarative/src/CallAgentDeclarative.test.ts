@@ -95,7 +95,7 @@ describe('declarative call agent', () => {
     expect(mockCall.emitter.eventNames().length).not.toBe(0);
   });
 
-  test('should unsubscribe when disposed is envoked', async () => {
+  test('should unsubscribe when disposed is invoked', async () => {
     const mockCallAgent = new MockCallAgent();
     const context = new CallContext();
     const mockCall = createMockCall(mockCallId);
@@ -106,7 +106,7 @@ describe('declarative call agent', () => {
     expect(mockCallAgent.emitter.eventNames().length).toBe(0);
   });
 
-  test('should update state with new call when startCall is envoked', () => {
+  test('should update state with new call when startCall is invoked', () => {
     const mockCallAgent = new MockCallAgent();
     const context = new CallContext();
     expect(context.getState().calls.size).toBe(0);
@@ -115,7 +115,7 @@ describe('declarative call agent', () => {
     expect(context.getState().calls.size).toBe(1);
   });
 
-  test('should update state with new call when join is envoked', () => {
+  test('should update state with new call when join is invoked', () => {
     const mockCallAgent = new MockCallAgent();
     const context = new CallContext();
     expect(context.getState().calls.size).toBe(0);
