@@ -2,10 +2,10 @@
 
 import React from 'react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
-import { GridLayoutComponent, VideoTile } from '@azure/communication-ui';
+import { GridLayout, VideoTile } from '@azure/communication-ui';
 
 const importStatement = `
-import { GridLayoutComponent, VideoTile } from '@azure/communication-ui';
+import { GridLayout, VideoTile } from '@azure/communication-ui';
 `;
 
 const GridLayoutExample: () => JSX.Element = () => {
@@ -16,7 +16,7 @@ const GridLayoutExample: () => JSX.Element = () => {
         width: '830px'
       }}
     >
-      <GridLayoutComponent>
+      <GridLayout>
         <VideoTile isVideoReady={false} videoProvider={null} avatarName={'Michael'}>
           <label>Michael</label>
         </VideoTile>
@@ -29,7 +29,7 @@ const GridLayoutExample: () => JSX.Element = () => {
         <VideoTile isVideoReady={false} videoProvider={null} avatarName={'Dwight'}>
           <label>Dwight</label>
         </VideoTile>
-      </GridLayoutComponent>
+      </GridLayout>
     </div>
   );
 };
@@ -43,7 +43,7 @@ const GridLayoutExample: () => JSX.Element = () => {
         width: '830px'
       }}
     >
-      <GridLayoutComponent>
+      <GridLayout>
         <VideoTile
           isVideoReady={false}
           videoProvider={null}
@@ -72,7 +72,7 @@ const GridLayoutExample: () => JSX.Element = () => {
         >
           <label>Dwight</label>
         </VideoTile>
-      </GridLayoutComponent>
+      </GridLayout>
     </div>
   );
 };
@@ -94,7 +94,7 @@ export const getDocs: () => JSX.Element = () => {
       </Canvas>
       <Source code={exampleCode} />
       <Heading>Props</Heading>
-      <Props of={GridLayoutComponent} />
+      <Props of={GridLayout} />
     </>
   );
 };

@@ -2,9 +2,9 @@
 import { Provider, teamsTheme } from '@fluentui/react-northstar';
 import { Title, Description, Props, Heading, Source, Canvas, Subheading } from '@storybook/addon-docs/blocks';
 import React from 'react';
-import { TypingIndicatorComponent } from '@azure/communication-ui';
+import { TypingIndicator } from '@azure/communication-ui';
 
-const importStatement = `import { TypingIndicatorComponent } from '@azure/communication-ui';`;
+const importStatement = `import { TypingIndicator } from '@azure/communication-ui';`;
 const usageCode = `
 const oneTypingUsers = [{ displayName: 'User1', prefixImageUrl: '' }];
 const twoTypingUsers = [
@@ -14,10 +14,10 @@ const twoTypingUsers = [
 
 return (
   <>
-    <TypingIndicatorComponent typingUsers={oneTypingUsers} typingString={' is typing...'} />
-    <TypingIndicatorComponent typingUsers={twoTypingUsers} typingString={' are typing...'} />
-    <TypingIndicatorComponent typingUsers={twoTypingUsers} typingString={' and 5 others are typing...'} />
-    <TypingIndicatorComponent typingUsers={[]} typingString={'10 participants are typing...'} />
+    <TypingIndicator typingUsers={oneTypingUsers} typingString={' is typing...'} />
+    <TypingIndicator typingUsers={twoTypingUsers} typingString={' are typing...'} />
+    <TypingIndicator typingUsers={twoTypingUsers} typingString={' and 5 others are typing...'} />
+    <TypingIndicator typingUsers={[]} typingString={'10 participants are typing...'} />
   </>
 );
 `;
@@ -27,7 +27,7 @@ const importStatementwithACS = `import { ChatProvider,
           useUserId, 
           useThreadMembers, 
           useTypingUsers, 
-          TypingIndicatorComponent } 
+          TypingIndicator } 
 from '@azure/communication-ui';`;
 const usageCodeWithACS = `
 function CustomTypingIndicator() {
@@ -42,7 +42,7 @@ function CustomTypingIndicator() {
   const typingString = typingUsers.length == 0 ? '' : typingUsers.length > 1 ? ' are typing...' : ' is typing...';
 
   return (
-    <TypingIndicatorComponent typingUsers={typingUsers} typingString={typingString}/>
+    <TypingIndicator typingUsers={typingUsers} typingString={typingString}/>
   );
 }
 
@@ -58,7 +58,7 @@ function CustomTypingIndicator() {
 </ChatProvider>
 `;
 
-const ExampleTypingIndicators: () => JSX.Element = () => {
+const ExampleTypingIndicator: () => JSX.Element = () => {
   const oneTypingUsers = [{ displayName: 'User1', prefixImageUrl: '' }];
   const twoTypingUsers = [
     { displayName: 'User1', prefixImageUrl: '' },
@@ -67,10 +67,10 @@ const ExampleTypingIndicators: () => JSX.Element = () => {
 
   return (
     <>
-      <TypingIndicatorComponent typingUsers={oneTypingUsers} typingString={' is typing...'} />
-      <TypingIndicatorComponent typingUsers={twoTypingUsers} typingString={' are typing...'} />
-      <TypingIndicatorComponent typingUsers={twoTypingUsers} typingString={' and 5 others are typing...'} />
-      <TypingIndicatorComponent typingUsers={[]} typingString={'10 participants are typing...'} />
+      <TypingIndicator typingUsers={oneTypingUsers} typingString={' is typing...'} />
+      <TypingIndicator typingUsers={twoTypingUsers} typingString={' are typing...'} />
+      <TypingIndicator typingUsers={twoTypingUsers} typingString={' and 5 others are typing...'} />
+      <TypingIndicator typingUsers={[]} typingString={'10 participants are typing...'} />
     </>
   );
 };
@@ -87,7 +87,7 @@ export const getDocs: () => JSX.Element = () => {
       <Heading>Example</Heading>
       <Canvas>
         <Provider theme={teamsTheme}>
-          <ExampleTypingIndicators />
+          <ExampleTypingIndicator />
         </Provider>
       </Canvas>
       <Source code={usageCode} />
@@ -97,7 +97,7 @@ export const getDocs: () => JSX.Element = () => {
       <Subheading>Example</Subheading>
       <Source code={usageCodeWithACS} />
       <Heading>Props</Heading>
-      <Props of={TypingIndicatorComponent} />
+      <Props of={TypingIndicator} />
     </>
   );
 };

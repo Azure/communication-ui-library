@@ -57,7 +57,16 @@ export const GroupCallComposite: () => JSX.Element = () => {
   }, [connectionString]);
 
   return (
-    <div style={{ width: '100%', height: '100%', maxWidth: '50rem', maxHeight: '35rem', margin: '20px auto' }}>
+    <div
+      style={{
+        width: '100%',
+        height: '100%',
+        maxWidth: '55rem',
+        maxHeight: '30rem',
+        margin: '20px auto',
+        border: '1px solid'
+      }}
+    >
       {connectionString && (
         <GroupCall
           displayName={`user${Math.ceil(Math.random() * 1000)}`}

@@ -2,6 +2,7 @@ dependencies:
   '@azure/communication-administration': 1.0.0-beta.3
   '@azure/communication-identity': 1.0.0-beta.4
   '@azure/core-http': 1.2.3
+  '@azure/core-paging': 1.1.3
   '@babel/core': 7.13.10
   '@babel/preset-env': 7.13.10_@babel+core@7.13.10
   '@babel/preset-react': 7.12.13_@babel+core@7.13.10
@@ -104,6 +105,7 @@ dependencies:
   prettier: 2.0.5
   pretty-quick: 3.1.0_prettier@2.0.5
   preval.macro: 5.0.0
+  raw-loader: 4.0.2_webpack@4.44.2
   react: 16.14.0
   react-aria-live: 2.0.5_react@16.14.0
   react-dom: 16.14.0_react@16.14.0
@@ -20190,6 +20192,7 @@ packages:
     dependencies:
       '@azure/communication-chat': 1.0.0-beta.4
       '@azure/communication-signaling': 1.0.0-beta.2
+      '@azure/core-paging': 1.1.3
       '@microsoft/api-documenter': 7.12.12
       '@microsoft/api-extractor': 7.13.2
       '@types/jest': 26.0.20
@@ -20212,7 +20215,7 @@ packages:
       prettier: '*'
       ts-node: '*'
     resolution:
-      integrity: sha512-yS3iBC8KTy5gjPkPVv0TkKzcJMEzVi7CxgT6gmNIqVYJkHlmWmskzKNliG/1ly3fYUkcVgXFb4Th6igScOCKUw==
+      integrity: sha512-27XkTAtdMHzfP28mzzTk9lQbSTO88/bWqBTcw5NDTHatpi6gWVmtKt7TLmIT/LoCFZLWJh2xk6wAqq+KKqtbpQ==
       tarball: file:projects/acs-chat-declarative.tgz
     version: 0.0.0
   file:projects/acs-chat-selector.tgz_prettier@2.0.5:
@@ -20460,7 +20463,7 @@ packages:
     peerDependencies:
       webpack-cli: '*'
     resolution:
-      integrity: sha512-muoyrGvzz7WDz/T9IZKeYsqfAHpTb0qOdNzNGbuH/gsYyhH9f92WCWxD03ix4jFO2BZaAXsfUDFNhQ5vCsMWQA==
+      integrity: sha512-KsffXOujTVbXbseiFJYZnzsNGbbtSmniaMzglpMaB75IK3QAeNsR5H7jHln/8jazplzE+O7EmdGLwuo9AHE5Ag==
       tarball: file:projects/communication-ui.tgz
     version: 0.0.0
   file:projects/one-to-one-call.tgz_570bf42e92a70fb216c5cd4d5ed668ef:
@@ -20665,6 +20668,7 @@ packages:
       node-forge: 0.10.0
       prettier: 2.0.5
       pretty-quick: 3.1.0_prettier@2.0.5
+      raw-loader: 4.0.2_webpack@4.44.2
       react: 16.14.0
       react-aria-live: 2.0.5_react@16.14.0
       react-dom: 16.14.0_react@16.14.0
@@ -20686,7 +20690,7 @@ packages:
     peerDependencies:
       webpack-cli: '*'
     resolution:
-      integrity: sha512-jXZ+r6MWu3XZC4Icu49RDSsZShaf7hZHTWabZf1BRs63zK6gX5ZLZF/wLh6mrA2P6Dvw1Huyz7Gmpjp0jA0ttA==
+      integrity: sha512-OGk5WmNz5SZQe7OyGHpnENmNpPJXnakYDoDsXioHAFVPDfvjXt/jLBa9EXlF0PjwW6samC4ZJqvRxNuU/IjhJw==
       tarball: file:projects/storybook.tgz
     version: 0.0.0
 registry: ''
@@ -20694,6 +20698,7 @@ specifiers:
   '@azure/communication-administration': 1.0.0-beta.3
   '@azure/communication-identity': 1.0.0-beta.4
   '@azure/core-http': ^1.2.3
+  '@azure/core-paging': ~1.1.3
   '@babel/core': ^7.12.7
   '@babel/preset-env': ^7.12.7
   '@babel/preset-react': ^7.12.7
@@ -20796,6 +20801,7 @@ specifiers:
   prettier: 2.0.5
   pretty-quick: ^3.1.0
   preval.macro: ^5.0.0
+  raw-loader: ~4.0.2
   react: ^16.13.1
   react-aria-live: ^2.0.5
   react-dom: ^16.13.1

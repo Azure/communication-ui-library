@@ -36,7 +36,6 @@ const endpointUrl = \`\${uri.protocol}//\${uri.host}\`;
 
   ReactDOM.render(
     <GroupChat
-      userId={user.communicationUserId}
       token={token.token}
       endpointUrl={endpointUrl}
       displayName={'User1'}

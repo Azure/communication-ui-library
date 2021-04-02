@@ -1,15 +1,18 @@
 // © Microsoft Corporation. All rights reserved.
 
 import React from 'react';
-import { TooltipHost } from '@fluentui/react';
+import { mergeStyles, TooltipHost } from '@fluentui/react';
 import { MessageStatus } from '../types/ChatMessage';
 import { SizeValue } from '@fluentui/react-northstar/dist/commonjs/utils/commonPropInterfaces';
 import { readReceiptIconErrorStyle, readReceiptIconMessageStyle } from './styles/ReadReceipt.styles';
 import { CircleRingIcon, CompletedIcon, ErrorIcon } from '@fluentui/react-icons';
 import { MessageSeenIcon } from '@fluentui/react-icons-northstar';
 import { ErrorHandlingProps } from '../providers/ErrorProvider';
-import { WithErrorHandling } from '../utils/WithErrorHandling';
+import { BaseCustomStylesProps } from '../types';
 
+/**
+ * Props for ReadReceipt component
+ */
 export interface ReadReceiptProps {
   /** Message status that determines the read receipt icon to show. */
   messageStatus: MessageStatus;
@@ -23,30 +26,41 @@ export interface ReadReceiptProps {
   failedToSendTooltipText?: string;
   /** Size of the read receipt icon. */
   size?: SizeValue;
+  /**
+   * Allows users to pass in an object contains custom CSS styles.
+   * @Example
+   * ```
+   * <ReadReceipt styles={{ root: { background: 'blue' } }} />
+   * ```
+   */
+  styles?: BaseCustomStylesProps;
 }
 
 /**
- * ReadReciptIcon component.
+ * ReadReceipt component.
  */
-const ReadReceiptComponentBase = ({
-  messageStatus,
-  deliveredTooltipText = 'Sent',
-  seenTooltipText = 'Seen',
-  sendingTooltipText = 'Sending',
-  failedToSendTooltipText = 'Failed to send',
-  size = 'medium'
-}: ReadReceiptProps & ErrorHandlingProps): JSX.Element => {
+export const ReadReceipt = (props: ReadReceiptProps & ErrorHandlingProps): JSX.Element => {
+  const {
+    messageStatus,
+    deliveredTooltipText = 'Sent',
+    seenTooltipText = 'Seen',
+    sendingTooltipText = 'Sending',
+    failedToSendTooltipText = 'Failed to send',
+    size = 'medium',
+    styles
+  } = props;
+
   switch (messageStatus) {
     case MessageStatus.FAILED:
       return (
         <TooltipHost content={failedToSendTooltipText}>
-          <ErrorIcon className={readReceiptIconErrorStyle} />
+          <ErrorIcon className={mergeStyles(readReceiptIconErrorStyle, styles?.root)} />
         </TooltipHost>
       );
     case MessageStatus.SENDING:
       return (
         <TooltipHost content={sendingTooltipText}>
-          <CircleRingIcon className={readReceiptIconMessageStyle} />
+          <CircleRingIcon className={mergeStyles(readReceiptIconMessageStyle, styles?.root)} />
         </TooltipHost>
       );
     case MessageStatus.SEEN:
@@ -54,19 +68,16 @@ const ReadReceiptComponentBase = ({
       // equivalent one in react-icons and react-icons don't seem to have size property.
       return (
         <TooltipHost content={seenTooltipText}>
-          <MessageSeenIcon size={size} />
+          <MessageSeenIcon size={size} className={mergeStyles(styles?.root)} />
         </TooltipHost>
       );
     case MessageStatus.DELIVERED:
       return (
         <TooltipHost content={deliveredTooltipText}>
-          <CompletedIcon className={readReceiptIconMessageStyle} />
+          <CompletedIcon className={mergeStyles(readReceiptIconMessageStyle, styles?.root)} />
         </TooltipHost>
       );
     default:
       return <></>;
   }
 };
-
-export const ReadReceiptComponent = (props: ReadReceiptProps & ErrorHandlingProps): JSX.Element =>
-  WithErrorHandling(ReadReceiptComponentBase, props);

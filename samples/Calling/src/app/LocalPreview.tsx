@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
 import { CallVideoIcon, MicIcon } from '@fluentui/react-icons-northstar';
-import { Stack, Toggle, Image, ImageFit, IImageStyles } from '@fluentui/react';
+import { Stack, Toggle, Image, ImageFit, IImageStyles, mergeStyles } from '@fluentui/react';
 import React from 'react';
 import {
   localPreviewContainerStyle,
@@ -17,12 +17,14 @@ import {
   ErrorHandlingProps,
   WithErrorHandling,
   CommunicationUiErrorFromError,
-  ErrorBar,
+  ErrorBar as ErrorBarComponent,
+  MapToErrorBarProps,
   MapToLocalDeviceSettingsProps,
   LocalDeviceSettingsContainerProps,
   StreamMedia,
   VideoTile
 } from '@azure/communication-ui';
+import { useTheme } from '@fluentui/react-theme-provider';
 import staticMediaSVG from '../assets/staticmedia.svg';
 
 const staticAvatarStyle: Partial<IImageStyles> = {
@@ -45,11 +47,13 @@ const LocalPreviewComponentBase = (
   // we haven't properly properly exported this component to make it re-usable
   // we should create a MapToLocalPreviewProps, instead of using MapToMediaControlsProps and MapToLocalDeviceSettingsProps
   const { localVideoStream } = useCallContext();
+  const theme = useTheme();
 
   const { isVideoReady, videoStreamElement } = MapToLocalVideoProps({
     stream: localVideoStream,
     scalingMode: 'Crop'
   });
+  const ErrorBar = connectFuncsToContext(ErrorBarComponent, MapToErrorBarProps);
 
   return (
     <Stack className={localPreviewContainerStyle}>
@@ -65,9 +69,9 @@ const LocalPreviewComponentBase = (
         horizontalAlign="center"
         verticalAlign="center"
         tokens={toggleButtonsBarToken}
-        className={toggleButtonsBarStyle}
+        className={mergeStyles(toggleButtonsBarStyle, { background: theme.palette.neutralLight })}
       >
-        <CallVideoIcon size="medium" />
+        <CallVideoIcon size="medium" style={{ color: theme.palette.black }} />
         <Toggle
           styles={toggleStyle}
           disabled={isVideoDisabled}
@@ -82,7 +86,7 @@ const LocalPreviewComponentBase = (
           }}
           ariaLabel="Video Icon"
         />
-        <MicIcon size="medium" />
+        <MicIcon size="medium" style={{ color: theme.palette.black }} />
         <Toggle
           styles={toggleStyle}
           disabled={isAudioDisabled}

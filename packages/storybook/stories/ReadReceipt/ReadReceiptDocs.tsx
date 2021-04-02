@@ -1,28 +1,28 @@
 // © Microsoft Corporation. All rights reserved.
 import React from 'react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
-import { MessageStatus, ReadReceiptComponent } from '@azure/communication-ui';
+import { MessageStatus, ReadReceipt } from '@azure/communication-ui';
 import { Provider, teamsTheme } from '@fluentui/react-northstar';
 
-const importStatement = `import { ReadReceiptComponent, MessageStatus } from '@azure/communication-ui';`;
-const usageCode = `<ReadReceiptComponent messageStatus={MessageStatus.DELIVERED} />
-<ReadReceiptComponent messageStatus={MessageStatus.SEEN} />
-<ReadReceiptComponent messageStatus={MessageStatus.SENDING} />
-<ReadReceiptComponent messageStatus={MessageStatus.FAILED} />`;
+const importStatement = `import { ReadReceipt, MessageStatus } from '@azure/communication-ui';`;
+const usageCode = `<ReadReceipt messageStatus={MessageStatus.DELIVERED} />
+<ReadReceipt messageStatus={MessageStatus.SEEN} />
+<ReadReceipt messageStatus={MessageStatus.SENDING} />
+<ReadReceipt messageStatus={MessageStatus.FAILED} />`;
 
 const ExampleReadReceipts: () => JSX.Element = () => (
   <>
     <span style={{ margin: '0 5px' }}>
-      <ReadReceiptComponent messageStatus={MessageStatus.DELIVERED} />
+      <ReadReceipt messageStatus={MessageStatus.DELIVERED} />
     </span>
     <span style={{ margin: '0 5px' }}>
-      <ReadReceiptComponent messageStatus={MessageStatus.SEEN} />
+      <ReadReceipt messageStatus={MessageStatus.SEEN} />
     </span>
     <span style={{ margin: '0 5px' }}>
-      <ReadReceiptComponent messageStatus={MessageStatus.SENDING} />
+      <ReadReceipt messageStatus={MessageStatus.SENDING} />
     </span>
     <span style={{ margin: '0 5px' }}>
-      <ReadReceiptComponent messageStatus={MessageStatus.FAILED} />
+      <ReadReceipt messageStatus={MessageStatus.FAILED} />
     </span>
   </>
 );
@@ -45,7 +45,7 @@ export const getDocs: () => JSX.Element = () => {
       </Canvas>
       <Source code={usageCode} />
       <Heading>Props</Heading>
-      <Props of={ReadReceiptComponent} />
+      <Props of={ReadReceipt} />
     </>
   );
 };

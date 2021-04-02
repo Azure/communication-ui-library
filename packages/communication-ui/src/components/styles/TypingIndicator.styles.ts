@@ -2,13 +2,13 @@
 
 import { mergeStyles } from '@fluentui/react';
 
-export const TypingIndicatorContainerStyle = mergeStyles({
+export const typingIndicatorContainerStyle = mergeStyles({
   height: '2.125rem',
   display: 'flex',
   alignItems: 'center'
 });
 
-export const TypingIndicatorListStyle = mergeStyles({
+export const typingIndicatorListStyle = mergeStyles({
   fontWeight: 400,
   whiteSpace: 'nowrap',
   overflow: 'hidden',
@@ -16,7 +16,7 @@ export const TypingIndicatorListStyle = mergeStyles({
   paddingRight: '0.1875rem'
 });
 
-export const TypingIndicatorVerbStyle = mergeStyles({
+export const typingIndicatorVerbStyle = mergeStyles({
   fontWeight: 400,
   whiteSpace: 'nowrap',
   overflow: 'hidden',
@@ -24,7 +24,7 @@ export const TypingIndicatorVerbStyle = mergeStyles({
   paddingRight: '0.1875rem'
 });
 
-export const TypingIndicatorPrefixImageStyle = mergeStyles({
+export const typingIndicatorPrefixImageStyle = mergeStyles({
   width: '2.125rem',
   height: '2.125rem',
   paddingRight: '0.1875rem'

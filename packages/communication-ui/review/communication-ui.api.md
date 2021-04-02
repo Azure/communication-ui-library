@@ -17,7 +17,7 @@ import { CallState } from '@azure/communication-calling';
 import { ChatClient } from '@azure/communication-chat';
 import { ChatMessage as ChatMessage_2 } from '@azure/communication-chat';
 import { ChatMessageReceivedEvent } from '@azure/communication-signaling';
-import { ChatThread as ChatThread_2 } from '@azure/communication-chat';
+import { ChatThread } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { ChatThreadMember as ChatThreadMember_2 } from '@azure/communication-chat';
 import { CommunicationUser } from '@azure/communication-signaling';
@@ -29,6 +29,7 @@ import { ErrorInfo } from 'react';
 import { GroupCallContext } from '@azure/communication-calling';
 import { HangupCallOptions } from '@azure/communication-calling';
 import { IButtonProps } from '@fluentui/react';
+import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { JoinCallOptions } from '@azure/communication-calling';
@@ -40,7 +41,7 @@ import { PersonaPresence } from '@fluentui/react';
 import { PhoneNumber } from '@azure/communication-common';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
-import { ReadReceipt } from '@azure/communication-chat';
+import { ReadReceipt as ReadReceipt_2 } from '@azure/communication-chat';
 import { RemoteParticipant } from '@azure/communication-calling';
 import { RemoteVideoStream } from '@azure/communication-calling';
 import { RendererOptions } from '@azure/communication-calling';
@@ -60,6 +61,11 @@ export const areStreamsEqual: (prevStream: LocalVideoStream, newStream: LocalVid
 
 // @public (undocumented)
 export const audioButtonProps: IButtonProps;
+
+// @public (undocumented)
+export interface BaseCustomStylesProps {
+    root?: IStyle;
+}
 
 // @public (undocumented)
 export type CallContainerProps = {
@@ -96,6 +102,19 @@ export type CallContextType = {
     isLocalVideoOn: boolean;
     setLocalVideoOn: Dispatch<SetStateAction<boolean>>;
 };
+
+// @public
+export const CallControlBar: (props: ControlBarProps & CallControlBarProps & ErrorHandlingProps) => JSX.Element;
+
+// @public (undocumented)
+export const CallControlBarComponent: (props: Pick<ControlBarProps & CallControlBarProps & ErrorHandlingProps, "onErrorCallback" | "children" | "styles" | "layout" | "onEndCallClick">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+
+// Warning: (ae-forgotten-export) The symbol "CallControlBarContainerProps" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export interface CallControlBarProps extends CallControlBarContainerProps {
+    onEndCallClick(): void;
+}
 
 // @public (undocumented)
 export const CallingContext: React_2.Context<CallingContextType | undefined>;
@@ -178,8 +197,8 @@ export type ChatMessage = {
 export type ChatMessagePropsFromContext = {
     userId: string;
     chatMessages: ChatMessage[];
-    disableReadReceipt: boolean;
-    onSendReadReceipt: () => Promise<void>;
+    disableReadReceipt?: boolean;
+    onSendReadReceipt?: () => Promise<void>;
     disableLoadPreviousMessage?: boolean;
     onLoadPreviousMessages?: () => void;
 };
@@ -195,15 +214,6 @@ export interface ChatMessageWithClientMessageId extends ChatMessage_2 {
 // @public (undocumented)
 export const ChatProvider: (props: ChatProviderProps & ErrorHandlingProps) => JSX.Element;
 
-// @public (undocumented)
-export const ChatThread: (props: Pick<ChatThreadProps & ErrorHandlingProps & ChatMessagePropsFromContext, "onErrorCallback" | "styles" | "disableJumpToNewMessageButton" | "onRenderReadReceipt" | "onRenderAvatar" | "onRenderLoadPreviousMessagesButton" | "onRenderJumpToNewMessageButton">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
-
-// @public (undocumented)
-export const ChatThreadComponent: (props: ChatThreadProps & ErrorHandlingProps & ChatMessagePropsFromContext) => JSX.Element;
-
-// @public
-export const ChatThreadComponentBase: (props: ChatThreadProps & ErrorHandlingProps) => JSX.Element;
-
 // @public
 export type ChatThreadMember = {
     userId: string;
@@ -217,25 +227,9 @@ export type ChatThreadMemberPropsFromContext = {
 };
 
 // @public (undocumented)
-export type ChatThreadProps = {
-    userId: string;
-    chatMessages: ChatMessage[];
-    styles?: ChatThreadStylesProps;
-    disableJumpToNewMessageButton?: boolean;
-    disableLoadPreviousMessage?: boolean;
-    disableReadReceipt?: boolean;
-    onSendReadReceipt?: () => Promise<void>;
-    onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element | null;
-    onRenderAvatar?: (userId: string) => JSX.Element;
-    onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
-    onLoadPreviousMessages?: () => void;
-    onRenderLoadPreviousMessagesButton?: (loadPreviousMessagesButton: LoadPreviousMessagesButtonProps) => JSX.Element;
-};
-
-// @public (undocumented)
 export type ChatThreadPropsFromContext = {
     userId: string;
-    thread: ChatThread_2 | undefined;
+    thread: ChatThread | undefined;
     sendTypingNotification: () => void;
     getThread: () => void;
     updateThreadTopicName: (topicName: string) => Promise<boolean>;
@@ -245,16 +239,6 @@ export type ChatThreadPropsFromContext = {
 //
 // @public (undocumented)
 export const ChatThreadProvider: (props: ChatThreadProviderProps & ErrorHandlingProps) => JSX.Element;
-
-// @public (undocumented)
-export interface ChatThreadStylesProps {
-    chatContainer?: ComponentSlotStyle;
-    chatMessageContainer?: ComponentSlotStyle;
-    loadPreviousMessagesButtonContainer?: IStyle;
-    newMessageButtonContainer?: IStyle;
-    readReceiptContainer?: (mine: boolean) => IStyle;
-    root?: IStyle;
-}
 
 // @public (undocumented)
 export type ChatTopicPropsFromContext = {
@@ -422,10 +406,18 @@ export const CONNECTING = "Connecting";
 // @public (undocumented)
 export const CONTROL_BAR_LAYOUTS: readonly ["horizontal", "vertical", "dockedTop", "dockedBottom", "dockedLeft", "dockedRight", "floatingTop", "floatingBottom", "floatingLeft", "floatingRight"];
 
-// Warning: (ae-forgotten-export) The symbol "ControlBarProps" needs to be exported by the entry point index.d.ts
-//
 // @public
 export const ControlBar: (props: ControlBarProps) => JSX.Element;
+
+// @public (undocumented)
+export type ControlBarLayoutType = 'horizontal' | 'vertical' | 'dockedTop' | 'dockedBottom' | 'dockedLeft' | 'dockedRight' | 'floatingTop' | 'floatingBottom' | 'floatingLeft' | 'floatingRight';
+
+// @public
+export interface ControlBarProps {
+    children?: React_2.ReactNode;
+    layout?: ControlBarLayoutType;
+    styles?: BaseCustomStylesProps;
+}
 
 // @public (undocumented)
 export const convertSdkRemoteParticipantToGalleryParticipant: (remoteParticipantFromSDK: RemoteParticipant) => GalleryParticipant;
@@ -466,13 +458,16 @@ export const EMPTY_MESSAGE_REGEX: RegExp;
 // @public (undocumented)
 export const ENTER_KEY = 13;
 
-// Warning: (ae-forgotten-export) The symbol "ErrorBarProps" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export const ErrorBar: (props: Pick<ErrorBarProps, never>) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+// @public
+export const ErrorBar: (props: ErrorBarProps) => JSX.Element | null;
 
 // @public
-export const ErrorBarComponent: (props: ErrorBarProps) => JSX.Element;
+export type ErrorBarProps = {
+    message?: string;
+    severity?: CommunicationUiErrorSeverity;
+    onClose?: () => void;
+    styles?: BaseCustomStylesProps;
+};
 
 // @public (undocumented)
 export const ErrorContextLastError: React_2.Context<ErrorContextLastErrorType | undefined>;
@@ -581,15 +576,37 @@ export const getThemeFromLocalStorage: (scopeId: string) => string | null;
 // @public (undocumented)
 export const getThreadContextState: () => ThreadProviderContextType;
 
-// Warning: (ae-forgotten-export) The symbol "GridLayoutProps" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
-export const GridLayoutComponent: (props: GridLayoutProps) => JSX.Element;
+export const GridLayout: (props: GridLayoutProps) => JSX.Element;
+
+// @public (undocumented)
+export interface GridLayoutProps {
+    // (undocumented)
+    children: React_2.ReactNode;
+    // (undocumented)
+    layout?: GridLayoutType;
+    styles?: BaseCustomStylesProps;
+}
+
+// @public (undocumented)
+export type GridLayoutType = 'standard';
 
 // Warning: (ae-forgotten-export) The symbol "GroupCallCompositeProps" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
 export const GroupCall: (props: GroupCallCompositeProps) => JSX.Element;
+
+// @public (undocumented)
+export const GroupCallControlBar: (props: ControlBarProps & GroupCallControlBarProps & ErrorHandlingProps) => JSX.Element;
+
+// @public (undocumented)
+export const GroupCallControlBarComponent: (props: Pick<ControlBarProps & GroupCallControlBarProps & ErrorHandlingProps, "onErrorCallback" | "children" | "styles" | "layout" | "onEndCallClick" | "compressedMode">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+
+// @public (undocumented)
+export interface GroupCallControlBarProps extends CallControlBarContainerProps {
+    compressedMode: boolean;
+    onEndCallClick(): void;
+}
 
 // Warning: (ae-forgotten-export) The symbol "GroupChatProps" needs to be exported by the entry point index.d.ts
 //
@@ -599,11 +616,22 @@ export const GroupChat: (props: GroupChatProps) => JSX.Element;
 // @public (undocumented)
 export const GUID_FOR_INITIAL_TOPIC_NAME = "c774da81-94d5-4652-85c7-6ed0e8dc67e6";
 
+// Warning: (ae-forgotten-export) The symbol "HangupButtonProps" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export const HangupButtonComponent: (props: Pick<HangupButtonProps, "onErrorCallback" | "text" | "styles" | "onEndCallClick">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+
 // @public (undocumented)
 export const hangupButtonProps: IButtonProps;
 
 // @public (undocumented)
 export const INCOMING = "Incoming";
+
+// @public (undocumented)
+export const IncomingCallControlBar: (props: ControlBarProps & CallControlBarContainerProps & ErrorHandlingProps) => JSX.Element;
+
+// @public (undocumented)
+export const IncomingCallControlBarComponent: (props: Pick<ControlBarProps & CallControlBarContainerProps & ErrorHandlingProps, "onErrorCallback" | "children" | "styles" | "layout">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
 
 // Warning: (ae-forgotten-export) The symbol "IncomingCallModalProps" needs to be exported by the entry point index.d.ts
 //
@@ -734,6 +762,9 @@ export const MapToChatThreadProps: () => ChatThreadPropsFromContext;
 export const MapToChatTopicProps: () => ChatTopicPropsFromContext;
 
 // @public (undocumented)
+export const MapToErrorBarProps: () => ErrorBarProps;
+
+// @public (undocumented)
 export const MapToErrorsProps: () => ErrorsPropsFromContext;
 
 // @public (undocumented)
@@ -798,8 +829,36 @@ export enum MessageStatus {
     SENDING = "sending"
 }
 
+// @public
+export const MessageThread: (props: MessageThreadProps & ErrorHandlingProps & ChatMessagePropsFromContext) => JSX.Element;
+
+// @public
+export type MessageThreadProps = {
+    userId: string;
+    chatMessages: ChatMessage[];
+    styles?: MessageThreadStylesProps;
+    disableJumpToNewMessageButton?: boolean;
+    disableLoadPreviousMessage?: boolean;
+    disableReadReceipt?: boolean;
+    onSendReadReceipt?: () => Promise<void>;
+    onRenderReadReceipt?: (readReceiptComponentProps: ReadReceiptProps) => JSX.Element | null;
+    onRenderAvatar?: (userId: string) => JSX.Element;
+    onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
+    onLoadPreviousMessages?: () => void;
+    onRenderLoadPreviousMessagesButton?: (loadPreviousMessagesButton: LoadPreviousMessagesButtonProps) => JSX.Element;
+};
+
 // @public (undocumented)
-export const MINI_HEADER_WINDOW_WIDTH = 360;
+export interface MessageThreadStylesProps extends BaseCustomStylesProps {
+    chatContainer?: ComponentSlotStyle;
+    chatMessageContainer?: ComponentSlotStyle;
+    loadPreviousMessagesButtonContainer?: IStyle;
+    newMessageButtonContainer?: IStyle;
+    readReceiptContainer?: (mine: boolean) => IStyle;
+}
+
+// @public (undocumented)
+export const MINI_HEADER_WINDOW_WIDTH = 450;
 
 // @public (undocumented)
 export const MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS = 8000;
@@ -825,6 +884,17 @@ export const OneToOneCall: (props: OneToOneCallCompositeProps) => JSX.Element;
 export const optionsButtonProps: IButtonProps;
 
 // @public (undocumented)
+export const OutgoingCallControlBar: (props: OutgoingCallControlBarProps & ErrorHandlingProps) => JSX.Element;
+
+// @public (undocumented)
+export const OutgoingCallControlBarComponent: (props: Pick<OutgoingCallControlBarProps & ErrorHandlingProps, "onErrorCallback" | "children" | "styles" | "layout" | "onEndCallClick">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+
+// @public (undocumented)
+export interface OutgoingCallControlBarProps extends ControlBarProps, CallControlBarContainerProps {
+    onEndCallClick(): void;
+}
+
+// @public (undocumented)
 export const PAGE_SIZE = 200;
 
 // @public
@@ -838,6 +908,15 @@ export interface ParticipantItemProps {
     onRenderAvatar?: (props?: ParticipantItemProps) => JSX.Element | null;
     onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
     presence?: PersonaPresence;
+    styles?: ParticipantItemStylesProps;
+}
+
+// @public (undocumented)
+export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
+    avatar?: IStyle;
+    iconContainer?: IStyle;
+    isYou?: IStyle;
+    menu?: IStyle;
 }
 
 // @public (undocumented)
@@ -850,6 +929,12 @@ export type ParticipantStream = {
 };
 
 // @public (undocumented)
+export interface PlaceholderProps {
+    avatarName?: string;
+    noVideoAvailableAriaLabel?: string;
+}
+
+// @public (undocumented)
 export const PRECONDITION_FAILED_RETRY_INTERVAL = 200;
 
 // @public (undocumented)
@@ -858,10 +943,10 @@ export const PRECONDITION_FAILED_STATUS_CODE = 412;
 // @public (undocumented)
 export const propagateError: (error: Error, onErrorCallback?: ((error: CommunicationUiErrorInfo) => void) | undefined) => void;
 
-// @public (undocumented)
-export const ReadReceiptComponent: (props: ReadReceiptProps & ErrorHandlingProps) => JSX.Element;
+// @public
+export const ReadReceipt: (props: ReadReceiptProps & ErrorHandlingProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface ReadReceiptProps {
     deliveredTooltipText?: string;
     failedToSendTooltipText?: string;
@@ -869,6 +954,7 @@ export interface ReadReceiptProps {
     seenTooltipText?: string;
     sendingTooltipText?: string;
     size?: SizeValue;
+    styles?: BaseCustomStylesProps;
 }
 
 // @public (undocumented)
@@ -888,15 +974,16 @@ export const saveThemeToLocalStorage: (theme: string, scopeId: string) => void;
 // @public (undocumented)
 export const screenShareButtonProps: IButtonProps;
 
-// @public (undocumented)
-export const SendBox: (props: Pick<{
-    onRenderSystemMessage?: ((systemMessage: string | undefined) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>) | undefined;
-    supportNewline?: boolean | undefined;
-    onRenderIcon?: ((props: SendBoxProps) => JSX.Element | null) | undefined;
-} & SendBoxPropsFromContext & ErrorHandlingProps, "onErrorCallback" | "supportNewline" | "onRenderIcon" | "onRenderSystemMessage">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+// @public
+export const SendBox: (props: SendBoxProps & SendBoxPropsFromContext & ErrorHandlingProps) => JSX.Element;
 
-// @public (undocumented)
-export const SendBoxComponent: (props: SendBoxProps & ErrorHandlingProps) => JSX.Element;
+// @public
+export interface SendBoxProps {
+    onRenderIcon?: (props: SendBoxProps & SendBoxPropsFromContext, isMouseOverSendIcon: boolean) => JSX.Element | null;
+    onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
+    styles?: SendBoxStylesProps;
+    supportNewline?: boolean;
+}
 
 // @public (undocumented)
 export type SendBoxPropsFromContext = {
@@ -907,6 +994,14 @@ export type SendBoxPropsFromContext = {
     sendMessage: (displayName: string, userId: string, messageContent: string) => Promise<void>;
     onSendTypingNotification: () => Promise<void>;
 };
+
+// @public (undocumented)
+export interface SendBoxStylesProps extends BaseCustomStylesProps {
+    defaultSendMessageIcon?: IStyle;
+    defaultSystemMessage?: IStyle;
+    sendMessageIconContainer?: IStyle;
+    textField?: IStyle;
+}
 
 // @public (undocumented)
 export const SERVICE_UNAVAILABLE_STATUS_CODE = 503;
@@ -922,7 +1017,7 @@ export type SetupContainerProps = {
 // @public (undocumented)
 export type SidePanelPropsFromContext = {
     threadMembers: ChatThreadMember_2[];
-    thread: ChatThread_2 | undefined;
+    thread: ChatThread | undefined;
     existsTopicName: boolean | undefined;
     updateThreadTopicName: (topicName: string) => Promise<boolean>;
     removeThreadMemberByUserId: (userId: string) => void;
@@ -931,10 +1026,15 @@ export type SidePanelPropsFromContext = {
 // @public (undocumented)
 export const SPACE_KEY = 32;
 
-// Warning: (ae-forgotten-export) The symbol "StreamMediaProps" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
+// @public
 export const StreamMedia: (props: StreamMediaProps & ErrorHandlingProps) => JSX.Element;
+
+// @public
+export interface StreamMediaProps {
+    invertVideo?: boolean;
+    styles?: BaseCustomStylesProps;
+    videoStreamElement: HTMLElement | null;
+}
 
 // @public
 export interface SwitchableFluentThemeContext {
@@ -1000,10 +1100,10 @@ export type ThreadProviderContextType = {
     setChatMessages: Dispatch<SetStateAction<ChatMessage_2[] | undefined>>;
     threadId: string;
     setThreadId: Dispatch<SetStateAction<string>>;
-    thread: ChatThread_2 | undefined;
-    setThread: Dispatch<SetStateAction<ChatThread_2 | undefined>>;
-    receipts: ReadReceipt[] | undefined;
-    setReceipts: Dispatch<SetStateAction<ReadReceipt[] | undefined>>;
+    thread: ChatThread | undefined;
+    setThread: Dispatch<SetStateAction<ChatThread | undefined>>;
+    receipts: ReadReceipt_2[] | undefined;
+    setReceipts: Dispatch<SetStateAction<ReadReceipt_2[] | undefined>>;
     threadMembers: ChatThreadMember_2[];
     setThreadMembers: Dispatch<SetStateAction<ChatThreadMember_2[]>>;
     coolPeriod: Date | undefined;
@@ -1019,17 +1119,22 @@ export type ThreadProviderContextType = {
 // @public (undocumented)
 export const TOO_MANY_REQUESTS_STATUS_CODE = 429;
 
-// @public (undocumented)
-export const TypingIndicator: (props: Pick<TypingIndicatorProps & ErrorHandlingProps, "onErrorCallback">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+// @public
+export const TypingIndicator: (props: TypingIndicatorProps & ErrorHandlingProps) => JSX.Element;
 
-// @public (undocumented)
-export const TypingIndicatorComponent: (props: TypingIndicatorProps & ErrorHandlingProps) => JSX.Element;
-
-// @public (undocumented)
-export type TypingIndicatorProps = {
-    typingUsers: TypingUser[];
+// @public
+export interface TypingIndicatorProps {
+    styles?: TypingIndicatorStylesProps;
     typingString: string;
-};
+    typingUsers: TypingUser[];
+}
+
+// @public (undocumented)
+export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
+    typingString?: IStyle;
+    typingUserDisplayName?: IStyle;
+    typingUserImage?: IStyle;
+}
 
 // @public (undocumented)
 export type TypingUser = {
@@ -1080,7 +1185,7 @@ export const useFetchMessage: () => (messageId: string) => Promise<ChatMessage_2
 export const useFetchMessages: () => (options?: RestListMessagesOptions | undefined) => Promise<ChatMessage_2[]>;
 
 // @public (undocumented)
-export const useFetchReadReceipts: () => (() => Promise<ReadReceipt[]>);
+export const useFetchReadReceipts: () => (() => Promise<ReadReceipt_2[]>);
 
 // @public (undocumented)
 export const useFetchThread: () => (() => Promise<void>);
@@ -1134,7 +1239,7 @@ export const useMicrophone: () => UseMicrophoneType;
 export const useOutgoingCall: () => UseOutgoingCallType;
 
 // @public (undocumented)
-export const useReceipts: () => ReadReceipt[] | undefined;
+export const useReceipts: () => ReadReceipt_2[] | undefined;
 
 // Warning: (ae-forgotten-export) The symbol "UseRemoteVideoStreamType" needs to be exported by the entry point index.d.ts
 //
@@ -1188,10 +1293,10 @@ export const useSetLastError: () => (error: CommunicationUiError | undefined) =>
 export const useSetOnErrorCallback: () => (callback: (error: CommunicationUiError) => void) => void;
 
 // @public (undocumented)
-export const useSetReceipts: () => (receipts: ReadReceipt[]) => void;
+export const useSetReceipts: () => (receipts: ReadReceipt_2[]) => void;
 
 // @public (undocumented)
-export const useSetThread: () => (thread: ChatThread_2) => void;
+export const useSetThread: () => (thread: ChatThread) => void;
 
 // @public (undocumented)
 export const useSetThreadId: () => (threadId: string) => void;
@@ -1206,7 +1311,7 @@ export const useSetUpdateThreadMembersError: () => (updateThreadMembersError?: b
 export const useSubscribeMessage: (addMessage?: ((messageEvent: ChatMessageReceivedEvent) => void) | undefined) => void;
 
 // @public (undocumented)
-export const useSubscribeReadReceipt: (addReadReceipts?: ((readReceipts: ReadReceipt[]) => void) | undefined) => void;
+export const useSubscribeReadReceipt: (addReadReceipts?: ((readReceipts: ReadReceipt_2[]) => void) | undefined) => void;
 
 // @public (undocumented)
 export const useSubscribeToAudioDeviceList: () => void;
@@ -1231,7 +1336,7 @@ export const useSwitchableFluentTheme: () => SwitchableFluentThemeContext;
 export const useTeamsCall: () => UseTeamsCallType;
 
 // @public (undocumented)
-export const useThread: () => ChatThread_2 | undefined;
+export const useThread: () => ChatThread | undefined;
 
 // @public (undocumented)
 export const useThreadId: () => string;
@@ -1265,12 +1370,10 @@ export interface VideoContainerProps {
     videoStreamElement: HTMLElement | null;
 }
 
-// Warning: (ae-forgotten-export) The symbol "PlaceholderProps" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export const VideoTile: (props: VideoTileProps & PlaceholderProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface VideoTileProps {
     children?: React_2.ReactNode;
     invertVideo?: boolean;
@@ -1281,19 +1384,14 @@ export interface VideoTileProps {
 }
 
 // @public (undocumented)
-export interface VideoTileStylesProps {
+export interface VideoTileStylesProps extends BaseCustomStylesProps {
     overlayContainer?: IStyle;
-    root?: IStyle;
     videoContainer?: IStyle;
 }
 
 // @public
 export const WithErrorHandling: (Component: (props: any & ErrorHandlingProps) => JSX.Element, props: any & ErrorHandlingProps) => JSX.Element;
 
-
-// Warnings were encountered during analysis:
-//
-// src/components/SendBox.tsx:31:3 - (ae-forgotten-export) The symbol "SendBoxProps" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 
