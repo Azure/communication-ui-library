@@ -14,7 +14,8 @@ import {
   MessageThreadProps,
   ErrorHandlingProps,
   SendBoxProps,
-  TypingIndicatorProps
+  TypingIndicatorProps,
+  SendBoxPropsFromContext
 } from '@azure/communication-ui';
 import { Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
@@ -36,7 +37,8 @@ export const ChatArea = (props: ChatAreaProps): JSX.Element => {
   }, []);
   const SendBox = useMemo(() => {
     return connectFuncsToContext(
-      (props: SendBoxProps & ErrorHandlingProps) => WithErrorHandling(SendBoxComponent, props),
+      (props: SendBoxProps & SendBoxPropsFromContext & ErrorHandlingProps) =>
+        WithErrorHandling(SendBoxComponent, props),
       MapToSendBoxProps
     );
   }, []);

@@ -1023,29 +1023,22 @@ exports[`storybook snapshot tests Storyshots Examples/Themes Teams Theme Compone
                   className="ms-Stack css-17"
                 >
                   <div
-                    className="ms-Stack css-18"
-                    style={
-                      Object {
-                        "height": "100%",
-                        "position": "absolute",
-                        "width": "100%",
-                      }
-                    }
+                    className="ms-Stack css-19"
                   >
                     <div
-                      className="ms-Persona ms-Persona--size100 root-19"
+                      className="ms-Persona ms-Persona--size100 root-20"
                     >
                       <div
-                        className="ms-Persona-coin ms-Persona--size100 coin-26"
+                        className="ms-Persona-coin ms-Persona--size100 coin-27"
                         role="presentation"
                       >
                         <div
-                          className="ms-Persona-imageArea imageArea-28"
+                          className="ms-Persona-imageArea imageArea-29"
                           role="presentation"
                         >
                           <div
                             aria-hidden="true"
-                            className="ms-Persona-initials initials-31"
+                            className="ms-Persona-initials initials-32"
                           >
                             <span>
                               M
@@ -1056,7 +1049,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes Teams Theme Compone
                     </div>
                   </div>
                   <div
-                    className="ms-Stack css-34"
+                    className="ms-Stack css-35"
                   >
                     <label>
                       Michael
@@ -1425,29 +1418,22 @@ exports[`storybook snapshot tests Storyshots UI Components/GridLayout Grid Layou
             className="ms-Stack css-4"
           >
             <div
-              className="ms-Stack css-5"
-              style={
-                Object {
-                  "height": "100%",
-                  "position": "absolute",
-                  "width": "100%",
-                }
-              }
+              className="ms-Stack css-6"
             >
               <div
-                className="ms-Persona ms-Persona--size100 root-6"
+                className="ms-Persona ms-Persona--size100 root-7"
               >
                 <div
-                  className="ms-Persona-coin ms-Persona--size100 coin-13"
+                  className="ms-Persona-coin ms-Persona--size100 coin-14"
                   role="presentation"
                 >
                   <div
-                    className="ms-Persona-imageArea imageArea-15"
+                    className="ms-Persona-imageArea imageArea-16"
                     role="presentation"
                   >
                     <div
                       aria-hidden="true"
-                      className="ms-Persona-initials initials-18"
+                      className="ms-Persona-initials initials-19"
                     >
                       <span>
                         M
@@ -1458,7 +1444,7 @@ exports[`storybook snapshot tests Storyshots UI Components/GridLayout Grid Layou
               </div>
             </div>
             <div
-              className="ms-Stack css-21"
+              className="ms-Stack css-22"
             >
               <label>
                 Michael
@@ -1469,29 +1455,22 @@ exports[`storybook snapshot tests Storyshots UI Components/GridLayout Grid Layou
             className="ms-Stack css-4"
           >
             <div
-              className="ms-Stack css-5"
-              style={
-                Object {
-                  "height": "100%",
-                  "position": "absolute",
-                  "width": "100%",
-                }
-              }
+              className="ms-Stack css-6"
             >
               <div
-                className="ms-Persona ms-Persona--size100 root-6"
+                className="ms-Persona ms-Persona--size100 root-7"
               >
                 <div
-                  className="ms-Persona-coin ms-Persona--size100 coin-13"
+                  className="ms-Persona-coin ms-Persona--size100 coin-14"
                   role="presentation"
                 >
                   <div
-                    className="ms-Persona-imageArea imageArea-15"
+                    className="ms-Persona-imageArea imageArea-16"
                     role="presentation"
                   >
                     <div
                       aria-hidden="true"
-                      className="ms-Persona-initials initials-22"
+                      className="ms-Persona-initials initials-23"
                     >
                       <span>
                         J
@@ -1502,7 +1481,7 @@ exports[`storybook snapshot tests Storyshots UI Components/GridLayout Grid Layou
               </div>
             </div>
             <div
-              className="ms-Stack css-21"
+              className="ms-Stack css-22"
             >
               <label>
                 Jim
@@ -1513,29 +1492,22 @@ exports[`storybook snapshot tests Storyshots UI Components/GridLayout Grid Layou
             className="ms-Stack css-4"
           >
             <div
-              className="ms-Stack css-5"
-              style={
-                Object {
-                  "height": "100%",
-                  "position": "absolute",
-                  "width": "100%",
-                }
-              }
+              className="ms-Stack css-6"
             >
               <div
-                className="ms-Persona ms-Persona--size100 root-6"
+                className="ms-Persona ms-Persona--size100 root-7"
               >
                 <div
-                  className="ms-Persona-coin ms-Persona--size100 coin-13"
+                  className="ms-Persona-coin ms-Persona--size100 coin-14"
                   role="presentation"
                 >
                   <div
-                    className="ms-Persona-imageArea imageArea-15"
+                    className="ms-Persona-imageArea imageArea-16"
                     role="presentation"
                   >
                     <div
                       aria-hidden="true"
-                      className="ms-Persona-initials initials-23"
+                      className="ms-Persona-initials initials-24"
                     >
                       <span>
                         P
@@ -1546,7 +1518,7 @@ exports[`storybook snapshot tests Storyshots UI Components/GridLayout Grid Layou
               </div>
             </div>
             <div
-              className="ms-Stack css-21"
+              className="ms-Stack css-22"
             >
               <label>
                 Pam
@@ -1557,29 +1529,22 @@ exports[`storybook snapshot tests Storyshots UI Components/GridLayout Grid Layou
             className="ms-Stack css-4"
           >
             <div
-              className="ms-Stack css-5"
-              style={
-                Object {
-                  "height": "100%",
-                  "position": "absolute",
-                  "width": "100%",
-                }
-              }
+              className="ms-Stack css-6"
             >
               <div
-                className="ms-Persona ms-Persona--size100 root-6"
+                className="ms-Persona ms-Persona--size100 root-7"
               >
                 <div
-                  className="ms-Persona-coin ms-Persona--size100 coin-13"
+                  className="ms-Persona-coin ms-Persona--size100 coin-14"
                   role="presentation"
                 >
                   <div
-                    className="ms-Persona-imageArea imageArea-15"
+                    className="ms-Persona-imageArea imageArea-16"
                     role="presentation"
                   >
                     <div
                       aria-hidden="true"
-                      className="ms-Persona-initials initials-24"
+                      className="ms-Persona-initials initials-25"
                     >
                       <span>
                         D
@@ -1590,7 +1555,7 @@ exports[`storybook snapshot tests Storyshots UI Components/GridLayout Grid Layou
               </div>
             </div>
             <div
-              className="ms-Stack css-21"
+              className="ms-Stack css-22"
             >
               <label>
                 Dwight
@@ -1980,12 +1945,35 @@ exports[`storybook snapshot tests Storyshots UI Components/SendBox Send Box Comp
             </div>
           </div>
           <div
-            className="css-60 sendIconWrapper"
+            className="css-60"
+            id="sendIconWrapper"
             onClick={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
           >
-            <div
-              className="css-61"
-            />
+            <span
+              aria-hidden="true"
+              className="ui-icon al am an css-61"
+              role="img"
+            >
+              <svg
+                className="ao ap aq ar as"
+                focusable="false"
+                role="presentation"
+                viewBox="2 2 16 16"
+              >
+                <g>
+                  <path
+                    className="ui-icon__outline ao"
+                    d="M2.72113 2.05149L18.0756 9.61746C18.3233 9.73952 18.4252 10.0393 18.3031 10.287C18.2544 10.3858 18.1744 10.4658 18.0756 10.5145L2.72144 18.0803C2.47374 18.2023 2.17399 18.1005 2.05193 17.8528C1.99856 17.7445 1.98619 17.6205 2.0171 17.5038L3.9858 10.0701L2.01676 2.62789C1.94612 2.36093 2.10528 2.08726 2.37224 2.01663C2.48893 1.98576 2.61285 1.99814 2.72113 2.05149ZM3.26445 3.43403L4.87357 9.51612L4.93555 9.50412L5 9.5H12C12.2761 9.5 12.5 9.72386 12.5 10C12.5 10.2455 12.3231 10.4496 12.0899 10.4919L12 10.5H5C4.9686 10.5 4.93787 10.4971 4.90807 10.4916L3.26508 16.6976L16.7234 10.066L3.26445 3.43403Z"
+                  />
+                  <path
+                    className="ui-icon__filled at"
+                    d="M2.72113 2.05149L18.0756 9.61746C18.3233 9.73952 18.4252 10.0393 18.3031 10.287C18.2544 10.3858 18.1744 10.4658 18.0756 10.5145L2.72144 18.0803C2.47374 18.2023 2.17399 18.1005 2.05193 17.8528C1.99856 17.7445 1.98619 17.6205 2.0171 17.5038L3.53835 11.7591C3.58866 11.5691 3.7456 11.4262 3.93946 11.3939L10.8204 10.2466C10.9047 10.2325 10.9744 10.1769 11.0079 10.1012L11.0259 10.0411C11.0454 9.92436 10.9805 9.81305 10.8759 9.76934L10.8204 9.7534L3.90061 8.6001C3.70668 8.56778 3.54969 8.4248 3.49942 8.23473L2.01676 2.62789C1.94612 2.36093 2.10528 2.08726 2.37224 2.01663C2.48893 1.98576 2.61285 1.99814 2.72113 2.05149Z"
+                  />
+                </g>
+              </svg>
+            </span>
           </div>
         </div>
         <div
@@ -2099,29 +2087,22 @@ exports[`storybook snapshot tests Storyshots UI Components/VideoTile Video Tile 
         className="ms-Stack css-3"
       >
         <div
-          className="ms-Stack css-4"
-          style={
-            Object {
-              "height": "100%",
-              "position": "absolute",
-              "width": "100%",
-            }
-          }
+          className="ms-Stack css-5"
         >
           <div
-            className="ms-Persona ms-Persona--size100 root-5"
+            className="ms-Persona ms-Persona--size100 root-6"
           >
             <div
-              className="ms-Persona-coin ms-Persona--size100 coin-12"
+              className="ms-Persona-coin ms-Persona--size100 coin-13"
               role="presentation"
             >
               <div
-                className="ms-Persona-imageArea imageArea-14"
+                className="ms-Persona-imageArea imageArea-15"
                 role="presentation"
               >
                 <div
                   aria-hidden="true"
-                  className="ms-Persona-initials initials-17"
+                  className="ms-Persona-initials initials-18"
                 >
                   <span>
                     JK
