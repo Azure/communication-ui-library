@@ -46,10 +46,11 @@ export interface PlaceholderProps {
 
 const DefaultPlaceholder = (props: PlaceholderProps): JSX.Element => {
   const { avatarName, noVideoAvailableAriaLabel } = props;
+  const personaStyles = { root: { margin: 'auto' } };
   return (
-    <Stack style={{ position: 'absolute', height: '100%', width: '100%' }}>
+    <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
       <Persona
-        styles={{ root: { margin: 'auto' } }}
+        styles={personaStyles}
         size={PersonaSize.size100}
         hidePersonaDetails={true}
         text={avatarName}
