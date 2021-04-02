@@ -2,7 +2,6 @@
 import { DeviceManager } from '@azure/communication-calling';
 import { UnsubscribeFunction } from './AzureCommunicationCallingAdapter';
 import { CallingStateUpdate, ChangeEmitter } from './StateUpdates';
-import { CallingState } from '../CallingState';
 import { queryMicrophones, queryCameras } from './DeviceManagerReducers';
 
 // interface CollectionUpdatedEventPayload<T> {
@@ -11,7 +10,6 @@ import { queryMicrophones, queryCameras } from './DeviceManagerReducers';
 // }
 
 export function subscribeToDeviceManager(
-  getState: () => Readonly<CallingState>,
   emitOnChange: ChangeEmitter,
   deviceManager: DeviceManager
 ): UnsubscribeFunction {

@@ -6,7 +6,8 @@ import {
   VideoDeviceInfo,
   AudioDeviceInfo,
   PermissionState,
-  CallState as CallStatus
+  CallState as CallStatus,
+  RemoteVideoStream
 } from '@azure/communication-calling';
 import { ParticipantStream } from '../types/ParticipantStream';
 
@@ -23,6 +24,7 @@ export interface DevicesState {
 }
 
 export interface CallState {
+  callId: string | undefined;
   isInitialized: boolean;
   status: CallStatus;
   participants: RemoteParticipant[];
@@ -31,6 +33,7 @@ export interface CallState {
   isMicrophoneEnabled: boolean;
   localScreenShareActive: boolean;
   localVideoStream: LocalVideoStream | undefined;
+  remoteVideoStreams: Map<string, RemoteVideoStream[]>;
   rawLocalMediaStream: MediaProvider | null;
   localVideoElement: HTMLElement | undefined;
   isLocalVideoOn: boolean;
@@ -70,6 +73,7 @@ export const emptyCallingState: CallingState = {
     cameras: []
   },
   call: {
+    callId: undefined,
     isInitialized: false,
     status: 'None',
     participants: [],
@@ -79,6 +83,7 @@ export const emptyCallingState: CallingState = {
     localScreenShareActive: false,
     localVideoStream: undefined,
     localVideoElement: undefined,
+    remoteVideoStreams: new Map(),
     rawLocalMediaStream: null,
     isLocalVideoOn: false
   }

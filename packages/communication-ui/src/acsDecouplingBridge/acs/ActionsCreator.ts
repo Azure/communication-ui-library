@@ -11,7 +11,10 @@ import {
   toggleCameraOnOff,
   mute,
   unmute,
-  toggleMute
+  toggleMute,
+  startScreenShare,
+  stopScreenShare,
+  toggleScreenShare
 } from './CallAgentReducers';
 import { setMicrophone, setCamera, queryCameras, queryMicrophones } from './DeviceManagerReducers';
 import { renderLocalVideo } from './RendererReducers';
@@ -41,8 +44,8 @@ export function createActions(
     mute: async () => emit(await mute(getState(), callAgent)),
     unmute: async () => emit(await unmute(getState(), callAgent)),
     toggleMute: async () => emit(await toggleMute(getState(), callAgent)),
-    startScreenShare: async () => emit(await startScreenShare(getState(), callAgent)),
-    stopScreenShare: async () => emit(await stopScreenShare(getState(), callAgent)),
+    startScreenShare: async () => emit(await startScreenShare(callAgent)),
+    stopScreenShare: async () => emit(await stopScreenShare(callAgent)),
     toggleScreenShare: async () => emit(await toggleScreenShare(getState(), callAgent)),
     renderLocalVideo: async (scalingMode?: ScalingMode, mirrored?: boolean) =>
       emit(await renderLocalVideo(getState(), scalingMode, mirrored))

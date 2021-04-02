@@ -9,6 +9,7 @@ import { createActions } from './ActionsCreator';
 import { CallingStateUpdate, CallingStateUpdateAsync, ChangeEmitter, isPromise } from './StateUpdates';
 import { CallingActions } from '../CallingActions';
 import { subscribeToDeviceManager } from './DeviceManagerSubscriber';
+import { subscribeToCallAgent } from './CallAgentSubscriber';
 import { EventEmitter } from 'events';
 import { createDraft, finishDraft } from 'immer';
 
@@ -40,6 +41,7 @@ export class AzureCommunicationCallingAdapter implements CallingAdapter {
   private readonly emitter = new EventEmitter();
 
   private unsubscribeFromDeviceManager!: UnsubscribeFunction;
+  private unsubscribeFromCallAgent!: UnsubscribeFunction;
 
   constructor(token: string, options?: AzureCommunicationCallingAdapterOptions) {
     this.logger = options?.logger;
@@ -65,11 +67,8 @@ export class AzureCommunicationCallingAdapter implements CallingAdapter {
       await this.initCalling();
       this.actions = createActions(getState, this.emitStateChange.bind(this), this.callAgent, this.deviceManager);
 
-      this.unsubscribeFromDeviceManager = subscribeToDeviceManager(
-        getState,
-        this.emitStateChange.bind(this),
-        this.deviceManager
-      );
+      this.unsubscribeFromDeviceManager = subscribeToDeviceManager(this.emitStateChange.bind(this), this.deviceManager);
+      this.unsubscribeFromCallAgent = subscribeToCallAgent(this.emitStateChange.bind(this), this.callAgent);
 
       this.isInitialized = true;
       this.isInitializing = false;
@@ -104,6 +103,7 @@ export class AzureCommunicationCallingAdapter implements CallingAdapter {
     this.isDisposing = true;
 
     this.unsubscribeFromDeviceManager();
+    this.unsubscribeFromCallAgent();
     await this.callAgent.dispose();
     this.emitter.removeAllListeners();
 
