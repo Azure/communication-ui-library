@@ -1,0 +1,36 @@
+import { Title, Description, Source, Canvas } from '@storybook/addon-docs/blocks';
+import { BasicParticipantListExample } from './examples/BasicParticipantListExample';
+import BasicParticipantListExampleText from '!!raw-loader!./examples/BasicParticipantListExample.tsx';
+import { InteractiveParticipantListExample } from './examples/InteractiveParticipantListExample';
+import InteractiveParticipantListExampleText from '!!raw-loader!./examples/InteractiveParticipantListExample.tsx';
+import { Meta } from '@storybook/addon-docs/blocks';
+import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
+
+<Meta title={`${EXAMPLES_FOLDER_PREFIX}/Participant List`} />
+
+# Participant List
+
+## Basic example
+
+To build a list of [ParticipantItem](./?path=/docs/ui-components-participantitem--participant-item), we recommend using
+the Fluent UI [Stack](https://developer.microsoft.com/en-us/fluentui#/controls/web/stack) as a container like in the
+example below.
+
+<Source code={BasicParticipantListExampleText} />
+
+<Canvas withSource="none">
+  <BasicParticipantListExample />
+</Canvas>
+
+## Interactive example
+
+To showcase a more interactivity, let us add menu items and icons to the participants using `menuItems` and
+`onRenderIcon` properties of [ParticipantItem](./?path=/docs/ui-components-participantitem--participant-item#props)
+like in the example below. For simplicity, we are using React `useState` to keep the state of every participant
+to decide which menu items and icons to show.
+
+<Source code={InteractiveParticipantListExampleText} />
+
+<Canvas withSource="none">
+  <InteractiveParticipantListExample />
+</Canvas>

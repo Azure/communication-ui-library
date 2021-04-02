@@ -9,7 +9,7 @@ export const memberItemContainerStyle = (theme: Theme): string =>
     paddingBottom: '0.25rem',
     display: 'flex',
     position: 'relative',
-    width: '100%',
+    maxWidth: '20rem',
     minWidth: '12rem',
     cursor: 'pointer',
     selectors: {

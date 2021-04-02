@@ -14,7 +14,7 @@ const onlyUnique = (value: string, index: number, self: string[]): boolean => {
   return self.indexOf(value) === index;
 };
 
-export const ParticipantItemComponent: () => JSX.Element = () => {
+export const _ParticipantItem: () => JSX.Element = () => {
   const name = text('Name', 'Jim');
   const isScreenSharing = boolean('Is screen sharing', false);
   const isMuted = boolean('Is muted', false);
