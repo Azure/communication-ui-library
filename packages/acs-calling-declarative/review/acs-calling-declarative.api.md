@@ -4,6 +4,7 @@
 
 ```ts
 
+import { AudioDeviceInfo } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';
 import { CallDirection } from '@azure/communication-calling';
 import { CallEndReason } from '@azure/communication-calling';
@@ -11,6 +12,7 @@ import { CallerInfo } from '@azure/communication-calling';
 import { CallingApplicationKind } from '@azure/communication-common';
 import { CallState } from '@azure/communication-calling';
 import { CommunicationUserKind } from '@azure/communication-common';
+import { DeviceAccess } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { PhoneNumberKind } from '@azure/communication-common';
@@ -20,23 +22,14 @@ import { VideoDeviceInfo } from '@azure/communication-calling';
 
 // @public
 export interface Call {
-    // (undocumented)
     callEndReason?: CallEndReason;
-    // (undocumented)
     callerInfo: CallerInfo;
-    // (undocumented)
     direction: CallDirection;
-    // (undocumented)
     id: string;
-    // (undocumented)
     isMicrophoneMuted: boolean;
-    // (undocumented)
     isScreenSharingOn: boolean;
-    // (undocumented)
     localVideoStreams: ReadonlyArray<LocalVideoStream>;
-    // (undocumented)
     remoteParticipants: Map<string, RemoteParticipant>;
-    // (undocumented)
     state: CallState;
 }
 
@@ -45,65 +38,57 @@ export const callClientDeclaratify: (callClient: CallClient) => DeclarativeCallC
 
 // @public
 export interface CallClientState {
-    // (undocumented)
     calls: Map<string, Call>;
-    // (undocumented)
+    deviceManagerState: DeviceManagerState;
     incomingCalls: Map<string, IncomingCall>;
 }
 
 // @public
 export interface DeclarativeCallClient extends CallClient {
-    // (undocumented)
     onStateChange(handler: (state: CallClientState) => void): void;
-    // (undocumented)
     state: CallClientState;
 }
 
 // @public
+export type DeviceManagerState = {
+    isSpeakerSelectionAvailable: boolean;
+    selectedMicrophone?: AudioDeviceInfo;
+    selectedSpeaker?: AudioDeviceInfo;
+    cameras: VideoDeviceInfo[];
+    microphones: AudioDeviceInfo[];
+    speakers: AudioDeviceInfo[];
+    deviceAccess?: DeviceAccess;
+};
+
+// @public
 export interface IncomingCall {
-    // (undocumented)
     callEnded: boolean;
-    // (undocumented)
     callEndReason?: CallEndReason;
-    // (undocumented)
     callerInfo: CallerInfo;
-    // (undocumented)
     id: string;
 }
 
 // @public
 export interface LocalVideoStream {
-    // (undocumented)
     mediaStreamType: MediaStreamType;
-    // (undocumented)
     source: VideoDeviceInfo;
 }
 
 // @public
 export interface RemoteParticipant {
-    // (undocumented)
     callEndReason?: CallEndReason;
-    // (undocumented)
     displayName?: string;
-    // (undocumented)
     identifier: CommunicationUserKind | PhoneNumberKind | CallingApplicationKind | MicrosoftTeamsUserKind | UnknownIdentifierKind;
-    // (undocumented)
     isMuted: boolean;
-    // (undocumented)
     isSpeaking: boolean;
-    // (undocumented)
     state: RemoteParticipantState;
-    // (undocumented)
     videoStreams: ReadonlyArray<RemoteVideoStream>;
 }
 
 // @public
 export interface RemoteVideoStream {
-    // (undocumented)
     id: number;
-    // (undocumented)
     isAvailable: boolean;
-    // (undocumented)
     mediaStreamType: MediaStreamType;
 }
 
