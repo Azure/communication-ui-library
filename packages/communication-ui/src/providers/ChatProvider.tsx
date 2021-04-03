@@ -50,7 +50,7 @@ const ChatProviderBase = (props: ChatProviderProps & ErrorHandlingProps): JSX.El
   const [chatClient, setChatClient] = useState<ChatClient>(
     chatClientDeclaratify(
       new ChatClient(props.endpointUrl, createAzureCommunicationUserCredential(token, props.refreshTokenCallback)),
-      { userId, displayName, threadId: props.threadId }
+      { userId, displayName }
     )
   );
   const [chatProviderState, setChatProviderState] = useState<number>(CHATPROVIDER_LOADING_STATE);

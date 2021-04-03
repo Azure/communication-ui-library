@@ -7,11 +7,9 @@ import {
   MapToTypingIndicatorProps,
   MessageThread,
   connectFuncsToContext,
-  MapToChatMessageProps,
   MapToErrorBarProps,
   MapToSendBoxProps,
   WithErrorHandling,
-  MessageThreadProps,
   ErrorHandlingProps,
   SendBoxProps,
   TypingIndicatorProps,
@@ -30,12 +28,6 @@ export interface ChatAreaProps {
 }
 
 export const ChatArea = (props: ChatAreaProps): JSX.Element => {
-  const ChatThread = useMemo(() => {
-    return connectFuncsToContext(
-      (props: MessageThreadProps & ErrorHandlingProps) => WithErrorHandling(MessageThread, props),
-      MapToChatMessageProps
-    );
-  }, []);
   const ErrorBar = useMemo(() => {
     return connectFuncsToContext(ErrorBarComponent, MapToErrorBarProps);
   }, []);
@@ -63,10 +55,10 @@ export const ChatArea = (props: ChatAreaProps): JSX.Element => {
   }, [threadId]);
 
   const chatThreadProps = useSelector(chatThreadSelector, selectorConfig);
-  const handlers = useHandlers(ChatThreadComponentBase);
+  const handlers = useHandlers(MessageThread);
   return (
     <Stack className={chatAreaContainerStyle}>
-      <ChatThreadComponentBase {...chatThreadProps} {...handlers} onRenderAvatar={props.onRenderAvatar} />
+      <MessageThread {...chatThreadProps} {...handlers} onRenderAvatar={props.onRenderAvatar} />
       <Stack.Item align="center" className={sendBoxParentStyle}>
         <div style={{ paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>
           <TypingIndicator />

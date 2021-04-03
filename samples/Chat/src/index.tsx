@@ -1,10 +1,8 @@
 // © Microsoft Corporation. All rights reserved.
-
-import './index.css';
-
-import App from './app/App';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './index.css';
+import App from './app/App';
 import { SwitchableFluentThemeProvider } from '@azure/communication-ui';
 
 if (document.getElementById('root') !== undefined) {

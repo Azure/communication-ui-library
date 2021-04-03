@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
 import { ChatClientState, DeclarativeChatClient } from '@azure/acs-chat-declarative';
-import { useChatClient } from '@azure/communication-ui/src/providers';
+import { useChatClient } from '@azure/communication-ui';
 
 import { useState, useEffect, useRef } from 'react';
 
@@ -24,7 +24,7 @@ export const useSelector = <SelectorT extends (state: ChatClientState, props: an
     };
     chatClient.onStateChange(onStateChange);
     return () => {
-      chatClient.unsubscribeStateChange(onStateChange);
+      chatClient.offStateChange(onStateChange);
     };
   }, [chatClient, selector, selectorProps]);
   return props;
