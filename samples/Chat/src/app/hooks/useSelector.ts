@@ -1,12 +1,12 @@
 // © Microsoft Corporation. All rights reserved.
 
 import { ChatClientState, DeclarativeChatClient } from '@azure/acs-chat-declarative';
-import { useChatClient } from '../providers';
+import { useChatClient } from '@azure/communication-ui/src/providers';
 
 import { useState, useEffect, useRef } from 'react';
 
 // This function highly depends on chatClient.onChange event
-// It will be moved into selector folder with a ChatClientProvide when refactor finished
+// It will be moved into selector folder when the ChatClientProvide when refactor finished
 export const useSelector = <SelectorT extends (state: ChatClientState, props: any) => any>(
   selector: SelectorT,
   selectorProps: Parameters<SelectorT>[1]

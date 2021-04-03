@@ -8,34 +8,21 @@ import { ChatClientState } from '@azure/acs-chat-declarative';
 import { ChatMessageWithStatus } from '@azure/acs-chat-declarative';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
+import { MessageStatus } from '@azure/acs-chat-declarative';
 import { ReactElement } from 'react';
 import * as reselect from 'reselect';
 
-// Warning: (ae-forgotten-export) The symbol "BaseChatConfigProps" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "BaseSelectorProps" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
-export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientState, BaseChatConfigProps, {
+export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
     userId: string;
     disableReadReceipt: boolean;
-    chatMessages: {
-        createdOn: Date;
-        content: string | undefined;
-        status: "delivered" | "sending" | "seen" | "failed";
-        senderDisplayName: string | undefined;
-        senderId: string;
-        messageId: string | undefined;
-    }[];
-}, (res1: BaseChatConfigProps, res2: Map<string, ChatMessageWithStatus>) => {
+    chatMessages: UiChatMessage[];
+}, (res1: string, res2: Map<string, ChatMessageWithStatus>, res3: Date, res4: boolean) => {
     userId: string;
     disableReadReceipt: boolean;
-    chatMessages: {
-        createdOn: Date;
-        content: string | undefined;
-        status: "delivered" | "sending" | "seen" | "failed";
-        senderDisplayName: string | undefined;
-        senderId: string;
-        messageId: string | undefined;
-    }[];
+    chatMessages: UiChatMessage[];
 }>;
 
 // Warning: (ae-forgotten-export) The symbol "DefaultHandlers" needs to be exported by the entry point index.d.ts
@@ -45,16 +32,20 @@ export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientSta
 export const createDefaultHandlersForComponent: <Props>(chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultHandlers, CommonProperties<DefaultHandlers, Props>>;
 
 // @public (undocumented)
-export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState, BaseChatConfigProps, {
+export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
     displayName: string;
     userId: string;
     disabled: boolean;
-}, (res1: Date | undefined, res2: BaseChatConfigProps) => {
+}, (res1: Date | undefined, res2: string, res3: string) => {
     displayName: string;
     userId: string;
     disabled: boolean;
 }>;
 
+
+// Warnings were encountered during analysis:
+//
+// src/chatThreadSelector.ts:18:32 - (ae-forgotten-export) The symbol "UiChatMessage" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 
