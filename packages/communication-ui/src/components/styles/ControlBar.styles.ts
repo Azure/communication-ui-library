@@ -27,7 +27,7 @@ export const controlBarStyles: IControlBarStyles = {
   },
   dockedTop: {
     flexFlow: 'row nowrap',
-    boxShadow: theme.effects.elevation4,
+    boxShadow: theme.effects.elevation16,
     justifyContent: 'center',
     overflow: 'hidden',
     position: 'absolute',
@@ -47,7 +47,7 @@ export const controlBarStyles: IControlBarStyles = {
   },
   dockedLeft: {
     justifyContent: 'center',
-    boxShadow: theme.effects.elevation4,
+    boxShadow: theme.effects.elevation16,
     overflow: 'hidden',
     position: 'absolute',
     top: 0,
@@ -56,7 +56,7 @@ export const controlBarStyles: IControlBarStyles = {
   },
   dockedRight: {
     justifyContent: 'center',
-    boxShadow: theme.effects.elevation4,
+    boxShadow: theme.effects.elevation16,
     overflow: 'hidden',
     position: 'absolute',
     top: 0,
@@ -66,7 +66,7 @@ export const controlBarStyles: IControlBarStyles = {
   floatingTop: {
     flexFlow: 'row nowrap',
     justifyContent: 'center',
-    boxShadow: theme.effects.elevation4,
+    boxShadow: theme.effects.elevation16,
     borderRadius: theme.effects.roundedCorner6,
     overflow: 'hidden',
     position: 'absolute',
@@ -78,7 +78,7 @@ export const controlBarStyles: IControlBarStyles = {
   floatingBottom: {
     flexFlow: 'row nowrap',
     justifyContent: 'center',
-    boxShadow: theme.effects.elevation4,
+    boxShadow: theme.effects.elevation16,
     borderRadius: theme.effects.roundedCorner6,
     overflow: 'hidden',
     position: 'absolute',
@@ -90,7 +90,7 @@ export const controlBarStyles: IControlBarStyles = {
   floatingLeft: {
     flexFlow: 'column nowrap',
     justifyContent: 'center',
-    boxShadow: theme.effects.elevation4,
+    boxShadow: theme.effects.elevation16,
     borderRadius: theme.effects.roundedCorner6,
     overflow: 'hidden',
     position: 'absolute',
@@ -102,7 +102,7 @@ export const controlBarStyles: IControlBarStyles = {
   floatingRight: {
     flexFlow: 'column nowrap',
     justifyContent: 'center',
-    boxShadow: theme.effects.elevation4,
+    boxShadow: theme.effects.elevation16,
     borderRadius: theme.effects.roundedCorner6,
     overflow: 'hidden',
     position: 'absolute',
@@ -122,13 +122,15 @@ export const controlButtonStyles: IButtonStyles = {
     minWidth: '56px'
   },
   flexContainer: {
-    flexFlow: 'column'
+    flexFlow: 'column',
+    display: 'contents'
   }
 };
 
 export const controlButtonLabelStyles: IStyle = {
-  fontSize: '0.75rem',
-  lineHeight: '1.25rem'
+  fontSize: '0.625rem',
+  lineHeight: '1rem',
+  marginTop: '0.125rem'
 };
 
 export const hangUpControlButtonStyles: IButtonStyles = concatStyleSets(controlButtonStyles, {

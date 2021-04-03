@@ -33,11 +33,7 @@ export const videoButtonProps: IButtonProps = {
 
 export const labeledVideoButtonProps: IButtonProps = {
   ...videoButtonProps,
-  onRenderText: () => (
-    <Stack className={mergeStyles(controlButtonLabelStyles)}>
-      <Stack>Camera</Stack>
-    </Stack>
-  )
+  onRenderText: () => <Stack className={mergeStyles(controlButtonLabelStyles)}>Camera</Stack>
 };
 
 export const audioButtonProps: IButtonProps = {
@@ -55,17 +51,9 @@ export const labeledAudioButtonProps: IButtonProps = {
   ...audioButtonProps,
   onRenderText: (props?: IButtonProps): JSX.Element => {
     if (props?.checked) {
-      return (
-        <Stack className={mergeStyles(controlButtonLabelStyles)}>
-          <Stack>Mute</Stack>
-        </Stack>
-      );
+      return <Stack className={mergeStyles(controlButtonLabelStyles)}>Mute</Stack>;
     } else {
-      return (
-        <Stack className={mergeStyles(controlButtonLabelStyles)}>
-          <Stack>Unmute</Stack>
-        </Stack>
-      );
+      return <Stack className={mergeStyles(controlButtonLabelStyles)}>Unmute</Stack>;
     }
   }
 };
@@ -85,17 +73,9 @@ export const labeledScreenShareButtonProps: IButtonProps = {
   ...screenShareButtonProps,
   onRenderText: (props?: IButtonProps): JSX.Element => {
     if (props?.checked) {
-      return (
-        <Stack className={mergeStyles(controlButtonLabelStyles)}>
-          <Stack>Stop</Stack>
-        </Stack>
-      );
+      return <Stack className={mergeStyles(controlButtonLabelStyles)}>Stop</Stack>;
     } else {
-      return (
-        <Stack className={mergeStyles(controlButtonLabelStyles)}>
-          <Stack>Share</Stack>
-        </Stack>
-      );
+      return <Stack className={mergeStyles(controlButtonLabelStyles)}>Share</Stack>;
     }
   }
 };
@@ -122,11 +102,7 @@ export const labeledOptionsButtonProps: IButtonProps = {
 export const answerButtonProps: IButtonProps = {
   onRenderIcon: (): JSX.Element => <CallIcon />,
   onRenderText: (): JSX.Element => {
-    return (
-      <Stack className={mergeStyles(controlButtonLabelStyles)}>
-        <Stack>Answer</Stack>
-      </Stack>
-    );
+    return <Stack className={mergeStyles(controlButtonLabelStyles)}>Answer</Stack>;
   }
 };
 
@@ -138,11 +114,7 @@ export const hangupButtonProps: IButtonProps = {
 export const labeledHangupButtonProps: IButtonProps = {
   ...hangupButtonProps,
   onRenderText: (): JSX.Element => {
-    return (
-      <Stack className={mergeStyles(controlButtonLabelStyles)}>
-        <Stack>Hangup</Stack>
-      </Stack>
-    );
+    return <Stack className={mergeStyles(controlButtonLabelStyles)}>Hangup</Stack>;
   }
 };
 
