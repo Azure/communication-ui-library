@@ -3,6 +3,7 @@ dependencies:
   '@azure/communication-calling': 1.0.0-beta.2
   '@azure/communication-common': 1.0.0-beta.3
   '@azure/communication-identity': 1.0.0-beta.4
+  '@azure/communication-signaling-2': /@azure/communication-signaling/1.0.0-beta.2
   '@azure/core-http': 1.2.3
   '@babel/core': 7.13.10
   '@babel/preset-env': 7.13.10_@babel+core@7.13.10
@@ -94,6 +95,7 @@ dependencies:
   jest-junit: 12.0.0
   jquery: 3.6.0
   json-stringify-safe: 5.0.1
+  lodash.findlastindex: 4.6.0
   memoize-one: 5.1.1
   merge: 1.2.1
   morgan: 1.9.1
@@ -155,6 +157,7 @@ packages:
     resolution:
       integrity: sha512-JqGWH19PZKtW49Y4RfyOxmm+iPLOYZ5xP8bQ8ZhoAJ9aDzfY/UEEbmjaVPYFdso4UVKgPP6y0lOmy73xpwKTVg==
   /@azure/communication-calling/1.0.0-beta.2:
+    deprecated: This version is deprecated. Please update to the latest @azure/communication-calling@1.0.0-beta.9
     dev: false
     resolution:
       integrity: sha512-PF33xuq1FGYDd09+IiQKJ/g/ATQGx1GFLflXJ9V0cErrIvSnhwtqd2f5j/1CeJ6fqhqfZ8RzcOepV2R7gP4BtA==
@@ -13059,6 +13062,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-yQRGkMIeBClL6qUXcS/e0fqI3pg=
+  /lodash.findlastindex/4.6.0:
+    dev: false
+    resolution:
+      integrity: sha1-uDdawPAum5Jjdc343D6oFKv5xqw=
   /lodash.flattendeep/4.4.0:
     dev: false
     resolution:
@@ -20128,7 +20135,7 @@ packages:
       ts-node: '*'
       webpack-cli: '*'
     resolution:
-      integrity: sha512-ik/XLHRZJUbJ0X6LZFwF5Yf7XVAqfijRfTWaLtAnkrK/MIQMMaWYncEW1kNC92JU6I5ecWD6ir6cYqXOdOwK7Q==
+      integrity: sha512-kC0W8bOFF0x8AEq6ywJ9ekdy/qDw8Q/lR5OULDo3+bfP5tehJpglFnU2V1/V8+BU/adNySCu6aVIAbM5+Au60A==
       tarball: file:projects/acs-chat-sample.tgz
     version: 0.0.0
   file:projects/acs-chat-selector.tgz_prettier@2.0.5:
@@ -20142,6 +20149,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.22.0
       eslint-plugin-import: 2.22.1_eslint@7.22.0
       eslint-plugin-prettier: 3.3.1_cdac37046eab2e8d6fb794f34ed825c2
+      lodash.findlastindex: 4.6.0
       memoize-one: 5.1.1
       reselect: 4.0.0
       typescript: 4.1.5
@@ -20151,7 +20159,7 @@ packages:
     peerDependencies:
       prettier: '*'
     resolution:
-      integrity: sha512-vgq6DDxDUEWYFZ87cBH4q1E92dgwgtbVsPUf6YVIrtITro9kA+YrR7CmgI5smLDwJbCau5vxd9UIEASkg8cXCA==
+      integrity: sha512-ibxmPrKbFoaZoAG4r7edNWF9Gu84W6kIClyNQA4ma9MLdeP5MN2izHR9ZBgVDbKtLqqLeulPYGfpopqUs/9kJQ==
       tarball: file:projects/acs-chat-selector.tgz
     version: 0.0.0
   file:projects/acs-one-to-one-call-sample.tgz_570bf42e92a70fb216c5cd4d5ed668ef:
@@ -20278,9 +20286,10 @@ packages:
     dependencies:
       '@azure/communication-administration': 1.0.0-beta.3
       '@azure/communication-calling': 1.0.0-beta.2
-      '@azure/communication-chat': 1.0.0-beta.3
+      '@azure/communication-chat': 1.0.0-beta.4
       '@azure/communication-common': 1.0.0-beta.3
       '@azure/communication-signaling': 1.0.0-beta.1
+      '@azure/communication-signaling-2': /@azure/communication-signaling/1.0.0-beta.2
       '@azure/core-http': 1.2.3
       '@babel/core': 7.13.10
       '@babel/preset-env': 7.13.10_@babel+core@7.13.10
@@ -20359,7 +20368,7 @@ packages:
     peerDependencies:
       webpack-cli: '*'
     resolution:
-      integrity: sha512-2zNxQ0gNyIidBQtz2Obl1ft3C2EY2L8c6ZDymbPl8cn5THTDBV77WA2V676nL/QBXqND8QbMe4VaaUWTTH/xyQ==
+      integrity: sha512-H28gtl8hUs+7IiQlDJEVoHLab+DXerO+CsNiAJmgqf/pWStUm08RJgfYUedzuXO4z3jZRH5I+shSnCT/z0MoOw==
       tarball: file:projects/communication-ui.tgz
     version: 0.0.0
   file:projects/release-tools.tgz_typescript@4.1.5:
@@ -20383,6 +20392,7 @@ specifiers:
   '@azure/communication-calling': 1.0.0-beta.2
   '@azure/communication-common': 1.0.0-beta.3
   '@azure/communication-identity': 1.0.0-beta.4
+  '@azure/communication-signaling-2': npm:@azure/communication-signaling@1.0.0-beta.2
   '@azure/core-http': ^1.2.3
   '@babel/core': ^7.12.7
   '@babel/preset-env': ^7.12.7
@@ -20474,6 +20484,7 @@ specifiers:
   jest-junit: ^12.0.0
   jquery: ^3.5.1
   json-stringify-safe: ^5.0.1
+  lodash.findlastindex: ~4.6.0
   memoize-one: ~5.1.1
   merge: ^1.2.1
   morgan: ~1.9.1

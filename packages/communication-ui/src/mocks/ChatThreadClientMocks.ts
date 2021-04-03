@@ -4,7 +4,7 @@
 import { BaseClientMock, createBaseClientMock } from './ChatClientMocks';
 import { OK, TEXT_MESSAGE } from '../constants';
 
-import { ChatMessage, ChatThreadMember } from '@azure/communication-chat';
+import { ChatMessage, ChatParticipant } from '@azure/communication-chat';
 
 export type ThreadClientMock = {
   sendReadReceipt: () => void;
@@ -17,9 +17,9 @@ export type ThreadClientMock = {
 
 export const mockChatMessages = (): ChatMessage[] => {
   return [
-    { id: '1', content: '1', type: TEXT_MESSAGE },
-    { id: '2', content: '2', type: TEXT_MESSAGE },
-    { id: '3', content: '3', type: TEXT_MESSAGE }
+    { id: '1', content: { message: '1' }, type: TEXT_MESSAGE, sequenceId: '', version: '', createdOn: new Date() },
+    { id: '2', content: { message: '2' }, type: TEXT_MESSAGE, sequenceId: '', version: '', createdOn: new Date() },
+    { id: '3', content: { message: '3' }, type: TEXT_MESSAGE, sequenceId: '', version: '', createdOn: new Date() }
   ];
 };
 
@@ -32,10 +32,18 @@ type ChatMessageWithReponseStatus = {
 } & ChatMessage;
 
 export const mockChatMessage = (): ChatMessageWithReponseStatus => {
-  return { _response: { status: OK }, id: '1', content: '1', type: TEXT_MESSAGE };
+  return {
+    _response: { status: OK },
+    id: '1',
+    content: { message: '1' },
+    type: TEXT_MESSAGE,
+    sequenceId: '',
+    version: '',
+    createdOn: new Date()
+  };
 };
 
-export const mockThreadMembers = (): ChatThreadMember[] => {
+export const mockThreadMembers = (): ChatParticipant[] => {
   return [
     { user: { communicationUserId: 'userId1' } },
     { user: { communicationUserId: 'userId2' } },
@@ -48,7 +56,7 @@ export const createThreadClient = (): ThreadClientMock => {
   const messageId = 'message id';
   const messagesMock: ChatMessage[] = mockChatMessages();
   const messageMock: ChatMessage = mockChatMessage();
-  const threadMembersMock: ChatThreadMember[] = mockThreadMembers();
+  const threadMembersMock: ChatParticipant[] = mockThreadMembers();
   const threadClientMock: ThreadClientMock = {
     ...clientMock,
     sendReadReceipt: jest.fn(() => messageId),

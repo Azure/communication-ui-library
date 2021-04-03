@@ -1,12 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-export enum MessageStatus {
-  DELIVERED = 'delivered',
-  SENDING = 'sending',
-  SEEN = 'seen',
-  FAILED = 'failed'
-}
-
+export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
 export enum MessageAttachedStatus {
   BOTTOM = 'bottom',
   TOP = 'top'

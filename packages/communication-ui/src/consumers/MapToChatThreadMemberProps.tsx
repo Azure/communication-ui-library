@@ -1,11 +1,11 @@
 // © Microsoft Corporation. All rights reserved.
-import { ChatThreadMember } from '@azure/communication-chat';
+import { ChatParticipant } from '@azure/communication-chat';
 import { useRemoveThreadMember } from '../hooks/useRemoveThreadMember';
 import { useThreadMembers } from '../providers/ChatThreadProvider';
-import { ChatThreadMember as WebUiChatThreadMember } from '../types/ChatThreadMember';
+import { ChatParticipant as WebUiChatThreadMember } from '../types/ChatParticipant';
 
-const convertSdkThreadMembersToChatThreadMembers = (sdkThreadMembers: ChatThreadMember[]): WebUiChatThreadMember[] => {
-  return sdkThreadMembers.map((sdkThreadMember: ChatThreadMember) => {
+const convertSdkThreadMembersToChatThreadMembers = (sdkThreadMembers: ChatParticipant[]): WebUiChatThreadMember[] => {
+  return sdkThreadMembers.map((sdkThreadMember: ChatParticipant) => {
     return {
       userId: sdkThreadMember.user.communicationUserId,
       displayName: sdkThreadMember.displayName

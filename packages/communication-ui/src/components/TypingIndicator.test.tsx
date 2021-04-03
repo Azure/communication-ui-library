@@ -1,13 +1,13 @@
 // © Microsoft Corporation. All rights reserved.
-import { ChatThreadMember } from '@azure/communication-chat';
+import { ChatParticipant } from '@azure/communication-chat';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 import React from 'react';
 import TypingIndicator from './TypingIndicator';
 
 let mockCurrentUserId = '';
-let mockThreadMembers: ChatThreadMember[] = [];
-let mockTypingUsers: ChatThreadMember[] = [];
+let mockThreadMembers: ChatParticipant[] = [];
+let mockTypingUsers: ChatParticipant[] = [];
 
 jest.mock('../providers/ChatProvider', () => {
   return {
@@ -17,7 +17,7 @@ jest.mock('../providers/ChatProvider', () => {
 
 jest.mock('../providers/ChatThreadProvider', () => {
   return {
-    useThreadMembers: jest.fn().mockImplementation((): ChatThreadMember[] => {
+    useThreadMembers: jest.fn().mockImplementation((): ChatParticipant[] => {
       return mockThreadMembers;
     })
   };
@@ -25,7 +25,7 @@ jest.mock('../providers/ChatThreadProvider', () => {
 
 jest.mock('../hooks/useTypingUsers', () => {
   return {
-    useTypingUsers: jest.fn().mockImplementation((): ChatThreadMember[] => {
+    useTypingUsers: jest.fn().mockImplementation((): ChatParticipant[] => {
       return mockTypingUsers;
     })
   };
@@ -217,7 +217,7 @@ describe('TypingIndicator tests', () => {
     mockTypingUsers = [{ displayName: userTwoDisplayName, user: { communicationUserId: userIdTwo } }];
     mockCurrentUserId = currentUserId;
 
-    const mockGenerator = (user: ChatThreadMember): TypingUserData => {
+    const mockGenerator = (user: ChatParticipant): TypingUserData => {
       if (user.displayName === userTwoDisplayName) {
         return {
           prefixImageUrl: '',
@@ -250,7 +250,7 @@ describe('TypingIndicator tests', () => {
     mockTypingUsers = [{ displayName: userTwoDisplayName, user: { communicationUserId: userIdTwo } }];
     mockCurrentUserId = currentUserId;
 
-    const mockGenerator = (user: ChatThreadMember): TypingUserData => {
+    const mockGenerator = (user: ChatParticipant): TypingUserData => {
       if (user.displayName === userTwoDisplayName) {
         return {
           prefixImageUrl: userTwoCustomPrefixImage,

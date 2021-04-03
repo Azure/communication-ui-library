@@ -17,7 +17,7 @@ import {
 import { SidePanelTypes } from './SidePanel';
 import { copyIconStyle } from './styles/InviteFooter.styles';
 import {
-  ChatThreadMember,
+  ChatParticipant,
   connectFuncsToContext,
   ChatThreadMemberPropsFromContext,
   MapToChatThreadMemberProps,
@@ -36,10 +36,10 @@ export type ChatHeaderProps = UserIdPropsFromContext &
     setSelectedPane: Dispatch<SidePanelTypes>;
   };
 
-const generateDefaultHeaderMessage = (threadMembers: ChatThreadMember[], userId: string): string => {
+const generateDefaultHeaderMessage = (threadMembers: ChatParticipant[], userId: string): string => {
   let header = 'Chat with ';
 
-  const members = threadMembers?.filter((member: ChatThreadMember) => member.userId !== userId && member.displayName);
+  const members = threadMembers?.filter((member: ChatParticipant) => member.userId !== userId && member.displayName);
 
   if (!members?.length) {
     header += 'yourself';
@@ -48,7 +48,7 @@ const generateDefaultHeaderMessage = (threadMembers: ChatThreadMember[], userId:
 
   // if we have at least one other participant we want to show names for the first 3
   const namedMembers = members.slice(0, 3);
-  header += namedMembers.map((member: ChatThreadMember) => member.displayName).join(', ');
+  header += namedMembers.map((member: ChatParticipant) => member.displayName).join(', ');
 
   // if we have more than 3 other participants we want to show the number of other participants
   if (members.length > 3) {

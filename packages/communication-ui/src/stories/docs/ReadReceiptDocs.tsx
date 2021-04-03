@@ -2,7 +2,6 @@
 import React from 'react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
 import { ReadReceiptComponent } from '../../components';
-import { MessageStatus } from '../../types';
 import { Provider, teamsTheme } from '@fluentui/react-northstar';
 
 const importStatement = `import { ReadReceiptComponent, MessageStatus } from '@azure/communication-ui';`;
@@ -14,16 +13,16 @@ const usageCode = `<ReadReceiptComponent messageStatus={MessageStatus.DELIVERED}
 const ExampleReadReceipts: () => JSX.Element = () => (
   <>
     <span style={{ margin: '0 5px' }}>
-      <ReadReceiptComponent messageStatus={MessageStatus.DELIVERED} />
+      <ReadReceiptComponent messageStatus={'delivered'} />
     </span>
     <span style={{ margin: '0 5px' }}>
-      <ReadReceiptComponent messageStatus={MessageStatus.SEEN} />
+      <ReadReceiptComponent messageStatus={'seen'} />
     </span>
     <span style={{ margin: '0 5px' }}>
-      <ReadReceiptComponent messageStatus={MessageStatus.SENDING} />
+      <ReadReceiptComponent messageStatus={'sending'} />
     </span>
     <span style={{ margin: '0 5px' }}>
-      <ReadReceiptComponent messageStatus={MessageStatus.FAILED} />
+      <ReadReceiptComponent messageStatus={'failed'} />
     </span>
   </>
 );

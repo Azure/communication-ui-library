@@ -19,9 +19,9 @@ import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack }
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { LiveAnnouncer, LiveMessage } from 'react-aria-live';
 import { ErrorHandlingProps } from '../providers';
-import { formatTimestampForChatMessage, propagateError, WithErrorHandling } from '../utils';
+import { formatTimestampForChatMessage, WithErrorHandling } from '../utils';
 import { CLICK_TO_LOAD_MORE_MESSAGES, NEW_MESSAGES } from '../constants';
-import { ChatMessage as WebUiChatMessage, MessageStatus } from '../types';
+import { ChatMessage as WebUiChatMessage } from '../types';
 import { ReadReceiptComponent, ReadReceiptProps } from './ReadReceipt';
 import { connectFuncsToContext, ChatMessagePropsFromContext, MapToChatMessageProps } from '../consumers';
 
@@ -117,8 +117,8 @@ const didUserSendTheLatestMessage = (
       return (
         !isMessageSame(latestMessageFromNewMessages, latestMessageFromPreviousMessages) &&
         latestMessageFromNewMessages.senderId === userId &&
-        latestMessageFromNewMessages.statusToRender !== MessageStatus.SEEN &&
-        latestMessageFromNewMessages.statusToRender !== MessageStatus.FAILED
+        latestMessageFromNewMessages.statusToRender !== 'seen' &&
+        latestMessageFromNewMessages.statusToRender !== 'failed'
       );
     }
   }
@@ -177,7 +177,7 @@ export type ChatThreadProps = {
   disableNewMessageButton?: boolean;
   disableLoadPreviousMessage?: boolean;
   disableReadReceipt?: boolean;
-  onSendReadReceipt?: () => Promise<void>;
+  onMessageSeen?: (messageId: string) => Promise<void>;
   onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element;
   onRenderAvatar?: (userId: string) => JSX.Element;
   onRenderNewMessageButton?: (newMessageButtonProps: NewMessageButtonProps) => JSX.Element;
@@ -187,7 +187,7 @@ export type ChatThreadProps = {
 
 //  A Chatthread will be fed many messages so it will try to map out the messages out of the props and feed them into a
 //  Chat item. We need to be smarter and figure out for the last N messages are they all of the same person or not?
-export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingProps): JSX.Element => {
+export const ChatThreadComponentBase = (props: ChatThreadProps): JSX.Element => {
   const {
     chatMessages: newChatMessages,
     userId,
@@ -195,10 +195,9 @@ export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingPr
     disableNewMessageButton = false,
     disableReadReceipt = true,
     disableLoadPreviousMessage = true,
-    onSendReadReceipt,
+    onMessageSeen,
     onRenderReadReceipt,
     onRenderAvatar,
-    onErrorCallback,
     onLoadPreviousMessages,
     onRenderLoadPreviousMessagesButton,
     onRenderNewMessageButton
@@ -255,12 +254,14 @@ export const ChatThreadComponentBase = (props: ChatThreadProps & ErrorHandlingPr
     ) {
       return;
     }
+    const messagesWithId = chatMessagesRef.current.filter((message) => !!message.messageId);
+    if (messagesWithId.length === 0) {
+      return;
+    }
+    const lastMessage = messagesWithId[messagesWithId.length - 1];
 
-    onSendReadReceipt &&
-      onSendReadReceipt().catch((error: any) => {
-        propagateError(error, onErrorCallback);
-      });
-  }, [disableReadReceipt, onErrorCallback, onSendReadReceipt]);
+    onMessageSeen && lastMessage.messageId && onMessageSeen(lastMessage.messageId);
+  }, [disableReadReceipt, onMessageSeen]);
 
   const scrollToBottom = useCallback((): void => {
     chatScrollDivRef.current.scrollTop = chatScrollDivRef.current.scrollHeight;
