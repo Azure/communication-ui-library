@@ -10,7 +10,7 @@ import {
 import { Spinner } from '@fluentui/react';
 import { WithErrorHandling } from '../utils/WithErrorHandling';
 import React, { Dispatch, SetStateAction, createContext, useContext, useState, useEffect } from 'react';
-import { useChatClient } from './ChatProvider';
+import { useChatClient } from './ChatProviderHelper';
 import { ErrorHandlingProps } from './ErrorProvider';
 import {
   CommunicationUiErrorCode,

@@ -11,9 +11,13 @@ import {
   paneStyles,
   subContainerStyles
 } from './styles/GroupCall.styles';
-import { connectFuncsToContext, ErrorBar } from '@azure/communication-ui';
+import {
+  connectFuncsToContext,
+  ErrorBar as ErrorBarComponent,
+  MapToErrorBarProps,
+  MINI_HEADER_WINDOW_WIDTH
+} from '@azure/communication-ui';
 import { isInCall } from './utils/AppUtils';
-import { MINI_HEADER_WINDOW_WIDTH } from './utils/constants';
 import MediaGallery from './MediaGallery';
 import { GroupCallContainerProps, MapToGroupCallProps } from './consumers/MapToCallProps';
 import { Header } from './Header';
@@ -30,6 +34,7 @@ const spinnerLabel = 'Initializing call client...';
 const GroupCallComponent = (props: GroupCallProps): JSX.Element => {
   const [selectedPane, setSelectedPane] = useState(CommandPanelTypes.None);
   const { isCallInitialized, callState, isLocalScreenSharingOn, groupId, screenWidth, endCallHandler } = props;
+  const ErrorBar = connectFuncsToContext(ErrorBarComponent, MapToErrorBarProps);
 
   useEffect(() => {
     if (isInCall(callState)) {

@@ -2,7 +2,8 @@
 import { ChatMessage, ChatThreadClient, RestListMessagesOptions } from '@azure/communication-chat';
 import { ChatContext } from '../ChatContext';
 import { convertChatMessage } from '../ChatThreadClientDeclarative';
-import { createDecoratedIterator, PagedAsyncIterableIterator } from './createDecoratedIterator';
+import { createDecoratedIterator } from './createDecoratedIterator';
+import { PagedAsyncIterableIterator } from '@azure/core-paging';
 
 export const createDecoratedListMessages = (
   chatThreadClient: ChatThreadClient,

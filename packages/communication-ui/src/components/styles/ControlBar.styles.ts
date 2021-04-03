@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
-import { getTheme, IStyle } from '@fluentui/react';
-import { ControlButtonStylesProps } from '../ControlBar';
+
+import { getTheme, IStyle, IButtonStyles, concatStyleSets } from '@fluentui/react';
 
 const theme = getTheme();
 const palette = theme.palette;
@@ -72,7 +72,8 @@ export const controlBarStyles: IControlBarStyles = {
     position: 'absolute',
     top: '1rem',
     left: '50%',
-    transform: 'translateX(-50%)'
+    transform: 'translateX(-50%)',
+    zIndex: 10
   },
   floatingBottom: {
     flexFlow: 'row nowrap',
@@ -83,7 +84,8 @@ export const controlBarStyles: IControlBarStyles = {
     position: 'absolute',
     bottom: '1rem',
     left: '50%',
-    transform: 'translateX(-50%)'
+    transform: 'translateX(-50%)',
+    zIndex: 10
   },
   floatingLeft: {
     flexFlow: 'column nowrap',
@@ -94,7 +96,8 @@ export const controlBarStyles: IControlBarStyles = {
     position: 'absolute',
     top: '50%',
     left: '1rem',
-    transform: 'translateY(-50%)'
+    transform: 'translateY(-50%)',
+    zIndex: 10
   },
   floatingRight: {
     flexFlow: 'column nowrap',
@@ -105,16 +108,22 @@ export const controlBarStyles: IControlBarStyles = {
     position: 'absolute',
     top: '50%',
     right: '1rem',
-    transform: 'translateY(-50%)'
+    transform: 'translateY(-50%)',
+    zIndex: 10
   }
 };
 
-export const controlButtonStyles: IStyle = {
-  background: 'none',
-  border: 'none',
-  borderRadius: 0,
-  minHeight: '56px',
-  minWidth: '56px'
+export const controlButtonStyles: IButtonStyles = {
+  root: {
+    background: 'none',
+    border: 'none',
+    borderRadius: 0,
+    minHeight: '56px',
+    minWidth: '56px'
+  },
+  flexContainer: {
+    flexFlow: 'column'
+  }
 };
 
 export const controlButtonLabelStyles: IStyle = {
@@ -122,16 +131,16 @@ export const controlButtonLabelStyles: IStyle = {
   lineHeight: '1.25rem'
 };
 
-export const hangUpControlButtonStyles: ControlButtonStylesProps = {
+export const hangUpControlButtonStyles: IButtonStyles = concatStyleSets(controlButtonStyles, {
   root: {
     background: palette.redDark,
-    color: palette.white,
-    ':hover': {
-      background: palette.red,
-      color: palette.white
-    }
+    color: palette.white
+  },
+  rootHovered: {
+    background: palette.red,
+    color: palette.white
   },
   label: {
     color: palette.whiteTranslucent40
   }
-};
+});

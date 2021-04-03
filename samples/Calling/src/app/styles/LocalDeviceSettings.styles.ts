@@ -1,6 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
 import { IDropdownStyles, IStackTokens, mergeStyles } from '@fluentui/react';
+import { Theme } from '@fluentui/react-theme-provider';
 
 export const mainStackTokens: IStackTokens = {
   childrenGap: '1.5rem'
@@ -10,7 +11,7 @@ export const micStackTokens: IStackTokens = {
   childrenGap: '0.75rem'
 };
 
-export const dropDownStyles: Partial<IDropdownStyles> = {
+export const dropDownStyles = (theme: Theme): Partial<IDropdownStyles> => ({
   caretDownWrapper: {
     height: '2.5rem',
     lineHeight: '2.5rem'
@@ -18,6 +19,9 @@ export const dropDownStyles: Partial<IDropdownStyles> = {
   dropdownItem: {
     fontSize: '0.875rem',
     height: '2.5rem'
+  },
+  dropdownItemSelected: {
+    background: theme.palette.neutralQuaternaryAlt
   },
   dropdown: {
     height: '2.5rem',
@@ -33,7 +37,7 @@ export const dropDownStyles: Partial<IDropdownStyles> = {
     fontWeight: 600,
     fontSize: '0.875rem'
   }
-};
+});
 
 export const localSettingsContainer = mergeStyles({
   width: '100%',

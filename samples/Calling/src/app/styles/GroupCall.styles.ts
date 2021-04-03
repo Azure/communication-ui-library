@@ -34,7 +34,6 @@ export const overlayStyles: IStackItemStyles = {
 };
 export const activeContainerClassName: IStackItemStyles = {
   root: {
-    border: `solid 1px ${palette.neutralLighterAlt}`,
     display: 'flex',
     height: '100%'
   }

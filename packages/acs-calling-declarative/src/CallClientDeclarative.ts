@@ -1,107 +1,75 @@
 // © Microsoft Corporation. All rights reserved.
-import { Call, CallAgent, CallClient, RemoteParticipant } from '@azure/communication-calling';
-import { produce } from 'immer';
+import { deviceManagerDeclaratify } from './DeviceManagerDeclarative';
+import { CallAgent, CallClient, DeviceManager } from '@azure/communication-calling';
 import { CallClientState } from './CallClientState';
 import { CallContext } from './CallContext';
+import { callAgentDeclaratify } from './CallAgentDeclarative';
 
 /**
- * Defines the methods that allow CallClient to be used declaratively.
+ * Defines the methods that allow CallClient {@Link @azure/communication-calling#CallClient} to be used declaratively.
+ * The interface provides access to proxied state and also allows registering a handler for state change events.
  */
 export interface DeclarativeCallClient extends CallClient {
+  /**
+   * Holds all the state that we could proxy from CallClient {@Link @azure/communication-calling#CallClient} as
+   * CallClientState {@Link CallClientState}.
+   */
   state: CallClientState;
+  /**
+   * Allows a handler to be registered for 'stateChanged' events.
+   *
+   * @param handler - Callback to receive the state.
+   */
   onStateChange(handler: (state: CallClientState) => void): void;
 }
 
 /**
- * ProxyCallClient proxies CallClient and subscribes to all events that affect state. When state is updated,
- * ProxyCallClient emits the event 'stateChanged'. Since CallClient contains its own state, when state is updated,
- * ProxyCallClient only queries the CallClient state and this same state is surfaced in getState.
+ * ProxyCallClient proxies CallClient {@Link @azure/communication-calling#CallClient} and subscribes to all events that
+ * affect state. ProxyCallClient keeps its own copy of the call state and when state is updated, ProxyCallClient emits
+ * the event 'stateChanged'.
  */
 class ProxyCallClient implements ProxyHandler<CallClient> {
   private _context: CallContext;
   private _callAgent: CallAgent | undefined;
+  private _deviceManager: DeviceManager | undefined;
+  private _sdkDeviceManager: DeviceManager | undefined;
 
   constructor(context: CallContext) {
     this._context = context;
   }
 
-  private refreshState = (): void => {
-    if (!this._callAgent) {
-      return;
-    }
-    const calls: Call[] = this._callAgent.calls;
-    this._context.setState(
-      produce(this._context.getState(), (draft: CallClientState) => {
-        draft.calls = calls;
-      })
-    );
-  };
-
-  private subscribeToParticipant = (participant: RemoteParticipant): void => {
-    participant.on('participantStateChanged', this.refreshState);
-    participant.on('isMutedChanged', this.refreshState);
-    participant.on('displayNameChanged', this.refreshState);
-    participant.on('isSpeakingChanged', this.refreshState);
-    participant.on('videoStreamsUpdated', this.refreshState);
-  };
-
-  private unsubscribeFromParticipant = (participant: RemoteParticipant): void => {
-    participant.off('participantStateChanged', this.refreshState);
-    participant.off('isMutedChanged', this.refreshState);
-    participant.off('displayNameChanged', this.refreshState);
-    participant.off('isSpeakingChanged', this.refreshState);
-    participant.off('videoStreamsUpdated', this.refreshState);
-  };
-
-  private onParticipantsUpdated = (event: { added: RemoteParticipant[]; removed: RemoteParticipant[] }): void => {
-    for (const participant of event.added) {
-      this.subscribeToParticipant(participant);
-    }
-    for (const participant of event.removed) {
-      this.unsubscribeFromParticipant(participant);
-    }
-    this.refreshState();
-  };
-
-  private subscribeToCall = (call: Call): void => {
-    call.on('callStateChanged', this.refreshState);
-    call.on('callIdChanged', this.refreshState);
-    call.on('isScreenSharingOnChanged', this.refreshState);
-    call.on('remoteParticipantsUpdated', this.onParticipantsUpdated);
-    call.on('localVideoStreamsUpdated', this.refreshState);
-    call.on('isRecordingActiveChanged', this.refreshState);
-  };
-
-  private unsubscribeFromCall = (call: Call): void => {
-    call.off('callStateChanged', this.refreshState);
-    call.off('callIdChanged', this.refreshState);
-    call.off('isScreenSharingOnChanged', this.refreshState);
-    call.off('remoteParticipantsUpdated', this.onParticipantsUpdated);
-    call.off('localVideoStreamsUpdated', this.refreshState);
-    call.off('isRecordingActiveChanged', this.refreshState);
-
-    for (const participant of call.remoteParticipants) {
-      this.unsubscribeFromParticipant(participant);
-    }
-  };
-
-  private onCallsUpdated = (event: { added: Call[]; removed: Call[] }): void => {
-    for (const call of event.added) {
-      this.subscribeToCall(call);
-    }
-    for (const call of event.removed) {
-      this.unsubscribeFromCall(call);
-    }
-    this.refreshState();
-  };
-
   public get<P extends keyof CallClient>(target: CallClient, prop: P): any {
     switch (prop) {
       case 'createCallAgent': {
         return async (...args: Parameters<CallClient['createCallAgent']>) => {
-          this._callAgent = await target.createCallAgent(...args);
-          this._callAgent.on('callsUpdated', this.onCallsUpdated);
+          // createCallAgent will throw an exception if the previous callAgent was not disposed. If the previous
+          // callAgent was disposed then it would have unsubscribed to events so we can just create a new declarative
+          // callAgent if the createCallAgent succeeds.
+          const callAgent = await target.createCallAgent(...args);
+          this._callAgent = callAgentDeclaratify(callAgent, this._context);
           return this._callAgent;
+        };
+      }
+      case 'getDeviceManager': {
+        return async () => {
+          // As of writing, the SDK always returns the same instance of DeviceManager so we keep a reference of
+          // DeviceManager and if it does not change we return the cached DeclarativeDeviceManager. If it does not we'll
+          // throw an error that indicate we need to fix this issue as our implementation has diverged from the SDK.
+          const deviceManager = await target.getDeviceManager();
+          if (this._sdkDeviceManager) {
+            if (this._sdkDeviceManager === deviceManager) {
+              return this._deviceManager;
+            } else {
+              throw new Error(
+                'Multiple DeviceManager not supported. This means a incompatible version of communication-calling is ' +
+                  'used OR calling declarative was not properly updated to communication-calling version.'
+              );
+            }
+          } else {
+            this._sdkDeviceManager = deviceManager;
+          }
+          this._deviceManager = deviceManagerDeclaratify(deviceManager, this._context);
+          return this._deviceManager;
         };
       }
       default:
@@ -111,10 +79,11 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
 }
 
 /**
- * Creates a declarative CallClient by proxying CallClient with ProxyCallClient which then allows access to state in a
- * declarative way.
+ * Creates a declarative CallClient {@Link DeclarativeCallClient} by proxying CallClient
+ * {@Link @azure/communication-calling#CallClient} with ProxyCallClient {@Link ProxyCallClient} which then allows access
+ * to state in a declarative way.
  *
- * @param callClient - call client to declaratify
+ * @param callClient - CallClient from SDK to declaratify
  */
 export const callClientDeclaratify = (callClient: CallClient): DeclarativeCallClient => {
   const context: CallContext = new CallContext();

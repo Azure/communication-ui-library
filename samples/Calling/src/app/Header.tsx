@@ -1,19 +1,18 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { Pivot, PivotItem, Separator, Stack } from '@fluentui/react';
+import { DefaultButton, Separator, Stack } from '@fluentui/react';
 import React from 'react';
 import { SettingsIcon, UserFriendsIcon } from '@fluentui/react-icons-northstar';
 import {
+  controlButtonStyles,
   headerCenteredContainer,
   headerContainer,
-  pivotItemStyle,
-  pivotItemStyles,
+  itemSelectedStyle,
   separatorContainerStyle,
   separatorStyles
 } from './styles/Header.styles';
 
-import { MINI_HEADER_WINDOW_WIDTH } from '@azure/communication-ui';
-import { MediaControls } from './MediaControls';
+import { MINI_HEADER_WINDOW_WIDTH, GroupCallControlBarComponent } from '@azure/communication-ui';
 import { CommandPanelTypes } from './CommandPanel';
 
 export interface HeaderProps {
@@ -41,49 +40,42 @@ export const Header = (props: HeaderProps): JSX.Element => {
       id="header"
       className={props.screenWidth > MINI_HEADER_WINDOW_WIDTH ? headerContainer : headerCenteredContainer}
     >
-      <Pivot
-        onKeyDownCapture={(e) => {
-          if ((e.target as HTMLElement).id === CommandPanelTypes.People && e.keyCode === 39) e.preventDefault();
-        }}
-        getTabId={(itemKey: string) => itemKey}
-        onLinkClick={(item) => {
-          if (!item) return;
-          if (item.props.itemKey === CommandPanelTypes.Settings)
-            toggleOptions(props.selectedPane, props.setSelectedPane);
-          if (item.props.itemKey === CommandPanelTypes.People) togglePeople(props.selectedPane, props.setSelectedPane);
-        }}
-        styles={pivotItemStyles}
-        initialSelectedKey={CommandPanelTypes.None}
-        selectedKey={props.selectedPane}
-      >
-        <PivotItem
-          itemKey={CommandPanelTypes.Settings}
-          onRenderItemLink={() => (
+      <DefaultButton
+        onRenderIcon={() => {
+          return (
             <SettingsIcon
               outline={props.selectedPane === CommandPanelTypes.Settings ? false : true}
               size="medium"
-              className={pivotItemStyle}
+              className={props.selectedPane === CommandPanelTypes.Settings ? itemSelectedStyle : ''}
             />
-          )}
-        />
-        <PivotItem
-          itemKey={CommandPanelTypes.People}
-          onRenderItemLink={() => (
+          );
+        }}
+        onClick={() => {
+          toggleOptions(props.selectedPane, props.setSelectedPane);
+        }}
+        styles={controlButtonStyles}
+      />
+      <DefaultButton
+        onRenderIcon={() => {
+          return (
             <UserFriendsIcon
               outline={props.selectedPane === CommandPanelTypes.People ? false : true}
               size="medium"
-              className={pivotItemStyle}
+              className={props.selectedPane === CommandPanelTypes.People ? itemSelectedStyle : ''}
             />
-          )}
-        />
-        <PivotItem itemKey={CommandPanelTypes.None} />
-      </Pivot>
+          );
+        }}
+        onClick={() => {
+          togglePeople(props.selectedPane, props.setSelectedPane);
+        }}
+        styles={controlButtonStyles}
+      />
       {props.screenWidth > MINI_HEADER_WINDOW_WIDTH && (
         <div className={separatorContainerStyle}>
           <Separator styles={separatorStyles} vertical={true} />
         </div>
       )}
-      <MediaControls
+      <GroupCallControlBarComponent
         onEndCallClick={props.endCallHandler}
         compressedMode={props.screenWidth <= MINI_HEADER_WINDOW_WIDTH}
       />

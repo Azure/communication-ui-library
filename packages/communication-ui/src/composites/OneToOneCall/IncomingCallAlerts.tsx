@@ -11,8 +11,6 @@ import {
   incomingCallModalContainerStyle
 } from './styles/IncomingCallAlerts.styles';
 import { useBoolean } from '@uifabric/react-hooks';
-import { MapToLocalVideoProps } from '../../consumers';
-import { LocalVideoStream, ScalingMode } from '@azure/communication-calling';
 import { WithTheme, withThemeContext } from '../../providers/WithTheme';
 import { StreamMedia, VideoTile } from '../../components';
 
@@ -72,14 +70,12 @@ export interface IncomingCallModalProps extends IncomingCallToastProps {
   callerTitle?: string;
   /** Receiver's Name */
   localParticipantName?: string;
-  /** Receiver's local video scaling mode */
-  localVideoScalingMode?: ScalingMode;
   /** If set to `true`, mirrors the local video preview of the receiver */
   localVideoInverted?: boolean;
   /** Toggle local video preview on or off */
   showLocalVideo?: boolean;
-  /** Local Video Stream */
-  localVideoStream: LocalVideoStream | undefined;
+  /** Local Video Stream Element. An HTML Element containing a video stream. */
+  localVideoStreamElement: HTMLElement | null;
   /** Provide a function that handles the call behavior when Video Toggle Button is clicked */
   onClickVideoToggle: () => void;
 }
@@ -93,27 +89,21 @@ const IncomingCallModal = (props: WithTheme<IncomingCallModalProps>): JSX.Elemen
     callerTitle,
     localParticipantName,
     localVideoInverted,
-    localVideoScalingMode,
     onClickAccept,
     onClickReject,
     onClickVideoToggle,
     showLocalVideo,
-    localVideoStream,
+    localVideoStreamElement,
     theme
   } = props;
   const palette = theme.palette;
   const [hideDialog, { toggle: toggleHideDialog }] = useBoolean(false);
   const dialogContentProps = { type: DialogType.normal, title: alertText ?? 'Incoming Video Call' };
 
-  const { isVideoReady, videoStreamElement } = MapToLocalVideoProps({
-    stream: localVideoStream,
-    scalingMode: localVideoScalingMode ?? 'Crop'
-  });
-
   const mediaGalleryLocalParticipant: JSX.Element = (
     <VideoTile
-      isVideoReady={isVideoReady}
-      videoProvider={<StreamMedia videoStreamElement={videoStreamElement} />}
+      isVideoReady={showLocalVideo}
+      videoProvider={<StreamMedia videoStreamElement={localVideoStreamElement} />}
       avatarName={localParticipantName}
       invertVideo={localVideoInverted}
     />

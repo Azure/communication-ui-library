@@ -85,7 +85,8 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
       case 'addParticipants': {
         return async (...args: Parameters<ChatThreadClient['addParticipants']>) => {
           const result = await chatThreadClient.addParticipants(...args);
-          const participantsToAdd = args[0].participants;
+          const [addRequest] = args;
+          const participantsToAdd = addRequest.participants;
           this._context.setParticipants(chatThreadClient.threadId, participantsToAdd);
           return result;
         };
@@ -93,11 +94,12 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
       case 'deleteMessage': {
         return async (...args: Parameters<ChatThreadClient['deleteMessage']>) => {
           // DeleteMessage is able to either delete local one(for failed message) or synced message
-          if (this._context.deleteLocalMessage(chatThreadClient.threadId, args[0])) {
+          const [messageId] = args;
+          if (this._context.deleteLocalMessage(chatThreadClient.threadId, messageId)) {
             return {};
           }
           const result = await chatThreadClient.deleteMessage(...args);
-          this._context.deleteMessage(chatThreadClient.threadId, args[0]);
+          this._context.deleteMessage(chatThreadClient.threadId, messageId);
           return result;
         };
       }
@@ -110,7 +112,8 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
       case 'removeParticipant': {
         return async (...args: Parameters<ChatThreadClient['removeParticipant']>) => {
           const result = await chatThreadClient.removeParticipant(...args);
-          this._context.deleteParticipant(chatThreadClient.threadId, args[0].communicationUserId);
+          const [removeIdentifier] = args;
+          this._context.deleteParticipant(chatThreadClient.threadId, removeIdentifier.communicationUserId);
           return result;
         };
       }
@@ -119,7 +122,7 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
           const result = await chatThreadClient.updateMessage(...args);
           const [messageId, updateOption] = args;
 
-          this._context.updateChatMessagesContent(chatThreadClient.threadId, messageId, updateOption?.content);
+          this._context.updateChatMessageContent(chatThreadClient.threadId, messageId, updateOption?.content);
           return result;
         };
       }

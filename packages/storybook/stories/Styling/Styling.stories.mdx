@@ -1,0 +1,52 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
+import {
+  ControlBar,
+  FluentThemeProvider,
+  audioButtonProps,
+  hangupButtonProps,
+  optionsButtonProps,
+  screenShareButtonProps,
+  videoButtonProps
+} from '@azure/communication-ui';
+import { DefaultButton } from '@fluentui/react';
+import { ControlBarExample } from './StylingControlBar.Example.tsx';
+import ControlBarExampleText from '!!raw-loader!./StylingControlBar.Example.tsx';
+import { VideoTileExample } from './StylingVideoTile.Example.tsx';
+import VideoTileExampleText from '!!raw-loader!./StylingVideoTile.Example.tsx';
+
+<Meta title="Styling" />
+
+# Styling
+
+The ability to style components using custom CSS is an important feature of Azure Communication UI Toolkit.
+All the UI Components have complete CSS support and provide complex styling capabilities.
+
+## Overview
+
+- UI Components expose a `prop` named `styles` that accepts an Object containing custom CSS for the component root as well as it's child components.
+
+- Users can always provide the `root` property in `styles` object and apply custom CSS to the component root.
+
+- Properties in `styles` object will vary from component to component.
+
+## Example - ControlBar
+
+Let's style the `ControlBar` component and `DefaultButton` components inside it using the `root` styles property.
+
+<Source code={ControlBarExampleText} />
+
+<Canvas withSource="none">
+  <ControlBarExample />
+</Canvas>
+
+## Example - VideoTile
+
+Let's style the `VideoTile` component.
+`VideoTile` component allows you to style its `root` element, the `Video Container` and the `Overlay Container` (Content rendered in front of the Video Container).
+
+<Source code={VideoTileExampleText} />
+
+<Canvas withSource="none">
+  <VideoTileExample />
+</Canvas>

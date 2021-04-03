@@ -26,7 +26,6 @@ export type ChatClientState = {
 export type ChatConfig = {
     userId: string;
     displayName: string;
-    threadId: string;
 };
 
 // @public (undocumented)
@@ -52,22 +51,30 @@ export type ChatThreadClientState = {
     failedMessageIds: string[];
     readReceipts: ReadReceipt[];
     typingIndicators: TypingIndicator[];
+    latestReadtime: Date;
 };
 
 // @public (undocumented)
 export interface DeclarativeChatClient extends ChatClient {
+    // (undocumented)
+    offStateChange(handler: (state: ChatClientState) => void): void;
     // (undocumented)
     onStateChange(handler: (state: ChatClientState) => void): void;
     // (undocumented)
     state: ChatClientState;
 }
 
+// @public (undocumented)
+export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
 
-// Warnings were encountered during analysis:
-//
-// src/ChatClientState.ts:22:3 - (ae-forgotten-export) The symbol "ReadReceipt" needs to be exported by the entry point index.d.ts
-// src/ChatClientState.ts:23:3 - (ae-forgotten-export) The symbol "TypingIndicator" needs to be exported by the entry point index.d.ts
-// src/types/ChatMessageWithStatus.ts:8:3 - (ae-forgotten-export) The symbol "MessageStatus" needs to be exported by the entry point index.d.ts
+// @public (undocumented)
+export type ReadReceipt = ChatMessageReadReceipt;
+
+// @public (undocumented)
+export type TypingIndicator = Omit<TypingIndicatorReceivedEvent, 'receivedOn'> & {
+    receivedOn: Date;
+};
+
 
 // (No @packageDocumentation comment for this package)
 

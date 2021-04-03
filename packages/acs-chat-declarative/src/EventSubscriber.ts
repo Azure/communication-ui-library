@@ -28,7 +28,9 @@ export class EventSubscriber {
     this.subscribe();
   }
 
-  private converToChatMessage = (event: ChatMessageReceivedEvent | ChatMessageEditedEvent): ChatMessageWithStatus => {
+  private convertEventToChatMessage = (
+    event: ChatMessageReceivedEvent | ChatMessageEditedEvent
+  ): ChatMessageWithStatus => {
     return convertChatMessage({
       id: event.id,
       version: event.version,
@@ -42,7 +44,7 @@ export class EventSubscriber {
   };
 
   private onChatMessageReceived = (event: ChatMessageReceivedEvent): void => {
-    const newMessage = this.converToChatMessage(event);
+    const newMessage = this.convertEventToChatMessage(event);
     // Because of bug in chatMessageReceived event, if we already have that particular message in context, we want to
     // make sure to not overwrite the sequenceId when calling setChatMessage.
     const existingMessage = this.chatContext.getState().threads.get(event.threadId)?.chatMessages.get(event.id);
@@ -57,7 +59,7 @@ export class EventSubscriber {
   };
 
   private onChatMessageEdited = (event: ChatMessageEditedEvent): void => {
-    const editedMessage = this.converToChatMessage(event);
+    const editedMessage = this.convertEventToChatMessage(event);
     this.chatContext.setChatMessage(event.threadId, convertChatMessage(editedMessage));
   };
 
@@ -80,8 +82,7 @@ export class EventSubscriber {
     const readReceipt: ReadReceipt = {
       ...event,
       sender: { communicationUserId: event.sender.user.communicationUserId },
-      readOn: new Date(event.readOn),
-      senderId: event.recipient.communicationUserId
+      readOn: new Date(event.readOn)
     };
     this.chatContext.addReadReceipt(event.threadId, readReceipt);
   };
@@ -89,8 +90,7 @@ export class EventSubscriber {
   private onTypingIndicatorReceived = (event: TypingIndicatorReceivedEvent): void => {
     const typingIndicator: TypingIndicator = {
       ...event,
-      receivedOn: new Date(event.receivedOn),
-      senderId: event.sender.user.communicationUserId
+      receivedOn: new Date(event.receivedOn)
     };
     this.chatContext.addTypingIndicator(event.threadId, typingIndicator);
   };
@@ -135,5 +135,17 @@ export class EventSubscriber {
 
   public unsubscribe = (): void => {
     this.chatClient.off('chatMessageReceived', this.onChatMessageReceived);
+    this.chatClient.off('chatMessageDeleted', this.onChatMessageDeleted);
+    this.chatClient.off('chatMessageEdited', this.onChatMessageEdited);
+
+    this.chatClient.off('participantsAdded', this.onParticipantsAdded);
+    this.chatClient.off('participantsRemoved', this.onParticipantsRemoved);
+
+    this.chatClient.off('readReceiptReceived', this.onReadReceiptReceived);
+    this.chatClient.off('typingIndicatorReceived', this.onTypingIndicatorReceived);
+
+    this.chatClient.off('chatThreadCreated', this.onChatThreadCreated);
+    this.chatClient.off('chatThreadDeleted', this.onChatThreadDeleted);
+    this.chatClient.off('chatThreadPropertiesUpdated', this.onChatThreadPropertiesUpdated);
   };
 }

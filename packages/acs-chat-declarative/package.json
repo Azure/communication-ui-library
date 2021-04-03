@@ -2,12 +2,12 @@
   "name": "@azure/acs-chat-declarative",
   "version": "1.0.0-beta",
   "description": "ACS UI SDK",
-  "module": "dist/index.js",
-  "main": "dist/index.js",
+  "module": "dist/dist-esm/index.js",
+  "main": "dist/dist-esm/index.js",
   "types": "dist/acs-chat-declarative.d.ts",
   "scripts": {
     "build": "tsc && api-extractor run --local",
-    "build:watch": "tsc -w",
+    "build:watch": "rushx build",
     "test": "jest",
     "test:coverage": "npm run test -- --coverage",
     "lint": "eslint \"*/**/*.{ts,tsx}\"",
@@ -32,7 +32,8 @@
     "@azure/communication-chat": "1.0.0-beta.4",
     "@azure/communication-signaling": "1.0.0-beta.2",
     "immer": "~8.0.1",
-    "nanoid": "~3.1.20"
+    "nanoid": "~3.1.20",
+    "@azure/core-paging": "~1.1.3"
   },
   "devDependencies": {
     "@microsoft/api-documenter": "~7.12.11",

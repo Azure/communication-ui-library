@@ -1,7 +1,8 @@
 // © Microsoft Corporation. All rights reserved.
 import { ChatParticipant, ChatThreadClient, RestListParticipantsOptions } from '@azure/communication-chat';
 import { ChatContext } from '../ChatContext';
-import { createDecoratedIterator, PagedAsyncIterableIterator } from './createDecoratedIterator';
+import { createDecoratedIterator } from './createDecoratedIterator';
+import { PagedAsyncIterableIterator } from '@azure/core-paging';
 
 export const createDecoratedListParticipants = (
   chatThreadClient: ChatThreadClient,

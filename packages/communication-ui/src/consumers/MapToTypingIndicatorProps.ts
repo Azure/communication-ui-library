@@ -6,11 +6,7 @@ import { useTypingUsers } from '../hooks/useTypingUsers';
 import { useThreadMembers } from '../providers/ChatThreadProvider';
 import { useUserId } from '../providers/ChatProvider';
 import { TypingUser } from '../types/TypingUser';
-
-export type TypingIndicatorProps = {
-  typingUsers: TypingUser[];
-  typingString: string;
-};
+import { TypingIndicatorProps } from '../components/TypingIndicator';
 
 const appendTypingLabel = (
   typingString: string,

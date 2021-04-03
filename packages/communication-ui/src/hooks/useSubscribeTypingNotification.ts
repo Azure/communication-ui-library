@@ -3,7 +3,7 @@
 import { useCallback, useEffect } from 'react';
 
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling-2';
-import { useChatClient } from '../providers/ChatProvider';
+import { useChatClient } from '../providers/ChatProviderHelper';
 
 export type TypingNotification = {
   from: string;

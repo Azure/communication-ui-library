@@ -16,13 +16,18 @@ const mockChatClient = (): ChatClientMock => {
   return chatClientMock;
 };
 
-jest.mock('../providers/ChatProvider', () => {
+jest.mock('../providers/ChatProviderHelper', () => {
   return {
     useChatClient: jest.fn().mockImplementation(
       (): ChatClientMock => {
         return mockChatClient();
       }
-    ),
+    )
+  };
+});
+
+jest.mock('../providers/ChatProvider', () => {
+  return {
     useUserId: () => 'dummyValueNotUsedByTest'
   };
 });

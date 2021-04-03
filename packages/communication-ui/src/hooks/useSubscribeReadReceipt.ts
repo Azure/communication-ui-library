@@ -3,7 +3,7 @@
 import { useCallback, useEffect } from 'react';
 
 import { ChatMessageReadReceipt } from '@azure/communication-chat';
-import { useChatClient } from '../providers/ChatProvider';
+import { useChatClient } from '../providers/ChatProviderHelper';
 import { useFetchReadReceipts } from './useFetchReadReceipts';
 import { useSetReceipts, useThreadId } from '../providers/ChatThreadProvider';
 import { useTriggerOnErrorCallback } from '../providers/ErrorProvider';

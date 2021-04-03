@@ -1,13 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import {
-  memberItemContainerStyle,
-  memberItemIsYouStyle,
-  memberItemNameStyle,
-  iconStackStyle,
-  iconStackTokens
-} from './styles/ParticipantItem.styles';
-
+import { memberItemContainerStyle, memberItemIsYouStyle, iconContainerStyle } from './styles/ParticipantItem.styles';
 import {
   ContextualMenu,
   DirectionalHint,
@@ -15,30 +8,58 @@ import {
   Persona,
   PersonaSize,
   PersonaPresence,
-  Stack
+  Stack,
+  mergeStyles,
+  IStyle
 } from '@fluentui/react';
 import React, { useRef, useState } from 'react';
-import { WithErrorHandling } from '../utils/WithErrorHandling';
 import { ErrorHandlingProps } from '../providers/ErrorProvider';
 import { useTheme } from '@fluentui/react-theme-provider';
+import { BaseCustomStylesProps } from '../types';
 
-interface ParticipantItemProps {
-  /** Name of participant */
-  name: string;
-  /** Optional indicator to show participant is the user */
-  isYou?: boolean;
-  /** Optional JSX element to override avatar */
-  avatar?: JSX.Element;
-  /** Optional array of IContextualMenuItem for contextual menu */
-  menuItems?: IContextualMenuItem[];
-  /** Optional children to component such as icons */
-  children?: React.ReactNode;
-  /** Optional PersonaPresence to show participant presence. This will not have an effect if property avatar is assigned */
-  presence?: PersonaPresence;
+export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
+  /** Styles for the avatar. */
+  avatar?: IStyle;
+  /** Styles for the (You) string. */
+  isYou?: IStyle;
+  /** Styles for the container of the icon. */
+  iconContainer?: IStyle;
+  /** Styles for the menu. */
+  menu?: IStyle;
 }
 
-const ParticipantItemBase = (props: ParticipantItemProps & ErrorHandlingProps): JSX.Element => {
-  const { name, isYou, avatar, menuItems, children, presence } = props;
+/**
+ * Props for ParticipantItem component
+ */
+export interface ParticipantItemProps {
+  /** Name of participant. */
+  name: string;
+  /** Optional indicator to show participant is the user. */
+  isYou?: boolean;
+  /** Optional callback returning a JSX element to override avatar. */
+  onRenderAvatar?: (props?: ParticipantItemProps) => JSX.Element | null;
+  /** Optional array of IContextualMenuItem for contextual menu. */
+  menuItems?: IContextualMenuItem[];
+  /** Optional callback returning a JSX element rendered on the right portion of the ParticipantItem. Intended for adding icons. */
+  onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
+  /** Optional PersonaPresence to show participant presence. This will not have an effect if property avatar is assigned. */
+  presence?: PersonaPresence;
+  /**
+   * Allows users to pass in an object contains custom CSS styles.
+   * @Example
+   * ```
+   * <ParticipantItem styles={{ root: { background: 'blue' } }} />
+   * ```
+   */
+  styles?: ParticipantItemStylesProps;
+}
+
+/**
+ * Participant Item component representing a participant in Calling or Chat.
+ * @param props - ParticipantItemProps & ErrorHandlingProps
+ */
+export const ParticipantItem = (props: ParticipantItemProps & ErrorHandlingProps): JSX.Element => {
+  const { name, isYou, onRenderAvatar, menuItems, onRenderIcon, presence, styles } = props;
   const [clickEvent, setClickEvent] = useState<MouseEvent | undefined>();
   const [menuHidden, setMenuHidden] = useState<boolean>(true);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -54,23 +75,23 @@ const ParticipantItemBase = (props: ParticipantItemProps & ErrorHandlingProps): 
     setMenuHidden(true);
   };
 
-  let avatarToUse = <Persona text={name} size={PersonaSize.size32} presence={presence} />;
-  if (avatar) {
-    avatarToUse = (
-      <div style={{ display: 'flex' }}>
-        {avatar}
-        <span className={memberItemNameStyle}>{name}</span>
-      </div>
-    );
-  }
-
+  const avatarToUse = (
+    <Persona
+      text={name}
+      size={PersonaSize.size32}
+      presence={presence}
+      onRenderPersonaCoin={onRenderAvatar ? () => onRenderAvatar(props) : undefined}
+      className={mergeStyles(styles?.avatar)}
+      initialsTextColor="white"
+    />
+  );
   return (
-    <div ref={containerRef} className={memberItemContainerStyle(theme)} onClick={showMenu}>
+    <div ref={containerRef} className={mergeStyles(memberItemContainerStyle(theme), styles?.root)} onClick={showMenu}>
       {avatarToUse}
-      {isYou && <span className={memberItemIsYouStyle}>(you)</span>}
-      <Stack horizontal={true} className={iconStackStyle} tokens={iconStackTokens}>
-        {children}
-      </Stack>
+      {isYou && <span className={mergeStyles(memberItemIsYouStyle, styles?.isYou)}>(you)</span>}
+      {onRenderIcon && (
+        <Stack className={mergeStyles(iconContainerStyle, styles?.iconContainer)}>{onRenderIcon(props)}</Stack>
+      )}
       {menuItems && (
         <ContextualMenu
           items={menuItems}
@@ -79,11 +100,9 @@ const ParticipantItemBase = (props: ParticipantItemProps & ErrorHandlingProps): 
           onItemClick={hideMenu}
           onDismiss={hideMenu}
           directionalHint={DirectionalHint.bottomLeftEdge}
+          className={mergeStyles(styles?.menu)}
         />
       )}
     </div>
   );
 };
-
-export const ParticipantItem = (props: ParticipantItemProps & ErrorHandlingProps): JSX.Element =>
-  WithErrorHandling(ParticipantItemBase, props);
