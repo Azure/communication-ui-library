@@ -15,9 +15,10 @@ import { CallClientOptions } from '@azure/communication-calling';
 import { CallingApplication } from '@azure/communication-common';
 import { CallState } from '@azure/communication-calling';
 import { ChatClient } from '@azure/communication-chat';
-import { ChatClientState } from '@azure/acs-chat-declarative';
 import { ChatMessage as ChatMessage_2 } from '@azure/communication-chat';
-import { ChatMessageReceivedEvent } from '@azure/communication-signaling';
+import { ChatMessageReadReceipt } from '@azure/communication-chat';
+import { ChatMessageReceivedEvent } from '@azure/communication-signaling-2';
+import { ChatParticipant as ChatParticipant_2 } from '@azure/communication-chat';
 import { ChatThread } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationUser } from '@azure/communication-signaling';
@@ -41,7 +42,6 @@ import { PersonaPresence } from '@fluentui/react';
 import { PhoneNumber } from '@azure/communication-common';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
-import { ReadReceipt as ReadReceipt_2 } from '@azure/communication-chat';
 import { RemoteParticipant } from '@azure/communication-calling';
 import { RemoteVideoStream } from '@azure/communication-calling';
 import { RendererOptions } from '@azure/communication-calling';
@@ -219,12 +219,6 @@ export type ChatParticipant = {
 //
 // @public (undocumented)
 export const ChatProvider: (props: ChatProviderProps & ErrorHandlingProps) => JSX.Element;
-
-// @public
-export type ChatThreadMember = {
-    userId: string;
-    displayName?: string;
-};
 
 // @public (undocumented)
 export type ChatThreadMemberPropsFromContext = {
@@ -837,7 +831,7 @@ export type MessageThreadProps = {
     disableJumpToNewMessageButton?: boolean;
     disableLoadPreviousMessage?: boolean;
     disableReadReceipt?: boolean;
-    onSendReadReceipt?: () => Promise<void>;
+    onMessageSeen?: (messageId: string) => Promise<void>;
     onRenderReadReceipt?: (readReceiptComponentProps: ReadReceiptProps) => JSX.Element | null;
     onRenderAvatar?: (userId: string) => JSX.Element;
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
@@ -1013,7 +1007,7 @@ export type SetupContainerProps = {
 
 // @public (undocumented)
 export type SidePanelPropsFromContext = {
-    threadMembers: ChatThreadMember_2[];
+    threadMembers: ChatParticipant_2[];
     thread: ChatThread | undefined;
     existsTopicName: boolean | undefined;
     updateThreadTopicName: (topicName: string) => Promise<boolean>;
@@ -1099,10 +1093,10 @@ export type ThreadProviderContextType = {
     setThreadId: Dispatch<SetStateAction<string>>;
     thread: ChatThread | undefined;
     setThread: Dispatch<SetStateAction<ChatThread | undefined>>;
-    receipts: ReadReceipt_2[] | undefined;
-    setReceipts: Dispatch<SetStateAction<ReadReceipt_2[] | undefined>>;
-    threadMembers: ChatThreadMember_2[];
-    setThreadMembers: Dispatch<SetStateAction<ChatThreadMember_2[]>>;
+    receipts: ChatMessageReadReceipt[] | undefined;
+    setReceipts: Dispatch<SetStateAction<ChatMessageReadReceipt[] | undefined>>;
+    threadMembers: ChatParticipant_2[];
+    setThreadMembers: Dispatch<SetStateAction<ChatParticipant_2[]>>;
     coolPeriod: Date | undefined;
     setCoolPeriod: Dispatch<SetStateAction<Date | undefined>>;
     getThreadMembersError: boolean | undefined;
@@ -1182,7 +1176,7 @@ export const useFetchMessage: () => (messageId: string) => Promise<ChatMessage_2
 export const useFetchMessages: () => (options?: RestListMessagesOptions | undefined) => Promise<ChatMessage_2[]>;
 
 // @public (undocumented)
-export const useFetchReadReceipts: () => (() => Promise<ReadReceipt_2[]>);
+export const useFetchReadReceipts: () => (() => Promise<ChatMessageReadReceipt[]>);
 
 // @public (undocumented)
 export const useFetchThread: () => (() => Promise<void>);
@@ -1236,7 +1230,7 @@ export const useMicrophone: () => UseMicrophoneType;
 export const useOutgoingCall: () => UseOutgoingCallType;
 
 // @public (undocumented)
-export const useReceipts: () => ReadReceipt_2[] | undefined;
+export const useReceipts: () => ChatMessageReadReceipt[] | undefined;
 
 // Warning: (ae-forgotten-export) The symbol "UseRemoteVideoStreamType" needs to be exported by the entry point index.d.ts
 //
@@ -1255,9 +1249,6 @@ export type UserIdPropsFromContext = {
 //
 // @public (undocumented)
 export const useScreenShare: () => useScreenShareType;
-
-// @public (undocumented)
-export const useSelector: <SelectorT extends (state: ChatClientState, props: any) => any>(selector: SelectorT, selectorProps: Parameters<SelectorT>[1]) => ReturnType<SelectorT>;
 
 // @public (undocumented)
 export const useSendMessage: () => (displayName: string, userId: string, messageContent: string) => Promise<void>;
@@ -1293,7 +1284,7 @@ export const useSetLastError: () => (error: CommunicationUiError | undefined) =>
 export const useSetOnErrorCallback: () => (callback: (error: CommunicationUiError) => void) => void;
 
 // @public (undocumented)
-export const useSetReceipts: () => (receipts: ReadReceipt_2[]) => void;
+export const useSetReceipts: () => (receipts: ChatMessageReadReceipt[]) => void;
 
 // @public (undocumented)
 export const useSetThread: () => (thread: ChatThread) => void;
@@ -1311,7 +1302,7 @@ export const useSetUpdateThreadMembersError: () => (updateThreadMembersError?: b
 export const useSubscribeMessage: (addMessage?: ((messageEvent: ChatMessageReceivedEvent) => void) | undefined) => void;
 
 // @public (undocumented)
-export const useSubscribeReadReceipt: (addReadReceipts?: ((readReceipts: ReadReceipt_2[]) => void) | undefined) => void;
+export const useSubscribeReadReceipt: (addReadReceipts?: ((readReceipts: ChatMessageReadReceipt[]) => void) | undefined) => void;
 
 // @public (undocumented)
 export const useSubscribeToAudioDeviceList: () => void;
