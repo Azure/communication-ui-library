@@ -20,7 +20,8 @@ const wrapper = mergeStyles({
   height: '100%',
   width: '100%',
   alignItems: 'center',
-  justifyContent: 'center'
+  justifyContent: 'center',
+  background: 'inherit'
 });
 
 /**
@@ -57,8 +58,8 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
   }, [fluentUITheme]);
 
   return (
-    <ThemeProvider theme={fluentUITheme} className={wrapper} style={{ display: 'inherit' }}>
-      <Provider theme={fluentNorthStarTheme} className={wrapper} style={{ display: 'flex' }}>
+    <ThemeProvider theme={fluentUITheme} className={wrapper}>
+      <Provider theme={fluentNorthStarTheme} className={wrapper}>
         {children}
       </Provider>
     </ThemeProvider>

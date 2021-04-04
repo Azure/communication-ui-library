@@ -14,7 +14,10 @@ import {
   labeledHangupButtonProps,
   optionsButtonProps,
   screenShareButtonProps,
-  videoButtonProps
+  videoButtonProps,
+  LIGHT,
+  DARK,
+  THEMES
 } from '@azure/communication-ui';
 import { boolean, select } from '@storybook/addon-knobs';
 import { getDocs } from './ControlBarDocs';
@@ -48,25 +51,44 @@ const exampleOptionsMenuProps = {
   ]
 };
 
-export const ControlBarComponent: () => JSX.Element = () => {
+export const ControlBarComponent: (
+  args: any,
+  {
+    globals: { theme }
+  }
+) => JSX.Element = (args, { globals: { theme } }) => {
   const layout = select('Layout', CONTROL_BAR_LAYOUTS, 'floatingBottom');
   const toggleButtons = boolean('Toggle Buttons', false);
   const showLabels = boolean('Show Labels', false);
 
+  let background = 'none';
+  if (theme === DARK) {
+    background = '#252423';
+  } else if (theme === LIGHT) {
+    background = '#f8f8f8';
+  }
+
   return (
-    <ControlBar layout={layout}>
-      <DefaultButton {...(showLabels ? labeledVideoButtonProps : videoButtonProps)} checked={toggleButtons} />
-      <DefaultButton {...(showLabels ? labeledAudioButtonProps : audioButtonProps)} checked={toggleButtons} />
-      <DefaultButton
-        {...(showLabels ? labeledScreenShareButtonProps : screenShareButtonProps)}
-        checked={toggleButtons}
-      />
-      <DefaultButton
-        {...(showLabels ? labeledOptionsButtonProps : optionsButtonProps)}
-        menuProps={exampleOptionsMenuProps}
-      />
-      <DefaultButton {...(showLabels ? labeledHangupButtonProps : hangupButtonProps)} />
-    </ControlBar>
+    <div style={{ width: '100%', height: '100%', background: background }}>
+      <ControlBar
+        layout={layout}
+        styles={{
+          root: { background: theme === DARK ? THEMES[DARK]?.palette?.neutralLight : THEMES[theme]?.palette?.white }
+        }}
+      >
+        <DefaultButton {...(showLabels ? labeledVideoButtonProps : videoButtonProps)} checked={toggleButtons} />
+        <DefaultButton {...(showLabels ? labeledAudioButtonProps : audioButtonProps)} checked={toggleButtons} />
+        <DefaultButton
+          {...(showLabels ? labeledScreenShareButtonProps : screenShareButtonProps)}
+          checked={toggleButtons}
+        />
+        <DefaultButton
+          {...(showLabels ? labeledOptionsButtonProps : optionsButtonProps)}
+          menuProps={exampleOptionsMenuProps}
+        />
+        <DefaultButton {...(showLabels ? labeledHangupButtonProps : hangupButtonProps)} />
+      </ControlBar>
+    </div>
   );
 };
 
