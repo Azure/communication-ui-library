@@ -127,7 +127,7 @@ export const controlButtonStyles: IButtonStyles = {
 export const controlButtonLabelStyles: IStyle = {
   fontSize: '0.625rem',
   lineHeight: '1rem',
-  marginTop: '0.25rem'
+  marginTop: '0.125rem'
 };
 
 export const hangUpControlButtonStyles: IButtonStyles = concatStyleSets(controlButtonStyles, {

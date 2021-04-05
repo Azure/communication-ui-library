@@ -33,7 +33,13 @@ export const videoButtonProps: IButtonProps = {
 
 export const labeledVideoButtonProps: IButtonProps = {
   ...videoButtonProps,
-  onRenderText: () => <Stack className={mergeStyles(controlButtonLabelStyles)}>Camera</Stack>
+  onRenderText: (props?: IButtonProps): JSX.Element => {
+    if (props?.checked) {
+      return <Stack className={mergeStyles(controlButtonLabelStyles)}>Turn off</Stack>;
+    } else {
+      return <Stack className={mergeStyles(controlButtonLabelStyles)}>Turn on</Stack>;
+    }
+  }
 };
 
 export const audioButtonProps: IButtonProps = {
