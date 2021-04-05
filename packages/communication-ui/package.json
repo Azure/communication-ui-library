@@ -40,7 +40,6 @@
     "@fluentui/react-theme-provider": "^0.18.0",
     "@uifabric/react-hooks": "~7.13.11",
     "copy-to-clipboard": "~3.3.1",
-    "classnames": "^2.2.6",
     "react-aria-live": "^2.0.5",
     "react-linkify": "^1.0.0-alpha"
   },
@@ -57,7 +56,6 @@
     "@rollup/plugin-commonjs": "~17.1.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react-hooks": "^3.4.2",
-    "@types/classnames": "^2.2.11",
     "@types/jest": "^26.0.20",
     "@types/json-stringify-safe": "^5.0.0",
     "@types/node": "^14.14.10",

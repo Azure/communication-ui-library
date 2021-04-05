@@ -21,7 +21,7 @@ import { LiveAnnouncer, LiveMessage } from 'react-aria-live';
 import { ErrorHandlingProps } from '../providers';
 import { formatTimestampForChatMessage, propagateError } from '../utils';
 import { CLICK_TO_LOAD_MORE_MESSAGES, NEW_MESSAGES } from '../constants';
-import { ChatMessage as WebUiChatMessage } from '../types';
+import { BaseCustomStylesProps, ChatMessage as WebUiChatMessage } from '../types';
 import { ReadReceipt, ReadReceiptProps } from './ReadReceipt';
 import { ChatMessagePropsFromContext } from '../consumers';
 
@@ -122,18 +122,16 @@ const didUserSendTheLatestMessage = (
   }
 };
 
-export interface MessageThreadStylesProps {
-  /** Styles for the root container */
-  root?: IStyle;
-  /** Styles for load previous messages container */
+export interface MessageThreadStylesProps extends BaseCustomStylesProps {
+  /** Styles for load previous messages container. */
   loadPreviousMessagesButtonContainer?: IStyle;
-  /** Styles for new message container */
+  /** Styles for new message container. */
   newMessageButtonContainer?: IStyle;
-  /** Styles for chat container */
+  /** Styles for chat container. */
   chatContainer?: ComponentSlotStyle;
-  /** Styles for chat message container */
+  /** Styles for chat message container. */
   chatMessageContainer?: ComponentSlotStyle;
-  /** Styles for read receipt container */
+  /** Styles for read receipt container. */
   readReceiptContainer?: (mine: boolean) => IStyle;
 }
 
@@ -168,6 +166,9 @@ const DefaultLoadPreviousMessagesButton = (props: LoadPreviousMessagesButtonProp
   );
 };
 
+/**
+ * Props for MessageThread component
+ */
 export type MessageThreadProps = {
   /**
    * The userId of the current user.
@@ -178,7 +179,11 @@ export type MessageThreadProps = {
    */
   chatMessages: WebUiChatMessage[];
   /**
-   * Custom CSS Styling.
+   * Allows users to pass in an object contains custom CSS styles.
+   * @Example
+   * ```
+   * <MessageThread styles={{ root: { background: 'blue' } }} />
+   * ```
    */
   styles?: MessageThreadStylesProps;
   /**
