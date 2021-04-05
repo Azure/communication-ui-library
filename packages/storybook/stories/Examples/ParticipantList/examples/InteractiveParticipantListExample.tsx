@@ -32,7 +32,7 @@ export const InteractiveParticipantListExample: () => JSX.Element = () => {
     <>
       <div style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Participants</div>
       <Stack style={{ width: '12.5rem' }}>
-        {participants.map((participant, i) => (
+        {participants.map((participant) => (
           <ParticipantItem
             name={participant.name}
             menuItems={[
