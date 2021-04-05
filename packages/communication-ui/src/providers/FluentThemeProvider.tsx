@@ -18,10 +18,7 @@ export interface FluentThemeProviderProps {
 
 const wrapper = mergeStyles({
   height: '100%',
-  width: '100%',
-  alignItems: 'center',
-  justifyContent: 'center',
-  background: 'inherit'
+  width: '100%'
 });
 
 /**

@@ -69,7 +69,16 @@ export const ControlBarComponent: (
   }
 
   return (
-    <div style={{ width: '100%', height: '100%', background: background }}>
+    <div
+      style={{
+        width: '100%',
+        height: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        display: 'inherit',
+        background: background
+      }}
+    >
       <ControlBar
         layout={layout}
         styles={{
