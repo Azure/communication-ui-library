@@ -24,7 +24,7 @@ export const controlBarStyles: IControlBarStyles = {
   },
   vertical: {
     flexFlow: 'column nowrap',
-    maxWidth: '56px'
+    maxWidth: '3.5rem'
   },
   dockedTop: {
     flexFlow: 'row nowrap',
@@ -115,8 +115,8 @@ export const controlButtonStyles: IButtonStyles = {
     background: 'none',
     border: 'none',
     borderRadius: 0,
-    minHeight: '56px',
-    minWidth: '56px'
+    minHeight: '3.5rem',
+    minWidth: '3.5rem'
   },
   flexContainer: {
     flexFlow: 'column',
