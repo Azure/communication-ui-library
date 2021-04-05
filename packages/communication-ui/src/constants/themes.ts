@@ -65,11 +65,11 @@ export const darkTheme: PartialTheme = {
 /**
  * Light theme name for ACS UI SDK components
  */
-export const LIGHT = 'light';
+export const LIGHT = 'Light';
 /**
  * Dark theme name for ACS UI SDK components
  */
-export const DARK = 'dark';
+export const DARK = 'Dark';
 
 /**
  * Map of themes
