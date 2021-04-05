@@ -441,7 +441,7 @@ export const CREATED = 201;
 export const CROP_MEDIA = "Crop";
 
 // @public
-export const DARK = "dark";
+export const DARK = "Dark";
 
 // @public
 export const darkTheme: PartialTheme;
@@ -699,7 +699,7 @@ export const labeledScreenShareButtonProps: IButtonProps;
 export const labeledVideoButtonProps: IButtonProps;
 
 // @public
-export const LIGHT = "light";
+export const LIGHT = "Light";
 
 // @public
 export const lightTheme: PartialTheme;
@@ -1070,8 +1070,8 @@ export const ThemeSelector: (props: ThemeSelectorProps) => JSX.Element;
 
 // @public
 export interface ThemeSelectorProps {
+    horizontal?: boolean;
     label?: string;
-    layout?: string;
     themeMap?: ThemeMap;
 }
 
