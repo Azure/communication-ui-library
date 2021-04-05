@@ -61,9 +61,16 @@ export const ControlBarComponent: (
   const toggleButtons = boolean('Toggle Buttons', false);
   const showLabels = boolean('Show Labels', false);
 
-  let background = 'none';
+  let background = THEMES[theme]?.palette?.white;
+  let controlBarBackground = THEMES[theme]?.palette?.white;
+
   if (theme === DARK) {
-    background = '#252423';
+    if (layout.startsWith('floating')) {
+      background = '#252423';
+      controlBarBackground = THEMES[DARK]?.palette?.neutralLight;
+    } else {
+      background = '#161514';
+    }
   } else if (theme === LIGHT) {
     background = '#f8f8f8';
   }
@@ -79,12 +86,7 @@ export const ControlBarComponent: (
         background: background
       }}
     >
-      <ControlBar
-        layout={layout}
-        styles={{
-          root: { background: theme === DARK ? THEMES[DARK]?.palette?.neutralLight : THEMES[theme]?.palette?.white }
-        }}
-      >
+      <ControlBar layout={layout} styles={{ root: { background: controlBarBackground } }}>
         <DefaultButton {...(showLabels ? labeledVideoButtonProps : videoButtonProps)} checked={toggleButtons} />
         <DefaultButton {...(showLabels ? labeledAudioButtonProps : audioButtonProps)} checked={toggleButtons} />
         <DefaultButton
