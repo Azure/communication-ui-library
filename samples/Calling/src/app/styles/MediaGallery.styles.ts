@@ -41,12 +41,10 @@ export const screenShareContainerStyle = mergeStyles({
   position: 'relative'
 });
 
-export const videoHint = mergeStyles({
-  backgroundColor: palette.neutralSecondary,
+export const disabledVideoHint = mergeStyles({
   bottom: '5%',
   height: '1.75rem',
-  boxShadow: '0 0 1px 0 rgba(0,0,0,.16)',
-  color: palette.neutralLighter,
+  boxShadow: 'none',
   fontSize: '1.25rem',
   lineHeight: '1.0625rem',
   textAlign: 'left',
@@ -59,8 +57,8 @@ export const videoHint = mergeStyles({
   borderRadius: 4
 });
 
-export const disabledVideoHint = mergeStyles(videoHint, {
-  backgroundColor: 'transparent',
-  color: palette.neutralSecondary,
-  boxShadow: 'none'
+export const videoHint = mergeStyles(disabledVideoHint, {
+  backgroundColor: palette.neutralSecondary,
+  boxShadow: '0 0 1px 0 rgba(0,0,0,.16)',
+  color: palette.white
 });

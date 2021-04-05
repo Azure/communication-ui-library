@@ -35,6 +35,5 @@ export const localPreviewContainerStyle = mergeStyles({
 
 export const toggleButtonsBarStyle = mergeStyles({
   height: '2.8125rem',
-  width: '100%',
-  backgroundColor: palette.neutralQuaternaryAlt
+  width: '100%'
 });

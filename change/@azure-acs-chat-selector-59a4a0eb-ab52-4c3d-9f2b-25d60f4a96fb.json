@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Update api.md to avoid 'unimported' type error",
+  "packageName": "@azure/acs-chat-selector",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "none"
+}

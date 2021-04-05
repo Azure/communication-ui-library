@@ -1,6 +1,5 @@
 // © Microsoft Corporation. All rights reserved.
-import { IStyle, mergeStyles, Stack, IButtonProps } from '@fluentui/react';
-import { useTheme } from '@fluentui/react-theme-provider';
+import { mergeStyles, Stack, IButtonProps } from '@fluentui/react';
 import {
   CallControlCloseTrayIcon,
   CallControlPresentNewIcon,
@@ -13,16 +12,13 @@ import {
   MoreIcon
 } from '@fluentui/react-northstar';
 import React from 'react';
+import { BaseCustomStylesProps } from '../types';
 import {
   controlBarStyles,
   controlButtonLabelStyles,
   controlButtonStyles,
   hangUpControlButtonStyles
 } from './styles/ControlBar.styles';
-
-export interface CustomStylesProps {
-  root?: IStyle;
-}
 
 export const videoButtonProps: IButtonProps = {
   onRenderIcon: (props?: IButtonProps): JSX.Element => {
@@ -175,16 +171,20 @@ export type ControlBarLayoutType =
   | 'floatingLeft'
   | 'floatingRight';
 
+/**
+ * Props for ControlBar component.
+ */
 export interface ControlBarProps {
+  /** React Child components. */
   children?: React.ReactNode;
   /**
    * Allows users to pass in an object contains custom CSS styles.
-   * Example
+   * @Example
    * ```
    * <ControlBar styles={{ root: { background: 'blue' } }} />
    * ```
    */
-  styles?: CustomStylesProps;
+  styles?: BaseCustomStylesProps;
   /**
    * Changes the layout of the control bar.
    * Available layouts are `horizontal`, `vertical`, `dockedTop`, `dockedBottom`,
@@ -203,11 +203,6 @@ export interface ControlBarProps {
  */
 export const ControlBar = (props: ControlBarProps): JSX.Element => {
   const { styles, layout } = props;
-  const theme = useTheme();
   const controlBarStyle = controlBarStyles[layout ?? 'horizontal'];
-  return (
-    <Stack className={mergeStyles(controlBarStyle, { background: theme.palette.neutralLight }, styles?.root)}>
-      {props.children}
-    </Stack>
-  );
+  return <Stack className={mergeStyles(controlBarStyle, styles?.root)}>{props.children}</Stack>;
 };
