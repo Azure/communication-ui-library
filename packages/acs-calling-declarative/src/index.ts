@@ -2,6 +2,7 @@
 export { callClientDeclaratify } from './CallClientDeclarative';
 export type { DeclarativeCallClient } from './CallClientDeclarative';
 export type {
+  DeviceManagerState,
   CallClientState,
   Call,
   IncomingCall,

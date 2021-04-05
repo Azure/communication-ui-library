@@ -33,7 +33,7 @@ export const memberItemIsYouStyle = mergeStyles({
   marginTop: '0.3125rem'
 });
 
-export const iconsContainerStyle = mergeStyles({
+export const iconContainerStyle = mergeStyles({
   position: 'absolute',
   display: 'flex',
   right: '1rem',
