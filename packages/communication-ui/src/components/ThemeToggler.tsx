@@ -4,7 +4,7 @@ import React from 'react';
 import { Toggle, mergeStyles } from '@fluentui/react';
 import { LIGHT, DARK, lightTheme, darkTheme } from '../constants/themes';
 import { useSwitchableFluentTheme, FluentTheme } from '../providers/SwitchableFluentThemeProvider';
-import { themeComponentStyles } from './styles/ThemeComponent.styles';
+import { themeTogglerStyles } from './styles/ThemeToggler.styles';
 
 /**
  * Props for ThemeToggler component
@@ -21,7 +21,7 @@ export interface ThemeTogglerProps {
 }
 
 /**
- * @description Toggler component for switching the theme context with respect to components inside FluentThemeProvider.
+ * @description Toggler component for toggling the fluent theme context for SwitchableFluentThemeProvider
  * @param props - ThemeTogglerProps
  */
 export const ThemeToggler = (props: ThemeTogglerProps): JSX.Element => {
@@ -39,7 +39,7 @@ export const ThemeToggler = (props: ThemeTogglerProps): JSX.Element => {
     }
   };
 
-  const themeComponentStyle = layout && themeComponentStyles[layout] ? themeComponentStyles[layout] : {};
+  const themeComponentStyle = layout && themeTogglerStyles[layout] ? themeTogglerStyles[layout] : {};
 
   return (
     <div className={mergeStyles(themeComponentStyle)}>
