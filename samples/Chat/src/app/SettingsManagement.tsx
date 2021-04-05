@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 import React, { useEffect, useState } from 'react';
-import { Icon, Panel, PrimaryButton, TextField } from '@fluentui/react';
+import { Icon, Panel, PrimaryButton, Stack, TextField } from '@fluentui/react';
 import {
   settingsGroupNameInputBoxStyle,
   settingsGroupNameInputBoxWarningStyle,
@@ -15,7 +15,7 @@ import {
 } from './styles/SettingsManagement.styles';
 import { inputBoxTextStyle } from './styles/SidePanel.styles';
 import { ChatTopicPropsFromContext, MapToChatTopicProps, connectFuncsToContext } from '@azure/communication-ui';
-import { ENTER_KEY, MAXIMUM_LENGTH_OF_TOPIC, ThemeToggler } from '@azure/communication-ui';
+import { ENTER_KEY, MAXIMUM_LENGTH_OF_TOPIC, ThemeSelector } from '@azure/communication-ui';
 
 export type SettingsManagementProps = {
   updateThreadTopicName: (topicName: string) => Promise<boolean>;
@@ -89,42 +89,44 @@ export const SettingsManagementComponent = (
       onRenderFooterContent={onRenderFooter}
       styles={{ main: settingsManagementPanelStyle, content: settingsManagementContentStyle }}
     >
-      <div className={settingsListStyle}>
+      <Stack className={settingsListStyle} tokens={{ childrenGap: '1.5rem' }}>
         {/* Change Chat Name */}
-        <div className={settingsGroupNameStyle}>Group Name</div>
-        <TextField
-          key={topicName}
-          className={isTopicNameOverflow ? settingsGroupNameInputBoxWarningStyle : settingsGroupNameInputBoxStyle}
-          inputClassName={inputBoxTextStyle}
-          borderless={true}
-          defaultValue={isEditingTopicName ? edittedTopicName : existsTopicName ? topicName : ''}
-          placeholder={existsTopicName ? undefined : 'Type a group name'}
-          autoComplete="off"
-          onSubmit={onTopicNameSubmit}
-          onChange={onTopicNameTextChange}
-          onKeyUp={(ev) => {
-            if (ev.which === ENTER_KEY) {
-              onTopicNameSubmit();
-            }
-          }}
-        />
-        {(isTopicNameOverflow && (
-          <div className={settingsTopicWarningStyle}> Topic cannot be over 30 characters </div>
-        )) ||
-          (!isTopicNameOverflow && <div className={settingsTopicWarningStyle} />)}
-        <PrimaryButton
-          id="editThreadTopicButton"
-          className={settingsSaveChatNameButtonStyle}
-          onClick={() => onTopicNameSubmit()}
-          disabled={isSavingTopicName}
-        >
-          <Icon iconName="Save" className={settingsTextFieldIconStyle} />
-          <div className={settingsSaveButtonTextStyle}>{isSavingTopicName ? 'Saving...' : 'Save'}</div>
-        </PrimaryButton>
-        <div className={settingsGroupNameStyle}>
-          <ThemeToggler label="Theme" />
+        <div>
+          <div className={settingsGroupNameStyle}>Group Name</div>
+          <TextField
+            key={topicName}
+            className={isTopicNameOverflow ? settingsGroupNameInputBoxWarningStyle : settingsGroupNameInputBoxStyle}
+            inputClassName={inputBoxTextStyle}
+            borderless={true}
+            defaultValue={isEditingTopicName ? edittedTopicName : existsTopicName ? topicName : ''}
+            placeholder={existsTopicName ? undefined : 'Type a group name'}
+            autoComplete="off"
+            onSubmit={onTopicNameSubmit}
+            onChange={onTopicNameTextChange}
+            onKeyUp={(ev) => {
+              if (ev.which === ENTER_KEY) {
+                onTopicNameSubmit();
+              }
+            }}
+          />
+          {(isTopicNameOverflow && (
+            <div className={settingsTopicWarningStyle}> Topic cannot be over 30 characters </div>
+          )) ||
+            (!isTopicNameOverflow && <div className={settingsTopicWarningStyle} />)}
+          <PrimaryButton
+            id="editThreadTopicButton"
+            className={settingsSaveChatNameButtonStyle}
+            onClick={() => onTopicNameSubmit()}
+            disabled={isSavingTopicName}
+          >
+            <Icon iconName="Save" className={settingsTextFieldIconStyle} />
+            <div className={settingsSaveButtonTextStyle}>{isSavingTopicName ? 'Saving...' : 'Save'}</div>
+          </PrimaryButton>
         </div>
-      </div>
+        <div className={settingsGroupNameStyle}>
+          <ThemeSelector label="Theme" />
+        </div>
+      </Stack>
     </Panel>
   );
 };
