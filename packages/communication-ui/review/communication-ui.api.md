@@ -841,7 +841,7 @@ export type MessageThreadProps = {
     disableLoadPreviousMessage?: boolean;
     disableReadReceipt?: boolean;
     onSendReadReceipt?: () => Promise<void>;
-    onRenderReadReceipt?: (readReceiptComponentProps: ReadReceiptProps) => JSX.Element | null;
+    onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element | null;
     onRenderAvatar?: (userId: string) => JSX.Element;
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousMessages?: () => void;
@@ -985,13 +985,11 @@ export interface SendBoxProps {
     supportNewline?: boolean;
 }
 
-// @public (undocumented)
+// @public
 export type SendBoxPropsFromContext = {
-    disabled: boolean;
+    disabled?: boolean;
     systemMessage?: string;
-    displayName: string;
-    userId: string;
-    sendMessage: (displayName: string, userId: string, messageContent: string) => Promise<void>;
+    onSendMessage: (messageContent: string) => Promise<void>;
     onSendTypingNotification: () => Promise<void>;
 };
 
@@ -1260,7 +1258,7 @@ export type UserIdPropsFromContext = {
 export const useScreenShare: () => useScreenShareType;
 
 // @public (undocumented)
-export const useSendMessage: () => (displayName: string, userId: string, messageContent: string) => Promise<void>;
+export const useSendMessage: (displayName: string, userId: string) => (messageContent: string) => Promise<void>;
 
 // @public (undocumented)
 export const useSendReadReceipt: () => (messageId: string) => Promise<void>;
