@@ -6,7 +6,6 @@
 
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { AzureCommunicationUserCredential } from '@azure/communication-common';
-import { Call } from '@azure/communication-calling';
 import { CallingApplication } from '@azure/communication-common';
 import { CallState } from '@azure/communication-calling';
 import { CommunicationUser } from '@azure/communication-common';
@@ -397,19 +396,6 @@ export const hangupButtonProps: IButtonProps;
 export const INCOMING = "Incoming";
 
 // @public (undocumented)
-export const IncomingCallsContext: React_2.Context<IncomingCallsContextType | undefined>;
-
-// @public (undocumented)
-export type IncomingCallsContextType = {
-    incomingCalls: Call[];
-};
-
-// @public (undocumented)
-export const IncomingCallsProvider: (props: {
-    children: React_2.ReactNode;
-}) => JSX.Element;
-
-// @public (undocumented)
 export const INITIAL_MESSAGES_SIZE = 2000;
 
 // @public (undocumented)
@@ -772,9 +758,6 @@ export const UNABLE_TO_LOAD_MORE_MESSAGES = "You have reached the beginning of t
 
 // @public (undocumented)
 export const UNAUTHORIZED_STATUS_CODE = 401;
-
-// @public (undocumented)
-export const useIncomingCallsContext: () => IncomingCallsContextType;
 
 // @public (undocumented)
 export const useLastError: () => CommunicationUiError | undefined;

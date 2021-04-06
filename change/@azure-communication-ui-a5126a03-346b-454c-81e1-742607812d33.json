@@ -1,5 +1,5 @@
 {
-  "type": "none",
+  "type": "prerelease",
   "comment": "Prune exports for beta release",
   "packageName": "@azure/communication-ui",
   "email": "mail@jamesburnside.com",

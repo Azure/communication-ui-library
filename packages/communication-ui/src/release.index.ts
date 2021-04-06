@@ -10,7 +10,6 @@ export * from './constants';
 export * from './types';
 export * from './utils';
 
-export * from './providers/IncomingCallsProvider';
 export * from './providers/ErrorProvider';
 export * from './providers/FluentThemeProvider';
 export * from './providers/SwitchableFluentThemeProvider';
