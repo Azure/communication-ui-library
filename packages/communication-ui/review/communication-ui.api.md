@@ -321,7 +321,7 @@ export type ErrorHandlingProps = {
     onErrorCallback?: (error: CommunicationUiErrorInfo) => void;
 };
 
-// Warning: (ae-forgotten-export) The symbol "ErrorProviderProps" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "ErrorProviderProps" needs to be exported by the entry point release.index.d.ts
 //
 // @public
 export const ErrorProvider: (props: ErrorProviderProps & ErrorHandlingProps) => JSX.Element;
@@ -390,16 +390,7 @@ export type GridLayoutType = 'standard';
 // @public (undocumented)
 export const GUID_FOR_INITIAL_TOPIC_NAME = "c774da81-94d5-4652-85c7-6ed0e8dc67e6";
 
-<<<<<<< HEAD
-// @public (undocumented)
-=======
-// Warning: (ae-forgotten-export) The symbol "HangupButtonProps" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export const HangupButtonComponent: (props: Pick<HangupButtonProps, "onErrorCallback" | "text" | "styles" | "onEndCallClick">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
-
 // @public
->>>>>>> origin/main
 export const hangupButtonProps: IButtonProps;
 
 // @public (undocumented)
@@ -534,7 +525,7 @@ export enum MessageStatus {
     SENDING = "sending"
 }
 
-// Warning: (ae-forgotten-export) The symbol "ChatMessagePropsFromContext" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "ChatMessagePropsFromContext" needs to be exported by the entry point release.index.d.ts
 //
 // @public
 export const MessageThread: (props: MessageThreadProps & ErrorHandlingProps & ChatMessagePropsFromContext) => JSX.Element;
@@ -582,16 +573,7 @@ export const NO_CONTENT = 204;
 // @public (undocumented)
 export const OK = 200;
 
-<<<<<<< HEAD
-// @public (undocumented)
-=======
-// Warning: (ae-forgotten-export) The symbol "OneToOneCallCompositeProps" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export const OneToOneCall: (props: OneToOneCallCompositeProps) => JSX.Element;
-
 // @public
->>>>>>> origin/main
 export const optionsButtonProps: IButtonProps;
 
 // @public (undocumented)
@@ -669,7 +651,7 @@ export const saveThemeToLocalStorage: (theme: string, scopeId: string) => void;
 // @public
 export const screenShareButtonProps: IButtonProps;
 
-// Warning: (ae-forgotten-export) The symbol "SendBoxPropsFromContext" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "SendBoxPropsFromContext" needs to be exported by the entry point release.index.d.ts
 //
 // @public
 export const SendBox: (props: SendBoxProps & SendBoxPropsFromContext & ErrorHandlingProps) => JSX.Element;
@@ -682,17 +664,6 @@ export interface SendBoxProps {
     supportNewline?: boolean;
 }
 
-<<<<<<< HEAD
-=======
-// @public
-export type SendBoxPropsFromContext = {
-    disabled?: boolean;
-    systemMessage?: string;
-    onSendMessage: (messageContent: string) => Promise<void>;
-    onSendTypingNotification: () => Promise<void>;
-};
-
->>>>>>> origin/main
 // @public (undocumented)
 export interface SendBoxStylesProps extends BaseCustomStylesProps {
     defaultSendMessageIcon?: IStyle;
@@ -808,77 +779,6 @@ export const useIncomingCallsContext: () => IncomingCallsContextType;
 // @public (undocumented)
 export const useLastError: () => CommunicationUiError | undefined;
 
-<<<<<<< HEAD
-=======
-// Warning: (ae-forgotten-export) The symbol "useLocalVideoType" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export const useLocalVideo: () => useLocalVideoType;
-
-// Warning: (ae-forgotten-export) The symbol "UseLocalVideoStreamType" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export const useLocalVideoStreamRenderer: (stream: LocalVideoStream | undefined, rendererOptions: RendererOptions | undefined) => UseLocalVideoStreamType;
-
-// Warning: (ae-forgotten-export) The symbol "UseMicrophoneType" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export const useMicrophone: () => UseMicrophoneType;
-
-// Warning: (ae-forgotten-export) The symbol "UseOutgoingCallType" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export const useOutgoingCall: () => UseOutgoingCallType;
-
-// @public (undocumented)
-export const useReceipts: () => ReadReceipt_2[] | undefined;
-
-// Warning: (ae-forgotten-export) The symbol "UseRemoteVideoStreamType" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export const useRemoteVideoStreamRenderer: (stream: RemoteVideoStream | undefined, options?: RendererOptions | undefined) => UseRemoteVideoStreamType;
-
-// @public (undocumented)
-export const useRemoveThreadMember: () => (userId: string) => Promise<void>;
-
-// @public (undocumented)
-export type UserIdPropsFromContext = {
-    userId: string;
-};
-
-// Warning: (ae-forgotten-export) The symbol "useScreenShareType" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export const useScreenShare: () => useScreenShareType;
-
-// @public (undocumented)
-export const useSendMessage: (displayName: string, userId: string) => (messageContent: string) => Promise<void>;
-
-// @public (undocumented)
-export const useSendReadReceipt: () => (messageId: string) => Promise<void>;
-
-// @public (undocumented)
-export const useSendTypingNotification: () => (() => Promise<boolean>);
-
-// @public (undocumented)
-export const useSetChatClient: () => (chatClient: ChatClient) => void;
-
-// @public (undocumented)
-export const useSetChatMessages: () => Dispatch<SetStateAction<ChatMessage_2[] | undefined>>;
-
-// @public (undocumented)
-export const useSetChatThreadClient: () => (threadClient: ChatThreadClient) => void;
-
-// @public (undocumented)
-export const useSetCoolPeriod: () => (coolPeriod: Date | undefined) => void;
-
-// @public (undocumented)
-export const useSetFailedMessageIds: () => Dispatch<SetStateAction<string[]>>;
-
-// @public (undocumented)
-export const useSetGetThreadMembersError: () => (getThreadMembersError: boolean) => void;
-
->>>>>>> origin/main
 // @public (undocumented)
 export const useSetLastError: () => (error: CommunicationUiError | undefined) => void;
 
