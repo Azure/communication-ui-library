@@ -36,11 +36,6 @@ export const parameters = {
 const withThemeProvider = (Story: any, context: any) => {
   const themeName = context.globals.theme;
   const theme = THEMES[themeName];
-  if (themeName === DARK) {
-    document.body.style.background = '#070707';
-  } else if (themeName === LIGHT) {
-    document.body.style.background = '#ffffff';
-  }
 
   return (
     <FluentThemeProvider fluentTheme={theme}>
@@ -62,7 +57,7 @@ const withCenterStory = (Story: any) => {
   );
 };
 
-export const decorators = [withKnobs, withThemeProvider, withCenterStory];
+export const decorators = [withKnobs, withCenterStory, withThemeProvider];
 
 export const globalTypes = {
   theme: {

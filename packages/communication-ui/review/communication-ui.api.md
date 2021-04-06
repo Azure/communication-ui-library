@@ -29,13 +29,13 @@ import { Theme } from '@fluentui/react-theme-provider';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 
-// @public (undocumented)
+// @public
 export const answerButtonProps: IButtonProps;
 
 // @public (undocumented)
 export const areStreamsEqual: (prevStream: LocalVideoStream, newStream: LocalVideoStream) => boolean;
 
-// @public (undocumented)
+// @public
 export const audioButtonProps: IButtonProps;
 
 // @public (undocumented)
@@ -218,7 +218,7 @@ export const CONNECTED = "Connected";
 // @public (undocumented)
 export const CONNECTING = "Connecting";
 
-// @public (undocumented)
+// @public
 export const CONTROL_BAR_LAYOUTS: readonly ["horizontal", "vertical", "dockedTop", "dockedBottom", "dockedLeft", "dockedRight", "floatingTop", "floatingBottom", "floatingLeft", "floatingRight"];
 
 // @public
@@ -256,7 +256,7 @@ export const CREATED = 201;
 export const CROP_MEDIA = "Crop";
 
 // @public
-export const DARK = "dark";
+export const DARK = "Dark";
 
 // @public
 export const darkTheme: PartialTheme;
@@ -390,7 +390,16 @@ export type GridLayoutType = 'standard';
 // @public (undocumented)
 export const GUID_FOR_INITIAL_TOPIC_NAME = "c774da81-94d5-4652-85c7-6ed0e8dc67e6";
 
+<<<<<<< HEAD
 // @public (undocumented)
+=======
+// Warning: (ae-forgotten-export) The symbol "HangupButtonProps" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export const HangupButtonComponent: (props: Pick<HangupButtonProps, "onErrorCallback" | "text" | "styles" | "onEndCallClick">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+
+// @public
+>>>>>>> origin/main
 export const hangupButtonProps: IButtonProps;
 
 // @public (undocumented)
@@ -436,23 +445,29 @@ export interface JumpToNewMessageButtonProps {
     onClick: () => void;
 }
 
-// @public (undocumented)
+// @public
+export const labeledAnswerButtonProps: IButtonProps;
+
+// @public
 export const labeledAudioButtonProps: IButtonProps;
 
-// @public (undocumented)
+// @public
 export const labeledHangupButtonProps: IButtonProps;
 
-// @public (undocumented)
+// @public
 export const labeledOptionsButtonProps: IButtonProps;
 
-// @public (undocumented)
+// @public
+export const labeledRecordButtonProps: IButtonProps;
+
+// @public
 export const labeledScreenShareButtonProps: IButtonProps;
 
-// @public (undocumented)
+// @public
 export const labeledVideoButtonProps: IButtonProps;
 
 // @public
-export const LIGHT = "light";
+export const LIGHT = "Light";
 
 // @public
 export const lightTheme: PartialTheme;
@@ -533,7 +548,7 @@ export type MessageThreadProps = {
     disableLoadPreviousMessage?: boolean;
     disableReadReceipt?: boolean;
     onSendReadReceipt?: () => Promise<void>;
-    onRenderReadReceipt?: (readReceiptComponentProps: ReadReceiptProps) => JSX.Element | null;
+    onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element | null;
     onRenderAvatar?: (userId: string) => JSX.Element;
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousMessages?: () => void;
@@ -567,7 +582,16 @@ export const NO_CONTENT = 204;
 // @public (undocumented)
 export const OK = 200;
 
+<<<<<<< HEAD
 // @public (undocumented)
+=======
+// Warning: (ae-forgotten-export) The symbol "OneToOneCallCompositeProps" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export const OneToOneCall: (props: OneToOneCallCompositeProps) => JSX.Element;
+
+// @public
+>>>>>>> origin/main
 export const optionsButtonProps: IButtonProps;
 
 // @public (undocumented)
@@ -633,13 +657,16 @@ export interface ReadReceiptProps {
     styles?: BaseCustomStylesProps;
 }
 
+// @public
+export const recordButtonProps: IButtonProps;
+
 // @public (undocumented)
 export const RINGING = "Ringing";
 
 // @public
 export const saveThemeToLocalStorage: (theme: string, scopeId: string) => void;
 
-// @public (undocumented)
+// @public
 export const screenShareButtonProps: IButtonProps;
 
 // Warning: (ae-forgotten-export) The symbol "SendBoxPropsFromContext" needs to be exported by the entry point index.d.ts
@@ -655,6 +682,17 @@ export interface SendBoxProps {
     supportNewline?: boolean;
 }
 
+<<<<<<< HEAD
+=======
+// @public
+export type SendBoxPropsFromContext = {
+    disabled?: boolean;
+    systemMessage?: string;
+    onSendMessage: (messageContent: string) => Promise<void>;
+    onSendTypingNotification: () => Promise<void>;
+};
+
+>>>>>>> origin/main
 // @public (undocumented)
 export interface SendBoxStylesProps extends BaseCustomStylesProps {
     defaultSendMessageIcon?: IStyle;
@@ -713,8 +751,8 @@ export const ThemeSelector: (props: ThemeSelectorProps) => JSX.Element;
 
 // @public
 export interface ThemeSelectorProps {
+    horizontal?: boolean;
     label?: string;
-    layout?: string;
     themeMap?: ThemeMap;
 }
 
@@ -770,6 +808,77 @@ export const useIncomingCallsContext: () => IncomingCallsContextType;
 // @public (undocumented)
 export const useLastError: () => CommunicationUiError | undefined;
 
+<<<<<<< HEAD
+=======
+// Warning: (ae-forgotten-export) The symbol "useLocalVideoType" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export const useLocalVideo: () => useLocalVideoType;
+
+// Warning: (ae-forgotten-export) The symbol "UseLocalVideoStreamType" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export const useLocalVideoStreamRenderer: (stream: LocalVideoStream | undefined, rendererOptions: RendererOptions | undefined) => UseLocalVideoStreamType;
+
+// Warning: (ae-forgotten-export) The symbol "UseMicrophoneType" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export const useMicrophone: () => UseMicrophoneType;
+
+// Warning: (ae-forgotten-export) The symbol "UseOutgoingCallType" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export const useOutgoingCall: () => UseOutgoingCallType;
+
+// @public (undocumented)
+export const useReceipts: () => ReadReceipt_2[] | undefined;
+
+// Warning: (ae-forgotten-export) The symbol "UseRemoteVideoStreamType" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export const useRemoteVideoStreamRenderer: (stream: RemoteVideoStream | undefined, options?: RendererOptions | undefined) => UseRemoteVideoStreamType;
+
+// @public (undocumented)
+export const useRemoveThreadMember: () => (userId: string) => Promise<void>;
+
+// @public (undocumented)
+export type UserIdPropsFromContext = {
+    userId: string;
+};
+
+// Warning: (ae-forgotten-export) The symbol "useScreenShareType" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export const useScreenShare: () => useScreenShareType;
+
+// @public (undocumented)
+export const useSendMessage: (displayName: string, userId: string) => (messageContent: string) => Promise<void>;
+
+// @public (undocumented)
+export const useSendReadReceipt: () => (messageId: string) => Promise<void>;
+
+// @public (undocumented)
+export const useSendTypingNotification: () => (() => Promise<boolean>);
+
+// @public (undocumented)
+export const useSetChatClient: () => (chatClient: ChatClient) => void;
+
+// @public (undocumented)
+export const useSetChatMessages: () => Dispatch<SetStateAction<ChatMessage_2[] | undefined>>;
+
+// @public (undocumented)
+export const useSetChatThreadClient: () => (threadClient: ChatThreadClient) => void;
+
+// @public (undocumented)
+export const useSetCoolPeriod: () => (coolPeriod: Date | undefined) => void;
+
+// @public (undocumented)
+export const useSetFailedMessageIds: () => Dispatch<SetStateAction<string[]>>;
+
+// @public (undocumented)
+export const useSetGetThreadMembersError: () => (getThreadMembersError: boolean) => void;
+
+>>>>>>> origin/main
 // @public (undocumented)
 export const useSetLastError: () => (error: CommunicationUiError | undefined) => void;
 
@@ -785,7 +894,7 @@ export const useTriggerOnErrorCallback: () => (error: CommunicationUiErrorInfo) 
 // @public
 export const useValidContext: <T extends unknown>(ReactContext: React_2.Context<T | undefined>) => T;
 
-// @public (undocumented)
+// @public
 export const videoButtonProps: IButtonProps;
 
 // @public (undocumented)
