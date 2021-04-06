@@ -56,18 +56,15 @@ const defaultOnRenderSystemMessage = (
   systemMessage ? <Alert attached="bottom" content={systemMessage} className={mergeStyles(style)} /> : undefined;
 
 /**
- * @description `SendBox` is a component for users to type and send messages. An optional message can also be
- * added below the `SendBox`.
- * @param props - SendBoxProps
+ * `SendBox` is a component for users to send messages and typing notifications. An optional message
+ * can also be shown below the `SendBox`.
  */
 export const SendBox = (props: SendBoxProps & SendBoxPropsFromContext & ErrorHandlingProps): JSX.Element => {
   const {
     disabled,
-    displayName,
-    userId,
     systemMessage,
-    supportNewline: supportMultiline,
-    sendMessage,
+    supportNewline,
+    onSendMessage,
     onErrorCallback,
     onSendTypingNotification,
     onRenderIcon,
@@ -89,7 +86,7 @@ export const SendBox = (props: SendBoxProps & SendBoxPropsFromContext & ErrorHan
     }
     // we dont want to send empty messages including spaces, newlines, tabs
     if (!EMPTY_MESSAGE_REGEX.test(textValue)) {
-      sendMessage(displayName, userId, textValue).catch((error) => {
+      onSendMessage(textValue).catch((error) => {
         propagateError(error, onErrorCallback);
       });
       setTextValue('');
@@ -125,7 +122,7 @@ export const SendBox = (props: SendBoxProps & SendBoxPropsFromContext & ErrorHan
           onChange={setText}
           autoComplete="off"
           onKeyDown={(ev) => {
-            if (ev.key === 'Enter' && (ev.shiftKey === false || !supportMultiline) && !textValueOverflow) {
+            if (ev.key === 'Enter' && (ev.shiftKey === false || !supportNewline) && !textValueOverflow) {
               ev.preventDefault();
               sendMessageOnClick();
             }
