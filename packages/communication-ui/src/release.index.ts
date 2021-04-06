@@ -8,10 +8,14 @@
  */
 
 export * from './components';
-export * from './constants';
-export * from './types';
-export * from './utils';
-
-export * from './providers/ErrorProvider';
 export * from './providers/FluentThemeProvider';
 export * from './providers/SwitchableFluentThemeProvider';
+
+export type {
+  BaseCustomStylesProps,
+  ChatMessage,
+  CommunicationUiErrorSeverity,
+  MessageAttachedStatus,
+  MessageStatus,
+  TypingUser
+} from './types';
