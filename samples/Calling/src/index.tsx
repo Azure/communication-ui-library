@@ -7,7 +7,9 @@ import { SwitchableFluentThemeProvider } from '@azure/communication-ui';
 
 ReactDOM.render(
   <SwitchableFluentThemeProvider scopeId="SampleCallingApp">
-    <App />
+    <div className="wrapper">
+      <App />
+    </div>
   </SwitchableFluentThemeProvider>,
   document.getElementById('root')
 );

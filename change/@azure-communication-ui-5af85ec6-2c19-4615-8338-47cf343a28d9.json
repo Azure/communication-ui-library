@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Updated onRenderText prop for video button and styling. Removed centering style in FluentThemeProvider.",
+  "packageName": "@azure/communication-ui",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}

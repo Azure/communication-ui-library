@@ -53,13 +53,13 @@ import { Theme } from '@fluentui/react-theme-provider';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 
-// @public (undocumented)
+// @public
 export const answerButtonProps: IButtonProps;
 
 // @public (undocumented)
 export const areStreamsEqual: (prevStream: LocalVideoStream, newStream: LocalVideoStream) => boolean;
 
-// @public (undocumented)
+// @public
 export const audioButtonProps: IButtonProps;
 
 // @public (undocumented)
@@ -403,7 +403,7 @@ export const connectFuncsToContext: <FuncTypes extends ((ownProps: any) => any)[
 // @public (undocumented)
 export const CONNECTING = "Connecting";
 
-// @public (undocumented)
+// @public
 export const CONTROL_BAR_LAYOUTS: readonly ["horizontal", "vertical", "dockedTop", "dockedBottom", "dockedLeft", "dockedRight", "floatingTop", "floatingBottom", "floatingLeft", "floatingRight"];
 
 // @public
@@ -621,7 +621,7 @@ export const GUID_FOR_INITIAL_TOPIC_NAME = "c774da81-94d5-4652-85c7-6ed0e8dc67e6
 // @public (undocumented)
 export const HangupButtonComponent: (props: Pick<HangupButtonProps, "onErrorCallback" | "text" | "styles" | "onEndCallClick">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
 
-// @public (undocumented)
+// @public
 export const hangupButtonProps: IButtonProps;
 
 // @public (undocumented)
@@ -683,19 +683,25 @@ export interface JumpToNewMessageButtonProps {
     onClick: () => void;
 }
 
-// @public (undocumented)
+// @public
+export const labeledAnswerButtonProps: IButtonProps;
+
+// @public
 export const labeledAudioButtonProps: IButtonProps;
 
-// @public (undocumented)
+// @public
 export const labeledHangupButtonProps: IButtonProps;
 
-// @public (undocumented)
+// @public
 export const labeledOptionsButtonProps: IButtonProps;
 
-// @public (undocumented)
+// @public
+export const labeledRecordButtonProps: IButtonProps;
+
+// @public
 export const labeledScreenShareButtonProps: IButtonProps;
 
-// @public (undocumented)
+// @public
 export const labeledVideoButtonProps: IButtonProps;
 
 // @public
@@ -880,7 +886,7 @@ export const OK = 200;
 // @public (undocumented)
 export const OneToOneCall: (props: OneToOneCallCompositeProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export const optionsButtonProps: IButtonProps;
 
 // @public (undocumented)
@@ -957,6 +963,9 @@ export interface ReadReceiptProps {
     styles?: BaseCustomStylesProps;
 }
 
+// @public
+export const recordButtonProps: IButtonProps;
+
 // @public (undocumented)
 export interface RemoteVideoContainerOwnProps {
     // (undocumented)
@@ -971,7 +980,7 @@ export const RINGING = "Ringing";
 // @public
 export const saveThemeToLocalStorage: (theme: string, scopeId: string) => void;
 
-// @public (undocumented)
+// @public
 export const screenShareButtonProps: IButtonProps;
 
 // @public
@@ -1357,7 +1366,7 @@ export const useUserId: () => string;
 // @public
 export const useValidContext: <T extends unknown>(ReactContext: React_2.Context<T | undefined>) => T;
 
-// @public (undocumented)
+// @public
 export const videoButtonProps: IButtonProps;
 
 // @public (undocumented)
