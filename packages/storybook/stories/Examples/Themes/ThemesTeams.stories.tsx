@@ -3,7 +3,7 @@
 import React from 'react';
 import { Meta } from '@storybook/react/types-6-0';
 import { getDocs } from './ThemesDocs';
-import { EXAMPLES_FOLDER_PREFIX } from '../constants';
+import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import {
   FluentThemeProvider,
   GridLayout,

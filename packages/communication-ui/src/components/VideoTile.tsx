@@ -71,7 +71,7 @@ export const VideoTile = (props: VideoTileProps & PlaceholderProps): JSX.Element
           {videoProvider}
         </Stack>
       ) : (
-        placeholder
+        <Stack className={mergeStyles(videoContainerStyles)}>{placeholder}</Stack>
       )}
       {children && <Stack className={mergeStyles(overlayContainerStyles, styles?.overlayContainer)}>{children}</Stack>}
     </Stack>
