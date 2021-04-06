@@ -8,6 +8,7 @@ import { ChatClientState } from '@azure/acs-chat-declarative';
 import { ChatMessageWithStatus } from '@azure/acs-chat-declarative';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
+import { MessageStatus } from '@azure/acs-chat-declarative';
 import { ReactElement } from 'react';
 import * as reselect from 'reselect';
 
@@ -20,7 +21,7 @@ export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientSta
     chatMessages: {
         createdOn: Date;
         content: string | undefined;
-        status: "delivered" | "sending" | "seen" | "failed";
+        status: MessageStatus;
         senderDisplayName: string | undefined;
         senderId: string;
         messageId: string | undefined;
@@ -31,7 +32,7 @@ export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientSta
     chatMessages: {
         createdOn: Date;
         content: string | undefined;
-        status: "delivered" | "sending" | "seen" | "failed";
+        status: MessageStatus;
         senderDisplayName: string | undefined;
         senderId: string;
         messageId: string | undefined;

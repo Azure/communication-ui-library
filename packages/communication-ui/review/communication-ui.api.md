@@ -53,14 +53,19 @@ import { Theme } from '@fluentui/react-theme-provider';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 
-// @public (undocumented)
+// @public
 export const answerButtonProps: IButtonProps;
 
 // @public (undocumented)
 export const areStreamsEqual: (prevStream: LocalVideoStream, newStream: LocalVideoStream) => boolean;
 
-// @public (undocumented)
+// @public
 export const audioButtonProps: IButtonProps;
+
+// @public (undocumented)
+export interface BaseCustomStylesProps {
+    root?: IStyle;
+}
 
 // @public (undocumented)
 export type CallContainerProps = {
@@ -102,7 +107,7 @@ export type CallContextType = {
 export const CallControlBar: (props: ControlBarProps & CallControlBarProps & ErrorHandlingProps) => JSX.Element;
 
 // @public (undocumented)
-export const CallControlBarComponent: (props: Pick<ControlBarProps & CallControlBarProps & ErrorHandlingProps, "onErrorCallback" | "children" | "layout" | "styles" | "onEndCallClick">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+export const CallControlBarComponent: (props: Pick<ControlBarProps & CallControlBarProps & ErrorHandlingProps, "onErrorCallback" | "children" | "styles" | "layout" | "onEndCallClick">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
 
 // Warning: (ae-forgotten-export) The symbol "CallControlBarContainerProps" needs to be exported by the entry point index.d.ts
 //
@@ -398,7 +403,7 @@ export const connectFuncsToContext: <FuncTypes extends ((ownProps: any) => any)[
 // @public (undocumented)
 export const CONNECTING = "Connecting";
 
-// @public (undocumented)
+// @public
 export const CONTROL_BAR_LAYOUTS: readonly ["horizontal", "vertical", "dockedTop", "dockedBottom", "dockedLeft", "dockedRight", "floatingTop", "floatingBottom", "floatingLeft", "floatingRight"];
 
 // @public
@@ -407,12 +412,11 @@ export const ControlBar: (props: ControlBarProps) => JSX.Element;
 // @public (undocumented)
 export type ControlBarLayoutType = 'horizontal' | 'vertical' | 'dockedTop' | 'dockedBottom' | 'dockedLeft' | 'dockedRight' | 'floatingTop' | 'floatingBottom' | 'floatingLeft' | 'floatingRight';
 
-// @public (undocumented)
+// @public
 export interface ControlBarProps {
-    // (undocumented)
     children?: React_2.ReactNode;
     layout?: ControlBarLayoutType;
-    styles?: CustomStylesProps;
+    styles?: BaseCustomStylesProps;
 }
 
 // @public (undocumented)
@@ -436,14 +440,8 @@ export const CREATED = 201;
 // @public (undocumented)
 export const CROP_MEDIA = "Crop";
 
-// @public (undocumented)
-export interface CustomStylesProps {
-    // (undocumented)
-    root?: IStyle;
-}
-
 // @public
-export const DARK = "dark";
+export const DARK = "Dark";
 
 // @public
 export const darkTheme: PartialTheme;
@@ -468,6 +466,7 @@ export type ErrorBarProps = {
     message?: string;
     severity?: CommunicationUiErrorSeverity;
     onClose?: () => void;
+    styles?: BaseCustomStylesProps;
 };
 
 // @public (undocumented)
@@ -586,6 +585,7 @@ export interface GridLayoutProps {
     children: React_2.ReactNode;
     // (undocumented)
     layout?: GridLayoutType;
+    styles?: BaseCustomStylesProps;
 }
 
 // @public (undocumented)
@@ -600,7 +600,7 @@ export const GroupCall: (props: GroupCallCompositeProps) => JSX.Element;
 export const GroupCallControlBar: (props: ControlBarProps & GroupCallControlBarProps & ErrorHandlingProps) => JSX.Element;
 
 // @public (undocumented)
-export const GroupCallControlBarComponent: (props: Pick<ControlBarProps & GroupCallControlBarProps & ErrorHandlingProps, "onErrorCallback" | "children" | "layout" | "styles" | "onEndCallClick" | "compressedMode">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+export const GroupCallControlBarComponent: (props: Pick<ControlBarProps & GroupCallControlBarProps & ErrorHandlingProps, "onErrorCallback" | "children" | "styles" | "layout" | "onEndCallClick" | "compressedMode">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
 
 // @public (undocumented)
 export interface GroupCallControlBarProps extends CallControlBarContainerProps {
@@ -621,7 +621,7 @@ export const GUID_FOR_INITIAL_TOPIC_NAME = "c774da81-94d5-4652-85c7-6ed0e8dc67e6
 // @public (undocumented)
 export const HangupButtonComponent: (props: Pick<HangupButtonProps, "onErrorCallback" | "text" | "styles" | "onEndCallClick">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
 
-// @public (undocumented)
+// @public
 export const hangupButtonProps: IButtonProps;
 
 // @public (undocumented)
@@ -631,7 +631,7 @@ export const INCOMING = "Incoming";
 export const IncomingCallControlBar: (props: ControlBarProps & CallControlBarContainerProps & ErrorHandlingProps) => JSX.Element;
 
 // @public (undocumented)
-export const IncomingCallControlBarComponent: (props: Pick<ControlBarProps & CallControlBarContainerProps & ErrorHandlingProps, "onErrorCallback" | "children" | "layout" | "styles">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+export const IncomingCallControlBarComponent: (props: Pick<ControlBarProps & CallControlBarContainerProps & ErrorHandlingProps, "onErrorCallback" | "children" | "styles" | "layout">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
 
 // Warning: (ae-forgotten-export) The symbol "IncomingCallModalProps" needs to be exported by the entry point index.d.ts
 //
@@ -683,23 +683,29 @@ export interface JumpToNewMessageButtonProps {
     onClick: () => void;
 }
 
-// @public (undocumented)
+// @public
+export const labeledAnswerButtonProps: IButtonProps;
+
+// @public
 export const labeledAudioButtonProps: IButtonProps;
 
-// @public (undocumented)
+// @public
 export const labeledHangupButtonProps: IButtonProps;
 
-// @public (undocumented)
+// @public
 export const labeledOptionsButtonProps: IButtonProps;
 
-// @public (undocumented)
+// @public
+export const labeledRecordButtonProps: IButtonProps;
+
+// @public
 export const labeledScreenShareButtonProps: IButtonProps;
 
-// @public (undocumented)
+// @public
 export const labeledVideoButtonProps: IButtonProps;
 
 // @public
-export const LIGHT = "light";
+export const LIGHT = "Light";
 
 // @public
 export const lightTheme: PartialTheme;
@@ -832,7 +838,7 @@ export enum MessageStatus {
 // @public
 export const MessageThread: (props: MessageThreadProps & ErrorHandlingProps & ChatMessagePropsFromContext) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export type MessageThreadProps = {
     userId: string;
     chatMessages: ChatMessage[];
@@ -841,7 +847,7 @@ export type MessageThreadProps = {
     disableLoadPreviousMessage?: boolean;
     disableReadReceipt?: boolean;
     onSendReadReceipt?: () => Promise<void>;
-    onRenderReadReceipt?: (readReceiptComponentProps: ReadReceiptProps) => JSX.Element | null;
+    onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element | null;
     onRenderAvatar?: (userId: string) => JSX.Element;
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousMessages?: () => void;
@@ -849,13 +855,12 @@ export type MessageThreadProps = {
 };
 
 // @public (undocumented)
-export interface MessageThreadStylesProps {
+export interface MessageThreadStylesProps extends BaseCustomStylesProps {
     chatContainer?: ComponentSlotStyle;
     chatMessageContainer?: ComponentSlotStyle;
     loadPreviousMessagesButtonContainer?: IStyle;
     newMessageButtonContainer?: IStyle;
     readReceiptContainer?: (mine: boolean) => IStyle;
-    root?: IStyle;
 }
 
 // @public (undocumented)
@@ -881,14 +886,14 @@ export const OK = 200;
 // @public (undocumented)
 export const OneToOneCall: (props: OneToOneCallCompositeProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export const optionsButtonProps: IButtonProps;
 
 // @public (undocumented)
 export const OutgoingCallControlBar: (props: OutgoingCallControlBarProps & ErrorHandlingProps) => JSX.Element;
 
 // @public (undocumented)
-export const OutgoingCallControlBarComponent: (props: Pick<OutgoingCallControlBarProps & ErrorHandlingProps, "onErrorCallback" | "children" | "layout" | "styles" | "onEndCallClick">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+export const OutgoingCallControlBarComponent: (props: Pick<OutgoingCallControlBarProps & ErrorHandlingProps, "onErrorCallback" | "children" | "styles" | "layout" | "onEndCallClick">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
 
 // @public (undocumented)
 export interface OutgoingCallControlBarProps extends ControlBarProps, CallControlBarContainerProps {
@@ -909,6 +914,15 @@ export interface ParticipantItemProps {
     onRenderAvatar?: (props?: ParticipantItemProps) => JSX.Element | null;
     onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
     presence?: PersonaPresence;
+    styles?: ParticipantItemStylesProps;
+}
+
+// @public (undocumented)
+export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
+    avatar?: IStyle;
+    iconContainer?: IStyle;
+    isYou?: IStyle;
+    menu?: IStyle;
 }
 
 // @public (undocumented)
@@ -936,9 +950,9 @@ export const PRECONDITION_FAILED_STATUS_CODE = 412;
 export const propagateError: (error: Error, onErrorCallback?: ((error: CommunicationUiErrorInfo) => void) | undefined) => void;
 
 // @public
-export const ReadReceipt: ({ messageStatus, deliveredTooltipText, seenTooltipText, sendingTooltipText, failedToSendTooltipText, size }: ReadReceiptProps & ErrorHandlingProps) => JSX.Element;
+export const ReadReceipt: (props: ReadReceiptProps & ErrorHandlingProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface ReadReceiptProps {
     deliveredTooltipText?: string;
     failedToSendTooltipText?: string;
@@ -946,7 +960,11 @@ export interface ReadReceiptProps {
     seenTooltipText?: string;
     sendingTooltipText?: string;
     size?: SizeValue;
+    styles?: BaseCustomStylesProps;
 }
+
+// @public
+export const recordButtonProps: IButtonProps;
 
 // @public (undocumented)
 export interface RemoteVideoContainerOwnProps {
@@ -962,28 +980,35 @@ export const RINGING = "Ringing";
 // @public
 export const saveThemeToLocalStorage: (theme: string, scopeId: string) => void;
 
-// @public (undocumented)
+// @public
 export const screenShareButtonProps: IButtonProps;
 
 // @public
-export const SendBox: (props: SendBoxProps & ErrorHandlingProps) => JSX.Element;
+export const SendBox: (props: SendBoxProps & SendBoxPropsFromContext & ErrorHandlingProps) => JSX.Element;
 
 // @public
-export type SendBoxProps = {
+export interface SendBoxProps {
+    onRenderIcon?: (props: SendBoxProps & SendBoxPropsFromContext, isMouseOverSendIcon: boolean) => JSX.Element | null;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
+    styles?: SendBoxStylesProps;
     supportNewline?: boolean;
-    onRenderIcon?: (props: SendBoxProps & SendBoxPropsFromContext) => JSX.Element | null;
-} & SendBoxPropsFromContext;
+}
 
-// @public (undocumented)
+// @public
 export type SendBoxPropsFromContext = {
-    disabled: boolean;
+    disabled?: boolean;
     systemMessage?: string;
-    displayName: string;
-    userId: string;
-    sendMessage: (displayName: string, userId: string, messageContent: string) => Promise<void>;
+    onSendMessage: (messageContent: string) => Promise<void>;
     onSendTypingNotification: () => Promise<void>;
 };
+
+// @public (undocumented)
+export interface SendBoxStylesProps extends BaseCustomStylesProps {
+    defaultSendMessageIcon?: IStyle;
+    defaultSystemMessage?: IStyle;
+    sendMessageIconContainer?: IStyle;
+    textField?: IStyle;
+}
 
 // @public (undocumented)
 export const SERVICE_UNAVAILABLE_STATUS_CODE = 503;
@@ -1008,14 +1033,13 @@ export type SidePanelPropsFromContext = {
 // @public (undocumented)
 export const SPACE_KEY = 32;
 
-// @public (undocumented)
+// @public
 export const StreamMedia: (props: StreamMediaProps & ErrorHandlingProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface StreamMediaProps {
-    // (undocumented)
     invertVideo?: boolean;
-    // (undocumented)
+    styles?: BaseCustomStylesProps;
     videoStreamElement: HTMLElement | null;
 }
 
@@ -1053,8 +1077,8 @@ export const ThemeSelector: (props: ThemeSelectorProps) => JSX.Element;
 
 // @public
 export interface ThemeSelectorProps {
+    horizontal?: boolean;
     label?: string;
-    layout?: string;
     themeMap?: ThemeMap;
 }
 
@@ -1105,11 +1129,19 @@ export const TOO_MANY_REQUESTS_STATUS_CODE = 429;
 // @public
 export const TypingIndicator: (props: TypingIndicatorProps & ErrorHandlingProps) => JSX.Element;
 
-// @public (undocumented)
-export type TypingIndicatorProps = {
-    typingUsers: TypingUser[];
+// @public
+export interface TypingIndicatorProps {
+    styles?: TypingIndicatorStylesProps;
     typingString: string;
-};
+    typingUsers: TypingUser[];
+}
+
+// @public (undocumented)
+export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
+    typingString?: IStyle;
+    typingUserDisplayName?: IStyle;
+    typingUserImage?: IStyle;
+}
 
 // @public (undocumented)
 export type TypingUser = {
@@ -1235,7 +1267,7 @@ export type UserIdPropsFromContext = {
 export const useScreenShare: () => useScreenShareType;
 
 // @public (undocumented)
-export const useSendMessage: () => (displayName: string, userId: string, messageContent: string) => Promise<void>;
+export const useSendMessage: (displayName: string, userId: string) => (messageContent: string) => Promise<void>;
 
 // @public (undocumented)
 export const useSendReadReceipt: () => (messageId: string) => Promise<void>;
@@ -1334,7 +1366,7 @@ export const useUserId: () => string;
 // @public
 export const useValidContext: <T extends unknown>(ReactContext: React_2.Context<T | undefined>) => T;
 
-// @public (undocumented)
+// @public
 export const videoButtonProps: IButtonProps;
 
 // @public (undocumented)
@@ -1348,7 +1380,7 @@ export interface VideoContainerProps {
 // @public (undocumented)
 export const VideoTile: (props: VideoTileProps & PlaceholderProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface VideoTileProps {
     children?: React_2.ReactNode;
     invertVideo?: boolean;
@@ -1359,9 +1391,8 @@ export interface VideoTileProps {
 }
 
 // @public (undocumented)
-export interface VideoTileStylesProps {
+export interface VideoTileStylesProps extends BaseCustomStylesProps {
     overlayContainer?: IStyle;
-    root?: IStyle;
     videoContainer?: IStyle;
 }
 

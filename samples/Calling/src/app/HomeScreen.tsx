@@ -16,6 +16,7 @@ import {
   upperStackStyle,
   listItemStyle
 } from './styles/HomeScreen.styles';
+import { ThemeSelector } from '@azure/communication-ui';
 
 export interface HomeScreenProps {
   startCallHandler(): void;
@@ -67,6 +68,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
           <VideoCameraEmphasisIcon className={videoCameraIconStyle} size="medium" />
           {startCallButtonText}
         </PrimaryButton>
+        <ThemeSelector label="Theme" horizontal={true} />
       </Stack>
       <Image
         alt="Welcome to the ACS Calling sample app"

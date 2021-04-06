@@ -21,7 +21,8 @@ import {
   MapToChatMessageProps,
   MapToErrorBarProps,
   MapToSendBoxProps,
-  MapToTypingIndicatorProps
+  MapToTypingIndicatorProps,
+  SendBoxPropsFromContext
 } from '../../consumers';
 import { WithErrorHandling } from '../../utils';
 
@@ -60,7 +61,8 @@ export default (props: GroupChatProps): JSX.Element => {
   }, []);
   const SendBox = useMemo(() => {
     return connectFuncsToContext(
-      (props: SendBoxProps & ErrorHandlingProps) => WithErrorHandling(SendBoxComponent, props),
+      (props: SendBoxProps & SendBoxPropsFromContext & ErrorHandlingProps) =>
+        WithErrorHandling(SendBoxComponent, props),
       MapToSendBoxProps
     );
   }, []);

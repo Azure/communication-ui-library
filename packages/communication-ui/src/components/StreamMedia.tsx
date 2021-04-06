@@ -3,15 +3,34 @@
 import { ErrorHandlingProps } from '../providers/ErrorProvider';
 import React, { useEffect, useRef } from 'react';
 import { invertedVideoStyle, mediaContainer } from './styles/StreamMedia.styles';
+import { BaseCustomStylesProps } from '../types';
+import { mergeStyles } from '@fluentui/react';
 
+/**
+ * Props for StreamMedia component
+ */
 export interface StreamMediaProps {
+  /** Video stream element to render. */
   videoStreamElement: HTMLElement | null;
+  /** Decides whether invert the video or not. */
   invertVideo?: boolean;
+  /**
+   * Allows users to pass in an object contains custom CSS styles.
+   * @Example
+   * ```
+   * <StreamMedia styles={{ root: { background: 'blue' } }} />
+   * ```
+   */
+  styles?: BaseCustomStylesProps;
 }
 
+/**
+ * StreamMedia component converts a HTMLElement to a JSX Element.
+ * This component becomes very handy when you get the video stream HTMLElement from the calling sdk and want to render it in components like VideoTile.
+ */
 export const StreamMedia = (props: StreamMediaProps & ErrorHandlingProps): JSX.Element => {
   const containerEl = useRef<HTMLDivElement>(null);
-  const { invertVideo, videoStreamElement } = props;
+  const { invertVideo, videoStreamElement, styles } = props;
 
   useEffect(() => {
     const container = containerEl.current;
@@ -20,5 +39,7 @@ export const StreamMedia = (props: StreamMediaProps & ErrorHandlingProps): JSX.E
     }
   }, [videoStreamElement]);
 
-  return <div className={invertVideo ? invertedVideoStyle : mediaContainer} ref={containerEl} />;
+  return (
+    <div className={mergeStyles(invertVideo ? invertedVideoStyle : mediaContainer, styles?.root)} ref={containerEl} />
+  );
 };

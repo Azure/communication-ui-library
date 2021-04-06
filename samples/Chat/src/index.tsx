@@ -11,7 +11,9 @@ if (document.getElementById('root') !== undefined) {
   ReactDOM.render(
     <SwitchableFluentThemeProvider scopeId="SampleChatApp">
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
-      <App />
+      <div className="wrapper">
+        <App />
+      </div>
     </SwitchableFluentThemeProvider>,
     document.getElementById('root')
   );

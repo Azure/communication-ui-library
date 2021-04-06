@@ -4,28 +4,36 @@ import { IStyle, mergeStyles, Persona, PersonaSize, Stack } from '@fluentui/reac
 import React from 'react';
 import { rootStyles, videoContainerStyles, overlayContainerStyles } from './styles/VideoTile.styles';
 import { useTheme } from '@fluentui/react-theme-provider';
+import { BaseCustomStylesProps } from '../types';
 
-export interface VideoTileStylesProps {
-  /** Styles for the root container */
-  root?: IStyle;
-  /** Styles for video container */
+export interface VideoTileStylesProps extends BaseCustomStylesProps {
+  /** Styles for video container. */
   videoContainer?: IStyle;
-  /** Styles for container overlayed on the video container */
+  /** Styles for container overlayed on the video container. */
   overlayContainer?: IStyle;
 }
 
+/**
+ * Props for VideoTile component
+ */
 export interface VideoTileProps {
-  /** React Child components. */
+  /** React Child components. Child Components will show as overlay component in the VideoTile. */
   children?: React.ReactNode;
-  /** Custom styles */
+  /**
+   * Allows users to pass in an object contains custom CSS styles.
+   * @Example
+   * ```
+   * <VideoTile styles={{ root: { background: 'blue' } }} />
+   * ```
+   */
   styles?: VideoTileStylesProps;
   /** Determines if the static image or video stream should be rendered. */
   isVideoReady?: boolean;
-  /** Component with the video stream */
+  /** Component with the video stream. */
   videoProvider?: JSX.Element | null;
-  /** Determines if the video is mirrored or not */
+  /** Determines if the video is mirrored or not. */
   invertVideo?: boolean;
-  /** Custom Component to render when no video is available. Defaults to a Persona Icon */
+  /** Custom Component to render when no video is available. Defaults to a Persona Icon. */
   placeholderProvider?: JSX.Element | null;
 }
 
@@ -38,10 +46,11 @@ export interface PlaceholderProps {
 
 const DefaultPlaceholder = (props: PlaceholderProps): JSX.Element => {
   const { avatarName, noVideoAvailableAriaLabel } = props;
+  const personaStyles = { root: { margin: 'auto' } };
   return (
-    <Stack style={{ position: 'absolute', height: '100%', width: '100%' }}>
+    <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
       <Persona
-        styles={{ root: { margin: 'auto' } }}
+        styles={personaStyles}
         size={PersonaSize.size100}
         hidePersonaDetails={true}
         text={avatarName}

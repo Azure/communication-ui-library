@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Removed userId and displayName props from SendBox. Updated SendBox storybook doc.",
+  "packageName": "@azure/communication-ui",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
