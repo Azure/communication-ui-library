@@ -1,11 +1,12 @@
 // © Microsoft Corporation. All rights reserved.
-import { Call, CallAgent, CallClient, LocalVideoStream, RemoteVideoStream } from '@azure/communication-calling';
+import { Call, CallAgent, CallClient, LocalVideoStream } from '@azure/communication-calling';
 import { callClientDeclaratify, DeclarativeCallClient } from './CallClientDeclarative';
 import { getRemoteParticipantKey } from './Converter';
 import {
   addMockEmitter,
   createMockCall,
   createMockRemoteParticipant,
+  createMockRemoteVideoStream,
   MockCall,
   MockCallAgent,
   MockCommunicationUserCredential,
@@ -353,9 +354,10 @@ describe('declarative call client', () => {
     await createMockCallAndEmitCallsUpdated(testData);
     await createMockParticipantAndEmitParticipantUpdated(testData);
 
-    testData.mockRemoteParticipant.videoStreams = [{} as RemoteVideoStream];
+    const mockRemoteVideoStream = createMockRemoteVideoStream(false);
+    testData.mockRemoteParticipant.videoStreams = [mockRemoteVideoStream];
     testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
-      added: [{} as RemoteVideoStream],
+      added: [mockRemoteVideoStream],
       removed: []
     });
 
@@ -378,9 +380,10 @@ describe('declarative call client', () => {
     await createMockCallAndEmitCallsUpdated(testData);
     await createMockParticipantAndEmitParticipantUpdated(testData);
 
-    testData.mockRemoteParticipant.videoStreams = [{} as RemoteVideoStream];
+    const mockRemoteVideoStream = createMockRemoteVideoStream(false);
+    testData.mockRemoteParticipant.videoStreams = [mockRemoteVideoStream];
     testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
-      added: [{} as RemoteVideoStream],
+      added: [mockRemoteVideoStream],
       removed: []
     });
 
@@ -394,7 +397,7 @@ describe('declarative call client', () => {
     testData.mockRemoteParticipant.videoStreams = [];
     testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
       added: [],
-      removed: [{} as RemoteVideoStream]
+      removed: [mockRemoteVideoStream]
     });
 
     await waitWithBreakCondition(
@@ -406,5 +409,40 @@ describe('declarative call client', () => {
       testData.declarativeCallClient.state.calls.get(mockCallId)?.remoteParticipants.get(participantKey)?.videoStreams
         .length
     ).toBe(0);
+  });
+
+  test('should update state when remote video stream emits `isAvailableChanged`', async () => {
+    const testData = {} as TestData;
+    createClientAndAgentMocks(testData);
+    createDeclarativeClient(testData);
+    await createMockCallAndEmitCallsUpdated(testData);
+    await createMockParticipantAndEmitParticipantUpdated(testData);
+
+    const mockRemoteVideoStream = createMockRemoteVideoStream(false);
+    testData.mockRemoteParticipant.videoStreams = [mockRemoteVideoStream];
+    testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
+      added: [mockRemoteVideoStream],
+      removed: []
+    });
+
+    const participantKey = getRemoteParticipantKey(testData.mockRemoteParticipant.identifier);
+    await waitWithBreakCondition(
+      () =>
+        testData.declarativeCallClient.state.calls.get(mockCallId)?.remoteParticipants.get(participantKey)?.videoStreams
+          .length !== 0
+    );
+
+    mockRemoteVideoStream.isAvailable = true;
+    mockRemoteVideoStream.emit('isAvailableChanged');
+
+    await waitWithBreakCondition(
+      () =>
+        testData.declarativeCallClient.state.calls.get(mockCallId)?.remoteParticipants.get(participantKey)
+          ?.videoStreams[0].isAvailable === true
+    );
+    expect(
+      testData.declarativeCallClient.state.calls.get(mockCallId)?.remoteParticipants.get(participantKey)
+        ?.videoStreams[0].isAvailable
+    ).toBe(true);
   });
 });
