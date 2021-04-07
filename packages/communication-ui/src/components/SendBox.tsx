@@ -2,17 +2,25 @@
 
 import { EMPTY_MESSAGE_REGEX, MAXIMUM_LENGTH_OF_MESSAGE, TEXT_EXCEEDS_LIMIT } from '../constants';
 import React, { useState } from 'react';
-import { IStyle, ITextField, mergeStyles, Stack, TextField } from '@fluentui/react';
+import {
+  IStyle,
+  ITextField,
+  mergeStyles,
+  Stack,
+  TextField,
+  MessageBar,
+  MessageBarType,
+  concatStyleSets
+} from '@fluentui/react';
 import { SendIcon } from '@fluentui/react-northstar';
 import {
   TextFieldStyleProps,
   sendBoxStyle,
-  textFieldStyle,
   sendBoxWrapperStyle,
   sendButtonStyle,
-  sendIconDiv
+  sendIconDiv,
+  suppressIconStyle
 } from './styles/SendBox.styles';
-import { Alert } from '@fluentui/react-northstar/dist/commonjs/components/Alert/Alert';
 import { BaseCustomStylesProps } from '../types';
 
 export interface SendBoxStylesProps extends BaseCustomStylesProps {
@@ -21,9 +29,9 @@ export interface SendBoxStylesProps extends BaseCustomStylesProps {
   /** Styles for the container of the send message icon. */
   sendMessageIconContainer?: IStyle;
   /** Styles for the send message icon; These styles will be ignored when a custom send message icon is provided. */
-  defaultSendMessageIcon?: IStyle;
-  /** Styles for the default system message; These styles will be ignored when a custom system message component is provided. */
-  defaultSystemMessage?: IStyle;
+  sendMessageIcon?: IStyle;
+  /** Styles for the system message; These styles will be ignored when a custom system message component is provided. */
+  systemMessage?: IStyle;
 }
 
 /**
@@ -76,7 +84,11 @@ const defaultOnRenderSystemMessage = (
   systemMessage: string | undefined,
   style: IStyle | undefined
 ): JSX.Element | undefined =>
-  systemMessage ? <Alert attached="bottom" content={systemMessage} className={mergeStyles(style)} /> : undefined;
+  systemMessage ? (
+    <MessageBar messageBarType={MessageBarType.info} styles={concatStyleSets(suppressIconStyle, { root: style })}>
+      {systemMessage}
+    </MessageBar>
+  ) : undefined;
 
 /**
  * `SendBox` is a component for users to send messages and typing notifications. An optional message
@@ -125,15 +137,14 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const textTooLongMessage = textValueOverflow ? TEXT_EXCEEDS_LIMIT : undefined;
 
   return (
-    <>
-      <Stack horizontal={true} className={mergeStyles(sendBoxWrapperStyle, styles?.root)}>
+    <Stack className={mergeStyles(sendBoxWrapperStyle, styles?.root)}>
+      <Stack horizontal={true}>
         <TextField
           multiline
           autoAdjustHeight
           multiple={false}
           resizable={false}
           componentRef={sendTextFieldRef}
-          className={mergeStyles(textFieldStyle, styles?.textField)}
           id="sendbox"
           ariaLabel={'Type'}
           inputClassName={sendBoxStyle}
@@ -148,7 +159,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
             }
             onSendTypingNotification && onSendTypingNotification();
           }}
-          styles={TextFieldStyleProps}
+          styles={concatStyleSets(TextFieldStyleProps, { fieldGroup: styles?.textField })}
         />
 
         <div
@@ -170,14 +181,11 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           {onRenderIcon ? (
             onRenderIcon(props, isMouseOverSendIcon)
           ) : (
-            <SendIcon
-              className={mergeStyles(sendIconDiv, styles?.defaultSendMessageIcon)}
-              outline={!isMouseOverSendIcon}
-            />
+            <SendIcon className={mergeStyles(sendIconDiv, styles?.sendMessageIcon)} outline={!isMouseOverSendIcon} />
           )}
         </div>
       </Stack>
-      {onRenderSystemMessage(systemMessage ? systemMessage : textTooLongMessage, styles?.defaultSystemMessage)}
-    </>
+      {onRenderSystemMessage(systemMessage ? systemMessage : textTooLongMessage, styles?.systemMessage)}
+    </Stack>
   );
 };
