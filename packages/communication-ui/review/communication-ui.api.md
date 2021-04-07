@@ -247,8 +247,8 @@ export interface SendBoxProps {
     disabled?: boolean;
     onRenderIcon?: (props: SendBoxProps, isMouseOverSendIcon: boolean) => JSX.Element | null;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
-    onSendMessage: (messageContent: string) => Promise<void>;
-    onSendTypingNotification: () => Promise<void>;
+    onSendMessage?: (messageContent: string) => Promise<void>;
+    onSendTypingNotification?: () => Promise<void>;
     styles?: SendBoxStylesProps;
     supportNewline?: boolean;
     systemMessage?: string;

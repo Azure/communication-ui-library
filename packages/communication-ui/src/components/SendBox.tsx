@@ -30,19 +30,37 @@ export interface SendBoxStylesProps extends BaseCustomStylesProps {
  * Props for SendBox component
  */
 export interface SendBoxProps {
-  /** Optional boolean to disable text box */
+  /**
+   * Optional boolean to disable text box
+   * @defaultValue false
+   */
   disabled?: boolean;
-  /** Optional text for system message below text box*/
+  /**
+   * Optional text for system message below text box
+   */
   systemMessage?: string;
-  /** Optional callback called when message is sent */
-  onSendMessage: (messageContent: string) => Promise<void>;
-  /** Optional callback called when user is typing */
-  onSendTypingNotification: () => Promise<void>;
-  /** Optional callback to render system message below the SendBox. */
+  /**
+   * Optional callback called when message is sent
+   */
+  onSendMessage?: (messageContent: string) => Promise<void>;
+  /**
+   * Optional callback called when user is typing
+   */
+  onSendTypingNotification?: () => Promise<void>;
+  /**
+   * Optional callback to render system message below the SendBox.
+   * @defaultValue MessageBar
+   */
   onRenderSystemMessage?: (systemMessage: string | undefined) => React.ReactElement;
-  /** Optional boolean to support new line in SendBox. */
+  /**
+   * Optional boolean to support new line in SendBox.
+   * @defaultValue false
+   */
   supportNewline?: boolean;
-  /** Optional callback to render send button icon to the right of the SendBox. */
+  /**
+   * Optional callback to render send button icon to the right of the SendBox.
+   * @defaultValue SendIcon
+   */
   onRenderIcon?: (props: SendBoxProps, isMouseOverSendIcon: boolean) => JSX.Element | null;
   /**
    * Allows users to pass in an object contains custom CSS styles.
@@ -90,7 +108,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     }
     // we dont want to send empty messages including spaces, newlines, tabs
     if (!EMPTY_MESSAGE_REGEX.test(textValue)) {
-      onSendMessage(textValue);
+      onSendMessage && onSendMessage(textValue);
       setTextValue('');
     }
     sendTextFieldRef.current?.focus();
@@ -128,7 +146,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
               ev.preventDefault();
               sendMessageOnClick();
             }
-            onSendTypingNotification();
+            onSendTypingNotification && onSendTypingNotification();
           }}
           styles={TextFieldStyleProps}
         />
