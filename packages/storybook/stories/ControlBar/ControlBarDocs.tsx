@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { Canvas, Description, Heading, Props, Source, SourceState, Title } from '@storybook/addon-docs/blocks';
+import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import React from 'react';
 import { ControlBar } from '../../../communication-ui/src';
 import { AllButtonsControlBarExample } from './examples/AllButtonsControlBarExample';
@@ -23,7 +23,7 @@ export const getDocs: () => JSX.Element = () => {
     <>
       <Title>ControlBar</Title>
       <Description of={ControlBar} />
-      <Canvas withSource={SourceState.NONE}>
+      <Canvas withSource="none">
         <ControlBarExample />
       </Canvas>
 
