@@ -12,6 +12,12 @@ import React from 'react';
 import { renderVideoStream } from '../utils';
 
 export const VideoTileExample: () => JSX.Element = () => {
+  const customStyles = {
+    root: { height: '300px', width: '400px' },
+    videoContainer: { border: '5px solid firebrick' },
+    overlayContainer: { background: 'rgba(165, 13, 13, 0.5)' }
+  };
+  const controlBarStyles = { root: { background: 'white' } };
   return (
     <FluentThemeProvider>
       <VideoTile
@@ -22,13 +28,9 @@ export const VideoTileExample: () => JSX.Element = () => {
         }
         avatarName={'Jack Reacher'}
         invertVideo={true}
-        styles={{
-          root: { height: '300px', width: '400px' },
-          videoContainer: { border: '5px solid firebrick' },
-          overlayContainer: { background: 'rgba(165, 13, 13, 0.5)' }
-        }}
+        styles={customStyles}
       >
-        <ControlBar layout="floatingBottom" styles={{ root: { background: 'white' } }}>
+        <ControlBar layout="floatingBottom" styles={controlBarStyles}>
           <DefaultButton {...videoButtonProps} />
           <DefaultButton {...audioButtonProps} />
           <DefaultButton {...hangupButtonProps} />
