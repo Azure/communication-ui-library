@@ -4,13 +4,12 @@ import { getTheme, mergeStyles } from '@fluentui/react';
 
 const palette = getTheme().palette;
 
-export const textFieldStyle = mergeStyles({
-  width: '100%',
-  minHeight: '0px',
-  fontSize: '8.25rem'
-});
-
 export const TextFieldStyleProps = {
+  root: {
+    width: '100%',
+    minHeight: '0px',
+    fontSize: '8.25rem'
+  },
   wrapper: {},
   fieldGroup: {
     height: 'auto',
@@ -21,6 +20,11 @@ export const TextFieldStyleProps = {
 export const sendBoxWrapperStyle = mergeStyles({
   padding: '0.0625rem'
 });
+
+export const suppressIconStyle = {
+  iconContainer: { minHeight: '0', minWidth: '0', height: '0', width: '0', margin: '0' },
+  icon: { display: 'none' }
+};
 
 export const sendBoxStyle = mergeStyles({
   minHeight: '0',
@@ -40,15 +44,6 @@ export const sendBoxStyle = mergeStyles({
   ':-moz-placeholder': {
     fontSize: '0.875rem'
   }
-});
-
-export const sendIconStyle = mergeStyles({
-  width: '2.25rem',
-  height: '2.25rem',
-  color: 'grey',
-  paddingLeft: '0.5rem',
-  paddingTop: '0.625rem',
-  fontSize: '0.875rem' // 14px
 });
 
 export const sendButtonStyle = mergeStyles({

@@ -53,7 +53,7 @@ export const MessageThreadComponent: () => JSX.Element = () => {
       />
       {/* We need to use these two buttons to render more messages in the chat thread and showcase the "new message" button.
       Using storybook knobs would trigger the whole story to do a fresh re-render, not just components inside the story. */}
-      <Stack horizontal horizontalAlign="space-between">
+      <Stack horizontal horizontalAlign="space-between" tokens={{ childrenGap: '1rem' }}>
         <PrimaryButton text="Send new message from others" onClick={onSendNewMessageFromOthers} />
         <PrimaryButton text="Send new message" onClick={onSendNewMessage} />
       </Stack>
