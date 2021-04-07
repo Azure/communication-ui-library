@@ -19,7 +19,7 @@ export const getDocs: () => JSX.Element = () => {
       <Description>
         In these examples, we use [Stack](https://developer.microsoft.com/en-us/fluentui#/controls/web/stack) component
         from `fluentui` to build a layout for our video tiles. For the individual elements in this layout we use
-        `VideoTile` from `@azure/communication-ui` to render each participant. We're not passing in video stream to the
+        `VideoTile` from `@azure/communication-ui` to render each participant. We are not passing in video stream to the
         `VideoTile` component in these examples, instead a
         [Persona](https://developer.microsoft.com/en-us/fluentui#/controls/web/persona) component is used as a
         placeholder component.

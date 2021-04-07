@@ -3,7 +3,7 @@
 import React from 'react';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
 import { Meta } from '@storybook/react/types-6-0';
-import { number, object, select } from '@storybook/addon-knobs';
+import { number } from '@storybook/addon-knobs';
 import {
   mediaGalleryWidthDefault,
   mediaGalleryWidthOptions,
@@ -11,8 +11,7 @@ import {
   mediaGalleryHeightOptions,
   EXAMPLES_FOLDER_PREFIX
 } from '../../constants';
-import { GridLayout, VideoTile, StreamMedia } from '@azure/communication-ui';
-import { renderVideoStream } from '../../utils';
+import { GridLayout, VideoTile } from '@azure/communication-ui';
 import { Stack, mergeStyles, PersonaSize, Persona } from '@fluentui/react';
 import { getDocs } from './LayoutsDocs';
 
