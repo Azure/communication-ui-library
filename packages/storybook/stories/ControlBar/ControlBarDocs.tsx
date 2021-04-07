@@ -11,7 +11,6 @@ import ControlBarLayoutExampleText from '!!raw-loader!./examples/ControlBarLayou
 import { CustomControlBarExample } from './examples/CustomControlBarExample';
 import CustomControlBarExampleText from '!!raw-loader!./examples/CustomControlBarExample.tsx';
 import { OptionsButtonExample } from './examples/OptionsButton.Example';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const OptionsButtonExampleText = require('!!raw-loader!./examples/OptionsButton.Example.tsx').default;
 
 const importStatement = `

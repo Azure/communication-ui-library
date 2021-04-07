@@ -13,13 +13,15 @@
       "commandKind": "global",
       "name": "changelog",
       "summary": "Runs beachball change",
-      "shellCommand": "node common/release/node_modules/beachball/bin/beachball"
+      "shellCommand": "node common/release/node_modules/beachball/bin/beachball",
+      "safeForSimultaneousRushProcesses": true
     },
     {
       "commandKind": "global",
       "name": "changelog:check",
       "summary": "Checks change files have been generated",
-      "shellCommand": "node common/release/node_modules/beachball/bin/beachball check"
+      "shellCommand": "node common/release/node_modules/beachball/bin/beachball check",
+      "safeForSimultaneousRushProcesses": true
     },
     {
       "commandKind": "bulk",
@@ -27,7 +29,8 @@
       "summary": "Run tests in each project.",
       "description": "Run jest tests in each project.",
       "enableParallelism": true,
-      "allowWarningsInSuccessfulBuild": true
+      "allowWarningsInSuccessfulBuild": true,
+      "safeForSimultaneousRushProcesses": true
     },
     {
       "commandKind": "bulk",
@@ -37,7 +40,8 @@
       "enableParallelism": true,
       "allowWarningsInSuccessfulBuild": true,
       "ignoreDependencyOrder": true,
-      "incremental": false
+      "incremental": false,
+      "safeForSimultaneousRushProcesses": true
     },
     {
       "commandKind": "bulk",
@@ -46,7 +50,8 @@
       "enableParallelism": true,
       "allowWarningsInSuccessfulBuild": true,
       "ignoreDependencyOrder": true,
-      "incremental": false
+      "incremental": false,
+      "safeForSimultaneousRushProcesses": true
     },
     {
       "commandKind": "bulk",
