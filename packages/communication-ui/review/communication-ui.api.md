@@ -5,7 +5,6 @@
 ```ts
 
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
-import { ErrorInfo } from 'react';
 import { IButtonProps } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
@@ -161,11 +160,8 @@ export enum MessageStatus {
     SENDING = "sending"
 }
 
-// Warning: (ae-forgotten-export) The symbol "ErrorHandlingProps" needs to be exported by the entry point release.index.d.ts
-// Warning: (ae-forgotten-export) The symbol "ChatMessagePropsFromContext" needs to be exported by the entry point release.index.d.ts
-//
 // @public
-export const MessageThread: (props: MessageThreadProps & ErrorHandlingProps & ChatMessagePropsFromContext) => JSX.Element;
+export const MessageThread: (props: MessageThreadProps) => JSX.Element;
 
 // @public
 export type MessageThreadProps = {
@@ -196,7 +192,7 @@ export interface MessageThreadStylesProps extends BaseCustomStylesProps {
 export const optionsButtonProps: IButtonProps;
 
 // @public
-export const ParticipantItem: (props: ParticipantItemProps & ErrorHandlingProps) => JSX.Element;
+export const ParticipantItem: (props: ParticipantItemProps) => JSX.Element;
 
 // @public
 export interface ParticipantItemProps {
@@ -224,7 +220,7 @@ export interface PlaceholderProps {
 }
 
 // @public
-export const ReadReceipt: (props: ReadReceiptProps & ErrorHandlingProps) => JSX.Element;
+export const ReadReceipt: (props: ReadReceiptProps) => JSX.Element;
 
 // @public
 export interface ReadReceiptProps {
@@ -243,17 +239,19 @@ export const recordButtonProps: IButtonProps;
 // @public
 export const screenShareButtonProps: IButtonProps;
 
-// Warning: (ae-forgotten-export) The symbol "SendBoxPropsFromContext" needs to be exported by the entry point release.index.d.ts
-//
 // @public
-export const SendBox: (props: SendBoxProps & SendBoxPropsFromContext & ErrorHandlingProps) => JSX.Element;
+export const SendBox: (props: SendBoxProps) => JSX.Element;
 
 // @public
 export interface SendBoxProps {
-    onRenderIcon?: (props: SendBoxProps & SendBoxPropsFromContext, isMouseOverSendIcon: boolean) => JSX.Element | null;
+    disabled?: boolean;
+    onRenderIcon?: (props: SendBoxProps, isMouseOverSendIcon: boolean) => JSX.Element | null;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
+    onSendMessage: (messageContent: string) => Promise<void>;
+    onSendTypingNotification: () => Promise<void>;
     styles?: SendBoxStylesProps;
     supportNewline?: boolean;
+    systemMessage?: string;
 }
 
 // @public (undocumented)
@@ -265,7 +263,7 @@ export interface SendBoxStylesProps extends BaseCustomStylesProps {
 }
 
 // @public
-export const StreamMedia: (props: StreamMediaProps & ErrorHandlingProps) => JSX.Element;
+export const StreamMedia: (props: StreamMediaProps) => JSX.Element;
 
 // @public
 export interface StreamMediaProps {
@@ -312,7 +310,7 @@ export interface ThemeTogglerProps {
 }
 
 // @public
-export const TypingIndicator: (props: TypingIndicatorProps & ErrorHandlingProps) => JSX.Element;
+export const TypingIndicator: (props: TypingIndicatorProps) => JSX.Element;
 
 // @public
 export interface TypingIndicatorProps {
