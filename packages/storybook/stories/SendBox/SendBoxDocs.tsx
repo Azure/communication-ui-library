@@ -1,15 +1,18 @@
 // © Microsoft Corporation. All rights reserved.
+
 import React from 'react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
 import { SendBox } from '@azure/communication-ui';
 import { SendBoxExample } from './examples/SendBoxExample';
-import SendBoxExampleText from '!!raw-loader!./examples/SendBoxExample.tsx';
 import { SendBoxWithSystemMessageExample } from './examples/SendBoxWithSystemMessageExample';
-import SendBoxWithSystemMessageExampleText from '!!raw-loader!./examples/SendBoxWithSystemMessageExample.tsx';
 import { CustomIconExample } from './examples/CustomIconExample';
-import CustomIconExampleText from '!!raw-loader!./examples/CustomIconExample.tsx';
 import { CustomStylingExample } from './examples/CustomStylingExample';
-import CustomStylingExampleText from '!!raw-loader!./examples/CustomStylingExample.tsx';
+
+const SendBoxExampleText = require('!!raw-loader!./examples/SendBoxExample.tsx').default;
+const SendBoxWithSystemMessageExampleText = require('!!raw-loader!./examples/SendBoxWithSystemMessageExample.tsx')
+  .default;
+const CustomIconExampleText = require('!!raw-loader!./examples/CustomIconExample.tsx').default;
+const CustomStylingExampleText = require('!!raw-loader!./examples/CustomStylingExample.tsx').default;
 
 const importStatement = `import { SendBox } from '@azure/communication-ui';`;
 
