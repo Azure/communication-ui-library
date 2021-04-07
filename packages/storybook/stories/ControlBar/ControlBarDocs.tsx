@@ -8,11 +8,8 @@ import { AllButtonsControlBarExample } from './examples/AllButtonsControlBarExam
 import { ControlBarLayoutExample } from './examples/ControlBarLayoutExample';
 import { CustomControlBarExample } from './examples/CustomControlBarExample';
 
-/* eslint-disable @typescript-eslint/no-var-requires */
 const AllButtonsControlBarExampleText = require('!!raw-loader?./examples/AllButtonsControlBarExample.tsx').default;
-/* eslint-disable @typescript-eslint/no-var-requires */
 const ControlBarLayoutExampleText = require('!!raw-loader?./examples/ControlBarLayoutExample.tsx').default;
-/* eslint-disable @typescript-eslint/no-var-requires */
 const CustomControlBarExampleText = require('!!raw-loader?./examples/CustomControlBarExample.tsx').default;
 
 const importStatement = `

@@ -6,12 +6,9 @@ import { SendBoxExample } from './examples/SendBoxExample';
 import { SendBoxWithSystemMessageExample } from './examples/SendBoxWithSystemMessageExample';
 import { CustomIconExample } from './examples/CustomIconExample';
 
-/* eslint-disable @typescript-eslint/no-var-requires */
 const SendBoxExampleText = require('!!raw-loader!./examples/SendBoxExample.tsx').default;
-/* eslint-disable @typescript-eslint/no-var-requires */
 const SendBoxWithSystemMessageExampleText = require('!!raw-loader!./examples/SendBoxWithSystemMessageExample.tsx')
   .default;
-/* eslint-disable @typescript-eslint/no-var-requires */
 const CustomIconExampleText = require('!!raw-loader!./examples/CustomIconExample.tsx').default;
 
 const importStatement = `import { SendBox } from '@azure/communication-ui';`;
