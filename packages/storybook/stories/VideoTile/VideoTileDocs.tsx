@@ -2,41 +2,11 @@
 
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import React from 'react';
-import { FluentThemeProvider, StreamMedia, VideoTile } from '@azure/communication-ui';
-import { renderVideoStream } from '../utils';
-
-const importStatement = `
-import { VideoTile } from '@azure/communication-ui';
-`;
-
-const VideoTileExample: () => JSX.Element = () => {
-  return (
-    <FluentThemeProvider>
-      <VideoTile
-        avatarName={'Maximus Aurelius'}
-        videoProvider={<StreamMedia videoStreamElement={renderVideoStream()} />}
-        isVideoReady={false}
-        invertVideo={false}
-        styles={{ root: { minHeight: '300px', minWidth: '400px' } }}
-      />
-    </FluentThemeProvider>
-  );
-};
-
-const exampleCode = `
-const VideoTileExample: () => JSX.Element = () => {
-  return (
-    <FluentThemeProvider>
-      <VideoTile 
-        avatarName={'Maximus Aurelius'}
-        videoProvider={<StreamMedia videoStreamElement={renderVideoStream()} />}
-        isVideoReady={false}
-        invertVideo={false}
-       styles={{ root: {minHeight: '300px', minWidth: '400px'} }} />
-    </FluentThemeProvider>
-  );
-};
-`;
+import { VideoTile } from '../../../communication-ui/src';
+import { VideoTileExample } from './VideoTile.Example';
+import VideoTileExampleText from '!!raw-loader!./VideoTile.Example';
+import { VideoTileExample as VideoTileStylineExample } from '../Styling/StylingVideoTile.Example';
+import VideoTileStylineExampleText from '!!raw-loader!../Styling/StylingVideoTile.Example';
 
 export const getDocs: () => JSX.Element = () => {
   return (
@@ -45,13 +15,25 @@ export const getDocs: () => JSX.Element = () => {
       <Description>
         The VideoTile component displays a static component or the available video stream of a participant.
       </Description>
+
       <Heading>Importing</Heading>
-      <Source code={importStatement} />
+      <Source code="import { VideoTile } from '@azure/communication-ui';" />
+
       <Heading>Example</Heading>
       <Canvas>
         <VideoTileExample />
       </Canvas>
-      <Source code={exampleCode} />
+      <Source code={VideoTileExampleText} />
+
+      <Heading>Styling</Heading>
+      <Description>
+        A VideoTile component can be styled just like other components using the `styles` property.
+      </Description>
+      <Canvas>
+        <VideoTileStylineExample />
+      </Canvas>
+      <Source code={VideoTileStylineExampleText} />
+
       <Heading>Props</Heading>
       <Props of={VideoTile} />
     </>
