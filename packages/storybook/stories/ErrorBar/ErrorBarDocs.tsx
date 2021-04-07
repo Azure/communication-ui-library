@@ -4,9 +4,10 @@ import React from 'react';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import { ErrorBar } from '@azure/communication-ui';
 import { ErrorBarExample } from './examples/ErrorBarExample';
-import ErrorBarExampleText from '!!raw-loader!./examples/ErrorBarExample.tsx';
 import { OtherSeverityErrorBarExample } from './examples/OtherSeverityErrorBarExample';
-import OtherSeverityErrorBarExampleText from '!!raw-loader!./examples/OtherSeverityErrorBarExample.tsx';
+
+const ErrorBarExampleText = require('!!raw-loader!./examples/ErrorBarExample.tsx').default;
+const OtherSeverityErrorBarExampleText = require('!!raw-loader!./examples/OtherSeverityErrorBarExample.tsx').default;
 
 const importStatement = `
 import { ErrorBarComponent, CommunicationUiErrorSeverity } from '@azure/communication-ui';
