@@ -30,7 +30,6 @@ export const ScreenShareLayout: () => JSX.Element = () => {
   );
   const aspectRatioNumberArray = sidePanelTileAspectRatio.split(':');
   const aspectRatio = (100 * aspectRatioNumberArray[1]) / aspectRatioNumberArray[0] + '%';
-  console.log(aspectRatioNumberArray, aspectRatio);
 
   const aspectRatioBoxStyle = mergeStyles({
     border: '1',
