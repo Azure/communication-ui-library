@@ -6,7 +6,9 @@ import { ErrorBar } from '@azure/communication-ui';
 import { ErrorBarExample } from './examples/ErrorBarExample';
 import { OtherSeverityErrorBarExample } from './examples/OtherSeverityErrorBarExample';
 
+/* eslint-disable @typescript-eslint/no-var-requires */
 const ErrorBarExampleText = require('!!raw-loader!./examples/ErrorBarExample.tsx').default;
+/* eslint-disable @typescript-eslint/no-var-requires */
 const OtherSeverityErrorBarExampleText = require('!!raw-loader!./examples/OtherSeverityErrorBarExample.tsx').default;
 
 const importStatement = `
