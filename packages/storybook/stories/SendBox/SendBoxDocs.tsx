@@ -8,6 +8,8 @@ import { SendBoxWithSystemMessageExample } from './examples/SendBoxWithSystemMes
 import SendBoxWithSystemMessageExampleText from '!!raw-loader!./examples/SendBoxWithSystemMessageExample.tsx';
 import { CustomIconExample } from './examples/CustomIconExample';
 import CustomIconExampleText from '!!raw-loader!./examples/CustomIconExample.tsx';
+import { CustomStylingExample } from './examples/CustomStylingExample';
+import CustomStylingExampleText from '!!raw-loader!./examples/CustomStylingExample.tsx';
 
 const importStatement = `import { SendBox } from '@azure/communication-ui';`;
 
@@ -31,13 +33,22 @@ export const getDocs: () => JSX.Element = () => {
       </Canvas>
       <Heading>Customize send icon</Heading>
       <Description>
-        To customize the send icon, use the onRenderIcon property like in the example below. A [Fluent UI
-        Icon](https://developer.microsoft.com/en-us/fluentui#/controls/web/icon) is used in this example but you can use
-        any `JSX.Element`.
+        To customize the send icon, use the `onRenderIcon` property like in the example below. A Fluent UI
+        [Icon](https://developer.microsoft.com/en-us/fluentui#/controls/web/icon) is used in this example but you can
+        use any `JSX.Element`.
       </Description>
       <Source code={CustomIconExampleText} />
       <Canvas withSource="none">
         <CustomIconExample />
+      </Canvas>
+      <Heading>Customize styling</Heading>
+      <Description>
+        To customize the style of SendBox, use the `styles` property like in the example below. Notice that the keys of
+        `styles` property are sub-components of `SendBox`, each of which can be styled independently.
+      </Description>
+      <Source code={CustomStylingExampleText} />
+      <Canvas withSource="none">
+        <CustomStylingExample />
       </Canvas>
       <Heading>Props</Heading>
       <Props of={SendBox} />
