@@ -4,9 +4,11 @@ import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/a
 import React from 'react';
 import { VideoTile } from '../../../communication-ui/src';
 import { VideoTileExample } from './VideoTile.Example';
-import VideoTileExampleText from '!!raw-loader!./VideoTile.Example';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const VideoTileExampleText = require('!!raw-loader!./VideoTile.Example').default;
 import { VideoTileExample as VideoTileStylineExample } from '../Styling/StylingVideoTile.Example';
-import VideoTileStylineExampleText from '!!raw-loader!../Styling/StylingVideoTile.Example';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const VideoTileStylineExampleText = require('!!raw-loader!../Styling/StylingVideoTile.Example').default;
 
 export const getDocs: () => JSX.Element = () => {
   return (
