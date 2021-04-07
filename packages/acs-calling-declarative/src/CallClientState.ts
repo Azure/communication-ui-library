@@ -91,8 +91,7 @@ export interface RemoteParticipant {
 }
 
 /**
- * State only version of {@Link @azure/communication-calling#Call}. RemoteParticipants is a map of identifier
- * {@Link Converter.getRemoteParticipantKey} to {@Link @azure/communication-calling#RemoteParticipant}.
+ * State only version of {@Link @azure/communication-calling#Call}. RemoteParticipants is a .
  */
 export interface Call {
   /**
@@ -128,14 +127,20 @@ export interface Call {
    */
   localVideoStreams: ReadonlyArray<LocalVideoStream>;
   /**
-   * Proxy of {@Link @azure/communication-calling#Call.remoteParticipants}.
+   * Proxy of {@Link @azure/communication-calling#Call.remoteParticipants}. Map of identifier
+   * {@Link Converter.getRemoteParticipantKey} to {@Link @azure/communication-calling#RemoteParticipant}
    */
   remoteParticipants: Map<string, RemoteParticipant>;
+  /**
+   * Stores remote participants that have left the call so that the callEndReason could be retrieved. Map of identifier
+   * {@Link Converter.getRemoteParticipantKey} to {@Link @azure/communication-calling#RemoteParticipant}
+   */
+  remoteParticipantsEnded: Map<string, RemoteParticipant>;
 }
 
 /**
- * State only version of {@Link @azure/communication-calling#IncomingCall}. CallEnded and callEndReason are added by the
- * declarative layer based on received events.
+ * State only version of {@Link @azure/communication-calling#IncomingCall}. CallEndReason is added by the declarative
+ * layer based on received events.
  */
 export interface IncomingCall {
   /**
@@ -147,13 +152,7 @@ export interface IncomingCall {
    */
   callerInfo: CallerInfo;
   /**
-   * Set to true when 'callEnded' event on {@Link @azure/communication-calling#IncomingCall} is received. Defaults to
-   * false.
-   */
-  callEnded: boolean;
-  /**
    * Set to the state returned by 'callEnded' event on {@Link @azure/communication-calling#IncomingCall} when received.
-   * If it is undefined then no 'callEnded' event was received yet.
    */
   callEndReason?: CallEndReason;
 }
@@ -204,11 +203,23 @@ export interface CallClientState {
    */
   calls: Map<string, Call>;
   /**
+   * Calls that have ended are stored here so the callEndReason could be checked. It is a map of Call {@Link Call}. It
+   * is keyed by Call.id.
+   */
+  callsEnded: Map<string, Call>;
+  /**
    * Proxy of {@Link @azure/communication-calling#IncomingCall} as a map of IncomingCall {@Link IncomingCall} received
    * in the event 'incomingCall' emitted by {@Link @azure/communication-calling#CallAgent}. It is keyed by
    * IncomingCall.id.
    */
   incomingCalls: Map<string, IncomingCall>;
+  /**
+   * Incoming Calls that have ended are stored here so the callEndReason could be checked. It is a map of IncomingCall
+   * {@Link IncomingCall} received in the event 'incomingCall' emitted by
+   * {@Link @azure/communication-calling#CallAgent}. It is keyed by
+   * IncomingCall.id.
+   */
+  incomingCallsEnded: Map<string, IncomingCall>;
   /**
    * Proxy of {@Link @azure/communication-calling#DeviceManager} and its events.
    */

@@ -18,7 +18,14 @@ import {
 import EventEmitter from 'events';
 import { callAgentDeclaratify } from './CallAgentDeclarative';
 import { CallContext } from './CallContext';
-import { createMockCall, createMockRemoteParticipant, MockCall, mockoutObjectFreeze } from './TestUtils';
+import {
+  createMockCall,
+  createMockIncomingCall,
+  createMockRemoteParticipant,
+  MockCall,
+  mockoutObjectFreeze,
+  waitWithBreakCondition
+} from './TestUtils';
 
 mockoutObjectFreeze();
 
@@ -104,6 +111,7 @@ describe('declarative call agent', () => {
     await declarativeCallAgent.dispose();
     expect(mockCall.emitter.eventNames().length).toBe(0);
     expect(mockCallAgent.emitter.eventNames().length).toBe(0);
+    expect(context.getState().calls.size).toBe(0);
   });
 
   test('should update state with new call when startCall is invoked', () => {
@@ -122,5 +130,52 @@ describe('declarative call agent', () => {
     const declarativeCallAgent = callAgentDeclaratify(mockCallAgent, context);
     declarativeCallAgent.join({ meetingLink: '' });
     expect(context.getState().calls.size).toBe(1);
+  });
+
+  test('should move call to callEnded when call is removed', async () => {
+    const mockCallAgent = new MockCallAgent();
+    const context = new CallContext();
+    expect(context.getState().calls.size).toBe(0);
+    callAgentDeclaratify(mockCallAgent, context);
+
+    const mockCall = createMockCall(mockCallId);
+    mockCallAgent.calls = [mockCall];
+    mockCallAgent.emit('callsUpdated', { added: [mockCall], removed: [] });
+
+    await waitWithBreakCondition(() => context.getState().calls.size !== 0);
+
+    expect(context.getState().calls.size).toBe(1);
+
+    mockCall.callEndReason = { code: 1 };
+    mockCallAgent.calls = [];
+    mockCallAgent.emit('callsUpdated', { added: [], removed: [mockCall] });
+
+    await waitWithBreakCondition(() => context.getState().callsEnded.size !== 0);
+
+    expect(context.getState().calls.size).toBe(0);
+    expect(context.getState().callsEnded.size).toBe(1);
+    expect(context.getState().callsEnded.get(mockCallId)?.callEndReason?.code).toBe(1);
+  });
+
+  test('should move incoming call to incomingCallEnded when incoming call is ended', async () => {
+    const mockCallAgent = new MockCallAgent();
+    const context = new CallContext();
+    expect(context.getState().calls.size).toBe(0);
+    callAgentDeclaratify(mockCallAgent, context);
+
+    const mockIncomingCall = createMockIncomingCall(mockCallId);
+    mockCallAgent.emit('incomingCall', { incomingCall: mockIncomingCall });
+
+    await waitWithBreakCondition(() => context.getState().incomingCalls.size !== 0);
+
+    expect(context.getState().incomingCalls.size).toBe(1);
+
+    mockIncomingCall.emit('callEnded', { callEndReason: { code: 1 } });
+
+    await waitWithBreakCondition(() => context.getState().callsEnded.size !== 0);
+
+    expect(context.getState().incomingCalls.size).toBe(0);
+    expect(context.getState().incomingCallsEnded.size).toBe(1);
+    expect(context.getState().incomingCallsEnded.get(mockCallId)?.callEndReason?.code).toBe(1);
   });
 });

@@ -30,6 +30,7 @@ export interface Call {
     isScreenSharingOn: boolean;
     localVideoStreams: ReadonlyArray<LocalVideoStream>;
     remoteParticipants: Map<string, RemoteParticipant>;
+    remoteParticipantsEnded: Map<string, RemoteParticipant>;
     state: CallState;
 }
 
@@ -39,8 +40,10 @@ export const callClientDeclaratify: (callClient: CallClient) => DeclarativeCallC
 // @public
 export interface CallClientState {
     calls: Map<string, Call>;
+    callsEnded: Map<string, Call>;
     deviceManagerState: DeviceManagerState;
     incomingCalls: Map<string, IncomingCall>;
+    incomingCallsEnded: Map<string, IncomingCall>;
 }
 
 // @public
@@ -62,7 +65,6 @@ export type DeviceManagerState = {
 
 // @public
 export interface IncomingCall {
-    callEnded: boolean;
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
     id: string;

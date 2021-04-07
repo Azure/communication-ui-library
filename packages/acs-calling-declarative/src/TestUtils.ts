@@ -1,5 +1,12 @@
 // © Microsoft Corporation. All rights reserved.
-import { Call, CallAgent, LocalVideoStream, RemoteParticipant, RemoteVideoStream } from '@azure/communication-calling';
+import {
+  Call,
+  CallAgent,
+  IncomingCall,
+  LocalVideoStream,
+  RemoteParticipant,
+  RemoteVideoStream
+} from '@azure/communication-calling';
 import EventEmitter from 'events';
 
 let backupFreezeFunction;
@@ -30,6 +37,7 @@ type Mutable<T> = {
 export type MockCall = Mutable<Call> & MockEmitter;
 export type MockCallAgent = Mutable<CallAgent> & MockEmitter;
 export type MockRemoteParticipant = Mutable<RemoteParticipant> & MockEmitter;
+export type MockIncomingCall = Mutable<IncomingCall> & MockEmitter;
 
 export class MockCommunicationUserCredential {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -38,7 +46,7 @@ export class MockCommunicationUserCredential {
   public dispose(): void {}
 }
 
-export function addMockEmitter(object: MockCall | MockCallAgent | MockRemoteParticipant): any {
+export function addMockEmitter(object: MockCall | MockCallAgent | MockRemoteParticipant | MockIncomingCall): any {
   object.emitter = new EventEmitter();
   object.on = (event: any, listener: any): void => {
     object.emitter.on(event, listener);
@@ -67,4 +75,33 @@ export function createMockRemoteParticipant(mockCommunicationUserId: string): Mo
     videoStreams: [] as ReadonlyArray<RemoteVideoStream>
   } as MockRemoteParticipant;
   return addMockEmitter(mockRemoteParticipant);
+}
+
+export function createMockIncomingCall(mockCallId: string): MockIncomingCall {
+  const mockIncomingCall = { id: mockCallId } as MockIncomingCall;
+  return addMockEmitter(mockIncomingCall);
+}
+
+function waitMilliseconds(duration: number): Promise<void> {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, duration);
+  });
+}
+
+/**
+ * This will wait for up to 4 seconds and break when the given breakCondition is true. The reason for four seconds is
+ * that by default the jest timeout for waiting for test is 5 seconds so ideally we want to break this and fail then
+ * fail some expects check before the 5 seconds otherwise you'll just get a cryptic 'jest timeout error'.
+ *
+ * @param breakCondition
+ */
+export async function waitWithBreakCondition(breakCondition: () => boolean): Promise<void> {
+  for (let i = 0; i < 40; i++) {
+    await waitMilliseconds(100);
+    if (breakCondition()) {
+      break;
+    }
+  }
 }

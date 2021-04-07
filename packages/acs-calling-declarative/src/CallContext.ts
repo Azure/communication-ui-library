@@ -18,7 +18,9 @@ enableMapSet();
 export class CallContext {
   private _state: CallClientState = {
     calls: new Map<string, Call>(),
+    callsEnded: new Map<string, Call>(),
     incomingCalls: new Map<string, IncomingCall>(),
+    incomingCallsEnded: new Map<string, Call>(),
     deviceManagerState: {
       isSpeakerSelectionAvailable: false,
       cameras: [],
@@ -61,10 +63,31 @@ export class CallContext {
     );
   }
 
-  public removeCall(id: string): void {
+  public removeCall(callId: string): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        draft.calls.delete(id);
+        draft.calls.delete(callId);
+      })
+    );
+  }
+
+  public setCallEnded(callId: string, callEndReason: CallEndReason | undefined): void {
+    this.setState(
+      produce(this._state, (draft: CallClientState) => {
+        const call = draft.calls.get(callId);
+        if (call) {
+          draft.calls.delete(callId);
+          call.callEndReason = callEndReason;
+          draft.callsEnded.set(callId, call);
+        }
+      })
+    );
+  }
+
+  public removeCallEnded(callId: string): void {
+    this.setState(
+      produce(this._state, (draft: CallClientState) => {
+        draft.callsEnded.delete(callId);
       })
     );
   }
@@ -129,6 +152,17 @@ export class CallContext {
         const call = draft.calls.get(callId);
         if (call) {
           call.localVideoStreams = streams;
+        }
+      })
+    );
+  }
+
+  public setCallIsMicrophoneMuted(callId: string, isMicrophoneMuted: boolean): void {
+    this.setState(
+      produce(this._state, (draft: CallClientState) => {
+        const call = draft.calls.get(callId);
+        if (call) {
+          call.isMicrophoneMuted = isMicrophoneMuted;
         }
       })
     );
@@ -217,14 +251,31 @@ export class CallContext {
     );
   }
 
-  public setIncomingCallEnded(callId: string, callEndReason: CallEndReason): void {
+  public removeIncomingCall(callId: string): void {
+    this.setState(
+      produce(this._state, (draft: CallClientState) => {
+        draft.incomingCalls.delete(callId);
+      })
+    );
+  }
+
+  public setIncomingCallEnded(callId: string, callEndReason: CallEndReason | undefined): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         const call = draft.incomingCalls.get(callId);
         if (call) {
+          draft.incomingCalls.delete(callId);
           call.callEndReason = callEndReason;
-          call.callEnded = true;
+          draft.incomingCallsEnded.set(callId, call);
         }
+      })
+    );
+  }
+
+  public removeIncomingCallEnded(callId: string): void {
+    this.setState(
+      produce(this._state, (draft: CallClientState) => {
+        draft.incomingCallsEnded.delete(callId);
       })
     );
   }
