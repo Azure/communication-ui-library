@@ -1,36 +1,9 @@
-// © Microsoft Corporation. All rights reserved.
-
+import { VideoTile } from '@azure/communication-ui';
+import { mergeStyles, Persona, PersonaSize, Stack } from '@fluentui/react';
 import React from 'react';
-// also exported from '@storybook/react' if you can deal with breaking changes in 6.1
-import { Meta } from '@storybook/react/types-6-0';
-import { number, object, select } from '@storybook/addon-knobs';
-import {
-  mediaGalleryWidthDefault,
-  mediaGalleryWidthOptions,
-  mediaGalleryHeightDefault,
-  mediaGalleryHeightOptions,
-  EXAMPLES_FOLDER_PREFIX
-} from '../../constants';
-import { GridLayout, VideoTile, StreamMedia } from '@azure/communication-ui';
-import { renderVideoStream } from '../../utils';
-import { Stack, mergeStyles, PersonaSize, Persona } from '@fluentui/react';
-import { getDocs } from './LayoutsDocs';
 
-export const ScreenShareLayout: () => JSX.Element = () => {
-  const width = number('Width (px)', 850, mediaGalleryWidthOptions);
-  const height = number('Height (px)', mediaGalleryHeightDefault, mediaGalleryHeightOptions);
-
+export const ScreenShareLayoutExample: () => JSX.Element = () => {
   const defaultParticipants = ['Michael', 'Jim', 'Pam', 'Dwight', 'Kelly', 'Ryan', 'Andy'];
-
-  const sidePanelWidthRatio = select('Side Panel Width Ratio', ['30%', '35%', '40%', '45%', '50%'], '30%');
-  const sidePanelTileAspectRatio = select(
-    'Side Panel Tile Aspect Ratio (Width:Height)',
-    ['16:9', '3:2', '4:3', '5:9', '1:1'],
-    '16:9'
-  );
-  const aspectRatioNumberArray = sidePanelTileAspectRatio.split(':');
-  const aspectRatio = (100 * aspectRatioNumberArray[1]) / aspectRatioNumberArray[0] + '%';
-  console.log(aspectRatioNumberArray, aspectRatio);
 
   const aspectRatioBoxStyle = mergeStyles({
     border: '1',
@@ -38,7 +11,7 @@ export const ScreenShareLayout: () => JSX.Element = () => {
     width: '100%',
     height: 0,
     position: 'relative',
-    paddingTop: aspectRatio
+    paddingTop: '56.25%'
   });
 
   const aspectRatioBoxContentStyle = mergeStyles({
@@ -50,7 +23,7 @@ export const ScreenShareLayout: () => JSX.Element = () => {
   });
 
   const videoStreamStyle = mergeStyles({
-    border: 1,
+    border: '1',
     borderStyle: 'solid',
     position: 'absolute',
     bottom: '.25rem',
@@ -83,9 +56,9 @@ export const ScreenShareLayout: () => JSX.Element = () => {
   });
 
   return (
-    <Stack style={{ height: `${height}px`, width: `${width}px`, border: '1px' }} horizontal>
+    <Stack style={{ height: `500px`, width: `850px`, border: '1px' }} horizontal>
       {/* Side panel component in this layout */}
-      <Stack.Item className={mergeStyles({ height: '100%', width: sidePanelWidthRatio })}>
+      <Stack.Item className={mergeStyles({ height: '100%', width: '30%' })}>
         <Stack grow className={mergeStyles({ height: '100%', overflow: 'auto' })}>
           {participantsComponents}
         </Stack>
@@ -126,13 +99,3 @@ export const ScreenShareLayout: () => JSX.Element = () => {
     </Stack>
   );
 };
-
-export default {
-  title: `${EXAMPLES_FOLDER_PREFIX}/Layouts`,
-  component: GridLayout,
-  parameters: {
-    docs: {
-      page: () => getDocs()
-    }
-  }
-} as Meta;
