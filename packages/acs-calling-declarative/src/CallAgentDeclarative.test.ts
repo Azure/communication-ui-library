@@ -172,7 +172,7 @@ describe('declarative call agent', () => {
 
     mockIncomingCall.emit('callEnded', { callEndReason: { code: 1 } });
 
-    await waitWithBreakCondition(() => context.getState().callsEnded.size !== 0);
+    await waitWithBreakCondition(() => context.getState().incomingCallsEnded.size !== 0);
 
     expect(context.getState().incomingCalls.size).toBe(0);
     expect(context.getState().incomingCallsEnded.size).toBe(1);
