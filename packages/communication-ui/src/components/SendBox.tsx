@@ -117,7 +117,7 @@ export const SendBox = (props: SendBoxProps & SendBoxPropsFromContext & ErrorHan
   const textTooLongMessage = textValueOverflow ? TEXT_EXCEEDS_LIMIT : undefined;
 
   return (
-    <Stack className={mergeStyles(sendBoxWrapperStyle, styles?.root)} tokens={{ childrenGap: '0.0625rem' }}>
+    <Stack className={mergeStyles(sendBoxWrapperStyle, styles?.root)}>
       <Stack horizontal={true}>
         <TextField
           multiline
