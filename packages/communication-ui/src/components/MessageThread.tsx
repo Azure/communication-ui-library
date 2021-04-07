@@ -206,9 +206,9 @@ export type MessageThreadProps = {
    */
   onMessageSeen?: (messageId: string) => Promise<void>;
   /**
-   * onRenderReadReceipt event handler. `(readReceiptComponentProps: ReadReceiptProps) => JSX.Element`
+   * onRenderReadReceipt event handler. `(readReceiptProps: ReadReceiptProps) => JSX.Element | null`
    */
-  onRenderReadReceipt?: (readReceiptComponentProps: ReadReceiptProps) => JSX.Element | null;
+  onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element | null;
   /**
    * onRenderAvatar event handler. `(userId: string) => JSX.Element`
    */

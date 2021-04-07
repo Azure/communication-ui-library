@@ -10,7 +10,7 @@ export const fullHeightStyles: IStackStyles = {
 };
 
 export const paneHeaderStyle = mergeStyles({
-  height: '4.3125rem'
+  height: '2.8125rem'
 });
 
 export const paneHeaderTextStyle = mergeStyles({

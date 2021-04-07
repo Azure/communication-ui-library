@@ -2,11 +2,11 @@
 
 import { IStyle } from '@fluentui/react';
 
-interface ThemeComponentStyles {
+interface ThemeTogglerStyles {
   [key: string]: IStyle;
 }
 
-export const themeComponentStyles: ThemeComponentStyles = {
+export const themeTogglerStyles: ThemeTogglerStyles = {
   dockedTop: {
     flexFlow: 'row nowrap',
     justifyContent: 'center',

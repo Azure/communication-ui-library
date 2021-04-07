@@ -1,129 +1,45 @@
 // © Microsoft Corporation. All rights reserved.
 import React from 'react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
-import { Icon } from '@fluentui/react';
+import { SendBox } from '@azure/communication-ui';
+import { SendBoxExample } from './examples/SendBoxExample';
+import { SendBoxWithSystemMessageExample } from './examples/SendBoxWithSystemMessageExample';
+import { CustomIconExample } from './examples/CustomIconExample';
 
-import { FluentThemeProvider, SendBox } from '@azure/communication-ui';
+const SendBoxExampleText = require('!!raw-loader!./examples/SendBoxExample.tsx').default;
+const SendBoxWithSystemMessageExampleText = require('!!raw-loader!./examples/SendBoxWithSystemMessageExample.tsx')
+  .default;
+const CustomIconExampleText = require('!!raw-loader!./examples/CustomIconExample.tsx').default;
 
 const importStatement = `import { SendBox } from '@azure/communication-ui';`;
-const usageCode = `
-<div style={{ width: '400px', margin: '0 5px' }}>
-  <SendBox
-    disabled={false}
-    sendMessage={async () => {
-      return;
-    }}
-    userId="UserId1"
-    displayName="User Name"
-    onSendTypingNotification={(): Promise<void> => {
-      return Promise.resolve();
-    }}
-  />
-</div>
-<div style={{ width: '400px', margin: '0 5px' }}>
-  <SendBox
-    disabled={false}
-    sendMessage={async () => {
-      return;
-    }}
-    userId="UserId2"
-    displayName="User Name"
-    onSendTypingNotification={(): Promise<void> => {
-      return Promise.resolve();
-    }}
-    systemMessage="Please wait 30 seconds to send new messages"
-  />
-</div>`;
-
-const ExampleSendBox: () => JSX.Element = () => (
-  <>
-    <div style={{ width: '400px', margin: '0 5px' }}>
-      <SendBox
-        disabled={false}
-        sendMessage={async () => {
-          return;
-        }}
-        userId="UserId1"
-        displayName="User Name"
-        onSendTypingNotification={(): Promise<void> => {
-          return Promise.resolve();
-        }}
-      />
-    </div>
-    <div style={{ width: '400px', margin: '0 5px' }}>
-      <SendBox
-        disabled={false}
-        sendMessage={async () => {
-          return;
-        }}
-        userId="UserId2"
-        displayName="User Name"
-        onSendTypingNotification={(): Promise<void> => {
-          return Promise.resolve();
-        }}
-        systemMessage="Please wait 30 seconds to send new messages"
-      />
-    </div>
-  </>
-);
-
-const CustomIconExample: () => JSX.Element = () => (
-  <div style={{ width: '400px' }}>
-    <SendBox
-      disabled={false}
-      sendMessage={async () => {
-        return;
-      }}
-      userId="UserId3"
-      displayName="User Name"
-      onSendTypingNotification={(): Promise<void> => {
-        return Promise.resolve();
-      }}
-      onRenderIcon={() => <Icon iconName="AirplaneSolid" />}
-    />
-  </div>
-);
-
-const customIconCode = `
-<div style={{ width: '400px' }}>
-  <SendBox
-    disabled={false}
-    sendMessage={async () => {
-      return;
-    }}
-    userId="UserId3"
-    displayName="User Name"
-    onSendTypingNotification={(): Promise<void> => {
-      return Promise.resolve();
-    }}
-    onRenderIcon={() => <Icon iconName="AirplaneSolid" />}
-  />
-</div>`;
 
 export const getDocs: () => JSX.Element = () => {
   return (
     <>
       <Title>SendBox</Title>
-      <Description>
-        SendBox is component used for message/typing notification sending, it is also able to show system messages
-        related to message sending
-      </Description>
+      <Description of={SendBox} />
       <Heading>Importing</Heading>
       <Source code={importStatement} />
       <Heading>Example</Heading>
-      <Canvas>
-        <FluentThemeProvider>
-          <ExampleSendBox />
-        </FluentThemeProvider>
+      <Canvas withSource="none">
+        <SendBoxExample />
       </Canvas>
-      <Source code={usageCode} />
-      <Heading>Custom send icon</Heading>
-      To customize the send icon, use the onRenderIcon property like in the example below.
-      <Source code={customIconCode} />
-      <Canvas>
-        <FluentThemeProvider>
-          <CustomIconExample />
-        </FluentThemeProvider>
+      <Source code={SendBoxExampleText} />
+      <Heading>Add a system message</Heading>
+      <Description>To add a system message, use the systemMessage property like in the example below.</Description>
+      <Source code={SendBoxWithSystemMessageExampleText} />
+      <Canvas withSource="none">
+        <SendBoxWithSystemMessageExample />
+      </Canvas>
+      <Heading>Customize send icon</Heading>
+      <Description>
+        To customize the send icon, use the onRenderIcon property like in the example below. A [Fluent UI
+        Icon](https://developer.microsoft.com/en-us/fluentui#/controls/web/icon) is used in this example but you can use
+        any `JSX.Element`.
+      </Description>
+      <Source code={CustomIconExampleText} />
+      <Canvas withSource="none">
+        <CustomIconExample />
       </Canvas>
       <Heading>Props</Heading>
       <Props of={SendBox} />

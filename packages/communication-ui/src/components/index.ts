@@ -38,11 +38,14 @@ export {
   optionsButtonProps,
   answerButtonProps,
   hangupButtonProps,
+  recordButtonProps,
   labeledVideoButtonProps,
   labeledAudioButtonProps,
   labeledScreenShareButtonProps,
   labeledHangupButtonProps,
-  labeledOptionsButtonProps
+  labeledOptionsButtonProps,
+  labeledAnswerButtonProps,
+  labeledRecordButtonProps
 } from './ControlBar';
 export type { ControlBarProps, ControlBarLayoutType } from './ControlBar';
 

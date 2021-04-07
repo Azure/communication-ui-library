@@ -139,18 +139,18 @@ afterEach(() => {
 describe('useSendMessage tests', () => {
   test('should be able to call useSendMessage', async () => {
     sendMessageResponseStatus = OK;
-    const { result } = renderHook(() => useSendMessage());
-    await result.current('mockDisplayName', 'mockUserId', 'mockMessage');
+    const { result } = renderHook(() => useSendMessage('mockDisplayName', 'mockUserId'));
+    await result.current('mockMessage');
     expect(threadClientMock.sendMessage).toBeCalledTimes(1);
     expect(threadClientMock.sendMessage).toBeCalledWith(expect.objectContaining({ content: 'mockMessage' }));
     expect(mockSetFailedMessageIds).toBeCalledTimes(0);
   });
   test('should be able to retry sending message for MAXIMUM_RETRY_COUNT times after encountering PRECONDITION_FAILED_STATUS_CODE status and after max retry throw an error', async () => {
     sendMessageResponseStatus = PRECONDITION_FAILED_STATUS_CODE;
-    const { result } = renderHook(() => useSendMessage());
+    const { result } = renderHook(() => useSendMessage('mockDisplayName', 'mockUserId'));
     let caughtError;
     try {
-      await result.current('mockDisplayName', 'mockUserId', 'mockMessage');
+      await result.current('mockMessage');
     } catch (error) {
       caughtError = error;
     }
@@ -162,14 +162,14 @@ describe('useSendMessage tests', () => {
   test('should be able to call retry sending message after COOL_PERIOD_THRESHOLD', async () => {
     sendMessageResponseStatus = TOO_MANY_REQUESTS_STATUS_CODE;
     tooManyRequestsCounter = 0;
-    const { result } = renderHook(() => useSendMessage());
-    await result.current('mockDisplayName', 'mockUserId', 'mockMessage');
+    const { result } = renderHook(() => useSendMessage('mockDisplayName', 'mockUserId'));
+    await result.current('mockMessage');
     expect(threadClientMock.sendMessage).toBeCalledTimes(tooManyRequestsCounter + 1);
     expect(threadClientMock.sendMessage).toBeCalledWith(expect.objectContaining({ content: 'mockMessage' }));
   });
   test('should throw an error and update failedIds if chat client send message threw an error', async () => {
     sendMessageResponseStatus = UNIT_TEST_THROW_ERROR_FLAG;
-    const { result } = renderHook(() => useSendMessage());
+    const { result } = renderHook(() => useSendMessage('mockDisplayName', 'mockUserId'));
     let caughtError;
     try {
       await result.current('mockDisplayName', 'mockUserId', 'mockMessage');

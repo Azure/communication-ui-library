@@ -224,7 +224,7 @@ const processSendMessage = async (
   );
 };
 
-export const useSendMessage = (): ((displayName: string, userId: string, messageContent: string) => Promise<void>) => {
+export const useSendMessage = (displayName: string, userId: string): ((messageContent: string) => Promise<void>) => {
   const threadId = useThreadId();
   const setCoolPeriod = useSetCoolPeriod();
 
@@ -250,7 +250,7 @@ export const useSendMessage = (): ((displayName: string, userId: string, message
   const failedMessageIds = useFailedMessageIds();
 
   const sendMessage = useCallback(
-    async (displayName: string, userId: string, messageContent: string): Promise<void> => {
+    async (messageContent: string): Promise<void> => {
       await processSendMessage(
         displayName,
         userId,
