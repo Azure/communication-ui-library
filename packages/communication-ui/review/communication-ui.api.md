@@ -258,9 +258,9 @@ export interface SendBoxProps {
 
 // @public (undocumented)
 export interface SendBoxStylesProps extends BaseCustomStylesProps {
-    defaultSendMessageIcon?: IStyle;
-    defaultSystemMessage?: IStyle;
+    sendMessageIcon?: IStyle;
     sendMessageIconContainer?: IStyle;
+    systemMessage?: IStyle;
     textField?: IStyle;
 }
 
