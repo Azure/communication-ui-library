@@ -6,9 +6,9 @@ export type BaseSelectorProps = {
 };
 
 export const getSelectorProps = <T>(_: ChatClientState, props: T): T => props;
-export const getUserId = (state: ChatClientState) => state.userId;
+export const getUserId = (state: ChatClientState): string => state.userId;
 
-export const getDisplayName = (state: ChatClientState) => state.displayName;
+export const getDisplayName = (state: ChatClientState): string => state.displayName;
 export const getChatMessages = (state: ChatClientState, props: BaseSelectorProps): Map<string, ChatMessageWithStatus> =>
   (props.threadId && state.threads.get(props.threadId)?.chatMessages) || new Map();
 

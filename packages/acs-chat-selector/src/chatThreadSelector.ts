@@ -45,7 +45,7 @@ export const chatThreadSelector = createSelector(
 );
 
 // we only attach statusToRender to the last message with matched status
-const attachLastStatusToRender = (messages: UiChatMessage[], status: MessageStatus) => {
+const attachLastStatusToRender = (messages: UiChatMessage[], status: MessageStatus): void => {
   const messagesToFind = messages.filter((message) => message.mine && message.status === status);
   const lastMessageWithStatus = messagesToFind[messagesToFind.length - 1];
   if (messagesToFind.length > 0) {

@@ -1,3 +1,4 @@
+// © Microsoft Corporation. All rights reserved.
 import { MessageStatus } from '@azure/acs-chat-declarative';
 
 export enum MessageAttachedStatus {
