@@ -4,10 +4,10 @@
   "version": "0.0.1",
   "description": "Azure Communication Services UI Toolkit Storybook",
   "scripts": {
-    "build": "build-storybook -s stories --quiet --loglevel warn",
+    "build": "build-storybook -s stories,./public --quiet --loglevel warn",
     "start": "concurrently \"rush build:watch -T storybook\" \"rushx start:storybook\"",
-    "start:storybook": "start-storybook -p 6006 -s stories --no-manager-cache --quiet --loglevel warn",
-    "deploy-storybook": "storybook-to-ghpages",
+    "start:storybook": "start-storybook -p 6006 -s stories,./public --no-manager-cache --quiet --loglevel warn",
+    "deploy-storybook": "storybook-to-ghpages --script build",
     "test": "jest",
     "test:coverage": "npm run test -- --coverage",
     "snapshot:update": "npm run test -- --update-snapshot",
