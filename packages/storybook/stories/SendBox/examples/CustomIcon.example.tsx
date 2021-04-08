@@ -4,7 +4,7 @@ import { Icon } from '@fluentui/react';
 
 export const CustomIconExample: () => JSX.Element = () => (
   <FluentThemeProvider>
-    <div style={{ width: '400px' }}>
+    <div style={{ width: '31.25rem' }}>
       <SendBox
         onSendMessage={async () => {
           return;
