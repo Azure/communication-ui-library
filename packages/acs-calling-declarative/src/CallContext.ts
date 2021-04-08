@@ -146,6 +146,26 @@ export class CallContext {
     );
   }
 
+  public setCallRemoteParticipantsEnded(
+    callId: string,
+    addRemoteParticipant: RemoteParticipant[],
+    removeRemoteParticipant: string[]
+  ): void {
+    this.setState(
+      produce(this._state, (draft: CallClientState) => {
+        const call = draft.calls.get(callId);
+        if (call) {
+          removeRemoteParticipant.forEach((id: string) => {
+            call.remoteParticipantsEnded.delete(id);
+          });
+          addRemoteParticipant.forEach((participant: RemoteParticipant) => {
+            call.remoteParticipantsEnded.set(getRemoteParticipantKey(participant.identifier), participant);
+          });
+        }
+      })
+    );
+  }
+
   public setCallLocalVideoStreams(callId: string, streams: LocalVideoStream[]): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
