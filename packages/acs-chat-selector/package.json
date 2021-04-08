@@ -6,7 +6,9 @@
   "main": "dist/dist-esm/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc && api-extractor run --local",
+    "build": "rushx build:esm && rushx build:cjs && api-extractor run --local",
+    "build:esm": "tsc",
+    "build:cjs": "rollup -c --silent --failAfterWarnings",
     "build:watch": "rushx build",
     "test": "jest --passWithNoTests",
     "test:coverage": "npm run test -- --coverage",
