@@ -38,7 +38,11 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
 
           if (thread) {
             const threadInfo = { ...thread, createdBy: { communicationUserId: thread.createdBy } };
-            context.createThread(thread.id, threadInfo);
+            context.batch(() => {
+              context.createThread(thread.id, threadInfo);
+              const [request] = args;
+              context.setParticipants(thread.id, request.participants);
+            });
           }
           return result;
         };

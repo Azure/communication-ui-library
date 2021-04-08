@@ -51,7 +51,10 @@ export class EventSubscriber {
     if (existingMessage) {
       newMessage.sequenceId = existingMessage.sequenceId;
     }
-    this.chatContext.setChatMessage(event.threadId, newMessage);
+    this.chatContext.batch(() => {
+      this.chatContext.createThreadIfNotExist(event.threadId);
+      this.chatContext.setChatMessage(event.threadId, newMessage);
+    });
   };
 
   private onChatMessageDeleted = (event: ChatMessageDeletedEvent): void => {
@@ -68,7 +71,10 @@ export class EventSubscriber {
       ...participant,
       shareHistoryTime: participant.shareHistoryTime ? new Date(participant.shareHistoryTime) : undefined
     }));
-    this.chatContext.setParticipants(event.threadId, participantsToAdd);
+    this.chatContext.batch(() => {
+      this.chatContext.createThreadIfNotExist(event.threadId);
+      this.chatContext.setParticipants(event.threadId, participantsToAdd);
+    });
   };
 
   private onParticipantsRemoved = (event: ParticipantsRemovedEvent): void => {
@@ -84,7 +90,10 @@ export class EventSubscriber {
       sender: { communicationUserId: event.sender.user.communicationUserId },
       readOn: new Date(event.readOn)
     };
-    this.chatContext.addReadReceipt(event.threadId, readReceipt);
+    this.chatContext.batch(() => {
+      this.chatContext.createThreadIfNotExist(event.threadId);
+      this.chatContext.addReadReceipt(event.threadId, readReceipt);
+    });
   };
 
   private onTypingIndicatorReceived = (event: TypingIndicatorReceivedEvent): void => {
@@ -92,7 +101,10 @@ export class EventSubscriber {
       ...event,
       receivedOn: new Date(event.receivedOn)
     };
-    this.chatContext.addTypingIndicator(event.threadId, typingIndicator);
+    this.chatContext.batch(() => {
+      this.chatContext.createThreadIfNotExist(event.threadId);
+      this.chatContext.addTypingIndicator(event.threadId, typingIndicator);
+    });
   };
 
   private onChatThreadCreated = (event: ChatThreadCreatedEvent): void => {
