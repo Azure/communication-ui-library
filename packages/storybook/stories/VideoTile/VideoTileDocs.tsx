@@ -5,8 +5,8 @@ import React from 'react';
 import { VideoTile } from '../../../communication-ui/src';
 import { VideoTileExample } from './VideoTile.example';
 const VideoTileExampleText = require('!!raw-loader!./VideoTile.example').default;
-import { VideoTileExample as VideoTileStylineExample } from '../Styling/StylingVideoTile.example';
-const VideoTileStylineExampleText = require('!!raw-loader!../Styling/StylingVideoTile.example').default;
+import { VideoTileExample as VideoTileStylineExample } from '../Styling/StylingVideoTile.Example';
+const VideoTileStylineExampleText = require('!!raw-loader!../Styling/StylingVideoTile.Example').default;
 
 const importStatement = `import { VideoTile } from '@azure/communication-ui';`;
 
