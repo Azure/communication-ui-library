@@ -16,7 +16,8 @@
     "lint:fix": "npm run lint -- --fix",
     "lint:quiet": "npm run lint -- --quiet",
     "api-extractor": "tsc && api-extractor run --local",
-    "generate-doc": "api-documenter markdown -i temp -o docGen"
+    "generate-doc": "api-documenter markdown -i temp -o docGen",
+    "postpack": "copyfiles -E \"./*.tgz\" private-preview"
   },
   "browserslist": {
     "production": [
@@ -40,6 +41,7 @@
     "@microsoft/api-documenter": "~7.12.11",
     "@microsoft/api-extractor": "~7.13.2",
     "@types/react": "^16.9.49",
+    "copyfiles": "^2.4.1",
     "eslint": "^7.7.0",
     "eslint-config-prettier": "^6.12.0",
     "eslint-plugin-prettier": "^3.1.4",
