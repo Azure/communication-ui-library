@@ -9,9 +9,9 @@ import { ControlBarLayoutExample } from './examples/ControlBarLayout.example';
 import { CustomControlBarExample } from './examples/CustomControlBar.example';
 import { OptionsButtonExample } from './examples/OptionsButton.example';
 const OptionsButtonExampleText = require('!!raw-loader!./examples/OptionsButton.example.tsx').default;
-const AllButtonsControlBarExampleText = require('!!raw-loader?./examples/AllButtonsControlBarExample.tsx').default;
-const ControlBarLayoutExampleText = require('!!raw-loader?./examples/ControlBarLayoutExample.tsx').default;
-const CustomControlBarExampleText = require('!!raw-loader?./examples/CustomControlBarExample.tsx').default;
+const AllButtonsControlBarExampleText = require('!!raw-loader?./examples/AllButtonsControlBar.example.tsx').default;
+const ControlBarLayoutExampleText = require('!!raw-loader?./examples/ControlBarLayout.example.tsx').default;
+const CustomControlBarExampleText = require('!!raw-loader?./examples/CustomControlBar.example.tsx').default;
 
 const importStatement = `
 import { FluentThemeProvider, ControlBar } from '@azure/communication-ui';
