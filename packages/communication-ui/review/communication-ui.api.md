@@ -64,6 +64,12 @@ export interface ControlBarProps {
 }
 
 // @public
+export const DARK = "Dark";
+
+// @public
+export const darkTheme: PartialTheme;
+
+// @public
 export const ErrorBar: (props: ErrorBarProps) => JSX.Element | null;
 
 // @public
@@ -88,6 +94,9 @@ export interface FluentThemeProviderProps {
     children: React_2.ReactNode;
     fluentTheme?: PartialTheme | Theme;
 }
+
+// @public
+export const getThemeFromLocalStorage: (scopeId: string) => string | null;
 
 // @public (undocumented)
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;
@@ -133,6 +142,12 @@ export const labeledScreenShareButtonProps: IButtonProps;
 
 // @public
 export const labeledVideoButtonProps: IButtonProps;
+
+// @public
+export const LIGHT = "Light";
+
+// @public
+export const lightTheme: PartialTheme;
 
 // @public (undocumented)
 export interface LoadPreviousMessagesButtonProps {
@@ -237,6 +252,9 @@ export interface ReadReceiptProps {
 export const recordButtonProps: IButtonProps;
 
 // @public
+export const saveThemeToLocalStorage: (theme: string, scopeId: string) => void;
+
+// @public
 export const screenShareButtonProps: IButtonProps;
 
 // @public
@@ -288,13 +306,20 @@ export interface SwitchableFluentThemeProviderProps {
 }
 
 // @public
+export type ThemeMap = {
+    [key: string]: Theme | PartialTheme;
+};
+
+// @public
+export const THEMES: ThemeMap;
+
+// @public
 export const ThemeSelector: (props: ThemeSelectorProps) => JSX.Element;
 
 // @public
 export interface ThemeSelectorProps {
     horizontal?: boolean;
     label?: string;
-    // Warning: (ae-forgotten-export) The symbol "ThemeMap" needs to be exported by the entry point release.index.d.ts
     themeMap?: ThemeMap;
 }
 
