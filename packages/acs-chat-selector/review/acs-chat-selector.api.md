@@ -4,38 +4,34 @@
 
 ```ts
 
-import { ChatClientState } from '@azure/acs-chat-declarative';
-import { ChatMessageWithStatus } from '@azure/acs-chat-declarative';
 import { ChatThreadClient } from '@azure/communication-chat';
-import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
-import { MessageStatus } from '@azure/acs-chat-declarative';
 import { ReactElement } from 'react';
 import * as reselect from 'reselect';
 
 // Warning: (ae-forgotten-export) The symbol "BaseChatConfigProps" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
-export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientState, BaseChatConfigProps, {
+export const chatThreadSelector: reselect.OutputParametricSelector<any, BaseChatConfigProps, {
     userId: string;
     disableReadReceipt: boolean;
     chatMessages: {
-        createdOn: Date;
-        content: string | undefined;
-        status: MessageStatus;
-        senderDisplayName: string | undefined;
-        senderId: string;
-        messageId: string | undefined;
+        createdOn: any;
+        content: any;
+        status: any;
+        senderDisplayName: any;
+        senderId: any;
+        messageId: any;
     }[];
-}, (res1: BaseChatConfigProps, res2: Map<string, ChatMessageWithStatus>) => {
+}, (res1: BaseChatConfigProps, res2: Map<string, any>) => {
     userId: string;
     disableReadReceipt: boolean;
     chatMessages: {
-        createdOn: Date;
-        content: string | undefined;
-        status: MessageStatus;
-        senderDisplayName: string | undefined;
-        senderId: string;
-        messageId: string | undefined;
+        createdOn: any;
+        content: any;
+        status: any;
+        senderDisplayName: any;
+        senderId: any;
+        messageId: any;
     }[];
 }>;
 
@@ -43,10 +39,10 @@ export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientSta
 // Warning: (ae-forgotten-export) The symbol "CommonProperties" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
-export const createDefaultHandlersForComponent: <Props>(chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultHandlers, CommonProperties<DefaultHandlers, Props>>;
+export const createDefaultHandlersForComponent: <Props>(chatClient: any, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultHandlers, CommonProperties<DefaultHandlers, Props>>;
 
 // @public (undocumented)
-export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState, BaseChatConfigProps, {
+export const sendBoxSelector: reselect.OutputParametricSelector<any, BaseChatConfigProps, {
     displayName: string;
     userId: string;
     disabled: boolean;

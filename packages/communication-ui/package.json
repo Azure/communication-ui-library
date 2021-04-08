@@ -93,6 +93,7 @@
     "react-test-renderer": "^16.14.0",
     "react": "^16.13.1",
     "regenerator-runtime": "^0.13.7",
+    "rollup": "~2.42.4",
     "source-map-explorer": "^2.5.0",
     "styled-components": "~5.2.1",
     "ts-jest": "^26.4.4",
