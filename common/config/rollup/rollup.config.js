@@ -6,6 +6,7 @@ import svg from 'rollup-plugin-svg';
 
 export default {
   context: 'window',
+  external: [],
   input: './dist/dist-esm/index.js',
   output: {
     file: './dist/dist-cjs/index.js',
