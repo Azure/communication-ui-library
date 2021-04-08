@@ -55,8 +55,8 @@ export interface ParticipantItemProps {
 }
 
 /**
- * Participant Item component representing a participant in Calling or Chat.
- * @param props - ParticipantItemProps & ErrorHandlingProps
+ * `ParticipantItem` represents a participant in Calling or Chat. `ParticipantItem` displays a participant's avatar,
+ * name and status as well as optional icons and context menu.
  */
 export const ParticipantItem = (props: ParticipantItemProps & ErrorHandlingProps): JSX.Element => {
   const { name, isYou, onRenderAvatar, menuItems, onRenderIcon, presence, styles } = props;
