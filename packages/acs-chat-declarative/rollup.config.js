@@ -3,7 +3,4 @@
 import Package from './package.json';
 import commonConfig from '../../common/config/rollup/rollup.config';
 
-export default {
-  ...commonConfig,
-  external: [...commonConfig.external, ...Object.keys(Package.dependencies), ...Object.keys(Package.peerDependencies)]
-};
+export default commonConfig(Package);
