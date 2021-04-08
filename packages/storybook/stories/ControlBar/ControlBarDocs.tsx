@@ -3,12 +3,12 @@
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import React from 'react';
 import { ControlBar } from '../../../communication-ui/src';
-import { AllButtonsControlBarExample } from './examples/AllButtonsControlBarExample';
-import { ControlBarExample } from './examples/ControlBarExample';
-import { ControlBarLayoutExample } from './examples/ControlBarLayoutExample';
-import { CustomControlBarExample } from './examples/CustomControlBarExample';
-import { OptionsButtonExample } from './examples/OptionsButton.Example';
-const OptionsButtonExampleText = require('!!raw-loader!./examples/OptionsButton.Example.tsx').default;
+import { AllButtonsControlBarExample } from './examples/AllButtonsControlBar.example';
+import { ControlBarExample } from './examples/ControlBar.example';
+import { ControlBarLayoutExample } from './examples/ControlBarLayout.example';
+import { CustomControlBarExample } from './examples/CustomControlBar.example';
+import { OptionsButtonExample } from './examples/OptionsButton.example';
+const OptionsButtonExampleText = require('!!raw-loader!./examples/OptionsButton.example.tsx').default;
 const AllButtonsControlBarExampleText = require('!!raw-loader?./examples/AllButtonsControlBarExample.tsx').default;
 const ControlBarLayoutExampleText = require('!!raw-loader?./examples/ControlBarLayoutExample.tsx').default;
 const CustomControlBarExampleText = require('!!raw-loader?./examples/CustomControlBarExample.tsx').default;

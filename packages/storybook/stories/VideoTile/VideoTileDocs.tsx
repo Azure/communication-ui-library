@@ -3,10 +3,12 @@
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import React from 'react';
 import { VideoTile } from '../../../communication-ui/src';
-import { VideoTileExample } from './VideoTile.Example';
-const VideoTileExampleText = require('!!raw-loader!./VideoTile.Example').default;
-import { VideoTileExample as VideoTileStylineExample } from '../Styling/StylingVideoTile.Example';
-const VideoTileStylineExampleText = require('!!raw-loader!../Styling/StylingVideoTile.Example').default;
+import { VideoTileExample } from './VideoTile.example';
+const VideoTileExampleText = require('!!raw-loader!./VideoTile.example').default;
+import { VideoTileExample as VideoTileStylineExample } from '../Styling/StylingVideoTile.example';
+const VideoTileStylineExampleText = require('!!raw-loader!../Styling/StylingVideoTile.example').default;
+
+const importStatement = `import { VideoTile } from '@azure/communication-ui';`;
 
 export const getDocs: () => JSX.Element = () => {
   return (
@@ -17,7 +19,7 @@ export const getDocs: () => JSX.Element = () => {
       </Description>
 
       <Heading>Importing</Heading>
-      <Source code="import { VideoTile } from '@azure/communication-ui';" />
+      <Source code={importStatement} />
 
       <Heading>Example</Heading>
       <Canvas>
