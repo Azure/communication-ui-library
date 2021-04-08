@@ -11,11 +11,13 @@ export const CustomIconExample: () => JSX.Element = () => {
     }
     return <Icon iconName="AddFriend" />;
   };
+  const containerStyle = { width: '12rem' };
+
   return (
-    <>
+    <div style={containerStyle}>
       <ParticipantItem name="Spongebob" presence={PersonaPresence.online} isYou={true} onRenderIcon={onRenderIcon} />
       <ParticipantItem name="Patrick" presence={PersonaPresence.online} onRenderIcon={onRenderIcon} />
       <ParticipantItem name="Sandy" presence={PersonaPresence.online} onRenderIcon={onRenderIcon} />
-    </>
+    </div>
   );
 };

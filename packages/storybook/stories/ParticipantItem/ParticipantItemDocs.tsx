@@ -4,11 +4,12 @@ import React from 'react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
 import { ParticipantItem } from '@azure/communication-ui';
 import { ParticipantItemExample } from './examples/ParticipantItemExample';
-import ParticipantItemExampleText from '!!raw-loader!./examples/ParticipantItemExample.tsx';
 import { CustomAvatarExample } from './examples/CustomAvatarExample';
-import CustomAvatarExampleText from '!!raw-loader!./examples/CustomAvatarExample.tsx';
 import { CustomIconExample } from './examples/CustomIconExample';
-import CustomIconExampleText from '!!raw-loader!./examples/CustomIconExample.tsx';
+
+const ParticipantItemExampleText = require('!!raw-loader!./examples/ParticipantItemExample.tsx').default;
+const CustomAvatarExampleText = require('!!raw-loader!./examples/CustomAvatarExample.tsx').default;
+const CustomIconExampleText = require('!!raw-loader!./examples/CustomIconExample.tsx').default;
 
 const importStatement = `
 import { ParticipantItem, ParticipantItemProps } from '@azure/communication-ui';
@@ -21,7 +22,13 @@ export const getDocs: () => JSX.Element = () => {
       <Description of={ParticipantItem} />
       <Heading>Importing</Heading>
       <Source code={importStatement} />
-      <Heading>Example</Heading>
+      <Heading>Usage</Heading>
+      <Description>
+        Here is an example of how to use `ParticipantItem.` In this example, the `menuItems` property is used to add a
+        context menu. The type of `menuItems` is an array of
+        [IContextualMenuItem](https://developer.microsoft.com/en-us/fluentui#/controls/web/contextualmenu#IContextualMenuItem).
+        Click on the rendered participant below to see the menu items.
+      </Description>
       <Canvas withSource="none">
         <ParticipantItemExample />
       </Canvas>
