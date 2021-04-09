@@ -1,3 +1,7 @@
+// © Microsoft Corporation. All rights reserved.
+
+const path = require('path');
+
 module.exports = {
   stories: ['../stories/**/*.stories.mdx', '../stories/**/*.stories.@(ts|tsx)'],
   // Speeds up webpack build time after every code change. Improvements of up
@@ -13,5 +17,13 @@ module.exports = {
       }
     },
     '@storybook/addon-knobs'
-  ]
+  ],
+  webpackFinal: async (config, { configType }) => {
+    config.resolve.alias = {
+      ...(config.resolve.alias || {}),
+      "@azure/communication-ui": path.resolve(__dirname, "../../communication-ui/src")
+    }
+
+    return config;
+  }
 };
