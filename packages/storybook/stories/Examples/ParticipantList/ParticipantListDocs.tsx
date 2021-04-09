@@ -5,8 +5,8 @@ import { Title, Heading, Description, Canvas, Source } from '@storybook/addon-do
 import { BasicParticipantListExample } from './examples/BasicParticipantList.example';
 import { InteractiveParticipantListExample } from './examples/InteractiveParticipantList.example';
 
-const BasicParticipantListExampleText = require('!!raw-loader!./examples/BasicParticipantListExample.tsx').default;
-const InteractiveParticipantListExampleText = require('!!raw-loader!./examples/InteractiveParticipantListExample.tsx')
+const BasicParticipantListExampleText = require('!!raw-loader!./examples/BasicParticipantList.example.tsx').default;
+const InteractiveParticipantListExampleText = require('!!raw-loader!./examples/InteractiveParticipantList.example.tsx')
   .default;
 
 export const getDocs: () => JSX.Element = () => {
