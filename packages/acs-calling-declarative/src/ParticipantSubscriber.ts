@@ -3,6 +3,7 @@
 import { RemoteParticipant } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
 import { convertSdkRemoteStreamToDeclarativeRemoteStream, getRemoteParticipantKey } from './Converter';
+import { RemoteVideoStreamSubscriber } from './RemoteVideoStreamSubscriber';
 
 /**
  * Internal object used to hold callId. This is so when we create the closure that includes this container we can update
@@ -23,12 +24,14 @@ export class ParticipantSubscriber {
   private _participant: RemoteParticipant;
   private _context: CallContext;
   private _participantKey: string;
+  private _remoteVideoStreamSubscribers: RemoteVideoStreamSubscriber[];
 
   constructor(callId: string, participant: RemoteParticipant, context: CallContext) {
     this._callIdRef = { callId: callId };
     this._participant = participant;
     this._context = context;
     this._participantKey = getRemoteParticipantKey(this._participant.identifier);
+    this._remoteVideoStreamSubscribers = [];
     this.subscribe();
   }
 
@@ -38,6 +41,10 @@ export class ParticipantSubscriber {
     this._participant.on('displayNameChanged', this.displayNameChanged);
     this._participant.on('isSpeakingChanged', this.isSpeakingChanged);
     this._participant.on('videoStreamsUpdated', this.videoStreamsUpdated);
+
+    for (const videoStream of this._participant.videoStreams) {
+      this._remoteVideoStreamSubscribers.push(new RemoteVideoStreamSubscriber(videoStream, this.videoStreamsUpdated));
+    }
   };
 
   public unsubscribe = (): void => {
@@ -76,6 +83,13 @@ export class ParticipantSubscriber {
     // We don't have an easy way to distinguish different remote video streams so a quick way to handle this is to
     // create the remote video streams again from scratch. TODO: do we want to be more selective on adding/removing
     // streams?
+    for (const remoteVideoStreamSubscriber of this._remoteVideoStreamSubscribers) {
+      remoteVideoStreamSubscriber.unsubscribe();
+    }
+    this._remoteVideoStreamSubscribers = [];
+    for (const videoStream of this._participant.videoStreams) {
+      this._remoteVideoStreamSubscribers.push(new RemoteVideoStreamSubscriber(videoStream, this.videoStreamsUpdated));
+    }
     this._context.setParticipantVideoStreams(
       this._callIdRef.callId,
       this._participantKey,

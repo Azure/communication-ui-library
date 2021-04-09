@@ -5,7 +5,7 @@ import { Meta } from '@storybook/react/types-6-0';
 import { IncomingCallToast } from '@azure/communication-ui';
 import { text, files } from '@storybook/addon-knobs';
 import { getDocs } from './IncomingCallAlertsDocs';
-import { EXAMPLES_FOLDER_PREFIX } from '../constants';
+import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import { Stack } from '@fluentui/react';
 
 export const IncomingCallToastComponent: () => JSX.Element = () => {

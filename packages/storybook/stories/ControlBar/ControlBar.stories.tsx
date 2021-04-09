@@ -3,7 +3,6 @@
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import {
-  CONTROL_BAR_LAYOUTS,
   ControlBar,
   audioButtonProps,
   hangupButtonProps,
@@ -23,6 +22,19 @@ import { boolean, select } from '@storybook/addon-knobs';
 import { getDocs } from './ControlBarDocs';
 import { DefaultButton } from '@fluentui/react';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
+
+export const CONTROL_BAR_LAYOUTS = [
+  'horizontal',
+  'vertical',
+  'dockedTop',
+  'dockedBottom',
+  'dockedLeft',
+  'dockedRight',
+  'floatingTop',
+  'floatingBottom',
+  'floatingLeft',
+  'floatingRight'
+] as const;
 
 const exampleOptionsMenuProps = {
   items: [

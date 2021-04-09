@@ -18,12 +18,10 @@ import {
 import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack } from '@fluentui/react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { LiveAnnouncer, LiveMessage } from 'react-aria-live';
-import { ErrorHandlingProps } from '../providers';
-import { formatTimestampForChatMessage, propagateError } from '../utils';
+import { formatTimestampForChatMessage } from '../utils';
 import { CLICK_TO_LOAD_MORE_MESSAGES, NEW_MESSAGES } from '../constants';
 import { BaseCustomStylesProps, ChatMessage as WebUiChatMessage } from '../types';
 import { ReadReceipt, ReadReceiptProps } from './ReadReceipt';
-import { ChatMessagePropsFromContext } from '../consumers';
 
 const isMessageSame = (first: WebUiChatMessage, second: WebUiChatMessage): boolean => {
   return (
@@ -235,9 +233,7 @@ export type MessageThreadProps = {
  *
  * `MessageThread` internally uses the `Chat` & `Chat.Message` component from `@fluentui/react-northstar`. You can checkout the details about these [two components](https://fluentsite.z22.web.core.windows.net/0.53.0/components/chat/props).
  */
-export const MessageThread = (
-  props: MessageThreadProps & ErrorHandlingProps & ChatMessagePropsFromContext
-): JSX.Element => {
+export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const {
     chatMessages: newChatMessages,
     userId,
@@ -248,7 +244,6 @@ export const MessageThread = (
     onSendReadReceipt,
     onRenderReadReceipt,
     onRenderAvatar,
-    onErrorCallback,
     onLoadPreviousMessages,
     onRenderLoadPreviousMessagesButton,
     onRenderJumpToNewMessageButton
@@ -306,11 +301,8 @@ export const MessageThread = (
       return;
     }
 
-    onSendReadReceipt &&
-      onSendReadReceipt().catch((error: any) => {
-        propagateError(error, onErrorCallback);
-      });
-  }, [disableReadReceipt, onErrorCallback, onSendReadReceipt]);
+    onSendReadReceipt && onSendReadReceipt();
+  }, [disableReadReceipt, onSendReadReceipt]);
 
   const scrollToBottom = useCallback((): void => {
     chatScrollDivRef.current.scrollTop = chatScrollDivRef.current.scrollHeight;
