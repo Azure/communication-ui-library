@@ -50,6 +50,13 @@ module.exports = {
       env: {
         jest: true
       }
+    },
+    {
+      files: ['**/*Example.ts', '**/*Example.tsx'],
+      rules: {
+        'react/prop-types': 'off',
+        'react/jsx-key': 'off'
+      }
     }
   ]
 };

@@ -37,6 +37,7 @@ type Mutable<T> = {
 export type MockCall = Mutable<Call> & MockEmitter;
 export type MockCallAgent = Mutable<CallAgent> & MockEmitter;
 export type MockRemoteParticipant = Mutable<RemoteParticipant> & MockEmitter;
+export type MockRemoteVideoStream = Mutable<RemoteVideoStream> & MockEmitter;
 export type MockIncomingCall = Mutable<IncomingCall> & MockEmitter;
 
 export class MockCommunicationUserCredential {
@@ -46,7 +47,9 @@ export class MockCommunicationUserCredential {
   public dispose(): void {}
 }
 
-export function addMockEmitter(object: MockCall | MockCallAgent | MockRemoteParticipant | MockIncomingCall): any {
+export function addMockEmitter(
+  object: MockCall | MockCallAgent | MockRemoteParticipant | MockRemoteVideoStream | MockIncomingCall
+): any {
   object.emitter = new EventEmitter();
   object.on = (event: any, listener: any): void => {
     object.emitter.on(event, listener);
@@ -80,6 +83,11 @@ export function createMockRemoteParticipant(mockCommunicationUserId: string): Mo
 export function createMockIncomingCall(mockCallId: string): MockIncomingCall {
   const mockIncomingCall = { id: mockCallId } as MockIncomingCall;
   return addMockEmitter(mockIncomingCall);
+}
+
+export function createMockRemoteVideoStream(mockIsAvailable: boolean): MockRemoteVideoStream {
+  const mockRemoteVideoStream = { isAvailable: mockIsAvailable } as MockRemoteVideoStream;
+  return addMockEmitter(mockRemoteVideoStream);
 }
 
 function waitMilliseconds(duration: number): Promise<void> {
