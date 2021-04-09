@@ -23,7 +23,7 @@ import { getDocs } from './ControlBarDocs';
 import { DefaultButton } from '@fluentui/react';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 
-export const CONTROL_BAR_LAYOUTS = [
+const CONTROL_BAR_LAYOUTS = [
   'horizontal',
   'vertical',
   'dockedTop',
