@@ -28,10 +28,13 @@ export const InteractiveParticipantListExample: () => JSX.Element = () => {
 
   const participants = [participant1, participant2, participant3];
 
+  const headingStyle = { fontSize: '1.5rem', marginBottom: '1rem' };
+  const stackStyle = { width: '12.5rem' };
+
   return (
     <>
-      <div style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Participants</div>
-      <Stack style={{ width: '12.5rem' }}>
+      <h1 style={headingStyle}>Participants</h1>
+      <Stack style={stackStyle}>
         {participants.map((participant) => (
           <ParticipantItem
             name={participant.name}
