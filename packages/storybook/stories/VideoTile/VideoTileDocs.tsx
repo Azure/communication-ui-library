@@ -3,10 +3,10 @@
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import React from 'react';
 import { VideoTile } from '../../../communication-ui/src';
-import { VideoTileExample } from './VideoTileExample';
-const VideoTileExampleText = require('!!raw-loader!./VideoTileExample').default;
-import { VideoTileExample as VideoTileStylineExample } from '../Styling/StylingVideoTileExample';
-const VideoTileStylineExampleText = require('!!raw-loader!../Styling/StylingVideoTileExample').default;
+import { VideoTileExample } from './VideoTile.example';
+const VideoTileExampleText = require('!!raw-loader!./VideoTile.example').default;
+import { VideoTileExample as VideoTileStylineExample } from '../Styling/StylingVideoTile.example';
+const VideoTileStylineExampleText = require('!!raw-loader!../Styling/StylingVideoTile.example').default;
 
 const importStatement = `import { VideoTile } from '@azure/communication-ui';`;
 
