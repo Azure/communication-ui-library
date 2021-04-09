@@ -13,7 +13,6 @@ import {
   IStyle
 } from '@fluentui/react';
 import React, { useRef, useState } from 'react';
-import { ErrorHandlingProps } from '../providers/ErrorProvider';
 import { useTheme } from '@fluentui/react-theme-provider';
 import { BaseCustomStylesProps } from '../types';
 
@@ -56,9 +55,8 @@ export interface ParticipantItemProps {
 
 /**
  * Participant Item component representing a participant in Calling or Chat.
- * @param props - ParticipantItemProps & ErrorHandlingProps
  */
-export const ParticipantItem = (props: ParticipantItemProps & ErrorHandlingProps): JSX.Element => {
+export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
   const { name, isYou, onRenderAvatar, menuItems, onRenderIcon, presence, styles } = props;
   const [clickEvent, setClickEvent] = useState<MouseEvent | undefined>();
   const [menuHidden, setMenuHidden] = useState<boolean>(true);
