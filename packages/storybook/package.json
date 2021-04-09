@@ -5,6 +5,7 @@
   "description": "Azure Communication Services UI Toolkit Storybook",
   "scripts": {
     "build": "build-storybook -s stories,./public --quiet --loglevel warn",
+    "s": "start-storybook -p 6006 -s stories,./public --no-manager-cache",
     "start": "concurrently \"rush build:watch -T storybook\" \"rushx start:storybook\"",
     "start:storybook": "start-storybook -p 6006 -s stories,./public --no-manager-cache --quiet --loglevel warn",
     "deploy-storybook": "storybook-to-ghpages --script build",
@@ -67,6 +68,7 @@
     "@types/react-linkify": "^1.0.0",
     "@types/react": "^16.9.49",
     "@types/uuid": "^8.3.0",
+    "@types/webpack": "4.41.26",
     "@typescript-eslint/eslint-plugin": "^4.12.0",
     "@typescript-eslint/parser": "^4.12.0",
     "ajv": "^6.9.1",
@@ -105,6 +107,7 @@
     "ts-node": "^9.1.1",
     "typescript": "4.1.5",
     "uuid": "^8.1.0",
-    "webpack": "4.44.2"
+    "webpack": "4.44.2",
+    "enhanced-resolve": "~5.7.0"
   }
 }
