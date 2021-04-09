@@ -13,6 +13,13 @@ import { ReactElement } from 'react';
 import * as reselect from 'reselect';
 
 // @public (undocumented)
+export type BaseChatConfigProps = {
+    displayName: string;
+    userId: string;
+    threadId: string;
+};
+
+// @public (undocumented)
 export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientState, BaseChatConfigProps, {
     userId: string;
     disableReadReceipt: boolean;
@@ -38,7 +45,19 @@ export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientSta
 }>;
 
 // @public (undocumented)
+export type CommonProperties<A, B> = {
+    [P in keyof A & keyof B]: A[P] extends B[P] ? (A[P] extends B[P] ? P : never) : never;
+}[keyof A & keyof B];
+
+// @public (undocumented)
 export const createDefaultHandlersForComponent: <Props>(chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultHandlers, CommonProperties<DefaultHandlers, Props>>;
+
+// @public (undocumented)
+export type DefaultHandlers = {
+    onMessageSend: (content: string) => Promise<void>;
+    onMessageSeen: (chatMessageId: string) => Promise<void>;
+    onTyping: () => Promise<void>;
+};
 
 // @public (undocumented)
 export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState, BaseChatConfigProps, {
