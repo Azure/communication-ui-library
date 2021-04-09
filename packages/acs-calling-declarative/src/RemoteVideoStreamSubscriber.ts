@@ -3,7 +3,7 @@
 import { RemoteVideoStream } from '@azure/communication-calling';
 
 /**
- * Subscribes to the isAvailableChanged event of the RemoteVideoStream. Because we dont' have a good way to distinquish
+ * Subscribes to the isAvailableChanged event of the RemoteVideoStream. Because we dont' have a good way to distinguish
  * different remote video streams in context, we call the parent participant's videoStreamsUpdated function which will
  * recreate the remote video streams state from scratch. TODO: do we want to be more selective on adding/removing
  * streams?
