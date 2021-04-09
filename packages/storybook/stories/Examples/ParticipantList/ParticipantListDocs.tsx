@@ -32,7 +32,7 @@ export const getDocs: () => JSX.Element = () => {
         `menuItems` and `onRenderIcon` properties of
         [ParticipantItem](./?path=/docs/ui-components-participantitem--participant-item#props) like in the code below.
         For simplicity, we are using React `useState` to keep the state of every participant to decide which menu items
-        and icons to show. By clicking a participant in the rendered example below, you can now mute and unmute.
+        and icons to show. You can now mute and unmute by clicking a participant in the rendered example below.
       </Description>
       <Source code={InteractiveParticipantListExampleText} />
 

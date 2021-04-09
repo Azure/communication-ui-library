@@ -67,6 +67,7 @@ export const ParticipantListComponent: () => JSX.Element = () => {
           }
 
           return (
+            // eslint-disable-next-line react/jsx-key
             <ParticipantItem
               name={p.displayName}
               presence={p.presence}
