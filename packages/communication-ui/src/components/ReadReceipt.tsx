@@ -3,7 +3,7 @@
 import React from 'react';
 import { mergeStyles, TooltipHost } from '@fluentui/react';
 import { MessageStatus } from '../types/ChatMessage';
-import { SizeValue } from '@fluentui/react-northstar/dist/commonjs/utils/commonPropInterfaces';
+import { SizeValue } from '@fluentui/react-northstar';
 import { readReceiptIconErrorStyle, readReceiptIconMessageStyle } from './styles/ReadReceipt.styles';
 import { CircleRingIcon, CompletedIcon, ErrorIcon } from '@fluentui/react-icons';
 import { MessageSeenIcon } from '@fluentui/react-icons-northstar';

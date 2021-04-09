@@ -48,7 +48,7 @@ import { RendererOptions } from '@azure/communication-calling';
 import { RestListMessagesOptions } from '@azure/communication-chat';
 import { ScalingMode } from '@azure/communication-calling';
 import { SetStateAction } from 'react';
-import { SizeValue } from '@fluentui/react-northstar/dist/commonjs/utils/commonPropInterfaces';
+import { SizeValue } from '@fluentui/react-northstar';
 import { Theme } from '@fluentui/react-theme-provider';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
