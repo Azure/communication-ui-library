@@ -7,7 +7,6 @@ import { SizeValue } from '@fluentui/react-northstar';
 import { readReceiptIconErrorStyle, readReceiptIconMessageStyle } from './styles/ReadReceipt.styles';
 import { CircleRingIcon, CompletedIcon, ErrorIcon } from '@fluentui/react-icons';
 import { MessageSeenIcon } from '@fluentui/react-icons-northstar';
-import { ErrorHandlingProps } from '../providers/ErrorProvider';
 import { BaseCustomStylesProps } from '../types';
 
 /**
@@ -39,7 +38,7 @@ export interface ReadReceiptProps {
 /**
  * ReadReceipt component.
  */
-export const ReadReceipt = (props: ReadReceiptProps & ErrorHandlingProps): JSX.Element => {
+export const ReadReceipt = (props: ReadReceiptProps): JSX.Element => {
   const {
     messageStatus,
     deliveredTooltipText = 'Sent',
