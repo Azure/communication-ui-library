@@ -3,10 +3,12 @@
   "version": "1.0.0-beta",
   "description": "ACS UI SDK",
   "module": "dist/dist-esm/index.js",
-  "main": "dist/dist-esm/index.js",
+  "main": "dist/dist-cjs/index.js",
   "types": "dist/acs-chat-declarative.d.ts",
   "scripts": {
-    "build": "tsc && api-extractor run --local",
+    "build": "rushx build:esm && rushx build:cjs && api-extractor run --local",
+    "build:esm": "tsc",
+    "build:cjs": "rollup -c --silent --failAfterWarnings",
     "build:watch": "rushx build",
     "test": "jest",
     "test:coverage": "npm run test -- --coverage",
@@ -14,7 +16,8 @@
     "lint:fix": "npm run lint -- --fix",
     "lint:quiet": "npm run lint -- --quiet",
     "api-extractor": "tsc && api-extractor run --local",
-    "generate-doc": "api-documenter markdown -i temp -o docGen"
+    "generate-doc": "api-documenter markdown -i temp -o docGen",
+    "postpack": "copyfiles -E \"./*.tgz\" private-preview"
   },
   "browserslist": {
     "production": [
@@ -31,9 +34,10 @@
   "dependencies": {
     "@azure/communication-chat": "1.0.0-beta.4",
     "@azure/communication-signaling": "1.0.0-beta.2",
+    "@azure/core-paging": "~1.1.3",
+    "events": "~3.3.0",
     "immer": "~8.0.1",
-    "nanoid": "~3.1.20",
-    "@azure/core-paging": "~1.1.3"
+    "nanoid": "~3.1.20"
   },
   "devDependencies": {
     "@microsoft/api-documenter": "~7.12.11",
@@ -41,12 +45,14 @@
     "@types/jest": "^26.0.20",
     "@typescript-eslint/eslint-plugin": "^4.12.0",
     "@typescript-eslint/parser": "^4.12.0",
+    "copyfiles": "^2.4.1",
     "eslint-config-prettier": "^6.12.0",
     "eslint-plugin-header": "^3.1.0",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint": "^7.7.0",
     "jest": "26.6.0",
+    "rollup": "~2.42.4",
     "ts-jest": "^26.4.4",
     "typescript": "4.1.5"
   },

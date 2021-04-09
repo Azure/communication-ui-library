@@ -13,7 +13,7 @@ import {
   TypingIndicatorReceivedEvent
 } from '@azure/communication-signaling';
 import { ChatContext } from './ChatContext';
-import { convertChatMessage } from './ChatThreadClientDeclarative';
+import { convertChatMessage } from './convertChatMessage';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 import { ReadReceipt } from './types/ReadReceipt';
 import { TypingIndicator } from './types/TypingIndicator';
