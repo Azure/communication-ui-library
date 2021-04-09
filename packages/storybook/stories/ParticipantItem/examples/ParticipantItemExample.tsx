@@ -15,6 +15,11 @@ export const ParticipantItemExample: () => JSX.Element = () => {
       onClick: () => alert('Remove')
     }
   ];
+  const containerStyle = { width: '12rem' };
 
-  return <ParticipantItem name="Johnny Bravo" menuItems={menuItems} presence={PersonaPresence.online} />;
+  return (
+    <div style={containerStyle}>
+      <ParticipantItem name="Johnny Bravo" menuItems={menuItems} presence={PersonaPresence.online} />
+    </div>
+  );
 };

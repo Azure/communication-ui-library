@@ -18,13 +18,10 @@ export const BasicParticipantListExample: () => JSX.Element = () => {
     }
   ];
 
-  const headingStyle = { fontSize: '1.5rem', marginBottom: '1rem' };
-  const stackStyle = { width: '12.5rem' };
-
   return (
     <>
-      <h1 style={headingStyle}>Participants</h1>
-      <Stack style={stackStyle}>
+      <div style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Participants</div>
+      <Stack style={{ width: '12.5rem' }}>
         {participants.map((participant: any) => (
           <ParticipantItem name={participant.name} presence={participant.presence} />
         ))}
