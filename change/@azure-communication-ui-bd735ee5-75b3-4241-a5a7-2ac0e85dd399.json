@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Renamed props of interface SendBoxStylesProps. SendBox system message component change.",
+  "packageName": "@azure/communication-ui",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
