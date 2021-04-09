@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Set maxWidth to 20rem for ParticipantItem.",
+  "packageName": "@azure/communication-ui",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
