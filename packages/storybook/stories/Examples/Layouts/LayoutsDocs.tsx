@@ -2,11 +2,11 @@
 
 import { Canvas, Description, Heading, Source, Title, SourceState } from '@storybook/addon-docs/blocks';
 import React from 'react';
-import { ScreenShareLayoutExample } from './examples/ScreenShareLayoutExample';
-import { OneToOneCallLayoutExample } from './examples/OneToOneCallLayoutExample';
+import { ScreenShareLayoutExample } from './examples/ScreenShareLayout.example';
+import { OneToOneCallLayoutExample } from './examples/OneToOneCallLayout.example';
 
-const ScreenShareLayoutExampleText = require('!!raw-loader!./examples/ScreenShareLayoutExample.tsx').default;
-const OneToOneCallLayoutExampleText = require('!!raw-loader!./examples/OneToOneCallLayoutExample.tsx').default;
+const ScreenShareLayoutExampleText = require('!!raw-loader!./examples/ScreenShareLayout.example.tsx').default;
+const OneToOneCallLayoutExampleText = require('!!raw-loader!./examples/OneToOneCallLayout.example.tsx').default;
 
 export const getDocs: () => JSX.Element = () => {
   return (
@@ -38,10 +38,12 @@ export const getDocs: () => JSX.Element = () => {
       <Source code={ScreenShareLayoutExampleText} />
       <Description>
         In the example above, we show a layout containing 30% of side panel on the left and 70% screen share stream on
-        the right. And the video tile in the side panel has aspect ratio `16:9`. To customize the proportion of the side
-        panel, you can change the `width` of the side panel component and the screen share component will take the rest
-        of the width automatically. To customize the aspect ratio of the video tile, change the `paddingTop` field in
-        the `aspectRatioBoxStyle` to be the ratio you want.
+        the right. To customize the proportion of the side panel, you can change the `width` of the side panel component
+        and the screen share component will take the rest of the width automatically.
+      </Description>
+      <Description>
+        For the individual video tile in the side panel, it has aspect ratio `16:9`. To customize the aspect ratio of
+        the video tile, you can change the `paddingTop` field in the `aspectRatioBoxStyle` to be the ratio you want.
       </Description>
     </>
   );

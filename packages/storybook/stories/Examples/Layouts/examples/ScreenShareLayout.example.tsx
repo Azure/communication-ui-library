@@ -1,12 +1,12 @@
 import { VideoTile } from '@azure/communication-ui';
-import { mergeStyles, Persona, PersonaSize, Stack } from '@fluentui/react';
+import { Label, mergeStyles, Persona, PersonaSize, Stack } from '@fluentui/react';
 import React from 'react';
 
 export const ScreenShareLayoutExample: () => JSX.Element = () => {
   const defaultParticipants = ['Michael', 'Jim', 'Pam', 'Dwight', 'Kelly', 'Ryan', 'Andy'];
 
   const aspectRatioBoxStyle = mergeStyles({
-    border: '1',
+    borderWidth: '.063rem .063rem .025rem .063rem',
     borderStyle: 'solid',
     width: '100%',
     height: 0,
@@ -32,6 +32,20 @@ export const ScreenShareLayoutExample: () => JSX.Element = () => {
     width: '30%'
   });
 
+  const screenShareLayoutStyle = {
+    height: `31.25rem`,
+    width: `53.125rem`,
+    border: '.063rem'
+  };
+
+  const videoLabelStyle = mergeStyles({
+    bottom: '5%',
+    left: '2%',
+    overflow: 'hidden',
+    position: 'absolute',
+    maxWidth: '95%'
+  });
+
   const participantsComponents = defaultParticipants.map((participant, index) => {
     return (
       <Stack className={aspectRatioBoxStyle} key={index}>
@@ -48,7 +62,8 @@ export const ScreenShareLayoutExample: () => JSX.Element = () => {
               />
             }
           >
-            <label>{participant}</label>
+            {/* The overlay component we want to render in a videoTile, in this case, we want to render a label. */}
+            <Label className={videoLabelStyle}>{participant}</Label>
           </VideoTile>
         </Stack>
       </Stack>
@@ -56,7 +71,7 @@ export const ScreenShareLayoutExample: () => JSX.Element = () => {
   });
 
   return (
-    <Stack style={{ height: `500px`, width: `850px`, border: '1px' }} horizontal>
+    <Stack style={screenShareLayoutStyle} horizontal>
       {/* Side panel component in this layout */}
       <Stack.Item className={mergeStyles({ height: '100%', width: '30%' })}>
         <Stack grow className={mergeStyles({ height: '100%', overflow: 'auto' })}>
@@ -80,7 +95,7 @@ export const ScreenShareLayoutExample: () => JSX.Element = () => {
             </Stack>
           }
         >
-          {/* Video component for screen sharer's stream */}
+          {/* We want to render another overlay videoTile inside the parent videoTile for screen sharer's video */}
           <VideoTile
             isVideoReady={false}
             // A placeholder element for screen sharer's video stream
@@ -93,7 +108,9 @@ export const ScreenShareLayoutExample: () => JSX.Element = () => {
                 initialsTextColor="white"
               />
             }
-          />
+          >
+            {/* We do not want to add any overlay component for this videoTile, so we do not add children for this videoTile. */}
+          </VideoTile>
         </VideoTile>
       </Stack.Item>
     </Stack>

@@ -11,7 +11,7 @@ import {
   EXAMPLES_FOLDER_PREFIX
 } from '../../constants';
 import { GridLayout, VideoTile } from '@azure/communication-ui';
-import { Stack, mergeStyles, PersonaSize, Persona } from '@fluentui/react';
+import { Stack, mergeStyles, PersonaSize, Persona, Label } from '@fluentui/react';
 import { getDocs } from './LayoutsDocs';
 
 export const ScreenShareLayout: () => JSX.Element = () => {
@@ -30,7 +30,7 @@ export const ScreenShareLayout: () => JSX.Element = () => {
   const aspectRatio = (100 * aspectRatioNumberArray[1]) / aspectRatioNumberArray[0] + '%';
 
   const aspectRatioBoxStyle = mergeStyles({
-    border: '1',
+    borderWidth: '.063rem .063rem .025rem .063rem',
     borderStyle: 'solid',
     width: '100%',
     height: 0,
@@ -56,6 +56,20 @@ export const ScreenShareLayout: () => JSX.Element = () => {
     width: '30%'
   });
 
+  const screenShareLayoutStyle = {
+    height: `${height}px`,
+    width: `${width}px`,
+    border: '.063rem'
+  };
+
+  const videoLabelStyle = mergeStyles({
+    bottom: '5%',
+    left: '2%',
+    overflow: 'hidden',
+    position: 'absolute',
+    maxWidth: '95%'
+  });
+
   const participantsComponents = defaultParticipants.map((participant, index) => {
     return (
       <Stack className={aspectRatioBoxStyle} key={index}>
@@ -72,7 +86,7 @@ export const ScreenShareLayout: () => JSX.Element = () => {
               />
             }
           >
-            <label>{participant}</label>
+            <Label className={videoLabelStyle}>{participant}</Label>
           </VideoTile>
         </Stack>
       </Stack>
@@ -80,7 +94,7 @@ export const ScreenShareLayout: () => JSX.Element = () => {
   });
 
   return (
-    <Stack style={{ height: `${height}px`, width: `${width}px`, border: '1px' }} horizontal>
+    <Stack style={screenShareLayoutStyle} horizontal>
       {/* Side panel component in this layout */}
       <Stack.Item className={mergeStyles({ height: '100%', width: sidePanelWidthRatio })}>
         <Stack grow className={mergeStyles({ height: '100%', overflow: 'auto' })}>
