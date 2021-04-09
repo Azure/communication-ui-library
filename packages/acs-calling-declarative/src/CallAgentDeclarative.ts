@@ -68,6 +68,8 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
         callSubscriber.unsubscribe();
         this._callSubscribers.delete(call);
       }
+      this._context.removeIncomingCallEnded(call.id);
+      this._context.removeIncomingCall(call.id);
       this._context.setCallEnded(call.id, call.callEndReason);
     }
   };
@@ -78,30 +80,39 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
       incomingCallSubscriber.unsubscribe();
       this._incomingCallSubscribers.delete(incomingCallId);
     }
+    this._context.removeCall(incomingCallId);
+    this._context.removeCallEnded(incomingCallId);
     this._context.setIncomingCallEnded(incomingCallId, callEndReason);
   };
 
   private incomingCall = (event: { incomingCall: IncomingCall }): void => {
-    // Safety check incase somehow got a duplicate incoming call.
+    // Make sure to not subscribe to the incoming call if we are already subscribed to it.
     if (!this._incomingCallSubscribers.has(event.incomingCall.id)) {
       this._incomingCallSubscribers.set(
         event.incomingCall.id,
         new IncomingCallSubscriber(event.incomingCall, this.setIncomingCallEnded)
       );
     }
+
+    // Call id be unique so there should only be one instance of this Call in all the maps.
+    this._context.removeCall(event.incomingCall.id);
+    this._context.removeCallEnded(event.incomingCall.id);
     this._context.removeIncomingCallEnded(event.incomingCall.id);
+
     this._context.setIncomingCall(convertSdkIncomingCallToDeclarativeIncomingCall(event.incomingCall));
   };
 
   private addCall = (call: Call): void => {
-    // In case we get the same call from startCall or join in an event, we first check if we're already subscribed
-    // before subscribing.
+    // Make sure to not subscribe to the call if we are already subscribed to it.
     if (!this._callSubscribers.has(call)) {
       this._callSubscribers.set(call, new CallSubscriber(call, this._context));
     }
 
-    // Incase this call was ended and somehow end up re-activating we can quickly delete it from callsEnded if exists.
+    // Call id be unique so there should only be one instance of this Call in all the maps.
     this._context.removeCallEnded(call.id);
+    this._context.removeIncomingCall(call.id);
+    this._context.removeIncomingCallEnded(call.id);
+
     this._context.setCall(convertSdkCallToDeclarativeCall(call));
   };
 
