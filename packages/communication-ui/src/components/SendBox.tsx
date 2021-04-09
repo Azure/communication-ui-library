@@ -21,9 +21,6 @@ import {
   sendIconDiv,
   suppressIconStyle
 } from './styles/SendBox.styles';
-import { SendBoxPropsFromContext } from '../consumers/MapToSendBoxProps';
-import { ErrorHandlingProps } from '../providers/ErrorProvider';
-import { propagateError } from '../utils/SDKUtils';
 import { BaseCustomStylesProps } from '../types';
 
 export interface SendBoxStylesProps extends BaseCustomStylesProps {
@@ -41,12 +38,38 @@ export interface SendBoxStylesProps extends BaseCustomStylesProps {
  * Props for SendBox component
  */
 export interface SendBoxProps {
-  /** Optional callback to render system message below the SendBox. */
+  /**
+   * Optional boolean to disable text box
+   * @defaultValue false
+   */
+  disabled?: boolean;
+  /**
+   * Optional text for system message below text box
+   */
+  systemMessage?: string;
+  /**
+   * Optional callback called when message is sent
+   */
+  onSendMessage?: (messageContent: string) => Promise<void>;
+  /**
+   * Optional callback called when user is typing
+   */
+  onSendTypingNotification?: () => Promise<void>;
+  /**
+   * Optional callback to render system message below the SendBox.
+   * @defaultValue MessageBar
+   */
   onRenderSystemMessage?: (systemMessage: string | undefined) => React.ReactElement;
-  /** Optional boolean to support new line in SendBox. */
+  /**
+   * Optional boolean to support new line in SendBox.
+   * @defaultValue false
+   */
   supportNewline?: boolean;
-  /** Optional callback to render send button icon to the right of the SendBox. */
-  onRenderIcon?: (props: SendBoxProps & SendBoxPropsFromContext, isMouseOverSendIcon: boolean) => JSX.Element | null;
+  /**
+   * Optional callback to render send button icon to the right of the SendBox.
+   * @defaultValue SendIcon
+   */
+  onRenderIcon?: (props: SendBoxProps, isMouseOverSendIcon: boolean) => JSX.Element | null;
   /**
    * Allows users to pass in an object contains custom CSS styles.
    * @Example
@@ -71,13 +94,12 @@ const defaultOnRenderSystemMessage = (
  * `SendBox` is a component for users to send messages and typing notifications. An optional message
  * can also be shown below the `SendBox`.
  */
-export const SendBox = (props: SendBoxProps & SendBoxPropsFromContext & ErrorHandlingProps): JSX.Element => {
+export const SendBox = (props: SendBoxProps): JSX.Element => {
   const {
     disabled,
     systemMessage,
     supportNewline,
     onSendMessage,
-    onErrorCallback,
     onSendTypingNotification,
     onRenderIcon,
     styles
@@ -98,9 +120,7 @@ export const SendBox = (props: SendBoxProps & SendBoxPropsFromContext & ErrorHan
     }
     // we dont want to send empty messages including spaces, newlines, tabs
     if (!EMPTY_MESSAGE_REGEX.test(textValue)) {
-      onSendMessage(textValue).catch((error) => {
-        propagateError(error, onErrorCallback);
-      });
+      onSendMessage && onSendMessage(textValue);
       setTextValue('');
     }
     sendTextFieldRef.current?.focus();
@@ -137,9 +157,7 @@ export const SendBox = (props: SendBoxProps & SendBoxPropsFromContext & ErrorHan
               ev.preventDefault();
               sendMessageOnClick();
             }
-            onSendTypingNotification().catch((error) => {
-              propagateError(error, onErrorCallback);
-            });
+            onSendTypingNotification && onSendTypingNotification();
           }}
           styles={concatStyleSets(TextFieldStyleProps, { fieldGroup: styles?.textField })}
         />

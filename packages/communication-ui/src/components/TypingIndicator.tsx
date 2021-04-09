@@ -8,9 +8,7 @@ import {
 } from './styles/TypingIndicator.styles';
 
 import React from 'react';
-import { TypingUser } from '../types/TypingUser';
-import { ErrorHandlingProps } from '../providers/ErrorProvider';
-import { BaseCustomStylesProps } from '../types';
+import { BaseCustomStylesProps, TypingUser } from '../types';
 import { IStyle, mergeStyles } from '@fluentui/react';
 
 export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
@@ -55,7 +53,7 @@ export interface TypingIndicatorProps {
  * @param props - An object of TypingIndicatorProps type that contains all data and functions needed.
  * @returns ReactElement
  */
-export const TypingIndicator = (props: TypingIndicatorProps & ErrorHandlingProps): JSX.Element => {
+export const TypingIndicator = (props: TypingIndicatorProps): JSX.Element => {
   const displayComponents: JSX.Element[] = [];
   const { typingUsers, typingString, styles } = props;
 
