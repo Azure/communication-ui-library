@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Update API extractor warnings to be errors",
+  "packageName": "@azure/acs-chat-selector",
+  "email": "mail@jamesburnside.com",
+  "dependentChangeType": "none"
+}

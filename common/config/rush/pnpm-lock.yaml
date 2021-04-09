@@ -19,11 +19,11 @@ dependencies:
   '@rush-temp/acs-calling-declarative': file:projects/acs-calling-declarative.tgz_prettier@2.0.5+ts-node@9.1.1
   '@rush-temp/acs-chat-declarative': file:projects/acs-chat-declarative.tgz_prettier@2.0.5+ts-node@9.1.1
   '@rush-temp/acs-chat-selector': file:projects/acs-chat-selector.tgz_prettier@2.0.5
+  '@rush-temp/build-tools': file:projects/build-tools.tgz_typescript@4.1.5
   '@rush-temp/calling': file:projects/calling.tgz_570bf42e92a70fb216c5cd4d5ed668ef
   '@rush-temp/chat': file:projects/chat.tgz_40b0c9f7a7a0fac66e4b6fcf06de2a42
   '@rush-temp/communication-ui': file:projects/communication-ui.tgz_webpack-cli@4.5.0
   '@rush-temp/one-to-one-call': file:projects/one-to-one-call.tgz_570bf42e92a70fb216c5cd4d5ed668ef
-  '@rush-temp/release-tools': file:projects/release-tools.tgz_typescript@4.1.5
   '@rush-temp/server': file:projects/server.tgz
   '@rush-temp/storybook': file:projects/storybook.tgz_webpack-cli@4.5.0
   '@storybook/addon-actions': 6.1.21_30bc4764d4ba778218056aab0be8023f
@@ -86,6 +86,7 @@ dependencies:
   eslint-plugin-prettier: 3.3.1_cdac37046eab2e8d6fb794f34ed825c2
   eslint-plugin-react: 7.22.0_eslint@7.22.0
   eslint-plugin-react-hooks: 4.2.0_eslint@7.22.0
+  events: 3.3.0
   express: 4.16.4
   http-errors: 1.6.3
   husky: 4.3.8
@@ -20203,9 +20204,11 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.22.0
       eslint-plugin-import: 2.22.1_eslint@7.22.0
       eslint-plugin-prettier: 3.3.1_cdac37046eab2e8d6fb794f34ed825c2
+      events: 3.3.0
       immer: 8.0.1
       jest: 26.6.0_ts-node@9.1.1
       nanoid: 3.1.22
+      rollup: 2.42.4
       ts-jest: 26.5.3_jest@26.6.0+typescript@4.1.5
       typescript: 4.1.5
     dev: false
@@ -20215,7 +20218,7 @@ packages:
       prettier: '*'
       ts-node: '*'
     resolution:
-      integrity: sha512-27XkTAtdMHzfP28mzzTk9lQbSTO88/bWqBTcw5NDTHatpi6gWVmtKt7TLmIT/LoCFZLWJh2xk6wAqq+KKqtbpQ==
+      integrity: sha512-Dvfet7uEYruGSHOgIksbZNzgzhkatwbwdMO0MS8PMbLeyiL/qS45bqnBPZ0h3r+SxpwfbVd+vJKIKEn9n2HhQQ==
       tarball: file:projects/acs-chat-declarative.tgz
     version: 0.0.0
   file:projects/acs-chat-selector.tgz_prettier@2.0.5:
@@ -20240,6 +20243,25 @@ packages:
     resolution:
       integrity: sha512-vgq6DDxDUEWYFZ87cBH4q1E92dgwgtbVsPUf6YVIrtITro9kA+YrR7CmgI5smLDwJbCau5vxd9UIEASkg8cXCA==
       tarball: file:projects/acs-chat-selector.tgz
+    version: 0.0.0
+  file:projects/build-tools.tgz_typescript@4.1.5:
+    dependencies:
+      '@octokit/rest': 18.0.15
+      '@rollup/plugin-commonjs': 17.1.0_rollup@2.42.4
+      '@types/node': 14.14.35
+      beachball: 1.53.2
+      rollup: 2.42.4
+      rollup-plugin-sourcemaps: 0.6.3_9135ee81d9218d0e99b56082525729b5
+      rollup-plugin-svg: 2.0.0
+      ts-node: 9.1.1_typescript@4.1.5
+    dev: false
+    id: file:projects/build-tools.tgz
+    name: '@rush-temp/build-tools'
+    peerDependencies:
+      typescript: '*'
+    resolution:
+      integrity: sha512-b5hFauElrTQk+ieDLylltlsXYuREKzGdSgkbZY/NC9PgniOwHvxJPuuAQCWf0rHbgYzH8HOddbB5yIoFADO/ug==
+      tarball: file:projects/build-tools.tgz
     version: 0.0.0
   file:projects/calling.tgz_570bf42e92a70fb216c5cd4d5ed668ef:
     dependencies:
@@ -20463,7 +20485,7 @@ packages:
     peerDependencies:
       webpack-cli: '*'
     resolution:
-      integrity: sha512-KsffXOujTVbXbseiFJYZnzsNGbbtSmniaMzglpMaB75IK3QAeNsR5H7jHln/8jazplzE+O7EmdGLwuo9AHE5Ag==
+      integrity: sha512-irlqrdu6PIGa6dbiOIYfrBqwhBSeZIVB8gAKPgSCmefAJtSlAgmYTKRxlwNhhjA7Az0ZXF4ICXiM3nya8ZChgw==
       tarball: file:projects/communication-ui.tgz
     version: 0.0.0
   file:projects/one-to-one-call.tgz_570bf42e92a70fb216c5cd4d5ed668ef:
@@ -20535,21 +20557,6 @@ packages:
     resolution:
       integrity: sha512-7Eei6TVL74VGNBmON8HLssHISzQr8G8ImvnnvLBOTTGUat72KR7QjO16GHMr4QUYlKFLFd/+hvFFiwjvu6u/hw==
       tarball: file:projects/one-to-one-call.tgz
-    version: 0.0.0
-  file:projects/release-tools.tgz_typescript@4.1.5:
-    dependencies:
-      '@octokit/rest': 18.0.15
-      '@types/node': 14.14.35
-      beachball: 1.53.2
-      ts-node: 9.1.1_typescript@4.1.5
-    dev: false
-    id: file:projects/release-tools.tgz
-    name: '@rush-temp/release-tools'
-    peerDependencies:
-      typescript: '*'
-    resolution:
-      integrity: sha512-z8gCO5dSCyziWJ+KCb64AK7YSaU+hep4QQ9rcswo/dTE2JpMHkrACkdV/jjOKrx0wtUHIH6BmypWIROVzaf7Zw==
-      tarball: file:projects/release-tools.tgz
     version: 0.0.0
   file:projects/server.tgz:
     dependencies:
@@ -20715,11 +20722,11 @@ specifiers:
   '@rush-temp/acs-calling-declarative': file:./projects/acs-calling-declarative.tgz
   '@rush-temp/acs-chat-declarative': file:./projects/acs-chat-declarative.tgz
   '@rush-temp/acs-chat-selector': file:./projects/acs-chat-selector.tgz
+  '@rush-temp/build-tools': file:./projects/build-tools.tgz
   '@rush-temp/calling': file:./projects/calling.tgz
   '@rush-temp/chat': file:./projects/chat.tgz
   '@rush-temp/communication-ui': file:./projects/communication-ui.tgz
   '@rush-temp/one-to-one-call': file:./projects/one-to-one-call.tgz
-  '@rush-temp/release-tools': file:./projects/release-tools.tgz
   '@rush-temp/server': file:./projects/server.tgz
   '@rush-temp/storybook': file:./projects/storybook.tgz
   '@storybook/addon-actions': ^6.1.1
@@ -20782,6 +20789,7 @@ specifiers:
   eslint-plugin-prettier: ^3.1.4
   eslint-plugin-react: ^7.18.3
   eslint-plugin-react-hooks: ^4.1.2
+  events: ~3.3.0
   express: ~4.16.1
   http-errors: ~1.6.3
   husky: ^4.3.0
