@@ -43,7 +43,7 @@ jobs:
 
       # Bump package versions
       - name: Bump package versions
-        run: node common/release/node_modules/beachball/bin/beachball bump
+        run: node common/config/node_modules/beachball/bin/beachball bump
 
       # Get datetime for release branch name
       - name: Create datetime

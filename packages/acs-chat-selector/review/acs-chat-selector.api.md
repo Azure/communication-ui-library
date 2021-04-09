@@ -12,8 +12,13 @@ import { MessageStatus } from '@azure/acs-chat-declarative';
 import { ReactElement } from 'react';
 import * as reselect from 'reselect';
 
-// Warning: (ae-forgotten-export) The symbol "BaseChatConfigProps" needs to be exported by the entry point index.d.ts
-//
+// @public (undocumented)
+export type BaseChatConfigProps = {
+    displayName: string;
+    userId: string;
+    threadId: string;
+};
+
 // @public (undocumented)
 export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientState, BaseChatConfigProps, {
     userId: string;
@@ -39,11 +44,20 @@ export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientSta
     }[];
 }>;
 
-// Warning: (ae-forgotten-export) The symbol "DefaultHandlers" needs to be exported by the entry point index.d.ts
-// Warning: (ae-forgotten-export) The symbol "CommonProperties" needs to be exported by the entry point index.d.ts
-//
+// @public (undocumented)
+export type CommonProperties<A, B> = {
+    [P in keyof A & keyof B]: A[P] extends B[P] ? (A[P] extends B[P] ? P : never) : never;
+}[keyof A & keyof B];
+
 // @public (undocumented)
 export const createDefaultHandlersForComponent: <Props>(chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultHandlers, CommonProperties<DefaultHandlers, Props>>;
+
+// @public (undocumented)
+export type DefaultHandlers = {
+    onMessageSend: (content: string) => Promise<void>;
+    onMessageSeen: (chatMessageId: string) => Promise<void>;
+    onTyping: () => Promise<void>;
+};
 
 // @public (undocumented)
 export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState, BaseChatConfigProps, {

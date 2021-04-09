@@ -41,14 +41,14 @@ For writing a good changelog entry for the change file see: [Tips for writing me
 
 ### Package version bumping
 
-This is done by our github actions. If this needs to be down manually you can run `npm run beachball -- bump` under `common/release`.
+This is done by our github actions. If this needs to be down manually you can run `npm run beachball -- bump` under `common/config`.
 See [creating a release](./creating-a-release.md) for more information.
 
 ### Changelog Generation
 
 This happens as part of the `beachball bump` command. In our repo however we have custom changelog renderers to create a feature rich changelog with links to PRs and authors.
 
-These custom renderers are located here: [common/release/changelog-custom-renders.ts](https://github.com/Azure/communication-ui-sdk/blob/main/common/release/changelog-custom-renders.ts).
+These custom renderers are located here: [common/config/beachball/changelog-custom-renders.ts](https://github.com/Azure/communication-ui-sdk/blob/main/common/config/beachball/changelog-custom-renders.ts).
 
 ## Gating PRs
 
@@ -57,6 +57,6 @@ To see all PR gates, view [pull requests](./pull-requests.md) docs.
 
 ## Configuration Files
 
-The primary beachball configuration file is at: [common/release/changelog-config.ts](https://github.com/Azure/communication-ui-sdk/blob/main/common/release/changelog-config.ts). This is picked up by the root level `beachball.config.js`.
+The primary beachball configuration file is at: [common/config/beachball/changelog-config.ts](https://github.com/Azure/communication-ui-sdk/blob/main/common/config/beachball/changelog-config.ts). This is picked up by the root level `beachball.config.js`.
 
 Each `package.json` must also not be marked `private:true` or beachball will ignore it and may optionally contain a `beachball:` section that contains package specific configuration.

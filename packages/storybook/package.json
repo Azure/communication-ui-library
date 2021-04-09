@@ -52,7 +52,7 @@
     "@storybook/addon-essentials": "^6.1.1",
     "@storybook/addon-knobs": "^6.1.9",
     "@storybook/addon-links": "^6.1.1",
-    "@storybook/addon-storyshots": "^6.1.6",
+    "@storybook/addon-storyshots": "~6.1.6",
     "@storybook/node-logger": "^6.1.1",
     "@storybook/react": "^6.1.1",
     "@storybook/storybook-deployer": "^2.8.7",

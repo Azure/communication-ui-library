@@ -63,8 +63,8 @@
       "reviewCategory": "tools"
     },
     {
-      "packageName": "release-tools",
-      "projectFolder": "common/release",
+      "packageName": "build-tools",
+      "projectFolder": "common/config",
       "reviewCategory": "tools"
     }
   ]
