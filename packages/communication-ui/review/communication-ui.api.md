@@ -11,7 +11,7 @@ import { IStyle } from '@fluentui/react';
 import { PartialTheme } from '@fluentui/react-theme-provider';
 import { PersonaPresence } from '@fluentui/react';
 import { default as React_2 } from 'react';
-import { SizeValue } from '@fluentui/react-northstar/dist/commonjs/utils/commonPropInterfaces';
+import { SizeValue } from '@fluentui/react-northstar';
 import { Theme } from '@fluentui/react-theme-provider';
 
 // @public
