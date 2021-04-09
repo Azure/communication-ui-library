@@ -23,9 +23,9 @@ module.exports = {
     // For more information on how this might be possible see: https://github.com/storybookjs/storybook/issues/6885
     config.performance.hints = false;
 
-    // Resolve local packages directly to the source file.
-    // This means props in the docs for each component can be directly retrieved from the component (we are seeing issues when 
-    // referencing the dist/component.js file, these are fixed when referencing the /component.ts typescript file).
+    // Resolve local packages directly to the source files instead of module linking via node_modules.
+    // This means props in the docs for each component can be directly retrieved from the component (we were seeing issues where props
+    // did not show when referencing the dist/component.js file, these issues are fixed when referencing the src/component.ts typescript file).
     // Note: This triggers babel to retranspile all package dependency files during webpack's compilation step.
     config.resolve.alias = {
       ...(config.resolve.alias || {}),
