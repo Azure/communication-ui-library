@@ -160,20 +160,6 @@ export const labeledHangupButtonProps: IButtonProps = {
   }
 };
 
-/** All ControlBar layout types */
-export const CONTROL_BAR_LAYOUTS = [
-  'horizontal',
-  'vertical',
-  'dockedTop',
-  'dockedBottom',
-  'dockedLeft',
-  'dockedRight',
-  'floatingTop',
-  'floatingBottom',
-  'floatingLeft',
-  'floatingRight'
-] as const;
-
 export type ControlBarLayoutType =
   | 'horizontal'
   | 'vertical'
