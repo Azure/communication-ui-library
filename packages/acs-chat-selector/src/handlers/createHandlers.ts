@@ -4,7 +4,7 @@ import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
 import { ChatThreadClient } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
 
-type DefaultHandlers = {
+export type DefaultHandlers = {
   onMessageSend: (content: string) => Promise<void>;
   onMessageSeen: (chatMessageId: string) => Promise<void>;
   onTyping: () => Promise<void>;
@@ -25,7 +25,7 @@ const createDefaultHandlers = memoizeOne((chatClient: DeclarativeChatClient, cha
   };
 });
 
-type CommonProperties<A, B> = {
+export type CommonProperties<A, B> = {
   [P in keyof A & keyof B]: A[P] extends B[P] ? (A[P] extends B[P] ? P : never) : never;
 }[keyof A & keyof B];
 
