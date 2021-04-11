@@ -20,10 +20,11 @@ import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { LiveAnnouncer, LiveMessage } from 'react-aria-live';
 import { formatTimestampForChatMessage } from '../utils';
 import { CLICK_TO_LOAD_MORE_MESSAGES, NEW_MESSAGES } from '../constants';
-import { BaseCustomStylesProps, ChatMessage as WebUiChatMessage } from '../types';
+import { BaseCustomStylesProps, ChatMessage, Message, MessageStatus, MessageTypes } from '../types';
 import { ReadReceipt, ReadReceiptProps } from './ReadReceipt';
+import { SystemMessage } from './SystemMessage';
 
-const isMessageSame = (first: WebUiChatMessage, second: WebUiChatMessage): boolean => {
+const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
     first.messageId === second.messageId &&
     first.content === second.content &&
@@ -35,47 +36,37 @@ const isMessageSame = (first: WebUiChatMessage, second: WebUiChatMessage): boole
 };
 
 /**
- * Get the latest message from old messages and new messages as an array [latestOldMessage, latestNewMessage]. There are
- * two things we like to know from this information:
- * 1. If user just sent a message (then we scroll user to bottom of chat)
- * 2. If user got a new message from someone else (maybe we need to show NewMessages button)
+ * Get the latest message from the message array.
  *
- * @param chatMessages
- * @param newChatMessages
+ * @param messages
  */
-const getLatestMessageFromPreviousMessagesAndNewMessages = (chatMessages: any[], newChatMessages: any[]): any[] => {
-  let latestMessageFromNewMessages: any | undefined = undefined;
-  for (let i = newChatMessages.length - 1; i >= 0; i--) {
-    const newMessageWithAttached = newChatMessages[i];
-    if (newMessageWithAttached.createdOn !== undefined) {
-      latestMessageFromNewMessages = newMessageWithAttached;
-      break;
+const getLatestChatMessage = (messages: Message<MessageTypes>[]): ChatMessage | undefined => {
+  let latestChatMessage: ChatMessage | undefined = undefined;
+  for (let i = messages.length - 1; i >= 0; i--) {
+    const message = messages[i];
+    if (message.type === 'chat') {
+      const payload: ChatMessage = message.payload;
+      if (payload.createdOn !== undefined) {
+        latestChatMessage = payload;
+        break;
+      }
     }
   }
 
-  let latestMessageFromPreviousMessages: any | undefined = undefined;
-  for (let i = chatMessages.length - 1; i >= 0; i--) {
-    const messageWithAttached = chatMessages[i];
-    if (messageWithAttached.createdOn !== undefined) {
-      latestMessageFromPreviousMessages = messageWithAttached;
-      break;
-    }
-  }
-
-  return [latestMessageFromPreviousMessages, latestMessageFromNewMessages];
+  return latestChatMessage;
 };
 
 /**
- * Check the information from getLatestMessageFromPreviousMessagesAndNewMessages to see if the new message is not from
+ * Compare latestMessageFromPreviousMessages & latestMessageFromNewMessages to see if the new message is not from
  * current user.
  *
- * @param chatMessages
- * @param newChatMessages
+ * @param latestMessageFromPreviousMessages
+ * @param latestMessageFromNewMessages
  * @param userId
  */
 const isThereNewMessageNotFromCurrentUser = (
-  latestMessageFromPreviousMessages: any,
-  latestMessageFromNewMessages: any,
+  latestMessageFromPreviousMessages: ChatMessage | undefined,
+  latestMessageFromNewMessages: ChatMessage | undefined,
   userId: string
 ): boolean => {
   if (latestMessageFromNewMessages === undefined) {
@@ -98,12 +89,12 @@ const isThereNewMessageNotFromCurrentUser = (
  * as an indirect way to detect if user is at bottom of the chat when the component updates with new messages. If we
  * updated this component due to current user sending a message we want to then call scrollToBottom.
  *
- * @param chatMessages
- * @param userId
+ * @param latestMessageFromPreviousMessages
+ * @param latestMessageFromNewMessages
  */
 const didUserSendTheLatestMessage = (
-  latestMessageFromPreviousMessages: any,
-  latestMessageFromNewMessages: any,
+  latestMessageFromPreviousMessages: ChatMessage | undefined,
+  latestMessageFromNewMessages: ChatMessage | undefined,
   userId: string
 ): boolean => {
   if (latestMessageFromNewMessages === undefined) {
@@ -173,9 +164,9 @@ export type MessageThreadProps = {
    */
   userId: string;
   /**
-   * The chat messages to render in chat thread. Chat messages need to have type `WebUiChatMessage`
+   * The chat messages to render in chat thread. Chat messages need to have type `ChatMessage`
    */
-  chatMessages: WebUiChatMessage[];
+  messages: Message<MessageTypes>[];
   /**
    * Allows users to pass in an object contains custom CSS styles.
    * @Example
@@ -223,6 +214,10 @@ export type MessageThreadProps = {
    * onRenderLoadPreviousMessagesButton event handler. `(loadPreviousMessagesButton: LoadPreviousMessagesButtonProps) => JSX.Element`
    */
   onRenderLoadPreviousMessagesButton?: (loadPreviousMessagesButton: LoadPreviousMessagesButtonProps) => JSX.Element;
+  /**
+   * onRenderMessage event handler. `(message: Message<MessageTypes>) => JSX.Element`
+   */
+  onRenderMessage?: (message: Message<MessageTypes>) => JSX.Element;
 };
 
 /**
@@ -235,7 +230,7 @@ export type MessageThreadProps = {
  */
 export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const {
-    chatMessages: newChatMessages,
+    messages: newMessages,
     userId,
     styles,
     disableJumpToNewMessageButton = false,
@@ -246,27 +241,28 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onRenderAvatar,
     onLoadPreviousMessages,
     onRenderLoadPreviousMessagesButton,
-    onRenderJumpToNewMessageButton
+    onRenderJumpToNewMessageButton,
+    onRenderMessage
   } = props;
 
-  const [chatMessages, setChatMessages] = useState<WebUiChatMessage[]>([]);
-  // We need this state to wait for one tick and scroll to bottom after chatMessages have been initialized.
-  // Otherwise chatScrollDivRef.current.clientHeight is wrong if we scroll to bottom before chatMessages are initialized.
+  const [messages, setChatMessages] = useState<Message<MessageTypes>[]>([]);
+  // We need this state to wait for one tick and scroll to bottom after messages have been initialized.
+  // Otherwise chatScrollDivRef.current.clientHeight is wrong if we scroll to bottom before messages are initialized.
   const [chatMessagesInitialized, setChatMessagesInitialized] = useState<boolean>(false);
   const [isAtBottomOfScroll, setIsAtBottomOfScroll] = useState<boolean>(true);
   const [isAtTopOfScroll, setIsAtTopOfScroll] = useState<boolean>(false);
   const [forceUpdate, setForceUpdate] = useState<number>(0);
 
   // Used to decide if should auto scroll to bottom or show "new message" button
-  const [latestPreviousMessage, setLatestPreviousMessage] = useState<WebUiChatMessage | undefined>(undefined);
-  const [latestCurrentMessage, setLatestCurrentMessage] = useState<WebUiChatMessage | undefined>(undefined);
+  const [latestPreviousMessage, setLatestPreviousMessage] = useState<ChatMessage | undefined>(undefined);
+  const [latestCurrentMessage, setLatestCurrentMessage] = useState<ChatMessage | undefined>(undefined);
   const [existsNewMessage, setExistsNewMessage] = useState<boolean>(false);
 
   const chatScrollDivRef: any = useRef();
   const chatThreadRef: any = useRef();
 
-  const chatMessagesRef = useRef(chatMessages);
-  const setChatMessagesRef = (messagesWithAttachedValue: any[]): void => {
+  const chatMessagesRef = useRef(messages);
+  const setChatMessagesRef = (messagesWithAttachedValue: Message<MessageTypes>[]): void => {
     chatMessagesRef.current = messagesWithAttachedValue;
     setChatMessages(messagesWithAttachedValue);
   };
@@ -363,15 +359,11 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
    * These two states are used to manipulate scrollbar
    */
   useEffect(() => {
-    const latestMessagesOldAndNew = getLatestMessageFromPreviousMessagesAndNewMessages(
-      chatMessagesRef.current,
-      newChatMessages
-    );
-    setLatestPreviousMessage(latestMessagesOldAndNew[0]);
-    setLatestCurrentMessage(latestMessagesOldAndNew[1]);
-    setChatMessagesRef(newChatMessages);
+    setLatestPreviousMessage(getLatestChatMessage(chatMessagesRef.current));
+    setLatestCurrentMessage(getLatestChatMessage(newMessages));
+    setChatMessagesRef(newMessages);
     !chatMessagesInitializedRef.current && setChatMessagesInitializedRef(true);
-  }, [newChatMessages]);
+  }, [newMessages]);
 
   /**
    * This needs to run after messages are rendererd so we can manipulate the scroll bar.
@@ -390,66 +382,91 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       scrollToBottom();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chatMessages]);
+  }, [messages]);
 
   // To rerender the messages if app running across days(every new day chat time stamp need to be regenerated)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const todayDate = useMemo(() => new Date(), [new Date().toDateString()]);
   const messagesToDisplay = useMemo(
     () =>
-      chatMessages.map(
-        (message: any): ChatItemProps => {
-          const liveAuthor = `${message.senderDisplayName} says `;
-          const messageContentItem = (
-            <div>
-              <LiveMessage message={`${message.mine ? '' : liveAuthor} ${message.content}`} aria-live="polite" />
-              <Linkify>{message.content}</Linkify>
-            </div>
-          );
-          const showReadReceipt = !disableReadReceipt && message.statusToRender;
-          return {
-            gutter: message.mine ? (
-              ''
-            ) : onRenderAvatar ? (
-              onRenderAvatar(message.senderId)
-            ) : (
-              <Persona text={message.senderDisplayName} hidePersonaDetails={true} size={PersonaSize.size32} />
-            ),
-            contentPosition: message.mine ? 'end' : 'start',
-            message: (
-              <Flex vAlign="end">
-                <Chat.Message
-                  styles={styles?.chatMessageContainer ?? chatMessageStyle}
-                  content={messageContentItem}
-                  author={message.senderDisplayName}
-                  mine={message.mine}
-                  timestamp={
-                    message.createdOn ? formatTimestampForChatMessage(message.createdOn, todayDate) : undefined
-                  }
-                />
-                <div
-                  className={mergeStyles(
-                    readReceiptContainerStyle(message.mine),
-                    styles?.readReceiptContainer ? styles.readReceiptContainer(message.mine) : ''
-                  )}
-                >
-                  {showReadReceipt ? (
-                    onRenderReadReceipt ? (
-                      onRenderReadReceipt({ messageStatus: message.statusToRender })
-                    ) : (
-                      ReadReceipt({ messageStatus: message.statusToRender })
-                    )
+      messages.map(
+        (message: Message<MessageTypes>): ChatItemProps => {
+          if (onRenderMessage) {
+            return {
+              children: onRenderMessage(message)
+            };
+          } else {
+            switch (message.type) {
+              case 'chat': {
+                const payload: any = message.payload;
+                const liveAuthor = `${payload.senderDisplayName} says `;
+                const messageContentItem = (
+                  <div>
+                    <LiveMessage message={`${payload.mine ? '' : liveAuthor} ${payload.content}`} aria-live="polite" />
+                    <Linkify>{payload.content}</Linkify>
+                  </div>
+                );
+                const showReadReceipt = !disableReadReceipt && payload.statusToRender;
+                return {
+                  gutter: payload.mine ? (
+                    ''
+                  ) : onRenderAvatar ? (
+                    onRenderAvatar(payload.senderId ?? '')
                   ) : (
-                    <div className={mergeStyles(noReadReceiptStyle)} />
-                  )}
-                </div>
-              </Flex>
-            ),
-            attached: message.attached
-          };
+                    <Persona text={payload.senderDisplayName} hidePersonaDetails={true} size={PersonaSize.size32} />
+                  ),
+                  contentPosition: payload.mine ? 'end' : 'start',
+                  message: (
+                    <Flex vAlign="end">
+                      <Chat.Message
+                        styles={styles?.chatMessageContainer ?? chatMessageStyle}
+                        content={messageContentItem}
+                        author={payload.senderDisplayName}
+                        mine={payload.mine}
+                        timestamp={
+                          payload.createdOn ? formatTimestampForChatMessage(payload.createdOn, todayDate) : undefined
+                        }
+                      />
+                      <div
+                        className={mergeStyles(
+                          readReceiptContainerStyle(payload.mine ?? false),
+                          styles?.readReceiptContainer ? styles.readReceiptContainer(payload.mine ?? false) : ''
+                        )}
+                      >
+                        {showReadReceipt ? (
+                          onRenderReadReceipt ? (
+                            onRenderReadReceipt({
+                              messageStatus: payload.statusToRender ?? ('sending' as MessageStatus)
+                            })
+                          ) : (
+                            ReadReceipt({ messageStatus: payload.statusToRender ?? ('sending' as MessageStatus) })
+                          )
+                        ) : (
+                          <div className={mergeStyles(noReadReceiptStyle)} />
+                        )}
+                      </div>
+                    </Flex>
+                  ),
+                  attached: payload.attached
+                };
+              }
+              case 'system': {
+                const payload: any = message.payload;
+                return {
+                  children: <SystemMessage type={payload.type} content={payload.content} />
+                };
+              }
+              // We do not handle custom type message by default, users can handle custom type by using onRenderMessage function.
+              case 'custom': {
+                return {
+                  children: <></>
+                };
+              }
+            }
+          }
         }
       ),
-    [styles, disableReadReceipt, chatMessages, onRenderAvatar, onRenderReadReceipt, todayDate]
+    [styles, disableReadReceipt, messages, onRenderAvatar, onRenderReadReceipt, todayDate]
   );
 
   return (

@@ -24,3 +24,18 @@ export type ChatMessage = {
   mine?: boolean;
   clientMessageId?: string;
 };
+
+// Todo: We need to add more types of system messages that we support.
+export type SystemMessageTypes = 'ParticipantAdded' | 'ParticipantRemoved';
+
+export type SystemMessage = {
+  type?: SystemMessageTypes;
+  content?: string;
+};
+
+export type MessageTypes = 'chat' | 'system' | 'custom';
+
+export type Message<T extends MessageTypes> = {
+  type: T;
+  payload: T extends 'chat' ? ChatMessage : T extends 'system' ? SystemMessage : { [name: string]: any };
+};

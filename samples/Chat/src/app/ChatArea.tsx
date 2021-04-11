@@ -26,12 +26,18 @@ export interface ChatAreaProps {
 }
 
 export const ChatArea = (props: ChatAreaProps): JSX.Element => {
+  const { onRenderAvatar } = props;
   const ChatThread = useMemo(() => {
     return connectFuncsToContext(
       (props: MessageThreadProps & ErrorHandlingProps) => WithErrorHandling(MessageThread, props),
-      MapToChatMessageProps
+      () => {
+        return {
+          ...MapToChatMessageProps(),
+          onRenderAvatar: onRenderAvatar
+        };
+      }
     );
-  }, []);
+  }, [onRenderAvatar]);
   const ErrorBar = useMemo(() => {
     return connectFuncsToContext(ErrorBarComponent, MapToErrorBarProps);
   }, []);
@@ -54,7 +60,7 @@ export const ChatArea = (props: ChatAreaProps): JSX.Element => {
   // ChatArea is to become a component or if Sample App is to move to composite
   return (
     <Stack className={chatAreaContainerStyle}>
-      <ChatThread onRenderAvatar={props.onRenderAvatar} />
+      <ChatThread />
       <Stack.Item align="center" className={sendBoxParentStyle}>
         <div style={{ paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>
           <TypingIndicator />

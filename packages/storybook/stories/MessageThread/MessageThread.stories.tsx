@@ -2,7 +2,7 @@
 
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
-import { MessageThread, ChatMessage as WebUiChatMessage } from '@azure/communication-ui';
+import { MessageThread, ChatMessage as WebUiChatMessage, Message, MessageTypes } from '@azure/communication-ui';
 import { boolean } from '@storybook/addon-knobs';
 import { PrimaryButton, Stack } from '@fluentui/react';
 import { getDocs } from './MessageThreadDocs';
@@ -18,7 +18,7 @@ import {
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 
 export const MessageThreadComponent: () => JSX.Element = () => {
-  const [chatMessages, setChatMessages] = useState<WebUiChatMessage[]>(GenerateMockChatMessages());
+  const [chatMessages, setChatMessages] = useState<Message<MessageTypes>[]>(GenerateMockChatMessages());
   const showReadReceipt = boolean('Enable Message Read Receipt', true);
   const loadMoreMessages = boolean('Enable Load More Messages', true);
   const enableJumpToNewMessageButton = boolean('Enable Jump To New Message', true);
@@ -27,7 +27,7 @@ export const MessageThreadComponent: () => JSX.Element = () => {
     const existingChatMessages = chatMessages;
     // We dont want to render the status for previous messages
     existingChatMessages.forEach((message) => {
-      message.statusToRender = undefined;
+      message.payload.statusToRender = undefined;
     });
     setChatMessages([...existingChatMessages, GenerateMockNewChatMessage()]);
   };

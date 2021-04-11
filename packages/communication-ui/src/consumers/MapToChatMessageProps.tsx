@@ -13,7 +13,7 @@ import {
 import { useChatMessages, useFailedMessageIds, useThreadMembers, useUserId } from '../providers';
 import { compareMessages } from '../utils';
 import { PARTICIPANTS_THRESHOLD, PAGE_SIZE } from '../constants';
-import { ChatMessage as WebUiChatMessage, MessageStatus } from '../types';
+import { ChatMessage as WebUiChatMessage, Message, MessageStatus } from '../types';
 
 export const updateMessagesWithAttached = (
   chatMessagesWithStatus: WebUiChatMessage[],
@@ -21,7 +21,7 @@ export const updateMessagesWithAttached = (
   failedMessageIds: string[],
   isLargeGroup: boolean,
   isMessageSeen: (userId: string, message: WebUiChatMessage) => boolean
-): WebUiChatMessage[] => {
+): Message<'chat'>[] => {
   /**
    * A block of messages: continuous messages that belong to the same sender and not intercepted by other senders.
    *
@@ -30,7 +30,7 @@ export const updateMessagesWithAttached = (
    * in this case, we only want to show the read statusToRender of last message of the new messages block)
    */
   let IndexOfMyLastMassage: number | undefined = undefined;
-  const newChatMessages: WebUiChatMessage[] = [];
+  const newChatMessages: Message<'chat'>[] = [];
 
   chatMessagesWithStatus.sort(compareMessages);
   chatMessagesWithStatus.map((message: any, index: number, messagesList: any) => {
@@ -77,14 +77,14 @@ export const updateMessagesWithAttached = (
       // Clean the statusToRender of the previous message in the same message block of mine.
       if (newChatMessages.length > 0) {
         const prevMsg = newChatMessages[newChatMessages.length - 1];
-        if (prevMsg.statusToRender === statusToRender || prevMsg.statusToRender === 'failed') {
-          prevMsg.statusToRender = undefined;
+        if (prevMsg.payload.statusToRender === statusToRender || prevMsg.payload.statusToRender === 'failed') {
+          prevMsg.payload.statusToRender = undefined;
         }
       }
 
       // If there's a previous block of messages that are mine, clean the read statusToRender on the last message
       if (IndexOfMyLastMassage) {
-        newChatMessages[IndexOfMyLastMassage].statusToRender = undefined;
+        newChatMessages[IndexOfMyLastMassage].payload.statusToRender = undefined;
         IndexOfMyLastMassage = undefined;
       }
 
@@ -98,16 +98,18 @@ export const updateMessagesWithAttached = (
     // Remove the clientMessageId field as it's only needed to getMessageStatus, not needed by MessageThread component
     // When we migrate to declarative, ideally we should remove the clientMessageId from the WebUiChatMessage type.
     delete messageWithAttached.clientMessageId;
-    newChatMessages.push(messageWithAttached);
-    return message;
+    newChatMessages.push({
+      type: 'chat',
+      payload: messageWithAttached
+    });
   });
   return newChatMessages;
 };
 
-export const getLatestIncomingMessageId = (chatMessages: WebUiChatMessage[], userId: string): string | undefined => {
+export const getLatestIncomingMessageId = (chatMessages: Message<'chat'>[], userId: string): string | undefined => {
   const lastSeenChatMessage = chatMessages
-    .filter((message) => message.createdOn && message.senderId !== userId)
-    .map((message) => ({ createdOn: message.createdOn, id: message.messageId }))
+    .filter((message) => message.payload.createdOn && message.payload.senderId !== userId)
+    .map((message) => ({ createdOn: message.payload.createdOn, id: message.payload.messageId }))
     .reduce(
       (message1, message2) => {
         if (!message1.createdOn || !message2.createdOn) {
@@ -168,7 +170,7 @@ const convertSdkChatMessagesToWebUiChatMessages = (
   isLargeGroup: boolean,
   userId: string,
   isMessageSeen: (userId: string, message: WebUiChatMessage) => boolean
-): WebUiChatMessage[] => {
+): Message<'chat'>[] => {
   const convertedChatMessages =
     chatMessages?.map<WebUiChatMessage>((chatMessage: ChatMessageWithClientMessageId) => {
       return {
@@ -189,11 +191,12 @@ const convertSdkChatMessagesToWebUiChatMessages = (
 
 export type ChatMessagePropsFromContext = {
   userId: string;
-  chatMessages: WebUiChatMessage[];
+  messages: Message<'chat'>[];
   disableReadReceipt?: boolean;
   onSendReadReceipt?: () => Promise<void>;
   disableLoadPreviousMessage?: boolean;
   onLoadPreviousMessages?: () => void;
+  onRenderAvatar?: (userId: string) => JSX.Element;
 };
 
 export const MapToChatMessageProps = (): ChatMessagePropsFromContext => {
@@ -247,7 +250,7 @@ export const MapToChatMessageProps = (): ChatMessagePropsFromContext => {
 
   return {
     userId: userId,
-    chatMessages: chatMessages,
+    messages: chatMessages,
     disableReadReceipt: isLargeGroup,
     onSendReadReceipt,
     disableLoadPreviousMessage,

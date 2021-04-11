@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { ChatMessage as WebUiChatMessage, MessageStatus, MessageAttachedStatus } from '@azure/communication-ui';
+import { MessageStatus, MessageAttachedStatus, Message, MessageTypes } from '@azure/communication-ui';
 
 export const MessageThreadContainerStyles = {
   width: '100%',
@@ -30,148 +30,203 @@ const UserThree = {
   senderDisplayName: 'User3'
 };
 
-export const GenerateMockNewChatMessage = (): WebUiChatMessage => {
+export const GenerateMockNewChatMessage = (): Message<'chat'> => {
   return {
-    ...UserOne,
-    messageId: Math.random().toString(),
-    content: 'I just sent a new Message!',
-    createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
-    mine: true,
-    attached: false,
-    statusToRender: 'seen' as MessageStatus
-  };
-};
-
-export const GenerateMockNewChatMessageFromOthers = (): WebUiChatMessage => {
-  return {
-    ...UserThree,
-    messageId: Math.random().toString(),
-    content: "Sure! Let's checkout calling UI components as well!",
-    createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
-    mine: false,
-    attached: false
-  };
-};
-
-export const GenerateMockHistoryChatMessages = (): WebUiChatMessage[] => {
-  return [
-    {
+    type: 'chat',
+    payload: {
       ...UserOne,
       messageId: Math.random().toString(),
-      content: 'Hi everyone, I created this awesome group chat for us!',
-      createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
+      content: 'I just sent a new Message!',
+      createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
       mine: true,
-      attached: false
-    },
-    {
-      ...UserTwo,
-      messageId: Math.random().toString(),
-      content: 'Nice! This looks great!',
-      createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
-      mine: false,
-      attached: false
-    },
-    {
+      attached: false,
+      statusToRender: 'seen' as MessageStatus
+    }
+  };
+};
+
+export const GenerateMockNewChatMessageFromOthers = (): Message<'chat'> => {
+  return {
+    type: 'chat',
+    payload: {
       ...UserThree,
       messageId: Math.random().toString(),
-      content: "Yeah agree, let's chat here from now on!",
-      createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
+      content: "Sure! Let's checkout calling UI components as well!",
+      createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
       mine: false,
       attached: false
+    }
+  };
+};
+
+export const GenerateMockHistoryChatMessages = (): Message<MessageTypes>[] => {
+  return [
+    {
+      type: 'system',
+      payload: {
+        type: 'ParticipantAdded',
+        content: 'User1 added User2 to the chat and shared all chat history.'
+      }
+    },
+    {
+      type: 'chat',
+      payload: {
+        ...UserOne,
+        messageId: Math.random().toString(),
+        content: 'Hi everyone, I created this awesome group chat for us!',
+        createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
+        mine: true,
+        attached: false
+      }
+    },
+    {
+      type: 'chat',
+      payload: {
+        ...UserTwo,
+        messageId: Math.random().toString(),
+        content: 'Nice! This looks great!',
+        createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
+        mine: false,
+        attached: false
+      }
+    },
+    {
+      type: 'chat',
+      payload: {
+        ...UserThree,
+        messageId: Math.random().toString(),
+        content: "Yeah agree, let's chat here from now on!",
+        createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
+        mine: false,
+        attached: false
+      }
     }
   ];
 };
 
-export const GenerateMockChatMessages = (): WebUiChatMessage[] => {
+export const GenerateMockChatMessages = (): Message<'chat'>[] => {
   return [
     {
-      ...UserOne,
-      messageId: Math.random().toString(),
-      content: 'Hey folks!',
-      createdOn: new Date('2020-04-13T00:00:00.000+08:10'),
-      mine: true,
-      attached: false
+      type: 'chat',
+      payload: {
+        ...UserOne,
+        messageId: Math.random().toString(),
+        content: 'Hey folks!',
+        createdOn: new Date('2020-04-13T00:00:00.000+08:10'),
+        mine: true,
+        attached: false
+      }
     },
     {
-      ...UserTwo,
-      messageId: Math.random().toString(),
-      content: 'Hey how are you?',
-      createdOn: new Date('2020-04-13T00:00:00.000+08:09'),
-      mine: false,
-      attached: false
+      type: 'chat',
+      payload: {
+        ...UserTwo,
+        messageId: Math.random().toString(),
+        content: 'Hey how are you?',
+        createdOn: new Date('2020-04-13T00:00:00.000+08:09'),
+        mine: false,
+        attached: false
+      }
     },
     {
-      ...UserThree,
-      messageId: Math.random().toString(),
-      content: 'Hey everyone!',
-      createdOn: new Date('2020-04-13T00:00:00.000+08:08'),
-      mine: false,
-      attached: false
+      type: 'chat',
+      payload: {
+        ...UserThree,
+        messageId: Math.random().toString(),
+        content: 'Hey everyone!',
+        createdOn: new Date('2020-04-13T00:00:00.000+08:08'),
+        mine: false,
+        attached: false
+      }
     },
     {
-      ...UserOne,
-      messageId: Math.random().toString(),
-      content: 'Doing well!',
-      createdOn: new Date('2020-04-13T00:00:00.000+08:07'),
-      mine: true,
-      attached: false
+      type: 'chat',
+      payload: {
+        ...UserOne,
+        messageId: Math.random().toString(),
+        content: 'Doing well!',
+        createdOn: new Date('2020-04-13T00:00:00.000+08:07'),
+        mine: true,
+        attached: false
+      }
     },
     {
-      ...UserTwo,
-      messageId: Math.random().toString(),
-      content: 'Checking out the new UI Components for Azure Communication Services!',
-      createdOn: new Date('2020-04-13T00:00:00.000+08:06'),
-      mine: false,
-      attached: 'top' as MessageAttachedStatus
+      type: 'chat',
+      payload: {
+        ...UserTwo,
+        messageId: Math.random().toString(),
+        content: 'Checking out the new UI Components for Azure Communication Services!',
+        createdOn: new Date('2020-04-13T00:00:00.000+08:06'),
+        mine: false,
+        attached: 'top' as MessageAttachedStatus
+      }
     },
     {
-      ...UserTwo,
-      messageId: Math.random().toString(),
-      content: 'The chat thread is very responsive.',
-      createdOn: new Date('2020-04-13T00:00:00.000+08:05'),
-      mine: false,
-      attached: true
+      type: 'chat',
+      payload: {
+        ...UserTwo,
+        messageId: Math.random().toString(),
+        content: 'The chat thread is very responsive.',
+        createdOn: new Date('2020-04-13T00:00:00.000+08:05'),
+        mine: false,
+        attached: true
+      }
     },
     {
-      ...UserTwo,
-      messageId: Math.random().toString(),
-      content: 'It even scrolls!',
-      createdOn: new Date('2020-04-13T00:00:00.000+08:05'),
-      mine: false,
-      attached: 'bottom' as MessageAttachedStatus
+      type: 'chat',
+      payload: {
+        ...UserTwo,
+        messageId: Math.random().toString(),
+        content: 'It even scrolls!',
+        createdOn: new Date('2020-04-13T00:00:00.000+08:05'),
+        mine: false,
+        attached: 'bottom' as MessageAttachedStatus
+      }
     },
     {
-      ...UserThree,
-      messageId: Math.random().toString(),
-      content: 'Can you customize it?',
-      createdOn: new Date('2020-04-13T00:00:00.000+08:04'),
-      mine: false,
-      attached: false
+      type: 'chat',
+      payload: {
+        ...UserThree,
+        messageId: Math.random().toString(),
+        content: 'Can you customize it?',
+        createdOn: new Date('2020-04-13T00:00:00.000+08:04'),
+        mine: false,
+        attached: false
+      }
     },
     {
-      ...UserTwo,
-      messageId: Math.random().toString(),
-      content: 'Yes you can customize it.',
-      createdOn: new Date('2020-04-13T00:00:00.000+08:03'),
-      mine: false,
-      attached: false
+      type: 'chat',
+      payload: {
+        ...UserTwo,
+        messageId: Math.random().toString(),
+        content: 'Yes you can customize it.',
+        createdOn: new Date('2020-04-13T00:00:00.000+08:03'),
+        mine: false,
+        attached: false
+      }
     },
     {
-      ...UserOne,
-      messageId: Math.random().toString(),
-      content: 'I saw there are also calling UI components',
-      createdOn: new Date('2020-04-13T00:00:00.000+08:02'),
-      mine: true,
-      attached: false,
-      statusToRender: 'seen' as MessageStatus
+      type: 'chat',
+      payload: {
+        ...UserOne,
+        messageId: Math.random().toString(),
+        content: 'I saw there are also calling UI components',
+        createdOn: new Date('2020-04-13T00:00:00.000+08:02'),
+        mine: true,
+        attached: false,
+        statusToRender: 'seen' as MessageStatus
+      }
     },
     {
-      ...UserTwo,
-      messageId: Math.random().toString(),
-      content: 'Yeah you can combine chat and calling components to build full communication experiences!',
-      createdOn: new Date('2020-04-13T00:00:00.000+08:01'),
-      mine: false,
-      attached: false
+      type: 'chat',
+      payload: {
+        ...UserTwo,
+        messageId: Math.random().toString(),
+        content: 'Yeah you can combine chat and calling components to build full communication experiences!',
+        createdOn: new Date('2020-04-13T00:00:00.000+08:01'),
+        mine: false,
+        attached: false
+      }
     }
   ];
 };
