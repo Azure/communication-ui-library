@@ -39,45 +39,6 @@ exports[`storybook snapshot tests Storyshots Composites/GroupCall Group Call Com
 </div>
 `;
 
-exports[`storybook snapshot tests Storyshots Composites/GroupChat Group Chat Composite 1`] = `
-<div
-  className="css-74 root-0 body-1"
->
-  <div
-    className="css-74"
-    data-uses-unhanded-props={true}
-    dir="ltr"
-  >
-    <div
-      style={
-        Object {
-          "alignItems": "center",
-          "display": "flex",
-          "height": "100vh",
-          "justifyContent": "center",
-        }
-      }
-    >
-      <div
-        style={
-          Object {
-            "border": "1px solid",
-            "height": "100%",
-            "margin": "20px auto",
-            "maxHeight": "30rem",
-            "maxWidth": "50rem",
-            "padding": "0 10px",
-            "width": "100%",
-          }
-        }
-      >
-        Please fill in Connection String or required params to run GroupChat.
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
 exports[`storybook snapshot tests Storyshots Composites/OneToOneCall One To One Call Composite Component 1`] = `
 <div
   className="css-74 root-0 body-1"
