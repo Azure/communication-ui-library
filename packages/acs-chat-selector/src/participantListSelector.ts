@@ -1,17 +1,12 @@
-import { createSelector } from 'reselect';
-// @ts-ignore
-import * as reselect from 'reselect';
+// © Microsoft Corporation. All rights reserved.
+
 // @ts-ignore
 import { ChatClientState } from '@azure/acs-chat-declarative';
 // @ts-ignore
-import { BaseSelectorProps } from './baseSelectors';
+import { BaseSelectorProps, getUserId, getDisplayName, getParticipants } from './baseSelectors';
+import * as reselect from 'reselect';
 import { ChatParticipant } from '@azure/communication-chat';
-import { getUserId, getDisplayName, getParticipants } from './baseSelectors';
-
-export type WebUiChatParticipant = {
-  userId: string;
-  displayName?: string;
-};
+import { WebUiChatParticipant } from './types/WebUiChatParticipant';
 
 const convertSdkThreadMembersToChatThreadMembers = (sdkThreadMembers: ChatParticipant[]): WebUiChatParticipant[] => {
   return sdkThreadMembers.map((sdkThreadMember: ChatParticipant) => {
@@ -22,7 +17,7 @@ const convertSdkThreadMembersToChatThreadMembers = (sdkThreadMembers: ChatPartic
   });
 };
 
-export const participantListSelector = createSelector(
+export const participantListSelector = reselect.createSelector(
   [getUserId, getParticipants, getDisplayName],
   (userId, chatParticipants: Map<string, ChatParticipant>, displayName) => {
     return {
