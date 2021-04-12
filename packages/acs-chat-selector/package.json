@@ -4,7 +4,7 @@
   "description": "ACS UI SDK",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/acs-chat-selector.d.ts",
   "scripts": {
     "build": "rushx build:esm && rushx build:cjs && api-extractor run --local",
     "build:esm": "tsc",

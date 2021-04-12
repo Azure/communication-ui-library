@@ -18,11 +18,26 @@ type ChatMessageWithResponseStatus = {
 } & ChatMessage;
 
 export const mockChatMessageWithResponse = (): ChatMessageWithResponseStatus => {
-  return { _response: { status: OK }, id: '1', content: '1', type: TEXT_MESSAGE };
+  return {
+    _response: { status: OK },
+    id: '1',
+    content: { message: '1' },
+    type: TEXT_MESSAGE,
+    sequenceId: '',
+    createdOn: new Date(),
+    version: ''
+  };
 };
 
 export const mockChatMessage = (): ChatMessage => {
-  return { id: '1', content: '1', type: TEXT_MESSAGE };
+  return {
+    id: '1',
+    content: { message: '1' },
+    type: TEXT_MESSAGE,
+    sequenceId: '',
+    createdOn: new Date(0),
+    version: ''
+  };
 };
 
 const mockThreadClient = (): ThreadClientMock => {

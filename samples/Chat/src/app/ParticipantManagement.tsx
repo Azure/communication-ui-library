@@ -2,7 +2,7 @@
 
 import React from 'react';
 import {
-  ChatThreadMember,
+  WebUiChatParticipant,
   ParticipantItem,
   connectFuncsToContext,
   MapToChatThreadMemberProps,
@@ -15,7 +15,7 @@ import { Stack, IContextualMenuItem } from '@fluentui/react';
 
 export type ParticipantManagementProps = {
   userId: string;
-  threadMembers: ChatThreadMember[];
+  threadMembers: WebUiChatParticipant[];
   removeThreadMember?: (userId: string) => Promise<void>;
   onRenderAvatar?: (userId: string) => JSX.Element;
 };

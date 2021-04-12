@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { ChatThreadMember } from '@azure/communication-chat';
+import { ChatParticipant } from '@azure/communication-chat';
 import { PARTICIPANTS_THRESHOLD, MAXIMUM_LENGTH_OF_TYPING_USERS } from '../constants';
 import { useTypingUsers } from '../hooks/useTypingUsers';
 import { useThreadMembers } from '../providers/ChatThreadProvider';
@@ -47,8 +47,8 @@ const appendTypingLabel = (
  * @param displayInfoGenerator
  */
 const convertSdkTypingUsersDataToTypingUsersData = (
-  typingUsersFromContext: ChatThreadMember[],
-  threadMembersFromContext: ChatThreadMember[],
+  typingUsersFromContext: ChatParticipant[],
+  threadMembersFromContext: ChatParticipant[],
   currentUserId: string,
   othersLabel?: string,
   participantsLabel?: string,
@@ -57,7 +57,7 @@ const convertSdkTypingUsersDataToTypingUsersData = (
   displayInfoGenerator?: (userId: string) => TypingUser
 ): { typingUsers: TypingUser[]; typingString: string } => {
   const typingUsersWithoutCurrentUser = typingUsersFromContext.filter(
-    (typingUser: ChatThreadMember) => typingUser.user.communicationUserId !== currentUserId
+    (typingUser: ChatParticipant) => typingUser.user.communicationUserId !== currentUserId
   );
   if (typingUsersWithoutCurrentUser.length === 0 || threadMembersFromContext.length >= PARTICIPANTS_THRESHOLD) {
     return { typingUsers: [], typingString: '' };

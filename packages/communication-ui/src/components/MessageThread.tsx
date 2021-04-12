@@ -202,7 +202,7 @@ export type MessageThreadProps = {
   /**
    * onSendReadReceipt event handler. `() => Promise<void>`
    */
-  onSendReadReceipt?: () => Promise<void>;
+  onMessageSeen?: (messageId: string) => Promise<void>;
   /**
    * onRenderReadReceipt event handler. `(readReceiptProps: ReadReceiptProps) => JSX.Element | null`
    */
@@ -241,7 +241,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     disableJumpToNewMessageButton = false,
     disableReadReceipt = true,
     disableLoadPreviousMessage = true,
-    onSendReadReceipt,
+    onMessageSeen,
     onRenderReadReceipt,
     onRenderAvatar,
     onLoadPreviousMessages,
@@ -300,9 +300,14 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     ) {
       return;
     }
+    const messagesWithId = chatMessagesRef.current.filter((message) => !!message.messageId);
+    if (messagesWithId.length === 0) {
+      return;
+    }
+    const lastMessage = messagesWithId[messagesWithId.length - 1];
 
-    onSendReadReceipt && onSendReadReceipt();
-  }, [disableReadReceipt, onSendReadReceipt]);
+    onMessageSeen && lastMessage.messageId && onMessageSeen(lastMessage.messageId);
+  }, [disableReadReceipt, onMessageSeen]);
 
   const scrollToBottom = useCallback((): void => {
     chatScrollDivRef.current.scrollTop = chatScrollDivRef.current.scrollHeight;

@@ -63,14 +63,14 @@ let tooManyRequestsCounter = 0;
 const mockSendMessageWithTooManyRequestsResponse = (): SendMessageResponseWithStatus => {
   if (tooManyRequestsCounter < 1) {
     tooManyRequestsCounter++;
-    return { _response: { status: TOO_MANY_REQUESTS_STATUS_CODE } };
+    return { _response: { status: TOO_MANY_REQUESTS_STATUS_CODE }, id: '' };
   } else {
     return { _response: { status: CREATED }, id: '1' };
   }
 };
 
 const mockSendMessageWithPreConditionFaileResponse = (): SendMessageResponseWithStatus => {
-  return { _response: { status: PRECONDITION_FAILED_STATUS_CODE } };
+  return { _response: { status: PRECONDITION_FAILED_STATUS_CODE }, id: '' };
 };
 
 const mockSendMessageWithThrowErrorResponse = (): SendMessageResponseWithStatus => {

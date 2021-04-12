@@ -17,7 +17,7 @@ export const useRemoveThreadMember = (): ((userId: string) => Promise<void>) => 
       }
       let response;
       try {
-        response = await chatThreadClient.removeMember({
+        response = await chatThreadClient.removeParticipant({
           communicationUserId: userId
         });
       } catch (error) {

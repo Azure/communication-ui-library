@@ -13,35 +13,19 @@ import { ReactElement } from 'react';
 import * as reselect from 'reselect';
 
 // @public (undocumented)
-export type BaseChatConfigProps = {
-    displayName: string;
-    userId: string;
+export type BaseSelectorProps = {
     threadId: string;
 };
 
 // @public (undocumented)
-export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientState, BaseChatConfigProps, {
+export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
     userId: string;
     disableReadReceipt: boolean;
-    chatMessages: {
-        createdOn: Date;
-        content: string | undefined;
-        status: MessageStatus;
-        senderDisplayName: string | undefined;
-        senderId: string;
-        messageId: string | undefined;
-    }[];
-}, (res1: BaseChatConfigProps, res2: Map<string, ChatMessageWithStatus>) => {
+    chatMessages: UiChatMessage[];
+}, (res1: string, res2: Map<string, ChatMessageWithStatus>, res3: Date, res4: boolean) => {
     userId: string;
     disableReadReceipt: boolean;
-    chatMessages: {
-        createdOn: Date;
-        content: string | undefined;
-        status: MessageStatus;
-        senderDisplayName: string | undefined;
-        senderId: string;
-        messageId: string | undefined;
-    }[];
+    chatMessages: UiChatMessage[];
 }>;
 
 // @public (undocumented)
@@ -60,15 +44,37 @@ export type DefaultHandlers = {
 };
 
 // @public (undocumented)
-export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState, BaseChatConfigProps, {
+export enum MessageAttachedStatus {
+    // (undocumented)
+    BOTTOM = "bottom",
+    // (undocumented)
+    TOP = "top"
+}
+
+// @public (undocumented)
+export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
     displayName: string;
     userId: string;
     disabled: boolean;
-}, (res1: Date | undefined, res2: BaseChatConfigProps) => {
+}, (res1: Date, res2: string, res3: string) => {
     displayName: string;
     userId: string;
     disabled: boolean;
 }>;
+
+// @public
+export type UiChatMessage = {
+    messageId?: string;
+    content?: string;
+    createdOn?: Date;
+    senderId?: string;
+    senderDisplayName?: string;
+    statusToRender?: MessageStatus;
+    status?: MessageStatus;
+    attached?: MessageAttachedStatus | boolean;
+    mine?: boolean;
+    clientMessageId?: string;
+};
 
 
 // (No @packageDocumentation comment for this package)
