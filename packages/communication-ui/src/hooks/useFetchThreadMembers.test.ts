@@ -23,10 +23,11 @@ const mockSetThreadMembers = (threadMembers: ChatParticipant[]): void => {
 
 const mockThreadClient = (): ThreadClientMock => {
   const threadClientMock: ThreadClientMock = createThreadClient();
-  threadClientMock.listMembers = () => threadMembersMock;
+  threadClientMock.listParticipants = () => threadMembersMock;
   return threadClientMock;
 };
 const mockUseSetGetThreadMembersError: (value: boolean) => void = jest.fn();
+const mockUseUpdateGetThreadMembersError: (value: boolean) => void = jest.fn();
 
 jest.mock('../providers/ChatThreadProvider', () => {
   return {
@@ -35,7 +36,7 @@ jest.mock('../providers/ChatThreadProvider', () => {
         return mockThreadClient();
       }
     ),
-    useSetUpdateThreadMembersError: jest.fn(() => jest.fn()),
+    useSetUpdateThreadMembersError: jest.fn(() => mockUseUpdateGetThreadMembersError),
     useSetThreadMembers: () => mockSetThreadMembers,
     useThreadId: () => 'abcde',
     useSetGetThreadMembersError: jest.fn(() => mockUseSetGetThreadMembersError)
@@ -65,6 +66,6 @@ describe('useFetchThreadMembers tests', () => {
     await act(async () => {
       if (fetchThreadMembers !== undefined) await fetchThreadMembers();
     });
-    expect(mockUseSetGetThreadMembersError).toBeCalledTimes(1);
+    expect(mockUseUpdateGetThreadMembersError).toBeCalledTimes(1);
   });
 });

@@ -9,7 +9,7 @@ import { ChatMessage, ChatParticipant } from '@azure/communication-chat';
 export type ThreadClientMock = {
   sendReadReceipt: () => void;
   listMessages: () => void;
-  listMembers: () => void;
+  listParticipants: () => void;
   sendTypingNotification: () => void;
   getMessage: () => void;
   getThread: () => void;
@@ -17,9 +17,9 @@ export type ThreadClientMock = {
 
 export const mockChatMessages = (): ChatMessage[] => {
   return [
-    { id: '1', content: { message: '1' }, type: TEXT_MESSAGE, sequenceId: '', version: '', createdOn: new Date() },
-    { id: '2', content: { message: '2' }, type: TEXT_MESSAGE, sequenceId: '', version: '', createdOn: new Date() },
-    { id: '3', content: { message: '3' }, type: TEXT_MESSAGE, sequenceId: '', version: '', createdOn: new Date() }
+    { id: '1', content: { message: '1' }, type: TEXT_MESSAGE, sequenceId: '', version: '', createdOn: new Date(0) },
+    { id: '2', content: { message: '2' }, type: TEXT_MESSAGE, sequenceId: '', version: '', createdOn: new Date(1) },
+    { id: '3', content: { message: '3' }, type: TEXT_MESSAGE, sequenceId: '', version: '', createdOn: new Date(2) }
   ];
 };
 
@@ -39,7 +39,7 @@ export const mockChatMessage = (): ChatMessageWithReponseStatus => {
     type: TEXT_MESSAGE,
     sequenceId: '',
     version: '',
-    createdOn: new Date()
+    createdOn: new Date(0)
   };
 };
 
@@ -62,7 +62,7 @@ export const createThreadClient = (): ThreadClientMock => {
     sendReadReceipt: jest.fn(() => messageId),
     sendTypingNotification: jest.fn(),
     listMessages: jest.fn(() => messagesMock),
-    listMembers: jest.fn(() => threadMembersMock),
+    listParticipants: jest.fn(() => threadMembersMock),
     getMessage: jest.fn(() => messageMock),
     getThread: jest.fn()
   };

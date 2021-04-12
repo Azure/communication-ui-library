@@ -35,7 +35,7 @@ export const mockChatMessage = (): ChatMessage => {
     content: { message: '1' },
     type: TEXT_MESSAGE,
     sequenceId: '',
-    createdOn: new Date(),
+    createdOn: new Date(0),
     version: ''
   };
 };
