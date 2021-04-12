@@ -1,10 +1,10 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import { GroupCall, GroupChat } from '@azure/communication-ui';
-import { App } from './examples/CompositeQuickstart.example.tsx';
-import CompositeQuickstartText from '!!raw-loader!./examples/CompositeQuickstart.example.tsx';
+import { App as QuickstartCompositeExample } from './examples/QuickstartComposite.example.tsx';
+import QuickstartCompositeText from '!!raw-loader!./examples/QuickstartComposite.example.tsx';
 
-<Meta title="Quickstart: Composites" />
+<Meta title="Quickstarts/Get started with Composites" />
 
 # Quickstart: Get started with Composites
 
@@ -95,11 +95,7 @@ For details on how to do get access tokens, see: [create and manage user access 
 
 `App.tsx`
 
-<Source code={CompositeQuickstartText} />
-
-<Canvas withSource="none">
-  <App />
-</Canvas>
+<Source code={QuickstartCompositeText} />
 
 ## Run quickstart
 
