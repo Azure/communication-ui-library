@@ -6,6 +6,9 @@ export enum MessageAttachedStatus {
   TOP = 'top'
 }
 
+/**
+ * This is the Message item returned by our selectors, which should match the message type consumed by components.
+ */
 export type UiChatMessage = {
   messageId?: string;
   content?: string;
@@ -15,7 +18,7 @@ export type UiChatMessage = {
   senderDisplayName?: string;
   statusToRender?: MessageStatus;
   status?: MessageStatus;
-  attached?: MessageAttachedStatus;
+  attached?: MessageAttachedStatus | boolean;
   mine?: boolean;
   clientMessageId?: string;
 };

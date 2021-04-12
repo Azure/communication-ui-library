@@ -2,9 +2,9 @@
 import { ChatParticipant } from '@azure/communication-chat';
 import { useRemoveThreadMember } from '../hooks/useRemoveThreadMember';
 import { useThreadMembers } from '../providers/ChatThreadProvider';
-import { ChatParticipant as WebUiChatThreadMember } from '../types/ChatParticipant';
+import { WebUiChatParticipant } from '../types/WebUiChatParticipant';
 
-const convertSdkThreadMembersToChatThreadMembers = (sdkThreadMembers: ChatParticipant[]): WebUiChatThreadMember[] => {
+const convertSdkThreadMembersToChatThreadMembers = (sdkThreadMembers: ChatParticipant[]): WebUiChatParticipant[] => {
   return sdkThreadMembers.map((sdkThreadMember: ChatParticipant) => {
     return {
       userId: sdkThreadMember.user.communicationUserId,
@@ -14,7 +14,7 @@ const convertSdkThreadMembersToChatThreadMembers = (sdkThreadMembers: ChatPartic
 };
 
 export type ChatThreadMemberPropsFromContext = {
-  threadMembers: WebUiChatThreadMember[];
+  threadMembers: WebUiChatParticipant[];
   removeThreadMember?: (userId: string) => Promise<void>;
 };
 

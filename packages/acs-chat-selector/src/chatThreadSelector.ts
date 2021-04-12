@@ -2,6 +2,8 @@
 import { getChatMessages, getIsLargeGroup, getLatestReadTime, getUserId } from './baseSelectors';
 import { ChatMessageWithStatus, MessageStatus } from '@azure/acs-chat-declarative';
 import { createSelector } from 'reselect';
+import { compareMessages } from './utils/compareMessages';
+import { MessageAttachedStatus, UiChatMessage } from './types/UiChatMessage';
 // The following need explicitly imported to avoid api-extractor issues.
 // These can be removed once https://github.com/microsoft/rushstack/pull/1916 is fixed.
 // @ts-ignore
@@ -12,8 +14,6 @@ import { ChatMessageContent, ChatParticipant } from '@azure/communication-chat';
 import { ChatClientState } from '@azure/acs-chat-declarative';
 // @ts-ignore
 import { BaseSelectorProps } from './baseSelectors';
-import { compareMessages } from './utils/compareMessages';
-import { MessageAttachedStatus, UiChatMessage } from './types/UiChatMessage';
 
 export const chatThreadSelector = createSelector(
   [getUserId, getChatMessages, getLatestReadTime, getIsLargeGroup],
@@ -58,18 +58,17 @@ export const updateMessagesWithAttached = (
   userId: string,
   isLargeGroup: boolean
 ): void => {
-  /**
-   * A block of messages: continuous messages that belong to the same sender and not intercepted by other senders.
-   *
-   * This is the index of the last message in the previous block of messages that are mine.
-   * This message's statusToRender will be reset when there's a new block of messages that are mine. (Because
-   * in this case, we only want to show the read statusToRender of last message of the new messages block)
-   */
-
   chatMessagesWithStatus.sort(compareMessages);
 
   chatMessagesWithStatus.forEach((message, index, messages) => {
     const mine = message.senderId === userId;
+    /**
+     * A block of messages: continuous messages that belong to the same sender and not intercepted by other senders.
+     *
+     * Attacthed is the index of the last message in the previous block of messages which mine===true.
+     * This message's statusToRender will be reset when there's a new block of messages which mine===true. (Because
+     * in this case, we only want to show the read statusToRender of last message of the new messages block)
+     */
     let attached: boolean | MessageAttachedStatus = false;
     if (index === 0) {
       if (index !== messages.length - 1) {
@@ -103,7 +102,7 @@ export const updateMessagesWithAttached = (
         }
       }
     }
-    message.attached = attached as any;
+    message.attached = attached;
     message.mine = mine;
   });
 

@@ -18,7 +18,7 @@ import { ChatClient } from '@azure/communication-chat';
 import { ChatMessage as ChatMessage_2 } from '@azure/communication-chat';
 import { ChatMessageReadReceipt } from '@azure/communication-chat';
 import { ChatMessageReceivedEvent } from '@azure/communication-signaling-2';
-import { ChatParticipant as ChatParticipant_2 } from '@azure/communication-chat';
+import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThread } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationUser } from '@azure/communication-signaling';
@@ -209,12 +209,6 @@ export interface ChatMessageWithClientMessageId extends ChatMessage_2 {
     clientMessageId?: string;
 }
 
-// @public
-export type ChatParticipant = {
-    userId: string;
-    displayName?: string;
-};
-
 // Warning: (ae-forgotten-export) The symbol "ChatProviderProps" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
@@ -222,7 +216,7 @@ export const ChatProvider: (props: ChatProviderProps & ErrorHandlingProps) => JS
 
 // @public (undocumented)
 export type ChatThreadMemberPropsFromContext = {
-    threadMembers: ChatParticipant[];
+    threadMembers: WebUiChatParticipant[];
     removeThreadMember?: (userId: string) => Promise<void>;
 };
 
@@ -1014,7 +1008,7 @@ export type SetupContainerProps = {
 
 // @public (undocumented)
 export type SidePanelPropsFromContext = {
-    threadMembers: ChatParticipant_2[];
+    threadMembers: ChatParticipant[];
     thread: ChatThread | undefined;
     existsTopicName: boolean | undefined;
     updateThreadTopicName: (topicName: string) => Promise<boolean>;
@@ -1102,8 +1096,8 @@ export type ThreadProviderContextType = {
     setThread: Dispatch<SetStateAction<ChatThread | undefined>>;
     receipts: ChatMessageReadReceipt[] | undefined;
     setReceipts: Dispatch<SetStateAction<ChatMessageReadReceipt[] | undefined>>;
-    threadMembers: ChatParticipant_2[];
-    setThreadMembers: Dispatch<SetStateAction<ChatParticipant_2[]>>;
+    threadMembers: ChatParticipant[];
+    setThreadMembers: Dispatch<SetStateAction<ChatParticipant[]>>;
     coolPeriod: Date | undefined;
     setCoolPeriod: Dispatch<SetStateAction<Date | undefined>>;
     getThreadMembersError: boolean | undefined;
@@ -1300,7 +1294,7 @@ export const useSetThread: () => (thread: ChatThread) => void;
 export const useSetThreadId: () => (threadId: string) => void;
 
 // @public (undocumented)
-export const useSetThreadMembers: () => (threadMembers: ChatParticipant_2[]) => void;
+export const useSetThreadMembers: () => (threadMembers: ChatParticipant[]) => void;
 
 // @public (undocumented)
 export const useSetUpdateThreadMembersError: () => (updateThreadMembersError?: boolean | undefined) => void;
@@ -1340,13 +1334,13 @@ export const useThread: () => ChatThread | undefined;
 export const useThreadId: () => string;
 
 // @public (undocumented)
-export const useThreadMembers: () => ChatParticipant_2[];
+export const useThreadMembers: () => ChatParticipant[];
 
 // @public (undocumented)
 export const useTriggerOnErrorCallback: () => (error: CommunicationUiErrorInfo) => void;
 
 // @public (undocumented)
-export const useTypingUsers: (threadMembers: ChatParticipant_2[]) => ChatParticipant_2[];
+export const useTypingUsers: (threadMembers: ChatParticipant[]) => ChatParticipant[];
 
 // @public (undocumented)
 export const useUpdateThreadTopicName: () => (topicName: string) => Promise<boolean>;
@@ -1386,6 +1380,12 @@ export interface VideoTileStylesProps extends BaseCustomStylesProps {
     overlayContainer?: IStyle;
     videoContainer?: IStyle;
 }
+
+// @public
+export type WebUiChatParticipant = {
+    userId: string;
+    displayName?: string;
+};
 
 // @public
 export const WithErrorHandling: (Component: (props: any & ErrorHandlingProps) => JSX.Element, props: any & ErrorHandlingProps) => JSX.Element;

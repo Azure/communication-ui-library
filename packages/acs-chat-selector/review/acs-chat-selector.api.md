@@ -12,8 +12,11 @@ import { MessageStatus } from '@azure/acs-chat-declarative';
 import { ReactElement } from 'react';
 import * as reselect from 'reselect';
 
-// Warning: (ae-forgotten-export) The symbol "BaseSelectorProps" needs to be exported by the entry point index.d.ts
-//
+// @public (undocumented)
+export type BaseSelectorProps = {
+    threadId: string;
+};
+
 // @public (undocumented)
 export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
     userId: string;
@@ -25,27 +28,54 @@ export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientSta
     chatMessages: UiChatMessage[];
 }>;
 
-// Warning: (ae-forgotten-export) The symbol "DefaultHandlers" needs to be exported by the entry point index.d.ts
-// Warning: (ae-forgotten-export) The symbol "CommonProperties" needs to be exported by the entry point index.d.ts
-//
+// @public (undocumented)
+export type CommonProperties<A, B> = {
+    [P in keyof A & keyof B]: A[P] extends B[P] ? (A[P] extends B[P] ? P : never) : never;
+}[keyof A & keyof B];
+
 // @public (undocumented)
 export const createDefaultHandlersForComponent: <Props>(chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultHandlers, CommonProperties<DefaultHandlers, Props>>;
+
+// @public (undocumented)
+export type DefaultHandlers = {
+    onMessageSend: (content: string) => Promise<void>;
+    onMessageSeen: (chatMessageId: string) => Promise<void>;
+    onTyping: () => Promise<void>;
+};
+
+// @public (undocumented)
+export enum MessageAttachedStatus {
+    // (undocumented)
+    BOTTOM = "bottom",
+    // (undocumented)
+    TOP = "top"
+}
 
 // @public (undocumented)
 export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
     displayName: string;
     userId: string;
     disabled: boolean;
-}, (res1: Date | undefined, res2: string, res3: string) => {
+}, (res1: Date, res2: string, res3: string) => {
     displayName: string;
     userId: string;
     disabled: boolean;
 }>;
 
+// @public
+export type UiChatMessage = {
+    messageId?: string;
+    content?: string;
+    createdOn?: Date;
+    senderId?: string;
+    senderDisplayName?: string;
+    statusToRender?: MessageStatus;
+    status?: MessageStatus;
+    attached?: MessageAttachedStatus | boolean;
+    mine?: boolean;
+    clientMessageId?: string;
+};
 
-// Warnings were encountered during analysis:
-//
-// src/chatThreadSelector.ts:18:32 - (ae-forgotten-export) The symbol "UiChatMessage" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 
