@@ -6,6 +6,7 @@
 
 import { ChatClientState } from '@azure/acs-chat-declarative';
 import { ChatMessageWithStatus } from '@azure/acs-chat-declarative';
+import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
 import { MessageStatus } from '@azure/acs-chat-declarative';
@@ -52,6 +53,17 @@ export enum MessageAttachedStatus {
 }
 
 // @public (undocumented)
+export const participantListSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
+    userId: string;
+    displayName: string;
+    participants: WebUiChatParticipant[];
+}, (res1: string, res2: Map<string, ChatParticipant>, res3: string) => {
+    userId: string;
+    displayName: string;
+    participants: WebUiChatParticipant[];
+}>;
+
+// @public (undocumented)
 export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
     displayName: string;
     userId: string;
@@ -74,6 +86,12 @@ export type UiChatMessage = {
     attached?: MessageAttachedStatus | boolean;
     mine?: boolean;
     clientMessageId?: string;
+};
+
+// @public (undocumented)
+export type WebUiChatParticipant = {
+    userId: string;
+    displayName?: string;
 };
 
 

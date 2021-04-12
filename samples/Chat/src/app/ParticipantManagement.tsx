@@ -15,17 +15,17 @@ import { Stack, IContextualMenuItem } from '@fluentui/react';
 
 export type ParticipantManagementProps = {
   userId: string;
-  threadMembers: WebUiChatParticipant[];
+  participants: WebUiChatParticipant[];
   removeThreadMember?: (userId: string) => Promise<void>;
   onRenderAvatar?: (userId: string) => JSX.Element;
 };
 
-const ParticipantManagementComponentBase = (props: ParticipantManagementProps & ErrorHandlingProps): JSX.Element => {
-  const { userId, threadMembers, removeThreadMember, onRenderAvatar, onErrorCallback } = props;
+export const ParticipantManagementComponentBase = (props: ParticipantManagementProps): JSX.Element => {
+  const { userId, participants, removeThreadMember, onRenderAvatar } = props;
 
   return (
     <Stack>
-      {threadMembers.map((member) => {
+      {participants.map((member) => {
         if (member.displayName !== undefined) {
           const menuItems: IContextualMenuItem[] = [];
           menuItems.push({
@@ -33,7 +33,7 @@ const ParticipantManagementComponentBase = (props: ParticipantManagementProps & 
             text: 'Remove',
             onClick: () => {
               removeThreadMember?.(member.userId).catch((error) => {
-                propagateError(error, onErrorCallback);
+                propagateError(error);
               });
             }
           });

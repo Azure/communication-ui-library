@@ -2,9 +2,12 @@
 
 import React, { Dispatch } from 'react';
 import { InviteFooter } from './InviteFooter';
-import { ParticipantManagement } from './ParticipantManagement';
+import { ParticipantManagementComponentBase } from './ParticipantManagement';
 import SettingsManagement from './SettingsManagement';
 import { SlideOutPanelComponent } from './SlideOutPanel';
+import { participantListSelector } from '@azure/acs-chat-selector';
+import { useSelector } from './hooks/useSelector';
+import { useThreadId } from '@azure/communication-ui';
 
 export enum SidePanelTypes {
   None = 'none',
@@ -20,6 +23,7 @@ export interface SelectedPaneProps {
 
 export const SidePanel = (props: SelectedPaneProps): JSX.Element => {
   const { selectedPane, setSelectedPane, onRenderAvatar } = props;
+  const participantProps = useSelector(participantListSelector, { threadId: useThreadId() });
   return (
     <>
       <div
@@ -47,7 +51,7 @@ export const SidePanel = (props: SelectedPaneProps): JSX.Element => {
         onRenderFooter={() => <InviteFooter />}
         onClose={() => setSelectedPane(SidePanelTypes.None)}
       >
-        <ParticipantManagement onRenderAvatar={onRenderAvatar} />
+        <ParticipantManagementComponentBase {...participantProps} onRenderAvatar={onRenderAvatar} />
       </SlideOutPanelComponent>
       <SettingsManagement
         visible={selectedPane === SidePanelTypes.Settings}
