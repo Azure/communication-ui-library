@@ -1,5 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 export { chatClientDeclaratify } from './ChatClientDeclarative';
+export { ChatContext } from './ChatContext';
 export { chatThreadClientDeclaratify } from './ChatThreadClientDeclarative';
 
 export type { DeclarativeChatClient } from './ChatClientDeclarative';

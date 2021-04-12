@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Changed ParticipantList example doc to story",
+  "packageName": "@azure/communication-ui",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "none"
+}
