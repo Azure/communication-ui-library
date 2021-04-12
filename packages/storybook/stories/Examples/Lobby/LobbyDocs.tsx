@@ -1,5 +1,3 @@
-// © Microsoft Corporation. All rights reserved.
-
 import { Description, Heading, Source, Title } from '@storybook/addon-docs/blocks';
 import React from 'react';
 const LobbyControlBarText = require('!!raw-loader!./LobbyControlBar.example.tsx').default;
