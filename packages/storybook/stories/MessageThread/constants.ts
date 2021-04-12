@@ -59,15 +59,29 @@ export const GenerateMockNewChatMessageFromOthers = (): Message<'chat'> => {
   };
 };
 
+export const GenerateMockSystemMessage = (): Message<'system'> => {
+  return {
+    type: 'system',
+    payload: {
+      type: 'ParticipantAdded',
+      content: 'User1 added User2 to the chat and shared all chat history.'
+    }
+  };
+};
+
+export const GenerateMockCustomMessage = (): Message<'custom'> => {
+  return {
+    type: 'custom',
+    // Custom message's payload can be any shape, this is just an example.
+    // Whatever is defined in the custom message's payload needs to be handled in onRenderCustomMessage in MessageThread.
+    payload: {
+      content: 'Today'
+    }
+  };
+};
+
 export const GenerateMockHistoryChatMessages = (): Message<MessageTypes>[] => {
   return [
-    {
-      type: 'system',
-      payload: {
-        type: 'ParticipantAdded',
-        content: 'User1 added User2 to the chat and shared all chat history.'
-      }
-    },
     {
       type: 'chat',
       payload: {

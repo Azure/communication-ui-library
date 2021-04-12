@@ -215,9 +215,19 @@ export type MessageThreadProps = {
    */
   onRenderLoadPreviousMessagesButton?: (loadPreviousMessagesButton: LoadPreviousMessagesButtonProps) => JSX.Element;
   /**
-   * onRenderMessage event handler. `(message: Message<MessageTypes>) => JSX.Element`
+   * onRenderChatMessage event handler. `(message: Message<'chat'>) => JSX.Element`
    */
-  onRenderMessage?: (message: Message<MessageTypes>) => JSX.Element;
+  onRenderChatMessage?: (message: Message<'chat'>) => JSX.Element;
+  /**
+   * onRenderSystemMessage event handler. `(message: Message<'system'>) => JSX.Element`
+   */
+  onRenderSystemMessage?: (message: Message<'system'>) => JSX.Element;
+  /**
+   * onRenderCustomMessage event handler.
+   * If there's `custom` message that MessageThread needs to handle, then onRenderCustomMessage must be provided.
+   * `(message: Message<'custom'>) => JSX.Element`
+   */
+  onRenderCustomMessage?: (message: Message<'custom'>) => JSX.Element;
 };
 
 /**
@@ -242,7 +252,9 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onLoadPreviousMessages,
     onRenderLoadPreviousMessagesButton,
     onRenderJumpToNewMessageButton,
-    onRenderMessage
+    onRenderChatMessage,
+    onRenderSystemMessage,
+    onRenderCustomMessage
   } = props;
 
   const [messages, setChatMessages] = useState<Message<MessageTypes>[]>([]);
@@ -391,77 +403,87 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     () =>
       messages.map(
         (message: Message<MessageTypes>): ChatItemProps => {
-          if (onRenderMessage) {
-            return {
-              children: onRenderMessage(message)
-            };
-          } else {
-            switch (message.type) {
-              case 'chat': {
-                const payload: any = message.payload;
-                const liveAuthor = `${payload.senderDisplayName} says `;
-                const messageContentItem = (
-                  <div>
-                    <LiveMessage message={`${payload.mine ? '' : liveAuthor} ${payload.content}`} aria-live="polite" />
-                    <Linkify>{payload.content}</Linkify>
-                  </div>
+          switch (message.type) {
+            case 'chat': {
+              const payload: any = message.payload;
+              const liveAuthor = `${payload.senderDisplayName} says `;
+              const messageContentItem = (
+                <div>
+                  <LiveMessage message={`${payload.mine ? '' : liveAuthor} ${payload.content}`} aria-live="polite" />
+                  <Linkify>{payload.content}</Linkify>
+                </div>
+              );
+              const showReadReceipt = !disableReadReceipt && payload.statusToRender;
+              const chatMessageComponent =
+                onRenderChatMessage === undefined ? (
+                  <Chat.Message
+                    styles={styles?.chatMessageContainer ?? chatMessageStyle}
+                    content={messageContentItem}
+                    author={payload.senderDisplayName}
+                    mine={payload.mine}
+                    timestamp={
+                      payload.createdOn ? formatTimestampForChatMessage(payload.createdOn, todayDate) : undefined
+                    }
+                  />
+                ) : (
+                  onRenderChatMessage(message as Message<'chat'>)
                 );
-                const showReadReceipt = !disableReadReceipt && payload.statusToRender;
-                return {
-                  gutter: payload.mine ? (
-                    ''
-                  ) : onRenderAvatar ? (
-                    onRenderAvatar(payload.senderId ?? '')
-                  ) : (
-                    <Persona text={payload.senderDisplayName} hidePersonaDetails={true} size={PersonaSize.size32} />
-                  ),
-                  contentPosition: payload.mine ? 'end' : 'start',
-                  message: (
-                    <Flex vAlign="end">
-                      <Chat.Message
-                        styles={styles?.chatMessageContainer ?? chatMessageStyle}
-                        content={messageContentItem}
-                        author={payload.senderDisplayName}
-                        mine={payload.mine}
-                        timestamp={
-                          payload.createdOn ? formatTimestampForChatMessage(payload.createdOn, todayDate) : undefined
-                        }
-                      />
-                      <div
-                        className={mergeStyles(
-                          readReceiptContainerStyle(payload.mine ?? false),
-                          styles?.readReceiptContainer ? styles.readReceiptContainer(payload.mine ?? false) : ''
-                        )}
-                      >
-                        {showReadReceipt ? (
-                          onRenderReadReceipt ? (
-                            onRenderReadReceipt({
-                              messageStatus: payload.statusToRender ?? ('sending' as MessageStatus)
-                            })
-                          ) : (
-                            ReadReceipt({ messageStatus: payload.statusToRender ?? ('sending' as MessageStatus) })
-                          )
+
+              return {
+                gutter: payload.mine ? (
+                  ''
+                ) : onRenderAvatar ? (
+                  onRenderAvatar(payload.senderId ?? '')
+                ) : (
+                  <Persona text={payload.senderDisplayName} hidePersonaDetails={true} size={PersonaSize.size32} />
+                ),
+                contentPosition: payload.mine ? 'end' : 'start',
+                message: (
+                  <Flex vAlign="end">
+                    {chatMessageComponent}
+                    <div
+                      className={mergeStyles(
+                        readReceiptContainerStyle(payload.mine ?? false),
+                        styles?.readReceiptContainer ? styles.readReceiptContainer(payload.mine ?? false) : ''
+                      )}
+                    >
+                      {showReadReceipt ? (
+                        onRenderReadReceipt ? (
+                          onRenderReadReceipt({
+                            messageStatus: payload.statusToRender ?? ('sending' as MessageStatus)
+                          })
                         ) : (
-                          <div className={mergeStyles(noReadReceiptStyle)} />
-                        )}
-                      </div>
-                    </Flex>
-                  ),
-                  attached: payload.attached
-                };
-              }
-              case 'system': {
-                const payload: any = message.payload;
-                return {
-                  children: <SystemMessage type={payload.type} content={payload.content} />
-                };
-              }
-              // We do not handle custom type message by default, users can handle custom type by using onRenderMessage function.
-              case 'custom': {
-                return {
-                  children: <></>
-                };
-              }
+                          ReadReceipt({ messageStatus: payload.statusToRender ?? ('sending' as MessageStatus) })
+                        )
+                      ) : (
+                        <div className={mergeStyles(noReadReceiptStyle)} />
+                      )}
+                    </div>
+                  </Flex>
+                ),
+                attached: payload.attached
+              };
+            }
+            case 'system': {
+              const payload: any = message.payload;
+              const systemMessageComponent =
+                onRenderSystemMessage == undefined ? (
+                  <SystemMessage type={payload.type} content={payload.content} />
+                ) : (
+                  onRenderSystemMessage(message as Message<'system'>)
+                );
+
+              return {
+                children: systemMessageComponent
+              };
+            }
+            // We do not handle custom type message by default, users can handle custom type by using onRenderCustomMessage function.
+            case 'custom': {
+              const customMessageComponent =
+                onRenderCustomMessage == undefined ? <></> : onRenderCustomMessage(message as Message<'custom'>);
+              return {
+                children: customMessageComponent
+              };
             }
           }
         }

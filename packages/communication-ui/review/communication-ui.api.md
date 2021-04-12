@@ -192,7 +192,9 @@ export type MessageThreadProps = {
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousMessages?: () => void;
     onRenderLoadPreviousMessagesButton?: (loadPreviousMessagesButton: LoadPreviousMessagesButtonProps) => JSX.Element;
-    onRenderMessage?: (message: Message<MessageTypes>) => JSX.Element;
+    onRenderChatMessage?: (message: Message<'chat'>) => JSX.Element;
+    onRenderSystemMessage?: (message: Message<'system'>) => JSX.Element;
+    onRenderCustomMessage?: (message: Message<'custom'>) => JSX.Element;
 };
 
 // @public (undocumented)
@@ -383,11 +385,6 @@ export interface VideoTileStylesProps extends BaseCustomStylesProps {
     videoContainer?: IStyle;
 }
 
-
-// Warnings were encountered during analysis:
-//
-// src/components/MessageThread.tsx:169:3 - (ae-forgotten-export) The symbol "Message" needs to be exported by the entry point release.index.d.ts
-// src/components/MessageThread.tsx:169:3 - (ae-forgotten-export) The symbol "MessageTypes" needs to be exported by the entry point release.index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

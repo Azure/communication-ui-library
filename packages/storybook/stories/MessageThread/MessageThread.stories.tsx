@@ -2,9 +2,10 @@
 
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
-import { MessageThread, ChatMessage as WebUiChatMessage, Message, MessageTypes } from '@azure/communication-ui';
+import { MessageThread, Message, MessageTypes } from '@azure/communication-ui';
 import { boolean } from '@storybook/addon-knobs';
 import { PrimaryButton, Stack } from '@fluentui/react';
+import { Divider } from '@fluentui/react-northstar';
 import { getDocs } from './MessageThreadDocs';
 import {
   GenerateMockNewChatMessage,
@@ -13,7 +14,9 @@ import {
   GenerateMockHistoryChatMessages,
   GenerateMockChatMessages,
   MessageThreadContainerStyles,
-  MessageThreadStyles
+  MessageThreadStyles,
+  GenerateMockSystemMessage,
+  GenerateMockCustomMessage
 } from './constants';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 
@@ -40,22 +43,37 @@ export const MessageThreadComponent: () => JSX.Element = () => {
     setChatMessages([...GenerateMockHistoryChatMessages(), ...chatMessages]);
   };
 
+  const onSendNewSystemMessage = (): void => {
+    setChatMessages([...chatMessages, GenerateMockSystemMessage()]);
+  };
+
+  const onSendCustomMessage = (): void => {
+    setChatMessages([...chatMessages, GenerateMockCustomMessage()]);
+  };
+
+  const onRenderCustomMessage = (message: Message<'custom'>): JSX.Element => {
+    return <Divider content={message.payload.content} color="brand" important />;
+  };
+
   return (
     <Stack style={MessageThreadContainerStyles}>
       <MessageThread
         styles={MessageThreadStyles}
         userId={UserOne.senderId}
-        chatMessages={chatMessages}
+        messages={chatMessages}
         disableReadReceipt={!showReadReceipt}
         disableLoadPreviousMessage={!loadMoreMessages}
         disableJumpToNewMessageButton={!enableJumpToNewMessageButton}
         onLoadPreviousMessages={onLoadPreviousMessages}
+        onRenderCustomMessage={onRenderCustomMessage}
       />
       {/* We need to use these two buttons to render more messages in the chat thread and showcase the "new message" button.
       Using storybook knobs would trigger the whole story to do a fresh re-render, not just components inside the story. */}
       <Stack horizontal horizontalAlign="space-between" tokens={{ childrenGap: '1rem' }}>
         <PrimaryButton text="Send new message from others" onClick={onSendNewMessageFromOthers} />
         <PrimaryButton text="Send new message" onClick={onSendNewMessage} />
+        <PrimaryButton text="Send new system message" onClick={onSendNewSystemMessage} />
+        <PrimaryButton text="Send new custom message" onClick={onSendCustomMessage} />
       </Stack>
     </Stack>
   );

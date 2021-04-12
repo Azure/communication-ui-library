@@ -29,7 +29,7 @@ export type ChatMessage = {
 export type SystemMessageTypes = 'ParticipantAdded' | 'ParticipantRemoved';
 
 export type SystemMessage = {
-  type?: SystemMessageTypes;
+  type: SystemMessageTypes;
   content?: string;
 };
 
