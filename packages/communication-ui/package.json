@@ -4,7 +4,7 @@
   "description": "ACS UI SDK",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
-  "types": "dist/communication-ui.d.ts",
+  "types": "dist/dist-esm/index.d.ts",
   "files": [
     "dist/"
   ],
@@ -53,7 +53,6 @@
     "@mdx-js/react": "^1.6.22",
     "@microsoft/api-documenter": "~7.12.11",
     "@microsoft/api-extractor": "~7.13.2",
-    "@rollup/plugin-commonjs": "~17.1.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react-hooks": "^3.4.2",
     "@types/jest": "^26.0.20",
@@ -95,8 +94,6 @@
     "react": "^16.13.1",
     "regenerator-runtime": "^0.13.7",
     "rollup": "~2.42.4",
-    "rollup-plugin-sourcemaps": "~0.6.3",
-    "rollup-plugin-svg": "~2.0.0",
     "source-map-explorer": "^2.5.0",
     "styled-components": "~5.2.1",
     "ts-jest": "^26.4.4",
