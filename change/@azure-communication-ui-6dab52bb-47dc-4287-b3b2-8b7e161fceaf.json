@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Merging main",
+  "packageName": "@azure/communication-ui",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}
