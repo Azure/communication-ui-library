@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Merging main",
+  "comment": "Add participantList selector",
   "packageName": "@azure/communication-ui",
   "email": "anjulgarg@live.com",
   "dependentChangeType": "patch"
