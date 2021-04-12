@@ -1,7 +1,7 @@
 import { GroupCall, GroupChat } from '@azure/communication-ui';
 import React from 'react';
 
-export function App(): JSX.Element {
+function App(): JSX.Element {
   return (
     <>
       {/* Example styling provided, developers can provide their own styling to position and resize components */}
@@ -55,3 +55,5 @@ export function App(): JSX.Element {
     </>
   );
 }
+
+export default App;
