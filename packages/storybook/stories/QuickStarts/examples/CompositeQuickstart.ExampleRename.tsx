@@ -1,7 +1,7 @@
 import { GroupCall, GroupChat } from '@azure/communication-ui';
 import React from 'react';
 
-function App() {
+export function App(): JSX.Element {
   return (
     <>
       {/* Example styling provided, developers can provide their own styling to position and resize components */}
@@ -36,7 +36,7 @@ function App() {
           endpointUrl={
             'ENDPOINT_URL'
           } /* Required, URL for Azure endpoint being used for Azure Communication Services */
-          onRenderAvatar={(acsId) => {
+          onRenderAvatar={(userId) => {
             /* Optional, function to override the avatar image on the chat thread. Function receives one parameters for the Azure Communication Services Identity. Must return a React element */
             return <h1>Sample Element</h1>;
           }}
@@ -55,5 +55,3 @@ function App() {
     </>
   );
 }
-
-export default App;
