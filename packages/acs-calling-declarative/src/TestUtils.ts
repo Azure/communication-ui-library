@@ -30,6 +30,7 @@ type Mutable<T> = {
 export type MockCall = Mutable<Call> & MockEmitter;
 export type MockCallAgent = Mutable<CallAgent> & MockEmitter;
 export type MockRemoteParticipant = Mutable<RemoteParticipant> & MockEmitter;
+export type MockRemoteVideoStream = Mutable<RemoteVideoStream> & MockEmitter;
 
 export class MockCommunicationUserCredential {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -38,7 +39,7 @@ export class MockCommunicationUserCredential {
   public dispose(): void {}
 }
 
-export function addMockEmitter(object: MockCall | MockCallAgent | MockRemoteParticipant): any {
+export function addMockEmitter(object: MockCall | MockCallAgent | MockRemoteParticipant | MockRemoteVideoStream): any {
   object.emitter = new EventEmitter();
   object.on = (event: any, listener: any): void => {
     object.emitter.on(event, listener);
@@ -67,4 +68,9 @@ export function createMockRemoteParticipant(mockCommunicationUserId: string): Mo
     videoStreams: [] as ReadonlyArray<RemoteVideoStream>
   } as MockRemoteParticipant;
   return addMockEmitter(mockRemoteParticipant);
+}
+
+export function createMockRemoteVideoStream(mockIsAvailable: boolean): MockRemoteVideoStream {
+  const mockRemoteVideoStream = { isAvailable: mockIsAvailable } as MockRemoteVideoStream;
+  return addMockEmitter(mockRemoteVideoStream);
 }

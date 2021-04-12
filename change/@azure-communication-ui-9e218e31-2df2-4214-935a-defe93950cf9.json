@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add some basic styling for placeholder in VideoTile",
+  "packageName": "@azure/communication-ui",
+  "email": "easony@microsoft.com",
+  "dependentChangeType": "patch"
+}

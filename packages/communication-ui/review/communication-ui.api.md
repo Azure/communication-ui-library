@@ -24,22 +24,11 @@ import { ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationUser } from '@azure/communication-signaling';
 import { CommunicationUser as CommunicationUser_2 } from '@azure/communication-common';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
-import { DeviceManager } from '@azure/communication-calling';
-import { Dispatch } from 'react';
-import { ErrorInfo } from 'react';
-import { GroupCallContext } from '@azure/communication-calling';
-import { HangupCallOptions } from '@azure/communication-calling';
 import { IButtonProps } from '@fluentui/react';
-import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
-import { JoinCallOptions } from '@azure/communication-calling';
-import { LocalVideoStream } from '@azure/communication-calling';
 import { PartialTheme } from '@fluentui/react-theme-provider';
-import { PermissionState as PermissionState_2 } from '@azure/communication-calling';
-import { PermissionType } from '@azure/communication-calling';
 import { PersonaPresence } from '@fluentui/react';
-import { PhoneNumber } from '@azure/communication-common';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
 import { RemoteParticipant } from '@azure/communication-calling';
@@ -50,14 +39,9 @@ import { ScalingMode } from '@azure/communication-calling';
 import { SetStateAction } from 'react';
 import { SizeValue } from '@fluentui/react-northstar/dist/commonjs/utils/commonPropInterfaces';
 import { Theme } from '@fluentui/react-theme-provider';
-import { UnknownIdentifier } from '@azure/communication-common';
-import { VideoDeviceInfo } from '@azure/communication-calling';
 
 // @public
 export const answerButtonProps: IButtonProps;
-
-// @public (undocumented)
-export const areStreamsEqual: (prevStream: LocalVideoStream, newStream: LocalVideoStream) => boolean;
 
 // @public
 export const audioButtonProps: IButtonProps;
@@ -66,119 +50,6 @@ export const audioButtonProps: IButtonProps;
 export interface BaseCustomStylesProps {
     root?: IStyle;
 }
-
-// @public (undocumented)
-export type CallContainerProps = {
-    isCallInitialized: boolean;
-    callState: CallState;
-    screenShareStream: ParticipantStream | undefined;
-    isLocalScreenSharingOn: boolean;
-    leaveCall: (hangupCallOptions: HangupCallOptions) => Promise<void>;
-};
-
-// @public (undocumented)
-export const CallContext: React_2.Context<CallContextType | undefined>;
-
-// @public (undocumented)
-export type CallContextType = {
-    call: Call | undefined;
-    setCall: Dispatch<SetStateAction<Call | undefined>>;
-    callState: CallState;
-    setCallState: Dispatch<SetStateAction<CallState>>;
-    participants: RemoteParticipant[];
-    setParticipants: Dispatch<SetStateAction<RemoteParticipant[]>>;
-    screenShareStream: ParticipantStream | undefined;
-    setScreenShareStream: Dispatch<SetStateAction<ParticipantStream | undefined>>;
-    displayName: string;
-    setDisplayName: Dispatch<SetStateAction<string>>;
-    isMicrophoneEnabled: boolean;
-    setIsMicrophoneEnabled: Dispatch<SetStateAction<boolean>>;
-    localScreenShareActive: boolean;
-    setLocalScreenShare: Dispatch<SetStateAction<boolean>>;
-    localVideoStream: LocalVideoStream | undefined;
-    setLocalVideoStream: Dispatch<SetStateAction<LocalVideoStream | undefined>>;
-    isLocalVideoRendererBusy: boolean;
-    setLocalVideoRendererBusy: Dispatch<SetStateAction<boolean>>;
-    isLocalVideoOn: boolean;
-    setLocalVideoOn: Dispatch<SetStateAction<boolean>>;
-};
-
-// @public
-export const CallControlBar: (props: ControlBarProps & CallControlBarProps & ErrorHandlingProps) => JSX.Element;
-
-// @public (undocumented)
-export const CallControlBarComponent: (props: Pick<ControlBarProps & CallControlBarProps & ErrorHandlingProps, "onErrorCallback" | "children" | "styles" | "layout" | "onEndCallClick">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
-
-// Warning: (ae-forgotten-export) The symbol "CallControlBarContainerProps" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export interface CallControlBarProps extends CallControlBarContainerProps {
-    onEndCallClick(): void;
-}
-
-// @public (undocumented)
-export const CallingContext: React_2.Context<CallingContextType | undefined>;
-
-// @public (undocumented)
-export type CallingContextType = {
-    userId: string;
-    setUserId: Dispatch<SetStateAction<string>>;
-    callClient: CallClient;
-    setCallClient: Dispatch<SetStateAction<CallClient>>;
-    callAgent: CallAgent | undefined;
-    setCallAgent: Dispatch<SetStateAction<CallAgent | undefined>>;
-    deviceManager: DeviceManager | undefined;
-    setDeviceManager: Dispatch<SetStateAction<DeviceManager | undefined>>;
-    audioDevicePermission: PermissionState_2;
-    setAudioDevicePermission: Dispatch<SetStateAction<PermissionState_2>>;
-    videoDevicePermission: PermissionState_2;
-    setVideoDevicePermission: Dispatch<SetStateAction<PermissionState_2>>;
-    videoDeviceInfo: VideoDeviceInfo | undefined;
-    setVideoDeviceInfo: Dispatch<SetStateAction<VideoDeviceInfo | undefined>>;
-    videoDeviceList: VideoDeviceInfo[];
-    setVideoDeviceList: Dispatch<SetStateAction<VideoDeviceInfo[]>>;
-    audioDeviceInfo: AudioDeviceInfo | undefined;
-    setAudioDeviceInfo: Dispatch<SetStateAction<AudioDeviceInfo | undefined>>;
-    audioDeviceList: AudioDeviceInfo[];
-    setAudioDeviceList: Dispatch<SetStateAction<AudioDeviceInfo[]>>;
-};
-
-// Warning: (ae-forgotten-export) The symbol "CallingProviderProps" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export const CallingProvider: (props: CallingProviderProps & ErrorHandlingProps) => JSX.Element;
-
-// @public (undocumented)
-export interface CallProvider {
-    // (undocumented)
-    children: React_2.ReactNode;
-    // (undocumented)
-    displayName: string;
-}
-
-// @public (undocumented)
-export const CallProvider: (props: CallProvider & ErrorHandlingProps) => JSX.Element;
-
-// @public (undocumented)
-export type ChatConfig = {
-    token: string;
-    displayName: string;
-    endpointUrl: string;
-    threadId: string;
-};
-
-// @public (undocumented)
-export const ChatContext: React_2.Context<ChatContextType | undefined>;
-
-// @public (undocumented)
-export type ChatContextType = {
-    chatClient?: ChatClient;
-    setChatClient: Dispatch<SetStateAction<ChatClient>>;
-    userId: string;
-    setUserId: Dispatch<SetStateAction<string>>;
-    displayName: string;
-    setDisplayName: Dispatch<SetStateAction<string>>;
-};
 
 // @public (undocumented)
 export type ChatMessage = {
@@ -376,30 +247,6 @@ export enum CommunicationUiErrorSeverity {
     WARNING = "Warning"
 }
 
-// @public (undocumented)
-export const compareMessages: (firstMessage: {
-    createdOn?: Date;
-}, secondMessage: {
-    createdOn?: Date;
-}) => number;
-
-// @public (undocumented)
-export const CONNECTED = "Connected";
-
-// Warning: (ae-forgotten-export) The symbol "UnionToIntersection" needs to be exported by the entry point index.d.ts
-// Warning: (ae-forgotten-export) The symbol "UnionTypesOfTuple" needs to be exported by the entry point index.d.ts
-// Warning: (ae-forgotten-export) The symbol "ContextMapFuncReturns" needs to be exported by the entry point index.d.ts
-// Warning: (ae-forgotten-export) The symbol "ContextMapFuncArgs" needs to be exported by the entry point index.d.ts
-//
-// @public
-export const connectFuncsToContext: <FuncTypes extends ((ownProps: any) => any)[], PropsForComponent extends UnionToIntersection<UnionTypesOfTuple<ContextMapFuncReturns<FuncTypes>>>>(ElementToConnect: (props: PropsForComponent) => ReactElement | null, ...mapToComponentFuncs: FuncTypes) => (props: UnionToIntersection<UnionTypesOfTuple<ContextMapFuncArgs<FuncTypes>>> & Pick<PropsForComponent, Exclude<keyof PropsForComponent, keyof UnionToIntersection<UnionTypesOfTuple<ContextMapFuncReturns<FuncTypes>>>>>) => ReactElement;
-
-// @public (undocumented)
-export const CONNECTING = "Connecting";
-
-// @public
-export const CONTROL_BAR_LAYOUTS: readonly ["horizontal", "vertical", "dockedTop", "dockedBottom", "dockedLeft", "dockedRight", "floatingTop", "floatingBottom", "floatingLeft", "floatingRight"];
-
 // @public
 export const ControlBar: (props: ControlBarProps) => JSX.Element;
 
@@ -413,44 +260,11 @@ export interface ControlBarProps {
     styles?: BaseCustomStylesProps;
 }
 
-// @public (undocumented)
-export const convertSdkRemoteParticipantToGalleryParticipant: (remoteParticipantFromSDK: RemoteParticipant) => GalleryParticipant;
-
-// @public (undocumented)
-export const convertSdkRemoteParticipantToListParticipant: (participant: RemoteParticipant, onRemove?: (() => void) | undefined, onMute?: (() => void) | undefined) => ListParticipant;
-
-// @public (undocumented)
-export const COOL_PERIOD_REFRESH_INVERVAL = 1000;
-
-// @public (undocumented)
-export const COOL_PERIOD_THRESHOLD: number;
-
-// @public (undocumented)
-export const createAzureCommunicationUserCredential: (token: string, refreshTokenCallback?: (() => Promise<string>) | undefined) => AzureCommunicationUserCredential;
-
-// @public (undocumented)
-export const CREATED = 201;
-
-// @public (undocumented)
-export const CROP_MEDIA = "Crop";
-
 // @public
 export const DARK = "Dark";
 
 // @public
 export const darkTheme: PartialTheme;
-
-// @public (undocumented)
-export const DEFAULT_IMG_WIDTH = 200;
-
-// @public (undocumented)
-export const DEFAULT_NUMBER_OF_MESSAGES_TO_LOAD = 100;
-
-// @public (undocumented)
-export const EMPTY_MESSAGE_REGEX: RegExp;
-
-// @public (undocumented)
-export const ENTER_KEY = 13;
 
 // @public
 export const ErrorBar: (props: ErrorBarProps) => JSX.Element | null;
@@ -461,55 +275,6 @@ export type ErrorBarProps = {
     severity?: CommunicationUiErrorSeverity;
     onClose?: () => void;
     styles?: BaseCustomStylesProps;
-};
-
-// @public (undocumented)
-export const ErrorContextLastError: React_2.Context<ErrorContextLastErrorType | undefined>;
-
-// @public (undocumented)
-export type ErrorContextLastErrorType = {
-    lastError: CommunicationUiError | undefined;
-};
-
-// @public (undocumented)
-export const ErrorContextOnErrorCallback: React_2.Context<ErrorContextOnErrorCallbackType | undefined>;
-
-// @public (undocumented)
-export type ErrorContextOnErrorCallbackType = {
-    onErrorCallback: ((error: CommunicationUiError) => void) | undefined;
-};
-
-// @public (undocumented)
-export const ErrorContextSetLastError: React_2.Context<ErrorContextSetLastErrorType | undefined>;
-
-// @public (undocumented)
-export type ErrorContextSetLastErrorType = {
-    setLastError: Dispatch<SetStateAction<CommunicationUiError | undefined>>;
-};
-
-// @public (undocumented)
-export const ErrorContextSetOnErrorCallback: React_2.Context<ErrorContextSetOnErrorCallbackType | undefined>;
-
-// @public (undocumented)
-export type ErrorContextSetOnErrorCallbackType = {
-    setOnErrorCallback: Dispatch<SetStateAction<((error: CommunicationUiError) => void) | undefined>>;
-};
-
-// @public (undocumented)
-export type ErrorHandlingProps = {
-    onErrorCallback?: (error: CommunicationUiErrorInfo) => void;
-};
-
-// Warning: (ae-forgotten-export) The symbol "ErrorProviderProps" needs to be exported by the entry point index.d.ts
-//
-// @public
-export const ErrorProvider: (props: ErrorProviderProps & ErrorHandlingProps) => JSX.Element;
-
-// @public (undocumented)
-export type ErrorsPropsFromContext = {
-    getThreadMembersError: boolean | undefined;
-    updateThreadMembersError: boolean | undefined;
-    setUpdateThreadMembersError: (error: boolean | undefined) => void;
 };
 
 // @public
@@ -527,48 +292,8 @@ export interface FluentThemeProviderProps {
     fluentTheme?: PartialTheme | Theme;
 }
 
-// @public (undocumented)
-export const FORBIDDEN_STATUS_CODE = 403;
-
-// @public (undocumented)
-export const formatDateForChatMessage: (messageDate: Date) => string;
-
-// @public (undocumented)
-export const formatTimeForChatMessage: (messageDate: Date) => string;
-
-// @public
-export const formatTimestampForChatMessage: (messageDate: Date, todayDate: Date) => string;
-
-// @public (undocumented)
-export type GalleryParticipant = {
-    displayName: string;
-    userId: string;
-    videoStream?: RemoteVideoStream;
-};
-
-// @public (undocumented)
-export const getACSId: (identifier: CommunicationUser_2 | CallingApplication | UnknownIdentifier | PhoneNumber) => string;
-
-// @public (undocumented)
-export const getChatContextState: () => ChatContextType;
-
-// @public (undocumented)
-export const getErrorFromAcsResponseCode: (message: string, statusCode: number) => CommunicationUiError | undefined;
-
-// @public (undocumented)
-export const getIdFromToken: (jwtToken: string) => string;
-
-// @public (undocumented)
-export const getLatestIncomingMessageId: (chatMessages: ChatMessage[], userId: string) => string | undefined;
-
-// @public (undocumented)
-export const getMessageStatus: (message: ChatMessage, failedMessageIds: string[], isLargeParticipantsGroup: boolean, userId: string, isMessageSeen?: ((userId: string, message: ChatMessage) => boolean) | undefined) => MessageStatus;
-
 // @public
 export const getThemeFromLocalStorage: (scopeId: string) => string | null;
-
-// @public (undocumented)
-export const getThreadContextState: () => ThreadProviderContextType;
 
 // @public (undocumented)
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;
@@ -585,91 +310,8 @@ export interface GridLayoutProps {
 // @public (undocumented)
 export type GridLayoutType = 'standard';
 
-// Warning: (ae-forgotten-export) The symbol "GroupCallCompositeProps" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export const GroupCall: (props: GroupCallCompositeProps) => JSX.Element;
-
-// @public (undocumented)
-export const GroupCallControlBar: (props: ControlBarProps & GroupCallControlBarProps & ErrorHandlingProps) => JSX.Element;
-
-// @public (undocumented)
-export const GroupCallControlBarComponent: (props: Pick<ControlBarProps & GroupCallControlBarProps & ErrorHandlingProps, "onErrorCallback" | "children" | "styles" | "layout" | "onEndCallClick" | "compressedMode">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
-
-// @public (undocumented)
-export interface GroupCallControlBarProps extends CallControlBarContainerProps {
-    compressedMode: boolean;
-    onEndCallClick(): void;
-}
-
-// Warning: (ae-forgotten-export) The symbol "GroupChatProps" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export const GroupChat: (props: GroupChatProps) => JSX.Element;
-
-// @public (undocumented)
-export const GUID_FOR_INITIAL_TOPIC_NAME = "c774da81-94d5-4652-85c7-6ed0e8dc67e6";
-
-// Warning: (ae-forgotten-export) The symbol "HangupButtonProps" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export const HangupButtonComponent: (props: Pick<HangupButtonProps, "onErrorCallback" | "text" | "styles" | "onEndCallClick">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
-
 // @public
 export const hangupButtonProps: IButtonProps;
-
-// @public (undocumented)
-export const INCOMING = "Incoming";
-
-// @public (undocumented)
-export const IncomingCallControlBar: (props: ControlBarProps & CallControlBarContainerProps & ErrorHandlingProps) => JSX.Element;
-
-// @public (undocumented)
-export const IncomingCallControlBarComponent: (props: Pick<ControlBarProps & CallControlBarContainerProps & ErrorHandlingProps, "onErrorCallback" | "children" | "styles" | "layout">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
-
-// Warning: (ae-forgotten-export) The symbol "IncomingCallModalProps" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export const IncomingCallModal: React_2.ComponentType<IncomingCallModalProps>;
-
-// @public (undocumented)
-export const IncomingCallsContext: React_2.Context<IncomingCallsContextType | undefined>;
-
-// @public (undocumented)
-export type IncomingCallsContextType = {
-    incomingCalls: Call[];
-};
-
-// @public (undocumented)
-export const IncomingCallsProvider: (props: {
-    children: React_2.ReactNode;
-}) => JSX.Element;
-
-// Warning: (ae-forgotten-export) The symbol "IncomingCallToastProps" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export const IncomingCallToast: (props: IncomingCallToastProps) => JSX.Element;
-
-// @public (undocumented)
-export const INITIAL_MESSAGES_SIZE = 2000;
-
-// @public (undocumented)
-export const INTERNAL_SERVER_ERROR_STATUS_CODE = 500;
-
-// @public
-export const isGUID: (str: string) => boolean;
-
-// @public (undocumented)
-export const isInCall: (callState: CallState) => boolean;
-
-// @public (undocumented)
-export const isLocalScreenShareSupportedInBrowser: () => boolean;
-
-// @public (undocumented)
-export const isMobileSession: () => boolean;
-
-// @public (undocumented)
-export function isSelectedDeviceInList<T extends AudioDeviceInfo | VideoDeviceInfo>(device: T, list: T[]): boolean;
 
 // @public (undocumented)
 export interface JumpToNewMessageButtonProps {
@@ -705,109 +347,10 @@ export const LIGHT = "Light";
 export const lightTheme: PartialTheme;
 
 // @public (undocumented)
-export type ListParticipant = {
-    key: string;
-    displayName: string;
-    state: string;
-    isScreenSharing: boolean;
-    isMuted: boolean;
-    onRemove?: () => void;
-    onMute?: () => void;
-};
-
-// @public (undocumented)
 export interface LoadPreviousMessagesButtonProps {
     // (undocumented)
     onClick: () => void;
 }
-
-// @public (undocumented)
-export type LocalDeviceSettingsContainerProps = {
-    videoDeviceList: VideoDeviceInfo[];
-    audioDeviceList: AudioDeviceInfo[];
-    videoDeviceInfo?: VideoDeviceInfo;
-    audioDeviceInfo?: AudioDeviceInfo;
-    updateLocalVideoStream: (source: VideoDeviceInfo) => void;
-    updateAudioDeviceInfo: (source: AudioDeviceInfo) => void;
-};
-
-// @public (undocumented)
-export type LocalGalleryParticipant = {
-    displayName: string;
-    userId: string;
-    videoStream?: LocalVideoStream;
-};
-
-// @public (undocumented)
-export interface LocalVideoContainerOwnProps {
-    // (undocumented)
-    scalingMode?: ScalingMode;
-    // (undocumented)
-    stream: LocalVideoStream | undefined;
-}
-
-// @public (undocumented)
-export const MapToCallConfigurationProps: () => SetupContainerProps;
-
-// @public (undocumented)
-export const MapToChatMessageProps: () => ChatMessagePropsFromContext;
-
-// @public (undocumented)
-export const MapToChatThreadMemberProps: () => ChatThreadMemberPropsFromContext;
-
-// @public (undocumented)
-export const MapToChatThreadProps: () => ChatThreadPropsFromContext;
-
-// @public (undocumented)
-export const MapToChatTopicProps: () => ChatTopicPropsFromContext;
-
-// @public (undocumented)
-export const MapToErrorBarProps: () => ErrorBarProps;
-
-// @public (undocumented)
-export const MapToErrorsProps: () => ErrorsPropsFromContext;
-
-// @public (undocumented)
-export const MapToLocalDeviceSettingsProps: () => LocalDeviceSettingsContainerProps;
-
-// @public (undocumented)
-export const MapToLocalVideoProps: (ownProps: LocalVideoContainerOwnProps) => VideoContainerProps;
-
-// @public (undocumented)
-export const MapToOneToOneCallProps: () => CallContainerProps;
-
-// @public (undocumented)
-export const MapToRemoteVideoProps: (ownProps: RemoteVideoContainerOwnProps) => VideoContainerProps;
-
-// @public (undocumented)
-export const MapToSendBoxProps: () => SendBoxPropsFromContext;
-
-// @public (undocumented)
-export const MapToSidePanelProps: () => SidePanelPropsFromContext;
-
-// @public (undocumented)
-export const MapToTypingIndicatorProps: () => TypingIndicatorProps;
-
-// @public (undocumented)
-export const MapToUserIdProps: () => UserIdPropsFromContext;
-
-// @public (undocumented)
-export const MAXIMUM_INT64 = 9223372036854776000;
-
-// @public (undocumented)
-export const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
-
-// @public (undocumented)
-export const MAXIMUM_LENGTH_OF_NAME = 10;
-
-// @public (undocumented)
-export const MAXIMUM_LENGTH_OF_TOPIC = 30;
-
-// @public (undocumented)
-export const MAXIMUM_LENGTH_OF_TYPING_USERS = 35;
-
-// @public (undocumented)
-export const MAXIMUM_RETRY_COUNT = 3;
 
 // @public (undocumented)
 export enum MessageAttachedStatus {
@@ -821,7 +364,7 @@ export enum MessageAttachedStatus {
 export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
 
 // @public
-export const MessageThread: (props: MessageThreadProps & ErrorHandlingProps & ChatMessagePropsFromContext) => JSX.Element;
+export const MessageThread: (props: MessageThreadProps) => JSX.Element;
 
 // @public
 export type MessageThreadProps = {
@@ -848,48 +391,11 @@ export interface MessageThreadStylesProps extends BaseCustomStylesProps {
     readReceiptContainer?: (mine: boolean) => IStyle;
 }
 
-// @public (undocumented)
-export const MINI_HEADER_WINDOW_WIDTH = 450;
-
-// @public (undocumented)
-export const MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS = 8000;
-
-// @public (undocumented)
-export const MULTI_STATUS = 207;
-
-// @public (undocumented)
-export const NEW_MESSAGES = "New Messages";
-
-// @public (undocumented)
-export const NO_CONTENT = 204;
-
-// @public (undocumented)
-export const OK = 200;
-
-// Warning: (ae-forgotten-export) The symbol "OneToOneCallCompositeProps" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export const OneToOneCall: (props: OneToOneCallCompositeProps) => JSX.Element;
-
 // @public
 export const optionsButtonProps: IButtonProps;
 
-// @public (undocumented)
-export const OutgoingCallControlBar: (props: OutgoingCallControlBarProps & ErrorHandlingProps) => JSX.Element;
-
-// @public (undocumented)
-export const OutgoingCallControlBarComponent: (props: Pick<OutgoingCallControlBarProps & ErrorHandlingProps, "onErrorCallback" | "children" | "styles" | "layout" | "onEndCallClick">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
-
-// @public (undocumented)
-export interface OutgoingCallControlBarProps extends ControlBarProps, CallControlBarContainerProps {
-    onEndCallClick(): void;
-}
-
-// @public (undocumented)
-export const PAGE_SIZE = 200;
-
 // @public
-export const ParticipantItem: (props: ParticipantItemProps & ErrorHandlingProps) => JSX.Element;
+export const ParticipantItem: (props: ParticipantItemProps) => JSX.Element;
 
 // @public
 export interface ParticipantItemProps {
@@ -911,31 +417,13 @@ export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
 }
 
 // @public (undocumented)
-export const PARTICIPANTS_THRESHOLD = 20;
-
-// @public (undocumented)
-export type ParticipantStream = {
-    user: RemoteParticipant;
-    stream: RemoteVideoStream | undefined;
-};
-
-// @public (undocumented)
 export interface PlaceholderProps {
     avatarName?: string;
     noVideoAvailableAriaLabel?: string;
 }
 
-// @public (undocumented)
-export const PRECONDITION_FAILED_RETRY_INTERVAL = 200;
-
-// @public (undocumented)
-export const PRECONDITION_FAILED_STATUS_CODE = 412;
-
-// @public (undocumented)
-export const propagateError: (error: Error, onErrorCallback?: ((error: CommunicationUiErrorInfo) => void) | undefined) => void;
-
 // @public
-export const ReadReceipt: (props: ReadReceiptProps & ErrorHandlingProps) => JSX.Element;
+export const ReadReceipt: (props: ReadReceiptProps) => JSX.Element;
 
 // @public
 export interface ReadReceiptProps {
@@ -951,17 +439,6 @@ export interface ReadReceiptProps {
 // @public
 export const recordButtonProps: IButtonProps;
 
-// @public (undocumented)
-export interface RemoteVideoContainerOwnProps {
-    // (undocumented)
-    scalingMode?: ScalingMode;
-    // (undocumented)
-    stream: RemoteVideoStream | undefined;
-}
-
-// @public (undocumented)
-export const RINGING = "Ringing";
-
 // @public
 export const saveThemeToLocalStorage: (theme: string, scopeId: string) => void;
 
@@ -969,29 +446,25 @@ export const saveThemeToLocalStorage: (theme: string, scopeId: string) => void;
 export const screenShareButtonProps: IButtonProps;
 
 // @public
-export const SendBox: (props: SendBoxProps & SendBoxPropsFromContext & ErrorHandlingProps) => JSX.Element;
+export const SendBox: (props: SendBoxProps) => JSX.Element;
 
 // @public
 export interface SendBoxProps {
-    onRenderIcon?: (props: SendBoxProps & SendBoxPropsFromContext, isMouseOverSendIcon: boolean) => JSX.Element | null;
+    disabled?: boolean;
+    onRenderIcon?: (props: SendBoxProps, isMouseOverSendIcon: boolean) => JSX.Element | null;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
+    onSendMessage?: (messageContent: string) => Promise<void>;
+    onSendTypingNotification?: () => Promise<void>;
     styles?: SendBoxStylesProps;
     supportNewline?: boolean;
-}
-
-// @public
-export type SendBoxPropsFromContext = {
-    disabled?: boolean;
     systemMessage?: string;
-    onSendMessage: (messageContent: string) => Promise<void>;
-    onSendTypingNotification: () => Promise<void>;
-};
+}
 
 // @public (undocumented)
 export interface SendBoxStylesProps extends BaseCustomStylesProps {
-    defaultSendMessageIcon?: IStyle;
-    defaultSystemMessage?: IStyle;
+    sendMessageIcon?: IStyle;
     sendMessageIconContainer?: IStyle;
+    systemMessage?: IStyle;
     textField?: IStyle;
 }
 
@@ -1019,7 +492,7 @@ export type SidePanelPropsFromContext = {
 export const SPACE_KEY = 32;
 
 // @public
-export const StreamMedia: (props: StreamMediaProps & ErrorHandlingProps) => JSX.Element;
+export const StreamMedia: (props: StreamMediaProps) => JSX.Element;
 
 // @public
 export interface StreamMediaProps {
@@ -1042,12 +515,6 @@ export interface SwitchableFluentThemeProviderProps {
     children: React_2.ReactNode;
     scopeId: string;
 }
-
-// @public (undocumented)
-export const TEXT_EXCEEDS_LIMIT: string;
-
-// @public (undocumented)
-export const TEXT_MESSAGE = "Text";
 
 // @public
 export type ThemeMap = {
@@ -1112,7 +579,7 @@ export type ThreadProviderContextType = {
 export const TOO_MANY_REQUESTS_STATUS_CODE = 429;
 
 // @public
-export const TypingIndicator: (props: TypingIndicatorProps & ErrorHandlingProps) => JSX.Element;
+export const TypingIndicator: (props: TypingIndicatorProps) => JSX.Element;
 
 // @public
 export interface TypingIndicatorProps {
@@ -1353,14 +820,6 @@ export const useValidContext: <T extends unknown>(ReactContext: React_2.Context<
 
 // @public
 export const videoButtonProps: IButtonProps;
-
-// @public (undocumented)
-export interface VideoContainerProps {
-    // (undocumented)
-    isVideoReady: boolean;
-    // (undocumented)
-    videoStreamElement: HTMLElement | null;
-}
 
 // @public (undocumented)
 export const VideoTile: (props: VideoTileProps & PlaceholderProps) => JSX.Element;

@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 import { ChatMessage, ChatThreadClient, RestListMessagesOptions } from '@azure/communication-chat';
 import { ChatContext } from '../ChatContext';
-import { convertChatMessage } from '../ChatThreadClientDeclarative';
+import { convertChatMessage } from '../convertChatMessage';
 import { createDecoratedIterator } from './createDecoratedIterator';
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 

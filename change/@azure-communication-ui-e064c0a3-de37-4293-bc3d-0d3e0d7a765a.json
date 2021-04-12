@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Exclude config files from npm pack",
+  "packageName": "@azure/communication-ui",
+  "email": "mail@jamesburnside.com",
+  "dependentChangeType": "none"
+}
