@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add participantList selector",
+  "packageName": "@azure/acs-chat-selector",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}

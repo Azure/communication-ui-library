@@ -14,13 +14,13 @@ const convertSdkThreadMembersToChatThreadMembers = (sdkThreadMembers: ChatPartic
 };
 
 export type ChatThreadMemberPropsFromContext = {
-  threadMembers: WebUiChatParticipant[];
+  chatParticipants: WebUiChatParticipant[];
   removeThreadMember?: (userId: string) => Promise<void>;
 };
 
 export const MapToChatThreadMemberProps = (): ChatThreadMemberPropsFromContext => {
   return {
-    threadMembers: convertSdkThreadMembersToChatThreadMembers(useThreadMembers()),
+    chatParticipants: convertSdkThreadMembersToChatThreadMembers(useThreadMembers()),
     removeThreadMember: useRemoveThreadMember()
   };
 };

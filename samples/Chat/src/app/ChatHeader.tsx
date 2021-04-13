@@ -36,10 +36,10 @@ export type ChatHeaderProps = UserIdPropsFromContext &
     setSelectedPane: Dispatch<SidePanelTypes>;
   };
 
-const generateDefaultHeaderMessage = (threadMembers: WebUiChatParticipant[], userId: string): string => {
+const generateDefaultHeaderMessage = (participants: WebUiChatParticipant[], userId: string): string => {
   let header = 'Chat with ';
 
-  const members = threadMembers?.filter(
+  const members = participants?.filter(
     (member: WebUiChatParticipant) => member.userId !== userId && member.displayName
   );
 
@@ -88,7 +88,7 @@ const ChatHeader = (props: ChatHeaderProps): JSX.Element => {
     <Stack className={chatHeaderContainerStyle} horizontal={true} horizontalAlign="space-between">
       <Stack.Item align="center">
         <div className={topicNameLabelStyle}>
-          {props.existsTopicName ? props.topicName : generateDefaultHeaderMessage(props.threadMembers, userId)}
+          {props.existsTopicName ? props.topicName : generateDefaultHeaderMessage(props.chatParticipants, userId)}
         </div>
       </Stack.Item>
       <Stack.Item align="center">
