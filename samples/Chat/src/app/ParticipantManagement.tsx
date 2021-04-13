@@ -1,26 +1,17 @@
 // © Microsoft Corporation. All rights reserved.
 
 import React from 'react';
-import {
-  WebUiChatParticipant,
-  ParticipantItem,
-  connectFuncsToContext,
-  MapToChatThreadMemberProps,
-  MapToUserIdProps,
-  WithErrorHandling,
-  ErrorHandlingProps,
-  propagateError
-} from '@azure/communication-ui';
+import { WebUiChatParticipant, ParticipantItem, propagateError } from '@azure/communication-ui';
 import { Stack, IContextualMenuItem } from '@fluentui/react';
 
 export type ParticipantManagementProps = {
   userId: string;
   chatParticipants: WebUiChatParticipant[];
-  removeThreadMember?: (userId: string) => Promise<void>;
+  removeThreadMember: (userId: string) => Promise<void>;
   onRenderAvatar?: (userId: string) => JSX.Element;
 };
 
-export const ParticipantManagementComponentBase = (props: ParticipantManagementProps): JSX.Element => {
+export const ParticipantManagement = (props: ParticipantManagementProps): JSX.Element => {
   const { userId, chatParticipants, removeThreadMember, onRenderAvatar } = props;
 
   return (
@@ -55,12 +46,3 @@ export const ParticipantManagementComponentBase = (props: ParticipantManagementP
     </Stack>
   );
 };
-
-export const ParticipantManagementComponent = (props: ParticipantManagementProps & ErrorHandlingProps): JSX.Element =>
-  WithErrorHandling(ParticipantManagementComponentBase, props);
-
-export const ParticipantManagement = connectFuncsToContext(
-  ParticipantManagementComponent,
-  MapToChatThreadMemberProps,
-  MapToUserIdProps
-);

@@ -53,6 +53,7 @@ export type DefaultHandlers = {
     onMessageSend: (content: string) => Promise<void>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
     onTyping: () => Promise<void>;
+    removeThreadMember: (userId: string) => Promise<void>;
 };
 
 // @public (undocumented)
