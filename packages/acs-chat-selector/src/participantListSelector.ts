@@ -8,11 +8,11 @@ import * as reselect from 'reselect';
 import { ChatParticipant } from '@azure/communication-chat';
 import { WebUiChatParticipant } from './types/WebUiChatParticipant';
 
-const convertSdkThreadMembersToChatThreadMembers = (sdkThreadMembers: ChatParticipant[]): WebUiChatParticipant[] => {
-  return sdkThreadMembers.map((sdkThreadMember: ChatParticipant) => {
+const convertParticipantsToWebUiChatParticipants = (participants: ChatParticipant[]): WebUiChatParticipant[] => {
+  return participants.map((participant: ChatParticipant) => {
     return {
-      userId: sdkThreadMember.user.communicationUserId,
-      displayName: sdkThreadMember.displayName
+      userId: participant.user.communicationUserId,
+      displayName: participant.displayName
     };
   });
 };
@@ -23,7 +23,7 @@ export const participantListSelector = reselect.createSelector(
     return {
       userId,
       displayName,
-      participants: convertSdkThreadMembersToChatThreadMembers(Array.from(chatParticipants.values()))
+      participants: convertParticipantsToWebUiChatParticipants(Array.from(chatParticipants.values()))
     };
   }
 );
