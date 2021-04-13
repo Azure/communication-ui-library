@@ -8,8 +8,10 @@ import * as reselect from 'reselect';
 import { ChatParticipant } from '@azure/communication-chat';
 import { WebUiChatParticipant } from './types/WebUiChatParticipant';
 
-const convertParticipantsToWebUiChatParticipants = (participants: ChatParticipant[]): WebUiChatParticipant[] => {
-  return participants.map((participant: ChatParticipant) => {
+const convertChatParticipantsToWebUiChatParticipants = (
+  chatParticipants: ChatParticipant[]
+): WebUiChatParticipant[] => {
+  return chatParticipants.map((participant: ChatParticipant) => {
     return {
       userId: participant.user.communicationUserId,
       displayName: participant.displayName
@@ -17,13 +19,13 @@ const convertParticipantsToWebUiChatParticipants = (participants: ChatParticipan
   });
 };
 
-export const participantListSelector = reselect.createSelector(
+export const chatParticipantListSelector = reselect.createSelector(
   [getUserId, getParticipants, getDisplayName],
   (userId, chatParticipants: Map<string, ChatParticipant>, displayName) => {
     return {
       userId,
       displayName,
-      participants: convertParticipantsToWebUiChatParticipants(Array.from(chatParticipants.values()))
+      chatParticipants: convertChatParticipantsToWebUiChatParticipants(Array.from(chatParticipants.values()))
     };
   }
 );

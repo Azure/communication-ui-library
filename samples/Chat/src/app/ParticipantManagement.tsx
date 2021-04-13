@@ -15,17 +15,17 @@ import { Stack, IContextualMenuItem } from '@fluentui/react';
 
 export type ParticipantManagementProps = {
   userId: string;
-  participants: WebUiChatParticipant[];
+  chatParticipants: WebUiChatParticipant[];
   removeThreadMember?: (userId: string) => Promise<void>;
   onRenderAvatar?: (userId: string) => JSX.Element;
 };
 
 export const ParticipantManagementComponentBase = (props: ParticipantManagementProps): JSX.Element => {
-  const { userId, participants, removeThreadMember, onRenderAvatar } = props;
+  const { userId, chatParticipants, removeThreadMember, onRenderAvatar } = props;
 
   return (
     <Stack>
-      {participants.map((member) => {
+      {chatParticipants.map((member) => {
         if (member.displayName !== undefined) {
           const menuItems: IContextualMenuItem[] = [];
           menuItems.push({

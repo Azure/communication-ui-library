@@ -19,6 +19,17 @@ export type BaseSelectorProps = {
 };
 
 // @public (undocumented)
+export const chatParticipantListSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
+    userId: string;
+    displayName: string;
+    chatParticipants: WebUiChatParticipant[];
+}, (res1: string, res2: Map<string, ChatParticipant>, res3: string) => {
+    userId: string;
+    displayName: string;
+    chatParticipants: WebUiChatParticipant[];
+}>;
+
+// @public (undocumented)
 export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
     userId: string;
     disableReadReceipt: boolean;
@@ -51,17 +62,6 @@ export enum MessageAttachedStatus {
     // (undocumented)
     TOP = "top"
 }
-
-// @public (undocumented)
-export const participantListSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
-    userId: string;
-    displayName: string;
-    participants: WebUiChatParticipant[];
-}, (res1: string, res2: Map<string, ChatParticipant>, res3: string) => {
-    userId: string;
-    displayName: string;
-    participants: WebUiChatParticipant[];
-}>;
 
 // @public (undocumented)
 export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {

@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 export { chatThreadSelector } from './chatThreadSelector';
 export { sendBoxSelector } from './sendBoxSelector';
-export { participantListSelector } from './participantListSelector';
+export { chatParticipantListSelector } from './chatParticipantListSelector';
 
 export { createDefaultHandlersForComponent } from './handlers/createHandlers';
 export type { UiChatMessage, MessageAttachedStatus } from './types/UiChatMessage';

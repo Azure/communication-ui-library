@@ -88,7 +88,7 @@ const ChatHeader = (props: ChatHeaderProps): JSX.Element => {
     <Stack className={chatHeaderContainerStyle} horizontal={true} horizontalAlign="space-between">
       <Stack.Item align="center">
         <div className={topicNameLabelStyle}>
-          {props.existsTopicName ? props.topicName : generateDefaultHeaderMessage(props.participants, userId)}
+          {props.existsTopicName ? props.topicName : generateDefaultHeaderMessage(props.chatParticipants, userId)}
         </div>
       </Stack.Item>
       <Stack.Item align="center">
