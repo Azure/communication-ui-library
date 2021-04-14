@@ -13,15 +13,15 @@ import {
 import { useChatMessages, useFailedMessageIds, useThreadMembers, useUserId } from '../providers';
 import { compareMessages } from '../utils';
 import { PARTICIPANTS_THRESHOLD, PAGE_SIZE } from '../constants';
-import { ChatMessage as WebUiChatMessage, Message, MessageStatus } from '../types';
+import { ChatMessagePayload, ChatMessage, MessageStatus } from '../types';
 
 export const updateMessagesWithAttached = (
-  chatMessagesWithStatus: WebUiChatMessage[],
+  chatMessagesWithStatus: ChatMessagePayload[],
   userId: string,
   failedMessageIds: string[],
   isLargeGroup: boolean,
-  isMessageSeen: (userId: string, message: WebUiChatMessage) => boolean
-): Message<'chat'>[] => {
+  isMessageSeen: (userId: string, message: ChatMessagePayload) => boolean
+): ChatMessage[] => {
   /**
    * A block of messages: continuous messages that belong to the same sender and not intercepted by other senders.
    *
@@ -30,7 +30,7 @@ export const updateMessagesWithAttached = (
    * in this case, we only want to show the read statusToRender of last message of the new messages block)
    */
   let IndexOfMyLastMassage: number | undefined = undefined;
-  const newChatMessages: Message<'chat'>[] = [];
+  const newChatMessages: ChatMessage[] = [];
 
   chatMessagesWithStatus.sort(compareMessages);
   chatMessagesWithStatus.map((message: any, index: number, messagesList: any) => {
@@ -96,7 +96,7 @@ export const updateMessagesWithAttached = (
 
     const messageWithAttached = { ...message, attached, mine, statusToRender };
     // Remove the clientMessageId field as it's only needed to getMessageStatus, not needed by MessageThread component
-    // When we migrate to declarative, ideally we should remove the clientMessageId from the WebUiChatMessage type.
+    // When we migrate to declarative, ideally we should remove the clientMessageId from the ChatMessagePayload type.
     delete messageWithAttached.clientMessageId;
     newChatMessages.push({
       type: 'chat',
@@ -106,7 +106,7 @@ export const updateMessagesWithAttached = (
   return newChatMessages;
 };
 
-export const getLatestIncomingMessageId = (chatMessages: Message<'chat'>[], userId: string): string | undefined => {
+export const getLatestIncomingMessageId = (chatMessages: ChatMessage[], userId: string): string | undefined => {
   const lastSeenChatMessage = chatMessages
     .filter((message) => message.payload.createdOn && message.payload.senderId !== userId)
     .map((message) => ({ createdOn: message.payload.createdOn, id: message.payload.messageId }))
@@ -124,11 +124,11 @@ export const getLatestIncomingMessageId = (chatMessages: Message<'chat'>[], user
 };
 
 export const getMessageStatus = (
-  message: WebUiChatMessage,
+  message: ChatMessagePayload,
   failedMessageIds: string[],
   isLargeParticipantsGroup: boolean,
   userId: string,
-  isMessageSeen?: ((userId: string, message: WebUiChatMessage) => boolean) | undefined
+  isMessageSeen?: ((userId: string, message: ChatMessagePayload) => boolean) | undefined
 ): MessageStatus => {
   // message is pending send or is failed to be sent
   if (message.createdOn === undefined) {
@@ -155,7 +155,7 @@ const isLargeParticipantsGroup = (threadMembers: ChatThreadMember[]): boolean =>
  * messages, etc., we need information from many different places in Chat SDK. But to provide a nice clean interface for
  * developers, we hide all of that by combining all different sources of info before passing it down as a prop to
  * MessageThread. This way we keep the Chat SDK parts internal and if developer wants to use this component with their own
- * data source, they only need to provide one stream of formatted WebUIChatMessage[] for MessageThread to be able to render
+ * data source, they only need to provide one stream of formatted ChatMessagePayload[] for MessageThread to be able to render
  * everything properly.
  *
  * @param chatMessages
@@ -169,10 +169,10 @@ const convertSdkChatMessagesToWebUiChatMessages = (
   failedMessageIds: string[],
   isLargeGroup: boolean,
   userId: string,
-  isMessageSeen: (userId: string, message: WebUiChatMessage) => boolean
-): Message<'chat'>[] => {
+  isMessageSeen: (userId: string, message: ChatMessagePayload) => boolean
+): ChatMessage[] => {
   const convertedChatMessages =
-    chatMessages?.map<WebUiChatMessage>((chatMessage: ChatMessageWithClientMessageId) => {
+    chatMessages?.map<ChatMessagePayload>((chatMessage: ChatMessageWithClientMessageId) => {
       return {
         messageId: chatMessage.id,
         content: chatMessage.content,
@@ -191,7 +191,7 @@ const convertSdkChatMessagesToWebUiChatMessages = (
 
 export type ChatMessagePropsFromContext = {
   userId: string;
-  messages: Message<'chat'>[];
+  messages: ChatMessage[];
   disableReadReceipt?: boolean;
   onSendReadReceipt?: () => Promise<void>;
   disableLoadPreviousMessage?: boolean;

@@ -3,13 +3,13 @@
 import { useCallback } from 'react';
 
 import { useReceipts } from '../providers/ChatThreadProvider';
-import { ChatMessage as WebUiChatMessage } from '../types';
+import { ChatMessagePayload } from '../types';
 
-export const useIsMessageSeen = (): ((userId: string, message: WebUiChatMessage) => boolean) => {
+export const useIsMessageSeen = (): ((userId: string, message: ChatMessagePayload) => boolean) => {
   const receipts = useReceipts();
 
   const internal = useCallback(
-    (userId: string, message: WebUiChatMessage): boolean => {
+    (userId: string, message: ChatMessagePayload): boolean => {
       if (!receipts || receipts.length === 0) {
         return false;
       }

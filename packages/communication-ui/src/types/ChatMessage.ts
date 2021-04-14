@@ -12,7 +12,7 @@ export enum MessageAttachedStatus {
   TOP = 'top'
 }
 
-export type ChatMessage = {
+export type ChatMessagePayload = {
   messageId?: string;
   content?: string;
   // ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`
@@ -25,17 +25,18 @@ export type ChatMessage = {
   clientMessageId?: string;
 };
 
-// Todo: We need to add more types of system messages that we support.
-export type SystemMessageTypes = 'ParticipantAdded' | 'ParticipantRemoved';
-
-export type SystemMessage = {
-  type: SystemMessageTypes;
+export type SystemMessagePayload = {
   content?: string;
+  iconName?: string;
 };
 
 export type MessageTypes = 'chat' | 'system' | 'custom';
 
 export type Message<T extends MessageTypes> = {
   type: T;
-  payload: T extends 'chat' ? ChatMessage : T extends 'system' ? SystemMessage : { [name: string]: any };
+  payload: T extends 'chat' ? ChatMessagePayload : T extends 'system' ? SystemMessagePayload : { [name: string]: any };
 };
+
+export type ChatMessage = Message<'chat'>;
+export type SystemMessage = Message<'system'>;
+export type CustomMessage = Message<'custom'>;

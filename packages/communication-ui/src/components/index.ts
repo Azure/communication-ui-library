@@ -20,7 +20,9 @@ export type {
   MessageThreadProps,
   MessageThreadStylesProps,
   JumpToNewMessageButtonProps,
-  LoadPreviousMessagesButtonProps
+  LoadPreviousMessagesButtonProps,
+  DefaultSystemMessageRendererType,
+  DefaultChatMessageRendererType
 } from './MessageThread';
 
 export { StreamMedia } from './StreamMedia';

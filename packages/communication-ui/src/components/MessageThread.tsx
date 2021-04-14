@@ -20,11 +20,19 @@ import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { LiveAnnouncer, LiveMessage } from 'react-aria-live';
 import { formatTimestampForChatMessage } from '../utils';
 import { CLICK_TO_LOAD_MORE_MESSAGES, NEW_MESSAGES } from '../constants';
-import { BaseCustomStylesProps, ChatMessage, Message, MessageStatus, MessageTypes } from '../types';
+import {
+  BaseCustomStylesProps,
+  ChatMessage,
+  CustomMessage,
+  SystemMessage,
+  MessageStatus,
+  ChatMessagePayload,
+  SystemMessagePayload
+} from '../types';
 import { ReadReceipt, ReadReceiptProps } from './ReadReceipt';
-import { SystemMessage } from './SystemMessage';
+import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from './SystemMessage';
 
-const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
+const isMessageSame = (first: ChatMessagePayload, second: ChatMessagePayload): boolean => {
   return (
     first.messageId === second.messageId &&
     first.content === second.content &&
@@ -40,12 +48,14 @@ const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
  *
  * @param messages
  */
-const getLatestChatMessage = (messages: Message<MessageTypes>[]): ChatMessage | undefined => {
-  let latestChatMessage: ChatMessage | undefined = undefined;
+const getLatestChatMessage = (
+  messages: (ChatMessage | SystemMessage | CustomMessage)[]
+): ChatMessagePayload | undefined => {
+  let latestChatMessage: ChatMessagePayload | undefined = undefined;
   for (let i = messages.length - 1; i >= 0; i--) {
     const message = messages[i];
     if (message.type === 'chat') {
-      const payload: ChatMessage = message.payload;
+      const payload: ChatMessagePayload = message.payload;
       if (payload.createdOn !== undefined) {
         latestChatMessage = payload;
         break;
@@ -65,8 +75,8 @@ const getLatestChatMessage = (messages: Message<MessageTypes>[]): ChatMessage | 
  * @param userId
  */
 const isThereNewMessageNotFromCurrentUser = (
-  latestMessageFromPreviousMessages: ChatMessage | undefined,
-  latestMessageFromNewMessages: ChatMessage | undefined,
+  latestMessageFromPreviousMessages: ChatMessagePayload | undefined,
+  latestMessageFromNewMessages: ChatMessagePayload | undefined,
   userId: string
 ): boolean => {
   if (latestMessageFromNewMessages === undefined) {
@@ -93,8 +103,8 @@ const isThereNewMessageNotFromCurrentUser = (
  * @param latestMessageFromNewMessages
  */
 const didUserSendTheLatestMessage = (
-  latestMessageFromPreviousMessages: ChatMessage | undefined,
-  latestMessageFromNewMessages: ChatMessage | undefined,
+  latestMessageFromPreviousMessages: ChatMessagePayload | undefined,
+  latestMessageFromNewMessages: ChatMessagePayload | undefined,
   userId: string
 ): boolean => {
   if (latestMessageFromNewMessages === undefined) {
@@ -142,7 +152,7 @@ export interface LoadPreviousMessagesButtonProps {
   onClick: () => void;
 }
 
-const DefaultLoadPreviousMessagesButton = (props: LoadPreviousMessagesButtonProps): JSX.Element => {
+const DefaultLoadPreviousMessagesButtonRenderer = (props: LoadPreviousMessagesButtonProps): JSX.Element => {
   const { onClick } = props;
   return (
     <Button
@@ -151,6 +161,55 @@ const DefaultLoadPreviousMessagesButton = (props: LoadPreviousMessagesButtonProp
       className={loadPreviousMessageButtonStyle}
       content={CLICK_TO_LOAD_MORE_MESSAGES}
       onClick={onClick}
+    />
+  );
+};
+
+export type DefaultChatMessageRendererType = (
+  message: ChatMessage,
+  todayDate: Date,
+  styles?: MessageThreadStylesProps
+) => JSX.Element;
+
+const DefaultChatMessageRenderer: DefaultChatMessageRendererType = (
+  message: ChatMessage,
+  todayDate: Date,
+  styles?: MessageThreadStylesProps
+) => {
+  const payload: ChatMessagePayload = message.payload;
+  const liveAuthor = `${payload.senderDisplayName} says `;
+  const messageContentItem = (
+    <div>
+      <LiveMessage message={`${payload.mine ? '' : liveAuthor} ${payload.content}`} aria-live="polite" />
+      <Linkify>{payload.content}</Linkify>
+    </div>
+  );
+  return (
+    <Chat.Message
+      styles={styles?.chatMessageContainer ?? chatMessageStyle}
+      content={messageContentItem}
+      author={payload.senderDisplayName}
+      mine={payload.mine}
+      timestamp={payload.createdOn ? formatTimestampForChatMessage(payload.createdOn, todayDate) : undefined}
+    />
+  );
+};
+
+export type DefaultSystemMessageRendererType = (
+  message: SystemMessage,
+  styles?: MessageThreadStylesProps
+) => JSX.Element;
+
+const DefaultSystemMessageRenderer: DefaultSystemMessageRendererType = (
+  message: SystemMessage,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  styles?: MessageThreadStylesProps
+) => {
+  const payload: SystemMessagePayload = message.payload;
+  return (
+    <SystemMessageComponent
+      iconName={(payload.iconName ?? '') as SystemMessageIconTypes}
+      content={payload.content ?? ''}
     />
   );
 };
@@ -166,7 +225,7 @@ export type MessageThreadProps = {
   /**
    * The chat messages to render in chat thread. Chat messages need to have type `ChatMessage`
    */
-  messages: Message<MessageTypes>[];
+  messages: (ChatMessage | SystemMessage | CustomMessage)[];
   /**
    * Allows users to pass in an object contains custom CSS styles.
    * @Example
@@ -215,19 +274,12 @@ export type MessageThreadProps = {
    */
   onRenderLoadPreviousMessagesButton?: (loadPreviousMessagesButton: LoadPreviousMessagesButtonProps) => JSX.Element;
   /**
-   * onRenderChatMessage event handler. `(message: Message<'chat'>) => JSX.Element`
+   * onRenderMessage event handler.
    */
-  onRenderChatMessage?: (message: Message<'chat'>) => JSX.Element;
-  /**
-   * onRenderSystemMessage event handler. `(message: Message<'system'>) => JSX.Element`
-   */
-  onRenderSystemMessage?: (message: Message<'system'>) => JSX.Element;
-  /**
-   * onRenderCustomMessage event handler.
-   * If there's `custom` message that MessageThread needs to handle, then onRenderCustomMessage must be provided.
-   * `(message: Message<'custom'>) => JSX.Element`
-   */
-  onRenderCustomMessage?: (message: Message<'custom'>) => JSX.Element;
+  onRenderMessage?: (
+    message: ChatMessage | SystemMessage | CustomMessage,
+    defaultOnRender?: DefaultSystemMessageRendererType | DefaultChatMessageRendererType
+  ) => JSX.Element;
 };
 
 /**
@@ -252,12 +304,10 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onLoadPreviousMessages,
     onRenderLoadPreviousMessagesButton,
     onRenderJumpToNewMessageButton,
-    onRenderChatMessage,
-    onRenderSystemMessage,
-    onRenderCustomMessage
+    onRenderMessage
   } = props;
 
-  const [messages, setChatMessages] = useState<Message<MessageTypes>[]>([]);
+  const [messages, setChatMessages] = useState<(ChatMessage | SystemMessage | CustomMessage)[]>([]);
   // We need this state to wait for one tick and scroll to bottom after messages have been initialized.
   // Otherwise chatScrollDivRef.current.clientHeight is wrong if we scroll to bottom before messages are initialized.
   const [chatMessagesInitialized, setChatMessagesInitialized] = useState<boolean>(false);
@@ -266,15 +316,15 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const [forceUpdate, setForceUpdate] = useState<number>(0);
 
   // Used to decide if should auto scroll to bottom or show "new message" button
-  const [latestPreviousMessage, setLatestPreviousMessage] = useState<ChatMessage | undefined>(undefined);
-  const [latestCurrentMessage, setLatestCurrentMessage] = useState<ChatMessage | undefined>(undefined);
+  const [latestPreviousMessage, setLatestPreviousMessage] = useState<ChatMessagePayload | undefined>(undefined);
+  const [latestCurrentMessage, setLatestCurrentMessage] = useState<ChatMessagePayload | undefined>(undefined);
   const [existsNewMessage, setExistsNewMessage] = useState<boolean>(false);
 
   const chatScrollDivRef: any = useRef();
   const chatThreadRef: any = useRef();
 
   const chatMessagesRef = useRef(messages);
-  const setChatMessagesRef = (messagesWithAttachedValue: Message<MessageTypes>[]): void => {
+  const setChatMessagesRef = (messagesWithAttachedValue: (ChatMessage | SystemMessage | CustomMessage)[]): void => {
     chatMessagesRef.current = messagesWithAttachedValue;
     setChatMessages(messagesWithAttachedValue);
   };
@@ -402,93 +452,68 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const messagesToDisplay = useMemo(
     () =>
       messages.map(
-        (message: Message<MessageTypes>): ChatItemProps => {
-          switch (message.type) {
-            case 'chat': {
-              const payload: any = message.payload;
-              const liveAuthor = `${payload.senderDisplayName} says `;
-              const messageContentItem = (
-                <div>
-                  <LiveMessage message={`${payload.mine ? '' : liveAuthor} ${payload.content}`} aria-live="polite" />
-                  <Linkify>{payload.content}</Linkify>
-                </div>
-              );
-              const showReadReceipt = !disableReadReceipt && payload.statusToRender;
-              const chatMessageComponent =
-                onRenderChatMessage === undefined ? (
-                  <Chat.Message
-                    styles={styles?.chatMessageContainer ?? chatMessageStyle}
-                    content={messageContentItem}
-                    author={payload.senderDisplayName}
-                    mine={payload.mine}
-                    timestamp={
-                      payload.createdOn ? formatTimestampForChatMessage(payload.createdOn, todayDate) : undefined
-                    }
-                  />
-                ) : (
-                  onRenderChatMessage(message as Message<'chat'>)
-                );
+        (message: ChatMessage | SystemMessage | CustomMessage): ChatItemProps => {
+          if (message.type === 'chat') {
+            const payload: ChatMessagePayload = message.payload;
+            const showReadReceipt = !disableReadReceipt && payload.statusToRender;
+            const chatMessageComponent =
+              onRenderMessage === undefined
+                ? DefaultChatMessageRenderer(message, todayDate, styles)
+                : onRenderMessage(message as ChatMessage, DefaultChatMessageRenderer);
 
-              return {
-                gutter: payload.mine ? (
-                  ''
-                ) : onRenderAvatar ? (
-                  onRenderAvatar(payload.senderId ?? '')
-                ) : (
-                  <Persona text={payload.senderDisplayName} hidePersonaDetails={true} size={PersonaSize.size32} />
-                ),
-                contentPosition: payload.mine ? 'end' : 'start',
-                message: (
-                  <Flex vAlign="end">
-                    {chatMessageComponent}
-                    <div
-                      className={mergeStyles(
-                        readReceiptContainerStyle(payload.mine ?? false),
-                        styles?.readReceiptContainer ? styles.readReceiptContainer(payload.mine ?? false) : ''
-                      )}
-                    >
-                      {showReadReceipt ? (
-                        onRenderReadReceipt ? (
-                          onRenderReadReceipt({
-                            messageStatus: payload.statusToRender ?? ('sending' as MessageStatus)
-                          })
-                        ) : (
-                          ReadReceipt({ messageStatus: payload.statusToRender ?? ('sending' as MessageStatus) })
-                        )
+            return {
+              gutter: payload.mine ? (
+                ''
+              ) : onRenderAvatar ? (
+                onRenderAvatar(payload.senderId ?? '')
+              ) : (
+                <Persona text={payload.senderDisplayName} hidePersonaDetails={true} size={PersonaSize.size32} />
+              ),
+              contentPosition: payload.mine ? 'end' : 'start',
+              message: (
+                <Flex vAlign="end">
+                  {chatMessageComponent}
+                  <div
+                    className={mergeStyles(
+                      readReceiptContainerStyle(payload.mine ?? false),
+                      styles?.readReceiptContainer ? styles.readReceiptContainer(payload.mine ?? false) : ''
+                    )}
+                  >
+                    {showReadReceipt ? (
+                      onRenderReadReceipt ? (
+                        onRenderReadReceipt({
+                          messageStatus: payload.statusToRender ?? ('sending' as MessageStatus)
+                        })
                       ) : (
-                        <div className={mergeStyles(noReadReceiptStyle)} />
-                      )}
-                    </div>
-                  </Flex>
-                ),
-                attached: payload.attached
-              };
-            }
-            case 'system': {
-              const payload: any = message.payload;
-              const systemMessageComponent =
-                onRenderSystemMessage == undefined ? (
-                  <SystemMessage type={payload.type} content={payload.content} />
-                ) : (
-                  onRenderSystemMessage(message as Message<'system'>)
-                );
+                        ReadReceipt({ messageStatus: payload.statusToRender ?? ('sending' as MessageStatus) })
+                      )
+                    ) : (
+                      <div className={mergeStyles(noReadReceiptStyle)} />
+                    )}
+                  </div>
+                </Flex>
+              ),
+              attached: payload.attached
+            };
+          } else if (message.type === 'system') {
+            const systemMessageComponent =
+              onRenderMessage === undefined
+                ? DefaultSystemMessageRenderer(message, styles)
+                : onRenderMessage(message, DefaultSystemMessageRenderer);
 
-              return {
-                children: systemMessageComponent
-              };
-            }
-            // We do not handle custom type message by default, users can handle custom type by using onRenderCustomMessage function.
-            case 'custom': {
-              const customMessageComponent =
-                onRenderCustomMessage == undefined ? <></> : onRenderCustomMessage(message as Message<'custom'>);
-              return {
-                children: customMessageComponent
-              };
-            }
+            return {
+              children: systemMessageComponent
+            };
+          } else {
+            // We do not handle custom type message by default, users can handle custom type by using onRenderMessage function.
+            const customMessageComponent = onRenderMessage === undefined ? <></> : onRenderMessage(message);
+            return {
+              children: customMessageComponent
+            };
           }
         }
       ),
-    [styles, disableReadReceipt, messages, onRenderAvatar, onRenderReadReceipt, todayDate]
+    [messages, disableReadReceipt, onRenderMessage, todayDate, styles, onRenderAvatar, onRenderReadReceipt]
   );
 
   return (
@@ -506,7 +531,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
               (onRenderLoadPreviousMessagesButton ? (
                 onRenderLoadPreviousMessagesButton({ onClick: onLoadPreviousMessages })
               ) : (
-                <DefaultLoadPreviousMessagesButton onClick={onLoadPreviousMessages} />
+                <DefaultLoadPreviousMessagesButtonRenderer onClick={onLoadPreviousMessages} />
               ))}
           </div>
         )}
