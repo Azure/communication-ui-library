@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { CallState, HangupCallOptions } from '@azure/communication-calling';
+import { CallState, HangUpOptions } from '@azure/communication-calling';
 import { useCallContext, useCallingContext } from '../providers';
 import { ParticipantStream } from '../types/ParticipantStream';
 import { useOutgoingCall } from '../hooks';
@@ -10,7 +10,7 @@ export type CallContainerProps = {
   callState: CallState;
   screenShareStream: ParticipantStream | undefined;
   isLocalScreenSharingOn: boolean;
-  leaveCall: (hangupCallOptions: HangupCallOptions) => Promise<void>;
+  leaveCall: (hangupCallOptions: HangUpOptions) => Promise<void>;
 };
 
 export const MapToOneToOneCallProps = (): CallContainerProps => {

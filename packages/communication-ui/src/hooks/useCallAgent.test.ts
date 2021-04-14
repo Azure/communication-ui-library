@@ -138,21 +138,11 @@ describe('useCallAgent tests', () => {
     expect(callsUpdatedEvent).toBeDefined();
   });
 
-  test('after callsUpdated listener is called, useCallAgent hook should reject the addedcall if it is incoming', async () => {
-    addedCall.isIncoming = true;
-
+  test('after callsUpdated listener is called, if the addedCall is defined and not incoming, addedCall should subscibe for stateChanged and remoteParticipantsUpdated', async () => {
     renderHook(() => useCallAgent());
     await events.callsUpdated({ added: [addedCall], removed: [] });
 
-    expect(rejectExecutedCallback).toHaveBeenCalled();
-    expect(setCallCallback).not.toHaveBeenCalled();
-  });
-
-  test('after callsUpdated listener is called, if the addedCall is defined and not incoming, addedCall should subscibe for callStateChanged and remoteParticipantsUpdated', async () => {
-    renderHook(() => useCallAgent());
-    await events.callsUpdated({ added: [addedCall], removed: [] });
-
-    expect(addedCallEvents.callStateChanged).toBeDefined();
+    expect(addedCallEvents.stateChanged).toBeDefined();
     expect(addedCallEvents.remoteParticipantsUpdated).toBeDefined();
   });
 
@@ -163,13 +153,13 @@ describe('useCallAgent tests', () => {
     expect(setCallCallback).toHaveBeenCalled();
   });
 
-  test('if callStateChanged listener of the added call is called, setCallState should have been called', async () => {
+  test('if stateChanged listener of the added call is called, setCallState should have been called', async () => {
     expect(setCallStateCallback).not.toHaveBeenCalled();
 
     renderHook(() => useCallAgent());
     await events.callsUpdated({ added: [addedCall], removed: [] });
 
-    const callStateChangedCallback = addedCallEvents.callStateChanged as PropertyChangedEvent;
+    const callStateChangedCallback = addedCallEvents.stateChanged as PropertyChangedEvent;
     callStateChangedCallback();
 
     expect(setCallStateCallback).toHaveBeenCalled();
@@ -202,17 +192,17 @@ describe('useCallAgent tests', () => {
     expect(setParticipantsCallback).toHaveBeenCalled();
   });
 
-  test('if added call has remoteParticipants, then the remoteParticipants should subsribe to participantStateChanged, isSpeakingChanged, videoStreamsUpdated', async () => {
+  test('if added call has remoteParticipants, then the remoteParticipants should subsribe to stateChanged, isSpeakingChanged, videoStreamsUpdated', async () => {
     renderHook(() => useCallAgent());
     await events.callsUpdated({ added: [addedCall], removed: [] });
 
-    expect(remoteParticipantEvents.participantStateChanged).toBeDefined();
+    expect(remoteParticipantEvents.stateChanged).toBeDefined();
     expect(remoteParticipantEvents.isSpeakingChanged).toBeDefined();
     expect(remoteParticipantEvents.videoStreamsUpdated).toBeDefined();
   });
 
   test('if addedRemoteVideoStream is type video, it should not subscribe to any events', async () => {
-    addedRemoteVideoStream.type = 'Video';
+    addedRemoteVideoStream.mediaStreamType = 'Video';
     renderHook(() => useCallAgent());
     await events.callsUpdated({ added: [addedCall], removed: [] });
 
@@ -224,8 +214,8 @@ describe('useCallAgent tests', () => {
     expect(addedRemoteVideoStreamEvents).toStrictEqual({});
   });
 
-  test('if addedRemoteVideoStream is type ScreenSharing, it should not subscribe to availabilityChanged event', async () => {
-    addedRemoteVideoStream.type = 'ScreenSharing';
+  test('if addedRemoteVideoStream is type ScreenSharing, it should not subscribe to isAvailableChanged event', async () => {
+    addedRemoteVideoStream.mediaStreamType = 'ScreenSharing';
     renderHook(() => useCallAgent());
     await events.callsUpdated({ added: [addedCall], removed: [] });
 
@@ -234,11 +224,11 @@ describe('useCallAgent tests', () => {
     >;
     videoStreamsUpdatedCallback({ added: [addedRemoteVideoStream], removed: [] });
 
-    expect(addedRemoteVideoStreamEvents.availabilityChanged).toBeDefined();
+    expect(addedRemoteVideoStreamEvents.isAvailableChanged).toBeDefined();
   });
 
   test('if addedRemoteVideoStream is type ScreenSharing and available, setScreenShareStream should have been called', async () => {
-    addedRemoteVideoStream.type = 'ScreenSharing';
+    addedRemoteVideoStream.mediaStreamType = 'ScreenSharing';
     addedRemoteVideoStream.isAvailable = true;
     renderHook(() => useCallAgent());
     await events.callsUpdated({ added: [addedCall], removed: [] });
@@ -252,7 +242,7 @@ describe('useCallAgent tests', () => {
   });
 
   test('if addedRemoteVideoStream is type ScreenSharing and not available, setScreenShareStream should not have been called', async () => {
-    addedRemoteVideoStream.type = 'ScreenSharing';
+    addedRemoteVideoStream.mediaStreamType = 'ScreenSharing';
     addedRemoteVideoStream.isAvailable = false;
     renderHook(() => useCallAgent());
     await events.callsUpdated({ added: [addedCall], removed: [] });
@@ -265,8 +255,8 @@ describe('useCallAgent tests', () => {
     expect(setScreenShareStreamCallback).not.toHaveBeenCalled();
   });
 
-  test('if availabilityChanged of addedRemoteVideoStream and addedRemoteVideoStream is not available, setScreenShareStream should have been called with undefined', async () => {
-    addedRemoteVideoStream.type = 'ScreenSharing';
+  test('if isAvailableChanged of addedRemoteVideoStream and addedRemoteVideoStream is not available, setScreenShareStream should have been called with undefined', async () => {
+    addedRemoteVideoStream.mediaStreamType = 'ScreenSharing';
     addedRemoteVideoStream.isAvailable = false;
     renderHook(() => useCallAgent());
     await events.callsUpdated({ added: [addedCall], removed: [] });
@@ -276,13 +266,13 @@ describe('useCallAgent tests', () => {
     >;
     videoStreamsUpdatedCallback({ added: [addedRemoteVideoStream], removed: [] });
 
-    addedRemoteVideoStreamEvents.availabilityChanged();
+    addedRemoteVideoStreamEvents.isAvailableChanged();
 
     expect(setScreenShareStreamCallback).toHaveBeenCalledWith(undefined);
   });
 
-  test('if availabilityChanged of addedRemoteVideoStream is called and addedRemoteVideoStream is available, setScreenShareStream should have been called', async () => {
-    addedRemoteVideoStream.type = 'ScreenSharing';
+  test('if isAvailableChanged of addedRemoteVideoStream is called and addedRemoteVideoStream is available, setScreenShareStream should have been called', async () => {
+    addedRemoteVideoStream.mediaStreamType = 'ScreenSharing';
     addedRemoteVideoStream.isAvailable = false;
     renderHook(() => useCallAgent());
     await events.callsUpdated({ added: [addedCall], removed: [] });
@@ -295,7 +285,7 @@ describe('useCallAgent tests', () => {
 
     expect(setScreenShareStreamCallback).not.toHaveBeenCalled();
 
-    addedRemoteVideoStreamEvents.availabilityChanged();
+    addedRemoteVideoStreamEvents.isAvailableChanged();
 
     expect(setScreenShareStreamCallback).toHaveBeenCalled();
   });

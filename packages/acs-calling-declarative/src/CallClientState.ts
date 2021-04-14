@@ -12,7 +12,6 @@ import {
   VideoDeviceInfo
 } from '@azure/communication-calling';
 import {
-  CallingApplicationKind,
   CommunicationUserKind,
   MicrosoftTeamsUserKind,
   PhoneNumberKind,
@@ -58,12 +57,7 @@ export interface RemoteParticipant {
   /**
    * Proxy of {@Link @azure/communication-calling#RemoteParticipant.identifier}.
    */
-  identifier:
-    | CommunicationUserKind
-    | PhoneNumberKind
-    | CallingApplicationKind
-    | MicrosoftTeamsUserKind
-    | UnknownIdentifierKind;
+  identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind;
   /**
    * Proxy of {@Link @azure/communication-calling#RemoteParticipant.displayName}.
    */
@@ -116,9 +110,9 @@ export interface Call {
    */
   direction: CallDirection;
   /**
-   * Proxy of {@Link @azure/communication-calling#Call.isMicrophoneMuted}.
+   * Proxy of {@Link @azure/communication-calling#Call.isMuted}.
    */
-  isMicrophoneMuted: boolean;
+  isMuted: boolean;
   /**
    * Proxy of {@Link @azure/communication-calling#Call.isScreenSharingOn}.
    */

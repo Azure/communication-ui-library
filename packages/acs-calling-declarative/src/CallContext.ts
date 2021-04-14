@@ -50,7 +50,7 @@ export class CallContext {
           existingCall.state = call.state;
           existingCall.callEndReason = call.callEndReason;
           existingCall.direction = call.direction;
-          existingCall.isMicrophoneMuted = call.isMicrophoneMuted;
+          existingCall.isMuted = call.isMuted;
           existingCall.isScreenSharingOn = call.isScreenSharingOn;
           existingCall.localVideoStreams = call.localVideoStreams;
           existingCall.remoteParticipants = call.remoteParticipants;

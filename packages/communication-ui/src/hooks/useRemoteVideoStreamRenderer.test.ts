@@ -6,7 +6,7 @@ import { PropertyChangedEvent, RemoteVideoStream } from '@azure/communication-ca
 jest.mock('@azure/communication-calling', () => {
   // Works and lets you check for constructor calls:
   return {
-    Renderer: jest.fn().mockImplementation(() => {
+    VideoStreamRenderer: jest.fn().mockImplementation(() => {
       return {
         createView: jest.fn().mockImplementation(() => {
           return {
@@ -27,7 +27,7 @@ jest.mock('../providers/ErrorProvider', () => {
 const getRemoteVideoStreamStub = (isAvailable: boolean): RemoteVideoStream => {
   return {
     id: 1,
-    type: 'Video',
+    mediaStreamType: 'Video',
     isAvailable: isAvailable,
     on: () => {
       return;
@@ -70,9 +70,9 @@ describe('useRemoteVideoStreamRenderer tests', () => {
     };
     const { result } = renderHook(() => useRemoteVideoStreamRenderer(remoteVideoStream));
 
-    expect(remoteVideoStreamEvents.availabilityChanged).toBeDefined();
+    expect(remoteVideoStreamEvents.isAvailableChanged).toBeDefined();
 
-    remoteVideoStreamEvents.availabilityChanged();
+    remoteVideoStreamEvents.isAvailableChanged();
 
     expect(result.current.isAvailable).toBe(false);
   });

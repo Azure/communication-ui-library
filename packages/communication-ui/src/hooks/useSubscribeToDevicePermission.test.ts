@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
 import { renderHook } from '@testing-library/react-hooks';
-import { DeviceAccess, DeviceManager, PermissionState } from '@azure/communication-calling';
+import { DeviceAccess, DeviceManager } from '@azure/communication-calling';
 import useSubscribeToDevicePermission from './useSubscribeToDevicePermission';
 import { CallingProvider } from '../providers';
 import React from 'react';
@@ -33,17 +33,7 @@ describe('useSubscribeToDevicePermission tests', () => {
   beforeEach(() => {
     setAudioDevicePermissionCallback = jest.fn();
     setVideoDevicePermissionCallback = jest.fn();
-    tsDeviceManagerMock = createSpyObj<DeviceManager>('tsDeviceManagerMock', [
-      'getPermissionState',
-      'askDevicePermission',
-      'on',
-      'off'
-    ]);
-    tsDeviceManagerMock.getPermissionState.mockImplementation(
-      (): Promise<PermissionState> => {
-        return Promise.resolve('Unknown');
-      }
-    );
+    tsDeviceManagerMock = createSpyObj<DeviceManager>('tsDeviceManagerMock', ['askDevicePermission', 'on', 'off']);
     tsDeviceManagerMock.askDevicePermission.mockImplementation(
       (): Promise<DeviceAccess> => {
         return Promise.resolve({ audio: true, video: true });
@@ -84,49 +74,48 @@ describe('useSubscribeToDevicePermission tests', () => {
       wrapper: CallingProvider
     });
     await waitForNextUpdate();
-    expect(tsDeviceManagerMock.getPermissionState).toBeCalled();
-    expect(tsDeviceManagerMock.askDevicePermission).toBeCalled();
-  });
-
-  test('useSubscribeToDevicePermission hook should ask user for permission if permission state is Prompt', async () => {
-    tsDeviceManagerMock.getPermissionState.mockImplementation(
-      (): Promise<PermissionState> => {
-        return Promise.resolve('Prompt');
-      }
-    );
-    const { waitForNextUpdate } = renderHook(() => useSubscribeToDevicePermission('Camera'), {
-      wrapper: CallingProvider
-    });
-    await waitForNextUpdate();
-    expect(tsDeviceManagerMock.getPermissionState).toBeCalled();
     expect(tsDeviceManagerMock.askDevicePermission).toBeCalled();
   });
 
   test('useSubscribeToDevicePermission hook should not ask user for permission if permission state is Granted', async () => {
-    tsDeviceManagerMock.getPermissionState.mockImplementation(
-      (): Promise<PermissionState> => {
-        return Promise.resolve('Granted');
+    // 1. First call will ask for permission
+    tsDeviceManagerMock.askDevicePermission.mockImplementation(
+      (): Promise<DeviceAccess> => {
+        return Promise.resolve({ audio: true, video: true });
       }
     );
     const { waitForNextUpdate } = renderHook(() => useSubscribeToDevicePermission('Camera'), {
       wrapper: CallingProvider
     });
     await waitForNextUpdate();
-    expect(tsDeviceManagerMock.getPermissionState).toBeCalled();
+    expect(tsDeviceManagerMock.askDevicePermission).toBeCalled();
+
+    // 2. Second call will not ask for permission as it was already granted
+    const { waitForNextNextUpdate } = renderHook(() => useSubscribeToDevicePermission('Camera'), {
+      wrapper: CallingProvider
+    });
+    await waitForNextNextUpdate();
     expect(tsDeviceManagerMock.askDevicePermission).not.toBeCalled();
   });
 
   test('useSubscribeToDevicePermission hook should not ask user for permission if permission state is Denied', async () => {
-    tsDeviceManagerMock.getPermissionState.mockImplementation(
-      (): Promise<PermissionState> => {
-        return Promise.resolve('Denied');
+    // 1. First call will ask for permission
+    tsDeviceManagerMock.askDevicePermission.mockImplementation(
+      (): Promise<DeviceAccess> => {
+        return Promise.resolve({ audio: false, video: false });
       }
     );
     const { waitForNextUpdate } = renderHook(() => useSubscribeToDevicePermission('Camera'), {
       wrapper: CallingProvider
     });
     await waitForNextUpdate();
-    expect(tsDeviceManagerMock.getPermissionState).toBeCalled();
+    expect(tsDeviceManagerMock.askDevicePermission).toBeCalled();
+
+    // Second call will not ask for permission as it was already denied
+    const { waitForNextNextUpdate } = renderHook(() => useSubscribeToDevicePermission('Camera'), {
+      wrapper: CallingProvider
+    });
+    await waitForNextNextUpdate();
     expect(tsDeviceManagerMock.askDevicePermission).not.toBeCalled();
   });
 
@@ -142,7 +131,7 @@ describe('useSubscribeToDevicePermission tests', () => {
   test('useSubscribeToDevicePermission hook should set videoDevicePermission with Denied if video permission is false', async () => {
     tsDeviceManagerMock.askDevicePermission.mockImplementation(
       (): Promise<DeviceAccess> => {
-        return Promise.resolve({ video: false });
+        return Promise.resolve({ audio: false, video: false });
       }
     );
     const { waitForNextUpdate } = renderHook(() => useSubscribeToDevicePermission('Camera'), {
@@ -165,7 +154,7 @@ describe('useSubscribeToDevicePermission tests', () => {
   test('useSubscribeToDevicePermission hook should set audioDevicePermission with Denied if audio permission is false', async () => {
     tsDeviceManagerMock.askDevicePermission.mockImplementation(
       (): Promise<DeviceAccess> => {
-        return Promise.resolve({ audio: false });
+        return Promise.resolve({ audio: false, video: false });
       }
     );
     const { waitForNextUpdate } = renderHook(() => useSubscribeToDevicePermission('Microphone'), {

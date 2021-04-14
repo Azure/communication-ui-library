@@ -3,18 +3,14 @@ import {
   Call,
   CallAgent,
   CollectionUpdatedEvent,
+  GroupChatCallLocator,
   GroupLocator,
   IncomingCallEvent,
   JoinCallOptions,
   MeetingLocator,
   StartCallOptions
 } from '@azure/communication-calling';
-import {
-  CommunicationUserIdentifier,
-  PhoneNumberIdentifier,
-  CallingApplicationIdentifier,
-  UnknownIdentifier
-} from '@azure/communication-common';
+import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 import EventEmitter from 'events';
 import { callAgentDeclaratify } from './CallAgentDeclarative';
 import { CallContext } from './CallContext';
@@ -34,12 +30,7 @@ class MockCallAgent implements CallAgent {
 
   startCall(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    participants: (
-      | CommunicationUserIdentifier
-      | PhoneNumberIdentifier
-      | CallingApplicationIdentifier
-      | UnknownIdentifier
-    )[],
+    participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     options?: StartCallOptions
   ): Call {
@@ -49,6 +40,7 @@ class MockCallAgent implements CallAgent {
     return call;
   }
   join(groupLocator: GroupLocator, options?: JoinCallOptions): Call;
+  join(groupChatCallLocator: GroupChatCallLocator, options?: JoinCallOptions): Call;
   join(meetingLocator: MeetingLocator, options?: JoinCallOptions): Call;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   join(meetingLocator: any, options?: any): Call {

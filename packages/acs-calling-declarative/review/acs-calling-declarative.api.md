@@ -9,7 +9,6 @@ import { CallClient } from '@azure/communication-calling';
 import { CallDirection } from '@azure/communication-calling';
 import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
-import { CallingApplicationKind } from '@azure/communication-common';
 import { CallState } from '@azure/communication-calling';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { DeviceAccess } from '@azure/communication-calling';
@@ -26,7 +25,7 @@ export interface Call {
     callerInfo: CallerInfo;
     direction: CallDirection;
     id: string;
-    isMicrophoneMuted: boolean;
+    isMuted: boolean;
     isScreenSharingOn: boolean;
     localVideoStreams: ReadonlyArray<LocalVideoStream>;
     remoteParticipants: Map<string, RemoteParticipant>;
@@ -78,7 +77,7 @@ export interface LocalVideoStream {
 export interface RemoteParticipant {
     callEndReason?: CallEndReason;
     displayName?: string;
-    identifier: CommunicationUserKind | PhoneNumberKind | CallingApplicationKind | MicrosoftTeamsUserKind | UnknownIdentifierKind;
+    identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind;
     isMuted: boolean;
     isSpeaking: boolean;
     state: RemoteParticipantState;

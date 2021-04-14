@@ -2,7 +2,7 @@
 
 import { LocalVideoStream } from '@azure/communication-calling';
 import { useEffect, useState } from 'react';
-import { useCallContext } from '../../../providers';
+import { useCallContext, useCallingContext } from '../../../providers';
 import { GalleryParticipant } from '../../../types/GalleryParticipant';
 import { convertSdkRemoteParticipantToGalleryParticipant } from '../../../utils/TypeConverter';
 
@@ -16,7 +16,8 @@ export type MediaGallery1To1ContainerProps = {
 };
 
 export const MapToMediaGallery1To1Props = (): MediaGallery1To1ContainerProps => {
-  const { call, displayName, localVideoStream } = useCallContext();
+  const { call, localVideoStream } = useCallContext();
+  const { displayName } = useCallingContext();
   const [remoteParticipant, setRemoteParticipant] = useState<GalleryParticipant | undefined>();
 
   useEffect(() => {

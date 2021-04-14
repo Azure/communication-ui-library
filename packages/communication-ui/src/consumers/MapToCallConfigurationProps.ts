@@ -12,13 +12,12 @@ export type SetupContainerProps = {
 };
 
 export const MapToCallConfigurationProps = (): SetupContainerProps => {
-  const { callAgent, deviceManager } = useCallingContext();
-  const { call, displayName, setDisplayName } = useCallContext();
+  const { callAgent, deviceManager, displayName, setDisplayName } = useCallingContext();
+  const { call } = useCallContext();
   const { join } = useGroupCall();
   useCallAgent();
 
   const updateDisplayName = (displayName: string): void => {
-    callAgent?.updateDisplayName(displayName);
     setDisplayName(displayName);
   };
 

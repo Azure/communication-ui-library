@@ -31,7 +31,7 @@ export default (): void => {
   useEffect(() => {
     const subscribeToParticipant = (participant: RemoteParticipant, call: Call): void => {
       const userId = getACSId(participant.identifier);
-      participant.on('participantStateChanged', () => {
+      participant.on('stateChanged', () => {
         console.log('participant stateChanged', userId, participant.state);
         setParticipants([...call.remoteParticipants.values()]);
       });
@@ -54,10 +54,10 @@ export default (): void => {
 
       participant.on('videoStreamsUpdated', (e): void => {
         e.added.forEach((addedStream) => {
-          if (addedStream.type === 'Video') {
+          if (addedStream.mediaStreamType === 'Video') {
             return;
           }
-          addedStream.on('availabilityChanged', () => {
+          addedStream.on('isAvailableChanged', () => {
             if (addedStream.isAvailable) {
               setScreenShareStream({ stream: addedStream, user: participant });
             } else {
@@ -80,13 +80,8 @@ export default (): void => {
 
     const onCallsUpdated = (e: { added: Call[]; removed: Call[] }): void => {
       e.added.forEach((addedCall) => {
-        if (call && addedCall.isIncoming) {
-          addedCall.reject();
-          return;
-        }
-
         setCall(addedCall);
-        addedCall.on('callStateChanged', (): void => {
+        addedCall.on('stateChanged', (): void => {
           setCallState(addedCall.state);
         });
         addedCall.on('remoteParticipantsUpdated', (ev): void => {

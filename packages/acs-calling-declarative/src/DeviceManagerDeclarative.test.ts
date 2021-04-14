@@ -3,7 +3,6 @@
 import {
   AudioDeviceInfo,
   AudioDeviceType,
-  CameraFacing,
   CollectionUpdatedEvent,
   DeviceAccess,
   DeviceManager,
@@ -38,7 +37,6 @@ class MockDeviceManager implements DeviceManager {
         {
           name: 'camera',
           id: '3',
-          cameraFacing: 'Front' as CameraFacing,
           deviceType: 'UsbCamera' as VideoDeviceType
         }
       ]);

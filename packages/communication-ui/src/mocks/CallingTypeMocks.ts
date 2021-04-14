@@ -1,23 +1,34 @@
 // © Microsoft Corporation. All rights reserved.
 
 import {
-  AcceptCallOptions,
   AddPhoneNumberOptions,
+  Call,
+  CallApiFeature,
+  CallDirection,
   CallEndReason,
+  CallerInfo,
+  CallFeatureFactoryType,
   CallState,
   CollectionUpdatedEvent,
   DtmfTone,
-  GroupCallContext,
-  GroupChatCallContext,
-  HangupCallOptions,
+  GroupChatCallLocator,
+  GroupLocator,
+  HangUpOptions,
+  IncomingCallEvent,
   JoinCallOptions,
   LocalVideoStream,
   MediaStreamType,
+  MeetingLocator,
   PropertyChangedEvent,
   RemoteParticipant,
   StartCallOptions
 } from '@azure/communication-calling';
-import { CallingApplication, CommunicationUser, PhoneNumber, UnknownIdentifier } from '@azure/communication-common';
+import {
+  CommunicationUserIdentifier,
+  MicrosoftTeamsUserIdentifier,
+  PhoneNumberIdentifier,
+  UnknownIdentifier
+} from '@azure/communication-common';
 
 /**
  * Represents a MockCall
@@ -27,58 +38,50 @@ export declare interface MockCall {
   /**
    * Get the unique Id for this Call.
    */
-  readonly id: string;
+  id: string;
   /**
-   * The identity of caller if the call is incoming.
+   * Caller Information if the call is incoming.
    */
-  readonly callerIdentity: CommunicationUser | PhoneNumber | CallingApplication | UnknownIdentifier | undefined;
+  callerInfo: CallerInfo;
   /**
    * Get the state of this Call.
    */
-  readonly state: CallState;
+  state: CallState;
   /**
-   * Containing code/subcode indicating how call ended
+   * Containing code/subCode indicating how call ended
    */
-  readonly callEndReason?: CallEndReason;
+  callEndReason?: CallEndReason;
   /**
-   * Whether this Call is incoming.
+   * Get the call direction, whether Incoming or Outgoing.
    */
-  isIncoming: boolean;
+  direction: CallDirection;
   /**
-   * Whether this local microphone is muted.
+   * Whether local user is muted, locally or remotely
    */
-  isMicrophoneMuted: boolean;
-  /**
-   * When the call is being actively recorded
-   */
-  isRecordingActive: boolean;
+  isMuted: boolean;
   /**
    * Whether screen sharing is on
    */
-  readonly isScreenSharingOn: boolean;
+  isScreenSharingOn: boolean;
   /**
    * Collection of video streams sent to other participants in a call.
    */
-  readonly localVideoStreams: LocalVideoStream[];
+  localVideoStreams: ReadonlyArray<LocalVideoStream>;
   /**
    * Collection of remote participants participating in this call.
    */
-  remoteParticipants: RemoteParticipant[];
-
+  remoteParticipants: ReadonlyArray<RemoteParticipant>;
   /**
-   * Accept this incoming Call.
-   * @param options - accept options.
+   * Retrieves an initialized and memoized API feature object with extended API.
+   * @param cls - The call feature class that provides an object with extended API.
+   * @beta
    */
-  accept(options?: AcceptCallOptions): Promise<void>;
-  /**
-   * Reject this incoming Call.
-   */
-  reject(): Promise<void>;
+  api<TFeature extends CallApiFeature>(cls: CallFeatureFactoryType<TFeature>): TFeature;
   /**
    * Hang up the call.
-   * @param options? - Hangup options.
+   * @param options? - HangUp options.
    */
-  hangUp(options?: HangupCallOptions): Promise<void>;
+  hangUp(options?: HangUpOptions): Promise<void>;
   /**
    * Mute local microphone.
    */
@@ -88,7 +91,7 @@ export declare interface MockCall {
    */
   unmute(): Promise<void>;
   /**
-   * Unmute local microphone.
+   * Send DTMF tone.
    */
   sendDtmf(dtmfTone: DtmfTone): Promise<void>;
   /**
@@ -104,27 +107,27 @@ export declare interface MockCall {
   /**
    * Add a participant to this Call.
    * @param identifier - The identifier of the participant to add.
-   * @param options - options
+   * @param options - Additional options for managing the PSTN call. For example, setting the Caller Id phone number in a PSTN call.
    * @returns The RemoteParticipant object associated with the successfully added participant.
    */
-  addParticipant(identifier: CommunicationUser | CallingApplication): RemoteParticipant;
-  addParticipant(identifier: PhoneNumber, options?: AddPhoneNumberOptions): RemoteParticipant;
+  addParticipant(identifier: CommunicationUserIdentifier | MicrosoftTeamsUserIdentifier): RemoteParticipant;
+  addParticipant(identifier: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): RemoteParticipant;
   /**
    * Remove a participant from this Call.
    * @param identifier - The identifier of the participant to remove.
    * @param options - options
    */
   removeParticipant(
-    identifier: CommunicationUser | PhoneNumber | CallingApplication | UnknownIdentifier
+    identifier: CommunicationUserIdentifier | PhoneNumberIdentifier | MicrosoftTeamsUserIdentifier | UnknownIdentifier
   ): Promise<void>;
   /**
    * Put this Call on hold.
    */
   hold(): Promise<void>;
   /**
-   * Unhold this Call.
+   * Resume this Call.
    */
-  unhold(): Promise<void>;
+  resume(): Promise<void>;
   /**
    * Start local screen sharing, browser handles screen/window enumeration and selection.
    */
@@ -134,17 +137,23 @@ export declare interface MockCall {
    */
   stopScreenSharing(): Promise<void>;
   /**
-   * Subscribe function for callStateChanged event
+   * Subscribe function for stateChanged event
    * @param event - event name
    * @param listener - callback fn that will be called when value of this property will change
    */
-  on(event: 'callStateChanged', listener: PropertyChangedEvent): void;
+  on(event: 'stateChanged', listener: PropertyChangedEvent): void;
   /**
-   * Subscribe function for callIdChanged event
+   * Subscribe function for idChanged event
    * @param event - event name
    * @param listener - callback fn that will be called when value of this property will change
    */
-  on(event: 'callIdChanged', listener: PropertyChangedEvent): void;
+  on(event: 'idChanged', listener: PropertyChangedEvent): void;
+  /**
+   * Subscribe function for isMutedChanged event
+   * @param event - event name
+   * @param listener - callback fn that will be called when value of this property will change
+   */
+  on(event: 'isMutedChanged', listener: PropertyChangedEvent): void;
   /**
    * Subscribe function for isScreenSharingChanged event
    * @param event - event name
@@ -165,25 +174,24 @@ export declare interface MockCall {
    * it will pass arrays of added and removed elements
    */
   on(event: 'localVideoStreamsUpdated', listener: CollectionUpdatedEvent<LocalVideoStream>): void;
-
   /**
-   * Unsubscribe function for callStateChanged event
+   * Unsubscribe function for stateChanged event
    * @param event - event name
    * @param listener - callback fn that was used to subscribe to this event
    */
-  on(event: 'isRecordingActiveChanged', listener: PropertyChangedEvent): void;
+  off(event: 'stateChanged', listener: PropertyChangedEvent): void;
   /**
-   * Unsubscribe function for callStateChanged event
+   * Unsubscribe function for idChanged event
    * @param event - event name
    * @param listener - callback fn that was used to subscribe to this event
    */
-  off(event: 'callStateChanged', listener: PropertyChangedEvent): void;
+  off(event: 'idChanged', listener: PropertyChangedEvent): void;
   /**
-   * Unsubscribe function for callIdChanged event
+   * Subscribe function for isMutedChanged event
    * @param event - event name
-   * @param listener - callback fn that was used to subscribe to this event
+   * @param listener - callback fn that will be called when value of this property will change
    */
-  off(event: 'callIdChanged', listener: PropertyChangedEvent): void;
+  off(event: 'isMutedChanged', listener: PropertyChangedEvent): void;
   /**
    * Unsubscribe function for isScreenSharingChanged event
    * @param event - event name
@@ -202,13 +210,6 @@ export declare interface MockCall {
    * @param listener - callback fn that was used to subscribe to this event
    */
   off(event: 'localVideoStreamsUpdated', listener: CollectionUpdatedEvent<LocalVideoStream>): void;
-  /**
-   * Unsubscribe function for isRecordingActiveChanged event
-   * @beta
-   * @param event - event name
-   * @param listener - callback fn that was used to subscribe to this event
-   */
-  off(event: 'isRecordingActiveChanged', listener: PropertyChangedEvent): void;
 }
 
 /**
@@ -223,7 +224,7 @@ export declare interface MockRemoteVideoStream {
   /**
    * Get this remote media stream type.
    */
-  type: MediaStreamType;
+  mediaStreamType: MediaStreamType;
   /**
    * Whether the stream is available or not.
    */
@@ -233,7 +234,7 @@ export declare interface MockRemoteVideoStream {
    * @param event - event name
    * @param listener - callback fn that will be called when value of this property will change
    */
-  on(event: 'availabilityChanged', listener: PropertyChangedEvent): void;
+  on(event: 'isAvailableChanged', listener: PropertyChangedEvent): void;
   /**
    * Subscribe function for activeRenderersChanged event
    * @param event - event name
@@ -245,7 +246,7 @@ export declare interface MockRemoteVideoStream {
    * @param event - event name
    * @param listener - callback fn that was used to subscribe to this event
    */
-  off(event: 'availabilityChanged', listener: PropertyChangedEvent): void;
+  off(event: 'isAvailableChanged', listener: PropertyChangedEvent): void;
 }
 
 /**
@@ -256,48 +257,73 @@ export declare interface MockCallAgent {
   /**
    * Get the calls.
    */
-  calls: MockCall[];
+  readonly calls: ReadonlyArray<MockCall>;
+  /**
+   * Specify the display name of the local participant for all new calls.
+   */
+  readonly displayName?: string;
   /**
    * Initiates a call to the participants provided.
    * @param participants[] - User Identifiers (Callees) to make a call to.
    * @param options? - Start Call options.
    * @returns The Call object associated with the started call.
    */
-  call(
-    participants: (CommunicationUser | PhoneNumber | CallingApplication | UnknownIdentifier)[],
+  startCall(
+    participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
     options?: StartCallOptions
-  ): MockCall;
+  ): Call;
   /**
    * Join a group call.
    * To join a group call just use a groupId.
-   * @param context - Group call context information.
+   * @param groupLocator - Group call information.
    * @param options - Call start options.
    * @returns The Call object associated with the call.
    */
-  join(context: GroupChatCallContext, options?: JoinCallOptions): MockCall;
-  join(context: GroupCallContext, options?: JoinCallOptions): MockCall;
-
+  join(groupLocator: GroupLocator, options?: JoinCallOptions): Call;
   /**
-   * Update display name of local participant.
-   * It will be used in all new calls.
-   * @param displayName The display name to use.
+   * Join a group chat call.
+   * To join a group chat call just use a threadId.
+   * @param groupChatCallLocator - GroupChat call information.
+   * @param options - Call start options.
+   * @returns The Call object associated with the call.
+   * @beta
    */
-  updateDisplayName(displayName: string): void;
+  join(groupChatCallLocator: GroupChatCallLocator, options?: JoinCallOptions): Call;
+  /**
+   * Join a meeting.
+   * @param meetingLocator - Meeting information.
+   * @param options - Call start options.
+   * @returns The Call object associated with the call.
+   * @beta
+   */
+  join(meetingLocator: MeetingLocator, options?: JoinCallOptions): Call;
   /**
    * Dispose this CallAgent ( required to create another new CallAgent)
    */
   dispose(): Promise<void>;
+  /**
+   * Subscribe function for incomingCall event.
+   * @param event - event name
+   * @param listener - callback fn that will be called when this callAgent will receive an incoming call
+   */
+  on(event: 'incomingCall', listener: IncomingCallEvent): void;
   /**
    * Subscribe function for callsUpdated event.
    * @param event - event name
    * @param listener - callback fn that will be called when this collection will change,
    * it will pass arrays of added and removed elements
    */
-  on(event: 'callsUpdated', listener: CollectionUpdatedEvent<MockCall>): void;
+  on(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
+  /**
+   * Unsubscribe function for incomingCall event.
+   * @param event - event name.
+   * @param listener - callback fn that was used to subscribe to this event.
+   */
+  off(event: 'incomingCall', listener: IncomingCallEvent): void;
   /**
    * Unsubscribe function for callsUpdated event.
    * @param event - event name.
    * @param listener - allback fn that was used to subscribe to this event.
    */
-  off(event: 'callsUpdated', listener: CollectionUpdatedEvent<MockCall>): void;
+  off(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
 }

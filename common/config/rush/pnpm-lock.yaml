@@ -1,5 +1,6 @@
 dependencies:
   '@azure/communication-administration': 1.0.0-beta.3
+  '@azure/communication-common-beta3': /@azure/communication-common/1.0.0-beta.3
   '@azure/communication-identity': 1.0.0-beta.4
   '@azure/communication-signaling-2': /@azure/communication-signaling/1.0.0-beta.2
   '@azure/core-http': 1.2.3
@@ -169,13 +170,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-PF33xuq1FGYDd09+IiQKJ/g/ATQGx1GFLflXJ9V0cErrIvSnhwtqd2f5j/1CeJ6fqhqfZ8RzcOepV2R7gP4BtA==
-  /@azure/communication-calling/1.0.0-beta.9:
+  /@azure/communication-calling/1.0.1-beta.1:
     dependencies:
-      '@azure/communication-common': 1.0.0-beta.4
+      '@azure/communication-common': 1.0.0
       '@azure/logger': 1.0.2
     dev: false
     resolution:
-      integrity: sha512-dQ2lIrB+XlNtYKSVUBleM17nQYdckqA369X0/WFq89DVRRHhjZ+nscayC006eBtubFbe0zYwpEZmZN4Il7C6kw==
+      integrity: sha512-jjkAcO+dFKl6fjdI62mgImF7VJ48vRs6PfR5TfuswZQ758k1bHxnJfi8T1jS8F5JcBJGEzoUsaFCQD8Ae2eFgg==
   /@azure/communication-chat/1.0.0-beta.3:
     dependencies:
       '@azure/abort-controller': 1.0.4
@@ -212,6 +213,20 @@ packages:
       node: '>=8.0.0'
     resolution:
       integrity: sha512-SLdpTkoJTE1LE5IVj/fJH7oYmWXNxmEmeMIHVvPoHAbEqvjOIN0DrG0m5D4afYUl3BgL3QQJ4hG+lDDbi1XT/w==
+  /@azure/communication-common/1.0.0:
+    dependencies:
+      '@azure/abort-controller': 1.0.4
+      '@azure/core-auth': 1.2.0
+      '@azure/core-http': 1.2.3
+      '@opentelemetry/api': 0.10.2
+      events: 3.3.0
+      jwt-decode: 2.2.0
+      tslib: 2.1.0
+    dev: false
+    engines:
+      node: '>=8.0.0'
+    resolution:
+      integrity: sha512-kBWnamOow0COBPHkkUKaQl4wVMlkOpTDFmvRRW+JN3+JIM9ca1l1wdZA3Q6XfpYdpqoI+tVICr3+3SxyF7ulxw==
   /@azure/communication-common/1.0.0-beta.3:
     dependencies:
       '@azure/abort-controller': 1.0.4
@@ -226,20 +241,6 @@ packages:
       node: '>=8.0.0'
     resolution:
       integrity: sha512-2Yxr/wrbObcy2xcEp9b4tBv8KhFEpieYfEhf+jSYzoqAfX49WUiCNBt2u2HmwSTm81sr4ppDS7w8qWioVpUgJw==
-  /@azure/communication-common/1.0.0-beta.4:
-    dependencies:
-      '@azure/abort-controller': 1.0.4
-      '@azure/core-auth': 1.2.0
-      '@azure/core-http': 1.2.3
-      '@opentelemetry/api': 0.10.2
-      events: 3.3.0
-      jwt-decode: 2.2.0
-      tslib: 2.1.0
-    dev: false
-    engines:
-      node: '>=8.0.0'
-    resolution:
-      integrity: sha512-HPLwM6EaQ8Grc+smncr4t/Q/I0TnhAS3Ql/z9Zuju7hXDcSBCYjINmaYNQ76LCdhDQ62Akzye7vYak4eOuit9w==
   /@azure/communication-common/1.0.0-beta.5:
     dependencies:
       '@azure/abort-controller': 1.0.4
@@ -20218,8 +20219,8 @@ packages:
       integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==
   file:projects/acs-calling-declarative.tgz_prettier@2.0.5+ts-node@9.1.1:
     dependencies:
-      '@azure/communication-calling': 1.0.0-beta.9
-      '@azure/communication-common': 1.0.0-beta.4
+      '@azure/communication-calling': 1.0.1-beta.1
+      '@azure/communication-common': 1.0.0
       '@microsoft/api-documenter': 7.12.12
       '@microsoft/api-extractor': 7.13.2
       '@types/jest': 26.0.20
@@ -20244,7 +20245,7 @@ packages:
       prettier: '*'
       ts-node: '*'
     resolution:
-      integrity: sha512-MY4NtNRjLTPuxGxYyxB7OUUWmrTfgUUuvpYjzVJ7DTnmdoerowBWSgbuT3wfnaLsrkYTeC/qizCvTty9LiiVjg==
+      integrity: sha512-6WDVzpnjmR2MwCtI1zhNSC+8t40zkB4OZZbi6nF+p/SMwtYGwjl0g8FVF7L9zYL7ENgf6Jdqxs9flYTQ7bMgoQ==
       tarball: file:projects/acs-calling-declarative.tgz
     version: 0.0.0
   file:projects/acs-chat-declarative.tgz_prettier@2.0.5+ts-node@9.1.1:
@@ -20328,8 +20329,8 @@ packages:
   file:projects/calling.tgz_570bf42e92a70fb216c5cd4d5ed668ef:
     dependencies:
       '@azure/communication-administration': 1.0.0-beta.3
-      '@azure/communication-calling': 1.0.0-beta.2
-      '@azure/communication-common': 1.0.0-beta.3
+      '@azure/communication-calling': 1.0.1-beta.1
+      '@azure/communication-common': 1.0.0
       '@azure/core-http': 1.2.3
       '@babel/core': 7.13.10
       '@babel/preset-env': 7.13.10_@babel+core@7.13.10
@@ -20390,7 +20391,7 @@ packages:
       webpack: '*'
       webpack-cli: '*'
     resolution:
-      integrity: sha512-PYwlIGfcB/u+Jv4BePuPKciDw4bnKNnSzu8ayjoITq0Gt2v1SATcTJX9vaLzHIFKI4CRbOzu/KRFovJg757XCg==
+      integrity: sha512-cvgnfZYSK6tTMoat2cY5pUeEA4a8e3HMKUgiz1z6PIULBM/Wp8xP1NPzuwD5Q9PRIUujT+vYi7544Mk1q/TPFw==
       tarball: file:projects/calling.tgz
     version: 0.0.0
   file:projects/chat.tgz_40b0c9f7a7a0fac66e4b6fcf06de2a42:
@@ -20458,9 +20459,10 @@ packages:
   file:projects/communication-ui.tgz_webpack-cli@4.5.0:
     dependencies:
       '@azure/communication-administration': 1.0.0-beta.3
-      '@azure/communication-calling': 1.0.0-beta.2
+      '@azure/communication-calling': 1.0.1-beta.1
       '@azure/communication-chat': 1.0.0-beta.4
-      '@azure/communication-common': 1.0.0-beta.3
+      '@azure/communication-common': 1.0.0
+      '@azure/communication-common-beta3': /@azure/communication-common/1.0.0-beta.3
       '@azure/communication-signaling': 1.0.0-beta.1
       '@azure/communication-signaling-2': /@azure/communication-signaling/1.0.0-beta.2
       '@azure/core-http': 1.2.3
@@ -20547,7 +20549,7 @@ packages:
     peerDependencies:
       webpack-cli: '*'
     resolution:
-      integrity: sha512-IAJnzwRH5gb4xIeXlVGGfFS8AmJNS1k6qOqJuplSutwM7OO3uzuWoumkn8R6NfFO7B/X2hP7RMuQUIEogXkszw==
+      integrity: sha512-nQJvypLutxWMSYZChumjynxphCXkwaA8m5aaL/gtin6w2UaZNGUhdCLlylY+bWbb8vwA/kkoInrrwwC3DcsCRw==
       tarball: file:projects/communication-ui.tgz
     version: 0.0.0
   file:projects/one-to-one-call.tgz_570bf42e92a70fb216c5cd4d5ed668ef:
@@ -20765,6 +20767,7 @@ packages:
 registry: ''
 specifiers:
   '@azure/communication-administration': 1.0.0-beta.3
+  '@azure/communication-common-beta3': npm:@azure/communication-common@1.0.0-beta.3
   '@azure/communication-identity': 1.0.0-beta.4
   '@azure/communication-signaling-2': npm:@azure/communication-signaling@1.0.0-beta.2
   '@azure/core-http': ^1.2.3
