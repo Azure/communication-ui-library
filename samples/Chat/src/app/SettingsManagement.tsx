@@ -14,22 +14,19 @@ import {
   settingsTopicWarningStyle
 } from './styles/SettingsManagement.styles';
 import { inputBoxTextStyle } from './styles/SidePanel.styles';
-import { ChatTopicPropsFromContext, MapToChatTopicProps, connectFuncsToContext } from '@azure/communication-ui';
 import { ENTER_KEY, MAXIMUM_LENGTH_OF_TOPIC, ThemeSelector } from '@azure/communication-ui';
 
 export type SettingsManagementProps = {
-  updateThreadTopicName: (topicName: string) => Promise<boolean>;
+  updateThreadTopicName: (topicName: string) => Promise<void>;
   topicName?: string;
-  topicNameExists?: boolean;
+  existsTopicName?: boolean;
   visible?: boolean;
   parentId?: string;
   onClose?: () => void;
   onRenderFooter?: () => JSX.Element;
 };
 
-export const SettingsManagementComponent = (
-  props: SettingsManagementProps & ChatTopicPropsFromContext
-): JSX.Element => {
+export const SettingsManagementComponent = (props: SettingsManagementProps): JSX.Element => {
   const { updateThreadTopicName, topicName, existsTopicName, visible, parentId, onClose, onRenderFooter } = props;
   const [edittedTopicName, setEdittedTopicName] = useState('');
   const [isOpen, setIsOpen] = useState<boolean>(visible ? visible : false);
@@ -50,10 +47,7 @@ export const SettingsManagementComponent = (
   const onTopicNameSubmit = async (): Promise<void> => {
     if (edittedTopicName.length > MAXIMUM_LENGTH_OF_TOPIC) return;
     setIsSavingTopicName(true);
-    const res = await updateThreadTopicName(edittedTopicName);
-    if (!res) {
-      console.error('unable to update thread topic name');
-    }
+    await updateThreadTopicName(edittedTopicName);
     setIsSavingTopicName(false);
     setIsEditingTopicName(false);
     setTimeout(() => {
@@ -130,5 +124,3 @@ export const SettingsManagementComponent = (
     </Panel>
   );
 };
-
-export default connectFuncsToContext(SettingsManagementComponent, MapToChatTopicProps);
