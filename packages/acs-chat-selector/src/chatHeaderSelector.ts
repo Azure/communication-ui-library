@@ -1,3 +1,5 @@
+// © Microsoft Corporation. All rights reserved.
+
 // @ts-ignore
 import { ChatClientState } from '@azure/acs-chat-declarative';
 import * as reselect from 'reselect';
