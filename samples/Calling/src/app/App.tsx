@@ -87,8 +87,12 @@ const App = (): JSX.Element => {
                 console.error('onErrorCallback received error:', error)
               }
             >
-              <CallingProvider token={token} refreshTokenCallback={refreshTokenAsync(userId)}>
-                <CallProvider displayName={defaultDisplayName}>
+              <CallingProvider
+                token={token}
+                displayName={defaultDisplayName}
+                refreshTokenCallback={refreshTokenAsync(userId)}
+              >
+                <CallProvider>
                   {(() => {
                     switch (subpage) {
                       case 'configuration': {
