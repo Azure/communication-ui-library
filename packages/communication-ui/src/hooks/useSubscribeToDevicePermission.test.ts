@@ -6,6 +6,7 @@ import useSubscribeToDevicePermission from './useSubscribeToDevicePermission';
 import { CallingProvider } from '../providers';
 import React from 'react';
 import { createSpyObj } from '../mocks';
+import { act } from 'react-dom/test-utils';
 
 jest.mock('@azure/communication-calling', () => {
   return {
@@ -84,17 +85,17 @@ describe('useSubscribeToDevicePermission tests', () => {
         return Promise.resolve({ audio: true, video: true });
       }
     );
-    const { waitForNextUpdate } = renderHook(() => useSubscribeToDevicePermission('Camera'), {
+    const { waitForNextUpdate, rerender } = renderHook(() => useSubscribeToDevicePermission('Camera'), {
       wrapper: CallingProvider
     });
     await waitForNextUpdate();
     expect(tsDeviceManagerMock.askDevicePermission).toBeCalled();
 
-    // 2. Second call will not ask for permission as it was already granted
-    const { waitForNextNextUpdate } = renderHook(() => useSubscribeToDevicePermission('Camera'), {
-      wrapper: CallingProvider
+    // Second call will not ask for permission as it was already denied
+    tsDeviceManagerMock.askDevicePermission.mockClear();
+    act(() => {
+      rerender();
     });
-    await waitForNextNextUpdate();
     expect(tsDeviceManagerMock.askDevicePermission).not.toBeCalled();
   });
 
@@ -105,17 +106,17 @@ describe('useSubscribeToDevicePermission tests', () => {
         return Promise.resolve({ audio: false, video: false });
       }
     );
-    const { waitForNextUpdate } = renderHook(() => useSubscribeToDevicePermission('Camera'), {
+    const { waitForNextUpdate, rerender } = renderHook(() => useSubscribeToDevicePermission('Camera'), {
       wrapper: CallingProvider
     });
     await waitForNextUpdate();
     expect(tsDeviceManagerMock.askDevicePermission).toBeCalled();
 
     // Second call will not ask for permission as it was already denied
-    const { waitForNextNextUpdate } = renderHook(() => useSubscribeToDevicePermission('Camera'), {
-      wrapper: CallingProvider
+    tsDeviceManagerMock.askDevicePermission.mockClear();
+    act(() => {
+      rerender();
     });
-    await waitForNextNextUpdate();
     expect(tsDeviceManagerMock.askDevicePermission).not.toBeCalled();
   });
 

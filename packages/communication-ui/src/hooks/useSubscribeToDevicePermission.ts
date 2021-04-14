@@ -29,15 +29,15 @@ export default (permissionType: DevicePermissionType): void => {
       if (devicePermissionState === 'Unknown') {
         try {
           if (permissionType === 'Microphone') {
-            const access = await deviceManager.askDevicePermission({ video: false, audio: true });
-            const permissionState = access.video ? 'Granted' : 'Denied';
-            setDevicePermissionState(permissionState);
-            setVideoDevicePermission(permissionState);
-          } else if (permissionType === 'Camera') {
             const access = await deviceManager.askDevicePermission({ video: true, audio: false });
             const permissionState = access.audio ? 'Granted' : 'Denied';
             setDevicePermissionState(permissionState);
             setAudioDevicePermission(permissionState);
+          } else if (permissionType === 'Camera') {
+            const access = await deviceManager.askDevicePermission({ video: false, audio: true });
+            const permissionState = access.video ? 'Granted' : 'Denied';
+            setDevicePermissionState(permissionState);
+            setVideoDevicePermission(permissionState);
           } else {
             throw new Error('invalid device type specified');
           }
