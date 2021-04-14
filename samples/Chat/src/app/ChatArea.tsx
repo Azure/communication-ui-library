@@ -2,22 +2,19 @@
 
 import {
   ErrorBar as ErrorBarComponent,
-  SendBox as SendBoxComponent,
+  SendBox,
   TypingIndicator as TypingIndicatorComponent,
   MapToTypingIndicatorProps,
   MessageThread,
   connectFuncsToContext,
   MapToErrorBarProps,
-  MapToSendBoxProps,
   WithErrorHandling,
   ErrorHandlingProps,
-  SendBoxProps,
   TypingIndicatorProps,
-  SendBoxPropsFromContext,
   useThreadId
 } from '@azure/communication-ui';
 import { useHandlers } from './hooks/useHandlers';
-import { chatThreadSelector } from '@azure/acs-chat-selector';
+import { chatThreadSelector, sendBoxSelector } from '@azure/acs-chat-selector';
 import { Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import { chatAreaContainerStyle, sendBoxParentStyle } from './styles/ChatArea.styles';
@@ -30,13 +27,6 @@ export interface ChatAreaProps {
 export const ChatArea = (props: ChatAreaProps): JSX.Element => {
   const ErrorBar = useMemo(() => {
     return connectFuncsToContext(ErrorBarComponent, MapToErrorBarProps);
-  }, []);
-  const SendBox = useMemo(() => {
-    return connectFuncsToContext(
-      (props: SendBoxProps & SendBoxPropsFromContext & ErrorHandlingProps) =>
-        WithErrorHandling(SendBoxComponent, props),
-      MapToSendBoxProps
-    );
   }, []);
   const TypingIndicator = useMemo(() => {
     return connectFuncsToContext(
@@ -56,6 +46,9 @@ export const ChatArea = (props: ChatAreaProps): JSX.Element => {
 
   const chatThreadProps = useSelector(chatThreadSelector, selectorConfig);
   const handlers = useHandlers(MessageThread);
+  const sendBoxProps = useSelector(sendBoxSelector, selectorConfig);
+  const sendBoxHandlers = useHandlers(SendBox);
+
   return (
     <Stack className={chatAreaContainerStyle}>
       <MessageThread {...chatThreadProps} {...handlers} onRenderAvatar={props.onRenderAvatar} />
@@ -64,7 +57,7 @@ export const ChatArea = (props: ChatAreaProps): JSX.Element => {
           <TypingIndicator />
         </div>
         <ErrorBar />
-        <SendBox />
+        <SendBox {...sendBoxProps} {...sendBoxHandlers} />
       </Stack.Item>
     </Stack>
   );

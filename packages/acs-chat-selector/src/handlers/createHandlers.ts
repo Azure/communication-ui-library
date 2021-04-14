@@ -11,20 +11,26 @@ export type DefaultHandlers = {
 };
 
 // Keep all these handlers the same instance(unless client changed) to avoid re-render
-const createDefaultHandlers = memoizeOne((chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient) => {
-  return {
-    onMessageSend: async (content: string) => {
-      await chatThreadClient.sendMessage({ content });
-    },
-    // This handler is designed for chatThread to consume
-    onMessageSeen: async (chatMessageId: string) => {
-      await chatThreadClient.sendReadReceipt({ chatMessageId });
-    },
-    onTyping: async () => {
-      await chatThreadClient.sendTypingNotification();
-    }
-  };
-});
+const createDefaultHandlers = memoizeOne(
+  (chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient): DefaultHandlers => {
+    return {
+      onMessageSend: async (content: string) => {
+        const sendMessageRequest = {
+          content: content,
+          senderDisplayName: chatClient.state.displayName
+        };
+        await chatThreadClient.sendMessage(sendMessageRequest);
+      },
+      // This handler is designed for chatThread to consume
+      onMessageSeen: async (chatMessageId: string) => {
+        await chatThreadClient.sendReadReceipt({ chatMessageId });
+      },
+      onTyping: async () => {
+        await chatThreadClient.sendTypingNotification();
+      }
+    };
+  }
+);
 
 export type CommonProperties<A, B> = {
   [P in keyof A & keyof B]: A[P] extends B[P] ? (A[P] extends B[P] ? P : never) : never;
