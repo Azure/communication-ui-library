@@ -20555,8 +20555,8 @@ packages:
   file:projects/one-to-one-call.tgz_570bf42e92a70fb216c5cd4d5ed668ef:
     dependencies:
       '@azure/communication-administration': 1.0.0-beta.3
-      '@azure/communication-calling': 1.0.0-beta.2
-      '@azure/communication-common': 1.0.0-beta.3
+      '@azure/communication-calling': 1.0.1-beta.1
+      '@azure/communication-common': 1.0.0
       '@azure/core-http': 1.2.3
       '@babel/core': 7.13.10
       '@babel/preset-env': 7.13.10_@babel+core@7.13.10
@@ -20619,7 +20619,7 @@ packages:
       webpack: '*'
       webpack-cli: '*'
     resolution:
-      integrity: sha512-7Eei6TVL74VGNBmON8HLssHISzQr8G8ImvnnvLBOTTGUat72KR7QjO16GHMr4QUYlKFLFd/+hvFFiwjvu6u/hw==
+      integrity: sha512-mdOZ2vFNF5mBoIE/2Qj3lXgSOeH3BIzBd3dehMA64/0RD1pEWcnSm5VsqU2W6zbQAzSFA1x6Eion3jlIozBWTg==
       tarball: file:projects/one-to-one-call.tgz
     version: 0.0.0
   file:projects/server.tgz:
