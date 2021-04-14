@@ -6,6 +6,7 @@
 
 import { ChatClientState } from '@azure/acs-chat-declarative';
 import { ChatMessageWithStatus } from '@azure/acs-chat-declarative';
+import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
 import { MessageStatus } from '@azure/acs-chat-declarative';
@@ -16,6 +17,17 @@ import * as reselect from 'reselect';
 export type BaseSelectorProps = {
     threadId: string;
 };
+
+// @public (undocumented)
+export const chatParticipantListSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
+    userId: string;
+    displayName: string;
+    chatParticipants: WebUiChatParticipant[];
+}, (res1: string, res2: Map<string, ChatParticipant>, res3: string) => {
+    userId: string;
+    displayName: string;
+    chatParticipants: WebUiChatParticipant[];
+}>;
 
 // @public (undocumented)
 export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
@@ -41,6 +53,7 @@ export type DefaultHandlers = {
     onMessageSend: (content: string) => Promise<void>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
     onTyping: () => Promise<void>;
+    removeThreadMember: (userId: string) => Promise<void>;
 };
 
 // @public (undocumented)
@@ -74,6 +87,12 @@ export type UiChatMessage = {
     attached?: MessageAttachedStatus | boolean;
     mine?: boolean;
     clientMessageId?: string;
+};
+
+// @public (undocumented)
+export type WebUiChatParticipant = {
+    userId: string;
+    displayName?: string;
 };
 
 
