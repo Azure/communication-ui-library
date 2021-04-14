@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "[#2415700] Updating Sample Chat App Header and Settings with declarative code.",
+  "comment": "Add chatHeaderSelector and handlers",
   "packageName": "@azure/acs-chat-selector",
   "email": "anjulgarg@live.com",
   "dependentChangeType": "patch"
