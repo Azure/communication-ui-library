@@ -1,5 +1,6 @@
 dependencies:
   '@azure/communication-administration': 1.0.0-beta.3
+  '@azure/communication-calling': 1.0.1-beta.1
   '@azure/communication-common-beta3': /@azure/communication-common/1.0.0-beta.3
   '@azure/communication-identity': 1.0.0-beta.4
   '@azure/communication-signaling-2': /@azure/communication-signaling/1.0.0-beta.2
@@ -165,11 +166,6 @@ packages:
       node: '>=8.0.0'
     resolution:
       integrity: sha512-JqGWH19PZKtW49Y4RfyOxmm+iPLOYZ5xP8bQ8ZhoAJ9aDzfY/UEEbmjaVPYFdso4UVKgPP6y0lOmy73xpwKTVg==
-  /@azure/communication-calling/1.0.0-beta.2:
-    deprecated: This version is deprecated. Please update to the latest @azure/communication-calling@1.0.0-beta.9
-    dev: false
-    resolution:
-      integrity: sha512-PF33xuq1FGYDd09+IiQKJ/g/ATQGx1GFLflXJ9V0cErrIvSnhwtqd2f5j/1CeJ6fqhqfZ8RzcOepV2R7gP4BtA==
   /@azure/communication-calling/1.0.1-beta.1:
     dependencies:
       '@azure/communication-common': 1.0.0
@@ -20675,8 +20671,8 @@ packages:
   file:projects/storybook.tgz_webpack-cli@4.5.0:
     dependencies:
       '@azure/communication-administration': 1.0.0-beta.3
-      '@azure/communication-calling': 1.0.0-beta.2
-      '@azure/communication-chat': 1.0.0-beta.3
+      '@azure/communication-calling': 1.0.1-beta.1
+      '@azure/communication-chat': 1.0.0-beta.4
       '@azure/communication-common': 1.0.0-beta.3
       '@azure/communication-signaling': 1.0.0-beta.1
       '@azure/core-http': 1.2.3
@@ -20761,12 +20757,13 @@ packages:
     peerDependencies:
       webpack-cli: '*'
     resolution:
-      integrity: sha512-OGk5WmNz5SZQe7OyGHpnENmNpPJXnakYDoDsXioHAFVPDfvjXt/jLBa9EXlF0PjwW6samC4ZJqvRxNuU/IjhJw==
+      integrity: sha512-8SZsUIBIxRx+iaIbRGanCod+Qh25XQ3Ox0U729RkB4XXLJVMXq2odNRpr6lmiU7St1sDt+HejqmshxM6+5Z8Ig==
       tarball: file:projects/storybook.tgz
     version: 0.0.0
 registry: ''
 specifiers:
   '@azure/communication-administration': 1.0.0-beta.3
+  '@azure/communication-calling': 1.0.1-beta.1
   '@azure/communication-common-beta3': npm:@azure/communication-common@1.0.0-beta.3
   '@azure/communication-identity': 1.0.0-beta.4
   '@azure/communication-signaling-2': npm:@azure/communication-signaling@1.0.0-beta.2
