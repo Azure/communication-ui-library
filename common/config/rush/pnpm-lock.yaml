@@ -20283,6 +20283,7 @@ packages:
   file:projects/acs-chat-selector.tgz_prettier@2.0.5:
     dependencies:
       '@azure/communication-chat': 1.0.0-beta.4
+      '@azure/communication-signaling-2': /@azure/communication-signaling/1.0.0-beta.2
       '@microsoft/api-documenter': 7.12.12
       '@microsoft/api-extractor': 7.13.2
       '@types/react': 16.14.5
@@ -20303,7 +20304,7 @@ packages:
     peerDependencies:
       prettier: '*'
     resolution:
-      integrity: sha512-/iCBUWZs2hQN3mVwclC7/eXBC4j94SQYcJJU32XCbffl9iIJR8DpfRAaK1wqUrfWuuyOHXz7djiUHXzsqtJktg==
+      integrity: sha512-1ZUQBLSL3mv7myahtGDEiDJLRgJwbrpthE7o2HWWFG92Bh0faF2o3gF9iZEbMaJxd/GOL0CLQpeWjNOGZJLTpQ==
       tarball: file:projects/acs-chat-selector.tgz
     version: 0.0.0
   file:projects/build-tools.tgz_typescript@4.1.5:
