@@ -28,3 +28,7 @@ export const getLatestReadTime = (state: ChatClientState, props: BaseSelectorPro
 
 export const getCoolPeriod = (state: ChatClientState, props: BaseSelectorProps): Date =>
   (props.threadId && state.threads.get(props.threadId)?.coolPeriod) || new Date(0);
+
+export const getTopicName = (state: ChatClientState, props: BaseSelectorProps): string => {
+  return state.threads.get(props.threadId)?.threadInfo?.topic || '';
+};

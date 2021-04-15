@@ -14,23 +14,20 @@ import {
   settingsTopicWarningStyle
 } from './styles/SettingsManagement.styles';
 import { inputBoxTextStyle } from './styles/SidePanel.styles';
-import { ChatTopicPropsFromContext, MapToChatTopicProps, connectFuncsToContext } from '@azure/communication-ui';
 import { ENTER_KEY, MAXIMUM_LENGTH_OF_TOPIC, ThemeSelector } from '@azure/communication-ui';
+import { existsTopicName } from './utils/utils';
 
 export type SettingsManagementProps = {
-  updateThreadTopicName: (topicName: string) => Promise<boolean>;
+  updateThreadTopicName: (topicName: string) => Promise<void>;
   topicName?: string;
-  topicNameExists?: boolean;
   visible?: boolean;
   parentId?: string;
   onClose?: () => void;
   onRenderFooter?: () => JSX.Element;
 };
 
-export const SettingsManagementComponent = (
-  props: SettingsManagementProps & ChatTopicPropsFromContext
-): JSX.Element => {
-  const { updateThreadTopicName, topicName, existsTopicName, visible, parentId, onClose, onRenderFooter } = props;
+export const SettingsManagementComponent = (props: SettingsManagementProps): JSX.Element => {
+  const { updateThreadTopicName, topicName, visible, parentId, onClose, onRenderFooter } = props;
   const [edittedTopicName, setEdittedTopicName] = useState('');
   const [isOpen, setIsOpen] = useState<boolean>(visible ? visible : false);
   const [isEditingTopicName, setIsEditingTopicName] = useState(false);
@@ -50,10 +47,7 @@ export const SettingsManagementComponent = (
   const onTopicNameSubmit = async (): Promise<void> => {
     if (edittedTopicName.length > MAXIMUM_LENGTH_OF_TOPIC) return;
     setIsSavingTopicName(true);
-    const res = await updateThreadTopicName(edittedTopicName);
-    if (!res) {
-      console.error('unable to update thread topic name');
-    }
+    await updateThreadTopicName(edittedTopicName);
     setIsSavingTopicName(false);
     setIsEditingTopicName(false);
     setTimeout(() => {
@@ -98,8 +92,8 @@ export const SettingsManagementComponent = (
             className={isTopicNameOverflow ? settingsGroupNameInputBoxWarningStyle : settingsGroupNameInputBoxStyle}
             inputClassName={inputBoxTextStyle}
             borderless={true}
-            defaultValue={isEditingTopicName ? edittedTopicName : existsTopicName ? topicName : ''}
-            placeholder={existsTopicName ? undefined : 'Type a group name'}
+            defaultValue={isEditingTopicName ? edittedTopicName : existsTopicName(topicName) ? topicName : ''}
+            placeholder={existsTopicName(topicName) ? undefined : 'Type a group name'}
             autoComplete="off"
             onSubmit={onTopicNameSubmit}
             onChange={onTopicNameTextChange}
@@ -130,5 +124,3 @@ export const SettingsManagementComponent = (
     </Panel>
   );
 };
-
-export default connectFuncsToContext(SettingsManagementComponent, MapToChatTopicProps);
