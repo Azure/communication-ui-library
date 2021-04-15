@@ -17,7 +17,7 @@ import {
 import { SidePanelTypes } from './SidePanel';
 import { copyIconStyle } from './styles/InviteFooter.styles';
 import { WebUiChatParticipant } from '@azure/acs-chat-selector';
-import { GUID_FOR_INITIAL_TOPIC_NAME } from '@azure/communication-ui';
+import { existsTopicName } from './utils/utils';
 
 export type ChatHeaderProps = {
   userId: string;
@@ -78,13 +78,13 @@ export const ChatHeader = (props: ChatHeaderProps): JSX.Element => {
 
   const leaveString = 'Leave';
 
-  const existsTopicName = props.topicName !== GUID_FOR_INITIAL_TOPIC_NAME;
-
   return (
     <Stack className={chatHeaderContainerStyle} horizontal={true} horizontalAlign="space-between">
       <Stack.Item align="center">
         <div className={topicNameLabelStyle}>
-          {existsTopicName ? props.topicName : generateDefaultHeaderMessage(props.chatParticipants, userId)}
+          {existsTopicName(props.topicName)
+            ? props.topicName
+            : generateDefaultHeaderMessage(props.chatParticipants, userId)}
         </div>
       </Stack.Item>
       <Stack.Item align="center">

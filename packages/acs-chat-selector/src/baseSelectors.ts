@@ -1,7 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 import { ChatClientState, ChatMessageWithStatus } from '@azure/acs-chat-declarative';
 import { ChatParticipant, ChatMessageReadReceipt } from '@azure/communication-chat';
-// import { GUID_FOR_INITIAL_TOPIC_NAME } from './constants';
 export type BaseSelectorProps = {
   threadId: string;
 };
