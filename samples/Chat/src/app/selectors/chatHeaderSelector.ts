@@ -1,12 +1,9 @@
 // © Microsoft Corporation. All rights reserved.
 
-// @ts-ignore
-import { ChatClientState } from '@azure/acs-chat-declarative';
 import { ChatParticipant } from '@azure/communication-chat';
-import * as reselect from 'reselect';
-// @ts-ignore
-import { BaseSelectorProps, getExistsTopicName, getParticipants, getTopicName, getUserId } from './baseSelectors';
-import { existsTopicName } from './utils/existsTopicName';
+import { existsTopicName } from 'app/utils/utils';
+import { createSelector } from 'reselect';
+import { getTopicName, getUserId, getParticipants } from './baseSelectors';
 
 const generateDefaultHeaderMessage = (participants: ChatParticipant[], userId: string): string => {
   let header = 'Chat with ';
@@ -33,7 +30,7 @@ const generateDefaultHeaderMessage = (participants: ChatParticipant[], userId: s
   return header;
 };
 
-export const chatHeaderSelector = reselect.createSelector(
+export const chatHeaderSelector = createSelector(
   [getUserId, getTopicName, getParticipants],
   (userId, topicName, participants) => {
     return {

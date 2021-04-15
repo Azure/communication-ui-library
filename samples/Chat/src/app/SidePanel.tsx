@@ -8,7 +8,8 @@ import { SlideOutPanelComponent } from './SlideOutPanel';
 import { useSelector } from './hooks/useSelector';
 import { useThreadId } from '@azure/communication-ui';
 import { useHandlers } from './hooks/useHandlers';
-import { chatParticipantListSelector, chatSettingsSelector } from '@azure/acs-chat-selector';
+import { chatParticipantListSelector } from '@azure/acs-chat-selector';
+import { chatSettingsSelector } from './selectors/chatSettingsSelector';
 
 export enum SidePanelTypes {
   None = 'none',

@@ -19,15 +19,6 @@ export type BaseSelectorProps = {
 };
 
 // @public (undocumented)
-export const chatHeaderSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
-    userId: string;
-    topicName: string;
-}, (res1: string, res2: string, res3: Map<string, ChatParticipant>) => {
-    userId: string;
-    topicName: string;
-}>;
-
-// @public (undocumented)
 export const chatParticipantListSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
     userId: string;
     displayName: string;
@@ -36,15 +27,6 @@ export const chatParticipantListSelector: reselect.OutputParametricSelector<Chat
     userId: string;
     displayName: string;
     chatParticipants: WebUiChatParticipant[];
-}>;
-
-// @public (undocumented)
-export const chatSettingsSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
-    userId: string;
-    topicName: string | undefined;
-}, (res1: string, res2: string) => {
-    userId: string;
-    topicName: string | undefined;
 }>;
 
 // @public (undocumented)

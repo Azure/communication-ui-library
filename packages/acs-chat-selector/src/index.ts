@@ -2,8 +2,6 @@
 export { chatThreadSelector } from './chatThreadSelector';
 export { sendBoxSelector } from './sendBoxSelector';
 export { chatParticipantListSelector } from './chatParticipantListSelector';
-export { chatHeaderSelector } from './chatHeaderSelector';
-export { chatSettingsSelector } from './chatSettingsSelector';
 
 export { createDefaultHandlersForComponent } from './handlers/createHandlers';
 export type { UiChatMessage, MessageAttachedStatus } from './types/UiChatMessage';
