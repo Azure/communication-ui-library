@@ -15,11 +15,11 @@ import {
 } from './styles/SettingsManagement.styles';
 import { inputBoxTextStyle } from './styles/SidePanel.styles';
 import { ENTER_KEY, MAXIMUM_LENGTH_OF_TOPIC, ThemeSelector } from '@azure/communication-ui';
+import { GUID_FOR_INITIAL_TOPIC_NAME } from '@azure/communication-ui';
 
 export type SettingsManagementProps = {
   updateThreadTopicName: (topicName: string) => Promise<void>;
   topicName?: string;
-  existsTopicName?: boolean;
   visible?: boolean;
   parentId?: string;
   onClose?: () => void;
@@ -27,12 +27,14 @@ export type SettingsManagementProps = {
 };
 
 export const SettingsManagementComponent = (props: SettingsManagementProps): JSX.Element => {
-  const { updateThreadTopicName, topicName, existsTopicName, visible, parentId, onClose, onRenderFooter } = props;
+  const { updateThreadTopicName, topicName, visible, parentId, onClose, onRenderFooter } = props;
   const [edittedTopicName, setEdittedTopicName] = useState('');
   const [isOpen, setIsOpen] = useState<boolean>(visible ? visible : false);
   const [isEditingTopicName, setIsEditingTopicName] = useState(false);
   const [isTopicNameOverflow, setTopicNameOverflow] = useState(false);
   const [isSavingTopicName, setIsSavingTopicName] = useState(false);
+
+  const existsTopicName = props.topicName !== GUID_FOR_INITIAL_TOPIC_NAME;
 
   const onTopicNameTextChange = (event: any): void => {
     setIsEditingTopicName(true);

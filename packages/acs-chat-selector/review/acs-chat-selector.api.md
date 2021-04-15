@@ -22,11 +22,9 @@ export type BaseSelectorProps = {
 export const chatHeaderSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
     userId: string;
     topicName: string;
-    existsTopicName: boolean;
-}, (res1: string, res2: string, res3: boolean) => {
+}, (res1: string, res2: string) => {
     userId: string;
     topicName: string;
-    existsTopicName: boolean;
 }>;
 
 // @public (undocumented)

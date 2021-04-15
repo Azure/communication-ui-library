@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 import { ChatClientState, ChatMessageWithStatus } from '@azure/acs-chat-declarative';
 import { ChatParticipant, ChatMessageReadReceipt } from '@azure/communication-chat';
-import { GUID_FOR_INITIAL_TOPIC_NAME } from './constants';
+// import { GUID_FOR_INITIAL_TOPIC_NAME } from './constants';
 export type BaseSelectorProps = {
   threadId: string;
 };
@@ -32,9 +32,4 @@ export const getCoolPeriod = (state: ChatClientState, props: BaseSelectorProps):
 
 export const getTopicName = (state: ChatClientState, props: BaseSelectorProps): string => {
   return state.threads.get(props.threadId)?.threadInfo?.topic || '';
-};
-
-export const getExistsTopicName = (state: ChatClientState, props: BaseSelectorProps): boolean => {
-  const topic = state.threads.get(props.threadId)?.threadInfo?.topic;
-  return !!topic && topic !== GUID_FOR_INITIAL_TOPIC_NAME;
 };

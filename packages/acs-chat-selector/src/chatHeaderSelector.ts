@@ -6,13 +6,9 @@ import * as reselect from 'reselect';
 // @ts-ignore
 import { BaseSelectorProps, getExistsTopicName, getTopicName, getUserId } from './baseSelectors';
 
-export const chatHeaderSelector = reselect.createSelector(
-  [getUserId, getTopicName, getExistsTopicName],
-  (userId, topicName, existsTopicName) => {
-    return {
-      userId,
-      topicName,
-      existsTopicName
-    };
-  }
-);
+export const chatHeaderSelector = reselect.createSelector([getUserId, getTopicName], (userId, topicName) => {
+  return {
+    userId,
+    topicName
+  };
+});
