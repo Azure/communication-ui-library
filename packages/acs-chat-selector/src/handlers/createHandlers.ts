@@ -9,6 +9,7 @@ export type DefaultHandlers = {
   onMessageSeen: (chatMessageId: string) => Promise<void>;
   onTyping: () => Promise<void>;
   removeThreadMember: (userId: string) => Promise<void>;
+  updateThreadTopicName: (topicName: string) => Promise<void>;
 };
 
 // Keep all these handlers the same instance(unless client changed) to avoid re-render
@@ -29,6 +30,9 @@ const createDefaultHandlers = memoizeOne(
         await chatThreadClient.removeParticipant({
           communicationUserId: userId
         });
+      },
+      updateThreadTopicName: async (topicName: string) => {
+        await chatThreadClient.updateThread({ topic: topicName });
       }
     };
   }
