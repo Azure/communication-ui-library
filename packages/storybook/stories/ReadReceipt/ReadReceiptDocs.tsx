@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 import React from 'react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
-import { MessageStatus, ReadReceipt } from '@azure/communication-ui';
+import { ReadReceipt } from '@azure/communication-ui';
 import { Provider, teamsTheme } from '@fluentui/react-northstar';
 
 const importStatement = `import { ReadReceipt, MessageStatus } from '@azure/communication-ui';`;
@@ -13,16 +13,16 @@ const usageCode = `<ReadReceipt messageStatus={MessageStatus.DELIVERED} />
 const ExampleReadReceipts: () => JSX.Element = () => (
   <>
     <span style={{ margin: '0 5px' }}>
-      <ReadReceipt messageStatus={MessageStatus.DELIVERED} />
+      <ReadReceipt messageStatus={'delivered'} />
     </span>
     <span style={{ margin: '0 5px' }}>
-      <ReadReceipt messageStatus={MessageStatus.SEEN} />
+      <ReadReceipt messageStatus={'seen'} />
     </span>
     <span style={{ margin: '0 5px' }}>
-      <ReadReceipt messageStatus={MessageStatus.SENDING} />
+      <ReadReceipt messageStatus={'sending'} />
     </span>
     <span style={{ margin: '0 5px' }}>
-      <ReadReceipt messageStatus={MessageStatus.FAILED} />
+      <ReadReceipt messageStatus={'failed'} />
     </span>
   </>
 );

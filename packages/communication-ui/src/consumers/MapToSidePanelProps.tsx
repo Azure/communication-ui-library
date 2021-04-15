@@ -1,13 +1,13 @@
 // © Microsoft Corporation. All rights reserved.
 
 import { GUID_FOR_INITIAL_TOPIC_NAME } from '../constants';
-import { ChatThread, ChatThreadMember } from '@azure/communication-chat';
+import { ChatThread, ChatParticipant } from '@azure/communication-chat';
 import { useThread, useThreadMembers } from '../providers/ChatThreadProvider';
 import { useUpdateThreadTopicName } from '../hooks/useUpdateThreadTopicName';
 import { useRemoveThreadMember } from '../hooks/useRemoveThreadMember';
 
 export type SidePanelPropsFromContext = {
-  threadMembers: ChatThreadMember[];
+  threadMembers: ChatParticipant[];
   thread: ChatThread | undefined;
   existsTopicName: boolean | undefined;
   updateThreadTopicName: (topicName: string) => Promise<boolean>;

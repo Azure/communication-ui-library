@@ -8,22 +8,31 @@ export type DefaultHandlers = {
   onMessageSend: (content: string) => Promise<void>;
   onMessageSeen: (chatMessageId: string) => Promise<void>;
   onTyping: () => Promise<void>;
+  removeThreadMember: (userId: string) => Promise<void>;
 };
 
 // Keep all these handlers the same instance(unless client changed) to avoid re-render
-const createDefaultHandlers = memoizeOne((chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient) => {
-  return {
-    onMessageSend: async (content: string) => {
-      await chatThreadClient.sendMessage({ content });
-    },
-    onMessageSeen: async (chatMessageId: string) => {
-      await chatThreadClient.sendReadReceipt({ chatMessageId });
-    },
-    onTyping: async () => {
-      await chatThreadClient.sendTypingNotification();
-    }
-  };
-});
+const createDefaultHandlers = memoizeOne(
+  (chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient): DefaultHandlers => {
+    return {
+      onMessageSend: async (content: string) => {
+        await chatThreadClient.sendMessage({ content });
+      },
+      // This handler is designed for chatThread to consume
+      onMessageSeen: async (chatMessageId: string) => {
+        await chatThreadClient.sendReadReceipt({ chatMessageId });
+      },
+      onTyping: async () => {
+        await chatThreadClient.sendTypingNotification();
+      },
+      removeThreadMember: async (userId: string) => {
+        await chatThreadClient.removeParticipant({
+          communicationUserId: userId
+        });
+      }
+    };
+  }
+);
 
 export type CommonProperties<A, B> = {
   [P in keyof A & keyof B]: A[P] extends B[P] ? (A[P] extends B[P] ? P : never) : never;

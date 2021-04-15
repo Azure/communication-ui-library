@@ -1,6 +1,12 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { ChatMessage, ChatThread, ChatThreadClient, ChatThreadMember, ReadReceipt } from '@azure/communication-chat';
+import {
+  ChatMessage,
+  ChatThread,
+  ChatThreadClient,
+  ChatParticipant,
+  ChatMessageReadReceipt
+} from '@azure/communication-chat';
 import { Spinner } from '@fluentui/react';
 import { WithErrorHandling } from '../utils/WithErrorHandling';
 import React, { Dispatch, SetStateAction, createContext, useContext, useState, useEffect } from 'react';
@@ -21,10 +27,10 @@ export type ThreadProviderContextType = {
   setThreadId: Dispatch<SetStateAction<string>>;
   thread: ChatThread | undefined;
   setThread: Dispatch<SetStateAction<ChatThread | undefined>>;
-  receipts: ReadReceipt[] | undefined;
-  setReceipts: Dispatch<SetStateAction<ReadReceipt[] | undefined>>;
-  threadMembers: ChatThreadMember[];
-  setThreadMembers: Dispatch<SetStateAction<ChatThreadMember[]>>;
+  receipts: ChatMessageReadReceipt[] | undefined;
+  setReceipts: Dispatch<SetStateAction<ChatMessageReadReceipt[] | undefined>>;
+  threadMembers: ChatParticipant[];
+  setThreadMembers: Dispatch<SetStateAction<ChatParticipant[]>>;
   coolPeriod: Date | undefined;
   setCoolPeriod: Dispatch<SetStateAction<Date | undefined>>;
   getThreadMembersError: boolean | undefined;
@@ -56,8 +62,8 @@ const ChatThreadProviderBase = (props: ChatThreadProviderProps & ErrorHandlingPr
   const [chatMessages, setChatMessages] = useState<ChatMessage[] | undefined>(undefined);
   const [threadId, setThreadId] = useState<string>(props.threadId);
   const [thread, setThread] = useState<ChatThread | undefined>(undefined);
-  const [receipts, setReceipts] = useState<ReadReceipt[] | undefined>(undefined);
-  const [threadMembers, setThreadMembers] = useState<ChatThreadMember[]>([]);
+  const [receipts, setReceipts] = useState<ChatMessageReadReceipt[] | undefined>(undefined);
+  const [threadMembers, setThreadMembers] = useState<ChatParticipant[]>([]);
   const [getThreadMembersError, setGetThreadMembersError] = useState<boolean | undefined>(undefined);
   const [updateThreadMembersError, setUpdateThreadMembersError] = useState<boolean | undefined>(undefined);
   const [coolPeriod, setCoolPeriod] = useState<Date>();
@@ -180,22 +186,22 @@ export const useSetThread = (): ((thread: ChatThread) => void) => {
   return threadContext.setThread;
 };
 
-export const useReceipts = (): ReadReceipt[] | undefined => {
+export const useReceipts = (): ChatMessageReadReceipt[] | undefined => {
   const threadContext = useValidateAndGetThreadContext();
   return threadContext.receipts;
 };
 
-export const useSetReceipts = (): ((receipts: ReadReceipt[]) => void) => {
+export const useSetReceipts = (): ((receipts: ChatMessageReadReceipt[]) => void) => {
   const threadContext = useValidateAndGetThreadContext();
   return threadContext.setReceipts;
 };
 
-export const useThreadMembers = (): ChatThreadMember[] => {
+export const useThreadMembers = (): ChatParticipant[] => {
   const threadContext = useValidateAndGetThreadContext();
   return threadContext.threadMembers;
 };
 
-export const useSetThreadMembers = (): ((threadMembers: ChatThreadMember[]) => void) => {
+export const useSetThreadMembers = (): ((threadMembers: ChatParticipant[]) => void) => {
   const threadContext = useValidateAndGetThreadContext();
   return threadContext.setThreadMembers;
 };

@@ -1,11 +1,14 @@
 // © Microsoft Corporation. All rights reserved.
+import { MessageStatus } from '@azure/acs-chat-declarative';
 
-export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
 export enum MessageAttachedStatus {
   BOTTOM = 'bottom',
   TOP = 'top'
 }
 
+/**
+ * This is the Message item returned by our selectors, which should match the message type consumed by components.
+ */
 export type ChatMessagePayload = {
   messageId?: string;
   content?: string;
@@ -14,6 +17,7 @@ export type ChatMessagePayload = {
   senderId?: string;
   senderDisplayName?: string;
   statusToRender?: MessageStatus;
+  status?: MessageStatus;
   attached?: MessageAttachedStatus | boolean;
   mine?: boolean;
   clientMessageId?: string;

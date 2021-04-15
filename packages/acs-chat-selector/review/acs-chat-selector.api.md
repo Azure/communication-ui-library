@@ -6,6 +6,7 @@
 
 import { ChatClientState } from '@azure/acs-chat-declarative';
 import { ChatMessageWithStatus } from '@azure/acs-chat-declarative';
+import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
 import { MessageStatus } from '@azure/acs-chat-declarative';
@@ -13,35 +14,47 @@ import { ReactElement } from 'react';
 import * as reselect from 'reselect';
 
 // @public (undocumented)
-export type BaseChatConfigProps = {
-    displayName: string;
-    userId: string;
+export type BaseSelectorProps = {
     threadId: string;
 };
 
 // @public (undocumented)
-export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientState, BaseChatConfigProps, {
+export type ChatMessage = Message<'chat'>;
+
+// @public
+export type ChatMessagePayload = {
+    messageId?: string;
+    content?: string;
+    createdOn?: Date;
+    senderId?: string;
+    senderDisplayName?: string;
+    statusToRender?: MessageStatus;
+    status?: MessageStatus;
+    attached?: MessageAttachedStatus | boolean;
+    mine?: boolean;
+    clientMessageId?: string;
+};
+
+// @public (undocumented)
+export const chatParticipantListSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
+    userId: string;
+    displayName: string;
+    chatParticipants: WebUiChatParticipant[];
+}, (res1: string, res2: Map<string, ChatParticipant>, res3: string) => {
+    userId: string;
+    displayName: string;
+    chatParticipants: WebUiChatParticipant[];
+}>;
+
+// @public (undocumented)
+export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
     userId: string;
     disableReadReceipt: boolean;
-    chatMessages: {
-        createdOn: Date;
-        content: string | undefined;
-        status: MessageStatus;
-        senderDisplayName: string | undefined;
-        senderId: string;
-        messageId: string | undefined;
-    }[];
-}, (res1: BaseChatConfigProps, res2: Map<string, ChatMessageWithStatus>) => {
+    messages: Message<"chat">[];
+}, (res1: string, res2: Map<string, ChatMessageWithStatus>, res3: Date, res4: boolean) => {
     userId: string;
     disableReadReceipt: boolean;
-    chatMessages: {
-        createdOn: Date;
-        content: string | undefined;
-        status: MessageStatus;
-        senderDisplayName: string | undefined;
-        senderId: string;
-        messageId: string | undefined;
-    }[];
+    messages: Message<"chat">[];
 }>;
 
 // @public (undocumented)
@@ -53,22 +66,60 @@ export type CommonProperties<A, B> = {
 export const createDefaultHandlersForComponent: <Props>(chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultHandlers, CommonProperties<DefaultHandlers, Props>>;
 
 // @public (undocumented)
+export type CustomMessage = Message<'custom'>;
+
+// @public (undocumented)
 export type DefaultHandlers = {
     onMessageSend: (content: string) => Promise<void>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
     onTyping: () => Promise<void>;
+    removeThreadMember: (userId: string) => Promise<void>;
 };
 
 // @public (undocumented)
-export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState, BaseChatConfigProps, {
+export type Message<T extends MessageTypes> = {
+    type: T;
+    payload: T extends 'chat' ? ChatMessagePayload : T extends 'system' ? SystemMessagePayload : {
+        [name: string]: any;
+    };
+};
+
+// @public (undocumented)
+export enum MessageAttachedStatus {
+    // (undocumented)
+    BOTTOM = "bottom",
+    // (undocumented)
+    TOP = "top"
+}
+
+// @public (undocumented)
+export type MessageTypes = 'chat' | 'system' | 'custom';
+
+// @public (undocumented)
+export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
     displayName: string;
     userId: string;
     disabled: boolean;
-}, (res1: Date | undefined, res2: BaseChatConfigProps) => {
+}, (res1: Date, res2: string, res3: string) => {
     displayName: string;
     userId: string;
     disabled: boolean;
 }>;
+
+// @public (undocumented)
+export type SystemMessage = Message<'system'>;
+
+// @public (undocumented)
+export type SystemMessagePayload = {
+    content?: string;
+    iconName?: string;
+};
+
+// @public (undocumented)
+export type WebUiChatParticipant = {
+    userId: string;
+    displayName?: string;
+};
 
 
 // (No @packageDocumentation comment for this package)

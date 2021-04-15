@@ -3,6 +3,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 
 import { ChatClient } from '@azure/communication-chat';
+import { chatClientDeclaratify } from '@azure/acs-chat-declarative';
 import { ChatThreadProvider } from './ChatThreadProvider';
 import { AbortSignalLike } from '@azure/core-http';
 import { createAzureCommunicationUserCredential } from '../utils';
@@ -47,7 +48,10 @@ const ChatProviderBase = (props: ChatProviderProps & ErrorHandlingProps): JSX.El
   const [userId, setUserId] = useState<string>(idFromToken);
   const [displayName, setDisplayName] = useState<string>(props.displayName);
   const [chatClient, setChatClient] = useState<ChatClient>(
-    new ChatClient(props.endpointUrl, createAzureCommunicationUserCredential(token, props.refreshTokenCallback))
+    chatClientDeclaratify(
+      new ChatClient(props.endpointUrl, createAzureCommunicationUserCredential(token, props.refreshTokenCallback)),
+      { userId, displayName }
+    )
   );
   const [chatProviderState, setChatProviderState] = useState<number>(CHATPROVIDER_LOADING_STATE);
 

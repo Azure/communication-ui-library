@@ -184,16 +184,7 @@ export enum MessageAttachedStatus {
 }
 
 // @public (undocumented)
-export enum MessageStatus {
-    // (undocumented)
-    DELIVERED = "delivered",
-    // (undocumented)
-    FAILED = "failed",
-    // (undocumented)
-    SEEN = "seen",
-    // (undocumented)
-    SENDING = "sending"
-}
+export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
 
 // @public
 export const MessageThread: (props: MessageThreadProps) => JSX.Element;
@@ -206,7 +197,7 @@ export type MessageThreadProps = {
     disableJumpToNewMessageButton?: boolean;
     disableLoadPreviousMessage?: boolean;
     disableReadReceipt?: boolean;
-    onSendReadReceipt?: () => Promise<void>;
+    onMessageSeen?: (messageId: string) => Promise<void>;
     onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element | null;
     onRenderAvatar?: (userId: string) => JSX.Element;
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
