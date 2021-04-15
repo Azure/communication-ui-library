@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { ChatThreadMember } from '@azure/communication-chat';
+import { ChatParticipant } from '@azure/communication-chat';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   useSubscribeReadReceipt,
@@ -129,22 +129,22 @@ export const getMessageStatus = (
   isMessageSeen?: ((userId: string, message: WebUiChatMessage) => boolean) | undefined
 ): MessageStatus => {
   // message is pending send or is failed to be sent
-  if (message.createdOn === undefined) {
+  if (message.createdOn === undefined || message.messageId === '') {
     const messageFailed: boolean =
       failedMessageIds.find((failedMessageId: string) => failedMessageId === message.clientMessageId) !== undefined;
-    return messageFailed ? MessageStatus.FAILED : MessageStatus.SENDING;
+    return messageFailed ? 'failed' : 'sending';
   } else {
-    if (message.messageId === undefined) return MessageStatus.DELIVERED;
+    if (message.messageId === undefined) return 'delivered';
     // show read receipt if it's not a large participant group
     if (!isLargeParticipantsGroup) {
-      return isMessageSeen && isMessageSeen(userId, message) ? MessageStatus.SEEN : MessageStatus.DELIVERED;
+      return isMessageSeen && isMessageSeen(userId, message) ? 'seen' : 'delivered';
     } else {
-      return MessageStatus.DELIVERED;
+      return 'delivered';
     }
   }
 };
 
-const isLargeParticipantsGroup = (threadMembers: ChatThreadMember[]): boolean => {
+const isLargeParticipantsGroup = (threadMembers: ChatParticipant[]): boolean => {
   return threadMembers.length >= PARTICIPANTS_THRESHOLD;
 };
 
@@ -173,7 +173,7 @@ const convertSdkChatMessagesToWebUiChatMessages = (
     chatMessages?.map<WebUiChatMessage>((chatMessage: ChatMessageWithClientMessageId) => {
       return {
         messageId: chatMessage.id,
-        content: chatMessage.content,
+        content: chatMessage.content?.message ?? '',
         createdOn: chatMessage.createdOn,
         senderId: chatMessage.sender?.communicationUserId,
         senderDisplayName: chatMessage.senderDisplayName,

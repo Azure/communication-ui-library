@@ -9,11 +9,15 @@ import {
   MapToChatThreadProps,
   connectFuncsToContext,
   ErrorsPropsFromContext,
-  MapToErrorsProps
+  MapToErrorsProps,
+  useThreadId
 } from '@azure/communication-ui';
-import ChatHeader from './ChatHeader';
+import { ChatHeader } from './ChatHeader';
 import { ChatArea } from './ChatArea';
 import { SidePanel, SidePanelTypes } from './SidePanel';
+import { useSelector } from './hooks/useSelector';
+import { chatHeaderSelector, chatParticipantListSelector } from '@azure/acs-chat-selector';
+import { useHandlers } from './hooks/useHandlers';
 
 // These props are passed in when this component is referenced in JSX and not found in context
 interface ChatScreenProps {
@@ -39,12 +43,23 @@ const ChatScreen = (props: ChatScreenProps & ChatThreadPropsFromContext & Errors
     }
   }, [errorHandler, getThreadMembersError]);
 
+  const chatHeaderProps = useSelector(chatHeaderSelector, { threadId: useThreadId() });
+  const chatHeaderHandlers = useHandlers(ChatHeader);
+  const chatParticipantProps = useSelector(chatParticipantListSelector, { threadId: useThreadId() });
+
   // onRenderAvatar is a contoso callback. We need it to support emoji in Sample App. Sample App is currently on
   // components v0 so we're passing the callback at the component level. This might need further refactoring if this
   // ChatScreen is to become a component or if Sample App is to move to composite
   return (
     <Stack className={chatScreenContainerStyle}>
-      <ChatHeader endChatHandler={props.endChatHandler} selectedPane={selectedPane} setSelectedPane={setSelectedPane} />
+      <ChatHeader
+        {...chatHeaderProps}
+        {...chatHeaderHandlers}
+        {...chatParticipantProps}
+        endChatHandler={props.endChatHandler}
+        selectedPane={selectedPane}
+        setSelectedPane={setSelectedPane}
+      />
       <Stack className={chatScreenBottomContainerStyle} horizontal={true}>
         <ChatArea onRenderAvatar={onRenderAvatar} />
         <Stack.Item grow disableShrink>

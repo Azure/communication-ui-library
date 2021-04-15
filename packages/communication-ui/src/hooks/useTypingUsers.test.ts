@@ -1,5 +1,5 @@
 // © Microsoft Corporation. All rights reserved.
-import { ChatThreadMember } from '@azure/communication-chat';
+import { ChatParticipant } from '@azure/communication-chat';
 // © Microsoft Corporation. All rights reserved.
 import { act, renderHook } from '@testing-library/react-hooks';
 import { TypingNotification } from './useSubscribeTypingNotification';
@@ -29,7 +29,7 @@ jest.mock('./useSubscribeTypingNotification', () => {
   };
 });
 
-const threadMembers: ChatThreadMember[] = [{ user: { communicationUserId: 'Test User' } }];
+const threadMembers: ChatParticipant[] = [{ user: { communicationUserId: 'Test User' } }];
 
 describe('useTypingUsers tests', () => {
   test('should be able to generate typingUsers at the beginning and at 1 seconds', async (): Promise<void> => {
@@ -38,7 +38,7 @@ describe('useTypingUsers tests', () => {
         user: { communicationUserId: 'Test User' }
       }
     ];
-    let typingUsers: ChatThreadMember[] = [];
+    let typingUsers: ChatParticipant[] = [];
 
     await act(async () => {
       renderHook(() => {
@@ -51,8 +51,8 @@ describe('useTypingUsers tests', () => {
   });
 
   test('should be able to clear typingUsers when expired', async (): Promise<void> => {
-    const expectTypingUsers: ChatThreadMember[] = [];
-    let typingUsers: ChatThreadMember[] = [];
+    const expectTypingUsers: ChatParticipant[] = [];
+    let typingUsers: ChatParticipant[] = [];
 
     await act(async () => {
       renderHook(() => {

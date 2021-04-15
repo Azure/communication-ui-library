@@ -1,6 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
 import preval from 'preval.macro';
+import { GUID_FOR_INITIAL_TOPIC_NAME } from '@azure/communication-ui';
 
 export const getBuildTime = (): string => {
   const dateTimeStamp = preval`module.exports = new Date().toLocaleString();`;
@@ -77,3 +78,6 @@ export const getBackgroundColor = (avatar: string): { backgroundColor: string } 
       };
   }
 };
+
+export const existsTopicName = (topicName?: string): boolean =>
+  !!topicName && topicName !== GUID_FOR_INITIAL_TOPIC_NAME;

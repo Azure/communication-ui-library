@@ -1,10 +1,10 @@
 // © Microsoft Corporation. All rights reserved.
 
 import { ChatClientMock, createChatClient } from '../mocks/ChatClientMocks';
-import { ChatMessage, ChatMessagePriority } from '@azure/communication-chat';
+import { ChatMessage } from '@azure/communication-chat';
 import { act, renderHook } from '@testing-library/react-hooks';
 
-import { ChatMessageReceivedEvent } from '@azure/communication-signaling/types/src/events/chat';
+import { ChatMessageReceivedEvent } from '@azure/communication-signaling-2/types/src/events/chat';
 import { useSubscribeMessage } from './useSubscribeMessage';
 
 let chatClientMock: ChatClientMock;
@@ -42,24 +42,22 @@ jest.mock('../providers/ChatThreadProvider', () => {
 });
 
 const mockMessage: ChatMessage = {
-  content: 'mockContent',
+  content: { message: 'mockContent' },
   id: 'mockId',
   createdOn: new Date('2020-10-23T05:25:44.927Z'),
-  priority: 'Normal',
   sender: { communicationUserId: 'mockSenderCommunicationUserId' },
   senderDisplayName: 'mockSenderDisplayName',
   type: 'Text',
-  version: 'mockVersion'
+  version: 'mockVersion',
+  sequenceId: ''
 };
 
 const mockMessageEvent: ChatMessageReceivedEvent = {
   content: 'mockContent',
   createdOn: '2020-10-23T05:25:44.927Z',
   id: 'mockId',
-  priority: 'Normal',
   recipient: { communicationUserId: 'mockRecipientCommunicationUserId' },
-  sender: { communicationUserId: 'mockSenderCommunicationUserId' },
-  senderDisplayName: 'mockSenderDisplayName',
+  sender: { user: { communicationUserId: 'mockSenderCommunicationUserId' }, displayName: '' },
   threadId: 'mockThreadId',
   type: 'Text',
   version: 'mockVersion'
@@ -75,8 +73,10 @@ describe('useSubscribeMessage tests', () => {
     const mockAddMessage = jest.fn((messageEvent: ChatMessageReceivedEvent) => {
       const { threadId: _threadId, recipient: _recipient, ...newMessage } = {
         ...messageEvent,
-        priority: messageEvent.priority as ChatMessagePriority,
-        createdOn: new Date(messageEvent.createdOn)
+        sender: { communicationUserId: messageEvent.sender.user.communicationUserId },
+        content: { message: messageEvent.content },
+        createdOn: new Date(messageEvent.createdOn),
+        sequenceId: ''
       };
       messages = [...messages, newMessage];
     });

@@ -4,7 +4,7 @@
   "description": "ACS UI SDK",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
-  "types": "dist/communication-ui.d.ts",
+  "types": "dist/dist-esm/index.d.ts",
   "files": [
     "dist/"
   ],
@@ -29,9 +29,10 @@
   "dependencies": {
     "@azure/communication-administration": "1.0.0-beta.3",
     "@azure/communication-calling": "1.0.0-beta.2",
-    "@azure/communication-chat": "1.0.0-beta.3",
+    "@azure/communication-chat": "1.0.0-beta.4",
     "@azure/communication-common": "1.0.0-beta.3",
     "@azure/communication-signaling": "1.0.0-beta.1",
+    "@azure/communication-signaling-2": "npm:@azure/communication-signaling@1.0.0-beta.2",
     "@azure/core-http": "^1.2.3",
     "@fluentui/react": "^7.117.1",
     "@fluentui/react-icons": "^0.3.9",
@@ -40,6 +41,8 @@
     "@fluentui/react-theme-provider": "^0.18.0",
     "@uifabric/react-hooks": "~7.13.11",
     "copy-to-clipboard": "~3.3.1",
+    "@azure/acs-chat-declarative": "~1.0.0-beta",
+    "@azure/acs-chat-selector": "~1.0.0-beta",
     "react-aria-live": "^2.0.5",
     "react-linkify": "^1.0.0-alpha"
   },
@@ -53,7 +56,6 @@
     "@mdx-js/react": "^1.6.22",
     "@microsoft/api-documenter": "~7.12.11",
     "@microsoft/api-extractor": "~7.13.2",
-    "@rollup/plugin-commonjs": "~17.1.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react-hooks": "^3.4.2",
     "@types/jest": "^26.0.20",
@@ -95,8 +97,6 @@
     "react": "^16.13.1",
     "regenerator-runtime": "^0.13.7",
     "rollup": "~2.42.4",
-    "rollup-plugin-sourcemaps": "~0.6.3",
-    "rollup-plugin-svg": "~2.0.0",
     "source-map-explorer": "^2.5.0",
     "styled-components": "~5.2.1",
     "ts-jest": "^26.4.4",

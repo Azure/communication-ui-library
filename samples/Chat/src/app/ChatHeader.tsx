@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { DefaultButton, Icon, IconButton, Pivot, PivotItem, Stack } from '@fluentui/react';
 import React, { Dispatch } from 'react';
+import { DefaultButton, Icon, IconButton, Pivot, PivotItem, Stack } from '@fluentui/react';
 import { SettingsIcon, UserFriendsIcon } from '@fluentui/react-icons-northstar';
 import {
   chatHeaderContainerStyle,
@@ -16,30 +16,26 @@ import {
 } from './styles/ChatHeader.styles';
 import { SidePanelTypes } from './SidePanel';
 import { copyIconStyle } from './styles/InviteFooter.styles';
-import {
-  ChatThreadMember,
-  connectFuncsToContext,
-  ChatThreadMemberPropsFromContext,
-  MapToChatThreadMemberProps,
-  ChatTopicPropsFromContext,
-  MapToChatTopicProps,
-  MapToUserIdProps,
-  UserIdPropsFromContext
-} from '@azure/communication-ui';
+import { WebUiChatParticipant } from '@azure/acs-chat-selector';
+import { existsTopicName } from './utils/utils';
 
-export type ChatHeaderProps = UserIdPropsFromContext &
-  ChatTopicPropsFromContext &
-  ChatThreadMemberPropsFromContext & {
-    endChatHandler(): void;
-    existsTopicName: boolean;
-    selectedPane: SidePanelTypes;
-    setSelectedPane: Dispatch<SidePanelTypes>;
-  };
+export type ChatHeaderProps = {
+  userId: string;
+  topicName: string;
+  selectedPane: SidePanelTypes;
+  chatParticipants: WebUiChatParticipant[];
+  setSelectedPane: Dispatch<SidePanelTypes>;
+  endChatHandler(): void;
+  removeThreadMember?: (userId: string) => Promise<void>;
+  updateThreadTopicName: (topicName: string) => Promise<void>;
+};
 
-const generateDefaultHeaderMessage = (threadMembers: ChatThreadMember[], userId: string): string => {
+const generateDefaultHeaderMessage = (participants: WebUiChatParticipant[], userId: string): string => {
   let header = 'Chat with ';
 
-  const members = threadMembers?.filter((member: ChatThreadMember) => member.userId !== userId && member.displayName);
+  const members = participants?.filter(
+    (member: WebUiChatParticipant) => member.userId !== userId && member.displayName
+  );
 
   if (!members?.length) {
     header += 'yourself';
@@ -48,7 +44,7 @@ const generateDefaultHeaderMessage = (threadMembers: ChatThreadMember[], userId:
 
   // if we have at least one other participant we want to show names for the first 3
   const namedMembers = members.slice(0, 3);
-  header += namedMembers.map((member: ChatThreadMember) => member.displayName).join(', ');
+  header += namedMembers.map((member: WebUiChatParticipant) => member.displayName).join(', ');
 
   // if we have more than 3 other participants we want to show the number of other participants
   if (members.length > 3) {
@@ -59,7 +55,7 @@ const generateDefaultHeaderMessage = (threadMembers: ChatThreadMember[], userId:
   return header;
 };
 
-const ChatHeader = (props: ChatHeaderProps): JSX.Element => {
+export const ChatHeader = (props: ChatHeaderProps): JSX.Element => {
   const togglePeople = (selectedPane: SidePanelTypes, setSelectedPane: (pane: SidePanelTypes) => void): void => {
     selectedPane !== SidePanelTypes.People
       ? setSelectedPane(SidePanelTypes.People)
@@ -86,7 +82,9 @@ const ChatHeader = (props: ChatHeaderProps): JSX.Element => {
     <Stack className={chatHeaderContainerStyle} horizontal={true} horizontalAlign="space-between">
       <Stack.Item align="center">
         <div className={topicNameLabelStyle}>
-          {props.existsTopicName ? props.topicName : generateDefaultHeaderMessage(props.threadMembers, userId)}
+          {existsTopicName(props.topicName)
+            ? props.topicName
+            : generateDefaultHeaderMessage(props.chatParticipants, userId)}
         </div>
       </Stack.Item>
       <Stack.Item align="center">
@@ -155,5 +153,3 @@ const ChatHeader = (props: ChatHeaderProps): JSX.Element => {
     </Stack>
   );
 };
-
-export default connectFuncsToContext(ChatHeader, MapToChatTopicProps, MapToChatThreadMemberProps, MapToUserIdProps);

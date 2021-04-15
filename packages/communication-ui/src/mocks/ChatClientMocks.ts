@@ -55,7 +55,7 @@ export const createChatClient = (): ChatClientMock => {
       chatClientMock.startRealtimeNotifications.mockReset();
     },
     getChatThread: async (): Promise<ChatThread> => {
-      return { createdBy: { communicationUserId: 'userId' } };
+      return { createdBy: { communicationUserId: 'userId' }, id: '', topic: 'Empty', createdOn: new Date() };
     }
   };
   return chatClientMock;

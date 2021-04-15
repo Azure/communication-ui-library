@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect } from 'react';
 
-import { ReadReceipt } from '@azure/communication-chat';
+import { ChatMessageReadReceipt } from '@azure/communication-chat';
 import { useChatClient } from '../providers/ChatProviderHelper';
 import { useFetchReadReceipts } from './useFetchReadReceipts';
 import { useSetReceipts, useThreadId } from '../providers/ChatThreadProvider';
@@ -11,7 +11,7 @@ import { propagateError } from '../utils/SDKUtils';
 
 const subscribedTheadIdSet = new Set<string>();
 
-export const useSubscribeReadReceipt = (addReadReceipts?: (readReceipts: ReadReceipt[]) => void): void => {
+export const useSubscribeReadReceipt = (addReadReceipts?: (readReceipts: ChatMessageReadReceipt[]) => void): void => {
   const chatClient = useChatClient();
   const fetchReadReceipts = useFetchReadReceipts();
   const setReceipts = useSetReceipts();
@@ -19,7 +19,7 @@ export const useSubscribeReadReceipt = (addReadReceipts?: (readReceipts: ReadRec
   const onErrorCallback = useTriggerOnErrorCallback();
 
   const defaultAddReadReceipts = useCallback(
-    (readReceipts: ReadReceipt[]) => {
+    (readReceipts: ChatMessageReadReceipt[]) => {
       setReceipts(readReceipts);
     },
     [setReceipts]
@@ -34,7 +34,7 @@ export const useSubscribeReadReceipt = (addReadReceipts?: (readReceipts: ReadRec
       //   readOn: new Date(event.readOn)
       // };
       try {
-        const readReceipts: ReadReceipt[] = await fetchReadReceipts();
+        const readReceipts: ChatMessageReadReceipt[] = await fetchReadReceipts();
         addReadReceipts ? addReadReceipts(readReceipts) : defaultAddReadReceipts(readReceipts);
       } catch (error) {
         propagateError(error, onErrorCallback);
