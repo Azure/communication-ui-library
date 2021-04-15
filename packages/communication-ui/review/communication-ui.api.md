@@ -224,6 +224,9 @@ export interface MessageThreadStylesProps extends BaseCustomStylesProps {
     readReceiptContainer?: (mine: boolean) => IStyle;
 }
 
+// @public (undocumented)
+export type MessageTypes = 'chat' | 'system' | 'custom';
+
 // @public
 export const optionsButtonProps: IButtonProps;
 
