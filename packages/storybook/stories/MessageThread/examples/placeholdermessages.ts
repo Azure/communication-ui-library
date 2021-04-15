@@ -1,8 +1,8 @@
-import { Message, MessageStatus, MessageTypes } from '@azure/communication-ui';
+import { ChatMessage, CustomMessage, MessageStatus, SystemMessage } from '@azure/communication-ui';
 
 // This is some mock messages for example purposes.
 // For actual projects, you can get chat messages from declarative/selectors for ACS.
-export const GetHistoryChatMessages = (): Message<'chat'>[] => {
+export const GetHistoryChatMessages = (): ChatMessage[] => {
   return [
     {
       type: 'chat',
@@ -44,20 +44,20 @@ export const GetHistoryChatMessages = (): Message<'chat'>[] => {
   ];
 };
 
-export const GetHistoryWithSystemMessages = (): Message<MessageTypes>[] => {
+export const GetHistoryWithSystemMessages = (): (SystemMessage | ChatMessage)[] => {
   return [
     ...GetHistoryChatMessages(),
     {
       type: 'system',
       payload: {
-        type: 'ParticipantAdded',
+        iconName: 'ParticipantAdded',
         content: 'User1 is added to the chat'
       }
     }
   ];
 };
 
-export const GetHistoryWithCustomMessages = (): Message<MessageTypes>[] => {
+export const GetHistoryWithCustomMessages = (): (CustomMessage | ChatMessage)[] => {
   return [
     {
       type: 'custom',

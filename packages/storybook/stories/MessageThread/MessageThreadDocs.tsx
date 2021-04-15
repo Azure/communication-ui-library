@@ -3,7 +3,7 @@
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import React from 'react';
 import { MessageThread } from '@azure/communication-ui';
-const ExampleConstantsText = require('!!raw-loader!./examples/constants.ts').default;
+const ExampleConstantsText = require('!!raw-loader!./examples/placeholdermessages.ts').default;
 import { DefaultMessageThreadExample } from './examples/MessageThread.example';
 const DefaultMessageThreadExampleText = require('!!raw-loader!./examples/MessageThread.example.tsx').default;
 import { MessageThreadWithReadReceiptExample } from './examples/MessageThreadWithReadReceipt.example';
@@ -26,8 +26,8 @@ export const getDocs: () => JSX.Element = () => {
       <Description of={MessageThread} />
       <Heading>Sample Messages</Heading>
       <Description>
-        Create a `constants.ts` file in the current folder you are working on. Then copy paste the code below into that
-        file.
+        Create a `placeholdermessages.ts` file in the current folder you are working on. Then copy paste the code below
+        into that file.
       </Description>
       <Source code={ExampleConstantsText} />
       <Heading>Default MessageThread</Heading>

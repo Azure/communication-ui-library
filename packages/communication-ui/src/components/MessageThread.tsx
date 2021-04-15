@@ -165,16 +165,8 @@ const DefaultLoadPreviousMessagesButtonRenderer = (props: LoadPreviousMessagesBu
   );
 };
 
-export type DefaultChatMessageRendererType = (
-  message: ChatMessage,
-  todayDate: Date,
-  styles?: MessageThreadStylesProps
-) => JSX.Element;
-
-const DefaultChatMessageRenderer: DefaultChatMessageRendererType = (
-  message: ChatMessage,
-  todayDate: Date,
-  styles?: MessageThreadStylesProps
+const DefaultChatMessageRenderer: DefaultMessageRendererType = (
+  message: ChatMessage | SystemMessage | CustomMessage
 ) => {
   const payload: ChatMessagePayload = message.payload;
   const liveAuthor = `${payload.senderDisplayName} says `;
@@ -186,32 +178,31 @@ const DefaultChatMessageRenderer: DefaultChatMessageRendererType = (
   );
   return (
     <Chat.Message
-      styles={styles?.chatMessageContainer ?? chatMessageStyle}
+      styles={chatMessageStyle}
       content={messageContentItem}
       author={payload.senderDisplayName}
       mine={payload.mine}
-      timestamp={payload.createdOn ? formatTimestampForChatMessage(payload.createdOn, todayDate) : undefined}
+      timestamp={payload.createdOn ? formatTimestampForChatMessage(payload.createdOn, new Date()) : undefined}
     />
   );
 };
 
-export type DefaultSystemMessageRendererType = (
-  message: SystemMessage,
-  styles?: MessageThreadStylesProps
-) => JSX.Element;
+export type DefaultMessageRendererType = (message: ChatMessage | SystemMessage | CustomMessage) => JSX.Element;
 
-const DefaultSystemMessageRenderer: DefaultSystemMessageRendererType = (
-  message: SystemMessage,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  styles?: MessageThreadStylesProps
+const DefaultSystemMessageRenderer: DefaultMessageRendererType = (
+  message: ChatMessage | SystemMessage | CustomMessage
 ) => {
-  const payload: SystemMessagePayload = message.payload;
-  return (
-    <SystemMessageComponent
-      iconName={(payload.iconName ?? '') as SystemMessageIconTypes}
-      content={payload.content ?? ''}
-    />
-  );
+  if (message.type === 'system') {
+    const payload: SystemMessagePayload = message.payload;
+    return (
+      <SystemMessageComponent
+        iconName={(payload.iconName ?? '') as SystemMessageIconTypes}
+        content={payload.content ?? ''}
+      />
+    );
+  } else {
+    return <></>;
+  }
 };
 
 /**
@@ -223,7 +214,7 @@ export type MessageThreadProps = {
    */
   userId: string;
   /**
-   * The chat messages to render in chat thread. Chat messages need to have type `ChatMessage`
+   * The messages to render in message thread. Message can type `ChatMessage` or `SystemMessage` or `CustomMessage`.
    */
   messages: (ChatMessage | SystemMessage | CustomMessage)[];
   /**
@@ -274,11 +265,11 @@ export type MessageThreadProps = {
    */
   onRenderLoadPreviousMessagesButton?: (loadPreviousMessagesButton: LoadPreviousMessagesButtonProps) => JSX.Element;
   /**
-   * onRenderMessage event handler.
+   * onRenderMessage event handler. `defaultOnRender` is not provide for `CustomMessage` and is available for `ChatMessage` and `SystemMessage`.
    */
   onRenderMessage?: (
     message: ChatMessage | SystemMessage | CustomMessage,
-    defaultOnRender?: DefaultSystemMessageRendererType | DefaultChatMessageRendererType
+    defaultOnRender?: DefaultMessageRendererType
   ) => JSX.Element;
 };
 
@@ -453,9 +444,14 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
 
-  // To rerender the messages if app running across days(every new day chat time stamp need to be regenerated)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const todayDate = useMemo(() => new Date(), [new Date().toDateString()]);
+  // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp need to be regenerated)
+  const defaultChatMessageRenderer = useCallback(
+    (message: ChatMessage) => {
+      return DefaultChatMessageRenderer(message);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [new Date().toDateString()]
+  );
   const messagesToDisplay = useMemo(
     () =>
       messages.map(
@@ -465,7 +461,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             const showReadReceipt = !disableReadReceipt && payload.statusToRender;
             const chatMessageComponent =
               onRenderMessage === undefined
-                ? DefaultChatMessageRenderer(message, todayDate, styles)
+                ? defaultChatMessageRenderer(message)
                 : onRenderMessage(message as ChatMessage, DefaultChatMessageRenderer);
 
             return {
@@ -505,7 +501,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
           } else if (message.type === 'system') {
             const systemMessageComponent =
               onRenderMessage === undefined
-                ? DefaultSystemMessageRenderer(message, styles)
+                ? DefaultSystemMessageRenderer(message)
                 : onRenderMessage(message, DefaultSystemMessageRenderer);
 
             return {
@@ -520,7 +516,15 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
           }
         }
       ),
-    [messages, disableReadReceipt, onRenderMessage, todayDate, styles, onRenderAvatar, onRenderReadReceipt]
+    [
+      messages,
+      disableReadReceipt,
+      onRenderMessage,
+      defaultChatMessageRenderer,
+      styles,
+      onRenderAvatar,
+      onRenderReadReceipt
+    ]
   );
 
   return (

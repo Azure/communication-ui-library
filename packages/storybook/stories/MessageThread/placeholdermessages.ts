@@ -1,6 +1,12 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { MessageStatus, MessageAttachedStatus, Message, MessageTypes } from '@azure/communication-ui';
+import {
+  MessageStatus,
+  MessageAttachedStatus,
+  ChatMessage,
+  CustomMessage,
+  SystemMessage
+} from '@azure/communication-ui';
 
 export const MessageThreadContainerStyles = {
   width: '100%',
@@ -30,7 +36,7 @@ const UserThree = {
   senderDisplayName: 'User3'
 };
 
-export const GenerateMockNewChatMessage = (): Message<'chat'> => {
+export const GenerateMockNewChatMessage = (): ChatMessage => {
   return {
     type: 'chat',
     payload: {
@@ -45,7 +51,7 @@ export const GenerateMockNewChatMessage = (): Message<'chat'> => {
   };
 };
 
-export const GenerateMockNewChatMessageFromOthers = (): Message<'chat'> => {
+export const GenerateMockNewChatMessageFromOthers = (): ChatMessage => {
   return {
     type: 'chat',
     payload: {
@@ -59,17 +65,17 @@ export const GenerateMockNewChatMessageFromOthers = (): Message<'chat'> => {
   };
 };
 
-export const GenerateMockSystemMessage = (): Message<'system'> => {
+export const GenerateMockSystemMessage = (): SystemMessage => {
   return {
     type: 'system',
     payload: {
-      type: 'ParticipantAdded',
+      iconName: 'ParticipantAdded',
       content: 'User1 added User2 to the chat and shared all chat history.'
     }
   };
 };
 
-export const GenerateMockCustomMessage = (): Message<'custom'> => {
+export const GenerateMockCustomMessage = (): CustomMessage => {
   return {
     type: 'custom',
     // Custom message's payload can be any shape, this is just an example.
@@ -80,7 +86,7 @@ export const GenerateMockCustomMessage = (): Message<'custom'> => {
   };
 };
 
-export const GenerateMockHistoryChatMessages = (): Message<MessageTypes>[] => {
+export const GenerateMockHistoryChatMessages = (): ChatMessage[] => {
   return [
     {
       type: 'chat',
@@ -118,7 +124,7 @@ export const GenerateMockHistoryChatMessages = (): Message<MessageTypes>[] => {
   ];
 };
 
-export const GenerateMockChatMessages = (): Message<'chat'>[] => {
+export const GenerateMockChatMessages = (): ChatMessage[] => {
   return [
     {
       type: 'chat',

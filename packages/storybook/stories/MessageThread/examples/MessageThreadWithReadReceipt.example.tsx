@@ -1,6 +1,6 @@
 import { FluentThemeProvider, MessageThread } from '@azure/communication-ui';
 import React from 'react';
-import { GetHistoryChatMessages } from './constants';
+import { GetHistoryChatMessages } from './placeholdermessages';
 
 export const MessageThreadWithReadReceiptExample: () => JSX.Element = () => {
   // Show the read receipt of messages that I sent by setting 'disableReadReceipt' prop to be false.
