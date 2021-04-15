@@ -44,6 +44,7 @@ export const useOutgoingCall = (): UseOutgoingCallType => {
     }
 
     const newCall = callAgent.startCall([receiver], { videoOptions, audioOptions });
+    console.log('newCall', newCall);
     setCall(newCall);
 
     // Listen to Remote Participant screen share stream

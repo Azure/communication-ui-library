@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 import { CallingContext } from '../providers';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { CommunicationUiErrorCode, CommunicationUiError } from '../types/CommunicationUiError';
 import { useTriggerOnErrorCallback } from '../providers/ErrorProvider';
 import { propagateError } from '../utils/SDKUtils';
@@ -21,6 +21,16 @@ export default (permissionType: DevicePermissionType): void => {
   }
   const { deviceManager, setAudioDevicePermission, setVideoDevicePermission } = context;
   const [devicePermissionState, setDevicePermissionState] = useState<DevicePermissionState>('Unknown');
+  const mounted = useRef(false);
+
+  // With new SDK, the permissions all happen async. Make sure not up try to update state if the component was already
+  // unmounted.
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  });
 
   useEffect(() => {
     if (!deviceManager || devicePermissionState === 'Granted' || devicePermissionState === 'Denied') return;
@@ -30,11 +40,17 @@ export default (permissionType: DevicePermissionType): void => {
         try {
           if (permissionType === 'Microphone') {
             const access = await deviceManager.askDevicePermission({ video: false, audio: true });
+            if (!mounted.current) {
+              return;
+            }
             const permissionState = access.audio ? 'Granted' : 'Denied';
             setDevicePermissionState(permissionState);
             setAudioDevicePermission(permissionState);
           } else if (permissionType === 'Camera') {
             const access = await deviceManager.askDevicePermission({ video: true, audio: false });
+            if (!mounted.current) {
+              return;
+            }
             const permissionState = access.video ? 'Granted' : 'Denied';
             setDevicePermissionState(permissionState);
             setVideoDevicePermission(permissionState);
