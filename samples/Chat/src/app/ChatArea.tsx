@@ -24,12 +24,6 @@ export const ChatArea = (props: ChatAreaProps): JSX.Element => {
   const ErrorBar = useMemo(() => {
     return connectFuncsToContext(ErrorBarComponent, MapToErrorBarProps);
   }, []);
-  // const TypingIndicator = useMemo(() => {
-  //   return connectFuncsToContext(
-  //     (props: TypingIndicatorProps & ErrorHandlingProps) => WithErrorHandling(TypingIndicatorComponent, props),
-  //     MapToTypingIndicatorProps
-  //   );
-  // }, []);
 
   // onRenderAvatar is a contoso callback. We need it to support emoji in Sample App. Sample App is currently on
   // components v0 so we're passing the callback at the component level. This might need further refactoring if this

@@ -9,3 +9,4 @@ export type { UiChatMessage, MessageAttachedStatus } from './types/UiChatMessage
 export type { BaseSelectorProps } from './baseSelectors';
 export type { DefaultHandlers, CommonProperties } from './handlers/createHandlers';
 export type { WebUiChatParticipant } from './types/WebUiChatParticipant';
+export type { TypingUser } from './types/TypingUser';

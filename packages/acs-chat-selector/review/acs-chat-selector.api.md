@@ -12,6 +12,7 @@ import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
 import { MessageStatus } from '@azure/acs-chat-declarative';
 import { ReactElement } from 'react';
 import * as reselect from 'reselect';
+import { TypingIndicator } from '@azure/acs-chat-declarative';
 
 // @public (undocumented)
 export type BaseSelectorProps = {
@@ -73,6 +74,21 @@ export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState,
     userId: string;
     disabled: boolean;
 }>;
+
+// @public (undocumented)
+export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
+    typingUsers: TypingUser[];
+    typingString: string;
+}, (res1: TypingIndicator[], res2: Map<string, ChatParticipant>, res3: string) => {
+    typingUsers: TypingUser[];
+    typingString: string;
+}>;
+
+// @public (undocumented)
+export type TypingUser = {
+    displayName: string;
+    prefixImageUrl: string;
+};
 
 // @public
 export type UiChatMessage = {
