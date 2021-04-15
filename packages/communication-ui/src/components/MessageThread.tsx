@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Linkify from 'react-linkify';
-import { Button, Chat, ChatItemProps, Flex, Ref } from '@fluentui/react-northstar';
+import { Button, Chat, ChatItemProps, Flex, Ref, ShorthandValue } from '@fluentui/react-northstar';
 import {
   DownIconStyle,
   newMessageButtonContainerStyle,
@@ -309,6 +309,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   // Used to decide if should auto scroll to bottom or show "new message" button
   const [latestPreviousMessage, setLatestPreviousMessage] = useState<ChatMessagePayload | undefined>(undefined);
   const [latestCurrentMessage, setLatestCurrentMessage] = useState<ChatMessagePayload | undefined>(undefined);
+  const [lastSeenMessageId, setLastSeenMessageId] = useState<string | undefined>(undefined);
   const [existsNewMessage, setExistsNewMessage] = useState<boolean>(false);
 
   const chatScrollDivRef: any = useRef();
@@ -339,7 +340,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   };
 
   // we try to only send those read receipt if user is scrolled to the bottom.
-  const sendReadReceiptIfAtBottom = useCallback((): void => {
+  const sendReadReceiptIfAtBottom = useCallback(async (): Promise<void> => {
     if (
       !isAtBottomOfScrollRef.current ||
       !document.hasFocus() ||
@@ -350,15 +351,27 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       return;
     }
     const messagesWithId = chatMessagesRef.current.filter((message) => {
-      return message.type === 'chat' && !!message.payload.messageId;
+      return message.type === 'chat' && !message.payload.mine && !!message.payload.messageId;
     });
     if (messagesWithId.length === 0) {
       return;
     }
     const lastMessage: ChatMessage = messagesWithId[messagesWithId.length - 1] as ChatMessage;
 
-    onMessageSeen && lastMessage.payload.messageId && onMessageSeen(lastMessage.payload.messageId);
-  }, [disableReadReceipt, onMessageSeen]);
+    try {
+      if (
+        onMessageSeen &&
+        lastMessage &&
+        lastMessage.payload.messageId &&
+        lastMessage.payload.messageId !== lastSeenMessageId
+      ) {
+        await onMessageSeen(lastMessage.payload.messageId);
+        setLastSeenMessageId(lastMessage.payload.messageId);
+      }
+    } catch (e) {
+      console.log('onMessageSeen Error', lastMessage, e);
+    }
+  }, [disableReadReceipt, onMessageSeen, lastSeenMessageId]);
 
   const scrollToBottom = useCallback((): void => {
     chatScrollDivRef.current.scrollTop = chatScrollDivRef.current.scrollHeight;
@@ -455,7 +468,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const messagesToDisplay = useMemo(
     () =>
       messages.map(
-        (message: ChatMessage | SystemMessage | CustomMessage): ChatItemProps => {
+        (message: ChatMessage | SystemMessage | CustomMessage, index: number): ShorthandValue<ChatItemProps> => {
           if (message.type === 'chat') {
             const payload: ChatMessagePayload = message.payload;
             const showReadReceipt = !disableReadReceipt && payload.statusToRender;
@@ -496,7 +509,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
                   </div>
                 </Flex>
               ),
-              attached: payload.attached
+              attached: payload.attached,
+              key: index
             };
           } else if (message.type === 'system') {
             const systemMessageComponent =
@@ -505,13 +519,15 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
                 : onRenderMessage(message, DefaultSystemMessageRenderer);
 
             return {
-              children: systemMessageComponent
+              children: systemMessageComponent,
+              key: index
             };
           } else {
             // We do not handle custom type message by default, users can handle custom type by using onRenderMessage function.
             const customMessageComponent = onRenderMessage === undefined ? <></> : onRenderMessage(message);
             return {
-              children: customMessageComponent
+              children: customMessageComponent,
+              key: index
             };
           }
         }
