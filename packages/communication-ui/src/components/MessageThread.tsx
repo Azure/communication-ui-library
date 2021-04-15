@@ -22,7 +22,7 @@ import { formatTimestampForChatMessage } from '../utils';
 import { CLICK_TO_LOAD_MORE_MESSAGES, NEW_MESSAGES } from '../constants';
 import { BaseCustomStylesProps, ChatMessage as WebUiChatMessage } from '../types';
 import { ReadReceipt, ReadReceiptProps } from './ReadReceipt';
-import { memoizeAll } from '../utils/memoizeAll';
+import { memoizeAll } from '@azure/acs-chat-selector';
 
 const isMessageSame = (first: WebUiChatMessage, second: WebUiChatMessage): boolean => {
   return (
