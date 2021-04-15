@@ -16,7 +16,6 @@ const IncomingCallAlertACSWrapper = (props: IncomingCallToastProps & { call: Inc
   const [callerName, setCallerName] = useState<string | undefined>(undefined);
 
   useEffect(() => {
-    console.log('incoming call', call);
     setCallerName(call.callerInfo.displayName);
   }, [call]);
 
