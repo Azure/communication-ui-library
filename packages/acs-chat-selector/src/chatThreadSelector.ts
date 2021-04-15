@@ -14,32 +14,48 @@ import { ChatMessageContent, ChatParticipant } from '@azure/communication-chat';
 import { ChatClientState } from '@azure/acs-chat-declarative';
 // @ts-ignore
 import { BaseSelectorProps } from './baseSelectors';
+import { memoizeAll } from './utils/memoizeAll';
+
+const memoizedAllConvertChatMessage = memoizeAll(
+  (
+    _key: string,
+    chatMessage: ChatMessageWithStatus,
+    userId: string,
+    isSeen: boolean,
+    isLargeGroup: boolean
+  ): UiChatMessage => ({
+    createdOn: chatMessage.createdOn,
+    content: chatMessage.content?.message,
+    status: !isLargeGroup && chatMessage.status === 'delivered' && isSeen ? 'seen' : chatMessage.status,
+    senderDisplayName: chatMessage.senderDisplayName,
+    senderId: chatMessage.sender?.communicationUserId || userId,
+    messageId: chatMessage.id,
+    clientMessageId: chatMessage.clientMessageId,
+    statusToRender: chatMessage.status === 'failed' ? 'failed' : undefined
+  })
+);
 
 export const chatThreadSelector = createSelector(
   [getUserId, getChatMessages, getLatestReadTime, getIsLargeGroup],
   (userId, chatMessages, latestReadTime, isLargeGroup) => {
     // A function takes parameter above and generate return value
-    const chatMessagesWithStatus: UiChatMessage[] = Array.from(chatMessages.values()).map(
-      (chatMessage: ChatMessageWithStatus) => ({
-        createdOn: chatMessage.createdOn,
-        content: chatMessage.content?.message,
-        status:
-          !isLargeGroup && chatMessage.status === 'delivered' && chatMessage.createdOn < latestReadTime
-            ? 'seen'
-            : chatMessage.status,
-        senderDisplayName: chatMessage.senderDisplayName,
-        senderId: chatMessage.sender?.communicationUserId || userId,
-        messageId: chatMessage.id,
-        clientMessageId: chatMessage.clientMessageId,
-        statusToRender: chatMessage.status === 'failed' ? 'failed' : undefined
-      })
+    const convertedMessages = memoizedAllConvertChatMessage((memoizedFn) =>
+      Array.from(chatMessages.values()).map((message) =>
+        memoizedFn(
+          message.id ?? message.clientMessageId,
+          message,
+          userId,
+          message.createdOn <= latestReadTime,
+          isLargeGroup
+        )
+      )
     );
 
-    updateMessagesWithAttached(chatMessagesWithStatus, userId, isLargeGroup);
+    updateMessagesWithAttached(convertedMessages, userId, isLargeGroup);
     return {
       userId,
       disableReadReceipt: false,
-      chatMessages: chatMessagesWithStatus
+      chatMessages: convertedMessages
     };
   }
 );

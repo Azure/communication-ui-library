@@ -22,6 +22,7 @@ import { formatTimestampForChatMessage } from '../utils';
 import { CLICK_TO_LOAD_MORE_MESSAGES, NEW_MESSAGES } from '../constants';
 import { BaseCustomStylesProps, ChatMessage as WebUiChatMessage } from '../types';
 import { ReadReceipt, ReadReceiptProps } from './ReadReceipt';
+import { memoizeAll } from '../utils/memoizeAll';
 
 const isMessageSame = (first: WebUiChatMessage, second: WebUiChatMessage): boolean => {
   return (
@@ -163,6 +164,65 @@ const DefaultLoadPreviousMessagesButton = (props: LoadPreviousMessagesButtonProp
     />
   );
 };
+
+const memoizeAllMessages = memoizeAll(
+  (
+    _messageKey: string,
+    message: WebUiChatMessage,
+    disableReadReceipt: boolean,
+    onRenderAvatar: ((userId: string) => JSX.Element) | undefined,
+    styles: MessageThreadStylesProps | undefined,
+    onRenderReadReceipt: ((readReceiptProps: ReadReceiptProps) => JSX.Element | null) | undefined,
+    todayDate: Date
+  ): ChatItemProps => {
+    const liveAuthor = `${message.senderDisplayName} says `;
+    const messageContentItem = (
+      <div>
+        <LiveMessage message={`${message.mine ? '' : liveAuthor} ${message.content}`} aria-live="polite" />
+        <Linkify>{message.content}</Linkify>
+      </div>
+    );
+    const showReadReceipt = !disableReadReceipt && message.statusToRender;
+    return {
+      gutter: message.mine ? (
+        ''
+      ) : onRenderAvatar ? (
+        onRenderAvatar(message.senderId ?? '')
+      ) : (
+        <Persona text={message.senderDisplayName} hidePersonaDetails={true} size={PersonaSize.size32} />
+      ),
+      contentPosition: message.mine ? 'end' : 'start',
+      message: (
+        <Flex vAlign="end">
+          <Chat.Message
+            styles={styles?.chatMessageContainer ?? chatMessageStyle}
+            content={messageContentItem}
+            author={message.senderDisplayName}
+            mine={message.mine}
+            timestamp={message.createdOn ? formatTimestampForChatMessage(message.createdOn, todayDate) : undefined}
+          />
+          <div
+            className={mergeStyles(
+              readReceiptContainerStyle(message.mine ?? false),
+              styles?.readReceiptContainer ? styles.readReceiptContainer(message.mine ?? false) : ''
+            )}
+          >
+            {showReadReceipt ? (
+              onRenderReadReceipt ? (
+                onRenderReadReceipt({ messageStatus: message.statusToRender })
+              ) : (
+                ReadReceipt({ messageStatus: message.statusToRender })
+              )
+            ) : (
+              <div className={mergeStyles(noReadReceiptStyle)} />
+            )}
+          </div>
+        </Flex>
+      ),
+      attached: message.attached
+    };
+  }
+);
 
 /**
  * Props for MessageThread component
@@ -402,58 +462,20 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const todayDate = useMemo(() => new Date(), [new Date().toDateString()]);
   const messagesToDisplay = useMemo(
     () =>
-      chatMessages.map(
-        (message: any): ChatItemProps => {
-          const liveAuthor = `${message.senderDisplayName} says `;
-          const messageContentItem = (
-            <div>
-              <LiveMessage message={`${message.mine ? '' : liveAuthor} ${message.content}`} aria-live="polite" />
-              <Linkify>{message.content}</Linkify>
-            </div>
-          );
-          const showReadReceipt = !disableReadReceipt && message.statusToRender;
-          return {
-            gutter: message.mine ? (
-              ''
-            ) : onRenderAvatar ? (
-              onRenderAvatar(message.senderId)
-            ) : (
-              <Persona text={message.senderDisplayName} hidePersonaDetails={true} size={PersonaSize.size32} />
-            ),
-            contentPosition: message.mine ? 'end' : 'start',
-            message: (
-              <Flex vAlign="end">
-                <Chat.Message
-                  styles={styles?.chatMessageContainer ?? chatMessageStyle}
-                  content={messageContentItem}
-                  author={message.senderDisplayName}
-                  mine={message.mine}
-                  timestamp={
-                    message.createdOn ? formatTimestampForChatMessage(message.createdOn, todayDate) : undefined
-                  }
-                />
-                <div
-                  className={mergeStyles(
-                    readReceiptContainerStyle(message.mine),
-                    styles?.readReceiptContainer ? styles.readReceiptContainer(message.mine) : ''
-                  )}
-                >
-                  {showReadReceipt ? (
-                    onRenderReadReceipt ? (
-                      onRenderReadReceipt({ messageStatus: message.statusToRender })
-                    ) : (
-                      ReadReceipt({ messageStatus: message.statusToRender })
-                    )
-                  ) : (
-                    <div className={mergeStyles(noReadReceiptStyle)} />
-                  )}
-                </div>
-              </Flex>
-            ),
-            attached: message.attached
-          };
-        }
-      ),
+      memoizeAllMessages((memoizedMessageFn) => {
+        return chatMessages.map(
+          (message: WebUiChatMessage): ChatItemProps =>
+            memoizedMessageFn(
+              message.messageId ?? message.clientMessageId ?? '',
+              message,
+              disableReadReceipt,
+              onRenderAvatar,
+              styles,
+              onRenderReadReceipt,
+              todayDate
+            )
+        );
+      }),
     [styles, disableReadReceipt, chatMessages, onRenderAvatar, onRenderReadReceipt, todayDate]
   );
 
