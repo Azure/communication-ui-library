@@ -1,32 +1,27 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { mergeStyles, Stack } from '@fluentui/react';
-import { ParticipantAddIcon, ParticipantRemoveIcon } from '@fluentui/react-northstar';
+import { FontIcon, mergeStyles, Stack } from '@fluentui/react';
+// import { EditIcon, ParticipantAddIcon, ParticipantRemoveIcon } from '@fluentui/react-northstar';
 import React from 'react';
 import { systemMessageContentStyle, systemMessageIconStyle } from './styles/SystemMessage.styles';
 
 // Todo: We need to add more types of system messages that we support.
-export type SystemMessageIconTypes = 'ParticipantAdded' | 'ParticipantRemoved';
+export type SystemMessageIconTypes = 'PeopleAdd' | 'PeopleBlock' | 'Edit';
 
 export type SystemMessageProps = {
+  /**
+   * Icon name for the system message. iconName should match the iconName in fluentUI icon.
+   */
   iconName: SystemMessageIconTypes;
+  /**
+   * Content string for the system message.
+   */
   content: string;
 };
 
 export const SystemMessage = (props: SystemMessageProps): JSX.Element => {
   const { iconName, content } = props;
-  let Icon: JSX.Element | undefined = undefined;
-
-  switch (iconName) {
-    case 'ParticipantAdded': {
-      Icon = <ParticipantAddIcon className={mergeStyles(systemMessageIconStyle)} />;
-      break;
-    }
-    case 'ParticipantRemoved': {
-      Icon = <ParticipantRemoveIcon className={mergeStyles(systemMessageIconStyle)} />;
-      break;
-    }
-  }
+  const Icon: JSX.Element = <FontIcon iconName={iconName} className={mergeStyles(systemMessageIconStyle)} />;
 
   return (
     <Stack horizontal>

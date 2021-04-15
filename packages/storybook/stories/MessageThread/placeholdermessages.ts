@@ -69,7 +69,7 @@ export const GenerateMockSystemMessage = (): SystemMessage => {
   return {
     type: 'system',
     payload: {
-      iconName: 'ParticipantAdded',
+      iconName: 'PeopleAdd',
       content: 'User1 added User2 to the chat and shared all chat history.'
     }
   };

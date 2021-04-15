@@ -50,7 +50,7 @@ export const GetHistoryWithSystemMessages = (): (SystemMessage | ChatMessage)[] 
     {
       type: 'system',
       payload: {
-        iconName: 'ParticipantAdded',
+        iconName: 'PeopleAdd',
         content: 'User1 is added to the chat'
       }
     }
