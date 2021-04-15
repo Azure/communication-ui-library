@@ -20,6 +20,15 @@ export type BaseSelectorProps = {
 };
 
 // @public (undocumented)
+export const chatHeaderSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
+    userId: string;
+    topicName: string;
+}, (res1: string, res2: string) => {
+    userId: string;
+    topicName: string;
+}>;
+
+// @public (undocumented)
 export const chatParticipantListSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
     userId: string;
     displayName: string;
@@ -54,6 +63,8 @@ export type DefaultHandlers = {
     onMessageSend: (content: string) => Promise<void>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
     onTyping: () => Promise<void>;
+    removeThreadMember: (userId: string) => Promise<void>;
+    updateThreadTopicName: (topicName: string) => Promise<void>;
 };
 
 // @public (undocumented)
