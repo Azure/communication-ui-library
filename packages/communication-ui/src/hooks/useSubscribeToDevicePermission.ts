@@ -29,12 +29,12 @@ export default (permissionType: DevicePermissionType): void => {
       if (devicePermissionState === 'Unknown') {
         try {
           if (permissionType === 'Microphone') {
-            const access = await deviceManager.askDevicePermission({ video: true, audio: false });
+            const access = await deviceManager.askDevicePermission({ video: false, audio: true });
             const permissionState = access.audio ? 'Granted' : 'Denied';
             setDevicePermissionState(permissionState);
             setAudioDevicePermission(permissionState);
           } else if (permissionType === 'Camera') {
-            const access = await deviceManager.askDevicePermission({ video: false, audio: true });
+            const access = await deviceManager.askDevicePermission({ video: true, audio: false });
             const permissionState = access.video ? 'Granted' : 'Denied';
             setDevicePermissionState(permissionState);
             setVideoDevicePermission(permissionState);

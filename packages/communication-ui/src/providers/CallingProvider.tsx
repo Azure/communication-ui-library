@@ -56,7 +56,7 @@ const CallingProviderBase = (props: CallingProviderProps & ErrorHandlingProps): 
 
   // if there is no valid token then there is no valid userId
   const userIdFromToken = token ? getIdFromToken(token) : '';
-  const [callClient, setCallClient] = useState<CallClient>(new CallClient({}));
+  const [callClient, setCallClient] = useState<CallClient>(new CallClient(callClientOptions));
   const [callAgent, setCallAgent] = useState<CallAgent | undefined>(undefined);
   const [deviceManager, setDeviceManager] = useState<DeviceManager | undefined>(undefined);
   const [userId, setUserId] = useState<string>(userIdFromToken);
@@ -75,19 +75,22 @@ const CallingProviderBase = (props: CallingProviderProps & ErrorHandlingProps): 
   }, [refreshTokenCallback]);
 
   useEffect(() => {
-    if (!token) return;
-
     (async () => {
       try {
-        setCallClient(new CallClient(callClientOptions));
-        const callAgent = await callClient.createCallAgent(
-          createAzureCommunicationUserCredential(token, refreshTokenCallbackRefContainer.current),
-          { displayName: displayName }
-        );
-        setCallAgent(callAgent);
-
-        const deviceManager = await callClient.getDeviceManager();
-        setDeviceManager(deviceManager);
+        // Need refactor: to support having ConfigurationScreen separate from GroupCall in Calling Sample, we need to
+        // allow DeviceManager to be created but not create CallAgent because ConfigurationScreen depends on
+        // DeviceManager but CallAgent depends on ConfigurationScreen displayName. So the CallingProvider used by
+        // ConfigurationScreen will pass in undefined token while all other cases like when CallingProvider is used by
+        // GroupCall or used in composite, you should pass in the valid token.
+        if (token) {
+          setCallAgent(
+            await callClient.createCallAgent(
+              createAzureCommunicationUserCredential(token, refreshTokenCallbackRefContainer.current),
+              { displayName: displayName }
+            )
+          );
+        }
+        setDeviceManager(await callClient.getDeviceManager());
       } catch (error) {
         throw new CommunicationUiError({
           message: 'Error creating call agent',
@@ -98,17 +101,7 @@ const CallingProviderBase = (props: CallingProviderProps & ErrorHandlingProps): 
     })().catch((error) => {
       propagateError(error, onErrorCallback);
     });
-  }, [
-    token,
-    callClient,
-    setCallAgent,
-    setDeviceManager,
-    callClientOptions,
-    setCallClient,
-    refreshTokenCallbackRefContainer,
-    onErrorCallback,
-    displayName
-  ]);
+  }, [token, callClient, refreshTokenCallbackRefContainer, displayName, onErrorCallback]);
 
   // Clean up callAgent whenever the callAgent or userTokenCredential is changed. This is required because callAgent itself is a singleton.
   // We need to clean up before creating another one.
