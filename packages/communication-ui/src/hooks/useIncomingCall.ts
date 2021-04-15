@@ -10,7 +10,7 @@ export type UseIncomingCallType = {
 };
 
 export const useIncomingCall = (): UseIncomingCallType => {
-  const { incomingCalls } = useIncomingCallsContext();
+  const { incomingCalls, setIncomingCalls } = useIncomingCallsContext();
   const { setCall, localVideoStream, setScreenShareStream, screenShareStream } = useCallContext();
 
   /** Accept an incoming calls and set it as the active call. */
@@ -25,6 +25,15 @@ export const useIncomingCall = (): UseIncomingCallType => {
 
     const call = await incomingCall.accept({ videoOptions });
     setCall(call);
+
+    // Remove the accepted incomingCall from incomingCalls
+    const incomingCallsFiltered: IncomingCall[] = [];
+    for (const incomingCallCandidate of incomingCalls) {
+      if (incomingCallCandidate !== incomingCall) {
+        incomingCallsFiltered.push(incomingCallCandidate);
+      }
+    }
+    setIncomingCalls(incomingCallsFiltered);
 
     // Listen to Remote Participant screen share stream
     // Should we move this logic to CallProvider ?
