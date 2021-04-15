@@ -8,7 +8,7 @@ import { SlideOutPanelComponent } from './SlideOutPanel';
 import { useSelector } from './hooks/useSelector';
 import { useThreadId } from '@azure/communication-ui';
 import { useHandlers } from './hooks/useHandlers';
-import { chatParticipantListSelector, chatHeaderSelector } from '@azure/acs-chat-selector';
+import { chatParticipantListSelector, chatSettingsSelector } from '@azure/acs-chat-selector';
 
 export enum SidePanelTypes {
   None = 'none',
@@ -26,7 +26,7 @@ export const SidePanel = (props: SelectedPaneProps): JSX.Element => {
   const { selectedPane, setSelectedPane, onRenderAvatar } = props;
   const chatParticipantProps = useSelector(chatParticipantListSelector, { threadId: useThreadId() });
   const chatParticipantHandlers = useHandlers(ParticipantManagement);
-  const chatSettingsProps = useSelector(chatHeaderSelector, { threadId: useThreadId() });
+  const chatSettingsProps = useSelector(chatSettingsSelector, { threadId: useThreadId() });
   const chatSettingsHandlers = useHandlers(SettingsManagementComponent);
 
   return (

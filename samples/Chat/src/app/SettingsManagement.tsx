@@ -15,7 +15,6 @@ import {
 } from './styles/SettingsManagement.styles';
 import { inputBoxTextStyle } from './styles/SidePanel.styles';
 import { ENTER_KEY, MAXIMUM_LENGTH_OF_TOPIC, ThemeSelector } from '@azure/communication-ui';
-import { existsTopicName } from './utils/utils';
 
 export type SettingsManagementProps = {
   updateThreadTopicName: (topicName: string) => Promise<void>;
@@ -92,8 +91,8 @@ export const SettingsManagementComponent = (props: SettingsManagementProps): JSX
             className={isTopicNameOverflow ? settingsGroupNameInputBoxWarningStyle : settingsGroupNameInputBoxStyle}
             inputClassName={inputBoxTextStyle}
             borderless={true}
-            defaultValue={isEditingTopicName ? edittedTopicName : existsTopicName(topicName) ? topicName : ''}
-            placeholder={existsTopicName(topicName) ? undefined : 'Type a group name'}
+            defaultValue={isEditingTopicName ? edittedTopicName : topicName ? topicName : ''}
+            placeholder={topicName ? undefined : 'Type a group name'}
             autoComplete="off"
             onSubmit={onTopicNameSubmit}
             onChange={onTopicNameTextChange}
