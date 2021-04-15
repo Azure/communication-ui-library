@@ -14,9 +14,15 @@ export * from './providers/SwitchableFluentThemeProvider';
 
 export type {
   BaseCustomStylesProps,
-  ChatMessage,
   CommunicationUiErrorSeverity,
   MessageAttachedStatus,
   MessageStatus,
-  TypingUser
+  TypingUser,
+  Message,
+  MessageTypes,
+  ChatMessage,
+  SystemMessage,
+  CustomMessage,
+  SystemMessagePayload,
+  ChatMessagePayload
 } from './types';
