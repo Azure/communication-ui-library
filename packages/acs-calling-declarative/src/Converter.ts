@@ -17,7 +17,8 @@ import {
   RemoteParticipant as DeclarativeRemoteParticipant,
   RemoteVideoStream as DeclarativeRemoteVideoStream,
   LocalVideoStream as DeclarativeLocalVideoStream,
-  IncomingCall as DeclarativeIncomingCall
+  IncomingCall as DeclarativeIncomingCall,
+  RemoteParticipant
 } from './CallClientState';
 
 export function convertSdkLocalStreamToDeclarativeLocalStream(
@@ -99,7 +100,10 @@ export function convertSdkCallToDeclarativeCall(call: SdkCall): DeclarativeCall 
     isMuted: call.isMuted,
     isScreenSharingOn: call.isScreenSharingOn,
     localVideoStreams: call.localVideoStreams.map(convertSdkLocalStreamToDeclarativeLocalStream),
-    remoteParticipants: declarativeRemoteParticipants
+    remoteParticipants: declarativeRemoteParticipants,
+    remoteParticipantsEnded: new Map<string, RemoteParticipant>(),
+    startTime: new Date(),
+    endTime: undefined
   };
 }
 
@@ -107,6 +111,7 @@ export function convertSdkIncomingCallToDeclarativeIncomingCall(call: SdkIncomin
   return {
     id: call.id,
     callerInfo: call.callerInfo,
-    callEnded: false
+    startTime: new Date(),
+    endTime: undefined
   };
 }
