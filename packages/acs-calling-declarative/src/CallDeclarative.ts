@@ -22,14 +22,14 @@ class ProxyCall implements ProxyHandler<Call> {
       case 'mute': {
         return (): Promise<void> => {
           return target.mute().then(() => {
-            this._context.setCallIsMicrophoneMuted(this._call.id, this._call.isMicrophoneMuted);
+            this._context.setCallIsMicrophoneMuted(this._call.id, this._call.isMuted);
           });
         };
       }
       case 'unmute': {
         return (): Promise<void> => {
           return target.unmute().then(() => {
-            this._context.setCallIsMicrophoneMuted(this._call.id, this._call.isMicrophoneMuted);
+            this._context.setCallIsMicrophoneMuted(this._call.id, this._call.isMuted);
           });
         };
       }

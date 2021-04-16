@@ -196,7 +196,7 @@ export class CallContext {
       produce(this._state, (draft: CallClientState) => {
         const call = draft.calls.get(callId);
         if (call) {
-          call.isMicrophoneMuted = isMicrophoneMuted;
+          call.isMuted = isMicrophoneMuted;
         }
       })
     );

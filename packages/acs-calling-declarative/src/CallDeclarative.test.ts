@@ -16,11 +16,10 @@ describe('declarative call', () => {
     mockCall.callerInfo = { identifier: { kind: 'communicationUser' } } as CallerInfo;
     mockCall.state = 'None';
     mockCall.direction = 'Incoming';
-    mockCall.isMicrophoneMuted = false;
+    mockCall.isMuted = false;
     mockCall.isScreenSharingOn = false;
     mockCall.localVideoStreams = [];
     mockCall.remoteParticipants = [];
-    mockCall.isMicrophoneMuted = false;
     mockCall.mute = () => {
       return Promise.resolve();
     };
@@ -33,14 +32,14 @@ describe('declarative call', () => {
 
     const declarativeCall = callDeclaratify(mockCall, context);
 
-    mockCall.isMicrophoneMuted = true;
+    mockCall.isMuted = true;
     await declarativeCall.mute();
 
-    expect(context.getState().calls.get(mockCallId)?.isMicrophoneMuted).toBe(true);
+    expect(context.getState().calls.get(mockCallId)?.isMuted).toBe(true);
 
-    mockCall.isMicrophoneMuted = false;
+    mockCall.isMuted = false;
     await declarativeCall.unmute();
 
-    expect(context.getState().calls.get(mockCallId)?.isMicrophoneMuted).toBe(false);
+    expect(context.getState().calls.get(mockCallId)?.isMuted).toBe(false);
   });
 });
