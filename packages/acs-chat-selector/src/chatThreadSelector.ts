@@ -3,7 +3,6 @@ import { getChatMessages, getIsLargeGroup, getLatestReadTime, getUserId } from '
 import { ChatMessageWithStatus, MessageStatus } from '@azure/acs-chat-declarative';
 import { createSelector } from 'reselect';
 import { compareMessages } from './utils/compareMessages';
-import { MessageAttachedStatus, UiChatMessage } from './types/UiChatMessage';
 // The following need explicitly imported to avoid api-extractor issues.
 // These can be removed once https://github.com/microsoft/rushstack/pull/1916 is fixed.
 // @ts-ignore
@@ -14,24 +13,29 @@ import { ChatMessageContent, ChatParticipant } from '@azure/communication-chat';
 import { ChatClientState } from '@azure/acs-chat-declarative';
 // @ts-ignore
 import { BaseSelectorProps } from './baseSelectors';
+// @ts-ignore
+import { ChatMessage, MessageAttachedStatus, Message } from './types/UiChatMessage';
 
 export const chatThreadSelector = createSelector(
   [getUserId, getChatMessages, getLatestReadTime, getIsLargeGroup],
   (userId, chatMessages, latestReadTime, isLargeGroup) => {
     // A function takes parameter above and generate return value
-    const chatMessagesWithStatus: UiChatMessage[] = Array.from(chatMessages.values()).map(
+    const chatMessagesWithStatus: ChatMessage[] = Array.from(chatMessages.values()).map(
       (chatMessage: ChatMessageWithStatus) => ({
-        createdOn: chatMessage.createdOn,
-        content: chatMessage.content?.message,
-        status:
-          !isLargeGroup && chatMessage.status === 'delivered' && chatMessage.createdOn < latestReadTime
-            ? 'seen'
-            : chatMessage.status,
-        senderDisplayName: chatMessage.senderDisplayName,
-        senderId: chatMessage.sender?.communicationUserId || userId,
-        messageId: chatMessage.id,
-        clientMessageId: chatMessage.clientMessageId,
-        statusToRender: chatMessage.status === 'failed' ? 'failed' : undefined
+        type: 'chat',
+        payload: {
+          createdOn: chatMessage.createdOn,
+          content: chatMessage.content?.message,
+          status:
+            !isLargeGroup && chatMessage.status === 'delivered' && chatMessage.createdOn < latestReadTime
+              ? 'seen'
+              : chatMessage.status,
+          senderDisplayName: chatMessage.senderDisplayName,
+          senderId: chatMessage.sender?.communicationUserId || userId,
+          messageId: chatMessage.id,
+          clientMessageId: chatMessage.clientMessageId,
+          statusToRender: chatMessage.status === 'failed' ? 'failed' : undefined
+        }
       })
     );
 
@@ -39,29 +43,29 @@ export const chatThreadSelector = createSelector(
     return {
       userId,
       disableReadReceipt: false,
-      chatMessages: chatMessagesWithStatus
+      messages: chatMessagesWithStatus
     };
   }
 );
 
 // we only attach statusToRender to the last message with matched status
-const attachLastStatusToRender = (messages: UiChatMessage[], status: MessageStatus): void => {
-  const messagesToFind = messages.filter((message) => message.mine && message.status === status);
+const attachLastStatusToRender = (messages: ChatMessage[], status: MessageStatus): void => {
+  const messagesToFind = messages.filter((message) => message.payload.mine && message.payload.status === status);
   const lastMessageWithStatus = messagesToFind[messagesToFind.length - 1];
   if (messagesToFind.length > 0) {
-    lastMessageWithStatus.statusToRender = lastMessageWithStatus.status;
+    lastMessageWithStatus.payload.statusToRender = lastMessageWithStatus.payload.status;
   }
 };
 
 export const updateMessagesWithAttached = (
-  chatMessagesWithStatus: UiChatMessage[],
+  chatMessagesWithStatus: ChatMessage[],
   userId: string,
   isLargeGroup: boolean
 ): void => {
   chatMessagesWithStatus.sort(compareMessages);
 
   chatMessagesWithStatus.forEach((message, index, messages) => {
-    const mine = message.senderId === userId;
+    const mine = message.payload.senderId === userId;
     /**
      * A block of messages: continuous messages that belong to the same sender and not intercepted by other senders.
      *
@@ -73,15 +77,15 @@ export const updateMessagesWithAttached = (
     if (index === 0) {
       if (index !== messages.length - 1) {
         //the next message has the same sender
-        if (messages[index].senderId === messages[index + 1].senderId) {
+        if (messages[index].payload.senderId === messages[index + 1].payload.senderId) {
           attached = MessageAttachedStatus.TOP;
         }
       }
     } else {
-      if (messages[index].senderId === messages[index - 1].senderId) {
+      if (messages[index].payload.senderId === messages[index - 1].payload.senderId) {
         //the previous message has the same sender
         if (index !== messages.length - 1) {
-          if (messages[index].senderId === messages[index + 1].senderId) {
+          if (messages[index].payload.senderId === messages[index + 1].payload.senderId) {
             //the next message has the same sender
             attached = true;
           } else {
@@ -95,15 +99,15 @@ export const updateMessagesWithAttached = (
       } else {
         //the previous message has a different sender
         if (index !== messages.length - 1) {
-          if (messages[index].senderId === messages[index + 1].senderId) {
+          if (messages[index].payload.senderId === messages[index + 1].payload.senderId) {
             //the next message has the same sender
             attached = MessageAttachedStatus.TOP;
           }
         }
       }
     }
-    message.attached = attached;
-    message.mine = mine;
+    message.payload.attached = attached;
+    message.payload.mine = mine;
   });
 
   attachLastStatusToRender(chatMessagesWithStatus, 'delivered');

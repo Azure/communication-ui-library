@@ -29,6 +29,23 @@ export const chatHeaderSelector: reselect.OutputParametricSelector<ChatClientSta
 }>;
 
 // @public (undocumented)
+export type ChatMessage = Message<'chat'>;
+
+// @public
+export type ChatMessagePayload = {
+    messageId?: string;
+    content?: string;
+    createdOn?: Date;
+    senderId?: string;
+    senderDisplayName?: string;
+    statusToRender?: MessageStatus;
+    status?: MessageStatus;
+    attached?: MessageAttachedStatus | boolean;
+    mine?: boolean;
+    clientMessageId?: string;
+};
+
+// @public (undocumented)
 export const chatParticipantListSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
     userId: string;
     displayName: string;
@@ -43,11 +60,11 @@ export const chatParticipantListSelector: reselect.OutputParametricSelector<Chat
 export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
     userId: string;
     disableReadReceipt: boolean;
-    chatMessages: UiChatMessage[];
+    messages: Message<"chat">[];
 }, (res1: string, res2: Map<string, ChatMessageWithStatus>, res3: Date, res4: boolean) => {
     userId: string;
     disableReadReceipt: boolean;
-    chatMessages: UiChatMessage[];
+    messages: Message<"chat">[];
 }>;
 
 // @public (undocumented)
@@ -59,12 +76,23 @@ export type CommonProperties<A, B> = {
 export const createDefaultHandlersForComponent: <Props>(chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultHandlers, CommonProperties<DefaultHandlers, Props>>;
 
 // @public (undocumented)
+export type CustomMessage = Message<'custom'>;
+
+// @public (undocumented)
 export type DefaultHandlers = {
     onMessageSend: (content: string) => Promise<void>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
     onTyping: () => Promise<void>;
     removeThreadMember: (userId: string) => Promise<void>;
     updateThreadTopicName: (topicName: string) => Promise<void>;
+};
+
+// @public (undocumented)
+export type Message<T extends MessageTypes> = {
+    type: T;
+    payload: T extends 'chat' ? ChatMessagePayload : T extends 'system' ? SystemMessagePayload : {
+        [name: string]: any;
+    };
 };
 
 // @public (undocumented)
@@ -76,6 +104,9 @@ export enum MessageAttachedStatus {
 }
 
 // @public (undocumented)
+export type MessageTypes = 'chat' | 'system' | 'custom';
+
+// @public (undocumented)
 export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
     displayName: string;
     userId: string;
@@ -85,6 +116,15 @@ export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState,
     userId: string;
     disabled: boolean;
 }>;
+
+// @public (undocumented)
+export type SystemMessage = Message<'system'>;
+
+// @public (undocumented)
+export type SystemMessagePayload = {
+    content?: string;
+    iconName?: string;
+};
 
 // @public (undocumented)
 export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
@@ -99,20 +139,6 @@ export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClie
 export type TypingUser = {
     displayName: string;
     prefixImageUrl: string;
-};
-
-// @public
-export type UiChatMessage = {
-    messageId?: string;
-    content?: string;
-    createdOn?: Date;
-    senderId?: string;
-    senderDisplayName?: string;
-    statusToRender?: MessageStatus;
-    status?: MessageStatus;
-    attached?: MessageAttachedStatus | boolean;
-    mine?: boolean;
-    clientMessageId?: string;
 };
 
 // @public (undocumented)

@@ -2,207 +2,63 @@
 
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import React from 'react';
-import {
-  FluentThemeProvider,
-  THEMES,
-  MessageThread,
-  ChatMessage as WebUiChatMessage,
-  MessageStatus
-} from '@azure/communication-ui';
-import { Persona, PersonaPresence, PersonaSize } from '@fluentui/react';
-
-const importStatement = `
-import React from 'react';
-// We need to wrap MessageThread component with the FluentThemeProvider and pass the THEMES you'd like to use to the provider.
-import {
-  MessageThread,
-  ChatMessage as WebUiChatMessage,
-  MessageStatus,
-  FluentThemeProvider,
-  THEMES
-} from '@azure/communication-ui';
-`;
-
-const dataStatement = `
-// This is some mock messages for example purposes.
-// For actual projects, you can get chat messages from declarative/selectors for ACS.
-const GetHistoryChatMessages = (): WebUiChatMessage[] => {
-  return [
-    {
-      senderId: '1',
-      senderDisplayName: 'User1',
-      messageId: Math.random().toString(),
-      content: 'Hi everyone, I created this awesome group chat for us!',
-      createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
-      mine: true,
-      attached: false,
-      statusToRender: 'seen' as MessageStatus
-    },
-    {
-      senderId: '2',
-      senderDisplayName: 'User2',
-      messageId: Math.random().toString(),
-      content: 'Nice! This looks great!',
-      createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
-      mine: false,
-      attached: false
-    },
-    {
-      senderId: '3',
-      senderDisplayName: 'User3',
-      messageId: Math.random().toString(),
-      content: "Yeah agree, let's chat here from now on!",
-      createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
-      mine: false,
-      attached: false
-    }
-  ];
-};
-`;
-
-const defaultMessageThreadUsageCode = `
-const DefaultMessageThreadExample: () => JSX.Element = () => {
-  // userId and chatMessages are required props.
-  return (
-    <FluentThemeProvider fluentTheme={THEMES['light']}>
-      <MessageThread
-        userId={'1'}
-        chatMessages={GetHistoryChatMessages()}
-      />
-    </FluentThemeProvider>
-  );
-};
-`;
-
-const chatThreadWithReadReceiptUsageCode = `
-const MessageThreadWithReadReceiptExample: () => JSX.Element = () => {
-  // Show the read receipt of messages that I sent by setting 'disableReadReceipt' prop to be false.
-  // You can also set your own read receipt component by passing in onRenderReadReceipt of type (readReceiptComponentProps: ReadReceiptProps) => JSX.Element.
-  return (
-    <FluentThemeProvider fluentTheme={THEMES['light']}>
-      <MessageThread userId={'1'} chatMessages={GetHistoryChatMessages()} disableReadReceipt={false}/>
-    </FluentThemeProvider>
-  );
-};
-`;
-
-const chatThreadWithCustomAvatarExample = `
-import { Persona, PersonaPresence, PersonaSize } from '@fluentui/react';
-
-const MessageThreadWithCustomAvatarExample: () => JSX.Element = () => {
-  // Customize the Avatar of other participants to be a Persona component from Fluent and show the presence status on the avatar.
-  return (
-    <FluentThemeProvider fluentTheme={THEMES['light']}>
-      <MessageThread
-        userId={'1'}
-        chatMessages={GetHistoryChatMessages()}
-        onRenderAvatar={(userId: string) => {
-          return (
-            <Persona
-              size={PersonaSize.size32}
-              hidePersonaDetails
-              presence={PersonaPresence.online}
-              text={userId}
-            />
-          )
-        }}
-      />
-    </FluentThemeProvider>
-  );
-};
-`;
-
-export const GetHistoryChatMessages = (): WebUiChatMessage[] => {
-  return [
-    {
-      senderId: '1',
-      senderDisplayName: 'User1',
-      messageId: Math.random().toString(),
-      content: 'Hi everyone, I created this awesome group chat for us!',
-      createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
-      mine: true,
-      attached: false,
-      statusToRender: 'seen' as MessageStatus
-    },
-    {
-      senderId: '2',
-      senderDisplayName: 'User2',
-      messageId: Math.random().toString(),
-      content: 'Nice! This looks great!',
-      createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
-      mine: false,
-      attached: false
-    },
-    {
-      senderId: '3',
-      senderDisplayName: 'User3',
-      messageId: Math.random().toString(),
-      content: "Yeah agree, let's chat here from now on!",
-      createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
-      mine: false,
-      attached: false
-    }
-  ];
-};
-
-const DefaultMessageThreadExample: () => JSX.Element = () => {
-  return (
-    <FluentThemeProvider fluentTheme={THEMES['light']}>
-      <MessageThread userId={'1'} chatMessages={GetHistoryChatMessages()} />
-    </FluentThemeProvider>
-  );
-};
-
-const MessageThreadWithReadReceiptExample: () => JSX.Element = () => {
-  // Show the read receipt of messages that I sent by setting 'disableReadReceipt' prop to be false.
-  return (
-    <FluentThemeProvider fluentTheme={THEMES['light']}>
-      <MessageThread userId={'1'} chatMessages={GetHistoryChatMessages()} disableReadReceipt={false} />
-    </FluentThemeProvider>
-  );
-};
-
-const MessageThreadWithCustomAvatarExample: () => JSX.Element = () => {
-  // Customize the Avatar of other participants to be a Persona component from Fluent and show the presence status on the avatar.
-  return (
-    <FluentThemeProvider fluentTheme={THEMES['light']}>
-      <MessageThread
-        userId={'1'}
-        chatMessages={GetHistoryChatMessages()}
-        onRenderAvatar={(userId: string) => {
-          return (
-            <Persona size={PersonaSize.size32} hidePersonaDetails presence={PersonaPresence.online} text={userId} />
-          );
-        }}
-      />
-    </FluentThemeProvider>
-  );
-};
+import { MessageThread } from '@azure/communication-ui';
+const ExampleConstantsText = require('!!raw-loader!./examples/placeholdermessages.ts').default;
+import { DefaultMessageThreadExample } from './examples/MessageThread.example';
+const DefaultMessageThreadExampleText = require('!!raw-loader!./examples/MessageThread.example.tsx').default;
+import { MessageThreadWithReadReceiptExample } from './examples/MessageThreadWithReadReceipt.example';
+const MessageThreadWithReadReceiptExampleText = require('!!raw-loader!./examples/MessageThreadWithReadReceipt.example.tsx')
+  .default;
+import { MessageThreadWithCustomAvatarExample } from './examples/MessageThreadWithCustomAvatar.example';
+const MessageThreadWithCustomAvatarExampleText = require('!!raw-loader!./examples/MessageThreadWithCustomAvatar.example.tsx')
+  .default;
+import { MessageThreadWithSystemMessagesExample } from './examples/MessageThreadWithSystemMessages.example';
+const MessageThreadWithSystemMessagesExampleText = require('!!raw-loader!./examples/MessageThreadWithSystemMessages.example.tsx')
+  .default;
+import { MessageThreadWithCustomMessagesExample } from './examples/MessageThreadWithCustomMessages.example';
+const MessageThreadWithCustomMessagesExampleText = require('!!raw-loader!./examples/MessageThreadWithCustomMessages.example.tsx')
+  .default;
 
 export const getDocs: () => JSX.Element = () => {
   return (
     <>
       <Title>MessageThread</Title>
       <Description of={MessageThread} />
-      <Heading>Importing</Heading>
-      <Source code={importStatement} />
       <Heading>Sample Messages</Heading>
-      <Source code={dataStatement} />
+      <Description>
+        Create a `placeholdermessages.ts` file in the current folder you are working on. Then copy paste the code below
+        into that file.
+      </Description>
+      <Source code={ExampleConstantsText} />
       <Heading>Default MessageThread</Heading>
       <Canvas>
         <DefaultMessageThreadExample />
       </Canvas>
-      <Source code={defaultMessageThreadUsageCode} />
+      <Source code={DefaultMessageThreadExampleText} />
+      <Heading>System Message</Heading>
+      <Description>The example below shows a message thread with a system message.</Description>
+      <Canvas>
+        <MessageThreadWithSystemMessagesExample />
+      </Canvas>
+      <Source code={MessageThreadWithSystemMessagesExampleText} />
+      <Heading>Custom Message</Heading>
+      <Description>
+        The example below shows how to render a `custom` message with `onRenderCustomMessage` in `MessageThread`
+      </Description>
+      <Canvas>
+        <MessageThreadWithCustomMessagesExample />
+      </Canvas>
+      <Source code={MessageThreadWithCustomMessagesExampleText} />
       <Heading>Read Receipt</Heading>
       <Canvas>
         <MessageThreadWithReadReceiptExample />
       </Canvas>
-      <Source code={chatThreadWithReadReceiptUsageCode} />
+      <Source code={MessageThreadWithReadReceiptExampleText} />
       <Heading>Customized Avatar</Heading>
       <Canvas>
         <MessageThreadWithCustomAvatarExample />
       </Canvas>
-      <Source code={chatThreadWithCustomAvatarExample} />
+      <Source code={MessageThreadWithCustomAvatarExampleText} />
       <Description>
         Note: You can view the details of the
         [Persona](https://developer.microsoft.com/en-us/fluentui#/controls/web/persona) component
