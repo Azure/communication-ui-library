@@ -7,23 +7,21 @@ import { BaseSelectorProps, getTypingIndicators, getParticipants, getUserId } fr
 import * as reselect from 'reselect';
 import { ChatParticipant } from '@azure/communication-chat';
 import { TypingIndicator } from '@azure/acs-chat-declarative';
-import { TypingUser } from './types/TypingUser';
+import { WebUiChatParticipant } from './types/WebUiChatParticipant';
 
 const MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS = 8000;
 const PARTICIPANTS_THRESHOLD = 20;
-const MAXIMUM_LENGTH_OF_TYPING_USERS = 35;
 
 const filterTypingIndicators = (typingIndicators: TypingIndicator[], userId: string): TypingIndicator[] => {
   const filteredTypingIndicators: TypingIndicator[] = [];
   const seen = new Set();
-  const dateNow = new Date();
-  const date5SecondsAgo = new Date(dateNow.getTime() - MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS);
+  const date8SecondsAgo = new Date(Date.now() - MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS);
   for (let i = typingIndicators.length - 1; i >= 0; i--) {
     const typingIndicator = typingIndicators[i];
     if (typingIndicator.sender.user.communicationUserId === userId) {
       continue;
     }
-    if (typingIndicator.receivedOn < date5SecondsAgo) {
+    if (typingIndicator.receivedOn < date8SecondsAgo) {
       // assuming typingIndicators is ordered from oldest to newest so we don't need to check the rest
       break;
     }
@@ -36,29 +34,14 @@ const filterTypingIndicators = (typingIndicators: TypingIndicator[], userId: str
   return filteredTypingIndicators;
 };
 
-const convertSdkTypingIndicatorsToTypingUsers = (
+const convertSdkTypingIndicatorsToWebUiChatParticipants = (
   typingIndicators: TypingIndicator[],
   participants: Map<string, ChatParticipant>
-): TypingUser[] => {
-  const typingUsersMentioned: TypingUser[] = [];
-  let countOfUsersMentioned = 0;
-  let totalCharacterCount = 0;
-
-  for (const typingIndicator of typingIndicators) {
-    const displayName = participants.get(typingIndicator.sender.user.communicationUserId)?.displayName ?? 'unknown';
-    countOfUsersMentioned += 1;
-    // The typing users above will be separated by ', '. We account for that additional length and with this length in
-    // mind we generate the final string.
-    const additionalCharCount = 2 * (countOfUsersMentioned - 1) + displayName.length;
-    if (totalCharacterCount + additionalCharCount <= MAXIMUM_LENGTH_OF_TYPING_USERS || countOfUsersMentioned === 1) {
-      typingUsersMentioned.push({ prefixImageUrl: '', displayName });
-      totalCharacterCount += additionalCharCount;
-    } else {
-      break;
-    }
-  }
-
-  return typingUsersMentioned;
+): WebUiChatParticipant[] => {
+  return typingIndicators.map((typingIndicator) => ({
+    userId: typingIndicator.sender.user.communicationUserId,
+    displayName: participants.get(typingIndicator.sender.user.communicationUserId)?.displayName ?? 'unknown'
+  }));
 };
 
 export const typingIndicatorSelector = reselect.createSelector(
@@ -68,24 +51,14 @@ export const typingIndicatorSelector = reselect.createSelector(
     const filteredTypingIndicators = filterTypingIndicators(typingIndicators, userId);
 
     if (filteredTypingIndicators.length === 0 || participants.size >= PARTICIPANTS_THRESHOLD) {
-      return { typingUsers: [], typingString: '' };
+      return { typingUsers: [] };
     }
 
-    const typingUsersMentioned: TypingUser[] = convertSdkTypingIndicatorsToTypingUsers(
+    const typingUsers: WebUiChatParticipant[] = convertSdkTypingIndicatorsToWebUiChatParticipants(
       filteredTypingIndicators,
       participants
     );
 
-    let typingString = '';
-    const countOfUsersNotMentioned = filteredTypingIndicators.length - typingUsersMentioned.length;
-    if (countOfUsersNotMentioned > 0) {
-      typingString = ` and ${countOfUsersNotMentioned} other${countOfUsersNotMentioned === 1 ? '' : 's'}`;
-    }
-    typingString += filteredTypingIndicators.length > 1 ? ' are typing...' : ' is typing...';
-
-    return {
-      typingUsers: typingUsersMentioned,
-      typingString: typingString
-    };
+    return { typingUsers };
   }
 );

@@ -128,18 +128,10 @@ export type SystemMessagePayload = {
 
 // @public (undocumented)
 export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
-    typingUsers: TypingUser[];
-    typingString: string;
+    typingUsers: WebUiChatParticipant[];
 }, (res1: TypingIndicator[], res2: Map<string, ChatParticipant>, res3: string) => {
-    typingUsers: TypingUser[];
-    typingString: string;
+    typingUsers: WebUiChatParticipant[];
 }>;
-
-// @public (undocumented)
-export type TypingUser = {
-    displayName: string;
-    prefixImageUrl: string;
-};
 
 // @public (undocumented)
 export type WebUiChatParticipant = {

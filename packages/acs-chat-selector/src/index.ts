@@ -19,4 +19,3 @@ export type {
 export type { BaseSelectorProps } from './baseSelectors';
 export type { DefaultHandlers, CommonProperties } from './handlers/createHandlers';
 export type { WebUiChatParticipant } from './types/WebUiChatParticipant';
-export type { TypingUser } from './types/TypingUser';

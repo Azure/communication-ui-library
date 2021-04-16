@@ -9,12 +9,12 @@ import { COMPONENT_FOLDER_PREFIX } from '../constants';
 export const TypingIndicatorComponent: () => JSX.Element = () => {
   const typingUsers = object('Typing Users', [
     {
-      displayName: 'User1',
-      prefixImageUrl: ''
+      userId: '1',
+      displayName: 'User1'
     },
     {
-      displayName: 'User2',
-      prefixImageUrl: ''
+      userId: '2',
+      displayName: 'User2'
     }
   ]);
   const typingString = text('Typing String', ' and 5 others are typing...');

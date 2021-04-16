@@ -3,12 +3,11 @@
 import {
   typingIndicatorContainerStyle,
   typingIndicatorListStyle,
-  typingIndicatorVerbStyle,
-  typingIndicatorPrefixImageStyle
+  typingIndicatorVerbStyle
 } from './styles/TypingIndicator.styles';
 
 import React from 'react';
-import { BaseCustomStylesProps, TypingUser } from '../types';
+import { BaseCustomStylesProps, WebUiChatParticipant } from '../types';
 import { IStyle, mergeStyles } from '@fluentui/react';
 
 export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
@@ -25,9 +24,11 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
  */
 export interface TypingIndicatorProps {
   /** List of the typing users. */
-  typingUsers: TypingUser[];
+  typingUsers: WebUiChatParticipant[];
   /** The string to render after listing all users' display name. For example ' are typing ...'. */
-  typingString: string;
+  typingString?: string;
+  /** Callback to render each typing user */
+  renderUserDisplayName?: (user: WebUiChatParticipant) => JSX.Element;
   /**
    * Allows users to pass in an object contains custom CSS styles.
    * @Example
@@ -37,6 +38,8 @@ export interface TypingIndicatorProps {
    */
   styles?: TypingIndicatorStylesProps;
 }
+
+const MAXIMUM_LENGTH_OF_TYPING_USERS = 35;
 
 /**
  * React component that handles displaying a typing indicator on the screen.
@@ -54,30 +57,49 @@ export interface TypingIndicatorProps {
  * @returns ReactElement
  */
 export const TypingIndicator = (props: TypingIndicatorProps): JSX.Element => {
-  const displayComponents: JSX.Element[] = [];
-  const { typingUsers, typingString, styles } = props;
+  const { typingUsers, renderUserDisplayName, styles } = props;
 
-  typingUsers.map((typingUser: TypingUser, index: number) => {
-    if (typingUser.prefixImageUrl.length !== 0) {
-      displayComponents.push(
-        <img
-          key={'typing indicator prefix ' + index.toString()}
-          className={mergeStyles(typingIndicatorPrefixImageStyle, styles?.typingUserImage)}
-          src={typingUser.prefixImageUrl}
-          alt={'typing indicator prefix avatar/profile/icon'}
-        />
-      );
+  const displayComponents: JSX.Element[] = [];
+
+  const typingUsersMentioned: WebUiChatParticipant[] = [];
+  let countOfUsersMentioned = 0;
+  let totalCharacterCount = 0;
+
+  for (const typingUser of typingUsers) {
+    const displayName = typingUser?.displayName ?? 'unknown';
+    countOfUsersMentioned += 1;
+    // The typing users above will be separated by ', '. We account for that additional length and with this length in
+    // mind we generate the final string.
+    const additionalCharCount = 2 * (countOfUsersMentioned - 1) + displayName.length;
+    if (totalCharacterCount + additionalCharCount <= MAXIMUM_LENGTH_OF_TYPING_USERS || countOfUsersMentioned === 1) {
+      typingUsersMentioned.push(typingUser);
+      totalCharacterCount += additionalCharCount;
+    } else {
+      break;
     }
+  }
+
+  typingUsersMentioned.forEach((typingUser, index) => {
     displayComponents.push(
-      <span
-        className={mergeStyles(typingIndicatorListStyle, styles?.typingUserDisplayName)}
-        key={'typing indicator display string ' + index.toString()}
-      >
-        {index < typingUsers.length - 1 ? typingUser.displayName + ', ' : typingUser.displayName}
-      </span>
+      renderUserDisplayName ? (
+        renderUserDisplayName(typingUser)
+      ) : (
+        <span
+          className={mergeStyles(typingIndicatorListStyle, styles?.typingUserDisplayName)}
+          key={'typing indicator display string ' + index.toString()}
+        >
+          {index < typingUsers.length - 1 ? typingUser.displayName + ', ' : typingUser.displayName}
+        </span>
+      )
     );
-    return undefined;
   });
+
+  let typingString = '';
+  const countOfUsersNotMentioned = typingUsers.length - typingUsersMentioned.length;
+  if (countOfUsersNotMentioned > 0) {
+    typingString = ` and ${countOfUsersNotMentioned} other${countOfUsersNotMentioned === 1 ? '' : 's'}`;
+  }
+  typingString += typingUsers.length > 0 ? (typingUsers.length > 1 ? ' are typing...' : ' is typing...') : '';
 
   return (
     <div className={mergeStyles(typingIndicatorContainerStyle, styles?.root)}>

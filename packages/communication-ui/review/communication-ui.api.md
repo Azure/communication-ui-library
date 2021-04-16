@@ -360,9 +360,10 @@ export const TypingIndicator: (props: TypingIndicatorProps) => JSX.Element;
 
 // @public
 export interface TypingIndicatorProps {
+    renderUserDisplayName?: (user: WebUiChatParticipant) => JSX.Element;
     styles?: TypingIndicatorStylesProps;
-    typingString: string;
-    typingUsers: TypingUser[];
+    typingString?: string;
+    typingUsers: WebUiChatParticipant[];
 }
 
 // @public (undocumented)
@@ -371,12 +372,6 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
     typingUserDisplayName?: IStyle;
     typingUserImage?: IStyle;
 }
-
-// @public (undocumented)
-export type TypingUser = {
-    displayName: string;
-    prefixImageUrl: string;
-};
 
 // @public
 export const useSwitchableFluentTheme: () => SwitchableFluentThemeContext;
@@ -402,6 +397,12 @@ export interface VideoTileStylesProps extends BaseCustomStylesProps {
     overlayContainer?: IStyle;
     videoContainer?: IStyle;
 }
+
+// @public
+export type WebUiChatParticipant = {
+    userId: string;
+    displayName?: string;
+};
 
 
 // (No @packageDocumentation comment for this package)
