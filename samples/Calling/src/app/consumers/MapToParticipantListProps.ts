@@ -16,8 +16,8 @@ type ParticipantListContainerProps = {
 };
 
 export const MapToParticipantListProps = (): ParticipantListContainerProps => {
-  const { userId } = useCallingContext();
-  const { call, participants, displayName } = useCallContext();
+  const { userId, displayName } = useCallingContext();
+  const { call, participants } = useCallContext();
 
   const remoteParticipants = participants.map((p) =>
     convertSdkRemoteParticipantToListParticipant(p, call ? () => call.removeParticipant(p.identifier) : undefined)
@@ -28,6 +28,6 @@ export const MapToParticipantListProps = (): ParticipantListContainerProps => {
     isScreenSharingOn: call?.isScreenSharingOn ?? false,
     displayName: displayName,
     userId: userId,
-    isMuted: call?.isMicrophoneMuted ?? false
+    isMuted: call?.isMuted ?? false
   };
 };

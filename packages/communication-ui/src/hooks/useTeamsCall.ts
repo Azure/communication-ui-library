@@ -1,12 +1,12 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { AudioOptions, Call, HangupCallOptions, JoinCallOptions } from '@azure/communication-calling';
+import { AudioOptions, Call, HangUpOptions, JoinCallOptions } from '@azure/communication-calling';
 import { useCallback } from 'react';
 import { CommunicationUiErrorCode, CommunicationUiError } from '../types/CommunicationUiError';
 import { useCallingContext, useCallContext } from '../providers';
 
 export type UseTeamsCallType = {
-  leave: (hangupCallOptions: HangupCallOptions) => Promise<void>;
+  leave: (hangupCallOptions: HangUpOptions) => Promise<void>;
   join: (meetingLink: string, joinCallOptions?: JoinCallOptions) => Call;
 };
 
@@ -42,7 +42,7 @@ export const useTeamsCall = (): UseTeamsCallType => {
   );
 
   const leave = useCallback(
-    async (hangupCallOptions: HangupCallOptions): Promise<void> => {
+    async (hangupCallOptions: HangUpOptions): Promise<void> => {
       if (!call) {
         throw new CommunicationUiError({
           message: 'Call is invalid',

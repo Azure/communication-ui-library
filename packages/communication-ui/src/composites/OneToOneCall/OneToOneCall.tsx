@@ -59,8 +59,13 @@ export const OneToOneCall = (props: OneToOneCallCompositeProps): JSX.Element => 
 
   return (
     <ErrorProvider onErrorCallback={onErrorCallback}>
-      <CallingProvider token={token} callClientOptions={callClientOptions} refreshTokenCallback={refreshTokenCallback}>
-        <CallProvider displayName={displayName}>
+      <CallingProvider
+        token={token}
+        displayName={displayName}
+        callClientOptions={callClientOptions}
+        refreshTokenCallback={refreshTokenCallback}
+      >
+        <CallProvider>
           {(() => {
             switch (page) {
               case 'landing': {

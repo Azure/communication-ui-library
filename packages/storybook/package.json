@@ -19,8 +19,8 @@
   },
   "dependencies": {
     "@azure/communication-administration": "1.0.0-beta.3",
-    "@azure/communication-calling": "1.0.0-beta.2",
-    "@azure/communication-chat": "1.0.0-beta.3",
+    "@azure/communication-calling": "1.0.1-beta.1",
+    "@azure/communication-chat": "1.0.0-beta.4",
     "@azure/communication-common": "1.0.0-beta.3",
     "@azure/communication-signaling": "1.0.0-beta.1",
     "@azure/communication-ui": "1.0.0-beta",

@@ -9,8 +9,8 @@ export default (): void => {
   useEffect(() => {
     if (!deviceManager || audioDevicePermission !== 'Granted') return;
 
-    function promptAudioDevices(deviceManager: DeviceManager): void {
-      const microphoneList: AudioDeviceInfo[] = deviceManager.getMicrophoneList();
+    async function promptAudioDevices(deviceManager: DeviceManager): Promise<void> {
+      const microphoneList: AudioDeviceInfo[] = await deviceManager.getMicrophones();
       setAudioDeviceList(microphoneList);
       if (microphoneList.length > 0) setAudioDeviceInfo(microphoneList[0]);
     }

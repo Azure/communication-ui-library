@@ -35,11 +35,11 @@ const defaultDisplayName = (localStorageAvailable && getDisplayNameFromLocalStor
 
 const App = (): JSX.Element => {
   const [page, setPage] = useState('home');
-  const [subpage, setSubpage] = useState('configuration');
   const [groupId, setGroupId] = useState('');
   const [screenWidth, setScreenWidth] = useState(window?.innerWidth ?? 0);
   const [token, setToken] = useState('');
   const [userId, setUserId] = useState('');
+  const [displayName, setDisplayName] = useState('');
 
   useEffect(() => {
     const setWindowWidth = (): void => {
@@ -80,6 +80,29 @@ const App = (): JSX.Element => {
             />
           );
         }
+        case 'configuration': {
+          return (
+            <ErrorProvider
+              onErrorCallback={(error: CommunicationUiErrorInfo) =>
+                console.error('onErrorCallback received error:', error)
+              }
+            >
+              <CallingProvider
+                token={''}
+                displayName={displayName ? displayName : defaultDisplayName}
+                refreshTokenCallback={refreshTokenAsync(userId)}
+              >
+                <CallProvider>
+                  <ConfigurationScreen
+                    screenWidth={screenWidth}
+                    startCallHandler={(): void => setPage('call')}
+                    onDisplayNameUpdate={setDisplayName}
+                  />
+                </CallProvider>
+              </CallingProvider>
+            </ErrorProvider>
+          );
+        }
         case 'call': {
           return (
             <ErrorProvider
@@ -87,36 +110,19 @@ const App = (): JSX.Element => {
                 console.error('onErrorCallback received error:', error)
               }
             >
-              <CallingProvider token={token} refreshTokenCallback={refreshTokenAsync(userId)}>
-                <CallProvider displayName={defaultDisplayName}>
-                  {(() => {
-                    switch (subpage) {
-                      case 'configuration': {
-                        return (
-                          <ConfigurationScreen
-                            screenWidth={screenWidth}
-                            startCallHandler={(): void => setSubpage('groupcall')}
-                            groupId={getGroupId()}
-                          />
-                        );
-                      }
-                      case 'groupcall': {
-                        return (
-                          <GroupCall
-                            endCallHandler={(): void => {
-                              setPage('endCall');
-                              setSubpage('configuration');
-                            }}
-                            screenWidth={screenWidth}
-                            groupId={getGroupId()}
-                          />
-                        );
-                      }
-                      default: {
-                        return <>Please set a valid subpage</>;
-                      }
-                    }
-                  })()}
+              <CallingProvider
+                token={token}
+                displayName={displayName ? displayName : defaultDisplayName}
+                refreshTokenCallback={refreshTokenAsync(userId)}
+              >
+                <CallProvider>
+                  <GroupCall
+                    endCallHandler={(): void => {
+                      setPage('endCall');
+                    }}
+                    screenWidth={screenWidth}
+                    groupId={getGroupId()}
+                  />
                 </CallProvider>
               </CallingProvider>
             </ErrorProvider>
@@ -126,8 +132,7 @@ const App = (): JSX.Element => {
           return (
             <EndCall
               rejoinHandler={(): void => {
-                setSubpage('configuration');
-                setPage('call');
+                setPage('configuration');
               }}
               homeHandler={(): void => {
                 window.location.href = window.location.href.split('?')[0];
@@ -153,8 +158,7 @@ const App = (): JSX.Element => {
   };
 
   if (getGroupIdFromUrl() && page === 'home') {
-    setSubpage('configuration');
-    setPage('call');
+    setPage('configuration');
   }
 
   if (isMobileSession() || isSmallScreen()) {

@@ -1,13 +1,14 @@
 // © Microsoft Corporation. All rights reserved.
 import { renderHook } from '@testing-library/react-hooks';
 import { useMicrophone } from './useMicrophone';
-import { CallAgent, PermissionState } from '@azure/communication-calling';
+import { CallAgent } from '@azure/communication-calling';
 import { defaultMockCallProps, mockCallAgent } from '../mocks';
 import { CommunicationUiError } from '../types/CommunicationUiError';
+import { DevicePermissionState } from '../types/DevicePermission';
 
 type MockCallingContextType = {
   callAgent: CallAgent;
-  audioDevicePermission: PermissionState;
+  audioDevicePermission: DevicePermissionState;
 };
 
 type MockCallContextType = {
@@ -19,7 +20,7 @@ let muteExecuted = jest.fn();
 let unmuteExecuted = jest.fn();
 let setIsMicrophoneEnabledMock = jest.fn();
 let microphoneMutedInitialState = false;
-let microphonePermissionInitialState: PermissionState = 'Granted';
+let microphonePermissionInitialState: DevicePermissionState = 'Granted';
 
 let mockCallingContext: () => MockCallingContextType;
 let mockCallContext: () => MockCallContextType;
@@ -103,7 +104,7 @@ describe('useMicrophone tests', () => {
       unmuteExecutedCallback: unmuteExecuted,
       isMicrophoneMuted: microphoneMutedInitialState
     });
-    callAgent.calls[0].isMicrophoneMuted = false;
+    callAgent.calls[0].isMuted = false;
     mockCallingContext = (): MockCallingContextType => {
       return {
         // TODO: fix typescript types
@@ -153,7 +154,7 @@ describe('useMicrophone tests', () => {
       unmuteExecutedCallback: unmuteExecuted,
       isMicrophoneMuted: microphoneMutedInitialState
     });
-    callAgent.calls[0].isMicrophoneMuted = true;
+    callAgent.calls[0].isMuted = true;
     mockCallingContext = (): MockCallingContextType => {
       return {
         // TODO: fix typescript types
