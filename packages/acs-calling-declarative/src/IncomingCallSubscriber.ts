@@ -1,7 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
 import { CallEndReason, IncomingCall } from '@azure/communication-calling';
-import { CallContext } from './CallContext';
 
 /**
  * Keeps track of the listeners assigned to a particular incoming call because when we get an event from SDK, it doesn't
@@ -11,11 +10,15 @@ import { CallContext } from './CallContext';
  */
 export class IncomingCallSubscriber {
   private _incomingCall: IncomingCall;
-  private _context: CallContext;
+  private _setIncomingCallEnded: (incomingCallId: string, callEndReason: CallEndReason) => void;
 
-  constructor(incomingCall: IncomingCall, context: CallContext) {
+  constructor(
+    incomingCall: IncomingCall,
+    // setIncomingCallEnded callback is used so parent can clean up IncomingCallSubscriber.
+    setIncomingCallEnded: (incomingCallId: string, callEndReason: CallEndReason) => void
+  ) {
     this._incomingCall = incomingCall;
-    this._context = context;
+    this._setIncomingCallEnded = setIncomingCallEnded;
     this.subscribe();
   }
 
@@ -23,12 +26,11 @@ export class IncomingCallSubscriber {
     this._incomingCall.on('callEnded', this.callEnded);
   };
 
-  private unsubscribe = (): void => {
+  public unsubscribe = (): void => {
     this._incomingCall.off('callEnded', this.callEnded);
   };
 
   private callEnded = (event: { callEndReason: CallEndReason }): void => {
-    this._context.setIncomingCallEnded(this._incomingCall.id, event.callEndReason);
-    this.unsubscribe();
+    this._setIncomingCallEnded(this._incomingCall.id, event.callEndReason);
   };
 }
