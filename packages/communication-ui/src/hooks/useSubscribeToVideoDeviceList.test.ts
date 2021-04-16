@@ -3,7 +3,7 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import { DeviceManager, VideoDeviceInfo } from '@azure/communication-calling';
 import useSubscribeToVideoDeviceList from './useSubscribeToVideoDeviceList';
-import { createSpyObj } from '../mocks';
+import { createSpyObj, waitWithBreakCondition } from '../mocks';
 import { useCallingContext } from '../providers';
 
 jest.mock('@azure/communication-calling', () => {
@@ -45,14 +45,14 @@ describe('useSubscribeToVideoDeviceList tests', () => {
   beforeEach(() => {
     callbacks = {};
 
-    const deviceManagerMock = createSpyObj<DeviceManager>('deviceManagerMock', ['getCameraList', 'on', 'off']);
+    const deviceManagerMock = createSpyObj<DeviceManager>('deviceManagerMock', ['getCameras', 'on', 'off']);
     deviceManagerMock.on.mockImplementation((name: string, callback: () => void) => {
       callbacks[name] = callback;
     });
     deviceManagerMock.off.mockImplementation(() => {
       return;
     });
-    deviceManagerMock.getCameraList.mockImplementation(() => {
+    deviceManagerMock.getCameras.mockImplementation(async () => {
       return mockCameraList;
     });
 
@@ -95,6 +95,7 @@ describe('useSubscribeToVideoDeviceList tests', () => {
     const callback = callbacks.videoDevicesUpdated;
     expect(callback).toBeTruthy();
     act(callback);
+    await waitWithBreakCondition(() => useCallingContext().videoDeviceList !== undefined);
     expect(useCallingContext().videoDeviceList).toBe(mockCameraList);
   });
 
@@ -103,6 +104,7 @@ describe('useSubscribeToVideoDeviceList tests', () => {
     const callback = callbacks.videoDevicesUpdated;
     expect(callback).toBeTruthy();
     act(callback);
+    await waitWithBreakCondition(() => useCallingContext().videoDeviceInfo !== undefined);
     expect(useCallingContext().videoDeviceInfo).toBe(mockFrontCamera);
   });
 });

@@ -1,9 +1,11 @@
 // © Microsoft Corporation. All rights reserved.
 
-export const compareMessages = (firstMessage: { createdOn?: Date }, secondMessage: { createdOn?: Date }): number => {
-  if (firstMessage.createdOn === undefined) return 1;
-  if (secondMessage.createdOn === undefined) return -1;
-  const firstDate = new Date(firstMessage.createdOn).getTime();
-  const secondDate = new Date(secondMessage.createdOn).getTime();
+import { ChatMessage } from '../types/UiChatMessage';
+
+export const compareMessages = (firstMessage: ChatMessage, secondMessage: ChatMessage): number => {
+  if (firstMessage.payload.createdOn === undefined) return 1;
+  if (secondMessage.payload.createdOn === undefined) return -1;
+  const firstDate = new Date(firstMessage.payload.createdOn).getTime();
+  const secondDate = new Date(secondMessage.payload.createdOn).getTime();
   return firstDate - secondDate;
 };

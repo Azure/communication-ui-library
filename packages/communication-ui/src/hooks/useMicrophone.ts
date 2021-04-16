@@ -24,7 +24,7 @@ export const useMicrophone = (): UseMicrophoneType => {
     }
 
     try {
-      if (call?.isMicrophoneMuted) {
+      if (call?.isMuted) {
         await call.unmute();
       }
       setIsMicrophoneEnabled(true);
@@ -39,7 +39,7 @@ export const useMicrophone = (): UseMicrophoneType => {
 
   const mute = useCallback(async (): Promise<void> => {
     try {
-      if (!call?.isMicrophoneMuted) {
+      if (!call?.isMuted) {
         await call?.mute();
       }
       setIsMicrophoneEnabled(false);

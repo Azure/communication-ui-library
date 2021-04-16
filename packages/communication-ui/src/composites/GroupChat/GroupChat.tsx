@@ -44,7 +44,7 @@ type GroupChatOptions = {
 };
 
 export default (props: GroupChatProps): JSX.Element => {
-  const { displayName, threadId, token, endpointUrl, options, onRenderAvatar, onErrorCallback } = props;
+  const { displayName, threadId, token, endpointUrl, options, onErrorCallback, onRenderAvatar } = props;
   const sendBoxParentStyle = mergeStyles({
     maxWidth: options?.sendBoxMaxLength ? `${options?.sendBoxMaxLength / 16}rem` : 'unset',
     width: '100%'
@@ -53,9 +53,14 @@ export default (props: GroupChatProps): JSX.Element => {
   const ChatThread = useMemo(() => {
     return connectFuncsToContext(
       (props: MessageThreadProps & ErrorHandlingProps) => WithErrorHandling(MessageThread, props),
-      MapToChatMessageProps
+      () => {
+        return {
+          ...MapToChatMessageProps(),
+          onRenderAvatar: onRenderAvatar
+        };
+      }
     );
-  }, []);
+  }, [onRenderAvatar]);
   const ErrorBar = useMemo(() => {
     return connectFuncsToContext(ErrorBarComponent, MapToErrorBarProps);
   }, []);
@@ -85,7 +90,7 @@ export default (props: GroupChatProps): JSX.Element => {
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
         <Stack className={chatContainer} grow>
           <Stack className={chatWrapper} grow>
-            <ChatThread onRenderAvatar={onRenderAvatar} />
+            <ChatThread />
             <Stack.Item align="center" className={sendBoxParentStyle}>
               <div style={{ paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>
                 <TypingIndicator />

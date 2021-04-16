@@ -1,17 +1,17 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { AzureCommunicationUserCredential, RefreshOptions } from '@azure/communication-common';
+import {
+  AzureCommunicationTokenCredential,
+  CommunicationUserKind,
+  MicrosoftTeamsUserKind,
+  PhoneNumberKind,
+  CommunicationTokenRefreshOptions,
+  UnknownIdentifierKind
+} from '@azure/communication-common';
+
+import { AzureCommunicationUserCredential, RefreshOptions } from '@azure/communication-common-beta3';
 
 import { AudioDeviceInfo, CallState, LocalVideoStream, VideoDeviceInfo } from '@azure/communication-calling';
-import {
-  CallingApplication,
-  CommunicationUser,
-  PhoneNumber,
-  UnknownIdentifier,
-  isCallingApplication,
-  isCommunicationUser,
-  isPhoneNumber
-} from '@azure/communication-common';
 import {
   CommunicationUiErrorCode,
   CommunicationUiError,
@@ -32,16 +32,21 @@ import {
 } from '../constants/chatConstants';
 
 export const getACSId = (
-  identifier: CommunicationUser | CallingApplication | UnknownIdentifier | PhoneNumber
+  identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind
 ): string => {
-  if (isCommunicationUser(identifier)) {
-    return identifier.communicationUserId;
-  } else if (isCallingApplication(identifier)) {
-    return identifier.callingApplicationId;
-  } else if (isPhoneNumber(identifier)) {
-    return identifier.phoneNumber;
-  } else {
-    return identifier.id;
+  switch (identifier.kind) {
+    case 'communicationUser': {
+      return identifier.communicationUserId;
+    }
+    case 'phoneNumber': {
+      return identifier.phoneNumber;
+    }
+    case 'microsoftTeamsUser': {
+      return identifier.microsoftTeamsUserId;
+    }
+    default: {
+      return identifier.id;
+    }
   }
 };
 
@@ -60,7 +65,7 @@ export const isGUID = (str: string): boolean =>
   !!str.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
 
 export const areStreamsEqual = (prevStream: LocalVideoStream, newStream: LocalVideoStream): boolean => {
-  return !!prevStream && !!newStream && prevStream.getSource().id === newStream.getSource().id;
+  return !!prevStream && !!newStream && prevStream.source.id === newStream.source.id;
 };
 
 export const isMobileSession = (): boolean =>
@@ -68,7 +73,8 @@ export const isMobileSession = (): boolean =>
 
 // Create AzureCommunicationUserCredential using optional refreshTokenCallback if provided. If callback is provided then
 // identity must also be provided for callback to be used.
-export const createAzureCommunicationUserCredential = (
+// TODO: Delete this and use the one below once Chat has been upgraded to latest common
+export const createAzureCommunicationUserCredentialBeta = (
   token: string,
   refreshTokenCallback?: (() => Promise<string>) | undefined
 ): AzureCommunicationUserCredential => {
@@ -81,6 +87,24 @@ export const createAzureCommunicationUserCredential = (
     return new AzureCommunicationUserCredential(options);
   } else {
     return new AzureCommunicationUserCredential(token);
+  }
+};
+
+// Create AzureCommunicationUserCredential using optional refreshTokenCallback if provided. If callback is provided then
+// identity must also be provided for callback to be used.
+export const createAzureCommunicationUserCredential = (
+  token: string,
+  refreshTokenCallback?: (() => Promise<string>) | undefined
+): AzureCommunicationTokenCredential => {
+  if (refreshTokenCallback !== undefined) {
+    const options: CommunicationTokenRefreshOptions = {
+      token: token,
+      tokenRefresher: () => refreshTokenCallback(),
+      refreshProactively: true
+    };
+    return new AzureCommunicationTokenCredential(options);
+  } else {
+    return new AzureCommunicationTokenCredential(token);
   }
 };
 

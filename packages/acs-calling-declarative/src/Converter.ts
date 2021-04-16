@@ -7,7 +7,6 @@ import {
   IncomingCall as SdkIncomingCall
 } from '@azure/communication-calling';
 import {
-  CallingApplicationKind,
   CommunicationUserKind,
   MicrosoftTeamsUserKind,
   PhoneNumberKind,
@@ -18,7 +17,8 @@ import {
   RemoteParticipant as DeclarativeRemoteParticipant,
   RemoteVideoStream as DeclarativeRemoteVideoStream,
   LocalVideoStream as DeclarativeLocalVideoStream,
-  IncomingCall as DeclarativeIncomingCall
+  IncomingCall as DeclarativeIncomingCall,
+  RemoteParticipant
 } from './CallClientState';
 
 export function convertSdkLocalStreamToDeclarativeLocalStream(
@@ -60,14 +60,9 @@ export function convertSdkParticipantToDeclarativeParticipant(
  * @param identifier
  */
 export function getRemoteParticipantKey(
-  identifier:
-    | CommunicationUserKind
-    | PhoneNumberKind
-    | CallingApplicationKind
-    | MicrosoftTeamsUserKind
-    | UnknownIdentifierKind
+  identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind
 ): string {
-  let id = identifier.id;
+  let id = '';
   switch (identifier.kind) {
     case 'communicationUser': {
       id = identifier.communicationUserId;
@@ -75,10 +70,6 @@ export function getRemoteParticipantKey(
     }
     case 'phoneNumber': {
       id = identifier.phoneNumber;
-      break;
-    }
-    case 'callingApplication': {
-      id = identifier.callingApplicationId;
       break;
     }
     case 'microsoftTeamsUser': {
@@ -106,10 +97,13 @@ export function convertSdkCallToDeclarativeCall(call: SdkCall): DeclarativeCall 
     state: call.state,
     callEndReason: call.callEndReason,
     direction: call.direction,
-    isMicrophoneMuted: call.isMicrophoneMuted,
+    isMuted: call.isMuted,
     isScreenSharingOn: call.isScreenSharingOn,
     localVideoStreams: call.localVideoStreams.map(convertSdkLocalStreamToDeclarativeLocalStream),
-    remoteParticipants: declarativeRemoteParticipants
+    remoteParticipants: declarativeRemoteParticipants,
+    remoteParticipantsEnded: new Map<string, RemoteParticipant>(),
+    startTime: new Date(),
+    endTime: undefined
   };
 }
 
@@ -117,6 +111,7 @@ export function convertSdkIncomingCallToDeclarativeIncomingCall(call: SdkIncomin
   return {
     id: call.id,
     callerInfo: call.callerInfo,
-    callEnded: false
+    startTime: new Date(),
+    endTime: undefined
   };
 }

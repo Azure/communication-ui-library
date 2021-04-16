@@ -1,5 +1,10 @@
 // © Microsoft Corporation. All rights reserved.
-import { LocalVideoStream, Renderer, RendererOptions, RendererView } from '@azure/communication-calling';
+import {
+  LocalVideoStream,
+  VideoStreamRenderer,
+  CreateViewOptions,
+  VideoStreamRendererView
+} from '@azure/communication-calling';
 import { useCallContext } from '../providers';
 import { useEffect, useRef, useState } from 'react';
 import { CommunicationUiErrorCode, CommunicationUiError } from '../types/CommunicationUiError';
@@ -15,14 +20,14 @@ export type UseLocalVideoStreamType = {
 // It also has an event handler to say when the stream is available or not since it can be difficult to tell from the returned HTMLElement.
 export default (
   stream: LocalVideoStream | undefined,
-  rendererOptions: RendererOptions | undefined
+  rendererOptions: CreateViewOptions | undefined
 ): UseLocalVideoStreamType => {
   const onErrorCallback = useTriggerOnErrorCallback();
   const { setLocalVideoRendererBusy } = useCallContext();
   const [render, setRender] = useState<HTMLElement | null>(null);
   const [isAvailable, setIsAvailable] = useState<boolean>(false);
-  const [options] = useState<RendererOptions | undefined>(rendererOptions);
-  const rendererViewRef: React.MutableRefObject<RendererView | null> = useRef(null);
+  const [options] = useState<CreateViewOptions | undefined>(rendererOptions);
+  const rendererViewRef: React.MutableRefObject<VideoStreamRendererView | null> = useRef(null);
 
   const cleanUp = (): void => {
     if (rendererViewRef.current && rendererViewRef.current.dispose) {
@@ -34,7 +39,7 @@ export default (
   useEffect(() => {
     const renderStream = async (stream: LocalVideoStream): Promise<void> => {
       setLocalVideoRendererBusy(true);
-      const renderer = new Renderer(stream);
+      const renderer = new VideoStreamRenderer(stream);
       try {
         rendererViewRef.current = await renderer.createView(options);
       } catch (error) {
