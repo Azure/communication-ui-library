@@ -136,6 +136,16 @@ export interface Call {
    * {@Link Converter.getRemoteParticipantKey} to {@Link @azure/communication-calling#RemoteParticipant}
    */
   remoteParticipantsEnded: Map<string, RemoteParticipant>;
+  /**
+   * Stores the local date when the call started on the client. This is not originally in the SDK but provided by the
+   * Declarative layer.
+   */
+  startTime: Date;
+  /**
+   * Stores the local date when the call ended on the client. This is not originally in the SDK but provided by the
+   * Declarative layer. It is undefined if the call is not ended yet.
+   */
+  endTime: Date | undefined;
 }
 
 /**
@@ -155,6 +165,16 @@ export interface IncomingCall {
    * Set to the state returned by 'callEnded' event on {@Link @azure/communication-calling#IncomingCall} when received.
    */
   callEndReason?: CallEndReason;
+  /**
+   * Stores the local date when the call started on the client. This is not originally in the SDK but provided by the
+   * Declarative layer.
+   */
+  startTime: Date;
+  /**
+   * Stores the local date when the call ended on the client. This is not originally in the SDK but provided by the
+   * Declarative layer. It is undefined if the call is not ended yet.
+   */
+  endTime: Date | undefined;
 }
 
 /**
@@ -203,10 +223,10 @@ export interface CallClientState {
    */
   calls: Map<string, Call>;
   /**
-   * Calls that have ended are stored here so the callEndReason could be checked. It is a map of Call {@Link Call}. It
-   * is keyed by Call.id.
+   * Calls that have ended are stored here so the callEndReason could be checked. It is an array of Call {@Link Call}.
+   * Calls are pushed on to the array as they end, meaning this is sorted by endTime ascending.
    */
-  callsEnded: Map<string, Call>;
+  callsEnded: Call[];
   /**
    * Proxy of {@Link @azure/communication-calling#IncomingCall} as a map of IncomingCall {@Link IncomingCall} received
    * in the event 'incomingCall' emitted by {@Link @azure/communication-calling#CallAgent}. It is keyed by
@@ -214,12 +234,12 @@ export interface CallClientState {
    */
   incomingCalls: Map<string, IncomingCall>;
   /**
-   * Incoming Calls that have ended are stored here so the callEndReason could be checked. It is a map of IncomingCall
+   * Incoming Calls that have ended are stored here so the callEndReason could be checked. It is a array of IncomingCall
    * {@Link IncomingCall} received in the event 'incomingCall' emitted by
-   * {@Link @azure/communication-calling#CallAgent}. It is keyed by
-   * IncomingCall.id.
+   * {@Link @azure/communication-calling#CallAgent}. IncomingCalls are pushed on to the array as they end, meaning this
+   * is sorted by endTime ascending.
    */
-  incomingCallsEnded: Map<string, IncomingCall>;
+  incomingCallsEnded: IncomingCall[];
   /**
    * Proxy of {@Link @azure/communication-calling#DeviceManager} and its events.
    */

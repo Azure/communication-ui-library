@@ -111,13 +111,17 @@ export function convertSdkCallToDeclarativeCall(call: SdkCall): DeclarativeCall 
     isScreenSharingOn: call.isScreenSharingOn,
     localVideoStreams: call.localVideoStreams.map(convertSdkLocalStreamToDeclarativeLocalStream),
     remoteParticipants: declarativeRemoteParticipants,
-    remoteParticipantsEnded: new Map<string, RemoteParticipant>()
+    remoteParticipantsEnded: new Map<string, RemoteParticipant>(),
+    startTime: new Date(),
+    endTime: undefined
   };
 }
 
 export function convertSdkIncomingCallToDeclarativeIncomingCall(call: SdkIncomingCall): DeclarativeIncomingCall {
   return {
     id: call.id,
-    callerInfo: call.callerInfo
+    callerInfo: call.callerInfo,
+    startTime: new Date(),
+    endTime: undefined
   };
 }

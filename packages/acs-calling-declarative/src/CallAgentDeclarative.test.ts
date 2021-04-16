@@ -17,12 +17,13 @@ import {
 } from '@azure/communication-common';
 import EventEmitter from 'events';
 import { callAgentDeclaratify } from './CallAgentDeclarative';
-import { CallContext } from './CallContext';
+import { CallContext, MAX_CALL_HISTORY_LENGTH } from './CallContext';
 import {
   createMockCall,
   createMockIncomingCall,
   createMockRemoteParticipant,
   MockCall,
+  MockIncomingCall,
   mockoutObjectFreeze,
   waitWithBreakCondition
 } from './TestUtils';
@@ -102,7 +103,7 @@ describe('declarative call agent', () => {
     expect(mockCall.emitter.eventNames().length).not.toBe(0);
   });
 
-  test('should unsubscribe when disposed is invoked', async () => {
+  test('should unsubscribe but not clear data when disposed is invoked', async () => {
     const mockCallAgent = new MockCallAgent();
     const context = new CallContext();
     const mockCall = createMockCall(mockCallId);
@@ -111,6 +112,21 @@ describe('declarative call agent', () => {
     await declarativeCallAgent.dispose();
     expect(mockCall.emitter.eventNames().length).toBe(0);
     expect(mockCallAgent.emitter.eventNames().length).toBe(0);
+    expect(context.getState().calls.size).toBe(1);
+  });
+
+  test('should clear state if newly created agent and if there is old existing state', async () => {
+    const mockCallAgent = new MockCallAgent();
+    const context = new CallContext();
+    const mockCall = createMockCall(mockCallId);
+    mockCallAgent.calls = [mockCall];
+    const declarativeCallAgent = callAgentDeclaratify(mockCallAgent, context);
+    await declarativeCallAgent.dispose();
+    expect(mockCall.emitter.eventNames().length).toBe(0);
+    expect(mockCallAgent.emitter.eventNames().length).toBe(0);
+    expect(context.getState().calls.size).toBe(1);
+    mockCallAgent.calls = [];
+    callAgentDeclaratify(mockCallAgent, context);
     expect(context.getState().calls.size).toBe(0);
   });
 
@@ -132,7 +148,7 @@ describe('declarative call agent', () => {
     expect(context.getState().calls.size).toBe(1);
   });
 
-  test('should move call to callEnded when call is removed', async () => {
+  test('should move call to callEnded when call is removed and add endTime', async () => {
     const mockCallAgent = new MockCallAgent();
     const context = new CallContext();
     expect(context.getState().calls.size).toBe(0);
@@ -150,14 +166,15 @@ describe('declarative call agent', () => {
     mockCallAgent.calls = [];
     mockCallAgent.emit('callsUpdated', { added: [], removed: [mockCall] });
 
-    await waitWithBreakCondition(() => context.getState().callsEnded.size !== 0);
+    await waitWithBreakCondition(() => context.getState().callsEnded.length !== 0);
 
     expect(context.getState().calls.size).toBe(0);
-    expect(context.getState().callsEnded.size).toBe(1);
-    expect(context.getState().callsEnded.get(mockCallId)?.callEndReason?.code).toBe(1);
+    expect(context.getState().callsEnded.length).toBe(1);
+    expect(context.getState().callsEnded[0].callEndReason?.code).toBe(1);
+    expect(context.getState().callsEnded[0].endTime).toBeTruthy();
   });
 
-  test('should move incoming call to incomingCallEnded when incoming call is ended', async () => {
+  test('should move incoming call to incomingCallEnded when incoming call is ended and add endTime', async () => {
     const mockCallAgent = new MockCallAgent();
     const context = new CallContext();
     expect(context.getState().calls.size).toBe(0);
@@ -172,10 +189,58 @@ describe('declarative call agent', () => {
 
     mockIncomingCall.emit('callEnded', { callEndReason: { code: 1 } });
 
-    await waitWithBreakCondition(() => context.getState().incomingCallsEnded.size !== 0);
+    await waitWithBreakCondition(() => context.getState().incomingCallsEnded.length !== 0);
 
     expect(context.getState().incomingCalls.size).toBe(0);
-    expect(context.getState().incomingCallsEnded.size).toBe(1);
-    expect(context.getState().incomingCallsEnded.get(mockCallId)?.callEndReason?.code).toBe(1);
+    expect(context.getState().incomingCallsEnded.length).toBe(1);
+    expect(context.getState().incomingCallsEnded[0].callEndReason?.code).toBe(1);
+    expect(context.getState().incomingCallsEnded[0].endTime).toBeTruthy();
+  });
+
+  test('should make sure that callsEnded not exceed max length', async () => {
+    const mockCallAgent = new MockCallAgent();
+    const context = new CallContext();
+    callAgentDeclaratify(mockCallAgent, context);
+
+    const numberOfCalls = MAX_CALL_HISTORY_LENGTH + 10;
+    const mockCalls: MockCall[] = [];
+    for (let i = 0; i < numberOfCalls; i++) {
+      const mockCall = createMockCall(mockCallId + i.toString());
+      mockCalls.push(mockCall);
+    }
+    mockCallAgent.calls = mockCalls;
+    mockCallAgent.emit('callsUpdated', { added: mockCalls, removed: [] });
+
+    await waitWithBreakCondition(() => context.getState().calls.size === numberOfCalls);
+
+    mockCallAgent.emit('callsUpdated', { added: [], removed: mockCalls });
+
+    await waitWithBreakCondition(() => context.getState().calls.size === 0);
+
+    expect(context.getState().callsEnded.length).toBe(MAX_CALL_HISTORY_LENGTH);
+  });
+
+  test('should make sure that incomingCallsEnded not exceed max length', async () => {
+    const mockCallAgent = new MockCallAgent();
+    const context = new CallContext();
+    callAgentDeclaratify(mockCallAgent, context);
+
+    const numberOfCalls = MAX_CALL_HISTORY_LENGTH + 10;
+    const mockIncomingCalls: MockIncomingCall[] = [];
+    for (let i = 0; i < numberOfCalls; i++) {
+      const mockIncomingCall = createMockIncomingCall(mockCallId + i);
+      mockIncomingCalls.push(mockIncomingCall);
+      mockCallAgent.emit('incomingCall', { incomingCall: mockIncomingCall });
+    }
+
+    await waitWithBreakCondition(() => context.getState().incomingCalls.size === numberOfCalls);
+
+    for (const mockIncomingCall of mockIncomingCalls) {
+      mockIncomingCall.emit('callEnded', { callEndReason: { code: 1 } });
+    }
+
+    await waitWithBreakCondition(() => context.getState().incomingCalls.size === 0);
+
+    expect(context.getState().incomingCallsEnded.length).toBe(MAX_CALL_HISTORY_LENGTH);
   });
 });

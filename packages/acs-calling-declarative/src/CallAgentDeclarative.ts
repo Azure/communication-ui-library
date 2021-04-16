@@ -41,19 +41,15 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
     this._callAgent.off('callsUpdated', this.callsUpdated);
     this._callAgent.off('incomingCall', this.incomingCall);
 
-    // Unsubscribe is called when CallAgent is disposed. This should mean no more updating of existing call so we
-    // remove it from the state and same for incomingCall.
-    for (const [call, callSubscriber] of this._callSubscribers.entries()) {
+    // Unsubscribe is called when CallAgent is disposed. This should mean no more updating of existing call but we don't
+    // remove any existing state.
+    for (const [_, callSubscriber] of this._callSubscribers.entries()) {
       callSubscriber.unsubscribe();
-      this._context.removeCall(call.id);
-      this._context.removeCallEnded(call.id);
     }
     this._callSubscribers.clear();
 
-    for (const [incomingCallId, incomingCallSubscriber] of this._incomingCallSubscribers.entries()) {
+    for (const [_, incomingCallSubscriber] of this._incomingCallSubscribers.entries()) {
       incomingCallSubscriber.unsubscribe();
-      this._context.removeIncomingCall(incomingCallId);
-      this._context.removeIncomingCallEnded(incomingCallId);
     }
     this._incomingCallSubscribers.clear();
   };
@@ -68,8 +64,6 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
         callSubscriber.unsubscribe();
         this._callSubscribers.delete(call);
       }
-      this._context.removeIncomingCallEnded(call.id);
-      this._context.removeIncomingCall(call.id);
       this._context.setCallEnded(call.id, call.callEndReason);
     }
   };
@@ -80,8 +74,6 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
       incomingCallSubscriber.unsubscribe();
       this._incomingCallSubscribers.delete(incomingCallId);
     }
-    this._context.removeCall(incomingCallId);
-    this._context.removeCallEnded(incomingCallId);
     this._context.setIncomingCallEnded(incomingCallId, callEndReason);
   };
 
@@ -93,12 +85,6 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
         new IncomingCallSubscriber(event.incomingCall, this.setIncomingCallEnded)
       );
     }
-
-    // Call id be unique so there should only be one instance of this Call in all the maps.
-    this._context.removeCall(event.incomingCall.id);
-    this._context.removeCallEnded(event.incomingCall.id);
-    this._context.removeIncomingCallEnded(event.incomingCall.id);
-
     this._context.setIncomingCall(convertSdkIncomingCallToDeclarativeIncomingCall(event.incomingCall));
   };
 
@@ -107,12 +93,6 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
     if (!this._callSubscribers.has(call)) {
       this._callSubscribers.set(call, new CallSubscriber(call, this._context));
     }
-
-    // Call id be unique so there should only be one instance of this Call in all the maps.
-    this._context.removeCallEnded(call.id);
-    this._context.removeIncomingCall(call.id);
-    this._context.removeIncomingCallEnded(call.id);
-
     this._context.setCall(convertSdkCallToDeclarativeCall(call));
   };
 
@@ -153,5 +133,8 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
  * @param context - CallContext from CallClientDeclarative
  */
 export const callAgentDeclaratify = (callAgent: CallAgent, context: CallContext): CallAgent => {
+  // Make sure there are no existing call data if creating a new CallAgentDeclarative (if creating a new
+  // CallAgentDeclarative after disposing of the hold one will mean context have old call state).
+  context.clearCallRelatedState();
   return new Proxy(callAgent, new ProxyCallAgent(callAgent, context)) as CallAgent;
 };

@@ -15,12 +15,15 @@ import { getRemoteParticipantKey } from './Converter';
 
 enableMapSet();
 
+// TODO: How can we make this configurable?
+export const MAX_CALL_HISTORY_LENGTH = 10;
+
 export class CallContext {
   private _state: CallClientState = {
     calls: new Map<string, Call>(),
-    callsEnded: new Map<string, Call>(),
+    callsEnded: [],
     incomingCalls: new Map<string, IncomingCall>(),
-    incomingCallsEnded: new Map<string, Call>(),
+    incomingCallsEnded: [],
     deviceManagerState: {
       isSpeakerSelectionAvailable: false,
       cameras: [],
@@ -43,6 +46,20 @@ export class CallContext {
     this._emitter.on('stateChanged', handler);
   }
 
+  // Disposing of the CallAgentDeclarative will not clear the state. If we create a new CallAgentDeclarative, we should
+  // make sure the state is clean because any left over state (if previous CallAgentDeclarative was disposed) may be
+  // invalid.
+  public clearCallRelatedState(): void {
+    this.setState(
+      produce(this._state, (draft: CallClientState) => {
+        draft.calls.clear();
+        draft.incomingCalls.clear();
+        draft.callsEnded.splice(0, draft.callsEnded.length);
+        draft.incomingCallsEnded.splice(0, draft.incomingCallsEnded.length);
+      })
+    );
+  }
+
   public setCall(call: Call): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
@@ -56,6 +73,7 @@ export class CallContext {
           existingCall.isScreenSharingOn = call.isScreenSharingOn;
           existingCall.localVideoStreams = call.localVideoStreams;
           existingCall.remoteParticipants = call.remoteParticipants;
+          // We don't update the startTime and endTime if we are updating an existing active call
         } else {
           draft.calls.set(call.id, call);
         }
@@ -76,18 +94,14 @@ export class CallContext {
       produce(this._state, (draft: CallClientState) => {
         const call = draft.calls.get(callId);
         if (call) {
-          draft.calls.delete(callId);
+          call.endTime = new Date();
           call.callEndReason = callEndReason;
-          draft.callsEnded.set(callId, call);
+          draft.calls.delete(callId);
+          if (draft.callsEnded.length >= MAX_CALL_HISTORY_LENGTH) {
+            draft.callsEnded.shift();
+          }
+          draft.callsEnded.push(call);
         }
-      })
-    );
-  }
-
-  public removeCallEnded(callId: string): void {
-    this.setState(
-      produce(this._state, (draft: CallClientState) => {
-        draft.callsEnded.delete(callId);
       })
     );
   }
@@ -284,18 +298,14 @@ export class CallContext {
       produce(this._state, (draft: CallClientState) => {
         const call = draft.incomingCalls.get(callId);
         if (call) {
-          draft.incomingCalls.delete(callId);
+          call.endTime = new Date();
           call.callEndReason = callEndReason;
-          draft.incomingCallsEnded.set(callId, call);
+          draft.incomingCalls.delete(callId);
+          if (draft.incomingCallsEnded.length >= MAX_CALL_HISTORY_LENGTH) {
+            draft.incomingCallsEnded.shift();
+          }
+          draft.incomingCallsEnded.push(call);
         }
-      })
-    );
-  }
-
-  public removeIncomingCallEnded(callId: string): void {
-    this.setState(
-      produce(this._state, (draft: CallClientState) => {
-        draft.incomingCallsEnded.delete(callId);
       })
     );
   }
