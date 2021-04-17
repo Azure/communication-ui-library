@@ -37,7 +37,9 @@ export const chatStyle: ComponentSlotStyle = {
 };
 
 export const loadPreviousMessagesButtonContainerStyle = mergeStyles({
-  minHeight: '2rem'
+  minHeight: '2rem',
+  display: 'flex',
+  justifyContent: 'center'
 });
 
 export const newMessageButtonContainerStyle = mergeStyles({
@@ -62,7 +64,12 @@ export const newMessageButtonStyle = mergeStyles({
 });
 
 export const loadPreviousMessageButtonStyle = mergeStyles({
-  minHeight: '1.5rem'
+  border: 'none',
+  minHeight: '1.5rem',
+  selectors: {
+    '&:hover': { background: 'none' },
+    '&:active': { background: 'none' }
+  }
 });
 
 export const DownIconStyle = mergeStyles({
