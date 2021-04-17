@@ -29,9 +29,9 @@ We'll use the create-react-app template for this quickstart. For more informatio
 ```bash
 
 # Build app in typescript:
-npx create-react-app UI-ToolKit-Quickstart --template typescript
+npx create-react-app ui-toolkit-quickstart --template typescript
 
-cd UI-ToolKit-Quickstart
+cd ui-toolkit-quickstart
 
 ```
 
@@ -84,10 +84,9 @@ It is in charge of allowing developer customize the theme of the components as w
 `App.tsx`
 
 ```jsx
-import React from 'react';
 import { FluentThemeProvider } from '@azure/communication-ui';
 
-function App(props) {
+function App() {
   return <FluentThemeProvider>{/*Add Components!*/}</FluentThemeProvider>;
 }
 
@@ -231,9 +230,7 @@ export const ChatComponents = () => {
 
       <SendBox
         disabled={false}
-        sendMessage={async () => { return }}
-        userId='ACS_ID PLACEHOLDER'
-        displayName='User Name'
+        onSendMessage={async () => { return }}
         onSendTypingNotification={async () => { return }}
       />
     </div >
