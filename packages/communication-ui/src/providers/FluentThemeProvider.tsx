@@ -42,10 +42,12 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
             backgroundColor: fluentUITheme?.palette?.white
           },
           ChatMessage: {
-            authorColor: fluentUITheme?.palette?.neutralDark,
-            contentColor: fluentUITheme?.palette?.neutralDark,
-            backgroundColor: fluentUITheme?.palette?.neutralLight,
-            backgroundColorMine: fluentUITheme?.palette?.themeLight
+            authorColor: fluentUITheme?.palette?.neutralPrimary,
+            contentColor: fluentUITheme?.palette?.neutralPrimary,
+            timestampColor: fluentUITheme?.palette?.neutralPrimary,
+            timestampColorMine: fluentUITheme?.palette?.neutralPrimary,
+            backgroundColor: fluentUITheme?.palette?.neutralLighter,
+            backgroundColorMine: fluentUITheme?.palette?.neutralLighter
           }
           // add more northstar components to align with Fluent UI theme
         }
