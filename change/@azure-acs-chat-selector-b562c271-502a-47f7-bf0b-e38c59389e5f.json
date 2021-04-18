@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Calculate more props in selector for perf improvement",
+  "packageName": "@azure/acs-chat-selector",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}

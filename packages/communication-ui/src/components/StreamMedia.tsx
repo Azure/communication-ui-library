@@ -1,6 +1,5 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { ErrorHandlingProps } from '../providers/ErrorProvider';
 import React, { useEffect, useRef } from 'react';
 import { invertedVideoStyle, mediaContainer } from './styles/StreamMedia.styles';
 import { BaseCustomStylesProps } from '../types';
@@ -28,7 +27,7 @@ export interface StreamMediaProps {
  * StreamMedia component converts a HTMLElement to a JSX Element.
  * This component becomes very handy when you get the video stream HTMLElement from the calling sdk and want to render it in components like VideoTile.
  */
-export const StreamMedia = (props: StreamMediaProps & ErrorHandlingProps): JSX.Element => {
+export const StreamMedia = (props: StreamMediaProps): JSX.Element => {
   const containerEl = useRef<HTMLDivElement>(null);
   const { invertVideo, videoStreamElement, styles } = props;
 

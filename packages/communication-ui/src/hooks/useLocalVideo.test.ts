@@ -14,7 +14,11 @@ type MockCallContextType = {
   setLocalVideoOn: jest.Mock<any, any>;
 };
 
-const mockVideoDeviceInfo = { name: 'Microsoft Camera Front', id: 'camera:54321' } as VideoDeviceInfo;
+const mockVideoDeviceInfo = {
+  name: 'Microsoft Camera Front',
+  id: 'camera:54321',
+  deviceType: 'Unknown'
+} as VideoDeviceInfo;
 let startVideo = jest.fn();
 let stopVideo = jest.fn();
 let setLocalVideoOn = jest.fn();
@@ -28,6 +32,18 @@ jest.mock('../providers', () => {
         return mockCallContext();
       }
     )
+  };
+});
+
+jest.mock('@azure/communication-calling', () => {
+  return {
+    LocalVideoStream: jest.fn().mockImplementation((videoDeviceInfo: VideoDeviceInfo) => {
+      return {
+        source: videoDeviceInfo,
+        mediaStreamType: 'Video',
+        switchSource: jest.fn()
+      };
+    })
   };
 });
 
@@ -54,7 +70,7 @@ describe('useLocalVideo tests', () => {
   test('Upon calling startLocalVideo `call.startCall` function should be triggered when localVideoStream is defined.', async () => {
     const { result } = renderHook(() => useLocalVideo());
     // TODO: fix typescript types
-    await result.current.startLocalVideo(mockCallContext().localVideoStream as any);
+    await result.current.startLocalVideo(mockCallContext().localVideoStream);
     expect(startVideo).toBeCalled();
     expect(setLocalVideoOn).toBeCalledWith(true);
   });
@@ -70,7 +86,7 @@ describe('useLocalVideo tests', () => {
     const { result } = renderHook(() => useLocalVideo());
 
     // TODO: fix typescript types
-    await result.current.startLocalVideo(mockCallContext().localVideoStream as any).catch((e: Error) => {
+    await result.current.startLocalVideo(mockCallContext().localVideoStream).catch((e: Error) => {
       expect(e.message).toEqual('Failed to start local video: local video renderer is busy');
     });
     expect(startVideo).not.toBeCalled();
@@ -87,7 +103,7 @@ describe('useLocalVideo tests', () => {
     };
     const { result } = renderHook(() => useLocalVideo());
     // TODO: fix typescript types
-    await result.current.startLocalVideo(mockCallContext().localVideoStream as any);
+    await result.current.startLocalVideo(mockCallContext().localVideoStream);
     expect(startVideo).toBeCalledTimes(1);
     expect(setLocalVideoOn).toBeCalledWith(true);
   });

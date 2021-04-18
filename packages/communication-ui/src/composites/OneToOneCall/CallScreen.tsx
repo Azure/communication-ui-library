@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
 import { Label, Stack } from '@fluentui/react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { activeContainerClassName, containerStyles, loadingStyle } from './styles/CallScreen.styles';
 import MediaFullScreen from './MediaFullScreen';
 import { connectFuncsToContext } from '../../consumers/ConnectContext';
@@ -17,13 +17,25 @@ export interface OneToOneCallProps extends CallContainerProps {
 }
 
 const CallScreenComponent = (props: OneToOneCallProps): JSX.Element => {
-  const { callState, isCallInitialized, screenShareStream, isLocalScreenSharingOn, endCallHandler } = props;
+  const {
+    callState,
+    isCallInitialized,
+    screenShareStream,
+    isLocalScreenSharingOn,
+    endCallHandler,
+    callFailedHandler
+  } = props;
+
+  // In the OneToOne Sample, the handler is used to change the parent OneToOneCall's state. This causes an error:
+  // 'Cannot update a component (`OneToOneCall`) while rendering a different component (`CallScreenComponent`)'. Moved
+  // callFailedHandler inside a useEffect so it runs after the render to fix the error.
+  useEffect(() => {
+    if (!callState || callState === 'Disconnected') callFailedHandler();
+  }, [callState, callFailedHandler]);
 
   if (!isCallInitialized || callState === 'None' || callState === 'Connecting' || callState === 'Ringing') {
     return <OutgoingCallScreen callState={callState} endCallHandler={endCallHandler} />;
   }
-
-  if (!callState || callState === 'Disconnected') props.callFailedHandler();
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles}>

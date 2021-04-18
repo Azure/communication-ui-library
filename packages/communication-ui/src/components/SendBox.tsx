@@ -2,20 +2,25 @@
 
 import { EMPTY_MESSAGE_REGEX, MAXIMUM_LENGTH_OF_MESSAGE, TEXT_EXCEEDS_LIMIT } from '../constants';
 import React, { useState } from 'react';
-import { IStyle, ITextField, mergeStyles, Stack, TextField } from '@fluentui/react';
+import {
+  IStyle,
+  ITextField,
+  mergeStyles,
+  Stack,
+  TextField,
+  MessageBar,
+  MessageBarType,
+  concatStyleSets
+} from '@fluentui/react';
 import { SendIcon } from '@fluentui/react-northstar';
 import {
   TextFieldStyleProps,
   sendBoxStyle,
-  textFieldStyle,
   sendBoxWrapperStyle,
   sendButtonStyle,
-  sendIconDiv
+  sendIconDiv,
+  suppressIconStyle
 } from './styles/SendBox.styles';
-import { SendBoxPropsFromContext } from '../consumers/MapToSendBoxProps';
-import { Alert } from '@fluentui/react-northstar/dist/commonjs/components/Alert/Alert';
-import { ErrorHandlingProps } from '../providers/ErrorProvider';
-import { propagateError } from '../utils/SDKUtils';
 import { BaseCustomStylesProps } from '../types';
 
 export interface SendBoxStylesProps extends BaseCustomStylesProps {
@@ -24,21 +29,47 @@ export interface SendBoxStylesProps extends BaseCustomStylesProps {
   /** Styles for the container of the send message icon. */
   sendMessageIconContainer?: IStyle;
   /** Styles for the send message icon; These styles will be ignored when a custom send message icon is provided. */
-  defaultSendMessageIcon?: IStyle;
-  /** Styles for the default system message; These styles will be ignored when a custom system message component is provided. */
-  defaultSystemMessage?: IStyle;
+  sendMessageIcon?: IStyle;
+  /** Styles for the system message; These styles will be ignored when a custom system message component is provided. */
+  systemMessage?: IStyle;
 }
 
 /**
  * Props for SendBox component
  */
 export interface SendBoxProps {
-  /** Optional callback to render system message below the SendBox. */
+  /**
+   * Optional boolean to disable text box
+   * @defaultValue false
+   */
+  disabled?: boolean;
+  /**
+   * Optional text for system message below text box
+   */
+  systemMessage?: string;
+  /**
+   * Optional callback called when message is sent
+   */
+  onSendMessage?: (messageContent: string) => Promise<void>;
+  /**
+   * Optional callback called when user is typing
+   */
+  onSendTypingNotification?: () => Promise<void>;
+  /**
+   * Optional callback to render system message below the SendBox.
+   * @defaultValue MessageBar
+   */
   onRenderSystemMessage?: (systemMessage: string | undefined) => React.ReactElement;
-  /** Optional boolean to support new line in SendBox. */
+  /**
+   * Optional boolean to support new line in SendBox.
+   * @defaultValue false
+   */
   supportNewline?: boolean;
-  /** Optional callback to render send button icon to the right of the SendBox. */
-  onRenderIcon?: (props: SendBoxProps & SendBoxPropsFromContext, isMouseOverSendIcon: boolean) => JSX.Element | null;
+  /**
+   * Optional callback to render send button icon to the right of the SendBox.
+   * @defaultValue SendIcon
+   */
+  onRenderIcon?: (props: SendBoxProps, isMouseOverSendIcon: boolean) => JSX.Element | null;
   /**
    * Allows users to pass in an object contains custom CSS styles.
    * @Example
@@ -53,19 +84,22 @@ const defaultOnRenderSystemMessage = (
   systemMessage: string | undefined,
   style: IStyle | undefined
 ): JSX.Element | undefined =>
-  systemMessage ? <Alert attached="bottom" content={systemMessage} className={mergeStyles(style)} /> : undefined;
+  systemMessage ? (
+    <MessageBar messageBarType={MessageBarType.info} styles={concatStyleSets(suppressIconStyle, { root: style })}>
+      {systemMessage}
+    </MessageBar>
+  ) : undefined;
 
 /**
  * `SendBox` is a component for users to send messages and typing notifications. An optional message
  * can also be shown below the `SendBox`.
  */
-export const SendBox = (props: SendBoxProps & SendBoxPropsFromContext & ErrorHandlingProps): JSX.Element => {
+export const SendBox = (props: SendBoxProps): JSX.Element => {
   const {
     disabled,
     systemMessage,
     supportNewline,
     onSendMessage,
-    onErrorCallback,
     onSendTypingNotification,
     onRenderIcon,
     styles
@@ -86,9 +120,7 @@ export const SendBox = (props: SendBoxProps & SendBoxPropsFromContext & ErrorHan
     }
     // we dont want to send empty messages including spaces, newlines, tabs
     if (!EMPTY_MESSAGE_REGEX.test(textValue)) {
-      onSendMessage(textValue).catch((error) => {
-        propagateError(error, onErrorCallback);
-      });
+      onSendMessage && onSendMessage(textValue);
       setTextValue('');
     }
     sendTextFieldRef.current?.focus();
@@ -105,15 +137,14 @@ export const SendBox = (props: SendBoxProps & SendBoxPropsFromContext & ErrorHan
   const textTooLongMessage = textValueOverflow ? TEXT_EXCEEDS_LIMIT : undefined;
 
   return (
-    <>
-      <Stack horizontal={true} className={mergeStyles(sendBoxWrapperStyle, styles?.root)}>
+    <Stack className={mergeStyles(sendBoxWrapperStyle, styles?.root)}>
+      <Stack horizontal={true}>
         <TextField
           multiline
           autoAdjustHeight
           multiple={false}
           resizable={false}
           componentRef={sendTextFieldRef}
-          className={mergeStyles(textFieldStyle, styles?.textField)}
           id="sendbox"
           ariaLabel={'Type'}
           inputClassName={sendBoxStyle}
@@ -126,11 +157,9 @@ export const SendBox = (props: SendBoxProps & SendBoxPropsFromContext & ErrorHan
               ev.preventDefault();
               sendMessageOnClick();
             }
-            onSendTypingNotification().catch((error) => {
-              propagateError(error, onErrorCallback);
-            });
+            onSendTypingNotification && onSendTypingNotification();
           }}
-          styles={TextFieldStyleProps}
+          styles={concatStyleSets(TextFieldStyleProps, { fieldGroup: styles?.textField })}
         />
 
         <div
@@ -152,14 +181,11 @@ export const SendBox = (props: SendBoxProps & SendBoxPropsFromContext & ErrorHan
           {onRenderIcon ? (
             onRenderIcon(props, isMouseOverSendIcon)
           ) : (
-            <SendIcon
-              className={mergeStyles(sendIconDiv, styles?.defaultSendMessageIcon)}
-              outline={!isMouseOverSendIcon}
-            />
+            <SendIcon className={mergeStyles(sendIconDiv, styles?.sendMessageIcon)} outline={!isMouseOverSendIcon} />
           )}
         </div>
       </Stack>
-      {onRenderSystemMessage(systemMessage ? systemMessage : textTooLongMessage, styles?.defaultSystemMessage)}
-    </>
+      {onRenderSystemMessage(systemMessage ? systemMessage : textTooLongMessage, styles?.systemMessage)}
+    </Stack>
   );
 };

@@ -7,7 +7,6 @@ import { GroupCall } from '@azure/communication-ui';
 const importStatement = `
 import { GroupCall } from '@azure/communication-ui';
 import { v1 as createGUID } from 'uuid';
-import { AzureCommunicationUserCredential } from '@azure/communication-common';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-administration';
 `;
 

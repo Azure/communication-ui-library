@@ -5,7 +5,6 @@ import {
   CallClient,
   CallAgent,
   DeviceManager,
-  PermissionState,
   VideoDeviceInfo,
   AudioDeviceInfo,
   CallClientOptions
@@ -15,20 +14,23 @@ import { AbortSignalLike } from '@azure/core-http';
 import { ErrorHandlingProps } from './ErrorProvider';
 import { WithErrorHandling } from '../utils/WithErrorHandling';
 import { CommunicationUiError, CommunicationUiErrorCode } from '../types/CommunicationUiError';
+import { DevicePermissionState } from '../types/DevicePermission';
 
 export type CallingContextType = {
   userId: string;
   setUserId: Dispatch<SetStateAction<string>>;
+  displayName: string;
+  setDisplayName: Dispatch<SetStateAction<string>>;
   callClient: CallClient;
   setCallClient: Dispatch<SetStateAction<CallClient>>;
   callAgent: CallAgent | undefined;
   setCallAgent: Dispatch<SetStateAction<CallAgent | undefined>>;
   deviceManager: DeviceManager | undefined;
   setDeviceManager: Dispatch<SetStateAction<DeviceManager | undefined>>;
-  audioDevicePermission: PermissionState;
-  setAudioDevicePermission: Dispatch<SetStateAction<PermissionState>>;
-  videoDevicePermission: PermissionState;
-  setVideoDevicePermission: Dispatch<SetStateAction<PermissionState>>;
+  audioDevicePermission: DevicePermissionState;
+  setAudioDevicePermission: Dispatch<SetStateAction<DevicePermissionState>>;
+  videoDevicePermission: DevicePermissionState;
+  setVideoDevicePermission: Dispatch<SetStateAction<DevicePermissionState>>;
   videoDeviceInfo: VideoDeviceInfo | undefined;
   setVideoDeviceInfo: Dispatch<SetStateAction<VideoDeviceInfo | undefined>>;
   videoDeviceList: VideoDeviceInfo[];
@@ -44,21 +46,23 @@ export const CallingContext = createContext<CallingContextType | undefined>(unde
 interface CallingProviderProps {
   children: React.ReactNode;
   token: string;
+  displayName: string;
   callClientOptions?: CallClientOptions;
   refreshTokenCallback?: (abortSignal?: AbortSignalLike) => Promise<string>;
 }
 
 const CallingProviderBase = (props: CallingProviderProps & ErrorHandlingProps): JSX.Element => {
-  const { token, callClientOptions, refreshTokenCallback, onErrorCallback } = props;
+  const { token, displayName: initialDisplayName, callClientOptions, refreshTokenCallback, onErrorCallback } = props;
 
   // if there is no valid token then there is no valid userId
   const userIdFromToken = token ? getIdFromToken(token) : '';
-  const [callClient, setCallClient] = useState<CallClient>(new CallClient({}));
+  const [callClient, setCallClient] = useState<CallClient>(new CallClient(callClientOptions));
   const [callAgent, setCallAgent] = useState<CallAgent | undefined>(undefined);
   const [deviceManager, setDeviceManager] = useState<DeviceManager | undefined>(undefined);
   const [userId, setUserId] = useState<string>(userIdFromToken);
-  const [audioDevicePermission, setAudioDevicePermission] = useState<PermissionState>('Unknown');
-  const [videoDevicePermission, setVideoDevicePermission] = useState<PermissionState>('Unknown');
+  const [displayName, setDisplayName] = useState<string>(initialDisplayName);
+  const [audioDevicePermission, setAudioDevicePermission] = useState<DevicePermissionState>('Unknown');
+  const [videoDevicePermission, setVideoDevicePermission] = useState<DevicePermissionState>('Unknown');
   const [videoDeviceInfo, setVideoDeviceInfo] = useState<VideoDeviceInfo | undefined>(undefined);
   const [videoDeviceList, setVideoDeviceList] = useState<VideoDeviceInfo[]>([]);
   const [audioDeviceInfo, setAudioDeviceInfo] = useState<AudioDeviceInfo | undefined>(undefined);
@@ -71,18 +75,22 @@ const CallingProviderBase = (props: CallingProviderProps & ErrorHandlingProps): 
   }, [refreshTokenCallback]);
 
   useEffect(() => {
-    if (!token) return;
-
     (async () => {
       try {
-        setCallClient(new CallClient(callClientOptions));
-        const callAgent = await callClient.createCallAgent(
-          createAzureCommunicationUserCredential(token, refreshTokenCallbackRefContainer.current)
-        );
-        setCallAgent(callAgent);
-
-        const deviceManager = await callClient.getDeviceManager();
-        setDeviceManager(deviceManager);
+        // Need refactor: to support having ConfigurationScreen separate from GroupCall in Calling Sample, we need to
+        // allow DeviceManager to be created but not create CallAgent because ConfigurationScreen depends on
+        // DeviceManager but CallAgent depends on ConfigurationScreen displayName. So the CallingProvider used by
+        // ConfigurationScreen will pass in undefined token while all other cases like when CallingProvider is used by
+        // GroupCall or used in composite, you should pass in the valid token.
+        if (token) {
+          setCallAgent(
+            await callClient.createCallAgent(
+              createAzureCommunicationUserCredential(token, refreshTokenCallbackRefContainer.current),
+              { displayName: displayName }
+            )
+          );
+        }
+        setDeviceManager(await callClient.getDeviceManager());
       } catch (error) {
         throw new CommunicationUiError({
           message: 'Error creating call agent',
@@ -93,16 +101,7 @@ const CallingProviderBase = (props: CallingProviderProps & ErrorHandlingProps): 
     })().catch((error) => {
       propagateError(error, onErrorCallback);
     });
-  }, [
-    token,
-    callClient,
-    setCallAgent,
-    setDeviceManager,
-    callClientOptions,
-    setCallClient,
-    refreshTokenCallbackRefContainer,
-    onErrorCallback
-  ]);
+  }, [token, callClient, refreshTokenCallbackRefContainer, displayName, onErrorCallback]);
 
   // Clean up callAgent whenever the callAgent or userTokenCredential is changed. This is required because callAgent itself is a singleton.
   // We need to clean up before creating another one.
@@ -129,6 +128,8 @@ const CallingProviderBase = (props: CallingProviderProps & ErrorHandlingProps): 
     setDeviceManager,
     userId,
     setUserId,
+    displayName,
+    setDisplayName,
     audioDevicePermission,
     setAudioDevicePermission,
     videoDevicePermission,

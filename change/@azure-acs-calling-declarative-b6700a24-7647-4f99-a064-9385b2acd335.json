@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add subscriber for RemoteVideoStream events to capture those state updates for Calling Declarative",
+  "packageName": "@azure/acs-calling-declarative",
+  "email": "allenhwang@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -64,7 +64,7 @@ export const MapToLocalDeviceSettingsProps = (): LocalDeviceSettingsContainerPro
   const updateAudioDeviceInfo = (source: AudioDeviceInfo): void => {
     if (source) {
       setAudioDeviceInfo(source);
-      deviceManager?.setMicrophone(source);
+      deviceManager?.selectMicrophone(source);
     }
   };
 

@@ -16,8 +16,8 @@ export default (): void => {
   useEffect(() => {
     if (!deviceManager || videoDevicePermission !== 'Granted') return;
 
-    function promptVideoDevices(deviceManager: DeviceManager): void {
-      const cameraList: VideoDeviceInfo[] = deviceManager.getCameraList();
+    async function promptVideoDevices(deviceManager: DeviceManager): Promise<void> {
+      const cameraList: VideoDeviceInfo[] = await deviceManager.getCameras();
       setVideoDeviceList(cameraList);
 
       //Reset if the selected video is no longer available or no selected video.
