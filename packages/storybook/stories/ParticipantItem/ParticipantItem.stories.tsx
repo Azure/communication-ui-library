@@ -32,18 +32,22 @@ export const ParticipantItemComponent: () => JSX.Element = () => {
       };
     });
 
+  const containerStyle = { width: '12rem' };
+
   return (
-    <ParticipantItem
-      name={name}
-      isYou={isYou}
-      menuItems={menuItems}
-      onRenderIcon={() => (
-        <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
-          {isScreenSharing && <CallControlPresentNewIcon size="small" />}
-          {isMuted && <MicOffIcon size="small" />}
-        </Stack>
-      )}
-    />
+    <div style={containerStyle}>
+      <ParticipantItem
+        name={name}
+        isYou={isYou}
+        menuItems={menuItems}
+        onRenderIcon={() => (
+          <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
+            {isScreenSharing && <CallControlPresentNewIcon size="small" />}
+            {isMuted && <MicOffIcon size="small" />}
+          </Stack>
+        )}
+      />
+    </div>
   );
 };
 

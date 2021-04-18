@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add participantList selector",
+  "packageName": "@azure/communication-ui",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}

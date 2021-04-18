@@ -11,7 +11,7 @@ let mockCallContext: () => MockCallContextType;
 
 jest.mock('@azure/communication-calling', () => {
   return {
-    Renderer: jest.fn().mockImplementation(() => {
+    VideoStreamRenderer: jest.fn().mockImplementation(() => {
       return {
         createView: jest.fn().mockImplementation(() => {
           return {
@@ -45,8 +45,7 @@ jest.mock('../providers/ErrorProvider', () => {
 const videoDeviceInfoStub: VideoDeviceInfo = {
   id: '1',
   name: 'camera',
-  deviceType: 'Unknown',
-  cameraFacing: 'Front'
+  deviceType: 'Unknown'
 };
 
 describe('useLocalVideoStreamRenderer tests', () => {

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add basic support for system message and custom message in MessageThread",
+  "packageName": "@azure/communication-ui",
+  "email": "easony@microsoft.com",
+  "dependentChangeType": "patch"
+}

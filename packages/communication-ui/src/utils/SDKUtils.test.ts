@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
 import { AudioDeviceInfo } from '@azure/communication-calling';
-import { CallingApplication, CommunicationUser, PhoneNumber, UnknownIdentifier } from '@azure/communication-common';
+import { CommunicationUserKind, PhoneNumberKind, UnknownIdentifierKind } from '@azure/communication-common';
 import { getACSId, isGUID, isInCall, isSelectedDeviceInList } from './SDKUtils';
 
 describe('SDKUtils tests', () => {
@@ -10,36 +10,10 @@ describe('SDKUtils tests', () => {
       jest.resetAllMocks();
     });
 
-    jest.mock('@azure/communication-calling', () => {
-      return {
-        isCommunicationUser: (identifer: CommunicationUser | CallingApplication | UnknownIdentifier | PhoneNumber) => {
-          return 'communicationUserId' in identifer;
-        },
-        isCallingApplication: (identifer: CommunicationUser | CallingApplication | UnknownIdentifier | PhoneNumber) => {
-          return 'callingApplicationId' in identifer;
-        },
-        isPhoneNumber: (identifer: CommunicationUser | CallingApplication | UnknownIdentifier | PhoneNumber) => {
-          return 'phoneNumber' in identifer;
-        }
-      };
-    });
-
     test('getACSId should return CommunicationUserId if the identifier is a CommunicationUser', () => {
       // Arrange
       const expectedId = 'testUserId';
-      const identifer: CommunicationUser = { communicationUserId: expectedId };
-
-      // Act
-      const id = getACSId(identifer);
-
-      // Assert
-      expect(id).toEqual(expectedId);
-    });
-
-    test('getACSId should return CallingApplicationId if the identifier is a CallingApplication', () => {
-      // Arrange
-      const expectedId = 'testCallApplicationId';
-      const identifer: CallingApplication = { callingApplicationId: expectedId };
+      const identifer: CommunicationUserKind = { communicationUserId: expectedId, kind: 'communicationUser' };
 
       // Act
       const id = getACSId(identifer);
@@ -51,7 +25,7 @@ describe('SDKUtils tests', () => {
     test('getACSId should return PhoneNumber if the identifier is a PhoneNumber', () => {
       // Arrange
       const expectedId = 'testPhoneNumber';
-      const identifer: PhoneNumber = { phoneNumber: expectedId };
+      const identifer: PhoneNumberKind = { phoneNumber: expectedId, kind: 'phoneNumber' };
 
       // Act
       const id = getACSId(identifer);
@@ -60,10 +34,10 @@ describe('SDKUtils tests', () => {
       expect(id).toEqual(expectedId);
     });
 
-    test('getACSId should return id if the identifier is a something other than CommunicationUser, CallingApplication or PhoneNumber', () => {
+    test('getACSId should return id if the identifier is unknown', () => {
       // Arrange
       const expectedId = 'testId';
-      const identifer: UnknownIdentifier = { id: expectedId };
+      const identifer: UnknownIdentifierKind = { id: expectedId, kind: 'unknown' };
 
       // Act
       const id = getACSId(identifer);
@@ -110,11 +84,11 @@ describe('SDKUtils tests', () => {
     expect(isInCall('Disconnected')).toEqual(false);
 
     // true conditions
-    expect(isInCall('Incoming')).toEqual(true);
     expect(isInCall('Connecting')).toEqual(true);
     expect(isInCall('Ringing')).toEqual(true);
     expect(isInCall('Connected')).toEqual(true);
-    expect(isInCall('Hold')).toEqual(true);
+    expect(isInCall('LocalHold')).toEqual(true);
+    expect(isInCall('RemoteHold')).toEqual(true);
     expect(isInCall('InLobby')).toEqual(true);
     expect(isInCall('Disconnecting')).toEqual(true);
     expect(isInCall('EarlyMedia')).toEqual(true);

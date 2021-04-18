@@ -1,8 +1,8 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { HangupCallOptions, PermissionState as DevicePermissionState } from '@azure/communication-calling';
+import { HangUpOptions } from '@azure/communication-calling';
 import { useCallContext, useCallingContext } from '../../../providers';
-import { CommunicationUiErrorCode, CommunicationUiError } from '../../../types';
+import { CommunicationUiErrorCode, CommunicationUiError, DevicePermissionState } from '../../../types';
 import {
   useSubscribeToDevicePermission,
   useLocalVideo,
@@ -48,7 +48,7 @@ export type CallControlBarContainerProps = {
   /** Determines mic permission. */
   micPermission: DevicePermissionState;
   /** Callback when leaving the call.  */
-  leaveCall: (hangupCallOptions: HangupCallOptions) => Promise<void>;
+  leaveCall: (hangupCallOptions: HangUpOptions) => Promise<void>;
 };
 
 export const MapToCallControlBarProps = (): CallControlBarContainerProps => {
@@ -101,7 +101,7 @@ export const MapToCallControlBarProps = (): CallControlBarContainerProps => {
     toggleScreenShare,
     cameraPermission: videoDevicePermission,
     micPermission: audioDevicePermission,
-    leaveCall: async (hangupCallOptions: HangupCallOptions): Promise<void> => {
+    leaveCall: async (hangupCallOptions: HangUpOptions): Promise<void> => {
       await leave(hangupCallOptions);
     }
   };

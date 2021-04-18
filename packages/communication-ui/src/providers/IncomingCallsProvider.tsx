@@ -1,43 +1,48 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { Call, CollectionUpdatedEvent } from '@azure/communication-calling';
-import React, { createContext, useState } from 'react';
+import { CallEndedEvent, IncomingCall, IncomingCallEvent } from '@azure/communication-calling';
+import React, { createContext, Dispatch, SetStateAction, useState } from 'react';
 import { useValidContext } from '../utils';
 import { useEffect } from 'react';
 import { useCallingContext } from './CallingProvider';
 
 export type IncomingCallsContextType = {
-  incomingCalls: Call[];
+  incomingCalls: IncomingCall[];
+  setIncomingCalls: Dispatch<SetStateAction<IncomingCall[]>>;
 };
 
 export const IncomingCallsContext = createContext<IncomingCallsContextType | undefined>(undefined);
 
 export const IncomingCallsProvider = (props: { children: React.ReactNode }): JSX.Element => {
-  const [incomingCalls, setIncomingCalls] = useState<Call[]>([]);
+  const [incomingCalls, setIncomingCalls] = useState<IncomingCall[]>([]);
   const { callAgent } = useCallingContext();
 
-  // Update `incomingCalls` whenever a new call is added or removed.
-  // Also configures an event on each call so that it removes itself from
-  // active calls.
+  // Update `incomingCalls` whenever a new incoming call is added or removed.
   useEffect(() => {
-    const onCallsUpdate: CollectionUpdatedEvent<Call> = () => {
-      const validCalls = callAgent?.calls.filter((c: Call) => c.isIncoming) ?? [];
-      setIncomingCalls(validCalls);
-      validCalls.forEach((c) => {
-        c.on('callStateChanged', () => {
-          if (c.state !== 'Incoming') {
-            validCalls.splice(validCalls.indexOf(c), 1);
-            setIncomingCalls(validCalls);
+    const onIncomingCall: IncomingCallEvent = (incomingCallEvent: { incomingCall: IncomingCall }): void => {
+      setIncomingCalls([...incomingCalls, incomingCallEvent.incomingCall]);
+
+      const onIncomingCallEnded: CallEndedEvent = () => {
+        const incomingCallWithEndedOneRemoved: IncomingCall[] = [];
+        for (const incomingCall of incomingCalls) {
+          if (incomingCall !== incomingCallEvent.incomingCall) {
+            incomingCallWithEndedOneRemoved.push(incomingCall);
           }
-        });
-      });
+        }
+        setIncomingCalls(incomingCallWithEndedOneRemoved);
+      };
+      incomingCallEvent.incomingCall.on('callEnded', onIncomingCallEnded);
     };
 
-    callAgent?.on('callsUpdated', onCallsUpdate);
-    return () => callAgent?.off('callsUpdated', onCallsUpdate);
-  }, [callAgent, setIncomingCalls]);
+    callAgent?.on('incomingCall', onIncomingCall);
+    return () => callAgent?.off('incomingCall', onIncomingCall);
+  }, [callAgent, incomingCalls]);
 
-  return <IncomingCallsContext.Provider value={{ incomingCalls }}>{props.children}</IncomingCallsContext.Provider>;
+  return (
+    <IncomingCallsContext.Provider value={{ incomingCalls, setIncomingCalls }}>
+      {props.children}
+    </IncomingCallsContext.Provider>
+  );
 };
 
 export const useIncomingCallsContext = (): IncomingCallsContextType => useValidContext(IncomingCallsContext);

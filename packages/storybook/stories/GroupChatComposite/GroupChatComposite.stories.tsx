@@ -88,12 +88,13 @@ const createChatConfig = async (resourceConnectionString: string): Promise<ChatC
   const userAccessTokenCredential = new AzureCommunicationUserCredential(user.token);
   const chatClient = new ChatClient(endpointUrl, userAccessTokenCredential);
 
-  const threadId = (
-    await chatClient.createChatThread({
-      members: [{ user: { communicationUserId: user.userId } }, { user: { communicationUserId: bot.userId } }],
-      topic: 'DemoThread'
-    })
-  ).threadId;
+  const threadId =
+    (
+      await chatClient.createChatThread({
+        participants: [{ user: { communicationUserId: user.userId } }, { user: { communicationUserId: bot.userId } }],
+        topic: 'DemoThread'
+      })
+    ).chatThread?.id ?? '';
   console.log(`threadId: ${threadId}`);
 
   createMessageBot(bot.token, endpointUrl, threadId, bot.userId);

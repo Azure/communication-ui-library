@@ -97,7 +97,14 @@ const sendMessageWithClient = async (
           updateMessagesArray({ ...message, clientMessageId }, setChatMessages);
         } else {
           updateMessagesArray(
-            { clientMessageId: clientMessageId, createdOn: new Date(), id: sendMessageResponse.id },
+            {
+              clientMessageId: clientMessageId,
+              createdOn: new Date(),
+              id: sendMessageResponse.id,
+              type: 'text',
+              sequenceId: '',
+              version: ''
+            },
             setChatMessages
           );
         }
@@ -186,12 +193,16 @@ const processSendMessage = async (
 ): Promise<void> => {
   const clientMessageId = (Math.floor(Math.random() * MAXIMUM_INT64) + 1).toString(); //generate a random unsigned Int64 number
   const newMessage = {
-    content: messageContent,
+    content: { message: messageContent },
     clientMessageId: clientMessageId,
     sender: { communicationUserId: userId },
     senderDisplayName: displayName,
     threadId: threadId,
-    createdOn: undefined
+    createdOn: new Date(),
+    type: '',
+    id: '',
+    version: '',
+    sequenceId: ''
   };
   setChatMessages((prevMessages) => {
     const messages: ChatMessage[] = prevMessages ? [...prevMessages] : [];

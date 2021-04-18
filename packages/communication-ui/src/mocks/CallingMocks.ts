@@ -1,6 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
 import {
+  CallApiFeature,
   LocalVideoStream,
   MediaStreamType,
   RemoteParticipant,
@@ -46,13 +47,13 @@ export const defaultMockCallProps = {
 
 export function mockCall(mockProps?: MockCallProps): MockCall {
   const props = { ...defaultMockCallProps, ...mockProps };
+
   return {
     id: 'call id',
-    callerIdentity: undefined,
+    callerInfo: { identifier: undefined },
     state: 'None',
-    isIncoming: props.isIncoming,
-    isMicrophoneMuted: props.isMicrophoneMuted,
-    isRecordingActive: false,
+    direction: props.isIncoming ? 'Incoming' : 'Outgoing',
+    isMuted: props.isMicrophoneMuted,
     isScreenSharingOn: props.isScreenSharingOn,
     localVideoStreams: props.localVideoStreams,
     remoteParticipants: [],
@@ -66,20 +67,16 @@ export function mockCall(mockProps?: MockCallProps): MockCall {
         props.unmuteExecutedCallback(true);
       });
     },
-    accept: async () => {
-      return await new Promise<void>((resolve) => resolve()).then(() => {
-        props.acceptExecutedCallback(true);
-      });
-    },
-    reject: async () => {
-      return await new Promise<void>((resolve) => resolve()).then(() => {
-        props.rejectExecutedCallback(true);
-      });
+    api: <TFeature extends CallApiFeature>(): TFeature => {
+      throw new Error('not implemented');
     },
     hangUp: async () => {
       return await new Promise<void>((resolve) => resolve()).then(() => {
         props.hangUpExecutedCallback();
       });
+    },
+    sendDtmf: async () => {
+      return await new Promise((resolve) => resolve());
     },
     startVideo: async () => {
       props.startVideo(true);
@@ -91,7 +88,7 @@ export function mockCall(mockProps?: MockCallProps): MockCall {
     },
     addParticipant: () => {
       const a: RemoteParticipant = {
-        identifier: { phoneNumber: 'phoneNumber' },
+        identifier: { phoneNumber: 'phoneNumber', kind: 'phoneNumber' },
         state: 'Connecting',
         videoStreams: [],
         isMuted: false,
@@ -111,7 +108,7 @@ export function mockCall(mockProps?: MockCallProps): MockCall {
     hold: async () => {
       return await new Promise((resolve) => resolve());
     },
-    unhold: async () => {
+    resume: async () => {
       return await new Promise((resolve) => resolve());
     },
     startScreenSharing: async () => {
@@ -129,9 +126,6 @@ export function mockCall(mockProps?: MockCallProps): MockCall {
     },
     off: () => {
       return;
-    },
-    sendDtmf: async () => {
-      return await new Promise((resolve) => resolve());
     }
   };
 }
@@ -140,7 +134,7 @@ export function mockCallAgent(props?: MockCallProps): MockCallAgent {
   const call = mockCall(props);
   return {
     calls: [call],
-    call: () => {
+    startCall: () => {
       props?.outgoingCallExecutedCallback();
       return call;
     },
@@ -156,9 +150,6 @@ export function mockCallAgent(props?: MockCallProps): MockCallAgent {
     },
     dispose: async () => {
       return await new Promise((resolve) => resolve());
-    },
-    updateDisplayName: () => {
-      return;
     }
   };
 }
@@ -170,7 +161,7 @@ export function mockRemoteParticipant(
   isMuted?: boolean
 ): RemoteParticipant {
   return {
-    identifier: { communicationUserId: 'id' },
+    identifier: { communicationUserId: 'id', kind: 'communicationUser' },
     displayName: displayName ?? 'displayName',
     state: state ?? 'Connected',
     videoStreams: videoStreams ?? [],
@@ -188,7 +179,7 @@ export function mockRemoteParticipant(
 export function mockRemoteVideoStream(type?: MediaStreamType, isAvailable?: boolean): MockRemoteVideoStream {
   return {
     id: 1,
-    type: type ?? 'Video',
+    mediaStreamType: type ?? 'Video',
     isAvailable: isAvailable ?? false,
     on: () => {
       return;

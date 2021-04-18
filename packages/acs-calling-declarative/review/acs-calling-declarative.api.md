@@ -9,7 +9,6 @@ import { CallClient } from '@azure/communication-calling';
 import { CallDirection } from '@azure/communication-calling';
 import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
-import { CallingApplicationKind } from '@azure/communication-common';
 import { CallState } from '@azure/communication-calling';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { DeviceAccess } from '@azure/communication-calling';
@@ -25,11 +24,14 @@ export interface Call {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
     direction: CallDirection;
+    endTime: Date | undefined;
     id: string;
-    isMicrophoneMuted: boolean;
+    isMuted: boolean;
     isScreenSharingOn: boolean;
     localVideoStreams: ReadonlyArray<LocalVideoStream>;
     remoteParticipants: Map<string, RemoteParticipant>;
+    remoteParticipantsEnded: Map<string, RemoteParticipant>;
+    startTime: Date;
     state: CallState;
 }
 
@@ -39,8 +41,10 @@ export const callClientDeclaratify: (callClient: CallClient) => DeclarativeCallC
 // @public
 export interface CallClientState {
     calls: Map<string, Call>;
+    callsEnded: Call[];
     deviceManagerState: DeviceManagerState;
     incomingCalls: Map<string, IncomingCall>;
+    incomingCallsEnded: IncomingCall[];
 }
 
 // @public
@@ -62,10 +66,11 @@ export type DeviceManagerState = {
 
 // @public
 export interface IncomingCall {
-    callEnded: boolean;
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
+    endTime: Date | undefined;
     id: string;
+    startTime: Date;
 }
 
 // @public
@@ -78,7 +83,7 @@ export interface LocalVideoStream {
 export interface RemoteParticipant {
     callEndReason?: CallEndReason;
     displayName?: string;
-    identifier: CommunicationUserKind | PhoneNumberKind | CallingApplicationKind | MicrosoftTeamsUserKind | UnknownIdentifierKind;
+    identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind;
     isMuted: boolean;
     isSpeaking: boolean;
     state: RemoteParticipantState;

@@ -8,7 +8,7 @@ import {
 } from './useSubscribeTypingNotification';
 import { act, renderHook } from '@testing-library/react-hooks';
 
-import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling/types/src/events/chat';
+import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling-2';
 
 let chatClientMock: ChatClientMock;
 
@@ -42,7 +42,8 @@ const typingIndicatorEvent: TypingIndicatorReceivedEvent = {
   receivedOn: new Date(1577865600000).toUTCString(),
   threadId: typingNotification.threadId,
   sender: {
-    communicationUserId: typingNotification.from
+    user: { communicationUserId: typingNotification.from },
+    displayName: 'User1'
   },
   recipient: {
     communicationUserId: typingNotification.recipientId
