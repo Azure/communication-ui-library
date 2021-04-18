@@ -15,6 +15,7 @@ import {
 } from '@azure/communication-signaling';
 import { chatClientDeclaratify, DeclarativeChatClient } from './ChatClientDeclarative';
 import { ChatClientState } from './ChatClientState';
+import { Constants } from './Constants';
 import { createMockChatThreadClient } from './mocks/createMockChatThreadClient';
 import { createMockIterator } from './mocks/createMockIterator';
 import { MockCommunicationUserCredential } from './mocks/MockCommunicationUserCredential';
@@ -325,7 +326,7 @@ describe('declarative chatClient subscribe to event properly after startRealtime
 
     const addedEvent: TypingIndicatorReceivedEvent = {
       threadId,
-      receivedOn: new Date(Date.now() - 35 * 1000).toUTCString(),
+      receivedOn: new Date(Date.now() - (Constants.TYPING_INDICATOR_MAINTAIN_TIME + 1 * 1000)).toUTCString(),
       recipient: { communicationUserId: 'user2' },
       sender: { user: { communicationUserId: 'user3' }, displayName: '' },
       version: ''
@@ -354,7 +355,7 @@ describe('declarative chatClient subscribe to event properly after startRealtime
     expect(client.state.threads.get(threadId)?.readReceipts.length).toBe(1);
     expect(client.state.threads.get(threadId)?.readReceipts[0].chatMessageId).toBe(messageId);
 
-    expect(client.state.threads.get(threadId)?.latestReadtime).toEqual(new Date(readOn));
+    expect(client.state.threads.get(threadId)?.latestReadTime).toEqual(new Date(readOn));
   });
 });
 
@@ -398,13 +399,13 @@ describe('declarative chatClient onStateChange', () => {
     expect(state.threads.size).toBe(1);
   });
 
-  test('offStateChange will unsubscribe corretly', async () => {
+  test('offStateChange will unsubscribe correctly', async () => {
     const client = createMockChatClientAndDeclaratify();
 
     let onChangeCalledTimes = 0;
 
     const callback = (): void => {
-      onChangeCalledTimes += 1;
+      onChangeCalledTimes++;
     };
 
     client.onStateChange(callback);

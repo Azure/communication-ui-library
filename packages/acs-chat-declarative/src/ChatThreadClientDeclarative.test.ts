@@ -91,19 +91,19 @@ describe('declarative chatThreadClient list iterators', () => {
     expect(context.getState().threads.get(threadId)?.readReceipts.length).toBe(mockReadReceipts.length);
   });
 
-  test('declarative listReadReceipts should generate latestReadtime properly', async () => {
+  test('declarative listReadReceipts should generate latestReadTime properly', async () => {
     const context = new ChatContext();
     const pages = createMockChatClientAndDeclaratify(context).listReadReceipts().byPage();
     for await (const _page of pages);
-    const latestReadtime = context.getState().threads.get(threadId)?.latestReadtime;
+    const latestReadTime = context.getState().threads.get(threadId)?.latestReadTime;
 
     const maxReadTime = mockReadReceipts[mockReadReceipts.length - 1].readOn;
-    expect(latestReadtime && latestReadtime).toBe(maxReadTime);
+    expect(latestReadTime && latestReadTime).toBe(maxReadTime);
   });
 });
 
 describe('declarative chatThreadClient basic api functions', () => {
-  test('set internal store correctly when proxy getmessage', async () => {
+  test('set internal store correctly when proxy getMessage', async () => {
     const context = new ChatContext();
     const message = await createMockChatClientAndDeclaratify(context).getMessage('MessageId1');
 

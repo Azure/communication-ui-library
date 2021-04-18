@@ -2,12 +2,10 @@
 
 import { ChatMessageReadReceipt, ChatThreadClient, ChatParticipant } from '@azure/communication-chat';
 import { ChatMessageWithStatus } from '..';
-import { delay } from '../TestUtils';
 import { createMockIterator } from './createMockIterator';
 import { MockCommunicationUserCredential } from './MockCommunicationUserCredential';
 
-// [1, 2 ... 5] array
-const seedArray = Array.from(Array(5).keys());
+const seedArray = [0, 1, 2, 3, 4];
 
 export const messageTemplate: ChatMessageWithStatus = {
   id: 'MessageId',
@@ -86,7 +84,6 @@ export const createMockChatThreadClient = (threadId: string): ChatThreadClient =
   mockChatThreadClient.addParticipants = emptyAsyncFunctionWithResponse;
 
   mockChatThreadClient.sendMessage = async ({ content }) => {
-    delay(200);
     if (content === 'fail') {
       throw 'receive fail content';
     }
