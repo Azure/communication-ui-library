@@ -17,4 +17,4 @@ fi
 # Invoke the "rush prettier" custom command to reformat files whenever they
 # are committed. The command is defined in common/config/rush/command-line.json
 # and uses the "rush-prettier" autoinstaller.
-rush prettier || exit $?
+npx --no-install rush prettier || exit $?
