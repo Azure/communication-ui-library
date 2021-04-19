@@ -45,9 +45,8 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
             authorColor: fluentUITheme?.palette?.neutralPrimary,
             contentColor: fluentUITheme?.palette?.neutralPrimary,
             backgroundColor: fluentUITheme?.palette?.neutralLighter,
-            backgroundColorMine: fluentUITheme?.palette?.neutralLighter
+            backgroundColorMine: fluentUITheme?.palette?.themeLight
           }
-          // add more northstar components to align with Fluent UI theme
         },
         componentStyles: {
           ChatMessage: {
@@ -56,6 +55,7 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
             }
           }
         }
+        // add more northstar components to align with Fluent UI theme
       })
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
