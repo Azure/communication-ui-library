@@ -38,20 +38,29 @@ cd ui-toolkit-quickstart
 At the end of this process, you should have a full application inside of the folder `ui-toolkit-quickstart`.
 For this quickstart, we'll be modifying files inside of the `src` folder.
 
-### Install the package
+### Install the UI toolkit package
 
 Use the `npm install` command to install the Azure Communication Services UI Toolkit for JavaScript.
-Move the provided tarball (Private Preview) over to the `ui-toolkit-quickstart` directory. **Make sure to run the `npm i` command inside the `ui-toolkit-quickstart` directory.**
+
+Packages are not published to the npm registry during the private preview.
+Instead, download the `private-preview.zip` archive from the [latest private preview release on GitHub][private-preview-release]
+into the `ui-toolkit-quickstart` directory. Unzip the downloaded archive and install all the npm packages inside.
+
+e.g., if you unzipped into the `ui-toolkit-quickstart/private-preview`:
 
 ```bash
 
-# For Private Preview install tarball
+# Inside the ui-toolkit-quickstart directory...
 
-npm install --save ./{path for tarball}
+npm install --save ./private-preview/azure-acs-calling-declarative-1.0.0-beta.tgz ./private-preview/azure-acs-chat-declarative-1.0.0-beta.tgz ...
 
 ```
 
+The exact version numbers of the included packages may be different, please list all `.tgz` files in the archive.
+
 The `--save` option lists the library as a dependency in your **package.json** file.
+
+[private-preview-release]: https://github.com/Azure/communication-ui-sdk/releases/latest
 
 ### Run Create React App
 
