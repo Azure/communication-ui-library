@@ -1,0 +1,49 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
+
+<Meta title="Stateful Chat SDK/Selectors" />
+
+# Selectors
+
+Selectors are data providers used to access data from a global data store (state). Stateful Chat SDK provides selectors that can be used seemlessly with UI Components.
+
+## Thread Selector
+
+The `chatThreadSelector` provides data props needed to render a [MessageThread](?path=/docs/ui-components-messagethread--message-thread-component) component.
+
+```tsx
+import { chatThreadSelector } from '@azure/acs-chat-selector';
+
+const threadId = 'YOUR_THREAD_ID';
+const chatThreadProps = useSelector(chatThreadSelector, { threadId });
+
+<MessageThread {...chatThreadProps} />;
+```
+
+## Participant List Selector
+
+The `chatParticipantListSelector` provides a list of chat participants that can be used to render render a [ParticipantItem](?path=/docs/ui-components-participantitem--participant-item-component) component.
+
+```tsx
+import { chatParticipantListSelector, WebUiChatParticipant } from '@azure/acs-chat-selector';
+
+const threadId = 'YOUR_THREAD_ID';
+const chatParticipantProps = useSelector(chatParticipantListSelector, { threadId });
+
+const Participants = chatParticipantProps.chatParticipants.map((member: WebUiChatParticipant) => (
+  <ParticipantItem key={member.userId} name={member.displayName as string} />
+));
+```
+
+## Send Box Selector
+
+The `sendBoxSelector` provides data for rendering a [SendBox](?path=/docs/ui-components-sendbox--send-box-component) component.
+
+```tsx
+import { sendBoxSelector } from '@azure/acs-chat-selector';
+
+const threadId = 'YOUR_THREAD_ID';
+const sendBoxProps = useSelector(sendBoxSelector, { threadId });
+
+<SendBox {...sendBoxProps} />;
+```

@@ -28,7 +28,18 @@ export const parameters = {
   },
   options: {
     storySort: {
-      order: ['Introduction', 'Use Cases', 'Quickstart: UI Components', 'Quickstart: Composites',  'Styling', 'Theming', 'Localization', 'Composites', 'UI Components']
+      order: [
+        'Introduction',
+       'Use Cases',
+       'Quickstart: UI Components',
+       'Quickstart: Composites',
+        'Styling',
+       'Theming',
+       'Localization',
+       'Composites',
+       'UI Components',
+       'Stateful Chat SDK'
+      ]
     }
   }
 };
