@@ -6,6 +6,12 @@ import { FluentThemeProvider, LIGHT, DARK, THEMES } from '@azure/communication-u
 import { initializeIcons, loadTheme, mergeStyles } from '@fluentui/react';
 import { DocsContainer } from '@storybook/addon-docs/blocks';
 import { BackToTop, TableOfContents } from 'storybook-docs-toc';
+import {
+  COMPONENT_FOLDER_PREFIX,
+  COMPOSITE_FOLDER_PREFIX,
+  EXAMPLES_FOLDER_PREFIX,
+  QUICKSTARTS_FOLDER_PREFIX
+} from '../stories/constants';
 
 // Removing `loadTheme({})` causes storybook declaration exception.
 loadTheme({});
@@ -28,7 +34,17 @@ export const parameters = {
   },
   options: {
     storySort: {
-      order: ['Introduction', 'Use Cases', 'Quickstart: UI Components', 'Quickstart: Composites',  'Styling', 'Theming', 'Localization', 'Composites', 'UI Components']
+      order: [
+        'Introduction',
+        'Use Cases',
+        'Styling',
+        'Theming',
+        'Localization',
+        QUICKSTARTS_FOLDER_PREFIX,
+        COMPOSITE_FOLDER_PREFIX,
+        COMPONENT_FOLDER_PREFIX,
+        EXAMPLES_FOLDER_PREFIX
+      ]
     }
   }
 };
