@@ -2,11 +2,11 @@
 
 import React from 'react';
 import { Title, Heading, Description, Canvas, Source } from '@storybook/addon-docs/blocks';
-import { BasicParticipantListExample } from './examples/BasicParticipantList.example';
-import { InteractiveParticipantListExample } from './examples/InteractiveParticipantList.example';
+import { BasicParticipantListExample } from './snippets/BasicParticipantList.snippet';
+import { InteractiveParticipantListExample } from './snippets/InteractiveParticipantList.snippet';
 
-const BasicParticipantListExampleText = require('!!raw-loader!./examples/BasicParticipantList.example.tsx').default;
-const InteractiveParticipantListExampleText = require('!!raw-loader!./examples/InteractiveParticipantList.example.tsx')
+const BasicParticipantListExampleText = require('!!raw-loader!./snippets/BasicParticipantList.snippet.tsx').default;
+const InteractiveParticipantListExampleText = require('!!raw-loader!./snippets/InteractiveParticipantList.snippet.tsx')
   .default;
 
 export const getDocs: () => JSX.Element = () => {

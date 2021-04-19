@@ -1,8 +1,8 @@
 import { FluentThemeProvider, StreamMedia, VideoTile } from '@azure/communication-ui';
 import { getTheme } from '@fluentui/react';
 import React from 'react';
-import { renderVideoStream } from '../../utils';
-import { LobbyCallControlBar } from './LobbyControlBar.example';
+import { renderVideoStream } from '../../../utils';
+import { LobbyCallControlBar } from './LobbyControlBar.snippet';
 
 const theme = getTheme();
 const palette = theme.palette;
