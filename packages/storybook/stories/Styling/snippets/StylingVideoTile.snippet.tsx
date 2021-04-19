@@ -9,7 +9,7 @@ import {
 } from '@azure/communication-ui';
 import { DefaultButton } from '@fluentui/react';
 import React from 'react';
-import { renderVideoStream } from '../utils';
+import { renderVideoStream } from '../../utils';
 
 export const VideoTileExample: () => JSX.Element = () => {
   const customStyles = {
