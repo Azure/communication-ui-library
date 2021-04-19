@@ -20,8 +20,8 @@ export type MediaGalleryContainerProps = {
 };
 
 export const MapToMediaGalleryProps = (): MediaGalleryContainerProps => {
-  const { participants, displayName, screenShareStream, localVideoStream } = useCallContext();
-  const { userId } = useCallingContext();
+  const { participants, screenShareStream, localVideoStream } = useCallContext();
+  const { userId, displayName } = useCallingContext();
   const [remoteParticipants, setRemoteParticipants] = useState<GalleryParticipant[]>([]);
   const [localParticipant, setLocalParticipant] = useState<LocalGalleryParticipant>({
     userId,

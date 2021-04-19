@@ -6,7 +6,7 @@ import { ChatClient } from '@azure/communication-chat';
 import { chatClientDeclaratify } from '@azure/acs-chat-declarative';
 import { ChatThreadProvider } from './ChatThreadProvider';
 import { AbortSignalLike } from '@azure/core-http';
-import { createAzureCommunicationUserCredential } from '../utils';
+import { createAzureCommunicationUserCredentialBeta } from '../utils';
 import { Spinner } from '@fluentui/react';
 import { getIdFromToken } from '../utils';
 import { WithErrorHandling } from '../utils/WithErrorHandling';
@@ -49,7 +49,7 @@ const ChatProviderBase = (props: ChatProviderProps & ErrorHandlingProps): JSX.El
   const [displayName, setDisplayName] = useState<string>(props.displayName);
   const [chatClient, setChatClient] = useState<ChatClient>(
     chatClientDeclaratify(
-      new ChatClient(props.endpointUrl, createAzureCommunicationUserCredential(token, props.refreshTokenCallback)),
+      new ChatClient(props.endpointUrl, createAzureCommunicationUserCredentialBeta(token, props.refreshTokenCallback)),
       { userId, displayName }
     )
   );

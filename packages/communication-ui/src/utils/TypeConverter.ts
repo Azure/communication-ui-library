@@ -21,7 +21,9 @@ export const convertSdkRemoteParticipantToListParticipant = (
   onRemove?: () => void,
   onMute?: () => void
 ): ListParticipant => {
-  const isScreenSharing = participant.videoStreams.some((vs) => vs.type === 'ScreenSharing' && vs.isAvailable);
+  const isScreenSharing = participant.videoStreams.some(
+    (vs) => vs.mediaStreamType === 'ScreenSharing' && vs.isAvailable
+  );
   const identifier = getACSId(participant.identifier);
   return {
     key: identifier,

@@ -69,7 +69,7 @@ export class CallContext {
           existingCall.state = call.state;
           existingCall.callEndReason = call.callEndReason;
           existingCall.direction = call.direction;
-          existingCall.isMicrophoneMuted = call.isMicrophoneMuted;
+          existingCall.isMuted = call.isMuted;
           existingCall.isScreenSharingOn = call.isScreenSharingOn;
           existingCall.localVideoStreams = call.localVideoStreams;
           existingCall.remoteParticipants = call.remoteParticipants;
@@ -196,7 +196,7 @@ export class CallContext {
       produce(this._state, (draft: CallClientState) => {
         const call = draft.calls.get(callId);
         if (call) {
-          call.isMicrophoneMuted = isMicrophoneMuted;
+          call.isMuted = isMicrophoneMuted;
         }
       })
     );

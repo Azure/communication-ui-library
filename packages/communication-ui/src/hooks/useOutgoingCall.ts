@@ -21,9 +21,9 @@ export const useOutgoingCall = (): UseOutgoingCallType => {
 
     setCallState(call?.state ?? 'None');
 
-    call?.on('callStateChanged', updateCallState);
+    call?.on('stateChanged', updateCallState);
     return () => {
-      call?.off('callStateChanged', updateCallState);
+      call?.off('stateChanged', updateCallState);
     };
   }, [call, setCallState]);
 
@@ -43,7 +43,8 @@ export const useOutgoingCall = (): UseOutgoingCallType => {
       };
     }
 
-    const newCall = callAgent.call([receiver], { videoOptions, audioOptions });
+    const newCall = callAgent.startCall([receiver], { videoOptions, audioOptions });
+    console.log('newCall', newCall);
     setCall(newCall);
 
     // Listen to Remote Participant screen share stream
@@ -51,8 +52,8 @@ export const useOutgoingCall = (): UseOutgoingCallType => {
     newCall.remoteParticipants.forEach((participant) => {
       participant.on('videoStreamsUpdated', (e) => {
         e.added.forEach((addedStream) => {
-          if (addedStream.type === 'Video') return;
-          addedStream.on('availabilityChanged', () => {
+          if (addedStream.mediaStreamType === 'Video') return;
+          addedStream.on('isAvailableChanged', () => {
             if (addedStream.isAvailable) {
               setScreenShareStream({ stream: addedStream, user: participant });
             } else {

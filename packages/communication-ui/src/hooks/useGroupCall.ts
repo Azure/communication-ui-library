@@ -1,13 +1,13 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { AudioOptions, Call, GroupCallContext, HangupCallOptions, JoinCallOptions } from '@azure/communication-calling';
+import { AudioOptions, Call, GroupLocator, HangUpOptions, JoinCallOptions } from '@azure/communication-calling';
 import { useCallback } from 'react';
 import { CommunicationUiErrorCode, CommunicationUiError } from '../types/CommunicationUiError';
 import { useCallingContext, useCallContext } from '../providers';
 
 export type UseGroupCallType = {
-  leave: (hangupCallOptions: HangupCallOptions) => Promise<void>;
-  join: (context: GroupCallContext, joinCallOptions?: JoinCallOptions) => Call;
+  leave: (hangupCallOptions: HangUpOptions) => Promise<void>;
+  join: (context: GroupLocator, joinCallOptions?: JoinCallOptions) => Call;
 };
 
 export const useGroupCall = (): UseGroupCallType => {
@@ -15,7 +15,7 @@ export const useGroupCall = (): UseGroupCallType => {
   const { call, localVideoStream, isMicrophoneEnabled } = useCallContext();
 
   const join = useCallback(
-    (context: GroupCallContext, joinCallOptions?: JoinCallOptions): Call => {
+    (context: GroupLocator, joinCallOptions?: JoinCallOptions): Call => {
       if (!callAgent) {
         throw new CommunicationUiError({
           message: 'CallAgent is undefined',
@@ -43,7 +43,7 @@ export const useGroupCall = (): UseGroupCallType => {
   );
 
   const leave = useCallback(
-    async (hangupCallOptions: HangupCallOptions): Promise<void> => {
+    async (hangupCallOptions: HangUpOptions): Promise<void> => {
       if (!call) {
         throw new CommunicationUiError({
           message: 'Call is invalid',

@@ -8,3 +8,4 @@ export * from './ListParticipant';
 export * from './ParticipantStream';
 export * from './CommunicationUiError';
 export * from './CustomStylesProps';
+export * from './DevicePermission';
