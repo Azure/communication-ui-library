@@ -5,7 +5,7 @@ import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/a
 
 # Quickstart: Get started with UI Components
 
-Get started with Azure Communication Services by using the UI Framework to quickly integrate communication experiences into your applications. In this quickstart, you'll learn how integrate UI Framework base components into your application to build communication experiences.
+Get started with Azure Communication Services by using the UI Framework to quickly integrate communication experiences into your applications. In this quickstart, you'll learn how to integrate UI Framework base components into your application to build communication experiences.
 
 UI Framework components come in two flavors: Base and Composite.
 
@@ -35,8 +35,8 @@ cd UI-ToolKit-Quickstart
 
 ```
 
-At the end of this process, you should have a full application inside of the folder `UI-ToolKit-Quickstart`.
-For this quickstart, we'll be modifying files inside of the `src` folder.
+At the end of this process, you should have a full application inside the folder `UI-ToolKit-Quickstart`.
+For this quickstart, we'll be modifying files inside the `src` folder.
 
 ### Install the package
 
@@ -46,7 +46,6 @@ Move the provided tarball (Private Preview) over to the `UI-ToolKit-Quickstart` 
 ```bash
 
 # For Private Preview install tarball
-
 npm install --save ./{path for tarball}
 
 ```
@@ -67,14 +66,14 @@ npm run start
 
 The following classes and interfaces handle some of the major features of the Azure Communication Services UI client library:
 
-| Name                                                                          | Description                                                                              |
-| ----------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| [FluentThemeProvider](/?path=/story/theming--page)                            | Provider that controls Theming on the components. Can be used to override theme          |
-| [GridLayout](/?path=/story/ui-components-gridlayout--grid-layout-component)   | Base component that organizes video tiles into a grid                                    |
-| [Video Tile](/?path=/story/ui-components-VideoTile--video-tile-component)     | Base component to render participants either with or without video                       |
-| [ControlBar](/?path=/story/ui-components-controlbar--control-bar-component)   | Base component to control call including mute, video, share screen                       |
-| [MessageThread](/?path=/docs/ui-components-chatthread--chat-thread-component) | Base component that renders a chat thread with typing indicators, read receipts, etc.    |
-| [SendBox](/?path=/story/ui-components-sendbox--send-box-story-book-component) | Base component that allows user to input messages that will be sent to the joined thread |
+| Name                                                                                 | Description                                                                              |
+| ------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- |
+| [FluentThemeProvider](/?path=/story/theming--page)                                   | Provider that controls Theming on the components. Can be used to override theme          |
+| [GridLayout](/?path=/story/ui-components-gridlayout--grid-layout-component)          | Base component that organizes video tiles into a grid                                    |
+| [Video Tile](/?path=/story/ui-components-VideoTile--video-tile-component)            | Base component to render participants either with or without video                       |
+| [ControlBar](/?path=/story/ui-components-controlbar--control-bar-component)          | Base component to control call including mute, video, share screen                       |
+| [MessageThread](/?path=/story/ui-components-messagethread--message-thread-component) | Base component that renders a chat thread with typing indicators, read receipts, etc.    |
+| [SendBox](/?path=/story/ui-components-sendbox--send-box-component)                   | Base component that allows user to input messages that will be sent to the joined thread |
 
 ## Set Up Fluent Theme Provider
 
@@ -100,7 +99,7 @@ You can customize the layout of these components and add any other custom compon
 
 ## Add Calling UI Components
 
-For Calling, we'll use the [`GridLayout`](/?path=/story/ui-components-gridlayout--grid-layout-component) and [`ControlBar`](/?path=/story/ui-components-controlbar--control-bar-component) Components.
+For Calling, we'll use the [`GridLayout`](/?path=/story/ui-components-gridlayout--grid-layout-component) and [`ControlBar`](/?path=/story/ui-components-controlbar--control-bar-component) components.
 To start, in the `src` folder, create a new file called `CallingComponents.tsx`.
 Here we'll initialize a function component that will hold our base components to then import in `app.tsx`.
 You can add extra layout and styling around the components.
