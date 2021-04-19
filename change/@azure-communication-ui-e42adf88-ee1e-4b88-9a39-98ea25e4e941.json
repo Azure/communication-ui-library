@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update js sdk dependency version to beta4",
+  "packageName": "@azure/communication-ui",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}

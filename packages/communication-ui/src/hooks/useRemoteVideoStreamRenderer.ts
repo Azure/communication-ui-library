@@ -1,5 +1,10 @@
 // © Microsoft Corporation. All rights reserved.
-import { RemoteVideoStream, Renderer, RendererOptions, RendererView } from '@azure/communication-calling';
+import {
+  RemoteVideoStream,
+  VideoStreamRenderer,
+  CreateViewOptions,
+  VideoStreamRendererView
+} from '@azure/communication-calling';
 import { useEffect, useState, useRef } from 'react';
 import { CommunicationUiErrorCode, CommunicationUiError } from '../types/CommunicationUiError';
 import { useTriggerOnErrorCallback } from '../providers/ErrorProvider';
@@ -14,17 +19,17 @@ export type UseRemoteVideoStreamType = {
 // It also has an event handler to say when the stream is available or not since it can be difficult to tell from the returned HTMLElement.
 export default (
   stream: RemoteVideoStream | undefined,
-  options?: RendererOptions | undefined
+  options?: CreateViewOptions | undefined
 ): UseRemoteVideoStreamType => {
   const onErrorCallback = useTriggerOnErrorCallback();
   const [render, setRender] = useState<HTMLElement | null>(null);
   const [isAvailable, setIsAvailable] = useState<boolean>(false);
-  const rendererViewRef: React.MutableRefObject<RendererView | null> = useRef(null);
+  const rendererViewRef: React.MutableRefObject<VideoStreamRendererView | null> = useRef(null);
 
   useEffect(() => {
     const renderStream = async (
       stream: RemoteVideoStream | undefined,
-      renderViewRef: RendererView | null
+      renderViewRef: VideoStreamRendererView | null
     ): Promise<void> => {
       if (!stream) {
         setRender(null);
@@ -32,7 +37,7 @@ export default (
       }
       if (stream && stream.isAvailable) {
         if (render === null) {
-          const renderer = new Renderer(stream);
+          const renderer = new VideoStreamRenderer(stream);
           try {
             renderViewRef = await renderer.createView(options);
           } catch (error) {
@@ -72,10 +77,10 @@ export default (
         propagateError(error, onErrorCallback);
       }
     };
-    stream?.on('availabilityChanged', onAvailabilityChanged);
+    stream?.on('isAvailableChanged', onAvailabilityChanged);
 
     return () => {
-      stream?.off('availabilityChanged', onAvailabilityChanged);
+      stream?.off('isAvailableChanged', onAvailabilityChanged);
     };
   }, [stream, options, render, rendererViewRef, onErrorCallback]);
 

@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { ReadReceipt } from '@azure/communication-chat';
+import { ChatMessageReadReceipt } from '@azure/communication-chat';
 import { useCallback } from 'react';
 import {
   CommunicationUiErrorCode,
@@ -9,7 +9,7 @@ import {
 } from '../types/CommunicationUiError';
 import { useChatThreadClient } from '../providers/ChatThreadProvider';
 
-export const useFetchReadReceipts = (): (() => Promise<ReadReceipt[]>) => {
+export const useFetchReadReceipts = (): (() => Promise<ChatMessageReadReceipt[]>) => {
   const chatThreadClient = useChatThreadClient();
   if (chatThreadClient === undefined) {
     throw new CommunicationUiError({
@@ -18,8 +18,8 @@ export const useFetchReadReceipts = (): (() => Promise<ReadReceipt[]>) => {
       severity: CommunicationUiErrorSeverity.IGNORE
     });
   }
-  const fetchReadReceipts = useCallback(async (): Promise<ReadReceipt[]> => {
-    const receipts: ReadReceipt[] = [];
+  const fetchReadReceipts = useCallback(async (): Promise<ChatMessageReadReceipt[]> => {
+    const receipts: ChatMessageReadReceipt[] = [];
     try {
       for await (const page of chatThreadClient.listReadReceipts().byPage()) {
         for (const receipt of page) {

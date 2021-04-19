@@ -20,7 +20,7 @@ export default {
 export const ReadRecieptIconComponent = (): JSX.Element => {
   return (
     <ReadReceipt
-      messageStatus={select<MessageStatus>('Message Status', MessageStatus, MessageStatus.DELIVERED)}
+      messageStatus={select<MessageStatus>('Message Status', ['delivered', 'sending', 'seen', 'failed'], 'delivered')}
       deliveredTooltipText={text('Delivered icon tooltip text', 'Sent')}
       sendingTooltipText={text('Sending icon tooltip text', 'Sending')}
       seenTooltipText={text('Seen icon tooltip text', 'Seen')}

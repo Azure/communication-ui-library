@@ -60,4 +60,4 @@ We look forward to building an amazing open source toolkit with you!
 
 * [Repo Documentation](./docs/README.md)
 * [Conceptual Documentation](https://docs.microsoft.com/en-us/azure/communication-services/concepts/ui-framework/ui-sdk-overview)
-* [Quick-start Documentation](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/ui-framework/getting-started-with-components)
+* [Quick-start Documentation](https://azure.github.io/communication-ui-sdk/?path=/story/quickstart-ui-components--page)

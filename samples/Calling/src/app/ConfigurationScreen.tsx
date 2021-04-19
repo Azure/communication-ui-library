@@ -12,18 +12,18 @@ import { LocalDeviceSettings } from './LocalDeviceSettings';
 export interface ConfigurationScreenProps extends SetupContainerProps {
   screenWidth: number;
   startCallHandler(): void;
-  groupId: string;
+  onDisplayNameUpdate: (displayName: string) => void;
 }
 
 export const ConfigurationComponent = (props: ConfigurationScreenProps): JSX.Element => {
-  const { displayName, updateDisplayName, startCallHandler, joinCall, groupId } = props;
+  const { displayName, startCallHandler, onDisplayNameUpdate } = props;
   const [emptyWarning, setEmptyWarning] = useState(false);
   const [nameTooLongWarning, setNameTooLongWarning] = useState(false);
 
   return (
     <CallConfiguration {...props}>
       <DisplayNameField
-        setName={updateDisplayName}
+        setName={onDisplayNameUpdate}
         defaultName={displayName}
         setEmptyWarning={setEmptyWarning}
         isEmpty={emptyWarning}
@@ -35,12 +35,11 @@ export const ConfigurationComponent = (props: ConfigurationScreenProps): JSX.Ele
       </div>
       <div>
         <StartCallButton
-          onClickHandler={() => {
+          onClickHandler={async () => {
             if (localStorageAvailable) {
               saveDisplayNameToLocalStorage(displayName);
             }
             startCallHandler();
-            joinCall(groupId);
           }}
           isDisabled={!displayName || emptyWarning || nameTooLongWarning}
         />

@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { ChatThreadMember } from '@azure/communication-chat';
+import { ChatParticipant } from '@azure/communication-chat';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   useSubscribeReadReceipt,
@@ -13,15 +13,15 @@ import {
 import { useChatMessages, useFailedMessageIds, useThreadMembers, useUserId } from '../providers';
 import { compareMessages } from '../utils';
 import { PARTICIPANTS_THRESHOLD, PAGE_SIZE } from '../constants';
-import { ChatMessage as WebUiChatMessage, MessageStatus } from '../types';
+import { ChatMessagePayload, ChatMessage, MessageStatus } from '../types';
 
 export const updateMessagesWithAttached = (
-  chatMessagesWithStatus: WebUiChatMessage[],
+  chatMessagesWithStatus: ChatMessagePayload[],
   userId: string,
   failedMessageIds: string[],
   isLargeGroup: boolean,
-  isMessageSeen: (userId: string, message: WebUiChatMessage) => boolean
-): WebUiChatMessage[] => {
+  isMessageSeen: (userId: string, message: ChatMessagePayload) => boolean
+): ChatMessage[] => {
   /**
    * A block of messages: continuous messages that belong to the same sender and not intercepted by other senders.
    *
@@ -30,7 +30,7 @@ export const updateMessagesWithAttached = (
    * in this case, we only want to show the read statusToRender of last message of the new messages block)
    */
   let IndexOfMyLastMassage: number | undefined = undefined;
-  const newChatMessages: WebUiChatMessage[] = [];
+  const newChatMessages: ChatMessage[] = [];
 
   chatMessagesWithStatus.sort(compareMessages);
   chatMessagesWithStatus.map((message: any, index: number, messagesList: any) => {
@@ -77,14 +77,14 @@ export const updateMessagesWithAttached = (
       // Clean the statusToRender of the previous message in the same message block of mine.
       if (newChatMessages.length > 0) {
         const prevMsg = newChatMessages[newChatMessages.length - 1];
-        if (prevMsg.statusToRender === statusToRender || prevMsg.statusToRender === 'failed') {
-          prevMsg.statusToRender = undefined;
+        if (prevMsg.payload.statusToRender === statusToRender || prevMsg.payload.statusToRender === 'failed') {
+          prevMsg.payload.statusToRender = undefined;
         }
       }
 
       // If there's a previous block of messages that are mine, clean the read statusToRender on the last message
       if (IndexOfMyLastMassage) {
-        newChatMessages[IndexOfMyLastMassage].statusToRender = undefined;
+        newChatMessages[IndexOfMyLastMassage].payload.statusToRender = undefined;
         IndexOfMyLastMassage = undefined;
       }
 
@@ -96,18 +96,20 @@ export const updateMessagesWithAttached = (
 
     const messageWithAttached = { ...message, attached, mine, statusToRender };
     // Remove the clientMessageId field as it's only needed to getMessageStatus, not needed by MessageThread component
-    // When we migrate to declarative, ideally we should remove the clientMessageId from the WebUiChatMessage type.
+    // When we migrate to declarative, ideally we should remove the clientMessageId from the ChatMessagePayload type.
     delete messageWithAttached.clientMessageId;
-    newChatMessages.push(messageWithAttached);
-    return message;
+    newChatMessages.push({
+      type: 'chat',
+      payload: messageWithAttached
+    });
   });
   return newChatMessages;
 };
 
-export const getLatestIncomingMessageId = (chatMessages: WebUiChatMessage[], userId: string): string | undefined => {
+export const getLatestIncomingMessageId = (chatMessages: ChatMessage[], userId: string): string | undefined => {
   const lastSeenChatMessage = chatMessages
-    .filter((message) => message.createdOn && message.senderId !== userId)
-    .map((message) => ({ createdOn: message.createdOn, id: message.messageId }))
+    .filter((message) => message.payload.createdOn && message.payload.senderId !== userId)
+    .map((message) => ({ createdOn: message.payload.createdOn, id: message.payload.messageId }))
     .reduce(
       (message1, message2) => {
         if (!message1.createdOn || !message2.createdOn) {
@@ -122,29 +124,29 @@ export const getLatestIncomingMessageId = (chatMessages: WebUiChatMessage[], use
 };
 
 export const getMessageStatus = (
-  message: WebUiChatMessage,
+  message: ChatMessagePayload,
   failedMessageIds: string[],
   isLargeParticipantsGroup: boolean,
   userId: string,
-  isMessageSeen?: ((userId: string, message: WebUiChatMessage) => boolean) | undefined
+  isMessageSeen?: ((userId: string, message: ChatMessagePayload) => boolean) | undefined
 ): MessageStatus => {
   // message is pending send or is failed to be sent
-  if (message.createdOn === undefined) {
+  if (message.createdOn === undefined || message.messageId === '') {
     const messageFailed: boolean =
       failedMessageIds.find((failedMessageId: string) => failedMessageId === message.clientMessageId) !== undefined;
-    return messageFailed ? MessageStatus.FAILED : MessageStatus.SENDING;
+    return messageFailed ? 'failed' : 'sending';
   } else {
-    if (message.messageId === undefined) return MessageStatus.DELIVERED;
+    if (message.messageId === undefined) return 'delivered';
     // show read receipt if it's not a large participant group
     if (!isLargeParticipantsGroup) {
-      return isMessageSeen && isMessageSeen(userId, message) ? MessageStatus.SEEN : MessageStatus.DELIVERED;
+      return isMessageSeen && isMessageSeen(userId, message) ? 'seen' : 'delivered';
     } else {
-      return MessageStatus.DELIVERED;
+      return 'delivered';
     }
   }
 };
 
-const isLargeParticipantsGroup = (threadMembers: ChatThreadMember[]): boolean => {
+const isLargeParticipantsGroup = (threadMembers: ChatParticipant[]): boolean => {
   return threadMembers.length >= PARTICIPANTS_THRESHOLD;
 };
 
@@ -153,7 +155,7 @@ const isLargeParticipantsGroup = (threadMembers: ChatThreadMember[]): boolean =>
  * messages, etc., we need information from many different places in Chat SDK. But to provide a nice clean interface for
  * developers, we hide all of that by combining all different sources of info before passing it down as a prop to
  * MessageThread. This way we keep the Chat SDK parts internal and if developer wants to use this component with their own
- * data source, they only need to provide one stream of formatted WebUIChatMessage[] for MessageThread to be able to render
+ * data source, they only need to provide one stream of formatted ChatMessagePayload[] for MessageThread to be able to render
  * everything properly.
  *
  * @param chatMessages
@@ -167,13 +169,13 @@ const convertSdkChatMessagesToWebUiChatMessages = (
   failedMessageIds: string[],
   isLargeGroup: boolean,
   userId: string,
-  isMessageSeen: (userId: string, message: WebUiChatMessage) => boolean
-): WebUiChatMessage[] => {
+  isMessageSeen: (userId: string, message: ChatMessagePayload) => boolean
+): ChatMessage[] => {
   const convertedChatMessages =
-    chatMessages?.map<WebUiChatMessage>((chatMessage: ChatMessageWithClientMessageId) => {
+    chatMessages?.map<ChatMessagePayload>((chatMessage: ChatMessageWithClientMessageId) => {
       return {
         messageId: chatMessage.id,
-        content: chatMessage.content,
+        content: chatMessage.content?.message ?? '',
         createdOn: chatMessage.createdOn,
         senderId: chatMessage.sender?.communicationUserId,
         senderDisplayName: chatMessage.senderDisplayName,
@@ -189,11 +191,12 @@ const convertSdkChatMessagesToWebUiChatMessages = (
 
 export type ChatMessagePropsFromContext = {
   userId: string;
-  chatMessages: WebUiChatMessage[];
+  messages: ChatMessage[];
   disableReadReceipt?: boolean;
   onSendReadReceipt?: () => Promise<void>;
   disableLoadPreviousMessage?: boolean;
   onLoadPreviousMessages?: () => void;
+  onRenderAvatar?: (userId: string) => JSX.Element;
 };
 
 export const MapToChatMessageProps = (): ChatMessagePropsFromContext => {
@@ -247,7 +250,7 @@ export const MapToChatMessageProps = (): ChatMessagePropsFromContext => {
 
   return {
     userId: userId,
-    chatMessages: chatMessages,
+    messages: chatMessages,
     disableReadReceipt: isLargeGroup,
     onSendReadReceipt,
     disableLoadPreviousMessage,

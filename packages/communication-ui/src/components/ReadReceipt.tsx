@@ -50,19 +50,19 @@ export const ReadReceipt = (props: ReadReceiptProps): JSX.Element => {
   } = props;
 
   switch (messageStatus) {
-    case MessageStatus.FAILED:
+    case 'failed':
       return (
         <TooltipHost content={failedToSendTooltipText}>
           <ErrorIcon className={mergeStyles(readReceiptIconErrorStyle, styles?.root)} />
         </TooltipHost>
       );
-    case MessageStatus.SENDING:
+    case 'sending':
       return (
         <TooltipHost content={sendingTooltipText}>
           <CircleRingIcon className={mergeStyles(readReceiptIconMessageStyle, styles?.root)} />
         </TooltipHost>
       );
-    case MessageStatus.SEEN:
+    case 'seen':
       // MessageSeenIcon is only one that takes in size because its a react-northstar-icon. There doesn't seem to be a
       // equivalent one in react-icons and react-icons don't seem to have size property.
       return (
@@ -70,7 +70,7 @@ export const ReadReceipt = (props: ReadReceiptProps): JSX.Element => {
           <MessageSeenIcon size={size} className={mergeStyles(styles?.root)} />
         </TooltipHost>
       );
-    case MessageStatus.DELIVERED:
+    case 'delivered':
       return (
         <TooltipHost content={deliveredTooltipText}>
           <CompletedIcon className={mergeStyles(readReceiptIconMessageStyle, styles?.root)} />
