@@ -3,13 +3,13 @@
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import React from 'react';
 import { ControlBar } from '@azure/communication-ui';
-import { ControlBarExample } from './examples/ControlBarExample';
-import { AllButtonsControlBarExample } from './examples/AllButtonsControlBarExample';
-import AllButtonsControlBarExampleText from '!!raw-loader!./examples/AllButtonsControlBarExample.tsx';
-import { ControlBarLayoutExample } from './examples/ControlBarLayoutExample';
-import ControlBarLayoutExampleText from '!!raw-loader!./examples/ControlBarLayoutExample.tsx';
-import { CustomControlBarExample } from './examples/CustomControlBarExample';
-import CustomControlBarExampleText from '!!raw-loader!./examples/CustomControlBarExample.tsx';
+import { ControlBarExample } from './snippets/ControlBarExample.snippet';
+import { AllButtonsControlBarExample } from './snippets/AllButtonsControlBarExample.snippet';
+import AllButtonsControlBarExampleText from '!!raw-loader!./snippets/AllButtonsControlBarExample.snippet.tsx';
+import { ControlBarLayoutExample } from './snippets/ControlBarLayoutExample.snippet';
+import ControlBarLayoutExampleText from '!!raw-loader!./snippets/ControlBarLayoutExample.snippet.tsx';
+import { CustomControlBarExample } from './snippets/CustomControlBarExample.snippet';
+import CustomControlBarExampleText from '!!raw-loader!./snippets/CustomControlBarExample.snippet.tsx';
 
 const importStatement = `
 import { FluentThemeProvider, ControlBar } from '@azure/communication-ui';

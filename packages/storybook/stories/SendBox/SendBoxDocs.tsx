@@ -2,12 +2,12 @@
 import React from 'react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
 import { SendBox } from '@azure/communication-ui';
-import { SendBoxExample } from './examples/SendBoxExample';
-import SendBoxExampleText from '!!raw-loader!./examples/SendBoxExample.tsx';
-import { SendBoxWithSystemMessageExample } from './examples/SendBoxWithSystemMessageExample';
-import SendBoxWithSystemMessageExampleText from '!!raw-loader!./examples/SendBoxWithSystemMessageExample.tsx';
-import { CustomIconExample } from './examples/CustomIconExample';
-import CustomIconExampleText from '!!raw-loader!./examples/CustomIconExample.tsx';
+import { SendBoxExample } from './snippets/SendBoxExample.snippet';
+import SendBoxExampleText from '!!raw-loader!./snippets/SendBoxExample.snippet.tsx';
+import { SendBoxWithSystemMessageExample } from './snippets/SendBoxWithSystemMessageExample.snippet';
+import SendBoxWithSystemMessageExampleText from '!!raw-loader!./snippets/SendBoxWithSystemMessageExample.snippet.tsx';
+import { CustomIconExample } from './snippets/CustomIconExample.snippet';
+import CustomIconExampleText from '!!raw-loader!./snippets/CustomIconExample.snippet.tsx';
 
 const importStatement = `import { SendBox } from '@azure/communication-ui';`;
 

@@ -1,10 +1,10 @@
 import { FluentThemeProvider } from '@azure/communication-ui';
 import { Stack } from '@fluentui/react';
 import React from 'react';
-import { CallingComponents } from './CallingComponents';
-import { ChatComponents } from './ChatComponents';
+import { CallingComponents } from './CallingComponents.snippet';
+import { ChatComponents } from './ChatComponents.snippet';
 
-function App() {
+function CompletedComponentsApp() {
   return (
     <FluentThemeProvider>
       <Stack
@@ -21,4 +21,4 @@ function App() {
   );
 }
 
-export default App;
+export default CompletedComponentsApp;
