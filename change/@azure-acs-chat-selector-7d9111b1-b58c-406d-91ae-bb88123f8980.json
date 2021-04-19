@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add messages types in selector",
+  "packageName": "@azure/acs-chat-selector",
+  "email": "easony@microsoft.com",
+  "dependentChangeType": "patch"
+}

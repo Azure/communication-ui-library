@@ -3,7 +3,7 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import { AudioDeviceInfo, DeviceManager } from '@azure/communication-calling';
 import useSubscribeToAudioDeviceList from './useSubscribeToAudioDeviceList';
-import { createSpyObj } from '../mocks';
+import { createSpyObj, waitWithBreakCondition } from '../mocks';
 import { useCallingContext } from '../providers';
 
 jest.mock('@azure/communication-calling', () => {
@@ -55,8 +55,8 @@ describe('useSubscribeToAudioDeviceList tests', () => {
   beforeEach(() => {
     callbacks = {};
     const deviceManagerMock = createSpyObj<DeviceManager>('deviceManagerMock', [
-      'getMicrophoneList',
-      'setMicrophone',
+      'getMicrophones',
+      'selectMicrophone',
       'on',
       'off'
     ]);
@@ -84,7 +84,7 @@ describe('useSubscribeToAudioDeviceList tests', () => {
     deviceManagerMock.off.mockImplementation(() => {
       return;
     });
-    deviceManagerMock.getMicrophoneList.mockImplementation(() => {
+    deviceManagerMock.getMicrophones.mockImplementation(async () => {
       return mockMicrophoneList;
     });
   });
@@ -121,6 +121,7 @@ describe('useSubscribeToAudioDeviceList tests', () => {
     const callback = callbacks.audioDevicesUpdated;
     expect(callback).toBeTruthy();
     act(callback);
+    await waitWithBreakCondition(() => useCallingContext().audioDeviceList !== undefined);
     expect(useCallingContext().audioDeviceList).toBe(mockMicrophoneList);
   });
 
@@ -129,6 +130,7 @@ describe('useSubscribeToAudioDeviceList tests', () => {
     const callback = callbacks.audioDevicesUpdated;
     expect(callback).toBeTruthy();
     act(callback);
+    await waitWithBreakCondition(() => useCallingContext().audioDeviceInfo !== undefined);
     expect(useCallingContext().audioDeviceInfo).toBe(mockPrimaryMicrophone);
   });
 });

@@ -2,14 +2,16 @@
 
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import React from 'react';
-import { ControlBar } from '@azure/communication-ui';
-import { ControlBarExample } from './snippets/ControlBarExample.snippet';
-import { AllButtonsControlBarExample } from './snippets/AllButtonsControlBarExample.snippet';
-import AllButtonsControlBarExampleText from '!!raw-loader!./snippets/AllButtonsControlBarExample.snippet.tsx';
-import { ControlBarLayoutExample } from './snippets/ControlBarLayoutExample.snippet';
-import ControlBarLayoutExampleText from '!!raw-loader!./snippets/ControlBarLayoutExample.snippet.tsx';
-import { CustomControlBarExample } from './snippets/CustomControlBarExample.snippet';
-import CustomControlBarExampleText from '!!raw-loader!./snippets/CustomControlBarExample.snippet.tsx';
+import { ControlBar } from '../../../communication-ui/src';
+import { AllButtonsControlBarExample } from './snippets/AllButtonsControlBar.snippet';
+import { ControlBarExample } from './snippets/ControlBar.snippet';
+import { ControlBarLayoutExample } from './snippets/ControlBarLayout.snippet';
+import { CustomControlBarExample } from './snippets/CustomControlBar.snippet';
+import { OptionsButtonExample } from './snippets/OptionsButton.snippet';
+const OptionsButtonExampleText = require('!!raw-loader!./snippets/OptionsButton.snippet.tsx').default;
+const AllButtonsControlBarExampleText = require('!!raw-loader?./snippets/AllButtonsControlBar.snippet.tsx').default;
+const ControlBarLayoutExampleText = require('!!raw-loader?./snippets/ControlBarLayout.snippet.tsx').default;
+const CustomControlBarExampleText = require('!!raw-loader?./snippets/CustomControlBar.snippet.tsx').default;
 
 const importStatement = `
 import { FluentThemeProvider, ControlBar } from '@azure/communication-ui';
@@ -55,6 +57,7 @@ export const getDocs: () => JSX.Element = () => {
         <ControlBarLayoutExample />
       </Canvas>
       <Source code={ControlBarLayoutExampleText} />
+
       <Heading>Custom Control Bar</Heading>
       <Description>
         You can also easily change the styles of any `DefaultButton`. In the example, below we import `videoButtonProps`
@@ -65,6 +68,16 @@ export const getDocs: () => JSX.Element = () => {
       <Canvas withSource="none">
         <CustomControlBarExample />
       </Canvas>
+
+      <Heading>Dropdown Options Button</Heading>
+      <Description>
+        A `DefaultButton` can be customised to be used as a dropdown. For more information, check out the official
+        Fluent UI documentation at https://developer.microsoft.com/en-us/fluentui#/controls/web/button
+      </Description>
+      <Canvas withSource="none">
+        <OptionsButtonExample />
+      </Canvas>
+      <Source code={OptionsButtonExampleText} />
 
       <Heading>ControlBar Props</Heading>
       <Props of={ControlBar} />

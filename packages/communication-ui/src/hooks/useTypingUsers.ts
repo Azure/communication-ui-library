@@ -6,7 +6,7 @@ import {
   TypingNotification
 } from './useSubscribeTypingNotification';
 import { MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS } from '../constants';
-import { ChatThreadMember } from '@azure/communication-chat';
+import { ChatParticipant } from '@azure/communication-chat';
 
 const shouldDisplayTyping = (lastReceivedTypingEventDate: number): boolean => {
   const currentDate = new Date();
@@ -14,7 +14,7 @@ const shouldDisplayTyping = (lastReceivedTypingEventDate: number): boolean => {
   return timeSinceLastTypingNotificationMs <= MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS;
 };
 
-export const compareUserArray = (array1: ChatThreadMember[], array2: ChatThreadMember[]): boolean => {
+export const compareUserArray = (array1: ChatParticipant[], array2: ChatParticipant[]): boolean => {
   const sortedArr2 = array2.sort();
   return (
     array1.length === array2.length &&
@@ -22,16 +22,16 @@ export const compareUserArray = (array1: ChatThreadMember[], array2: ChatThreadM
   );
 };
 
-export const useTypingUsers = (threadMembers: ChatThreadMember[]): ChatThreadMember[] => {
+export const useTypingUsers = (threadMembers: ChatParticipant[]): ChatParticipant[] => {
   const [typingNotifications, setTypingNotifications] = useState<TypingNotifications>({});
 
-  const [typingUsers, setTypingUsers] = useState<ChatThreadMember[]>([]);
+  const [typingUsers, setTypingUsers] = useState<ChatParticipant[]>([]);
   const [forceUpdateFlag, setForceUpdateFlag] = useState({});
 
   const notificationRef = useRef(typingNotifications);
   const typingUsersRef = useRef(typingUsers);
   const updateTimerRef = useRef<number>();
-  const threadMemberRef = useRef<ChatThreadMember[]>([]);
+  const threadMemberRef = useRef<ChatParticipant[]>([]);
 
   const addTypingNotification = useCallback((notification: TypingNotification) => {
     setTypingNotifications((notifications: TypingNotifications) => ({
@@ -43,7 +43,7 @@ export const useTypingUsers = (threadMembers: ChatThreadMember[]): ChatThreadMem
   useSubscribeTypingNotification(addTypingNotification);
 
   const updateTypingUsers = useCallback(async () => {
-    const currentTypingUsers: ChatThreadMember[] = [];
+    const currentTypingUsers: ChatParticipant[] = [];
 
     for (const id in notificationRef.current) {
       const typingNotification = notificationRef.current[id];

@@ -88,3 +88,5 @@ dist/
 build/
 temp/
 docGen/
+private-preview/
+private-preview.zip

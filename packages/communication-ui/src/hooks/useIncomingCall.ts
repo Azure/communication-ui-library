@@ -1,20 +1,20 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { AcceptCallOptions, Call } from '@azure/communication-calling';
+import { AcceptCallOptions, IncomingCall } from '@azure/communication-calling';
 import { useCallContext, useIncomingCallsContext } from '../providers';
 
 export type UseIncomingCallType = {
-  accept: (incomingCall: Call, acceptCallOptions?: AcceptCallOptions) => Promise<void>;
-  reject: (incomingCall: Call) => Promise<void>;
-  incomingCalls: Call[];
+  accept: (incomingCall: IncomingCall, acceptCallOptions?: AcceptCallOptions) => Promise<void>;
+  reject: (incomingCall: IncomingCall) => Promise<void>;
+  incomingCalls: IncomingCall[];
 };
 
 export const useIncomingCall = (): UseIncomingCallType => {
-  const { incomingCalls } = useIncomingCallsContext();
+  const { incomingCalls, setIncomingCalls } = useIncomingCallsContext();
   const { setCall, localVideoStream, setScreenShareStream, screenShareStream } = useCallContext();
 
   /** Accept an incoming calls and set it as the active call. */
-  const accept = async (incomingCall: Call, acceptCallOptions?: AcceptCallOptions): Promise<void> => {
+  const accept = async (incomingCall: IncomingCall, acceptCallOptions?: AcceptCallOptions): Promise<void> => {
     if (!incomingCall) {
       throw new Error('incomingCall is null or undefined');
     }
@@ -23,16 +23,25 @@ export const useIncomingCall = (): UseIncomingCallType => {
       localVideoStreams: localVideoStream ? [localVideoStream] : undefined
     };
 
-    await incomingCall.accept({ videoOptions });
-    setCall(incomingCall);
+    const call = await incomingCall.accept({ videoOptions });
+    setCall(call);
+
+    // Remove the accepted incomingCall from incomingCalls
+    const incomingCallsFiltered: IncomingCall[] = [];
+    for (const incomingCallCandidate of incomingCalls) {
+      if (incomingCallCandidate !== incomingCall) {
+        incomingCallsFiltered.push(incomingCallCandidate);
+      }
+    }
+    setIncomingCalls(incomingCallsFiltered);
 
     // Listen to Remote Participant screen share stream
     // Should we move this logic to CallProvider ?
-    incomingCall.remoteParticipants.forEach((participant) => {
+    call.remoteParticipants.forEach((participant) => {
       participant.on('videoStreamsUpdated', (e) => {
         e.added.forEach((addedStream) => {
-          if (addedStream.type === 'Video') return;
-          addedStream.on('availabilityChanged', () => {
+          if (addedStream.mediaStreamType === 'Video') return;
+          addedStream.on('isAvailableChanged', () => {
             if (addedStream.isAvailable) {
               setScreenShareStream({ stream: addedStream, user: participant });
             } else {
@@ -54,7 +63,7 @@ export const useIncomingCall = (): UseIncomingCallType => {
   };
 
   /** Reject an incoming call and remove it from `incomingCalls`. */
-  const reject = async (incomingCall: Call): Promise<void> => {
+  const reject = async (incomingCall: IncomingCall): Promise<void> => {
     if (!incomingCall) {
       throw new Error('incomingCall is null or undefined');
     }

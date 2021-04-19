@@ -26,14 +26,30 @@ jobs:
         run: rush install
 
       - name: Build Packages and Samples
-        run: rush build -t "@azure/communication-ui"
+        run: |
+          rush build -t "@azure/communication-ui"
+          rush build -t "@azure/acs-chat-declarative"
+          rush build -t "@azure/acs-chat-selector"
+          rush build -t "@azure/acs-calling-declarative"
 
-      - name: Package Private-Preview Artifact
+      - name: Package @communication-ui
         run: npm pack
         working-directory: ./packages/communication-ui/
 
-      - name: Archive builds
-        run: 7z a private-preview.zip ./packages/communication-ui/private-preview/*
+      - name: Package @azure/acs-chat-declarative
+        run: npm pack
+        working-directory: ./packages/acs-chat-declarative/
+
+      - name: Package @azure/acs-chat-selector
+        run: npm pack
+        working-directory: ./packages/acs-chat-selector/
+
+      - name: Package @azure/acs-calling-declarative
+        run: npm pack
+        working-directory: ./packages/acs-calling-declarative/
+
+      - name: Compile private preview zip
+        run: 7z a private-preview.zip ./packages/**/private-preview/*
 
       # Get datetime to name and tag the releases with.
       - name: Get Release names

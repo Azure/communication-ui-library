@@ -1,9 +1,9 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { ChatMessage, ChatMessagePriority } from '@azure/communication-chat';
+import { ChatMessage } from '@azure/communication-chat';
 import { useCallback, useEffect } from 'react';
 
-import { ChatMessageReceivedEvent } from '@azure/communication-signaling';
+import { ChatMessageReceivedEvent } from '@azure/communication-signaling-2';
 import { useUserId } from '../providers/ChatProvider';
 import { useChatClient } from '../providers/ChatProviderHelper';
 import { useSetChatMessages, useThreadId } from '../providers/ChatThreadProvider';
@@ -18,14 +18,16 @@ export const useSubscribeMessage = (addMessage?: (messageEvent: ChatMessageRecei
 
   const defaultAddMessage = useCallback(
     (messageEvent: ChatMessageReceivedEvent) => {
-      if (messageEvent.sender.communicationUserId !== userId) {
+      if (messageEvent.sender.user.communicationUserId !== userId) {
         // not user's own message
         setChatMessages((prevMessages) => {
           const messages: ChatMessage[] = prevMessages ? [...prevMessages] : [];
           const { threadId: _threadId, recipient: _recipient, ...newMessage } = {
             ...messageEvent,
-            priority: messageEvent.priority as ChatMessagePriority,
-            createdOn: new Date(messageEvent.createdOn)
+            sender: { communicationUserId: messageEvent.sender.user.communicationUserId },
+            content: { message: messageEvent.content },
+            createdOn: new Date(messageEvent.createdOn),
+            sequenceId: ''
           };
           messages.push(newMessage);
           return messages;

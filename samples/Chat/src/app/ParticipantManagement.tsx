@@ -1,31 +1,22 @@
 // © Microsoft Corporation. All rights reserved.
 
 import React from 'react';
-import {
-  ChatThreadMember,
-  ParticipantItem,
-  connectFuncsToContext,
-  MapToChatThreadMemberProps,
-  MapToUserIdProps,
-  WithErrorHandling,
-  ErrorHandlingProps,
-  propagateError
-} from '@azure/communication-ui';
+import { WebUiChatParticipant, ParticipantItem, propagateError } from '@azure/communication-ui';
 import { Stack, IContextualMenuItem } from '@fluentui/react';
 
 export type ParticipantManagementProps = {
   userId: string;
-  threadMembers: ChatThreadMember[];
-  removeThreadMember?: (userId: string) => Promise<void>;
+  chatParticipants: WebUiChatParticipant[];
+  removeThreadMember: (userId: string) => Promise<void>;
   onRenderAvatar?: (userId: string) => JSX.Element;
 };
 
-const ParticipantManagementComponentBase = (props: ParticipantManagementProps & ErrorHandlingProps): JSX.Element => {
-  const { userId, threadMembers, removeThreadMember, onRenderAvatar, onErrorCallback } = props;
+export const ParticipantManagement = (props: ParticipantManagementProps): JSX.Element => {
+  const { userId, chatParticipants, removeThreadMember, onRenderAvatar } = props;
 
   return (
     <Stack>
-      {threadMembers.map((member) => {
+      {chatParticipants.map((member) => {
         if (member.displayName !== undefined) {
           const menuItems: IContextualMenuItem[] = [];
           menuItems.push({
@@ -33,7 +24,7 @@ const ParticipantManagementComponentBase = (props: ParticipantManagementProps & 
             text: 'Remove',
             onClick: () => {
               removeThreadMember?.(member.userId).catch((error) => {
-                propagateError(error, onErrorCallback);
+                propagateError(error);
               });
             }
           });
@@ -55,12 +46,3 @@ const ParticipantManagementComponentBase = (props: ParticipantManagementProps & 
     </Stack>
   );
 };
-
-export const ParticipantManagementComponent = (props: ParticipantManagementProps & ErrorHandlingProps): JSX.Element =>
-  WithErrorHandling(ParticipantManagementComponentBase, props);
-
-export const ParticipantManagement = connectFuncsToContext(
-  ParticipantManagementComponent,
-  MapToChatThreadMemberProps,
-  MapToUserIdProps
-);

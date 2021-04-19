@@ -39,7 +39,7 @@ jobs:
 
       # Perform changelog check
       - name: Guard check - ensure no new changes were introduced
-        run: node common/release/node_modules/beachball/bin/beachball check
+        run: node common/config/node_modules/beachball/bin/beachball check
 
       # Builds
       - name: Build Packages and Samples

@@ -1,23 +1,12 @@
 // © Microsoft Corporation. All rights reserved.
-import { ChatMessage, ChatThreadClient, SendChatMessageResult, WithResponse } from '@azure/communication-chat';
-import { ChatMessageWithStatus, MessageStatus } from './types/ChatMessageWithStatus';
+import { ChatThreadClient, SendChatMessageResult, WithResponse } from '@azure/communication-chat';
+import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 import { ChatContext } from './ChatContext';
 import { nanoid } from 'nanoid';
 import { createDecoratedListMessages } from './iterators/createDecoratedListMessages';
 import { createDecoratedListReadReceipts } from './iterators/createDecoratedListReadReceipts';
 import { createDecoratedListParticipants } from './iterators/createDecoratedListParticipants';
-
-export const convertChatMessage = (
-  message: ChatMessage,
-  status: MessageStatus = 'delivered',
-  clientMessageId?: string
-): ChatMessageWithStatus => {
-  return {
-    ...message,
-    clientMessageId: clientMessageId,
-    status
-  };
-};
+import { convertChatMessage } from './convertChatMessage';
 
 class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
   private _context: ChatContext;

@@ -15,10 +15,15 @@ import { getRemoteParticipantKey } from './Converter';
 
 enableMapSet();
 
+// TODO: How can we make this configurable?
+export const MAX_CALL_HISTORY_LENGTH = 10;
+
 export class CallContext {
   private _state: CallClientState = {
     calls: new Map<string, Call>(),
+    callsEnded: [],
     incomingCalls: new Map<string, IncomingCall>(),
+    incomingCallsEnded: [],
     deviceManagerState: {
       isSpeakerSelectionAvailable: false,
       cameras: [],
@@ -41,6 +46,20 @@ export class CallContext {
     this._emitter.on('stateChanged', handler);
   }
 
+  // Disposing of the CallAgentDeclarative will not clear the state. If we create a new CallAgentDeclarative, we should
+  // make sure the state is clean because any left over state (if previous CallAgentDeclarative was disposed) may be
+  // invalid.
+  public clearCallRelatedState(): void {
+    this.setState(
+      produce(this._state, (draft: CallClientState) => {
+        draft.calls.clear();
+        draft.incomingCalls.clear();
+        draft.callsEnded.splice(0, draft.callsEnded.length);
+        draft.incomingCallsEnded.splice(0, draft.incomingCallsEnded.length);
+      })
+    );
+  }
+
   public setCall(call: Call): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
@@ -50,10 +69,11 @@ export class CallContext {
           existingCall.state = call.state;
           existingCall.callEndReason = call.callEndReason;
           existingCall.direction = call.direction;
-          existingCall.isMicrophoneMuted = call.isMicrophoneMuted;
+          existingCall.isMuted = call.isMuted;
           existingCall.isScreenSharingOn = call.isScreenSharingOn;
           existingCall.localVideoStreams = call.localVideoStreams;
           existingCall.remoteParticipants = call.remoteParticipants;
+          // We don't update the startTime and endTime if we are updating an existing active call
         } else {
           draft.calls.set(call.id, call);
         }
@@ -61,10 +81,27 @@ export class CallContext {
     );
   }
 
-  public removeCall(id: string): void {
+  public removeCall(callId: string): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        draft.calls.delete(id);
+        draft.calls.delete(callId);
+      })
+    );
+  }
+
+  public setCallEnded(callId: string, callEndReason: CallEndReason | undefined): void {
+    this.setState(
+      produce(this._state, (draft: CallClientState) => {
+        const call = draft.calls.get(callId);
+        if (call) {
+          call.endTime = new Date();
+          call.callEndReason = callEndReason;
+          draft.calls.delete(callId);
+          if (draft.callsEnded.length >= MAX_CALL_HISTORY_LENGTH) {
+            draft.callsEnded.shift();
+          }
+          draft.callsEnded.push(call);
+        }
       })
     );
   }
@@ -123,12 +160,43 @@ export class CallContext {
     );
   }
 
+  public setCallRemoteParticipantsEnded(
+    callId: string,
+    addRemoteParticipant: RemoteParticipant[],
+    removeRemoteParticipant: string[]
+  ): void {
+    this.setState(
+      produce(this._state, (draft: CallClientState) => {
+        const call = draft.calls.get(callId);
+        if (call) {
+          removeRemoteParticipant.forEach((id: string) => {
+            call.remoteParticipantsEnded.delete(id);
+          });
+          addRemoteParticipant.forEach((participant: RemoteParticipant) => {
+            call.remoteParticipantsEnded.set(getRemoteParticipantKey(participant.identifier), participant);
+          });
+        }
+      })
+    );
+  }
+
   public setCallLocalVideoStreams(callId: string, streams: LocalVideoStream[]): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         const call = draft.calls.get(callId);
         if (call) {
           call.localVideoStreams = streams;
+        }
+      })
+    );
+  }
+
+  public setCallIsMicrophoneMuted(callId: string, isMicrophoneMuted: boolean): void {
+    this.setState(
+      produce(this._state, (draft: CallClientState) => {
+        const call = draft.calls.get(callId);
+        if (call) {
+          call.isMuted = isMicrophoneMuted;
         }
       })
     );
@@ -217,13 +285,26 @@ export class CallContext {
     );
   }
 
-  public setIncomingCallEnded(callId: string, callEndReason: CallEndReason): void {
+  public removeIncomingCall(callId: string): void {
+    this.setState(
+      produce(this._state, (draft: CallClientState) => {
+        draft.incomingCalls.delete(callId);
+      })
+    );
+  }
+
+  public setIncomingCallEnded(callId: string, callEndReason: CallEndReason | undefined): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         const call = draft.incomingCalls.get(callId);
         if (call) {
+          call.endTime = new Date();
           call.callEndReason = callEndReason;
-          call.callEnded = true;
+          draft.incomingCalls.delete(callId);
+          if (draft.incomingCallsEnded.length >= MAX_CALL_HISTORY_LENGTH) {
+            draft.incomingCallsEnded.shift();
+          }
+          draft.incomingCallsEnded.push(call);
         }
       })
     );

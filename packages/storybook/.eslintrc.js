@@ -22,6 +22,7 @@ module.exports = {
     sourceType: 'module'
   },
   rules: {
+    '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/explicit-function-return-type': [
       'warn',
       {
@@ -48,6 +49,13 @@ module.exports = {
       },
       env: {
         jest: true
+      }
+    },
+    {
+      files: ['**/*.example.ts', '**/*.example.tsx'],
+      rules: {
+        'react/prop-types': 'off',
+        'react/jsx-key': 'off'
       }
     }
   ]

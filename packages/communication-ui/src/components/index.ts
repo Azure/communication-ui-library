@@ -20,7 +20,8 @@ export type {
   MessageThreadProps,
   MessageThreadStylesProps,
   JumpToNewMessageButtonProps,
-  LoadPreviousMessagesButtonProps
+  LoadPreviousMessagesButtonProps,
+  DefaultMessageRendererType
 } from './MessageThread';
 
 export { StreamMedia } from './StreamMedia';
@@ -30,7 +31,6 @@ export { ParticipantItem } from './ParticipantItem';
 export type { ParticipantItemProps, ParticipantItemStylesProps } from './ParticipantItem';
 
 export {
-  CONTROL_BAR_LAYOUTS,
   ControlBar,
   videoButtonProps,
   audioButtonProps,

@@ -1,7 +1,8 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { Call, CallAgent, IncomingCall } from '@azure/communication-calling';
+import { Call, CallAgent, CallEndReason, IncomingCall } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
+import { callDeclaratify } from './CallDeclarative';
 import { CallSubscriber } from './CallSubscriber';
 import { convertSdkCallToDeclarativeCall, convertSdkIncomingCallToDeclarativeIncomingCall } from './Converter';
 import { IncomingCallSubscriber } from './IncomingCallSubscriber';
@@ -31,22 +32,26 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
 
     // There could be scenario that when ProxyCallAgent is created that the given CallAgent already has Calls. In this
     // case we need to make sure to subscribe to those already existing Calls.
-    this._callAgent.calls.forEach((call: Call) => {
+    for (const call of this._callAgent.calls) {
       this.addCall(call);
-    });
+    }
   };
 
   private unsubscribe = (): void => {
     this._callAgent.off('callsUpdated', this.callsUpdated);
     this._callAgent.off('incomingCall', this.incomingCall);
 
-    this._callSubscribers.forEach((callSubscriber: CallSubscriber, key: Call) => {
+    // Unsubscribe is called when CallAgent is disposed. This should mean no more updating of existing call but we don't
+    // remove any existing state.
+    for (const [_, callSubscriber] of this._callSubscribers.entries()) {
       callSubscriber.unsubscribe();
-      // Unsubscribe is called when CallAgent is disposed. This should mean no more updating of existing call so we
-      // remove it from the state.
-      this._context.removeCall(key.id);
-    });
+    }
     this._callSubscribers.clear();
+
+    for (const [_, incomingCallSubscriber] of this._incomingCallSubscribers.entries()) {
+      incomingCallSubscriber.unsubscribe();
+    }
+    this._incomingCallSubscribers.clear();
   };
 
   private callsUpdated = (event: { added: Call[]; removed: Call[] }): void => {
@@ -59,22 +64,33 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
         callSubscriber.unsubscribe();
         this._callSubscribers.delete(call);
       }
-      this._context.removeCall(call.id);
+      this._context.setCallEnded(call.id, call.callEndReason);
     }
   };
 
+  private setIncomingCallEnded = (incomingCallId: string, callEndReason: CallEndReason): void => {
+    const incomingCallSubscriber = this._incomingCallSubscribers.get(incomingCallId);
+    if (incomingCallSubscriber) {
+      incomingCallSubscriber.unsubscribe();
+      this._incomingCallSubscribers.delete(incomingCallId);
+    }
+    this._context.setIncomingCallEnded(incomingCallId, callEndReason);
+  };
+
   private incomingCall = (event: { incomingCall: IncomingCall }): void => {
+    // Make sure to not subscribe to the incoming call if we are already subscribed to it.
+    if (!this._incomingCallSubscribers.has(event.incomingCall.id)) {
+      this._incomingCallSubscribers.set(
+        event.incomingCall.id,
+        new IncomingCallSubscriber(event.incomingCall, this.setIncomingCallEnded)
+      );
+    }
     this._context.setIncomingCall(convertSdkIncomingCallToDeclarativeIncomingCall(event.incomingCall));
-    this._incomingCallSubscribers.set(
-      event.incomingCall.id,
-      new IncomingCallSubscriber(event.incomingCall, this._context)
-    );
   };
 
   private addCall = (call: Call): void => {
-    // In case we get the same call from startCall or join in an event, we first check if we're already subscribed
-    // before subscribing.
-    if (!this._callSubscribers.get(call)) {
+    // Make sure to not subscribe to the call if we are already subscribed to it.
+    if (!this._callSubscribers.has(call)) {
       this._callSubscribers.set(call, new CallSubscriber(call, this._context));
     }
     this._context.setCall(convertSdkCallToDeclarativeCall(call));
@@ -86,14 +102,14 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
         return (...args: Parameters<CallAgent['startCall']>): Call => {
           const call = target.startCall(...args);
           this.addCall(call);
-          return call;
+          return callDeclaratify(call, this._context);
         };
       }
       case 'join': {
         return (...args: Parameters<CallAgent['join']>): Call => {
           const call = target.join(...args);
           this.addCall(call);
-          return call;
+          return callDeclaratify(call, this._context);
         };
       }
       case 'dispose': {
@@ -117,5 +133,8 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
  * @param context - CallContext from CallClientDeclarative
  */
 export const callAgentDeclaratify = (callAgent: CallAgent, context: CallContext): CallAgent => {
+  // Make sure there are no existing call data if creating a new CallAgentDeclarative (if creating a new
+  // CallAgentDeclarative after disposing of the hold one will mean context have old call state).
+  context.clearCallRelatedState();
   return new Proxy(callAgent, new ProxyCallAgent(callAgent, context)) as CallAgent;
 };

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add commonjs support",
+  "packageName": "@azure/acs-chat-selector",
+  "email": "mail@jamesburnside.com",
+  "dependentChangeType": "patch"
+}

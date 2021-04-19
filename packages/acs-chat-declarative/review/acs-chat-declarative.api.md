@@ -29,13 +29,61 @@ export type ChatConfig = {
 };
 
 // @public (undocumented)
+export class ChatContext {
+    // (undocumented)
+    addReadReceipt(threadId: string, readReceipt: ReadReceipt): void;
+    // (undocumented)
+    addTypingIndicator(threadId: string, typingIndicator: TypingIndicator): void;
+    // (undocumented)
+    batch(batchFunc: () => void): void;
+    // (undocumented)
+    createThread(threadId: string, threadInfo?: ChatThreadInfo): void;
+    // (undocumented)
+    createThreadIfNotExist(threadId: string, thread?: ChatThreadInfo): boolean;
+    // (undocumented)
+    deleteLocalMessage(threadId: string, localId: string): boolean;
+    // (undocumented)
+    deleteMessage(threadId: string, id: string): void;
+    // (undocumented)
+    deleteParticipant(threadId: string, participantId: string): void;
+    // (undocumented)
+    deleteParticipants(threadId: string, participantIds: string[]): void;
+    // (undocumented)
+    deleteThread(threadId: string): void;
+    // (undocumented)
+    getState(): ChatClientState;
+    // (undocumented)
+    offStateChange(handler: (state: ChatClientState) => void): void;
+    // (undocumented)
+    onStateChange(handler: (state: ChatClientState) => void): void;
+    // (undocumented)
+    setChatMessage(threadId: string, message: ChatMessageWithStatus): void;
+    // (undocumented)
+    setChatMessages(threadId: string, messages: Map<string, ChatMessageWithStatus>): void;
+    // (undocumented)
+    setParticipant(threadId: string, participant: ChatParticipant): void;
+    // (undocumented)
+    setParticipants(threadId: string, participants: ChatParticipant[]): void;
+    // (undocumented)
+    setState(state: ChatClientState): void;
+    // (undocumented)
+    setThread(threadId: string, threadState: ChatThreadClientState): void;
+    // (undocumented)
+    updateChatConfig(config: ChatConfig): void;
+    // (undocumented)
+    updateChatMessageContent(threadId: string, messagesId: string, content: string | undefined): void;
+    // (undocumented)
+    updateThread(threadId: string, threadInfo?: ChatThreadInfo): void;
+    // (undocumented)
+    updateThreadTopic(threadId: string, topic?: string): void;
+}
+
+// @public (undocumented)
 export type ChatMessageWithStatus = ChatMessage & {
     clientMessageId?: string;
     status: MessageStatus;
 };
 
-// Warning: (ae-forgotten-export) The symbol "ChatContext" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export const chatThreadClientDeclaratify: (chatThreadClient: ChatThreadClient, context: ChatContext) => ChatThreadClient;
 

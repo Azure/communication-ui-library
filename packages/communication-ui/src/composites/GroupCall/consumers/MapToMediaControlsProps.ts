@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { HangupCallOptions, PermissionState as DevicePermissionState } from '@azure/communication-calling';
+import { HangUpOptions } from '@azure/communication-calling';
 import { useCallContext, useCallingContext } from '../../../providers';
 import useSubscribeToDevicePermission from '../../../hooks/useSubscribeToDevicePermission';
 import useLocalVideo from '../../../hooks/useLocalVideo';
@@ -11,6 +11,7 @@ import { isMobileSession } from '../../../utils';
 import { useGroupCall } from '../../../hooks';
 import { CommunicationUiErrorCode, CommunicationUiError } from '../../../types/CommunicationUiError';
 import { useCallback } from 'react';
+import { DevicePermissionState } from '../../../types/DevicePermission';
 
 export type MediaControlsContainerProps = {
   /** Determines icon for mic toggle button. */
@@ -48,7 +49,7 @@ export type MediaControlsContainerProps = {
   /** Determines if screen share is supported by browser. */
   isLocalScreenShareSupportedInBrowser(): boolean;
   /** Callback when leaving the call.  */
-  leaveCall: (hangupCallOptions: HangupCallOptions) => Promise<void>;
+  leaveCall: (hangupCallOptions: HangUpOptions) => Promise<void>;
 };
 
 export const MapToMediaControlsProps = (): MediaControlsContainerProps => {
@@ -110,7 +111,7 @@ export const MapToMediaControlsProps = (): MediaControlsContainerProps => {
     cameraPermission: videoDevicePermission,
     micPermission: audioDevicePermission,
     isLocalScreenShareSupportedInBrowser,
-    leaveCall: async (hangupCallOptions: HangupCallOptions): Promise<void> => {
+    leaveCall: async (hangupCallOptions: HangUpOptions): Promise<void> => {
       await leave(hangupCallOptions);
     }
   };

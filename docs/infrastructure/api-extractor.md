@@ -20,7 +20,7 @@ API Extractor is run as part of the build commands for each package. Running `ru
 
 ## Configuration Files
 
-The primary configuration file can be found here: [common/api-extractor/api-extractor.json](https://github.com/Azure/communication-ui-sdk/blob/main/common/api-extractor/api-extractor.json). Each package has their own `api-extractor.json` that extends from this.
+The primary configuration file can be found here: [common/config/api-extractor/api-extractor.json](https://github.com/Azure/communication-ui-sdk/blob/main/common/config/api-extractor/api-extractor.json). Each package has their own `api-extractor.json` that extends from this.
 
 ## Gating PRs
 

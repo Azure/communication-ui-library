@@ -78,7 +78,7 @@ jobs:
 
       # Bump alpha package versions
       - name: Bump alpha package versions
-        run: node common/release/node_modules/beachball/bin/beachball canary --canary-name alpha+${{ steps.datetime.outputs.datetime }} --tag dev --no-publish
+        run: node common/config/node_modules/beachball/bin/beachball canary --canary-name alpha+${{ steps.datetime.outputs.datetime }} --tag dev --no-publish
 
       # Build packages
       - name: Build @azure/communication-ui package
