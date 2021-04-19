@@ -19,15 +19,6 @@ export type BaseSelectorProps = {
 };
 
 // @public (undocumented)
-export const chatHeaderSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
-    userId: string;
-    topicName: string;
-}, (res1: string, res2: string) => {
-    userId: string;
-    topicName: string;
-}>;
-
-// @public (undocumented)
 export type ChatMessage = Message<'chat'>;
 
 // @public

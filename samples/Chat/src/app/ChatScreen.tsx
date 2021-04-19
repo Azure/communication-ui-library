@@ -9,8 +9,9 @@ import { ChatHeader } from './ChatHeader';
 import { ChatArea } from './ChatArea';
 import { SidePanel, SidePanelTypes } from './SidePanel';
 import { useSelector } from './hooks/useSelector';
-import { chatHeaderSelector, chatParticipantListSelector } from '@azure/acs-chat-selector';
+import { chatParticipantListSelector } from '@azure/acs-chat-selector';
 import { useHandlers } from './hooks/useHandlers';
+import { chatHeaderSelector } from './selectors/chatHeaderSelector';
 
 // These props are passed in when this component is referenced in JSX and not found in context
 interface ChatScreenProps {

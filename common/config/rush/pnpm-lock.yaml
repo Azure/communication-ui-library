@@ -20393,7 +20393,7 @@ packages:
   file:projects/chat.tgz_40b0c9f7a7a0fac66e4b6fcf06de2a42:
     dependencies:
       '@azure/communication-administration': 1.0.0-beta.3
-      '@azure/communication-chat': 1.0.0-beta.3
+      '@azure/communication-chat': 1.0.0-beta.4
       '@azure/communication-common': 1.0.0-beta.3
       '@azure/communication-signaling': 1.0.0-beta.1
       '@azure/core-http': 1.2.3
@@ -20449,7 +20449,7 @@ packages:
       ts-node: '*'
       webpack-cli: '*'
     resolution:
-      integrity: sha512-X+93PCcd8IKHjg6kT8cvqGSEatywCHEwkodMGFPdtmH+RHYvkMvWFLPdFNZHT/kKzvUXc2Hozcm4cO3XSJqw/g==
+      integrity: sha512-xauuwTv4mQHyIVZGzXTDI9Tx1Gfjcmd4Ks4GqQADJNqEgbqc5uw5D7HsfecPlWj+iTAOvuc6fs+Jc2Aldt+NKw==
       tarball: file:projects/chat.tgz
     version: 0.0.0
   file:projects/communication-ui.tgz_webpack-cli@4.5.0:
