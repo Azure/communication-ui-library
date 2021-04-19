@@ -50,14 +50,11 @@ const MAXIMUM_LENGTH_OF_TYPING_USERS = 35;
  * 'Username1, Username2 and 5 others are typing...'
  * '100 participants are typing...'
  *
- * TypingIndicator can be customized. TODO: See the parameters in
- * MapToTypingUsers.convertSdkTypingUsersDataToTypingUsersData. We need to design a way for users to provide this.
- *
  * @param props - An object of TypingIndicatorProps type that contains all data and functions needed.
  * @returns ReactElement
  */
 export const TypingIndicator = (props: TypingIndicatorProps): JSX.Element => {
-  const { typingUsers, renderUserDisplayName, styles } = props;
+  const { typingUsers, typingString, renderUserDisplayName, styles } = props;
 
   const displayComponents: JSX.Element[] = [];
 
@@ -94,17 +91,21 @@ export const TypingIndicator = (props: TypingIndicatorProps): JSX.Element => {
     );
   });
 
-  let typingString = '';
+  let textAfterUsers = '';
   const countOfUsersNotMentioned = typingUsers.length - typingUsersMentioned.length;
   if (countOfUsersNotMentioned > 0) {
-    typingString = ` and ${countOfUsersNotMentioned} other${countOfUsersNotMentioned === 1 ? '' : 's'}`;
+    textAfterUsers = ` and ${countOfUsersNotMentioned} other${countOfUsersNotMentioned === 1 ? '' : 's'}`;
   }
-  typingString += typingUsers.length > 0 ? (typingUsers.length > 1 ? ' are typing...' : ' is typing...') : '';
+  if (typingString !== undefined) {
+    textAfterUsers += typingString;
+  } else {
+    textAfterUsers += typingUsers.length > 0 ? (typingUsers.length > 1 ? ' are typing...' : ' is typing...') : '';
+  }
 
   return (
     <div className={mergeStyles(typingIndicatorContainerStyle, styles?.root)}>
       {displayComponents}
-      <span className={mergeStyles(typingIndicatorVerbStyle, styles?.typingString)}>{typingString}</span>
+      <span className={mergeStyles(typingIndicatorVerbStyle, styles?.typingString)}>{textAfterUsers}</span>
     </div>
   );
 };

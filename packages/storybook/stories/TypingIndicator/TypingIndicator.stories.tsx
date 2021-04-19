@@ -1,5 +1,5 @@
 // © Microsoft Corporation. All rights reserved.
-import { object, text } from '@storybook/addon-knobs';
+import { object, text, boolean } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import { TypingIndicator } from '@azure/communication-ui';
 import React from 'react';
@@ -17,7 +17,8 @@ export const TypingIndicatorComponent: () => JSX.Element = () => {
       displayName: 'User2'
     }
   ]);
-  const typingString = text('Typing String', ' and 5 others are typing...');
+  const overrideTypingString = boolean('Override typing string?', false);
+  const typingString = overrideTypingString ? text('Typing String', ' are typing away...') : undefined;
   return <TypingIndicator typingUsers={typingUsers} typingString={typingString} />;
 };
 
