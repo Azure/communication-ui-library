@@ -9,6 +9,10 @@ import {
   screenShareButtonProps,
   videoButtonProps
 } from '@azure/communication-ui';
+
+import StyledControlBarText from '!!raw-loader!./snippets/StyledControlBar.tsx';
+import { StyledControlBar } from './snippets/StyledControlBar';
+
 import { DefaultButton } from '@fluentui/react';
 
 <Meta title="Styling" />
@@ -30,53 +34,8 @@ All the UI Components have complete CSS support and provide complex styling capa
 
 Let's style the `ControlBar` component and `DefaultButton` components inside it using the `root` styles property.
 
-```tsx
-import { ControlBar } from '@azure/communication-ui';
-
-// ControlBar accepts a `styles` prop with only the `root` key as a valid property.
-const styles = {
-  root: {
-    background: 'white',
-    border: '2px solid firebrick',
-    '& button': {
-      ':hover': {
-        background: 'black',
-        color: 'white'
-      }
-    }
-  }
-}
-
-<FluentThemeProvider>
-  <ControlBar styles={styles}>
-    <DefaultButton {...videoButtonProps} />
-    <DefaultButton {...audioButtonProps} />
-    <DefaultButton {...optionsButtonProps} />
-    <DefaultButton {...hangupButtonProps} />
-  </ControlBar>
-</FluentThemeProvider>
-```
+<Source code={StyledControlBarText} />
 
 <Canvas withSource="none">
-  <FluentThemeProvider>
-    <ControlBar
-      styles={{
-        root: {
-          background: 'white',
-          border: '2px solid firebrick',
-          '& button': {
-            ':hover': {
-              background: 'black',
-              color: 'white'
-            }
-          }
-        }
-      }}
-    >
-      <DefaultButton {...videoButtonProps} />
-      <DefaultButton {...audioButtonProps} />
-      <DefaultButton {...optionsButtonProps} />
-      <DefaultButton {...hangupButtonProps} />
-    </ControlBar>
-  </FluentThemeProvider>
+  <StyledControlBar />
 </Canvas>
