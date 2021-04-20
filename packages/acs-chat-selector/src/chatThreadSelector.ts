@@ -14,9 +14,9 @@ import { ChatMessageContent, ChatParticipant } from '@azure/communication-chat';
 import { ChatClientState } from '@azure/acs-chat-declarative';
 // @ts-ignore
 import { BaseSelectorProps } from './baseSelectors';
-import { memoizeAll } from './utils/memoizeAll';
+import { memoizeFunctionAll } from './utils/memoizeFunctionAll';
 
-const memoizedAllConvertChatMessage = memoizeAll(
+const memoizedAllConvertChatMessage = memoizeFunctionAll(
   (
     _key: string,
     chatMessage: ChatMessageWithStatus,
@@ -50,8 +50,8 @@ export const chatThreadSelector = createSelector(
         )
       )
     );
-
     updateMessagesWithAttached(convertedMessages, userId, isLargeGroup);
+
     return {
       userId,
       disableReadReceipt: false,

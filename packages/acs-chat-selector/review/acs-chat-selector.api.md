@@ -19,6 +19,9 @@ export type BaseSelectorProps = {
 };
 
 // @public (undocumented)
+export type CallbackType<KeyT, ArgsT extends any[], FnRetT> = (memoizedFn: FunctionWithKey<KeyT, ArgsT, FnRetT>) => FnRetT[];
+
+// @public (undocumented)
 export const chatHeaderSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
     userId: string;
     topicName: string;
@@ -65,6 +68,12 @@ export type DefaultHandlers = {
     removeThreadMember: (userId: string) => Promise<void>;
     updateThreadTopicName: (topicName: string) => Promise<void>;
 };
+
+// @public (undocumented)
+export type FunctionWithKey<KeyT, ArgsT extends any[], RetT> = (key: KeyT, ...args: ArgsT) => RetT;
+
+// @public
+export const memoizeFunctionAll: <KeyT, ArgsT extends any[], FnRetT, CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>>(fn: FunctionWithKey<KeyT, ArgsT, FnRetT>, shouldCacheUpdate?: (args1: any, args2: any) => boolean) => (callback: CallBackT) => FnRetT[];
 
 // @public (undocumented)
 export enum MessageAttachedStatus {

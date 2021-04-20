@@ -22,7 +22,7 @@ import { formatTimestampForChatMessage } from '../utils';
 import { CLICK_TO_LOAD_MORE_MESSAGES, NEW_MESSAGES } from '../constants';
 import { BaseCustomStylesProps, ChatMessage as WebUiChatMessage } from '../types';
 import { ReadReceipt, ReadReceiptProps } from './ReadReceipt';
-import { memoizeAll } from '@azure/acs-chat-selector';
+import { memoizeFunctionAll } from '@azure/acs-chat-selector';
 
 const isMessageSame = (first: WebUiChatMessage, second: WebUiChatMessage): boolean => {
   return (
@@ -165,7 +165,7 @@ const DefaultLoadPreviousMessagesButton = (props: LoadPreviousMessagesButtonProp
   );
 };
 
-const memoizeAllMessages = memoizeAll(
+const memoizeAllMessages = memoizeFunctionAll(
   (
     _messageKey: string,
     message: WebUiChatMessage,
@@ -184,6 +184,7 @@ const memoizeAllMessages = memoizeAll(
     );
     const showReadReceipt = !disableReadReceipt && message.statusToRender;
     return {
+      key: message.messageId ?? message.clientMessageId,
       gutter: message.mine ? (
         ''
       ) : onRenderAvatar ? (
@@ -220,7 +221,7 @@ const memoizeAllMessages = memoizeAll(
         </Flex>
       ),
       attached: message.attached
-    };
+    } as any;
   }
 );
 
@@ -479,6 +480,14 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     [styles, disableReadReceipt, chatMessages, onRenderAvatar, onRenderReadReceipt, todayDate]
   );
 
+  const chatBody = useMemo(() => {
+    return (
+      <LiveAnnouncer>
+        <Chat styles={styles?.chatContainer ?? chatStyle} items={messagesToDisplay} />
+      </LiveAnnouncer>
+    );
+  }, [styles?.chatContainer, messagesToDisplay]);
+
   return (
     <Ref innerRef={chatThreadRef}>
       <Stack className={mergeStyles(messageThreadContainerStyle, styles?.root)} grow>
@@ -498,11 +507,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
               ))}
           </div>
         )}
-        <Ref innerRef={chatScrollDivRef}>
-          <LiveAnnouncer>
-            <Chat styles={styles?.chatContainer ?? chatStyle} items={messagesToDisplay} />
-          </LiveAnnouncer>
-        </Ref>
+        <Ref innerRef={chatScrollDivRef}>{chatBody}</Ref>
         {existsNewMessage && !disableJumpToNewMessageButton && (
           <div className={mergeStyles(newMessageButtonContainerStyle, styles?.newMessageButtonContainer)}>
             {onRenderJumpToNewMessageButton ? (

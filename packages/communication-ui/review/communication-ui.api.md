@@ -232,7 +232,7 @@ export const ReadReceipt: (props: ReadReceiptProps) => JSX.Element;
 export interface ReadReceiptProps {
     deliveredTooltipText?: string;
     failedToSendTooltipText?: string;
-    messageStatus: MessageStatus;
+    messageStatus?: MessageStatus;
     seenTooltipText?: string;
     sendingTooltipText?: string;
     size?: SizeValue;
