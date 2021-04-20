@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Linkify from 'react-linkify';
-import { Button, Chat, ChatItemProps, Flex, Ref, ShorthandValue } from '@fluentui/react-northstar';
+import { Chat, ChatItemProps, Flex, Ref, ShorthandValue } from '@fluentui/react-northstar';
 import {
   DownIconStyle,
   newMessageButtonContainerStyle,
@@ -15,7 +15,7 @@ import {
   readReceiptContainerStyle,
   noReadReceiptStyle
 } from './styles/MessageThread.styles';
-import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack } from '@fluentui/react';
+import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack, DefaultButton } from '@fluentui/react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { LiveAnnouncer, LiveMessage } from 'react-aria-live';
 import { formatTimestampForChatMessage } from '../utils';
@@ -155,13 +155,9 @@ export interface LoadPreviousMessagesButtonProps {
 const DefaultLoadPreviousMessagesButtonRenderer = (props: LoadPreviousMessagesButtonProps): JSX.Element => {
   const { onClick } = props;
   return (
-    <Button
-      text
-      fluid
-      className={loadPreviousMessageButtonStyle}
-      content={CLICK_TO_LOAD_MORE_MESSAGES}
-      onClick={onClick}
-    />
+    <DefaultButton className={loadPreviousMessageButtonStyle} onClick={onClick}>
+      {CLICK_TO_LOAD_MORE_MESSAGES}
+    </DefaultButton>
   );
 };
 

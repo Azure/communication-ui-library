@@ -3,15 +3,15 @@
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import React from 'react';
 import { ControlBar } from '../../../communication-ui/src';
-import { AllButtonsControlBarExample } from './examples/AllButtonsControlBar.example';
-import { ControlBarExample } from './examples/ControlBar.example';
-import { ControlBarLayoutExample } from './examples/ControlBarLayout.example';
-import { CustomControlBarExample } from './examples/CustomControlBar.example';
-import { OptionsButtonExample } from './examples/OptionsButton.example';
-const OptionsButtonExampleText = require('!!raw-loader!./examples/OptionsButton.example.tsx').default;
-const AllButtonsControlBarExampleText = require('!!raw-loader?./examples/AllButtonsControlBar.example.tsx').default;
-const ControlBarLayoutExampleText = require('!!raw-loader?./examples/ControlBarLayout.example.tsx').default;
-const CustomControlBarExampleText = require('!!raw-loader?./examples/CustomControlBar.example.tsx').default;
+import { AllButtonsControlBarExample } from './snippets/AllButtonsControlBar.snippet';
+import { ControlBarExample } from './snippets/ControlBar.snippet';
+import { ControlBarLayoutExample } from './snippets/ControlBarLayout.snippet';
+import { CustomControlBarExample } from './snippets/CustomControlBar.snippet';
+import { OptionsButtonExample } from './snippets/OptionsButton.snippet';
+const OptionsButtonExampleText = require('!!raw-loader!./snippets/OptionsButton.snippet.tsx').default;
+const AllButtonsControlBarExampleText = require('!!raw-loader?./snippets/AllButtonsControlBar.snippet.tsx').default;
+const ControlBarLayoutExampleText = require('!!raw-loader?./snippets/ControlBarLayout.snippet.tsx').default;
+const CustomControlBarExampleText = require('!!raw-loader?./snippets/CustomControlBar.snippet.tsx').default;
 
 const importStatement = `
 import { FluentThemeProvider, ControlBar } from '@azure/communication-ui';
