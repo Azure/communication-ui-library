@@ -3,6 +3,7 @@
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
 import {
+  MessageProps,
   MessageThread,
   ChatMessage,
   CustomMessage,
@@ -61,15 +62,12 @@ export const MessageThreadComponent: () => JSX.Element = () => {
     setChatMessages([...chatMessages, GenerateMockCustomMessage()]);
   };
 
-  const onRenderMessage = (
-    message: SystemMessage | CustomMessage | ChatMessage,
-    defaultOnRender: DefaultMessageRendererType
-  ): JSX.Element => {
-    if (message.type === 'custom') {
-      return <Divider content={message.payload.content} color="brand" important />;
+  const onRenderMessage = (props: MessageProps, defaultOnRender?: DefaultMessageRendererType): JSX.Element => {
+    if (props.message.type === 'custom') {
+      return <Divider content={props.message.payload.content} color="brand" important />;
     }
 
-    return defaultOnRender(message);
+    return defaultOnRender ? defaultOnRender(props) : <></>;
   };
 
   return (

@@ -68,7 +68,8 @@ export const getDocs: () => JSX.Element = () => {
       <Source code={MessageThreadWithCustomizedChatContainerExampleText} />
       <Heading>Messages with Customized Message Container</Heading>
       <Description>
-        The example below shows how to render a `custom` chat container with `onRenderMessage` in `MessageThread`
+        The example below shows how to render a `custom` message container with `styles.chatMessageContainer` or
+        `styles.systemMessageContainer` in `MessageThread`
       </Description>
       <Canvas>
         <MessageThreadWithCustomizedMessageContainerExample />

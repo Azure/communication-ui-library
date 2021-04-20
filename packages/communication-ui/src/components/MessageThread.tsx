@@ -130,6 +130,8 @@ export interface MessageThreadStylesProps extends BaseCustomStylesProps {
   chatContainer?: ComponentSlotStyle;
   /** Styles for chat message container. */
   chatMessageContainer?: ComponentSlotStyle;
+  /** Styles for system message container. */
+  systemMessageContainer?: ComponentSlotStyle;
   /** Styles for read receipt container. */
   readReceiptContainer?: (mine: boolean) => IStyle;
 }
@@ -165,11 +167,8 @@ const DefaultLoadPreviousMessagesButtonRenderer = (props: LoadPreviousMessagesBu
   );
 };
 
-const DefaultChatMessageRenderer: DefaultMessageRendererType = (
-  message: ChatMessage | SystemMessage | CustomMessage,
-  messageContainerStyle?: ComponentSlotStyle
-) => {
-  const payload: ChatMessagePayload = message.payload;
+const DefaultChatMessageRenderer: DefaultMessageRendererType = (props: MessageProps) => {
+  const payload: ChatMessagePayload = props.message.payload;
   const liveAuthor = `${payload.senderDisplayName} says `;
   const messageContentItem = (
     <div>
@@ -179,7 +178,7 @@ const DefaultChatMessageRenderer: DefaultMessageRendererType = (
   );
   return (
     <Chat.Message
-      styles={!!messageContainerStyle ? messageContainerStyle : chatMessageStyle}
+      styles={!!props.messageContainerStyle ? props.messageContainerStyle : chatMessageStyle}
       content={messageContentItem}
       author={payload.senderDisplayName}
       mine={payload.mine}
@@ -188,22 +187,18 @@ const DefaultChatMessageRenderer: DefaultMessageRendererType = (
   );
 };
 
-export type DefaultMessageRendererType = (
-  message: ChatMessage | SystemMessage | CustomMessage,
-  messageContainerStyle?: ComponentSlotStyle
-) => JSX.Element;
+export type DefaultMessageRendererType = (props: MessageProps) => JSX.Element;
 
-const DefaultSystemMessageRenderer: DefaultMessageRendererType = (
-  message: ChatMessage | SystemMessage | CustomMessage,
-  messageContainerStyle?: ComponentSlotStyle
-) => {
-  if (message.type === 'system') {
-    const payload: SystemMessagePayload = message.payload;
+const DefaultSystemMessageRenderer: DefaultMessageRendererType = (props: MessageProps) => {
+  if (props.message.type === 'system') {
+    const payload: SystemMessagePayload = props.message.payload;
     return (
-      <SystemMessageComponent
-        iconName={(payload.iconName ?? '') as SystemMessageIconTypes}
-        content={payload.content ?? ''}
-      />
+      <div className={mergeStyles(props.messageContainerStyle as IStyle)}>
+        <SystemMessageComponent
+          iconName={(payload.iconName ?? '') as SystemMessageIconTypes}
+          content={payload.content ?? ''}
+        />
+      </div>
     );
   } else {
     return <></>;
@@ -272,10 +267,21 @@ export type MessageThreadProps = {
   /**
    * onRenderMessage event handler. `defaultOnRender` is not provide for `CustomMessage` and is available for `ChatMessage` and `SystemMessage`.
    */
-  onRenderMessage?: (
-    message: ChatMessage | SystemMessage | CustomMessage,
-    defaultOnRender: DefaultMessageRendererType
-  ) => JSX.Element;
+  onRenderMessage?: (props: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+};
+
+/**
+ * Props for MessageThread component
+ */
+export type MessageProps = {
+  /**
+   * Message to render. It can type `ChatMessage` or `SystemMessage` or `CustomMessage.
+   */
+  message: ChatMessage | SystemMessage | CustomMessage;
+  /**
+   * Styles for chat message container.
+   */
+  messageContainerStyle?: ComponentSlotStyle;
 };
 
 /**
@@ -464,8 +470,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
 
   // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp need to be regenerated)
   const defaultChatMessageRenderer = useCallback(
-    (message: ChatMessage, messageContainerStyle?: ComponentSlotStyle) => {
-      return DefaultChatMessageRenderer(message, messageContainerStyle);
+    (props: MessageProps) => {
+      return DefaultChatMessageRenderer(props);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [new Date().toDateString()]
@@ -477,10 +483,14 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
           if (message.type === 'chat') {
             const payload: ChatMessagePayload = message.payload;
             const showReadReceipt = !disableReadReceipt && payload.statusToRender;
+            const messageProps: MessageProps = {
+              message: message,
+              messageContainerStyle: styles?.chatMessageContainer
+            };
             const chatMessageComponent =
               onRenderMessage === undefined
-                ? defaultChatMessageRenderer(message)
-                : onRenderMessage(message as ChatMessage, DefaultChatMessageRenderer);
+                ? defaultChatMessageRenderer(messageProps)
+                : onRenderMessage(messageProps, DefaultChatMessageRenderer);
 
             return {
               gutter: payload.mine ? (
@@ -518,10 +528,14 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
               key: index
             };
           } else if (message.type === 'system') {
+            const messageProps: MessageProps = {
+              message: message,
+              messageContainerStyle: styles?.systemMessageContainer
+            };
             const systemMessageComponent =
               onRenderMessage === undefined
-                ? DefaultSystemMessageRenderer(message)
-                : onRenderMessage(message, DefaultSystemMessageRenderer);
+                ? DefaultSystemMessageRenderer(messageProps)
+                : onRenderMessage(messageProps, DefaultSystemMessageRenderer);
 
             return {
               children: systemMessageComponent,
@@ -529,14 +543,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             };
           } else {
             // We do not handle custom type message by default, users can handle custom type by using onRenderMessage function.
-            const customMessageComponent =
-              onRenderMessage === undefined ? (
-                <></>
-              ) : (
-                onRenderMessage(message, () => {
-                  return <></>;
-                })
-              );
+            const messageProps: MessageProps = { message: message };
+            const customMessageComponent = onRenderMessage === undefined ? <></> : onRenderMessage(messageProps);
             return {
               children: customMessageComponent,
               key: index
