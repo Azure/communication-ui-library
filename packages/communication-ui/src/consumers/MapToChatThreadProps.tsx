@@ -30,17 +30,6 @@ export const MapToChatThreadProps = (): ChatThreadPropsFromContext => {
     fetchThreadMembers();
   }, [fetchThread, fetchThreadMembers]);
 
-  useEffect(() => {
-    const listener: number = window.setInterval(() => {
-      fetchThread();
-      fetchThreadMembers();
-    }, THREAD_INFO_FETCH_INVERVAL);
-
-    return () => {
-      clearInterval(listener);
-    };
-  }, [fetchThread, fetchThreadMembers]);
-
   return {
     userId: useUserId(),
     thread: thread,
