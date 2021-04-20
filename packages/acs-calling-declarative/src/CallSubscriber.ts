@@ -2,21 +2,14 @@
 
 import { Call, RemoteParticipant } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
+import { CallIdRef } from './CallIdRef';
 import {
   convertSdkLocalStreamToDeclarativeLocalStream,
   convertSdkParticipantToDeclarativeParticipant,
   getRemoteParticipantKey
 } from './Converter';
+import { InternalCallContext } from './InternalCallContext';
 import { ParticipantSubscriber } from './ParticipantSubscriber';
-
-/**
- * Internal object used to hold callId. This is so when we create the closure that includes this container we can update
- * the container contents without needing to update the closure since the closure is referencing this object otherwise
- * if the closure contains a primitive the updating of the primitive does not get picked up by the closure.
- */
-interface CallIdRef {
-  callId: string;
-}
 
 /**
  * Keeps track of the listeners assigned to a particular call because when we get an event from SDK, it doesn't tell us
@@ -25,14 +18,16 @@ interface CallIdRef {
  */
 export class CallSubscriber {
   private _call: Call;
-  private _callIdRef: CallIdRef; // Cache id because it could change so we know old and new id for updating.
+  private _callIdRef: CallIdRef;
   private _context: CallContext;
+  private _internalContext: InternalCallContext;
   private _participantSubscribers: Map<string, ParticipantSubscriber>;
 
-  constructor(call: Call, context: CallContext) {
+  constructor(call: Call, context: CallContext, internalContext: InternalCallContext) {
     this._call = call;
     this._callIdRef = { callId: call.id };
     this._context = context;
+    this._internalContext = internalContext;
     this._participantSubscribers = new Map<string, ParticipantSubscriber>();
 
     this.subscribe();
@@ -44,9 +39,18 @@ export class CallSubscriber {
     this._call.on('isScreenSharingOnChanged', this.isScreenSharingOnChanged);
     this._call.on('remoteParticipantsUpdated', this.remoteParticipantsUpdated);
     this._call.on('localVideoStreamsUpdated', this.localVideoStreamsUpdated);
-    this._call.remoteParticipants.forEach((participant: RemoteParticipant) => {
-      this.addParticipantListener(participant);
-    });
+
+    if (this._call.remoteParticipants.length > 0) {
+      this._call.remoteParticipants.forEach((participant: RemoteParticipant) => {
+        this.addParticipantListener(participant);
+      });
+
+      this._context.setCallRemoteParticipants(
+        this._callIdRef.callId,
+        this._call.remoteParticipants.map(convertSdkParticipantToDeclarativeParticipant),
+        []
+      );
+    }
   };
 
   public unsubscribe = (): void => {
@@ -64,12 +68,11 @@ export class CallSubscriber {
 
   private addParticipantListener(participant: RemoteParticipant): void {
     const participantKey = getRemoteParticipantKey(participant.identifier);
-    if (!this._participantSubscribers.get(participantKey)) {
-      this._participantSubscribers.set(
-        participantKey,
-        new ParticipantSubscriber(this._callIdRef.callId, participant, this._context)
-      );
-    }
+    this._participantSubscribers.get(participantKey)?.unsubscribe();
+    this._participantSubscribers.set(
+      participantKey,
+      new ParticipantSubscriber(this._callIdRef, participant, this._context, this._internalContext)
+    );
   }
 
   private removeParticipantListener(participant: RemoteParticipant): void {
@@ -86,10 +89,8 @@ export class CallSubscriber {
   };
 
   private idChanged = (): void => {
-    this._participantSubscribers.forEach((participantSubscriber: ParticipantSubscriber) => {
-      participantSubscriber.setCallId(this._call.id);
-    });
     this._context.setCallId(this._call.id, this._callIdRef.callId);
+    this._internalContext.setCallId(this._call.id, this._callIdRef.callId);
     this._callIdRef.callId = this._call.id;
   };
 

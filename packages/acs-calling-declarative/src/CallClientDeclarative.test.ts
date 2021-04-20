@@ -365,11 +365,11 @@ describe('declarative call client', () => {
     await waitWithBreakCondition(
       () =>
         testData.declarativeCallClient.state.calls.get(mockCallId)?.remoteParticipants.get(participantKey)?.videoStreams
-          .length !== 0
+          .size !== 0
     );
     expect(
       testData.declarativeCallClient.state.calls.get(mockCallId)?.remoteParticipants.get(participantKey)?.videoStreams
-        .length
+        .size
     ).toBe(1);
   });
 
@@ -391,7 +391,7 @@ describe('declarative call client', () => {
     await waitWithBreakCondition(
       () =>
         testData.declarativeCallClient.state.calls.get(mockCallId)?.remoteParticipants.get(participantKey)?.videoStreams
-          .length !== 0
+          .size !== 0
     );
 
     testData.mockRemoteParticipant.videoStreams = [];
@@ -403,11 +403,11 @@ describe('declarative call client', () => {
     await waitWithBreakCondition(
       () =>
         testData.declarativeCallClient.state.calls.get(mockCallId)?.remoteParticipants.get(participantKey)?.videoStreams
-          .length === 0
+          .size === 0
     );
     expect(
       testData.declarativeCallClient.state.calls.get(mockCallId)?.remoteParticipants.get(participantKey)?.videoStreams
-        .length
+        .size
     ).toBe(0);
   });
 
@@ -419,6 +419,7 @@ describe('declarative call client', () => {
     await createMockParticipantAndEmitParticipantUpdated(testData);
 
     const mockRemoteVideoStream = createMockRemoteVideoStream(false);
+    mockRemoteVideoStream.id = 1;
     testData.mockRemoteParticipant.videoStreams = [mockRemoteVideoStream];
     testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
       added: [mockRemoteVideoStream],
@@ -429,7 +430,7 @@ describe('declarative call client', () => {
     await waitWithBreakCondition(
       () =>
         testData.declarativeCallClient.state.calls.get(mockCallId)?.remoteParticipants.get(participantKey)?.videoStreams
-          .length !== 0
+          .size !== 0
     );
 
     mockRemoteVideoStream.isAvailable = true;
@@ -437,12 +438,16 @@ describe('declarative call client', () => {
 
     await waitWithBreakCondition(
       () =>
-        testData.declarativeCallClient.state.calls.get(mockCallId)?.remoteParticipants.get(participantKey)
-          ?.videoStreams[0].isAvailable === true
+        testData.declarativeCallClient.state.calls
+          .get(mockCallId)
+          ?.remoteParticipants.get(participantKey)
+          ?.videoStreams.get(1)?.isAvailable === true
     );
     expect(
-      testData.declarativeCallClient.state.calls.get(mockCallId)?.remoteParticipants.get(participantKey)
-        ?.videoStreams[0].isAvailable
+      testData.declarativeCallClient.state.calls
+        .get(mockCallId)
+        ?.remoteParticipants.get(participantKey)
+        ?.videoStreams.get(1)?.isAvailable
     ).toBe(true);
   });
 

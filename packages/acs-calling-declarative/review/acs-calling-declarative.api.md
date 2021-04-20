@@ -11,11 +11,13 @@ import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
 import { CallState } from '@azure/communication-calling';
 import { CommunicationUserKind } from '@azure/communication-common';
+import { CreateViewOptions } from '@azure/communication-calling';
 import { DeviceAccess } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { PhoneNumberKind } from '@azure/communication-common';
 import { RemoteParticipantState } from '@azure/communication-calling';
+import { ScalingMode } from '@azure/communication-calling';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 
@@ -50,7 +52,9 @@ export interface CallClientState {
 // @public
 export interface DeclarativeCallClient extends CallClient {
     onStateChange(handler: (state: CallClientState) => void): void;
+    startRenderVideo(callId: string, streamId: number, options?: CreateViewOptions): Promise<void>;
     state: CallClientState;
+    stopRenderVideo(callId: string, streamId: number): void;
 }
 
 // @public
@@ -77,6 +81,7 @@ export interface IncomingCall {
 export interface LocalVideoStream {
     mediaStreamType: MediaStreamType;
     source: VideoDeviceInfo;
+    videoStreamRendererView: VideoStreamRendererView | undefined;
 }
 
 // @public
@@ -87,7 +92,7 @@ export interface RemoteParticipant {
     isMuted: boolean;
     isSpeaking: boolean;
     state: RemoteParticipantState;
-    videoStreams: ReadonlyArray<RemoteVideoStream>;
+    videoStreams: Map<number, RemoteVideoStream>;
 }
 
 // @public
@@ -95,6 +100,21 @@ export interface RemoteVideoStream {
     id: number;
     isAvailable: boolean;
     mediaStreamType: MediaStreamType;
+    videoStreamRendererView: VideoStreamRendererView | undefined;
+}
+
+// @public
+export interface VideoStreamRendererView {
+    isMirrored: boolean;
+    scalingMode: ScalingMode;
+    target: HTMLElement;
+}
+
+// @public
+export interface VideoStreamRendererView {
+    isMirrored: boolean;
+    scalingMode: ScalingMode;
+    target: HTMLElement;
 }
 
 

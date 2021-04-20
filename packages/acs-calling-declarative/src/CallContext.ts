@@ -9,7 +9,8 @@ import {
   LocalVideoStream,
   RemoteParticipant,
   RemoteVideoStream,
-  IncomingCall
+  IncomingCall,
+  VideoStreamRendererView
 } from './CallClientState';
 import { getRemoteParticipantKey } from './Converter';
 
@@ -258,14 +259,99 @@ export class CallContext {
     );
   }
 
-  public setParticipantVideoStreams(callId: string, participantKey: string, streams: RemoteVideoStream[]): void {
+  public setParticipantVideoStream(callId: string, participantKey: string, stream: RemoteVideoStream): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         const call = draft.calls.get(callId);
         if (call) {
           const participant = call.remoteParticipants.get(participantKey);
           if (participant) {
-            participant.videoStreams = streams;
+            // Set is called by subscriber will not modify any rendered stream so if there is existing stream only
+            // modify the values that subscriber has access to.
+            const existingStream = participant.videoStreams.get(stream.id);
+            if (existingStream) {
+              existingStream.isAvailable = stream.isAvailable;
+              existingStream.mediaStreamType = stream.mediaStreamType;
+            } else {
+              participant.videoStreams.set(stream.id, stream);
+            }
+          }
+        }
+      })
+    );
+  }
+
+  public setRemoteVideoStreamIsAvailable(
+    callId: string,
+    participantKey: string,
+    streamId: number,
+    isAvailable: boolean
+  ): void {
+    this.setState(
+      produce(this._state, (draft: CallClientState) => {
+        const call = draft.calls.get(callId);
+        if (call) {
+          const participant = call.remoteParticipants.get(participantKey);
+          if (participant) {
+            const stream = participant.videoStreams.get(streamId);
+            if (stream) {
+              stream.isAvailable = isAvailable;
+            }
+          }
+        }
+      })
+    );
+  }
+
+  public setRemoteVideoStreams(
+    callId: string,
+    participantKey: string,
+    addRemoteVideoStream: RemoteVideoStream[],
+    removeRemoteVideoStream: number[]
+  ): void {
+    this.setState(
+      produce(this._state, (draft: CallClientState) => {
+        const call = draft.calls.get(callId);
+        if (call) {
+          const participant = call.remoteParticipants.get(participantKey);
+          if (participant) {
+            for (const id of removeRemoteVideoStream) {
+              participant.videoStreams.delete(id);
+            }
+
+            for (const newStream of addRemoteVideoStream) {
+              // This should only be called by the subscriber and some properties are add by other components so if the
+              // stream already exists, only update the values that subscriber knows about.
+              const stream = participant.videoStreams.get(newStream.id);
+              if (stream) {
+                stream.mediaStreamType = newStream.mediaStreamType;
+                stream.isAvailable = newStream.isAvailable;
+              } else {
+                participant.videoStreams.set(newStream.id, newStream);
+              }
+            }
+          }
+        }
+      })
+    );
+  }
+
+  public setRemoteVideoStreamRendererView(
+    callId: string,
+    participantKey: string,
+    streamId: number,
+    view: VideoStreamRendererView | undefined
+  ): void {
+    this.setState(
+      produce(this._state, (draft: CallClientState) => {
+        const call = draft.calls.get(callId);
+        if (call) {
+          const participant = call.remoteParticipants.get(participantKey);
+          if (participant) {
+            const stream = participant.videoStreams.get(streamId);
+            if (stream) {
+              stream.videoStreamRendererView = view;
+            }
           }
         }
       })
