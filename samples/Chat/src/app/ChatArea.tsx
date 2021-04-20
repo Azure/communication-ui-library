@@ -2,22 +2,15 @@
 
 import {
   ErrorBar as ErrorBarComponent,
-  SendBox as SendBoxComponent,
-  TypingIndicator as TypingIndicatorComponent,
-  MapToTypingIndicatorProps,
+  SendBox,
+  TypingIndicator,
   MessageThread,
   connectFuncsToContext,
   MapToErrorBarProps,
-  MapToSendBoxProps,
-  WithErrorHandling,
-  ErrorHandlingProps,
-  SendBoxProps,
-  TypingIndicatorProps,
-  SendBoxPropsFromContext,
   useThreadId
 } from '@azure/communication-ui';
 import { useHandlers } from './hooks/useHandlers';
-import { chatThreadSelector } from '@azure/acs-chat-selector';
+import { chatThreadSelector, sendBoxSelector, typingIndicatorSelector } from '@azure/acs-chat-selector';
 import { Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import { chatAreaContainerStyle, sendBoxParentStyle } from './styles/ChatArea.styles';
@@ -31,19 +24,6 @@ export const ChatArea = (props: ChatAreaProps): JSX.Element => {
   const ErrorBar = useMemo(() => {
     return connectFuncsToContext(ErrorBarComponent, MapToErrorBarProps);
   }, []);
-  const SendBox = useMemo(() => {
-    return connectFuncsToContext(
-      (props: SendBoxProps & SendBoxPropsFromContext & ErrorHandlingProps) =>
-        WithErrorHandling(SendBoxComponent, props),
-      MapToSendBoxProps
-    );
-  }, []);
-  const TypingIndicator = useMemo(() => {
-    return connectFuncsToContext(
-      (props: TypingIndicatorProps & ErrorHandlingProps) => WithErrorHandling(TypingIndicatorComponent, props),
-      MapToTypingIndicatorProps
-    );
-  }, []);
 
   // onRenderAvatar is a contoso callback. We need it to support emoji in Sample App. Sample App is currently on
   // components v0 so we're passing the callback at the component level. This might need further refactoring if this
@@ -56,15 +36,19 @@ export const ChatArea = (props: ChatAreaProps): JSX.Element => {
 
   const chatThreadProps = useSelector(chatThreadSelector, selectorConfig);
   const handlers = useHandlers(MessageThread);
+  const sendBoxProps = useSelector(sendBoxSelector, selectorConfig);
+  const sendBoxHandlers = useHandlers(SendBox);
+  const typingIndicatorProps = useSelector(typingIndicatorSelector, selectorConfig);
+
   return (
     <Stack className={chatAreaContainerStyle}>
       <MessageThread {...chatThreadProps} {...handlers} onRenderAvatar={props.onRenderAvatar} />
       <Stack.Item align="center" className={sendBoxParentStyle}>
         <div style={{ paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>
-          <TypingIndicator />
+          <TypingIndicator {...typingIndicatorProps} />
         </div>
         <ErrorBar />
-        <SendBox />
+        <SendBox {...sendBoxProps} {...sendBoxHandlers} />
       </Stack.Item>
     </Stack>
   );

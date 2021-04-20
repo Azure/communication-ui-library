@@ -5,10 +5,10 @@ export const SendBoxExample: () => JSX.Element = () => (
   <FluentThemeProvider>
     <div style={{ width: '31.25rem' }}>
       <SendBox
-        onSendMessage={async () => {
+        onMessageSend={async () => {
           return;
         }}
-        onSendTypingNotification={async () => {
+        onTyping={async () => {
           return;
         }}
       />

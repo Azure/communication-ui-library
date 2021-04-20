@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Updated onMessageSend handler for SendBox. Added selector for TypingIndicator.",
+  "packageName": "@azure/acs-chat-selector",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
