@@ -63,13 +63,13 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
       this.addCall(call);
     }
     for (const call of event.removed) {
+      stopRenderVideoAll(this._context, this._internalContext, call.id);
       const callSubscriber = this._callSubscribers.get(call);
       if (callSubscriber) {
         callSubscriber.unsubscribe();
         this._callSubscribers.delete(call);
       }
       this._context.setCallEnded(call.id, call.callEndReason);
-      stopRenderVideoAll(this._context, this._internalContext, call.id);
     }
   };
 

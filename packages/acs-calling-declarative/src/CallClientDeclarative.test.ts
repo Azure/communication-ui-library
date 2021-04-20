@@ -1,5 +1,13 @@
 // © Microsoft Corporation. All rights reserved.
-import { Call, CallAgent, CallClient, LocalVideoStream } from '@azure/communication-calling';
+import {
+  Call,
+  CallAgent,
+  CallClient,
+  CreateViewOptions,
+  LocalVideoStream,
+  RemoteVideoStream,
+  VideoStreamRendererView
+} from '@azure/communication-calling';
 import { callClientDeclaratify, DeclarativeCallClient } from './CallClientDeclarative';
 import { getRemoteParticipantKey } from './Converter';
 import {
@@ -16,7 +24,24 @@ import {
 
 mockoutObjectFreeze();
 
-jest.mock('@azure/communication-calling');
+jest.mock('@azure/communication-calling', () => {
+  return {
+    CallClient: jest.fn().mockImplementation(() => {
+      return {};
+    }),
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    VideoStreamRenderer: jest.fn().mockImplementation((videoStream: LocalVideoStream | RemoteVideoStream) => {
+      return {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        createView: (options?: CreateViewOptions) => {
+          return Promise.resolve<VideoStreamRendererView>({} as VideoStreamRendererView);
+        },
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        dispose: () => {}
+      };
+    })
+  };
+});
 
 const mockCallId = 'a';
 const mockCallId2 = 'b';
@@ -479,5 +504,159 @@ describe('declarative call client', () => {
       testData.declarativeCallClient.state.calls.get(mockCallId)?.remoteParticipantsEnded.get(participantKey)
         ?.callEndReason?.code
     ).toBe(1);
+  });
+
+  test('should render the stream and add to state when startRenderVideo is called', async () => {
+    const testData = {} as TestData;
+    createClientAndAgentMocks(testData);
+    createDeclarativeClient(testData);
+    await createMockCallAndEmitCallsUpdated(testData);
+    await createMockParticipantAndEmitParticipantUpdated(testData);
+
+    const mockRemoteVideoStream = createMockRemoteVideoStream(false);
+    mockRemoteVideoStream.id = 1;
+    testData.mockRemoteParticipant.videoStreams = [mockRemoteVideoStream];
+    testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
+      added: [mockRemoteVideoStream],
+      removed: []
+    });
+
+    await waitWithBreakCondition(
+      () =>
+        testData.declarativeCallClient.state.calls
+          .get(mockCallId)
+          ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))?.videoStreams
+          .size !== 0
+    );
+
+    testData.declarativeCallClient.startRenderVideo(mockCallId, 1);
+
+    await waitWithBreakCondition(
+      () =>
+        testData.declarativeCallClient.state.calls
+          .get(mockCallId)
+          ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
+          ?.videoStreams.get(1)?.videoStreamRendererView !== undefined
+    );
+
+    expect(
+      testData.declarativeCallClient.state.calls
+        .get(mockCallId)
+        ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
+        ?.videoStreams.get(1)?.videoStreamRendererView
+    ).toBeDefined();
+  });
+
+  test('should stop rendering the stream and remove from state when stopRenderVideo is called', async () => {
+    const testData = {} as TestData;
+    createClientAndAgentMocks(testData);
+    createDeclarativeClient(testData);
+    await createMockCallAndEmitCallsUpdated(testData);
+    await createMockParticipantAndEmitParticipantUpdated(testData);
+
+    const mockRemoteVideoStream = createMockRemoteVideoStream(false);
+    mockRemoteVideoStream.id = 1;
+    testData.mockRemoteParticipant.videoStreams = [mockRemoteVideoStream];
+    testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
+      added: [mockRemoteVideoStream],
+      removed: []
+    });
+
+    await waitWithBreakCondition(
+      () =>
+        testData.declarativeCallClient.state.calls
+          .get(mockCallId)
+          ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))?.videoStreams
+          .size !== 0
+    );
+
+    testData.declarativeCallClient.startRenderVideo(mockCallId, 1);
+
+    await waitWithBreakCondition(
+      () =>
+        testData.declarativeCallClient.state.calls
+          .get(mockCallId)
+          ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
+          ?.videoStreams.get(1)?.videoStreamRendererView !== undefined
+    );
+
+    expect(
+      testData.declarativeCallClient.state.calls
+        .get(mockCallId)
+        ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
+        ?.videoStreams.get(1)?.videoStreamRendererView
+    ).toBeDefined();
+
+    testData.declarativeCallClient.stopRenderVideo(mockCallId, 1);
+
+    await waitWithBreakCondition(
+      () =>
+        testData.declarativeCallClient.state.calls
+          .get(mockCallId)
+          ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
+          ?.videoStreams.get(1)?.videoStreamRendererView === undefined
+    );
+
+    expect(
+      testData.declarativeCallClient.state.calls
+        .get(mockCallId)
+        ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
+        ?.videoStreams.get(1)?.videoStreamRendererView
+    ).not.toBeDefined();
+  });
+
+  test('should stop rendering the stream and remove from state when call ends', async () => {
+    const testData = {} as TestData;
+    createClientAndAgentMocks(testData);
+    createDeclarativeClient(testData);
+    await createMockCallAndEmitCallsUpdated(testData);
+    await createMockParticipantAndEmitParticipantUpdated(testData);
+
+    const mockRemoteVideoStream = createMockRemoteVideoStream(false);
+    mockRemoteVideoStream.id = 1;
+    testData.mockRemoteParticipant.videoStreams = [mockRemoteVideoStream];
+    testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
+      added: [mockRemoteVideoStream],
+      removed: []
+    });
+
+    await waitWithBreakCondition(
+      () =>
+        testData.declarativeCallClient.state.calls
+          .get(mockCallId)
+          ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))?.videoStreams
+          .size !== 0
+    );
+
+    testData.declarativeCallClient.startRenderVideo(mockCallId, 1);
+
+    await waitWithBreakCondition(
+      () =>
+        testData.declarativeCallClient.state.calls
+          .get(mockCallId)
+          ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
+          ?.videoStreams.get(1)?.videoStreamRendererView !== undefined
+    );
+
+    expect(
+      testData.declarativeCallClient.state.calls
+        .get(mockCallId)
+        ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
+        ?.videoStreams.get(1)?.videoStreamRendererView
+    ).toBeDefined();
+
+    testData.mockCallAgent.calls = [];
+    testData.mockCallAgent.emit('callsUpdated', {
+      added: [],
+      removed: [testData.mockCall]
+    });
+
+    await waitWithBreakCondition(() => testData.declarativeCallClient.state.calls.size === 0);
+
+    expect(
+      testData.declarativeCallClient.state.callsEnded[0]?.remoteParticipants
+        .get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
+        ?.videoStreams.get(1)?.videoStreamRendererView
+    ).not.toBeDefined();
   });
 });
