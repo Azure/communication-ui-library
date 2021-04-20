@@ -14,13 +14,13 @@ export const MessageThreadWithCustomMessagesExample: () => JSX.Element = () => {
   // As an example, we want to use render custom message as a Divider.
   const onRenderMessage = (
     message: SystemMessage | CustomMessage | ChatMessage,
-    defaultOnRender?: DefaultMessageRendererType
+    defaultOnRender: DefaultMessageRendererType
   ): JSX.Element => {
     if (message.type === 'custom') {
       return <Divider content={message.payload.content} color="brand" important />;
-    } else {
-      return defaultOnRender ? defaultOnRender(message) : <></>;
     }
+
+    return defaultOnRender(message);
   };
 
   return (

@@ -18,6 +18,15 @@ const MessageThreadWithSystemMessagesExampleText = require('!!raw-loader!./snipp
 import { MessageThreadWithCustomMessagesExample } from './snippets/MessageThreadWithCustomMessagesExample.snippet';
 const MessageThreadWithCustomMessagesExampleText = require('!!raw-loader!./snippets/MessageThreadWithCustomMessagesExample.snippet.tsx')
   .default;
+import { MessageThreadWithCustomizedChatContainerExample } from './snippets/MessageThreadWithCustomizedChatContainerExample.snippet';
+const MessageThreadWithCustomizedChatContainerExampleText = require('!!raw-loader!./snippets/MessageThreadWithCustomizedChatContainerExample.snippet.tsx')
+  .default;
+import { MessageThreadWithCustomizedMessageContainerExample } from './snippets/MessageThreadWithCustomizedMessageContainerExample.snippet';
+const MessageThreadWithCustomizedMessageContainerExampleText = require('!!raw-loader!./snippets/MessageThreadWithCustomizedMessageContainerExample.snippet.tsx')
+  .default;
+import { MessageThreadWithCustomizedReadReceiptExample } from './snippets/MessageThreadWithCustomizedReadReceiptExample.snippet';
+const MessageThreadWithCustomizedReadReceiptExampleText = require('!!raw-loader!./snippets/MessageThreadWithCustomizedReadReceiptExample.snippet.tsx')
+  .default;
 
 export const getDocs: () => JSX.Element = () => {
   return (
@@ -43,17 +52,41 @@ export const getDocs: () => JSX.Element = () => {
       <Source code={MessageThreadWithSystemMessagesExampleText} />
       <Heading>Custom Message</Heading>
       <Description>
-        The example below shows how to render a `custom` message with `onRenderCustomMessage` in `MessageThread`
+        The example below shows how to render a `custom` message with `onRenderMessage` in `MessageThread`
       </Description>
       <Canvas>
         <MessageThreadWithCustomMessagesExample />
       </Canvas>
       <Source code={MessageThreadWithCustomMessagesExampleText} />
+      <Heading>Messages with Customized Chat Container</Heading>
+      <Description>
+        The example below shows how to render a `custom` chat container with `styles.chatContainer` in `MessageThread`
+      </Description>
+      <Canvas>
+        <MessageThreadWithCustomizedChatContainerExample />
+      </Canvas>
+      <Source code={MessageThreadWithCustomizedChatContainerExampleText} />
+      <Heading>Messages with Customized Message Container</Heading>
+      <Description>
+        The example below shows how to render a `custom` chat container with `onRenderMessage` in `MessageThread`
+      </Description>
+      <Canvas>
+        <MessageThreadWithCustomizedMessageContainerExample />
+      </Canvas>
+      <Source code={MessageThreadWithCustomizedMessageContainerExampleText} />
       <Heading>Default Read Receipt</Heading>
       <Canvas>
         <MessageThreadWithReadReceiptExample />
       </Canvas>
       <Source code={MessageThreadWithReadReceiptExampleText} />
+      <Heading>Cutomized Read Receipt</Heading>
+      <Description>
+        The example below shows how to render a `custom` read receipt with `onRenderReadReceipt` in `MessageThread`
+      </Description>
+      <Canvas>
+        <MessageThreadWithCustomizedReadReceiptExample />
+      </Canvas>
+      <Source code={MessageThreadWithCustomizedReadReceiptExampleText} />
       <Heading>Customized Avatar</Heading>
       <Canvas>
         <MessageThreadWithCustomAvatarExample />

@@ -63,13 +63,13 @@ export const MessageThreadComponent: () => JSX.Element = () => {
 
   const onRenderMessage = (
     message: SystemMessage | CustomMessage | ChatMessage,
-    defaultOnRender?: DefaultMessageRendererType
+    defaultOnRender: DefaultMessageRendererType
   ): JSX.Element => {
     if (message.type === 'custom') {
       return <Divider content={message.payload.content} color="brand" important />;
-    } else {
-      return defaultOnRender ? defaultOnRender(message) : <></>;
     }
+
+    return defaultOnRender(message);
   };
 
   return (

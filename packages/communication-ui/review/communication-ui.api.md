@@ -76,7 +76,7 @@ export const DARK = "Dark";
 export const darkTheme: PartialTheme;
 
 // @public (undocumented)
-export type DefaultMessageRendererType = (message: ChatMessage | SystemMessage | CustomMessage) => JSX.Element;
+export type DefaultMessageRendererType = (message: ChatMessage | SystemMessage | CustomMessage, messageContainerStyle?: ComponentSlotStyle) => JSX.Element;
 
 // @public
 export const ErrorBar: (props: ErrorBarProps) => JSX.Element | null;
@@ -200,7 +200,7 @@ export type MessageThreadProps = {
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousMessages?: () => void;
     onRenderLoadPreviousMessagesButton?: (loadPreviousMessagesButton: LoadPreviousMessagesButtonProps) => JSX.Element;
-    onRenderMessage?: (message: ChatMessage | SystemMessage | CustomMessage, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+    onRenderMessage?: (message: ChatMessage | SystemMessage | CustomMessage, defaultOnRender: DefaultMessageRendererType) => JSX.Element;
 };
 
 // @public (undocumented)

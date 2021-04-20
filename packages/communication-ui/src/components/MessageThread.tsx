@@ -166,7 +166,8 @@ const DefaultLoadPreviousMessagesButtonRenderer = (props: LoadPreviousMessagesBu
 };
 
 const DefaultChatMessageRenderer: DefaultMessageRendererType = (
-  message: ChatMessage | SystemMessage | CustomMessage
+  message: ChatMessage | SystemMessage | CustomMessage,
+  messageContainerStyle?: ComponentSlotStyle
 ) => {
   const payload: ChatMessagePayload = message.payload;
   const liveAuthor = `${payload.senderDisplayName} says `;
@@ -178,7 +179,7 @@ const DefaultChatMessageRenderer: DefaultMessageRendererType = (
   );
   return (
     <Chat.Message
-      styles={chatMessageStyle}
+      styles={!!messageContainerStyle ? messageContainerStyle : chatMessageStyle}
       content={messageContentItem}
       author={payload.senderDisplayName}
       mine={payload.mine}
@@ -187,10 +188,14 @@ const DefaultChatMessageRenderer: DefaultMessageRendererType = (
   );
 };
 
-export type DefaultMessageRendererType = (message: ChatMessage | SystemMessage | CustomMessage) => JSX.Element;
+export type DefaultMessageRendererType = (
+  message: ChatMessage | SystemMessage | CustomMessage,
+  messageContainerStyle?: ComponentSlotStyle
+) => JSX.Element;
 
 const DefaultSystemMessageRenderer: DefaultMessageRendererType = (
-  message: ChatMessage | SystemMessage | CustomMessage
+  message: ChatMessage | SystemMessage | CustomMessage,
+  messageContainerStyle?: ComponentSlotStyle
 ) => {
   if (message.type === 'system') {
     const payload: SystemMessagePayload = message.payload;
@@ -269,7 +274,7 @@ export type MessageThreadProps = {
    */
   onRenderMessage?: (
     message: ChatMessage | SystemMessage | CustomMessage,
-    defaultOnRender?: DefaultMessageRendererType
+    defaultOnRender: DefaultMessageRendererType
   ) => JSX.Element;
 };
 
@@ -459,8 +464,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
 
   // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp need to be regenerated)
   const defaultChatMessageRenderer = useCallback(
-    (message: ChatMessage) => {
-      return DefaultChatMessageRenderer(message);
+    (message: ChatMessage, messageContainerStyle?: ComponentSlotStyle) => {
+      return DefaultChatMessageRenderer(message, messageContainerStyle);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [new Date().toDateString()]
@@ -524,7 +529,14 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             };
           } else {
             // We do not handle custom type message by default, users can handle custom type by using onRenderMessage function.
-            const customMessageComponent = onRenderMessage === undefined ? <></> : onRenderMessage(message);
+            const customMessageComponent =
+              onRenderMessage === undefined ? (
+                <></>
+              ) : (
+                onRenderMessage(message, () => {
+                  return <></>;
+                })
+              );
             return {
               children: customMessageComponent,
               key: index
