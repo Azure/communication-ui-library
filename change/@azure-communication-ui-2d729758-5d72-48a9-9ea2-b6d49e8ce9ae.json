@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Updated onMessageSend handler. Updated prop names in SendBox. Updated props and added selector for TypingIndicator.",
+  "packageName": "@azure/communication-ui",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -59,10 +59,10 @@ function CustomTypingIndicator() {
 `;
 
 const ExampleTypingIndicator: () => JSX.Element = () => {
-  const oneTypingUsers = [{ displayName: 'User1', prefixImageUrl: '' }];
+  const oneTypingUsers = [{ userId: '1', displayName: 'User1' }];
   const twoTypingUsers = [
-    { displayName: 'User1', prefixImageUrl: '' },
-    { displayName: 'User2', prefixImageUrl: '' }
+    { userId: '1', displayName: 'User1' },
+    { userId: '2', displayName: 'User2' }
   ];
 
   return (

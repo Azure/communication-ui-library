@@ -50,11 +50,11 @@ export interface SendBoxProps {
   /**
    * Optional callback called when message is sent
    */
-  onSendMessage?: (messageContent: string) => Promise<void>;
+  onMessageSend?: (content: string) => Promise<void>;
   /**
    * Optional callback called when user is typing
    */
-  onSendTypingNotification?: () => Promise<void>;
+  onTyping?: () => Promise<void>;
   /**
    * Optional callback to render system message below the SendBox.
    * @defaultValue MessageBar
@@ -95,15 +95,7 @@ const defaultOnRenderSystemMessage = (
  * can also be shown below the `SendBox`.
  */
 export const SendBox = (props: SendBoxProps): JSX.Element => {
-  const {
-    disabled,
-    systemMessage,
-    supportNewline,
-    onSendMessage,
-    onSendTypingNotification,
-    onRenderIcon,
-    styles
-  } = props;
+  const { disabled, systemMessage, supportNewline, onMessageSend, onTyping, onRenderIcon, styles } = props;
 
   const [textValue, setTextValue] = useState('');
   const [textValueOverflow, setTextValueOverflow] = useState(false);
@@ -120,7 +112,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     }
     // we dont want to send empty messages including spaces, newlines, tabs
     if (!EMPTY_MESSAGE_REGEX.test(textValue)) {
-      onSendMessage && onSendMessage(textValue);
+      onMessageSend && onMessageSend(textValue);
       setTextValue('');
     }
     sendTextFieldRef.current?.focus();
@@ -157,7 +149,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
               ev.preventDefault();
               sendMessageOnClick();
             }
-            onSendTypingNotification && onSendTypingNotification();
+            onTyping && onTyping();
           }}
           styles={concatStyleSets(TextFieldStyleProps, { fieldGroup: styles?.textField })}
         />
