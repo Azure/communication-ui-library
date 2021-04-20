@@ -33,12 +33,11 @@ const filterTypingIndicators = (typingIndicators: TypingIndicator[], userId: str
 };
 
 const convertSdkTypingIndicatorsToWebUiChatParticipants = (
-  typingIndicators: TypingIndicator[],
-  participants: Map<string, ChatParticipant>
+  typingIndicators: TypingIndicator[]
 ): WebUiChatParticipant[] => {
   return typingIndicators.map((typingIndicator) => ({
     userId: typingIndicator.sender.user.communicationUserId,
-    displayName: participants.get(typingIndicator.sender.user.communicationUserId)?.displayName ?? 'unknown'
+    displayName: typingIndicator.sender.displayName
   }));
 };
 
@@ -53,8 +52,7 @@ export const typingIndicatorSelector = reselect.createSelector(
     }
 
     const typingUsers: WebUiChatParticipant[] = convertSdkTypingIndicatorsToWebUiChatParticipants(
-      filteredTypingIndicators,
-      participants
+      filteredTypingIndicators
     );
 
     return { typingUsers };

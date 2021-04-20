@@ -47,7 +47,6 @@ dependencies:
   '@types/cors': 2.8.10
   '@types/express': 4.17.11
   '@types/http-errors': 1.8.0
-  '@types/jest': 26.0.20
   '@types/json-stringify-safe': 5.0.0
   '@types/morgan': 1.9.2
   '@types/node': 14.14.35
@@ -5007,6 +5006,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-9zi2Y+5USJRxd0FsahERhBwlcvFh6D2GLQnY2FH2BzK8J9s9omvNHIbvABwIluXa0fD8XVKMLTO0aOEuUfACAA==
+  /@types/jest/26.0.22:
+    dependencies:
+      jest-diff: 26.6.2
+      pretty-format: 26.6.2
+    dev: false
+    resolution:
+      integrity: sha512-eeWwWjlqxvBxc4oQdkueW5OF/gtfSceKk4OnOAGlUSwS/liBRtZppbJuz1YkgbrbfGOoeBHun9fOvXnjNwrSOw==
   /@types/json-schema/7.0.7:
     dev: false
     resolution:
@@ -20219,7 +20225,7 @@ packages:
       '@azure/communication-common': 1.0.0
       '@microsoft/api-documenter': 7.12.12
       '@microsoft/api-extractor': 7.13.2
-      '@types/jest': 26.0.20
+      '@types/jest': 26.0.22
       '@typescript-eslint/eslint-plugin': 4.18.0_e9e1aa536ec0b34179456e3b69e4968e
       '@typescript-eslint/parser': 4.18.0_eslint@7.22.0+typescript@4.1.5
       copyfiles: 2.4.1
@@ -20251,7 +20257,7 @@ packages:
       '@azure/core-paging': 1.1.3
       '@microsoft/api-documenter': 7.12.12
       '@microsoft/api-extractor': 7.13.2
-      '@types/jest': 26.0.20
+      '@types/jest': 26.0.22
       '@typescript-eslint/eslint-plugin': 4.18.0_e9e1aa536ec0b34179456e3b69e4968e
       '@typescript-eslint/parser': 4.18.0_eslint@7.22.0+typescript@4.1.5
       copyfiles: 2.4.1
@@ -20283,6 +20289,7 @@ packages:
       '@azure/communication-signaling-2': /@azure/communication-signaling/1.0.0-beta.2
       '@microsoft/api-documenter': 7.12.12
       '@microsoft/api-extractor': 7.13.2
+      '@types/jest': 26.0.22
       '@types/react': 16.14.5
       copyfiles: 2.4.1
       eslint: 7.22.0
@@ -20301,7 +20308,7 @@ packages:
     peerDependencies:
       prettier: '*'
     resolution:
-      integrity: sha512-/iCBUWZs2hQN3mVwclC7/eXBC4j94SQYcJJU32XCbffl9iIJR8DpfRAaK1wqUrfWuuyOHXz7djiUHXzsqtJktg==
+      integrity: sha512-lC+SwqFME8wS8hj0aRA8bjRo1kHxsIYC1B2KV2YCycj5nT1zvd5Jgi3hl7GvSJclkeItnv19EGU3kmVA62ianQ==
       tarball: file:projects/acs-chat-selector.tgz
     version: 0.0.0
   file:projects/build-tools.tgz_typescript@4.1.5:
@@ -20337,7 +20344,7 @@ packages:
       '@fluentui/react-northstar': 0.51.7_b0d7ca8a0459a1df1ff516252688d92a
       '@fluentui/react-theme-provider': 0.18.5_b0d7ca8a0459a1df1ff516252688d92a
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
-      '@types/jest': 26.0.20
+      '@types/jest': 26.0.22
       '@types/node': 14.14.35
       '@types/preval.macro': 3.0.0
       '@types/react': 16.14.5
@@ -20404,7 +20411,7 @@ packages:
       '@fluentui/react-theme-provider': 0.18.5_b0d7ca8a0459a1df1ff516252688d92a
       '@testing-library/jest-dom': 5.11.9
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
-      '@types/jest': 26.0.20
+      '@types/jest': 26.0.22
       '@types/json-stringify-safe': 5.0.0
       '@types/preval.macro': 3.0.0
       '@types/react': 16.14.5
@@ -20564,7 +20571,7 @@ packages:
       '@fluentui/react-northstar': 0.51.7_b0d7ca8a0459a1df1ff516252688d92a
       '@fluentui/react-theme-provider': 0.18.5_b0d7ca8a0459a1df1ff516252688d92a
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
-      '@types/jest': 26.0.20
+      '@types/jest': 26.0.22
       '@types/node': 14.14.35
       '@types/preval.macro': 3.0.0
       '@types/react': 16.14.5
@@ -20630,7 +20637,7 @@ packages:
       '@types/cors': 2.8.10
       '@types/express': 4.17.11
       '@types/http-errors': 1.8.0
-      '@types/jest': 26.0.20
+      '@types/jest': 26.0.22
       '@types/morgan': 1.9.2
       '@types/node': 14.14.35
       '@types/supertest': 2.0.10
@@ -20701,7 +20708,7 @@ packages:
       '@testing-library/jest-dom': 5.11.9
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
       '@types/classnames': 2.2.11
-      '@types/jest': 26.0.20
+      '@types/jest': 26.0.22
       '@types/json-stringify-safe': 5.0.0
       '@types/node': 14.14.35
       '@types/react': 16.14.5
@@ -20812,7 +20819,6 @@ specifiers:
   '@types/cors': ^2.8.8
   '@types/express': ^4.17.8
   '@types/http-errors': ^1.8.0
-  '@types/jest': ^26.0.20
   '@types/json-stringify-safe': ^5.0.0
   '@types/morgan': ^1.9.2
   '@types/node': ^14.14.10
