@@ -48,7 +48,7 @@
   },
   "dependencies": {
     "@azure/communication-administration": "1.0.0-beta.3",
-    "@azure/communication-chat": "1.0.0-beta.3",
+    "@azure/communication-chat": "1.0.0-beta.4",
     "@azure/communication-common": "1.0.0-beta.3",
     "@azure/communication-signaling": "1.0.0-beta.1",
     "@azure/communication-ui": "1.0.0-beta",
@@ -68,7 +68,8 @@
     "react-linkify": "^1.0.0-alpha",
     "react-scripts": "^4.0.2",
     "@azure/acs-chat-declarative": "~1.0.0-beta",
-    "@azure/acs-chat-selector": "~1.0.0-beta"
+    "@azure/acs-chat-selector": "~1.0.0-beta",
+    "reselect": "~4.0.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.4",

@@ -33,18 +33,36 @@ const spinnerLabel = 'Initializing call client...';
 
 const GroupCallComponent = (props: GroupCallProps): JSX.Element => {
   const [selectedPane, setSelectedPane] = useState(CommandPanelTypes.None);
-  const { isCallInitialized, callState, isLocalScreenSharingOn, groupId, screenWidth, endCallHandler } = props;
+  const {
+    callAgentSubscribed,
+    isCallInitialized,
+    callState,
+    isLocalScreenSharingOn,
+    groupId,
+    screenWidth,
+    endCallHandler,
+    joinCall
+  } = props;
   const ErrorBar = connectFuncsToContext(ErrorBarComponent, MapToErrorBarProps);
+  const [joinCallCalled, setJoinCallCalled] = useState(false);
 
   useEffect(() => {
     if (isInCall(callState)) {
       document.title = `${groupId} group call sample`;
+    } else {
+      if (callAgentSubscribed && !joinCallCalled) {
+        // Need refactor: We might not have joined call yet if there is no Call object, See comment in CallingProvider
+        // for more details and useCallAgent
+        joinCall(groupId);
+        setJoinCallCalled(true);
+      }
     }
-  }, [callState, groupId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [callState, groupId, callAgentSubscribed]);
 
   return (
     <>
-      {isCallInitialized ? (
+      {isCallInitialized && isInCall(callState) ? (
         <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow>
           <Stack.Item styles={headerStyles}>
             <Header

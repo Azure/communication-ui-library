@@ -445,4 +445,34 @@ describe('declarative call client', () => {
         ?.videoStreams[0].isAvailable
     ).toBe(true);
   });
+
+  test('should move participant to ended when participant is removed', async () => {
+    const testData = {} as TestData;
+    createClientAndAgentMocks(testData);
+    createDeclarativeClient(testData);
+    await createMockCallAndEmitCallsUpdated(testData);
+    await createMockParticipantAndEmitParticipantUpdated(testData);
+
+    await waitWithBreakCondition(
+      () => testData.declarativeCallClient.state.calls.get(mockCallId)?.remoteParticipants.size !== 0
+    );
+
+    expect(testData.declarativeCallClient.state.calls.get(mockCallId)?.remoteParticipants.size).toBe(1);
+
+    testData.mockCall.remoteParticipants = [];
+    testData.mockRemoteParticipant.callEndReason = { code: 1 };
+    testData.mockCall.emit('remoteParticipantsUpdated', { added: [], removed: [testData.mockRemoteParticipant] });
+
+    await waitWithBreakCondition(
+      () => testData.declarativeCallClient.state.calls.get(mockCallId)?.remoteParticipants.size === 0
+    );
+
+    const participantKey = getRemoteParticipantKey(testData.mockRemoteParticipant.identifier);
+    expect(testData.declarativeCallClient.state.calls.get(mockCallId)?.remoteParticipants.size).toBe(0);
+    expect(testData.declarativeCallClient.state.calls.get(mockCallId)?.remoteParticipantsEnded.size).toBe(1);
+    expect(
+      testData.declarativeCallClient.state.calls.get(mockCallId)?.remoteParticipantsEnded.get(participantKey)
+        ?.callEndReason?.code
+    ).toBe(1);
+  });
 });

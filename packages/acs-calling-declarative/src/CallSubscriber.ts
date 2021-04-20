@@ -104,6 +104,18 @@ export class CallSubscriber {
     event.removed.forEach((participant: RemoteParticipant) => {
       this.removeParticipantListener(participant);
     });
+
+    // Remove any added participants from remoteParticipantsEnded if they are there and add any removed participants to
+    // remoteParticipantsEnded.
+    this._context.setCallRemoteParticipantsEnded(
+      this._callIdRef.callId,
+      event.removed.map(convertSdkParticipantToDeclarativeParticipant),
+      event.added.map((participant: RemoteParticipant) => {
+        return getRemoteParticipantKey(participant.identifier);
+      })
+    );
+
+    // Add added participants to remoteParticipants and remove removed participants from remoteParticipants.
     this._context.setCallRemoteParticipants(
       this._callIdRef.callId,
       event.added.map(convertSdkParticipantToDeclarativeParticipant),

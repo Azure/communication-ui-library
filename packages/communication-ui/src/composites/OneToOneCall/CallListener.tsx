@@ -1,5 +1,5 @@
 // © Microsoft Corporation. All rights reserved.
-import { Call } from '@azure/communication-calling';
+import { IncomingCall } from '@azure/communication-calling';
 import { Stack } from '@fluentui/react';
 import React, { useEffect, useState } from 'react';
 import { IncomingCallToast, IncomingCallToastProps } from './IncomingCallAlerts';
@@ -11,12 +11,12 @@ export type IncomingCallProps = {
   onIncomingCallRejected?: () => void;
 };
 
-const IncomingCallAlertACSWrapper = (props: IncomingCallToastProps & { call: Call }): JSX.Element => {
+const IncomingCallAlertACSWrapper = (props: IncomingCallToastProps & { call: IncomingCall }): JSX.Element => {
   const { call } = props;
   const [callerName, setCallerName] = useState<string | undefined>(undefined);
 
   useEffect(() => {
-    setCallerName(call.remoteParticipants[0]?.displayName);
+    setCallerName(call.callerInfo.displayName);
   }, [call]);
 
   return <IncomingCallToast {...props} callerName={callerName} />;

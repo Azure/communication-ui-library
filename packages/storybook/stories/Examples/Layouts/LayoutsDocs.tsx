@@ -2,11 +2,11 @@
 
 import { Canvas, Description, Heading, Source, Title, SourceState } from '@storybook/addon-docs/blocks';
 import React from 'react';
-import { ScreenShareLayoutExample } from './examples/ScreenShareLayout.example';
-import { OneToOneCallLayoutExample } from './examples/OneToOneCallLayout.example';
+import { ScreenShareLayoutExample } from './snippets/ScreenShareLayout.snippet';
+import { OneToOneCallLayoutExample } from './snippets/OneToOneCallLayout.snippet';
 
-const ScreenShareLayoutExampleText = require('!!raw-loader!./examples/ScreenShareLayout.example.tsx').default;
-const OneToOneCallLayoutExampleText = require('!!raw-loader!./examples/OneToOneCallLayout.example.tsx').default;
+const ScreenShareLayoutExampleText = require('!!raw-loader!./snippets/ScreenShareLayout.snippet.tsx').default;
+const OneToOneCallLayoutExampleText = require('!!raw-loader!./snippets/OneToOneCallLayout.snippet.tsx').default;
 
 export const getDocs: () => JSX.Element = () => {
   return (
