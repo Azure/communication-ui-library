@@ -42,13 +42,20 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
             backgroundColor: fluentUITheme?.palette?.white
           },
           ChatMessage: {
-            authorColor: fluentUITheme?.palette?.neutralDark,
-            contentColor: fluentUITheme?.palette?.neutralDark,
-            backgroundColor: fluentUITheme?.palette?.neutralLight,
+            authorColor: fluentUITheme?.palette?.neutralPrimary,
+            contentColor: fluentUITheme?.palette?.neutralPrimary,
+            backgroundColor: fluentUITheme?.palette?.neutralLighter,
             backgroundColorMine: fluentUITheme?.palette?.themeLight
           }
-          // add more northstar components to align with Fluent UI theme
+        },
+        componentStyles: {
+          ChatMessage: {
+            timestamp: {
+              WebkitTextFillColor: fluentUITheme?.palette?.neutralSecondary
+            }
+          }
         }
+        // add more northstar components to align with Fluent UI theme
       })
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps

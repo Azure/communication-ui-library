@@ -3,7 +3,7 @@
 import { Call, CallState, RemoteParticipant } from '@azure/communication-calling';
 import { useCallingContext, useCallContext } from '../providers';
 import { ParticipantStream } from '../types/ParticipantStream';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getACSId } from '../utils';
 
 export type UseCallAgentType = {
@@ -16,7 +16,7 @@ export type UseCallAgentType = {
   screenShareStream: ParticipantStream | undefined;
 };
 
-export default (): void => {
+export default (): boolean => {
   const { callAgent } = useCallingContext();
   const {
     call,
@@ -28,10 +28,12 @@ export default (): void => {
     setLocalScreenShare
   } = useCallContext();
 
+  const [subscribed, setSubscribed] = useState(false);
+
   useEffect(() => {
     const subscribeToParticipant = (participant: RemoteParticipant, call: Call): void => {
       const userId = getACSId(participant.identifier);
-      participant.on('participantStateChanged', () => {
+      participant.on('stateChanged', () => {
         console.log('participant stateChanged', userId, participant.state);
         setParticipants([...call.remoteParticipants.values()]);
       });
@@ -54,10 +56,10 @@ export default (): void => {
 
       participant.on('videoStreamsUpdated', (e): void => {
         e.added.forEach((addedStream) => {
-          if (addedStream.type === 'Video') {
+          if (addedStream.mediaStreamType === 'Video') {
             return;
           }
-          addedStream.on('availabilityChanged', () => {
+          addedStream.on('isAvailableChanged', () => {
             if (addedStream.isAvailable) {
               setScreenShareStream({ stream: addedStream, user: participant });
             } else {
@@ -80,13 +82,8 @@ export default (): void => {
 
     const onCallsUpdated = (e: { added: Call[]; removed: Call[] }): void => {
       e.added.forEach((addedCall) => {
-        if (call && addedCall.isIncoming) {
-          addedCall.reject();
-          return;
-        }
-
         setCall(addedCall);
-        addedCall.on('callStateChanged', (): void => {
+        addedCall.on('stateChanged', (): void => {
           setCallState(addedCall.state);
         });
         addedCall.on('remoteParticipantsUpdated', (ev): void => {
@@ -119,9 +116,13 @@ export default (): void => {
       });
     };
 
-    callAgent?.on('callsUpdated', onCallsUpdated);
+    if (callAgent) {
+      callAgent.on('callsUpdated', onCallsUpdated);
+      setSubscribed(true);
+    }
     return () => {
       callAgent?.off('callsUpdated', onCallsUpdated);
+      setSubscribed(false);
     };
   }, [
     call,
@@ -133,4 +134,8 @@ export default (): void => {
     setLocalScreenShare,
     screenShareStream
   ]);
+
+  // Need refactor: because callAgent is created asynchronously and this useEffect is run asynchronously, any usages
+  // of CallAgent like join/start inbetween it being created and subscribed will not have the event be picked up.
+  return subscribed;
 };

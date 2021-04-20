@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add proxying for Call mute/unmute and Call/IncomingCall/RemoteParticipant CallEndReason states in Declarative Calling.",
+  "packageName": "@azure/acs-calling-declarative",
+  "email": "allenhwang@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -26,7 +26,10 @@ export interface BaseCustomStylesProps {
 }
 
 // @public (undocumented)
-export type ChatMessage = {
+export type ChatMessage = Message<'chat'>;
+
+// @public (undocumented)
+export type ChatMessagePayload = {
     messageId?: string;
     content?: string;
     createdOn?: Date;
@@ -63,11 +66,22 @@ export interface ControlBarProps {
     styles?: BaseCustomStylesProps;
 }
 
+// @public (undocumented)
+export type CustomMessage = Message<'custom'>;
+
+// @public (undocumented)
+export type CustomMessagePayload = {
+    messageId?: string;
+};
+
 // @public
 export const DARK = "Dark";
 
 // @public
 export const darkTheme: PartialTheme;
+
+// @public (undocumented)
+export type DefaultMessageRendererType = (message: ChatMessage | SystemMessage | CustomMessage) => JSX.Element;
 
 // @public
 export const ErrorBar: (props: ErrorBarProps) => JSX.Element | null;
@@ -156,6 +170,12 @@ export interface LoadPreviousMessagesButtonProps {
 }
 
 // @public (undocumented)
+export type Message<T extends MessageTypes> = {
+    type: T;
+    payload: T extends 'chat' ? ChatMessagePayload : T extends 'system' ? SystemMessagePayload : CustomMessagePayload;
+};
+
+// @public (undocumented)
 export enum MessageAttachedStatus {
     // (undocumented)
     BOTTOM = "bottom",
@@ -172,7 +192,7 @@ export const MessageThread: (props: MessageThreadProps) => JSX.Element;
 // @public
 export type MessageThreadProps = {
     userId: string;
-    chatMessages: ChatMessage[];
+    messages: (ChatMessage | SystemMessage | CustomMessage)[];
     styles?: MessageThreadStylesProps;
     disableJumpToNewMessageButton?: boolean;
     disableLoadPreviousMessage?: boolean;
@@ -183,6 +203,7 @@ export type MessageThreadProps = {
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousMessages?: () => void;
     onRenderLoadPreviousMessagesButton?: (loadPreviousMessagesButton: LoadPreviousMessagesButtonProps) => JSX.Element;
+    onRenderMessage?: (message: ChatMessage | SystemMessage | CustomMessage, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
 };
 
 // @public (undocumented)
@@ -193,6 +214,9 @@ export interface MessageThreadStylesProps extends BaseCustomStylesProps {
     newMessageButtonContainer?: IStyle;
     readReceiptContainer?: (mine: boolean) => IStyle;
 }
+
+// @public (undocumented)
+export type MessageTypes = 'chat' | 'system' | 'custom';
 
 // @public
 export const optionsButtonProps: IButtonProps;
@@ -295,6 +319,16 @@ export interface SwitchableFluentThemeProviderProps {
     children: React_2.ReactNode;
     scopeId: string;
 }
+
+// @public (undocumented)
+export type SystemMessage = Message<'system'>;
+
+// @public (undocumented)
+export type SystemMessagePayload = {
+    messageId?: string;
+    content?: string;
+    iconName?: string;
+};
 
 // @public
 export type ThemeMap = {

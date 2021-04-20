@@ -3,16 +3,16 @@
 import React from 'react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
 import { SendBox } from '@azure/communication-ui';
-import { SendBoxExample } from './examples/SendBox.example';
-import { SendBoxWithSystemMessageExample } from './examples/SendBoxWithSystemMessage.example';
-import { CustomIconExample } from './examples/CustomIcon.example';
-import { CustomStylingExample } from './examples/CustomStyling.example';
+import { SendBoxExample } from './snippets/SendBox.snippet';
+import { SendBoxWithSystemMessageExample } from './snippets/SendBoxWithSystemMessage.snippet';
+import { CustomIconExample } from './snippets/CustomIcon.snippet';
+import { CustomStylingExample } from './snippets/CustomStyling.snippet';
 
-const SendBoxExampleText = require('!!raw-loader!./examples/SendBox.example.tsx').default;
-const SendBoxWithSystemMessageExampleText = require('!!raw-loader!./examples/SendBoxWithSystemMessage.example.tsx')
+const SendBoxExampleText = require('!!raw-loader!./snippets/SendBox.snippet.tsx').default;
+const SendBoxWithSystemMessageExampleText = require('!!raw-loader!./snippets/SendBoxWithSystemMessage.snippet.tsx')
   .default;
-const CustomIconExampleText = require('!!raw-loader!./examples/CustomIcon.example.tsx').default;
-const CustomStylingExampleText = require('!!raw-loader!./examples/CustomStyling.example.tsx').default;
+const CustomIconExampleText = require('!!raw-loader!./snippets/CustomIcon.snippet.tsx').default;
+const CustomStylingExampleText = require('!!raw-loader!./snippets/CustomStyling.snippet.tsx').default;
 
 const importStatement = `import { SendBox } from '@azure/communication-ui';`;
 

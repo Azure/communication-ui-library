@@ -9,3 +9,4 @@ export * from './ParticipantStream';
 export * from './TypingUser';
 export * from './CommunicationUiError';
 export * from './CustomStylesProps';
+export * from './DevicePermission';

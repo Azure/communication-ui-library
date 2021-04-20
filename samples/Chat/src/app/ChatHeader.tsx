@@ -17,7 +17,6 @@ import {
 import { SidePanelTypes } from './SidePanel';
 import { copyIconStyle } from './styles/InviteFooter.styles';
 import { WebUiChatParticipant } from '@azure/acs-chat-selector';
-import { existsTopicName } from './utils/utils';
 
 export type ChatHeaderProps = {
   userId: string;
@@ -28,31 +27,6 @@ export type ChatHeaderProps = {
   endChatHandler(): void;
   removeThreadMember?: (userId: string) => Promise<void>;
   updateThreadTopicName: (topicName: string) => Promise<void>;
-};
-
-const generateDefaultHeaderMessage = (participants: WebUiChatParticipant[], userId: string): string => {
-  let header = 'Chat with ';
-
-  const members = participants?.filter(
-    (member: WebUiChatParticipant) => member.userId !== userId && member.displayName
-  );
-
-  if (!members?.length) {
-    header += 'yourself';
-    return header;
-  }
-
-  // if we have at least one other participant we want to show names for the first 3
-  const namedMembers = members.slice(0, 3);
-  header += namedMembers.map((member: WebUiChatParticipant) => member.displayName).join(', ');
-
-  // if we have more than 3 other participants we want to show the number of other participants
-  if (members.length > 3) {
-    const len = members.length - 3;
-    header += ` and ${len} other participant${len === 1 ? '' : 's'}`;
-  }
-
-  return header;
 };
 
 export const ChatHeader = (props: ChatHeaderProps): JSX.Element => {
@@ -81,11 +55,7 @@ export const ChatHeader = (props: ChatHeaderProps): JSX.Element => {
   return (
     <Stack className={chatHeaderContainerStyle} horizontal={true} horizontalAlign="space-between">
       <Stack.Item align="center">
-        <div className={topicNameLabelStyle}>
-          {existsTopicName(props.topicName)
-            ? props.topicName
-            : generateDefaultHeaderMessage(props.chatParticipants, userId)}
-        </div>
+        <div className={topicNameLabelStyle}>{props.topicName}</div>
       </Stack.Item>
       <Stack.Item align="center">
         <Stack horizontal={true}>
