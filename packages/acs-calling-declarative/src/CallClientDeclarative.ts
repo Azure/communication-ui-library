@@ -24,23 +24,24 @@ export interface DeclarativeCallClient extends CallClient {
    */
   onStateChange(handler: (state: CallClientState) => void): void;
   /**
-   * Renders a remote video stream and stores the HTMLElement in state under the remoteParticipant's RemoteVideoStream.
-   * Under the hood calls {@Link @azure/communication-calling#VideoStreamRenderer.createView}.
+   * Renders a {@Link RemoteVideoStream} or {@Link LocalVideoStream} and stores the resulting
+   * {@Link VideoStreamRendererView} under the relevant {@Link RemoteVideoStream} or {@Link LocalVideoStream} in the
+   * state. Under the hood calls {@Link @azure/communication-calling#VideoStreamRenderer.createView}.
    *
    * @param callId - CallId of the Call where the stream to start rendering is contained in.
-   * @param streamId - StreamId of the stream to start rendering.
+   * @param streamId - RemoteVideoStreamId of the stream to stop rendering. If undefined, LocalVideoStream is used.
    * @param options - Options that are passed to the {@Link @azure/communication-calling#VideoStreamRenderer}.
    */
-  startRenderVideo(callId: string, streamId: number, options?: CreateViewOptions): Promise<void>;
+  startRenderVideo(callId: string, streamId?: number, options?: CreateViewOptions): Promise<void>;
   /**
-   * Stops rendering a video stream. Under the hood calls
-   * {@Link @azure/communication-calling#VideoStreamRenderer.dispose}. This will remove the relevant HTMLElement from
-   * the {@Link RemoteVideoStream} in the state.
+   * Stops rendering a {@Link RemoteVideoStream} or {@Link LocalVideoStream} and removes the
+   * {@Link VideoStreamRendererView} from the relevant {@Link RemoteVideoStream} or {@Link LocalVideoStream} in the
+   * state. Under the hood calls {@Link @azure/communication-calling#VideoStreamRenderer.dispose}.
    *
    * @param callId - CallId of the Call where the stream to stop rendering is contained in.
-   * @param streamId - StreamId of the stream to stop rendering.
+   * @param streamId - RemoteVideoStreamId of the stream to stop rendering. If undefined, LocalVideoStream is used.
    */
-  stopRenderVideo(callId: string, streamId: number): void;
+  stopRenderVideo(callId: string, streamId?: number): void;
 }
 
 /**

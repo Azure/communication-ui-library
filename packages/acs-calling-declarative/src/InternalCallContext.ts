@@ -1,5 +1,5 @@
 // © Microsoft Corporation. All rights reserved.
-import { RemoteVideoStream, VideoStreamRenderer } from '@azure/communication-calling';
+import { LocalVideoStream, RemoteVideoStream, VideoStreamRenderer } from '@azure/communication-calling';
 
 /**
  * Contains internal data used between different Declarative components to share data.
@@ -10,12 +10,20 @@ export class InternalCallContext {
   // CallId -> <StreamId, ParticipantKey>
   private _remoteParticipantKeys: Map<string, Map<number, string>>;
   // CallId -> <StreamId, VideoStreamRenderer>
-  private _videoStreamRenderers: Map<string, Map<number, VideoStreamRenderer>>;
+  private _remoteVideoStreamRenderers: Map<string, Map<number, VideoStreamRenderer>>;
+
+  // At the time of writing only one LocalVideoStream is supported by SDK.
+  // CallId -> LocalVideoStream
+  private _localVideoStreams: Map<string, LocalVideoStream>;
+  // CallId -> VideoStreamRenderer
+  private _localVideoStreamRenders: Map<string, VideoStreamRenderer>;
 
   constructor() {
     this._remoteVideoStreams = new Map<string, Map<number, RemoteVideoStream>>();
     this._remoteParticipantKeys = new Map<string, Map<number, string>>();
-    this._videoStreamRenderers = new Map<string, Map<number, VideoStreamRenderer>>();
+    this._remoteVideoStreamRenderers = new Map<string, Map<number, VideoStreamRenderer>>();
+    this._localVideoStreams = new Map<string, LocalVideoStream>();
+    this._localVideoStreamRenders = new Map<string, VideoStreamRenderer>();
   }
 
   public setCallId(newCallId: string, oldCallId: string): void {
@@ -29,6 +37,18 @@ export class InternalCallContext {
     if (remoteParticipants) {
       this._remoteParticipantKeys.delete(oldCallId);
       this._remoteParticipantKeys.set(newCallId, remoteParticipants);
+    }
+
+    const localVideoStream = this._localVideoStreams.get(oldCallId);
+    if (localVideoStream) {
+      this._localVideoStreams.delete(oldCallId);
+      this._localVideoStreams.set(newCallId, localVideoStream);
+    }
+
+    const localVideoStreamRenderer = this._localVideoStreamRenders.get(oldCallId);
+    if (localVideoStreamRenderer) {
+      this._localVideoStreamRenders.delete(oldCallId);
+      this._localVideoStreamRenders.set(newCallId, localVideoStreamRenderer);
     }
   }
 
@@ -52,14 +72,6 @@ export class InternalCallContext {
     const remoteParticipants = this._remoteParticipantKeys.get(callId);
     if (remoteParticipants) {
       return remoteParticipants.get(streamId);
-    }
-    return undefined;
-  }
-
-  public getVideoStreamRenderer(callId: string, streamId: number): VideoStreamRenderer | undefined {
-    const videoStreamRenderers = this._videoStreamRenderers.get(callId);
-    if (videoStreamRenderers) {
-      return videoStreamRenderers.get(streamId);
     }
     return undefined;
   }
@@ -91,7 +103,7 @@ export class InternalCallContext {
       remoteParticipants.delete(streamId);
     }
 
-    const videoStreamRenderers = this._videoStreamRenderers.get(callId);
+    const videoStreamRenderers = this._remoteVideoStreamRenderers.get(callId);
     if (videoStreamRenderers) {
       const videoStreamRenderer = videoStreamRenderers.get(streamId);
       if (videoStreamRenderer) {
@@ -101,25 +113,59 @@ export class InternalCallContext {
     }
   }
 
-  public setVideoStreamRenderer(callId: string, streamId: number, videoStreamRenderer: VideoStreamRenderer): void {
-    let videoStreamRenderers = this._videoStreamRenderers.get(callId);
+  public getRemoteVideoStreamRenderer(callId: string, streamId: number): VideoStreamRenderer | undefined {
+    const videoStreamRenderers = this._remoteVideoStreamRenderers.get(callId);
+    if (videoStreamRenderers) {
+      return videoStreamRenderers.get(streamId);
+    }
+    return undefined;
+  }
+
+  public setRemoteVideoStreamRenderer(
+    callId: string,
+    streamId: number,
+    videoStreamRenderer: VideoStreamRenderer
+  ): void {
+    let videoStreamRenderers = this._remoteVideoStreamRenderers.get(callId);
     if (!videoStreamRenderers) {
       videoStreamRenderers = new Map<number, VideoStreamRenderer>();
-      this._videoStreamRenderers.set(callId, videoStreamRenderers);
+      this._remoteVideoStreamRenderers.set(callId, videoStreamRenderers);
     }
     videoStreamRenderers.set(streamId, videoStreamRenderer);
   }
 
-  public removeVideoStreamRenderer(callId: string, streamId: number): void {
-    const videoStreamRenderers = this._videoStreamRenderers.get(callId);
+  public removeRemoteVideoStreamRenderer(callId: string, streamId: number): void {
+    const videoStreamRenderers = this._remoteVideoStreamRenderers.get(callId);
     if (videoStreamRenderers) {
       videoStreamRenderers.delete(streamId);
     }
   }
 
+  public setLocalVideoStream(callId: string, localVideoStream: LocalVideoStream): void {
+    this._localVideoStreams.set(callId, localVideoStream);
+  }
+
+  public getLocalVideoStream(callId: string): LocalVideoStream | undefined {
+    return this._localVideoStreams.get(callId);
+  }
+
+  public getLocalVideoStreamRenderer(callId: string): VideoStreamRenderer | undefined {
+    return this._localVideoStreamRenders.get(callId);
+  }
+
+  public setLocalVideoStreamRenderer(callId: string, renderer: VideoStreamRenderer): void {
+    this._localVideoStreamRenders.set(callId, renderer);
+  }
+
+  public removeLocalVideoStreamRenderer(callId: string): void {
+    this._localVideoStreamRenders.delete(callId);
+  }
+
   public clearCallRelatedState(): void {
     this._remoteVideoStreams.clear();
     this._remoteParticipantKeys.clear();
-    this._videoStreamRenderers.clear();
+    this._remoteVideoStreamRenderers.clear();
+    this._localVideoStreams.clear();
+    this._localVideoStreamRenders.clear();
   }
 }

@@ -72,7 +72,7 @@ export class CallContext {
           existingCall.direction = call.direction;
           existingCall.isMuted = call.isMuted;
           existingCall.isScreenSharingOn = call.isScreenSharingOn;
-          existingCall.localVideoStreams = call.localVideoStreams;
+          existingCall.localVideoStream = call.localVideoStream;
           existingCall.remoteParticipants = call.remoteParticipants;
           // We don't update the startTime and endTime if we are updating an existing active call
         } else {
@@ -181,12 +181,12 @@ export class CallContext {
     );
   }
 
-  public setCallLocalVideoStreams(callId: string, streams: LocalVideoStream[]): void {
+  public setCallLocalVideoStream(callId: string, stream: LocalVideoStream): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         const call = draft.calls.get(callId);
         if (call) {
-          call.localVideoStreams = streams;
+          call.localVideoStream = stream;
         }
       })
     );
@@ -198,6 +198,19 @@ export class CallContext {
         const call = draft.calls.get(callId);
         if (call) {
           call.isMuted = isMicrophoneMuted;
+        }
+      })
+    );
+  }
+
+  public setLocalVideoStreamRendererView(callId: string, view: VideoStreamRendererView | undefined): void {
+    this.setState(
+      produce(this._state, (draft: CallClientState) => {
+        const call = draft.calls.get(callId);
+        if (call) {
+          if (call.localVideoStream) {
+            call.localVideoStream.videoStreamRendererView = view;
+          }
         }
       })
     );

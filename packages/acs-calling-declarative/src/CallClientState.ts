@@ -167,9 +167,10 @@ export interface Call {
    */
   isScreenSharingOn: boolean;
   /**
-   * Proxy of {@Link @azure/communication-calling#Call.localVideoStreams}.
+   * Proxy of {@Link @azure/communication-calling#Call.localVideoStreams}. At the time of writing the SDK has an array
+   * of LocalVideoStreams however only at most one LocalVideoStream at any time is supported.
    */
-  localVideoStreams: ReadonlyArray<LocalVideoStream>;
+  localVideoStream: LocalVideoStream | undefined;
   /**
    * Proxy of {@Link @azure/communication-calling#Call.remoteParticipants}. Map of identifier
    * {@Link Converter.getRemoteParticipantKey} to {@Link @azure/communication-calling#RemoteParticipant}

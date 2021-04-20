@@ -90,6 +90,7 @@ export function getRemoteParticipantKey(
   return `${identifier.kind}_${id}`;
 }
 
+// Note at the time of writing only one LocalVideoStream is supported by the SDK.
 export function convertSdkCallToDeclarativeCall(call: SdkCall): DeclarativeCall {
   const declarativeRemoteParticipants = new Map<string, DeclarativeRemoteParticipant>();
   call.remoteParticipants.forEach((participant: SdkRemoteParticipant) => {
@@ -106,7 +107,10 @@ export function convertSdkCallToDeclarativeCall(call: SdkCall): DeclarativeCall 
     direction: call.direction,
     isMuted: call.isMuted,
     isScreenSharingOn: call.isScreenSharingOn,
-    localVideoStreams: call.localVideoStreams.map(convertSdkLocalStreamToDeclarativeLocalStream),
+    localVideoStream:
+      call.localVideoStreams.length > 0
+        ? convertSdkLocalStreamToDeclarativeLocalStream(call.localVideoStreams[0])
+        : undefined,
     remoteParticipants: declarativeRemoteParticipants,
     remoteParticipantsEnded: new Map<string, DeclarativeRemoteParticipant>(),
     startTime: new Date(),

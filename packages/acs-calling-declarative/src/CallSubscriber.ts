@@ -51,6 +51,10 @@ export class CallSubscriber {
         []
       );
     }
+    // At time of writing only one LocalVideoStream is supported by SDK.
+    if (this._call.localVideoStreams.length > 0) {
+      this._internalContext.setLocalVideoStream(this._callIdRef.callId, this._call.localVideoStreams[0]);
+    }
   };
 
   public unsubscribe = (): void => {
@@ -127,11 +131,13 @@ export class CallSubscriber {
   };
 
   private localVideoStreamsUpdated = (): void => {
-    // We don't have an easy way to distinguish different local video streams so a quick way to handle this is to create
-    // the local video streams again from scratch. TODO: do we want to be more selective on adding/removing streams?
-    this._context.setCallLocalVideoStreams(
-      this._callIdRef.callId,
-      this._call.localVideoStreams.map(convertSdkLocalStreamToDeclarativeLocalStream)
-    );
+    if (this._call.localVideoStreams.length > 0) {
+      // At time of writing only one LocalVideoStream is supported by SDK.
+      this._context.setCallLocalVideoStream(
+        this._callIdRef.callId,
+        convertSdkLocalStreamToDeclarativeLocalStream(this._call.localVideoStreams[0])
+      );
+      this._internalContext.setLocalVideoStream(this._callIdRef.callId, this._call.localVideoStreams[0]);
+    }
   };
 }

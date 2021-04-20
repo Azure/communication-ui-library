@@ -5,7 +5,8 @@ import {
   CreateViewOptions,
   VideoStreamRendererView,
   LocalVideoStream as SdkLocalVideoStream,
-  RemoteVideoStream as SdkRemoteVideoStream
+  RemoteVideoStream as SdkRemoteVideoStream,
+  VideoDeviceInfo
 } from '@azure/communication-calling';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { Call, LocalVideoStream, RemoteParticipant, RemoteVideoStream } from './CallClientState';
@@ -18,6 +19,21 @@ jest.mock('@azure/communication-calling', () => {
   return {
     CallClient: jest.fn().mockImplementation(() => {
       return {};
+    }),
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    LocalVideoStream: jest.fn().mockImplementation((info: VideoDeviceInfo) => {
+      return {
+        source: () => {
+          return {} as VideoDeviceInfo;
+        },
+        mediaStreamType: () => {
+          return 'Video';
+        },
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        switchSource: (videoDeviceInfo: VideoDeviceInfo) => {
+          return Promise.resolve();
+        }
+      };
     }),
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     VideoStreamRenderer: jest.fn().mockImplementation((videoStream: SdkLocalVideoStream | SdkRemoteVideoStream) => {
@@ -45,7 +61,7 @@ interface TestData {
   internalContext: InternalCallContext;
 }
 
-function setupDefaultTestData(): TestData {
+function createMockCall(mockCallId: string): Call {
   const call: Call = {
     id: mockCallId,
     callerInfo: {} as CallerInfo,
@@ -53,12 +69,16 @@ function setupDefaultTestData(): TestData {
     direction: 'Incoming',
     isMuted: true,
     isScreenSharingOn: false,
-    localVideoStreams: [] as ReadonlyArray<LocalVideoStream>,
+    localVideoStream: undefined,
     remoteParticipants: new Map<string, RemoteParticipant>(),
     remoteParticipantsEnded: new Map<string, RemoteParticipant>(),
     startTime: new Date(),
     endTime: undefined
   };
+  return call;
+}
+
+function addMockRemoteStreamAndParticipant(call: Call, key: string, id: number): void {
   const participant: RemoteParticipant = {
     identifier: {} as CommunicationUserKind,
     state: 'Connected',
@@ -66,23 +86,19 @@ function setupDefaultTestData(): TestData {
     isMuted: true,
     isSpeaking: false
   };
-  call.remoteParticipants.set(mockParticipantKey, participant);
   const remoteVideoStream: RemoteVideoStream = {
-    id: mockStreamId,
+    id: id,
     mediaStreamType: 'Video',
     isAvailable: true,
     videoStreamRendererView: undefined
   };
-  participant.videoStreams.set(mockStreamId, remoteVideoStream);
+  participant.videoStreams.set(id, remoteVideoStream);
+  call.remoteParticipants.set(key, participant);
+}
 
+function createContexts(): TestData {
   const context = new CallContext();
-  context.setCall(call);
-
-  const sdkRemoteVideoStream = createMockRemoteVideoStream(true);
-  sdkRemoteVideoStream.id = mockStreamId;
-
   const internalContext = new InternalCallContext();
-  internalContext.setRemoteVideoStream(mockCallId, mockParticipantKey, sdkRemoteVideoStream);
 
   return {
     context: context,
@@ -90,159 +106,32 @@ function setupDefaultTestData(): TestData {
   };
 }
 
-function setupDefaultTestDataWithMultipleStreams(): TestData {
-  const call: Call = {
-    id: mockCallId,
-    callerInfo: {} as CallerInfo,
-    state: 'None',
-    direction: 'Incoming',
-    isMuted: true,
-    isScreenSharingOn: false,
-    localVideoStreams: [] as ReadonlyArray<LocalVideoStream>,
-    remoteParticipants: new Map<string, RemoteParticipant>(),
-    remoteParticipantsEnded: new Map<string, RemoteParticipant>(),
-    startTime: new Date(),
-    endTime: undefined
-  };
-  const participant: RemoteParticipant = {
-    identifier: {} as CommunicationUserKind,
-    state: 'Connected',
-    videoStreams: new Map<number, RemoteVideoStream>(),
-    isMuted: true,
-    isSpeaking: false
-  };
-  call.remoteParticipants.set(mockParticipantKey, participant);
-  const remoteVideoStream: RemoteVideoStream = {
-    id: mockStreamId,
-    mediaStreamType: 'Video',
-    isAvailable: true,
-    videoStreamRendererView: undefined
-  };
-  participant.videoStreams.set(mockStreamId, remoteVideoStream);
-
-  const participant2: RemoteParticipant = {
-    identifier: {} as CommunicationUserKind,
-    state: 'Connected',
-    videoStreams: new Map<number, RemoteVideoStream>(),
-    isMuted: true,
-    isSpeaking: false
-  };
-  call.remoteParticipants.set(mockParticipantKey2, participant2);
-  const remoteVideoStream2: RemoteVideoStream = {
-    id: mockStreamId,
-    mediaStreamType: 'Video',
-    isAvailable: true,
-    videoStreamRendererView: undefined
-  };
-  participant2.videoStreams.set(mockStreamId2, remoteVideoStream2);
-
-  const context = new CallContext();
-  context.setCall(call);
-
+function addSdkRemoteStream(internalContext: InternalCallContext, callId: string, key: string, id: number): void {
   const sdkRemoteVideoStream = createMockRemoteVideoStream(true);
-  sdkRemoteVideoStream.id = mockStreamId;
-
-  const sdkRemoteVideoStream2 = createMockRemoteVideoStream(true);
-  sdkRemoteVideoStream2.id = mockStreamId2;
-
-  const internalContext = new InternalCallContext();
-  internalContext.setRemoteVideoStream(mockCallId, mockParticipantKey, sdkRemoteVideoStream);
-  internalContext.setRemoteVideoStream(mockCallId, mockParticipantKey2, sdkRemoteVideoStream2);
-
-  return {
-    context: context,
-    internalContext: internalContext
-  };
+  sdkRemoteVideoStream.id = id;
+  internalContext.setRemoteVideoStream(callId, key, sdkRemoteVideoStream);
 }
 
-function setupDefaultTestDataMultipleCalls(): TestData {
-  const call: Call = {
-    id: mockCallId,
-    callerInfo: {} as CallerInfo,
-    state: 'None',
-    direction: 'Incoming',
-    isMuted: true,
-    isScreenSharingOn: false,
-    localVideoStreams: [] as ReadonlyArray<LocalVideoStream>,
-    remoteParticipants: new Map<string, RemoteParticipant>(),
-    remoteParticipantsEnded: new Map<string, RemoteParticipant>(),
-    startTime: new Date(),
-    endTime: undefined
-  };
-  const participant: RemoteParticipant = {
-    identifier: {} as CommunicationUserKind,
-    state: 'Connected',
-    videoStreams: new Map<number, RemoteVideoStream>(),
-    isMuted: true,
-    isSpeaking: false
-  };
-  call.remoteParticipants.set(mockParticipantKey, participant);
-  const remoteVideoStream: RemoteVideoStream = {
-    id: mockStreamId,
-    mediaStreamType: 'Video',
-    isAvailable: true,
-    videoStreamRendererView: undefined
-  };
-  participant.videoStreams.set(mockStreamId, remoteVideoStream);
+function addMockLocalStream(call: Call): void {
+  call.localVideoStream = {} as LocalVideoStream;
+}
 
-  const context = new CallContext();
-  context.setCall(call);
-
-  const call2: Call = {
-    id: mockCallId2,
-    callerInfo: {} as CallerInfo,
-    state: 'None',
-    direction: 'Incoming',
-    isMuted: true,
-    isScreenSharingOn: false,
-    localVideoStreams: [] as ReadonlyArray<LocalVideoStream>,
-    remoteParticipants: new Map<string, RemoteParticipant>(),
-    remoteParticipantsEnded: new Map<string, RemoteParticipant>(),
-    startTime: new Date(),
-    endTime: undefined
-  };
-  const participant2: RemoteParticipant = {
-    identifier: {} as CommunicationUserKind,
-    state: 'Connected',
-    videoStreams: new Map<number, RemoteVideoStream>(),
-    isMuted: true,
-    isSpeaking: false
-  };
-  call2.remoteParticipants.set(mockParticipantKey2, participant2);
-  const remoteVideoStream2: RemoteVideoStream = {
-    id: mockStreamId2,
-    mediaStreamType: 'Video',
-    isAvailable: true,
-    videoStreamRendererView: undefined
-  };
-  participant2.videoStreams.set(mockStreamId2, remoteVideoStream2);
-
-  context.setCall(call2);
-
-  const sdkRemoteVideoStream = createMockRemoteVideoStream(true);
-  sdkRemoteVideoStream.id = mockStreamId;
-
-  const sdkRemoteVideoStream2 = createMockRemoteVideoStream(true);
-  sdkRemoteVideoStream2.id = mockStreamId2;
-
-  const internalContext = new InternalCallContext();
-  internalContext.setRemoteVideoStream(mockCallId, mockParticipantKey, sdkRemoteVideoStream);
-  internalContext.setRemoteVideoStream(mockCallId2, mockParticipantKey2, sdkRemoteVideoStream2);
-
-  return {
-    context: context,
-    internalContext: internalContext
-  };
+function addSdkLocalStream(internalContext: InternalCallContext, callId: string): void {
+  internalContext.setLocalVideoStream(callId, new SdkLocalVideoStream({} as VideoDeviceInfo));
 }
 
 describe('stream utils', () => {
-  test('should store the correct state and start rendering when startRenderVideo is called', async () => {
-    const { context, internalContext } = setupDefaultTestData();
+  test('stores the correct state and start rendering when startRenderVideo is called on remote stream', async () => {
+    const { context, internalContext } = createContexts();
+    const call = createMockCall(mockCallId);
+    addMockRemoteStreamAndParticipant(call, mockParticipantKey, mockStreamId);
+    context.setCall(call);
+    addSdkRemoteStream(internalContext, mockCallId, mockParticipantKey, mockStreamId);
 
     await startRenderVideo(context, internalContext, mockCallId, mockStreamId);
 
     expect(internalContext.getRemoteParticipantKey(mockCallId, mockStreamId)).toBe(mockParticipantKey);
-    expect(internalContext.getVideoStreamRenderer(mockCallId, mockStreamId)).toBeDefined();
+    expect(internalContext.getRemoteVideoStreamRenderer(mockCallId, mockStreamId)).toBeDefined();
     expect(
       context
         .getState()
@@ -252,14 +141,18 @@ describe('stream utils', () => {
     ).toBeDefined();
   });
 
-  test('should clean up state and stop rendering when stopRenderVideo is called', async () => {
-    const { context, internalContext } = setupDefaultTestData();
+  test('cleans up state and stop rendering when stopRenderVideo is called on remote stream', async () => {
+    const { context, internalContext } = createContexts();
+    const call = createMockCall(mockCallId);
+    addMockRemoteStreamAndParticipant(call, mockParticipantKey, mockStreamId);
+    context.setCall(call);
+    addSdkRemoteStream(internalContext, mockCallId, mockParticipantKey, mockStreamId);
 
     await startRenderVideo(context, internalContext, mockCallId, mockStreamId);
 
     stopRenderVideo(context, internalContext, mockCallId, mockStreamId);
 
-    expect(internalContext.getVideoStreamRenderer(mockCallId, mockStreamId)).not.toBeDefined();
+    expect(internalContext.getRemoteVideoStreamRenderer(mockCallId, mockStreamId)).not.toBeDefined();
     expect(
       context
         .getState()
@@ -269,16 +162,22 @@ describe('stream utils', () => {
     ).not.toBeDefined();
   });
 
-  test('should clean up multiple state and stop rendering when stopRenderVideoAll is called', async () => {
-    const { context, internalContext } = setupDefaultTestDataWithMultipleStreams();
+  test('cleans up state and stop rendering when stopRenderVideoAll is called on multiple remote streams', async () => {
+    const { context, internalContext } = createContexts();
+    const call = createMockCall(mockCallId);
+    addMockRemoteStreamAndParticipant(call, mockParticipantKey, mockStreamId);
+    addMockRemoteStreamAndParticipant(call, mockParticipantKey2, mockStreamId2);
+    context.setCall(call);
+    addSdkRemoteStream(internalContext, mockCallId, mockParticipantKey, mockStreamId);
+    addSdkRemoteStream(internalContext, mockCallId, mockParticipantKey2, mockStreamId2);
 
     await startRenderVideo(context, internalContext, mockCallId, mockStreamId);
     await startRenderVideo(context, internalContext, mockCallId, mockStreamId2);
 
     expect(internalContext.getRemoteParticipantKey(mockCallId, mockStreamId)).toBe(mockParticipantKey);
     expect(internalContext.getRemoteParticipantKey(mockCallId, mockStreamId2)).toBe(mockParticipantKey2);
-    expect(internalContext.getVideoStreamRenderer(mockCallId, mockStreamId)).toBeDefined();
-    expect(internalContext.getVideoStreamRenderer(mockCallId, mockStreamId2)).toBeDefined();
+    expect(internalContext.getRemoteVideoStreamRenderer(mockCallId, mockStreamId)).toBeDefined();
+    expect(internalContext.getRemoteVideoStreamRenderer(mockCallId, mockStreamId2)).toBeDefined();
     expect(
       context
         .getState()
@@ -296,8 +195,8 @@ describe('stream utils', () => {
 
     stopRenderVideoAll(context, internalContext, mockCallId);
 
-    expect(internalContext.getVideoStreamRenderer(mockCallId, mockStreamId)).not.toBeDefined();
-    expect(internalContext.getVideoStreamRenderer(mockCallId, mockStreamId2)).not.toBeDefined();
+    expect(internalContext.getRemoteVideoStreamRenderer(mockCallId, mockStreamId)).not.toBeDefined();
+    expect(internalContext.getRemoteVideoStreamRenderer(mockCallId, mockStreamId2)).not.toBeDefined();
     expect(
       context
         .getState()
@@ -314,16 +213,24 @@ describe('stream utils', () => {
     ).not.toBeDefined();
   });
 
-  test('should clean up multiple state and stop rendering when stopRenderVideoAllCalls is called', async () => {
-    const { context, internalContext } = setupDefaultTestDataMultipleCalls();
+  test('cleans up state and stop rendering if stopRenderVideoAllCalls called on multiple remote streams', async () => {
+    const { context, internalContext } = createContexts();
+    const call = createMockCall(mockCallId);
+    addMockRemoteStreamAndParticipant(call, mockParticipantKey, mockStreamId);
+    const call2 = createMockCall(mockCallId2);
+    addMockRemoteStreamAndParticipant(call2, mockParticipantKey2, mockStreamId2);
+    context.setCall(call);
+    context.setCall(call2);
+    addSdkRemoteStream(internalContext, mockCallId, mockParticipantKey, mockStreamId);
+    addSdkRemoteStream(internalContext, mockCallId2, mockParticipantKey2, mockStreamId2);
 
     await startRenderVideo(context, internalContext, mockCallId, mockStreamId);
     await startRenderVideo(context, internalContext, mockCallId2, mockStreamId2);
 
     expect(internalContext.getRemoteParticipantKey(mockCallId, mockStreamId)).toBe(mockParticipantKey);
     expect(internalContext.getRemoteParticipantKey(mockCallId2, mockStreamId2)).toBe(mockParticipantKey2);
-    expect(internalContext.getVideoStreamRenderer(mockCallId, mockStreamId)).toBeDefined();
-    expect(internalContext.getVideoStreamRenderer(mockCallId2, mockStreamId2)).toBeDefined();
+    expect(internalContext.getRemoteVideoStreamRenderer(mockCallId, mockStreamId)).toBeDefined();
+    expect(internalContext.getRemoteVideoStreamRenderer(mockCallId2, mockStreamId2)).toBeDefined();
     expect(
       context
         .getState()
@@ -341,8 +248,8 @@ describe('stream utils', () => {
 
     stopRenderVideoAllCalls(context, internalContext);
 
-    expect(internalContext.getVideoStreamRenderer(mockCallId, mockStreamId)).not.toBeDefined();
-    expect(internalContext.getVideoStreamRenderer(mockCallId2, mockStreamId2)).not.toBeDefined();
+    expect(internalContext.getRemoteVideoStreamRenderer(mockCallId, mockStreamId)).not.toBeDefined();
+    expect(internalContext.getRemoteVideoStreamRenderer(mockCallId2, mockStreamId2)).not.toBeDefined();
     expect(
       context
         .getState()
@@ -357,5 +264,34 @@ describe('stream utils', () => {
         ?.remoteParticipants.get(mockParticipantKey2)
         ?.videoStreams.get(mockStreamId2)?.videoStreamRendererView
     ).not.toBeDefined();
+  });
+
+  test('stores the correct state and start rendering when startRenderVideo is called on local stream', async () => {
+    const { context, internalContext } = createContexts();
+    const call = createMockCall(mockCallId);
+    addMockLocalStream(call);
+    context.setCall(call);
+    addSdkLocalStream(internalContext, mockCallId);
+
+    await startRenderVideo(context, internalContext, mockCallId);
+
+    expect(internalContext.getLocalVideoStream(mockCallId)).toBeDefined();
+    expect(internalContext.getLocalVideoStreamRenderer(mockCallId)).toBeDefined();
+    expect(context.getState().calls.get(mockCallId)?.localVideoStream?.videoStreamRendererView).toBeDefined();
+  });
+
+  test('cleans up state and stop rendering when stopRenderVideo is called on remote stream', async () => {
+    const { context, internalContext } = createContexts();
+    const call = createMockCall(mockCallId);
+    addMockLocalStream(call);
+    context.setCall(call);
+    addSdkLocalStream(internalContext, mockCallId);
+
+    await startRenderVideo(context, internalContext, mockCallId);
+
+    stopRenderVideo(context, internalContext, mockCallId);
+
+    expect(internalContext.getLocalVideoStreamRenderer(mockCallId)).not.toBeDefined();
+    expect(context.getState().calls.get(mockCallId)?.localVideoStream?.videoStreamRendererView).not.toBeDefined();
   });
 });

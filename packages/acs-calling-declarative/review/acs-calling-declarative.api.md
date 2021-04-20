@@ -30,7 +30,7 @@ export interface Call {
     id: string;
     isMuted: boolean;
     isScreenSharingOn: boolean;
-    localVideoStreams: ReadonlyArray<LocalVideoStream>;
+    localVideoStream: LocalVideoStream | undefined;
     remoteParticipants: Map<string, RemoteParticipant>;
     remoteParticipantsEnded: Map<string, RemoteParticipant>;
     startTime: Date;
@@ -52,9 +52,9 @@ export interface CallClientState {
 // @public
 export interface DeclarativeCallClient extends CallClient {
     onStateChange(handler: (state: CallClientState) => void): void;
-    startRenderVideo(callId: string, streamId: number, options?: CreateViewOptions): Promise<void>;
+    startRenderVideo(callId: string, streamId?: number, options?: CreateViewOptions): Promise<void>;
     state: CallClientState;
-    stopRenderVideo(callId: string, streamId: number): void;
+    stopRenderVideo(callId: string, streamId?: number): void;
 }
 
 // @public
