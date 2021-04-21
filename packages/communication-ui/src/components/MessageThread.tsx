@@ -30,7 +30,7 @@ import {
   SystemMessagePayload
 } from '../types';
 import { ReadReceipt, ReadReceiptProps } from './ReadReceipt';
-import { memoizeAll } from '@azure/acs-chat-selector';
+import { memoizeFunctionAll } from '@azure/acs-chat-selector';
 import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from './SystemMessage';
 
 const isMessageSame = (first: ChatMessagePayload, second: ChatMessagePayload): boolean => {
@@ -184,7 +184,7 @@ const DefaultChatMessageRenderer: DefaultMessageRendererType = (
   );
 };
 
-const memoizeAllMessages = memoizeAll(
+const memoizeAllMessages = memoizeFunctionAll(
   (
     _messageKey: string,
     message: ChatMessage | SystemMessage | CustomMessage,
@@ -621,6 +621,14 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     ]
   );
 
+  const chatBody = useMemo(() => {
+    return (
+      <LiveAnnouncer>
+        <Chat styles={styles?.chatContainer ?? chatStyle} items={messagesToDisplay} />
+      </LiveAnnouncer>
+    );
+  }, [styles?.chatContainer, messagesToDisplay]);
+
   return (
     <Ref innerRef={chatThreadRef}>
       <Stack className={mergeStyles(messageThreadContainerStyle, styles?.root)} grow>
@@ -640,11 +648,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
               ))}
           </div>
         )}
-        <Ref innerRef={chatScrollDivRef}>
-          <LiveAnnouncer>
-            <Chat styles={styles?.chatContainer ?? chatStyle} items={messagesToDisplay} />
-          </LiveAnnouncer>
-        </Ref>
+        <Ref innerRef={chatScrollDivRef}>{chatBody}</Ref>
         {existsNewChatMessage && !disableJumpToNewMessageButton && (
           <div className={mergeStyles(newMessageButtonContainerStyle, styles?.newMessageButtonContainer)}>
             {onRenderJumpToNewMessageButton ? (

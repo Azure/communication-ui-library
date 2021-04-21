@@ -87,8 +87,8 @@ export type DefaultHandlers = {
 // @public (undocumented)
 export type FunctionWithKey<KeyT, ArgsT extends any[], RetT> = (key: KeyT, ...args: ArgsT) => RetT;
 
-// @public (undocumented)
-export const memoizeAll: <KeyT, ArgsT extends any[], FnRetT, CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>>(fn: FunctionWithKey<KeyT, ArgsT, FnRetT>, compareFunc?: (args1: any, args2: any) => boolean) => (callback: CallBackT) => FnRetT[];
+// @public
+export const memoizeFunctionAll: <KeyT, ArgsT extends any[], FnRetT, CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>>(fn: FunctionWithKey<KeyT, ArgsT, FnRetT>, shouldCacheUpdate?: (args1: any, args2: any) => boolean) => (callback: CallBackT) => FnRetT[];
 
 // @public (undocumented)
 export type Message<T extends MessageTypes> = {

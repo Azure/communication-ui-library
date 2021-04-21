@@ -8,7 +8,6 @@ import { useSendTypingNotification } from '../hooks/useSendTypingNotification';
 import { useUpdateThreadTopicName } from '../hooks/useUpdateThreadTopicName';
 import { useEffect } from 'react';
 import { useFetchThreadMembers } from '../hooks/useFetchThreadMembers';
-import { THREAD_INFO_FETCH_INVERVAL } from '../constants';
 import { useUserId } from '../providers/ChatProvider';
 
 export type ChatThreadPropsFromContext = {
@@ -28,17 +27,6 @@ export const MapToChatThreadProps = (): ChatThreadPropsFromContext => {
     // We call the fetch immediately the first time instead of waiting for THREAD_INFO_FETCH_INVERVAL.
     fetchThread();
     fetchThreadMembers();
-  }, [fetchThread, fetchThreadMembers]);
-
-  useEffect(() => {
-    const listener: number = window.setInterval(() => {
-      fetchThread();
-      fetchThreadMembers();
-    }, THREAD_INFO_FETCH_INVERVAL);
-
-    return () => {
-      clearInterval(listener);
-    };
   }, [fetchThread, fetchThreadMembers]);
 
   return {
