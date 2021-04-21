@@ -39,6 +39,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             maxPageSize: 100
           }));
         } catch (e) {
+          console.log(e);
           errorHandler();
         }
       }
