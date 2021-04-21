@@ -2,7 +2,7 @@ import { boolean, text } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
-import { Lobby } from './Lobby.example';
+import { Lobby } from './snippets/Lobby.snippet';
 import { getDocs } from './LobbyDocs';
 
 export const LobbyComponent: () => JSX.Element = () => {

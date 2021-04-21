@@ -52,7 +52,7 @@ module.exports = {
       }
     },
     {
-      files: ['**/*.example.ts', '**/*.example.tsx'],
+      files: ['**/*.snippet.ts', '**/*.snippet.tsx'],
       rules: {
         'react/prop-types': 'off',
         'react/jsx-key': 'off'

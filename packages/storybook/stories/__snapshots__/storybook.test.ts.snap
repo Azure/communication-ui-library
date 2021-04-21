@@ -1291,7 +1291,7 @@ exports[`storybook snapshot tests Storyshots UI Components/TypingIndicator Typin
         <span
           className="css-53"
         >
-           and 5 others are typing...
+           are typing...
         </span>
       </div>
     </div>

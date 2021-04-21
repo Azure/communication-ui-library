@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Add all UTs for declarative chat clients, Update some minor details: 1. Add logic to create thread while receiving events with no thread 2. Add logic to set participants into state when create chat thread",
+  "packageName": "@azure/acs-chat-declarative",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "none"
+}

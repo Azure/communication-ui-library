@@ -3,13 +3,13 @@
 import React from 'react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
 import { ParticipantItem } from '@azure/communication-ui';
-import { ParticipantItemExample } from './examples/ParticipantItem.example';
-import { CustomAvatarExample } from './examples/CustomAvatar.example';
-import { CustomIconExample } from './examples/CustomIcon.example';
+import { ParticipantItemExample } from './snippets/ParticipantItem.snippet';
+import { CustomAvatarExample } from './snippets/CustomAvatar.snippet';
+import { CustomIconExample } from './snippets/CustomIcon.snippet';
 
-const ParticipantItemExampleText = require('!!raw-loader!./examples/ParticipantItem.example.tsx').default;
-const CustomAvatarExampleText = require('!!raw-loader!./examples/CustomAvatar.example.tsx').default;
-const CustomIconExampleText = require('!!raw-loader!./examples/CustomIcon.example.tsx').default;
+const ParticipantItemExampleText = require('!!raw-loader!./snippets/ParticipantItem.snippet.tsx').default;
+const CustomAvatarExampleText = require('!!raw-loader!./snippets/CustomAvatar.snippet.tsx').default;
+const CustomIconExampleText = require('!!raw-loader!./snippets/CustomIcon.snippet.tsx').default;
 
 const importStatement = `
 import { ParticipantItem, ParticipantItemProps } from '@azure/communication-ui';
