@@ -3,7 +3,7 @@ import React from 'react';
 import { GetHistoryWithSystemMessages } from './placeholdermessages';
 
 export const MessageThreadWithCustomizedMessageContainerExample: () => JSX.Element = () => {
-  // Show a customized Chat container.
+  // Show a customized message containers.
   return (
     <FluentThemeProvider>
       <MessageThread
