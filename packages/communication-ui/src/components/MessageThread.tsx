@@ -40,7 +40,7 @@ const isMessageSame = (first: ChatMessagePayload, second: ChatMessagePayload): b
     JSON.stringify(first.createdOn) === JSON.stringify(second.createdOn) &&
     first.senderId === second.senderId &&
     first.senderDisplayName === second.senderDisplayName &&
-    first.statusToRender === second.statusToRender
+    first.status === second.status
   );
 };
 
@@ -193,6 +193,7 @@ const memoizeAllMessages = memoizeAll(
     styles: MessageThreadStylesProps | undefined,
     onRenderReadReceipt: ((readReceiptProps: ReadReceiptProps) => JSX.Element | null) | undefined,
     defaultChatMessageRenderer: (message: ChatMessage) => JSX.Element,
+    statusToRender?: MessageStatus,
     onRenderMessage?: (
       message: ChatMessage | SystemMessage | CustomMessage,
       defaultOnRender?: DefaultMessageRendererType
@@ -200,7 +201,6 @@ const memoizeAllMessages = memoizeAll(
   ): ShorthandValue<ChatItemProps> => {
     if (message.type === 'chat') {
       const payload: ChatMessagePayload = message.payload;
-      const showReadReceipt = !disableReadReceipt && payload.statusToRender;
       const chatMessageComponent =
         onRenderMessage === undefined
           ? defaultChatMessageRenderer(message)
@@ -224,13 +224,13 @@ const memoizeAllMessages = memoizeAll(
                 styles?.readReceiptContainer ? styles.readReceiptContainer(payload.mine ?? false) : ''
               )}
             >
-              {showReadReceipt ? (
+              {!disableReadReceipt && statusToRender ? (
                 onRenderReadReceipt ? (
                   onRenderReadReceipt({
-                    messageStatus: payload.statusToRender ?? ('sending' as MessageStatus)
+                    messageStatus: statusToRender
                   })
                 ) : (
-                  ReadReceipt({ messageStatus: payload.statusToRender ?? ('sending' as MessageStatus) })
+                  ReadReceipt({ messageStatus: statusToRender })
                 )
               ) : (
                 <div className={mergeStyles(noReadReceiptStyle)} />
@@ -261,6 +261,21 @@ const memoizeAllMessages = memoizeAll(
     }
   }
 );
+
+// we only attach statusToRender to the last message with matched status
+const getLastChatMessageIdWithStatus = (
+  messages: (ChatMessage | SystemMessage | CustomMessage)[],
+  status: MessageStatus
+): string | undefined => {
+  for (let i = messages.length - 1; i >= 0; i--) {
+    const message = messages[i];
+    if (message.type === 'chat' && message.payload.status === status) {
+      return message.payload.messageId;
+    }
+  }
+  return undefined;
+};
+
 export type DefaultMessageRendererType = (message: ChatMessage | SystemMessage | CustomMessage) => JSX.Element;
 
 const DefaultSystemMessageRenderer: DefaultMessageRendererType = (
@@ -372,7 +387,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onRenderMessage
   } = props;
 
-  const [messages, setChatMessages] = useState<(ChatMessage | SystemMessage | CustomMessage)[]>([]);
+  const [messages, setMessages] = useState<(ChatMessage | SystemMessage | CustomMessage)[]>([]);
   // We need this state to wait for one tick and scroll to bottom after messages have been initialized.
   // Otherwise chatScrollDivRef.current.clientHeight is wrong if we scroll to bottom before messages are initialized.
   const [chatMessagesInitialized, setChatMessagesInitialized] = useState<boolean>(false);
@@ -381,18 +396,22 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const [forceUpdate, setForceUpdate] = useState<number>(0);
 
   // Used to decide if should auto scroll to bottom or show "new message" button
-  const [latestPreviousMessage, setLatestPreviousMessage] = useState<ChatMessagePayload | undefined>(undefined);
-  const [latestCurrentMessage, setLatestCurrentMessage] = useState<ChatMessagePayload | undefined>(undefined);
-  const [lastSeenMessageId, setLastSeenMessageId] = useState<string | undefined>(undefined);
-  const [existsNewMessage, setExistsNewMessage] = useState<boolean>(false);
+  const [latestPreviousChatMessage, setLatestPreviousChatMessage] = useState<ChatMessagePayload | undefined>(undefined);
+  const [latestCurrentChatMessage, setLatestCurrentChatMessage] = useState<ChatMessagePayload | undefined>(undefined);
+  const [chatMessageIdJustSeen, setChatMessageIdJustSeen] = useState<string | undefined>(undefined);
+  const [existsNewChatMessage, setExistsNewChatMessage] = useState<boolean>(false);
+
+  const [lastSeenChatMessage, setLastSeenChatMessage] = useState<string | undefined>(undefined);
+  const [lastDeliveredChatMessage, setLastDeliveredChatMessage] = useState<string | undefined>(undefined);
+  const [lastSendingChatMessage, setLastSendingChatMessage] = useState<string | undefined>(undefined);
 
   const chatScrollDivRef: any = useRef();
   const chatThreadRef: any = useRef();
 
-  const chatMessagesRef = useRef(messages);
-  const setChatMessagesRef = (messagesWithAttachedValue: (ChatMessage | SystemMessage | CustomMessage)[]): void => {
-    chatMessagesRef.current = messagesWithAttachedValue;
-    setChatMessages(messagesWithAttachedValue);
+  const messagesRef = useRef(messages);
+  const setMessagesRef = (messagesWithAttachedValue: (ChatMessage | SystemMessage | CustomMessage)[]): void => {
+    messagesRef.current = messagesWithAttachedValue;
+    setMessages(messagesWithAttachedValue);
   };
 
   const isAtBottomOfScrollRef = useRef(isAtBottomOfScroll);
@@ -418,13 +437,13 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     if (
       !isAtBottomOfScrollRef.current ||
       !document.hasFocus() ||
-      !chatMessagesRef.current ||
-      chatMessagesRef.current.length === 0 ||
+      !messagesRef.current ||
+      messagesRef.current.length === 0 ||
       disableReadReceipt
     ) {
       return;
     }
-    const messagesWithId = chatMessagesRef.current.filter((message) => {
+    const messagesWithId = messagesRef.current.filter((message) => {
       return message.type === 'chat' && !message.payload.mine && !!message.payload.messageId;
     });
     if (messagesWithId.length === 0) {
@@ -437,19 +456,19 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
         onMessageSeen &&
         lastMessage &&
         lastMessage.payload.messageId &&
-        lastMessage.payload.messageId !== lastSeenMessageId
+        lastMessage.payload.messageId !== chatMessageIdJustSeen
       ) {
         await onMessageSeen(lastMessage.payload.messageId);
-        setLastSeenMessageId(lastMessage.payload.messageId);
+        setChatMessageIdJustSeen(lastMessage.payload.messageId);
       }
     } catch (e) {
       console.log('onMessageSeen Error', lastMessage, e);
     }
-  }, [disableReadReceipt, onMessageSeen, lastSeenMessageId]);
+  }, [disableReadReceipt, onMessageSeen, chatMessageIdJustSeen]);
 
   const scrollToBottom = useCallback((): void => {
     chatScrollDivRef.current.scrollTop = chatScrollDivRef.current.scrollHeight;
-    setExistsNewMessage(false);
+    setExistsNewChatMessage(false);
     setIsAtBottomOfScrollRef(true);
     sendReadReceiptIfAtBottom();
   }, [sendReadReceiptIfAtBottom]);
@@ -502,14 +521,17 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   }, [clientHeight, forceUpdate, scrollToBottom, chatMessagesInitialized]);
 
   /**
-   * This needs to run to update latestPreviousMessage & latestCurrentMessage.
+   * This needs to run to update latestPreviousChatMessage & latestCurrentChatMessage.
    * These two states are used to manipulate scrollbar
    */
   useEffect(() => {
-    setLatestPreviousMessage(getLatestChatMessage(chatMessagesRef.current));
-    setLatestCurrentMessage(getLatestChatMessage(newMessages));
-    setChatMessagesRef(newMessages);
+    setLatestPreviousChatMessage(getLatestChatMessage(messagesRef.current));
+    setLatestCurrentChatMessage(getLatestChatMessage(newMessages));
+    setMessagesRef(newMessages);
     !chatMessagesInitializedRef.current && setChatMessagesInitializedRef(true);
+    setLastDeliveredChatMessage(getLastChatMessageIdWithStatus(newMessages, 'delivered'));
+    setLastSeenChatMessage(getLastChatMessageIdWithStatus(newMessages, 'seen'));
+    setLastSendingChatMessage(getLastChatMessageIdWithStatus(newMessages, 'sending'));
   }, [newMessages]);
 
   /**
@@ -518,12 +540,12 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   useEffect(() => {
     // If user just sent the latest message then we assume we can move user to bottom of scroll.
     if (
-      isThereNewMessageNotFromCurrentUser(latestPreviousMessage, latestCurrentMessage, userId) &&
+      isThereNewMessageNotFromCurrentUser(latestPreviousChatMessage, latestCurrentChatMessage, userId) &&
       !isAtBottomOfScrollRef.current
     ) {
-      setExistsNewMessage(true);
+      setExistsNewChatMessage(true);
     } else if (
-      didUserSendTheLatestMessage(latestPreviousMessage, latestCurrentMessage, userId) ||
+      didUserSendTheLatestMessage(latestPreviousChatMessage, latestCurrentChatMessage, userId) ||
       isAtBottomOfScrollRef.current
     ) {
       scrollToBottom();
@@ -544,17 +566,45 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     () =>
       memoizeAllMessages((memoizedMessageFn) => {
         return messages.map(
-          (message: ChatMessage | SystemMessage | CustomMessage, index: number): ShorthandValue<ChatItemProps> =>
-            memoizedMessageFn(
-              message.payload.messageId ?? 'id_' + index,
+          (message: ChatMessage | SystemMessage | CustomMessage, index: number): ShorthandValue<ChatItemProps> => {
+            const key =
+              message.type === 'chat'
+                ? message.payload.messageId ?? message.payload.clientMessageId
+                : message.payload.messageId;
+
+            let statusToRender: MessageStatus | undefined = undefined;
+            if (message.type === 'chat') {
+              if (!disableReadReceipt && message.payload.mine) {
+                switch (message.payload.messageId) {
+                  case lastSeenChatMessage: {
+                    statusToRender = 'seen';
+                    break;
+                  }
+                  case lastSendingChatMessage: {
+                    statusToRender = 'sending';
+                    break;
+                  }
+                  case lastDeliveredChatMessage: {
+                    statusToRender = 'delivered';
+                    break;
+                  }
+                }
+              }
+              if (message.payload.mine && message.payload.status === 'failed') statusToRender = 'failed';
+            }
+
+            return memoizedMessageFn(
+              key ?? 'id_' + index,
               message,
               disableReadReceipt,
               onRenderAvatar,
               styles,
               onRenderReadReceipt,
               defaultChatMessageRenderer,
+              statusToRender,
               onRenderMessage
-            )
+            );
+          }
         );
       }),
     [
@@ -564,6 +614,9 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       styles,
       onRenderReadReceipt,
       defaultChatMessageRenderer,
+      lastSeenChatMessage,
+      lastSendingChatMessage,
+      lastDeliveredChatMessage,
       onRenderMessage
     ]
   );
@@ -592,7 +645,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             <Chat styles={styles?.chatContainer ?? chatStyle} items={messagesToDisplay} />
           </LiveAnnouncer>
         </Ref>
-        {existsNewMessage && !disableJumpToNewMessageButton && (
+        {existsNewChatMessage && !disableJumpToNewMessageButton && (
           <div className={mergeStyles(newMessageButtonContainerStyle, styles?.newMessageButtonContainer)}>
             {onRenderJumpToNewMessageButton ? (
               onRenderJumpToNewMessageButton({ onClick: scrollToBottom })

@@ -16,7 +16,6 @@ export type ChatMessagePayload = {
   createdOn?: Date;
   senderId?: string;
   senderDisplayName?: string;
-  statusToRender?: MessageStatus;
   status?: MessageStatus;
   attached?: MessageAttachedStatus | boolean;
   mine?: boolean;
@@ -24,13 +23,13 @@ export type ChatMessagePayload = {
 };
 
 export type SystemMessagePayload = {
-  messageId?: string;
+  messageId: string;
   content?: string;
   iconName?: string;
 };
 
 export type CustomMessagePayload = {
-  messageId?: string;
+  messageId: string;
 };
 
 export type MessageTypes = 'chat' | 'system' | 'custom';

@@ -31,7 +31,6 @@ export type ChatMessagePayload = {
     createdOn?: Date;
     senderId?: string;
     senderDisplayName?: string;
-    statusToRender?: MessageStatus;
     status?: MessageStatus;
     attached?: MessageAttachedStatus | boolean;
     mine?: boolean;
@@ -73,7 +72,7 @@ export type CustomMessage = Message<'custom'>;
 
 // @public (undocumented)
 export type CustomMessagePayload = {
-    messageId?: string;
+    messageId: string;
 };
 
 // @public (undocumented)
@@ -124,7 +123,7 @@ export type SystemMessage = Message<'system'>;
 
 // @public (undocumented)
 export type SystemMessagePayload = {
-    messageId?: string;
+    messageId: string;
     content?: string;
     iconName?: string;
 };
