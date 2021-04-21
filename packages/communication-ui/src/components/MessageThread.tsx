@@ -265,7 +265,9 @@ export type MessageThreadProps = {
    */
   onRenderLoadPreviousMessagesButton?: (loadPreviousMessagesButton: LoadPreviousMessagesButtonProps) => JSX.Element;
   /**
-   * onRenderMessage event handler. `defaultOnRender` is not provide for `CustomMessage` and is available for `ChatMessage` and `SystemMessage`.
+   * onRenderMessage event handler.
+   * Note that `defaultOnRender` is not provided for `CustomMessage` and thus only available for `ChatMessage` and `SystemMessage`.
+   * `(props: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element`
    */
   onRenderMessage?: (props: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
 };

@@ -1,12 +1,4 @@
-import {
-  // ChatMessage,
-  // CustomMessage,
-  // DefaultMessageRendererType,
-  FluentThemeProvider,
-  MessageThread
-  // SystemMessage
-} from '@azure/communication-ui';
-// import { ComponentSlotStyle } from '@fluentui/react-northstar';
+import { FluentThemeProvider, MessageThread } from '@azure/communication-ui';
 import React from 'react';
 import { GetHistoryWithSystemMessages } from './placeholdermessages';
 
