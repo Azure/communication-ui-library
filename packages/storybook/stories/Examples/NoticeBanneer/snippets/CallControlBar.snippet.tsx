@@ -1,5 +1,3 @@
-// ControlBar.example.tsx
-
 import {
   ControlBar,
   labeledAudioButtonProps,
