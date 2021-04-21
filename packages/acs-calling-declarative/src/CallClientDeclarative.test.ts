@@ -539,8 +539,22 @@ describe('declarative call client', () => {
       () => testData.declarativeCallClient.state.calls.get(mockCallId)?.localVideoStream !== undefined
     );
 
-    testData.declarativeCallClient.startRenderVideo(mockCallId, 1);
-    testData.declarativeCallClient.startRenderVideo(mockCallId);
+    const remoteVideoStream = testData.declarativeCallClient.state.calls
+      .get(mockCallId)
+      ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
+      ?.videoStreams.get(1);
+    if (!remoteVideoStream) {
+      expect(remoteVideoStream).toBeDefined();
+    } else {
+      testData.declarativeCallClient.startRenderVideo(mockCallId, remoteVideoStream);
+    }
+
+    const localVideoStream = testData.declarativeCallClient.state.calls.get(mockCallId)?.localVideoStream;
+    if (!localVideoStream) {
+      expect(localVideoStream).toBeDefined();
+    } else {
+      testData.declarativeCallClient.startRenderVideo(mockCallId, localVideoStream);
+    }
 
     await waitWithBreakCondition(
       () =>
@@ -603,8 +617,24 @@ describe('declarative call client', () => {
       () => testData.declarativeCallClient.state.calls.get(mockCallId)?.localVideoStream !== undefined
     );
 
-    testData.declarativeCallClient.startRenderVideo(mockCallId, 1);
-    testData.declarativeCallClient.startRenderVideo(mockCallId);
+    const remoteVideoStream = testData.declarativeCallClient.state.calls
+      .get(mockCallId)
+      ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
+      ?.videoStreams.get(1);
+    if (!remoteVideoStream) {
+      expect(remoteVideoStream).toBeDefined();
+      return;
+    } else {
+      testData.declarativeCallClient.startRenderVideo(mockCallId, remoteVideoStream);
+    }
+
+    const localVideoStream = testData.declarativeCallClient.state.calls.get(mockCallId)?.localVideoStream;
+    if (!localVideoStream) {
+      expect(localVideoStream).toBeDefined();
+      return;
+    } else {
+      testData.declarativeCallClient.startRenderVideo(mockCallId, localVideoStream);
+    }
 
     await waitWithBreakCondition(
       () =>
@@ -633,8 +663,8 @@ describe('declarative call client', () => {
       testData.declarativeCallClient.state.calls.get(mockCallId)?.localVideoStream?.videoStreamRendererView
     ).toBeDefined();
 
-    testData.declarativeCallClient.stopRenderVideo(mockCallId, 1);
-    testData.declarativeCallClient.stopRenderVideo(mockCallId);
+    testData.declarativeCallClient.stopRenderVideo(mockCallId, remoteVideoStream);
+    testData.declarativeCallClient.stopRenderVideo(mockCallId, localVideoStream);
 
     await waitWithBreakCondition(
       () =>
@@ -695,8 +725,24 @@ describe('declarative call client', () => {
       () => testData.declarativeCallClient.state.calls.get(mockCallId)?.localVideoStream !== undefined
     );
 
-    testData.declarativeCallClient.startRenderVideo(mockCallId, 1);
-    testData.declarativeCallClient.startRenderVideo(mockCallId);
+    const remoteVideoStream = testData.declarativeCallClient.state.calls
+      .get(mockCallId)
+      ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
+      ?.videoStreams.get(1);
+    if (!remoteVideoStream) {
+      expect(remoteVideoStream).toBeDefined();
+      return;
+    } else {
+      testData.declarativeCallClient.startRenderVideo(mockCallId, remoteVideoStream);
+    }
+
+    const localVideoStream = testData.declarativeCallClient.state.calls.get(mockCallId)?.localVideoStream;
+    if (!localVideoStream) {
+      expect(localVideoStream).toBeDefined();
+      return;
+    } else {
+      testData.declarativeCallClient.startRenderVideo(mockCallId, localVideoStream);
+    }
 
     await waitWithBreakCondition(
       () =>

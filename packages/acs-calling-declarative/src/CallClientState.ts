@@ -20,24 +20,6 @@ import {
 } from '@azure/communication-common';
 
 /**
- * State only version of {@Link @azure/communication-calling#VideoStreamRendererView}.
- */
-export interface VideoStreamRendererView {
-  /**
-   * Proxy of {@Link @azure/communication-calling#VideoStreamRendererView.scalingMode}.
-   */
-  scalingMode: ScalingMode;
-  /**
-   * Proxy of {@Link @azure/communication-calling#VideoStreamRendererView.isMirrored}.
-   */
-  isMirrored: boolean;
-  /**
-   * Proxy of {@Link @azure/communication-calling#VideoStreamRendererView.target}.
-   */
-  target: HTMLElement;
-}
-
-/**
  * State only version of {@Link @azure/communication-calling#LocalVideoStream}.
  */
 export interface LocalVideoStream {

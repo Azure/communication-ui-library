@@ -52,9 +52,9 @@ export interface CallClientState {
 // @public
 export interface DeclarativeCallClient extends CallClient {
     onStateChange(handler: (state: CallClientState) => void): void;
-    startRenderVideo(callId: string, streamId?: number, options?: CreateViewOptions): Promise<void>;
+    startRenderVideo(callId: string, stream: LocalVideoStream | RemoteVideoStream, options?: CreateViewOptions): Promise<void>;
     state: CallClientState;
-    stopRenderVideo(callId: string, streamId?: number): void;
+    stopRenderVideo(callId: string, stream: LocalVideoStream | RemoteVideoStream): void;
 }
 
 // @public
@@ -101,13 +101,6 @@ export interface RemoteVideoStream {
     isAvailable: boolean;
     mediaStreamType: MediaStreamType;
     videoStreamRendererView: VideoStreamRendererView | undefined;
-}
-
-// @public
-export interface VideoStreamRendererView {
-    isMirrored: boolean;
-    scalingMode: ScalingMode;
-    target: HTMLElement;
 }
 
 // @public

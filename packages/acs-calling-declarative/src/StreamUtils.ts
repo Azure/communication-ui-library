@@ -1,18 +1,24 @@
 // © Microsoft Corporation. All rights reserved.
 
 import { CreateViewOptions, VideoStreamRenderer } from '@azure/communication-calling';
+import { LocalVideoStream, RemoteVideoStream } from './CallClientState';
 import { CallContext } from './CallContext';
-import { convertSdkVideoStreamRendererViewToDeclarativeVideoStreamRendererView } from './Converter';
+import {
+  convertSdkLocalStreamToDeclarativeLocalStream,
+  convertSdkRemoteStreamToDeclarativeRemoteStream,
+  convertSdkVideoStreamRendererViewToDeclarativeVideoStreamRendererView
+} from './Converter';
 import { InternalCallContext } from './InternalCallContext';
 
 export async function startRenderVideo(
   context: CallContext,
   internalContext: InternalCallContext,
   callId: string,
-  streamId?: number,
+  stream: LocalVideoStream | RemoteVideoStream,
   options?: CreateViewOptions
 ): Promise<void> {
-  if (streamId) {
+  if ('id' in stream) {
+    const streamId = stream.id;
     const remoteVideoStream = internalContext.getRemoteVideoStream(callId, streamId);
     const participantKey = internalContext.getRemoteParticipantKey(callId, streamId);
     const videoStreamRenderer = internalContext.getRemoteVideoStreamRenderer(callId, streamId);
@@ -54,9 +60,10 @@ export function stopRenderVideo(
   context: CallContext,
   internalContext: InternalCallContext,
   callId: string,
-  streamId?: number
+  stream: LocalVideoStream | RemoteVideoStream
 ): void {
-  if (streamId) {
+  if ('id' in stream) {
+    const streamId = stream.id;
     const videoStreamRenderer = internalContext.getRemoteVideoStreamRenderer(callId, streamId);
 
     if (!videoStreamRenderer) {
@@ -84,13 +91,23 @@ export function stopRenderVideo(
 }
 
 export function stopRenderVideoAll(context: CallContext, internalContext: InternalCallContext, callId: string): void {
-  const streamIds = internalContext.getRemoteVideoStreams(callId);
-  if (streamIds) {
-    for (const [streamId] of streamIds.entries()) {
-      stopRenderVideo(context, internalContext, callId, streamId);
+  const streams = internalContext.getRemoteVideoStreams(callId);
+  if (streams) {
+    for (const [streamId] of streams.entries()) {
+      const stream = internalContext.getRemoteVideoStream(callId, streamId);
+      if (stream) {
+        // We don't want to accept SDK stream as parameter but we also don't cache the declarative stream so we have to
+        // convert the SDK stream to declarative stream which is not pretty so this could use some further refactoring.
+        stopRenderVideo(context, internalContext, callId, convertSdkRemoteStreamToDeclarativeRemoteStream(stream));
+      }
     }
   }
-  stopRenderVideo(context, internalContext, callId);
+  // We don't want to accept SDK stream as parameter but we also don't cache the declarative stream so we have to
+  // convert the SDK stream to declarative stream which is not pretty so this could use some further refactoring.
+  const localVideoStream = internalContext.getLocalVideoStream(callId);
+  if (localVideoStream) {
+    stopRenderVideo(context, internalContext, callId, convertSdkLocalStreamToDeclarativeLocalStream(localVideoStream));
+  }
 }
 
 export function stopRenderVideoAllCalls(context: CallContext, internalContext: InternalCallContext): void {

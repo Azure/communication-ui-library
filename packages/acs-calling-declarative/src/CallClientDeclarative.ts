@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 import { deviceManagerDeclaratify } from './DeviceManagerDeclarative';
 import { CallAgent, CallClient, CreateViewOptions, DeviceManager } from '@azure/communication-calling';
-import { CallClientState } from './CallClientState';
+import { CallClientState, LocalVideoStream, RemoteVideoStream } from './CallClientState';
 import { CallContext } from './CallContext';
 import { callAgentDeclaratify } from './CallAgentDeclarative';
 import { InternalCallContext } from './InternalCallContext';
@@ -29,19 +29,23 @@ export interface DeclarativeCallClient extends CallClient {
    * state. Under the hood calls {@Link @azure/communication-calling#VideoStreamRenderer.createView}.
    *
    * @param callId - CallId of the Call where the stream to start rendering is contained in.
-   * @param streamId - RemoteVideoStreamId of the stream to stop rendering. If undefined, LocalVideoStream is used.
+   * @param stream - The LocalVideoStream or RemoteVideoStream to start rendering.
    * @param options - Options that are passed to the {@Link @azure/communication-calling#VideoStreamRenderer}.
    */
-  startRenderVideo(callId: string, streamId?: number, options?: CreateViewOptions): Promise<void>;
+  startRenderVideo(
+    callId: string,
+    stream: LocalVideoStream | RemoteVideoStream,
+    options?: CreateViewOptions
+  ): Promise<void>;
   /**
    * Stops rendering a {@Link RemoteVideoStream} or {@Link LocalVideoStream} and removes the
    * {@Link VideoStreamRendererView} from the relevant {@Link RemoteVideoStream} or {@Link LocalVideoStream} in the
    * state. Under the hood calls {@Link @azure/communication-calling#VideoStreamRenderer.dispose}.
    *
    * @param callId - CallId of the Call where the stream to stop rendering is contained in.
-   * @param streamId - RemoteVideoStreamId of the stream to stop rendering. If undefined, LocalVideoStream is used.
+   * @param stream - The LocalVideoStream or RemoteVideoStream to start rendering.
    */
-  stopRenderVideo(callId: string, streamId?: number): void;
+  stopRenderVideo(callId: string, stream: LocalVideoStream | RemoteVideoStream): void;
 }
 
 /**
@@ -122,14 +126,18 @@ export const callClientDeclaratify = (callClient: CallClient): DeclarativeCallCl
   });
   Object.defineProperty(callClient, 'startRenderVideo', {
     configurable: false,
-    value: (callId: string, streamId: number, options?: CreateViewOptions): Promise<void> => {
-      return startRenderVideo(context, internalContext, callId, streamId, options);
+    value: (
+      callId: string,
+      stream: LocalVideoStream | RemoteVideoStream,
+      options?: CreateViewOptions
+    ): Promise<void> => {
+      return startRenderVideo(context, internalContext, callId, stream, options);
     }
   });
   Object.defineProperty(callClient, 'stopRenderVideo', {
     configurable: false,
-    value: (callId: string, streamId: number): void => {
-      stopRenderVideo(context, internalContext, callId, streamId);
+    value: (callId: string, stream: LocalVideoStream | RemoteVideoStream): void => {
+      stopRenderVideo(context, internalContext, callId, stream);
     }
   });
 

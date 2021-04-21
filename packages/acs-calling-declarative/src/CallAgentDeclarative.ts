@@ -147,6 +147,6 @@ export const callAgentDeclaratify = (
   stopRenderVideoAllCalls(context, internalContext);
 
   context.clearCallRelatedState();
-  internalContext.clearCallRelatedState();
+  internalContext.clearAll();
   return new Proxy(callAgent, new ProxyCallAgent(callAgent, context, internalContext)) as CallAgent;
 };

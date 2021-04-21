@@ -161,7 +161,7 @@ export class InternalCallContext {
     this._localVideoStreamRenders.delete(callId);
   }
 
-  public clearCallRelatedState(): void {
+  public clearAll(): void {
     this._remoteVideoStreams.clear();
     this._remoteParticipantKeys.clear();
     this._remoteVideoStreamRenderers.clear();
