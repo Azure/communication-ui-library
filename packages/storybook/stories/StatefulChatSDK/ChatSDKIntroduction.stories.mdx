@@ -1,0 +1,91 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Stateful Chat SDK/Introduction" />
+
+# Introduction
+
+The `Declarative Chat SDK` is a stateful Chat SDK that allows you to use `@azure/communication-chat` SDK in a stateful manner.
+It provides a proxy layer built on top of the `@azure/communication-chat` and exposes all of the underlying functionality.
+
+## Features
+
+- Framework agnostic SDK that can be easily integrated into applications built using frameworks like React and Angular.
+- Allows you to use custom data stores. For example, React Context, React State, Redux etc.
+- API is identical to `@azure/communication-chat`. Can be used as a drop-in replacement.
+
+## Installation
+
+You can install the `@azure/acs-chat-declarative` library in your project by running the following command.
+
+```bash
+# Install the pre-requisite `@azure/communication-chat` library
+npm i --save @azure/communication-chat
+
+# Install the Private Preview `@azure/acs-chat-declarative` tarball
+npm i --save ./{path to @azure/acs-chat-declarative tarball}
+```
+
+It is also recommended to install the `@azure/communication-common` library that provides commonly used functionality.
+
+```bash
+npm i --save @azure/communication-common
+```
+
+## Setup Client
+
+```tsx
+import { ChatClient } from '@azure/communication-chat';
+import { chatClientDeclaratify } from '@azure/acs-chat-declarative';
+import { AzureCommunicationTokenCredential } from "@azure/communication-common";
+
+const ENDPOINT_URL = '<ENDPOINT>';
+const TOKEN = '<USER_ACCESS_TOKEN>';
+const TOKEN_CREDENTIAL = new AzureCommunicationTokenCredential(userAccessToken);
+
+const declarativeChatClient = chatClientDeclaratify(
+  new ChatClient(ENDPOINT_URL, TOKEN_CREDENTIAL, { userId, displayName }
+)
+
+// You can then use the `declarativeChatClient` similar to how you would use a `ChatClient`
+const chatThreadClient = await declarativeChatClient.createChatThread({});
+```
+
+## State Management
+
+The Declarative Chat Client allows you to subscribe to state changes via event listeners.
+
+```tsx
+import { ChatClientState } from '@azure/acs-chat-declarative';
+
+const onStateChange = (state: ChatClientState): void => {
+  // The `state` variable contains new state whenever a change occurs.
+};
+
+// Subscribe to state changes
+declarativeChatClient.onStateChange(onStateChange);
+
+// Unsubscribe to state changes
+declarativeChatClient.offStateChange(onStateChange);
+```
+
+## Usage
+
+Although the API interface of declarative chat client is similar to `@azure/communication-chat`, it's usage has a slight variation.
+
+Calling a client method like `chatThreadClient.updateThread({ topic: 'newTopicName' })` will not return anything. Instead, to view the changes triggered by such a client method, you will have to subscribe to the `onStateChange` events as sown below.
+
+```tsx
+import { ChatClientState } from '@azure/acs-chat-declarative';
+
+const threadId = 'CHAT_THREAD_ID';
+
+const onStateChange = (state: ChatClientState): void => {
+  console.log(state.threads.get(threadId)?.threadInfo?.topic);
+};
+
+// Subscribe to state changes
+declarativeChatClient.onStateChange(onStateChange);
+
+// Call client methods
+chatThreadClient.updateThread({ topic: 'newTopicName' });
+```

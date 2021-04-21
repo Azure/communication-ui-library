@@ -5,17 +5,30 @@ import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/a
 
 # Selectors
 
-Selectors are data providers used to access data from a global data store (state). Stateful Chat SDK provides selectors that can be used seemlessly with UI Components.
+Selectors are data providers used to efficiently compute derived data from a data store.
+Declarative Chat SDK provides selectors that can be used seemlessly with UI Components.
+
+Selectors use `Reselect` behind the scenes. `Reselect` is a simple library for creating memoized, composable selector functions.
+
+It is recommended that users familiarize themselves with `Reselect`. Official documentation can be found here: https://github.com/reduxjs/reselect
+
+```tsx
+// A selector usage will almost always look like this;
+// where `state` is the app data store and `configuration` contains
+// information needed by the selector to compute derived data.
+const props = someSelector(state, configuration);
+```
 
 ## Thread Selector
 
 The `chatThreadSelector` provides data props needed to render a [MessageThread](?path=/docs/ui-components-messagethread--message-thread-component) component.
 
 ```tsx
-import { chatThreadSelector } from '@azure/acs-chat-selector';
+import { ChatClientState, chatThreadSelector } from '@azure/acs-chat-selector';
 
-const threadId = 'YOUR_THREAD_ID';
-const chatThreadProps = useSelector(chatThreadSelector, { threadId });
+const state: ChatClientState = 'CHAT_APP_DATA_STORE';
+const threadId = 'CHAT_THREAD_ID';
+const chatThreadProps = chatThreadSelector(state, { threadId });
 
 <MessageThread {...chatThreadProps} />;
 ```
@@ -27,8 +40,8 @@ The `chatParticipantListSelector` provides a list of chat participants that can 
 ```tsx
 import { chatParticipantListSelector, WebUiChatParticipant } from '@azure/acs-chat-selector';
 
-const threadId = 'YOUR_THREAD_ID';
-const chatParticipantProps = useSelector(chatParticipantListSelector, { threadId });
+const threadId = 'CHAT_THREAD_ID';
+const chatParticipantProps = chatParticipantListSelector(state, { threadId });
 
 const Participants = chatParticipantProps.chatParticipants.map((member: WebUiChatParticipant) => (
   <ParticipantItem key={member.userId} name={member.displayName as string} />
@@ -42,8 +55,8 @@ The `sendBoxSelector` provides data for rendering a [SendBox](?path=/docs/ui-com
 ```tsx
 import { sendBoxSelector } from '@azure/acs-chat-selector';
 
-const threadId = 'YOUR_THREAD_ID';
-const sendBoxProps = useSelector(sendBoxSelector, { threadId });
+const threadId = 'CHAT_THREAD_ID';
+const sendBoxProps = sendBoxSelector(state, { threadId });
 
 <SendBox {...sendBoxProps} />;
 ```

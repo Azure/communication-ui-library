@@ -30,15 +30,15 @@ export const parameters = {
     storySort: {
       order: [
         'Introduction',
-       'Use Cases',
-       'Quickstart: UI Components',
-       'Quickstart: Composites',
+        'Use Cases',
+        'Quickstart: UI Components',
+        'Quickstart: Composites',
         'Styling',
-       'Theming',
-       'Localization',
-       'Composites',
-       'UI Components',
-       'Stateful Chat SDK'
+        'Theming',
+        'Localization',
+        'Composites',
+        'UI Components',
+        'Stateful Chat SDK',
       ]
     }
   }
