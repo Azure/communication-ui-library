@@ -6,7 +6,7 @@ import { CallContext } from './CallContext';
 import {
   convertSdkLocalStreamToDeclarativeLocalStream,
   convertSdkRemoteStreamToDeclarativeRemoteStream,
-  convertSdkVideoStreamRendererViewToDeclarativeVideoStreamRendererView
+  convertFromSDKToDeclarativeVideoStreamRendererView
 } from './Converter';
 import { InternalCallContext } from './InternalCallContext';
 
@@ -34,7 +34,7 @@ export async function startRenderVideo(
       callId,
       participantKey,
       streamId,
-      convertSdkVideoStreamRendererViewToDeclarativeVideoStreamRendererView(view)
+      convertFromSDKToDeclarativeVideoStreamRendererView(view)
     );
     internalContext.setRemoteVideoStreamRenderer(callId, streamId, renderer);
   } else {
@@ -48,10 +48,7 @@ export async function startRenderVideo(
     const renderer = new VideoStreamRenderer(localVideoStream);
     const view = await renderer.createView(options);
 
-    context.setLocalVideoStreamRendererView(
-      callId,
-      convertSdkVideoStreamRendererViewToDeclarativeVideoStreamRendererView(view)
-    );
+    context.setLocalVideoStreamRendererView(callId, convertFromSDKToDeclarativeVideoStreamRendererView(view));
     internalContext.setLocalVideoStreamRenderer(callId, renderer);
   }
 }

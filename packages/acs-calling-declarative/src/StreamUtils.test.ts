@@ -69,7 +69,7 @@ function createMockCall(mockCallId: string): Call {
     direction: 'Incoming',
     isMuted: true,
     isScreenSharingOn: false,
-    localVideoStream: undefined,
+    localVideoStreams: [],
     remoteParticipants: new Map<string, RemoteParticipant>(),
     remoteParticipantsEnded: new Map<string, RemoteParticipant>(),
     startTime: new Date(),
@@ -114,7 +114,7 @@ function addSdkRemoteStream(internalContext: InternalCallContext, callId: string
 }
 
 function addMockLocalStream(call: Call): void {
-  call.localVideoStream = {} as LocalVideoStream;
+  call.localVideoStreams.push({} as LocalVideoStream);
 }
 
 function addSdkLocalStream(internalContext: InternalCallContext, callId: string): void {
@@ -278,7 +278,7 @@ describe('stream utils', () => {
 
     expect(internalContext.getLocalVideoStream(mockCallId)).toBeDefined();
     expect(internalContext.getLocalVideoStreamRenderer(mockCallId)).toBeDefined();
-    expect(context.getState().calls.get(mockCallId)?.localVideoStream?.videoStreamRendererView).toBeDefined();
+    expect(context.getState().calls.get(mockCallId)?.localVideoStreams[0].videoStreamRendererView).toBeDefined();
   });
 
   test('cleans up state and stop rendering when stopRenderVideo is called on remote stream', async () => {
@@ -293,6 +293,6 @@ describe('stream utils', () => {
     stopRenderVideo(context, internalContext, mockCallId, {} as LocalVideoStream);
 
     expect(internalContext.getLocalVideoStreamRenderer(mockCallId)).not.toBeDefined();
-    expect(context.getState().calls.get(mockCallId)?.localVideoStream?.videoStreamRendererView).not.toBeDefined();
+    expect(context.getState().calls.get(mockCallId)?.localVideoStreams[0].videoStreamRendererView).not.toBeDefined();
   });
 });

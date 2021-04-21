@@ -107,10 +107,7 @@ export function convertSdkCallToDeclarativeCall(call: SdkCall): DeclarativeCall 
     direction: call.direction,
     isMuted: call.isMuted,
     isScreenSharingOn: call.isScreenSharingOn,
-    localVideoStream:
-      call.localVideoStreams.length > 0
-        ? convertSdkLocalStreamToDeclarativeLocalStream(call.localVideoStreams[0])
-        : undefined,
+    localVideoStreams: call.localVideoStreams.map(convertSdkLocalStreamToDeclarativeLocalStream),
     remoteParticipants: declarativeRemoteParticipants,
     remoteParticipantsEnded: new Map<string, DeclarativeRemoteParticipant>(),
     startTime: new Date(),
@@ -127,7 +124,7 @@ export function convertSdkIncomingCallToDeclarativeIncomingCall(call: SdkIncomin
   };
 }
 
-export function convertSdkVideoStreamRendererViewToDeclarativeVideoStreamRendererView(
+export function convertFromSDKToDeclarativeVideoStreamRendererView(
   view: VideoStreamRendererView
 ): DeclarativeVideoStreamRendererView {
   return {

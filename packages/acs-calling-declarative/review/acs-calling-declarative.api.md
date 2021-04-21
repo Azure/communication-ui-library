@@ -30,7 +30,7 @@ export interface Call {
     id: string;
     isMuted: boolean;
     isScreenSharingOn: boolean;
-    localVideoStream: LocalVideoStream | undefined;
+    localVideoStreams: LocalVideoStream[];
     remoteParticipants: Map<string, RemoteParticipant>;
     remoteParticipantsEnded: Map<string, RemoteParticipant>;
     startTime: Date;

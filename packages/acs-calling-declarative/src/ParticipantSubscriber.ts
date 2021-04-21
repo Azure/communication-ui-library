@@ -6,6 +6,7 @@ import { CallIdRef } from './CallIdRef';
 import { convertSdkRemoteStreamToDeclarativeRemoteStream, getRemoteParticipantKey } from './Converter';
 import { InternalCallContext } from './InternalCallContext';
 import { RemoteVideoStreamSubscriber } from './RemoteVideoStreamSubscriber';
+import { stopRenderVideo } from './StreamUtils';
 
 /**
  * Keeps track of the listeners assigned to a particular participant because when we get an event from SDK, it doesn't
@@ -95,6 +96,14 @@ export class ParticipantSubscriber {
   private videoStreamsUpdated = (event: { added: RemoteVideoStream[]; removed: RemoteVideoStream[] }): void => {
     for (const stream of event.removed) {
       this._remoteVideoStreamSubscribers.get(stream.id)?.unsubscribe();
+      const existingDeclarativeStream = this._context
+        .getState()
+        .calls.get(this._callIdRef.callId)
+        ?.remoteParticipants.get(this._participantKey)
+        ?.videoStreams.get(stream.id);
+      if (existingDeclarativeStream) {
+        stopRenderVideo(this._context, this._internalContext, this._callIdRef.callId, existingDeclarativeStream);
+      }
       this._internalContext.removeRemoteVideoStream(this._callIdRef.callId, stream.id);
     }
 

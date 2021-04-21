@@ -145,6 +145,10 @@ export class InternalCallContext {
     this._localVideoStreams.set(callId, localVideoStream);
   }
 
+  public removeLocalVideoStream(callId: string): void {
+    this._localVideoStreams.delete(callId);
+  }
+
   public getLocalVideoStream(callId: string): LocalVideoStream | undefined {
     return this._localVideoStreams.get(callId);
   }

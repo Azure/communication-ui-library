@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { Call, RemoteParticipant } from '@azure/communication-calling';
+import { Call, LocalVideoStream, RemoteParticipant } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
 import { CallIdRef } from './CallIdRef';
 import {
@@ -10,6 +10,7 @@ import {
 } from './Converter';
 import { InternalCallContext } from './InternalCallContext';
 import { ParticipantSubscriber } from './ParticipantSubscriber';
+import { stopRenderVideo } from './StreamUtils';
 
 /**
  * Keeps track of the listeners assigned to a particular call because when we get an event from SDK, it doesn't tell us
@@ -130,14 +131,20 @@ export class CallSubscriber {
     );
   };
 
-  private localVideoStreamsUpdated = (): void => {
-    if (this._call.localVideoStreams.length > 0) {
-      // At time of writing only one LocalVideoStream is supported by SDK.
-      this._context.setCallLocalVideoStream(
-        this._callIdRef.callId,
-        convertSdkLocalStreamToDeclarativeLocalStream(this._call.localVideoStreams[0])
-      );
+  private localVideoStreamsUpdated = (event: { added: LocalVideoStream[]; removed: LocalVideoStream[] }): void => {
+    // At time of writing only one LocalVideoStream is supported by SDK.
+    if (event.added.length > 0) {
+      const localVideoStreams = [convertSdkLocalStreamToDeclarativeLocalStream(this._call.localVideoStreams[0])];
+      this._context.setCallLocalVideoStream(this._callIdRef.callId, localVideoStreams);
       this._internalContext.setLocalVideoStream(this._callIdRef.callId, this._call.localVideoStreams[0]);
+    }
+    if (event.removed.length > 0) {
+      const localVideoStreams = this._context.getState().calls.get(this._callIdRef.callId)?.localVideoStreams;
+      if (localVideoStreams && localVideoStreams.length === 1) {
+        stopRenderVideo(this._context, this._internalContext, this._callIdRef.callId, localVideoStreams[0]);
+      }
+      this._context.setCallLocalVideoStream(this._callIdRef.callId, []);
+      this._internalContext.removeLocalVideoStream(this._callIdRef.callId);
     }
   };
 }
