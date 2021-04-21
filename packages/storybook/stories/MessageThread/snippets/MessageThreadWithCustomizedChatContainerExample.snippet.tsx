@@ -9,7 +9,7 @@ export const MessageThreadWithCustomizedChatContainerExample: () => JSX.Element 
       <MessageThread
         userId={'1'}
         messages={GetHistoryChatMessages()}
-        styles={{ chatContainer: { backgroundColor: 'lightgray' } }}
+        styles={{ chatContainer: { backgroundColor: 'lightgray', padding: '15px' } }}
       />
     </FluentThemeProvider>
   );
