@@ -1,5 +1,5 @@
 // © Microsoft Corporation. All rights reserved.
-import { ChatClientState, ChatMessageWithStatus } from '@azure/acs-chat-declarative';
+import { ChatClientState, ChatMessageWithStatus, TypingIndicator } from '@azure/acs-chat-declarative';
 import { ChatParticipant, ChatMessageReadReceipt } from '@azure/communication-chat';
 export type BaseSelectorProps = {
   threadId: string;
@@ -24,11 +24,15 @@ export const getIsLargeGroup = (state: ChatClientState, props: BaseSelectorProps
 };
 
 export const getLatestReadTime = (state: ChatClientState, props: BaseSelectorProps): Date =>
-  (props.threadId && state.threads.get(props.threadId)?.latestReadtime) || new Date(0);
+  (props.threadId && state.threads.get(props.threadId)?.latestReadTime) || new Date(0);
 
 export const getCoolPeriod = (state: ChatClientState, props: BaseSelectorProps): Date =>
   (props.threadId && state.threads.get(props.threadId)?.coolPeriod) || new Date(0);
 
 export const getTopicName = (state: ChatClientState, props: BaseSelectorProps): string => {
   return state.threads.get(props.threadId)?.threadInfo?.topic || '';
+};
+
+export const getTypingIndicators = (state: ChatClientState, props: BaseSelectorProps): TypingIndicator[] => {
+  return (props.threadId && state.threads.get(props.threadId)?.typingIndicators) || [];
 };

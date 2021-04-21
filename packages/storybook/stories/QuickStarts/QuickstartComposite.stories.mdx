@@ -1,0 +1,122 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
+import { GroupCall, GroupChat } from '@azure/communication-ui';
+import { App as QuickstartCompositeExample } from './snippets/QuickstartComposite.snippet.tsx';
+import QuickstartCompositeText from '!!raw-loader!./snippets/QuickstartComposite.snippet.tsx';
+
+<Meta title="Quickstarts/Get started with Composites" />
+
+# Quickstart: Get started with Composites
+
+Get started with Azure Communication Services by using the UI Framework to quickly integrate communication experiences into your applications. In this quickstart, you'll learn how integrate UI Framework base components into your application to build communication experiences.
+
+UI Framework components come in two flavors: Base and Composite.
+
+- **Base components** represent discrete communication capabilities; they're the basic building blocks that can be used to build complex communication experiences.
+- **Composite components** are turn-key experiences for common communication scenarios that have been built using **base components** as building blocks and packaged to be easily integrated into applications.
+
+## Prerequisites
+
+- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
+- [Node.js](https://nodejs.org/) Active LTS and Maintenance LTS versions (Node 12 Recommended).
+- An active Communication Services resource. [Create a Communication Services resource](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp).
+
+## Setting up
+
+UI Framework requires a React environment to be setup. Next we will do that. If you already have a React App, you can skip this section.
+
+### Set Up React App
+
+We'll use the create-react-app template for this quickstart. For more information, see: [Get Started with React](https://reactjs.org/docs/create-a-new-react-app.html)
+
+```bash
+
+# Build app in typescript:
+npx create-react-app ui-toolkit-quickstart --template typescript
+
+cd ui-toolkit-quickstart
+
+```
+
+At the end of this process, you should have a full application inside of the folder `ui-toolkit-quickstart`.
+For this quickstart, we'll be modifying files inside of the `src` folder.
+
+### Install the package
+
+Use the `npm install` command to install the Azure Communication Services UI Toolkit for JavaScript.
+Move the provided tarball (Private Preview) over to the `ui-toolkit-quickstart` directory. **Make sure to run the `npm i` command inside the `ui-toolkit-quickstart` directory.**
+
+```bash
+
+# For Private Preview install tarball
+
+npm install --save ./{path for tarball}
+
+```
+
+The `--save` option lists the library as a dependency in your **package.json** file.
+
+### Run Create React App
+
+Let's test the Create React App installation by running:
+
+```bash
+
+npm run start
+
+```
+
+## Object model
+
+The following classes and interfaces handle some of the major features of the Azure Communication Services UI client library:
+
+| Name                                                                  | Description                                                                                        |
+| --------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| [GroupCall](/?path=/story/composites-groupcall--group-call-composite) | Composite component that renders a group calling experience with participant gallery and controls. |
+| [GroupChat](/?path=/story/composites-groupchat--group-chat-composite) | Composite component that renders a group chat experience with chat thread and input                |
+
+## Initialize Group Call and Group Chat Composite Components
+
+Go to the `src` folder inside of `ui-toolkit-quickstart` and look for the file `app.tsx`.
+Here we'll drop the following code to initialize our Composite Components for Group Chat and Calling.
+You can choose which one to use depending on the type of communication experience you're building.
+If needed, you can use both at the same time.
+To initialize the components, you'll need an access token retrieved from Azure Communication Services.
+For details on how to do get access tokens, see: [create and manage user access tokens](https://docs.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-javascript).
+
+The components don't generate access tokens, group IDs, or thread IDs.
+These elements come from services that go through the proper steps to generate these IDs and pass them to the client application.
+For more information, see: [Client Server Architecture](https://docs.microsoft.com/azure/communication-services/concepts/client-and-server-architecture).
+For Example: The Group Chat composite expects that the `userId` associated to the `token` being used to initialize it has already been joined to the `threadId` being provided.
+If the token hasn't been joined to the thread ID, then the Group Chat composite will fail.
+For more information on chat, see: [Getting Started with Chat](https://docs.microsoft.com/azure/communication-services/quickstarts/chat/get-started?pivots=programming-language-csharp)
+
+`App.tsx`
+
+<Source code={QuickstartCompositeText} />
+
+## Run quickstart
+
+To run the code above use the command:
+
+```bash
+
+npm run start
+
+```
+
+## Clean up resources
+
+If you want to clean up and remove a Communication Services subscription, you can delete the resource or resource group.
+Deleting the resource group also deletes any other resources associated with it.
+Learn more about [cleaning up resources](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp#clean-up-resources).
+
+## Next steps
+
+[Try UI Toolkit UI Components](/?path=/story/quickstart-ui-components--page)
+
+For more information, see the following resources:
+
+- [UI Toolkit Use Cases](/?path=/story/use-cases--page)
+- [UI Toolkit Styling](/?path=/story/styling--page)
+- [UI Toolkit Theming](/?path=/story/theming--page)

@@ -1,7 +1,14 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
+import AppText from '!!raw-loader!./snippets/App.snippet.tsx';
+import CallingComponentsText from '!!raw-loader!./snippets/CallingComponents.snippet.tsx';
+import { CallingComponents } from './snippets/CallingComponents.snippet';
+import ChatComponentsText from '!!raw-loader!./snippets/ChatComponents.snippet.tsx';
+import { ChatComponents } from './snippets/ChatComponents.snippet';
+import CompletedComponentsAppText from '!!raw-loader!./snippets/CompletedComponentsApp.snippet.tsx';
+import CompletedComponentsApp from './snippets/CompletedComponentsApp.snippet';
 
-<Meta title="Quickstart: UI Components" />
+<Meta title="Quickstarts/Get started with UI Components" />
 
 # Quickstart: Get started with UI Components
 
@@ -29,9 +36,9 @@ We'll use the create-react-app template for this quickstart. For more informatio
 ```bash
 
 # Build app in typescript:
-npx create-react-app UI-ToolKit-Quickstart --template typescript
+npx create-react-app ui-toolkit-quickstart --template typescript
 
-cd UI-ToolKit-Quickstart
+cd ui-toolkit-quickstart
 
 ```
 
@@ -83,16 +90,7 @@ It is in charge of allowing developer customize the theme of the components as w
 
 `App.tsx`
 
-```jsx
-import React from 'react';
-import { FluentThemeProvider } from '@azure/communication-ui';
-
-function App(props) {
-  return <FluentThemeProvider>{/*Add Components!*/}</FluentThemeProvider>;
-}
-
-export default App;
-```
+<Source code={AppText} />
 
 Inside the `FluentThemeProvider`, you can add additional components.
 Next we'll use various UI components to showcase a sample experience.
@@ -107,70 +105,7 @@ You can add extra layout and styling around the components.
 
 `CallingComponents.tsx`
 
-```jsx
-import {
-  GridLayout,
-  VideoTile,
-  ControlBar,
-  videoButtonProps,
-  audioButtonProps,
-  screenShareButtonProps,
-  optionsButtonProps,
-  hangupButtonProps
-} from '@azure/communication-ui';
-import { DefaultButton, Stack, IContextualMenuProps } from '@fluentui/react';
-import { useState } from 'react';
-
-export function CallingComponents() {
-  const exampleOptionsMenuProps: IContextualMenuProps = {
-    items: [
-      {
-        key: '1',
-        name: 'Choose Camera',
-        iconProps: { iconName: 'LocationCircle' },
-        onClick: () => alert('Choose Camera Menu Item Clicked!')
-      }
-    ]
-  };
-  const [videoButtonChecked, setVideoButtonChecked] = useState < boolean > false;
-  const [audioButtonChecked, setAudioButtonChecked] = useState < boolean > false;
-  const [screenshareButtonChecked, setScreenshareButtonChecked] = useState < boolean > false;
-
-  return (
-    <Stack>
-      {/* GridLayout Component relies on the parent's height and width, so it's required to set the height and width on its parent. */}
-      <div style={{ height: '30rem', width: '30rem', border: '1px solid' }}>
-        <GridLayout>
-          <VideoTile isVideoReady={false} videoProvider={null} avatarName={'Michael'}>
-            <label>Michael</label>
-          </VideoTile>
-        </GridLayout>
-      </div>
-
-      {/* Control Bar with default set up */}
-      <ControlBar styles={{ root: { justifyContent: 'center' } }}>
-        <DefaultButton
-          {...videoButtonProps}
-          checked={videoButtonChecked}
-          onClick={() => setVideoButtonChecked(!videoButtonChecked)}
-        />
-        <DefaultButton
-          {...audioButtonProps}
-          checked={audioButtonChecked}
-          onClick={() => setAudioButtonChecked(!audioButtonChecked)}
-        />
-        <DefaultButton
-          {...screenShareButtonProps}
-          checked={screenshareButtonChecked}
-          onClick={() => setScreenshareButtonChecked(!screenshareButtonChecked)}
-        />
-        <DefaultButton {...optionsButtonProps} menuProps={exampleOptionsMenuProps} />
-        <DefaultButton {...hangupButtonProps} />
-      </ControlBar>
-    </Stack>
-  );
-}
-```
+<Source code={CallingComponentsText} />
 
 For this example we added a single `Video Tile` to the grid, but additional can be added.
 
@@ -182,64 +117,7 @@ Here we'll initialize a function component that will hold our base components to
 
 `ChatComponents.tsx`
 
-```jsx
-import {MessageThread, ChatMessage as WebUiChatMessage, SendBox, MessageStatus } from '@azure/communication-ui'
-
-export const ChatComponents = () => {
-  //A sample chat history
-  const GetHistoryChatMessages = (): WebUiChatMessage[] => {
-    return [
-      {
-        senderId: '1',
-        senderDisplayName: 'User1',
-        messageId: Math.random().toString(),
-        content: 'Hi everyone, I created this awesome group chat for us!',
-        createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
-        mine: true,
-        attached: false,
-        statusToRender: 'seen' as MessageStatus
-      },
-      {
-        senderId: '2',
-        senderDisplayName: 'User2',
-        messageId: Math.random().toString(),
-        content: 'Nice! This looks great!',
-        createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
-        mine: false,
-        attached: false
-      },
-      {
-        senderId: '3',
-        senderDisplayName: 'User3',
-        messageId: Math.random().toString(),
-        content: "Yeah agree, let's chat here from now on!",
-        createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
-        mine: false,
-        attached: false
-      }
-    ];
-  };
-
-  return (
-    <div style = {{height: '30rem', width: '30rem'}}>
-      {/* Chat thread component with read receipt feature enabled */}
-      <MessageThread
-        userId={'1'}
-        chatMessages={GetHistoryChatMessages()}
-        disableReadReceipt={false}
-      />
-
-      <SendBox
-        disabled={false}
-        sendMessage={async () => { return }}
-        userId='ACS_ID PLACEHOLDER'
-        displayName='User Name'
-        onSendTypingNotification={async () => { return }}
-      />
-    </div >
-  );
-}
-```
+<Source code={ChatComponentsText} />
 
 ## Add Calling and Chat Components to the main application
 
@@ -247,31 +125,10 @@ Back in the `app.tsx` file, we will now add the components to the `FluentThemePr
 
 `App.tsx`
 
-```jsx
-import { FluentThemeProvider } from '@azure/communication-ui';
-import { Stack } from '@fluentui/react';
-import { CallingComponents } from './CallingComponents';
-import { ChatComponents } from './ChatComponents';
-
-function App() {
-  return (
-    <FluentThemeProvider>
-      <Stack
-        horizontal
-        horizontalAlign="space-evenly"
-        styles={{
-          root: { width: '100%' }
-        }}
-      >
-        <CallingComponents />
-        <ChatComponents />
-      </Stack>
-    </FluentThemeProvider>
-  );
-}
-
-export default App;
-```
+<Source code={CompletedComponentsAppText} />
+<Canvas withSource="none">
+  <CompletedComponentsApp />
+</Canvas>
 
 ## Run quickstart
 

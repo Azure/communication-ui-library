@@ -10,5 +10,3 @@ export * from './MapToLocalDeviceSettingsProps';
 export * from './MapToChatMessageProps';
 export * from './MapToErrorsProps';
 export * from './MapToErrorBarProps';
-export * from './MapToSendBoxProps';
-export * from './MapToTypingIndicatorProps';

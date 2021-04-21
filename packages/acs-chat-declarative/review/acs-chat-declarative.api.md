@@ -99,7 +99,7 @@ export type ChatThreadClientState = {
     failedMessageIds: string[];
     readReceipts: ReadReceipt[];
     typingIndicators: TypingIndicator[];
-    latestReadtime: Date;
+    latestReadTime: Date;
 };
 
 // @public (undocumented)
