@@ -25,7 +25,7 @@ npm i --save @azure/communication-chat
 npm i --save ./{path to @azure/acs-chat-declarative tarball}
 ```
 
-It is also recommended to install the `@azure/communication-common` library that provides commonly used functionality.
+It is also recommended to install the `@azure/communication-common` library as it is required for generating `AzureCommunicationTokenCredential`.
 
 ```bash
 npm i --save @azure/communication-common
@@ -72,7 +72,7 @@ declarativeChatClient.offStateChange(onStateChange);
 
 Although the API interface of declarative chat client is similar to `@azure/communication-chat`, it's usage has a slight variation.
 
-Calling a client method like `chatThreadClient.updateThread({ topic: 'newTopicName' })` will not return anything. Instead, to view the changes triggered by such a client method, you will have to subscribe to the `onStateChange` events as sown below.
+Calling a client method like `chatThreadClient.updateThread({ topic: 'newTopicName' })` will not return anything. Instead, to view the changes triggered by such a client method, you will have to subscribe to the `onStateChange` events as shown below.
 
 ```tsx
 import { ChatClientState } from '@azure/acs-chat-declarative';
