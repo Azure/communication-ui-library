@@ -178,7 +178,7 @@ const DefaultChatMessageRenderer: DefaultMessageRendererType = (props: MessagePr
   );
   return (
     <Chat.Message
-      styles={!!props.messageContainerStyle ? props.messageContainerStyle : chatMessageStyle}
+      className={mergeStyles(chatMessageStyle as IStyle, props.messageContainerStyle as IStyle)}
       content={messageContentItem}
       author={payload.senderDisplayName}
       mine={payload.mine}
@@ -193,12 +193,11 @@ const DefaultSystemMessageRenderer: DefaultMessageRendererType = (props: Message
   if (props.message.type === 'system') {
     const payload: SystemMessagePayload = props.message.payload;
     return (
-      <div className={mergeStyles(props.messageContainerStyle as IStyle)}>
-        <SystemMessageComponent
-          iconName={(payload.iconName ?? '') as SystemMessageIconTypes}
-          content={payload.content ?? ''}
-        />
-      </div>
+      <SystemMessageComponent
+        iconName={(payload.iconName ?? '') as SystemMessageIconTypes}
+        content={payload.content ?? ''}
+        containerStyle={props?.messageContainerStyle}
+      />
     );
   } else {
     return <></>;

@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { FontIcon, mergeStyles, Stack } from '@fluentui/react';
-// import { EditIcon, ParticipantAddIcon, ParticipantRemoveIcon } from '@fluentui/react-northstar';
+import { IStyle, FontIcon, mergeStyles, Stack } from '@fluentui/react';
+import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import React from 'react';
 import { systemMessageContentStyle, systemMessageIconStyle } from './styles/SystemMessage.styles';
 
@@ -17,6 +17,10 @@ export type SystemMessageProps = {
    * Content string for the system message.
    */
   content: string;
+  /*
+   * Style for the system message container.
+   */
+  containerStyle?: ComponentSlotStyle;
 };
 
 export const SystemMessage = (props: SystemMessageProps): JSX.Element => {
@@ -24,7 +28,7 @@ export const SystemMessage = (props: SystemMessageProps): JSX.Element => {
   const Icon: JSX.Element = <FontIcon iconName={iconName} className={mergeStyles(systemMessageIconStyle)} />;
 
   return (
-    <Stack horizontal>
+    <Stack horizontal className={mergeStyles(props?.containerStyle as IStyle)}>
       {Icon}
       <span className={mergeStyles(systemMessageContentStyle)}>{content}</span>
     </Stack>
