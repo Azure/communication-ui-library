@@ -4,7 +4,8 @@ import {
   RemoteParticipant as SdkRemoteParticipant,
   RemoteVideoStream as SdkRemoteVideoStream,
   LocalVideoStream as SdkLocalVideoStream,
-  IncomingCall as SdkIncomingCall
+  IncomingCall as SdkIncomingCall,
+  VideoStreamRendererView
 } from '@azure/communication-calling';
 import {
   CommunicationUserKind,
@@ -18,7 +19,7 @@ import {
   RemoteVideoStream as DeclarativeRemoteVideoStream,
   LocalVideoStream as DeclarativeLocalVideoStream,
   IncomingCall as DeclarativeIncomingCall,
-  RemoteParticipant
+  VideoStreamRendererView as DeclarativeVideoStreamRendererView
 } from './CallClientState';
 
 export function convertSdkLocalStreamToDeclarativeLocalStream(
@@ -26,7 +27,8 @@ export function convertSdkLocalStreamToDeclarativeLocalStream(
 ): DeclarativeLocalVideoStream {
   return {
     source: stream.source,
-    mediaStreamType: stream.mediaStreamType
+    mediaStreamType: stream.mediaStreamType,
+    videoStreamRendererView: undefined
   };
 }
 
@@ -36,19 +38,24 @@ export function convertSdkRemoteStreamToDeclarativeRemoteStream(
   return {
     id: stream.id,
     mediaStreamType: stream.mediaStreamType,
-    isAvailable: stream.isAvailable
+    isAvailable: stream.isAvailable,
+    videoStreamRendererView: undefined
   };
 }
 
 export function convertSdkParticipantToDeclarativeParticipant(
   participant: SdkRemoteParticipant
 ): DeclarativeRemoteParticipant {
+  const declarativeVideoStreams = new Map<number, DeclarativeRemoteVideoStream>();
+  for (const videoStream of participant.videoStreams) {
+    declarativeVideoStreams.set(videoStream.id, convertSdkRemoteStreamToDeclarativeRemoteStream(videoStream));
+  }
   return {
     identifier: participant.identifier,
     displayName: participant.displayName,
     state: participant.state,
     callEndReason: participant.callEndReason,
-    videoStreams: participant.videoStreams.map(convertSdkRemoteStreamToDeclarativeRemoteStream),
+    videoStreams: declarativeVideoStreams,
     isMuted: participant.isMuted,
     isSpeaking: participant.isSpeaking
   };
@@ -83,6 +90,7 @@ export function getRemoteParticipantKey(
   return `${identifier.kind}_${id}`;
 }
 
+// Note at the time of writing only one LocalVideoStream is supported by the SDK.
 export function convertSdkCallToDeclarativeCall(call: SdkCall): DeclarativeCall {
   const declarativeRemoteParticipants = new Map<string, DeclarativeRemoteParticipant>();
   call.remoteParticipants.forEach((participant: SdkRemoteParticipant) => {
@@ -101,7 +109,7 @@ export function convertSdkCallToDeclarativeCall(call: SdkCall): DeclarativeCall 
     isScreenSharingOn: call.isScreenSharingOn,
     localVideoStreams: call.localVideoStreams.map(convertSdkLocalStreamToDeclarativeLocalStream),
     remoteParticipants: declarativeRemoteParticipants,
-    remoteParticipantsEnded: new Map<string, RemoteParticipant>(),
+    remoteParticipantsEnded: new Map<string, DeclarativeRemoteParticipant>(),
     startTime: new Date(),
     endTime: undefined
   };
@@ -113,5 +121,15 @@ export function convertSdkIncomingCallToDeclarativeIncomingCall(call: SdkIncomin
     callerInfo: call.callerInfo,
     startTime: new Date(),
     endTime: undefined
+  };
+}
+
+export function convertFromSDKToDeclarativeVideoStreamRendererView(
+  view: VideoStreamRendererView
+): DeclarativeVideoStreamRendererView {
+  return {
+    scalingMode: view.scalingMode,
+    isMirrored: view.isMirrored,
+    target: view.target
   };
 }
