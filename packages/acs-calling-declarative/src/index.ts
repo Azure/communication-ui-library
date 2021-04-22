@@ -8,5 +8,6 @@ export type {
   IncomingCall,
   LocalVideoStream,
   RemoteVideoStream,
-  RemoteParticipant
+  RemoteParticipant,
+  VideoStreamRendererView
 } from './CallClientState';
