@@ -44,7 +44,7 @@ export const parameters = {
         COMPOSITE_FOLDER_PREFIX,
         COMPONENT_FOLDER_PREFIX,
         EXAMPLES_FOLDER_PREFIX,
-        'Stateful Chat SDK',
+        'Stateful Chat Client',
       ]
     }
   }
