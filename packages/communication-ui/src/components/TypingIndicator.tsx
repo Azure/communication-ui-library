@@ -40,16 +40,7 @@ export interface TypingIndicatorProps {
 const MAXIMUM_LENGTH_OF_TYPING_USERS = 35;
 
 /**
- * React component that handles displaying a typing indicator on the screen.
- *
- * Some samples:
- * 'Username1 is typing...'
- * 'Username1, Username2 are typing...'
- * 'Username1, Username2 and 5 others are typing...'
- * '100 participants are typing...'
- *
- * @param props - An object of TypingIndicatorProps type that contains all data and functions needed.
- * @returns ReactElement
+ * Typing Indicator is used to notify users if there are any other users typing in the thread.
  */
 export const TypingIndicator = (props: TypingIndicatorProps): JSX.Element => {
   const { typingUsers, typingString, onRenderUsers, styles } = props;

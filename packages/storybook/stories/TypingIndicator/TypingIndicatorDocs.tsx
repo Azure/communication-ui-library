@@ -17,9 +17,7 @@ export const getDocs: () => JSX.Element = () => {
   return (
     <>
       <Title>TypingIndicator</Title>
-      <Description>
-        Typing Indicator is used to notify users if there are any other users typing in the thread.
-      </Description>
+      <Description of={TypingIndicator} />
       <Heading>Importing</Heading>
       <Source code={importStatement} />
       <Heading>Example</Heading>
@@ -44,7 +42,7 @@ export const getDocs: () => JSX.Element = () => {
       <Heading>Customize user rendering</Heading>
       <Description>
         To customize user rendering of `TypingIndicator`, use the `onRenderUsers` property like in the example below.
-        Note when this property is assigned you must apply style directly and the `styles` property will not apply.
+        Note when this property is assigned you must apply style directly. The `styles` property will not apply.
       </Description>
       <Source code={CustomUserRenderSnippetText} />
       <Canvas>
