@@ -19,7 +19,11 @@ const createDefaultHandlers = memoizeOne(
     const messageIterator = chatThreadClient.listMessages();
     return {
       onMessageSend: async (content: string) => {
-        await chatThreadClient.sendMessage({ content });
+        const sendMessageRequest = {
+          content,
+          senderDisplayName: chatClient.state.displayName
+        };
+        await chatThreadClient.sendMessage(sendMessageRequest);
       },
       // This handler is designed for chatThread to consume
       onMessageSeen: async (chatMessageId: string) => {

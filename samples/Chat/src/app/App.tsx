@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { getBuildTime, getChatSDKVersion } from './utils/utils';
 import { initializeIcons } from '@fluentui/react';
 
-import ChatScreen from './ChatScreen';
+import { ChatScreen } from './ChatScreen';
 import { EndScreen } from './EndScreen';
 import { ErrorScreen } from './ErrorScreen';
 import HomeScreen from './HomeScreen';

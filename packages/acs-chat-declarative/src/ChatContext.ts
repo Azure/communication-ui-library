@@ -52,7 +52,7 @@ export class ChatContext {
           participants: new Map(),
           readReceipts: [],
           typingIndicators: [],
-          latestReadtime: new Date(0)
+          latestReadTime: new Date(0)
         });
       })
     );
@@ -217,9 +217,9 @@ export class ChatContext {
         if (thread && readReceipts) {
           if (
             readReceipt.sender.communicationUserId !== this.getState().userId &&
-            thread.latestReadtime < readReceipt.readOn
+            thread.latestReadTime < readReceipt.readOn
           ) {
-            thread.latestReadtime = readReceipt.readOn;
+            thread.latestReadTime = readReceipt.readOn;
           }
           readReceipts.push(readReceipt);
         }

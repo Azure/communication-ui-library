@@ -4,27 +4,21 @@ import { mergeStyles } from '@fluentui/react';
 import { ChatProvider } from '../../providers';
 import React, { useMemo } from 'react';
 import {
-  SendBox as SendBoxComponent,
-  TypingIndicator as TypingIndicatorComponent,
+  SendBox,
+  TypingIndicator,
   ErrorBar as ErrorBarComponent,
   MessageThread,
-  MessageThreadProps,
-  SendBoxProps,
-  TypingIndicatorProps
+  MessageThreadProps
 } from '../../components';
 import { chatContainer, chatWrapper } from './styles/GroupChat.styles';
 import { AbortSignalLike } from '@azure/core-http';
 import { ErrorHandlingProps, ErrorProvider } from '../../providers/ErrorProvider';
 import { CommunicationUiErrorInfo } from '../../types/CommunicationUiError';
-import {
-  connectFuncsToContext,
-  MapToChatMessageProps,
-  MapToErrorBarProps,
-  MapToSendBoxProps,
-  MapToTypingIndicatorProps,
-  SendBoxPropsFromContext
-} from '../../consumers';
+import { connectFuncsToContext, MapToChatMessageProps, MapToErrorBarProps } from '../../consumers';
 import { WithErrorHandling } from '../../utils';
+import { typingIndicatorSelector, sendBoxSelector } from '@azure/acs-chat-selector';
+import { useSelector } from './hooks/useSelector';
+import { useHandlers } from './hooks/useHandlers';
 
 export type GroupChatProps = {
   displayName: string;
@@ -64,19 +58,12 @@ export default (props: GroupChatProps): JSX.Element => {
   const ErrorBar = useMemo(() => {
     return connectFuncsToContext(ErrorBarComponent, MapToErrorBarProps);
   }, []);
-  const SendBox = useMemo(() => {
-    return connectFuncsToContext(
-      (props: SendBoxProps & SendBoxPropsFromContext & ErrorHandlingProps) =>
-        WithErrorHandling(SendBoxComponent, props),
-      MapToSendBoxProps
-    );
-  }, []);
-  const TypingIndicator = useMemo(() => {
-    return connectFuncsToContext(
-      (props: TypingIndicatorProps & ErrorHandlingProps) => WithErrorHandling(TypingIndicatorComponent, props),
-      MapToTypingIndicatorProps
-    );
-  }, []);
+  const selectorConfig = useMemo(() => {
+    return { threadId };
+  }, [threadId]);
+  const sendBoxProps = useSelector(sendBoxSelector, selectorConfig);
+  const sendBoxHandlers = useHandlers(SendBox);
+  const typingIndicatorProps = useSelector(typingIndicatorSelector, selectorConfig);
 
   return (
     <ErrorProvider onErrorCallback={onErrorCallback}>
@@ -93,10 +80,10 @@ export default (props: GroupChatProps): JSX.Element => {
             <ChatThread />
             <Stack.Item align="center" className={sendBoxParentStyle}>
               <div style={{ paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>
-                <TypingIndicator />
+                <TypingIndicator {...typingIndicatorProps} />
               </div>
               <ErrorBar />
-              <SendBox />
+              <SendBox {...sendBoxProps} {...sendBoxHandlers} />
             </Stack.Item>
           </Stack>
         </Stack>
