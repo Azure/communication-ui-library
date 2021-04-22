@@ -28,7 +28,7 @@ import {
   SystemMessagePayload
 } from '../types';
 import { ReadReceipt, ReadReceiptProps } from './ReadReceipt';
-import { memoizeFunctionAll } from '@azure/acs-chat-selector';
+import { memoizeFnAll } from '@azure/acs-chat-selector';
 import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from './SystemMessage';
 
 const isMessageSame = (first: ChatMessagePayload, second: ChatMessagePayload): boolean => {
@@ -169,7 +169,7 @@ const DefaultChatMessageRenderer: DefaultMessageRendererType = (
   );
 };
 
-const memoizeAllMessages = memoizeFunctionAll(
+const memoizeAllMessages = memoizeFnAll(
   (
     _messageKey: string,
     message: ChatMessage | SystemMessage | CustomMessage,

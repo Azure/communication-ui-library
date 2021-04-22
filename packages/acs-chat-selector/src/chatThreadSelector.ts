@@ -12,7 +12,7 @@ import { ChatClientState } from '@azure/acs-chat-declarative';
 // @ts-ignore
 import { BaseSelectorProps } from './baseSelectors';
 // @ts-ignore
-import { memoizeFunctionAll } from './utils/memoizeFunctionAll';
+import { memoizeFnAll } from './utils/memoizeFnAll';
 // @ts-ignore
 import { ChatMessage, MessageAttachedStatus, Message, MessageTypes } from './types/UiChatMessage';
 // @ts-ignore
@@ -20,7 +20,7 @@ import { createSelector } from 'reselect';
 // @ts-ignore
 import { compareMessages } from './utils/compareMessages';
 
-const memoizedAllConvertChatMessage = memoizeFunctionAll(
+const memoizedAllConvertChatMessage = memoizeFnAll(
   (
     _key: string,
     chatMessage: ChatMessageWithStatus,
