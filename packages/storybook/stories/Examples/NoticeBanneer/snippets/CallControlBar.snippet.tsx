@@ -8,6 +8,7 @@ import {
 import { DefaultButton } from '@fluentui/react';
 import React from 'react';
 
+// TODO: Add unique keys to the list here.
 export const CallControlBar = (): JSX.Element => {
   return (
     <ControlBar

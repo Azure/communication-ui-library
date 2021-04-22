@@ -1,6 +1,7 @@
 import { FluentThemeProvider, StreamMedia, VideoTile } from '@azure/communication-ui';
 import React from 'react';
 import { renderVideoStream } from '../../../utils';
+import { Banner } from './Banner.snippet';
 import { CallControlBar } from './CallControlBar.snippet';
 
 export const CallComponent = (): JSX.Element => {
@@ -21,6 +22,7 @@ export const CallComponent = (): JSX.Element => {
         }
         placeholderProvider={<></>}
       >
+        <Banner />
         <CallControlBar />
       </VideoTile>
     </FluentThemeProvider>
