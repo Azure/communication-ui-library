@@ -74,6 +74,7 @@ export type CustomMessage = Message<'custom'>;
 // @public (undocumented)
 export type CustomMessagePayload = {
     messageId: string;
+    content?: string;
 };
 
 // @public (undocumented)

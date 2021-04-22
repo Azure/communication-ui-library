@@ -14,7 +14,7 @@ export const GetHistoryChatMessages = (): ChatMessage[] => {
         createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
         mine: true,
         attached: false,
-        statusToRender: 'seen' as MessageStatus
+        status: 'seen' as MessageStatus
       }
     },
     {
@@ -50,6 +50,7 @@ export const GetHistoryWithSystemMessages = (): (SystemMessage | ChatMessage)[] 
     {
       type: 'system',
       payload: {
+        messageId: '123',
         iconName: 'PeopleAdd',
         content: 'User1 is added to the chat'
       }
@@ -64,6 +65,7 @@ export const GetHistoryWithCustomMessages = (): (CustomMessage | ChatMessage)[] 
       // Custom message's payload can be any shape, this is just an example.
       // Whatever is defined in the custom message's payload needs to be handled in onRenderMessage in MessageThread.
       payload: {
+        messageId: '1234',
         content: 'Today'
       }
     },

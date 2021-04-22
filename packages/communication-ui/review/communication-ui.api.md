@@ -72,6 +72,7 @@ export type CustomMessage = Message<'custom'>;
 // @public (undocumented)
 export type CustomMessagePayload = {
     messageId: string;
+    content?: string;
 };
 
 // @public
@@ -164,12 +165,6 @@ export const LIGHT = "Light";
 export const lightTheme: PartialTheme;
 
 // @public (undocumented)
-export interface LoadPreviousMessagesButtonProps {
-    // (undocumented)
-    onClick: () => Promise<void>;
-}
-
-// @public (undocumented)
 export type Message<T extends MessageTypes> = {
     type: T;
     payload: T extends 'chat' ? ChatMessagePayload : T extends 'system' ? SystemMessagePayload : CustomMessagePayload;
@@ -195,7 +190,6 @@ export type MessageThreadProps = {
     messages: (ChatMessage | SystemMessage | CustomMessage)[];
     styles?: MessageThreadStylesProps;
     disableJumpToNewMessageButton?: boolean;
-    disableLoadPreviousMessage?: boolean;
     disableReadReceipt?: boolean;
     numberOfChatMessagesToReload?: number;
     onMessageSeen?: (messageId: string) => Promise<void>;
@@ -203,7 +197,6 @@ export type MessageThreadProps = {
     onRenderAvatar?: (userId: string) => JSX.Element;
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
-    onRenderLoadPreviousMessagesButton?: (loadPreviousMessagesButton: LoadPreviousMessagesButtonProps) => JSX.Element;
     onRenderMessage?: (message: ChatMessage | SystemMessage | CustomMessage, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
 };
 

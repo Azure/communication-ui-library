@@ -30,6 +30,7 @@ export type SystemMessagePayload = {
 
 export type CustomMessagePayload = {
   messageId: string;
+  content?: string;
 };
 
 export type MessageTypes = 'chat' | 'system' | 'custom';

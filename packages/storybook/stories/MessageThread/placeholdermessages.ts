@@ -46,7 +46,7 @@ export const GenerateMockNewChatMessage = (): ChatMessage => {
       createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
       mine: true,
       attached: false,
-      statusToRender: 'seen' as MessageStatus
+      status: 'seen' as MessageStatus
     }
   };
 };
@@ -69,6 +69,7 @@ export const GenerateMockSystemMessage = (): SystemMessage => {
   return {
     type: 'system',
     payload: {
+      messageId: '123',
       iconName: 'PeopleAdd',
       content: 'User1 added User2 to the chat and shared all chat history.'
     }
@@ -81,6 +82,7 @@ export const GenerateMockCustomMessage = (): CustomMessage => {
     // Custom message's payload can be any shape, this is just an example.
     // Whatever is defined in the custom message's payload needs to be handled in onRenderCustomMessage in MessageThread.
     payload: {
+      messageId: '1234',
       content: 'Today'
     }
   };
@@ -234,7 +236,7 @@ export const GenerateMockChatMessages = (): ChatMessage[] => {
         createdOn: new Date('2020-04-13T00:00:00.000+08:02'),
         mine: true,
         attached: false,
-        statusToRender: 'seen' as MessageStatus
+        status: 'seen' as MessageStatus
       }
     },
     {

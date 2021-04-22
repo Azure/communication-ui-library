@@ -8,18 +8,16 @@ import {
   newMessageButtonContainerStyle,
   messageThreadContainerStyle,
   chatMessageStyle,
-  loadPreviousMessagesButtonContainerStyle,
   chatStyle,
-  loadPreviousMessageButtonStyle,
   newMessageButtonStyle,
   readReceiptContainerStyle,
   noReadReceiptStyle
 } from './styles/MessageThread.styles';
-import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack, DefaultButton } from '@fluentui/react';
+import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack } from '@fluentui/react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { LiveAnnouncer, LiveMessage } from 'react-aria-live';
 import { formatTimestampForChatMessage } from '../utils';
-import { CLICK_TO_LOAD_MORE_MESSAGES, NEW_MESSAGES } from '../constants';
+import { NEW_MESSAGES } from '../constants';
 import {
   BaseCustomStylesProps,
   ChatMessage,
@@ -149,19 +147,6 @@ const DefaultJumpToNewMessageButton = (props: JumpToNewMessageButtonProps): JSX.
   );
 };
 
-export interface LoadPreviousMessagesButtonProps {
-  onClick: () => Promise<void>;
-}
-
-const DefaultLoadPreviousMessagesButtonRenderer = (props: LoadPreviousMessagesButtonProps): JSX.Element => {
-  const { onClick } = props;
-  return (
-    <DefaultButton className={loadPreviousMessageButtonStyle} onClick={onClick}>
-      {CLICK_TO_LOAD_MORE_MESSAGES}
-    </DefaultButton>
-  );
-};
-
 const DefaultChatMessageRenderer: DefaultMessageRendererType = (
   message: ChatMessage | SystemMessage | CustomMessage
 ) => {
@@ -193,6 +178,7 @@ const memoizeAllMessages = memoizeFunctionAll(
     styles: MessageThreadStylesProps | undefined,
     onRenderReadReceipt: ((readReceiptProps: ReadReceiptProps) => JSX.Element | null) | undefined,
     defaultChatMessageRenderer: (message: ChatMessage) => JSX.Element,
+    _attached?: boolean | string,
     statusToRender?: MessageStatus,
     onRenderMessage?: (
       message: ChatMessage | SystemMessage | CustomMessage,
@@ -320,11 +306,6 @@ export type MessageThreadProps = {
    */
   disableJumpToNewMessageButton?: boolean;
   /**
-   * Whether the load previous message button is disabled.
-   * @defaultValue `true`
-   */
-  disableLoadPreviousMessage?: boolean;
-  /**
    * Whether the read receipt for each message is disabled.
    * @defaultValue `true`
    */
@@ -357,10 +338,6 @@ export type MessageThreadProps = {
    */
   onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
   /**
-   * onRenderLoadPreviousMessagesButton event handler. `(loadPreviousMessagesButton: LoadPreviousMessagesButtonProps) => JSX.Element`
-   */
-  onRenderLoadPreviousMessagesButton?: (loadPreviousMessagesButton: LoadPreviousMessagesButtonProps) => JSX.Element;
-  /**
    * onRenderMessage event handler. `defaultOnRender` is not provide for `CustomMessage` and is available for `ChatMessage` and `SystemMessage`.
    */
   onRenderMessage?: (
@@ -384,13 +361,11 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     styles,
     disableJumpToNewMessageButton = false,
     disableReadReceipt = true,
-    disableLoadPreviousMessage = true,
     numberOfChatMessagesToReload = 0,
     onMessageSeen,
     onRenderReadReceipt,
     onRenderAvatar,
     onLoadPreviousChatMessages,
-    onRenderLoadPreviousMessagesButton,
     onRenderJumpToNewMessageButton,
     onRenderMessage
   } = props;
@@ -414,9 +389,12 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const [lastSendingChatMessage, setLastSendingChatMessage] = useState<string | undefined>(undefined);
 
   const [isAllChatMessagesLoaded, setIsAllChatMessagesLoaded] = useState<boolean>(false);
+  const isAllChatMessagesLoadedRef = useRef(isAllChatMessagesLoaded);
+  isAllChatMessagesLoadedRef.current = isAllChatMessagesLoaded;
 
   const chatScrollDivRef: any = useRef();
   const chatThreadRef: any = useRef();
+  const isLoadingChatMessagesRef = useRef(false);
 
   const messagesRef = useRef(messages);
   const setMessagesRef = (messagesWithAttachedValue: (ChatMessage | SystemMessage | CustomMessage)[]): void => {
@@ -496,6 +474,24 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     }
     setIsAtBottomOfScrollRef(atBottom);
     setIsAtTopOfScrollRef(atTop);
+
+    // Make sure we do not stuck at the top if more messages are being fetched.
+    if (chatScrollDivRef.current.scrollTop === 0 && !isAllChatMessagesLoadedRef.current)
+      chatScrollDivRef.current.scrollTop = 5;
+
+    (async () => {
+      if (
+        chatScrollDivRef.current.scrollTop <= 200 &&
+        !isAllChatMessagesLoadedRef.current &&
+        !isLoadingChatMessagesRef.current
+      ) {
+        if (onLoadPreviousChatMessages) {
+          isLoadingChatMessagesRef.current = true;
+          setIsAllChatMessagesLoaded(await onLoadPreviousChatMessages(numberOfChatMessagesToReload));
+          isLoadingChatMessagesRef.current = false;
+        }
+      }
+    })();
   };
 
   /**
@@ -563,6 +559,17 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
 
+  // Fetch more messages to make the scroll bar appear, infinity scroll is then handled in the handleScroll function.
+  useEffect(() => {
+    (async () => {
+      while (chatScrollDivRef.current.scrollTop <= 200 && !isAllChatMessagesLoaded) {
+        if (onLoadPreviousChatMessages) {
+          setIsAllChatMessagesLoaded(await onLoadPreviousChatMessages(numberOfChatMessagesToReload));
+        }
+      }
+    })();
+  }, [isAllChatMessagesLoaded, onLoadPreviousChatMessages, numberOfChatMessagesToReload]);
+
   // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp need to be regenerated)
   const defaultChatMessageRenderer = useCallback(
     (message: ChatMessage) => {
@@ -611,6 +618,9 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
               styles,
               onRenderReadReceipt,
               defaultChatMessageRenderer,
+              // Temporary solution to make sure we re-render if attach attribute is changed.
+              // The proper fix should be in selector.
+              message.type === 'chat' ? message.payload.attached : undefined,
               statusToRender,
               onRenderMessage
             );
@@ -639,33 +649,9 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     );
   }, [styles?.chatContainer, messagesToDisplay]);
 
-  const loadPreviousMessagesButtonOnClick = useCallback(async () => {
-    if (onLoadPreviousChatMessages) {
-      setIsAllChatMessagesLoaded(await onLoadPreviousChatMessages(numberOfChatMessagesToReload));
-    }
-  }, [numberOfChatMessagesToReload, onLoadPreviousChatMessages]);
-
   return (
     <Ref innerRef={chatThreadRef}>
       <Stack className={mergeStyles(messageThreadContainerStyle, styles?.root)} grow>
-        {!disableLoadPreviousMessage && !isAllChatMessagesLoaded && (
-          <div
-            className={mergeStyles(
-              loadPreviousMessagesButtonContainerStyle,
-              styles?.loadPreviousMessagesButtonContainer
-            )}
-          >
-            {onLoadPreviousChatMessages &&
-              isAtTopOfScrollRef.current &&
-              (onRenderLoadPreviousMessagesButton ? (
-                onRenderLoadPreviousMessagesButton({
-                  onClick: loadPreviousMessagesButtonOnClick
-                })
-              ) : (
-                <DefaultLoadPreviousMessagesButtonRenderer onClick={loadPreviousMessagesButtonOnClick} />
-              ))}
-          </div>
-        )}
         <Ref innerRef={chatScrollDivRef}>{chatBody}</Ref>
         {existsNewChatMessage && !disableJumpToNewMessageButton && (
           <div className={mergeStyles(newMessageButtonContainerStyle, styles?.newMessageButtonContainer)}>

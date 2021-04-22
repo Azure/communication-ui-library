@@ -43,7 +43,7 @@ export const ChatArea = (props: ChatAreaProps): JSX.Element => {
   // Initialize the Chat thread with history messages
   useEffect(() => {
     (async () => {
-      await chatThreadHandlers.onLoadPreviousChatMessages(15);
+      await chatThreadHandlers.onLoadPreviousChatMessages(5);
     })();
   }, [chatThreadHandlers]);
 
@@ -53,7 +53,6 @@ export const ChatArea = (props: ChatAreaProps): JSX.Element => {
         {...chatThreadProps}
         {...chatThreadHandlers}
         onRenderAvatar={props.onRenderAvatar}
-        disableLoadPreviousMessage={false}
         numberOfChatMessagesToReload={5}
       />
       <Stack.Item align="center" className={sendBoxParentStyle}>
