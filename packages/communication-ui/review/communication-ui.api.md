@@ -62,6 +62,7 @@ export type ControlBarLayoutType = 'horizontal' | 'vertical' | 'dockedTop' | 'do
 // @public
 export interface ControlBarProps {
     children?: React_2.ReactNode;
+    darkThemed?: boolean;
     layout?: ControlBarLayoutType;
     styles?: BaseCustomStylesProps;
 }

@@ -74,12 +74,10 @@ export const ControlBarComponent: (
   const showLabels = boolean('Show Labels', false);
 
   let background = THEMES[theme]?.palette?.white;
-  let controlBarBackground = THEMES[theme]?.palette?.white;
 
   if (theme === DARK) {
     if (layout.startsWith('floating')) {
       background = '#252423';
-      controlBarBackground = THEMES[DARK]?.palette?.neutralLight;
     } else {
       background = '#161514';
     }
@@ -98,7 +96,7 @@ export const ControlBarComponent: (
         background: background
       }}
     >
-      <ControlBar layout={layout} styles={{ root: { background: controlBarBackground } }}>
+      <ControlBar layout={layout} darkThemed={theme === DARK}>
         <DefaultButton {...(showLabels ? labeledVideoButtonProps : videoButtonProps)} checked={toggleButtons} />
         <DefaultButton {...(showLabels ? labeledAudioButtonProps : audioButtonProps)} checked={toggleButtons} />
         <DefaultButton

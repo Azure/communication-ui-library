@@ -20,6 +20,7 @@ import {
   controlButtonStyles,
   hangUpControlButtonStyles
 } from './styles/ControlBar.styles';
+import { useTheme } from '@fluentui/react-theme-provider';
 
 /** Fluent UI Button props for video control */
 export const videoButtonProps: IButtonProps = {
@@ -194,6 +195,10 @@ export interface ControlBarProps {
    * Defaults to a `horizontal` layout.
    */
   layout?: ControlBarLayoutType;
+  /**
+   * Boolean to remap theme slots if dark themed
+   */
+  darkThemed?: boolean;
 }
 
 /**
@@ -203,7 +208,18 @@ export interface ControlBarProps {
  * for altering call behavior.
  */
 export const ControlBar = (props: ControlBarProps): JSX.Element => {
-  const { styles, layout } = props;
+  const { styles, layout, darkThemed } = props;
+  const theme = useTheme();
   const controlBarStyle = controlBarStyles[layout ?? 'horizontal'];
-  return <Stack className={mergeStyles(controlBarStyle, styles?.root)}>{props.children}</Stack>;
+  return (
+    <Stack
+      className={mergeStyles(
+        controlBarStyle,
+        { background: darkThemed && layout?.startsWith('floating') ? theme.palette.neutralLight : theme.palette.white },
+        styles?.root
+      )}
+    >
+      {props.children}
+    </Stack>
+  );
 };
