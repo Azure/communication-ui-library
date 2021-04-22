@@ -77,7 +77,7 @@ export const DARK = "Dark";
 export const darkTheme: PartialTheme;
 
 // @public (undocumented)
-export type DefaultMessageRendererType = (message: ChatMessage | SystemMessage | CustomMessage) => JSX.Element;
+export type DefaultMessageRendererType = (props: MessageProps) => JSX.Element;
 
 // @public
 export const ErrorBar: (props: ErrorBarProps) => JSX.Element | null;
@@ -181,6 +181,12 @@ export enum MessageAttachedStatus {
     TOP = "top"
 }
 
+// @public
+export type MessageProps = {
+    message: ChatMessage | SystemMessage | CustomMessage;
+    messageContainerStyle?: ComponentSlotStyle;
+};
+
 // @public (undocumented)
 export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
 
@@ -200,8 +206,8 @@ export type MessageThreadProps = {
     onRenderAvatar?: (userId: string) => JSX.Element;
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousMessages?: () => void;
-    onRenderLoadPreviousMessagesButton?: (loadPreviousMessagesButton: LoadPreviousMessagesButtonProps) => JSX.Element;
-    onRenderMessage?: (message: ChatMessage | SystemMessage | CustomMessage, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+    onRenderLoadPreviousMessagesButton?: (loadPreviousMessagesButtonProps: LoadPreviousMessagesButtonProps) => JSX.Element;
+    onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
 };
 
 // @public (undocumented)
@@ -211,6 +217,7 @@ export interface MessageThreadStylesProps extends BaseCustomStylesProps {
     loadPreviousMessagesButtonContainer?: IStyle;
     newMessageButtonContainer?: IStyle;
     readReceiptContainer?: (mine: boolean) => IStyle;
+    systemMessageContainer?: ComponentSlotStyle;
 }
 
 // @public (undocumented)
@@ -361,7 +368,7 @@ export const TypingIndicator: (props: TypingIndicatorProps) => JSX.Element;
 
 // @public
 export interface TypingIndicatorProps {
-    renderUserDisplayName?: (user: WebUiChatParticipant) => JSX.Element;
+    onRenderUsers?: (users: WebUiChatParticipant[]) => JSX.Element;
     styles?: TypingIndicatorStylesProps;
     typingString?: string;
     typingUsers: WebUiChatParticipant[];
@@ -371,7 +378,6 @@ export interface TypingIndicatorProps {
 export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
-    typingUserImage?: IStyle;
 }
 
 // @public

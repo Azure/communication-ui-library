@@ -47,7 +47,7 @@ export const getDocs: () => JSX.Element = () => {
       <Heading>Customize styling</Heading>
       <Description>
         To customize the style of SendBox, use the `styles` property like in the example below. Notice that the keys of
-        `styles` property are sub-components of `SendBox`, each of which can be styled independently.
+        `styles` property are the root and sub-components of `SendBox`, each of which can be styled independently.
       </Description>
       <Source code={CustomStylingExampleText} />
       <Canvas withSource="none">
