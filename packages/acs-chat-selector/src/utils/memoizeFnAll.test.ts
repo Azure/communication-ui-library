@@ -1,6 +1,15 @@
+// © Microsoft Corporation. All rights reserved.
 import { memoizeFnAll } from './memoizeFnAll';
 
-function* genArray(n: number) {
+function* genArray(
+  n: number
+): Generator<
+  {
+    value: number;
+  },
+  void,
+  unknown
+> {
   for (let i = 0; i < n; i++) {
     yield { value: i };
   }
