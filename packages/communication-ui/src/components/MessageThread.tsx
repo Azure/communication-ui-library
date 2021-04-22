@@ -281,7 +281,7 @@ export type MessageThreadProps = {
  */
 export type MessageProps = {
   /**
-   * Message to render. It can type `ChatMessage` or `SystemMessage` or `CustomMessage.
+   * Message to render. It can type `ChatMessage` or `SystemMessage` or `CustomMessage`.
    */
   message: ChatMessage | SystemMessage | CustomMessage;
   /**
