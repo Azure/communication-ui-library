@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "adding MessageProps type and using them for default render of Message",
+  "packageName": "@azure/communication-ui",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "patch"
+}

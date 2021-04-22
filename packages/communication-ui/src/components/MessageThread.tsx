@@ -129,6 +129,8 @@ export interface MessageThreadStylesProps extends BaseCustomStylesProps {
   chatContainer?: ComponentSlotStyle;
   /** Styles for chat message container. */
   chatMessageContainer?: ComponentSlotStyle;
+  /** Styles for system message container. */
+  systemMessageContainer?: ComponentSlotStyle;
   /** Styles for read receipt container. */
   readReceiptContainer?: (mine: boolean) => IStyle;
 }
@@ -147,26 +149,45 @@ const DefaultJumpToNewMessageButton = (props: JumpToNewMessageButtonProps): JSX.
   );
 };
 
-const DefaultChatMessageRenderer: DefaultMessageRendererType = (
-  message: ChatMessage | SystemMessage | CustomMessage
-) => {
-  const payload: ChatMessagePayload = message.payload;
-  const liveAuthor = `${payload.senderDisplayName} says `;
-  const messageContentItem = (
-    <div>
-      <LiveMessage message={`${payload.mine ? '' : liveAuthor} ${payload.content}`} aria-live="polite" />
-      <Linkify>{payload.content}</Linkify>
-    </div>
-  );
-  return (
-    <Chat.Message
-      styles={chatMessageStyle}
-      content={messageContentItem}
-      author={payload.senderDisplayName}
-      mine={payload.mine}
-      timestamp={payload.createdOn ? formatTimestampForChatMessage(payload.createdOn, new Date()) : undefined}
-    />
-  );
+export type DefaultMessageRendererType = (props: MessageProps) => JSX.Element;
+
+const DefaultSystemMessageRenderer: DefaultMessageRendererType = (props: MessageProps) => {
+  if (props.message.type === 'system') {
+    const payload: SystemMessagePayload = props.message.payload;
+    return (
+      <SystemMessageComponent
+        iconName={(payload.iconName ?? '') as SystemMessageIconTypes}
+        content={payload.content ?? ''}
+        containerStyle={props?.messageContainerStyle}
+      />
+    );
+  }
+
+  return <></>;
+};
+
+const DefaultChatMessageRenderer: DefaultMessageRendererType = (props: MessageProps) => {
+  if (props.message.type === 'chat') {
+    const payload: ChatMessagePayload = props.message.payload;
+    const liveAuthor = `${payload.senderDisplayName} says `;
+    const messageContentItem = (
+      <div>
+        <LiveMessage message={`${payload.mine ? '' : liveAuthor} ${payload.content}`} aria-live="polite" />
+        <Linkify>{payload.content}</Linkify>
+      </div>
+    );
+    return (
+      <Chat.Message
+        className={mergeStyles(chatMessageStyle as IStyle, props.messageContainerStyle as IStyle)}
+        content={messageContentItem}
+        author={payload.senderDisplayName}
+        mine={payload.mine}
+        timestamp={payload.createdOn ? formatTimestampForChatMessage(payload.createdOn, new Date()) : undefined}
+      />
+    );
+  }
+
+  return <></>;
 };
 
 const memoizeAllMessages = memoizeFnAll(
@@ -177,20 +198,21 @@ const memoizeAllMessages = memoizeFnAll(
     onRenderAvatar: ((userId: string) => JSX.Element) | undefined,
     styles: MessageThreadStylesProps | undefined,
     onRenderReadReceipt: ((readReceiptProps: ReadReceiptProps) => JSX.Element | null) | undefined,
-    defaultChatMessageRenderer: (message: ChatMessage) => JSX.Element,
+    defaultChatMessageRenderer: (message: MessageProps) => JSX.Element,
     _attached?: boolean | string,
     statusToRender?: MessageStatus,
-    onRenderMessage?: (
-      message: ChatMessage | SystemMessage | CustomMessage,
-      defaultOnRender?: DefaultMessageRendererType
-    ) => JSX.Element
+    onRenderMessage?: (message: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element
   ): ShorthandValue<ChatItemProps> => {
+    const messageProps: MessageProps = {
+      message: message,
+      messageContainerStyle: styles?.chatMessageContainer
+    };
     if (message.type === 'chat') {
       const payload: ChatMessagePayload = message.payload;
       const chatMessageComponent =
         onRenderMessage === undefined
-          ? defaultChatMessageRenderer(message)
-          : onRenderMessage(message as ChatMessage, DefaultChatMessageRenderer);
+          ? defaultChatMessageRenderer(messageProps)
+          : onRenderMessage(messageProps, DefaultChatMessageRenderer);
 
       return {
         gutter: payload.mine ? (
@@ -230,8 +252,8 @@ const memoizeAllMessages = memoizeFnAll(
     } else if (message.type === 'system') {
       const systemMessageComponent =
         onRenderMessage === undefined
-          ? DefaultSystemMessageRenderer(message)
-          : onRenderMessage(message, DefaultSystemMessageRenderer);
+          ? DefaultSystemMessageRenderer(messageProps)
+          : onRenderMessage(messageProps, DefaultSystemMessageRenderer);
 
       return {
         children: systemMessageComponent,
@@ -239,7 +261,7 @@ const memoizeAllMessages = memoizeFnAll(
       };
     } else {
       // We do not handle custom type message by default, users can handle custom type by using onRenderMessage function.
-      const customMessageComponent = onRenderMessage === undefined ? <></> : onRenderMessage(message);
+      const customMessageComponent = onRenderMessage === undefined ? <></> : onRenderMessage(messageProps);
       return {
         children: customMessageComponent,
         key: _messageKey
@@ -262,38 +284,20 @@ const getLastChatMessageIdWithStatus = (
   return undefined;
 };
 
-export type DefaultMessageRendererType = (message: ChatMessage | SystemMessage | CustomMessage) => JSX.Element;
-
-const DefaultSystemMessageRenderer: DefaultMessageRendererType = (
-  message: ChatMessage | SystemMessage | CustomMessage
-) => {
-  if (message.type === 'system') {
-    const payload: SystemMessagePayload = message.payload;
-    return (
-      <SystemMessageComponent
-        iconName={(payload.iconName ?? '') as SystemMessageIconTypes}
-        content={payload.content ?? ''}
-      />
-    );
-  } else {
-    return <></>;
-  }
-};
-
 /**
  * Props for MessageThread component
  */
 export type MessageThreadProps = {
   /**
-   * The userId of the current user.
+   * UserId of the current user.
    */
   userId: string;
   /**
-   * The messages to render in message thread. Message can type `ChatMessage` or `SystemMessage` or `CustomMessage`.
+   * Messages to render in message thread. A message can be of type `ChatMessage`, `SystemMessage` or `CustomMessage`.
    */
   messages: (ChatMessage | SystemMessage | CustomMessage)[];
   /**
-   * Allows users to pass in an object contains custom CSS styles.
+   * Allows users to pass an object containing custom CSS styles.
    * @Example
    * ```
    * <MessageThread styles={{ root: { background: 'blue' } }} />
@@ -301,12 +305,12 @@ export type MessageThreadProps = {
    */
   styles?: MessageThreadStylesProps;
   /**
-   * Whether the new message button is disabled.
+   * Whether the new message button is disabled or not.
    * @defaultValue `false`
    */
   disableJumpToNewMessageButton?: boolean;
   /**
-   * Whether the read receipt for each message is disabled.
+   * Whether the read receipt for each message is disabled or not.
    * @defaultValue `true`
    */
   disableReadReceipt?: boolean;
@@ -316,38 +320,58 @@ export type MessageThreadProps = {
    */
   numberOfChatMessagesToReload?: number;
   /**
-   * onSendReadReceipt event handler. `() => Promise<void>`
+   * Optional callback to override actions on message being seen.
+   * @param messageId - message Id
    */
   onMessageSeen?: (messageId: string) => Promise<void>;
   /**
-   * onRenderReadReceipt event handler. `(readReceiptProps: ReadReceiptProps) => JSX.Element | null`
+   * Optional callback to override render of the Read Receipt indicator.
+   * @param readReceiptProps - props of type ReadReceiptProps
    */
   onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element | null;
   /**
-   * onRenderAvatar event handler. `(userId: string) => JSX.Element`
+   * Optional callback to override render of the avatar.
+   * @param userId - user Id
    */
   onRenderAvatar?: (userId: string) => JSX.Element;
   /**
-   * onRenderJumpToNewMessageButton event handler. `(newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element`
+   * Optional callback to override render of the button for jumping to the new message.
+   * @param newMessageButtonProps - button props of type JumpToNewMessageButtonProps
    */
   onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
   /**
-   * onLoadPreviousChatMessages event handler.
+   * Optional callback to override loading of previous messages.
    * It accepts the number of history chat messages that we want to load and return a boolean Promise indicating if we have got all the history messages.
    * If the promise resolves to `true`, we have load all chat messages into the message thread and `loadPreviousMessagesButton` will not be rendered anymore.
    */
   onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
   /**
-   * onRenderMessage event handler. `defaultOnRender` is not provide for `CustomMessage` and is available for `ChatMessage` and `SystemMessage`.
+   * Optional callback to override render of a message.
+   * @param messageProps - props of type MessageProps
+   * @param defaultOnRender - default render of type DefaultMessageRendererType
+   * @remarks
+   * `defaultOnRender` is not provided for `CustomMessage` and thus only available for `ChatMessage` and `SystemMessage`.
    */
-  onRenderMessage?: (
-    message: ChatMessage | SystemMessage | CustomMessage,
-    defaultOnRender?: DefaultMessageRendererType
-  ) => JSX.Element;
+  onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+};
+
+/**
+ * Props for MessageThread component
+ */
+export type MessageProps = {
+  /**
+   * Message to render. It can type `ChatMessage` or `SystemMessage` or `CustomMessage`.
+   */
+  message: ChatMessage | SystemMessage | CustomMessage;
+  /**
+   * Custom CSS styles for chat message container.
+   */
+  messageContainerStyle?: ComponentSlotStyle;
 };
 
 /**
  * `MessageThread` allows you to easily create a component for rendering chat messages, handling scrolling behavior of new/old messages and customizing icons & controls inside the chat thread.
+ * @param props - of type MessageThreadProps
  *
  * Users will need to provide at least chat messages and userId to render the `MessageThread` component.
  * Users can also customize `MessageThread` by passing in their own Avatar, `ReadReceipt` icon, `JumpToNewMessageButton`, `LoadPreviousMessagesButton` and the behavior of these controls.
@@ -574,8 +598,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
 
   // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp need to be regenerated)
   const defaultChatMessageRenderer = useCallback(
-    (message: ChatMessage) => {
-      return DefaultChatMessageRenderer(message);
+    (messageProps: MessageProps) => {
+      return DefaultChatMessageRenderer(messageProps);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [new Date().toDateString()]

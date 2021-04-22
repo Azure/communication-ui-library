@@ -82,7 +82,7 @@ export const DARK = "Dark";
 export const darkTheme: PartialTheme;
 
 // @public (undocumented)
-export type DefaultMessageRendererType = (message: ChatMessage | SystemMessage | CustomMessage) => JSX.Element;
+export type DefaultMessageRendererType = (props: MessageProps) => JSX.Element;
 
 // @public
 export const ErrorBar: (props: ErrorBarProps) => JSX.Element | null;
@@ -178,6 +178,12 @@ export enum MessageAttachedStatus {
     TOP = "top"
 }
 
+// @public
+export type MessageProps = {
+    message: ChatMessage | SystemMessage | CustomMessage;
+    messageContainerStyle?: ComponentSlotStyle;
+};
+
 // @public (undocumented)
 export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
 
@@ -197,7 +203,7 @@ export type MessageThreadProps = {
     onRenderAvatar?: (userId: string) => JSX.Element;
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
-    onRenderMessage?: (message: ChatMessage | SystemMessage | CustomMessage, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+    onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
 };
 
 // @public (undocumented)
@@ -207,6 +213,7 @@ export interface MessageThreadStylesProps extends BaseCustomStylesProps {
     loadPreviousMessagesButtonContainer?: IStyle;
     newMessageButtonContainer?: IStyle;
     readReceiptContainer?: (mine: boolean) => IStyle;
+    systemMessageContainer?: ComponentSlotStyle;
 }
 
 // @public (undocumented)

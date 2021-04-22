@@ -69,7 +69,7 @@ export const GenerateMockSystemMessage = (): SystemMessage => {
   return {
     type: 'system',
     payload: {
-      messageId: '123',
+      messageId: Math.random().toString(),
       iconName: 'PeopleAdd',
       content: 'User1 added User2 to the chat and shared all chat history.'
     }
@@ -82,7 +82,7 @@ export const GenerateMockCustomMessage = (): CustomMessage => {
     // Custom message's payload can be any shape, this is just an example.
     // Whatever is defined in the custom message's payload needs to be handled in onRenderCustomMessage in MessageThread.
     payload: {
-      messageId: '1234',
+      messageId: Math.random().toString(),
       content: 'Today'
     }
   };
