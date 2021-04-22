@@ -367,7 +367,7 @@ export const TypingIndicator: (props: TypingIndicatorProps) => JSX.Element;
 
 // @public
 export interface TypingIndicatorProps {
-    renderUserDisplayName?: (user: WebUiChatParticipant) => JSX.Element;
+    onRenderUsers?: (users: WebUiChatParticipant[]) => JSX.Element;
     styles?: TypingIndicatorStylesProps;
     typingString?: string;
     typingUsers: WebUiChatParticipant[];
@@ -377,7 +377,6 @@ export interface TypingIndicatorProps {
 export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
-    typingUserImage?: IStyle;
 }
 
 // @public
