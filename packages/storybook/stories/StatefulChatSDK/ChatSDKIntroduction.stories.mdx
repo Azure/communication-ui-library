@@ -4,7 +4,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 # Introduction
 
-The `Declarative Chat SDK` is a stateful Chat SDK that allows you to use `@azure/communication-chat` SDK in a stateful manner.
+The `Declarative Chat` is a stateful Chat library that allows you to use `@azure/communication-chat` in a stateful manner.
 It provides a proxy layer built on top of the `@azure/communication-chat` and exposes all of the underlying functionality.
 
 ## Features
@@ -38,15 +38,16 @@ import { ChatClient } from '@azure/communication-chat';
 import { chatClientDeclaratify } from '@azure/acs-chat-declarative';
 import { AzureCommunicationTokenCredential } from "@azure/communication-common";
 
-const ENDPOINT_URL = '<ENDPOINT>';
-const TOKEN = '<USER_ACCESS_TOKEN>';
-const TOKEN_CREDENTIAL = new AzureCommunicationTokenCredential(userAccessToken);
+const endpointUrl = '<ENDPOINT>';
+const userAccessToken = '<USER_ACCESS_TOKEN>';
+const tokenCredential = new AzureCommunicationTokenCredential(userAccessToken);
 
 const declarativeChatClient = chatClientDeclaratify(
-  new ChatClient(ENDPOINT_URL, TOKEN_CREDENTIAL, { userId, displayName }
+  new ChatClient(endpointUrl, tokenCredential, { userId, displayName }
 )
 
-// You can then use the `declarativeChatClient` similar to how you would use a `ChatClient`
+// You can then use the `declarativeChatClient` in the same way as a `ChatClient` with a slight variation.
+// Details about the variation in usage are documented below under `Usage` section.
 const chatThreadClient = await declarativeChatClient.createChatThread({});
 ```
 
@@ -70,9 +71,9 @@ declarativeChatClient.offStateChange(onStateChange);
 
 ## Usage
 
-Although the API interface of declarative chat client is similar to `@azure/communication-chat`, it's usage has a slight variation.
+The API interface of declarative chat client is a superset of `@azure/communication-chat` with a slight variation in usage.
 
-Calling a client method like `chatThreadClient.updateThread({ topic: 'newTopicName' })` will not return anything. Instead, to view the changes triggered by such a client method, you will have to subscribe to the `onStateChange` events as shown below.
+Although, calling a client method like `chatThreadClient.updateThread({ topic: 'newTopicName' })` will return some values; to view the changes triggered by such a client method, you need to subscribe to the `onStateChange` events as shown below.
 
 ```tsx
 import { ChatClientState } from '@azure/acs-chat-declarative';
