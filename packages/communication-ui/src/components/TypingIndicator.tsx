@@ -38,13 +38,12 @@ export interface TypingIndicatorProps {
 }
 
 const MAXIMUM_LENGTH_OF_TYPING_USERS = 35;
+const UNKNOWN_DISPLAYNAME = 'unknown';
 
-/**
- * Typing Indicator is used to notify users if there are any other users typing in the thread.
- */
-export const TypingIndicator = (props: TypingIndicatorProps): JSX.Element => {
-  const { typingUsers, typingString, onRenderUsers, styles } = props;
-
+const getDefaultComponents = (
+  typingUsers: WebUiChatParticipant[],
+  styles?: TypingIndicatorStylesProps
+): JSX.Element[] => {
   const displayComponents: JSX.Element[] = [];
 
   const typingUsersMentioned: WebUiChatParticipant[] = [];
@@ -52,13 +51,13 @@ export const TypingIndicator = (props: TypingIndicatorProps): JSX.Element => {
   let totalCharacterCount = 0;
 
   for (const typingUser of typingUsers) {
-    const displayName = typingUser?.displayName ?? 'unknown';
+    const displayName = typingUser?.displayName ?? UNKNOWN_DISPLAYNAME;
     countOfUsersMentioned += 1;
     // The typing users above will be separated by ', '. We account for that additional length and with this length in
     // mind we generate the final string.
     const additionalCharCount = 2 * (countOfUsersMentioned - 1) + displayName.length;
     if (totalCharacterCount + additionalCharCount <= MAXIMUM_LENGTH_OF_TYPING_USERS || countOfUsersMentioned === 1) {
-      typingUsersMentioned.push(typingUser);
+      typingUsersMentioned.push({ ...typingUser, displayName: displayName });
       totalCharacterCount += additionalCharCount;
     } else {
       break;
@@ -76,21 +75,34 @@ export const TypingIndicator = (props: TypingIndicatorProps): JSX.Element => {
     );
   });
 
-  let textAfterUsers = '';
   const countOfUsersNotMentioned = typingUsers.length - typingUsersMentioned.length;
   if (countOfUsersNotMentioned > 0) {
-    textAfterUsers = ` and ${countOfUsersNotMentioned} other${countOfUsersNotMentioned === 1 ? '' : 's'}`;
+    displayComponents.push(
+      <span className={mergeStyles(typingIndicatorVerbStyle, styles?.typingString)}>
+        ` and ${countOfUsersNotMentioned} other${countOfUsersNotMentioned === 1 ? '' : 's'}`
+      </span>
+    );
   }
-  if (typingString !== undefined) {
-    textAfterUsers += typingString;
-  } else {
-    textAfterUsers += typingUsers.length > 0 ? (typingUsers.length > 1 ? ' are typing...' : ' is typing...') : '';
-  }
+
+  return displayComponents;
+};
+
+const defaultTypingString = (typingUsers: WebUiChatParticipant[]): string => {
+  return typingUsers.length > 0 ? (typingUsers.length > 1 ? ' are typing...' : ' is typing...') : '';
+};
+
+/**
+ * Typing Indicator is used to notify users if there are any other users typing in the thread.
+ */
+export const TypingIndicator = (props: TypingIndicatorProps): JSX.Element => {
+  const { typingUsers, typingString, onRenderUsers, styles } = props;
 
   return (
     <Stack horizontal className={mergeStyles(typingIndicatorContainerStyle, styles?.root)}>
-      {onRenderUsers ? onRenderUsers(typingUsers) : displayComponents}
-      <span className={mergeStyles(typingIndicatorVerbStyle, styles?.typingString)}>{textAfterUsers}</span>
+      {onRenderUsers ? onRenderUsers(typingUsers) : getDefaultComponents(typingUsers, styles)}
+      <span className={mergeStyles(typingIndicatorVerbStyle, styles?.typingString)}>
+        {typingString ?? defaultTypingString(typingUsers)}
+      </span>
     </Stack>
   );
 };
