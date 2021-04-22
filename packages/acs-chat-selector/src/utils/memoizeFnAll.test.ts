@@ -1,4 +1,4 @@
-import { memoizeFunctionAll } from './memoizeFunctionAll';
+import { memoizeFnAll } from './memoizeFnAll';
 
 function* genArray(n: number) {
   for (let i = 0; i < n; i++) {
@@ -11,7 +11,7 @@ describe('memoizeFunctionAll', () => {
     const arr = Array.from(genArray(100));
     let i = 0;
 
-    const memo = memoizeFunctionAll((x: { value: number }) => {
+    const memo = memoizeFnAll((x: { value: number }) => {
       i++;
       return {
         ...x,

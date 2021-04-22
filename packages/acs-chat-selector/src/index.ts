@@ -16,8 +16,8 @@ export type {
   MessageTypes,
   MessageAttachedStatus
 } from './types/UiChatMessage';
-export { memoizeFunctionAll } from './utils/memoizeFunctionAll';
-export type { FunctionWithKey, CallbackType } from './utils/memoizeFunctionAll';
+export { memoizeFnAll } from './utils/memoizeFnAll';
+export type { FunctionWithKey, CallbackType } from './utils/memoizeFnAll';
 export type { BaseSelectorProps } from './baseSelectors';
 export type { DefaultHandlers, CommonProperties } from './handlers/createHandlers';
 export type { WebUiChatParticipant } from './types/WebUiChatParticipant';
