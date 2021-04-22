@@ -8,11 +8,9 @@ import {
 
 import React from 'react';
 import { BaseCustomStylesProps, WebUiChatParticipant } from '../types';
-import { IStyle, mergeStyles } from '@fluentui/react';
+import { IStyle, mergeStyles, Stack } from '@fluentui/react';
 
 export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
-  /** Styles for each typing user's image. */
-  typingUserImage?: IStyle;
   /** Styles for each typing user's displayName. */
   typingUserDisplayName?: IStyle;
   /** Styles for the typing string. */
@@ -27,8 +25,8 @@ export interface TypingIndicatorProps {
   typingUsers: WebUiChatParticipant[];
   /** The string to render after listing all users' display name. For example ' are typing ...'. */
   typingString?: string;
-  /** Callback to render each typing user */
-  renderUserDisplayName?: (user: WebUiChatParticipant) => JSX.Element;
+  /** Callback to render typing users */
+  onRenderUsers?: (users: WebUiChatParticipant[]) => JSX.Element;
   /**
    * Allows users to pass in an object contains custom CSS styles.
    * @Example
@@ -54,7 +52,7 @@ const MAXIMUM_LENGTH_OF_TYPING_USERS = 35;
  * @returns ReactElement
  */
 export const TypingIndicator = (props: TypingIndicatorProps): JSX.Element => {
-  const { typingUsers, typingString, renderUserDisplayName, styles } = props;
+  const { typingUsers, typingString, onRenderUsers, styles } = props;
 
   const displayComponents: JSX.Element[] = [];
 
@@ -78,16 +76,12 @@ export const TypingIndicator = (props: TypingIndicatorProps): JSX.Element => {
 
   typingUsersMentioned.forEach((typingUser, index) => {
     displayComponents.push(
-      renderUserDisplayName ? (
-        renderUserDisplayName(typingUser)
-      ) : (
-        <span
-          className={mergeStyles(typingIndicatorListStyle, styles?.typingUserDisplayName)}
-          key={'typing indicator display string ' + index.toString()}
-        >
-          {index < typingUsers.length - 1 ? typingUser.displayName + ', ' : typingUser.displayName}
-        </span>
-      )
+      <span
+        className={mergeStyles(typingIndicatorListStyle, styles?.typingUserDisplayName)}
+        key={'typing indicator display string ' + index.toString()}
+      >
+        {index < typingUsers.length - 1 ? typingUser.displayName + ', ' : typingUser.displayName}
+      </span>
     );
   });
 
@@ -103,9 +97,9 @@ export const TypingIndicator = (props: TypingIndicatorProps): JSX.Element => {
   }
 
   return (
-    <div className={mergeStyles(typingIndicatorContainerStyle, styles?.root)}>
-      {displayComponents}
+    <Stack horizontal className={mergeStyles(typingIndicatorContainerStyle, styles?.root)}>
+      {onRenderUsers ? onRenderUsers(typingUsers) : displayComponents}
       <span className={mergeStyles(typingIndicatorVerbStyle, styles?.typingString)}>{textAfterUsers}</span>
-    </div>
+    </Stack>
   );
 };

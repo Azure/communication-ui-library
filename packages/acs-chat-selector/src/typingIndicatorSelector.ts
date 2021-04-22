@@ -44,12 +44,13 @@ const convertSdkTypingIndicatorsToWebUiChatParticipants = (
 export const typingIndicatorSelector = reselect.createSelector(
   [getTypingIndicators, getParticipants, getUserId],
   (typingIndicators: TypingIndicator[], participants: Map<string, ChatParticipant>, userId: string) => {
-    // filter typing indicators to remove those that are from the duplicate users or current user as well as those older than a threshold
-    const filteredTypingIndicators = filterTypingIndicators(typingIndicators, userId);
-
-    if (filteredTypingIndicators.length === 0 || participants.size >= PARTICIPANTS_THRESHOLD) {
+    // if there are participant size is at threshold return no typing users
+    if (participants.size >= PARTICIPANTS_THRESHOLD) {
       return { typingUsers: [] };
     }
+
+    // filter typing indicators to remove those that are from the duplicate users or current user as well as those older than a threshold
+    const filteredTypingIndicators = filterTypingIndicators(typingIndicators, userId);
 
     const typingUsers: WebUiChatParticipant[] = convertSdkTypingIndicatorsToWebUiChatParticipants(
       filteredTypingIndicators
