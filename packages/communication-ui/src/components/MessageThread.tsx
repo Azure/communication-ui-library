@@ -270,7 +270,6 @@ const memoizeAllMessages = memoizeFnAll(
   }
 );
 
-// we only attach statusToRender to the last message with matched status
 const getLastChatMessageIdWithStatus = (
   messages: (ChatMessage | SystemMessage | CustomMessage)[],
   status: MessageStatus
@@ -586,8 +585,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   // Fetch more messages to make the scroll bar appear, infinity scroll is then handled in the handleScroll function.
   useEffect(() => {
     (async () => {
-      while (chatScrollDivRef.current.scrollTop <= 200 && !isAllChatMessagesLoadedRef.current) {
-        if (onLoadPreviousChatMessages) {
+      if (onLoadPreviousChatMessages) {
+        while (chatScrollDivRef.current.scrollTop <= 200 && !isAllChatMessagesLoadedRef.current) {
           setIsAllChatMessagesLoaded(await onLoadPreviousChatMessages(numberOfChatMessagesToReload));
           // Release CPU resources for 200 milliseconds between each loop.
           await delay(200);
