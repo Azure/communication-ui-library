@@ -40,7 +40,7 @@ export const Lobby = (props: LobbyProps): JSX.Element => {
           }}
         />
 
-        <div style={{ textAlign: 'center', margin: 'auto', zIndex: 1 }}>
+        <div style={{ textAlign: 'center', margin: 'auto', zIndex: 0 }}>
           <p style={{ fontSize: '1.75rem', color: props.isVideoReady ? palette.neutralLight : palette.neutralPrimary }}>
             ☕ <br /> {props.callStateText}
           </p>
