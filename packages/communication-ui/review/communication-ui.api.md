@@ -205,8 +205,8 @@ export type MessageThreadProps = {
     onRenderAvatar?: (userId: string) => JSX.Element;
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousMessages?: () => void;
-    onRenderLoadPreviousMessagesButton?: (loadPreviousMessagesButton: LoadPreviousMessagesButtonProps) => JSX.Element;
-    onRenderMessage?: (props: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+    onRenderLoadPreviousMessagesButton?: (loadPreviousMessagesButtonProps: LoadPreviousMessagesButtonProps) => JSX.Element;
+    onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
 };
 
 // @public (undocumented)

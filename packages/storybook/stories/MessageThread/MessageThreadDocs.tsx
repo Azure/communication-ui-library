@@ -4,28 +4,28 @@ import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/a
 import React from 'react';
 import { MessageThread } from '@azure/communication-ui';
 const ExampleConstantsText = require('!!raw-loader!./snippets/placeholdermessages.ts').default;
-import { DefaultMessageThreadExample } from './snippets/MessageThreadExample.snippet';
-const DefaultMessageThreadExampleText = require('!!raw-loader!./snippets/MessageThreadExample.snippet.tsx').default;
-import { MessageThreadWithReadReceiptExample } from './snippets/MessageThreadWithReadReceiptExample.snippet';
-const MessageThreadWithReadReceiptExampleText = require('!!raw-loader!./snippets/MessageThreadWithReadReceiptExample.snippet.tsx')
+import { DefaultMessageThreadExample } from './snippets/MessageThread.snippet';
+const DefaultMessageThreadExampleText = require('!!raw-loader!./snippets/MessageThread.snippet.tsx').default;
+import { MessageThreadWithReadReceiptExample } from './snippets/MessageThreadWithReadReceipt.snippet';
+const MessageThreadWithReadReceiptExampleText = require('!!raw-loader!./snippets/MessageThreadWithReadReceipt.snippet.tsx')
   .default;
-import { MessageThreadWithCustomAvatarExample } from './snippets/MessageThreadWithCustomAvatarExample.snippet';
-const MessageThreadWithCustomAvatarExampleText = require('!!raw-loader!./snippets/MessageThreadWithCustomAvatarExample.snippet.tsx')
+import { MessageThreadWithCustomAvatarExample } from './snippets/MessageThreadWithCustomAvatar.snippet';
+const MessageThreadWithCustomAvatarExampleText = require('!!raw-loader!./snippets/MessageThreadWithCustomAvatar.snippet.tsx')
   .default;
-import { MessageThreadWithSystemMessagesExample } from './snippets/MessageThreadWithSystemMessagesExample.snippet';
-const MessageThreadWithSystemMessagesExampleText = require('!!raw-loader!./snippets/MessageThreadWithSystemMessagesExample.snippet.tsx')
+import { MessageThreadWithSystemMessagesExample } from './snippets/MessageThreadWithSystemMessages.snippet';
+const MessageThreadWithSystemMessagesExampleText = require('!!raw-loader!./snippets/MessageThreadWithSystemMessages.snippet.tsx')
   .default;
-import { MessageThreadWithCustomMessagesExample } from './snippets/MessageThreadWithCustomMessagesExample.snippet';
-const MessageThreadWithCustomMessagesExampleText = require('!!raw-loader!./snippets/MessageThreadWithCustomMessagesExample.snippet.tsx')
+import { MessageThreadWithCustomMessagesExample } from './snippets/MessageThreadWithCustomMessages.snippet';
+const MessageThreadWithCustomMessagesExampleText = require('!!raw-loader!./snippets/MessageThreadWithCustomMessages.snippet.tsx')
   .default;
-import { MessageThreadWithCustomizedChatContainerExample } from './snippets/MessageThreadWithCustomizedChatContainerExample.snippet';
-const MessageThreadWithCustomizedChatContainerExampleText = require('!!raw-loader!./snippets/MessageThreadWithCustomizedChatContainerExample.snippet.tsx')
+import { MessageThreadWithCustomChatContainerExample } from './snippets/MessageThreadWithCustomChatContainer.snippet';
+const MessageThreadWithCustomChatContainerExampleText = require('!!raw-loader!./snippets/MessageThreadWithCustomChatContainer.snippet.tsx')
   .default;
-import { MessageThreadWithCustomizedMessageContainerExample } from './snippets/MessageThreadWithCustomizedMessageContainerExample.snippet';
-const MessageThreadWithCustomizedMessageContainerExampleText = require('!!raw-loader!./snippets/MessageThreadWithCustomizedMessageContainerExample.snippet.tsx')
+import { MessageThreadWithCustomMessageContainerExample } from './snippets/MessageThreadWithCustomMessageContainer.snippet';
+const MessageThreadWithCustomMessageContainerExampleText = require('!!raw-loader!./snippets/MessageThreadWithCustomMessageContainer.snippet.tsx')
   .default;
-import { MessageThreadWithCustomizedReadReceiptExample } from './snippets/MessageThreadWithCustomizedReadReceiptExample.snippet';
-const MessageThreadWithCustomizedReadReceiptExampleText = require('!!raw-loader!./snippets/MessageThreadWithCustomizedReadReceiptExample.snippet.tsx')
+import { MessageThreadWithCustomReadReceiptExample } from './snippets/MessageThreadWithCustomReadReceipt.snippet';
+const MessageThreadWithCustomReadReceiptExampleText = require('!!raw-loader!./snippets/MessageThreadWithCustomReadReceipt.snippet.tsx')
   .default;
 
 export const getDocs: () => JSX.Element = () => {
@@ -63,18 +63,18 @@ export const getDocs: () => JSX.Element = () => {
         The example below shows how to render a `custom` chat container with `styles.chatContainer` in `MessageThread`
       </Description>
       <Canvas>
-        <MessageThreadWithCustomizedChatContainerExample />
+        <MessageThreadWithCustomChatContainerExample />
       </Canvas>
-      <Source code={MessageThreadWithCustomizedChatContainerExampleText} />
+      <Source code={MessageThreadWithCustomChatContainerExampleText} />
       <Heading>Messages with Customized Message Container</Heading>
       <Description>
         The example below shows how to render a `custom` message container with `styles.chatMessageContainer` or
         `styles.systemMessageContainer` in `MessageThread`
       </Description>
       <Canvas>
-        <MessageThreadWithCustomizedMessageContainerExample />
+        <MessageThreadWithCustomMessageContainerExample />
       </Canvas>
-      <Source code={MessageThreadWithCustomizedMessageContainerExampleText} />
+      <Source code={MessageThreadWithCustomMessageContainerExampleText} />
       <Heading>Default Read Receipt</Heading>
       <Canvas>
         <MessageThreadWithReadReceiptExample />
@@ -85,9 +85,9 @@ export const getDocs: () => JSX.Element = () => {
         The example below shows how to render a `custom` read receipt with `onRenderReadReceipt` in `MessageThread`
       </Description>
       <Canvas>
-        <MessageThreadWithCustomizedReadReceiptExample />
+        <MessageThreadWithCustomReadReceiptExample />
       </Canvas>
-      <Source code={MessageThreadWithCustomizedReadReceiptExampleText} />
+      <Source code={MessageThreadWithCustomReadReceiptExampleText} />
       <Heading>Customized Avatar</Heading>
       <Canvas>
         <MessageThreadWithCustomAvatarExample />

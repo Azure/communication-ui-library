@@ -209,15 +209,15 @@ const DefaultSystemMessageRenderer: DefaultMessageRendererType = (props: Message
  */
 export type MessageThreadProps = {
   /**
-   * The userId of the current user.
+   * UserId of the current user.
    */
   userId: string;
   /**
-   * The messages to render in message thread. Message can type `ChatMessage` or `SystemMessage` or `CustomMessage`.
+   * Messages to render in message thread. A message can be of type `ChatMessage`, `SystemMessage` or `CustomMessage`.
    */
   messages: (ChatMessage | SystemMessage | CustomMessage)[];
   /**
-   * Allows users to pass in an object contains custom CSS styles.
+   * Allows users to pass an object containing custom CSS styles.
    * @Example
    * ```
    * <MessageThread styles={{ root: { background: 'blue' } }} />
@@ -225,12 +225,12 @@ export type MessageThreadProps = {
    */
   styles?: MessageThreadStylesProps;
   /**
-   * Whether the new message button is disabled.
+   * Whether the new message button is disabled or not.
    * @defaultValue `false`
    */
   disableJumpToNewMessageButton?: boolean;
   /**
-   * Whether the load previous message button is disabled.
+   * Whether the load previous message button is disabled or not.
    * @defaultValue `true`
    */
   disableLoadPreviousMessage?: boolean;
@@ -240,35 +240,44 @@ export type MessageThreadProps = {
    */
   disableReadReceipt?: boolean;
   /**
-   * onSendReadReceipt event handler. `() => Promise<void>`
+   * Optional callback to override actions on message being seen.
+   * @param messageId - message Id
    */
   onMessageSeen?: (messageId: string) => Promise<void>;
   /**
-   * onRenderReadReceipt event handler. `(readReceiptProps: ReadReceiptProps) => JSX.Element | null`
+   * Optional callback to override the Read Receipt indicator.
+   * @param readReceiptProps - props of type ReadReceiptProps
    */
   onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element | null;
   /**
-   * onRenderAvatar event handler. `(userId: string) => JSX.Element`
+   * Optional callback to override avatar.
+   * @param userId - user Id
    */
   onRenderAvatar?: (userId: string) => JSX.Element;
   /**
-   * onRenderJumpToNewMessageButton event handler. `(newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element`
+   * Optional callback to override the render of the button for jumping to the new message.
+   * @param newMessageButtonProps - button props of type JumpToNewMessageButtonProps
    */
   onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
   /**
-   * onLoadPreviousMessages event handler.
+   * Optional callback to override the loading of previous messages.
    */
   onLoadPreviousMessages?: () => void;
   /**
-   * onRenderLoadPreviousMessagesButton event handler. `(loadPreviousMessagesButton: LoadPreviousMessagesButtonProps) => JSX.Element`
+   * Optional callback to override the button render for loading previous messages.
+   * @param loadPreviousMessagesButtonProps - button props of type LoadPreviousMessagesButtonProps
    */
-  onRenderLoadPreviousMessagesButton?: (loadPreviousMessagesButton: LoadPreviousMessagesButtonProps) => JSX.Element;
+  onRenderLoadPreviousMessagesButton?: (
+    loadPreviousMessagesButtonProps: LoadPreviousMessagesButtonProps
+  ) => JSX.Element;
   /**
-   * onRenderMessage event handler.
-   * Note that `defaultOnRender` is not provided for `CustomMessage` and thus only available for `ChatMessage` and `SystemMessage`.
-   * `(props: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element`
+   * Optional callback to override the render of a message.
+   * @param messageProps - props of type MessageProps
+   * @param defaultOnRender - default render of type DefaultMessageRendererType
+   * @remarks
+   * `defaultOnRender` is not provided for `CustomMessage` and thus only available for `ChatMessage` and `SystemMessage`.
    */
-  onRenderMessage?: (props: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+  onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
 };
 
 /**
@@ -280,13 +289,14 @@ export type MessageProps = {
    */
   message: ChatMessage | SystemMessage | CustomMessage;
   /**
-   * Styles for chat message container.
+   * Custom CSS styles for chat message container.
    */
   messageContainerStyle?: ComponentSlotStyle;
 };
 
 /**
  * `MessageThread` allows you to easily create a component for rendering chat messages, handling scrolling behavior of new/old messages and customizing icons & controls inside the chat thread.
+ * @param props - of type MessageThreadProps
  *
  * Users will need to provide at least chat messages and userId to render the `MessageThread` component.
  * Users can also customize `MessageThread` by passing in their own Avatar, `ReadReceipt` icon, `JumpToNewMessageButton`, `LoadPreviousMessagesButton` and the behavior of these controls.

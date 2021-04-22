@@ -2,7 +2,7 @@ import { FluentThemeProvider, MessageThread } from '@azure/communication-ui';
 import React from 'react';
 import { GetHistoryWithSystemMessages } from './placeholdermessages';
 
-export const MessageThreadWithCustomizedMessageContainerExample: () => JSX.Element = () => {
+export const MessageThreadWithCustomMessageContainerExample: () => JSX.Element = () => {
   // Show a customized message containers.
   return (
     <FluentThemeProvider>
