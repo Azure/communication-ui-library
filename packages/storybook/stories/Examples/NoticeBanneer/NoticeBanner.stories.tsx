@@ -6,6 +6,8 @@ import { CallComponent } from './snippets/CallComponent.snippet';
 import { getDocs } from './Docs';
 
 export const Component: () => JSX.Element = () => {
+  // TODO: Fix dark theming
+  // TODO: Avoid re-rendering video when recording/transcription is enabled/disabled.
   const recordingEnabled = boolean('Record meeting', false);
   const transcriptionEnabled = boolean('Transcribe meeting', false);
   return <CallComponent banner={{ recordingEnabled: recordingEnabled, transcriptionEnabled: transcriptionEnabled }} />;
