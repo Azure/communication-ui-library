@@ -69,6 +69,13 @@ export class CallSubscriber {
       participantSubscriber.unsubscribe();
     });
     this._participantSubscribers.clear();
+
+    // If we are unsubscribing that means we no longer want to display any video for this call (callEnded or callAgent
+    // disposed) and we should not be updating it any more. So if video is rendering we stop rendering.
+    const localVideoStreams = this._context.getState().calls.get(this._callIdRef.callId)?.localVideoStreams;
+    if (localVideoStreams && localVideoStreams.length === 1) {
+      stopRenderVideo(this._context, this._internalContext, this._callIdRef.callId, localVideoStreams[0]);
+    }
   };
 
   private addParticipantListener(participant: RemoteParticipant): void {

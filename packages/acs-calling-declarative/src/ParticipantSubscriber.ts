@@ -63,6 +63,21 @@ export class ParticipantSubscriber {
     this._participant.off('displayNameChanged', this.displayNameChanged);
     this._participant.off('isSpeakingChanged', this.isSpeakingChanged);
     this._participant.off('videoStreamsUpdated', this.videoStreamsUpdated);
+
+    // If unsubscribing it means the participant left the call. If they have any rendering streams we should stop them
+    // as it doesn't make sense to render for an ended participant.
+    if (this._participant.videoStreams.length > 0) {
+      for (const stream of this._participant.videoStreams) {
+        const existingDeclarativeStream = this._context
+          .getState()
+          .calls.get(this._callIdRef.callId)
+          ?.remoteParticipants.get(this._participantKey)
+          ?.videoStreams.get(stream.id);
+        if (existingDeclarativeStream) {
+          stopRenderVideo(this._context, this._internalContext, this._callIdRef.callId, existingDeclarativeStream);
+        }
+      }
+    }
   };
 
   private addRemoteVideoStreamSubscriber = (remoteVideoStream: RemoteVideoStream): void => {
