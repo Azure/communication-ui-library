@@ -5,7 +5,7 @@ import { CallComponent } from './snippets/CallComponent.snippet';
 import { getDocs } from './Docs';
 
 export const Component: () => JSX.Element = () => {
-  return <CallComponent />;
+  return <CallComponent banner={{ recordingEnabled: false, transcriptionEnabled: false }} />;
 };
 
 export default {

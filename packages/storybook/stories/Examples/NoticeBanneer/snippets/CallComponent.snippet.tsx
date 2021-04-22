@@ -1,10 +1,14 @@
 import { FluentThemeProvider, StreamMedia, VideoTile } from '@azure/communication-ui';
 import React from 'react';
 import { renderVideoStream } from '../../../utils';
-import { Banner } from './Banner.snippet';
+import { Banner, BannerProps } from './Banner.snippet';
 import { CallControlBar } from './CallControlBar.snippet';
 
-export const CallComponent = (): JSX.Element => {
+export interface CallProps {
+  banner: BannerProps;
+}
+
+export const CallComponent = (props: CallProps): JSX.Element => {
   const videoTileStyles = {
     root: { height: '100%', width: '100%' },
     overlayContainer: {}
@@ -22,7 +26,7 @@ export const CallComponent = (): JSX.Element => {
         }
         placeholderProvider={<></>}
       >
-        <Banner />
+        <Banner {...props.banner} />
         <CallControlBar />
       </VideoTile>
     </FluentThemeProvider>
