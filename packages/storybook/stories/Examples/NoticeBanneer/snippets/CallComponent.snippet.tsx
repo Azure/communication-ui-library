@@ -8,27 +8,29 @@ export interface CallProps {
   banner: BannerProps;
 }
 
-export const CallComponent = (props: CallProps): JSX.Element => {
-  const videoTileStyles = {
-    root: { height: '100%', width: '100%' },
-    overlayContainer: {}
-  };
+export class CallComponent extends React.Component<CallProps> {
+  render(): JSX.Element {
+    const videoTileStyles = {
+      root: { height: '100%', width: '100%' },
+      overlayContainer: {}
+    };
 
-  return (
-    <FluentThemeProvider>
-      <VideoTile
-        styles={videoTileStyles}
-        invertVideo={true}
-        isVideoReady={true}
-        videoProvider={
-          // Replace with your own video provider.
-          <StreamMedia videoStreamElement={renderVideoStream()} />
-        }
-        placeholderProvider={<></>}
-      >
-        <Banner {...props.banner} />
-        <CallControlBar />
-      </VideoTile>
-    </FluentThemeProvider>
-  );
-};
+    return (
+      <FluentThemeProvider>
+        <VideoTile
+          styles={videoTileStyles}
+          invertVideo={true}
+          isVideoReady={true}
+          videoProvider={
+            // Replace with your own video provider.
+            <StreamMedia videoStreamElement={renderVideoStream()} />
+          }
+          placeholderProvider={<></>}
+        >
+          <Banner {...this.props.banner} />
+          <CallControlBar />
+        </VideoTile>
+      </FluentThemeProvider>
+    );
+  }
+}

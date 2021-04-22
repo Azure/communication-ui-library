@@ -1,6 +1,5 @@
 import React from 'react';
 import { MessageBar } from '@fluentui/react';
-import { getPreviousElement } from '@fluentui/react-northstar';
 
 export interface BannerProps {
   recordingEnabled: boolean;
@@ -8,28 +7,42 @@ export interface BannerProps {
 }
 
 interface State {
-  previousRecordingEnabled: boolean;
-  previousTranscriptionEnabled: boolean;
+  currentProps: BannerProps;
+  previousProps: BannerProps;
 }
 
 export class Banner extends React.Component<BannerProps, State> {
   constructor(props: BannerProps) {
     super(props);
     this.state = {
-      previousRecordingEnabled: false,
-      previousTranscriptionEnabled: false
+      currentProps: {
+        recordingEnabled: false,
+        transcriptionEnabled: false
+      },
+      previousProps: {
+        recordingEnabled: true,
+        transcriptionEnabled: false
+      }
+    };
+  }
+
+  static getDerivedStateFromProps(props: BannerProps, state: State): State | null {
+    return {
+      currentProps: { ...props },
+      previousProps: { ...state.currentProps }
     };
   }
 
   render(): JSX.Element {
+    const cur = this.state.currentProps;
+    const prev = this.state.previousProps;
     // TODO: Make dismissable.
     return (
       <MessageBar styles={{ content: { alignItems: 'center' } }}>
-        Recording is {enabledOrNot(this.props.recordingEnabled)}, previously was{' '}
-        {enabledOrNot(this.state.previousRecordingEnabled)}.
+        Recording is {enabledOrNot(cur.recordingEnabled)}, previously was {enabledOrNot(prev.recordingEnabled)}.
         <br />
-        Transcription is {enabledOrNot(this.props.transcriptionEnabled)}, previously was{' '}
-        {enabledOrNot(this.state.previousTranscriptionEnabled)}.
+        Transcription is {enabledOrNot(cur.transcriptionEnabled)}, previously was{' '}
+        {enabledOrNot(prev.transcriptionEnabled)}.
         <br />
       </MessageBar>
     );
