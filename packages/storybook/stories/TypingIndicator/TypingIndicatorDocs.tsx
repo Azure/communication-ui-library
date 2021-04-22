@@ -1,5 +1,4 @@
 // © Microsoft Corporation. All rights reserved.
-import { Provider, teamsTheme } from '@fluentui/react-northstar';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
 import React from 'react';
 import { TypingIndicator } from '@azure/communication-ui';
@@ -23,9 +22,7 @@ export const getDocs: () => JSX.Element = () => {
       <Heading>Example</Heading>
       <Source code={TypingIndicatorSnippetText} />
       <Canvas>
-        <Provider theme={teamsTheme}>
-          <TypingIndicatorSnippet />
-        </Provider>
+        <TypingIndicatorSnippet />
       </Canvas>
       <Heading>Customize style</Heading>
       <Description>
@@ -35,9 +32,7 @@ export const getDocs: () => JSX.Element = () => {
       </Description>
       <Source code={CustomStylingSnippetText} />
       <Canvas>
-        <Provider theme={teamsTheme}>
-          <CustomStylingSnippet />
-        </Provider>
+        <CustomStylingSnippet />
       </Canvas>
       <Heading>Customize user rendering</Heading>
       <Description>
@@ -46,9 +41,7 @@ export const getDocs: () => JSX.Element = () => {
       </Description>
       <Source code={CustomUserRenderSnippetText} />
       <Canvas>
-        <Provider theme={teamsTheme}>
-          <CustomUserRenderSnippet />
-        </Provider>
+        <CustomUserRenderSnippet />
       </Canvas>
       <Heading>Props</Heading>
       <Props of={TypingIndicator} />

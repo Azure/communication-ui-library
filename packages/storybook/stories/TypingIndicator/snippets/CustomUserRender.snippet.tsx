@@ -13,9 +13,9 @@ export const CustomUserRenderSnippet: () => JSX.Element = () => {
   };
 
   const verticallyCenterStyle = mergeStyles({ display: 'flex', alignItems: 'center' });
-  const spanStyle = mergeStyles({ whiteSpace: 'nowrap', paddingRight: '0.1875rem' });
+  const spanStyle = mergeStyles({ whiteSpace: 'nowrap', paddingRight: '3px' });
 
-  const onRenderAvatar = (users: WebUiChatParticipant[]): JSX.Element => {
+  const onRenderUsers = (users: WebUiChatParticipant[]): JSX.Element => {
     return (
       <>
         {users.map((user, index) => (
@@ -36,9 +36,5 @@ export const CustomUserRenderSnippet: () => JSX.Element = () => {
     { userId: '2', displayName: 'Ted Randall' }
   ];
 
-  return (
-    <>
-      <TypingIndicator typingUsers={twoTypingUsers} onRenderUsers={onRenderAvatar} />
-    </>
-  );
+  return <TypingIndicator typingUsers={twoTypingUsers} onRenderUsers={onRenderUsers} />;
 };
