@@ -1,24 +1,41 @@
 import React from 'react';
 import { MessageBar } from '@fluentui/react';
+import { getPreviousElement } from '@fluentui/react-northstar';
 
 export interface BannerProps {
   recordingEnabled: boolean;
   transcriptionEnabled: boolean;
 }
 
-export class Banner extends React.Component<BannerProps> {
+interface State {
+  previousRecordingEnabled: boolean;
+  previousTranscriptionEnabled: boolean;
+}
+
+export class Banner extends React.Component<BannerProps, State> {
   constructor(props: BannerProps) {
     super(props);
+    this.state = {
+      previousRecordingEnabled: false,
+      previousTranscriptionEnabled: false
+    };
   }
 
-  render() {
+  render(): JSX.Element {
     // TODO: Make dismissable.
     return (
       <MessageBar styles={{ content: { alignItems: 'center' } }}>
-        Recording is {this.props.recordingEnabled ? 'enabled' : 'disabled'}
+        Recording is {enabledOrNot(this.props.recordingEnabled)}, previously was{' '}
+        {enabledOrNot(this.state.previousRecordingEnabled)}.
         <br />
-        Transcription is {this.props.transcriptionEnabled ? 'enabled' : 'disabled'}
+        Transcription is {enabledOrNot(this.props.transcriptionEnabled)}, previously was{' '}
+        {enabledOrNot(this.state.previousTranscriptionEnabled)}.
+        <br />
       </MessageBar>
     );
   }
+}
+
+function enabledOrNot(b: boolean): string {
+  return b ? 'enabled' : 'disabled';
 }
