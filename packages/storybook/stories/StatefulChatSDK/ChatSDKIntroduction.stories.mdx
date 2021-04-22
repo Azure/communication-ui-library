@@ -5,7 +5,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 # Introduction
 
 The `Declarative Chat`  is a stateful Chat library that allows you to use `@azure/communication-chat`  in a stateful manner.
-It provides a proxy layer built on top of the `@azure/communication-chat` and exposes all of the underlying functionality.
+It provides a proxy layer built on top of the `@azure/communication-chat` and augments the `ChatClient` with a centralized state and a `onStateChange` event. This makes it easy to use with any declarative UI framework where state changes trigger view updates.
 
 ## Features
 
