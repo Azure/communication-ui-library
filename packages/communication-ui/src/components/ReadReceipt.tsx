@@ -14,7 +14,7 @@ import { BaseCustomStylesProps } from '../types';
  */
 export interface ReadReceiptProps {
   /** Message status that determines the read receipt icon to show. */
-  messageStatus: MessageStatus;
+  messageStatus?: MessageStatus;
   /** Text to display in the delivered read receipt icon tooltip. */
   deliveredTooltipText?: string;
   /** Text to display in the seen read receipt icon tooltip. */
