@@ -87,5 +87,6 @@ const onStateChange = (state: ChatClientState): void => {
 declarativeChatClient.onStateChange(onStateChange);
 
 // Call client methods
+// The topic update here will automatically trigger the console.log in the state change listener.
 chatThreadClient.updateThread({ topic: 'newTopicName' });
 ```
