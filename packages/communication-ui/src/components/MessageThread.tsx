@@ -150,7 +150,7 @@ const DefaultJumpToNewMessageButton = (props: JumpToNewMessageButtonProps): JSX.
 };
 
 export interface LoadPreviousMessagesButtonProps {
-  onClick: () => void;
+  onClick: () => Promise<void>;
 }
 
 const DefaultLoadPreviousMessagesButtonRenderer = (props: LoadPreviousMessagesButtonProps): JSX.Element => {
@@ -269,7 +269,7 @@ const getLastChatMessageIdWithStatus = (
 ): string | undefined => {
   for (let i = messages.length - 1; i >= 0; i--) {
     const message = messages[i];
-    if (message.type === 'chat' && message.payload.status === status) {
+    if (message.type === 'chat' && message.payload.status === status && message.payload.mine) {
       return message.payload.messageId;
     }
   }
@@ -330,6 +330,11 @@ export type MessageThreadProps = {
    */
   disableReadReceipt?: boolean;
   /**
+   * Number of chat messaegs to reload each time onLoadPreviousChatMessages is called.
+   * @defaultValue 0
+   */
+  numberOfChatMessagesToReload?: number;
+  /**
    * onSendReadReceipt event handler. `() => Promise<void>`
    */
   onMessageSeen?: (messageId: string) => Promise<void>;
@@ -346,9 +351,11 @@ export type MessageThreadProps = {
    */
   onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
   /**
-   * onLoadPreviousMessages event handler.
+   * onLoadPreviousChatMessages event handler.
+   * It accepts the number of history chat messages that we want to load and return a boolean Promise indicating if we have got all the history messages.
+   * If the promise resolves to `true`, we have load all chat messages into the message thread and `loadPreviousMessagesButton` will not be rendered anymore.
    */
-  onLoadPreviousMessages?: () => void;
+  onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
   /**
    * onRenderLoadPreviousMessagesButton event handler. `(loadPreviousMessagesButton: LoadPreviousMessagesButtonProps) => JSX.Element`
    */
@@ -378,10 +385,11 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     disableJumpToNewMessageButton = false,
     disableReadReceipt = true,
     disableLoadPreviousMessage = true,
+    numberOfChatMessagesToReload = 0,
     onMessageSeen,
     onRenderReadReceipt,
     onRenderAvatar,
-    onLoadPreviousMessages,
+    onLoadPreviousChatMessages,
     onRenderLoadPreviousMessagesButton,
     onRenderJumpToNewMessageButton,
     onRenderMessage
@@ -404,6 +412,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const [lastSeenChatMessage, setLastSeenChatMessage] = useState<string | undefined>(undefined);
   const [lastDeliveredChatMessage, setLastDeliveredChatMessage] = useState<string | undefined>(undefined);
   const [lastSendingChatMessage, setLastSendingChatMessage] = useState<string | undefined>(undefined);
+
+  const [isAllChatMessagesLoaded, setIsAllChatMessagesLoaded] = useState<boolean>(false);
 
   const chatScrollDivRef: any = useRef();
   const chatThreadRef: any = useRef();
@@ -567,10 +577,10 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       memoizeAllMessages((memoizedMessageFn) => {
         return messages.map(
           (message: ChatMessage | SystemMessage | CustomMessage, index: number): ShorthandValue<ChatItemProps> => {
-            const key =
-              message.type === 'chat'
-                ? message.payload.messageId ?? message.payload.clientMessageId
-                : message.payload.messageId;
+            let key: string | undefined = message.payload.messageId;
+            if (message.type === 'chat' && (!message.payload.messageId || message.payload.messageId === '')) {
+              key = message.payload.clientMessageId;
+            }
 
             let statusToRender: MessageStatus | undefined = undefined;
             if (message.type === 'chat') {
@@ -629,22 +639,30 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     );
   }, [styles?.chatContainer, messagesToDisplay]);
 
+  const loadPreviousMessagesButtonOnClick = useCallback(async () => {
+    if (onLoadPreviousChatMessages) {
+      setIsAllChatMessagesLoaded(await onLoadPreviousChatMessages(numberOfChatMessagesToReload));
+    }
+  }, [numberOfChatMessagesToReload, onLoadPreviousChatMessages]);
+
   return (
     <Ref innerRef={chatThreadRef}>
       <Stack className={mergeStyles(messageThreadContainerStyle, styles?.root)} grow>
-        {!disableLoadPreviousMessage && (
+        {!disableLoadPreviousMessage && !isAllChatMessagesLoaded && (
           <div
             className={mergeStyles(
               loadPreviousMessagesButtonContainerStyle,
               styles?.loadPreviousMessagesButtonContainer
             )}
           >
-            {onLoadPreviousMessages &&
+            {onLoadPreviousChatMessages &&
               isAtTopOfScrollRef.current &&
               (onRenderLoadPreviousMessagesButton ? (
-                onRenderLoadPreviousMessagesButton({ onClick: onLoadPreviousMessages })
+                onRenderLoadPreviousMessagesButton({
+                  onClick: loadPreviousMessagesButtonOnClick
+                })
               ) : (
-                <DefaultLoadPreviousMessagesButtonRenderer onClick={onLoadPreviousMessages} />
+                <DefaultLoadPreviousMessagesButtonRenderer onClick={loadPreviousMessagesButtonOnClick} />
               ))}
           </div>
         )}

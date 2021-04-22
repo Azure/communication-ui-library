@@ -10,11 +10,13 @@ export type DefaultHandlers = {
   onTyping: () => Promise<void>;
   removeThreadMember: (userId: string) => Promise<void>;
   updateThreadTopicName: (topicName: string) => Promise<void>;
+  onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
 };
 
 // Keep all these handlers the same instance(unless client changed) to avoid re-render
 const createDefaultHandlers = memoizeOne(
   (chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient): DefaultHandlers => {
+    const messageIterator = chatThreadClient.listMessages();
     return {
       onMessageSend: async (content: string) => {
         await chatThreadClient.sendMessage({ content });
@@ -33,6 +35,21 @@ const createDefaultHandlers = memoizeOne(
       },
       updateThreadTopicName: async (topicName: string) => {
         await chatThreadClient.updateThread({ topic: topicName });
+      },
+      onLoadPreviousChatMessages: async (messagesToLoad: number) => {
+        let remainingMessaegsToGet = messagesToLoad;
+        let isAllChatMessagesLoaded = false;
+        while (remainingMessaegsToGet >= 1) {
+          const message = await messageIterator.next();
+          if (message.value?.type && message.value.type == 'text') remainingMessaegsToGet--;
+          // We have travered all messages in this thread
+          if (message.done) {
+            isAllChatMessagesLoaded = true;
+            break;
+          }
+        }
+
+        return isAllChatMessagesLoaded;
       }
     };
   }

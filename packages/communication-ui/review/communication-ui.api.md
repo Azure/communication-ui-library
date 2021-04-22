@@ -166,7 +166,7 @@ export const lightTheme: PartialTheme;
 // @public (undocumented)
 export interface LoadPreviousMessagesButtonProps {
     // (undocumented)
-    onClick: () => void;
+    onClick: () => Promise<void>;
 }
 
 // @public (undocumented)
@@ -197,11 +197,12 @@ export type MessageThreadProps = {
     disableJumpToNewMessageButton?: boolean;
     disableLoadPreviousMessage?: boolean;
     disableReadReceipt?: boolean;
+    numberOfChatMessagesToReload?: number;
     onMessageSeen?: (messageId: string) => Promise<void>;
     onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element | null;
     onRenderAvatar?: (userId: string) => JSX.Element;
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
-    onLoadPreviousMessages?: () => void;
+    onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderLoadPreviousMessagesButton?: (loadPreviousMessagesButton: LoadPreviousMessagesButtonProps) => JSX.Element;
     onRenderMessage?: (message: ChatMessage | SystemMessage | CustomMessage, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
 };

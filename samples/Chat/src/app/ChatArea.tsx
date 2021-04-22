@@ -19,7 +19,7 @@ import {
 import { useHandlers } from './hooks/useHandlers';
 import { chatThreadSelector } from '@azure/acs-chat-selector';
 import { Stack } from '@fluentui/react';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { chatAreaContainerStyle, sendBoxParentStyle } from './styles/ChatArea.styles';
 import { useSelector } from './hooks/useSelector';
 
@@ -55,10 +55,24 @@ export const ChatArea = (props: ChatAreaProps): JSX.Element => {
   }, [threadId]);
 
   const chatThreadProps = useSelector(chatThreadSelector, selectorConfig);
-  const handlers = useHandlers(MessageThread);
+  const chatThreadHandlers = useHandlers(MessageThread);
+
+  // Initialize the Chat thread with history messages
+  useEffect(() => {
+    (async () => {
+      await chatThreadHandlers.onLoadPreviousChatMessages(15);
+    })();
+  }, [chatThreadHandlers]);
+
   return (
     <Stack className={chatAreaContainerStyle}>
-      <MessageThread {...chatThreadProps} {...handlers} onRenderAvatar={props.onRenderAvatar} />
+      <MessageThread
+        {...chatThreadProps}
+        {...chatThreadHandlers}
+        onRenderAvatar={props.onRenderAvatar}
+        disableLoadPreviousMessage={false}
+        numberOfChatMessagesToReload={5}
+      />
       <Stack.Item align="center" className={sendBoxParentStyle}>
         <div style={{ paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>
           <TypingIndicator />

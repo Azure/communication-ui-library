@@ -82,6 +82,7 @@ export type DefaultHandlers = {
     onTyping: () => Promise<void>;
     removeThreadMember: (userId: string) => Promise<void>;
     updateThreadTopicName: (topicName: string) => Promise<void>;
+    onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
 };
 
 // @public (undocumented)
