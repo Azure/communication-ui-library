@@ -16,7 +16,7 @@ import {
 import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack } from '@fluentui/react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { LiveAnnouncer, LiveMessage } from 'react-aria-live';
-import { formatTimestampForChatMessage } from '../utils';
+import { delay, formatTimestampForChatMessage } from '../utils';
 import { NEW_MESSAGES } from '../constants';
 import {
   BaseCustomStylesProps,
@@ -562,13 +562,15 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   // Fetch more messages to make the scroll bar appear, infinity scroll is then handled in the handleScroll function.
   useEffect(() => {
     (async () => {
-      while (chatScrollDivRef.current.scrollTop <= 200 && !isAllChatMessagesLoaded) {
+      while (chatScrollDivRef.current.scrollTop <= 200 && !isAllChatMessagesLoadedRef.current) {
         if (onLoadPreviousChatMessages) {
           setIsAllChatMessagesLoaded(await onLoadPreviousChatMessages(numberOfChatMessagesToReload));
+          // Release CPU resources for 200 milliseconds between each loop.
+          await delay(200);
         }
       }
     })();
-  }, [isAllChatMessagesLoaded, onLoadPreviousChatMessages, numberOfChatMessagesToReload]);
+  }, [onLoadPreviousChatMessages, numberOfChatMessagesToReload]);
 
   // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp need to be regenerated)
   const defaultChatMessageRenderer = useCallback(

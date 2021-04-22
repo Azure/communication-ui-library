@@ -50,7 +50,7 @@ export const GetHistoryWithSystemMessages = (): (SystemMessage | ChatMessage)[] 
     {
       type: 'system',
       payload: {
-        messageId: '123',
+        messageId: Math.random().toString(),
         iconName: 'PeopleAdd',
         content: 'User1 is added to the chat'
       }
@@ -65,7 +65,7 @@ export const GetHistoryWithCustomMessages = (): (CustomMessage | ChatMessage)[] 
       // Custom message's payload can be any shape, this is just an example.
       // Whatever is defined in the custom message's payload needs to be handled in onRenderMessage in MessageThread.
       payload: {
-        messageId: '1234',
+        messageId: Math.random().toString(),
         content: 'Today'
       }
     },
