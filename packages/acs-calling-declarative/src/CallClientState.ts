@@ -9,6 +9,7 @@ import {
   DeviceAccess,
   MediaStreamType,
   RemoteParticipantState,
+  ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
 import {
@@ -30,6 +31,11 @@ export interface LocalVideoStream {
    * Proxy of {@Link @azure/communication-calling#LocalVideoStream.mediaStreamType}.
    */
   mediaStreamType: MediaStreamType;
+  /**
+   * {@Link VideoStreamRendererView} is added/removed from state by startRenderVideo/stopRenderVideo in
+   * {@Link DeclarativeCallClient} API.
+   */
+  videoStreamRendererView: VideoStreamRendererView | undefined;
 }
 
 /**
@@ -48,6 +54,31 @@ export interface RemoteVideoStream {
    * Proxy of {@Link @azure/communication-calling#RemoteVideoStream.isAvailable}.
    */
   isAvailable: boolean;
+  /**
+   * {@Link VideoStreamRendererView} is added/removed from state by startRenderVideo/stopRenderVideo in
+   * {@Link DeclarativeCallClient} API.
+   */
+  videoStreamRendererView: VideoStreamRendererView | undefined;
+}
+
+/**
+ * State only version of {@Link @azure/communication-calling#VideoStreamRendererView}. TODO: Do we want to provide an
+ * API for updateScalingMode? There is a way to change scaling mode which is to stop the video and start it again with
+ * the desired scaling mode option.
+ */
+export interface VideoStreamRendererView {
+  /**
+   * Proxy of {@Link @azure/communication-calling#VideoStreamRendererView.scalingMode}.
+   */
+  scalingMode: ScalingMode;
+  /**
+   * Proxy of {@Link @azure/communication-calling#VideoStreamRendererView.isMirrored}.
+   */
+  isMirrored: boolean;
+  /**
+   * Proxy of {@Link @azure/communication-calling#VideoStreamRendererView.target}.
+   */
+  target: HTMLElement;
 }
 
 /**
@@ -71,9 +102,10 @@ export interface RemoteParticipant {
    */
   callEndReason?: CallEndReason;
   /**
-   * Proxy of {@Link @azure/communication-calling#RemoteParticipant.videoStreams}.
+   * Proxy of {@Link @azure/communication-calling#RemoteParticipant.videoStreams} as a map of
+   * {@Link @azure/communication-calling#RemoteVideoStream.id} to {@Link RemoteVideoStream}.
    */
-  videoStreams: ReadonlyArray<RemoteVideoStream>;
+  videoStreams: Map<number, RemoteVideoStream>;
   /**
    * Proxy of {@Link @azure/communication-calling#RemoteParticipant.isMuted}.
    */
@@ -119,7 +151,7 @@ export interface Call {
   /**
    * Proxy of {@Link @azure/communication-calling#Call.localVideoStreams}.
    */
-  localVideoStreams: ReadonlyArray<LocalVideoStream>;
+  localVideoStreams: LocalVideoStream[];
   /**
    * Proxy of {@Link @azure/communication-calling#Call.remoteParticipants}. Map of identifier
    * {@Link Converter.getRemoteParticipantKey} to {@Link @azure/communication-calling#RemoteParticipant}

@@ -6,6 +6,8 @@ import { callDeclaratify } from './CallDeclarative';
 import { CallSubscriber } from './CallSubscriber';
 import { convertSdkCallToDeclarativeCall, convertSdkIncomingCallToDeclarativeIncomingCall } from './Converter';
 import { IncomingCallSubscriber } from './IncomingCallSubscriber';
+import { InternalCallContext } from './InternalCallContext';
+import { stopRenderVideoAll, stopRenderVideoAllCalls } from './StreamUtils';
 
 /**
  * ProxyCallAgent proxies CallAgent and saves any returned state in the given context. It will subscribe to all state
@@ -15,12 +17,14 @@ import { IncomingCallSubscriber } from './IncomingCallSubscriber';
 class ProxyCallAgent implements ProxyHandler<CallAgent> {
   private _callAgent: CallAgent;
   private _context: CallContext;
+  private _internalContext: InternalCallContext;
   private _callSubscribers: Map<Call, CallSubscriber>;
   private _incomingCallSubscribers: Map<string, IncomingCallSubscriber>;
 
-  constructor(callAgent: CallAgent, context: CallContext) {
+  constructor(callAgent: CallAgent, context: CallContext, internalContext: InternalCallContext) {
     this._callAgent = callAgent;
     this._context = context;
+    this._internalContext = internalContext;
     this._callSubscribers = new Map<Call, CallSubscriber>();
     this._incomingCallSubscribers = new Map<string, IncomingCallSubscriber>();
     this.subscribe();
@@ -59,6 +63,7 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
       this.addCall(call);
     }
     for (const call of event.removed) {
+      stopRenderVideoAll(this._context, this._internalContext, call.id);
       const callSubscriber = this._callSubscribers.get(call);
       if (callSubscriber) {
         callSubscriber.unsubscribe();
@@ -89,10 +94,8 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
   };
 
   private addCall = (call: Call): void => {
-    // Make sure to not subscribe to the call if we are already subscribed to it.
-    if (!this._callSubscribers.has(call)) {
-      this._callSubscribers.set(call, new CallSubscriber(call, this._context));
-    }
+    this._callSubscribers.get(call)?.unsubscribe();
+    this._callSubscribers.set(call, new CallSubscriber(call, this._context, this._internalContext));
     this._context.setCall(convertSdkCallToDeclarativeCall(call));
   };
 
@@ -131,10 +134,19 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
  *
  * @param callAgent - CallAgent from SDK
  * @param context - CallContext from CallClientDeclarative
+ * @param internalContext- InternalCallContext from CallClientDeclarative
  */
-export const callAgentDeclaratify = (callAgent: CallAgent, context: CallContext): CallAgent => {
+export const callAgentDeclaratify = (
+  callAgent: CallAgent,
+  context: CallContext,
+  internalContext: InternalCallContext
+): CallAgent => {
   // Make sure there are no existing call data if creating a new CallAgentDeclarative (if creating a new
-  // CallAgentDeclarative after disposing of the hold one will mean context have old call state).
+  // CallAgentDeclarative after disposing of the hold one will mean context have old call state). TODO: should we stop
+  // rendering when the previous callAgent is disposed?
+  stopRenderVideoAllCalls(context, internalContext);
+
   context.clearCallRelatedState();
-  return new Proxy(callAgent, new ProxyCallAgent(callAgent, context)) as CallAgent;
+  internalContext.clearAll();
+  return new Proxy(callAgent, new ProxyCallAgent(callAgent, context, internalContext)) as CallAgent;
 };

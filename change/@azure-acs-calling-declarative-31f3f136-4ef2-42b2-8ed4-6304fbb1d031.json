@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add ability to render Declarative VideoStreams",
+  "packageName": "@azure/acs-calling-declarative",
+  "email": "allenhwang@microsoft.com",
+  "dependentChangeType": "patch"
+}

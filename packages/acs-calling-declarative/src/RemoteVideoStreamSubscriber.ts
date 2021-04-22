@@ -1,28 +1,42 @@
 // © Microsoft Corporation. All rights reserved.
 
 import { RemoteVideoStream } from '@azure/communication-calling';
+import { CallContext } from './CallContext';
+import { CallIdRef } from './CallIdRef';
 
-/**
- * Subscribes to the isAvailableChanged event of the RemoteVideoStream. Because we dont' have a good way to distinguish
- * different remote video streams in context, we call the parent participant's videoStreamsUpdated function which will
- * recreate the remote video streams state from scratch. TODO: do we want to be more selective on adding/removing
- * streams?
- */
 export class RemoteVideoStreamSubscriber {
+  private _callIdRef: CallIdRef;
+  private _participantKey: string;
   private _remoteVideoStream: RemoteVideoStream;
-  private _videoStreamsUpdated: () => void;
+  private _context: CallContext;
 
-  constructor(remoteVideoStream: RemoteVideoStream, videoStreamsUpdated: () => void) {
+  constructor(
+    callIdRef: CallIdRef,
+    participantKey: string,
+    remoteVideoStream: RemoteVideoStream,
+    context: CallContext
+  ) {
+    this._callIdRef = callIdRef;
+    this._participantKey = participantKey;
     this._remoteVideoStream = remoteVideoStream;
-    this._videoStreamsUpdated = videoStreamsUpdated;
+    this._context = context;
     this.subscribe();
   }
 
   private subscribe = (): void => {
-    this._remoteVideoStream.on('isAvailableChanged', this._videoStreamsUpdated);
+    this._remoteVideoStream.on('isAvailableChanged', this.isAvailableChanged);
   };
 
   public unsubscribe = (): void => {
-    this._remoteVideoStream.off('isAvailableChanged', this._videoStreamsUpdated);
+    this._remoteVideoStream.off('isAvailableChanged', this.isAvailableChanged);
+  };
+
+  private isAvailableChanged = (): void => {
+    this._context.setRemoteVideoStreamIsAvailable(
+      this._callIdRef.callId,
+      this._participantKey,
+      this._remoteVideoStream.id,
+      this._remoteVideoStream.isAvailable
+    );
   };
 }
