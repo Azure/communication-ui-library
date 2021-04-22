@@ -24,5 +24,6 @@ export type {
   SystemMessage,
   CustomMessage,
   SystemMessagePayload,
-  ChatMessagePayload
+  ChatMessagePayload,
+  CustomMessagePayload
 } from './types';

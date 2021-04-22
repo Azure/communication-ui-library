@@ -32,7 +32,6 @@ export const MessageThreadComponent: () => JSX.Element = () => {
     GenerateMockChatMessages()
   );
   const showReadReceipt = boolean('Enable Message Read Receipt', true);
-  const loadMoreMessages = boolean('Enable Load More Messages', true);
   const enableJumpToNewMessageButton = boolean('Enable Jump To New Message', true);
 
   const onSendNewMessage = (): void => {
@@ -40,7 +39,7 @@ export const MessageThreadComponent: () => JSX.Element = () => {
     // We dont want to render the status for previous messages
     existingChatMessages.forEach((message) => {
       if (message.type === 'chat') {
-        message.payload.statusToRender = undefined;
+        message.payload.status = undefined;
       }
     });
     setChatMessages([...existingChatMessages, GenerateMockNewChatMessage()]);
@@ -50,8 +49,9 @@ export const MessageThreadComponent: () => JSX.Element = () => {
     setChatMessages([...chatMessages, GenerateMockNewChatMessageFromOthers()]);
   };
 
-  const onLoadPreviousMessages = (): void => {
+  const onLoadPreviousMessages = async (): Promise<boolean> => {
     setChatMessages([...GenerateMockHistoryChatMessages(), ...chatMessages]);
+    return false;
   };
 
   const onSendNewSystemMessage = (): void => {
@@ -77,9 +77,8 @@ export const MessageThreadComponent: () => JSX.Element = () => {
         userId={UserOne.senderId}
         messages={chatMessages}
         disableReadReceipt={!showReadReceipt}
-        disableLoadPreviousMessage={!loadMoreMessages}
         disableJumpToNewMessageButton={!enableJumpToNewMessageButton}
-        onLoadPreviousMessages={onLoadPreviousMessages}
+        onLoadPreviousChatMessages={onLoadPreviousMessages}
         onRenderMessage={onRenderMessage}
       />
       {/* We need to use these two buttons to render more messages in the chat thread and showcase the "new message" button.
