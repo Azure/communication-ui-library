@@ -215,7 +215,10 @@ export const ControlBar = (props: ControlBarProps): JSX.Element => {
     <Stack
       className={mergeStyles(
         controlBarStyle,
-        { background: darkThemed && layout?.startsWith('floating') ? theme.palette.neutralLight : theme.palette.white },
+        {
+          background:
+            darkThemed && layout?.startsWith('floating') ? theme.palette.neutralQuaternaryAlt : theme.palette.white
+        },
         styles?.root
       )}
     >
