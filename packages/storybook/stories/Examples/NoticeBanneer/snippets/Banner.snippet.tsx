@@ -6,13 +6,19 @@ export interface BannerProps {
   transcriptionEnabled: boolean;
 }
 
-export const Banner = (props: BannerProps): JSX.Element => {
-  // TODO: Make dismissable.
-  return (
-    <MessageBar styles={{ content: { alignItems: 'center' } }}>
-      Recording is {props.recordingEnabled ? 'enabled' : 'disabled'}
-      <br />
-      Transcription is {props.transcriptionEnabled ? 'enabled' : 'disabled'}
-    </MessageBar>
-  );
-};
+export class Banner extends React.Component<BannerProps> {
+  constructor(props: BannerProps) {
+    super(props);
+  }
+
+  render() {
+    // TODO: Make dismissable.
+    return (
+      <MessageBar styles={{ content: { alignItems: 'center' } }}>
+        Recording is {this.props.recordingEnabled ? 'enabled' : 'disabled'}
+        <br />
+        Transcription is {this.props.transcriptionEnabled ? 'enabled' : 'disabled'}
+      </MessageBar>
+    );
+  }
+}
