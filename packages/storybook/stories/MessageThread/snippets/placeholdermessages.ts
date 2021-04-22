@@ -62,7 +62,7 @@ export const GetHistoryWithCustomMessages = (): (CustomMessage | ChatMessage)[] 
     {
       type: 'custom',
       // Custom message's payload can be any shape, this is just an example.
-      // Whatever is defined in the custom message's payload needs to be handled in onRenderCustomMessage in MessageThread.
+      // Whatever is defined in the custom message's payload needs to be handled in onRenderMessage in MessageThread.
       payload: {
         content: 'Today'
       }

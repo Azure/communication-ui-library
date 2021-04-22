@@ -17,7 +17,7 @@ export type {
   CommunicationUiErrorSeverity,
   MessageAttachedStatus,
   MessageStatus,
-  TypingUser,
+  WebUiChatParticipant,
   Message,
   MessageTypes,
   ChatMessage,

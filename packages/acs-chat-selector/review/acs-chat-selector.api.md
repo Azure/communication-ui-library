@@ -12,6 +12,7 @@ import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
 import { MessageStatus } from '@azure/acs-chat-declarative';
 import { ReactElement } from 'react';
 import * as reselect from 'reselect';
+import { TypingIndicator } from '@azure/acs-chat-declarative';
 
 // @public (undocumented)
 export type BaseSelectorProps = {
@@ -31,7 +32,6 @@ export type ChatMessagePayload = {
     createdOn?: Date;
     senderId?: string;
     senderDisplayName?: string;
-    statusToRender?: MessageStatus;
     status?: MessageStatus;
     attached?: MessageAttachedStatus | boolean;
     mine?: boolean;
@@ -73,7 +73,7 @@ export type CustomMessage = Message<'custom'>;
 
 // @public (undocumented)
 export type CustomMessagePayload = {
-    messageId?: string;
+    messageId: string;
 };
 
 // @public (undocumented)
@@ -83,12 +83,13 @@ export type DefaultHandlers = {
     onTyping: () => Promise<void>;
     removeThreadMember: (userId: string) => Promise<void>;
     updateThreadTopicName: (topicName: string) => Promise<void>;
+    onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
 };
 
 // @public (undocumented)
 export type FunctionWithKey<KeyT, ArgsT extends any[], RetT> = (key: KeyT, ...args: ArgsT) => RetT;
 
-// @public (undocumented)
+// @public
 export const memoizeFunctionAll: <KeyT, ArgsT extends any[], FnRetT, CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>>(fn: FunctionWithKey<KeyT, ArgsT, FnRetT>, shouldCacheUpdate?: (args1: any, args2: any) => boolean) => (callback: CallBackT) => FnRetT[];
 
 // @public (undocumented)
@@ -124,10 +125,17 @@ export type SystemMessage = Message<'system'>;
 
 // @public (undocumented)
 export type SystemMessagePayload = {
-    messageId?: string;
+    messageId: string;
     content?: string;
     iconName?: string;
 };
+
+// @public (undocumented)
+export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
+    typingUsers: WebUiChatParticipant[];
+}, (res1: TypingIndicator[], res2: Map<string, ChatParticipant>, res3: string) => {
+    typingUsers: WebUiChatParticipant[];
+}>;
 
 // @public (undocumented)
 export type WebUiChatParticipant = {
