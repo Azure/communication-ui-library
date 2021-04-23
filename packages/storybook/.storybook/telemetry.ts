@@ -1,6 +1,4 @@
 import { ApplicationInsights } from '@microsoft/applicationinsights-web'
-import { ReactPlugin } from '@microsoft/applicationinsights-react-js';
-import { createBrowserHistory } from "history";
 
 /**
  * Check if we have the necessary cookie consent to allow the app insights library to make use of cookies
@@ -45,21 +43,13 @@ const startTelemetry = (cookieConsent: boolean): ApplicationInsights | undefined
     return;
   }
 
-  // Initialize telemetry react plugin
-  const browserHistory = createBrowserHistory({ window });
-  var reactPlugin = new ReactPlugin();
-
 
   // Initialize and start collecting telemetry
   const appInsights = new ApplicationInsights({
     config: {
       disableCookiesUsage: !cookieConsent,
       instrumentationKey,
-      enableAutoRouteTracking: true,
-      extensions: [reactPlugin],
-      extensionConfig: {
-        [reactPlugin.identifier]: { history: browserHistory }
-      }
+      enableAutoRouteTracking: true
     }
   });
   appInsights.loadAppInsights();

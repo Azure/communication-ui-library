@@ -18,6 +18,7 @@ dependencies:
   '@microsoft/api-documenter': 7.12.22
   '@microsoft/api-extractor': 7.13.5
   '@microsoft/applicationinsights-react-js': 3.0.5_react@16.14.0
+  '@microsoft/applicationinsights-shims': 2.0.0
   '@microsoft/applicationinsights-web': 2.6.2
   '@octokit/rest': 18.0.15
   '@rollup/plugin-commonjs': 17.1.0_rollup@2.42.4
@@ -20844,6 +20845,7 @@ packages:
       '@microsoft/api-documenter': 7.12.22
       '@microsoft/api-extractor': 7.13.5
       '@microsoft/applicationinsights-react-js': 3.0.5_react@16.14.0
+      '@microsoft/applicationinsights-shims': 2.0.0
       '@microsoft/applicationinsights-web': 2.6.2
       '@storybook/addon-actions': 6.1.21_30bc4764d4ba778218056aab0be8023f
       '@storybook/addon-docs': 6.1.21_5514be1c2f82a2c07dc23d6d89b846eb
@@ -20917,9 +20919,10 @@ packages:
     peerDependencies:
       webpack-cli: '*'
     resolution:
-      integrity: sha512-1SDidGsTxEYq4njaHKQip+G6ir97ZXfHt+e1RYi9XmfEc3L3BXC1bLbG/hm+K9gv72+8OoDkDkn+N6u3vxaIiA==
+      integrity: sha512-L7omrlDRrtKtIfu8I6naxSZbPwqciQkGP4tmlefZbLNf5kcig9gO/zukueFvjFetVaUKBS3gLfAjr14vstal7Q==
       tarball: file:projects/storybook.tgz
     version: 0.0.0
+registry: ''
 specifiers:
   '@azure/communication-administration': 1.0.0-beta.3
   '@azure/communication-calling': 1.0.1-beta.1
@@ -20940,6 +20943,7 @@ specifiers:
   '@microsoft/api-documenter': ~7.12.11
   '@microsoft/api-extractor': ~7.13.2
   '@microsoft/applicationinsights-react-js': ~3.0.5
+  '@microsoft/applicationinsights-shims': ~2.0.0
   '@microsoft/applicationinsights-web': ~2.6.1
   '@octokit/rest': ~18.0.6
   '@rollup/plugin-commonjs': ~17.1.0
