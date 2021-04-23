@@ -1,21 +1,20 @@
 import React from 'react';
-import { Link, MessageBar } from '@fluentui/react';
+import { Link } from '@fluentui/react';
+
 export interface TeamsInterop {
   recordingEnabled: boolean;
   transcriptionEnabled: boolean;
 }
 
-export interface BannerProps {
+export interface TeamsInteropHistory {
   teamsInteropCurrent: TeamsInterop;
   teamsInteropPrevious: TeamsInterop;
 }
 
-export const Banner = (props: BannerProps): JSX.Element => {
-  // TODO: Make dismissable.
-  return <MessageBar>{bannerMessage(props)}</MessageBar>;
-};
-
-export function bannerMessage(props: BannerProps): JSX.Element | null {
+// Return the banner message to display for teams interop.
+//
+// Returns null if no banner needs to be displayed.
+export function bannerMessage(props: TeamsInteropHistory): JSX.Element | null {
   const prev = props.teamsInteropPrevious;
   const cur = props.teamsInteropCurrent;
 
