@@ -28,11 +28,17 @@ import { MessageThreadWithCustomReadReceiptExample } from './snippets/MessageThr
 const MessageThreadWithCustomReadReceiptExampleText = require('!!raw-loader!./snippets/MessageThreadWithCustomReadReceipt.snippet.tsx')
   .default;
 
+const importStatement = `
+import { FluentThemeProvider, MessageThread } from '@azure/communication-ui';
+`;
+
 export const getDocs: () => JSX.Element = () => {
   return (
     <>
       <Title>MessageThread</Title>
       <Description of={MessageThread} />
+      <Heading>Importing</Heading>
+      <Source code={importStatement} />
       <Heading>Sample Messages</Heading>
       <Description>
         Create a `placeholdermessages.ts` file in the current folder you are working on. Then copy paste the code below

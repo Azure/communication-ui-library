@@ -1,15 +1,15 @@
 import React from 'react';
 import {
   FluentThemeProvider,
-  audioButtonProps,
   ControlBar,
+  audioButtonProps,
   hangupButtonProps,
   videoButtonProps
 } from '@azure/communication-ui';
 import { DefaultButton, concatStyleSets } from '@fluentui/react';
 import { CallEndIcon } from '@fluentui/react-northstar';
 
-export const CustomControlBarExample: () => JSX.Element = () => {
+export const CustomButtonsExample: () => JSX.Element = () => {
   const CustomHangupButton: () => JSX.Element = () => {
     const styles = concatStyleSets(hangupButtonProps.styles, {
       root: {
@@ -24,10 +24,15 @@ export const CustomControlBarExample: () => JSX.Element = () => {
       },
       flexContainer: { flexFlow: 'row' }
     });
+
     return (
       <DefaultButton
-        onRenderIcon={() => <CallEndIcon />}
-        onRenderText={() => <span style={{ marginLeft: '0.250rem' }}>End Call</span>}
+        onRenderIcon={() => <CallEndIcon key={'hangupBtnIconKey'} />}
+        onRenderText={() => (
+          <span key={'hangupBtnTextKey'} style={{ marginLeft: '0.5rem' }}>
+            End Call
+          </span>
+        )}
         styles={styles}
         onClick={() => {
           /* handle hangup */
