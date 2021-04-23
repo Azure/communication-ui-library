@@ -10,16 +10,18 @@ export const Component: () => JSX.Element = () => {
     current: false,
     previous: false
   });
-  button('Toggle Recording', () => {
-    setRecording(toggleWithHistory(recording));
-    return false;
-  });
-
   const [transcription, setTranscription] = useState({
     current: false,
     previous: false
   });
+
+  button('Toggle Recording', () => {
+    setRecording(toggleWithHistory(recording));
+    setTranscription(mirrorHistory(transcription));
+    return false;
+  });
   button('Toggle Transcription', () => {
+    setRecording(mirrorHistory(recording));
     setTranscription(toggleWithHistory(transcription));
     return false;
   });
@@ -41,6 +43,13 @@ interface ToggleState {
 function toggleWithHistory(s: ToggleState): ToggleState {
   return {
     current: !s.current,
+    previous: s.current
+  };
+}
+
+function mirrorHistory(s: ToggleState): ToggleState {
+  return {
+    current: s.current,
     previous: s.current
   };
 }
