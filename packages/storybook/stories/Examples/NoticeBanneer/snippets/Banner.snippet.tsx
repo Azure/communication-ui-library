@@ -12,10 +12,10 @@ export interface BannerProps {
 
 export const Banner = (props: BannerProps): JSX.Element => {
   // TODO: Make dismissable.
-  return <MessageBar>{message(props)}</MessageBar>;
+  return <MessageBar>{bannerMessage(props)}</MessageBar>;
 };
 
-function message(props: BannerProps): JSX.Element | null {
+export function bannerMessage(props: BannerProps): JSX.Element | null {
   const prev = props.teamsInteropPrevious;
   const cur = props.teamsInteropCurrent;
 

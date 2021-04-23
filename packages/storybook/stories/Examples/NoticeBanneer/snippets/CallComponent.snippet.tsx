@@ -1,8 +1,9 @@
 import { FluentThemeProvider, StreamMedia, VideoTile } from '@azure/communication-ui';
 import React from 'react';
 import { renderVideoStream } from '../../../utils';
-import { Banner, TeamsInterop } from './Banner.snippet';
+import { TeamsInterop, bannerMessage } from './Banner.snippet';
 import { CallControlBar } from './CallControlBar.snippet';
+import { MessageBar } from '@fluentui/react';
 
 export interface CallProps {
   teamsInteropCurrent: TeamsInterop;
@@ -15,6 +16,8 @@ export const CallComponent = (props: CallProps): JSX.Element => {
     overlayContainer: {}
   };
 
+  const msg = bannerMessage(props);
+  const banner = msg !== null ? <MessageBar>{msg}</MessageBar> : <></>;
   return (
     <FluentThemeProvider>
       <VideoTile
@@ -27,22 +30,9 @@ export const CallComponent = (props: CallProps): JSX.Element => {
         }
         placeholderProvider={<></>}
       >
-        {needsComplianceBanner(props) ? (
-          <Banner teamsInteropCurrent={props.teamsInteropCurrent} teamsInteropPrevious={props.teamsInteropPrevious} />
-        ) : (
-          <></>
-        )}
+        {banner}
         <CallControlBar />
       </VideoTile>
     </FluentThemeProvider>
   );
 };
-
-function needsComplianceBanner(props: CallProps): boolean {
-  return [
-    props.teamsInteropCurrent.recordingEnabled,
-    props.teamsInteropCurrent.transcriptionEnabled,
-    props.teamsInteropPrevious.recordingEnabled,
-    props.teamsInteropPrevious.transcriptionEnabled
-  ].some((x) => x);
-}
