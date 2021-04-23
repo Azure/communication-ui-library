@@ -21,7 +21,6 @@ export type {
   MessageThreadProps,
   MessageThreadStylesProps,
   JumpToNewMessageButtonProps,
-  LoadPreviousMessagesButtonProps,
   DefaultMessageRendererType
 } from './MessageThread';
 

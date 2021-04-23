@@ -3,16 +3,17 @@ import { ParticipantItem } from '@azure/communication-ui';
 import { PersonaPresence } from '@fluentui/react';
 
 export const CustomAvatarExample: () => JSX.Element = () => {
+  const avatarStyle = {
+    borderRadius: 20,
+    display: 'block'
+  };
   const onRenderAvatar = (): JSX.Element => {
     return (
       <img
         src="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/persona-female.png"
         width="32px"
         height="32px"
-        style={{
-          borderRadius: 20,
-          display: 'block'
-        }}
+        style={avatarStyle}
       />
     );
   };

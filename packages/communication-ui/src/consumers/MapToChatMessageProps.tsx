@@ -77,14 +77,14 @@ export const updateMessagesWithAttached = (
       // Clean the statusToRender of the previous message in the same message block of mine.
       if (newChatMessages.length > 0) {
         const prevMsg = newChatMessages[newChatMessages.length - 1];
-        if (prevMsg.payload.statusToRender === statusToRender || prevMsg.payload.statusToRender === 'failed') {
-          prevMsg.payload.statusToRender = undefined;
+        if (prevMsg.payload.status === statusToRender || prevMsg.payload.status === 'failed') {
+          prevMsg.payload.status = undefined;
         }
       }
 
       // If there's a previous block of messages that are mine, clean the read statusToRender on the last message
       if (IndexOfMyLastMassage) {
-        newChatMessages[IndexOfMyLastMassage].payload.statusToRender = undefined;
+        newChatMessages[IndexOfMyLastMassage].payload.status = undefined;
         IndexOfMyLastMassage = undefined;
       }
 
