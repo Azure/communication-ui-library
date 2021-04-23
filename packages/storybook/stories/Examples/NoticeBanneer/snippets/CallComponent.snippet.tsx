@@ -9,39 +9,34 @@ export interface CallProps {
   teamsInteropPrevious: TeamsInterop;
 }
 
-export class CallComponent extends React.Component<CallProps> {
-  render(): JSX.Element {
-    const videoTileStyles = {
-      root: { height: '100%', width: '100%' },
-      overlayContainer: {}
-    };
+export const CallComponent = (props: CallProps): JSX.Element => {
+  const videoTileStyles = {
+    root: { height: '100%', width: '100%' },
+    overlayContainer: {}
+  };
 
-    return (
-      <FluentThemeProvider>
-        <VideoTile
-          styles={videoTileStyles}
-          invertVideo={true}
-          isVideoReady={true}
-          videoProvider={
-            // Replace with your own video provider.
-            <StreamMedia videoStreamElement={renderVideoStream()} />
-          }
-          placeholderProvider={<></>}
-        >
-          {needsComplianceBanner(this.props) ? (
-            <Banner
-              teamsInteropCurrent={this.props.teamsInteropCurrent}
-              teamsInteropPrevious={this.props.teamsInteropPrevious}
-            />
-          ) : (
-            <></>
-          )}
-          <CallControlBar />
-        </VideoTile>
-      </FluentThemeProvider>
-    );
-  }
-}
+  return (
+    <FluentThemeProvider>
+      <VideoTile
+        styles={videoTileStyles}
+        invertVideo={true}
+        isVideoReady={true}
+        videoProvider={
+          // Replace with your own video provider.
+          <StreamMedia videoStreamElement={renderVideoStream()} />
+        }
+        placeholderProvider={<></>}
+      >
+        {needsComplianceBanner(props) ? (
+          <Banner teamsInteropCurrent={props.teamsInteropCurrent} teamsInteropPrevious={props.teamsInteropPrevious} />
+        ) : (
+          <></>
+        )}
+        <CallControlBar />
+      </VideoTile>
+    </FluentThemeProvider>
+  );
+};
 
 function needsComplianceBanner(props: CallProps): boolean {
   return [

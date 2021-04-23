@@ -10,12 +10,10 @@ export interface BannerProps {
   teamsInteropPrevious: TeamsInterop;
 }
 
-export class Banner extends React.Component<BannerProps> {
-  render(): JSX.Element {
-    // TODO: Make dismissable.
-    return <MessageBar>{message(this.props)}</MessageBar>;
-  }
-}
+export const Banner = (props: BannerProps): JSX.Element => {
+  // TODO: Make dismissable.
+  return <MessageBar>{message(props)}</MessageBar>;
+};
 
 function message(props: BannerProps): JSX.Element | null {
   const prev = props.teamsInteropPrevious;
