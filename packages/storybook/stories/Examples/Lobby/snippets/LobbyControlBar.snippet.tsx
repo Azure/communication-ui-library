@@ -1,5 +1,6 @@
 // LobbyControlBar.example.tsx
 
+import React from 'react';
 import {
   ControlBar,
   labeledAudioButtonProps,
@@ -8,13 +9,14 @@ import {
   labeledVideoButtonProps
 } from '@azure/communication-ui';
 import { DefaultButton } from '@fluentui/react';
-import React from 'react';
+import { useTheme } from '@fluentui/react-theme-provider';
 
 export const LobbyCallControlBar = (): JSX.Element => {
+  const theme = useTheme();
   return (
     <ControlBar
       layout="dockedBottom"
-      styles={{ root: { background: 'white', minHeight: '4.25rem', alignItems: 'center' } }}
+      styles={{ root: { background: theme.palette.white, minHeight: '4.25rem', alignItems: 'center' } }}
     >
       <DefaultButton {...labeledVideoButtonProps} checked={true} />
       <DefaultButton {...labeledAudioButtonProps} checked={true} />

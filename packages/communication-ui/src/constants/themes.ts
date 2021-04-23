@@ -2,10 +2,16 @@
 
 import { Theme, PartialTheme } from '@fluentui/react-theme-provider';
 
+export type CommunicationUiTheme = PartialTheme & {
+  palette: {
+    lobbyTint: string;
+  };
+};
+
 /**
  * Light theme designed ACS UI SDK components
  */
-export const lightTheme: PartialTheme = {
+export const lightTheme: CommunicationUiTheme = {
   palette: {
     themePrimary: '#0078d4',
     themeLighterAlt: '#eff6fc',
@@ -28,14 +34,15 @@ export const lightTheme: PartialTheme = {
     neutralPrimary: '#323130',
     neutralDark: '#201f1e',
     black: '#000000',
-    white: '#ffffff'
+    white: '#ffffff',
+    lobbyTint: '#004578'
   }
 };
 
 /**
  * Dark theme designed ACS UI SDK components
  */
-export const darkTheme: PartialTheme = {
+export const darkTheme: CommunicationUiTheme = {
   palette: {
     themePrimary: '#2899f5',
     themeLighterAlt: '#02060a',
@@ -58,7 +65,8 @@ export const darkTheme: PartialTheme = {
     neutralPrimary: '#ffffff',
     neutralDark: '#f4f4f4',
     black: '#f8f8f8',
-    white: '#252423'
+    white: '#252423',
+    lobbyTint: '#252423'
   }
 };
 
