@@ -8,7 +8,11 @@ import * as reselect from 'reselect';
 import { ChatParticipant } from '@azure/communication-chat';
 import { TypingIndicator } from '@azure/acs-chat-declarative';
 import { WebUiChatParticipant } from './types/WebUiChatParticipant';
-import { MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS, PARTICIPANTS_THRESHOLD } from './utils/constants';
+import {
+  MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS,
+  PARTICIPANTS_THRESHOLD,
+  UNKNOWN_DISPLAYNAME
+} from './utils/constants';
 
 const filterTypingIndicators = (typingIndicators: TypingIndicator[], userId: string): TypingIndicator[] => {
   const filteredTypingIndicators: TypingIndicator[] = [];
@@ -33,18 +37,19 @@ const filterTypingIndicators = (typingIndicators: TypingIndicator[], userId: str
 };
 
 const convertSdkTypingIndicatorsToWebUiChatParticipants = (
-  typingIndicators: TypingIndicator[]
+  typingIndicators: TypingIndicator[],
+  participants: Map<string, ChatParticipant>
 ): WebUiChatParticipant[] => {
   return typingIndicators.map((typingIndicator) => ({
     userId: typingIndicator.sender.user.communicationUserId,
-    displayName: typingIndicator.sender.displayName
+    displayName: participants.get(typingIndicator.sender.user.communicationUserId)?.displayName ?? UNKNOWN_DISPLAYNAME
   }));
 };
 
 export const typingIndicatorSelector = reselect.createSelector(
   [getTypingIndicators, getParticipants, getUserId],
   (typingIndicators: TypingIndicator[], participants: Map<string, ChatParticipant>, userId: string) => {
-    // if there are participant size is at threshold return no typing users
+    // if the participant size reaches the threshold then return no typing users
     if (participants.size >= PARTICIPANTS_THRESHOLD) {
       return { typingUsers: [] };
     }
@@ -53,7 +58,8 @@ export const typingIndicatorSelector = reselect.createSelector(
     const filteredTypingIndicators = filterTypingIndicators(typingIndicators, userId);
 
     const typingUsers: WebUiChatParticipant[] = convertSdkTypingIndicatorsToWebUiChatParticipants(
-      filteredTypingIndicators
+      filteredTypingIndicators,
+      participants
     );
 
     return { typingUsers };
