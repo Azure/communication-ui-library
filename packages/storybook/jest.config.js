@@ -105,10 +105,10 @@ module.exports = {
   // restoreMocks: false,
 
   // The root directory that Jest should scan for tests and modules within
-  rootDir: './stories',
+  rootDir: '.',
 
   // A list of paths to directories that Jest should use to search for files in
-  // roots: ['stories'],
+  roots: ['stories', '.storybook'],
 
   // Allows you to use a custom runner instead of Jest's default test runner
   // runner: "jest-runner",
@@ -161,7 +161,7 @@ module.exports = {
   // A map from regular expressions to paths to transformers
   transform: {
     '^.+\\.(ts)x?$': 'ts-jest',
-    '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': '<rootDir>/../jest/fileTransform.js'
+    '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': '<rootDir>/jest/fileTransform.js'
   },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
