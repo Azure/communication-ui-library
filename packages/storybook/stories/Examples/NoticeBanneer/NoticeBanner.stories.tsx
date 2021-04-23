@@ -4,44 +4,46 @@ import React, { useState } from 'react';
 import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import { CallComponent } from './snippets/CallComponent.snippet';
 import { getDocs } from './Docs';
-import { TeamsState } from './snippets/TeamsState.snippet';
 
 export const Component: () => JSX.Element = () => {
   // TODO: Fix dark theming
   // TODO: Avoid re-rendering video when recording/transcription is enabled/disabled.
-  const [state, setState] = useState({
-    recordingEnabled: false,
-    recordingPreviouslyEnabled: false,
-    transcriptionEnabled: false,
-    transcriptionPreviouslyEnabled: false
+
+  const [recording, setRecording] = useState({
+    current: false,
+    previous: false
   });
   button('Toggle Recording', () => {
-    setState(toggleRecording(state));
+    setRecording(toggleWithHistory(recording));
     return false;
+  });
+
+  const [transcription, setTranscription] = useState({
+    current: false,
+    previous: false
   });
   button('Toggle Transcription', () => {
-    setState(toggleTranscription(state));
+    setTranscription(toggleWithHistory(transcription));
     return false;
   });
 
-  return <CallComponent teamsState={state} />;
+  return (
+    <CallComponent
+      teamsInteropCurrent={{ recordingEnabled: recording.current, transcriptionEnabled: transcription.current }}
+      teamsInteropPrevious={{ recordingEnabled: recording.previous, transcriptionEnabled: transcription.previous }}
+    />
+  );
 };
 
-function toggleRecording(s: TeamsState): TeamsState {
-  return {
-    recordingEnabled: !s.recordingEnabled,
-    recordingPreviouslyEnabled: s.recordingEnabled,
-    transcriptionEnabled: s.transcriptionEnabled,
-    transcriptionPreviouslyEnabled: s.transcriptionPreviouslyEnabled
-  };
+interface ToggleState {
+  current: boolean;
+  previous: boolean;
 }
 
-function toggleTranscription(s: TeamsState): TeamsState {
+function toggleWithHistory(s: ToggleState): ToggleState {
   return {
-    recordingEnabled: s.recordingEnabled,
-    recordingPreviouslyEnabled: s.recordingPreviouslyEnabled,
-    transcriptionEnabled: !s.transcriptionEnabled,
-    transcriptionPreviouslyEnabled: s.transcriptionEnabled
+    current: !s.current,
+    previous: s.current
   };
 }
 

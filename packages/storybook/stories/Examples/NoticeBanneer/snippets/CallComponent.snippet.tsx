@@ -1,12 +1,12 @@
 import { FluentThemeProvider, StreamMedia, VideoTile } from '@azure/communication-ui';
 import React from 'react';
 import { renderVideoStream } from '../../../utils';
-import { Banner, BannerProps } from './Banner.snippet';
+import { Banner, TeamsInterop } from './Banner.snippet';
 import { CallControlBar } from './CallControlBar.snippet';
-import { TeamsState } from './TeamsState.snippet';
 
 export interface CallProps {
-  teamsState: TeamsState;
+  teamsInteropCurrent: TeamsInterop;
+  teamsInteropPrevious: TeamsInterop;
 }
 
 export class CallComponent extends React.Component<CallProps> {
@@ -28,7 +28,14 @@ export class CallComponent extends React.Component<CallProps> {
           }
           placeholderProvider={<></>}
         >
-          {needsComplianceBanner(this.props.teamsState) ? <Banner teamsState={this.props.teamsState} /> : <></>}
+          {needsComplianceBanner(this.props) ? (
+            <Banner
+              teamsInteropCurrent={this.props.teamsInteropCurrent}
+              teamsInteropPrevious={this.props.teamsInteropPrevious}
+            />
+          ) : (
+            <></>
+          )}
           <CallControlBar />
         </VideoTile>
       </FluentThemeProvider>
@@ -36,8 +43,11 @@ export class CallComponent extends React.Component<CallProps> {
   }
 }
 
-function needsComplianceBanner(s: TeamsState): boolean {
-  return (
-    s.recordingEnabled || s.recordingPreviouslyEnabled || s.transcriptionEnabled || s.transcriptionPreviouslyEnabled
-  );
+function needsComplianceBanner(props: CallProps): boolean {
+  return [
+    props.teamsInteropCurrent.recordingEnabled,
+    props.teamsInteropCurrent.transcriptionEnabled,
+    props.teamsInteropPrevious.recordingEnabled,
+    props.teamsInteropPrevious.transcriptionEnabled
+  ].some((x) => x);
 }

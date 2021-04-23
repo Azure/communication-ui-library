@@ -1,26 +1,25 @@
 import React from 'react';
 import { MessageBar } from '@fluentui/react';
-import { TeamsState } from './TeamsState.snippet';
-
+export interface TeamsInterop {
+  recordingEnabled: boolean;
+  transcriptionEnabled: boolean;
+}
 export interface BannerProps {
-  teamsState: TeamsState;
+  teamsInteropCurrent: TeamsInterop;
+  teamsInteropPrevious: TeamsInterop;
 }
 
-interface State {
-  currentProps: BannerProps;
-  previousProps: BannerProps;
-}
-
-export class Banner extends React.Component<BannerProps, State> {
+export class Banner extends React.Component<BannerProps> {
   render(): JSX.Element {
-    const ts = this.props.teamsState;
+    const cur = this.props.teamsInteropCurrent;
+    const prev = this.props.teamsInteropPrevious;
     // TODO: Make dismissable.
     return (
       <MessageBar styles={{ content: { alignItems: 'center' } }}>
-        Recording is {enabledOrNot(ts.recordingEnabled)}, previously was {enabledOrNot(ts.recordingPreviouslyEnabled)}.
+        Recording is {enabledOrNot(cur.recordingEnabled)}, previously was {enabledOrNot(prev.recordingEnabled)}.
         <br />
-        Transcription is {enabledOrNot(ts.transcriptionEnabled)}, previously was{' '}
-        {enabledOrNot(ts.transcriptionPreviouslyEnabled)}.
+        Transcription is {enabledOrNot(cur.transcriptionEnabled)}, previously was{' '}
+        {enabledOrNot(prev.transcriptionEnabled)}.
         <br />
       </MessageBar>
     );
