@@ -5,7 +5,7 @@ import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import { CallComponent } from './snippets/CallComponent.snippet';
 import { getDocs } from './Docs';
 
-export const Component: () => JSX.Element = () => {
+export const NoticeBanner: () => JSX.Element = () => {
   const [recording, setRecording] = useState({
     current: false,
     previous: false
@@ -55,8 +55,8 @@ function mirrorHistory(s: ToggleState): ToggleState {
 }
 
 export default {
-  title: `${EXAMPLES_FOLDER_PREFIX}/NoticeBanner`,
-  component: Component,
+  title: `${EXAMPLES_FOLDER_PREFIX}/TeamsInteroperation`,
+  component: NoticeBanner,
   parameters: {
     docs: {
       page: () => getDocs()

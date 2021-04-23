@@ -16,8 +16,10 @@ export const CallComponent = (props: CallProps): JSX.Element => {
     overlayContainer: {}
   };
 
+  // Optionally show a message bar for Teams interoperability messages.
   const msg = bannerMessage(props);
   const banner = msg !== null ? <MessageBar>{msg}</MessageBar> : <></>;
+
   return (
     <FluentThemeProvider>
       <VideoTile
@@ -30,7 +32,9 @@ export const CallComponent = (props: CallProps): JSX.Element => {
         }
         placeholderProvider={<></>}
       >
+        {/* Optional Banner */}
         {banner}
+
         <CallControlBar />
       </VideoTile>
     </FluentThemeProvider>
