@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Updated FluentThemeProvider theming for MessageThread. MessageThread button to load previous messages changed.",
+  "packageName": "@azure/communication-ui",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}

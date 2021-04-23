@@ -8,8 +8,5 @@ export * from './MapToVideoProps';
 export * from './MapToLocalDeviceSettingsProps';
 
 export * from './MapToChatMessageProps';
-export * from './MapToChatThreadProps';
 export * from './MapToErrorsProps';
 export * from './MapToErrorBarProps';
-export * from './MapToSendBoxProps';
-export * from './MapToTypingIndicatorProps';

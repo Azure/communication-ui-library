@@ -1,9 +1,11 @@
 // © Microsoft Corporation. All rights reserved.
 import { deviceManagerDeclaratify } from './DeviceManagerDeclarative';
-import { CallAgent, CallClient, DeviceManager } from '@azure/communication-calling';
-import { CallClientState } from './CallClientState';
+import { CallAgent, CallClient, CreateViewOptions, DeviceManager } from '@azure/communication-calling';
+import { CallClientState, LocalVideoStream, RemoteVideoStream } from './CallClientState';
 import { CallContext } from './CallContext';
 import { callAgentDeclaratify } from './CallAgentDeclarative';
+import { InternalCallContext } from './InternalCallContext';
+import { startRenderVideo, stopRenderVideo } from './StreamUtils';
 
 /**
  * Defines the methods that allow CallClient {@Link @azure/communication-calling#CallClient} to be used declaratively.
@@ -21,6 +23,29 @@ export interface DeclarativeCallClient extends CallClient {
    * @param handler - Callback to receive the state.
    */
   onStateChange(handler: (state: CallClientState) => void): void;
+  /**
+   * Renders a {@Link RemoteVideoStream} or {@Link LocalVideoStream} and stores the resulting
+   * {@Link VideoStreamRendererView} under the relevant {@Link RemoteVideoStream} or {@Link LocalVideoStream} in the
+   * state. Under the hood calls {@Link @azure/communication-calling#VideoStreamRenderer.createView}.
+   *
+   * @param callId - CallId of the Call where the stream to start rendering is contained in.
+   * @param stream - The LocalVideoStream or RemoteVideoStream to start rendering.
+   * @param options - Options that are passed to the {@Link @azure/communication-calling#VideoStreamRenderer}.
+   */
+  startRenderVideo(
+    callId: string,
+    stream: LocalVideoStream | RemoteVideoStream,
+    options?: CreateViewOptions
+  ): Promise<void>;
+  /**
+   * Stops rendering a {@Link RemoteVideoStream} or {@Link LocalVideoStream} and removes the
+   * {@Link VideoStreamRendererView} from the relevant {@Link RemoteVideoStream} or {@Link LocalVideoStream} in the
+   * state. Under the hood calls {@Link @azure/communication-calling#VideoStreamRenderer.dispose}.
+   *
+   * @param callId - CallId of the Call where the stream to stop rendering is contained in.
+   * @param stream - The LocalVideoStream or RemoteVideoStream to start rendering.
+   */
+  stopRenderVideo(callId: string, stream: LocalVideoStream | RemoteVideoStream): void;
 }
 
 /**
@@ -30,12 +55,14 @@ export interface DeclarativeCallClient extends CallClient {
  */
 class ProxyCallClient implements ProxyHandler<CallClient> {
   private _context: CallContext;
+  private _internalContext: InternalCallContext;
   private _callAgent: CallAgent | undefined;
   private _deviceManager: DeviceManager | undefined;
   private _sdkDeviceManager: DeviceManager | undefined;
 
-  constructor(context: CallContext) {
+  constructor(context: CallContext, internalContext: InternalCallContext) {
     this._context = context;
+    this._internalContext = internalContext;
   }
 
   public get<P extends keyof CallClient>(target: CallClient, prop: P): any {
@@ -46,7 +73,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
           // callAgent was disposed then it would have unsubscribed to events so we can just create a new declarative
           // callAgent if the createCallAgent succeeds.
           const callAgent = await target.createCallAgent(...args);
-          this._callAgent = callAgentDeclaratify(callAgent, this._context);
+          this._callAgent = callAgentDeclaratify(callAgent, this._context, this._internalContext);
           return this._callAgent;
         };
       }
@@ -87,6 +114,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
  */
 export const callClientDeclaratify = (callClient: CallClient): DeclarativeCallClient => {
   const context: CallContext = new CallContext();
+  const internalContext: InternalCallContext = new InternalCallContext();
 
   Object.defineProperty(callClient, 'state', {
     configurable: false,
@@ -96,6 +124,22 @@ export const callClientDeclaratify = (callClient: CallClient): DeclarativeCallCl
     configurable: false,
     value: (handler: (state: CallClientState) => void) => context.onStateChange(handler)
   });
+  Object.defineProperty(callClient, 'startRenderVideo', {
+    configurable: false,
+    value: (
+      callId: string,
+      stream: LocalVideoStream | RemoteVideoStream,
+      options?: CreateViewOptions
+    ): Promise<void> => {
+      return startRenderVideo(context, internalContext, callId, stream, options);
+    }
+  });
+  Object.defineProperty(callClient, 'stopRenderVideo', {
+    configurable: false,
+    value: (callId: string, stream: LocalVideoStream | RemoteVideoStream): void => {
+      stopRenderVideo(context, internalContext, callId, stream);
+    }
+  });
 
-  return new Proxy(callClient, new ProxyCallClient(context)) as DeclarativeCallClient;
+  return new Proxy(callClient, new ProxyCallClient(context, internalContext)) as DeclarativeCallClient;
 };

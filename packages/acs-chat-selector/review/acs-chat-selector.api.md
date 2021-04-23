@@ -12,11 +12,15 @@ import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
 import { MessageStatus } from '@azure/acs-chat-declarative';
 import { ReactElement } from 'react';
 import * as reselect from 'reselect';
+import { TypingIndicator } from '@azure/acs-chat-declarative';
 
 // @public (undocumented)
 export type BaseSelectorProps = {
     threadId: string;
 };
+
+// @public (undocumented)
+export type CallbackType<KeyT, ArgsT extends any[], FnRetT> = (memoizedFn: FunctionWithKey<KeyT, ArgsT, FnRetT>) => FnRetT[];
 
 // @public (undocumented)
 export type ChatMessage = Message<'chat'>;
@@ -28,7 +32,6 @@ export type ChatMessagePayload = {
     createdOn?: Date;
     senderId?: string;
     senderDisplayName?: string;
-    statusToRender?: MessageStatus;
     status?: MessageStatus;
     attached?: MessageAttachedStatus | boolean;
     mine?: boolean;
@@ -69,20 +72,31 @@ export const createDefaultHandlersForComponent: <Props>(chatClient: DeclarativeC
 export type CustomMessage = Message<'custom'>;
 
 // @public (undocumented)
+export type CustomMessagePayload = {
+    messageId: string;
+    content?: string;
+};
+
+// @public (undocumented)
 export type DefaultHandlers = {
     onMessageSend: (content: string) => Promise<void>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
     onTyping: () => Promise<void>;
     removeThreadMember: (userId: string) => Promise<void>;
     updateThreadTopicName: (topicName: string) => Promise<void>;
+    onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
 };
+
+// @public (undocumented)
+export type FunctionWithKey<KeyT, ArgsT extends any[], RetT> = (key: KeyT, ...args: ArgsT) => RetT;
+
+// @public
+export const memoizeFnAll: <KeyT, ArgsT extends any[], FnRetT, CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>>(fnToMemoize: FunctionWithKey<KeyT, ArgsT, FnRetT>, shouldCacheUpdate?: (args1: any, args2: any) => boolean) => (callback: CallBackT) => FnRetT[];
 
 // @public (undocumented)
 export type Message<T extends MessageTypes> = {
     type: T;
-    payload: T extends 'chat' ? ChatMessagePayload : T extends 'system' ? SystemMessagePayload : {
-        [name: string]: any;
-    };
+    payload: T extends 'chat' ? ChatMessagePayload : T extends 'system' ? SystemMessagePayload : CustomMessagePayload;
 };
 
 // @public (undocumented)
@@ -112,9 +126,17 @@ export type SystemMessage = Message<'system'>;
 
 // @public (undocumented)
 export type SystemMessagePayload = {
+    messageId: string;
     content?: string;
     iconName?: string;
 };
+
+// @public (undocumented)
+export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
+    typingUsers: WebUiChatParticipant[];
+}, (res1: TypingIndicator[], res2: Map<string, ChatParticipant>, res3: string) => {
+    typingUsers: WebUiChatParticipant[];
+}>;
 
 // @public (undocumented)
 export type WebUiChatParticipant = {

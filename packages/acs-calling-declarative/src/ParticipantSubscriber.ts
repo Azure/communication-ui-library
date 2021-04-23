@@ -1,18 +1,12 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { RemoteParticipant } from '@azure/communication-calling';
+import { RemoteParticipant, RemoteVideoStream } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
+import { CallIdRef } from './CallIdRef';
 import { convertSdkRemoteStreamToDeclarativeRemoteStream, getRemoteParticipantKey } from './Converter';
+import { InternalCallContext } from './InternalCallContext';
 import { RemoteVideoStreamSubscriber } from './RemoteVideoStreamSubscriber';
-
-/**
- * Internal object used to hold callId. This is so when we create the closure that includes this container we can update
- * the container contents without needing to update the closure since the closure is referencing this object otherwise
- * if the closure contains a primitive the updating of the primitive does not get picked up by the closure.
- */
-interface CallIdRef {
-  callId: string;
-}
+import { stopRenderVideo } from './StreamUtils';
 
 /**
  * Keeps track of the listeners assigned to a particular participant because when we get an event from SDK, it doesn't
@@ -23,15 +17,22 @@ export class ParticipantSubscriber {
   private _callIdRef: CallIdRef;
   private _participant: RemoteParticipant;
   private _context: CallContext;
+  private _internalContext: InternalCallContext;
   private _participantKey: string;
-  private _remoteVideoStreamSubscribers: RemoteVideoStreamSubscriber[];
+  private _remoteVideoStreamSubscribers: Map<number, RemoteVideoStreamSubscriber>;
 
-  constructor(callId: string, participant: RemoteParticipant, context: CallContext) {
-    this._callIdRef = { callId: callId };
+  constructor(
+    callIdRef: CallIdRef,
+    participant: RemoteParticipant,
+    context: CallContext,
+    internalContext: InternalCallContext
+  ) {
+    this._callIdRef = callIdRef;
     this._participant = participant;
     this._context = context;
+    this._internalContext = internalContext;
     this._participantKey = getRemoteParticipantKey(this._participant.identifier);
-    this._remoteVideoStreamSubscribers = [];
+    this._remoteVideoStreamSubscribers = new Map<number, RemoteVideoStreamSubscriber>();
     this.subscribe();
   }
 
@@ -42,8 +43,17 @@ export class ParticipantSubscriber {
     this._participant.on('isSpeakingChanged', this.isSpeakingChanged);
     this._participant.on('videoStreamsUpdated', this.videoStreamsUpdated);
 
-    for (const videoStream of this._participant.videoStreams) {
-      this._remoteVideoStreamSubscribers.push(new RemoteVideoStreamSubscriber(videoStream, this.videoStreamsUpdated));
+    if (this._participant.videoStreams.length > 0) {
+      for (const stream of this._participant.videoStreams) {
+        this.addRemoteVideoStreamSubscriber(stream);
+        this._internalContext.setRemoteVideoStream(this._callIdRef.callId, this._participantKey, stream);
+      }
+      this._context.setRemoteVideoStreams(
+        this._callIdRef.callId,
+        this._participantKey,
+        this._participant.videoStreams.map(convertSdkRemoteStreamToDeclarativeRemoteStream),
+        []
+      );
     }
   };
 
@@ -53,10 +63,29 @@ export class ParticipantSubscriber {
     this._participant.off('displayNameChanged', this.displayNameChanged);
     this._participant.off('isSpeakingChanged', this.isSpeakingChanged);
     this._participant.off('videoStreamsUpdated', this.videoStreamsUpdated);
+
+    // If unsubscribing it means the participant left the call. If they have any rendering streams we should stop them
+    // as it doesn't make sense to render for an ended participant.
+    if (this._participant.videoStreams.length > 0) {
+      for (const stream of this._participant.videoStreams) {
+        const existingDeclarativeStream = this._context
+          .getState()
+          .calls.get(this._callIdRef.callId)
+          ?.remoteParticipants.get(this._participantKey)
+          ?.videoStreams.get(stream.id);
+        if (existingDeclarativeStream) {
+          stopRenderVideo(this._context, this._internalContext, this._callIdRef.callId, existingDeclarativeStream);
+        }
+      }
+    }
   };
 
-  public setCallId = (callId: string): void => {
-    this._callIdRef.callId = callId;
+  private addRemoteVideoStreamSubscriber = (remoteVideoStream: RemoteVideoStream): void => {
+    this._remoteVideoStreamSubscribers.get(remoteVideoStream.id)?.unsubscribe();
+    this._remoteVideoStreamSubscribers.set(
+      remoteVideoStream.id,
+      new RemoteVideoStreamSubscriber(this._callIdRef, this._participantKey, remoteVideoStream, this._context)
+    );
   };
 
   private stateChanged = (): void => {
@@ -79,21 +108,30 @@ export class ParticipantSubscriber {
     this._context.setParticipantIsSpeaking(this._callIdRef.callId, this._participantKey, this._participant.isSpeaking);
   };
 
-  private videoStreamsUpdated = (): void => {
-    // We don't have an easy way to distinguish different remote video streams so a quick way to handle this is to
-    // create the remote video streams again from scratch. TODO: do we want to be more selective on adding/removing
-    // streams?
-    for (const remoteVideoStreamSubscriber of this._remoteVideoStreamSubscribers) {
-      remoteVideoStreamSubscriber.unsubscribe();
+  private videoStreamsUpdated = (event: { added: RemoteVideoStream[]; removed: RemoteVideoStream[] }): void => {
+    for (const stream of event.removed) {
+      this._remoteVideoStreamSubscribers.get(stream.id)?.unsubscribe();
+      const existingDeclarativeStream = this._context
+        .getState()
+        .calls.get(this._callIdRef.callId)
+        ?.remoteParticipants.get(this._participantKey)
+        ?.videoStreams.get(stream.id);
+      if (existingDeclarativeStream) {
+        stopRenderVideo(this._context, this._internalContext, this._callIdRef.callId, existingDeclarativeStream);
+      }
+      this._internalContext.removeRemoteVideoStream(this._callIdRef.callId, stream.id);
     }
-    this._remoteVideoStreamSubscribers = [];
-    for (const videoStream of this._participant.videoStreams) {
-      this._remoteVideoStreamSubscribers.push(new RemoteVideoStreamSubscriber(videoStream, this.videoStreamsUpdated));
+
+    for (const stream of event.added) {
+      this.addRemoteVideoStreamSubscriber(stream);
+      this._internalContext.setRemoteVideoStream(this._callIdRef.callId, this._participantKey, stream);
     }
-    this._context.setParticipantVideoStreams(
+
+    this._context.setRemoteVideoStreams(
       this._callIdRef.callId,
       this._participantKey,
-      this._participant.videoStreams.map(convertSdkRemoteStreamToDeclarativeRemoteStream)
+      event.added.map(convertSdkRemoteStreamToDeclarativeRemoteStream),
+      event.removed.map((stream: RemoteVideoStream) => stream.id)
     );
   };
 }

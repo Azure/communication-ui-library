@@ -35,7 +35,7 @@ export type ChatMessagePayload = {
     createdOn?: Date;
     senderId?: string;
     senderDisplayName?: string;
-    statusToRender?: MessageStatus;
+    status?: MessageStatus;
     attached?: MessageAttachedStatus | boolean;
     mine?: boolean;
     clientMessageId?: string;
@@ -69,6 +69,12 @@ export interface ControlBarProps {
 // @public (undocumented)
 export type CustomMessage = Message<'custom'>;
 
+// @public (undocumented)
+export type CustomMessagePayload = {
+    messageId: string;
+    content?: string;
+};
+
 // @public
 export const DARK = "Dark";
 
@@ -76,7 +82,7 @@ export const DARK = "Dark";
 export const darkTheme: PartialTheme;
 
 // @public (undocumented)
-export type DefaultMessageRendererType = (message: ChatMessage | SystemMessage | CustomMessage) => JSX.Element;
+export type DefaultMessageRendererType = (props: MessageProps) => JSX.Element;
 
 // @public
 export const ErrorBar: (props: ErrorBarProps) => JSX.Element | null;
@@ -159,17 +165,9 @@ export const LIGHT = "Light";
 export const lightTheme: PartialTheme;
 
 // @public (undocumented)
-export interface LoadPreviousMessagesButtonProps {
-    // (undocumented)
-    onClick: () => void;
-}
-
-// @public (undocumented)
 export type Message<T extends MessageTypes> = {
     type: T;
-    payload: T extends 'chat' ? ChatMessagePayload : T extends 'system' ? SystemMessagePayload : {
-        [name: string]: any;
-    };
+    payload: T extends 'chat' ? ChatMessagePayload : T extends 'system' ? SystemMessagePayload : CustomMessagePayload;
 };
 
 // @public (undocumented)
@@ -179,6 +177,12 @@ export enum MessageAttachedStatus {
     // (undocumented)
     TOP = "top"
 }
+
+// @public
+export type MessageProps = {
+    message: ChatMessage | SystemMessage | CustomMessage;
+    messageContainerStyle?: ComponentSlotStyle;
+};
 
 // @public (undocumented)
 export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
@@ -192,15 +196,14 @@ export type MessageThreadProps = {
     messages: (ChatMessage | SystemMessage | CustomMessage)[];
     styles?: MessageThreadStylesProps;
     disableJumpToNewMessageButton?: boolean;
-    disableLoadPreviousMessage?: boolean;
     disableReadReceipt?: boolean;
+    numberOfChatMessagesToReload?: number;
     onMessageSeen?: (messageId: string) => Promise<void>;
     onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element | null;
     onRenderAvatar?: (userId: string) => JSX.Element;
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
-    onLoadPreviousMessages?: () => void;
-    onRenderLoadPreviousMessagesButton?: (loadPreviousMessagesButton: LoadPreviousMessagesButtonProps) => JSX.Element;
-    onRenderMessage?: (message: ChatMessage | SystemMessage | CustomMessage, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+    onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
+    onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
 };
 
 // @public (undocumented)
@@ -210,6 +213,7 @@ export interface MessageThreadStylesProps extends BaseCustomStylesProps {
     loadPreviousMessagesButtonContainer?: IStyle;
     newMessageButtonContainer?: IStyle;
     readReceiptContainer?: (mine: boolean) => IStyle;
+    systemMessageContainer?: ComponentSlotStyle;
 }
 
 // @public (undocumented)
@@ -253,7 +257,7 @@ export const ReadReceipt: (props: ReadReceiptProps) => JSX.Element;
 export interface ReadReceiptProps {
     deliveredTooltipText?: string;
     failedToSendTooltipText?: string;
-    messageStatus: MessageStatus;
+    messageStatus?: MessageStatus;
     seenTooltipText?: string;
     sendingTooltipText?: string;
     size?: SizeValue;
@@ -275,10 +279,10 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 // @public
 export interface SendBoxProps {
     disabled?: boolean;
+    onMessageSend?: (content: string) => Promise<void>;
     onRenderIcon?: (props: SendBoxProps, isMouseOverSendIcon: boolean) => JSX.Element | null;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
-    onSendMessage?: (messageContent: string) => Promise<void>;
-    onSendTypingNotification?: () => Promise<void>;
+    onTyping?: () => Promise<void>;
     styles?: SendBoxStylesProps;
     supportNewline?: boolean;
     systemMessage?: string;
@@ -322,6 +326,7 @@ export type SystemMessage = Message<'system'>;
 
 // @public (undocumented)
 export type SystemMessagePayload = {
+    messageId: string;
     content?: string;
     iconName?: string;
 };
@@ -360,23 +365,17 @@ export const TypingIndicator: (props: TypingIndicatorProps) => JSX.Element;
 
 // @public
 export interface TypingIndicatorProps {
+    onRenderUsers?: (users: WebUiChatParticipant[]) => JSX.Element;
     styles?: TypingIndicatorStylesProps;
-    typingString: string;
-    typingUsers: TypingUser[];
+    typingString?: string;
+    typingUsers: WebUiChatParticipant[];
 }
 
 // @public (undocumented)
 export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
-    typingUserImage?: IStyle;
 }
-
-// @public (undocumented)
-export type TypingUser = {
-    displayName: string;
-    prefixImageUrl: string;
-};
 
 // @public
 export const useSwitchableFluentTheme: () => SwitchableFluentThemeContext;
@@ -402,6 +401,12 @@ export interface VideoTileStylesProps extends BaseCustomStylesProps {
     overlayContainer?: IStyle;
     videoContainer?: IStyle;
 }
+
+// @public
+export type WebUiChatParticipant = {
+    userId: string;
+    displayName?: string;
+};
 
 
 // (No @packageDocumentation comment for this package)

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update chatThread to deep memoize each element when doing mapping",
+  "packageName": "@azure/acs-chat-selector",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}
