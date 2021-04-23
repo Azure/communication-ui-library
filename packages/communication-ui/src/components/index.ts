@@ -17,10 +17,10 @@ export type { ReadReceiptProps } from './ReadReceipt';
 
 export { MessageThread } from './MessageThread';
 export type {
+  MessageProps,
   MessageThreadProps,
   MessageThreadStylesProps,
   JumpToNewMessageButtonProps,
-  LoadPreviousMessagesButtonProps,
   DefaultMessageRendererType
 } from './MessageThread';
 
