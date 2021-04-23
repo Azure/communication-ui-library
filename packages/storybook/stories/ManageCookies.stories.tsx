@@ -7,7 +7,7 @@ function openManageCookiesModal(): void {
 }
 
 export const ManageCookies: () => JSX.Element = () => {
-  const manageCookiesRequired = (window as any).parent?.siteConsent.isConsentRequired;
+  const manageCookiesRequired = (window as any).parent.siteConsent?.isConsentRequired;
   const buttonText = manageCookiesRequired ? 'Manage Cookies' : 'Manage Cookies unavailable';
   return <PrimaryButton text={buttonText} onClick={openManageCookiesModal} disabled={!manageCookiesRequired} />;
 };

@@ -1002,10 +1002,10 @@ exports[`storybook snapshot tests Storyshots Examples/Themes Teams Theme Compone
 
 exports[`storybook snapshot tests Storyshots Settings/Manage Cookies Manage Cookies 1`] = `
 <div
-  className="css-76 root-0 body-1"
+  className="css-75 root-0 body-1"
 >
   <div
-    className="css-76"
+    className="css-75"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -1020,8 +1020,10 @@ exports[`storybook snapshot tests Storyshots Settings/Manage Cookies Manage Cook
       }
     >
       <button
-        className="ms-Button ms-Button--primary root-2"
-        data-is-focusable={true}
+        aria-disabled={true}
+        className="ms-Button ms-Button--primary is-disabled root-2"
+        data-is-focusable={false}
+        disabled={true}
         onClick={[Function]}
         onKeyDown={[Function]}
         onKeyPress={[Function]}
@@ -1041,7 +1043,7 @@ exports[`storybook snapshot tests Storyshots Settings/Manage Cookies Manage Cook
               className="ms-Button-label label-6"
               id="id__0"
             >
-              Manage Cookies
+              Manage Cookies unavailable
             </span>
           </span>
         </span>
