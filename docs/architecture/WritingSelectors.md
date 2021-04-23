@@ -20,6 +20,7 @@ Basic, atomic, non-feature components like CommonButton or ReadReceipt not inclu
 
 To align all the usages of selector, it is recommended that always use one selector for one component, here is a bad example:
 
+Don't:
 ```typescript
 const userProps = userSelector(state);
 const messagesProps = messagesSelector(state);
@@ -27,10 +28,11 @@ const messagesProps = messagesSelector(state);
 <MessageThread {...userProps} {...messagesProps}>
 ```
 
-This method makes userProps and messagesProps more reusable, but if we follow this pattern, it will become normal that 2 or more selectors for each components. This requires devs to find all these matched selectors for just one component, which is not an excellent dev experience.
+This method makes userProps and messagesProps more reusable, but if this pattern is followed, it will become normal that 2 or more selectors are required for each components. That requires devs to find all these matched selectors for just one component, which is not an excellent dev experience.
 
 Instead of doing this, we need to design a selector for MessageThread, which returns both userInfo and messages:
 
+Do:
 ```typescript
 const messageThreadProps = messageThreadSelector(state);
 
@@ -39,7 +41,7 @@ const messageThreadProps = messageThreadSelector(state);
 
 ## Selector/Handlers return props name must match function type props name of component
 
-To make code style cleaner and simple, we use Object spread operator to pass props and handlers to a component whenever it is possible, which requires all selector/handlers return type, name should matched component props.
+To make code style cleaner and simple, we use Object spread operator to pass props and handlers to a component whenever it is possible, which requires all selector/handlers return type, name must matched component props.
 
 Do:
 ```typescript
@@ -52,7 +54,7 @@ Don't:
 ```typescript
 const messageThreadProps = messageThreadSelector(state);
 
-// code lines could explode when there is 
+// props could explode when there is 
 <MessageThread user={messageThreadProps.userInfo} messages={messagesProps.chatMessages}>
 ```
 
