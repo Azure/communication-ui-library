@@ -1,9 +1,9 @@
 import { FluentThemeProvider, StreamMedia, VideoTile } from '@azure/communication-ui';
+import { MessageBar } from '@fluentui/react';
 import React from 'react';
 import { renderVideoStream } from '../../../utils';
-import { TeamsInterop, bannerMessage } from './TeamsInterop.snippet';
 import { CallControlBar } from './CallControlBar.snippet';
-import { MessageBar } from '@fluentui/react';
+import { bannerMessage, TeamsInterop } from './TeamsInterop.snippet';
 
 export interface CallProps {
   teamsInteropCurrent: TeamsInterop;

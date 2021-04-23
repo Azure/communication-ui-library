@@ -1,11 +1,15 @@
-import React from 'react';
 import { Link } from '@fluentui/react';
+import React from 'react';
 
+// State tracking for Teams interop.
+//
+// In a real application, this would be fetched from ACS APIs.
 export interface TeamsInterop {
   recordingEnabled: boolean;
   transcriptionEnabled: boolean;
 }
 
+// Historical state of Teams interop, for computing state transition events.
 export interface TeamsInteropHistory {
   teamsInteropCurrent: TeamsInterop;
   teamsInteropPrevious: TeamsInterop;
