@@ -16,19 +16,14 @@ It provides a proxy layer built on top of the `@azure/communication-chat` and au
 ## Installation
 
 You can install the `@azure/acs-chat-declarative` library in your project by running the following command.
+You will also need to install the `@azure/communication-common` library for generating `AzureCommunicationTokenCredential`.
 
 ```bash
-# Install the pre-requisite `@azure/communication-chat` library
-npm i --save @azure/communication-chat
+# Install the pre-requisite `@azure/communication-chat` and `@azure/communication-common` library
+npm i --save @azure/communication-chat @azure/communication-common
 
 # Install the Private Preview `@azure/acs-chat-declarative` tarball
 npm i --save ./{path to @azure/acs-chat-declarative tarball}
-```
-
-It is also recommended to install the `@azure/communication-common` library as it is required for generating `AzureCommunicationTokenCredential`.
-
-```bash
-npm i --save @azure/communication-common
 ```
 
 ## Setup Client

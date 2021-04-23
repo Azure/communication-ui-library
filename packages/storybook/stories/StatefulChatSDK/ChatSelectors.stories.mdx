@@ -8,7 +8,7 @@ import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/a
 Selectors are data providers used to efficiently compute derived data from a data store.
 Declarative Chat SDK provides selectors that can be used seemlessly with UI Components.
 
-Selectors use `Reselect` behind the scenes. `Reselect` is a simple library for creating memoized, composable selector functions.
+Selectors use `Reselect` behind the scenes. `Reselect` is a library for creating memoized, composable selector functions.
 
 It is recommended that users familiarize themselves with `Reselect`. Official documentation can be found here: https://github.com/reduxjs/reselect
 
@@ -35,7 +35,7 @@ const chatThreadProps = chatThreadSelector(state, { threadId });
 
 ## Participant List Selector
 
-The `chatParticipantListSelector` provides a list of chat participants that can be used to render a [ParticipantItem](?path=/docs/ui-components-participantitem--participant-item-component) component.
+The `chatParticipantListSelector` provides a list of chat participants that can be used to render a list of [ParticipantItem](?path=/docs/ui-components-participantitem--participant-item-component) component.
 
 ```tsx
 import { chatParticipantListSelector, WebUiChatParticipant } from '@azure/acs-chat-selector';
