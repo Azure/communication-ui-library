@@ -21,7 +21,7 @@ dependencies:
   '@rollup/plugin-commonjs': 17.1.0_rollup@2.42.4
   '@rush-temp/acs-calling-declarative': file:projects/acs-calling-declarative.tgz_prettier@2.0.5+ts-node@9.1.1
   '@rush-temp/acs-chat-declarative': file:projects/acs-chat-declarative.tgz_prettier@2.0.5+ts-node@9.1.1
-  '@rush-temp/acs-chat-selector': file:projects/acs-chat-selector.tgz_prettier@2.0.5
+  '@rush-temp/acs-chat-selector': file:projects/acs-chat-selector.tgz_prettier@2.0.5+ts-node@9.1.1
   '@rush-temp/build-tools': file:projects/build-tools.tgz_typescript@4.1.5
   '@rush-temp/calling': file:projects/calling.tgz_570bf42e92a70fb216c5cd4d5ed668ef
   '@rush-temp/chat': file:projects/chat.tgz_40b0c9f7a7a0fac66e4b6fcf06de2a42
@@ -47,6 +47,7 @@ dependencies:
   '@types/cors': 2.8.10
   '@types/express': 4.17.11
   '@types/http-errors': 1.8.0
+  '@types/jest': 26.0.20
   '@types/json-stringify-safe': 5.0.0
   '@types/morgan': 1.9.2
   '@types/node': 14.14.35
@@ -5006,13 +5007,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-9zi2Y+5USJRxd0FsahERhBwlcvFh6D2GLQnY2FH2BzK8J9s9omvNHIbvABwIluXa0fD8XVKMLTO0aOEuUfACAA==
-  /@types/jest/26.0.22:
-    dependencies:
-      jest-diff: 26.6.2
-      pretty-format: 26.6.2
-    dev: false
-    resolution:
-      integrity: sha512-eeWwWjlqxvBxc4oQdkueW5OF/gtfSceKk4OnOAGlUSwS/liBRtZppbJuz1YkgbrbfGOoeBHun9fOvXnjNwrSOw==
   /@types/json-schema/7.0.7:
     dev: false
     resolution:
@@ -13248,10 +13242,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-yQRGkMIeBClL6qUXcS/e0fqI3pg=
-  /lodash.findlastindex/4.6.0:
-    dev: false
-    resolution:
-      integrity: sha1-uDdawPAum5Jjdc343D6oFKv5xqw=
   /lodash.flattendeep/4.4.0:
     dev: false
     resolution:
@@ -20225,7 +20215,7 @@ packages:
       '@azure/communication-common': 1.0.0
       '@microsoft/api-documenter': 7.12.12
       '@microsoft/api-extractor': 7.13.2
-      '@types/jest': 26.0.22
+      '@types/jest': 26.0.20
       '@typescript-eslint/eslint-plugin': 4.18.0_e9e1aa536ec0b34179456e3b69e4968e
       '@typescript-eslint/parser': 4.18.0_eslint@7.22.0+typescript@4.1.5
       copyfiles: 2.4.1
@@ -20257,7 +20247,7 @@ packages:
       '@azure/core-paging': 1.1.3
       '@microsoft/api-documenter': 7.12.12
       '@microsoft/api-extractor': 7.13.2
-      '@types/jest': 26.0.22
+      '@types/jest': 26.0.20
       '@typescript-eslint/eslint-plugin': 4.18.0_e9e1aa536ec0b34179456e3b69e4968e
       '@typescript-eslint/parser': 4.18.0_eslint@7.22.0+typescript@4.1.5
       copyfiles: 2.4.1
@@ -20283,13 +20273,12 @@ packages:
       integrity: sha512-C7k1vra8HBcK214BF1DjCyfXZ42hP9SVW/vno6B6UHaMFDdXSAEMqcv2FQTmsswZpdWCc295/qCEy2/ECsRaLg==
       tarball: file:projects/acs-chat-declarative.tgz
     version: 0.0.0
-  file:projects/acs-chat-selector.tgz_prettier@2.0.5:
+  file:projects/acs-chat-selector.tgz_prettier@2.0.5+ts-node@9.1.1:
     dependencies:
       '@azure/communication-chat': 1.0.0-beta.4
-      '@azure/communication-signaling-2': /@azure/communication-signaling/1.0.0-beta.2
       '@microsoft/api-documenter': 7.12.12
       '@microsoft/api-extractor': 7.13.2
-      '@types/jest': 26.0.22
+      '@types/jest': 26.0.20
       '@types/react': 16.14.5
       copyfiles: 2.4.1
       eslint: 7.22.0
@@ -20297,7 +20286,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.22.0
       eslint-plugin-import: 2.22.1_eslint@7.22.0
       eslint-plugin-prettier: 3.3.1_cdac37046eab2e8d6fb794f34ed825c2
-      lodash.findlastindex: 4.6.0
+      jest: 26.6.0_ts-node@9.1.1
       memoize-one: 5.1.1
       reselect: 4.0.0
       rollup: 2.42.4
@@ -20307,8 +20296,9 @@ packages:
     name: '@rush-temp/acs-chat-selector'
     peerDependencies:
       prettier: '*'
+      ts-node: '*'
     resolution:
-      integrity: sha512-lC+SwqFME8wS8hj0aRA8bjRo1kHxsIYC1B2KV2YCycj5nT1zvd5Jgi3hl7GvSJclkeItnv19EGU3kmVA62ianQ==
+      integrity: sha512-zPs8kzBXhBG5gbDbklzNgYiyHzPKw8JWhj13CwMEKDxrNB4iY9M01dfOu2qyqh9Y60e25kjomD0umqDaT8b+eA==
       tarball: file:projects/acs-chat-selector.tgz
     version: 0.0.0
   file:projects/build-tools.tgz_typescript@4.1.5:
@@ -20344,7 +20334,7 @@ packages:
       '@fluentui/react-northstar': 0.51.7_b0d7ca8a0459a1df1ff516252688d92a
       '@fluentui/react-theme-provider': 0.18.5_b0d7ca8a0459a1df1ff516252688d92a
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
-      '@types/jest': 26.0.22
+      '@types/jest': 26.0.20
       '@types/node': 14.14.35
       '@types/preval.macro': 3.0.0
       '@types/react': 16.14.5
@@ -20411,7 +20401,7 @@ packages:
       '@fluentui/react-theme-provider': 0.18.5_b0d7ca8a0459a1df1ff516252688d92a
       '@testing-library/jest-dom': 5.11.9
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
-      '@types/jest': 26.0.22
+      '@types/jest': 26.0.20
       '@types/json-stringify-safe': 5.0.0
       '@types/preval.macro': 3.0.0
       '@types/react': 16.14.5
@@ -20571,7 +20561,7 @@ packages:
       '@fluentui/react-northstar': 0.51.7_b0d7ca8a0459a1df1ff516252688d92a
       '@fluentui/react-theme-provider': 0.18.5_b0d7ca8a0459a1df1ff516252688d92a
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
-      '@types/jest': 26.0.22
+      '@types/jest': 26.0.20
       '@types/node': 14.14.35
       '@types/preval.macro': 3.0.0
       '@types/react': 16.14.5
@@ -20637,7 +20627,7 @@ packages:
       '@types/cors': 2.8.10
       '@types/express': 4.17.11
       '@types/http-errors': 1.8.0
-      '@types/jest': 26.0.22
+      '@types/jest': 26.0.20
       '@types/morgan': 1.9.2
       '@types/node': 14.14.35
       '@types/supertest': 2.0.10
@@ -20708,7 +20698,7 @@ packages:
       '@testing-library/jest-dom': 5.11.9
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
       '@types/classnames': 2.2.11
-      '@types/jest': 26.0.22
+      '@types/jest': 26.0.20
       '@types/json-stringify-safe': 5.0.0
       '@types/node': 14.14.35
       '@types/react': 16.14.5
@@ -20819,6 +20809,7 @@ specifiers:
   '@types/cors': ^2.8.8
   '@types/express': ^4.17.8
   '@types/http-errors': ^1.8.0
+  '@types/jest': ^26.0.20
   '@types/json-stringify-safe': ^5.0.0
   '@types/morgan': ^1.9.2
   '@types/node': ^14.14.10

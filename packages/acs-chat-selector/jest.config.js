@@ -25,9 +25,6 @@ module.exports = {
   // The root directory that Jest should scan for tests and modules within
   rootDir: './src',
 
-  // The test environment that will be used for testing
-  testEnvironment: 'jsdom',
-
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
   testPathIgnorePatterns: ['/node_modules/', '/dist/'],
 

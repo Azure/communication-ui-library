@@ -2,10 +2,10 @@
 
 exports[`storybook snapshot tests Storyshots Composites/GroupCall Group Call Composite 1`] = `
 <div
-  className="css-76 root-0 body-1"
+  className="css-75 root-0 body-1"
 >
   <div
-    className="css-76"
+    className="css-75"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -41,10 +41,10 @@ exports[`storybook snapshot tests Storyshots Composites/GroupCall Group Call Com
 
 exports[`storybook snapshot tests Storyshots Composites/GroupChat Group Chat Composite 1`] = `
 <div
-  className="css-76 root-0 body-1"
+  className="css-75 root-0 body-1"
 >
   <div
-    className="css-76"
+    className="css-75"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -80,10 +80,10 @@ exports[`storybook snapshot tests Storyshots Composites/GroupChat Group Chat Com
 
 exports[`storybook snapshot tests Storyshots Composites/OneToOneCall One To One Call Composite Component 1`] = `
 <div
-  className="css-76 root-0 body-1"
+  className="css-75 root-0 body-1"
 >
   <div
-    className="css-76"
+    className="css-75"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -125,10 +125,10 @@ exports[`storybook snapshot tests Storyshots Composites/OneToOneCall One To One 
 
 exports[`storybook snapshot tests Storyshots Examples/IncomingCallAlerts Incoming Call Modal Component 1`] = `
 <div
-  className="css-76 root-0 body-1"
+  className="css-75 root-0 body-1"
 >
   <div
-    className="css-76"
+    className="css-75"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -361,7 +361,7 @@ exports[`storybook snapshot tests Storyshots Examples/IncomingCallAlerts Incomin
                           </div>
                         </div>
                         <div
-                          className="ms-Stack css-117 css-48"
+                          className="ms-Stack css-116 css-48"
                         >
                           <div
                             className="ms-Stack css-51"
@@ -370,7 +370,7 @@ exports[`storybook snapshot tests Storyshots Examples/IncomingCallAlerts Incomin
                               className="ms-Stack css-52"
                             >
                               <div
-                                className="css-71"
+                                className="css-70"
                               />
                             </div>
                           </div>
@@ -539,10 +539,10 @@ exports[`storybook snapshot tests Storyshots Examples/IncomingCallAlerts Incomin
 
 exports[`storybook snapshot tests Storyshots Examples/IncomingCallAlerts Incoming Call Toast Component 1`] = `
 <div
-  className="css-76 root-0 body-1"
+  className="css-75 root-0 body-1"
 >
   <div
-    className="css-76"
+    className="css-75"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -560,10 +560,10 @@ exports[`storybook snapshot tests Storyshots Examples/IncomingCallAlerts Incomin
         className="ms-Stack css-2"
       >
         <div
-          className="ms-Stack css-113 css-3"
+          className="ms-Stack css-112 css-3"
         >
           <div
-            className="ms-Stack css-114 css-4"
+            className="ms-Stack css-113 css-4"
           >
             <div
               aria-label="John Doe"
@@ -627,7 +627,7 @@ exports[`storybook snapshot tests Storyshots Examples/IncomingCallAlerts Incomin
             className="ms-Stack css-21"
           >
             <button
-              className="ms-Button ms-Button--default css-116 root-22"
+              className="ms-Button ms-Button--default css-115 root-22"
               data-is-focusable={true}
               onClick={[Function]}
               onKeyDown={[Function]}
@@ -665,7 +665,7 @@ exports[`storybook snapshot tests Storyshots Examples/IncomingCallAlerts Incomin
               </span>
             </button>
             <button
-              className="ms-Button ms-Button--default css-115 root-22"
+              className="ms-Button ms-Button--default css-114 root-22"
               data-is-focusable={true}
               onClick={[Function]}
               onKeyDown={[Function]}
@@ -712,10 +712,10 @@ exports[`storybook snapshot tests Storyshots Examples/IncomingCallAlerts Incomin
 
 exports[`storybook snapshot tests Storyshots Examples/Themes Teams Theme Component 1`] = `
 <div
-  className="css-76 root-0 body-1"
+  className="css-75 root-0 body-1"
 >
   <div
-    className="css-76"
+    className="css-75"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -731,10 +731,10 @@ exports[`storybook snapshot tests Storyshots Examples/Themes Teams Theme Compone
     >
       <div>
         <div
-          className="css-76 root-2 body-1"
+          className="css-75 root-2 body-1"
         >
           <div
-            className="css-76"
+            className="css-75"
             data-uses-unhanded-props={true}
           >
             <div
@@ -1002,10 +1002,10 @@ exports[`storybook snapshot tests Storyshots Examples/Themes Teams Theme Compone
 
 exports[`storybook snapshot tests Storyshots UI Components/GridLayout Grid Layout Component 1`] = `
 <div
-  className="css-76 root-0 body-1"
+  className="css-75 root-0 body-1"
 >
   <div
-    className="css-76"
+    className="css-75"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -1209,10 +1209,10 @@ exports[`storybook snapshot tests Storyshots UI Components/GridLayout Grid Layou
 
 exports[`storybook snapshot tests Storyshots UI Components/ReadReceipt Read Reciept Icon Component 1`] = `
 <div
-  className="css-76 root-0 body-1"
+  className="css-75 root-0 body-1"
 >
   <div
-    className="css-76"
+    className="css-75"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -1249,49 +1249,6 @@ exports[`storybook snapshot tests Storyshots UI Components/ReadReceipt Read Reci
               d="M1491 595l90 90-749 749-365-365 90-90 275 275 659-659zM1024 0q141 0 272 36t245 103 207 160 160 208 103 245 37 272q0 141-36 272t-103 245-160 207-208 160-245 103-272 37q-141 0-272-36t-245-103-207-160-160-208-103-244-37-273q0-141 36-272t103-245 160-207 208-160T751 37t273-37zm0 1920q123 0 237-32t214-90 182-141 140-181 91-214 32-238q0-123-32-237t-90-214-141-182-181-140-214-91-238-32q-123 0-237 32t-214 90-182 141-140 181-91 214-32 238q0 123 32 237t90 214 141 182 181 140 214 91 238 32z"
             />
           </svg>
-        </span>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`storybook snapshot tests Storyshots UI Components/TypingIndicator Typing Indicator Component 1`] = `
-<div
-  className="css-76 root-0 body-1"
->
-  <div
-    className="css-76"
-    data-uses-unhanded-props={true}
-    dir="ltr"
-  >
-    <div
-      style={
-        Object {
-          "alignItems": "center",
-          "display": "flex",
-          "height": "100vh",
-          "justifyContent": "center",
-        }
-      }
-    >
-      <div
-        className="css-52"
-      >
-        <span
-          className="css-53"
-        >
-          User1, 
-        </span>
-        <span
-          className="css-53"
-        >
-          User2
-        </span>
-        <span
-          className="css-53"
-        >
-           are typing...
         </span>
       </div>
     </div>

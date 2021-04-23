@@ -36,12 +36,6 @@ export const chatStyle: ComponentSlotStyle = {
   overflow: 'auto'
 };
 
-export const loadPreviousMessagesButtonContainerStyle = mergeStyles({
-  minHeight: '2rem',
-  display: 'flex',
-  justifyContent: 'center'
-});
-
 export const newMessageButtonContainerStyle = mergeStyles({
   position: 'absolute',
   zIndex: 1,

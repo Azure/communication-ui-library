@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import React, { Dispatch } from 'react';
+import React, { Dispatch, useMemo } from 'react';
 import { InviteFooter } from './InviteFooter';
 import { ParticipantManagement } from './ParticipantManagement';
 import { SettingsManagementComponent } from './SettingsManagement';
@@ -25,9 +25,13 @@ export interface SelectedPaneProps {
 
 export const SidePanel = (props: SelectedPaneProps): JSX.Element => {
   const { selectedPane, setSelectedPane, onRenderAvatar } = props;
-  const chatParticipantProps = useSelector(chatParticipantListSelector, { threadId: useThreadId() });
+  const threadId = useThreadId();
+  const selectorConfig = useMemo(() => {
+    return { threadId };
+  }, [threadId]);
+  const chatParticipantProps = useSelector(chatParticipantListSelector, selectorConfig);
   const chatParticipantHandlers = useHandlers(ParticipantManagement);
-  const chatSettingsProps = useSelector(chatSettingsSelector, { threadId: useThreadId() });
+  const chatSettingsProps = useSelector(chatSettingsSelector, selectorConfig);
   const chatSettingsHandlers = useHandlers(SettingsManagementComponent);
 
   return (
