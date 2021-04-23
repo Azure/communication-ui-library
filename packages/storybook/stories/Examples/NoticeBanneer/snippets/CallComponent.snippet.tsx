@@ -3,6 +3,7 @@ import React from 'react';
 import { renderVideoStream } from '../../../utils';
 import { Banner, BannerProps } from './Banner.snippet';
 import { CallControlBar } from './CallControlBar.snippet';
+import { TeamsState } from './TeamsState.snippet';
 
 export interface CallProps {
   banner: BannerProps;
