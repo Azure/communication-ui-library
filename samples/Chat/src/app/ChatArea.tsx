@@ -6,14 +6,13 @@ import {
   TypingIndicator,
   MessageThread,
   connectFuncsToContext,
-  MapToErrorBarProps,
-  useThreadId
+  MapToErrorBarProps
 } from '@azure/communication-ui';
 import { useHandlers } from './hooks/useHandlers';
-import { chatThreadSelector, sendBoxSelector, typingIndicatorSelector } from '@azure/acs-chat-selector';
 import { Stack } from '@fluentui/react';
 import React, { useEffect, useMemo } from 'react';
 import { chatAreaContainerStyle, sendBoxParentStyle } from './styles/ChatArea.styles';
+import { getSelector, useProps } from './hooks/useProps';
 import { useSelector } from './hooks/useSelector';
 
 export interface ChatAreaProps {
@@ -28,17 +27,14 @@ export const ChatArea = (props: ChatAreaProps): JSX.Element => {
   // onRenderAvatar is a contoso callback. We need it to support emoji in Sample App. Sample App is currently on
   // components v0 so we're passing the callback at the component level. This might need further refactoring if this
   // ChatArea is to become a component or if Sample App is to move to composite
-  const threadId = useThreadId();
 
-  const selectorConfig = useMemo(() => {
-    return { threadId };
-  }, [threadId]);
-
-  const chatThreadProps = useSelector(chatThreadSelector, selectorConfig);
+  // This could be option 1 of get a selector for a component without knowing the selector name
+  const chatThreadProps = useSelector(getSelector(MessageThread));
   const chatThreadHandlers = useHandlers(MessageThread);
-  const sendBoxProps = useSelector(sendBoxSelector, selectorConfig);
+  // Option2
+  const sendBoxProps = useProps(SendBox);
   const sendBoxHandlers = useHandlers(SendBox);
-  const typingIndicatorProps = useSelector(typingIndicatorSelector, selectorConfig);
+  const typingIndicatorProps = useProps(TypingIndicator);
 
   // Initialize the Chat thread with history messages
   useEffect(() => {

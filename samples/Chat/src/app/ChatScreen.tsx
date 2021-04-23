@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { chatScreenBottomContainerStyle, chatScreenContainerStyle } from './styles/ChatScreen.styles';
 import { Stack } from '@fluentui/react';
 import { onRenderAvatar } from './Avatar';
-import { useChatThreadClient, useThreadId } from '@azure/communication-ui';
+import { useChatThreadClient } from '@azure/communication-ui';
 import { ChatHeader } from './ChatHeader';
 import { ChatArea } from './ChatArea';
 import { SidePanel, SidePanelTypes } from './SidePanel';
@@ -52,9 +52,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     document.getElementById('sendbox')?.focus();
   }, []);
 
-  const chatHeaderProps = useSelector(chatHeaderSelector, { threadId: useThreadId() });
+  const chatHeaderProps = useSelector(chatHeaderSelector);
   const chatHeaderHandlers = useHandlers(ChatHeader);
-  const chatParticipantProps = useSelector(chatParticipantListSelector, { threadId: useThreadId() });
+  const chatParticipantProps = useSelector(chatParticipantListSelector);
 
   // onRenderAvatar is a contoso callback. We need it to support emoji in Sample App. Sample App is currently on
   // components v0 so we're passing the callback at the component level. This might need further refactoring if this
