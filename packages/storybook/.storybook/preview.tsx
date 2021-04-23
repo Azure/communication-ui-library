@@ -43,7 +43,8 @@ export const parameters = {
         QUICKSTARTS_FOLDER_PREFIX,
         COMPOSITE_FOLDER_PREFIX,
         COMPONENT_FOLDER_PREFIX,
-        EXAMPLES_FOLDER_PREFIX
+        EXAMPLES_FOLDER_PREFIX,
+        'Stateful Chat Client',
       ]
     }
   }
