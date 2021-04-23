@@ -15,10 +15,9 @@ dependencies:
   '@fluentui/react-northstar': 0.51.7_dc8920ecded7f534e37e775405ba89a3
   '@fluentui/react-theme-provider': 0.18.5_dc8920ecded7f534e37e775405ba89a3
   '@mdx-js/react': 1.6.22_react@16.14.0
-  '@microsoft/1ds-core-js': 3.1.1
   '@microsoft/api-documenter': 7.12.22
   '@microsoft/api-extractor': 7.13.5
-  '@microsoft/applicationinsights-react-js': 3.1.0_react@16.14.0
+  '@microsoft/applicationinsights-react-js': 3.0.5_react@16.14.0
   '@microsoft/applicationinsights-web': 2.6.1
   '@octokit/rest': 18.0.15
   '@rollup/plugin-commonjs': 17.1.0_rollup@2.42.4
@@ -3436,7 +3435,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-TQmKp9/j0yMGjUHBatRQ41E4S/1yTkJImh8csZxc4waMQmV9ITkNrDaC3bIPcrw+ASepI3QfP7sry+n7nvYLFw==
-  /@microsoft/applicationinsights-react-js/3.1.0_react@16.14.0:
+  /@microsoft/applicationinsights-react-js/3.0.5_react@16.14.0:
     dependencies:
       '@microsoft/applicationinsights-common': 2.6.1
       '@microsoft/applicationinsights-core-js': 2.6.1
@@ -3445,9 +3444,9 @@ packages:
       react: 16.14.0
     dev: false
     peerDependencies:
-      react: ^17.0.1
+      react: ^16.0.0
     resolution:
-      integrity: sha512-o5mz/hH3GemWDlm/NkalHyaupDJNSQfnhvdsuAW6iyxmDdfG5bcspkNiRpSUj2qW2QNmj2OmrkXHScu97sBxbA==
+      integrity: sha512-+cAD9NZXQZB4/5gBkLrxXywtQllTqTPDlGod2Emli0kM9JLi4P4iH/i4Gtn4OBJtjlzcjYzU91AnFrjIisxx9A==
   /@microsoft/applicationinsights-shims/1.0.3:
     dev: false
     resolution:
@@ -20846,7 +20845,7 @@ packages:
       '@microsoft/1ds-core-js': 3.1.1
       '@microsoft/api-documenter': 7.12.22
       '@microsoft/api-extractor': 7.13.5
-      '@microsoft/applicationinsights-react-js': 3.1.0_react@16.14.0
+      '@microsoft/applicationinsights-react-js': 3.0.5_react@16.14.0
       '@microsoft/applicationinsights-web': 2.6.1
       '@storybook/addon-actions': 6.1.21_30bc4764d4ba778218056aab0be8023f
       '@storybook/addon-docs': 6.1.21_5514be1c2f82a2c07dc23d6d89b846eb
@@ -20920,7 +20919,7 @@ packages:
     peerDependencies:
       webpack-cli: '*'
     resolution:
-      integrity: sha512-FyykOcu/TAaMdhjYBdihfnaitydxQGqkzNir7HIWUo0ZzEb3vdzdCg1o2tjsepLOue72Xdj9hi7F/C5BKGCGxg==
+      integrity: sha512-1SDidGsTxEYq4njaHKQip+G6ir97ZXfHt+e1RYi9XmfEc3L3BXC1bLbG/hm+K9gv72+8OoDkDkn+N6u3vxaIiA==
       tarball: file:projects/storybook.tgz
     version: 0.0.0
 registry: ''
@@ -20941,10 +20940,9 @@ specifiers:
   '@fluentui/react-northstar': ^0.51.2
   '@fluentui/react-theme-provider': ^0.18.0
   '@mdx-js/react': ^1.6.22
-  '@microsoft/1ds-core-js': ~3.1.1
   '@microsoft/api-documenter': ~7.12.11
   '@microsoft/api-extractor': ~7.13.2
-  '@microsoft/applicationinsights-react-js': ~3.1.0
+  '@microsoft/applicationinsights-react-js': ~3.0.5
   '@microsoft/applicationinsights-web': ~2.6.1
   '@octokit/rest': ~18.0.6
   '@rollup/plugin-commonjs': ~17.1.0
