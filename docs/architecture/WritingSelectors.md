@@ -2,7 +2,7 @@
 
 Selectors/handlers are what we provide to our customer to connect our communication ui library with our declarative client(Calling and chat).
 
-There are several principles for writing selectors/handlers we exporting from our library, either for perf or styles:
+There are several principles for writing selectors/handlers we exporting from our library, either for perf or code styles:
 
 ## Selectors package is tailored for what we have in our component package
 
