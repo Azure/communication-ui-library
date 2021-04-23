@@ -41,14 +41,14 @@ const messageThreadProps = messageThreadSelector(state);
 
 To make code style cleaner and simple, we use Object spread operator to pass props and handlers to a component whenever it is possible, which requires all selector/handlers return type, name should matched component props.
 
-Good
+Do:
 ```typescript
 const messageThreadProps = messageThreadSelector(state);
 
 <MessageThread {...messageThreadProps}>
 ```
 
-Bad
+Don't:
 ```typescript
 const messageThreadProps = messageThreadSelector(state);
 
@@ -72,6 +72,8 @@ A selector is a function built on top of reselect, it takes a list of functions 
 
 Return props object, as a contract between selector and components, must have minimum required data and changes.
 Imagine there is a selector to list item names when item count less than 10:
+
+Don't:
 ```typescript
 const items = ['book', 'food'];
 const itemSelector = createSelector([getItems], (items) => { items });
@@ -84,7 +86,7 @@ const ItemsDisplay = React.memo((items) => {
 ```
 The code snippet above will work without problem, but it will still trigger unnecessary re-render whenever items are updated, even more than 10 items, whcih could be a perf regression when the array grows huge and calculation is heavier.
 
-Better:
+Do:
 ```typescript
 const items = ['book', 'food'];
 const itemSelector = createSelector([getItems], (items) => { displayStrs: items.length > 10 ? 'There are more than 10 items in the page...' : items.join(',') });
@@ -112,7 +114,7 @@ foo1 === foo2; // return true because if it is basic type
 
 Here is a bad example of selector:
 
-Bad:
+Don't:
 ```typescript
 const items = ['book', 'food'];
 const itemSelector = createSelector([getItems], (items) => { itemsInfo: {
@@ -123,7 +125,7 @@ const itemSelector = createSelector([getItems], (items) => { itemsInfo: {
 
 When you pass return props to a pure component, whether itemCount or itemName is changed or not, re-render will happen, because you are creating a new object every time
 
-Better:
+Do:
 ```typescript
 const items = ['book', 'food'];
 const itemSelector = createSelector([getItems], (items) => { 
@@ -139,6 +141,8 @@ return basic type directly so the compare function will always consider there is
 Stateful client guarantee its immutability of state, when a single item in an array changes, it create a new instance for itself and create a new array reference, but keep all the other elements the same reference.
 
 Reselect provides a nice memoize feature for selectors, but when an array is passed as a parameter, every element will be iterated again in the function:
+
+Don't:
 ```typescript
 const items = ['book', 'food'];
 const itemSelector = createSelector([getItems], (items) => { 
@@ -149,6 +153,8 @@ const itemSelector = createSelector([getItems], (items) => {
 ```
 
 This will generate every reshapedItem every even just one element is changed in items array, which is not perf friendly, what might be a better design is:
+
+Do:
 ```typescript
 const items = ['book', 'food'];
 const itemSelector = createSelector([getItems], (items) => { 
