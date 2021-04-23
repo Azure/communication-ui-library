@@ -6,9 +6,6 @@ import { CallComponent } from './snippets/CallComponent.snippet';
 import { getDocs } from './Docs';
 
 export const Component: () => JSX.Element = () => {
-  // TODO: Fix dark theming
-  // TODO: Avoid re-rendering video when recording/transcription is enabled/disabled.
-
   const [recording, setRecording] = useState({
     current: false,
     previous: false
@@ -27,6 +24,7 @@ export const Component: () => JSX.Element = () => {
     return false;
   });
 
+  // TODO: Fix dark theming
   return (
     <CallComponent
       teamsInteropCurrent={{ recordingEnabled: recording.current, transcriptionEnabled: transcription.current }}
