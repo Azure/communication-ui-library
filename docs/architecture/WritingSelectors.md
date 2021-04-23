@@ -140,9 +140,9 @@ return basic type directly so the compare function will always consider there is
 
 ### 3. Return same object references in array when possible 
 
-Stateful client guarantee its immutability of state, when a single item in an array changes, it create a new instance for itself and create a new array reference, but keep all the other elements the same reference.
+Stateful client guarantees its immutability of state: When a single item in an array changes, it creates a new instance for itself and creates a new array reference, but keeps all the other elements the same reference.
 
-Reselect provides a nice memoize feature for selectors, but when an array is passed as a parameter, every element will be iterated again in the function:
+Reselect provides a nice memoize feature for selectors, but when an array is passed as a parameter, every element will be iterated again in the function, and all elements in new generated array will be new instance:
 
 Don't:
 ```typescript
@@ -154,7 +154,7 @@ const itemSelector = createSelector([getItems], (items) => {
 });
 ```
 
-This will generate every reshapedItem every even just one element is changed in items array, which is not perf friendly, what might be a better design is:
+This will generate every reshapedItem every even just one element is changed in items array, which is not perf friendly. What might be a better design is:
 
 Do:
 ```typescript
@@ -164,8 +164,8 @@ const itemSelector = createSelector([getItems], (items) => {
     foodItems: items.filter(item => item === 'food')
 });
 ```
-By not generating new objects, we will be able to enjoy the immutablity from state provided by stateful client, and keep the rest of unchanged element ref the same.
+By not generating new objects, we will be able to enjoy the immutablity from state provided by stateful client, and keep the rest of unchanged element refs the same.
 
 *What if I do need a reshape?*
 
-In a lot of case, reshaping or generating new object is not avoidable, so don't break your own design by bothering generating new object. And under most situation, array size is limited, we don't need to worry too much about perf when we handle it properly. There might be some extreme cases like chatMessages, which could grow into a size like 10k, when this happens, doing a memoize item by item will help. Check *memoizeFnAll.ts* util function for more details
+In a lot of cases, reshaping or generating new object is not avoidable, so don't break your own design by bothering generating new objects. And under most situations, array sizes are limited, we don't need to worry too much about perf when we handle it properly later in components. There might be some extreme cases like chatMessages, which could grow into a size like 10k, when this happens, doing a memoize element by element will help. Check *memoizeFnAll.ts* util function for more details
