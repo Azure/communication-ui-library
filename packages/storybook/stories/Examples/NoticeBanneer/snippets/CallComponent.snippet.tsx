@@ -6,7 +6,7 @@ import { CallControlBar } from './CallControlBar.snippet';
 import { TeamsState } from './TeamsState.snippet';
 
 export interface CallProps {
-  banner: BannerProps;
+  teamsState: TeamsState;
 }
 
 export class CallComponent extends React.Component<CallProps> {
@@ -28,10 +28,16 @@ export class CallComponent extends React.Component<CallProps> {
           }
           placeholderProvider={<></>}
         >
-          <Banner {...this.props.banner} />
+          {needsComplianceBanner(this.props.teamsState) ? <Banner teamsState={this.props.teamsState} /> : <></>}
           <CallControlBar />
         </VideoTile>
       </FluentThemeProvider>
     );
   }
+}
+
+function needsComplianceBanner(s: TeamsState): boolean {
+  return (
+    s.recordingEnabled || s.recordingPreviouslyEnabled || s.transcriptionEnabled || s.transcriptionPreviouslyEnabled
+  );
 }
