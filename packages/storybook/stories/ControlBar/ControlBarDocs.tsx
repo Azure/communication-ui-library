@@ -50,8 +50,8 @@ export const getDocs: () => JSX.Element = () => {
       <Heading>Layouts</Heading>
       <Description>
         You can change the layout of `ControlBar` by providing a preset layout to the `layout` prop. Preset layouts are
-        `horizontal`, `vertical`, `dockedTop`, `dockedBottom`, `dockedLeft`, `dockedRight'`, `floatingTop`,
-        `floatingBottom`, `floatingLeft`and `floatingRight`.
+        `horizontal`, `vertical`, `dockedTop`, `dockedBottom`, `dockedLeft`, `dockedRight`, `floatingTop`,
+        `floatingBottom`, `floatingLeft` and `floatingRight`.
       </Description>
       <Canvas withSource={SourceState.NONE}>
         <ControlBarLayoutExample />
