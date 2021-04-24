@@ -1,7 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import React, { useContext, useState, useEffect } from 'react';
-
+import React, { useContext, useState, useEffect, Dispatch, SetStateAction, createContext } from 'react';
 import { ChatClient } from '@azure/communication-chat';
 import { chatClientDeclaratify } from '@azure/acs-chat-declarative';
 import { ChatThreadProvider } from './ChatThreadProvider';
@@ -16,7 +15,13 @@ import {
   CommunicationUiErrorFromError,
   CommunicationUiError
 } from '../types/CommunicationUiError';
-import { ChatContext, ChatContextType } from './ChatProviderHelper';
+
+export const ChatContext = createContext<ChatContextType | undefined>(undefined);
+
+export type ChatContextType = {
+  chatClient?: ChatClient;
+  setChatClient: Dispatch<SetStateAction<ChatClient>>;
+};
 
 let contextState: ChatContextType;
 
@@ -43,14 +48,12 @@ type ChatProviderProps = {
  * @param props
  */
 const ChatProviderBase = (props: ChatProviderProps & ErrorHandlingProps): JSX.Element => {
-  const { token } = props;
+  const { token, displayName } = props;
   const idFromToken = getIdFromToken(token);
-  const [userId, setUserId] = useState<string>(idFromToken);
-  const [displayName, setDisplayName] = useState<string>(props.displayName);
   const [chatClient, setChatClient] = useState<ChatClient>(
     chatClientDeclaratify(
       new ChatClient(props.endpointUrl, createAzureCommunicationUserCredentialBeta(token, props.refreshTokenCallback)),
-      { userId, displayName }
+      { userId: idFromToken, displayName }
     )
   );
   const [chatProviderState, setChatProviderState] = useState<number>(CHATPROVIDER_LOADING_STATE);
@@ -80,11 +83,7 @@ const ChatProviderBase = (props: ChatProviderProps & ErrorHandlingProps): JSX.El
 
   contextState = {
     chatClient,
-    setChatClient,
-    userId,
-    setUserId,
-    displayName,
-    setDisplayName
+    setChatClient
   };
 
   // We wait until realtime notifications are set up to avoid any potential bugs where code is relying on notifications
@@ -107,35 +106,19 @@ const ChatProviderBase = (props: ChatProviderProps & ErrorHandlingProps): JSX.El
 export const ChatProvider = (props: ChatProviderProps & ErrorHandlingProps): JSX.Element =>
   WithErrorHandling(ChatProviderBase, props);
 
-export const useSetChatClient = (): ((chatClient: ChatClient) => void) => {
+export const useChatClient = (): ChatClient => {
   const chatContext = useContext<ChatContextType | undefined>(ChatContext);
   if (chatContext === undefined) {
     throw new CommunicationUiError({
-      message: 'UseSetChatClient invoked when ChatContext not initialized',
+      message: 'UseChatClient invoked when ChatContext not initialized',
       code: CommunicationUiErrorCode.CONFIGURATION_ERROR
     });
   }
-  return chatContext.setChatClient;
-};
-
-export const useUserId = (): string => {
-  const chatContext = useContext<ChatContextType | undefined>(ChatContext);
-  if (chatContext === undefined) {
+  if (chatContext.chatClient === undefined) {
     throw new CommunicationUiError({
-      message: 'UseUserId invoked when ChatContext not initialized',
+      message: 'UseChatClient invoked with ChatClient not initialized',
       code: CommunicationUiErrorCode.CONFIGURATION_ERROR
     });
   }
-  return chatContext.userId;
-};
-
-export const useDisplayName = (): string => {
-  const chatContext = useContext<ChatContextType | undefined>(ChatContext);
-  if (chatContext === undefined) {
-    throw new CommunicationUiError({
-      message: 'UseDisplayName invoked when ChatContext not initialized',
-      code: CommunicationUiErrorCode.CONFIGURATION_ERROR
-    });
-  }
-  return chatContext.displayName;
+  return chatContext.chatClient;
 };
