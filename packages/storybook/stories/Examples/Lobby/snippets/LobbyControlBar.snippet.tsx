@@ -12,7 +12,10 @@ import React from 'react';
 
 export const LobbyCallControlBar = (): JSX.Element => {
   return (
-    <ControlBar layout="dockedBottom" styles={{ root: { minHeight: '4.25rem', alignItems: 'center' } }}>
+    <ControlBar
+      layout="dockedBottom"
+      styles={{ root: { background: 'white', minHeight: '4.25rem', alignItems: 'center' } }}
+    >
       <DefaultButton {...labeledVideoButtonProps} checked={true} />
       <DefaultButton {...labeledAudioButtonProps} checked={true} />
       <DefaultButton {...labeledOptionsButtonProps} />
