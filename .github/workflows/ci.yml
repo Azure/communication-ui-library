@@ -75,6 +75,7 @@ jobs:
         working-directory: ./packages/storybook
         env:
           GH_TOKEN: ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
+          TELEMETRY_INSTRUMENTATION_KEY: ${{ secrets.TELEMETRY_INSTRUMENTATION_KEY }}
 
       # Create a GitHub issue if the CI failed when running on the `main` branch
       - name: Create issue if main branch CI failed
