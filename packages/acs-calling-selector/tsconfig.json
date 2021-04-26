@@ -2,11 +2,10 @@
   "compilerOptions": {
     "target": "es6",
     "module": "esnext",
-    "jsx": "react",
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
-    "outDir": "./dist/",
+    "outDir": "./dist/dist-esm/",
     "strict": true,
     "noImplicitAny": false, // disable for now for storybook
     "strictFunctionTypes": true,
@@ -16,7 +15,7 @@
     "typeRoots": ["./node_modules/@types"],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": ["esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
@@ -25,6 +24,6 @@
     "isolatedModules": true,
     "moduleResolution": "node"
   },
-  "include": ["stories/**/*", "./.storybook/**/*"],
+  "include": ["src/**/*"],
   "exclude": ["dist", "node_modules"]
 }
