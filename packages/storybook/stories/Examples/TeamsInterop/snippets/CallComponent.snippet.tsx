@@ -1,24 +1,20 @@
-import { FluentThemeProvider, StreamMedia, VideoTile } from '@azure/communication-ui';
-import { MessageBar } from '@fluentui/react';
+import { StreamMedia, VideoTile } from '@azure/communication-ui';
 import React from 'react';
 import { renderVideoStream } from '../../../utils';
+import { Banner } from './Banner.snippet';
 import { CallControlBar } from './CallControlBar.snippet';
-import { bannerMessage, TeamsInterop } from './TeamsInterop.snippet';
+import { TeamsInterop } from './TeamsInterop.snippet';
 
 export interface CallProps {
   teamsInteropCurrent: TeamsInterop;
   teamsInteropPrevious: TeamsInterop;
 }
 
-export const CallComponent = (props: CallProps): JSX.Element => {
+export const CallComponent = (props: TeamsInterop): JSX.Element => {
   const videoTileStyles = {
     root: { height: '100%', width: '100%' },
     overlayContainer: {}
   };
-
-  // Optionally show a message bar for Teams interoperability messages.
-  const msg = bannerMessage(props);
-  const banner = msg !== null ? <MessageBar>{msg}</MessageBar> : <></>;
 
   return (
     <VideoTile
@@ -32,7 +28,7 @@ export const CallComponent = (props: CallProps): JSX.Element => {
       placeholderProvider={<></>}
     >
       {/* Optional Banner */}
-      {banner}
+      <Banner {...props} />
 
       <CallControlBar />
     </VideoTile>

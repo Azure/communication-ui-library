@@ -6,25 +6,25 @@ import { CallComponent } from './snippets/CallComponent.snippet';
 import { getDocs } from './Docs';
 
 export const NoticeBanner: () => JSX.Element = () => {
-  const [recording, setRecording] = useState({
-    current: false,
-    previous: false
-  });
-  const [transcription, setTranscription] = useState({
-    current: false,
-    previous: false
+  const [teamsInterop, setTeamsInterop] = useState({
+    recordingEnabled: false,
+    transcriptionEnabled: false
   });
 
   button('Toggle Recording', () => {
-    setRecording(toggleWithHistory(recording));
-    setTranscription(mirrorHistory(transcription));
+    setTeamsInterop({
+      recordingEnabled: !teamsInterop.recordingEnabled,
+      transcriptionEnabled: teamsInterop.transcriptionEnabled
+    });
     // Without an explicit return, the Canvas iframe is re-rendered, and all Components are recreated.
     // This causes the state in this component to be lost.
     return false;
   });
   button('Toggle Transcription', () => {
-    setRecording(mirrorHistory(recording));
-    setTranscription(toggleWithHistory(transcription));
+    setTeamsInterop({
+      recordingEnabled: teamsInterop.recordingEnabled,
+      transcriptionEnabled: !teamsInterop.transcriptionEnabled
+    });
     // Without an explicit return, the Canvas iframe is re-rendered, and all Components are recreated.
     // This causes the state in this component to be lost.
     return false;
@@ -32,32 +32,8 @@ export const NoticeBanner: () => JSX.Element = () => {
 
   // TODO: Fix dark theming.
   // Once https://github.com/Azure/communication-ui-sdk/pull/169 lands, same fix should be applied here.
-  return (
-    <CallComponent
-      teamsInteropCurrent={{ recordingEnabled: recording.current, transcriptionEnabled: transcription.current }}
-      teamsInteropPrevious={{ recordingEnabled: recording.previous, transcriptionEnabled: transcription.previous }}
-    />
-  );
+  return <CallComponent {...teamsInterop} />;
 };
-
-interface ToggleState {
-  current: boolean;
-  previous: boolean;
-}
-
-function toggleWithHistory(s: ToggleState): ToggleState {
-  return {
-    current: !s.current,
-    previous: s.current
-  };
-}
-
-function mirrorHistory(s: ToggleState): ToggleState {
-  return {
-    current: s.current,
-    previous: s.current
-  };
-}
 
 export default {
   title: `${EXAMPLES_FOLDER_PREFIX}/TeamsInterop`,
