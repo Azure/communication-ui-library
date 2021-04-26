@@ -6,10 +6,10 @@ import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/a
 # UI Toolkit Use Cases
 
 UI Toolkit supports a number of use cases across calling and chat experiences.
-These capabilities extend across both UI Components and Composites.
+These capabilities are available through UI Components and Composites.
 For Composites, these capabilities are built directly in and exposed when the composite is integrated into an application.
-For UI Components, these capabilities are exposed through a combination of UI functionality and underlying state management.
-To take full advantage of these capabilities we recommend to use the UI Components in conjunction with the stateful call and chat clients.
+For UI Components, these capabilities are exposed through a combination of UI functionality and underlying stateful libraries.
+To take full advantage of these capabilities we recommend using the UI Components in conjunction with the stateful call and chat client libraries.
 
 ## Calling Use Cases
 
@@ -49,11 +49,12 @@ To take full advantage of these capabilities we recommend to use the UI Componen
 
 ## Supported identities:
 
-An Azure Communication Services identity is required to initialize the UI Framework and authenticate to the service. For more information on authentication, see [Authentication](https://docs.microsoft.com/azure/communication-services/concepts/authentication) and [Access Tokens](https://docs.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-javascript)
+An Azure Communication Services identity is required to initialize the stateful client libraries and authenticate to the service.
+For more information on authentication, see [Authentication](https://docs.microsoft.com/azure/communication-services/concepts/authentication) and [Access Tokens](https://docs.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-javascript)
 
 ## Customization
 
-UI Toolkit exposes key customization use cases to developer so that they can modify components to fit their look and feel of their application.
+UI Toolkit exposes patterns for developers to modify components to fit the look and feel of their application.
 This is a key area of differentiation between Composites and UI Components, where Composites provide less customization options in favor of a simpler integration experience.
 
 | Use Case                                            | Composites | UI Components |
