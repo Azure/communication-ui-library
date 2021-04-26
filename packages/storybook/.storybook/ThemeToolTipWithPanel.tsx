@@ -4,7 +4,6 @@ import { useGlobals } from '@storybook/api';
 import addons from '@storybook/addons';
 import { FORCE_RE_RENDER } from '@storybook/core-events';
 import { TextField, DefaultButton, Stack, Panel, initializeIcons } from '@fluentui/react';
-import { Theme } from '@fluentui/react-theme-provider';
 
 export const ThemeToolTipWithPanel = (props: { active: boolean }): JSX.Element => {
   const [globals, updateGlobals] = useGlobals();
@@ -26,8 +25,14 @@ export const ThemeToolTipWithPanel = (props: { active: boolean }): JSX.Element =
       themeJson = themeJson.replace(/'/g, '"');
       // replace trailing commas from object
       themeJson = themeJson.replace(/\,(?!\s*[\{\"\w])/g, '');
-      JSON.parse(themeJson) as Theme;
-      updateGlobals({ ['theme']: 'Custom', ['customTheme']: themeJson });
+
+      let customThemeValue = themeJson;
+      // if themeObject does not have palette property then assume it is the palette
+      const themeObject = JSON.parse(themeJson);
+      if (!themeObject.palette) {
+        customThemeValue = JSON.stringify({ palette: themeObject });
+      }
+      updateGlobals({ ['theme']: 'Custom', ['customTheme']: customThemeValue });
       // Invokes Storybook's addon API method (with the FORCE_RE_RENDER) event to trigger a UI refresh
       addons.getChannel().emit(FORCE_RE_RENDER);
       setTextValue(themeJson);
@@ -38,7 +43,7 @@ export const ThemeToolTipWithPanel = (props: { active: boolean }): JSX.Element =
   };
 
   const setText = (e: any): void => {
-    setError(undefined);
+    setError('');
     setTextValue(e.target.value);
   };
 
