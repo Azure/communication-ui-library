@@ -5,8 +5,8 @@ import {
   answerButtonProps,
   audioButtonProps,
   hangupButtonProps,
-  recordButtonProps,
   optionsButtonProps,
+  recordButtonProps,
   screenShareButtonProps,
   videoButtonProps
 } from '@azure/communication-ui';
