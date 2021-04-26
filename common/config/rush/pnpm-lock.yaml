@@ -940,7 +940,7 @@ packages:
   /@babel/plugin-proposal-object-rest-spread/7.12.1_@babel+core@7.12.9:
     dependencies:
       '@babel/core': 7.12.9
-      '@babel/helper-plugin-utils': 7.10.4
+      '@babel/helper-plugin-utils': 7.13.0
       '@babel/plugin-syntax-object-rest-spread': 7.8.3_@babel+core@7.12.9
       '@babel/plugin-transform-parameters': 7.13.0_@babel+core@7.12.9
     dev: false
@@ -4184,7 +4184,7 @@ packages:
       global: 4.4.0
       lodash: 4.17.21
       prop-types: 15.7.2
-      qs: 6.9.6
+      qs: 6.10.1
       react: 16.14.0
       react-color: 2.19.3_react@16.14.0
       react-dom: 16.14.0_react@16.14.0
@@ -4214,7 +4214,7 @@ packages:
       core-js: 3.9.1
       global: 4.4.0
       prop-types: 15.7.2
-      qs: 6.9.6
+      qs: 6.10.1
       react: 16.14.0
       react-dom: 16.14.0_react@16.14.0
       regenerator-runtime: 0.13.7
@@ -4432,7 +4432,7 @@ packages:
       '@storybook/core-events': 6.1.21
       core-js: 3.9.1
       global: 4.4.0
-      qs: 6.9.6
+      qs: 6.10.1
       telejson: 5.1.0
     dev: false
     resolution:
@@ -4467,7 +4467,7 @@ packages:
       global: 4.4.0
       lodash: 4.17.21
       memoizerific: 1.11.3
-      qs: 6.9.6
+      qs: 6.10.1
       react: 16.14.0
       react-dom: 16.14.0_react@16.14.0
       regenerator-runtime: 0.13.7
@@ -4657,7 +4657,7 @@ packages:
       postcss-flexbugs-fixes: 4.2.1
       postcss-loader: 3.0.0
       pretty-hrtime: 1.0.3
-      qs: 6.9.6
+      qs: 6.10.1
       raw-loader: 4.0.2_webpack@4.44.2
       react: 16.14.0
       react-dev-utils: 11.0.4
@@ -4756,7 +4756,7 @@ packages:
       core-js: 3.9.1
       global: 4.4.0
       memoizerific: 1.11.3
-      qs: 6.9.6
+      qs: 6.10.1
       react: 16.14.0
       react-dom: 16.14.0_react@16.14.0
     dev: false
@@ -4895,7 +4895,7 @@ packages:
       markdown-to-jsx: 6.11.4_react@16.14.0
       memoizerific: 1.11.3
       polished: 3.7.1
-      qs: 6.9.6
+      qs: 6.10.1
       react: 16.14.0
       react-dom: 16.14.0_react@16.14.0
       react-draggable: 4.4.3
@@ -5251,7 +5251,7 @@ packages:
       integrity: sha512-nwKNbvnwJ2/mndE9ItP/zc2TCzw6uuodnF4EHYWD+gCQDVBuRQL5UzbZD0/ezy1iKsFU2ZQiDqg4M9dN4+wZgA==
   /@types/jest-specific-snapshot/0.5.5:
     dependencies:
-      '@types/jest': 26.0.20
+      '@types/jest': 26.0.22
     dev: false
     resolution:
       integrity: sha512-AaPPw2tE8ewfjD6qGLkEd4DOfM6pPOK7ob/RSOe1Z8Oo70r9Jgo0SlWyfxslPAOvLfQukQtiVPm6DcnjSoZU5A==
@@ -9120,7 +9120,7 @@ packages:
       integrity: sha512-LnuPJ+dwqKDIyotW1VzmOZ5TONUN7CwkCR5hrgawTUbkBGYdeoNLZo6nNfGkCrjtE1nXXaj7iMMpDa8/d9WoIA==
   /dom-helpers/5.2.0:
     dependencies:
-      '@babel/runtime': 7.13.10
+      '@babel/runtime': 7.13.17
       csstype: 3.0.7
     dev: false
     resolution:
@@ -9256,7 +9256,7 @@ packages:
       integrity: sha512-V1idov3Rkvz1YWA1K67aIx51EgokIDvep4x6KmU7HhsayI8DvTEZBeH4O92zeFVGximKujRO7ChBzBAf4PKWFA==
   /downshift/6.1.0_react@16.14.0:
     dependencies:
-      '@babel/runtime': 7.13.10
+      '@babel/runtime': 7.13.17
       compute-scroll-into-view: 1.0.17
       prop-types: 15.7.2
       react: 16.14.0
@@ -13427,7 +13427,7 @@ packages:
       integrity: sha512-7KI2l2GIZa9p2spzPIVZBYyNKkN+e/SQPpnjlTiPhdbDW3F86tdKKELxKpzJ5sgU19wQWsACULZmpTPYHeWO5w==
   /lazy-universal-dotenv/3.0.1:
     dependencies:
-      '@babel/runtime': 7.13.10
+      '@babel/runtime': 7.13.17
       app-root-dir: 1.0.2
       core-js: 3.9.1
       dotenv: 8.2.0
@@ -14942,7 +14942,7 @@ packages:
     dependencies:
       is-ssh: 1.3.2
       protocols: 1.4.8
-      qs: 6.9.6
+      qs: 6.10.1
       query-string: 6.14.1
     dev: false
     resolution:
@@ -15205,7 +15205,7 @@ packages:
       integrity: sha512-7Wjy+9E3WwLOEL30D+m8TSTF7qJJUJLONBnwQp0518siuMxUQUbgZwssaFX+QKlZkjHZcw/IpZCt/H0srrntSg==
   /polished/3.7.1:
     dependencies:
-      '@babel/runtime': 7.13.10
+      '@babel/runtime': 7.13.17
     dev: false
     engines:
       node: '>=10'
@@ -16491,7 +16491,7 @@ packages:
   /react-docgen/5.3.1:
     dependencies:
       '@babel/core': 7.13.10
-      '@babel/runtime': 7.13.10
+      '@babel/runtime': 7.13.17
       ast-types: 0.14.2
       commander: 2.20.3
       doctrine: 3.0.0
@@ -16557,7 +16557,7 @@ packages:
       integrity: sha512-TDIuOzxwtPcMhxlR4be/s1Er5b7zS8D42QOzaZZGMJskfH1ULFSOpdlBsb32ivqacXatbGZzshHDXGV5vKNkhQ==
   /react-helmet-async/1.0.9_react-dom@16.14.0+react@16.14.0:
     dependencies:
-      '@babel/runtime': 7.13.10
+      '@babel/runtime': 7.13.17
       invariant: 2.2.4
       prop-types: 15.7.2
       react: 16.14.0
@@ -16590,7 +16590,7 @@ packages:
       integrity: sha512-nL9uS7jEs/zu8sqwFE5MAPx6pPkNAriACQ2rGLlqmKr2sPGtN7TXTyDdQt4lbNXVx7Uzadb40x8qotIuru6Rhg==
   /react-inspector/5.1.0_react@16.14.0:
     dependencies:
-      '@babel/runtime': 7.13.10
+      '@babel/runtime': 7.13.17
       is-dom: 1.1.0
       prop-types: 15.7.2
       react: 16.14.0
@@ -16777,7 +16777,7 @@ packages:
       integrity: sha512-S5eO4vjUzUisvkIPB7jVsKtuH2HhWcASREYWHAQ1FP5HyCv3xgn+wpILAEWkmy+A+tTNbSZClhxjT3qz6g4L1A==
   /react-select/3.2.0_react-dom@16.14.0+react@16.14.0:
     dependencies:
-      '@babel/runtime': 7.13.10
+      '@babel/runtime': 7.13.17
       '@emotion/cache': 10.0.29
       '@emotion/core': 10.1.1_react@16.14.0
       '@emotion/css': 10.0.27
@@ -16862,7 +16862,7 @@ packages:
       integrity: sha512-+HzNTCHpeQyl4MJ/bdE0u6XRMe9+XG/+aL4mCxVN4DnPBQ0/5bfHWPDuOZUzYdMj94daZaZdCCc1Dzt9R/xSSg==
   /react-transition-group/4.4.1_react-dom@16.14.0+react@16.14.0:
     dependencies:
-      '@babel/runtime': 7.13.10
+      '@babel/runtime': 7.13.17
       dom-helpers: 5.2.0
       loose-envify: 1.4.0
       prop-types: 15.7.2
@@ -20615,7 +20615,7 @@ packages:
       '@azure/communication-common': 1.0.0
       '@microsoft/api-documenter': 7.12.12
       '@microsoft/api-extractor': 7.13.2
-      '@types/jest': 26.0.20
+      '@types/jest': 26.0.22
       '@typescript-eslint/eslint-plugin': 4.18.0_e9e1aa536ec0b34179456e3b69e4968e
       '@typescript-eslint/parser': 4.18.0_eslint@7.22.0+typescript@4.1.5
       copyfiles: 2.4.1
@@ -20673,7 +20673,7 @@ packages:
       '@azure/core-paging': 1.1.3
       '@microsoft/api-documenter': 7.12.12
       '@microsoft/api-extractor': 7.13.2
-      '@types/jest': 26.0.20
+      '@types/jest': 26.0.22
       '@typescript-eslint/eslint-plugin': 4.18.0_e9e1aa536ec0b34179456e3b69e4968e
       '@typescript-eslint/parser': 4.18.0_eslint@7.22.0+typescript@4.1.5
       copyfiles: 2.4.1
@@ -20704,7 +20704,7 @@ packages:
       '@azure/communication-chat': 1.0.0-beta.4
       '@microsoft/api-documenter': 7.12.12
       '@microsoft/api-extractor': 7.13.2
-      '@types/jest': 26.0.20
+      '@types/jest': 26.0.22
       '@types/react': 16.14.5
       copyfiles: 2.4.1
       eslint: 7.22.0
@@ -20760,7 +20760,7 @@ packages:
       '@fluentui/react-northstar': 0.51.7_b0d7ca8a0459a1df1ff516252688d92a
       '@fluentui/react-theme-provider': 0.18.5_b0d7ca8a0459a1df1ff516252688d92a
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
-      '@types/jest': 26.0.20
+      '@types/jest': 26.0.22
       '@types/node': 14.14.35
       '@types/preval.macro': 3.0.0
       '@types/react': 16.14.5
@@ -20827,7 +20827,7 @@ packages:
       '@fluentui/react-theme-provider': 0.18.5_b0d7ca8a0459a1df1ff516252688d92a
       '@testing-library/jest-dom': 5.11.9
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
-      '@types/jest': 26.0.20
+      '@types/jest': 26.0.22
       '@types/json-stringify-safe': 5.0.0
       '@types/preval.macro': 3.0.0
       '@types/react': 16.14.5
@@ -20911,7 +20911,7 @@ packages:
       '@testing-library/jest-dom': 5.11.9
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
       '@types/classnames': 2.2.11
-      '@types/jest': 26.0.20
+      '@types/jest': 26.0.22
       '@types/json-stringify-safe': 5.0.0
       '@types/node': 14.14.35
       '@types/react': 16.14.5
@@ -20987,7 +20987,7 @@ packages:
       '@fluentui/react-northstar': 0.51.7_b0d7ca8a0459a1df1ff516252688d92a
       '@fluentui/react-theme-provider': 0.18.5_b0d7ca8a0459a1df1ff516252688d92a
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
-      '@types/jest': 26.0.20
+      '@types/jest': 26.0.22
       '@types/node': 14.14.35
       '@types/preval.macro': 3.0.0
       '@types/react': 16.14.5
@@ -21053,7 +21053,7 @@ packages:
       '@types/cors': 2.8.10
       '@types/express': 4.17.11
       '@types/http-errors': 1.8.0
-      '@types/jest': 26.0.20
+      '@types/jest': 26.0.22
       '@types/morgan': 1.9.2
       '@types/node': 14.14.35
       '@types/supertest': 2.0.10
@@ -21126,11 +21126,11 @@ packages:
       '@storybook/node-logger': 6.1.21
       '@storybook/react': 6.1.21_4afa15f3c90940bbd828a24f4067472e
       '@storybook/storybook-deployer': 2.8.7
-      '@storybook/theming': 6.2.9_react-dom@16.14.0+react@16.14.0
+      '@storybook/theming': 6.1.21_react-dom@16.14.0+react@16.14.0
       '@testing-library/jest-dom': 5.11.9
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
       '@types/classnames': 2.2.11
-      '@types/jest': 26.0.20
+      '@types/jest': 26.0.22
       '@types/json-stringify-safe': 5.0.0
       '@types/node': 14.14.35
       '@types/react': 16.14.5
@@ -21189,7 +21189,7 @@ packages:
     peerDependencies:
       webpack-cli: '*'
     resolution:
-      integrity: sha512-xTUMokG4CIvIRrBFYWnJQwV57KVITMZ+1Vm0JttbOM9odvgKn5duLDWvx8SQJBiX5RkK+CgZDxgTywk4kB5yRQ==
+      integrity: sha512-WQdccpypge1hzrxraF5Z5ksMH16aptSM7OdipBEYCK4lwSap3xB54fBOOfnoStnhb9O/Ga2CgkapPERNyaHu7A==
       tarball: file:projects/storybook.tgz
     version: 0.0.0
 registry: ''
@@ -21227,20 +21227,20 @@ specifiers:
   '@rush-temp/one-to-one-call': file:./projects/one-to-one-call.tgz
   '@rush-temp/server': file:./projects/server.tgz
   '@rush-temp/storybook': file:./projects/storybook.tgz
-  '@storybook/addon-actions': ^6.1.1
-  '@storybook/addon-docs': ^6.1.18
-  '@storybook/addon-essentials': ^6.1.1
-  '@storybook/addon-knobs': ^6.1.9
-  '@storybook/addon-links': ^6.1.1
-  '@storybook/addon-storyshots': ^6.1.6
+  '@storybook/addon-actions': ~6.1.1
+  '@storybook/addon-docs': ~6.1.18
+  '@storybook/addon-essentials': ~6.1.1
+  '@storybook/addon-knobs': ~6.1.9
+  '@storybook/addon-links': ~6.1.1
+  '@storybook/addon-storyshots': ~6.1.6
   '@storybook/addons': ^6.2.5
   '@storybook/api': ^6.2.5
   '@storybook/components': ^6.2.5
   '@storybook/core-events': ^6.2.5
-  '@storybook/node-logger': ^6.1.1
-  '@storybook/react': ^6.1.1
-  '@storybook/storybook-deployer': ^2.8.7
-  '@storybook/theming': ^6.1.10
+  '@storybook/node-logger': ~6.1.1
+  '@storybook/react': ~6.1.1
+  '@storybook/storybook-deployer': ~2.8.7
+  '@storybook/theming': ~6.1.10
   '@testing-library/jest-dom': ^5.11.4
   '@testing-library/react-hooks': ^3.4.2
   '@types/classnames': ^2.2.11
