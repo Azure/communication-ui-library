@@ -52,14 +52,14 @@ export const parameters = {
 
 const withThemeProvider = (Story: any, context: any) => {
   const themeName = context.globals.theme;
-  let customTheme = undefined;
-  try {
-    customTheme = JSON.parse(context.globals.customTheme);
-  } catch(e) {
-    // do nothing
+  let theme = THEMES[themeName];
+  if (context.globals.customTheme !== '') {
+    try {
+      theme = JSON.parse(context.globals.customTheme);
+    } catch(e) {
+      console.log('Could not parse the following theme JSON: ' + context.globals.customTheme);
+    }
   }
-
-  const theme = customTheme ?? THEMES[themeName];
 
   return (
     <FluentThemeProvider fluentTheme={theme}>
