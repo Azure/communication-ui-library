@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "description": "Azure Communication Services UI Toolkit Storybook",
   "scripts": {
-    "build": "build-storybook -s stories,./public --quiet --loglevel warn",
+    "build": "build-storybook -s stories,public,.storybook  --quiet --loglevel warn",
     "start": "concurrently \"rush build:watch -T storybook\" \"rushx start:storybook\"",
     "start:storybook": "start-storybook -p 6006 -s stories,./public --no-manager-cache --quiet --loglevel warn",
     "deploy-storybook": "storybook-to-ghpages --script build",
@@ -31,7 +31,7 @@
     "@fluentui/react-northstar": "^0.51.2",
     "@fluentui/react-theme-provider": "^0.18.0",
     "@microsoft/applicationinsights-react-js": "~3.0.5",
-    "@microsoft/applicationinsights-web": "~2.6.1",
+    "@microsoft/applicationinsights-web": "~2.6.2",
     "@uifabric/react-hooks": "~7.13.11",
     "classnames": "^2.2.6",
     "copy-to-clipboard": "~3.3.1",

@@ -31,6 +31,7 @@ jobs:
           rush build -t "@azure/acs-chat-declarative"
           rush build -t "@azure/acs-chat-selector"
           rush build -t "@azure/acs-calling-declarative"
+          rush build -t "@azure/acs-calling-selector"
 
       - name: Package @communication-ui
         run: npm pack
@@ -47,6 +48,10 @@ jobs:
       - name: Package @azure/acs-calling-declarative
         run: npm pack
         working-directory: ./packages/acs-calling-declarative/
+
+      - name: Package @azure/acs-calling-selector
+        run: npm pack
+        working-directory: ./packages/acs-calling-selector/
 
       - name: Compile private preview zip
         run: 7z a private-preview.zip ./packages/**/private-preview/*
