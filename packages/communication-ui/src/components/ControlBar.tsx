@@ -20,7 +20,7 @@ import {
   controlButtonStyles,
   hangUpControlButtonStyles
 } from './styles/ControlBar.styles';
-import { useTheme } from '@fluentui/react-theme-provider';
+import { useTheme, Theme } from '@fluentui/react-theme-provider';
 
 /** Fluent UI Button props for video control */
 export const videoButtonProps: IButtonProps = {
@@ -195,11 +195,28 @@ export interface ControlBarProps {
    * Defaults to a `horizontal` layout.
    */
   layout?: ControlBarLayoutType;
-  /**
-   * Boolean to remap theme slots if dark themed
-   */
-  darkThemed?: boolean;
 }
+
+const isDarkThemed = (theme: Theme): boolean => {
+  const blackBrightness = getPerceptualBrightnessOfHexColor(theme.palette.black);
+  const whiteBrightness = getPerceptualBrightnessOfHexColor(theme.palette.white);
+  if (Number.isNaN(blackBrightness) || Number.isNaN(whiteBrightness)) {
+    return false;
+  }
+  return blackBrightness > whiteBrightness;
+};
+
+// Will return Nan if hexColor is not a hex code
+const getPerceptualBrightnessOfHexColor = (hexColor: string): number => {
+  if (hexColor.substring(0, 1) !== '#' || hexColor.length !== 7) {
+    return NaN;
+  }
+  const r = parseInt(hexColor.substring(1, 3), 16);
+  const g = parseInt(hexColor.substring(3, 5), 16);
+  const b = parseInt(hexColor.substring(5, 7), 16);
+
+  return r * 2 + g * 3 + b;
+};
 
 /**
  * `ControlBar` allows you to easily create a component for call controls using
@@ -208,7 +225,7 @@ export interface ControlBarProps {
  * for altering call behavior.
  */
 export const ControlBar = (props: ControlBarProps): JSX.Element => {
-  const { styles, layout, darkThemed } = props;
+  const { styles, layout } = props;
   const theme = useTheme();
   const controlBarStyle = controlBarStyles[layout ?? 'horizontal'];
   return (
@@ -217,7 +234,9 @@ export const ControlBar = (props: ControlBarProps): JSX.Element => {
         controlBarStyle,
         {
           background:
-            darkThemed && layout?.startsWith('floating') ? theme.palette.neutralQuaternaryAlt : theme.palette.white
+            isDarkThemed(theme) && layout?.startsWith('floating')
+              ? theme.palette.neutralQuaternaryAlt
+              : theme.palette.white
         },
         styles?.root
       )}

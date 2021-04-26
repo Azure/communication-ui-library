@@ -95,7 +95,7 @@ export const ControlBarComponent: (
         background: background
       }}
     >
-      <ControlBar layout={layout} darkThemed={theme === DARK}>
+      <ControlBar layout={layout}>
         <DefaultButton {...(showLabels ? labeledVideoButtonProps : videoButtonProps)} checked={toggleButtons} />
         <DefaultButton {...(showLabels ? labeledAudioButtonProps : audioButtonProps)} checked={toggleButtons} />
         <DefaultButton
