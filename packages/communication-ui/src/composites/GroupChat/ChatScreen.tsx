@@ -17,8 +17,10 @@ export type ChatScreenProps = {
 export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const { threadId, onRenderAvatar, sendBoxMaxLength } = props;
 
+  const pixelToRemConvertRatio = 16;
+  const defaultNumberOfChatMessagesToReload = 5;
   const sendBoxParentStyle = mergeStyles({
-    maxWidth: sendBoxMaxLength ? `${sendBoxMaxLength / 16}rem` : 'unset',
+    maxWidth: sendBoxMaxLength ? `${sendBoxMaxLength / pixelToRemConvertRatio}rem` : 'unset',
     width: '100%'
   });
 
@@ -38,7 +40,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           {...chatThreadProps}
           {...chatThreadHandlers}
           onRenderAvatar={onRenderAvatar}
-          numberOfChatMessagesToReload={5}
+          numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
         />
         <Stack.Item align="center" className={sendBoxParentStyle}>
           <div style={{ paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>
