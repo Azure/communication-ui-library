@@ -18,11 +18,15 @@ export const NoticeBanner: () => JSX.Element = () => {
   button('Toggle Recording', () => {
     setRecording(toggleWithHistory(recording));
     setTranscription(mirrorHistory(transcription));
+    // Without an explicit return, the Canvas iframe is re-rendered, and all Components are recreated.
+    // This causes the state in this component to be lost.
     return false;
   });
   button('Toggle Transcription', () => {
     setRecording(mirrorHistory(recording));
     setTranscription(toggleWithHistory(transcription));
+    // Without an explicit return, the Canvas iframe is re-rendered, and all Components are recreated.
+    // This causes the state in this component to be lost.
     return false;
   });
 
