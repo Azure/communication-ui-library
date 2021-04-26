@@ -28,7 +28,7 @@ export function bannerMessage(props: TeamsInteropHistory): JSX.Element | null {
         <>
           <b>Recording and transcription have started.</b> By joining, you are giving consent for this meeting to be
           transcribed.
-          {privacyPolicy()}
+          <PrivacyPolicy />
         </>
       );
     }
@@ -36,7 +36,7 @@ export function bannerMessage(props: TeamsInteropHistory): JSX.Element | null {
       return (
         <>
           <b>Recording has started.</b> By joining, you are giving consent for this meeting to be transcribed.
-          {privacyPolicy()}
+          <PrivacyPolicy />
         </>
       );
     }
@@ -44,7 +44,7 @@ export function bannerMessage(props: TeamsInteropHistory): JSX.Element | null {
       return (
         <>
           <b>Transcription has started.</b> By joining, you are giving consent for this meeting to be transcribed.
-          {privacyPolicy()}
+          <PrivacyPolicy />
         </>
       );
     }
@@ -57,7 +57,7 @@ export function bannerMessage(props: TeamsInteropHistory): JSX.Element | null {
         <>
           <b>Recording and transcription have started.</b> By joining, you are giving consent for this meeting to be
           transcribed.
-          {privacyPolicy()}
+          <PrivacyPolicy />
         </>
       );
     }
@@ -65,7 +65,7 @@ export function bannerMessage(props: TeamsInteropHistory): JSX.Element | null {
       return (
         <>
           <b>Recording is being saved.</b> Recording has stopped.
-          {learnMore()}
+          <LearnMore />
         </>
       );
     }
@@ -77,7 +77,7 @@ export function bannerMessage(props: TeamsInteropHistory): JSX.Element | null {
       return (
         <>
           <b>Transcription has started.</b> By joining, you are giving consent for this meeting to be transcribed.
-          {privacyPolicy()}
+          <PrivacyPolicy />
         </>
       );
     }
@@ -90,7 +90,7 @@ export function bannerMessage(props: TeamsInteropHistory): JSX.Element | null {
         <>
           <b>Recording and transcription have started.</b> By joining, you are giving consent for this meeting to be
           transcribed.
-          {privacyPolicy()}
+          <PrivacyPolicy />
         </>
       );
     }
@@ -98,7 +98,7 @@ export function bannerMessage(props: TeamsInteropHistory): JSX.Element | null {
       return (
         <>
           <b>Transcription is being saved.</b> Transcription has stopped.
-          {learnMore()}
+          <LearnMore />
         </>
       );
     }
@@ -110,7 +110,7 @@ export function bannerMessage(props: TeamsInteropHistory): JSX.Element | null {
       return (
         <>
           <b>Recording has started.</b> By joining, you are giving consent for this meeting to be transcribed.
-          {privacyPolicy()}
+          <PrivacyPolicy />
         </>
       );
     }
@@ -122,7 +122,7 @@ export function bannerMessage(props: TeamsInteropHistory): JSX.Element | null {
       return (
         <>
           <b>Transcription has stopped.</b> You are now only recording this meeting.
-          {privacyPolicy()}
+          <PrivacyPolicy />
         </>
       );
     }
@@ -130,7 +130,7 @@ export function bannerMessage(props: TeamsInteropHistory): JSX.Element | null {
       return (
         <>
           <b>Recording has stopped.</b> You are now only transcribing this meeting.
-          {privacyPolicy()}
+          <PrivacyPolicy />
         </>
       );
     }
@@ -138,7 +138,7 @@ export function bannerMessage(props: TeamsInteropHistory): JSX.Element | null {
       return (
         <>
           <b>Recording and transcription are being saved. </b> Recording and transcription have stopped.
-          {learnMore()}
+          <LearnMore />
         </>
       );
     }
@@ -147,7 +147,7 @@ export function bannerMessage(props: TeamsInteropHistory): JSX.Element | null {
   return null;
 }
 
-function privacyPolicy(): JSX.Element {
+function PrivacyPolicy(): JSX.Element {
   return (
     <Link
       href="https://privacy.microsoft.com/en-US/privacystatement#mainnoticetoendusersmodule"
@@ -159,7 +159,7 @@ function privacyPolicy(): JSX.Element {
   );
 }
 
-function learnMore(): JSX.Element {
+function LearnMore(): JSX.Element {
   return (
     <Link
       href="https://support.microsoft.com/en-us/office/record-a-meeting-in-teams-34dfbe7f-b07d-4a27-b4c6-de62f1348c24"
