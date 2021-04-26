@@ -2,8 +2,9 @@
 
 import { chatThreadSelector, sendBoxSelector, typingIndicatorSelector } from '@azure/acs-chat-selector';
 import { mergeStyles, Stack } from '@fluentui/react';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { ErrorBar, MessageThread, SendBox, TypingIndicator } from '../../components';
+import { useChatThreadClient } from '../../providers';
 import { useHandlers } from './hooks/useHandlers';
 import { useSelector } from './hooks/useSelector';
 import { chatContainer, chatWrapper } from './styles/GroupChat.styles';
@@ -23,6 +24,27 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     maxWidth: sendBoxMaxLength ? `${sendBoxMaxLength / pixelToRemConvertRatio}rem` : 'unset',
     width: '100%'
   });
+
+  const chatThreadClient = useChatThreadClient();
+
+  // This code gets all participants who joined the chat earlier than the current user.
+  // We need to do this to make the state in declaritive up to date.
+  useEffect(() => {
+    const fetchAllParticipants = async (): Promise<void> => {
+      if (chatThreadClient !== undefined) {
+        try {
+          for await (const _page of chatThreadClient.listParticipants().byPage({
+            // Fetch 100 participants per page by default.
+            maxPageSize: 100
+          }));
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    };
+
+    fetchAllParticipants();
+  }, [chatThreadClient]);
 
   const selectorConfig = useMemo(() => {
     return { threadId };
