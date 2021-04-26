@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import React, { useState, useEffect, createContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChatClient } from '@azure/communication-chat';
 import { chatClientDeclaratify } from '@azure/acs-chat-declarative';
 import { ChatThreadProvider } from './ChatThreadProvider';
@@ -15,9 +15,7 @@ import {
   CommunicationUiErrorFromError,
   CommunicationUiError
 } from '../types/CommunicationUiError';
-import { ChatContextType } from './ChatProviderHelper';
-
-export const ChatContext = createContext<ChatContextType | undefined>(undefined);
+import { ChatContext, ChatContextType } from './ChatProviderHelper';
 
 let contextState: ChatContextType;
 
