@@ -30,8 +30,8 @@ const wrapper = mergeStyles({
  */
 export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Element => {
   const { fluentTheme, children } = props;
-  // if fluentTheme is not provided, default to light theme
-  const fluentUITheme = fluentTheme ?? lightTheme;
+  // if fluentTheme is not provided or if palette property is empty then default to light theme
+  const fluentUITheme = !fluentTheme || !fluentTheme?.palette ? lightTheme : fluentTheme;
   const [fluentNorthStarTheme, setFluentNorthStarTheme] = useState<ThemeInput<any>>(teamsTheme);
 
   useEffect(() => {
