@@ -2,7 +2,7 @@
 
 import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
 import { createDefaultHandlersForComponent } from '@azure/acs-chat-selector';
-import { useChatClient } from '../../../providers/ChatProvider';
+import { useChatClient } from '../../../providers/ChatProviderHelper';
 import { useChatThreadClient } from '../../../providers/ChatThreadProvider';
 
 import { ReactElement } from 'react';

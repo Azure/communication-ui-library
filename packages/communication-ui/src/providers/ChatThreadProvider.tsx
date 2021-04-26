@@ -4,13 +4,13 @@ import { ChatThreadClient } from '@azure/communication-chat';
 import { Spinner } from '@fluentui/react';
 import { WithErrorHandling } from '../utils/WithErrorHandling';
 import React, { Dispatch, SetStateAction, createContext, useContext, useState, useEffect } from 'react';
-import { useChatClient } from './ChatProvider';
 import { ErrorHandlingProps } from './ErrorProvider';
 import {
   CommunicationUiErrorCode,
   CommunicationUiErrorFromError,
   CommunicationUiError
 } from '../types/CommunicationUiError';
+import { useChatClient } from './ChatProviderHelper';
 
 export type ThreadProviderContextType = {
   chatThreadClient?: ChatThreadClient;

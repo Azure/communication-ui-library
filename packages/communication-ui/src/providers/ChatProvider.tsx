@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import React, { useContext, useState, useEffect, Dispatch, SetStateAction, createContext } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import { ChatClient } from '@azure/communication-chat';
 import { chatClientDeclaratify } from '@azure/acs-chat-declarative';
 import { ChatThreadProvider } from './ChatThreadProvider';
@@ -15,13 +15,9 @@ import {
   CommunicationUiErrorFromError,
   CommunicationUiError
 } from '../types/CommunicationUiError';
+import { ChatContextType } from './ChatProviderHelper';
 
 export const ChatContext = createContext<ChatContextType | undefined>(undefined);
-
-export type ChatContextType = {
-  chatClient?: ChatClient;
-  setChatClient: Dispatch<SetStateAction<ChatClient>>;
-};
 
 let contextState: ChatContextType;
 
@@ -105,20 +101,3 @@ const ChatProviderBase = (props: ChatProviderProps & ErrorHandlingProps): JSX.El
 
 export const ChatProvider = (props: ChatProviderProps & ErrorHandlingProps): JSX.Element =>
   WithErrorHandling(ChatProviderBase, props);
-
-export const useChatClient = (): ChatClient => {
-  const chatContext = useContext<ChatContextType | undefined>(ChatContext);
-  if (chatContext === undefined) {
-    throw new CommunicationUiError({
-      message: 'UseChatClient invoked when ChatContext not initialized',
-      code: CommunicationUiErrorCode.CONFIGURATION_ERROR
-    });
-  }
-  if (chatContext.chatClient === undefined) {
-    throw new CommunicationUiError({
-      message: 'UseChatClient invoked with ChatClient not initialized',
-      code: CommunicationUiErrorCode.CONFIGURATION_ERROR
-    });
-  }
-  return chatContext.chatClient;
-};
