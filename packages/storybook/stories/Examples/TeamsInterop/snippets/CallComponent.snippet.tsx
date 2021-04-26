@@ -21,22 +21,20 @@ export const CallComponent = (props: CallProps): JSX.Element => {
   const banner = msg !== null ? <MessageBar>{msg}</MessageBar> : <></>;
 
   return (
-    <FluentThemeProvider>
-      <VideoTile
-        styles={videoTileStyles}
-        invertVideo={true}
-        isVideoReady={true}
-        videoProvider={
-          // Replace with your own video provider.
-          <StreamMedia videoStreamElement={renderVideoStream()} />
-        }
-        placeholderProvider={<></>}
-      >
-        {/* Optional Banner */}
-        {banner}
+    <VideoTile
+      styles={videoTileStyles}
+      invertVideo={true}
+      isVideoReady={true}
+      videoProvider={
+        // Replace with your own video provider.
+        <StreamMedia videoStreamElement={renderVideoStream()} />
+      }
+      placeholderProvider={<></>}
+    >
+      {/* Optional Banner */}
+      {banner}
 
-        <CallControlBar />
-      </VideoTile>
-    </FluentThemeProvider>
+      <CallControlBar />
+    </VideoTile>
   );
 };

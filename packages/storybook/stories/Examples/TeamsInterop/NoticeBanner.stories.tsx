@@ -26,7 +26,8 @@ export const NoticeBanner: () => JSX.Element = () => {
     return false;
   });
 
-  // TODO: Fix dark theming
+  // TODO: Fix dark theming.
+  // Once https://github.com/Azure/communication-ui-sdk/pull/169 lands, same fix should be applied here.
   return (
     <CallComponent
       teamsInteropCurrent={{ recordingEnabled: recording.current, transcriptionEnabled: transcription.current }}
@@ -55,7 +56,7 @@ function mirrorHistory(s: ToggleState): ToggleState {
 }
 
 export default {
-  title: `${EXAMPLES_FOLDER_PREFIX}/TeamsInteroperation`,
+  title: `${EXAMPLES_FOLDER_PREFIX}/TeamsInterop`,
   component: NoticeBanner,
   parameters: {
     docs: {

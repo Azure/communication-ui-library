@@ -7,9 +7,9 @@ const TeamsInteropText = require('!!raw-loader!./snippets/TeamsInterop.snippet.t
 export const getDocs: () => JSX.Element = () => {
   return (
     <>
-      <Title>Teams Inter-Operation</Title>
+      <Title>Teams Interop</Title>
       <Description>
-        Azure Communication Service applications can inter-operate with Microsoft Teams. There are some additional
+        Azure Communication Services applications can inter-operate with Microsoft Teams. There are some additional
         considerations when connecting to a Teams meeting.
       </Description>
       <Heading>Compliance notifications for recording and transcription</Heading>
