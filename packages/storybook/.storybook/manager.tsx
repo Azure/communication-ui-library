@@ -2,6 +2,9 @@ import { create } from '@storybook/theming';
 import addons, { types } from '@storybook/addons';
 import React from 'react';
 import { ThemeToolTipWithPanel } from './ThemeToolTipWithPanel';
+import { initTelemetry } from './telemetry';
+
+initTelemetry();
 
 addons.setConfig({
   theme: create({
