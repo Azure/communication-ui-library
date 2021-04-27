@@ -32,10 +32,6 @@ export const Banner = (props: TeamsInterop): JSX.Element => {
     };
   }
 
-  // Optionally show a message bar for Teams interoperability messages.
   const msg = bannerMessage(history.current);
-  if (msg !== null) {
-    return <MessageBar>{msg}</MessageBar>;
-  }
-  return <></>;
+  return msg !== null ? <MessageBar>{msg}</MessageBar> : <></>;
 };
