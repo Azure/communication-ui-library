@@ -8,7 +8,7 @@ import { v1 as createGUID } from 'uuid';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-administration';
 import { getDocs } from './GroupCallCompositeDocs';
 import { GroupCall } from '@azure/communication-ui';
-import { COMPOSITE_FOLDER_PREFIX } from '../constants';
+import { COMPOSITE_FOLDER_PREFIX, Component_String_ConnectionString } from '../constants';
 
 export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/GroupCall`,
@@ -38,7 +38,7 @@ export const GroupCallComposite: () => JSX.Element = () => {
   const [userId, setUserId] = useState<string>('');
   const [groupId, setGroupId] = useState<string>('');
   const [token, setToken] = useState<string>('');
-  const connectionString = text('Connection String', '');
+  const connectionString = text(Component_String_ConnectionString, '');
 
   useEffect(() => {
     (async () => {
