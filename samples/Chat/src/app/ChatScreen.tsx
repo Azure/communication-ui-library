@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { chatScreenBottomContainerStyle, chatScreenContainerStyle } from './styles/ChatScreen.styles';
 import { Stack } from '@fluentui/react';
 import { onRenderAvatar } from './Avatar';
@@ -24,6 +24,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const [selectedPane, setSelectedPane] = useState(
     window.innerWidth > 600 ? SidePanelTypes.People : SidePanelTypes.None
   );
+  const isAllInitialParticipantsFetchedRef = useRef(false);
 
   const { errorHandler, endChatHandler } = props;
   const chatThreadClient = useChatThreadClient();
@@ -38,6 +39,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             // Fetch 100 participants per page by default.
             maxPageSize: 100
           }));
+          isAllInitialParticipantsFetchedRef.current = true;
         } catch (e) {
           console.log(e);
           errorHandler();
@@ -55,6 +57,22 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const chatHeaderProps = useSelector(chatHeaderSelector, { threadId: useThreadId() });
   const chatHeaderHandlers = useHandlers(ChatHeader);
   const chatParticipantProps = useSelector(chatParticipantListSelector, { threadId: useThreadId() });
+
+  useEffect(() => {
+    // We only want to check if we've fetched all the existing participants.
+    if (isAllInitialParticipantsFetchedRef.current) {
+      let isCurrentUserInChat = false;
+      // Check if current user still in chat.
+      for (let i = 0; i < chatParticipantProps.chatParticipants.length; i++) {
+        if (chatParticipantProps.chatParticipants[i].userId === chatParticipantProps.userId) {
+          isCurrentUserInChat = true;
+          break;
+        }
+      }
+      // If there is no match in the participant list, then the current user is no longer in the chat.
+      !isCurrentUserInChat && errorHandler();
+    }
+  }, [chatParticipantProps, errorHandler]);
 
   // onRenderAvatar is a contoso callback. We need it to support emoji in Sample App. Sample App is currently on
   // components v0 so we're passing the callback at the component level. This might need further refactoring if this
