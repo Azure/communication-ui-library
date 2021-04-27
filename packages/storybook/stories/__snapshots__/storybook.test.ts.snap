@@ -42,7 +42,7 @@ exports[`storybook snapshot tests Storyshots Composites/GroupCall Group Call Com
           }
         >
           <span>
-            Connect String is required to run the Group Call widget.
+            Connection String is required to run the Group Call widget.
           </span>
         </div>
       </div>
@@ -93,10 +93,10 @@ exports[`storybook snapshot tests Storyshots Composites/GroupChat Group Chat Com
           }
         >
           <span>
-            Connect String is required to run the Group Chat widget.
+            Connection String is required to run the Group Chat widget.
           </span>
           <span>
-            Otherwise fill out the required params to do so.
+            Or you can fill out the required params to do so.
           </span>
         </div>
       </div>
@@ -143,7 +143,7 @@ exports[`storybook snapshot tests Storyshots Composites/OneToOneCall One To One 
           }
         >
           <span>
-            Connect String is required to run the One To One Call widget.
+            Connection String is required to run the One To One Call widget.
           </span>
         </div>
       </div>
