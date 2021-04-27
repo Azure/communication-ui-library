@@ -38,6 +38,11 @@
       "reviewCategory": "prototypes"
     },
     {
+      "packageName": "@azure/acs-calling-selector",
+      "projectFolder": "packages/acs-calling-selector",
+      "reviewCategory": "prototypes"
+    },
+    {
       "packageName": "calling",
       "projectFolder": "samples/Calling",
       "reviewCategory": "prototypes"

@@ -1,10 +1,12 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
+import { Canvas, Description, Heading, Props, Source, Title, Subheading } from '@storybook/addon-docs/blocks';
 import React from 'react';
 import { VideoTile } from '../../../communication-ui/src';
 import { VideoTileExample } from './snippets/VideoTile.snippet';
 const VideoTileExampleText = require('!!raw-loader!./snippets/VideoTile.snippet').default;
+import { VideoTilePlaceholderExample } from './snippets/VideoTilePlaceholder.snippet';
+const VideoTilePlaceholderText = require('!!raw-loader!./snippets/VideoTilePlaceholder.snippet').default;
 import { VideoTileExample as VideoTileStylineExample } from '../Styling/snippets/StylingVideoTile.snippet';
 const VideoTileStylineExampleText = require('!!raw-loader!../Styling/snippets/StylingVideoTile.snippet').default;
 
@@ -22,10 +24,24 @@ export const getDocs: () => JSX.Element = () => {
       <Source code={importStatement} />
 
       <Heading>Example</Heading>
+      <Subheading>Default Usage</Subheading>
+      <Description>
+        The default VideoTile component shows a Persona with the initials of `avatarName` when no video is available.
+      </Description>
       <Canvas>
         <VideoTileExample />
       </Canvas>
       <Source code={VideoTileExampleText} />
+
+      <Subheading>Custom Placeholder</Subheading>
+      <Description>
+        A custom placeholder can be provided to override the default Persona avatar by providing a JSX element to the
+        `placeholderProvider` prop.
+      </Description>
+      <Canvas>
+        <VideoTilePlaceholderExample />
+      </Canvas>
+      <Source code={VideoTilePlaceholderText} />
 
       <Heading>Styling</Heading>
       <Description>

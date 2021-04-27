@@ -47,6 +47,8 @@
     ]
   },
   "dependencies": {
+    "@azure/acs-calling-declarative": "~1.0.0-beta",
+    "@azure/acs-calling-selector": "~1.0.0-beta",
     "@azure/communication-administration": "1.0.0-beta.3",
     "@azure/communication-calling": "1.0.1-beta.1",
     "@azure/communication-common": "1.0.0",
