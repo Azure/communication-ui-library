@@ -8,7 +8,7 @@ import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/comm
 import { getDocs } from './OneToOneCallCompositeDocs';
 import { OneToOneCall } from '@azure/communication-ui';
 import { Stack } from '@fluentui/react';
-import { COMPOSITE_FOLDER_PREFIX, Component_String_ConnectionString } from '../constants';
+import { COMPOSITE_FOLDER_PREFIX, Composite_String_ConnectionString } from '../constants';
 
 export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/OneToOneCall`,
@@ -72,7 +72,7 @@ export const OneToOneCallComposite: () => JSX.Element = () => {
   const [token, setToken] = useState<string>('');
   const [userId, setUserId] = useState<string>('');
 
-  const connectionString = text(Component_String_ConnectionString, '');
+  const connectionString = text(Composite_String_ConnectionString, '');
 
   useEffect(() => {
     (async () => {

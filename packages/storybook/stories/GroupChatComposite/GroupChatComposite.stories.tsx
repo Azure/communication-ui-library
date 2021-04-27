@@ -8,7 +8,7 @@ import { AzureCommunicationUserCredential } from '@azure/communication-common';
 import { CommunicationIdentityClient } from '@azure/communication-administration';
 import { ChatClient } from '@azure/communication-chat';
 import { useState } from 'react';
-import { COMPOSITE_FOLDER_PREFIX, Component_String_ConnectionString } from '../constants';
+import { COMPOSITE_FOLDER_PREFIX, Composite_String_ConnectionString } from '../constants';
 import { Meta } from '@storybook/react/types-6-0';
 
 export default {
@@ -110,7 +110,7 @@ const createChatConfig = async (resourceConnectionString: string): Promise<ChatC
 export const GroupChatComposite: () => JSX.Element = () => {
   const [chatConfig, setChatConfig] = useState<ChatConfig>();
 
-  const connectionString = text(Component_String_ConnectionString, '', 'Server Simulator');
+  const connectionString = text(Composite_String_ConnectionString, '', 'Server Simulator');
 
   const { userId, token, endpointUrl, displayName, threadId } = {
     userId: text('User Id', '', 'Required'),
