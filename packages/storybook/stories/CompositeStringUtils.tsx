@@ -9,7 +9,7 @@ export const Composite_String_RequiredConnectionString = 'Connect String is requ
 export const CompositeConnectionParamsErrMessage = (errors: string[]): JSX.Element => (
   <Stack horizontalAlign="center" verticalAlign="center" style={{ height: '100%', width: '100%' }}>
     {errors.map((error) => {
-      return !!error ? <span key={error}>{error}</span> : null;
+      return error ? <span key={error}>{error}</span> : null;
     })}
   </Stack>
 );
