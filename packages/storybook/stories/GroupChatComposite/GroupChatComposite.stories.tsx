@@ -8,7 +8,12 @@ import { AzureCommunicationUserCredential } from '@azure/communication-common';
 import { CommunicationIdentityClient } from '@azure/communication-administration';
 import { ChatClient } from '@azure/communication-chat';
 import { useState } from 'react';
-import { COMPOSITE_FOLDER_PREFIX, Composite_String_ConnectionString } from '../constants';
+import { COMPOSITE_FOLDER_PREFIX } from '../constants';
+import {
+  CompositeConnectionParamsErrMessage,
+  Composite_String_ConnectionString,
+  Composite_String_RequiredConnectionString
+} from '../CompositeStringUtils';
 import { Meta } from '@storybook/react/types-6-0';
 
 export default {
@@ -139,10 +144,11 @@ export const GroupChatComposite: () => JSX.Element = () => {
     }
   }, [connectionString, userId, token, endpointUrl, displayName, threadId]);
 
-  let emptyConfigTips = 'Required params to run GroupChat are invalid or not complete.';
+  const emptyConfigTips = Composite_String_RequiredConnectionString.replace('{0}', 'Group Chat');
+  let emptyConfigParametersTips = '';
 
   if (!userId && !token && !displayName && !endpointUrl && !threadId) {
-    emptyConfigTips = 'Please fill in Connection String or required params to run GroupChat.';
+    emptyConfigParametersTips = 'Otherwise fill out the required params to do so.';
   }
 
   return (
@@ -158,7 +164,7 @@ export const GroupChatComposite: () => JSX.Element = () => {
       }}
     >
       {chatConfig && <GroupChat {...chatConfig} />}
-      {!chatConfig && emptyConfigTips}
+      {!chatConfig && CompositeConnectionParamsErrMessage([emptyConfigTips, emptyConfigParametersTips])}
     </div>
   );
 };

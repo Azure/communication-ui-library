@@ -8,7 +8,12 @@ import { v1 as createGUID } from 'uuid';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-administration';
 import { getDocs } from './GroupCallCompositeDocs';
 import { GroupCall } from '@azure/communication-ui';
-import { COMPOSITE_FOLDER_PREFIX, Composite_String_ConnectionString } from '../constants';
+import { COMPOSITE_FOLDER_PREFIX } from '../constants';
+import {
+  CompositeConnectionParamsErrMessage,
+  Composite_String_ConnectionString,
+  Composite_String_RequiredConnectionString
+} from '../CompositeStringUtils';
 
 export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/GroupCall`,
@@ -20,7 +25,7 @@ export default {
   }
 } as Meta;
 
-const emptyConfigTips = 'Please fill in Connection String to run group call widget.';
+const emptyConfigTips = Composite_String_RequiredConnectionString.replace('{0}', 'Group Call');
 
 const createUserToken = async (connectionString: string): Promise<CommunicationUserToken> => {
   if (!connectionString) {
@@ -75,7 +80,7 @@ export const GroupCallComposite: () => JSX.Element = () => {
           token={token}
         />
       )}
-      {!connectionString && emptyConfigTips}
+      {!connectionString && CompositeConnectionParamsErrMessage([emptyConfigTips])}
     </div>
   );
 };

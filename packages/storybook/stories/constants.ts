@@ -40,5 +40,3 @@ export const COMPONENT_FOLDER_PREFIX = 'UI Components';
 export const COMPOSITE_FOLDER_PREFIX = 'Composites';
 export const EXAMPLES_FOLDER_PREFIX = 'Examples';
 export const QUICKSTARTS_FOLDER_PREFIX = 'Quickstarts';
-
-export const Composite_String_ConnectionString = 'ACS Connection String';
