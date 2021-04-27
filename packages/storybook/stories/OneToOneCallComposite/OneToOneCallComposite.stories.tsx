@@ -68,7 +68,7 @@ const OneToOneCallCompositeInstance: (token: string, calleeId?: string) => JSX.E
   );
 };
 
-export const OneToOneCallCompositeComponent: () => JSX.Element = () => {
+export const OneToOneCallComposite: () => JSX.Element = () => {
   const [token, setToken] = useState<string>('');
   const [userId, setUserId] = useState<string>('');
 

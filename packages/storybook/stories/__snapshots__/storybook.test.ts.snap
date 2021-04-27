@@ -78,7 +78,7 @@ exports[`storybook snapshot tests Storyshots Composites/GroupChat Group Chat Com
 </div>
 `;
 
-exports[`storybook snapshot tests Storyshots Composites/OneToOneCall One To One Call Composite Component 1`] = `
+exports[`storybook snapshot tests Storyshots Composites/OneToOneCall One To One Call Composite 1`] = `
 <div
   className="css-75 root-0 body-1"
 >
