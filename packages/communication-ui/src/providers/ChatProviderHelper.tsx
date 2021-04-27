@@ -19,10 +19,6 @@ export const ChatContext = createContext<ChatContextType | undefined>(undefined)
 export type ChatContextType = {
   chatClient?: ChatClient;
   setChatClient: Dispatch<SetStateAction<ChatClient>>;
-  userId: string;
-  setUserId: Dispatch<SetStateAction<string>>;
-  displayName: string;
-  setDisplayName: Dispatch<SetStateAction<string>>;
 };
 
 export const useChatClient = (): ChatClient => {
