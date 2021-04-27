@@ -1,5 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 import { mergeStyles, Stack, IButtonProps } from '@fluentui/react';
+import { useTheme } from '@fluentui/react-theme-provider';
 import {
   CallControlCloseTrayIcon,
   CallControlPresentNewIcon,
@@ -20,7 +21,7 @@ import {
   controlButtonStyles,
   hangUpControlButtonStyles
 } from './styles/ControlBar.styles';
-import { useTheme, Theme } from '@fluentui/react-theme-provider';
+import { isDarkThemed } from '../utils/themeUtils';
 
 /** Fluent UI Button props for video control */
 export const videoButtonProps: IButtonProps = {
@@ -196,28 +197,6 @@ export interface ControlBarProps {
    */
   layout?: ControlBarLayoutType;
 }
-
-const isDarkThemed = (theme: Theme): boolean => {
-  const themeBlackBrightness = getPerceptualBrightnessOfHexColor(theme.palette.black);
-  const themeWhiteBrightness = getPerceptualBrightnessOfHexColor(theme.palette.white);
-  if (Number.isNaN(themeBlackBrightness) || Number.isNaN(themeWhiteBrightness)) {
-    return false;
-  }
-  return themeBlackBrightness > themeWhiteBrightness;
-};
-
-const getPerceptualBrightnessOfHexColor = (hexColor: string): number => {
-  // return NaN if hexColor is not a hex code
-  if (!/^#[0-9A-Fa-f]{6}$/i.test(hexColor)) {
-    return NaN;
-  }
-  const r = parseInt(hexColor.substring(1, 3), 16);
-  const g = parseInt(hexColor.substring(3, 5), 16);
-  const b = parseInt(hexColor.substring(5, 7), 16);
-
-  // arithmetic mean μ of the red, green, and blue color coordinates. Source: https://en.wikipedia.org/wiki/Brightness
-  return (r + g + b) / 3;
-};
 
 /**
  * `ControlBar` allows you to easily create a component for call controls using
