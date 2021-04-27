@@ -1,34 +1,73 @@
 // © Microsoft Corporation. All rights reserved.
-import { CallClient, CallAgent, DeviceManager, Call } from '@azure/communication-calling';
+import {
+  CallClient,
+  CallAgent,
+  DeviceManager,
+  Call,
+  StartCallOptions,
+  HangUpOptions,
+  VideoDeviceInfo
+} from '@azure/communication-calling';
+import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 import { ReactElement } from 'react';
 import memoizeOne from 'memoize-one';
 
-export type CallClientHandlers = {};
-export type CallAgentHandlers = {};
-export type CallHandlers = {};
-export type DeviceManagerHandlers = {};
+export type CallClientHandlers = {
+  getDeviceManager: () => Promise<DeviceManager>;
+};
+export type CallAgentHandlers = {
+  onStartCall(
+    participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
+    options?: StartCallOptions
+  ): Call;
+};
+export type DeviceManagerHandlers = {
+  getCameras(): Promise<VideoDeviceInfo[]>;
+};
+export type CallHandlers = {
+  onHangUp(options?: HangUpOptions): Promise<void>;
+};
 
 const createCallClientDefaultHandlers = memoizeOne(
   (declarativeCallClient: CallClient): CallClientHandlers => {
-    return {};
+    return {
+      getDeviceManager: () => {
+        return declarativeCallClient.getDeviceManager();
+      }
+    };
   }
 );
 
 const createCallAgentDefaultHandlers = memoizeOne(
   (declarativeCallAgent: CallAgent): CallAgentHandlers => {
-    return {};
+    return {
+      onStartCall: (
+        participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
+        options?: StartCallOptions
+      ): Call => {
+        return declarativeCallAgent.startCall(participants, options);
+      }
+    };
   }
 );
 
 const createDeviceManagerDefaultHandlers = memoizeOne(
   (declarativeDeviceManager: DeviceManager): DeviceManagerHandlers => {
-    return {};
+    return {
+      getCameras: (): Promise<VideoDeviceInfo[]> => {
+        return declarativeDeviceManager.getCameras();
+      }
+    };
   }
 );
 
 const createCallDefaultHandlers = memoizeOne(
   (declarativeCall: Call): CallHandlers => {
-    return {};
+    return {
+      onHangUp: (options?: HangUpOptions): Promise<void> => {
+        return declarativeCall.hangUp(options);
+      }
+    };
   }
 );
 
@@ -44,7 +83,9 @@ export const createDefaultHandlersForComponent = <Props>(
   declarativeDeviceManager: DeviceManager | undefined,
   declarativeCall: Call | undefined,
   _: (props: Props) => ReactElement | null
-): Common<CallClientHandlers & CallAgentHandlers & DeviceManagerHandlers & CallHandlers, Props> => {
+):
+  | Common<CallClientHandlers & CallAgentHandlers & DeviceManagerHandlers & CallHandlers, Props>
+  | Common<CallClientHandlers, Props> => {
   const callClientHandlers = createCallClientDefaultHandlers(declarativeCallClient);
   let callAgentHandlers: CallAgentHandlers | undefined;
   if (declarativeCallAgent) {
