@@ -10,8 +10,8 @@ import { OneToOneCall } from '@azure/communication-ui';
 import { COMPOSITE_FOLDER_PREFIX } from '../constants';
 import {
   CompositeConnectionParamsErrMessage,
-  Composite_String_ConnectionString,
-  Composite_String_RequiredConnectionString
+  COMPOSITE_STRING_CONNECTIONSTRING,
+  COMPOSITE_STRING_REQUIREDCONNECTIONSTRING
 } from '../CompositeStringUtils';
 
 export default {
@@ -63,7 +63,7 @@ const OneToOneCallCompositeInstance: (token: string, calleeId?: string) => JSX.E
       )}
       {!requiredInformationObtained &&
         CompositeConnectionParamsErrMessage([
-          Composite_String_RequiredConnectionString.replace('{0}', 'One To One Call')
+          COMPOSITE_STRING_REQUIREDCONNECTIONSTRING.replace('{0}', 'One To One Call')
         ])}
     </div>
   );
@@ -73,7 +73,7 @@ export const OneToOneCallComposite: () => JSX.Element = () => {
   const [token, setToken] = useState<string>('');
   const [userId, setUserId] = useState<string>('');
 
-  const connectionString = text(Composite_String_ConnectionString, '');
+  const connectionString = text(COMPOSITE_STRING_CONNECTIONSTRING, '');
 
   useEffect(() => {
     (async () => {

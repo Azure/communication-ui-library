@@ -11,8 +11,8 @@ import { GroupCall } from '@azure/communication-ui';
 import { COMPOSITE_FOLDER_PREFIX } from '../constants';
 import {
   CompositeConnectionParamsErrMessage,
-  Composite_String_ConnectionString,
-  Composite_String_RequiredConnectionString
+  COMPOSITE_STRING_CONNECTIONSTRING,
+  COMPOSITE_STRING_REQUIREDCONNECTIONSTRING
 } from '../CompositeStringUtils';
 
 export default {
@@ -25,7 +25,7 @@ export default {
   }
 } as Meta;
 
-const emptyConfigTips = Composite_String_RequiredConnectionString.replace('{0}', 'Group Call');
+const emptyConfigTips = COMPOSITE_STRING_REQUIREDCONNECTIONSTRING.replace('{0}', 'Group Call');
 
 const createUserToken = async (connectionString: string): Promise<CommunicationUserToken> => {
   if (!connectionString) {
@@ -43,7 +43,7 @@ export const GroupCallComposite: () => JSX.Element = () => {
   const [userId, setUserId] = useState<string>('');
   const [groupId, setGroupId] = useState<string>('');
   const [token, setToken] = useState<string>('');
-  const connectionString = text(Composite_String_ConnectionString, '');
+  const connectionString = text(COMPOSITE_STRING_CONNECTIONSTRING, '');
 
   useEffect(() => {
     (async () => {

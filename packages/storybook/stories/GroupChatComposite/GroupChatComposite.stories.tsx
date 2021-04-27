@@ -11,8 +11,8 @@ import { useState } from 'react';
 import { COMPOSITE_FOLDER_PREFIX } from '../constants';
 import {
   CompositeConnectionParamsErrMessage,
-  Composite_String_ConnectionString,
-  Composite_String_RequiredConnectionString
+  COMPOSITE_STRING_CONNECTIONSTRING,
+  COMPOSITE_STRING_REQUIREDCONNECTIONSTRING
 } from '../CompositeStringUtils';
 import { Meta } from '@storybook/react/types-6-0';
 
@@ -115,7 +115,7 @@ const createChatConfig = async (resourceConnectionString: string): Promise<ChatC
 export const GroupChatComposite: () => JSX.Element = () => {
   const [chatConfig, setChatConfig] = useState<ChatConfig>();
 
-  const connectionString = text(Composite_String_ConnectionString, '', 'Server Simulator');
+  const connectionString = text(COMPOSITE_STRING_CONNECTIONSTRING, '', 'Server Simulator');
 
   const { userId, token, endpointUrl, displayName, threadId } = {
     userId: text('User Id', '', 'Required'),
@@ -144,11 +144,11 @@ export const GroupChatComposite: () => JSX.Element = () => {
     }
   }, [connectionString, userId, token, endpointUrl, displayName, threadId]);
 
-  const emptyConfigTips = Composite_String_RequiredConnectionString.replace('{0}', 'Group Chat');
+  const emptyConfigTips = COMPOSITE_STRING_REQUIREDCONNECTIONSTRING.replace('{0}', 'Group Chat');
   let emptyConfigParametersTips = '';
 
   if (!userId && !token && !displayName && !endpointUrl && !threadId) {
-    emptyConfigParametersTips = 'Otherwise fill out the required params to do so.';
+    emptyConfigParametersTips = 'Or you can fill out the required params to do so.';
   }
 
   return (
