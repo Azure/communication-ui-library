@@ -18,12 +18,27 @@ const MessageThreadWithSystemMessagesExampleText = require('!!raw-loader!./snipp
 import { MessageThreadWithCustomMessagesExample } from './snippets/MessageThreadWithCustomMessages.snippet';
 const MessageThreadWithCustomMessagesExampleText = require('!!raw-loader!./snippets/MessageThreadWithCustomMessages.snippet.tsx')
   .default;
+import { MessageThreadWithCustomChatContainerExample } from './snippets/MessageThreadWithCustomChatContainer.snippet';
+const MessageThreadWithCustomChatContainerExampleText = require('!!raw-loader!./snippets/MessageThreadWithCustomChatContainer.snippet.tsx')
+  .default;
+import { MessageThreadWithCustomMessageContainerExample } from './snippets/MessageThreadWithCustomMessageContainer.snippet';
+const MessageThreadWithCustomMessageContainerExampleText = require('!!raw-loader!./snippets/MessageThreadWithCustomMessageContainer.snippet.tsx')
+  .default;
+import { MessageThreadWithCustomReadReceiptExample } from './snippets/MessageThreadWithCustomReadReceipt.snippet';
+const MessageThreadWithCustomReadReceiptExampleText = require('!!raw-loader!./snippets/MessageThreadWithCustomReadReceipt.snippet.tsx')
+  .default;
+
+const importStatement = `
+import { FluentThemeProvider, MessageThread } from '@azure/communication-ui';
+`;
 
 export const getDocs: () => JSX.Element = () => {
   return (
     <>
       <Title>MessageThread</Title>
       <Description of={MessageThread} />
+      <Heading>Importing</Heading>
+      <Source code={importStatement} />
       <Heading>Sample Messages</Heading>
       <Description>
         Create a `placeholdermessages.ts` file in the current folder you are working on. Then copy paste the code below
@@ -43,17 +58,42 @@ export const getDocs: () => JSX.Element = () => {
       <Source code={MessageThreadWithSystemMessagesExampleText} />
       <Heading>Custom Message</Heading>
       <Description>
-        The example below shows how to render a `custom` message with `onRenderCustomMessage` in `MessageThread`
+        The example below shows how to render a `custom` message with `onRenderMessage` in `MessageThread`
       </Description>
       <Canvas>
         <MessageThreadWithCustomMessagesExample />
       </Canvas>
       <Source code={MessageThreadWithCustomMessagesExampleText} />
-      <Heading>Read Receipt</Heading>
+      <Heading>Messages with Customized Chat Container</Heading>
+      <Description>
+        The example below shows how to render a `custom` chat container with `styles.chatContainer` in `MessageThread`
+      </Description>
+      <Canvas>
+        <MessageThreadWithCustomChatContainerExample />
+      </Canvas>
+      <Source code={MessageThreadWithCustomChatContainerExampleText} />
+      <Heading>Messages with Customized Message Container</Heading>
+      <Description>
+        The example below shows how to render a `custom` message container with `styles.chatMessageContainer` or
+        `styles.systemMessageContainer` in `MessageThread`
+      </Description>
+      <Canvas>
+        <MessageThreadWithCustomMessageContainerExample />
+      </Canvas>
+      <Source code={MessageThreadWithCustomMessageContainerExampleText} />
+      <Heading>Default Read Receipt</Heading>
       <Canvas>
         <MessageThreadWithReadReceiptExample />
       </Canvas>
       <Source code={MessageThreadWithReadReceiptExampleText} />
+      <Heading>Cutomized Read Receipt</Heading>
+      <Description>
+        The example below shows how to render a `custom` read receipt with `onRenderReadReceipt` in `MessageThread`
+      </Description>
+      <Canvas>
+        <MessageThreadWithCustomReadReceiptExample />
+      </Canvas>
+      <Source code={MessageThreadWithCustomReadReceiptExampleText} />
       <Heading>Customized Avatar</Heading>
       <Canvas>
         <MessageThreadWithCustomAvatarExample />

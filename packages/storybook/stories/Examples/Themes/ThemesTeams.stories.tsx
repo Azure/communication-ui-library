@@ -47,34 +47,6 @@ export const TeamsThemeComponent: () => JSX.Element = () => {
   return (
     <div>
       <FluentThemeProvider fluentTheme={TeamsTheme}>
-        {/*Control Bar with default set up*/}
-        <ControlBar layout={'dockedTop'}>
-          <DefaultButton
-            {...videoButtonProps}
-            onClick={() => {
-              /*handle onClick*/
-            }}
-          />
-          <DefaultButton
-            {...audioButtonProps}
-            onClick={() => {
-              /*handle onClick*/
-            }}
-          />
-          <DefaultButton
-            {...screenShareButtonProps}
-            onClick={() => {
-              /*handle onClick*/
-            }}
-          />
-          <DefaultButton
-            {...hangupButtonProps}
-            onClick={() => {
-              /*handle onClick*/
-            }}
-          />
-        </ControlBar>
-        {/*Control Bar with default set up*/}
         <div
           style={{
             height: '530px',
@@ -84,6 +56,35 @@ export const TeamsThemeComponent: () => JSX.Element = () => {
           <GridLayout>
             <VideoTile isVideoReady={false} videoProvider={null} avatarName={'Michael'}>
               <label>Michael</label>
+
+              {/*Control Bar with default set up*/}
+              <ControlBar layout={'dockedTop'}>
+                <DefaultButton
+                  {...videoButtonProps}
+                  onClick={() => {
+                    /*handle onClick*/
+                  }}
+                />
+                <DefaultButton
+                  {...audioButtonProps}
+                  onClick={() => {
+                    /*handle onClick*/
+                  }}
+                />
+                <DefaultButton
+                  {...screenShareButtonProps}
+                  onClick={() => {
+                    /*handle onClick*/
+                  }}
+                />
+                <DefaultButton
+                  {...hangupButtonProps}
+                  onClick={() => {
+                    /*handle onClick*/
+                  }}
+                />
+              </ControlBar>
+              {/*Control Bar with default set up*/}
             </VideoTile>
           </GridLayout>
         </div>

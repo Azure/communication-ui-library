@@ -1,0 +1,25 @@
+<script src="https://wcpstatic.microsoft.com/mscc/lib/v2/wcp-consent.js"></script>
+
+<script>
+  window.addEventListener('load', () => {
+    const cookieBannerId = 'cookie-banner';
+    const cookieBannerContainer = document.createElement('div');
+    cookieBannerContainer.id = cookieBannerId;
+    document.body.insertBefore(cookieBannerContainer, document.body.firstChild);
+
+    function onConsentChanged(categoryPreferences) {
+      window.cookieConsentChanged && window.cookieConsentChanged();
+    }
+
+    function initCallback(err, _siteConsent) {
+      if (!err) {
+        siteConsent = _siteConsent; // siteConsent is used to get the current consent
+        window.cookieConsentChanged && window.cookieConsentChanged(); // call callback now cookie library has finished initializing
+      } else {
+        console.log(`Error initializing WcpConsent: ${err}`);
+      }
+    }
+
+    window.WcpConsent && WcpConsent.init('en-US', cookieBannerId, initCallback, onConsentChanged, WcpConsent.themes.light);
+  });
+</script>
