@@ -15,15 +15,18 @@ import memoizeOne from 'memoize-one';
 export type CallClientHandlers = {
   getDeviceManager: () => Promise<DeviceManager>;
 };
+
 export type CallAgentHandlers = {
   onStartCall(
     participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
     options?: StartCallOptions
   ): Call;
 };
+
 export type DeviceManagerHandlers = {
   getCameras(): Promise<VideoDeviceInfo[]>;
 };
+
 export type CallHandlers = {
   onHangUp(options?: HangUpOptions): Promise<void>;
 };
@@ -31,9 +34,7 @@ export type CallHandlers = {
 const createCallClientDefaultHandlers = memoizeOne(
   (declarativeCallClient: CallClient): CallClientHandlers => {
     return {
-      getDeviceManager: () => {
-        return declarativeCallClient.getDeviceManager();
-      }
+      getDeviceManager: () => declarativeCallClient.getDeviceManager()
     };
   }
 );
@@ -44,9 +45,7 @@ const createCallAgentDefaultHandlers = memoizeOne(
       onStartCall: (
         participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
         options?: StartCallOptions
-      ): Call => {
-        return declarativeCallAgent.startCall(participants, options);
-      }
+      ): Call => declarativeCallAgent.startCall(participants, options)
     };
   }
 );
@@ -54,9 +53,7 @@ const createCallAgentDefaultHandlers = memoizeOne(
 const createDeviceManagerDefaultHandlers = memoizeOne(
   (declarativeDeviceManager: DeviceManager): DeviceManagerHandlers => {
     return {
-      getCameras: (): Promise<VideoDeviceInfo[]> => {
-        return declarativeDeviceManager.getCameras();
-      }
+      getCameras: (): Promise<VideoDeviceInfo[]> => declarativeDeviceManager.getCameras()
     };
   }
 );
@@ -64,9 +61,7 @@ const createDeviceManagerDefaultHandlers = memoizeOne(
 const createCallDefaultHandlers = memoizeOne(
   (declarativeCall: Call): CallHandlers => {
     return {
-      onHangUp: (options?: HangUpOptions): Promise<void> => {
-        return declarativeCall.hangUp(options);
-      }
+      onHangUp: (options?: HangUpOptions): Promise<void> => declarativeCall.hangUp(options)
     };
   }
 );
@@ -87,18 +82,11 @@ export const createDefaultHandlersForComponent = <Props>(
   | Common<CallClientHandlers & CallAgentHandlers & DeviceManagerHandlers & CallHandlers, Props>
   | Common<CallClientHandlers, Props> => {
   const callClientHandlers = createCallClientDefaultHandlers(declarativeCallClient);
-  let callAgentHandlers: CallAgentHandlers | undefined;
-  if (declarativeCallAgent) {
-    callAgentHandlers = createCallAgentDefaultHandlers(declarativeCallAgent);
-  }
-  let deviceManagerHandlers: DeviceManagerHandlers | undefined;
-  if (declarativeDeviceManager) {
-    deviceManagerHandlers = createDeviceManagerDefaultHandlers(declarativeDeviceManager);
-  }
-  let callHandlers: CallHandlers | undefined;
-  if (declarativeCall) {
-    callHandlers = createCallDefaultHandlers(declarativeCall);
-  }
+  const callAgentHandlers = declarativeCallAgent ? createCallAgentDefaultHandlers(declarativeCallAgent) : undefined;
+  const deviceManagerHandlers = declarativeDeviceManager
+    ? createDeviceManagerDefaultHandlers(declarativeDeviceManager)
+    : undefined;
+  const callHandlers = declarativeCall ? createCallDefaultHandlers(declarativeCall) : undefined;
   return {
     ...callClientHandlers,
     ...callAgentHandlers,
