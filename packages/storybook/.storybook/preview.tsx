@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
-import { FluentThemeProvider, LIGHT, THEMES } from '@azure/communication-ui';
+import { FluentThemeProvider, defaultThemes } from '@azure/communication-ui';
 import { initializeIcons, loadTheme, mergeStyles } from '@fluentui/react';
 import { DocsContainer } from '@storybook/addon-docs/blocks';
 import { BackToTop, TableOfContents } from 'storybook-docs-toc';
@@ -16,6 +16,8 @@ import {
 // Removing `loadTheme({})` causes storybook declaration exception.
 loadTheme({});
 initializeIcons();
+
+const THEMES = defaultThemes;
 
 export const parameters = {
   layout: 'fullscreen',
@@ -52,6 +54,7 @@ export const parameters = {
 
 const withThemeProvider = (Story: any, context: any) => {
   const themeName = context.globals.theme;
+  console.log(`themeName: ${themeName}`);
   let theme = THEMES[themeName];
   if (context.globals.customTheme !== '') {
     try {
@@ -87,7 +90,7 @@ export const globalTypes = {
   theme: {
     name: 'Theme',
     description: 'Global theme for components',
-    defaultValue: LIGHT
+    defaultValue: defaultThemes.light
   },
   customTheme: {
     name: 'Custom theme',

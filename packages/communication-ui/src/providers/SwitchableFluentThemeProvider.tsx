@@ -1,39 +1,56 @@
 // © Microsoft Corporation. All rights reserved.
 
 import React, { useState, useMemo, createContext, useContext } from 'react';
-import { Theme, PartialTheme } from '@fluentui/react-theme-provider';
-import { THEMES, LIGHT, lightTheme, getThemeFromLocalStorage, saveThemeToLocalStorage } from '../constants/themes';
+import { defaultThemes, NamedTheme } from '../constants/themes';
 import { FluentThemeProvider } from './FluentThemeProvider';
 
-/**
- * type for theme state of SwitchableFluentThemeProvider. Simply contains \@fluentui/react PartialTheme | Theme and an assigned name
- */
-export type FluentTheme = {
-  /** assigned name of theme */
-  name: string;
-  /** theme used for applying to all ACS UI SDK components */
-  theme: PartialTheme | Theme;
-};
+export type ThemeStore = Record<string, NamedTheme>;
+const defaultTheme: NamedTheme = defaultThemes.light;
 
 /**
- * interface for React useContext hook containing the FluentTheme and a setter to switch themes
+ * Interface for React useContext hook containing the FluentTheme and a setter to switch themes
  */
-export interface SwitchableFluentThemeContext {
-  /** FluentTheme state context used for FluentThemeProvider */
-  fluentTheme: FluentTheme;
-  /** setter for FluentTheme */
-  setFluentTheme: (fluentTheme: FluentTheme) => void;
+interface SwitchableFluentThemeContext {
+  /**
+   * Currently chosen theme.
+   * @defaultValue lightTheme
+   */
+  currentTheme: NamedTheme;
+  /**
+   * Setter for the current theme.
+   * If this the doesn't already exist in the theme context this will
+   * add that theme to the store.
+   */
+  setCurrentTheme: (namedTheme: NamedTheme) => void;
+  /**
+   * All stored themes within the context
+   * @defaultValue defaultThemes
+   */
+  themeStore: ThemeStore;
 }
 
-const defaultTheme: FluentTheme = { name: LIGHT, theme: lightTheme };
+const LocalStorageKey_Theme = 'AzureCommunicationUI_Theme';
+
+/**
+ * Function to get theme from LocalStorage
+ */
+const getThemeFromLocalStorage = (scopeId: string): string | null =>
+  window.localStorage.getItem(LocalStorageKey_Theme + '_' + scopeId);
+
+/**
+ * Function to save theme to LocalStorage
+ */
+const saveThemeToLocalStorage = (theme: string, scopeId: string): void =>
+  window.localStorage.setItem(LocalStorageKey_Theme + '_' + scopeId, theme);
 
 /**
  * React useContext for FluentTheme state of SwitchableFluentThemeProvider
  */
 const SwitchableFluentThemeContext = createContext<SwitchableFluentThemeContext>({
-  fluentTheme: defaultTheme,
+  currentTheme: defaultTheme,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
-  setFluentTheme: (fluentTheme: FluentTheme) => {}
+  setCurrentTheme: (theme: NamedTheme) => {},
+  themeStore: { ...defaultThemes }
 });
 
 /**
@@ -44,38 +61,52 @@ export interface SwitchableFluentThemeProviderProps {
   children: React.ReactNode;
   /** Scope ID for context */
   scopeId: string;
+  /**
+   * Initial set of themes to switch between.
+   * @defaultValue defaultThemes
+   */
+  themes?: ThemeStore;
 }
 
 /**
  * @description Provider wrapped around FluentThemeProvider that stores themes in local storage
  * to be switched via useContext hook.
  * @param props - SwitchableFluentThemeProviderProps
+ * @remarks This makes use of the browser's local storage if available
  */
 export const SwitchableFluentThemeProvider = (props: SwitchableFluentThemeProviderProps): JSX.Element => {
   const { children, scopeId } = props;
-  const themeFromStorage = getThemeFromLocalStorage(scopeId);
-  const [fluentTheme, _setFluentTheme] = useState<FluentTheme>(
-    themeFromStorage && THEMES[themeFromStorage]
-      ? { name: themeFromStorage, theme: THEMES[themeFromStorage] }
-      : defaultTheme
-  );
+  const [themeStore, setThemeStore] = useState<ThemeStore>(props.themes ?? defaultThemes);
 
-  const themeMemo = useMemo<SwitchableFluentThemeContext>(
+  const themeFromStorage = getThemeFromLocalStorage(scopeId);
+  const initialTheme = themeStore[themeFromStorage || 'light'] ?? defaultTheme;
+  const [currentTheme, _setCurrentTheme] = useState<NamedTheme>(initialTheme);
+
+  const state = useMemo<SwitchableFluentThemeContext>(
     () => ({
-      fluentTheme: fluentTheme,
-      setFluentTheme: (fluentTheme: FluentTheme): void => {
-        _setFluentTheme(fluentTheme);
-        if (typeof Storage !== 'undefined') {
-          saveThemeToLocalStorage(fluentTheme.name, scopeId);
+      currentTheme,
+      setCurrentTheme: (namedTheme: NamedTheme): void => {
+        _setCurrentTheme(namedTheme);
+
+        // If this is a new theme, add to the theme store
+        if (!themeStore[namedTheme.name]) {
+          setThemeStore({ ...themeStore, namedTheme });
         }
-      }
+
+        // Save current selection to local storage. Note the theme itself
+        // is not saved to local storage, only the name.
+        if (typeof Storage !== 'undefined') {
+          saveThemeToLocalStorage(namedTheme.name, scopeId);
+        }
+      },
+      themeStore
     }),
-    [fluentTheme, scopeId]
+    [currentTheme, scopeId, themeStore]
   );
 
   return (
-    <SwitchableFluentThemeContext.Provider value={themeMemo}>
-      <FluentThemeProvider fluentTheme={fluentTheme.theme}>{children}</FluentThemeProvider>
+    <SwitchableFluentThemeContext.Provider value={state}>
+      <FluentThemeProvider fluentTheme={currentTheme.theme}>{children}</FluentThemeProvider>
     </SwitchableFluentThemeContext.Provider>
   );
 };

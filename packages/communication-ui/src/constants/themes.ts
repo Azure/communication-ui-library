@@ -63,39 +63,25 @@ export const darkTheme: PartialTheme = {
 };
 
 /**
- * Light theme name for ACS UI SDK components
+ * A theme with an associated name.
  */
-export const LIGHT = 'Light';
-/**
- * Dark theme name for ACS UI SDK components
- */
-export const DARK = 'Dark';
-
-/**
- * Map of themes
- */
-export type ThemeMap = {
-  [key: string]: Theme | PartialTheme;
+export type NamedTheme = {
+  /** assigned name of theme */
+  name: string;
+  /** theme used for applying to components */
+  theme: PartialTheme | Theme;
 };
 
 /**
- * Default themes map for ACS UI SDK components
+ * Light and Dark default themes used throughout components.
  */
-export const THEMES: ThemeMap = {
-  [LIGHT]: lightTheme,
-  [DARK]: darkTheme
+export const defaultThemes: Record<string, NamedTheme> = {
+  light: {
+    name: 'light',
+    theme: lightTheme
+  },
+  dark: {
+    name: 'dark',
+    theme: darkTheme
+  }
 };
-
-const LocalStorageKey_Theme = 'AzureCommunicationUI_Theme';
-
-/**
- * Function to get theme for ACS UI SDK components from LocalStorage
- */
-export const getThemeFromLocalStorage = (scopeId: string): string | null =>
-  window.localStorage.getItem(LocalStorageKey_Theme + '_' + scopeId);
-
-/**
- * Function to save theme for ACS UI SDK components from LocalStorage
- */
-export const saveThemeToLocalStorage = (theme: string, scopeId: string): void =>
-  window.localStorage.setItem(LocalStorageKey_Theme + '_' + scopeId, theme);
