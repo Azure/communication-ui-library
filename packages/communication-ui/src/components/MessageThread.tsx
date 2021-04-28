@@ -213,12 +213,14 @@ const memoizeAllMessages = memoizeFnAll(
     statusToRender?: MessageStatus,
     onRenderMessage?: (message: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element
   ): ShorthandValue<ChatItemProps> => {
-    const messageProps: MessageProps = {
-      message: message,
-      messageContainerStyle: styles?.chatMessageContainer
+    let messageProps: MessageProps = {
+      message: message
     };
+
     if (message.type === 'chat') {
       const payload: ChatMessagePayload = message.payload;
+      messageProps.messageContainerStyle = styles?.chatMessageContainer;
+
       const chatMessageComponent =
         onRenderMessage === undefined
           ? defaultChatMessageRenderer(messageProps)
@@ -260,6 +262,8 @@ const memoizeAllMessages = memoizeFnAll(
         key: _messageKey
       };
     } else if (message.type === 'system') {
+      messageProps.messageContainerStyle = styles?.systemMessageContainer;
+
       const systemMessageComponent =
         onRenderMessage === undefined
           ? DefaultSystemMessageRenderer(messageProps)
