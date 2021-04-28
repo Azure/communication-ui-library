@@ -22,7 +22,7 @@ dependencies:
   '@octokit/rest': 18.0.15
   '@rollup/plugin-commonjs': 17.1.0_rollup@2.42.4
   '@rush-temp/acs-calling-declarative': file:projects/acs-calling-declarative.tgz_prettier@2.0.5+ts-node@9.1.1
-  '@rush-temp/acs-calling-selector': file:projects/acs-calling-selector.tgz_prettier@2.0.5
+  '@rush-temp/acs-calling-selector': file:projects/acs-calling-selector.tgz_prettier@2.0.5+ts-node@9.1.1
   '@rush-temp/acs-chat-declarative': file:projects/acs-chat-declarative.tgz_prettier@2.0.5+ts-node@9.1.1
   '@rush-temp/acs-chat-selector': file:projects/acs-chat-selector.tgz_prettier@2.0.5+ts-node@9.1.1
   '@rush-temp/build-tools': file:projects/build-tools.tgz_typescript@4.1.5
@@ -38,10 +38,6 @@ dependencies:
   '@storybook/addon-knobs': 6.1.21_30bc4764d4ba778218056aab0be8023f
   '@storybook/addon-links': 6.1.21_react-dom@16.14.0+react@16.14.0
   '@storybook/addon-storyshots': 6.1.21_bf4eba619a81a338b8fdba9794ec01fe
-  '@storybook/addons': 6.2.9_react-dom@16.14.0+react@16.14.0
-  '@storybook/api': 6.2.9_react-dom@16.14.0+react@16.14.0
-  '@storybook/components': 6.2.9_30bc4764d4ba778218056aab0be8023f
-  '@storybook/core-events': 6.2.9
   '@storybook/node-logger': 6.1.21
   '@storybook/react': 6.1.21_4afa15f3c90940bbd828a24f4067472e
   '@storybook/storybook-deployer': 2.8.7
@@ -20640,30 +20636,36 @@ packages:
       integrity: sha512-6WDVzpnjmR2MwCtI1zhNSC+8t40zkB4OZZbi6nF+p/SMwtYGwjl0g8FVF7L9zYL7ENgf6Jdqxs9flYTQ7bMgoQ==
       tarball: file:projects/acs-calling-declarative.tgz
     version: 0.0.0
-  file:projects/acs-calling-selector.tgz_prettier@2.0.5:
+  file:projects/acs-calling-selector.tgz_prettier@2.0.5+ts-node@9.1.1:
     dependencies:
       '@azure/communication-calling': 1.0.1-beta.1
+      '@azure/communication-common': 1.0.0
       '@microsoft/api-documenter': 7.12.12
       '@microsoft/api-extractor': 7.13.2
       '@types/jest': 26.0.22
       '@types/react': 16.14.5
+      '@typescript-eslint/eslint-plugin': 4.18.0_e9e1aa536ec0b34179456e3b69e4968e
+      '@typescript-eslint/parser': 4.18.0_eslint@7.22.0+typescript@4.1.5
       copyfiles: 2.4.1
       eslint: 7.22.0
       eslint-config-prettier: 6.15.0_eslint@7.22.0
       eslint-plugin-header: 3.1.1_eslint@7.22.0
       eslint-plugin-import: 2.22.1_eslint@7.22.0
       eslint-plugin-prettier: 3.3.1_cdac37046eab2e8d6fb794f34ed825c2
+      jest: 26.6.0_ts-node@9.1.1
       memoize-one: 5.1.1
       reselect: 4.0.0
       rollup: 2.42.4
+      ts-jest: 26.5.3_jest@26.6.0+typescript@4.1.5
       typescript: 4.1.5
     dev: false
     id: file:projects/acs-calling-selector.tgz
     name: '@rush-temp/acs-calling-selector'
     peerDependencies:
       prettier: '*'
+      ts-node: '*'
     resolution:
-      integrity: sha512-fTpeDKoc1ila4kJzci4gitfnTici82paTB2p08ZNQXggudZciGa2NvJSpsgBPbFgxlTQFF1fJNtkL/81q1gZ1Q==
+      integrity: sha512-jdKUqrjba5k49khYBUAPVD+uZg0w2bpckz5gKZMYHBBqZAyT43PrYToBwGEAKHRUK1mDTU465Hw1196gpSLUqA==
       tarball: file:projects/acs-calling-selector.tgz
     version: 0.0.0
   file:projects/acs-chat-declarative.tgz_prettier@2.0.5+ts-node@9.1.1:
@@ -21189,7 +21191,7 @@ packages:
     peerDependencies:
       webpack-cli: '*'
     resolution:
-      integrity: sha512-WQdccpypge1hzrxraF5Z5ksMH16aptSM7OdipBEYCK4lwSap3xB54fBOOfnoStnhb9O/Ga2CgkapPERNyaHu7A==
+      integrity: sha512-UlApYfT1mmhLpMrV2E0qILycrKVR65FYQr1A91vpFvVXqFB0fzDTszXnrnWcJQSWNnnSGRCGdZS+ymtdmjo5qw==
       tarball: file:projects/storybook.tgz
     version: 0.0.0
 registry: ''
@@ -21233,10 +21235,6 @@ specifiers:
   '@storybook/addon-knobs': ~6.1.9
   '@storybook/addon-links': ~6.1.1
   '@storybook/addon-storyshots': ~6.1.6
-  '@storybook/addons': ^6.2.5
-  '@storybook/api': ^6.2.5
-  '@storybook/components': ^6.2.5
-  '@storybook/core-events': ^6.2.5
   '@storybook/node-logger': ~6.1.1
   '@storybook/react': ~6.1.1
   '@storybook/storybook-deployer': ~2.8.7
