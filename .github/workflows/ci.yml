@@ -73,7 +73,7 @@ jobs:
         # if: github.ref == 'refs/heads/main' -- REMOVED FOR TESTING, DO NOT COMMIT
         # storybook requires the env vars to be in a .env file for access in the manager.ts
         run: |
-          'echo ${TELEMETRY_INSTRUMENTATION_KEY//[[:space:]]} > .env'
+          'echo TELEMETRY_INSTRUMENTATION_KEY=${TELEMETRY_INSTRUMENTATION_KEY//[[:space:]]} > .env'
           npm run deploy-storybook -- --ci
         working-directory: ./packages/storybook
         env:
