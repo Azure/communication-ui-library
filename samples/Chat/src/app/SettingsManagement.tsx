@@ -42,13 +42,11 @@ export const SettingsManagementComponent = (props: SettingsManagementProps): JSX
   const validateTopic = (input: string): void => {
     if (input.length > MAXIMUM_LENGTH_OF_TOPIC) {
       setTopicValidationError(`Topic cannot be over ${MAXIMUM_LENGTH_OF_TOPIC} characters`);
-    }
-
-    if (input.length <= 0) {
+    } else if (input.length <= 0) {
       setTopicValidationError('Topic cannot be blank');
+    } else {
+      setTopicValidationError(undefined);
     }
-
-    setTopicValidationError(undefined);
   };
 
   const onChangeTopicName = (event: any): void => {
