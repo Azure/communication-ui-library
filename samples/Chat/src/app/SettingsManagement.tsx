@@ -39,19 +39,16 @@ export const SettingsManagementComponent = (props: SettingsManagementProps): JSX
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [topicName]);
 
-  const validateTopic = (input: string): boolean => {
+  const validateTopic = (input: string): void => {
     if (input.length > MAXIMUM_LENGTH_OF_TOPIC) {
       setTopicValidationError(`Topic cannot be over ${MAXIMUM_LENGTH_OF_TOPIC} characters`);
-      return false;
     }
 
     if (input.length <= 0) {
       setTopicValidationError('Topic cannot be blank');
-      return false;
     }
 
     setTopicValidationError(undefined);
-    return true;
   };
 
   const onChangeTopicName = (event: any): void => {
