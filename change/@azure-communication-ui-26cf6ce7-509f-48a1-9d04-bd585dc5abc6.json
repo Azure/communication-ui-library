@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add useCallClient, useDeviceManager, and useCall utilities",
+  "packageName": "@azure/communication-ui",
+  "email": "allenhwang@microsoft.com",
+  "dependentChangeType": "patch"
+}
