@@ -38,7 +38,6 @@ export interface TypingIndicatorProps {
 }
 
 const MAXIMUM_LENGTH_OF_TYPING_USERS = 35;
-const UNKNOWN_DISPLAYNAME = 'unknown';
 
 const getDefaultComponents = (
   typingUsers: WebUiChatParticipant[],
@@ -47,20 +46,22 @@ const getDefaultComponents = (
   const displayComponents: JSX.Element[] = [];
 
   const typingUsersMentioned: WebUiChatParticipant[] = [];
+  let countOfUsersTyping = 0;
   let countOfUsersMentioned = 0;
   let totalCharacterCount = 0;
 
   for (const typingUser of typingUsers) {
-    const displayName = typingUser?.displayName ?? UNKNOWN_DISPLAYNAME;
-    countOfUsersMentioned += 1;
+    if (typingUser.displayName === undefined) {
+      continue;
+    }
+    countOfUsersTyping += 1;
     // The typing users above will be separated by ', '. We account for that additional length and with this length in
     // mind we generate the final string.
-    const additionalCharCount = 2 * (countOfUsersMentioned - 1) + displayName.length;
+    const additionalCharCount = 2 * (countOfUsersMentioned - 1) + typingUser.displayName.length;
     if (totalCharacterCount + additionalCharCount <= MAXIMUM_LENGTH_OF_TYPING_USERS || countOfUsersMentioned === 1) {
-      typingUsersMentioned.push({ ...typingUser, displayName: displayName });
+      typingUsersMentioned.push({ ...typingUser, displayName: typingUser.displayName });
       totalCharacterCount += additionalCharCount;
-    } else {
-      break;
+      countOfUsersMentioned += 1;
     }
   }
 
@@ -70,16 +71,16 @@ const getDefaultComponents = (
         className={mergeStyles(typingIndicatorListStyle, styles?.typingUserDisplayName)}
         key={'typing indicator display string ' + index.toString()}
       >
-        {index < typingUsers.length - 1 ? typingUser.displayName + ', ' : typingUser.displayName}
+        {index < countOfUsersTyping - 1 ? typingUser.displayName + ', ' : typingUser.displayName}
       </span>
     );
   });
 
-  const countOfUsersNotMentioned = typingUsers.length - typingUsersMentioned.length;
+  const countOfUsersNotMentioned = countOfUsersTyping - typingUsersMentioned.length;
   if (countOfUsersNotMentioned > 0) {
     displayComponents.push(
       <span className={mergeStyles(typingIndicatorVerbStyle, styles?.typingString)}>
-        ` and ${countOfUsersNotMentioned} other${countOfUsersNotMentioned === 1 ? '' : 's'}`
+        {` and ${countOfUsersNotMentioned} other${countOfUsersNotMentioned === 1 ? '' : 's'}`}
       </span>
     );
   }
