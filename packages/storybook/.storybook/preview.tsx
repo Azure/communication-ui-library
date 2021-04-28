@@ -53,9 +53,8 @@ export const parameters = {
 };
 
 const withThemeProvider = (Story: any, context: any) => {
-  const themeName = context.globals.theme;
-  console.log(`themeName: ${themeName}`);
-  let theme = THEMES[themeName];
+  const themeName = (context.globals.theme as string).toLowerCase();
+  let theme = THEMES[themeName]?.theme;
   if (context.globals.customTheme !== '') {
     try {
       theme = JSON.parse(context.globals.customTheme);
@@ -90,7 +89,7 @@ export const globalTypes = {
   theme: {
     name: 'Theme',
     description: 'Global theme for components',
-    defaultValue: defaultThemes.light
+    defaultValue: defaultThemes.light.name
   },
   customTheme: {
     name: 'Custom theme',

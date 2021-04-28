@@ -6,7 +6,7 @@ import { PartialTheme } from '@fluentui/react-theme-provider';
 /**
  * Light theme designed ACS UI SDK components
  */
-export const lightTheme: PartialTheme = {
+const lightTheme: PartialTheme = {
   palette: {
     themePrimary: '#0078d4',
     themeLighterAlt: '#eff6fc',
@@ -36,7 +36,7 @@ export const lightTheme: PartialTheme = {
 /**
  * Dark theme designed ACS UI SDK components
  */
-export const darkTheme: PartialTheme = {
+const darkTheme: PartialTheme = {
   palette: {
     themePrimary: '#2899f5',
     themeLighterAlt: '#02060a',

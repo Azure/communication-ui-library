@@ -75,9 +75,6 @@ export type CustomMessagePayload = {
     content?: string;
 };
 
-// @public
-export const darkTheme: PartialTheme;
-
 // @public (undocumented)
 export type DefaultMessageRendererType = (props: MessageProps) => JSX.Element;
 
@@ -148,9 +145,6 @@ export const labeledScreenShareButtonProps: IButtonProps;
 
 // @public
 export const labeledVideoButtonProps: IButtonProps;
-
-// @public
-export const lightTheme: PartialTheme;
 
 // @public (undocumented)
 export type Message<T extends MessageTypes> = {
