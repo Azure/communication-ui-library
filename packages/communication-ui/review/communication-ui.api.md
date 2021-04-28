@@ -76,13 +76,13 @@ export type CustomMessagePayload = {
 };
 
 // @public
-export const DARK = "Dark";
-
-// @public
 export const darkTheme: PartialTheme;
 
 // @public (undocumented)
 export type DefaultMessageRendererType = (props: MessageProps) => JSX.Element;
+
+// @public
+export const defaultThemes: ThemeCollection;
 
 // @public
 export const ErrorBar: (props: ErrorBarProps) => JSX.Element | null;
@@ -96,12 +96,6 @@ export type ErrorBarProps = {
 };
 
 // @public
-export type FluentTheme = {
-    name: string;
-    theme: PartialTheme | Theme;
-};
-
-// @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
 
 // @public
@@ -109,9 +103,6 @@ export interface FluentThemeProviderProps {
     children: React_2.ReactNode;
     fluentTheme?: PartialTheme | Theme;
 }
-
-// @public
-export const getThemeFromLocalStorage: (scopeId: string) => string | null;
 
 // @public (undocumented)
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;
@@ -157,9 +148,6 @@ export const labeledScreenShareButtonProps: IButtonProps;
 
 // @public
 export const labeledVideoButtonProps: IButtonProps;
-
-// @public
-export const LIGHT = "Light";
 
 // @public
 export const lightTheme: PartialTheme;
@@ -220,6 +208,12 @@ export interface MessageThreadStylesProps extends BaseCustomStylesProps {
 export type MessageTypes = 'chat' | 'system' | 'custom';
 
 // @public
+export type NamedTheme = {
+    name: string;
+    theme: PartialTheme | Theme;
+};
+
+// @public
 export const optionsButtonProps: IButtonProps;
 
 // @public
@@ -268,9 +262,6 @@ export interface ReadReceiptProps {
 export const recordButtonProps: IButtonProps;
 
 // @public
-export const saveThemeToLocalStorage: (theme: string, scopeId: string) => void;
-
-// @public
 export const screenShareButtonProps: IButtonProps;
 
 // @public
@@ -308,8 +299,9 @@ export interface StreamMediaProps {
 
 // @public
 export interface SwitchableFluentThemeContext {
-    fluentTheme: FluentTheme;
-    setFluentTheme: (fluentTheme: FluentTheme) => void;
+    currentTheme: NamedTheme;
+    setCurrentTheme: (namedTheme: NamedTheme) => void;
+    themeStore: ThemeCollection;
 }
 
 // @public
@@ -319,6 +311,7 @@ export const SwitchableFluentThemeProvider: (props: SwitchableFluentThemeProvide
 export interface SwitchableFluentThemeProviderProps {
     children: React_2.ReactNode;
     scopeId: string;
+    themes?: ThemeCollection;
 }
 
 // @public (undocumented)
@@ -332,12 +325,7 @@ export type SystemMessagePayload = {
 };
 
 // @public
-export type ThemeMap = {
-    [key: string]: Theme | PartialTheme;
-};
-
-// @public
-export const THEMES: ThemeMap;
+export type ThemeCollection = Record<string, NamedTheme>;
 
 // @public
 export const ThemeSelector: (props: ThemeSelectorProps) => JSX.Element;
@@ -346,7 +334,6 @@ export const ThemeSelector: (props: ThemeSelectorProps) => JSX.Element;
 export interface ThemeSelectorProps {
     horizontal?: boolean;
     label?: string;
-    themeMap?: ThemeMap;
 }
 
 // @public
@@ -356,8 +343,8 @@ export const ThemeToggler: (props: ThemeTogglerProps) => JSX.Element;
 export interface ThemeTogglerProps {
     label?: string;
     layout?: string;
-    offTheme?: FluentTheme;
-    onTheme?: FluentTheme;
+    offTheme?: NamedTheme;
+    onTheme?: NamedTheme;
 }
 
 // @public

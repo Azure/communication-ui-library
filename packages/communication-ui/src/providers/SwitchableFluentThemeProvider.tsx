@@ -1,16 +1,16 @@
 // © Microsoft Corporation. All rights reserved.
 
 import React, { useState, useMemo, createContext, useContext } from 'react';
-import { defaultThemes, NamedTheme } from '../constants/themes';
+import { NamedTheme, ThemeCollection } from '../types';
+import { defaultThemes } from '../constants';
 import { FluentThemeProvider } from './FluentThemeProvider';
 
-export type ThemeStore = Record<string, NamedTheme>;
 const defaultTheme: NamedTheme = defaultThemes.light;
 
 /**
  * Interface for React useContext hook containing the FluentTheme and a setter to switch themes
  */
-interface SwitchableFluentThemeContext {
+export interface SwitchableFluentThemeContext {
   /**
    * Currently chosen theme.
    * @defaultValue lightTheme
@@ -26,7 +26,7 @@ interface SwitchableFluentThemeContext {
    * All stored themes within the context
    * @defaultValue defaultThemes
    */
-  themeStore: ThemeStore;
+  themeStore: ThemeCollection;
 }
 
 const LocalStorageKey_Theme = 'AzureCommunicationUI_Theme';
@@ -65,7 +65,7 @@ export interface SwitchableFluentThemeProviderProps {
    * Initial set of themes to switch between.
    * @defaultValue defaultThemes
    */
-  themes?: ThemeStore;
+  themes?: ThemeCollection;
 }
 
 /**
@@ -76,7 +76,7 @@ export interface SwitchableFluentThemeProviderProps {
  */
 export const SwitchableFluentThemeProvider = (props: SwitchableFluentThemeProviderProps): JSX.Element => {
   const { children, scopeId } = props;
-  const [themeStore, setThemeStore] = useState<ThemeStore>(props.themes ?? defaultThemes);
+  const [themeStore, setThemeCollection] = useState<ThemeCollection>(props.themes ?? defaultThemes);
 
   const themeFromStorage = getThemeFromLocalStorage(scopeId);
   const initialTheme = themeStore[themeFromStorage || 'light'] ?? defaultTheme;
@@ -90,7 +90,7 @@ export const SwitchableFluentThemeProvider = (props: SwitchableFluentThemeProvid
 
         // If this is a new theme, add to the theme store
         if (!themeStore[namedTheme.name]) {
-          setThemeStore({ ...themeStore, namedTheme });
+          setThemeCollection({ ...themeStore, namedTheme });
         }
 
         // Save current selection to local storage. Note the theme itself

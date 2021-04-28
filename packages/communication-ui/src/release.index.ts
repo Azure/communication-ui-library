@@ -25,5 +25,7 @@ export type {
   CustomMessage,
   SystemMessagePayload,
   ChatMessagePayload,
-  CustomMessagePayload
+  CustomMessagePayload,
+  NamedTheme,
+  ThemeCollection
 } from './types';

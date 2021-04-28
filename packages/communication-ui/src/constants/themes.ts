@@ -1,6 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { Theme, PartialTheme } from '@fluentui/react-theme-provider';
+import { ThemeCollection } from '../types';
+import { PartialTheme } from '@fluentui/react-theme-provider';
 
 /**
  * Light theme designed ACS UI SDK components
@@ -63,19 +64,9 @@ export const darkTheme: PartialTheme = {
 };
 
 /**
- * A theme with an associated name.
- */
-export type NamedTheme = {
-  /** assigned name of theme */
-  name: string;
-  /** theme used for applying to components */
-  theme: PartialTheme | Theme;
-};
-
-/**
  * Light and Dark default themes used throughout components.
  */
-export const defaultThemes: Record<string, NamedTheme> = {
+export const defaultThemes: ThemeCollection = {
   light: {
     name: 'light',
     theme: lightTheme
