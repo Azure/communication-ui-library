@@ -8,11 +8,7 @@ import * as reselect from 'reselect';
 import { ChatParticipant } from '@azure/communication-chat';
 import { TypingIndicator } from '@azure/acs-chat-declarative';
 import { WebUiChatParticipant } from './types/WebUiChatParticipant';
-import {
-  MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS,
-  PARTICIPANTS_THRESHOLD,
-  UNKNOWN_DISPLAYNAME
-} from './utils/constants';
+import { MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS, PARTICIPANTS_THRESHOLD } from './utils/constants';
 
 const filterTypingIndicators = (typingIndicators: TypingIndicator[], userId: string): TypingIndicator[] => {
   const filteredTypingIndicators: TypingIndicator[] = [];
@@ -42,7 +38,7 @@ const convertSdkTypingIndicatorsToWebUiChatParticipants = (
 ): WebUiChatParticipant[] => {
   return typingIndicators.map((typingIndicator) => ({
     userId: typingIndicator.sender.user.communicationUserId,
-    displayName: participants.get(typingIndicator.sender.user.communicationUserId)?.displayName ?? UNKNOWN_DISPLAYNAME
+    displayName: participants.get(typingIndicator.sender.user.communicationUserId)?.displayName
   }));
 };
 
