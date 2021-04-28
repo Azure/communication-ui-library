@@ -32,7 +32,19 @@ exports[`storybook snapshot tests Storyshots Composites/GroupCall Group Call Com
         }
       >
         
-        Please fill in Connection String to run group call widget.
+        <div
+          className="ms-Stack css-2"
+          style={
+            Object {
+              "height": "100%",
+              "width": "100%",
+            }
+          }
+        >
+          <span>
+            Connection String is required to run the Group Call widget.
+          </span>
+        </div>
       </div>
     </div>
   </div>
@@ -71,14 +83,29 @@ exports[`storybook snapshot tests Storyshots Composites/GroupChat Group Chat Com
           }
         }
       >
-        Please fill in Connection String or required params to run GroupChat.
+        <div
+          className="ms-Stack css-2"
+          style={
+            Object {
+              "height": "100%",
+              "width": "100%",
+            }
+          }
+        >
+          <span>
+            Connection String is required to run the Group Chat widget.
+          </span>
+          <span>
+            Or you can fill out the required params to do so.
+          </span>
+        </div>
       </div>
     </div>
   </div>
 </div>
 `;
 
-exports[`storybook snapshot tests Storyshots Composites/OneToOneCall One To One Call Composite Component 1`] = `
+exports[`storybook snapshot tests Storyshots Composites/OneToOneCall One To One Call Composite 1`] = `
 <div
   className="css-75 root-0 body-1"
 >
@@ -115,7 +142,9 @@ exports[`storybook snapshot tests Storyshots Composites/OneToOneCall One To One 
             }
           }
         >
-          Please enter required information below.
+          <span>
+            Connection String is required to run the One To One Call widget.
+          </span>
         </div>
       </div>
     </div>
