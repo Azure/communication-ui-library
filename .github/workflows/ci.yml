@@ -28,73 +28,69 @@ jobs:
           node-version: '12.x'
 
       # Install dependencies
-      # - name: Install rush
-      #   run: npm install -g @microsoft/rush
-      # - name: Install dependencies
-      #   run: rush install
+      - name: Install rush
+        run: npm install -g @microsoft/rush
+      - name: Install dependencies
+        run: rush install
 
-      # # Perform changelog check
-      # - name: Check the necessary change file has been submitted
-      #   run: rush changelog:check
+      # Perform changelog check
+      - name: Check the necessary change file has been submitted
+        run: rush changelog:check
 
-      # # Perform lint check
-      # - name: Run linter
-      #   run: rush lint
+      # Perform lint check
+      - name: Run linter
+        run: rush lint
 
-      # # Builds
-      # - name: Build Packages and Samples
-      #   run: rush build
+      # Builds
+      - name: Build Packages and Samples
+        run: rush build
 
-      # # Verify no uncommitted api extractor changes
-      # - name: API Extractor Check
-      #   run: |
-      #     DIFF_FILE="APIChanges.diff"
-      #     git diff --output=$DIFF_FILE --exit-code **/review/**.md
-      #     DIFF_STATUS=$?
-      #     echo "Exit code for git diff for changes in api review files: $DIFF_STATUS"
-      #     if [$DIFF_STATUS -ne 0]
-      #     then
-      #         echo "API CHANGES FOUND - PLEASE RUN 'rushx api-extractor' IN THE APPROPRIATE PACKAGE(S)"
-      #         echo "Changes:"
-      #         cat $DIFF_FILE
-      #         exit 1
-      #     else
-      #       echo "Success, no new api changes found."
-      #     fi
-
-      # # Run tests
-      # - name: Run Tests
-      #   run: rush test
-      #   env:
-      #     CI: true
-
-      - name: tes
-        run: 'echo TELEMETRY_INSTRUMENTATION_KEY=${{ secrets.TELEMETRY_INSTRUMENTATION_KEY }} > .env'
-        working-directory: ./packages/storybook
-
-      - name: tes2
+      # Verify no uncommitted api extractor changes
+      - name: API Extractor Check
         run: |
-          'echo TELEMETRY_INSTRUMENTATION_KEY=${{ secrets.TELEMETRY_INSTRUMENTATION_KEY }} > .env'
-        working-directory: ./packages/storybook
+          DIFF_FILE="APIChanges.diff"
+          git diff --output=$DIFF_FILE --exit-code **/review/**.md
+          DIFF_STATUS=$?
+          echo "Exit code for git diff for changes in api review files: $DIFF_STATUS"
+          if [$DIFF_STATUS -ne 0]
+          then
+              echo "API CHANGES FOUND - PLEASE RUN 'rushx api-extractor' IN THE APPROPRIATE PACKAGE(S)"
+              echo "Changes:"
+              cat $DIFF_FILE
+              exit 1
+          else
+            echo "Success, no new api changes found."
+          fi
+
+      # Run tests
+      - name: Run Tests
+        run: rush test
+        env:
+          CI: true
+
+      # - name: Create env file
+      #   run: ''
+      #   working-directory: ./packages/storybook
 
       # Deploy Storybook - only perform this step on main branch CI
       - name: Deploy Storybook
         # if: github.ref == 'refs/heads/main' -- REMOVED FOR TESTING, DO NOT COMMIT
         # storybook requires the env vars to be in a .env file for access in the manager.ts
         run: |
-          'echo TELEMETRY_INSTRUMENTATION_KEY=${{ secrets.TELEMETRY_INSTRUMENTATION_KEY }} > .env'
+          echo TELEMETRY_INSTRUMENTATION_KEY=${{ secrets.TELEMETRY_INSTRUMENTATION_KEY }} > .env
           npm run deploy-storybook -- --ci
         working-directory: ./packages/storybook
         env:
           GH_TOKEN: ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
           TELEMETRY_INSTRUMENTATION_KEY: ${{ secrets.TELEMETRY_INSTRUMENTATION_KEY }}
+
       # Create a GitHub issue if the CI failed when running on the `main` branch
-      # - name: Create issue if main branch CI failed
-      #   id: create-issue
-      #   if: failure() && github.ref == 'refs/heads/main'
-      #   uses: JasonEtco/create-an-issue@v2.4.0
-      #   with:
-      #     filename: .github/failed_ci_build_template.md
-      #     update_existing: true
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create issue if main branch CI failed
+        id: create-issue
+        if: failure() && github.ref == 'refs/heads/main'
+        uses: JasonEtco/create-an-issue@v2.4.0
+        with:
+          filename: .github/failed_ci_build_template.md
+          update_existing: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
