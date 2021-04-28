@@ -4,8 +4,50 @@
 
 ```ts
 
-// @public (undocumented)
-export const TEMPORARY_EXPORT = "REPLACE THIS";
+import { Call } from '@azure/communication-calling';
+import { CallAgent } from '@azure/communication-calling';
+import { CommunicationUserIdentifier } from '@azure/communication-common';
+import { DeclarativeCallClient } from '@azure/acs-calling-declarative';
+import { DeviceManager } from '@azure/communication-calling';
+import { HangUpOptions } from '@azure/communication-calling';
+import { PhoneNumberIdentifier } from '@azure/communication-common';
+import { ReactElement } from 'react';
+import { StartCallOptions } from '@azure/communication-calling';
+import { UnknownIdentifier } from '@azure/communication-common';
+import { VideoDeviceInfo } from '@azure/communication-calling';
+
+// @public
+export type BaseSelectorProps = {
+    callId: string;
+};
+
+// @public
+export type CallAgentHandlers = {
+    onStartCall(participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions): Call;
+};
+
+// @public
+export type CallClientHandlers = {
+    getDeviceManager: () => Promise<DeviceManager>;
+};
+
+// @public
+export type CallHandlers = {
+    onHangUp(options?: HangUpOptions): Promise<void>;
+};
+
+// @public
+export type CommonProperties<A, B> = {
+    [P in keyof A & keyof B]: A[P] extends B[P] ? (A[P] extends B[P] ? P : never) : never;
+}[keyof A & keyof B];
+
+// @public
+export const createDefaultHandlersForComponent: <Props>(declarativeCallClient: DeclarativeCallClient, callAgent: CallAgent | undefined, deviceManager: DeviceManager | undefined, call: Call | undefined, _: (props: Props) => ReactElement | null) => Pick<CallClientHandlers & CallAgentHandlers & DeviceManagerHandlers & CallHandlers, CommonProperties<CallClientHandlers & CallAgentHandlers & DeviceManagerHandlers & CallHandlers, Props>> | Pick<CallClientHandlers, CommonProperties<CallClientHandlers, Props>>;
+
+// @public
+export type DeviceManagerHandlers = {
+    getCameras(): Promise<VideoDeviceInfo[]>;
+};
 
 
 // (No @packageDocumentation comment for this package)
