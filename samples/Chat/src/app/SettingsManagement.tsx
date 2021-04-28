@@ -60,7 +60,7 @@ export const SettingsManagementComponent = (props: SettingsManagementProps): JSX
   };
 
   const onSubmitTopicName = async (): Promise<void> => {
-    if (topicValidationError) return;
+    if (topicValidationError || editedTopicName.length === 0) return;
     setIsSavingTopicName(true);
     await updateThreadTopicName(editedTopicName);
     setIsSavingTopicName(false);
