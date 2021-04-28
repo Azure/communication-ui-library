@@ -69,11 +69,18 @@ jobs:
       #     CI: true
 
       - name: tes
-        run: |
-          'echo TELEMETRY_INSTRUMENTATION_KEY=${TELEMETRY_INSTRUMENTATION_KEY}'
+        run: 'echo TELEMETRY_INSTRUMENTATION_KEY=$TELEMETRY_INSTRUMENTATION_KEY'
         working-directory: ./packages/storybook
         env:
           TELEMETRY_INSTRUMENTATION_KEY: ${{ secrets.TELEMETRY_INSTRUMENTATION_KEY }}
+
+      - name: tes2
+        run: 'echo TELEMETRY_INSTRUMENTATION_KEY=${{ secrets.TELEMETRY_INSTRUMENTATION_KEY }} > .env'
+        working-directory: ./packages/storybook
+
+      - name: tes3
+        run: cat .env
+        working-directory: ./packages/storybook
 
       # Deploy Storybook - only perform this step on main branch CI
       - name: Deploy Storybook
