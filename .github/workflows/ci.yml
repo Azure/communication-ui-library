@@ -70,7 +70,7 @@ jobs:
 
       # Deploy Storybook - only perform this step on main branch CI
       - name: Deploy Storybook
-        if: github.ref == 'refs/heads/main' -- REMOVED FOR TESTING, DO NOT COMMIT
+        if: github.ref == 'refs/heads/main'
         # storybook requires the env vars to be in a .env file for access in the manager.ts
         run: |
           echo TELEMETRY_INSTRUMENTATION_KEY=${{ secrets.TELEMETRY_INSTRUMENTATION_KEY }} > .env
