@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Fixed empty display names in TypingIndicator",
+  "comment": "Fixed empty display names in TypingIndicator component",
   "packageName": "@azure/acs-chat-selector",
   "email": "miguelgamis@microsoft.com",
   "dependentChangeType": "patch"
