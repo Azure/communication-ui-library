@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
-import { FluentThemeProvider, LIGHT, DARK, THEMES } from '@azure/communication-ui';
+import { FluentThemeProvider, LIGHT, THEMES } from '@azure/communication-ui';
 import { initializeIcons, loadTheme, mergeStyles } from '@fluentui/react';
 import { DocsContainer } from '@storybook/addon-docs/blocks';
 import { BackToTop, TableOfContents } from 'storybook-docs-toc';
@@ -52,7 +52,14 @@ export const parameters = {
 
 const withThemeProvider = (Story: any, context: any) => {
   const themeName = context.globals.theme;
-  const theme = THEMES[themeName];
+  let theme = THEMES[themeName];
+  if (context.globals.customTheme !== '') {
+    try {
+      theme = JSON.parse(context.globals.customTheme);
+    } catch(e) {
+      console.log('Could not parse the following theme JSON: ' + context.globals.customTheme);
+    }
+  }
 
   return (
     <FluentThemeProvider fluentTheme={theme}>
@@ -80,10 +87,11 @@ export const globalTypes = {
   theme: {
     name: 'Theme',
     description: 'Global theme for components',
-    defaultValue: LIGHT,
-    toolbar: {
-      icon: 'paintbrush',
-      items: [LIGHT, DARK]
-    }
+    defaultValue: LIGHT
+  },
+  customTheme: {
+    name: 'Custom theme',
+    description: 'Custom global theme for components',
+    defaultValue: ''
   }
 };

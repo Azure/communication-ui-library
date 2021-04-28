@@ -1,5 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 import { DefaultButton, Persona, PersonaSize, Stack, Dialog, DialogType, DialogFooter } from '@fluentui/react';
+import { useTheme } from '@fluentui/react-theme-provider';
 import { CallEndIcon, CallIcon, CallVideoIcon, CallVideoOffIcon } from '@fluentui/react-northstar';
 import React from 'react';
 import {
@@ -11,7 +12,6 @@ import {
   incomingCallModalContainerStyle
 } from './styles/IncomingCallAlerts.styles';
 import { useBoolean } from '@uifabric/react-hooks';
-import { WithTheme, withThemeContext } from '../../providers/WithTheme';
 import { StreamMedia, VideoTile } from '../../components';
 
 export type IncomingCallToastProps = {
@@ -80,7 +80,7 @@ export interface IncomingCallModalProps extends IncomingCallToastProps {
   onClickVideoToggle: () => void;
 }
 
-const IncomingCallModal = (props: WithTheme<IncomingCallModalProps>): JSX.Element => {
+export const IncomingCallModal = (props: IncomingCallModalProps): JSX.Element => {
   const {
     alertText,
     avatar,
@@ -93,9 +93,9 @@ const IncomingCallModal = (props: WithTheme<IncomingCallModalProps>): JSX.Elemen
     onClickReject,
     onClickVideoToggle,
     showLocalVideo,
-    localVideoStreamElement,
-    theme
+    localVideoStreamElement
   } = props;
+  const theme = useTheme();
   const palette = theme.palette;
   const [hideDialog, { toggle: toggleHideDialog }] = useBoolean(false);
   const dialogContentProps = { type: DialogType.normal, title: alertText ?? 'Incoming Video Call' };
@@ -173,6 +173,3 @@ const IncomingCallModal = (props: WithTheme<IncomingCallModalProps>): JSX.Elemen
     </>
   );
 };
-
-export const IncomingCallModalWithTheme = withThemeContext(IncomingCallModal);
-export { IncomingCallModalWithTheme as IncomingCallModal };
