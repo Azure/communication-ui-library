@@ -24,6 +24,12 @@ export interface DeclarativeCallClient extends CallClient {
    */
   onStateChange(handler: (state: CallClientState) => void): void;
   /**
+   * Allows unregistering for 'stateChanged' events.
+   *
+   * @param handler - Original callback to be unsubscribed.
+   */
+  offStateChange(handler: (state: CallClientState) => void): void;
+  /**
    * Renders a {@Link RemoteVideoStream} or {@Link LocalVideoStream} and stores the resulting
    * {@Link VideoStreamRendererView} under the relevant {@Link RemoteVideoStream} or {@Link LocalVideoStream} in the
    * state. Under the hood calls {@Link @azure/communication-calling#VideoStreamRenderer.createView}.
@@ -123,6 +129,10 @@ export const callClientDeclaratify = (callClient: CallClient): DeclarativeCallCl
   Object.defineProperty(callClient, 'onStateChange', {
     configurable: false,
     value: (handler: (state: CallClientState) => void) => context.onStateChange(handler)
+  });
+  Object.defineProperty(callClient, 'offStateChange', {
+    configurable: false,
+    value: (handler: (state: CallClientState) => void) => context.offStateChange(handler)
   });
   Object.defineProperty(callClient, 'startRenderVideo', {
     configurable: false,

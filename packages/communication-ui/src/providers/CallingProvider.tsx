@@ -152,3 +152,11 @@ export const CallingProvider = (props: CallingProviderProps & ErrorHandlingProps
   WithErrorHandling(CallingProviderBase, props);
 
 export const useCallingContext = (): CallingContextType => useValidContext(CallingContext);
+
+export const useCallClient = (): CallClient => {
+  return useValidContext(CallingContext).callClient;
+};
+
+export const useDeviceManager = (): DeviceManager | undefined => {
+  return useValidContext(CallingContext).deviceManager;
+};
