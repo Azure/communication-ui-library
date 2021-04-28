@@ -31,7 +31,7 @@ const createUserToken = async (connectionString: string): Promise<CommunicationU
   return token;
 };
 
-export const OneToOneCallCompositeComponent: () => JSX.Element = () => {
+export const OneToOneCallComposite: () => JSX.Element = () => {
   const [token, setToken] = useState<string>('GENERATED_TOKEN_USING_createUserToken()');
   const [userId, setUserId] = useState<string>('CALLEE_ID');
 

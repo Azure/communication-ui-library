@@ -9,6 +9,11 @@ import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/comm
 import { getDocs } from './GroupCallCompositeDocs';
 import { GroupCall } from '@azure/communication-ui';
 import { COMPOSITE_FOLDER_PREFIX } from '../constants';
+import {
+  CompositeConnectionParamsErrMessage,
+  COMPOSITE_STRING_CONNECTIONSTRING,
+  COMPOSITE_STRING_REQUIREDCONNECTIONSTRING
+} from '../CompositeStringUtils';
 
 export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/GroupCall`,
@@ -20,7 +25,7 @@ export default {
   }
 } as Meta;
 
-const emptyConfigTips = 'Please fill in Connection String to run group call widget.';
+const emptyConfigTips = COMPOSITE_STRING_REQUIREDCONNECTIONSTRING.replace('{0}', 'Group Call');
 
 const createUserToken = async (connectionString: string): Promise<CommunicationUserToken> => {
   if (!connectionString) {
@@ -38,7 +43,7 @@ export const GroupCallComposite: () => JSX.Element = () => {
   const [userId, setUserId] = useState<string>('');
   const [groupId, setGroupId] = useState<string>('');
   const [token, setToken] = useState<string>('');
-  const connectionString = text('Connection String', '');
+  const connectionString = text(COMPOSITE_STRING_CONNECTIONSTRING, '');
 
   useEffect(() => {
     (async () => {
@@ -62,7 +67,7 @@ export const GroupCallComposite: () => JSX.Element = () => {
         width: '100%',
         height: '100%',
         maxWidth: '55rem',
-        maxHeight: '30rem',
+        maxHeight: '30.0625rem',
         margin: '20px auto',
         border: '1px solid'
       }}
@@ -75,7 +80,7 @@ export const GroupCallComposite: () => JSX.Element = () => {
           token={token}
         />
       )}
-      {!connectionString && emptyConfigTips}
+      {!connectionString && CompositeConnectionParamsErrMessage([emptyConfigTips])}
     </div>
   );
 };

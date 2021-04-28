@@ -25,6 +25,6 @@
     "isolatedModules": true,
     "moduleResolution": "node"
   },
-  "include": ["stories/**/*"],
+  "include": ["stories/**/*", "./.storybook/**/*"],
   "exclude": ["dist", "node_modules"]
 }

@@ -1,8 +1,8 @@
 import React from 'react';
 import {
   FluentThemeProvider,
-  audioButtonProps,
   ControlBar,
+  audioButtonProps,
   hangupButtonProps,
   optionsButtonProps,
   screenShareButtonProps,
