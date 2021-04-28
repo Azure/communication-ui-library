@@ -15,8 +15,7 @@ import {
   screenShareButtonProps,
   videoButtonProps,
   LIGHT,
-  DARK,
-  THEMES
+  DARK
 } from '@azure/communication-ui';
 import { boolean, select } from '@storybook/addon-knobs';
 import { getDocs } from './ControlBarDocs';
@@ -73,13 +72,11 @@ export const ControlBarComponent: (
   const toggleButtons = boolean('Toggle Buttons', false);
   const showLabels = boolean('Show Labels', false);
 
-  let background = THEMES[theme]?.palette?.white;
-  let controlBarBackground = THEMES[theme]?.palette?.white;
-
+  // This is code to set the color of the background div to show contrast to the control bar based on the theme like shown in the Figma design.
+  let background = 'none';
   if (theme === DARK) {
     if (layout.startsWith('floating')) {
       background = '#252423';
-      controlBarBackground = THEMES[DARK]?.palette?.neutralLight;
     } else {
       background = '#161514';
     }
@@ -98,7 +95,7 @@ export const ControlBarComponent: (
         background: background
       }}
     >
-      <ControlBar layout={layout} styles={{ root: { background: controlBarBackground } }}>
+      <ControlBar layout={layout}>
         <DefaultButton {...(showLabels ? labeledVideoButtonProps : videoButtonProps)} checked={toggleButtons} />
         <DefaultButton {...(showLabels ? labeledAudioButtonProps : audioButtonProps)} checked={toggleButtons} />
         <DefaultButton
