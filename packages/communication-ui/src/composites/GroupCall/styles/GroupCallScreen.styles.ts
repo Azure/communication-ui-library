@@ -1,10 +1,8 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { IStackItemStyles, IStackStyles, getTheme, mergeStyles } from '@fluentui/react';
+import { IStackItemStyles, IStackStyles, mergeStyles } from '@fluentui/react';
 
 const headerShadow = 'rgba(0, 0, 0, 0.133) 0px 1.6px 3.6px 0px, rgba(0, 0, 0, 0.11) 0px 0.3px 0.9px 0px';
-
-const palette = getTheme().palette;
 
 export const headerStyles: IStackItemStyles = {
   root: {
@@ -48,7 +46,6 @@ export const subContainerStyles: IStackStyles = {
 
 export const activeContainerClassName: IStackItemStyles = {
   root: {
-    border: `solid 1px ${palette.neutralLighterAlt}`,
     display: 'flex',
     height: '100%',
     position: 'relative'

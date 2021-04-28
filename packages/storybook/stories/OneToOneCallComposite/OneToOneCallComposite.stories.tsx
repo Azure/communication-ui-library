@@ -7,8 +7,12 @@ import { text } from '@storybook/addon-knobs';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-administration';
 import { getDocs } from './OneToOneCallCompositeDocs';
 import { OneToOneCall } from '@azure/communication-ui';
-import { Stack } from '@fluentui/react';
 import { COMPOSITE_FOLDER_PREFIX } from '../constants';
+import {
+  CompositeConnectionParamsErrMessage,
+  COMPOSITE_STRING_CONNECTIONSTRING,
+  COMPOSITE_STRING_REQUIREDCONNECTIONSTRING
+} from '../CompositeStringUtils';
 
 export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/OneToOneCall`,
@@ -24,12 +28,6 @@ const experienceContainerStyle = {
   width: '90vw',
   height: '90vh'
 };
-
-const errMessage: () => JSX.Element = () => (
-  <Stack horizontalAlign="center" verticalAlign="center" style={{ height: '100%', width: '100%' }}>
-    {'Please enter required information below.'}
-  </Stack>
-);
 
 const createUserToken = async (connectionString: string): Promise<CommunicationUserToken> => {
   if (!connectionString) {
@@ -63,16 +61,19 @@ const OneToOneCallCompositeInstance: (token: string, calleeId?: string) => JSX.E
       {requiredInformationObtained && (
         <OneToOneCall displayName={randomCallerName()} calleeId={calleeId} token={token} />
       )}
-      {!requiredInformationObtained && errMessage()}
+      {!requiredInformationObtained &&
+        CompositeConnectionParamsErrMessage([
+          COMPOSITE_STRING_REQUIREDCONNECTIONSTRING.replace('{0}', 'One To One Call')
+        ])}
     </div>
   );
 };
 
-export const OneToOneCallCompositeComponent: () => JSX.Element = () => {
+export const OneToOneCallComposite: () => JSX.Element = () => {
   const [token, setToken] = useState<string>('');
   const [userId, setUserId] = useState<string>('');
 
-  const connectionString = text('Connection String', '');
+  const connectionString = text(COMPOSITE_STRING_CONNECTIONSTRING, '');
 
   useEffect(() => {
     (async () => {

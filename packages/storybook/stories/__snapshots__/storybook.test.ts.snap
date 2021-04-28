@@ -25,14 +25,26 @@ exports[`storybook snapshot tests Storyshots Composites/GroupCall Group Call Com
             "border": "1px solid",
             "height": "100%",
             "margin": "20px auto",
-            "maxHeight": "30rem",
+            "maxHeight": "30.0625rem",
             "maxWidth": "55rem",
             "width": "100%",
           }
         }
       >
         
-        Please fill in Connection String to run group call widget.
+        <div
+          className="ms-Stack css-2"
+          style={
+            Object {
+              "height": "100%",
+              "width": "100%",
+            }
+          }
+        >
+          <span>
+            Connection String is required to run the Group Call widget.
+          </span>
+        </div>
       </div>
     </div>
   </div>
@@ -71,14 +83,29 @@ exports[`storybook snapshot tests Storyshots Composites/GroupChat Group Chat Com
           }
         }
       >
-        Please fill in Connection String or required params to run GroupChat.
+        <div
+          className="ms-Stack css-2"
+          style={
+            Object {
+              "height": "100%",
+              "width": "100%",
+            }
+          }
+        >
+          <span>
+            Connection String is required to run the Group Chat widget.
+          </span>
+          <span>
+            Or you can fill out the required params to do so.
+          </span>
+        </div>
       </div>
     </div>
   </div>
 </div>
 `;
 
-exports[`storybook snapshot tests Storyshots Composites/OneToOneCall One To One Call Composite Component 1`] = `
+exports[`storybook snapshot tests Storyshots Composites/OneToOneCall One To One Call Composite 1`] = `
 <div
   className="css-75 root-0 body-1"
 >
@@ -115,7 +142,9 @@ exports[`storybook snapshot tests Storyshots Composites/OneToOneCall One To One 
             }
           }
         >
-          Please enter required information below.
+          <span>
+            Connection String is required to run the One To One Call widget.
+          </span>
         </div>
       </div>
     </div>
@@ -361,7 +390,7 @@ exports[`storybook snapshot tests Storyshots Examples/IncomingCallAlerts Incomin
                           </div>
                         </div>
                         <div
-                          className="ms-Stack css-116 css-48"
+                          className="ms-Stack css-118 css-48"
                         >
                           <div
                             className="ms-Stack css-51"
@@ -560,10 +589,10 @@ exports[`storybook snapshot tests Storyshots Examples/IncomingCallAlerts Incomin
         className="ms-Stack css-2"
       >
         <div
-          className="ms-Stack css-112 css-3"
+          className="ms-Stack css-114 css-3"
         >
           <div
-            className="ms-Stack css-113 css-4"
+            className="ms-Stack css-115 css-4"
           >
             <div
               aria-label="John Doe"
@@ -627,7 +656,7 @@ exports[`storybook snapshot tests Storyshots Examples/IncomingCallAlerts Incomin
             className="ms-Stack css-21"
           >
             <button
-              className="ms-Button ms-Button--default css-115 root-22"
+              className="ms-Button ms-Button--default css-117 root-22"
               data-is-focusable={true}
               onClick={[Function]}
               onKeyDown={[Function]}
@@ -665,7 +694,7 @@ exports[`storybook snapshot tests Storyshots Examples/IncomingCallAlerts Incomin
               </span>
             </button>
             <button
-              className="ms-Button ms-Button--default css-114 root-22"
+              className="ms-Button ms-Button--default css-116 root-22"
               data-is-focusable={true}
               onClick={[Function]}
               onKeyDown={[Function]}

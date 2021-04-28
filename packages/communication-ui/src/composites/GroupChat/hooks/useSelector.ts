@@ -1,8 +1,8 @@
 // © Microsoft Corporation. All rights reserved.
 
 import { ChatClientState, DeclarativeChatClient } from '@azure/acs-chat-declarative';
-import { useChatClient } from '../../../providers/ChatProviderHelper';
 import { useState, useEffect, useRef } from 'react';
+import { useChatClient } from '../../../providers/ChatProviderHelper';
 
 // This function highly depends on chatClient.onChange event
 // It will be moved into selector folder when the ChatClientProvide when refactor finished
