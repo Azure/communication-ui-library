@@ -67,7 +67,7 @@ export const GroupCallComposite: () => JSX.Element = () => {
         width: '100%',
         height: '100%',
         maxWidth: '55rem',
-        maxHeight: '30rem',
+        maxHeight: '30.0625rem',
         margin: '20px auto',
         border: '1px solid'
       }}
