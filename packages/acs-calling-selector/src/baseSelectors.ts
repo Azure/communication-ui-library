@@ -1,12 +1,10 @@
 // © Microsoft Corporation. All rights reserved.
 
-import {
-  Call,
-  CallClientState,
-  DeviceManagerState,
-  IncomingCall
-} from '../../acs-calling-declarative/dist/acs-calling-declarative';
+import { Call, CallClientState, DeviceManagerState, IncomingCall } from '@azure/acs-calling-declarative';
 
+/**
+ * Common props used to reference declarative client state.
+ */
 export type BaseSelectorProps = {
   callId: string;
 };

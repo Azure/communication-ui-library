@@ -1,9 +1,10 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { CallAgent, CallAgentOptions, CallClient, DeviceManager } from '@azure/communication-calling';
+import { CallAgent, CallAgentOptions, DeviceManager } from '@azure/communication-calling';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { ReactElement } from 'react';
 import { CallClientHandlers, createDefaultHandlersForComponent } from './createHandlers';
+import { DeclarativeCallClient } from '@azure/acs-calling-declarative';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function TestCallClientComponent(props: CallClientHandlers): ReactElement | null {
@@ -11,6 +12,19 @@ function TestCallClientComponent(props: CallClientHandlers): ReactElement | null
 }
 
 class MockCallClient {
+  state: any;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  onStateChange(handler: (state: any) => void): void {
+    throw new Error('Method not implemented.');
+  }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  startRenderVideo(callId: string, stream: any, options?: any): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  stopRenderVideo(callId: string, stream: any): void {
+    throw new Error('Method not implemented.');
+  }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   createCallAgent(tokenCredential: CommunicationTokenCredential, options?: CallAgentOptions): Promise<CallAgent> {
     throw new Error('Method not implemented.');
@@ -23,7 +37,7 @@ class MockCallClient {
 describe('createHandlers', () => {
   test('creates handlers when only callClient is passed in and others are undefined', async () => {
     const handlers = createDefaultHandlersForComponent(
-      new MockCallClient() as CallClient,
+      new MockCallClient() as DeclarativeCallClient,
       undefined,
       undefined,
       undefined,
