@@ -40,6 +40,7 @@ describe('typingIndicatorSelector tests', () => {
     ];
     const participants = new Map();
     participants.set('1', { id: '1', displayName: 'User1' });
+    participants.set('2', { id: '2', displayName: 'User2' });
     const userId = '1';
     const result = typingIndicatorSelector.resultFunc(orderedTypingIndicators, participants, userId);
     expect(result.typingUsers.length).toEqual(1);

@@ -21,24 +21,8 @@ export {
   useSubscribeToVideoDeviceList
 };
 
-export { useFetchMessage } from './useFetchMessage';
-export { useFetchMessages } from './useFetchMessages';
-export { useFetchReadReceipts } from './useFetchReadReceipts';
-export { useFetchThread } from './useFetchThread';
-export { useFetchThreadMembers } from './useFetchThreadMembers';
 export { useGroupCall } from './useGroupCall';
-export { useIsMessageSeen } from './useIsMessageSeen';
 export { useMicrophone } from './useMicrophone';
 export { useOutgoingCall } from './useOutgoingCall';
-export { useRemoveThreadMember } from './useRemoveThreadMember';
-export { useSendMessage } from './useSendMessage';
-export type { ChatMessageWithClientMessageId } from './useSendMessage';
-export { useSendReadReceipt } from './useSendReadReceipt';
-export { useSendTypingNotification } from './useSendTypingNotification';
-export { useSubscribeMessage } from './useSubscribeMessage';
-export { useSubscribeReadReceipt } from './useSubscribeReadReceipt';
-export { useSubscribeTypingNotification } from './useSubscribeTypingNotification';
 export { useTeamsCall } from './useTeamsCall';
-export { useTypingUsers } from './useTypingUsers';
-export { useUpdateThreadTopicName } from './useUpdateThreadTopicName';
 export { useIncomingCall } from './useIncomingCall';

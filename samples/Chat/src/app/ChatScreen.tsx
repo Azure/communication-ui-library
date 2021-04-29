@@ -1,10 +1,10 @@
 // © Microsoft Corporation. All rights reserved.
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { chatScreenBottomContainerStyle, chatScreenContainerStyle } from './styles/ChatScreen.styles';
 import { Stack } from '@fluentui/react';
 import { onRenderAvatar } from './Avatar';
-import { useChatThreadClient } from '@azure/communication-ui';
+import { useChatClient, useChatThreadClient, useThreadId } from '@azure/communication-ui';
 import { ChatHeader } from './ChatHeader';
 import { ChatArea } from './ChatArea';
 import { SidePanel, SidePanelTypes } from './SidePanel';
@@ -20,13 +20,23 @@ interface ChatScreenProps {
 }
 
 export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
+  const { errorHandler, endChatHandler } = props;
+
   // People pane will be visible when a chat is joined if the window width is greater than 600
   const [selectedPane, setSelectedPane] = useState(
     window.innerWidth > 600 ? SidePanelTypes.People : SidePanelTypes.None
   );
+  const isAllInitialParticipantsFetchedRef = useRef(false);
 
-  const { errorHandler, endChatHandler } = props;
+  const threadId = useThreadId();
+  const chatClient = useChatClient();
   const chatThreadClient = useChatThreadClient();
+
+  // Updates the thread state and populates attributes like topic, id, createdBy etc.
+  useEffect(() => {
+    chatClient.getChatThread(threadId);
+    // eslint-disable-next-line
+  }, []);
 
   // This code gets all participants who joined the chat earlier than the current user.
   // We need to do this to make the state in declaritive up to date.
@@ -38,6 +48,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             // Fetch 100 participants per page by default.
             maxPageSize: 100
           }));
+          isAllInitialParticipantsFetchedRef.current = true;
         } catch (e) {
           console.log(e);
           errorHandler();
@@ -55,6 +66,22 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const chatHeaderProps = useSelector(chatHeaderSelector);
   const chatHeaderHandlers = useHandlers(ChatHeader);
   const chatParticipantProps = useSelector(chatParticipantListSelector);
+
+  useEffect(() => {
+    // We only want to check if we've fetched all the existing participants.
+    if (isAllInitialParticipantsFetchedRef.current) {
+      let isCurrentUserInChat = false;
+      // Check if current user still in chat.
+      for (let i = 0; i < chatParticipantProps.chatParticipants.length; i++) {
+        if (chatParticipantProps.chatParticipants[i].userId === chatParticipantProps.userId) {
+          isCurrentUserInChat = true;
+          break;
+        }
+      }
+      // If there is no match in the participant list, then the current user is no longer in the chat.
+      !isCurrentUserInChat && errorHandler();
+    }
+  }, [chatParticipantProps.chatParticipants, chatParticipantProps.userId, errorHandler]);
 
   // onRenderAvatar is a contoso callback. We need it to support emoji in Sample App. Sample App is currently on
   // components v0 so we're passing the callback at the component level. This might need further refactoring if this
