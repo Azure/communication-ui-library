@@ -5,14 +5,14 @@ import { Meta } from '@storybook/react/types-6-0';
 import { getDocs } from './ThemesDocs';
 import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import {
+  CameraButton,
   ControlBar,
   FluentThemeProvider,
   GridLayout,
   MicrophoneButton,
   VideoTile,
   hangupButtonProps,
-  screenShareButtonProps,
-  videoButtonProps
+  screenShareButtonProps
 } from '@azure/communication-ui';
 import { DefaultButton } from '@fluentui/react';
 
@@ -59,8 +59,7 @@ export const TeamsThemeComponent: () => JSX.Element = () => {
 
               {/*Control Bar with default set up*/}
               <ControlBar layout={'dockedTop'}>
-                <DefaultButton
-                  {...videoButtonProps}
+                <CameraButton
                   onClick={() => {
                     /*handle onClick*/
                   }}

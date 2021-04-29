@@ -1,12 +1,12 @@
 import React from 'react';
 import {
+  CameraButton,
   ControlBar,
   FluentThemeProvider,
   MicrophoneButton,
   hangupButtonProps,
   optionsButtonProps,
-  screenShareButtonProps,
-  videoButtonProps
+  screenShareButtonProps
 } from '@azure/communication-ui';
 import { DefaultButton } from '@fluentui/react';
 
@@ -14,8 +14,7 @@ export const ControlBarExample: () => JSX.Element = () => {
   return (
     <FluentThemeProvider>
       <ControlBar layout={'horizontal'}>
-        <DefaultButton
-          {...videoButtonProps}
+        <CameraButton
           onClick={() => {
             /*handle onClick*/
           }}

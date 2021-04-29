@@ -7,12 +7,13 @@ export const getDocs: () => JSX.Element = () => {
   const exampleTeamsTheme = `
   import React from 'react';
   import {
+    CameraButton,
     ControlBar,
     FluentThemeProvider,
     GridLayout,
     MicrophoneButton,
     VideoTile,
-    hangupButtonProps, screenShareButtonProps, videoButtonProps,
+    hangupButtonProps, screenShareButtonProps
   } from '@azure/communication-ui';
   import { DefaultButton } from '@fluentui/react';
 
@@ -47,8 +48,7 @@ export const getDocs: () => JSX.Element = () => {
         <FluentThemeProvider fluentTheme={ TeamsTheme } >
           {/*Control Bar with default set up*/}
           <ControlBar layout={'dockedTop'}>
-            <DefaultButton
-                {...videoButtonProps}
+            <CameraButton
                 onClick={() => {
                 /*handle onClick*/
                 }}
@@ -87,7 +87,7 @@ export const getDocs: () => JSX.Element = () => {
         </FluentThemeProvider>
       );
     }
-    
+
   export default TeamsLikeTheme;`;
 
   return (
