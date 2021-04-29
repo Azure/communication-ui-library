@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { mergeStyles } from '@fluentui/react';
 import { ThemeProvider, Theme, PartialTheme } from '@fluentui/react-theme-provider';
 import { mergeThemes, Provider, teamsTheme, ThemeInput } from '@fluentui/react-northstar';
-import { lightTheme } from '../constants/themes';
+import { defaultThemes } from '../constants';
 
 /**
  * Props for FluentThemeProvider
@@ -21,6 +21,16 @@ const wrapper = mergeStyles({
   width: '100%'
 });
 
+const initialFluentNorthstarTheme = mergeThemes(teamsTheme, {
+  componentVariables: {
+    // suppressing teams theme for chat message links to get better styling from Fluent UI Link
+    ChatMessage: {
+      linkColor: undefined,
+      linkColorMine: undefined
+    }
+  }
+});
+
 /**
  * @description Provider to apply theme ACS UI SDK core components. ACS UI SDK core components are built
  * with components mostly from [Fluent UI](https://developer.microsoft.com/en-us/fluentui#/controls/web)
@@ -31,12 +41,12 @@ const wrapper = mergeStyles({
 export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Element => {
   const { fluentTheme, children } = props;
   // if fluentTheme is not provided, default to light theme
-  const fluentUITheme = fluentTheme ?? lightTheme;
-  const [fluentNorthStarTheme, setFluentNorthStarTheme] = useState<ThemeInput<any>>(teamsTheme);
+  const fluentUITheme = fluentTheme ?? defaultThemes.light.theme;
+  const [fluentNorthstarTheme, setFluentNorthstarTheme] = useState<ThemeInput<any>>(initialFluentNorthstarTheme);
 
   useEffect(() => {
-    setFluentNorthStarTheme(
-      mergeThemes(teamsTheme, {
+    setFluentNorthstarTheme(
+      mergeThemes(initialFluentNorthstarTheme, {
         componentVariables: {
           Chat: {
             backgroundColor: fluentUITheme?.palette?.white
@@ -63,7 +73,7 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
 
   return (
     <ThemeProvider theme={fluentUITheme} className={wrapper}>
-      <Provider theme={fluentNorthStarTheme} className={wrapper}>
+      <Provider theme={fluentNorthstarTheme} className={wrapper}>
         {children}
       </Provider>
     </ThemeProvider>

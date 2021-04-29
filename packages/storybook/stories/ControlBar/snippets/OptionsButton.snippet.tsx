@@ -29,6 +29,7 @@ export const OptionsButtonExample: () => JSX.Element = () => {
       }
     ]
   };
+
   return (
     <FluentThemeProvider>
       <ControlBar layout={'horizontal'}>
