@@ -153,8 +153,8 @@ export const MOCK_TRANSCRIPTION_NAME = 'Transcription';
 export function createMockApiFeatures(
   isTranscription: boolean,
   cache: Map<string, any>
-): <TFeature extends CallApiFeature>(cls: CallFeatureFactoryType<TFeature>) => TFeature {
-  return <TFeature extends CallApiFeature>(cls: CallFeatureFactoryType<TFeature>): TFeature => {
+): <FeatureT extends CallApiFeature>(cls: CallFeatureFactoryType<FeatureT>) => FeatureT {
+  return <FeatureT extends CallApiFeature>(cls: CallFeatureFactoryType<FeatureT>): FeatureT => {
     if (typeof cls === typeof Features.Transcription) {
       if (cache.has(MOCK_TRANSCRIPTION_NAME)) {
         return cache.get(MOCK_TRANSCRIPTION_NAME);

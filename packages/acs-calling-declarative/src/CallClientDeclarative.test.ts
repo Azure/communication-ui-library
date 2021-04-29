@@ -828,11 +828,10 @@ describe('declarative call client', () => {
     await createMockCallAndEmitCallsUpdated(testData, undefined, mockCall);
 
     await waitWithBreakCondition(
-      () => testData.declarativeCallClient.state.calls.get(mockCallId)?.isTranscriptionActive === true
+      () => testData.declarativeCallClient.state.calls.get(mockCallId)?.transcription.isTranscriptionActive === true
     );
 
-    expect(testData.declarativeCallClient.state.calls.get(mockCallId)?.isTranscriptionActive).toBeDefined();
-    expect(testData.declarativeCallClient.state.calls.get(mockCallId)?.isTranscriptionActive).toBe(true);
+    expect(testData.declarativeCallClient.state.calls.get(mockCallId)?.transcription.isTranscriptionActive).toBe(true);
   });
 
   test('should detect transcription changes in call', async () => {
@@ -845,20 +844,20 @@ describe('declarative call client', () => {
     await createMockCallAndEmitCallsUpdated(testData, undefined, mockCall);
 
     await waitWithBreakCondition(
-      () => testData.declarativeCallClient.state.calls.get(mockCallId)?.isTranscriptionActive === true
+      () => testData.declarativeCallClient.state.calls.get(mockCallId)?.transcription.isTranscriptionActive === true
     );
 
-    expect(testData.declarativeCallClient.state.calls.get(mockCallId)?.isTranscriptionActive).toBe(true);
+    expect(testData.declarativeCallClient.state.calls.get(mockCallId)?.transcription.isTranscriptionActive).toBe(true);
 
     const transcription = featureCache.get(MOCK_TRANSCRIPTION_NAME);
     transcription.isTranscriptionActive = false;
     transcription.emitter.emit('isTranscriptionActiveChanged');
 
     await waitWithBreakCondition(
-      () => testData.declarativeCallClient.state.calls.get(mockCallId)?.isTranscriptionActive === false
+      () => testData.declarativeCallClient.state.calls.get(mockCallId)?.transcription.isTranscriptionActive === false
     );
 
-    expect(testData.declarativeCallClient.state.calls.get(mockCallId)?.isTranscriptionActive).toBe(false);
+    expect(testData.declarativeCallClient.state.calls.get(mockCallId)?.transcription.isTranscriptionActive).toBe(false);
   });
 
   test('should unsubscribe to transcription changes when call ended', async () => {
@@ -871,10 +870,10 @@ describe('declarative call client', () => {
     await createMockCallAndEmitCallsUpdated(testData, undefined, mockCall);
 
     await waitWithBreakCondition(
-      () => testData.declarativeCallClient.state.calls.get(mockCallId)?.isTranscriptionActive === true
+      () => testData.declarativeCallClient.state.calls.get(mockCallId)?.transcription.isTranscriptionActive === true
     );
 
-    expect(testData.declarativeCallClient.state.calls.get(mockCallId)?.isTranscriptionActive).toBe(true);
+    expect(testData.declarativeCallClient.state.calls.get(mockCallId)?.transcription.isTranscriptionActive).toBe(true);
 
     testData.mockCallAgent.calls = [];
     testData.mockCallAgent.emit('callsUpdated', {

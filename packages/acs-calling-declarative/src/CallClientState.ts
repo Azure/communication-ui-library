@@ -20,6 +20,16 @@ import {
 } from '@azure/communication-common';
 
 /**
+ * State only version of {@Link @azure/communication-calling#TranscriptionCallFeature}.
+ */
+export interface TranscriptionCallFeature {
+  /**
+   * Proxy of {@Link @azure/communication-calling#TranscriptionCallFeature.isTranscriptionActive}.
+   */
+  isTranscriptionActive: boolean;
+}
+
+/**
  * State only version of {@Link @azure/communication-calling#LocalVideoStream}.
  */
 export interface LocalVideoStream {
@@ -163,9 +173,9 @@ export interface Call {
    */
   remoteParticipantsEnded: Map<string, RemoteParticipant>;
   /**
-   * Proxy of {@Link @azure/communication-calling#TranscriptionCallFeature.isTranscriptionActive}.
+   * Proxy of {@Link @azure/communication-calling#TranscriptionCallFeature}.
    */
-  isTranscriptionActive: boolean;
+  transcription: TranscriptionCallFeature;
   /**
    * Stores the local date when the call started on the client. This is not originally in the SDK but provided by the
    * Declarative layer.

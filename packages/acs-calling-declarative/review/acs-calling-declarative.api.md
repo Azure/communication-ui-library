@@ -30,12 +30,12 @@ export interface Call {
     id: string;
     isMuted: boolean;
     isScreenSharingOn: boolean;
-    isTranscriptionActive: boolean;
     localVideoStreams: LocalVideoStream[];
     remoteParticipants: Map<string, RemoteParticipant>;
     remoteParticipantsEnded: Map<string, RemoteParticipant>;
     startTime: Date;
     state: CallState;
+    transcription: TranscriptionCallFeature;
 }
 
 // @public
@@ -102,6 +102,11 @@ export interface RemoteVideoStream {
     isAvailable: boolean;
     mediaStreamType: MediaStreamType;
     videoStreamRendererView: VideoStreamRendererView | undefined;
+}
+
+// @public
+export interface TranscriptionCallFeature {
+    isTranscriptionActive: boolean;
 }
 
 // @public
