@@ -2,6 +2,9 @@
 import {
   Call,
   CallAgent,
+  CallApiFeature,
+  CallFeatureFactoryType,
+  Features,
   IncomingCall,
   LocalVideoStream,
   RemoteParticipant,
@@ -47,9 +50,8 @@ export class MockCommunicationUserCredential {
   public dispose(): void {}
 }
 
-export function addMockEmitter(
-  object: MockCall | MockCallAgent | MockRemoteParticipant | MockRemoteVideoStream | MockIncomingCall
-): any {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function addMockEmitter(object: any): any {
   object.emitter = new EventEmitter();
   object.on = (event: any, listener: any): void => {
     object.emitter.on(event, listener);
@@ -67,7 +69,8 @@ export function createMockCall(mockCallId: string): MockCall {
   const mockCall = {
     id: mockCallId,
     remoteParticipants: [] as ReadonlyArray<RemoteParticipant>,
-    localVideoStreams: [] as ReadonlyArray<LocalVideoStream>
+    localVideoStreams: [] as ReadonlyArray<LocalVideoStream>,
+    api: createMockApiFeatures(false)
   } as MockCall;
   return addMockEmitter(mockCall);
 }
@@ -88,6 +91,25 @@ export function createMockIncomingCall(mockCallId: string): MockIncomingCall {
 export function createMockRemoteVideoStream(mockIsAvailable: boolean): MockRemoteVideoStream {
   const mockRemoteVideoStream = { isAvailable: mockIsAvailable } as MockRemoteVideoStream;
   return addMockEmitter(mockRemoteVideoStream);
+}
+
+export function createMockApiFeatures(
+  isTranscription: boolean
+): <TFeature extends CallApiFeature>(cls: CallFeatureFactoryType<TFeature>) => TFeature {
+  return <TFeature extends CallApiFeature>(cls: CallFeatureFactoryType<TFeature>): TFeature => {
+    console.log('cls', cls);
+    console.log('recording', Features.Recording);
+    console.log('transcription', Features.Transcription);
+    console.log('transfer', Features.Transfer);
+    if (cls instanceof Features.Transcription) {
+      const recordingFeature = {
+        isTranscriptionActive: isTranscription
+      };
+      return addMockEmitter(recordingFeature);
+    } else {
+      throw new Error('Not implemented');
+    }
+  };
 }
 
 function waitMilliseconds(duration: number): Promise<void> {

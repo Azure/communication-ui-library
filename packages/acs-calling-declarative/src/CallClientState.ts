@@ -163,6 +163,10 @@ export interface Call {
    */
   remoteParticipantsEnded: Map<string, RemoteParticipant>;
   /**
+   * Proxy of {@Link @azure/communication-calling#TranscriptionCallFeature.isTranscriptionActive}.
+   */
+  isTranscriptionActive: boolean;
+  /**
    * Stores the local date when the call started on the client. This is not originally in the SDK but provided by the
    * Declarative layer.
    */

@@ -13,6 +13,7 @@ import { callClientDeclaratify, DeclarativeCallClient } from './CallClientDeclar
 import { getRemoteParticipantKey } from './Converter';
 import {
   addMockEmitter,
+  createMockApiFeatures,
   createMockCall,
   createMockRemoteParticipant,
   createMockRemoteVideoStream,
@@ -71,9 +72,17 @@ function createDeclarativeClient(testData: TestData): void {
   testData.declarativeCallClient = callClientDeclaratify(testData.mockCallClient);
 }
 
-async function createMockCallAndEmitCallsUpdated(testData: TestData, waitCondition?: () => boolean): Promise<void> {
+async function createMockCallAndEmitCallsUpdated(
+  testData: TestData,
+  waitCondition?: () => boolean,
+  mockCall?: MockCall
+): Promise<void> {
   await testData.declarativeCallClient.createCallAgent(new MockCommunicationUserCredential());
-  testData.mockCall = createMockCall(mockCallId);
+  if (mockCall) {
+    testData.mockCall = mockCall;
+  } else {
+    testData.mockCall = createMockCall(mockCallId);
+  }
   testData.mockCallAgent.calls = [testData.mockCall];
   testData.mockCallAgent.emit('callsUpdated', {
     added: [testData.mockCall],
@@ -789,5 +798,21 @@ describe('declarative call client', () => {
     expect(
       testData.declarativeCallClient.state.calls.get(mockCallId)?.localVideoStreams[0]?.videoStreamRendererView
     ).not.toBeDefined();
+  });
+
+  test('should detect if call already has transcription active', async () => {
+    const testData = {} as TestData;
+    createClientAndAgentMocks(testData);
+    createDeclarativeClient(testData);
+    const mockCall = createMockCall(mockCallId);
+    mockCall.api = createMockApiFeatures(true);
+    await createMockCallAndEmitCallsUpdated(testData, undefined);
+
+    await waitWithBreakCondition(
+      () => testData.declarativeCallClient.state.calls.get(mockCallId)?.isTranscriptionActive === true
+    );
+
+    expect(testData.declarativeCallClient.state.calls.get(mockCallId)?.isTranscriptionActive).toBeDefined();
+    expect(testData.declarativeCallClient.state.calls.get(mockCallId)?.isTranscriptionActive).toBe(true);
   });
 });

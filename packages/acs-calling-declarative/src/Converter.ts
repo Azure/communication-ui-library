@@ -110,6 +110,7 @@ export function convertSdkCallToDeclarativeCall(call: SdkCall): DeclarativeCall 
     localVideoStreams: call.localVideoStreams.map(convertSdkLocalStreamToDeclarativeLocalStream),
     remoteParticipants: declarativeRemoteParticipants,
     remoteParticipantsEnded: new Map<string, DeclarativeRemoteParticipant>(),
+    isTranscriptionActive: false,
     startTime: new Date(),
     endTime: undefined
   };
