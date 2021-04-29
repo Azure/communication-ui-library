@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Add AudioButton component to replace DefaultButton for audio",
+  "comment": "Add MicrophoneButton component to replace DefaultButton for microphone",
   "packageName": "@azure/communication-ui",
   "email": "alcail@microsoft.com",
   "dependentChangeType": "patch"
