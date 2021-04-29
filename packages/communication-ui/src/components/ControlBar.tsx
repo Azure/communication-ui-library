@@ -1,14 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 import { mergeStyles, Stack, IButtonProps } from '@fluentui/react';
 import { useTheme } from '@fluentui/react-theme-provider';
-import {
-  CallControlCloseTrayIcon,
-  CallControlPresentNewIcon,
-  CallEndIcon,
-  CallIcon,
-  CallRecordingIcon,
-  MoreIcon
-} from '@fluentui/react-northstar';
+import { CallEndIcon, CallIcon, CallRecordingIcon, MoreIcon } from '@fluentui/react-northstar';
 import React from 'react';
 import { BaseCustomStylesProps } from '../types';
 import {
