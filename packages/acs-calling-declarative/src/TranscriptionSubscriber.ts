@@ -14,6 +14,8 @@ export class TranscriptionSubscriber {
     this._context = context;
     this._transcription = transcription;
 
+    // If transcription as already started when we joined the call, make sure it is reflected in state as there may not
+    // be an event for it.
     if (this._transcription.isTranscriptionActive) {
       this._context.setCallTranscriptionActive(this._callIdRef.callId, this._transcription.isTranscriptionActive);
     }

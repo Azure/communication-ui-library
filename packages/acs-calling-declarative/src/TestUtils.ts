@@ -7,8 +7,16 @@ import {
   Features,
   IncomingCall,
   LocalVideoStream,
+  PropertyChangedEvent,
+  RecordingCallFeature,
   RemoteParticipant,
-  RemoteVideoStream
+  RemoteVideoStream,
+  TranscriptionCallFeature,
+  Transfer,
+  TransferCallFeature,
+  TransferRequestedEvent,
+  TransferToParticipant,
+  TransferToParticipantOptions
 } from '@azure/communication-calling';
 import EventEmitter from 'events';
 
@@ -50,6 +58,45 @@ export class MockCommunicationUserCredential {
   public dispose(): void {}
 }
 
+export class MockRecordingCallFeatureImpl implements RecordingCallFeature {
+  public name = 'Recording';
+  public isRecordingActive = false;
+  public emitter = new EventEmitter();
+  on(event: 'isRecordingActiveChanged', listener: PropertyChangedEvent): void {
+    this.emitter.on(event, listener);
+  }
+  off(event: 'isRecordingActiveChanged', listener: PropertyChangedEvent): void {
+    this.emitter.off(event, listener);
+  }
+}
+
+export class MockTransferCallFeatureImpl implements TransferCallFeature {
+  public name = 'Transfer';
+  public emitter = new EventEmitter();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  transfer(target: TransferToParticipant, transferOptions?: TransferToParticipantOptions): Transfer {
+    throw new Error('Method not implemented.');
+  }
+  on(event: 'transferRequested', listener: TransferRequestedEvent): void {
+    this.emitter.on(event, listener);
+  }
+  off(event: 'transferRequested', listener: TransferRequestedEvent): void {
+    this.emitter.off(event, listener);
+  }
+}
+
+export class MockTranscriptionCallFeatureImpl implements TranscriptionCallFeature {
+  public name = 'Transcription';
+  public isTranscriptionActive = false;
+  public emitter = new EventEmitter();
+  on(event: 'isTranscriptionActiveChanged', listener: PropertyChangedEvent): void {
+    this.emitter.on(event, listener);
+  }
+  off(event: 'isTranscriptionActiveChanged', listener: PropertyChangedEvent): void {
+    this.emitter.off(event, listener);
+  }
+}
+
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function addMockEmitter(object: any): any {
   object.emitter = new EventEmitter();
@@ -70,7 +117,7 @@ export function createMockCall(mockCallId: string): MockCall {
     id: mockCallId,
     remoteParticipants: [] as ReadonlyArray<RemoteParticipant>,
     localVideoStreams: [] as ReadonlyArray<LocalVideoStream>,
-    api: createMockApiFeatures(false)
+    api: createMockApiFeatures(false, new Map<string, any>())
   } as MockCall;
   return addMockEmitter(mockCall);
 }
@@ -93,19 +140,30 @@ export function createMockRemoteVideoStream(mockIsAvailable: boolean): MockRemot
   return addMockEmitter(mockRemoteVideoStream);
 }
 
+export const MOCK_TRANSCRIPTION_NAME = 'Transcription';
+
+/**
+ * Create a mockApiFeatures function see {@Link @azure/communication-calling#Call.api}. If cache is passed in, will try
+ * to return existing cached TFeatures else create new TFeature, cache it, and then return it.
+ *
+ * @param isTranscription
+ * @param cache
+ * @returns
+ */
 export function createMockApiFeatures(
-  isTranscription: boolean
+  isTranscription: boolean,
+  cache: Map<string, any>
 ): <TFeature extends CallApiFeature>(cls: CallFeatureFactoryType<TFeature>) => TFeature {
   return <TFeature extends CallApiFeature>(cls: CallFeatureFactoryType<TFeature>): TFeature => {
-    console.log('cls', cls);
-    console.log('recording', Features.Recording);
-    console.log('transcription', Features.Transcription);
-    console.log('transfer', Features.Transfer);
-    if (cls instanceof Features.Transcription) {
-      const recordingFeature = {
+    if (typeof cls === typeof Features.Transcription) {
+      if (cache.has(MOCK_TRANSCRIPTION_NAME)) {
+        return cache.get(MOCK_TRANSCRIPTION_NAME);
+      }
+      const transcription = addMockEmitter({
         isTranscriptionActive: isTranscription
-      };
-      return addMockEmitter(recordingFeature);
+      });
+      cache.set(MOCK_TRANSCRIPTION_NAME, transcription);
+      return transcription;
     } else {
       throw new Error('Not implemented');
     }
