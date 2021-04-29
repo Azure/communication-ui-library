@@ -1,6 +1,6 @@
 # Writing selectors/handlers
 
-Selectors/handlers are what we provide to our customer to connect our communication ui library with our declarative client(Calling and chat).
+Selectors/handlers are what we provide to our customers to connect our communication UI library with our declarative client(Calling and Chat).
 
 There are several principles for writing selectors/handlers we exporting from our library, either for perf or code styles:
 
