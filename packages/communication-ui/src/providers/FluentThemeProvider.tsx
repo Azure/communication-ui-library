@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { mergeStyles } from '@fluentui/react';
 import { ThemeProvider, Theme, PartialTheme } from '@fluentui/react-theme-provider';
 import { mergeThemes, Provider, teamsTheme, ThemeInput } from '@fluentui/react-northstar';
-import { lightTheme } from '../constants/themes';
+import { defaultThemes } from '../constants';
 
 /**
  * Props for FluentThemeProvider
@@ -41,7 +41,7 @@ const initialFluentNorthstarTheme = mergeThemes(teamsTheme, {
 export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Element => {
   const { fluentTheme, children } = props;
   // if fluentTheme is not provided, default to light theme
-  const fluentUITheme = fluentTheme ?? lightTheme;
+  const fluentUITheme = fluentTheme ?? defaultThemes.light.theme;
   const [fluentNorthstarTheme, setFluentNorthstarTheme] = useState<ThemeInput<any>>(initialFluentNorthstarTheme);
 
   useEffect(() => {
