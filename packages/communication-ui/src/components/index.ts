@@ -35,12 +35,10 @@ export type { CameraButtonProps } from './CameraButton';
 
 export {
   ControlBar,
-  screenShareButtonProps,
   optionsButtonProps,
   answerButtonProps,
   hangupButtonProps,
   recordButtonProps,
-  labeledScreenShareButtonProps,
   labeledHangupButtonProps,
   labeledOptionsButtonProps,
   labeledAnswerButtonProps,
@@ -50,6 +48,9 @@ export type { ControlBarProps, ControlBarLayoutType } from './ControlBar';
 
 export { MicrophoneButton } from './MicrophoneButton';
 export type { MicrophoneButtonProps } from './MicrophoneButton';
+
+export { ScreenShareButton } from './ScreenShareButton';
+export type { ScreenShareButtonProps } from './ScreenShareButton';
 
 export { VideoTile } from './VideoTile';
 export type { VideoTileProps, VideoTileStylesProps, PlaceholderProps } from './VideoTile';
