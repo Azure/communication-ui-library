@@ -25,19 +25,11 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   const { showLabel = false, styles, onRenderIcon, onRenderText } = props;
 
   const defaultRenderIcon = (props?: IButtonProps): JSX.Element => {
-    if (props?.checked) {
-      return <CallVideoIcon />;
-    }
-
-    return <CallVideoOffIcon />;
+    return props?.checked ? <CallVideoIcon /> : <CallVideoOffIcon />;
   };
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {
-    if (props?.checked) {
-      return <Stack className={mergeStyles(controlButtonLabelStyles)}>Turn off</Stack>;
-    }
-
-    return <Stack className={mergeStyles(controlButtonLabelStyles)}>Turn on</Stack>;
+    return <Stack className={mergeStyles(controlButtonLabelStyles)}>{props?.checked ? 'Turn off' : 'Turn on'}</Stack>;
   };
 
   return (
