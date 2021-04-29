@@ -275,7 +275,9 @@ export interface GroupCallControlBarProps extends CallControlBarContainerProps {
   onEndCallClick(): void;
 }
 
-export const GroupCallControlBar = (props: ControlBarProps & GroupCallControlBarProps & ErrorHandlingProps) => {
+export const GroupCallControlBar = (
+  props: ControlBarProps & GroupCallControlBarProps & ErrorHandlingProps
+): JSX.Element => {
   const {
     localVideoEnabled,
     onEndCallClick,

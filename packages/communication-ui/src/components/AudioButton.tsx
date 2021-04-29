@@ -21,10 +21,10 @@ export interface AudioButtonProps extends IButtonProps {
  * @param props - of type AudioButtonProps
  */
 export const AudioButton = (props: AudioButtonProps): JSX.Element => {
-  const { checked, showLabel = false, styles, onRenderIcon, onRenderText } = props;
+  const { showLabel = false, styles, onRenderIcon, onRenderText } = props;
 
   const defaultRenderIcon = (props?: IButtonProps): JSX.Element => {
-    if (checked) {
+    if (props?.checked) {
       return <MicIcon />;
     }
 
@@ -32,7 +32,7 @@ export const AudioButton = (props: AudioButtonProps): JSX.Element => {
   };
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {
-    if (checked) {
+    if (props?.checked) {
       return <Stack className={mergeStyles(controlButtonLabelStyles)}>Mute</Stack>;
     }
 
