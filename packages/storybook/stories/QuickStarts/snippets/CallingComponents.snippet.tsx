@@ -1,12 +1,12 @@
 import {
+  AudioButton,
+  ControlBar,
   GridLayout,
   VideoTile,
-  ControlBar,
-  videoButtonProps,
-  audioButtonProps,
-  screenShareButtonProps,
+  hangupButtonProps,
   optionsButtonProps,
-  hangupButtonProps
+  screenShareButtonProps,
+  videoButtonProps
 } from '@azure/communication-ui';
 
 import { DefaultButton, Stack, IContextualMenuProps } from '@fluentui/react';
@@ -46,11 +46,7 @@ export const CallingComponents = (): JSX.Element => {
           checked={videoButtonChecked}
           onClick={() => setVideoButtonChecked(!videoButtonChecked)}
         />
-        <DefaultButton
-          {...audioButtonProps}
-          checked={audioButtonChecked}
-          onClick={() => setAudioButtonChecked(!audioButtonChecked)}
-        />
+        <AudioButton checked={audioButtonChecked} onClick={() => setAudioButtonChecked(!audioButtonChecked)} />
         <DefaultButton
           {...screenShareButtonProps}
           checked={screenshareButtonChecked}

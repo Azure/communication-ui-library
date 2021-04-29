@@ -1,8 +1,8 @@
 import React from 'react';
 import {
-  FluentThemeProvider,
+  AudioButton,
   ControlBar,
-  audioButtonProps,
+  FluentThemeProvider,
   hangupButtonProps,
   screenShareButtonProps,
   videoButtonProps
@@ -14,7 +14,7 @@ export const FluentThemeProviderSnippet = (): JSX.Element => {
     <FluentThemeProvider>
       <ControlBar>
         <DefaultButton {...videoButtonProps} />
-        <DefaultButton {...audioButtonProps} />
+        <AudioButton />
         <DefaultButton {...screenShareButtonProps} />
         <DefaultButton {...hangupButtonProps} />
       </ControlBar>

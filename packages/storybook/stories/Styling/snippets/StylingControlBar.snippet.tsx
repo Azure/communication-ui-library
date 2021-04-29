@@ -1,5 +1,5 @@
 import {
-  audioButtonProps,
+  AudioButton,
   ControlBar,
   FluentThemeProvider,
   hangupButtonProps,
@@ -27,7 +27,7 @@ export const ControlBarExample = (): JSX.Element => {
     <FluentThemeProvider>
       <ControlBar styles={styles}>
         <DefaultButton {...videoButtonProps} />
-        <DefaultButton {...audioButtonProps} />
+        <AudioButton />
         <DefaultButton {...hangupButtonProps} />
       </ControlBar>
     </FluentThemeProvider>
