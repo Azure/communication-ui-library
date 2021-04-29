@@ -36,7 +36,7 @@ export const getDocs: () => JSX.Element = () => {
 
       <Heading>Microphone with default label</Heading>
       <Description>
-        You can display the button label which, by default, will show below the icon as 'Mute' or 'Unmute'.
+        You can display the button label which, by default, will show below the icon as `Mute` or `Unmute`.
       </Description>
       <Canvas withSource={SourceState.NONE}>
         <MicrophoneButtonWithLabelExample />
