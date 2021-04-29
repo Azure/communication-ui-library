@@ -213,7 +213,7 @@ const memoizeAllMessages = memoizeFnAll(
     statusToRender?: MessageStatus,
     onRenderMessage?: (message: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element
   ): ShorthandValue<ChatItemProps> => {
-    let messageProps: MessageProps = {
+    const messageProps: MessageProps = {
       message: message
     };
 
