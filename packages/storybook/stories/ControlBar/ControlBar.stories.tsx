@@ -4,13 +4,12 @@ import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import {
   ControlBar,
-  audioButtonProps,
+  MicrophoneButton,
   hangupButtonProps,
-  labeledVideoButtonProps,
-  labeledAudioButtonProps,
-  labeledScreenShareButtonProps,
-  labeledOptionsButtonProps,
   labeledHangupButtonProps,
+  labeledOptionsButtonProps,
+  labeledScreenShareButtonProps,
+  labeledVideoButtonProps,
   optionsButtonProps,
   screenShareButtonProps,
   videoButtonProps,
@@ -97,7 +96,7 @@ export const ControlBarComponent: (
     >
       <ControlBar layout={layout}>
         <DefaultButton {...(showLabels ? labeledVideoButtonProps : videoButtonProps)} checked={toggleButtons} />
-        <DefaultButton {...(showLabels ? labeledAudioButtonProps : audioButtonProps)} checked={toggleButtons} />
+        <MicrophoneButton showLabel={showLabels} checked={toggleButtons} />
         <DefaultButton
           {...(showLabels ? labeledScreenShareButtonProps : screenShareButtonProps)}
           checked={toggleButtons}

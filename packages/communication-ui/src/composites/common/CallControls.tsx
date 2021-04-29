@@ -4,10 +4,10 @@ import { DefaultButton, IButtonStyles, IContextualMenuProps } from '@fluentui/re
 import React, { useCallback } from 'react';
 import {
   ControlBar,
-  videoButtonProps,
-  audioButtonProps,
+  MicrophoneButton,
+  hangupButtonProps,
   optionsButtonProps,
-  hangupButtonProps
+  videoButtonProps
 } from '../../components';
 import { ControlBarProps, screenShareButtonProps } from '../../components/ControlBar';
 import {
@@ -144,8 +144,7 @@ export const OutgoingCallControlBar = (props: OutgoingCallControlBarProps & Erro
           });
         }}
       />
-      <DefaultButton
-        {...audioButtonProps}
+      <MicrophoneButton
         checked={isMicrophoneActive}
         disabled={micDisabled}
         onClick={() => {
@@ -190,8 +189,7 @@ export const IncomingCallControlBar = (
           });
         }}
       />
-      <DefaultButton
-        {...audioButtonProps}
+      <MicrophoneButton
         checked={isMicrophoneActive}
         disabled={micDisabled}
         onClick={() => {
@@ -247,8 +245,7 @@ export const CallControlBar = (props: ControlBarProps & CallControlBarProps & Er
           });
         }}
       />
-      <DefaultButton
-        {...audioButtonProps}
+      <MicrophoneButton
         checked={isMicrophoneActive}
         disabled={micDisabled}
         onClick={() => {
@@ -284,7 +281,9 @@ export interface GroupCallControlBarProps extends CallControlBarContainerProps {
   onEndCallClick(): void;
 }
 
-export const GroupCallControlBar = (props: ControlBarProps & GroupCallControlBarProps & ErrorHandlingProps) => {
+export const GroupCallControlBar = (
+  props: ControlBarProps & GroupCallControlBarProps & ErrorHandlingProps
+): JSX.Element => {
   const {
     localVideoEnabled,
     onEndCallClick,
@@ -317,8 +316,7 @@ export const GroupCallControlBar = (props: ControlBarProps & GroupCallControlBar
           });
         }}
       />
-      <DefaultButton
-        {...audioButtonProps}
+      <MicrophoneButton
         checked={isMicrophoneActive}
         disabled={micDisabled}
         onClick={() => {

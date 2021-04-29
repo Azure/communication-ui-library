@@ -1,8 +1,8 @@
 import React from 'react';
 import {
-  FluentThemeProvider,
   ControlBar,
-  audioButtonProps,
+  FluentThemeProvider,
+  MicrophoneButton,
   hangupButtonProps,
   videoButtonProps
 } from '@azure/communication-ui';
@@ -45,7 +45,7 @@ export const CustomButtonsExample: () => JSX.Element = () => {
     <FluentThemeProvider>
       <ControlBar layout={'horizontal'}>
         <DefaultButton {...videoButtonProps} />
-        <DefaultButton {...audioButtonProps} />
+        <MicrophoneButton />
         <CustomHangupButton />
       </ControlBar>
     </FluentThemeProvider>
