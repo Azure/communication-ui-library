@@ -19,30 +19,6 @@ import {
 } from './styles/ControlBar.styles';
 import { isDarkThemed } from '../utils/themeUtils';
 
-/** Fluent UI Button props for screenshare control */
-export const screenShareButtonProps: IButtonProps = {
-  onRenderIcon: (props?: IButtonProps): JSX.Element => {
-    if (props?.checked) {
-      return <CallControlCloseTrayIcon />;
-    } else {
-      return <CallControlPresentNewIcon bordered={false} />;
-    }
-  },
-  styles: controlButtonStyles
-};
-
-/** Fluent UI Button props for screenshare control with label */
-export const labeledScreenShareButtonProps: IButtonProps = {
-  ...screenShareButtonProps,
-  onRenderText: (props?: IButtonProps): JSX.Element => {
-    if (props?.checked) {
-      return <Stack className={mergeStyles(controlButtonLabelStyles)}>Stop</Stack>;
-    } else {
-      return <Stack className={mergeStyles(controlButtonLabelStyles)}>Share</Stack>;
-    }
-  }
-};
-
 /** Fluent UI Button props for options control */
 export const optionsButtonProps: IButtonProps = {
   onRenderIcon: (): JSX.Element => <MoreIcon />,
