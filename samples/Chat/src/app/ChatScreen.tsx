@@ -63,9 +63,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     document.getElementById('sendbox')?.focus();
   }, []);
 
-  const chatHeaderProps = useSelector(chatHeaderSelector, { threadId: threadId });
+  const chatHeaderProps = useSelector(chatHeaderSelector);
   const chatHeaderHandlers = useHandlers(ChatHeader);
-  const chatParticipantProps = useSelector(chatParticipantListSelector, { threadId: threadId });
+  const chatParticipantProps = useSelector(chatParticipantListSelector);
 
   useEffect(() => {
     // We only want to check if we've fetched all the existing participants.
