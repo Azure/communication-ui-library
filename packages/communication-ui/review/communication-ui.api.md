@@ -22,6 +22,14 @@ export interface BaseCustomStylesProps {
     root?: IStyle;
 }
 
+// @public
+export const CameraButton: (props: CameraButtonProps) => JSX.Element;
+
+// @public
+export interface CameraButtonProps extends IButtonProps {
+    showLabel?: boolean;
+}
+
 // @public (undocumented)
 export type ChatMessage = Message<'chat'>;
 
@@ -148,9 +156,6 @@ export const labeledRecordButtonProps: IButtonProps;
 
 // @public
 export const labeledScreenShareButtonProps: IButtonProps;
-
-// @public
-export const labeledVideoButtonProps: IButtonProps;
 
 // @public
 export const LIGHT = "Light";
@@ -381,9 +386,6 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
 
 // @public
 export const useSwitchableFluentTheme: () => SwitchableFluentThemeContext;
-
-// @public
-export const videoButtonProps: IButtonProps;
 
 // @public (undocumented)
 export const VideoTile: (props: VideoTileProps & PlaceholderProps) => JSX.Element;
