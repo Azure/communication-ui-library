@@ -7,10 +7,10 @@ export const getDocs: () => JSX.Element = () => {
   const exampleTeamsTheme = `
   import React from 'react';
   import {
-    AudioButton,
     ControlBar,
     FluentThemeProvider,
     GridLayout,
+    MicrophoneButton,
     VideoTile,
     hangupButtonProps, screenShareButtonProps, videoButtonProps,
   } from '@azure/communication-ui';
@@ -53,7 +53,7 @@ export const getDocs: () => JSX.Element = () => {
                 /*handle onClick*/
                 }}
             />
-            <AudioButton
+            <MicrophoneButton
                 onClick={() => {
                     /*handle onClick*/
                 }}

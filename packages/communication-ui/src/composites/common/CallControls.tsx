@@ -2,7 +2,13 @@
 
 import { DefaultButton, IButtonStyles, IContextualMenuProps } from '@fluentui/react';
 import React, { useCallback } from 'react';
-import { AudioButton, ControlBar, hangupButtonProps, optionsButtonProps, videoButtonProps } from '../../components';
+import {
+  ControlBar,
+  MicrophoneButton,
+  hangupButtonProps,
+  optionsButtonProps,
+  videoButtonProps
+} from '../../components';
 import { ControlBarProps, screenShareButtonProps } from '../../components/ControlBar';
 import {
   connectFuncsToContext,
@@ -138,7 +144,7 @@ export const OutgoingCallControlBar = (props: OutgoingCallControlBarProps & Erro
           });
         }}
       />
-      <AudioButton
+      <MicrophoneButton
         checked={isMicrophoneActive}
         disabled={micDisabled}
         onClick={() => {
@@ -183,7 +189,7 @@ export const IncomingCallControlBar = (
           });
         }}
       />
-      <AudioButton
+      <MicrophoneButton
         checked={isMicrophoneActive}
         disabled={micDisabled}
         onClick={() => {
@@ -239,7 +245,7 @@ export const CallControlBar = (props: ControlBarProps & CallControlBarProps & Er
           });
         }}
       />
-      <AudioButton
+      <MicrophoneButton
         checked={isMicrophoneActive}
         disabled={micDisabled}
         onClick={() => {
@@ -310,7 +316,7 @@ export const GroupCallControlBar = (
           });
         }}
       />
-      <AudioButton
+      <MicrophoneButton
         checked={isMicrophoneActive}
         disabled={micDisabled}
         onClick={() => {

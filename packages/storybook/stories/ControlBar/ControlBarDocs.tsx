@@ -70,8 +70,8 @@ export const getDocs: () => JSX.Element = () => {
       <Heading>Custom Buttons</Heading>
       <Description>
         You can also easily change the styles of any `DefaultButton`. In the example, below we import `videoButtonProps`
-        and `AudioButton` for the 1st and 2nd buttons and style our own hang up button for the 3rd button. Learn more
-        about styling [here](./?path=/docs/styling--page).
+        and `MicrophoneButton` for the 1st and 2nd buttons and style our own hang up button for the 3rd button. Learn
+        more about styling [here](./?path=/docs/styling--page).
       </Description>
       <Canvas withSource={SourceState.NONE}>
         <CustomButtonsExample />

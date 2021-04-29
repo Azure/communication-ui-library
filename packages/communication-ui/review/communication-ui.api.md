@@ -17,14 +17,6 @@ import { Theme } from '@fluentui/react-theme-provider';
 // @public
 export const answerButtonProps: IButtonProps;
 
-// @public
-export const AudioButton: (props: AudioButtonProps) => JSX.Element;
-
-// @public
-export interface AudioButtonProps extends IButtonProps {
-    showLabel?: boolean;
-}
-
 // @public (undocumented)
 export interface BaseCustomStylesProps {
     root?: IStyle;
@@ -202,6 +194,14 @@ export interface MessageThreadStylesProps extends BaseCustomStylesProps {
 
 // @public (undocumented)
 export type MessageTypes = 'chat' | 'system' | 'custom';
+
+// @public
+export const MicrophoneButton: (props: MicrophoneButtonProps) => JSX.Element;
+
+// @public
+export interface MicrophoneButtonProps extends IButtonProps {
+    showLabel?: boolean;
+}
 
 // @public
 export type NamedTheme = {

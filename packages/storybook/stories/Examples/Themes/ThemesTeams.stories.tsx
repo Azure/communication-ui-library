@@ -5,10 +5,10 @@ import { Meta } from '@storybook/react/types-6-0';
 import { getDocs } from './ThemesDocs';
 import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import {
-  AudioButton,
   ControlBar,
   FluentThemeProvider,
   GridLayout,
+  MicrophoneButton,
   VideoTile,
   hangupButtonProps,
   screenShareButtonProps,
@@ -65,7 +65,7 @@ export const TeamsThemeComponent: () => JSX.Element = () => {
                     /*handle onClick*/
                   }}
                 />
-                <AudioButton
+                <MicrophoneButton
                   onClick={() => {
                     /*handle onClick*/
                   }}
