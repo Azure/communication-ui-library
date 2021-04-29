@@ -11,7 +11,7 @@ import {
 import { Stack } from '@fluentui/react';
 import React, { useEffect, useMemo } from 'react';
 import { chatAreaContainerStyle, sendBoxParentStyle } from './styles/ChatArea.styles';
-import { useProps } from './hooks/useProps';
+import { usePropsFor } from './hooks/usePropsFor';
 
 export interface ChatAreaProps {
   onRenderAvatar?: (userId: string) => JSX.Element;
@@ -26,9 +26,9 @@ export const ChatArea = (props: ChatAreaProps): JSX.Element => {
   // components v0 so we're passing the callback at the component level. This might need further refactoring if this
   // ChatArea is to become a component or if Sample App is to move to composite
 
-  const chatThreadProps = useProps(MessageThread);
-  const sendBoxProps = useProps(SendBox);
-  const typingIndicatorProps = useProps(TypingIndicator);
+  const chatThreadProps = usePropsFor(MessageThread);
+  const sendBoxProps = usePropsFor(SendBox);
+  const typingIndicatorProps = usePropsFor(TypingIndicator);
 
   const onLoadPreviousChatMessages = chatThreadProps.onLoadPreviousChatMessages;
 

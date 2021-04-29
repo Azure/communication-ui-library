@@ -9,7 +9,7 @@ import { useHandlers } from './useHandlers';
 import { useSelector } from './useSelector';
 
 type Selector = (state: ChatClientState, props: any) => any;
-export const useProps = <SelectorT extends (state: ChatClientState, props: any) => any>(
+export const usePropsFor = <SelectorT extends (state: ChatClientState, props: any) => any>(
   component: React.FunctionComponent<any>
 ): ReturnType<SelectorT> => {
   const selector = getSelector(component);
