@@ -13,7 +13,7 @@ import React from 'react';
 
 export const DarkControlBar = (): JSX.Element => {
   return (
-    <FluentThemeProvider fluentTheme={darkTheme}>
+    <FluentThemeProvider fluentTheme={defaultThemes.dark.theme}>
       <ControlBar>
         <CameraButton />
         <MicrophoneButton />
