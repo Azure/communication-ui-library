@@ -15,6 +15,7 @@ import { ErrorHandlingProps } from './ErrorProvider';
 import { WithErrorHandling } from '../utils/WithErrorHandling';
 import { CommunicationUiError, CommunicationUiErrorCode } from '../types/CommunicationUiError';
 import { DevicePermissionState } from '../types/DevicePermission';
+import { callClientDeclaratify } from '@azure/acs-calling-declarative';
 
 export type CallingContextType = {
   userId: string;
@@ -56,7 +57,7 @@ const CallingProviderBase = (props: CallingProviderProps & ErrorHandlingProps): 
 
   // if there is no valid token then there is no valid userId
   const userIdFromToken = token ? getIdFromToken(token) : '';
-  const [callClient, setCallClient] = useState<CallClient>(new CallClient(callClientOptions));
+  const [callClient, setCallClient] = useState<CallClient>(callClientDeclaratify(new CallClient(callClientOptions)));
   const [callAgent, setCallAgent] = useState<CallAgent | undefined>(undefined);
   const [deviceManager, setDeviceManager] = useState<DeviceManager | undefined>(undefined);
   const [userId, setUserId] = useState<string>(userIdFromToken);
@@ -151,3 +152,11 @@ export const CallingProvider = (props: CallingProviderProps & ErrorHandlingProps
   WithErrorHandling(CallingProviderBase, props);
 
 export const useCallingContext = (): CallingContextType => useValidContext(CallingContext);
+
+export const useCallClient = (): CallClient => {
+  return useValidContext(CallingContext).callClient;
+};
+
+export const useDeviceManager = (): DeviceManager | undefined => {
+  return useValidContext(CallingContext).deviceManager;
+};
