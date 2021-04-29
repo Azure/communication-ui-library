@@ -18,7 +18,12 @@ import { Theme } from '@fluentui/react-theme-provider';
 export const answerButtonProps: IButtonProps;
 
 // @public
-export const audioButtonProps: IButtonProps;
+export const AudioButton: (props: AudioButtonProps) => JSX.Element;
+
+// @public
+export interface AudioButtonProps extends IButtonProps {
+    showLabel?: boolean;
+}
 
 // @public (undocumented)
 export interface BaseCustomStylesProps {
@@ -139,9 +144,6 @@ export interface JumpToNewMessageButtonProps {
 
 // @public
 export const labeledAnswerButtonProps: IButtonProps;
-
-// @public
-export const labeledAudioButtonProps: IButtonProps;
 
 // @public
 export const labeledHangupButtonProps: IButtonProps;

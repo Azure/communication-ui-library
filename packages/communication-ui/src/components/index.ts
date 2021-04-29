@@ -33,14 +33,12 @@ export type { ParticipantItemProps, ParticipantItemStylesProps } from './Partici
 export {
   ControlBar,
   videoButtonProps,
-  audioButtonProps,
   screenShareButtonProps,
   optionsButtonProps,
   answerButtonProps,
   hangupButtonProps,
   recordButtonProps,
   labeledVideoButtonProps,
-  labeledAudioButtonProps,
   labeledScreenShareButtonProps,
   labeledHangupButtonProps,
   labeledOptionsButtonProps,
@@ -48,6 +46,9 @@ export {
   labeledRecordButtonProps
 } from './ControlBar';
 export type { ControlBarProps, ControlBarLayoutType } from './ControlBar';
+
+export { AudioButton } from './AudioButton';
+export type { AudioButtonProps } from './AudioButton';
 
 export { VideoTile } from './VideoTile';
 export type { VideoTileProps, VideoTileStylesProps, PlaceholderProps } from './VideoTile';

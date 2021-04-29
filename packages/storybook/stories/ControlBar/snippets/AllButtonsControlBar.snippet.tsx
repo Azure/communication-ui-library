@@ -1,9 +1,9 @@
 import React from 'react';
 import {
-  FluentThemeProvider,
+  AudioButton,
   ControlBar,
+  FluentThemeProvider,
   answerButtonProps,
-  audioButtonProps,
   hangupButtonProps,
   optionsButtonProps,
   recordButtonProps,
@@ -33,8 +33,7 @@ export const AllButtonsControlBarExample: () => JSX.Element = () => {
             /*handle onClick*/
           }}
         />
-        <DefaultButton
-          {...audioButtonProps}
+        <AudioButton
           onClick={() => {
             /*handle onClick*/
           }}

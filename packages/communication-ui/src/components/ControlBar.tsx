@@ -9,8 +9,6 @@ import {
   CallRecordingIcon,
   CallVideoIcon,
   CallVideoOffIcon,
-  MicIcon,
-  MicOffIcon,
   MoreIcon
 } from '@fluentui/react-northstar';
 import React from 'react';
@@ -43,30 +41,6 @@ export const labeledVideoButtonProps: IButtonProps = {
       return <Stack className={mergeStyles(controlButtonLabelStyles)}>Turn off</Stack>;
     } else {
       return <Stack className={mergeStyles(controlButtonLabelStyles)}>Turn on</Stack>;
-    }
-  }
-};
-
-/** Fluent UI Button props for audio control */
-export const audioButtonProps: IButtonProps = {
-  onRenderIcon: (props?: IButtonProps): JSX.Element => {
-    if (props?.checked) {
-      return <MicIcon />;
-    } else {
-      return <MicOffIcon />;
-    }
-  },
-  styles: controlButtonStyles
-};
-
-/** Fluent UI Button props for audio control with label */
-export const labeledAudioButtonProps: IButtonProps = {
-  ...audioButtonProps,
-  onRenderText: (props?: IButtonProps): JSX.Element => {
-    if (props?.checked) {
-      return <Stack className={mergeStyles(controlButtonLabelStyles)}>Mute</Stack>;
-    } else {
-      return <Stack className={mergeStyles(controlButtonLabelStyles)}>Unmute</Stack>;
     }
   }
 };

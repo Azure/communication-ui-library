@@ -1,8 +1,8 @@
 import {
-  audioButtonProps,
+  AudioButton,
   ControlBar,
-  darkTheme,
   FluentThemeProvider,
+  darkTheme,
   hangupButtonProps,
   optionsButtonProps,
   screenShareButtonProps,
@@ -16,7 +16,7 @@ export const DarkControlBar = (): JSX.Element => {
     <FluentThemeProvider fluentTheme={darkTheme}>
       <ControlBar>
         <DefaultButton {...videoButtonProps} />
-        <DefaultButton {...audioButtonProps} />
+        <AudioButton />
         <DefaultButton {...screenShareButtonProps} />
         <DefaultButton {...optionsButtonProps} />
         <DefaultButton {...hangupButtonProps} />

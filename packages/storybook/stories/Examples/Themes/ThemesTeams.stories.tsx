@@ -5,14 +5,14 @@ import { Meta } from '@storybook/react/types-6-0';
 import { getDocs } from './ThemesDocs';
 import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import {
+  AudioButton,
+  ControlBar,
   FluentThemeProvider,
   GridLayout,
   VideoTile,
-  ControlBar,
-  videoButtonProps,
-  audioButtonProps,
+  hangupButtonProps,
   screenShareButtonProps,
-  hangupButtonProps
+  videoButtonProps
 } from '@azure/communication-ui';
 import { DefaultButton } from '@fluentui/react';
 
@@ -65,8 +65,7 @@ export const TeamsThemeComponent: () => JSX.Element = () => {
                     /*handle onClick*/
                   }}
                 />
-                <DefaultButton
-                  {...audioButtonProps}
+                <AudioButton
                   onClick={() => {
                     /*handle onClick*/
                   }}

@@ -1,6 +1,6 @@
 import {
+  AudioButton,
   ControlBar,
-  labeledAudioButtonProps,
   labeledHangupButtonProps,
   labeledOptionsButtonProps,
   labeledVideoButtonProps
@@ -16,7 +16,7 @@ export const CallControlBar = (): JSX.Element => {
       styles={{ root: { background: 'white', minHeight: '4.25rem', alignItems: 'center' } }}
     >
       <DefaultButton {...labeledVideoButtonProps} checked={true} />
-      <DefaultButton {...labeledAudioButtonProps} checked={true} />
+      <AudioButton showLabel={true} checked={true} />
       <DefaultButton {...labeledOptionsButtonProps} />
       <DefaultButton {...labeledHangupButtonProps} style={{ borderRadius: '0.25rem', marginLeft: '0.25rem' }} />
     </ControlBar>
