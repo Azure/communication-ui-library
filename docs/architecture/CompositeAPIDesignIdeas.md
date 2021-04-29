@@ -23,6 +23,9 @@ groupCall.on('participantJoined', handler);
 
 // rewire event handling
 groupCall.on('beforeMute', () => 'continue' | 'abort');
+
+// summary:
+=> fulfills scenarios, but not idiomatic React
 ```
 
 ## JSX-style
@@ -42,6 +45,9 @@ onParticipantJoined passed via props
 
 // rewire event handling
 onBeforeMute event: () => 'continue' | 'abort';
+
+// summary:
+=> does not fulfill scenarios
 ```
 
 ## JSX-style with full composite State
@@ -62,6 +68,8 @@ onStateChange, then developer has to diff with previous state
 // rewire event handling
 ???
 
+// summary:
+=> does not fulfill scenarios
 ```
 
 ## JSX-style with Adapter
@@ -75,7 +83,7 @@ adapter.mute()
 adapter.stopCamera()
 
 // query
-? store state from latest event, then state.isMuted
+adapter.getState().isMuted
 
 // events
 adapter.onStateChange, then developer has to diff with previous state
@@ -83,6 +91,9 @@ or also onStateChange event on GroupCall
 
 // rewire event handling
 override or decorate adapter.mute() function
+
+// summary:
+=> fulfills scenarios, GroupCall tailored simple interface
 ```
 
 ## JSX-style with selector and handlers
@@ -100,14 +111,18 @@ const agent = await client.createCallAgent();
 </CallingProvider>
 
 // send commands
-???
+client.calls[0].mute();
 
 // query
 ? store payload from each raised event
+or client.state
 
 // events
 override or decorate handlers
 
 // rewire event handling
 override or decorate onMute handler
+
+// summary:
+=> fulfills scenarios, same pattern as core components but over-generic interface for multiple calls
 ```
