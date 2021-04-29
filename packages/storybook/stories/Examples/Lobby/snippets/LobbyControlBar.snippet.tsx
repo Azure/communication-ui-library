@@ -1,8 +1,8 @@
 // LobbyControlBar.example.tsx
 
 import {
-  AudioButton,
   ControlBar,
+  MicrophoneButton,
   labeledHangupButtonProps,
   labeledOptionsButtonProps,
   labeledVideoButtonProps
@@ -17,7 +17,7 @@ export const LobbyCallControlBar = (): JSX.Element => {
       styles={{ root: { background: 'white', minHeight: '4.25rem', alignItems: 'center' } }}
     >
       <DefaultButton {...labeledVideoButtonProps} checked={true} />
-      <AudioButton showLabel={true} checked={true} />
+      <MicrophoneButton showLabel={true} checked={true} />
       <DefaultButton {...labeledOptionsButtonProps} />
       <DefaultButton {...labeledHangupButtonProps} style={{ borderRadius: '0.25rem', marginLeft: '0.25rem' }} />
     </ControlBar>

@@ -1,8 +1,8 @@
 import React from 'react';
 import {
-  AudioButton,
   ControlBar,
   FluentThemeProvider,
+  MicrophoneButton,
   answerButtonProps,
   hangupButtonProps,
   optionsButtonProps,
@@ -33,7 +33,7 @@ export const AllButtonsControlBarExample: () => JSX.Element = () => {
             /*handle onClick*/
           }}
         />
-        <AudioButton
+        <MicrophoneButton
           onClick={() => {
             /*handle onClick*/
           }}

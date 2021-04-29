@@ -1,7 +1,7 @@
 import {
-  AudioButton,
   ControlBar,
   GridLayout,
+  MicrophoneButton,
   VideoTile,
   hangupButtonProps,
   optionsButtonProps,
@@ -46,7 +46,7 @@ export const CallingComponents = (): JSX.Element => {
           checked={videoButtonChecked}
           onClick={() => setVideoButtonChecked(!videoButtonChecked)}
         />
-        <AudioButton checked={audioButtonChecked} onClick={() => setAudioButtonChecked(!audioButtonChecked)} />
+        <MicrophoneButton checked={audioButtonChecked} onClick={() => setAudioButtonChecked(!audioButtonChecked)} />
         <DefaultButton
           {...screenShareButtonProps}
           checked={screenshareButtonChecked}

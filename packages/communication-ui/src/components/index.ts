@@ -47,8 +47,8 @@ export {
 } from './ControlBar';
 export type { ControlBarProps, ControlBarLayoutType } from './ControlBar';
 
-export { AudioButton } from './AudioButton';
-export type { AudioButtonProps } from './AudioButton';
+export { MicrophoneButton } from './MicrophoneButton';
+export type { MicrophoneButtonProps } from './MicrophoneButton';
 
 export { VideoTile } from './VideoTile';
 export type { VideoTileProps, VideoTileStylesProps, PlaceholderProps } from './VideoTile';

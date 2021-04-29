@@ -4,8 +4,8 @@ import React from 'react';
 import { Meta } from '@storybook/react/types-6-0';
 import { Stack, DefaultButton } from '@fluentui/react';
 import {
-  AudioButton,
   ControlBar,
+  MicrophoneButton,
   StreamMedia,
   VideoTile,
   hangupButtonProps,
@@ -49,7 +49,7 @@ export const VideoTileComponent: () => JSX.Element = () => {
         <Stack style={{ position: 'absolute', left: '50%', bottom: '1rem' }}>
           <ControlBar styles={{ root: { position: 'relative', left: '-50%' } }}>
             <DefaultButton {...videoButtonProps} />
-            <AudioButton />
+            <MicrophoneButton />
             <DefaultButton {...optionsButtonProps} />
             <DefaultButton {...hangupButtonProps} />
           </ControlBar>

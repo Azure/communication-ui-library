@@ -1,7 +1,7 @@
 import {
-  AudioButton,
   ControlBar,
   FluentThemeProvider,
+  MicrophoneButton,
   StreamMedia,
   VideoTile,
   hangupButtonProps,
@@ -32,7 +32,7 @@ export const VideoTileExample: () => JSX.Element = () => {
       >
         <ControlBar layout="floatingBottom" styles={controlBarStyles}>
           <DefaultButton {...videoButtonProps} />
-          <AudioButton />
+          <MicrophoneButton />
           <DefaultButton {...hangupButtonProps} />
         </ControlBar>
       </VideoTile>
