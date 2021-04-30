@@ -87,6 +87,14 @@ export type DefaultMessageRendererType = (props: MessageProps) => JSX.Element;
 export const defaultThemes: ThemeCollection;
 
 // @public
+export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
+
+// @public
+export interface EndCallButtonProps extends IButtonProps {
+    showLabel?: boolean;
+}
+
+// @public
 export const ErrorBar: (props: ErrorBarProps) => JSX.Element | null;
 
 // @public
@@ -121,9 +129,6 @@ export interface GridLayoutProps {
 // @public (undocumented)
 export type GridLayoutType = 'standard';
 
-// @public
-export const hangupButtonProps: IButtonProps;
-
 // @public (undocumented)
 export interface JumpToNewMessageButtonProps {
     // (undocumented)
@@ -132,9 +137,6 @@ export interface JumpToNewMessageButtonProps {
 
 // @public
 export const labeledAnswerButtonProps: IButtonProps;
-
-// @public
-export const labeledHangupButtonProps: IButtonProps;
 
 // @public
 export const labeledOptionsButtonProps: IButtonProps;

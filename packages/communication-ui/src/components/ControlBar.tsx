@@ -1,15 +1,10 @@
 // © Microsoft Corporation. All rights reserved.
 import { mergeStyles, Stack, IButtonProps } from '@fluentui/react';
 import { useTheme } from '@fluentui/react-theme-provider';
-import { CallEndIcon, CallIcon, CallRecordingIcon, MoreIcon } from '@fluentui/react-northstar';
+import { CallIcon, CallRecordingIcon, MoreIcon } from '@fluentui/react-northstar';
 import React from 'react';
 import { BaseCustomStylesProps } from '../types';
-import {
-  controlBarStyles,
-  controlButtonLabelStyles,
-  controlButtonStyles,
-  hangUpControlButtonStyles
-} from './styles/ControlBar.styles';
+import { controlBarStyles, controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 import { isDarkThemed } from '../utils/themeUtils';
 
 /** Fluent UI Button props for options control */
@@ -62,20 +57,6 @@ export const labeledAnswerButtonProps: IButtonProps = {
   ...answerButtonProps,
   onRenderText: (): JSX.Element => {
     return <Stack className={mergeStyles(controlButtonLabelStyles)}>Answer</Stack>;
-  }
-};
-
-/** Fluent UI Button props for end call control */
-export const hangupButtonProps: IButtonProps = {
-  onRenderIcon: (): JSX.Element => <CallEndIcon />,
-  styles: hangUpControlButtonStyles
-};
-
-/** Fluent UI Button props for end call control with label */
-export const labeledHangupButtonProps: IButtonProps = {
-  ...hangupButtonProps,
-  onRenderText: (): JSX.Element => {
-    return <Stack className={mergeStyles(controlButtonLabelStyles)}>Hangup</Stack>;
   }
 };
 

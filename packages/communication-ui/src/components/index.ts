@@ -37,14 +37,15 @@ export {
   ControlBar,
   optionsButtonProps,
   answerButtonProps,
-  hangupButtonProps,
   recordButtonProps,
-  labeledHangupButtonProps,
   labeledOptionsButtonProps,
   labeledAnswerButtonProps,
   labeledRecordButtonProps
 } from './ControlBar';
 export type { ControlBarProps, ControlBarLayoutType } from './ControlBar';
+
+export { EndCallButton } from './EndCallButton';
+export type { EndCallButtonProps } from './EndCallButton';
 
 export { MicrophoneButton } from './MicrophoneButton';
 export type { MicrophoneButtonProps } from './MicrophoneButton';

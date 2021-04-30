@@ -5,9 +5,9 @@ import React, { useCallback } from 'react';
 import {
   CameraButton,
   ControlBar,
+  EndCallButton,
   MicrophoneButton,
   ScreenShareButton,
-  hangupButtonProps,
   optionsButtonProps
 } from '../../components';
 import { ControlBarProps } from '../../components/ControlBar';
@@ -97,15 +97,14 @@ const HangupButton = (props: HangupButtonProps): JSX.Element => {
   }, [muteMicrophone, stopScreenShare, localVideoEnabled, stopLocalVideo, leaveCall, onEndCallClick]);
 
   return (
-    <DefaultButton
-      onRenderIcon={hangupButtonProps.onRenderIcon}
+    <EndCallButton
       checked={false}
       onClick={() => {
         hangup().catch((error) => {
           propagateError(error, onErrorCallback);
         });
       }}
-      styles={styles ?? hangupButtonProps.styles}
+      styles={styles ?? undefined}
       text={text}
     />
   );

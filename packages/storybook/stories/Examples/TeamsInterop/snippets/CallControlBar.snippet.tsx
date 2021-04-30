@@ -1,7 +1,7 @@
 import {
   ControlBar,
+  EndCallButton,
   MicrophoneButton,
-  labeledHangupButtonProps,
   labeledOptionsButtonProps,
   labeledVideoButtonProps
 } from '@azure/communication-ui';
@@ -18,7 +18,7 @@ export const CallControlBar = (): JSX.Element => {
       <DefaultButton {...labeledVideoButtonProps} checked={true} />
       <MicrophoneButton showLabel={true} checked={true} />
       <DefaultButton {...labeledOptionsButtonProps} />
-      <DefaultButton {...labeledHangupButtonProps} style={{ borderRadius: '0.25rem', marginLeft: '0.25rem' }} />
+      <EndCallButton showLabel={true} style={{ borderRadius: '0.25rem', marginLeft: '0.25rem' }} />
     </ControlBar>
   );
 };

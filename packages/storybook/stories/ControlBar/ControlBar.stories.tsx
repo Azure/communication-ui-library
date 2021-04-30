@@ -5,10 +5,9 @@ import React from 'react';
 import {
   CameraButton,
   ControlBar,
+  EndCallButton,
   MicrophoneButton,
   ScreenShareButton,
-  hangupButtonProps,
-  labeledHangupButtonProps,
   labeledOptionsButtonProps,
   optionsButtonProps,
   LIGHT,
@@ -100,7 +99,7 @@ export const ControlBarComponent: (
           {...(showLabels ? labeledOptionsButtonProps : optionsButtonProps)}
           menuProps={exampleOptionsMenuProps}
         />
-        <DefaultButton {...(showLabels ? labeledHangupButtonProps : hangupButtonProps)} />
+        <EndCallButton showLabel={showLabels} />
       </ControlBar>
     </div>
   );
