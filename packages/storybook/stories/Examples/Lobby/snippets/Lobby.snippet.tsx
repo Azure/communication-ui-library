@@ -1,4 +1,4 @@
-import { CommunicationUiTheme, StreamMedia, VideoTile } from '@azure/communication-ui';
+import { StreamMedia, VideoTile } from '@azure/communication-ui';
 import { useTheme } from '@fluentui/react-theme-provider';
 import React from 'react';
 import { renderVideoStream } from '../../../utils';
@@ -10,7 +10,7 @@ export interface LobbyProps {
 }
 
 export const Lobby = (props: LobbyProps): JSX.Element => {
-  const theme = useTheme() as CommunicationUiTheme;
+  const theme = useTheme();
   const palette = theme.palette;
 
   const videoTileStyles = {
@@ -34,7 +34,7 @@ export const Lobby = (props: LobbyProps): JSX.Element => {
           width: '100%',
           height: '100%',
           position: 'absolute',
-          background: props.isVideoReady ? palette.lobbyTint : palette.neutralLight,
+          background: props.isVideoReady ? '#201f1e' : palette.neutralLight,
           opacity: 0.75
         }}
       />

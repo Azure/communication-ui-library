@@ -53,13 +53,6 @@ export enum CommunicationUiErrorSeverity {
     WARNING = "Warning"
 }
 
-// @public (undocumented)
-export type CommunicationUiTheme = PartialTheme & {
-    palette: {
-        lobbyTint: string;
-    };
-};
-
 // @public
 export const ControlBar: (props: ControlBarProps) => JSX.Element;
 
@@ -86,7 +79,7 @@ export type CustomMessagePayload = {
 export const DARK = "Dark";
 
 // @public
-export const darkTheme: CommunicationUiTheme;
+export const darkTheme: PartialTheme;
 
 // @public (undocumented)
 export type DefaultMessageRendererType = (props: MessageProps) => JSX.Element;
@@ -169,7 +162,7 @@ export const labeledVideoButtonProps: IButtonProps;
 export const LIGHT = "Light";
 
 // @public
-export const lightTheme: CommunicationUiTheme;
+export const lightTheme: PartialTheme;
 
 // @public (undocumented)
 export type Message<T extends MessageTypes> = {
