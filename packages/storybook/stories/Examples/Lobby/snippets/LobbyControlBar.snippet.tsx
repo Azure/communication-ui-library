@@ -18,7 +18,7 @@ export const LobbyCallControlBar = (): JSX.Element => {
       layout="dockedBottom"
       styles={{ root: { background: theme.palette.white, minHeight: '4.25rem', alignItems: 'center' } }}
     >
-      <CameraButton checked={true} />
+      <CameraButton showLabel={true} checked={true} />
       <MicrophoneButton showLabel={true} checked={true} />
       <DefaultButton {...labeledOptionsButtonProps} />
       <DefaultButton {...labeledHangupButtonProps} style={{ borderRadius: '0.25rem', marginLeft: '0.25rem' }} />
