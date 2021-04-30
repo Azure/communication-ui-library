@@ -6,7 +6,7 @@ import {
   ControlBar,
   MicrophoneButton,
   labeledHangupButtonProps,
-  labeledOptionsButton
+  labeledOptionsButtonProps
 } from '@azure/communication-ui';
 import { DefaultButton } from '@fluentui/react';
 import { useTheme } from '@fluentui/react-theme-provider';
