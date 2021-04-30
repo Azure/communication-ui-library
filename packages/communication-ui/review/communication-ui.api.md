@@ -142,12 +142,6 @@ export const labeledOptionsButtonProps: IButtonProps;
 // @public
 export const labeledRecordButtonProps: IButtonProps;
 
-// @public
-export const LIGHT = "Light";
-
-// @public
-export const lightTheme: PartialTheme;
-
 // @public (undocumented)
 export type Message<T extends MessageTypes> = {
     type: T;
@@ -264,9 +258,6 @@ export interface ReadReceiptProps {
 
 // @public
 export const recordButtonProps: IButtonProps;
-
-// @public
-export const saveThemeToLocalStorage: (theme: string, scopeId: string) => void;
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
