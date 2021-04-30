@@ -389,7 +389,7 @@ export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 // @public (undocumented)
 export type VideoGalleryLocalParticipant = VideoGalleryParticipant & {
     isScreenSharingOn: boolean;
-    vidoeStreams: VideoGalleryLocalVideoStream[];
+    videoStreams: VideoGalleryLocalVideoStream[];
 };
 
 // @public (undocumented)
@@ -405,6 +405,7 @@ export interface VideoGalleryProps {
 
 // @public (undocumented)
 export type VideoGalleryRemoteParticipant = VideoGalleryParticipant & {
+    isSpeaking: boolean;
     videoStreams: VideoGalleryRemoteVideoStream[];
 };
 
