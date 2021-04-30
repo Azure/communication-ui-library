@@ -29,5 +29,7 @@ export type {
   VideoGalleryRemoteParticipant,
   VideoGalleryLocalParticipant,
   VideoGalleryLocalVideoStream,
-  VideoGalleryRemoteVideoStream
+  VideoGalleryRemoteVideoStream,
+  NamedTheme,
+  ThemeCollection
 } from './types';

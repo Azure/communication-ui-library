@@ -2,8 +2,9 @@
 
 import React from 'react';
 import { Toggle, mergeStyles } from '@fluentui/react';
-import { LIGHT, DARK, lightTheme, darkTheme } from '../constants/themes';
-import { useSwitchableFluentTheme, FluentTheme } from '../providers/SwitchableFluentThemeProvider';
+import { defaultThemes } from '../constants';
+import { NamedTheme } from '../types';
+import { useSwitchableFluentTheme } from '../providers/SwitchableFluentThemeProvider';
 import { themeTogglerStyles } from './styles/ThemeToggler.styles';
 
 /**
@@ -11,9 +12,9 @@ import { themeTogglerStyles } from './styles/ThemeToggler.styles';
  */
 export interface ThemeTogglerProps {
   /** Optional theme name for the on state of the toggler. Default is 'dark' theme. */
-  onTheme?: FluentTheme;
+  onTheme?: NamedTheme;
   /** Optional theme name of off state of the toggler. Default is 'light' theme. */
-  offTheme?: FluentTheme;
+  offTheme?: NamedTheme;
   /** Optional label for toggler component */
   label?: string;
   /** Optional layout styling for toggler component */
@@ -23,19 +24,20 @@ export interface ThemeTogglerProps {
 /**
  * @description Toggler component for toggling the fluent theme context for SwitchableFluentThemeProvider
  * @param props - ThemeTogglerProps
+ * @remarks - this must be a child of a SwitchableFluentThemeProvider
  */
 export const ThemeToggler = (props: ThemeTogglerProps): JSX.Element => {
   const { onTheme, offTheme, label, layout } = props;
-  const { fluentTheme, setFluentTheme } = useSwitchableFluentTheme();
+  const { currentTheme, setCurrentTheme } = useSwitchableFluentTheme();
 
-  const _onTheme: FluentTheme = onTheme ? onTheme : { name: DARK, theme: darkTheme };
-  const _offTheme: FluentTheme = offTheme ? offTheme : { name: LIGHT, theme: lightTheme };
+  const _onTheme: NamedTheme = onTheme ? onTheme : defaultThemes.dark;
+  const _offTheme: NamedTheme = offTheme ? offTheme : defaultThemes.light;
 
   const onChange = (ev: React.MouseEvent<HTMLElement>, checked?: boolean): void => {
     if (checked) {
-      setFluentTheme(_onTheme);
+      setCurrentTheme(_onTheme);
     } else {
-      setFluentTheme(_offTheme);
+      setCurrentTheme(_offTheme);
     }
   };
 
@@ -48,7 +50,7 @@ export const ThemeToggler = (props: ThemeTogglerProps): JSX.Element => {
         onText={_onTheme.name}
         offText={_offTheme.name}
         onChange={onChange}
-        checked={fluentTheme.name === _onTheme.name}
+        checked={currentTheme.name === _onTheme.name}
       />
     </div>
   );

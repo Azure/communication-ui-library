@@ -1,11 +1,11 @@
 import React from 'react';
 import {
-  FluentThemeProvider,
+  CameraButton,
   ControlBar,
-  audioButtonProps,
+  FluentThemeProvider,
+  MicrophoneButton,
   hangupButtonProps,
-  screenShareButtonProps,
-  videoButtonProps
+  screenShareButtonProps
 } from '@azure/communication-ui';
 import { DefaultButton } from '@fluentui/react';
 
@@ -13,8 +13,8 @@ export const FluentThemeProviderSnippet = (): JSX.Element => {
   return (
     <FluentThemeProvider>
       <ControlBar>
-        <DefaultButton {...videoButtonProps} />
-        <DefaultButton {...audioButtonProps} />
+        <CameraButton />
+        <MicrophoneButton />
         <DefaultButton {...screenShareButtonProps} />
         <DefaultButton {...hangupButtonProps} />
       </ControlBar>

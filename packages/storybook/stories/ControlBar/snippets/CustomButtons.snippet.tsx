@@ -1,10 +1,10 @@
 import React from 'react';
 import {
-  FluentThemeProvider,
+  CameraButton,
   ControlBar,
-  audioButtonProps,
-  hangupButtonProps,
-  videoButtonProps
+  FluentThemeProvider,
+  MicrophoneButton,
+  hangupButtonProps
 } from '@azure/communication-ui';
 import { DefaultButton, concatStyleSets } from '@fluentui/react';
 import { CallEndIcon } from '@fluentui/react-northstar';
@@ -44,8 +44,8 @@ export const CustomButtonsExample: () => JSX.Element = () => {
   return (
     <FluentThemeProvider>
       <ControlBar layout={'horizontal'}>
-        <DefaultButton {...videoButtonProps} />
-        <DefaultButton {...audioButtonProps} />
+        <CameraButton />
+        <MicrophoneButton />
         <CustomHangupButton />
       </ControlBar>
     </FluentThemeProvider>

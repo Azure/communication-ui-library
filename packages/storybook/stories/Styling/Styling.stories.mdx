@@ -1,13 +1,13 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import {
+  CameraButton,
   ControlBar,
   FluentThemeProvider,
-  audioButtonProps,
+  MicrophoneButton,
   hangupButtonProps,
   optionsButtonProps,
-  screenShareButtonProps,
-  videoButtonProps
+  screenShareButtonProps
 } from '@azure/communication-ui';
 import { DefaultButton } from '@fluentui/react';
 import { ControlBarExample } from './snippets/StylingControlBar.snippet';
@@ -32,7 +32,7 @@ All the UI Components have complete CSS support and provide complex styling capa
 
 ## Example - ControlBar
 
-Let's style the `ControlBar` component and `DefaultButton` components inside it using the `root` styles property.
+Let's style the `ControlBar` component and components inside it using the `root` styles property.
 
 <Source code={ControlBarExampleText} />
 
