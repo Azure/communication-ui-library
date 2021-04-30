@@ -3,7 +3,7 @@
 import React from 'react';
 import { DefaultButton, IButtonProps, Stack, concatStyleSets, mergeStyles } from '@fluentui/react';
 import { CallEndIcon } from '@fluentui/react-northstar';
-import { controlButtonLabelStyles, hangUpControlButtonStyles } from './styles/ControlBar.styles';
+import { controlButtonLabelStyles, endCallControlButtonStyles } from './styles/ControlBar.styles';
 
 /**
  * Props for EndCallButton component
@@ -34,7 +34,7 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
   return (
     <DefaultButton
       {...props}
-      styles={styles ? concatStyleSets(hangUpControlButtonStyles, styles) : hangUpControlButtonStyles}
+      styles={styles ? concatStyleSets(endCallControlButtonStyles, styles) : endCallControlButtonStyles}
       onRenderIcon={onRenderIcon ?? defaultRenderIcon}
       onRenderText={showLabel ? onRenderText ?? defaultRenderText : undefined}
     />
