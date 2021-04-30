@@ -104,7 +104,7 @@ const HangupButton = (props: HangupButtonProps): JSX.Element => {
           propagateError(error, onErrorCallback);
         });
       }}
-      styles={styles ?? undefined}
+      styles={styles}
       text={text}
     />
   );
