@@ -30,6 +30,9 @@ export type { StreamMediaProps } from './StreamMedia';
 export { ParticipantItem } from './ParticipantItem';
 export type { ParticipantItemProps, ParticipantItemStylesProps } from './ParticipantItem';
 
+export { VideoGallery } from './VideoGallery';
+export type { VideoGalleryProps } from './VideoGallery';
+
 export {
   ControlBar,
   videoButtonProps,

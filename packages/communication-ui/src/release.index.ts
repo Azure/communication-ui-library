@@ -25,5 +25,9 @@ export type {
   CustomMessage,
   SystemMessagePayload,
   ChatMessagePayload,
-  CustomMessagePayload
+  CustomMessagePayload,
+  VideoGalleryRemoteParticipant,
+  VideoGalleryLocalParticipant,
+  VideoGalleryLocalVideoStream,
+  VideoGalleryRemoteVideoStream
 } from './types';

@@ -384,6 +384,34 @@ export const useSwitchableFluentTheme: () => SwitchableFluentThemeContext;
 export const videoButtonProps: IButtonProps;
 
 // @public (undocumented)
+export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
+
+// @public (undocumented)
+export type VideoGalleryLocalParticipant = VideoGalleryParticipant & {
+    isScreenSharingOn: boolean;
+    vidoeStreams: VideoGalleryLocalVideoStream[];
+};
+
+// @public (undocumented)
+export type VideoGalleryLocalVideoStream = VideoGalleryVideoStream;
+
+// @public (undocumented)
+export interface VideoGalleryProps {
+    // (undocumented)
+    localParticipant?: VideoGalleryLocalParticipant;
+    // (undocumented)
+    remoteParticipants?: VideoGalleryRemoteParticipant[];
+}
+
+// @public (undocumented)
+export type VideoGalleryRemoteParticipant = VideoGalleryParticipant & {
+    videoStreams: VideoGalleryRemoteVideoStream[];
+};
+
+// @public (undocumented)
+export type VideoGalleryRemoteVideoStream = VideoGalleryVideoStream;
+
+// @public (undocumented)
 export const VideoTile: (props: VideoTileProps & PlaceholderProps) => JSX.Element;
 
 // @public
