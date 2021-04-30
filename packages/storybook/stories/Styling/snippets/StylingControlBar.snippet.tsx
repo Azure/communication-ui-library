@@ -1,9 +1,9 @@
 import {
+  CameraButton,
   ControlBar,
   FluentThemeProvider,
   MicrophoneButton,
-  hangupButtonProps,
-  videoButtonProps
+  hangupButtonProps
 } from '@azure/communication-ui';
 import { DefaultButton } from '@fluentui/react';
 import React from 'react';
@@ -26,7 +26,7 @@ export const ControlBarExample = (): JSX.Element => {
   return (
     <FluentThemeProvider>
       <ControlBar styles={styles}>
-        <DefaultButton {...videoButtonProps} />
+        <CameraButton />
         <MicrophoneButton />
         <DefaultButton {...hangupButtonProps} />
       </ControlBar>

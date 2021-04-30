@@ -30,15 +30,16 @@ export type { StreamMediaProps } from './StreamMedia';
 export { ParticipantItem } from './ParticipantItem';
 export type { ParticipantItemProps, ParticipantItemStylesProps } from './ParticipantItem';
 
+export { CameraButton } from './CameraButton';
+export type { CameraButtonProps } from './CameraButton';
+
 export {
   ControlBar,
-  videoButtonProps,
   screenShareButtonProps,
   optionsButtonProps,
   answerButtonProps,
   hangupButtonProps,
   recordButtonProps,
-  labeledVideoButtonProps,
   labeledScreenShareButtonProps,
   labeledHangupButtonProps,
   labeledOptionsButtonProps,

@@ -2,13 +2,7 @@
 
 import { DefaultButton, IButtonStyles, IContextualMenuProps } from '@fluentui/react';
 import React, { useCallback } from 'react';
-import {
-  ControlBar,
-  MicrophoneButton,
-  hangupButtonProps,
-  optionsButtonProps,
-  videoButtonProps
-} from '../../components';
+import { CameraButton, ControlBar, MicrophoneButton, hangupButtonProps, optionsButtonProps } from '../../components';
 import { ControlBarProps, screenShareButtonProps } from '../../components/ControlBar';
 import {
   connectFuncsToContext,
@@ -134,8 +128,7 @@ export const OutgoingCallControlBar = (props: OutgoingCallControlBarProps & Erro
 
   return (
     <ControlBar {...props}>
-      <DefaultButton
-        {...videoButtonProps}
+      <CameraButton
         checked={localVideoEnabled}
         disabled={cameraDisabled || localVideoBusy}
         onClick={() => {
@@ -179,8 +172,7 @@ export const IncomingCallControlBar = (
 
   return (
     <ControlBar {...props}>
-      <DefaultButton
-        {...videoButtonProps}
+      <CameraButton
         checked={localVideoEnabled}
         disabled={cameraDisabled || localVideoBusy}
         onClick={() => {
@@ -235,8 +227,7 @@ export const CallControlBar = (props: ControlBarProps & CallControlBarProps & Er
 
   return (
     <ControlBar {...props}>
-      <DefaultButton
-        {...videoButtonProps}
+      <CameraButton
         checked={localVideoEnabled}
         disabled={cameraDisabled || localVideoBusy}
         onClick={() => {
@@ -306,8 +297,7 @@ export const GroupCallControlBar = (
 
   return (
     <ControlBar {...props}>
-      <DefaultButton
-        {...videoButtonProps}
+      <CameraButton
         checked={localVideoEnabled}
         disabled={cameraDisabled || localVideoBusy}
         onClick={() => {

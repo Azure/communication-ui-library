@@ -9,14 +9,14 @@ import ThemedButtonText from '!!raw-loader!./snippets/ThemedButton.snippet.tsx';
 import { ThemedButton } from './snippets/ThemedButton.snippet';
 
 import {
+  CameraButton,
   ControlBar,
   FluentThemeProvider,
   MicrophoneButton,
   darkTheme,
   hangupButtonProps,
   optionsButtonProps,
-  screenShareButtonProps,
-  videoButtonProps
+  screenShareButtonProps
 } from '@azure/communication-ui';
 import { DefaultButton } from '@fluentui/react';
 
@@ -45,7 +45,7 @@ the `ControlBar`.
 
 `FluentThemeProvider` does two things here:
 
-1. `FluentThemeProvider` loads the icons defined by the props such as `videoButtonProps`
+1. `FluentThemeProvider` loads the icons used by components such as `CameraButton`
 2. `FluentThemeProvider` applies theme (light theme by default) to the `ControlBar`
 
 To illustrate how another theme can be applied, import `darkTheme` from `@azure/communication-ui`
