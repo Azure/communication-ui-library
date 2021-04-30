@@ -1,15 +1,12 @@
 // © Microsoft Corporation. All rights reserved.
 import { mergeStyles, Stack, IButtonProps } from '@fluentui/react';
+import { useTheme } from '@fluentui/react-theme-provider';
 import {
   CallControlCloseTrayIcon,
   CallControlPresentNewIcon,
   CallEndIcon,
   CallIcon,
   CallRecordingIcon,
-  CallVideoIcon,
-  CallVideoOffIcon,
-  MicIcon,
-  MicOffIcon,
   MoreIcon
 } from '@fluentui/react-northstar';
 import React from 'react';
@@ -20,54 +17,7 @@ import {
   controlButtonStyles,
   hangUpControlButtonStyles
 } from './styles/ControlBar.styles';
-
-/** Fluent UI Button props for video control */
-export const videoButtonProps: IButtonProps = {
-  onRenderIcon: (props?: IButtonProps): JSX.Element => {
-    if (props?.checked) {
-      return <CallVideoIcon />;
-    } else {
-      return <CallVideoOffIcon />;
-    }
-  },
-  styles: controlButtonStyles
-};
-
-/** Fluent UI Button props for video control with label */
-export const labeledVideoButtonProps: IButtonProps = {
-  ...videoButtonProps,
-  onRenderText: (props?: IButtonProps): JSX.Element => {
-    if (props?.checked) {
-      return <Stack className={mergeStyles(controlButtonLabelStyles)}>Turn off</Stack>;
-    } else {
-      return <Stack className={mergeStyles(controlButtonLabelStyles)}>Turn on</Stack>;
-    }
-  }
-};
-
-/** Fluent UI Button props for audio control */
-export const audioButtonProps: IButtonProps = {
-  onRenderIcon: (props?: IButtonProps): JSX.Element => {
-    if (props?.checked) {
-      return <MicIcon />;
-    } else {
-      return <MicOffIcon />;
-    }
-  },
-  styles: controlButtonStyles
-};
-
-/** Fluent UI Button props for audio control with label */
-export const labeledAudioButtonProps: IButtonProps = {
-  ...audioButtonProps,
-  onRenderText: (props?: IButtonProps): JSX.Element => {
-    if (props?.checked) {
-      return <Stack className={mergeStyles(controlButtonLabelStyles)}>Mute</Stack>;
-    } else {
-      return <Stack className={mergeStyles(controlButtonLabelStyles)}>Unmute</Stack>;
-    }
-  }
-};
+import { isDarkThemed } from '../utils/themeUtils';
 
 /** Fluent UI Button props for screenshare control */
 export const screenShareButtonProps: IButtonProps = {
@@ -179,7 +129,7 @@ export interface ControlBarProps {
   /** React Child components. */
   children?: React.ReactNode;
   /**
-   * Allows users to pass in an object contains custom CSS styles.
+   * Allows users to pass an object containing custom CSS styles.
    * @Example
    * ```
    * <ControlBar styles={{ root: { background: 'blue' } }} />
@@ -204,6 +154,22 @@ export interface ControlBarProps {
  */
 export const ControlBar = (props: ControlBarProps): JSX.Element => {
   const { styles, layout } = props;
+  const theme = useTheme();
   const controlBarStyle = controlBarStyles[layout ?? 'horizontal'];
-  return <Stack className={mergeStyles(controlBarStyle, styles?.root)}>{props.children}</Stack>;
+  return (
+    <Stack
+      className={mergeStyles(
+        controlBarStyle,
+        {
+          background:
+            isDarkThemed(theme) && layout?.startsWith('floating')
+              ? theme.palette.neutralQuaternaryAlt
+              : theme.palette.white
+        },
+        styles?.root
+      )}
+    >
+      {props.children}
+    </Stack>
+  );
 };

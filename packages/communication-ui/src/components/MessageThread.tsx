@@ -13,7 +13,7 @@ import {
   readReceiptContainerStyle,
   noReadReceiptStyle
 } from './styles/MessageThread.styles';
-import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack } from '@fluentui/react';
+import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack, Link } from '@fluentui/react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { LiveAnnouncer, LiveMessage } from 'react-aria-live';
 import { delay, formatTimestampForChatMessage } from '../utils';
@@ -173,7 +173,17 @@ const DefaultChatMessageRenderer: DefaultMessageRendererType = (props: MessagePr
     const messageContentItem = (
       <div>
         <LiveMessage message={`${payload.mine ? '' : liveAuthor} ${payload.content}`} aria-live="polite" />
-        <Linkify>{payload.content}</Linkify>
+        <Linkify
+          componentDecorator={(decoratedHref: string, decoratedText: string, key: number) => {
+            return (
+              <Link href={decoratedHref} key={key}>
+                {decoratedText}
+              </Link>
+            );
+          }}
+        >
+          {payload.content}
+        </Linkify>
       </div>
     );
     return (
@@ -204,11 +214,13 @@ const memoizeAllMessages = memoizeFnAll(
     onRenderMessage?: (message: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element
   ): ShorthandValue<ChatItemProps> => {
     const messageProps: MessageProps = {
-      message: message,
-      messageContainerStyle: styles?.chatMessageContainer
+      message: message
     };
+
     if (message.type === 'chat') {
       const payload: ChatMessagePayload = message.payload;
+      messageProps.messageContainerStyle = styles?.chatMessageContainer;
+
       const chatMessageComponent =
         onRenderMessage === undefined
           ? defaultChatMessageRenderer(messageProps)
@@ -250,6 +262,8 @@ const memoizeAllMessages = memoizeFnAll(
         key: _messageKey
       };
     } else if (message.type === 'system') {
+      messageProps.messageContainerStyle = styles?.systemMessageContainer;
+
       const systemMessageComponent =
         onRenderMessage === undefined
           ? DefaultSystemMessageRenderer(messageProps)

@@ -51,6 +51,7 @@ export interface CallClientState {
 
 // @public
 export interface DeclarativeCallClient extends CallClient {
+    offStateChange(handler: (state: CallClientState) => void): void;
     onStateChange(handler: (state: CallClientState) => void): void;
     startRenderVideo(callId: string, stream: LocalVideoStream | RemoteVideoStream, options?: CreateViewOptions): Promise<void>;
     state: CallClientState;

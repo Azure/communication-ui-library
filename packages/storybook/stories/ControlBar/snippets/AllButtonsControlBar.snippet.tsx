@@ -1,14 +1,14 @@
 import React from 'react';
 import {
-  FluentThemeProvider,
+  CameraButton,
   ControlBar,
+  FluentThemeProvider,
+  MicrophoneButton,
   answerButtonProps,
-  audioButtonProps,
   hangupButtonProps,
-  recordButtonProps,
   optionsButtonProps,
-  screenShareButtonProps,
-  videoButtonProps
+  recordButtonProps,
+  screenShareButtonProps
 } from '@azure/communication-ui';
 import { DefaultButton, IContextualMenuProps } from '@fluentui/react';
 
@@ -27,14 +27,12 @@ export const AllButtonsControlBarExample: () => JSX.Element = () => {
   return (
     <FluentThemeProvider>
       <ControlBar layout={'horizontal'}>
-        <DefaultButton
-          {...videoButtonProps}
+        <CameraButton
           onClick={() => {
             /*handle onClick*/
           }}
         />
-        <DefaultButton
-          {...audioButtonProps}
+        <MicrophoneButton
           onClick={() => {
             /*handle onClick*/
           }}

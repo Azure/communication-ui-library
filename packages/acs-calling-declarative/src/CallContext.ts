@@ -47,6 +47,10 @@ export class CallContext {
     this._emitter.on('stateChanged', handler);
   }
 
+  public offStateChange(handler: (state: CallClientState) => void): void {
+    this._emitter.off('stateChanged', handler);
+  }
+
   // Disposing of the CallAgentDeclarative will not clear the state. If we create a new CallAgentDeclarative, we should
   // make sure the state is clean because any left over state (if previous CallAgentDeclarative was disposed) may be
   // invalid.

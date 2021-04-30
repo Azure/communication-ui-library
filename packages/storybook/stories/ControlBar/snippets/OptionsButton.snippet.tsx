@@ -1,5 +1,5 @@
 import React from 'react';
-import { FluentThemeProvider, ControlBar, optionsButtonProps, videoButtonProps } from '@azure/communication-ui';
+import { CameraButton, ControlBar, FluentThemeProvider, optionsButtonProps } from '@azure/communication-ui';
 import { DefaultButton } from '@fluentui/react';
 
 export const OptionsButtonExample: () => JSX.Element = () => {
@@ -29,11 +29,11 @@ export const OptionsButtonExample: () => JSX.Element = () => {
       }
     ]
   };
+
   return (
     <FluentThemeProvider>
       <ControlBar layout={'horizontal'}>
-        <DefaultButton
-          {...videoButtonProps}
+        <CameraButton
           onClick={() => {
             /*handle onClick*/
           }}

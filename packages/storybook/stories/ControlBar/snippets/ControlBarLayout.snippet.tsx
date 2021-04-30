@@ -1,12 +1,12 @@
 import React from 'react';
 import {
-  FluentThemeProvider,
-  audioButtonProps,
+  CameraButton,
   ControlBar,
+  FluentThemeProvider,
+  MicrophoneButton,
   hangupButtonProps,
   optionsButtonProps,
-  screenShareButtonProps,
-  videoButtonProps
+  screenShareButtonProps
 } from '@azure/communication-ui';
 import { Stack, DefaultButton } from '@fluentui/react';
 
@@ -15,8 +15,8 @@ export const ControlBarLayoutExample: () => JSX.Element = () => {
     <Stack style={{ flexFlow: 'row', minHeight: '250px' }}>
       <FluentThemeProvider>
         <ControlBar layout="floatingLeft">
-          <DefaultButton {...videoButtonProps} />
-          <DefaultButton {...audioButtonProps} />
+          <CameraButton />
+          <MicrophoneButton />
           <DefaultButton {...screenShareButtonProps} />
           <DefaultButton {...optionsButtonProps} />
           <DefaultButton {...hangupButtonProps} />

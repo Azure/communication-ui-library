@@ -75,3 +75,7 @@ export const CallProvider = (props: CallProvider & ErrorHandlingProps): JSX.Elem
   WithErrorHandling(CallProviderBase, props);
 
 export const useCallContext = (): CallContextType => useValidContext(CallContext);
+
+export const useCall = (): Call | undefined => {
+  return useValidContext(CallContext).call;
+};
