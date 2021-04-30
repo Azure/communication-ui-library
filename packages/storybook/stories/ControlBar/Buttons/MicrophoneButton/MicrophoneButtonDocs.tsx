@@ -2,7 +2,7 @@
 
 import { Canvas, Description, Heading, Props, Source, SourceState, Title } from '@storybook/addon-docs/blocks';
 import React from 'react';
-import { MicrophoneButton } from '../../../communication-ui/src';
+import { MicrophoneButton } from '@azure/communication-ui';
 import { MicrophoneButtonExample } from './snippets/MicrophoneButton.snippet';
 import { MicrophoneButtonWithLabelExample } from './snippets/MicrophoneButtonWithLabel.snippet';
 import { CustomMicrophoneButtonExample } from './snippets/CustomMicrophoneButton.snippet';

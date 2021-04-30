@@ -19,7 +19,11 @@ export const CustomMicrophoneButtonExample: () => JSX.Element = () => {
 
   const customOnRenderText = (props?: IButtonProps): JSX.Element => {
     if (props?.checked) {
-      return <Text key={'micCustomText'}>unmuted</Text>;
+      return (
+        <Text key={'micCustomText'} style={{ fontStyle: 'italic' }}>
+          unmuted
+        </Text>
+      );
     }
 
     return <Label key={'micCustomLabel'}>muted</Label>;

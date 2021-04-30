@@ -5,7 +5,7 @@ import React from 'react';
 import { MicrophoneButton } from '@azure/communication-ui';
 import { boolean } from '@storybook/addon-knobs';
 import { getDocs } from './MicrophoneButtonDocs';
-import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
 
 export const MicrophoneButtonComponent = (): JSX.Element => {
   const toggleButtons = boolean('Toggle Buttons', false);
@@ -15,7 +15,7 @@ export const MicrophoneButtonComponent = (): JSX.Element => {
 };
 
 export default {
-  title: `${COMPONENT_FOLDER_PREFIX}/MicrophoneButton`,
+  title: `${COMPONENT_FOLDER_PREFIX}/ControlBar/Buttons/MicrophoneButton`,
   component: MicrophoneButton,
   parameters: {
     docs: {
