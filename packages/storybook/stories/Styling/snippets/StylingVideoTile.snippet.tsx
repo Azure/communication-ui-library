@@ -5,7 +5,7 @@ import {
   FluentThemeProvider,
   MicrophoneButton,
   StreamMedia,
-  VideoTile,
+  VideoTile
 } from '@azure/communication-ui';
 import React from 'react';
 import { renderVideoStream } from '../../utils';

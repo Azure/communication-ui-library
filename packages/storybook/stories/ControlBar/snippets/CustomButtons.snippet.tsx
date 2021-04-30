@@ -4,7 +4,7 @@ import {
   ControlBar,
   EndCallButton,
   FluentThemeProvider,
-  MicrophoneButton,
+  MicrophoneButton
 } from '@azure/communication-ui';
 import { CallEndIcon } from '@fluentui/react-northstar';
 

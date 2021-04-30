@@ -3,7 +3,7 @@ import {
   ControlBar,
   EndCallButton,
   FluentThemeProvider,
-  MicrophoneButton,
+  MicrophoneButton
 } from '@azure/communication-ui';
 import React from 'react';
 
