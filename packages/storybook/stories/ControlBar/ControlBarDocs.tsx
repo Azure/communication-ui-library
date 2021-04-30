@@ -69,10 +69,10 @@ export const getDocs: () => JSX.Element = () => {
 
       <Heading>Custom Buttons</Heading>
       <Description>
-        You can also easily change the styles of included button components. They are built on Fluent UI's
-        `DefaultButton` and accept all the same props. In the example below we import `CameraButton` and
-        `MicrophoneButton` for the 1st and 2nd buttons and style our own hang up button for the 3rd button. Learn more
-        about styling [here](./?path=/docs/styling--page).
+        You can also easily change the styles of included button components. They are built on Fluent UI `DefaultButton`
+        and accept all the same props. In the example below we import `CameraButton` and `MicrophoneButton` for the 1st
+        and 2nd buttons and style our own hang up button for the 3rd button. Learn more about styling
+        [here](./?path=/docs/styling--page).
       </Description>
       <Canvas withSource={SourceState.NONE}>
         <CustomButtonsExample />
