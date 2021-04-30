@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
 import React from 'react';
-import { DefaultButton, IButtonProps, mergeStyles, Stack } from '@fluentui/react';
+import { DefaultButton, IButtonProps, Stack, concatStyleSets, mergeStyles } from '@fluentui/react';
 import { CallVideoIcon, CallVideoOffIcon } from '@fluentui/react-northstar';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 
@@ -35,7 +35,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   return (
     <DefaultButton
       {...props}
-      styles={styles ?? controlButtonStyles}
+      styles={styles ? concatStyleSets(controlButtonStyles, styles) : controlButtonStyles}
       onRenderIcon={onRenderIcon ?? defaultRenderIcon}
       onRenderText={showLabel ? onRenderText ?? defaultRenderText : undefined}
     />
