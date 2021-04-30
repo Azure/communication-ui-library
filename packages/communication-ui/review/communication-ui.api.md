@@ -142,12 +142,6 @@ export const labeledOptionsButtonProps: IButtonProps;
 // @public
 export const labeledRecordButtonProps: IButtonProps;
 
-<<<<<<< HEAD
-// @public
-export const labeledScreenShareButtonProps: IButtonProps;
-
-=======
->>>>>>> 735fdff... Update communication-ui.api.md
 // @public (undocumented)
 export type Message<T extends MessageTypes> = {
     type: T;
@@ -266,16 +260,12 @@ export interface ReadReceiptProps {
 export const recordButtonProps: IButtonProps;
 
 // @public
-<<<<<<< HEAD
-export const screenShareButtonProps: IButtonProps;
-=======
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
 
 // @public
 export interface ScreenShareButtonProps extends IButtonProps {
     showLabel?: boolean;
 }
->>>>>>> 735fdff... Update communication-ui.api.md
 
 // @public
 export const SendBox: (props: SendBoxProps) => JSX.Element;
