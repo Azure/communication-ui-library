@@ -126,3 +126,82 @@ override or decorate onMute handler
 // summary:
 => fulfills scenarios, same pattern as core components but over-generic interface for multiple calls
 ```
+
+## JSX with ref
+
+```typescript
+const GroupCall = () => {
+  mute() {
+
+  }
+
+  on(event, handler) {
+
+  }
+};
+
+const ContosoApp = () => {
+    const groupCallRef = useRef<typeof GroupCall>();
+    useEffect(() => {
+      groupCallRef.current.on(...);
+      groupCallRef.current.on(...);
+
+      return () => {
+        groupCallRef.current.off(...);
+        groupCallRef.current.off(...);
+      }
+    }, [groupCallRef]);
+
+    mute() {
+        groupCallRef.current.mute();
+    }
+    return (
+        <GroupCall ref={groupCallRef} />
+    );
+}
+
+// send commands
+groupCallRef.current.mute();
+
+// query
+??? groupCallRef.current
+
+// events
+groupCallRef.current.on('mute', handler);
+
+// rewire event handling
+override or decorate onMute handler
+
+// summary:
+=> more code to write, .current syntax
+```
+
+## Winner: MVVM & Adapter
+
+```typescript
+groupCall = new GroupCallActor(); // name tbd
+
+// render with React 
+<GroupCall actor={groupCall} {...customizationOptions}>
+
+// render without React
+htmlElement = groupCall.createView(customizationOptions);
+container.appendChild(htmlElement);
+
+// send commands
+groupCall.mute();
+groupCall.stopCamera();
+
+// query
+muted = groupCall.getState().isMuted
+
+// events
+groupCall.on('participantJoined', handler); // single event
+groupCall.onStateChanged(handler); // all changes
+
+// rewire event handling
+tbd, maybe:
+groupCall.on('beforeMute', () => 'continue' | 'abort');
+or decorate the GroupCall and override/delegate
+or pass a middleware function when instantiating the GroupCall
+```
