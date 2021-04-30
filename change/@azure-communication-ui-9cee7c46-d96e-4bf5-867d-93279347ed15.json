@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Resolve conflicts in communication-ui.api.md",
+  "packageName": "@azure/communication-ui",
+  "email": "prprabhu@microsoft.com",
+  "dependentChangeType": "patch"
+}
