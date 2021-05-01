@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add userId to callClientDeclaratify to add userId to Declarative state\"",
+  "packageName": "@azure/communication-ui",
+  "email": "allenhwang@microsoft.com",
+  "dependentChangeType": "patch"
+}
