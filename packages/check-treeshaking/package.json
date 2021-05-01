@@ -1,0 +1,38 @@
+{
+  "name": "check-treeshaking",
+  "version": "1.0.0-beta",
+  "description": "Utility to ensure proper dependencies across modules",
+  "scripts": {
+    "build": "npx webpack",
+    "build:watch": "echo skip",
+    "test": "echo skip",
+    "test:coverage": "echo skip",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "lint:fix": "npm run lint -- --fix",
+    "lint:quiet": "npm run lint -- --quiet"
+  },
+  "dependencies": {
+    "@azure/communication-ui": "1.0.0-beta",
+    "@azure/acs-chat-declarative": "1.0.0-beta",
+    "@azure/acs-calling-declarative": "1.0.0-beta",
+    "@azure/acs-chat-selector": "1.0.0-beta",
+    "@azure/acs-calling-selector": "1.0.0-beta"
+  },
+  "devDependencies": {
+    "webpack": "4.44.2",
+    "webpack-cli": "4.5.0",
+    "eslint": "^7.7.0",
+    "eslint-config-prettier": "^6.12.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-header": "^3.1.0",
+    "eslint-plugin-import": "^2.20.1"
+  },
+  "beachball": {
+    "tag": "next",
+    "disallowedChangeTypes": [
+      "major",
+      "minor",
+      "patch"
+    ]
+  }
+}
