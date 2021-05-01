@@ -57,7 +57,9 @@ const CallingProviderBase = (props: CallingProviderProps & ErrorHandlingProps): 
 
   // if there is no valid token then there is no valid userId
   const userIdFromToken = token ? getIdFromToken(token) : '';
-  const [callClient, setCallClient] = useState<CallClient>(callClientDeclaratify(new CallClient(callClientOptions)));
+  const [callClient, setCallClient] = useState<CallClient>(
+    callClientDeclaratify(new CallClient(callClientOptions), userIdFromToken)
+  );
   const [callAgent, setCallAgent] = useState<CallAgent | undefined>(undefined);
   const [deviceManager, setDeviceManager] = useState<DeviceManager | undefined>(undefined);
   const [userId, setUserId] = useState<string>(userIdFromToken);
