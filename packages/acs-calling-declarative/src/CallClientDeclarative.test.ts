@@ -47,6 +47,8 @@ jest.mock('@azure/communication-calling', () => {
 const mockCallId = 'a';
 const mockCallId2 = 'b';
 const mockParticipantCommunicationUserId = 'c';
+const mockDisplayName = 'd';
+const mockUserId = 'e';
 
 interface TestData {
   mockCallClient: any;
@@ -58,7 +60,7 @@ interface TestData {
 
 function createClientAndAgentMocks(testData: TestData): void {
   const mockCallClient = new CallClient();
-  const mockCallAgent = { calls: [] as ReadonlyArray<Call> } as MockCallAgent;
+  const mockCallAgent = { calls: [] as ReadonlyArray<Call>, displayName: mockDisplayName } as MockCallAgent;
   addMockEmitter(mockCallAgent);
   mockCallClient.createCallAgent = (): Promise<CallAgent> => {
     return Promise.resolve(mockCallAgent);
@@ -68,7 +70,7 @@ function createClientAndAgentMocks(testData: TestData): void {
 }
 
 function createDeclarativeClient(testData: TestData): void {
-  testData.declarativeCallClient = callClientDeclaratify(testData.mockCallClient);
+  testData.declarativeCallClient = callClientDeclaratify(testData.mockCallClient, '');
 }
 
 async function createMockCallAndEmitCallsUpdated(testData: TestData, waitCondition?: () => boolean): Promise<void> {
@@ -127,6 +129,22 @@ async function waitWithBreakCondition(breakCondition: () => boolean): Promise<vo
 }
 
 describe('declarative call client', () => {
+  test('should allow developer to specify userId and provide access to it in state', async () => {
+    const callClient = new CallClient();
+    const declarativeCallClient = callClientDeclaratify(callClient, mockUserId);
+    expect(declarativeCallClient.state.userId).toBe(mockUserId);
+  });
+
+  test('should update callAgent state and have displayName when callAgent is created', async () => {
+    const testData = {} as TestData;
+    createClientAndAgentMocks(testData);
+    createDeclarativeClient(testData);
+    await createMockCallAndEmitCallsUpdated(testData);
+
+    expect(testData.declarativeCallClient.state.callAgent).toBeDefined();
+    expect(testData.declarativeCallClient.state.callAgent?.displayName).toBe(mockDisplayName);
+  });
+
   test('should update state when call added in `callUpdated` event and subscribe to call', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);

@@ -80,6 +80,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
           // callAgent if the createCallAgent succeeds.
           const callAgent = await target.createCallAgent(...args);
           this._callAgent = callAgentDeclaratify(callAgent, this._context, this._internalContext);
+          this._context.setCallAgent({ displayName: this._callAgent.displayName });
           return this._callAgent;
         };
       }
@@ -117,9 +118,11 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
  * to state in a declarative way.
  *
  * @param callClient - CallClient from SDK to declaratify
+ * @param userId - UserId from SDK (optional - not used internally by the stateful client) (this is provided for
+ *   developer convenience to easily access the userId from the state)
  */
-export const callClientDeclaratify = (callClient: CallClient): DeclarativeCallClient => {
-  const context: CallContext = new CallContext();
+export const callClientDeclaratify = (callClient: CallClient, userId: string): DeclarativeCallClient => {
+  const context: CallContext = new CallContext(userId);
   const internalContext: InternalCallContext = new InternalCallContext();
 
   Object.defineProperty(callClient, 'state', {

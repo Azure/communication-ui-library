@@ -20,6 +20,19 @@ import {
 } from '@azure/communication-common';
 
 /**
+ * State only version of {@Link @azure/communication-calling#CallAgent} except calls is moved to be a child directly of
+ * {@Link CallClientState}. The reason to have CallAgent's state proxied is to provide access to displayName. We don't
+ * flatten CallAgent.displayName and put it in CallClientState because it would be ambiguious that displayName is
+ * actually reliant on the creation/existence of CallAgent to be available.
+ */
+export interface CallAgent {
+  /**
+   * Proxy of {@Link @azure/communication-calling#CallAgent.displayName}.
+   */
+  displayName?: string;
+}
+
+/**
  * State only version of {@Link @azure/communication-calling#LocalVideoStream}.
  */
 export interface LocalVideoStream {
@@ -207,7 +220,7 @@ export interface IncomingCall {
  * This type is meant to encapsulate all the state inside {@Link @azure/communication-calling#DeviceManager}. For
  * optional parameters they may not be available until permission is granted by the user.
  */
-export type DeviceManagerState = {
+export type DeviceManager = {
   /**
    * Proxy of {@Link @azure/communication-calling#DeviceManager.isSpeakerSelectionAvailable}.
    */
@@ -269,5 +282,15 @@ export interface CallClientState {
   /**
    * Proxy of {@Link @azure/communication-calling#DeviceManager} and its events.
    */
-  deviceManagerState: DeviceManagerState;
+  deviceManager: DeviceManager;
+  /**
+   * Proxy of {@Link @azure/communication-calling#CallAgent} without the calls property. Provides access to displayName
+   * but only available if CallAgent has been created.
+   */
+  callAgent: CallAgent | undefined;
+  /**
+   * Stores a userId string. This is not used by the stateful client and is provided here as a convenience for the
+   * developer for easier access to userId. Must be passed in at initialization of the stateful client.
+   */
+  userId: string;
 }
