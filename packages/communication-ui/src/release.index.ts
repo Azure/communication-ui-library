@@ -31,5 +31,11 @@ export type {
   VideoGalleryLocalVideoStream,
   VideoGalleryRemoteVideoStream,
   NamedTheme,
-  ThemeCollection
+  ThemeCollection,
+  LocalGalleryParticipant,
+  GalleryParticipant,
+  VideoGalleryVideoStream,
+  VideoGalleryParticipant,
+  MediaStreamType,
+  ScalingMode
 } from './types';

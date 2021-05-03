@@ -5,11 +5,11 @@ import {
   connectFuncsToContext,
   StreamMedia,
   VideoTile,
-  GridLayout,
   MapToLocalVideoProps,
   convertSdkRemoteParticipantToGalleryParticipant,
   ErrorHandlingProps,
-  WithErrorHandling
+  WithErrorHandling,
+  VideoGallery
 } from '@azure/communication-ui';
 import { MapToMediaGalleryProps, MediaGalleryContainerProps } from './consumers/MapToMediaGalleryProps';
 import { Label, mergeStyles, Stack } from '@fluentui/react';
@@ -18,15 +18,18 @@ import {
   aspectRatioBoxContentStyle,
   aspectRatioBoxStyle,
   disabledVideoHint,
-  gridStyle,
+  // gridStyle,
   screenShareContainerStyle,
   stackContainerStyle,
   videoHint
 } from './styles/MediaGallery.styles';
 import { RemoteVideoTile } from './RemoteVideoTile';
+import { usePropsFor } from './hooks/usePropsFor';
 
 export const MediaGalleryComponentBase = (props: MediaGalleryContainerProps): JSX.Element => {
   const { localParticipant, remoteParticipants, screenShareStream } = props;
+
+  const videoGalleryProps = usePropsFor(VideoGallery);
 
   const localVideoStream = MapToLocalVideoProps({
     stream: localParticipant.videoStream,
@@ -54,20 +57,6 @@ export const MediaGalleryComponentBase = (props: MediaGalleryContainerProps): JS
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [remoteParticipants, screenShareStream]);
-
-  const gridLayoutRemoteParticipants = useMemo(() => {
-    return remoteParticipants.map((participant, key) => {
-      const label = participant.displayName;
-      const stream = participant.videoStream;
-
-      return (
-        <Stack className={gridStyle} key={key} grow>
-          <RemoteVideoTile stream={stream} scalingMode={'Crop'} label={label} avatarName={label} />
-        </Stack>
-      );
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [remoteParticipants]);
 
   const layoutLocalParticipant = useMemo(() => {
     return (
@@ -99,12 +88,7 @@ export const MediaGalleryComponentBase = (props: MediaGalleryContainerProps): JS
       </div>
     </>
   ) : (
-    <GridLayout>
-      <Stack horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
-        {layoutLocalParticipant}
-      </Stack>
-      {gridLayoutRemoteParticipants}
-    </GridLayout>
+    <VideoGallery {...videoGalleryProps} />
   );
 };
 

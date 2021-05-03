@@ -13,11 +13,15 @@ export type LocalGalleryParticipant = {
   videoStream?: LocalVideoStream;
 };
 
-type VideoGalleryVideoStream = {
+export type MediaStreamType = 'Video' | 'ScreenSharing';
+
+export type ScalingMode = 'Stretch' | 'Crop' | 'Fit';
+
+export type VideoGalleryVideoStream = {
   id: string;
-  mediaStreamType: 'Video' | 'ScreenSharing';
+  mediaStreamType: MediaStreamType;
   isAvailable: boolean;
-  scalingMode?: 'Stretch' | 'Crop' | 'Fit';
+  scalingMode?: ScalingMode;
   isMirrored?: boolean;
   target?: HTMLElement;
 };
@@ -26,7 +30,7 @@ export type VideoGalleryRemoteVideoStream = VideoGalleryVideoStream;
 
 export type VideoGalleryLocalVideoStream = VideoGalleryVideoStream;
 
-type VideoGalleryParticipant = {
+export type VideoGalleryParticipant = {
   userId: string;
   displayName?: string;
   isMuted: boolean;
@@ -34,10 +38,11 @@ type VideoGalleryParticipant = {
 
 export type VideoGalleryRemoteParticipant = VideoGalleryParticipant & {
   isSpeaking: boolean;
-  videoStreams: VideoGalleryRemoteVideoStream[];
+  videoStream?: VideoGalleryRemoteVideoStream;
+  screenShareStream?: VideoGalleryRemoteVideoStream;
 };
 
 export type VideoGalleryLocalParticipant = VideoGalleryParticipant & {
   isScreenSharingOn: boolean;
-  videoStreams: VideoGalleryLocalVideoStream[];
+  videoStream?: VideoGalleryLocalVideoStream;
 };

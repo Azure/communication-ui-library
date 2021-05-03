@@ -8,9 +8,11 @@ import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { IButtonProps } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
+import { LocalVideoStream } from '@azure/communication-calling';
 import { PartialTheme } from '@fluentui/react-theme-provider';
 import { PersonaPresence } from '@fluentui/react';
 import { default as React_2 } from 'react';
+import { RemoteVideoStream } from '@azure/communication-calling';
 import { SizeValue } from '@fluentui/react-northstar';
 import { Theme } from '@fluentui/react-theme-provider';
 
@@ -107,6 +109,13 @@ export interface FluentThemeProviderProps {
 }
 
 // @public (undocumented)
+export type GalleryParticipant = {
+    displayName: string;
+    userId: string;
+    videoStream?: RemoteVideoStream;
+};
+
+// @public (undocumented)
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;
 
 // @public (undocumented)
@@ -144,6 +153,16 @@ export const labeledRecordButtonProps: IButtonProps;
 
 // @public
 export const labeledScreenShareButtonProps: IButtonProps;
+
+// @public (undocumented)
+export type LocalGalleryParticipant = {
+    displayName: string;
+    userId: string;
+    videoStream?: LocalVideoStream;
+};
+
+// @public (undocumented)
+export type MediaStreamType = 'Video' | 'ScreenSharing';
 
 // @public (undocumented)
 export type Message<T extends MessageTypes> = {
@@ -262,6 +281,9 @@ export interface ReadReceiptProps {
 // @public
 export const recordButtonProps: IButtonProps;
 
+// @public (undocumented)
+export type ScalingMode = 'Stretch' | 'Crop' | 'Fit';
+
 // @public
 export const screenShareButtonProps: IButtonProps;
 
@@ -374,11 +396,18 @@ export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 // @public (undocumented)
 export type VideoGalleryLocalParticipant = VideoGalleryParticipant & {
     isScreenSharingOn: boolean;
-    videoStreams: VideoGalleryLocalVideoStream[];
+    videoStream?: VideoGalleryLocalVideoStream;
 };
 
 // @public (undocumented)
 export type VideoGalleryLocalVideoStream = VideoGalleryVideoStream;
+
+// @public (undocumented)
+export type VideoGalleryParticipant = {
+    userId: string;
+    displayName?: string;
+    isMuted: boolean;
+};
 
 // @public (undocumented)
 export interface VideoGalleryProps {
@@ -391,11 +420,22 @@ export interface VideoGalleryProps {
 // @public (undocumented)
 export type VideoGalleryRemoteParticipant = VideoGalleryParticipant & {
     isSpeaking: boolean;
-    videoStreams: VideoGalleryRemoteVideoStream[];
+    videoStream?: VideoGalleryRemoteVideoStream;
+    screenShareStream?: VideoGalleryRemoteVideoStream;
 };
 
 // @public (undocumented)
 export type VideoGalleryRemoteVideoStream = VideoGalleryVideoStream;
+
+// @public (undocumented)
+export type VideoGalleryVideoStream = {
+    id: string;
+    mediaStreamType: MediaStreamType;
+    isAvailable: boolean;
+    scalingMode?: ScalingMode;
+    isMirrored?: boolean;
+    target?: HTMLElement;
+};
 
 // @public (undocumented)
 export const VideoTile: (props: VideoTileProps & PlaceholderProps) => JSX.Element;

@@ -48,10 +48,24 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
       className={mergeStyles(gridLayoutStyle, styles?.root)}
       style={{
         gridTemplateRows: `repeat(${gridRow}, minmax(0, 1fr))`,
-        gridTemplateColumns: `repeat(${gridCol}, 1fr)`
+        gridTemplateColumns: `repeat(${gridCol}, 1fr)`,
+        gap: 8
       }}
     >
-      {children}
+      {React.Children.map(children, (child: React.ReactNode, index: number) => {
+        return (
+          <div style={{ border: 'solid' }} key={index}>
+            {child}
+          </div>
+        );
+      })}
+      {/* {children?.map((child: React.ReactNode, index: number) => {
+        return (
+          <div style={{ border: 'solid' }} key={index}>
+            {child}
+          </div>
+        );
+      })} */}
     </div>
   );
 };

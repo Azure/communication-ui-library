@@ -1,9 +1,9 @@
 // © Microsoft Corporation. All rights reserved.
 
+import { memoizeFnAll } from '@azure/acs-calling-selector';
 import { Label, Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import { disabledVideoHint, gridStyle, videoHint } from '../composites/GroupCall/styles/MediaGallery.styles';
-// import { MapToLocalVideoProps } from '../consumers';
 import { VideoGalleryRemoteParticipant, VideoGalleryLocalParticipant } from '../types';
 import { GridLayout } from './GridLayout';
 import { StreamMedia } from './StreamMedia';
@@ -14,33 +14,63 @@ export interface VideoGalleryProps {
   localParticipant?: VideoGalleryLocalParticipant;
 }
 
-export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
-  const { localParticipant } = props;
-  const localVideoStream = localParticipant?.videoStreams[0];
-
-  const layoutLocalParticipant = useMemo(() => {
+const memoizeAllRemoteParticipants = memoizeFnAll(
+  (remoteParticipantkey: number, isAvailable?: boolean, target?: HTMLElement, displayName?: string): JSX.Element => {
     return (
-      localParticipant && (
+      <Stack className={gridStyle} key={remoteParticipantkey} grow>
         <VideoTile
-          isVideoReady={localVideoStream?.isAvailable}
-          videoProvider={<StreamMedia videoStreamElement={localVideoStream?.target ?? null} />}
-          avatarName={localParticipant.displayName}
+          isVideoReady={isAvailable}
+          videoProvider={<StreamMedia videoStreamElement={target ?? null} />}
+          avatarName={displayName}
         >
-          <Label className={localVideoStream?.isAvailable ? videoHint : disabledVideoHint}>
-            {localParticipant.displayName}
-          </Label>
+          <Label className={isAvailable ? videoHint : disabledVideoHint}>{displayName}</Label>
         </VideoTile>
-      )
+      </Stack>
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [localParticipant]);
+  }
+);
+
+export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
+  const { localParticipant, remoteParticipants } = props;
+  const localVideoStream = localParticipant?.videoStream;
+
+  const localParticipantComponent = useMemo(() => {
+    return (
+      <VideoTile
+        isVideoReady={localVideoStream?.isAvailable}
+        videoProvider={<StreamMedia videoStreamElement={localVideoStream?.target ?? null} />}
+        avatarName={localParticipant?.displayName}
+      >
+        <Label className={localVideoStream?.isAvailable ? videoHint : disabledVideoHint}>
+          {localParticipant?.displayName}
+        </Label>
+      </VideoTile>
+    );
+  }, [localParticipant?.displayName, localVideoStream]);
+
+  const gridLayoutRemoteParticipants = useMemo(() => {
+    return memoizeAllRemoteParticipants((memoizedRemoteParticipantFn) => {
+      return remoteParticipants
+        ? remoteParticipants.map((participant, key) => {
+            const remoteVideoStream = participant.videoStream;
+
+            return memoizedRemoteParticipantFn(
+              key,
+              remoteVideoStream?.isAvailable,
+              remoteVideoStream?.target,
+              participant.displayName
+            );
+          })
+        : [];
+    });
+  }, [remoteParticipants]);
 
   return (
     <GridLayout>
       <Stack horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
-        {layoutLocalParticipant}
+        {localParticipant && localParticipantComponent}
       </Stack>
-      {/* {gridLayoutRemoteParticipants} */}
+      {gridLayoutRemoteParticipants}
     </GridLayout>
   );
 };

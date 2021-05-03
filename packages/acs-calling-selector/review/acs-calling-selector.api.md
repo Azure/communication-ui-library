@@ -5,13 +5,16 @@
 ```ts
 
 import { Call } from '@azure/communication-calling';
+import { Call as Call_2 } from '@azure/acs-calling-declarative';
 import { CallAgent } from '@azure/communication-calling';
+import * as callingStateful from '@azure/acs-calling-declarative';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { DeclarativeCallClient } from '@azure/acs-calling-declarative';
 import { DeviceManager } from '@azure/communication-calling';
 import { HangUpOptions } from '@azure/communication-calling';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { ReactElement } from 'react';
+import * as reselect from 'reselect';
 import { StartCallOptions } from '@azure/communication-calling';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
@@ -19,12 +22,17 @@ import { VideoDeviceInfo } from '@azure/communication-calling';
 // @public
 export type BaseSelectorProps = {
     callId: string;
+    displayName: string;
+    identifier: string;
 };
 
 // @public
 export type CallAgentHandlers = {
     onStartCall(participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions): Call;
 };
+
+// @public (undocumented)
+export type CallbackType<KeyT, ArgsT extends any[], FnRetT> = (memoizedFn: FunctionWithKey<KeyT, ArgsT, FnRetT>) => FnRetT[];
 
 // @public
 export type CallClientHandlers = {
@@ -47,6 +55,57 @@ export const createDefaultHandlersForComponent: <Props>(declarativeCallClient: D
 // @public
 export type DeviceManagerHandlers = {
     getCameras(): Promise<VideoDeviceInfo[]>;
+};
+
+// @public (undocumented)
+export type FunctionWithKey<KeyT, ArgsT extends any[], RetT> = (key: KeyT, ...args: ArgsT) => RetT;
+
+// @public
+export const memoizeFnAll: <KeyT, ArgsT extends any[], FnRetT, CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>>(fnToMemoize: FunctionWithKey<KeyT, ArgsT, FnRetT>, shouldCacheUpdate?: (args1: any, args2: any) => boolean) => (callback: CallBackT) => FnRetT[];
+
+// @public (undocumented)
+export type VideoGalleryLocalParticipant = VideoGalleryParticipant & {
+    isScreenSharingOn: boolean;
+    videoStream?: VideoGalleryLocalVideoStream;
+};
+
+// @public (undocumented)
+export type VideoGalleryLocalVideoStream = VideoGalleryVideoStream;
+
+// @public (undocumented)
+export type VideoGalleryParticipant = {
+    userId: string;
+    displayName?: string;
+    isMuted: boolean;
+};
+
+// @public (undocumented)
+export type VideoGalleryRemoteParticipant = VideoGalleryParticipant & {
+    isSpeaking: boolean;
+    videoStream?: VideoGalleryRemoteVideoStream;
+    screenShareStream?: VideoGalleryRemoteVideoStream;
+};
+
+// @public (undocumented)
+export type VideoGalleryRemoteVideoStream = VideoGalleryVideoStream;
+
+// @public (undocumented)
+export const videoGallerySelector: reselect.OutputParametricSelector<callingStateful.CallClientState, BaseSelectorProps, {
+    localParticipant: VideoGalleryLocalParticipant | undefined;
+    remoteParticipants: VideoGalleryRemoteParticipant[];
+}, (res1: Call_2 | undefined, res2: string | undefined, res3: string | undefined) => {
+    localParticipant: VideoGalleryLocalParticipant | undefined;
+    remoteParticipants: VideoGalleryRemoteParticipant[];
+}>;
+
+// @public (undocumented)
+export type VideoGalleryVideoStream = {
+    id: string;
+    mediaStreamType: MediaStreamType;
+    isAvailable: boolean;
+    scalingMode?: ScalingMode;
+    isMirrored?: boolean;
+    target?: HTMLElement;
 };
 
 
