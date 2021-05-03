@@ -136,23 +136,25 @@ type Common<A, B> = Pick<A, CommonProperties<A, B>>;
  * @param _ - React component that you want to generate handlers for.
  * @returns
  */
-export const createDefaultHandlersForComponent = <Props>(
-  declarativeCallClient: DeclarativeCallClient,
-  callAgent: CallAgent | undefined,
-  deviceManager: DeviceManager | undefined,
-  call: Call | undefined,
-  _: (props: Props) => ReactElement | null
-):
-  | Common<CallClientHandlers & CallAgentHandlers & DeviceManagerHandlers & CallHandlers, Props>
-  | Common<CallClientHandlers, Props> => {
-  const callClientHandlers = createCallClientDefaultHandlers(declarativeCallClient);
-  const callAgentHandlers = callAgent ? createCallAgentDefaultHandlers(callAgent) : undefined;
-  const deviceManagerHandlers = deviceManager ? createDeviceManagerDefaultHandlers(deviceManager) : undefined;
-  const callHandlers = call ? createCallDefaultHandlers(call) : undefined;
-  return {
-    ...callClientHandlers,
-    ...callAgentHandlers,
-    ...deviceManagerHandlers,
-    ...callHandlers
-  };
-};
+export const createDefaultHandlersForComponent = memoizeOne(
+  <Props>(
+    declarativeCallClient: DeclarativeCallClient,
+    callAgent: CallAgent | undefined,
+    deviceManager: DeviceManager | undefined,
+    call: Call | undefined,
+    _: (props: Props) => ReactElement | null
+  ):
+    | Common<CallClientHandlers & CallAgentHandlers & DeviceManagerHandlers & CallHandlers, Props>
+    | Common<CallClientHandlers, Props> => {
+    const callClientHandlers = createCallClientDefaultHandlers(declarativeCallClient);
+    const callAgentHandlers = callAgent ? createCallAgentDefaultHandlers(callAgent) : undefined;
+    const deviceManagerHandlers = deviceManager ? createDeviceManagerDefaultHandlers(deviceManager) : undefined;
+    const callHandlers = call ? createCallDefaultHandlers(call) : undefined;
+    return {
+      ...callClientHandlers,
+      ...callAgentHandlers,
+      ...deviceManagerHandlers,
+      ...callHandlers
+    };
+  }
+);
