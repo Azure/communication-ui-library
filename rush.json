@@ -71,6 +71,11 @@
       "packageName": "build-tools",
       "projectFolder": "common/config",
       "reviewCategory": "tools"
+    },
+    {
+      "packageName": "check-treeshaking",
+      "projectFolder": "packages/check-treeshaking",
+      "reviewCategory": "tools"
     }
   ]
 }
