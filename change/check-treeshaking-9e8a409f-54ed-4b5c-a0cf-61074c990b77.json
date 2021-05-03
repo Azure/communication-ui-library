@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "New tool to check dependencies for optimal treeshaking",
-  "packageName": "check-treeshaking",
-  "email": "domessin@microsoft.com",
-  "dependentChangeType": "none"
-}

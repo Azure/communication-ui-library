@@ -1,6 +1,7 @@
 {
   "name": "check-treeshaking",
-  "version": "1.0.0-beta",
+  "version": "0.1.0",
+  "private": "true",
   "description": "Utility to ensure proper dependencies across modules",
   "scripts": {
     "build": "npx webpack",
@@ -26,13 +27,5 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-header": "^3.1.0",
     "eslint-plugin-import": "^2.20.1"
-  },
-  "beachball": {
-    "tag": "next",
-    "disallowedChangeTypes": [
-      "major",
-      "minor",
-      "patch"
-    ]
   }
 }
