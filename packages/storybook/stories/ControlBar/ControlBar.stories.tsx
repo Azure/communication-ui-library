@@ -6,12 +6,11 @@ import {
   CameraButton,
   ControlBar,
   MicrophoneButton,
+  ScreenShareButton,
   hangupButtonProps,
   labeledHangupButtonProps,
   labeledOptionsButtonProps,
-  labeledScreenShareButtonProps,
   optionsButtonProps,
-  screenShareButtonProps,
   LIGHT,
   DARK
 } from '@azure/communication-ui';
@@ -96,10 +95,7 @@ export const ControlBarComponent: (
       <ControlBar layout={layout}>
         <CameraButton showLabel={showLabels} checked={toggleButtons} />
         <MicrophoneButton showLabel={showLabels} checked={toggleButtons} />
-        <DefaultButton
-          {...(showLabels ? labeledScreenShareButtonProps : screenShareButtonProps)}
-          checked={toggleButtons}
-        />
+        <ScreenShareButton showLabel={showLabels} checked={toggleButtons} />
         <DefaultButton
           {...(showLabels ? labeledOptionsButtonProps : optionsButtonProps)}
           menuProps={exampleOptionsMenuProps}

@@ -4,8 +4,8 @@ import {
   ControlBar,
   FluentThemeProvider,
   MicrophoneButton,
-  hangupButtonProps,
-  screenShareButtonProps
+  ScreenShareButton,
+  hangupButtonProps
 } from '@azure/communication-ui';
 import { DefaultButton } from '@fluentui/react';
 
@@ -15,7 +15,7 @@ export const FluentThemeProviderSnippet = (): JSX.Element => {
       <ControlBar>
         <CameraButton />
         <MicrophoneButton />
-        <DefaultButton {...screenShareButtonProps} />
+        <ScreenShareButton />
         <DefaultButton {...hangupButtonProps} />
       </ControlBar>
     </FluentThemeProvider>

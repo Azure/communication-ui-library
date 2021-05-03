@@ -142,9 +142,6 @@ export const labeledOptionsButtonProps: IButtonProps;
 // @public
 export const labeledRecordButtonProps: IButtonProps;
 
-// @public
-export const labeledScreenShareButtonProps: IButtonProps;
-
 // @public (undocumented)
 export type Message<T extends MessageTypes> = {
     type: T;
@@ -263,7 +260,12 @@ export interface ReadReceiptProps {
 export const recordButtonProps: IButtonProps;
 
 // @public
-export const screenShareButtonProps: IButtonProps;
+export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
+
+// @public
+export interface ScreenShareButtonProps extends IButtonProps {
+    showLabel?: boolean;
+}
 
 // @public
 export const SendBox: (props: SendBoxProps) => JSX.Element;
