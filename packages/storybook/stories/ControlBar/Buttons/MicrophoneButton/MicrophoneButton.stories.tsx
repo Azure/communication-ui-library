@@ -15,7 +15,7 @@ export const MicrophoneButtonComponent = (): JSX.Element => {
 };
 
 export default {
-  title: `${COMPONENT_FOLDER_PREFIX}/ControlBar/Buttons/MicrophoneButton`,
+  title: `${COMPONENT_FOLDER_PREFIX}/ControlBar/Buttons`,
   component: MicrophoneButton,
   parameters: {
     docs: {
