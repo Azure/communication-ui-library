@@ -33,11 +33,11 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   };
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {
-    if (props?.checked) {
-      return <Stack className={mergeStyles(controlButtonLabelStyles)}>Mute</Stack>;
-    }
-
-    return <Stack className={mergeStyles(controlButtonLabelStyles)}>Unmute</Stack>;
+    return (
+      <Stack className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
+        {props?.checked ? 'Mute' : 'Unmute'}
+      </Stack>
+    );
   };
 
   return (

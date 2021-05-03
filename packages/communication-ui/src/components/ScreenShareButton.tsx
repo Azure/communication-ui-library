@@ -30,7 +30,11 @@ export const ScreenShareButton = (props: ScreenShareButtonProps): JSX.Element =>
   };
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {
-    return <Stack className={mergeStyles(controlButtonLabelStyles)}>{props?.checked ? 'Stop' : 'Share'}</Stack>;
+    return (
+      <Stack className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
+        {props?.checked ? 'Stop' : 'Share'}
+      </Stack>
+    );
   };
 
   return (

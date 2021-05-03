@@ -30,7 +30,11 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   };
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {
-    return <Stack className={mergeStyles(controlButtonLabelStyles)}>{props?.checked ? 'Turn off' : 'Turn on'}</Stack>;
+    return (
+      <Stack className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
+        {props?.checked ? 'Turn off' : 'Turn on'}
+      </Stack>
+    );
   };
 
   return (
