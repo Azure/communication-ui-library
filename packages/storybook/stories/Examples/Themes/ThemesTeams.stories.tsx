@@ -10,9 +10,9 @@ import {
   FluentThemeProvider,
   GridLayout,
   MicrophoneButton,
+  ScreenShareButton,
   VideoTile,
-  hangupButtonProps,
-  screenShareButtonProps
+  hangupButtonProps
 } from '@azure/communication-ui';
 import { DefaultButton } from '@fluentui/react';
 
@@ -69,8 +69,7 @@ export const TeamsThemeComponent: () => JSX.Element = () => {
                     /*handle onClick*/
                   }}
                 />
-                <DefaultButton
-                  {...screenShareButtonProps}
+                <ScreenShareButton
                   onClick={() => {
                     /*handle onClick*/
                   }}

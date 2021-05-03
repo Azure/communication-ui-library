@@ -12,8 +12,9 @@ export const getDocs: () => JSX.Element = () => {
     FluentThemeProvider,
     GridLayout,
     MicrophoneButton,
+    ScreenShareButton,
     VideoTile,
-    hangupButtonProps, screenShareButtonProps
+    hangupButtonProps
   } from '@azure/communication-ui';
   import { DefaultButton } from '@fluentui/react';
 
@@ -58,8 +59,7 @@ export const getDocs: () => JSX.Element = () => {
                     /*handle onClick*/
                 }}
             />
-            <DefaultButton
-                {...screenShareButtonProps}
+            <ScreenShareButton
                 onClick={() => {
                     /*handle onClick*/
                 }}
