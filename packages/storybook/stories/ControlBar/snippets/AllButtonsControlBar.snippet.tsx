@@ -2,11 +2,11 @@ import React from 'react';
 import {
   CameraButton,
   ControlBar,
+  EndCallButton,
   FluentThemeProvider,
   MicrophoneButton,
   ScreenShareButton,
   answerButtonProps,
-  hangupButtonProps,
   optionsButtonProps,
   recordButtonProps
 } from '@azure/communication-ui';
@@ -55,8 +55,7 @@ export const AllButtonsControlBarExample: () => JSX.Element = () => {
           }}
         />
         <DefaultButton {...optionsButtonProps} menuProps={exampleOptionsMenuProps} />
-        <DefaultButton
-          {...hangupButtonProps}
+        <EndCallButton
           onClick={() => {
             /*handle onClick*/
           }}

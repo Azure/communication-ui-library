@@ -6,10 +6,10 @@ import { Stack, DefaultButton } from '@fluentui/react';
 import {
   CameraButton,
   ControlBar,
+  EndCallButton,
   MicrophoneButton,
   StreamMedia,
   VideoTile,
-  hangupButtonProps,
   optionsButtonProps
 } from '@azure/communication-ui';
 import { text, boolean, number } from '@storybook/addon-knobs';
@@ -51,7 +51,7 @@ export const VideoTileComponent: () => JSX.Element = () => {
             <CameraButton />
             <MicrophoneButton />
             <DefaultButton {...optionsButtonProps} />
-            <DefaultButton {...hangupButtonProps} />
+            <EndCallButton />
           </ControlBar>
         </Stack>
       )}

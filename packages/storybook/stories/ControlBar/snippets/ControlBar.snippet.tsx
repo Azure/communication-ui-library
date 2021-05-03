@@ -2,10 +2,10 @@ import React from 'react';
 import {
   CameraButton,
   ControlBar,
+  EndCallButton,
   FluentThemeProvider,
   MicrophoneButton,
   ScreenShareButton,
-  hangupButtonProps,
   optionsButtonProps
 } from '@azure/communication-ui';
 import { DefaultButton } from '@fluentui/react';
@@ -30,8 +30,7 @@ export const ControlBarExample: () => JSX.Element = () => {
           }}
         />
         <DefaultButton {...optionsButtonProps} menuProps={undefined /*some IContextualMenuProps*/} />
-        <DefaultButton
-          {...hangupButtonProps}
+        <EndCallButton
           onClick={() => {
             /*handle onClick*/
           }}

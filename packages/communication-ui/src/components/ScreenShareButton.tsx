@@ -23,19 +23,24 @@ export interface ScreenShareButtonProps extends IButtonProps {
  */
 export const ScreenShareButton = (props: ScreenShareButtonProps): JSX.Element => {
   const { showLabel = false, styles, onRenderIcon, onRenderText } = props;
+  const componentStyles = styles ? concatStyleSets(controlButtonStyles, styles) : controlButtonStyles;
 
   const defaultRenderIcon = (props?: IButtonProps): JSX.Element => {
     return props?.checked ? <CallControlCloseTrayIcon /> : <CallControlPresentNewIcon bordered={false} />;
   };
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {
-    return <Stack className={mergeStyles(controlButtonLabelStyles)}>{props?.checked ? 'Stop' : 'Share'}</Stack>;
+    return (
+      <Stack className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
+        {props?.checked ? 'Stop' : 'Share'}
+      </Stack>
+    );
   };
 
   return (
     <DefaultButton
       {...props}
-      styles={styles ? concatStyleSets(controlButtonStyles, styles) : controlButtonStyles}
+      styles={componentStyles}
       onRenderIcon={onRenderIcon ?? defaultRenderIcon}
       onRenderText={showLabel ? onRenderText ?? defaultRenderText : undefined}
     />
