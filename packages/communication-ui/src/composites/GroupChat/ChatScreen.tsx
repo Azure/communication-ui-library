@@ -1,12 +1,11 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { chatThreadSelector, sendBoxSelector, typingIndicatorSelector } from '@azure/acs-chat-selector';
 import { mergeStyles, Stack } from '@fluentui/react';
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import { ErrorBar, MessageThread, SendBox, TypingIndicator } from '../../components';
 import { useChatThreadClient } from '../../providers';
-import { useHandlers } from './hooks/useHandlers';
-import { useSelector } from './hooks/useSelector';
+import { useAdapter } from './adapter/GroupChatAdapterProvider';
+import { usePropsFor } from './hooks/usePropsFor';
 import { chatContainer, chatWrapper } from './styles/GroupChat.styles';
 
 export type ChatScreenProps = {
@@ -16,7 +15,7 @@ export type ChatScreenProps = {
 };
 
 export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
-  const { threadId, onRenderAvatar, sendBoxMaxLength } = props;
+  const { onRenderAvatar, sendBoxMaxLength } = props;
 
   const pixelToRemConvertRatio = 16;
   const defaultNumberOfChatMessagesToReload = 5;
@@ -25,42 +24,23 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     width: '100%'
   });
 
-  const chatThreadClient = useChatThreadClient();
+  const adapter = useAdapter();
 
   // This code gets all participants who joined the chat earlier than the current user.
   // We need to do this to make the state in declaritive up to date.
   useEffect(() => {
-    const fetchAllParticipants = async (): Promise<void> => {
-      if (chatThreadClient !== undefined) {
-        try {
-          for await (const _page of chatThreadClient.listParticipants().byPage({
-            // Fetch 100 participants per page by default.
-            maxPageSize: 100
-          }));
-        } catch (e) {
-          console.log(e);
-        }
-      }
-    };
+    adapter.fetchAllParticipants();
+  }, [adapter]);
 
-    fetchAllParticipants();
-  }, [chatThreadClient]);
-
-  const selectorConfig = useMemo(() => {
-    return { threadId };
-  }, [threadId]);
-  const sendBoxProps = useSelector(sendBoxSelector, selectorConfig);
-  const sendBoxHandlers = useHandlers(SendBox);
-  const typingIndicatorProps = useSelector(typingIndicatorSelector, selectorConfig);
-  const chatThreadProps = useSelector(chatThreadSelector, selectorConfig);
-  const chatThreadHandlers = useHandlers(MessageThread);
+  const sendBoxProps = usePropsFor(SendBox);
+  const typingIndicatorProps = usePropsFor(TypingIndicator);
+  const messageThreadProps = usePropsFor(MessageThread);
 
   return (
     <Stack className={chatContainer} grow>
       <Stack className={chatWrapper} grow>
         <MessageThread
-          {...chatThreadProps}
-          {...chatThreadHandlers}
+          {...messageThreadProps}
           onRenderAvatar={onRenderAvatar}
           numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
         />
@@ -69,7 +49,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             <TypingIndicator {...typingIndicatorProps} />
           </div>
           <ErrorBar />
-          <SendBox {...sendBoxProps} {...sendBoxHandlers} />
+          <SendBox {...sendBoxProps} />
         </Stack.Item>
       </Stack>
     </Stack>

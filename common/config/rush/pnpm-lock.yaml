@@ -38,6 +38,10 @@ dependencies:
   '@storybook/addon-knobs': 6.1.21_30bc4764d4ba778218056aab0be8023f
   '@storybook/addon-links': 6.1.21_react-dom@16.14.0+react@16.14.0
   '@storybook/addon-storyshots': 6.1.21_bf4eba619a81a338b8fdba9794ec01fe
+  '@storybook/addons': 6.2.9_react-dom@16.14.0+react@16.14.0
+  '@storybook/api': 6.2.9_react-dom@16.14.0+react@16.14.0
+  '@storybook/components': 6.2.9_30bc4764d4ba778218056aab0be8023f
+  '@storybook/core-events': 6.2.9
   '@storybook/node-logger': 6.1.21
   '@storybook/react': 6.1.21_4afa15f3c90940bbd828a24f4067472e
   '@storybook/storybook-deployer': 2.8.7
@@ -102,7 +106,6 @@ dependencies:
   jest-junit: 12.0.0
   jquery: 3.6.0
   json-stringify-safe: 5.0.1
-  memoize-one: 5.1.1
   merge: 1.2.1
   morgan: 1.9.1
   nan: 2.14.2
@@ -13820,6 +13823,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-HKeeBpWvqiVJD57ZUAsJNm71eHTykffzcLZVYWiVfQeI1rJtuEaS7hQiEpWfVVk18donPwJEcFKIkCmPJNOhHA==
+  /memoize-one/5.2.1:
+    dev: false
+    resolution:
+      integrity: sha512-zYiwtZUcYyXKo/np96AGZAckk+FWWsUdJ3cHGGmld7+AhvcWmQyGCYUh1hc4Q/pkOhb65dQR/pqCyK0cOaHz4Q==
   /memoizerific/1.11.3:
     dependencies:
       map-or-similar: 1.5.0
@@ -16616,7 +16623,7 @@ packages:
       integrity: sha512-7gcIUvJkAXXttt1fmBK9cwn+1jTa4hbKLGCZ9J1U6EOkyb2/+LKL1Z28d9rtDLMnpvImlNlLPdTPooorl5cpmg==
   /react-popper-tooltip/3.1.1_react-dom@16.14.0+react@16.14.0:
     dependencies:
-      '@babel/runtime': 7.13.10
+      '@babel/runtime': 7.13.17
       '@popperjs/core': 2.9.1
       react: 16.14.0
       react-dom: 16.14.0_react@16.14.0
@@ -16805,7 +16812,7 @@ packages:
       integrity: sha512-tL4sCgfmvapYRZ1FO2VmBmjPVzzqgHA7kI8lSJ6JS6L78jXFNRdOZFpXyK6P1NBZvKPPCZxReNgzZNUajAerZw==
   /react-syntax-highlighter/13.5.3_react@16.14.0:
     dependencies:
-      '@babel/runtime': 7.13.10
+      '@babel/runtime': 7.13.17
       highlight.js: 10.6.0
       lowlight: 1.19.0
       prismjs: 1.23.0
@@ -16830,7 +16837,7 @@ packages:
       integrity: sha512-L8yPjqPE5CZO6rKsKXRO/rVPiaCOy0tQQJbC+UjPNlobl5mad59lvPjwFsQHTvL03caVDIVr9x9/OSgDe6I5Eg==
   /react-textarea-autosize/8.3.2_f650913bea380c685c20f94e5dc2f677:
     dependencies:
-      '@babel/runtime': 7.13.10
+      '@babel/runtime': 7.13.17
       react: 16.14.0
       use-composed-ref: 1.1.0_react@16.14.0
       use-latest: 1.2.0_f650913bea380c685c20f94e5dc2f677
@@ -20945,6 +20952,7 @@ packages:
       jest-fetch-mock: 3.0.3
       jest-junit: 12.0.0
       json-stringify-safe: 5.0.1
+      memoize-one: 5.2.1
       nan: 2.14.2
       node-forge: 0.10.0
       prettier: 2.0.5
@@ -20972,7 +20980,7 @@ packages:
     peerDependencies:
       webpack-cli: '*'
     resolution:
-      integrity: sha512-nQJvypLutxWMSYZChumjynxphCXkwaA8m5aaL/gtin6w2UaZNGUhdCLlylY+bWbb8vwA/kkoInrrwwC3DcsCRw==
+      integrity: sha512-Wt2ueG3tzWHBGomTl5vWZfz+O0+r4JBwQqpiJon+nMRyoYZmyvaFWs507Y0WBWge9ix8ecPPp1zK7kV7dOVGPQ==
       tarball: file:projects/communication-ui.tgz
     version: 0.0.0
   file:projects/one-to-one-call.tgz_570bf42e92a70fb216c5cd4d5ed668ef:
@@ -21191,7 +21199,7 @@ packages:
     peerDependencies:
       webpack-cli: '*'
     resolution:
-      integrity: sha512-UlApYfT1mmhLpMrV2E0qILycrKVR65FYQr1A91vpFvVXqFB0fzDTszXnrnWcJQSWNnnSGRCGdZS+ymtdmjo5qw==
+      integrity: sha512-WQdccpypge1hzrxraF5Z5ksMH16aptSM7OdipBEYCK4lwSap3xB54fBOOfnoStnhb9O/Ga2CgkapPERNyaHu7A==
       tarball: file:projects/storybook.tgz
     version: 0.0.0
 registry: ''
@@ -21235,6 +21243,10 @@ specifiers:
   '@storybook/addon-knobs': ~6.1.9
   '@storybook/addon-links': ~6.1.1
   '@storybook/addon-storyshots': ~6.1.6
+  '@storybook/addons': ^6.2.5
+  '@storybook/api': ^6.2.5
+  '@storybook/components': ^6.2.5
+  '@storybook/core-events': ^6.2.5
   '@storybook/node-logger': ~6.1.1
   '@storybook/react': ~6.1.1
   '@storybook/storybook-deployer': ~2.8.7
@@ -21299,7 +21311,6 @@ specifiers:
   jest-junit: ^12.0.0
   jquery: ^3.5.1
   json-stringify-safe: ^5.0.1
-  memoize-one: ~5.1.1
   merge: ^1.2.1
   morgan: ~1.9.1
   nan: ^2.14.1
