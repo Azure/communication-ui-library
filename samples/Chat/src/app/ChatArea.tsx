@@ -34,7 +34,7 @@ export const ChatArea = (props: ChatAreaProps): JSX.Element => {
 
   // This state is a temporary contoso fix and will be the typingUsers prop passed to TypingIndicator
   const [transientTypingUsers, setTransientTypingUsers] = useState(typingIndicatorProps.typingUsers);
-  // This useEffect is to set transientTypingIndicatorProps to have empty typingUsers after a timeout of no updates from the selector
+  // This useEffect is to set transientTypingIndicatorProps to have empty typingUsers after a timeout of no updates from useProps
   useEffect(() => {
     setTransientTypingUsers(typingIndicatorProps.typingUsers);
     setTimeout(() => {
