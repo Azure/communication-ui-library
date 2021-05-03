@@ -22,6 +22,7 @@ export interface MicrophoneButtonProps extends IButtonProps {
  */
 export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   const { showLabel = false, styles, onRenderIcon, onRenderText } = props;
+  const componentStyles = styles ? concatStyleSets(controlButtonStyles, styles) : controlButtonStyles;
 
   const defaultRenderIcon = (props?: IButtonProps): JSX.Element => {
     if (props?.checked) {
@@ -42,7 +43,7 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   return (
     <DefaultButton
       {...props}
-      styles={styles ? concatStyleSets(controlButtonStyles, styles) : controlButtonStyles}
+      styles={componentStyles}
       onRenderIcon={onRenderIcon ?? defaultRenderIcon}
       onRenderText={showLabel ? onRenderText ?? defaultRenderText : undefined}
     />
