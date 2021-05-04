@@ -16,7 +16,6 @@ export const getDocs: () => JSX.Element = () => {
     ScreenShareButton,
     VideoTile
   } from '@azure/react-components';
-  import { DefaultButton } from '@fluentui/react';
 
   const TeamsTheme = {
     palette: {

@@ -1,14 +1,12 @@
-import React from 'react';
 import {
   CameraButton,
   ControlBar,
   EndCallButton,
   FluentThemeProvider,
   MicrophoneButton,
-  ScreenShareButton,
-  optionsButtonProps
+  OptionsButton,
+  ScreenShareButton
 } from '@azure/react-components';
-import { DefaultButton } from '@fluentui/react';
 
 export const ControlBarExample: () => JSX.Element = () => {
   return (
@@ -29,7 +27,7 @@ export const ControlBarExample: () => JSX.Element = () => {
             /*handle onClick*/
           }}
         />
-        <DefaultButton {...optionsButtonProps} menuProps={undefined /*some IContextualMenuProps*/} />
+        <OptionsButton menuProps={undefined /*some IContextualMenuProps*/} />
         <EndCallButton
           onClick={() => {
             /*handle onClick*/

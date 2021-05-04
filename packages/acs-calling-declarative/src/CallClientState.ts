@@ -20,6 +20,16 @@ import {
 } from '@azure/communication-common';
 
 /**
+ * State only version of {@Link @azure/communication-calling#RecordingCallFeature}.
+ */
+export interface RecordingCallFeature {
+  /**
+   * Proxy of {@Link @azure/communication-calling#RecordingCallFeature.isRecordingActive}.
+   */
+  isRecordingActive: boolean;
+}
+
+/**
  * State only version of {@Link @azure/communication-calling#LocalVideoStream}.
  */
 export interface LocalVideoStream {
@@ -35,7 +45,7 @@ export interface LocalVideoStream {
    * {@Link VideoStreamRendererView} is added/removed from state by startRenderVideo/stopRenderVideo in
    * {@Link DeclarativeCallClient} API.
    */
-  videoStreamRendererView: VideoStreamRendererView | undefined;
+  videoStreamRendererView?: VideoStreamRendererView | undefined;
 }
 
 /**
@@ -162,6 +172,10 @@ export interface Call {
    * {@Link Converter.getRemoteParticipantKey} to {@Link @azure/communication-calling#RemoteParticipant}
    */
   remoteParticipantsEnded: Map<string, RemoteParticipant>;
+  /**
+   * Proxy of {@Link @azure/communication-calling#RecordingCallFeature}.
+   */
+  recording: RecordingCallFeature;
   /**
    * Stores the local date when the call started on the client. This is not originally in the SDK but provided by the
    * Declarative layer.
