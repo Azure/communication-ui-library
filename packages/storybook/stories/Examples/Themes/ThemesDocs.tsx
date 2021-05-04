@@ -9,12 +9,12 @@ export const getDocs: () => JSX.Element = () => {
   import {
     CameraButton,
     ControlBar,
+    EndCallButton,
     FluentThemeProvider,
     GridLayout,
     MicrophoneButton,
     ScreenShareButton,
-    VideoTile,
-    hangupButtonProps
+    VideoTile
   } from '@azure/communication-ui';
   import { DefaultButton } from '@fluentui/react';
 
@@ -64,8 +64,7 @@ export const getDocs: () => JSX.Element = () => {
                     /*handle onClick*/
                 }}
             />
-            <DefaultButton
-                {...hangupButtonProps}
+            <EndCallButton
                 onClick={() => {
                     /*handle onClick*/
                 }}

@@ -1,11 +1,11 @@
 import {
   CameraButton,
   ControlBar,
+  EndCallButton,
   GridLayout,
   MicrophoneButton,
   ScreenShareButton,
   VideoTile,
-  hangupButtonProps,
   optionsButtonProps
 } from '@azure/communication-ui';
 
@@ -48,7 +48,7 @@ export const CallingComponents = (): JSX.Element => {
           onClick={() => setScreenshareButtonChecked(!screenshareButtonChecked)}
         />
         <DefaultButton {...optionsButtonProps} menuProps={exampleOptionsMenuProps} />
-        <DefaultButton {...hangupButtonProps} />
+        <EndCallButton />
       </ControlBar>
     </Stack>
   );
