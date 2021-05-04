@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "[Web] Align chat thread and message thread terms between UI Components and stateful client ",
+  "comment": "Updating chatThreadSelector to be messageThreadSelector",
   "packageName": "@azure/communication-ui",
   "email": "alkwa@microsoft.com",
   "dependentChangeType": "patch"
