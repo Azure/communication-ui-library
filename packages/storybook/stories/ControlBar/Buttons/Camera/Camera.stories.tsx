@@ -30,8 +30,8 @@ const getDocs: () => JSX.Element = () => {
 
       <Heading>Example</Heading>
       <Description>
-        The default `CameraButton` component shows a Camera icon with no label. The following example displays an
-        unmuted `CameraButton` and a muted `CameraButton`.
+        The default `CameraButton` component shows a Camera icon with no label. The following example displays the
+        `CameraButton` with camera turned on and off.
       </Description>
       <Canvas withSource={SourceState.NONE}>
         <CameraButtonExample />
@@ -40,7 +40,7 @@ const getDocs: () => JSX.Element = () => {
 
       <Heading>Camera with default label</Heading>
       <Description>
-        You can display the button label which, by default, will show below the icon as `Mute` or `Unmute`.
+        You can display the button label which, by default, will show below the icon as `Turn on` or `Turn off`.
       </Description>
       <Canvas withSource={SourceState.NONE}>
         <CameraButtonWithLabelExample />

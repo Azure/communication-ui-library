@@ -31,7 +31,7 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Example</Heading>
       <Description>
         The default `ScreenShareButton` component shows a ScreenShare icon with no label. The following example displays
-        an unmuted `ScreenShareButton` and a muted `ScreenShareButton`.
+        the `ScreenShareButton` with screen sharing enabled and disabled.
       </Description>
       <Canvas withSource={SourceState.NONE}>
         <ScreenShareButtonExample />
@@ -40,7 +40,7 @@ const getDocs: () => JSX.Element = () => {
 
       <Heading>ScreenShare with default label</Heading>
       <Description>
-        You can display the button label which, by default, will show below the icon as `Mute` or `Unmute`.
+        You can display the button label which, by default, will show below the icon as `Share` or `Stop`.
       </Description>
       <Canvas withSource={SourceState.NONE}>
         <ScreenShareButtonWithLabelExample />
