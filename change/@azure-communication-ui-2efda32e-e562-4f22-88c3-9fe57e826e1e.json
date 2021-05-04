@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Clean up button component docstrings",
+  "packageName": "@azure/communication-ui",
+  "email": "prprabhu@microsoft.com",
+  "dependentChangeType": "patch"
+}
