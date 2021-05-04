@@ -25,6 +25,13 @@ export type BaseSelectorProps = {
     callId: string;
 };
 
+// @public (undocumented)
+export const cameraButtonSelector: reselect.OutputParametricSelector<callingDeclarative.CallClientState, BaseSelectorProps, {
+    checked: boolean;
+}, (res: callingDeclarative.Call | undefined) => {
+    checked: boolean;
+}>;
+
 // @public
 export type CommonProperties<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? (A[P] extends B[P] ? P : never) : never;
@@ -108,13 +115,6 @@ export const screenShareButtonSelector: reselect.OutputParametricSelector<callin
     checked: boolean | undefined;
 }, (res: callingDeclarative.Call | undefined) => {
     checked: boolean | undefined;
-}>;
-
-// @public (undocumented)
-export const videoButtonSelector: reselect.OutputParametricSelector<callingDeclarative.CallClientState, BaseSelectorProps, {
-    checked: boolean;
-}, (res: callingDeclarative.Call | undefined) => {
-    checked: boolean;
 }>;
 
 
