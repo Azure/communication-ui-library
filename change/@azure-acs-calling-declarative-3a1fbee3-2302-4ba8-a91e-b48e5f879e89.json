@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "[#2426782][#2426783] Renaming videoButtonSelector to cameraButtonSelector",
+  "packageName": "@azure/acs-calling-declarative",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}
