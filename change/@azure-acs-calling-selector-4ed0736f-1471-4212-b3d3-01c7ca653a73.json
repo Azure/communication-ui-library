@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Alcail/control bar btn docs - MicrophoneButton (#198)",
+  "comment": "Add handler and selector for call controls",
   "packageName": "@azure/acs-calling-selector",
   "email": "anjulgarg@live.com",
   "dependentChangeType": "patch"
