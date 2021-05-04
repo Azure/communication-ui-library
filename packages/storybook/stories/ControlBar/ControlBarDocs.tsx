@@ -81,7 +81,7 @@ export const getDocs: () => JSX.Element = () => {
 
       <Heading>Dropdown Options Button</Heading>
       <Description>
-        Our `OptionsButton` can be used for any dropdown items defined through `menuProps`. For more information, check
+        The `OptionsButton` can be used for any dropdown items defined through `menuProps`. For more information, check
         out the official Fluent UI documentation at https://developer.microsoft.com/en-us/fluentui#/controls/web/button
       </Description>
       <Canvas withSource={SourceState.NONE}>

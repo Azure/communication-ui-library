@@ -25,7 +25,7 @@ export interface OptionsButtonProps extends IButtonProps {
  */
 export const OptionsButton = (props: OptionsButtonProps): JSX.Element => {
   const { showLabel = false, styles, onRenderIcon, onRenderText } = props;
-  const componentStyles = styles ? concatStyleSets(controlButtonStyles, styles) : controlButtonStyles;
+  const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
 
   const defaultRenderIcon = (): JSX.Element => {
     return <MoreIcon />;

@@ -23,7 +23,7 @@ export interface CameraButtonProps extends IButtonProps {
  */
 export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   const { showLabel = false, styles, onRenderIcon, onRenderText } = props;
-  const componentStyles = styles ? concatStyleSets(controlButtonStyles, styles) : controlButtonStyles;
+  const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
 
   const defaultRenderIcon = (props?: IButtonProps): JSX.Element => {
     return props?.checked ? <CallVideoIcon /> : <CallVideoOffIcon />;
