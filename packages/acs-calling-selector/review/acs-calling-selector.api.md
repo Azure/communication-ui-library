@@ -41,33 +41,33 @@ export type CommonProperties<A, B> = {
 export const createDefaultHandlersForComponent: <Props>(declarativeCallClient: DeclarativeCallClient, callAgent: CallAgent | undefined, deviceManager: DeviceManager | undefined, call: Call | undefined, _Component: (props: Props) => ReactElement | null) => Pick<{
     onHangUp: (options?: HangUpOptions | undefined) => Promise<void> | void;
     onMute: () => Promise<void> | void;
+    onUnmute: () => Promise<void> | void;
     onSelectCamera: (deviceId: string) => Promise<void | undefined>;
     onSelectMicrophone: (deviceId: string) => Promise<void | undefined>;
     onSelectSpeaker: (deviceId: string) => Promise<void | undefined>;
     onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions | undefined) => Call | undefined;
     onStartLocalVideo: (callId: string, deviceId: string, options: CreateViewOptions) => Promise<void>;
-    onStartScreenShare: () => Promise<void> | void;
     onStopLocalVideo: (callId: string) => Promise<void> | void;
+    onStartScreenShare: () => Promise<void> | void;
     onStopScreenShare: () => Promise<void> | void;
     onToggleLocalVideo: (callId: string, videoDeviceInfo: any, options: any) => Promise<void> | void;
     onToggleMicrophone: () => Promise<void> | void;
     onToggleScreenShare: () => Promise<void> | void;
-    onUnmute: () => Promise<void> | void;
 }, CommonProperties<{
     onHangUp: (options?: HangUpOptions | undefined) => Promise<void> | void;
     onMute: () => Promise<void> | void;
+    onUnmute: () => Promise<void> | void;
     onSelectCamera: (deviceId: string) => Promise<void | undefined>;
     onSelectMicrophone: (deviceId: string) => Promise<void | undefined>;
     onSelectSpeaker: (deviceId: string) => Promise<void | undefined>;
     onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions | undefined) => Call | undefined;
     onStartLocalVideo: (callId: string, deviceId: string, options: CreateViewOptions) => Promise<void>;
-    onStartScreenShare: () => Promise<void> | void;
     onStopLocalVideo: (callId: string) => Promise<void> | void;
+    onStartScreenShare: () => Promise<void> | void;
     onStopScreenShare: () => Promise<void> | void;
     onToggleLocalVideo: (callId: string, videoDeviceInfo: any, options: any) => Promise<void> | void;
     onToggleMicrophone: () => Promise<void> | void;
     onToggleScreenShare: () => Promise<void> | void;
-    onUnmute: () => Promise<void> | void;
 }, Props>>;
 
 // @public (undocumented)
