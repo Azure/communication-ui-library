@@ -130,7 +130,7 @@ export const controlButtonLabelStyles: IStyle = {
   marginTop: '0.125rem'
 };
 
-export const hangUpControlButtonStyles: IButtonStyles = concatStyleSets(controlButtonStyles, {
+export const endCallControlButtonStyles: IButtonStyles = concatStyleSets(controlButtonStyles, {
   root: {
     background: palette.redDark,
     color: palette.white

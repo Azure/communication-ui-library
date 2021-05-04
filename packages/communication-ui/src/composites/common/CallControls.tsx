@@ -2,8 +2,15 @@
 
 import { DefaultButton, IButtonStyles, IContextualMenuProps } from '@fluentui/react';
 import React, { useCallback } from 'react';
-import { CameraButton, ControlBar, MicrophoneButton, hangupButtonProps, optionsButtonProps } from '../../components';
-import { ControlBarProps, screenShareButtonProps } from '../../components/ControlBar';
+import {
+  CameraButton,
+  ControlBar,
+  EndCallButton,
+  MicrophoneButton,
+  ScreenShareButton,
+  optionsButtonProps
+} from '../../components';
+import { ControlBarProps } from '../../components/ControlBar';
 import {
   connectFuncsToContext,
   LocalDeviceSettingsContainerProps,
@@ -90,15 +97,14 @@ const HangupButton = (props: HangupButtonProps): JSX.Element => {
   }, [muteMicrophone, stopScreenShare, localVideoEnabled, stopLocalVideo, leaveCall, onEndCallClick]);
 
   return (
-    <DefaultButton
-      onRenderIcon={hangupButtonProps.onRenderIcon}
+    <EndCallButton
       checked={false}
       onClick={() => {
         hangup().catch((error) => {
           propagateError(error, onErrorCallback);
         });
       }}
-      styles={styles ?? hangupButtonProps.styles}
+      styles={styles}
       text={text}
     />
   );
@@ -246,8 +252,7 @@ export const CallControlBar = (props: ControlBarProps & CallControlBarProps & Er
         }}
       />
       {isLocalScreenShareSupportedInBrowser() && (
-        <DefaultButton
-          {...screenShareButtonProps}
+        <ScreenShareButton
           checked={isLocalScreenShareActive}
           disabled={screenShareDisabled}
           onClick={() => {
@@ -316,8 +321,7 @@ export const GroupCallControlBar = (
         }}
       />
       {isLocalScreenShareSupportedInBrowser() && (
-        <DefaultButton
-          {...screenShareButtonProps}
+        <ScreenShareButton
           checked={isLocalScreenShareActive}
           disabled={screenShareDisabled}
           onClick={() => {

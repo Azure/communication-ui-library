@@ -2,13 +2,13 @@
 
 import React from 'react';
 import { DefaultButton, IButtonProps, Stack, concatStyleSets, mergeStyles } from '@fluentui/react';
-import { MicIcon, MicOffIcon } from '@fluentui/react-northstar';
+import { CallControlCloseTrayIcon, CallControlPresentNewIcon } from '@fluentui/react-northstar';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 
 /**
- * Props for MicrophoneButton component
+ * Props for ScreenShareButton component
  */
-export interface MicrophoneButtonProps extends IButtonProps {
+export interface ScreenShareButtonProps extends IButtonProps {
   /**
    * Whether the label is displayed or not.
    * @defaultValue `false`
@@ -17,25 +17,22 @@ export interface MicrophoneButtonProps extends IButtonProps {
 }
 
 /**
- * `MicrophoneButton` allows you to easily create a component for rendering an audio button. It can be used in your ControlBar component for example.
- * @param props - of type MicrophoneButtonProps
+ * `ScreenShareButton` allows you to easily create a component for rendering a screen-share button.
+ * It can be used in your ControlBar component for example.
+ * @param props - of type ScreenShareButtonProps
  */
-export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
+export const ScreenShareButton = (props: ScreenShareButtonProps): JSX.Element => {
   const { showLabel = false, styles, onRenderIcon, onRenderText } = props;
   const componentStyles = styles ? concatStyleSets(controlButtonStyles, styles) : controlButtonStyles;
 
   const defaultRenderIcon = (props?: IButtonProps): JSX.Element => {
-    if (props?.checked) {
-      return <MicIcon key={'micIconKey'} />;
-    }
-
-    return <MicOffIcon key={'micOffIconKey'} />;
+    return props?.checked ? <CallControlCloseTrayIcon /> : <CallControlPresentNewIcon bordered={false} />;
   };
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {
     return (
-      <Stack key={'microphoneLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
-        {props?.checked ? 'Mute' : 'Unmute'}
+      <Stack className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
+        {props?.checked ? 'Stop' : 'Share'}
       </Stack>
     );
   };
