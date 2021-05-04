@@ -1,11 +1,16 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { Canvas, Description, Heading, Props, Source, SourceState, Title } from '@storybook/addon-docs/blocks';
-import React from 'react';
 import { MicrophoneButton } from '@azure/communication-ui';
+import { Canvas, Description, Heading, Props, Source, SourceState, Title } from '@storybook/addon-docs/blocks';
+import { boolean } from '@storybook/addon-knobs';
+import { Meta } from '@storybook/react/types-6-0';
+import React from 'react';
+
+import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
 import { MicrophoneButtonExample } from './snippets/MicrophoneButton.snippet';
 import { MicrophoneButtonWithLabelExample } from './snippets/MicrophoneButtonWithLabel.snippet';
 import { CustomMicrophoneButtonExample } from './snippets/CustomMicrophoneButton.snippet';
+
 const MicrophoneButtonExampleText = require('!!raw-loader!./snippets/MicrophoneButton.snippet.tsx').default;
 const MicrophoneButtonWithLabelExampleText = require('!!raw-loader!./snippets/MicrophoneButtonWithLabel.snippet.tsx')
   .default;
@@ -15,7 +20,7 @@ const importStatement = `
 import { MicrophoneButton } from '@azure/communication-ui';
 `;
 
-export const getDocs: () => JSX.Element = () => {
+const getDocs: () => JSX.Element = () => {
   return (
     <>
       <Title>MicrophoneButton</Title>
@@ -63,3 +68,22 @@ export const getDocs: () => JSX.Element = () => {
     </>
   );
 };
+
+// This must be the only named export from this module, and must be named to match the storybook path suffix.
+// This ensures that storybook hoists the story instead of creating a folder with a single entry.
+export const Microphone = (): JSX.Element => {
+  const toggleButtons = boolean('Toggle Buttons', false);
+  const showLabels = boolean('Show Labels', false);
+
+  return <MicrophoneButton showLabel={showLabels} checked={toggleButtons} />;
+};
+
+export default {
+  title: `${COMPONENT_FOLDER_PREFIX}/ControlBar/Buttons/Microphone`,
+  component: MicrophoneButton,
+  parameters: {
+    docs: {
+      page: () => getDocs()
+    }
+  }
+} as Meta;
