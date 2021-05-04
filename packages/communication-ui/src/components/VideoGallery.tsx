@@ -3,7 +3,7 @@
 import { memoizeFnAll } from '@azure/acs-calling-selector';
 import { Label, Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
-import { disabledVideoHint, gridStyle, videoHint } from '../composites/GroupCall/styles/MediaGallery.styles';
+import { disabledVideoHint, gridStyle, videoHint, videoTileStyle } from './styles/VideoGallery.styles';
 import { VideoGalleryRemoteParticipant, VideoGalleryLocalParticipant } from '../types';
 import { GridLayout } from './GridLayout';
 import { StreamMedia } from './StreamMedia';
@@ -22,6 +22,7 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
           isVideoReady={isAvailable}
           videoProvider={<StreamMedia videoStreamElement={target ?? null} />}
           avatarName={displayName}
+          styles={videoTileStyle}
         >
           <Label className={isAvailable ? videoHint : disabledVideoHint}>{displayName}</Label>
         </VideoTile>
@@ -40,6 +41,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         isVideoReady={localVideoStream?.isAvailable}
         videoProvider={<StreamMedia videoStreamElement={localVideoStream?.target ?? null} />}
         avatarName={localParticipant?.displayName}
+        styles={videoTileStyle}
       >
         <Label className={localVideoStream?.isAvailable ? videoHint : disabledVideoHint}>
           {localParticipant?.displayName}
