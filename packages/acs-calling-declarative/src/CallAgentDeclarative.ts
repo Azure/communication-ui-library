@@ -95,8 +95,8 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
 
   private addCall = (call: Call): void => {
     this._callSubscribers.get(call)?.unsubscribe();
-    this._callSubscribers.set(call, new CallSubscriber(call, this._context, this._internalContext));
     this._context.setCall(convertSdkCallToDeclarativeCall(call));
+    this._callSubscribers.set(call, new CallSubscriber(call, this._context, this._internalContext));
   };
 
   public get<P extends keyof CallAgent>(target: CallAgent, prop: P): any {

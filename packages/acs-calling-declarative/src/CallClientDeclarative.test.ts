@@ -3,9 +3,13 @@ import {
   Call,
   CallAgent,
   CallClient,
+  CallFeatureFactoryType,
   CreateViewOptions,
   LocalVideoStream,
+  RecordingCallFeature,
   RemoteVideoStream,
+  TranscriptionCallFeature,
+  TransferCallFeature,
   VideoDeviceInfo,
   VideoStreamRendererView
 } from '@azure/communication-calling';
@@ -13,6 +17,7 @@ import { callClientDeclaratify, DeclarativeCallClient } from './CallClientDeclar
 import { getRemoteParticipantKey } from './Converter';
 import {
   addMockEmitter,
+  createMockApiFeatures,
   createMockCall,
   createMockRemoteParticipant,
   createMockRemoteVideoStream,
@@ -20,7 +25,11 @@ import {
   MockCallAgent,
   MockCommunicationUserCredential,
   mockoutObjectFreeze,
-  MockRemoteParticipant
+  MockRecordingCallFeatureImpl,
+  MockRemoteParticipant,
+  MockTranscriptionCallFeatureImpl,
+  MockTransferCallFeatureImpl,
+  MOCK_RECORDING_NAME
 } from './TestUtils';
 
 mockoutObjectFreeze();
@@ -40,7 +49,18 @@ jest.mock('@azure/communication-calling', () => {
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         dispose: () => {}
       };
-    })
+    }),
+    Features: {
+      get Recording(): CallFeatureFactoryType<RecordingCallFeature> {
+        return MockRecordingCallFeatureImpl;
+      },
+      get Transfer(): CallFeatureFactoryType<TransferCallFeature> {
+        return MockTransferCallFeatureImpl;
+      },
+      get Transcription(): CallFeatureFactoryType<TranscriptionCallFeature> {
+        return MockTranscriptionCallFeatureImpl;
+      }
+    }
   };
 });
 
@@ -71,9 +91,17 @@ function createDeclarativeClient(testData: TestData): void {
   testData.declarativeCallClient = callClientDeclaratify(testData.mockCallClient);
 }
 
-async function createMockCallAndEmitCallsUpdated(testData: TestData, waitCondition?: () => boolean): Promise<void> {
+async function createMockCallAndEmitCallsUpdated(
+  testData: TestData,
+  waitCondition?: () => boolean,
+  mockCall?: MockCall
+): Promise<void> {
   await testData.declarativeCallClient.createCallAgent(new MockCommunicationUserCredential());
-  testData.mockCall = createMockCall(mockCallId);
+  if (mockCall) {
+    testData.mockCall = mockCall;
+  } else {
+    testData.mockCall = createMockCall(mockCallId);
+  }
   testData.mockCallAgent.calls = [testData.mockCall];
   testData.mockCallAgent.emit('callsUpdated', {
     added: [testData.mockCall],
@@ -789,5 +817,73 @@ describe('declarative call client', () => {
     expect(
       testData.declarativeCallClient.state.calls.get(mockCallId)?.localVideoStreams[0]?.videoStreamRendererView
     ).not.toBeDefined();
+  });
+
+  test('should detect if call already has recording active', async () => {
+    const testData = {} as TestData;
+    createClientAndAgentMocks(testData);
+    createDeclarativeClient(testData);
+    const mockCall = createMockCall(mockCallId);
+    mockCall.api = createMockApiFeatures(true, new Map<string, any>());
+    await createMockCallAndEmitCallsUpdated(testData, undefined, mockCall);
+
+    await waitWithBreakCondition(
+      () => testData.declarativeCallClient.state.calls.get(mockCallId)?.recording.isRecordingActive === true
+    );
+
+    expect(testData.declarativeCallClient.state.calls.get(mockCallId)?.recording.isRecordingActive).toBe(true);
+  });
+
+  test('should detect recording changes in call', async () => {
+    const testData = {} as TestData;
+    createClientAndAgentMocks(testData);
+    createDeclarativeClient(testData);
+    const mockCall = createMockCall(mockCallId);
+    const featureCache = new Map<string, any>();
+    mockCall.api = createMockApiFeatures(true, featureCache);
+    await createMockCallAndEmitCallsUpdated(testData, undefined, mockCall);
+
+    await waitWithBreakCondition(
+      () => testData.declarativeCallClient.state.calls.get(mockCallId)?.recording.isRecordingActive === true
+    );
+
+    expect(testData.declarativeCallClient.state.calls.get(mockCallId)?.recording.isRecordingActive).toBe(true);
+
+    const recording = featureCache.get(MOCK_RECORDING_NAME);
+    recording.isRecordingActive = false;
+    recording.emitter.emit('isRecordingActiveChanged');
+
+    await waitWithBreakCondition(
+      () => testData.declarativeCallClient.state.calls.get(mockCallId)?.recording.isRecordingActive === false
+    );
+
+    expect(testData.declarativeCallClient.state.calls.get(mockCallId)?.recording.isRecordingActive).toBe(false);
+  });
+
+  test('should unsubscribe to recording changes when call ended', async () => {
+    const testData = {} as TestData;
+    createClientAndAgentMocks(testData);
+    createDeclarativeClient(testData);
+    const mockCall = createMockCall(mockCallId);
+    const featureCache = new Map<string, any>();
+    mockCall.api = createMockApiFeatures(true, featureCache);
+    await createMockCallAndEmitCallsUpdated(testData, undefined, mockCall);
+
+    await waitWithBreakCondition(
+      () => testData.declarativeCallClient.state.calls.get(mockCallId)?.recording.isRecordingActive === true
+    );
+
+    expect(testData.declarativeCallClient.state.calls.get(mockCallId)?.recording.isRecordingActive).toBe(true);
+
+    testData.mockCallAgent.calls = [];
+    testData.mockCallAgent.emit('callsUpdated', {
+      added: [],
+      removed: [testData.mockCall]
+    });
+
+    await waitWithBreakCondition(() => testData.declarativeCallClient.state.calls.size === 0);
+
+    const recording = featureCache.get(MOCK_RECORDING_NAME);
+    expect(recording.emitter.eventNames().length).toBe(0);
   });
 });
