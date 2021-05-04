@@ -35,10 +35,8 @@ export type { CameraButtonProps } from './CameraButton';
 
 export {
   ControlBar,
-  optionsButtonProps,
   answerButtonProps,
   recordButtonProps,
-  labeledOptionsButtonProps,
   labeledAnswerButtonProps,
   labeledRecordButtonProps
 } from './ControlBar';
@@ -49,6 +47,9 @@ export type { EndCallButtonProps } from './EndCallButton';
 
 export { MicrophoneButton } from './MicrophoneButton';
 export type { MicrophoneButtonProps } from './MicrophoneButton';
+
+export { OptionsButton } from './OptionsButton';
+export type { OptionsButtonProps } from './OptionsButton';
 
 export { ScreenShareButton } from './ScreenShareButton';
 export type { ScreenShareButtonProps } from './ScreenShareButton';
