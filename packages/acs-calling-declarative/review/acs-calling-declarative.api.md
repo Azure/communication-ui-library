@@ -31,6 +31,7 @@ export interface Call {
     isMuted: boolean;
     isScreenSharingOn: boolean;
     localVideoStreams: LocalVideoStream[];
+    recording: RecordingCallFeature;
     remoteParticipants: Map<string, RemoteParticipant>;
     remoteParticipantsEnded: Map<string, RemoteParticipant>;
     startTime: Date;
@@ -83,6 +84,11 @@ export interface LocalVideoStream {
     mediaStreamType: MediaStreamType;
     source: VideoDeviceInfo;
     videoStreamRendererView?: VideoStreamRendererView | undefined;
+}
+
+// @public
+export interface RecordingCallFeature {
+    isRecordingActive: boolean;
 }
 
 // @public
