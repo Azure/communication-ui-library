@@ -2,13 +2,13 @@
 
 import React from 'react';
 import { DefaultButton, IButtonProps, Stack, concatStyleSets, mergeStyles } from '@fluentui/react';
-import { CallVideoIcon, CallVideoOffIcon } from '@fluentui/react-northstar';
+import { CallControlCloseTrayIcon, CallControlPresentNewIcon } from '@fluentui/react-northstar';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 
 /**
- * Props for CameraButton component
+ * Props for ScreenShareButton component
  */
-export interface CameraButtonProps extends IButtonProps {
+export interface ScreenShareButtonProps extends IButtonProps {
   /**
    * Whether the label is displayed or not.
    * @defaultValue `false`
@@ -17,22 +17,22 @@ export interface CameraButtonProps extends IButtonProps {
 }
 
 /**
- * `CameraButton` allows you to easily create a component for rendering a camera button.
+ * `ScreenShareButton` allows you to easily create a component for rendering a screen-share button.
  * It can be used in your ControlBar component for example.
- * @param props - of type CameraButtonProps
+ * @param props - of type ScreenShareButtonProps
  */
-export const CameraButton = (props: CameraButtonProps): JSX.Element => {
+export const ScreenShareButton = (props: ScreenShareButtonProps): JSX.Element => {
   const { showLabel = false, styles, onRenderIcon, onRenderText } = props;
   const componentStyles = styles ? concatStyleSets(controlButtonStyles, styles) : controlButtonStyles;
 
   const defaultRenderIcon = (props?: IButtonProps): JSX.Element => {
-    return props?.checked ? <CallVideoIcon /> : <CallVideoOffIcon />;
+    return props?.checked ? <CallControlCloseTrayIcon /> : <CallControlPresentNewIcon bordered={false} />;
   };
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {
     return (
       <Stack className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
-        {props?.checked ? 'Turn off' : 'Turn on'}
+        {props?.checked ? 'Stop' : 'Share'}
       </Stack>
     );
   };

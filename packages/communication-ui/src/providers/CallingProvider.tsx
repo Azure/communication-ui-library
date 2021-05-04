@@ -166,7 +166,6 @@ export const useDeviceManager = (): DeviceManager | undefined => {
 };
 
 export const useIdentifier = (): string | undefined => {
-  console.log(useValidContext(CallingContext));
   return useValidContext(CallingContext).userId;
 };
 

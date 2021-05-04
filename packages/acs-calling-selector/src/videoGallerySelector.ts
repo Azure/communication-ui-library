@@ -128,6 +128,7 @@ const convertCallToVideoGalleryLocalParticipants = (
   displayName: string | undefined,
   identifier: string | undefined
 ): VideoGalleryLocalParticipant => {
+  console.log(call);
   const convertedVideoStreams = memoizedAllConvertVideoGalleryVideoStream((memoizedFn) =>
     call.localVideoStreams.map((videoStream) => {
       return memoizedFn(

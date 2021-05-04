@@ -89,6 +89,14 @@ export type DefaultMessageRendererType = (props: MessageProps) => JSX.Element;
 export const defaultThemes: ThemeCollection;
 
 // @public
+export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
+
+// @public
+export interface EndCallButtonProps extends IButtonProps {
+    showLabel?: boolean;
+}
+
+// @public
 export const ErrorBar: (props: ErrorBarProps) => JSX.Element | null;
 
 // @public
@@ -130,9 +138,6 @@ export interface GridLayoutProps {
 // @public (undocumented)
 export type GridLayoutType = 'standard';
 
-// @public
-export const hangupButtonProps: IButtonProps;
-
 // @public (undocumented)
 export interface JumpToNewMessageButtonProps {
     // (undocumented)
@@ -143,16 +148,10 @@ export interface JumpToNewMessageButtonProps {
 export const labeledAnswerButtonProps: IButtonProps;
 
 // @public
-export const labeledHangupButtonProps: IButtonProps;
-
-// @public
 export const labeledOptionsButtonProps: IButtonProps;
 
 // @public
 export const labeledRecordButtonProps: IButtonProps;
-
-// @public
-export const labeledScreenShareButtonProps: IButtonProps;
 
 // @public (undocumented)
 export type LocalGalleryParticipant = {
@@ -285,7 +284,12 @@ export const recordButtonProps: IButtonProps;
 export type ScalingMode = 'Stretch' | 'Crop' | 'Fit';
 
 // @public
-export const screenShareButtonProps: IButtonProps;
+export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
+
+// @public
+export interface ScreenShareButtonProps extends IButtonProps {
+    showLabel?: boolean;
+}
 
 // @public
 export const SendBox: (props: SendBoxProps) => JSX.Element;

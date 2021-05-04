@@ -5,13 +5,11 @@ import React from 'react';
 import {
   CameraButton,
   ControlBar,
+  EndCallButton,
   MicrophoneButton,
-  hangupButtonProps,
-  labeledHangupButtonProps,
+  ScreenShareButton,
   labeledOptionsButtonProps,
-  labeledScreenShareButtonProps,
   optionsButtonProps,
-  screenShareButtonProps,
   LIGHT,
   DARK
 } from '@azure/communication-ui';
@@ -96,15 +94,12 @@ export const ControlBarComponent: (
       <ControlBar layout={layout}>
         <CameraButton showLabel={showLabels} checked={toggleButtons} />
         <MicrophoneButton showLabel={showLabels} checked={toggleButtons} />
-        <DefaultButton
-          {...(showLabels ? labeledScreenShareButtonProps : screenShareButtonProps)}
-          checked={toggleButtons}
-        />
+        <ScreenShareButton showLabel={showLabels} checked={toggleButtons} />
         <DefaultButton
           {...(showLabels ? labeledOptionsButtonProps : optionsButtonProps)}
           menuProps={exampleOptionsMenuProps}
         />
-        <DefaultButton {...(showLabels ? labeledHangupButtonProps : hangupButtonProps)} />
+        <EndCallButton showLabel={showLabels} />
       </ControlBar>
     </div>
   );

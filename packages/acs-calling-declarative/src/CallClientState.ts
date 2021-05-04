@@ -35,7 +35,7 @@ export interface LocalVideoStream {
    * {@Link VideoStreamRendererView} is added/removed from state by startRenderVideo/stopRenderVideo in
    * {@Link DeclarativeCallClient} API.
    */
-  videoStreamRendererView: VideoStreamRendererView | undefined;
+  videoStreamRendererView?: VideoStreamRendererView | undefined;
 }
 
 /**

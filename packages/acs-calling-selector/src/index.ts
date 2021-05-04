@@ -8,6 +8,12 @@ export type {
   CallHandlers,
   CommonProperties
 } from './handlers/createHandlers';
+export {
+  createCallDefaultHandlers,
+  createDeviceManagerDefaultHandlers,
+  createCallAgentDefaultHandlers,
+  createCallClientDefaultHandlers
+} from './handlers/createHandlers';
 export { videoGallerySelector } from './videoGallerySelector';
 
 export type {
@@ -16,8 +22,11 @@ export type {
   VideoGalleryLocalVideoStream,
   VideoGalleryRemoteVideoStream,
   VideoGalleryVideoStream,
-  VideoGalleryParticipant
+  VideoGalleryParticipant,
+  ScalingMode,
+  MediaStreamType
 } from './types/VideoGallery';
 
 export { memoizeFnAll } from './utils/memoizeFnAll';
 export type { FunctionWithKey, CallbackType } from './utils/memoizeFnAll';
+export * from './callControlSelectors';
