@@ -50,17 +50,6 @@ export const chatParticipantListSelector: reselect.OutputParametricSelector<Chat
 }>;
 
 // @public (undocumented)
-export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
-    userId: string;
-    disableReadReceipt: boolean;
-    messages: Message<"chat">[];
-}, (res1: string, res2: Map<string, ChatMessageWithStatus>, res3: Date, res4: boolean) => {
-    userId: string;
-    disableReadReceipt: boolean;
-    messages: Message<"chat">[];
-}>;
-
-// @public (undocumented)
 export type CommonProperties<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? (A[P] extends B[P] ? P : never) : never;
 }[keyof A & keyof B];
@@ -106,6 +95,17 @@ export enum MessageAttachedStatus {
     // (undocumented)
     TOP = "top"
 }
+
+// @public (undocumented)
+export const messageThreadSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
+    userId: string;
+    disableReadReceipt: boolean;
+    messages: Message<"chat">[];
+}, (res1: string, res2: Map<string, ChatMessageWithStatus>, res3: Date, res4: boolean) => {
+    userId: string;
+    disableReadReceipt: boolean;
+    messages: Message<"chat">[];
+}>;
 
 // @public (undocumented)
 export type MessageTypes = 'chat' | 'system' | 'custom';
