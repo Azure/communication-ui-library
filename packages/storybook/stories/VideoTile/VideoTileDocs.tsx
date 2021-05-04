@@ -10,7 +10,7 @@ const VideoTilePlaceholderText = require('!!raw-loader!./snippets/VideoTilePlace
 import { VideoTileExample as VideoTileStylineExample } from '../Styling/snippets/StylingVideoTile.snippet';
 const VideoTileStylineExampleText = require('!!raw-loader!../Styling/snippets/StylingVideoTile.snippet').default;
 
-const importStatement = `import { VideoTile } from '@azure/react-components';`;
+const importStatement = `import { VideoTile } from 'react-components';`;
 
 export const getDocs: () => JSX.Element = () => {
   return (

@@ -3,7 +3,7 @@
 import { DeclarativeCallClient } from '@azure/acs-calling-declarative';
 import { createDefaultHandlersForComponent } from '@azure/acs-calling-selector';
 
-import { useCallClient, useCallingContext, useDeviceManager, useCall } from '@azure/react-components';
+import { useCallClient, useCallingContext, useDeviceManager, useCall } from 'react-components';
 
 import { ReactElement } from 'react';
 

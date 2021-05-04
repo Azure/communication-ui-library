@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
-import { ErrorBar } from '@azure/react-components';
+import { ErrorBar } from 'react-components';
 import { ErrorBarExample } from './snippets/ErrorBar.snippet';
 import { OtherSeverityErrorBarExample } from './snippets/OtherSeverityErrorBar.snippet';
 
@@ -10,7 +10,7 @@ const ErrorBarExampleText = require('!!raw-loader!./snippets/ErrorBar.snippet.ts
 const OtherSeverityErrorBarExampleText = require('!!raw-loader!./snippets/OtherSeverityErrorBar.snippet.tsx').default;
 
 const importStatement = `
-import { ErrorBarComponent, CommunicationUiErrorSeverity } from '@azure/react-components';
+import { ErrorBarComponent, CommunicationUiErrorSeverity } from 'react-components';
 `;
 
 export const getDocs: () => JSX.Element = () => {

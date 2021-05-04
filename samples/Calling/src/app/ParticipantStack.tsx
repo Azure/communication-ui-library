@@ -10,7 +10,7 @@ import {
   Stack,
   PersonaPresence
 } from '@fluentui/react';
-import { connectFuncsToContext, ListParticipant, ParticipantItem } from '@azure/react-components';
+import { connectFuncsToContext, ListParticipant, ParticipantItem } from 'react-components';
 import { MicOffIcon, CallControlPresentNewIcon } from '@fluentui/react-northstar';
 import { participantStackStyle, overFlowButtonStyles, overflowSetStyle } from './styles/ParticipantStack.styles';
 import { MapToParticipantListProps } from './consumers/MapToParticipantListProps';

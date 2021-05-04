@@ -1,5 +1,5 @@
 import React from 'react';
-import { TypingIndicator, WebUiChatParticipant } from '@azure/react-components';
+import { TypingIndicator, WebUiChatParticipant } from 'react-components';
 
 export const TypingIndicatorSnippet: () => JSX.Element = () => {
   const oneTypingUsers = [{ userId: '1', displayName: 'User1' }];

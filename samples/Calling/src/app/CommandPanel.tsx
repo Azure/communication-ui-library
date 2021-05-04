@@ -11,7 +11,7 @@ import {
 import { Footer } from './Footer';
 import { LocalDeviceSettings } from './LocalDeviceSettings';
 import { ParticipantStack } from './ParticipantStack';
-import { ThemeSelector } from '@azure/react-components';
+import { ThemeSelector } from 'react-components';
 
 export enum CommandPanelTypes {
   None = 'none',

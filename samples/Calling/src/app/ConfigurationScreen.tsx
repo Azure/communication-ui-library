@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
 import React, { useState } from 'react';
-import { connectFuncsToContext, MapToCallConfigurationProps, SetupContainerProps } from '@azure/react-components';
+import { connectFuncsToContext, MapToCallConfigurationProps, SetupContainerProps } from 'react-components';
 import { localStorageAvailable } from './utils/constants';
 import { saveDisplayNameToLocalStorage } from './utils/AppUtils';
 import { DisplayNameField } from './DisplayNameField';

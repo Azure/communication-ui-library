@@ -9,7 +9,7 @@ import {
   ScreenShareButton,
   answerButtonProps,
   recordButtonProps
-} from '@azure/react-components';
+} from 'react-components';
 import { DefaultButton, IContextualMenuProps } from '@fluentui/react';
 
 export const AllButtonsControlBarExample: () => JSX.Element = () => {

@@ -16,7 +16,7 @@ import {
   ErrorBar as ErrorBarComponent,
   MapToErrorBarProps,
   MINI_HEADER_WINDOW_WIDTH
-} from '@azure/react-components';
+} from 'react-components';
 import { isInCall } from './utils/AppUtils';
 import MediaGallery from './MediaGallery';
 import { GroupCallContainerProps, MapToGroupCallProps } from './consumers/MapToCallProps';

@@ -2,7 +2,7 @@
 
 import { ChatClientState } from '@azure/acs-chat-declarative';
 import { chatThreadSelector, sendBoxSelector, typingIndicatorSelector } from '@azure/acs-chat-selector';
-import { MessageThread, SendBox, TypingIndicator } from '@azure/react-components';
+import { MessageThread, SendBox, TypingIndicator } from 'react-components';
 
 import React from 'react';
 import { useHandlers } from './useHandlers';

@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
   "comment": "Remove mappers used in Sample Chat App ChatHeader",
-  "packageName": "@azure/react-components",
+  "packageName": "react-components",
   "email": "anjulgarg@live.com",
   "dependentChangeType": "patch"
 }

@@ -10,7 +10,7 @@ import {
   mediaGalleryHeightOptions,
   EXAMPLES_FOLDER_PREFIX
 } from '../../constants';
-import { GridLayout, VideoTile } from '@azure/react-components';
+import { GridLayout, VideoTile } from 'react-components';
 import { Stack, mergeStyles, PersonaSize, Persona, Label } from '@fluentui/react';
 import { getDocs } from './LayoutsDocs';
 

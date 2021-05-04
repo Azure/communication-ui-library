@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
   "comment": "Wrote theming documentation page in storybook. Updated dark theme palette. Updated ControlBar and VideoTile theme mapping.",
-  "packageName": "@azure/react-components",
+  "packageName": "react-components",
   "email": "miguelgamis@microsoft.com",
   "dependentChangeType": "patch"
 }

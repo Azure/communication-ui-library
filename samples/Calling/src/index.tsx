@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './app/App';
-import { SwitchableFluentThemeProvider } from '@azure/react-components';
+import { SwitchableFluentThemeProvider } from 'react-components';
 
 ReactDOM.render(
   <SwitchableFluentThemeProvider scopeId="SampleCallingApp">

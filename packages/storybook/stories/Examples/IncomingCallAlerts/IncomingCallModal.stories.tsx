@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Meta } from '@storybook/react/types-6-0';
-import { IncomingCallModal } from '@azure/react-components';
+import { IncomingCallModal } from 'react-components';
 import { text, files, boolean } from '@storybook/addon-knobs';
 import { getDocs } from './IncomingCallAlertsDocs';
 import { renderVideoStream } from '../../utils';

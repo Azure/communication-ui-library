@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
   "comment": "Fix styling props for all components to have the same format. Add more comments to the interfaces.",
-  "packageName": "@azure/react-components",
+  "packageName": "react-components",
   "email": "easony@microsoft.com",
   "dependentChangeType": "patch"
 }

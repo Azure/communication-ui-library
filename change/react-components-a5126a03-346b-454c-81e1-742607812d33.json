@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
   "comment": "Prune exports for beta release",
-  "packageName": "@azure/react-components",
+  "packageName": "react-components",
   "email": "mail@jamesburnside.com",
   "dependentChangeType": "none"
 }

@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
   "comment": "Export Chat thread component base from components and add more docs",
-  "packageName": "@azure/react-components",
+  "packageName": "react-components",
   "email": "easony@microsoft.com",
   "dependentChangeType": "patch"
 }

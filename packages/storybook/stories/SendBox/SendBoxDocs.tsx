@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
-import { SendBox } from '@azure/react-components';
+import { SendBox } from 'react-components';
 import { SendBoxExample } from './snippets/SendBox.snippet';
 import { SendBoxWithSystemMessageExample } from './snippets/SendBoxWithSystemMessage.snippet';
 import { CustomIconExample } from './snippets/CustomIcon.snippet';
@@ -14,7 +14,7 @@ const SendBoxWithSystemMessageExampleText = require('!!raw-loader!./snippets/Sen
 const CustomIconExampleText = require('!!raw-loader!./snippets/CustomIcon.snippet.tsx').default;
 const CustomStylingExampleText = require('!!raw-loader!./snippets/CustomStyling.snippet.tsx').default;
 
-const importStatement = `import { SendBox } from '@azure/react-components';`;
+const importStatement = `import { SendBox } from 'react-components';`;
 
 export const getDocs: () => JSX.Element = () => {
   return (

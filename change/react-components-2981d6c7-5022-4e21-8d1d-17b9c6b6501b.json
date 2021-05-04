@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
   "comment": "Fix theming for links in chat content of MessageThread.",
-  "packageName": "@azure/react-components",
+  "packageName": "react-components",
   "email": "miguelgamis@microsoft.com",
   "dependentChangeType": "patch"
 }

@@ -6,7 +6,7 @@ import {
   MicrophoneButton,
   StreamMedia,
   VideoTile
-} from '@azure/react-components';
+} from 'react-components';
 import React from 'react';
 import { renderVideoStream } from '../../utils';
 

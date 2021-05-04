@@ -9,7 +9,7 @@ import {
   connectFuncsToContext,
   MapToRemoteVideoProps,
   ErrorHandlingProps
-} from '@azure/react-components';
+} from 'react-components';
 import { disabledVideoHint, videoHint } from './styles/MediaGallery.styles';
 
 export interface RemoteVideoTileProps {

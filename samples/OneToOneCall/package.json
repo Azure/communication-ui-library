@@ -52,7 +52,7 @@
     "@azure/communication-administration": "1.0.0-beta.3",
     "@azure/communication-calling": "1.0.1-beta.1",
     "@azure/communication-common": "1.0.0",
-    "@azure/react-components": "1.0.0-beta",
+    "react-components": "1.0.0-beta",
     "@azure/core-http": "^1.2.3",
     "@babel/preset-react": "^7.12.7",
     "@fluentui/react": "^7.117.1",

@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './app/App';
-import { FluentThemeProvider } from '@azure/react-components';
+import { FluentThemeProvider } from 'react-components';
 
 ReactDOM.render(
   <FluentThemeProvider>

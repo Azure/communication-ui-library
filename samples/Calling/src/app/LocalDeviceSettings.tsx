@@ -8,7 +8,7 @@ import {
   WithErrorHandling,
   LocalDeviceSettingsContainerProps,
   MapToLocalDeviceSettingsProps
-} from '@azure/react-components';
+} from 'react-components';
 import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
 import { useTheme } from '@fluentui/react-theme-provider';
 

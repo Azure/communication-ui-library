@@ -1,5 +1,5 @@
 {
-  "name": "@azure/react-components",
+  "name": "react-components",
   "version": "1.0.0-beta",
   "description": "ACS UI SDK",
   "module": "dist/dist-esm/index.js",

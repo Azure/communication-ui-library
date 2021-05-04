@@ -18,8 +18,13 @@
   "telemetryEnabled": false,
   "projects": [
     {
-      "packageName": "@azure/react-components",
+      "packageName": "react-components",
       "projectFolder": "packages/react-components",
+      "reviewCategory": "production"
+    },
+    {
+      "packageName": "react-composites",
+      "projectFolder": "packages/react-composites",
       "reviewCategory": "production"
     },
     {

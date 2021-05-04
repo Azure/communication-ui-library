@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
   "comment": "Added examples for icon and avatar customization for ParticipantItem and SendBox in storybook docs.",
-  "packageName": "@azure/react-components",
+  "packageName": "react-components",
   "email": "miguelgamis@microsoft.com",
   "dependentChangeType": "patch"
 }

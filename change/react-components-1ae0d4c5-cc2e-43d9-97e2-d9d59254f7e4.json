@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
   "comment": "Add CameraButton component to replace DefaultButton in ControlBar",
-  "packageName": "@azure/react-components",
+  "packageName": "react-components",
   "email": "prprabhu@microsoft.com",
   "dependentChangeType": "patch"
 }

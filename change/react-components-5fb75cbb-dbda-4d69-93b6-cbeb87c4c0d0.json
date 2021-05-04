@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
   "comment": "Upgrade to Calling SDK version 1.0.1-beta.1",
-  "packageName": "@azure/react-components",
+  "packageName": "react-components",
   "email": "allenhwang@microsoft.com",
   "dependentChangeType": "patch"
 }

@@ -12,7 +12,7 @@ import {
   separatorStyles
 } from './styles/Header.styles';
 
-import { MINI_HEADER_WINDOW_WIDTH, GroupCallControlBarComponent } from '@azure/react-components';
+import { MINI_HEADER_WINDOW_WIDTH, GroupCallControlBarComponent } from 'react-components';
 import { CommandPanelTypes } from './CommandPanel';
 
 export interface HeaderProps {

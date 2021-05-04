@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
 import { ChatClientState, DeclarativeChatClient } from '@azure/acs-chat-declarative';
-import { useChatClient, useThreadId } from '@azure/react-components';
+import { useChatClient, useThreadId } from 'react-components';
 
 import { useState, useEffect, useRef, useMemo } from 'react';
 

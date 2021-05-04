@@ -20,7 +20,7 @@ import {
   mediaControlStyles,
   leaveButtonStyle
 } from './styles/MediaControls.styles';
-import { connectFuncsToContext, ErrorHandlingProps, WithErrorHandling, propagateError } from '@azure/react-components';
+import { connectFuncsToContext, ErrorHandlingProps, WithErrorHandling, propagateError } from 'react-components';
 import { MapToMediaControlsProps, MediaControlsContainerProps } from './consumers/MapToMediaControlsProps';
 
 export interface MediaControlsProps extends MediaControlsContainerProps {

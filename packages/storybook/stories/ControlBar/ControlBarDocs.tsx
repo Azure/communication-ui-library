@@ -15,7 +15,7 @@ const CustomControlBarStylesExampleText = require('!!raw-loader!./snippets/Custo
 const OptionsButtonExampleText = require('!!raw-loader!./snippets/OptionsButton.snippet.tsx').default;
 
 const importStatement = `
-import { FluentThemeProvider, ControlBar } from '@azure/react-components';
+import { FluentThemeProvider, ControlBar } from 'react-components';
 import { DefaultButton } from '@fluentui/react';
 `;
 

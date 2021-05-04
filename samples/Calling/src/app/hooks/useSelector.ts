@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
 import { CallClientState, DeclarativeCallClient } from '@azure/acs-calling-declarative';
-import { useCallClient } from '@azure/react-components';
+import { useCallClient } from 'react-components';
 
 import { useState, useEffect, useRef } from 'react';
 

@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
 import React from 'react';
-import { MessageStatus, ReadReceipt } from '@azure/react-components';
+import { MessageStatus, ReadReceipt } from 'react-components';
 import { select, text } from '@storybook/addon-knobs';
 import { getDocs } from './ReadReceiptDocs';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';

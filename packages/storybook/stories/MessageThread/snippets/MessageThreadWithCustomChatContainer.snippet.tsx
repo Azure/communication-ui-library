@@ -1,4 +1,4 @@
-import { FluentThemeProvider, MessageThread } from '@azure/react-components';
+import { FluentThemeProvider, MessageThread } from 'react-components';
 import React from 'react';
 import { GetHistoryChatMessages } from './placeholdermessages';
 

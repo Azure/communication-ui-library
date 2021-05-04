@@ -1,5 +1,5 @@
 import React from 'react';
-import { SendBox, FluentThemeProvider } from '@azure/react-components';
+import { SendBox, FluentThemeProvider } from 'react-components';
 
 export const SendBoxWithSystemMessageExample: () => JSX.Element = () => (
   <FluentThemeProvider>

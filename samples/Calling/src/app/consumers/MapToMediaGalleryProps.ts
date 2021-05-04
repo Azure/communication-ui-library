@@ -7,7 +7,7 @@ import {
   useCallingContext,
   ParticipantStream,
   convertSdkRemoteParticipantToGalleryParticipant
-} from '@azure/react-components';
+} from 'react-components';
 import { useEffect, useState } from 'react';
 
 export type MediaGalleryContainerProps = {

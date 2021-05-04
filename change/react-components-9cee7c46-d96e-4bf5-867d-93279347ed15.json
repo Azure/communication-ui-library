@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
   "comment": "Add ScreenShare button component",
-  "packageName": "@azure/react-components",
+  "packageName": "react-components",
   "email": "prprabhu@microsoft.com",
   "dependentChangeType": "patch"
 }

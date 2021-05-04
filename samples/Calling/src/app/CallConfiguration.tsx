@@ -9,7 +9,7 @@ import {
   verticalStackStyle
 } from './styles/CallConfiguration.styles';
 import { LocalPreview } from './LocalPreview';
-import { SetupContainerProps } from '@azure/react-components';
+import { SetupContainerProps } from 'react-components';
 
 export interface CallConfigurationProps extends SetupContainerProps {
   screenWidth: number;

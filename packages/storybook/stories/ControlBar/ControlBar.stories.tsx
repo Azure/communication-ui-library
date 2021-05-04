@@ -11,7 +11,7 @@ import {
   ScreenShareButton,
   LIGHT,
   DARK
-} from '@azure/react-components';
+} from 'react-components';
 import { boolean, select } from '@storybook/addon-knobs';
 import { getDocs } from './ControlBarDocs';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';

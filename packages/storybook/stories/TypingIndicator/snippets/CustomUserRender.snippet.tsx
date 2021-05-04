@@ -1,5 +1,5 @@
 import React from 'react';
-import { TypingIndicator, WebUiChatParticipant } from '@azure/react-components';
+import { TypingIndicator, WebUiChatParticipant } from 'react-components';
 import { mergeStyles } from '@fluentui/react';
 
 export const CustomUserRenderSnippet: () => JSX.Element = () => {

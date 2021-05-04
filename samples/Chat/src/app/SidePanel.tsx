@@ -6,7 +6,7 @@ import { ParticipantManagement } from './ParticipantManagement';
 import { SettingsManagementComponent } from './SettingsManagement';
 import { SlideOutPanelComponent } from './SlideOutPanel';
 import { useSelector } from './hooks/useSelector';
-import { useThreadId } from '@azure/react-components';
+import { useThreadId } from 'react-components';
 import { useHandlers } from './hooks/useHandlers';
 import { chatParticipantListSelector } from '@azure/acs-chat-selector';
 import { chatSettingsSelector } from './selectors/chatSettingsSelector';

@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
   "comment": "Remove THEMES singleton. Refine theme related exports.",
-  "packageName": "@azure/react-components",
+  "packageName": "react-components",
   "email": "mail@jamesburnside.com",
   "dependentChangeType": "patch"
 }

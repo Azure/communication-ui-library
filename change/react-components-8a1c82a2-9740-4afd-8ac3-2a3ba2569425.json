@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
   "comment": "Add support for CommonJS",
-  "packageName": "@azure/react-components",
+  "packageName": "react-components",
   "email": "mail@jamesburnside.com",
   "dependentChangeType": "patch"
 }

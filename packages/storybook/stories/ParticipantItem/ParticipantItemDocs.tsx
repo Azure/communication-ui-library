@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
-import { ParticipantItem } from '@azure/react-components';
+import { ParticipantItem } from 'react-components';
 import { ParticipantItemExample } from './snippets/ParticipantItem.snippet';
 import { CustomAvatarExample } from './snippets/CustomAvatar.snippet';
 import { CustomIconExample } from './snippets/CustomIcon.snippet';
@@ -12,7 +12,7 @@ const CustomAvatarExampleText = require('!!raw-loader!./snippets/CustomAvatar.sn
 const CustomIconExampleText = require('!!raw-loader!./snippets/CustomIcon.snippet.tsx').default;
 
 const importStatement = `
-import { ParticipantItem, ParticipantItemProps } from '@azure/react-components';
+import { ParticipantItem, ParticipantItemProps } from 'react-components';
 import { IContextualMenuItem, PersonaPresence } from '@fluentui/react';`;
 
 export const getDocs: () => JSX.Element = () => {

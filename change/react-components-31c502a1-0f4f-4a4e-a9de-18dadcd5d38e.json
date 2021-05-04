@@ -1,7 +1,7 @@
 {
   "type": "none",
   "comment": "Log storybook composite chat and call details to allow joining calls.",
-  "packageName": "@azure/react-components",
+  "packageName": "react-components",
   "email": "mail@jamesburnside.com",
   "dependentChangeType": "none"
 }
