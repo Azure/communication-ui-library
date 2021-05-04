@@ -1,11 +1,10 @@
 import {
   CameraButton,
   ControlBar,
+  EndCallButton,
   FluentThemeProvider,
-  MicrophoneButton,
-  hangupButtonProps
+  MicrophoneButton
 } from '@azure/communication-ui';
-import { DefaultButton } from '@fluentui/react';
 import React from 'react';
 
 // ControlBar component accepts a `styles` prop with only the `root` key as a valid property.
@@ -28,7 +27,7 @@ export const ControlBarExample = (): JSX.Element => {
       <ControlBar styles={styles}>
         <CameraButton />
         <MicrophoneButton />
-        <DefaultButton {...hangupButtonProps} />
+        <EndCallButton />
       </ControlBar>
     </FluentThemeProvider>
   );
