@@ -38,7 +38,7 @@ const createDefaultHandlers = memoizeOne(
       return callClient.stopRenderVideo(callId, stream);
     };
 
-    const onToggleLocalVideo = (callId: string, videoDeviceInfo, options): Promise<void> | void => {
+    const onToggleCamera = (callId: string, videoDeviceInfo, options): Promise<void> | void => {
       const call = callClient.state.calls.get(callId);
       const stream = call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
       if (stream) {
@@ -107,7 +107,7 @@ const createDefaultHandlers = memoizeOne(
       onStopLocalVideo,
       onStartScreenShare,
       onStopScreenShare,
-      onToggleLocalVideo,
+      onToggleCamera,
       onToggleMicrophone,
       onToggleScreenShare
     };
@@ -118,7 +118,7 @@ const createDefaultHandlers = memoizeOne(
  * Type guard for common properties between two types.
  */
 export type CommonProperties<A, B> = {
-  [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
+  [P in keyof A & keyof B]: A[P] extends B[P] ? (B[P] extends A[P] ? P : never) : never;
 }[keyof A & keyof B];
 
 type Common<A, B> = Pick<A, CommonProperties<A, B>>;

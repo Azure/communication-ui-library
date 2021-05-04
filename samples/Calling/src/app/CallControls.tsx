@@ -1,21 +1,32 @@
 // © Microsoft Corporation. All rights reserved.
 
 import React from 'react';
-import {
-  ControlBar,
-  MicrophoneButton,
-  CameraButton,
-  ScreenShareButton,
-  HangupButtonComponent
-} from '@azure/communication-ui';
+import { ControlBar, MicrophoneButton, CameraButton, ScreenShareButton, EndCallButton } from '@azure/communication-ui';
+import { Call } from '@azure/communication-calling';
+import { microphoneButtonSelector, cameraButtonSelector, screenShareButtonSelector } from '@azure/acs-calling-selector';
+import { useSelector } from './hooks/useSelector';
+import { useHandlers } from './hooks/useHandlers';
 
-export const CallControls = (): JSX.Element => {
+export type CallControlsProps = {
+  call: Call;
+};
+
+export const CallControls = (props: CallControlsProps): JSX.Element => {
+  const { call } = props;
+  const microphoneButtonProps = useSelector(microphoneButtonSelector, { callId: call.id });
+  const microphoneButtonHandlers = useHandlers(MicrophoneButton);
+  const cameraButtonProps = useSelector(cameraButtonSelector, { callId: call.id });
+  const cameraButtonHandlers = useHandlers(CameraButton);
+  const screenShareButtonProps = useSelector(screenShareButtonSelector, { callId: call.id });
+  const screenShareButtonHandlers = useHandlers(ScreenShareButton);
+  const hangUpButtonHandlers = useHandlers(EndCallButton);
+
   return (
     <ControlBar>
-      <MicrophoneButton />
-      <CameraButton />
-      <ScreenShareButton />
-      <HangupButtonComponent />
+      <MicrophoneButton {...microphoneButtonProps} {...microphoneButtonHandlers} />
+      <CameraButton {...cameraButtonProps} {...cameraButtonHandlers} />
+      <ScreenShareButton {...screenShareButtonProps} {...screenShareButtonHandlers} />
+      <EndCallButton {...hangUpButtonHandlers} />
     </ControlBar>
   );
 };
