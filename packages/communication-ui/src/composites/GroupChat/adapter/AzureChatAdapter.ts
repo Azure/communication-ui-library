@@ -118,7 +118,7 @@ export class AzureChatAdapter implements GroupChatAdapter {
   };
 
   updateThreadTopicName = async (topicName: string): Promise<void> => {
-    await this.handlers.removeThreadMember(topicName);
+    await this.handlers.updateThreadTopicName(topicName);
   };
 
   loadPreviousChatMessages = async (messagesToLoad: number): Promise<boolean> => {
