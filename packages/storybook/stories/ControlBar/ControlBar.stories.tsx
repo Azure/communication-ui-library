@@ -7,15 +7,13 @@ import {
   ControlBar,
   EndCallButton,
   MicrophoneButton,
+  OptionsButton,
   ScreenShareButton,
-  labeledOptionsButtonProps,
-  optionsButtonProps,
   LIGHT,
   DARK
 } from '@azure/communication-ui';
 import { boolean, select } from '@storybook/addon-knobs';
 import { getDocs } from './ControlBarDocs';
-import { DefaultButton } from '@fluentui/react';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 
 const CONTROL_BAR_LAYOUTS = [
@@ -95,10 +93,7 @@ export const ControlBarComponent: (
         <CameraButton showLabel={showLabels} checked={toggleButtons} />
         <MicrophoneButton showLabel={showLabels} checked={toggleButtons} />
         <ScreenShareButton showLabel={showLabels} checked={toggleButtons} />
-        <DefaultButton
-          {...(showLabels ? labeledOptionsButtonProps : optionsButtonProps)}
-          menuProps={exampleOptionsMenuProps}
-        />
+        <OptionsButton showLabel={showLabels} menuProps={exampleOptionsMenuProps} />
         <EndCallButton showLabel={showLabels} />
       </ControlBar>
     </div>

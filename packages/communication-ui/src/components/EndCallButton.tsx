@@ -22,7 +22,7 @@ export interface EndCallButtonProps extends IButtonProps {
  */
 export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
   const { showLabel = false, styles, onRenderIcon, onRenderText } = props;
-  const componentStyles = styles ? concatStyleSets(endCallControlButtonStyles, styles) : endCallControlButtonStyles;
+  const componentStyles = concatStyleSets(endCallControlButtonStyles, styles ?? {});
 
   const defaultRenderIcon = (): JSX.Element => {
     return <CallEndIcon />;
