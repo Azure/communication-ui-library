@@ -35,6 +35,9 @@ export type DeviceManagerHandlers = ReturnType<typeof createDeviceManagerDefault
  */
 export type CallHandlers = ReturnType<typeof createCallDefaultHandlers>;
 
+/**
+ * Call Client Handlers
+ */
 const createCallClientDefaultHandlers = memoizeOne((callClient: DeclarativeCallClient) => {
   const onStartLocalVideo = (
     callId: string,
@@ -52,7 +55,7 @@ const createCallClientDefaultHandlers = memoizeOne((callClient: DeclarativeCallC
     return callClient.stopRenderVideo(callId, stream);
   };
 
-  const onToggleVideo = (callId: string, videoDeviceInfo, options): Promise<void> | void => {
+  const onToggleLocalVideo = (callId: string, videoDeviceInfo, options): Promise<void> | void => {
     const call = callClient.state.calls.get(callId);
     const stream = call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
     if (stream) {
@@ -66,10 +69,13 @@ const createCallClientDefaultHandlers = memoizeOne((callClient: DeclarativeCallC
     getDeviceManager: () => callClient.getDeviceManager(),
     onStartLocalVideo,
     onStopLocalVideo,
-    onToggleVideo
+    onToggleLocalVideo
   };
 });
 
+/**
+ * Call Agent Handlers
+ */
 const createCallAgentDefaultHandlers = memoizeOne((callAgent: CallAgent) => {
   return {
     onStartCall: (
@@ -79,16 +85,19 @@ const createCallAgentDefaultHandlers = memoizeOne((callAgent: CallAgent) => {
   };
 });
 
+/**
+ * Device Manager Handlers
+ */
 const createDeviceManagerDefaultHandlers = memoizeOne((deviceManager: DeviceManager) => {
   return {
-    getCameras: (): Promise<VideoDeviceInfo[]> => deviceManager.getCameras(),
-    getMicrophones: (): Promise<AudioDeviceInfo[]> => deviceManager.getMicrophones(),
-    getSpeakers: (): Promise<AudioDeviceInfo[]> => deviceManager.getSpeakers(),
-    onSelectMicrophone: (audioDeviceInfo) => deviceManager.selectMicrophone(audioDeviceInfo),
-    onSelectSpeaker: (audioDeviceInfo) => deviceManager.selectSpeaker(audioDeviceInfo)
+    onSelectMicrophone: (audioDeviceInfo: AudioDeviceInfo) => deviceManager.selectMicrophone(audioDeviceInfo),
+    onSelectSpeaker: (audioDeviceInfo: AudioDeviceInfo) => deviceManager.selectSpeaker(audioDeviceInfo)
   };
 });
 
+/**
+ * Call Handlers
+ */
 const createCallDefaultHandlers = memoizeOne((call: Call) => {
   const onSelectCamera = (videoDeviceInfo: VideoDeviceInfo): Promise<void> | undefined => {
     const stream = call.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
@@ -110,7 +119,8 @@ const createCallDefaultHandlers = memoizeOne((call: Call) => {
     onSelectCamera,
     onStartScreenShare,
     onStopScreenShare,
-    toggleMicrophone: (): Promise<void> => (call.isMuted ? call.unmute() : call.mute())
+    onToggleMicrophone: (): Promise<void> => (call.isMuted ? call.unmute() : call.mute()),
+    onToggleScreenShare: (): Promise<void> => (call.isScreenSharingOn ? onStopScreenShare() : onStartScreenShare())
   };
 });
 
