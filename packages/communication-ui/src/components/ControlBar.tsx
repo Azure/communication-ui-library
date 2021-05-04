@@ -1,99 +1,11 @@
 // © Microsoft Corporation. All rights reserved.
 import { mergeStyles, Stack, IButtonProps } from '@fluentui/react';
 import { useTheme } from '@fluentui/react-theme-provider';
-import {
-  CallControlCloseTrayIcon,
-  CallControlPresentNewIcon,
-  CallEndIcon,
-  CallIcon,
-  CallRecordingIcon,
-  CallVideoIcon,
-  CallVideoOffIcon,
-  MicIcon,
-  MicOffIcon,
-  MoreIcon
-} from '@fluentui/react-northstar';
+import { CallIcon, CallRecordingIcon, MoreIcon } from '@fluentui/react-northstar';
 import React from 'react';
 import { BaseCustomStylesProps } from '../types';
-import {
-  controlBarStyles,
-  controlButtonLabelStyles,
-  controlButtonStyles,
-  hangUpControlButtonStyles
-} from './styles/ControlBar.styles';
+import { controlBarStyles, controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 import { isDarkThemed } from '../utils/themeUtils';
-
-/** Fluent UI Button props for video control */
-export const videoButtonProps: IButtonProps = {
-  onRenderIcon: (props?: IButtonProps): JSX.Element => {
-    if (props?.checked) {
-      return <CallVideoIcon />;
-    } else {
-      return <CallVideoOffIcon />;
-    }
-  },
-  styles: controlButtonStyles
-};
-
-/** Fluent UI Button props for video control with label */
-export const labeledVideoButtonProps: IButtonProps = {
-  ...videoButtonProps,
-  onRenderText: (props?: IButtonProps): JSX.Element => {
-    if (props?.checked) {
-      return <Stack className={mergeStyles(controlButtonLabelStyles)}>Turn off</Stack>;
-    } else {
-      return <Stack className={mergeStyles(controlButtonLabelStyles)}>Turn on</Stack>;
-    }
-  }
-};
-
-/** Fluent UI Button props for audio control */
-export const audioButtonProps: IButtonProps = {
-  onRenderIcon: (props?: IButtonProps): JSX.Element => {
-    if (props?.checked) {
-      return <MicIcon />;
-    } else {
-      return <MicOffIcon />;
-    }
-  },
-  styles: controlButtonStyles
-};
-
-/** Fluent UI Button props for audio control with label */
-export const labeledAudioButtonProps: IButtonProps = {
-  ...audioButtonProps,
-  onRenderText: (props?: IButtonProps): JSX.Element => {
-    if (props?.checked) {
-      return <Stack className={mergeStyles(controlButtonLabelStyles)}>Mute</Stack>;
-    } else {
-      return <Stack className={mergeStyles(controlButtonLabelStyles)}>Unmute</Stack>;
-    }
-  }
-};
-
-/** Fluent UI Button props for screenshare control */
-export const screenShareButtonProps: IButtonProps = {
-  onRenderIcon: (props?: IButtonProps): JSX.Element => {
-    if (props?.checked) {
-      return <CallControlCloseTrayIcon />;
-    } else {
-      return <CallControlPresentNewIcon bordered={false} />;
-    }
-  },
-  styles: controlButtonStyles
-};
-
-/** Fluent UI Button props for screenshare control with label */
-export const labeledScreenShareButtonProps: IButtonProps = {
-  ...screenShareButtonProps,
-  onRenderText: (props?: IButtonProps): JSX.Element => {
-    if (props?.checked) {
-      return <Stack className={mergeStyles(controlButtonLabelStyles)}>Stop</Stack>;
-    } else {
-      return <Stack className={mergeStyles(controlButtonLabelStyles)}>Share</Stack>;
-    }
-  }
-};
 
 /** Fluent UI Button props for options control */
 export const optionsButtonProps: IButtonProps = {
@@ -145,20 +57,6 @@ export const labeledAnswerButtonProps: IButtonProps = {
   ...answerButtonProps,
   onRenderText: (): JSX.Element => {
     return <Stack className={mergeStyles(controlButtonLabelStyles)}>Answer</Stack>;
-  }
-};
-
-/** Fluent UI Button props for end call control */
-export const hangupButtonProps: IButtonProps = {
-  onRenderIcon: (): JSX.Element => <CallEndIcon />,
-  styles: hangUpControlButtonStyles
-};
-
-/** Fluent UI Button props for end call control with label */
-export const labeledHangupButtonProps: IButtonProps = {
-  ...hangupButtonProps,
-  onRenderText: (): JSX.Element => {
-    return <Stack className={mergeStyles(controlButtonLabelStyles)}>Hangup</Stack>;
   }
 };
 

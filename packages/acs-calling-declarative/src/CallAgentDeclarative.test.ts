@@ -2,13 +2,17 @@
 import {
   Call,
   CallAgent,
+  CallFeatureFactoryType,
   CollectionUpdatedEvent,
   GroupChatCallLocator,
   GroupLocator,
   IncomingCallEvent,
   JoinCallOptions,
   MeetingLocator,
-  StartCallOptions
+  RecordingCallFeature,
+  StartCallOptions,
+  TranscriptionCallFeature,
+  TransferCallFeature
 } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 import EventEmitter from 'events';
@@ -22,12 +26,29 @@ import {
   MockCall,
   MockIncomingCall,
   mockoutObjectFreeze,
+  MockRecordingCallFeatureImpl,
+  MockTranscriptionCallFeatureImpl,
+  MockTransferCallFeatureImpl,
   waitWithBreakCondition
 } from './TestUtils';
 
 mockoutObjectFreeze();
 
-jest.mock('@azure/communication-calling');
+jest.mock('@azure/communication-calling', () => {
+  return {
+    Features: {
+      get Recording(): CallFeatureFactoryType<RecordingCallFeature> {
+        return MockRecordingCallFeatureImpl;
+      },
+      get Transfer(): CallFeatureFactoryType<TransferCallFeature> {
+        return MockTransferCallFeatureImpl;
+      },
+      get Transcription(): CallFeatureFactoryType<TranscriptionCallFeature> {
+        return MockTranscriptionCallFeatureImpl;
+      }
+    }
+  };
+});
 
 const mockRemoteParticipantId = 'a';
 const mockCallId = 'b';

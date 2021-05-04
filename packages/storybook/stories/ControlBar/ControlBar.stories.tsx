@@ -3,17 +3,13 @@
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import {
+  CameraButton,
   ControlBar,
-  audioButtonProps,
-  hangupButtonProps,
-  labeledVideoButtonProps,
-  labeledAudioButtonProps,
-  labeledScreenShareButtonProps,
+  EndCallButton,
+  MicrophoneButton,
+  ScreenShareButton,
   labeledOptionsButtonProps,
-  labeledHangupButtonProps,
   optionsButtonProps,
-  screenShareButtonProps,
-  videoButtonProps,
   LIGHT,
   DARK
 } from '@azure/communication-ui';
@@ -96,17 +92,14 @@ export const ControlBarComponent: (
       }}
     >
       <ControlBar layout={layout}>
-        <DefaultButton {...(showLabels ? labeledVideoButtonProps : videoButtonProps)} checked={toggleButtons} />
-        <DefaultButton {...(showLabels ? labeledAudioButtonProps : audioButtonProps)} checked={toggleButtons} />
-        <DefaultButton
-          {...(showLabels ? labeledScreenShareButtonProps : screenShareButtonProps)}
-          checked={toggleButtons}
-        />
+        <CameraButton showLabel={showLabels} checked={toggleButtons} />
+        <MicrophoneButton showLabel={showLabels} checked={toggleButtons} />
+        <ScreenShareButton showLabel={showLabels} checked={toggleButtons} />
         <DefaultButton
           {...(showLabels ? labeledOptionsButtonProps : optionsButtonProps)}
           menuProps={exampleOptionsMenuProps}
         />
-        <DefaultButton {...(showLabels ? labeledHangupButtonProps : hangupButtonProps)} />
+        <EndCallButton showLabel={showLabels} />
       </ControlBar>
     </div>
   );

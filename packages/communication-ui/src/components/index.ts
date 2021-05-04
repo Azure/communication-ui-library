@@ -30,24 +30,28 @@ export type { StreamMediaProps } from './StreamMedia';
 export { ParticipantItem } from './ParticipantItem';
 export type { ParticipantItemProps, ParticipantItemStylesProps } from './ParticipantItem';
 
+export { CameraButton } from './CameraButton';
+export type { CameraButtonProps } from './CameraButton';
+
 export {
   ControlBar,
-  videoButtonProps,
-  audioButtonProps,
-  screenShareButtonProps,
   optionsButtonProps,
   answerButtonProps,
-  hangupButtonProps,
   recordButtonProps,
-  labeledVideoButtonProps,
-  labeledAudioButtonProps,
-  labeledScreenShareButtonProps,
-  labeledHangupButtonProps,
   labeledOptionsButtonProps,
   labeledAnswerButtonProps,
   labeledRecordButtonProps
 } from './ControlBar';
 export type { ControlBarProps, ControlBarLayoutType } from './ControlBar';
+
+export { EndCallButton } from './EndCallButton';
+export type { EndCallButtonProps } from './EndCallButton';
+
+export { MicrophoneButton } from './MicrophoneButton';
+export type { MicrophoneButtonProps } from './MicrophoneButton';
+
+export { ScreenShareButton } from './ScreenShareButton';
+export type { ScreenShareButtonProps } from './ScreenShareButton';
 
 export { VideoTile } from './VideoTile';
 export type { VideoTileProps, VideoTileStylesProps, PlaceholderProps } from './VideoTile';

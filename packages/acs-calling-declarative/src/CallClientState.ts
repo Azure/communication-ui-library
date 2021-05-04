@@ -30,6 +30,16 @@ export interface TranscriptionCallFeature {
 }
 
 /**
+ * State only version of {@Link @azure/communication-calling#RecordingCallFeature}.
+ */
+export interface RecordingCallFeature {
+  /**
+   * Proxy of {@Link @azure/communication-calling#RecordingCallFeature.isRecordingActive}.
+   */
+  isRecordingActive: boolean;
+}
+
+/**
  * State only version of {@Link @azure/communication-calling#LocalVideoStream}.
  */
 export interface LocalVideoStream {
@@ -176,6 +186,10 @@ export interface Call {
    * Proxy of {@Link @azure/communication-calling#TranscriptionCallFeature}.
    */
   transcription: TranscriptionCallFeature;
+  /*
+   * Proxy of {@Link @azure/communication-calling#RecordingCallFeature}.
+   */
+  recording: RecordingCallFeature;
   /**
    * Stores the local date when the call started on the client. This is not originally in the SDK but provided by the
    * Declarative layer.

@@ -47,6 +47,10 @@ export class CallContext {
     this._emitter.on('stateChanged', handler);
   }
 
+  public offStateChange(handler: (state: CallClientState) => void): void {
+    this._emitter.off('stateChanged', handler);
+  }
+
   // Disposing of the CallAgentDeclarative will not clear the state. If we create a new CallAgentDeclarative, we should
   // make sure the state is clean because any left over state (if previous CallAgentDeclarative was disposed) may be
   // invalid.
@@ -75,6 +79,7 @@ export class CallContext {
           existingCall.localVideoStreams = call.localVideoStreams;
           existingCall.remoteParticipants = call.remoteParticipants;
           existingCall.transcription.isTranscriptionActive = call.transcription.isTranscriptionActive;
+          existingCall.recording.isRecordingActive = call.recording.isRecordingActive;
           // We don't update the startTime and endTime if we are updating an existing active call
         } else {
           draft.calls.set(call.id, call);
@@ -199,6 +204,17 @@ export class CallContext {
         const call = draft.calls.get(callId);
         if (call) {
           call.isMuted = isMicrophoneMuted;
+        }
+      })
+    );
+  }
+
+  public setCallRecordingActive(callId: string, isRecordingActive: boolean): void {
+    this.setState(
+      produce(this._state, (draft: CallClientState) => {
+        const call = draft.calls.get(callId);
+        if (call) {
+          call.recording.isRecordingActive = isRecordingActive;
         }
       })
     );

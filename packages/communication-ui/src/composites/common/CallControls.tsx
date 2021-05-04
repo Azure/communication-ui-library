@@ -3,13 +3,14 @@
 import { DefaultButton, IButtonStyles, IContextualMenuProps } from '@fluentui/react';
 import React, { useCallback } from 'react';
 import {
+  CameraButton,
   ControlBar,
-  videoButtonProps,
-  audioButtonProps,
-  optionsButtonProps,
-  hangupButtonProps
+  EndCallButton,
+  MicrophoneButton,
+  ScreenShareButton,
+  optionsButtonProps
 } from '../../components';
-import { ControlBarProps, screenShareButtonProps } from '../../components/ControlBar';
+import { ControlBarProps } from '../../components/ControlBar';
 import {
   connectFuncsToContext,
   LocalDeviceSettingsContainerProps,
@@ -96,15 +97,14 @@ const HangupButton = (props: HangupButtonProps): JSX.Element => {
   }, [muteMicrophone, stopScreenShare, localVideoEnabled, stopLocalVideo, leaveCall, onEndCallClick]);
 
   return (
-    <DefaultButton
-      onRenderIcon={hangupButtonProps.onRenderIcon}
+    <EndCallButton
       checked={false}
       onClick={() => {
         hangup().catch((error) => {
           propagateError(error, onErrorCallback);
         });
       }}
-      styles={styles ?? hangupButtonProps.styles}
+      styles={styles}
       text={text}
     />
   );
@@ -134,8 +134,7 @@ export const OutgoingCallControlBar = (props: OutgoingCallControlBarProps & Erro
 
   return (
     <ControlBar {...props}>
-      <DefaultButton
-        {...videoButtonProps}
+      <CameraButton
         checked={localVideoEnabled}
         disabled={cameraDisabled || localVideoBusy}
         onClick={() => {
@@ -144,8 +143,7 @@ export const OutgoingCallControlBar = (props: OutgoingCallControlBarProps & Erro
           });
         }}
       />
-      <DefaultButton
-        {...audioButtonProps}
+      <MicrophoneButton
         checked={isMicrophoneActive}
         disabled={micDisabled}
         onClick={() => {
@@ -180,8 +178,7 @@ export const IncomingCallControlBar = (
 
   return (
     <ControlBar {...props}>
-      <DefaultButton
-        {...videoButtonProps}
+      <CameraButton
         checked={localVideoEnabled}
         disabled={cameraDisabled || localVideoBusy}
         onClick={() => {
@@ -190,8 +187,7 @@ export const IncomingCallControlBar = (
           });
         }}
       />
-      <DefaultButton
-        {...audioButtonProps}
+      <MicrophoneButton
         checked={isMicrophoneActive}
         disabled={micDisabled}
         onClick={() => {
@@ -237,8 +233,7 @@ export const CallControlBar = (props: ControlBarProps & CallControlBarProps & Er
 
   return (
     <ControlBar {...props}>
-      <DefaultButton
-        {...videoButtonProps}
+      <CameraButton
         checked={localVideoEnabled}
         disabled={cameraDisabled || localVideoBusy}
         onClick={() => {
@@ -247,8 +242,7 @@ export const CallControlBar = (props: ControlBarProps & CallControlBarProps & Er
           });
         }}
       />
-      <DefaultButton
-        {...audioButtonProps}
+      <MicrophoneButton
         checked={isMicrophoneActive}
         disabled={micDisabled}
         onClick={() => {
@@ -258,8 +252,7 @@ export const CallControlBar = (props: ControlBarProps & CallControlBarProps & Er
         }}
       />
       {isLocalScreenShareSupportedInBrowser() && (
-        <DefaultButton
-          {...screenShareButtonProps}
+        <ScreenShareButton
           checked={isLocalScreenShareActive}
           disabled={screenShareDisabled}
           onClick={() => {
@@ -284,7 +277,9 @@ export interface GroupCallControlBarProps extends CallControlBarContainerProps {
   onEndCallClick(): void;
 }
 
-export const GroupCallControlBar = (props: ControlBarProps & GroupCallControlBarProps & ErrorHandlingProps) => {
+export const GroupCallControlBar = (
+  props: ControlBarProps & GroupCallControlBarProps & ErrorHandlingProps
+): JSX.Element => {
   const {
     localVideoEnabled,
     onEndCallClick,
@@ -307,8 +302,7 @@ export const GroupCallControlBar = (props: ControlBarProps & GroupCallControlBar
 
   return (
     <ControlBar {...props}>
-      <DefaultButton
-        {...videoButtonProps}
+      <CameraButton
         checked={localVideoEnabled}
         disabled={cameraDisabled || localVideoBusy}
         onClick={() => {
@@ -317,8 +311,7 @@ export const GroupCallControlBar = (props: ControlBarProps & GroupCallControlBar
           });
         }}
       />
-      <DefaultButton
-        {...audioButtonProps}
+      <MicrophoneButton
         checked={isMicrophoneActive}
         disabled={micDisabled}
         onClick={() => {
@@ -328,8 +321,7 @@ export const GroupCallControlBar = (props: ControlBarProps & GroupCallControlBar
         }}
       />
       {isLocalScreenShareSupportedInBrowser() && (
-        <DefaultButton
-          {...screenShareButtonProps}
+        <ScreenShareButton
           checked={isLocalScreenShareActive}
           disabled={screenShareDisabled}
           onClick={() => {

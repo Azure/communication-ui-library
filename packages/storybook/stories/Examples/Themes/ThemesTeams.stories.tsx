@@ -5,16 +5,15 @@ import { Meta } from '@storybook/react/types-6-0';
 import { getDocs } from './ThemesDocs';
 import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import {
+  CameraButton,
+  ControlBar,
+  EndCallButton,
   FluentThemeProvider,
   GridLayout,
-  VideoTile,
-  ControlBar,
-  videoButtonProps,
-  audioButtonProps,
-  screenShareButtonProps,
-  hangupButtonProps
+  MicrophoneButton,
+  ScreenShareButton,
+  VideoTile
 } from '@azure/communication-ui';
-import { DefaultButton } from '@fluentui/react';
 
 const TeamsTheme = {
   palette: {
@@ -59,26 +58,22 @@ export const TeamsThemeComponent: () => JSX.Element = () => {
 
               {/*Control Bar with default set up*/}
               <ControlBar layout={'dockedTop'}>
-                <DefaultButton
-                  {...videoButtonProps}
+                <CameraButton
                   onClick={() => {
                     /*handle onClick*/
                   }}
                 />
-                <DefaultButton
-                  {...audioButtonProps}
+                <MicrophoneButton
                   onClick={() => {
                     /*handle onClick*/
                   }}
                 />
-                <DefaultButton
-                  {...screenShareButtonProps}
+                <ScreenShareButton
                   onClick={() => {
                     /*handle onClick*/
                   }}
                 />
-                <DefaultButton
-                  {...hangupButtonProps}
+                <EndCallButton
                   onClick={() => {
                     /*handle onClick*/
                   }}

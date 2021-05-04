@@ -31,6 +31,8 @@ export interface Call {
     isMuted: boolean;
     isScreenSharingOn: boolean;
     localVideoStreams: LocalVideoStream[];
+    // (undocumented)
+    recording: RecordingCallFeature;
     remoteParticipants: Map<string, RemoteParticipant>;
     remoteParticipantsEnded: Map<string, RemoteParticipant>;
     startTime: Date;
@@ -52,6 +54,7 @@ export interface CallClientState {
 
 // @public
 export interface DeclarativeCallClient extends CallClient {
+    offStateChange(handler: (state: CallClientState) => void): void;
     onStateChange(handler: (state: CallClientState) => void): void;
     startRenderVideo(callId: string, stream: LocalVideoStream | RemoteVideoStream, options?: CreateViewOptions): Promise<void>;
     state: CallClientState;
@@ -83,6 +86,11 @@ export interface LocalVideoStream {
     mediaStreamType: MediaStreamType;
     source: VideoDeviceInfo;
     videoStreamRendererView: VideoStreamRendererView | undefined;
+}
+
+// @public
+export interface RecordingCallFeature {
+    isRecordingActive: boolean;
 }
 
 // @public

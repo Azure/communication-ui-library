@@ -1,12 +1,12 @@
 import {
-  GridLayout,
-  VideoTile,
+  CameraButton,
   ControlBar,
-  videoButtonProps,
-  audioButtonProps,
-  screenShareButtonProps,
-  optionsButtonProps,
-  hangupButtonProps
+  EndCallButton,
+  GridLayout,
+  MicrophoneButton,
+  ScreenShareButton,
+  VideoTile,
+  optionsButtonProps
 } from '@azure/communication-ui';
 
 import { DefaultButton, Stack, IContextualMenuProps } from '@fluentui/react';
@@ -41,23 +41,14 @@ export const CallingComponents = (): JSX.Element => {
 
       {/* Control Bar with default set up */}
       <ControlBar styles={{ root: { justifyContent: 'center' } }}>
-        <DefaultButton
-          {...videoButtonProps}
-          checked={videoButtonChecked}
-          onClick={() => setVideoButtonChecked(!videoButtonChecked)}
-        />
-        <DefaultButton
-          {...audioButtonProps}
-          checked={audioButtonChecked}
-          onClick={() => setAudioButtonChecked(!audioButtonChecked)}
-        />
-        <DefaultButton
-          {...screenShareButtonProps}
+        <CameraButton checked={videoButtonChecked} onClick={() => setVideoButtonChecked(!videoButtonChecked)} />
+        <MicrophoneButton checked={audioButtonChecked} onClick={() => setAudioButtonChecked(!audioButtonChecked)} />
+        <ScreenShareButton
           checked={screenshareButtonChecked}
           onClick={() => setScreenshareButtonChecked(!screenshareButtonChecked)}
         />
         <DefaultButton {...optionsButtonProps} menuProps={exampleOptionsMenuProps} />
-        <DefaultButton {...hangupButtonProps} />
+        <EndCallButton />
       </ControlBar>
     </Stack>
   );

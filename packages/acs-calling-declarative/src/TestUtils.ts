@@ -4,7 +4,6 @@ import {
   CallAgent,
   CallApiFeature,
   CallFeatureFactoryType,
-  Features,
   IncomingCall,
   LocalVideoStream,
   PropertyChangedEvent,
@@ -117,7 +116,7 @@ export function createMockCall(mockCallId: string): MockCall {
     id: mockCallId,
     remoteParticipants: [] as ReadonlyArray<RemoteParticipant>,
     localVideoStreams: [] as ReadonlyArray<LocalVideoStream>,
-    api: createMockApiFeatures(false, new Map<string, any>())
+    api: createMockApiFeatures(new Map())
   } as MockCall;
   return addMockEmitter(mockCall);
 }
@@ -140,32 +139,34 @@ export function createMockRemoteVideoStream(mockIsAvailable: boolean): MockRemot
   return addMockEmitter(mockRemoteVideoStream);
 }
 
-export const MOCK_TRANSCRIPTION_NAME = 'Transcription';
-
 /**
- * Create a mockApiFeatures function see {@Link @azure/communication-calling#Call.api}. If cache is passed in, will try
- * to return existing cached TFeatures else create new TFeature, cache it, and then return it.
+ * Creates a function equivalent to Call.api. The api() generated will use the passed in cache to return the feature
+ * objects as defined in the cache. For any undefined feature not in cache, it will return a generic object. Containing
+ * properties of all features. Note that this generic object is instanciated every call whereas the cache objects are
+ * reused on repeated calls.
  *
- * @param isTranscription
  * @param cache
  * @returns
  */
 export function createMockApiFeatures(
-  isTranscription: boolean,
-  cache: Map<string, any>
+  cache: Map<CallFeatureFactoryType<any>, CallApiFeature>
 ): <FeatureT extends CallApiFeature>(cls: CallFeatureFactoryType<FeatureT>) => FeatureT {
   return <FeatureT extends CallApiFeature>(cls: CallFeatureFactoryType<FeatureT>): FeatureT => {
-    if (typeof cls === typeof Features.Transcription) {
-      if (cache.has(MOCK_TRANSCRIPTION_NAME)) {
-        return cache.get(MOCK_TRANSCRIPTION_NAME);
-      }
-      const transcription = addMockEmitter({
-        isTranscriptionActive: isTranscription
-      });
-      cache.set(MOCK_TRANSCRIPTION_NAME, transcription);
-      return transcription;
+    const feature = cache.get(cls);
+    if (feature) {
+      return feature as FeatureT;
     } else {
-      throw new Error('Not implemented');
+      // Default one if none provided
+      const generic = addMockEmitter({
+        name: 'Default',
+        isRecordingActive: false,
+        isTranscriptionActive: false,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        transfer(target: TransferToParticipant, transferOptions?: TransferToParticipantOptions): Transfer {
+          throw new Error('Method not implemented.');
+        }
+      });
+      return generic;
     }
   };
 }

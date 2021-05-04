@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add ability to unregister from stateChange events",
+  "packageName": "@azure/acs-calling-declarative",
+  "email": "allenhwang@microsoft.com",
+  "dependentChangeType": "patch"
+}

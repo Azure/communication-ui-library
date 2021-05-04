@@ -72,6 +72,7 @@ function createMockCall(mockCallId: string): Call {
     localVideoStreams: [],
     remoteParticipants: new Map<string, RemoteParticipant>(),
     remoteParticipantsEnded: new Map<string, RemoteParticipant>(),
+    recording: { isRecordingActive: false },
     transcription: { isTranscriptionActive: false },
     startTime: new Date(),
     endTime: undefined

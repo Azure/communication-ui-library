@@ -2,15 +2,12 @@
 
 import React from 'react';
 import { ChoiceGroup, IChoiceGroupOption, concatStyleSets } from '@fluentui/react';
-import { THEMES, ThemeMap } from '../constants/themes';
 import { useSwitchableFluentTheme } from '../providers/SwitchableFluentThemeProvider';
 
 /**
  * Props for ThemeSelector component
  */
 export interface ThemeSelectorProps {
-  /** Optional map of themes with theme as the key. Defaults to map of light and dark themes. */
-  themeMap?: ThemeMap;
   /** Optional label for selector component */
   label?: string;
   /** Optional boolean to arrange choices horizontally */
@@ -20,12 +17,11 @@ export interface ThemeSelectorProps {
 /**
  * @description ChoiceGroup component for selecting the fluent theme context for SwitchableFluentThemeProvider
  * @param props - ThemeSelectorProps
+ * @remarks - this must be a child of a SwitchableFluentThemeProvider
  */
 export const ThemeSelector = (props: ThemeSelectorProps): JSX.Element => {
-  const { themeMap, label, horizontal } = props;
-  const { fluentTheme, setFluentTheme } = useSwitchableFluentTheme();
-
-  const themes = themeMap ? themeMap : THEMES;
+  const { label, horizontal } = props;
+  const { currentTheme, setCurrentTheme, themeStore } = useSwitchableFluentTheme();
 
   const onChange = (
     ev?: React.FormEvent<HTMLElement | HTMLInputElement> | undefined,
@@ -33,15 +29,15 @@ export const ThemeSelector = (props: ThemeSelectorProps): JSX.Element => {
   ): void => {
     if (option) {
       const themeName = option.key.toString();
-      const theme = THEMES[themeName];
-      setFluentTheme({ name: themeName, theme: theme });
+      const theme = themeStore[themeName];
+      setCurrentTheme(theme);
     }
   };
 
   return (
     <ChoiceGroup
       label={label}
-      options={Object.keys(themes).map((theme) => ({
+      options={Object.keys(themeStore).map((theme) => ({
         key: theme,
         text: theme,
         styles: concatStyleSets(
@@ -50,7 +46,7 @@ export const ThemeSelector = (props: ThemeSelectorProps): JSX.Element => {
         )
       }))}
       onChange={onChange}
-      selectedKey={fluentTheme.name}
+      selectedKey={currentTheme.name}
       styles={concatStyleSets(
         { label: { padding: '0' } },
         horizontal ? { flexContainer: { display: 'flex' } } : undefined

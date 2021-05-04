@@ -38,7 +38,6 @@ export interface TypingIndicatorProps {
 }
 
 const MAXIMUM_LENGTH_OF_TYPING_USERS = 35;
-const UNKNOWN_DISPLAYNAME = 'unknown';
 
 const getDefaultComponents = (
   typingUsers: WebUiChatParticipant[],
@@ -51,14 +50,14 @@ const getDefaultComponents = (
   let totalCharacterCount = 0;
 
   for (const typingUser of typingUsers) {
-    const displayName = typingUser?.displayName ?? UNKNOWN_DISPLAYNAME;
-    countOfUsersMentioned += 1;
     // The typing users above will be separated by ', '. We account for that additional length and with this length in
     // mind we generate the final string.
-    const additionalCharCount = 2 * (countOfUsersMentioned - 1) + displayName.length;
+    const additionalCharCount =
+      2 * (countOfUsersMentioned - 1) + (typingUser.displayName ? typingUser.displayName.length : 0);
     if (totalCharacterCount + additionalCharCount <= MAXIMUM_LENGTH_OF_TYPING_USERS || countOfUsersMentioned === 1) {
-      typingUsersMentioned.push({ ...typingUser, displayName: displayName });
+      typingUsersMentioned.push(typingUser);
       totalCharacterCount += additionalCharCount;
+      countOfUsersMentioned += 1;
     } else {
       break;
     }
@@ -79,7 +78,7 @@ const getDefaultComponents = (
   if (countOfUsersNotMentioned > 0) {
     displayComponents.push(
       <span className={mergeStyles(typingIndicatorVerbStyle, styles?.typingString)}>
-        ` and ${countOfUsersNotMentioned} other${countOfUsersNotMentioned === 1 ? '' : 's'}`
+        {` and ${countOfUsersNotMentioned} other${countOfUsersNotMentioned === 1 ? '' : 's'}`}
       </span>
     );
   }
@@ -97,11 +96,15 @@ const defaultTypingString = (typingUsers: WebUiChatParticipant[]): string => {
 export const TypingIndicator = (props: TypingIndicatorProps): JSX.Element => {
   const { typingUsers, typingString, onRenderUsers, styles } = props;
 
+  const typingUsersToRender = onRenderUsers
+    ? typingUsers
+    : typingUsers.filter((typingUser) => typingUser.displayName !== undefined);
+
   return (
     <Stack horizontal className={mergeStyles(typingIndicatorContainerStyle, styles?.root)}>
-      {onRenderUsers ? onRenderUsers(typingUsers) : getDefaultComponents(typingUsers, styles)}
+      {onRenderUsers ? onRenderUsers(typingUsersToRender) : getDefaultComponents(typingUsersToRender, styles)}
       <span className={mergeStyles(typingIndicatorVerbStyle, styles?.typingString)}>
-        {typingString ?? defaultTypingString(typingUsers)}
+        {typingString ?? defaultTypingString(typingUsersToRender)}
       </span>
     </Stack>
   );
