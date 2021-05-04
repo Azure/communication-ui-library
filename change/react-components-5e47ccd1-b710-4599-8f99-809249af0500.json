@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Add more examples to Styling. Samples can now be imported directly from .tsx files and displayed in storybook.",
+  "packageName": "@azure/react-components",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "none"
+}

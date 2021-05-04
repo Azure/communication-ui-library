@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
 import React from 'react';
-import { WebUiChatParticipant, ParticipantItem, propagateError } from '@azure/communication-ui';
+import { WebUiChatParticipant, ParticipantItem, propagateError } from '@azure/react-components';
 import { Stack, IContextualMenuItem } from '@fluentui/react';
 
 export type ParticipantManagementProps = {

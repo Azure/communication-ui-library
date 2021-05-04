@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Updated light and dark theme. ParticipantItem initials color fixed to white.",
+  "packageName": "@azure/react-components",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}

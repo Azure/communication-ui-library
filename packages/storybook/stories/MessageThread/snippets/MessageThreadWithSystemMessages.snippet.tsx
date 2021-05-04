@@ -1,4 +1,4 @@
-import { FluentThemeProvider, MessageThread } from '@azure/communication-ui';
+import { FluentThemeProvider, MessageThread } from '@azure/react-components';
 import React from 'react';
 import { GetHistoryWithSystemMessages } from './placeholdermessages';
 

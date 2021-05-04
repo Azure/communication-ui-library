@@ -6,7 +6,7 @@ import { Meta } from '@storybook/react/types-6-0';
 import { text } from '@storybook/addon-knobs';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-administration';
 import { getDocs } from './OneToOneCallCompositeDocs';
-import { OneToOneCall } from '@azure/communication-ui';
+import { OneToOneCall } from '@azure/react-components';
 import { COMPOSITE_FOLDER_PREFIX } from '../constants';
 import {
   CompositeConnectionParamsErrMessage,

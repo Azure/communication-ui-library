@@ -1,10 +1,10 @@
 // © Microsoft Corporation. All rights reserved.
 import React from 'react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
-import { ReadReceipt } from '@azure/communication-ui';
+import { ReadReceipt } from '@azure/react-components';
 import { Provider, teamsTheme } from '@fluentui/react-northstar';
 
-const importStatement = `import { ReadReceipt, MessageStatus } from '@azure/communication-ui';`;
+const importStatement = `import { ReadReceipt, MessageStatus } from '@azure/react-components';`;
 const usageCode = `<ReadReceipt messageStatus={MessageStatus.DELIVERED} />
 <ReadReceipt messageStatus={MessageStatus.SEEN} />
 <ReadReceipt messageStatus={MessageStatus.SENDING} />

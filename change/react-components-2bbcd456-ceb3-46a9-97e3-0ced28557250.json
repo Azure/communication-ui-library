@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Add code samples for ControlBar and ControlButton to storybook docs",
+  "packageName": "@azure/react-components",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "none"
+}

@@ -7,7 +7,7 @@ import {
   MicrophoneButton,
   ScreenShareButton,
   optionsButtonProps
-} from '@azure/communication-ui';
+} from '@azure/react-components';
 import { DefaultButton } from '@fluentui/react';
 
 export const ControlBarExample: () => JSX.Element = () => {

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fixed exported props of ControlBar",
-  "packageName": "@azure/communication-ui",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

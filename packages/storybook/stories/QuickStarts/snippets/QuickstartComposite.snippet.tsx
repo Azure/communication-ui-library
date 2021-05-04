@@ -1,4 +1,4 @@
-import { GroupCall, GroupChat } from '@azure/communication-ui';
+import { GroupCall, GroupChat } from '@azure/react-components';
 import React from 'react';
 
 function App(): JSX.Element {

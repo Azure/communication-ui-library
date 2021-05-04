@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { initializeIcons, loadTheme, Spinner, Stack } from '@fluentui/react';
-import { OneToOneCall } from '@azure/communication-ui';
+import { OneToOneCall } from '@azure/react-components';
 import { createRandomDisplayName, fetchTokenResponse, getBuildTime, supportedBrowser } from './utils/AppUtils';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires

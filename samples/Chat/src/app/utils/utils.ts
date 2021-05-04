@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
 import preval from 'preval.macro';
-import { GUID_FOR_INITIAL_TOPIC_NAME } from '@azure/communication-ui';
+import { GUID_FOR_INITIAL_TOPIC_NAME } from '@azure/react-components';
 
 export const getBuildTime = (): string => {
   const dateTimeStamp = preval`module.exports = new Date().toLocaleString();`;

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Refactor ChatThread component and optimize ReadReceipt data flow",
+  "packageName": "@azure/react-components",
+  "email": "easony@microsoft.com",
+  "dependentChangeType": "patch"
+}

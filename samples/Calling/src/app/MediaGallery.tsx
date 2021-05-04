@@ -10,7 +10,7 @@ import {
   convertSdkRemoteParticipantToGalleryParticipant,
   ErrorHandlingProps,
   WithErrorHandling
-} from '@azure/communication-ui';
+} from '@azure/react-components';
 import { MapToMediaGalleryProps, MediaGalleryContainerProps } from './consumers/MapToMediaGalleryProps';
 import { Label, mergeStyles, Stack } from '@fluentui/react';
 import ScreenShareComponent from './ScreenShare';

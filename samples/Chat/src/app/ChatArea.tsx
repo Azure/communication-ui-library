@@ -7,7 +7,7 @@ import {
   MessageThread,
   connectFuncsToContext,
   MapToErrorBarProps
-} from '@azure/communication-ui';
+} from '@azure/react-components';
 import { Stack } from '@fluentui/react';
 import React, { useEffect, useMemo } from 'react';
 import { chatAreaContainerStyle, sendBoxParentStyle } from './styles/ChatArea.styles';

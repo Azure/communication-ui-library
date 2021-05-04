@@ -7,7 +7,7 @@ import {
   EndCallButton,
   MicrophoneButton,
   labeledOptionsButtonProps
-} from '@azure/communication-ui';
+} from '@azure/react-components';
 import { DefaultButton } from '@fluentui/react';
 import { useTheme } from '@fluentui/react-theme-provider';
 

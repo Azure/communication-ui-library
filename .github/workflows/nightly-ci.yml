@@ -81,16 +81,16 @@ jobs:
         run: node common/config/node_modules/beachball/bin/beachball canary --canary-name alpha+${{ steps.datetime.outputs.datetime }} --tag dev --no-publish
 
       # Build packages
-      - name: Build @azure/communication-ui package
-        run: rush build -t @azure/communication-ui
+      - name: Build @azure/react-components package
+        run: rush build -t @azure/react-components
       - name: Build @azure/acs-calling-declarative package
         run: rush build -t @azure/acs-calling-declarative
       - name: Build @azure/acs-chat-declarative package
         run: rush build -t @azure/acs-chat-declarative
 
       # Test Packages
-      - name: Test @azure/communication-ui package
-        run: rush test -o @azure/communication-ui
+      - name: Test @azure/react-components package
+        run: rush test -o @azure/react-components
       - name: Test @azure/acs-calling-declarative package
         run: rush test -o @azure/acs-calling-declarative
       - name: Test @azure/acs-chat-declarative package

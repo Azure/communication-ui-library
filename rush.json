@@ -18,8 +18,8 @@
   "telemetryEnabled": false,
   "projects": [
     {
-      "packageName": "@azure/communication-ui",
-      "projectFolder": "packages/communication-ui",
+      "packageName": "@azure/react-components",
+      "projectFolder": "packages/react-components",
       "reviewCategory": "production"
     },
     {

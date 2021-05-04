@@ -9,7 +9,7 @@ import {
   answerButtonProps,
   optionsButtonProps,
   recordButtonProps
-} from '@azure/communication-ui';
+} from '@azure/react-components';
 import { DefaultButton, IContextualMenuProps } from '@fluentui/react';
 
 export const AllButtonsControlBarExample: () => JSX.Element = () => {

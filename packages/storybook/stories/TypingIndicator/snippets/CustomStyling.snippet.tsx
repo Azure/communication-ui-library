@@ -1,5 +1,5 @@
 import React from 'react';
-import { TypingIndicator } from '@azure/communication-ui';
+import { TypingIndicator } from '@azure/react-components';
 
 export const CustomStylingSnippet: () => JSX.Element = () => {
   const twoTypingUsers = [

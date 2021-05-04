@@ -13,7 +13,7 @@ import {
   MicrophoneButton,
   ScreenShareButton,
   VideoTile
-} from '@azure/communication-ui';
+} from '@azure/react-components';
 
 const TeamsTheme = {
   palette: {

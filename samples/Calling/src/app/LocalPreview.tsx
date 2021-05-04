@@ -23,7 +23,7 @@ import {
   LocalDeviceSettingsContainerProps,
   StreamMedia,
   VideoTile
-} from '@azure/communication-ui';
+} from '@azure/react-components';
 import { useTheme } from '@fluentui/react-theme-provider';
 import staticMediaSVG from '../assets/staticmedia.svg';
 

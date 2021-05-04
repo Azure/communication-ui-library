@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add api extractor for package",
-  "packageName": "@azure/communication-ui",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "patch"
-}

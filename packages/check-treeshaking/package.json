@@ -13,7 +13,7 @@
     "lint:quiet": "npm run lint -- --quiet"
   },
   "dependencies": {
-    "@azure/communication-ui": "1.0.0-beta",
+    "@azure/react-components": "1.0.0-beta",
     "@azure/acs-chat-declarative": "1.0.0-beta",
     "@azure/acs-calling-declarative": "1.0.0-beta",
     "@azure/acs-chat-selector": "1.0.0-beta",

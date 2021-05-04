@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add EndCallButton component",
+  "packageName": "@azure/react-components",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "patch"
+}

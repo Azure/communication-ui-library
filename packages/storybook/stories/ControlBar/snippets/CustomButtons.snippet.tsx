@@ -5,7 +5,7 @@ import {
   EndCallButton,
   FluentThemeProvider,
   MicrophoneButton
-} from '@azure/communication-ui';
+} from '@azure/react-components';
 import { CallEndIcon } from '@fluentui/react-northstar';
 
 export const CustomButtonsExample: () => JSX.Element = () => {

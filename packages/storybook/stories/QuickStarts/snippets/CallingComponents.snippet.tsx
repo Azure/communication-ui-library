@@ -7,7 +7,7 @@ import {
   ScreenShareButton,
   VideoTile,
   optionsButtonProps
-} from '@azure/communication-ui';
+} from '@azure/react-components';
 
 import { DefaultButton, Stack, IContextualMenuProps } from '@fluentui/react';
 import React from 'react';

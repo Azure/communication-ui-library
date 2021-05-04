@@ -27,15 +27,15 @@ jobs:
 
       - name: Build Packages and Samples
         run: |
-          rush build -t "@azure/communication-ui"
+          rush build -t "@azure/react-components"
           rush build -t "@azure/acs-chat-declarative"
           rush build -t "@azure/acs-chat-selector"
           rush build -t "@azure/acs-calling-declarative"
           rush build -t "@azure/acs-calling-selector"
 
-      - name: Package @communication-ui
+      - name: Package @react-components
         run: npm pack
-        working-directory: ./packages/communication-ui/
+        working-directory: ./packages/react-components/
 
       - name: Package @azure/acs-chat-declarative
         run: npm pack

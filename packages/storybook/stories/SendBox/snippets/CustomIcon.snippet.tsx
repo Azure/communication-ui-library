@@ -1,5 +1,5 @@
 import React from 'react';
-import { SendBox, FluentThemeProvider } from '@azure/communication-ui';
+import { SendBox, FluentThemeProvider } from '@azure/react-components';
 import { Icon } from '@fluentui/react';
 
 export const CustomIconExample: () => JSX.Element = () => (

@@ -11,7 +11,7 @@ import {
   mediaGalleryHeightOptions,
   EXAMPLES_FOLDER_PREFIX
 } from '../../constants';
-import { GridLayout, VideoTile } from '@azure/communication-ui';
+import { GridLayout, VideoTile } from '@azure/react-components';
 import { Stack, mergeStyles, PersonaSize, Persona } from '@fluentui/react';
 import { getDocs } from './LayoutsDocs';
 

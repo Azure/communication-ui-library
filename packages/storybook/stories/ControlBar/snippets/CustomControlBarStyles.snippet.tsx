@@ -5,7 +5,7 @@ import {
   EndCallButton,
   FluentThemeProvider,
   MicrophoneButton
-} from '@azure/communication-ui';
+} from '@azure/react-components';
 
 export const CustomControlBarStylesExample: () => JSX.Element = () => {
   const customStyles = {

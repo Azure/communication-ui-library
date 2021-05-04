@@ -2,10 +2,10 @@
 
 import { Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import React from 'react';
-import { OneToOneCall } from '@azure/communication-ui';
+import { OneToOneCall } from '@azure/react-components';
 
 const importStatement = `
-import { OneToOneCall } from '@azure/communication-ui';
+import { OneToOneCall } from '@azure/react-components';
 import { Provider, teamsTheme } from '@fluentui/react-northstar';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-administration';
 `;

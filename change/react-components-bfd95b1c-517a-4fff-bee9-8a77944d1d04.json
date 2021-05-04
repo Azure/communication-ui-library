@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "ParticipantItem now has onRenderIcon and onRenderAvatar properties. ControlButton deleted and replaced with Fluent UI DefaultButton.",
+  "packageName": "@azure/react-components",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}

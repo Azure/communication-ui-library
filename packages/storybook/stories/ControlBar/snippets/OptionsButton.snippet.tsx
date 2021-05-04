@@ -1,5 +1,5 @@
 import React from 'react';
-import { CameraButton, ControlBar, FluentThemeProvider, optionsButtonProps } from '@azure/communication-ui';
+import { CameraButton, ControlBar, FluentThemeProvider, optionsButtonProps } from '@azure/react-components';
 import { DefaultButton } from '@fluentui/react';
 
 export const OptionsButtonExample: () => JSX.Element = () => {

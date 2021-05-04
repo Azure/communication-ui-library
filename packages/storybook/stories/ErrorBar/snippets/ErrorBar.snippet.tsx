@@ -1,5 +1,5 @@
 import React from 'react';
-import { ErrorBar } from '@azure/communication-ui';
+import { ErrorBar } from '@azure/react-components';
 
 export const ErrorBarExample: () => JSX.Element = () => {
   const message = 'Something went wrong';
