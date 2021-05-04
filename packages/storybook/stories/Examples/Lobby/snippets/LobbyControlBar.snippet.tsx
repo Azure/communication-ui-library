@@ -4,8 +4,8 @@ import React from 'react';
 import {
   CameraButton,
   ControlBar,
+  EndCallButton,
   MicrophoneButton,
-  labeledHangupButtonProps,
   labeledOptionsButtonProps
 } from '@azure/communication-ui';
 import { DefaultButton } from '@fluentui/react';
@@ -21,7 +21,7 @@ export const LobbyCallControlBar = (): JSX.Element => {
       <CameraButton showLabel={true} checked={true} />
       <MicrophoneButton showLabel={true} checked={true} />
       <DefaultButton {...labeledOptionsButtonProps} />
-      <DefaultButton {...labeledHangupButtonProps} style={{ borderRadius: '0.25rem', marginLeft: '0.25rem' }} />
+      <EndCallButton showLabel={true} style={{ borderRadius: '0.25rem', marginLeft: '0.25rem' }} />
     </ControlBar>
   );
 };
