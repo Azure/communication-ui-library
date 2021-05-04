@@ -21,7 +21,7 @@ export interface OptionsButtonProps extends IButtonProps {
  * This button should contain dropdown menu items you can define through its property `menuProps`.
  * This `menuProps` property is of type [IContextualMenuProps](https://developer.microsoft.com/en-us/fluentui#/controls/web/contextualmenu#IContextualMenuProps).
  *
- * @param props - of type OptionsButton
+ * @param props - of type OptionsButtonProps
  */
 export const OptionsButton = (props: OptionsButtonProps): JSX.Element => {
   const { showLabel = false, styles, onRenderIcon, onRenderText } = props;
