@@ -1,14 +1,14 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { DefaultButton, IButtonStyles, IContextualMenuProps } from '@fluentui/react';
+import { IButtonStyles, IContextualMenuProps } from '@fluentui/react';
 import React, { useCallback } from 'react';
 import {
   CameraButton,
   ControlBar,
   EndCallButton,
   MicrophoneButton,
-  ScreenShareButton,
-  optionsButtonProps
+  OptionsButton,
+  ScreenShareButton
 } from '../../components';
 import { ControlBarProps } from '../../components/ControlBar';
 import {
@@ -64,7 +64,7 @@ const CallOptionsButton = (props: LocalDeviceSettingsContainerProps): JSX.Elemen
       }
     ]
   };
-  return <DefaultButton {...optionsButtonProps} menuProps={callOptionsMenu} />;
+  return <OptionsButton menuProps={callOptionsMenu} />;
 };
 
 const CallOptionsButtonComponent = connectFuncsToContext(CallOptionsButton, MapToLocalDeviceSettingsProps);

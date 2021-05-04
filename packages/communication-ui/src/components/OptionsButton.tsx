@@ -1,0 +1,51 @@
+// © Microsoft Corporation. All rights reserved.
+
+import React from 'react';
+import { DefaultButton, IButtonProps, Stack, concatStyleSets, mergeStyles } from '@fluentui/react';
+import { MoreIcon } from '@fluentui/react-northstar';
+import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
+
+/**
+ * Props for OptionsButton component
+ */
+export interface OptionsButtonProps extends IButtonProps {
+  /**
+   * Whether the label is displayed or not.
+   * @defaultValue `false`
+   */
+  showLabel?: boolean;
+}
+
+/**
+ * `OptionsButton` allows you to easily create a component for rendering an options button. It can be used in your ControlBar component for example.
+ * This button should contain dropdown menu items you can define through its property `menuProps`.
+ * This `menuProps` property is of type [IContextualMenuProps](https://developer.microsoft.com/en-us/fluentui#/controls/web/contextualmenu#IContextualMenuProps).
+ *
+ * @param props - of type OptionsButton
+ */
+export const OptionsButton = (props: OptionsButtonProps): JSX.Element => {
+  const { showLabel = false, styles, onRenderIcon, onRenderText } = props;
+  const componentStyles = styles ? concatStyleSets(controlButtonStyles, styles) : controlButtonStyles;
+
+  const defaultRenderIcon = (): JSX.Element => {
+    return <MoreIcon />;
+  };
+
+  const defaultRenderText = (props?: IButtonProps): JSX.Element => {
+    return (
+      <Stack className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
+        <Stack>{'Options'}</Stack>
+      </Stack>
+    );
+  };
+
+  return (
+    <DefaultButton
+      {...props}
+      menuIconProps={{ hidden: true }}
+      styles={componentStyles}
+      onRenderIcon={onRenderIcon ?? defaultRenderIcon}
+      onRenderText={showLabel ? onRenderText ?? defaultRenderText : undefined}
+    />
+  );
+};

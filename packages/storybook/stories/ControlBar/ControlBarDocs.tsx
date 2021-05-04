@@ -30,10 +30,10 @@ export const getDocs: () => JSX.Element = () => {
 
       <Heading>Example</Heading>
       <Description>
-        We recommend using `DefaultButton`, a
-        [Button](https://developer.microsoft.com/en-us/fluentui#/controls/web/button) component from Fluent UI, as
-        controls inside `ControlBar`. Props like `optionsButtonProps` can also be imported and used as `DefaultButton`
-        props for easy icons and styling. All the available importable props are shown in the example below.
+        We recommend using our pre-defined buttons you can find [here](./?path=/docs/ui-components-controlbar-buttons)
+        or `DefaultButton`, a [Button](https://developer.microsoft.com/en-us/fluentui#/controls/web/button) component
+        from Fluent UI, as controls inside `ControlBar`. Pre-defined styles like `controlButtonStyles` or
+        `controlButtonLabelStyles` can also be imported and used as `DefaultButton` styles for easy styling.
         `FluentThemeProvider` is needed around `ControlBar` to provide theming and icons. Learn more about theming
         [here](./?path=/docs/theming--page).
       </Description>
@@ -81,8 +81,8 @@ export const getDocs: () => JSX.Element = () => {
 
       <Heading>Dropdown Options Button</Heading>
       <Description>
-        A `DefaultButton` can be customised to be used as a dropdown. For more information, check out the official
-        Fluent UI documentation at https://developer.microsoft.com/en-us/fluentui#/controls/web/button
+        Our 'OptionsButton' can be used for any dropdown items defined through `menuProps`. For more information, check
+        out the official Fluent UI documentation at https://developer.microsoft.com/en-us/fluentui#/controls/web/button
       </Description>
       <Canvas withSource={SourceState.NONE}>
         <OptionsButtonExample />

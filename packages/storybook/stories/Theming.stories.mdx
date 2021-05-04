@@ -14,11 +14,10 @@ import {
   EndCallButton,
   FluentThemeProvider,
   MicrophoneButton,
+  OptionsButton,
   ScreenShareButton,
-  darkTheme,
-  optionsButtonProps
+  darkTheme
 } from '@azure/communication-ui';
-import { DefaultButton } from '@fluentui/react';
 
 <Meta title="Theming" />
 
@@ -57,7 +56,7 @@ and assign it to the `fluentTheme` property.
   <DarkControlBar />
 </Canvas>
 
-The dark theme is applied to the `ControlBar`. The icon colors in `DefaultButton` are themed
+The dark theme is applied to the `ControlBar`. The icon colors in all its pre-defined button components, being `DefaultButton`, are themed
 correctly because it is a Fluent UI component.
 
 ## FluentThemeProvider Props

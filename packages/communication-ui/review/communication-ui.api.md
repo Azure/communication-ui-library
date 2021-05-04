@@ -139,9 +139,6 @@ export interface JumpToNewMessageButtonProps {
 export const labeledAnswerButtonProps: IButtonProps;
 
 // @public
-export const labeledOptionsButtonProps: IButtonProps;
-
-// @public
 export const labeledRecordButtonProps: IButtonProps;
 
 // @public (undocumented)
@@ -214,7 +211,12 @@ export type NamedTheme = {
 };
 
 // @public
-export const optionsButtonProps: IButtonProps;
+export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
+
+// @public
+export interface OptionsButtonProps extends IButtonProps {
+    showLabel?: boolean;
+}
 
 // @public
 export const ParticipantItem: (props: ParticipantItemProps) => JSX.Element;
