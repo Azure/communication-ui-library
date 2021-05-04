@@ -21,16 +21,16 @@ const props = someSelector(state, configuration);
 
 ## Thread Selector
 
-The `chatThreadSelector` provides data props needed to render a [MessageThread](?path=/docs/ui-components-messagethread--message-thread-component) component.
+The `messageThreadSelector` provides data props needed to render a [MessageThread](?path=/docs/ui-components-messagethread--message-thread-component) component.
 
 ```tsx
-import { ChatClientState, chatThreadSelector } from '@azure/acs-chat-selector';
+import { ChatClientState, messageThreadSelector } from '@azure/acs-chat-selector';
 
 const state: ChatClientState = 'CHAT_APP_DATA_STORE';
 const threadId = 'CHAT_THREAD_ID';
-const chatThreadProps = chatThreadSelector(state, { threadId });
+const messageThreadProps = messageThreadSelector(state, { threadId });
 
-<MessageThread {...chatThreadProps} />;
+<MessageThread {...messageThreadProps} />;
 ```
 
 ## Participant List Selector

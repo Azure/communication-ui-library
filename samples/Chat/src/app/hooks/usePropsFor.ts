@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
 import { ChatClientState } from '@azure/acs-chat-declarative';
-import { chatThreadSelector, sendBoxSelector, typingIndicatorSelector } from '@azure/acs-chat-selector';
+import { messageThreadSelector, sendBoxSelector, typingIndicatorSelector } from '@azure/acs-chat-selector';
 import { MessageThread, SendBox, TypingIndicator } from '@azure/communication-ui';
 
 import React from 'react';
@@ -21,7 +21,7 @@ export const getSelector = (component: React.FunctionComponent<any>): Selector =
     case SendBox:
       return sendBoxSelector;
     case MessageThread:
-      return chatThreadSelector;
+      return messageThreadSelector;
     case TypingIndicator:
       return typingIndicatorSelector;
   }

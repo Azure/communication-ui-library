@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { chatThreadSelector, sendBoxSelector, typingIndicatorSelector } from '@azure/acs-chat-selector';
+import { messageThreadSelector, sendBoxSelector, typingIndicatorSelector } from '@azure/acs-chat-selector';
 import { mergeStyles, Stack } from '@fluentui/react';
 import React, { useEffect, useMemo } from 'react';
 import { ErrorBar, MessageThread, SendBox, TypingIndicator } from '../../components';
@@ -52,14 +52,14 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const sendBoxProps = useSelector(sendBoxSelector, selectorConfig);
   const sendBoxHandlers = useHandlers(SendBox);
   const typingIndicatorProps = useSelector(typingIndicatorSelector, selectorConfig);
-  const chatThreadProps = useSelector(chatThreadSelector, selectorConfig);
+  const messageThreadProps = useSelector(messageThreadSelector, selectorConfig);
   const chatThreadHandlers = useHandlers(MessageThread);
 
   return (
     <Stack className={chatContainer} grow>
       <Stack className={chatWrapper} grow>
         <MessageThread
-          {...chatThreadProps}
+          {...messageThreadProps}
           {...chatThreadHandlers}
           onRenderAvatar={onRenderAvatar}
           numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}

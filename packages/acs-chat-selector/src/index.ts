@@ -1,5 +1,5 @@
 // © Microsoft Corporation. All rights reserved.
-export { chatThreadSelector } from './chatThreadSelector';
+export { messageThreadSelector } from './messageThreadSelector';
 export { sendBoxSelector } from './sendBoxSelector';
 export { chatParticipantListSelector } from './chatParticipantListSelector';
 export { typingIndicatorSelector } from './typingIndicatorSelector';

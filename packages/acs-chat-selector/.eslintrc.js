@@ -56,7 +56,7 @@ module.exports = {
       // remove ban on files affected by https://github.com/microsoft/rushstack/pull/1916.
       // This should be removed once this issue is fixed.
       files: [
-        'chatThreadSelector.ts',
+        'messageThreadSelector.ts',
         'sendBoxSelector.ts',
         'chatParticipantListSelector.ts',
         'chatHeaderSelector.ts',
