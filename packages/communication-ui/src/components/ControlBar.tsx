@@ -5,7 +5,7 @@ import { CallIcon, CallRecordingIcon, MoreIcon } from '@fluentui/react-northstar
 import React from 'react';
 import { BaseCustomStylesProps } from '../types';
 import { controlBarStyles, controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
-import { isDarkThemed } from '../utils/themeUtils';
+import { isDarkThemed } from '../theming/themeUtils';
 
 /** Fluent UI Button props for options control */
 export const optionsButtonProps: IButtonProps = {

@@ -16,11 +16,12 @@ import MediaGallery from './MediaGallery';
 import { connectFuncsToContext, MapToErrorBarProps } from '../../consumers';
 import { isInCall } from '../../utils/SDKUtils';
 import { GroupCallContainerProps, MapToGroupCallProps } from './consumers/MapToGroupCallProps';
-import { MINI_HEADER_WINDOW_WIDTH } from '../../constants';
 import { ErrorHandlingProps } from '../../providers/ErrorProvider';
 import { WithErrorHandling } from '../../utils/WithErrorHandling';
 import { ErrorBar as ErrorBarComponent } from '../../components/ErrorBar';
 import { GroupCallControlBarComponent } from '../common/CallControls';
+
+export const MINI_HEADER_WINDOW_WIDTH = 450;
 
 export interface GroupCallProps extends GroupCallContainerProps {
   screenWidth: number;

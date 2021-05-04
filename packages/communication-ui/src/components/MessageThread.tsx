@@ -16,8 +16,8 @@ import {
 import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack, Link } from '@fluentui/react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { LiveAnnouncer, LiveMessage } from 'react-aria-live';
-import { delay, formatTimestampForChatMessage } from '../utils';
-import { NEW_MESSAGES } from '../constants';
+import { delay, formatTimestampForChatMessage } from './utils';
+import { NEW_MESSAGES } from '../theming';
 import {
   BaseCustomStylesProps,
   ChatMessage,

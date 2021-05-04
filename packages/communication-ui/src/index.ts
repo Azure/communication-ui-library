@@ -1,10 +1,22 @@
 // © Microsoft Corporation. All rights reserved.
 
 export * from './components';
-export * from './composites';
-export * from './consumers';
-export * from './constants';
-export * from './hooks';
-export * from './providers';
-export * from './types';
-export * from './utils';
+export * from './theming';
+
+export type {
+  BaseCustomStylesProps,
+  CommunicationUiErrorSeverity,
+  MessageAttachedStatus,
+  MessageStatus,
+  WebUiChatParticipant,
+  Message,
+  MessageTypes,
+  ChatMessage,
+  SystemMessage,
+  CustomMessage,
+  SystemMessagePayload,
+  ChatMessagePayload,
+  CustomMessagePayload,
+  NamedTheme,
+  ThemeCollection
+} from './types';

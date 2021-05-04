@@ -37,6 +37,7 @@
     "copy-to-clipboard": "~3.3.1",
     "history": "~5.0.0",
     "react-aria-live": "^2.0.5",
+    "react-composites": "1.0.0-beta",
     "react-linkify": "^1.0.0-alpha"
   },
   "peerDependencies": {

@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { EMPTY_MESSAGE_REGEX, MAXIMUM_LENGTH_OF_MESSAGE, TEXT_EXCEEDS_LIMIT } from '../constants';
+import { EMPTY_MESSAGE_REGEX, MAXIMUM_LENGTH_OF_MESSAGE, TEXT_EXCEEDS_LIMIT } from '../theming';
 import React, { useState } from 'react';
 import {
   IStyle,

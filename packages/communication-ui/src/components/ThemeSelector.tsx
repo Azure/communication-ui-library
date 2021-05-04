@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { ChoiceGroup, IChoiceGroupOption, concatStyleSets } from '@fluentui/react';
-import { useSwitchableFluentTheme } from '../providers/SwitchableFluentThemeProvider';
+import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 
 /**
  * Props for ThemeSelector component

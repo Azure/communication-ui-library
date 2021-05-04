@@ -2,9 +2,9 @@
 
 import React from 'react';
 import { Toggle, mergeStyles } from '@fluentui/react';
-import { defaultThemes } from '../constants';
+import { defaultThemes } from '../theming';
 import { NamedTheme } from '../types';
-import { useSwitchableFluentTheme } from '../providers/SwitchableFluentThemeProvider';
+import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 import { themeTogglerStyles } from './styles/ThemeToggler.styles';
 
 /**

@@ -1,6 +1,5 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { ENTER_KEY, MAXIMUM_LENGTH_OF_NAME } from '../../constants';
 import {
   TextFieldStyleProps,
   inputBoxStyle,
@@ -14,6 +13,9 @@ import React from 'react';
 import { TextField } from '@fluentui/react';
 import { ErrorHandlingProps } from '../../providers/ErrorProvider';
 import { WithErrorHandling } from '../../utils/WithErrorHandling';
+
+export const ENTER_KEY = 13;
+export const MAXIMUM_LENGTH_OF_NAME = 10;
 
 interface DisplayNameFieldProps {
   setName(name: string): void;
