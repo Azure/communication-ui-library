@@ -15,7 +15,7 @@ export const microphoneButtonSelector = reselect.createSelector([getCall], (call
   };
 });
 
-export const videoButtonSelector = reselect.createSelector([getCall], (call) => {
+export const cameraButtonSelector = reselect.createSelector([getCall], (call) => {
   return {
     checked: !!call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video')
   };
