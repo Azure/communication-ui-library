@@ -32,11 +32,7 @@ export const OptionsButton = (props: OptionsButtonProps): JSX.Element => {
   };
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {
-    return (
-      <Stack className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
-        <Stack>{'Options'}</Stack>
-      </Stack>
-    );
+    return <Stack className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>{'Options'}</Stack>;
   };
 
   return (
