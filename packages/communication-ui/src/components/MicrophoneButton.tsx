@@ -26,15 +26,15 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
 
   const defaultRenderIcon = (props?: IButtonProps): JSX.Element => {
     if (props?.checked) {
-      return <MicIcon />;
+      return <MicIcon key={'micIconKey'} />;
     }
 
-    return <MicOffIcon />;
+    return <MicOffIcon key={'micOffIconKey'} />;
   };
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {
     return (
-      <Stack className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
+      <Stack key={'microphoneLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
         {props?.checked ? 'Mute' : 'Unmute'}
       </Stack>
     );
