@@ -1,6 +1,11 @@
 // © Microsoft Corporation. All rights reserved.
 import { LocalVideoStream, RemoteVideoStream } from '@azure/communication-calling';
 
+import {
+  RemoteVideoStream as RemoteVideoStreamStateful,
+  LocalVideoStream as LocalVideoStreamStateful
+} from '@azure/acs-calling-declarative';
+
 export type GalleryParticipant = {
   displayName: string;
   userId: string;
@@ -12,6 +17,11 @@ export type LocalGalleryParticipant = {
   userId: string;
   videoStream?: LocalVideoStream;
 };
+
+export declare interface CreateViewOptions {
+  isMirrored?: boolean;
+  scalingMode?: ScalingMode;
+}
 
 export type MediaStreamType = 'Video' | 'ScreenSharing';
 
@@ -38,11 +48,11 @@ export type VideoGalleryParticipant = {
 
 export type VideoGalleryRemoteParticipant = VideoGalleryParticipant & {
   isSpeaking: boolean;
-  videoStream?: VideoGalleryRemoteVideoStream;
-  screenShareStream?: VideoGalleryRemoteVideoStream;
+  videoStream?: RemoteVideoStreamStateful;
+  screenShareStream?: RemoteVideoStreamStateful;
 };
 
 export type VideoGalleryLocalParticipant = VideoGalleryParticipant & {
   isScreenSharingOn: boolean;
-  videoStream?: VideoGalleryLocalVideoStream;
+  videoStream?: LocalVideoStreamStateful;
 };

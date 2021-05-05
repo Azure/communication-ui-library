@@ -8,11 +8,13 @@ import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { IButtonProps } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
-import { LocalVideoStream } from '@azure/communication-calling';
+import { LocalVideoStream } from '@azure/acs-calling-declarative';
+import { LocalVideoStream as LocalVideoStream_2 } from '@azure/communication-calling';
 import { PartialTheme } from '@fluentui/react-theme-provider';
 import { PersonaPresence } from '@fluentui/react';
 import { default as React_2 } from 'react';
-import { RemoteVideoStream } from '@azure/communication-calling';
+import { RemoteVideoStream } from '@azure/acs-calling-declarative';
+import { RemoteVideoStream as RemoteVideoStream_2 } from '@azure/communication-calling';
 import { SizeValue } from '@fluentui/react-northstar';
 import { Theme } from '@fluentui/react-theme-provider';
 
@@ -75,6 +77,14 @@ export interface ControlBarProps {
 }
 
 // @public (undocumented)
+export interface CreateViewOptions {
+    // (undocumented)
+    isMirrored?: boolean;
+    // (undocumented)
+    scalingMode?: ScalingMode;
+}
+
+// @public (undocumented)
 export type CustomMessage = Message<'custom'>;
 
 // @public (undocumented)
@@ -122,7 +132,7 @@ export interface FluentThemeProviderProps {
 export type GalleryParticipant = {
     displayName: string;
     userId: string;
-    videoStream?: RemoteVideoStream;
+    videoStream?: RemoteVideoStream_2;
 };
 
 // @public (undocumented)
@@ -159,7 +169,7 @@ export const labeledRecordButtonProps: IButtonProps;
 export type LocalGalleryParticipant = {
     displayName: string;
     userId: string;
-    videoStream?: LocalVideoStream;
+    videoStream?: LocalVideoStream_2;
 };
 
 // @public (undocumented)
@@ -404,7 +414,7 @@ export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 // @public (undocumented)
 export type VideoGalleryLocalParticipant = VideoGalleryParticipant & {
     isScreenSharingOn: boolean;
-    videoStream?: VideoGalleryLocalVideoStream;
+    videoStream?: LocalVideoStream;
 };
 
 // @public (undocumented)
@@ -422,14 +432,18 @@ export interface VideoGalleryProps {
     // (undocumented)
     localParticipant?: VideoGalleryLocalParticipant;
     // (undocumented)
+    onRenderView(stream: RemoteVideoStream | LocalVideoStream, options?: CreateViewOptions | undefined): Promise<void>;
+    // (undocumented)
     remoteParticipants?: VideoGalleryRemoteParticipant[];
+    // (undocumented)
+    scalingMode: ScalingMode;
 }
 
 // @public (undocumented)
 export type VideoGalleryRemoteParticipant = VideoGalleryParticipant & {
     isSpeaking: boolean;
-    videoStream?: VideoGalleryRemoteVideoStream;
-    screenShareStream?: VideoGalleryRemoteVideoStream;
+    videoStream?: RemoteVideoStream;
+    screenShareStream?: RemoteVideoStream;
 };
 
 // @public (undocumented)

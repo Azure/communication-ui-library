@@ -76,6 +76,7 @@ export const Header = (props: HeaderProps): JSX.Element => {
           <Separator styles={separatorStyles} vertical={true} />
         </div>
       )}
+      {/* leave this here for now to borrow the styles for CallControls */}
       {/* <GroupCallControlBarComponent
         onEndCallClick={props.endCallHandler}
         compressedMode={props.screenWidth <= MINI_HEADER_WINDOW_WIDTH}

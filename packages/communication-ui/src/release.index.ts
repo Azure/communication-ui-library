@@ -37,5 +37,6 @@ export type {
   VideoGalleryVideoStream,
   VideoGalleryParticipant,
   MediaStreamType,
-  ScalingMode
+  ScalingMode,
+  CreateViewOptions
 } from './types';

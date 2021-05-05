@@ -16,15 +16,9 @@ import { createSelector } from 'reselect';
 // @ts-ignore
 import * as reselect from 'reselect';
 // @ts-ignore
-import { getCall, BaseSelectorProps, getDisplayName, getIdentifier } from './baseSelectors';
+import { getCall, BaseSelectorProps, getDisplayName, getIdentifier, getCallId } from './baseSelectors';
 // @ts-ignore
-import {
-  MediaStreamType,
-  ScalingMode,
-  VideoGalleryLocalParticipant,
-  VideoGalleryRemoteParticipant,
-  VideoGalleryVideoStream
-} from './types/VideoGallery';
+import { VideoGalleryLocalParticipant, VideoGalleryRemoteParticipant } from './types/VideoGallery';
 import { memoizeFnAll } from './utils/memoizeFnAll';
 
 const getUserId = (
@@ -52,26 +46,6 @@ const getUserId = (
   return userId;
 };
 
-const memoizedAllConvertVideoGalleryVideoStream = memoizeFnAll(
-  (
-    key: string,
-    mediaStreamType: MediaStreamType,
-    isAvailable: boolean,
-    scalingMode?: ScalingMode,
-    isMirrored?: boolean,
-    target?: HTMLElement
-  ): VideoGalleryVideoStream => {
-    return {
-      id: key,
-      mediaStreamType,
-      scalingMode,
-      isMirrored,
-      target,
-      isAvailable
-    };
-  }
-);
-
 const memoizedAllConvertRemoteParticipant = memoizeFnAll(
   (
     key: string,
@@ -80,18 +54,7 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     videoStreams: Map<number, RemoteVideoStream>,
     displayName?: string
   ): VideoGalleryRemoteParticipant => {
-    const convertedVideoStreams = memoizedAllConvertVideoGalleryVideoStream((memoizedFn) =>
-      Array.from(videoStreams.values()).map((videoStream) => {
-        return memoizedFn(
-          videoStream.id.toString(),
-          videoStream.mediaStreamType,
-          videoStream.isAvailable,
-          videoStream.videoStreamRendererView?.scalingMode,
-          videoStream.videoStreamRendererView?.isMirrored,
-          videoStream.videoStreamRendererView?.target
-        );
-      })
-    );
+    const rawVideoStreamsArray = Array.from(videoStreams.values());
 
     return {
       userId: key,
@@ -101,8 +64,8 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
       // From the current calling sdk, remote participant videoStreams is actually a typle
       // The first item is always video stream
       // The second item is always screenshare stream
-      videoStream: convertedVideoStreams[0],
-      screenShareStream: convertedVideoStreams[1]
+      videoStream: rawVideoStreamsArray[0],
+      screenShareStream: rawVideoStreamsArray[1]
     };
   }
 );
@@ -128,20 +91,6 @@ const convertCallToVideoGalleryLocalParticipants = (
   displayName: string | undefined,
   identifier: string | undefined
 ): VideoGalleryLocalParticipant => {
-  console.log(call);
-  const convertedVideoStreams = memoizedAllConvertVideoGalleryVideoStream((memoizedFn) =>
-    call.localVideoStreams.map((videoStream) => {
-      return memoizedFn(
-        videoStream.source.id,
-        videoStream.mediaStreamType,
-        !!videoStream.videoStreamRendererView,
-        videoStream.videoStreamRendererView?.scalingMode,
-        videoStream.videoStreamRendererView?.isMirrored,
-        videoStream.videoStreamRendererView?.target
-      );
-    })
-  );
-
   return {
     userId: identifier ?? '',
     displayName: displayName,
@@ -149,7 +98,7 @@ const convertCallToVideoGalleryLocalParticipants = (
     isMuted: call.isMuted,
     // From the current calling sdk, local participant videoStreams could be an empty array
     // or an array with only one video stream item.
-    videoStream: convertedVideoStreams[0]
+    videoStream: call.localVideoStreams[0]
   };
 };
 

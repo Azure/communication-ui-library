@@ -25,11 +25,13 @@ import {
 } from './styles/MediaGallery.styles';
 import { RemoteVideoTile } from './RemoteVideoTile';
 import { usePropsFor } from './hooks/usePropsFor';
+import { useHandlers } from './hooks/useHandlers';
 
 export const MediaGalleryComponentBase = (props: MediaGalleryContainerProps): JSX.Element => {
   const { localParticipant, remoteParticipants, screenShareStream } = props;
 
   const videoGalleryProps = usePropsFor(VideoGallery);
+  const videoGalleryHandlers = useHandlers(VideoGallery);
 
   const localVideoStream = MapToLocalVideoProps({
     stream: localParticipant.videoStream,
@@ -88,7 +90,7 @@ export const MediaGalleryComponentBase = (props: MediaGalleryContainerProps): JS
       </div>
     </>
   ) : (
-    <VideoGallery {...videoGalleryProps} />
+    <VideoGallery {...videoGalleryProps} {...videoGalleryHandlers} scalingMode={'Crop'} />
   );
 };
 

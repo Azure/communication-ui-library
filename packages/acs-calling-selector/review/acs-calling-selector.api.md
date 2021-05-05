@@ -10,13 +10,14 @@ import { Call as Call_2 } from '@azure/acs-calling-declarative';
 import { CallAgent } from '@azure/communication-calling';
 import * as callingStateful from '@azure/acs-calling-declarative';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
-import { CreateViewOptions } from '@azure/communication-calling';
 import { DeclarativeCallClient } from '@azure/acs-calling-declarative';
 import { DeviceManager } from '@azure/communication-calling';
 import { HangUpOptions } from '@azure/communication-calling';
 import { LocalVideoStream } from '@azure/communication-calling';
+import { LocalVideoStream as LocalVideoStream_2 } from '@azure/acs-calling-declarative';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { ReactElement } from 'react';
+import { RemoteVideoStream } from '@azure/acs-calling-declarative';
 import * as reselect from 'reselect';
 import { StartCallOptions } from '@azure/communication-calling';
 import { UnknownIdentifier } from '@azure/communication-common';
@@ -53,13 +54,14 @@ export const createDefaultHandlersForComponent: <Props>(declarativeCallClient: D
     onSelectMicrophone: (deviceId: string) => Promise<void | undefined>;
     onSelectSpeaker: (deviceId: string) => Promise<void | undefined>;
     onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions | undefined) => Call | undefined;
-    onStartLocalVideo: (options: CreateViewOptions) => Promise<void>;
+    onStartLocalVideo: () => Promise<void>;
     onStopLocalVideo: (stream: LocalVideoStream) => Promise<void>;
     onStartScreenShare: () => Promise<void> | void;
     onStopScreenShare: () => Promise<void> | void;
-    onToggleCamera: (options: any) => Promise<void> | void;
+    onToggleCamera: () => Promise<void> | void;
     onToggleMicrophone: () => Promise<void> | void;
     onToggleScreenShare: () => Promise<void> | void;
+    onRenderView: (stream: LocalVideoStream_2 | RemoteVideoStream, options: CreateViewOptions) => Promise<void>;
 }, CommonProperties<{
     onHangUp: (options?: HangUpOptions | undefined) => Promise<void> | void;
     onMute: () => Promise<void> | void;
@@ -68,14 +70,23 @@ export const createDefaultHandlersForComponent: <Props>(declarativeCallClient: D
     onSelectMicrophone: (deviceId: string) => Promise<void | undefined>;
     onSelectSpeaker: (deviceId: string) => Promise<void | undefined>;
     onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions | undefined) => Call | undefined;
-    onStartLocalVideo: (options: CreateViewOptions) => Promise<void>;
+    onStartLocalVideo: () => Promise<void>;
     onStopLocalVideo: (stream: LocalVideoStream) => Promise<void>;
     onStartScreenShare: () => Promise<void> | void;
     onStopScreenShare: () => Promise<void> | void;
-    onToggleCamera: (options: any) => Promise<void> | void;
+    onToggleCamera: () => Promise<void> | void;
     onToggleMicrophone: () => Promise<void> | void;
     onToggleScreenShare: () => Promise<void> | void;
+    onRenderView: (stream: LocalVideoStream_2 | RemoteVideoStream, options: CreateViewOptions) => Promise<void>;
 }, Props>>;
+
+// @public (undocumented)
+export interface CreateViewOptions {
+    // (undocumented)
+    isMirrored?: boolean;
+    // (undocumented)
+    scalingMode?: ScalingMode;
+}
 
 // @public (undocumented)
 export type FunctionWithKey<KeyT, ArgsT extends any[], RetT> = (key: KeyT, ...args: ArgsT) => RetT;
@@ -123,7 +134,7 @@ export const screenShareButtonSelector: reselect.OutputParametricSelector<callin
 // @public (undocumented)
 export type VideoGalleryLocalParticipant = VideoGalleryParticipant & {
     isScreenSharingOn: boolean;
-    videoStream?: VideoGalleryLocalVideoStream;
+    videoStream?: LocalVideoStream_2;
 };
 
 // @public (undocumented)
@@ -139,8 +150,8 @@ export type VideoGalleryParticipant = {
 // @public (undocumented)
 export type VideoGalleryRemoteParticipant = VideoGalleryParticipant & {
     isSpeaking: boolean;
-    videoStream?: VideoGalleryRemoteVideoStream;
-    screenShareStream?: VideoGalleryRemoteVideoStream;
+    videoStream?: RemoteVideoStream;
+    screenShareStream?: RemoteVideoStream;
 };
 
 // @public (undocumented)
