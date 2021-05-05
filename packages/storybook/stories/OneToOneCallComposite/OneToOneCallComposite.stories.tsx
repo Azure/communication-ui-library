@@ -7,7 +7,7 @@ import { text } from '@storybook/addon-knobs';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-administration';
 import { getDocs } from './OneToOneCallCompositeDocs';
 import { OneToOneCall } from 'react-composites';
-import { COMPOSITE_FOLDER_PREFIX } from '../constants';
+import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE, COMPOSITE_FOLDER_PREFIX } from '../constants';
 import {
   CompositeConnectionParamsErrMessage,
   COMPOSITE_STRING_CONNECTIONSTRING,
@@ -23,11 +23,6 @@ export default {
     }
   }
 } as Meta;
-
-const experienceContainerStyle = {
-  width: '90vw',
-  height: '90vh'
-};
 
 const createUserToken = async (connectionString: string): Promise<CommunicationUserToken> => {
   if (!connectionString) {
@@ -57,7 +52,7 @@ const OneToOneCallCompositeInstance: (token: string, calleeId?: string) => JSX.E
   const requiredInformationObtained = token;
 
   return (
-    <div style={experienceContainerStyle}>
+    <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
       {requiredInformationObtained && (
         <OneToOneCall displayName={randomCallerName()} calleeId={calleeId} token={token} />
       )}

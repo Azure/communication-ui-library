@@ -8,7 +8,7 @@ import { v1 as createGUID } from 'uuid';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-administration';
 import { getDocs } from './GroupCallCompositeDocs';
 import { GroupCall } from 'react-composites';
-import { COMPOSITE_FOLDER_PREFIX } from '../constants';
+import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE, COMPOSITE_FOLDER_PREFIX } from '../constants';
 import {
   CompositeConnectionParamsErrMessage,
   COMPOSITE_STRING_CONNECTIONSTRING,
@@ -26,10 +26,6 @@ export default {
 } as Meta;
 
 const emptyConfigTips = COMPOSITE_STRING_REQUIREDCONNECTIONSTRING.replace('{0}', 'Group Call');
-const experienceContainerStyle = {
-  width: '90vw',
-  height: '90vh'
-};
 
 const createUserToken = async (connectionString: string): Promise<CommunicationUserToken> => {
   if (!connectionString) {
@@ -66,7 +62,7 @@ export const GroupCallComposite: () => JSX.Element = () => {
   }, [connectionString]);
 
   return (
-    <div style={experienceContainerStyle}>
+    <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
       {connectionString && (
         <GroupCall
           displayName={`user${Math.ceil(Math.random() * 1000)}`}

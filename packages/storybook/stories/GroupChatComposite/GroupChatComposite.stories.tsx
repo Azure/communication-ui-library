@@ -8,7 +8,7 @@ import { AzureCommunicationUserCredential } from '@azure/communication-common';
 import { CommunicationIdentityClient } from '@azure/communication-administration';
 import { ChatClient } from '@azure/communication-chat';
 import { useState } from 'react';
-import { COMPOSITE_FOLDER_PREFIX } from '../constants';
+import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE, COMPOSITE_FOLDER_PREFIX } from '../constants';
 import {
   CompositeConnectionParamsErrMessage,
   COMPOSITE_STRING_CONNECTIONSTRING,
@@ -27,11 +27,6 @@ export default {
     }
   }
 } as Meta;
-
-const experienceContainerStyle = {
-  width: '90vw',
-  height: '90vh'
-};
 
 const messageArray = [
   'Hello ACS!',
@@ -157,7 +152,7 @@ export const GroupChatComposite: () => JSX.Element = () => {
   }
 
   return (
-    <div style={experienceContainerStyle}>
+    <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
       {chatConfig && <GroupChat {...chatConfig} />}
       {!chatConfig && CompositeConnectionParamsErrMessage([emptyConfigTips, emptyConfigParametersTips])}
     </div>
