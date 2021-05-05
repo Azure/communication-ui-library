@@ -45,10 +45,6 @@ jobs:
       - name: Build Packages and Samples
         run: rush build
 
-      - name: Build Storybook
-        run: rushx build:storybook
-        working-directory: ./packages/react-components
-
       # Run tests
       - name: Run Tests
         run: rush test

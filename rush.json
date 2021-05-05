@@ -18,54 +18,59 @@
   "telemetryEnabled": false,
   "projects": [
     {
+      "packageName": "@azure/communication-react",
+      "projectFolder": "packages/communication-react",
+      "reviewCategory": "production"
+    },
+    {
       "packageName": "react-components",
       "projectFolder": "packages/react-components",
-      "reviewCategory": "production"
+      "reviewCategory": "internal"
     },
     {
       "packageName": "react-composites",
       "projectFolder": "packages/react-composites",
-      "reviewCategory": "production"
+      "reviewCategory": "internal"
     },
     {
       "packageName": "@azure/acs-chat-declarative",
       "projectFolder": "packages/acs-chat-declarative",
-      "reviewCategory": "prototypes"
+      "reviewCategory": "internal"
     },
     {
       "packageName": "@azure/acs-chat-selector",
       "projectFolder": "packages/acs-chat-selector",
-      "reviewCategory": "prototypes"
+      "reviewCategory": "internal"
     },
     {
       "packageName": "@azure/acs-calling-declarative",
       "projectFolder": "packages/acs-calling-declarative",
-      "reviewCategory": "prototypes"
+      "reviewCategory": "internal"
     },
     {
       "packageName": "@azure/acs-calling-selector",
       "projectFolder": "packages/acs-calling-selector",
-      "reviewCategory": "prototypes"
+      "reviewCategory": "internal"
     },
     {
       "packageName": "calling",
       "projectFolder": "samples/Calling",
-      "reviewCategory": "prototypes"
+      "reviewCategory": "sample"
     },
     {
       "packageName": "chat",
       "projectFolder": "samples/Chat",
-      "reviewCategory": "prototypes"
+      "reviewCategory": "sample"
     },
     {
       "packageName": "one-to-one-call",
       "projectFolder": "samples/OneToOneCall",
-      "reviewCategory": "prototypes"
+      "reviewCategory": "sample"
     },
     {
       "packageName": "server",
       "projectFolder": "samples/Server",
-      "reviewCategory": "prototypes"
+      "reviewCategory": "sample"
     },
     {
       "packageName": "storybook",

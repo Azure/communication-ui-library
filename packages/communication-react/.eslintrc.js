@@ -33,19 +33,7 @@ module.exports = {
     eqeqeq: 'warn',
     'header/header': ['error', 'line', ' © Microsoft Corporation. All rights reserved.'],
     'react/display-name': 'off',
-    '@typescript-eslint/no-unused-vars': ['warn', { varsIgnorePattern: '^_' }],
-    'no-restricted-imports': [
-      'error',
-      {
-        patterns: [
-          // Do not allow references that are outside the src folder. These will break the npm package created as no src dir exists in output dir.
-          '**/../**/src/*',
-          // Do not allow references to node_modules' /es/ folder. These will break jest tests and the npm package as those imports won't be transpiled.
-          '**/dist/**/es/*',
-          '**/lib/**/es/*'
-        ]
-      }
-    ]
+    '@typescript-eslint/no-unused-vars': ['warn', { varsIgnorePattern: '^_' }]
   },
   root: true,
   settings: {
