@@ -5,6 +5,7 @@ import {
   CallClient,
   CallFeatureFactoryType,
   CreateViewOptions,
+  Features,
   LocalVideoStream,
   RecordingCallFeature,
   RemoteVideoStream,
@@ -28,8 +29,7 @@ import {
   MockRecordingCallFeatureImpl,
   MockRemoteParticipant,
   MockTranscriptionCallFeatureImpl,
-  MockTransferCallFeatureImpl,
-  MOCK_RECORDING_NAME
+  MockTransferCallFeatureImpl
 } from './TestUtils';
 
 mockoutObjectFreeze();
@@ -67,6 +67,8 @@ jest.mock('@azure/communication-calling', () => {
 const mockCallId = 'a';
 const mockCallId2 = 'b';
 const mockParticipantCommunicationUserId = 'c';
+const mockDisplayName = 'd';
+const mockUserId = 'e';
 
 interface TestData {
   mockCallClient: any;
@@ -78,7 +80,7 @@ interface TestData {
 
 function createClientAndAgentMocks(testData: TestData): void {
   const mockCallClient = new CallClient();
-  const mockCallAgent = { calls: [] as ReadonlyArray<Call> } as MockCallAgent;
+  const mockCallAgent = { calls: [] as ReadonlyArray<Call>, displayName: mockDisplayName } as MockCallAgent;
   addMockEmitter(mockCallAgent);
   mockCallClient.createCallAgent = (): Promise<CallAgent> => {
     return Promise.resolve(mockCallAgent);
@@ -88,7 +90,7 @@ function createClientAndAgentMocks(testData: TestData): void {
 }
 
 function createDeclarativeClient(testData: TestData): void {
-  testData.declarativeCallClient = callClientDeclaratify(testData.mockCallClient);
+  testData.declarativeCallClient = callClientDeclaratify(testData.mockCallClient, '');
 }
 
 async function createMockCallAndEmitCallsUpdated(
@@ -155,6 +157,22 @@ async function waitWithBreakCondition(breakCondition: () => boolean): Promise<vo
 }
 
 describe('declarative call client', () => {
+  test('should allow developer to specify userId and provide access to it in state', async () => {
+    const callClient = new CallClient();
+    const declarativeCallClient = callClientDeclaratify(callClient, mockUserId);
+    expect(declarativeCallClient.state.userId).toBe(mockUserId);
+  });
+
+  test('should update callAgent state and have displayName when callAgent is created', async () => {
+    const testData = {} as TestData;
+    createClientAndAgentMocks(testData);
+    createDeclarativeClient(testData);
+    await createMockCallAndEmitCallsUpdated(testData);
+
+    expect(testData.declarativeCallClient.state.callAgent).toBeDefined();
+    expect(testData.declarativeCallClient.state.callAgent?.displayName).toBe(mockDisplayName);
+  });
+
   test('should update state when call added in `callUpdated` event and subscribe to call', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
@@ -824,7 +842,9 @@ describe('declarative call client', () => {
     createClientAndAgentMocks(testData);
     createDeclarativeClient(testData);
     const mockCall = createMockCall(mockCallId);
-    mockCall.api = createMockApiFeatures(true, new Map<string, any>());
+    const featureCache = new Map<any, any>();
+    featureCache.set(Features.Recording, addMockEmitter({ name: 'Default', isRecordingActive: true }));
+    mockCall.api = createMockApiFeatures(featureCache);
     await createMockCallAndEmitCallsUpdated(testData, undefined, mockCall);
 
     await waitWithBreakCondition(
@@ -834,13 +854,31 @@ describe('declarative call client', () => {
     expect(testData.declarativeCallClient.state.calls.get(mockCallId)?.recording.isRecordingActive).toBe(true);
   });
 
+  test('should detect if call already has transcription active', async () => {
+    const testData = {} as TestData;
+    createClientAndAgentMocks(testData);
+    createDeclarativeClient(testData);
+    const mockCall = createMockCall(mockCallId);
+    const featureCache = new Map<any, any>();
+    featureCache.set(Features.Transcription, addMockEmitter({ name: 'Default', isTranscriptionActive: true }));
+    mockCall.api = createMockApiFeatures(featureCache);
+    await createMockCallAndEmitCallsUpdated(testData, undefined, mockCall);
+
+    await waitWithBreakCondition(
+      () => testData.declarativeCallClient.state.calls.get(mockCallId)?.transcription.isTranscriptionActive === true
+    );
+
+    expect(testData.declarativeCallClient.state.calls.get(mockCallId)?.transcription.isTranscriptionActive).toBe(true);
+  });
+
   test('should detect recording changes in call', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
     createDeclarativeClient(testData);
     const mockCall = createMockCall(mockCallId);
-    const featureCache = new Map<string, any>();
-    mockCall.api = createMockApiFeatures(true, featureCache);
+    const featureCache = new Map<any, any>();
+    featureCache.set(Features.Recording, addMockEmitter({ name: 'Default', isRecordingActive: true }));
+    mockCall.api = createMockApiFeatures(featureCache);
     await createMockCallAndEmitCallsUpdated(testData, undefined, mockCall);
 
     await waitWithBreakCondition(
@@ -849,7 +887,7 @@ describe('declarative call client', () => {
 
     expect(testData.declarativeCallClient.state.calls.get(mockCallId)?.recording.isRecordingActive).toBe(true);
 
-    const recording = featureCache.get(MOCK_RECORDING_NAME);
+    const recording = featureCache.get(Features.Recording);
     recording.isRecordingActive = false;
     recording.emitter.emit('isRecordingActiveChanged');
 
@@ -860,18 +898,48 @@ describe('declarative call client', () => {
     expect(testData.declarativeCallClient.state.calls.get(mockCallId)?.recording.isRecordingActive).toBe(false);
   });
 
+  test('should detect transcription changes in call', async () => {
+    const testData = {} as TestData;
+    createClientAndAgentMocks(testData);
+    createDeclarativeClient(testData);
+    const mockCall = createMockCall(mockCallId);
+    const featureCache = new Map<any, any>();
+    featureCache.set(Features.Transcription, addMockEmitter({ name: 'Default', isTranscriptionActive: true }));
+    mockCall.api = createMockApiFeatures(featureCache);
+    await createMockCallAndEmitCallsUpdated(testData, undefined, mockCall);
+
+    await waitWithBreakCondition(
+      () => testData.declarativeCallClient.state.calls.get(mockCallId)?.transcription.isTranscriptionActive === true
+    );
+
+    expect(testData.declarativeCallClient.state.calls.get(mockCallId)?.transcription.isTranscriptionActive).toBe(true);
+
+    const transcription = featureCache.get(Features.Transcription);
+    transcription.isTranscriptionActive = false;
+    transcription.emitter.emit('isTranscriptionActiveChanged');
+
+    await waitWithBreakCondition(
+      () => testData.declarativeCallClient.state.calls.get(mockCallId)?.transcription.isTranscriptionActive === false
+    );
+
+    expect(testData.declarativeCallClient.state.calls.get(mockCallId)?.transcription.isTranscriptionActive).toBe(false);
+  });
+
   test('should unsubscribe to recording changes when call ended', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
     createDeclarativeClient(testData);
     const mockCall = createMockCall(mockCallId);
-    const featureCache = new Map<string, any>();
-    mockCall.api = createMockApiFeatures(true, featureCache);
+    const featureCache = new Map<any, any>();
+    featureCache.set(Features.Recording, addMockEmitter({ name: 'Default', isRecordingActive: true }));
+    mockCall.api = createMockApiFeatures(featureCache);
     await createMockCallAndEmitCallsUpdated(testData, undefined, mockCall);
 
     await waitWithBreakCondition(
       () => testData.declarativeCallClient.state.calls.get(mockCallId)?.recording.isRecordingActive === true
     );
+
+    expect(() => testData.declarativeCallClient.state.calls.get(mockCallId)?.recording.isRecordingActive === true);
 
     expect(testData.declarativeCallClient.state.calls.get(mockCallId)?.recording.isRecordingActive).toBe(true);
 
@@ -883,7 +951,35 @@ describe('declarative call client', () => {
 
     await waitWithBreakCondition(() => testData.declarativeCallClient.state.calls.size === 0);
 
-    const recording = featureCache.get(MOCK_RECORDING_NAME);
+    const recording = featureCache.get(Features.Recording);
     expect(recording.emitter.eventNames().length).toBe(0);
+  });
+
+  test('should unsubscribe to transcription changes when call ended', async () => {
+    const testData = {} as TestData;
+    createClientAndAgentMocks(testData);
+    createDeclarativeClient(testData);
+    const mockCall = createMockCall(mockCallId);
+    const featureCache = new Map<any, any>();
+    featureCache.set(Features.Transcription, addMockEmitter({ name: 'Default', isTranscriptionActive: true }));
+    mockCall.api = createMockApiFeatures(featureCache);
+    await createMockCallAndEmitCallsUpdated(testData, undefined, mockCall);
+
+    await waitWithBreakCondition(
+      () => testData.declarativeCallClient.state.calls.get(mockCallId)?.transcription.isTranscriptionActive === true
+    );
+
+    expect(testData.declarativeCallClient.state.calls.get(mockCallId)?.transcription.isTranscriptionActive).toBe(true);
+
+    testData.mockCallAgent.calls = [];
+    testData.mockCallAgent.emit('callsUpdated', {
+      added: [],
+      removed: [testData.mockCall]
+    });
+
+    await waitWithBreakCondition(() => testData.declarativeCallClient.state.calls.size === 0);
+
+    const transcription = featureCache.get(Features.Transcription);
+    expect(transcription.emitter.eventNames().length).toBe(0);
   });
 });

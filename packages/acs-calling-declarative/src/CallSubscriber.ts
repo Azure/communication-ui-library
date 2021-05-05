@@ -12,6 +12,7 @@ import { InternalCallContext } from './InternalCallContext';
 import { ParticipantSubscriber } from './ParticipantSubscriber';
 import { RecordingSubscriber } from './RecordingSubscriber';
 import { stopRenderVideo } from './StreamUtils';
+import { TranscriptionSubscriber } from './TranscriptionSubscriber';
 
 /**
  * Keeps track of the listeners assigned to a particular call because when we get an event from SDK, it doesn't tell us
@@ -25,6 +26,7 @@ export class CallSubscriber {
   private _internalContext: InternalCallContext;
   private _participantSubscribers: Map<string, ParticipantSubscriber>;
   private _recordingSubscriber: RecordingSubscriber;
+  private _transcriptionSubscriber: TranscriptionSubscriber;
 
   constructor(call: Call, context: CallContext, internalContext: InternalCallContext) {
     this._call = call;
@@ -37,6 +39,12 @@ export class CallSubscriber {
       this._callIdRef,
       this._context,
       this._call.api(Features.Recording)
+    );
+
+    this._transcriptionSubscriber = new TranscriptionSubscriber(
+      this._callIdRef,
+      this._context,
+      this._call.api(Features.Transcription)
     );
 
     this.subscribe();
@@ -85,6 +93,7 @@ export class CallSubscriber {
       stopRenderVideo(this._context, this._internalContext, this._callIdRef.callId, localVideoStreams[0]);
     }
 
+    this._transcriptionSubscriber.unsubscribe();
     this._recordingSubscriber.unsubscribe();
   };
 
