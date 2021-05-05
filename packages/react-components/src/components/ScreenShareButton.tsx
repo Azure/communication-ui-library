@@ -19,6 +19,7 @@ export interface ScreenShareButtonProps extends IButtonProps {
 /**
  * `ScreenShareButton` allows you to easily create a component for rendering a screen-share button.
  * It can be used in your ControlBar component for example.
+ *
  * @param props - of type ScreenShareButtonProps
  */
 export const ScreenShareButton = (props: ScreenShareButtonProps): JSX.Element => {
