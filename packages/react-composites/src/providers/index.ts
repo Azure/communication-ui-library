@@ -7,5 +7,3 @@ export * from './ChatProviderHelper';
 export * from './ChatThreadProvider';
 export * from './IncomingCallsProvider';
 export * from './ErrorProvider';
-export * from './FluentThemeProvider';
-export * from './SwitchableFluentThemeProvider';

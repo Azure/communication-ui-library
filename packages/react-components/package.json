@@ -1,7 +1,7 @@
 {
   "name": "react-components",
   "version": "1.0.0-beta",
-  "description": "ACS UI SDK",
+  "description": "React component library",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
   "types": "dist/react-components.d.ts",
