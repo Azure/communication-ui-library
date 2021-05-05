@@ -19,6 +19,7 @@ export interface CameraButtonProps extends IButtonProps {
 /**
  * `CameraButton` allows you to easily create a component for rendering a camera button.
  * It can be used in your ControlBar component for example.
+ *
  * @param props - of type CameraButtonProps
  */
 export const CameraButton = (props: CameraButtonProps): JSX.Element => {
