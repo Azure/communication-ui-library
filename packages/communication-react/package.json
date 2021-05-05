@@ -34,8 +34,8 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
-  "main": "./dist/dist-cjs/react-components/index.js",
-  "module": "./dist/dist-esm/react-components/src/index.js",
+  "main": "./dist/dist-cjs/communication-react/index.js",
+  "module": "./dist/dist-esm/communication-react/src/index.js",
   "scripts": {
     "build": "rushx build:esm && rushx build:cjs && api-extractor run --local",
     "build:cjs": "rollup -c --silent",
@@ -94,11 +94,6 @@
     "uuid": "^8.1.0"
   },
   "beachball": {
-    "tag": "next",
-    "disallowedChangeTypes": [
-      "major",
-      "minor",
-      "patch"
-    ]
+    "shouldPublish": false
   }
 }

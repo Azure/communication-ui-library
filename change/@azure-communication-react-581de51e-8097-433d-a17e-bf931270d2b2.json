@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Create package",
-  "packageName": "@azure/communication-react",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "patch"
-}
