@@ -1,11 +1,12 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { MicrophoneButton } from '@azure/communication-ui';
 import { Canvas, Description, Heading, Props, Source, SourceState, Title } from '@storybook/addon-docs/blocks';
 import { boolean } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { MicrophoneButton } from 'react-components';
+
+import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
 import { MicrophoneButtonExample } from './snippets/MicrophoneButton.snippet';
 import { MicrophoneButtonWithLabelExample } from './snippets/MicrophoneButtonWithLabel.snippet';
 import { CustomMicrophoneButtonExample } from './snippets/CustomMicrophoneButton.snippet';

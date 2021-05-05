@@ -1,10 +1,10 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { ScreenShareButton } from '@azure/communication-ui';
 import { Canvas, Description, Heading, Props, Source, SourceState, Title } from '@storybook/addon-docs/blocks';
 import { boolean } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
+import { ScreenShareButton } from 'react-components';
 
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
 import { CustomScreenShareButtonExample } from './snippets/Custom.snippet';
