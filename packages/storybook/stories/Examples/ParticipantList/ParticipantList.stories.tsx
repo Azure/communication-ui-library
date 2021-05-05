@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meta } from '@storybook/react/types-6-0';
-import { ParticipantItem } from '@azure/communication-ui';
+import { ParticipantItem } from 'react-components';
 import { boolean, text, select } from '@storybook/addon-knobs';
 import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import { Stack, PersonaPresence } from '@fluentui/react';

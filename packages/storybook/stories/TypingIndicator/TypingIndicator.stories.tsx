@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 import { object, text, boolean } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
-import { TypingIndicator } from '@azure/communication-ui';
+import { TypingIndicator } from 'react-components';
 import React from 'react';
 import { getDocs } from './TypingIndicatorDocs';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';

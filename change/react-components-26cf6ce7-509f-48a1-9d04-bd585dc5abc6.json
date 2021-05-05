@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add useCallClient, useDeviceManager, and useCall utilities",
+  "packageName": "react-components",
+  "email": "allenhwang@microsoft.com",
+  "dependentChangeType": "patch"
+}

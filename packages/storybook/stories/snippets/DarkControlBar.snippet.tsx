@@ -4,11 +4,10 @@ import {
   EndCallButton,
   FluentThemeProvider,
   MicrophoneButton,
+  OptionsButton,
   ScreenShareButton,
-  defaultThemes,
-  optionsButtonProps
-} from '@azure/communication-ui';
-import { DefaultButton } from '@fluentui/react';
+  defaultThemes
+} from 'react-components';
 import React from 'react';
 
 export const DarkControlBar = (): JSX.Element => {
@@ -18,7 +17,7 @@ export const DarkControlBar = (): JSX.Element => {
         <CameraButton />
         <MicrophoneButton />
         <ScreenShareButton />
-        <DefaultButton {...optionsButtonProps} />
+        <OptionsButton />
         <EndCallButton />
       </ControlBar>
     </FluentThemeProvider>

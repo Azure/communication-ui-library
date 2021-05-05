@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Exporting ErrorBarProps. Fixed ErrorBar when severity is INFO. Added ErrorBar storybook docs.",
+  "packageName": "react-components",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -4,14 +4,18 @@
 
 ```ts
 
+import { AudioDeviceInfo } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
+import * as callingDeclarative from '@azure/acs-calling-declarative';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
+import { CreateViewOptions } from '@azure/communication-calling';
 import { DeclarativeCallClient } from '@azure/acs-calling-declarative';
 import { DeviceManager } from '@azure/communication-calling';
 import { HangUpOptions } from '@azure/communication-calling';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { ReactElement } from 'react';
+import * as reselect from 'reselect';
 import { StartCallOptions } from '@azure/communication-calling';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
@@ -21,33 +25,81 @@ export type BaseSelectorProps = {
     callId: string;
 };
 
-// @public
-export type CallAgentHandlers = {
-    onStartCall(participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions): Call;
-};
-
-// @public
-export type CallClientHandlers = {
-    getDeviceManager: () => Promise<DeviceManager>;
-};
-
-// @public
-export type CallHandlers = {
-    onHangUp(options?: HangUpOptions): Promise<void>;
-};
+// @public (undocumented)
+export const cameraButtonSelector: reselect.OutputParametricSelector<callingDeclarative.CallClientState, BaseSelectorProps, {
+    checked: boolean;
+}, (res: callingDeclarative.Call | undefined) => {
+    checked: boolean;
+}>;
 
 // @public
 export type CommonProperties<A, B> = {
-    [P in keyof A & keyof B]: A[P] extends B[P] ? (A[P] extends B[P] ? P : never) : never;
+    [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
 
 // @public
-export const createDefaultHandlersForComponent: <Props>(declarativeCallClient: DeclarativeCallClient, callAgent: CallAgent | undefined, deviceManager: DeviceManager | undefined, call: Call | undefined, _: (props: Props) => ReactElement | null) => Pick<CallClientHandlers & CallAgentHandlers & DeviceManagerHandlers & CallHandlers, CommonProperties<CallClientHandlers & CallAgentHandlers & DeviceManagerHandlers & CallHandlers, Props>> | Pick<CallClientHandlers, CommonProperties<CallClientHandlers, Props>>;
+export const createDefaultHandlersForComponent: <Props>(declarativeCallClient: DeclarativeCallClient, callAgent: CallAgent | undefined, deviceManager: DeviceManager | undefined, call: Call | undefined, _Component: (props: Props) => ReactElement | null) => Pick<{
+    onHangUp: (options?: HangUpOptions | undefined) => Promise<void> | void;
+    onMute: () => Promise<void> | void;
+    onUnmute: () => Promise<void> | void;
+    onSelectCamera: (deviceId: string) => Promise<void | undefined>;
+    onSelectMicrophone: (deviceId: string) => Promise<void | undefined>;
+    onSelectSpeaker: (deviceId: string) => Promise<void | undefined>;
+    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions | undefined) => Call | undefined;
+    onStartLocalVideo: (callId: string, deviceId: string, options: CreateViewOptions) => Promise<void>;
+    onStopLocalVideo: (callId: string) => Promise<void> | void;
+    onStartScreenShare: () => Promise<void> | void;
+    onStopScreenShare: () => Promise<void> | void;
+    onToggleLocalVideo: (callId: string, videoDeviceInfo: any, options: any) => Promise<void> | void;
+    onToggleMicrophone: () => Promise<void> | void;
+    onToggleScreenShare: () => Promise<void> | void;
+}, CommonProperties<{
+    onHangUp: (options?: HangUpOptions | undefined) => Promise<void> | void;
+    onMute: () => Promise<void> | void;
+    onUnmute: () => Promise<void> | void;
+    onSelectCamera: (deviceId: string) => Promise<void | undefined>;
+    onSelectMicrophone: (deviceId: string) => Promise<void | undefined>;
+    onSelectSpeaker: (deviceId: string) => Promise<void | undefined>;
+    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions | undefined) => Call | undefined;
+    onStartLocalVideo: (callId: string, deviceId: string, options: CreateViewOptions) => Promise<void>;
+    onStopLocalVideo: (callId: string) => Promise<void> | void;
+    onStartScreenShare: () => Promise<void> | void;
+    onStopScreenShare: () => Promise<void> | void;
+    onToggleLocalVideo: (callId: string, videoDeviceInfo: any, options: any) => Promise<void> | void;
+    onToggleMicrophone: () => Promise<void> | void;
+    onToggleScreenShare: () => Promise<void> | void;
+}, Props>>;
 
-// @public
-export type DeviceManagerHandlers = {
-    getCameras(): Promise<VideoDeviceInfo[]>;
-};
+// @public (undocumented)
+export const microphoneButtonSelector: reselect.OutputParametricSelector<callingDeclarative.CallClientState, BaseSelectorProps, {
+    checked: boolean;
+}, (res: callingDeclarative.Call | undefined) => {
+    checked: boolean;
+}>;
+
+// @public (undocumented)
+export const optionsButtonSelector: reselect.OutputParametricSelector<callingDeclarative.CallClientState, BaseSelectorProps, {
+    microphones: AudioDeviceInfo[];
+    speakers: AudioDeviceInfo[];
+    cameras: VideoDeviceInfo[];
+    selectedMicrophone: AudioDeviceInfo | undefined;
+    selectedSpeaker: AudioDeviceInfo | undefined;
+    selectedCamera: VideoDeviceInfo | undefined;
+}, (res1: callingDeclarative.DeviceManager, res2: callingDeclarative.Call | undefined) => {
+    microphones: AudioDeviceInfo[];
+    speakers: AudioDeviceInfo[];
+    cameras: VideoDeviceInfo[];
+    selectedMicrophone: AudioDeviceInfo | undefined;
+    selectedSpeaker: AudioDeviceInfo | undefined;
+    selectedCamera: VideoDeviceInfo | undefined;
+}>;
+
+// @public (undocumented)
+export const screenShareButtonSelector: reselect.OutputParametricSelector<callingDeclarative.CallClientState, BaseSelectorProps, {
+    checked: boolean | undefined;
+}, (res: callingDeclarative.Call | undefined) => {
+    checked: boolean | undefined;
+}>;
 
 
 // (No @packageDocumentation comment for this package)

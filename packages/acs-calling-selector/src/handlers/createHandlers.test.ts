@@ -3,11 +3,11 @@
 import { CallAgent, CallAgentOptions, DeviceManager } from '@azure/communication-calling';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { ReactElement } from 'react';
-import { CallClientHandlers, createDefaultHandlersForComponent } from './createHandlers';
+import { DefaultHandlers, createDefaultHandlersForComponent } from './createHandlers';
 import { DeclarativeCallClient } from '@azure/acs-calling-declarative';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function TestCallClientComponent(props: CallClientHandlers): ReactElement | null {
+function TestCallClientComponent(props: DefaultHandlers): ReactElement | null {
   return null;
 }
 
@@ -43,7 +43,7 @@ describe('createHandlers', () => {
       undefined,
       TestCallClientComponent
     );
-
+    console.log(handlers);
     expect(handlers).toBeDefined();
     expect(Object.keys(handlers).length > 0).toBe(true);
   });

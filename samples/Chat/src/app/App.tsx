@@ -10,7 +10,7 @@ import { ErrorScreen } from './ErrorScreen';
 import HomeScreen from './HomeScreen';
 import ConfigurationScreen from './ConfigurationScreen';
 import { getThreadId } from './utils/getThreadId';
-import { ChatProvider, ErrorProvider, CommunicationUiErrorInfo } from '@azure/communication-ui';
+import { ChatProvider, ErrorProvider, CommunicationUiErrorInfo } from 'react-composites';
 import { refreshTokenAsync } from './utils/refreshToken';
 
 console.info(`Thread chat sample using @azure/communication-chat : ${getChatSDKVersion()}`);
