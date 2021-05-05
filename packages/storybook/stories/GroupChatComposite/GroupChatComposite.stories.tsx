@@ -28,6 +28,11 @@ export default {
   }
 } as Meta;
 
+const experienceContainerStyle = {
+  width: '90vw',
+  height: '90vh'
+};
+
 const messageArray = [
   'Hello ACS!',
   'Congratulations! You can see this message because you successfully passed in a connection string!',
@@ -152,17 +157,7 @@ export const GroupChatComposite: () => JSX.Element = () => {
   }
 
   return (
-    <div
-      style={{
-        width: '100%',
-        height: '100%',
-        maxWidth: '50rem',
-        maxHeight: '30rem',
-        margin: '20px auto',
-        border: '1px solid',
-        padding: '0 10px'
-      }}
-    >
+    <div style={experienceContainerStyle}>
       {chatConfig && <GroupChat {...chatConfig} />}
       {!chatConfig && CompositeConnectionParamsErrMessage([emptyConfigTips, emptyConfigParametersTips])}
     </div>

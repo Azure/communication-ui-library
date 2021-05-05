@@ -26,6 +26,10 @@ export default {
 } as Meta;
 
 const emptyConfigTips = COMPOSITE_STRING_REQUIREDCONNECTIONSTRING.replace('{0}', 'Group Call');
+const experienceContainerStyle = {
+  width: '90vw',
+  height: '90vh'
+};
 
 const createUserToken = async (connectionString: string): Promise<CommunicationUserToken> => {
   if (!connectionString) {
@@ -62,16 +66,7 @@ export const GroupCallComposite: () => JSX.Element = () => {
   }, [connectionString]);
 
   return (
-    <div
-      style={{
-        width: '100%',
-        height: '100%',
-        maxWidth: '55rem',
-        maxHeight: '30.0625rem',
-        margin: '20px auto',
-        border: '1px solid'
-      }}
-    >
+    <div style={experienceContainerStyle}>
       {connectionString && (
         <GroupCall
           displayName={`user${Math.ceil(Math.random() * 1000)}`}
