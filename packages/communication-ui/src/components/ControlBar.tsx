@@ -1,32 +1,11 @@
 // © Microsoft Corporation. All rights reserved.
 import { mergeStyles, Stack, IButtonProps } from '@fluentui/react';
 import { useTheme } from '@fluentui/react-theme-provider';
-import { CallIcon, CallRecordingIcon, MoreIcon } from '@fluentui/react-northstar';
+import { CallIcon, CallRecordingIcon } from '@fluentui/react-northstar';
 import React from 'react';
 import { BaseCustomStylesProps } from '../types';
 import { controlBarStyles, controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 import { isDarkThemed } from '../utils/themeUtils';
-
-/** Fluent UI Button props for options control */
-export const optionsButtonProps: IButtonProps = {
-  onRenderIcon: (): JSX.Element => <MoreIcon />,
-  menuIconProps: {
-    hidden: true
-  },
-  styles: controlButtonStyles
-};
-
-/** Fluent UI Button props for options control with label */
-export const labeledOptionsButtonProps: IButtonProps = {
-  ...optionsButtonProps,
-  onRenderText: (): JSX.Element => {
-    return (
-      <Stack className={mergeStyles(controlButtonLabelStyles)}>
-        <Stack>Options</Stack>
-      </Stack>
-    );
-  }
-};
 
 /** Fluent UI Button props for recording control */
 export const recordButtonProps: IButtonProps = {

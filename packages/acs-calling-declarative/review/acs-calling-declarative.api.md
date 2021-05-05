@@ -84,7 +84,7 @@ export interface IncomingCall {
 export interface LocalVideoStream {
     mediaStreamType: MediaStreamType;
     source: VideoDeviceInfo;
-    videoStreamRendererView: VideoStreamRendererView | undefined;
+    videoStreamRendererView?: VideoStreamRendererView | undefined;
 }
 
 // @public
