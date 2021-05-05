@@ -9,13 +9,13 @@ export const getDocs: () => JSX.Element = () => {
   import {
     CameraButton,
     ControlBar,
+    EndCallButton,
     FluentThemeProvider,
     GridLayout,
     MicrophoneButton,
-    VideoTile,
-    hangupButtonProps, screenShareButtonProps
+    ScreenShareButton,
+    VideoTile
   } from '@azure/communication-ui';
-  import { DefaultButton } from '@fluentui/react';
 
   const TeamsTheme = {
     palette: {
@@ -58,14 +58,12 @@ export const getDocs: () => JSX.Element = () => {
                     /*handle onClick*/
                 }}
             />
-            <DefaultButton
-                {...screenShareButtonProps}
+            <ScreenShareButton
                 onClick={() => {
                     /*handle onClick*/
                 }}
             />
-            <DefaultButton
-                {...hangupButtonProps}
+            <EndCallButton
                 onClick={() => {
                     /*handle onClick*/
                 }}

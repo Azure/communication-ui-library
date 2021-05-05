@@ -2,15 +2,15 @@
 
 import React from 'react';
 import { Meta } from '@storybook/react/types-6-0';
-import { Stack, DefaultButton } from '@fluentui/react';
+import { Stack } from '@fluentui/react';
 import {
   CameraButton,
   ControlBar,
+  EndCallButton,
   MicrophoneButton,
+  OptionsButton,
   StreamMedia,
-  VideoTile,
-  hangupButtonProps,
-  optionsButtonProps
+  VideoTile
 } from '@azure/communication-ui';
 import { text, boolean, number } from '@storybook/addon-knobs';
 import { renderVideoStream } from '../utils';
@@ -50,8 +50,8 @@ export const VideoTileComponent: () => JSX.Element = () => {
           <ControlBar styles={{ root: { position: 'relative', left: '-50%' } }}>
             <CameraButton />
             <MicrophoneButton />
-            <DefaultButton {...optionsButtonProps} />
-            <DefaultButton {...hangupButtonProps} />
+            <OptionsButton />
+            <EndCallButton />
           </ControlBar>
         </Stack>
       )}

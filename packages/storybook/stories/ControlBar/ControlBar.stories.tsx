@@ -5,19 +5,15 @@ import React from 'react';
 import {
   CameraButton,
   ControlBar,
+  EndCallButton,
   MicrophoneButton,
-  hangupButtonProps,
-  labeledHangupButtonProps,
-  labeledOptionsButtonProps,
-  labeledScreenShareButtonProps,
-  optionsButtonProps,
-  screenShareButtonProps,
+  OptionsButton,
+  ScreenShareButton,
   LIGHT,
   DARK
 } from '@azure/communication-ui';
 import { boolean, select } from '@storybook/addon-knobs';
 import { getDocs } from './ControlBarDocs';
-import { DefaultButton } from '@fluentui/react';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 
 const CONTROL_BAR_LAYOUTS = [
@@ -96,15 +92,9 @@ export const ControlBarComponent: (
       <ControlBar layout={layout}>
         <CameraButton showLabel={showLabels} checked={toggleButtons} />
         <MicrophoneButton showLabel={showLabels} checked={toggleButtons} />
-        <DefaultButton
-          {...(showLabels ? labeledScreenShareButtonProps : screenShareButtonProps)}
-          checked={toggleButtons}
-        />
-        <DefaultButton
-          {...(showLabels ? labeledOptionsButtonProps : optionsButtonProps)}
-          menuProps={exampleOptionsMenuProps}
-        />
-        <DefaultButton {...(showLabels ? labeledHangupButtonProps : hangupButtonProps)} />
+        <ScreenShareButton showLabel={showLabels} checked={toggleButtons} />
+        <OptionsButton showLabel={showLabels} menuProps={exampleOptionsMenuProps} />
+        <EndCallButton showLabel={showLabels} />
       </ControlBar>
     </div>
   );

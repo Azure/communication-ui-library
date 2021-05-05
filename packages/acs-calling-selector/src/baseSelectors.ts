@@ -18,3 +18,6 @@ export const getIncomingCalls = (state: CallClientState): Map<string, IncomingCa
 export const getIncomingCallsEnded = (state: CallClientState): IncomingCall[] => state.incomingCallsEnded;
 
 export const getDeviceManager = (state: CallClientState): DeviceManager => state.deviceManager;
+
+export const getCall = (state: CallClientState, props: BaseSelectorProps): Call | undefined =>
+  state.calls.get(props.callId);

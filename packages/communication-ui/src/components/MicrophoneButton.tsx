@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
 import React from 'react';
-import { DefaultButton, IButtonProps, mergeStyles, Stack } from '@fluentui/react';
+import { DefaultButton, IButtonProps, Stack, concatStyleSets, mergeStyles } from '@fluentui/react';
 import { MicIcon, MicOffIcon } from '@fluentui/react-northstar';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 
@@ -22,27 +22,28 @@ export interface MicrophoneButtonProps extends IButtonProps {
  */
 export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   const { showLabel = false, styles, onRenderIcon, onRenderText } = props;
+  const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
 
   const defaultRenderIcon = (props?: IButtonProps): JSX.Element => {
     if (props?.checked) {
-      return <MicIcon />;
+      return <MicIcon key={'micIconKey'} />;
     }
 
-    return <MicOffIcon />;
+    return <MicOffIcon key={'micOffIconKey'} />;
   };
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {
-    if (props?.checked) {
-      return <Stack className={mergeStyles(controlButtonLabelStyles)}>Mute</Stack>;
-    }
-
-    return <Stack className={mergeStyles(controlButtonLabelStyles)}>Unmute</Stack>;
+    return (
+      <Stack key={'microphoneLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
+        {props?.checked ? 'Mute' : 'Unmute'}
+      </Stack>
+    );
   };
 
   return (
     <DefaultButton
       {...props}
-      styles={styles ?? controlButtonStyles}
+      styles={componentStyles}
       onRenderIcon={onRenderIcon ?? defaultRenderIcon}
       onRenderText={showLabel ? onRenderText ?? defaultRenderText : undefined}
     />

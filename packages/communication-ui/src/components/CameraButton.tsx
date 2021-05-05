@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
 import React from 'react';
-import { DefaultButton, IButtonProps, mergeStyles, Stack } from '@fluentui/react';
+import { DefaultButton, IButtonProps, Stack, concatStyleSets, mergeStyles } from '@fluentui/react';
 import { CallVideoIcon, CallVideoOffIcon } from '@fluentui/react-northstar';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 
@@ -23,19 +23,24 @@ export interface CameraButtonProps extends IButtonProps {
  */
 export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   const { showLabel = false, styles, onRenderIcon, onRenderText } = props;
+  const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
 
   const defaultRenderIcon = (props?: IButtonProps): JSX.Element => {
     return props?.checked ? <CallVideoIcon /> : <CallVideoOffIcon />;
   };
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {
-    return <Stack className={mergeStyles(controlButtonLabelStyles)}>{props?.checked ? 'Turn off' : 'Turn on'}</Stack>;
+    return (
+      <Stack className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
+        {props?.checked ? 'Turn off' : 'Turn on'}
+      </Stack>
+    );
   };
 
   return (
     <DefaultButton
       {...props}
-      styles={styles ?? controlButtonStyles}
+      styles={componentStyles}
       onRenderIcon={onRenderIcon ?? defaultRenderIcon}
       onRenderText={showLabel ? onRenderText ?? defaultRenderText : undefined}
     />

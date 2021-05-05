@@ -10,5 +10,7 @@ export type {
   LocalVideoStream,
   RemoteParticipant,
   RemoteVideoStream,
-  VideoStreamRendererView
+  VideoStreamRendererView,
+  RecordingCallFeature,
+  TranscriptionCallFeature
 } from './CallClientState';
