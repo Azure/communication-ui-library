@@ -34,6 +34,7 @@
   "dependencies": {
     "@azure/acs-chat-declarative": "~1.0.0-beta",
     "@azure/communication-chat": "1.0.0-beta.4",
+    "react": "^16.13.1",
     "reselect": "~4.0.0",
     "memoize-one": "~5.1.1"
   },

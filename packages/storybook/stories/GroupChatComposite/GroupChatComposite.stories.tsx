@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 import { text } from '@storybook/addon-knobs';
 import { getDocs } from './GroupChatCompositeDocs';
-import { ChatConfig, GroupChat } from '@azure/communication-ui';
+import { ChatConfig, GroupChat } from 'react-composites';
 import { AzureCommunicationUserCredential } from '@azure/communication-common';
 import { CommunicationIdentityClient } from '@azure/communication-administration';
 import { ChatClient } from '@azure/communication-chat';

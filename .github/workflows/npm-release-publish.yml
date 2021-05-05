@@ -47,7 +47,7 @@ jobs:
 
       - name: Build Storybook
         run: rushx build:storybook
-        working-directory: ./packages/communication-ui
+        working-directory: ./packages/react-components
 
       # Run tests
       - name: Run Tests

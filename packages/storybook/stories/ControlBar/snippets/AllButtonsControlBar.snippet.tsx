@@ -2,14 +2,14 @@ import React from 'react';
 import {
   CameraButton,
   ControlBar,
+  EndCallButton,
   FluentThemeProvider,
   MicrophoneButton,
+  OptionsButton,
+  ScreenShareButton,
   answerButtonProps,
-  hangupButtonProps,
-  optionsButtonProps,
-  recordButtonProps,
-  screenShareButtonProps
-} from '@azure/communication-ui';
+  recordButtonProps
+} from 'react-components';
 import { DefaultButton, IContextualMenuProps } from '@fluentui/react';
 
 export const AllButtonsControlBarExample: () => JSX.Element = () => {
@@ -37,8 +37,7 @@ export const AllButtonsControlBarExample: () => JSX.Element = () => {
             /*handle onClick*/
           }}
         />
-        <DefaultButton
-          {...screenShareButtonProps}
+        <ScreenShareButton
           onClick={() => {
             /*handle onClick*/
           }}
@@ -55,9 +54,8 @@ export const AllButtonsControlBarExample: () => JSX.Element = () => {
             /*handle onClick*/
           }}
         />
-        <DefaultButton {...optionsButtonProps} menuProps={exampleOptionsMenuProps} />
-        <DefaultButton
-          {...hangupButtonProps}
+        <OptionsButton menuProps={exampleOptionsMenuProps} />
+        <EndCallButton
           onClick={() => {
             /*handle onClick*/
           }}

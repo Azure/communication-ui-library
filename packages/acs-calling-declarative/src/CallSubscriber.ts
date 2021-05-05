@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { Call, LocalVideoStream, RemoteParticipant } from '@azure/communication-calling';
+import { Call, Features, LocalVideoStream, RemoteParticipant } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
 import { CallIdRef } from './CallIdRef';
 import {
@@ -10,7 +10,9 @@ import {
 } from './Converter';
 import { InternalCallContext } from './InternalCallContext';
 import { ParticipantSubscriber } from './ParticipantSubscriber';
+import { RecordingSubscriber } from './RecordingSubscriber';
 import { stopRenderVideo } from './StreamUtils';
+import { TranscriptionSubscriber } from './TranscriptionSubscriber';
 
 /**
  * Keeps track of the listeners assigned to a particular call because when we get an event from SDK, it doesn't tell us
@@ -23,6 +25,8 @@ export class CallSubscriber {
   private _context: CallContext;
   private _internalContext: InternalCallContext;
   private _participantSubscribers: Map<string, ParticipantSubscriber>;
+  private _recordingSubscriber: RecordingSubscriber;
+  private _transcriptionSubscriber: TranscriptionSubscriber;
 
   constructor(call: Call, context: CallContext, internalContext: InternalCallContext) {
     this._call = call;
@@ -30,6 +34,18 @@ export class CallSubscriber {
     this._context = context;
     this._internalContext = internalContext;
     this._participantSubscribers = new Map<string, ParticipantSubscriber>();
+
+    this._recordingSubscriber = new RecordingSubscriber(
+      this._callIdRef,
+      this._context,
+      this._call.api(Features.Recording)
+    );
+
+    this._transcriptionSubscriber = new TranscriptionSubscriber(
+      this._callIdRef,
+      this._context,
+      this._call.api(Features.Transcription)
+    );
 
     this.subscribe();
   }
@@ -76,6 +92,9 @@ export class CallSubscriber {
     if (localVideoStreams && localVideoStreams.length === 1) {
       stopRenderVideo(this._context, this._internalContext, this._callIdRef.callId, localVideoStreams[0]);
     }
+
+    this._transcriptionSubscriber.unsubscribe();
+    this._recordingSubscriber.unsubscribe();
   };
 
   private addParticipantListener(participant: RemoteParticipant): void {

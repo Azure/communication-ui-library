@@ -1,13 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
-import {
-  ErrorBar as ErrorBarComponent,
-  SendBox,
-  TypingIndicator,
-  MessageThread,
-  connectFuncsToContext,
-  MapToErrorBarProps
-} from '@azure/communication-ui';
+import { ErrorBar as ErrorBarComponent, SendBox, TypingIndicator, MessageThread } from 'react-components';
+import { connectFuncsToContext, MapToErrorBarProps } from 'react-composites';
 import { Stack } from '@fluentui/react';
 import React, { useEffect, useMemo, useState } from 'react';
 import { chatAreaContainerStyle, sendBoxParentStyle } from './styles/ChatArea.styles';
