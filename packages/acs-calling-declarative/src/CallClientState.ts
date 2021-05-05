@@ -186,7 +186,7 @@ export interface Call {
    * Proxy of {@Link @azure/communication-calling#TranscriptionCallFeature}.
    */
   transcription: TranscriptionCallFeature;
-  /*
+  /**
    * Proxy of {@Link @azure/communication-calling#RecordingCallFeature}.
    */
   recording: RecordingCallFeature;
