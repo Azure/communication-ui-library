@@ -35,23 +35,8 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
-  "exports": {
-    ".": {
-      "import": "./dist/dist-esm/meta/src/*.js",
-      "module": "./dist/dist-esm/meta/src/*.js"
-    },
-    "./components": {
-      "default": "./dist/dist-esm/communication-ui/src/*.js",
-      "import": "./dist/dist-esm/communication-ui/src/*.js",
-      "module": "./dist/dist-esm/communication-ui/src/*.js"
-    },
-    "./chat-selector": {
-      "import": "./dist/dist-esm/acs-chat-selector/src/*.js",
-      "module": "./dist/dist-esm/acs-chat-selector/src/*.js"
-    }
-  },
-  "main": "./dist/dist-cjs/communication-ui/index.js",
-  "module": "./dist/dist-esm/meta/src/index.js",
+  "main": "./dist/dist-cjs/react-components/index.js",
+  "module": "./dist/dist-esm/react-components/src/index.js",
   "scripts": {
     "build": "rushx build:esm && rushx build:cjs && api-extractor run --local",
     "build:cjs": "rollup -c --silent",

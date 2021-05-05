@@ -19,51 +19,63 @@
   "projects": [
     {
       "packageName": "@azure/communication-react",
-      "projectFolder": "packages/communication-react"
+      "projectFolder": "packages/communication-react",
+      "reviewCategory": "production"
     },
     {
       "packageName": "react-components",
-      "projectFolder": "packages/react-components"
+      "projectFolder": "packages/react-components",
+      "reviewCategory": "internal"
     },
     {
       "packageName": "react-composites",
-      "projectFolder": "packages/react-composites"
+      "projectFolder": "packages/react-composites",
+      "reviewCategory": "internal"
     },
     {
       "packageName": "@azure/acs-chat-declarative",
-      "projectFolder": "packages/acs-chat-declarative"
+      "projectFolder": "packages/acs-chat-declarative",
+      "reviewCategory": "internal"
     },
     {
       "packageName": "@azure/acs-chat-selector",
-      "projectFolder": "packages/acs-chat-selector"
+      "projectFolder": "packages/acs-chat-selector",
+      "reviewCategory": "internal"
     },
     {
       "packageName": "@azure/acs-calling-declarative",
-      "projectFolder": "packages/acs-calling-declarative"
+      "projectFolder": "packages/acs-calling-declarative",
+      "reviewCategory": "internal"
     },
     {
       "packageName": "@azure/acs-calling-selector",
-      "projectFolder": "packages/acs-calling-selector"
+      "projectFolder": "packages/acs-calling-selector",
+      "reviewCategory": "internal"
     },
     {
       "packageName": "calling",
-      "projectFolder": "samples/Calling"
+      "projectFolder": "samples/Calling",
+      "reviewCategory": "sample"
     },
     {
       "packageName": "chat",
-      "projectFolder": "samples/Chat"
+      "projectFolder": "samples/Chat",
+      "reviewCategory": "sample"
     },
     {
       "packageName": "one-to-one-call",
-      "projectFolder": "samples/OneToOneCall"
+      "projectFolder": "samples/OneToOneCall",
+      "reviewCategory": "sample"
     },
     {
       "packageName": "server",
-      "projectFolder": "samples/Server"
+      "projectFolder": "samples/Server",
+      "reviewCategory": "sample"
     },
     {
       "packageName": "storybook",
-      "projectFolder": "packages/storybook"
+      "projectFolder": "packages/storybook",
+      "reviewCategory": "tools"
     },
     {
       "packageName": "build-tools",
