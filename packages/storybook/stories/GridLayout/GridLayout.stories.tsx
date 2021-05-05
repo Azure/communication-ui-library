@@ -12,10 +12,12 @@ import {
   mediaGalleryHeightOptions,
   COMPONENT_FOLDER_PREFIX
 } from '../constants';
-import { GridLayout, VideoTile, StreamMedia } from '@azure/communication-ui';
+import { GridLayout as GridLayoutComponent, VideoTile, StreamMedia } from 'react-components';
 import { renderVideoStream } from '../utils';
 
-export const GridLayoutComponent: () => JSX.Element = () => {
+// This must be the only named export from this module, and must be named to match the storybook path suffix.
+// This ensures that storybook hoists the story instead of creating a folder with a single entry.
+export const GridLayout: () => JSX.Element = () => {
   const width = number('Width', mediaGalleryWidthDefault, mediaGalleryWidthOptions);
   const height = number('Height', mediaGalleryHeightDefault, mediaGalleryHeightOptions);
 
@@ -60,14 +62,14 @@ export const GridLayoutComponent: () => JSX.Element = () => {
         width: `${width}px`
       }}
     >
-      <GridLayout>{participantsComponents}</GridLayout>
+      <GridLayoutComponent>{participantsComponents}</GridLayoutComponent>
     </div>
   );
 };
 
 export default {
-  title: `${COMPONENT_FOLDER_PREFIX}/GridLayout`,
-  component: GridLayout,
+  title: `${COMPONENT_FOLDER_PREFIX}/Grid Layout`,
+  component: GridLayoutComponent,
   parameters: {
     docs: {
       page: () => getDocs()

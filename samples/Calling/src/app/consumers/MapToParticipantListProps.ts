@@ -5,7 +5,7 @@ import {
   useCallContext,
   ListParticipant,
   convertSdkRemoteParticipantToListParticipant
-} from '@azure/communication-ui';
+} from 'react-composites';
 
 type ParticipantListContainerProps = {
   remoteParticipants: ListParticipant[];

@@ -4,12 +4,12 @@ import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
 import {
   MessageProps,
-  MessageThread,
+  MessageThread as MessageThreadComponent,
   ChatMessage,
   CustomMessage,
   SystemMessage,
   DefaultMessageRendererType
-} from '@azure/communication-ui';
+} from 'react-components';
 import { boolean } from '@storybook/addon-knobs';
 import { PrimaryButton, Stack } from '@fluentui/react';
 import { Divider } from '@fluentui/react-northstar';
@@ -27,7 +27,9 @@ import {
 } from './placeholdermessages';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 
-export const MessageThreadComponent: () => JSX.Element = () => {
+// This must be the only named export from this module, and must be named to match the storybook path suffix.
+// This ensures that storybook hoists the story instead of creating a folder with a single entry.
+export const MessageThread: () => JSX.Element = () => {
   const [chatMessages, setChatMessages] = useState<(SystemMessage | CustomMessage | ChatMessage)[]>(
     GenerateMockChatMessages()
   );
@@ -72,7 +74,7 @@ export const MessageThreadComponent: () => JSX.Element = () => {
 
   return (
     <Stack style={MessageThreadContainerStyles}>
-      <MessageThread
+      <MessageThreadComponent
         styles={MessageThreadStyles}
         userId={UserOne.senderId}
         messages={chatMessages}
@@ -94,8 +96,8 @@ export const MessageThreadComponent: () => JSX.Element = () => {
 };
 
 export default {
-  title: `${COMPONENT_FOLDER_PREFIX}/MessageThread`,
-  component: MessageThread,
+  title: `${COMPONENT_FOLDER_PREFIX}/Message Thread`,
+  component: MessageThreadComponent,
   parameters: {
     docs: {
       page: () => getDocs()

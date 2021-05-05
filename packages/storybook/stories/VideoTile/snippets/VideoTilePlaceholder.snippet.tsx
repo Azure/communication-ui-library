@@ -1,5 +1,5 @@
 import React from 'react';
-import { VideoTile, FluentThemeProvider, StreamMedia } from '@azure/communication-ui';
+import { VideoTile, FluentThemeProvider, StreamMedia } from 'react-components';
 import { renderVideoStream } from '../../utils';
 import { Stack } from '@fluentui/react';
 

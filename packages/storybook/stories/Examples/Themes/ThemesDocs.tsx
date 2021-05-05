@@ -15,8 +15,7 @@ export const getDocs: () => JSX.Element = () => {
     MicrophoneButton,
     ScreenShareButton,
     VideoTile
-  } from '@azure/communication-ui';
-  import { DefaultButton } from '@fluentui/react';
+  } from 'react-components';
 
   const TeamsTheme = {
     palette: {

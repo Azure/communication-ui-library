@@ -1,4 +1,4 @@
-import { StreamMedia, VideoTile } from '@azure/communication-ui';
+import { StreamMedia, VideoTile } from 'react-components';
 import React from 'react';
 import { renderVideoStream } from '../../../utils';
 import { Banner } from './Banner.snippet';

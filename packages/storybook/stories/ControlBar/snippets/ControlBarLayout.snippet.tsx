@@ -5,10 +5,10 @@ import {
   EndCallButton,
   FluentThemeProvider,
   MicrophoneButton,
-  ScreenShareButton,
-  optionsButtonProps
-} from '@azure/communication-ui';
-import { Stack, DefaultButton } from '@fluentui/react';
+  OptionsButton,
+  ScreenShareButton
+} from 'react-components';
+import { Stack } from '@fluentui/react';
 
 export const ControlBarLayoutExample: () => JSX.Element = () => {
   return (
@@ -18,7 +18,7 @@ export const ControlBarLayoutExample: () => JSX.Element = () => {
           <CameraButton />
           <MicrophoneButton />
           <ScreenShareButton />
-          <DefaultButton {...optionsButtonProps} />
+          <OptionsButton />
           <EndCallButton />
         </ControlBar>
       </FluentThemeProvider>
