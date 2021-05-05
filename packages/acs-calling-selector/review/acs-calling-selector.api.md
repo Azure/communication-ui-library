@@ -42,32 +42,34 @@ export const createDefaultHandlersForComponent: <Props>(declarativeCallClient: D
     onHangUp: (options?: HangUpOptions | undefined) => Promise<void> | void;
     onMute: () => Promise<void> | void;
     onUnmute: () => Promise<void> | void;
-    onSelectCamera: (deviceId: string) => Promise<void | undefined>;
-    onSelectMicrophone: (deviceId: string) => Promise<void | undefined>;
-    onSelectSpeaker: (deviceId: string) => Promise<void | undefined>;
+    onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
+    onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
+    onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
     onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions | undefined) => Call | undefined;
-    onStartLocalVideo: (callId: string, deviceId: string, options: CreateViewOptions) => Promise<void>;
+    onStartLocalVideo: (callId: string, device: VideoDeviceInfo, options: CreateViewOptions) => Promise<void>;
     onStopLocalVideo: (callId: string) => Promise<void> | void;
     onStartScreenShare: () => Promise<void> | void;
     onStopScreenShare: () => Promise<void> | void;
-    onToggleLocalVideo: (callId: string, videoDeviceInfo: any, options: any) => Promise<void> | void;
+    onToggleCamera: (callId: string, device: VideoDeviceInfo, options: any) => Promise<void> | void;
     onToggleMicrophone: () => Promise<void> | void;
     onToggleScreenShare: () => Promise<void> | void;
+    getSpeakers: () => Promise<AudioDeviceInfo[]> | undefined;
 }, CommonProperties<{
     onHangUp: (options?: HangUpOptions | undefined) => Promise<void> | void;
     onMute: () => Promise<void> | void;
     onUnmute: () => Promise<void> | void;
-    onSelectCamera: (deviceId: string) => Promise<void | undefined>;
-    onSelectMicrophone: (deviceId: string) => Promise<void | undefined>;
-    onSelectSpeaker: (deviceId: string) => Promise<void | undefined>;
+    onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
+    onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
+    onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
     onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions | undefined) => Call | undefined;
-    onStartLocalVideo: (callId: string, deviceId: string, options: CreateViewOptions) => Promise<void>;
+    onStartLocalVideo: (callId: string, device: VideoDeviceInfo, options: CreateViewOptions) => Promise<void>;
     onStopLocalVideo: (callId: string) => Promise<void> | void;
     onStartScreenShare: () => Promise<void> | void;
     onStopScreenShare: () => Promise<void> | void;
-    onToggleLocalVideo: (callId: string, videoDeviceInfo: any, options: any) => Promise<void> | void;
+    onToggleCamera: (callId: string, device: VideoDeviceInfo, options: any) => Promise<void> | void;
     onToggleMicrophone: () => Promise<void> | void;
     onToggleScreenShare: () => Promise<void> | void;
+    getSpeakers: () => Promise<AudioDeviceInfo[]> | undefined;
 }, Props>>;
 
 // @public (undocumented)

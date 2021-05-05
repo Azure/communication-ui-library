@@ -6,7 +6,9 @@ import {
   StartCallOptions,
   HangUpOptions,
   LocalVideoStream,
-  CreateViewOptions
+  CreateViewOptions,
+  AudioDeviceInfo,
+  VideoDeviceInfo
 } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 import { DeclarativeCallClient } from '@azure/acs-calling-declarative';
@@ -22,12 +24,13 @@ const createDefaultHandlers = memoizeOne(
     deviceManager: DeviceManager | undefined,
     call: Call | undefined
   ) => {
-    const onStartLocalVideo = async (callId: string, deviceId: string, options: CreateViewOptions): Promise<void> => {
+    const onStartLocalVideo = async (
+      callId: string,
+      device: VideoDeviceInfo,
+      options: CreateViewOptions
+    ): Promise<void> => {
       if (!deviceManager) return;
-      const devices = await deviceManager.getCameras();
-      const selected = devices.find((device) => device.id === deviceId);
-      if (!selected) return;
-      const stream = new LocalVideoStream(selected);
+      const stream = new LocalVideoStream(device);
       return callClient.startRenderVideo(callId, stream, options);
     };
 
@@ -38,13 +41,13 @@ const createDefaultHandlers = memoizeOne(
       return callClient.stopRenderVideo(callId, stream);
     };
 
-    const onToggleCamera = (callId: string, videoDeviceInfo, options): Promise<void> | void => {
+    const onToggleCamera = (callId: string, device: VideoDeviceInfo, options): Promise<void> | void => {
       const call = callClient.state.calls.get(callId);
       const stream = call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
       if (stream) {
         return onStopLocalVideo(callId);
       } else {
-        return onStartLocalVideo(callId, videoDeviceInfo, options);
+        return onStartLocalVideo(callId, device, options);
       }
     };
 
@@ -55,29 +58,20 @@ const createDefaultHandlers = memoizeOne(
       return callAgent ? callAgent.startCall(participants, options) : undefined;
     };
 
-    const onSelectMicrophone = async (deviceId: string): Promise<void | undefined> => {
+    const onSelectMicrophone = async (device: AudioDeviceInfo): Promise<void> => {
       if (!deviceManager) return;
-      const devices = await deviceManager.getMicrophones();
-      const selected = devices.find((device) => device.id === deviceId);
-      if (!selected) return;
-      return deviceManager.selectMicrophone(selected);
+      return deviceManager.selectMicrophone(device);
     };
 
-    const onSelectSpeaker = async (deviceId: string): Promise<void | undefined> => {
+    const onSelectSpeaker = async (device: AudioDeviceInfo): Promise<void> => {
       if (!deviceManager) return;
-      const devices = await deviceManager.getSpeakers();
-      const selected = devices.find((device) => device.id === deviceId);
-      if (!selected) return;
-      return deviceManager.selectMicrophone(selected);
+      return deviceManager.selectMicrophone(device);
     };
 
-    const onSelectCamera = async (deviceId: string): Promise<void | undefined> => {
+    const onSelectCamera = async (device: VideoDeviceInfo): Promise<void> => {
       if (!call || !deviceManager) return;
-      const devices = await deviceManager.getCameras();
-      const selected = devices.find((device) => device.id === deviceId);
       const stream = call.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
-      if (!selected || !stream) return;
-      return stream.switchSource(selected);
+      return stream?.switchSource(device);
     };
 
     const onMute = (): Promise<void> | void => call?.mute();
@@ -109,7 +103,8 @@ const createDefaultHandlers = memoizeOne(
       onStopScreenShare,
       onToggleCamera,
       onToggleMicrophone,
-      onToggleScreenShare
+      onToggleScreenShare,
+      getSpeakers: () => deviceManager?.getSpeakers()
     };
   }
 );
@@ -118,7 +113,7 @@ const createDefaultHandlers = memoizeOne(
  * Type guard for common properties between two types.
  */
 export type CommonProperties<A, B> = {
-  [P in keyof A & keyof B]: A[P] extends B[P] ? (B[P] extends A[P] ? P : never) : never;
+  [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
 
 type Common<A, B> = Pick<A, CommonProperties<A, B>>;

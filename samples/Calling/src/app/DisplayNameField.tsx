@@ -1,5 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
+import React from 'react';
 import { ENTER_KEY, MAXIMUM_LENGTH_OF_NAME, ErrorHandlingProps, WithErrorHandling } from '@azure/communication-ui';
 import {
   TextFieldStyleProps,
@@ -9,8 +10,6 @@ import {
   labelFontStyle,
   warningStyle
 } from './styles/DisplayNameField.styles';
-
-import React from 'react';
 import { TextField } from '@fluentui/react';
 
 interface DisplayNameFieldProps {
