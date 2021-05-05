@@ -1,4 +1,4 @@
-import { MessageThread, ChatMessage as WebUiChatMessage, SendBox, MessageStatus } from 'react-components';
+import { MessageThread, ChatMessage as WebUiChatMessage, SendBox, MessageStatus } from '@azure/communication-react';
 import React from 'react';
 
 export const ChatComponents = (): JSX.Element => {

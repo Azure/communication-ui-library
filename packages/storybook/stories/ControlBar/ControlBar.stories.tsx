@@ -9,7 +9,7 @@ import {
   MicrophoneButton,
   OptionsButton,
   ScreenShareButton
-} from 'react-components';
+} from '@azure/communication-react';
 import { boolean, select } from '@storybook/addon-knobs';
 import { getDocs } from './ControlBarDocs';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';

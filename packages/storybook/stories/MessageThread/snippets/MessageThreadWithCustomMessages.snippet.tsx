@@ -1,4 +1,9 @@
-import { DefaultMessageRendererType, FluentThemeProvider, MessageProps, MessageThread } from 'react-components';
+import {
+  DefaultMessageRendererType,
+  FluentThemeProvider,
+  MessageProps,
+  MessageThread
+} from '@azure/communication-react';
 import { Divider } from '@fluentui/react-northstar';
 import React from 'react';
 import { GetHistoryWithCustomMessages } from './placeholdermessages';
