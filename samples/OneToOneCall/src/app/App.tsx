@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { initializeIcons, loadTheme, Spinner, Stack } from '@fluentui/react';
-import { OneToOneCall } from 'react-components';
+import { OneToOneCall } from 'react-composites';
 import { createRandomDisplayName, fetchTokenResponse, getBuildTime, supportedBrowser } from './utils/AppUtils';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires

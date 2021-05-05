@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { ENTER_KEY, MAXIMUM_LENGTH_OF_NAME, ErrorHandlingProps, WithErrorHandling } from 'react-components';
+import { ENTER_KEY, MAXIMUM_LENGTH_OF_NAME, ErrorHandlingProps, WithErrorHandling } from 'react-composites';
 import {
   TextFieldStyleProps,
   inputBoxStyle,

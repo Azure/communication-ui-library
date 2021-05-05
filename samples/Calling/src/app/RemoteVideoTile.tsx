@@ -2,14 +2,8 @@
 
 import { Label } from '@fluentui/react';
 import React from 'react';
-import {
-  StreamMedia,
-  VideoTile,
-  WithErrorHandling,
-  connectFuncsToContext,
-  MapToRemoteVideoProps,
-  ErrorHandlingProps
-} from 'react-components';
+import { StreamMedia, VideoTile } from 'react-components';
+import { WithErrorHandling, connectFuncsToContext, MapToRemoteVideoProps, ErrorHandlingProps } from 'react-composites';
 import { disabledVideoHint, videoHint } from './styles/MediaGallery.styles';
 
 export interface RemoteVideoTileProps {

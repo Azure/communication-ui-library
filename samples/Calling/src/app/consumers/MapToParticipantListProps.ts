@@ -5,7 +5,7 @@ import {
   useCallContext,
   ListParticipant,
   convertSdkRemoteParticipantToListParticipant
-} from 'react-components';
+} from 'react-composites';
 
 type ParticipantListContainerProps = {
   remoteParticipants: ListParticipant[];

@@ -63,6 +63,7 @@
     "preval.macro": "^5.0.0",
     "react": "^16.13.1",
     "react-components": "1.0.0-beta",
+    "react-composites": "1.0.0-beta",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^4.0.2",

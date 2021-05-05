@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { chatScreenBottomContainerStyle, chatScreenContainerStyle } from './styles/ChatScreen.styles';
 import { Stack } from '@fluentui/react';
 import { onRenderAvatar } from './Avatar';
-import { useChatClient, useChatThreadClient, useThreadId } from 'react-components';
+import { useChatClient, useChatThreadClient, useThreadId } from 'react-composites';
 import { ChatHeader } from './ChatHeader';
 import { ChatArea } from './ChatArea';
 import { SidePanel, SidePanelTypes } from './SidePanel';

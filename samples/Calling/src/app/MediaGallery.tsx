@@ -1,16 +1,14 @@
 // © Microsoft Corporation. All rights reserved.
 
 import React, { useMemo } from 'react';
+import { StreamMedia, VideoTile, GridLayout } from 'react-components';
 import {
   connectFuncsToContext,
-  StreamMedia,
-  VideoTile,
-  GridLayout,
   MapToLocalVideoProps,
   convertSdkRemoteParticipantToGalleryParticipant,
   ErrorHandlingProps,
   WithErrorHandling
-} from 'react-components';
+} from 'react-composites';
 import { MapToMediaGalleryProps, MediaGalleryContainerProps } from './consumers/MapToMediaGalleryProps';
 import { Label, mergeStyles, Stack } from '@fluentui/react';
 import ScreenShareComponent from './ScreenShare';

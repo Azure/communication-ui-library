@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
 import { CallState, HangUpOptions } from '@azure/communication-calling';
-import { useCallAgent, useGroupCall, useCallContext, useCallingContext } from 'react-components';
+import { useCallAgent, useGroupCall, useCallContext, useCallingContext } from 'react-composites';
 
 export type GroupCallContainerProps = {
   callAgentSubscribed: boolean;

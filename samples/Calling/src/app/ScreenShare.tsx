@@ -4,7 +4,7 @@ import React from 'react';
 import { Spinner, SpinnerSize } from '@fluentui/react';
 import { loadingStyle, videoStreamStyle } from './styles/ScreenShare.styles';
 
-import { connectFuncsToContext } from 'react-components';
+import { connectFuncsToContext } from 'react-composites';
 import { MapToScreenShareProps, ScreenShareContainerProps } from './consumers/MapToScreenShareProps';
 import { StreamMedia, VideoTile } from 'react-components';
 

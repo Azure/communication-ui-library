@@ -5,7 +5,7 @@ import {
   convertSdkRemoteParticipantToGalleryParticipant,
   useRemoteVideoStreamRenderer,
   ParticipantStream
-} from 'react-components';
+} from 'react-composites';
 import { ScalingMode } from '@azure/communication-calling';
 
 export type ScreenShareContainerProps = {
