@@ -59,6 +59,8 @@ export const LocalPreviewExample = (props: LocalPreviewProps): JSX.Element => {
       <VideoTile
         styles={videoTileStyle}
         isVideoReady={isVideoReady}
+        // Here this storybook example isn't connected with Azure Communication Services
+        // We would suggest you replace this videoStreamElement below with a rendered video stream from the calling SDK
         videoProvider={<StreamMedia videoStreamElement={renderVideoStream()} />}
         placeholderProvider={
           <Image
