@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Removed SwitchableFluentThemeProvider, ThemeSelector, and ThemeToggler",
+  "packageName": "@azure/communication-ui",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
