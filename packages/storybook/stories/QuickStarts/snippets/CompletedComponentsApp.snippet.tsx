@@ -4,7 +4,7 @@ import React from 'react';
 import { CallingComponents } from './CallingComponents.snippet';
 import { ChatComponents } from './ChatComponents.snippet';
 
-function CompletedComponentsApp() {
+function CompletedComponentsApp(): JSX.Element {
   return (
     <FluentThemeProvider>
       <Stack
