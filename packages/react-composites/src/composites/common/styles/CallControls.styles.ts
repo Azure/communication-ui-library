@@ -9,7 +9,7 @@ export const groupCallLeaveButtonStyle = {
     background: palette.red,
     border: '0.125rem',
     borderRadius: 2,
-    margin: '.75rem',
+    marginRight: '.75rem',
     height: '2.1875rem',
     width: '6.5625rem',
     color: palette.white
