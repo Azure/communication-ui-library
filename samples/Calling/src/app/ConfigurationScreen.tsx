@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
 import React, { useState } from 'react';
-import { connectFuncsToContext, MapToCallConfigurationProps, SetupContainerProps } from '@azure/communication-ui';
+import { connectFuncsToContext, MapToCallConfigurationProps, SetupContainerProps } from 'react-composites';
 import { localStorageAvailable } from './utils/constants';
 import { saveDisplayNameToLocalStorage } from './utils/AppUtils';
 import { DisplayNameField } from './DisplayNameField';

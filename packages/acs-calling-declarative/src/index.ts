@@ -2,13 +2,15 @@
 export { callClientDeclaratify } from './CallClientDeclarative';
 export type { DeclarativeCallClient } from './CallClientDeclarative';
 export type {
-  DeviceManagerState,
-  CallClientState,
   Call,
+  CallAgent,
+  CallClientState,
+  DeviceManager,
   IncomingCall,
   LocalVideoStream,
-  RemoteVideoStream,
   RemoteParticipant,
+  RemoteVideoStream,
   VideoStreamRendererView,
-  RecordingCallFeature
+  RecordingCallFeature,
+  TranscriptionCallFeature
 } from './CallClientState';

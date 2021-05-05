@@ -1,7 +1,7 @@
 // LobbyControlBar.example.tsx
 
 import React from 'react';
-import { CameraButton, ControlBar, EndCallButton, MicrophoneButton, OptionsButton } from '@azure/communication-ui';
+import { CameraButton, ControlBar, EndCallButton, MicrophoneButton, OptionsButton } from 'react-components';
 import { useTheme } from '@fluentui/react-theme-provider';
 
 export const LobbyCallControlBar = (): JSX.Element => {

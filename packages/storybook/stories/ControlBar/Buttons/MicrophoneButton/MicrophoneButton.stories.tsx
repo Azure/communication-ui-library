@@ -2,7 +2,7 @@
 
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { MicrophoneButton } from '@azure/communication-ui';
+import { MicrophoneButton } from 'react-components';
 import { boolean } from '@storybook/addon-knobs';
 import { getDocs } from './MicrophoneButtonDocs';
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';

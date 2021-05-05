@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Adding custom palette color and fixing lobby example theming",
-  "packageName": "@azure/communication-ui",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

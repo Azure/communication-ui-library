@@ -2,7 +2,7 @@
 
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
-import { CommunicationUiErrorSeverity, ErrorBar as ErrorBarComponent } from '@azure/communication-ui';
+import { CommunicationUiErrorSeverity, ErrorBar as ErrorBarComponent } from 'react-components';
 import { text, select } from '@storybook/addon-knobs';
 import { getDocs } from './ErrorBarDocs';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';

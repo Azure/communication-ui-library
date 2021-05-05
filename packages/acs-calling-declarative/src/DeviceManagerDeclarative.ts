@@ -17,11 +17,11 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
     this._deviceManager = deviceManager;
     this._context = context;
 
-    this.setDeviceManagerState();
+    this.setDeviceManager();
     this.subscribe();
   }
 
-  private setDeviceManagerState = (): void => {
+  private setDeviceManager = (): void => {
     // isSpeakerSelectionAvailable, selectedMicrophone, and selectedSpeaker are properties on DeviceManager. Since they
     // are not functions we can't proxy them so we'll update whenever we think they may need updating such as at
     // construction time or when certain events happen.
@@ -108,7 +108,7 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
         return (...args: Parameters<DeviceManager['askDevicePermission']>): Promise<DeviceAccess> => {
           return target.askDevicePermission(...args).then((deviceAccess: DeviceAccess) => {
             this._context.setDeviceManagerDeviceAccess(deviceAccess);
-            this.setDeviceManagerState();
+            this.setDeviceManager();
             return deviceAccess;
           });
         };

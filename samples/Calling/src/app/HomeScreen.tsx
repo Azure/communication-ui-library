@@ -16,7 +16,7 @@ import {
   upperStackStyle,
   listItemStyle
 } from './styles/HomeScreen.styles';
-import { ThemeSelector } from '@azure/communication-ui';
+import { ThemeSelector } from 'react-components';
 
 export interface HomeScreenProps {
   startCallHandler(): void;

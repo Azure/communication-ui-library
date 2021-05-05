@@ -12,7 +12,7 @@ import {
   mediaGalleryHeightOptions,
   COMPONENT_FOLDER_PREFIX
 } from '../constants';
-import { GridLayout as GridLayoutComponent, VideoTile, StreamMedia } from '@azure/communication-ui';
+import { GridLayout as GridLayoutComponent, VideoTile, StreamMedia } from 'react-components';
 import { renderVideoStream } from '../utils';
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
