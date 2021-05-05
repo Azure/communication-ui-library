@@ -2,7 +2,7 @@
 
 import { Canvas, Description, Heading, Props, Source, Title, Subheading } from '@storybook/addon-docs/blocks';
 import React from 'react';
-import { VideoTile } from '../../../react-components/src';
+import { VideoTile } from 'react-components';
 import { VideoTileExample } from './snippets/VideoTile.snippet';
 const VideoTileExampleText = require('!!raw-loader!./snippets/VideoTile.snippet').default;
 import { VideoTilePlaceholderExample } from './snippets/VideoTilePlaceholder.snippet';
