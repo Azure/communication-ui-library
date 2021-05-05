@@ -11,7 +11,7 @@ import {
 import { Footer } from './Footer';
 import { LocalDeviceSettings } from './LocalDeviceSettings';
 import { ParticipantStack } from './ParticipantStack';
-import { ThemeSelector } from '@azure/communication-ui';
+import { ThemeSelector } from './ThemeSelector';
 
 export enum CommandPanelTypes {
   None = 'none',

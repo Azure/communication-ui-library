@@ -304,23 +304,6 @@ export interface StreamMediaProps {
     videoStreamElement: HTMLElement | null;
 }
 
-// @public
-export interface SwitchableFluentThemeContext {
-    currentTheme: NamedTheme;
-    setCurrentTheme: (namedTheme: NamedTheme) => void;
-    themeStore: ThemeCollection;
-}
-
-// @public
-export const SwitchableFluentThemeProvider: (props: SwitchableFluentThemeProviderProps) => JSX.Element;
-
-// @public
-export interface SwitchableFluentThemeProviderProps {
-    children: React_2.ReactNode;
-    scopeId: string;
-    themes?: ThemeCollection;
-}
-
 // @public (undocumented)
 export type SystemMessage = Message<'system'>;
 
@@ -333,26 +316,6 @@ export type SystemMessagePayload = {
 
 // @public
 export type ThemeCollection = Record<string, NamedTheme>;
-
-// @public
-export const ThemeSelector: (props: ThemeSelectorProps) => JSX.Element;
-
-// @public
-export interface ThemeSelectorProps {
-    horizontal?: boolean;
-    label?: string;
-}
-
-// @public
-export const ThemeToggler: (props: ThemeTogglerProps) => JSX.Element;
-
-// @public
-export interface ThemeTogglerProps {
-    label?: string;
-    layout?: string;
-    offTheme?: NamedTheme;
-    onTheme?: NamedTheme;
-}
 
 // @public
 export const TypingIndicator: (props: TypingIndicatorProps) => JSX.Element;
@@ -370,9 +333,6 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
 }
-
-// @public
-export const useSwitchableFluentTheme: () => SwitchableFluentThemeContext;
 
 // @public (undocumented)
 export const VideoTile: (props: VideoTileProps & PlaceholderProps) => JSX.Element;

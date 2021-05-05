@@ -1,9 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
 import React, { useState, useMemo, createContext, useContext } from 'react';
-import { NamedTheme, ThemeCollection } from '../types';
-import { defaultThemes } from '../constants';
-import { FluentThemeProvider } from './FluentThemeProvider';
+import { FluentThemeProvider, defaultThemes, NamedTheme, ThemeCollection } from '@azure/communication-ui';
 
 const defaultTheme: NamedTheme = defaultThemes.light;
 

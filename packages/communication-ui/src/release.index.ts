@@ -10,7 +10,6 @@
 export * from './components';
 export * from './constants/themes';
 export * from './providers/FluentThemeProvider';
-export * from './providers/SwitchableFluentThemeProvider';
 
 export type {
   BaseCustomStylesProps,
