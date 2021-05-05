@@ -7,6 +7,7 @@ import * as callingDeclarative from '@azure/acs-calling-declarative';
 // @ts-ignore
 import { BaseSelectorProps } from './baseSelectors';
 import { getCall, getDeviceManager } from './baseSelectors';
+// @ts-ignore
 import { AudioDeviceInfo, VideoDeviceInfo } from '@azure/communication-calling';
 
 export const microphoneButtonSelector = reselect.createSelector([getCall], (call) => {
@@ -27,12 +28,11 @@ export const screenShareButtonSelector = reselect.createSelector([getCall], (cal
   };
 });
 
-export const optionsButtonSelector = reselect.createSelector([getDeviceManager, getCall], (deviceManager, call): {
-  selectedMicrophone: AudioDeviceInfo | undefined;
-  selectedSpeaker: AudioDeviceInfo | undefined;
-  selectedCamera: VideoDeviceInfo | undefined;
-} => {
+export const optionsButtonSelector = reselect.createSelector([getDeviceManager, getCall], (deviceManager, call) => {
   return {
+    microphones: deviceManager.microphones,
+    speakers: deviceManager.speakers,
+    cameras: deviceManager.cameras,
     selectedMicrophone: deviceManager.selectedMicrophone,
     selectedSpeaker: deviceManager.selectedSpeaker,
     selectedCamera: call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video')?.source

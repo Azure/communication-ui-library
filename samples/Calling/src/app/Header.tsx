@@ -12,8 +12,9 @@ import {
   separatorStyles
 } from './styles/Header.styles';
 
-import { MINI_HEADER_WINDOW_WIDTH, GroupCallControlBarComponent } from '@azure/communication-ui';
+import { MINI_HEADER_WINDOW_WIDTH } from '@azure/communication-ui';
 import { CommandPanelTypes } from './CommandPanel';
+import { CallControls } from './CallControls';
 
 export interface HeaderProps {
   selectedPane: CommandPanelTypes;
@@ -75,10 +76,11 @@ export const Header = (props: HeaderProps): JSX.Element => {
           <Separator styles={separatorStyles} vertical={true} />
         </div>
       )}
-      <GroupCallControlBarComponent
+      {/* <GroupCallControlBarComponent
         onEndCallClick={props.endCallHandler}
         compressedMode={props.screenWidth <= MINI_HEADER_WINDOW_WIDTH}
-      />
+      /> */}
+      <CallControls />
     </Stack>
   );
 };

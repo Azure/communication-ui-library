@@ -1,8 +1,13 @@
 // © Microsoft Corporation. All rights reserved.
 
 import { CallClientState } from '@azure/acs-calling-declarative';
-import { videoGallerySelector } from '@azure/acs-calling-selector';
-import { VideoGallery } from '@azure/communication-ui';
+import {
+  cameraButtonSelector,
+  microphoneButtonSelector,
+  screenShareButtonSelector,
+  videoGallerySelector
+} from '@azure/acs-calling-selector';
+import { CameraButton, MicrophoneButton, ScreenShareButton, VideoGallery } from '@azure/communication-ui';
 
 import React from 'react';
 import { useHandlers } from './useHandlers';
@@ -20,6 +25,12 @@ export const getSelector = (component: React.FunctionComponent<any>): Selector =
   switch (component) {
     case VideoGallery:
       return videoGallerySelector;
+    case MicrophoneButton:
+      return microphoneButtonSelector;
+    case CameraButton:
+      return cameraButtonSelector;
+    case ScreenShareButton:
+      return screenShareButtonSelector;
   }
   throw 'Can\'t find corresponding selector for this component. Please check the supported components from Azure Communication UI Feature Component List.';
 };

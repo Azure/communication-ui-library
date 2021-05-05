@@ -29,6 +29,7 @@ export const CameraButton: (props: CameraButtonProps) => JSX.Element;
 
 // @public
 export interface CameraButtonProps extends IButtonProps {
+    onToggleCamera?: () => Promise<void>;
     showLabel?: boolean;
 }
 
@@ -93,6 +94,7 @@ export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
 
 // @public
 export interface EndCallButtonProps extends IButtonProps {
+    onHangUp?: () => Promise<void>;
     showLabel?: boolean;
 }
 
@@ -223,6 +225,7 @@ export const MicrophoneButton: (props: MicrophoneButtonProps) => JSX.Element;
 
 // @public
 export interface MicrophoneButtonProps extends IButtonProps {
+    onToggleMicrophone?: () => Promise<void>;
     showLabel?: boolean;
 }
 
@@ -288,6 +291,7 @@ export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
 
 // @public
 export interface ScreenShareButtonProps extends IButtonProps {
+    onToggleScreenShare?: () => Promise<void>;
     showLabel?: boolean;
 }
 

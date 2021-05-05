@@ -2,10 +2,21 @@
 import {
   Call,
   CallAgent,
+  CallApiFeature,
+  CallFeatureFactoryType,
+  Features,
   IncomingCall,
   LocalVideoStream,
+  PropertyChangedEvent,
+  RecordingCallFeature,
   RemoteParticipant,
-  RemoteVideoStream
+  RemoteVideoStream,
+  TranscriptionCallFeature,
+  Transfer,
+  TransferCallFeature,
+  TransferRequestedEvent,
+  TransferToParticipant,
+  TransferToParticipantOptions
 } from '@azure/communication-calling';
 import EventEmitter from 'events';
 
@@ -47,9 +58,47 @@ export class MockCommunicationUserCredential {
   public dispose(): void {}
 }
 
-export function addMockEmitter(
-  object: MockCall | MockCallAgent | MockRemoteParticipant | MockRemoteVideoStream | MockIncomingCall
-): any {
+export class MockRecordingCallFeatureImpl implements RecordingCallFeature {
+  public name = 'Recording';
+  public isRecordingActive = false;
+  public emitter = new EventEmitter();
+  on(event: 'isRecordingActiveChanged', listener: PropertyChangedEvent): void {
+    this.emitter.on(event, listener);
+  }
+  off(event: 'isRecordingActiveChanged', listener: PropertyChangedEvent): void {
+    this.emitter.off(event, listener);
+  }
+}
+
+export class MockTransferCallFeatureImpl implements TransferCallFeature {
+  public name = 'Transfer';
+  public emitter = new EventEmitter();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  transfer(target: TransferToParticipant, transferOptions?: TransferToParticipantOptions): Transfer {
+    throw new Error('Method not implemented.');
+  }
+  on(event: 'transferRequested', listener: TransferRequestedEvent): void {
+    this.emitter.on(event, listener);
+  }
+  off(event: 'transferRequested', listener: TransferRequestedEvent): void {
+    this.emitter.off(event, listener);
+  }
+}
+
+export class MockTranscriptionCallFeatureImpl implements TranscriptionCallFeature {
+  public name = 'Transcription';
+  public isTranscriptionActive = false;
+  public emitter = new EventEmitter();
+  on(event: 'isTranscriptionActiveChanged', listener: PropertyChangedEvent): void {
+    this.emitter.on(event, listener);
+  }
+  off(event: 'isTranscriptionActiveChanged', listener: PropertyChangedEvent): void {
+    this.emitter.off(event, listener);
+  }
+}
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function addMockEmitter(object: any): any {
   object.emitter = new EventEmitter();
   object.on = (event: any, listener: any): void => {
     object.emitter.on(event, listener);
@@ -67,7 +116,8 @@ export function createMockCall(mockCallId: string): MockCall {
   const mockCall = {
     id: mockCallId,
     remoteParticipants: [] as ReadonlyArray<RemoteParticipant>,
-    localVideoStreams: [] as ReadonlyArray<LocalVideoStream>
+    localVideoStreams: [] as ReadonlyArray<LocalVideoStream>,
+    api: createMockApiFeatures(false, new Map<string, any>())
   } as MockCall;
   return addMockEmitter(mockCall);
 }
@@ -88,6 +138,36 @@ export function createMockIncomingCall(mockCallId: string): MockIncomingCall {
 export function createMockRemoteVideoStream(mockIsAvailable: boolean): MockRemoteVideoStream {
   const mockRemoteVideoStream = { isAvailable: mockIsAvailable } as MockRemoteVideoStream;
   return addMockEmitter(mockRemoteVideoStream);
+}
+
+export const MOCK_RECORDING_NAME = 'Recording';
+
+/**
+ * Create a mockApiFeatures function see {@Link @azure/communication-calling#Call.api}. If cache is passed in, will try
+ * to return existing cached TFeatures else create new TFeature, cache it, and then return it.
+ *
+ * @param isRecording
+ * @param cache
+ * @returns
+ */
+export function createMockApiFeatures(
+  isRecording: boolean,
+  cache: Map<string, any>
+): <FeatureT extends CallApiFeature>(cls: CallFeatureFactoryType<FeatureT>) => FeatureT {
+  return <FeatureT extends CallApiFeature>(cls: CallFeatureFactoryType<FeatureT>): FeatureT => {
+    if (typeof cls === typeof Features.Recording) {
+      if (cache.has(MOCK_RECORDING_NAME)) {
+        return cache.get(MOCK_RECORDING_NAME);
+      }
+      const recording = addMockEmitter({
+        isRecordingActive: isRecording
+      });
+      cache.set(MOCK_RECORDING_NAME, recording);
+      return recording;
+    } else {
+      throw new Error('Not implemented');
+    }
+  };
 }
 
 function waitMilliseconds(duration: number): Promise<void> {

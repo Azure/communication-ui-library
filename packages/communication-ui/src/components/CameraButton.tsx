@@ -14,6 +14,12 @@ export interface CameraButtonProps extends IButtonProps {
    * @defaultValue `false`
    */
   showLabel?: boolean;
+
+  /**
+   * Utility property for using this component with `communication react eventHandlers`.
+   * Maps directly to the `onClick` property.
+   */
+  onToggleCamera?: () => Promise<void>;
 }
 
 /**
@@ -40,6 +46,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   return (
     <DefaultButton
       {...props}
+      onClick={props.onToggleCamera ?? props.onClick}
       styles={componentStyles}
       onRenderIcon={onRenderIcon ?? defaultRenderIcon}
       onRenderText={showLabel ? onRenderText ?? defaultRenderText : undefined}
