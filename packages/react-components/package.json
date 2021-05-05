@@ -27,7 +27,6 @@
     "postpack": "node scripts/restore-pkg && copyfiles -E \"./*.tgz\" private-preview && copyfiles -u 2 -E \"docs/private-preview/README.md\" private-preview"
   },
   "dependencies": {
-    "@azure/acs-chat-selector": "~1.0.0-beta",
     "@fluentui/react": "^7.117.1",
     "@fluentui/react-icons": "^0.3.9",
     "@fluentui/react-icons-northstar": "^0.51.2",
