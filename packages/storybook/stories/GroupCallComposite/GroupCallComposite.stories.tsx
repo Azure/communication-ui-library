@@ -8,7 +8,7 @@ import { v1 as createGUID } from 'uuid';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-administration';
 import { getDocs } from './GroupCallCompositeDocs';
 import { GroupCall as GroupCallComposite } from 'react-composites';
-import { COMPOSITE_FOLDER_PREFIX } from '../constants';
+import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE, COMPOSITE_FOLDER_PREFIX } from '../constants';
 import {
   CompositeConnectionParamsErrMessage,
   COMPOSITE_STRING_CONNECTIONSTRING,
@@ -64,16 +64,7 @@ export const GroupCall: () => JSX.Element = () => {
   }, [connectionString]);
 
   return (
-    <div
-      style={{
-        width: '100%',
-        height: '100%',
-        maxWidth: '55rem',
-        maxHeight: '30.0625rem',
-        margin: '20px auto',
-        border: '1px solid'
-      }}
-    >
+    <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
       {connectionString && (
         <GroupCallComposite
           displayName={`user${Math.ceil(Math.random() * 1000)}`}
