@@ -13,7 +13,7 @@ export const CustomScreenShareButtonExample: () => JSX.Element = () => {
 
   const customOnRenderText = (props?: IButtonProps): JSX.Element => {
     if (props?.checked) {
-      return <Text style={{ fontStyle: 'italic' }}>sharing screen</Text>;
+      return <Label style={{ fontStyle: 'italic' }}>sharing screen</Label>;
     }
 
     return <Label>not sharing screen</Label>;

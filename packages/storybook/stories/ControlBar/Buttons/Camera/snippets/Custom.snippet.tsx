@@ -13,10 +13,10 @@ export const CustomCameraButtonExample: () => JSX.Element = () => {
 
   const customOnRenderText = (props?: IButtonProps): JSX.Element => {
     if (props?.checked) {
-      return <Text style={{ fontStyle: 'italic' }}>Turn off</Text>;
+      return <Label style={{ fontStyle: 'italic' }}>Turn off</Label>;
     }
 
-    return <Label key={'micCustomLabel'}>Turn on</Label>;
+    return <Label>Turn on</Label>;
   };
 
   return (
