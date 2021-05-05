@@ -1,7 +1,10 @@
 {
   "extends": "../../common/config/tsc/tsconfig.json",
   "compilerOptions": {
-    "outDir": "./dist/dist-esm"
+    "outDir": "./dist/dist-esm",
+    "paths": {
+      "@azure/acs-chat-selector": ["../acs-chat-selector/src/"]
+    }
   },
   "typeRoots": ["./node_modules/@types"],
   "include": ["src/**/*"],

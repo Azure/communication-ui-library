@@ -28,6 +28,7 @@ dependencies:
   '@rush-temp/build-tools': file:projects/build-tools.tgz_typescript@4.1.5
   '@rush-temp/calling': file:projects/calling.tgz_570bf42e92a70fb216c5cd4d5ed668ef
   '@rush-temp/chat': file:projects/chat.tgz_40b0c9f7a7a0fac66e4b6fcf06de2a42
+  '@rush-temp/communication-react': file:projects/communication-react.tgz_b0d7ca8a0459a1df1ff516252688d92a
   '@rush-temp/communication-ui': file:projects/communication-ui.tgz_webpack-cli@4.5.0
   '@rush-temp/one-to-one-call': file:projects/one-to-one-call.tgz_570bf42e92a70fb216c5cd4d5ed668ef
   '@rush-temp/server': file:projects/server.tgz
@@ -38,6 +39,10 @@ dependencies:
   '@storybook/addon-knobs': 6.1.21_30bc4764d4ba778218056aab0be8023f
   '@storybook/addon-links': 6.1.21_react-dom@16.14.0+react@16.14.0
   '@storybook/addon-storyshots': 6.1.21_bf4eba619a81a338b8fdba9794ec01fe
+  '@storybook/addons': 6.2.9_react-dom@16.14.0+react@16.14.0
+  '@storybook/api': 6.2.9_react-dom@16.14.0+react@16.14.0
+  '@storybook/components': 6.2.9_30bc4764d4ba778218056aab0be8023f
+  '@storybook/core-events': 6.2.9
   '@storybook/node-logger': 6.1.21
   '@storybook/react': 6.1.21_4afa15f3c90940bbd828a24f4067472e
   '@storybook/storybook-deployer': 2.8.7
@@ -16616,7 +16621,7 @@ packages:
       integrity: sha512-7gcIUvJkAXXttt1fmBK9cwn+1jTa4hbKLGCZ9J1U6EOkyb2/+LKL1Z28d9rtDLMnpvImlNlLPdTPooorl5cpmg==
   /react-popper-tooltip/3.1.1_react-dom@16.14.0+react@16.14.0:
     dependencies:
-      '@babel/runtime': 7.13.10
+      '@babel/runtime': 7.13.17
       '@popperjs/core': 2.9.1
       react: 16.14.0
       react-dom: 16.14.0_react@16.14.0
@@ -16805,7 +16810,7 @@ packages:
       integrity: sha512-tL4sCgfmvapYRZ1FO2VmBmjPVzzqgHA7kI8lSJ6JS6L78jXFNRdOZFpXyK6P1NBZvKPPCZxReNgzZNUajAerZw==
   /react-syntax-highlighter/13.5.3_react@16.14.0:
     dependencies:
-      '@babel/runtime': 7.13.10
+      '@babel/runtime': 7.13.17
       highlight.js: 10.6.0
       lowlight: 1.19.0
       prismjs: 1.23.0
@@ -16830,7 +16835,7 @@ packages:
       integrity: sha512-L8yPjqPE5CZO6rKsKXRO/rVPiaCOy0tQQJbC+UjPNlobl5mad59lvPjwFsQHTvL03caVDIVr9x9/OSgDe6I5Eg==
   /react-textarea-autosize/8.3.2_f650913bea380c685c20f94e5dc2f677:
     dependencies:
-      '@babel/runtime': 7.13.10
+      '@babel/runtime': 7.13.17
       react: 16.14.0
       use-composed-ref: 1.1.0_react@16.14.0
       use-latest: 1.2.0_f650913bea380c685c20f94e5dc2f677
@@ -20879,6 +20884,27 @@ packages:
       integrity: sha512-epzsbDyJdbBCDktJyN/lSv7X9MXrgCB3C5eHnVOtwawx4grtWsZMKMbP3CjaKjg7nyl/pczfPTb+TVGBEYnLAw==
       tarball: file:projects/chat.tgz
     version: 0.0.0
+  file:projects/communication-react.tgz_b0d7ca8a0459a1df1ff516252688d92a:
+    dependencies:
+      '@fluentui/react': 7.164.1_b0d7ca8a0459a1df1ff516252688d92a
+      '@fluentui/react-icons': 0.3.10_b0d7ca8a0459a1df1ff516252688d92a
+      '@fluentui/react-icons-northstar': 0.51.7_b0d7ca8a0459a1df1ff516252688d92a
+      '@fluentui/react-northstar': 0.51.7_b0d7ca8a0459a1df1ff516252688d92a
+      '@fluentui/react-theme-provider': 0.18.5_b0d7ca8a0459a1df1ff516252688d92a
+      react-aria-live: 2.0.5_react@16.14.0
+      react-linkify: 1.0.0-alpha
+    dev: false
+    id: file:projects/communication-react.tgz
+    name: '@rush-temp/communication-react'
+    peerDependencies:
+      '@types/react': '*'
+      '@types/react-dom': '*'
+      react: '*'
+      react-dom: '*'
+    resolution:
+      integrity: sha512-Hy5KJ5320pwt+cbKtEd7ezvCM+Y03GJd+4MpJPd8cmqCXdwhw4jR5dKFDnMY4+SNbK70Eb+hNry/puufsmxK+Q==
+      tarball: file:projects/communication-react.tgz
+    version: 0.0.0
   file:projects/communication-ui.tgz_webpack-cli@4.5.0:
     dependencies:
       '@azure/communication-administration': 1.0.0-beta.3
@@ -21191,7 +21217,7 @@ packages:
     peerDependencies:
       webpack-cli: '*'
     resolution:
-      integrity: sha512-UlApYfT1mmhLpMrV2E0qILycrKVR65FYQr1A91vpFvVXqFB0fzDTszXnrnWcJQSWNnnSGRCGdZS+ymtdmjo5qw==
+      integrity: sha512-WQdccpypge1hzrxraF5Z5ksMH16aptSM7OdipBEYCK4lwSap3xB54fBOOfnoStnhb9O/Ga2CgkapPERNyaHu7A==
       tarball: file:projects/storybook.tgz
     version: 0.0.0
 registry: ''
@@ -21225,6 +21251,7 @@ specifiers:
   '@rush-temp/build-tools': file:./projects/build-tools.tgz
   '@rush-temp/calling': file:./projects/calling.tgz
   '@rush-temp/chat': file:./projects/chat.tgz
+  '@rush-temp/communication-react': file:./projects/communication-react.tgz
   '@rush-temp/communication-ui': file:./projects/communication-ui.tgz
   '@rush-temp/one-to-one-call': file:./projects/one-to-one-call.tgz
   '@rush-temp/server': file:./projects/server.tgz
@@ -21235,6 +21262,10 @@ specifiers:
   '@storybook/addon-knobs': ~6.1.9
   '@storybook/addon-links': ~6.1.1
   '@storybook/addon-storyshots': ~6.1.6
+  '@storybook/addons': ^6.2.5
+  '@storybook/api': ^6.2.5
+  '@storybook/components': ^6.2.5
+  '@storybook/core-events': ^6.2.5
   '@storybook/node-logger': ~6.1.1
   '@storybook/react': ~6.1.1
   '@storybook/storybook-deployer': ~2.8.7

@@ -18,59 +18,52 @@
   "telemetryEnabled": false,
   "projects": [
     {
+      "packageName": "@azure/communication-react",
+      "projectFolder": "packages/communication-react"
+    },
+    {
       "packageName": "@azure/communication-ui",
-      "projectFolder": "packages/communication-ui",
-      "reviewCategory": "production"
+      "projectFolder": "packages/communication-ui"
     },
     {
       "packageName": "@azure/acs-chat-declarative",
-      "projectFolder": "packages/acs-chat-declarative",
-      "reviewCategory": "prototypes"
+      "projectFolder": "packages/acs-chat-declarative"
     },
     {
       "packageName": "@azure/acs-chat-selector",
-      "projectFolder": "packages/acs-chat-selector",
-      "reviewCategory": "prototypes"
+      "projectFolder": "packages/acs-chat-selector"
     },
     {
       "packageName": "@azure/acs-calling-declarative",
-      "projectFolder": "packages/acs-calling-declarative",
-      "reviewCategory": "prototypes"
+      "projectFolder": "packages/acs-calling-declarative"
     },
     {
       "packageName": "@azure/acs-calling-selector",
-      "projectFolder": "packages/acs-calling-selector",
-      "reviewCategory": "prototypes"
+      "projectFolder": "packages/acs-calling-selector"
     },
     {
       "packageName": "calling",
-      "projectFolder": "samples/Calling",
-      "reviewCategory": "prototypes"
+      "projectFolder": "samples/Calling"
     },
     {
       "packageName": "chat",
-      "projectFolder": "samples/Chat",
-      "reviewCategory": "prototypes"
+      "projectFolder": "samples/Chat"
     },
     {
       "packageName": "one-to-one-call",
-      "projectFolder": "samples/OneToOneCall",
-      "reviewCategory": "prototypes"
+      "projectFolder": "samples/OneToOneCall"
     },
     {
       "packageName": "server",
-      "projectFolder": "samples/Server",
-      "reviewCategory": "prototypes"
+      "projectFolder": "samples/Server"
     },
     {
       "packageName": "storybook",
-      "projectFolder": "packages/storybook",
-      "reviewCategory": "tools"
+      "projectFolder": "packages/storybook"
     },
     {
       "packageName": "build-tools",
-      "projectFolder": "common/config",
-      "reviewCategory": "tools"
+      "projectFolder": "common/config"
     }
   ]
 }
