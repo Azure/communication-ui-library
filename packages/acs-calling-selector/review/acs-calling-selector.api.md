@@ -85,7 +85,7 @@ export const optionsButtonSelector: reselect.OutputParametricSelector<callingDec
     selectedMicrophone: AudioDeviceInfo | undefined;
     selectedSpeaker: AudioDeviceInfo | undefined;
     selectedCamera: VideoDeviceInfo | undefined;
-}, (res1: callingDeclarative.DeviceManagerState, res2: callingDeclarative.Call | undefined) => {
+}, (res1: callingDeclarative.DeviceManager, res2: callingDeclarative.Call | undefined) => {
     microphones: AudioDeviceInfo[];
     speakers: AudioDeviceInfo[];
     cameras: VideoDeviceInfo[];

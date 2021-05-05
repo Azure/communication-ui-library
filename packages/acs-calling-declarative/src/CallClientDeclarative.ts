@@ -118,8 +118,9 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
  * to state in a declarative way.
  *
  * @param callClient - CallClient from SDK to declaratify
- * @param userId - UserId from SDK (optional - not used internally by the stateful client) (this is provided for
- *   developer convenience to easily access the userId from the state)
+ * @param userId - UserId from SDK. This is provided for developer convenience to easily access the userId from the
+ *   state. It is not used by DeclarativeCallClient so if you do not have this value or do not want to use this value,
+ *   you could pass any dummy value like empty string.
  */
 export const callClientDeclaratify = (callClient: CallClient, userId: string): DeclarativeCallClient => {
   const context: CallContext = new CallContext(userId);
