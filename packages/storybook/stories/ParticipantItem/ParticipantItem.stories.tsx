@@ -4,7 +4,7 @@ import React from 'react';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
 import { Meta } from '@storybook/react/types-6-0';
 import { boolean, text } from '@storybook/addon-knobs';
-import { ParticipantItem } from '@azure/communication-ui';
+import { ParticipantItem } from 'react-components';
 import { getDocs } from './ParticipantItemDocs';
 import { Stack } from '@fluentui/react';
 import { MicOffIcon, CallControlPresentNewIcon } from '@fluentui/react-northstar';

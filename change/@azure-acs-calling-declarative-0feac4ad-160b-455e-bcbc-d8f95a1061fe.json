@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Surface userId and displayName in Calling Declarative state",
+  "packageName": "@azure/acs-calling-declarative",
+  "email": "allenhwang@microsoft.com",
+  "dependentChangeType": "patch"
+}

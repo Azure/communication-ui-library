@@ -24,6 +24,12 @@ export interface DeclarativeCallClient extends CallClient {
    */
   onStateChange(handler: (state: CallClientState) => void): void;
   /**
+   * Allows unregistering for 'stateChanged' events.
+   *
+   * @param handler - Original callback to be unsubscribed.
+   */
+  offStateChange(handler: (state: CallClientState) => void): void;
+  /**
    * Renders a {@Link RemoteVideoStream} or {@Link LocalVideoStream} and stores the resulting
    * {@Link VideoStreamRendererView} under the relevant {@Link RemoteVideoStream} or {@Link LocalVideoStream} in the
    * state. Under the hood calls {@Link @azure/communication-calling#VideoStreamRenderer.createView}.
@@ -74,6 +80,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
           // callAgent if the createCallAgent succeeds.
           const callAgent = await target.createCallAgent(...args);
           this._callAgent = callAgentDeclaratify(callAgent, this._context, this._internalContext);
+          this._context.setCallAgent({ displayName: this._callAgent.displayName });
           return this._callAgent;
         };
       }
@@ -111,9 +118,12 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
  * to state in a declarative way.
  *
  * @param callClient - CallClient from SDK to declaratify
+ * @param userId - UserId from SDK. This is provided for developer convenience to easily access the userId from the
+ *   state. It is not used by DeclarativeCallClient so if you do not have this value or do not want to use this value,
+ *   you could pass any dummy value like empty string.
  */
-export const callClientDeclaratify = (callClient: CallClient): DeclarativeCallClient => {
-  const context: CallContext = new CallContext();
+export const callClientDeclaratify = (callClient: CallClient, userId: string): DeclarativeCallClient => {
+  const context: CallContext = new CallContext(userId);
   const internalContext: InternalCallContext = new InternalCallContext();
 
   Object.defineProperty(callClient, 'state', {
@@ -123,6 +133,10 @@ export const callClientDeclaratify = (callClient: CallClient): DeclarativeCallCl
   Object.defineProperty(callClient, 'onStateChange', {
     configurable: false,
     value: (handler: (state: CallClientState) => void) => context.onStateChange(handler)
+  });
+  Object.defineProperty(callClient, 'offStateChange', {
+    configurable: false,
+    value: (handler: (state: CallClientState) => void) => context.offStateChange(handler)
   });
   Object.defineProperty(callClient, 'startRenderVideo', {
     configurable: false,

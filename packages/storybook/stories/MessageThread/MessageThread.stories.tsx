@@ -9,7 +9,7 @@ import {
   CustomMessage,
   SystemMessage,
   DefaultMessageRendererType
-} from '@azure/communication-ui';
+} from 'react-components';
 import { boolean } from '@storybook/addon-knobs';
 import { PrimaryButton, Stack } from '@fluentui/react';
 import { Divider } from '@fluentui/react-northstar';

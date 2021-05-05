@@ -22,8 +22,12 @@
       "projectFolder": "packages/communication-react"
     },
     {
-      "packageName": "@azure/communication-ui",
-      "projectFolder": "packages/communication-ui"
+      "packageName": "react-components",
+      "projectFolder": "packages/react-components"
+    },
+    {
+      "packageName": "react-composites",
+      "projectFolder": "packages/react-composites"
     },
     {
       "packageName": "@azure/acs-chat-declarative",
@@ -63,7 +67,13 @@
     },
     {
       "packageName": "build-tools",
-      "projectFolder": "common/config"
+      "projectFolder": "common/config",
+      "reviewCategory": "tools"
+    },
+    {
+      "packageName": "check-treeshaking",
+      "projectFolder": "packages/check-treeshaking",
+      "reviewCategory": "tools"
     }
   ]
 }

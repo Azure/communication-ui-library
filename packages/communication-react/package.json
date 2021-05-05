@@ -69,7 +69,6 @@
     "lint:quiet": "npm run lint -- --quiet"
   },
   "devDependencies": {
-    "@azure/communication-ui": "1.0.0-beta",
     "@microsoft/api-documenter": "~7.12.11",
     "@microsoft/api-extractor": "~7.13.2",
     "@testing-library/jest-dom": "^5.11.4",
@@ -101,6 +100,7 @@
     "react-dom": "^16.13.1",
     "react-is": "~17.0.1",
     "react": "^16.13.1",
+    "react-components": "1.0.0-beta",
     "regenerator-runtime": "^0.13.7",
     "rollup": "~2.42.4",
     "source-map-explorer": "^2.5.0",

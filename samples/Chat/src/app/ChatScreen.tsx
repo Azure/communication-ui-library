@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { chatScreenBottomContainerStyle, chatScreenContainerStyle } from './styles/ChatScreen.styles';
 import { Stack } from '@fluentui/react';
 import { onRenderAvatar } from './Avatar';
-import { useChatClient, useChatThreadClient, useThreadId } from '@azure/communication-ui';
+import { useChatClient, useChatThreadClient, useThreadId } from 'react-composites';
 import { ChatHeader } from './ChatHeader';
 import { ChatArea } from './ChatArea';
 import { SidePanel, SidePanelTypes } from './SidePanel';
@@ -63,9 +63,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     document.getElementById('sendbox')?.focus();
   }, []);
 
-  const chatHeaderProps = useSelector(chatHeaderSelector, { threadId: threadId });
+  const chatHeaderProps = useSelector(chatHeaderSelector);
   const chatHeaderHandlers = useHandlers(ChatHeader);
-  const chatParticipantProps = useSelector(chatParticipantListSelector, { threadId: threadId });
+  const chatParticipantProps = useSelector(chatParticipantListSelector);
 
   useEffect(() => {
     // We only want to check if we've fetched all the existing participants.

@@ -1,13 +1,12 @@
 import {
-  audioButtonProps,
+  CameraButton,
   ControlBar,
+  EndCallButton,
   FluentThemeProvider,
-  hangupButtonProps,
+  MicrophoneButton,
   StreamMedia,
-  videoButtonProps,
   VideoTile
-} from '@azure/communication-ui';
-import { DefaultButton } from '@fluentui/react';
+} from 'react-components';
 import React from 'react';
 import { renderVideoStream } from '../../utils';
 
@@ -31,9 +30,9 @@ export const VideoTileExample: () => JSX.Element = () => {
         styles={customStyles}
       >
         <ControlBar layout="floatingBottom" styles={controlBarStyles}>
-          <DefaultButton {...videoButtonProps} />
-          <DefaultButton {...audioButtonProps} />
-          <DefaultButton {...hangupButtonProps} />
+          <CameraButton />
+          <MicrophoneButton />
+          <EndCallButton />
         </ControlBar>
       </VideoTile>
     </FluentThemeProvider>

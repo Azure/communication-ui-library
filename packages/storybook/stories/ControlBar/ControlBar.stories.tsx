@@ -3,23 +3,15 @@
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import {
+  CameraButton,
   ControlBar,
-  audioButtonProps,
-  hangupButtonProps,
-  labeledVideoButtonProps,
-  labeledAudioButtonProps,
-  labeledScreenShareButtonProps,
-  labeledOptionsButtonProps,
-  labeledHangupButtonProps,
-  optionsButtonProps,
-  screenShareButtonProps,
-  videoButtonProps,
-  LIGHT,
-  DARK
-} from '@azure/communication-ui';
+  EndCallButton,
+  MicrophoneButton,
+  OptionsButton,
+  ScreenShareButton
+} from 'react-components';
 import { boolean, select } from '@storybook/addon-knobs';
 import { getDocs } from './ControlBarDocs';
-import { DefaultButton } from '@fluentui/react';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 
 const CONTROL_BAR_LAYOUTS = [
@@ -74,13 +66,13 @@ export const ControlBarComponent: (
 
   // This is code to set the color of the background div to show contrast to the control bar based on the theme like shown in the Figma design.
   let background = 'none';
-  if (theme === DARK) {
+  if (theme === 'dark') {
     if (layout.startsWith('floating')) {
       background = '#252423';
     } else {
       background = '#161514';
     }
-  } else if (theme === LIGHT) {
+  } else if (theme === 'light') {
     background = '#f8f8f8';
   }
 
@@ -96,17 +88,11 @@ export const ControlBarComponent: (
       }}
     >
       <ControlBar layout={layout}>
-        <DefaultButton {...(showLabels ? labeledVideoButtonProps : videoButtonProps)} checked={toggleButtons} />
-        <DefaultButton {...(showLabels ? labeledAudioButtonProps : audioButtonProps)} checked={toggleButtons} />
-        <DefaultButton
-          {...(showLabels ? labeledScreenShareButtonProps : screenShareButtonProps)}
-          checked={toggleButtons}
-        />
-        <DefaultButton
-          {...(showLabels ? labeledOptionsButtonProps : optionsButtonProps)}
-          menuProps={exampleOptionsMenuProps}
-        />
-        <DefaultButton {...(showLabels ? labeledHangupButtonProps : hangupButtonProps)} />
+        <CameraButton showLabel={showLabels} checked={toggleButtons} />
+        <MicrophoneButton showLabel={showLabels} checked={toggleButtons} />
+        <ScreenShareButton showLabel={showLabels} checked={toggleButtons} />
+        <OptionsButton showLabel={showLabels} menuProps={exampleOptionsMenuProps} />
+        <EndCallButton showLabel={showLabels} />
       </ControlBar>
     </div>
   );

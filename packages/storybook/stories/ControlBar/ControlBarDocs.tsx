@@ -2,7 +2,7 @@
 
 import { Canvas, Description, Heading, Props, Source, SourceState, Title } from '@storybook/addon-docs/blocks';
 import React from 'react';
-import { ControlBar } from '../../../communication-ui/src';
+import { ControlBar } from 'react-components';
 import { AllButtonsControlBarExample } from './snippets/AllButtonsControlBar.snippet';
 import { ControlBarLayoutExample } from './snippets/ControlBarLayout.snippet';
 import { CustomButtonsExample } from './snippets/CustomButtons.snippet';
@@ -15,7 +15,7 @@ const CustomControlBarStylesExampleText = require('!!raw-loader!./snippets/Custo
 const OptionsButtonExampleText = require('!!raw-loader!./snippets/OptionsButton.snippet.tsx').default;
 
 const importStatement = `
-import { FluentThemeProvider, ControlBar } from '@azure/communication-ui';
+import { FluentThemeProvider, ControlBar } from 'react-components';
 import { DefaultButton } from '@fluentui/react';
 `;
 
@@ -30,10 +30,10 @@ export const getDocs: () => JSX.Element = () => {
 
       <Heading>Example</Heading>
       <Description>
-        We recommend using `DefaultButton`, a
-        [Button](https://developer.microsoft.com/en-us/fluentui#/controls/web/button) component from Fluent UI, as
-        controls inside `ControlBar`. Props like `videoButtonProps` can also be imported and used as `DefaultButton`
-        props for easy icons and styling. All the available importable props are shown in the example below.
+        We recommend using our pre-defined buttons you can find [here](./?path=/docs/ui-components-controlbar-buttons)
+        or `DefaultButton`, a [Button](https://developer.microsoft.com/en-us/fluentui#/controls/web/button) component
+        from Fluent UI, as controls inside `ControlBar`. Pre-defined styles like `controlButtonStyles` or
+        `controlButtonLabelStyles` can also be imported and used as `DefaultButton` styles for easy styling.
         `FluentThemeProvider` is needed around `ControlBar` to provide theming and icons. Learn more about theming
         [here](./?path=/docs/theming--page).
       </Description>
@@ -69,9 +69,10 @@ export const getDocs: () => JSX.Element = () => {
 
       <Heading>Custom Buttons</Heading>
       <Description>
-        You can also easily change the styles of any `DefaultButton`. In the example, below we import `videoButtonProps`
-        and `audioButtonProps` for the 1st and 2nd buttons and style our own hang up button for the 3rd button. Learn
-        more about styling [here](./?path=/docs/styling--page).
+        You can also easily change the styles of included button components. They are built on Fluent UI `DefaultButton`
+        and accept all the same props. In the example below we import `CameraButton` and `MicrophoneButton` for the 1st
+        and 2nd buttons and style our own hang up button for the 3rd button. Learn more about styling
+        [here](./?path=/docs/styling--page).
       </Description>
       <Canvas withSource={SourceState.NONE}>
         <CustomButtonsExample />
@@ -80,8 +81,8 @@ export const getDocs: () => JSX.Element = () => {
 
       <Heading>Dropdown Options Button</Heading>
       <Description>
-        A `DefaultButton` can be customised to be used as a dropdown. For more information, check out the official
-        Fluent UI documentation at https://developer.microsoft.com/en-us/fluentui#/controls/web/button
+        The `OptionsButton` can be used for any dropdown items defined through `menuProps`. For more information, check
+        out the official Fluent UI documentation at https://developer.microsoft.com/en-us/fluentui#/controls/web/button
       </Description>
       <Canvas withSource={SourceState.NONE}>
         <OptionsButtonExample />
