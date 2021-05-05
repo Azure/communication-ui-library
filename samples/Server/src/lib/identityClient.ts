@@ -17,12 +17,10 @@ const getIdentityClient = (): CommunicationIdentityClient =>
 
 // replicate here to allow for mocks in tests
 export const createUser = (): Promise<CommunicationUserIdentifier> => getIdentityClient().createUser();
-// TODO: Rename to getToken
-export const issueToken = (
+export const getToken = (
   user: CommunicationUserIdentifier,
   scopes: TokenScope[],
   options?: OperationOptions
 ): Promise<CommunicationAccessToken> => getIdentityClient().getToken(user, scopes);
-// TODO: Rename to getToken
-export const createUserWithToken = (scopes: TokenScope[]): Promise<CommunicationUserToken> =>
+export const createUserAndToken = (scopes: TokenScope[]): Promise<CommunicationUserToken> =>
   getIdentityClient().createUserAndToken(scopes);

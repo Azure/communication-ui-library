@@ -5,13 +5,13 @@ import { ChatClient, CreateChatThreadOptions, CreateChatThreadRequest } from '@a
 import { getEnvUrl } from '../envHelper';
 import { GUID_FOR_INITIAL_TOPIC_NAME } from '../constants';
 import { threadIdToModeratorCredentialMap } from './threadIdToModeratorTokenMap';
-import { createUser, issueToken } from '../identityClient';
+import { createUser, getToken } from '../identityClient';
 
 export const createThread = async (topicName?: string): Promise<string> => {
   const user = await createUser();
 
   const credential = new AzureCommunicationTokenCredential({
-    tokenRefresher: async () => (await issueToken(user, ['chat', 'voip'])).token,
+    tokenRefresher: async () => (await getToken(user, ['chat', 'voip'])).token,
     refreshProactively: true
   });
   const chatClient = new ChatClient(getEnvUrl(), credential);
@@ -29,8 +29,11 @@ export const createThread = async (topicName?: string): Promise<string> => {
     ]
   };
   const result = await chatClient.createChatThread(request, options);
-  // TODO: Error handling
+
   const threadID = result.chatThread?.id;
+  if (!threadID) {
+    throw new Error(`Invalid or missing ID for newly created thread ${result.chatThread}`);
+  }
 
   threadIdToModeratorCredentialMap.set(threadID, credential);
   return threadID;
