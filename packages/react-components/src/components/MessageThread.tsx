@@ -28,7 +28,7 @@ import {
   SystemMessagePayload
 } from '../types';
 import { ReadReceipt, ReadReceiptProps } from './ReadReceipt';
-import { memoizeFnAll } from '@azure/acs-chat-selector';
+import { memoizeFnAll } from './utils/memoizeFnAll';
 import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from './SystemMessage';
 
 const NEW_MESSAGES = 'New Messages';
