@@ -1,1 +1,1 @@
-export * from '../../communication-ui/src/release.index';
+export * from '../../react-components/src';
