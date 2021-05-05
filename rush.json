@@ -75,7 +75,7 @@
     {
       "packageName": "storybook",
       "projectFolder": "packages/storybook",
-      "reviewCategory": "tools"
+      "reviewCategory": "internal"
     },
     {
       "packageName": "build-tools",
@@ -85,6 +85,11 @@
     {
       "packageName": "check-treeshaking",
       "projectFolder": "packages/check-treeshaking",
+      "reviewCategory": "tools"
+    },
+    {
+      "packageName": "import-transform",
+      "projectFolder": "tools/import-transform",
       "reviewCategory": "tools"
     }
   ]

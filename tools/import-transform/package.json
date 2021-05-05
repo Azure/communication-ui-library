@@ -1,0 +1,24 @@
+{
+  "name": "import-transform",
+  "version": "0.1.0",
+  "private": "true",
+  "bin": "./transformImports.js",
+  "description": "Utility to ensure build files reference local packages",
+  "scripts": {
+    "build": "echo 'no build step required'",
+    "build:watch": "echo 'no build step required'",
+    "test": "",
+    "test:coverage": "",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "lint:fix": "npm run lint -- --fix",
+    "lint:quiet": "npm run lint -- --quiet"
+  },
+  "devDependencies": {
+    "eslint": "^7.7.0",
+    "eslint-config-prettier": "^6.12.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-header": "^3.1.0",
+    "eslint-plugin-import": "^2.20.1",
+    "yargs": "~17.0.1"
+  }
+}

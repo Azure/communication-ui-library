@@ -30,6 +30,7 @@ dependencies:
   '@rush-temp/chat': file:projects/chat.tgz_40696ef7625c6ba30f84e95f800c1560
   '@rush-temp/check-treeshaking': file:projects/check-treeshaking.tgz_prettier@2.0.5
   '@rush-temp/communication-react': file:projects/communication-react.tgz_86ada2f0781d42aae29c9b7c11ee1a9f
+  '@rush-temp/import-transform': file:projects/import-transform.tgz_prettier@2.0.5
   '@rush-temp/one-to-one-call': file:projects/one-to-one-call.tgz_b145821026ea2fc3b8b481e1817e93b8
   '@rush-temp/react-components': file:projects/react-components.tgz
   '@rush-temp/react-composites': file:projects/react-composites.tgz
@@ -147,6 +148,7 @@ dependencies:
   uuid: 8.3.2
   webpack: 4.44.2
   webpack-node-externals: 2.5.2
+  yargs: 17.0.1
 lockfileVersion: 5.2
 packages:
   /@azure/abort-controller/1.0.4:
@@ -20616,6 +20618,20 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-D1mvvtDG0L5ft/jGWkLpG1+m0eQxOfaBvTNELraWj22wSVUMWxZUvYgJYcKh6jGGIkJFhH4IZPQhR4TKpc8mBw==
+  /yargs/17.0.1:
+    dependencies:
+      cliui: 7.0.4
+      escalade: 3.1.1
+      get-caller-file: 2.0.5
+      require-directory: 2.1.1
+      string-width: 4.2.2
+      y18n: 5.0.5
+      yargs-parser: 20.2.7
+    dev: false
+    engines:
+      node: '>=12'
+    resolution:
+      integrity: sha512-xBBulfCc8Y6gLFcrPvtqKz9hz8SO0l1Ni8GgDekvBX2ro0HRQImDGnikfc33cgzcYUSncapnNcZDjVFIH3f6KQ==
   /yn/3.1.1:
     dev: false
     engines:
@@ -20989,8 +21005,25 @@ packages:
       jest: '*'
       react-test-renderer: '*'
     resolution:
-      integrity: sha512-oksZCB7Ml2pPKytXZ94ketRwAgSBwCNkrDbH6UNClxzCRoSWge7oIJdupj/8EoCBIziE9Ve8u4GxXmqGYwVqJw==
+      integrity: sha512-a163Lvi/kX2m15P5MhC5bP+yAtocTTOpHb2+pfRGgOWXjgya9Jlb7s9rHKZYPU0hPs059tVUepZURjCHt1ITxQ==
       tarball: file:projects/communication-react.tgz
+    version: 0.0.0
+  file:projects/import-transform.tgz_prettier@2.0.5:
+    dependencies:
+      eslint: 7.22.0
+      eslint-config-prettier: 6.15.0_eslint@7.22.0
+      eslint-plugin-header: 3.1.1_eslint@7.22.0
+      eslint-plugin-import: 2.22.1_eslint@7.22.0
+      eslint-plugin-prettier: 3.3.1_cdac37046eab2e8d6fb794f34ed825c2
+      yargs: 17.0.1
+    dev: false
+    id: file:projects/import-transform.tgz
+    name: '@rush-temp/import-transform'
+    peerDependencies:
+      prettier: '*'
+    resolution:
+      integrity: sha512-XCQVv19B/iCQLRwx39VbZbHX0MzKTI01NpKecrC+w9lE0x1efcLt/X/+MrNBTnpj8nbsCnMdMl6I0GnLgvxXPQ==
+      tarball: file:projects/import-transform.tgz
     version: 0.0.0
   file:projects/one-to-one-call.tgz_b145821026ea2fc3b8b481e1817e93b8:
     dependencies:
@@ -21387,6 +21420,7 @@ specifiers:
   '@rush-temp/chat': file:./projects/chat.tgz
   '@rush-temp/check-treeshaking': file:./projects/check-treeshaking.tgz
   '@rush-temp/communication-react': file:./projects/communication-react.tgz
+  '@rush-temp/import-transform': file:./projects/import-transform.tgz
   '@rush-temp/one-to-one-call': file:./projects/one-to-one-call.tgz
   '@rush-temp/react-components': file:./projects/react-components.tgz
   '@rush-temp/react-composites': file:./projects/react-composites.tgz
@@ -21504,3 +21538,4 @@ specifiers:
   uuid: ^8.1.0
   webpack: 4.44.2
   webpack-node-externals: ^2.5.2
+  yargs: ~17.0.1
