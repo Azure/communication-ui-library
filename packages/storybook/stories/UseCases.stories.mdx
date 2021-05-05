@@ -80,14 +80,14 @@ Developers can hook into the stateful client to read the state, handle events an
 
 ## Recommended architecture
 
-![UI Framework recommended architecture with client-server architecture](images/framework-architecture.png)
+![UI Toolkit recommended architecture with client-server architecture](images/Toolkit-architecture.png)
 
 Composite and Base Components are initialized using an Azure Communication Services access token. Access tokens should be procured from Azure Communication Services through a
 trusted service that you manage. See [Quickstart: Create Access Tokens](https://docs.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-javascript) and [Trusted Service Tutorial](https://docs.microsoft.com/azure/communication-services/tutorials/trusted-service-tutorial) for more information.
 
 These client libraries also require the context for the call or chat they will join. Similar to user access tokens, this context should be disseminated to clients via your own trusted service. The list below summarizes the initialization and resource management functions that you need to operationalize.
 
-| Contoso Responsibilities                                 | UI Framework Responsibilities                                   |
+| Contoso Responsibilities                                 | UI Toolkit Responsibilities                                     |
 | -------------------------------------------------------- | --------------------------------------------------------------- |
 | Provide access token from Azure                          | Pass through given access token to initialize components        |
 | Provide refresh function                                 | Refresh access token using developer provided function          |
