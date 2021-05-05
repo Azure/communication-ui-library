@@ -18,7 +18,7 @@ import { isInCall } from '../../utils/SDKUtils';
 import { GroupCallContainerProps, MapToGroupCallProps } from './consumers/MapToGroupCallProps';
 import { ErrorHandlingProps } from '../../providers/ErrorProvider';
 import { WithErrorHandling } from '../../utils/WithErrorHandling';
-import { ErrorBar as ErrorBarComponent } from '../../components/ErrorBar';
+import { ErrorBar as ErrorBarComponent } from 'react-components';
 import { GroupCallControlBarComponent } from '../common/CallControls';
 
 export const MINI_HEADER_WINDOW_WIDTH = 450;

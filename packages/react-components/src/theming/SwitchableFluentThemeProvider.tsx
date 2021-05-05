@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo, createContext, useContext } from 'react';
 import { NamedTheme, ThemeCollection } from '../types';
-import { defaultThemes } from '.';
+import { defaultThemes } from './themes';
 import { FluentThemeProvider } from './FluentThemeProvider';
 
 const defaultTheme: NamedTheme = defaultThemes.light;

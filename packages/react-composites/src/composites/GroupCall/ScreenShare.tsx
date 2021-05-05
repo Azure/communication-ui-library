@@ -6,7 +6,7 @@ import { loadingStyle, videoStreamStyle } from './styles/ScreenShare.styles';
 
 import { connectFuncsToContext } from '../../consumers';
 import { MapToScreenShareProps, ScreenShareContainerProps } from './consumers/MapToScreenShareProps';
-import { StreamMedia, VideoTile } from '../../components';
+import { StreamMedia, VideoTile } from 'react-components';
 
 const ScreenShareComponent = (props: ScreenShareContainerProps): JSX.Element => {
   const { displayName, videoRender, isVideoRenderAvailable, screenShareRender, isScreenShareRenderAvailable } = props;

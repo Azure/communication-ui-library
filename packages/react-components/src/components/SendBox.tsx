@@ -1,6 +1,5 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { EMPTY_MESSAGE_REGEX, MAXIMUM_LENGTH_OF_MESSAGE, TEXT_EXCEEDS_LIMIT } from '../theming';
 import React, { useState } from 'react';
 import {
   IStyle,
@@ -22,6 +21,10 @@ import {
   suppressIconStyle
 } from './styles/SendBox.styles';
 import { BaseCustomStylesProps } from '../types';
+
+const EMPTY_MESSAGE_REGEX = /^\s*$/;
+const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
+const TEXT_EXCEEDS_LIMIT = `Your message is over the limit of ${MAXIMUM_LENGTH_OF_MESSAGE} characters`;
 
 export interface SendBoxStylesProps extends BaseCustomStylesProps {
   /** Styles for the text field. */

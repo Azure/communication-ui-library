@@ -13,7 +13,7 @@ import { connectFuncsToContext, MapToLocalVideoProps } from '../../consumers';
 import { GalleryParticipant } from '../../types/GalleryParticipant';
 import { MapToMediaGallery1To1Props, MediaGallery1To1ContainerProps } from './consumers/MapToMediaGallery1To1Props';
 import { RemoteVideoTile } from './RemoteVideoTile';
-import { StreamMedia, VideoTile } from '../../components';
+import { StreamMedia, VideoTile } from 'react-components';
 
 export interface MediaGallery1To1Props extends MediaGallery1To1ContainerProps {
   /** Determines the remote participant in the media gallery. */

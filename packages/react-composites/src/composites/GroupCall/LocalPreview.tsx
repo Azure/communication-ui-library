@@ -17,7 +17,7 @@ import {
   MapToErrorBarProps,
   MapToLocalVideoProps
 } from '../../consumers';
-import { StreamMedia, VideoTile, ErrorBar as ErrorBarComponent } from '../../components';
+import { StreamMedia, VideoTile, ErrorBar as ErrorBarComponent } from 'react-components';
 import staticMediaSVG from './assets/staticmedia.svg';
 import { useCallContext } from '../../providers';
 import { ErrorHandlingProps } from '../../providers/ErrorProvider';

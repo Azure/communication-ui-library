@@ -1,10 +1,10 @@
 // © Microsoft Corporation. All rights reserved.
 import { Title, Description, Props, Heading, Source } from '@storybook/addon-docs/blocks';
-import { GroupChat } from 'react-components';
+import { GroupChat } from 'react-composites';
 import React from 'react';
 
-const importStatement = `import { GroupChat } from 'react-components';`;
-const usageCode = `import { GroupChat } from 'react-components';
+const importStatement = `import { GroupChat } from 'react-composites';`;
+const usageCode = `import { GroupChat } from 'react-composites';
 import { AzureCommunicationUserCredential } from '@azure/communication-common';
 import { CommunicationIdentityClient } from "@azure/communication-administration";
 import { ChatClient } from '@azure/communication-chat';

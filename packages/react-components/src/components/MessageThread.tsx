@@ -16,8 +16,8 @@ import {
 import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack, Link } from '@fluentui/react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { LiveAnnouncer, LiveMessage } from 'react-aria-live';
-import { delay, formatTimestampForChatMessage } from './utils';
-import { NEW_MESSAGES } from '../theming';
+import { formatTimestampForChatMessage } from './utils/Datetime';
+import { delay } from './utils/delay';
 import {
   BaseCustomStylesProps,
   ChatMessage,
@@ -30,6 +30,8 @@ import {
 import { ReadReceipt, ReadReceiptProps } from './ReadReceipt';
 import { memoizeFnAll } from '@azure/acs-chat-selector';
 import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from './SystemMessage';
+
+const NEW_MESSAGES = 'New Messages';
 
 const isMessageSame = (first: ChatMessagePayload, second: ChatMessagePayload): boolean => {
   return (

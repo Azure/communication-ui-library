@@ -3,7 +3,7 @@
 import { chatThreadSelector, sendBoxSelector, typingIndicatorSelector } from '@azure/acs-chat-selector';
 import { mergeStyles, Stack } from '@fluentui/react';
 import React, { useEffect, useMemo } from 'react';
-import { ErrorBar, MessageThread, SendBox, TypingIndicator } from '../../components';
+import { ErrorBar, MessageThread, SendBox, TypingIndicator } from 'react-components';
 import { useChatThreadClient } from '../../providers';
 import { useHandlers } from './hooks/useHandlers';
 import { useSelector } from './hooks/useSelector';

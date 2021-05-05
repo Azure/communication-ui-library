@@ -2,7 +2,7 @@
 
 import { Stack } from '@fluentui/react';
 import React, { useEffect } from 'react';
-import { StreamMedia, VideoTile } from '../../components';
+import { StreamMedia, VideoTile } from 'react-components';
 import { OutgoingCallControlBarComponent } from '../common/CallControls';
 import { MapToLocalVideoProps } from '../../consumers';
 import { useCallContext, useCallingContext } from '../../providers';

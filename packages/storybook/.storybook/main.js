@@ -30,7 +30,11 @@ module.exports = {
     config.resolve.alias = {
       ...(config.resolve.alias || {}),
       "react-components": path.resolve(__dirname, "../../react-components/src"),
-      "@azure/acs-chat-selector": path.resolve(__dirname, "../../acs-chat-selector/src")
+      "react-composites": path.resolve(__dirname, "../../react-composites/src"),
+      "@azure/acs-chat-declarative": path.resolve(__dirname, "../../acs-chat-declarative/src"),
+      "@azure/acs-chat-selector": path.resolve(__dirname, "../../acs-chat-selector/src"),
+      "@azure/acs-calling-declarative": path.resolve(__dirname, "../../acs-calling-declarative/src"),
+      "@azure/acs-calling-selector": path.resolve(__dirname, "../../acs-calling-selector/src")
     }
 
     return config;

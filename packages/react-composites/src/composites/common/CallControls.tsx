@@ -5,12 +5,12 @@ import React, { useCallback } from 'react';
 import {
   CameraButton,
   ControlBar,
+  ControlBarProps,
   EndCallButton,
   MicrophoneButton,
   OptionsButton,
   ScreenShareButton
-} from '../../components';
-import { ControlBarProps } from '../../components/ControlBar';
+} from 'react-components';
 import {
   connectFuncsToContext,
   LocalDeviceSettingsContainerProps,

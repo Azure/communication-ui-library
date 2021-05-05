@@ -3,9 +3,8 @@
 import React, { useMemo } from 'react';
 import { connectFuncsToContext, MapToLocalVideoProps } from '../../consumers';
 import { MapToMediaGalleryProps, MediaGalleryContainerProps } from './consumers/MapToMediaGalleryProps';
-import { GridLayout } from '../../components/GridLayout';
 import { convertSdkRemoteParticipantToGalleryParticipant } from '../../utils';
-import { StreamMedia, VideoTile } from '../../components';
+import { GridLayout, StreamMedia, VideoTile } from 'react-components';
 import { Label, mergeStyles, Stack } from '@fluentui/react';
 import ScreenShareComponent from './ScreenShare';
 import {

@@ -12,7 +12,7 @@ import {
   incomingCallModalContainerStyle
 } from './styles/IncomingCallAlerts.styles';
 import { useBoolean } from '@uifabric/react-hooks';
-import { StreamMedia, VideoTile } from '../../components';
+import { StreamMedia, VideoTile } from 'react-components';
 
 export type IncomingCallToastProps = {
   /** Caller's Name */

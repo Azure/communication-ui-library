@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { ErrorBarProps } from '../components/ErrorBar';
+import { ErrorBarProps } from 'react-components';
 import { CommunicationUiErrorCode, CommunicationUiErrorSeverity } from '../types/CommunicationUiError';
 import { useLastError, useSetLastError } from '../providers/ErrorProvider';
 

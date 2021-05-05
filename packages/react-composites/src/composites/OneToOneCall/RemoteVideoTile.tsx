@@ -2,7 +2,7 @@
 
 import { Label } from '@fluentui/react';
 import React from 'react';
-import { StreamMedia, VideoTile } from '../../components';
+import { StreamMedia, VideoTile } from 'react-components';
 import { WithErrorHandling } from '../../utils';
 import { connectFuncsToContext, MapToRemoteVideoProps } from '../../consumers';
 import { ErrorHandlingProps } from '../../providers';
