@@ -7,7 +7,7 @@ import { text } from '@storybook/addon-knobs';
 import { v1 as createGUID } from 'uuid';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-administration';
 import { getDocs } from './GroupCallCompositeDocs';
-import { GroupCall } from 'react-composites';
+import { GroupCall as GroupCallComposite } from 'react-composites';
 import { COMPOSITE_FOLDER_PREFIX } from '../constants';
 import {
   CompositeConnectionParamsErrMessage,
@@ -16,8 +16,8 @@ import {
 } from '../CompositeStringUtils';
 
 export default {
-  title: `${COMPOSITE_FOLDER_PREFIX}/GroupCall`,
-  component: GroupCall,
+  title: `${COMPOSITE_FOLDER_PREFIX}/Group Call`,
+  component: GroupCallComposite,
   parameters: {
     docs: {
       page: () => getDocs()
@@ -39,7 +39,9 @@ const createUserToken = async (connectionString: string): Promise<CommunicationU
   return token;
 };
 
-export const GroupCallComposite: () => JSX.Element = () => {
+// This must be the only named export from this module, and must be named to match the storybook path suffix.
+// This ensures that storybook hoists the story instead of creating a folder with a single entry.
+export const GroupCall: () => JSX.Element = () => {
   const [userId, setUserId] = useState<string>('');
   const [groupId, setGroupId] = useState<string>('');
   const [token, setToken] = useState<string>('');
@@ -73,7 +75,7 @@ export const GroupCallComposite: () => JSX.Element = () => {
       }}
     >
       {connectionString && (
-        <GroupCall
+        <GroupCallComposite
           displayName={`user${Math.ceil(Math.random() * 1000)}`}
           userId={userId}
           groupId={groupId}

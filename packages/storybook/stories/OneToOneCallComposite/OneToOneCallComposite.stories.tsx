@@ -6,7 +6,7 @@ import { Meta } from '@storybook/react/types-6-0';
 import { text } from '@storybook/addon-knobs';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-administration';
 import { getDocs } from './OneToOneCallCompositeDocs';
-import { OneToOneCall } from 'react-composites';
+import { OneToOneCall as OneToOneCallComposite } from 'react-composites';
 import { COMPOSITE_FOLDER_PREFIX } from '../constants';
 import {
   CompositeConnectionParamsErrMessage,
@@ -15,8 +15,8 @@ import {
 } from '../CompositeStringUtils';
 
 export default {
-  title: `${COMPOSITE_FOLDER_PREFIX}/OneToOneCall`,
-  component: OneToOneCall,
+  title: `${COMPOSITE_FOLDER_PREFIX}/One To One Call`,
+  component: OneToOneCallComposite,
   parameters: {
     docs: {
       page: () => getDocs()
@@ -59,7 +59,7 @@ const OneToOneCallCompositeInstance: (token: string, calleeId?: string) => JSX.E
   return (
     <div style={experienceContainerStyle}>
       {requiredInformationObtained && (
-        <OneToOneCall displayName={randomCallerName()} calleeId={calleeId} token={token} />
+        <OneToOneCallComposite displayName={randomCallerName()} calleeId={calleeId} token={token} />
       )}
       {!requiredInformationObtained &&
         CompositeConnectionParamsErrMessage([
@@ -69,7 +69,9 @@ const OneToOneCallCompositeInstance: (token: string, calleeId?: string) => JSX.E
   );
 };
 
-export const OneToOneCallComposite: () => JSX.Element = () => {
+// This must be the only named export from this module, and must be named to match the storybook path suffix.
+// This ensures that storybook hoists the story instead of creating a folder with a single entry.
+export const OneToOneCall: () => JSX.Element = () => {
   const [token, setToken] = useState<string>('');
   const [userId, setUserId] = useState<string>('');
 

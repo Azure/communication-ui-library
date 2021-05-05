@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 import { text } from '@storybook/addon-knobs';
 import { getDocs } from './GroupChatCompositeDocs';
-import { ChatConfig, GroupChat } from 'react-composites';
+import { ChatConfig, GroupChat as GroupChatComposite } from 'react-composites';
 import { AzureCommunicationUserCredential } from '@azure/communication-common';
 import { CommunicationIdentityClient } from '@azure/communication-administration';
 import { ChatClient } from '@azure/communication-chat';
@@ -17,8 +17,8 @@ import {
 import { Meta } from '@storybook/react/types-6-0';
 
 export default {
-  title: `${COMPOSITE_FOLDER_PREFIX}/GroupChat`,
-  component: GroupChat,
+  title: `${COMPOSITE_FOLDER_PREFIX}/Group Chat`,
+  component: GroupChatComposite,
   parameters: {
     useMaxHeightParent: true,
     useMaxWidthParent: true,
@@ -112,7 +112,9 @@ const createChatConfig = async (resourceConnectionString: string): Promise<ChatC
   };
 };
 
-export const GroupChatComposite: () => JSX.Element = () => {
+// This must be the only named export from this module, and must be named to match the storybook path suffix.
+// This ensures that storybook hoists the story instead of creating a folder with a single entry.
+export const GroupChat: () => JSX.Element = () => {
   const [chatConfig, setChatConfig] = useState<ChatConfig>();
 
   const connectionString = text(COMPOSITE_STRING_CONNECTIONSTRING, '', 'Server Simulator');
@@ -163,7 +165,7 @@ export const GroupChatComposite: () => JSX.Element = () => {
         padding: '0 10px'
       }}
     >
-      {chatConfig && <GroupChat {...chatConfig} />}
+      {chatConfig && <GroupChatComposite {...chatConfig} />}
       {!chatConfig && CompositeConnectionParamsErrMessage([emptyConfigTips, emptyConfigParametersTips])}
     </div>
   );
