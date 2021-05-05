@@ -40,5 +40,16 @@ module.exports = {
     react: {
       version: 'detect'
     }
-  }
+  },
+  overrides: [
+    {
+      files: ['**/*.test.ts', '**/*.test.tsx', '**/*.spec.ts', '**/*.spec.tsx', '**/mocks/*'],
+      rules: {
+        '@typescript-eslint/ban-ts-comment': 'off'
+      },
+      env: {
+        jest: true
+      }
+    }
+  ]
 };

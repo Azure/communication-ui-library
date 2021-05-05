@@ -20,7 +20,6 @@
   "bugs": {
     "url": "https://github.com/Azure/communication-ui-sdk/issues/new/choose"
   },
-  "type": "module",
   "types": "dist/communication-react.d.ts",
   "dependencies": {
     "@fluentui/react": "^7.117.1",
