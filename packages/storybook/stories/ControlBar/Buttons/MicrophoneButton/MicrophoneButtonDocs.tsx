@@ -2,7 +2,7 @@
 
 import { Canvas, Description, Heading, Props, Source, SourceState, Title } from '@storybook/addon-docs/blocks';
 import React from 'react';
-import { MicrophoneButton } from '@azure/communication-ui';
+import { MicrophoneButton } from 'react-components';
 import { MicrophoneButtonExample } from './snippets/MicrophoneButton.snippet';
 import { MicrophoneButtonWithLabelExample } from './snippets/MicrophoneButtonWithLabel.snippet';
 import { CustomMicrophoneButtonExample } from './snippets/CustomMicrophoneButton.snippet';
@@ -12,7 +12,7 @@ const MicrophoneButtonWithLabelExampleText = require('!!raw-loader!./snippets/Mi
 const CustomMicrophoneButtonExampleText = require('!!raw-loader!./snippets/CustomMicrophoneButton.snippet.tsx').default;
 
 const importStatement = `
-import { MicrophoneButton } from '@azure/communication-ui';
+import { MicrophoneButton } from 'react-components';
 `;
 
 export const getDocs: () => JSX.Element = () => {

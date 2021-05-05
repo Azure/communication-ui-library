@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
   "comment": "add documentation for MicrophoneButton Component",
-  "packageName": "@azure/communication-ui",
+  "packageName": "react-components",
   "email": "alcail@microsoft.com",
   "dependentChangeType": "patch"
 }

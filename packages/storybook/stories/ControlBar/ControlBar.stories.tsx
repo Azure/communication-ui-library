@@ -8,9 +8,7 @@ import {
   EndCallButton,
   MicrophoneButton,
   OptionsButton,
-  ScreenShareButton,
-  LIGHT,
-  DARK
+  ScreenShareButton
 } from 'react-components';
 import { boolean, select } from '@storybook/addon-knobs';
 import { getDocs } from './ControlBarDocs';
@@ -68,13 +66,13 @@ export const ControlBarComponent: (
 
   // This is code to set the color of the background div to show contrast to the control bar based on the theme like shown in the Figma design.
   let background = 'none';
-  if (theme === DARK) {
+  if (theme === 'dark') {
     if (layout.startsWith('floating')) {
       background = '#252423';
     } else {
       background = '#161514';
     }
-  } else if (theme === LIGHT) {
+  } else if (theme === 'light') {
     background = '#f8f8f8';
   }
 

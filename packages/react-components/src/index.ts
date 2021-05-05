@@ -3,20 +3,21 @@
 export * from './components';
 export * from './theming';
 
+export { CommunicationUiErrorSeverity } from './types';
+
 export type {
   BaseCustomStylesProps,
-  CommunicationUiErrorSeverity,
+  ChatMessage,
+  ChatMessagePayload,
+  CustomMessage,
+  CustomMessagePayload,
+  Message,
   MessageAttachedStatus,
   MessageStatus,
-  WebUiChatParticipant,
-  Message,
   MessageTypes,
-  ChatMessage,
-  SystemMessage,
-  CustomMessage,
-  SystemMessagePayload,
-  ChatMessagePayload,
-  CustomMessagePayload,
   NamedTheme,
-  ThemeCollection
+  SystemMessage,
+  SystemMessagePayload,
+  ThemeCollection,
+  WebUiChatParticipant
 } from './types';

@@ -83,6 +83,8 @@ jobs:
       # Build packages
       - name: Build react-components package
         run: rush build -t react-components
+      - name: Build react-composites package
+        run: rush build -t react-composites
       - name: Build @azure/acs-calling-declarative package
         run: rush build -t @azure/acs-calling-declarative
       - name: Build @azure/acs-chat-declarative package
@@ -91,6 +93,8 @@ jobs:
       # Test Packages
       - name: Test react-components package
         run: rush test -o react-components
+      - name: Test react-components package
+        run: rush test -o react-composites
       - name: Test @azure/acs-calling-declarative package
         run: rush test -o @azure/acs-calling-declarative
       - name: Test @azure/acs-chat-declarative package

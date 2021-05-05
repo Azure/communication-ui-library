@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Meta } from '@storybook/react/types-6-0';
-import { IncomingCallToast } from 'react-components';
+import { IncomingCallToast } from 'react-composites';
 import { text, files } from '@storybook/addon-knobs';
 import { getDocs } from './IncomingCallAlertsDocs';
 import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
