@@ -89,7 +89,7 @@ export interface GroupCallAdapter {
 
   on(event: 'incomingCall', listener: IncomingCallListener): void;
 
-  on(event: 'participantJoined', listener: IncomingCallListener): void;
+  on(event: 'participantJoined', listener: ParticipantJoinedListener): void;
 
   on(event: 'error', errorHandler: (e: Error) => void): void;
 
