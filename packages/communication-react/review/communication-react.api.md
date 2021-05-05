@@ -17,12 +17,17 @@ import { Theme } from '@fluentui/react-theme-provider';
 // @public
 export const answerButtonProps: IButtonProps;
 
-// @public
-export const audioButtonProps: IButtonProps;
-
 // @public (undocumented)
 export interface BaseCustomStylesProps {
     root?: IStyle;
+}
+
+// @public
+export const CameraButton: (props: CameraButtonProps) => JSX.Element;
+
+// @public
+export interface CameraButtonProps extends IButtonProps {
+    showLabel?: boolean;
 }
 
 // @public (undocumented)
@@ -82,6 +87,14 @@ export type DefaultMessageRendererType = (props: MessageProps) => JSX.Element;
 export const defaultThemes: ThemeCollection;
 
 // @public
+export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
+
+// @public
+export interface EndCallButtonProps extends IButtonProps {
+    showLabel?: boolean;
+}
+
+// @public
 export const ErrorBar: (props: ErrorBarProps) => JSX.Element | null;
 
 // @public
@@ -116,9 +129,6 @@ export interface GridLayoutProps {
 // @public (undocumented)
 export type GridLayoutType = 'standard';
 
-// @public
-export const hangupButtonProps: IButtonProps;
-
 // @public (undocumented)
 export interface JumpToNewMessageButtonProps {
     // (undocumented)
@@ -129,22 +139,7 @@ export interface JumpToNewMessageButtonProps {
 export const labeledAnswerButtonProps: IButtonProps;
 
 // @public
-export const labeledAudioButtonProps: IButtonProps;
-
-// @public
-export const labeledHangupButtonProps: IButtonProps;
-
-// @public
-export const labeledOptionsButtonProps: IButtonProps;
-
-// @public
 export const labeledRecordButtonProps: IButtonProps;
-
-// @public
-export const labeledScreenShareButtonProps: IButtonProps;
-
-// @public
-export const labeledVideoButtonProps: IButtonProps;
 
 // @public (undocumented)
 export type Message<T extends MessageTypes> = {
@@ -202,13 +197,26 @@ export interface MessageThreadStylesProps extends BaseCustomStylesProps {
 export type MessageTypes = 'chat' | 'system' | 'custom';
 
 // @public
+export const MicrophoneButton: (props: MicrophoneButtonProps) => JSX.Element;
+
+// @public
+export interface MicrophoneButtonProps extends IButtonProps {
+    showLabel?: boolean;
+}
+
+// @public
 export type NamedTheme = {
     name: string;
     theme: PartialTheme | Theme;
 };
 
 // @public
-export const optionsButtonProps: IButtonProps;
+export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
+
+// @public
+export interface OptionsButtonProps extends IButtonProps {
+    showLabel?: boolean;
+}
 
 // @public
 export const ParticipantItem: (props: ParticipantItemProps) => JSX.Element;
@@ -256,7 +264,12 @@ export interface ReadReceiptProps {
 export const recordButtonProps: IButtonProps;
 
 // @public
-export const screenShareButtonProps: IButtonProps;
+export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
+
+// @public
+export interface ScreenShareButtonProps extends IButtonProps {
+    showLabel?: boolean;
+}
 
 // @public
 export const SendBox: (props: SendBoxProps) => JSX.Element;
@@ -360,9 +373,6 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
 
 // @public
 export const useSwitchableFluentTheme: () => SwitchableFluentThemeContext;
-
-// @public
-export const videoButtonProps: IButtonProps;
 
 // @public (undocumented)
 export const VideoTile: (props: VideoTileProps & PlaceholderProps) => JSX.Element;

@@ -6,9 +6,9 @@ import commonConfig from '../../common/config/rollup/rollup.config';
 export default [
   {
     ...commonConfig(Package),
-    input: './dist/dist-esm/communication-ui/src/release.index.js',
+    input: './dist/dist-esm/react-components/src/index.js',
     output: {
-      file: './dist/dist-cjs/communication-ui/index.js',
+      file: './dist/dist-cjs/react-components/index.js',
       format: 'cjs',
       sourcemap: true
     }
