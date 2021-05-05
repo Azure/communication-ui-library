@@ -1,4 +1,4 @@
-import { FluentThemeProvider } from '@azure/communication-ui';
+import { FluentThemeProvider } from 'react-components';
 import React from 'react';
 
 function App(): JSX.Element {

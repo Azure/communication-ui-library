@@ -7,7 +7,7 @@ import {
   OptionsButton,
   ScreenShareButton,
   defaultThemes
-} from '@azure/communication-ui';
+} from 'react-components';
 import React from 'react';
 
 export const DarkControlBar = (): JSX.Element => {

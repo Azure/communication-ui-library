@@ -2,7 +2,7 @@
 
 import { Canvas, Description, Heading, Props, Source, SourceState, Title } from '@storybook/addon-docs/blocks';
 import React from 'react';
-import { ControlBar } from '../../../communication-ui/src';
+import { ControlBar } from 'react-components';
 import { AllButtonsControlBarExample } from './snippets/AllButtonsControlBar.snippet';
 import { ControlBarLayoutExample } from './snippets/ControlBarLayout.snippet';
 import { CustomButtonsExample } from './snippets/CustomButtons.snippet';
@@ -15,7 +15,7 @@ const CustomControlBarStylesExampleText = require('!!raw-loader!./snippets/Custo
 const OptionsButtonExampleText = require('!!raw-loader!./snippets/OptionsButton.snippet.tsx').default;
 
 const importStatement = `
-import { FluentThemeProvider, ControlBar } from '@azure/communication-ui';
+import { FluentThemeProvider, ControlBar } from 'react-components';
 import { DefaultButton } from '@fluentui/react';
 `;
 

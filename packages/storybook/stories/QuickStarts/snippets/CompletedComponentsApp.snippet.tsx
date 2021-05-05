@@ -1,4 +1,4 @@
-import { FluentThemeProvider } from '@azure/communication-ui';
+import { FluentThemeProvider } from 'react-components';
 import { Stack } from '@fluentui/react';
 import React from 'react';
 import { CallingComponents } from './CallingComponents.snippet';

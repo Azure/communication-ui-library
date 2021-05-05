@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Ensure react-northstar icons are always loaded as part of FluentThemeProvider.\n Fix ParticipantItem to show context menu if the participant is you.\n Add Storybook background change when storybook theme is changed.\n",
-  "packageName": "@azure/communication-ui",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

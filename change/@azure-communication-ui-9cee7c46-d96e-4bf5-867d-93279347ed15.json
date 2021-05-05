@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add ScreenShare button component",
-  "packageName": "@azure/communication-ui",
-  "email": "prprabhu@microsoft.com",
-  "dependentChangeType": "patch"
-}
