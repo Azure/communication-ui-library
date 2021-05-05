@@ -11,7 +11,7 @@ import {
   OptionsButton,
   StreamMedia,
   VideoTile
-} from '@azure/communication-ui';
+} from 'react-components';
 import { text, boolean, number } from '@storybook/addon-knobs';
 import { renderVideoStream } from '../utils';
 import { getDocs } from './VideoTileDocs';

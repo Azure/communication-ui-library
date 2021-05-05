@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Move Storybook into its own project",
+  "packageName": "react-components",
+  "email": "mail@jamesburnside.com",
+  "dependentChangeType": "patch"
+}

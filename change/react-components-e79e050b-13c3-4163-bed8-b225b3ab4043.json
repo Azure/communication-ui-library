@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fixed exported props of ControlBar",
+  "packageName": "react-components",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}

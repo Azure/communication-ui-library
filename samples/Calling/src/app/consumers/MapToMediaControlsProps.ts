@@ -14,7 +14,7 @@ import {
   CommunicationUiErrorCode,
   CommunicationUiError,
   DevicePermissionState
-} from '@azure/communication-ui';
+} from 'react-composites';
 import { useCallback } from 'react';
 
 export type MediaControlsContainerProps = {

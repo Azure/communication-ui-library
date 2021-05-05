@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Ignoring typing users with no display name in TypingIndicator component",
-  "packageName": "@azure/communication-ui",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

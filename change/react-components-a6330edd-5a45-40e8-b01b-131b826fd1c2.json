@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "add documentation for MicrophoneButton Component",
+  "packageName": "react-components",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Refactor mediaControls and Headers to use control bar component",
+  "packageName": "react-components",
+  "email": "easony@microsoft.com",
+  "dependentChangeType": "patch"
+}
