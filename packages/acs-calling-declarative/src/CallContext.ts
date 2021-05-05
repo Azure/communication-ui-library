@@ -78,6 +78,7 @@ export class CallContext {
           existingCall.isScreenSharingOn = call.isScreenSharingOn;
           existingCall.localVideoStreams = call.localVideoStreams;
           existingCall.remoteParticipants = call.remoteParticipants;
+          existingCall.transcription.isTranscriptionActive = call.transcription.isTranscriptionActive;
           existingCall.recording.isRecordingActive = call.recording.isRecordingActive;
           // We don't update the startTime and endTime if we are updating an existing active call
         } else {
@@ -214,6 +215,17 @@ export class CallContext {
         const call = draft.calls.get(callId);
         if (call) {
           call.recording.isRecordingActive = isRecordingActive;
+        }
+      })
+    );
+  }
+
+  public setCallTranscriptionActive(callId: string, isTranscriptionActive: boolean): void {
+    this.setState(
+      produce(this._state, (draft: CallClientState) => {
+        const call = draft.calls.get(callId);
+        if (call) {
+          call.transcription.isTranscriptionActive = isTranscriptionActive;
         }
       })
     );

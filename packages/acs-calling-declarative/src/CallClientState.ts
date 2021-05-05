@@ -20,6 +20,16 @@ import {
 } from '@azure/communication-common';
 
 /**
+ * State only version of {@Link @azure/communication-calling#TranscriptionCallFeature}.
+ */
+export interface TranscriptionCallFeature {
+  /**
+   * Proxy of {@Link @azure/communication-calling#TranscriptionCallFeature.isTranscriptionActive}.
+   */
+  isTranscriptionActive: boolean;
+}
+
+/**
  * State only version of {@Link @azure/communication-calling#RecordingCallFeature}.
  */
 export interface RecordingCallFeature {
@@ -172,6 +182,10 @@ export interface Call {
    * {@Link Converter.getRemoteParticipantKey} to {@Link @azure/communication-calling#RemoteParticipant}
    */
   remoteParticipantsEnded: Map<string, RemoteParticipant>;
+  /**
+   * Proxy of {@Link @azure/communication-calling#TranscriptionCallFeature}.
+   */
+  transcription: TranscriptionCallFeature;
   /**
    * Proxy of {@Link @azure/communication-calling#RecordingCallFeature}.
    */
