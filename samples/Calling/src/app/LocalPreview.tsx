@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
 import { CallVideoOffIcon } from '@fluentui/react-icons-northstar';
-import { Stack, Label } from '@fluentui/react';
+import { Stack, Text } from '@fluentui/react';
 import { localPreviewContainerStyle, cameraOffLabelStyle } from './styles/LocalPreview.styles';
 import React from 'react';
 import { MapToMediaControlsProps, MediaControlsContainerProps } from './consumers/MapToMediaControlsProps';
@@ -61,7 +61,7 @@ const LocalPreviewComponentBase = (
               <CallVideoOffIcon />
             </Stack.Item>
             <Stack.Item align="center">
-              <Label className={cameraOffLabelStyle}>Your camera is turned off</Label>
+              <Text className={cameraOffLabelStyle}>Your camera is turned off</Text>
             </Stack.Item>
           </Stack>
         }

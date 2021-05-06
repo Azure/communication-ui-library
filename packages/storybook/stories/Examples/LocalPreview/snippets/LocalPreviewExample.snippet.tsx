@@ -8,7 +8,7 @@ import {
 } from 'react-components';
 import { useTheme } from '@fluentui/react-theme-provider';
 import React, { useState } from 'react';
-import { Stack, mergeStyles, Label } from '@fluentui/react';
+import { Stack, mergeStyles, Text } from '@fluentui/react';
 import { CallVideoOffIcon } from '@fluentui/react-northstar';
 import { renderVideoStream } from '../../../utils';
 
@@ -68,7 +68,7 @@ export const LocalPreviewExample = ({
                     <CallVideoOffIcon />
                   </Stack.Item>
                   <Stack.Item align="center">
-                    <Label className={cameraOffLabelStyle}>Your camera is turned off</Label>
+                    <Text className={cameraOffLabelStyle}>Your camera is turned off</Text>
                   </Stack.Item>
                 </Stack>
               }
