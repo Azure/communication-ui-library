@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-// File logic: 
+// File logic:
 //
 // ┌─────────────────────────┐
 // │                         │
