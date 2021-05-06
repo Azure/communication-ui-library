@@ -1,19 +1,18 @@
-import React from 'react';
 import { Meta } from '@storybook/react/types-6-0';
 import { boolean } from '@storybook/addon-knobs';
+import React from 'react';
 import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import { getDocs } from './LocalPreviewDocs';
+import { LocalPreviewExample } from './snippets/LocalPreviewExample.snippet';
 
-import { LocalPreviewExample } from './snippets/LocalPreview.snippet';
-
-export const LocalPreviewComponent: () => JSX.Element = () => {
-  const isVideoReady = boolean('Show Video', true);
+export const LocalPreview: () => JSX.Element = () => {
+  const isVideoAvailable = boolean('Is video available', true);
   const isCameraEnabled = boolean('Is camera available', true);
   const isMicrophoneEnabled = boolean('Is microphone available', true);
 
   return (
     <LocalPreviewExample
-      isVideoReady={isVideoReady}
+      isVideoAvailable={isVideoAvailable}
       isCameraEnabled={isCameraEnabled}
       isMicrophoneEnabled={isMicrophoneEnabled}
     />
@@ -21,8 +20,8 @@ export const LocalPreviewComponent: () => JSX.Element = () => {
 };
 
 export default {
-  title: `${EXAMPLES_FOLDER_PREFIX}/LocalPreview`,
-  component: LocalPreviewComponent,
+  title: `${EXAMPLES_FOLDER_PREFIX}/Local Preview`,
+  component: LocalPreview,
   parameters: {
     docs: {
       page: () => getDocs()

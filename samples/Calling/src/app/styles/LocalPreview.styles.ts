@@ -30,7 +30,13 @@ export const localPreviewContainerStyle = mergeStyles({
   maxHeight: '18.75rem',
   minHeight: '16.875rem',
   background: palette.neutralLighter,
-  color: palette.neutralPrimaryAlt
+  color: palette.neutralTertiary
+});
+
+export const cameraOffLabelStyle = mergeStyles({
+  fontFamily: 'Segoe UI Regular',
+  fontSize: '0.625rem', // 10px
+  color: palette.neutralTertiary
 });
 
 export const toggleButtonsBarStyle = mergeStyles({
