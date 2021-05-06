@@ -1,5 +1,5 @@
-import React from 'react';
 import { Title, Heading, Description, Canvas, Source } from '@storybook/addon-docs/blocks';
+import React from 'react';
 import { LocalPreviewExample } from './snippets/LocalPreviewExample.snippet';
 
 const LocalPreviewExampleText = require('!!raw-loader!./snippets/LocalPreviewExample.snippet.tsx').default;

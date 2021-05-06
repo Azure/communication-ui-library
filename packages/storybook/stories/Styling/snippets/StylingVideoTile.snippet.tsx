@@ -1,5 +1,5 @@
-import { FluentThemeProvider, StreamMedia, VideoTile } from 'react-components';
 import React from 'react';
+import { FluentThemeProvider, StreamMedia, VideoTile } from 'react-components';
 import { renderVideoStream } from '../../utils';
 
 export const VideoTileExample: () => JSX.Element = () => {

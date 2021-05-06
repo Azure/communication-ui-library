@@ -1,5 +1,5 @@
-import { Meta } from '@storybook/react/types-6-0';
 import { boolean } from '@storybook/addon-knobs';
+import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import { getDocs } from './LocalPreviewDocs';

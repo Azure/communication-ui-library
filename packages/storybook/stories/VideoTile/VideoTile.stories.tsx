@@ -1,15 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-import {
-  CameraButton,
-  ControlBar,
-  EndCallButton,
-  MicrophoneButton,
-  OptionsButton,
-  StreamMedia,
-  VideoTile as VideoTileComponent
-} from '@azure/communication-react';
-import { Stack } from '@fluentui/react';
+import { StreamMedia, VideoTile as VideoTileComponent } from '@azure/communication-react';
 import { text, boolean, number } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
