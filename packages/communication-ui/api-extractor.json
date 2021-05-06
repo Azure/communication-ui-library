@@ -1,4 +1,0 @@
-{
-  "extends": "../../common/config/api-extractor/api-extractor.json",
-  "mainEntryPointFilePath": "<projectFolder>/dist/dist-esm/release.index.d.ts"
-}

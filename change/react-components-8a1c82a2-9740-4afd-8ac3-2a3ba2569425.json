@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add support for CommonJS",
+  "packageName": "react-components",
+  "email": "mail@jamesburnside.com",
+  "dependentChangeType": "patch"
+}

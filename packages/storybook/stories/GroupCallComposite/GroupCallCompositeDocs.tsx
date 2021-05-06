@@ -1,11 +1,11 @@
 // © Microsoft Corporation. All rights reserved.
 
-import React from 'react';
 import { Title, Description, Heading, Source, Props } from '@storybook/addon-docs/blocks';
-import { GroupCall } from '@azure/communication-ui';
+import React from 'react';
+import { GroupCall } from 'react-composites';
 
 const importStatement = `
-import { GroupCall } from '@azure/communication-ui';
+import { GroupCall } from 'react-composites';
 import { v1 as createGUID } from 'uuid';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-administration';
 `;

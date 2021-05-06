@@ -31,22 +31,31 @@ export interface Call {
     isMuted: boolean;
     isScreenSharingOn: boolean;
     localVideoStreams: LocalVideoStream[];
+    recording: RecordingCallFeature;
     remoteParticipants: Map<string, RemoteParticipant>;
     remoteParticipantsEnded: Map<string, RemoteParticipant>;
     startTime: Date;
     state: CallState;
+    transcription: TranscriptionCallFeature;
 }
 
 // @public
-export const callClientDeclaratify: (callClient: CallClient) => DeclarativeCallClient;
+export interface CallAgent {
+    displayName?: string;
+}
+
+// @public
+export const callClientDeclaratify: (callClient: CallClient, userId: string) => DeclarativeCallClient;
 
 // @public
 export interface CallClientState {
+    callAgent: CallAgent | undefined;
     calls: Map<string, Call>;
     callsEnded: Call[];
-    deviceManagerState: DeviceManagerState;
+    deviceManager: DeviceManager;
     incomingCalls: Map<string, IncomingCall>;
     incomingCallsEnded: IncomingCall[];
+    userId: string;
 }
 
 // @public
@@ -59,7 +68,7 @@ export interface DeclarativeCallClient extends CallClient {
 }
 
 // @public
-export type DeviceManagerState = {
+export type DeviceManager = {
     isSpeakerSelectionAvailable: boolean;
     selectedMicrophone?: AudioDeviceInfo;
     selectedSpeaker?: AudioDeviceInfo;
@@ -82,7 +91,12 @@ export interface IncomingCall {
 export interface LocalVideoStream {
     mediaStreamType: MediaStreamType;
     source: VideoDeviceInfo;
-    videoStreamRendererView: VideoStreamRendererView | undefined;
+    videoStreamRendererView?: VideoStreamRendererView | undefined;
+}
+
+// @public
+export interface RecordingCallFeature {
+    isRecordingActive: boolean;
 }
 
 // @public
@@ -102,6 +116,11 @@ export interface RemoteVideoStream {
     isAvailable: boolean;
     mediaStreamType: MediaStreamType;
     videoStreamRendererView: VideoStreamRendererView | undefined;
+}
+
+// @public
+export interface TranscriptionCallFeature {
+    isTranscriptionActive: boolean;
 }
 
 // @public
