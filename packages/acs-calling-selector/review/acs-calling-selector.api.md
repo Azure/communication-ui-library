@@ -26,8 +26,8 @@ import { VideoDeviceInfo } from '@azure/communication-calling';
 // @public
 export type BaseSelectorProps = {
     callId: string;
-    displayName: string;
-    identifier: string;
+    displayName?: string;
+    identifier?: string;
 };
 
 // @public (undocumented)
@@ -50,15 +50,15 @@ export const createDefaultHandlersForComponent: <Props>(declarativeCallClient: D
     onHangUp: (options?: HangUpOptions | undefined) => Promise<void>;
     onMute: () => Promise<void> | void;
     onUnmute: () => Promise<void> | void;
-    onSelectCamera: (deviceId: string) => Promise<void | undefined>;
-    onSelectMicrophone: (deviceId: string) => Promise<void | undefined>;
-    onSelectSpeaker: (deviceId: string) => Promise<void | undefined>;
+    onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
+    onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
+    onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
     onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions | undefined) => Call | undefined;
     onStartLocalVideo: () => Promise<void>;
     onStopLocalVideo: (stream: LocalVideoStream) => Promise<void>;
     onStartScreenShare: () => Promise<void> | void;
     onStopScreenShare: () => Promise<void> | void;
-    onToggleCamera: () => Promise<void> | void;
+    onToggleCamera: () => Promise<void>;
     onToggleMicrophone: () => Promise<void> | void;
     onToggleScreenShare: () => Promise<void> | void;
     onRenderView: (stream: LocalVideoStream_2 | RemoteVideoStream, options: CreateViewOptions) => Promise<void>;
@@ -66,15 +66,15 @@ export const createDefaultHandlersForComponent: <Props>(declarativeCallClient: D
     onHangUp: (options?: HangUpOptions | undefined) => Promise<void>;
     onMute: () => Promise<void> | void;
     onUnmute: () => Promise<void> | void;
-    onSelectCamera: (deviceId: string) => Promise<void | undefined>;
-    onSelectMicrophone: (deviceId: string) => Promise<void | undefined>;
-    onSelectSpeaker: (deviceId: string) => Promise<void | undefined>;
+    onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
+    onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
+    onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
     onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions | undefined) => Call | undefined;
     onStartLocalVideo: () => Promise<void>;
     onStopLocalVideo: (stream: LocalVideoStream) => Promise<void>;
     onStartScreenShare: () => Promise<void> | void;
     onStopScreenShare: () => Promise<void> | void;
-    onToggleCamera: () => Promise<void> | void;
+    onToggleCamera: () => Promise<void>;
     onToggleMicrophone: () => Promise<void> | void;
     onToggleScreenShare: () => Promise<void> | void;
     onRenderView: (stream: LocalVideoStream_2 | RemoteVideoStream, options: CreateViewOptions) => Promise<void>;

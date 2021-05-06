@@ -6,7 +6,8 @@ import {
   StartCallOptions,
   HangUpOptions,
   LocalVideoStream,
-  VideoDeviceInfo
+  VideoDeviceInfo,
+  AudioDeviceInfo
 } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 import {
@@ -50,7 +51,7 @@ const createDefaultHandlers = memoizeOne(
       }
     };
 
-    const onToggleCamera = (): Promise<void> | void => {
+    const onToggleCamera = (): Promise<void> => {
       const stream = call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
       if (stream) {
         return onStopLocalVideo(stream);
@@ -66,29 +67,20 @@ const createDefaultHandlers = memoizeOne(
       return callAgent ? callAgent.startCall(participants, options) : undefined;
     };
 
-    const onSelectMicrophone = async (deviceId: string): Promise<void | undefined> => {
+    const onSelectMicrophone = async (device: AudioDeviceInfo): Promise<void> => {
       if (!deviceManager) return;
-      const devices = await deviceManager.getMicrophones();
-      const selected = devices.find((device) => device.id === deviceId);
-      if (!selected) return;
-      return deviceManager.selectMicrophone(selected);
+      return deviceManager.selectMicrophone(device);
     };
 
-    const onSelectSpeaker = async (deviceId: string): Promise<void | undefined> => {
+    const onSelectSpeaker = async (device: AudioDeviceInfo): Promise<void> => {
       if (!deviceManager) return;
-      const devices = await deviceManager.getSpeakers();
-      const selected = devices.find((device) => device.id === deviceId);
-      if (!selected) return;
-      return deviceManager.selectMicrophone(selected);
+      return deviceManager.selectSpeaker(device);
     };
 
-    const onSelectCamera = async (deviceId: string): Promise<void | undefined> => {
+    const onSelectCamera = async (device: VideoDeviceInfo): Promise<void> => {
       if (!call || !deviceManager) return;
-      const devices = await deviceManager.getCameras();
-      const selected = devices.find((device) => device.id === deviceId);
       const stream = call.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
-      if (!selected || !stream) return;
-      return stream.switchSource(selected);
+      return stream?.switchSource(device);
     };
 
     const onMute = (): Promise<void> | void => call?.mute();

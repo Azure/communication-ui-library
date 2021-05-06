@@ -95,7 +95,15 @@ const CallingProviderBase = (props: CallingProviderProps & ErrorHandlingProps): 
             )
           );
         }
-        setDeviceManager(await callClient.getDeviceManager());
+
+        /**
+         * Initialize the DeviceManager state.
+         */
+        const dm = await callClient.getDeviceManager();
+        dm.getCameras();
+        dm.getMicrophones();
+        dm.getSpeakers();
+        setDeviceManager(dm);
       } catch (error) {
         throw new CommunicationUiError({
           message: 'Error creating call agent',
