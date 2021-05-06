@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { clearCachedUserToken, getToken } from './getToken';
 import fetchMock, { enableFetchMocks } from 'jest-fetch-mock';

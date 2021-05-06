@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { CallEndedEvent, IncomingCall, IncomingCallEvent } from '@azure/communication-calling';
 import React, { createContext, Dispatch, SetStateAction, useState } from 'react';

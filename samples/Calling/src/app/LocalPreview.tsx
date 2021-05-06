@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { CallVideoOffIcon } from '@fluentui/react-icons-northstar';
 import { Stack, Text } from '@fluentui/react';
