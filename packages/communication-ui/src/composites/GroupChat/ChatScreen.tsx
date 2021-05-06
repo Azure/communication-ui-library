@@ -8,7 +8,6 @@ import { usePropsFor } from './hooks/usePropsFor';
 import { chatContainer, chatWrapper } from './styles/GroupChat.styles';
 
 export type ChatScreenProps = {
-  threadId: string;
   sendBoxMaxLength?: number;
   onRenderAvatar?: (userId: string) => JSX.Element;
 };

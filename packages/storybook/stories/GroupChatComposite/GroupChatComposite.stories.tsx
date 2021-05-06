@@ -15,6 +15,8 @@ import {
   COMPOSITE_STRING_REQUIREDCONNECTIONSTRING
 } from '../CompositeStringUtils';
 import { Meta } from '@storybook/react/types-6-0';
+import { GroupChatAdapter } from '@azure/communication-ui';
+import { createAzureChatAdapter } from '@azure/communication-ui';
 
 export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/GroupChat`,
@@ -114,6 +116,7 @@ const createChatConfig = async (resourceConnectionString: string): Promise<ChatC
 
 export const GroupChatComposite: () => JSX.Element = () => {
   const [chatConfig, setChatConfig] = useState<ChatConfig>();
+  const [adapter, setAdapter] = useState<GroupChatAdapter>();
 
   const connectionString = text(COMPOSITE_STRING_CONNECTIONSTRING, '', 'Server Simulator');
 
@@ -144,6 +147,22 @@ export const GroupChatComposite: () => JSX.Element = () => {
     }
   }, [connectionString, userId, token, endpointUrl, displayName, threadId]);
 
+  useEffect(() => {
+    if (chatConfig) {
+      const createAdapter = async (): Promise<void> => {
+        setAdapter(
+          await createAzureChatAdapter(
+            chatConfig.token,
+            chatConfig.endpointUrl,
+            chatConfig.threadId,
+            chatConfig.displayName
+          )
+        );
+      };
+      createAdapter();
+    }
+  }, [chatConfig]);
+
   const emptyConfigTips = COMPOSITE_STRING_REQUIREDCONNECTIONSTRING.replace('{0}', 'Group Chat');
   let emptyConfigParametersTips = '';
 
@@ -163,8 +182,8 @@ export const GroupChatComposite: () => JSX.Element = () => {
         padding: '0 10px'
       }}
     >
-      {chatConfig && <GroupChat {...chatConfig} />}
-      {!chatConfig && CompositeConnectionParamsErrMessage([emptyConfigTips, emptyConfigParametersTips])}
+      {adapter && <GroupChat adapter={adapter} />}
+      {!adapter && CompositeConnectionParamsErrMessage([emptyConfigTips, emptyConfigParametersTips])}
     </div>
   );
 };

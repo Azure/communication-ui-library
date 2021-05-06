@@ -1,8 +1,9 @@
 // © Microsoft Corporation. All rights reserved.
-import { ChatClientState, DeclarativeChatClient } from '@azure/acs-chat-declarative';
+import { chatClientDeclaratify, ChatClientState, DeclarativeChatClient } from '@azure/acs-chat-declarative';
 import { DefaultHandlers, createDefaultHandlers } from '@azure/acs-chat-selector';
-import { ChatMessage, ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
+import { ChatClient, ChatMessage, ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
 import EventEmitter from 'events';
+import { createAzureCommunicationUserCredentialBeta, getIdFromToken } from '../../../utils';
 // import { createAzureCommunicationUserCredentialBeta, getIdFromToken } from '../../..';
 import { GroupChatAdapter, GroupChatEvent, GroupChatState } from './GroupChatAdapter';
 
@@ -137,23 +138,23 @@ export class AzureChatAdapter implements GroupChatAdapter {
   }
 }
 
-// export const createAzureChatAdapter = async (
-//   token: string,
-//   endpointUrl: string,
-//   threadId: string,
-//   displayName: string,
-//   refreshTokenCallback?: (() => Promise<string>) | undefined
-// ): Promise<AzureChatAdapter> => {
-//   const userId = getIdFromToken(token);
+export const createAzureChatAdapter = async (
+  token: string,
+  endpointUrl: string,
+  threadId: string,
+  displayName: string,
+  refreshTokenCallback?: (() => Promise<string>) | undefined
+): Promise<AzureChatAdapter> => {
+  const userId = getIdFromToken(token);
 
-//   const chatClient = chatClientDeclaratify(
-//     new ChatClient(endpointUrl, createAzureCommunicationUserCredentialBeta(token, refreshTokenCallback)),
-//     { userId, displayName }
-//   );
-//   const chatThreadClient = await chatClient.getChatThreadClient(threadId);
+  const chatClient = chatClientDeclaratify(
+    new ChatClient(endpointUrl, createAzureCommunicationUserCredentialBeta(token, refreshTokenCallback)),
+    { userId, displayName }
+  );
+  const chatThreadClient = await chatClient.getChatThreadClient(threadId);
 
-//   chatClient.startRealtimeNotifications();
+  chatClient.startRealtimeNotifications();
 
-//   const adapter = new AzureChatAdapter(chatClient, chatThreadClient);
-//   return adapter;
-// };
+  const adapter = new AzureChatAdapter(chatClient, chatThreadClient);
+  return adapter;
+};
