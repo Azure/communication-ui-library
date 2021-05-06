@@ -26,8 +26,8 @@ import { VideoDeviceInfo } from '@azure/communication-calling';
 // @public
 export type BaseSelectorProps = {
     callId: string;
-    displayName: string;
-    identifier: string;
+    displayName?: string;
+    identifier?: string;
 };
 
 // @public (undocumented)

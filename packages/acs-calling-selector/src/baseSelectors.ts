@@ -7,8 +7,8 @@ import { Call, CallClientState, DeviceManagerState, IncomingCall } from '@azure/
  */
 export type BaseSelectorProps = {
   callId: string;
-  displayName: string;
-  identifier: string;
+  displayName?: string;
+  identifier?: string;
 };
 
 export const getCalls = (state: CallClientState): Map<string, Call> => state.calls;

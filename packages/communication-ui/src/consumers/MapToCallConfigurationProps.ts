@@ -12,7 +12,7 @@ export type SetupContainerProps = {
 
 export const MapToCallConfigurationProps = (): SetupContainerProps => {
   const { callAgent, deviceManager, displayName } = useCallingContext();
-  const { call } = useCallContext();
+  const { call, setCall } = useCallContext();
   const { join } = useGroupCall();
   useCallAgent();
 
@@ -20,7 +20,10 @@ export const MapToCallConfigurationProps = (): SetupContainerProps => {
     isCallInitialized: !!(callAgent && deviceManager),
     displayName,
     joinCall: (groupId: string) => {
-      !call && join({ groupId: groupId });
+      if (!call) {
+        const call = join({ groupId: groupId });
+        setCall(call);
+      }
     }
   };
 };

@@ -74,7 +74,7 @@ const createDefaultHandlers = memoizeOne(
 
     const onSelectSpeaker = async (device: AudioDeviceInfo): Promise<void> => {
       if (!deviceManager) return;
-      return deviceManager.selectMicrophone(device);
+      return deviceManager.selectSpeaker(device);
     };
 
     const onSelectCamera = async (device: VideoDeviceInfo): Promise<void> => {
