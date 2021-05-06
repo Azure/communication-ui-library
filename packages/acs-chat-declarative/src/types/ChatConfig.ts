@@ -1,6 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
+import { CommunicationIdentifier } from '@azure/communication-common';
 
 export type ChatConfig = {
-  userId: string;
+  userId: CommunicationIdentifier;
   displayName: string;
 };

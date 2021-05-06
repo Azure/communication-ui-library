@@ -5,6 +5,7 @@ import { ChatClientState, ChatThreadClientState } from './ChatClientState';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 import { enableMapSet } from 'immer';
 import { ChatThreadInfo, ChatParticipant } from '@azure/communication-chat';
+import { CommunicationIdentifier, UnknownIdentifier, getIdentifierKind } from '@azure/communication-common';
 import { ReadReceipt } from './types/ReadReceipt';
 import { Constants } from './Constants';
 import { TypingIndicator } from './types/TypingIndicator';
@@ -15,7 +16,7 @@ enableMapSet();
 // have separated ClientState and ChatThreadState?
 export class ChatContext {
   private _state: ChatClientState = {
-    userId: '',
+    userId: <UnknownIdentifier>{ id: '' },
     displayName: '',
     threads: new Map()
   };
@@ -168,7 +169,7 @@ export class ChatContext {
       produce(this._state, (draft: ChatClientState) => {
         const participants = draft.threads.get(threadId)?.participants;
         if (participants) {
-          participants.set(participant.user.communicationUserId, participant);
+          participants.set(participant.id, participant);
         }
       })
     );
@@ -180,14 +181,14 @@ export class ChatContext {
         const participantsMap = draft.threads.get(threadId)?.participants;
         if (participantsMap) {
           for (const participant of participants) {
-            participantsMap.set(participant.user.communicationUserId, participant);
+            participantsMap.set(participant.id, participant);
           }
         }
       })
     );
   }
 
-  public deleteParticipants(threadId: string, participantIds: string[]): void {
+  public deleteParticipants(threadId: string, participantIds: CommunicationIdentifier[]): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         const participants = draft.threads.get(threadId)?.participants;
@@ -200,7 +201,7 @@ export class ChatContext {
     );
   }
 
-  public deleteParticipant(threadId: string, participantId: string): void {
+  public deleteParticipant(threadId: string, participantId: CommunicationIdentifier): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         const participants = draft.threads.get(threadId)?.participants;
@@ -215,8 +216,9 @@ export class ChatContext {
         const thread = draft.threads.get(threadId);
         const readReceipts = thread?.readReceipts;
         if (thread && readReceipts) {
+          // TODO(prprabhu): Replace `this.getState()` with `draft`?
           if (
-            readReceipt.sender.communicationUserId !== this.getState().userId &&
+            readReceipt.sender !== getIdentifierKind(this.getState().userId) &&
             thread.latestReadTime < readReceipt.readOn
           ) {
             thread.latestReadTime = readReceipt.readOn;
