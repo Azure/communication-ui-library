@@ -109,7 +109,7 @@ dependencies:
   jquery: 3.6.0
   json-stringify-safe: 5.0.1
   memoize-one: 5.1.1
-  merge: 1.2.1
+  merge: 2.1.1
   morgan: 1.9.1
   nan: 2.14.2
   nanoid: 3.1.22
@@ -13937,10 +13937,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w==
-  /merge/1.2.1:
+  /merge/2.1.1:
     dev: false
     resolution:
-      integrity: sha512-VjFo4P5Whtj4vsLzsYBu5ayHhoHJ0UqNm7ibvShmbmoz7tGi0vXaoJbGdB+GmDMLUdg8DpQXEIeVDAe8MaABvQ==
+      integrity: sha512-jz+Cfrg9GWOZbQAnDQ4hlVnQky+341Yk5ru8bZSe6sIDTCIg8n9i/u7hSQGSVOF3C7lH6mGtqjkiT9G4wFLL0w==
   /merge2/1.4.1:
     dev: false
     engines:
@@ -20897,7 +20897,7 @@ packages:
       jest: 26.6.0_ts-node@9.1.1
       jest-junit: 12.0.0
       jquery: 3.6.0
-      merge: 1.2.1
+      merge: 2.1.1
       prettier: 2.0.5
       pretty-quick: 3.1.0_prettier@2.0.5
       preval.macro: 5.0.0
@@ -20920,7 +20920,7 @@ packages:
       ts-node: '*'
       webpack: '*'
     resolution:
-      integrity: sha512-AYPZJc3mmnncrsd6y465mg1I/YbH79vHrdEgZALbQEdoPZla1g8+twqVMz24QK0KlpJdNmZHft42/lJgm5OH6g==
+      integrity: sha512-dyXizlIC2umPcSuEgYV1uAXKsN//MqFjcG9VVV3ezTa9FyDm30a6to+DKczmj5fSYMAJKbxwsJR8fxydYzt/mw==
       tarball: file:projects/calling.tgz
     version: 0.0.0
   file:projects/chat.tgz_40696ef7625c6ba30f84e95f800c1560:
@@ -21104,7 +21104,7 @@ packages:
       jest: 26.6.0_ts-node@9.1.1
       jest-junit: 12.0.0
       jquery: 3.6.0
-      merge: 1.2.1
+      merge: 2.1.1
       prettier: 2.0.5
       pretty-quick: 3.1.0_prettier@2.0.5
       preval.macro: 5.0.0
@@ -21127,7 +21127,7 @@ packages:
       ts-node: '*'
       webpack: '*'
     resolution:
-      integrity: sha512-uuuUUk00py3W2bcciAUym2EvBbRDZVmsm31cKm8erGFiccl4q9EHiyUf6K3O+SXGnFq4PsU7uwU3q8urRCMR0Q==
+      integrity: sha512-2Nix8di7RlWpgtQRLeoDInUKW+IbNXtVKWpJFh938kLsQeqKywJAC4M4U1ZScXstI+Hrkf4cYXBbGJcvuvtp/g==
       tarball: file:projects/one-to-one-call.tgz
     version: 0.0.0
   file:projects/react-components.tgz:
@@ -21536,7 +21536,7 @@ specifiers:
   jquery: ^3.5.1
   json-stringify-safe: ^5.0.1
   memoize-one: ~5.1.1
-  merge: ^1.2.1
+  merge: ^2.1.1
   morgan: ~1.9.1
   nan: ^2.14.1
   nanoid: ~3.1.20
