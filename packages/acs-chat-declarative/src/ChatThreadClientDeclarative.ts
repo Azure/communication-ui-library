@@ -1,5 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 import { ChatThreadClient, SendChatMessageResult, WithResponse } from '@azure/communication-chat';
+import { getIdentifierKind } from '@azure/communication-common';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 import { ChatContext } from './ChatContext';
 import { nanoid } from 'nanoid';
@@ -102,7 +103,7 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
         return async (...args: Parameters<ChatThreadClient['removeParticipant']>) => {
           const result = await chatThreadClient.removeParticipant(...args);
           const [removeIdentifier] = args;
-          this._context.deleteParticipant(chatThreadClient.threadId, removeIdentifier.communicationUserId);
+          this._context.deleteParticipant(chatThreadClient.threadId, getIdentifierKind(removeIdentifier));
           return result;
         };
       }

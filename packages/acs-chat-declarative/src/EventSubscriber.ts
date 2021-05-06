@@ -79,7 +79,7 @@ export class EventSubscriber {
 
   private onParticipantsRemoved = (event: ParticipantsRemovedEvent): void => {
     const participantIds = event.participantsRemoved.map((participant) => {
-      return participant.user.communicationUserId;
+      return participant.id;
     });
     this.chatContext.deleteParticipants(event.threadId, participantIds);
   };
