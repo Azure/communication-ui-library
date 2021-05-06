@@ -96,7 +96,7 @@ const createDefaultHandlers = memoizeOne(
     const onToggleScreenShare = (): Promise<void> | void =>
       call?.isScreenSharingOn ? onStopScreenShare() : onStartScreenShare();
 
-    const onHangUp = (options?: HangUpOptions): Promise<void> | void => call?.hangUp(options);
+    const onHangUp = async (options?: HangUpOptions): Promise<void> => await call?.hangUp(options);
 
     const onRenderView = async (
       stream: LocalVideoStreamStateful | RemoteVideoStream,

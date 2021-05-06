@@ -47,7 +47,7 @@ export type CommonProperties<A, B> = {
 
 // @public
 export const createDefaultHandlersForComponent: <Props>(declarativeCallClient: DeclarativeCallClient, callAgent: CallAgent | undefined, deviceManager: DeviceManager | undefined, call: Call | undefined, videoDeviceInfo: VideoDeviceInfo | undefined, _Component: (props: Props) => ReactElement | null) => Pick<{
-    onHangUp: (options?: HangUpOptions | undefined) => Promise<void> | void;
+    onHangUp: (options?: HangUpOptions | undefined) => Promise<void>;
     onMute: () => Promise<void> | void;
     onUnmute: () => Promise<void> | void;
     onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
@@ -63,7 +63,7 @@ export const createDefaultHandlersForComponent: <Props>(declarativeCallClient: D
     onToggleScreenShare: () => Promise<void> | void;
     onRenderView: (stream: LocalVideoStream_2 | RemoteVideoStream, options: CreateViewOptions) => Promise<void>;
 }, CommonProperties<{
-    onHangUp: (options?: HangUpOptions | undefined) => Promise<void> | void;
+    onHangUp: (options?: HangUpOptions | undefined) => Promise<void>;
     onMute: () => Promise<void> | void;
     onUnmute: () => Promise<void> | void;
     onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;

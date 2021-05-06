@@ -81,7 +81,7 @@ export const Header = (props: HeaderProps): JSX.Element => {
         onEndCallClick={props.endCallHandler}
         compressedMode={props.screenWidth <= MINI_HEADER_WINDOW_WIDTH}
       /> */}
-      <CallControls />
+      <CallControls onEndCallClick={props.endCallHandler} />
     </Stack>
   );
 };
