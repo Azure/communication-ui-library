@@ -8,9 +8,13 @@ import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { IButtonProps } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
+import { LocalVideoStream } from '@azure/acs-calling-declarative';
+import { LocalVideoStream as LocalVideoStream_2 } from '@azure/communication-calling';
 import { PartialTheme } from '@fluentui/react-theme-provider';
 import { PersonaPresence } from '@fluentui/react';
 import { default as React_2 } from 'react';
+import { RemoteVideoStream } from '@azure/acs-calling-declarative';
+import { RemoteVideoStream as RemoteVideoStream_2 } from '@azure/communication-calling';
 import { SizeValue } from '@fluentui/react-northstar';
 import { Theme } from '@fluentui/react-theme-provider';
 
@@ -73,6 +77,14 @@ export interface ControlBarProps {
 }
 
 // @public (undocumented)
+export interface CreateViewOptions {
+    // (undocumented)
+    isMirrored?: boolean;
+    // (undocumented)
+    scalingMode?: ScalingMode;
+}
+
+// @public (undocumented)
 export type CustomMessage = Message<'custom'>;
 
 // @public (undocumented)
@@ -117,6 +129,13 @@ export interface FluentThemeProviderProps {
 }
 
 // @public (undocumented)
+export type GalleryParticipant = {
+    displayName: string;
+    userId: string;
+    videoStream?: RemoteVideoStream_2;
+};
+
+// @public (undocumented)
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;
 
 // @public (undocumented)
@@ -145,6 +164,16 @@ export const labeledOptionsButtonProps: IButtonProps;
 
 // @public
 export const labeledRecordButtonProps: IButtonProps;
+
+// @public (undocumented)
+export type LocalGalleryParticipant = {
+    displayName: string;
+    userId: string;
+    videoStream?: LocalVideoStream_2;
+};
+
+// @public (undocumented)
+export type MediaStreamType = 'Video' | 'ScreenSharing';
 
 // @public (undocumented)
 export type Message<T extends MessageTypes> = {
@@ -264,6 +293,9 @@ export interface ReadReceiptProps {
 // @public
 export const recordButtonProps: IButtonProps;
 
+// @public (undocumented)
+export type ScalingMode = 'Stretch' | 'Crop' | 'Fit';
+
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
 
@@ -375,6 +407,57 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
 
 // @public
 export const useSwitchableFluentTheme: () => SwitchableFluentThemeContext;
+
+// @public (undocumented)
+export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
+
+// @public (undocumented)
+export type VideoGalleryLocalParticipant = VideoGalleryParticipant & {
+    isScreenSharingOn: boolean;
+    videoStream?: LocalVideoStream;
+};
+
+// @public (undocumented)
+export type VideoGalleryLocalVideoStream = VideoGalleryVideoStream;
+
+// @public (undocumented)
+export type VideoGalleryParticipant = {
+    userId: string;
+    displayName?: string;
+    isMuted: boolean;
+};
+
+// @public (undocumented)
+export interface VideoGalleryProps {
+    // (undocumented)
+    localParticipant?: VideoGalleryLocalParticipant;
+    // (undocumented)
+    onRenderView(stream: RemoteVideoStream | LocalVideoStream, options?: CreateViewOptions | undefined): Promise<void>;
+    // (undocumented)
+    remoteParticipants?: VideoGalleryRemoteParticipant[];
+    // (undocumented)
+    scalingMode: ScalingMode;
+}
+
+// @public (undocumented)
+export type VideoGalleryRemoteParticipant = VideoGalleryParticipant & {
+    isSpeaking: boolean;
+    videoStream?: RemoteVideoStream;
+    screenShareStream?: RemoteVideoStream;
+};
+
+// @public (undocumented)
+export type VideoGalleryRemoteVideoStream = VideoGalleryVideoStream;
+
+// @public (undocumented)
+export type VideoGalleryVideoStream = {
+    id: string;
+    mediaStreamType: MediaStreamType;
+    isAvailable: boolean;
+    scalingMode?: ScalingMode;
+    isMirrored?: boolean;
+    target?: HTMLElement;
+};
 
 // @public (undocumented)
 export const VideoTile: (props: VideoTileProps & PlaceholderProps) => JSX.Element;

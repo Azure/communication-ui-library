@@ -76,6 +76,10 @@ const CallingProviderBase = (props: CallingProviderProps & ErrorHandlingProps): 
   }, [refreshTokenCallback]);
 
   useEffect(() => {
+    setUserId(userIdFromToken);
+  }, [userIdFromToken]);
+
+  useEffect(() => {
     (async () => {
       try {
         // Need refactor: to support having ConfigurationScreen separate from GroupCall in Calling Sample, we need to
@@ -167,4 +171,12 @@ export const useCallClient = (): CallClient => {
 
 export const useDeviceManager = (): DeviceManager | undefined => {
   return useValidContext(CallingContext).deviceManager;
+};
+
+export const useIdentifier = (): string | undefined => {
+  return useValidContext(CallingContext).userId;
+};
+
+export const useDisplayName = (): string | undefined => {
+  return useValidContext(CallingContext).displayName;
 };

@@ -67,7 +67,7 @@ export const VideoTile = (props: VideoTileProps & PlaceholderProps): JSX.Element
   const placeholder = placeholderProvider ?? <DefaultPlaceholder {...props} />;
   return (
     <Stack className={mergeStyles(rootStyles, { background: theme.palette.neutralLighter }, styles?.root)}>
-      {isVideoReady ? (
+      {isVideoReady && videoProvider ? (
         <Stack
           className={mergeStyles(
             videoContainerStyles,

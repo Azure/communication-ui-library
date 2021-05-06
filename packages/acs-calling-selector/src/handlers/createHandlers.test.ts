@@ -41,6 +41,7 @@ describe('createHandlers', () => {
       undefined,
       undefined,
       undefined,
+      undefined,
       TestCallClientComponent
     );
     console.log(handlers);

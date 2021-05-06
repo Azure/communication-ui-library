@@ -1,22 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
-import { LocalVideoStream, RemoteVideoStream } from '@azure/communication-calling';
 
-import {
-  RemoteVideoStream as RemoteVideoStreamStateful,
-  LocalVideoStream as LocalVideoStreamStateful
-} from '@azure/acs-calling-declarative';
-
-export type GalleryParticipant = {
-  displayName: string;
-  userId: string;
-  videoStream?: RemoteVideoStream;
-};
-
-export type LocalGalleryParticipant = {
-  displayName: string;
-  userId: string;
-  videoStream?: LocalVideoStream;
-};
+import { LocalVideoStream, RemoteVideoStream } from '@azure/acs-calling-declarative';
 
 export declare interface CreateViewOptions {
   isMirrored?: boolean;
@@ -48,11 +32,11 @@ export type VideoGalleryParticipant = {
 
 export type VideoGalleryRemoteParticipant = VideoGalleryParticipant & {
   isSpeaking: boolean;
-  videoStream?: RemoteVideoStreamStateful;
-  screenShareStream?: RemoteVideoStreamStateful;
+  videoStream?: RemoteVideoStream;
+  screenShareStream?: RemoteVideoStream;
 };
 
 export type VideoGalleryLocalParticipant = VideoGalleryParticipant & {
   isScreenSharingOn: boolean;
-  videoStream?: LocalVideoStreamStateful;
+  videoStream?: LocalVideoStream;
 };

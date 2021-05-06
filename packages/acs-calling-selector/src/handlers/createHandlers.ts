@@ -6,48 +6,57 @@ import {
   StartCallOptions,
   HangUpOptions,
   LocalVideoStream,
-  CreateViewOptions,
-  AudioDeviceInfo,
-  VideoDeviceInfo
+  VideoDeviceInfo,
+  AudioDeviceInfo
 } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
-import { DeclarativeCallClient } from '@azure/acs-calling-declarative';
+import {
+  DeclarativeCallClient,
+  RemoteVideoStream,
+  LocalVideoStream as LocalVideoStreamStateful
+} from '@azure/acs-calling-declarative';
 import { ReactElement } from 'react';
 import memoizeOne from 'memoize-one';
+import { CreateViewOptions } from '../types/VideoGallery';
 
 export type DefaultHandlers = ReturnType<typeof createDefaultHandlers>;
+
+export const areStreamsEqual = (prevStream: LocalVideoStream, newStream: LocalVideoStream): boolean => {
+  return !!prevStream && !!newStream && prevStream.source.id === newStream.source.id;
+};
 
 const createDefaultHandlers = memoizeOne(
   (
     callClient: DeclarativeCallClient,
     callAgent: CallAgent | undefined,
     deviceManager: DeviceManager | undefined,
-    call: Call | undefined
+    call: Call | undefined,
+    videoDeviceInfo: VideoDeviceInfo | undefined
   ) => {
-    const onStartLocalVideo = async (
-      callId: string,
-      device: VideoDeviceInfo,
-      options: CreateViewOptions
-    ): Promise<void> => {
-      if (!deviceManager) return;
-      const stream = new LocalVideoStream(device);
-      return callClient.startRenderVideo(callId, stream, options);
+    const onStartLocalVideo = async (): Promise<void> => {
+      const callId = call?.id;
+      if (!callId || !videoDeviceInfo) return;
+      const stream = new LocalVideoStream(videoDeviceInfo);
+      if (call && !call.localVideoStreams.find((s) => areStreamsEqual(s, stream))) {
+        await call.startVideo(stream);
+      }
     };
 
-    const onStopLocalVideo = (callId: string): Promise<void> | void => {
-      const call = callClient.state.calls.get(callId);
-      const stream = call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
-      if (!stream) return;
-      return callClient.stopRenderVideo(callId, stream);
+    const onStopLocalVideo = async (stream: LocalVideoStream): Promise<void> => {
+      const callId = call?.id;
+      if (!callId || !videoDeviceInfo) return;
+      if (call && call.localVideoStreams.find((s) => areStreamsEqual(s, stream))) {
+        callClient.stopRenderVideo(callId, stream);
+        await call.stopVideo(stream);
+      }
     };
 
-    const onToggleCamera = (callId: string, device: VideoDeviceInfo, options): Promise<void> | void => {
-      const call = callClient.state.calls.get(callId);
+    const onToggleCamera = (): Promise<void> => {
       const stream = call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
       if (stream) {
-        return onStopLocalVideo(callId);
+        return onStopLocalVideo(stream);
       } else {
-        return onStartLocalVideo(callId, device, options);
+        return onStartLocalVideo();
       }
     };
 
@@ -89,6 +98,15 @@ const createDefaultHandlers = memoizeOne(
 
     const onHangUp = (options?: HangUpOptions): Promise<void> | void => call?.hangUp(options);
 
+    const onRenderView = async (
+      stream: LocalVideoStreamStateful | RemoteVideoStream,
+      options: CreateViewOptions
+    ): Promise<void> => {
+      const callId = call?.id;
+      if (!callId) return;
+      await callClient.startRenderVideo(callId, stream, options);
+    };
+
     return {
       onHangUp,
       onMute,
@@ -104,7 +122,7 @@ const createDefaultHandlers = memoizeOne(
       onToggleCamera,
       onToggleMicrophone,
       onToggleScreenShare,
-      getSpeakers: () => deviceManager?.getSpeakers()
+      onRenderView
     };
   }
 );
@@ -128,6 +146,7 @@ type Common<A, B> = Pick<A, CommonProperties<A, B>>;
  * @param callAgent - Instance of {@Link @azure/communication-calling#CallClient}.
  * @param deviceManager - Instance of {@Link @azure/communication-calling#DeviceManager}.
  * @param call - Instance of {@Link @azure/communication-calling#Call}.
+ * @param videoDeviceInfo - Instance of {@Link @azure/communication-calling#Call}.
  * @param _ - React component that you want to generate handlers for.
  * @returns
  */
@@ -136,5 +155,7 @@ export const createDefaultHandlersForComponent = <Props>(
   callAgent: CallAgent | undefined,
   deviceManager: DeviceManager | undefined,
   call: Call | undefined,
+  videoDeviceInfo: VideoDeviceInfo | undefined,
   _Component: (props: Props) => ReactElement | null
-): Common<DefaultHandlers, Props> => createDefaultHandlers(declarativeCallClient, callAgent, deviceManager, call);
+): Common<DefaultHandlers, Props> =>
+  createDefaultHandlers(declarativeCallClient, callAgent, deviceManager, call, videoDeviceInfo);

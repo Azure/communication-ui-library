@@ -26,6 +26,17 @@ export type {
   SystemMessagePayload,
   ChatMessagePayload,
   CustomMessagePayload,
+  VideoGalleryRemoteParticipant,
+  VideoGalleryLocalParticipant,
+  VideoGalleryLocalVideoStream,
+  VideoGalleryRemoteVideoStream,
   NamedTheme,
-  ThemeCollection
+  ThemeCollection,
+  LocalGalleryParticipant,
+  GalleryParticipant,
+  VideoGalleryVideoStream,
+  VideoGalleryParticipant,
+  MediaStreamType,
+  ScalingMode,
+  CreateViewOptions
 } from './types';
