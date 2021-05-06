@@ -28,6 +28,7 @@ dependencies:
   '@rush-temp/calling': file:projects/calling.tgz_b145821026ea2fc3b8b481e1817e93b8
   '@rush-temp/chat': file:projects/chat.tgz_40696ef7625c6ba30f84e95f800c1560
   '@rush-temp/check-treeshaking': file:projects/check-treeshaking.tgz_prettier@2.0.5
+  '@rush-temp/communication-react': file:projects/communication-react.tgz_86ada2f0781d42aae29c9b7c11ee1a9f
   '@rush-temp/one-to-one-call': file:projects/one-to-one-call.tgz_b145821026ea2fc3b8b481e1817e93b8
   '@rush-temp/react-components': file:projects/react-components.tgz
   '@rush-temp/react-composites': file:projects/react-composites.tgz
@@ -21002,6 +21003,64 @@ packages:
       integrity: sha512-T8QyPXtou+73wp59GFuXH8T02m1D3t94xdw2j5xYTa6UEh6E2Hz4utFlXmRh8uc1xJDP+wZ4xj1ubGwmkTf7Vg==
       tarball: file:projects/check-treeshaking.tgz
     version: 0.0.0
+  file:projects/communication-react.tgz_86ada2f0781d42aae29c9b7c11ee1a9f:
+    dependencies:
+      '@fluentui/react': 7.164.1_b0d7ca8a0459a1df1ff516252688d92a
+      '@fluentui/react-icons': 0.3.10_b0d7ca8a0459a1df1ff516252688d92a
+      '@fluentui/react-icons-northstar': 0.51.7_b0d7ca8a0459a1df1ff516252688d92a
+      '@fluentui/react-northstar': 0.51.7_b0d7ca8a0459a1df1ff516252688d92a
+      '@fluentui/react-theme-provider': 0.18.5_b0d7ca8a0459a1df1ff516252688d92a
+      '@microsoft/api-documenter': 7.12.12
+      '@microsoft/api-extractor': 7.13.2
+      '@testing-library/jest-dom': 5.11.9
+      '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
+      '@types/jest': 26.0.22
+      '@types/json-stringify-safe': 5.0.0
+      '@types/node': 14.14.35
+      '@types/react': 16.14.5
+      '@types/react-aria-live': 2.0.0
+      '@types/react-dom': 16.9.11
+      '@types/react-linkify': 1.0.0
+      '@types/uuid': 8.3.0
+      '@typescript-eslint/eslint-plugin': 4.18.0_e9e1aa536ec0b34179456e3b69e4968e
+      '@typescript-eslint/parser': 4.18.0_eslint@7.22.0+typescript@4.1.5
+      ajv: 6.12.6
+      copyfiles: 2.4.1
+      eslint: 7.22.0
+      eslint-config-prettier: 6.15.0_eslint@7.22.0
+      eslint-plugin-header: 3.1.1_eslint@7.22.0
+      eslint-plugin-import: 2.22.1_eslint@7.22.0
+      eslint-plugin-jsx-a11y: 6.4.1_eslint@7.22.0
+      eslint-plugin-prettier: 3.3.1_cdac37046eab2e8d6fb794f34ed825c2
+      eslint-plugin-react: 7.22.0_eslint@7.22.0
+      eslint-plugin-react-hooks: 4.2.0_eslint@7.22.0
+      json-stringify-safe: 5.0.1
+      node-forge: 0.10.0
+      prettier: 2.0.5
+      pretty-quick: 3.1.0_prettier@2.0.5
+      react: 16.14.0
+      react-aria-live: 2.0.5_react@16.14.0
+      react-dom: 16.14.0_react@16.14.0
+      react-is: 17.0.1
+      react-linkify: 1.0.0-alpha
+      regenerator-runtime: 0.13.7
+      rollup: 2.42.4
+      source-map-explorer: 2.5.2
+      styled-components: 5.2.3_9debf3d425c3eafb0518d6c329d076f5
+      ts-jest: 26.5.3_jest@26.6.0+typescript@4.1.5
+      ts-node: 9.1.1_typescript@4.1.5
+      typescript: 4.1.5
+      uuid: 8.3.2
+    dev: false
+    id: file:projects/communication-react.tgz
+    name: '@rush-temp/communication-react'
+    peerDependencies:
+      jest: '*'
+      react-test-renderer: '*'
+    resolution:
+      integrity: sha512-oksZCB7Ml2pPKytXZ94ketRwAgSBwCNkrDbH6UNClxzCRoSWge7oIJdupj/8EoCBIziE9Ve8u4GxXmqGYwVqJw==
+      tarball: file:projects/communication-react.tgz
+    version: 0.0.0
   file:projects/one-to-one-call.tgz_b145821026ea2fc3b8b481e1817e93b8:
     dependencies:
       '@azure/communication-administration': 1.0.0-beta.3
@@ -21137,7 +21196,7 @@ packages:
     dev: false
     name: '@rush-temp/react-components'
     resolution:
-      integrity: sha512-BW1AZCi93uwY1mmGSVZAQAqlNhxGXm/IMdrIKaMFGILzD/ZfFkbdYLqJArxFF8htqWzqUUo/tL6XbnoBcrXYmg==
+      integrity: sha512-4SrgUxp7WPXJZ9cI88lO6RgSvFbbkpJyXfUHTSipXw1a2EblIULOqDHqJ8M78i1fPBomdnmDcGA8SPz1MPEihg==
       tarball: file:projects/react-components.tgz
     version: 0.0.0
   file:projects/react-composites.tgz:
@@ -21362,7 +21421,7 @@ packages:
     dev: false
     name: '@rush-temp/storybook'
     resolution:
-      integrity: sha512-vVdp+J/SQmVVx6VV+2Ds5GP/3tExkYvoYti8G2vIA0hJsXr1okH93JvxffEmC/K4S6kh3FQnq34LrdE4sNHrbg==
+      integrity: sha512-NtWHAZmcTtxGO3QkQGnqADA0E6341OVOzn0Xw2IDrXkahxkvArEQLZBRG0WnttJ71FIkIhARy/YD+6+8Xwm+bg==
       tarball: file:projects/storybook.tgz
     version: 0.0.0
 registry: ''
@@ -21396,6 +21455,7 @@ specifiers:
   '@rush-temp/calling': file:./projects/calling.tgz
   '@rush-temp/chat': file:./projects/chat.tgz
   '@rush-temp/check-treeshaking': file:./projects/check-treeshaking.tgz
+  '@rush-temp/communication-react': file:./projects/communication-react.tgz
   '@rush-temp/one-to-one-call': file:./projects/one-to-one-call.tgz
   '@rush-temp/react-components': file:./projects/react-components.tgz
   '@rush-temp/react-composites': file:./projects/react-composites.tgz
