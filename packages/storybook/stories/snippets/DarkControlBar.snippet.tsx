@@ -6,13 +6,13 @@ import {
   MicrophoneButton,
   OptionsButton,
   ScreenShareButton,
-  defaultThemes
+  darkTheme
 } from 'react-components';
 import React from 'react';
 
 export const DarkControlBar = (): JSX.Element => {
   return (
-    <FluentThemeProvider fluentTheme={defaultThemes.dark.theme}>
+    <FluentThemeProvider fluentTheme={darkTheme}>
       <ControlBar>
         <CameraButton />
         <MicrophoneButton />

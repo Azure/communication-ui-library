@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
 import React, { useState, useMemo, createContext, useContext } from 'react';
-import { FluentThemeProvider, lightTheme, darkTheme } from '@azure/communication-ui';
+import { FluentThemeProvider, lightTheme, darkTheme } from 'react-components';
 import { Theme, PartialTheme } from '@fluentui/react-theme-provider';
 
 /**

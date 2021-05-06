@@ -11,7 +11,7 @@ import {
 import { Footer } from './Footer';
 import { LocalDeviceSettings } from './LocalDeviceSettings';
 import { ParticipantStack } from './ParticipantStack';
-import { ThemeSelector } from 'react-components';
+import { ThemeSelector } from 'app/theming/ThemeSelector';
 
 export enum CommandPanelTypes {
   None = 'none',

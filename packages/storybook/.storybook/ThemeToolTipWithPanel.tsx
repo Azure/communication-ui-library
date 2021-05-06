@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Icons, IconButton, WithTooltip, TooltipLinkList } from '@storybook/components';
+import { Link } from '@storybook/components/dist/cjs/tooltip/TooltipLinkList';
 import { useGlobals } from '@storybook/api';
 import addons from '@storybook/addons';
 import { FORCE_RE_RENDER } from '@storybook/core-events';
 import { TextField, DefaultButton, Stack, Panel, initializeIcons } from '@fluentui/react';
+import { THEMES } from '../stories/themes';
 
 export const ThemeToolTipWithPanel = (props: { active: boolean }): JSX.Element => {
   const [globals, updateGlobals] = useGlobals();
@@ -47,31 +49,21 @@ export const ThemeToolTipWithPanel = (props: { active: boolean }): JSX.Element =
     setTextValue(e.target.value);
   };
 
-  const themeOptions = [
-    {
-      id: 'Light',
-      title: 'Light',
+  const themeOptions: Link[] = []
+  Object.keys(THEMES).forEach((theme) => 
+    themeOptions.push(    {
+      id: theme,
+      title: theme,
       onClick: () => {
         setShowPanel(false);
-        updateGlobals({ ['theme']: 'Light', ['customTheme']: '' });
+        updateGlobals({ ['theme']: theme, ['customTheme']: '' });
         // Invokes Storybook's addon API method (with the FORCE_RE_RENDER) event to trigger a UI refresh
         addons.getChannel().emit(FORCE_RE_RENDER);
       },
-      active: globals['theme'] === 'Light'
-    },
-    {
-      id: 'Dark',
-      title: 'Dark',
-      onClick: () => {
-        setShowPanel(false);
-        updateGlobals({ ['theme']: 'Dark', ['customTheme']: '' });
-        // Invokes Storybook's addon API method (with the FORCE_RE_RENDER) event to trigger a UI refresh
-        addons.getChannel().emit(FORCE_RE_RENDER);
-      },
-      active: globals['theme'] === 'Dark'
-    },
-    { id: 'Custom', title: 'Custom', onClick: () => setShowPanel(true), active: globals['theme'] === 'Custom' }
-  ];
+      active: globals['theme'] === theme
+    })
+  )
+  themeOptions.push({ id: 'Custom', title: 'Custom', onClick: () => setShowPanel(true), active: globals['theme'] === 'Custom' });
 
   return (
     <WithTooltip placement="top" trigger="click" closeOnClick={true} tooltip={<TooltipLinkList links={themeOptions} />}>
