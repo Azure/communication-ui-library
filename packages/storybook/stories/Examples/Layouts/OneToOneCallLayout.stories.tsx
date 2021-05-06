@@ -20,7 +20,7 @@ export const OneToOneCallLayout: () => JSX.Element = () => {
   const height = number('Height (px)', mediaGalleryHeightDefault, mediaGalleryHeightOptions);
 
   const videoStreamStyle = mergeStyles({
-    border: 1,
+    border: '1',
     borderStyle: 'solid',
     position: 'absolute',
     bottom: '.25rem',

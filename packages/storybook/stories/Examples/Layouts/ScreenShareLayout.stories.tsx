@@ -27,7 +27,7 @@ export const ScreenShareLayout: () => JSX.Element = () => {
     '16:9'
   );
   const aspectRatioNumberArray = sidePanelTileAspectRatio.split(':');
-  const aspectRatio = (100 * aspectRatioNumberArray[1]) / aspectRatioNumberArray[0] + '%';
+  const aspectRatio = (100 * parseInt(aspectRatioNumberArray[1])) / parseInt(aspectRatioNumberArray[0]) + '%';
 
   const aspectRatioBoxStyle = mergeStyles({
     borderWidth: '.063rem .063rem .025rem .063rem',
@@ -47,7 +47,7 @@ export const ScreenShareLayout: () => JSX.Element = () => {
   });
 
   const videoStreamStyle = mergeStyles({
-    border: 1,
+    border: '1',
     borderStyle: 'solid',
     position: 'absolute',
     bottom: '.25rem',
