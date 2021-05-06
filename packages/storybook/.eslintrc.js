@@ -8,6 +8,7 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:import/errors',
     'plugin:prettier/recommended',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended'
@@ -32,8 +33,18 @@ module.exports = {
     ],
     '@typescript-eslint/no-explicit-any': 'off',
     eqeqeq: 'warn',
-    'react/display-name': 'off',
-    '@typescript-eslint/no-unused-vars': ['warn', { varsIgnorePattern: '^_' }]
+    '@typescript-eslint/no-unused-vars': ['warn', { varsIgnorePattern: '^_' }],
+    'import/no-unresolved': 'off',
+    'no-restricted-imports': [
+      'error',
+      {
+        // Do not allow references to react-component package. These references should point to @azure/communication-react instead.
+        // As internal packlets get added to the @azure/communication-react package they should be added as a restriction here as well.
+        name: 'react-components',
+        message: 'Please use @azure/communication-react instead.'
+      }
+    ],
+    'react/display-name': 'off'
   },
   root: true,
   settings: {
