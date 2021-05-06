@@ -54,7 +54,7 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
         return createDecoratedListThreads(chatClient, context);
       }
       case 'getChatThreadClient': {
-        return async function (...args: Parameters<ChatClient['getChatThreadClient']>) {
+        return function (...args: Parameters<ChatClient['getChatThreadClient']>) {
           const chatThreadClient = chatClient.getChatThreadClient(...args);
           // TODO(prprabhu): Ensure that thread properties are fetched into the ChatContext at this point.
           // A new thread might be created here, but the properties will never be fetched.

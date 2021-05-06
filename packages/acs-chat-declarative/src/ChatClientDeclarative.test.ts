@@ -155,7 +155,6 @@ describe('declarative chatClient basic api functions', () => {
     const thread = client.state.threads.get(threadId);
     expect(thread).toBeDefined();
     expect(thread?.properties?.topic).toBe(topic);
-    thread && expect(Array.from(thread.participants.values()).sort()).toEqual(mockParticipants.sort());
   });
 
   test('declaratify chatThreadClient when return getChatThreadClient', async () => {
@@ -273,8 +272,7 @@ describe('declarative chatClient subscribe to event properly after startRealtime
       participantsAdded: mockParticipants,
       version: ''
     };
-
-    client.triggerEvent('participantsAdded', addedEvent);
+    await client.triggerEvent('participantsAdded', addedEvent);
 
     expect(client.state.threads.get(threadId)?.participants.size).toBe(2);
 
