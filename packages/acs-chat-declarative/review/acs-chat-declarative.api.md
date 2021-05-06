@@ -9,6 +9,7 @@ import { ChatMessage } from '@azure/communication-chat';
 import { ChatMessageReadReceipt } from '@azure/communication-chat';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
+import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 
@@ -106,6 +107,12 @@ export type ChatThreadClientState = {
 export type ChatThreadProperties = {
     topic?: string;
 };
+
+// @public (undocumented)
+export type CommunicationIdentifierAsKey = string;
+
+// @public (undocumented)
+export const communicationIdentifierAsKey: (i: CommunicationIdentifier) => CommunicationIdentifierAsKey;
 
 // @public (undocumented)
 export interface DeclarativeChatClient extends ChatClient {
