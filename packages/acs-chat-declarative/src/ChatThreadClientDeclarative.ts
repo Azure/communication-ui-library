@@ -43,7 +43,7 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
             createdOn: new Date(),
             status: 'sending',
             senderDisplayName: this._context.getState().displayName,
-            sender: { communicationUserId: this._context.getState().userId }
+            sender: this._context.getState().userId
           };
           this._context.setChatMessage(chatThreadClient.threadId, newMessage);
 
