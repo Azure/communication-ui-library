@@ -1,5 +1,5 @@
 import React from 'react';
-import { ParticipantItem, ParticipantItemProps } from 'react-components';
+import { ParticipantItem, ParticipantItemProps } from '@azure/communication-react';
 import { PersonaPresence, Icon } from '@fluentui/react';
 
 export const CustomIconExample: () => JSX.Element = () => {

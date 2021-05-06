@@ -1,6 +1,6 @@
 import React from 'react';
 import { Stack } from '@fluentui/react';
-import { ScreenShareButton } from 'react-components';
+import { ScreenShareButton } from '@azure/communication-react';
 
 export const ScreenShareButtonExample: () => JSX.Element = () => {
   return (
