@@ -104,7 +104,7 @@ const createDefaultHandlers = memoizeOne(
     const onToggleScreenShare = (): Promise<void> | void =>
       call?.isScreenSharingOn ? onStopScreenShare() : onStartScreenShare();
 
-    const onHangUp = (options?: HangUpOptions): Promise<void> | void => call?.hangUp(options);
+    const onHangUp = async (options?: HangUpOptions): Promise<void> => await call?.hangUp(options);
 
     const onRenderView = async (
       stream: LocalVideoStreamStateful | RemoteVideoStream,
@@ -139,7 +139,7 @@ const createDefaultHandlers = memoizeOne(
  * Type guard for common properties between two types.
  */
 export type CommonProperties<A, B> = {
-  [P in keyof A & keyof B]: A[P] extends B[P] ? (B[P] extends A[P] ? P : never) : never;
+  [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
 
 type Common<A, B> = Pick<A, CommonProperties<A, B>>;

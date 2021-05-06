@@ -2,15 +2,14 @@
 
 import React from 'react';
 import { ControlBar, MicrophoneButton, CameraButton, ScreenShareButton, EndCallButton } from '@azure/communication-ui';
-import { Call } from '@azure/communication-calling';
 import { useHandlers } from './hooks/useHandlers';
 import { usePropsFor } from './hooks/usePropsFor';
 
 export type CallControlsProps = {
-  call?: Call;
+  onEndCallClick(): void;
 };
 
-export const CallControls = (): JSX.Element => {
+export const CallControls = (props: CallControlsProps): JSX.Element => {
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
   const microphoneButtonHandlers = useHandlers(MicrophoneButton);
   const cameraButtonProps = usePropsFor(CameraButton);
@@ -18,6 +17,11 @@ export const CallControls = (): JSX.Element => {
   const screenShareButtonProps = usePropsFor(ScreenShareButton);
   const screenShareButtonHandlers = useHandlers(ScreenShareButton);
   const hangUpButtonHandlers = useHandlers(EndCallButton);
+  const hangUpFunctionFromDeclarative = hangUpButtonHandlers.onHangUp;
+  hangUpButtonHandlers.onHangUp = async () => {
+    await hangUpFunctionFromDeclarative();
+    props.onEndCallClick();
+  };
 
   return (
     <ControlBar>
