@@ -1,5 +1,11 @@
 import React from 'react';
-import { CameraButton, ControlBar, EndCallButton, FluentThemeProvider, MicrophoneButton } from 'react-components';
+import {
+  CameraButton,
+  ControlBar,
+  EndCallButton,
+  FluentThemeProvider,
+  MicrophoneButton
+} from '@azure/communication-react';
 import { CallEndIcon } from '@fluentui/react-northstar';
 
 export const CustomButtonsExample: () => JSX.Element = () => {

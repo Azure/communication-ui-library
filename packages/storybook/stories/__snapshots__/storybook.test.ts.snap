@@ -22,12 +22,8 @@ exports[`storybook snapshot tests Storyshots Composites/Group Call Group Call 1`
       <div
         style={
           Object {
-            "border": "1px solid",
-            "height": "100%",
-            "margin": "20px auto",
-            "maxHeight": "30.0625rem",
-            "maxWidth": "55rem",
-            "width": "100%",
+            "height": "90vh",
+            "width": "90vw",
           }
         }
       >
@@ -73,13 +69,8 @@ exports[`storybook snapshot tests Storyshots Composites/Group Chat Group Chat 1`
       <div
         style={
           Object {
-            "border": "1px solid",
-            "height": "100%",
-            "margin": "20px auto",
-            "maxHeight": "30rem",
-            "maxWidth": "50rem",
-            "padding": "0 10px",
-            "width": "100%",
+            "height": "90vh",
+            "width": "90vw",
           }
         }
       >

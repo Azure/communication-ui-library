@@ -1,5 +1,11 @@
 import React from 'react';
-import { CameraButton, ControlBar, EndCallButton, FluentThemeProvider, MicrophoneButton } from 'react-components';
+import {
+  CameraButton,
+  ControlBar,
+  EndCallButton,
+  FluentThemeProvider,
+  MicrophoneButton
+} from '@azure/communication-react';
 
 export const CustomControlBarStylesExample: () => JSX.Element = () => {
   const customStyles = {

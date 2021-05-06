@@ -2,12 +2,12 @@
 
 import React from 'react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
-import { GridLayout } from 'react-components';
+import { GridLayout } from '@azure/communication-react';
 import { GridLayoutExample } from './snippets/GridLayout.snippet';
 const GridLayoutExampleText = require('!!raw-loader!./snippets/GridLayout.snippet').default;
 
 const importStatement = `
-import { GridLayout, VideoTile } from 'react-components';
+import { GridLayout, VideoTile } from '@azure/communication-react';
 `;
 export const getDocs: () => JSX.Element = () => {
   return (

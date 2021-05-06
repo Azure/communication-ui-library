@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ParticipantItem } from 'react-components';
+import { ParticipantItem } from '@azure/communication-react';
 import { Icon, PersonaPresence, Stack } from '@fluentui/react';
 
 export const InteractiveParticipantListExample: () => JSX.Element = () => {

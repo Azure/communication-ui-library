@@ -1,4 +1,4 @@
-import { CameraButton, ControlBar, EndCallButton, MicrophoneButton, OptionsButton } from 'react-components';
+import { CameraButton, ControlBar, EndCallButton, MicrophoneButton, OptionsButton } from '@azure/communication-react';
 import React from 'react';
 
 // TODO: Add unique keys to the list here.
