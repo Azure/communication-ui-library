@@ -1,11 +1,11 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { Meta } from '@storybook/react/types-6-0';
-import React, { useState } from 'react';
 import { CommunicationUiErrorSeverity, ErrorBar as ErrorBarComponent } from '@azure/communication-react';
 import { text, select } from '@storybook/addon-knobs';
-import { getDocs } from './ErrorBarDocs';
+import { Meta } from '@storybook/react/types-6-0';
+import React, { useState } from 'react';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { getDocs } from './ErrorBarDocs';
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.

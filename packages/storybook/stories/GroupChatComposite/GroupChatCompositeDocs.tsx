@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 import { Title, Description, Props, Heading, Source } from '@storybook/addon-docs/blocks';
-import { GroupChat } from 'react-composites';
 import React from 'react';
+import { GroupChat } from 'react-composites';
 
 const importStatement = `import { GroupChat } from 'react-composites';`;
 const usageCode = `import { GroupChat } from 'react-composites';

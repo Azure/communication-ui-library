@@ -1,5 +1,5 @@
-import React from 'react';
 import { GridLayout, VideoTile } from '@azure/communication-react';
+import React from 'react';
 
 export const GridLayoutExample = (): JSX.Element => {
   const videoTileStyles = { root: { padding: '10px', border: '1px solid #999' } };
