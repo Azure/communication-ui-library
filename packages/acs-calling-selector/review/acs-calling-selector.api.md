@@ -95,6 +95,21 @@ export const optionsButtonSelector: reselect.OutputParametricSelector<callingDec
 }>;
 
 // @public (undocumented)
+export const participantListSelector: reselect.OutputParametricSelector<callingDeclarative.CallClientState, BaseSelectorProps, {
+    userId: string;
+    displayName?: string | undefined;
+    remoteParticipants?: callingDeclarative.RemoteParticipant[] | undefined;
+    isScreenSharingOn: boolean;
+    isMuted: boolean;
+}, (res1: string, res2: string | undefined, res3: callingDeclarative.Call | undefined) => {
+    userId: string;
+    displayName?: string | undefined;
+    remoteParticipants?: callingDeclarative.RemoteParticipant[] | undefined;
+    isScreenSharingOn: boolean;
+    isMuted: boolean;
+}>;
+
+// @public (undocumented)
 export const screenShareButtonSelector: reselect.OutputParametricSelector<callingDeclarative.CallClientState, BaseSelectorProps, {
     checked: boolean | undefined;
 }, (res: callingDeclarative.Call | undefined) => {

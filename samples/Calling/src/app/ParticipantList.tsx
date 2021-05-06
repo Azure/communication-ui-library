@@ -11,18 +11,18 @@ import {
   PersonaPresence
 } from '@fluentui/react';
 import { ParticipantItem } from 'react-components';
-import { connectFuncsToContext, ListParticipant } from 'react-composites';
+import { ListParticipant } from 'react-composites';
 import { MicOffIcon, CallControlPresentNewIcon } from '@fluentui/react-northstar';
 import { participantStackStyle, overFlowButtonStyles, overflowSetStyle } from './styles/ParticipantStack.styles';
-import { MapToParticipantListProps } from './consumers/MapToParticipantListProps';
+import { RemoteParticipant } from '@azure/acs-calling-declarative';
 
-export type ParticipantStackProps = {
+export type ParticipantListProps = {
   /** User ID of user */
   userId: string;
   /** Display name of user */
-  displayName: string;
+  displayName?: string;
   /** Remote participants in user call */
-  remoteParticipants: ListParticipant[];
+  remoteParticipants?: RemoteParticipant[];
   /** Determines if screen sharing is on */
   isScreenSharingOn: boolean;
   /** Determines if user is muted */
@@ -109,11 +109,32 @@ const renderParticipants = (
   ));
 };
 
-export const ParticipantStackComponent = (props: ParticipantStackProps): JSX.Element => {
-  const allParticipants: ListParticipant[] = Array.from(props.remoteParticipants);
+export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
+  const allParticipants: ListParticipant[] = props.remoteParticipants
+    ? props.remoteParticipants.map((remoteParticipant) => {
+        const videoStreams = Array.from(remoteParticipant.videoStreams);
+        console.log(remoteParticipant.identifier + ' videoStreams: ' + JSON.stringify(videoStreams));
+        const isScreenSharing = videoStreams.some(
+          (videoStream) => videoStream[1].mediaStreamType === 'ScreenSharing' && videoStream[1].isAvailable
+        );
+        return {
+          key: (remoteParticipant.identifier as unknown) as string,
+          displayName: remoteParticipant.displayName,
+          state: 'Connected', //TODO convert remoteParticipant.state to Persona.Presence,
+          isScreenSharing: isScreenSharing,
+          isMuted: remoteParticipant.isMuted,
+          onRemove: () => {
+            console.log('onRemove');
+          },
+          onMute: () => {
+            console.log('onMute');
+          }
+        };
+      })
+    : [];
   allParticipants.push({
     key: props.userId,
-    displayName: props.displayName,
+    displayName: props.displayName ?? '',
     state: 'Connected',
     isScreenSharing: props.isScreenSharingOn,
     isMuted: props.isMuted
@@ -124,5 +145,3 @@ export const ParticipantStackComponent = (props: ParticipantStackProps): JSX.Ele
     </Stack>
   );
 };
-
-export const ParticipantStack = connectFuncsToContext(ParticipantStackComponent, MapToParticipantListProps);

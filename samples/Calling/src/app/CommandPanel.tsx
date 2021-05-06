@@ -10,8 +10,11 @@ import {
 } from 'app/styles/CommandPanel.styles';
 import { Footer } from './Footer';
 import { LocalDeviceSettings } from './LocalDeviceSettings';
-import { ParticipantStack } from './ParticipantStack';
+import { ParticipantList } from './ParticipantList';
 import { ThemeSelector } from 'react-components';
+import { participantListSelector } from '@azure/acs-calling-selector';
+import { useSelector } from './hooks/useSelector';
+import { useCall } from 'react-composites';
 
 export enum CommandPanelTypes {
   None = 'none',
@@ -24,6 +27,9 @@ export interface CommandPanelProps {
 }
 
 export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
+  const call = useCall();
+  const participantListProps = useSelector(participantListSelector, { callId: call ? call.id : '' });
+
   return (
     <Stack styles={fullHeightStyles} tokens={{ childrenGap: '1.5rem' }}>
       <Stack.Item className={paneHeaderStyle}>
@@ -31,7 +37,7 @@ export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
       </Stack.Item>
       {props.selectedPane === CommandPanelTypes.People && (
         <Stack.Item styles={fullHeightStyles}>
-          <ParticipantStack />
+          <ParticipantList {...participantListProps} />
         </Stack.Item>
       )}
       {props.selectedPane === CommandPanelTypes.People && (
