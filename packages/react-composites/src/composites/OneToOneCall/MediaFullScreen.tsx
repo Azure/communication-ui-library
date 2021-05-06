@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+//Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import React, { useEffect, useRef, useState } from 'react';
 import { RemoteVideoStream, VideoStreamRenderer, VideoStreamRendererView } from '@azure/communication-calling';

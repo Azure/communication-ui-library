@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+//Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { ChatMessage, ChatMessageReadReceipt, ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
 import { ChatContext } from './ChatContext';

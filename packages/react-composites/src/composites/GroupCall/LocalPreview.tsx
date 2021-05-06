@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+//Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { CallVideoIcon, MicIcon } from '@fluentui/react-icons-northstar';
 import { Stack, Toggle, Image, ImageFit, IImageStyles } from '@fluentui/react';

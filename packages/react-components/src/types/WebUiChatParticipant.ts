@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+//Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 /**
  * If displayName is undefined, the ChatParticipant will not be listed in the ParticipantManagement component. I think

@@ -1,4 +1,6 @@
-// © Microsoft Corporation. All rights reserved.
+//Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { deviceManagerDeclaratify } from './DeviceManagerDeclarative';
 import { CallAgent, CallClient, CreateViewOptions, DeviceManager } from '@azure/communication-calling';
 import { CallClientState, LocalVideoStream, RemoteVideoStream } from './CallClientState';

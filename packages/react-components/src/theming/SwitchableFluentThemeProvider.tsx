@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+//Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import React, { useState, useMemo, createContext, useContext } from 'react';
 import { NamedTheme, ThemeCollection } from '../types';

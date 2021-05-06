@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+//Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 /**
  * This file was created to extract circular dependencies between ChatProvider and ChatThreadProvider that both

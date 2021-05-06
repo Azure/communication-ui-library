@@ -1,4 +1,6 @@
-// © Microsoft Corporation. All rights reserved.
+//Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { ReactElement } from 'react';
 import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
 import { ChatThreadClient } from '@azure/communication-chat';

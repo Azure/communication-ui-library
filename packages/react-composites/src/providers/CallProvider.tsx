@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+//Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import React, { createContext, useState, Dispatch, SetStateAction } from 'react';
 import { Call, CallState, LocalVideoStream, RemoteParticipant } from '@azure/communication-calling';

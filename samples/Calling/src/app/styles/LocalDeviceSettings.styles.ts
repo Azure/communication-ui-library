@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+//Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { IDropdownStyles, IStackTokens, mergeStyles } from '@fluentui/react';
 import { Theme } from '@fluentui/react-theme-provider';

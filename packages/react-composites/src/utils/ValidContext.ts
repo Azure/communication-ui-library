@@ -1,4 +1,6 @@
-// © Microsoft Corporation. All rights reserved.
+//Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import React, { useContext } from 'react';
 import { CommunicationUiErrorCode, CommunicationUiError } from '../types/CommunicationUiError';
 

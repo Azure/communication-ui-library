@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+//Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import React, { useEffect, useRef } from 'react';
 import { invertedVideoStyle, mediaContainer } from './styles/StreamMedia.styles';

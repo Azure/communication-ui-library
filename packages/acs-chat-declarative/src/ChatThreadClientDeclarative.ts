@@ -1,4 +1,6 @@
-// © Microsoft Corporation. All rights reserved.
+//Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { ChatThreadClient, SendChatMessageResult, WithResponse } from '@azure/communication-chat';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 import { ChatContext } from './ChatContext';

@@ -1,5 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
-/* eslint-disable no-undef */
+//Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { BaseClientMock, createBaseClientMock } from './ChatClientMocks';
 import { OK, TEXT_MESSAGE } from '../constants';

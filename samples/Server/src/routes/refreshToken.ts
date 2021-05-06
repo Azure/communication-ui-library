@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+//Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import * as express from 'express';
 import { CommunicationUserToken } from '@azure/communication-identity';

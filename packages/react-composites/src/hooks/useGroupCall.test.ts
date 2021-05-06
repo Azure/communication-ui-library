@@ -1,4 +1,6 @@
-// © Microsoft Corporation. All rights reserved.
+//Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { Call } from '@azure/communication-calling';
 import { renderHook } from '@testing-library/react-hooks';
 import { defaultMockCallProps, mockCall, mockCallAgent } from '../mocks';

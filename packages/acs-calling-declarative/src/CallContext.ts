@@ -1,4 +1,6 @@
-// © Microsoft Corporation. All rights reserved.
+//Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { AudioDeviceInfo, DeviceAccess, VideoDeviceInfo } from '@azure/communication-calling';
 import EventEmitter from 'events';
 import { enableMapSet, produce } from 'immer';

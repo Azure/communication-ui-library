@@ -1,4 +1,6 @@
-// © Microsoft Corporation. All rights reserved.
+//Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { MessageStatus } from '@azure/acs-chat-declarative';
 
 export enum MessageAttachedStatus {

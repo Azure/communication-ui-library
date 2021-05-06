@@ -1,4 +1,6 @@
-// © Microsoft Corporation. All rights reserved.
+//Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { createSelector } from 'reselect';
 import { getCoolPeriod, getDisplayName, getUserId } from './baseSelectors';
 

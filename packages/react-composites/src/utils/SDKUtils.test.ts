@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+//Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { CommunicationUserKind, PhoneNumberKind, UnknownIdentifierKind } from '@azure/communication-common';

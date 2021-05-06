@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+//Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Linkify from 'react-linkify';

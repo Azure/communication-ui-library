@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+//Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { TypingIndicator } from '@azure/acs-chat-declarative';
 import { typingIndicatorSelector } from './typingIndicatorSelector';

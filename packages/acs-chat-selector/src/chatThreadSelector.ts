@@ -1,4 +1,6 @@
-// © Microsoft Corporation. All rights reserved.
+//Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { getChatMessages, getIsLargeGroup, getLatestReadTime, getUserId } from './baseSelectors';
 import { ChatMessageWithStatus } from '@azure/acs-chat-declarative';
 // The following need explicitly imported to avoid api-extractor issues.

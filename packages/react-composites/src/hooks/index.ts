@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+//Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 // Todo: move these away from default exports
 import useSubscribeToAudioDeviceList from './useSubscribeToAudioDeviceList';

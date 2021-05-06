@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+//Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 /**
  * Internal object used to hold callId. This is so when we create the closure that includes this container we can update

@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+//Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 export { TypingIndicator } from './TypingIndicator';
 export type { TypingIndicatorProps, TypingIndicatorStylesProps } from './TypingIndicator';

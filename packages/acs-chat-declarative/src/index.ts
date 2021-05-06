@@ -1,4 +1,6 @@
-// © Microsoft Corporation. All rights reserved.
+//Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 export { chatClientDeclaratify } from './ChatClientDeclarative';
 export { ChatContext } from './ChatContext';
 export { chatThreadClientDeclaratify } from './ChatThreadClientDeclarative';

@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+//Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { DefaultButton, IconButton, Stack, TextField } from '@fluentui/react';
 import { CallIcon, VideoCameraEmphasisIcon } from '@fluentui/react-icons-northstar';

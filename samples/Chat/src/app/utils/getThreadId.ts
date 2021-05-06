@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+//Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 export const getThreadId = (): string | null => {
   const urlParams = new URLSearchParams(window.location.search);
