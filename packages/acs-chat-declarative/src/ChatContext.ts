@@ -1,19 +1,16 @@
 // © Microsoft Corporation. All rights reserved.
 import EventEmitter from 'events';
 import produce from 'immer';
-import { ChatClientState, ChatThreadClientState, ChatThreadProperties } from './ChatClientState';
+import {
+  ChatClientState,
+  ChatThreadClientState,
+  ChatThreadProperties,
+  communicationIdentifierAsKey
+} from './ChatClientState';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 import { enableMapSet } from 'immer';
 import { ChatParticipant } from '@azure/communication-chat';
-import {
-  CommunicationIdentifier,
-  CommunicationIdentifierKind,
-  UnknownIdentifierKind,
-  getIdentifierKind,
-  isCommunicationUserIdentifier,
-  isMicrosoftTeamsUserIdentifier,
-  isPhoneNumberIdentifier
-} from '@azure/communication-common';
+import { CommunicationIdentifierKind, UnknownIdentifierKind } from '@azure/communication-common';
 import { ReadReceipt } from './types/ReadReceipt';
 import { Constants } from './Constants';
 import { TypingIndicator } from './types/TypingIndicator';
@@ -177,7 +174,7 @@ export class ChatContext {
       produce(this._state, (draft: ChatClientState) => {
         const participants = draft.threads.get(threadId)?.participants;
         if (participants) {
-          participants.set(stringifyCommunicationIdentifier(participant.id), participant);
+          participants.set(communicationIdentifierAsKey(participant.id), participant);
         }
       })
     );
@@ -189,7 +186,7 @@ export class ChatContext {
         const participantsMap = draft.threads.get(threadId)?.participants;
         if (participantsMap) {
           for (const participant of participants) {
-            participantsMap.set(stringifyCommunicationIdentifier(participant.id), participant);
+            participantsMap.set(communicationIdentifierAsKey(participant.id), participant);
           }
         }
       })
@@ -202,7 +199,7 @@ export class ChatContext {
         const participants = draft.threads.get(threadId)?.participants;
         if (participants) {
           participantIds.forEach((id) => {
-            participants.delete(stringifyCommunicationIdentifier(id));
+            participants.delete(communicationIdentifierAsKey(id));
           });
         }
       })
@@ -213,7 +210,7 @@ export class ChatContext {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         const participants = draft.threads.get(threadId)?.participants;
-        participants?.delete(stringifyCommunicationIdentifier(participantId));
+        participants?.delete(communicationIdentifierAsKey(participantId));
       })
     );
   }
@@ -299,20 +296,3 @@ export class ChatContext {
     this._emitter.off('stateChanged', handler);
   }
 }
-
-const stringifyCommunicationIdentifier = (i: CommunicationIdentifier): string => {
-  return `${getIdentifierKind(i).kind}:${extractValue(i)}`;
-};
-
-const extractValue = (i: CommunicationIdentifier): string => {
-  if (isCommunicationUserIdentifier(i)) {
-    return i.communicationUserId;
-  }
-  if (isMicrosoftTeamsUserIdentifier(i)) {
-    return i.microsoftTeamsUserId;
-  }
-  if (isPhoneNumberIdentifier(i)) {
-    return i.phoneNumber;
-  }
-  return i.id;
-};
