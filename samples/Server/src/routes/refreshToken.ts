@@ -2,8 +2,8 @@
 
 import * as express from 'express';
 import { CommunicationUserToken } from '@azure/communication-identity';
-import { CommunicationUser } from '@azure/communication-common';
-import { issueToken } from '../lib/identityClient';
+import { CommunicationUserIdentifier } from '@azure/communication-common';
+import { getToken } from '../lib/identityClient';
 
 const router = express.Router();
 
@@ -12,10 +12,10 @@ router.post('/:id', async function (req, res, next) {
     res.sendStatus(404);
   }
 
-  const user: CommunicationUser = {
+  const user: CommunicationUserIdentifier = {
     communicationUserId: req.params['id'] as string
   };
-  const token = await issueToken(user, ['chat', 'voip']);
+  const token = await getToken(user, ['chat', 'voip']);
   const userToken: CommunicationUserToken = {
     user,
     ...token

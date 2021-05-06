@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "TypingIndicator property updated to render all users instead of each one. Removed property from TypingIndicator styles.",
+  "packageName": "react-components",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -1,17 +1,16 @@
-import React from 'react';
 import {
   CameraButton,
   ControlBar,
+  EndCallButton,
   FluentThemeProvider,
-  MicrophoneButton,
-  hangupButtonProps
-} from '@azure/communication-ui';
-import { DefaultButton, concatStyleSets } from '@fluentui/react';
+  MicrophoneButton
+} from '@azure/communication-react';
 import { CallEndIcon } from '@fluentui/react-northstar';
+import React from 'react';
 
 export const CustomButtonsExample: () => JSX.Element = () => {
-  const CustomHangupButton: () => JSX.Element = () => {
-    const styles = concatStyleSets(hangupButtonProps.styles, {
+  const CustomEndCallButton: () => JSX.Element = () => {
+    const customStyles = {
       root: {
         height: 'inherit',
         background: 'crimson',
@@ -23,17 +22,18 @@ export const CustomButtonsExample: () => JSX.Element = () => {
         color: 'white'
       },
       flexContainer: { flexFlow: 'row' }
-    });
+    };
 
     return (
-      <DefaultButton
+      <EndCallButton
+        styles={customStyles}
+        showLabel={true}
         onRenderIcon={() => <CallEndIcon key={'hangupBtnIconKey'} />}
         onRenderText={() => (
           <span key={'hangupBtnTextKey'} style={{ marginLeft: '0.5rem' }}>
             End Call
           </span>
         )}
-        styles={styles}
         onClick={() => {
           /* handle hangup */
         }}
@@ -46,7 +46,7 @@ export const CustomButtonsExample: () => JSX.Element = () => {
       <ControlBar layout={'horizontal'}>
         <CameraButton />
         <MicrophoneButton />
-        <CustomHangupButton />
+        <CustomEndCallButton />
       </ControlBar>
     </FluentThemeProvider>
   );

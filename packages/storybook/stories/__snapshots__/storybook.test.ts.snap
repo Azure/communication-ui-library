@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`storybook snapshot tests Storyshots Composites/GroupCall Group Call Composite 1`] = `
+exports[`storybook snapshot tests Storyshots Composites/Group Call Group Call 1`] = `
 <div
   className="css-75 root-0 body-1"
 >
@@ -22,12 +22,8 @@ exports[`storybook snapshot tests Storyshots Composites/GroupCall Group Call Com
       <div
         style={
           Object {
-            "border": "1px solid",
-            "height": "100%",
-            "margin": "20px auto",
-            "maxHeight": "30.0625rem",
-            "maxWidth": "55rem",
-            "width": "100%",
+            "height": "90vh",
+            "width": "90vw",
           }
         }
       >
@@ -51,7 +47,7 @@ exports[`storybook snapshot tests Storyshots Composites/GroupCall Group Call Com
 </div>
 `;
 
-exports[`storybook snapshot tests Storyshots Composites/GroupChat Group Chat Composite 1`] = `
+exports[`storybook snapshot tests Storyshots Composites/Group Chat Group Chat 1`] = `
 <div
   className="css-75 root-0 body-1"
 >
@@ -73,13 +69,8 @@ exports[`storybook snapshot tests Storyshots Composites/GroupChat Group Chat Com
       <div
         style={
           Object {
-            "border": "1px solid",
-            "height": "100%",
-            "margin": "20px auto",
-            "maxHeight": "30rem",
-            "maxWidth": "50rem",
-            "padding": "0 10px",
-            "width": "100%",
+            "height": "90vh",
+            "width": "90vw",
           }
         }
       >
@@ -105,7 +96,7 @@ exports[`storybook snapshot tests Storyshots Composites/GroupChat Group Chat Com
 </div>
 `;
 
-exports[`storybook snapshot tests Storyshots Composites/OneToOneCall One To One Call Composite 1`] = `
+exports[`storybook snapshot tests Storyshots Composites/One To One Call One To One Call 1`] = `
 <div
   className="css-75 root-0 body-1"
 >
@@ -1082,7 +1073,7 @@ exports[`storybook snapshot tests Storyshots Settings/Manage Cookies Manage Cook
 </div>
 `;
 
-exports[`storybook snapshot tests Storyshots UI Components/ReadReceipt Read Reciept Icon Component 1`] = `
+exports[`storybook snapshot tests Storyshots UI Components/Read Receipt Read Receipt 1`] = `
 <div
   className="css-75 root-0 body-1"
 >

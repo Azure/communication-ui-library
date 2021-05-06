@@ -1,20 +1,19 @@
 // © Microsoft Corporation. All rights reserved.
 
-import React from 'react';
-import { Meta } from '@storybook/react/types-6-0';
-import { getDocs } from './ThemesDocs';
-import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import {
   CameraButton,
   ControlBar,
+  EndCallButton,
   FluentThemeProvider,
   GridLayout,
   MicrophoneButton,
-  VideoTile,
-  hangupButtonProps,
-  screenShareButtonProps
-} from '@azure/communication-ui';
-import { DefaultButton } from '@fluentui/react';
+  ScreenShareButton,
+  VideoTile
+} from '@azure/communication-react';
+import { Meta } from '@storybook/react/types-6-0';
+import React from 'react';
+import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
+import { getDocs } from './ThemesDocs';
 
 const TeamsTheme = {
   palette: {
@@ -69,14 +68,12 @@ export const TeamsThemeComponent: () => JSX.Element = () => {
                     /*handle onClick*/
                   }}
                 />
-                <DefaultButton
-                  {...screenShareButtonProps}
+                <ScreenShareButton
                   onClick={() => {
                     /*handle onClick*/
                   }}
                 />
-                <DefaultButton
-                  {...hangupButtonProps}
+                <EndCallButton
                   onClick={() => {
                     /*handle onClick*/
                   }}
