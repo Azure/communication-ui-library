@@ -9,7 +9,8 @@ import { AcceptCallOptions } from '@azure/communication-calling';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { AzureCommunicationUserCredential } from '@azure/communication-common-beta3';
-import { Call } from '@azure/communication-calling';
+import { Call } from '@azure/acs-calling-declarative';
+import { Call as Call_2 } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';
 import { CallClientOptions } from '@azure/communication-calling';
@@ -20,7 +21,8 @@ import { CommunicationUser } from '@azure/communication-signaling';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { ControlBarProps } from 'react-components';
 import { CreateViewOptions } from '@azure/communication-calling';
-import { DeviceManager } from '@azure/communication-calling';
+import { DeviceManager } from '@azure/acs-calling-declarative';
+import { DeviceManager as DeviceManager_2 } from '@azure/communication-calling';
 import { Dispatch } from 'react';
 import { ErrorBarProps } from 'react-components';
 import { ErrorInfo } from 'react';
@@ -30,20 +32,23 @@ import { IButtonStyles } from '@fluentui/react';
 import { IncomingCall } from '@azure/communication-calling';
 import { IStyle } from '@fluentui/react';
 import { JoinCallOptions } from '@azure/communication-calling';
-import { LocalVideoStream } from '@azure/communication-calling';
+import { LocalVideoStream } from '@azure/acs-calling-declarative';
+import { LocalVideoStream as LocalVideoStream_2 } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { PhoneNumberKind } from '@azure/communication-common';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
-import { RemoteParticipant } from '@azure/communication-calling';
-import { RemoteVideoStream } from '@azure/communication-calling';
+import { RemoteParticipant } from '@azure/acs-calling-declarative';
+import { RemoteParticipant as RemoteParticipant_2 } from '@azure/communication-calling';
+import { RemoteVideoStream } from '@azure/acs-calling-declarative';
+import { RemoteVideoStream as RemoteVideoStream_2 } from '@azure/communication-calling';
 import { ScalingMode } from '@azure/communication-calling';
 import { SetStateAction } from 'react';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 
 // @public (undocumented)
-export const areStreamsEqual: (prevStream: LocalVideoStream, newStream: LocalVideoStream) => boolean;
+export const areStreamsEqual: (prevStream: LocalVideoStream_2, newStream: LocalVideoStream_2) => boolean;
 
 // @public (undocumented)
 export interface BaseCustomStylesProps {
@@ -64,20 +69,20 @@ export const CallContext: React_2.Context<CallContextType | undefined>;
 
 // @public (undocumented)
 export type CallContextType = {
-    call: Call | undefined;
-    setCall: Dispatch<SetStateAction<Call | undefined>>;
+    call: Call_2 | undefined;
+    setCall: Dispatch<SetStateAction<Call_2 | undefined>>;
     callState: CallState;
     setCallState: Dispatch<SetStateAction<CallState>>;
-    participants: RemoteParticipant[];
-    setParticipants: Dispatch<SetStateAction<RemoteParticipant[]>>;
+    participants: RemoteParticipant_2[];
+    setParticipants: Dispatch<SetStateAction<RemoteParticipant_2[]>>;
     screenShareStream: ParticipantStream | undefined;
     setScreenShareStream: Dispatch<SetStateAction<ParticipantStream | undefined>>;
     isMicrophoneEnabled: boolean;
     setIsMicrophoneEnabled: Dispatch<SetStateAction<boolean>>;
     localScreenShareActive: boolean;
     setLocalScreenShare: Dispatch<SetStateAction<boolean>>;
-    localVideoStream: LocalVideoStream | undefined;
-    setLocalVideoStream: Dispatch<SetStateAction<LocalVideoStream | undefined>>;
+    localVideoStream: LocalVideoStream_2 | undefined;
+    setLocalVideoStream: Dispatch<SetStateAction<LocalVideoStream_2 | undefined>>;
     isLocalVideoRendererBusy: boolean;
     setLocalVideoRendererBusy: Dispatch<SetStateAction<boolean>>;
     isLocalVideoOn: boolean;
@@ -110,8 +115,8 @@ export type CallingContextType = {
     setCallClient: Dispatch<SetStateAction<CallClient>>;
     callAgent: CallAgent | undefined;
     setCallAgent: Dispatch<SetStateAction<CallAgent | undefined>>;
-    deviceManager: DeviceManager | undefined;
-    setDeviceManager: Dispatch<SetStateAction<DeviceManager | undefined>>;
+    deviceManager: DeviceManager_2 | undefined;
+    setDeviceManager: Dispatch<SetStateAction<DeviceManager_2 | undefined>>;
     audioDevicePermission: DevicePermissionState;
     setAudioDevicePermission: Dispatch<SetStateAction<DevicePermissionState>>;
     videoDevicePermission: DevicePermissionState;
@@ -340,10 +345,10 @@ export const connectFuncsToContext: <FuncTypes extends ((ownProps: any) => any)[
 export const CONNECTING = "Connecting";
 
 // @public (undocumented)
-export const convertSdkRemoteParticipantToGalleryParticipant: (remoteParticipantFromSDK: RemoteParticipant) => GalleryParticipant;
+export const convertSdkRemoteParticipantToGalleryParticipant: (remoteParticipantFromSDK: RemoteParticipant_2) => GalleryParticipant;
 
 // @public (undocumented)
-export const convertSdkRemoteParticipantToListParticipant: (participant: RemoteParticipant, onRemove?: (() => void) | undefined, onMute?: (() => void) | undefined) => ListParticipant;
+export const convertSdkRemoteParticipantToListParticipant: (participant: RemoteParticipant_2, onRemove?: (() => void) | undefined, onMute?: (() => void) | undefined) => ListParticipant;
 
 // @public (undocumented)
 export const COOL_PERIOD_REFRESH_INVERVAL = 1000;
@@ -451,7 +456,7 @@ export const formatTimestampForChatMessage: (messageDate: Date, todayDate: Date)
 export type GalleryParticipant = {
     displayName: string;
     userId: string;
-    videoStream?: RemoteVideoStream;
+    videoStream?: RemoteVideoStream_2;
 };
 
 // @public (undocumented)
@@ -475,6 +480,74 @@ export const getThreadContextState: () => ThreadProviderContextType;
 export const GroupCall: (props: GroupCallCompositeProps) => JSX.Element;
 
 // @public (undocumented)
+export interface GroupCallAdapter {
+    // (undocumented)
+    dispose(): Promise<void>;
+    // (undocumented)
+    getState(): GroupCallState;
+    // (undocumented)
+    joinCall(groupCallId?: string): Promise<JoinCallResult>;
+    // (undocumented)
+    leaveCall(forEveryone?: boolean): Promise<void>;
+    // (undocumented)
+    mute(): Promise<void>;
+    // (undocumented)
+    off(event: 'incomingCall', listener: IncomingCallListener): void;
+    // (undocumented)
+    off(event: 'participantJoined', listener: ParticipantJoinedListener): void;
+    // (undocumented)
+    off(event: 'error', errorHandler: (e: Error) => void): void;
+    // (undocumented)
+    offStateChange(handler: (state: GroupCallState) => void): void;
+    // (undocumented)
+    on(event: 'incomingCall', listener: IncomingCallListener): void;
+    // (undocumented)
+    on(event: 'participantJoined', listener: ParticipantJoinedListener): void;
+    // (undocumented)
+    on(event: 'error', errorHandler: (e: Error) => void): void;
+    // (undocumented)
+    onStateChange(handler: (state: GroupCallState) => void): void;
+    // (undocumented)
+    queryCameras(): Promise<void>;
+    // (undocumented)
+    queryMicrophones(): Promise<void>;
+    // (undocumented)
+    setCamera(source: VideoDeviceInfo): Promise<void>;
+    // (undocumented)
+    setDisplayName(displayName: string): void;
+    // (undocumented)
+    setMicrophone(source: AudioDeviceInfo): Promise<void>;
+    // (undocumented)
+    startCamera(): Promise<void>;
+    // (undocumented)
+    startRenderVideo(callId: string, stream: LocalVideoStream | RemoteVideoStream, options?: CreateViewOptions): Promise<void>;
+    // (undocumented)
+    startScreenShare(): Promise<void>;
+    // (undocumented)
+    stopCamera(): Promise<void>;
+    // (undocumented)
+    stopRenderVideo(callId: string, stream: LocalVideoStream | RemoteVideoStream): void;
+    // (undocumented)
+    stopScreenShare(): Promise<void>;
+    // (undocumented)
+    toggleCameraOnOff(): Promise<void>;
+    // (undocumented)
+    toggleMute(): Promise<void>;
+    // (undocumented)
+    toggleScreenShare(): Promise<void>;
+    // (undocumented)
+    unmute(): Promise<void>;
+}
+
+// @public (undocumented)
+export type GroupCallClientState = {
+    userId: string;
+    displayName: string;
+    call: Call;
+    devices: DeviceManager;
+};
+
+// @public (undocumented)
 export const GroupCallControlBar: (props: ControlBarProps & GroupCallControlBarProps & ErrorHandlingProps) => JSX.Element;
 
 // @public (undocumented)
@@ -485,6 +558,15 @@ export interface GroupCallControlBarProps extends CallControlBarContainerProps {
     compressedMode: boolean;
     onEndCallClick(): void;
 }
+
+// @public (undocumented)
+export type GroupCallState = GroupCallUIState & GroupCallClientState;
+
+// @public (undocumented)
+export type GroupCallUIState = {
+    error?: Error;
+    page: 'configuration' | 'call';
+};
 
 // Warning: (ae-forgotten-export) The symbol "GroupChatProps" needs to be exported by the entry point index.d.ts
 //
@@ -507,6 +589,15 @@ export const IncomingCallControlBar: (props: ControlBarProps & CallControlBarCon
 
 // @public (undocumented)
 export const IncomingCallControlBarComponent: (props: Pick<ControlBarProps & CallControlBarContainerProps & ErrorHandlingProps, "onErrorCallback" | "children" | "styles" | "layout">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+
+// @public (undocumented)
+export type IncomingCallListener = (event: {
+    callId: string;
+    callerId: string;
+    callerDisplayName?: string;
+    accept: () => Promise<void>;
+    reject: () => Promise<void>;
+}) => Promise<void>;
 
 // Warning: (ae-forgotten-export) The symbol "IncomingCallModalProps" needs to be exported by the entry point index.d.ts
 //
@@ -554,6 +645,12 @@ export const isMobileSession: () => boolean;
 export function isSelectedDeviceInList<T extends AudioDeviceInfo | VideoDeviceInfo>(device: T, list: T[]): boolean;
 
 // @public (undocumented)
+export interface JoinCallResult {
+    // (undocumented)
+    groupCallId: string;
+}
+
+// @public (undocumented)
 export type ListParticipant = {
     key: string;
     displayName: string;
@@ -578,7 +675,7 @@ export type LocalDeviceSettingsContainerProps = {
 export type LocalGalleryParticipant = {
     displayName: string;
     userId: string;
-    videoStream?: LocalVideoStream;
+    videoStream?: LocalVideoStream_2;
 };
 
 // @public (undocumented)
@@ -586,7 +683,7 @@ export interface LocalVideoContainerOwnProps {
     // (undocumented)
     scalingMode?: ScalingMode;
     // (undocumented)
-    stream: LocalVideoStream | undefined;
+    stream: LocalVideoStream_2 | undefined;
 }
 
 // @public (undocumented)
@@ -683,12 +780,17 @@ export interface OutgoingCallControlBarProps extends ControlBarProps, CallContro
 export const PAGE_SIZE = 200;
 
 // @public (undocumented)
+export type ParticipantJoinedListener = (event: {
+    participant: RemoteParticipant;
+}) => Promise<void>;
+
+// @public (undocumented)
 export const PARTICIPANTS_THRESHOLD = 20;
 
 // @public (undocumented)
 export type ParticipantStream = {
-    user: RemoteParticipant;
-    stream: RemoteVideoStream | undefined;
+    user: RemoteParticipant_2;
+    stream: RemoteVideoStream_2 | undefined;
 };
 
 // @public (undocumented)
@@ -705,7 +807,7 @@ export interface RemoteVideoContainerOwnProps {
     // (undocumented)
     scalingMode?: ScalingMode;
     // (undocumented)
-    stream: RemoteVideoStream | undefined;
+    stream: RemoteVideoStream_2 | undefined;
 }
 
 // @public (undocumented)
@@ -761,7 +863,7 @@ export const UNABLE_TO_LOAD_MORE_MESSAGES = "You have reached the beginning of t
 export const UNAUTHORIZED_STATUS_CODE = 401;
 
 // @public (undocumented)
-export const useCall: () => Call | undefined;
+export const useCall: () => Call_2 | undefined;
 
 // @public (undocumented)
 export const useCallAgent: () => boolean;
@@ -782,7 +884,7 @@ export const useChatClient: () => ChatClient;
 export const useChatThreadClient: () => ChatThreadClient | undefined;
 
 // @public (undocumented)
-export const useDeviceManager: () => DeviceManager | undefined;
+export const useDeviceManager: () => DeviceManager_2 | undefined;
 
 // Warning: (ae-forgotten-export) The symbol "UseGroupCallType" needs to be exported by the entry point index.d.ts
 //
@@ -808,7 +910,7 @@ export const useLocalVideo: () => useLocalVideoType;
 // Warning: (ae-forgotten-export) The symbol "UseLocalVideoStreamType" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
-export const useLocalVideoStreamRenderer: (stream: LocalVideoStream | undefined, rendererOptions: CreateViewOptions | undefined) => UseLocalVideoStreamType;
+export const useLocalVideoStreamRenderer: (stream: LocalVideoStream_2 | undefined, rendererOptions: CreateViewOptions | undefined) => UseLocalVideoStreamType;
 
 // Warning: (ae-forgotten-export) The symbol "UseMicrophoneType" needs to be exported by the entry point index.d.ts
 //
@@ -823,7 +925,7 @@ export const useOutgoingCall: () => UseOutgoingCallType;
 // Warning: (ae-forgotten-export) The symbol "UseRemoteVideoStreamType" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
-export const useRemoteVideoStreamRenderer: (stream: RemoteVideoStream | undefined, options?: CreateViewOptions | undefined) => UseRemoteVideoStreamType;
+export const useRemoteVideoStreamRenderer: (stream: RemoteVideoStream_2 | undefined, options?: CreateViewOptions | undefined) => UseRemoteVideoStreamType;
 
 // Warning: (ae-forgotten-export) The symbol "useScreenShareType" needs to be exported by the entry point index.d.ts
 //

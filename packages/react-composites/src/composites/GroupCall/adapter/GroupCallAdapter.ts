@@ -12,6 +12,7 @@ import { AudioDeviceInfo, CreateViewOptions, VideoDeviceInfo } from '@azure/comm
 export type GroupCallUIState = {
   // Self-contained state for composite
   error?: Error;
+  page: 'configuration' | 'call';
 };
 
 export type GroupCallClientState = {
@@ -39,13 +40,13 @@ export type IncomingCallListener = (event: {
 export type ParticipantJoinedListener = (event: { participant: RemoteParticipant }) => Promise<void>;
 
 export interface GroupCallAdapter {
-  onStateChange: (handler: (state: GroupCallState) => void) => void;
+  onStateChange(handler: (state: GroupCallState) => void): void;
 
-  offStateChange: (handler: (state: GroupCallState) => void) => void;
+  offStateChange(handler: (state: GroupCallState) => void): void;
 
-  getState: () => GroupCallState;
+  getState(): GroupCallState;
 
-  fetchAllParticipants: () => Promise<void>;
+  dispose(): Promise<void>;
 
   setDisplayName(displayName: string): void;
 
@@ -94,6 +95,8 @@ export interface GroupCallAdapter {
   on(event: 'error', errorHandler: (e: Error) => void): void;
 
   off(event: 'incomingCall', listener: IncomingCallListener): void;
+
+  off(event: 'participantJoined', listener: ParticipantJoinedListener): void;
 
   off(event: 'error', errorHandler: (e: Error) => void): void;
 }
