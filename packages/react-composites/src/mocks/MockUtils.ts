@@ -1,4 +1,4 @@
-//Copyright (c) Microsoft Corporation.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
 export function createSpyObj<T>(baseName: string, methodNames: (keyof T)[]): jest.Mocked<T> {

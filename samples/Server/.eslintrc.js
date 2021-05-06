@@ -26,7 +26,7 @@ module.exports = {
     ],
     '@typescript-eslint/no-explicit-any': 'off',
     eqeqeq: 'warn',
-    'header/header': ['error', 'line', 'Copyright (c) Microsoft Corporation.\n Licensed under the MIT license.'],
+    'header/header': ['error', 'line', ' Copyright (c) Microsoft Corporation.\n Licensed under the MIT license.'],
     'react/display-name': 'off',
 
     // Allow unused vars for routing funtions

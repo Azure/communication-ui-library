@@ -1,4 +1,4 @@
-//Copyright (c) Microsoft Corporation.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
 import { IStackItemStyles, IStackStyles, getTheme, mergeStyles } from '@fluentui/react';

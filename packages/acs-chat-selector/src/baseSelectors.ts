@@ -1,4 +1,4 @@
-//Copyright (c) Microsoft Corporation.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
 import { ChatClientState, ChatMessageWithStatus, TypingIndicator } from '@azure/acs-chat-declarative';
