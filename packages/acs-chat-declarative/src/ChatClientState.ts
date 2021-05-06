@@ -26,7 +26,7 @@ export type ChatThreadClientState = {
   // - Redux and other data stores can't store objects that contain Map.
   // - There is no standard string representation of CommunicationIdentifier
   //   in the underlying SDKs.
-  participants: Map<string, ChatParticipant>;
+  participants: Map<CommunicationIdentifierAsKey, ChatParticipant>;
   threadId: string;
   properties?: ChatThreadProperties;
   coolPeriod?: Date;

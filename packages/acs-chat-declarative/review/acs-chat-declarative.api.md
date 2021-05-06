@@ -91,7 +91,7 @@ export const chatThreadClientDeclaratify: (chatThreadClient: ChatThreadClient, c
 // @public (undocumented)
 export type ChatThreadClientState = {
     chatMessages: Map<string, ChatMessageWithStatus>;
-    participants: Map<string, ChatParticipant>;
+    participants: Map<CommunicationIdentifierAsKey, ChatParticipant>;
     threadId: string;
     properties?: ChatThreadProperties;
     coolPeriod?: Date;
