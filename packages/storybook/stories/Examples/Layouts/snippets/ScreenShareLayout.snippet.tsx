@@ -1,4 +1,4 @@
-import { VideoTile } from 'react-components';
+import { VideoTile } from '@azure/communication-react';
 import { Label, mergeStyles, Persona, PersonaSize, Stack } from '@fluentui/react';
 import React from 'react';
 

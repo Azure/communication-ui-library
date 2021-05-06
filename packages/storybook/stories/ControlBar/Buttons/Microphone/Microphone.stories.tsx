@@ -4,7 +4,7 @@ import { Canvas, Description, Heading, Props, Source, SourceState, Title } from 
 import { boolean } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { MicrophoneButton } from 'react-components';
+import { MicrophoneButton } from '@azure/communication-react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
 import { MicrophoneButtonExample } from './snippets/MicrophoneButton.snippet';
@@ -17,7 +17,7 @@ const MicrophoneButtonWithLabelExampleText = require('!!raw-loader!./snippets/Mi
 const CustomMicrophoneButtonExampleText = require('!!raw-loader!./snippets/CustomMicrophoneButton.snippet.tsx').default;
 
 const importStatement = `
-import { MicrophoneButton } from 'react-components';
+import { MicrophoneButton } from '@azure/communication-react';
 `;
 
 const getDocs: () => JSX.Element = () => {
