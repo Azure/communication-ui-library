@@ -3,7 +3,7 @@
 import { CallVideoOffIcon } from '@fluentui/react-icons-northstar';
 import { Stack, Text } from '@fluentui/react';
 import React from 'react';
-import { localPreviewContainerStyle, cameraOffLabelStyle } from './styles/LocalPreview.styles';
+import { localPreviewContainerStyle, cameraOffLabelStyle, localPreviewTileStyle } from './styles/LocalPreview.styles';
 import { MapToMediaControlsProps, MediaControlsContainerProps } from './consumers/MapToMediaControlsProps';
 import {
   connectFuncsToContext,
@@ -41,18 +41,12 @@ const LocalPreviewComponentBase = (
   });
   const ErrorBar = connectFuncsToContext(ErrorBarComponent, MapToErrorBarProps);
 
-  const videoTileStyle = {
-    root: {
-      minHeight: '14rem'
-    }
-  };
-
   const { localVideoEnabled, isMicrophoneActive } = props;
 
   return (
     <Stack className={localPreviewContainerStyle}>
       <VideoTile
-        styles={videoTileStyle}
+        styles={localPreviewTileStyle}
         isVideoReady={isVideoReady}
         videoProvider={<StreamMedia videoStreamElement={videoStreamElement} />}
         placeholderProvider={

@@ -43,3 +43,9 @@ export const toggleButtonsBarStyle = mergeStyles({
   height: '2.8125rem',
   width: '100%'
 });
+
+export const localPreviewTileStyle = {
+  root: {
+    minHeight: '14rem'
+  }
+};

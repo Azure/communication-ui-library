@@ -44,3 +44,9 @@ export const cameraOffLabelStyle = mergeStyles({
   fontSize: '0.625rem', // 10px
   color: palette.neutralTertiary
 });
+
+export const localPreviewTileStyle = {
+  root: {
+    minHeight: '14rem'
+  }
+};
