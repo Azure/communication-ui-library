@@ -13,6 +13,7 @@ export const messageTemplate: ChatMessageWithStatus = {
   clientMessageId: undefined,
   createdOn: new Date(),
   sender: {
+    kind: 'communicationUser',
     communicationUserId: 'UserId'
   },
   senderDisplayName: 'User',
@@ -26,11 +27,11 @@ export const mockMessages: ChatMessageWithStatus[] = seedArray.map((seed) => ({
   ...messageTemplate,
   id: 'MessageId' + seed,
   content: { message: 'MessageContent' + seed },
-  sender: { communicationUserId: 'User' + seed }
+  sender: { kind: 'communicationUser', communicationUserId: 'User' + seed }
 }));
 
 export const participantTemplate: ChatParticipant = {
-  user: { communicationUserId: 'id1' },
+  id: { communicationUserId: 'id1' },
   displayName: 'user1',
   shareHistoryTime: new Date(0)
 };
@@ -44,7 +45,7 @@ export const mockParticipants: ChatParticipant[] = seedArray.map((seed) => ({
 export const mockReadReceipts: ChatMessageReadReceipt[] = seedArray.map((seed) => ({
   chatMessageId: `id${seed}`,
   readOn: new Date(seed * 10000),
-  sender: { communicationUserId: `senderid${seed}` }
+  sender: { kind: 'communicationUser', communicationUserId: `senderid${seed}` }
 }));
 
 const mockListMessages = (): any => {
@@ -91,7 +92,7 @@ export const createMockChatThreadClient = (threadId: string): ChatThreadClient =
   };
 
   mockChatThreadClient.updateMessage = emptyAsyncFunctionWithResponse;
-  mockChatThreadClient.updateThread = emptyAsyncFunctionWithResponse;
+  mockChatThreadClient.updateTopic = emptyAsyncFunctionWithResponse;
 
   mockChatThreadClient.deleteMessage = emptyAsyncFunctionWithResponse;
 
