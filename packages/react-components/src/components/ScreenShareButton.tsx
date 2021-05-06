@@ -27,12 +27,16 @@ export const ScreenShareButton = (props: ScreenShareButtonProps): JSX.Element =>
   const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
 
   const defaultRenderIcon = (props?: IButtonProps): JSX.Element => {
-    return props?.checked ? <CallControlCloseTrayIcon /> : <CallControlPresentNewIcon bordered={false} />;
+    return props?.checked ? (
+      <CallControlCloseTrayIcon key={'screenShareIconKey'} />
+    ) : (
+      <CallControlPresentNewIcon key={'screenShareBorderedIconKey'} bordered={false} />
+    );
   };
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {
     return (
-      <Stack className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
+      <Stack key={'screenShareLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
         {props?.checked ? 'Stop' : 'Share'}
       </Stack>
     );

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Stack } from '@fluentui/react';
-import { MicrophoneButton } from 'react-components';
+import { MicrophoneButton } from '@azure/communication-react';
 
 export const MicrophoneButtonWithLabelExample: () => JSX.Element = () => {
   return (

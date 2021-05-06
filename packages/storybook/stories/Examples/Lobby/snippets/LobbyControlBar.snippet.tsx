@@ -1,5 +1,5 @@
 import React from 'react';
-import { CameraButton, ControlBar, EndCallButton, MicrophoneButton, OptionsButton } from 'react-components';
+import { CameraButton, ControlBar, EndCallButton, MicrophoneButton, OptionsButton } from '@azure/communication-react';
 import { useTheme } from '@fluentui/react-theme-provider';
 
 export const LobbyCallControlBar = (): JSX.Element => {

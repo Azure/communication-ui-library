@@ -1,6 +1,12 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { MessageStatus, MessageAttachedStatus, ChatMessage, CustomMessage, SystemMessage } from 'react-components';
+import {
+  MessageStatus,
+  MessageAttachedStatus,
+  ChatMessage,
+  CustomMessage,
+  SystemMessage
+} from '@azure/communication-react';
 
 export const MessageThreadContainerStyles = {
   width: '100%',

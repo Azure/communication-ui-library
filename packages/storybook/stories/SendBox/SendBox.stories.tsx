@@ -3,7 +3,7 @@
 import React from 'react';
 import { boolean, text } from '@storybook/addon-knobs';
 import { getDocs } from './SendBoxDocs';
-import { SendBox as SendBoxComponent } from 'react-components';
+import { SendBox as SendBoxComponent } from '@azure/communication-react';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { Meta } from '@storybook/react/types-6-0';
 

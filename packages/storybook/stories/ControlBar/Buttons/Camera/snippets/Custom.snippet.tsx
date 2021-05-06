@@ -1,6 +1,6 @@
 import React from 'react';
 import { IButtonProps, Icon, Label, Stack, Text } from '@fluentui/react';
-import { CameraButton } from 'react-components';
+import { CameraButton } from '@azure/communication-react';
 
 export const CustomCameraButtonExample: () => JSX.Element = () => {
   const customOnRenderIcon = (props?: IButtonProps): JSX.Element => {

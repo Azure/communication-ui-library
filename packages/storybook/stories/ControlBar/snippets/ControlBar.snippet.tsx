@@ -7,7 +7,7 @@ import {
   MicrophoneButton,
   OptionsButton,
   ScreenShareButton
-} from 'react-components';
+} from '@azure/communication-react';
 
 export const ControlBarExample: () => JSX.Element = () => {
   return (
