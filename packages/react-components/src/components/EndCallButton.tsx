@@ -27,11 +27,15 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
   const componentStyles = concatStyleSets(endCallControlButtonStyles, styles ?? {});
 
   const defaultRenderIcon = (): JSX.Element => {
-    return <CallEndIcon />;
+    return <CallEndIcon key={'callEndIconKey'} />;
   };
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {
-    return <Stack className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>{'Hangup'}</Stack>;
+    return (
+      <Stack key={'callEndLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
+        {'Hangup'}
+      </Stack>
+    );
   };
 
   return (
