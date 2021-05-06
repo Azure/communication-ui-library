@@ -1,6 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 export { createDefaultHandlersForComponent } from './handlers/createHandlers';
 export type { BaseSelectorProps } from './baseSelectors';
+export * from './baseSelectors';
 export type { CommonProperties } from './handlers/createHandlers';
 export { videoGallerySelector } from './videoGallerySelector';
 

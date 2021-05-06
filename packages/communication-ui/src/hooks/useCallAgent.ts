@@ -28,7 +28,7 @@ export default (): boolean => {
     setLocalScreenShare
   } = useCallContext();
 
-  const [subscribed, setSubscribed] = useState(false);
+  const [subscribed] = useState(false);
 
   useEffect(() => {
     const subscribeToParticipant = (participant: RemoteParticipant, call: Call): void => {
@@ -116,14 +116,16 @@ export default (): boolean => {
       });
     };
 
-    if (callAgent) {
-      callAgent.on('callsUpdated', onCallsUpdated);
-      setSubscribed(true);
-    }
-    return () => {
-      callAgent?.off('callsUpdated', onCallsUpdated);
-      setSubscribed(false);
-    };
+    console.log(onCallsUpdated);
+
+    // if (callAgent) {
+    //   callAgent.on('callsUpdated', onCallsUpdated);
+    //   setSubscribed(true);
+    // }
+    // return () => {
+    //   callAgent?.off('callsUpdated', onCallsUpdated);
+    //   setSubscribed(false);
+    // };
   }, [
     call,
     callAgent,

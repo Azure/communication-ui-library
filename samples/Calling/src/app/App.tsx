@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { Link, initializeIcons } from '@fluentui/react';
 
 import EndCall from './EndCall';
-import ConfigurationScreen from './ConfigurationScreen';
-import GroupCall from './GroupCall';
+import { ConfigurationScreen } from './ConfigurationScreen';
+import { GroupCall } from './GroupCall';
 import { HomeScreen } from './HomeScreen';
 import { v1 as createGUID } from 'uuid';
 import { CallingProvider, CallProvider, CommunicationUiErrorInfo, ErrorProvider } from '@azure/communication-ui';

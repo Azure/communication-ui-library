@@ -15,15 +15,20 @@ import {
   connectFuncsToContext,
   ErrorBar as ErrorBarComponent,
   MapToErrorBarProps,
-  MINI_HEADER_WINDOW_WIDTH
+  MINI_HEADER_WINDOW_WIDTH,
+  useCall,
+  useCallClient,
+  useCallContext,
+  useCallingContext
 } from '@azure/communication-ui';
 import { isInCall } from './utils/AppUtils';
 import MediaGallery from './MediaGallery';
-import { GroupCallContainerProps, MapToGroupCallProps } from './consumers/MapToCallProps';
 import { Header } from './Header';
 import { CommandPanel, CommandPanelTypes } from './CommandPanel';
+import { AudioOptions, CallState } from '@azure/communication-calling';
+import { CallClientState, DeclarativeCallClient } from '@azure/acs-calling-declarative';
 
-export interface GroupCallProps extends GroupCallContainerProps {
+export interface GroupCallProps {
   screenWidth: number;
   endCallHandler(): void;
   groupId: string;
@@ -31,38 +36,58 @@ export interface GroupCallProps extends GroupCallContainerProps {
 
 const spinnerLabel = 'Initializing call client...';
 
-const GroupCallComponent = (props: GroupCallProps): JSX.Element => {
+export const GroupCall = (props: GroupCallProps): JSX.Element => {
   const [selectedPane, setSelectedPane] = useState(CommandPanelTypes.None);
-  const {
-    callAgentSubscribed,
-    isCallInitialized,
-    callState,
-    isLocalScreenSharingOn,
-    groupId,
-    screenWidth,
-    endCallHandler,
-    joinCall
-  } = props;
+  const { groupId, screenWidth, endCallHandler } = props;
   const ErrorBar = connectFuncsToContext(ErrorBarComponent, MapToErrorBarProps);
-  const [joinCallCalled, setJoinCallCalled] = useState(false);
+
+  const { callAgent } = useCallingContext();
+  const { setCall, localVideoStream, isMicrophoneEnabled } = useCallContext();
+  const call = useCall();
+  const callClient: DeclarativeCallClient = useCallClient();
+  const [callState, setCallState] = useState<CallState | undefined>(undefined);
+  const [isScreenSharingOn, setIsScreenSharingOn] = useState<boolean | undefined>(undefined);
+
+  // To use useProps to get these states, we need to create another file wrapping GroupCall,
+  // It seems unnecessary in this case, so we get the updated states using this approach.
+  useEffect(() => {
+    const onStateChange = (state: CallClientState): void => {
+      call?.id && setCallState(state.calls.get(call.id)?.state);
+      call?.id && setIsScreenSharingOn(state.calls.get(call.id)?.isScreenSharingOn);
+    };
+
+    callClient.onStateChange(onStateChange);
+
+    return () => {
+      callClient.offStateChange(onStateChange);
+    };
+  }, [call?.id, callClient]);
 
   useEffect(() => {
-    if (isInCall(callState)) {
+    if (isInCall(callState ?? 'None')) {
       document.title = `${groupId} group call sample`;
     } else {
-      if (callAgentSubscribed && !joinCallCalled) {
-        // Need refactor: We might not have joined call yet if there is no Call object, See comment in CallingProvider
-        // for more details and useCallAgent
-        joinCall(groupId);
-        setJoinCallCalled(true);
+      if (!isInCall(callState ?? 'None') && callAgent) {
+        const audioOptions: AudioOptions = { muted: !isMicrophoneEnabled };
+        const videoOptions = { localVideoStreams: localVideoStream ? [localVideoStream] : undefined };
+
+        const call = callAgent.join(
+          {
+            groupId
+          },
+          {
+            audioOptions,
+            videoOptions
+          }
+        );
+        setCall(call);
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [callState, groupId, callAgentSubscribed]);
+  }, [callState, groupId, callAgent, setCall, isMicrophoneEnabled, localVideoStream]);
 
   return (
     <>
-      {isCallInitialized && isInCall(callState) ? (
+      {isInCall(call?.state ?? 'None') ? (
         <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow>
           <Stack.Item styles={headerStyles}>
             <Header
@@ -74,7 +99,7 @@ const GroupCallComponent = (props: GroupCallProps): JSX.Element => {
             <ErrorBar />
           </Stack.Item>
           <Stack styles={subContainerStyles} grow horizontal>
-            {!isLocalScreenSharingOn ? (
+            {!isScreenSharingOn ? (
               callState === 'Connected' && (
                 <>
                   <Stack.Item grow styles={activeContainerClassName}>
@@ -105,5 +130,3 @@ const GroupCallComponent = (props: GroupCallProps): JSX.Element => {
     </>
   );
 };
-
-export default connectFuncsToContext(GroupCallComponent, MapToGroupCallProps);

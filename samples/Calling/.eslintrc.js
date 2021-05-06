@@ -54,6 +54,15 @@ module.exports = {
         // Allow requiring the package.json
         '@typescript-eslint/no-var-requires': 'off'
       }
+    },
+    {
+      // remove ban on files affected by https://github.com/microsoft/rushstack/pull/1916.
+      // This should be removed once this issue is fixed.
+      files: ['groupCallSelector.ts'],
+      rules: {
+        '@typescript-eslint/ban-ts-comment': 'off',
+        '@typescript-eslint/no-unused-vars': 'off'
+      }
     }
   ]
 };

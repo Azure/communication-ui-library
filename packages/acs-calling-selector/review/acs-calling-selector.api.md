@@ -8,11 +8,14 @@ import { AudioDeviceInfo } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
 import { Call as Call_2 } from '@azure/acs-calling-declarative';
 import { CallAgent } from '@azure/communication-calling';
+import { CallClientState } from '@azure/acs-calling-declarative';
 import * as callingStateful from '@azure/acs-calling-declarative';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { DeclarativeCallClient } from '@azure/acs-calling-declarative';
 import { DeviceManager } from '@azure/communication-calling';
+import { DeviceManagerState } from '@azure/acs-calling-declarative';
 import { HangUpOptions } from '@azure/communication-calling';
+import { IncomingCall } from '@azure/acs-calling-declarative';
 import { LocalVideoStream } from '@azure/communication-calling';
 import { LocalVideoStream as LocalVideoStream_2 } from '@azure/acs-calling-declarative';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
@@ -90,6 +93,30 @@ export interface CreateViewOptions {
 
 // @public (undocumented)
 export type FunctionWithKey<KeyT, ArgsT extends any[], RetT> = (key: KeyT, ...args: ArgsT) => RetT;
+
+// @public (undocumented)
+export const getCall: (state: CallClientState, props: BaseSelectorProps) => Call_2 | undefined;
+
+// @public (undocumented)
+export const getCalls: (state: CallClientState) => Map<string, Call_2>;
+
+// @public (undocumented)
+export const getCallsEnded: (state: CallClientState) => Call_2[];
+
+// @public (undocumented)
+export const getDeviceManager: (state: CallClientState) => DeviceManagerState;
+
+// @public (undocumented)
+export const getDisplayName: (state: CallClientState, props: BaseSelectorProps) => string | undefined;
+
+// @public (undocumented)
+export const getIdentifier: (_state: CallClientState, props: BaseSelectorProps) => string | undefined;
+
+// @public (undocumented)
+export const getIncomingCalls: (state: CallClientState) => Map<string, IncomingCall>;
+
+// @public (undocumented)
+export const getIncomingCallsEnded: (state: CallClientState) => IncomingCall[];
 
 // @public (undocumented)
 export type MediaStreamType = 'Video' | 'ScreenSharing';

@@ -15,15 +15,15 @@ import { ErrorHandlingProps } from './ErrorProvider';
 import { WithErrorHandling } from '../utils/WithErrorHandling';
 import { CommunicationUiError, CommunicationUiErrorCode } from '../types/CommunicationUiError';
 import { DevicePermissionState } from '../types/DevicePermission';
-import { callClientDeclaratify } from '@azure/acs-calling-declarative';
+import { callClientDeclaratify, DeclarativeCallClient } from '@azure/acs-calling-declarative';
 
 export type CallingContextType = {
   userId: string;
   setUserId: Dispatch<SetStateAction<string>>;
   displayName: string;
   setDisplayName: Dispatch<SetStateAction<string>>;
-  callClient: CallClient;
-  setCallClient: Dispatch<SetStateAction<CallClient>>;
+  callClient: DeclarativeCallClient;
+  setCallClient: Dispatch<SetStateAction<DeclarativeCallClient>>;
   callAgent: CallAgent | undefined;
   setCallAgent: Dispatch<SetStateAction<CallAgent | undefined>>;
   deviceManager: DeviceManager | undefined;
@@ -57,7 +57,9 @@ const CallingProviderBase = (props: CallingProviderProps & ErrorHandlingProps): 
 
   // if there is no valid token then there is no valid userId
   const userIdFromToken = token ? getIdFromToken(token) : '';
-  const [callClient, setCallClient] = useState<CallClient>(callClientDeclaratify(new CallClient(callClientOptions)));
+  const [callClient, setCallClient] = useState<DeclarativeCallClient>(
+    callClientDeclaratify(new CallClient(callClientOptions))
+  );
   const [callAgent, setCallAgent] = useState<CallAgent | undefined>(undefined);
   const [deviceManager, setDeviceManager] = useState<DeviceManager | undefined>(undefined);
   const [userId, setUserId] = useState<string>(userIdFromToken);
@@ -165,7 +167,7 @@ export const CallingProvider = (props: CallingProviderProps & ErrorHandlingProps
 
 export const useCallingContext = (): CallingContextType => useValidContext(CallingContext);
 
-export const useCallClient = (): CallClient => {
+export const useCallClient = (): DeclarativeCallClient => {
   return useValidContext(CallingContext).callClient;
 };
 

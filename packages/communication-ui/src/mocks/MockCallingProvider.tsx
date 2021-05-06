@@ -13,6 +13,7 @@ import {
 import { DevicePermissionState } from '../types/DevicePermission';
 import { ErrorHandlingProps } from '../providers/ErrorProvider';
 import { AbortSignalLike } from '@azure/core-http';
+import { callClientDeclaratify, DeclarativeCallClient } from '@azure/acs-calling-declarative';
 
 interface CallingProviderProps {
   children: React.ReactNode;
@@ -30,7 +31,7 @@ interface CallingProviderProps {
  * @returns
  */
 export const MockCallingProvider = (props: CallingProviderProps & ErrorHandlingProps): JSX.Element => {
-  const [callClient, setCallClient] = useState<CallClient>(new CallClient());
+  const [callClient, setCallClient] = useState<DeclarativeCallClient>(callClientDeclaratify(new CallClient()));
   const [callAgent, setCallAgent] = useState<CallAgent | undefined>(undefined);
   const [deviceManager, setDeviceManager] = useState<DeviceManager | undefined>(undefined);
   const [userId, setUserId] = useState<string>('');

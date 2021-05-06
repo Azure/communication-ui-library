@@ -1,13 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
 import React, { useState } from 'react';
-import {
-  connectFuncsToContext,
-  MapToCallConfigurationProps,
-  SetupContainerProps,
-  useCallContext,
-  useCallingContext
-} from '@azure/communication-ui';
+import { useCallContext, useCallingContext } from '@azure/communication-ui';
 import { localStorageAvailable } from './utils/constants';
 import { saveDisplayNameToLocalStorage } from './utils/AppUtils';
 import { DisplayNameField } from './DisplayNameField';
@@ -19,18 +13,18 @@ import { useSelector } from './hooks/useSelector';
 import { optionsButtonSelector } from '@azure/acs-calling-selector';
 import { useHandlers } from './hooks/useHandlers';
 
-export interface ConfigurationScreenProps extends SetupContainerProps {
+export interface ConfigurationScreenProps {
   screenWidth: number;
   startCallHandler(): void;
   onDisplayNameUpdate: (displayName: string) => void;
 }
 
-export const ConfigurationComponent = (props: ConfigurationScreenProps): JSX.Element => {
-  const { displayName, startCallHandler, onDisplayNameUpdate } = props;
+export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Element => {
+  const { startCallHandler, onDisplayNameUpdate } = props;
   const [emptyWarning, setEmptyWarning] = useState(false);
   const [nameTooLongWarning, setNameTooLongWarning] = useState(false);
 
-  const { setVideoDeviceInfo, videoDeviceInfo } = useCallingContext();
+  const { setVideoDeviceInfo, videoDeviceInfo, displayName } = useCallingContext();
   const { setLocalVideoStream } = useCallContext();
 
   const options = useSelector(optionsButtonSelector, { callId: '' });
@@ -76,5 +70,3 @@ export const ConfigurationComponent = (props: ConfigurationScreenProps): JSX.Ele
     </CallConfiguration>
   );
 };
-
-export default connectFuncsToContext(ConfigurationComponent, MapToCallConfigurationProps);

@@ -51,12 +51,12 @@ const createDefaultHandlers = memoizeOne(
       }
     };
 
-    const onToggleCamera = (): Promise<void> => {
+    const onToggleCamera = async (): Promise<void> => {
       const stream = call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
       if (stream) {
-        return onStopLocalVideo(stream);
+        await onStopLocalVideo(stream);
       } else {
-        return onStartLocalVideo();
+        await onStartLocalVideo();
       }
     };
 

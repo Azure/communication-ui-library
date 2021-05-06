@@ -23,14 +23,10 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     props.onEndCallClick();
   };
 
-  const onToggleCamera = async (): Promise<void> => {
-    await cameraButtonHandlers.onToggleCamera();
-  };
-
   return (
     <ControlBar>
       <MicrophoneButton {...microphoneButtonProps} {...microphoneButtonHandlers} />
-      <CameraButton {...cameraButtonProps} onToggleCamera={onToggleCamera} />
+      <CameraButton {...cameraButtonProps} {...cameraButtonHandlers} />
       <ScreenShareButton {...screenShareButtonProps} {...screenShareButtonHandlers} />
       <EndCallButton {...hangUpButtonHandlers} />
     </ControlBar>
