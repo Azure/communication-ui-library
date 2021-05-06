@@ -2,7 +2,7 @@
 
 import { CommunicationUserToken, TokenScope } from '@azure/communication-identity';
 import * as express from 'express';
-import { createUserWithToken } from '../lib/identityClient';
+import { createUserAndToken } from '../lib/identityClient';
 
 const router = express.Router();
 
@@ -12,7 +12,7 @@ const router = express.Router();
  */
 const handleUserTokenRequest = async (requestedScope?: string): Promise<CommunicationUserToken> => {
   const scopes: TokenScope[] = requestedScope ? (requestedScope.split(',') as TokenScope[]) : ['chat', 'voip'];
-  return await createUserWithToken(scopes);
+  return await createUserAndToken(scopes);
 };
 
 /**
