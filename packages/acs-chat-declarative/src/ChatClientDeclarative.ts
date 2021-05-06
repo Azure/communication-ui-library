@@ -37,12 +37,8 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
           const thread = result.chatThread;
 
           if (thread) {
-            const threadInfo = { ...thread, createdBy: { communicationUserId: thread.createdBy } };
-            context.batch(() => {
-              context.createThread(thread.id, threadInfo);
-              const [request] = args;
-              context.setParticipants(thread.id, request.participants);
-            });
+            const [request] = args;
+            context.createThread(thread.id, { topic: request.topic });
           }
           return result;
         };
@@ -59,7 +55,7 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
       }
       case 'getChatThreadClient': {
         return async function (...args: Parameters<ChatClient['getChatThreadClient']>) {
-          const chatThreadClient = await chatClient.getChatThreadClient(...args);
+          const chatThreadClient = chatClient.getChatThreadClient(...args);
           // TODO(prprabhu): Ensure that thread properties are fetched into the ChatContext at this point.
           // A new thread might be created here, but the properties will never be fetched.
           return chatThreadClientDeclaratify(chatThreadClient, context);

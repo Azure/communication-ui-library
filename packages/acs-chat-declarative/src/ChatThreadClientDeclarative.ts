@@ -1,5 +1,5 @@
 // © Microsoft Corporation. All rights reserved.
-import { ChatThreadClient, SendChatMessageResult, WithResponse } from '@azure/communication-chat';
+import { ChatThreadClient, SendChatMessageResult } from '@azure/communication-chat';
 import { getIdentifierKind } from '@azure/communication-common';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 import { ChatContext } from './ChatContext';
@@ -47,7 +47,7 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
           };
           this._context.setChatMessage(chatThreadClient.threadId, newMessage);
 
-          let result: WithResponse<SendChatMessageResult> | undefined = undefined;
+          let result: SendChatMessageResult | undefined = undefined;
           try {
             result = await chatThreadClient.sendMessage(...args);
           } catch (e) {
