@@ -1,5 +1,5 @@
-import { GroupCall, GroupChat } from 'react-composites';
 import React from 'react';
+import { GroupCall, GroupChat } from 'react-composites';
 
 function App(): JSX.Element {
   return (

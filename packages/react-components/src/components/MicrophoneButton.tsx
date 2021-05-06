@@ -26,11 +26,7 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
 
   const defaultRenderIcon = (props?: IButtonProps): JSX.Element => {
-    if (props?.checked) {
-      return <MicIcon key={'micIconKey'} />;
-    }
-
-    return <MicOffIcon key={'micOffIconKey'} />;
+    return props?.checked ? <MicIcon key={'microphoneIconKey'} /> : <MicOffIcon key={'microphoneOffIconKey'} />;
   };
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {

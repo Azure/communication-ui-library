@@ -1,6 +1,6 @@
-import React from 'react';
 import { ParticipantItem } from '@azure/communication-react';
 import { PersonaPresence } from '@fluentui/react';
+import React from 'react';
 
 export const CustomAvatarExample: () => JSX.Element = () => {
   const avatarStyle = {

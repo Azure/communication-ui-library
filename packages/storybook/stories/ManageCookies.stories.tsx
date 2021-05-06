@@ -1,6 +1,6 @@
-import React from 'react';
-import { Meta } from '@storybook/react/types-6-0';
 import { PrimaryButton } from '@fluentui/react';
+import { Meta } from '@storybook/react/types-6-0';
+import React from 'react';
 
 function openManageCookiesModal(): void {
   (window as any).parent.siteConsent?.manageConsent();
