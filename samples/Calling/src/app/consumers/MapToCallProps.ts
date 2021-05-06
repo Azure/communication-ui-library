@@ -14,7 +14,7 @@ export type GroupCallContainerProps = {
 
 export const MapToGroupCallProps = (): GroupCallContainerProps => {
   const { callAgent, deviceManager } = useCallingContext();
-  const { call, localScreenShareActive, setCall } = useCallContext();
+  const { call, localScreenShareActive } = useCallContext();
   const { join, leave } = useGroupCall();
   // Call useCallAgent to subscribe to events.
   const subscribed = useCallAgent();
@@ -25,14 +25,10 @@ export const MapToGroupCallProps = (): GroupCallContainerProps => {
     callState: call?.state ?? 'None',
     isLocalScreenSharingOn: localScreenShareActive,
     joinCall: (groupId: string) => {
-      if (!call) {
-        const call = join({ groupId: groupId });
-        setCall(call);
-      }
+      !call && join({ groupId: groupId });
     },
     leaveCall: async (hangupCallOptions: HangUpOptions) => {
       await leave(hangupCallOptions);
-      setCall(undefined);
     }
   };
 };

@@ -105,14 +105,15 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
         return (...args: Parameters<CallAgent['startCall']>): Call => {
           const call = target.startCall(...args);
           this.addCall(call);
-          return callDeclaratify(call, this._context);
+          return callDeclaratify(call);
         };
       }
       case 'join': {
         return (...args: Parameters<CallAgent['join']>): Call => {
           const call = target.join(...args);
           this.addCall(call);
-          return callDeclaratify(call, this._context);
+          const decCall = callDeclaratify(call);
+          return decCall;
         };
       }
       case 'dispose': {

@@ -4,7 +4,6 @@ import {
   DeviceManager,
   Call,
   StartCallOptions,
-  HangUpOptions,
   LocalVideoStream,
   VideoDeviceInfo,
   AudioDeviceInfo
@@ -87,7 +86,9 @@ const createDefaultHandlers = memoizeOne(
 
     const onUnmute = (): Promise<void> | void => call?.unmute();
 
-    const onToggleMicrophone = (): Promise<void> | void => (call?.isMuted ? call?.unmute() : call?.mute());
+    const onToggleMicrophone = (): Promise<void> | void => {
+      return call?.isMuted ? call?.unmute() : call?.mute();
+    };
 
     const onStartScreenShare = (): Promise<void> | void => call?.startScreenSharing();
 
@@ -96,7 +97,7 @@ const createDefaultHandlers = memoizeOne(
     const onToggleScreenShare = (): Promise<void> | void =>
       call?.isScreenSharingOn ? onStopScreenShare() : onStartScreenShare();
 
-    const onHangUp = async (options?: HangUpOptions): Promise<void> => await call?.hangUp(options);
+    const onHangUp = async (): Promise<void> => await call?.hangUp();
 
     const onRenderView = async (
       stream: LocalVideoStreamStateful | RemoteVideoStream,

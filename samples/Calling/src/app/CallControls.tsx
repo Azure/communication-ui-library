@@ -18,6 +18,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
   const screenShareButtonHandlers = useHandlers(ScreenShareButton);
   const hangUpButtonHandlers = useHandlers(EndCallButton);
   const hangUpFunctionFromDeclarative = hangUpButtonHandlers.onHangUp;
+
   hangUpButtonHandlers.onHangUp = async () => {
     await hangUpFunctionFromDeclarative();
     props.onEndCallClick();

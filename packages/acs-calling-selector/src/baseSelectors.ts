@@ -21,8 +21,9 @@ export const getIncomingCallsEnded = (state: CallClientState): IncomingCall[] =>
 
 export const getDeviceManager = (state: CallClientState): DeviceManagerState => state.deviceManagerState;
 
-export const getCall = (state: CallClientState, props: BaseSelectorProps): Call | undefined =>
-  state.calls.get(props.callId);
+export const getCall = (state: CallClientState, props: BaseSelectorProps): Call | undefined => {
+  return state.calls.get(props.callId);
+};
 
 export const getDisplayName = (state: CallClientState, props: BaseSelectorProps): string | undefined =>
   props.displayName;

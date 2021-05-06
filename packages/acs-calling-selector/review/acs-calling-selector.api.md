@@ -12,7 +12,6 @@ import * as callingStateful from '@azure/acs-calling-declarative';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { DeclarativeCallClient } from '@azure/acs-calling-declarative';
 import { DeviceManager } from '@azure/communication-calling';
-import { HangUpOptions } from '@azure/communication-calling';
 import { LocalVideoStream } from '@azure/communication-calling';
 import { LocalVideoStream as LocalVideoStream_2 } from '@azure/acs-calling-declarative';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
@@ -47,7 +46,7 @@ export type CommonProperties<A, B> = {
 
 // @public
 export const createDefaultHandlersForComponent: <Props>(declarativeCallClient: DeclarativeCallClient, callAgent: CallAgent | undefined, deviceManager: DeviceManager | undefined, call: Call | undefined, videoDeviceInfo: VideoDeviceInfo | undefined, _Component: (props: Props) => ReactElement | null) => Pick<{
-    onHangUp: (options?: HangUpOptions | undefined) => Promise<void>;
+    onHangUp: () => Promise<void>;
     onMute: () => Promise<void> | void;
     onUnmute: () => Promise<void> | void;
     onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
@@ -63,7 +62,7 @@ export const createDefaultHandlersForComponent: <Props>(declarativeCallClient: D
     onToggleScreenShare: () => Promise<void> | void;
     onRenderView: (stream: LocalVideoStream_2 | RemoteVideoStream, options: CreateViewOptions) => Promise<void>;
 }, CommonProperties<{
-    onHangUp: (options?: HangUpOptions | undefined) => Promise<void>;
+    onHangUp: () => Promise<void>;
     onMute: () => Promise<void> | void;
     onUnmute: () => Promise<void> | void;
     onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
