@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`storybook snapshot tests Storyshots Examples/IncomingCallAlerts Incoming Call Modal Component 1`] = `
+exports[`storybook snapshot tests Storyshots Examples/IncomingCallAlerts Incoming Call Modal 1`] = `
 <div
   className="css-75 root-0 body-1"
 >
@@ -414,7 +414,7 @@ exports[`storybook snapshot tests Storyshots Examples/IncomingCallAlerts Incomin
 </div>
 `;
 
-exports[`storybook snapshot tests Storyshots Examples/IncomingCallAlerts Incoming Call Toast Component 1`] = `
+exports[`storybook snapshot tests Storyshots Examples/IncomingCallAlerts Incoming Call Toast 1`] = `
 <div
   className="css-75 root-0 body-1"
 >

@@ -2,18 +2,15 @@
 
 import React from 'react';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
-import { Meta } from '@storybook/react/types-6-0';
 import { number } from '@storybook/addon-knobs';
 import {
   mediaGalleryWidthDefault,
   mediaGalleryWidthOptions,
   mediaGalleryHeightDefault,
-  mediaGalleryHeightOptions,
-  EXAMPLES_FOLDER_PREFIX
+  mediaGalleryHeightOptions
 } from '../../constants';
-import { GridLayout, VideoTile } from '@azure/communication-react';
+import { VideoTile } from '@azure/communication-react';
 import { Stack, mergeStyles, PersonaSize, Persona } from '@fluentui/react';
-import { getDocs } from './LayoutsDocs';
 
 export const OneToOneCallLayout: () => JSX.Element = () => {
   const width = number('Width (px)', mediaGalleryWidthDefault, mediaGalleryWidthOptions);
@@ -57,13 +54,3 @@ export const OneToOneCallLayout: () => JSX.Element = () => {
     </Stack>
   );
 };
-
-export default {
-  title: `${EXAMPLES_FOLDER_PREFIX}/Layouts`,
-  component: GridLayout,
-  parameters: {
-    docs: {
-      page: () => getDocs()
-    }
-  }
-} as Meta;
