@@ -2,7 +2,7 @@
 
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import React from 'react';
-import { MessageThread } from 'react-components';
+import { MessageThread } from '@azure/communication-react';
 const ExampleConstantsText = require('!!raw-loader!./snippets/placeholdermessages.ts').default;
 import { DefaultMessageThreadExample } from './snippets/MessageThread.snippet';
 const DefaultMessageThreadExampleText = require('!!raw-loader!./snippets/MessageThread.snippet.tsx').default;
@@ -29,7 +29,7 @@ const MessageThreadWithCustomReadReceiptExampleText = require('!!raw-loader!./sn
   .default;
 
 const importStatement = `
-import { FluentThemeProvider, MessageThread } from 'react-components';
+import { FluentThemeProvider, MessageThread } from '@azure/communication-react';
 `;
 
 export const getDocs: () => JSX.Element = () => {

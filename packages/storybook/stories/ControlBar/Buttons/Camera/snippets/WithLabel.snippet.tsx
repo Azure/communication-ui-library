@@ -1,6 +1,6 @@
 import React from 'react';
 import { Stack } from '@fluentui/react';
-import { CameraButton } from 'react-components';
+import { CameraButton } from '@azure/communication-react';
 
 export const CameraButtonWithLabelExample: () => JSX.Element = () => {
   return (

@@ -29,7 +29,7 @@ module.exports = {
     // Note: This triggers babel to retranspile all package dependency files during webpack's compilation step.
     config.resolve.alias = {
       ...(config.resolve.alias || {}),
-      "react-components": path.resolve(__dirname, "../../react-components/src"),
+      "@azure/communication-react": path.resolve(__dirname, "../../communication-react/src"),
       "react-composites": path.resolve(__dirname, "../../react-composites/src"),
       "@azure/acs-chat-declarative": path.resolve(__dirname, "../../acs-chat-declarative/src"),
       "@azure/acs-chat-selector": path.resolve(__dirname, "../../acs-chat-selector/src"),

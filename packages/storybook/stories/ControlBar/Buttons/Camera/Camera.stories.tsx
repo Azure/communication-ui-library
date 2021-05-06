@@ -4,7 +4,7 @@ import { Canvas, Description, Heading, Props, Source, SourceState, Title } from 
 import { boolean } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { CameraButton } from 'react-components';
+import { CameraButton } from '@azure/communication-react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
 import { CustomCameraButtonExample } from './snippets/Custom.snippet';

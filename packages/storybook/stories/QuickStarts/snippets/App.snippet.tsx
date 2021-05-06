@@ -1,4 +1,4 @@
-import { FluentThemeProvider } from 'react-components';
+import { FluentThemeProvider } from '@azure/communication-react';
 import React from 'react';
 
 function App() {

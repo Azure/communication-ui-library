@@ -6,7 +6,7 @@ import {
   FluentThemeProvider,
   MicrophoneButton,
   ScreenShareButton
-} from 'react-components';
+} from '@azure/communication-react';
 
 export const FluentThemeProviderSnippet = (): JSX.Element => {
   return (

@@ -7,7 +7,7 @@ import {
   MicrophoneButton,
   OptionsButton,
   ScreenShareButton
-} from 'react-components';
+} from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 
 export const ControlBarLayoutExample: () => JSX.Element = () => {
