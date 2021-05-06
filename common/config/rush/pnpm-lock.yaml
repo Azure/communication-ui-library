@@ -315,6 +315,19 @@ packages:
       node: '>=8.0.0'
     resolution:
       integrity: sha512-WargzA8PMc9SEvQpjhM0vVq/HB0wGUScplW8Us9nEFLHy/ZvgVjbRHlCALCa/tlU/Pv3RgZhk7XuPfwip17MCQ==
+  /@azure/communication-signaling/1.0.0-beta.5:
+    dependencies:
+      '@azure/core-http': 1.2.3
+      '@azure/core-tracing': 1.0.0-preview.9
+      '@azure/logger': 1.0.2
+      '@opentelemetry/api': 0.10.2
+      events: 3.3.0
+      tslib: 1.14.1
+    dev: false
+    engines:
+      node: '>=8.0.0'
+    resolution:
+      integrity: sha512-pGXI4F5OVzdM9Omg5fiflA/Vvs88qqER/ZxNj3PoWAdaYIPkWGb86OClbB0VsHi6gZ4ZDzyTP/l9hrREBuBYRA==
   /@azure/core-asynciterator-polyfill/1.0.0:
     dev: false
     resolution:
@@ -20732,7 +20745,7 @@ packages:
     dependencies:
       '@azure/communication-chat': 1.0.0
       '@azure/communication-common': 1.0.0
-      '@azure/communication-signaling': 1.0.0-beta.2
+      '@azure/communication-signaling': 1.0.0-beta.5
       '@azure/core-paging': 1.1.3
       '@microsoft/api-documenter': 7.12.12
       '@microsoft/api-extractor': 7.13.2
@@ -20759,7 +20772,7 @@ packages:
       prettier: '*'
       ts-node: '*'
     resolution:
-      integrity: sha512-FbY6yd1Zc/eE97Jxa/malLohzaEihlpYtCzeRZY1EcRJFDEyKKu3AltWb3LwhjsWmodvCd8E2K6HcMl/A9iHGg==
+      integrity: sha512-hxs1UM1f6rs3Gem6a6bAzdcIxuqGwn+RFoGH/Oa4cb1cvx4uv/WMhNuiJireRCLPDzndvegz8OlM0jDmjk7hIA==
       tarball: file:projects/acs-chat-declarative.tgz
     version: 0.0.0
   file:projects/acs-chat-selector.tgz_prettier@2.0.5+ts-node@9.1.1:
@@ -21161,7 +21174,7 @@ packages:
       '@azure/communication-chat': 1.0.0
       '@azure/communication-common': 1.0.0
       '@azure/communication-common-beta3': /@azure/communication-common/1.0.0-beta.3
-      '@azure/communication-signaling': 1.0.0-beta.1
+      '@azure/communication-signaling': 1.0.0-beta.5
       '@azure/communication-signaling-2': /@azure/communication-signaling/1.0.0-beta.2
       '@azure/core-http': 1.2.3
       '@babel/core': 7.13.10
@@ -21229,7 +21242,7 @@ packages:
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-1VxkdjBHvP3gj0qMkhxOVtXtvG6YaUeoYHaM9hn1/ixksGhN+qlcJrvuGtqSXAdd6CBXCaUfcIg59nwr+EVZWg==
+      integrity: sha512-zFUNsOhn11TwnvMjtnkhHfGSfawBfGdgCDcMCkiwTlvyoMN5wGs0eEADsyEintkyXHyNsM9LeLvqtAVl8A7TgA==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/server.tgz:
@@ -21288,7 +21301,7 @@ packages:
       '@azure/communication-calling': 1.0.1-beta.1
       '@azure/communication-chat': 1.0.0
       '@azure/communication-common': 1.0.0
-      '@azure/communication-signaling': 1.0.0-beta.1
+      '@azure/communication-signaling': 1.0.0-beta.5
       '@azure/core-http': 1.2.3
       '@babel/core': 7.13.10
       '@babel/preset-env': 7.13.10_@babel+core@7.13.10
@@ -21375,7 +21388,7 @@ packages:
     dev: false
     name: '@rush-temp/storybook'
     resolution:
-      integrity: sha512-XPte8ewtkoTIfEaDDJJUMti2h58NA6ld2Y4tje75GbsxAalkTkZ/V949uweEjkBseG+Lh88ULVoQ6Wgx3/5v4g==
+      integrity: sha512-x/VemYFeoSMRJlj29/O+/OmQmxtnvSzHvscimTdLc4NJiuB2rtDmNxRrNXCJlOMykOuQcF0j87+MGnKXOAIo5A==
       tarball: file:projects/storybook.tgz
     version: 0.0.0
 registry: ''
