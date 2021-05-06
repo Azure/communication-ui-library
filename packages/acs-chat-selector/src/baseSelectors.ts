@@ -1,12 +1,13 @@
 // © Microsoft Corporation. All rights reserved.
 import { ChatClientState, ChatMessageWithStatus, TypingIndicator } from '@azure/acs-chat-declarative';
+import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { ChatParticipant, ChatMessageReadReceipt } from '@azure/communication-chat';
 export type BaseSelectorProps = {
   threadId: string;
 };
 
 export const getSelectorProps = <T>(_: ChatClientState, props: T): T => props;
-export const getUserId = (state: ChatClientState): string => state.userId;
+export const getUserId = (state: ChatClientState): CommunicationIdentifierKind => state.userId;
 
 export const getDisplayName = (state: ChatClientState): string => state.displayName;
 export const getChatMessages = (state: ChatClientState, props: BaseSelectorProps): Map<string, ChatMessageWithStatus> =>

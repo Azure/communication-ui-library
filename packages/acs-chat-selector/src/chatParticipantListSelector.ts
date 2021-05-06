@@ -6,6 +6,7 @@ import { ChatClientState } from '@azure/acs-chat-declarative';
 import { BaseSelectorProps, getUserId, getDisplayName, getParticipants } from './baseSelectors';
 import * as reselect from 'reselect';
 import { ChatParticipant } from '@azure/communication-chat';
+import { getIdentifierKind } from '@azure/communication-common';
 import { WebUiChatParticipant } from './types/WebUiChatParticipant';
 
 const convertChatParticipantsToWebUiChatParticipants = (
@@ -13,7 +14,7 @@ const convertChatParticipantsToWebUiChatParticipants = (
 ): WebUiChatParticipant[] => {
   return chatParticipants.map((participant: ChatParticipant) => {
     return {
-      userId: participant.user.communicationUserId,
+      userId: getIdentifierKind(participant.id),
       displayName: participant.displayName
     };
   });

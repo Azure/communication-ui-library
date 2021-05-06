@@ -1,5 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 import { MessageStatus } from '@azure/acs-chat-declarative';
+import { CommunicationIdentifierKind } from '@azure/communication-common';
 
 export enum MessageAttachedStatus {
   BOTTOM = 'bottom',
@@ -14,7 +15,7 @@ export type ChatMessagePayload = {
   content?: string;
   // ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`
   createdOn?: Date;
-  senderId?: string;
+  senderId?: CommunicationIdentifierKind;
   senderDisplayName?: string;
   status?: MessageStatus;
   attached?: MessageAttachedStatus | boolean;

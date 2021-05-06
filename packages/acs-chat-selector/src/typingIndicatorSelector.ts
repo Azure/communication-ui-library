@@ -5,18 +5,23 @@ import { ChatClientState } from '@azure/acs-chat-declarative';
 // @ts-ignore
 import { BaseSelectorProps, getTypingIndicators, getParticipants, getUserId } from './baseSelectors';
 import * as reselect from 'reselect';
+import equal from 'fast-deep-equal';
 import { ChatParticipant } from '@azure/communication-chat';
+import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { TypingIndicator } from '@azure/acs-chat-declarative';
 import { WebUiChatParticipant } from './types/WebUiChatParticipant';
 import { MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS, PARTICIPANTS_THRESHOLD } from './utils/constants';
 
-const filterTypingIndicators = (typingIndicators: TypingIndicator[], userId: string): TypingIndicator[] => {
+const filterTypingIndicators = (
+  typingIndicators: TypingIndicator[],
+  userId: CommunicationIdentifierKind
+): TypingIndicator[] => {
   const filteredTypingIndicators: TypingIndicator[] = [];
   const seen = new Set();
   const date8SecondsAgo = new Date(Date.now() - MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS);
   for (let i = typingIndicators.length - 1; i >= 0; i--) {
     const typingIndicator = typingIndicators[i];
-    if (typingIndicator.sender.user.communicationUserId === userId) {
+    if (equal(typingIndicator.sender, userId)) {
       continue;
     }
     if (typingIndicator.receivedOn < date8SecondsAgo) {
@@ -36,7 +41,7 @@ const convertSdkTypingIndicatorsToWebUiChatParticipants = (
   participants: Map<string, ChatParticipant>
 ): WebUiChatParticipant[] => {
   return typingIndicators.map((typingIndicator) => ({
-    userId: typingIndicator.sender.user.communicationUserId,
+    userId: typingIndicator.sender,
     displayName: participants.get(typingIndicator.sender.user.communicationUserId)?.displayName
   }));
 };
