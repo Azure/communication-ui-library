@@ -9,8 +9,6 @@ import {
   UnknownIdentifierKind
 } from '@azure/communication-common';
 
-import { AzureCommunicationUserCredential, RefreshOptions } from '@azure/communication-common-beta3';
-
 import { AudioDeviceInfo, CallState, LocalVideoStream, VideoDeviceInfo } from '@azure/communication-calling';
 import {
   CommunicationUiErrorCode,
