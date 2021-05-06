@@ -9,6 +9,7 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:import/errors',
+    'plugin:import/warnings',
     'plugin:prettier/recommended',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended'
@@ -34,7 +35,19 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     eqeqeq: 'warn',
     '@typescript-eslint/no-unused-vars': ['warn', { varsIgnorePattern: '^_' }],
-    'import/no-unresolved': 'off',
+    'import/named': 'off', // very time consuming
+    'import/namespace': 'off', // very time consuming
+    'import/no-unresolved': 'off', // handled by tsc
+    'import/order': [
+      'error',
+      {
+        groups: ['builtin', 'external', 'parent', 'sibling', 'index'],
+        alphabetize: {
+          order: 'asc',
+          caseInsensitive: true
+        }
+      }
+    ],
     'no-restricted-imports': [
       'error',
       {

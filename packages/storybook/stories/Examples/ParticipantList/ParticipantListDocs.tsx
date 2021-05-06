@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
-import React from 'react';
 import { Title, Heading, Description, Canvas, Source } from '@storybook/addon-docs/blocks';
+import React from 'react';
 import { BasicParticipantListExample } from './snippets/BasicParticipantList.snippet';
 import { InteractiveParticipantListExample } from './snippets/InteractiveParticipantList.snippet';
 

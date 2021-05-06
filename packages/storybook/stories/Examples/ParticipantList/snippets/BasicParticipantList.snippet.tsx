@@ -1,6 +1,6 @@
-import React from 'react';
 import { ParticipantItem } from '@azure/communication-react';
 import { PersonaPresence, Stack } from '@fluentui/react';
+import React from 'react';
 
 export const BasicParticipantListExample: () => JSX.Element = () => {
   const participants = [

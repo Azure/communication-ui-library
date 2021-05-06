@@ -1,8 +1,8 @@
 // © Microsoft Corporation. All rights reserved.
 
+import { ControlBar } from '@azure/communication-react';
 import { Canvas, Description, Heading, Props, Source, SourceState, Title } from '@storybook/addon-docs/blocks';
 import React from 'react';
-import { ControlBar } from '@azure/communication-react';
 import { AllButtonsControlBarExample } from './snippets/AllButtonsControlBar.snippet';
 import { ControlBarLayoutExample } from './snippets/ControlBarLayout.snippet';
 import { CustomButtonsExample } from './snippets/CustomButtons.snippet';
