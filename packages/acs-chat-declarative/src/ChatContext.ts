@@ -1,10 +1,10 @@
 // © Microsoft Corporation. All rights reserved.
 import EventEmitter from 'events';
 import produce from 'immer';
-import { ChatClientState, ChatThreadClientState } from './ChatClientState';
+import { ChatClientState, ChatThreadClientState, ChatThreadProperties } from './ChatClientState';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 import { enableMapSet } from 'immer';
-import { ChatThreadInfo, ChatParticipant } from '@azure/communication-chat';
+import { ChatParticipant } from '@azure/communication-chat';
 import { CommunicationIdentifierKind, UnknownIdentifierKind, getIdentifierKind } from '@azure/communication-common';
 import { ReadReceipt } from './types/ReadReceipt';
 import { Constants } from './Constants';
@@ -42,14 +42,14 @@ export class ChatContext {
     );
   }
 
-  public createThread(threadId: string, threadInfo?: ChatThreadInfo): void {
+  public createThread(threadId: string, properties?: ChatThreadProperties): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         draft.threads.set(threadId, {
           failedMessageIds: [],
           chatMessages: new Map(),
           threadId: threadId,
-          threadInfo: threadInfo,
+          properties: properties,
           participants: new Map(),
           readReceipts: [],
           typingIndicators: [],
@@ -68,21 +68,21 @@ export class ChatContext {
     );
   }
 
-  public createThreadIfNotExist(threadId: string, thread?: ChatThreadInfo): boolean {
+  public createThreadIfNotExist(threadId: string, properties?: ChatThreadProperties): boolean {
     const exists = this.getState().threads.has(threadId);
     if (!exists) {
-      this.createThread(threadId, thread);
+      this.createThread(threadId, properties);
       return true;
     }
     return false;
   }
 
-  public updateThread(threadId: string, threadInfo?: ChatThreadInfo): void {
+  public updateThread(threadId: string, properties?: ChatThreadProperties): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         const thread = draft.threads.get(threadId);
         if (thread) {
-          thread.threadInfo = threadInfo;
+          thread.properties = properties;
         }
       })
     );
@@ -95,10 +95,10 @@ export class ChatContext {
           return;
         }
         const thread = draft.threads.get(threadId);
-        if (thread && !thread.threadInfo) {
-          thread.threadInfo = { id: threadId, topic: topic };
-        } else if (thread && thread.threadInfo) {
-          thread.threadInfo.topic = topic;
+        if (thread && !thread.properties) {
+          thread.properties = { topic: topic };
+        } else if (thread && thread.properties) {
+          thread.properties.topic = topic;
         }
       })
     );

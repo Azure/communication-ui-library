@@ -108,12 +108,11 @@ export class EventSubscriber {
   };
 
   private onChatThreadCreated = (event: ChatThreadCreatedEvent): void => {
-    const threadInfo = {
-      id: event.threadId,
+    const properties = {
       topic: event.properties.topic
     };
-    if (!this.chatContext.createThreadIfNotExist(event.threadId, threadInfo)) {
-      this.chatContext.updateThread(event.threadId, threadInfo);
+    if (!this.chatContext.createThreadIfNotExist(event.threadId, properties)) {
+      this.chatContext.updateThread(event.threadId, properties);
     }
   };
 
@@ -122,11 +121,7 @@ export class EventSubscriber {
   };
 
   private onChatThreadPropertiesUpdated = (event: ChatThreadPropertiesUpdatedEvent): void => {
-    const threadInfo = {
-      id: event.threadId,
-      topic: event.properties.topic
-    };
-    this.chatContext.updateThread(event.threadId, threadInfo);
+    this.chatContext.updateThread(event.threadId, { topic: event.properties.topic });
   };
 
   public subscribe = (): void => {
