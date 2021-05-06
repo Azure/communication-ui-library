@@ -13,7 +13,13 @@ export type ChatClientState = {
 
 export type ChatThreadClientState = {
   chatMessages: Map<string, ChatMessageWithStatus>;
-  participants: Map<CommunicationIdentifierKind, ChatParticipant>;
+  // Keys are stringified CommunicationIdentifier objects.
+  // The stringified format is a (leaked) implementation detail.
+  //
+  // TODO: Consider replacing this Map with Array:
+  // - Redux and other data stores can't store objects that contain Map.
+  // - There is no standard string representation of CommunicationIdentifier.
+  participants: Map<string, ChatParticipant>;
   threadId: string;
   properties?: ChatThreadProperties;
   coolPeriod?: Date;

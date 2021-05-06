@@ -38,7 +38,7 @@ export const participantTemplate: ChatParticipant = {
 
 export const mockParticipants: ChatParticipant[] = seedArray.map((seed) => ({
   ...participantTemplate,
-  user: { communicationUserId: `id${seed}` },
+  id: { communicationUserId: `id${seed}` },
   displayName: `user${seed}`
 }));
 
