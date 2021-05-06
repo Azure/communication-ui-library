@@ -4,20 +4,20 @@ import { Canvas, Description, Heading, Props, Source, SourceState, Title } from 
 import { boolean } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { Stack } from '@fluentui/react';
-import { OptionsButton } from 'react-components';
+import { IContextualMenuProps } from '@fluentui/react';
+import { OptionsButton } from '@azure/communication-react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
-import { OptionsButtonExample } from './snippets/OptionsButton.snippet';
-import { OptionsButtonWithLabelExample } from './snippets/OptionsButtonWithLabel.snippet';
-import { CustomOptionsButtonExample } from './snippets/CustomOptionsButton.snippet';
+import { OptionsButtonDefaultExample } from './snippets/Default.snippet';
+import { OptionsButtonWithLabelExample } from './snippets/WithLabel.snippet';
+import { OptionsButtonCustomExample } from './snippets/Custom.snippet';
 
-const OptionsButtonExampleText = require('!!raw-loader!./snippets/OptionsButton.snippet.tsx').default;
-const OptionsButtonWithLabelExampleText = require('!!raw-loader!./snippets/OptionsButtonWithLabel.snippet.tsx').default;
-const CustomOptionsButtonExampleText = require('!!raw-loader!./snippets/CustomOptionsButton.snippet.tsx').default;
+const OptionsButtonDefaultExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
+const OptionsButtonWithLabelExampleText = require('!!raw-loader!./snippets/WithLabel.snippet.tsx').default;
+const OptionsButtonCustomExampleText = require('!!raw-loader!./snippets/Custom.snippet.tsx').default;
 
 const importStatement = `
-import { OptionsButton } from 'react-components';
+import { OptionsButton } from '@azure/communication-react';
 `;
 
 const getDocs: () => JSX.Element = () => {
@@ -34,9 +34,9 @@ const getDocs: () => JSX.Element = () => {
         The default `OptionsButton` component shows an horizontal `More` icon with no label as in the example below.
       </Description>
       <Canvas withSource={SourceState.NONE}>
-        <OptionsButtonExample />
+        <OptionsButtonDefaultExample />
       </Canvas>
-      <Source code={OptionsButtonExampleText} />
+      <Source code={OptionsButtonDefaultExampleText} />
 
       <Heading>OptionsButton with default label</Heading>
       <Description>
@@ -53,19 +53,46 @@ const getDocs: () => JSX.Element = () => {
         onRenderIcon, onRenderText, etc... ).
       </Description>
       <Canvas withSource={SourceState.NONE}>
-        <CustomOptionsButtonExample />
+        <OptionsButtonCustomExample />
       </Canvas>
-      <Source code={CustomOptionsButtonExampleText} />
+      <Source code={OptionsButtonCustomExampleText} />
 
       <Heading>OptionsButton Props</Heading>
       <Description>
         `OptionsButton` features all props a [FluentUI
-        Button](https://developer.microsoft.com/en-us/fluentui#/controls/web/button) offers, with the additional
-        following properties.
+        Button](https://developer.microsoft.com/en-us/fluentui#/controls/web/button) offers, with the following
+        additional properties.
       </Description>
       <Props of={OptionsButton} />
     </>
   );
+};
+
+const exampleOptionsMenuProps: IContextualMenuProps = {
+  items: [
+    {
+      key: '1',
+      name: 'Choose Camera',
+      iconProps: { iconName: 'LocationCircle' },
+      subMenuProps: {
+        items: [
+          { key: 'camera1', text: 'Full HD Webcam', title: 'Full HD Webcam', canCheck: true, isChecked: true },
+          { key: 'camera2', text: 'Macbook Pro Webcam', title: 'Macbook Pro Webcam' }
+        ]
+      }
+    },
+    {
+      key: '2',
+      name: 'Choose Microphone',
+      iconProps: { iconName: 'LocationCircle' },
+      subMenuProps: {
+        items: [
+          { key: 'mic1', text: 'Realtek HD Audio', title: 'Realtek HD Audio' },
+          { key: 'mic2', text: 'Macbook Pro Mic', title: 'Macbook Pro Mic', canCheck: true, isChecked: true }
+        ]
+      }
+    }
+  ]
 };
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
@@ -73,11 +100,7 @@ const getDocs: () => JSX.Element = () => {
 export const Options = (): JSX.Element => {
   const showLabels = boolean('Show Labels', false);
 
-  return (
-    <Stack horizontal horizontalAlign={'center'} style={{ zoom: '1.5' }}>
-      <OptionsButton showLabel={showLabels} />
-    </Stack>
-  );
+  return <OptionsButton showLabel={showLabels} menuProps={exampleOptionsMenuProps} />;
 };
 
 export default {
