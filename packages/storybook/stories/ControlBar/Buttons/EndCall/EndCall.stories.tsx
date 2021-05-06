@@ -4,7 +4,7 @@ import { Canvas, Description, Heading, Props, Source, SourceState, Title } from 
 import { boolean } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { EndCallButton } from 'react-components';
+import { EndCallButton } from '@azure/communication-react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
 import { EndCallButtonExample } from './snippets/EndCallButton.snippet';
@@ -16,7 +16,7 @@ const EndCallButtonWithLabelExampleText = require('!!raw-loader!./snippets/EndCa
 const CustomEndCallButtonExampleText = require('!!raw-loader!./snippets/CustomEndCallButton.snippet.tsx').default;
 
 const importStatement = `
-import { EndCallButton, FluentThemeProvider } from 'react-components';
+import { EndCallButton, FluentThemeProvider } from '@azure/communication-react';
 `;
 
 const getDocs: () => JSX.Element = () => {
