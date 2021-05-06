@@ -1,12 +1,4 @@
-import {
-  CameraButton,
-  ControlBar,
-  EndCallButton,
-  FluentThemeProvider,
-  MicrophoneButton,
-  StreamMedia,
-  VideoTile
-} from 'react-components';
+import { FluentThemeProvider, StreamMedia, VideoTile } from 'react-components';
 import React from 'react';
 import { renderVideoStream } from '../../utils';
 
@@ -16,7 +8,7 @@ export const VideoTileExample: () => JSX.Element = () => {
     videoContainer: { border: '5px solid firebrick' },
     overlayContainer: { background: 'rgba(165, 13, 13, 0.5)' }
   };
-  const controlBarStyles = { root: { background: 'white' } };
+
   return (
     <FluentThemeProvider>
       <VideoTile
@@ -28,13 +20,7 @@ export const VideoTileExample: () => JSX.Element = () => {
         avatarName={'Jack Reacher'}
         invertVideo={true}
         styles={customStyles}
-      >
-        <ControlBar layout="floatingBottom" styles={controlBarStyles}>
-          <CameraButton />
-          <MicrophoneButton />
-          <EndCallButton />
-        </ControlBar>
-      </VideoTile>
+      ></VideoTile>
     </FluentThemeProvider>
   );
 };

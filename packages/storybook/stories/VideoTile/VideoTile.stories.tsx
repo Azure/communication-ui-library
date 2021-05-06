@@ -22,7 +22,6 @@ import { COMPONENT_FOLDER_PREFIX } from '../constants';
 export const VideoTile: () => JSX.Element = () => {
   const avatarName = text('Avatar Name', 'John Krasinski');
   const isVideoReady = boolean('Is Video Ready', false);
-  const showControlBarComponent = boolean('Show Control Bar (Not a part of this component)', false);
   const invertVideo = boolean('Invert Video', false);
   const width = number('Width', 400, {
     range: true,
@@ -46,18 +45,7 @@ export const VideoTile: () => JSX.Element = () => {
       styles={{
         root: { height: height, width: width }
       }}
-    >
-      {showControlBarComponent && (
-        <Stack style={{ position: 'absolute', left: '50%', bottom: '1rem' }}>
-          <ControlBar styles={{ root: { position: 'relative', left: '-50%' } }}>
-            <CameraButton />
-            <MicrophoneButton />
-            <OptionsButton />
-            <EndCallButton />
-          </ControlBar>
-        </Stack>
-      )}
-    </VideoTileComponent>
+    />
   );
 };
 
