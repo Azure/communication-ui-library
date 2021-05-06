@@ -34,10 +34,10 @@ export class EventSubscriber {
     return convertChatMessage({
       id: event.id,
       version: event.version,
-      content: { message: event.content },
+      content: { message: event.message },
       type: event.type,
-      sender: event.sender.user,
-      senderDisplayName: event.sender.displayName,
+      sender: event.sender,
+      senderDisplayName: event.senderDisplayName,
       sequenceId: '', // Note: there is a bug in chatMessageReceived event that it is missing sequenceId
       createdOn: new Date(event.createdOn)
     });
@@ -87,7 +87,7 @@ export class EventSubscriber {
   private onReadReceiptReceived = (event: ReadReceiptReceivedEvent): void => {
     const readReceipt: ReadReceipt = {
       ...event,
-      sender: { communicationUserId: event.sender.user.communicationUserId },
+      sender: event.sender,
       readOn: new Date(event.readOn)
     };
     this.chatContext.batch(() => {
