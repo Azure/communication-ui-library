@@ -28,12 +28,19 @@ beforeEach(() => {
   Stylesheet.getInstance().reset();
 });
 
-// Storyshots do not fail on warnings, this is a quick fix to ensure we have tests fail when warning are outputted.
+// Storyshots do not fail on warnings or errors thrown by components, this is a quick fix to ensure we have tests fail when warning are outputted.
 // Ideally this is something that should be supported by storybook. Related github discussion:
 // https://github.com/storybookjs/storybook/discussions/13420
-const spy = jest.spyOn(global.console, 'log');
+// NOTE: this does not work for warnings. Overriding console.warn is not picking up the logged warnings.
+const consoleError = console.error;
+beforeAll(() => {
+  console.error = (...args) => {
+    consoleError(...args);
+    throw 'Error found';
+  };
+});
 afterAll(() => {
-  expect(spy).not.toHaveBeenCalled();
+  console.error = consoleError;
 });
 
 describe('storybook snapshot tests', () => {
