@@ -28,11 +28,15 @@ export const OptionsButton = (props: OptionsButtonProps): JSX.Element => {
   const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
 
   const defaultRenderIcon = (): JSX.Element => {
-    return <MoreIcon />;
+    return <MoreIcon key={'optionsIconKey'} />;
   };
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {
-    return <Stack className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>{'Options'}</Stack>;
+    return (
+      <Stack key={'optionsLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
+        {'Options'}
+      </Stack>
+    );
   };
 
   return (
