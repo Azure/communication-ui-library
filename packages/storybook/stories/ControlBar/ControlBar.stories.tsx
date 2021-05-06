@@ -1,7 +1,5 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { Meta } from '@storybook/react/types-6-0';
-import React from 'react';
 import {
   CameraButton,
   ControlBar,
@@ -11,8 +9,10 @@ import {
   ScreenShareButton
 } from '@azure/communication-react';
 import { boolean, select } from '@storybook/addon-knobs';
-import { getDocs } from './ControlBarDocs';
+import { Meta } from '@storybook/react/types-6-0';
+import React from 'react';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { getDocs } from './ControlBarDocs';
 
 const CONTROL_BAR_LAYOUTS = [
   'horizontal',

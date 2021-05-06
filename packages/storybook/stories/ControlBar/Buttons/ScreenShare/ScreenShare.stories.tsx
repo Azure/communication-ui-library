@@ -1,19 +1,19 @@
 // © Microsoft Corporation. All rights reserved.
 
+import { ScreenShareButton } from '@azure/communication-react';
 import { Canvas, Description, Heading, Props, Source, SourceState, Title } from '@storybook/addon-docs/blocks';
 import { boolean } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { ScreenShareButton } from '@azure/communication-react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
 import { CustomScreenShareButtonExample } from './snippets/Custom.snippet';
 import { ScreenShareButtonExample } from './snippets/Default.snippet';
 import { ScreenShareButtonWithLabelExample } from './snippets/WithLabel.snippet';
 
-const ButtonWithLabelExampleText = require('!!raw-loader!./snippets/WithLabel.snippet.tsx').default;
 const CustomButtonExampleText = require('!!raw-loader!./snippets/Custom.snippet.tsx').default;
 const DefaultButtonExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
+const ButtonWithLabelExampleText = require('!!raw-loader!./snippets/WithLabel.snippet.tsx').default;
 
 const importStatement = `
 import { ScreenShareButton } from '@azure/communication-ui';

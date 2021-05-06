@@ -8,6 +8,8 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:import/errors',
+    'plugin:import/warnings',
     'plugin:prettier/recommended',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended'
@@ -31,9 +33,21 @@ module.exports = {
       }
     ],
     '@typescript-eslint/no-explicit-any': 'off',
-    eqeqeq: 'warn',
-    'react/display-name': 'off',
     '@typescript-eslint/no-unused-vars': ['warn', { varsIgnorePattern: '^_' }],
+    eqeqeq: 'warn',
+    'import/named': 'off', // very time consuming
+    'import/namespace': 'off', // very time consuming
+    'import/no-unresolved': 'off', // handled by tsc
+    'import/order': [
+      'error',
+      {
+        groups: ['builtin', 'external', 'parent', 'sibling', 'index'],
+        alphabetize: {
+          order: 'asc',
+          caseInsensitive: true
+        }
+      }
+    ],
     'no-restricted-imports': [
       'error',
       {
@@ -42,7 +56,8 @@ module.exports = {
         name: 'react-components',
         message: 'Please use @azure/communication-react instead.'
       }
-    ]
+    ],
+    'react/display-name': 'off'
   },
   root: true,
   settings: {
