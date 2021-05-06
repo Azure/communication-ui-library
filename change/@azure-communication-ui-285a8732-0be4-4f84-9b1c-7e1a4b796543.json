@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "clean up states, hooks and mappers in chat",
-  "packageName": "@azure/communication-ui",
-  "email": "easony@microsoft.com",
-  "dependentChangeType": "patch"
-}

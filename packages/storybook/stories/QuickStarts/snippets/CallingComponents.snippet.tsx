@@ -4,14 +4,13 @@ import {
   EndCallButton,
   GridLayout,
   MicrophoneButton,
+  OptionsButton,
   ScreenShareButton,
-  VideoTile,
-  optionsButtonProps
-} from '@azure/communication-ui';
+  VideoTile
+} from '@azure/communication-react';
 
-import { DefaultButton, Stack, IContextualMenuProps } from '@fluentui/react';
-import React from 'react';
-import { useState } from 'react';
+import { Stack, IContextualMenuProps } from '@fluentui/react';
+import React, { useState } from 'react';
 
 export const CallingComponents = (): JSX.Element => {
   const exampleOptionsMenuProps: IContextualMenuProps = {
@@ -47,7 +46,7 @@ export const CallingComponents = (): JSX.Element => {
           checked={screenshareButtonChecked}
           onClick={() => setScreenshareButtonChecked(!screenshareButtonChecked)}
         />
-        <DefaultButton {...optionsButtonProps} menuProps={exampleOptionsMenuProps} />
+        <OptionsButton menuProps={exampleOptionsMenuProps} />
         <EndCallButton />
       </ControlBar>
     </Stack>

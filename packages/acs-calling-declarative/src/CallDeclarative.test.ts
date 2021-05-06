@@ -27,7 +27,7 @@ describe('declarative call', () => {
       return Promise.resolve();
     };
 
-    const context = new CallContext();
+    const context = new CallContext('');
     context.setCall(convertSdkCallToDeclarativeCall(mockCall));
 
     const declarativeCall = callDeclaratify(mockCall, context);

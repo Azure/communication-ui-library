@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Move Storybook into its own project",
-  "packageName": "@azure/communication-ui",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "patch"
-}

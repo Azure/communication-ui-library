@@ -1,9 +1,9 @@
+import { CameraButton, ControlBar, FluentThemeProvider, OptionsButton } from '@azure/communication-react';
+import { IContextualMenuProps } from '@fluentui/react';
 import React from 'react';
-import { CameraButton, ControlBar, FluentThemeProvider, optionsButtonProps } from '@azure/communication-ui';
-import { DefaultButton } from '@fluentui/react';
 
 export const OptionsButtonExample: () => JSX.Element = () => {
-  const exampleOptionsMenuProps = {
+  const exampleOptionsMenuProps: IContextualMenuProps = {
     items: [
       {
         key: '1',
@@ -38,7 +38,7 @@ export const OptionsButtonExample: () => JSX.Element = () => {
             /*handle onClick*/
           }}
         />
-        <DefaultButton {...optionsButtonProps} menuProps={exampleOptionsMenuProps} />
+        <OptionsButton menuProps={exampleOptionsMenuProps} />
       </ControlBar>
     </FluentThemeProvider>
   );

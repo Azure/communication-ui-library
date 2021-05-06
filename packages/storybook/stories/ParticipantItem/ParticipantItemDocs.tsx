@@ -1,18 +1,18 @@
 // © Microsoft Corporation. All rights reserved.
 
-import React from 'react';
+import { ParticipantItem } from '@azure/communication-react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
-import { ParticipantItem } from '@azure/communication-ui';
-import { ParticipantItemExample } from './snippets/ParticipantItem.snippet';
+import React from 'react';
 import { CustomAvatarExample } from './snippets/CustomAvatar.snippet';
 import { CustomIconExample } from './snippets/CustomIcon.snippet';
+import { ParticipantItemExample } from './snippets/ParticipantItem.snippet';
 
-const ParticipantItemExampleText = require('!!raw-loader!./snippets/ParticipantItem.snippet.tsx').default;
 const CustomAvatarExampleText = require('!!raw-loader!./snippets/CustomAvatar.snippet.tsx').default;
 const CustomIconExampleText = require('!!raw-loader!./snippets/CustomIcon.snippet.tsx').default;
+const ParticipantItemExampleText = require('!!raw-loader!./snippets/ParticipantItem.snippet.tsx').default;
 
 const importStatement = `
-import { ParticipantItem, ParticipantItemProps } from '@azure/communication-ui';
+import { ParticipantItem, ParticipantItemProps } from '@azure/communication-react';
 import { IContextualMenuItem, PersonaPresence } from '@fluentui/react';`;
 
 export const getDocs: () => JSX.Element = () => {

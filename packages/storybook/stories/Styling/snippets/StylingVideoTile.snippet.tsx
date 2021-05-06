@@ -6,7 +6,7 @@ import {
   MicrophoneButton,
   StreamMedia,
   VideoTile
-} from '@azure/communication-ui';
+} from '@azure/communication-react';
 import React from 'react';
 import { renderVideoStream } from '../../utils';
 

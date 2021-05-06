@@ -27,15 +27,21 @@ jobs:
 
       - name: Build Packages and Samples
         run: |
-          rush build -t "@azure/communication-ui"
+          rush build -t "react-components"
+          rush build -t "react-composites"
           rush build -t "@azure/acs-chat-declarative"
           rush build -t "@azure/acs-chat-selector"
           rush build -t "@azure/acs-calling-declarative"
           rush build -t "@azure/acs-calling-selector"
+          rush build -t "@azure/communication-react"
 
-      - name: Package @communication-ui
+      - name: Package @react-components
         run: npm pack
-        working-directory: ./packages/communication-ui/
+        working-directory: ./packages/react-components/
+
+      - name: Package @react-composites
+        run: npm pack
+        working-directory: ./packages/react-composites/
 
       - name: Package @azure/acs-chat-declarative
         run: npm pack
@@ -52,6 +58,10 @@ jobs:
       - name: Package @azure/acs-calling-selector
         run: npm pack
         working-directory: ./packages/acs-calling-selector/
+
+      - name: Package @azure/communication-react
+        run: npm pack
+        working-directory: ./packages/communication-react/
 
       - name: Compile private preview zip
         run: 7z a private-preview.zip ./packages/**/private-preview/*

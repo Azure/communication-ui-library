@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Log storybook composite chat and call details to allow joining calls.",
-  "packageName": "@azure/communication-ui",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "none"
-}

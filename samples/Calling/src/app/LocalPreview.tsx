@@ -10,6 +10,7 @@ import {
   toggleStyle
 } from './styles/LocalPreview.styles';
 import { MapToMediaControlsProps, MediaControlsContainerProps } from './consumers/MapToMediaControlsProps';
+import { ErrorBar as ErrorBarComponent, StreamMedia, VideoTile } from 'react-components';
 import {
   connectFuncsToContext,
   MapToLocalVideoProps,
@@ -17,13 +18,11 @@ import {
   ErrorHandlingProps,
   WithErrorHandling,
   CommunicationUiErrorFromError,
-  ErrorBar as ErrorBarComponent,
   MapToErrorBarProps,
   MapToLocalDeviceSettingsProps,
-  LocalDeviceSettingsContainerProps,
-  StreamMedia,
-  VideoTile
-} from '@azure/communication-ui';
+  LocalDeviceSettingsContainerProps
+} from 'react-composites';
+
 import { useTheme } from '@fluentui/react-theme-provider';
 import staticMediaSVG from '../assets/staticmedia.svg';
 

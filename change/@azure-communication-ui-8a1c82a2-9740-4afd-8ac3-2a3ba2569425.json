@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add support for CommonJS",
-  "packageName": "@azure/communication-ui",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "patch"
-}
