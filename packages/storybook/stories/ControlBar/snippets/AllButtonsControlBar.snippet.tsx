@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   CameraButton,
   ControlBar,
@@ -11,6 +10,7 @@ import {
   recordButtonProps
 } from '@azure/communication-react';
 import { DefaultButton, IContextualMenuProps } from '@fluentui/react';
+import React from 'react';
 
 export const AllButtonsControlBarExample: () => JSX.Element = () => {
   const exampleOptionsMenuProps: IContextualMenuProps = {

@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
-import React from 'react';
 import { Title, Description, Heading, Source, Props } from '@storybook/addon-docs/blocks';
+import React from 'react';
 import { GroupCall } from 'react-composites';
 
 const importStatement = `

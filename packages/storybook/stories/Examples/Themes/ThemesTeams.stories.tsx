@@ -1,9 +1,5 @@
 // © Microsoft Corporation. All rights reserved.
 
-import React from 'react';
-import { Meta } from '@storybook/react/types-6-0';
-import { getDocs } from './ThemesDocs';
-import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import {
   CameraButton,
   ControlBar,
@@ -14,6 +10,10 @@ import {
   ScreenShareButton,
   VideoTile
 } from '@azure/communication-react';
+import { Meta } from '@storybook/react/types-6-0';
+import React from 'react';
+import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
+import { getDocs } from './ThemesDocs';
 
 const TeamsTheme = {
   palette: {

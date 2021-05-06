@@ -1,19 +1,19 @@
 // © Microsoft Corporation. All rights reserved.
 
+import { EndCallButton } from '@azure/communication-react';
 import { Canvas, Description, Heading, Props, Source, SourceState, Title } from '@storybook/addon-docs/blocks';
 import { boolean } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { EndCallButton } from '@azure/communication-react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
+import { EndCallButtonCustomExample } from './snippets/Custom.snippet';
 import { EndCallButtonDefaultExample } from './snippets/Default.snippet';
 import { EndCallButtonWithLabelExample } from './snippets/WithLabel.snippet';
-import { EndCallButtonCustomExample } from './snippets/Custom.snippet';
 
+const EndCallButtonCustomExampleText = require('!!raw-loader!./snippets/Custom.snippet.tsx').default;
 const EndCallButtonDefaultExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
 const EndCallButtonWithLabelExampleText = require('!!raw-loader!./snippets/WithLabel.snippet.tsx').default;
-const EndCallButtonCustomExampleText = require('!!raw-loader!./snippets/Custom.snippet.tsx').default;
 
 const importStatement = `
 import { EndCallButton, FluentThemeProvider } from '@azure/communication-react';
