@@ -11,6 +11,7 @@ import { controlButtonLabelStyles, endCallControlButtonStyles } from './styles/C
 export interface EndCallButtonProps extends IButtonProps {
   /**
    * Whether the label is displayed or not.
+   *
    * @defaultValue `false`
    */
   showLabel?: boolean;
@@ -18,6 +19,7 @@ export interface EndCallButtonProps extends IButtonProps {
 
 /**
  * `EndCallButton` allows you to easily create a component for rendering a end call button. It can be used in your ControlBar component for example.
+ *
  * @param props - of type EndCallButtonProps
  */
 export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
