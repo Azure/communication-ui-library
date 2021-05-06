@@ -24,14 +24,14 @@ export const getDocs: () => JSX.Element = () => {
       <Heading>Importing</Heading>
       <Source code={importStatement} />
       <Heading>Example</Heading>
-      <Canvas withSource="none">
+      <Canvas withSource={'none' as any}>
         <SendBoxExample />
       </Canvas>
       <Source code={SendBoxExampleText} />
       <Heading>Add a system message</Heading>
       <Description>To add a system message, use the systemMessage property like in the example below.</Description>
       <Source code={SendBoxWithSystemMessageExampleText} />
-      <Canvas withSource="none">
+      <Canvas withSource={'none' as any}>
         <SendBoxWithSystemMessageExample />
       </Canvas>
       <Heading>Customize send icon</Heading>
@@ -41,7 +41,7 @@ export const getDocs: () => JSX.Element = () => {
         use any `JSX.Element`.
       </Description>
       <Source code={CustomIconExampleText} />
-      <Canvas withSource="none">
+      <Canvas withSource={'none' as any}>
         <CustomIconExample />
       </Canvas>
       <Heading>Customize styling</Heading>
@@ -50,7 +50,7 @@ export const getDocs: () => JSX.Element = () => {
         `styles` property are the root and sub-components of `SendBox`, each of which can be styled independently.
       </Description>
       <Source code={CustomStylingExampleText} />
-      <Canvas withSource="none">
+      <Canvas withSource={'none' as any}>
         <CustomStylingExample />
       </Canvas>
       <Heading>Props</Heading>

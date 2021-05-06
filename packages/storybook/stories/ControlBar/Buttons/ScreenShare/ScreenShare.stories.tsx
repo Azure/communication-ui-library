@@ -33,7 +33,7 @@ const getDocs: () => JSX.Element = () => {
         The default `ScreenShareButton` component shows a ScreenShare icon with no label. The following example displays
         the `ScreenShareButton` with screen sharing enabled and disabled.
       </Description>
-      <Canvas withSource={SourceState.NONE}>
+      <Canvas withSource={SourceState.NONE as any}>
         <ScreenShareButtonExample />
       </Canvas>
       <Source code={DefaultButtonExampleText} />
@@ -42,7 +42,7 @@ const getDocs: () => JSX.Element = () => {
       <Description>
         You can display the button label which, by default, will show below the icon as `Share` or `Stop`.
       </Description>
-      <Canvas withSource={SourceState.NONE}>
+      <Canvas withSource={SourceState.NONE as any}>
         <ScreenShareButtonWithLabelExample />
       </Canvas>
       <Source code={ButtonWithLabelExampleText} />
@@ -52,7 +52,7 @@ const getDocs: () => JSX.Element = () => {
         You can change the styles of the `ScreenShareButton` as you would customized any Button (styles, primary,
         onRenderIcon, onRenderText, etc... ).
       </Description>
-      <Canvas withSource={SourceState.NONE}>
+      <Canvas withSource={SourceState.NONE as any}>
         <CustomScreenShareButtonExample />
       </Canvas>
       <Source code={CustomButtonExampleText} />

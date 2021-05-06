@@ -33,7 +33,7 @@ const getDocs: () => JSX.Element = () => {
         The default `CameraButton` component shows a Camera icon with no label. The following example displays the
         `CameraButton` with camera turned on and off.
       </Description>
-      <Canvas withSource={SourceState.NONE}>
+      <Canvas withSource={SourceState.NONE as any}>
         <CameraButtonExample />
       </Canvas>
       <Source code={DefaultButtonExampleText} />
@@ -42,7 +42,7 @@ const getDocs: () => JSX.Element = () => {
       <Description>
         You can display the button label which, by default, will show below the icon as `Turn on` or `Turn off`.
       </Description>
-      <Canvas withSource={SourceState.NONE}>
+      <Canvas withSource={SourceState.NONE as any}>
         <CameraButtonWithLabelExample />
       </Canvas>
       <Source code={ButtonWithLabelExampleText} />
@@ -52,7 +52,7 @@ const getDocs: () => JSX.Element = () => {
         You can change the styles of the `CameraButton` as you would customized any Button (styles, primary,
         onRenderIcon, onRenderText, etc... ).
       </Description>
-      <Canvas withSource={SourceState.NONE}>
+      <Canvas withSource={SourceState.NONE as any}>
         <CustomCameraButtonExample />
       </Canvas>
       <Source code={CustomButtonExampleText} />

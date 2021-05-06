@@ -34,7 +34,7 @@ const getDocs: () => JSX.Element = () => {
         The default `MicrophoneButton` component shows a microphone icon with no label. The following example displays
         an unmuted `MicrophoneButton` and a muted `MicrophoneButton`.
       </Description>
-      <Canvas withSource={SourceState.NONE}>
+      <Canvas withSource={SourceState.NONE as any}>
         <MicrophoneButtonExample />
       </Canvas>
       <Source code={MicrophoneButtonExampleText} />
@@ -43,7 +43,7 @@ const getDocs: () => JSX.Element = () => {
       <Description>
         You can display the button label which, by default, will show below the icon as `Mute` or `Unmute`.
       </Description>
-      <Canvas withSource={SourceState.NONE}>
+      <Canvas withSource={SourceState.NONE as any}>
         <MicrophoneButtonWithLabelExample />
       </Canvas>
       <Source code={MicrophoneButtonWithLabelExampleText} />
@@ -53,7 +53,7 @@ const getDocs: () => JSX.Element = () => {
         You can change the styles of the `MicrophoneButton` as you would customized any Button (styles, primary,
         onRenderIcon, onRenderText, etc... ).
       </Description>
-      <Canvas withSource={SourceState.NONE}>
+      <Canvas withSource={SourceState.NONE as any}>
         <CustomMicrophoneButtonExample />
       </Canvas>
       <Source code={CustomMicrophoneButtonExampleText} />

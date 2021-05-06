@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
 import { Stylesheet } from '@fluentui/react';
-import initStoryshots from '@storybook/addon-storyshots';
+import initStoryshots, { multiSnapshotWithOptions } from '@storybook/addon-storyshots';
 import ReactDom from 'react-dom';
 
 jest.mock('@azure/communication-calling', () => {
@@ -28,6 +28,16 @@ beforeEach(() => {
   Stylesheet.getInstance().reset();
 });
 
+// Storyshots do not fail on warnings, this is a quick fix to ensure we have tests fail when warning are outputted.
+// Ideally this is something that should be supported by storybook. Related github discussion:
+// https://github.com/storybookjs/storybook/discussions/13420
+// const spy = jest.spyOn(global.console, 'log');
+// afterAll(() => {
+//   expect(spy).not.toHaveBeenCalled();
+// });
+
 describe('storybook snapshot tests', () => {
-  initStoryshots();
+  initStoryshots({
+    test: multiSnapshotWithOptions()
+  });
 });
