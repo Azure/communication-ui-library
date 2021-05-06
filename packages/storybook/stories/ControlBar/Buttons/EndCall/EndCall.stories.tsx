@@ -7,13 +7,13 @@ import React from 'react';
 import { EndCallButton } from '@azure/communication-react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
-import { EndCallButtonExample } from './snippets/EndCallButton.snippet';
-import { EndCallButtonWithLabelExample } from './snippets/EndCallButtonWithLabel.snippet';
-import { CustomEndCallButtonExample } from './snippets/CustomEndCallButton.snippet';
+import { EndCallButtonDefaultExample } from './snippets/Default.snippet';
+import { EndCallButtonWithLabelExample } from './snippets/WithLabel.snippet';
+import { EndCallButtonCustomExample } from './snippets/Custom.snippet';
 
-const EndCallButtonExampleText = require('!!raw-loader!./snippets/EndCallButton.snippet.tsx').default;
-const EndCallButtonWithLabelExampleText = require('!!raw-loader!./snippets/EndCallButtonWithLabel.snippet.tsx').default;
-const CustomEndCallButtonExampleText = require('!!raw-loader!./snippets/CustomEndCallButton.snippet.tsx').default;
+const EndCallButtonDefaultExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
+const EndCallButtonWithLabelExampleText = require('!!raw-loader!./snippets/WithLabel.snippet.tsx').default;
+const EndCallButtonCustomExampleText = require('!!raw-loader!./snippets/Custom.snippet.tsx').default;
 
 const importStatement = `
 import { EndCallButton, FluentThemeProvider } from '@azure/communication-react';
@@ -33,9 +33,9 @@ const getDocs: () => JSX.Element = () => {
         The default `EndCallButton` component shows a hangup icon with no label as in the example below.
       </Description>
       <Canvas withSource={SourceState.NONE}>
-        <EndCallButtonExample />
+        <EndCallButtonDefaultExample />
       </Canvas>
-      <Source code={EndCallButtonExampleText} />
+      <Source code={EndCallButtonDefaultExampleText} />
 
       <Heading>EndCallButton with default label</Heading>
       <Description>
@@ -52,15 +52,15 @@ const getDocs: () => JSX.Element = () => {
         onRenderIcon, onRenderText, etc... ).
       </Description>
       <Canvas withSource={SourceState.NONE}>
-        <CustomEndCallButtonExample />
+        <EndCallButtonCustomExample />
       </Canvas>
-      <Source code={CustomEndCallButtonExampleText} />
+      <Source code={EndCallButtonCustomExampleText} />
 
       <Heading>EndCallButton Props</Heading>
       <Description>
         `EndCallButton` features all props a [FluentUI
-        Button](https://developer.microsoft.com/en-us/fluentui#/controls/web/button) offers, with the additional
-        following properties.
+        Button](https://developer.microsoft.com/en-us/fluentui#/controls/web/button) offers, with the following
+        additional properties.
       </Description>
       <Props of={EndCallButton} />
     </>

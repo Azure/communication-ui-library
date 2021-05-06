@@ -2,7 +2,7 @@ import React from 'react';
 import { IButtonProps, Icon, Label, Stack } from '@fluentui/react';
 import { EndCallButton } from '@azure/communication-react';
 
-export const CustomEndCallButtonExample: () => JSX.Element = () => {
+export const EndCallButtonCustomExample: () => JSX.Element = () => {
   const customOnRenderIcon = (): JSX.Element => {
     return <Icon key={'endCallCustomIconKey'} iconName={'DeclineCall'} style={{ color: 'black', fontSize: '25px' }} />;
   };
