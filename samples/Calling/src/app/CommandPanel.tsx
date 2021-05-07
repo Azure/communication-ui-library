@@ -10,8 +10,7 @@ import {
 } from 'app/styles/CommandPanel.styles';
 import { Footer } from './Footer';
 import { LocalDeviceSettings } from './LocalDeviceSettings';
-import { ParticipantList } from './ParticipantList';
-import { ThemeSelector } from 'react-components';
+import { ThemeSelector, ParticipantList } from 'react-components';
 import { participantListSelector, WebUIParticipant } from '@azure/acs-calling-selector';
 import { useSelector } from './hooks/useSelector';
 import { useCall } from 'react-composites';

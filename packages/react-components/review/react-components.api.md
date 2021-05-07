@@ -240,6 +240,17 @@ export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
     menu?: IStyle;
 }
 
+// @public
+export const ParticipantList: (props: ParticipantListProps) => JSX.Element;
+
+// @public
+export type ParticipantListProps = {
+    participants: WebUIParticipant[];
+    myUserId?: string;
+    onRenderParticipant?: (participant: WebUIParticipant) => JSX.Element;
+    onRenderParticipantMenu?: (participant: WebUIParticipant) => IContextualMenuItem[];
+};
+
 // @public (undocumented)
 export interface PlaceholderProps {
     avatarName?: string;
@@ -397,6 +408,16 @@ export interface VideoTileStylesProps extends BaseCustomStylesProps {
 export type WebUiChatParticipant = {
     userId: string;
     displayName?: string;
+};
+
+// @public (undocumented)
+export type WebUIParticipant = {
+    userId: string;
+    displayName?: string;
+    state?: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
+    isScreenSharing?: boolean;
+    isMuted?: boolean;
+    isSpeaking?: boolean;
 };
 
 

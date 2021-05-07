@@ -10,11 +10,14 @@ import {
   Stack,
   PersonaPresence
 } from '@fluentui/react';
-import { ParticipantItem } from 'react-components';
+import { ParticipantItem } from './ParticipantItem';
 import { MicOffIcon, CallControlPresentNewIcon } from '@fluentui/react-northstar';
-import { participantStackStyle, overFlowButtonStyles, overflowSetStyle } from './styles/ParticipantStack.styles';
-import { WebUIParticipant } from '@azure/acs-calling-selector';
+import { participantListStyle, overFlowButtonStyles, overflowSetStyle } from './styles/ParticipantList.styles';
+import { WebUIParticipant } from '../types';
 
+/**
+ * Props for component `ParticipantList`
+ */
 export type ParticipantListProps = {
   /** Remote participants in user call */
   participants: WebUIParticipant[];
@@ -31,7 +34,7 @@ const getDefaultRenderer = (
   onRenderParticipantMenu?: (remoteParticipant: WebUIParticipant) => IContextualMenuItem[]
 ): ((participant: WebUIParticipant) => JSX.Element) => {
   return (participant: WebUIParticipant) => {
-    let presence = undefined;
+    let presence: PersonaPresence | undefined = undefined;
     if (participant.state === 'Connected') {
       presence = PersonaPresence.online;
     } else if (participant.state === 'Idle') {
@@ -100,13 +103,17 @@ const renderParticipants = (
   });
 };
 
+/**
+ * `ParticipantList` renders a list of participants in Calling or Chat. If property `onRenderParticipant` is not
+ * assigned then each participant is rendered with `ParticipantItem`.
+ */
 export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
   const allParticipants: WebUIParticipant[] = [];
   if (props.participants !== undefined) {
     props.participants.forEach((participant) => allParticipants.push(participant));
   }
   return (
-    <Stack className={participantStackStyle}>
+    <Stack className={participantListStyle}>
       {renderParticipants(allParticipants, props.myUserId, props.onRenderParticipant, props.onRenderParticipantMenu)}
     </Stack>
   );

@@ -19,5 +19,6 @@ export type {
   SystemMessage,
   SystemMessagePayload,
   ThemeCollection,
-  WebUiChatParticipant
+  WebUiChatParticipant,
+  WebUIParticipant
 } from './types';
