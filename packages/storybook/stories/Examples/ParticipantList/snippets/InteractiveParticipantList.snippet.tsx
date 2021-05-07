@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { ParticipantItem } from 'react-components';
+import { ParticipantItem } from '@azure/communication-react';
 import { Icon, PersonaPresence, Stack } from '@fluentui/react';
+import React, { useState } from 'react';
 
 export const InteractiveParticipantListExample: () => JSX.Element = () => {
   const [isMuted1, setIsMuted1] = useState<any>(false);

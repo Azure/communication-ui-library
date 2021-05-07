@@ -1,7 +1,7 @@
-import React from 'react';
-import { VideoTile, FluentThemeProvider, StreamMedia } from 'react-components';
-import { renderVideoStream } from '../../utils';
+import { VideoTile, FluentThemeProvider, StreamMedia } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
+import React from 'react';
+import { renderVideoStream } from '../../utils';
 
 export const VideoTilePlaceholderExample: () => JSX.Element = () => {
   const videoTileStyles = { root: { height: '300px', width: '400px', border: '1px solid #999' } };

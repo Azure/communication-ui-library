@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { renderHook } from '@testing-library/react-hooks';
 import { DeviceAccess, DeviceManager } from '@azure/communication-calling';

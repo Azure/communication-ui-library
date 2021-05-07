@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { AudioOptions, Call, HangUpOptions, JoinCallOptions } from '@azure/communication-calling';
 import { useCallback } from 'react';

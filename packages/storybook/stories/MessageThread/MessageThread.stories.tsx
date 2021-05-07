@@ -1,7 +1,5 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { Meta } from '@storybook/react/types-6-0';
-import React, { useState } from 'react';
 import {
   MessageProps,
   MessageThread as MessageThreadComponent,
@@ -9,10 +7,13 @@ import {
   CustomMessage,
   SystemMessage,
   DefaultMessageRendererType
-} from 'react-components';
-import { boolean } from '@storybook/addon-knobs';
+} from '@azure/communication-react';
 import { PrimaryButton, Stack } from '@fluentui/react';
 import { Divider } from '@fluentui/react-northstar';
+import { boolean } from '@storybook/addon-knobs';
+import { Meta } from '@storybook/react/types-6-0';
+import React, { useState } from 'react';
+import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { getDocs } from './MessageThreadDocs';
 import {
   GenerateMockNewChatMessage,
@@ -25,7 +26,6 @@ import {
   GenerateMockSystemMessage,
   GenerateMockCustomMessage
 } from './placeholdermessages';
-import { COMPONENT_FOLDER_PREFIX } from '../constants';
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.

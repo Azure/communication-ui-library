@@ -1,5 +1,6 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import { CommunicationUserCredential } from '@azure/communication-common';
+import { CommunicationTokenCredential } from '@azure/communication-common';
 
-export const threadIdToModeratorCredentialMap = new Map<string, CommunicationUserCredential>();
+export const threadIdToModeratorCredentialMap = new Map<string, CommunicationTokenCredential>();

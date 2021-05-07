@@ -1,4 +1,4 @@
-import { StreamMedia, VideoTile } from 'react-components';
+import { StreamMedia, VideoTile } from '@azure/communication-react';
 import { useTheme } from '@fluentui/react-theme-provider';
 import React from 'react';
 import { renderVideoStream } from '../../../utils';

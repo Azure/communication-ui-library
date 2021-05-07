@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { ChatMessage } from '@azure/communication-chat';
 import { ChatMessageWithStatus, MessageStatus } from './types/ChatMessageWithStatus';

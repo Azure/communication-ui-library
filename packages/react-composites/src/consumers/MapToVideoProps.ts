@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { LocalVideoStream, RemoteVideoStream, ScalingMode } from '@azure/communication-calling';
 import { useRemoteVideoStreamRenderer, useLocalVideoStreamRenderer } from '../hooks';
