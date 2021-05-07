@@ -33,8 +33,8 @@ module.exports = {
       }
     ],
     '@typescript-eslint/no-explicit-any': 'off',
-    eqeqeq: 'warn',
     '@typescript-eslint/no-unused-vars': ['warn', { varsIgnorePattern: '^_' }],
+    eqeqeq: 'warn',
     'import/named': 'off', // very time consuming
     'import/namespace': 'off', // very time consuming
     'import/no-unresolved': 'off', // handled by tsc
@@ -46,6 +46,15 @@ module.exports = {
           order: 'asc',
           caseInsensitive: true
         }
+      }
+    ],
+    'no-restricted-imports': [
+      'error',
+      {
+        // Do not allow references to react-component package. These references should point to @azure/communication-react instead.
+        // As internal packlets get added to the @azure/communication-react package they should be added as a restriction here as well.
+        name: 'react-components',
+        message: 'Please use @azure/communication-react instead.'
       }
     ],
     'react/display-name': 'off'
