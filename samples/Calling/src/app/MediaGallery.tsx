@@ -25,6 +25,15 @@ export const MediaGallery = (): JSX.Element => {
       onRenderView={videoGalleryHandlers.onRenderView}
     />
   ) : (
-    <VideoGallery {...videoGalleryProps} {...videoGalleryHandlers} scalingMode={'Crop'} />
+    <VideoGallery
+      {...videoGalleryProps}
+      {...videoGalleryHandlers}
+      scalingMode={'Crop'}
+      styles={{
+        root: {
+          height: 'auto'
+        }
+      }}
+    />
   );
 };

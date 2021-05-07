@@ -10,7 +10,8 @@ import {
   ScalingMode,
   CreateViewOptions,
   RemoteVideoStream,
-  LocalVideoStream
+  LocalVideoStream,
+  BaseCustomStylesProps
 } from '../types';
 import { GridLayout } from './GridLayout';
 import { StreamMedia } from './StreamMedia';
@@ -19,6 +20,7 @@ import { VideoTile } from './VideoTile';
 import { memoizeFnAll } from './utils/memoizeFnAll';
 
 export interface VideoGalleryProps {
+  styles?: BaseCustomStylesProps;
   remoteParticipants?: VideoGalleryRemoteParticipant[];
   localParticipant?: VideoGalleryLocalParticipant;
   scalingMode: ScalingMode;
@@ -43,7 +45,7 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
 );
 
 export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
-  const { localParticipant, remoteParticipants, scalingMode, onRenderView } = props;
+  const { localParticipant, remoteParticipants, scalingMode, onRenderView, styles } = props;
   const localVideoStream = localParticipant?.videoStream;
   const isLocalVideoReady = localVideoStream?.videoStreamRendererView !== undefined;
 
@@ -90,7 +92,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   }, [remoteParticipants, onRenderView, scalingMode]);
 
   return (
-    <GridLayout>
+    <GridLayout styles={styles}>
       <Stack horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
         {localParticipant && localParticipantComponent}
       </Stack>
