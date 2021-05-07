@@ -10,14 +10,18 @@ import { CallDirection } from '@azure/communication-calling';
 import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
 import { CallState } from '@azure/communication-calling';
+import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { CreateViewOptions } from '@azure/communication-calling';
 import { DeviceAccess } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
+import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { PhoneNumberKind } from '@azure/communication-common';
 import { RemoteParticipantState } from '@azure/communication-calling';
 import { ScalingMode } from '@azure/communication-calling';
+import { TransferErrorCode } from '@azure/communication-calling';
+import { TransferState } from '@azure/communication-calling';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 
@@ -37,6 +41,7 @@ export interface Call {
     startTime: Date;
     state: CallState;
     transcription: TranscriptionCallFeature;
+    transfer: TransferCallFeature;
 }
 
 // @public
@@ -121,6 +126,26 @@ export interface RemoteVideoStream {
 // @public
 export interface TranscriptionCallFeature {
     isTranscriptionActive: boolean;
+}
+
+// @public
+export interface Transfer {
+    error?: TransferErrorCode;
+    id: number;
+    state: TransferState;
+    targetParticipant: CommunicationUserIdentifier | PhoneNumberIdentifier;
+}
+
+// @public
+export interface TransferCallFeature {
+    receivedTransferRequests: TransferRequest[];
+    requestedTransfers: Transfer[];
+}
+
+// @public
+export interface TransferRequest {
+    // (undocumented)
+    targetParticipant: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind;
 }
 
 // @public

@@ -10,14 +10,71 @@ import {
   MediaStreamType,
   RemoteParticipantState,
   ScalingMode,
+  TransferErrorCode,
+  TransferState,
   VideoDeviceInfo
 } from '@azure/communication-calling';
 import {
+  CommunicationUserIdentifier,
   CommunicationUserKind,
   MicrosoftTeamsUserKind,
+  PhoneNumberIdentifier,
   PhoneNumberKind,
   UnknownIdentifierKind
 } from '@azure/communication-common';
+
+/**
+ * State only version of {@Link @azure/communication-calling#TransferRequestedEventArgs}. At the time of writing
+ * Transfer Call is experimental. Not tested and not ready for consumption.
+ */
+export interface TransferRequest {
+  targetParticipant: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind;
+}
+
+/**
+ * State only version of {@Link @azure/communication-calling#Transfer}. At the time of writing Transfer Call is
+ * experimental. Not tested and not ready for consumption.
+ */
+export interface Transfer {
+  /**
+   * Added by Declarative and used internally.
+   */
+  id: number;
+  /**
+   * Added by Declarative, stores the targetParticipant passed to
+   * {@Link @azure/communication-calling#TransferCallFeature.transfer}
+   */
+  targetParticipant: CommunicationUserIdentifier | PhoneNumberIdentifier;
+  /**
+   * Proxy of {@Link @azure/communication-calling#Transfer.state}.
+   */
+  state: TransferState;
+  /**
+   * Proxy of {@Link @azure/communication-calling#Transfer.error}.
+   */
+  error?: TransferErrorCode;
+}
+
+/**
+ * Holds all the state found in {@Link @azure/communication-calling#TransferCallFeature} and
+ * {@Link @azure/communication-calling#Transfer}. At the time of writing Transfer Call is experimental. Not tested and
+ * not ready for consumption.
+ */
+export interface TransferCallFeature {
+  /**
+   * These are requests received in the {@Link @azure/communication-calling#TransferCallFeature}'s 'transferRequested'
+   * event. Only MAX_TRANSFER_REQUEST_LENGTH number of TransferRequest are kept in this array with the older ones being
+   * replaced by newer ones. To accept/reject a transfer request, the {@Link @azure/communication-calling#Call} must be
+   * used (TODO: do we want to provide an API?).
+   */
+  receivedTransferRequests: TransferRequest[];
+  /**
+   * These are requests initiated by the local user using {@Link DeclarativeCallClient.transfer}. Only
+   * MAX_TRANSFER_REQUEST_LENGTH number of TransferRequest are kept in this array with the older ones being replaced by
+   * newer ones.
+   */
+  requestedTransfers: Transfer[];
+}
 
 /**
  * State only version of {@Link @azure/communication-calling#CallAgent} except calls is moved to be a child directly of
@@ -150,7 +207,7 @@ export interface RemoteParticipant {
 }
 
 /**
- * State only version of {@Link @azure/communication-calling#Call}. RemoteParticipants is a .
+ * State only version of {@Link @azure/communication-calling#Call}.
  */
 export interface Call {
   /**
@@ -187,12 +244,12 @@ export interface Call {
   localVideoStreams: LocalVideoStream[];
   /**
    * Proxy of {@Link @azure/communication-calling#Call.remoteParticipants}. Map of identifier
-   * {@Link Converter.getRemoteParticipantKey} to {@Link @azure/communication-calling#RemoteParticipant}
+   * {@Link Converter.getRemoteParticipantKey} to {@Link RemoteParticipant}
    */
   remoteParticipants: Map<string, RemoteParticipant>;
   /**
    * Stores remote participants that have left the call so that the callEndReason could be retrieved. Map of identifier
-   * {@Link Converter.getRemoteParticipantKey} to {@Link @azure/communication-calling#RemoteParticipant}
+   * {@Link Converter.getRemoteParticipantKey} to {@Link RemoteParticipant}
    */
   remoteParticipantsEnded: Map<string, RemoteParticipant>;
   /**
@@ -203,6 +260,11 @@ export interface Call {
    * Proxy of {@Link @azure/communication-calling#RecordingCallFeature}.
    */
   recording: RecordingCallFeature;
+  /**
+   * Proxy of {@Link @azure/communication-calling#TransferCallFeature} with some differences see
+   * {@Link TransferCallFeature} for details.
+   */
+  transfer: TransferCallFeature;
   /**
    * Stores the local date when the call started on the client. This is not originally in the SDK but provided by the
    * Declarative layer.
@@ -291,7 +353,8 @@ export interface CallClientState {
   calls: Map<string, Call>;
   /**
    * Calls that have ended are stored here so the callEndReason could be checked. It is an array of Call {@Link Call}.
-   * Calls are pushed on to the array as they end, meaning this is sorted by endTime ascending.
+   * Calls are pushed on to the array as they end, meaning this is sorted by endTime ascending. Only
+   * MAX_CALL_HISTORY_LENGTH number of Calls are kept in this array with the older ones being replaced by newer ones.
    */
   callsEnded: Call[];
   /**
@@ -304,7 +367,8 @@ export interface CallClientState {
    * Incoming Calls that have ended are stored here so the callEndReason could be checked. It is a array of IncomingCall
    * {@Link IncomingCall} received in the event 'incomingCall' emitted by
    * {@Link @azure/communication-calling#CallAgent}. IncomingCalls are pushed on to the array as they end, meaning this
-   * is sorted by endTime ascending.
+   * is sorted by endTime ascending. Only MAX_CALL_HISTORY_LENGTH number of IncomingCalls are kept in this array with
+   * the older ones being replaced by newer ones.
    */
   incomingCallsEnded: IncomingCall[];
   /**
