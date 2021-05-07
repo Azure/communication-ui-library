@@ -26,7 +26,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const adapter = useAdapter();
 
   // This code gets all participants who joined the chat earlier than the current user.
-  // We need to do this to make the state in declaritive up to date.
+  // We need to do this to update the adapter's state.
   useEffect(() => {
     adapter.updateAllParticipants();
   }, [adapter]);

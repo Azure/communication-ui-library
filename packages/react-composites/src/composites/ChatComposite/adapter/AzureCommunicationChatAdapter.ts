@@ -17,7 +17,7 @@ export class GroupChatContext {
   constructor(clientState: ChatClientState, threadId: string) {
     const thread = clientState.threads.get(threadId);
     this.threadId = threadId;
-    if (!thread) throw 'Cannot find threadId, please initial thread before use!';
+    if (!thread) throw 'Cannot find threadId, please initialize thread before use!';
     this.state = {
       userId: clientState.userId,
       displayName: clientState.displayName,
@@ -25,13 +25,13 @@ export class GroupChatContext {
     };
   }
 
-  public onStateChange = (handler: (_uiState: GroupChatState) => void): void => {
+  public onStateChange(handler: (_uiState: GroupChatState) => void): void {
     this.emitter.on('stateChanged', handler);
-  };
+  }
 
-  public offStateChange = (handler: (_uiState: GroupChatState) => void): void => {
+  public offStateChange(handler: (_uiState: GroupChatState) => void): void {
     this.emitter.off('stateChanged', handler);
-  };
+  }
 
   public setState(state: GroupChatState): void {
     this.state = state;
