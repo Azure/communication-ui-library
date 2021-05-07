@@ -1,13 +1,9 @@
-import React, { useState } from 'react';
 import { FluentThemeProvider, MessageThread, SendBox, MessageThreadProps, SendBoxProps } from '@azure/communication-ui';
-import { chatClientDeclaratify, DeclarativeChatClient } from '@azure/acs-chat-declarative';
-import { AzureCommunicationUserCredential } from '@azure/communication-common';
-import { ChatClient, ChatThreadClient } from '@azure/communication-chat';
-import { sendBoxSelector, chatThreadSelector, createDefaultHandlersForComponent } from '@azure/acs-chat-selector';
+import React, { useState } from 'react';
 
-function App() {
-  const [messageThreadProps, setChatThreadProps] = useState<MessageThreadProps>();
-  const [sendBoxProps, setSendBoxProps] = useState<SendBoxProps>();
+function App(): JSX.Element {
+  const [messageThreadProps] = useState<MessageThreadProps>();
+  const [sendBoxProps] = useState<SendBoxProps>();
 
   return (
     <FluentThemeProvider>

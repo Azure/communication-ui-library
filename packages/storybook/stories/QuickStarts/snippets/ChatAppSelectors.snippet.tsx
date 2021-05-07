@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { FluentThemeProvider, MessageThread, SendBox, MessageThreadProps, SendBoxProps } from '@azure/communication-ui';
 import { chatClientDeclaratify, DeclarativeChatClient } from '@azure/acs-chat-declarative';
-import { AzureCommunicationUserCredential } from '@azure/communication-common';
+import { sendBoxSelector, chatThreadSelector } from '@azure/acs-chat-selector';
 import { ChatClient, ChatThreadClient } from '@azure/communication-chat';
-import { sendBoxSelector, chatThreadSelector, createDefaultHandlersForComponent } from '@azure/acs-chat-selector';
+import { AzureCommunicationUserCredential } from '@azure/communication-common';
+import { FluentThemeProvider, MessageThread, SendBox, MessageThreadProps, SendBoxProps } from '@azure/communication-ui';
+import React, { useState, useEffect } from 'react';
 
-function App() {
+function App(): JSX.Element {
   const endpointUrl = 'INSERT ENDPOINT URL FOR RESOURCE';
   const userAccessToken = 'INSERT ACCESS TOKEN FOR RESOURCE';
   const userId = 'INSERT USER ID';
@@ -21,7 +21,7 @@ function App() {
   useEffect(() => {
     // `selectors` compute props from `statefulChatClient`
     // Computed props are updated in you App's State.
-    const updateAppState = (statefulClientState) => {
+    const updateAppState = (statefulClientState): void => {
       setChatThreadProps(chatThreadSelector(statefulClientState, { threadId }));
       setSendBoxProps(sendBoxSelector(statefulClientState, { threadId }));
     };
@@ -37,7 +37,7 @@ function App() {
     })();
     // Important: Ensure that events are unsubscribed when component unloads.
     return () => statefulChatClient.offStateChange(updateAppState);
-  }, [statefulChatClient]);
+  }, [statefulChatClient, chatThreadClient]);
 
   //Add state to the low-level chat client
   setStatefulChatClient(

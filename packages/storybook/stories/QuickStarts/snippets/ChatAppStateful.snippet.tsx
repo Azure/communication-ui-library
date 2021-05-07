@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { FluentThemeProvider, MessageThread, SendBox, MessageThreadProps, SendBoxProps } from '@azure/communication-ui';
 import { chatClientDeclaratify, DeclarativeChatClient } from '@azure/acs-chat-declarative';
-import { AzureCommunicationUserCredential } from '@azure/communication-common';
 import { ChatClient, ChatThreadClient } from '@azure/communication-chat';
+import { AzureCommunicationUserCredential } from '@azure/communication-common';
+import { FluentThemeProvider, MessageThread, SendBox, MessageThreadProps, SendBoxProps } from '@azure/communication-ui';
+import React, { useState, useEffect } from 'react';
 
-function App() {
+function App(): JSX.Element {
   const endpointUrl = 'INSERT ENDPOINT URL FOR RESOURCE';
   const userAccessToken = 'INSERT ACCESS TOKEN FOR RESOURCE';
   const userId = 'INSERT USER ID';
@@ -14,8 +14,8 @@ function App() {
 
   const [statefulChatClient, setStatefulChatClient] = useState<DeclarativeChatClient>();
   const [chatThreadClient, setChatThreadClient] = useState<ChatThreadClient>();
-  const [messageThreadProps, setChatThreadProps] = useState<MessageThreadProps>();
-  const [sendBoxProps, setSendBoxProps] = useState<SendBoxProps>();
+  const [messageThreadProps] = useState<MessageThreadProps>();
+  const [sendBoxProps] = useState<SendBoxProps>();
 
   useEffect(() => {
     (async () => {
@@ -24,7 +24,7 @@ function App() {
         setChatThreadClient(await statefulChatClient.getChatThreadClient(threadId));
       }
     })();
-  }, [statefulChatClient]);
+  }, [statefulChatClient, chatThreadClient]);
 
   //Add state to the low-level chat client
   setStatefulChatClient(
