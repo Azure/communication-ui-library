@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { ChatClient } from '@azure/communication-chat';
-import { AzureCommunicationUserCredential } from '@azure/communication-common';
+import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { CommunicationIdentityClient } from '@azure/communication-identity';
 import { text } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
@@ -36,25 +36,30 @@ const messageArray = [
   'Have fun!'
 ];
 
-const createUser = async (resourceConnectionString: string): Promise<{ userId: string; token: string }> => {
+const createUser = async (
+  resourceConnectionString: string
+): Promise<{ user: CommunicationUserIdentifier; token: string }> => {
   if (!resourceConnectionString) {
     throw new Error('No ACS connection string provided');
   }
 
   const tokenClient = new CommunicationIdentityClient(resourceConnectionString);
   const user = await tokenClient.createUser();
-  const token = await tokenClient.issueToken(user, ['chat']);
-  return { userId: token.user.communicationUserId, token: token.token };
+  const token = await tokenClient.getToken(user, ['chat']);
+  return { user: user, token: token.token };
 };
 
 const createChatClient = (token: string, envUrl: string): ChatClient => {
-  const userAccessTokenCredential = new AzureCommunicationUserCredential(token);
-  return new ChatClient(envUrl, userAccessTokenCredential);
+  return new ChatClient(envUrl, new AzureCommunicationTokenCredential(token));
 };
 
-const createMessageBot = async (token: string, envUrl: string, threadId: string, userId: string): Promise<void> => {
-  const userAccessTokenCredential = new AzureCommunicationUserCredential(token);
-  const chatClient = new ChatClient(envUrl, userAccessTokenCredential);
+const createMessageBot = async (
+  token: string,
+  envUrl: string,
+  threadId: string,
+  user: CommunicationUserIdentifier
+): Promise<void> => {
+  const chatClient = new ChatClient(envUrl, new AzureCommunicationTokenCredential(token));
   const threadClient = await chatClient.getChatThreadClient(threadId);
 
   let index = 0;
@@ -63,7 +68,7 @@ const createMessageBot = async (token: string, envUrl: string, threadId: string,
     'Bot Configuration: ' +
       JSON.stringify(
         {
-          userId,
+          user,
           token,
           endpointUrl: envUrl,
           displayName: 'TestBot',
@@ -90,19 +95,15 @@ const createChatConfig = async (resourceConnectionString: string): Promise<ChatC
   const bot = await createUser(resourceConnectionString);
 
   const endpointUrl = new URL(resourceConnectionString.replace('endpoint=', '').split(';')[0]).toString();
-  const userAccessTokenCredential = new AzureCommunicationUserCredential(user.token);
-  const chatClient = new ChatClient(endpointUrl, userAccessTokenCredential);
+  const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(user.token));
 
-  const threadId =
-    (
-      await chatClient.createChatThread({
-        participants: [{ user: { communicationUserId: user.userId } }, { user: { communicationUserId: bot.userId } }],
-        topic: 'DemoThread'
-      })
-    ).chatThread?.id ?? '';
+  const threadId = (await chatClient.createChatThread({ topic: 'DemoThread' })).chatThread?.id ?? '';
+  await chatClient.getChatThreadClient(threadId).addParticipants({
+    participants: [{ id: user.user }, { id: bot.user }]
+  });
   console.log(`threadId: ${threadId}`);
 
-  createMessageBot(bot.token, endpointUrl, threadId, bot.userId);
+  createMessageBot(bot.token, endpointUrl, threadId, bot.user);
 
   return {
     token: user.token,
