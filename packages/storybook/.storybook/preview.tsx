@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
-import { FluentThemeProvider } from 'react-components';;
+import { FluentThemeProvider } from '@azure/communication-react';
 import { initializeIcons, loadTheme, mergeStyles } from '@fluentui/react';
 import { DocsContainer } from '@storybook/addon-docs/blocks';
 import { BackToTop, TableOfContents } from 'storybook-docs-toc';
