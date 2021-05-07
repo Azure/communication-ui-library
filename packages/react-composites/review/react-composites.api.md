@@ -508,9 +508,9 @@ export interface GroupCallAdapter {
     // (undocumented)
     onStateChange(handler: (state: GroupCallState) => void): void;
     // (undocumented)
-    queryCameras(): Promise<void>;
+    queryCameras(): Promise<VideoDeviceInfo[]>;
     // (undocumented)
-    queryMicrophones(): Promise<void>;
+    queryMicrophones(): Promise<AudioDeviceInfo[]>;
     // (undocumented)
     setCamera(source: VideoDeviceInfo): Promise<void>;
     // (undocumented)
@@ -529,12 +529,6 @@ export interface GroupCallAdapter {
     stopRenderVideo(callId: string, stream: LocalVideoStream | RemoteVideoStream): void;
     // (undocumented)
     stopScreenShare(): Promise<void>;
-    // (undocumented)
-    toggleCameraOnOff(): Promise<void>;
-    // (undocumented)
-    toggleMute(): Promise<void>;
-    // (undocumented)
-    toggleScreenShare(): Promise<void>;
     // (undocumented)
     unmute(): Promise<void>;
 }
