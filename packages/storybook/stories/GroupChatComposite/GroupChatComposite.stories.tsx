@@ -5,7 +5,7 @@ import { text } from '@storybook/addon-knobs';
 import { getDocs } from './GroupChatCompositeDocs';
 import { ChatConfig, GroupChat as GroupChatComposite } from 'react-composites';
 import { AzureCommunicationUserCredential } from '@azure/communication-common';
-import { CommunicationIdentityClient } from '@azure/communication-administration';
+import { CommunicationIdentityClient } from '@azure/communication-identity';
 import { ChatClient } from '@azure/communication-chat';
 import { useState } from 'react';
 import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE, COMPOSITE_FOLDER_PREFIX } from '../constants';

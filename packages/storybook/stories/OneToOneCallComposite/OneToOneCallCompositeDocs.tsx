@@ -7,7 +7,7 @@ import { OneToOneCall } from 'react-composites';
 const importStatement = `
 import { OneToOneCall } from 'react-composites';
 import { Provider, teamsTheme } from '@fluentui/react-northstar';
-import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-administration';
+import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-identity';
 `;
 
 const exampleCode = `

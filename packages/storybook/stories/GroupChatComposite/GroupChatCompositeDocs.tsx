@@ -6,7 +6,7 @@ import React from 'react';
 const importStatement = `import { GroupChat } from 'react-composites';`;
 const usageCode = `import { GroupChat } from 'react-composites';
 import { AzureCommunicationUserCredential } from '@azure/communication-common';
-import { CommunicationIdentityClient } from "@azure/communication-administration";
+import { CommunicationIdentityClient } from "@azure/communication-identity";
 import { ChatClient } from '@azure/communication-chat';
 import ReactDOM from 'react-dom';
 

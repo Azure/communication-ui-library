@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
 import { Meta } from '@storybook/react/types-6-0';
 import { text } from '@storybook/addon-knobs';
-import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-administration';
+import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-identity';
 import { getDocs } from './OneToOneCallCompositeDocs';
 import { OneToOneCall as OneToOneCallComposite } from 'react-composites';
 import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE, COMPOSITE_FOLDER_PREFIX } from '../constants';
