@@ -7,7 +7,7 @@ import { ChatComposite } from 'react-composites';
 const importStatement = `import { ChatComposite } from 'react-composites';`;
 const usageCode = `import { ChatComposite } from 'react-composites';
 import { AzureCommunicationUserCredential } from '@azure/communication-common';
-import { CommunicationIdentityClient } from "@azure/communication-administration";
+import { CommunicationIdentityClient } from "@azure/communication-identity";
 import { ChatClient } from '@azure/communication-chat';
 import ReactDOM from 'react-dom';
 

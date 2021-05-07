@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CommunicationIdentityClient } from '@azure/communication-administration';
 import { ChatClient } from '@azure/communication-chat';
 import { AzureCommunicationUserCredential } from '@azure/communication-common';
+import { CommunicationIdentityClient } from '@azure/communication-identity';
 import { text } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState, useEffect } from 'react';
