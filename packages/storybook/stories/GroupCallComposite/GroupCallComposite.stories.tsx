@@ -34,10 +34,9 @@ const createUserToken = async (connectionString: string): Promise<CommunicationU
   }
 
   const tokenClient = new CommunicationIdentityClient(connectionString);
-  const user = await tokenClient.createUser();
-  const token = await tokenClient.issueToken(user, ['voip']);
+  const userToken = await tokenClient.createUserAndToken(['voip']);
 
-  return token;
+  return userToken;
 };
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.

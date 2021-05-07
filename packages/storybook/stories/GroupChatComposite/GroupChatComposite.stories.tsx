@@ -43,9 +43,8 @@ const createUser = async (resourceConnectionString: string): Promise<{ userId: s
   }
 
   const tokenClient = new CommunicationIdentityClient(resourceConnectionString);
-  const user = await tokenClient.createUser();
-  const token = await tokenClient.issueToken(user, ['chat']);
-  return { userId: token.user.communicationUserId, token: token.token };
+  const userToken = await tokenClient.createUserAndToken(['chat']);
+  return { userId: userToken.user.communicationUserId, token: userToken.token };
 };
 
 const createChatClient = (token: string, envUrl: string): ChatClient => {
