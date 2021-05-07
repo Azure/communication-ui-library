@@ -10,6 +10,7 @@ import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
 import { MessageStatus } from '@azure/acs-chat-declarative';
+import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
 import * as reselect from 'reselect';
 import { TypingIndicator } from '@azure/acs-chat-declarative';
@@ -21,6 +22,15 @@ export type BaseSelectorProps = {
 
 // @public (undocumented)
 export type CallbackType<KeyT, ArgsT extends any[], FnRetT> = (memoizedFn: FunctionWithKey<KeyT, ArgsT, FnRetT>) => FnRetT[];
+
+// @public
+export const ChatClientProvider: (props: ChatClientProviderProps) => JSX.Element;
+
+// @public (undocumented)
+export type ChatClientProviderProps = {
+    children: React_2.ReactNode;
+    chatClient: DeclarativeChatClient;
+};
 
 // @public (undocumented)
 export type ChatMessage = Message<'chat'>;
@@ -49,6 +59,15 @@ export const chatParticipantListSelector: reselect.OutputParametricSelector<Chat
     chatParticipants: WebUiChatParticipant[];
 }>;
 
+// @public
+export const ChatThreadClientProvider: (props: ChatThreadClientProviderProps) => JSX.Element;
+
+// @public (undocumented)
+export type ChatThreadClientProviderProps = {
+    children: React_2.ReactNode;
+    chatThreadClient: ChatThreadClient;
+};
+
 // @public (undocumented)
 export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
     userId: string;
@@ -64,6 +83,9 @@ export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientSta
 export type CommonProperties<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? (A[P] extends B[P] ? P : never) : never;
 }[keyof A & keyof B];
+
+// @public (undocumented)
+export const createDefaultHandlers: (chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient) => DefaultHandlers;
 
 // @public (undocumented)
 export const createDefaultHandlersForComponent: <Props>(chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultHandlers, CommonProperties<DefaultHandlers, Props>>;
@@ -137,6 +159,24 @@ export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClie
 }, (res1: TypingIndicator[], res2: Map<string, ChatParticipant>, res3: string) => {
     typingUsers: WebUiChatParticipant[];
 }>;
+
+// @public (undocumented)
+export const useChatClient: () => DeclarativeChatClient;
+
+// @public (undocumented)
+export const useChatThreadClient: () => ChatThreadClient;
+
+// @public (undocumented)
+export const useHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Pick<DefaultHandlers, CommonProperties<DefaultHandlers, PropsT>>;
+
+// @public (undocumented)
+export const usePropsFor: <SelectorT extends (state: ChatClientState, props: any) => any>(component: React_2.FunctionComponent<any>) => ReturnType<SelectorT>;
+
+// @public (undocumented)
+export const useSelector: <SelectorT extends (state: ChatClientState, props: any) => any>(selector: SelectorT, selectorProps?: Parameters<SelectorT>[1] | undefined) => ReturnType<SelectorT>;
+
+// @public (undocumented)
+export const useThreadId: () => string;
 
 // @public (undocumented)
 export type WebUiChatParticipant = {
