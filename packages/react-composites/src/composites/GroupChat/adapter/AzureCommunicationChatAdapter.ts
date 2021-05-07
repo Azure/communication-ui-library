@@ -6,7 +6,6 @@ import { DefaultHandlers, createDefaultHandlers } from '@azure/acs-chat-selector
 import { ChatClient, ChatMessage, ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
 import EventEmitter from 'events';
 import { createAzureCommunicationUserCredentialBeta, getIdFromToken } from '../../../utils';
-// import { createAzureCommunicationUserCredentialBeta, getIdFromToken } from '../../..';
 import { GroupChatAdapter, GroupChatEvent, GroupChatState } from './GroupChatAdapter';
 
 // Context of GroupChat, which is a centralized context for all state updates
@@ -58,7 +57,7 @@ export class GroupChatContext {
   }
 }
 
-export class AzureChatAdapter implements GroupChatAdapter {
+export class AzureCommunicationChatAdapter implements GroupChatAdapter {
   private chatClient: DeclarativeChatClient;
   private chatThreadClient: ChatThreadClient;
   private context: GroupChatContext;
@@ -82,7 +81,7 @@ export class AzureChatAdapter implements GroupChatAdapter {
     this.chatClient.onStateChange(onStateChange);
   }
 
-  fetchAllParticipants = async (): Promise<void> => {
+  updateAllParticipants = async (): Promise<void> => {
     try {
       for await (const _page of this.chatThreadClient.listParticipants().byPage({
         // Fetch 100 participants per page by default.
@@ -121,7 +120,7 @@ export class AzureChatAdapter implements GroupChatAdapter {
     await this.handlers.removeThreadMember(userId);
   };
 
-  updateThreadTopicName = async (topicName: string): Promise<void> => {
+  updateTopicName = async (topicName: string): Promise<void> => {
     await this.handlers.updateThreadTopicName(topicName);
   };
 
@@ -140,13 +139,13 @@ export class AzureChatAdapter implements GroupChatAdapter {
   }
 }
 
-export const createAzureChatAdapter = async (
+export const createAzureCommunicationChatAdapter = async (
   token: string,
   endpointUrl: string,
   threadId: string,
   displayName: string,
   refreshTokenCallback?: (() => Promise<string>) | undefined
-): Promise<AzureChatAdapter> => {
+): Promise<AzureCommunicationChatAdapter> => {
   const userId = getIdFromToken(token);
 
   const chatClient = chatClientDeclaratify(
@@ -157,6 +156,6 @@ export const createAzureChatAdapter = async (
 
   chatClient.startRealtimeNotifications();
 
-  const adapter = new AzureChatAdapter(chatClient, chatThreadClient);
+  const adapter = new AzureCommunicationChatAdapter(chatClient, chatThreadClient);
   return adapter;
 };

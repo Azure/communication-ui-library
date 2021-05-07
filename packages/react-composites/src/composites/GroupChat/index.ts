@@ -2,7 +2,10 @@
 // Licensed under the MIT license.
 
 import GroupChat from './GroupChat';
-import { createAzureChatAdapter } from './adapter/AzureChatAdapter';
+export {
+  AzureCommunicationChatAdapter,
+  createAzureCommunicationChatAdapter
+} from './adapter/AzureCommunicationChatAdapter';
 
-export type { GroupChatAdapter } from './adapter/GroupChatAdapter';
-export { GroupChat, createAzureChatAdapter };
+export type { GroupChatState } from './adapter/GroupChatAdapter';
+export { GroupChat };
