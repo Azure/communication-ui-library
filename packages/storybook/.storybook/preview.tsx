@@ -44,6 +44,10 @@ export const parameters = {
         'Styling',
         'Theming',
         'Localization',
+        QUICKSTARTS_FOLDER_PREFIX,
+        COMPOSITE_FOLDER_PREFIX,
+        EXAMPLES_FOLDER_PREFIX,
+        COMPONENT_FOLDER_PREFIX,
         STATEFUL_CLIENT_PREFIX,
         [
           'What is it',
@@ -52,11 +56,7 @@ export const parameters = {
           'Selectors',
           'FAQ',
           'Reference'
-        ],
-        QUICKSTARTS_FOLDER_PREFIX,
-        COMPOSITE_FOLDER_PREFIX,
-        COMPONENT_FOLDER_PREFIX,
-        EXAMPLES_FOLDER_PREFIX
+        ]
       ]
     }
   }
