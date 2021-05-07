@@ -9,7 +9,7 @@ import {
   CameraButton,
   MicrophoneButton,
   FluentThemeProvider
-} from 'react-components';
+} from '@azure/communication-react';
 import { renderVideoStream } from '../../../utils';
 
 export interface LocalPreviewProps {

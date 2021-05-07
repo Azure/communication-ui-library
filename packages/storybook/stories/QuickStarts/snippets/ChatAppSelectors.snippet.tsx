@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { FluentThemeProvider, MessageThread, SendBox, MessageThreadProps, SendBoxProps } from '@azure/communication-ui';
 import { chatClientDeclaratify, DeclarativeChatClient } from '@azure/acs-chat-declarative';
-import { AzureCommunicationUserCredential } from '@azure/communication-common';
-import { ChatClient, ChatThreadClient } from '@azure/communication-chat';
 import { sendBoxSelector, chatThreadSelector, createDefaultHandlersForComponent } from '@azure/acs-chat-selector';
+import { ChatClient, ChatThreadClient } from '@azure/communication-chat';
+import { AzureCommunicationUserCredential } from '@azure/communication-common';
+import { FluentThemeProvider, MessageThread, SendBox, MessageThreadProps, SendBoxProps } from '@azure/communication-ui';
+import React, { useState, useEffect } from 'react';
 
 function App() {
   const endpointUrl = 'INSERT ENDPOINT URL FOR RESOURCE';
