@@ -12,7 +12,7 @@ import { ChatMessageContent, ChatParticipant } from '@azure/communication-chat';
 // @ts-ignore
 import { ChatClientState } from '@azure/acs-chat-declarative';
 // @ts-ignore
-import { BaseSelectorProps } from './baseSelectors';
+import { ChatBaseSelectorProps } from './baseSelectors';
 // @ts-ignore
 import { memoizeFnAll } from './utils/memoizeFnAll';
 // @ts-ignore

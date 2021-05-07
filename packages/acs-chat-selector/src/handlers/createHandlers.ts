@@ -61,11 +61,11 @@ const createDefaultHandlers = memoizeOne(
   }
 );
 
-export type CommonProperties<A, B> = {
+export type ChatCommonProperties<A, B> = {
   [P in keyof A & keyof B]: A[P] extends B[P] ? (A[P] extends B[P] ? P : never) : never;
 }[keyof A & keyof B];
 
-type Common<A, B> = Pick<A, CommonProperties<A, B>>;
+type Common<A, B> = Pick<A, ChatCommonProperties<A, B>>;
 
 // These could be shared functions between Chat and Calling
 export const defaultHandlerCreator = (chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient) => <Props>(
@@ -74,7 +74,7 @@ export const defaultHandlerCreator = (chatClient: DeclarativeChatClient, chatThr
   return createDefaultHandlers(chatClient, chatThreadClient);
 };
 
-export const createDefaultHandlersForComponent = <Props>(
+export const createDefaultChatHandlersForComponent = <Props>(
   chatClient: DeclarativeChatClient,
   chatThreadClient: ChatThreadClient,
   _: (props: Props) => ReactElement | null

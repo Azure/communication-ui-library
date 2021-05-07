@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-export { createDefaultHandlersForComponent } from './handlers/createHandlers';
-export type { BaseSelectorProps } from './baseSelectors';
-export type { CommonProperties } from './handlers/createHandlers';
+export { createDefaultCallingHandlersForComponent } from './handlers/createHandlers';
+export type { CallingBaseSelectorProps } from './baseSelectors';
+export type { CallingCommonProperties } from './handlers/createHandlers';
 export * from './callControlSelectors';

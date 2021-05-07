@@ -4,7 +4,7 @@
 // @ts-ignore
 import { ChatClientState } from '@azure/acs-chat-declarative';
 // @ts-ignore
-import { BaseSelectorProps, getTypingIndicators, getParticipants, getUserId } from './baseSelectors';
+import { ChatBaseSelectorProps, getTypingIndicators, getParticipants, getUserId } from './baseSelectors';
 import * as reselect from 'reselect';
 import { ChatParticipant } from '@azure/communication-chat';
 import { TypingIndicatorEvent } from '@azure/acs-chat-declarative';

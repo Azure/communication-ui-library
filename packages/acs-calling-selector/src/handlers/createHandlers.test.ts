@@ -4,7 +4,7 @@
 import { CallAgent, CallAgentOptions, DeviceManager } from '@azure/communication-calling';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { ReactElement } from 'react';
-import { DefaultHandlers, createDefaultHandlersForComponent } from './createHandlers';
+import { DefaultHandlers, createDefaultCallingHandlersForComponent } from './createHandlers';
 import { DeclarativeCallClient } from '@azure/acs-calling-declarative';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -37,7 +37,7 @@ class MockCallClient {
 
 describe('createHandlers', () => {
   test('creates handlers when only callClient is passed in and others are undefined', async () => {
-    const handlers = createDefaultHandlersForComponent(
+    const handlers = createDefaultCallingHandlersForComponent(
       new MockCallClient() as DeclarativeCallClient,
       undefined,
       undefined,

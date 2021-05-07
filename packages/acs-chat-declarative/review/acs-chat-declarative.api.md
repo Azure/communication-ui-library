@@ -79,9 +79,12 @@ export class ChatContext {
 }
 
 // @public (undocumented)
+export type ChatMessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
+
+// @public (undocumented)
 export type ChatMessageWithStatus = ChatMessage & {
     clientMessageId?: string;
-    status: MessageStatus;
+    status: ChatMessageStatus;
 };
 
 // @public (undocumented)
@@ -111,9 +114,6 @@ export interface DeclarativeChatClient extends ChatClient {
     // (undocumented)
     state: ChatClientState;
 }
-
-// @public (undocumented)
-export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
 
 // @public (undocumented)
 export type TypingIndicatorEvent = Omit<TypingIndicatorReceivedEvent, 'receivedOn'> & {

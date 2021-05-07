@@ -4,9 +4,9 @@
 import { Call, CallClientState, DeviceManager, IncomingCall } from '@azure/acs-calling-declarative';
 
 /**
- * Common props used to reference declarative client state.
+ * Common props used to reference calling declarative client state.
  */
-export type BaseSelectorProps = {
+export type CallingBaseSelectorProps = {
   callId: string;
 };
 
@@ -20,5 +20,5 @@ export const getIncomingCallsEnded = (state: CallClientState): IncomingCall[] =>
 
 export const getDeviceManager = (state: CallClientState): DeviceManager => state.deviceManager;
 
-export const getCall = (state: CallClientState, props: BaseSelectorProps): Call | undefined =>
+export const getCall = (state: CallClientState, props: CallingBaseSelectorProps): Call | undefined =>
   state.calls.get(props.callId);

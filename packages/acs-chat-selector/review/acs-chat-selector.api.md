@@ -16,15 +16,20 @@ import { TypingIndicatorEvent } from '@azure/acs-chat-declarative';
 import { WebUiChatParticipant } from 'react-components';
 
 // @public (undocumented)
-export type BaseSelectorProps = {
+export type CallbackType<KeyT, ArgsT extends any[], FnRetT> = (memoizedFn: FunctionWithKey<KeyT, ArgsT, FnRetT>) => FnRetT[];
+
+// @public (undocumented)
+export type ChatBaseSelectorProps = {
     threadId: string;
 };
 
 // @public (undocumented)
-export type CallbackType<KeyT, ArgsT extends any[], FnRetT> = (memoizedFn: FunctionWithKey<KeyT, ArgsT, FnRetT>) => FnRetT[];
+export type ChatCommonProperties<A, B> = {
+    [P in keyof A & keyof B]: A[P] extends B[P] ? (A[P] extends B[P] ? P : never) : never;
+}[keyof A & keyof B];
 
 // @public (undocumented)
-export const chatParticipantListSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
+export const chatParticipantListSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     userId: string;
     displayName: string;
     chatParticipants: WebUiChatParticipant[];
@@ -35,7 +40,7 @@ export const chatParticipantListSelector: reselect.OutputParametricSelector<Chat
 }>;
 
 // @public (undocumented)
-export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
+export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     userId: string;
     disableReadReceipt: boolean;
     messages: Message<"chat">[];
@@ -46,12 +51,7 @@ export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientSta
 }>;
 
 // @public (undocumented)
-export type CommonProperties<A, B> = {
-    [P in keyof A & keyof B]: A[P] extends B[P] ? (A[P] extends B[P] ? P : never) : never;
-}[keyof A & keyof B];
-
-// @public (undocumented)
-export const createDefaultHandlersForComponent: <Props>(chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultHandlers, CommonProperties<DefaultHandlers, Props>>;
+export const createDefaultChatHandlersForComponent: <Props>(chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultHandlers, ChatCommonProperties<DefaultHandlers, Props>>;
 
 // @public (undocumented)
 export type DefaultHandlers = {
@@ -70,7 +70,7 @@ export type FunctionWithKey<KeyT, ArgsT extends any[], RetT> = (key: KeyT, ...ar
 export const memoizeFnAll: <KeyT, ArgsT extends any[], FnRetT, CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>>(fnToMemoize: FunctionWithKey<KeyT, ArgsT, FnRetT>, shouldCacheUpdate?: (args1: any, args2: any) => boolean) => (callback: CallBackT) => FnRetT[];
 
 // @public (undocumented)
-export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
+export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     displayName: string;
     userId: string;
     disabled: boolean;
@@ -81,7 +81,7 @@ export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState,
 }>;
 
 // @public (undocumented)
-export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
+export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     typingUsers: WebUiChatParticipant[];
 }, (res1: TypingIndicatorEvent[], res2: Map<string, ChatParticipant>, res3: string) => {
     typingUsers: WebUiChatParticipant[];
