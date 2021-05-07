@@ -1,7 +1,8 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import React from 'react';
 import { Stack } from '@fluentui/react';
+import React from 'react';
 
 export const COMPOSITE_STRING_CONNECTIONSTRING = 'Connection String';
 export const COMPOSITE_STRING_REQUIREDCONNECTIONSTRING = 'Connection String is required to run the {0} widget.';

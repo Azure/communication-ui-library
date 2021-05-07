@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 export function createSpyObj<T>(baseName: string, methodNames: (keyof T)[]): jest.Mocked<T> {
   const obj: any = {};

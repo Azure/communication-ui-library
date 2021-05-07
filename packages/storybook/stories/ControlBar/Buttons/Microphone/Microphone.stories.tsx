@@ -1,23 +1,24 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
+import { MicrophoneButton } from '@azure/communication-react';
 import { Canvas, Description, Heading, Props, Source, SourceState, Title } from '@storybook/addon-docs/blocks';
 import { boolean } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { MicrophoneButton } from 'react-components';
 
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
+import { CustomMicrophoneButtonExample } from './snippets/CustomMicrophoneButton.snippet';
 import { MicrophoneButtonExample } from './snippets/MicrophoneButton.snippet';
 import { MicrophoneButtonWithLabelExample } from './snippets/MicrophoneButtonWithLabel.snippet';
-import { CustomMicrophoneButtonExample } from './snippets/CustomMicrophoneButton.snippet';
 
+const CustomMicrophoneButtonExampleText = require('!!raw-loader!./snippets/CustomMicrophoneButton.snippet.tsx').default;
 const MicrophoneButtonExampleText = require('!!raw-loader!./snippets/MicrophoneButton.snippet.tsx').default;
 const MicrophoneButtonWithLabelExampleText = require('!!raw-loader!./snippets/MicrophoneButtonWithLabel.snippet.tsx')
   .default;
-const CustomMicrophoneButtonExampleText = require('!!raw-loader!./snippets/CustomMicrophoneButton.snippet.tsx').default;
 
 const importStatement = `
-import { MicrophoneButton } from 'react-components';
+import { MicrophoneButton } from '@azure/communication-react';
 `;
 
 const getDocs: () => JSX.Element = () => {
@@ -34,7 +35,7 @@ const getDocs: () => JSX.Element = () => {
         The default `MicrophoneButton` component shows a microphone icon with no label. The following example displays
         an unmuted `MicrophoneButton` and a muted `MicrophoneButton`.
       </Description>
-      <Canvas withSource={SourceState.NONE}>
+      <Canvas withSource={SourceState.NONE as any}>
         <MicrophoneButtonExample />
       </Canvas>
       <Source code={MicrophoneButtonExampleText} />
@@ -43,7 +44,7 @@ const getDocs: () => JSX.Element = () => {
       <Description>
         You can display the button label which, by default, will show below the icon as `Mute` or `Unmute`.
       </Description>
-      <Canvas withSource={SourceState.NONE}>
+      <Canvas withSource={SourceState.NONE as any}>
         <MicrophoneButtonWithLabelExample />
       </Canvas>
       <Source code={MicrophoneButtonWithLabelExampleText} />
@@ -53,7 +54,7 @@ const getDocs: () => JSX.Element = () => {
         You can change the styles of the `MicrophoneButton` as you would customized any Button (styles, primary,
         onRenderIcon, onRenderText, etc... ).
       </Description>
-      <Canvas withSource={SourceState.NONE}>
+      <Canvas withSource={SourceState.NONE as any}>
         <CustomMicrophoneButtonExample />
       </Canvas>
       <Source code={CustomMicrophoneButtonExampleText} />

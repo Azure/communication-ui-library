@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { RecordingCallFeature } from '@azure/communication-calling';
 import { CallContext } from './CallContext';

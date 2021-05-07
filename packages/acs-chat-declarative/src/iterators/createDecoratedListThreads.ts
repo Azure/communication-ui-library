@@ -1,4 +1,6 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { ChatThreadItem, ChatClient, RestListChatThreadsOptions } from '@azure/communication-chat';
 import { ChatContext } from '../ChatContext';
 import { createDecoratedIterator } from './createDecoratedIterator';

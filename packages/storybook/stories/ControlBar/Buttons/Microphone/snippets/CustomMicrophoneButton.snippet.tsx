@@ -1,6 +1,6 @@
-import React from 'react';
+import { MicrophoneButton } from '@azure/communication-react';
 import { IButtonProps, Icon, Label, Stack, Text } from '@fluentui/react';
-import { MicrophoneButton } from 'react-components';
+import React from 'react';
 
 export const CustomMicrophoneButtonExample: () => JSX.Element = () => {
   const customOnRenderIcon = (props?: IButtonProps): JSX.Element => {

@@ -1,10 +1,11 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
+import { GridLayout as GridLayoutComponent, VideoTile, StreamMedia } from '@azure/communication-react';
+import { number, object } from '@storybook/addon-knobs';
+import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
-import { Meta } from '@storybook/react/types-6-0';
-import { number, object } from '@storybook/addon-knobs';
-import { getDocs } from './GridLayoutDocs';
 import {
   mediaGalleryWidthDefault,
   mediaGalleryWidthOptions,
@@ -12,8 +13,8 @@ import {
   mediaGalleryHeightOptions,
   COMPONENT_FOLDER_PREFIX
 } from '../constants';
-import { GridLayout as GridLayoutComponent, VideoTile, StreamMedia } from 'react-components';
 import { renderVideoStream } from '../utils';
+import { getDocs } from './GridLayoutDocs';
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.

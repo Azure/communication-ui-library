@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { Description, Heading, Source, Title } from '@storybook/addon-docs/blocks';
 import React from 'react';
@@ -103,7 +104,7 @@ const IncomingCallToast = (props: IncomingCallToastProps): JSX.Element => {
 `;
 
 const exampleIncomingCallModal = `
-import { StreamMedia, VideoTile } from 'react-components';
+import { StreamMedia, VideoTile } from '@azure/communication-react';
 import { DefaultButton, Persona, PersonaSize, Stack, Dialog, DialogType, DialogFooter } from '@fluentui/react';
 import { CallEndIcon, CallIcon, CallVideoIcon, CallVideoOffIcon } from '@fluentui/react-northstar';
 import { getTheme, mergeStyles } from '@fluentui/react';

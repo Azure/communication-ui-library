@@ -1,10 +1,11 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+import { TypingIndicator as TypingIndicatorComponent } from '@azure/communication-react';
 import { object, text, boolean } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
-import { TypingIndicator as TypingIndicatorComponent } from 'react-components';
 import React from 'react';
-import { getDocs } from './TypingIndicatorDocs';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { getDocs } from './TypingIndicatorDocs';
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.
