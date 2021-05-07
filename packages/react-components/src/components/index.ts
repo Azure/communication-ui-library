@@ -57,9 +57,3 @@ export type { ScreenShareButtonProps } from './ScreenShareButton';
 
 export { VideoTile } from './VideoTile';
 export type { VideoTileProps, VideoTileStylesProps, PlaceholderProps } from './VideoTile';
-
-export { ThemeSelector } from './ThemeSelector';
-export type { ThemeSelectorProps } from './ThemeSelector';
-
-export { ThemeToggler } from './ThemeToggler';
-export type { ThemeTogglerProps } from './ThemeToggler';
