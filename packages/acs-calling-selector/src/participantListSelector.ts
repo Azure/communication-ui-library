@@ -60,21 +60,23 @@ export const participantListSelector = reselect.createSelector(
     displayName,
     call
   ): {
-    userId: string;
-    displayName?: string;
-    remoteParticipants?: WebUIParticipant[];
-    isScreenSharingOn?: boolean;
-    isMuted?: boolean;
+    participants: WebUIParticipant[];
+    myUserId: string;
   } => {
-    return {
+    const remoteParticipants =
+      call && call?.remoteParticipants
+        ? convertRemoteParticipantsToWebUIParticipants(Array.from(call?.remoteParticipants.values()))
+        : [];
+    remoteParticipants.push({
       userId: userId,
       displayName: displayName,
-      remoteParticipants:
-        call && call?.remoteParticipants
-          ? convertRemoteParticipantsToWebUIParticipants(Array.from(call?.remoteParticipants.values()))
-          : [],
-      isScreenSharingOn: call?.isScreenSharingOn ?? false,
-      isMuted: call?.isMuted ?? false
+      isScreenSharing: call?.isScreenSharingOn,
+      isMuted: call?.isMuted,
+      state: 'Connected'
+    });
+    return {
+      participants: remoteParticipants,
+      myUserId: userId
     };
   }
 );

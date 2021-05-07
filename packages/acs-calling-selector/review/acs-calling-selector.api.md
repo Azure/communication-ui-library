@@ -97,17 +97,11 @@ export const optionsButtonSelector: reselect.OutputParametricSelector<callingDec
 
 // @public (undocumented)
 export const participantListSelector: reselect.OutputParametricSelector<callingDeclarative.CallClientState, BaseSelectorProps, {
-    userId: string;
-    displayName?: string | undefined;
-    remoteParticipants?: WebUIParticipant[] | undefined;
-    isScreenSharingOn?: boolean | undefined;
-    isMuted?: boolean | undefined;
+    participants: WebUIParticipant[];
+    myUserId: string;
 }, (res1: string, res2: string | undefined, res3: callingDeclarative.Call | undefined) => {
-    userId: string;
-    displayName?: string | undefined;
-    remoteParticipants?: WebUIParticipant[] | undefined;
-    isScreenSharingOn?: boolean | undefined;
-    isMuted?: boolean | undefined;
+    participants: WebUIParticipant[];
+    myUserId: string;
 }>;
 
 // @public (undocumented)

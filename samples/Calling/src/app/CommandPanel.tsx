@@ -32,7 +32,7 @@ export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
 
   const onRenderParticipantMenu = (participant: WebUIParticipant): IContextualMenuItem[] => {
     const menuItems: IContextualMenuItem[] = [];
-    if (participant.userId !== participantListProps.userId) {
+    if (participant.userId !== participantListProps.myUserId) {
       menuItems.push({
         key: 'Remove',
         text: 'Remove',
