@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { Label, Spinner, Stack } from '@fluentui/react';
 import React, { useEffect } from 'react';

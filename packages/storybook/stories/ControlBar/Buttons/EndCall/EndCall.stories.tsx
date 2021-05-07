@@ -1,19 +1,20 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
+import { EndCallButton } from '@azure/communication-react';
 import { Canvas, Description, Heading, Props, Source, SourceState, Title } from '@storybook/addon-docs/blocks';
 import { boolean } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { EndCallButton } from '@azure/communication-react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
+import { EndCallButtonCustomExample } from './snippets/Custom.snippet';
 import { EndCallButtonDefaultExample } from './snippets/Default.snippet';
 import { EndCallButtonWithLabelExample } from './snippets/WithLabel.snippet';
-import { EndCallButtonCustomExample } from './snippets/Custom.snippet';
 
+const EndCallButtonCustomExampleText = require('!!raw-loader!./snippets/Custom.snippet.tsx').default;
 const EndCallButtonDefaultExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
 const EndCallButtonWithLabelExampleText = require('!!raw-loader!./snippets/WithLabel.snippet.tsx').default;
-const EndCallButtonCustomExampleText = require('!!raw-loader!./snippets/Custom.snippet.tsx').default;
 
 const importStatement = `
 import { EndCallButton, FluentThemeProvider } from '@azure/communication-react';
@@ -32,7 +33,7 @@ const getDocs: () => JSX.Element = () => {
       <Description>
         The default `EndCallButton` component shows a hangup icon with no label as in the example below.
       </Description>
-      <Canvas withSource={SourceState.NONE}>
+      <Canvas withSource={SourceState.NONE as any}>
         <EndCallButtonDefaultExample />
       </Canvas>
       <Source code={EndCallButtonDefaultExampleText} />
@@ -41,7 +42,7 @@ const getDocs: () => JSX.Element = () => {
       <Description>
         You can display the button label which, by default, will show below the icon as `Hangup`.
       </Description>
-      <Canvas withSource={SourceState.NONE}>
+      <Canvas withSource={SourceState.NONE as any}>
         <EndCallButtonWithLabelExample />
       </Canvas>
       <Source code={EndCallButtonWithLabelExampleText} />
@@ -51,7 +52,7 @@ const getDocs: () => JSX.Element = () => {
         You can change the styles of the `EndCallButton` as you would customized any Button (styles, primary,
         onRenderIcon, onRenderText, etc... ).
       </Description>
-      <Canvas withSource={SourceState.NONE}>
+      <Canvas withSource={SourceState.NONE as any}>
         <EndCallButtonCustomExample />
       </Canvas>
       <Source code={EndCallButtonCustomExampleText} />

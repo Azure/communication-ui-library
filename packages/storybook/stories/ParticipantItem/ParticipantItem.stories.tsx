@@ -1,14 +1,15 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import React from 'react';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
-import { Meta } from '@storybook/react/types-6-0';
-import { boolean, text } from '@storybook/addon-knobs';
 import { ParticipantItem as ParticipantItemComponent } from '@azure/communication-react';
-import { getDocs } from './ParticipantItemDocs';
 import { Stack } from '@fluentui/react';
 import { MicOffIcon, CallControlPresentNewIcon } from '@fluentui/react-northstar';
+import { boolean, text } from '@storybook/addon-knobs';
+import { Meta } from '@storybook/react/types-6-0';
+import React from 'react';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { getDocs } from './ParticipantItemDocs';
 
 const onlyUnique = (value: string, index: number, self: string[]): boolean => {
   return self.indexOf(value) === index;

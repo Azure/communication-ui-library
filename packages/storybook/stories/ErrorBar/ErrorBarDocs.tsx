@@ -1,8 +1,9 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import React from 'react';
-import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import { ErrorBar } from '@azure/communication-react';
+import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
+import React from 'react';
 import { ErrorBarExample } from './snippets/ErrorBar.snippet';
 import { OtherSeverityErrorBarExample } from './snippets/OtherSeverityErrorBar.snippet';
 

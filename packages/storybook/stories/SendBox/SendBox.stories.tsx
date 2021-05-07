@@ -1,11 +1,12 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import React from 'react';
-import { boolean, text } from '@storybook/addon-knobs';
-import { getDocs } from './SendBoxDocs';
 import { SendBox as SendBoxComponent } from '@azure/communication-react';
-import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { boolean, text } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
+import React from 'react';
+import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { getDocs } from './SendBoxDocs';
 
 export default {
   title: `${COMPONENT_FOLDER_PREFIX}/Send Box`,
