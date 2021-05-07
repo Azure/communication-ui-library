@@ -6,7 +6,7 @@ export { sendBoxSelector } from './sendBoxSelector';
 export { chatParticipantListSelector } from './chatParticipantListSelector';
 export { typingIndicatorSelector } from './typingIndicatorSelector';
 
-export { createDefaultHandlersForComponent } from './handlers/createHandlers';
+export { createDefaultHandlersForComponent, createDefaultHandlers } from './handlers/createHandlers';
 export type {
   ChatMessagePayload,
   SystemMessagePayload,
