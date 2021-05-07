@@ -1,7 +1,12 @@
 // © Microsoft Corporation. All rights reserved.
-import { getChatMessages, getIsLargeGroup, getLatestReadTime, getUserId } from './baseSelectors';
+import {
+  communicationIdentifierToString,
+  getChatMessages,
+  getIsLargeGroup,
+  getLatestReadTime,
+  getUserId
+} from './baseSelectors';
 import { ChatMessageWithStatus } from '@azure/acs-chat-declarative';
-import { CommunicationIdentifierKind } from '@azure/communication-common';
 // The following need explicitly imported to avoid api-extractor issues.
 // These can be removed once https://github.com/microsoft/rushstack/pull/1916 is fixed.
 // @ts-ignore
@@ -25,7 +30,7 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
   (
     _key: string,
     chatMessage: ChatMessageWithStatus,
-    userId: CommunicationIdentifierKind,
+    userId: string,
     isSeen: boolean,
     isLargeGroup: boolean
   ): ChatMessage => ({
@@ -35,7 +40,7 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
       content: chatMessage.content?.message,
       status: !isLargeGroup && chatMessage.status === 'delivered' && isSeen ? 'seen' : chatMessage.status,
       senderDisplayName: chatMessage.senderDisplayName,
-      senderId: chatMessage.sender ?? userId,
+      senderId: communicationIdentifierToString(chatMessage.sender) ?? userId,
       messageId: chatMessage.id,
       clientMessageId: chatMessage.clientMessageId
     }
@@ -69,10 +74,7 @@ export const chatThreadSelector = createSelector(
   }
 );
 
-export const updateMessagesWithAttached = (
-  chatMessagesWithStatus: ChatMessage[],
-  userId: CommunicationIdentifierKind
-): void => {
+export const updateMessagesWithAttached = (chatMessagesWithStatus: ChatMessage[], userId: string): void => {
   chatMessagesWithStatus.sort(compareMessages);
 
   chatMessagesWithStatus.forEach((message, index, messages) => {

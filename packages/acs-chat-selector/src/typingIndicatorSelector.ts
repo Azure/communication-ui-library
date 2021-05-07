@@ -4,13 +4,8 @@
 import { ChatClientState } from '@azure/acs-chat-declarative';
 import { CommunicationIdentifierAsKey, communicationIdentifierAsKey } from '@azure/acs-chat-declarative';
 // @ts-ignore
-import {
-  BaseSelectorProps,
-  communicationIdentifierToString,
-  getTypingIndicators,
-  getParticipants,
-  getUserId
-} from './baseSelectors';
+import { BaseSelectorProps } from './baseSelectors';
+import { communicationIdentifierToString, getTypingIndicators, getParticipants, getUserId } from './baseSelectors';
 import * as reselect from 'reselect';
 import { ChatParticipant } from '@azure/communication-chat';
 import { TypingIndicator } from '@azure/acs-chat-declarative';
