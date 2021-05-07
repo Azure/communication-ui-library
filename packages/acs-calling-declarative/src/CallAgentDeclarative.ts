@@ -120,11 +120,11 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
     const declarativeCall = this._declarativeCalls.get(call);
     if (declarativeCall) {
       return declarativeCall;
-    } else {
-      const declarativeCall = callDeclaratify(call, this._context);
-      this._declarativeCalls.set(call, declarativeCall as DeclarativeCall);
-      return declarativeCall;
     }
+
+    const newDeclarativeCall = callDeclaratify(call, this._context);
+    this._declarativeCalls.set(call, newDeclarativeCall as DeclarativeCall);
+    return newDeclarativeCall;
   };
 
   public get<P extends keyof CallAgent>(target: CallAgent, prop: P): any {
