@@ -12,10 +12,9 @@ import { Footer } from './Footer';
 import { LocalDeviceSettings } from './LocalDeviceSettings';
 import { ParticipantList } from './ParticipantList';
 import { ThemeSelector } from 'react-components';
-import { participantListSelector } from '@azure/acs-calling-selector';
+import { participantListSelector, WebUICallParticipant } from '@azure/acs-calling-selector';
 import { useSelector } from './hooks/useSelector';
-import { useCall, getACSId } from 'react-composites';
-import { RemoteParticipant } from '@azure/acs-calling-declarative';
+import { useCall } from 'react-composites';
 
 export enum CommandPanelTypes {
   None = 'none',
@@ -31,14 +30,14 @@ export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
   const call = useCall();
   const participantListProps = useSelector(participantListSelector, { callId: call ? call.id : '' });
 
-  const onRenderParticipantMenu = (remoteParticipant: RemoteParticipant): IContextualMenuItem[] => {
+  const onRenderParticipantMenu = (participant: WebUICallParticipant): IContextualMenuItem[] => {
     const menuItems: IContextualMenuItem[] = [];
-    if (getACSId(remoteParticipant.identifier) !== participantListProps.userId) {
+    if (participant.userId !== participantListProps.userId) {
       menuItems.push({
         key: 'Remove',
         text: 'Remove',
         onClick: () => {
-          call?.removeParticipant(remoteParticipant.identifier);
+          call?.removeParticipant({ communicationUserId: participant.userId });
           Promise.resolve();
         }
       });

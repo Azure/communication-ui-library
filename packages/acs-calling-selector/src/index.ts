@@ -4,3 +4,4 @@ export type { BaseSelectorProps } from './baseSelectors';
 export type { CommonProperties } from './handlers/createHandlers';
 export * from './callControlSelectors';
 export * from './participantListSelector';
+export type { WebUICallParticipant } from './types/WebUICallParticipant';

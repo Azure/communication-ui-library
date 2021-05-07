@@ -15,6 +15,7 @@ import { DeviceManager } from '@azure/communication-calling';
 import { HangUpOptions } from '@azure/communication-calling';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { ReactElement } from 'react';
+import { RemoteParticipantState } from '@azure/communication-calling';
 import * as reselect from 'reselect';
 import { StartCallOptions } from '@azure/communication-calling';
 import { UnknownIdentifier } from '@azure/communication-common';
@@ -98,13 +99,13 @@ export const optionsButtonSelector: reselect.OutputParametricSelector<callingDec
 export const participantListSelector: reselect.OutputParametricSelector<callingDeclarative.CallClientState, BaseSelectorProps, {
     userId: string;
     displayName?: string | undefined;
-    remoteParticipants?: callingDeclarative.RemoteParticipant[] | undefined;
+    remoteParticipants?: WebUICallParticipant[] | undefined;
     isScreenSharingOn: boolean;
     isMuted: boolean;
 }, (res1: string, res2: string | undefined, res3: callingDeclarative.Call | undefined) => {
     userId: string;
     displayName?: string | undefined;
-    remoteParticipants?: callingDeclarative.RemoteParticipant[] | undefined;
+    remoteParticipants?: WebUICallParticipant[] | undefined;
     isScreenSharingOn: boolean;
     isMuted: boolean;
 }>;
@@ -115,6 +116,16 @@ export const screenShareButtonSelector: reselect.OutputParametricSelector<callin
 }, (res: callingDeclarative.Call | undefined) => {
     checked: boolean | undefined;
 }>;
+
+// @public (undocumented)
+export type WebUICallParticipant = {
+    userId: string;
+    displayName?: string;
+    state: RemoteParticipantState;
+    isScreenSharing: boolean;
+    isMuted: boolean;
+    isSpeaking: boolean;
+};
 
 
 // (No @packageDocumentation comment for this package)
