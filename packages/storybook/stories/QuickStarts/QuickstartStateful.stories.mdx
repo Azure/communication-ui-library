@@ -102,7 +102,7 @@ These properties will be used to instantiate the `ChatClient` and `statefulChatC
 ## Generate selector props to UI Components
 
 Update the `App.tsx` file to generate selector props off the `statefulChatClient`.
-Props need to be generated inside `useEffect`, as we must wait for the `statefulChatClient` to be populated.
+`statefulChatClient` will be updated asynchronously repeatedly in response to user actions and notifications from the chat server. We mirror these changes into the generated props via `useEffect`.
 The selector props needs to be updated everytime the `statefulChatClient` state changes to make sure they keep up to date.
 
 `App.tsx`
