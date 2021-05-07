@@ -15,7 +15,6 @@ import { DeviceManager } from '@azure/communication-calling';
 import { HangUpOptions } from '@azure/communication-calling';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { ReactElement } from 'react';
-import { RemoteParticipantState } from '@azure/communication-calling';
 import * as reselect from 'reselect';
 import { StartCallOptions } from '@azure/communication-calling';
 import { UnknownIdentifier } from '@azure/communication-common';
@@ -115,7 +114,7 @@ export const screenShareButtonSelector: reselect.OutputParametricSelector<callin
 export type WebUIParticipant = {
     userId: string;
     displayName?: string;
-    state?: RemoteParticipantState;
+    state?: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
     isScreenSharing?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;

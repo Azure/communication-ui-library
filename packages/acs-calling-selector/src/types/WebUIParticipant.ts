@@ -1,11 +1,10 @@
-// © Microsoft Corporation. All rights reserved.
-
-import { RemoteParticipantState } from '@azure/communication-calling';
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 export type WebUIParticipant = {
   userId: string;
   displayName?: string;
-  state?: RemoteParticipantState;
+  state?: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
   isScreenSharing?: boolean;
   isMuted?: boolean;
   isSpeaking?: boolean;
