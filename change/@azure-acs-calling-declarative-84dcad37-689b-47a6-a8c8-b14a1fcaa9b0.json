@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Merging main",
+  "packageName": "@azure/acs-calling-declarative",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}

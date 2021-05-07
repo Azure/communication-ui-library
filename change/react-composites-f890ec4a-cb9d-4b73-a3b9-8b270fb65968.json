@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Merging main",
+  "packageName": "react-composites",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}
