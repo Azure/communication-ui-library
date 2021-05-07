@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { GridLayout as GridLayoutComponent, VideoTile, StreamMedia } from '@azure/communication-react';
 import { number, object } from '@storybook/addon-knobs';

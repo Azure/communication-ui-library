@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "export createAllHandler for adapter to consume",
+  "packageName": "@azure/acs-chat-selector",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}

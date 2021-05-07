@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
 export enum MessageAttachedStatus {

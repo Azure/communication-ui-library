@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 export const compareMessages = (firstMessage: { createdOn?: Date }, secondMessage: { createdOn?: Date }): number => {
   if (firstMessage.createdOn === undefined) return 1;

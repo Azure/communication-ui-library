@@ -1,6 +1,7 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-administration';
+import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-identity';
 import { text } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useEffect, useState } from 'react';
@@ -33,10 +34,9 @@ const createUserToken = async (connectionString: string): Promise<CommunicationU
   }
 
   const tokenClient = new CommunicationIdentityClient(connectionString);
-  const user = await tokenClient.createUser();
-  const token = await tokenClient.issueToken(user, ['voip']);
+  const userToken = await tokenClient.createUserAndToken(['voip']);
 
-  return token;
+  return userToken;
 };
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
@@ -49,15 +49,18 @@ export const GroupCall: () => JSX.Element = () => {
 
   useEffect(() => {
     (async () => {
-      try {
-        const tokenResponse = await createUserToken(connectionString);
-        setToken(tokenResponse.token);
-        setUserId(tokenResponse.user.communicationUserId);
-        const groupId = createGUID();
-        console.log(`groupId: ${groupId}`);
-        setGroupId(groupId);
-      } catch (e) {
-        console.log('Please provide your connection string');
+      if (connectionString) {
+        try {
+          const tokenResponse = await createUserToken(connectionString);
+          setToken(tokenResponse.token);
+          setUserId(tokenResponse.user.communicationUserId);
+          const groupId = createGUID();
+          console.log(`groupId: ${groupId}`);
+          setGroupId(groupId);
+        } catch (e) {
+          console.error(e);
+          console.log('Ensure your connection string is valid.');
+        }
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps

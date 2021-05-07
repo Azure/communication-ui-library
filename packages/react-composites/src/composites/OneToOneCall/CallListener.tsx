@@ -1,4 +1,6 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { IncomingCall } from '@azure/communication-calling';
 import { Stack } from '@fluentui/react';
 import React, { useEffect, useState } from 'react';

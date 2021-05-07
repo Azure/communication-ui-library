@@ -1,10 +1,12 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 export { chatThreadSelector } from './chatThreadSelector';
 export { sendBoxSelector } from './sendBoxSelector';
 export { chatParticipantListSelector } from './chatParticipantListSelector';
 export { typingIndicatorSelector } from './typingIndicatorSelector';
 
-export { createDefaultHandlersForComponent } from './handlers/createHandlers';
+export { createDefaultHandlersForComponent, createDefaultHandlers } from './handlers/createHandlers';
 export type {
   ChatMessagePayload,
   SystemMessagePayload,

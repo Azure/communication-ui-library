@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { CommunicationUiErrorSeverity, ErrorBar as ErrorBarComponent } from '@azure/communication-react';
 import { text, select } from '@storybook/addon-knobs';
