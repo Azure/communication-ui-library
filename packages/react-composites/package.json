@@ -48,6 +48,8 @@
     "@azure/acs-chat-selector": "~1.0.0-beta",
     "react-aria-live": "^2.0.5",
     "react-linkify": "^1.0.0-alpha",
+    "memoize-one": "~5.2.1",
+    "events": "~3.3.0",
     "react-components": "1.0.0-beta"
   },
   "peerDependencies": {
