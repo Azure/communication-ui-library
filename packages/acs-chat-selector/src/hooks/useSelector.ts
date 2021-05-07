@@ -1,9 +1,10 @@
 // © Microsoft Corporation. All rights reserved.
 
 import { ChatClientState, DeclarativeChatClient } from '@azure/acs-chat-declarative';
-import { useChatClient, useThreadId } from 'react-composites';
+import { useChatClient } from '../providers/ChatClientProvider';
 
 import { useState, useEffect, useRef, useMemo } from 'react';
+import { useChatThreadClient } from '../providers/ChatThreadClientProvider';
 
 // This function highly depends on chatClient.onChange event
 // It will be moved into selector folder when the ChatClientProvide when refactor finished
@@ -12,7 +13,7 @@ export const useSelector = <SelectorT extends (state: ChatClientState, props: an
   selectorProps?: Parameters<SelectorT>[1]
 ): ReturnType<SelectorT> => {
   const chatClient: DeclarativeChatClient = useChatClient() as any;
-  const threadId = useThreadId();
+  const threadId = useChatThreadClient().threadId;
 
   const threadConfigProps = useMemo(
     () => ({

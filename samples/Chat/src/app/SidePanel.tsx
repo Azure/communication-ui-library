@@ -1,14 +1,11 @@
 // © Microsoft Corporation. All rights reserved.
 
-import React, { Dispatch, useMemo } from 'react';
+import React, { Dispatch } from 'react';
 import { InviteFooter } from './InviteFooter';
 import { ParticipantManagement } from './ParticipantManagement';
 import { SettingsManagementComponent } from './SettingsManagement';
 import { SlideOutPanelComponent } from './SlideOutPanel';
-import { useSelector } from './hooks/useSelector';
-import { useThreadId } from 'react-composites';
-import { useHandlers } from './hooks/useHandlers';
-import { chatParticipantListSelector } from '@azure/acs-chat-selector';
+import { chatParticipantListSelector, useHandlers, useSelector } from '@azure/acs-chat-selector';
 import { chatSettingsSelector } from './selectors/chatSettingsSelector';
 
 export enum SidePanelTypes {
@@ -25,13 +22,10 @@ export interface SelectedPaneProps {
 
 export const SidePanel = (props: SelectedPaneProps): JSX.Element => {
   const { selectedPane, setSelectedPane, onRenderAvatar } = props;
-  const threadId = useThreadId();
-  const selectorConfig = useMemo(() => {
-    return { threadId };
-  }, [threadId]);
-  const chatParticipantProps = useSelector(chatParticipantListSelector, selectorConfig);
+
+  const chatParticipantProps = useSelector(chatParticipantListSelector);
   const chatParticipantHandlers = useHandlers(ParticipantManagement);
-  const chatSettingsProps = useSelector(chatSettingsSelector, selectorConfig);
+  const chatSettingsProps = useSelector(chatSettingsSelector);
   const chatSettingsHandlers = useHandlers(SettingsManagementComponent);
 
   return (

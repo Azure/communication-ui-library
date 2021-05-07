@@ -1,12 +1,14 @@
 // © Microsoft Corporation. All rights reserved.
 
 import { ChatClientState } from '@azure/acs-chat-declarative';
-import { chatThreadSelector, sendBoxSelector, typingIndicatorSelector } from '@azure/acs-chat-selector';
 import { MessageThread, SendBox, TypingIndicator } from 'react-components';
 
 import React from 'react';
 import { useHandlers } from './useHandlers';
 import { useSelector } from './useSelector';
+import { sendBoxSelector } from '../sendBoxSelector';
+import { chatThreadSelector } from '../chatThreadSelector';
+import { typingIndicatorSelector } from '../typingIndicatorSelector';
 
 type Selector = (state: ChatClientState, props: any) => any;
 export const usePropsFor = <SelectorT extends (state: ChatClientState, props: any) => any>(

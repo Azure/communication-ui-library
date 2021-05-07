@@ -1,8 +1,8 @@
 // © Microsoft Corporation. All rights reserved.
 
-import React, { useState } from 'react';
-import { getBuildTime, getChatSDKVersion } from './utils/utils';
-import { initializeIcons } from '@fluentui/react';
+import React, { useEffect, useState } from 'react';
+import { createAzureCommunicationUserCredentialBeta, getBuildTime, getChatSDKVersion } from './utils/utils';
+import { initializeIcons, Spinner } from '@fluentui/react';
 
 import { ChatScreen } from './ChatScreen';
 import { EndScreen } from './EndScreen';
@@ -10,8 +10,11 @@ import { ErrorScreen } from './ErrorScreen';
 import HomeScreen from './HomeScreen';
 import ConfigurationScreen from './ConfigurationScreen';
 import { getThreadId } from './utils/getThreadId';
-import { ChatProvider, ErrorProvider, CommunicationUiErrorInfo } from 'react-composites';
+import { ErrorProvider, CommunicationUiErrorInfo } from 'react-composites';
 import { refreshTokenAsync } from './utils/refreshToken';
+import { ChatClientProvider, ChatThreadClientProvider } from '@azure/acs-chat-selector';
+import { ChatClient, ChatThreadClient } from '@azure/communication-chat';
+import { chatClientDeclaratify, DeclarativeChatClient } from '@azure/acs-chat-declarative';
 
 console.info(`Thread chat sample using @azure/communication-chat : ${getChatSDKVersion()}`);
 console.info(`Build Date : ${getBuildTime()}`);
@@ -25,6 +28,25 @@ export default (): JSX.Element => {
   const [displayName, setDisplayName] = useState('');
   const [threadId, setThreadId] = useState('');
   const [endpointUrl, setEndpointUrl] = useState('');
+  const [chatClient, setChatClient] = useState<DeclarativeChatClient>();
+  const [chatThreadClient, setChatThreadClient] = useState<ChatThreadClient>();
+
+  useEffect(() => {
+    if (token && userId && displayName && threadId && endpointUrl) {
+      const createClient = async (): Promise<void> => {
+        const chatClient = chatClientDeclaratify(
+          new ChatClient(endpointUrl, createAzureCommunicationUserCredentialBeta(token, refreshTokenAsync(userId))),
+          { userId, displayName }
+        );
+
+        setChatClient(chatClient);
+        setChatThreadClient(await chatClient.getChatThreadClient(threadId));
+
+        chatClient.startRealtimeNotifications();
+      };
+      createClient();
+    }
+  }, [displayName, endpointUrl, threadId, token, userId]);
 
   const getComponent = (): JSX.Element => {
     if (page === 'home') {
@@ -47,24 +69,24 @@ export default (): JSX.Element => {
         <ErrorProvider
           onErrorCallback={(error: CommunicationUiErrorInfo) => console.error('onErrorCallback received error:', error)}
         >
-          <ChatProvider
-            token={token}
-            displayName={displayName}
-            threadId={threadId}
-            endpointUrl={endpointUrl}
-            refreshTokenCallback={refreshTokenAsync(userId)}
-          >
-            <ChatScreen
-              endChatHandler={() => {
-                setPage('end');
-                // Send up signal that the user wants to leave the chat
-                // Move to to next screen on success
-              }}
-              errorHandler={() => {
-                setPage('error');
-              }}
-            />
-          </ChatProvider>
+          {chatClient && chatThreadClient ? (
+            <ChatClientProvider chatClient={chatClient}>
+              <ChatThreadClientProvider chatThreadClient={chatThreadClient}>
+                <ChatScreen
+                  endChatHandler={() => {
+                    setPage('end');
+                    // Send up signal that the user wants to leave the chat
+                    // Move to to next screen on success
+                  }}
+                  errorHandler={() => {
+                    setPage('error');
+                  }}
+                />
+              </ChatThreadClientProvider>
+            </ChatClientProvider>
+          ) : (
+            <Spinner label={'Loading...'} ariaLive="assertive" labelPosition="top" />
+          )}
         </ErrorProvider>
       );
     } else if (page === 'end') {
