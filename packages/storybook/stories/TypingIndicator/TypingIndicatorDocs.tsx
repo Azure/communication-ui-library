@@ -1,14 +1,15 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+import { TypingIndicator } from '@azure/communication-react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
 import React from 'react';
-import { TypingIndicator } from '@azure/communication-react';
-import { TypingIndicatorSnippet } from './snippets/TypingIndicator.snippet';
 import { CustomStylingSnippet } from './snippets/CustomStyling.snippet';
 import { CustomUserRenderSnippet } from './snippets/CustomUserRender.snippet';
+import { TypingIndicatorSnippet } from './snippets/TypingIndicator.snippet';
 
-const TypingIndicatorSnippetText = require('!!raw-loader!./snippets/TypingIndicator.snippet.tsx').default;
 const CustomStylingSnippetText = require('!!raw-loader!./snippets/CustomStyling.snippet.tsx').default;
 const CustomUserRenderSnippetText = require('!!raw-loader!./snippets/CustomUserRender.snippet.tsx').default;
+const TypingIndicatorSnippetText = require('!!raw-loader!./snippets/TypingIndicator.snippet.tsx').default;
 
 const importStatement = `import { TypingIndicator } from '@azure/communication-react';`;
 

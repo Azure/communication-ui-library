@@ -72,7 +72,11 @@ module.exports = {
   moduleFileExtensions: ['js', 'json', 'jsx', 'ts', 'tsx', 'node'],
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
-  // moduleNameMapper: {},
+  moduleNameMapper: {
+    // Jest is unable to perform the raw load of snippet files, instead stub out these imports.
+    // More information: https://stackoverflow.com/questions/63226101/handle-webpack-loader-syntax-with-jest-testing-exclamation-raw-loader
+    '^!!raw-loader!.*': '<rootDir>/jest/snippetStub.txt'
+  },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
   // modulePathIgnorePatterns: [],

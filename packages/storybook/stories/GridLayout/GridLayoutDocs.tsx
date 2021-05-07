@@ -1,8 +1,9 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import React from 'react';
-import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
 import { GridLayout } from '@azure/communication-react';
+import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
+import React from 'react';
 import { GridLayoutExample } from './snippets/GridLayout.snippet';
 const GridLayoutExampleText = require('!!raw-loader!./snippets/GridLayout.snippet').default;
 

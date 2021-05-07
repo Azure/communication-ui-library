@@ -1,4 +1,6 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 export type FunctionWithKey<KeyT, ArgsT extends any[], RetT> = (key: KeyT, ...args: ArgsT) => RetT;
 export type CallbackType<KeyT, ArgsT extends any[], FnRetT> = (
   memoizedFn: FunctionWithKey<KeyT, ArgsT, FnRetT>

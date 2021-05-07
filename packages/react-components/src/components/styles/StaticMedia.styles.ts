@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { getTheme, mergeStyles } from '@fluentui/react';
 
@@ -20,10 +21,4 @@ export const videoHint = mergeStyles({
   whiteSpace: 'nowrap',
   maxWidth: '40%',
   borderRadius: 4
-});
-
-export const staticMediaContainer = mergeStyles({
-  position: 'relative',
-  height: '100%',
-  width: '100%'
 });
