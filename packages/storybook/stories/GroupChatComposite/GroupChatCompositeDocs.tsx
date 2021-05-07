@@ -2,10 +2,10 @@
 // Licensed under the MIT license.
 import { Title, Description, Props, Heading, Source } from '@storybook/addon-docs/blocks';
 import React from 'react';
-import { GroupChat } from 'react-composites';
+import { ChatComposite } from 'react-composites';
 
-const importStatement = `import { GroupChat } from 'react-composites';`;
-const usageCode = `import { GroupChat } from 'react-composites';
+const importStatement = `import { ChatComposite } from 'react-composites';`;
+const usageCode = `import { ChatComposite } from 'react-composites';
 import { AzureCommunicationUserCredential } from '@azure/communication-common';
 import { CommunicationIdentityClient } from "@azure/communication-administration";
 import { ChatClient } from '@azure/communication-chat';
@@ -24,6 +24,7 @@ const endpointUrl = \`\${uri.protocol}//\${uri.host}\`;
   let tokenClient = new CommunicationIdentityClient(connectionString);
   const user = await tokenClient.createUser();
   const token = await tokenClient.issueToken(user, ["chat"]);
+  const [adapter, setAdapter] = useState<GroupChatAdapter>();
 
   const userAccessTokenCredential =
     new AzureCommunicationUserCredential(token.token);
@@ -35,27 +36,39 @@ const endpointUrl = \`\${uri.protocol}//\${uri.host}\`;
     topic: 'DemoThread'
   })).threadId;
 
+  useEffect(() => {
+    if (chatConfig) {
+      const createAdapter = async (): Promise<void> => {
+        setAdapter(
+          await createAzureChatAdapter(
+            token,
+            endpointUrl,
+            threadId,
+            'Empty Display Name'
+          )
+        );
+      };
+      createAdapter();
+    }
+  }, [token, endpointUrl, threadId]);
+
   ReactDOM.render(
-    <GroupChat
-      token={token.token}
-      endpointUrl={endpointUrl}
-      displayName={'User1'}
-      threadId={threadId}
-    />, document.getElementById('root'));
+    <ChatComposite adapter= {adapter} />,
+    document.getElementById('root'));
 })();
 `;
 
 export const getDocs: () => JSX.Element = () => {
   return (
     <>
-      <Title>GroupChat</Title>
-      <Description>GroupChat is an one-stop component that you can make ACS Group Chat running.</Description>
+      <Title>ChatComposite</Title>
+      <Description>ChatComposite is an one-stop component that you can make ACS Group Chat running.</Description>
       <Heading>Importing</Heading>
       <Source code={importStatement} />
       <Heading>Example Code</Heading>
       <Source code={usageCode} />
       <Heading>Props</Heading>
-      <Props of={GroupChat} />
+      <Props of={ChatComposite} />
     </>
   );
 };

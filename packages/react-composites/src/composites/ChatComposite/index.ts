@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import GroupChat from './GroupChat';
+import ChatComposite from './ChatComposite';
 export {
   AzureCommunicationChatAdapter,
   createAzureCommunicationChatAdapter
 } from './adapter/AzureCommunicationChatAdapter';
 
-export type { GroupChatState } from './adapter/GroupChatAdapter';
-export { GroupChat };
+export type { GroupChatState, GroupChatAdapter } from './adapter/GroupChatAdapter';
+export { ChatComposite };

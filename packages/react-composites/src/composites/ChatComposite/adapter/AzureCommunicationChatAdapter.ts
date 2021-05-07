@@ -14,13 +14,13 @@ export class GroupChatContext {
   private state: GroupChatState;
   private threadId: string;
 
-  constructor(state: ChatClientState, threadId: string) {
-    const thread = state.threads.get(threadId);
+  constructor(clientState: ChatClientState, threadId: string) {
+    const thread = clientState.threads.get(threadId);
     this.threadId = threadId;
     if (!thread) throw 'Cannot find threadId, please initial thread before use!';
     this.state = {
-      userId: state.userId,
-      displayName: state.displayName,
+      userId: clientState.userId,
+      displayName: clientState.displayName,
       thread
     };
   }
@@ -46,12 +46,12 @@ export class GroupChatContext {
     this.setState({ ...this.state, error });
   }
 
-  public updateClientState(state: ChatClientState): void {
-    const thread = state.threads.get(this.threadId);
+  public updateClientState(clientState: ChatClientState): void {
+    const thread = clientState.threads.get(this.threadId);
     if (!thread) throw 'Cannot find threadId, please make sure thread state is still in Stateful ChatClient.';
     this.setState({
-      userId: state.userId,
-      displayName: state.displayName,
+      userId: clientState.userId,
+      displayName: clientState.displayName,
       thread
     });
   }

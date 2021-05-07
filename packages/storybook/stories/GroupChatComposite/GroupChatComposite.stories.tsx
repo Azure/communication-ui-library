@@ -7,12 +7,7 @@ import { AzureCommunicationUserCredential } from '@azure/communication-common';
 import { text } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState, useEffect } from 'react';
-import {
-  GroupChatAdapter,
-  createAzureChatAdapter,
-  ChatConfig,
-  GroupChat as GroupChatComposite
-} from 'react-composites';
+import { GroupChatAdapter, ChatConfig, ChatComposite, createAzureCommunicationChatAdapter } from 'react-composites';
 
 import {
   CompositeConnectionParamsErrMessage,
@@ -24,7 +19,7 @@ import { getDocs } from './GroupChatCompositeDocs';
 
 export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/Group Chat`,
-  component: GroupChatComposite,
+  component: ChatComposite,
   parameters: {
     useMaxHeightParent: true,
     useMaxWidthParent: true,
@@ -157,7 +152,7 @@ export const GroupChat: () => JSX.Element = () => {
     if (chatConfig) {
       const createAdapter = async (): Promise<void> => {
         setAdapter(
-          await createAzureChatAdapter(
+          await createAzureCommunicationChatAdapter(
             chatConfig.token,
             chatConfig.endpointUrl,
             chatConfig.threadId,
@@ -178,7 +173,7 @@ export const GroupChat: () => JSX.Element = () => {
 
   return (
     <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
-      {adapter && <GroupChatComposite adapter={adapter} />}
+      {adapter && <ChatComposite adapter={adapter} />}
       {!adapter && CompositeConnectionParamsErrMessage([emptyConfigTips, emptyConfigParametersTips])}
     </div>
   );
