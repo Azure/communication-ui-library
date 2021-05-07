@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   CameraButton,
   ControlBar,
@@ -8,7 +7,8 @@ import {
   OptionsButton,
   ScreenShareButton,
   darkTheme
-} from 'react-components';
+} from '@azure/communication-react';
+import React from 'react';
 
 export const DarkControlBar = (): JSX.Element => {
   return (
