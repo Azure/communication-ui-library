@@ -1,12 +1,11 @@
 {
   "name": "storybook",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Azure Communication Services UI Toolkit Storybook",
   "scripts": {
     "build": "build-storybook -s stories,public,.storybook  --quiet --loglevel warn",
-    "start": "concurrently \"rush build:watch -T storybook\" \"rushx start:storybook\"",
-    "start:storybook": "start-storybook -p 6006 -s stories,./public --no-manager-cache --quiet --loglevel warn",
+    "start": "start-storybook -p 6006 -s stories,./public --no-manager-cache --quiet --loglevel warn",
     "deploy-storybook": "storybook-to-ghpages --script build",
     "test": "jest",
     "test:coverage": "npm run test -- --coverage",
@@ -18,12 +17,13 @@
     "lint:quiet": "npm run lint -- --quiet"
   },
   "dependencies": {
+    "@azure/acs-chat-selector": "~1.0.0-beta",
     "@azure/communication-administration": "1.0.0-beta.3",
     "@azure/communication-calling": "1.0.1-beta.1",
     "@azure/communication-chat": "1.0.0-beta.4",
     "@azure/communication-common": "1.0.0-beta.3",
+    "@azure/communication-react": "1.0.0-beta",
     "@azure/communication-signaling": "1.0.0-beta.1",
-    "@azure/communication-ui": "1.0.0-beta",
     "@azure/core-http": "^1.2.3",
     "@fluentui/react": "^7.117.1",
     "@fluentui/react-icons": "^0.3.9",
@@ -37,6 +37,7 @@
     "copy-to-clipboard": "~3.3.1",
     "history": "~5.0.0",
     "react-aria-live": "^2.0.5",
+    "react-composites": "1.0.0-beta",
     "react-linkify": "^1.0.0-alpha"
   },
   "peerDependencies": {
@@ -84,7 +85,7 @@
     "core-js": "^3.8.3",
     "eslint-config-prettier": "^6.12.0",
     "eslint-plugin-header": "^3.1.0",
-    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-import": "~2.22.1",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react-hooks": "^4.1.2",

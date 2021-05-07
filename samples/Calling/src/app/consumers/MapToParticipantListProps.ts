@@ -1,11 +1,12 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import {
   useCallingContext,
   useCallContext,
   ListParticipant,
   convertSdkRemoteParticipantToListParticipant
-} from '@azure/communication-ui';
+} from 'react-composites';
 
 type ParticipantListContainerProps = {
   remoteParticipants: ListParticipant[];

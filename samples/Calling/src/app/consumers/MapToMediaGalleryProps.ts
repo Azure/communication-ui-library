@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import {
   LocalGalleryParticipant,
@@ -7,7 +8,7 @@ import {
   useCallingContext,
   ParticipantStream,
   convertSdkRemoteParticipantToGalleryParticipant
-} from '@azure/communication-ui';
+} from 'react-composites';
 import { useEffect, useState } from 'react';
 
 export type MediaGalleryContainerProps = {

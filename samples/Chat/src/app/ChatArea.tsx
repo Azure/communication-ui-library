@@ -1,20 +1,12 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import {
-  ErrorBar as ErrorBarComponent,
-  SendBox,
-  TypingIndicator,
-  MessageThread,
-  connectFuncsToContext,
-  MapToErrorBarProps,
-  useThreadId
-} from '@azure/communication-ui';
-import { useHandlers } from './hooks/useHandlers';
-import { chatThreadSelector, sendBoxSelector, typingIndicatorSelector } from '@azure/acs-chat-selector';
+import { ErrorBar as ErrorBarComponent, SendBox, TypingIndicator, MessageThread } from 'react-components';
+import { connectFuncsToContext, MapToErrorBarProps } from 'react-composites';
 import { Stack } from '@fluentui/react';
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { chatAreaContainerStyle, sendBoxParentStyle } from './styles/ChatArea.styles';
-import { useSelector } from './hooks/useSelector';
+import { usePropsFor } from './hooks/usePropsFor';
 
 export interface ChatAreaProps {
   onRenderAvatar?: (userId: string) => JSX.Element;
@@ -28,39 +20,39 @@ export const ChatArea = (props: ChatAreaProps): JSX.Element => {
   // onRenderAvatar is a contoso callback. We need it to support emoji in Sample App. Sample App is currently on
   // components v0 so we're passing the callback at the component level. This might need further refactoring if this
   // ChatArea is to become a component or if Sample App is to move to composite
-  const threadId = useThreadId();
 
-  const selectorConfig = useMemo(() => {
-    return { threadId };
-  }, [threadId]);
+  const chatThreadProps = usePropsFor(MessageThread);
+  const sendBoxProps = usePropsFor(SendBox);
+  const typingIndicatorProps = usePropsFor(TypingIndicator);
 
-  const chatThreadProps = useSelector(chatThreadSelector, selectorConfig);
-  const chatThreadHandlers = useHandlers(MessageThread);
-  const sendBoxProps = useSelector(sendBoxSelector, selectorConfig);
-  const sendBoxHandlers = useHandlers(SendBox);
-  const typingIndicatorProps = useSelector(typingIndicatorSelector, selectorConfig);
+  const onLoadPreviousChatMessages = chatThreadProps.onLoadPreviousChatMessages;
+
+  // This state is a temporary contoso fix and will be the typingUsers prop passed to TypingIndicator
+  const [transientTypingUsers, setTransientTypingUsers] = useState(typingIndicatorProps.typingUsers);
+  // This useEffect is to set transientTypingUsers to be empty after a timeout of no updates from usePropsFor
+  useEffect(() => {
+    setTransientTypingUsers(typingIndicatorProps.typingUsers);
+    setTimeout(() => {
+      setTransientTypingUsers([]);
+    }, 8000); //wait 8000 milliseconds to make sure it cleans up well
+  }, [typingIndicatorProps.typingUsers]);
 
   // Initialize the Chat thread with history messages
   useEffect(() => {
     (async () => {
-      await chatThreadHandlers.onLoadPreviousChatMessages(5);
+      await onLoadPreviousChatMessages(5);
     })();
-  }, [chatThreadHandlers]);
+  }, [onLoadPreviousChatMessages]);
 
   return (
     <Stack className={chatAreaContainerStyle}>
-      <MessageThread
-        {...chatThreadProps}
-        {...chatThreadHandlers}
-        onRenderAvatar={props.onRenderAvatar}
-        numberOfChatMessagesToReload={5}
-      />
+      <MessageThread {...chatThreadProps} onRenderAvatar={props.onRenderAvatar} numberOfChatMessagesToReload={5} />
       <Stack.Item align="center" className={sendBoxParentStyle}>
         <div style={{ paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>
-          <TypingIndicator {...typingIndicatorProps} />
+          <TypingIndicator typingUsers={transientTypingUsers} />
         </div>
         <ErrorBar />
-        <SendBox {...sendBoxProps} {...sendBoxHandlers} />
+        <SendBox {...sendBoxProps} />
       </Stack.Item>
     </Stack>
   );

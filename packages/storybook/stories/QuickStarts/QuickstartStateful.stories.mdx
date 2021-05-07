@@ -1,0 +1,147 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
+import ChatApp from '!!raw-loader!./snippets/ChatApp.snippet.tsx';
+import ChatAppStateful from '!!raw-loader!./snippets/ChatAppStateful.snippet.tsx';
+import ChatAppSelectors from '!!raw-loader!./snippets/ChatAppSelectors.snippet.tsx';
+import ChatAppHandlers from '!!raw-loader!./snippets/ChatAppHandlers.snippet.tsx';
+
+<Meta title="Quickstarts/Get started with Stateful Client" />
+
+# Quickstart: Get started with Stateful Clients
+
+Get started with Azure Communication Services by using the UI Toolkit to quickly integrate communication experiences into your applications.
+In this quickstart, you'll learn how to integrate UI Toolkit stateful clients into your application to build communication experiences.
+To learn more about how to build applications with UI Toolkit UI Components, see [Get started with UI Components](/?path=/docs/quickstarts-get-started-with-ui-components--page)
+Stateful clients make it easier for developers to build UI applications on top of Azure Communication Services by providing built-in state that UI components can use to render. Find more information about [Stateful client here.](/?path=/docs/stateful-chat-client-introduction--page).
+
+## Prerequisites
+
+- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
+- [Node.js](https://nodejs.org/) Active LTS and Maintenance LTS versions (Node 12 Recommended).
+- An active Communication Services resource. [Create a Communication Services resource](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp).
+- Knowledge of [UI Toolkit Components](/?path=/story/quickstarts-get-started-with-ui-components--page). We will be using the UI Components in this quickstart.
+- Knowledge of Azure Communication Services [Chat patterns](https://docs.microsoft.com/azure/communication-services/concepts/chat/concepts). You will need to create a thread and a user to that thread to use the UI Toolkit. Look at the [recommended architecture for the UI Toolkit](/?path=/docs/use-cases--page#recommended-architecture)
+
+## Setting up
+
+UI Toolkit requires a React environment to be setup as described below. If you already have a React App, you can skip this section.
+
+### Set Up React App
+
+We'll use the `create-react-app` template for this quickstart. For more information, see: [Get Started with React](https://reactjs.org/docs/create-a-new-react-app.html)
+
+```bash
+
+# Build app in typescript:
+npx create-react-app ui-toolkit-starting-with-stateful --template typescript
+
+cd ui-toolkit-quickstart
+
+```
+
+At the end of this process, you should have a full application inside the folder `ui-toolkit-starting-with-stateful`.
+For this quickstart, we'll be modifying files inside the `src` folder.
+
+### Install the package
+
+Use the `npm install` command to install the Azure Communication Services UI Toolkit for JavaScript.
+Move the provided tarball (Private Preview) over to the `ui-toolkit-starting-with-stateful` directory. **Make sure to run the `npm i` command inside the `ui-toolkit-starting-with-stateful` directory.**
+
+```bash
+
+# For Private Preview install tarball
+npm install --save ./{path for tarball}
+
+```
+
+The `--save` option lists the library as a dependency in your **package.json** file.
+
+### Run Create React App
+
+Let's test the Create React App installation by running:
+
+```bash
+
+npm run start
+
+```
+
+## Object model
+
+The following classes and interfaces from the Azure Communication Services UI client library are referenced in this quickstart:
+
+| Name                                                                                                                            | Description                                                                                          |
+| ------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| [ChatClient](https://azuresdkdocs.blob.core.windows.net/$web/javascript/azure-communication-chat/1.0.0/classes/chatclient.html) | Low-level chat library client.                                                                       |
+| [chatClientDeclaratify](/?path=/story/stateful-chat-client-introduction--page)                                                  | Method to translate low-level library client into a stateful client for the UI Toolkit               |
+| [statefulChatClient](/?path=/story/stateful-chat-client-introduction--page)                                                     | Stateful chat client based on the low level chat library client.                                     |
+| [chatThreadSelector](/?path=/story/stateful-chat-client-introduction--page)                                                     | Method for generating reactive read-only props for Chat Thread UI Component from Stateful Client     |
+| [sendBoxSelector](/?path=/story/stateful-chat-client-introduction--page)                                                        | Method to generate props for Send Box UI Component from Stateful Client                              |
+| [createDefaultHandlersForComponent](/?path=/story/stateful-chat-client-introduction--page)                                      | Method to generate method props for UI Components from Stateful Client to handle UI Component events |
+
+## Compose Chat Components
+
+For Chat, we will use the [`MessageThread`](/?path=/docs/ui-components-chatthread--chat-thread-component) and [`SendBox`](/?path=/docs/ui-components-sendbox--send-box-story-book-component) components.
+To start add the code below to `App.tsx`.
+For more information on getting started with UI Components follow the [quickstart](/?path=/story/quickstarts-get-started-with-ui-components--page)
+
+`App.tsx`
+
+<Source code={ChatApp} />
+
+## Instantiate Stateful Chat client in the app
+
+Update the `App.tsx` file to create a `statefulChatClient` off the low-level `ChatClient` using the method `chatClientDeclaratify`.
+Make sure to populate the constants at the top of the App code with information from your Azure Communication Services Resource.
+These properties will be used to instantiate the `ChatClient` and `statefulChatClient`. Review [Chat patterns](https://docs.microsoft.com/azure/communication-services/concepts/chat/concepts) for questions on these properties.
+
+`App.tsx`
+
+<Source code={ChatAppStateful} />
+
+## Generate selector props to UI Components
+
+Update the `App.tsx` file to generate selector props off the `statefulChatClient`.
+`statefulChatClient` will be updated asynchronously repeatedly in response to user actions and notifications from the chat server. We mirror these changes into the generated props via `useEffect`.
+The selector props needs to be updated everytime the `statefulChatClient` state changes to make sure they keep up to date.
+
+`App.tsx`
+
+<Source code={ChatAppStateful} />
+
+## Generate handler props to UI Components
+
+Update the `App.tsx` file to generate handler props off the `statefulChatClient`.
+Handlers will update the `statefulChatClient` whenever the UI Components generate an event such as send a message.
+Update the UI Components to also use handlers as props.
+
+`App.tsx`
+
+<Source code={ChatAppHandlers} />
+
+## Run quickstart
+
+At this point your app should have two UI Components hooked up to
+To run the code above use the command:
+
+```console
+
+npm run start
+
+```
+
+## Clean up resources
+
+If you want to clean up and remove a Communication Services subscription, you can delete the resource or resource group.
+Deleting the resource group also deletes any other resources associated with it.
+Learn more about [cleaning up resources](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp#clean-up-resources).
+
+## Next steps
+
+[Try UI Toolkit Composite Components](/?path=/story/quickstart-composites--page)
+
+For more information, see the following resources:
+
+- [UI Toolkit Use Cases](/?path=/story/use-cases--page)
+- [UI Toolkit Styling](/?path=/story/styling--page)
+- [UI Toolkit Theming](/?path=/story/theming--page)

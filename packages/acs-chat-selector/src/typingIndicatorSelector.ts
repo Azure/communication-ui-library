@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 // @ts-ignore
 import { ChatClientState } from '@azure/acs-chat-declarative';
@@ -20,8 +21,7 @@ const filterTypingIndicators = (typingIndicators: TypingIndicator[], userId: str
       continue;
     }
     if (typingIndicator.receivedOn < date8SecondsAgo) {
-      // assuming typingIndicators is ordered from oldest to newest so we don't need to check the rest
-      break;
+      continue;
     }
     if (seen.has(typingIndicator.sender.user.communicationUserId)) {
       continue;
@@ -33,18 +33,19 @@ const filterTypingIndicators = (typingIndicators: TypingIndicator[], userId: str
 };
 
 const convertSdkTypingIndicatorsToWebUiChatParticipants = (
-  typingIndicators: TypingIndicator[]
+  typingIndicators: TypingIndicator[],
+  participants: Map<string, ChatParticipant>
 ): WebUiChatParticipant[] => {
   return typingIndicators.map((typingIndicator) => ({
     userId: typingIndicator.sender.user.communicationUserId,
-    displayName: typingIndicator.sender.displayName
+    displayName: participants.get(typingIndicator.sender.user.communicationUserId)?.displayName
   }));
 };
 
 export const typingIndicatorSelector = reselect.createSelector(
   [getTypingIndicators, getParticipants, getUserId],
   (typingIndicators: TypingIndicator[], participants: Map<string, ChatParticipant>, userId: string) => {
-    // if there are participant size is at threshold return no typing users
+    // if the participant size reaches the threshold then return no typing users
     if (participants.size >= PARTICIPANTS_THRESHOLD) {
       return { typingUsers: [] };
     }
@@ -53,7 +54,8 @@ export const typingIndicatorSelector = reselect.createSelector(
     const filteredTypingIndicators = filterTypingIndicators(typingIndicators, userId);
 
     const typingUsers: WebUiChatParticipant[] = convertSdkTypingIndicatorsToWebUiChatParticipants(
-      filteredTypingIndicators
+      filteredTypingIndicators,
+      participants
     );
 
     return { typingUsers };

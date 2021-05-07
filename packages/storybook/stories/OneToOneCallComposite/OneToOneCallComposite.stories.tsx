@@ -1,35 +1,29 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import React, { useEffect, useState } from 'react';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
-import { Meta } from '@storybook/react/types-6-0';
-import { text } from '@storybook/addon-knobs';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-administration';
+import { text } from '@storybook/addon-knobs';
+import { Meta } from '@storybook/react/types-6-0';
+import React, { useEffect, useState } from 'react';
+import { OneToOneCall as OneToOneCallComposite } from 'react-composites';
+import {
+  CompositeConnectionParamsErrMessage,
+  COMPOSITE_STRING_CONNECTIONSTRING,
+  COMPOSITE_STRING_REQUIREDCONNECTIONSTRING
+} from '../CompositeStringUtils';
+import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE, COMPOSITE_FOLDER_PREFIX } from '../constants';
 import { getDocs } from './OneToOneCallCompositeDocs';
-import { OneToOneCall } from '@azure/communication-ui';
-import { Stack } from '@fluentui/react';
-import { COMPOSITE_FOLDER_PREFIX } from '../constants';
 
 export default {
-  title: `${COMPOSITE_FOLDER_PREFIX}/OneToOneCall`,
-  component: OneToOneCall,
+  title: `${COMPOSITE_FOLDER_PREFIX}/One To One Call`,
+  component: OneToOneCallComposite,
   parameters: {
     docs: {
       page: () => getDocs()
     }
   }
 } as Meta;
-
-const experienceContainerStyle = {
-  width: '90vw',
-  height: '90vh'
-};
-
-const errMessage: () => JSX.Element = () => (
-  <Stack horizontalAlign="center" verticalAlign="center" style={{ height: '100%', width: '100%' }}>
-    {'Please enter required information below.'}
-  </Stack>
-);
 
 const createUserToken = async (connectionString: string): Promise<CommunicationUserToken> => {
   if (!connectionString) {
@@ -59,20 +53,25 @@ const OneToOneCallCompositeInstance: (token: string, calleeId?: string) => JSX.E
   const requiredInformationObtained = token;
 
   return (
-    <div style={experienceContainerStyle}>
+    <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
       {requiredInformationObtained && (
-        <OneToOneCall displayName={randomCallerName()} calleeId={calleeId} token={token} />
+        <OneToOneCallComposite displayName={randomCallerName()} calleeId={calleeId} token={token} />
       )}
-      {!requiredInformationObtained && errMessage()}
+      {!requiredInformationObtained &&
+        CompositeConnectionParamsErrMessage([
+          COMPOSITE_STRING_REQUIREDCONNECTIONSTRING.replace('{0}', 'One To One Call')
+        ])}
     </div>
   );
 };
 
-export const OneToOneCallCompositeComponent: () => JSX.Element = () => {
+// This must be the only named export from this module, and must be named to match the storybook path suffix.
+// This ensures that storybook hoists the story instead of creating a folder with a single entry.
+export const OneToOneCall: () => JSX.Element = () => {
   const [token, setToken] = useState<string>('');
   const [userId, setUserId] = useState<string>('');
 
-  const connectionString = text('Connection String', '');
+  const connectionString = text(COMPOSITE_STRING_CONNECTIONSTRING, '');
 
   useEffect(() => {
     (async () => {

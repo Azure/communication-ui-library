@@ -1,5 +1,5 @@
+import { SendBox, FluentThemeProvider } from '@azure/communication-react';
 import React from 'react';
-import { SendBox, FluentThemeProvider } from '@azure/communication-ui';
 
 export const CustomStylingExample: () => JSX.Element = () => {
   const sendBoxStyles = {

@@ -1,14 +1,20 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import {
   Call,
   CallAgent,
+  CallFeatureFactoryType,
   CollectionUpdatedEvent,
   GroupChatCallLocator,
   GroupLocator,
   IncomingCallEvent,
   JoinCallOptions,
   MeetingLocator,
-  StartCallOptions
+  RecordingCallFeature,
+  StartCallOptions,
+  TranscriptionCallFeature,
+  TransferCallFeature
 } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 import EventEmitter from 'events';
@@ -22,12 +28,29 @@ import {
   MockCall,
   MockIncomingCall,
   mockoutObjectFreeze,
+  MockRecordingCallFeatureImpl,
+  MockTranscriptionCallFeatureImpl,
+  MockTransferCallFeatureImpl,
   waitWithBreakCondition
 } from './TestUtils';
 
 mockoutObjectFreeze();
 
-jest.mock('@azure/communication-calling');
+jest.mock('@azure/communication-calling', () => {
+  return {
+    Features: {
+      get Recording(): CallFeatureFactoryType<RecordingCallFeature> {
+        return MockRecordingCallFeatureImpl;
+      },
+      get Transfer(): CallFeatureFactoryType<TransferCallFeature> {
+        return MockTransferCallFeatureImpl;
+      },
+      get Transcription(): CallFeatureFactoryType<TranscriptionCallFeature> {
+        return MockTranscriptionCallFeatureImpl;
+      }
+    }
+  };
+});
 
 const mockRemoteParticipantId = 'a';
 const mockCallId = 'b';
@@ -80,7 +103,7 @@ class MockCallAgent implements CallAgent {
 describe('declarative call agent', () => {
   test('should subscribe to callsUpdated and incomingCall events when created', () => {
     const mockCallAgent = new MockCallAgent();
-    const context = new CallContext();
+    const context = new CallContext('');
     const internalContext = new InternalCallContext();
     callAgentDeclaratify(mockCallAgent, context, internalContext);
     expect(mockCallAgent.emitter.eventNames().includes('incomingCall')).toBe(true);
@@ -89,7 +112,7 @@ describe('declarative call agent', () => {
 
   test('should subscribe to any existing calls and add to state when created', () => {
     const mockCallAgent = new MockCallAgent();
-    const context = new CallContext();
+    const context = new CallContext('');
     const mockCall = createMockCall(mockCallId);
     mockCallAgent.calls = [mockCall];
     const internalContext = new InternalCallContext();
@@ -100,7 +123,7 @@ describe('declarative call agent', () => {
 
   test('should unsubscribe but not clear data when disposed is invoked', async () => {
     const mockCallAgent = new MockCallAgent();
-    const context = new CallContext();
+    const context = new CallContext('');
     const internalContext = new InternalCallContext();
     const mockCall = createMockCall(mockCallId);
     mockCallAgent.calls = [mockCall];
@@ -113,7 +136,7 @@ describe('declarative call agent', () => {
 
   test('should clear state if newly created agent and if there is old existing state', async () => {
     const mockCallAgent = new MockCallAgent();
-    const context = new CallContext();
+    const context = new CallContext('');
     const internalContext = new InternalCallContext();
     const mockCall = createMockCall(mockCallId);
     mockCallAgent.calls = [mockCall];
@@ -130,7 +153,7 @@ describe('declarative call agent', () => {
 
   test('should update state with new call when startCall is invoked', () => {
     const mockCallAgent = new MockCallAgent();
-    const context = new CallContext();
+    const context = new CallContext('');
     const internalContext = new InternalCallContext();
     expect(context.getState().calls.size).toBe(0);
     const declarativeCallAgent = callAgentDeclaratify(mockCallAgent, context, internalContext);
@@ -140,7 +163,7 @@ describe('declarative call agent', () => {
 
   test('should update state with new call when join is invoked', () => {
     const mockCallAgent = new MockCallAgent();
-    const context = new CallContext();
+    const context = new CallContext('');
     const internalContext = new InternalCallContext();
     expect(context.getState().calls.size).toBe(0);
     const declarativeCallAgent = callAgentDeclaratify(mockCallAgent, context, internalContext);
@@ -150,7 +173,7 @@ describe('declarative call agent', () => {
 
   test('should move call to callEnded when call is removed and add endTime', async () => {
     const mockCallAgent = new MockCallAgent();
-    const context = new CallContext();
+    const context = new CallContext('');
     const internalContext = new InternalCallContext();
     expect(context.getState().calls.size).toBe(0);
     callAgentDeclaratify(mockCallAgent, context, internalContext);
@@ -177,7 +200,7 @@ describe('declarative call agent', () => {
 
   test('should move incoming call to incomingCallEnded when incoming call is ended and add endTime', async () => {
     const mockCallAgent = new MockCallAgent();
-    const context = new CallContext();
+    const context = new CallContext('');
     const internalContext = new InternalCallContext();
     expect(context.getState().calls.size).toBe(0);
     callAgentDeclaratify(mockCallAgent, context, internalContext);
@@ -201,7 +224,7 @@ describe('declarative call agent', () => {
 
   test('should make sure that callsEnded not exceed max length', async () => {
     const mockCallAgent = new MockCallAgent();
-    const context = new CallContext();
+    const context = new CallContext('');
     const internalContext = new InternalCallContext();
     callAgentDeclaratify(mockCallAgent, context, internalContext);
 
@@ -225,7 +248,7 @@ describe('declarative call agent', () => {
 
   test('should make sure that incomingCallsEnded not exceed max length', async () => {
     const mockCallAgent = new MockCallAgent();
-    const context = new CallContext();
+    const context = new CallContext('');
     const internalContext = new InternalCallContext();
     callAgentDeclaratify(mockCallAgent, context, internalContext);
 

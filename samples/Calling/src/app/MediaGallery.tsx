@@ -1,16 +1,15 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import React, { useMemo } from 'react';
+import { StreamMedia, VideoTile, GridLayout } from 'react-components';
 import {
   connectFuncsToContext,
-  StreamMedia,
-  VideoTile,
-  GridLayout,
   MapToLocalVideoProps,
   convertSdkRemoteParticipantToGalleryParticipant,
   ErrorHandlingProps,
   WithErrorHandling
-} from '@azure/communication-ui';
+} from 'react-composites';
 import { MapToMediaGalleryProps, MediaGalleryContainerProps } from './consumers/MapToMediaGalleryProps';
 import { Label, mergeStyles, Stack } from '@fluentui/react';
 import ScreenShareComponent from './ScreenShare';

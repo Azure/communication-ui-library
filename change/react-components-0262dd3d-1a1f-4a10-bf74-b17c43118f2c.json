@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Adding custom palette color and fixing lobby example theming",
+  "packageName": "react-components",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}

@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import React, { Dispatch, useMemo } from 'react';
 import { InviteFooter } from './InviteFooter';
@@ -6,7 +7,7 @@ import { ParticipantManagement } from './ParticipantManagement';
 import { SettingsManagementComponent } from './SettingsManagement';
 import { SlideOutPanelComponent } from './SlideOutPanel';
 import { useSelector } from './hooks/useSelector';
-import { useThreadId } from '@azure/communication-ui';
+import { useThreadId } from 'react-composites';
 import { useHandlers } from './hooks/useHandlers';
 import { chatParticipantListSelector } from '@azure/acs-chat-selector';
 import { chatSettingsSelector } from './selectors/chatSettingsSelector';

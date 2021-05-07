@@ -1,15 +1,16 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import React from 'react';
+import { SendBox as SendBoxComponent } from '@azure/communication-react';
 import { boolean, text } from '@storybook/addon-knobs';
-import { getDocs } from './SendBoxDocs';
-import { SendBox } from '@azure/communication-ui';
-import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { Meta } from '@storybook/react/types-6-0';
+import React from 'react';
+import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { getDocs } from './SendBoxDocs';
 
 export default {
-  title: `${COMPONENT_FOLDER_PREFIX}/SendBox`,
-  component: SendBox,
+  title: `${COMPONENT_FOLDER_PREFIX}/Send Box`,
+  component: SendBoxComponent,
   parameters: {
     docs: {
       page: () => getDocs()
@@ -17,10 +18,12 @@ export default {
   }
 } as Meta;
 
-export const SendBoxComponent = (): JSX.Element => {
+// This must be the only named export from this module, and must be named to match the storybook path suffix.
+// This ensures that storybook hoists the story instead of creating a folder with a single entry.
+export const SendBox = (): JSX.Element => {
   return (
     <div style={{ width: '31.25rem' }}>
-      <SendBox
+      <SendBoxComponent
         disabled={boolean('Block button from sending', false, 'Injected by ACS Context')}
         onMessageSend={async (message) => alert(`sent message: ${message} `)}
         onTyping={(): Promise<void> => {

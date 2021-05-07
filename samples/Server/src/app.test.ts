@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path="../node_modules/@types/jest/index.d.ts" />
@@ -15,10 +16,10 @@ const mockUserToken: CommunicationUserToken = {
   expiresOn: new Date(0)
 };
 
-let createUserWithTokenSpy: jest.SpyInstance;
+let createUserAndTokenSpy: jest.SpyInstance;
 
 beforeAll(() => {
-  createUserWithTokenSpy = jest.spyOn(identity, 'createUserWithToken').mockImplementation(async () => mockUserToken);
+  createUserAndTokenSpy = jest.spyOn(identity, 'createUserAndToken').mockImplementation(async () => mockUserToken);
 });
 
 describe('app route tests', () => {
@@ -26,27 +27,27 @@ describe('app route tests', () => {
     const getResponse = await request(app).get('/token');
     expect(getResponse.status).toEqual(200);
     expect(getResponse.text).toEqual(JSON.stringify(mockUserToken));
-    expect(createUserWithTokenSpy).toHaveBeenLastCalledWith(['chat', 'voip']);
-    createUserWithTokenSpy.mockClear();
+    expect(createUserAndTokenSpy).toHaveBeenLastCalledWith(['chat', 'voip']);
+    createUserAndTokenSpy.mockClear();
 
     const postResponse = await request(app).post('/token');
     expect(postResponse.status).toEqual(200);
     expect(postResponse.text).toEqual(JSON.stringify(mockUserToken));
-    expect(createUserWithTokenSpy).toHaveBeenLastCalledWith(['chat', 'voip']);
-    createUserWithTokenSpy.mockClear();
+    expect(createUserAndTokenSpy).toHaveBeenLastCalledWith(['chat', 'voip']);
+    createUserAndTokenSpy.mockClear();
   });
 
   test('/token?scope=chat,pstn should return a token with chat and pstn scopes with GET and POST requests', async () => {
     const getResponse = await request(app).get('/token?scope=chat,pstn');
     expect(getResponse.status).toEqual(200);
     expect(getResponse.text).toEqual(JSON.stringify(mockUserToken));
-    expect(createUserWithTokenSpy).toHaveBeenLastCalledWith(['chat', 'pstn']);
-    createUserWithTokenSpy.mockClear();
+    expect(createUserAndTokenSpy).toHaveBeenLastCalledWith(['chat', 'pstn']);
+    createUserAndTokenSpy.mockClear();
 
     const postResponse = await request(app).post('/token').send({ scope: 'chat,pstn' });
     expect(postResponse.status).toEqual(200);
     expect(postResponse.text).toEqual(JSON.stringify(mockUserToken));
-    expect(createUserWithTokenSpy).toHaveBeenLastCalledWith(['chat', 'pstn']);
-    createUserWithTokenSpy.mockClear();
+    expect(createUserAndTokenSpy).toHaveBeenLastCalledWith(['chat', 'pstn']);
+    createUserAndTokenSpy.mockClear();
   });
 });

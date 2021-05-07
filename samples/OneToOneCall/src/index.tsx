@@ -1,9 +1,11 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './app/App';
-import { FluentThemeProvider } from '@azure/communication-ui';
+import { FluentThemeProvider } from 'react-components';
 
 ReactDOM.render(
   <FluentThemeProvider>

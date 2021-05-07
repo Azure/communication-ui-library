@@ -1,13 +1,18 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 export { callClientDeclaratify } from './CallClientDeclarative';
 export type { DeclarativeCallClient } from './CallClientDeclarative';
 export type {
-  DeviceManagerState,
-  CallClientState,
   Call,
+  CallAgent,
+  CallClientState,
+  DeviceManager,
   IncomingCall,
   LocalVideoStream,
-  RemoteVideoStream,
   RemoteParticipant,
-  VideoStreamRendererView
+  RemoteVideoStream,
+  VideoStreamRendererView,
+  RecordingCallFeature,
+  TranscriptionCallFeature
 } from './CallClientState';

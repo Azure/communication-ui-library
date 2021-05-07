@@ -1,12 +1,13 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { Canvas, Description, Heading, Source, Title, SourceState } from '@storybook/addon-docs/blocks';
 import React from 'react';
-import { ScreenShareLayoutExample } from './snippets/ScreenShareLayout.snippet';
 import { OneToOneCallLayoutExample } from './snippets/OneToOneCallLayout.snippet';
+import { ScreenShareLayoutExample } from './snippets/ScreenShareLayout.snippet';
 
-const ScreenShareLayoutExampleText = require('!!raw-loader!./snippets/ScreenShareLayout.snippet.tsx').default;
 const OneToOneCallLayoutExampleText = require('!!raw-loader!./snippets/OneToOneCallLayout.snippet.tsx').default;
+const ScreenShareLayoutExampleText = require('!!raw-loader!./snippets/ScreenShareLayout.snippet.tsx').default;
 
 export const getDocs: () => JSX.Element = () => {
   return (
@@ -14,13 +15,13 @@ export const getDocs: () => JSX.Element = () => {
       <Title>Layouts</Title>
       <Description>
         In this section, we showcase different examples of building your own calling gallery layouts using `VideoTile`
-        component from `@azure/communication-ui` package and `@fluentui/react` package.
+        component from `@azure/communication-react` package and `@fluentui/react` package.
       </Description>
       <Description>
         In these examples, we use [Stack](https://developer.microsoft.com/en-us/fluentui#/controls/web/stack) component
         from `fluentui` to build a layout for our video tiles. For the individual elements in this layout we use
-        `VideoTile` from `@azure/communication-ui` to render each participant. We are not passing in video stream to the
-        `VideoTile` component in these examples, instead a
+        `VideoTile` from `@azure/communication-react` to render each participant. We are not passing in video stream to
+        the `VideoTile` component in these examples, instead a
         [Persona](https://developer.microsoft.com/en-us/fluentui#/controls/web/persona) component is used as a
         placeholder component.
       </Description>

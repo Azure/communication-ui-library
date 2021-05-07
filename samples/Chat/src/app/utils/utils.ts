@@ -1,7 +1,8 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import preval from 'preval.macro';
-import { GUID_FOR_INITIAL_TOPIC_NAME } from '@azure/communication-ui';
+import { GUID_FOR_INITIAL_TOPIC_NAME } from 'react-composites';
 
 export const getBuildTime = (): string => {
   const dateTimeStamp = preval`module.exports = new Date().toLocaleString();`;

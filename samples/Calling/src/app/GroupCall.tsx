@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { Label, Overlay, Spinner, Stack } from '@fluentui/react';
 import React, { useEffect, useState } from 'react';
@@ -11,12 +12,8 @@ import {
   paneStyles,
   subContainerStyles
 } from './styles/GroupCall.styles';
-import {
-  connectFuncsToContext,
-  ErrorBar as ErrorBarComponent,
-  MapToErrorBarProps,
-  MINI_HEADER_WINDOW_WIDTH
-} from '@azure/communication-ui';
+import { connectFuncsToContext, MapToErrorBarProps, MINI_HEADER_WINDOW_WIDTH } from 'react-composites';
+import { ErrorBar as ErrorBarComponent } from 'react-components';
 import { isInCall } from './utils/AppUtils';
 import MediaGallery from './MediaGallery';
 import { GroupCallContainerProps, MapToGroupCallProps } from './consumers/MapToCallProps';

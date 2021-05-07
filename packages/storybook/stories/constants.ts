@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 export const mediaGalleryTileWidthOptions = {
   range: true,
@@ -35,6 +36,11 @@ export const mediaGalleryHeightOptions = {
 };
 
 export const mediaGalleryHeightDefault = 500;
+
+export const COMPOSITE_EXPERIENCE_CONTAINER_STYLE = {
+  width: '90vw',
+  height: '90vh'
+};
 
 export const COMPONENT_FOLDER_PREFIX = 'UI Components';
 export const COMPOSITE_FOLDER_PREFIX = 'Composites';

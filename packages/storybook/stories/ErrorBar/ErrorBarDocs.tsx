@@ -1,8 +1,9 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import React from 'react';
+import { ErrorBar } from '@azure/communication-react';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
-import { ErrorBar } from '@azure/communication-ui';
+import React from 'react';
 import { ErrorBarExample } from './snippets/ErrorBar.snippet';
 import { OtherSeverityErrorBarExample } from './snippets/OtherSeverityErrorBar.snippet';
 
@@ -10,7 +11,7 @@ const ErrorBarExampleText = require('!!raw-loader!./snippets/ErrorBar.snippet.ts
 const OtherSeverityErrorBarExampleText = require('!!raw-loader!./snippets/OtherSeverityErrorBar.snippet.tsx').default;
 
 const importStatement = `
-import { ErrorBarComponent, CommunicationUiErrorSeverity } from '@azure/communication-ui';
+import { ErrorBarComponent, CommunicationUiErrorSeverity } from '@azure/communication-react';
 `;
 
 export const getDocs: () => JSX.Element = () => {
