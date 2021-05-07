@@ -78,6 +78,11 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
         this._callSubscribers.delete(call);
       }
       this._context.setCallEnded(call.id, call.callEndReason);
+      const declarativeCall = this._declarativeCalls.get(call);
+      if (declarativeCall) {
+        declarativeCall.unsubscribe();
+        this._declarativeCalls.delete(call);
+      }
     }
   };
 
@@ -108,6 +113,7 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
     // state during the subscription process in the subscriber so we add the call to state before subscribing.
     this._context.setCall(convertSdkCallToDeclarativeCall(call));
     this._callSubscribers.set(call, new CallSubscriber(call, this._context, this._internalContext));
+    this.getOrCreateDeclarativeCall(call);
   };
 
   private getOrCreateDeclarativeCall = (call: Call): Call => {
