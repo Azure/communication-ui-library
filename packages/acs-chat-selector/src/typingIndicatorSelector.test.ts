@@ -9,15 +9,18 @@ describe('typingIndicatorSelector tests', () => {
       {
         threadId: '1',
         version: '1',
-        sender: { user: { communicationUserId: '1' }, displayName: 'User1' },
-        recipient: { communicationUserId: '1' },
+        sender: { kind: 'communicationUser', communicationUserId: '1' },
+        senderDisplayName: 'User1',
+        recipient: { kind: 'communicationUser', communicationUserId: '1' },
         receivedOn: new Date()
       }
     ];
     const participants = new Map();
     participants.set('1', { id: '1', displayName: 'User1' });
-    const userId = '1';
-    const result = typingIndicatorSelector.resultFunc(orderedTypingIndicators, participants, userId);
+    const result = typingIndicatorSelector.resultFunc(orderedTypingIndicators, participants, {
+      kind: 'communicationUser',
+      communicationUserId: '1'
+    });
     expect(result.typingUsers).toEqual([]);
   });
 
@@ -26,23 +29,27 @@ describe('typingIndicatorSelector tests', () => {
       {
         threadId: '1',
         version: '1',
-        sender: { user: { communicationUserId: '2' }, displayName: 'User2' },
-        recipient: { communicationUserId: '1' },
+        sender: { kind: 'communicationUser', communicationUserId: '2' },
+        senderDisplayName: 'User2',
+        recipient: { kind: 'communicationUser', communicationUserId: '1' },
         receivedOn: new Date(Date.now() - 1000)
       },
       {
         threadId: '1',
         version: '1',
-        sender: { user: { communicationUserId: '2' }, displayName: 'User2' },
-        recipient: { communicationUserId: '1' },
+        sender: { kind: 'communicationUser', communicationUserId: '2' },
+        senderDisplayName: 'User2',
+        recipient: { kind: 'communicationUser', communicationUserId: '1' },
         receivedOn: new Date()
       }
     ];
     const participants = new Map();
     participants.set('1', { id: '1', displayName: 'User1' });
     participants.set('2', { id: '2', displayName: 'User2' });
-    const userId = '1';
-    const result = typingIndicatorSelector.resultFunc(orderedTypingIndicators, participants, userId);
+    const result = typingIndicatorSelector.resultFunc(orderedTypingIndicators, participants, {
+      kind: 'communicationUser',
+      communicationUserId: '1'
+    });
     expect(result.typingUsers.length).toEqual(1);
     expect(result.typingUsers).toEqual([{ userId: '2', displayName: 'User2' }]);
   });
@@ -52,22 +59,25 @@ describe('typingIndicatorSelector tests', () => {
       {
         threadId: '1',
         version: '1',
-        sender: { user: { communicationUserId: '3' }, displayName: 'User3' },
-        recipient: { communicationUserId: '1' },
+        sender: { kind: 'communicationUser', communicationUserId: '3' },
+        senderDisplayName: 'User3',
+        recipient: { kind: 'communicationUser', communicationUserId: '1' },
         receivedOn: new Date(Date.now() - 2000)
       },
       {
         threadId: '1',
         version: '1',
-        sender: { user: { communicationUserId: '2' }, displayName: 'User2' },
-        recipient: { communicationUserId: '1' },
+        sender: { kind: 'communicationUser', communicationUserId: '2' },
+        senderDisplayName: 'User2',
+        recipient: { kind: 'communicationUser', communicationUserId: '1' },
         receivedOn: new Date(Date.now() - 1500)
       },
       {
         threadId: '1',
         version: '1',
-        sender: { user: { communicationUserId: '4' }, displayName: 'User4' },
-        recipient: { communicationUserId: '1' },
+        sender: { kind: 'communicationUser', communicationUserId: '4' },
+        senderDisplayName: 'User4',
+        recipient: { kind: 'communicationUser', communicationUserId: '1' },
         receivedOn: new Date(Date.now() - 1000)
       }
     ];
@@ -75,8 +85,10 @@ describe('typingIndicatorSelector tests', () => {
     participants.set('2', { id: '2', displayName: 'User2' });
     participants.set('3', { id: '3', displayName: 'User3' });
     participants.set('4', { id: '4', displayName: 'User4' });
-    const userId = '1';
-    const result = typingIndicatorSelector.resultFunc(orderedTypingIndicators, participants, userId);
+    const result = typingIndicatorSelector.resultFunc(orderedTypingIndicators, participants, {
+      kind: 'communicationUser',
+      communicationUserId: '1'
+    });
     expect(result.typingUsers.length).toEqual(3);
     expect(result.typingUsers).toEqual([
       { userId: '4', displayName: 'User4' },
@@ -90,22 +102,25 @@ describe('typingIndicatorSelector tests', () => {
       {
         threadId: '1',
         version: '1',
-        sender: { user: { communicationUserId: '7' }, displayName: 'User7' },
-        recipient: { communicationUserId: '1' },
+        sender: { kind: 'communicationUser', communicationUserId: '7' },
+        senderDisplayName: 'User7',
+        recipient: { kind: 'communicationUser', communicationUserId: '1' },
         receivedOn: new Date(Date.now() - 10500)
       },
       {
         threadId: '1',
         version: '1',
-        sender: { user: { communicationUserId: '5' }, displayName: 'User5' },
-        recipient: { communicationUserId: '1' },
+        sender: { kind: 'communicationUser', communicationUserId: '5' },
+        senderDisplayName: 'User5',
+        recipient: { kind: 'communicationUser', communicationUserId: '1' },
         receivedOn: new Date(Date.now() - 9000)
       },
       {
         threadId: '1',
         version: '1',
-        sender: { user: { communicationUserId: '6' }, displayName: 'User6' },
-        recipient: { communicationUserId: '1' },
+        sender: { kind: 'communicationUser', communicationUserId: '6' },
+        senderDisplayName: 'User6',
+        recipient: { kind: 'communicationUser', communicationUserId: '1' },
         receivedOn: new Date(Date.now() - 3000)
       }
     ];
@@ -113,8 +128,10 @@ describe('typingIndicatorSelector tests', () => {
     participants.set('5', { id: '5', displayName: 'User5' });
     participants.set('6', { id: '6', displayName: 'User6' });
     participants.set('7', { id: '7', displayName: 'User7' });
-    const userId = '1';
-    const result = typingIndicatorSelector.resultFunc(orderedTypingIndicators, participants, userId);
+    const result = typingIndicatorSelector.resultFunc(orderedTypingIndicators, participants, {
+      kind: 'communicationUser',
+      communicationUserId: '1'
+    });
     expect(result.typingUsers.length).toEqual(1);
     expect(result.typingUsers).toEqual([{ userId: '6', displayName: 'User6' }]);
   });
@@ -124,8 +141,9 @@ describe('typingIndicatorSelector tests', () => {
       {
         threadId: '1',
         version: '1',
-        sender: { user: { communicationUserId: '5' }, displayName: 'User5' },
-        recipient: { communicationUserId: '1' },
+        sender: { kind: 'communicationUser', communicationUserId: '5' },
+        senderDisplayName: 'User5',
+        recipient: { kind: 'communicationUser', communicationUserId: '1' },
         receivedOn: new Date()
       }
     ];
@@ -133,8 +151,10 @@ describe('typingIndicatorSelector tests', () => {
     Array.from(Array(20).keys()).forEach((num) =>
       participants.set(`${num}`, { id: `${num}`, displayName: `User${num}` })
     );
-    const userId = '1';
-    const result = typingIndicatorSelector.resultFunc(orderedTypingIndicators, participants, userId);
+    const result = typingIndicatorSelector.resultFunc(orderedTypingIndicators, participants, {
+      kind: 'communicationUser',
+      communicationUserId: '1'
+    });
     expect(result.typingUsers).toEqual([]);
   });
 });

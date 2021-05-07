@@ -3,6 +3,8 @@
 // @ts-ignore
 import { ChatClientState, CommunicationIdentifierAsKey } from '@azure/acs-chat-declarative';
 // @ts-ignore
+import { CommunicationIdentifierKind } from '@azure/communication-common';
+// @ts-ignore
 import { BaseSelectorProps, getUserId, getDisplayName, getParticipants } from './baseSelectors';
 import * as reselect from 'reselect';
 import { ChatParticipant } from '@azure/communication-chat';

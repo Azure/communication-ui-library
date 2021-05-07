@@ -1,11 +1,8 @@
 // © Microsoft Corporation. All rights reserved.
 
 // @ts-ignore
-import {
-  ChatClientState,
-  CommunicationIdentifierAsKey,
-  communicationIdentifierAsKey
-} from '@azure/acs-chat-declarative';
+import { ChatClientState } from '@azure/acs-chat-declarative';
+import { CommunicationIdentifierAsKey, communicationIdentifierAsKey } from '@azure/acs-chat-declarative';
 // @ts-ignore
 import { BaseSelectorProps, getTypingIndicators, getParticipants, getUserId } from './baseSelectors';
 import * as reselect from 'reselect';

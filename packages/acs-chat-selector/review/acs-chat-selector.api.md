@@ -8,6 +8,7 @@ import { ChatClientState } from '@azure/acs-chat-declarative';
 import { ChatMessageWithStatus } from '@azure/acs-chat-declarative';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
+import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
 import { MessageStatus } from '@azure/acs-chat-declarative';
 import { ReactElement } from 'react';
@@ -30,7 +31,7 @@ export type ChatMessagePayload = {
     messageId?: string;
     content?: string;
     createdOn?: Date;
-    senderId?: string;
+    senderId?: CommunicationIdentifierKind;
     senderDisplayName?: string;
     status?: MessageStatus;
     attached?: MessageAttachedStatus | boolean;
@@ -40,22 +41,22 @@ export type ChatMessagePayload = {
 
 // @public (undocumented)
 export const chatParticipantListSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
-    userId: string;
+    userId: CommunicationIdentifierKind;
     displayName: string;
     chatParticipants: WebUiChatParticipant[];
-}, (res1: string, res2: Map<string, ChatParticipant>, res3: string) => {
-    userId: string;
+}, (res1: CommunicationIdentifierKind, res2: Map<string, ChatParticipant>, res3: string) => {
+    userId: CommunicationIdentifierKind;
     displayName: string;
     chatParticipants: WebUiChatParticipant[];
 }>;
 
 // @public (undocumented)
 export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
-    userId: string;
+    userId: CommunicationIdentifierKind;
     disableReadReceipt: boolean;
     messages: Message<"chat">[];
-}, (res1: string, res2: Map<string, ChatMessageWithStatus>, res3: Date, res4: boolean) => {
-    userId: string;
+}, (res1: CommunicationIdentifierKind, res2: Map<string, ChatMessageWithStatus>, res3: Date, res4: boolean) => {
+    userId: CommunicationIdentifierKind;
     disableReadReceipt: boolean;
     messages: Message<"chat">[];
 }>;
@@ -113,11 +114,11 @@ export type MessageTypes = 'chat' | 'system' | 'custom';
 // @public (undocumented)
 export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
     displayName: string;
-    userId: string;
+    userId: CommunicationIdentifierKind;
     disabled: boolean;
-}, (res1: Date, res2: string, res3: string) => {
+}, (res1: Date, res2: CommunicationIdentifierKind, res3: string) => {
     displayName: string;
-    userId: string;
+    userId: CommunicationIdentifierKind;
     disabled: boolean;
 }>;
 
@@ -134,13 +135,13 @@ export type SystemMessagePayload = {
 // @public (undocumented)
 export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
     typingUsers: WebUiChatParticipant[];
-}, (res1: TypingIndicator[], res2: Map<string, ChatParticipant>, res3: string) => {
+}, (res1: TypingIndicator[], res2: Map<string, ChatParticipant>, res3: CommunicationIdentifierKind) => {
     typingUsers: WebUiChatParticipant[];
 }>;
 
 // @public (undocumented)
 export type WebUiChatParticipant = {
-    userId: string;
+    userId: CommunicationIdentifierKind;
     displayName?: string;
 };
 
