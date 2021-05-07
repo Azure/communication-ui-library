@@ -29,7 +29,7 @@
   "dependencies": {
     "@azure/acs-calling-declarative": "~1.0.0-beta",
     "@azure/acs-calling-selector": "~1.0.0-beta",
-    "@azure/communication-administration": "1.0.0-beta.3",
+    "@azure/communication-identity": "1.0.0",
     "@azure/communication-calling": "1.0.1-beta.1",
     "@azure/communication-chat": "1.0.0-beta.4",
     "@azure/communication-common": "1.0.0",
@@ -48,6 +48,8 @@
     "@azure/acs-chat-selector": "~1.0.0-beta",
     "react-aria-live": "^2.0.5",
     "react-linkify": "^1.0.0-alpha",
+    "memoize-one": "~5.2.1",
+    "events": "~3.3.0",
     "react-components": "1.0.0-beta"
   },
   "peerDependencies": {

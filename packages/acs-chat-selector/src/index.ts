@@ -16,7 +16,7 @@ export { usePropsFor } from './hooks/usePropsFor';
 export { useSelector } from './hooks/useSelector';
 export { useHandlers } from './hooks/useHandlers';
 
-export { createDefaultHandlersForComponent } from './handlers/createHandlers';
+export { createDefaultHandlersForComponent, createDefaultHandlers } from './handlers/createHandlers';
 export type {
   ChatMessagePayload,
   SystemMessagePayload,

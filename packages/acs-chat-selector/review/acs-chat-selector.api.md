@@ -85,6 +85,9 @@ export type CommonProperties<A, B> = {
 }[keyof A & keyof B];
 
 // @public (undocumented)
+export const createDefaultHandlers: (chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient) => DefaultHandlers;
+
+// @public (undocumented)
 export const createDefaultHandlersForComponent: <Props>(chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultHandlers, CommonProperties<DefaultHandlers, Props>>;
 
 // @public (undocumented)
