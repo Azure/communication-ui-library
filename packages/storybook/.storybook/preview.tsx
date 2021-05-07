@@ -11,7 +11,8 @@ import {
   COMPONENT_FOLDER_PREFIX,
   COMPOSITE_FOLDER_PREFIX,
   EXAMPLES_FOLDER_PREFIX,
-  QUICKSTARTS_FOLDER_PREFIX
+  QUICKSTARTS_FOLDER_PREFIX,
+  STATEFUL_CLIENT_PREFIX
 } from '../stories/constants';
 
 // Removing `loadTheme({})` causes storybook declaration exception.
@@ -43,11 +44,19 @@ export const parameters = {
         'Styling',
         'Theming',
         'Localization',
+        STATEFUL_CLIENT_PREFIX,
+        [
+          'What is it',
+          'Best Practices',
+          'Handlers',
+          'Selectors',
+          'FAQ',
+          'Reference'
+        ],
         QUICKSTARTS_FOLDER_PREFIX,
         COMPOSITE_FOLDER_PREFIX,
         COMPONENT_FOLDER_PREFIX,
-        EXAMPLES_FOLDER_PREFIX,
-        'Stateful Chat Client',
+        EXAMPLES_FOLDER_PREFIX
       ]
     }
   }
