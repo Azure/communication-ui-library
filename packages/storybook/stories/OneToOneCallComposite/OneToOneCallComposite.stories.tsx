@@ -31,11 +31,10 @@ const createUserToken = async (connectionString: string): Promise<CommunicationU
   }
 
   const tokenClient = new CommunicationIdentityClient(connectionString);
-  const user = await tokenClient.createUser();
-  const token = await tokenClient.issueToken(user, ['voip']);
+  const token = await tokenClient.createUserAndToken(['voip']);
 
-  console.log('User: ', user);
-  console.log('Token: ', token);
+  console.log('User: ', token.user);
+  console.log('Token: ', token.token);
 
   return token;
 };
