@@ -19,20 +19,24 @@ function App() {
   const [sendBoxProps, setSendBoxProps] = useState<SendBoxProps>();
 
   useEffect(() => {
+    // `selectors` compute props from `statefulChatClient`
+    // Computed props are updated in you App's State.
+    const updateAppState = (statefulClientState) => {
+      setChatThreadProps(chatThreadSelector(statefulClientState, { threadId }));
+      setSendBoxProps(sendBoxSelector(statefulClientState, { threadId }));
+    };
     (async () => {
       if (statefulChatClient && !chatThreadClient) {
-        //Once stateful client exists, generate a thread client for chat
+        // When `statefulChatClient` becomes available, generate a thread client for chat
         setChatThreadClient(await statefulChatClient.getChatThreadClient(threadId));
-        //Extract props from stateful client to use to populate UI Components
-        setChatThreadProps(chatThreadSelector(statefulChatClient.state, { threadId }));
-        setSendBoxProps(sendBoxSelector(statefulChatClient.state, { threadId }));
-        //Update props when ever the state of the stateful client changes
-        statefulChatClient.onStateChange((state) => {
-          setChatThreadProps({ ...chatThreadSelector(state, { threadId }) });
-          setSendBoxProps({ ...sendBoxSelector(state, { threadId }) });
-        });
+        // Set your App State using computed props from `statefulChatClient`.
+        updateAppState(statefulChatClient.state);
+        // Subscribe for changes in `statefulChatClient` state.
+        statefulChatClient.onStateChange(updateAppState);
       }
     })();
+    // Important: Ensure that events are unsubscribed when component unloads.
+    return () => statefulChatClient.offStateChange(updateAppState);
   }, [statefulChatClient]);
 
   //Add state to the low-level chat client
