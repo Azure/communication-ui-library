@@ -1,13 +1,15 @@
-import { ApplicationInsights } from '@microsoft/applicationinsights-web'
+import { ApplicationInsights } from '@microsoft/applicationinsights-web';
 
 /**
  * Check if we have the necessary cookie consent to allow the app insights library to make use of cookies
  */
 export const analyticsCookieConsentObtained = (): boolean => {
-  return !!(window as any).siteConsent && // has telemetry library been initialized
+  return (
+    !!(window as any).siteConsent && // has telemetry library been initialized
     (!(window as any).siteConsent.isConsentRequired || // check if we need collect consent in this region
-      (window as any).siteConsent.getConsent().Analytics); // check if we have consent to collect analytics telemetry
-}
+      (window as any).siteConsent.getConsent().Analytics)
+  ); // check if we have consent to collect analytics telemetry
+};
 
 /**
  * Start telemetry collection and watch for cookie consent changes.
@@ -18,7 +20,7 @@ export const initTelemetry = () => {
   if (appInsightsInstance) {
     createCookieChangedCallback(appInsightsInstance);
   }
-}
+};
 
 /**
  * Setup the window.cookieConsentChanged that is called when the cookie banner's onConsentChanged is called.
@@ -28,8 +30,8 @@ const createCookieChangedCallback = (applicationInsightsInstance: ApplicationIns
   (window as any).cookieConsentChanged = () => {
     const analyticsCookieConsent = analyticsCookieConsentObtained();
     applicationInsightsInstance.getCookieMgr().setEnabled(analyticsCookieConsent);
-  }
-}
+  };
+};
 
 /**
  * Start app insights tracking telemetry
@@ -39,10 +41,9 @@ const createCookieChangedCallback = (applicationInsightsInstance: ApplicationIns
 const startTelemetry = (cookieConsent: boolean): ApplicationInsights | undefined => {
   const instrumentationKey = process.env.TELEMETRY_INSTRUMENTATION_KEY;
   if (!instrumentationKey) {
-    console.warn('No telemetry instrumentationKey provided. Telemetry collection is disabled.')
+    console.warn('No telemetry instrumentationKey provided. Telemetry collection is disabled.');
     return;
   }
-
 
   // Initialize and start collecting telemetry
   const appInsights = new ApplicationInsights({
@@ -55,4 +56,4 @@ const startTelemetry = (cookieConsent: boolean): ApplicationInsights | undefined
   appInsights.loadAppInsights();
 
   return appInsights;
-}
+};

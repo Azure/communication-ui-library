@@ -39,3 +39,15 @@ export const toggleButtonsBarStyle = mergeStyles({
   width: '100%',
   backgroundColor: palette.neutralQuaternaryAlt
 });
+
+export const cameraOffLabelStyle = mergeStyles({
+  fontFamily: 'Segoe UI Regular',
+  fontSize: '0.625rem', // 10px
+  color: palette.neutralTertiary
+});
+
+export const localPreviewTileStyle = {
+  root: {
+    minHeight: '14rem'
+  }
+};

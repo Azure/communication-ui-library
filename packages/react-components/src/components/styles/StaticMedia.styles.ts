@@ -22,9 +22,3 @@ export const videoHint = mergeStyles({
   maxWidth: '40%',
   borderRadius: 4
 });
-
-export const staticMediaContainer = mergeStyles({
-  position: 'relative',
-  height: '100%',
-  width: '100%'
-});

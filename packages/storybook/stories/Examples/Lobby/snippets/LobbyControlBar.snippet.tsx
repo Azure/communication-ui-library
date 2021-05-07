@@ -1,5 +1,3 @@
-// LobbyControlBar.example.tsx
-
 import { CameraButton, ControlBar, EndCallButton, MicrophoneButton, OptionsButton } from '@azure/communication-react';
 import { useTheme } from '@fluentui/react-theme-provider';
 import React from 'react';

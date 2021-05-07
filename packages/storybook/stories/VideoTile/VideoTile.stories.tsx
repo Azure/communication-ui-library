@@ -1,16 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  CameraButton,
-  ControlBar,
-  EndCallButton,
-  MicrophoneButton,
-  OptionsButton,
-  StreamMedia,
-  VideoTile as VideoTileComponent
-} from '@azure/communication-react';
-import { Stack } from '@fluentui/react';
+import { StreamMedia, VideoTile as VideoTileComponent } from '@azure/communication-react';
 import { text, boolean, number } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
@@ -23,7 +14,6 @@ import { getDocs } from './VideoTileDocs';
 export const VideoTile: () => JSX.Element = () => {
   const avatarName = text('Avatar Name', 'John Krasinski');
   const isVideoReady = boolean('Is Video Ready', false);
-  const showControlBarComponent = boolean('Show Control Bar (Not a part of this component)', false);
   const invertVideo = boolean('Invert Video', false);
   const width = number('Width', 400, {
     range: true,
@@ -47,18 +37,7 @@ export const VideoTile: () => JSX.Element = () => {
       styles={{
         root: { height: height, width: width }
       }}
-    >
-      {showControlBarComponent && (
-        <Stack style={{ position: 'absolute', left: '50%', bottom: '1rem' }}>
-          <ControlBar styles={{ root: { position: 'relative', left: '-50%' } }}>
-            <CameraButton />
-            <MicrophoneButton />
-            <OptionsButton />
-            <EndCallButton />
-          </ControlBar>
-        </Stack>
-      )}
-    </VideoTileComponent>
+    />
   );
 };
 
