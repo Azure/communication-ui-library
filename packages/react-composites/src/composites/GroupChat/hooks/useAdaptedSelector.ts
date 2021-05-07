@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { ChatClientState, ChatThreadClientState } from '@azure/acs-chat-declarative';
 import { useState, useEffect, useRef, useMemo } from 'react';

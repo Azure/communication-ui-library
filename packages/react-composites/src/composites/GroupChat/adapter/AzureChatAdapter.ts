@@ -1,4 +1,6 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { chatClientDeclaratify, ChatClientState, DeclarativeChatClient } from '@azure/acs-chat-declarative';
 import { DefaultHandlers, createDefaultHandlers } from '@azure/acs-chat-selector';
 import { ChatClient, ChatMessage, ChatParticipant, ChatThreadClient } from '@azure/communication-chat';

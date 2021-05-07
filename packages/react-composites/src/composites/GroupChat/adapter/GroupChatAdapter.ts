@@ -1,4 +1,6 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { ChatThreadClientState } from '@azure/acs-chat-declarative';
 import { ChatMessage, ChatParticipant } from '@azure/communication-chat';
 
