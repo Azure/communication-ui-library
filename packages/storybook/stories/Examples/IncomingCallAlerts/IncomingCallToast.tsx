@@ -1,9 +1,10 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
+import { Stack } from '@fluentui/react';
+import { text, files } from '@storybook/addon-knobs';
 import React from 'react';
 import { IncomingCallToast as IncomingCallToastComponent } from 'react-composites';
-import { text, files } from '@storybook/addon-knobs';
-import { Stack } from '@fluentui/react';
 
 export const IncomingCallToast: () => JSX.Element = () => {
   const callerName = text('Caller Name', 'John Doe');

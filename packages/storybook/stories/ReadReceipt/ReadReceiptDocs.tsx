@@ -1,8 +1,9 @@
-// © Microsoft Corporation. All rights reserved.
-import React from 'react';
-import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 import { ReadReceipt } from '@azure/communication-react';
 import { Provider, teamsTheme } from '@fluentui/react-northstar';
+import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
+import React from 'react';
 
 const importStatement = `import { ReadReceipt, MessageStatus } from '@azure/communication-react';`;
 const usageCode = `<ReadReceipt messageStatus={MessageStatus.DELIVERED} />

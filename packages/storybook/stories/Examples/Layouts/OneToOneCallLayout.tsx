@@ -1,16 +1,17 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
+import { VideoTile } from '@azure/communication-react';
+import { Stack, mergeStyles, PersonaSize, Persona } from '@fluentui/react';
+import { number } from '@storybook/addon-knobs';
 import React from 'react';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
-import { number } from '@storybook/addon-knobs';
 import {
   mediaGalleryWidthDefault,
   mediaGalleryWidthOptions,
   mediaGalleryHeightDefault,
   mediaGalleryHeightOptions
 } from '../../constants';
-import { VideoTile } from '@azure/communication-react';
-import { Stack, mergeStyles, PersonaSize, Persona } from '@fluentui/react';
 
 export const OneToOneCallLayout: () => JSX.Element = () => {
   const width = number('Width (px)', mediaGalleryWidthDefault, mediaGalleryWidthOptions);

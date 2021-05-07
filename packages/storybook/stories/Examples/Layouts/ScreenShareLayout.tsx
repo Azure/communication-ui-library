@@ -1,11 +1,11 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import React from 'react';
-// also exported from '@storybook/react' if you can deal with breaking changes in 6.1
-import { number, select } from '@storybook/addon-knobs';
-import { mediaGalleryWidthOptions, mediaGalleryHeightDefault, mediaGalleryHeightOptions } from '../../constants';
 import { VideoTile } from '@azure/communication-react';
 import { Stack, mergeStyles, PersonaSize, Persona, Label } from '@fluentui/react';
+import { number, select } from '@storybook/addon-knobs';
+import React from 'react';
+import { mediaGalleryWidthOptions, mediaGalleryHeightDefault, mediaGalleryHeightOptions } from '../../constants';
 
 export const ScreenShareLayout: () => JSX.Element = () => {
   const width = number('Width (px)', 850, mediaGalleryWidthOptions);

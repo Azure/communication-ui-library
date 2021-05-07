@@ -1,9 +1,12 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { boolean, text } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
-import { Lobby } from './snippets/Lobby.snippet';
 import { getDocs } from './LobbyDocs';
+import { Lobby } from './snippets/Lobby.snippet';
 
 export const LobbyComponent: () => JSX.Element = () => {
   const callStateText = text('Call State Text', 'Waiting for others to join');

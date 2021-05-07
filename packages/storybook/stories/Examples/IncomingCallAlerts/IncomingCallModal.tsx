@@ -1,8 +1,9 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
+import { text, files, boolean } from '@storybook/addon-knobs';
 import React from 'react';
 import { IncomingCallModal as IncomingCallModalComponent } from 'react-composites';
-import { text, files, boolean } from '@storybook/addon-knobs';
 import { renderVideoStream } from '../../utils';
 
 export const IncomingCallModal: () => JSX.Element = () => {

@@ -1,4 +1,6 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 module.exports = {
   '../react-components/dist/dist-esm/components/SendBox.js': [
     '@azure/communication-chat',

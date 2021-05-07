@@ -1,19 +1,20 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
+import { CameraButton } from '@azure/communication-react';
 import { Canvas, Description, Heading, Props, Source, SourceState, Title } from '@storybook/addon-docs/blocks';
 import { boolean } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { CameraButton } from '@azure/communication-react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
 import { CustomCameraButtonExample } from './snippets/Custom.snippet';
 import { CameraButtonExample } from './snippets/Default.snippet';
 import { CameraButtonWithLabelExample } from './snippets/WithLabel.snippet';
 
-const ButtonWithLabelExampleText = require('!!raw-loader!./snippets/WithLabel.snippet.tsx').default;
 const CustomButtonExampleText = require('!!raw-loader!./snippets/Custom.snippet.tsx').default;
 const DefaultButtonExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
+const ButtonWithLabelExampleText = require('!!raw-loader!./snippets/WithLabel.snippet.tsx').default;
 
 const importStatement = `
 import { CameraButton } from '@azure/communication-ui';
