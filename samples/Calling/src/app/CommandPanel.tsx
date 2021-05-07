@@ -13,11 +13,11 @@ import { VideoDeviceInfo, LocalVideoStream } from '@azure/communication-calling'
 import { Footer } from './Footer';
 import { LocalDeviceSettingsComponent } from './LocalDeviceSettings';
 import { ParticipantStack } from './ParticipantStack';
-import { ThemeSelector } from 'react-components';
 import { useCallContext, useCallingContext } from 'react-composites';
 import { optionsButtonSelector } from '@azure/acs-calling-selector';
 import { useSelector } from './hooks/useSelector';
 import { useHandlers } from './hooks/useHandlers';
+import { ThemeSelector } from 'app/theming/ThemeSelector';
 
 export enum CommandPanelTypes {
   None = 'none',
