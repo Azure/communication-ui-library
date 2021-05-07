@@ -1,5 +1,5 @@
-import React from 'react';
 import { VideoTile, FluentThemeProvider, StreamMedia } from '@azure/communication-react';
+import React from 'react';
 import { renderVideoStream } from '../../utils';
 
 export const VideoTileExample: () => JSX.Element = () => {

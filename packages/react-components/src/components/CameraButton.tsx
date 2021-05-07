@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import React from 'react';
 import { DefaultButton, IButtonProps, Stack, concatStyleSets, mergeStyles } from '@fluentui/react';
@@ -27,12 +28,12 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
 
   const defaultRenderIcon = (props?: IButtonProps): JSX.Element => {
-    return props?.checked ? <CallVideoIcon /> : <CallVideoOffIcon />;
+    return props?.checked ? <CallVideoIcon key={'videoIconKey'} /> : <CallVideoOffIcon key={'videoOffIconKey'} />;
   };
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {
     return (
-      <Stack className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
+      <Stack key={'videoLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
         {props?.checked ? 'Turn off' : 'Turn on'}
       </Stack>
     );

@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { HangUpOptions } from '@azure/communication-calling';
 import { useCallContext, useCallingContext } from '../../../providers';

@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { DeclarativeCallClient } from '@azure/acs-calling-declarative';
 import { createDefaultHandlersForComponent } from '@azure/acs-calling-selector';

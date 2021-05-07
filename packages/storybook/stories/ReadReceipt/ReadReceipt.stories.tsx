@@ -1,11 +1,11 @@
 // © Microsoft Corporation. All rights reserved.
 
-import React from 'react';
 import { MessageStatus, ReadReceipt as ReadRecieptComponent } from '@azure/communication-react';
 import { select, text } from '@storybook/addon-knobs';
-import { getDocs } from './ReadReceiptDocs';
-import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { Meta } from '@storybook/react/types-6-0';
+import React from 'react';
+import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { getDocs } from './ReadReceiptDocs';
 
 export default {
   title: `${COMPONENT_FOLDER_PREFIX}/Read Receipt`,

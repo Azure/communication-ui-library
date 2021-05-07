@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import React from 'react';
 import { DefaultButton, IButtonProps, Stack, concatStyleSets, mergeStyles } from '@fluentui/react';
@@ -28,11 +29,15 @@ export const OptionsButton = (props: OptionsButtonProps): JSX.Element => {
   const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
 
   const defaultRenderIcon = (): JSX.Element => {
-    return <MoreIcon />;
+    return <MoreIcon key={'optionsIconKey'} />;
   };
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {
-    return <Stack className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>{'Options'}</Stack>;
+    return (
+      <Stack key={'optionsLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
+        {'Options'}
+      </Stack>
+    );
   };
 
   return (

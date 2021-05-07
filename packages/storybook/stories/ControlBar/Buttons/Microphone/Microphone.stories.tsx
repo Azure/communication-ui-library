@@ -1,20 +1,20 @@
 // © Microsoft Corporation. All rights reserved.
 
+import { MicrophoneButton } from '@azure/communication-react';
 import { Canvas, Description, Heading, Props, Source, SourceState, Title } from '@storybook/addon-docs/blocks';
 import { boolean } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { MicrophoneButton } from '@azure/communication-react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
+import { CustomMicrophoneButtonExample } from './snippets/CustomMicrophoneButton.snippet';
 import { MicrophoneButtonExample } from './snippets/MicrophoneButton.snippet';
 import { MicrophoneButtonWithLabelExample } from './snippets/MicrophoneButtonWithLabel.snippet';
-import { CustomMicrophoneButtonExample } from './snippets/CustomMicrophoneButton.snippet';
 
+const CustomMicrophoneButtonExampleText = require('!!raw-loader!./snippets/CustomMicrophoneButton.snippet.tsx').default;
 const MicrophoneButtonExampleText = require('!!raw-loader!./snippets/MicrophoneButton.snippet.tsx').default;
 const MicrophoneButtonWithLabelExampleText = require('!!raw-loader!./snippets/MicrophoneButtonWithLabel.snippet.tsx')
   .default;
-const CustomMicrophoneButtonExampleText = require('!!raw-loader!./snippets/CustomMicrophoneButton.snippet.tsx').default;
 
 const importStatement = `
 import { MicrophoneButton } from '@azure/communication-react';

@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { CallingProvider, CallProvider } from '../../providers';
 import React, { useCallback, useEffect, useState } from 'react';
