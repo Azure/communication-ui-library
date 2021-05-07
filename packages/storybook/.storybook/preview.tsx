@@ -1,8 +1,9 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import React from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
-import { FluentThemeProvider, defaultThemes } from '@azure/communication-ui';
+import { FluentThemeProvider, defaultThemes } from '@azure/communication-react';
 import { initializeIcons, loadTheme, mergeStyles } from '@fluentui/react';
 import { DocsContainer } from '@storybook/addon-docs/blocks';
 import { BackToTop, TableOfContents } from 'storybook-docs-toc';
@@ -10,7 +11,8 @@ import {
   COMPONENT_FOLDER_PREFIX,
   COMPOSITE_FOLDER_PREFIX,
   EXAMPLES_FOLDER_PREFIX,
-  QUICKSTARTS_FOLDER_PREFIX
+  QUICKSTARTS_FOLDER_PREFIX,
+  STATEFUL_CLIENT_PREFIX
 } from '../stories/constants';
 
 // Removing `loadTheme({})` causes storybook declaration exception.
@@ -42,11 +44,19 @@ export const parameters = {
         'Styling',
         'Theming',
         'Localization',
+        STATEFUL_CLIENT_PREFIX,
+        [
+          'What is it',
+          'Best Practices',
+          'Handlers',
+          'Selectors',
+          'FAQ',
+          'Reference'
+        ],
         QUICKSTARTS_FOLDER_PREFIX,
         COMPOSITE_FOLDER_PREFIX,
         COMPONENT_FOLDER_PREFIX,
-        EXAMPLES_FOLDER_PREFIX,
-        'Stateful Chat Client',
+        EXAMPLES_FOLDER_PREFIX
       ]
     }
   }
@@ -55,7 +65,7 @@ export const parameters = {
 const withThemeProvider = (Story: any, context: any) => {
   const themeName = (context.globals.theme as string).toLowerCase();
   let theme = THEMES[themeName]?.theme;
-  if (context.globals.customTheme !== '') {
+  if (context.globals.customTheme) {
     try {
       theme = JSON.parse(context.globals.customTheme);
     } catch(e) {

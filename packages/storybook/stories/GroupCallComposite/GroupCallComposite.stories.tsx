@@ -1,23 +1,24 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
+import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-administration';
+import { text } from '@storybook/addon-knobs';
+import { Meta } from '@storybook/react/types-6-0';
 import React, { useEffect, useState } from 'react';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
-import { Meta } from '@storybook/react/types-6-0';
-import { text } from '@storybook/addon-knobs';
+import { GroupCall as GroupCallComposite } from 'react-composites';
 import { v1 as createGUID } from 'uuid';
-import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-administration';
-import { getDocs } from './GroupCallCompositeDocs';
-import { GroupCall } from '@azure/communication-ui';
-import { COMPOSITE_FOLDER_PREFIX } from '../constants';
 import {
   CompositeConnectionParamsErrMessage,
   COMPOSITE_STRING_CONNECTIONSTRING,
   COMPOSITE_STRING_REQUIREDCONNECTIONSTRING
 } from '../CompositeStringUtils';
+import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE, COMPOSITE_FOLDER_PREFIX } from '../constants';
+import { getDocs } from './GroupCallCompositeDocs';
 
 export default {
-  title: `${COMPOSITE_FOLDER_PREFIX}/GroupCall`,
-  component: GroupCall,
+  title: `${COMPOSITE_FOLDER_PREFIX}/Group Call`,
+  component: GroupCallComposite,
   parameters: {
     docs: {
       page: () => getDocs()
@@ -39,7 +40,9 @@ const createUserToken = async (connectionString: string): Promise<CommunicationU
   return token;
 };
 
-export const GroupCallComposite: () => JSX.Element = () => {
+// This must be the only named export from this module, and must be named to match the storybook path suffix.
+// This ensures that storybook hoists the story instead of creating a folder with a single entry.
+export const GroupCall: () => JSX.Element = () => {
   const [userId, setUserId] = useState<string>('');
   const [groupId, setGroupId] = useState<string>('');
   const [token, setToken] = useState<string>('');
@@ -47,33 +50,27 @@ export const GroupCallComposite: () => JSX.Element = () => {
 
   useEffect(() => {
     (async () => {
-      try {
-        const tokenResponse = await createUserToken(connectionString);
-        setToken(tokenResponse.token);
-        setUserId(tokenResponse.user.communicationUserId);
-        const groupId = createGUID();
-        console.log(`groupId: ${groupId}`);
-        setGroupId(groupId);
-      } catch (e) {
-        console.log('Please provide your connection string');
+      if (connectionString) {
+        try {
+          const tokenResponse = await createUserToken(connectionString);
+          setToken(tokenResponse.token);
+          setUserId(tokenResponse.user.communicationUserId);
+          const groupId = createGUID();
+          console.log(`groupId: ${groupId}`);
+          setGroupId(groupId);
+        } catch (e) {
+          console.error(e);
+          console.log('Ensure your connection string is valid.');
+        }
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [connectionString]);
 
   return (
-    <div
-      style={{
-        width: '100%',
-        height: '100%',
-        maxWidth: '55rem',
-        maxHeight: '30.0625rem',
-        margin: '20px auto',
-        border: '1px solid'
-      }}
-    >
+    <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
       {connectionString && (
-        <GroupCall
+        <GroupCallComposite
           displayName={`user${Math.ceil(Math.random() * 1000)}`}
           userId={userId}
           groupId={groupId}

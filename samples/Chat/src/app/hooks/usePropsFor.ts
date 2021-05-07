@@ -1,8 +1,9 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { ChatClientState } from '@azure/acs-chat-declarative';
 import { chatThreadSelector, sendBoxSelector, typingIndicatorSelector } from '@azure/acs-chat-selector';
-import { MessageThread, SendBox, TypingIndicator } from '@azure/communication-ui';
+import { MessageThread, SendBox, TypingIndicator } from 'react-components';
 
 import React from 'react';
 import { useHandlers } from './useHandlers';

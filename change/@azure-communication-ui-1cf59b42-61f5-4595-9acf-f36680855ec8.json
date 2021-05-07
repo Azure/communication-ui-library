@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove THEMES singleton. Refine theme related exports.",
-  "packageName": "@azure/communication-ui",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "patch"
-}

@@ -1,15 +1,16 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import React from 'react';
-import { MessageStatus, ReadReceipt } from '@azure/communication-ui';
+import { MessageStatus, ReadReceipt as ReadRecieptComponent } from '@azure/communication-react';
 import { select, text } from '@storybook/addon-knobs';
-import { getDocs } from './ReadReceiptDocs';
-import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { Meta } from '@storybook/react/types-6-0';
+import React from 'react';
+import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { getDocs } from './ReadReceiptDocs';
 
 export default {
-  title: `${COMPONENT_FOLDER_PREFIX}/ReadReceipt`,
-  component: ReadReceipt,
+  title: `${COMPONENT_FOLDER_PREFIX}/Read Receipt`,
+  component: ReadRecieptComponent,
   parameters: {
     docs: {
       page: () => getDocs()
@@ -17,9 +18,11 @@ export default {
   }
 } as Meta;
 
-export const ReadRecieptIconComponent = (): JSX.Element => {
+// This must be the only named export from this module, and must be named to match the storybook path suffix.
+// This ensures that storybook hoists the story instead of creating a folder with a single entry.
+export const ReadReceipt = (): JSX.Element => {
   return (
-    <ReadReceipt
+    <ReadRecieptComponent
       messageStatus={select<MessageStatus>('Message Status', ['delivered', 'sending', 'seen', 'failed'], 'delivered')}
       deliveredTooltipText={text('Delivered icon tooltip text', 'Sent')}
       sendingTooltipText={text('Sending icon tooltip text', 'Sending')}

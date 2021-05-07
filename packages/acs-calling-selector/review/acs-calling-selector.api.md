@@ -11,9 +11,10 @@ import { CallAgent } from '@azure/communication-calling';
 import { CallClientState } from '@azure/acs-calling-declarative';
 import * as callingStateful from '@azure/acs-calling-declarative';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
+import { CreateViewOptions as CreateViewOptions_2 } from '@azure/communication-calling';
 import { DeclarativeCallClient } from '@azure/acs-calling-declarative';
 import { DeviceManager } from '@azure/communication-calling';
-import { DeviceManagerState } from '@azure/acs-calling-declarative';
+import { DeviceManager as DeviceManager_2 } from '@azure/acs-calling-declarative';
 import { IncomingCall } from '@azure/acs-calling-declarative';
 import { LocalVideoStream } from '@azure/communication-calling';
 import { LocalVideoStream as LocalVideoStream_2 } from '@azure/acs-calling-declarative';
@@ -63,7 +64,7 @@ export const createDefaultHandlersForComponent: <Props>(declarativeCallClient: D
     onToggleCamera: () => Promise<void>;
     onToggleMicrophone: () => Promise<void> | void;
     onToggleScreenShare: () => Promise<void> | void;
-    onRenderView: (stream: LocalVideoStream_2 | RemoteVideoStream, options: CreateViewOptions) => Promise<void>;
+    onRenderView: (stream: LocalVideoStream_2 | RemoteVideoStream, options: CreateViewOptions_2) => Promise<void>;
 }, CommonProperties<{
     onHangUp: () => Promise<void>;
     onMute: () => Promise<void> | void;
@@ -79,7 +80,7 @@ export const createDefaultHandlersForComponent: <Props>(declarativeCallClient: D
     onToggleCamera: () => Promise<void>;
     onToggleMicrophone: () => Promise<void> | void;
     onToggleScreenShare: () => Promise<void> | void;
-    onRenderView: (stream: LocalVideoStream_2 | RemoteVideoStream, options: CreateViewOptions) => Promise<void>;
+    onRenderView: (stream: LocalVideoStream_2 | RemoteVideoStream, options: CreateViewOptions_2) => Promise<void>;
 }, Props>>;
 
 // @public (undocumented)
@@ -103,7 +104,7 @@ export const getCalls: (state: CallClientState) => Map<string, Call_2>;
 export const getCallsEnded: (state: CallClientState) => Call_2[];
 
 // @public (undocumented)
-export const getDeviceManager: (state: CallClientState) => DeviceManagerState;
+export const getDeviceManager: (state: CallClientState) => DeviceManager_2;
 
 // @public (undocumented)
 export const getDisplayName: (state: CallClientState, props: BaseSelectorProps) => string | undefined;
@@ -138,7 +139,7 @@ export const optionsButtonSelector: reselect.OutputParametricSelector<callingSta
     selectedMicrophone: AudioDeviceInfo | undefined;
     selectedSpeaker: AudioDeviceInfo | undefined;
     selectedCamera: VideoDeviceInfo | undefined;
-}, (res1: callingStateful.DeviceManagerState, res2: callingStateful.Call | undefined) => {
+}, (res1: callingStateful.DeviceManager, res2: callingStateful.Call | undefined) => {
     microphones: AudioDeviceInfo[];
     speakers: AudioDeviceInfo[];
     cameras: VideoDeviceInfo[];

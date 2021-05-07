@@ -1,11 +1,12 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import React from 'react';
-import { OneToOneCall } from '@azure/communication-ui';
+import { OneToOneCall } from 'react-composites';
 
 const importStatement = `
-import { OneToOneCall } from '@azure/communication-ui';
+import { OneToOneCall } from 'react-composites';
 import { Provider, teamsTheme } from '@fluentui/react-northstar';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-administration';
 `;

@@ -1,24 +1,24 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import React, { useEffect } from 'react';
-import { text } from '@storybook/addon-knobs';
-import { getDocs } from './GroupChatCompositeDocs';
-import { ChatConfig, GroupChat } from '@azure/communication-ui';
-import { AzureCommunicationUserCredential } from '@azure/communication-common';
 import { CommunicationIdentityClient } from '@azure/communication-administration';
 import { ChatClient } from '@azure/communication-chat';
-import { useState } from 'react';
-import { COMPOSITE_FOLDER_PREFIX } from '../constants';
+import { AzureCommunicationUserCredential } from '@azure/communication-common';
+import { text } from '@storybook/addon-knobs';
+import { Meta } from '@storybook/react/types-6-0';
+import React, { useState, useEffect } from 'react';
+import { ChatConfig, GroupChat as GroupChatComposite } from 'react-composites';
 import {
   CompositeConnectionParamsErrMessage,
   COMPOSITE_STRING_CONNECTIONSTRING,
   COMPOSITE_STRING_REQUIREDCONNECTIONSTRING
 } from '../CompositeStringUtils';
-import { Meta } from '@storybook/react/types-6-0';
+import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE, COMPOSITE_FOLDER_PREFIX } from '../constants';
+import { getDocs } from './GroupChatCompositeDocs';
 
 export default {
-  title: `${COMPOSITE_FOLDER_PREFIX}/GroupChat`,
-  component: GroupChat,
+  title: `${COMPOSITE_FOLDER_PREFIX}/Group Chat`,
+  component: GroupChatComposite,
   parameters: {
     useMaxHeightParent: true,
     useMaxWidthParent: true,
@@ -112,7 +112,9 @@ const createChatConfig = async (resourceConnectionString: string): Promise<ChatC
   };
 };
 
-export const GroupChatComposite: () => JSX.Element = () => {
+// This must be the only named export from this module, and must be named to match the storybook path suffix.
+// This ensures that storybook hoists the story instead of creating a folder with a single entry.
+export const GroupChat: () => JSX.Element = () => {
   const [chatConfig, setChatConfig] = useState<ChatConfig>();
 
   const connectionString = text(COMPOSITE_STRING_CONNECTIONSTRING, '', 'Server Simulator');
@@ -152,18 +154,8 @@ export const GroupChatComposite: () => JSX.Element = () => {
   }
 
   return (
-    <div
-      style={{
-        width: '100%',
-        height: '100%',
-        maxWidth: '50rem',
-        maxHeight: '30rem',
-        margin: '20px auto',
-        border: '1px solid',
-        padding: '0 10px'
-      }}
-    >
-      {chatConfig && <GroupChat {...chatConfig} />}
+    <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
+      {chatConfig && <GroupChatComposite {...chatConfig} />}
       {!chatConfig && CompositeConnectionParamsErrMessage([emptyConfigTips, emptyConfigParametersTips])}
     </div>
   );

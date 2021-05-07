@@ -1,8 +1,9 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import React, { useEffect, useState } from 'react';
 import { initializeIcons, loadTheme, Spinner, Stack } from '@fluentui/react';
-import { OneToOneCall } from '@azure/communication-ui';
+import { OneToOneCall } from 'react-composites';
 import { createRandomDisplayName, fetchTokenResponse, getBuildTime, supportedBrowser } from './utils/AppUtils';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires

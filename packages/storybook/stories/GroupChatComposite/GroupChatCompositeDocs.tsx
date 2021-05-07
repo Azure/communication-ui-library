@@ -1,10 +1,11 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 import { Title, Description, Props, Heading, Source } from '@storybook/addon-docs/blocks';
-import { GroupChat } from '@azure/communication-ui';
 import React from 'react';
+import { GroupChat } from 'react-composites';
 
-const importStatement = `import { GroupChat } from '@azure/communication-ui';`;
-const usageCode = `import { GroupChat } from '@azure/communication-ui';
+const importStatement = `import { GroupChat } from 'react-composites';`;
+const usageCode = `import { GroupChat } from 'react-composites';
 import { AzureCommunicationUserCredential } from '@azure/communication-common';
 import { CommunicationIdentityClient } from "@azure/communication-administration";
 import { ChatClient } from '@azure/communication-chat';

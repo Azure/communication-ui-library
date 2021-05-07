@@ -1,12 +1,15 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import {
   CallAgent,
   DeviceManager,
   Call,
   StartCallOptions,
-  LocalVideoStream,
   VideoDeviceInfo,
-  AudioDeviceInfo
+  AudioDeviceInfo,
+  LocalVideoStream,
+  CreateViewOptions
 } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 import {
@@ -16,7 +19,6 @@ import {
 } from '@azure/acs-calling-declarative';
 import { ReactElement } from 'react';
 import memoizeOne from 'memoize-one';
-import { CreateViewOptions } from '../types/VideoGallery';
 
 export type DefaultHandlers = ReturnType<typeof createDefaultHandlers>;
 

@@ -1,7 +1,8 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import React from 'react';
 import { Title, Heading, Description, Canvas, Source } from '@storybook/addon-docs/blocks';
+import React from 'react';
 import { BasicParticipantListExample } from './snippets/BasicParticipantList.snippet';
 import { InteractiveParticipantListExample } from './snippets/InteractiveParticipantList.snippet';
 
@@ -21,7 +22,7 @@ export const getDocs: () => JSX.Element = () => {
         a container like shown in the code below.
       </Description>
       <Source code={BasicParticipantListExampleText} />
-      <Canvas withSource="none">
+      <Canvas withSource={'none' as any}>
         <BasicParticipantListExample />
       </Canvas>
 
@@ -36,7 +37,7 @@ export const getDocs: () => JSX.Element = () => {
       </Description>
       <Source code={InteractiveParticipantListExampleText} />
 
-      <Canvas withSource="none">
+      <Canvas withSource={'none' as any}>
         <InteractiveParticipantListExample />
       </Canvas>
     </>

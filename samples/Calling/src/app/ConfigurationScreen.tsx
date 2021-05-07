@@ -1,7 +1,8 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import React, { useState } from 'react';
-import { useCallContext, useCallingContext } from '@azure/communication-ui';
+import { useCallContext, useCallingContext } from 'react-composites';
 import { localStorageAvailable } from './utils/constants';
 import { saveDisplayNameToLocalStorage } from './utils/AppUtils';
 import { DisplayNameField } from './DisplayNameField';
@@ -9,8 +10,8 @@ import { StartCallButton } from './StartCallButton';
 import { CallConfiguration } from './CallConfiguration';
 import { LocalDeviceSettingsComponent } from './LocalDeviceSettings';
 import { LocalVideoStream, VideoDeviceInfo } from '@azure/communication-calling';
-import { useSelector } from './hooks/useSelector';
 import { optionsButtonSelector } from '@azure/acs-calling-selector';
+import { useSelector } from './hooks/useSelector';
 import { useHandlers } from './hooks/useHandlers';
 
 export interface ConfigurationScreenProps {

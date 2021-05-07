@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import React from 'react';
 import { Stack } from '@fluentui/react';
@@ -12,9 +13,10 @@ import { VideoDeviceInfo, LocalVideoStream } from '@azure/communication-calling'
 import { Footer } from './Footer';
 import { LocalDeviceSettingsComponent } from './LocalDeviceSettings';
 import { ParticipantStack } from './ParticipantStack';
-import { ThemeSelector, useCallContext, useCallingContext } from '@azure/communication-ui';
-import { useSelector } from './hooks/useSelector';
+import { ThemeSelector } from 'react-components';
+import { useCallContext, useCallingContext } from 'react-composites';
 import { optionsButtonSelector } from '@azure/acs-calling-selector';
+import { useSelector } from './hooks/useSelector';
 import { useHandlers } from './hooks/useHandlers';
 
 export enum CommandPanelTypes {

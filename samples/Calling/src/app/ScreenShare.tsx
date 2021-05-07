@@ -1,15 +1,18 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import React, { useMemo } from 'react';
 import { Label, mergeStyles, Spinner, SpinnerSize, Stack } from '@fluentui/react';
 import { loadingStyle, videoStreamStyle, videoTileStyle } from './styles/ScreenShare.styles';
 
 import {
+  StreamMedia,
+  VideoTile,
   CreateViewOptions,
   VideoGalleryLocalParticipant,
   VideoGalleryRemoteParticipant
-} from '@azure/communication-ui';
-import { StreamMedia, VideoTile } from '@azure/communication-ui';
+} from 'react-components';
+import { LocalVideoStream, RemoteVideoStream } from '@azure/acs-calling-declarative';
 import { memoizeFnAll } from '@azure/acs-calling-selector';
 import {
   aspectRatioBoxContentStyle,
@@ -19,7 +22,6 @@ import {
   stackContainerStyle,
   videoHint
 } from './styles/MediaGallery.styles';
-import { LocalVideoStream, RemoteVideoStream } from '@azure/acs-calling-declarative';
 
 export type ScreenShareProps = {
   localParticipant: VideoGalleryLocalParticipant;

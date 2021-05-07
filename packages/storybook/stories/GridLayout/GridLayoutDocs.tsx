@@ -1,13 +1,14 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import React from 'react';
+import { GridLayout } from '@azure/communication-react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
-import { GridLayout } from '@azure/communication-ui';
+import React from 'react';
 import { GridLayoutExample } from './snippets/GridLayout.snippet';
 const GridLayoutExampleText = require('!!raw-loader!./snippets/GridLayout.snippet').default;
 
 const importStatement = `
-import { GridLayout, VideoTile } from '@azure/communication-ui';
+import { GridLayout, VideoTile } from '@azure/communication-react';
 `;
 export const getDocs: () => JSX.Element = () => {
   return (

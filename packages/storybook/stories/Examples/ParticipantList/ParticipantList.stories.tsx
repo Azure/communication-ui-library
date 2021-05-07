@@ -1,10 +1,13 @@
-import React from 'react';
-import { Meta } from '@storybook/react/types-6-0';
-import { ParticipantItem } from '@azure/communication-ui';
-import { boolean, text, select } from '@storybook/addon-knobs';
-import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+import { ParticipantItem } from '@azure/communication-react';
 import { Stack, PersonaPresence } from '@fluentui/react';
 import { MicOffIcon, CallControlPresentNewIcon } from '@fluentui/react-northstar';
+import { boolean, text, select } from '@storybook/addon-knobs';
+import { Meta } from '@storybook/react/types-6-0';
+import React from 'react';
+import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import { getDocs } from './ParticipantListDocs';
 
 const onlyUnique = (value: string, index: number, self: string[]): boolean => {
@@ -47,6 +50,7 @@ export const ParticipantListComponent: () => JSX.Element = () => {
 
   const headingStyle = { fontSize: '1.5rem', marginBottom: '1rem' };
   const stackStyle = { width: '12.5rem' };
+  let reactItemKey = 0;
 
   return (
     <Stack>
@@ -69,6 +73,7 @@ export const ParticipantListComponent: () => JSX.Element = () => {
           return (
             // eslint-disable-next-line react/jsx-key
             <ParticipantItem
+              key={'ParticipantItem' + ++reactItemKey}
               name={p.displayName}
               presence={p.presence}
               onRenderIcon={() => (

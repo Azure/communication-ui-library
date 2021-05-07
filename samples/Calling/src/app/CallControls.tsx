@@ -1,7 +1,8 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import React from 'react';
-import { ControlBar, MicrophoneButton, CameraButton, ScreenShareButton, EndCallButton } from '@azure/communication-ui';
+import { ControlBar, MicrophoneButton, CameraButton, ScreenShareButton, EndCallButton } from 'react-components';
 import { useHandlers } from './hooks/useHandlers';
 import { usePropsFor } from './hooks/usePropsFor';
 import {

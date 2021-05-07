@@ -1,7 +1,8 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import React from 'react';
-import { ENTER_KEY, MAXIMUM_LENGTH_OF_NAME, ErrorHandlingProps, WithErrorHandling } from '@azure/communication-ui';
+import { ENTER_KEY, MAXIMUM_LENGTH_OF_NAME, ErrorHandlingProps, WithErrorHandling } from 'react-composites';
 import {
   TextFieldStyleProps,
   inputBoxStyle,

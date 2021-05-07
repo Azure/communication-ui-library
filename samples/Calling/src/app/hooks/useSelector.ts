@@ -1,7 +1,8 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { CallClientState, DeclarativeCallClient } from '@azure/acs-calling-declarative';
-import { useCall, useCallClient, useDisplayName, useIdentifier } from '@azure/communication-ui';
+import { useCall, useCallClient, useDisplayName, useIdentifier } from 'react-composites';
 
 import { useState, useEffect, useRef, useMemo } from 'react';
 

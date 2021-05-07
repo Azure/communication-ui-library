@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 // @ts-ignore
 import { ChatClientState } from '@azure/acs-chat-declarative';
@@ -20,8 +21,7 @@ const filterTypingIndicators = (typingIndicators: TypingIndicator[], userId: str
       continue;
     }
     if (typingIndicator.receivedOn < date8SecondsAgo) {
-      // assuming typingIndicators is ordered from oldest to newest so we don't need to check the rest
-      break;
+      continue;
     }
     if (seen.has(typingIndicator.sender.user.communicationUserId)) {
       continue;

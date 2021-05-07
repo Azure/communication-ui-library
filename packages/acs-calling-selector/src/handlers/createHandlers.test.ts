@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { CallAgent, CallAgentOptions, DeviceManager } from '@azure/communication-calling';
 import { CommunicationTokenCredential } from '@azure/communication-common';

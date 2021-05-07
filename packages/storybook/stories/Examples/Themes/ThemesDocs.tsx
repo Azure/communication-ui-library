@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { Description, Heading, Source, Title } from '@storybook/addon-docs/blocks';
 import React from 'react';
@@ -15,8 +16,7 @@ export const getDocs: () => JSX.Element = () => {
     MicrophoneButton,
     ScreenShareButton,
     VideoTile
-  } from '@azure/communication-ui';
-  import { DefaultButton } from '@fluentui/react';
+  } from '@azure/communication-react';
 
   const TeamsTheme = {
     palette: {

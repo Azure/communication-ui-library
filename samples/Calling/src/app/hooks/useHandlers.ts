@@ -1,9 +1,10 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { DeclarativeCallClient } from '@azure/acs-calling-declarative';
 import { createDefaultHandlersForComponent } from '@azure/acs-calling-selector';
 
-import { useCallClient, useCallingContext, useDeviceManager, useCall } from '@azure/communication-ui';
+import { useCallClient, useCallingContext, useDeviceManager, useCall } from 'react-composites';
 
 import { ReactElement } from 'react';
 

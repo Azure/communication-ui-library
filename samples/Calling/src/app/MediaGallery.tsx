@@ -1,9 +1,10 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import React, { useMemo } from 'react';
-import { VideoGallery, VideoGalleryRemoteParticipant } from '@azure/communication-ui';
-import { usePropsFor } from './hooks/usePropsFor';
+import { VideoGallery, VideoGalleryRemoteParticipant } from 'react-components';
 import { useHandlers } from './hooks/useHandlers';
+import { usePropsFor } from './hooks/usePropsFor';
 import { ScreenShare } from './ScreenShare';
 
 export const MediaGallery = (): JSX.Element => {

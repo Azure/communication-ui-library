@@ -1,9 +1,6 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import React from 'react';
-import { Meta } from '@storybook/react/types-6-0';
-import { getDocs } from './ThemesDocs';
-import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import {
   CameraButton,
   ControlBar,
@@ -13,7 +10,11 @@ import {
   MicrophoneButton,
   ScreenShareButton,
   VideoTile
-} from '@azure/communication-ui';
+} from '@azure/communication-react';
+import { Meta } from '@storybook/react/types-6-0';
+import React from 'react';
+import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
+import { getDocs } from './ThemesDocs';
 
 const TeamsTheme = {
   palette: {

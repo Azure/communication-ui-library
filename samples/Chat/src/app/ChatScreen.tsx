@@ -1,10 +1,11 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import React, { useEffect, useRef, useState } from 'react';
 import { chatScreenBottomContainerStyle, chatScreenContainerStyle } from './styles/ChatScreen.styles';
 import { Stack } from '@fluentui/react';
 import { onRenderAvatar } from './Avatar';
-import { useChatClient, useChatThreadClient, useThreadId } from '@azure/communication-ui';
+import { useChatClient, useChatThreadClient, useThreadId } from 'react-composites';
 import { ChatHeader } from './ChatHeader';
 import { ChatArea } from './ChatArea';
 import { SidePanel, SidePanelTypes } from './SidePanel';

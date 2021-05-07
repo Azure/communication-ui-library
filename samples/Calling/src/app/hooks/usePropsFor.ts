@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { CallClientState } from '@azure/acs-calling-declarative';
 import {
@@ -7,7 +8,7 @@ import {
   screenShareButtonSelector,
   videoGallerySelector
 } from '@azure/acs-calling-selector';
-import { CameraButton, MicrophoneButton, ScreenShareButton, VideoGallery } from '@azure/communication-ui';
+import { CameraButton, MicrophoneButton, ScreenShareButton, VideoGallery } from 'react-components';
 
 import React from 'react';
 import { useHandlers } from './useHandlers';

@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { DefaultButton, Separator, Stack } from '@fluentui/react';
 import React from 'react';
@@ -12,7 +13,7 @@ import {
   separatorStyles
 } from './styles/Header.styles';
 
-import { MINI_HEADER_WINDOW_WIDTH } from '@azure/communication-ui';
+import { MINI_HEADER_WINDOW_WIDTH } from 'react-composites';
 import { CommandPanelTypes } from './CommandPanel';
 import { CallControls } from './CallControls';
 

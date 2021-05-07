@@ -1,16 +1,16 @@
-import React from 'react';
 import {
   CameraButton,
   ControlBar,
   EndCallButton,
   FluentThemeProvider,
   MicrophoneButton,
+  OptionsButton,
   ScreenShareButton,
   answerButtonProps,
-  optionsButtonProps,
   recordButtonProps
-} from '@azure/communication-ui';
+} from '@azure/communication-react';
 import { DefaultButton, IContextualMenuProps } from '@fluentui/react';
+import React from 'react';
 
 export const AllButtonsControlBarExample: () => JSX.Element = () => {
   const exampleOptionsMenuProps: IContextualMenuProps = {
@@ -54,7 +54,7 @@ export const AllButtonsControlBarExample: () => JSX.Element = () => {
             /*handle onClick*/
           }}
         />
-        <DefaultButton {...optionsButtonProps} menuProps={exampleOptionsMenuProps} />
+        <OptionsButton menuProps={exampleOptionsMenuProps} />
         <EndCallButton
           onClick={() => {
             /*handle onClick*/
