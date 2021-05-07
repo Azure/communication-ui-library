@@ -52,6 +52,10 @@
     "lint:quiet": "npm run lint -- --quiet"
   },
   "devDependencies": {
+    "@azure/acs-calling-declarative": "~1.0.0-beta",
+    "@azure/acs-calling-selector": "~1.0.0-beta",
+    "@azure/acs-chat-declarative": "~1.0.0-beta",
+    "@azure/acs-chat-selector": "~1.0.0-beta",
     "@microsoft/api-documenter": "~7.12.11",
     "@microsoft/api-extractor": "~7.13.2",
     "@testing-library/jest-dom": "^5.11.4",

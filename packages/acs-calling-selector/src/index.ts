@@ -3,5 +3,5 @@
 
 export { createDefaultCallingHandlersForComponent } from './handlers/createHandlers';
 export type { CallingBaseSelectorProps } from './baseSelectors';
-export type { CallingCommonProperties } from './handlers/createHandlers';
+export type { CommonProperties1 } from './handlers/createHandlers';
 export * from './callControlSelectors';

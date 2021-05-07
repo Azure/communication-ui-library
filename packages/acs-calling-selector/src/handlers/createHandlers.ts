@@ -119,11 +119,11 @@ const createDefaultHandlers = memoizeOne(
 /**
  * Type guard for common properties between two types.
  */
-export type CallingCommonProperties<A, B> = {
+export type CommonProperties1<A, B> = {
   [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
 
-type Common<A, B> = Pick<A, CallingCommonProperties<A, B>>;
+type Common<A, B> = Pick<A, CommonProperties1<A, B>>;
 
 /**
  * Create a set of default handlers for given component. Memoization is applied to the result. Multiple invokations with

@@ -21,24 +21,24 @@ import { UnknownIdentifier } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 
 // @public
-export type BaseSelectorProps = {
+export type CallingBaseSelectorProps = {
     callId: string;
 };
 
 // @public (undocumented)
-export const cameraButtonSelector: reselect.OutputParametricSelector<callingDeclarative.CallClientState, BaseSelectorProps, {
+export const cameraButtonSelector: reselect.OutputParametricSelector<callingDeclarative.CallClientState, CallingBaseSelectorProps, {
     checked: boolean;
 }, (res: callingDeclarative.Call | undefined) => {
     checked: boolean;
 }>;
 
 // @public
-export type CommonProperties<A, B> = {
+export type CommonProperties1<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
 
 // @public
-export const createDefaultHandlersForComponent: <Props>(declarativeCallClient: DeclarativeCallClient, callAgent: CallAgent | undefined, deviceManager: DeviceManager | undefined, call: Call | undefined, _Component: (props: Props) => ReactElement | null) => Pick<{
+export const createDefaultCallingHandlersForComponent: <Props>(declarativeCallClient: DeclarativeCallClient, callAgent: CallAgent | undefined, deviceManager: DeviceManager | undefined, call: Call | undefined, _Component: (props: Props) => ReactElement | null) => Pick<{
     onHangUp: (options?: HangUpOptions | undefined) => Promise<void> | void;
     onMute: () => Promise<void> | void;
     onUnmute: () => Promise<void> | void;
@@ -53,7 +53,7 @@ export const createDefaultHandlersForComponent: <Props>(declarativeCallClient: D
     onToggleLocalVideo: (callId: string, videoDeviceInfo: any, options: any) => Promise<void> | void;
     onToggleMicrophone: () => Promise<void> | void;
     onToggleScreenShare: () => Promise<void> | void;
-}, CommonProperties<{
+}, CommonProperties1<{
     onHangUp: (options?: HangUpOptions | undefined) => Promise<void> | void;
     onMute: () => Promise<void> | void;
     onUnmute: () => Promise<void> | void;
@@ -71,14 +71,14 @@ export const createDefaultHandlersForComponent: <Props>(declarativeCallClient: D
 }, Props>>;
 
 // @public (undocumented)
-export const microphoneButtonSelector: reselect.OutputParametricSelector<callingDeclarative.CallClientState, BaseSelectorProps, {
+export const microphoneButtonSelector: reselect.OutputParametricSelector<callingDeclarative.CallClientState, CallingBaseSelectorProps, {
     checked: boolean;
 }, (res: callingDeclarative.Call | undefined) => {
     checked: boolean;
 }>;
 
 // @public (undocumented)
-export const optionsButtonSelector: reselect.OutputParametricSelector<callingDeclarative.CallClientState, BaseSelectorProps, {
+export const optionsButtonSelector: reselect.OutputParametricSelector<callingDeclarative.CallClientState, CallingBaseSelectorProps, {
     microphones: AudioDeviceInfo[];
     speakers: AudioDeviceInfo[];
     cameras: VideoDeviceInfo[];
@@ -95,7 +95,7 @@ export const optionsButtonSelector: reselect.OutputParametricSelector<callingDec
 }>;
 
 // @public (undocumented)
-export const screenShareButtonSelector: reselect.OutputParametricSelector<callingDeclarative.CallClientState, BaseSelectorProps, {
+export const screenShareButtonSelector: reselect.OutputParametricSelector<callingDeclarative.CallClientState, CallingBaseSelectorProps, {
     checked: boolean | undefined;
 }, (res: callingDeclarative.Call | undefined) => {
     checked: boolean | undefined;

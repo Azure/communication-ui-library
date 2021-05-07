@@ -24,11 +24,6 @@ export type ChatBaseSelectorProps = {
 };
 
 // @public (undocumented)
-export type ChatCommonProperties<A, B> = {
-    [P in keyof A & keyof B]: A[P] extends B[P] ? (A[P] extends B[P] ? P : never) : never;
-}[keyof A & keyof B];
-
-// @public (undocumented)
 export const chatParticipantListSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     userId: string;
     displayName: string;
@@ -51,7 +46,12 @@ export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientSta
 }>;
 
 // @public (undocumented)
-export const createDefaultChatHandlersForComponent: <Props>(chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultHandlers, ChatCommonProperties<DefaultHandlers, Props>>;
+export type CommonProperties2<A, B> = {
+    [P in keyof A & keyof B]: A[P] extends B[P] ? (A[P] extends B[P] ? P : never) : never;
+}[keyof A & keyof B];
+
+// @public (undocumented)
+export const createDefaultChatHandlersForComponent: <Props>(chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultHandlers, CommonProperties2<DefaultHandlers, Props>>;
 
 // @public (undocumented)
 export type DefaultHandlers = {
