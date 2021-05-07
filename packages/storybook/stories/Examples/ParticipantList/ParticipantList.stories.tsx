@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { ParticipantItem } from '@azure/communication-react';
 import { Stack, PersonaPresence } from '@fluentui/react';
 import { MicOffIcon, CallControlPresentNewIcon } from '@fluentui/react-northstar';
@@ -47,6 +50,7 @@ export const ParticipantListComponent: () => JSX.Element = () => {
 
   const headingStyle = { fontSize: '1.5rem', marginBottom: '1rem' };
   const stackStyle = { width: '12.5rem' };
+  let reactItemKey = 0;
 
   return (
     <Stack>
@@ -69,6 +73,7 @@ export const ParticipantListComponent: () => JSX.Element = () => {
           return (
             // eslint-disable-next-line react/jsx-key
             <ParticipantItem
+              key={'ParticipantItem' + ++reactItemKey}
               name={p.displayName}
               presence={p.presence}
               onRenderIcon={() => (

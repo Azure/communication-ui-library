@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { Title, Heading, Description, Canvas, Source } from '@storybook/addon-docs/blocks';
 import React from 'react';
 import { LocalPreviewExample } from './snippets/LocalPreviewExample.snippet';
@@ -19,7 +22,7 @@ export const getDocs: () => JSX.Element = () => {
         be used in our video grid layouts.
       </Description>
       <Source code={LocalPreviewExampleText} />
-      <Canvas withSource="none">
+      <Canvas withSource={'none' as any}>
         <div style={{ height: '17.188rem' }}>
           <LocalPreviewExample isVideoAvailable={true} isCameraEnabled={true} isMicrophoneEnabled={true} />
         </div>

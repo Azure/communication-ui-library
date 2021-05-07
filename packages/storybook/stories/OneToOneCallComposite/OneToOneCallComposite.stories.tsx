@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-administration';

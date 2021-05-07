@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 module.exports = {
   env: {
@@ -10,6 +11,6 @@ module.exports = {
   plugins: ['header'],
   rules: {
     eqeqeq: 'warn',
-    'header/header': ['error', 'line', ' © Microsoft Corporation. All rights reserved.']
+    'header/header': ['error', 'line', ' Copyright (c) Microsoft Corporation.\n Licensed under the MIT license.']
   }
 };

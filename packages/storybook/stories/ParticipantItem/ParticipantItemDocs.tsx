@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { ParticipantItem } from '@azure/communication-react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
@@ -29,7 +30,7 @@ export const getDocs: () => JSX.Element = () => {
         [IContextualMenuItem](https://developer.microsoft.com/en-us/fluentui#/controls/web/contextualmenu#IContextualMenuItem).
         Click on the rendered participant below to see the menu items.
       </Description>
-      <Canvas withSource="none">
+      <Canvas withSource={'none' as any}>
         <ParticipantItemExample />
       </Canvas>
       <Source code={ParticipantItemExampleText} />
@@ -39,13 +40,13 @@ export const getDocs: () => JSX.Element = () => {
         element to be within 32 by 32 pixels.
       </Description>
       <Source code={CustomAvatarExampleText} />
-      <Canvas withSource="none">
+      <Canvas withSource={'none' as any}>
         <CustomAvatarExample />
       </Canvas>
       <Heading>Add icon</Heading>
       <Description>To add an icon, use the `onRenderIcon` property like in the example below.</Description>
       <Source code={CustomIconExampleText} />
-      <Canvas withSource="none">
+      <Canvas withSource={'none' as any}>
         <CustomIconExample />
       </Canvas>
       <Heading>Props</Heading>

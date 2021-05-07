@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 import { TypingIndicator as TypingIndicatorComponent } from '@azure/communication-react';
 import { object, text, boolean } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';

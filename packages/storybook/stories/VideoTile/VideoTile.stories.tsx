@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { StreamMedia, VideoTile as VideoTileComponent } from '@azure/communication-react';
 import { text, boolean, number } from '@storybook/addon-knobs';
