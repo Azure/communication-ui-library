@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   CameraButton,
   ControlBar,
@@ -8,7 +9,6 @@ import {
   ScreenShareButton,
   darkTheme
 } from 'react-components';
-import React from 'react';
 
 export const DarkControlBar = (): JSX.Element => {
   return (

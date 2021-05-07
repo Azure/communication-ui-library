@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { CallerInfo } from '@azure/communication-calling';
 import { CallContext } from './CallContext';

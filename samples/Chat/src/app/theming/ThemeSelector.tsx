@@ -1,8 +1,9 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import React from 'react';
 import { ChoiceGroup, IChoiceGroupOption, concatStyleSets } from '@fluentui/react';
-import { useSwitchableFluentTheme } from './SwitchableFluentThemeProvider';
+import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 
 /**
  * Props for ThemeSelector component

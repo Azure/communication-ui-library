@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { CreateViewOptions, VideoStreamRenderer } from '@azure/communication-calling';
 import { LocalVideoStream, RemoteVideoStream } from './CallClientState';

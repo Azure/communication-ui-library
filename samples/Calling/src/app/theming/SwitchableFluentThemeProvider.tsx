@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import React, { useState, useMemo, createContext, useContext } from 'react';
 import { FluentThemeProvider, lightTheme, darkTheme } from 'react-components';
@@ -66,7 +67,7 @@ const getThemeFromLocalStorage = (scopeId: string): string | null =>
 const saveThemeToLocalStorage = (theme: string, scopeId: string): void =>
   window.localStorage.setItem(LOCAL_STORAGE_KEY_PREFIX + '_' + scopeId, theme);
 
-const defaultTheme: NamedTheme = defaultThemes.light;
+const defaultTheme: NamedTheme = defaultThemes.Light;
 
 /**
  * React useContext for FluentTheme state of SwitchableFluentThemeProvider
@@ -104,7 +105,7 @@ export const SwitchableFluentThemeProvider = (props: SwitchableFluentThemeProvid
   const [themeStore, setThemeCollection] = useState<ThemeCollection>(props.themes ?? defaultThemes);
 
   const themeFromStorage = getThemeFromLocalStorage(scopeId);
-  const initialTheme = themeStore[themeFromStorage || defaultThemes.light.name] ?? defaultTheme;
+  const initialTheme = themeStore[themeFromStorage || defaultTheme.name] ?? defaultTheme;
   const [currentTheme, _setCurrentTheme] = useState<NamedTheme>(initialTheme);
 
   const state = useMemo<SwitchableFluentThemeContext>(

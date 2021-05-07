@@ -1,9 +1,11 @@
 // © Microsoft Corporation. All rights reserved.
 
+import { GridLayout, VideoTile } from '@azure/communication-react';
+import { Stack, mergeStyles, PersonaSize, Persona } from '@fluentui/react';
+import { number } from '@storybook/addon-knobs';
+import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
-import { Meta } from '@storybook/react/types-6-0';
-import { number } from '@storybook/addon-knobs';
 import {
   mediaGalleryWidthDefault,
   mediaGalleryWidthOptions,
@@ -11,8 +13,6 @@ import {
   mediaGalleryHeightOptions,
   EXAMPLES_FOLDER_PREFIX
 } from '../../constants';
-import { GridLayout, VideoTile } from 'react-components';
-import { Stack, mergeStyles, PersonaSize, Persona } from '@fluentui/react';
 import { getDocs } from './LayoutsDocs';
 
 export const OneToOneCallLayout: () => JSX.Element = () => {
