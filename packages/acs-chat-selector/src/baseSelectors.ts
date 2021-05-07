@@ -3,16 +3,17 @@ import {
   ChatClientState,
   ChatMessageWithStatus,
   CommunicationIdentifierAsKey,
-  TypingIndicator
+  TypingIndicator,
+  communicationIdentifierAsKey
 } from '@azure/acs-chat-declarative';
-import { CommunicationIdentifierKind } from '@azure/communication-common';
+import { CommunicationIdentifier, CommunicationIdentifierKind } from '@azure/communication-common';
 import { ChatParticipant, ChatMessageReadReceipt } from '@azure/communication-chat';
 export type BaseSelectorProps = {
   threadId: string;
 };
 
 export const getSelectorProps = <T>(_: ChatClientState, props: T): T => props;
-export const getUserId = (state: ChatClientState): CommunicationIdentifierKind => state.userId;
+export const getUserId = (state: ChatClientState): string => communicationIdentifierToString(state.userId);
 
 export const getDisplayName = (state: ChatClientState): string => state.displayName;
 export const getChatMessages = (state: ChatClientState, props: BaseSelectorProps): Map<string, ChatMessageWithStatus> =>
@@ -45,3 +46,9 @@ export const getTopicName = (state: ChatClientState, props: BaseSelectorProps): 
 export const getTypingIndicators = (state: ChatClientState, props: BaseSelectorProps): TypingIndicator[] => {
   return (props.threadId && state.threads.get(props.threadId)?.typingIndicators) || [];
 };
+
+// Bridge IDs to strings used in the pure components.
+//
+// The stateful client stores ACS ids as objects and the pure components use plain strings.
+// All instances of IDs must be translated uniformly by the selectors.
+export const communicationIdentifierToString = (i: CommunicationIdentifier): string => communicationIdentifierAsKey(i);

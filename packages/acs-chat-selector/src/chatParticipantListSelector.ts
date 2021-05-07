@@ -5,10 +5,15 @@ import { ChatClientState, CommunicationIdentifierAsKey } from '@azure/acs-chat-d
 // @ts-ignore
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 // @ts-ignore
-import { BaseSelectorProps, getUserId, getDisplayName, getParticipants } from './baseSelectors';
+import {
+  BaseSelectorProps,
+  communicationIdentifierToString,
+  getUserId,
+  getDisplayName,
+  getParticipants
+} from './baseSelectors';
 import * as reselect from 'reselect';
 import { ChatParticipant } from '@azure/communication-chat';
-import { getIdentifierKind } from '@azure/communication-common';
 import { WebUiChatParticipant } from './types/WebUiChatParticipant';
 
 const convertChatParticipantsToWebUiChatParticipants = (
@@ -16,7 +21,7 @@ const convertChatParticipantsToWebUiChatParticipants = (
 ): WebUiChatParticipant[] => {
   return chatParticipants.map((participant: ChatParticipant) => {
     return {
-      userId: getIdentifierKind(participant.id),
+      userId: communicationIdentifierToString(participant.id),
       displayName: participant.displayName
     };
   });

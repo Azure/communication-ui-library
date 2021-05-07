@@ -4,25 +4,26 @@
 import { ChatClientState } from '@azure/acs-chat-declarative';
 import { CommunicationIdentifierAsKey, communicationIdentifierAsKey } from '@azure/acs-chat-declarative';
 // @ts-ignore
-import { BaseSelectorProps, getTypingIndicators, getParticipants, getUserId } from './baseSelectors';
+import {
+  BaseSelectorProps,
+  communicationIdentifierToString,
+  getTypingIndicators,
+  getParticipants,
+  getUserId
+} from './baseSelectors';
 import * as reselect from 'reselect';
-import equal from 'fast-deep-equal';
 import { ChatParticipant } from '@azure/communication-chat';
-import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { TypingIndicator } from '@azure/acs-chat-declarative';
 import { WebUiChatParticipant } from './types/WebUiChatParticipant';
 import { MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS, PARTICIPANTS_THRESHOLD } from './utils/constants';
 
-const filterTypingIndicators = (
-  typingIndicators: TypingIndicator[],
-  userId: CommunicationIdentifierKind
-): TypingIndicator[] => {
+const filterTypingIndicators = (typingIndicators: TypingIndicator[], userId: string): TypingIndicator[] => {
   const filteredTypingIndicators: TypingIndicator[] = [];
   const seen = new Set();
   const date8SecondsAgo = new Date(Date.now() - MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS);
   for (let i = typingIndicators.length - 1; i >= 0; i--) {
     const typingIndicator = typingIndicators[i];
-    if (equal(typingIndicator.sender, userId)) {
+    if (communicationIdentifierToString(typingIndicator.sender) === userId) {
       continue;
     }
     if (typingIndicator.receivedOn < date8SecondsAgo) {
@@ -42,7 +43,7 @@ const convertSdkTypingIndicatorsToWebUiChatParticipants = (
   participants: Map<string, ChatParticipant>
 ): WebUiChatParticipant[] => {
   return typingIndicators.map((typingIndicator) => ({
-    userId: typingIndicator.sender,
+    userId: communicationIdentifierToString(typingIndicator.sender),
     displayName: participants.get(communicationIdentifierAsKey(typingIndicator.sender))?.displayName
   }));
 };
@@ -52,7 +53,7 @@ export const typingIndicatorSelector = reselect.createSelector(
   (
     typingIndicators: TypingIndicator[],
     participants: Map<CommunicationIdentifierAsKey, ChatParticipant>,
-    userId: CommunicationIdentifierKind
+    userId: string
   ) => {
     // if the participant size reaches the threshold then return no typing users
     if (participants.size >= PARTICIPANTS_THRESHOLD) {
