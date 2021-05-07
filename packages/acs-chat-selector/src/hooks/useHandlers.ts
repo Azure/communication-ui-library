@@ -2,11 +2,17 @@
 // Licensed under the MIT license.
 
 import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
-import { createDefaultHandlersForComponent } from '@azure/acs-chat-selector';
+import { createDefaultHandlersForComponent } from '../handlers/createHandlers';
 
-import { useChatClient, useChatThreadClient } from 'react-composites';
+import { useChatClient } from '../providers/ChatClientProvider';
+import { useChatThreadClient } from '../providers/ChatThreadClientProvider';
 
 import { ReactElement } from 'react';
+
+// @ts-ignore
+import { DefaultHandlers } from '../handlers/createHandlers';
+// @ts-ignore
+import { CommonProperties } from '../handlers/createHandlers';
 
 // This will be moved into selector folder when ChatClientProvide when refactor finished
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
