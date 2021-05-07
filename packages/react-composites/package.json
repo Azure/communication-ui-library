@@ -23,8 +23,7 @@
     "lint": "eslint \"*/**/*.{ts,tsx}\"",
     "lint:fix": "npm run lint -- --fix",
     "lint:quiet": "npm run lint -- --quiet",
-    "prepack": "node scripts/cleanse-pkg \"prepublish,build,test,test:coverage,snapshot:update\"",
-    "postpack": "node scripts/restore-pkg && copyfiles -E \"./*.tgz\" private-preview"
+    "postpack": "copyfiles -E \"./*.tgz\" private-preview"
   },
   "dependencies": {
     "@azure/acs-calling-declarative": "~1.0.0-beta",
