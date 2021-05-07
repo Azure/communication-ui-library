@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Apply the correct message container style",
+  "packageName": "@azure/communication-ui",
+  "email": "easony@microsoft.com",
+  "dependentChangeType": "patch"
+}
