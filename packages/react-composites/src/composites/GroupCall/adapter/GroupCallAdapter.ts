@@ -33,7 +33,13 @@ export type IncomingCallListener = (event: {
   callId: string;
   callerId: string;
   callerDisplayName?: string;
+  /**
+   * Invoke to accept the call.
+   */
   accept: () => Promise<void>;
+  /**
+   * Invoke to reject the call.
+   */
   reject: () => Promise<void>;
 }) => Promise<void>;
 
@@ -58,27 +64,21 @@ export interface GroupCallAdapter {
 
   setMicrophone(source: AudioDeviceInfo): Promise<void>;
 
-  queryCameras(): Promise<void>;
+  queryCameras(): Promise<VideoDeviceInfo[]>;
 
-  queryMicrophones(): Promise<void>;
+  queryMicrophones(): Promise<AudioDeviceInfo[]>;
 
   startCamera(): Promise<void>;
 
   stopCamera(): Promise<void>;
 
-  toggleCameraOnOff(): Promise<void>;
-
   mute(): Promise<void>;
 
   unmute(): Promise<void>;
 
-  toggleMute(): Promise<void>;
-
   startScreenShare(): Promise<void>;
 
   stopScreenShare(): Promise<void>;
-
-  toggleScreenShare(): Promise<void>;
 
   startRenderVideo(
     callId: string,
