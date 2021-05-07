@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { ChatThreadClient } from '@azure/communication-chat';
 import { Spinner } from '@fluentui/react';

@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 import { ReadReceipt } from '@azure/communication-react';
 import { Provider, teamsTheme } from '@fluentui/react-northstar';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
