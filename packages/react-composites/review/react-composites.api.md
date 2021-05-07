@@ -67,7 +67,7 @@ export class AzureCommunicationChatAdapter implements GroupChatAdapter {
     // (undocumented)
     onStateChange: (handler: (state: GroupChatState) => void) => void;
     // (undocumented)
-    removeThreadMember: (userId: string) => Promise<void>;
+    removeParticipant: (userId: string) => Promise<void>;
     // (undocumented)
     sendMessage: (content: string) => Promise<void>;
     // (undocumented)
@@ -75,9 +75,9 @@ export class AzureCommunicationChatAdapter implements GroupChatAdapter {
     // (undocumented)
     sendTypingIndicator: () => Promise<void>;
     // (undocumented)
-    updateAllParticipants: () => Promise<void>;
+    setTopic: (topicName: string) => Promise<void>;
     // (undocumented)
-    updateTopicName: (topicName: string) => Promise<void>;
+    updateAllParticipants: () => Promise<void>;
 }
 
 // @public (undocumented)
@@ -546,7 +546,7 @@ export interface GroupChatAdapter {
     // (undocumented)
     onStateChange: (handler: (state: GroupChatState) => void) => void;
     // (undocumented)
-    removeThreadMember: (userId: string) => Promise<void>;
+    removeParticipant: (userId: string) => Promise<void>;
     // (undocumented)
     sendMessage: (content: string) => Promise<void>;
     // (undocumented)
@@ -554,9 +554,9 @@ export interface GroupChatAdapter {
     // (undocumented)
     sendTypingIndicator: () => Promise<void>;
     // (undocumented)
-    updateAllParticipants: () => Promise<void>;
+    setTopic: (topicName: string) => Promise<void>;
     // (undocumented)
-    updateTopicName: (topicName: string) => Promise<void>;
+    updateAllParticipants: () => Promise<void>;
 }
 
 // Warning: (ae-forgotten-export) The symbol "GroupChatUIState" needs to be exported by the entry point index.d.ts

@@ -116,11 +116,11 @@ export class AzureCommunicationChatAdapter implements GroupChatAdapter {
     await this.handlers.onTyping();
   };
 
-  removeThreadMember = async (userId: string): Promise<void> => {
+  removeParticipant = async (userId: string): Promise<void> => {
     await this.handlers.removeThreadMember(userId);
   };
 
-  updateTopicName = async (topicName: string): Promise<void> => {
+  setTopic = async (topicName: string): Promise<void> => {
     await this.handlers.updateThreadTopicName(topicName);
   };
 

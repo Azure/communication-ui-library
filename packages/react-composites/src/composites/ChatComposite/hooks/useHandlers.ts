@@ -23,7 +23,7 @@ const createCompositeHandlers = memoizeOne(
     onLoadPreviousChatMessages: adapter.loadPreviousChatMessages,
     onMessageSeen: adapter.sendReadReceipt,
     onTyping: adapter.sendTypingIndicator,
-    removeThreadMember: adapter.removeThreadMember,
-    updateThreadTopicName: adapter.updateTopicName
+    removeThreadMember: adapter.removeParticipant,
+    updateThreadTopicName: adapter.setTopic
   })
 );

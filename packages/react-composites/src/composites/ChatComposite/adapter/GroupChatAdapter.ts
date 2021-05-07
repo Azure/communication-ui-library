@@ -25,8 +25,8 @@ export interface GroupChatAdapter {
   sendMessage: (content: string) => Promise<void>;
   sendReadReceipt: (chatMessageId: string) => Promise<void>;
   sendTypingIndicator: () => Promise<void>;
-  removeThreadMember: (userId: string) => Promise<void>;
-  updateTopicName: (topicName: string) => Promise<void>;
+  removeParticipant: (userId: string) => Promise<void>;
+  setTopic: (topicName: string) => Promise<void>;
   loadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
   updateAllParticipants: () => Promise<void>;
   on(event: 'messageReceived', messageReceivedHandler: (message: ChatMessage) => void): void;
