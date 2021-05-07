@@ -1,19 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { GridLayout, VideoTile } from '@azure/communication-react';
+import { VideoTile } from '@azure/communication-react';
 import { Stack, mergeStyles, PersonaSize, Persona, Label } from '@fluentui/react';
 import { number, select } from '@storybook/addon-knobs';
-import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-// also exported from '@storybook/react' if you can deal with breaking changes in 6.1
-import {
-  mediaGalleryWidthOptions,
-  mediaGalleryHeightDefault,
-  mediaGalleryHeightOptions,
-  EXAMPLES_FOLDER_PREFIX
-} from '../../constants';
-import { getDocs } from './LayoutsDocs';
+import { mediaGalleryWidthOptions, mediaGalleryHeightDefault, mediaGalleryHeightOptions } from '../../constants';
 
 export const ScreenShareLayout: () => JSX.Element = () => {
   const width = number('Width (px)', 850, mediaGalleryWidthOptions);
@@ -28,7 +20,7 @@ export const ScreenShareLayout: () => JSX.Element = () => {
     '16:9'
   );
   const aspectRatioNumberArray = sidePanelTileAspectRatio.split(':');
-  const aspectRatio = (100 * aspectRatioNumberArray[1]) / aspectRatioNumberArray[0] + '%';
+  const aspectRatio = (100 * parseInt(aspectRatioNumberArray[1])) / parseInt(aspectRatioNumberArray[0]) + '%';
 
   const aspectRatioBoxStyle = mergeStyles({
     borderWidth: '.063rem .063rem .025rem .063rem',
@@ -48,7 +40,7 @@ export const ScreenShareLayout: () => JSX.Element = () => {
   });
 
   const videoStreamStyle = mergeStyles({
-    border: 1,
+    border: '1',
     borderStyle: 'solid',
     position: 'absolute',
     bottom: '.25rem',
@@ -138,13 +130,3 @@ export const ScreenShareLayout: () => JSX.Element = () => {
     </Stack>
   );
 };
-
-export default {
-  title: `${EXAMPLES_FOLDER_PREFIX}/Layouts`,
-  component: GridLayout,
-  parameters: {
-    docs: {
-      page: () => getDocs()
-    }
-  }
-} as Meta;

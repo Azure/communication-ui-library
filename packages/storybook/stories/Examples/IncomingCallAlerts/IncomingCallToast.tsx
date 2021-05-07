@@ -3,20 +3,17 @@
 
 import { Stack } from '@fluentui/react';
 import { text, files } from '@storybook/addon-knobs';
-import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { IncomingCallToast } from 'react-composites';
-import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
-import { getDocs } from './IncomingCallAlertsDocs';
+import { IncomingCallToast as IncomingCallToastComponent } from 'react-composites';
 
-export const IncomingCallToastComponent: () => JSX.Element = () => {
+export const IncomingCallToast: () => JSX.Element = () => {
   const callerName = text('Caller Name', 'John Doe');
   const alertText = text('Alert Text', 'Incoming Call');
   const images = files('Avatar', '.jpeg, .jpg, .png', []);
 
   return (
     <Stack>
-      <IncomingCallToast
+      <IncomingCallToastComponent
         callerName={callerName}
         alertText={alertText}
         avatar={images.length > 0 ? images[0] : undefined}
@@ -26,13 +23,3 @@ export const IncomingCallToastComponent: () => JSX.Element = () => {
     </Stack>
   );
 };
-
-export default {
-  title: `${EXAMPLES_FOLDER_PREFIX}/IncomingCallAlerts`,
-  component: IncomingCallToast,
-  parameters: {
-    docs: {
-      page: () => getDocs()
-    }
-  }
-} as Meta;

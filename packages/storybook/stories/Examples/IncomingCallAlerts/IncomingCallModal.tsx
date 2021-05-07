@@ -2,14 +2,11 @@
 // Licensed under the MIT license.
 
 import { text, files, boolean } from '@storybook/addon-knobs';
-import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { IncomingCallModal } from 'react-composites';
-import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
+import { IncomingCallModal as IncomingCallModalComponent } from 'react-composites';
 import { renderVideoStream } from '../../utils';
-import { getDocs } from './IncomingCallAlertsDocs';
 
-export const IncomingCallModalComponent: () => JSX.Element = () => {
+export const IncomingCallModal: () => JSX.Element = () => {
   const alertText = text('Alert Text', 'Incoming Video Call');
   const callerName = text('Caller Name', 'Maximus Aurelius');
   const callerNameAlt = text('Caller Name Alt', '1st');
@@ -23,7 +20,7 @@ export const IncomingCallModalComponent: () => JSX.Element = () => {
   const streamElement = localVideoStreamEnabled ? renderVideoStream() : null;
 
   return (
-    <IncomingCallModal
+    <IncomingCallModalComponent
       callerName={callerName}
       callerNameAlt={callerNameAlt}
       callerTitle={callerTitle}
@@ -39,13 +36,3 @@ export const IncomingCallModalComponent: () => JSX.Element = () => {
     />
   );
 };
-
-export default {
-  title: `${EXAMPLES_FOLDER_PREFIX}/IncomingCallAlerts`,
-  component: IncomingCallModal,
-  parameters: {
-    docs: {
-      page: () => getDocs()
-    }
-  }
-} as Meta;

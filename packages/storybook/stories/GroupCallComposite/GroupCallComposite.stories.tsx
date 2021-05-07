@@ -50,15 +50,18 @@ export const GroupCall: () => JSX.Element = () => {
 
   useEffect(() => {
     (async () => {
-      try {
-        const tokenResponse = await createUserToken(connectionString);
-        setToken(tokenResponse.token);
-        setUserId(tokenResponse.user.communicationUserId);
-        const groupId = createGUID();
-        console.log(`groupId: ${groupId}`);
-        setGroupId(groupId);
-      } catch (e) {
-        console.log('Please provide your connection string');
+      if (connectionString) {
+        try {
+          const tokenResponse = await createUserToken(connectionString);
+          setToken(tokenResponse.token);
+          setUserId(tokenResponse.user.communicationUserId);
+          const groupId = createGUID();
+          console.log(`groupId: ${groupId}`);
+          setGroupId(groupId);
+        } catch (e) {
+          console.error(e);
+          console.log('Ensure your connection string is valid.');
+        }
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
