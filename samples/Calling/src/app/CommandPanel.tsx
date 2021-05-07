@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
 import React from 'react';
-import { Stack } from '@fluentui/react';
+import { Stack, IContextualMenuItem } from '@fluentui/react';
 import {
   fullHeightStyles,
   paneHeaderStyle,
@@ -14,7 +14,8 @@ import { ParticipantList } from './ParticipantList';
 import { ThemeSelector } from 'react-components';
 import { participantListSelector } from '@azure/acs-calling-selector';
 import { useSelector } from './hooks/useSelector';
-import { useCall } from 'react-composites';
+import { useCall, getACSId } from 'react-composites';
+import { RemoteParticipant } from '@azure/acs-calling-declarative';
 
 export enum CommandPanelTypes {
   None = 'none',
@@ -30,6 +31,21 @@ export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
   const call = useCall();
   const participantListProps = useSelector(participantListSelector, { callId: call ? call.id : '' });
 
+  const onRenderParticipantMenu = (remoteParticipant: RemoteParticipant): IContextualMenuItem[] => {
+    const menuItems: IContextualMenuItem[] = [];
+    if (getACSId(remoteParticipant.identifier) !== participantListProps.userId) {
+      menuItems.push({
+        key: 'Remove',
+        text: 'Remove',
+        onClick: () => {
+          call?.removeParticipant(remoteParticipant.identifier);
+          Promise.resolve();
+        }
+      });
+    }
+    return menuItems;
+  };
+
   return (
     <Stack styles={fullHeightStyles} tokens={{ childrenGap: '1.5rem' }}>
       <Stack.Item className={paneHeaderStyle}>
@@ -37,7 +53,7 @@ export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
       </Stack.Item>
       {props.selectedPane === CommandPanelTypes.People && (
         <Stack.Item styles={fullHeightStyles}>
-          <ParticipantList {...participantListProps} />
+          <ParticipantList {...participantListProps} onRenderParticipantMenu={onRenderParticipantMenu} />
         </Stack.Item>
       )}
       {props.selectedPane === CommandPanelTypes.People && (

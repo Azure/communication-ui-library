@@ -11,7 +11,7 @@ import {
   PersonaPresence
 } from '@fluentui/react';
 import { ParticipantItem } from 'react-components';
-import { ListParticipant } from 'react-composites';
+import { getACSId } from 'react-composites';
 import { MicOffIcon, CallControlPresentNewIcon } from '@fluentui/react-northstar';
 import { participantStackStyle, overFlowButtonStyles, overflowSetStyle } from './styles/ParticipantStack.styles';
 import { RemoteParticipant } from '@azure/acs-calling-declarative';
@@ -28,44 +28,42 @@ export type ParticipantListProps = {
   /** Determines if user is muted */
   isMuted: boolean;
   /** Optional function to render each participant  */
-  onRenderParticipant?: (participant: ListParticipant) => JSX.Element;
+  onRenderParticipant?: (participant: RemoteParticipant) => JSX.Element;
+  /** Optional function to render each participant  */
+  onRenderParticipantMenu?: (remoteParticipant: RemoteParticipant) => IContextualMenuItem[];
 };
 
-const defaultRenderer = (item: IOverflowSetItemProps): JSX.Element => {
-  const menuItems: IContextualMenuItem[] = [
-    {
-      key: 'Mute',
-      text: 'Mute',
-      onClick: item.onMute
-    },
-    {
-      key: 'Remove',
-      text: 'Remove',
-      onClick: item.onRemove
+const getDefaultRenderer = (
+  userId: string,
+  onRenderParticipantMenu?: (remoteParticipant: RemoteParticipant) => IContextualMenuItem[]
+): ((participant: RemoteParticipant) => JSX.Element) => {
+  return (participant: RemoteParticipant) => {
+    let presence = undefined;
+    if (participant.state === 'Connected') {
+      presence = PersonaPresence.online;
+    } else if (participant.state === 'Idle') {
+      presence = PersonaPresence.away;
     }
-  ];
 
-  let presence = undefined;
-  if (item.state === 'Connected') {
-    presence = PersonaPresence.online;
-  } else if (item.state === 'Idle') {
-    presence = PersonaPresence.away;
-  }
+    const isScreenSharing = Array.from(participant.videoStreams.values()).some(
+      (videoStream) => videoStream.mediaStreamType === 'ScreenSharing' && videoStream.isAvailable
+    );
 
-  return (
-    <ParticipantItem
-      name={item.name}
-      isYou={item.isYou}
-      menuItems={item.isYou ? undefined : menuItems}
-      presence={presence}
-      onRenderIcon={() => (
-        <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
-          {item.isScreenSharing && <CallControlPresentNewIcon size="small" />}
-          {item.isMuted && <MicOffIcon size="small" />}
-        </Stack>
-      )}
-    />
-  );
+    return (
+      <ParticipantItem
+        name={participant.displayName ?? ''}
+        isYou={getACSId(participant.identifier) === userId}
+        menuItems={onRenderParticipantMenu ? onRenderParticipantMenu(participant) : []}
+        presence={presence}
+        onRenderIcon={() => (
+          <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
+            {isScreenSharing && <CallControlPresentNewIcon size="small" />}
+            {participant.isMuted && <MicOffIcon size="small" />}
+          </Stack>
+        )}
+      />
+    );
+  };
 };
 
 const onRenderOverflowButton = (overflowItems: unknown): JSX.Element => (
@@ -80,68 +78,54 @@ const onRenderOverflowButton = (overflowItems: unknown): JSX.Element => (
 
 const renderParticipants = (
   userId: string,
-  participants: ListParticipant[],
-  participantRenderer?: (participant: ListParticipant) => JSX.Element
+  participants: RemoteParticipant[],
+  onRenderParticipant?: (participant: RemoteParticipant) => JSX.Element,
+  onRenderParticipantMenu?: (remoteParticipant: RemoteParticipant) => IContextualMenuItem[]
 ): JSX.Element[] => {
-  let onRenderItem = defaultRenderer;
-  if (participantRenderer) {
-    onRenderItem = (item: IOverflowSetItemProps): JSX.Element => {
-      const participant = {
-        key: item.key,
-        displayName: item.displayName,
-        state: item.state,
-        isScreenSharing: item.isScreenSharing,
-        isMuted: item.isMuted
-      };
-      return participantRenderer(participant);
+  const renderParticipant = onRenderParticipant ?? getDefaultRenderer(userId, onRenderParticipantMenu);
+  const onRenderItem = (item: IOverflowSetItemProps): JSX.Element => {
+    const participant: RemoteParticipant = {
+      ...item,
+      state: item.state,
+      identifier: item.identifier,
+      videoStreams: item.videoStreams,
+      isMuted: item.isMuted,
+      isSpeaking: item.isSpeaking
     };
-  }
-  return participants.map((item, i) => (
-    <OverflowSet
-      key={i}
-      items={[{ name: item.displayName, isYou: item.key === userId, ...item }]}
-      role="menubar"
-      vertical={false}
-      onRenderOverflowButton={onRenderOverflowButton}
-      onRenderItem={onRenderItem}
-      styles={overflowSetStyle}
-    />
-  ));
+    return renderParticipant(participant);
+  };
+  return participants.map((item, i) => {
+    const id = getACSId(item.identifier);
+    return (
+      <OverflowSet
+        key={i}
+        items={[{ key: id, name: item.displayName, isYou: id === userId, ...item }]}
+        role="menubar"
+        vertical={false}
+        onRenderOverflowButton={onRenderOverflowButton}
+        onRenderItem={onRenderItem}
+        styles={overflowSetStyle}
+      />
+    );
+  });
 };
 
 export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
-  const allParticipants: ListParticipant[] = props.remoteParticipants
-    ? props.remoteParticipants.map((remoteParticipant) => {
-        const videoStreams = Array.from(remoteParticipant.videoStreams);
-        console.log(remoteParticipant.identifier + ' videoStreams: ' + JSON.stringify(videoStreams));
-        const isScreenSharing = videoStreams.some(
-          (videoStream) => videoStream[1].mediaStreamType === 'ScreenSharing' && videoStream[1].isAvailable
-        );
-        return {
-          key: (remoteParticipant.identifier as unknown) as string,
-          displayName: remoteParticipant.displayName,
-          state: 'Connected', //TODO convert remoteParticipant.state to Persona.Presence,
-          isScreenSharing: isScreenSharing,
-          isMuted: remoteParticipant.isMuted,
-          onRemove: () => {
-            console.log('onRemove');
-          },
-          onMute: () => {
-            console.log('onMute');
-          }
-        };
-      })
-    : [];
+  const allParticipants: RemoteParticipant[] = [];
+  if (props.remoteParticipants !== undefined) {
+    props.remoteParticipants.forEach((remoteParticipant) => allParticipants.push(remoteParticipant));
+  }
   allParticipants.push({
-    key: props.userId,
     displayName: props.displayName ?? '',
     state: 'Connected',
-    isScreenSharing: props.isScreenSharingOn,
-    isMuted: props.isMuted
+    isMuted: props.isMuted,
+    identifier: { kind: 'communicationUser', communicationUserId: props.userId },
+    videoStreams: new Map(),
+    isSpeaking: false
   });
   return (
     <Stack className={participantStackStyle}>
-      {renderParticipants(props.userId, allParticipants, props.onRenderParticipant)}
+      {renderParticipants(props.userId, allParticipants, props.onRenderParticipant, props.onRenderParticipantMenu)}
     </Stack>
   );
 };
