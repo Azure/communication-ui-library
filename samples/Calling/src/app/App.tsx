@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import React, { useEffect, useState } from 'react';
 import { Link, initializeIcons } from '@fluentui/react';
@@ -88,6 +89,10 @@ const App = (): JSX.Element => {
               }
             >
               <CallingProvider
+                // Hotfix: CallingProvider internally holds state for `displayName`.
+                // React maps the CallingProvider for configuration and call screen, thus the
+                // update to the `displayName` here is ignored.
+                key="configuration-calling-provider"
                 token={''}
                 displayName={displayName ? displayName : defaultDisplayName}
                 refreshTokenCallback={refreshTokenAsync(userId)}
@@ -111,6 +116,10 @@ const App = (): JSX.Element => {
               }
             >
               <CallingProvider
+                // Hotfix: CallingProvider internally holds state for `displayName`.
+                // React maps the CallingProvider for configuration and call screen, thus the
+                // update to the `displayName` here is ignored.
+                key="call-calling-provider"
                 token={token}
                 displayName={displayName ? displayName : defaultDisplayName}
                 refreshTokenCallback={refreshTokenAsync(userId)}

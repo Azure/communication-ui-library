@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { SendBox as SendBoxComponent } from '@azure/communication-react';
 import { boolean, text } from '@storybook/addon-knobs';

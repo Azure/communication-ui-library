@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { ErrorBar as ErrorBarComponent, SendBox, TypingIndicator, MessageThread } from 'react-components';
 import { connectFuncsToContext, MapToErrorBarProps } from 'react-composites';
