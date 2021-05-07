@@ -5,7 +5,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './app/App';
-import { SwitchableFluentThemeProvider } from 'react-components';
+import { SwitchableFluentThemeProvider } from './app/theming/SwitchableFluentThemeProvider';
 
 if (document.getElementById('root') !== undefined) {
   ReactDOM.render(
