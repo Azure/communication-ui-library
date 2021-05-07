@@ -31,9 +31,9 @@ export type ChatConfig = {
 // @public (undocumented)
 export class ChatContext {
     // (undocumented)
-    addReadReceipt(threadId: string, readReceipt: ReadReceipt): void;
+    addReadReceipt(threadId: string, readReceipt: ChatMessageReadReceipt): void;
     // (undocumented)
-    addTypingIndicator(threadId: string, typingIndicator: TypingIndicator): void;
+    addTypingIndicator(threadId: string, typingIndicator: TypingIndicatorEvent): void;
     // (undocumented)
     batch(batchFunc: () => void): void;
     // (undocumented)
@@ -97,8 +97,8 @@ export type ChatThreadClientState = {
     getThreadMembersError?: boolean;
     updateThreadMembersError?: boolean;
     failedMessageIds: string[];
-    readReceipts: ReadReceipt[];
-    typingIndicators: TypingIndicator[];
+    readReceipts: ChatMessageReadReceipt[];
+    typingIndicators: TypingIndicatorEvent[];
     latestReadTime: Date;
 };
 
@@ -116,10 +116,7 @@ export interface DeclarativeChatClient extends ChatClient {
 export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
 
 // @public (undocumented)
-export type ReadReceipt = ChatMessageReadReceipt;
-
-// @public (undocumented)
-export type TypingIndicator = Omit<TypingIndicatorReceivedEvent, 'receivedOn'> & {
+export type TypingIndicatorEvent = Omit<TypingIndicatorReceivedEvent, 'receivedOn'> & {
     receivedOn: Date;
 };
 

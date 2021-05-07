@@ -9,10 +9,11 @@ import { ChatMessageWithStatus } from '@azure/acs-chat-declarative';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
-import { MessageStatus } from '@azure/acs-chat-declarative';
+import { Message } from 'react-components';
 import { ReactElement } from 'react';
 import * as reselect from 'reselect';
-import { TypingIndicator } from '@azure/acs-chat-declarative';
+import { TypingIndicatorEvent } from '@azure/acs-chat-declarative';
+import { WebUiChatParticipant } from 'react-components';
 
 // @public (undocumented)
 export type BaseSelectorProps = {
@@ -21,22 +22,6 @@ export type BaseSelectorProps = {
 
 // @public (undocumented)
 export type CallbackType<KeyT, ArgsT extends any[], FnRetT> = (memoizedFn: FunctionWithKey<KeyT, ArgsT, FnRetT>) => FnRetT[];
-
-// @public (undocumented)
-export type ChatMessage = Message<'chat'>;
-
-// @public
-export type ChatMessagePayload = {
-    messageId?: string;
-    content?: string;
-    createdOn?: Date;
-    senderId?: string;
-    senderDisplayName?: string;
-    status?: MessageStatus;
-    attached?: MessageAttachedStatus | boolean;
-    mine?: boolean;
-    clientMessageId?: string;
-};
 
 // @public (undocumented)
 export const chatParticipantListSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
@@ -69,15 +54,6 @@ export type CommonProperties<A, B> = {
 export const createDefaultHandlersForComponent: <Props>(chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultHandlers, CommonProperties<DefaultHandlers, Props>>;
 
 // @public (undocumented)
-export type CustomMessage = Message<'custom'>;
-
-// @public (undocumented)
-export type CustomMessagePayload = {
-    messageId: string;
-    content?: string;
-};
-
-// @public (undocumented)
 export type DefaultHandlers = {
     onMessageSend: (content: string) => Promise<void>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
@@ -94,23 +70,6 @@ export type FunctionWithKey<KeyT, ArgsT extends any[], RetT> = (key: KeyT, ...ar
 export const memoizeFnAll: <KeyT, ArgsT extends any[], FnRetT, CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>>(fnToMemoize: FunctionWithKey<KeyT, ArgsT, FnRetT>, shouldCacheUpdate?: (args1: any, args2: any) => boolean) => (callback: CallBackT) => FnRetT[];
 
 // @public (undocumented)
-export type Message<T extends MessageTypes> = {
-    type: T;
-    payload: T extends 'chat' ? ChatMessagePayload : T extends 'system' ? SystemMessagePayload : CustomMessagePayload;
-};
-
-// @public (undocumented)
-export enum MessageAttachedStatus {
-    // (undocumented)
-    BOTTOM = "bottom",
-    // (undocumented)
-    TOP = "top"
-}
-
-// @public (undocumented)
-export type MessageTypes = 'chat' | 'system' | 'custom';
-
-// @public (undocumented)
 export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
     displayName: string;
     userId: string;
@@ -122,27 +81,11 @@ export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState,
 }>;
 
 // @public (undocumented)
-export type SystemMessage = Message<'system'>;
-
-// @public (undocumented)
-export type SystemMessagePayload = {
-    messageId: string;
-    content?: string;
-    iconName?: string;
-};
-
-// @public (undocumented)
 export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
     typingUsers: WebUiChatParticipant[];
-}, (res1: TypingIndicator[], res2: Map<string, ChatParticipant>, res3: string) => {
+}, (res1: TypingIndicatorEvent[], res2: Map<string, ChatParticipant>, res3: string) => {
     typingUsers: WebUiChatParticipant[];
 }>;
-
-// @public (undocumented)
-export type WebUiChatParticipant = {
-    userId: string;
-    displayName?: string;
-};
 
 
 // (No @packageDocumentation comment for this package)

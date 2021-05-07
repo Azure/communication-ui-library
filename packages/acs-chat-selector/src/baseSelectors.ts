@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatClientState, ChatMessageWithStatus, TypingIndicator } from '@azure/acs-chat-declarative';
+import { ChatClientState, ChatMessageWithStatus, TypingIndicatorEvent } from '@azure/acs-chat-declarative';
 import { ChatParticipant, ChatMessageReadReceipt } from '@azure/communication-chat';
 export type BaseSelectorProps = {
   threadId: string;
@@ -35,6 +35,6 @@ export const getTopicName = (state: ChatClientState, props: BaseSelectorProps): 
   return state.threads.get(props.threadId)?.threadInfo?.topic || '';
 };
 
-export const getTypingIndicators = (state: ChatClientState, props: BaseSelectorProps): TypingIndicator[] => {
+export const getTypingIndicators = (state: ChatClientState, props: BaseSelectorProps): TypingIndicatorEvent[] => {
   return (props.threadId && state.threads.get(props.threadId)?.typingIndicators) || [];
 };

@@ -7,7 +7,7 @@ import { ChatClientState } from '@azure/acs-chat-declarative';
 import { BaseSelectorProps, getUserId, getDisplayName, getParticipants } from './baseSelectors';
 import * as reselect from 'reselect';
 import { ChatParticipant } from '@azure/communication-chat';
-import { WebUiChatParticipant } from './types/WebUiChatParticipant';
+import { WebUiChatParticipant } from 'react-components';
 
 const convertChatParticipantsToWebUiChatParticipants = (
   chatParticipants: ChatParticipant[]

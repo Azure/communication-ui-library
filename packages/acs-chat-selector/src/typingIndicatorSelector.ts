@@ -7,12 +7,12 @@ import { ChatClientState } from '@azure/acs-chat-declarative';
 import { BaseSelectorProps, getTypingIndicators, getParticipants, getUserId } from './baseSelectors';
 import * as reselect from 'reselect';
 import { ChatParticipant } from '@azure/communication-chat';
-import { TypingIndicator } from '@azure/acs-chat-declarative';
-import { WebUiChatParticipant } from './types/WebUiChatParticipant';
+import { TypingIndicatorEvent } from '@azure/acs-chat-declarative';
+import { WebUiChatParticipant } from 'react-components';
 import { MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS, PARTICIPANTS_THRESHOLD } from './utils/constants';
 
-const filterTypingIndicators = (typingIndicators: TypingIndicator[], userId: string): TypingIndicator[] => {
-  const filteredTypingIndicators: TypingIndicator[] = [];
+const filterTypingIndicators = (typingIndicators: TypingIndicatorEvent[], userId: string): TypingIndicatorEvent[] => {
+  const filteredTypingIndicators: TypingIndicatorEvent[] = [];
   const seen = new Set();
   const date8SecondsAgo = new Date(Date.now() - MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS);
   for (let i = typingIndicators.length - 1; i >= 0; i--) {
@@ -33,7 +33,7 @@ const filterTypingIndicators = (typingIndicators: TypingIndicator[], userId: str
 };
 
 const convertSdkTypingIndicatorsToWebUiChatParticipants = (
-  typingIndicators: TypingIndicator[],
+  typingIndicators: TypingIndicatorEvent[],
   participants: Map<string, ChatParticipant>
 ): WebUiChatParticipant[] => {
   return typingIndicators.map((typingIndicator) => ({
@@ -44,7 +44,7 @@ const convertSdkTypingIndicatorsToWebUiChatParticipants = (
 
 export const typingIndicatorSelector = reselect.createSelector(
   [getTypingIndicators, getParticipants, getUserId],
-  (typingIndicators: TypingIndicator[], participants: Map<string, ChatParticipant>, userId: string) => {
+  (typingIndicators: TypingIndicatorEvent[], participants: Map<string, ChatParticipant>, userId: string) => {
     // if the participant size reaches the threshold then return no typing users
     if (participants.size >= PARTICIPANTS_THRESHOLD) {
       return { typingUsers: [] };

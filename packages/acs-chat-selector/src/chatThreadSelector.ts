@@ -16,7 +16,7 @@ import { BaseSelectorProps } from './baseSelectors';
 // @ts-ignore
 import { memoizeFnAll } from './utils/memoizeFnAll';
 // @ts-ignore
-import { ChatMessage, MessageAttachedStatus, Message, MessageTypes } from './types/UiChatMessage';
+import { ChatMessage, MessageAttachedStatus, Message, MessageTypes } from 'react-components';
 // @ts-ignore
 import { createSelector } from 'reselect';
 // @ts-ignore
