@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { PrimaryButton } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';

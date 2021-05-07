@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { Stylesheet } from '@fluentui/react';
 import initStoryshots from '@storybook/addon-storyshots';

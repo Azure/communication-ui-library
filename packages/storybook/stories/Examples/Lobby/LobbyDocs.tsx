@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { Description, Heading, Source, Title } from '@storybook/addon-docs/blocks';
 import React from 'react';
 const LobbyComponentText = require('!!raw-loader!./snippets/Lobby.snippet.tsx').default;

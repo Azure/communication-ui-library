@@ -1,4 +1,6 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 module.exports = {
   env: {
     browser: true,
@@ -35,6 +37,7 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-unused-vars': ['warn', { varsIgnorePattern: '^_' }],
     eqeqeq: 'warn',
+    'header/header': ['error', 'line', ' Copyright (c) Microsoft Corporation.\n Licensed under the MIT license.'],
     'import/named': 'off', // very time consuming
     'import/namespace': 'off', // very time consuming
     'import/no-unresolved': 'off', // handled by tsc
@@ -66,6 +69,13 @@ module.exports = {
     }
   },
   overrides: [
+    // disable requiring the license header on snippet files
+    {
+      files: ['**/*.snippet.*'],
+      rules: {
+        'header/header': 'off'
+      }
+    },
     {
       files: ['**/*.test.ts', '**/*.test.tsx', '**/*.spec.ts', '**/*.spec.tsx', '**/mocks/*'],
       rules: {

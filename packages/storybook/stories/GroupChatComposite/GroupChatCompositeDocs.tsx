@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 import { Title, Description, Props, Heading, Source } from '@storybook/addon-docs/blocks';
 import React from 'react';
 import { GroupChat } from 'react-composites';

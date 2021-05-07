@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { Title, Heading, Description, Canvas, Source } from '@storybook/addon-docs/blocks';
 import React from 'react';
 import { LocalPreviewExample } from './snippets/LocalPreviewExample.snippet';
