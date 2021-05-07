@@ -7,7 +7,7 @@ import * as callingDeclarative from '@azure/acs-calling-declarative';
 // @ts-ignore
 import { BaseSelectorProps } from './baseSelectors';
 import { getCall, getUserId, getDisplayName } from './baseSelectors';
-import { WebUICallParticipant } from './types/WebUICallParticipant';
+import { WebUIParticipant } from './types/WebUIParticipant';
 import {
   CommunicationUserKind,
   PhoneNumberKind,
@@ -34,9 +34,9 @@ const getACSId = (
   }
 };
 
-const convertRemoteParticipantsToWebUICallParticipants = (
+const convertRemoteParticipantsToWebUIParticipants = (
   remoteParticipants: callingDeclarative.RemoteParticipant[]
-): WebUICallParticipant[] => {
+): WebUIParticipant[] => {
   return remoteParticipants.map((participant: callingDeclarative.RemoteParticipant) => {
     const isScreenSharing = Array.from(participant.videoStreams.values()).some(
       (videoStream) => videoStream.mediaStreamType === 'ScreenSharing' && videoStream.isAvailable
@@ -62,16 +62,16 @@ export const participantListSelector = reselect.createSelector(
   ): {
     userId: string;
     displayName?: string;
-    remoteParticipants?: WebUICallParticipant[];
-    isScreenSharingOn: boolean;
-    isMuted: boolean;
+    remoteParticipants?: WebUIParticipant[];
+    isScreenSharingOn?: boolean;
+    isMuted?: boolean;
   } => {
     return {
       userId: userId,
       displayName: displayName,
       remoteParticipants:
         call && call?.remoteParticipants
-          ? convertRemoteParticipantsToWebUICallParticipants(Array.from(call?.remoteParticipants.values()))
+          ? convertRemoteParticipantsToWebUIParticipants(Array.from(call?.remoteParticipants.values()))
           : [],
       isScreenSharingOn: call?.isScreenSharingOn ?? false,
       isMuted: call?.isMuted ?? false

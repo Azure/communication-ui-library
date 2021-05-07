@@ -13,7 +13,7 @@ import {
 import { ParticipantItem } from 'react-components';
 import { MicOffIcon, CallControlPresentNewIcon } from '@fluentui/react-northstar';
 import { participantStackStyle, overFlowButtonStyles, overflowSetStyle } from './styles/ParticipantStack.styles';
-import { WebUICallParticipant } from '@azure/acs-calling-selector';
+import { WebUIParticipant } from '@azure/acs-calling-selector';
 
 export type ParticipantListProps = {
   /** User ID of user */
@@ -21,22 +21,22 @@ export type ParticipantListProps = {
   /** Display name of user */
   displayName?: string;
   /** Remote participants in user call */
-  remoteParticipants?: WebUICallParticipant[];
+  remoteParticipants?: WebUIParticipant[];
   /** Determines if screen sharing is on */
-  isScreenSharingOn: boolean;
+  isScreenSharingOn?: boolean;
   /** Determines if user is muted */
-  isMuted: boolean;
+  isMuted?: boolean;
   /** Optional function to render each participant  */
-  onRenderParticipant?: (participant: WebUICallParticipant) => JSX.Element;
+  onRenderParticipant?: (participant: WebUIParticipant) => JSX.Element;
   /** Optional function to render each participant  */
-  onRenderParticipantMenu?: (participant: WebUICallParticipant) => IContextualMenuItem[];
+  onRenderParticipantMenu?: (participant: WebUIParticipant) => IContextualMenuItem[];
 };
 
 const getDefaultRenderer = (
   userId: string,
-  onRenderParticipantMenu?: (remoteParticipant: WebUICallParticipant) => IContextualMenuItem[]
-): ((participant: WebUICallParticipant) => JSX.Element) => {
-  return (participant: WebUICallParticipant) => {
+  onRenderParticipantMenu?: (remoteParticipant: WebUIParticipant) => IContextualMenuItem[]
+): ((participant: WebUIParticipant) => JSX.Element) => {
+  return (participant: WebUIParticipant) => {
     let presence = undefined;
     if (participant.state === 'Connected') {
       presence = PersonaPresence.online;
@@ -73,13 +73,13 @@ const onRenderOverflowButton = (overflowItems: unknown): JSX.Element => (
 
 const renderParticipants = (
   userId: string,
-  participants: WebUICallParticipant[],
-  onRenderParticipant?: (participant: WebUICallParticipant) => JSX.Element,
-  onRenderParticipantMenu?: (participant: WebUICallParticipant) => IContextualMenuItem[]
+  participants: WebUIParticipant[],
+  onRenderParticipant?: (participant: WebUIParticipant) => JSX.Element,
+  onRenderParticipantMenu?: (participant: WebUIParticipant) => IContextualMenuItem[]
 ): JSX.Element[] => {
   const renderParticipant = onRenderParticipant ?? getDefaultRenderer(userId, onRenderParticipantMenu);
   const onRenderItem = (item: IOverflowSetItemProps): JSX.Element => {
-    const participant: WebUICallParticipant = {
+    const participant: WebUIParticipant = {
       userId: item.userId,
       displayName: item.displayName,
       state: item.state,
@@ -105,7 +105,7 @@ const renderParticipants = (
 };
 
 export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
-  const allParticipants: WebUICallParticipant[] = [];
+  const allParticipants: WebUIParticipant[] = [];
   if (props.remoteParticipants !== undefined) {
     props.remoteParticipants.forEach((remoteParticipant) => allParticipants.push(remoteParticipant));
   }

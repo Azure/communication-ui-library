@@ -2,11 +2,11 @@
 
 import { RemoteParticipantState } from '@azure/communication-calling';
 
-export type WebUICallParticipant = {
+export type WebUIParticipant = {
   userId: string;
   displayName?: string;
-  state: RemoteParticipantState;
-  isScreenSharing: boolean;
-  isMuted: boolean;
-  isSpeaking: boolean;
+  state?: RemoteParticipantState;
+  isScreenSharing?: boolean;
+  isMuted?: boolean;
+  isSpeaking?: boolean;
 };

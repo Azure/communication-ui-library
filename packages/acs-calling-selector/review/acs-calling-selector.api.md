@@ -99,15 +99,15 @@ export const optionsButtonSelector: reselect.OutputParametricSelector<callingDec
 export const participantListSelector: reselect.OutputParametricSelector<callingDeclarative.CallClientState, BaseSelectorProps, {
     userId: string;
     displayName?: string | undefined;
-    remoteParticipants?: WebUICallParticipant[] | undefined;
-    isScreenSharingOn: boolean;
-    isMuted: boolean;
+    remoteParticipants?: WebUIParticipant[] | undefined;
+    isScreenSharingOn?: boolean | undefined;
+    isMuted?: boolean | undefined;
 }, (res1: string, res2: string | undefined, res3: callingDeclarative.Call | undefined) => {
     userId: string;
     displayName?: string | undefined;
-    remoteParticipants?: WebUICallParticipant[] | undefined;
-    isScreenSharingOn: boolean;
-    isMuted: boolean;
+    remoteParticipants?: WebUIParticipant[] | undefined;
+    isScreenSharingOn?: boolean | undefined;
+    isMuted?: boolean | undefined;
 }>;
 
 // @public (undocumented)
@@ -118,13 +118,13 @@ export const screenShareButtonSelector: reselect.OutputParametricSelector<callin
 }>;
 
 // @public (undocumented)
-export type WebUICallParticipant = {
+export type WebUIParticipant = {
     userId: string;
     displayName?: string;
-    state: RemoteParticipantState;
-    isScreenSharing: boolean;
-    isMuted: boolean;
-    isSpeaking: boolean;
+    state?: RemoteParticipantState;
+    isScreenSharing?: boolean;
+    isMuted?: boolean;
+    isSpeaking?: boolean;
 };
 
 

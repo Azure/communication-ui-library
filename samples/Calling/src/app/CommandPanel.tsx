@@ -12,7 +12,7 @@ import { Footer } from './Footer';
 import { LocalDeviceSettings } from './LocalDeviceSettings';
 import { ParticipantList } from './ParticipantList';
 import { ThemeSelector } from 'react-components';
-import { participantListSelector, WebUICallParticipant } from '@azure/acs-calling-selector';
+import { participantListSelector, WebUIParticipant } from '@azure/acs-calling-selector';
 import { useSelector } from './hooks/useSelector';
 import { useCall } from 'react-composites';
 
@@ -30,7 +30,7 @@ export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
   const call = useCall();
   const participantListProps = useSelector(participantListSelector, { callId: call ? call.id : '' });
 
-  const onRenderParticipantMenu = (participant: WebUICallParticipant): IContextualMenuItem[] => {
+  const onRenderParticipantMenu = (participant: WebUIParticipant): IContextualMenuItem[] => {
     const menuItems: IContextualMenuItem[] = [];
     if (participant.userId !== participantListProps.userId) {
       menuItems.push({
