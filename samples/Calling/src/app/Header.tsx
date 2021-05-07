@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { DefaultButton, Separator, Stack } from '@fluentui/react';
 import React from 'react';

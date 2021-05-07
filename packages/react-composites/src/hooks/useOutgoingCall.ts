@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { AudioOptions, JoinCallOptions, LocalVideoStream } from '@azure/communication-calling';
 import { CommunicationUser } from '@azure/communication-signaling';
