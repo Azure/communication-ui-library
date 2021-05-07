@@ -1,4 +1,6 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import React from 'react';
 import { IDropdownOption, Dropdown, Stack } from '@fluentui/react';
 import { dropDownStyles, localSettingsContainer, mainStackTokens } from './styles/LocalDeviceSettings.styles';
@@ -8,7 +10,7 @@ import {
   WithErrorHandling,
   LocalDeviceSettingsContainerProps,
   MapToLocalDeviceSettingsProps
-} from '@azure/communication-ui';
+} from 'react-composites';
 import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
 import { useTheme } from '@fluentui/react-theme-provider';
 

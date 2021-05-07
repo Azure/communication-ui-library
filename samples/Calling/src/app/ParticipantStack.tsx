@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import React from 'react';
 
@@ -10,7 +11,8 @@ import {
   Stack,
   PersonaPresence
 } from '@fluentui/react';
-import { connectFuncsToContext, ListParticipant, ParticipantItem } from '@azure/communication-ui';
+import { ParticipantItem } from 'react-components';
+import { connectFuncsToContext, ListParticipant } from 'react-composites';
 import { MicOffIcon, CallControlPresentNewIcon } from '@fluentui/react-northstar';
 import { participantStackStyle, overFlowButtonStyles, overflowSetStyle } from './styles/ParticipantStack.styles';
 import { MapToParticipantListProps } from './consumers/MapToParticipantListProps';

@@ -1,26 +1,18 @@
 // © Microsoft Corporation. All rights reserved.
 
-import React from 'react';
-import { Meta } from '@storybook/react/types-6-0';
-import { Stack } from '@fluentui/react';
-import {
-  CameraButton,
-  ControlBar,
-  EndCallButton,
-  MicrophoneButton,
-  OptionsButton,
-  StreamMedia,
-  VideoTile
-} from '@azure/communication-ui';
+import { StreamMedia, VideoTile as VideoTileComponent } from '@azure/communication-react';
 import { text, boolean, number } from '@storybook/addon-knobs';
+import { Meta } from '@storybook/react/types-6-0';
+import React from 'react';
+import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { renderVideoStream } from '../utils';
 import { getDocs } from './VideoTileDocs';
-import { COMPONENT_FOLDER_PREFIX } from '../constants';
 
-export const VideoTileComponent: () => JSX.Element = () => {
+// This must be the only named export from this module, and must be named to match the storybook path suffix.
+// This ensures that storybook hoists the story instead of creating a folder with a single entry.
+export const VideoTile: () => JSX.Element = () => {
   const avatarName = text('Avatar Name', 'John Krasinski');
   const isVideoReady = boolean('Is Video Ready', false);
-  const showControlBarComponent = boolean('Show Control Bar (Not a part of this component)', false);
   const invertVideo = boolean('Invert Video', false);
   const width = number('Width', 400, {
     range: true,
@@ -36,7 +28,7 @@ export const VideoTileComponent: () => JSX.Element = () => {
   });
 
   return (
-    <VideoTile
+    <VideoTileComponent
       isVideoReady={isVideoReady}
       videoProvider={<StreamMedia videoStreamElement={renderVideoStream()} />}
       avatarName={avatarName}
@@ -44,24 +36,13 @@ export const VideoTileComponent: () => JSX.Element = () => {
       styles={{
         root: { height: height, width: width }
       }}
-    >
-      {showControlBarComponent && (
-        <Stack style={{ position: 'absolute', left: '50%', bottom: '1rem' }}>
-          <ControlBar styles={{ root: { position: 'relative', left: '-50%' } }}>
-            <CameraButton />
-            <MicrophoneButton />
-            <OptionsButton />
-            <EndCallButton />
-          </ControlBar>
-        </Stack>
-      )}
-    </VideoTile>
+    />
   );
 };
 
 export default {
-  title: `${COMPONENT_FOLDER_PREFIX}/VideoTile`,
-  component: VideoTile,
+  title: `${COMPONENT_FOLDER_PREFIX}/Video Tile`,
+  component: VideoTileComponent,
   parameters: {
     docs: {
       page: () => getDocs()

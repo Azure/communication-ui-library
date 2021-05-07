@@ -1,4 +1,6 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { AudioDeviceInfo, DeviceAccess, VideoDeviceInfo } from '@azure/communication-calling';
 import EventEmitter from 'events';
 import { enableMapSet, produce } from 'immer';
@@ -10,7 +12,8 @@ import {
   RemoteParticipant,
   RemoteVideoStream,
   IncomingCall,
-  VideoStreamRendererView
+  VideoStreamRendererView,
+  CallAgent
 } from './CallClientState';
 import { getRemoteParticipantKey } from './Converter';
 
@@ -20,19 +23,26 @@ enableMapSet();
 export const MAX_CALL_HISTORY_LENGTH = 10;
 
 export class CallContext {
-  private _state: CallClientState = {
-    calls: new Map<string, Call>(),
-    callsEnded: [],
-    incomingCalls: new Map<string, IncomingCall>(),
-    incomingCallsEnded: [],
-    deviceManagerState: {
-      isSpeakerSelectionAvailable: false,
-      cameras: [],
-      microphones: [],
-      speakers: []
-    }
-  };
-  private _emitter: EventEmitter = new EventEmitter();
+  private _state: CallClientState;
+  private _emitter: EventEmitter;
+
+  constructor(userId: string) {
+    this._state = {
+      calls: new Map<string, Call>(),
+      callsEnded: [],
+      incomingCalls: new Map<string, IncomingCall>(),
+      incomingCallsEnded: [],
+      deviceManager: {
+        isSpeakerSelectionAvailable: false,
+        cameras: [],
+        microphones: [],
+        speakers: []
+      },
+      callAgent: undefined,
+      userId: userId
+    };
+    this._emitter = new EventEmitter();
+  }
 
   public setState(state: CallClientState): void {
     this._state = state;
@@ -65,6 +75,14 @@ export class CallContext {
     );
   }
 
+  public setCallAgent(callAgent: CallAgent): void {
+    this.setState(
+      produce(this._state, (draft: CallClientState) => {
+        draft.callAgent = callAgent;
+      })
+    );
+  }
+
   public setCall(call: Call): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
@@ -78,6 +96,7 @@ export class CallContext {
           existingCall.isScreenSharingOn = call.isScreenSharingOn;
           existingCall.localVideoStreams = call.localVideoStreams;
           existingCall.remoteParticipants = call.remoteParticipants;
+          existingCall.transcription.isTranscriptionActive = call.transcription.isTranscriptionActive;
           existingCall.recording.isRecordingActive = call.recording.isRecordingActive;
           // We don't update the startTime and endTime if we are updating an existing active call
         } else {
@@ -214,6 +233,17 @@ export class CallContext {
         const call = draft.calls.get(callId);
         if (call) {
           call.recording.isRecordingActive = isRecordingActive;
+        }
+      })
+    );
+  }
+
+  public setCallTranscriptionActive(callId: string, isTranscriptionActive: boolean): void {
+    this.setState(
+      produce(this._state, (draft: CallClientState) => {
+        const call = draft.calls.get(callId);
+        if (call) {
+          call.transcription.isTranscriptionActive = isTranscriptionActive;
         }
       })
     );
@@ -428,7 +458,7 @@ export class CallContext {
   public setDeviceManagerIsSpeakerSelectionAvailable(isSpeakerSelectionAvailable: boolean): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        draft.deviceManagerState.isSpeakerSelectionAvailable = isSpeakerSelectionAvailable;
+        draft.deviceManager.isSpeakerSelectionAvailable = isSpeakerSelectionAvailable;
       })
     );
   }
@@ -436,7 +466,7 @@ export class CallContext {
   public setDeviceManagerSelectedMicrophone(selectedMicrophone?: AudioDeviceInfo): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        draft.deviceManagerState.selectedMicrophone = selectedMicrophone;
+        draft.deviceManager.selectedMicrophone = selectedMicrophone;
       })
     );
   }
@@ -444,7 +474,7 @@ export class CallContext {
   public setDeviceManagerSelectedSpeaker(selectedSpeaker?: AudioDeviceInfo): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        draft.deviceManagerState.selectedSpeaker = selectedSpeaker;
+        draft.deviceManager.selectedSpeaker = selectedSpeaker;
       })
     );
   }
@@ -452,7 +482,7 @@ export class CallContext {
   public setDeviceManagerCameras(cameras: VideoDeviceInfo[]): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        draft.deviceManagerState.cameras = cameras;
+        draft.deviceManager.cameras = cameras;
       })
     );
   }
@@ -460,7 +490,7 @@ export class CallContext {
   public setDeviceManagerMicrophones(microphones: AudioDeviceInfo[]): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        draft.deviceManagerState.microphones = microphones;
+        draft.deviceManager.microphones = microphones;
       })
     );
   }
@@ -468,7 +498,7 @@ export class CallContext {
   public setDeviceManagerSpeakers(speakers: AudioDeviceInfo[]): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        draft.deviceManagerState.speakers = speakers;
+        draft.deviceManager.speakers = speakers;
       })
     );
   }
@@ -476,7 +506,7 @@ export class CallContext {
   public setDeviceManagerDeviceAccess(deviceAccess: DeviceAccess): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        draft.deviceManagerState.deviceAccess = deviceAccess;
+        draft.deviceManager.deviceAccess = deviceAccess;
       })
     );
   }

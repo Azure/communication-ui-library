@@ -1,20 +1,18 @@
 // © Microsoft Corporation. All rights reserved.
 
-import { Meta } from '@storybook/react/types-6-0';
-import React from 'react';
 import {
   CameraButton,
   ControlBar,
   EndCallButton,
   MicrophoneButton,
   OptionsButton,
-  ScreenShareButton,
-  LIGHT,
-  DARK
-} from '@azure/communication-ui';
+  ScreenShareButton
+} from '@azure/communication-react';
 import { boolean, select } from '@storybook/addon-knobs';
-import { getDocs } from './ControlBarDocs';
+import { Meta } from '@storybook/react/types-6-0';
+import React from 'react';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { getDocs } from './ControlBarDocs';
 
 const CONTROL_BAR_LAYOUTS = [
   'horizontal',
@@ -68,13 +66,13 @@ export const ControlBarComponent: (
 
   // This is code to set the color of the background div to show contrast to the control bar based on the theme like shown in the Figma design.
   let background = 'none';
-  if (theme === DARK) {
+  if (theme === 'dark') {
     if (layout.startsWith('floating')) {
       background = '#252423';
     } else {
       background = '#161514';
     }
-  } else if (theme === LIGHT) {
+  } else if (theme === 'light') {
     background = '#f8f8f8';
   }
 

@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "fix missing keys for ControlBar buttons",
+  "packageName": "react-components",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "none"
+}

@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { IImageStyles, Icon, Image, PrimaryButton, Spinner, Stack, Link } from '@fluentui/react';
 import React, { useState } from 'react';
@@ -20,7 +21,7 @@ import { ChatIcon } from '@fluentui/react-icons-northstar';
 import heroSVG from '../assets/hero.svg';
 import { getThreadId } from './utils/getThreadId';
 import { createThread } from './utils/createThread';
-import { ThemeSelector } from '@azure/communication-ui';
+import { ThemeSelector } from 'react-components';
 
 const imageStyleProps: IImageStyles = {
   image: {

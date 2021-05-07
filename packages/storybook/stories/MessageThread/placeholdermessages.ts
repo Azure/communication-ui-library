@@ -6,7 +6,7 @@ import {
   ChatMessage,
   CustomMessage,
   SystemMessage
-} from '@azure/communication-ui';
+} from '@azure/communication-react';
 
 export const MessageThreadContainerStyles = {
   width: '100%',

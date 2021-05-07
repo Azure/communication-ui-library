@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   CameraButton,
   ControlBar,
@@ -9,8 +8,9 @@ import {
   ScreenShareButton,
   answerButtonProps,
   recordButtonProps
-} from '@azure/communication-ui';
+} from '@azure/communication-react';
 import { DefaultButton, IContextualMenuProps } from '@fluentui/react';
+import React from 'react';
 
 export const AllButtonsControlBarExample: () => JSX.Element = () => {
   const exampleOptionsMenuProps: IContextualMenuProps = {

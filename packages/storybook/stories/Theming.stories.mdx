@@ -17,7 +17,7 @@ import {
   OptionsButton,
   ScreenShareButton,
   darkTheme
-} from '@azure/communication-ui';
+} from '@azure/communication-react';
 
 <Meta title="Theming" />
 
@@ -32,7 +32,7 @@ component ensures:
 
 ## Usage
 
-To use the FluentThemeProvider, simply import it from `@azure/communication-ui` and wrap it around
+To use the FluentThemeProvider, simply import it from `react-components` and wrap it around
 ACS UI SDK components and Fluent UI components. For the example below we will provide theming and icons to
 the `ControlBar`.
 
@@ -47,7 +47,7 @@ the `ControlBar`.
 1. `FluentThemeProvider` loads the icons used by components such as `CameraButton`
 2. `FluentThemeProvider` applies theme (light theme by default) to the `ControlBar`
 
-To illustrate how another theme can be applied, import `darkTheme` from `@azure/communication-ui`
+To illustrate how another theme can be applied, import `darkTheme` from `react-components`
 and assign it to the `fluentTheme` property.
 
 <Source code={DarkControlBarText} />

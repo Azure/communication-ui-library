@@ -1,4 +1,6 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import {
   Call as SdkCall,
   RemoteParticipant as SdkRemoteParticipant,
@@ -111,6 +113,7 @@ export function convertSdkCallToDeclarativeCall(call: SdkCall): DeclarativeCall 
     remoteParticipants: declarativeRemoteParticipants,
     remoteParticipantsEnded: new Map<string, DeclarativeRemoteParticipant>(),
     recording: { isRecordingActive: false },
+    transcription: { isTranscriptionActive: false },
     startTime: new Date(),
     endTime: undefined
   };

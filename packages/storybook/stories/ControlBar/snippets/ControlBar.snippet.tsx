@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   CameraButton,
   ControlBar,
@@ -7,7 +6,8 @@ import {
   MicrophoneButton,
   OptionsButton,
   ScreenShareButton
-} from '@azure/communication-ui';
+} from '@azure/communication-react';
+import React from 'react';
 
 export const ControlBarExample: () => JSX.Element = () => {
   return (

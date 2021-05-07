@@ -1,10 +1,10 @@
-import { FluentThemeProvider } from '@azure/communication-ui';
+import { FluentThemeProvider } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import React from 'react';
 import { CallingComponents } from './CallingComponents.snippet';
 import { ChatComponents } from './ChatComponents.snippet';
 
-function CompletedComponentsApp() {
+function CompletedComponentsApp(): JSX.Element {
   return (
     <FluentThemeProvider>
       <Stack

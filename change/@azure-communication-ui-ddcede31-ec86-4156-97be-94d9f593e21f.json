@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Refactor ChatThread component and optimize ReadReceipt data flow",
-  "packageName": "@azure/communication-ui",
-  "email": "easony@microsoft.com",
-  "dependentChangeType": "patch"
-}

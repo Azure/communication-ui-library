@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Removing references to static media.svg and styles",
+  "packageName": "react-components",
+  "email": "alkwa@microsoft.com",
+  "dependentChangeType": "patch"
+}

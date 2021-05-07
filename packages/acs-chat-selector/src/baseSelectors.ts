@@ -1,4 +1,6 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { ChatClientState, ChatMessageWithStatus, TypingIndicator } from '@azure/acs-chat-declarative';
 import { ChatParticipant, ChatMessageReadReceipt } from '@azure/communication-chat';
 export type BaseSelectorProps = {

@@ -1,9 +1,11 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './app/App';
-import { SwitchableFluentThemeProvider } from '@azure/communication-ui';
+import { SwitchableFluentThemeProvider } from 'react-components';
 
 ReactDOM.render(
   <SwitchableFluentThemeProvider scopeId="SampleCallingApp">

@@ -1,15 +1,10 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { Label } from '@fluentui/react';
 import React from 'react';
-import {
-  StreamMedia,
-  VideoTile,
-  WithErrorHandling,
-  connectFuncsToContext,
-  MapToRemoteVideoProps,
-  ErrorHandlingProps
-} from '@azure/communication-ui';
+import { StreamMedia, VideoTile } from 'react-components';
+import { WithErrorHandling, connectFuncsToContext, MapToRemoteVideoProps, ErrorHandlingProps } from 'react-composites';
 import { disabledVideoHint, videoHint } from './styles/MediaGallery.styles';
 
 export interface RemoteVideoTileProps {

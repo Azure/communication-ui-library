@@ -1,6 +1,6 @@
-import React from 'react';
-import { CameraButton, ControlBar, FluentThemeProvider, OptionsButton } from '@azure/communication-ui';
+import { CameraButton, ControlBar, FluentThemeProvider, OptionsButton } from '@azure/communication-react';
 import { IContextualMenuProps } from '@fluentui/react';
+import React from 'react';
 
 export const OptionsButtonExample: () => JSX.Element = () => {
   const exampleOptionsMenuProps: IContextualMenuProps = {

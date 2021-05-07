@@ -1,4 +1,6 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import React, { useEffect, useState } from 'react';
 import { Icon, Panel, PrimaryButton, Stack, TextField } from '@fluentui/react';
 import {
@@ -14,7 +16,8 @@ import {
   settingsTopicWarningStyle
 } from './styles/SettingsManagement.styles';
 import { inputBoxTextStyle } from './styles/SidePanel.styles';
-import { ENTER_KEY, MAXIMUM_LENGTH_OF_TOPIC, ThemeSelector } from '@azure/communication-ui';
+import { ThemeSelector } from 'react-components';
+import { ENTER_KEY, MAXIMUM_LENGTH_OF_TOPIC } from 'react-composites';
 
 export type SettingsManagementProps = {
   updateThreadTopicName: (topicName: string) => Promise<void>;
