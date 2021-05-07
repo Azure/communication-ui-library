@@ -1,10 +1,10 @@
-import React from 'react';
-import { Meta } from '@storybook/react/types-6-0';
-import { ParticipantItem } from 'react-components';
-import { boolean, text, select } from '@storybook/addon-knobs';
-import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
+import { ParticipantItem } from '@azure/communication-react';
 import { Stack, PersonaPresence } from '@fluentui/react';
 import { MicOffIcon, CallControlPresentNewIcon } from '@fluentui/react-northstar';
+import { boolean, text, select } from '@storybook/addon-knobs';
+import { Meta } from '@storybook/react/types-6-0';
+import React from 'react';
+import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import { getDocs } from './ParticipantListDocs';
 
 const onlyUnique = (value: string, index: number, self: string[]): boolean => {

@@ -1,20 +1,19 @@
 // © Microsoft Corporation. All rights reserved.
 
-import React, { useEffect } from 'react';
-import { text } from '@storybook/addon-knobs';
-import { getDocs } from './GroupChatCompositeDocs';
-import { ChatConfig, GroupChat as GroupChatComposite } from 'react-composites';
-import { AzureCommunicationUserCredential } from '@azure/communication-common';
 import { CommunicationIdentityClient } from '@azure/communication-administration';
 import { ChatClient } from '@azure/communication-chat';
-import { useState } from 'react';
-import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE, COMPOSITE_FOLDER_PREFIX } from '../constants';
+import { AzureCommunicationUserCredential } from '@azure/communication-common';
+import { text } from '@storybook/addon-knobs';
+import { Meta } from '@storybook/react/types-6-0';
+import React, { useState, useEffect } from 'react';
+import { ChatConfig, GroupChat as GroupChatComposite } from 'react-composites';
 import {
   CompositeConnectionParamsErrMessage,
   COMPOSITE_STRING_CONNECTIONSTRING,
   COMPOSITE_STRING_REQUIREDCONNECTIONSTRING
 } from '../CompositeStringUtils';
-import { Meta } from '@storybook/react/types-6-0';
+import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE, COMPOSITE_FOLDER_PREFIX } from '../constants';
+import { getDocs } from './GroupChatCompositeDocs';
 
 export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/Group Chat`,

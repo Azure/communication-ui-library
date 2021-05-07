@@ -1,4 +1,6 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { renderHook } from '@testing-library/react-hooks';
 import useLocalVideoStreamRenderer from './useLocalVideoStreamRenderer';
 import { LocalVideoStream, VideoDeviceInfo } from '@azure/communication-calling';

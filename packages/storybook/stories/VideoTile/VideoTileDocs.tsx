@@ -1,16 +1,17 @@
 // © Microsoft Corporation. All rights reserved.
 
+import { VideoTile } from '@azure/communication-react';
 import { Canvas, Description, Heading, Props, Source, Title, Subheading } from '@storybook/addon-docs/blocks';
 import React from 'react';
-import { VideoTile } from 'react-components';
-import { VideoTileExample } from './snippets/VideoTile.snippet';
-const VideoTileExampleText = require('!!raw-loader!./snippets/VideoTile.snippet').default;
-import { VideoTilePlaceholderExample } from './snippets/VideoTilePlaceholder.snippet';
-const VideoTilePlaceholderText = require('!!raw-loader!./snippets/VideoTilePlaceholder.snippet').default;
 import { VideoTileExample as VideoTileStylineExample } from '../Styling/snippets/StylingVideoTile.snippet';
-const VideoTileStylineExampleText = require('!!raw-loader!../Styling/snippets/StylingVideoTile.snippet').default;
+import { VideoTileExample } from './snippets/VideoTile.snippet';
+import { VideoTilePlaceholderExample } from './snippets/VideoTilePlaceholder.snippet';
 
-const importStatement = `import { VideoTile } from 'react-components';`;
+const VideoTileStylineExampleText = require('!!raw-loader!../Styling/snippets/StylingVideoTile.snippet').default;
+const VideoTileExampleText = require('!!raw-loader!./snippets/VideoTile.snippet').default;
+const VideoTilePlaceholderText = require('!!raw-loader!./snippets/VideoTilePlaceholder.snippet').default;
+
+const importStatement = `import { VideoTile } from '@azure/communication-react';`;
 
 export const getDocs: () => JSX.Element = () => {
   return (

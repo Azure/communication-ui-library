@@ -1,4 +1,6 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { mergeStyles, Stack, IButtonProps } from '@fluentui/react';
 import { useTheme } from '@fluentui/react-theme-provider';
 import { CallIcon, CallRecordingIcon } from '@fluentui/react-northstar';

@@ -7,11 +7,10 @@ import {
   OptionsButton,
   ScreenShareButton,
   VideoTile
-} from 'react-components';
+} from '@azure/communication-react';
 
 import { Stack, IContextualMenuProps } from '@fluentui/react';
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 export const CallingComponents = (): JSX.Element => {
   const exampleOptionsMenuProps: IContextualMenuProps = {

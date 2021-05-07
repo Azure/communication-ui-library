@@ -1,6 +1,6 @@
+import { ScreenShareButton } from '@azure/communication-react';
+import { IButtonProps, Icon, Label, Stack } from '@fluentui/react';
 import React from 'react';
-import { IButtonProps, Icon, Label, Stack, Text } from '@fluentui/react';
-import { ScreenShareButton } from 'react-components';
 
 export const CustomScreenShareButtonExample: () => JSX.Element = () => {
   const customOnRenderIcon = (props?: IButtonProps): JSX.Element => {

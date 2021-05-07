@@ -1,18 +1,16 @@
-import { analyticsCookieConsentObtained } from "./telemetry";
+import { analyticsCookieConsentObtained } from './telemetry';
 
 describe('storybook telemetry util tests', () => {
-
   beforeEach(() => {
     // reset cookie consent window variables
     (window as any).siteConsent = undefined;
-  })
+  });
 
-  describe ('test analyticsCookieConsentObtained', () => {
-
+  describe('test analyticsCookieConsentObtained', () => {
     test('analyticsCookieConsentObtained returns false if telemetry library is not initialized', () => {
       // set cookie consent library to uninitialized
       (window as any).siteConsent = undefined;
-      
+
       const result = analyticsCookieConsentObtained();
 
       expect(result).toEqual(false);
@@ -27,7 +25,7 @@ describe('storybook telemetry util tests', () => {
           Analytics: false
         })
       };
-      
+
       const result = analyticsCookieConsentObtained();
 
       expect(result).toEqual(false);
@@ -42,7 +40,7 @@ describe('storybook telemetry util tests', () => {
           Analytics: true
         })
       };
-      
+
       const result = analyticsCookieConsentObtained();
 
       expect(result).toEqual(true);
@@ -57,11 +55,10 @@ describe('storybook telemetry util tests', () => {
           Analytics: false
         })
       };
-      
+
       const result = analyticsCookieConsentObtained();
 
       expect(result).toEqual(true);
     });
-
-  })
+  });
 });
