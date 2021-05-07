@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { Title, Description, Heading, Source, Props } from '@storybook/addon-docs/blocks';
 import React from 'react';
@@ -7,7 +8,7 @@ import { GroupCall } from 'react-composites';
 const importStatement = `
 import { GroupCall } from 'react-composites';
 import { v1 as createGUID } from 'uuid';
-import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-administration';
+import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-identity';
 `;
 
 const exampleCode = `

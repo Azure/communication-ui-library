@@ -7,7 +7,7 @@
     "build": "build-storybook -s stories,public,.storybook  --quiet --loglevel warn",
     "start": "start-storybook -p 6006 -s stories,./public --no-manager-cache --quiet --loglevel warn",
     "deploy-storybook": "storybook-to-ghpages --script build",
-    "test": "jest",
+    "test": "rush build -T storybook && jest",
     "test:coverage": "npm run test -- --coverage",
     "snapshot:update": "npm run test -- --update-snapshot",
     "prettier": "prettier --write --config ../../.prettierrc \"**/*.js\" \"**/*.ts\"",
@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@azure/acs-chat-selector": "~1.0.0-beta",
-    "@azure/communication-administration": "1.0.0-beta.3",
+    "@azure/communication-identity": "1.0.0",
     "@azure/communication-calling": "1.0.1-beta.1",
     "@azure/communication-chat": "1.0.0-beta.4",
     "@azure/communication-common": "1.0.0-beta.3",
@@ -37,7 +37,6 @@
     "copy-to-clipboard": "~3.3.1",
     "history": "~5.0.0",
     "react-aria-live": "^2.0.5",
-    "react-components": "1.0.0-beta",
     "react-composites": "1.0.0-beta",
     "react-linkify": "^1.0.0-alpha"
   },
