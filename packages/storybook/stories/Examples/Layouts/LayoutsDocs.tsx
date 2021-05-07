@@ -14,13 +14,13 @@ export const getDocs: () => JSX.Element = () => {
       <Title>Layouts</Title>
       <Description>
         In this section, we showcase different examples of building your own calling gallery layouts using `VideoTile`
-        component from `react-components` package and `@fluentui/react` package.
+        component from `@azure/communication-react` package and `@fluentui/react` package.
       </Description>
       <Description>
         In these examples, we use [Stack](https://developer.microsoft.com/en-us/fluentui#/controls/web/stack) component
         from `fluentui` to build a layout for our video tiles. For the individual elements in this layout we use
-        `VideoTile` from `react-components` to render each participant. We are not passing in video stream to the
-        `VideoTile` component in these examples, instead a
+        `VideoTile` from `@azure/communication-react` to render each participant. We are not passing in video stream to
+        the `VideoTile` component in these examples, instead a
         [Persona](https://developer.microsoft.com/en-us/fluentui#/controls/web/persona) component is used as a
         placeholder component.
       </Description>
