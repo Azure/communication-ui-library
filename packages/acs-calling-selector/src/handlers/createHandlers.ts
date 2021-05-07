@@ -15,7 +15,7 @@ import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier }
 import {
   DeclarativeCallClient,
   RemoteVideoStream,
-  LocalVideoStream as LocalVideoStreamStateful
+  LocalVideoStream as StatefulLocalVideoStream
 } from '@azure/acs-calling-declarative';
 import { ReactElement } from 'react';
 import memoizeOne from 'memoize-one';
@@ -102,7 +102,7 @@ const createDefaultHandlers = memoizeOne(
     const onHangUp = async (): Promise<void> => await call?.hangUp();
 
     const onRenderView = async (
-      stream: LocalVideoStreamStateful | RemoteVideoStream,
+      stream: StatefulLocalVideoStream | RemoteVideoStream,
       options: CreateViewOptions
     ): Promise<void> => {
       const callId = call?.id;
