@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 // @ts-ignore
 import { Call, LocalVideoStream, RemoteParticipant, RemoteVideoStream } from '@azure/acs-calling-declarative';
