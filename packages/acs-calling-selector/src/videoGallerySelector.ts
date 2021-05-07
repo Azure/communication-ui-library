@@ -62,7 +62,7 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
       displayName: displayName,
       isMuted: isMuted,
       isSpeaking: isSpeaking,
-      // From the current calling sdk, remote participant videoStreams is actually a typle
+      // From the current calling sdk, remote participant videoStreams is actually a tuple
       // The first item is always video stream
       // The second item is always screenshare stream
       videoStream: rawVideoStreamsArray[0],
