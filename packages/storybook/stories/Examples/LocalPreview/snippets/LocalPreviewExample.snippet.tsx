@@ -1,7 +1,3 @@
-import { Stack, mergeStyles, Text } from '@fluentui/react';
-import { CallVideoOffIcon } from '@fluentui/react-northstar';
-import { useTheme } from '@fluentui/react-theme-provider';
-import React, { useState } from 'react';
 import {
   StreamMedia,
   VideoTile,
@@ -9,7 +5,11 @@ import {
   CameraButton,
   MicrophoneButton,
   FluentThemeProvider
-} from 'react-components';
+} from '@azure/communication-react';
+import { Stack, mergeStyles, Text } from '@fluentui/react';
+import { CallVideoOffIcon } from '@fluentui/react-northstar';
+import { useTheme } from '@fluentui/react-theme-provider';
+import React, { useState } from 'react';
 import { renderVideoStream } from '../../../utils';
 
 export interface LocalPreviewProps {
