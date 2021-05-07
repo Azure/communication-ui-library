@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
 // @ts-ignore
-import { ChatClientState } from '@azure/acs-chat-declarative';
+import { ChatClientState, CommunicationIdentifierAsKey } from '@azure/acs-chat-declarative';
 // @ts-ignore
 import { BaseSelectorProps, getUserId, getDisplayName, getParticipants } from './baseSelectors';
 import * as reselect from 'reselect';
@@ -22,7 +22,7 @@ const convertChatParticipantsToWebUiChatParticipants = (
 
 export const chatParticipantListSelector = reselect.createSelector(
   [getUserId, getParticipants, getDisplayName],
-  (userId, chatParticipants: Map<string, ChatParticipant>, displayName) => {
+  (userId, chatParticipants: Map<CommunicationIdentifierAsKey, ChatParticipant>, displayName) => {
     return {
       userId,
       displayName,
