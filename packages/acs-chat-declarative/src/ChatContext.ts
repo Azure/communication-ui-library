@@ -278,12 +278,12 @@ export class ChatContext {
         if (thread) {
           const typingIndicators = thread.typingIndicators;
           typingIndicators.push(typingIndicator);
-
-          // Make sure we only maintain a period of typing indicator for perf purposes
-          this.startTypingIndicatorCleanUp();
         }
       })
     );
+
+    // Make sure we only maintain a period of typing indicator for perf purposes
+    this.startTypingIndicatorCleanUp();
   }
 
   public setChatMessage(threadId: string, message: ChatMessageWithStatus): void {
