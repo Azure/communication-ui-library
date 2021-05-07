@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-administration';
 import { text } from '@storybook/addon-knobs';

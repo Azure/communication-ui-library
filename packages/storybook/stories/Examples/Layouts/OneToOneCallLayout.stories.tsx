@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { GridLayout, VideoTile } from '@azure/communication-react';
 import { Stack, mergeStyles, PersonaSize, Persona } from '@fluentui/react';

@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { CommunicationIdentityClient } from '@azure/communication-administration';
 import { ChatClient } from '@azure/communication-chat';

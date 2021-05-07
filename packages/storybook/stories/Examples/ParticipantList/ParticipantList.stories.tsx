@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { ParticipantItem } from '@azure/communication-react';
 import { Stack, PersonaPresence } from '@fluentui/react';
 import { MicOffIcon, CallControlPresentNewIcon } from '@fluentui/react-northstar';
