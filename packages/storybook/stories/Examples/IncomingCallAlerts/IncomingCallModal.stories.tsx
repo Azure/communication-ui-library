@@ -1,12 +1,13 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import React from 'react';
-import { Meta } from '@storybook/react/types-6-0';
-import { IncomingCallModal } from 'react-composites';
 import { text, files, boolean } from '@storybook/addon-knobs';
-import { getDocs } from './IncomingCallAlertsDocs';
-import { renderVideoStream } from '../../utils';
+import { Meta } from '@storybook/react/types-6-0';
+import React from 'react';
+import { IncomingCallModal } from 'react-composites';
 import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
+import { renderVideoStream } from '../../utils';
+import { getDocs } from './IncomingCallAlertsDocs';
 
 export const IncomingCallModalComponent: () => JSX.Element = () => {
   const alertText = text('Alert Text', 'Incoming Video Call');

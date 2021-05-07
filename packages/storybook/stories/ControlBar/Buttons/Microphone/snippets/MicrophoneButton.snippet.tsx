@@ -1,6 +1,6 @@
-import React from 'react';
-import { Stack } from '@fluentui/react';
 import { MicrophoneButton } from '@azure/communication-react';
+import { Stack } from '@fluentui/react';
+import React from 'react';
 
 export const MicrophoneButtonExample: () => JSX.Element = () => {
   return (

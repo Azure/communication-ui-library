@@ -1,6 +1,6 @@
-import React from 'react';
-import { Stack } from '@fluentui/react';
 import { EndCallButton, FluentThemeProvider } from '@azure/communication-react';
+import { Stack } from '@fluentui/react';
+import React from 'react';
 
 export const EndCallButtonWithLabelExample: () => JSX.Element = () => {
   return (

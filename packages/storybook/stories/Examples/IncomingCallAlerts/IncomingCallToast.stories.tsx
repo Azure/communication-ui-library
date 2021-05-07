@@ -1,12 +1,13 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import React from 'react';
-import { Meta } from '@storybook/react/types-6-0';
-import { IncomingCallToast } from 'react-composites';
-import { text, files } from '@storybook/addon-knobs';
-import { getDocs } from './IncomingCallAlertsDocs';
-import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import { Stack } from '@fluentui/react';
+import { text, files } from '@storybook/addon-knobs';
+import { Meta } from '@storybook/react/types-6-0';
+import React from 'react';
+import { IncomingCallToast } from 'react-composites';
+import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
+import { getDocs } from './IncomingCallAlertsDocs';
 
 export const IncomingCallToastComponent: () => JSX.Element = () => {
   const callerName = text('Caller Name', 'John Doe');

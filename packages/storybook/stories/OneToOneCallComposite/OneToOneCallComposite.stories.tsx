@@ -1,18 +1,19 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import React, { useEffect, useState } from 'react';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
-import { Meta } from '@storybook/react/types-6-0';
-import { text } from '@storybook/addon-knobs';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-administration';
-import { getDocs } from './OneToOneCallCompositeDocs';
+import { text } from '@storybook/addon-knobs';
+import { Meta } from '@storybook/react/types-6-0';
+import React, { useEffect, useState } from 'react';
 import { OneToOneCall as OneToOneCallComposite } from 'react-composites';
-import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE, COMPOSITE_FOLDER_PREFIX } from '../constants';
 import {
   CompositeConnectionParamsErrMessage,
   COMPOSITE_STRING_CONNECTIONSTRING,
   COMPOSITE_STRING_REQUIREDCONNECTIONSTRING
 } from '../CompositeStringUtils';
+import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE, COMPOSITE_FOLDER_PREFIX } from '../constants';
+import { getDocs } from './OneToOneCallCompositeDocs';
 
 export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/One To One Call`,

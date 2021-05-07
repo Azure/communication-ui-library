@@ -1,15 +1,16 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import React from 'react';
-import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
 import { ParticipantItem } from '@azure/communication-react';
-import { ParticipantItemExample } from './snippets/ParticipantItem.snippet';
+import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
+import React from 'react';
 import { CustomAvatarExample } from './snippets/CustomAvatar.snippet';
 import { CustomIconExample } from './snippets/CustomIcon.snippet';
+import { ParticipantItemExample } from './snippets/ParticipantItem.snippet';
 
-const ParticipantItemExampleText = require('!!raw-loader!./snippets/ParticipantItem.snippet.tsx').default;
 const CustomAvatarExampleText = require('!!raw-loader!./snippets/CustomAvatar.snippet.tsx').default;
 const CustomIconExampleText = require('!!raw-loader!./snippets/CustomIcon.snippet.tsx').default;
+const ParticipantItemExampleText = require('!!raw-loader!./snippets/ParticipantItem.snippet.tsx').default;
 
 const importStatement = `
 import { ParticipantItem, ParticipantItemProps } from '@azure/communication-react';
