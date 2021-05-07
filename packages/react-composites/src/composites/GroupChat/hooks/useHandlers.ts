@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
-import { createDefaultHandlersForComponent } from '@azure/acs-chat-selector';
+import { createDefaultChatHandlersForComponent } from '@azure/acs-chat-selector';
 import { useChatClient } from '../../../providers/ChatProviderHelper';
 import { useChatThreadClient } from '../../../providers/ChatThreadProvider';
 
@@ -17,5 +17,5 @@ export const useHandlers = <PropsT>(component: (props: PropsT) => ReactElement |
     throw 'Please initialize chatThreadClient first!';
   }
 
-  return createDefaultHandlersForComponent(chatClient, chatThreadClient, component);
+  return createDefaultChatHandlersForComponent(chatClient, chatThreadClient, component);
 };
