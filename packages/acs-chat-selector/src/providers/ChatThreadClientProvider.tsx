@@ -15,7 +15,7 @@ export type ChatThreadClientProviderProps = {
  * ChatThreadClientProvider requires valid StatefulChatThreadClient. It provides a global access to the
  * stateful chat thread client for the contoso app
  *
- * @param props
+ * @param props - includes one parameter StatefulChatThreadClient
  */
 export const ChatThreadClientProvider = (props: ChatThreadClientProviderProps): JSX.Element => {
   return (

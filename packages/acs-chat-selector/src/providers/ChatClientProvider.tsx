@@ -15,7 +15,7 @@ export type ChatClientProviderProps = {
  * ChatClientProvider requires valid StatefulChatClient. It provides a global access to the
  * stateful chat client for the contoso app
  *
- * @param props
+ * @param props - only one parameter StatefulChatClient
  */
 export const ChatClientProvider = (props: ChatClientProviderProps): JSX.Element => {
   return <ChatClientContext.Provider value={props.chatClient}>{props.children}</ChatClientContext.Provider>;
