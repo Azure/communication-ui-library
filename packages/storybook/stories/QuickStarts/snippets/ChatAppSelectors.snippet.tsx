@@ -43,7 +43,7 @@ function App() {
   return (
     <FluentThemeProvider>
       <div style={{ height: '50rem', width: '50rem' }}>
-        {/*Add UI Components with props passed. Render components only when props are populated*/}
+        {/*Props are updated asynchronously, so only render the component once props are populated.*/}
         {messageThreadProps && <MessageThread {...messageThreadProps} />}
         {sendBoxProps && <SendBox {...sendBoxProps} />}
       </div>
