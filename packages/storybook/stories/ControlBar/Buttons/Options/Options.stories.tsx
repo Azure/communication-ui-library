@@ -1,20 +1,21 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
+import { OptionsButton } from '@azure/communication-react';
+import { IContextualMenuProps } from '@fluentui/react';
 import { Canvas, Description, Heading, Props, Source, SourceState, Title } from '@storybook/addon-docs/blocks';
 import { boolean } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { IContextualMenuProps } from '@fluentui/react';
-import { OptionsButton } from '@azure/communication-react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
+import { OptionsButtonCustomExample } from './snippets/Custom.snippet';
 import { OptionsButtonDefaultExample } from './snippets/Default.snippet';
 import { OptionsButtonWithLabelExample } from './snippets/WithLabel.snippet';
-import { OptionsButtonCustomExample } from './snippets/Custom.snippet';
 
+const OptionsButtonCustomExampleText = require('!!raw-loader!./snippets/Custom.snippet.tsx').default;
 const OptionsButtonDefaultExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
 const OptionsButtonWithLabelExampleText = require('!!raw-loader!./snippets/WithLabel.snippet.tsx').default;
-const OptionsButtonCustomExampleText = require('!!raw-loader!./snippets/Custom.snippet.tsx').default;
 
 const importStatement = `
 import { OptionsButton } from '@azure/communication-react';

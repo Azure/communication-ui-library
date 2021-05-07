@@ -1,6 +1,6 @@
-import React from 'react';
-import { IContextualMenuProps, Stack } from '@fluentui/react';
 import { FluentThemeProvider, OptionsButton } from '@azure/communication-react';
+import { IContextualMenuProps, Stack } from '@fluentui/react';
+import React from 'react';
 
 const exampleOptionsMenuProps: IContextualMenuProps = {
   items: [
