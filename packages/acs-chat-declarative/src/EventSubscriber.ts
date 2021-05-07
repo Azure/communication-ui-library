@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatClient } from '@azure/communication-chat';
+import { ChatClient, ChatMessageReadReceipt } from '@azure/communication-chat';
 import {
   ChatMessageDeletedEvent,
   ChatMessageEditedEvent,
@@ -17,8 +17,7 @@ import {
 import { ChatContext } from './ChatContext';
 import { convertChatMessage } from './convertChatMessage';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
-import { ReadReceipt } from './types/ReadReceipt';
-import { TypingIndicator } from './types/TypingIndicator';
+import { TypingIndicatorEvent } from './types/TypingIndicatorEvent';
 
 export class EventSubscriber {
   private chatClient: ChatClient;
@@ -87,7 +86,7 @@ export class EventSubscriber {
   };
 
   private onReadReceiptReceived = (event: ReadReceiptReceivedEvent): void => {
-    const readReceipt: ReadReceipt = {
+    const readReceipt: ChatMessageReadReceipt = {
       ...event,
       sender: { communicationUserId: event.sender.user.communicationUserId },
       readOn: new Date(event.readOn)
@@ -99,7 +98,7 @@ export class EventSubscriber {
   };
 
   private onTypingIndicatorReceived = (event: TypingIndicatorReceivedEvent): void => {
-    const typingIndicator: TypingIndicator = {
+    const typingIndicator: TypingIndicatorEvent = {
       ...event,
       receivedOn: new Date(event.receivedOn)
     };

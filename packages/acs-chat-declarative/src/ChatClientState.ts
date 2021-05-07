@@ -1,10 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatThreadInfo, ChatParticipant } from '@azure/communication-chat';
+import { ChatMessageReadReceipt, ChatThreadInfo, ChatParticipant } from '@azure/communication-chat';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
-import { ReadReceipt } from './types/ReadReceipt';
-import { TypingIndicator } from './types/TypingIndicator';
+import { TypingIndicatorEvent } from './types/TypingIndicatorEvent';
 
 export type ChatClientState = {
   userId: string;
@@ -21,7 +20,7 @@ export type ChatThreadClientState = {
   getThreadMembersError?: boolean;
   updateThreadMembersError?: boolean;
   failedMessageIds: string[];
-  readReceipts: ReadReceipt[];
-  typingIndicators: TypingIndicator[];
+  readReceipts: ChatMessageReadReceipt[];
+  typingIndicators: TypingIndicatorEvent[];
   latestReadTime: Date;
 };

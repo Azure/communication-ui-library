@@ -6,10 +6,9 @@ import produce from 'immer';
 import { ChatClientState, ChatThreadClientState } from './ChatClientState';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 import { enableMapSet } from 'immer';
-import { ChatThreadInfo, ChatParticipant } from '@azure/communication-chat';
-import { ReadReceipt } from './types/ReadReceipt';
+import { ChatMessageReadReceipt, ChatThreadInfo, ChatParticipant } from '@azure/communication-chat';
 import { Constants } from './Constants';
-import { TypingIndicator } from './types/TypingIndicator';
+import { TypingIndicatorEvent } from './types/TypingIndicatorEvent';
 import { ChatConfig } from './types/ChatConfig';
 
 enableMapSet();
@@ -211,7 +210,7 @@ export class ChatContext {
     );
   }
 
-  public addReadReceipt(threadId: string, readReceipt: ReadReceipt): void {
+  public addReadReceipt(threadId: string, readReceipt: ChatMessageReadReceipt): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         const thread = draft.threads.get(threadId);
@@ -229,7 +228,7 @@ export class ChatContext {
     );
   }
 
-  public addTypingIndicator(threadId: string, typingIndicator: TypingIndicator): void {
+  public addTypingIndicator(threadId: string, typingIndicator: TypingIndicatorEvent): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         const thread = draft.threads.get(threadId);

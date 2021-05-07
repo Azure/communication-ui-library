@@ -8,6 +8,5 @@ export { chatThreadClientDeclaratify } from './ChatThreadClientDeclarative';
 export type { DeclarativeChatClient } from './ChatClientDeclarative';
 export type { ChatMessageWithStatus, MessageStatus } from './types/ChatMessageWithStatus';
 export type { ChatConfig } from './types/ChatConfig';
-export type { ReadReceipt } from './types/ReadReceipt';
-export type { TypingIndicator } from './types/TypingIndicator';
+export type { TypingIndicatorEvent } from './types/TypingIndicatorEvent';
 export type { ChatThreadClientState, ChatClientState } from './ChatClientState';
