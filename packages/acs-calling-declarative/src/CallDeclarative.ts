@@ -26,7 +26,9 @@ class ProxyCall implements ProxyHandler<Call> {
   }
 
   public unsubscribe(): void {
-    this._transfer.unsubscribe();
+    if (this._transfer) {
+      this._transfer.unsubscribe();
+    }
   }
 
   public get<P extends keyof Call>(target: Call, prop: P): any {
