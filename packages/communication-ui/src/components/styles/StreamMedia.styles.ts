@@ -7,7 +7,10 @@ export const mediaContainer = mergeStyles({
   height: '100%',
   width: '100%',
   background: 'transparent',
-  display: 'flex'
+  display: 'flex',
+  '& video': {
+    borderRadius: '.25rem'
+  }
 });
 
 export const invertedVideoStyle = mergeStyles(mediaContainer, {

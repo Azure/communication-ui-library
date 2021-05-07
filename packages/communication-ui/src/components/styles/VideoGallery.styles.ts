@@ -13,7 +13,7 @@ export const gridStyle = mergeStyles(videoBaseStyle, {
 
 export const videoTileStyle = {
   root: {
-    borderRadius: '4px'
+    borderRadius: '.25rem'
   }
 };
 

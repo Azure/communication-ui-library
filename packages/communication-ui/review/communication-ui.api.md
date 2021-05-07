@@ -418,9 +418,6 @@ export type VideoGalleryLocalParticipant = VideoGalleryParticipant & {
 };
 
 // @public (undocumented)
-export type VideoGalleryLocalVideoStream = VideoGalleryVideoStream;
-
-// @public (undocumented)
 export type VideoGalleryParticipant = {
     userId: string;
     displayName?: string;
@@ -444,19 +441,6 @@ export type VideoGalleryRemoteParticipant = VideoGalleryParticipant & {
     isSpeaking: boolean;
     videoStream?: RemoteVideoStream;
     screenShareStream?: RemoteVideoStream;
-};
-
-// @public (undocumented)
-export type VideoGalleryRemoteVideoStream = VideoGalleryVideoStream;
-
-// @public (undocumented)
-export type VideoGalleryVideoStream = {
-    id: string;
-    mediaStreamType: MediaStreamType;
-    isAvailable: boolean;
-    scalingMode?: ScalingMode;
-    isMirrored?: boolean;
-    target?: HTMLElement;
 };
 
 // @public (undocumented)

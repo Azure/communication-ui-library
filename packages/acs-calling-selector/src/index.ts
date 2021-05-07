@@ -8,9 +8,6 @@ export { videoGallerySelector } from './videoGallerySelector';
 export type {
   VideoGalleryRemoteParticipant,
   VideoGalleryLocalParticipant,
-  VideoGalleryLocalVideoStream,
-  VideoGalleryRemoteVideoStream,
-  VideoGalleryVideoStream,
   VideoGalleryParticipant,
   ScalingMode,
   MediaStreamType,

@@ -11,19 +11,6 @@ export type MediaStreamType = 'Video' | 'ScreenSharing';
 
 export type ScalingMode = 'Stretch' | 'Crop' | 'Fit';
 
-export type VideoGalleryVideoStream = {
-  id: string;
-  mediaStreamType: MediaStreamType;
-  isAvailable: boolean;
-  scalingMode?: ScalingMode;
-  isMirrored?: boolean;
-  target?: HTMLElement;
-};
-
-export type VideoGalleryRemoteVideoStream = VideoGalleryVideoStream;
-
-export type VideoGalleryLocalVideoStream = VideoGalleryVideoStream;
-
 export type VideoGalleryParticipant = {
   userId: string;
   displayName?: string;

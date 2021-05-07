@@ -30,7 +30,7 @@ describe('declarative call', () => {
     const context = new CallContext();
     context.setCall(convertSdkCallToDeclarativeCall(mockCall));
 
-    const declarativeCall = callDeclaratify(mockCall, context);
+    const declarativeCall = callDeclaratify(mockCall);
 
     mockCall.isMuted = true;
     await declarativeCall.mute();

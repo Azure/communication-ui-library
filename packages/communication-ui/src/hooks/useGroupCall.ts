@@ -12,7 +12,7 @@ export type UseGroupCallType = {
 
 export const useGroupCall = (): UseGroupCallType => {
   const { callAgent } = useCallingContext();
-  const { call, localVideoStream, isMicrophoneEnabled } = useCallContext();
+  const { call, setCall, localVideoStream, isMicrophoneEnabled } = useCallContext();
 
   const join = useCallback(
     (context: GroupLocator, joinCallOptions?: JoinCallOptions): Call => {
@@ -27,10 +27,12 @@ export const useGroupCall = (): UseGroupCallType => {
       const videoOptions = { localVideoStreams: localVideoStream ? [localVideoStream] : undefined };
 
       try {
-        return callAgent.join(context, {
+        const call = callAgent.join(context, {
           videoOptions: joinCallOptions?.videoOptions ?? videoOptions,
           audioOptions: joinCallOptions?.audioOptions ?? audioOptions
         });
+        setCall(call);
+        return call;
       } catch (error) {
         throw new CommunicationUiError({
           message: 'Error joining call',
@@ -39,6 +41,7 @@ export const useGroupCall = (): UseGroupCallType => {
         });
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [callAgent, isMicrophoneEnabled, localVideoStream]
   );
 
@@ -52,6 +55,7 @@ export const useGroupCall = (): UseGroupCallType => {
       }
       try {
         await call.hangUp(hangupCallOptions);
+        setCall(undefined);
       } catch (error) {
         throw new CommunicationUiError({
           message: 'Error hanging up call',
@@ -60,6 +64,7 @@ export const useGroupCall = (): UseGroupCallType => {
         });
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [call]
   );
 

@@ -22,7 +22,7 @@ import {
   useCallingContext
 } from '@azure/communication-ui';
 import { isInCall } from './utils/AppUtils';
-import MediaGallery from './MediaGallery';
+import { MediaGallery } from './MediaGallery';
 import { Header } from './Header';
 import { CommandPanel, CommandPanelTypes } from './CommandPanel';
 import { AudioOptions, CallState } from '@azure/communication-calling';

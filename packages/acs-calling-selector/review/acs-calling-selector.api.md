@@ -14,7 +14,6 @@ import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { DeclarativeCallClient } from '@azure/acs-calling-declarative';
 import { DeviceManager } from '@azure/communication-calling';
 import { DeviceManagerState } from '@azure/acs-calling-declarative';
-import { HangUpOptions } from '@azure/communication-calling';
 import { IncomingCall } from '@azure/acs-calling-declarative';
 import { LocalVideoStream } from '@azure/communication-calling';
 import { LocalVideoStream as LocalVideoStream_2 } from '@azure/acs-calling-declarative';
@@ -50,7 +49,7 @@ export type CommonProperties<A, B> = {
 
 // @public
 export const createDefaultHandlersForComponent: <Props>(declarativeCallClient: DeclarativeCallClient, callAgent: CallAgent | undefined, deviceManager: DeviceManager | undefined, call: Call | undefined, videoDeviceInfo: VideoDeviceInfo | undefined, _Component: (props: Props) => ReactElement | null) => Pick<{
-    onHangUp: (options?: HangUpOptions | undefined) => Promise<void>;
+    onHangUp: () => Promise<void>;
     onMute: () => Promise<void> | void;
     onUnmute: () => Promise<void> | void;
     onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
@@ -66,7 +65,7 @@ export const createDefaultHandlersForComponent: <Props>(declarativeCallClient: D
     onToggleScreenShare: () => Promise<void> | void;
     onRenderView: (stream: LocalVideoStream_2 | RemoteVideoStream, options: CreateViewOptions) => Promise<void>;
 }, CommonProperties<{
-    onHangUp: (options?: HangUpOptions | undefined) => Promise<void>;
+    onHangUp: () => Promise<void>;
     onMute: () => Promise<void> | void;
     onUnmute: () => Promise<void> | void;
     onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
@@ -165,9 +164,6 @@ export type VideoGalleryLocalParticipant = VideoGalleryParticipant & {
 };
 
 // @public (undocumented)
-export type VideoGalleryLocalVideoStream = VideoGalleryVideoStream;
-
-// @public (undocumented)
 export type VideoGalleryParticipant = {
     userId: string;
     displayName?: string;
@@ -182,9 +178,6 @@ export type VideoGalleryRemoteParticipant = VideoGalleryParticipant & {
 };
 
 // @public (undocumented)
-export type VideoGalleryRemoteVideoStream = VideoGalleryVideoStream;
-
-// @public (undocumented)
 export const videoGallerySelector: reselect.OutputParametricSelector<callingStateful.CallClientState, BaseSelectorProps, {
     localParticipant: VideoGalleryLocalParticipant | undefined;
     remoteParticipants: VideoGalleryRemoteParticipant[];
@@ -192,16 +185,6 @@ export const videoGallerySelector: reselect.OutputParametricSelector<callingStat
     localParticipant: VideoGalleryLocalParticipant | undefined;
     remoteParticipants: VideoGalleryRemoteParticipant[];
 }>;
-
-// @public (undocumented)
-export type VideoGalleryVideoStream = {
-    id: string;
-    mediaStreamType: MediaStreamType;
-    isAvailable: boolean;
-    scalingMode?: ScalingMode;
-    isMirrored?: boolean;
-    target?: HTMLElement;
-};
 
 
 // (No @packageDocumentation comment for this package)
