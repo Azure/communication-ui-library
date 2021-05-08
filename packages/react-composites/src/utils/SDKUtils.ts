@@ -10,8 +10,6 @@ import {
   UnknownIdentifierKind
 } from '@azure/communication-common';
 
-import { AzureCommunicationUserCredential, RefreshOptions } from '@azure/communication-common-beta3';
-
 import { AudioDeviceInfo, CallState, LocalVideoStream, VideoDeviceInfo } from '@azure/communication-calling';
 import {
   CommunicationUiErrorCode,
@@ -71,25 +69,6 @@ export const areStreamsEqual = (prevStream: LocalVideoStream, newStream: LocalVi
 
 export const isMobileSession = (): boolean =>
   !!window.navigator.userAgent.match(/(iPad|iPhone|iPod|Android|webOS|BlackBerry|Windows Phone)/g);
-
-// Create AzureCommunicationUserCredential using optional refreshTokenCallback if provided. If callback is provided then
-// identity must also be provided for callback to be used.
-// TODO: Delete this and use the one below once Chat has been upgraded to latest common
-export const createAzureCommunicationUserCredentialBeta = (
-  token: string,
-  refreshTokenCallback?: (() => Promise<string>) | undefined
-): AzureCommunicationUserCredential => {
-  if (refreshTokenCallback !== undefined) {
-    const options: RefreshOptions = {
-      initialToken: token,
-      tokenRefresher: () => refreshTokenCallback(),
-      refreshProactively: true
-    };
-    return new AzureCommunicationUserCredential(options);
-  } else {
-    return new AzureCommunicationUserCredential(token);
-  }
-};
 
 // Create AzureCommunicationUserCredential using optional refreshTokenCallback if provided. If callback is provided then
 // identity must also be provided for callback to be used.

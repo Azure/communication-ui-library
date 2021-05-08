@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { AzureCommunicationUserCredential, RefreshOptions } from '@azure/communication-common';
+import { AzureCommunicationTokenCredential, CommunicationTokenRefreshOptions } from '@azure/communication-common';
 
 import preval from 'preval.macro';
 import { GUID_FOR_INITIAL_TOPIC_NAME } from 'react-composites';
@@ -87,19 +87,18 @@ export const existsTopicName = (topicName?: string): boolean =>
 
 // Create AzureCommunicationUserCredential using optional refreshTokenCallback if provided. If callback is provided then
 // identity must also be provided for callback to be used.
-// TODO: Delete this and use the one below once Chat has been upgraded to latest common
-export const createAzureCommunicationUserCredentialBeta = (
+export const createAzureCommunicationUserCredential = (
   token: string,
   refreshTokenCallback?: (() => Promise<string>) | undefined
-): AzureCommunicationUserCredential => {
+): AzureCommunicationTokenCredential => {
   if (refreshTokenCallback !== undefined) {
-    const options: RefreshOptions = {
-      initialToken: token,
+    const options: CommunicationTokenRefreshOptions = {
+      token: token,
       tokenRefresher: () => refreshTokenCallback(),
       refreshProactively: true
     };
-    return new AzureCommunicationUserCredential(options);
+    return new AzureCommunicationTokenCredential(options);
   } else {
-    return new AzureCommunicationUserCredential(token);
+    return new AzureCommunicationTokenCredential(token);
   }
 };

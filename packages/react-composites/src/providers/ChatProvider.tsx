@@ -3,12 +3,12 @@
 
 import React, { useState, useEffect } from 'react';
 import { ChatClient } from '@azure/communication-chat';
+import { CommunicationUserKind } from '@azure/communication-common';
 import { chatClientDeclaratify } from '@azure/acs-chat-declarative';
 import { ChatThreadProvider } from './ChatThreadProvider';
 import { AbortSignalLike } from '@azure/core-http';
-import { createAzureCommunicationUserCredentialBeta } from '../utils';
 import { Spinner } from '@fluentui/react';
-import { getIdFromToken } from '../utils';
+import { createAzureCommunicationUserCredential, getIdFromToken } from '../utils';
 import { WithErrorHandling } from '../utils/WithErrorHandling';
 import { ErrorHandlingProps } from './ErrorProvider';
 import {
@@ -44,11 +44,15 @@ type ChatProviderProps = {
  */
 const ChatProviderBase = (props: ChatProviderProps & ErrorHandlingProps): JSX.Element => {
   const { token, displayName } = props;
-  const idFromToken = getIdFromToken(token);
+
+  const rawUserId = getIdFromToken(token);
+  // This hack can be removed when `getIdFromToken` is dropped in favour of actually passing in user credentials.
+  const userId = { kind: 'communicationUser', communicationUserId: rawUserId } as CommunicationUserKind;
+
   const [chatClient, setChatClient] = useState<ChatClient>(
     chatClientDeclaratify(
-      new ChatClient(props.endpointUrl, createAzureCommunicationUserCredentialBeta(token, props.refreshTokenCallback)),
-      { userId: idFromToken, displayName }
+      new ChatClient(props.endpointUrl, createAzureCommunicationUserCredential(token, props.refreshTokenCallback)),
+      { userId: userId, displayName }
     )
   );
   const [chatProviderState, setChatProviderState] = useState<number>(CHATPROVIDER_LOADING_STATE);

@@ -3,10 +3,16 @@
 
 import EventEmitter from 'events';
 import produce from 'immer';
-import { ChatClientState, ChatThreadClientState } from './ChatClientState';
+import {
+  ChatClientState,
+  ChatThreadClientState,
+  ChatThreadProperties,
+  getCommunicationIdentifierAsKey
+} from './ChatClientState';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 import { enableMapSet } from 'immer';
-import { ChatThreadInfo, ChatParticipant } from '@azure/communication-chat';
+import { ChatParticipant } from '@azure/communication-chat';
+import { CommunicationIdentifierKind, UnknownIdentifierKind } from '@azure/communication-common';
 import { ReadReceipt } from './types/ReadReceipt';
 import { Constants } from './Constants';
 import { TypingIndicator } from './types/TypingIndicator';
@@ -17,7 +23,7 @@ enableMapSet();
 // have separated ClientState and ChatThreadState?
 export class ChatContext {
   private _state: ChatClientState = {
-    userId: '',
+    userId: <UnknownIdentifierKind>{ id: '' },
     displayName: '',
     threads: new Map()
   };
@@ -44,14 +50,14 @@ export class ChatContext {
     );
   }
 
-  public createThread(threadId: string, threadInfo?: ChatThreadInfo): void {
+  public createThread(threadId: string, properties?: ChatThreadProperties): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         draft.threads.set(threadId, {
           failedMessageIds: [],
           chatMessages: new Map(),
           threadId: threadId,
-          threadInfo: threadInfo,
+          properties: properties,
           participants: new Map(),
           readReceipts: [],
           typingIndicators: [],
@@ -70,21 +76,21 @@ export class ChatContext {
     );
   }
 
-  public createThreadIfNotExist(threadId: string, thread?: ChatThreadInfo): boolean {
+  public createThreadIfNotExist(threadId: string, properties?: ChatThreadProperties): boolean {
     const exists = this.getState().threads.has(threadId);
     if (!exists) {
-      this.createThread(threadId, thread);
+      this.createThread(threadId, properties);
       return true;
     }
     return false;
   }
 
-  public updateThread(threadId: string, threadInfo?: ChatThreadInfo): void {
+  public updateThread(threadId: string, properties?: ChatThreadProperties): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         const thread = draft.threads.get(threadId);
         if (thread) {
-          thread.threadInfo = threadInfo;
+          thread.properties = properties;
         }
       })
     );
@@ -97,10 +103,10 @@ export class ChatContext {
           return;
         }
         const thread = draft.threads.get(threadId);
-        if (thread && !thread.threadInfo) {
-          thread.threadInfo = { id: threadId, topic: topic };
-        } else if (thread && thread.threadInfo) {
-          thread.threadInfo.topic = topic;
+        if (thread && !thread.properties) {
+          thread.properties = { topic: topic };
+        } else if (thread && thread.properties) {
+          thread.properties.topic = topic;
         }
       })
     );
@@ -129,7 +135,7 @@ export class ChatContext {
         const thread = draft.threads.get(threadId);
         if (thread) {
           for (const message of messages.values()) {
-            this.filterTypingIndicatorForUser(thread, message.sender?.communicationUserId);
+            this.filterTypingIndicatorForUser(thread, message.sender);
           }
         }
       })
@@ -179,7 +185,7 @@ export class ChatContext {
       produce(this._state, (draft: ChatClientState) => {
         const participants = draft.threads.get(threadId)?.participants;
         if (participants) {
-          participants.set(participant.user.communicationUserId, participant);
+          participants.set(getCommunicationIdentifierAsKey(participant.id), participant);
         }
       })
     );
@@ -191,31 +197,31 @@ export class ChatContext {
         const participantsMap = draft.threads.get(threadId)?.participants;
         if (participantsMap) {
           for (const participant of participants) {
-            participantsMap.set(participant.user.communicationUserId, participant);
+            participantsMap.set(getCommunicationIdentifierAsKey(participant.id), participant);
           }
         }
       })
     );
   }
 
-  public deleteParticipants(threadId: string, participantIds: string[]): void {
+  public deleteParticipants(threadId: string, participantIds: CommunicationIdentifierKind[]): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         const participants = draft.threads.get(threadId)?.participants;
         if (participants) {
           participantIds.forEach((id) => {
-            participants.delete(id);
+            participants.delete(getCommunicationIdentifierAsKey(id));
           });
         }
       })
     );
   }
 
-  public deleteParticipant(threadId: string, participantId: string): void {
+  public deleteParticipant(threadId: string, participantId: CommunicationIdentifierKind): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         const participants = draft.threads.get(threadId)?.participants;
-        participants?.delete(participantId);
+        participants?.delete(getCommunicationIdentifierAsKey(participantId));
       })
     );
   }
@@ -226,10 +232,8 @@ export class ChatContext {
         const thread = draft.threads.get(threadId);
         const readReceipts = thread?.readReceipts;
         if (thread && readReceipts) {
-          if (
-            readReceipt.sender.communicationUserId !== this.getState().userId &&
-            thread.latestReadTime < readReceipt.readOn
-          ) {
+          // TODO(prprabhu): Replace `this.getState()` with `draft`?
+          if (readReceipt.sender !== this.getState().userId && thread.latestReadTime < readReceipt.readOn) {
             thread.latestReadTime = readReceipt.readOn;
           }
           readReceipts.push(readReceipt);
@@ -302,7 +306,7 @@ export class ChatContext {
           // remove typing indicator when receive a message from a user
           const thread = draft.threads.get(threadId);
           if (thread) {
-            this.filterTypingIndicatorForUser(thread, message.sender?.communicationUserId);
+            this.filterTypingIndicatorForUser(thread, message.sender);
           }
         })
       );
@@ -310,11 +314,12 @@ export class ChatContext {
   }
 
   // This is a mutating function, only use it inside of a produce() function
-  private filterTypingIndicatorForUser(thread: ChatThreadClientState, userId?: string): void {
+  private filterTypingIndicatorForUser(thread: ChatThreadClientState, userId?: CommunicationIdentifierKind): void {
     if (!userId) return;
     const typingIndicators = thread.typingIndicators;
+    const userIdAsKey = getCommunicationIdentifierAsKey(userId);
     const filteredTypingIndicators = typingIndicators.filter(
-      (typingIndicator) => typingIndicator.sender.user.communicationUserId !== userId
+      (typingIndicator) => getCommunicationIdentifierAsKey(typingIndicator.sender) !== userIdAsKey
     );
     if (filteredTypingIndicators.length !== typingIndicators.length) {
       thread.typingIndicators = filteredTypingIndicators;
