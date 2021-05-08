@@ -39,7 +39,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   // Updates the thread state and populates attributes like topic, id, createdBy etc.
   useEffect(() => {
-    chatClient.getChatThread(threadId);
+    chatClient.getChatThreadClient(threadId).getProperties();
     // eslint-disable-next-line
   }, []);
 
