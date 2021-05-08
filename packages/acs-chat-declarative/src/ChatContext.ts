@@ -135,7 +135,7 @@ export class ChatContext {
         const thread = draft.threads.get(threadId);
         if (thread) {
           for (const message of messages.values()) {
-            this.filterTypingIndicatorForUser(thread, message.sender?.communicationUserId);
+            this.filterTypingIndicatorForUser(thread, message.sender);
           }
         }
       })
@@ -306,7 +306,7 @@ export class ChatContext {
           // remove typing indicator when receive a message from a user
           const thread = draft.threads.get(threadId);
           if (thread) {
-            this.filterTypingIndicatorForUser(thread, message.sender?.communicationUserId);
+            this.filterTypingIndicatorForUser(thread, message.sender);
           }
         })
       );
@@ -314,11 +314,12 @@ export class ChatContext {
   }
 
   // This is a mutating function, only use it inside of a produce() function
-  private filterTypingIndicatorForUser(thread: ChatThreadClientState, userId?: string): void {
+  private filterTypingIndicatorForUser(thread: ChatThreadClientState, userId?: CommunicationIdentifierKind): void {
     if (!userId) return;
     const typingIndicators = thread.typingIndicators;
+    const userIdAsKey = getCommunicationIdentifierAsKey(userId);
     const filteredTypingIndicators = typingIndicators.filter(
-      (typingIndicator) => typingIndicator.sender.user.communicationUserId !== userId
+      (typingIndicator) => getCommunicationIdentifierAsKey(typingIndicator.sender) !== userIdAsKey
     );
     if (filteredTypingIndicators.length !== typingIndicators.length) {
       thread.typingIndicators = filteredTypingIndicators;
