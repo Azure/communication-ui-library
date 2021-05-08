@@ -55,19 +55,15 @@ export type ChatThreadProperties = {
 // without notice.
 export type CommunicationIdentifierAsKey = string;
 
-export const communicationIdentifierAsKey = (i: CommunicationIdentifier): CommunicationIdentifierAsKey => {
-  return `${getIdentifierKind(i).kind}:${extractValue(i)}`;
-};
-
-const extractValue = (i: CommunicationIdentifier): string => {
-  if (isCommunicationUserIdentifier(i)) {
-    return i.communicationUserId;
+export const communicationIdentifierAsKey = (identifier: CommunicationIdentifier): CommunicationIdentifierAsKey => {
+  if (isCommunicationUserIdentifier(identifier)) {
+    return identifier.communicationUserId;
   }
-  if (isMicrosoftTeamsUserIdentifier(i)) {
-    return i.microsoftTeamsUserId;
+  if (isMicrosoftTeamsUserIdentifier(identifier)) {
+    return identifier.microsoftTeamsUserId;
   }
-  if (isPhoneNumberIdentifier(i)) {
-    return i.phoneNumber;
+  if (isPhoneNumberIdentifier(identifier)) {
+    return identifier.phoneNumber;
   }
-  return i.id;
+  return identifier.id;
 };
