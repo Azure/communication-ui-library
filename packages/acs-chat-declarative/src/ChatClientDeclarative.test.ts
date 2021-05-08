@@ -22,6 +22,8 @@ import { createMockChatThreadClient } from './mocks/createMockChatThreadClient';
 import { createMockIterator } from './mocks/createMockIterator';
 import { MockCommunicationUserCredential } from './mocks/MockCommunicationUserCredential';
 
+jest.useFakeTimers();
+
 // [1, 2 ... 5] array
 const seedArray = Array.from(Array(5).keys());
 
@@ -321,6 +323,8 @@ describe('declarative chatClient subscribe to event properly after startRealtime
     };
 
     await client.triggerEvent('typingIndicatorReceived', addedEvent);
+
+    jest.advanceTimersByTime(1500);
 
     expect(client.state.threads.get(threadId)?.typingIndicators.length).toBe(0);
   });
