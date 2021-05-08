@@ -3,8 +3,9 @@ import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/a
 import { GroupCall, GroupChat } from '@azure/communication-react';
 import { App as QuickstartCompositeExample } from './snippets/QuickstartComposite.snippet.tsx';
 import QuickstartCompositeText from '!!raw-loader!./snippets/QuickstartComposite.snippet.tsx';
+import { COMPOSITE_FOLDER_PREFIX } from '../constants';
 
-<Meta title="Quickstarts/Get started with Composites" />
+<Meta title={`${COMPOSITE_FOLDER_PREFIX}/Get started with Composites`} />
 
 # Quickstart: Get started with Composites
 
