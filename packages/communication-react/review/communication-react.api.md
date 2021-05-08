@@ -518,6 +518,8 @@ export interface VideoGalleryProps {
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     // (undocumented)
     scalingMode: ScalingMode;
+    // (undocumented)
+    styles?: BaseCustomStylesProps;
 }
 
 // @public (undocumented)
