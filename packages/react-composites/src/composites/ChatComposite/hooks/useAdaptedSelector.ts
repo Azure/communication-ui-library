@@ -6,6 +6,7 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import { GroupChatState } from '../adapter/GroupChatAdapter';
 import { useAdapter } from '../adapter/GroupChatAdapterProvider';
 import memoizeOne from 'memoize-one';
+import { CommunicationIdentifierKind } from '@azure/communication-signaling';
 
 // This function highly depends on chatClient.onChange event
 // It will be moved into selector folder when the ChatClientProvide when refactor finished
@@ -53,16 +54,22 @@ export const useSelectorWithAdaptation = <
   return props;
 };
 
-const memoizeState = memoizeOne((userId: string, displayName: string, threads: Map<string, ChatThreadClientState>) => ({
-  userId,
-  displayName,
-  threads
-}));
+const memoizeState = memoizeOne(
+  (userId: CommunicationIdentifierKind, displayName: string, threads: Map<string, ChatThreadClientState>) => ({
+    userId,
+    displayName,
+    threads
+  })
+);
 
 const memoizeThreadMap = memoizeOne((thread: ChatThreadClientState) => new Map([[thread.threadId, thread]]));
 
 const adaptCompositeState = (compositeState: GroupChatState): ChatClientState => {
   const thread = compositeState.thread;
   const threadMap = memoizeThreadMap(thread);
-  return memoizeState(compositeState.userId, compositeState.displayName, threadMap);
+  return memoizeState(
+    { kind: 'communicationUser', communicationUserId: compositeState.userId },
+    compositeState.displayName,
+    threadMap
+  );
 };

@@ -72,25 +72,6 @@ export const isMobileSession = (): boolean =>
 
 // Create AzureCommunicationUserCredential using optional refreshTokenCallback if provided. If callback is provided then
 // identity must also be provided for callback to be used.
-// TODO: Delete this and use the one below once Chat has been upgraded to latest common
-export const createAzureCommunicationUserCredentialBeta = (
-  token: string,
-  refreshTokenCallback?: (() => Promise<string>) | undefined
-): AzureCommunicationUserCredential => {
-  if (refreshTokenCallback !== undefined) {
-    const options: RefreshOptions = {
-      initialToken: token,
-      tokenRefresher: () => refreshTokenCallback(),
-      refreshProactively: true
-    };
-    return new AzureCommunicationUserCredential(options);
-  } else {
-    return new AzureCommunicationUserCredential(token);
-  }
-};
-
-// Create AzureCommunicationUserCredential using optional refreshTokenCallback if provided. If callback is provided then
-// identity must also be provided for callback to be used.
 export const createAzureCommunicationUserCredential = (
   token: string,
   refreshTokenCallback?: (() => Promise<string>) | undefined

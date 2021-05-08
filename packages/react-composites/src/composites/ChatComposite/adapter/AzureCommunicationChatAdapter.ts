@@ -2,10 +2,11 @@
 // Licensed under the MIT license.
 
 import { chatClientDeclaratify, ChatClientState, DeclarativeChatClient } from '@azure/acs-chat-declarative';
-import { DefaultHandlers, createDefaultHandlers } from '@azure/acs-chat-selector';
+import { DefaultHandlers, communicationIdentifierToString, createDefaultHandlers } from '@azure/acs-chat-selector';
 import { ChatClient, ChatMessage, ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
+import { CommunicationUserKind } from '@azure/communication-signaling';
 import EventEmitter from 'events';
-import { createAzureCommunicationUserCredentialBeta, getIdFromToken } from '../../../utils';
+import { createAzureCommunicationUserCredential, getIdFromToken } from '../../../utils';
 import { GroupChatAdapter, GroupChatEvent, GroupChatState } from './GroupChatAdapter';
 
 // Context of GroupChat, which is a centralized context for all state updates
@@ -19,7 +20,7 @@ export class GroupChatContext {
     this.threadId = threadId;
     if (!thread) throw 'Cannot find threadId, please initialize thread before use!';
     this.state = {
-      userId: clientState.userId,
+      userId: communicationIdentifierToString(clientState.userId),
       displayName: clientState.displayName,
       thread
     };
@@ -50,7 +51,7 @@ export class GroupChatContext {
     const thread = clientState.threads.get(this.threadId);
     if (!thread) throw 'Cannot find threadId, please make sure thread state is still in Stateful ChatClient.';
     this.setState({
-      userId: clientState.userId,
+      userId: communicationIdentifierToString(clientState.userId),
       displayName: clientState.displayName,
       thread
     });
@@ -146,10 +147,12 @@ export const createAzureCommunicationChatAdapter = async (
   displayName: string,
   refreshTokenCallback?: (() => Promise<string>) | undefined
 ): Promise<AzureCommunicationChatAdapter> => {
-  const userId = getIdFromToken(token);
+  const rawUserId = getIdFromToken(token);
 
+  // This hack can be removed when `getIdFromToken` is dropped in favour of actually passing in user credentials.
+  const userId = <CommunicationUserKind>{ kind: 'communicationUser', communicationUserId: rawUserId };
   const chatClient = chatClientDeclaratify(
-    new ChatClient(endpointUrl, createAzureCommunicationUserCredentialBeta(token, refreshTokenCallback)),
+    new ChatClient(endpointUrl, createAzureCommunicationUserCredential(token, refreshTokenCallback)),
     { userId, displayName }
   );
   const chatThreadClient = await chatClient.getChatThreadClient(threadId);
