@@ -54,5 +54,5 @@ export const getTypingIndicators = (state: ChatClientState, props: BaseSelectorP
 // The stateful client stores ACS ids as objects and the pure components use plain strings.
 // All instances of IDs must be translated uniformly by the selectors.
 export const communicationIdentifierToString = (i: CommunicationIdentifier | undefined): string => {
-  return !!i ? getCommunicationIdentifierAsKey(i) : '';
+  return i ? getCommunicationIdentifierAsKey(i) : '';
 };
