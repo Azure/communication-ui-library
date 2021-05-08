@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Extract hooks and providers to selector package Simplified provider logic, move client creation logic to contoso",
+  "packageName": "@azure/acs-chat-selector",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}

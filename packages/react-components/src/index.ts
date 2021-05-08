@@ -16,10 +16,8 @@ export type {
   MessageAttachedStatus,
   MessageStatus,
   MessageTypes,
-  NamedTheme,
   SystemMessage,
   SystemMessagePayload,
-  ThemeCollection,
   WebUiChatParticipant,
   WebUIParticipant
 } from './types';

@@ -80,11 +80,11 @@ export type CustomMessagePayload = {
     content?: string;
 };
 
+// @public
+export const darkTheme: PartialTheme;
+
 // @public (undocumented)
 export type DefaultMessageRendererType = (props: MessageProps) => JSX.Element;
-
-// @public
-export const defaultThemes: ThemeCollection;
 
 // @public
 export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
@@ -140,6 +140,9 @@ export const labeledAnswerButtonProps: IButtonProps;
 
 // @public
 export const labeledRecordButtonProps: IButtonProps;
+
+// @public
+export const lightTheme: PartialTheme;
 
 // @public (undocumented)
 export type Message<T extends MessageTypes> = {
@@ -203,12 +206,6 @@ export const MicrophoneButton: (props: MicrophoneButtonProps) => JSX.Element;
 export interface MicrophoneButtonProps extends IButtonProps {
     showLabel?: boolean;
 }
-
-// @public
-export type NamedTheme = {
-    name: string;
-    theme: PartialTheme | Theme;
-};
 
 // @public
 export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
@@ -315,23 +312,6 @@ export interface StreamMediaProps {
     videoStreamElement: HTMLElement | null;
 }
 
-// @public
-export interface SwitchableFluentThemeContext {
-    currentTheme: NamedTheme;
-    setCurrentTheme: (namedTheme: NamedTheme) => void;
-    themeStore: ThemeCollection;
-}
-
-// @public
-export const SwitchableFluentThemeProvider: (props: SwitchableFluentThemeProviderProps) => JSX.Element;
-
-// @public
-export interface SwitchableFluentThemeProviderProps {
-    children: React_2.ReactNode;
-    scopeId: string;
-    themes?: ThemeCollection;
-}
-
 // @public (undocumented)
 export type SystemMessage = Message<'system'>;
 
@@ -341,29 +321,6 @@ export type SystemMessagePayload = {
     content?: string;
     iconName?: string;
 };
-
-// @public
-export type ThemeCollection = Record<string, NamedTheme>;
-
-// @public
-export const ThemeSelector: (props: ThemeSelectorProps) => JSX.Element;
-
-// @public
-export interface ThemeSelectorProps {
-    horizontal?: boolean;
-    label?: string;
-}
-
-// @public
-export const ThemeToggler: (props: ThemeTogglerProps) => JSX.Element;
-
-// @public
-export interface ThemeTogglerProps {
-    label?: string;
-    layout?: string;
-    offTheme?: NamedTheme;
-    onTheme?: NamedTheme;
-}
 
 // @public
 export const TypingIndicator: (props: TypingIndicatorProps) => JSX.Element;
@@ -381,9 +338,6 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
 }
-
-// @public
-export const useSwitchableFluentTheme: () => SwitchableFluentThemeContext;
 
 // @public (undocumented)
 export const VideoTile: (props: VideoTileProps & PlaceholderProps) => JSX.Element;
