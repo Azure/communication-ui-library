@@ -3,7 +3,7 @@
 
 // @ts-ignore
 import { ChatClientState } from '@azure/acs-chat-declarative';
-import { CommunicationIdentifierAsKey, communicationIdentifierAsKey } from '@azure/acs-chat-declarative';
+import { CommunicationIdentifierAsKey, getCommunicationIdentifierAsKey } from '@azure/acs-chat-declarative';
 // @ts-ignore
 import { BaseSelectorProps } from './baseSelectors';
 import { communicationIdentifierToString, getTypingIndicators, getParticipants, getUserId } from './baseSelectors';
@@ -25,10 +25,10 @@ const filterTypingIndicators = (typingIndicators: TypingIndicator[], userId: str
     if (typingIndicator.receivedOn < date8SecondsAgo) {
       continue;
     }
-    if (seen.has(communicationIdentifierAsKey(typingIndicator.sender))) {
+    if (seen.has(getCommunicationIdentifierAsKey(typingIndicator.sender))) {
       continue;
     }
-    seen.add(communicationIdentifierAsKey(typingIndicator.sender));
+    seen.add(getCommunicationIdentifierAsKey(typingIndicator.sender));
     filteredTypingIndicators.push(typingIndicator);
   }
   return filteredTypingIndicators;
@@ -40,7 +40,7 @@ const convertSdkTypingIndicatorsToWebUiChatParticipants = (
 ): WebUiChatParticipant[] => {
   return typingIndicators.map((typingIndicator) => ({
     userId: communicationIdentifierToString(typingIndicator.sender),
-    displayName: participants.get(communicationIdentifierAsKey(typingIndicator.sender))?.displayName
+    displayName: participants.get(getCommunicationIdentifierAsKey(typingIndicator.sender))?.displayName
   }));
 };
 

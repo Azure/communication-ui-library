@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 export { chatClientDeclaratify } from './ChatClientDeclarative';
-export { communicationIdentifierAsKey } from './ChatClientState';
+export { getCommunicationIdentifierAsKey } from './ChatClientState';
 export { ChatContext } from './ChatContext';
 export { chatThreadClientDeclaratify } from './ChatThreadClientDeclarative';
 

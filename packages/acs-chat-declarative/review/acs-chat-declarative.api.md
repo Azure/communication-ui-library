@@ -112,9 +112,6 @@ export type ChatThreadProperties = {
 export type CommunicationIdentifierAsKey = string;
 
 // @public (undocumented)
-export const communicationIdentifierAsKey: (i: CommunicationIdentifier) => CommunicationIdentifierAsKey;
-
-// @public (undocumented)
 export interface DeclarativeChatClient extends ChatClient {
     // (undocumented)
     offStateChange(handler: (state: ChatClientState) => void): void;
@@ -123,6 +120,9 @@ export interface DeclarativeChatClient extends ChatClient {
     // (undocumented)
     state: ChatClientState;
 }
+
+// @public (undocumented)
+export const getCommunicationIdentifierAsKey: (identifier: CommunicationIdentifier) => CommunicationIdentifierAsKey;
 
 // @public (undocumented)
 export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';

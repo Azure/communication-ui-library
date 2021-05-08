@@ -7,7 +7,7 @@ import {
   ChatClientState,
   ChatThreadClientState,
   ChatThreadProperties,
-  communicationIdentifierAsKey
+  getCommunicationIdentifierAsKey
 } from './ChatClientState';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 import { enableMapSet } from 'immer';
@@ -176,7 +176,7 @@ export class ChatContext {
       produce(this._state, (draft: ChatClientState) => {
         const participants = draft.threads.get(threadId)?.participants;
         if (participants) {
-          participants.set(communicationIdentifierAsKey(participant.id), participant);
+          participants.set(getCommunicationIdentifierAsKey(participant.id), participant);
         }
       })
     );
@@ -188,7 +188,7 @@ export class ChatContext {
         const participantsMap = draft.threads.get(threadId)?.participants;
         if (participantsMap) {
           for (const participant of participants) {
-            participantsMap.set(communicationIdentifierAsKey(participant.id), participant);
+            participantsMap.set(getCommunicationIdentifierAsKey(participant.id), participant);
           }
         }
       })
@@ -201,7 +201,7 @@ export class ChatContext {
         const participants = draft.threads.get(threadId)?.participants;
         if (participants) {
           participantIds.forEach((id) => {
-            participants.delete(communicationIdentifierAsKey(id));
+            participants.delete(getCommunicationIdentifierAsKey(id));
           });
         }
       })
@@ -212,7 +212,7 @@ export class ChatContext {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         const participants = draft.threads.get(threadId)?.participants;
-        participants?.delete(communicationIdentifierAsKey(participantId));
+        participants?.delete(getCommunicationIdentifierAsKey(participantId));
       })
     );
   }

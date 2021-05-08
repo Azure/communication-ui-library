@@ -39,14 +39,14 @@ const messageArray = [
 
 const createUser = async (
   resourceConnectionString: string
-): Promise<{ user: CommunicationUserIdentifier; token: string }> => {
+): Promise<{ userId: CommunicationUserIdentifier; token: string }> => {
   if (!resourceConnectionString) {
     throw new Error('No ACS connection string provided');
   }
 
   const tokenClient = new CommunicationIdentityClient(resourceConnectionString);
   const userToken = await tokenClient.createUserAndToken(['chat']);
-  return { user: userToken.user, token: userToken.token };
+  return { userId: userToken.user, token: userToken.token };
 };
 
 const createChatClient = (token: string, envUrl: string): ChatClient => {
@@ -99,11 +99,11 @@ const createChatConfig = async (resourceConnectionString: string): Promise<ChatC
 
   const threadId = (await chatClient.createChatThread({ topic: 'DemoThread' })).chatThread?.id ?? '';
   await chatClient.getChatThreadClient(threadId).addParticipants({
-    participants: [{ id: user.user }, { id: bot.user }]
+    participants: [{ id: user.userId }, { id: bot.userId }]
   });
   console.log(`threadId: ${threadId}`);
 
-  createMessageBot(bot.token, endpointUrl, threadId, bot.user);
+  createMessageBot(bot.token, endpointUrl, threadId, bot.userId);
 
   return {
     token: user.token,

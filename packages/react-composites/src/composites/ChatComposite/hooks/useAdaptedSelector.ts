@@ -6,7 +6,7 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import { GroupChatState } from '../adapter/GroupChatAdapter';
 import { useAdapter } from '../adapter/GroupChatAdapterProvider';
 import memoizeOne from 'memoize-one';
-import { CommunicationIdentifierKind } from '@azure/communication-signaling';
+import { CommunicationIdentifierKind } from '@azure/communication-common';
 
 // This function highly depends on chatClient.onChange event
 // It will be moved into selector folder when the ChatClientProvide when refactor finished

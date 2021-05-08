@@ -5,7 +5,6 @@ import { ChatParticipant } from '@azure/communication-chat';
 import {
   CommunicationIdentifier,
   CommunicationIdentifierKind,
-  getIdentifierKind,
   isCommunicationUserIdentifier,
   isMicrosoftTeamsUserIdentifier,
   isPhoneNumberIdentifier
@@ -55,7 +54,7 @@ export type ChatThreadProperties = {
 // without notice.
 export type CommunicationIdentifierAsKey = string;
 
-export const communicationIdentifierAsKey = (identifier: CommunicationIdentifier): CommunicationIdentifierAsKey => {
+export const getCommunicationIdentifierAsKey = (identifier: CommunicationIdentifier): CommunicationIdentifierAsKey => {
   if (isCommunicationUserIdentifier(identifier)) {
     return identifier.communicationUserId;
   }
