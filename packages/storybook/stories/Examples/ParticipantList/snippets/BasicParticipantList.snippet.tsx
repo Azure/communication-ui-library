@@ -19,13 +19,13 @@ export const BasicParticipantListExample: () => JSX.Element = () => {
   ];
 
   return (
-    <>
-      <div style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Participants</div>
-      <Stack style={{ width: '12.5rem' }}>
+    <Stack>
+      <div style={{ fontSize: '1.5rem', marginBottom: '1rem', fontFamily: 'Segoe UI' }}>Participants</div>
+      <Stack>
         {participants.map((participant: any) => {
           return <ParticipantItem name={participant.name} presence={participant.presence} />;
         })}
       </Stack>
-    </>
+    </Stack>
   );
 };
