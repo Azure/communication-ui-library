@@ -90,7 +90,7 @@ export const TeamsThemeComponent: () => JSX.Element = () => {
 };
 
 export default {
-  title: `${EXAMPLES_FOLDER_PREFIX}/Themes`,
+  title: `${EXAMPLES_FOLDER_PREFIX}/Themes (Remove *?)`,
   parameters: {
     docs: {
       page: () => getDocs()

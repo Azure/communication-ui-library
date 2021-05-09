@@ -39,7 +39,7 @@ export const NoticeBanner: () => JSX.Element = () => {
 };
 
 export default {
-  title: `${EXAMPLES_FOLDER_PREFIX}/TeamsInterop`,
+  title: `${EXAMPLES_FOLDER_PREFIX}/Compliance Banner (Teams*)`,
   component: NoticeBanner,
   parameters: {
     docs: {

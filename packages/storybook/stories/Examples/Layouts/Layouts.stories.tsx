@@ -9,7 +9,7 @@ export { OneToOneCallLayout } from './OneToOneCallLayout';
 export { ScreenShareLayout } from './ScreenShareLayout';
 
 export default {
-  title: `${EXAMPLES_FOLDER_PREFIX}/Layouts`,
+  title: `${EXAMPLES_FOLDER_PREFIX}/Video Layouts`,
   parameters: {
     docs: {
       page: () => getDocs()

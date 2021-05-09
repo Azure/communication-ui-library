@@ -16,7 +16,7 @@ export const LobbyComponent: () => JSX.Element = () => {
 };
 
 export default {
-  title: `${EXAMPLES_FOLDER_PREFIX}/Lobby`,
+  title: `${EXAMPLES_FOLDER_PREFIX}/Lobby (Teams*)`,
   component: LobbyComponent,
   parameters: {
     docs: {

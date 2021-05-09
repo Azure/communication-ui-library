@@ -39,17 +39,29 @@ export const parameters = {
   options: {
     storySort: {
       order: [
-        'Introduction',
+        'Getting Started',
         'Use Cases',
+        'How to use Storybook',
         'Styling',
         'Theming',
+        'Personalization',
         'Localization',
-        QUICKSTARTS_FOLDER_PREFIX,
-        COMPOSITE_FOLDER_PREFIX,
+        'Accessibility',
         EXAMPLES_FOLDER_PREFIX,
+        [
+          'Incoming Call Alerts',
+          'Local Preview',
+          'Lobby (Teams*)',
+          'Video Layouts',
+          'Participant List',
+          'Compliance Banner (Teams*)',
+          'Themes (Remove *?)'
+        ],
+        COMPOSITE_FOLDER_PREFIX,
         COMPONENT_FOLDER_PREFIX,
         STATEFUL_CLIENT_PREFIX,
         [
+          'Get started with Stateful Client',
           'What is it',
           'Best Practices',
           'Handlers',
