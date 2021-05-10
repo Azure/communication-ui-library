@@ -12,7 +12,7 @@ import { ReactElement } from 'react';
 // @ts-ignore
 import { DefaultChatHandlers } from '../handlers/createHandlers';
 // @ts-ignore
-import { CommonProperties } from '../handlers/createHandlers';
+import { CommonProperties2 } from '../handlers/createHandlers';
 
 // This will be moved into selector folder when ChatClientProvide when refactor finished
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
