@@ -11,7 +11,6 @@ import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { Call } from '@azure/acs-calling-declarative';
 import { Call as Call_2 } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
-import { CallClient } from '@azure/communication-calling';
 import { CallClientOptions } from '@azure/communication-calling';
 import { CallState } from '@azure/communication-calling';
 import { ChatClient } from '@azure/communication-chat';
@@ -23,9 +22,9 @@ import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { ControlBarProps } from 'react-components';
 import { CreateViewOptions } from '@azure/communication-calling';
+import { DeclarativeCallClient } from '@azure/acs-calling-declarative';
 import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
 import { DeviceManager } from '@azure/acs-calling-declarative';
-import { DeviceManager as DeviceManager_2 } from '@azure/communication-calling';
 import { Dispatch } from 'react';
 import { ErrorBarProps } from 'react-components';
 import { ErrorInfo } from 'react';
@@ -47,6 +46,7 @@ import { RemoteVideoStream } from '@azure/acs-calling-declarative';
 import { RemoteVideoStream as RemoteVideoStream_2 } from '@azure/communication-calling';
 import { ScalingMode } from '@azure/communication-calling';
 import { SetStateAction } from 'react';
+import { StatefulDeviceManager } from '@azure/acs-calling-declarative';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 
@@ -145,12 +145,12 @@ export type CallingContextType = {
     setUserId: Dispatch<SetStateAction<string>>;
     displayName: string;
     setDisplayName: Dispatch<SetStateAction<string>>;
-    callClient: CallClient;
-    setCallClient: Dispatch<SetStateAction<CallClient>>;
+    callClient: DeclarativeCallClient;
+    setCallClient: Dispatch<SetStateAction<DeclarativeCallClient>>;
     callAgent: CallAgent | undefined;
     setCallAgent: Dispatch<SetStateAction<CallAgent | undefined>>;
-    deviceManager: DeviceManager_2 | undefined;
-    setDeviceManager: Dispatch<SetStateAction<DeviceManager_2 | undefined>>;
+    deviceManager: StatefulDeviceManager | undefined;
+    setDeviceManager: Dispatch<SetStateAction<StatefulDeviceManager | undefined>>;
     audioDevicePermission: DevicePermissionState;
     setAudioDevicePermission: Dispatch<SetStateAction<DevicePermissionState>>;
     videoDevicePermission: DevicePermissionState;
@@ -933,7 +933,7 @@ export const useCall: () => Call_2 | undefined;
 export const useCallAgent: () => boolean;
 
 // @public (undocumented)
-export const useCallClient: () => CallClient;
+export const useCallClient: () => DeclarativeCallClient;
 
 // @public (undocumented)
 export const useCallContext: () => CallContextType;
@@ -948,12 +948,18 @@ export const useChatClient: () => ChatClient;
 export const useChatThreadClient: () => ChatThreadClient | undefined;
 
 // @public (undocumented)
-export const useDeviceManager: () => DeviceManager_2 | undefined;
+export const useDeviceManager: () => StatefulDeviceManager | undefined;
+
+// @public (undocumented)
+export const useDisplayName: () => string | undefined;
 
 // Warning: (ae-forgotten-export) The symbol "UseGroupCallType" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
 export const useGroupCall: () => UseGroupCallType;
+
+// @public (undocumented)
+export const useIdentifier: () => string | undefined;
 
 // Warning: (ae-forgotten-export) The symbol "UseIncomingCallType" needs to be exported by the entry point index.d.ts
 //

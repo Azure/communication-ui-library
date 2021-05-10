@@ -8,6 +8,8 @@ import { Call, CallClientState, DeviceManager, IncomingCall } from '@azure/acs-c
  */
 export type BaseSelectorProps = {
   callId: string;
+  displayName?: string;
+  identifier?: string;
 };
 
 export const getCalls = (state: CallClientState): Map<string, Call> => state.calls;
@@ -20,5 +22,12 @@ export const getIncomingCallsEnded = (state: CallClientState): IncomingCall[] =>
 
 export const getDeviceManager = (state: CallClientState): DeviceManager => state.deviceManager;
 
-export const getCall = (state: CallClientState, props: BaseSelectorProps): Call | undefined =>
-  state.calls.get(props.callId);
+export const getCall = (state: CallClientState, props: BaseSelectorProps): Call | undefined => {
+  return state.calls.get(props.callId);
+};
+
+export const getDisplayName = (state: CallClientState, props: BaseSelectorProps): string | undefined =>
+  props.displayName;
+
+export const getIdentifier = (_state: CallClientState, props: BaseSelectorProps): string | undefined =>
+  props.identifier;

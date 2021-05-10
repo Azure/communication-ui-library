@@ -57,6 +57,7 @@ export class CallSubscriber {
     this._call.on('isScreenSharingOnChanged', this.isScreenSharingOnChanged);
     this._call.on('remoteParticipantsUpdated', this.remoteParticipantsUpdated);
     this._call.on('localVideoStreamsUpdated', this.localVideoStreamsUpdated);
+    this._call.on('isMutedChanged', this.isMuteChanged);
 
     if (this._call.remoteParticipants.length > 0) {
       this._call.remoteParticipants.forEach((participant: RemoteParticipant) => {
@@ -81,6 +82,7 @@ export class CallSubscriber {
     this._call.off('isScreenSharingOnChanged', this.isScreenSharingOnChanged);
     this._call.off('remoteParticipantsUpdated', this.remoteParticipantsUpdated);
     this._call.off('localVideoStreamsUpdated', this.localVideoStreamsUpdated);
+    this._call.off('isMutedChanged', this.isMuteChanged);
 
     this._participantSubscribers.forEach((participantSubscriber: ParticipantSubscriber) => {
       participantSubscriber.unsubscribe();
@@ -128,6 +130,10 @@ export class CallSubscriber {
 
   private isScreenSharingOnChanged = (): void => {
     this._context.setCallIsScreenSharingOn(this._callIdRef.callId, this._call.isScreenSharingOn);
+  };
+
+  private isMuteChanged = (): void => {
+    this._context.setCallIsMicrophoneMuted(this._callIdRef.callId, this._call.isMuted);
   };
 
   private remoteParticipantsUpdated = (event: { added: RemoteParticipant[]; removed: RemoteParticipant[] }): void => {
