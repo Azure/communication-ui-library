@@ -13,8 +13,7 @@ import * as callingStateful from '@azure/acs-calling-declarative';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CreateViewOptions as CreateViewOptions_2 } from '@azure/communication-calling';
 import { DeclarativeCallClient } from '@azure/acs-calling-declarative';
-import { DeviceManager } from '@azure/communication-calling';
-import { DeviceManager as DeviceManager_2 } from '@azure/acs-calling-declarative';
+import { DeviceManager } from '@azure/acs-calling-declarative';
 import { IncomingCall } from '@azure/acs-calling-declarative';
 import { LocalVideoStream } from '@azure/communication-calling';
 import { LocalVideoStream as LocalVideoStream_2 } from '@azure/acs-calling-declarative';
@@ -23,6 +22,7 @@ import { ReactElement } from 'react';
 import { RemoteVideoStream } from '@azure/acs-calling-declarative';
 import * as reselect from 'reselect';
 import { StartCallOptions } from '@azure/communication-calling';
+import { StatefulDeviceManager } from '@azure/acs-calling-declarative';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 
@@ -49,7 +49,7 @@ export type CommonProperties<A, B> = {
 }[keyof A & keyof B];
 
 // @public
-export const createDefaultHandlersForComponent: <Props>(declarativeCallClient: DeclarativeCallClient, callAgent: CallAgent | undefined, deviceManager: DeviceManager | undefined, call: Call | undefined, videoDeviceInfo: VideoDeviceInfo | undefined, _Component: (props: Props) => ReactElement | null) => Pick<{
+export const createDefaultHandlersForComponent: <Props>(declarativeCallClient: DeclarativeCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, _Component: (props: Props) => ReactElement | null) => Pick<{
     onHangUp: () => Promise<void>;
     onMute: () => Promise<void> | void;
     onUnmute: () => Promise<void> | void;
@@ -104,7 +104,7 @@ export const getCalls: (state: CallClientState) => Map<string, Call_2>;
 export const getCallsEnded: (state: CallClientState) => Call_2[];
 
 // @public (undocumented)
-export const getDeviceManager: (state: CallClientState) => DeviceManager_2;
+export const getDeviceManager: (state: CallClientState) => DeviceManager;
 
 // @public (undocumented)
 export const getDisplayName: (state: CallClientState, props: BaseSelectorProps) => string | undefined;

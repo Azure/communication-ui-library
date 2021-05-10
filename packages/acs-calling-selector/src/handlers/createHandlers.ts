@@ -3,7 +3,6 @@
 
 import {
   CallAgent,
-  DeviceManager,
   Call,
   StartCallOptions,
   VideoDeviceInfo,
@@ -15,7 +14,8 @@ import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier }
 import {
   DeclarativeCallClient,
   RemoteVideoStream,
-  LocalVideoStream as StatefulLocalVideoStream
+  LocalVideoStream as StatefulLocalVideoStream,
+  StatefulDeviceManager
 } from '@azure/acs-calling-declarative';
 import { ReactElement } from 'react';
 import memoizeOne from 'memoize-one';
@@ -30,22 +30,28 @@ const createDefaultHandlers = memoizeOne(
   (
     callClient: DeclarativeCallClient,
     callAgent: CallAgent | undefined,
-    deviceManager: DeviceManager | undefined,
-    call: Call | undefined,
-    videoDeviceInfo: VideoDeviceInfo | undefined
+    deviceManager: StatefulDeviceManager | undefined,
+    call: Call | undefined
   ) => {
     const onStartLocalVideo = async (): Promise<void> => {
       const callId = call?.id;
+      let videoDeviceInfo = callClient.state.deviceManager.selectedCamera;
+      if (!videoDeviceInfo) {
+        const cameras = await deviceManager?.getCameras();
+        videoDeviceInfo = cameras && cameras.length > 0 ? cameras[0] : undefined;
+        videoDeviceInfo && deviceManager?.selectCamera(videoDeviceInfo);
+      }
       if (!callId || !videoDeviceInfo) return;
       const stream = new LocalVideoStream(videoDeviceInfo);
       if (call && !call.localVideoStreams.find((s) => areStreamsEqual(s, stream))) {
         await call.startVideo(stream);
+        await callClient.startRenderVideo(callId, stream);
       }
     };
 
     const onStopLocalVideo = async (stream: LocalVideoStream): Promise<void> => {
       const callId = call?.id;
-      if (!callId || !videoDeviceInfo) return;
+      if (!callId) return;
       if (call && call.localVideoStreams.find((s) => areStreamsEqual(s, stream))) {
         callClient.stopRenderVideo(callId, stream);
         await call.stopVideo(stream);
@@ -80,6 +86,7 @@ const createDefaultHandlers = memoizeOne(
 
     const onSelectCamera = async (device: VideoDeviceInfo): Promise<void> => {
       if (!call || !deviceManager) return;
+      deviceManager.selectCamera(device);
       const stream = call.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
       return stream?.switchSource(device);
     };
@@ -156,9 +163,7 @@ type Common<A, B> = Pick<A, CommonProperties<A, B>>;
 export const createDefaultHandlersForComponent = <Props>(
   declarativeCallClient: DeclarativeCallClient,
   callAgent: CallAgent | undefined,
-  deviceManager: DeviceManager | undefined,
+  deviceManager: StatefulDeviceManager | undefined,
   call: Call | undefined,
-  videoDeviceInfo: VideoDeviceInfo | undefined,
   _Component: (props: Props) => ReactElement | null
-): Common<DefaultHandlers, Props> =>
-  createDefaultHandlers(declarativeCallClient, callAgent, deviceManager, call, videoDeviceInfo);
+): Common<DefaultHandlers, Props> => createDefaultHandlers(declarativeCallClient, callAgent, deviceManager, call);

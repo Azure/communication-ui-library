@@ -12,6 +12,7 @@ export const MediaGallery = (): JSX.Element => {
   const videoGalleryHandlers = useHandlers(VideoGallery);
 
   const remoteParticipants = videoGalleryProps.remoteParticipants;
+
   const participantWithScreenShare: VideoGalleryRemoteParticipant | undefined = useMemo(() => {
     return remoteParticipants.find((remoteParticipant: VideoGalleryRemoteParticipant) => {
       return remoteParticipant.screenShareStream?.isAvailable;

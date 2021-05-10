@@ -1,17 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { CallClientState, DeclarativeCallClient } from '@azure/acs-calling-declarative';
+import { AudioOptions, CallState } from '@azure/communication-calling';
 import { Label, Overlay, Spinner, Stack } from '@fluentui/react';
 import React, { useEffect, useState } from 'react';
-import {
-  activeContainerClassName,
-  containerStyles,
-  headerStyles,
-  loadingStyle,
-  overlayStyles,
-  paneStyles,
-  subContainerStyles
-} from './styles/GroupCall.styles';
+import { ErrorBar as ErrorBarComponent } from 'react-components';
 import {
   connectFuncsToContext,
   MapToErrorBarProps,
@@ -21,13 +15,19 @@ import {
   useCallContext,
   useCallingContext
 } from 'react-composites';
-import { ErrorBar as ErrorBarComponent } from 'react-components';
-import { isInCall } from './utils/AppUtils';
-import { MediaGallery } from './MediaGallery';
-import { Header } from './Header';
 import { CommandPanel, CommandPanelTypes } from './CommandPanel';
-import { AudioOptions, CallState } from '@azure/communication-calling';
-import { CallClientState, DeclarativeCallClient } from '@azure/acs-calling-declarative';
+import { Header } from './Header';
+import { MediaGallery } from './MediaGallery';
+import {
+  activeContainerClassName,
+  containerStyles,
+  headerStyles,
+  loadingStyle,
+  overlayStyles,
+  paneStyles,
+  subContainerStyles
+} from './styles/GroupCall.styles';
+import { isInCall } from './utils/AppUtils';
 
 export interface GroupCallProps {
   screenWidth: number;
@@ -42,24 +42,12 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
   const { groupId, screenWidth, endCallHandler } = props;
   const ErrorBar = connectFuncsToContext(ErrorBarComponent, MapToErrorBarProps);
 
-  const { callAgent, deviceManager, videoDeviceInfo, setVideoDeviceInfo } = useCallingContext();
+  const { callAgent } = useCallingContext();
   const { setCall, localVideoStream, isMicrophoneEnabled } = useCallContext();
   const call = useCall();
   const callClient: DeclarativeCallClient = useCallClient();
   const [callState, setCallState] = useState<CallState | undefined>(undefined);
   const [isScreenSharingOn, setIsScreenSharingOn] = useState<boolean | undefined>(undefined);
-
-  /**
-   * Set the camera if not already chosen by the user.
-   */
-  useEffect(() => {
-    (async () => {
-      if (!videoDeviceInfo && deviceManager) {
-        const cameras = await deviceManager.getCameras();
-        cameras.length > 0 && setVideoDeviceInfo(cameras[0]);
-      }
-    })();
-  });
 
   // To use useProps to get these states, we need to create another file wrapping GroupCall,
   // It seems unnecessary in this case, so we get the updated states using this approach.

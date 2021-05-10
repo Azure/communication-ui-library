@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
+import { optionsButtonSelector } from '@azure/acs-calling-selector';
 import { Stack } from '@fluentui/react';
 import {
   fullHeightStyles,
@@ -9,15 +9,14 @@ import {
   paneHeaderTextStyle,
   settingsContainerStyle
 } from 'app/styles/CommandPanel.styles';
-import { VideoDeviceInfo, LocalVideoStream } from '@azure/communication-calling';
+import { ThemeSelector } from 'app/theming/ThemeSelector';
+import React from 'react';
+import { useCallingContext } from 'react-composites';
 import { Footer } from './Footer';
+import { useHandlers } from './hooks/useHandlers';
+import { useSelector } from './hooks/useSelector';
 import { LocalDeviceSettingsComponent } from './LocalDeviceSettings';
 import { ParticipantStack } from './ParticipantStack';
-import { useCallContext, useCallingContext } from 'react-composites';
-import { optionsButtonSelector } from '@azure/acs-calling-selector';
-import { useSelector } from './hooks/useSelector';
-import { useHandlers } from './hooks/useHandlers';
-import { ThemeSelector } from 'app/theming/ThemeSelector';
 
 export enum CommandPanelTypes {
   None = 'none',
@@ -32,15 +31,7 @@ export interface CommandPanelProps {
 export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
   const options = useSelector(optionsButtonSelector, { callId: '' });
   const handlers = useHandlers(LocalDeviceSettingsComponent);
-  const { setVideoDeviceInfo, videoDeviceInfo } = useCallingContext();
-  const { setLocalVideoStream } = useCallContext();
-
-  const onSelectCamera = async (device: VideoDeviceInfo): Promise<void> => {
-    setVideoDeviceInfo(device);
-    const newLocalVideoStream = new LocalVideoStream(device);
-    setLocalVideoStream(newLocalVideoStream);
-    await handlers.onSelectCamera(device);
-  };
+  const { videoDeviceInfo } = useCallingContext();
 
   return (
     <Stack styles={fullHeightStyles} tokens={{ childrenGap: '1.5rem' }}>
@@ -63,7 +54,7 @@ export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
             <LocalDeviceSettingsComponent
               {...options}
               selectedCamera={videoDeviceInfo}
-              onSelectCamera={onSelectCamera}
+              onSelectCamera={handlers.onSelectCamera}
               onSelectMicrophone={handlers.onSelectMicrophone}
               onSelectSpeaker={handlers.onSelectSpeaker}
             />

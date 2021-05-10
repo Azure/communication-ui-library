@@ -12,9 +12,8 @@ import { ReactElement } from 'react';
 export const useHandlers = <PropsT>(component: (props: PropsT) => ReactElement | null) => {
   const callClient: DeclarativeCallClient = useCallClient() as any;
   const callAgent = useCallingContext().callAgent;
-  const videoDeviceInfo = useCallingContext().videoDeviceInfo;
   const deviceManager = useDeviceManager();
   const call = useCall();
 
-  return createDefaultHandlersForComponent(callClient, callAgent, deviceManager, call, videoDeviceInfo, component);
+  return createDefaultHandlersForComponent(callClient, callAgent, deviceManager, call, component);
 };

@@ -1,20 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallingContext, CallingContextType } from '../providers/CallingProvider';
-import React, { useState } from 'react';
+import { callClientDeclaratify, DeclarativeCallClient, StatefulDeviceManager } from '@azure/acs-calling-declarative';
 import {
   AudioDeviceInfo,
   CallAgent,
   CallClient,
   CallClientOptions,
-  DeviceManager,
   VideoDeviceInfo
 } from '@azure/communication-calling';
-import { DevicePermissionState } from '../types/DevicePermission';
-import { ErrorHandlingProps } from '../providers/ErrorProvider';
 import { AbortSignalLike } from '@azure/core-http';
-import { callClientDeclaratify, DeclarativeCallClient } from '@azure/acs-calling-declarative';
+import React, { useState } from 'react';
+import { CallingContext, CallingContextType } from '../providers/CallingProvider';
+import { ErrorHandlingProps } from '../providers/ErrorProvider';
+import { DevicePermissionState } from '../types/DevicePermission';
 
 interface CallingProviderProps {
   children: React.ReactNode;
@@ -34,7 +33,7 @@ interface CallingProviderProps {
 export const MockCallingProvider = (props: CallingProviderProps & ErrorHandlingProps): JSX.Element => {
   const [callClient, setCallClient] = useState<DeclarativeCallClient>(callClientDeclaratify(new CallClient(), ''));
   const [callAgent, setCallAgent] = useState<CallAgent | undefined>(undefined);
-  const [deviceManager, setDeviceManager] = useState<DeviceManager | undefined>(undefined);
+  const [deviceManager, setDeviceManager] = useState<StatefulDeviceManager | undefined>(undefined);
   const [userId, setUserId] = useState<string>('');
   const [displayName, setDisplayName] = useState<string>('');
   const [audioDevicePermission, setAudioDevicePermission] = useState<DevicePermissionState>('Unknown');

@@ -26,7 +26,6 @@ import { CreateViewOptions } from '@azure/communication-calling';
 import { DeclarativeCallClient } from '@azure/acs-calling-declarative';
 import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
 import { DeviceManager } from '@azure/acs-calling-declarative';
-import { DeviceManager as DeviceManager_2 } from '@azure/communication-calling';
 import { Dispatch } from 'react';
 import { ErrorBarProps } from 'react-components';
 import { ErrorInfo } from 'react';
@@ -48,6 +47,7 @@ import { RemoteVideoStream } from '@azure/acs-calling-declarative';
 import { RemoteVideoStream as RemoteVideoStream_2 } from '@azure/communication-calling';
 import { ScalingMode } from '@azure/communication-calling';
 import { SetStateAction } from 'react';
+import { StatefulDeviceManager } from '@azure/acs-calling-declarative';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 
@@ -150,8 +150,8 @@ export type CallingContextType = {
     setCallClient: Dispatch<SetStateAction<DeclarativeCallClient>>;
     callAgent: CallAgent | undefined;
     setCallAgent: Dispatch<SetStateAction<CallAgent | undefined>>;
-    deviceManager: DeviceManager_2 | undefined;
-    setDeviceManager: Dispatch<SetStateAction<DeviceManager_2 | undefined>>;
+    deviceManager: StatefulDeviceManager | undefined;
+    setDeviceManager: Dispatch<SetStateAction<StatefulDeviceManager | undefined>>;
     audioDevicePermission: DevicePermissionState;
     setAudioDevicePermission: Dispatch<SetStateAction<DevicePermissionState>>;
     videoDevicePermission: DevicePermissionState;
@@ -952,7 +952,7 @@ export const useChatClient: () => ChatClient;
 export const useChatThreadClient: () => ChatThreadClient | undefined;
 
 // @public (undocumented)
-export const useDeviceManager: () => DeviceManager_2 | undefined;
+export const useDeviceManager: () => StatefulDeviceManager | undefined;
 
 // @public (undocumented)
 export const useDisplayName: () => string | undefined;

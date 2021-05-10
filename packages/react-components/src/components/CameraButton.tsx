@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
-import { DefaultButton, IButtonProps, Stack, concatStyleSets, mergeStyles } from '@fluentui/react';
+import { concatStyleSets, DefaultButton, IButtonProps, mergeStyles, Stack } from '@fluentui/react';
 import { CallVideoIcon, CallVideoOffIcon } from '@fluentui/react-northstar';
+import React from 'react';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 
 /**
