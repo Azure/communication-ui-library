@@ -25,6 +25,10 @@ const getDocs: () => JSX.Element = () => {
     <>
       <Title>CameraButton</Title>
       <Description of={CameraButton} />
+      <Description>
+        Note: When overriding a render, like using `onRenderIcon` or `onRenderText`, don't forget to add a unique key to
+        each element to avoid warning for children in a list.
+      </Description>
 
       <Heading>Importing</Heading>
       <Source code={importStatement} />

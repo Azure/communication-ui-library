@@ -17,7 +17,7 @@ const BasicParticipantListExampleText = require('!!raw-loader!./snippets/BasicPa
 const InteractiveParticipantListExampleText = require('!!raw-loader!./snippets/InteractiveParticipantList.snippet.tsx')
   .default;
 
-export const getDocs: () => JSX.Element = () => {
+const getDocs: () => JSX.Element = () => {
   return (
     <>
       <Title>Participant List</Title>
@@ -27,6 +27,9 @@ export const getDocs: () => JSX.Element = () => {
         To build a list of [ParticipantItem](./?path=/docs/ui-components-participantitem--participant-item) components,
         we recommend using the Fluent UI [Stack](https://developer.microsoft.com/en-us/fluentui#/controls/web/stack) as
         a container like shown in the code below.
+      </Description>
+      <Description>
+        Note: Each `ParticipantItem` needs a unique key to avoid warning for children in a list.
       </Description>
       <Canvas mdxSource={BasicParticipantListExampleText}>
         <BasicParticipantListExample />
