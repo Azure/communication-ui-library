@@ -7,6 +7,12 @@ import { useHandlers } from './hooks/useHandlers';
 import { usePropsFor } from './hooks/usePropsFor';
 import { ScreenShare } from './ScreenShare';
 
+const VideoGalleryStyles = {
+  root: {
+    height: 'auto'
+  }
+};
+
 export const MediaGallery = (): JSX.Element => {
   const videoGalleryProps = usePropsFor(VideoGallery);
   const videoGalleryHandlers = useHandlers(VideoGallery);
@@ -26,15 +32,6 @@ export const MediaGallery = (): JSX.Element => {
       onRenderView={videoGalleryHandlers.onRenderView}
     />
   ) : (
-    <VideoGallery
-      {...videoGalleryProps}
-      {...videoGalleryHandlers}
-      scalingMode={'Crop'}
-      styles={{
-        root: {
-          height: 'auto'
-        }
-      }}
-    />
+    <VideoGallery {...videoGalleryProps} {...videoGalleryHandlers} scalingMode={'Crop'} styles={VideoGalleryStyles} />
   );
 };

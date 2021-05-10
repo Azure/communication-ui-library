@@ -16,7 +16,6 @@ import {
 import { GridLayout } from './GridLayout';
 import { StreamMedia } from './StreamMedia';
 import { VideoTile } from './VideoTile';
-// import { RemoteVideoStream, LocalVideoStream } from '@azure/acs-calling-declarative';
 import { memoizeFnAll } from './utils/memoizeFnAll';
 
 export interface VideoGalleryProps {

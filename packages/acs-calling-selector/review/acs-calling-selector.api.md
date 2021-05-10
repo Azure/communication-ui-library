@@ -15,8 +15,7 @@ import { CreateViewOptions as CreateViewOptions_2 } from '@azure/communication-c
 import { DeclarativeCallClient } from '@azure/acs-calling-declarative';
 import { DeviceManager } from '@azure/acs-calling-declarative';
 import { IncomingCall } from '@azure/acs-calling-declarative';
-import { LocalVideoStream } from '@azure/communication-calling';
-import { LocalVideoStream as LocalVideoStream_2 } from '@azure/acs-calling-declarative';
+import { LocalVideoStream } from '@azure/acs-calling-declarative';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { ReactElement } from 'react';
 import { RemoteVideoStream } from '@azure/acs-calling-declarative';
@@ -51,36 +50,24 @@ export type CommonProperties<A, B> = {
 // @public
 export const createDefaultHandlersForComponent: <Props>(declarativeCallClient: DeclarativeCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, _Component: (props: Props) => ReactElement | null) => Pick<{
     onHangUp: () => Promise<void>;
-    onMute: () => Promise<void> | void;
-    onUnmute: () => Promise<void> | void;
     onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
     onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
     onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
     onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions | undefined) => Call | undefined;
-    onStartLocalVideo: () => Promise<void>;
-    onStopLocalVideo: (stream: LocalVideoStream) => Promise<void>;
-    onStartScreenShare: () => Promise<void> | void;
-    onStopScreenShare: () => Promise<void> | void;
     onToggleCamera: () => Promise<void>;
     onToggleMicrophone: () => Promise<void> | void;
     onToggleScreenShare: () => Promise<void> | void;
-    onRenderView: (stream: LocalVideoStream_2 | RemoteVideoStream, options: CreateViewOptions_2) => Promise<void>;
+    onRenderView: (stream: LocalVideoStream | RemoteVideoStream, options: CreateViewOptions_2) => Promise<void>;
 }, CommonProperties<{
     onHangUp: () => Promise<void>;
-    onMute: () => Promise<void> | void;
-    onUnmute: () => Promise<void> | void;
     onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
     onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
     onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
     onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions | undefined) => Call | undefined;
-    onStartLocalVideo: () => Promise<void>;
-    onStopLocalVideo: (stream: LocalVideoStream) => Promise<void>;
-    onStartScreenShare: () => Promise<void> | void;
-    onStopScreenShare: () => Promise<void> | void;
     onToggleCamera: () => Promise<void>;
     onToggleMicrophone: () => Promise<void> | void;
     onToggleScreenShare: () => Promise<void> | void;
-    onRenderView: (stream: LocalVideoStream_2 | RemoteVideoStream, options: CreateViewOptions_2) => Promise<void>;
+    onRenderView: (stream: LocalVideoStream | RemoteVideoStream, options: CreateViewOptions_2) => Promise<void>;
 }, Props>>;
 
 // @public (undocumented)
@@ -161,7 +148,7 @@ export const screenShareButtonSelector: reselect.OutputParametricSelector<callin
 // @public (undocumented)
 export type VideoGalleryLocalParticipant = VideoGalleryParticipant & {
     isScreenSharingOn: boolean;
-    videoStream?: LocalVideoStream_2;
+    videoStream?: LocalVideoStream;
 };
 
 // @public (undocumented)

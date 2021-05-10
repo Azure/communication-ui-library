@@ -91,10 +91,6 @@ const createDefaultHandlers = memoizeOne(
       return stream?.switchSource(device);
     };
 
-    const onMute = (): Promise<void> | void => call?.mute();
-
-    const onUnmute = (): Promise<void> | void => call?.unmute();
-
     const onToggleMicrophone = (): Promise<void> | void => {
       return call?.isMuted ? call?.unmute() : call?.mute();
     };
@@ -119,16 +115,10 @@ const createDefaultHandlers = memoizeOne(
 
     return {
       onHangUp,
-      onMute,
-      onUnmute,
       onSelectCamera,
       onSelectMicrophone,
       onSelectSpeaker,
       onStartCall,
-      onStartLocalVideo,
-      onStopLocalVideo,
-      onStartScreenShare,
-      onStopScreenShare,
       onToggleCamera,
       onToggleMicrophone,
       onToggleScreenShare,
