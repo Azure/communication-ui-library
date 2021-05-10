@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Bump azure-communication-{chat, common, identity} to 1.0.0",
+  "packageName": "react-composites",
+  "email": "prprabhu@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -38,7 +38,7 @@ export const getDocs: () => JSX.Element = () => {
         `FluentThemeProvider` is needed around `ControlBar` to provide theming and icons. Learn more about theming
         [here](./?path=/docs/theming--page).
       </Description>
-      <Canvas withSource={SourceState.NONE}>
+      <Canvas withSource={SourceState.NONE as any}>
         <AllButtonsControlBarExample />
       </Canvas>
       <Source code={AllButtonsControlBarExampleText} />
@@ -54,7 +54,7 @@ export const getDocs: () => JSX.Element = () => {
         `horizontal`, `vertical`, `dockedTop`, `dockedBottom`, `dockedLeft`, `dockedRight`, `floatingTop`,
         `floatingBottom`, `floatingLeft` and `floatingRight`.
       </Description>
-      <Canvas withSource={SourceState.NONE}>
+      <Canvas withSource={SourceState.NONE as any}>
         <ControlBarLayoutExample />
       </Canvas>
       <Source code={ControlBarLayoutExampleText} />
@@ -63,7 +63,7 @@ export const getDocs: () => JSX.Element = () => {
       <Description>
         You can change the styles of the `ControlBar` by customizing its `styles` prop like in the example below.
       </Description>
-      <Canvas withSource={SourceState.NONE}>
+      <Canvas withSource={SourceState.NONE as any}>
         <CustomControlBarStylesExample />
       </Canvas>
       <Source code={CustomControlBarStylesExampleText} />
@@ -75,7 +75,7 @@ export const getDocs: () => JSX.Element = () => {
         and 2nd buttons and style our own hang up button for the 3rd button. Learn more about styling
         [here](./?path=/docs/styling--page).
       </Description>
-      <Canvas withSource={SourceState.NONE}>
+      <Canvas withSource={SourceState.NONE as any}>
         <CustomButtonsExample />
       </Canvas>
       <Source code={CustomButtonsExampleText} />
@@ -85,7 +85,7 @@ export const getDocs: () => JSX.Element = () => {
         The `OptionsButton` can be used for any dropdown items defined through `menuProps`. For more information, check
         out the official Fluent UI documentation at https://developer.microsoft.com/en-us/fluentui#/controls/web/button
       </Description>
-      <Canvas withSource={SourceState.NONE}>
+      <Canvas withSource={SourceState.NONE as any}>
         <OptionsButtonExample />
       </Canvas>
       <Source code={OptionsButtonExampleText} />
