@@ -42,8 +42,6 @@ const getDefaultRenderer = (
       presence = PersonaPresence.away;
     }
 
-    console.log('participant.userId: ' + participant.userId + ', myUserId:' + myUserId);
-
     return (
       <ParticipantItem
         name={participant.displayName ?? ''}
