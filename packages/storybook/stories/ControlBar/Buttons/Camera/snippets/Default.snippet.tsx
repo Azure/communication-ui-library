@@ -5,8 +5,8 @@ import React from 'react';
 export const CameraButtonExample: () => JSX.Element = () => {
   return (
     <Stack horizontal horizontalAlign={'center'}>
-      <CameraButton key={'micBtn1'} checked={true} />
-      <CameraButton key={'micBtn2'} />
+      <CameraButton key={'camBtn1'} checked={true} />
+      <CameraButton key={'camBtn2'} />
     </Stack>
   );
 };
