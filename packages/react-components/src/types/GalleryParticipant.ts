@@ -1,11 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-// import {
-//   RemoteVideoStream as StatefulRemoteVideoStream,
-//   LocalVideoStream as StatefulLocalVideoStream
-// } from '@azure/acs-calling-declarative';
-
 export declare type VideoDeviceType = 'Unknown' | 'UsbCamera' | 'CaptureAdapter' | 'Virtual';
 
 export declare interface VideoDeviceInfo {
