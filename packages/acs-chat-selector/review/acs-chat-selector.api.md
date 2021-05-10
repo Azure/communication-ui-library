@@ -8,6 +8,7 @@ import { ChatClientState } from '@azure/acs-chat-declarative';
 import { ChatMessageWithStatus } from '@azure/acs-chat-declarative';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
+import { CommunicationIdentifier } from '@azure/communication-common';
 import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
 import { MessageStatus } from '@azure/acs-chat-declarative';
 import { default as React_2 } from 'react';
@@ -83,6 +84,9 @@ export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientSta
 export type CommonProperties<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? (A[P] extends B[P] ? P : never) : never;
 }[keyof A & keyof B];
+
+// @public (undocumented)
+export const communicationIdentifierToString: (i: CommunicationIdentifier | undefined) => string;
 
 // @public (undocumented)
 export const createDefaultHandlers: (chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient) => DefaultHandlers;
