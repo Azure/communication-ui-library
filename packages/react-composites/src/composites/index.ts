@@ -4,4 +4,8 @@
 export * from './ChatComposite';
 export * from './GroupCall';
 export * from './OneToOneCall';
-export * from './common';
+export {
+  GroupCallControlBarComponent,
+  IncomingCallControlBarComponent,
+  OutgoingCallControlBarComponent
+} from './common';

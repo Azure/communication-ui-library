@@ -5,53 +5,28 @@
 ```ts
 
 import { AbortSignalLike } from '@azure/core-http';
-import { AcceptCallOptions } from '@azure/communication-calling';
 import { AudioDeviceInfo } from '@azure/communication-calling';
-import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { Call } from '@azure/acs-calling-declarative';
-import { Call as Call_2 } from '@azure/communication-calling';
-import { CallAgent } from '@azure/communication-calling';
-import { CallClient } from '@azure/communication-calling';
 import { CallClientOptions } from '@azure/communication-calling';
-import { CallState } from '@azure/communication-calling';
-import { ChatClient } from '@azure/communication-chat';
 import { ChatMessage as ChatMessage_2 } from '@azure/communication-chat';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { ChatThreadClientState } from '@azure/acs-chat-declarative';
-import { CommunicationUserIdentifier } from '@azure/communication-common';
-import { CommunicationUserKind } from '@azure/communication-common';
 import { ControlBarProps } from 'react-components';
 import { CreateViewOptions } from '@azure/communication-calling';
 import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
 import { DeviceManager } from '@azure/acs-calling-declarative';
-import { DeviceManager as DeviceManager_2 } from '@azure/communication-calling';
-import { Dispatch } from 'react';
-import { ErrorBarProps } from 'react-components';
 import { ErrorInfo } from 'react';
-import { GroupLocator } from '@azure/communication-calling';
 import { HangUpOptions } from '@azure/communication-calling';
-import { IButtonStyles } from '@fluentui/react';
-import { IncomingCall } from '@azure/communication-calling';
 import { IStyle } from '@fluentui/react';
-import { JoinCallOptions } from '@azure/communication-calling';
 import { LocalVideoStream } from '@azure/acs-calling-declarative';
 import { LocalVideoStream as LocalVideoStream_2 } from '@azure/communication-calling';
-import { MicrosoftTeamsUserKind } from '@azure/communication-common';
-import { PhoneNumberKind } from '@azure/communication-common';
 import { default as React_2 } from 'react';
-import { ReactElement } from 'react';
 import { RemoteParticipant } from '@azure/acs-calling-declarative';
 import { RemoteParticipant as RemoteParticipant_2 } from '@azure/communication-calling';
 import { RemoteVideoStream } from '@azure/acs-calling-declarative';
 import { RemoteVideoStream as RemoteVideoStream_2 } from '@azure/communication-calling';
-import { ScalingMode } from '@azure/communication-calling';
-import { SetStateAction } from 'react';
-import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
-
-// @public (undocumented)
-export const areStreamsEqual: (prevStream: LocalVideoStream_2, newStream: LocalVideoStream_2) => boolean;
 
 // @public (undocumented)
 export class AzureCommunicationChatAdapter implements GroupChatAdapter {
@@ -89,96 +64,6 @@ export interface BaseCustomStylesProps {
     root?: IStyle;
 }
 
-// @public (undocumented)
-export type CallContainerProps = {
-    isCallInitialized: boolean;
-    callState: CallState;
-    screenShareStream: ParticipantStream | undefined;
-    isLocalScreenSharingOn: boolean;
-    leaveCall: (hangupCallOptions: HangUpOptions) => Promise<void>;
-};
-
-// @public (undocumented)
-export const CallContext: React_2.Context<CallContextType | undefined>;
-
-// @public (undocumented)
-export type CallContextType = {
-    call: Call_2 | undefined;
-    setCall: Dispatch<SetStateAction<Call_2 | undefined>>;
-    callState: CallState;
-    setCallState: Dispatch<SetStateAction<CallState>>;
-    participants: RemoteParticipant_2[];
-    setParticipants: Dispatch<SetStateAction<RemoteParticipant_2[]>>;
-    screenShareStream: ParticipantStream | undefined;
-    setScreenShareStream: Dispatch<SetStateAction<ParticipantStream | undefined>>;
-    isMicrophoneEnabled: boolean;
-    setIsMicrophoneEnabled: Dispatch<SetStateAction<boolean>>;
-    localScreenShareActive: boolean;
-    setLocalScreenShare: Dispatch<SetStateAction<boolean>>;
-    localVideoStream: LocalVideoStream_2 | undefined;
-    setLocalVideoStream: Dispatch<SetStateAction<LocalVideoStream_2 | undefined>>;
-    isLocalVideoRendererBusy: boolean;
-    setLocalVideoRendererBusy: Dispatch<SetStateAction<boolean>>;
-    isLocalVideoOn: boolean;
-    setLocalVideoOn: Dispatch<SetStateAction<boolean>>;
-};
-
-// @public
-export const CallControlBar: (props: ControlBarProps & CallControlBarProps & ErrorHandlingProps) => JSX.Element;
-
-// @public (undocumented)
-export const CallControlBarComponent: (props: Pick<ControlBarProps & CallControlBarProps & ErrorHandlingProps, "children" | "onErrorCallback" | "onEndCallClick" | "styles" | "layout">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
-
-// Warning: (ae-forgotten-export) The symbol "CallControlBarContainerProps" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export interface CallControlBarProps extends CallControlBarContainerProps {
-    onEndCallClick(): void;
-}
-
-// @public (undocumented)
-export const CallingContext: React_2.Context<CallingContextType | undefined>;
-
-// @public (undocumented)
-export type CallingContextType = {
-    userId: string;
-    setUserId: Dispatch<SetStateAction<string>>;
-    displayName: string;
-    setDisplayName: Dispatch<SetStateAction<string>>;
-    callClient: CallClient;
-    setCallClient: Dispatch<SetStateAction<CallClient>>;
-    callAgent: CallAgent | undefined;
-    setCallAgent: Dispatch<SetStateAction<CallAgent | undefined>>;
-    deviceManager: DeviceManager_2 | undefined;
-    setDeviceManager: Dispatch<SetStateAction<DeviceManager_2 | undefined>>;
-    audioDevicePermission: DevicePermissionState;
-    setAudioDevicePermission: Dispatch<SetStateAction<DevicePermissionState>>;
-    videoDevicePermission: DevicePermissionState;
-    setVideoDevicePermission: Dispatch<SetStateAction<DevicePermissionState>>;
-    videoDeviceInfo: VideoDeviceInfo | undefined;
-    setVideoDeviceInfo: Dispatch<SetStateAction<VideoDeviceInfo | undefined>>;
-    videoDeviceList: VideoDeviceInfo[];
-    setVideoDeviceList: Dispatch<SetStateAction<VideoDeviceInfo[]>>;
-    audioDeviceInfo: AudioDeviceInfo | undefined;
-    setAudioDeviceInfo: Dispatch<SetStateAction<AudioDeviceInfo | undefined>>;
-    audioDeviceList: AudioDeviceInfo[];
-    setAudioDeviceList: Dispatch<SetStateAction<AudioDeviceInfo[]>>;
-};
-
-// Warning: (ae-forgotten-export) The symbol "CallingProviderProps" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export const CallingProvider: (props: CallingProviderProps & ErrorHandlingProps) => JSX.Element;
-
-// @public (undocumented)
-export interface CallProvider {
-    // (undocumented)
-    children: React_2.ReactNode;
-}
-
-// @public (undocumented)
-export const CallProvider: (props: CallProvider & ErrorHandlingProps) => JSX.Element;
-
 // Warning: (ae-forgotten-export) The symbol "GroupChatProps" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
@@ -190,15 +75,6 @@ export type ChatConfig = {
     displayName: string;
     endpointUrl: string;
     threadId: string;
-};
-
-// @public (undocumented)
-export const ChatContext: React_2.Context<ChatContextType | undefined>;
-
-// @public (undocumented)
-export type ChatContextType = {
-    chatClient?: ChatClient;
-    setChatClient: Dispatch<SetStateAction<ChatClient>>;
 };
 
 // @public (undocumented)
@@ -216,19 +92,6 @@ export type ChatMessagePayload = {
     mine?: boolean;
     clientMessageId?: string;
 };
-
-// Warning: (ae-forgotten-export) The symbol "ChatProviderProps" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export const ChatProvider: (props: ChatProviderProps & ErrorHandlingProps) => JSX.Element;
-
-// Warning: (ae-forgotten-export) The symbol "ChatThreadProviderProps" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export const ChatThreadProvider: (props: ChatThreadProviderProps & ErrorHandlingProps) => JSX.Element;
-
-// @public (undocumented)
-export const CLICK_TO_LOAD_MORE_MESSAGES = "click to load more messages...";
 
 // @public
 export class CommunicationUiError extends Error implements CommunicationUiErrorInfo {
@@ -363,49 +226,7 @@ export enum CommunicationUiErrorSeverity {
 }
 
 // @public (undocumented)
-export const compareMessages: (firstMessage: {
-    createdOn?: Date;
-}, secondMessage: {
-    createdOn?: Date;
-}) => number;
-
-// @public (undocumented)
-export const CONNECTED = "Connected";
-
-// Warning: (ae-forgotten-export) The symbol "UnionToIntersection" needs to be exported by the entry point index.d.ts
-// Warning: (ae-forgotten-export) The symbol "UnionTypesOfTuple" needs to be exported by the entry point index.d.ts
-// Warning: (ae-forgotten-export) The symbol "ContextMapFuncReturns" needs to be exported by the entry point index.d.ts
-// Warning: (ae-forgotten-export) The symbol "ContextMapFuncArgs" needs to be exported by the entry point index.d.ts
-//
-// @public
-export const connectFuncsToContext: <FuncTypes extends ((ownProps: any) => any)[], PropsForComponent extends UnionToIntersection<UnionTypesOfTuple<ContextMapFuncReturns<FuncTypes>>>>(ElementToConnect: (props: PropsForComponent) => ReactElement | null, ...mapToComponentFuncs: FuncTypes) => (props: UnionToIntersection<UnionTypesOfTuple<ContextMapFuncArgs<FuncTypes>>> & Pick<PropsForComponent, Exclude<keyof PropsForComponent, keyof UnionToIntersection<UnionTypesOfTuple<ContextMapFuncReturns<FuncTypes>>>>>) => ReactElement;
-
-// @public (undocumented)
-export const CONNECTING = "Connecting";
-
-// @public (undocumented)
-export const convertSdkRemoteParticipantToGalleryParticipant: (remoteParticipantFromSDK: RemoteParticipant_2) => GalleryParticipant;
-
-// @public (undocumented)
-export const convertSdkRemoteParticipantToListParticipant: (participant: RemoteParticipant_2, onRemove?: (() => void) | undefined, onMute?: (() => void) | undefined) => ListParticipant;
-
-// @public (undocumented)
-export const COOL_PERIOD_REFRESH_INVERVAL = 1000;
-
-// @public (undocumented)
-export const COOL_PERIOD_THRESHOLD: number;
-
-// @public (undocumented)
 export const createAzureCommunicationChatAdapter: (token: string, endpointUrl: string, threadId: string, displayName: string, refreshTokenCallback?: (() => Promise<string>) | undefined) => Promise<AzureCommunicationChatAdapter>;
-
-// @public (undocumented)
-export const createAzureCommunicationUserCredential: (token: string, refreshTokenCallback?: (() => Promise<string>) | undefined) => AzureCommunicationTokenCredential;
-
-// @public (undocumented)
-export const CREATED = 201;
-
-// @public (undocumented)
-export const CROP_MEDIA = "Crop";
 
 // @public (undocumented)
 export type CustomMessage = Message<'custom'>;
@@ -417,79 +238,10 @@ export type CustomMessagePayload = {
 };
 
 // @public (undocumented)
-export const DEFAULT_IMG_WIDTH = 200;
-
-// @public (undocumented)
-export const DEFAULT_NUMBER_OF_MESSAGES_TO_LOAD = 100;
-
-// @public (undocumented)
-export const delay: (delay: number) => Promise<void>;
-
-// @public (undocumented)
 export type DevicePermissionState = 'Granted' | 'Denied' | 'Unknown';
 
 // @public (undocumented)
 export type DevicePermissionType = 'Camera' | 'Microphone';
-
-// @public (undocumented)
-export const EMPTY_MESSAGE_REGEX: RegExp;
-
-// @public (undocumented)
-export const ENTER_KEY = 13;
-
-// @public (undocumented)
-export const ErrorContextLastError: React_2.Context<ErrorContextLastErrorType | undefined>;
-
-// @public (undocumented)
-export type ErrorContextLastErrorType = {
-    lastError: CommunicationUiError | undefined;
-};
-
-// @public (undocumented)
-export const ErrorContextOnErrorCallback: React_2.Context<ErrorContextOnErrorCallbackType | undefined>;
-
-// @public (undocumented)
-export type ErrorContextOnErrorCallbackType = {
-    onErrorCallback: ((error: CommunicationUiError) => void) | undefined;
-};
-
-// @public (undocumented)
-export const ErrorContextSetLastError: React_2.Context<ErrorContextSetLastErrorType | undefined>;
-
-// @public (undocumented)
-export type ErrorContextSetLastErrorType = {
-    setLastError: Dispatch<SetStateAction<CommunicationUiError | undefined>>;
-};
-
-// @public (undocumented)
-export const ErrorContextSetOnErrorCallback: React_2.Context<ErrorContextSetOnErrorCallbackType | undefined>;
-
-// @public (undocumented)
-export type ErrorContextSetOnErrorCallbackType = {
-    setOnErrorCallback: Dispatch<SetStateAction<((error: CommunicationUiError) => void) | undefined>>;
-};
-
-// @public (undocumented)
-export type ErrorHandlingProps = {
-    onErrorCallback?: (error: CommunicationUiErrorInfo) => void;
-};
-
-// Warning: (ae-forgotten-export) The symbol "ErrorProviderProps" needs to be exported by the entry point index.d.ts
-//
-// @public
-export const ErrorProvider: (props: ErrorProviderProps & ErrorHandlingProps) => JSX.Element;
-
-// @public (undocumented)
-export const FORBIDDEN_STATUS_CODE = 403;
-
-// @public (undocumented)
-export const formatDateForChatMessage: (messageDate: Date) => string;
-
-// @public (undocumented)
-export const formatTimeForChatMessage: (messageDate: Date) => string;
-
-// @public
-export const formatTimestampForChatMessage: (messageDate: Date, todayDate: Date) => string;
 
 // @public (undocumented)
 export type GalleryParticipant = {
@@ -497,21 +249,6 @@ export type GalleryParticipant = {
     userId: string;
     videoStream?: RemoteVideoStream_2;
 };
-
-// @public (undocumented)
-export const getACSId: (identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind) => string;
-
-// @public (undocumented)
-export const getChatContextState: () => ChatContextType;
-
-// @public (undocumented)
-export const getErrorFromAcsResponseCode: (message: string, statusCode: number) => CommunicationUiError | undefined;
-
-// @public (undocumented)
-export const getIdFromToken: (jwtToken: string) => string;
-
-// @public (undocumented)
-export const getThreadContextState: () => ThreadProviderContextType;
 
 // Warning: (ae-forgotten-export) The symbol "GroupCallCompositeProps" needs to be exported by the entry point index.d.ts
 //
@@ -580,17 +317,11 @@ export type GroupCallClientState = {
     devices: DeviceManager;
 };
 
-// @public (undocumented)
-export const GroupCallControlBar: (props: ControlBarProps & GroupCallControlBarProps & ErrorHandlingProps) => JSX.Element;
-
+// Warning: (ae-forgotten-export) The symbol "GroupCallControlBarProps" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "ErrorHandlingProps" needs to be exported by the entry point index.d.ts
+//
 // @public (undocumented)
 export const GroupCallControlBarComponent: (props: Pick<ControlBarProps & GroupCallControlBarProps & ErrorHandlingProps, "children" | "onErrorCallback" | "onEndCallClick" | "styles" | "compressedMode" | "layout">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
-
-// @public (undocumented)
-export interface GroupCallControlBarProps extends CallControlBarContainerProps {
-    compressedMode: boolean;
-    onEndCallClick(): void;
-}
 
 // @public (undocumented)
 export type GroupCallState = GroupCallUIState & GroupCallClientState;
@@ -637,20 +368,8 @@ export interface GroupChatAdapter {
 // @public (undocumented)
 export type GroupChatState = GroupChatUIState & GroupChatClientState;
 
-// @public (undocumented)
-export const GUID_FOR_INITIAL_TOPIC_NAME = "c774da81-94d5-4652-85c7-6ed0e8dc67e6";
-
-// Warning: (ae-forgotten-export) The symbol "HangupButtonProps" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "CallControlBarContainerProps" needs to be exported by the entry point index.d.ts
 //
-// @public (undocumented)
-export const HangupButtonComponent: (props: Pick<HangupButtonProps, "text" | "onErrorCallback" | "onEndCallClick" | "styles">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
-
-// @public (undocumented)
-export const INCOMING = "Incoming";
-
-// @public (undocumented)
-export const IncomingCallControlBar: (props: ControlBarProps & CallControlBarContainerProps & ErrorHandlingProps) => JSX.Element;
-
 // @public (undocumented)
 export const IncomingCallControlBarComponent: (props: Pick<ControlBarProps & CallControlBarContainerProps & ErrorHandlingProps, "children" | "onErrorCallback" | "styles" | "layout">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
 
@@ -668,45 +387,10 @@ export type IncomingCallListener = (event: {
 // @public (undocumented)
 export const IncomingCallModal: (props: IncomingCallModalProps) => JSX.Element;
 
-// @public (undocumented)
-export const IncomingCallsContext: React_2.Context<IncomingCallsContextType | undefined>;
-
-// @public (undocumented)
-export type IncomingCallsContextType = {
-    incomingCalls: IncomingCall[];
-    setIncomingCalls: Dispatch<SetStateAction<IncomingCall[]>>;
-};
-
-// @public (undocumented)
-export const IncomingCallsProvider: (props: {
-    children: React_2.ReactNode;
-}) => JSX.Element;
-
 // Warning: (ae-forgotten-export) The symbol "IncomingCallToastProps" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
 export const IncomingCallToast: (props: IncomingCallToastProps) => JSX.Element;
-
-// @public (undocumented)
-export const INITIAL_MESSAGES_SIZE = 2000;
-
-// @public (undocumented)
-export const INTERNAL_SERVER_ERROR_STATUS_CODE = 500;
-
-// @public
-export const isGUID: (str: string) => boolean;
-
-// @public (undocumented)
-export const isInCall: (callState: CallState) => boolean;
-
-// @public (undocumented)
-export const isLocalScreenShareSupportedInBrowser: () => boolean;
-
-// @public (undocumented)
-export const isMobileSession: () => boolean;
-
-// @public (undocumented)
-export function isSelectedDeviceInList<T extends AudioDeviceInfo | VideoDeviceInfo>(device: T, list: T[]): boolean;
 
 // @public (undocumented)
 export interface JoinCallResult {
@@ -726,65 +410,11 @@ export type ListParticipant = {
 };
 
 // @public (undocumented)
-export type LocalDeviceSettingsContainerProps = {
-    videoDeviceList: VideoDeviceInfo[];
-    audioDeviceList: AudioDeviceInfo[];
-    videoDeviceInfo?: VideoDeviceInfo;
-    audioDeviceInfo?: AudioDeviceInfo;
-    updateLocalVideoStream: (source: VideoDeviceInfo) => void;
-    updateAudioDeviceInfo: (source: AudioDeviceInfo) => void;
-};
-
-// @public (undocumented)
 export type LocalGalleryParticipant = {
     displayName: string;
     userId: string;
     videoStream?: LocalVideoStream_2;
 };
-
-// @public (undocumented)
-export interface LocalVideoContainerOwnProps {
-    // (undocumented)
-    scalingMode?: ScalingMode;
-    // (undocumented)
-    stream: LocalVideoStream_2 | undefined;
-}
-
-// @public (undocumented)
-export const MapToCallConfigurationProps: () => SetupContainerProps;
-
-// @public (undocumented)
-export const MapToErrorBarProps: () => ErrorBarProps;
-
-// @public (undocumented)
-export const MapToLocalDeviceSettingsProps: () => LocalDeviceSettingsContainerProps;
-
-// @public (undocumented)
-export const MapToLocalVideoProps: (ownProps: LocalVideoContainerOwnProps) => VideoContainerProps;
-
-// @public (undocumented)
-export const MapToOneToOneCallProps: () => CallContainerProps;
-
-// @public (undocumented)
-export const MapToRemoteVideoProps: (ownProps: RemoteVideoContainerOwnProps) => VideoContainerProps;
-
-// @public (undocumented)
-export const MAXIMUM_INT64 = 9223372036854776000;
-
-// @public (undocumented)
-export const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
-
-// @public (undocumented)
-export const MAXIMUM_LENGTH_OF_NAME = 10;
-
-// @public (undocumented)
-export const MAXIMUM_LENGTH_OF_TOPIC = 30;
-
-// @public (undocumented)
-export const MAXIMUM_LENGTH_OF_TYPING_USERS = 35;
-
-// @public (undocumented)
-export const MAXIMUM_RETRY_COUNT = 3;
 
 // @public (undocumented)
 export type Message<T extends MessageTypes> = {
@@ -806,42 +436,15 @@ export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
 // @public (undocumented)
 export type MessageTypes = 'chat' | 'system' | 'custom';
 
-// @public (undocumented)
-export const MINI_HEADER_WINDOW_WIDTH = 450;
-
-// @public (undocumented)
-export const MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS = 8000;
-
-// @public (undocumented)
-export const MULTI_STATUS = 207;
-
-// @public (undocumented)
-export const NEW_MESSAGES = "New Messages";
-
-// @public (undocumented)
-export const NO_CONTENT = 204;
-
-// @public (undocumented)
-export const OK = 200;
-
 // Warning: (ae-forgotten-export) The symbol "OneToOneCallCompositeProps" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
 export const OneToOneCall: (props: OneToOneCallCompositeProps) => JSX.Element;
 
-// @public (undocumented)
-export const OutgoingCallControlBar: (props: OutgoingCallControlBarProps & ErrorHandlingProps) => JSX.Element;
-
+// Warning: (ae-forgotten-export) The symbol "OutgoingCallControlBarProps" needs to be exported by the entry point index.d.ts
+//
 // @public (undocumented)
 export const OutgoingCallControlBarComponent: (props: Pick<OutgoingCallControlBarProps & ErrorHandlingProps, "children" | "onErrorCallback" | "onEndCallClick" | "styles" | "layout">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
-
-// @public (undocumented)
-export interface OutgoingCallControlBarProps extends ControlBarProps, CallControlBarContainerProps {
-    onEndCallClick(): void;
-}
-
-// @public (undocumented)
-export const PAGE_SIZE = 200;
 
 // @public (undocumented)
 export type ParticipantJoinedListener = (event: {
@@ -849,46 +452,10 @@ export type ParticipantJoinedListener = (event: {
 }) => Promise<void>;
 
 // @public (undocumented)
-export const PARTICIPANTS_THRESHOLD = 20;
-
-// @public (undocumented)
 export type ParticipantStream = {
     user: RemoteParticipant_2;
     stream: RemoteVideoStream_2 | undefined;
 };
-
-// @public (undocumented)
-export const PRECONDITION_FAILED_RETRY_INTERVAL = 200;
-
-// @public (undocumented)
-export const PRECONDITION_FAILED_STATUS_CODE = 412;
-
-// @public (undocumented)
-export const propagateError: (error: Error, onErrorCallback?: ((error: CommunicationUiErrorInfo) => void) | undefined) => void;
-
-// @public (undocumented)
-export interface RemoteVideoContainerOwnProps {
-    // (undocumented)
-    scalingMode?: ScalingMode;
-    // (undocumented)
-    stream: RemoteVideoStream_2 | undefined;
-}
-
-// @public (undocumented)
-export const RINGING = "Ringing";
-
-// @public (undocumented)
-export const SERVICE_UNAVAILABLE_STATUS_CODE = 503;
-
-// @public (undocumented)
-export type SetupContainerProps = {
-    isCallInitialized: boolean;
-    displayName: string;
-    joinCall: (groupId: string) => void;
-};
-
-// @public (undocumented)
-export const SPACE_KEY = 32;
 
 // @public (undocumented)
 export type SystemMessage = Message<'system'>;
@@ -900,150 +467,11 @@ export type SystemMessagePayload = {
     iconName?: string;
 };
 
-// @public (undocumented)
-export const TEXT_MESSAGE = "Text";
-
-// @public (undocumented)
-export const THREAD_INFO_FETCH_INVERVAL = 2000;
-
-// @public (undocumented)
-export const ThreadContext: React_2.Context<ThreadProviderContextType | undefined>;
-
-// @public (undocumented)
-export type ThreadProviderContextType = {
-    chatThreadClient?: ChatThreadClient;
-    setChatThreadClient: Dispatch<SetStateAction<ChatThreadClient | undefined>>;
-    threadId: string;
-    setThreadId: Dispatch<SetStateAction<string>>;
-};
-
-// @public (undocumented)
-export const TOO_MANY_REQUESTS_STATUS_CODE = 429;
-
-// @public (undocumented)
-export const UNABLE_TO_LOAD_MORE_MESSAGES = "You have reached the beginning of the thread";
-
-// @public (undocumented)
-export const UNAUTHORIZED_STATUS_CODE = 401;
-
-// @public (undocumented)
-export const useCall: () => Call_2 | undefined;
-
-// @public (undocumented)
-export const useCallAgent: () => boolean;
-
-// @public (undocumented)
-export const useCallClient: () => CallClient;
-
-// @public (undocumented)
-export const useCallContext: () => CallContextType;
-
-// @public (undocumented)
-export const useCallingContext: () => CallingContextType;
-
-// @public (undocumented)
-export const useChatClient: () => ChatClient;
-
-// @public (undocumented)
-export const useChatThreadClient: () => ChatThreadClient | undefined;
-
-// @public (undocumented)
-export const useDeviceManager: () => DeviceManager_2 | undefined;
-
-// Warning: (ae-forgotten-export) The symbol "UseGroupCallType" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export const useGroupCall: () => UseGroupCallType;
-
-// Warning: (ae-forgotten-export) The symbol "UseIncomingCallType" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export const useIncomingCall: () => UseIncomingCallType;
-
-// @public (undocumented)
-export const useIncomingCallsContext: () => IncomingCallsContextType;
-
-// @public (undocumented)
-export const useLastError: () => CommunicationUiError | undefined;
-
-// Warning: (ae-forgotten-export) The symbol "useLocalVideoType" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export const useLocalVideo: () => useLocalVideoType;
-
-// Warning: (ae-forgotten-export) The symbol "UseLocalVideoStreamType" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export const useLocalVideoStreamRenderer: (stream: LocalVideoStream_2 | undefined, rendererOptions: CreateViewOptions | undefined) => UseLocalVideoStreamType;
-
-// Warning: (ae-forgotten-export) The symbol "UseMicrophoneType" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export const useMicrophone: () => UseMicrophoneType;
-
-// Warning: (ae-forgotten-export) The symbol "UseOutgoingCallType" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export const useOutgoingCall: () => UseOutgoingCallType;
-
-// Warning: (ae-forgotten-export) The symbol "UseRemoteVideoStreamType" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export const useRemoteVideoStreamRenderer: (stream: RemoteVideoStream_2 | undefined, options?: CreateViewOptions | undefined) => UseRemoteVideoStreamType;
-
-// Warning: (ae-forgotten-export) The symbol "useScreenShareType" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export const useScreenShare: () => useScreenShareType;
-
-// @public (undocumented)
-export const useSetLastError: () => (error: CommunicationUiError | undefined) => void;
-
-// @public (undocumented)
-export const useSetOnErrorCallback: () => (callback: (error: CommunicationUiError) => void) => void;
-
-// @public (undocumented)
-export const useSetThreadId: () => (threadId: string) => void;
-
-// @public (undocumented)
-export const useSubscribeToAudioDeviceList: () => void;
-
-// @public (undocumented)
-export const useSubscribeToDevicePermission: (permissionType: DevicePermissionType) => void;
-
-// @public (undocumented)
-export const useSubscribeToVideoDeviceList: () => void;
-
-// Warning: (ae-forgotten-export) The symbol "UseTeamsCallType" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export const useTeamsCall: () => UseTeamsCallType;
-
-// @public (undocumented)
-export const useThreadId: () => string;
-
-// @public (undocumented)
-export const useTriggerOnErrorCallback: () => (error: CommunicationUiErrorInfo) => void;
-
-// @public
-export const useValidContext: <T extends unknown>(ReactContext: React_2.Context<T | undefined>) => T;
-
-// @public (undocumented)
-export interface VideoContainerProps {
-    // (undocumented)
-    isVideoReady: boolean;
-    // (undocumented)
-    videoStreamElement: HTMLElement | null;
-}
-
 // @public
 export type WebUiChatParticipant = {
     userId: string;
     displayName?: string;
 };
-
-// @public
-export const WithErrorHandling: (Component: (props: any & ErrorHandlingProps) => JSX.Element, props: any & ErrorHandlingProps) => JSX.Element;
 
 
 // (No @packageDocumentation comment for this package)
