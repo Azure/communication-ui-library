@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   CameraButton,
   ControlBar,
@@ -9,6 +8,7 @@ import {
   ScreenShareButton,
   VideoTile
 } from '@azure/communication-react';
+import React from 'react';
 
 const TeamsTheme = {
   palette: {
