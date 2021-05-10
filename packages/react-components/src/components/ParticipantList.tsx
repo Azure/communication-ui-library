@@ -24,9 +24,9 @@ export type ParticipantListProps = {
   participants: WebUIParticipant[];
   /** User ID of user */
   myUserId?: string;
-  /** Determines if screen sharing is on */
+  /** Optional callback to render each participant. If no callback is provided, each participant will be rendered with `ParticipantItem`  */
   onRenderParticipant?: (participant: WebUIParticipant) => JSX.Element;
-  /** Optional function to render each participant  */
+  /** Optional callback to render the context menu for each participant  */
   onRenderParticipantMenu?: (participant: WebUIParticipant) => IContextualMenuItem[];
 };
 
