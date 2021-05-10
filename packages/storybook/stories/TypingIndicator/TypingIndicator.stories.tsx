@@ -18,7 +18,7 @@ const TypingIndicatorSnippetText = require('!!raw-loader!./snippets/TypingIndica
 
 const importStatement = `import { TypingIndicator } from '@azure/communication-react';`;
 
-export const getDocs: () => JSX.Element = () => {
+const getDocs: () => JSX.Element = () => {
   return (
     <>
       <Title>TypingIndicator</Title>
