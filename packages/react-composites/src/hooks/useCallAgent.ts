@@ -83,7 +83,6 @@ export default (): boolean => {
 
     const onCallsUpdated = (e: { added: Call[]; removed: Call[] }): void => {
       e.added.forEach((addedCall) => {
-        // setCall(addedCall);
         addedCall.on('stateChanged', (): void => {
           setCallState(addedCall.state);
         });
