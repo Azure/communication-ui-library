@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatThreadClient, SendChatMessageResult, WithResponse } from '@azure/communication-chat';
+import { ChatThreadClient, SendChatMessageResult } from '@azure/communication-chat';
+import { getIdentifierKind } from '@azure/communication-common';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 import { ChatContext } from './ChatContext';
 import { nanoid } from 'nanoid';
@@ -44,11 +45,11 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
             createdOn: new Date(),
             status: 'sending',
             senderDisplayName: this._context.getState().displayName,
-            sender: { communicationUserId: this._context.getState().userId }
+            sender: this._context.getState().userId
           };
           this._context.setChatMessage(chatThreadClient.threadId, newMessage);
 
-          let result: WithResponse<SendChatMessageResult> | undefined = undefined;
+          let result: SendChatMessageResult | undefined = undefined;
           try {
             result = await chatThreadClient.sendMessage(...args);
           } catch (e) {
@@ -104,7 +105,7 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
         return async (...args: Parameters<ChatThreadClient['removeParticipant']>) => {
           const result = await chatThreadClient.removeParticipant(...args);
           const [removeIdentifier] = args;
-          this._context.deleteParticipant(chatThreadClient.threadId, removeIdentifier.communicationUserId);
+          this._context.deleteParticipant(chatThreadClient.threadId, getIdentifierKind(removeIdentifier));
           return result;
         };
       }
@@ -117,12 +118,12 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
           return result;
         };
       }
-      case 'updateThread': {
-        return async (...args: Parameters<ChatThreadClient['updateThread']>) => {
-          const result = await chatThreadClient.updateThread(...args);
-          const [updateOption] = args;
+      case 'updateTopic': {
+        return async (...args: Parameters<ChatThreadClient['updateTopic']>) => {
+          const result = await chatThreadClient.updateTopic(...args);
+          const [topic] = args;
 
-          this._context.updateThreadTopic(chatThreadClient.threadId, updateOption?.topic);
+          this._context.updateThreadTopic(chatThreadClient.threadId, topic);
           return result;
         };
       }

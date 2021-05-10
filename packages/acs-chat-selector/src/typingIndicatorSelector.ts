@@ -3,8 +3,15 @@
 
 // @ts-ignore
 import { ChatClientState } from '@azure/acs-chat-declarative';
+import { CommunicationIdentifierAsKey, getCommunicationIdentifierAsKey } from '@azure/acs-chat-declarative';
 // @ts-ignore
-import { ChatBaseSelectorProps, getTypingIndicators, getParticipants, getUserId } from './baseSelectors';
+import {
+  ChatBaseSelectorProps,
+  communicationIdentifierToString,
+  getTypingIndicators,
+  getParticipants,
+  getUserId
+} from './baseSelectors';
 import * as reselect from 'reselect';
 import { ChatParticipant } from '@azure/communication-chat';
 import { TypingIndicatorEvent } from '@azure/acs-chat-declarative';
@@ -17,16 +24,16 @@ const filterTypingIndicators = (typingIndicators: TypingIndicatorEvent[], userId
   const date8SecondsAgo = new Date(Date.now() - MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS);
   for (let i = typingIndicators.length - 1; i >= 0; i--) {
     const typingIndicator = typingIndicators[i];
-    if (typingIndicator.sender.user.communicationUserId === userId) {
+    if (communicationIdentifierToString(typingIndicator.sender) === userId) {
       continue;
     }
     if (typingIndicator.receivedOn < date8SecondsAgo) {
       continue;
     }
-    if (seen.has(typingIndicator.sender.user.communicationUserId)) {
+    if (seen.has(getCommunicationIdentifierAsKey(typingIndicator.sender))) {
       continue;
     }
-    seen.add(typingIndicator.sender.user.communicationUserId);
+    seen.add(getCommunicationIdentifierAsKey(typingIndicator.sender));
     filteredTypingIndicators.push(typingIndicator);
   }
   return filteredTypingIndicators;
@@ -37,14 +44,18 @@ const convertSdkTypingIndicatorsToWebUiChatParticipants = (
   participants: Map<string, ChatParticipant>
 ): WebUiChatParticipant[] => {
   return typingIndicators.map((typingIndicator) => ({
-    userId: typingIndicator.sender.user.communicationUserId,
-    displayName: participants.get(typingIndicator.sender.user.communicationUserId)?.displayName
+    userId: communicationIdentifierToString(typingIndicator.sender),
+    displayName: participants.get(getCommunicationIdentifierAsKey(typingIndicator.sender))?.displayName
   }));
 };
 
 export const typingIndicatorSelector = reselect.createSelector(
   [getTypingIndicators, getParticipants, getUserId],
-  (typingIndicators: TypingIndicatorEvent[], participants: Map<string, ChatParticipant>, userId: string) => {
+  (
+    typingIndicators: TypingIndicatorEvent[],
+    participants: Map<CommunicationIdentifierAsKey, ChatParticipant>,
+    userId: string
+  ) => {
     // if the participant size reaches the threshold then return no typing users
     if (participants.size >= PARTICIPANTS_THRESHOLD) {
       return { typingUsers: [] };

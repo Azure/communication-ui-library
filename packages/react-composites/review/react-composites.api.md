@@ -8,7 +8,6 @@ import { AbortSignalLike } from '@azure/core-http';
 import { AcceptCallOptions } from '@azure/communication-calling';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
-import { AzureCommunicationUserCredential } from '@azure/communication-common-beta3';
 import { Call } from '@azure/acs-calling-declarative';
 import { Call as Call_2 } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
@@ -16,11 +15,15 @@ import { CallClient } from '@azure/communication-calling';
 import { CallClientOptions } from '@azure/communication-calling';
 import { CallState } from '@azure/communication-calling';
 import { ChatClient } from '@azure/communication-chat';
+import { ChatMessage as ChatMessage_2 } from '@azure/communication-chat';
+import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
-import { CommunicationUser } from '@azure/communication-signaling';
+import { ChatThreadClientState } from '@azure/acs-chat-declarative';
+import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { ControlBarProps } from 'react-components';
 import { CreateViewOptions } from '@azure/communication-calling';
+import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
 import { DeviceManager } from '@azure/acs-calling-declarative';
 import { DeviceManager as DeviceManager_2 } from '@azure/communication-calling';
 import { Dispatch } from 'react';
@@ -49,6 +52,37 @@ import { VideoDeviceInfo } from '@azure/communication-calling';
 
 // @public (undocumented)
 export const areStreamsEqual: (prevStream: LocalVideoStream_2, newStream: LocalVideoStream_2) => boolean;
+
+// @public (undocumented)
+export class AzureCommunicationChatAdapter implements GroupChatAdapter {
+    constructor(chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient);
+    // (undocumented)
+    getState: () => GroupChatState;
+    // (undocumented)
+    loadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
+    // (undocumented)
+    offStateChange: (handler: (state: GroupChatState) => void) => void;
+    // (undocumented)
+    on(event: 'messageReceived', messageReceivedHandler: (message: ChatMessage_2) => void): void;
+    // (undocumented)
+    on(event: 'participantsJoined', participantsJoinedHandler: (participant: ChatParticipant) => void): void;
+    // (undocumented)
+    on(event: 'error', errorHandler: (e: Error) => void): void;
+    // (undocumented)
+    onStateChange: (handler: (state: GroupChatState) => void) => void;
+    // (undocumented)
+    removeParticipant: (userId: string) => Promise<void>;
+    // (undocumented)
+    sendMessage: (content: string) => Promise<void>;
+    // (undocumented)
+    sendReadReceipt: (chatMessageId: string) => Promise<void>;
+    // (undocumented)
+    sendTypingIndicator: () => Promise<void>;
+    // (undocumented)
+    setTopic: (topicName: string) => Promise<void>;
+    // (undocumented)
+    updateAllParticipants: () => Promise<void>;
+}
 
 // @public (undocumented)
 export interface BaseCustomStylesProps {
@@ -93,7 +127,7 @@ export type CallContextType = {
 export const CallControlBar: (props: ControlBarProps & CallControlBarProps & ErrorHandlingProps) => JSX.Element;
 
 // @public (undocumented)
-export const CallControlBarComponent: (props: Pick<ControlBarProps & CallControlBarProps & ErrorHandlingProps, "onErrorCallback" | "children" | "styles" | "onEndCallClick" | "layout">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+export const CallControlBarComponent: (props: Pick<ControlBarProps & CallControlBarProps & ErrorHandlingProps, "children" | "onErrorCallback" | "onEndCallClick" | "styles" | "layout">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
 
 // Warning: (ae-forgotten-export) The symbol "CallControlBarContainerProps" needs to be exported by the entry point index.d.ts
 //
@@ -144,6 +178,11 @@ export interface CallProvider {
 
 // @public (undocumented)
 export const CallProvider: (props: CallProvider & ErrorHandlingProps) => JSX.Element;
+
+// Warning: (ae-forgotten-export) The symbol "GroupChatProps" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export const ChatComposite: (props: GroupChatProps) => JSX.Element;
 
 // @public (undocumented)
 export type ChatConfig = {
@@ -357,10 +396,10 @@ export const COOL_PERIOD_REFRESH_INVERVAL = 1000;
 export const COOL_PERIOD_THRESHOLD: number;
 
 // @public (undocumented)
-export const createAzureCommunicationUserCredential: (token: string, refreshTokenCallback?: (() => Promise<string>) | undefined) => AzureCommunicationTokenCredential;
+export const createAzureCommunicationChatAdapter: (token: string, endpointUrl: string, threadId: string, displayName: string, refreshTokenCallback?: (() => Promise<string>) | undefined) => Promise<AzureCommunicationChatAdapter>;
 
 // @public (undocumented)
-export const createAzureCommunicationUserCredentialBeta: (token: string, refreshTokenCallback?: (() => Promise<string>) | undefined) => AzureCommunicationUserCredential;
+export const createAzureCommunicationUserCredential: (token: string, refreshTokenCallback?: (() => Promise<string>) | undefined) => AzureCommunicationTokenCredential;
 
 // @public (undocumented)
 export const CREATED = 201;
@@ -545,7 +584,7 @@ export type GroupCallClientState = {
 export const GroupCallControlBar: (props: ControlBarProps & GroupCallControlBarProps & ErrorHandlingProps) => JSX.Element;
 
 // @public (undocumented)
-export const GroupCallControlBarComponent: (props: Pick<ControlBarProps & GroupCallControlBarProps & ErrorHandlingProps, "onErrorCallback" | "children" | "styles" | "onEndCallClick" | "compressedMode" | "layout">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+export const GroupCallControlBarComponent: (props: Pick<ControlBarProps & GroupCallControlBarProps & ErrorHandlingProps, "children" | "onErrorCallback" | "onEndCallClick" | "styles" | "compressedMode" | "layout">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
 
 // @public (undocumented)
 export interface GroupCallControlBarProps extends CallControlBarContainerProps {
@@ -562,10 +601,41 @@ export type GroupCallUIState = {
     page: 'configuration' | 'call';
 };
 
-// Warning: (ae-forgotten-export) The symbol "GroupChatProps" needs to be exported by the entry point index.d.ts
+// @public (undocumented)
+export interface GroupChatAdapter {
+    // (undocumented)
+    getState(): GroupChatState;
+    // (undocumented)
+    loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
+    // (undocumented)
+    offStateChange(handler: (state: GroupChatState) => void): void;
+    // (undocumented)
+    on(event: 'messageReceived', messageReceivedHandler: (message: ChatMessage_2) => void): void;
+    // (undocumented)
+    on(event: 'participantsJoined', participantsJoinedHandler: (participant: ChatParticipant) => void): void;
+    // (undocumented)
+    on(event: 'error', errorHandler: (e: Error) => void): void;
+    // (undocumented)
+    onStateChange(handler: (state: GroupChatState) => void): void;
+    // (undocumented)
+    removeParticipant(userId: string): Promise<void>;
+    // (undocumented)
+    sendMessage(content: string): Promise<void>;
+    // (undocumented)
+    sendReadReceipt(chatMessageId: string): Promise<void>;
+    // (undocumented)
+    sendTypingIndicator(): Promise<void>;
+    // (undocumented)
+    setTopic(topicName: string): Promise<void>;
+    // (undocumented)
+    updateAllParticipants(): Promise<void>;
+}
+
+// Warning: (ae-forgotten-export) The symbol "GroupChatUIState" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "GroupChatClientState" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
-export const GroupChat: (props: GroupChatProps) => JSX.Element;
+export type GroupChatState = GroupChatUIState & GroupChatClientState;
 
 // @public (undocumented)
 export const GUID_FOR_INITIAL_TOPIC_NAME = "c774da81-94d5-4652-85c7-6ed0e8dc67e6";
@@ -573,7 +643,7 @@ export const GUID_FOR_INITIAL_TOPIC_NAME = "c774da81-94d5-4652-85c7-6ed0e8dc67e6
 // Warning: (ae-forgotten-export) The symbol "HangupButtonProps" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
-export const HangupButtonComponent: (props: Pick<HangupButtonProps, "onErrorCallback" | "text" | "styles" | "onEndCallClick">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+export const HangupButtonComponent: (props: Pick<HangupButtonProps, "text" | "onErrorCallback" | "onEndCallClick" | "styles">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
 
 // @public (undocumented)
 export const INCOMING = "Incoming";
@@ -582,7 +652,7 @@ export const INCOMING = "Incoming";
 export const IncomingCallControlBar: (props: ControlBarProps & CallControlBarContainerProps & ErrorHandlingProps) => JSX.Element;
 
 // @public (undocumented)
-export const IncomingCallControlBarComponent: (props: Pick<ControlBarProps & CallControlBarContainerProps & ErrorHandlingProps, "onErrorCallback" | "children" | "styles" | "layout">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+export const IncomingCallControlBarComponent: (props: Pick<ControlBarProps & CallControlBarContainerProps & ErrorHandlingProps, "children" | "onErrorCallback" | "styles" | "layout">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
 
 // @public (undocumented)
 export type IncomingCallListener = (event: {
@@ -763,7 +833,7 @@ export const OneToOneCall: (props: OneToOneCallCompositeProps) => JSX.Element;
 export const OutgoingCallControlBar: (props: OutgoingCallControlBarProps & ErrorHandlingProps) => JSX.Element;
 
 // @public (undocumented)
-export const OutgoingCallControlBarComponent: (props: Pick<OutgoingCallControlBarProps & ErrorHandlingProps, "onErrorCallback" | "children" | "styles" | "onEndCallClick" | "layout">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+export const OutgoingCallControlBarComponent: (props: Pick<OutgoingCallControlBarProps & ErrorHandlingProps, "children" | "onErrorCallback" | "onEndCallClick" | "styles" | "layout">) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
 
 // @public (undocumented)
 export interface OutgoingCallControlBarProps extends ControlBarProps, CallControlBarContainerProps {

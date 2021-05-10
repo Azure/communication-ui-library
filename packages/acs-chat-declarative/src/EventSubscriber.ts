@@ -35,10 +35,10 @@ export class EventSubscriber {
     return convertChatMessage({
       id: event.id,
       version: event.version,
-      content: { message: event.content },
+      content: { message: event.message },
       type: event.type,
-      sender: event.sender.user,
-      senderDisplayName: event.sender.displayName,
+      sender: event.sender,
+      senderDisplayName: event.senderDisplayName,
       sequenceId: '', // Note: there is a bug in chatMessageReceived event that it is missing sequenceId
       createdOn: new Date(event.createdOn)
     });
@@ -80,7 +80,7 @@ export class EventSubscriber {
 
   private onParticipantsRemoved = (event: ParticipantsRemovedEvent): void => {
     const participantIds = event.participantsRemoved.map((participant) => {
-      return participant.user.communicationUserId;
+      return participant.id;
     });
     this.chatContext.deleteParticipants(event.threadId, participantIds);
   };
@@ -88,7 +88,7 @@ export class EventSubscriber {
   private onReadReceiptReceived = (event: ReadReceiptReceivedEvent): void => {
     const readReceipt: ChatMessageReadReceipt = {
       ...event,
-      sender: { communicationUserId: event.sender.user.communicationUserId },
+      sender: event.sender,
       readOn: new Date(event.readOn)
     };
     this.chatContext.batch(() => {
@@ -109,12 +109,11 @@ export class EventSubscriber {
   };
 
   private onChatThreadCreated = (event: ChatThreadCreatedEvent): void => {
-    const threadInfo = {
-      id: event.threadId,
+    const properties = {
       topic: event.properties.topic
     };
-    if (!this.chatContext.createThreadIfNotExist(event.threadId, threadInfo)) {
-      this.chatContext.updateThread(event.threadId, threadInfo);
+    if (!this.chatContext.createThreadIfNotExist(event.threadId, properties)) {
+      this.chatContext.updateThread(event.threadId, properties);
     }
   };
 
@@ -123,11 +122,7 @@ export class EventSubscriber {
   };
 
   private onChatThreadPropertiesUpdated = (event: ChatThreadPropertiesUpdatedEvent): void => {
-    const threadInfo = {
-      id: event.threadId,
-      topic: event.properties.topic
-    };
-    this.chatContext.updateThread(event.threadId, threadInfo);
+    this.chatContext.updateThread(event.threadId, { topic: event.properties.topic });
   };
 
   public subscribe = (): void => {

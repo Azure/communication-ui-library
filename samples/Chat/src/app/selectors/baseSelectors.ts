@@ -2,13 +2,13 @@
 // Licensed under the MIT license.
 
 import { ChatClientState } from '@azure/acs-chat-declarative';
-import { BaseSelectorProps } from '@azure/acs-chat-selector';
+import { BaseSelectorProps, communicationIdentifierToString } from '@azure/acs-chat-selector';
 import { ChatParticipant } from '@azure/communication-chat';
 
-export const getUserId = (state: ChatClientState): string => state.userId;
+export const getUserId = (state: ChatClientState): string => communicationIdentifierToString(state.userId);
 
 export const getTopicName = (state: ChatClientState, props: BaseSelectorProps): string => {
-  return state.threads.get(props.threadId)?.threadInfo?.topic || '';
+  return state.threads.get(props.threadId)?.properties?.topic || '';
 };
 
 export const getParticipants = (state: ChatClientState, props: BaseSelectorProps): Map<string, ChatParticipant> =>

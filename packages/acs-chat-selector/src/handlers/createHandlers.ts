@@ -16,7 +16,7 @@ export type DefaultHandlers = {
 };
 
 // Keep all these handlers the same instance(unless client changed) to avoid re-render
-const createDefaultHandlers = memoizeOne(
+export const createDefaultHandlers = memoizeOne(
   (chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient): DefaultHandlers => {
     const messageIterator = chatThreadClient.listMessages();
     return {
@@ -40,7 +40,7 @@ const createDefaultHandlers = memoizeOne(
         });
       },
       updateThreadTopicName: async (topicName: string) => {
-        await chatThreadClient.updateThread({ topic: topicName });
+        await chatThreadClient.updateTopic(topicName);
       },
       onLoadPreviousChatMessages: async (messagesToLoad: number) => {
         let remainingMessagesToGet = messagesToLoad;

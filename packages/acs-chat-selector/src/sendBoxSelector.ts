@@ -11,6 +11,8 @@ import * as reselect from 'reselect';
 // @ts-ignore
 import { ChatClientState } from '@azure/acs-chat-declarative';
 // @ts-ignore
+import { CommunicationIdentifierKind } from '@azure/communication-common';
+// @ts-ignore
 import { ChatBaseSelectorProps } from './baseSelectors';
 
 export const sendBoxSelector = createSelector(
