@@ -194,11 +194,15 @@ export interface GroupChatAdapter {
     updateAllParticipants(): Promise<void>;
 }
 
-// Warning: (ae-forgotten-export) The symbol "GroupChatUIState" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "GroupChatClientState" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
 export type GroupChatState = GroupChatUIState & GroupChatClientState;
+
+// @public (undocumented)
+export type GroupChatUIState = {
+    error?: Error;
+};
 
 // @public (undocumented)
 export type IncomingCallListener = (event: {
