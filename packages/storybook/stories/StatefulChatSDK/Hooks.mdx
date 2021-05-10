@@ -72,7 +72,7 @@ useSelector allows you to provide your own [selector]() function that maps the s
 
 ### When to call useSelector() <a name="useSelector"></a>
 
-By default, if you are satisfied with props we prepared for component library, all you need is to call usePropsFor() to power our component. But sometimes you might want to call use selector instead when:
+By default, if you are satisfied with props we prepared for component library, all you need is to call usePropsFor() to power our component. If just one or two props need to be filtered or modified, directly overriding properties from return value of usePropsFor is recommended. But sometimes you might want to call use selector instead when:
 
 1. Override the way how it generates props from state
 2. Write your own components (which we don't provide dedicated selectors for it)
