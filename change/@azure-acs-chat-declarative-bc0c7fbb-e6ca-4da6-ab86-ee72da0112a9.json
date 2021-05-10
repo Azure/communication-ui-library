@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add cleaning up timer for typingIndicator every 8 secs",
+  "packageName": "@azure/acs-chat-declarative",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}
