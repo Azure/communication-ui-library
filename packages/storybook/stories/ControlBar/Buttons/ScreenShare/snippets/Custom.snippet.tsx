@@ -1,5 +1,5 @@
 import { ScreenShareButton } from '@azure/communication-react';
-import { IButtonProps, Icon, Label, Stack } from '@fluentui/react';
+import { IButtonProps, Icon, Label } from '@fluentui/react';
 import React from 'react';
 
 export const CustomScreenShareButtonExample: () => JSX.Element = () => {
@@ -30,7 +30,7 @@ export const CustomScreenShareButtonExample: () => JSX.Element = () => {
   };
 
   return (
-    <Stack horizontal horizontalAlign={'center'}>
+    <>
       <ScreenShareButton
         checked={true}
         showLabel={true}
@@ -38,6 +38,6 @@ export const CustomScreenShareButtonExample: () => JSX.Element = () => {
         onRenderText={customOnRenderText}
       />
       <ScreenShareButton showLabel={true} onRenderIcon={customOnRenderIcon} onRenderText={customOnRenderText} />
-    </Stack>
+    </>
   );
 };

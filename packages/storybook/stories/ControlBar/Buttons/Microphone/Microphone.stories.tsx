@@ -8,14 +8,13 @@ import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
-import { CustomMicrophoneButtonExample } from './snippets/CustomMicrophoneButton.snippet';
-import { MicrophoneButtonExample } from './snippets/MicrophoneButton.snippet';
-import { MicrophoneButtonWithLabelExample } from './snippets/MicrophoneButtonWithLabel.snippet';
+import { CustomMicrophoneButtonExample } from './snippets/Custom.snippet';
+import { MicrophoneButtonExample } from './snippets/Default.snippet';
+import { MicrophoneButtonWithLabelExample } from './snippets/WithLabel.snippet';
 
-const CustomMicrophoneButtonExampleText = require('!!raw-loader!./snippets/CustomMicrophoneButton.snippet.tsx').default;
-const MicrophoneButtonExampleText = require('!!raw-loader!./snippets/MicrophoneButton.snippet.tsx').default;
-const MicrophoneButtonWithLabelExampleText = require('!!raw-loader!./snippets/MicrophoneButtonWithLabel.snippet.tsx')
-  .default;
+const CustomMicrophoneButtonExampleText = require('!!raw-loader!./snippets/Custom.snippet.tsx').default;
+const MicrophoneButtonExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
+const MicrophoneButtonWithLabelExampleText = require('!!raw-loader!./snippets/WithLabel.snippet.tsx').default;
 
 const importStatement = `
 import { MicrophoneButton } from '@azure/communication-react';

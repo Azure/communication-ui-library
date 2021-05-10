@@ -1,5 +1,5 @@
 import { CameraButton } from '@azure/communication-react';
-import { IButtonProps, Icon, Label, Stack } from '@fluentui/react';
+import { IButtonProps, Icon, Label } from '@fluentui/react';
 import React from 'react';
 
 export const CustomCameraButtonExample: () => JSX.Element = () => {
@@ -30,7 +30,7 @@ export const CustomCameraButtonExample: () => JSX.Element = () => {
   };
 
   return (
-    <Stack horizontal horizontalAlign={'center'}>
+    <>
       <CameraButton
         key={'camera 1'}
         checked={true}
@@ -44,6 +44,6 @@ export const CustomCameraButtonExample: () => JSX.Element = () => {
         onRenderIcon={customOnRenderIcon}
         onRenderText={customOnRenderText}
       />
-    </Stack>
+    </>
   );
 };

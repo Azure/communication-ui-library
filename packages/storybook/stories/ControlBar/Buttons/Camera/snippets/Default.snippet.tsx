@@ -1,12 +1,11 @@
-import { CameraButton } from '@azure/communication-react';
-import { Stack } from '@fluentui/react';
+import { CameraButton, FluentThemeProvider } from '@azure/communication-react';
 import React from 'react';
 
 export const CameraButtonExample: () => JSX.Element = () => {
   return (
-    <Stack horizontal horizontalAlign={'center'}>
+    <FluentThemeProvider>
       <CameraButton key={'camBtn1'} checked={true} />
       <CameraButton key={'camBtn2'} />
-    </Stack>
+    </FluentThemeProvider>
   );
 };
