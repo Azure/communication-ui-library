@@ -132,6 +132,15 @@ export type ChatBaseSelectorProps = {
 // @public (undocumented)
 export const chatClientDeclaratify: (chatClient: ChatClient, chatConfig: ChatConfig) => DeclarativeChatClient;
 
+// @public
+export const ChatClientProvider: (props: ChatClientProviderProps) => JSX.Element;
+
+// @public (undocumented)
+export type ChatClientProviderProps = {
+    children: React_2.ReactNode;
+    chatClient: DeclarativeChatClient_2;
+};
+
 // @public (undocumented)
 export type ChatClientState = {
     userId: CommunicationIdentifierKind;
@@ -233,6 +242,15 @@ export const chatParticipantListSelector: reselect.OutputParametricSelector<Chat
 
 // @public (undocumented)
 export const chatThreadClientDeclaratify: (chatThreadClient: ChatThreadClient, context: ChatContext) => ChatThreadClient;
+
+// @public
+export const ChatThreadClientProvider: (props: ChatThreadClientProviderProps) => JSX.Element;
+
+// @public (undocumented)
+export type ChatThreadClientProviderProps = {
+    children: React_2.ReactNode;
+    chatThreadClient: ChatThreadClient;
+};
 
 // @public (undocumented)
 export type ChatThreadClientState = {

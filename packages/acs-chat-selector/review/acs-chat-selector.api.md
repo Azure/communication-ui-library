@@ -11,6 +11,7 @@ import { ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
 import { Message } from 'react-components';
+import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
 import * as reselect from 'reselect';
 import { TypingIndicatorEvent } from '@azure/acs-chat-declarative';
@@ -24,6 +25,15 @@ export type ChatBaseSelectorProps = {
     threadId: string;
 };
 
+// @public
+export const ChatClientProvider: (props: ChatClientProviderProps) => JSX.Element;
+
+// @public (undocumented)
+export type ChatClientProviderProps = {
+    children: React_2.ReactNode;
+    chatClient: DeclarativeChatClient;
+};
+
 // @public (undocumented)
 export const chatParticipantListSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     userId: string;
@@ -34,6 +44,15 @@ export const chatParticipantListSelector: reselect.OutputParametricSelector<Chat
     displayName: string;
     chatParticipants: WebUiChatParticipant[];
 }>;
+
+// @public
+export const ChatThreadClientProvider: (props: ChatThreadClientProviderProps) => JSX.Element;
+
+// @public (undocumented)
+export type ChatThreadClientProviderProps = {
+    children: React_2.ReactNode;
+    chatThreadClient: ChatThreadClient;
+};
 
 // @public (undocumented)
 export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
