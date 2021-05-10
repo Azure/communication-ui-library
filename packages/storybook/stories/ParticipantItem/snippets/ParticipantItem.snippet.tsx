@@ -1,5 +1,5 @@
 import { ParticipantItem } from '@azure/communication-react';
-import { IContextualMenuItem, PersonaPresence, Stack } from '@fluentui/react';
+import { IContextualMenuItem, PersonaPresence } from '@fluentui/react';
 import React from 'react';
 
 export const ParticipantItemExample: () => JSX.Element = () => {
