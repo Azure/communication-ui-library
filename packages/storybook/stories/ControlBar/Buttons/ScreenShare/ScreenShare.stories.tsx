@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { ScreenShareButton } from '@azure/communication-react';
-import { Canvas, Description, Heading, Props, Source, SourceState, Title } from '@storybook/addon-docs/blocks';
+import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import { boolean } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
@@ -34,29 +34,26 @@ const getDocs: () => JSX.Element = () => {
         The default `ScreenShareButton` component shows a ScreenShare icon with no label. The following example displays
         the `ScreenShareButton` with screen sharing enabled and disabled.
       </Description>
-      <Canvas withSource={SourceState.NONE as any}>
+      <Canvas mdxSource={DefaultButtonExampleText}>
         <ScreenShareButtonExample />
       </Canvas>
-      <Source code={DefaultButtonExampleText} />
 
       <Heading>ScreenShare with default label</Heading>
       <Description>
         You can display the button label which, by default, will show below the icon as `Share` or `Stop`.
       </Description>
-      <Canvas withSource={SourceState.NONE as any}>
+      <Canvas mdxSource={ButtonWithLabelExampleText}>
         <ScreenShareButtonWithLabelExample />
       </Canvas>
-      <Source code={ButtonWithLabelExampleText} />
 
       <Heading>Custom ScreenShareButton Styles</Heading>
       <Description>
         You can change the styles of the `ScreenShareButton` as you would customized any Button (styles, primary,
         onRenderIcon, onRenderText, etc... ).
       </Description>
-      <Canvas withSource={SourceState.NONE as any}>
+      <Canvas mdxSource={CustomButtonExampleText}>
         <CustomScreenShareButtonExample />
       </Canvas>
-      <Source code={CustomButtonExampleText} />
 
       <Heading>ScreenShareButton Props</Heading>
       <Description>
