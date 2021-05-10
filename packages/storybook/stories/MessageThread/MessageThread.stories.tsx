@@ -62,7 +62,7 @@ const getDocs: () => JSX.Element = () => {
   return (
     <>
       <Title>MessageThread</Title>
-      <Description of={MessageThread} />
+      <Description of={MessageThreadComponent} />
 
       <Heading>Importing</Heading>
       <Source code={importStatement} />
@@ -137,7 +137,7 @@ const getDocs: () => JSX.Element = () => {
         [Persona](https://developer.microsoft.com/en-us/fluentui#/controls/web/persona) component
       </Description>
       <Heading>Props</Heading>
-      <Props of={MessageThread} />
+      <Props of={MessageThreadComponent} />
     </>
   );
 };
