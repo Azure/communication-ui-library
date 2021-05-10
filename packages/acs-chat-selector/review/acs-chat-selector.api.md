@@ -82,7 +82,7 @@ export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientSta
 
 // @public (undocumented)
 export type CommonProperties<A, B> = {
-    [P in keyof A & keyof B]: A[P] extends B[P] ? (A[P] extends B[P] ? P : never) : never;
+    [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
 
 // @public (undocumented)

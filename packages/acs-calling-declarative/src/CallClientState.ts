@@ -263,6 +263,11 @@ export type DeviceManager = {
    */
   selectedSpeaker?: AudioDeviceInfo;
   /**
+   * Stores the selected camera device info. This is maintained in the proxy
+   * client state.
+   */
+  selectedCamera?: VideoDeviceInfo;
+  /**
    * Stores any cameras data returned from {@Link @azure/communication-calling#DeviceManager.getCameras}.
    */
   cameras: VideoDeviceInfo[];

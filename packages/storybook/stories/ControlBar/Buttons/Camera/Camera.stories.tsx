@@ -85,6 +85,7 @@ export default {
   parameters: {
     docs: {
       page: () => getDocs()
-    }
+    },
+    storyshots: { disable: true }
   }
 } as Meta;

@@ -479,6 +479,14 @@ export class CallContext {
     );
   }
 
+  public setDeviceManagerSelectedCamera(selectedCamera?: VideoDeviceInfo): void {
+    this.setState(
+      produce(this._state, (draft: CallClientState) => {
+        draft.deviceManager.selectedCamera = selectedCamera;
+      })
+    );
+  }
+
   public setDeviceManagerCameras(cameras: VideoDeviceInfo[]): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
