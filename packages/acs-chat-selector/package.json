@@ -38,8 +38,7 @@
     "react": "^16.13.1",
     "react-components": "1.0.0-beta",
     "reselect": "~4.0.0",
-    "memoize-one": "~5.1.1",
-    "react-components": "1.0.0-beta"
+    "memoize-one": "~5.1.1"
   },
   "devDependencies": {
     "@microsoft/api-documenter": "~7.12.11",

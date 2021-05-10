@@ -15,9 +15,9 @@ import { DeclarativeCallClient } from '@azure/acs-calling-declarative';
 import { ReactElement } from 'react';
 import memoizeOne from 'memoize-one';
 
-export type DefaultHandlers = ReturnType<typeof createDefaultHandlers>;
+export type DefaultChatHandlers = ReturnType<typeof createDefaultChatHandlers>;
 
-const createDefaultHandlers = memoizeOne(
+const createDefaultChatHandlers = memoizeOne(
   (
     callClient: DeclarativeCallClient,
     callAgent: CallAgent | undefined,
@@ -144,4 +144,5 @@ export const createDefaultCallingHandlersForComponent = <Props>(
   deviceManager: DeviceManager | undefined,
   call: Call | undefined,
   _Component: (props: Props) => ReactElement | null
-): Common<DefaultHandlers, Props> => createDefaultHandlers(declarativeCallClient, callAgent, deviceManager, call);
+): Common<DefaultChatHandlers, Props> =>
+  createDefaultChatHandlers(declarativeCallClient, callAgent, deviceManager, call);

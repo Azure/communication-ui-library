@@ -4,15 +4,9 @@
 // @ts-ignore
 import { ChatClientState } from '@azure/acs-chat-declarative';
 // @ts-ignore
-import {} from './baseSelectors';
+import { ChatBaseSelectorProps } from './baseSelectors';
 import { CommunicationIdentifierAsKey } from '@azure/acs-chat-declarative';
-import {
-  ChatBaseSelectorProps,
-  communicationIdentifierToString,
-  getUserId,
-  getDisplayName,
-  getParticipants
-} from './baseSelectors';
+import { communicationIdentifierToString, getUserId, getDisplayName, getParticipants } from './baseSelectors';
 import * as reselect from 'reselect';
 import { ChatParticipant } from '@azure/communication-chat';
 import { WebUiChatParticipant } from 'react-components';

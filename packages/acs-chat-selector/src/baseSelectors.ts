@@ -8,6 +8,7 @@ import {
   TypingIndicatorEvent,
   getCommunicationIdentifierAsKey
 } from '@azure/acs-chat-declarative';
+import { CommunicationIdentifier } from '@azure/communication-common';
 import { ChatParticipant, ChatMessageReadReceipt } from '@azure/communication-chat';
 export type ChatBaseSelectorProps = {
   threadId: string;

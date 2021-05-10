@@ -6,7 +6,7 @@ import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
 import { ChatThreadClient } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
 
-export type DefaultHandlers = {
+export type DefaultChatHandlers = {
   onMessageSend: (content: string) => Promise<void>;
   onMessageSeen: (chatMessageId: string) => Promise<void>;
   onTyping: () => Promise<void>;
@@ -16,8 +16,8 @@ export type DefaultHandlers = {
 };
 
 // Keep all these handlers the same instance(unless client changed) to avoid re-render
-export const createDefaultHandlers = memoizeOne(
-  (chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient): DefaultHandlers => {
+export const createDefaultChatHandlers = memoizeOne(
+  (chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient): DefaultChatHandlers => {
     const messageIterator = chatThreadClient.listMessages();
     return {
       onMessageSend: async (content: string) => {
@@ -70,14 +70,14 @@ type Common<A, B> = Pick<A, CommonProperties2<A, B>>;
 // These could be shared functions between Chat and Calling
 export const defaultHandlerCreator = (chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient) => <Props>(
   _: (props: Props) => ReactElement | null
-): Common<DefaultHandlers, Props> => {
-  return createDefaultHandlers(chatClient, chatThreadClient);
+): Common<DefaultChatHandlers, Props> => {
+  return createDefaultChatHandlers(chatClient, chatThreadClient);
 };
 
 export const createDefaultChatHandlersForComponent = <Props>(
   chatClient: DeclarativeChatClient,
   chatThreadClient: ChatThreadClient,
   _: (props: Props) => ReactElement | null
-): Common<DefaultHandlers, Props> => {
-  return createDefaultHandlers(chatClient, chatThreadClient);
+): Common<DefaultChatHandlers, Props> => {
+  return createDefaultChatHandlers(chatClient, chatThreadClient);
 };

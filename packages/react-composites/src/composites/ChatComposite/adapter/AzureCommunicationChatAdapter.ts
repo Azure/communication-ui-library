@@ -2,7 +2,11 @@
 // Licensed under the MIT license.
 
 import { chatClientDeclaratify, ChatClientState, DeclarativeChatClient } from '@azure/acs-chat-declarative';
-import { DefaultHandlers, communicationIdentifierToString, createDefaultHandlers } from '@azure/acs-chat-selector';
+import {
+  DefaultChatHandlers,
+  communicationIdentifierToString,
+  createDefaultChatHandlers
+} from '@azure/acs-chat-selector';
 import { ChatClient, ChatMessage, ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationUserKind } from '@azure/communication-signaling';
 import EventEmitter from 'events';
@@ -62,7 +66,7 @@ export class AzureCommunicationChatAdapter implements GroupChatAdapter {
   private chatClient: DeclarativeChatClient;
   private chatThreadClient: ChatThreadClient;
   private context: GroupChatContext;
-  private handlers: DefaultHandlers;
+  private handlers: DefaultChatHandlers;
 
   constructor(chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient) {
     this.chatClient = chatClient;
@@ -77,7 +81,7 @@ export class AzureCommunicationChatAdapter implements GroupChatAdapter {
       this.context.updateClientState(clientState);
     };
 
-    this.handlers = createDefaultHandlers(chatClient, chatThreadClient);
+    this.handlers = createDefaultChatHandlers(chatClient, chatThreadClient);
 
     this.chatClient.onStateChange(onStateChange);
   }
