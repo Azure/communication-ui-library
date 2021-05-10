@@ -672,13 +672,19 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
 }
 
 // @public (undocumented)
-export const useHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, PropsT>>;
+export const useChatClient: () => StatefulChatClient_2;
+
+// @public (undocumented)
+export const useChatThreadClient: () => ChatThreadClient;
 
 // @public (undocumented)
 export const usePropsFor: <SelectorT extends (state: ChatClientState_2, props: any) => any>(component: React_2.FunctionComponent<any>) => ReturnType<SelectorT>;
 
 // @public (undocumented)
 export const useSelector: <SelectorT extends (state: ChatClientState_2, props: any) => any>(selector: SelectorT, selectorProps?: Parameters<SelectorT>[1] | undefined) => ReturnType<SelectorT>;
+
+// @public (undocumented)
+export const useThreadId: () => string;
 
 // @public
 export interface VideoStreamRendererView {
