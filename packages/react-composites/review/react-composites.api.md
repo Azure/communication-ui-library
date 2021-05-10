@@ -23,7 +23,7 @@ import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { ControlBarProps } from 'react-components';
 import { CreateViewOptions } from '@azure/communication-calling';
-import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
+import { StatefulChatClient } from '@azure/acs-chat-declarative';
 import { DeviceManager } from '@azure/acs-calling-declarative';
 import { DeviceManager as DeviceManager_2 } from '@azure/communication-calling';
 import { Dispatch } from 'react';
@@ -55,7 +55,7 @@ export const areStreamsEqual: (prevStream: LocalVideoStream_2, newStream: LocalV
 
 // @public (undocumented)
 export class AzureCommunicationChatAdapter implements GroupChatAdapter {
-    constructor(chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient);
+    constructor(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient);
     // (undocumented)
     getState: () => GroupChatState;
     // (undocumented)

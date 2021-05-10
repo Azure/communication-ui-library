@@ -17,7 +17,6 @@ import { ChatClient } from '@azure/communication-chat';
 import { ChatClientState as ChatClientState_2 } from '@azure/acs-chat-declarative';
 import { ChatMessage as ChatMessage_2 } from '@azure/communication-chat';
 import { ChatMessageReadReceipt } from '@azure/communication-chat';
-import { ChatMessageWithStatus as ChatMessageWithStatus_2 } from '@azure/acs-chat-declarative';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationIdentifier } from '@azure/communication-common';
@@ -27,7 +26,6 @@ import { CommunicationUserKind } from '@azure/communication-common';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { CreateViewOptions } from '@azure/communication-calling';
 import { DeclarativeCallClient as DeclarativeCallClient_2 } from '@azure/acs-calling-declarative';
-import { DeclarativeChatClient as DeclarativeChatClient_2 } from '@azure/acs-chat-declarative';
 import { DeviceAccess } from '@azure/communication-calling';
 import { DeviceManager as DeviceManager_2 } from '@azure/communication-calling';
 import { HangUpOptions } from '@azure/communication-calling';
@@ -35,7 +33,6 @@ import { IButtonProps } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { MediaStreamType } from '@azure/communication-calling';
-import { Message as Message_2 } from 'react-components';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { PartialTheme } from '@fluentui/react-theme-provider';
 import { PersonaPresence } from '@fluentui/react';
@@ -48,13 +45,12 @@ import * as reselect from 'reselect';
 import { ScalingMode } from '@azure/communication-calling';
 import { SizeValue } from '@fluentui/react-northstar';
 import { StartCallOptions } from '@azure/communication-calling';
+import { StatefulChatClient as StatefulChatClient_2 } from '@azure/acs-chat-declarative';
 import { Theme } from '@fluentui/react-theme-provider';
-import { TypingIndicatorEvent as TypingIndicatorEvent_2 } from '@azure/acs-chat-declarative';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
-import { WebUiChatParticipant as WebUiChatParticipant_2 } from 'react-components';
 
 // @public
 export const answerButtonProps: IButtonProps;
@@ -130,9 +126,6 @@ export type ChatBaseSelectorProps = {
 };
 
 // @public (undocumented)
-export const chatClientDeclaratify: (chatClient: ChatClient, chatConfig: ChatConfig) => DeclarativeChatClient;
-
-// @public (undocumented)
 export type ChatClientState = {
     userId: CommunicationIdentifierKind;
     displayName: string;
@@ -144,56 +137,6 @@ export type ChatConfig = {
     userId: CommunicationIdentifierKind;
     displayName: string;
 };
-
-// @public (undocumented)
-export class ChatContext {
-    // (undocumented)
-    addReadReceipt(threadId: string, readReceipt: ChatMessageReadReceipt): void;
-    // (undocumented)
-    addTypingIndicator(threadId: string, typingIndicator: TypingIndicatorEvent): void;
-    // (undocumented)
-    batch(batchFunc: () => void): void;
-    // (undocumented)
-    createThread(threadId: string, properties?: ChatThreadProperties): void;
-    // (undocumented)
-    createThreadIfNotExist(threadId: string, properties?: ChatThreadProperties): boolean;
-    // (undocumented)
-    deleteLocalMessage(threadId: string, localId: string): boolean;
-    // (undocumented)
-    deleteMessage(threadId: string, id: string): void;
-    // (undocumented)
-    deleteParticipant(threadId: string, participantId: CommunicationIdentifierKind): void;
-    // (undocumented)
-    deleteParticipants(threadId: string, participantIds: CommunicationIdentifierKind[]): void;
-    // (undocumented)
-    deleteThread(threadId: string): void;
-    // (undocumented)
-    getState(): ChatClientState;
-    // (undocumented)
-    offStateChange(handler: (state: ChatClientState) => void): void;
-    // (undocumented)
-    onStateChange(handler: (state: ChatClientState) => void): void;
-    // (undocumented)
-    setChatMessage(threadId: string, message: ChatMessageWithStatus): void;
-    // (undocumented)
-    setChatMessages(threadId: string, messages: Map<string, ChatMessageWithStatus>): void;
-    // (undocumented)
-    setParticipant(threadId: string, participant: ChatParticipant): void;
-    // (undocumented)
-    setParticipants(threadId: string, participants: ChatParticipant[]): void;
-    // (undocumented)
-    setState(state: ChatClientState): void;
-    // (undocumented)
-    setThread(threadId: string, threadState: ChatThreadClientState): void;
-    // (undocumented)
-    updateChatConfig(config: ChatConfig): void;
-    // (undocumented)
-    updateChatMessageContent(threadId: string, messagesId: string, content: string | undefined): void;
-    // (undocumented)
-    updateThread(threadId: string, properties?: ChatThreadProperties): void;
-    // (undocumented)
-    updateThreadTopic(threadId: string, topic?: string): void;
-}
 
 // @public (undocumented)
 export type ChatMessage = Message<'chat'>;
@@ -221,20 +164,6 @@ export type ChatMessageWithStatus = ChatMessage_2 & {
 };
 
 // @public (undocumented)
-export const chatParticipantListSelector: reselect.OutputParametricSelector<ChatClientState_2, ChatBaseSelectorProps, {
-    userId: string;
-    displayName: string;
-    chatParticipants: WebUiChatParticipant_2[];
-}, (res1: string, res2: Map<string, ChatParticipant>, res3: string) => {
-    userId: string;
-    displayName: string;
-    chatParticipants: WebUiChatParticipant_2[];
-}>;
-
-// @public (undocumented)
-export const chatThreadClientDeclaratify: (chatThreadClient: ChatThreadClient, context: ChatContext) => ChatThreadClient;
-
-// @public (undocumented)
 export type ChatThreadClientState = {
     chatMessages: Map<string, ChatMessageWithStatus>;
     participants: Map<CommunicationIdentifierAsKey, ChatParticipant>;
@@ -253,17 +182,6 @@ export type ChatThreadClientState = {
 export type ChatThreadProperties = {
     topic?: string;
 };
-
-// @public (undocumented)
-export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientState_2, ChatBaseSelectorProps, {
-    userId: string;
-    disableReadReceipt: boolean;
-    messages: Message_2<"chat">[];
-}, (res1: string, res2: Map<string, ChatMessageWithStatus_2>, res3: Date, res4: boolean) => {
-    userId: string;
-    disableReadReceipt: boolean;
-    messages: Message_2<"chat">[];
-}>;
 
 // @public
 export type CommonProperties1<A, B> = {
@@ -340,10 +258,13 @@ export const createDefaultCallingHandlersForComponent: <Props>(declarativeCallCl
 }, Props>>;
 
 // @public (undocumented)
-export const createDefaultChatHandlers: (chatClient: DeclarativeChatClient_2, chatThreadClient: ChatThreadClient) => DefaultChatHandlers;
+export const createDefaultChatHandlers: (chatClient: StatefulChatClient_2, chatThreadClient: ChatThreadClient) => DefaultChatHandlers;
 
 // @public (undocumented)
-export const createDefaultChatHandlersForComponent: <Props>(chatClient: DeclarativeChatClient_2, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties2<DefaultChatHandlers, Props>>;
+export const createDefaultChatHandlersForComponent: <Props>(chatClient: StatefulChatClient_2, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties2<DefaultChatHandlers, Props>>;
+
+// @public (undocumented)
+export const createStatefulChatClient: (chatClient: ChatClient, chatConfig: ChatConfig) => StatefulChatClient;
 
 // @public (undocumented)
 export type CustomMessage = Message<'custom'>;
@@ -364,16 +285,6 @@ export interface DeclarativeCallClient extends CallClient {
     startRenderVideo(callId: string, stream: LocalVideoStream | RemoteVideoStream, options?: CreateViewOptions): Promise<void>;
     state: CallClientState;
     stopRenderVideo(callId: string, stream: LocalVideoStream | RemoteVideoStream): void;
-}
-
-// @public (undocumented)
-export interface DeclarativeChatClient extends ChatClient {
-    // (undocumented)
-    offStateChange(handler: (state: ChatClientState) => void): void;
-    // (undocumented)
-    onStateChange(handler: (state: ChatClientState) => void): void;
-    // (undocumented)
-    state: ChatClientState;
 }
 
 // @public (undocumented)
@@ -678,22 +589,21 @@ export interface SendBoxProps {
 }
 
 // @public (undocumented)
-export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState_2, ChatBaseSelectorProps, {
-    displayName: string;
-    userId: string;
-    disabled: boolean;
-}, (res1: Date, res2: string, res3: string) => {
-    displayName: string;
-    userId: string;
-    disabled: boolean;
-}>;
-
-// @public (undocumented)
 export interface SendBoxStylesProps extends BaseCustomStylesProps {
     sendMessageIcon?: IStyle;
     sendMessageIconContainer?: IStyle;
     systemMessage?: IStyle;
     textField?: IStyle;
+}
+
+// @public (undocumented)
+export interface StatefulChatClient extends ChatClient {
+    // (undocumented)
+    offStateChange(handler: (state: ChatClientState) => void): void;
+    // (undocumented)
+    onStateChange(handler: (state: ChatClientState) => void): void;
+    // (undocumented)
+    state: ChatClientState;
 }
 
 // @public
@@ -738,17 +648,19 @@ export interface TypingIndicatorProps {
 }
 
 // @public (undocumented)
-export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClientState_2, ChatBaseSelectorProps, {
-    typingUsers: WebUiChatParticipant_2[];
-}, (res1: TypingIndicatorEvent_2[], res2: Map<string, ChatParticipant>, res3: string) => {
-    typingUsers: WebUiChatParticipant_2[];
-}>;
-
-// @public (undocumented)
 export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
 }
+
+// @public (undocumented)
+export const useHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties2<DefaultChatHandlers, PropsT>>;
+
+// @public (undocumented)
+export const usePropsFor: <SelectorT extends (state: ChatClientState_2, props: any) => any>(component: React_2.FunctionComponent<any>) => ReturnType<SelectorT>;
+
+// @public (undocumented)
+export const useSelector: <SelectorT extends (state: ChatClientState_2, props: any) => any>(selector: SelectorT, selectorProps?: Parameters<SelectorT>[1] | undefined) => ReturnType<SelectorT>;
 
 // @public
 export interface VideoStreamRendererView {

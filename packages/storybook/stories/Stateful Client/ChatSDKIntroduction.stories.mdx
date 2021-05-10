@@ -30,20 +30,20 @@ npm i --save ./{path to @azure/acs-chat-declarative tarball}
 
 ```tsx
 import { ChatClient } from '@azure/communication-chat';
-import { chatClientDeclaratify } from '@azure/acs-chat-declarative';
+import { createStatefulChatClient } from '@azure/acs-chat-declarative';
 import { AzureCommunicationTokenCredential } from "@azure/communication-common";
 
 const endpointUrl = '<ENDPOINT>';
 const userAccessToken = '<USER_ACCESS_TOKEN>';
 const tokenCredential = new AzureCommunicationTokenCredential(userAccessToken);
 
-const declarativeChatClient = chatClientDeclaratify(
+const StatefulChatClient = createStatefulChatClient(
   new ChatClient(endpointUrl, tokenCredential, { userId, displayName }
 )
 
-// You can then use the `declarativeChatClient` in the same way as a `ChatClient` with a slight variation.
+// You can then use the `StatefulChatClient` in the same way as a `ChatClient` with a slight variation.
 // Details about the variation in usage are documented below under `Usage` section.
-const chatThreadClient = await declarativeChatClient.createChatThread({});
+const chatThreadClient = await StatefulChatClient.createChatThread({});
 ```
 
 ## State Management
@@ -58,10 +58,10 @@ const onStateChange = (state: ChatClientState): void => {
 };
 
 // Subscribe to state changes
-declarativeChatClient.onStateChange(onStateChange);
+StatefulChatClient.onStateChange(onStateChange);
 
 // Unsubscribe to state changes
-declarativeChatClient.offStateChange(onStateChange);
+StatefulChatClient.offStateChange(onStateChange);
 ```
 
 ## Usage
@@ -80,7 +80,7 @@ const onStateChange = (state: ChatClientState): void => {
 };
 
 // Subscribe to state changes
-declarativeChatClient.onStateChange(onStateChange);
+StatefulChatClient.onStateChange(onStateChange);
 
 // Call client methods
 // The topic update here will automatically trigger the console.log in the state change listener.

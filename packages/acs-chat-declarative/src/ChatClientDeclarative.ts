@@ -9,22 +9,22 @@ import { chatThreadClientDeclaratify } from './ChatThreadClientDeclarative';
 import { createDecoratedListThreads } from './iterators/createDecoratedListThreads';
 import { ChatConfig } from './types/ChatConfig';
 
-export interface DeclarativeChatClient extends ChatClient {
+export interface StatefulChatClient extends ChatClient {
   state: ChatClientState;
   onStateChange(handler: (state: ChatClientState) => void): void;
   offStateChange(handler: (state: ChatClientState) => void): void;
 }
 
-export interface DeclarativeChatClientWithPrivateProps extends DeclarativeChatClient {
+export interface StatefulChatClientWithPrivateProps extends StatefulChatClient {
   context: ChatContext;
   eventSubscriber: EventSubscriber | undefined;
 }
 
 const proxyChatClient: ProxyHandler<ChatClient> = {
-  get: function <P extends keyof DeclarativeChatClientWithPrivateProps>(
+  get: function <P extends keyof StatefulChatClientWithPrivateProps>(
     chatClient: ChatClient,
     prop: P,
-    receiver: DeclarativeChatClientWithPrivateProps
+    receiver: StatefulChatClientWithPrivateProps
   ) {
     // skip receiver.context call to avoid recursive bugs
     if (prop === 'context') {
@@ -90,7 +90,7 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
   }
 };
 
-export const chatClientDeclaratify = (chatClient: ChatClient, chatConfig: ChatConfig): DeclarativeChatClient => {
+export const createStatefulChatClient = (chatClient: ChatClient, chatConfig: ChatConfig): StatefulChatClient => {
   const context = new ChatContext();
   let eventSubscriber: EventSubscriber;
 
@@ -123,5 +123,5 @@ export const chatClientDeclaratify = (chatClient: ChatClient, chatConfig: ChatCo
     configurable: false,
     value: (handler: (state: ChatClientState) => void) => context?.offStateChange(handler)
   });
-  return proxy as DeclarativeChatClient;
+  return proxy as StatefulChatClient;
 };
