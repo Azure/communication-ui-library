@@ -14,7 +14,7 @@ export type GroupChatProps = {
   options?: GroupChatOptions;
 };
 
-type GroupChatOptions = {
+export type GroupChatOptions = {
   sendBoxMaxLength?: number; // Limit max send box length, when change viewport size
   // messagesPerPage?: number; // Number of messages per page - smaller for better perf
   // supportNewline: boolean; // Whether to support new line (shift+enter) in textArea, disable until ACS backend supports line switch
