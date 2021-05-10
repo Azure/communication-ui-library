@@ -26,7 +26,7 @@ const getDocs: () => JSX.Element = () => {
         be used in our video grid layouts.
       </Description>
       <Description>
-        Note: In the code example, all `%` characters wer replaced by their unicode value `\u0025` due to URI malformed
+        Note: In the code example, all `%` characters were replaced by their unicode value `\u0025` due to URI malformed
         issue when loading the storybook snippets
       </Description>
       <Canvas mdxSource={LocalPreviewExampleText}>
