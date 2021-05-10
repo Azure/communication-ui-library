@@ -3,4 +3,3 @@
 
 export * from './themes';
 export * from './FluentThemeProvider';
-export * from './SwitchableFluentThemeProvider';

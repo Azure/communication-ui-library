@@ -49,7 +49,8 @@
     "prettier:check": "prettier --check --config ../../.prettierrc \"**/*.js\" \"**/*.ts\"",
     "lint": "eslint \"*/**/*.{ts,tsx}\"",
     "lint:fix": "npm run lint -- --fix",
-    "lint:quiet": "npm run lint -- --quiet"
+    "lint:quiet": "npm run lint -- --quiet",
+    "postpack": "copyfiles -E \"./*.tgz\" private-preview"
   },
   "devDependencies": {
     "@microsoft/api-documenter": "~7.12.11",

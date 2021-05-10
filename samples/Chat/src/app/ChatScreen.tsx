@@ -5,13 +5,17 @@ import React, { useEffect, useRef, useState } from 'react';
 import { chatScreenBottomContainerStyle, chatScreenContainerStyle } from './styles/ChatScreen.styles';
 import { Stack } from '@fluentui/react';
 import { onRenderAvatar } from './Avatar';
-import { useChatClient, useChatThreadClient, useThreadId } from 'react-composites';
 import { ChatHeader } from './ChatHeader';
 import { ChatArea } from './ChatArea';
 import { SidePanel, SidePanelTypes } from './SidePanel';
-import { useSelector } from './hooks/useSelector';
-import { chatParticipantListSelector } from '@azure/acs-chat-selector';
-import { useHandlers } from './hooks/useHandlers';
+import {
+  chatParticipantListSelector,
+  useChatClient,
+  useChatThreadClient,
+  useHandlers,
+  useSelector,
+  useThreadId
+} from '@azure/acs-chat-selector';
 import { chatHeaderSelector } from './selectors/chatHeaderSelector';
 
 // These props are passed in when this component is referenced in JSX and not found in context
@@ -35,7 +39,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   // Updates the thread state and populates attributes like topic, id, createdBy etc.
   useEffect(() => {
-    chatClient.getChatThread(threadId);
+    chatClient.getChatThreadClient(threadId).getProperties();
     // eslint-disable-next-line
   }, []);
 
