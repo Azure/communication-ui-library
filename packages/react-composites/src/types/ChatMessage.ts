@@ -33,7 +33,7 @@ export type CustomMessagePayload = {
 
 export type MessageTypes = 'chat' | 'system' | 'custom';
 
-export type Message<T extends MessageTypes> = {
+type Message<T extends MessageTypes> = {
   type: T;
   payload: T extends 'chat' ? ChatMessagePayload : T extends 'system' ? SystemMessagePayload : CustomMessagePayload;
 };
