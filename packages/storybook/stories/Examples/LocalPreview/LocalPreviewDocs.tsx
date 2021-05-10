@@ -22,7 +22,7 @@ export const getDocs: () => JSX.Element = () => {
         be used in our video grid layouts.
       </Description>
       <Source code={LocalPreviewExampleText} />
-      <Canvas withSource="none">
+      <Canvas withSource={'none' as any}>
         <div style={{ height: '17.188rem' }}>
           <LocalPreviewExample isVideoAvailable={true} isCameraEnabled={true} isMicrophoneEnabled={true} />
         </div>

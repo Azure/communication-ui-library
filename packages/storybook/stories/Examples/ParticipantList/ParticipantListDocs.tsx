@@ -22,7 +22,7 @@ export const getDocs: () => JSX.Element = () => {
         a container like shown in the code below.
       </Description>
       <Source code={BasicParticipantListExampleText} />
-      <Canvas withSource="none">
+      <Canvas withSource={'none' as any}>
         <BasicParticipantListExample />
       </Canvas>
 
@@ -37,7 +37,7 @@ export const getDocs: () => JSX.Element = () => {
       </Description>
       <Source code={InteractiveParticipantListExampleText} />
 
-      <Canvas withSource="none">
+      <Canvas withSource={'none' as any}>
         <InteractiveParticipantListExample />
       </Canvas>
     </>

@@ -27,13 +27,13 @@ export const getDocs: () => JSX.Element = () => {
       </Description>
 
       <Heading>OneToOne Call Layout</Heading>
-      <Canvas withSource={SourceState.NONE}>
+      <Canvas withSource={SourceState.NONE as any}>
         <OneToOneCallLayoutExample />
       </Canvas>
       <Source code={OneToOneCallLayoutExampleText} />
 
       <Heading>Screenshare Layout</Heading>
-      <Canvas withSource={SourceState.NONE}>
+      <Canvas withSource={SourceState.NONE as any}>
         <ScreenShareLayoutExample />
       </Canvas>
       <Source code={ScreenShareLayoutExampleText} />
