@@ -14,7 +14,33 @@ import {
   COMPOSITE_STRING_REQUIREDCONNECTIONSTRING
 } from '../CompositeStringUtils';
 import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE, COMPOSITE_FOLDER_PREFIX } from '../constants';
-import { getDocs } from './GroupCallCompositeDocs';
+import { Title, Description, Heading, Source, Props } from '@storybook/addon-docs/blocks';
+
+const groupCallCompositeExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
+
+const importStatement = `
+  import { GroupCall } from 'react-composites';
+  import { v1 as createGUID } from 'uuid';
+  import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-identity';
+`;
+
+const getDocs: () => JSX.Element = () => {
+  return (
+    <>
+      <Title>GroupCall</Title>
+      <Description>GroupCall is an one-stop component that you can make ACS Group Call running.</Description>
+
+      <Heading>Importing</Heading>
+      <Source code={importStatement} />
+
+      <Heading>Example Code</Heading>
+      <Source code={groupCallCompositeExampleText} />
+
+      <Heading>Props</Heading>
+      <Props of={GroupCallComposite} />
+    </>
+  );
+};
 
 export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/Group Call`,
