@@ -69,7 +69,6 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
     }
     const screenShareStream = participantWithScreenShare?.screenShareStream;
     const videoStream = participantWithScreenShare?.videoStream;
-    console.log(participantWithScreenShare);
     if (screenShareStream?.isAvailable && !screenShareStream?.videoStreamRendererView) {
       onRenderView(screenShareStream, {
         scalingMode: 'Fit'
