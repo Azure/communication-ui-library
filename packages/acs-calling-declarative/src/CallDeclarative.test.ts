@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { CallerInfo } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
@@ -27,7 +28,7 @@ describe('declarative call', () => {
       return Promise.resolve();
     };
 
-    const context = new CallContext();
+    const context = new CallContext('');
     context.setCall(convertSdkCallToDeclarativeCall(mockCall));
 
     const declarativeCall = callDeclaratify(mockCall, context);

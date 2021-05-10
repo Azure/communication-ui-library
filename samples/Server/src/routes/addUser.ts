@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { ChatClient } from '@azure/communication-chat';
 import * as express from 'express';
@@ -19,10 +20,10 @@ router.post('/:threadId', async function (req, res, next) {
   const chatClient = new ChatClient(getEnvUrl(), moderatorCredential);
   const chatThreadClient = await chatClient.getChatThreadClient(threadId);
 
-  await chatThreadClient.addMembers({
-    members: [
+  await chatThreadClient.addParticipants({
+    participants: [
       {
-        user: { communicationUserId: addUserParam.Id },
+        id: { communicationUserId: addUserParam.Id },
         displayName: addUserParam.DisplayName
       }
     ]

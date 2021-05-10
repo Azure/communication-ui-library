@@ -1,11 +1,23 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import {
   Call,
   CallAgent,
+  CallApiFeature,
+  CallFeatureFactoryType,
   IncomingCall,
   LocalVideoStream,
+  PropertyChangedEvent,
+  RecordingCallFeature,
   RemoteParticipant,
-  RemoteVideoStream
+  RemoteVideoStream,
+  TranscriptionCallFeature,
+  Transfer,
+  TransferCallFeature,
+  TransferRequestedEvent,
+  TransferToParticipant,
+  TransferToParticipantOptions
 } from '@azure/communication-calling';
 import EventEmitter from 'events';
 
@@ -47,9 +59,47 @@ export class MockCommunicationUserCredential {
   public dispose(): void {}
 }
 
-export function addMockEmitter(
-  object: MockCall | MockCallAgent | MockRemoteParticipant | MockRemoteVideoStream | MockIncomingCall
-): any {
+export class MockRecordingCallFeatureImpl implements RecordingCallFeature {
+  public name = 'Recording';
+  public isRecordingActive = false;
+  public emitter = new EventEmitter();
+  on(event: 'isRecordingActiveChanged', listener: PropertyChangedEvent): void {
+    this.emitter.on(event, listener);
+  }
+  off(event: 'isRecordingActiveChanged', listener: PropertyChangedEvent): void {
+    this.emitter.off(event, listener);
+  }
+}
+
+export class MockTransferCallFeatureImpl implements TransferCallFeature {
+  public name = 'Transfer';
+  public emitter = new EventEmitter();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  transfer(target: TransferToParticipant, transferOptions?: TransferToParticipantOptions): Transfer {
+    throw new Error('Method not implemented.');
+  }
+  on(event: 'transferRequested', listener: TransferRequestedEvent): void {
+    this.emitter.on(event, listener);
+  }
+  off(event: 'transferRequested', listener: TransferRequestedEvent): void {
+    this.emitter.off(event, listener);
+  }
+}
+
+export class MockTranscriptionCallFeatureImpl implements TranscriptionCallFeature {
+  public name = 'Transcription';
+  public isTranscriptionActive = false;
+  public emitter = new EventEmitter();
+  on(event: 'isTranscriptionActiveChanged', listener: PropertyChangedEvent): void {
+    this.emitter.on(event, listener);
+  }
+  off(event: 'isTranscriptionActiveChanged', listener: PropertyChangedEvent): void {
+    this.emitter.off(event, listener);
+  }
+}
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function addMockEmitter(object: any): any {
   object.emitter = new EventEmitter();
   object.on = (event: any, listener: any): void => {
     object.emitter.on(event, listener);
@@ -67,7 +117,8 @@ export function createMockCall(mockCallId: string): MockCall {
   const mockCall = {
     id: mockCallId,
     remoteParticipants: [] as ReadonlyArray<RemoteParticipant>,
-    localVideoStreams: [] as ReadonlyArray<LocalVideoStream>
+    localVideoStreams: [] as ReadonlyArray<LocalVideoStream>,
+    api: createMockApiFeatures(new Map())
   } as MockCall;
   return addMockEmitter(mockCall);
 }
@@ -88,6 +139,38 @@ export function createMockIncomingCall(mockCallId: string): MockIncomingCall {
 export function createMockRemoteVideoStream(mockIsAvailable: boolean): MockRemoteVideoStream {
   const mockRemoteVideoStream = { isAvailable: mockIsAvailable } as MockRemoteVideoStream;
   return addMockEmitter(mockRemoteVideoStream);
+}
+
+/**
+ * Creates a function equivalent to Call.api. The api() generated will use the passed in cache to return the feature
+ * objects as defined in the cache. For any undefined feature not in cache, it will return a generic object. Containing
+ * properties of all features. Note that this generic object is instanciated every call whereas the cache objects are
+ * reused on repeated calls.
+ *
+ * @param cache
+ * @returns
+ */
+export function createMockApiFeatures(
+  cache: Map<CallFeatureFactoryType<any>, CallApiFeature>
+): <FeatureT extends CallApiFeature>(cls: CallFeatureFactoryType<FeatureT>) => FeatureT {
+  return <FeatureT extends CallApiFeature>(cls: CallFeatureFactoryType<FeatureT>): FeatureT => {
+    const feature = cache.get(cls);
+    if (feature) {
+      return feature as FeatureT;
+    } else {
+      // Default one if none provided
+      const generic = addMockEmitter({
+        name: 'Default',
+        isRecordingActive: false,
+        isTranscriptionActive: false,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        transfer(target: TransferToParticipant, transferOptions?: TransferToParticipantOptions): Transfer {
+          throw new Error('Method not implemented.');
+        }
+      });
+      return generic;
+    }
+  };
 }
 
 function waitMilliseconds(duration: number): Promise<void> {

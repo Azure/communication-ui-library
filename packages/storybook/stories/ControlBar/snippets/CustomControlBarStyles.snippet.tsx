@@ -1,12 +1,11 @@
-import React from 'react';
 import {
-  FluentThemeProvider,
+  CameraButton,
   ControlBar,
-  audioButtonProps,
-  hangupButtonProps,
-  videoButtonProps
-} from '@azure/communication-ui';
-import { DefaultButton } from '@fluentui/react';
+  EndCallButton,
+  FluentThemeProvider,
+  MicrophoneButton
+} from '@azure/communication-react';
+import React from 'react';
 
 export const CustomControlBarStylesExample: () => JSX.Element = () => {
   const customStyles = {
@@ -21,9 +20,9 @@ export const CustomControlBarStylesExample: () => JSX.Element = () => {
   return (
     <FluentThemeProvider>
       <ControlBar layout={'horizontal'} styles={customStyles}>
-        <DefaultButton {...videoButtonProps} />
-        <DefaultButton {...audioButtonProps} />
-        <DefaultButton {...hangupButtonProps} />
+        <CameraButton />
+        <MicrophoneButton />
+        <EndCallButton />
       </ControlBar>
     </FluentThemeProvider>
   );

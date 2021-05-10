@@ -1,13 +1,14 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import React from 'react';
-import { OneToOneCall } from '@azure/communication-ui';
+import { OneToOneCall } from 'react-composites';
 
 const importStatement = `
-import { OneToOneCall } from '@azure/communication-ui';
+import { OneToOneCall } from 'react-composites';
 import { Provider, teamsTheme } from '@fluentui/react-northstar';
-import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-administration';
+import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-identity';
 `;
 
 const exampleCode = `
@@ -31,7 +32,7 @@ const createUserToken = async (connectionString: string): Promise<CommunicationU
   return token;
 };
 
-export const OneToOneCallCompositeComponent: () => JSX.Element = () => {
+export const OneToOneCallComposite: () => JSX.Element = () => {
   const [token, setToken] = useState<string>('GENERATED_TOKEN_USING_createUserToken()');
   const [userId, setUserId] = useState<string>('CALLEE_ID');
 

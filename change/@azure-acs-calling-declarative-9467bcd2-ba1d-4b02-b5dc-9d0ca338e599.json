@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add transcription notice capability to Calling Declarative",
+  "packageName": "@azure/acs-calling-declarative",
+  "email": "allenhwang@microsoft.com",
+  "dependentChangeType": "patch"
+}

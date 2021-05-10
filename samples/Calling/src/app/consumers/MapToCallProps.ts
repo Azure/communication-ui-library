@@ -1,7 +1,8 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { CallState, HangUpOptions } from '@azure/communication-calling';
-import { useCallAgent, useGroupCall, useCallContext, useCallingContext } from '@azure/communication-ui';
+import { useCallAgent, useGroupCall, useCallContext, useCallingContext } from 'react-composites';
 
 export type GroupCallContainerProps = {
   callAgentSubscribed: boolean;

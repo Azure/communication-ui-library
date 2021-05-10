@@ -1,11 +1,12 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { useMemo } from 'react';
 import {
   convertSdkRemoteParticipantToGalleryParticipant,
   useRemoteVideoStreamRenderer,
   ParticipantStream
-} from '@azure/communication-ui';
+} from 'react-composites';
 import { ScalingMode } from '@azure/communication-calling';
 
 export type ScreenShareContainerProps = {

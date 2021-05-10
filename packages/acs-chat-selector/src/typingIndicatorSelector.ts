@@ -1,9 +1,12 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 // @ts-ignore
 import { ChatClientState } from '@azure/acs-chat-declarative';
+import { CommunicationIdentifierAsKey, getCommunicationIdentifierAsKey } from '@azure/acs-chat-declarative';
 // @ts-ignore
-import { BaseSelectorProps, getTypingIndicators, getParticipants, getUserId } from './baseSelectors';
+import { BaseSelectorProps } from './baseSelectors';
+import { communicationIdentifierToString, getTypingIndicators, getParticipants, getUserId } from './baseSelectors';
 import * as reselect from 'reselect';
 import { ChatParticipant } from '@azure/communication-chat';
 import { TypingIndicator } from '@azure/acs-chat-declarative';
@@ -16,35 +19,39 @@ const filterTypingIndicators = (typingIndicators: TypingIndicator[], userId: str
   const date8SecondsAgo = new Date(Date.now() - MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS);
   for (let i = typingIndicators.length - 1; i >= 0; i--) {
     const typingIndicator = typingIndicators[i];
-    if (typingIndicator.sender.user.communicationUserId === userId) {
+    if (communicationIdentifierToString(typingIndicator.sender) === userId) {
       continue;
     }
     if (typingIndicator.receivedOn < date8SecondsAgo) {
-      // assuming typingIndicators is ordered from oldest to newest so we don't need to check the rest
-      break;
-    }
-    if (seen.has(typingIndicator.sender.user.communicationUserId)) {
       continue;
     }
-    seen.add(typingIndicator.sender.user.communicationUserId);
+    if (seen.has(getCommunicationIdentifierAsKey(typingIndicator.sender))) {
+      continue;
+    }
+    seen.add(getCommunicationIdentifierAsKey(typingIndicator.sender));
     filteredTypingIndicators.push(typingIndicator);
   }
   return filteredTypingIndicators;
 };
 
 const convertSdkTypingIndicatorsToWebUiChatParticipants = (
-  typingIndicators: TypingIndicator[]
+  typingIndicators: TypingIndicator[],
+  participants: Map<string, ChatParticipant>
 ): WebUiChatParticipant[] => {
   return typingIndicators.map((typingIndicator) => ({
-    userId: typingIndicator.sender.user.communicationUserId,
-    displayName: typingIndicator.sender.displayName
+    userId: communicationIdentifierToString(typingIndicator.sender),
+    displayName: participants.get(getCommunicationIdentifierAsKey(typingIndicator.sender))?.displayName
   }));
 };
 
 export const typingIndicatorSelector = reselect.createSelector(
   [getTypingIndicators, getParticipants, getUserId],
-  (typingIndicators: TypingIndicator[], participants: Map<string, ChatParticipant>, userId: string) => {
-    // if there are participant size is at threshold return no typing users
+  (
+    typingIndicators: TypingIndicator[],
+    participants: Map<CommunicationIdentifierAsKey, ChatParticipant>,
+    userId: string
+  ) => {
+    // if the participant size reaches the threshold then return no typing users
     if (participants.size >= PARTICIPANTS_THRESHOLD) {
       return { typingUsers: [] };
     }
@@ -53,7 +60,8 @@ export const typingIndicatorSelector = reselect.createSelector(
     const filteredTypingIndicators = filterTypingIndicators(typingIndicators, userId);
 
     const typingUsers: WebUiChatParticipant[] = convertSdkTypingIndicatorsToWebUiChatParticipants(
-      filteredTypingIndicators
+      filteredTypingIndicators,
+      participants
     );
 
     return { typingUsers };

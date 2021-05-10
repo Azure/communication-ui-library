@@ -1,7 +1,10 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { Description, Heading, Source, Title } from '@storybook/addon-docs/blocks';
 import React from 'react';
-const LobbyControlBarText = require('!!raw-loader!./snippets/LobbyControlBar.snippet.tsx').default;
 const LobbyComponentText = require('!!raw-loader!./snippets/Lobby.snippet.tsx').default;
+const LobbyControlBarText = require('!!raw-loader!./snippets/LobbyControlBar.snippet.tsx').default;
 
 export const getDocs: () => JSX.Element = () => {
   return (

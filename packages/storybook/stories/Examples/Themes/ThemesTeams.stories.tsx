@@ -1,20 +1,20 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import React from 'react';
-import { Meta } from '@storybook/react/types-6-0';
-import { getDocs } from './ThemesDocs';
-import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import {
+  CameraButton,
+  ControlBar,
+  EndCallButton,
   FluentThemeProvider,
   GridLayout,
-  VideoTile,
-  ControlBar,
-  videoButtonProps,
-  audioButtonProps,
-  screenShareButtonProps,
-  hangupButtonProps
-} from '@azure/communication-ui';
-import { DefaultButton } from '@fluentui/react';
+  MicrophoneButton,
+  ScreenShareButton,
+  VideoTile
+} from '@azure/communication-react';
+import { Meta } from '@storybook/react/types-6-0';
+import React from 'react';
+import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
+import { getDocs } from './ThemesDocs';
 
 const TeamsTheme = {
   palette: {
@@ -59,26 +59,22 @@ export const TeamsThemeComponent: () => JSX.Element = () => {
 
               {/*Control Bar with default set up*/}
               <ControlBar layout={'dockedTop'}>
-                <DefaultButton
-                  {...videoButtonProps}
+                <CameraButton
                   onClick={() => {
                     /*handle onClick*/
                   }}
                 />
-                <DefaultButton
-                  {...audioButtonProps}
+                <MicrophoneButton
                   onClick={() => {
                     /*handle onClick*/
                   }}
                 />
-                <DefaultButton
-                  {...screenShareButtonProps}
+                <ScreenShareButton
                   onClick={() => {
                     /*handle onClick*/
                   }}
                 />
-                <DefaultButton
-                  {...hangupButtonProps}
+                <EndCallButton
                   onClick={() => {
                     /*handle onClick*/
                   }}

@@ -9,16 +9,15 @@ import ThemedButtonText from '!!raw-loader!./snippets/ThemedButton.snippet.tsx';
 import { ThemedButton } from './snippets/ThemedButton.snippet';
 
 import {
-  FluentThemeProvider,
+  CameraButton,
   ControlBar,
-  audioButtonProps,
-  hangupButtonProps,
-  optionsButtonProps,
-  screenShareButtonProps,
-  videoButtonProps,
+  EndCallButton,
+  FluentThemeProvider,
+  MicrophoneButton,
+  OptionsButton,
+  ScreenShareButton,
   darkTheme
-} from '@azure/communication-ui';
-import { DefaultButton } from '@fluentui/react';
+} from '@azure/communication-react';
 
 <Meta title="Theming" />
 
@@ -33,7 +32,7 @@ component ensures:
 
 ## Usage
 
-To use the FluentThemeProvider, simply import it from `@azure/communication-ui` and wrap it around
+To use the FluentThemeProvider, simply import it from `@azure/communication-react` and wrap it around
 ACS UI SDK components and Fluent UI components. For the example below we will provide theming and icons to
 the `ControlBar`.
 
@@ -45,10 +44,10 @@ the `ControlBar`.
 
 `FluentThemeProvider` does two things here:
 
-1. `FluentThemeProvider` loads the icons defined by the props such as `videoButtonProps`
+1. `FluentThemeProvider` loads the icons used by components such as `CameraButton`
 2. `FluentThemeProvider` applies theme (light theme by default) to the `ControlBar`
 
-To illustrate how another theme can be applied, import `darkTheme` from `@azure/communication-ui`
+To illustrate how another theme can be applied, import `darkTheme` from `@azure/communication-react`
 and assign it to the `fluentTheme` property.
 
 <Source code={DarkControlBarText} />
@@ -57,8 +56,8 @@ and assign it to the `fluentTheme` property.
   <DarkControlBar />
 </Canvas>
 
-The dark theme is applied to the `ControlBar`. The icon colors in `DefaultButton` are themed
-correctly because it is a Fluent UI component.
+The dark theme is applied to the `ControlBar`. The icon colors in the predefined button components are themed correctly
+because they are built using the `DefaultButton` Fluent UI component.
 
 ## FluentThemeProvider Props
 

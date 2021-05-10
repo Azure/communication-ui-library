@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { Call, CallAgent, CallEndReason, IncomingCall } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
@@ -95,8 +96,11 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
 
   private addCall = (call: Call): void => {
     this._callSubscribers.get(call)?.unsubscribe();
-    this._callSubscribers.set(call, new CallSubscriber(call, this._context, this._internalContext));
+
+    // For API extentions we need to have the call in the state when we are subscribing as we may want to update the
+    // state during the subscription process in the subscriber so we add the call to state before subscribing.
     this._context.setCall(convertSdkCallToDeclarativeCall(call));
+    this._callSubscribers.set(call, new CallSubscriber(call, this._context, this._internalContext));
   };
 
   public get<P extends keyof CallAgent>(target: CallAgent, prop: P): any {

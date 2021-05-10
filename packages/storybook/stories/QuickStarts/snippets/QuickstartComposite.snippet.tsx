@@ -1,5 +1,5 @@
-import { GroupCall, GroupChat } from '@azure/communication-ui';
 import React from 'react';
+import { GroupCall, GroupChat } from 'react-composites';
 
 function App(): JSX.Element {
   return (
@@ -36,10 +36,12 @@ function App(): JSX.Element {
           endpointUrl={
             'ENDPOINT_URL'
           } /* Required, URL for Azure endpoint being used for Azure Communication Services */
-          onRenderAvatar={(userId) => {
-            /* Optional, function to override the avatar image on the chat thread. Function receives one parameters for the Azure Communication Services Identity. Must return a React element */
-            return <h1>Sample Element</h1>;
-          }}
+          onRenderAvatar={
+            (/*userId*/) => {
+              /* Optional, function to override the avatar image on the chat thread. Function receives one parameters for the Azure Communication Services Identity. Must return a React element */
+              return <h1>Sample Element</h1>;
+            }
+          }
           refreshTokenCallback={async () => {
             /* Optional, function to refresh the access token in case it expires */
             return 'CALLBACK';
