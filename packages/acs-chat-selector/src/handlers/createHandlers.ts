@@ -40,7 +40,7 @@ export const createDefaultHandlers = memoizeOne(
         });
       },
       updateThreadTopicName: async (topicName: string) => {
-        await chatThreadClient.updateThread({ topic: topicName });
+        await chatThreadClient.updateTopic(topicName);
       },
       onLoadPreviousChatMessages: async (messagesToLoad: number) => {
         let remainingMessagesToGet = messagesToLoad;

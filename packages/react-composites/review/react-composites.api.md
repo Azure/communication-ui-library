@@ -8,7 +8,6 @@ import { AbortSignalLike } from '@azure/core-http';
 import { AcceptCallOptions } from '@azure/communication-calling';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
-import { AzureCommunicationUserCredential } from '@azure/communication-common-beta3';
 import { Call } from '@azure/acs-calling-declarative';
 import { Call as Call_2 } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
@@ -19,7 +18,7 @@ import { ChatMessage as ChatMessage_2 } from '@azure/communication-chat';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { ChatThreadClientState } from '@azure/acs-chat-declarative';
-import { CommunicationUser } from '@azure/communication-signaling';
+import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { ControlBarProps } from 'react-components';
 import { CreateViewOptions } from '@azure/communication-calling';
@@ -401,9 +400,6 @@ export const createAzureCommunicationChatAdapter: (token: string, endpointUrl: s
 
 // @public (undocumented)
 export const createAzureCommunicationUserCredential: (token: string, refreshTokenCallback?: (() => Promise<string>) | undefined) => AzureCommunicationTokenCredential;
-
-// @public (undocumented)
-export const createAzureCommunicationUserCredentialBeta: (token: string, refreshTokenCallback?: (() => Promise<string>) | undefined) => AzureCommunicationUserCredential;
 
 // @public (undocumented)
 export const CREATED = 201;

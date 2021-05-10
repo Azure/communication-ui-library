@@ -9,7 +9,8 @@ import { ChatMessage } from '@azure/communication-chat';
 import { ChatMessageReadReceipt } from '@azure/communication-chat';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
-import { ChatThreadInfo } from '@azure/communication-chat';
+import { CommunicationIdentifier } from '@azure/communication-common';
+import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 
 // @public (undocumented)
@@ -17,14 +18,14 @@ export const chatClientDeclaratify: (chatClient: ChatClient, chatConfig: ChatCon
 
 // @public (undocumented)
 export type ChatClientState = {
-    userId: string;
+    userId: CommunicationIdentifierKind;
     displayName: string;
     threads: Map<string, ChatThreadClientState>;
 };
 
 // @public (undocumented)
 export type ChatConfig = {
-    userId: string;
+    userId: CommunicationIdentifierKind;
     displayName: string;
 };
 
@@ -37,17 +38,17 @@ export class ChatContext {
     // (undocumented)
     batch(batchFunc: () => void): void;
     // (undocumented)
-    createThread(threadId: string, threadInfo?: ChatThreadInfo): void;
+    createThread(threadId: string, properties?: ChatThreadProperties): void;
     // (undocumented)
-    createThreadIfNotExist(threadId: string, thread?: ChatThreadInfo): boolean;
+    createThreadIfNotExist(threadId: string, properties?: ChatThreadProperties): boolean;
     // (undocumented)
     deleteLocalMessage(threadId: string, localId: string): boolean;
     // (undocumented)
     deleteMessage(threadId: string, id: string): void;
     // (undocumented)
-    deleteParticipant(threadId: string, participantId: string): void;
+    deleteParticipant(threadId: string, participantId: CommunicationIdentifierKind): void;
     // (undocumented)
-    deleteParticipants(threadId: string, participantIds: string[]): void;
+    deleteParticipants(threadId: string, participantIds: CommunicationIdentifierKind[]): void;
     // (undocumented)
     deleteThread(threadId: string): void;
     // (undocumented)
@@ -73,7 +74,7 @@ export class ChatContext {
     // (undocumented)
     updateChatMessageContent(threadId: string, messagesId: string, content: string | undefined): void;
     // (undocumented)
-    updateThread(threadId: string, threadInfo?: ChatThreadInfo): void;
+    updateThread(threadId: string, properties?: ChatThreadProperties): void;
     // (undocumented)
     updateThreadTopic(threadId: string, topic?: string): void;
 }
@@ -90,9 +91,9 @@ export const chatThreadClientDeclaratify: (chatThreadClient: ChatThreadClient, c
 // @public (undocumented)
 export type ChatThreadClientState = {
     chatMessages: Map<string, ChatMessageWithStatus>;
-    participants: Map<string, ChatParticipant>;
+    participants: Map<CommunicationIdentifierAsKey, ChatParticipant>;
     threadId: string;
-    threadInfo?: ChatThreadInfo;
+    properties?: ChatThreadProperties;
     coolPeriod?: Date;
     getThreadMembersError?: boolean;
     updateThreadMembersError?: boolean;
@@ -103,6 +104,14 @@ export type ChatThreadClientState = {
 };
 
 // @public (undocumented)
+export type ChatThreadProperties = {
+    topic?: string;
+};
+
+// @public (undocumented)
+export type CommunicationIdentifierAsKey = string;
+
+// @public (undocumented)
 export interface DeclarativeChatClient extends ChatClient {
     // (undocumented)
     offStateChange(handler: (state: ChatClientState) => void): void;
@@ -111,6 +120,9 @@ export interface DeclarativeChatClient extends ChatClient {
     // (undocumented)
     state: ChatClientState;
 }
+
+// @public (undocumented)
+export const getCommunicationIdentifierAsKey: (identifier: CommunicationIdentifier) => CommunicationIdentifierAsKey;
 
 // @public (undocumented)
 export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
