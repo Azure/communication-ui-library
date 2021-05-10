@@ -50,13 +50,13 @@ export type ChatMessagePayload = {
 
 // @public (undocumented)
 export const chatParticipantListSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
-    userId: string;
+    myUserId: string;
     displayName: string;
-    chatParticipants: WebUiChatParticipant[];
+    participants: WebUiChatParticipant[];
 }, (res1: string, res2: Map<string, ChatParticipant>, res3: string) => {
-    userId: string;
+    myUserId: string;
     displayName: string;
-    chatParticipants: WebUiChatParticipant[];
+    participants: WebUiChatParticipant[];
 }>;
 
 // @public
@@ -85,6 +85,13 @@ export type CommonProperties<A, B> = {
 }[keyof A & keyof B];
 
 // @public (undocumented)
+export type ContextualMenuItem = {
+    key: string;
+    text: string;
+    onClick: (userId: string) => boolean | void;
+};
+
+// @public (undocumented)
 export const createDefaultHandlers: (chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient) => DefaultHandlers;
 
 // @public (undocumented)
@@ -107,6 +114,7 @@ export type DefaultHandlers = {
     removeThreadMember: (userId: string) => Promise<void>;
     updateThreadTopicName: (topicName: string) => Promise<void>;
     onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
+    onRenderParticipantMenu: (participant: WebUiChatParticipant) => ContextualMenuItem[];
 };
 
 // @public (undocumented)

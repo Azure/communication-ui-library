@@ -20,10 +20,10 @@ import { copyIconStyle } from './styles/InviteFooter.styles';
 import { WebUiChatParticipant } from '@azure/acs-chat-selector';
 
 export type ChatHeaderProps = {
-  userId: string;
+  myUserId: string;
   topicName: string;
   selectedPane: SidePanelTypes;
-  chatParticipants: WebUiChatParticipant[];
+  participants: WebUiChatParticipant[];
   setSelectedPane: Dispatch<SidePanelTypes>;
   endChatHandler(): void;
   removeThreadMember?: (userId: string) => Promise<void>;
@@ -49,7 +49,7 @@ export const ChatHeader = (props: ChatHeaderProps): JSX.Element => {
     if (item.props.itemKey === SidePanelTypes.People) togglePeople(props.selectedPane, props.setSelectedPane);
   };
 
-  const userId = props.userId;
+  const userId = props.myUserId;
 
   const leaveString = 'Leave';
 

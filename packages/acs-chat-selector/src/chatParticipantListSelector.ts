@@ -24,9 +24,9 @@ export const chatParticipantListSelector = reselect.createSelector(
   [getUserId, getParticipants, getDisplayName],
   (userId, chatParticipants: Map<string, ChatParticipant>, displayName) => {
     return {
-      userId,
+      myUserId: userId,
       displayName,
-      chatParticipants: convertChatParticipantsToWebUiChatParticipants(Array.from(chatParticipants.values()))
+      participants: convertChatParticipantsToWebUiChatParticipants(Array.from(chatParticipants.values()))
     };
   }
 );

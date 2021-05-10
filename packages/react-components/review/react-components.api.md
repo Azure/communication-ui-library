@@ -244,7 +244,8 @@ export const ParticipantList: (props: ParticipantListProps) => JSX.Element;
 export type ParticipantListProps = {
     participants: WebUIParticipant[];
     myUserId?: string;
-    onRenderParticipant?: (participant: WebUIParticipant) => JSX.Element;
+    onRenderParticipant?: (participant: WebUIParticipant) => JSX.Element | null;
+    onRenderAvatar?: (participant: WebUIParticipant) => JSX.Element | null;
     onRenderParticipantMenu?: (participant: WebUIParticipant) => IContextualMenuItem[];
 };
 

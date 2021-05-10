@@ -33,3 +33,4 @@ export type { FunctionWithKey, CallbackType } from './utils/memoizeFnAll';
 export type { BaseSelectorProps } from './baseSelectors';
 export type { DefaultHandlers, CommonProperties } from './handlers/createHandlers';
 export type { WebUiChatParticipant } from './types/WebUiChatParticipant';
+export type { ContextualMenuItem } from './types/ContextualMenuItem';

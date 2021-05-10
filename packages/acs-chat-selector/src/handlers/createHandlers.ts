@@ -4,6 +4,8 @@
 import { ReactElement } from 'react';
 import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
 import { ChatThreadClient } from '@azure/communication-chat';
+import { ContextualMenuItem } from '../types/ContextualMenuItem';
+import { WebUiChatParticipant } from '../types/WebUiChatParticipant';
 import memoizeOne from 'memoize-one';
 
 export type DefaultHandlers = {
@@ -13,6 +15,7 @@ export type DefaultHandlers = {
   removeThreadMember: (userId: string) => Promise<void>;
   updateThreadTopicName: (topicName: string) => Promise<void>;
   onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
+  onRenderParticipantMenu: (participant: WebUiChatParticipant) => ContextualMenuItem[];
 };
 
 // Keep all these handlers the same instance(unless client changed) to avoid re-render
@@ -56,6 +59,21 @@ export const createDefaultHandlers = memoizeOne(
         }
 
         return isAllChatMessagesLoaded;
+      },
+      onRenderParticipantMenu: (participant: WebUiChatParticipant) => {
+        const menu: ContextualMenuItem[] = [];
+        if (chatClient.state.userId !== participant.userId) {
+          menu.push({
+            key: 'Remove',
+            text: 'Remove',
+            onClick: () => {
+              chatThreadClient.removeParticipant({
+                communicationUserId: participant.userId
+              });
+            }
+          });
+        }
+        return menu;
       }
     };
   }

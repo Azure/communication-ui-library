@@ -25,15 +25,18 @@ export type ParticipantListProps = {
   /** User ID of user */
   myUserId?: string;
   /** Optional callback to render each participant. If no callback is provided, each participant will be rendered with `ParticipantItem`  */
-  onRenderParticipant?: (participant: WebUIParticipant) => JSX.Element;
+  onRenderParticipant?: (participant: WebUIParticipant) => JSX.Element | null;
+  /** Optional callback to render the avatar for each participant. This property will have no effect if `onRenderParticipant` is assigned.  */
+  onRenderAvatar?: (participant: WebUIParticipant) => JSX.Element | null;
   /** Optional callback to render the context menu for each participant  */
   onRenderParticipantMenu?: (participant: WebUIParticipant) => IContextualMenuItem[];
 };
 
 const getDefaultRenderer = (
   myUserId?: string,
-  onRenderParticipantMenu?: (remoteParticipant: WebUIParticipant) => IContextualMenuItem[]
-): ((participant: WebUIParticipant) => JSX.Element) => {
+  onRenderParticipantMenu?: (remoteParticipant: WebUIParticipant) => IContextualMenuItem[],
+  onRenderAvatar?: (remoteParticipant: WebUIParticipant) => JSX.Element | null
+): ((participant: WebUIParticipant) => JSX.Element | null) => {
   return (participant: WebUIParticipant) => {
     let presence: PersonaPresence | undefined = undefined;
     if (participant.state === 'Connected') {
@@ -42,20 +45,30 @@ const getDefaultRenderer = (
       presence = PersonaPresence.away;
     }
 
-    return (
-      <ParticipantItem
-        name={participant.displayName ?? ''}
-        isYou={myUserId ? participant.userId === myUserId : false}
-        menuItems={onRenderParticipantMenu ? onRenderParticipantMenu(participant) : []}
-        presence={presence}
-        onRenderIcon={() => (
-          <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
-            {participant.isScreenSharing && <CallControlPresentNewIcon size="small" />}
-            {participant.isMuted && <MicOffIcon size="small" />}
-          </Stack>
-        )}
-      />
-    );
+    if (participant.displayName) {
+      return (
+        <ParticipantItem
+          name={participant.displayName}
+          isYou={myUserId ? participant.userId === myUserId : false}
+          menuItems={onRenderParticipantMenu ? onRenderParticipantMenu(participant) : []}
+          presence={presence}
+          onRenderIcon={() => (
+            <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
+              {participant.isScreenSharing && <CallControlPresentNewIcon size="small" />}
+              {participant.isMuted && <MicOffIcon size="small" />}
+            </Stack>
+          )}
+          onRenderAvatar={
+            onRenderAvatar
+              ? () => {
+                  return onRenderAvatar(participant);
+                }
+              : undefined
+          }
+        />
+      );
+    }
+    return null;
   };
 };
 
@@ -72,11 +85,13 @@ const onRenderOverflowButton = (overflowItems: unknown): JSX.Element => (
 const renderParticipants = (
   participants: WebUIParticipant[],
   myUserId?: string,
-  onRenderParticipant?: (participant: WebUIParticipant) => JSX.Element,
+  onRenderParticipant?: (participant: WebUIParticipant) => JSX.Element | null,
+  onRenderAvatar?: (participant: WebUIParticipant) => JSX.Element | null,
   onRenderParticipantMenu?: (participant: WebUIParticipant) => IContextualMenuItem[]
-): JSX.Element[] => {
-  const renderParticipant = onRenderParticipant ?? getDefaultRenderer(myUserId, onRenderParticipantMenu);
-  const onRenderItem = (item: IOverflowSetItemProps): JSX.Element => {
+): (JSX.Element | null)[] => {
+  const renderParticipant =
+    onRenderParticipant ?? getDefaultRenderer(myUserId, onRenderParticipantMenu, onRenderAvatar);
+  const onRenderItem = (item: IOverflowSetItemProps): JSX.Element | null => {
     const participant: WebUIParticipant = {
       userId: item.userId,
       displayName: item.displayName,
@@ -113,7 +128,13 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
   }
   return (
     <Stack className={participantListStyle}>
-      {renderParticipants(allParticipants, props.myUserId, props.onRenderParticipant, props.onRenderParticipantMenu)}
+      {renderParticipants(
+        allParticipants,
+        props.myUserId,
+        props.onRenderParticipant,
+        props.onRenderAvatar,
+        props.onRenderParticipantMenu
+      )}
     </Stack>
   );
 };
