@@ -156,7 +156,6 @@ type Common<A, B> = Pick<A, CommonProperties<A, B>>;
  * @param callAgent - Instance of {@Link @azure/communication-calling#CallClient}.
  * @param deviceManager - Instance of {@Link @azure/communication-calling#DeviceManager}.
  * @param call - Instance of {@Link @azure/communication-calling#Call}.
- * @param videoDeviceInfo - Instance of {@Link @azure/communication-calling#Call}.
  * @param _ - React component that you want to generate handlers for.
  * @returns
  */
