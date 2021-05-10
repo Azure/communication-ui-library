@@ -7,9 +7,11 @@ export const TypingIndicatorSnippet: () => JSX.Element = () => {
     { userId: '1', displayName: 'User1' },
     { userId: '2', displayName: 'User2' }
   ];
-  const twentyUsers: WebUiChatParticipant[] = Array(20)
-    .fill(1, 20)
-    .map((x, i) => ({ userId: `${i}`, displayName: `User${i}` }));
+
+  let twentyUsers: WebUiChatParticipant[] = [];
+  for (let idx = 0; idx < 20; idx++) {
+    twentyUsers.push({ userId: `${idx}`, displayName: `User${idx}` });
+  }
 
   return (
     <>
