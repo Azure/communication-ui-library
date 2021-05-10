@@ -9,4 +9,4 @@ export { useSelector } from './hooks/useSelector';
 export { useHandlers } from './hooks/useHandlers';
 export type { FunctionWithKey, CallbackType } from './utils/memoizeFnAll';
 export type { ChatBaseSelectorProps } from './baseSelectors';
-export type { DefaultChatHandlers, CommonProperties2 } from './handlers/createHandlers';
+export type { DefaultChatHandlers, CommonProperties } from './handlers/createHandlers';

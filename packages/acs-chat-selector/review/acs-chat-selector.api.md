@@ -20,7 +20,7 @@ export type ChatBaseSelectorProps = {
 };
 
 // @public (undocumented)
-export type CommonProperties2<A, B> = {
+export type CommonProperties<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? (A[P] extends B[P] ? P : never) : never;
 }[keyof A & keyof B];
 
@@ -31,7 +31,7 @@ export const communicationIdentifierToString: (i: CommunicationIdentifier | unde
 export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => DefaultChatHandlers;
 
 // @public (undocumented)
-export const createDefaultChatHandlersForComponent: <Props>(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties2<DefaultChatHandlers, Props>>;
+export const createDefaultChatHandlersForComponent: <Props>(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, Props>>;
 
 // @public (undocumented)
 export type DefaultChatHandlers = {
@@ -50,7 +50,7 @@ export type FunctionWithKey<KeyT, ArgsT extends any[], RetT> = (key: KeyT, ...ar
 export const memoizeFnAll: <KeyT, ArgsT extends any[], FnRetT, CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>>(fnToMemoize: FunctionWithKey<KeyT, ArgsT, FnRetT>, shouldCacheUpdate?: (args1: any, args2: any) => boolean) => (callback: CallBackT) => FnRetT[];
 
 // @public (undocumented)
-export const useHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties2<DefaultChatHandlers, PropsT>>;
+export const useHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, PropsT>>;
 
 // @public (undocumented)
 export const usePropsFor: <SelectorT extends (state: ChatClientState, props: any) => any>(component: React_2.FunctionComponent<any>) => ReturnType<SelectorT>;

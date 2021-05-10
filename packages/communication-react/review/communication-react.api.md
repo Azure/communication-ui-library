@@ -183,14 +183,14 @@ export type ChatThreadProperties = {
     topic?: string;
 };
 
+// @public (undocumented)
+export type CommonProperties<A, B> = {
+    [P in keyof A & keyof B]: A[P] extends B[P] ? (A[P] extends B[P] ? P : never) : never;
+}[keyof A & keyof B];
+
 // @public
 export type CommonProperties1<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
-}[keyof A & keyof B];
-
-// @public (undocumented)
-export type CommonProperties2<A, B> = {
-    [P in keyof A & keyof B]: A[P] extends B[P] ? (A[P] extends B[P] ? P : never) : never;
 }[keyof A & keyof B];
 
 // @public (undocumented)
@@ -261,7 +261,7 @@ export const createDefaultCallingHandlersForComponent: <Props>(declarativeCallCl
 export const createDefaultChatHandlers: (chatClient: StatefulChatClient_2, chatThreadClient: ChatThreadClient) => DefaultChatHandlers;
 
 // @public (undocumented)
-export const createDefaultChatHandlersForComponent: <Props>(chatClient: StatefulChatClient_2, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties2<DefaultChatHandlers, Props>>;
+export const createDefaultChatHandlersForComponent: <Props>(chatClient: StatefulChatClient_2, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, Props>>;
 
 // @public (undocumented)
 export const createStatefulChatClient: (chatClient: ChatClient, chatConfig: ChatConfig) => StatefulChatClient;
@@ -654,7 +654,7 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
 }
 
 // @public (undocumented)
-export const useHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties2<DefaultChatHandlers, PropsT>>;
+export const useHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, PropsT>>;
 
 // @public (undocumented)
 export const usePropsFor: <SelectorT extends (state: ChatClientState_2, props: any) => any>(component: React_2.FunctionComponent<any>) => ReturnType<SelectorT>;
