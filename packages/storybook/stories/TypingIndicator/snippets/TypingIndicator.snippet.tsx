@@ -8,7 +8,7 @@ export const TypingIndicatorSnippet: () => JSX.Element = () => {
     { userId: '2', displayName: 'User2' }
   ];
 
-  let twentyUsers: WebUiChatParticipant[] = [];
+  const twentyUsers: WebUiChatParticipant[] = [];
   for (let idx = 0; idx < 20; idx++) {
     twentyUsers.push({ userId: `${idx}`, displayName: `User${idx}` });
   }

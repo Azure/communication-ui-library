@@ -26,8 +26,8 @@ const getDocs: () => JSX.Element = () => {
       <Title>EndCallButton</Title>
       <Description of={EndCallButton} />
       <Description>
-        Note: When overriding a render, like using `onRenderIcon` or `onRenderText`, don't forget to add a unique key to
-        each element to avoid warning for children in a list.
+        Note: When overriding a render, like using `onRenderIcon` or `onRenderText`, don not forget to add a unique key
+        to each element to avoid warning for children in a list.
       </Description>
 
       <Heading>Importing</Heading>
