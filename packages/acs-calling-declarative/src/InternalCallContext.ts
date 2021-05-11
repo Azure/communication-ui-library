@@ -5,6 +5,14 @@ import { LocalVideoStream, RemoteVideoStream, VideoStreamRenderer } from '@azure
 import { LocalVideoStream as StatefulLocalVideoStream } from './CallClientState';
 
 /**
+ * Used internally in InternalCallContext to be able to hold both the stream and the renderer in the same array.
+ */
+export interface StreamAndRenderer {
+  stream: StatefulLocalVideoStream;
+  renderer: VideoStreamRenderer;
+}
+
+/**
  * Contains internal data used between different Declarative components to share data.
  */
 export class InternalCallContext {
@@ -21,13 +29,9 @@ export class InternalCallContext {
   // CallId -> VideoStreamRenderer
   private _localVideoStreamRenders: Map<string, VideoStreamRenderer>;
 
-  // Stores the original LocalVideoStream used when creating the {@Link VideoStreamRendererView} in
-  // {@Link CallClientState#DeviceManager.unparentedViews}. This is so we can delete views by reference check.
-  // unparentedStreams, unparentedRenders, and unparentedViews are related and used together.
-  private _unparentedStreams: StatefulLocalVideoStream[];
-
-  // Stores the VideoStreamRenderer. Meant to be used in conjunction with unparentedStreams.
-  private _unparentedRenderers: VideoStreamRenderer[];
+  // Stores the original LocalVideoStream used when creating the {@Link VideoStreamRendererView} along with the renderer
+  // {@Link @azure/communication-calling#VideoStreamRenderer} used to create the {@Link VideoStreamRendererView}.
+  private _unparentedStreamAndRenderers: StreamAndRenderer[];
 
   constructor() {
     this._remoteVideoStreams = new Map<string, Map<number, RemoteVideoStream>>();
@@ -35,8 +39,7 @@ export class InternalCallContext {
     this._remoteVideoStreamRenderers = new Map<string, Map<number, VideoStreamRenderer>>();
     this._localVideoStreams = new Map<string, LocalVideoStream>();
     this._localVideoStreamRenders = new Map<string, VideoStreamRenderer>();
-    this._unparentedStreams = [];
-    this._unparentedRenderers = [];
+    this._unparentedStreamAndRenderers = [];
   }
 
   public setCallId(newCallId: string, oldCallId: string): void {
@@ -178,17 +181,17 @@ export class InternalCallContext {
     this._localVideoStreamRenders.delete(callId);
   }
 
-  // Returns the index in unparentedStreams or -1 if not found.
-  public findUnparentedStream(localVideoStream: StatefulLocalVideoStream): number {
+  // Returns the index in unparentedStreamAndRenderers or -1 if not found.
+  public findInUnparentedStreamAndRenderers(localVideoStream: StatefulLocalVideoStream): number {
     // First try to find by referential equality.
-    for (let i = 0; i < this._unparentedStreams.length; i++) {
-      if (this._unparentedStreams[i] === localVideoStream) {
+    for (let i = 0; i < this._unparentedStreamAndRenderers.length; i++) {
+      if (this._unparentedStreamAndRenderers[i].stream === localVideoStream) {
         return i;
       }
     }
     // If not yet found, try find by comparing properties.
-    for (let i = 0; i < this._unparentedStreams.length; i++) {
-      const candidate = this._unparentedStreams[i];
+    for (let i = 0; i < this._unparentedStreamAndRenderers.length; i++) {
+      const candidate = this._unparentedStreamAndRenderers[i].stream;
       if (
         candidate.source.deviceType === localVideoStream.source.deviceType &&
         candidate.source.id === localVideoStream.source.id &&
@@ -201,27 +204,22 @@ export class InternalCallContext {
     return -1;
   }
 
-  public setUnparentedStream(localVideoStream: StatefulLocalVideoStream): void {
-    this._unparentedStreams.push(localVideoStream);
+  public getUnparentedStreamAndRenderer(index: number): StreamAndRenderer {
+    return this._unparentedStreamAndRenderers[index];
   }
 
-  public removeUnparentedStream(index: number): void {
-    this._unparentedStreams.splice(index, 1);
+  public setUnparentedStreamAndRenderer(
+    localVideoStream: StatefulLocalVideoStream,
+    videoStreamRenderer: VideoStreamRenderer
+  ): void {
+    this._unparentedStreamAndRenderers.push({ stream: localVideoStream, renderer: videoStreamRenderer });
   }
 
-  public getUnparentedRenderer(index: number): VideoStreamRenderer {
-    return this._unparentedRenderers[index];
+  public removeUnparentedStreamAndRenderer(index: number): void {
+    this._unparentedStreamAndRenderers.splice(index, 1);
   }
 
-  public setUnparentedRenderer(renderer: VideoStreamRenderer): void {
-    this._unparentedRenderers.push(renderer);
-  }
-
-  public removeUnparentedRenderer(index: number): void {
-    this._unparentedRenderers.splice(index, 1);
-  }
-
-  // UnparentedStreams and unparentedRenderers are not cleared as they are not part of the Call state.
+  // UnparentedStreamAndRenderers are not cleared as they are not part of the Call state.
   public clearCallRelatedState(): void {
     this._remoteVideoStreams.clear();
     this._remoteParticipantKeys.clear();

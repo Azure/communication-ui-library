@@ -65,8 +65,7 @@ export async function startRenderVideo(
     const renderer = new VideoStreamRenderer(localVideoStream);
     const view = await renderer.createView(options);
     context.setDeviceManagerUnparentedView(convertFromSDKToDeclarativeVideoStreamRendererView(view));
-    internalContext.setUnparentedStream(stream);
-    internalContext.setUnparentedRenderer(renderer);
+    internalContext.setUnparentedStreamAndRenderer(stream, renderer);
   } else {
     // TODO: How to standarize all errors
     throw new Error('Invalid combination of parameters');
@@ -107,17 +106,16 @@ export function stopRenderVideo(
     context.setLocalVideoStreamRendererView(callId, undefined);
     internalContext.removeLocalVideoStreamRenderer(callId);
   } else if (!('id' in stream) && !callId) {
-    const index = internalContext.findUnparentedStream(stream);
+    const index = internalContext.findInUnparentedStreamAndRenderers(stream);
     if (index === -1) {
       // TODO: How to standarize all errors
       throw new Error('UnparentedStream not found');
     }
 
-    const unparentedRenderer = internalContext.getUnparentedRenderer(index);
-    unparentedRenderer.dispose();
+    const unparentedRenderer = internalContext.getUnparentedStreamAndRenderer(index);
+    unparentedRenderer.renderer.dispose();
     context.removeDeviceManagerUnparentedView(index);
-    internalContext.removeUnparentedRenderer(index);
-    internalContext.removeUnparentedStream(index);
+    internalContext.removeUnparentedStreamAndRenderer(index);
   } else {
     // TODO: How to standarize all errors
     throw new Error('Invalid combination of parameters');

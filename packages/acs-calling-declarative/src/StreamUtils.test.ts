@@ -311,7 +311,7 @@ describe('stream utils', () => {
     await startRenderVideo(context, internalContext, undefined, {
       source: { name: 'a', id: 'a', deviceType: 'Unknown' }
     } as LocalVideoStream);
-    expect(internalContext.getUnparentedRenderer(0)).toBeDefined();
+    expect(internalContext.getUnparentedStreamAndRenderer(0)).toBeDefined();
     expect(context.getState().deviceManager.unparentedViews[0]).toBeDefined();
   });
 
@@ -324,7 +324,7 @@ describe('stream utils', () => {
     await startRenderVideo(context, internalContext, undefined, localVideoStream);
     stopRenderVideo(context, internalContext, undefined, localVideoStream);
 
-    expect(internalContext.getUnparentedRenderer(0)).not.toBeDefined();
+    expect(internalContext.getUnparentedStreamAndRenderer(0)).not.toBeDefined();
     expect(context.getState().deviceManager.unparentedViews[0]).not.toBeDefined();
   });
 
@@ -342,7 +342,7 @@ describe('stream utils', () => {
     await startRenderVideo(context, internalContext, undefined, differentReferenceLocalVideoStream);
     stopRenderVideo(context, internalContext, undefined, localVideoStream);
 
-    expect(internalContext.getUnparentedRenderer(0)).not.toBeDefined();
+    expect(internalContext.getUnparentedStreamAndRenderer(0)).not.toBeDefined();
     expect(context.getState().deviceManager.unparentedViews[0]).not.toBeDefined();
   });
 
@@ -366,7 +366,7 @@ describe('stream utils', () => {
     }
 
     expect(gotException).toBeTruthy();
-    expect(internalContext.getUnparentedRenderer(0)).toBeDefined();
+    expect(internalContext.getUnparentedStreamAndRenderer(0)).toBeDefined();
     expect(context.getState().deviceManager.unparentedViews[0]).toBeDefined();
   });
 
