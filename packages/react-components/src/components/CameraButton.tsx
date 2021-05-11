@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { concatStyleSets, DefaultButton, IButtonProps, mergeStyles, Stack } from '@fluentui/react';
+import { concatStyleSets, DefaultButton, IButtonProps, Label, mergeStyles } from '@fluentui/react';
 import { CallVideoIcon, CallVideoOffIcon } from '@fluentui/react-northstar';
 import React from 'react';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
@@ -39,9 +39,9 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {
     return (
-      <Stack key={'videoLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
+      <Label key={'videoLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
         {props?.checked ? 'Turn off' : 'Turn on'}
-      </Stack>
+      </Label>
     );
   };
 
