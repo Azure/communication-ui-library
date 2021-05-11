@@ -9,31 +9,7 @@ import * as callingDeclarative from '@azure/acs-calling-declarative';
 import { BaseSelectorProps } from './baseSelectors';
 import { getCall, getUserId, getDisplayName } from './baseSelectors';
 import { CommunicationParticipant } from 'react-components';
-import {
-  CommunicationUserKind,
-  PhoneNumberKind,
-  MicrosoftTeamsUserKind,
-  UnknownIdentifierKind
-} from '@azure/communication-common';
-
-const getACSId = (
-  identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind
-): string => {
-  switch (identifier.kind) {
-    case 'communicationUser': {
-      return identifier.communicationUserId;
-    }
-    case 'phoneNumber': {
-      return identifier.phoneNumber;
-    }
-    case 'microsoftTeamsUser': {
-      return identifier.microsoftTeamsUserId;
-    }
-    default: {
-      return identifier.id;
-    }
-  }
-};
+import { getACSId } from './utils/getACSId';
 
 const convertRemoteParticipantsToCommunicationParticipants = (
   remoteParticipants: callingDeclarative.RemoteParticipant[]
