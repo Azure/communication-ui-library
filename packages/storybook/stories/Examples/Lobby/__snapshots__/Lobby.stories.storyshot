@@ -107,11 +107,11 @@ exports[`storybook snapshot tests Storyshots Examples/Lobby Lobby 1`] = `
                     </g>
                   </svg>
                 </span>
-                <div
-                  className="ms-Stack css-19"
+                <label
+                  className="ms-Label root-19"
                 >
                   Turn off
-                </div>
+                </label>
               </span>
             </button>
             <button
@@ -162,11 +162,11 @@ exports[`storybook snapshot tests Storyshots Examples/Lobby Lobby 1`] = `
                     </g>
                   </svg>
                 </span>
-                <div
-                  className="ms-Stack css-19"
+                <label
+                  className="ms-Label root-19"
                 >
                   Mute
-                </div>
+                </label>
               </span>
             </button>
             <button
@@ -223,11 +223,11 @@ exports[`storybook snapshot tests Storyshots Examples/Lobby Lobby 1`] = `
                     </g>
                   </svg>
                 </span>
-                <div
-                  className="ms-Stack css-19"
+                <label
+                  className="ms-Label root-19"
                 >
                   Options
-                </div>
+                </label>
                 <i
                   aria-hidden={true}
                   className="ms-Icon root-37 css-22 ms-Button-menuIcon menuIcon-21"
@@ -286,11 +286,11 @@ exports[`storybook snapshot tests Storyshots Examples/Lobby Lobby 1`] = `
                     />
                   </svg>
                 </span>
-                <div
-                  className="ms-Stack css-26"
+                <label
+                  className="ms-Label root-26"
                 >
-                  Hangup
-                </div>
+                  Leave call
+                </label>
               </span>
             </button>
           </div>
