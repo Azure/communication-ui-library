@@ -34,6 +34,9 @@ export type { ParticipantItemProps, ParticipantItemStylesProps } from './Partici
 export { ParticipantList } from './ParticipantList';
 export type { ParticipantListProps } from './ParticipantList';
 
+export { VideoGallery } from './VideoGallery';
+export type { VideoGalleryProps } from './VideoGallery';
+
 export { CameraButton } from './CameraButton';
 export type { CameraButtonProps } from './CameraButton';
 

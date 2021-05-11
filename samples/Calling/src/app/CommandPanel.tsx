@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
+import { optionsButtonSelector, participantListSelector } from '@azure/acs-calling-selector';
 import { Stack, IContextualMenuItem } from '@fluentui/react';
 import {
   fullHeightStyles,
@@ -9,13 +10,13 @@ import {
   paneHeaderTextStyle,
   settingsContainerStyle
 } from 'app/styles/CommandPanel.styles';
-import { Footer } from './Footer';
-import { LocalDeviceSettings } from './LocalDeviceSettings';
 import { ThemeSelector } from 'app/theming/ThemeSelector';
-import { ParticipantList } from 'react-components';
-import { participantListSelector, WebUIParticipant } from '@azure/acs-calling-selector';
+import { useCall, useCallingContext } from 'react-composites';
+import { Footer } from './Footer';
+import { useHandlers } from './hooks/useHandlers';
 import { useSelector } from './hooks/useSelector';
-import { useCall } from 'react-composites';
+import { LocalDeviceSettingsComponent } from './LocalDeviceSettings';
+import { ParticipantList, WebUIParticipant } from 'react-components';
 
 export enum CommandPanelTypes {
   None = 'none',
@@ -39,12 +40,14 @@ export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
         text: 'Remove',
         onClick: () => {
           call?.removeParticipant({ communicationUserId: participant.userId });
-          Promise.resolve();
         }
       });
     }
     return menuItems;
   };
+  const options = useSelector(optionsButtonSelector, { callId: '' });
+  const handlers = useHandlers(LocalDeviceSettingsComponent);
+  const { videoDeviceInfo } = useCallingContext();
 
   return (
     <Stack styles={fullHeightStyles} tokens={{ childrenGap: '1.5rem' }}>
@@ -64,7 +67,13 @@ export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
       {props.selectedPane === CommandPanelTypes.Settings && (
         <Stack.Item>
           <div className={settingsContainerStyle}>
-            <LocalDeviceSettings />
+            <LocalDeviceSettingsComponent
+              {...options}
+              selectedCamera={videoDeviceInfo}
+              onSelectCamera={handlers.onSelectCamera}
+              onSelectMicrophone={handlers.onSelectMicrophone}
+              onSelectSpeaker={handlers.onSelectSpeaker}
+            />
           </div>
         </Stack.Item>
       )}

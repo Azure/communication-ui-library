@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useEffect, useState } from 'react';
-import { createAzureCommunicationUserCredentialBeta, getBuildTime, getChatSDKVersion } from './utils/utils';
+import { createAzureCommunicationUserCredential, getBuildTime, getChatSDKVersion } from './utils/utils';
 import { initializeIcons, Spinner } from '@fluentui/react';
 
 import { ChatScreen } from './ChatScreen';
@@ -15,6 +15,7 @@ import { ErrorProvider, CommunicationUiErrorInfo } from 'react-composites';
 import { refreshTokenAsync } from './utils/refreshToken';
 import { ChatClientProvider, ChatThreadClientProvider } from '@azure/acs-chat-selector';
 import { ChatClient, ChatThreadClient } from '@azure/communication-chat';
+import { CommunicationUserKind } from '@azure/communication-common';
 import { chatClientDeclaratify, DeclarativeChatClient } from '@azure/acs-chat-declarative';
 
 console.info(`Thread chat sample using @azure/communication-chat : ${getChatSDKVersion()}`);
@@ -34,10 +35,12 @@ export default (): JSX.Element => {
 
   useEffect(() => {
     if (token && userId && displayName && threadId && endpointUrl) {
+      // This hack can be removed when `getIdFromToken` is dropped in favour of actually passing in user credentials.
+      const userIdKind = { kind: 'communicationUser', communicationUserId: userId } as CommunicationUserKind;
       const createClient = async (): Promise<void> => {
         const chatClient = chatClientDeclaratify(
-          new ChatClient(endpointUrl, createAzureCommunicationUserCredentialBeta(token, refreshTokenAsync(userId))),
-          { userId, displayName }
+          new ChatClient(endpointUrl, createAzureCommunicationUserCredential(token, refreshTokenAsync(userId))),
+          { userId: userIdKind, displayName }
         );
 
         setChatClient(chatClient);

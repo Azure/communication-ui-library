@@ -6,3 +6,4 @@ export * from './CommunicationUiError';
 export * from './CustomStylesProps';
 export * from './WebUiChatParticipant';
 export * from './WebUIParticipant';
+export * from './GalleryParticipant';

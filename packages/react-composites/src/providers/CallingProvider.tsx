@@ -1,34 +1,33 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { createContext, useState, Dispatch, SetStateAction, useEffect, useRef } from 'react';
+import { callClientDeclaratify, DeclarativeCallClient, StatefulDeviceManager } from '@azure/acs-calling-declarative';
 import {
-  CallClient,
-  CallAgent,
-  DeviceManager,
-  VideoDeviceInfo,
   AudioDeviceInfo,
-  CallClientOptions
+  CallAgent,
+  CallClient,
+  CallClientOptions,
+  VideoDeviceInfo
 } from '@azure/communication-calling';
-import { createAzureCommunicationUserCredential, getIdFromToken, propagateError, useValidContext } from '../utils';
 import { AbortSignalLike } from '@azure/core-http';
-import { ErrorHandlingProps } from './ErrorProvider';
-import { WithErrorHandling } from '../utils/WithErrorHandling';
+import React, { createContext, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { CommunicationUiError, CommunicationUiErrorCode } from '../types/CommunicationUiError';
 import { DevicePermissionState } from '../types/DevicePermission';
-import { callClientDeclaratify } from '@azure/acs-calling-declarative';
+import { createAzureCommunicationUserCredential, getIdFromToken, propagateError, useValidContext } from '../utils';
+import { WithErrorHandling } from '../utils/WithErrorHandling';
+import { ErrorHandlingProps } from './ErrorProvider';
 
 export type CallingContextType = {
   userId: string;
   setUserId: Dispatch<SetStateAction<string>>;
   displayName: string;
   setDisplayName: Dispatch<SetStateAction<string>>;
-  callClient: CallClient;
-  setCallClient: Dispatch<SetStateAction<CallClient>>;
+  callClient: DeclarativeCallClient;
+  setCallClient: Dispatch<SetStateAction<DeclarativeCallClient>>;
   callAgent: CallAgent | undefined;
   setCallAgent: Dispatch<SetStateAction<CallAgent | undefined>>;
-  deviceManager: DeviceManager | undefined;
-  setDeviceManager: Dispatch<SetStateAction<DeviceManager | undefined>>;
+  deviceManager: StatefulDeviceManager | undefined;
+  setDeviceManager: Dispatch<SetStateAction<StatefulDeviceManager | undefined>>;
   audioDevicePermission: DevicePermissionState;
   setAudioDevicePermission: Dispatch<SetStateAction<DevicePermissionState>>;
   videoDevicePermission: DevicePermissionState;
@@ -58,11 +57,11 @@ const CallingProviderBase = (props: CallingProviderProps & ErrorHandlingProps): 
 
   // if there is no valid token then there is no valid userId
   const userIdFromToken = token ? getIdFromToken(token) : '';
-  const [callClient, setCallClient] = useState<CallClient>(
+  const [callClient, setCallClient] = useState<DeclarativeCallClient>(
     callClientDeclaratify(new CallClient(callClientOptions), userIdFromToken)
   );
   const [callAgent, setCallAgent] = useState<CallAgent | undefined>(undefined);
-  const [deviceManager, setDeviceManager] = useState<DeviceManager | undefined>(undefined);
+  const [deviceManager, setDeviceManager] = useState<StatefulDeviceManager | undefined>(undefined);
   const [userId, setUserId] = useState<string>(userIdFromToken);
   const [displayName, setDisplayName] = useState<string>(initialDisplayName);
   const [audioDevicePermission, setAudioDevicePermission] = useState<DevicePermissionState>('Unknown');
@@ -77,6 +76,10 @@ const CallingProviderBase = (props: CallingProviderProps & ErrorHandlingProps): 
   useEffect(() => {
     refreshTokenCallbackRefContainer.current = refreshTokenCallback;
   }, [refreshTokenCallback]);
+
+  useEffect(() => {
+    setUserId(userIdFromToken);
+  }, [userIdFromToken]);
 
   useEffect(() => {
     (async () => {
@@ -94,7 +97,15 @@ const CallingProviderBase = (props: CallingProviderProps & ErrorHandlingProps): 
             )
           );
         }
-        setDeviceManager(await callClient.getDeviceManager());
+
+        /**
+         * Initialize the DeviceManager state.
+         */
+        const statefulDeviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
+        statefulDeviceManager.getCameras();
+        statefulDeviceManager.getMicrophones();
+        statefulDeviceManager.getSpeakers();
+        setDeviceManager(statefulDeviceManager);
       } catch (error) {
         throw new CommunicationUiError({
           message: 'Error creating call agent',
@@ -156,10 +167,18 @@ export const CallingProvider = (props: CallingProviderProps & ErrorHandlingProps
 
 export const useCallingContext = (): CallingContextType => useValidContext(CallingContext);
 
-export const useCallClient = (): CallClient => {
+export const useCallClient = (): DeclarativeCallClient => {
   return useValidContext(CallingContext).callClient;
 };
 
-export const useDeviceManager = (): DeviceManager | undefined => {
+export const useDeviceManager = (): StatefulDeviceManager | undefined => {
   return useValidContext(CallingContext).deviceManager;
+};
+
+export const useIdentifier = (): string | undefined => {
+  return useValidContext(CallingContext).userId;
+};
+
+export const useDisplayName = (): string | undefined => {
+  return useValidContext(CallingContext).displayName;
 };
