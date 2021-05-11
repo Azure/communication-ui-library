@@ -6,7 +6,7 @@ import * as reselect from 'reselect';
 // @ts-ignore
 import * as callingDeclarative from '@azure/acs-calling-declarative';
 // @ts-ignore
-import { BaseSelectorProps } from './baseSelectors';
+import { CallingBaseSelectorProps } from './baseSelectors';
 import { getCall, getUserId, getDisplayName } from './baseSelectors';
 import { CommunicationParticipant } from 'react-components';
 import { getACSId } from './utils/getACSId';

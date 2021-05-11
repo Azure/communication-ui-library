@@ -13,7 +13,7 @@ import { ChatClientState } from '@azure/acs-chat-declarative';
 // @ts-ignore
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 // @ts-ignore
-import { BaseSelectorProps } from './baseSelectors';
+import { ChatBaseSelectorProps } from './baseSelectors';
 
 export const sendBoxSelector = createSelector(
   [getCoolPeriod, getUserId, getDisplayName],

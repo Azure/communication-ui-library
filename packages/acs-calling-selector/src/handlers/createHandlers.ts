@@ -21,13 +21,13 @@ import { ReactElement } from 'react';
 import { CommunicationParticipant, ContextualMenuItem } from 'react-components';
 import memoizeOne from 'memoize-one';
 
-export type DefaultHandlers = ReturnType<typeof createDefaultHandlers>;
+export type DefaultChatHandlers = ReturnType<typeof createDefaultChatHandlers>;
 
 export const areStreamsEqual = (prevStream: LocalVideoStream, newStream: LocalVideoStream): boolean => {
   return !!prevStream && !!newStream && prevStream.source.id === newStream.source.id;
 };
 
-const createDefaultHandlers = memoizeOne(
+const createDefaultChatHandlers = memoizeOne(
   (
     callClient: DeclarativeCallClient,
     callAgent: CallAgent | undefined,
@@ -146,11 +146,11 @@ const createDefaultHandlers = memoizeOne(
 /**
  * Type guard for common properties between two types.
  */
-export type CommonProperties<A, B> = {
+export type CommonProperties1<A, B> = {
   [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
 
-type Common<A, B> = Pick<A, CommonProperties<A, B>>;
+type Common<A, B> = Pick<A, CommonProperties1<A, B>>;
 
 /**
  * Create a set of default handlers for given component. Memoization is applied to the result. Multiple invokations with
@@ -165,10 +165,11 @@ type Common<A, B> = Pick<A, CommonProperties<A, B>>;
  * @param _ - React component that you want to generate handlers for.
  * @returns
  */
-export const createDefaultHandlersForComponent = <Props>(
+export const createDefaultCallingHandlersForComponent = <Props>(
   declarativeCallClient: DeclarativeCallClient,
   callAgent: CallAgent | undefined,
   deviceManager: StatefulDeviceManager | undefined,
   call: Call | undefined,
   _Component: (props: Props) => ReactElement | null
-): Common<DefaultHandlers, Props> => createDefaultHandlers(declarativeCallClient, callAgent, deviceManager, call);
+): Common<DefaultChatHandlers, Props> =>
+  createDefaultChatHandlers(declarativeCallClient, callAgent, deviceManager, call);

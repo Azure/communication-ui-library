@@ -12,19 +12,19 @@ import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationParticipant } from 'react-components';
 import { ContextualMenuItem } from 'react-components';
 import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
-import { MessageStatus } from '@azure/acs-chat-declarative';
+import { Message } from 'react-components';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
 import * as reselect from 'reselect';
-import { TypingIndicator } from '@azure/acs-chat-declarative';
-
-// @public (undocumented)
-export type BaseSelectorProps = {
-    threadId: string;
-};
+import { TypingIndicatorEvent } from '@azure/acs-chat-declarative';
 
 // @public (undocumented)
 export type CallbackType<KeyT, ArgsT extends any[], FnRetT> = (memoizedFn: FunctionWithKey<KeyT, ArgsT, FnRetT>) => FnRetT[];
+
+// @public (undocumented)
+export type ChatBaseSelectorProps = {
+    threadId: string;
+};
 
 // @public
 export const ChatClientProvider: (props: ChatClientProviderProps) => JSX.Element;
@@ -36,23 +36,7 @@ export type ChatClientProviderProps = {
 };
 
 // @public (undocumented)
-export type ChatMessage = Message<'chat'>;
-
-// @public
-export type ChatMessagePayload = {
-    messageId?: string;
-    content?: string;
-    createdOn?: Date;
-    senderId?: string;
-    senderDisplayName?: string;
-    status?: MessageStatus;
-    attached?: MessageAttachedStatus | boolean;
-    mine?: boolean;
-    clientMessageId?: string;
-};
-
-// @public (undocumented)
-export const chatParticipantListSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
+export const chatParticipantListSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     myUserId: string;
     displayName: string;
     participants: CommunicationParticipant[];
@@ -72,7 +56,7 @@ export type ChatThreadClientProviderProps = {
 };
 
 // @public (undocumented)
-export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
+export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     userId: string;
     disableReadReceipt: boolean;
     messages: Message<"chat">[];
@@ -83,7 +67,7 @@ export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientSta
 }>;
 
 // @public (undocumented)
-export type CommonProperties<A, B> = {
+export type CommonProperties2<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
 
@@ -91,22 +75,13 @@ export type CommonProperties<A, B> = {
 export const communicationIdentifierToString: (i: CommunicationIdentifier | undefined) => string;
 
 // @public (undocumented)
-export const createDefaultHandlers: (chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient) => DefaultHandlers;
+export const createDefaultChatHandlers: (chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient) => DefaultChatHandlers;
 
 // @public (undocumented)
-export const createDefaultHandlersForComponent: <Props>(chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultHandlers, CommonProperties<DefaultHandlers, Props>>;
+export const createDefaultChatHandlersForComponent: <Props>(chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties2<DefaultChatHandlers, Props>>;
 
 // @public (undocumented)
-export type CustomMessage = Message<'custom'>;
-
-// @public (undocumented)
-export type CustomMessagePayload = {
-    messageId: string;
-    content?: string;
-};
-
-// @public (undocumented)
-export type DefaultHandlers = {
+export type DefaultChatHandlers = {
     onMessageSend: (content: string) => Promise<void>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
     onTyping: () => Promise<void>;
@@ -123,24 +98,7 @@ export type FunctionWithKey<KeyT, ArgsT extends any[], RetT> = (key: KeyT, ...ar
 export const memoizeFnAll: <KeyT, ArgsT extends any[], FnRetT, CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>>(fnToMemoize: FunctionWithKey<KeyT, ArgsT, FnRetT>, shouldCacheUpdate?: (args1: any, args2: any) => boolean) => (callback: CallBackT) => FnRetT[];
 
 // @public (undocumented)
-export type Message<T extends MessageTypes> = {
-    type: T;
-    payload: T extends 'chat' ? ChatMessagePayload : T extends 'system' ? SystemMessagePayload : CustomMessagePayload;
-};
-
-// @public (undocumented)
-export enum MessageAttachedStatus {
-    // (undocumented)
-    BOTTOM = "bottom",
-    // (undocumented)
-    TOP = "top"
-}
-
-// @public (undocumented)
-export type MessageTypes = 'chat' | 'system' | 'custom';
-
-// @public (undocumented)
-export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
+export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     displayName: string;
     userId: string;
     disabled: boolean;
@@ -151,19 +109,9 @@ export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState,
 }>;
 
 // @public (undocumented)
-export type SystemMessage = Message<'system'>;
-
-// @public (undocumented)
-export type SystemMessagePayload = {
-    messageId: string;
-    content?: string;
-    iconName?: string;
-};
-
-// @public (undocumented)
-export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
+export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     typingUsers: CommunicationParticipant[];
-}, (res1: TypingIndicator[], res2: Map<string, ChatParticipant>, res3: string) => {
+}, (res1: TypingIndicatorEvent[], res2: Map<string, ChatParticipant>, res3: string) => {
     typingUsers: CommunicationParticipant[];
 }>;
 
@@ -174,7 +122,7 @@ export const useChatClient: () => DeclarativeChatClient;
 export const useChatThreadClient: () => ChatThreadClient;
 
 // @public (undocumented)
-export const useHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Pick<DefaultHandlers, CommonProperties<DefaultHandlers, PropsT>>;
+export const useHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties2<DefaultChatHandlers, PropsT>>;
 
 // @public (undocumented)
 export const usePropsFor: <SelectorT extends (state: ChatClientState, props: any) => any>(component: React_2.FunctionComponent<any>) => ReturnType<SelectorT>;

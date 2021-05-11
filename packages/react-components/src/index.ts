@@ -4,6 +4,20 @@
 export * from './components';
 export * from './theming';
 
-export { CommunicationUiErrorSeverity } from './types';
+export { CommunicationUiErrorSeverity, MessageAttachedStatus } from './types';
 
-export * from './types';
+export type {
+  BaseCustomStylesProps,
+  ChatMessage,
+  ChatMessagePayload,
+  CustomMessage,
+  CustomMessagePayload,
+  Message,
+  MessageStatus,
+  MessageTypes,
+  SystemMessage,
+  SystemMessagePayload,
+  CommunicationParticipant,
+  ContextualMenuItem
+} from './types';
+export * from './types/GalleryParticipant';

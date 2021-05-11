@@ -6,7 +6,7 @@ import * as reselect from 'reselect';
 // @ts-ignore
 import * as callingDeclarative from '@azure/acs-calling-declarative';
 // @ts-ignore
-import { BaseSelectorProps } from './baseSelectors';
+import { CallingBaseSelectorProps } from './baseSelectors';
 import { getCall, getDeviceManager } from './baseSelectors';
 // @ts-ignore
 import { AudioDeviceInfo, VideoDeviceInfo } from '@azure/communication-calling';
