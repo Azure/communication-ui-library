@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { CameraButton } from '@azure/communication-react';
-import { Canvas, Description, Heading, Props, Source, SourceState, Title } from '@storybook/addon-docs/blocks';
+import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import { boolean } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
@@ -25,6 +25,10 @@ const getDocs: () => JSX.Element = () => {
     <>
       <Title>CameraButton</Title>
       <Description of={CameraButton} />
+      <Description>
+        Note: When overriding a render, like using `onRenderIcon` or `onRenderText`, don not forget to add a unique key
+        to each element to avoid warning for children in a list.
+      </Description>
 
       <Heading>Importing</Heading>
       <Source code={importStatement} />
@@ -34,29 +38,26 @@ const getDocs: () => JSX.Element = () => {
         The default `CameraButton` component shows a Camera icon with no label. The following example displays the
         `CameraButton` with camera turned on and off.
       </Description>
-      <Canvas withSource={SourceState.NONE as any}>
+      <Canvas mdxSource={DefaultButtonExampleText}>
         <CameraButtonExample />
       </Canvas>
-      <Source code={DefaultButtonExampleText} />
 
       <Heading>Camera with default label</Heading>
       <Description>
         You can display the button label which, by default, will show below the icon as `Turn on` or `Turn off`.
       </Description>
-      <Canvas withSource={SourceState.NONE as any}>
+      <Canvas mdxSource={ButtonWithLabelExampleText}>
         <CameraButtonWithLabelExample />
       </Canvas>
-      <Source code={ButtonWithLabelExampleText} />
 
       <Heading>Custom CameraButton Styles</Heading>
       <Description>
         You can change the styles of the `CameraButton` as you would customized any Button (styles, primary,
         onRenderIcon, onRenderText, etc... ).
       </Description>
-      <Canvas withSource={SourceState.NONE as any}>
+      <Canvas mdxSource={CustomButtonExampleText}>
         <CustomCameraButtonExample />
       </Canvas>
-      <Source code={CustomButtonExampleText} />
 
       <Heading>CameraButton Props</Heading>
       <Description>
@@ -84,6 +85,7 @@ export default {
   parameters: {
     docs: {
       page: () => getDocs()
-    }
+    },
+    storyshots: { disable: true }
   }
 } as Meta;

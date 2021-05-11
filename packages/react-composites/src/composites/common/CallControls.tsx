@@ -31,6 +31,7 @@ const CallOptionsButton = (props: LocalDeviceSettingsContainerProps): JSX.Elemen
     updateLocalVideoStream,
     updateAudioDeviceInfo
   } = props;
+
   const callOptionsMenu: IContextualMenuProps = {
     items: [
       {

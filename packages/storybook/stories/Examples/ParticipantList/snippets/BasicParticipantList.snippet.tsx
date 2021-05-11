@@ -23,7 +23,9 @@ export const BasicParticipantListExample: () => JSX.Element = () => {
       <div style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Participants</div>
       <Stack style={{ width: '12.5rem' }}>
         {participants.map((participant: any) => {
-          return <ParticipantItem name={participant.name} presence={participant.presence} />;
+          return (
+            <ParticipantItem key={`${participant.name}Key`} name={participant.name} presence={participant.presence} />
+          );
         })}
       </Stack>
     </>

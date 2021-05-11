@@ -5,11 +5,17 @@
 ```ts
 
 import { ChatClientState } from '@azure/acs-chat-declarative';
+import { ChatMessageWithStatus } from '@azure/acs-chat-declarative';
+import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationIdentifier } from '@azure/communication-common';
+import { Message } from 'react-components';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
+import * as reselect from 'reselect';
 import { StatefulChatClient } from '@azure/acs-chat-declarative';
+import { TypingIndicatorEvent } from '@azure/acs-chat-declarative';
+import { WebUiChatParticipant } from 'react-components';
 
 // @public (undocumented)
 export type CallbackType<KeyT, ArgsT extends any[], FnRetT> = (memoizedFn: FunctionWithKey<KeyT, ArgsT, FnRetT>) => FnRetT[];
@@ -38,8 +44,19 @@ export type ChatThreadClientProviderProps = {
 };
 
 // @public (undocumented)
+export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
+    userId: string;
+    disableReadReceipt: boolean;
+    messages: Message<"chat">[];
+}, (res1: string, res2: Map<string, ChatMessageWithStatus>, res3: Date, res4: boolean) => {
+    userId: string;
+    disableReadReceipt: boolean;
+    messages: Message<"chat">[];
+}>;
+
+// @public (undocumented)
 export type CommonProperties<A, B> = {
-    [P in keyof A & keyof B]: A[P] extends B[P] ? (A[P] extends B[P] ? P : never) : never;
+    [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
 
 // @public (undocumented)
@@ -66,6 +83,24 @@ export type FunctionWithKey<KeyT, ArgsT extends any[], RetT> = (key: KeyT, ...ar
 
 // @public
 export const memoizeFnAll: <KeyT, ArgsT extends any[], FnRetT, CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>>(fnToMemoize: FunctionWithKey<KeyT, ArgsT, FnRetT>, shouldCacheUpdate?: (args1: any, args2: any) => boolean) => (callback: CallBackT) => FnRetT[];
+
+// @public (undocumented)
+export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
+    displayName: string;
+    userId: string;
+    disabled: boolean;
+}, (res1: Date, res2: string, res3: string) => {
+    displayName: string;
+    userId: string;
+    disabled: boolean;
+}>;
+
+// @public (undocumented)
+export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
+    typingUsers: WebUiChatParticipant[];
+}, (res1: TypingIndicatorEvent[], res2: Map<string, ChatParticipant>, res3: string) => {
+    typingUsers: WebUiChatParticipant[];
+}>;
 
 // @public (undocumented)
 export const useChatClient: () => StatefulChatClient;
