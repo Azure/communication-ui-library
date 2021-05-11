@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
-import { DefaultButton, IButtonProps, Stack, concatStyleSets, mergeStyles } from '@fluentui/react';
+import { concatStyleSets, DefaultButton, IButtonProps, mergeStyles, Stack } from '@fluentui/react';
 import { CallVideoIcon, CallVideoOffIcon } from '@fluentui/react-northstar';
+import React from 'react';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 
 /**
@@ -15,6 +15,12 @@ export interface CameraButtonProps extends IButtonProps {
    * @defaultValue `false`
    */
   showLabel?: boolean;
+
+  /**
+   * Utility property for using this component with `communication react eventHandlers`.
+   * Maps directly to the `onClick` property.
+   */
+  onToggleCamera?: () => Promise<void>;
 }
 
 /**
@@ -42,6 +48,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   return (
     <DefaultButton
       {...props}
+      onClick={props.onToggleCamera ?? props.onClick}
       styles={componentStyles}
       onRenderIcon={onRenderIcon ?? defaultRenderIcon}
       onRenderText={showLabel ? onRenderText ?? defaultRenderText : undefined}

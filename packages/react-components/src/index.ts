@@ -19,3 +19,4 @@ export type {
   SystemMessagePayload,
   WebUiChatParticipant
 } from './types';
+export * from './types/GalleryParticipant';
