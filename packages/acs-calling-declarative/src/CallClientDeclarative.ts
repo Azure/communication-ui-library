@@ -159,7 +159,7 @@ export const callClientDeclaratify = (callClient: CallClient, userId: string): D
   Object.defineProperty(callClient, 'startRenderVideo', {
     configurable: false,
     value: (
-      callId: string,
+      callId: string | undefined,
       stream: LocalVideoStream | RemoteVideoStream,
       options?: CreateViewOptions
     ): Promise<void> => {
@@ -168,7 +168,7 @@ export const callClientDeclaratify = (callClient: CallClient, userId: string): D
   });
   Object.defineProperty(callClient, 'stopRenderVideo', {
     configurable: false,
-    value: (callId: string, stream: LocalVideoStream | RemoteVideoStream): void => {
+    value: (callId: string | undefined, stream: LocalVideoStream | RemoteVideoStream): void => {
       stopRenderVideo(context, internalContext, callId, stream);
     }
   });
