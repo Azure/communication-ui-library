@@ -8,13 +8,9 @@ import { ChatClient } from '@azure/communication-chat';
 import { ChatMessage } from '@azure/communication-chat';
 import { ChatMessageReadReceipt } from '@azure/communication-chat';
 import { ChatParticipant } from '@azure/communication-chat';
-import { ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
-
-// @public (undocumented)
-export const chatClientDeclaratify: (chatClient: ChatClient, chatConfig: ChatConfig) => DeclarativeChatClient;
 
 // @public (undocumented)
 export type ChatClientState = {
@@ -30,56 +26,6 @@ export type ChatConfig = {
 };
 
 // @public (undocumented)
-export class ChatContext {
-    // (undocumented)
-    addReadReceipt(threadId: string, readReceipt: ChatMessageReadReceipt): void;
-    // (undocumented)
-    addTypingIndicator(threadId: string, typingIndicator: TypingIndicatorEvent): void;
-    // (undocumented)
-    batch(batchFunc: () => void): void;
-    // (undocumented)
-    createThread(threadId: string, properties?: ChatThreadProperties): void;
-    // (undocumented)
-    createThreadIfNotExist(threadId: string, properties?: ChatThreadProperties): boolean;
-    // (undocumented)
-    deleteLocalMessage(threadId: string, localId: string): boolean;
-    // (undocumented)
-    deleteMessage(threadId: string, id: string): void;
-    // (undocumented)
-    deleteParticipant(threadId: string, participantId: CommunicationIdentifierKind): void;
-    // (undocumented)
-    deleteParticipants(threadId: string, participantIds: CommunicationIdentifierKind[]): void;
-    // (undocumented)
-    deleteThread(threadId: string): void;
-    // (undocumented)
-    getState(): ChatClientState;
-    // (undocumented)
-    offStateChange(handler: (state: ChatClientState) => void): void;
-    // (undocumented)
-    onStateChange(handler: (state: ChatClientState) => void): void;
-    // (undocumented)
-    setChatMessage(threadId: string, message: ChatMessageWithStatus): void;
-    // (undocumented)
-    setChatMessages(threadId: string, messages: Map<string, ChatMessageWithStatus>): void;
-    // (undocumented)
-    setParticipant(threadId: string, participant: ChatParticipant): void;
-    // (undocumented)
-    setParticipants(threadId: string, participants: ChatParticipant[]): void;
-    // (undocumented)
-    setState(state: ChatClientState): void;
-    // (undocumented)
-    setThread(threadId: string, threadState: ChatThreadClientState): void;
-    // (undocumented)
-    updateChatConfig(config: ChatConfig): void;
-    // (undocumented)
-    updateChatMessageContent(threadId: string, messagesId: string, content: string | undefined): void;
-    // (undocumented)
-    updateThread(threadId: string, properties?: ChatThreadProperties): void;
-    // (undocumented)
-    updateThreadTopic(threadId: string, topic?: string): void;
-}
-
-// @public (undocumented)
 export type ChatMessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
 
 // @public (undocumented)
@@ -87,9 +33,6 @@ export type ChatMessageWithStatus = ChatMessage & {
     clientMessageId?: string;
     status: ChatMessageStatus;
 };
-
-// @public (undocumented)
-export const chatThreadClientDeclaratify: (chatThreadClient: ChatThreadClient, context: ChatContext) => ChatThreadClient;
 
 // @public (undocumented)
 export type ChatThreadClientState = {
@@ -115,7 +58,13 @@ export type ChatThreadProperties = {
 export type CommunicationIdentifierAsKey = string;
 
 // @public (undocumented)
-export interface DeclarativeChatClient extends ChatClient {
+export const createStatefulChatClient: (chatClient: ChatClient, chatConfig: ChatConfig) => StatefulChatClient;
+
+// @public (undocumented)
+export const getCommunicationIdentifierAsKey: (identifier: CommunicationIdentifier) => CommunicationIdentifierAsKey;
+
+// @public (undocumented)
+export interface StatefulChatClient extends ChatClient {
     // (undocumented)
     offStateChange(handler: (state: ChatClientState) => void): void;
     // (undocumented)
@@ -123,9 +72,6 @@ export interface DeclarativeChatClient extends ChatClient {
     // (undocumented)
     state: ChatClientState;
 }
-
-// @public (undocumented)
-export const getCommunicationIdentifierAsKey: (identifier: CommunicationIdentifier) => CommunicationIdentifierAsKey;
 
 // @public (undocumented)
 export type TypingIndicatorEvent = Omit<TypingIndicatorReceivedEvent, 'receivedOn'> & {

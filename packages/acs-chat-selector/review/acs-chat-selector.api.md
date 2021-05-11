@@ -11,11 +11,11 @@ import { ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationParticipant } from 'react-components';
 import { ContextualMenuItem } from 'react-components';
-import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
 import { Message } from 'react-components';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
 import * as reselect from 'reselect';
+import { StatefulChatClient } from '@azure/acs-chat-declarative';
 import { TypingIndicatorEvent } from '@azure/acs-chat-declarative';
 
 // @public (undocumented)
@@ -32,7 +32,7 @@ export const ChatClientProvider: (props: ChatClientProviderProps) => JSX.Element
 // @public (undocumented)
 export type ChatClientProviderProps = {
     children: React_2.ReactNode;
-    chatClient: DeclarativeChatClient;
+    chatClient: StatefulChatClient;
 };
 
 // @public (undocumented)
@@ -67,7 +67,7 @@ export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientSta
 }>;
 
 // @public (undocumented)
-export type CommonProperties2<A, B> = {
+export type CommonProperties<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
 
@@ -75,10 +75,10 @@ export type CommonProperties2<A, B> = {
 export const communicationIdentifierToString: (i: CommunicationIdentifier | undefined) => string;
 
 // @public (undocumented)
-export const createDefaultChatHandlers: (chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient) => DefaultChatHandlers;
+export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => DefaultChatHandlers;
 
 // @public (undocumented)
-export const createDefaultChatHandlersForComponent: <Props>(chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties2<DefaultChatHandlers, Props>>;
+export const createDefaultChatHandlersForComponent: <Props>(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, Props>>;
 
 // @public (undocumented)
 export type DefaultChatHandlers = {
@@ -116,13 +116,13 @@ export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClie
 }>;
 
 // @public (undocumented)
-export const useChatClient: () => DeclarativeChatClient;
+export const useChatClient: () => StatefulChatClient;
 
 // @public (undocumented)
 export const useChatThreadClient: () => ChatThreadClient;
 
 // @public (undocumented)
-export const useHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties2<DefaultChatHandlers, PropsT>>;
+export const useHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, PropsT>>;
 
 // @public (undocumented)
 export const usePropsFor: <SelectorT extends (state: ChatClientState, props: any) => any>(component: React_2.FunctionComponent<any>) => ReturnType<SelectorT>;

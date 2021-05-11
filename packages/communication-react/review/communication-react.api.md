@@ -16,7 +16,6 @@ import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CommunicationParticipant as CommunicationParticipant_2 } from 'react-components';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { ContextualMenuItem as ContextualMenuItem_2 } from 'react-components';
-import { DeclarativeChatClient as DeclarativeChatClient_2 } from '@azure/acs-chat-declarative';
 import { IButtonProps } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
@@ -27,6 +26,7 @@ import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
 import * as reselect from 'reselect';
 import { SizeValue } from '@fluentui/react-northstar';
+import { StatefulChatClient as StatefulChatClient_2 } from '@azure/acs-chat-declarative';
 import { Theme } from '@fluentui/react-theme-provider';
 import { TypingIndicatorEvent as TypingIndicatorEvent_2 } from '@azure/acs-chat-declarative';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
@@ -56,16 +56,13 @@ export type ChatBaseSelectorProps = {
     threadId: string;
 };
 
-// @public (undocumented)
-export const chatClientDeclaratify: (chatClient: ChatClient, chatConfig: ChatConfig) => DeclarativeChatClient;
-
 // @public
 export const ChatClientProvider: (props: ChatClientProviderProps) => JSX.Element;
 
 // @public (undocumented)
 export type ChatClientProviderProps = {
     children: React_2.ReactNode;
-    chatClient: DeclarativeChatClient_2;
+    chatClient: StatefulChatClient_2;
 };
 
 // @public (undocumented)
@@ -80,56 +77,6 @@ export type ChatConfig = {
     userId: CommunicationIdentifierKind;
     displayName: string;
 };
-
-// @public (undocumented)
-export class ChatContext {
-    // (undocumented)
-    addReadReceipt(threadId: string, readReceipt: ChatMessageReadReceipt): void;
-    // (undocumented)
-    addTypingIndicator(threadId: string, typingIndicator: TypingIndicatorEvent): void;
-    // (undocumented)
-    batch(batchFunc: () => void): void;
-    // (undocumented)
-    createThread(threadId: string, properties?: ChatThreadProperties): void;
-    // (undocumented)
-    createThreadIfNotExist(threadId: string, properties?: ChatThreadProperties): boolean;
-    // (undocumented)
-    deleteLocalMessage(threadId: string, localId: string): boolean;
-    // (undocumented)
-    deleteMessage(threadId: string, id: string): void;
-    // (undocumented)
-    deleteParticipant(threadId: string, participantId: CommunicationIdentifierKind): void;
-    // (undocumented)
-    deleteParticipants(threadId: string, participantIds: CommunicationIdentifierKind[]): void;
-    // (undocumented)
-    deleteThread(threadId: string): void;
-    // (undocumented)
-    getState(): ChatClientState;
-    // (undocumented)
-    offStateChange(handler: (state: ChatClientState) => void): void;
-    // (undocumented)
-    onStateChange(handler: (state: ChatClientState) => void): void;
-    // (undocumented)
-    setChatMessage(threadId: string, message: ChatMessageWithStatus): void;
-    // (undocumented)
-    setChatMessages(threadId: string, messages: Map<string, ChatMessageWithStatus>): void;
-    // (undocumented)
-    setParticipant(threadId: string, participant: ChatParticipant): void;
-    // (undocumented)
-    setParticipants(threadId: string, participants: ChatParticipant[]): void;
-    // (undocumented)
-    setState(state: ChatClientState): void;
-    // (undocumented)
-    setThread(threadId: string, threadState: ChatThreadClientState): void;
-    // (undocumented)
-    updateChatConfig(config: ChatConfig): void;
-    // (undocumented)
-    updateChatMessageContent(threadId: string, messagesId: string, content: string | undefined): void;
-    // (undocumented)
-    updateThread(threadId: string, properties?: ChatThreadProperties): void;
-    // (undocumented)
-    updateThreadTopic(threadId: string, topic?: string): void;
-}
 
 // @public (undocumented)
 export type ChatMessage = Message<'chat'>;
@@ -166,9 +113,6 @@ export const chatParticipantListSelector: reselect.OutputParametricSelector<Chat
     displayName: string;
     participants: CommunicationParticipant_2[];
 }>;
-
-// @public (undocumented)
-export const chatThreadClientDeclaratify: (chatThreadClient: ChatThreadClient, context: ChatContext) => ChatThreadClient;
 
 // @public
 export const ChatThreadClientProvider: (props: ChatThreadClientProviderProps) => JSX.Element;
@@ -211,7 +155,7 @@ export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientSta
 }>;
 
 // @public (undocumented)
-export type CommonProperties2<A, B> = {
+export type CommonProperties<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
 
@@ -264,10 +208,13 @@ export interface ControlBarProps {
 }
 
 // @public (undocumented)
-export const createDefaultChatHandlers: (chatClient: DeclarativeChatClient_2, chatThreadClient: ChatThreadClient) => DefaultChatHandlers;
+export const createDefaultChatHandlers: (chatClient: StatefulChatClient_2, chatThreadClient: ChatThreadClient) => DefaultChatHandlers;
 
 // @public (undocumented)
-export const createDefaultChatHandlersForComponent: <Props>(chatClient: DeclarativeChatClient_2, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties2<DefaultChatHandlers, Props>>;
+export const createDefaultChatHandlersForComponent: <Props>(chatClient: StatefulChatClient_2, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, Props>>;
+
+// @public (undocumented)
+export const createStatefulChatClient: (chatClient: ChatClient, chatConfig: ChatConfig) => StatefulChatClient;
 
 // @public (undocumented)
 export interface CreateViewOptions {
@@ -288,16 +235,6 @@ export type CustomMessagePayload = {
 
 // @public
 export const darkTheme: PartialTheme;
-
-// @public (undocumented)
-export interface DeclarativeChatClient extends ChatClient {
-    // (undocumented)
-    offStateChange(handler: (state: ChatClientState) => void): void;
-    // (undocumented)
-    onStateChange(handler: (state: ChatClientState) => void): void;
-    // (undocumented)
-    state: ChatClientState;
-}
 
 // @public (undocumented)
 export type DefaultChatHandlers = {
@@ -574,6 +511,16 @@ export interface SendBoxStylesProps extends BaseCustomStylesProps {
     textField?: IStyle;
 }
 
+// @public (undocumented)
+export interface StatefulChatClient extends ChatClient {
+    // (undocumented)
+    offStateChange(handler: (state: ChatClientState) => void): void;
+    // (undocumented)
+    onStateChange(handler: (state: ChatClientState) => void): void;
+    // (undocumented)
+    state: ChatClientState;
+}
+
 // @public
 export const StreamMedia: (props: StreamMediaProps) => JSX.Element;
 
@@ -624,13 +571,13 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
 }
 
 // @public (undocumented)
-export const useChatClient: () => DeclarativeChatClient_2;
+export const useChatClient: () => StatefulChatClient_2;
 
 // @public (undocumented)
 export const useChatThreadClient: () => ChatThreadClient;
 
 // @public (undocumented)
-export const useHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties2<DefaultChatHandlers, PropsT>>;
+export const useHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, PropsT>>;
 
 // @public (undocumented)
 export const usePropsFor: <SelectorT extends (state: ChatClientState_2, props: any) => any>(component: React_2.FunctionComponent<any>) => ReturnType<SelectorT>;

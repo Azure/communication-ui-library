@@ -25,7 +25,6 @@ import { ContextualMenuItem } from 'react-components';
 import { ControlBarProps } from 'react-components';
 import { CreateViewOptions } from '@azure/communication-calling';
 import { DeclarativeCallClient } from '@azure/acs-calling-declarative';
-import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
 import { DeviceManager } from '@azure/acs-calling-declarative';
 import { Dispatch } from 'react';
 import { ErrorBarProps } from 'react-components';
@@ -48,6 +47,7 @@ import { RemoteVideoStream } from '@azure/acs-calling-declarative';
 import { RemoteVideoStream as RemoteVideoStream_2 } from '@azure/communication-calling';
 import { ScalingMode } from '@azure/communication-calling';
 import { SetStateAction } from 'react';
+import { StatefulChatClient } from '@azure/acs-chat-declarative';
 import { StatefulDeviceManager } from '@azure/acs-calling-declarative';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
@@ -57,7 +57,7 @@ export const areStreamsEqual: (prevStream: LocalVideoStream_2, newStream: LocalV
 
 // @public (undocumented)
 export class AzureCommunicationChatAdapter implements GroupChatAdapter {
-    constructor(chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient);
+    constructor(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient);
     // (undocumented)
     getState: () => GroupChatState;
     // (undocumented)

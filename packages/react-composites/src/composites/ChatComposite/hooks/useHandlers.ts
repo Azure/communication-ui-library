@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CommonProperties2, DefaultChatHandlers } from '@azure/acs-chat-selector';
+import { CommonProperties, DefaultChatHandlers } from '@azure/acs-chat-selector';
 
 import { ReactElement } from 'react';
 import memoizeOne from 'memoize-one';
@@ -13,7 +13,7 @@ import { useAdapter } from '../adapter/GroupChatAdapterProvider';
 export const useHandlers = <PropsT>(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _component: (props: PropsT) => ReactElement | null
-): Pick<DefaultChatHandlers, CommonProperties2<DefaultChatHandlers, PropsT>> => {
+): Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, PropsT>> => {
   return createCompositeHandlers(useAdapter());
 };
 

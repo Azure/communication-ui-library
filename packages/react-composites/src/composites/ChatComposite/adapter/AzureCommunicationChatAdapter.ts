@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { chatClientDeclaratify, ChatClientState, DeclarativeChatClient } from '@azure/acs-chat-declarative';
+import { createStatefulChatClient, ChatClientState, StatefulChatClient } from '@azure/acs-chat-declarative';
 import {
   DefaultChatHandlers,
   communicationIdentifierToString,
@@ -64,12 +64,12 @@ export class GroupChatContext {
 }
 
 export class AzureCommunicationChatAdapter implements GroupChatAdapter {
-  private chatClient: DeclarativeChatClient;
+  private chatClient: StatefulChatClient;
   private chatThreadClient: ChatThreadClient;
   private context: GroupChatContext;
   private handlers: DefaultChatHandlers;
 
-  constructor(chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient) {
+  constructor(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) {
     this.chatClient = chatClient;
     this.chatThreadClient = chatThreadClient;
     this.context = new GroupChatContext(chatClient.state, chatThreadClient.threadId);
@@ -160,7 +160,7 @@ export const createAzureCommunicationChatAdapter = async (
 
   // This hack can be removed when `getIdFromToken` is dropped in favour of actually passing in user credentials.
   const userId = <CommunicationUserKind>{ kind: 'communicationUser', communicationUserId: rawUserId };
-  const chatClient = chatClientDeclaratify(
+  const chatClient = createStatefulChatClient(
     new ChatClient(endpointUrl, createAzureCommunicationUserCredential(token, refreshTokenCallback)),
     { userId, displayName }
   );
