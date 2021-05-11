@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Added Participant list selector",
+  "comment": "Added ParticipantList selector and handler",
   "packageName": "@azure/acs-calling-selector",
   "email": "miguelgamis@microsoft.com",
   "dependentChangeType": "patch"
