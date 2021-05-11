@@ -24,6 +24,7 @@ const createCompositeHandlers = memoizeOne(
     onMessageSeen: adapter.sendReadReceipt,
     onTyping: adapter.sendTypingIndicator,
     removeThreadMember: adapter.removeParticipant,
-    updateThreadTopicName: adapter.setTopic
+    updateThreadTopicName: adapter.setTopic,
+    onRenderParticipantMenu: adapter.onRenderParticipantMenu
   })
 );

@@ -180,6 +180,13 @@ export enum CommunicationUiErrorSeverity {
     WARNING = "Warning"
 }
 
+// @public (undocumented)
+export type ContextualMenuItem = {
+    key: string;
+    text: string;
+    onClick: (userId: string) => boolean | void;
+};
+
 // @public
 export const ControlBar: (props: ControlBarProps) => JSX.Element;
 

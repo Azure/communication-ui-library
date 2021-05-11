@@ -9,12 +9,14 @@ import { ChatMessageWithStatus } from '@azure/acs-chat-declarative';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationIdentifier } from '@azure/communication-common';
+import { ContextualMenuItem } from 'react-components';
 import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
 import { MessageStatus } from '@azure/acs-chat-declarative';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
 import * as reselect from 'reselect';
 import { TypingIndicator } from '@azure/acs-chat-declarative';
+import { WebUiChatParticipant } from 'react-components';
 
 // @public (undocumented)
 export type BaseSelectorProps = {
@@ -87,13 +89,6 @@ export type CommonProperties<A, B> = {
 
 // @public (undocumented)
 export const communicationIdentifierToString: (i: CommunicationIdentifier | undefined) => string;
-
-// @public (undocumented)
-export type ContextualMenuItem = {
-    key: string;
-    text: string;
-    onClick: (userId: string) => boolean | void;
-};
 
 // @public (undocumented)
 export const createDefaultHandlers: (chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient) => DefaultHandlers;
@@ -189,12 +184,6 @@ export const useSelector: <SelectorT extends (state: ChatClientState, props: any
 
 // @public (undocumented)
 export const useThreadId: () => string;
-
-// @public (undocumented)
-export type WebUiChatParticipant = {
-    userId: string;
-    displayName?: string;
-};
 
 
 // (No @packageDocumentation comment for this package)

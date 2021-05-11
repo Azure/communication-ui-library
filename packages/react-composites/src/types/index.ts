@@ -9,4 +9,3 @@ export * from './DevicePermission';
 export * from './GalleryParticipant';
 export * from './ListParticipant';
 export * from './ParticipantStream';
-export * from './WebUiChatParticipant';

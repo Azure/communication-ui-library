@@ -20,4 +20,3 @@ export { memoizeFnAll } from './utils/memoizeFnAll';
 export type { FunctionWithKey, CallbackType } from './utils/memoizeFnAll';
 export * from './callControlSelectors';
 export * from './participantListSelector';
-export type { WebUIParticipant } from './types/WebUIParticipant';

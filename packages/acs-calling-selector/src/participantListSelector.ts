@@ -8,7 +8,7 @@ import * as callingDeclarative from '@azure/acs-calling-declarative';
 // @ts-ignore
 import { BaseSelectorProps } from './baseSelectors';
 import { getCall, getUserId, getDisplayName } from './baseSelectors';
-import { WebUIParticipant } from './types/WebUIParticipant';
+import { WebUIParticipant } from 'react-components';
 import {
   CommunicationUserKind,
   PhoneNumberKind,

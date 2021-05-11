@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { optionsButtonSelector, participantListSelector } from '@azure/acs-calling-selector';
-import { Stack, IContextualMenuItem } from '@fluentui/react';
+import { Stack } from '@fluentui/react';
 import {
   fullHeightStyles,
   paneHeaderStyle,
@@ -11,12 +11,12 @@ import {
   settingsContainerStyle
 } from 'app/styles/CommandPanel.styles';
 import { ThemeSelector } from 'app/theming/ThemeSelector';
-import { useCall, useCallingContext } from 'react-composites';
+import { useCallingContext } from 'react-composites';
 import { Footer } from './Footer';
 import { useHandlers } from './hooks/useHandlers';
 import { useSelector } from './hooks/useSelector';
 import { LocalDeviceSettingsComponent } from './LocalDeviceSettings';
-import { ParticipantList, WebUIParticipant } from 'react-components';
+import { ParticipantList } from 'react-components';
 
 export enum CommandPanelTypes {
   None = 'none',
@@ -29,22 +29,9 @@ export interface CommandPanelProps {
 }
 
 export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
-  const call = useCall();
-  const participantListProps = useSelector(participantListSelector, { callId: call ? call.id : '' });
+  const participantListProps = useSelector(participantListSelector);
+  const participantListHandlers = useHandlers(ParticipantList);
 
-  const onRenderParticipantMenu = (participant: WebUIParticipant): IContextualMenuItem[] => {
-    const menuItems: IContextualMenuItem[] = [];
-    if (participant.userId !== participantListProps.myUserId) {
-      menuItems.push({
-        key: 'Remove',
-        text: 'Remove',
-        onClick: () => {
-          call?.removeParticipant({ communicationUserId: participant.userId });
-        }
-      });
-    }
-    return menuItems;
-  };
   const options = useSelector(optionsButtonSelector, { callId: '' });
   const handlers = useHandlers(LocalDeviceSettingsComponent);
   const { videoDeviceInfo } = useCallingContext();
@@ -56,7 +43,7 @@ export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
       </Stack.Item>
       {props.selectedPane === CommandPanelTypes.People && (
         <Stack.Item styles={fullHeightStyles}>
-          <ParticipantList {...participantListProps} onRenderParticipantMenu={onRenderParticipantMenu} />
+          <ParticipantList {...participantListProps} {...participantListHandlers} />
         </Stack.Item>
       )}
       {props.selectedPane === CommandPanelTypes.People && (

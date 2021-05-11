@@ -4,8 +4,8 @@
 import { ReactElement } from 'react';
 import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
 import { ChatThreadClient } from '@azure/communication-chat';
-import { ContextualMenuItem } from '../types/ContextualMenuItem';
-import { WebUiChatParticipant } from '../types/WebUiChatParticipant';
+import { ContextualMenuItem, WebUiChatParticipant } from 'react-components';
+import { getACSId } from '../utils/getACSId';
 import memoizeOne from 'memoize-one';
 
 export type DefaultHandlers = {
@@ -62,7 +62,7 @@ export const createDefaultHandlers = memoizeOne(
       },
       onRenderParticipantMenu: (participant: WebUiChatParticipant) => {
         const menu: ContextualMenuItem[] = [];
-        if (chatClient.state.userId !== participant.userId) {
+        if (getACSId(chatClient.state.userId) !== participant.userId) {
           menu.push({
             key: 'Remove',
             text: 'Remove',

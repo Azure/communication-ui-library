@@ -11,6 +11,7 @@ import { CallAgent } from '@azure/communication-calling';
 import { CallClientState } from '@azure/acs-calling-declarative';
 import * as callingStateful from '@azure/acs-calling-declarative';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
+import { ContextualMenuItem } from 'react-components';
 import { CreateViewOptions as CreateViewOptions_2 } from '@azure/communication-calling';
 import { DeclarativeCallClient } from '@azure/acs-calling-declarative';
 import { DeviceManager } from '@azure/acs-calling-declarative';
@@ -24,6 +25,7 @@ import { StartCallOptions } from '@azure/communication-calling';
 import { StatefulDeviceManager } from '@azure/acs-calling-declarative';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
+import { WebUIParticipant } from 'react-components';
 
 // @public
 export type BaseSelectorProps = {
@@ -58,6 +60,7 @@ export const createDefaultHandlersForComponent: <Props>(declarativeCallClient: D
     onToggleMicrophone: () => Promise<void> | void;
     onToggleScreenShare: () => Promise<void> | void;
     onRenderView: (stream: LocalVideoStream | RemoteVideoStream, options: CreateViewOptions_2) => Promise<void>;
+    onRenderParticipantMenu: (participant: WebUIParticipant) => ContextualMenuItem[];
 }, CommonProperties<{
     onHangUp: () => Promise<void>;
     onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
@@ -68,6 +71,7 @@ export const createDefaultHandlersForComponent: <Props>(declarativeCallClient: D
     onToggleMicrophone: () => Promise<void> | void;
     onToggleScreenShare: () => Promise<void> | void;
     onRenderView: (stream: LocalVideoStream | RemoteVideoStream, options: CreateViewOptions_2) => Promise<void>;
+    onRenderParticipantMenu: (participant: WebUIParticipant) => ContextualMenuItem[];
 }, Props>>;
 
 // @public (undocumented)
@@ -185,16 +189,6 @@ export const videoGallerySelector: reselect.OutputParametricSelector<callingStat
     localParticipant: VideoGalleryLocalParticipant | undefined;
     remoteParticipants: VideoGalleryRemoteParticipant[];
 }>;
-
-// @public (undocumented)
-export type WebUIParticipant = {
-    userId: string;
-    displayName?: string;
-    state?: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
-    isScreenSharing?: boolean;
-    isMuted?: boolean;
-    isSpeaking?: boolean;
-};
 
 
 // (No @packageDocumentation comment for this package)

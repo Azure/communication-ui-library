@@ -20,6 +20,7 @@ import { ChatThreadClient } from '@azure/communication-chat';
 import { ChatThreadClientState } from '@azure/acs-chat-declarative';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CommunicationUserKind } from '@azure/communication-common';
+import { ContextualMenuItem } from 'react-components';
 import { ControlBarProps } from 'react-components';
 import { CreateViewOptions } from '@azure/communication-calling';
 import { DeclarativeCallClient } from '@azure/acs-calling-declarative';
@@ -49,6 +50,7 @@ import { SetStateAction } from 'react';
 import { StatefulDeviceManager } from '@azure/acs-calling-declarative';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
+import { WebUiChatParticipant } from 'react-components';
 
 // @public (undocumented)
 export const areStreamsEqual: (prevStream: LocalVideoStream_2, newStream: LocalVideoStream_2) => boolean;
@@ -68,6 +70,8 @@ export class AzureCommunicationChatAdapter implements GroupChatAdapter {
     on(event: 'participantsJoined', participantsJoinedHandler: (participant: ChatParticipant) => void): void;
     // (undocumented)
     on(event: 'error', errorHandler: (e: Error) => void): void;
+    // (undocumented)
+    onRenderParticipantMenu: (participant: WebUiChatParticipant) => ContextualMenuItem[];
     // (undocumented)
     onStateChange: (handler: (state: GroupChatState) => void) => void;
     // (undocumented)
@@ -616,6 +620,8 @@ export interface GroupChatAdapter {
     // (undocumented)
     on(event: 'error', errorHandler: (e: Error) => void): void;
     // (undocumented)
+    onRenderParticipantMenu: (participant: WebUiChatParticipant) => ContextualMenuItem[];
+    // (undocumented)
     onStateChange(handler: (state: GroupChatState) => void): void;
     // (undocumented)
     removeParticipant(userId: string): Promise<void>;
@@ -1041,12 +1047,6 @@ export interface VideoContainerProps {
     // (undocumented)
     videoStreamElement: HTMLElement | null;
 }
-
-// @public
-export type WebUiChatParticipant = {
-    userId: string;
-    displayName?: string;
-};
 
 // @public
 export const WithErrorHandling: (Component: (props: any & ErrorHandlingProps) => JSX.Element, props: any & ErrorHandlingProps) => JSX.Element;

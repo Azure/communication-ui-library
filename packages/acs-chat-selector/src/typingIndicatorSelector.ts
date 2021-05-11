@@ -10,7 +10,7 @@ import { communicationIdentifierToString, getTypingIndicators, getParticipants, 
 import * as reselect from 'reselect';
 import { ChatParticipant } from '@azure/communication-chat';
 import { TypingIndicator } from '@azure/acs-chat-declarative';
-import { WebUiChatParticipant } from './types/WebUiChatParticipant';
+import { WebUiChatParticipant } from 'react-components';
 import { MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS, PARTICIPANTS_THRESHOLD } from './utils/constants';
 
 const filterTypingIndicators = (typingIndicators: TypingIndicator[], userId: string): TypingIndicator[] => {
