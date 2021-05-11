@@ -27,6 +27,7 @@ export const CameraButton: (props: CameraButtonProps) => JSX.Element;
 
 // @public
 export interface CameraButtonProps extends IButtonProps {
+    onToggleCamera?: () => Promise<void>;
     showLabel?: boolean;
 }
 
@@ -72,6 +73,14 @@ export interface ControlBarProps {
 }
 
 // @public (undocumented)
+export interface CreateViewOptions {
+    // (undocumented)
+    isMirrored?: boolean;
+    // (undocumented)
+    scalingMode?: ScalingMode;
+}
+
+// @public (undocumented)
 export type CustomMessage = Message<'custom'>;
 
 // @public (undocumented)
@@ -91,6 +100,7 @@ export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
 
 // @public
 export interface EndCallButtonProps extends IButtonProps {
+    onHangUp?: () => Promise<void>;
     showLabel?: boolean;
 }
 
@@ -143,6 +153,16 @@ export const labeledRecordButtonProps: IButtonProps;
 
 // @public
 export const lightTheme: PartialTheme;
+
+// @public
+export interface LocalVideoStream {
+    mediaStreamType: MediaStreamType;
+    source: VideoDeviceInfo;
+    videoStreamRendererView?: VideoStreamRendererView | undefined;
+}
+
+// @public (undocumented)
+export type MediaStreamType = 'Video' | 'ScreenSharing';
 
 // @public (undocumented)
 export type Message<T extends MessageTypes> = {
@@ -204,6 +224,7 @@ export const MicrophoneButton: (props: MicrophoneButtonProps) => JSX.Element;
 
 // @public
 export interface MicrophoneButtonProps extends IButtonProps {
+    onToggleMicrophone?: () => Promise<void>;
     showLabel?: boolean;
 }
 
@@ -261,10 +282,22 @@ export interface ReadReceiptProps {
 export const recordButtonProps: IButtonProps;
 
 // @public
+export interface RemoteVideoStream {
+    id: number;
+    isAvailable: boolean;
+    mediaStreamType: MediaStreamType;
+    videoStreamRendererView: VideoStreamRendererView | undefined;
+}
+
+// @public (undocumented)
+export type ScalingMode = 'Stretch' | 'Crop' | 'Fit';
+
+// @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
 
 // @public
 export interface ScreenShareButtonProps extends IButtonProps {
+    onToggleScreenShare?: () => Promise<void>;
     showLabel?: boolean;
 }
 
@@ -326,6 +359,60 @@ export interface TypingIndicatorProps {
 export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
+}
+
+// @public (undocumented)
+export interface VideoDeviceInfo {
+    readonly deviceType: VideoDeviceType;
+    readonly id: string;
+    readonly name: string;
+}
+
+// @public (undocumented)
+export type VideoDeviceType = 'Unknown' | 'UsbCamera' | 'CaptureAdapter' | 'Virtual';
+
+// @public (undocumented)
+export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
+
+// @public (undocumented)
+export type VideoGalleryLocalParticipant = VideoGalleryParticipant & {
+    isScreenSharingOn: boolean;
+    videoStream?: LocalVideoStream;
+};
+
+// @public (undocumented)
+export type VideoGalleryParticipant = {
+    userId: string;
+    displayName?: string;
+    isMuted: boolean;
+};
+
+// @public (undocumented)
+export interface VideoGalleryProps {
+    // (undocumented)
+    localParticipant?: VideoGalleryLocalParticipant;
+    // (undocumented)
+    onRenderView(stream: RemoteVideoStream | LocalVideoStream, options?: CreateViewOptions | undefined): Promise<void>;
+    // (undocumented)
+    remoteParticipants?: VideoGalleryRemoteParticipant[];
+    // (undocumented)
+    scalingMode: ScalingMode;
+    // (undocumented)
+    styles?: BaseCustomStylesProps;
+}
+
+// @public (undocumented)
+export type VideoGalleryRemoteParticipant = VideoGalleryParticipant & {
+    isSpeaking: boolean;
+    videoStream?: RemoteVideoStream;
+    screenShareStream?: RemoteVideoStream;
+};
+
+// @public
+export interface VideoStreamRendererView {
+    isMirrored: boolean;
+    scalingMode: ScalingMode;
+    target: HTMLElement;
 }
 
 // @public (undocumented)

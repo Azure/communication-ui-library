@@ -10,5 +10,5 @@ module.exports = {
   '../acs-chat-declarative/dist/dist-esm/index.js': ['react-components', '@fluentui', 'react'],
   '../acs-calling-declarative/dist/dist-esm/index.js': ['react-components', '@fluentui', 'react'],
   '../acs-chat-selector/dist/dist-esm/index.js': [],
-  '../acs-calling-selector/dist/dist-esm/index.js': ['react-components']
+  '../acs-calling-selector/dist/dist-esm/index.js': []
 };

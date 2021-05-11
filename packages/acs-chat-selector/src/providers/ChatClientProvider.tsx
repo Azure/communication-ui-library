@@ -2,13 +2,13 @@
 // Licensed under the MIT license.
 
 import React, { createContext, useContext } from 'react';
-import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
+import { StatefulChatClient } from '@azure/acs-chat-declarative';
 
-export const ChatClientContext = createContext<DeclarativeChatClient | undefined>(undefined);
+export const ChatClientContext = createContext<StatefulChatClient | undefined>(undefined);
 
 export type ChatClientProviderProps = {
   children: React.ReactNode;
-  chatClient: DeclarativeChatClient;
+  chatClient: StatefulChatClient;
 };
 
 /**
@@ -21,7 +21,7 @@ export const ChatClientProvider = (props: ChatClientProviderProps): JSX.Element 
   return <ChatClientContext.Provider value={props.chatClient}>{props.children}</ChatClientContext.Provider>;
 };
 
-export const useChatClient = (): DeclarativeChatClient => {
+export const useChatClient = (): StatefulChatClient => {
   const chatClient = useContext(ChatClientContext);
   if (!chatClient)
     throw 'Please wrap components with ChatClientProvider and initialize a chat client before calling the hook!';

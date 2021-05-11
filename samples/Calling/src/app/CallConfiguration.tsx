@@ -11,9 +11,8 @@ import {
   verticalStackStyle
 } from './styles/CallConfiguration.styles';
 import { LocalPreview } from './LocalPreview';
-import { SetupContainerProps } from 'react-composites';
 
-export interface CallConfigurationProps extends SetupContainerProps {
+export interface CallConfigurationProps {
   screenWidth: number;
   startCallHandler(): void;
   children: React.ReactNode;
