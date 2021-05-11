@@ -1,5 +1,5 @@
-import { chatClientDeclaratify, DeclarativeChatClient } from '@azure/acs-chat-declarative';
-import { sendBoxSelector, chatThreadSelector, createDefaultHandlersForComponent } from '@azure/acs-chat-selector';
+import { createStatefulChatClient, StatefulChatClient } from '@azure/acs-chat-declarative';
+import { sendBoxSelector, chatThreadSelector, createDefaultChatHandlersForComponent } from '@azure/acs-chat-selector';
 import { ChatClient, ChatThreadClient } from '@azure/communication-chat';
 import { AzureCommunicationUserCredential } from '@azure/communication-common';
 import { FluentThemeProvider, MessageThread, SendBox, MessageThreadProps, SendBoxProps } from '@azure/communication-ui';
@@ -13,7 +13,7 @@ function App(): JSX.Element {
   const threadId = 'INSERT THREAD ID ';
   const displayName = 'INSERT DISPLAY NAME';
 
-  const [statefulChatClient, setStatefulChatClient] = useState<DeclarativeChatClient>();
+  const [statefulChatClient, setStatefulChatClient] = useState<StatefulChatClient>();
   const [chatThreadClient, setChatThreadClient] = useState<ChatThreadClient>();
   const [messageThreadProps, setChatThreadProps] = useState<MessageThreadProps>();
   const [sendBoxProps, setSendBoxProps] = useState<SendBoxProps>();
@@ -41,15 +41,15 @@ function App(): JSX.Element {
 
   //Add state to the low-level chat client
   setStatefulChatClient(
-    chatClientDeclaratify(new ChatClient(endpointUrl, tokenCredential), { userId: userId, displayName: displayName })
+    createStatefulChatClient(new ChatClient(endpointUrl, tokenCredential), { userId: userId, displayName: displayName })
   );
 
   //Generate Handlers for Message Thread and SendBox off the stateful client to handle events from the UI Components
   let sendBoxHandler;
   let messageThreadHandler;
   if (chatThreadClient && statefulChatClient) {
-    sendBoxHandler = createDefaultHandlersForComponent(statefulChatClient, chatThreadClient, SendBox);
-    messageThreadHandler = createDefaultHandlersForComponent(statefulChatClient, chatThreadClient, MessageThread);
+    sendBoxHandler = createDefaultChatHandlersForComponent(statefulChatClient, chatThreadClient, SendBox);
+    messageThreadHandler = createDefaultChatHandlersForComponent(statefulChatClient, chatThreadClient, MessageThread);
   }
 
   return (

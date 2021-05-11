@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add memoized selector and VideoGallery component",
+  "packageName": "@azure/acs-calling-selector",
+  "email": "easony@microsoft.com",
+  "dependentChangeType": "patch"
+}

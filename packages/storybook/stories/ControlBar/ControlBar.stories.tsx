@@ -9,11 +9,23 @@ import {
   OptionsButton,
   ScreenShareButton
 } from '@azure/communication-react';
+import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import { boolean, select } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
+
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
-import { getDocs } from './ControlBarDocs';
+import { AllButtonsControlBarExample } from './snippets/AllButtonsControlBar.snippet';
+import { ControlBarLayoutExample } from './snippets/ControlBarLayout.snippet';
+import { CustomButtonsExample } from './snippets/CustomButtons.snippet';
+import { CustomControlBarStylesExample } from './snippets/CustomControlBarStyles.snippet';
+import { OptionsButtonExample } from './snippets/OptionsButton.snippet';
+
+const AllButtonsControlBarExampleText = require('!!raw-loader!./snippets/AllButtonsControlBar.snippet.tsx').default;
+const ControlBarLayoutExampleText = require('!!raw-loader!./snippets/ControlBarLayout.snippet.tsx').default;
+const CustomButtonsExampleText = require('!!raw-loader!./snippets/CustomButtons.snippet.tsx').default;
+const CustomControlBarStylesExampleText = require('!!raw-loader!./snippets/CustomControlBarStyles.snippet.tsx').default;
+const OptionsButtonExampleText = require('!!raw-loader!./snippets/OptionsButton.snippet.tsx').default;
 
 const CONTROL_BAR_LAYOUTS = [
   'horizontal',
@@ -53,6 +65,82 @@ const exampleOptionsMenuProps = {
       }
     }
   ]
+};
+
+const importStatement = `
+import { FluentThemeProvider, ControlBar } from '@azure/communication-react';
+import { DefaultButton } from '@fluentui/react';
+`;
+
+const getDocs: () => JSX.Element = () => {
+  return (
+    <>
+      <Title>ControlBar</Title>
+      <Description of={ControlBar} />
+
+      <Heading>Importing</Heading>
+      <Source code={importStatement} />
+
+      <Heading>Example</Heading>
+      <Description>
+        We recommend using our pre-defined buttons you can find [here](./?path=/docs/ui-components-controlbar-buttons)
+        or `DefaultButton`, a [Button](https://developer.microsoft.com/en-us/fluentui#/controls/web/button) component
+        from Fluent UI, as controls inside `ControlBar`. Pre-defined styles like `controlButtonStyles` or
+        `controlButtonLabelStyles` can also be imported and used as `DefaultButton` styles for easy styling.
+        `FluentThemeProvider` is needed around `ControlBar` to provide theming and icons. Learn more about theming
+        [here](./?path=/docs/theming--page).
+      </Description>
+      <Canvas mdxSource={AllButtonsControlBarExampleText}>
+        <AllButtonsControlBarExample />
+      </Canvas>
+      <Description>
+        Note: In the example above, `menuProps` is a property of `Button`. The property type is
+        [IContextualMenuProps](https://developer.microsoft.com/en-us/fluentui#/controls/web/contextualmenu#IContextualMenuProps),
+        an interface for defining dropdown menu items.
+      </Description>
+
+      <Heading>Layouts</Heading>
+      <Description>
+        You can change the layout of `ControlBar` by providing a preset layout to the `layout` prop. Preset layouts are
+        `horizontal`, `vertical`, `dockedTop`, `dockedBottom`, `dockedLeft`, `dockedRight`, `floatingTop`,
+        `floatingBottom`, `floatingLeft` and `floatingRight`.
+      </Description>
+      <Canvas mdxSource={ControlBarLayoutExampleText}>
+        <ControlBarLayoutExample />
+      </Canvas>
+
+      <Heading>Custom ControlBar Styles</Heading>
+      <Description>
+        You can change the styles of the `ControlBar` by customizing its `styles` prop like in the example below.
+      </Description>
+      <Canvas mdxSource={CustomControlBarStylesExampleText}>
+        <CustomControlBarStylesExample />
+      </Canvas>
+
+      <Heading>Custom Buttons</Heading>
+      <Description>
+        You can also easily change the styles of included button components. They are built on Fluent UI `DefaultButton`
+        and accept all the same props. In the example below we import `CameraButton` and `MicrophoneButton` for the 1st
+        and 2nd buttons and style our own hang up button for the 3rd button. Learn more about styling
+        [here](./?path=/docs/styling--page).
+      </Description>
+      <Canvas mdxSource={CustomButtonsExampleText}>
+        <CustomButtonsExample />
+      </Canvas>
+
+      <Heading>Dropdown Options Button</Heading>
+      <Description>
+        The `OptionsButton` can be used for any dropdown items defined through `menuProps`. For more information, check
+        out the official Fluent UI documentation at https://developer.microsoft.com/en-us/fluentui#/controls/web/button
+      </Description>
+      <Canvas mdxSource={OptionsButtonExampleText}>
+        <OptionsButtonExample />
+      </Canvas>
+
+      <Heading>ControlBar Props</Heading>
+      <Props of={ControlBar} />
+    </>
+  );
 };
 
 export const ControlBarComponent: (

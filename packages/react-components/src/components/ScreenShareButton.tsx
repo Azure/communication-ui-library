@@ -15,6 +15,12 @@ export interface ScreenShareButtonProps extends IButtonProps {
    * @defaultValue `false`
    */
   showLabel?: boolean;
+
+  /**
+   * Utility property for using this component with `communication react eventHandlers`.
+   * Maps directly to the `onClick` property.
+   */
+  onToggleScreenShare?: () => Promise<void>;
 }
 
 /**
@@ -46,6 +52,7 @@ export const ScreenShareButton = (props: ScreenShareButtonProps): JSX.Element =>
   return (
     <DefaultButton
       {...props}
+      onClick={props.onToggleScreenShare ?? props.onClick}
       styles={componentStyles}
       onRenderIcon={onRenderIcon ?? defaultRenderIcon}
       onRenderText={showLabel ? onRenderText ?? defaultRenderText : undefined}

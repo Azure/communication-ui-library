@@ -15,6 +15,12 @@ export interface MicrophoneButtonProps extends IButtonProps {
    * @defaultValue `false`
    */
   showLabel?: boolean;
+
+  /**
+   * Utility property for using this component with `communication react eventHandlers`.
+   * Maps directly to the `onClick` property.
+   */
+  onToggleMicrophone?: () => Promise<void>;
 }
 
 /**
@@ -40,6 +46,7 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   return (
     <DefaultButton
       {...props}
+      onClick={props.onToggleMicrophone ?? props.onClick}
       styles={componentStyles}
       onRenderIcon={onRenderIcon ?? defaultRenderIcon}
       onRenderText={showLabel ? onRenderText ?? defaultRenderText : undefined}
