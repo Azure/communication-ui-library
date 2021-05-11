@@ -14,6 +14,7 @@ import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { CreateViewOptions } from '@azure/communication-calling';
 import { DeviceAccess } from '@azure/communication-calling';
+import { DeviceManager as DeviceManager_2 } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
@@ -77,6 +78,7 @@ export type DeviceManager = {
     isSpeakerSelectionAvailable: boolean;
     selectedMicrophone?: AudioDeviceInfo;
     selectedSpeaker?: AudioDeviceInfo;
+    selectedCamera?: VideoDeviceInfo;
     cameras: VideoDeviceInfo[];
     microphones: AudioDeviceInfo[];
     speakers: AudioDeviceInfo[];
@@ -121,6 +123,12 @@ export interface RemoteVideoStream {
     isAvailable: boolean;
     mediaStreamType: MediaStreamType;
     videoStreamRendererView: VideoStreamRendererView | undefined;
+}
+
+// @public (undocumented)
+export interface StatefulDeviceManager extends DeviceManager_2 {
+    // (undocumented)
+    selectCamera: (VideoDeviceInfo: any) => void;
 }
 
 // @public

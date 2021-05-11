@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { EndCallButton } from '@azure/communication-react';
 import { Canvas, Description, Heading, Props, Source, SourceState, Title } from '@storybook/addon-docs/blocks';
@@ -32,7 +33,7 @@ const getDocs: () => JSX.Element = () => {
       <Description>
         The default `EndCallButton` component shows a hangup icon with no label as in the example below.
       </Description>
-      <Canvas withSource={SourceState.NONE}>
+      <Canvas withSource={SourceState.NONE as any}>
         <EndCallButtonDefaultExample />
       </Canvas>
       <Source code={EndCallButtonDefaultExampleText} />
@@ -41,7 +42,7 @@ const getDocs: () => JSX.Element = () => {
       <Description>
         You can display the button label which, by default, will show below the icon as `Hangup`.
       </Description>
-      <Canvas withSource={SourceState.NONE}>
+      <Canvas withSource={SourceState.NONE as any}>
         <EndCallButtonWithLabelExample />
       </Canvas>
       <Source code={EndCallButtonWithLabelExampleText} />
@@ -51,7 +52,7 @@ const getDocs: () => JSX.Element = () => {
         You can change the styles of the `EndCallButton` as you would customized any Button (styles, primary,
         onRenderIcon, onRenderText, etc... ).
       </Description>
-      <Canvas withSource={SourceState.NONE}>
+      <Canvas withSource={SourceState.NONE as any}>
         <EndCallButtonCustomExample />
       </Canvas>
       <Source code={EndCallButtonCustomExampleText} />

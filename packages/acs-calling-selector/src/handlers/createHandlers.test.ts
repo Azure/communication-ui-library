@@ -44,7 +44,6 @@ describe('createHandlers', () => {
       undefined,
       TestCallClientComponent
     );
-    console.log(handlers);
     expect(handlers).toBeDefined();
     expect(Object.keys(handlers).length > 0).toBe(true);
   });

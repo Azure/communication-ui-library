@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { MessageStatus, ReadReceipt as ReadRecieptComponent } from '@azure/communication-react';
 import { select, text } from '@storybook/addon-knobs';

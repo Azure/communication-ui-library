@@ -157,7 +157,7 @@ describe('declarative chatThreadClient basic api functions', () => {
   test('should be able to proxy add participants and remove participants', async () => {
     const context = new ChatContext();
     const mockClient = createMockChatClientAndDeclaratify(context);
-    const participants = [{ user: { communicationUserId: 'User1' } }, { user: { communicationUserId: 'User2' } }];
+    const participants = [{ id: { communicationUserId: 'User1' } }, { id: { communicationUserId: 'User2' } }];
 
     await mockClient.addParticipants({
       participants
@@ -167,7 +167,7 @@ describe('declarative chatThreadClient basic api functions', () => {
     expect(participantsInContext?.size).toBe(2);
 
     // Test removal function
-    await mockClient.removeParticipant(participants[0].user);
+    await mockClient.removeParticipant(participants[0].id);
 
     const participantsAfterRemoval = Array.from(context.getState().threads.get(threadId)?.participants.values() ?? []);
     expect(participantsAfterRemoval.length).toBe(1);
@@ -193,12 +193,12 @@ describe('declarative chatThreadClient basic api functions', () => {
     const mockClient = createMockChatClientAndDeclaratify(context);
     const topic = 'updatedTopic';
 
-    await mockClient.updateThread({ topic });
+    await mockClient.updateTopic(topic);
 
-    const threadInfo = context.getState().threads.get(threadId)?.threadInfo;
+    const properties = context.getState().threads.get(threadId)?.properties;
 
-    expect(threadInfo).toBeDefined();
-    threadInfo && expect(threadInfo.topic).toBe(topic);
+    expect(properties).toBeDefined();
+    properties && expect(properties.topic).toBe(topic);
   });
 
   test('should be able to delete message with local messageId', async () => {

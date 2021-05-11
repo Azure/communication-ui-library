@@ -4,6 +4,10 @@
 import { AudioDeviceInfo, DeviceAccess, DeviceManager, VideoDeviceInfo } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
 
+export interface StatefulDeviceManager extends DeviceManager {
+  selectCamera: (VideoDeviceInfo) => void;
+}
+
 /**
  * ProxyDeviceManager proxies DeviceManager and subscribes to all events that affect device manager state. State updates
  * are set on the provided context. Also any queries for state are proxied and stored in state as well. Only one device
@@ -47,6 +51,14 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
     this._deviceManager.off('audioDevicesUpdated', this.audioDevicesUpdated);
     this._deviceManager.off('selectedMicrophoneChanged', this.selectedMicrophoneChanged);
     this._deviceManager.off('selectedSpeakerChanged', this.selectedSpeakerChanged);
+  };
+
+  /**
+   * Used to set a camera inside the proxy device manager.
+   * @param videoDeviceInfo VideoDeviceInfo
+   */
+  public selectCamera = (videoDeviceInfo: VideoDeviceInfo): void => {
+    this._context.setDeviceManagerSelectedCamera(videoDeviceInfo);
   };
 
   private videoDevicesUpdated = async (): Promise<void> => {
@@ -134,5 +146,9 @@ export const deviceManagerDeclaratify = (deviceManager: DeviceManager, context: 
     configurable: false,
     value: () => proxyDeviceManager.unsubscribe()
   });
-  return new Proxy(deviceManager, proxyDeviceManager) as DeviceManager;
+  Object.defineProperty(deviceManager, 'selectCamera', {
+    configurable: false,
+    value: (videoDeviceInfo: VideoDeviceInfo) => proxyDeviceManager.selectCamera(videoDeviceInfo)
+  });
+  return new Proxy(deviceManager, proxyDeviceManager) as StatefulDeviceManager;
 };

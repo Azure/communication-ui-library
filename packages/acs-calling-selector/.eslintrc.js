@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 module.exports = {
   env: {
@@ -55,7 +56,7 @@ module.exports = {
     {
       // remove ban on files affected by https://github.com/microsoft/rushstack/pull/1916.
       // This should be removed once this issue is fixed.
-      files: ['callControlSelectors.ts'],
+      files: ['videoGallerySelector.ts', 'callControlSelectors.ts'],
       rules: {
         '@typescript-eslint/ban-ts-comment': 'off',
         '@typescript-eslint/no-unused-vars': 'off'

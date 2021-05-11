@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 module.exports = {
   env: {
@@ -60,7 +61,8 @@ module.exports = {
         'sendBoxSelector.ts',
         'chatParticipantListSelector.ts',
         'chatHeaderSelector.ts',
-        'typingIndicatorSelector.ts'
+        'typingIndicatorSelector.ts',
+        'useHandlers.ts'
       ],
       rules: {
         '@typescript-eslint/ban-ts-comment': 'off',

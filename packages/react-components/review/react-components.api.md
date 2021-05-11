@@ -5,6 +5,7 @@
 ```ts
 
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
+import { ErrorInfo } from 'react';
 import { IButtonProps } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
@@ -27,6 +28,7 @@ export const CameraButton: (props: CameraButtonProps) => JSX.Element;
 
 // @public
 export interface CameraButtonProps extends IButtonProps {
+    onToggleCamera?: () => Promise<void>;
     showLabel?: boolean;
 }
 
@@ -45,6 +47,126 @@ export type ChatMessagePayload = {
     mine?: boolean;
     clientMessageId?: string;
 };
+
+// @public
+export class CommunicationUiError extends Error implements CommunicationUiErrorInfo {
+    constructor(args: CommunicationUiErrorArgs);
+    // (undocumented)
+    get code(): CommunicationUiErrorCode;
+    // (undocumented)
+    get errorInfo(): ErrorInfo | undefined;
+    set errorInfo(errorInfo: ErrorInfo | undefined);
+    // (undocumented)
+    get originalError(): Error | undefined;
+    // (undocumented)
+    get severity(): CommunicationUiErrorSeverity;
+    set severity(severity: CommunicationUiErrorSeverity);
+    }
+
+// @public (undocumented)
+export interface CommunicationUiErrorArgs {
+    // (undocumented)
+    code?: CommunicationUiErrorCode;
+    // (undocumented)
+    error?: Error;
+    // (undocumented)
+    errorInfo?: ErrorInfo;
+    // (undocumented)
+    message?: string;
+    // (undocumented)
+    severity?: CommunicationUiErrorSeverity;
+}
+
+// @public (undocumented)
+export enum CommunicationUiErrorCode {
+    // (undocumented)
+    ASK_PERMISSIONS_ERROR = 21,
+    // (undocumented)
+    CONFIGURATION_ERROR = 1,
+    // (undocumented)
+    CREATE_CALL_AGENT_ERROR = 31,
+    // (undocumented)
+    CREATE_CHAT_THREAD_CLIENT_ERROR = 10,
+    // (undocumented)
+    DISPOSE_CALL_AGENT_ERROR = 32,
+    // (undocumented)
+    FORBIDDEN_ERROR = 3,
+    // (undocumented)
+    GET_MESSAGE_ERROR = 14,
+    // (undocumented)
+    GET_MESSAGES_ERROR = 16,
+    // (undocumented)
+    GET_READ_RECEIPT_ERROR = 12,
+    // (undocumented)
+    GET_THREAD_ERROR = 19,
+    // (undocumented)
+    INTERNAL_SERVER_ERROR = 6,
+    // (undocumented)
+    JOIN_CALL_ERROR = 33,
+    // (undocumented)
+    LEAVE_CALL_ERROR = 34,
+    // (undocumented)
+    MESSAGE_EXCEEDED_RETRY_ERROR = 8,
+    // (undocumented)
+    MUTE_ERROR = 24,
+    // (undocumented)
+    QUERY_PERMISSIONS_ERROR = 20,
+    // (undocumented)
+    REMOVE_THREAD_MEMBER_ERROR = 17,
+    // (undocumented)
+    RENDER_LOCAL_VIDEO_ERROR = 30,
+    // (undocumented)
+    RENDER_REMOTE_VIDEO_ERROR = 29,
+    // (undocumented)
+    SEND_MESSAGE_ERROR = 13,
+    // (undocumented)
+    SEND_READ_RECEIPT_ERROR = 11,
+    // (undocumented)
+    SEND_TYPING_NOTIFICATION_ERROR = 15,
+    // (undocumented)
+    SERVICE_UNAVAILABLE_ERROR = 5,
+    // (undocumented)
+    START_REALTIME_NOTIFICATIONS_ERROR = 9,
+    // (undocumented)
+    START_SCREEN_SHARE_ERROR = 27,
+    // (undocumented)
+    START_VIDEO_ERROR = 25,
+    // (undocumented)
+    STOP_SCREEN_SHARE_ERROR = 28,
+    // (undocumented)
+    STOP_VIDEO_ERROR = 26,
+    // (undocumented)
+    SWITCH_VIDEO_SOURCE_ERROR = 22,
+    // (undocumented)
+    TOO_MANY_REQUESTS_ERROR = 4,
+    // (undocumented)
+    UNAUTHORIZED_ERROR = 2,
+    // (undocumented)
+    UNKNOWN_ERROR = 0,
+    // (undocumented)
+    UNKNOWN_STATUS_CODE_ERROR = 7,
+    // (undocumented)
+    UNMUTE_ERROR = 23,
+    // (undocumented)
+    UPDATE_THREAD_ERROR = 18
+}
+
+// @public (undocumented)
+export const CommunicationUiErrorFromError: (error: any) => CommunicationUiError;
+
+// @public (undocumented)
+export interface CommunicationUiErrorInfo {
+    // (undocumented)
+    code: CommunicationUiErrorCode;
+    // (undocumented)
+    errorInfo: ErrorInfo | undefined;
+    // (undocumented)
+    message: string;
+    // (undocumented)
+    originalError: Error | undefined;
+    // (undocumented)
+    severity: CommunicationUiErrorSeverity;
+}
 
 // @public
 export enum CommunicationUiErrorSeverity {
@@ -72,6 +194,14 @@ export interface ControlBarProps {
 }
 
 // @public (undocumented)
+export interface CreateViewOptions {
+    // (undocumented)
+    isMirrored?: boolean;
+    // (undocumented)
+    scalingMode?: ScalingMode;
+}
+
+// @public (undocumented)
 export type CustomMessage = Message<'custom'>;
 
 // @public (undocumented)
@@ -80,17 +210,18 @@ export type CustomMessagePayload = {
     content?: string;
 };
 
+// @public
+export const darkTheme: PartialTheme;
+
 // @public (undocumented)
 export type DefaultMessageRendererType = (props: MessageProps) => JSX.Element;
-
-// @public
-export const defaultThemes: ThemeCollection;
 
 // @public
 export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
 
 // @public
 export interface EndCallButtonProps extends IButtonProps {
+    onHangUp?: () => Promise<void>;
     showLabel?: boolean;
 }
 
@@ -140,6 +271,19 @@ export const labeledAnswerButtonProps: IButtonProps;
 
 // @public
 export const labeledRecordButtonProps: IButtonProps;
+
+// @public
+export const lightTheme: PartialTheme;
+
+// @public
+export interface LocalVideoStream {
+    mediaStreamType: MediaStreamType;
+    source: VideoDeviceInfo;
+    videoStreamRendererView?: VideoStreamRendererView | undefined;
+}
+
+// @public (undocumented)
+export type MediaStreamType = 'Video' | 'ScreenSharing';
 
 // @public (undocumented)
 export type Message<T extends MessageTypes> = {
@@ -201,14 +345,9 @@ export const MicrophoneButton: (props: MicrophoneButtonProps) => JSX.Element;
 
 // @public
 export interface MicrophoneButtonProps extends IButtonProps {
+    onToggleMicrophone?: () => Promise<void>;
     showLabel?: boolean;
 }
-
-// @public
-export type NamedTheme = {
-    name: string;
-    theme: PartialTheme | Theme;
-};
 
 // @public
 export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
@@ -264,10 +403,22 @@ export interface ReadReceiptProps {
 export const recordButtonProps: IButtonProps;
 
 // @public
+export interface RemoteVideoStream {
+    id: number;
+    isAvailable: boolean;
+    mediaStreamType: MediaStreamType;
+    videoStreamRendererView: VideoStreamRendererView | undefined;
+}
+
+// @public (undocumented)
+export type ScalingMode = 'Stretch' | 'Crop' | 'Fit';
+
+// @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
 
 // @public
 export interface ScreenShareButtonProps extends IButtonProps {
+    onToggleScreenShare?: () => Promise<void>;
     showLabel?: boolean;
 }
 
@@ -304,23 +455,6 @@ export interface StreamMediaProps {
     videoStreamElement: HTMLElement | null;
 }
 
-// @public
-export interface SwitchableFluentThemeContext {
-    currentTheme: NamedTheme;
-    setCurrentTheme: (namedTheme: NamedTheme) => void;
-    themeStore: ThemeCollection;
-}
-
-// @public
-export const SwitchableFluentThemeProvider: (props: SwitchableFluentThemeProviderProps) => JSX.Element;
-
-// @public
-export interface SwitchableFluentThemeProviderProps {
-    children: React_2.ReactNode;
-    scopeId: string;
-    themes?: ThemeCollection;
-}
-
 // @public (undocumented)
 export type SystemMessage = Message<'system'>;
 
@@ -330,29 +464,6 @@ export type SystemMessagePayload = {
     content?: string;
     iconName?: string;
 };
-
-// @public
-export type ThemeCollection = Record<string, NamedTheme>;
-
-// @public
-export const ThemeSelector: (props: ThemeSelectorProps) => JSX.Element;
-
-// @public
-export interface ThemeSelectorProps {
-    horizontal?: boolean;
-    label?: string;
-}
-
-// @public
-export const ThemeToggler: (props: ThemeTogglerProps) => JSX.Element;
-
-// @public
-export interface ThemeTogglerProps {
-    label?: string;
-    layout?: string;
-    offTheme?: NamedTheme;
-    onTheme?: NamedTheme;
-}
 
 // @public
 export const TypingIndicator: (props: TypingIndicatorProps) => JSX.Element;
@@ -371,8 +482,59 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
     typingUserDisplayName?: IStyle;
 }
 
+// @public (undocumented)
+export interface VideoDeviceInfo {
+    readonly deviceType: VideoDeviceType;
+    readonly id: string;
+    readonly name: string;
+}
+
+// @public (undocumented)
+export type VideoDeviceType = 'Unknown' | 'UsbCamera' | 'CaptureAdapter' | 'Virtual';
+
+// @public (undocumented)
+export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
+
+// @public (undocumented)
+export type VideoGalleryLocalParticipant = VideoGalleryParticipant & {
+    isScreenSharingOn: boolean;
+    videoStream?: LocalVideoStream;
+};
+
+// @public (undocumented)
+export type VideoGalleryParticipant = {
+    userId: string;
+    displayName?: string;
+    isMuted: boolean;
+};
+
+// @public (undocumented)
+export interface VideoGalleryProps {
+    // (undocumented)
+    localParticipant?: VideoGalleryLocalParticipant;
+    // (undocumented)
+    onRenderView(stream: RemoteVideoStream | LocalVideoStream, options?: CreateViewOptions | undefined): Promise<void>;
+    // (undocumented)
+    remoteParticipants?: VideoGalleryRemoteParticipant[];
+    // (undocumented)
+    scalingMode: ScalingMode;
+    // (undocumented)
+    styles?: BaseCustomStylesProps;
+}
+
+// @public (undocumented)
+export type VideoGalleryRemoteParticipant = VideoGalleryParticipant & {
+    isSpeaking: boolean;
+    videoStream?: RemoteVideoStream;
+    screenShareStream?: RemoteVideoStream;
+};
+
 // @public
-export const useSwitchableFluentTheme: () => SwitchableFluentThemeContext;
+export interface VideoStreamRendererView {
+    isMirrored: boolean;
+    scalingMode: ScalingMode;
+    target: HTMLElement;
+}
 
 // @public (undocumented)
 export const VideoTile: (props: VideoTileProps & PlaceholderProps) => JSX.Element;

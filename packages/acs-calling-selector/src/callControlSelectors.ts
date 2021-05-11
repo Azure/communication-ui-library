@@ -36,6 +36,6 @@ export const optionsButtonSelector = reselect.createSelector([getDeviceManager, 
     cameras: deviceManager.cameras,
     selectedMicrophone: deviceManager.selectedMicrophone,
     selectedSpeaker: deviceManager.selectedSpeaker,
-    selectedCamera: call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video')?.source
+    selectedCamera: deviceManager.selectedCamera
   };
 });
