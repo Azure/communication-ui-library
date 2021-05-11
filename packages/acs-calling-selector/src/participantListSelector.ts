@@ -8,7 +8,7 @@ import * as callingDeclarative from '@azure/acs-calling-declarative';
 // @ts-ignore
 import { BaseSelectorProps } from './baseSelectors';
 import { getCall, getUserId, getDisplayName } from './baseSelectors';
-import { WebUIParticipant } from 'react-components';
+import { CommunicationParticipant } from 'react-components';
 import {
   CommunicationUserKind,
   PhoneNumberKind,
@@ -35,9 +35,9 @@ const getACSId = (
   }
 };
 
-const convertRemoteParticipantsToWebUIParticipants = (
+const convertRemoteParticipantsToCommunicationParticipants = (
   remoteParticipants: callingDeclarative.RemoteParticipant[]
-): WebUIParticipant[] => {
+): CommunicationParticipant[] => {
   return remoteParticipants.map((participant: callingDeclarative.RemoteParticipant) => {
     const isScreenSharing = Array.from(participant.videoStreams.values()).some(
       (videoStream) => videoStream.mediaStreamType === 'ScreenSharing' && videoStream.isAvailable
@@ -61,12 +61,12 @@ export const participantListSelector = reselect.createSelector(
     displayName,
     call
   ): {
-    participants: WebUIParticipant[];
+    participants: CommunicationParticipant[];
     myUserId: string;
   } => {
     const remoteParticipants =
       call && call?.remoteParticipants
-        ? convertRemoteParticipantsToWebUIParticipants(Array.from(call?.remoteParticipants.values()))
+        ? convertRemoteParticipantsToCommunicationParticipants(Array.from(call?.remoteParticipants.values()))
         : [];
     remoteParticipants.push({
       userId: userId,

@@ -14,30 +14,30 @@ import {
 import { ParticipantItem } from './ParticipantItem';
 import { MicOffIcon, CallControlPresentNewIcon } from '@fluentui/react-northstar';
 import { participantListStyle, overFlowButtonStyles, overflowSetStyle } from './styles/ParticipantList.styles';
-import { WebUIParticipant } from '../types';
+import { CommunicationParticipant } from '../types';
 
 /**
  * Props for component `ParticipantList`
  */
 export type ParticipantListProps = {
   /** Remote participants in user call */
-  participants: WebUIParticipant[];
+  participants: CommunicationParticipant[];
   /** User ID of user */
   myUserId?: string;
   /** Optional callback to render each participant. If no callback is provided, each participant will be rendered with `ParticipantItem`  */
-  onRenderParticipant?: (participant: WebUIParticipant) => JSX.Element | null;
+  onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
   /** Optional callback to render the avatar for each participant. This property will have no effect if `onRenderParticipant` is assigned.  */
-  onRenderAvatar?: (participant: WebUIParticipant) => JSX.Element | null;
+  onRenderAvatar?: (participant: CommunicationParticipant) => JSX.Element | null;
   /** Optional callback to render the context menu for each participant  */
-  onRenderParticipantMenu?: (participant: WebUIParticipant) => IContextualMenuItem[];
+  onRenderParticipantMenu?: (participant: CommunicationParticipant) => IContextualMenuItem[];
 };
 
 const getDefaultRenderer = (
   myUserId?: string,
-  onRenderParticipantMenu?: (remoteParticipant: WebUIParticipant) => IContextualMenuItem[],
-  onRenderAvatar?: (remoteParticipant: WebUIParticipant) => JSX.Element | null
-): ((participant: WebUIParticipant) => JSX.Element | null) => {
-  return (participant: WebUIParticipant) => {
+  onRenderParticipantMenu?: (remoteParticipant: CommunicationParticipant) => IContextualMenuItem[],
+  onRenderAvatar?: (remoteParticipant: CommunicationParticipant) => JSX.Element | null
+): ((participant: CommunicationParticipant) => JSX.Element | null) => {
+  return (participant: CommunicationParticipant) => {
     let presence: PersonaPresence | undefined = undefined;
     if (participant.state === 'Connected') {
       presence = PersonaPresence.online;
@@ -83,16 +83,16 @@ const onRenderOverflowButton = (overflowItems: unknown): JSX.Element => (
 );
 
 const renderParticipants = (
-  participants: WebUIParticipant[],
+  participants: CommunicationParticipant[],
   myUserId?: string,
-  onRenderParticipant?: (participant: WebUIParticipant) => JSX.Element | null,
-  onRenderAvatar?: (participant: WebUIParticipant) => JSX.Element | null,
-  onRenderParticipantMenu?: (participant: WebUIParticipant) => IContextualMenuItem[]
+  onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null,
+  onRenderAvatar?: (participant: CommunicationParticipant) => JSX.Element | null,
+  onRenderParticipantMenu?: (participant: CommunicationParticipant) => IContextualMenuItem[]
 ): (JSX.Element | null)[] => {
   const renderParticipant =
     onRenderParticipant ?? getDefaultRenderer(myUserId, onRenderParticipantMenu, onRenderAvatar);
   const onRenderItem = (item: IOverflowSetItemProps): JSX.Element | null => {
-    const participant: WebUIParticipant = {
+    const participant: CommunicationParticipant = {
       userId: item.userId,
       displayName: item.displayName,
       state: item.state,
@@ -122,7 +122,7 @@ const renderParticipants = (
  * assigned then each participant is rendered with `ParticipantItem`.
  */
 export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
-  const allParticipants: WebUIParticipant[] = [];
+  const allParticipants: CommunicationParticipant[] = [];
   if (props.participants !== undefined) {
     props.participants.forEach((participant) => allParticipants.push(participant));
   }

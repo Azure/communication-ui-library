@@ -18,7 +18,7 @@ import {
   StatefulDeviceManager
 } from '@azure/acs-calling-declarative';
 import { ReactElement } from 'react';
-import { WebUIParticipant, ContextualMenuItem } from 'react-components';
+import { CommunicationParticipant, ContextualMenuItem } from 'react-components';
 import memoizeOne from 'memoize-one';
 
 export type DefaultHandlers = ReturnType<typeof createDefaultHandlers>;
@@ -114,7 +114,7 @@ const createDefaultHandlers = memoizeOne(
       await callClient.startRenderVideo(callId, stream, options);
     };
 
-    const onRenderParticipantMenu = (participant: WebUIParticipant): ContextualMenuItem[] => {
+    const onRenderParticipantMenu = (participant: CommunicationParticipant): ContextualMenuItem[] => {
       const menuItems: ContextualMenuItem[] = [];
       if (participant.userId !== callClient?.state.userId) {
         menuItems.push({

@@ -18,6 +18,7 @@ import { ChatMessage as ChatMessage_2 } from '@azure/communication-chat';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { ChatThreadClientState } from '@azure/acs-chat-declarative';
+import { CommunicationParticipant } from 'react-components';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { ContextualMenuItem } from 'react-components';
@@ -50,7 +51,6 @@ import { SetStateAction } from 'react';
 import { StatefulDeviceManager } from '@azure/acs-calling-declarative';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
-import { WebUiChatParticipant } from 'react-components';
 
 // @public (undocumented)
 export const areStreamsEqual: (prevStream: LocalVideoStream_2, newStream: LocalVideoStream_2) => boolean;
@@ -71,7 +71,7 @@ export class AzureCommunicationChatAdapter implements GroupChatAdapter {
     // (undocumented)
     on(event: 'error', errorHandler: (e: Error) => void): void;
     // (undocumented)
-    onRenderParticipantMenu: (participant: WebUiChatParticipant) => ContextualMenuItem[];
+    onRenderParticipantMenu: (participant: CommunicationParticipant) => ContextualMenuItem[];
     // (undocumented)
     onStateChange: (handler: (state: GroupChatState) => void) => void;
     // (undocumented)
@@ -620,7 +620,7 @@ export interface GroupChatAdapter {
     // (undocumented)
     on(event: 'error', errorHandler: (e: Error) => void): void;
     // (undocumented)
-    onRenderParticipantMenu: (participant: WebUiChatParticipant) => ContextualMenuItem[];
+    onRenderParticipantMenu: (participant: CommunicationParticipant) => ContextualMenuItem[];
     // (undocumented)
     onStateChange(handler: (state: GroupChatState) => void): void;
     // (undocumented)

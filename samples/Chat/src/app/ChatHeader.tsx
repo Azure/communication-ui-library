@@ -17,13 +17,13 @@ import {
 } from './styles/ChatHeader.styles';
 import { SidePanelTypes } from './SidePanel';
 import { copyIconStyle } from './styles/InviteFooter.styles';
-import { WebUiChatParticipant } from 'react-components';
+import { CommunicationParticipant } from 'react-components';
 
 export type ChatHeaderProps = {
   myUserId: string;
   topicName: string;
   selectedPane: SidePanelTypes;
-  participants: WebUiChatParticipant[];
+  participants: CommunicationParticipant[];
   setSelectedPane: Dispatch<SidePanelTypes>;
   endChatHandler(): void;
   removeThreadMember?: (userId: string) => Promise<void>;

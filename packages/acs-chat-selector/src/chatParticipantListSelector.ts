@@ -9,11 +9,11 @@ import { CommunicationIdentifierAsKey } from '@azure/acs-chat-declarative';
 import { communicationIdentifierToString, getUserId, getDisplayName, getParticipants } from './baseSelectors';
 import * as reselect from 'reselect';
 import { ChatParticipant } from '@azure/communication-chat';
-import { WebUiChatParticipant } from 'react-components';
+import { CommunicationParticipant } from 'react-components';
 
-const convertChatParticipantsToWebUiChatParticipants = (
+const convertChatParticipantsToCommunicationParticipants = (
   chatParticipants: ChatParticipant[]
-): WebUiChatParticipant[] => {
+): CommunicationParticipant[] => {
   return chatParticipants.map((participant: ChatParticipant) => {
     return {
       userId: communicationIdentifierToString(participant.id),
@@ -28,7 +28,7 @@ export const chatParticipantListSelector = reselect.createSelector(
     return {
       myUserId: userId,
       displayName,
-      participants: convertChatParticipantsToWebUiChatParticipants(Array.from(chatParticipants.values()))
+      participants: convertChatParticipantsToCommunicationParticipants(Array.from(chatParticipants.values()))
     };
   }
 );

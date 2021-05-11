@@ -2,13 +2,13 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { WebUiChatParticipant, ParticipantItem } from 'react-components';
+import { CommunicationParticipant, ParticipantItem } from 'react-components';
 import { propagateError } from 'react-composites';
 import { Stack, IContextualMenuItem } from '@fluentui/react';
 
 export type ParticipantManagementProps = {
   userId: string;
-  chatParticipants: WebUiChatParticipant[];
+  chatParticipants: CommunicationParticipant[];
   removeThreadMember: (userId: string) => Promise<void>;
   onRenderAvatar?: (userId: string) => JSX.Element;
 };

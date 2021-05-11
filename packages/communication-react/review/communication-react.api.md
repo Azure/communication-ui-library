@@ -49,6 +49,16 @@ export type ChatMessagePayload = {
 };
 
 // @public
+export type CommunicationParticipant = {
+    userId: string;
+    displayName?: string;
+    state?: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
+    isScreenSharing?: boolean;
+    isMuted?: boolean;
+    isSpeaking?: boolean;
+};
+
+// @public
 export class CommunicationUiError extends Error implements CommunicationUiErrorInfo {
     constructor(args: CommunicationUiErrorArgs);
     // (undocumented)
@@ -180,11 +190,11 @@ export enum CommunicationUiErrorSeverity {
     WARNING = "Warning"
 }
 
-// @public (undocumented)
+// @public
 export type ContextualMenuItem = {
     key: string;
     text: string;
-    onClick: (userId: string) => boolean | void;
+    onClick: (userId: string) => void;
 };
 
 // @public
@@ -391,11 +401,11 @@ export const ParticipantList: (props: ParticipantListProps) => JSX.Element;
 
 // @public
 export type ParticipantListProps = {
-    participants: WebUIParticipant[];
+    participants: CommunicationParticipant[];
     myUserId?: string;
-    onRenderParticipant?: (participant: WebUIParticipant) => JSX.Element | null;
-    onRenderAvatar?: (participant: WebUIParticipant) => JSX.Element | null;
-    onRenderParticipantMenu?: (participant: WebUIParticipant) => IContextualMenuItem[];
+    onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
+    onRenderAvatar?: (participant: CommunicationParticipant) => JSX.Element | null;
+    onRenderParticipantMenu?: (participant: CommunicationParticipant) => IContextualMenuItem[];
 };
 
 // @public (undocumented)
@@ -489,10 +499,10 @@ export const TypingIndicator: (props: TypingIndicatorProps) => JSX.Element;
 
 // @public
 export interface TypingIndicatorProps {
-    onRenderUsers?: (users: WebUiChatParticipant[]) => JSX.Element;
+    onRenderUsers?: (users: CommunicationParticipant[]) => JSX.Element;
     styles?: TypingIndicatorStylesProps;
     typingString?: string;
-    typingUsers: WebUiChatParticipant[];
+    typingUsers: CommunicationParticipant[];
 }
 
 // @public (undocumented)
@@ -573,22 +583,6 @@ export interface VideoTileStylesProps extends BaseCustomStylesProps {
     overlayContainer?: IStyle;
     videoContainer?: IStyle;
 }
-
-// @public
-export type WebUiChatParticipant = {
-    userId: string;
-    displayName?: string;
-};
-
-// @public (undocumented)
-export type WebUIParticipant = {
-    userId: string;
-    displayName?: string;
-    state?: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
-    isScreenSharing?: boolean;
-    isMuted?: boolean;
-    isSpeaking?: boolean;
-};
 
 
 // (No @packageDocumentation comment for this package)

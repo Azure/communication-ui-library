@@ -8,7 +8,7 @@ import { CommunicationUserKind } from '@azure/communication-signaling';
 import EventEmitter from 'events';
 import { createAzureCommunicationUserCredential, getIdFromToken } from '../../../utils';
 import { GroupChatAdapter, GroupChatEvent, GroupChatState } from './GroupChatAdapter';
-import { WebUiChatParticipant, ContextualMenuItem } from 'react-components';
+import { CommunicationParticipant, ContextualMenuItem } from 'react-components';
 
 // Context of GroupChat, which is a centralized context for all state updates
 export class GroupChatContext {
@@ -130,7 +130,7 @@ export class AzureCommunicationChatAdapter implements GroupChatAdapter {
     return await this.handlers.onLoadPreviousChatMessages(messagesToLoad);
   };
 
-  onRenderParticipantMenu = (participant: WebUiChatParticipant): ContextualMenuItem[] => {
+  onRenderParticipantMenu = (participant: CommunicationParticipant): ContextualMenuItem[] => {
     return this.handlers.onRenderParticipantMenu(participant);
   };
 

@@ -9,6 +9,7 @@ import { ChatMessageWithStatus } from '@azure/acs-chat-declarative';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationIdentifier } from '@azure/communication-common';
+import { CommunicationParticipant } from 'react-components';
 import { ContextualMenuItem } from 'react-components';
 import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
 import { MessageStatus } from '@azure/acs-chat-declarative';
@@ -16,7 +17,6 @@ import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
 import * as reselect from 'reselect';
 import { TypingIndicator } from '@azure/acs-chat-declarative';
-import { WebUiChatParticipant } from 'react-components';
 
 // @public (undocumented)
 export type BaseSelectorProps = {
@@ -55,11 +55,11 @@ export type ChatMessagePayload = {
 export const chatParticipantListSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
     myUserId: string;
     displayName: string;
-    participants: WebUiChatParticipant[];
+    participants: CommunicationParticipant[];
 }, (res1: string, res2: Map<string, ChatParticipant>, res3: string) => {
     myUserId: string;
     displayName: string;
-    participants: WebUiChatParticipant[];
+    participants: CommunicationParticipant[];
 }>;
 
 // @public
@@ -113,7 +113,7 @@ export type DefaultHandlers = {
     removeThreadMember: (userId: string) => Promise<void>;
     updateThreadTopicName: (topicName: string) => Promise<void>;
     onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
-    onRenderParticipantMenu: (participant: WebUiChatParticipant) => ContextualMenuItem[];
+    onRenderParticipantMenu: (participant: CommunicationParticipant) => ContextualMenuItem[];
 };
 
 // @public (undocumented)
@@ -162,9 +162,9 @@ export type SystemMessagePayload = {
 
 // @public (undocumented)
 export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
-    typingUsers: WebUiChatParticipant[];
+    typingUsers: CommunicationParticipant[];
 }, (res1: TypingIndicator[], res2: Map<string, ChatParticipant>, res3: string) => {
-    typingUsers: WebUiChatParticipant[];
+    typingUsers: CommunicationParticipant[];
 }>;
 
 // @public (undocumented)

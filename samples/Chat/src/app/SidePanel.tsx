@@ -7,7 +7,7 @@ import { SettingsManagementComponent } from './SettingsManagement';
 import { SlideOutPanelComponent } from './SlideOutPanel';
 import { chatParticipantListSelector, useHandlers, useSelector } from '@azure/acs-chat-selector';
 import { chatSettingsSelector } from './selectors/chatSettingsSelector';
-import { ParticipantList, WebUiChatParticipant } from 'react-components';
+import { ParticipantList, CommunicationParticipant } from 'react-components';
 
 export enum SidePanelTypes {
   None = 'none',
@@ -60,7 +60,7 @@ export const SidePanel = (props: SelectedPaneProps): JSX.Element => {
           {...chatParticipantProps}
           {...chatParticipantHandlers}
           onRenderAvatar={
-            onRenderAvatar ? (participant: WebUiChatParticipant) => onRenderAvatar(participant.userId) : undefined
+            onRenderAvatar ? (participant: CommunicationParticipant) => onRenderAvatar(participant.userId) : undefined
           }
         />
       </SlideOutPanelComponent>

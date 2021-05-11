@@ -4,7 +4,7 @@
 import { ReactElement } from 'react';
 import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
 import { ChatThreadClient } from '@azure/communication-chat';
-import { ContextualMenuItem, WebUiChatParticipant } from 'react-components';
+import { ContextualMenuItem, CommunicationParticipant } from 'react-components';
 import { getACSId } from '../utils/getACSId';
 import memoizeOne from 'memoize-one';
 
@@ -15,7 +15,7 @@ export type DefaultHandlers = {
   removeThreadMember: (userId: string) => Promise<void>;
   updateThreadTopicName: (topicName: string) => Promise<void>;
   onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
-  onRenderParticipantMenu: (participant: WebUiChatParticipant) => ContextualMenuItem[];
+  onRenderParticipantMenu: (participant: CommunicationParticipant) => ContextualMenuItem[];
 };
 
 // Keep all these handlers the same instance(unless client changed) to avoid re-render
@@ -60,7 +60,7 @@ export const createDefaultHandlers = memoizeOne(
 
         return isAllChatMessagesLoaded;
       },
-      onRenderParticipantMenu: (participant: WebUiChatParticipant) => {
+      onRenderParticipantMenu: (participant: CommunicationParticipant) => {
         const menu: ContextualMenuItem[] = [];
         if (getACSId(chatClient.state.userId) !== participant.userId) {
           menu.push({

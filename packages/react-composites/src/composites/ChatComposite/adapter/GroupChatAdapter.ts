@@ -3,7 +3,7 @@
 
 import { ChatThreadClientState } from '@azure/acs-chat-declarative';
 import { ChatMessage, ChatParticipant } from '@azure/communication-chat';
-import { WebUiChatParticipant, ContextualMenuItem } from 'react-components';
+import { CommunicationParticipant, ContextualMenuItem } from 'react-components';
 
 export type GroupChatUIState = {
   // Self-contained state for composite
@@ -30,7 +30,7 @@ export interface GroupChatAdapter {
   setTopic(topicName: string): Promise<void>;
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
   updateAllParticipants(): Promise<void>;
-  onRenderParticipantMenu: (participant: WebUiChatParticipant) => ContextualMenuItem[];
+  onRenderParticipantMenu: (participant: CommunicationParticipant) => ContextualMenuItem[];
   on(event: 'messageReceived', messageReceivedHandler: (message: ChatMessage) => void): void;
   on(event: 'participantsJoined', participantsJoinedHandler: (participant: ChatParticipant) => void): void;
   on(event: 'error', errorHandler: (e: Error) => void): void;
