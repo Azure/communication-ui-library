@@ -165,7 +165,7 @@ export function createMockApiFeatures(
         isTranscriptionActive: false,
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         transfer(target: TransferToParticipant, transferOptions?: TransferToParticipantOptions): Transfer {
-          throw new Error('Method not implemented.');
+          return addMockEmitter({ state: 'None' });
         }
       });
       return generic;
