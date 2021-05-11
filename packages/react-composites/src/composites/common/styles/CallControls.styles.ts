@@ -19,11 +19,11 @@ export const groupCallLeaveButtonStyle = {
     flexFlow: 'row'
   },
   rootHovered: {
-    backgroundColor: palette.redDark,
+    background: palette.redDark,
     color: palette.white
   },
   rootPressed: {
-    backgroundColor: palette.redDark,
+    background: palette.redDark,
     color: palette.white
   }
 };

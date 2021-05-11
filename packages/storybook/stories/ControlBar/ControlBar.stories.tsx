@@ -154,15 +154,18 @@ export const ControlBarComponent: (
   const showLabels = boolean('Show Labels', false);
 
   // This is code to set the color of the background div to show contrast to the control bar based on the theme like shown in the Figma design.
-  let background = 'none';
-  if (theme === 'dark') {
+  let background = '#f8f8f8';
+  let endCallBackground = '#a42e43';
+  let endCallHoverBackGround = '#8b2c3d';
+  if (theme === 'Dark') {
+    endCallBackground = '#c4314b';
+    endCallHoverBackGround = '#a42e43';
+
     if (layout.startsWith('floating')) {
       background = '#252423';
     } else {
       background = '#161514';
     }
-  } else if (theme === 'light') {
-    background = '#f8f8f8';
   }
 
   return (
@@ -181,7 +184,14 @@ export const ControlBarComponent: (
         <MicrophoneButton showLabel={showLabels} checked={toggleButtons} />
         <ScreenShareButton showLabel={showLabels} checked={toggleButtons} />
         <OptionsButton showLabel={showLabels} menuProps={exampleOptionsMenuProps} />
-        <EndCallButton showLabel={showLabels} />
+        <EndCallButton
+          showLabel={showLabels}
+          styles={{
+            root: { background: endCallBackground },
+            rootHovered: { background: endCallHoverBackGround },
+            rootPressed: { background: endCallHoverBackGround }
+          }}
+        />
       </ControlBar>
     </div>
   );

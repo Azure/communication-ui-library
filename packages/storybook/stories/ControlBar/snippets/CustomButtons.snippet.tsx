@@ -13,7 +13,7 @@ export const CustomButtonsExample: () => JSX.Element = () => {
     const customStyles = {
       root: {
         height: 'inherit',
-        background: 'crimson',
+        background: 'darkorange',
         color: 'white',
         width: '10rem'
       },
