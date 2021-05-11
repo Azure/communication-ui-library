@@ -141,7 +141,7 @@ export const endCallControlButtonStyles: IButtonStyles = concatStyleSets(control
     color: palette.white
   },
   rootPressed: {
-    background: palette.redDark,
+    background: palette.blackTranslucent40,
     color: palette.white
   },
   label: {
