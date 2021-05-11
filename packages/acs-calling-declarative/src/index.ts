@@ -15,5 +15,8 @@ export type {
   RemoteVideoStream,
   VideoStreamRendererView,
   RecordingCallFeature,
-  TranscriptionCallFeature
+  TranscriptionCallFeature,
+  Transfer,
+  TransferCallFeature,
+  TransferRequest
 } from './CallClientState';
