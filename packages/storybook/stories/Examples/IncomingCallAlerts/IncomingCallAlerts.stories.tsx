@@ -9,7 +9,7 @@ export { IncomingCallModal } from './IncomingCallModal';
 export { IncomingCallToast } from './IncomingCallToast';
 
 export default {
-  title: `${EXAMPLES_FOLDER_PREFIX}/IncomingCallAlerts`,
+  title: `${EXAMPLES_FOLDER_PREFIX}/Incoming Call Alerts`,
   parameters: {
     docs: {
       page: () => getDocs()

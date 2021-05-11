@@ -1,5 +1,5 @@
 import { FluentThemeProvider, OptionsButton } from '@azure/communication-react';
-import { IContextualMenuProps, Stack } from '@fluentui/react';
+import { IContextualMenuProps } from '@fluentui/react';
 import React from 'react';
 
 const exampleOptionsMenuProps: IContextualMenuProps = {
@@ -16,9 +16,7 @@ const exampleOptionsMenuProps: IContextualMenuProps = {
 export const OptionsButtonDefaultExample: () => JSX.Element = () => {
   return (
     <FluentThemeProvider>
-      <Stack horizontal horizontalAlign={'center'}>
-        <OptionsButton menuProps={exampleOptionsMenuProps} />
-      </Stack>
+      <OptionsButton menuProps={exampleOptionsMenuProps} />
     </FluentThemeProvider>
   );
 };
