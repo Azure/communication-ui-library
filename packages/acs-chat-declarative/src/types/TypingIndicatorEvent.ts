@@ -3,6 +3,6 @@
 
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 
-export type TypingIndicator = Omit<TypingIndicatorReceivedEvent, 'receivedOn'> & {
+export type TypingIndicatorEvent = Omit<TypingIndicatorReceivedEvent, 'receivedOn'> & {
   receivedOn: Date;
 };

@@ -2,11 +2,11 @@
 // Licensed under the MIT license.
 
 import { ChatMessage } from '@azure/communication-chat';
-import { ChatMessageWithStatus, MessageStatus } from './types/ChatMessageWithStatus';
+import { ChatMessageWithStatus, ChatMessageStatus } from './types/ChatMessageWithStatus';
 
 export const convertChatMessage = (
   message: ChatMessage,
-  status: MessageStatus = 'delivered',
+  status: ChatMessageStatus = 'delivered',
   clientMessageId?: string
 ): ChatMessageWithStatus => {
   return {

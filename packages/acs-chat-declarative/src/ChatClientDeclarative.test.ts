@@ -15,7 +15,7 @@ import {
   ReadReceiptReceivedEvent,
   TypingIndicatorReceivedEvent
 } from '@azure/communication-signaling';
-import { chatClientDeclaratify, DeclarativeChatClient } from './ChatClientDeclarative';
+import { createStatefulChatClient, StatefulChatClient } from './ChatClientDeclarative';
 import { ChatClientState } from './ChatClientState';
 import { Constants } from './Constants';
 import { createMockChatThreadClient } from './mocks/createMockChatThreadClient';
@@ -49,11 +49,11 @@ const emptyAsyncFunctionWithResponse = async (): Promise<any> => {
   return { _response: {} as any };
 };
 
-type DeclarativeChatClientWithEventTrigger = DeclarativeChatClient & {
+type StatefulChatClientWithEventTrigger = StatefulChatClient & {
   triggerEvent: (eventName: string, e: any) => Promise<void>;
 };
 
-function createMockChatClientAndDeclaratify(): DeclarativeChatClientWithEventTrigger {
+function createMockChatClientAndDeclaratify(): StatefulChatClientWithEventTrigger {
   const mockClient = new ChatClient('', new MockCommunicationUserCredential());
   const eventHandlers = {};
 
@@ -86,7 +86,7 @@ function createMockChatClientAndDeclaratify(): DeclarativeChatClientWithEventTri
     }
   }) as any;
 
-  const declarativeClient = chatClientDeclaratify(mockClient, {
+  const declarativeClient = createStatefulChatClient(mockClient, {
     displayName: '',
     userId: { kind: 'communicationUser', communicationUserId: 'userId1' }
   });
@@ -103,7 +103,7 @@ function createMockChatClientAndDeclaratify(): DeclarativeChatClientWithEventTri
     }
   });
 
-  return declarativeClient as DeclarativeChatClientWithEventTrigger;
+  return declarativeClient as StatefulChatClientWithEventTrigger;
 }
 
 describe('declarative chatThread list iterators', () => {
@@ -174,7 +174,7 @@ describe('declarative chatClient basic api functions', () => {
 });
 
 describe('declarative chatClient subscribe to event properly after startRealtimeNotification', () => {
-  let client: DeclarativeChatClientWithEventTrigger;
+  let client: StatefulChatClientWithEventTrigger;
   beforeEach(() => {
     client = createMockChatClientAndDeclaratify();
     client.startRealtimeNotifications();
