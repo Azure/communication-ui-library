@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { DefaultButton, IButtonProps, Stack, concatStyleSets, mergeStyles } from '@fluentui/react';
+import { DefaultButton, IButtonProps, Label, concatStyleSets, mergeStyles } from '@fluentui/react';
 import { CallEndIcon } from '@fluentui/react-northstar';
 import { controlButtonLabelStyles, endCallControlButtonStyles } from './styles/ControlBar.styles';
 
@@ -39,9 +39,9 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {
     return (
-      <Stack key={'callEndLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
-        {'Hangup'}
-      </Stack>
+      <Label key={'callEndLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
+        {'Leave call'}
+      </Label>
     );
   };
 
