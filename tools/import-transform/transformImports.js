@@ -75,7 +75,6 @@ let filesSearchedCount = 0;
  */
 function transformFileImports(file, packageTranslations, dirLevel) {
   log(`File found (dirLevel: ${dirLevel})`, file);
-  filesSearchedCount++;
   const backTravel = '../'.repeat(dirLevel);
 
   const fileContent = fs.readFileSync(file, 'UTF-8');
@@ -109,22 +108,22 @@ function transformFileImports(file, packageTranslations, dirLevel) {
  * @param {number} dirLevel - directory distance relative to the initial recursion directory level
  */
 function recurseThroughFolder(folder, packageTranslations, dirLevel) {
-  // increment directory level or initialize to 0
-  dirLevel = typeof dirLevel !== 'undefined' ? dirLevel + 1 : 0;
-
   log(`Searching folder (dirLevel: ${dirLevel})`, folder);
 
   const dirContents = fs.readdirSync(folder, { withFileTypes: true });
 
-  // recursively perform translate on sub dirs
-  dirContents
-    .filter((dirent) => dirent.isDirectory())
-    .forEach((dirent) => recurseThroughFolder(path.resolve(folder, dirent.name), packageTranslations, dirLevel));
-
   // transform each file's import lines
   dirContents
     .filter((dirent) => dirent.isFile())
-    .forEach((dirent) => transformFileImports(path.resolve(folder, dirent.name), packageTranslations, dirLevel));
+    .forEach((dirent) => {
+      filesSearchedCount++;
+      transformFileImports(path.resolve(folder, dirent.name), packageTranslations, dirLevel);
+    });
+
+  // recursively perform translate on sub dirs
+  dirContents
+    .filter((dirent) => dirent.isDirectory())
+    .forEach((dirent) => recurseThroughFolder(path.resolve(folder, dirent.name), packageTranslations, ++dirLevel));
 }
 
 /**
@@ -140,7 +139,7 @@ function transformImports(config) {
       console.error(`❌ ERROR: folder not found at ${folderPath}`);
       exit(1);
     }
-    recurseThroughFolder(folderPath, config.packageTranslations);
+    recurseThroughFolder(folderPath, config.packageTranslations, 0);
   }
 }
 
@@ -168,16 +167,20 @@ function getConfigFile() {
   return config;
 }
 
-if (!silent || verbose) {
-  console.log('Transforming imports...');
+function main() {
+  if (!silent || verbose) {
+    console.log('Transforming imports...');
+  }
+
+  transformImports(getConfigFile());
+
+  if (!silent || verbose) {
+    console.log(
+      `✅ complete. Files Searched: ${filesSearchedCount}. Files changed: ${filesChangedCount}. Lines changed ${linesChangedCount}.`
+    );
+  }
+
+  exit(0);
 }
 
-transformImports(getConfigFile());
-
-if (!silent || verbose) {
-  console.log(
-    `✅ complete. Files Searched: ${filesSearchedCount}. Files changed: ${filesChangedCount}. Lines changed ${linesChangedCount}.`
-  );
-}
-
-exit(0);
+main();
