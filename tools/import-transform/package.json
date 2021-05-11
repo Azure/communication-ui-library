@@ -1,24 +1,33 @@
 {
   "name": "import-transform",
+  "bin": {
+    "import-transform": "./bin/import-transform"
+  },
   "version": "0.1.0",
   "private": "true",
-  "bin": "./transformImports.js",
   "description": "Utility to ensure build files reference local packages",
   "scripts": {
-    "build": "echo 'no build step required'",
-    "build:watch": "echo 'no build step required'",
-    "test": "",
-    "test:coverage": "",
+    "build": "tsc",
+    "build:watch": "tsc -w",
+    "test": "jest",
+    "test:coverage": "npm run test -- --coverage",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "lint:fix": "npm run lint -- --fix",
     "lint:quiet": "npm run lint -- --quiet"
   },
   "devDependencies": {
+    "@types/jest": "^26.0.20",
+    "@types/node": "^14.14.10",
+    "@types/yargs": "^16.0.1",
     "eslint": "^7.7.0",
     "eslint-config-prettier": "^6.12.0",
-    "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-header": "^3.1.0",
     "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "jest": "26.6.0",
+    "ts-jest": "^26.4.4",
+    "ts-node": "^9.1.1",
+    "typescript": "4.1.5",
     "yargs": "~17.0.1"
   }
 }

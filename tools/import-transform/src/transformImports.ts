@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 // File logic:
 //
 // ┌─────────────────────────┐
@@ -43,10 +41,17 @@
 // │                         │
 // └─────────────────────────┘
 
-const yargs = require('yargs');
-const fs = require('fs');
-const path = require('path');
-const { exit } = require('process');
+import yargs from 'yargs';
+import fs from 'fs';
+import path from 'path';
+import { exit } from 'process';
+
+type BuildFolderRoots = Array<string>;
+type PackageTransforms = Record<string, string>;
+type TransformImportConfig = {
+  buildFolderRoots: BuildFolderRoots;
+  packageTranslations: PackageTransforms;
+};
 
 const { argv } = yargs
   .option('v', {
@@ -64,21 +69,21 @@ const { silent, verbose } = argv;
 const log = verbose ? console.log : () => {};
 
 // Variables for tracking number of changes
-let linesChangedCount = 0;
-let filesChangedCount = 0;
-let filesSearchedCount = 0;
+let linesChangedCount: number;
+let filesChangedCount: number;
+let filesSearchedCount: number;
 
 /**
  * Transform any matching import and require lines to the mapping provided in packageTranslations.js
- * @param {fs.PathLike} file - file to transform the imports of
- * @param {number} dirLevel - directory level, this indicates the number of ../ to be prepended
+ * @param file - file to transform the imports of
+ * @param dirLevel - directory level, this indicates the number of ../ to be prepended
  */
-function transformFileImports(file, packageTranslations, dirLevel) {
+function transformFileImports(file: fs.PathLike, packageTranslations: PackageTransforms, dirLevel: number): void {
   log(`File found (dirLevel: ${dirLevel})`, file);
   const backTravel = '../'.repeat(dirLevel);
 
-  const fileContent = fs.readFileSync(file, 'UTF-8');
-  let changeOccured = false;
+  const fileContent = fs.readFileSync(file, 'utf-8');
+  let changeOccurred = false;
   let newContent = '';
   for (let line of fileContent.split(/\n/)) {
     if (line.startsWith('import ') || line.includes('require(')) {
@@ -87,7 +92,7 @@ function transformFileImports(file, packageTranslations, dirLevel) {
           const newImport = backTravel + packageTranslations[packageBaseName];
           log(`Replacing ${packageBaseName} in ${line} with ${newImport}`);
           line = line.replace(packageBaseName, newImport);
-          changeOccured = true;
+          changeOccurred = true;
           linesChangedCount++;
         }
       }
@@ -96,7 +101,7 @@ function transformFileImports(file, packageTranslations, dirLevel) {
   }
 
   // if an import transform happened, write the contents back to the file
-  if (changeOccured) {
+  if (changeOccurred) {
     filesChangedCount++;
     fs.writeFileSync(file, newContent);
   }
@@ -104,10 +109,10 @@ function transformFileImports(file, packageTranslations, dirLevel) {
 
 /**
  * Recurse through all directories and call transformFileImports on all files
- * @param {fs.PathLike} folder - folder to recurse through
- * @param {number} dirLevel - directory distance relative to the initial recursion directory level
+ * @param folder - folder to recurse through
+ * @param dirLevel - directory distance relative to the initial recursion directory level
  */
-function recurseThroughFolder(folder, packageTranslations, dirLevel) {
+function recurseThroughFolder(folder: string, packageTranslations: PackageTransforms, dirLevel: number): void {
   log(`Searching folder (dirLevel: ${dirLevel})`, folder);
 
   const dirContents = fs.readdirSync(folder, { withFileTypes: true });
@@ -129,9 +134,9 @@ function recurseThroughFolder(folder, packageTranslations, dirLevel) {
 /**
  * Transform the imports of all esm and cjs build files.
  * The transform maps are listed in packageTranslations.js
- * @param {*} config - config file, see readme for options and format
+ * @param config - config file, see readme for options and format
  */
-function transformImports(config) {
+function transformImports(config: TransformImportConfig): void {
   for (const folder of config.buildFolderRoots) {
     const folderPath = path.resolve(process.cwd(), folder);
     log(`Folder:`, folderPath);
@@ -143,7 +148,7 @@ function transformImports(config) {
   }
 }
 
-function getConfigFile() {
+function getConfig(): TransformImportConfig {
   const configPath = path.resolve(process.cwd(), 'importTransform.config.js');
   if (!fs.existsSync(configPath)) {
     console.error(`❌ ERROR: config not found at ${configPath}`);
@@ -167,20 +172,23 @@ function getConfigFile() {
   return config;
 }
 
-function main() {
+function resetBookkeeping(): void {
+  linesChangedCount = 0;
+  filesChangedCount = 0;
+  filesSearchedCount = 0;
+}
+
+export function main(): void {
   if (!silent || verbose) {
     console.log('Transforming imports...');
   }
+  resetBookkeeping();
 
-  transformImports(getConfigFile());
+  transformImports(getConfig());
 
   if (!silent || verbose) {
     console.log(
       `✅ complete. Files Searched: ${filesSearchedCount}. Files changed: ${filesChangedCount}. Lines changed ${linesChangedCount}.`
     );
   }
-
-  exit(0);
 }
-
-main();
