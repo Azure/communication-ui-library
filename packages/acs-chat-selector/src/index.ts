@@ -9,10 +9,13 @@ export { ChatThreadClientProvider, useChatThreadClient, useThreadId } from './pr
 export { usePropsFor } from './hooks/usePropsFor';
 export { useSelector } from './hooks/useSelector';
 
-// TODO: these exports should be removed in favor of useSelector
+// -- TODO: these exports should be removed in favor of useSelector -- //
+export { useHandlers } from './hooks/useHandlers';
 export { chatThreadSelector } from './chatThreadSelector';
 export { typingIndicatorSelector } from './typingIndicatorSelector';
 export { sendBoxSelector } from './sendBoxSelector';
+export { chatParticipantListSelector } from './chatParticipantListSelector';
+// ---- //
 
 export type { ChatClientProviderProps } from './providers/ChatClientProvider';
 export type { ChatThreadClientProviderProps } from './providers/ChatThreadClientProvider';

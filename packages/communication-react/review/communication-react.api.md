@@ -102,6 +102,17 @@ export type ChatMessageWithStatus = ChatMessage_2 & {
     status: ChatMessageStatus;
 };
 
+// @public (undocumented)
+export const chatParticipantListSelector: reselect.OutputParametricSelector<ChatClientState_2, ChatBaseSelectorProps, {
+    userId: string;
+    displayName: string;
+    chatParticipants: WebUiChatParticipant_2[];
+}, (res1: string, res2: Map<string, ChatParticipant>, res3: string) => {
+    userId: string;
+    displayName: string;
+    chatParticipants: WebUiChatParticipant_2[];
+}>;
+
 // @public
 export const ChatThreadClientProvider: (props: ChatThreadClientProviderProps) => JSX.Element;
 
@@ -533,6 +544,9 @@ export const useChatClient: () => StatefulChatClient_2;
 
 // @public (undocumented)
 export const useChatThreadClient: () => ChatThreadClient;
+
+// @public (undocumented)
+export const useHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, PropsT>>;
 
 // @public (undocumented)
 export const usePropsFor: <SelectorT extends (state: ChatClientState_2, props: any) => any>(component: React_2.FunctionComponent<any>) => ReturnType<SelectorT>;
