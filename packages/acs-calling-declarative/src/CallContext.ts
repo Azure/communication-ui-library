@@ -46,7 +46,8 @@ export class CallContext {
         isSpeakerSelectionAvailable: false,
         cameras: [],
         microphones: [],
-        speakers: []
+        speakers: [],
+        unparentedViews: []
       },
       callAgent: undefined,
       userId: userId
@@ -576,6 +577,22 @@ export class CallContext {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         draft.deviceManager.deviceAccess = deviceAccess;
+      })
+    );
+  }
+
+  public setDeviceManagerUnparentedView(view: VideoStreamRendererView): void {
+    this.setState(
+      produce(this._state, (draft: CallClientState) => {
+        draft.deviceManager.unparentedViews.push(view);
+      })
+    );
+  }
+
+  public removeDeviceManagerUnparentedView(index: number): void {
+    this.setState(
+      produce(this._state, (draft: CallClientState) => {
+        draft.deviceManager.unparentedViews.splice(index, 1);
       })
     );
   }

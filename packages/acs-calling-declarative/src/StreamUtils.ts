@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CreateViewOptions, VideoStreamRenderer } from '@azure/communication-calling';
-import { LocalVideoStream, RemoteVideoStream } from './CallClientState';
+import { CreateViewOptions, LocalVideoStream, VideoStreamRenderer } from '@azure/communication-calling';
+import { LocalVideoStream as StatefulLocalVideoStream, RemoteVideoStream } from './CallClientState';
 import { CallContext } from './CallContext';
 import {
   convertSdkLocalStreamToDeclarativeLocalStream,
@@ -11,21 +11,25 @@ import {
 } from './Converter';
 import { InternalCallContext } from './InternalCallContext';
 
+// TODO: How can we make this configurable?
+export const MAX_UNPARENTED_VIEWS_LENGTH = 10;
+
 export async function startRenderVideo(
   context: CallContext,
   internalContext: InternalCallContext,
-  callId: string,
-  stream: LocalVideoStream | RemoteVideoStream,
+  callId: string | undefined,
+  stream: StatefulLocalVideoStream | RemoteVideoStream,
   options?: CreateViewOptions
 ): Promise<void> {
-  if ('id' in stream) {
+  if ('id' in stream && callId) {
     const streamId = stream.id;
     const remoteVideoStream = internalContext.getRemoteVideoStream(callId, streamId);
     const participantKey = internalContext.getRemoteParticipantKey(callId, streamId);
     const videoStreamRenderer = internalContext.getRemoteVideoStreamRenderer(callId, streamId);
 
     if (!remoteVideoStream || !participantKey || videoStreamRenderer) {
-      return;
+      // TODO: How to standarize all errors
+      throw new Error('RemoteVideoStream not found, RemoteParticipant not found, or Stream is already rendered');
     }
 
     const renderer = new VideoStreamRenderer(remoteVideoStream);
@@ -38,12 +42,13 @@ export async function startRenderVideo(
       convertFromSDKToDeclarativeVideoStreamRendererView(view)
     );
     internalContext.setRemoteVideoStreamRenderer(callId, streamId, renderer);
-  } else {
+  } else if (!('id' in stream) && callId) {
     const localVideoStream = internalContext.getLocalVideoStream(callId);
     const localVideoStreamRenderer = internalContext.getLocalVideoStreamRenderer(callId);
 
     if (!localVideoStream || localVideoStreamRenderer) {
-      return;
+      // TODO: How to standarize all errors
+      throw new Error('LocalVideoStream not found or Stream is already rendered');
     }
 
     const renderer = new VideoStreamRenderer(localVideoStream);
@@ -51,21 +56,36 @@ export async function startRenderVideo(
 
     context.setLocalVideoStreamRendererView(callId, convertFromSDKToDeclarativeVideoStreamRendererView(view));
     internalContext.setLocalVideoStreamRenderer(callId, renderer);
+  } else if (!('id' in stream) && !callId) {
+    if (context.getState().deviceManager.unparentedViews.length >= MAX_UNPARENTED_VIEWS_LENGTH) {
+      // TODO: How to standarize all errors
+      throw new Error('Max amount of unparented views reached ' + MAX_UNPARENTED_VIEWS_LENGTH.toString());
+    }
+    const localVideoStream = new LocalVideoStream(stream.source);
+    const renderer = new VideoStreamRenderer(localVideoStream);
+    const view = await renderer.createView(options);
+    context.setDeviceManagerUnparentedView(convertFromSDKToDeclarativeVideoStreamRendererView(view));
+    internalContext.setUnparentedStream(stream);
+    internalContext.setUnparentedRenderer(renderer);
+  } else {
+    // TODO: How to standarize all errors
+    throw new Error('Invalid combination of parameters');
   }
 }
 
 export function stopRenderVideo(
   context: CallContext,
   internalContext: InternalCallContext,
-  callId: string,
-  stream: LocalVideoStream | RemoteVideoStream
+  callId: string | undefined,
+  stream: StatefulLocalVideoStream | RemoteVideoStream
 ): void {
-  if ('id' in stream) {
+  if ('id' in stream && callId) {
     const streamId = stream.id;
     const videoStreamRenderer = internalContext.getRemoteVideoStreamRenderer(callId, streamId);
 
     if (!videoStreamRenderer) {
-      return;
+      // TODO: How to standarize all errors
+      throw new Error('VideoStreamRenderer not found');
     }
 
     videoStreamRenderer.dispose();
@@ -75,19 +95,36 @@ export function stopRenderVideo(
       context.setRemoteVideoStreamRendererView(callId, participantKey, streamId, undefined);
     }
     internalContext.removeRemoteVideoStreamRenderer(callId, streamId);
-  } else {
+  } else if (!('id' in stream) && callId) {
     const videoStreamRenderer = internalContext.getLocalVideoStreamRenderer(callId);
 
     if (!videoStreamRenderer) {
-      return;
+      // TODO: How to standarize all errors
+      throw new Error('VideoStreamRenderer not found');
     }
 
     videoStreamRenderer.dispose();
     context.setLocalVideoStreamRendererView(callId, undefined);
     internalContext.removeLocalVideoStreamRenderer(callId);
+  } else if (!('id' in stream) && !callId) {
+    const index = internalContext.findUnparentedStream(stream);
+    if (index === -1) {
+      // TODO: How to standarize all errors
+      throw new Error('UnparentedStream not found');
+    }
+
+    const unparentedRenderer = internalContext.getUnparentedRenderer(index);
+    unparentedRenderer.dispose();
+    context.removeDeviceManagerUnparentedView(index);
+    internalContext.removeUnparentedRenderer(index);
+    internalContext.removeUnparentedStream(index);
+  } else {
+    // TODO: How to standarize all errors
+    throw new Error('Invalid combination of parameters');
   }
 }
 
+// Only stops videos that are tied to a Call.
 export function stopRenderVideoAll(context: CallContext, internalContext: InternalCallContext, callId: string): void {
   const streams = internalContext.getRemoteVideoStreams(callId);
   if (streams) {

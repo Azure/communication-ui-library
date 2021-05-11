@@ -317,16 +317,16 @@ export type DeviceManager = {
    */
   isSpeakerSelectionAvailable: boolean;
   /**
-   * Proxy of {@Link @azure/communication-calling#DeviceManager.isSpeakerSelectionAvailable}.
+   * Proxy of {@Link @azure/communication-calling#DeviceManager.selectedMicrophone}.
    */
   selectedMicrophone?: AudioDeviceInfo;
   /**
-   * Proxy of {@Link @azure/communication-calling#DeviceManager.selectedMicrophone}.
+   * Proxy of {@Link @azure/communication-calling#DeviceManager.selectedSpeaker}.
    */
   selectedSpeaker?: AudioDeviceInfo;
   /**
-   * Stores the selected camera device info. This is maintained in the proxy
-   * client state.
+   * Stores the selected camera device info. This is provided by the stateful layer and does not exist in the Calling
+   * SDK. It must be explicitly set before use and does not persist across instances of the stateful client.
    */
   selectedCamera?: VideoDeviceInfo;
   /**
@@ -345,6 +345,11 @@ export type DeviceManager = {
    * Stores deviceAccess data returned from {@Link @azure/communication-calling#DeviceManager.askDevicePermission}.
    */
   deviceAccess?: DeviceAccess;
+  /**
+   * Stores created views that are not associated with any Call state (when
+   * {@Link DeclarativeCallClient#startRenderVideo} is called with undefined callId and LocalVideoStream).
+   */
+  unparentedViews: VideoStreamRendererView[];
 };
 
 /**
