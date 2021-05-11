@@ -17,7 +17,7 @@ import { createSelector } from 'reselect';
 // @ts-ignore
 import * as reselect from 'reselect';
 // @ts-ignore
-import { getCall, BaseSelectorProps, getDisplayName, getIdentifier, getCallId } from './baseSelectors';
+import { getCall, CallingBaseSelectorProps, getDisplayName, getIdentifier, getCallId } from './baseSelectors';
 // @ts-ignore
 import { VideoGalleryLocalParticipant, VideoGalleryRemoteParticipant } from './types/VideoGallery';
 import { memoizeFnAll } from './utils/memoizeFnAll';

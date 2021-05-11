@@ -1,5 +1,5 @@
 import { chatClientDeclaratify, DeclarativeChatClient } from '@azure/acs-chat-declarative';
-import { sendBoxSelector, chatThreadSelector, createDefaultHandlersForComponent } from '@azure/acs-chat-selector';
+import { sendBoxSelector, chatThreadSelector, createDefaultChatHandlersForComponent } from '@azure/acs-chat-selector';
 import { ChatClient, ChatThreadClient } from '@azure/communication-chat';
 import { AzureCommunicationUserCredential } from '@azure/communication-common';
 import { FluentThemeProvider, MessageThread, SendBox, MessageThreadProps, SendBoxProps } from '@azure/communication-ui';
@@ -48,8 +48,8 @@ function App(): JSX.Element {
   let sendBoxHandler;
   let messageThreadHandler;
   if (chatThreadClient && statefulChatClient) {
-    sendBoxHandler = createDefaultHandlersForComponent(statefulChatClient, chatThreadClient, SendBox);
-    messageThreadHandler = createDefaultHandlersForComponent(statefulChatClient, chatThreadClient, MessageThread);
+    sendBoxHandler = createDefaultChatHandlersForComponent(statefulChatClient, chatThreadClient, SendBox);
+    messageThreadHandler = createDefaultChatHandlersForComponent(statefulChatClient, chatThreadClient, MessageThread);
   }
 
   return (

@@ -17,7 +17,7 @@ import {
 } from './styles/ChatHeader.styles';
 import { SidePanelTypes } from './SidePanel';
 import { copyIconStyle } from './styles/InviteFooter.styles';
-import { WebUiChatParticipant } from '@azure/acs-chat-selector';
+import { WebUiChatParticipant } from 'react-components';
 
 export type ChatHeaderProps = {
   userId: string;
