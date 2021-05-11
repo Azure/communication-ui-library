@@ -1,5 +1,5 @@
 import { EndCallButton } from '@azure/communication-react';
-import { Icon, Label, Stack } from '@fluentui/react';
+import { Icon, Label } from '@fluentui/react';
 import React from 'react';
 
 export const EndCallButtonCustomExample: () => JSX.Element = () => {
@@ -16,14 +16,12 @@ export const EndCallButtonCustomExample: () => JSX.Element = () => {
   };
 
   return (
-    <Stack horizontal horizontalAlign={'center'}>
-      <EndCallButton
-        style={{ backgroundColor: 'cyan' }}
-        key={'endCallCustomBtnKey'}
-        showLabel={true}
-        onRenderIcon={customOnRenderIcon}
-        onRenderText={customOnRenderText}
-      />
-    </Stack>
+    <EndCallButton
+      style={{ backgroundColor: 'cyan' }}
+      key={'endCallCustomBtnKey'}
+      showLabel={true}
+      onRenderIcon={customOnRenderIcon}
+      onRenderText={customOnRenderText}
+    />
   );
 };

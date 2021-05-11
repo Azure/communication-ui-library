@@ -1,16 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-export { chatClientDeclaratify } from './ChatClientDeclarative';
+export { createStatefulChatClient } from './ChatClientDeclarative';
 export { getCommunicationIdentifierAsKey } from './ChatClientState';
-export { ChatContext } from './ChatContext';
-export { chatThreadClientDeclaratify } from './ChatThreadClientDeclarative';
 
-export type { DeclarativeChatClient } from './ChatClientDeclarative';
-export type { ChatMessageWithStatus, MessageStatus } from './types/ChatMessageWithStatus';
+export type { StatefulChatClient } from './ChatClientDeclarative';
+export type { ChatMessageWithStatus, ChatMessageStatus } from './types/ChatMessageWithStatus';
 export type { ChatConfig } from './types/ChatConfig';
-export type { ReadReceipt } from './types/ReadReceipt';
-export type { TypingIndicator } from './types/TypingIndicator';
+export type { TypingIndicatorEvent } from './types/TypingIndicatorEvent';
 export type {
   ChatClientState,
   ChatThreadClientState,

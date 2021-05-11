@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatParticipant } from '@azure/communication-chat';
+import { ChatMessageReadReceipt, ChatParticipant } from '@azure/communication-chat';
 import {
   CommunicationIdentifier,
   CommunicationIdentifierKind,
@@ -10,8 +10,7 @@ import {
   isPhoneNumberIdentifier
 } from '@azure/communication-common';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
-import { ReadReceipt } from './types/ReadReceipt';
-import { TypingIndicator } from './types/TypingIndicator';
+import { TypingIndicatorEvent } from './types/TypingIndicatorEvent';
 
 export type ChatClientState = {
   userId: CommunicationIdentifierKind;
@@ -34,8 +33,8 @@ export type ChatThreadClientState = {
   getThreadMembersError?: boolean;
   updateThreadMembersError?: boolean;
   failedMessageIds: string[];
-  readReceipts: ReadReceipt[];
-  typingIndicators: TypingIndicator[];
+  readReceipts: ChatMessageReadReceipt[];
+  typingIndicators: TypingIndicatorEvent[];
   latestReadTime: Date;
 };
 

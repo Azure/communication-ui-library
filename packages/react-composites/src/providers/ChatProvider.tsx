@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import { ChatClient } from '@azure/communication-chat';
 import { CommunicationUserKind } from '@azure/communication-common';
-import { chatClientDeclaratify } from '@azure/acs-chat-declarative';
+import { createStatefulChatClient } from '@azure/acs-chat-declarative';
 import { ChatThreadProvider } from './ChatThreadProvider';
 import { AbortSignalLike } from '@azure/core-http';
 import { Spinner } from '@fluentui/react';
@@ -50,7 +50,7 @@ const ChatProviderBase = (props: ChatProviderProps & ErrorHandlingProps): JSX.El
   const userId = { kind: 'communicationUser', communicationUserId: rawUserId } as CommunicationUserKind;
 
   const [chatClient, setChatClient] = useState<ChatClient>(
-    chatClientDeclaratify(
+    createStatefulChatClient(
       new ChatClient(props.endpointUrl, createAzureCommunicationUserCredential(token, props.refreshTokenCallback)),
       { userId: userId, displayName }
     )
