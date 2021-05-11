@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "updated EndCallButton label and defaultRenderText of all buttons for ControlBar",
+  "packageName": "react-components",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "none"
+}
