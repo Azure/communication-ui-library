@@ -80,20 +80,18 @@ export const EndCall: (
   const showLabels = boolean('Show Labels', false);
 
   // This is code to set the color of the background div to show contrast to the control bar based on the theme like shown in the Figma design.
-  let background = '#a42e43';
-  let hoverBackGround = '#8b2c3d';
-  if (theme === 'Dark') {
-    background = '#c4314b';
-    hoverBackGround = '#a42e43';
-  }
+  const btnBackground =
+    theme === 'Dark'
+      ? { root: '#c4314b', hovered: '#a42e43', pressed: '#8b2c3d' }
+      : { root: '#a42e43', hovered: '#8b2c3d', pressed: '#772a38' };
 
   return (
     <EndCallButton
       showLabel={showLabels}
       styles={{
-        root: { background: background },
-        rootHovered: { background: hoverBackGround },
-        rootPressed: { background: hoverBackGround }
+        root: { background: btnBackground.root },
+        rootHovered: { background: btnBackground.hovered },
+        rootPressed: { background: btnBackground.pressed }
       }}
     />
   );
