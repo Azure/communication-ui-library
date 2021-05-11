@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Removed WebUiChatParticipant type. Added onRenderParticipantMenu property to GroupChatAdapter. ",
+  "packageName": "react-composites",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
