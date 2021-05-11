@@ -1,6 +1,13 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import { MessageStatus, MessageAttachedStatus, ChatMessage, CustomMessage, SystemMessage } from 'react-components';
+import {
+  MessageStatus,
+  MessageAttachedStatus,
+  ChatMessage,
+  CustomMessage,
+  SystemMessage
+} from '@azure/communication-react';
 
 export const MessageThreadContainerStyles = {
   width: '100%',

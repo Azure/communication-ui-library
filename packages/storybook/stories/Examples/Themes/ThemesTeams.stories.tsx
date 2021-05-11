@@ -1,9 +1,6 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import React from 'react';
-import { Meta } from '@storybook/react/types-6-0';
-import { getDocs } from './ThemesDocs';
-import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import {
   CameraButton,
   ControlBar,
@@ -13,7 +10,26 @@ import {
   MicrophoneButton,
   ScreenShareButton,
   VideoTile
-} from 'react-components';
+} from '@azure/communication-react';
+import { Description, Heading, Source, Title } from '@storybook/addon-docs/blocks';
+import { Meta } from '@storybook/react/types-6-0';
+import React from 'react';
+import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
+
+const exampleTeamsTheme = require('!!raw-loader!./snippets/ThemesTeams.snippet.tsx').default;
+
+const getDocs: () => JSX.Element = () => {
+  return (
+    <>
+      <Title>Themes</Title>
+      <Description>
+        Example Themes that can be leveraged by developers to provide color schemes to UI Components
+      </Description>
+      <Heading>Teams-Like Theme</Heading>
+      <Source code={exampleTeamsTheme} />
+    </>
+  );
+};
 
 const TeamsTheme = {
   palette: {

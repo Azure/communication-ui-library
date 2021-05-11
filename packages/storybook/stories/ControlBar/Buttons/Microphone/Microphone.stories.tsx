@@ -1,23 +1,23 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import { Canvas, Description, Heading, Props, Source, SourceState, Title } from '@storybook/addon-docs/blocks';
+import { MicrophoneButton } from '@azure/communication-react';
+import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import { boolean } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { MicrophoneButton } from 'react-components';
 
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
-import { MicrophoneButtonExample } from './snippets/MicrophoneButton.snippet';
-import { MicrophoneButtonWithLabelExample } from './snippets/MicrophoneButtonWithLabel.snippet';
-import { CustomMicrophoneButtonExample } from './snippets/CustomMicrophoneButton.snippet';
+import { CustomMicrophoneButtonExample } from './snippets/Custom.snippet';
+import { MicrophoneButtonExample } from './snippets/Default.snippet';
+import { MicrophoneButtonWithLabelExample } from './snippets/WithLabel.snippet';
 
-const MicrophoneButtonExampleText = require('!!raw-loader!./snippets/MicrophoneButton.snippet.tsx').default;
-const MicrophoneButtonWithLabelExampleText = require('!!raw-loader!./snippets/MicrophoneButtonWithLabel.snippet.tsx')
-  .default;
-const CustomMicrophoneButtonExampleText = require('!!raw-loader!./snippets/CustomMicrophoneButton.snippet.tsx').default;
+const CustomMicrophoneButtonExampleText = require('!!raw-loader!./snippets/Custom.snippet.tsx').default;
+const MicrophoneButtonExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
+const MicrophoneButtonWithLabelExampleText = require('!!raw-loader!./snippets/WithLabel.snippet.tsx').default;
 
 const importStatement = `
-import { MicrophoneButton } from 'react-components';
+import { MicrophoneButton } from '@azure/communication-react';
 `;
 
 const getDocs: () => JSX.Element = () => {
@@ -25,6 +25,10 @@ const getDocs: () => JSX.Element = () => {
     <>
       <Title>MicrophoneButton</Title>
       <Description of={MicrophoneButton} />
+      <Description>
+        Note: When overriding a render, like using `onRenderIcon` or `onRenderText`, don not forget to add a unique key
+        to each element to avoid warning for children in a list.
+      </Description>
 
       <Heading>Importing</Heading>
       <Source code={importStatement} />
@@ -34,29 +38,26 @@ const getDocs: () => JSX.Element = () => {
         The default `MicrophoneButton` component shows a microphone icon with no label. The following example displays
         an unmuted `MicrophoneButton` and a muted `MicrophoneButton`.
       </Description>
-      <Canvas withSource={SourceState.NONE}>
+      <Canvas mdxSource={MicrophoneButtonExampleText}>
         <MicrophoneButtonExample />
       </Canvas>
-      <Source code={MicrophoneButtonExampleText} />
 
       <Heading>Microphone with default label</Heading>
       <Description>
         You can display the button label which, by default, will show below the icon as `Mute` or `Unmute`.
       </Description>
-      <Canvas withSource={SourceState.NONE}>
+      <Canvas mdxSource={MicrophoneButtonWithLabelExampleText}>
         <MicrophoneButtonWithLabelExample />
       </Canvas>
-      <Source code={MicrophoneButtonWithLabelExampleText} />
 
       <Heading>Custom MicrophoneButton Styles</Heading>
       <Description>
         You can change the styles of the `MicrophoneButton` as you would customized any Button (styles, primary,
         onRenderIcon, onRenderText, etc... ).
       </Description>
-      <Canvas withSource={SourceState.NONE}>
+      <Canvas mdxSource={CustomMicrophoneButtonExampleText}>
         <CustomMicrophoneButtonExample />
       </Canvas>
-      <Source code={CustomMicrophoneButtonExampleText} />
 
       <Heading>MicrophoneButton Props</Heading>
       <Description>

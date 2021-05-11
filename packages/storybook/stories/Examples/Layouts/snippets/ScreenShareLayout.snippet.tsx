@@ -1,4 +1,4 @@
-import { VideoTile } from 'react-components';
+import { VideoTile } from '@azure/communication-react';
 import { Label, mergeStyles, Persona, PersonaSize, Stack } from '@fluentui/react';
 import React from 'react';
 
@@ -8,18 +8,18 @@ export const ScreenShareLayoutExample: () => JSX.Element = () => {
   const aspectRatioBoxStyle = mergeStyles({
     borderWidth: '.063rem .063rem .025rem .063rem',
     borderStyle: 'solid',
-    width: '100%',
+    width: '100\u0025',
     height: 0,
     position: 'relative',
-    paddingTop: '56.25%'
+    paddingTop: '56.25\u0025'
   });
 
   const aspectRatioBoxContentStyle = mergeStyles({
     position: 'absolute',
     top: 0,
     left: 0,
-    width: '100%',
-    height: '100%'
+    width: '100\u0025',
+    height: '100\u0025'
   });
 
   const videoStreamStyle = mergeStyles({
@@ -28,8 +28,8 @@ export const ScreenShareLayoutExample: () => JSX.Element = () => {
     position: 'absolute',
     bottom: '.25rem',
     right: '.25rem',
-    height: '20%',
-    width: '30%'
+    height: '20\u0025',
+    width: '30\u0025'
   });
 
   const screenShareLayoutStyle = {
@@ -39,11 +39,11 @@ export const ScreenShareLayoutExample: () => JSX.Element = () => {
   };
 
   const videoLabelStyle = mergeStyles({
-    bottom: '5%',
-    left: '2%',
+    bottom: '5\u0025',
+    left: '2\u0025',
     overflow: 'hidden',
     position: 'absolute',
-    maxWidth: '95%'
+    maxWidth: '95\u0025'
   });
 
   const participantsComponents = defaultParticipants.map((participant, index) => {
@@ -73,13 +73,13 @@ export const ScreenShareLayoutExample: () => JSX.Element = () => {
   return (
     <Stack style={screenShareLayoutStyle} horizontal>
       {/* Side panel component in this layout */}
-      <Stack.Item className={mergeStyles({ height: '100%', width: '30%' })}>
-        <Stack grow className={mergeStyles({ height: '100%', overflow: 'auto' })}>
+      <Stack.Item className={mergeStyles({ height: '100\u0025', width: '30\u0025' })}>
+        <Stack grow className={mergeStyles({ height: '100\u0025', overflow: 'auto' })}>
           {participantsComponents}
         </Stack>
       </Stack.Item>
       {/* Screen share stream component in this layout */}
-      <Stack.Item grow className={mergeStyles({ height: '100%' })}>
+      <Stack.Item grow className={mergeStyles({ height: '100\u0025' })}>
         {/* The screen share component that will display the screen share stream and sharer's video */}
         <VideoTile
           isVideoReady={false}
@@ -88,8 +88,8 @@ export const ScreenShareLayoutExample: () => JSX.Element = () => {
           }}
           // A placeholder element for the screen share stream
           placeholderProvider={
-            <Stack className={mergeStyles({ height: '100%' })}>
-              <Stack verticalAlign="center" horizontalAlign="center" className={mergeStyles({ height: '100%' })}>
+            <Stack className={mergeStyles({ height: '100\u0025' })}>
+              <Stack verticalAlign="center" horizontalAlign="center" className={mergeStyles({ height: '100\u0025' })}>
                 Your Screen Share Stream
               </Stack>
             </Stack>

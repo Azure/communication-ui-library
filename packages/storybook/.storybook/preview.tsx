@@ -1,8 +1,9 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import React from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
-import { FluentThemeProvider, defaultThemes } from 'react-components';
+import { FluentThemeProvider } from '@azure/communication-react';
 import { initializeIcons, loadTheme, mergeStyles } from '@fluentui/react';
 import { DocsContainer } from '@storybook/addon-docs/blocks';
 import { BackToTop, TableOfContents } from 'storybook-docs-toc';
@@ -10,14 +11,14 @@ import {
   COMPONENT_FOLDER_PREFIX,
   COMPOSITE_FOLDER_PREFIX,
   EXAMPLES_FOLDER_PREFIX,
-  QUICKSTARTS_FOLDER_PREFIX
+  QUICKSTARTS_FOLDER_PREFIX,
+  STATEFUL_CLIENT_PREFIX
 } from '../stories/constants';
+import { THEMES } from '../stories/themes';
 
 // Removing `loadTheme({})` causes storybook declaration exception.
 loadTheme({});
 initializeIcons();
-
-const THEMES = defaultThemes;
 
 export const parameters = {
   layout: 'fullscreen',
@@ -42,20 +43,28 @@ export const parameters = {
         'Styling',
         'Theming',
         'Localization',
+        STATEFUL_CLIENT_PREFIX,
+        [
+          'What is it',
+          'Best Practices',
+          'Handlers',
+          'Selectors',
+          'FAQ',
+          'Reference'
+        ],
         QUICKSTARTS_FOLDER_PREFIX,
         COMPOSITE_FOLDER_PREFIX,
         COMPONENT_FOLDER_PREFIX,
-        EXAMPLES_FOLDER_PREFIX,
-        'Stateful Chat Client',
+        EXAMPLES_FOLDER_PREFIX
       ]
     }
   }
 };
 
 const withThemeProvider = (Story: any, context: any) => {
-  const themeName = (context.globals.theme as string).toLowerCase();
+  const themeName = context.globals.theme;
   let theme = THEMES[themeName]?.theme;
-  if (context.globals.customTheme !== '') {
+  if (context.globals.customTheme) {
     try {
       theme = JSON.parse(context.globals.customTheme);
     } catch(e) {
@@ -89,7 +98,7 @@ export const globalTypes = {
   theme: {
     name: 'Theme',
     description: 'Global theme for components',
-    defaultValue: defaultThemes.light.name
+    defaultValue: THEMES.Light.name
   },
   customTheme: {
     name: 'Custom theme',

@@ -1,10 +1,13 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
+import { GridLayout as GridLayoutComponent, VideoTile, StreamMedia } from '@azure/communication-react';
+import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
+import { number, object } from '@storybook/addon-knobs';
+import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
-import { Meta } from '@storybook/react/types-6-0';
-import { number, object } from '@storybook/addon-knobs';
-import { getDocs } from './GridLayoutDocs';
+
 import {
   mediaGalleryWidthDefault,
   mediaGalleryWidthOptions,
@@ -12,8 +15,42 @@ import {
   mediaGalleryHeightOptions,
   COMPONENT_FOLDER_PREFIX
 } from '../constants';
-import { GridLayout as GridLayoutComponent, VideoTile, StreamMedia } from 'react-components';
 import { renderVideoStream } from '../utils';
+import { GridLayoutExample } from './snippets/GridLayout.snippet';
+
+const GridLayoutExampleText = require('!!raw-loader!./snippets/GridLayout.snippet').default;
+
+const importStatement = `
+import { GridLayout, VideoTile } from '@azure/communication-react';
+`;
+
+const getDocs: () => JSX.Element = () => {
+  return (
+    <>
+      <Title>GridLayout</Title>
+      <Description>
+        The `GridLayout` organizes components passed to it as children in a grid layout. It can display a grid of call
+        participants through the use of `VideoTile` component.
+      </Description>
+
+      <Heading>Importing</Heading>
+      <Source code={importStatement} />
+
+      <Heading>Example</Heading>
+      <Description>
+        The following example shows how you can render `VideoTile` components inside a grid layout. For styling the
+        children video tiles, please read the [VideoTile component
+        docs](./?path=/docs/ui-components-videotile--video-tile-component).
+      </Description>
+      <Canvas mdxSource={GridLayoutExampleText}>
+        <GridLayoutExample />
+      </Canvas>
+
+      <Heading>Props</Heading>
+      <Props of={GridLayoutComponent} />
+    </>
+  );
+};
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.

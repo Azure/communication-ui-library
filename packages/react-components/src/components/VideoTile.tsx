@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { IStyle, mergeStyles, Persona, PersonaSize, Stack } from '@fluentui/react';
 import React from 'react';
@@ -67,7 +68,7 @@ export const VideoTile = (props: VideoTileProps & PlaceholderProps): JSX.Element
   const placeholder = placeholderProvider ?? <DefaultPlaceholder {...props} />;
   return (
     <Stack className={mergeStyles(rootStyles, { background: theme.palette.neutralLighter }, styles?.root)}>
-      {isVideoReady ? (
+      {isVideoReady && videoProvider ? (
         <Stack
           className={mergeStyles(
             videoContainerStyles,

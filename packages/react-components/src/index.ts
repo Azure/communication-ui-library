@@ -1,9 +1,10 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 export * from './components';
 export * from './theming';
 
-export { CommunicationUiErrorSeverity } from './types';
+export { CommunicationUiErrorSeverity, MessageAttachedStatus } from './types';
 
 export type {
   BaseCustomStylesProps,
@@ -12,12 +13,10 @@ export type {
   CustomMessage,
   CustomMessagePayload,
   Message,
-  MessageAttachedStatus,
   MessageStatus,
   MessageTypes,
-  NamedTheme,
   SystemMessage,
   SystemMessagePayload,
-  ThemeCollection,
   WebUiChatParticipant
 } from './types';
+export * from './types/GalleryParticipant';

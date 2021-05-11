@@ -1,4 +1,6 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { ChatClient } from '@azure/communication-chat';
 import { ChatContext } from './ChatContext';
 import { ChatClientState } from './ChatClientState';
@@ -7,22 +9,22 @@ import { chatThreadClientDeclaratify } from './ChatThreadClientDeclarative';
 import { createDecoratedListThreads } from './iterators/createDecoratedListThreads';
 import { ChatConfig } from './types/ChatConfig';
 
-export interface DeclarativeChatClient extends ChatClient {
+export interface StatefulChatClient extends ChatClient {
   state: ChatClientState;
   onStateChange(handler: (state: ChatClientState) => void): void;
   offStateChange(handler: (state: ChatClientState) => void): void;
 }
 
-export interface DeclarativeChatClientWithPrivateProps extends DeclarativeChatClient {
+export interface StatefulChatClientWithPrivateProps extends StatefulChatClient {
   context: ChatContext;
   eventSubscriber: EventSubscriber | undefined;
 }
 
 const proxyChatClient: ProxyHandler<ChatClient> = {
-  get: function <P extends keyof DeclarativeChatClientWithPrivateProps>(
+  get: function <P extends keyof StatefulChatClientWithPrivateProps>(
     chatClient: ChatClient,
     prop: P,
-    receiver: DeclarativeChatClientWithPrivateProps
+    receiver: StatefulChatClientWithPrivateProps
   ) {
     // skip receiver.context call to avoid recursive bugs
     if (prop === 'context') {
@@ -37,24 +39,8 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
           const thread = result.chatThread;
 
           if (thread) {
-            const threadInfo = { ...thread, createdBy: { communicationUserId: thread.createdBy } };
-            context.batch(() => {
-              context.createThread(thread.id, threadInfo);
-              const [request] = args;
-              context.setParticipants(thread.id, request.participants);
-            });
-          }
-          return result;
-        };
-      }
-      case 'getChatThread': {
-        return async function (...args: Parameters<ChatClient['getChatThread']>) {
-          const result = await chatClient.getChatThread(...args);
-          const { _response: _, ...thread } = result;
-          if (thread) {
-            if (!context.createThreadIfNotExist(thread.id, thread)) {
-              context.updateThread(thread.id, thread);
-            }
+            const [request] = args;
+            context.createThread(thread.id, { topic: request.topic });
           }
           return result;
         };
@@ -70,8 +56,10 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
         return createDecoratedListThreads(chatClient, context);
       }
       case 'getChatThreadClient': {
-        return async function (...args: Parameters<ChatClient['getChatThreadClient']>) {
-          const chatThreadClient = await chatClient.getChatThreadClient(...args);
+        return function (...args: Parameters<ChatClient['getChatThreadClient']>) {
+          const chatThreadClient = chatClient.getChatThreadClient(...args);
+          // TODO(prprabhu): Ensure that thread properties are fetched into the ChatContext at this point.
+          // A new thread might be created here, but the properties will never be fetched.
           return chatThreadClientDeclaratify(chatThreadClient, context);
         };
       }
@@ -102,7 +90,7 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
   }
 };
 
-export const chatClientDeclaratify = (chatClient: ChatClient, chatConfig: ChatConfig): DeclarativeChatClient => {
+export const createStatefulChatClient = (chatClient: ChatClient, chatConfig: ChatConfig): StatefulChatClient => {
   const context = new ChatContext();
   let eventSubscriber: EventSubscriber;
 
@@ -135,5 +123,5 @@ export const chatClientDeclaratify = (chatClient: ChatClient, chatConfig: ChatCo
     configurable: false,
     value: (handler: (state: ChatClientState) => void) => context?.offStateChange(handler)
   });
-  return proxy as DeclarativeChatClient;
+  return proxy as StatefulChatClient;
 };

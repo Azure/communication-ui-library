@@ -1,12 +1,13 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { AudioOptions, JoinCallOptions, LocalVideoStream } from '@azure/communication-calling';
-import { CommunicationUser } from '@azure/communication-signaling';
+import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { useEffect } from 'react';
 import { useCallingContext, useCallContext } from '../providers';
 
 export type UseOutgoingCallType = {
-  makeCall: (receiver: CommunicationUser, joinCallOptions?: JoinCallOptions) => void;
+  makeCall: (receiver: CommunicationUserIdentifier, joinCallOptions?: JoinCallOptions) => void;
   endCall: () => Promise<void>;
 };
 
@@ -27,7 +28,7 @@ export const useOutgoingCall = (): UseOutgoingCallType => {
     };
   }, [call, setCallState]);
 
-  const makeCall = (receiver: CommunicationUser, joinCallOptions?: JoinCallOptions): void => {
+  const makeCall = (receiver: CommunicationUserIdentifier, joinCallOptions?: JoinCallOptions): void => {
     if (!callAgent) {
       throw new Error('CallAgent is invalid');
     }

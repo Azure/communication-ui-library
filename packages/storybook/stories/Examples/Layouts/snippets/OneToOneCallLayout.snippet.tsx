@@ -1,4 +1,4 @@
-import { VideoTile } from 'react-components';
+import { VideoTile } from '@azure/communication-react';
 import { mergeStyles, Persona, PersonaSize, Stack } from '@fluentui/react';
 import React from 'react';
 
@@ -9,8 +9,8 @@ export const OneToOneCallLayoutExample: () => JSX.Element = () => {
     position: 'absolute',
     bottom: '.25rem',
     right: '.25rem',
-    height: '25%',
-    width: '30%'
+    height: '25\u0025',
+    width: '30\u0025'
   });
 
   return (

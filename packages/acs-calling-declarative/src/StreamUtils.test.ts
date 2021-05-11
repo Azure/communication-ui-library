@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import {
   CallerInfo,
@@ -74,6 +75,7 @@ function createMockCall(mockCallId: string): Call {
     remoteParticipantsEnded: new Map<string, RemoteParticipant>(),
     recording: { isRecordingActive: false },
     transcription: { isTranscriptionActive: false },
+    transfer: { receivedTransferRequests: [], requestedTransfers: [] },
     startTime: new Date(),
     endTime: undefined
   };

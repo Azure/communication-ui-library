@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { mergeStyles } from '@fluentui/react';
 
@@ -7,7 +8,10 @@ export const mediaContainer = mergeStyles({
   height: '100%',
   width: '100%',
   background: 'transparent',
-  display: 'flex'
+  display: 'flex',
+  '& video': {
+    borderRadius: '.25rem'
+  }
 });
 
 export const invertedVideoStyle = mergeStyles(mediaContainer, {

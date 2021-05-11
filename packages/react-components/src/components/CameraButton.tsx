@@ -1,8 +1,9 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import React from 'react';
-import { DefaultButton, IButtonProps, Stack, concatStyleSets, mergeStyles } from '@fluentui/react';
+import { concatStyleSets, DefaultButton, IButtonProps, mergeStyles, Stack } from '@fluentui/react';
 import { CallVideoIcon, CallVideoOffIcon } from '@fluentui/react-northstar';
+import React from 'react';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 
 /**
@@ -14,6 +15,12 @@ export interface CameraButtonProps extends IButtonProps {
    * @defaultValue `false`
    */
   showLabel?: boolean;
+
+  /**
+   * Utility property for using this component with `communication react eventHandlers`.
+   * Maps directly to the `onClick` property.
+   */
+  onToggleCamera?: () => Promise<void>;
 }
 
 /**
@@ -27,12 +34,12 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
 
   const defaultRenderIcon = (props?: IButtonProps): JSX.Element => {
-    return props?.checked ? <CallVideoIcon /> : <CallVideoOffIcon />;
+    return props?.checked ? <CallVideoIcon key={'videoIconKey'} /> : <CallVideoOffIcon key={'videoOffIconKey'} />;
   };
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {
     return (
-      <Stack className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
+      <Stack key={'videoLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
         {props?.checked ? 'Turn off' : 'Turn on'}
       </Stack>
     );
@@ -41,6 +48,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   return (
     <DefaultButton
       {...props}
+      onClick={props.onToggleCamera ?? props.onClick}
       styles={componentStyles}
       onRenderIcon={onRenderIcon ?? defaultRenderIcon}
       onRenderText={showLabel ? onRenderText ?? defaultRenderText : undefined}

@@ -1,15 +1,21 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import {
   Call as SdkCall,
   RemoteParticipant as SdkRemoteParticipant,
   RemoteVideoStream as SdkRemoteVideoStream,
   LocalVideoStream as SdkLocalVideoStream,
   IncomingCall as SdkIncomingCall,
-  VideoStreamRendererView
+  VideoStreamRendererView,
+  TransferRequestedEventArgs,
+  Transfer
 } from '@azure/communication-calling';
 import {
+  CommunicationUserIdentifier,
   CommunicationUserKind,
   MicrosoftTeamsUserKind,
+  PhoneNumberIdentifier,
   PhoneNumberKind,
   UnknownIdentifierKind
 } from '@azure/communication-common';
@@ -19,7 +25,9 @@ import {
   RemoteVideoStream as DeclarativeRemoteVideoStream,
   LocalVideoStream as DeclarativeLocalVideoStream,
   IncomingCall as DeclarativeIncomingCall,
-  VideoStreamRendererView as DeclarativeVideoStreamRendererView
+  VideoStreamRendererView as DeclarativeVideoStreamRendererView,
+  TransferRequest,
+  Transfer as DeclarativeTransfer
 } from './CallClientState';
 
 export function convertSdkLocalStreamToDeclarativeLocalStream(
@@ -112,6 +120,7 @@ export function convertSdkCallToDeclarativeCall(call: SdkCall): DeclarativeCall 
     remoteParticipantsEnded: new Map<string, DeclarativeRemoteParticipant>(),
     recording: { isRecordingActive: false },
     transcription: { isTranscriptionActive: false },
+    transfer: { receivedTransferRequests: [], requestedTransfers: [] },
     startTime: new Date(),
     endTime: undefined
   };
@@ -133,5 +142,26 @@ export function convertFromSDKToDeclarativeVideoStreamRendererView(
     scalingMode: view.scalingMode,
     isMirrored: view.isMirrored,
     target: view.target
+  };
+}
+
+export function convertSdkTransferRequestedToDeclarativeTransferRequested(
+  transferRequested: TransferRequestedEventArgs
+): TransferRequest {
+  return {
+    targetParticipant: transferRequested.targetParticipant
+  };
+}
+
+export function convertSdkTransferToDeclarativeTransfer(
+  transfer: Transfer,
+  targetParticipant: CommunicationUserIdentifier | PhoneNumberIdentifier,
+  transferId: number
+): DeclarativeTransfer {
+  return {
+    id: transferId,
+    targetParticipant: targetParticipant,
+    state: transfer.state,
+    error: transfer.error
   };
 }

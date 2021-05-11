@@ -1,5 +1,7 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
+import React from 'react';
 import { ENTER_KEY, MAXIMUM_LENGTH_OF_NAME, ErrorHandlingProps, WithErrorHandling } from 'react-composites';
 import {
   TextFieldStyleProps,
@@ -9,8 +11,6 @@ import {
   labelFontStyle,
   warningStyle
 } from './styles/DisplayNameField.styles';
-
-import React from 'react';
 import { TextField } from '@fluentui/react';
 
 interface DisplayNameFieldProps {

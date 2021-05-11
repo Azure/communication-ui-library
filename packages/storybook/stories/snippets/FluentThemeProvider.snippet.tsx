@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   CameraButton,
   ControlBar,
@@ -6,7 +5,8 @@ import {
   FluentThemeProvider,
   MicrophoneButton,
   ScreenShareButton
-} from 'react-components';
+} from '@azure/communication-react';
+import React from 'react';
 
 export const FluentThemeProviderSnippet = (): JSX.Element => {
   return (

@@ -1,6 +1,6 @@
-import React from 'react';
-import { TypingIndicator, WebUiChatParticipant } from 'react-components';
+import { TypingIndicator, WebUiChatParticipant } from '@azure/communication-react';
 import { mergeStyles } from '@fluentui/react';
+import React from 'react';
 
 export const CustomUserRenderSnippet: () => JSX.Element = () => {
   const avatarStyle = {
@@ -19,7 +19,7 @@ export const CustomUserRenderSnippet: () => JSX.Element = () => {
     return (
       <>
         {users.map((user, index) => (
-          <div className={verticallyCenterStyle}>
+          <div key={`${user.displayName}UserKey`} className={verticallyCenterStyle}>
             <img src={imageMap[user.userId]} width="32px" height="32px" style={avatarStyle} />
             <span className={spanStyle}>
               {user.displayName}

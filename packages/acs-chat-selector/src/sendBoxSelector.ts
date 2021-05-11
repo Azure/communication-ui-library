@@ -1,4 +1,6 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { createSelector } from 'reselect';
 import { getCoolPeriod, getDisplayName, getUserId } from './baseSelectors';
 
@@ -9,7 +11,9 @@ import * as reselect from 'reselect';
 // @ts-ignore
 import { ChatClientState } from '@azure/acs-chat-declarative';
 // @ts-ignore
-import { BaseSelectorProps } from './baseSelectors';
+import { CommunicationIdentifierKind } from '@azure/communication-common';
+// @ts-ignore
+import { ChatBaseSelectorProps } from './baseSelectors';
 
 export const sendBoxSelector = createSelector(
   [getCoolPeriod, getUserId, getDisplayName],

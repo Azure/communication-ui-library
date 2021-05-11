@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 export { TypingIndicator } from './TypingIndicator';
 export type { TypingIndicatorProps, TypingIndicatorStylesProps } from './TypingIndicator';
@@ -30,6 +31,9 @@ export type { StreamMediaProps } from './StreamMedia';
 export { ParticipantItem } from './ParticipantItem';
 export type { ParticipantItemProps, ParticipantItemStylesProps } from './ParticipantItem';
 
+export { VideoGallery } from './VideoGallery';
+export type { VideoGalleryProps } from './VideoGallery';
+
 export { CameraButton } from './CameraButton';
 export type { CameraButtonProps } from './CameraButton';
 
@@ -56,9 +60,3 @@ export type { ScreenShareButtonProps } from './ScreenShareButton';
 
 export { VideoTile } from './VideoTile';
 export type { VideoTileProps, VideoTileStylesProps, PlaceholderProps } from './VideoTile';
-
-export { ThemeSelector } from './ThemeSelector';
-export type { ThemeSelectorProps } from './ThemeSelector';
-
-export { ThemeToggler } from './ThemeToggler';
-export type { ThemeTogglerProps } from './ThemeToggler';

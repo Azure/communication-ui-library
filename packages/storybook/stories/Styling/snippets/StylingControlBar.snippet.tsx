@@ -1,4 +1,10 @@
-import { CameraButton, ControlBar, EndCallButton, FluentThemeProvider, MicrophoneButton } from 'react-components';
+import {
+  CameraButton,
+  ControlBar,
+  EndCallButton,
+  FluentThemeProvider,
+  MicrophoneButton
+} from '@azure/communication-react';
 import React from 'react';
 
 // ControlBar component accepts a `styles` prop with only the `root` key as a valid property.

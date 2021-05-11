@@ -1,12 +1,12 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import { ThemeCollection } from '../types';
 import { PartialTheme } from '@fluentui/react-theme-provider';
 
 /**
  * Light theme designed ACS UI SDK components
  */
-const lightTheme: PartialTheme = {
+export const lightTheme: PartialTheme = {
   palette: {
     themePrimary: '#0078d4',
     themeLighterAlt: '#eff6fc',
@@ -36,7 +36,7 @@ const lightTheme: PartialTheme = {
 /**
  * Dark theme designed ACS UI SDK components
  */
-const darkTheme: PartialTheme = {
+export const darkTheme: PartialTheme = {
   palette: {
     themePrimary: '#2899f5',
     themeLighterAlt: '#02060a',
@@ -60,19 +60,5 @@ const darkTheme: PartialTheme = {
     neutralDark: '#f4f4f4',
     black: '#f8f8f8',
     white: '#252423'
-  }
-};
-
-/**
- * Light and Dark default themes used throughout components.
- */
-export const defaultThemes: ThemeCollection = {
-  light: {
-    name: 'light',
-    theme: lightTheme
-  },
-  dark: {
-    name: 'dark',
-    theme: darkTheme
   }
 };

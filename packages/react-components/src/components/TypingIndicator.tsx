@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import {
   typingIndicatorContainerStyle,
@@ -67,7 +68,7 @@ const getDefaultComponents = (
     displayComponents.push(
       <span
         className={mergeStyles(typingIndicatorListStyle, styles?.typingUserDisplayName)}
-        key={'typing indicator display string ' + index.toString()}
+        key={`typing indicator display string ${index}`}
       >
         {index < typingUsers.length - 1 ? typingUser.displayName + ', ' : typingUser.displayName}
       </span>
@@ -77,7 +78,7 @@ const getDefaultComponents = (
   const countOfUsersNotMentioned = typingUsers.length - typingUsersMentioned.length;
   if (countOfUsersNotMentioned > 0) {
     displayComponents.push(
-      <span className={mergeStyles(typingIndicatorVerbStyle, styles?.typingString)}>
+      <span className={mergeStyles(typingIndicatorVerbStyle, styles?.typingString)} key={'UsersCountKey'}>
         {` and ${countOfUsersNotMentioned} other${countOfUsersNotMentioned === 1 ? '' : 's'}`}
       </span>
     );
@@ -103,7 +104,7 @@ export const TypingIndicator = (props: TypingIndicatorProps): JSX.Element => {
   return (
     <Stack horizontal className={mergeStyles(typingIndicatorContainerStyle, styles?.root)}>
       {onRenderUsers ? onRenderUsers(typingUsersToRender) : getDefaultComponents(typingUsersToRender, styles)}
-      <span className={mergeStyles(typingIndicatorVerbStyle, styles?.typingString)}>
+      <span className={mergeStyles(typingIndicatorVerbStyle, styles?.typingString)} key={'TypingStringKey'}>
         {typingString ?? defaultTypingString(typingUsersToRender)}
       </span>
     </Stack>

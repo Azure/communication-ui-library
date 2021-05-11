@@ -1,4 +1,6 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { Stack } from '@fluentui/react';
 import React from 'react';
 import {
@@ -9,9 +11,8 @@ import {
   verticalStackStyle
 } from './styles/CallConfiguration.styles';
 import { LocalPreview } from './LocalPreview';
-import { SetupContainerProps } from 'react-composites';
 
-export interface CallConfigurationProps extends SetupContainerProps {
+export interface CallConfigurationProps {
   screenWidth: number;
   startCallHandler(): void;
   children: React.ReactNode;

@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { Call, Features, LocalVideoStream, RemoteParticipant } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
@@ -8,6 +9,7 @@ import {
   convertSdkParticipantToDeclarativeParticipant,
   getRemoteParticipantKey
 } from './Converter';
+import { ReceivedTransferSubscriber } from './ReceivedTransferSubscriber';
 import { InternalCallContext } from './InternalCallContext';
 import { ParticipantSubscriber } from './ParticipantSubscriber';
 import { RecordingSubscriber } from './RecordingSubscriber';
@@ -27,6 +29,7 @@ export class CallSubscriber {
   private _participantSubscribers: Map<string, ParticipantSubscriber>;
   private _recordingSubscriber: RecordingSubscriber;
   private _transcriptionSubscriber: TranscriptionSubscriber;
+  private _receivedTransferSubscriber: ReceivedTransferSubscriber;
 
   constructor(call: Call, context: CallContext, internalContext: InternalCallContext) {
     this._call = call;
@@ -47,6 +50,12 @@ export class CallSubscriber {
       this._call.api(Features.Transcription)
     );
 
+    this._receivedTransferSubscriber = new ReceivedTransferSubscriber(
+      this._callIdRef,
+      this._context,
+      this._call.api(Features.Transfer)
+    );
+
     this.subscribe();
   }
 
@@ -56,6 +65,7 @@ export class CallSubscriber {
     this._call.on('isScreenSharingOnChanged', this.isScreenSharingOnChanged);
     this._call.on('remoteParticipantsUpdated', this.remoteParticipantsUpdated);
     this._call.on('localVideoStreamsUpdated', this.localVideoStreamsUpdated);
+    this._call.on('isMutedChanged', this.isMuteChanged);
 
     if (this._call.remoteParticipants.length > 0) {
       this._call.remoteParticipants.forEach((participant: RemoteParticipant) => {
@@ -80,6 +90,7 @@ export class CallSubscriber {
     this._call.off('isScreenSharingOnChanged', this.isScreenSharingOnChanged);
     this._call.off('remoteParticipantsUpdated', this.remoteParticipantsUpdated);
     this._call.off('localVideoStreamsUpdated', this.localVideoStreamsUpdated);
+    this._call.off('isMutedChanged', this.isMuteChanged);
 
     this._participantSubscribers.forEach((participantSubscriber: ParticipantSubscriber) => {
       participantSubscriber.unsubscribe();
@@ -93,8 +104,9 @@ export class CallSubscriber {
       stopRenderVideo(this._context, this._internalContext, this._callIdRef.callId, localVideoStreams[0]);
     }
 
-    this._transcriptionSubscriber.unsubscribe();
     this._recordingSubscriber.unsubscribe();
+    this._transcriptionSubscriber.unsubscribe();
+    this._receivedTransferSubscriber.unsubscribe();
   };
 
   private addParticipantListener(participant: RemoteParticipant): void {
@@ -127,6 +139,10 @@ export class CallSubscriber {
 
   private isScreenSharingOnChanged = (): void => {
     this._context.setCallIsScreenSharingOn(this._callIdRef.callId, this._call.isScreenSharingOn);
+  };
+
+  private isMuteChanged = (): void => {
+    this._context.setCallIsMicrophoneMuted(this._callIdRef.callId, this._call.isMuted);
   };
 
   private remoteParticipantsUpdated = (event: { added: RemoteParticipant[]; removed: RemoteParticipant[] }): void => {

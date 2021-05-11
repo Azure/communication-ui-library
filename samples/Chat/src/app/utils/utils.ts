@@ -1,4 +1,7 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+import { AzureCommunicationTokenCredential, CommunicationTokenRefreshOptions } from '@azure/communication-common';
 
 import preval from 'preval.macro';
 import { GUID_FOR_INITIAL_TOPIC_NAME } from 'react-composites';
@@ -81,3 +84,21 @@ export const getBackgroundColor = (avatar: string): { backgroundColor: string } 
 
 export const existsTopicName = (topicName?: string): boolean =>
   !!topicName && topicName !== GUID_FOR_INITIAL_TOPIC_NAME;
+
+// Create AzureCommunicationUserCredential using optional refreshTokenCallback if provided. If callback is provided then
+// identity must also be provided for callback to be used.
+export const createAzureCommunicationUserCredential = (
+  token: string,
+  refreshTokenCallback?: (() => Promise<string>) | undefined
+): AzureCommunicationTokenCredential => {
+  if (refreshTokenCallback !== undefined) {
+    const options: CommunicationTokenRefreshOptions = {
+      token: token,
+      tokenRefresher: () => refreshTokenCallback(),
+      refreshProactively: true
+    };
+    return new AzureCommunicationTokenCredential(options);
+  } else {
+    return new AzureCommunicationTokenCredential(token);
+  }
+};

@@ -8,102 +8,63 @@ import { ChatClient } from '@azure/communication-chat';
 import { ChatMessage } from '@azure/communication-chat';
 import { ChatMessageReadReceipt } from '@azure/communication-chat';
 import { ChatParticipant } from '@azure/communication-chat';
-import { ChatThreadClient } from '@azure/communication-chat';
-import { ChatThreadInfo } from '@azure/communication-chat';
+import { CommunicationIdentifier } from '@azure/communication-common';
+import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 
 // @public (undocumented)
-export const chatClientDeclaratify: (chatClient: ChatClient, chatConfig: ChatConfig) => DeclarativeChatClient;
-
-// @public (undocumented)
 export type ChatClientState = {
-    userId: string;
+    userId: CommunicationIdentifierKind;
     displayName: string;
     threads: Map<string, ChatThreadClientState>;
 };
 
 // @public (undocumented)
 export type ChatConfig = {
-    userId: string;
+    userId: CommunicationIdentifierKind;
     displayName: string;
 };
 
 // @public (undocumented)
-export class ChatContext {
-    // (undocumented)
-    addReadReceipt(threadId: string, readReceipt: ReadReceipt): void;
-    // (undocumented)
-    addTypingIndicator(threadId: string, typingIndicator: TypingIndicator): void;
-    // (undocumented)
-    batch(batchFunc: () => void): void;
-    // (undocumented)
-    createThread(threadId: string, threadInfo?: ChatThreadInfo): void;
-    // (undocumented)
-    createThreadIfNotExist(threadId: string, thread?: ChatThreadInfo): boolean;
-    // (undocumented)
-    deleteLocalMessage(threadId: string, localId: string): boolean;
-    // (undocumented)
-    deleteMessage(threadId: string, id: string): void;
-    // (undocumented)
-    deleteParticipant(threadId: string, participantId: string): void;
-    // (undocumented)
-    deleteParticipants(threadId: string, participantIds: string[]): void;
-    // (undocumented)
-    deleteThread(threadId: string): void;
-    // (undocumented)
-    getState(): ChatClientState;
-    // (undocumented)
-    offStateChange(handler: (state: ChatClientState) => void): void;
-    // (undocumented)
-    onStateChange(handler: (state: ChatClientState) => void): void;
-    // (undocumented)
-    setChatMessage(threadId: string, message: ChatMessageWithStatus): void;
-    // (undocumented)
-    setChatMessages(threadId: string, messages: Map<string, ChatMessageWithStatus>): void;
-    // (undocumented)
-    setParticipant(threadId: string, participant: ChatParticipant): void;
-    // (undocumented)
-    setParticipants(threadId: string, participants: ChatParticipant[]): void;
-    // (undocumented)
-    setState(state: ChatClientState): void;
-    // (undocumented)
-    setThread(threadId: string, threadState: ChatThreadClientState): void;
-    // (undocumented)
-    updateChatConfig(config: ChatConfig): void;
-    // (undocumented)
-    updateChatMessageContent(threadId: string, messagesId: string, content: string | undefined): void;
-    // (undocumented)
-    updateThread(threadId: string, threadInfo?: ChatThreadInfo): void;
-    // (undocumented)
-    updateThreadTopic(threadId: string, topic?: string): void;
-}
+export type ChatMessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
 
 // @public (undocumented)
 export type ChatMessageWithStatus = ChatMessage & {
     clientMessageId?: string;
-    status: MessageStatus;
+    status: ChatMessageStatus;
 };
-
-// @public (undocumented)
-export const chatThreadClientDeclaratify: (chatThreadClient: ChatThreadClient, context: ChatContext) => ChatThreadClient;
 
 // @public (undocumented)
 export type ChatThreadClientState = {
     chatMessages: Map<string, ChatMessageWithStatus>;
-    participants: Map<string, ChatParticipant>;
+    participants: Map<CommunicationIdentifierAsKey, ChatParticipant>;
     threadId: string;
-    threadInfo?: ChatThreadInfo;
+    properties?: ChatThreadProperties;
     coolPeriod?: Date;
     getThreadMembersError?: boolean;
     updateThreadMembersError?: boolean;
     failedMessageIds: string[];
-    readReceipts: ReadReceipt[];
-    typingIndicators: TypingIndicator[];
+    readReceipts: ChatMessageReadReceipt[];
+    typingIndicators: TypingIndicatorEvent[];
     latestReadTime: Date;
 };
 
 // @public (undocumented)
-export interface DeclarativeChatClient extends ChatClient {
+export type ChatThreadProperties = {
+    topic?: string;
+};
+
+// @public (undocumented)
+export type CommunicationIdentifierAsKey = string;
+
+// @public (undocumented)
+export const createStatefulChatClient: (chatClient: ChatClient, chatConfig: ChatConfig) => StatefulChatClient;
+
+// @public (undocumented)
+export const getCommunicationIdentifierAsKey: (identifier: CommunicationIdentifier) => CommunicationIdentifierAsKey;
+
+// @public (undocumented)
+export interface StatefulChatClient extends ChatClient {
     // (undocumented)
     offStateChange(handler: (state: ChatClientState) => void): void;
     // (undocumented)
@@ -113,13 +74,7 @@ export interface DeclarativeChatClient extends ChatClient {
 }
 
 // @public (undocumented)
-export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
-
-// @public (undocumented)
-export type ReadReceipt = ChatMessageReadReceipt;
-
-// @public (undocumented)
-export type TypingIndicator = Omit<TypingIndicatorReceivedEvent, 'receivedOn'> & {
+export type TypingIndicatorEvent = Omit<TypingIndicatorReceivedEvent, 'receivedOn'> & {
     receivedOn: Date;
 };
 

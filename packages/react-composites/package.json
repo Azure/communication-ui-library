@@ -23,18 +23,16 @@
     "lint": "eslint \"*/**/*.{ts,tsx}\"",
     "lint:fix": "npm run lint -- --fix",
     "lint:quiet": "npm run lint -- --quiet",
-    "prepack": "node scripts/cleanse-pkg \"prepublish,build,test,test:coverage,snapshot:update\"",
-    "postpack": "node scripts/restore-pkg && copyfiles -E \"./*.tgz\" private-preview && copyfiles -u 2 -E \"docs/private-preview/README.md\" private-preview"
+    "postpack": "copyfiles -E \"./*.tgz\" private-preview"
   },
   "dependencies": {
     "@azure/acs-calling-declarative": "~1.0.0-beta",
     "@azure/acs-calling-selector": "~1.0.0-beta",
-    "@azure/communication-administration": "1.0.0-beta.3",
+    "@azure/communication-identity": "1.0.0",
     "@azure/communication-calling": "1.0.1-beta.1",
-    "@azure/communication-chat": "1.0.0-beta.4",
+    "@azure/communication-chat": "1.0.0",
     "@azure/communication-common": "1.0.0",
-    "@azure/communication-common-beta3": "npm:@azure/communication-common@1.0.0-beta.3",
-    "@azure/communication-signaling": "1.0.0-beta.1",
+    "@azure/communication-signaling": "1.0.0-beta.5",
     "@azure/communication-signaling-2": "npm:@azure/communication-signaling@1.0.0-beta.2",
     "@azure/core-http": "^1.2.3",
     "@fluentui/react": "^7.117.1",
@@ -48,6 +46,8 @@
     "@azure/acs-chat-selector": "~1.0.0-beta",
     "react-aria-live": "^2.0.5",
     "react-linkify": "^1.0.0-alpha",
+    "memoize-one": "~5.2.1",
+    "events": "~3.3.0",
     "react-components": "1.0.0-beta"
   },
   "peerDependencies": {
@@ -80,7 +80,7 @@
     "core-js": "^3.8.3",
     "eslint-config-prettier": "^6.12.0",
     "eslint-plugin-header": "^3.1.0",
-    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-import": "~2.22.1",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react-hooks": "^4.1.2",

@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 module.exports = {
   env: {
@@ -32,7 +33,7 @@ module.exports = {
     ],
     '@typescript-eslint/no-explicit-any': 'off',
     eqeqeq: 'warn',
-    'header/header': ['error', 'line', ' © Microsoft Corporation. All rights reserved.'],
+    'header/header': ['error', 'line', ' Copyright (c) Microsoft Corporation.\n Licensed under the MIT license.'],
     'react/display-name': 'off',
     '@typescript-eslint/no-unused-vars': ['warn', { varsIgnorePattern: '^_' }]
   },
@@ -53,6 +54,15 @@ module.exports = {
       rules: {
         // Allow requiring the package.json
         '@typescript-eslint/no-var-requires': 'off'
+      }
+    },
+    {
+      // remove ban on files affected by https://github.com/microsoft/rushstack/pull/1916.
+      // This should be removed once this issue is fixed.
+      files: ['groupCallSelector.ts'],
+      rules: {
+        '@typescript-eslint/ban-ts-comment': 'off',
+        '@typescript-eslint/no-unused-vars': 'off'
       }
     }
   ]

@@ -80,14 +80,14 @@ Developers can hook into the stateful client to read the state, handle events an
 
 ## Recommended architecture
 
-![UI Framework recommended architecture with client-server architecture](images/framework-architecture.png)
+![UI Toolkit recommended architecture with client-server architecture](images/Toolkit-architecture.png)
 
 Composite and Base Components are initialized using an Azure Communication Services access token. Access tokens should be procured from Azure Communication Services through a
 trusted service that you manage. See [Quickstart: Create Access Tokens](https://docs.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-javascript) and [Trusted Service Tutorial](https://docs.microsoft.com/azure/communication-services/tutorials/trusted-service-tutorial) for more information.
 
 These client libraries also require the context for the call or chat they will join. Similar to user access tokens, this context should be disseminated to clients via your own trusted service. The list below summarizes the initialization and resource management functions that you need to operationalize.
 
-| Contoso Responsibilities                                 | UI Framework Responsibilities                                   |
+| Contoso Responsibilities                                 | UI Toolkit Responsibilities                                     |
 | -------------------------------------------------------- | --------------------------------------------------------------- |
 | Provide access token from Azure                          | Pass through given access token to initialize components        |
 | Provide refresh function                                 | Refresh access token using developer provided function          |
@@ -106,3 +106,17 @@ previous two releases.
 \*\*Note that Safari versions 13.1+ are supported. Outgoing video for Safari
 macOS is not yet supported, but it is supported on iOS. Outgoing screen sharing
 is only supported on desktop iOS.
+
+## Accessibility
+
+Accessibility by design is a principle across Microsoft products.
+UI Library follows this principle in making sure that all UI Components are fully accessible.
+During public preview, the UI Library will continue to improve and add accessibility feature to the UI Components.
+We expect to add more details on accessibility ahead of the UI Library being in General Availability.
+
+## Localization
+
+Localization is a key to making products that can be used across the world and by people who who speak different languages.
+UI Library will provide out of the box support for some languages and capabilities such as RTL.
+Developers can provide their own localization files to be used for the UI Library.
+These localization capabilities will be added ahead of General Availability.

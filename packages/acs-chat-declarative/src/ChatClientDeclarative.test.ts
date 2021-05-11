@@ -1,10 +1,12 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import { ChatClient, ChatThread, ChatThreadInfo } from '@azure/communication-chat';
+import { ChatClient, ChatThreadItem } from '@azure/communication-chat';
 import {
   ChatMessageDeletedEvent,
   ChatMessageEditedEvent,
   ChatMessageReceivedEvent,
+  ChatParticipant,
   ChatThreadCreatedEvent,
   ChatThreadDeletedEvent,
   ChatThreadPropertiesUpdatedEvent,
@@ -13,33 +15,28 @@ import {
   ReadReceiptReceivedEvent,
   TypingIndicatorReceivedEvent
 } from '@azure/communication-signaling';
-import { chatClientDeclaratify, DeclarativeChatClient } from './ChatClientDeclarative';
+import { createStatefulChatClient, StatefulChatClient } from './ChatClientDeclarative';
 import { ChatClientState } from './ChatClientState';
 import { Constants } from './Constants';
 import { createMockChatThreadClient } from './mocks/createMockChatThreadClient';
 import { createMockIterator } from './mocks/createMockIterator';
 import { MockCommunicationUserCredential } from './mocks/MockCommunicationUserCredential';
 
+jest.useFakeTimers();
+
 // [1, 2 ... 5] array
 const seedArray = Array.from(Array(5).keys());
 
-const mockChatThread: ChatThread = {
-  id: 'chatThreadId',
-  topic: 'topic',
-  createdOn: new Date(0),
-  createdBy: { communicationUserId: 'user1' }
-};
-
-const mockChatThreads: ChatThread[] = seedArray.map((seed) => ({
+const mockChatThreads: ChatThreadItem[] = seedArray.map((seed) => ({
   id: 'chatThreadId' + seed,
   topic: 'topic' + seed,
   createdOn: new Date(seed * 10000),
   createdBy: { communicationUserId: 'user' + seed }
 }));
 
-const mockParticipants = [
-  { user: { communicationUserId: 'user1' }, displayName: 'user1' },
-  { user: { communicationUserId: 'user2' }, displayName: 'user1' }
+const mockParticipants: ChatParticipant[] = [
+  { id: { kind: 'communicationUser', communicationUserId: 'user1' }, displayName: 'user1' },
+  { id: { kind: 'communicationUser', communicationUserId: 'user2' }, displayName: 'user1' }
 ];
 
 const mockListChatThreads = (): any => {
@@ -52,21 +49,21 @@ const emptyAsyncFunctionWithResponse = async (): Promise<any> => {
   return { _response: {} as any };
 };
 
-type DeclarativeChatClientWithEventTrigger = DeclarativeChatClient & {
+type StatefulChatClientWithEventTrigger = StatefulChatClient & {
   triggerEvent: (eventName: string, e: any) => Promise<void>;
 };
 
-function createMockChatClientAndDeclaratify(): DeclarativeChatClientWithEventTrigger {
+function createMockChatClientAndDeclaratify(): StatefulChatClientWithEventTrigger {
   const mockClient = new ChatClient('', new MockCommunicationUserCredential());
   const eventHandlers = {};
 
   mockClient.createChatThread = async (request) => {
     return {
-      _response: {} as any,
       chatThread: {
-        ...mockChatThread,
+        id: 'chatThreadId',
         topic: request.topic,
-        createdBy: mockChatThread.createdBy?.communicationUserId ?? ''
+        createdOn: new Date(0),
+        createdBy: { kind: 'communicationUser', communicationUserId: 'user1' }
       }
     };
   };
@@ -75,16 +72,8 @@ function createMockChatClientAndDeclaratify(): DeclarativeChatClientWithEventTri
 
   mockClient.deleteChatThread = emptyAsyncFunctionWithResponse;
 
-  mockClient.getChatThreadClient = async (threadId) => {
+  mockClient.getChatThreadClient = (threadId) => {
     return createMockChatThreadClient(threadId);
-  };
-
-  mockClient.getChatThread = async (threadId) => {
-    const retThread = mockChatThreads.find((chatThread) => chatThread.id === threadId);
-    if (!retThread) {
-      throw 'cannot find thread from mock theards';
-    }
-    return { _response: {} as any, ...retThread };
   };
 
   mockClient.on = ((event: Parameters<ChatClient['on']>[0], listener: (e: Event) => void) => {
@@ -97,9 +86,9 @@ function createMockChatClientAndDeclaratify(): DeclarativeChatClientWithEventTri
     }
   }) as any;
 
-  const declarativeClient = chatClientDeclaratify(mockClient, {
+  const declarativeClient = createStatefulChatClient(mockClient, {
     displayName: '',
-    userId: 'userId1'
+    userId: { kind: 'communicationUser', communicationUserId: 'userId1' }
   });
 
   mockClient.startRealtimeNotifications = emptyAsyncFunctionWithResponse;
@@ -114,14 +103,14 @@ function createMockChatClientAndDeclaratify(): DeclarativeChatClientWithEventTri
     }
   });
 
-  return declarativeClient as DeclarativeChatClientWithEventTrigger;
+  return declarativeClient as StatefulChatClientWithEventTrigger;
 }
 
 describe('declarative chatThread list iterators', () => {
   test('declarative listChatThreads should proxy listChatThreads iterator and store it in internal state', async () => {
     const client = createMockChatClientAndDeclaratify();
     const chatThreads = client.listChatThreads();
-    const proxiedThreads: ChatThreadInfo[] = [];
+    const proxiedThreads: ChatThreadItem[] = [];
     for await (const thread of chatThreads) {
       proxiedThreads.push(thread);
     }
@@ -132,7 +121,7 @@ describe('declarative chatThread list iterators', () => {
   test('declarative listChatThreads should proxy listChatThreads paged iterator and store it in internal state', async () => {
     const client = createMockChatClientAndDeclaratify();
     const pages = client.listChatThreads().byPage();
-    const proxiedThreads: ChatThreadInfo[] = [];
+    const proxiedThreads: ChatThreadItem[] = [];
     for await (const page of pages) {
       for (const thread of page) {
         proxiedThreads.push(thread);
@@ -145,9 +134,9 @@ describe('declarative chatThread list iterators', () => {
 });
 
 describe('declarative chatClient basic api functions', () => {
-  test('set internal store correctly when proxy getThread and deleteThread', async () => {
+  test('set internal store correctly when proxy getChatThreadClient and deleteThread', async () => {
     const client = createMockChatClientAndDeclaratify();
-    await client.getChatThread(mockChatThreads[0].id);
+    await client.getChatThreadClient(mockChatThreads[0].id);
 
     expect(client.state.threads.size).toBe(1);
     expect(client.state.threads.get(mockChatThreads[0].id)).toBeDefined();
@@ -161,21 +150,20 @@ describe('declarative chatClient basic api functions', () => {
     const client = createMockChatClientAndDeclaratify();
     const topic = 'topic';
 
-    const response = await client.createChatThread({ topic, participants: mockParticipants });
+    const response = await client.createChatThread({ topic });
     const threadId = response.chatThread?.id ?? '';
 
     expect(client.state.threads.size).toBe(1);
 
     const thread = client.state.threads.get(threadId);
     expect(thread).toBeDefined();
-    expect(thread?.threadInfo?.topic).toBe(topic);
-    thread && expect(Array.from(thread.participants.values()).sort()).toEqual(mockParticipants.sort());
+    expect(thread?.properties?.topic).toBe(topic);
   });
 
-  test('declarify chatThreadClient when return getChatThreadClient', async () => {
+  test('declaratify chatThreadClient when return getChatThreadClient', async () => {
     const client = createMockChatClientAndDeclaratify();
     const threadId = 'threadId';
-    const chatThreadClient = await client.getChatThreadClient(threadId);
+    const chatThreadClient = client.getChatThreadClient(threadId);
 
     expect(client.state.threads.get(threadId)).toBeDefined();
 
@@ -186,7 +174,7 @@ describe('declarative chatClient basic api functions', () => {
 });
 
 describe('declarative chatClient subscribe to event properly after startRealtimeNotification', () => {
-  let client: DeclarativeChatClientWithEventTrigger;
+  let client: StatefulChatClientWithEventTrigger;
   beforeEach(() => {
     client = createMockChatClientAndDeclaratify();
     client.startRealtimeNotifications();
@@ -203,15 +191,15 @@ describe('declarative chatClient subscribe to event properly after startRealtime
       threadId,
       version: '',
       properties: { topic },
-      createdOn: '01-01-2020',
-      createdBy: { displayName: '', user: { communicationUserId: 'user1' } },
+      createdOn: new Date('01-01-2020'),
+      createdBy: { id: { kind: 'communicationUser', communicationUserId: 'user1' }, displayName: '' },
       participants: mockParticipants
     };
 
     await client.triggerEvent('chatThreadCreated', event);
 
     expect(client.state.threads.get(threadId)).toBeDefined();
-    expect(client.state.threads.get(threadId)?.threadInfo?.topic).toBe(topic);
+    expect(client.state.threads.get(threadId)?.properties?.topic).toBe(topic);
 
     // edit event
 
@@ -219,18 +207,18 @@ describe('declarative chatClient subscribe to event properly after startRealtime
     const editEvent: ChatThreadPropertiesUpdatedEvent = {
       ...event,
       properties: { topic: editedTopic },
-      updatedBy: { displayName: '', user: { communicationUserId: 'user1' } },
-      updatedOn: '01-01-2020'
+      updatedBy: { displayName: '', id: { kind: 'communicationUser', communicationUserId: 'user1' } },
+      updatedOn: new Date('01-01-2020')
     };
     await client.triggerEvent('chatThreadPropertiesUpdated', editEvent);
 
-    expect(client.state.threads.get(threadId)?.threadInfo?.topic).toBe(editedTopic);
+    expect(client.state.threads.get(threadId)?.properties?.topic).toBe(editedTopic);
 
     // delete event
     const deletedEvent: ChatThreadDeletedEvent = {
       ...event,
-      deletedBy: { displayName: '', user: { communicationUserId: 'user1' } },
-      deletedOn: '01-01-2020'
+      deletedBy: { displayName: '', id: { kind: 'communicationUser', communicationUserId: 'user1' } },
+      deletedOn: new Date('01-01-2020')
     };
     await client.triggerEvent('chatThreadDeleted', deletedEvent);
     expect(client.state.threads.size).toBe(0);
@@ -244,10 +232,11 @@ describe('declarative chatClient subscribe to event properly after startRealtime
       id: messageId,
       type: 'text',
       version: '',
-      createdOn: '01-01-2020',
-      sender: { user: { communicationUserId: 'sender1' }, displayName: '' },
-      content: 'message',
-      recipient: { communicationUserId: 'userId1' }
+      createdOn: new Date('01-01-2020'),
+      sender: { kind: 'communicationUser', communicationUserId: 'sender1' },
+      senderDisplayName: '',
+      message: 'message',
+      recipient: { kind: 'communicationUser', communicationUserId: 'userId1' }
     };
 
     await client.triggerEvent('chatMessageReceived', event);
@@ -255,20 +244,20 @@ describe('declarative chatClient subscribe to event properly after startRealtime
     expect(client.state.threads.get(threadId)?.chatMessages.get(messageId)).toBeDefined();
 
     // edit event
-    const content = 'editedContent';
+    const message = 'editedContent';
     const editedEvent: ChatMessageEditedEvent = {
       ...event,
-      content,
-      editedOn: '01-01-2020'
+      message: message,
+      editedOn: new Date('01-01-2020')
     };
     await client.triggerEvent('chatMessageEdited', editedEvent);
 
-    expect(client.state.threads.get(threadId)?.chatMessages.get(messageId)?.content?.message).toBe(content);
+    expect(client.state.threads.get(threadId)?.chatMessages.get(messageId)?.content?.message).toBe(message);
 
     // delete event
     const deleteEvent: ChatMessageDeletedEvent = {
       ...event,
-      deletedOn: '01-01-2020'
+      deletedOn: new Date('01-01-2020')
     };
 
     await client.triggerEvent('chatMessageDeleted', deleteEvent);
@@ -281,13 +270,12 @@ describe('declarative chatClient subscribe to event properly after startRealtime
 
     const addedEvent: ParticipantsAddedEvent = {
       threadId,
-      addedBy: { user: { communicationUserId: 'user1' }, displayName: '' },
-      addedOn: '01-01-2020',
+      addedBy: { id: { kind: 'communicationUser', communicationUserId: 'user1' }, displayName: '' },
+      addedOn: new Date('01-01-2020'),
       participantsAdded: mockParticipants,
       version: ''
     };
-
-    client.triggerEvent('participantsAdded', addedEvent);
+    await client.triggerEvent('participantsAdded', addedEvent);
 
     expect(client.state.threads.get(threadId)?.participants.size).toBe(2);
 
@@ -296,8 +284,8 @@ describe('declarative chatClient subscribe to event properly after startRealtime
       threadId,
       participantsRemoved: [mockParticipants[0]],
       version: '',
-      removedBy: { user: { communicationUserId: 'user1' }, displayName: '' },
-      removedOn: '01-01-2020'
+      removedBy: { id: { kind: 'communicationUser', communicationUserId: 'user1' }, displayName: '' },
+      removedOn: new Date('01-01-2020')
     };
     await client.triggerEvent('participantsRemoved', removedEvent);
 
@@ -309,9 +297,10 @@ describe('declarative chatClient subscribe to event properly after startRealtime
 
     const addedEvent: TypingIndicatorReceivedEvent = {
       threadId,
-      receivedOn: new Date().toUTCString(),
-      recipient: { communicationUserId: 'user2' },
-      sender: { user: { communicationUserId: 'user3' }, displayName: '' },
+      receivedOn: new Date(),
+      recipient: { kind: 'communicationUser', communicationUserId: 'user2' },
+      sender: { kind: 'communicationUser', communicationUserId: 'user3' },
+      senderDisplayName: '',
       version: ''
     };
 
@@ -326,13 +315,16 @@ describe('declarative chatClient subscribe to event properly after startRealtime
 
     const addedEvent: TypingIndicatorReceivedEvent = {
       threadId,
-      receivedOn: new Date(Date.now() - (Constants.TYPING_INDICATOR_MAINTAIN_TIME + 1 * 1000)).toUTCString(),
-      recipient: { communicationUserId: 'user2' },
-      sender: { user: { communicationUserId: 'user3' }, displayName: '' },
+      receivedOn: new Date(Date.now() - (Constants.TYPING_INDICATOR_MAINTAIN_TIME + 1 * 1000)),
+      recipient: { kind: 'communicationUser', communicationUserId: 'user2' },
+      sender: { kind: 'communicationUser', communicationUserId: 'user3' },
+      senderDisplayName: '',
       version: ''
     };
 
     await client.triggerEvent('typingIndicatorReceived', addedEvent);
+
+    jest.advanceTimersByTime(1500);
 
     expect(client.state.threads.get(threadId)?.typingIndicators.length).toBe(0);
   });
@@ -340,13 +332,14 @@ describe('declarative chatClient subscribe to event properly after startRealtime
   test('set internal store correctly when receive readReceiptReceived events', async () => {
     const threadId = 'threadId1';
     const messageId = 'messageId1';
-    const readOn = new Date().toUTCString();
+    const readOn = new Date();
 
     const addedEvent: ReadReceiptReceivedEvent = {
       threadId,
       readOn,
-      recipient: { communicationUserId: 'user1' },
-      sender: { user: { communicationUserId: 'user1' }, displayName: '' },
+      recipient: { kind: 'communicationUser', communicationUserId: 'user1' },
+      sender: { kind: 'communicationUser', communicationUserId: 'user1' },
+      senderDisplayName: '',
       chatMessageId: 'messageId1'
     };
 
@@ -355,7 +348,7 @@ describe('declarative chatClient subscribe to event properly after startRealtime
     expect(client.state.threads.get(threadId)?.readReceipts.length).toBe(1);
     expect(client.state.threads.get(threadId)?.readReceipts[0].chatMessageId).toBe(messageId);
 
-    expect(client.state.threads.get(threadId)?.latestReadTime).toEqual(new Date(readOn));
+    expect(client.state.threads.get(threadId)?.latestReadTime).toEqual(readOn);
   });
 });
 
@@ -369,9 +362,10 @@ describe('declarative chatClient unsubscribe', () => {
 
     const addedEvent: ReadReceiptReceivedEvent = {
       threadId,
-      readOn: '01-01-2020',
-      recipient: { communicationUserId: 'user1' },
-      sender: { user: { communicationUserId: 'user1' }, displayName: '' },
+      readOn: new Date('01-01-2020'),
+      recipient: { kind: 'communicationUser', communicationUserId: 'user1' },
+      sender: { kind: 'communicationUser', communicationUserId: 'user1' },
+      senderDisplayName: '',
       chatMessageId: 'messageId1'
     };
 
@@ -393,7 +387,7 @@ describe('declarative chatClient onStateChange', () => {
       onChangeCalled = true;
     });
 
-    await client.createChatThread({ topic: 'topic', participants: mockParticipants });
+    await client.createChatThread({ topic: 'topic' });
 
     expect(onChangeCalled).toBeTruthy();
     expect(state.threads.size).toBe(1);
@@ -409,11 +403,11 @@ describe('declarative chatClient onStateChange', () => {
     };
 
     client.onStateChange(callback);
-    await client.createChatThread({ topic: 'topic', participants: mockParticipants });
+    await client.createChatThread({ topic: 'topic' });
     expect(onChangeCalledTimes).toBe(1);
 
     client.offStateChange(callback);
-    await client.createChatThread({ topic: 'topic', participants: mockParticipants });
+    await client.createChatThread({ topic: 'topic' });
     expect(onChangeCalledTimes).toBe(1);
   });
 });

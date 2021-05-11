@@ -1,11 +1,12 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { ErrorBar as ErrorBarComponent, SendBox, TypingIndicator, MessageThread } from 'react-components';
 import { connectFuncsToContext, MapToErrorBarProps } from 'react-composites';
 import { Stack } from '@fluentui/react';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { chatAreaContainerStyle, sendBoxParentStyle } from './styles/ChatArea.styles';
-import { usePropsFor } from './hooks/usePropsFor';
+import { usePropsFor } from '@azure/acs-chat-selector';
 
 export interface ChatAreaProps {
   onRenderAvatar?: (userId: string) => JSX.Element;
@@ -26,16 +27,6 @@ export const ChatArea = (props: ChatAreaProps): JSX.Element => {
 
   const onLoadPreviousChatMessages = chatThreadProps.onLoadPreviousChatMessages;
 
-  // This state is a temporary contoso fix and will be the typingUsers prop passed to TypingIndicator
-  const [transientTypingUsers, setTransientTypingUsers] = useState(typingIndicatorProps.typingUsers);
-  // This useEffect is to set transientTypingUsers to be empty after a timeout of no updates from usePropsFor
-  useEffect(() => {
-    setTransientTypingUsers(typingIndicatorProps.typingUsers);
-    setTimeout(() => {
-      setTransientTypingUsers([]);
-    }, 8000); //wait 8000 milliseconds to make sure it cleans up well
-  }, [typingIndicatorProps.typingUsers]);
-
   // Initialize the Chat thread with history messages
   useEffect(() => {
     (async () => {
@@ -48,7 +39,7 @@ export const ChatArea = (props: ChatAreaProps): JSX.Element => {
       <MessageThread {...chatThreadProps} onRenderAvatar={props.onRenderAvatar} numberOfChatMessagesToReload={5} />
       <Stack.Item align="center" className={sendBoxParentStyle}>
         <div style={{ paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>
-          <TypingIndicator typingUsers={transientTypingUsers} />
+          <TypingIndicator {...typingIndicatorProps} />
         </div>
         <ErrorBar />
         <SendBox {...sendBoxProps} />

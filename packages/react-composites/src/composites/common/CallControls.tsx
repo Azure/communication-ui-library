@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { IButtonStyles, IContextualMenuProps } from '@fluentui/react';
 import React, { useCallback } from 'react';
@@ -30,6 +31,7 @@ const CallOptionsButton = (props: LocalDeviceSettingsContainerProps): JSX.Elemen
     updateLocalVideoStream,
     updateAudioDeviceInfo
   } = props;
+
   const callOptionsMenu: IContextualMenuProps = {
     items: [
       {

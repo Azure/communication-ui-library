@@ -1,13 +1,14 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { CallAgent, CallAgentOptions, DeviceManager } from '@azure/communication-calling';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { ReactElement } from 'react';
-import { DefaultHandlers, createDefaultHandlersForComponent } from './createHandlers';
+import { DefaultChatHandlers, createDefaultCallingHandlersForComponent } from './createHandlers';
 import { DeclarativeCallClient } from '@azure/acs-calling-declarative';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function TestCallClientComponent(props: DefaultHandlers): ReactElement | null {
+function TestCallClientComponent(props: DefaultChatHandlers): ReactElement | null {
   return null;
 }
 
@@ -36,14 +37,13 @@ class MockCallClient {
 
 describe('createHandlers', () => {
   test('creates handlers when only callClient is passed in and others are undefined', async () => {
-    const handlers = createDefaultHandlersForComponent(
+    const handlers = createDefaultCallingHandlersForComponent(
       new MockCallClient() as DeclarativeCallClient,
       undefined,
       undefined,
       undefined,
       TestCallClientComponent
     );
-    console.log(handlers);
     expect(handlers).toBeDefined();
     expect(Object.keys(handlers).length > 0).toBe(true);
   });

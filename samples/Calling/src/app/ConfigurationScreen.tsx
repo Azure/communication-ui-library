@@ -1,24 +1,42 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import React, { useState } from 'react';
-import { connectFuncsToContext, MapToCallConfigurationProps, SetupContainerProps } from 'react-composites';
+import { useCallContext, useCallingContext } from 'react-composites';
 import { localStorageAvailable } from './utils/constants';
 import { saveDisplayNameToLocalStorage } from './utils/AppUtils';
 import { DisplayNameField } from './DisplayNameField';
 import { StartCallButton } from './StartCallButton';
 import { CallConfiguration } from './CallConfiguration';
-import { LocalDeviceSettings } from './LocalDeviceSettings';
+import { LocalDeviceSettingsComponent } from './LocalDeviceSettings';
+import { LocalVideoStream, VideoDeviceInfo } from '@azure/communication-calling';
+import { optionsButtonSelector } from '@azure/acs-calling-selector';
+import { useSelector } from './hooks/useSelector';
+import { useHandlers } from './hooks/useHandlers';
 
-export interface ConfigurationScreenProps extends SetupContainerProps {
+export interface ConfigurationScreenProps {
   screenWidth: number;
   startCallHandler(): void;
   onDisplayNameUpdate: (displayName: string) => void;
 }
 
-export const ConfigurationComponent = (props: ConfigurationScreenProps): JSX.Element => {
-  const { displayName, startCallHandler, onDisplayNameUpdate } = props;
+export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Element => {
+  const { startCallHandler, onDisplayNameUpdate } = props;
   const [emptyWarning, setEmptyWarning] = useState(false);
   const [nameTooLongWarning, setNameTooLongWarning] = useState(false);
+
+  const { setVideoDeviceInfo, videoDeviceInfo, displayName } = useCallingContext();
+  const { setLocalVideoStream } = useCallContext();
+
+  const options = useSelector(optionsButtonSelector, { callId: '' });
+  const handlers = useHandlers(LocalDeviceSettingsComponent);
+
+  const onSelectCamera = async (device: VideoDeviceInfo): Promise<void> => {
+    setVideoDeviceInfo(device);
+    const newLocalVideoStream = new LocalVideoStream(device);
+    setLocalVideoStream(newLocalVideoStream);
+    await handlers.onSelectCamera(device);
+  };
 
   return (
     <CallConfiguration {...props}>
@@ -31,7 +49,13 @@ export const ConfigurationComponent = (props: ConfigurationScreenProps): JSX.Ele
         setNameLengthExceedLimit={setNameTooLongWarning}
       />
       <div>
-        <LocalDeviceSettings />
+        <LocalDeviceSettingsComponent
+          {...options}
+          selectedCamera={videoDeviceInfo}
+          onSelectCamera={onSelectCamera}
+          onSelectMicrophone={handlers.onSelectMicrophone}
+          onSelectSpeaker={handlers.onSelectSpeaker}
+        />
       </div>
       <div>
         <StartCallButton
@@ -47,5 +71,3 @@ export const ConfigurationComponent = (props: ConfigurationScreenProps): JSX.Ele
     </CallConfiguration>
   );
 };
-
-export default connectFuncsToContext(ConfigurationComponent, MapToCallConfigurationProps);

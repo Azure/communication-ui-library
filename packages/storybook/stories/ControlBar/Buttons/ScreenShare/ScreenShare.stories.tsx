@@ -1,19 +1,20 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import { Canvas, Description, Heading, Props, Source, SourceState, Title } from '@storybook/addon-docs/blocks';
+import { ScreenShareButton } from '@azure/communication-react';
+import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import { boolean } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { ScreenShareButton } from 'react-components';
 
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
 import { CustomScreenShareButtonExample } from './snippets/Custom.snippet';
 import { ScreenShareButtonExample } from './snippets/Default.snippet';
 import { ScreenShareButtonWithLabelExample } from './snippets/WithLabel.snippet';
 
-const ButtonWithLabelExampleText = require('!!raw-loader!./snippets/WithLabel.snippet.tsx').default;
 const CustomButtonExampleText = require('!!raw-loader!./snippets/Custom.snippet.tsx').default;
 const DefaultButtonExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
+const ButtonWithLabelExampleText = require('!!raw-loader!./snippets/WithLabel.snippet.tsx').default;
 
 const importStatement = `
 import { ScreenShareButton } from '@azure/communication-ui';
@@ -24,6 +25,10 @@ const getDocs: () => JSX.Element = () => {
     <>
       <Title>ScreenShareButton</Title>
       <Description of={ScreenShareButton} />
+      <Description>
+        Note: When overriding a render, like using `onRenderIcon` or `onRenderText`, don not forget to add a unique key
+        to each element to avoid warning for children in a list.
+      </Description>
 
       <Heading>Importing</Heading>
       <Source code={importStatement} />
@@ -33,29 +38,26 @@ const getDocs: () => JSX.Element = () => {
         The default `ScreenShareButton` component shows a ScreenShare icon with no label. The following example displays
         the `ScreenShareButton` with screen sharing enabled and disabled.
       </Description>
-      <Canvas withSource={SourceState.NONE}>
+      <Canvas mdxSource={DefaultButtonExampleText}>
         <ScreenShareButtonExample />
       </Canvas>
-      <Source code={DefaultButtonExampleText} />
 
       <Heading>ScreenShare with default label</Heading>
       <Description>
         You can display the button label which, by default, will show below the icon as `Share` or `Stop`.
       </Description>
-      <Canvas withSource={SourceState.NONE}>
+      <Canvas mdxSource={ButtonWithLabelExampleText}>
         <ScreenShareButtonWithLabelExample />
       </Canvas>
-      <Source code={ButtonWithLabelExampleText} />
 
       <Heading>Custom ScreenShareButton Styles</Heading>
       <Description>
         You can change the styles of the `ScreenShareButton` as you would customized any Button (styles, primary,
         onRenderIcon, onRenderText, etc... ).
       </Description>
-      <Canvas withSource={SourceState.NONE}>
+      <Canvas mdxSource={CustomButtonExampleText}>
         <CustomScreenShareButtonExample />
       </Canvas>
-      <Source code={CustomButtonExampleText} />
 
       <Heading>ScreenShareButton Props</Heading>
       <Description>

@@ -1,6 +1,7 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import React from 'react';
+import { optionsButtonSelector } from '@azure/acs-calling-selector';
 import { Stack } from '@fluentui/react';
 import {
   fullHeightStyles,
@@ -8,10 +9,14 @@ import {
   paneHeaderTextStyle,
   settingsContainerStyle
 } from 'app/styles/CommandPanel.styles';
+import { ThemeSelector } from 'app/theming/ThemeSelector';
+import React from 'react';
+import { useCallingContext } from 'react-composites';
 import { Footer } from './Footer';
-import { LocalDeviceSettings } from './LocalDeviceSettings';
+import { useHandlers } from './hooks/useHandlers';
+import { useSelector } from './hooks/useSelector';
+import { LocalDeviceSettingsComponent } from './LocalDeviceSettings';
 import { ParticipantStack } from './ParticipantStack';
-import { ThemeSelector } from 'react-components';
 
 export enum CommandPanelTypes {
   None = 'none',
@@ -24,6 +29,10 @@ export interface CommandPanelProps {
 }
 
 export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
+  const options = useSelector(optionsButtonSelector, { callId: '' });
+  const handlers = useHandlers(LocalDeviceSettingsComponent);
+  const { videoDeviceInfo } = useCallingContext();
+
   return (
     <Stack styles={fullHeightStyles} tokens={{ childrenGap: '1.5rem' }}>
       <Stack.Item className={paneHeaderStyle}>
@@ -42,7 +51,13 @@ export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
       {props.selectedPane === CommandPanelTypes.Settings && (
         <Stack.Item>
           <div className={settingsContainerStyle}>
-            <LocalDeviceSettings />
+            <LocalDeviceSettingsComponent
+              {...options}
+              selectedCamera={videoDeviceInfo}
+              onSelectCamera={handlers.onSelectCamera}
+              onSelectMicrophone={handlers.onSelectMicrophone}
+              onSelectSpeaker={handlers.onSelectSpeaker}
+            />
           </div>
         </Stack.Item>
       )}

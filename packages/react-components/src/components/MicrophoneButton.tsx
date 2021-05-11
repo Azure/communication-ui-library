@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import React from 'react';
 import { DefaultButton, IButtonProps, Stack, concatStyleSets, mergeStyles } from '@fluentui/react';
@@ -14,6 +15,12 @@ export interface MicrophoneButtonProps extends IButtonProps {
    * @defaultValue `false`
    */
   showLabel?: boolean;
+
+  /**
+   * Utility property for using this component with `communication react eventHandlers`.
+   * Maps directly to the `onClick` property.
+   */
+  onToggleMicrophone?: () => Promise<void>;
 }
 
 /**
@@ -25,11 +32,7 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
 
   const defaultRenderIcon = (props?: IButtonProps): JSX.Element => {
-    if (props?.checked) {
-      return <MicIcon key={'micIconKey'} />;
-    }
-
-    return <MicOffIcon key={'micOffIconKey'} />;
+    return props?.checked ? <MicIcon key={'microphoneIconKey'} /> : <MicOffIcon key={'microphoneOffIconKey'} />;
   };
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {
@@ -43,6 +46,7 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   return (
     <DefaultButton
       {...props}
+      onClick={props.onToggleMicrophone ?? props.onClick}
       styles={componentStyles}
       onRenderIcon={onRenderIcon ?? defaultRenderIcon}
       onRenderText={showLabel ? onRenderText ?? defaultRenderText : undefined}

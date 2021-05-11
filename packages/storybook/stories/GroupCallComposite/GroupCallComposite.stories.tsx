@@ -1,19 +1,47 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
+import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-identity';
+import { Title, Description, Heading, Source, Props } from '@storybook/addon-docs/blocks';
+import { text } from '@storybook/addon-knobs';
+import { Meta } from '@storybook/react/types-6-0';
 import React, { useEffect, useState } from 'react';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
-import { Meta } from '@storybook/react/types-6-0';
-import { text } from '@storybook/addon-knobs';
-import { v1 as createGUID } from 'uuid';
-import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-administration';
-import { getDocs } from './GroupCallCompositeDocs';
 import { GroupCall as GroupCallComposite } from 'react-composites';
-import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE, COMPOSITE_FOLDER_PREFIX } from '../constants';
+import { v1 as createGUID } from 'uuid';
+
 import {
   CompositeConnectionParamsErrMessage,
   COMPOSITE_STRING_CONNECTIONSTRING,
   COMPOSITE_STRING_REQUIREDCONNECTIONSTRING
 } from '../CompositeStringUtils';
+import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE, COMPOSITE_FOLDER_PREFIX } from '../constants';
+
+const groupCallCompositeExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
+
+const importStatement = `
+  import { GroupCall } from 'react-composites';
+  import { v1 as createGUID } from 'uuid';
+  import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-identity';
+`;
+
+const getDocs: () => JSX.Element = () => {
+  return (
+    <>
+      <Title>GroupCall</Title>
+      <Description>GroupCall is an one-stop component that you can make ACS Group Call running.</Description>
+
+      <Heading>Importing</Heading>
+      <Source code={importStatement} />
+
+      <Heading>Example Code</Heading>
+      <Source code={groupCallCompositeExampleText} />
+
+      <Heading>Props</Heading>
+      <Props of={GroupCallComposite} />
+    </>
+  );
+};
 
 export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/Group Call`,
@@ -33,10 +61,9 @@ const createUserToken = async (connectionString: string): Promise<CommunicationU
   }
 
   const tokenClient = new CommunicationIdentityClient(connectionString);
-  const user = await tokenClient.createUser();
-  const token = await tokenClient.issueToken(user, ['voip']);
+  const userToken = await tokenClient.createUserAndToken(['voip']);
 
-  return token;
+  return userToken;
 };
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
@@ -49,15 +76,18 @@ export const GroupCall: () => JSX.Element = () => {
 
   useEffect(() => {
     (async () => {
-      try {
-        const tokenResponse = await createUserToken(connectionString);
-        setToken(tokenResponse.token);
-        setUserId(tokenResponse.user.communicationUserId);
-        const groupId = createGUID();
-        console.log(`groupId: ${groupId}`);
-        setGroupId(groupId);
-      } catch (e) {
-        console.log('Please provide your connection string');
+      if (connectionString) {
+        try {
+          const tokenResponse = await createUserToken(connectionString);
+          setToken(tokenResponse.token);
+          setUserId(tokenResponse.user.communicationUserId);
+          const groupId = createGUID();
+          console.log(`groupId: ${groupId}`);
+          setGroupId(groupId);
+        } catch (e) {
+          console.error(e);
+          console.log('Ensure your connection string is valid.');
+        }
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps

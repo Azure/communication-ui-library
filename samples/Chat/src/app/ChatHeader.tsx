@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import React, { Dispatch } from 'react';
 import { DefaultButton, Icon, IconButton, Pivot, PivotItem, Stack } from '@fluentui/react';
@@ -16,7 +17,7 @@ import {
 } from './styles/ChatHeader.styles';
 import { SidePanelTypes } from './SidePanel';
 import { copyIconStyle } from './styles/InviteFooter.styles';
-import { WebUiChatParticipant } from '@azure/acs-chat-selector';
+import { WebUiChatParticipant } from 'react-components';
 
 export type ChatHeaderProps = {
   userId: string;

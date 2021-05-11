@@ -4,15 +4,31 @@
 
 ```ts
 
+import { ChatClient } from '@azure/communication-chat';
+import { ChatClientState as ChatClientState_2 } from '@azure/acs-chat-declarative';
+import { ChatMessage as ChatMessage_2 } from '@azure/communication-chat';
+import { ChatMessageReadReceipt } from '@azure/communication-chat';
+import { ChatMessageWithStatus as ChatMessageWithStatus_2 } from '@azure/acs-chat-declarative';
+import { ChatParticipant } from '@azure/communication-chat';
+import { ChatThreadClient } from '@azure/communication-chat';
+import { CommunicationIdentifier } from '@azure/communication-common';
+import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { IButtonProps } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
+import { Message as Message_2 } from 'react-components';
 import { PartialTheme } from '@fluentui/react-theme-provider';
 import { PersonaPresence } from '@fluentui/react';
 import { default as React_2 } from 'react';
+import { ReactElement } from 'react';
+import * as reselect from 'reselect';
 import { SizeValue } from '@fluentui/react-northstar';
+import { StatefulChatClient as StatefulChatClient_2 } from '@azure/acs-chat-declarative';
 import { Theme } from '@fluentui/react-theme-provider';
+import { TypingIndicatorEvent as TypingIndicatorEvent_2 } from '@azure/acs-chat-declarative';
+import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
+import { WebUiChatParticipant as WebUiChatParticipant_2 } from 'react-components';
 
 // @public
 export const answerButtonProps: IButtonProps;
@@ -22,13 +38,44 @@ export interface BaseCustomStylesProps {
     root?: IStyle;
 }
 
+// @public (undocumented)
+export type CallbackType<KeyT, ArgsT extends any[], FnRetT> = (memoizedFn: FunctionWithKey<KeyT, ArgsT, FnRetT>) => FnRetT[];
+
 // @public
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
 
 // @public
 export interface CameraButtonProps extends IButtonProps {
+    onToggleCamera?: () => Promise<void>;
     showLabel?: boolean;
 }
+
+// @public (undocumented)
+export type ChatBaseSelectorProps = {
+    threadId: string;
+};
+
+// @public
+export const ChatClientProvider: (props: ChatClientProviderProps) => JSX.Element;
+
+// @public (undocumented)
+export type ChatClientProviderProps = {
+    children: React_2.ReactNode;
+    chatClient: StatefulChatClient_2;
+};
+
+// @public (undocumented)
+export type ChatClientState = {
+    userId: CommunicationIdentifierKind;
+    displayName: string;
+    threads: Map<string, ChatThreadClientState>;
+};
+
+// @public (undocumented)
+export type ChatConfig = {
+    userId: CommunicationIdentifierKind;
+    displayName: string;
+};
 
 // @public (undocumented)
 export type ChatMessage = Message<'chat'>;
@@ -45,6 +92,77 @@ export type ChatMessagePayload = {
     mine?: boolean;
     clientMessageId?: string;
 };
+
+// @public (undocumented)
+export type ChatMessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
+
+// @public (undocumented)
+export type ChatMessageWithStatus = ChatMessage_2 & {
+    clientMessageId?: string;
+    status: ChatMessageStatus;
+};
+
+// @public (undocumented)
+export const chatParticipantListSelector: reselect.OutputParametricSelector<ChatClientState_2, ChatBaseSelectorProps, {
+    userId: string;
+    displayName: string;
+    chatParticipants: WebUiChatParticipant_2[];
+}, (res1: string, res2: Map<string, ChatParticipant>, res3: string) => {
+    userId: string;
+    displayName: string;
+    chatParticipants: WebUiChatParticipant_2[];
+}>;
+
+// @public
+export const ChatThreadClientProvider: (props: ChatThreadClientProviderProps) => JSX.Element;
+
+// @public (undocumented)
+export type ChatThreadClientProviderProps = {
+    children: React_2.ReactNode;
+    chatThreadClient: ChatThreadClient;
+};
+
+// @public (undocumented)
+export type ChatThreadClientState = {
+    chatMessages: Map<string, ChatMessageWithStatus>;
+    participants: Map<CommunicationIdentifierAsKey, ChatParticipant>;
+    threadId: string;
+    properties?: ChatThreadProperties;
+    coolPeriod?: Date;
+    getThreadMembersError?: boolean;
+    updateThreadMembersError?: boolean;
+    failedMessageIds: string[];
+    readReceipts: ChatMessageReadReceipt[];
+    typingIndicators: TypingIndicatorEvent[];
+    latestReadTime: Date;
+};
+
+// @public (undocumented)
+export type ChatThreadProperties = {
+    topic?: string;
+};
+
+// @public (undocumented)
+export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientState_2, ChatBaseSelectorProps, {
+    userId: string;
+    disableReadReceipt: boolean;
+    messages: Message_2<"chat">[];
+}, (res1: string, res2: Map<string, ChatMessageWithStatus_2>, res3: Date, res4: boolean) => {
+    userId: string;
+    disableReadReceipt: boolean;
+    messages: Message_2<"chat">[];
+}>;
+
+// @public (undocumented)
+export type CommonProperties<A, B> = {
+    [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
+}[keyof A & keyof B];
+
+// @public (undocumented)
+export type CommunicationIdentifierAsKey = string;
+
+// @public (undocumented)
+export const communicationIdentifierToString: (i: CommunicationIdentifier | undefined) => string;
 
 // @public
 export enum CommunicationUiErrorSeverity {
@@ -72,6 +190,23 @@ export interface ControlBarProps {
 }
 
 // @public (undocumented)
+export const createDefaultChatHandlers: (chatClient: StatefulChatClient_2, chatThreadClient: ChatThreadClient) => DefaultChatHandlers;
+
+// @public (undocumented)
+export const createDefaultChatHandlersForComponent: <Props>(chatClient: StatefulChatClient_2, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, Props>>;
+
+// @public (undocumented)
+export const createStatefulChatClient: (chatClient: ChatClient, chatConfig: ChatConfig) => StatefulChatClient;
+
+// @public (undocumented)
+export interface CreateViewOptions {
+    // (undocumented)
+    isMirrored?: boolean;
+    // (undocumented)
+    scalingMode?: ScalingMode;
+}
+
+// @public (undocumented)
 export type CustomMessage = Message<'custom'>;
 
 // @public (undocumented)
@@ -80,17 +215,28 @@ export type CustomMessagePayload = {
     content?: string;
 };
 
+// @public
+export const darkTheme: PartialTheme;
+
+// @public (undocumented)
+export type DefaultChatHandlers = {
+    onMessageSend: (content: string) => Promise<void>;
+    onMessageSeen: (chatMessageId: string) => Promise<void>;
+    onTyping: () => Promise<void>;
+    removeThreadMember: (userId: string) => Promise<void>;
+    updateThreadTopicName: (topicName: string) => Promise<void>;
+    onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
+};
+
 // @public (undocumented)
 export type DefaultMessageRendererType = (props: MessageProps) => JSX.Element;
-
-// @public
-export const defaultThemes: ThemeCollection;
 
 // @public
 export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
 
 // @public
 export interface EndCallButtonProps extends IButtonProps {
+    onHangUp?: () => Promise<void>;
     showLabel?: boolean;
 }
 
@@ -113,6 +259,12 @@ export interface FluentThemeProviderProps {
     children: React_2.ReactNode;
     fluentTheme?: PartialTheme | Theme;
 }
+
+// @public (undocumented)
+export type FunctionWithKey<KeyT, ArgsT extends any[], RetT> = (key: KeyT, ...args: ArgsT) => RetT;
+
+// @public (undocumented)
+export const getCommunicationIdentifierAsKey: (identifier: CommunicationIdentifier) => CommunicationIdentifierAsKey;
 
 // @public (undocumented)
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;
@@ -140,6 +292,22 @@ export const labeledAnswerButtonProps: IButtonProps;
 
 // @public
 export const labeledRecordButtonProps: IButtonProps;
+
+// @public
+export const lightTheme: PartialTheme;
+
+// @public
+export interface LocalVideoStream {
+    mediaStreamType: MediaStreamType;
+    source: VideoDeviceInfo;
+    videoStreamRendererView?: VideoStreamRendererView | undefined;
+}
+
+// @public (undocumented)
+export type MediaStreamType = 'Video' | 'ScreenSharing';
+
+// @public
+export const memoizeFnAll: <KeyT, ArgsT extends any[], FnRetT, CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>>(fnToMemoize: FunctionWithKey<KeyT, ArgsT, FnRetT>, shouldCacheUpdate?: (args1: any, args2: any) => boolean) => (callback: CallBackT) => FnRetT[];
 
 // @public (undocumented)
 export type Message<T extends MessageTypes> = {
@@ -201,14 +369,9 @@ export const MicrophoneButton: (props: MicrophoneButtonProps) => JSX.Element;
 
 // @public
 export interface MicrophoneButtonProps extends IButtonProps {
+    onToggleMicrophone?: () => Promise<void>;
     showLabel?: boolean;
 }
-
-// @public
-export type NamedTheme = {
-    name: string;
-    theme: PartialTheme | Theme;
-};
 
 // @public
 export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
@@ -264,10 +427,22 @@ export interface ReadReceiptProps {
 export const recordButtonProps: IButtonProps;
 
 // @public
+export interface RemoteVideoStream {
+    id: number;
+    isAvailable: boolean;
+    mediaStreamType: MediaStreamType;
+    videoStreamRendererView: VideoStreamRendererView | undefined;
+}
+
+// @public (undocumented)
+export type ScalingMode = 'Stretch' | 'Crop' | 'Fit';
+
+// @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
 
 // @public
 export interface ScreenShareButtonProps extends IButtonProps {
+    onToggleScreenShare?: () => Promise<void>;
     showLabel?: boolean;
 }
 
@@ -287,11 +462,32 @@ export interface SendBoxProps {
 }
 
 // @public (undocumented)
+export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState_2, ChatBaseSelectorProps, {
+    displayName: string;
+    userId: string;
+    disabled: boolean;
+}, (res1: Date, res2: string, res3: string) => {
+    displayName: string;
+    userId: string;
+    disabled: boolean;
+}>;
+
+// @public (undocumented)
 export interface SendBoxStylesProps extends BaseCustomStylesProps {
     sendMessageIcon?: IStyle;
     sendMessageIconContainer?: IStyle;
     systemMessage?: IStyle;
     textField?: IStyle;
+}
+
+// @public (undocumented)
+export interface StatefulChatClient extends ChatClient {
+    // (undocumented)
+    offStateChange(handler: (state: ChatClientState) => void): void;
+    // (undocumented)
+    onStateChange(handler: (state: ChatClientState) => void): void;
+    // (undocumented)
+    state: ChatClientState;
 }
 
 // @public
@@ -302,23 +498,6 @@ export interface StreamMediaProps {
     invertVideo?: boolean;
     styles?: BaseCustomStylesProps;
     videoStreamElement: HTMLElement | null;
-}
-
-// @public
-export interface SwitchableFluentThemeContext {
-    currentTheme: NamedTheme;
-    setCurrentTheme: (namedTheme: NamedTheme) => void;
-    themeStore: ThemeCollection;
-}
-
-// @public
-export const SwitchableFluentThemeProvider: (props: SwitchableFluentThemeProviderProps) => JSX.Element;
-
-// @public
-export interface SwitchableFluentThemeProviderProps {
-    children: React_2.ReactNode;
-    scopeId: string;
-    themes?: ThemeCollection;
 }
 
 // @public (undocumented)
@@ -332,30 +511,12 @@ export type SystemMessagePayload = {
 };
 
 // @public
-export type ThemeCollection = Record<string, NamedTheme>;
-
-// @public
-export const ThemeSelector: (props: ThemeSelectorProps) => JSX.Element;
-
-// @public
-export interface ThemeSelectorProps {
-    horizontal?: boolean;
-    label?: string;
-}
-
-// @public
-export const ThemeToggler: (props: ThemeTogglerProps) => JSX.Element;
-
-// @public
-export interface ThemeTogglerProps {
-    label?: string;
-    layout?: string;
-    offTheme?: NamedTheme;
-    onTheme?: NamedTheme;
-}
-
-// @public
 export const TypingIndicator: (props: TypingIndicatorProps) => JSX.Element;
+
+// @public (undocumented)
+export type TypingIndicatorEvent = Omit<TypingIndicatorReceivedEvent, 'receivedOn'> & {
+    receivedOn: Date;
+};
 
 // @public
 export interface TypingIndicatorProps {
@@ -366,13 +527,89 @@ export interface TypingIndicatorProps {
 }
 
 // @public (undocumented)
+export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClientState_2, ChatBaseSelectorProps, {
+    typingUsers: WebUiChatParticipant_2[];
+}, (res1: TypingIndicatorEvent_2[], res2: Map<string, ChatParticipant>, res3: string) => {
+    typingUsers: WebUiChatParticipant_2[];
+}>;
+
+// @public (undocumented)
 export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
 }
 
+// @public (undocumented)
+export const useChatClient: () => StatefulChatClient_2;
+
+// @public (undocumented)
+export const useChatThreadClient: () => ChatThreadClient;
+
+// @public (undocumented)
+export const useHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, PropsT>>;
+
+// @public (undocumented)
+export const usePropsFor: <SelectorT extends (state: ChatClientState_2, props: any) => any>(component: React_2.FunctionComponent<any>) => ReturnType<SelectorT>;
+
+// @public (undocumented)
+export const useSelector: <SelectorT extends (state: ChatClientState_2, props: any) => any>(selector: SelectorT, selectorProps?: Parameters<SelectorT>[1] | undefined) => ReturnType<SelectorT>;
+
+// @public (undocumented)
+export const useThreadId: () => string;
+
+// @public (undocumented)
+export interface VideoDeviceInfo {
+    readonly deviceType: VideoDeviceType;
+    readonly id: string;
+    readonly name: string;
+}
+
+// @public (undocumented)
+export type VideoDeviceType = 'Unknown' | 'UsbCamera' | 'CaptureAdapter' | 'Virtual';
+
+// @public (undocumented)
+export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
+
+// @public (undocumented)
+export type VideoGalleryLocalParticipant = VideoGalleryParticipant & {
+    isScreenSharingOn: boolean;
+    videoStream?: LocalVideoStream;
+};
+
+// @public (undocumented)
+export type VideoGalleryParticipant = {
+    userId: string;
+    displayName?: string;
+    isMuted: boolean;
+};
+
+// @public (undocumented)
+export interface VideoGalleryProps {
+    // (undocumented)
+    localParticipant?: VideoGalleryLocalParticipant;
+    // (undocumented)
+    onRenderView(stream: RemoteVideoStream | LocalVideoStream, options?: CreateViewOptions | undefined): Promise<void>;
+    // (undocumented)
+    remoteParticipants?: VideoGalleryRemoteParticipant[];
+    // (undocumented)
+    scalingMode: ScalingMode;
+    // (undocumented)
+    styles?: BaseCustomStylesProps;
+}
+
+// @public (undocumented)
+export type VideoGalleryRemoteParticipant = VideoGalleryParticipant & {
+    isSpeaking: boolean;
+    videoStream?: RemoteVideoStream;
+    screenShareStream?: RemoteVideoStream;
+};
+
 // @public
-export const useSwitchableFluentTheme: () => SwitchableFluentThemeContext;
+export interface VideoStreamRendererView {
+    isMirrored: boolean;
+    scalingMode: ScalingMode;
+    target: HTMLElement;
+}
 
 // @public (undocumented)
 export const VideoTile: (props: VideoTileProps & PlaceholderProps) => JSX.Element;

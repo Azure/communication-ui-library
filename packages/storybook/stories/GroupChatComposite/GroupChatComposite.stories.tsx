@@ -1,24 +1,97 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import React, { useEffect } from 'react';
-import { text } from '@storybook/addon-knobs';
-import { getDocs } from './GroupChatCompositeDocs';
-import { ChatConfig, GroupChat as GroupChatComposite } from 'react-composites';
-import { AzureCommunicationUserCredential } from '@azure/communication-common';
-import { CommunicationIdentityClient } from '@azure/communication-administration';
 import { ChatClient } from '@azure/communication-chat';
-import { useState } from 'react';
-import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE, COMPOSITE_FOLDER_PREFIX } from '../constants';
+import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+import { CommunicationIdentityClient } from '@azure/communication-identity';
+import { Title, Description, Props, Heading, Source } from '@storybook/addon-docs/blocks';
+import { text } from '@storybook/addon-knobs';
+import { Meta } from '@storybook/react/types-6-0';
+import React, { useState, useEffect } from 'react';
+import { GroupChatAdapter, ChatConfig, ChatComposite, createAzureCommunicationChatAdapter } from 'react-composites';
+
 import {
   CompositeConnectionParamsErrMessage,
   COMPOSITE_STRING_CONNECTIONSTRING,
   COMPOSITE_STRING_REQUIREDCONNECTIONSTRING
 } from '../CompositeStringUtils';
-import { Meta } from '@storybook/react/types-6-0';
+import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE, COMPOSITE_FOLDER_PREFIX } from '../constants';
+
+const importStatement = `import { ChatComposite } from 'react-composites';`;
+const usageCode = `import { ChatComposite } from 'react-composites';
+import { AzureCommunicationUserCredential } from '@azure/communication-common';
+import { CommunicationIdentityClient } from "@azure/communication-identity";
+import { ChatClient } from '@azure/communication-chat';
+import ReactDOM from 'react-dom';
+
+// Initialize an Azure Comunnication Services chat user and create a thread
+// This code is for demo purpose. In production this should happen in server side
+// Check [Server folder] for a complete nodejs demo server
+// Please don't show your CONNECTION STRING in any public place
+const connectionString = '[CONNECTION STRING]';
+
+const uri = new URL(connectionString.replace("endpoint=", ""));
+const endpointUrl = \`\${uri.protocol}//\${uri.host}\`;
+
+(async () => {
+  let tokenClient = new CommunicationIdentityClient(connectionString);
+  const user = await tokenClient.createUser();
+  const token = await tokenClient.issueToken(user, ["chat"]);
+  const [adapter, setAdapter] = useState<GroupChatAdapter>();
+
+  const userAccessTokenCredential =
+    new AzureCommunicationUserCredential(token.token);
+  const chatClient = new ChatClient(endpointUrl, userAccessTokenCredential);
+
+  const threadId = (await chatClient.createChatThread({
+    members:
+      [{ user: token.user }],
+    topic: 'DemoThread'
+  })).threadId;
+
+  useEffect(() => {
+    if (chatConfig) {
+      const createAdapter = async (): Promise<void> => {
+        setAdapter(
+          await createAzureChatAdapter(
+            token,
+            endpointUrl,
+            threadId,
+            'Empty Display Name'
+          )
+        );
+      };
+      createAdapter();
+    }
+  }, [token, endpointUrl, threadId]);
+
+  ReactDOM.render(
+    <ChatComposite adapter= {adapter} />,
+    document.getElementById('root'));
+})();
+`;
+
+const getDocs: () => JSX.Element = () => {
+  return (
+    <>
+      <Title>ChatComposite</Title>
+      <Description>ChatComposite is an one-stop component that you can make ACS Group Chat running.</Description>
+
+      <Heading>Importing</Heading>
+      <Source code={importStatement} />
+
+      <Heading>Example Code</Heading>
+      <Source code={usageCode} />
+
+      <Heading>Props</Heading>
+      <Props of={ChatComposite} />
+    </>
+  );
+};
 
 export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/Group Chat`,
-  component: GroupChatComposite,
+  component: ChatComposite,
   parameters: {
     useMaxHeightParent: true,
     useMaxWidthParent: true,
@@ -36,25 +109,29 @@ const messageArray = [
   'Have fun!'
 ];
 
-const createUser = async (resourceConnectionString: string): Promise<{ userId: string; token: string }> => {
+const createUser = async (
+  resourceConnectionString: string
+): Promise<{ userId: CommunicationUserIdentifier; token: string }> => {
   if (!resourceConnectionString) {
     throw new Error('No ACS connection string provided');
   }
 
   const tokenClient = new CommunicationIdentityClient(resourceConnectionString);
-  const user = await tokenClient.createUser();
-  const token = await tokenClient.issueToken(user, ['chat']);
-  return { userId: token.user.communicationUserId, token: token.token };
+  const userToken = await tokenClient.createUserAndToken(['chat']);
+  return { userId: userToken.user, token: userToken.token };
 };
 
 const createChatClient = (token: string, envUrl: string): ChatClient => {
-  const userAccessTokenCredential = new AzureCommunicationUserCredential(token);
-  return new ChatClient(envUrl, userAccessTokenCredential);
+  return new ChatClient(envUrl, new AzureCommunicationTokenCredential(token));
 };
 
-const createMessageBot = async (token: string, envUrl: string, threadId: string, userId: string): Promise<void> => {
-  const userAccessTokenCredential = new AzureCommunicationUserCredential(token);
-  const chatClient = new ChatClient(envUrl, userAccessTokenCredential);
+const createMessageBot = async (
+  token: string,
+  envUrl: string,
+  threadId: string,
+  user: CommunicationUserIdentifier
+): Promise<void> => {
+  const chatClient = new ChatClient(envUrl, new AzureCommunicationTokenCredential(token));
   const threadClient = await chatClient.getChatThreadClient(threadId);
 
   let index = 0;
@@ -63,7 +140,7 @@ const createMessageBot = async (token: string, envUrl: string, threadId: string,
     'Bot Configuration: ' +
       JSON.stringify(
         {
-          userId,
+          user,
           token,
           endpointUrl: envUrl,
           displayName: 'TestBot',
@@ -90,16 +167,12 @@ const createChatConfig = async (resourceConnectionString: string): Promise<ChatC
   const bot = await createUser(resourceConnectionString);
 
   const endpointUrl = new URL(resourceConnectionString.replace('endpoint=', '').split(';')[0]).toString();
-  const userAccessTokenCredential = new AzureCommunicationUserCredential(user.token);
-  const chatClient = new ChatClient(endpointUrl, userAccessTokenCredential);
+  const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(user.token));
 
-  const threadId =
-    (
-      await chatClient.createChatThread({
-        participants: [{ user: { communicationUserId: user.userId } }, { user: { communicationUserId: bot.userId } }],
-        topic: 'DemoThread'
-      })
-    ).chatThread?.id ?? '';
+  const threadId = (await chatClient.createChatThread({ topic: 'DemoThread' })).chatThread?.id ?? '';
+  await chatClient.getChatThreadClient(threadId).addParticipants({
+    participants: [{ id: user.userId }, { id: bot.userId }]
+  });
   console.log(`threadId: ${threadId}`);
 
   createMessageBot(bot.token, endpointUrl, threadId, bot.userId);
@@ -116,6 +189,7 @@ const createChatConfig = async (resourceConnectionString: string): Promise<ChatC
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.
 export const GroupChat: () => JSX.Element = () => {
   const [chatConfig, setChatConfig] = useState<ChatConfig>();
+  const [adapter, setAdapter] = useState<GroupChatAdapter>();
 
   const connectionString = text(COMPOSITE_STRING_CONNECTIONSTRING, '', 'Server Simulator');
 
@@ -146,6 +220,22 @@ export const GroupChat: () => JSX.Element = () => {
     }
   }, [connectionString, userId, token, endpointUrl, displayName, threadId]);
 
+  useEffect(() => {
+    if (chatConfig) {
+      const createAdapter = async (): Promise<void> => {
+        setAdapter(
+          await createAzureCommunicationChatAdapter(
+            chatConfig.token,
+            chatConfig.endpointUrl,
+            chatConfig.threadId,
+            chatConfig.displayName
+          )
+        );
+      };
+      createAdapter();
+    }
+  }, [chatConfig]);
+
   const emptyConfigTips = COMPOSITE_STRING_REQUIREDCONNECTIONSTRING.replace('{0}', 'Group Chat');
   let emptyConfigParametersTips = '';
 
@@ -155,8 +245,8 @@ export const GroupChat: () => JSX.Element = () => {
 
   return (
     <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
-      {chatConfig && <GroupChatComposite {...chatConfig} />}
-      {!chatConfig && CompositeConnectionParamsErrMessage([emptyConfigTips, emptyConfigParametersTips])}
+      {adapter && <ChatComposite adapter={adapter} />}
+      {!adapter && CompositeConnectionParamsErrMessage([emptyConfigTips, emptyConfigParametersTips])}
     </div>
   );
 };

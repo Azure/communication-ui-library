@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import React from 'react';
 import { DefaultButton, IButtonProps, Stack, concatStyleSets, mergeStyles } from '@fluentui/react';
@@ -14,6 +15,12 @@ export interface ScreenShareButtonProps extends IButtonProps {
    * @defaultValue `false`
    */
   showLabel?: boolean;
+
+  /**
+   * Utility property for using this component with `communication react eventHandlers`.
+   * Maps directly to the `onClick` property.
+   */
+  onToggleScreenShare?: () => Promise<void>;
 }
 
 /**
@@ -27,12 +34,16 @@ export const ScreenShareButton = (props: ScreenShareButtonProps): JSX.Element =>
   const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
 
   const defaultRenderIcon = (props?: IButtonProps): JSX.Element => {
-    return props?.checked ? <CallControlCloseTrayIcon /> : <CallControlPresentNewIcon bordered={false} />;
+    return props?.checked ? (
+      <CallControlCloseTrayIcon key={'screenShareIconKey'} />
+    ) : (
+      <CallControlPresentNewIcon key={'screenShareBorderedIconKey'} bordered={false} />
+    );
   };
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {
     return (
-      <Stack className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
+      <Stack key={'screenShareLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
         {props?.checked ? 'Stop' : 'Share'}
       </Stack>
     );
@@ -41,6 +52,7 @@ export const ScreenShareButton = (props: ScreenShareButtonProps): JSX.Element =>
   return (
     <DefaultButton
       {...props}
+      onClick={props.onToggleScreenShare ?? props.onClick}
       styles={componentStyles}
       onRenderIcon={onRenderIcon ?? defaultRenderIcon}
       onRenderText={showLabel ? onRenderText ?? defaultRenderText : undefined}

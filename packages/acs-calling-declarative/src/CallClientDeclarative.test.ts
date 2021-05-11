@@ -1,4 +1,6 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import {
   Call,
   CallAgent,
@@ -981,5 +983,52 @@ describe('declarative call client', () => {
 
     const transcription = featureCache.get(Features.Transcription);
     expect(transcription.emitter.eventNames().length).toBe(0);
+  });
+
+  test('should detect transfer requests in call', async () => {
+    const testData = {} as TestData;
+    createClientAndAgentMocks(testData);
+    createDeclarativeClient(testData);
+    const mockCall = createMockCall(mockCallId);
+    const transfer = addMockEmitter({ name: 'Default' });
+    const featureCache = new Map<any, any>();
+    featureCache.set(Features.Transfer, transfer);
+    mockCall.api = createMockApiFeatures(featureCache);
+    await createMockCallAndEmitCallsUpdated(testData, undefined, mockCall);
+
+    await waitWithBreakCondition(() => testData.declarativeCallClient.state.calls.get(mockCallId) !== undefined);
+
+    transfer.emit('transferRequested', { targetParticipant: { communicationUserId: 'a', kind: 'communicationUser' } });
+    await waitWithBreakCondition(
+      () => testData.declarativeCallClient.state.calls.get(mockCallId)?.transfer.receivedTransferRequests.length !== 0
+    );
+
+    expect(testData.declarativeCallClient.state.calls.get(mockCallId)?.transfer.receivedTransferRequests.length).toBe(
+      1
+    );
+  });
+
+  test('should unsubscribe to transfer requests when call ended', async () => {
+    const testData = {} as TestData;
+    createClientAndAgentMocks(testData);
+    createDeclarativeClient(testData);
+    const mockCall = createMockCall(mockCallId);
+    const featureCache = new Map<any, any>();
+    featureCache.set(Features.Transfer, addMockEmitter({ name: 'Default' }));
+    mockCall.api = createMockApiFeatures(featureCache);
+    await createMockCallAndEmitCallsUpdated(testData, undefined, mockCall);
+
+    await waitWithBreakCondition(() => testData.declarativeCallClient.state.calls.get(mockCallId) !== undefined);
+
+    testData.mockCallAgent.calls = [];
+    testData.mockCallAgent.emit('callsUpdated', {
+      added: [],
+      removed: [testData.mockCall]
+    });
+
+    await waitWithBreakCondition(() => testData.declarativeCallClient.state.calls.size === 0);
+
+    const transfer = featureCache.get(Features.Transfer);
+    expect(transfer.emitter.eventNames().length).toBe(0);
   });
 });

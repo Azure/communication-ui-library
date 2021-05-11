@@ -1,5 +1,13 @@
-// © Microsoft Corporation. All rights reserved.
-import { getChatMessages, getIsLargeGroup, getLatestReadTime, getUserId } from './baseSelectors';
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+import {
+  communicationIdentifierToString,
+  getChatMessages,
+  getIsLargeGroup,
+  getLatestReadTime,
+  getUserId
+} from './baseSelectors';
 import { ChatMessageWithStatus } from '@azure/acs-chat-declarative';
 // The following need explicitly imported to avoid api-extractor issues.
 // These can be removed once https://github.com/microsoft/rushstack/pull/1916 is fixed.
@@ -10,11 +18,11 @@ import { ChatMessageContent, ChatParticipant } from '@azure/communication-chat';
 // @ts-ignore
 import { ChatClientState } from '@azure/acs-chat-declarative';
 // @ts-ignore
-import { BaseSelectorProps } from './baseSelectors';
+import { ChatBaseSelectorProps } from './baseSelectors';
 // @ts-ignore
 import { memoizeFnAll } from './utils/memoizeFnAll';
 // @ts-ignore
-import { ChatMessage, MessageAttachedStatus, Message, MessageTypes } from './types/UiChatMessage';
+import { ChatMessage, MessageAttachedStatus, Message, MessageTypes } from 'react-components';
 // @ts-ignore
 import { createSelector } from 'reselect';
 // @ts-ignore
@@ -34,7 +42,7 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
       content: chatMessage.content?.message,
       status: !isLargeGroup && chatMessage.status === 'delivered' && isSeen ? 'seen' : chatMessage.status,
       senderDisplayName: chatMessage.senderDisplayName,
-      senderId: chatMessage.sender?.communicationUserId || userId,
+      senderId: communicationIdentifierToString(chatMessage.sender) ?? userId,
       messageId: chatMessage.id,
       clientMessageId: chatMessage.clientMessageId
     }

@@ -1,11 +1,10 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { mergeStyles } from '@fluentui/react';
 
 const videoBaseStyle = mergeStyles({
-  border: 0,
-  borderRight: '1px solid rgba(0,0,0,0.05)',
-  borderBottom: '1px solid rgba(0,0,0,0.05)'
+  border: 0
 });
 
 export const gridStyle = mergeStyles(videoBaseStyle, {

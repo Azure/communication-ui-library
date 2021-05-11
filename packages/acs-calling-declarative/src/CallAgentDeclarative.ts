@@ -1,8 +1,9 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { Call, CallAgent, CallEndReason, IncomingCall } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
-import { callDeclaratify } from './CallDeclarative';
+import { callDeclaratify, DeclarativeCall } from './CallDeclarative';
 import { CallSubscriber } from './CallSubscriber';
 import { convertSdkCallToDeclarativeCall, convertSdkIncomingCallToDeclarativeIncomingCall } from './Converter';
 import { IncomingCallSubscriber } from './IncomingCallSubscriber';
@@ -20,6 +21,7 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
   private _internalContext: InternalCallContext;
   private _callSubscribers: Map<Call, CallSubscriber>;
   private _incomingCallSubscribers: Map<string, IncomingCallSubscriber>;
+  private _declarativeCalls: Map<Call, DeclarativeCall>;
 
   constructor(callAgent: CallAgent, context: CallContext, internalContext: InternalCallContext) {
     this._callAgent = callAgent;
@@ -27,6 +29,7 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
     this._internalContext = internalContext;
     this._callSubscribers = new Map<Call, CallSubscriber>();
     this._incomingCallSubscribers = new Map<string, IncomingCallSubscriber>();
+    this._declarativeCalls = new Map<Call, DeclarativeCall>();
     this.subscribe();
   }
 
@@ -56,6 +59,11 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
       incomingCallSubscriber.unsubscribe();
     }
     this._incomingCallSubscribers.clear();
+
+    for (const [_, declarativeCall] of this._declarativeCalls.entries()) {
+      declarativeCall.unsubscribe();
+    }
+    this._declarativeCalls.clear();
   };
 
   private callsUpdated = (event: { added: Call[]; removed: Call[] }): void => {
@@ -70,6 +78,11 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
         this._callSubscribers.delete(call);
       }
       this._context.setCallEnded(call.id, call.callEndReason);
+      const declarativeCall = this._declarativeCalls.get(call);
+      if (declarativeCall) {
+        declarativeCall.unsubscribe();
+        this._declarativeCalls.delete(call);
+      }
     }
   };
 
@@ -100,6 +113,18 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
     // state during the subscription process in the subscriber so we add the call to state before subscribing.
     this._context.setCall(convertSdkCallToDeclarativeCall(call));
     this._callSubscribers.set(call, new CallSubscriber(call, this._context, this._internalContext));
+    this.getOrCreateDeclarativeCall(call);
+  };
+
+  private getOrCreateDeclarativeCall = (call: Call): Call => {
+    const declarativeCall = this._declarativeCalls.get(call);
+    if (declarativeCall) {
+      return declarativeCall;
+    }
+
+    const newDeclarativeCall = callDeclaratify(call, this._context);
+    this._declarativeCalls.set(call, newDeclarativeCall as DeclarativeCall);
+    return newDeclarativeCall;
   };
 
   public get<P extends keyof CallAgent>(target: CallAgent, prop: P): any {
@@ -108,14 +133,14 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
         return (...args: Parameters<CallAgent['startCall']>): Call => {
           const call = target.startCall(...args);
           this.addCall(call);
-          return callDeclaratify(call, this._context);
+          return this.getOrCreateDeclarativeCall(call);
         };
       }
       case 'join': {
         return (...args: Parameters<CallAgent['join']>): Call => {
           const call = target.join(...args);
           this.addCall(call);
-          return callDeclaratify(call, this._context);
+          return this.getOrCreateDeclarativeCall(call);
         };
       }
       case 'dispose': {
