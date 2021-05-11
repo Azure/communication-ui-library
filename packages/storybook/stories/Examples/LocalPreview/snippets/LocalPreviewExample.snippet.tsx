@@ -30,8 +30,8 @@ export const LocalPreviewExample = ({
 
   const localPreviewContainerStyle = mergeStyles({
     minWidth: '25rem',
-    width: '100%',
-    height: '100%',
+    width: '100\u0025',
+    height: '100\u0025',
     maxHeight: '18.75rem',
     minHeight: '16.875rem',
     margin: '0 auto',
@@ -53,7 +53,7 @@ export const LocalPreviewExample = ({
 
   return (
     <FluentThemeProvider fluentTheme={theme}>
-      <Stack style={{ width: '100%', height: '100%' }} verticalAlign="center">
+      <Stack style={{ width: '100\u0025', height: '100\u0025' }} verticalAlign="center">
         <Stack.Item align="center">
           <Stack className={localPreviewContainerStyle}>
             <VideoTile
@@ -63,7 +63,7 @@ export const LocalPreviewExample = ({
               // We would suggest you replace this videoStreamElement below with a rendered video stream from the calling SDK
               videoProvider={<StreamMedia videoStreamElement={renderVideoStream()} />}
               placeholderProvider={
-                <Stack style={{ width: '100%', height: '100%' }} verticalAlign="center">
+                <Stack style={{ width: '100\u0025', height: '100\u0025' }} verticalAlign="center">
                   <Stack.Item align="center">
                     <CallVideoOffIcon />
                   </Stack.Item>
