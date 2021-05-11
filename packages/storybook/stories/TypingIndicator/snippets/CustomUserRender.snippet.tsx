@@ -19,7 +19,7 @@ export const CustomUserRenderSnippet: () => JSX.Element = () => {
     return (
       <>
         {users.map((user, index) => (
-          <div className={verticallyCenterStyle}>
+          <div key={`${user.displayName}UserKey`} className={verticallyCenterStyle}>
             <img src={imageMap[user.userId]} width="32px" height="32px" style={avatarStyle} />
             <span className={spanStyle}>
               {user.displayName}

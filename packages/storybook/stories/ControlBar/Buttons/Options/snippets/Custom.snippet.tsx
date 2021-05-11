@@ -1,5 +1,5 @@
 import { OptionsButton } from '@azure/communication-react';
-import { IButtonProps, Icon, IContextualMenuProps, Label, Stack } from '@fluentui/react';
+import { IButtonProps, Icon, IContextualMenuProps, Label } from '@fluentui/react';
 import React from 'react';
 
 const exampleOptionsMenuProps: IContextualMenuProps = {
@@ -29,14 +29,12 @@ export const OptionsButtonCustomExample: () => JSX.Element = () => {
   };
 
   return (
-    <Stack horizontal horizontalAlign={'center'}>
-      <OptionsButton
-        key={'optionsCustomBtnKey'}
-        showLabel={true}
-        menuProps={exampleOptionsMenuProps}
-        onRenderIcon={customOnRenderIcon}
-        onRenderText={customOnRenderText}
-      />
-    </Stack>
+    <OptionsButton
+      key={'optionsCustomBtnKey'}
+      showLabel={true}
+      menuProps={exampleOptionsMenuProps}
+      onRenderIcon={customOnRenderIcon}
+      onRenderText={customOnRenderText}
+    />
   );
 };

@@ -1,5 +1,5 @@
 import { MicrophoneButton } from '@azure/communication-react';
-import { IButtonProps, Icon, Label, Stack, Text } from '@fluentui/react';
+import { IButtonProps, Icon, Label, Text } from '@fluentui/react';
 import React from 'react';
 
 export const CustomMicrophoneButtonExample: () => JSX.Element = () => {
@@ -30,7 +30,7 @@ export const CustomMicrophoneButtonExample: () => JSX.Element = () => {
   };
 
   return (
-    <Stack horizontal horizontalAlign={'center'}>
+    <>
       <MicrophoneButton
         key={'micCustomBtn1'}
         checked={true}
@@ -44,6 +44,6 @@ export const CustomMicrophoneButtonExample: () => JSX.Element = () => {
         onRenderIcon={customOnRenderIcon}
         onRenderText={customOnRenderText}
       />
-    </Stack>
+    </>
   );
 };
