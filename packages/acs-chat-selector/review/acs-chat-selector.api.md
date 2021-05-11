@@ -10,7 +10,6 @@ import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationParticipant } from 'react-components';
-import { ContextualMenuItem } from 'react-components';
 import { Message } from 'react-components';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
@@ -85,10 +84,9 @@ export type DefaultChatHandlers = {
     onMessageSend: (content: string) => Promise<void>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
     onTyping: () => Promise<void>;
-    removeThreadMember: (userId: string) => Promise<void>;
+    onParticipantRemove: (userId: string) => Promise<void>;
     updateThreadTopicName: (topicName: string) => Promise<void>;
     onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
-    onRenderParticipantMenu: (participant: CommunicationParticipant) => ContextualMenuItem[];
 };
 
 // @public (undocumented)

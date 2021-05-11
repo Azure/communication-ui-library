@@ -4,18 +4,15 @@
 import { ReactElement } from 'react';
 import { StatefulChatClient } from '@azure/acs-chat-declarative';
 import { ChatThreadClient } from '@azure/communication-chat';
-import { ContextualMenuItem, CommunicationParticipant } from 'react-components';
-import { getACSId } from '../utils/getACSId';
 import memoizeOne from 'memoize-one';
 
 export type DefaultChatHandlers = {
   onMessageSend: (content: string) => Promise<void>;
   onMessageSeen: (chatMessageId: string) => Promise<void>;
   onTyping: () => Promise<void>;
-  removeThreadMember: (userId: string) => Promise<void>;
+  onParticipantRemove: (userId: string) => Promise<void>;
   updateThreadTopicName: (topicName: string) => Promise<void>;
   onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
-  onRenderParticipantMenu: (participant: CommunicationParticipant) => ContextualMenuItem[];
 };
 
 // Keep all these handlers the same instance(unless client changed) to avoid re-render
@@ -37,7 +34,7 @@ export const createDefaultChatHandlers = memoizeOne(
       onTyping: async () => {
         await chatThreadClient.sendTypingNotification();
       },
-      removeThreadMember: async (userId: string) => {
+      onParticipantRemove: async (userId: string) => {
         await chatThreadClient.removeParticipant({
           communicationUserId: userId
         });
@@ -59,21 +56,6 @@ export const createDefaultChatHandlers = memoizeOne(
         }
 
         return isAllChatMessagesLoaded;
-      },
-      onRenderParticipantMenu: (participant: CommunicationParticipant) => {
-        const menu: ContextualMenuItem[] = [];
-        if (getACSId(chatClient.state.userId) !== participant.userId) {
-          menu.push({
-            key: 'Remove',
-            text: 'Remove',
-            onClick: () => {
-              chatThreadClient.removeParticipant({
-                communicationUserId: participant.userId
-              });
-            }
-          });
-        }
-        return menu;
       }
     };
   }

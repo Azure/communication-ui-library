@@ -70,13 +70,6 @@ export enum CommunicationUiErrorSeverity {
 }
 
 // @public
-export type ContextualMenuItem = {
-    key: string;
-    text: string;
-    onClick: (userId: string) => void;
-};
-
-// @public
 export const ControlBar: (props: ControlBarProps) => JSX.Element;
 
 // @public (undocumented)
@@ -284,7 +277,7 @@ export type ParticipantListProps = {
     myUserId?: string;
     onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
     onRenderAvatar?: (participant: CommunicationParticipant) => JSX.Element | null;
-    onRenderParticipantMenu?: (participant: CommunicationParticipant) => IContextualMenuItem[];
+    onParticipantRemove?: (userId: string) => void;
 };
 
 // @public (undocumented)

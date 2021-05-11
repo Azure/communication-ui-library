@@ -18,10 +18,8 @@ import { ChatMessage as ChatMessage_2 } from '@azure/communication-chat';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { ChatThreadClientState } from '@azure/acs-chat-declarative';
-import { CommunicationParticipant } from 'react-components';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CommunicationUserKind } from '@azure/communication-common';
-import { ContextualMenuItem } from 'react-components';
 import { ControlBarProps } from 'react-components';
 import { CreateViewOptions } from '@azure/communication-calling';
 import { DeclarativeCallClient } from '@azure/acs-calling-declarative';
@@ -70,8 +68,6 @@ export class AzureCommunicationChatAdapter implements GroupChatAdapter {
     on(event: 'participantsJoined', participantsJoinedHandler: (participant: ChatParticipant) => void): void;
     // (undocumented)
     on(event: 'error', errorHandler: (e: Error) => void): void;
-    // (undocumented)
-    onRenderParticipantMenu: (participant: CommunicationParticipant) => ContextualMenuItem[];
     // (undocumented)
     onStateChange: (handler: (state: GroupChatState) => void) => void;
     // (undocumented)
@@ -616,8 +612,6 @@ export interface GroupChatAdapter {
     on(event: 'participantsJoined', participantsJoinedHandler: (participant: ChatParticipant) => void): void;
     // (undocumented)
     on(event: 'error', errorHandler: (e: Error) => void): void;
-    // (undocumented)
-    onRenderParticipantMenu: (participant: CommunicationParticipant) => ContextualMenuItem[];
     // (undocumented)
     onStateChange(handler: (state: GroupChatState) => void): void;
     // (undocumented)

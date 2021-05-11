@@ -15,7 +15,6 @@ import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CommunicationParticipant as CommunicationParticipant_2 } from 'react-components';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
-import { ContextualMenuItem as ContextualMenuItem_2 } from 'react-components';
 import { IButtonProps } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
@@ -188,13 +187,6 @@ export enum CommunicationUiErrorSeverity {
 }
 
 // @public
-export type ContextualMenuItem = {
-    key: string;
-    text: string;
-    onClick: (userId: string) => void;
-};
-
-// @public
 export const ControlBar: (props: ControlBarProps) => JSX.Element;
 
 // @public (undocumented)
@@ -241,10 +233,9 @@ export type DefaultChatHandlers = {
     onMessageSend: (content: string) => Promise<void>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
     onTyping: () => Promise<void>;
-    removeThreadMember: (userId: string) => Promise<void>;
+    onParticipantRemove: (userId: string) => Promise<void>;
     updateThreadTopicName: (topicName: string) => Promise<void>;
     onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
-    onRenderParticipantMenu: (participant: CommunicationParticipant_2) => ContextualMenuItem_2[];
 };
 
 // @public (undocumented)
@@ -431,7 +422,7 @@ export type ParticipantListProps = {
     myUserId?: string;
     onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
     onRenderAvatar?: (participant: CommunicationParticipant) => JSX.Element | null;
-    onRenderParticipantMenu?: (participant: CommunicationParticipant) => IContextualMenuItem[];
+    onParticipantRemove?: (userId: string) => void;
 };
 
 // @public (undocumented)

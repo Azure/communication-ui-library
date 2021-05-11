@@ -12,7 +12,6 @@ import { CommunicationUserKind } from '@azure/communication-signaling';
 import EventEmitter from 'events';
 import { createAzureCommunicationUserCredential, getIdFromToken } from '../../../utils';
 import { GroupChatAdapter, GroupChatEvent, GroupChatState } from './GroupChatAdapter';
-import { CommunicationParticipant, ContextualMenuItem } from 'react-components';
 
 // Context of GroupChat, which is a centralized context for all state updates
 export class GroupChatContext {
@@ -123,7 +122,7 @@ export class AzureCommunicationChatAdapter implements GroupChatAdapter {
   };
 
   removeParticipant = async (userId: string): Promise<void> => {
-    await this.handlers.removeThreadMember(userId);
+    await this.handlers.onParticipantRemove(userId);
   };
 
   setTopic = async (topicName: string): Promise<void> => {
@@ -132,10 +131,6 @@ export class AzureCommunicationChatAdapter implements GroupChatAdapter {
 
   loadPreviousChatMessages = async (messagesToLoad: number): Promise<boolean> => {
     return await this.handlers.onLoadPreviousChatMessages(messagesToLoad);
-  };
-
-  onRenderParticipantMenu = (participant: CommunicationParticipant): ContextualMenuItem[] => {
-    return this.handlers.onRenderParticipantMenu(participant);
   };
 
   on(event: 'messageReceived', messageReceivedHandler: (message: ChatMessage) => void): void;

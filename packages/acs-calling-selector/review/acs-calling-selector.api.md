@@ -12,7 +12,6 @@ import { CallClientState } from '@azure/acs-calling-declarative';
 import * as callingStateful from '@azure/acs-calling-declarative';
 import { CommunicationParticipant } from 'react-components';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
-import { ContextualMenuItem } from 'react-components';
 import { CreateViewOptions as CreateViewOptions_2 } from '@azure/communication-calling';
 import { DeclarativeCallClient } from '@azure/acs-calling-declarative';
 import { DeviceManager } from '@azure/acs-calling-declarative';
@@ -60,7 +59,7 @@ export const createDefaultCallingHandlersForComponent: <Props>(declarativeCallCl
     onToggleMicrophone: () => Promise<void> | void;
     onToggleScreenShare: () => Promise<void> | void;
     onRenderView: (stream: LocalVideoStream | RemoteVideoStream, options: CreateViewOptions_2) => Promise<void>;
-    onRenderParticipantMenu: (participant: CommunicationParticipant) => ContextualMenuItem[];
+    onParticipantRemove: (userId: string) => void;
 }, CommonProperties1<{
     onHangUp: () => Promise<void>;
     onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
@@ -71,7 +70,7 @@ export const createDefaultCallingHandlersForComponent: <Props>(declarativeCallCl
     onToggleMicrophone: () => Promise<void> | void;
     onToggleScreenShare: () => Promise<void> | void;
     onRenderView: (stream: LocalVideoStream | RemoteVideoStream, options: CreateViewOptions_2) => Promise<void>;
-    onRenderParticipantMenu: (participant: CommunicationParticipant) => ContextualMenuItem[];
+    onParticipantRemove: (userId: string) => void;
 }, Props>>;
 
 // @public (undocumented)

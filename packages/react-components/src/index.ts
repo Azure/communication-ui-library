@@ -17,7 +17,6 @@ export type {
   MessageTypes,
   SystemMessage,
   SystemMessagePayload,
-  CommunicationParticipant,
-  ContextualMenuItem
+  CommunicationParticipant
 } from './types';
 export * from './types/GalleryParticipant';

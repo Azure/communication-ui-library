@@ -6,4 +6,3 @@ export * from './CommunicationUiError';
 export * from './CustomStylesProps';
 export * from './CommunicationParticipant';
 export * from './GalleryParticipant';
-export * from './ContextualMenuItem';

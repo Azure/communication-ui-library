@@ -18,7 +18,6 @@ import {
   StatefulDeviceManager
 } from '@azure/acs-calling-declarative';
 import { ReactElement } from 'react';
-import { CommunicationParticipant, ContextualMenuItem } from 'react-components';
 import memoizeOne from 'memoize-one';
 
 export type DefaultChatHandlers = ReturnType<typeof createDefaultChatHandlers>;
@@ -114,18 +113,8 @@ const createDefaultChatHandlers = memoizeOne(
       await callClient.startRenderVideo(callId, stream, options);
     };
 
-    const onRenderParticipantMenu = (participant: CommunicationParticipant): ContextualMenuItem[] => {
-      const menuItems: ContextualMenuItem[] = [];
-      if (participant.userId !== callClient?.state.userId) {
-        menuItems.push({
-          key: 'Remove',
-          text: 'Remove',
-          onClick: () => {
-            call?.removeParticipant({ communicationUserId: participant.userId });
-          }
-        });
-      }
-      return menuItems;
+    const onParticipantRemove = (userId: string): void => {
+      call?.removeParticipant({ communicationUserId: userId });
     };
 
     return {
@@ -138,7 +127,7 @@ const createDefaultChatHandlers = memoizeOne(
       onToggleMicrophone,
       onToggleScreenShare,
       onRenderView,
-      onRenderParticipantMenu
+      onParticipantRemove
     };
   }
 );

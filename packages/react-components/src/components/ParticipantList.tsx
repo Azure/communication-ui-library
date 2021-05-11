@@ -29,12 +29,12 @@ export type ParticipantListProps = {
   /** Optional callback to render the avatar for each participant. This property will have no effect if `onRenderParticipant` is assigned.  */
   onRenderAvatar?: (participant: CommunicationParticipant) => JSX.Element | null;
   /** Optional callback to render the context menu for each participant  */
-  onRenderParticipantMenu?: (participant: CommunicationParticipant) => IContextualMenuItem[];
+  onParticipantRemove?: (userId: string) => void;
 };
 
 const getDefaultRenderer = (
   myUserId?: string,
-  onRenderParticipantMenu?: (remoteParticipant: CommunicationParticipant) => IContextualMenuItem[],
+  onParticipantRemove?: (userId: string) => void,
   onRenderAvatar?: (remoteParticipant: CommunicationParticipant) => JSX.Element | null
 ): ((participant: CommunicationParticipant) => JSX.Element | null) => {
   return (participant: CommunicationParticipant) => {
@@ -45,12 +45,21 @@ const getDefaultRenderer = (
       presence = PersonaPresence.away;
     }
 
+    const menuItems: IContextualMenuItem[] = [];
+    if (participant.userId !== myUserId && onParticipantRemove) {
+      menuItems.push({
+        key: 'Remove',
+        text: 'Remove',
+        onClick: () => onParticipantRemove(participant.userId)
+      });
+    }
+
     if (participant.displayName) {
       return (
         <ParticipantItem
           name={participant.displayName}
           isYou={myUserId ? participant.userId === myUserId : false}
-          menuItems={onRenderParticipantMenu ? onRenderParticipantMenu(participant) : []}
+          menuItems={menuItems}
           presence={presence}
           onRenderIcon={() => (
             <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
@@ -87,10 +96,9 @@ const renderParticipants = (
   myUserId?: string,
   onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null,
   onRenderAvatar?: (participant: CommunicationParticipant) => JSX.Element | null,
-  onRenderParticipantMenu?: (participant: CommunicationParticipant) => IContextualMenuItem[]
+  onParticipantRemove?: (userId: string) => void
 ): (JSX.Element | null)[] => {
-  const renderParticipant =
-    onRenderParticipant ?? getDefaultRenderer(myUserId, onRenderParticipantMenu, onRenderAvatar);
+  const renderParticipant = onRenderParticipant ?? getDefaultRenderer(myUserId, onParticipantRemove, onRenderAvatar);
   const onRenderItem = (item: IOverflowSetItemProps): JSX.Element | null => {
     const participant: CommunicationParticipant = {
       userId: item.userId,
@@ -133,7 +141,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
         props.myUserId,
         props.onRenderParticipant,
         props.onRenderAvatar,
-        props.onRenderParticipantMenu
+        props.onParticipantRemove
       )}
     </Stack>
   );
