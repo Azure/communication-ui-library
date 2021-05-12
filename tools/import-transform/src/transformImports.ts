@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 // File logic:
 //
 // ┌─────────────────────────┐
@@ -78,7 +81,11 @@ let filesSearchedCount: number;
  * @param file - file to transform the imports of
  * @param dirLevel - directory level, this indicates the number of ../ to be prepended
  */
-function transformFileImports(file: fs.PathLike, packageTranslations: PackageTransforms, dirLevel: number): void {
+export function transformFileImports(
+  file: fs.PathLike,
+  packageTranslations: PackageTransforms,
+  dirLevel: number
+): void {
   log(`File found (dirLevel: ${dirLevel})`, file);
   const backTravel = '../'.repeat(dirLevel);
 
@@ -86,7 +93,7 @@ function transformFileImports(file: fs.PathLike, packageTranslations: PackageTra
   let changeOccurred = false;
   let newContent = '';
   for (let line of fileContent.split(/\n/)) {
-    if (line.startsWith('import ') || line.includes('require(')) {
+    if (line.includes(' from ') || line.includes('require(')) {
       for (const packageBaseName of Object.keys(packageTranslations)) {
         if (line.includes(packageBaseName)) {
           const newImport = backTravel + packageTranslations[packageBaseName];
