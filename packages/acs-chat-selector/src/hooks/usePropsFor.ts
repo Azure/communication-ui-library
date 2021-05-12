@@ -1,25 +1,39 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-
-import { ChatClientState } from 'chat-stateful-client';
 import { MessageThread, SendBox, TypingIndicator } from 'react-components';
 
-import React from 'react';
 import { useHandlers } from './useHandlers';
 import { useSelector } from './useSelector';
 import { sendBoxSelector } from '../sendBoxSelector';
 import { chatThreadSelector } from '../chatThreadSelector';
 import { typingIndicatorSelector } from '../typingIndicatorSelector';
+// @ts-ignore
+import { Common, DefaultChatHandlers, CommonProperties } from '../handlers/createHandlers';
 
-type Selector = (state: ChatClientState, props: any) => any;
-export const usePropsFor = <SelectorT extends (state: ChatClientState, props: any) => any>(
-  component: React.FunctionComponent<any>
-): ReturnType<SelectorT> => {
+export const usePropsFor = <Component extends (props: any) => JSX.Element>(
+  component: Component
+): ReturnType<GetSelector<Component>> & Common<DefaultChatHandlers, Parameters<Component>[0]> => {
   const selector = getSelector(component);
-  return { ...useSelector(selector), ...useHandlers(component) };
+  return { ...useSelector(selector), ...useHandlers<Parameters<Component>[0]>(component) };
 };
 
-export const getSelector = (component: React.FunctionComponent<any>): Selector => {
+export type GetSelector<Component> = AreEqual<Component, typeof SendBox> extends true
+  ? typeof sendBoxSelector
+  : AreEqual<Component, typeof MessageThread> extends true
+  ? typeof chatThreadSelector
+  : AreEqual<Component, typeof TypingIndicator> extends true
+  ? typeof typingIndicatorSelector
+  : never;
+
+export type AreEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
+
+export const getSelector = <Component extends (props: any) => JSX.Element | undefined>(
+  component: Component
+): GetSelector<Component> => {
+  return findSelector(component);
+};
+
+const findSelector = (component: (props: any) => JSX.Element | undefined): any => {
   switch (component) {
     case SendBox:
       return sendBoxSelector;
