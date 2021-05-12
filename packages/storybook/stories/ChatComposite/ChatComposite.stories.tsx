@@ -8,7 +8,7 @@ import { Title, Description, Props, Heading, Source } from '@storybook/addon-doc
 import { text } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState, useEffect } from 'react';
-import { GroupChatAdapter, ChatConfig, ChatComposite, createAzureCommunicationChatAdapter } from 'react-composites';
+import { ChatAdapter, ChatConfig, ChatComposite, createAzureCommunicationChatAdapter } from 'react-composites';
 
 import {
   CompositeConnectionParamsErrMessage,
@@ -37,7 +37,7 @@ const endpointUrl = \`\${uri.protocol}//\${uri.host}\`;
   let tokenClient = new CommunicationIdentityClient(connectionString);
   const user = await tokenClient.createUser();
   const token = await tokenClient.issueToken(user, ["chat"]);
-  const [adapter, setAdapter] = useState<GroupChatAdapter>();
+  const [adapter, setAdapter] = useState<ChatAdapter>();
 
   const userAccessTokenCredential =
     new AzureCommunicationUserCredential(token.token);
@@ -75,7 +75,7 @@ const getDocs: () => JSX.Element = () => {
   return (
     <>
       <Title>ChatComposite</Title>
-      <Description>ChatComposite is an one-stop component that you can make ACS Group Chat running.</Description>
+      <Description>ChatComposite is an one-stop component that you can make ACS Chat running.</Description>
 
       <Heading>Importing</Heading>
       <Source code={importStatement} />
@@ -90,7 +90,7 @@ const getDocs: () => JSX.Element = () => {
 };
 
 export default {
-  title: `${COMPOSITE_FOLDER_PREFIX}/Group Chat`,
+  title: `${COMPOSITE_FOLDER_PREFIX}/Chat`,
   component: ChatComposite,
   parameters: {
     useMaxHeightParent: true,
@@ -187,9 +187,9 @@ const createChatConfig = async (resourceConnectionString: string): Promise<ChatC
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.
-export const GroupChat: () => JSX.Element = () => {
+export const Chat: () => JSX.Element = () => {
   const [chatConfig, setChatConfig] = useState<ChatConfig>();
-  const [adapter, setAdapter] = useState<GroupChatAdapter>();
+  const [adapter, setAdapter] = useState<ChatAdapter>();
 
   const connectionString = text(COMPOSITE_STRING_CONNECTIONSTRING, '', 'Server Simulator');
 
@@ -236,7 +236,7 @@ export const GroupChat: () => JSX.Element = () => {
     }
   }, [chatConfig]);
 
-  const emptyConfigTips = COMPOSITE_STRING_REQUIREDCONNECTIONSTRING.replace('{0}', 'Group Chat');
+  const emptyConfigTips = COMPOSITE_STRING_REQUIREDCONNECTIONSTRING.replace('{0}', 'Chat');
   let emptyConfigParametersTips = '';
 
   if (!userId && !token && !displayName && !endpointUrl && !threadId) {
