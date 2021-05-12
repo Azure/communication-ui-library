@@ -189,7 +189,6 @@ const createChatConfig = async (resourceConnectionString: string): Promise<ChatC
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.
 export const Chat: () => JSX.Element = () => {
   const [chatConfig, setChatConfig] = useState<ChatConfig>();
-  const [adapter, setAdapter] = useState<ChatAdapter>();
 
   const connectionString = text(COMPOSITE_STRING_CONNECTIONSTRING, '', 'Server Simulator');
 
@@ -220,33 +219,42 @@ export const Chat: () => JSX.Element = () => {
     }
   }, [connectionString, userId, token, endpointUrl, displayName, threadId]);
 
+  return <ContosoChatContainer config={chatConfig} />;
+};
+
+const ContosoChatContainer = (props: { config: ChatConfig | undefined }): JSX.Element => {
+  const { config } = props;
+
+  // Creating an adapter is asynchronous.
+  // We trigger adapter creation or update on updated config via useEffect
+  // and trigger a rerender when the adapter becomes ready via useState.
+
+  const [adapter, setAdapter] = useState<ChatAdapter>();
   useEffect(() => {
-    if (chatConfig) {
+    if (config) {
       const createAdapter = async (): Promise<void> => {
         setAdapter(
           await createAzureCommunicationChatAdapter(
-            chatConfig.token,
-            chatConfig.endpointUrl,
-            chatConfig.threadId,
-            chatConfig.displayName
+            config.token,
+            config.endpointUrl,
+            config.threadId,
+            config.displayName
           )
         );
       };
       createAdapter();
     }
-  }, [chatConfig]);
-
-  const emptyConfigTips = COMPOSITE_STRING_REQUIREDCONNECTIONSTRING.replace('{0}', 'Chat');
-  let emptyConfigParametersTips = '';
-
-  if (!userId && !token && !displayName && !endpointUrl && !threadId) {
-    emptyConfigParametersTips = 'Or you can fill out the required params to do so.';
-  }
+  }, [config]);
 
   return (
     <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
-      {adapter && <ChatComposite adapter={adapter} />}
-      {!adapter && CompositeConnectionParamsErrMessage([emptyConfigTips, emptyConfigParametersTips])}
+      {adapter ? <ChatComposite adapter={adapter} /> : <ContosoConfigHintBanner />}
     </div>
   );
+};
+
+const ContosoConfigHintBanner = (): JSX.Element => {
+  const emptyConfigTips = COMPOSITE_STRING_REQUIREDCONNECTIONSTRING.replace('{0}', 'Chat');
+  const emptyConfigParametersTips = 'Or you can fill out the required params to do so.';
+  return <>{CompositeConnectionParamsErrMessage([emptyConfigTips, emptyConfigParametersTips])}</>;
 };
