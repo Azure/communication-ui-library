@@ -22,6 +22,7 @@ export async function startRenderVideo(
   options?: CreateViewOptions
 ): Promise<void> {
   if ('id' in stream && callId) {
+    // Render RemoteVideoStream that is part of a Call
     const streamId = stream.id;
     const remoteVideoStream = internalContext.getRemoteVideoStream(callId, streamId);
     const participantKey = internalContext.getRemoteParticipantKey(callId, streamId);
@@ -43,6 +44,7 @@ export async function startRenderVideo(
     );
     internalContext.setRemoteVideoStreamRenderer(callId, streamId, renderer);
   } else if (!('id' in stream) && callId) {
+    // Render LocalVideoStream that is part of a Call
     const localVideoStream = internalContext.getLocalVideoStream(callId);
     const localVideoStreamRenderer = internalContext.getLocalVideoStreamRenderer(callId);
 
@@ -57,6 +59,7 @@ export async function startRenderVideo(
     context.setLocalVideoStreamRendererView(callId, convertFromSDKToDeclarativeVideoStreamRendererView(view));
     internalContext.setLocalVideoStreamRenderer(callId, renderer);
   } else if (!('id' in stream) && !callId) {
+    // Render LocalVideoStream that is not part of a Call
     if (context.getState().deviceManager.unparentedViews.length >= MAX_UNPARENTED_VIEWS_LENGTH) {
       // TODO: How to standarize all errors
       throw new Error('Max amount of unparented views reached ' + MAX_UNPARENTED_VIEWS_LENGTH.toString());
@@ -79,6 +82,7 @@ export function stopRenderVideo(
   stream: StatefulLocalVideoStream | RemoteVideoStream
 ): void {
   if ('id' in stream && callId) {
+    // Stop rendering RemoteVideoStream that is part of a Call
     const streamId = stream.id;
     const videoStreamRenderer = internalContext.getRemoteVideoStreamRenderer(callId, streamId);
 
@@ -95,6 +99,7 @@ export function stopRenderVideo(
     }
     internalContext.removeRemoteVideoStreamRenderer(callId, streamId);
   } else if (!('id' in stream) && callId) {
+    // Stop rendering LocalVideoStream that is part of a Call
     const videoStreamRenderer = internalContext.getLocalVideoStreamRenderer(callId);
 
     if (!videoStreamRenderer) {
@@ -106,6 +111,7 @@ export function stopRenderVideo(
     context.setLocalVideoStreamRendererView(callId, undefined);
     internalContext.removeLocalVideoStreamRenderer(callId);
   } else if (!('id' in stream) && !callId) {
+    // Stop rendering LocalVideoStream that is not part of a Call
     const index = internalContext.findInUnparentedStreamAndRenderers(stream);
     if (index === -1) {
       // TODO: How to standarize all errors
