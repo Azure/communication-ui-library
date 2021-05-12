@@ -4,8 +4,8 @@
 
 ```ts
 
-import { ChatClientState } from '@azure/acs-chat-declarative';
-import { ChatMessageWithStatus } from '@azure/acs-chat-declarative';
+import { ChatClientState } from 'chat-stateful-client';
+import { ChatMessageWithStatus } from 'chat-stateful-client';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationIdentifier } from '@azure/communication-common';
@@ -16,9 +16,9 @@ import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
 import * as reselect from 'reselect';
 import { SendBox } from 'react-components';
-import { StatefulChatClient } from '@azure/acs-chat-declarative';
+import { StatefulChatClient } from 'chat-stateful-client';
 import { TypingIndicator } from 'react-components';
-import { TypingIndicatorEvent } from '@azure/acs-chat-declarative';
+import { TypingIndicatorEvent } from 'chat-stateful-client';
 
 // @public (undocumented)
 export type AreEqual<A, B> = A extends B ? (B extends A ? true : false) : false;

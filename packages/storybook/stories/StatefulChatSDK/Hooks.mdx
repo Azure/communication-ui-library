@@ -137,7 +137,7 @@ const onMessageSend = useCallback(
   (message: string) => {
     const sendMessageRequest = {
       `✉: ${content}`,
-      senderDisplayName: chatClient.state.displayName
+      senderDisplayName: chatClient.getState().displayName
     };
     // directly call into stateful client
     await chatThreadClient.sendMessage(sendMessageRequest);

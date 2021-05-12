@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { ReactElement } from 'react';
-import { StatefulChatClient } from '@azure/acs-chat-declarative';
+import { StatefulChatClient } from 'chat-stateful-client';
 import { ChatThreadClient } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
 
@@ -23,7 +23,7 @@ export const createDefaultChatHandlers = memoizeOne(
       onMessageSend: async (content: string) => {
         const sendMessageRequest = {
           content,
-          senderDisplayName: chatClient.state.displayName
+          senderDisplayName: chatClient.getState().displayName
         };
         await chatThreadClient.sendMessage(sendMessageRequest);
       },

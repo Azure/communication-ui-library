@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatClientState, StatefulChatClient } from '@azure/acs-chat-declarative';
+import { ChatClientState, StatefulChatClient } from 'chat-stateful-client';
 import { useChatClient } from '../providers/ChatClientProvider';
 
 import { useState, useEffect, useRef, useMemo } from 'react';
@@ -23,7 +23,7 @@ export const useSelector = <SelectorT extends (state: ChatClientState, props: an
     [threadId]
   );
 
-  const [props, setProps] = useState(selector(chatClient.state, selectorProps ?? threadConfigProps));
+  const [props, setProps] = useState(selector(chatClient.getState(), selectorProps ?? threadConfigProps));
   const propRef = useRef(props);
   propRef.current = props;
   useEffect(() => {

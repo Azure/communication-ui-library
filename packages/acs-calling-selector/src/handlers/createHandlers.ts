@@ -16,7 +16,7 @@ import {
   RemoteVideoStream,
   LocalVideoStream as StatefulLocalVideoStream,
   StatefulDeviceManager
-} from '@azure/acs-calling-declarative';
+} from 'calling-stateful-client';
 import { ReactElement } from 'react';
 import memoizeOne from 'memoize-one';
 
@@ -147,7 +147,7 @@ type Common<A, B> = Pick<A, CommonProperties1<A, B>>;
  * DeclarativeCall may be undefined. If undefined, their associated handlers will not be created and returned.
  *
  * @param declarativeCallClient - DeclarativeCallClient returned from
- *   {@Link @azure/acs-calling-declarative#callClientDeclaratify}.
+ *   {@Link calling-stateful-client#callClientDeclaratify}.
  * @param callAgent - Instance of {@Link @azure/communication-calling#CallClient}.
  * @param deviceManager - Instance of {@Link @azure/communication-calling#DeviceManager}.
  * @param call - Instance of {@Link @azure/communication-calling#Call}.

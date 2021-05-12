@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
   "comment": "Add commonjs support",
-  "packageName": "@azure/acs-calling-declarative",
+  "packageName": "calling-stateful-client",
   "email": "mail@jamesburnside.com",
   "dependentChangeType": "patch"
 }
