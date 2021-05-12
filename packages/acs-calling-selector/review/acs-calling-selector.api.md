@@ -84,6 +84,7 @@ export const createDefaultChatHandlers: (callClient: DeclarativeCallClient, call
     onToggleMicrophone: () => Promise<void>;
     onToggleScreenShare: () => Promise<void>;
     onRenderView: (stream: LocalVideoStream | RemoteVideoStream, options: CreateViewOptions_2) => Promise<void>;
+    onParticipantRemove: (userId: string) => void;
 };
 
 // @public (undocumented)
