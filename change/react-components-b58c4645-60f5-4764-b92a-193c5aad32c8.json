@@ -3,5 +3,5 @@
   "comment": "added CallingTheme and used it for EndCallButton styles",
   "packageName": "react-components",
   "email": "alcail@microsoft.com",
-  "dependentChangeType": "none"
+  "dependentChangeType": "patch"
 }
