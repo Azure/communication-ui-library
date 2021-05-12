@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { LocalVideoStream, RemoteVideoStream } from '@azure/acs-calling-declarative';
+import { LocalVideoStream, RemoteVideoStream } from 'calling-stateful-client';
 
 export declare interface CreateViewOptions {
   isMirrored?: boolean;

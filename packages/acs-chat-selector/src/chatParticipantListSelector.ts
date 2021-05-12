@@ -2,10 +2,10 @@
 // Licensed under the MIT license.
 
 // @ts-ignore
-import { ChatClientState } from '@azure/acs-chat-declarative';
+import { ChatClientState } from 'chat-stateful-client';
 // @ts-ignore
 import { ChatBaseSelectorProps } from './baseSelectors';
-import { CommunicationIdentifierAsKey } from '@azure/acs-chat-declarative';
+import { CommunicationIdentifierAsKey } from 'chat-stateful-client';
 import { communicationIdentifierToString, getUserId, getDisplayName, getParticipants } from './baseSelectors';
 import * as reselect from 'reselect';
 import { ChatParticipant } from '@azure/communication-chat';

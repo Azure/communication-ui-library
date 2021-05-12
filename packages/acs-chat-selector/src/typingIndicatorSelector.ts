@@ -2,14 +2,14 @@
 // Licensed under the MIT license.
 
 // @ts-ignore
-import { ChatClientState } from '@azure/acs-chat-declarative';
-import { CommunicationIdentifierAsKey, getCommunicationIdentifierAsKey } from '@azure/acs-chat-declarative';
+import { ChatClientState } from 'chat-stateful-client';
+import { CommunicationIdentifierAsKey, getCommunicationIdentifierAsKey } from 'chat-stateful-client';
 // @ts-ignore
 import { ChatBaseSelectorProps } from './baseSelectors';
 import { communicationIdentifierToString, getTypingIndicators, getParticipants, getUserId } from './baseSelectors';
 import * as reselect from 'reselect';
 import { ChatParticipant } from '@azure/communication-chat';
-import { TypingIndicatorEvent } from '@azure/acs-chat-declarative';
+import { TypingIndicatorEvent } from 'chat-stateful-client';
 import { CommunicationParticipant } from 'react-components';
 import { MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS, PARTICIPANTS_THRESHOLD } from './utils/constants';
 

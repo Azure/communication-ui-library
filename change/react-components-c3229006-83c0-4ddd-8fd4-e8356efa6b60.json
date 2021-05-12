@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Convert duplicate render from error to warning since Stateful handles it",
+  "packageName": "react-components",
+  "email": "allenhwang@microsoft.com",
+  "dependentChangeType": "patch"
+}

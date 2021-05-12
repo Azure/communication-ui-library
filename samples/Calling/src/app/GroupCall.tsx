@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallClientState, DeclarativeCallClient } from '@azure/acs-calling-declarative';
+import { CallClientState, DeclarativeCallClient } from 'calling-stateful-client';
 import { AudioOptions, CallState } from '@azure/communication-calling';
 import { Label, Overlay, Spinner, Stack } from '@fluentui/react';
 import React, { useEffect, useState } from 'react';
