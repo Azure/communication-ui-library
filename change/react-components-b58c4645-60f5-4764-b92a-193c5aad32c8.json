@@ -1,6 +1,6 @@
 {
-  "type": "none",
-  "comment": "updated EndCallButton label and defaultRenderText of all buttons for ControlBar",
+  "type": "prerelease",
+  "comment": "added CallingTheme and used it for EndCallButton styles",
   "packageName": "react-components",
   "email": "alcail@microsoft.com",
   "dependentChangeType": "none"
