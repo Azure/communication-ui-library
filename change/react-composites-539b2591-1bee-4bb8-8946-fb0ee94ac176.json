@@ -1,7 +1,7 @@
 {
-  "type": "none",
-  "comment": "updated background of HangupButton in CallControls",
+  "type": "prerelease",
+  "comment": "added CallingTheme and used it for EndCallButton styles",
   "packageName": "react-composites",
   "email": "alcail@microsoft.com",
-  "dependentChangeType": "none"
+  "dependentChangeType": "patch"
 }
