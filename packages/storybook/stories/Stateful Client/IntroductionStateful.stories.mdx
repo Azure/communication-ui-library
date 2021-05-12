@@ -11,7 +11,7 @@ They simply add a state layer on top of it to help track state that can be rende
 They can be used in the same way as low-level clients would be used, so developers can use it to query the service and handle events (i.e. participant added or message recieved).
 Stateful clients are agnostic to any specific state management framework.
 
-## Stateful Client Selectors and Handlers
+## Component Binding with Stateful Clients
 
 To make it simpler to connect the stateful client with UI Components, the UI Library exposes helpers to generate props in the form of selectors and handlers.
 Selectors expose out data from the client state. Handlers provide default methods to handle actions from the UI Components and pass them to the stateful clients.
