@@ -75,7 +75,7 @@ const getDocs: () => JSX.Element = () => {
   return (
     <>
       <Title>ChatComposite</Title>
-      <Description>ChatComposite is an one-stop component that you can make ACS Group Chat running.</Description>
+      <Description>ChatComposite is an one-stop component that you can make ACS Chat running.</Description>
 
       <Heading>Importing</Heading>
       <Source code={importStatement} />
@@ -90,7 +90,7 @@ const getDocs: () => JSX.Element = () => {
 };
 
 export default {
-  title: `${COMPOSITE_FOLDER_PREFIX}/Group Chat`,
+  title: `${COMPOSITE_FOLDER_PREFIX}/Chat`,
   component: ChatComposite,
   parameters: {
     useMaxHeightParent: true,
@@ -187,7 +187,7 @@ const createChatConfig = async (resourceConnectionString: string): Promise<ChatC
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.
-export const GroupChat: () => JSX.Element = () => {
+export const Chat: () => JSX.Element = () => {
   const [chatConfig, setChatConfig] = useState<ChatConfig>();
   const [adapter, setAdapter] = useState<ChatAdapter>();
 
@@ -236,7 +236,7 @@ export const GroupChat: () => JSX.Element = () => {
     }
   }, [chatConfig]);
 
-  const emptyConfigTips = COMPOSITE_STRING_REQUIREDCONNECTIONSTRING.replace('{0}', 'Group Chat');
+  const emptyConfigTips = COMPOSITE_STRING_REQUIREDCONNECTIONSTRING.replace('{0}', 'Chat');
   let emptyConfigParametersTips = '';
 
   if (!userId && !token && !displayName && !endpointUrl && !threadId) {
