@@ -592,6 +592,22 @@ export class CallContext {
     );
   }
 
+  public setDeviceManagerUnparentedView(view: VideoStreamRendererView): void {
+    this.setState(
+      produce(this._state, (draft: CallClientState) => {
+        draft.deviceManager.unparentedViews.push(view);
+      })
+    );
+  }
+
+  public removeDeviceManagerUnparentedView(index: number): void {
+    this.setState(
+      produce(this._state, (draft: CallClientState) => {
+        draft.deviceManager.unparentedViews.splice(index, 1);
+      })
+    );
+  }
+
   public getAndIncrementAtomicId(): number {
     const id = this._atomicId;
     this._atomicId++;
