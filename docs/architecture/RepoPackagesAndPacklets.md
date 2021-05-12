@@ -42,6 +42,31 @@ Now if an external user was to consume this transpiled output from an npm packag
 
 To solve this issue we make use of [ts-transform-paths](../infrastructure/ttypescript-plugins#zerollupts-transform-paths).
 
+### How this tool solves the issue
+
+As an example, the output contents of the `@azure/communication-react` package when built may look like:
+
+```text
+/dist/dist-esm/react-components/index.js
+/dist/dist-esm/react-components/mycomponent.js
+/dist/dist-esm/component-binding/index.js
+/dist/dist-esm/component-binding/utils.js
+```
+
+Therefore, we want the import line from before:
+
+```javascript
+import { fn } from '@internal/component-binding';
+```
+
+to instead have a relative path to the correct file in the dist directory:
+
+```javascript
+import { fn } from '../component-binding';
+```
+
+This tool correctly rewrites the import lines to ensure they have the correct relative path.
+
 ## Treeshaking
 
 To ensure packlets are not referencing unintended modules or other packlets, we use a [check-treeshaking](https://github.com/Azure/communication-ui-sdk/tree/main/packages/check-treeshaking) tool.

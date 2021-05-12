@@ -28,43 +28,6 @@ Imports to be transformed are configured in the `tsconfig.json` file. The `ts-tr
 
 #### Why this is needed
 
-Our internal packages may reference other internal packages, e.g.
+Currently this plugin is used to fix incorrect import lines when packlets have downstream dependencies on other packlets.
 
-```javascript
-// @internal/react-components/mycomponent.ts
-import { fn } from '@internal/component-binding';
-```
-
-When this is transpiled the resultant javascript output will remain unchanged:
-
-```javascript
-// @internal/react-components/mycomponent.ts
-import { fn } from '@internal/component-binding';
-```
-
-Now if an external user was to consume this transpiled output from an npm package, their build system will try to import `fn` from `'@internal/component-binding'` - but that package doesn't exist as an npm package so their build system will break.
-
-#### How this tool solves the issue
-
-As an example, the output contents of the `@azure/communication-react` package produced in this repo may look like:
-
-```text
-/dist/dist-esm/react-components/index.js
-/dist/dist-esm/react-components/mycomponent.js
-/dist/dist-esm/component-binding/index.js
-/dist/dist-esm/component-binding/utils.js
-```
-
-Therefore, we want the import line from before:
-
-```javascript
-import { fn } from '@internal/component-binding';
-```
-
-to instead have a relative path to the correct file in the dist directory:
-
-```javascript
-import { fn } from '../component-binding';
-```
-
-This tool correctly rewrites the import lines to ensure they have the correct relative path.
+For more information on this issue see: [../architecture/RepoPackagesAndPacklets.md#dependency-chain-issues-when-building-packages]
