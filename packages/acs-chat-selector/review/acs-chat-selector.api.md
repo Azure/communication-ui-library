@@ -9,6 +9,7 @@ import { ChatMessageWithStatus } from '@azure/acs-chat-declarative';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationIdentifier } from '@azure/communication-common';
+import { CommunicationParticipant } from 'react-components';
 import { Message } from 'react-components';
 import { MessageThread } from 'react-components';
 import { default as React_2 } from 'react';
@@ -18,7 +19,6 @@ import { SendBox } from 'react-components';
 import { StatefulChatClient } from '@azure/acs-chat-declarative';
 import { TypingIndicator } from 'react-components';
 import { TypingIndicatorEvent } from '@azure/acs-chat-declarative';
-import { WebUiChatParticipant } from 'react-components';
 
 // @public (undocumented)
 export type AreEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
@@ -42,13 +42,13 @@ export type ChatClientProviderProps = {
 
 // @public (undocumented)
 export const chatParticipantListSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
-    userId: string;
+    myUserId: string;
     displayName: string;
-    chatParticipants: WebUiChatParticipant[];
+    participants: CommunicationParticipant[];
 }, (res1: string, res2: Map<string, ChatParticipant>, res3: string) => {
-    userId: string;
+    myUserId: string;
     displayName: string;
-    chatParticipants: WebUiChatParticipant[];
+    participants: CommunicationParticipant[];
 }>;
 
 // @public
@@ -90,7 +90,7 @@ export type DefaultChatHandlers = {
     onMessageSend: (content: string) => Promise<void>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
     onTyping: () => Promise<void>;
-    removeThreadMember: (userId: string) => Promise<void>;
+    onParticipantRemove: (userId: string) => Promise<void>;
     updateThreadTopicName: (topicName: string) => Promise<void>;
     onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
 };
@@ -117,9 +117,9 @@ export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState,
 
 // @public (undocumented)
 export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
-    typingUsers: WebUiChatParticipant[];
+    typingUsers: CommunicationParticipant[];
 }, (res1: TypingIndicatorEvent[], res2: Map<string, ChatParticipant>, res3: string) => {
-    typingUsers: WebUiChatParticipant[];
+    typingUsers: CommunicationParticipant[];
 }>;
 
 // @public (undocumented)

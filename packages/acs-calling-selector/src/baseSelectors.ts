@@ -31,3 +31,5 @@ export const getDisplayName = (state: CallClientState, props: CallingBaseSelecto
 
 export const getIdentifier = (_state: CallClientState, props: CallingBaseSelectorProps): string | undefined =>
   props.identifier;
+
+export const getUserId = (state: CallClientState): string => state.userId;

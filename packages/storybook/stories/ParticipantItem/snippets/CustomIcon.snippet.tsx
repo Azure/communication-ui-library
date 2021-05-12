@@ -1,5 +1,5 @@
 import { ParticipantItem, ParticipantItemProps } from '@azure/communication-react';
-import { PersonaPresence, Icon } from '@fluentui/react';
+import { PersonaPresence, Icon, Stack } from '@fluentui/react';
 import React from 'react';
 
 export const CustomIconExample: () => JSX.Element = () => {
@@ -11,13 +11,12 @@ export const CustomIconExample: () => JSX.Element = () => {
     }
     return <Icon iconName="AddFriend" />;
   };
-  const containerStyle = { width: '12rem' };
 
   return (
-    <div style={containerStyle}>
+    <Stack>
       <ParticipantItem name="Spongebob" presence={PersonaPresence.online} isYou={true} onRenderIcon={onRenderIcon} />
       <ParticipantItem name="Patrick" presence={PersonaPresence.online} onRenderIcon={onRenderIcon} />
       <ParticipantItem name="Sandy" presence={PersonaPresence.online} onRenderIcon={onRenderIcon} />
-    </div>
+    </Stack>
   );
 };

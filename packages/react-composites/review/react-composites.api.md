@@ -387,9 +387,6 @@ export const CONNECTING = "Connecting";
 export const convertSdkRemoteParticipantToGalleryParticipant: (remoteParticipantFromSDK: RemoteParticipant_2) => GalleryParticipant;
 
 // @public (undocumented)
-export const convertSdkRemoteParticipantToListParticipant: (participant: RemoteParticipant_2, onRemove?: (() => void) | undefined, onMute?: (() => void) | undefined) => ListParticipant;
-
-// @public (undocumented)
 export const COOL_PERIOD_REFRESH_INVERVAL = 1000;
 
 // @public (undocumented)
@@ -715,17 +712,6 @@ export interface JoinCallResult {
 }
 
 // @public (undocumented)
-export type ListParticipant = {
-    key: string;
-    displayName: string;
-    state: string;
-    isScreenSharing: boolean;
-    isMuted: boolean;
-    onRemove?: () => void;
-    onMute?: () => void;
-};
-
-// @public (undocumented)
 export type LocalDeviceSettingsContainerProps = {
     videoDeviceList: VideoDeviceInfo[];
     audioDeviceList: AudioDeviceInfo[];
@@ -1041,12 +1027,6 @@ export interface VideoContainerProps {
     // (undocumented)
     videoStreamElement: HTMLElement | null;
 }
-
-// @public
-export type WebUiChatParticipant = {
-    userId: string;
-    displayName?: string;
-};
 
 // @public
 export const WithErrorHandling: (Component: (props: any & ErrorHandlingProps) => JSX.Element, props: any & ErrorHandlingProps) => JSX.Element;

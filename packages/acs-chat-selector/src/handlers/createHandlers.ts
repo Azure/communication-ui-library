@@ -10,7 +10,7 @@ export type DefaultChatHandlers = {
   onMessageSend: (content: string) => Promise<void>;
   onMessageSeen: (chatMessageId: string) => Promise<void>;
   onTyping: () => Promise<void>;
-  removeThreadMember: (userId: string) => Promise<void>;
+  onParticipantRemove: (userId: string) => Promise<void>;
   updateThreadTopicName: (topicName: string) => Promise<void>;
   onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
 };
@@ -34,7 +34,7 @@ export const createDefaultChatHandlers = memoizeOne(
       onTyping: async () => {
         await chatThreadClient.sendTypingNotification();
       },
-      removeThreadMember: async (userId: string) => {
+      onParticipantRemove: async (userId: string) => {
         await chatThreadClient.removeParticipant({
           communicationUserId: userId
         });
