@@ -219,7 +219,11 @@ export const Chat: () => JSX.Element = () => {
     }
   }, [connectionString, userId, token, endpointUrl, displayName, threadId]);
 
-  return <ContosoChatContainer config={chatConfig} />;
+  return (
+    <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
+      {chatConfig ? <ContosoChatContainer config={chatConfig} /> : <ContosoConfigHintBanner />}
+    </div>
+  );
 };
 
 const ContosoChatContainer = (props: { config: ChatConfig | undefined }): JSX.Element => {
@@ -248,7 +252,7 @@ const ContosoChatContainer = (props: { config: ChatConfig | undefined }): JSX.El
 
   return (
     <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
-      {adapter ? <ChatComposite adapter={adapter} /> : <ContosoConfigHintBanner />}
+      {adapter ? <ChatComposite adapter={adapter} /> : <h3>Loading...</h3>}
     </div>
   );
 };
