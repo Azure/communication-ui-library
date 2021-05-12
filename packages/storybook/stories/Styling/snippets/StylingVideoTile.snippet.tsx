@@ -18,7 +18,7 @@ export const VideoTileExample: () => JSX.Element = () => {
           <StreamMedia videoStreamElement={renderVideoStream()} />
         }
         avatarName={'Jack Reacher'}
-        invertVideo={true}
+        isMirrored={true}
         styles={customStyles}
       ></VideoTile>
     </FluentThemeProvider>

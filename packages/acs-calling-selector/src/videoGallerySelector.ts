@@ -6,76 +6,50 @@ import { Call, LocalVideoStream, RemoteParticipant, RemoteVideoStream } from '@a
 // @ts-ignore
 import * as callingStateful from '@azure/acs-calling-declarative';
 // @ts-ignore
-import {
-  CommunicationUserKind,
-  PhoneNumberKind,
-  MicrosoftTeamsUserKind,
-  UnknownIdentifierKind
-} from '@azure/communication-common';
-// @ts-ignore
 import { createSelector } from 'reselect';
 // @ts-ignore
 import * as reselect from 'reselect';
 // @ts-ignore
 import { getCall, BaseSelectorProps, getDisplayName, getIdentifier, getCallId } from './baseSelectors';
 // @ts-ignore
-import { VideoGalleryLocalParticipant, VideoGalleryRemoteParticipant } from './types/VideoGallery';
+import { VideoGalleryLocalParticipant, VideoGalleryRemoteParticipant } from 'react-components';
 import { memoizeFnAll } from './utils/memoizeFnAll';
-
-const getUserId = (
-  identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | undefined
-): string => {
-  let userId = '';
-  switch (identifier?.kind) {
-    case 'communicationUser': {
-      userId = identifier.communicationUserId;
-      break;
-    }
-    case 'microsoftTeamsUser': {
-      userId = identifier.microsoftTeamsUserId;
-      break;
-    }
-    case 'phoneNumber': {
-      userId = identifier.phoneNumber;
-      break;
-    }
-    case 'unknown': {
-      userId = identifier.id;
-      break;
-    }
-  }
-  return userId;
-};
+import { getUserId } from './utils/participant';
 
 const memoizedAllConvertRemoteParticipant = memoizeFnAll(
   (
-    key: string,
+    userId: string,
     isMuted: boolean,
     isSpeaking: boolean,
     videoStreams: Map<number, RemoteVideoStream>,
     displayName?: string
   ): VideoGalleryRemoteParticipant => {
     const rawVideoStreamsArray = Array.from(videoStreams.values());
-
+    const remoteVideoStream = rawVideoStreamsArray[0];
+    const screenShareStream = rawVideoStreamsArray[1];
     return {
-      userId: key,
-      displayName: displayName,
-      isMuted: isMuted,
-      isSpeaking: isSpeaking,
+      userId,
+      displayName,
+      isMuted,
+      isSpeaking,
       // From the current calling sdk, remote participant videoStreams is actually a tuple
-      // The first item is always video stream
-      // The second item is always screenshare stream
-      videoStream: rawVideoStreamsArray[0],
-      screenShareStream: rawVideoStreamsArray[1]
+      // The first item is always video stream. The second item is always screenshare stream
+      videoStream: {
+        id: remoteVideoStream.id,
+        isAvailable: remoteVideoStream.isAvailable,
+        isMirrored: remoteVideoStream.videoStreamRendererView?.isMirrored,
+        videoProvider: remoteVideoStream.videoStreamRendererView?.target
+      },
+      screenShareStream,
+      isScreenSharingOn: !!screenShareStream
     };
   }
 );
 
-const convertRemoteParticipantsToVideoGalleryRemoteParticipants = (
-  remoteParticipants: RemoteParticipant[]
-): VideoGalleryRemoteParticipant[] => {
+const videoGalleryRemoteParticipantsFromCall = (call: Call | undefined): VideoGalleryRemoteParticipant[] => {
+  if (!call || !call.remoteParticipants) return [];
   return memoizedAllConvertRemoteParticipant((memoizedFn) => {
-    return remoteParticipants.map((participant: RemoteParticipant) => {
+    return Array.from(call.remoteParticipants.values()).map((participant: RemoteParticipant) => {
       return memoizedFn(
         getUserId(participant.identifier),
         participant.isMuted,
@@ -87,30 +61,22 @@ const convertRemoteParticipantsToVideoGalleryRemoteParticipants = (
   });
 };
 
-const convertCallToVideoGalleryLocalParticipants = (
-  call: Call,
-  displayName: string | undefined,
-  identifier: string | undefined
-): VideoGalleryLocalParticipant => {
-  return {
-    userId: identifier ?? '',
-    displayName: displayName,
-    isScreenSharingOn: call.isScreenSharingOn,
-    isMuted: call.isMuted,
-    // From the current calling sdk, local participant videoStreams could be an empty array
-    // or an array with only one video stream item.
-    videoStream: call.localVideoStreams[0]
-  };
-};
-
 export const videoGallerySelector = createSelector(
   [getCall, getDisplayName, getIdentifier],
   (call: Call | undefined, displayName: string | undefined, identifier: string | undefined) => {
     return {
-      localParticipant: call ? convertCallToVideoGalleryLocalParticipants(call, displayName, identifier) : undefined,
-      remoteParticipants: call
-        ? convertRemoteParticipantsToVideoGalleryRemoteParticipants(Array.from(call.remoteParticipants.values()))
-        : []
+      localParticipant: {
+        userId: identifier ?? '',
+        displayName: displayName ?? '',
+        isMuted: call?.isMuted,
+        isScreenSharingOn: call?.isScreenSharingOn,
+        videoStream: {
+          isAvailable: !!call?.localVideoStreams[0],
+          isMirrored: call?.localVideoStreams[0]?.videoStreamRendererView?.isMirrored,
+          videoProvider: call?.localVideoStreams[0]?.videoStreamRendererView?.target
+        }
+      },
+      remoteParticipants: videoGalleryRemoteParticipantsFromCall(call)
     };
   }
 );

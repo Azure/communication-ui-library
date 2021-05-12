@@ -4,15 +4,7 @@
 import { Label, Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import { disabledVideoHint, gridStyle, videoHint, videoTileStyle } from './styles/VideoGallery.styles';
-import {
-  VideoGalleryRemoteParticipant,
-  VideoGalleryLocalParticipant,
-  ScalingMode,
-  CreateViewOptions,
-  RemoteVideoStream,
-  LocalVideoStream,
-  BaseCustomStylesProps
-} from '../types';
+import { VideoGalleryRemoteParticipant, VideoGalleryLocalParticipant, BaseCustomStylesProps } from '../types';
 import { GridLayout } from './GridLayout';
 import { StreamMedia } from './StreamMedia';
 import { VideoTile } from './VideoTile';
@@ -20,19 +12,21 @@ import { memoizeFnAll } from './utils/memoizeFnAll';
 
 export interface VideoGalleryProps {
   styles?: BaseCustomStylesProps;
+  localParticipant: VideoGalleryLocalParticipant;
   remoteParticipants?: VideoGalleryRemoteParticipant[];
-  localParticipant?: VideoGalleryLocalParticipant;
-  scalingMode: ScalingMode;
-  onRenderView(stream: RemoteVideoStream | LocalVideoStream, options?: CreateViewOptions | undefined): Promise<void>;
+  onBeforeRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => Promise<void>;
+  onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
+  onBeforeRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => Promise<void>;
+  onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
 }
 
 const memoizeAllRemoteParticipants = memoizeFnAll(
-  (remoteParticipantkey: number, isAvailable?: boolean, target?: HTMLElement, displayName?: string): JSX.Element => {
+  (userId: string, isAvailable?: boolean, videoProvider?: HTMLElement, displayName?: string): JSX.Element => {
     return (
-      <Stack className={gridStyle} key={remoteParticipantkey} grow>
+      <Stack className={gridStyle} key={userId} grow>
         <VideoTile
           isVideoReady={isAvailable}
-          videoProvider={<StreamMedia videoStreamElement={target ?? null} />}
+          videoProvider={<StreamMedia videoStreamElement={videoProvider ?? null} />}
           avatarName={displayName}
           styles={videoTileStyle}
         >
@@ -44,58 +38,70 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
 );
 
 export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
-  const { localParticipant, remoteParticipants, scalingMode, onRenderView, styles } = props;
-  const localVideoStream = localParticipant?.videoStream;
-  const isLocalVideoReady = localVideoStream?.videoStreamRendererView !== undefined;
+  const {
+    localParticipant,
+    remoteParticipants,
+    onRenderLocalVideoTile,
+    onRenderRemoteVideoTile,
+    onBeforeRenderLocalVideoTile,
+    onBeforeRenderRemoteVideoTile,
+    styles
+  } = props;
 
-  const localParticipantComponent = useMemo(() => {
-    if (localVideoStream && !localVideoStream?.videoStreamRendererView) {
-      onRenderView(localVideoStream, {
-        scalingMode
-      });
+  /**
+   * Utility function for meoized rendering of LocalParticipant.
+   */
+  const _onRenderLocalVideoTile = useMemo((): JSX.Element => {
+    const localVideoStream = localParticipant?.videoStream;
+    const isLocalVideoReady = localVideoStream?.isAvailable;
+    if (localVideoStream && !isLocalVideoReady) {
+      onBeforeRenderLocalVideoTile && onBeforeRenderLocalVideoTile(localParticipant);
     }
-
     return (
       <VideoTile
         isVideoReady={isLocalVideoReady}
-        videoProvider={<StreamMedia videoStreamElement={localVideoStream?.videoStreamRendererView?.target ?? null} />}
+        videoProvider={<StreamMedia videoStreamElement={localVideoStream?.videoProvider ?? null} />}
         avatarName={localParticipant?.displayName}
         styles={videoTileStyle}
       >
         <Label className={isLocalVideoReady ? videoHint : disabledVideoHint}>{localParticipant?.displayName}</Label>
       </VideoTile>
     );
-  }, [isLocalVideoReady, localParticipant?.displayName, localVideoStream, onRenderView, scalingMode]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [localParticipant, localParticipant.videoStream, onBeforeRenderLocalVideoTile]);
 
-  const gridLayoutRemoteParticipants = useMemo(() => {
+  /**
+   * Utility function for memoized rendering of RemoteParticipants.
+   */
+  const _onRenderRemoteParticipants = useMemo(() => {
+    console.log('REMOTE PARTS', remoteParticipants);
+    if (!remoteParticipants) return null;
     return memoizeAllRemoteParticipants((memoizedRemoteParticipantFn) => {
-      return remoteParticipants
-        ? remoteParticipants.map((participant, key) => {
-            const remoteVideoStream = participant.videoStream;
-
-            if (remoteVideoStream?.isAvailable && !remoteVideoStream?.videoStreamRendererView) {
-              onRenderView(remoteVideoStream, {
-                scalingMode
-              });
-            }
-
-            return memoizedRemoteParticipantFn(
-              key,
-              remoteVideoStream?.isAvailable,
-              remoteVideoStream?.videoStreamRendererView?.target,
-              participant.displayName
-            );
-          })
-        : [];
+      // If user provided a custom onRender function return that function.
+      if (onRenderRemoteVideoTile) return remoteParticipants.map((participant) => onRenderRemoteVideoTile(participant));
+      // Else generate Remote Video Tiles
+      return remoteParticipants.map((participant) => {
+        const remoteVideoStream = participant.videoStream;
+        console.log('I am going crazy');
+        if (remoteVideoStream?.isAvailable && !remoteVideoStream?.videoProvider) {
+          onBeforeRenderRemoteVideoTile && onBeforeRenderRemoteVideoTile(participant);
+        }
+        return memoizedRemoteParticipantFn(
+          participant.userId,
+          remoteVideoStream?.isAvailable,
+          remoteVideoStream?.videoProvider,
+          participant.displayName
+        );
+      });
     });
-  }, [remoteParticipants, onRenderView, scalingMode]);
+  }, [remoteParticipants, onRenderRemoteVideoTile, onBeforeRenderRemoteVideoTile]);
 
   return (
     <GridLayout styles={styles}>
       <Stack horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
-        {localParticipant && localParticipantComponent}
+        {onRenderLocalVideoTile ?? (localParticipant && _onRenderLocalVideoTile)}
       </Stack>
-      {gridLayoutRemoteParticipants}
+      {onRenderRemoteVideoTile ?? _onRenderRemoteParticipants}
     </GridLayout>
   );
 };

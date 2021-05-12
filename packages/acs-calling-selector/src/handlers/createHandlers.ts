@@ -1,24 +1,20 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { DeclarativeCallClient, StatefulDeviceManager } from '@azure/acs-calling-declarative';
 import {
-  CallAgent,
-  Call,
-  StartCallOptions,
-  VideoDeviceInfo,
   AudioDeviceInfo,
+  Call,
+  CallAgent,
   LocalVideoStream,
-  CreateViewOptions
+  StartCallOptions,
+  VideoDeviceInfo
 } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
-import {
-  DeclarativeCallClient,
-  RemoteVideoStream,
-  LocalVideoStream as StatefulLocalVideoStream,
-  StatefulDeviceManager
-} from '@azure/acs-calling-declarative';
-import { ReactElement } from 'react';
 import memoizeOne from 'memoize-one';
+import { ReactElement } from 'react';
+import { VideoGalleryLocalParticipant, VideoGalleryRemoteParticipant } from '../types/VideoGallery';
+import { getUserId } from '../utils/participant';
 
 export type DefaultHandlers = ReturnType<typeof createDefaultHandlers>;
 
@@ -104,13 +100,43 @@ const createDefaultHandlers = memoizeOne(
 
     const onHangUp = async (): Promise<void> => await call?.hangUp();
 
-    const onRenderView = async (
-      stream: StatefulLocalVideoStream | RemoteVideoStream,
-      options: CreateViewOptions
-    ): Promise<void> => {
-      const callId = call?.id;
-      if (!callId) return;
-      await callClient.startRenderVideo(callId, stream, options);
+    const onBeforeRenderLocalVideoTile = async (_localParticipant: VideoGalleryLocalParticipant): Promise<void> => {
+      if (!call || call.localVideoStreams.length < 1) return;
+      const localStream = call.localVideoStreams[0];
+      if (!localStream) return;
+      callClient.startRenderVideo(call.id, call.localVideoStreams[0]);
+    };
+
+    const onBeforeRenderRemoteVideoTile = async (remoteParticipant: VideoGalleryRemoteParticipant): Promise<void> => {
+      if (!call) return;
+      const userId = remoteParticipant.userId;
+      const callState = callClient.state.calls.get(call.id);
+      if (!callState) throw new Error(`Call Not Found: ${call.id}`);
+
+      const streams = Array.from(callState.remoteParticipants.values()).find(
+        (participant) => getUserId(participant.identifier) === userId
+      )?.videoStreams;
+
+      let remoteVideoStream;
+      let screenShareStream;
+
+      streams &&
+        Array.from(streams?.values()).forEach((item) => {
+          if (item.mediaStreamType === 'Video') {
+            remoteVideoStream = item;
+          }
+          if (item.mediaStreamType === 'ScreenSharing') {
+            screenShareStream = item;
+          }
+        });
+
+      if (remoteVideoStream && remoteVideoStream?.isAvailable && !remoteVideoStream.videoStreamRendererView) {
+        callClient.startRenderVideo(call.id, remoteVideoStream);
+      }
+
+      if (screenShareStream && screenShareStream.isAvailable && !screenShareStream.videoStreamRendererView) {
+        callClient.startRenderVideo(call.id, screenShareStream);
+      }
     };
 
     return {
@@ -122,7 +148,8 @@ const createDefaultHandlers = memoizeOne(
       onToggleCamera,
       onToggleMicrophone,
       onToggleScreenShare,
-      onRenderView
+      onBeforeRenderLocalVideoTile,
+      onBeforeRenderRemoteVideoTile
     };
   }
 );

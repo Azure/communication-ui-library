@@ -29,7 +29,7 @@ export const MediaGallery = (): JSX.Element => {
     <ScreenShare
       localParticipant={videoGalleryProps.localParticipant}
       remoteParticipants={videoGalleryProps.remoteParticipants}
-      onRenderView={videoGalleryHandlers.onRenderView}
+      {...videoGalleryHandlers}
     />
   ) : (
     <VideoGallery {...videoGalleryProps} {...videoGalleryHandlers} scalingMode={'Crop'} styles={VideoGalleryStyles} />

@@ -28,8 +28,10 @@ export async function startRenderVideo(
       return;
     }
 
+    console.log('startRenderVideo RUNNING', stream);
     const renderer = new VideoStreamRenderer(remoteVideoStream);
-    const view = await renderer.createView(options);
+    const view = await renderer.createView();
+    console.log('startRenderVideo View Created', stream);
 
     context.setRemoteVideoStreamRendererView(
       callId,

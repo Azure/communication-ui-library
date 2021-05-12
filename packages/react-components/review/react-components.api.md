@@ -194,14 +194,6 @@ export interface ControlBarProps {
 }
 
 // @public (undocumented)
-export interface CreateViewOptions {
-    // (undocumented)
-    isMirrored?: boolean;
-    // (undocumented)
-    scalingMode?: ScalingMode;
-}
-
-// @public (undocumented)
 export type CustomMessage = Message<'custom'>;
 
 // @public (undocumented)
@@ -274,16 +266,6 @@ export const labeledRecordButtonProps: IButtonProps;
 
 // @public
 export const lightTheme: PartialTheme;
-
-// @public
-export interface LocalVideoStream {
-    mediaStreamType: MediaStreamType;
-    source: VideoDeviceInfo;
-    videoStreamRendererView?: VideoStreamRendererView | undefined;
-}
-
-// @public (undocumented)
-export type MediaStreamType = 'Video' | 'ScreenSharing';
 
 // @public (undocumented)
 export type Message<T extends MessageTypes> = {
@@ -403,17 +385,6 @@ export interface ReadReceiptProps {
 export const recordButtonProps: IButtonProps;
 
 // @public
-export interface RemoteVideoStream {
-    id: number;
-    isAvailable: boolean;
-    mediaStreamType: MediaStreamType;
-    videoStreamRendererView: VideoStreamRendererView | undefined;
-}
-
-// @public (undocumented)
-export type ScalingMode = 'Stretch' | 'Crop' | 'Fit';
-
-// @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
 
 // @public
@@ -450,7 +421,7 @@ export const StreamMedia: (props: StreamMediaProps) => JSX.Element;
 
 // @public
 export interface StreamMediaProps {
-    invertVideo?: boolean;
+    isMirrored?: boolean;
     styles?: BaseCustomStylesProps;
     videoStreamElement: HTMLElement | null;
 }
@@ -483,57 +454,56 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
 }
 
 // @public (undocumented)
-export interface VideoDeviceInfo {
-    readonly deviceType: VideoDeviceType;
-    readonly id: string;
-    readonly name: string;
-}
-
-// @public (undocumented)
-export type VideoDeviceType = 'Unknown' | 'UsbCamera' | 'CaptureAdapter' | 'Virtual';
-
-// @public (undocumented)
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
 // @public (undocumented)
-export type VideoGalleryLocalParticipant = VideoGalleryParticipant & {
-    isScreenSharingOn: boolean;
-    videoStream?: LocalVideoStream;
-};
+export type VideoGalleryLocalParticipant = VideoGalleryParticipant;
 
 // @public (undocumented)
 export type VideoGalleryParticipant = {
     userId: string;
+    isMuted?: boolean;
     displayName?: string;
-    isMuted: boolean;
+    videoStream?: VideoGalleryStream;
+    isScreenSharingOn?: boolean;
 };
 
 // @public (undocumented)
 export interface VideoGalleryProps {
     // (undocumented)
-    localParticipant?: VideoGalleryLocalParticipant;
+    localParticipant: VideoGalleryLocalParticipant;
     // (undocumented)
-    onRenderView(stream: RemoteVideoStream | LocalVideoStream, options?: CreateViewOptions | undefined): Promise<void>;
+    onBeforeRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => Promise<void>;
+    // (undocumented)
+    onBeforeRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => Promise<void>;
+    // (undocumented)
+    onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
+    // (undocumented)
+    onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     // (undocumented)
     remoteParticipants?: VideoGalleryRemoteParticipant[];
-    // (undocumented)
-    scalingMode: ScalingMode;
     // (undocumented)
     styles?: BaseCustomStylesProps;
 }
 
 // @public (undocumented)
-export type VideoGalleryRemoteParticipant = VideoGalleryParticipant & {
-    isSpeaking: boolean;
-    videoStream?: RemoteVideoStream;
-    screenShareStream?: RemoteVideoStream;
-};
+export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
+    // (undocumented)
+    isSpeaking?: boolean;
+    // (undocumented)
+    screenShareStream?: VideoGalleryStream;
+}
 
-// @public
-export interface VideoStreamRendererView {
-    isMirrored: boolean;
-    scalingMode: ScalingMode;
-    target: HTMLElement;
+// @public (undocumented)
+export interface VideoGalleryStream {
+    // (undocumented)
+    id?: number;
+    // (undocumented)
+    isAvailable?: boolean;
+    // (undocumented)
+    isMirrored?: boolean;
+    // (undocumented)
+    videoProvider?: HTMLElement;
 }
 
 // @public (undocumented)
@@ -542,7 +512,7 @@ export const VideoTile: (props: VideoTileProps & PlaceholderProps) => JSX.Elemen
 // @public
 export interface VideoTileProps {
     children?: React_2.ReactNode;
-    invertVideo?: boolean;
+    isMirrored?: boolean;
     isVideoReady?: boolean;
     placeholderProvider?: JSX.Element | null;
     styles?: VideoTileStylesProps;

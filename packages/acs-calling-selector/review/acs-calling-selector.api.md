@@ -11,7 +11,6 @@ import { CallAgent } from '@azure/communication-calling';
 import { CallClientState } from '@azure/acs-calling-declarative';
 import * as callingStateful from '@azure/acs-calling-declarative';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
-import { CreateViewOptions as CreateViewOptions_2 } from '@azure/communication-calling';
 import { DeclarativeCallClient } from '@azure/acs-calling-declarative';
 import { DeviceManager } from '@azure/acs-calling-declarative';
 import { IncomingCall } from '@azure/acs-calling-declarative';
@@ -24,6 +23,7 @@ import { StartCallOptions } from '@azure/communication-calling';
 import { StatefulDeviceManager } from '@azure/acs-calling-declarative';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
+import { VideoGalleryRemoteParticipant as VideoGalleryRemoteParticipant_2 } from 'react-components';
 
 // @public
 export type BaseSelectorProps = {
@@ -57,7 +57,8 @@ export const createDefaultHandlersForComponent: <Props>(declarativeCallClient: D
     onToggleCamera: () => Promise<void>;
     onToggleMicrophone: () => Promise<void> | void;
     onToggleScreenShare: () => Promise<void> | void;
-    onRenderView: (stream: LocalVideoStream | RemoteVideoStream, options: CreateViewOptions_2) => Promise<void>;
+    onBeforeRenderLocalVideoTile: (_localParticipant: VideoGalleryLocalParticipant) => Promise<void>;
+    onBeforeRenderRemoteVideoTile: (remoteParticipant: VideoGalleryRemoteParticipant) => Promise<void>;
 }, CommonProperties<{
     onHangUp: () => Promise<void>;
     onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
@@ -67,7 +68,8 @@ export const createDefaultHandlersForComponent: <Props>(declarativeCallClient: D
     onToggleCamera: () => Promise<void>;
     onToggleMicrophone: () => Promise<void> | void;
     onToggleScreenShare: () => Promise<void> | void;
-    onRenderView: (stream: LocalVideoStream | RemoteVideoStream, options: CreateViewOptions_2) => Promise<void>;
+    onBeforeRenderLocalVideoTile: (_localParticipant: VideoGalleryLocalParticipant) => Promise<void>;
+    onBeforeRenderRemoteVideoTile: (remoteParticipant: VideoGalleryRemoteParticipant) => Promise<void>;
 }, Props>>;
 
 // @public (undocumented)
@@ -167,11 +169,31 @@ export type VideoGalleryRemoteParticipant = VideoGalleryParticipant & {
 
 // @public (undocumented)
 export const videoGallerySelector: reselect.OutputParametricSelector<callingStateful.CallClientState, BaseSelectorProps, {
-    localParticipant: VideoGalleryLocalParticipant | undefined;
-    remoteParticipants: VideoGalleryRemoteParticipant[];
+    localParticipant: {
+        userId: string;
+        displayName: string;
+        isMuted: boolean | undefined;
+        isScreenSharingOn: boolean | undefined;
+        videoStream: {
+            isAvailable: boolean;
+            isMirrored: boolean | undefined;
+            videoProvider: HTMLElement | undefined;
+        };
+    };
+    remoteParticipants: VideoGalleryRemoteParticipant_2[];
 }, (res1: Call_2 | undefined, res2: string | undefined, res3: string | undefined) => {
-    localParticipant: VideoGalleryLocalParticipant | undefined;
-    remoteParticipants: VideoGalleryRemoteParticipant[];
+    localParticipant: {
+        userId: string;
+        displayName: string;
+        isMuted: boolean | undefined;
+        isScreenSharingOn: boolean | undefined;
+        videoStream: {
+            isAvailable: boolean;
+            isMirrored: boolean | undefined;
+            videoProvider: HTMLElement | undefined;
+        };
+    };
+    remoteParticipants: VideoGalleryRemoteParticipant_2[];
 }>;
 
 
