@@ -7,5 +7,5 @@ export {
   createAzureCommunicationChatAdapter
 } from './adapter/AzureCommunicationChatAdapter';
 
-export type { GroupChatState, GroupChatAdapter } from './adapter/GroupChatAdapter';
+export type { ChatState, ChatAdapter } from './adapter/ChatAdapter';
 export { ChatComposite };
