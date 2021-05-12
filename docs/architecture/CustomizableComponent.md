@@ -1,6 +1,6 @@
 # Customizable Component Design
 
-This document outlines the design principles followed by components in UI Toolkit that makes them easily customizable. Implementation guidelines are discussed in detail below.
+This document outlines the design principles followed by components in UI Library that makes them easily customizable. Implementation guidelines are discussed in detail below.
 
 ## Qualities of a *delightful* Customizable UI Component
 
@@ -28,7 +28,7 @@ Instead of being an "all-or-nothing" solution, our components should allow parti
 
 ### Consistent
 
-Given that the UI Toolkit is built on top of Fluent UI, we will encounter users who have used Fluent UI in the past, and those who haven’t.  
+Given that the UI Library is built on top of Fluent UI, we will encounter users who have used Fluent UI in the past, and those who haven’t.  
 
 We should ensure that our components:
 
@@ -77,7 +77,7 @@ To implement a customizable UI component we recommend creating a component on to
 
 ### Custom CSS Styling
 
-The UI Toolkit has adapted a custom styling mechanism similar to what Fluent UI uses.
+The UI Library has adapted a custom styling mechanism similar to what Fluent UI uses.
 
 Each component should expose a `styles` property that allows users to provide custom CSS rules to the `root` component and `children` components (when applicable).
 
