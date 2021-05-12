@@ -3,9 +3,9 @@ import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/a
 
 <Meta title="Use Cases" />
 
-# UI Toolkit Use Cases
+# UI Library Use Cases
 
-UI Toolkit supports a number of use cases across calling and chat experiences.
+UI Library supports a number of use cases across calling and chat experiences.
 These capabilities are available through UI Components and Composites.
 For Composites, these capabilities are built directly in and exposed when the composite is integrated into an application.
 For UI Components, these capabilities are exposed through a combination of UI functionality and underlying stateful libraries.
@@ -54,7 +54,7 @@ For more information on authentication, see [Authentication](https://docs.micros
 
 ## Customization
 
-UI Toolkit exposes patterns for developers to modify components to fit the look and feel of their application.
+UI Library exposes patterns for developers to modify components to fit the look and feel of their application.
 This is a key area of differentiation between Composites and UI Components, where Composites provide less customization options in favor of a simpler integration experience.
 
 | Use Case                                            | Composites | UI Components |
@@ -69,7 +69,7 @@ This is a key area of differentiation between Composites and UI Components, wher
 
 ## Observability:
 
-As part of the decoupled state management architecture of the UI Toolkit, developers are able to access the stateful calling and chat clients directly.
+As part of the decoupled state management architecture of the UI Library, developers are able to access the stateful calling and chat clients directly.
 Developers can hook into the stateful client to read the state, handle events and override behavior to pass onto the UI Components.
 
 | Use Case                                  | Composites | UI Components |
@@ -80,14 +80,14 @@ Developers can hook into the stateful client to read the state, handle events an
 
 ## Recommended architecture
 
-![UI Toolkit recommended architecture with client-server architecture](images/Toolkit-architecture.png)
+![UI Library recommended architecture with client-server architecture](images/Toolkit-architecture.png)
 
 Composite and Base Components are initialized using an Azure Communication Services access token. Access tokens should be procured from Azure Communication Services through a
 trusted service that you manage. See [Quickstart: Create Access Tokens](https://docs.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-javascript) and [Trusted Service Tutorial](https://docs.microsoft.com/azure/communication-services/tutorials/trusted-service-tutorial) for more information.
 
 These client libraries also require the context for the call or chat they will join. Similar to user access tokens, this context should be disseminated to clients via your own trusted service. The list below summarizes the initialization and resource management functions that you need to operationalize.
 
-| Contoso Responsibilities                                 | UI Toolkit Responsibilities                                     |
+| Contoso Responsibilities                                 | UI Library Responsibilities                                     |
 | -------------------------------------------------------- | --------------------------------------------------------------- |
 | Provide access token from Azure                          | Pass through given access token to initialize components        |
 | Provide refresh function                                 | Refresh access token using developer provided function          |

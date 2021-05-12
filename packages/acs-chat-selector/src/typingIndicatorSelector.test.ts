@@ -6,7 +6,7 @@ import {
   CommunicationIdentifierAsKey,
   TypingIndicatorEvent,
   getCommunicationIdentifierAsKey
-} from '@azure/acs-chat-declarative';
+} from 'chat-stateful-client';
 import { typingIndicatorSelector } from './typingIndicatorSelector';
 import { communicationIdentifierToString } from './baseSelectors';
 

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { callClientDeclaratify, DeclarativeCallClient, StatefulDeviceManager } from '@azure/acs-calling-declarative';
+import { callClientDeclaratify, DeclarativeCallClient, StatefulDeviceManager } from 'calling-stateful-client';
 import {
   AudioDeviceInfo,
   CallAgent,

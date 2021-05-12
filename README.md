@@ -1,11 +1,11 @@
-# Azure Communication Services UI Toolkit
+# Azure Communication Services UI Library
 
 [![Storybook](https://raw.githubusercontent.com/storybooks/brand/master/badge/badge-storybook.svg)](https://azure.github.io/communication-ui-sdk)
 [![CI build status](https://github.com/Azure/communication-ui-sdk/workflows/CI/badge.svg?branch=main)](https://github.com/Azure/communication-ui-sdk/actions/workflows/ci.yml?query=branch%3Amain)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-%230074c1.svg)](https://www.typescriptlang.org/)
 
-Azure Communication Services UI toolkit is a collection of JavaScript libraries that can be used to easily build fast, responsive communication web applications.
+Azure Communication Services UI Library is a collection of JavaScript libraries that can be used to easily build fast, responsive communication web applications.
 
 We also have a number of samples to try out features and get your development kick started 🚀
 
@@ -45,9 +45,9 @@ Explore and play around with the UI components on the [![Storybook](https://raw.
 Package | Description | License | Latest Version
 ------- | ----------- | ------- | --------------
 [`react-components`](packages/react-components/README.md) | Todo: _Package description_ | [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) | [![react-components npm version](https://badge.fury.io/js/UPDATE-WHEN-RELEASED.svg)](https://www.npmjs.com/)
-[`@Azure/acs-calling-declarative`](packages/acs-calling-declarative/README.md) | Todo: _Package description_ | [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) | [![react-components npm version](https://badge.fury.io/js/UPDATE-WHEN-RELEASED.svg)](https://www.npmjs.com/)
+[`calling-stateful-client`](packages/calling-stateful-client/README.md) | Todo: _Package description_ | [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) | [![react-components npm version](https://badge.fury.io/js/UPDATE-WHEN-RELEASED.svg)](https://www.npmjs.com/)
 [`@Azure/acs-calling-selector`](packages/acs-calling-selector/README.md) | Todo: _Package description_ | [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) | [![react-components npm version](https://badge.fury.io/js/UPDATE-WHEN-RELEASED.svg)](https://www.npmjs.com/)
-[`@Azure/acs-chat-declarative`](packages/acs-chat-declarative/README.md) | Todo: _Package description_ | [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) | [![react-components npm version](https://badge.fury.io/js/UPDATE-WHEN-RELEASED.svg)](https://www.npmjs.com/)
+[`chat-stateful-client`](packages/chat-stateful-client/README.md) | Todo: _Package description_ | [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) | [![react-components npm version](https://badge.fury.io/js/UPDATE-WHEN-RELEASED.svg)](https://www.npmjs.com/)
 [`@Azure/acs-chat-selector`](packages/acs-chat-selector/README.md) | Todo: _Package description_ | [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) | [![react-components npm version](https://badge.fury.io/js/UPDATE-WHEN-RELEASED.svg)](https://www.npmjs.com/)
 
 ## Contributing to the Packages or Samples

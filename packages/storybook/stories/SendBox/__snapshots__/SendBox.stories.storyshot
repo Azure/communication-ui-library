@@ -2,10 +2,10 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`] = `
 <div
-  className="css-79 root-0 body-1"
+  className="css-80 root-0 body-1"
 >
   <div
-    className="css-79"
+    className="css-80"
     data-uses-unhanded-props={true}
     dir="ltr"
   >

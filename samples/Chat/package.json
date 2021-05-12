@@ -47,7 +47,6 @@
     ]
   },
   "dependencies": {
-    "@azure/communication-administration": "1.0.0-beta.3",
     "@azure/communication-chat": "1.0.0",
     "@azure/communication-common": "1.0.0",
     "@azure/communication-identity": "1.0.0",
@@ -69,7 +68,7 @@
     "react-dom": "^16.13.1",
     "react-linkify": "^1.0.0-alpha",
     "react-scripts": "^4.0.2",
-    "@azure/acs-chat-declarative": "~1.0.0-beta",
+    "chat-stateful-client": "~1.0.0-beta",
     "@azure/acs-chat-selector": "~1.0.0-beta",
     "reselect": "~4.0.0"
   },

@@ -17,11 +17,6 @@ export const CustomAvatarExample: () => JSX.Element = () => {
       />
     );
   };
-  const containerStyle = { width: '12rem' };
 
-  return (
-    <div style={containerStyle}>
-      <ParticipantItem name="Annie Lindqvist" presence={PersonaPresence.online} onRenderAvatar={onRenderAvatar} />
-    </div>
-  );
+  return <ParticipantItem name="Annie Lindqvist" presence={PersonaPresence.online} onRenderAvatar={onRenderAvatar} />;
 };
