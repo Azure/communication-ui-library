@@ -3,7 +3,7 @@
 
 import { ChatMessage, ChatMessageReadReceipt, ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
 import { ChatContext } from './ChatContext';
-import { chatThreadClientDeclaratify } from './ChatThreadClientDeclarative';
+import { chatThreadClientDeclaratify } from './StatefulChatThreadClient';
 import {
   createMockChatThreadClient,
   messageTemplate,

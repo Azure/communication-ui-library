@@ -23,7 +23,7 @@ export const createDefaultChatHandlers = memoizeOne(
       onMessageSend: async (content: string) => {
         const sendMessageRequest = {
           content,
-          senderDisplayName: chatClient.state.displayName
+          senderDisplayName: chatClient.getState().displayName
         };
         await chatThreadClient.sendMessage(sendMessageRequest);
       },

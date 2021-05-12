@@ -66,11 +66,11 @@ export const getCommunicationIdentifierAsKey: (identifier: CommunicationIdentifi
 // @public (undocumented)
 export interface StatefulChatClient extends ChatClient {
     // (undocumented)
+    getState(): ChatClientState;
+    // (undocumented)
     offStateChange(handler: (state: ChatClientState) => void): void;
     // (undocumented)
     onStateChange(handler: (state: ChatClientState) => void): void;
-    // (undocumented)
-    state: ChatClientState;
 }
 
 // @public (undocumented)

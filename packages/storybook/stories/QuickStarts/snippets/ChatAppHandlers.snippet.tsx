@@ -30,7 +30,7 @@ function App(): JSX.Element {
         // When `statefulChatClient` becomes available, generate a thread client for chat
         setChatThreadClient(await statefulChatClient.getChatThreadClient(threadId));
         // Set your App State using computed props from `statefulChatClient`.
-        updateAppState(statefulChatClient.state);
+        updateAppState(statefulChatClient.getState());
         // Subscribe for changes in `statefulChatClient` state.
         statefulChatClient.onStateChange(updateAppState);
       }

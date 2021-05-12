@@ -23,7 +23,7 @@ export const useSelector = <SelectorT extends (state: ChatClientState, props: an
     [threadId]
   );
 
-  const [props, setProps] = useState(selector(chatClient.state, selectorProps ?? threadConfigProps));
+  const [props, setProps] = useState(selector(chatClient.getState(), selectorProps ?? threadConfigProps));
   const propRef = useRef(props);
   propRef.current = props;
   useEffect(() => {
