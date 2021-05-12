@@ -65,7 +65,7 @@ export type CommonProperties<A, B> = {
   [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
 
-type Common<A, B> = Pick<A, CommonProperties<A, B>>;
+export type Common<A, B> = Pick<A, CommonProperties<A, B>>;
 
 // These could be shared functions between Chat and Calling
 export const defaultHandlerCreator = (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => <Props>(

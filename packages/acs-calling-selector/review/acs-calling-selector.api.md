@@ -55,8 +55,8 @@ export const createDefaultCallingHandlersForComponent: <Props>(declarativeCallCl
     onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
     onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions | undefined) => Call | undefined;
     onToggleCamera: () => Promise<void>;
-    onToggleMicrophone: () => Promise<void> | void;
-    onToggleScreenShare: () => Promise<void> | void;
+    onToggleMicrophone: () => Promise<void>;
+    onToggleScreenShare: () => Promise<void>;
     onRenderView: (stream: LocalVideoStream | RemoteVideoStream, options: CreateViewOptions_2) => Promise<void>;
 }, CommonProperties1<{
     onHangUp: () => Promise<void>;
@@ -65,10 +65,23 @@ export const createDefaultCallingHandlersForComponent: <Props>(declarativeCallCl
     onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
     onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions | undefined) => Call | undefined;
     onToggleCamera: () => Promise<void>;
-    onToggleMicrophone: () => Promise<void> | void;
-    onToggleScreenShare: () => Promise<void> | void;
+    onToggleMicrophone: () => Promise<void>;
+    onToggleScreenShare: () => Promise<void>;
     onRenderView: (stream: LocalVideoStream | RemoteVideoStream, options: CreateViewOptions_2) => Promise<void>;
 }, Props>>;
+
+// @public (undocumented)
+export const createDefaultChatHandlers: (callClient: DeclarativeCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => {
+    onHangUp: () => Promise<void>;
+    onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
+    onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
+    onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
+    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions | undefined) => Call | undefined;
+    onToggleCamera: () => Promise<void>;
+    onToggleMicrophone: () => Promise<void>;
+    onToggleScreenShare: () => Promise<void>;
+    onRenderView: (stream: LocalVideoStream | RemoteVideoStream, options: CreateViewOptions_2) => Promise<void>;
+};
 
 // @public (undocumented)
 export interface CreateViewOptions {
@@ -77,6 +90,9 @@ export interface CreateViewOptions {
     // (undocumented)
     scalingMode?: ScalingMode;
 }
+
+// @public (undocumented)
+export type DefaultCallingHandlers = ReturnType<typeof createDefaultChatHandlers>;
 
 // @public (undocumented)
 export type FunctionWithKey<KeyT, ArgsT extends any[], RetT> = (key: KeyT, ...args: ArgsT) => RetT;

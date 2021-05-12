@@ -24,7 +24,7 @@ import {
 } from './styles/MediaGallery.styles';
 
 export type ScreenShareProps = {
-  localParticipant: VideoGalleryLocalParticipant;
+  localParticipant?: VideoGalleryLocalParticipant;
   remoteParticipants: VideoGalleryRemoteParticipant[];
   onRenderView: (stream: LocalVideoStream | RemoteVideoStream, options: CreateViewOptions) => Promise<void>;
 };
