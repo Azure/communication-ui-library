@@ -43,7 +43,7 @@ const getDocs: () => JSX.Element = () => {
       </Description>
       <Source code={containerText} />
 
-      <Heading>Pre-requisites</Heading>
+      <Heading>Prerequisites</Heading>
       <Description>
         ChatComposite provides the UI for an *existing user* in an *existing thread*. Thus, the user and thread must be
         created beforehand. Typically, the user and thread are created on a Contoso-owned service, and the `ChatConfig`
