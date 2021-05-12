@@ -11,11 +11,17 @@ import { ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationParticipant } from 'react-components';
 import { Message } from 'react-components';
+import { MessageThread } from 'react-components';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
 import * as reselect from 'reselect';
+import { SendBox } from 'react-components';
 import { StatefulChatClient } from 'chat-stateful-client';
+import { TypingIndicator } from 'react-components';
 import { TypingIndicatorEvent } from 'chat-stateful-client';
+
+// @public (undocumented)
+export type AreEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
 // @public (undocumented)
 export type CallbackType<KeyT, ArgsT extends any[], FnRetT> = (memoizedFn: FunctionWithKey<KeyT, ArgsT, FnRetT>) => FnRetT[];
@@ -92,6 +98,9 @@ export type DefaultChatHandlers = {
 // @public (undocumented)
 export type FunctionWithKey<KeyT, ArgsT extends any[], RetT> = (key: KeyT, ...args: ArgsT) => RetT;
 
+// @public (undocumented)
+export type GetSelector<Component> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof chatThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : never;
+
 // @public
 export const memoizeFnAll: <KeyT, ArgsT extends any[], FnRetT, CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>>(fnToMemoize: FunctionWithKey<KeyT, ArgsT, FnRetT>, shouldCacheUpdate?: (args1: any, args2: any) => boolean) => (callback: CallBackT) => FnRetT[];
 
@@ -123,7 +132,7 @@ export const useChatThreadClient: () => ChatThreadClient;
 export const useHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, PropsT>>;
 
 // @public (undocumented)
-export const usePropsFor: <SelectorT extends (state: ChatClientState, props: any) => any>(component: React_2.FunctionComponent<any>) => ReturnType<SelectorT>;
+export const usePropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => ReturnType<GetSelector<Component>> & Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, Parameters<Component>[0]>>;
 
 // @public (undocumented)
 export const useSelector: <SelectorT extends (state: ChatClientState, props: any) => any>(selector: SelectorT, selectorProps?: Parameters<SelectorT>[1] | undefined) => ReturnType<SelectorT>;

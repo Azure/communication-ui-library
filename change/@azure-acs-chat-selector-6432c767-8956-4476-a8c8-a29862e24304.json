@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Reinforce usePropsFor type guard",
+  "packageName": "@azure/acs-chat-selector",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}
