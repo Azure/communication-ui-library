@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { StatefulChatClient } from '@azure/acs-chat-declarative';
+import { StatefulChatClient } from 'chat-stateful-client';
 import { createDefaultChatHandlersForComponent } from '../handlers/createHandlers';
 
 import { useChatClient } from '../providers/ChatClientProvider';

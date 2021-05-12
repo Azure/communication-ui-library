@@ -1,3 +1,3 @@
-# @Azure/acs-calling-declarative
+# chat-stateful-client
 
 Todo: _documentation to follow_

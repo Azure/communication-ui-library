@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { createStatefulChatClient, ChatClientState, StatefulChatClient } from '@azure/acs-chat-declarative';
+import { createStatefulChatClient, ChatClientState, StatefulChatClient } from 'chat-stateful-client';
 import {
   DefaultChatHandlers,
   communicationIdentifierToString,
@@ -71,7 +71,7 @@ export class AzureCommunicationChatAdapter implements GroupChatAdapter {
   constructor(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) {
     this.chatClient = chatClient;
     this.chatThreadClient = chatThreadClient;
-    this.context = new GroupChatContext(chatClient.state, chatThreadClient.threadId);
+    this.context = new GroupChatContext(chatClient.getState(), chatThreadClient.threadId);
     const onStateChange = (clientState: ChatClientState): void => {
       // unsubscribe when the instance gets disposed
       if (!this) {

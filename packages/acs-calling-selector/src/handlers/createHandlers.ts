@@ -16,17 +16,17 @@ import {
   RemoteVideoStream,
   LocalVideoStream as StatefulLocalVideoStream,
   StatefulDeviceManager
-} from '@azure/acs-calling-declarative';
+} from 'calling-stateful-client';
 import { ReactElement } from 'react';
 import memoizeOne from 'memoize-one';
 
-export type DefaultChatHandlers = ReturnType<typeof createDefaultChatHandlers>;
+export type DefaultCallingHandlers = ReturnType<typeof createDefaultCallingHandlers>;
 
 export const areStreamsEqual = (prevStream: LocalVideoStream, newStream: LocalVideoStream): boolean => {
   return !!prevStream && !!newStream && prevStream.source.id === newStream.source.id;
 };
 
-const createDefaultChatHandlers = memoizeOne(
+export const createDefaultCallingHandlers = memoizeOne(
   (
     callClient: DeclarativeCallClient,
     callAgent: CallAgent | undefined,
@@ -91,16 +91,16 @@ const createDefaultChatHandlers = memoizeOne(
       return stream?.switchSource(device);
     };
 
-    const onToggleMicrophone = (): Promise<void> | void => {
-      return call?.isMuted ? call?.unmute() : call?.mute();
+    const onToggleMicrophone = async (): Promise<void> => {
+      return call?.isMuted ? await call?.unmute() : await call?.mute();
     };
 
-    const onStartScreenShare = (): Promise<void> | void => call?.startScreenSharing();
+    const onStartScreenShare = async (): Promise<void> => await call?.startScreenSharing();
 
-    const onStopScreenShare = (): Promise<void> | void => call?.stopScreenSharing();
+    const onStopScreenShare = async (): Promise<void> => await call?.stopScreenSharing();
 
-    const onToggleScreenShare = (): Promise<void> | void =>
-      call?.isScreenSharingOn ? onStopScreenShare() : onStartScreenShare();
+    const onToggleScreenShare = async (): Promise<void> =>
+      call?.isScreenSharingOn ? await onStopScreenShare() : await onStartScreenShare();
 
     const onHangUp = async (): Promise<void> => await call?.hangUp();
 
@@ -147,7 +147,7 @@ type Common<A, B> = Pick<A, CommonProperties1<A, B>>;
  * DeclarativeCall may be undefined. If undefined, their associated handlers will not be created and returned.
  *
  * @param declarativeCallClient - DeclarativeCallClient returned from
- *   {@Link @azure/acs-calling-declarative#callClientDeclaratify}.
+ *   {@Link calling-stateful-client#callClientDeclaratify}.
  * @param callAgent - Instance of {@Link @azure/communication-calling#CallClient}.
  * @param deviceManager - Instance of {@Link @azure/communication-calling#DeviceManager}.
  * @param call - Instance of {@Link @azure/communication-calling#Call}.
@@ -160,5 +160,6 @@ export const createDefaultCallingHandlersForComponent = <Props>(
   deviceManager: StatefulDeviceManager | undefined,
   call: Call | undefined,
   _Component: (props: Props) => ReactElement | null
-): Common<DefaultChatHandlers, Props> =>
-  createDefaultChatHandlers(declarativeCallClient, callAgent, deviceManager, call);
+): Common<DefaultCallingHandlers, Props> => {
+  return createDefaultCallingHandlers(declarativeCallClient, callAgent, deviceManager, call);
+};

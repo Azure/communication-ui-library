@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DeclarativeCallClient } from '@azure/acs-calling-declarative';
+import { DeclarativeCallClient } from 'calling-stateful-client';
 import { createDefaultCallingHandlersForComponent } from '@azure/acs-calling-selector';
 
 import { useCallClient, useCallingContext, useDeviceManager, useCall } from 'react-composites';
