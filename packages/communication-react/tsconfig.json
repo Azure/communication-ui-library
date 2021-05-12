@@ -1,7 +1,21 @@
 {
   "extends": "../../common/config/tsc/tsconfig.json",
   "compilerOptions": {
-    "outDir": "./dist/dist-esm"
+    "baseUrl": "./src",
+    "outDir": "./dist/dist-esm",
+    "paths": {
+      "@azure/acs-chat-selector": ["../../acs-chat-selector/src"],
+      "@azure/acs-calling-selector": ["../../acs-calling-selector/src"],
+      "calling-stateful-client": ["../../calling-stateful-client/src"],
+      "chat-stateful-client": ["../../chat-stateful-client/src"],
+      "react-components": ["../../react-components/src"],
+      "react-composites": ["../../react-composites/src"]
+    },
+    "plugins": [
+      {
+        "transform": "@zerollup/ts-transform-paths"
+      }
+    ]
   },
   "typeRoots": ["./node_modules/@types"],
   "include": ["src/**/*"],
