@@ -26,7 +26,7 @@ export const areStreamsEqual = (prevStream: LocalVideoStream, newStream: LocalVi
   return !!prevStream && !!newStream && prevStream.source.id === newStream.source.id;
 };
 
-export const createDefaultChatHandlers = memoizeOne(
+export const createDefaultCallingHandlers = memoizeOne(
   (
     callClient: DeclarativeCallClient,
     callAgent: CallAgent | undefined,
