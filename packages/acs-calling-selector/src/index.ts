@@ -5,6 +5,7 @@ export * from './baseSelectors';
 export * from './callControlSelectors';
 export { createDefaultCallingHandlersForComponent, createDefaultChatHandlers } from './handlers/createHandlers';
 export { videoGallerySelector } from './videoGallerySelector';
+export { participantListSelector } from './participantListSelector';
 export { memoizeFnAll } from './utils/memoizeFnAll';
 
 export type { CallingBaseSelectorProps } from './baseSelectors';
