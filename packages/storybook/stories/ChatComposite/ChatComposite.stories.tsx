@@ -1,21 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatClient } from '@azure/communication-chat';
-import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
-import { CommunicationIdentityClient } from '@azure/communication-identity';
 import { Title, Description, Props, Heading, Source } from '@storybook/addon-docs/blocks';
-import { text } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
-import React, { useState, useEffect, useRef } from 'react';
-import { ChatAdapter, ChatConfig, ChatComposite, createAzureCommunicationChatAdapter } from 'react-composites';
+import React from 'react';
+import { ChatComposite } from 'react-composites';
 
-import {
-  CompositeConnectionParamsErrMessage,
-  COMPOSITE_STRING_CONNECTIONSTRING,
-  COMPOSITE_STRING_REQUIREDCONNECTIONSTRING
-} from '../CompositeStringUtils';
-import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE, COMPOSITE_FOLDER_PREFIX } from '../constants';
+import { COMPOSITE_FOLDER_PREFIX } from '../constants';
 
 const importStatement = `import { ChatComposite } from 'react-composites';`;
 const usageCode = `import { ChatComposite } from 'react-composites';
@@ -71,6 +62,20 @@ const endpointUrl = \`\${uri.protocol}//\${uri.host}\`;
 })();
 `;
 
+export default {
+  title: `${COMPOSITE_FOLDER_PREFIX}/Chat`,
+  component: ChatComposite,
+  parameters: {
+    useMaxHeightParent: true,
+    useMaxWidthParent: true,
+    docs: {
+      page: () => getDocs()
+    }
+  }
+} as Meta;
+
+export { BasicCanvas } from './snippets/BasicCanvas.snippet';
+
 const getDocs: () => JSX.Element = () => {
   return (
     <>
@@ -87,137 +92,4 @@ const getDocs: () => JSX.Element = () => {
       <Props of={ChatComposite} />
     </>
   );
-};
-
-export default {
-  title: `${COMPOSITE_FOLDER_PREFIX}/Chat`,
-  component: ChatComposite,
-  parameters: {
-    useMaxHeightParent: true,
-    useMaxWidthParent: true,
-    docs: {
-      page: () => getDocs()
-    }
-  }
-} as Meta;
-
-const messageArray = [
-  'Hello ACS!',
-  'Congratulations! You can see this message because you successfully passed in a connection string!',
-  'In production environment, it is recommended to issue tokens in server side.',
-  'You can also issue a token by creating your own server and input them in required tab below.',
-  'Have fun!'
-];
-
-const createIntroductionBot = async (token: string, envUrl: string, threadId: string): Promise<void> => {
-  const chatClient = new ChatClient(envUrl, new AzureCommunicationTokenCredential(token));
-  const threadClient = await chatClient.getChatThreadClient(threadId);
-
-  let index = 0;
-  setInterval(() => {
-    if (index < messageArray.length) {
-      const sendMessageRequest = {
-        content: messageArray[index++],
-        senderDisplayName: 'TestBot'
-      };
-      threadClient.sendMessage(sendMessageRequest);
-    }
-  }, 5000);
-};
-
-const createUserAndThread = async (resourceConnectionString: string, displayName: string): Promise<ChatConfig> => {
-  const tokenClient = new CommunicationIdentityClient(resourceConnectionString);
-  const user = await tokenClient.createUserAndToken(['chat']);
-
-  const endpointUrl = new URL(resourceConnectionString.replace('endpoint=', '').split(';')[0]).toString();
-  const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(user.token));
-  const threadId = (await chatClient.createChatThread({ topic: 'DemoThread' })).chatThread?.id ?? '';
-  await chatClient.getChatThreadClient(threadId).addParticipants({
-    participants: [{ id: user.user }]
-  });
-
-  return {
-    token: user.token,
-    endpointUrl: endpointUrl,
-    displayName: displayName,
-    threadId
-  };
-};
-
-const addBotToThread = async (resourceConnectionString: string, chatConfig: ChatConfig): Promise<void> => {
-  const tokenClient = new CommunicationIdentityClient(resourceConnectionString);
-  const bot = await tokenClient.createUserAndToken(['chat']);
-
-  const endpointUrl = new URL(resourceConnectionString.replace('endpoint=', '').split(';')[0]).toString();
-  // Must use the credentials of the thread owner to add more participants.
-  const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(chatConfig.token));
-  await chatClient.getChatThreadClient(chatConfig.threadId).addParticipants({
-    participants: [{ id: bot.user }]
-  });
-
-  createIntroductionBot(bot.token, endpointUrl, chatConfig.threadId);
-};
-
-// This must be the only named export from this module, and must be named to match the storybook path suffix.
-// This ensures that storybook hoists the story instead of creating a folder with a single entry.
-export const Chat: () => JSX.Element = () => {
-  const [chatConfig, setChatConfig] = useState<ChatConfig>();
-
-  const knobs = useRef({
-    connectionString: text(COMPOSITE_STRING_CONNECTIONSTRING, '', 'Server Simulator'),
-    displayName: text('Display Name', '', 'Server Simulator')
-  });
-
-  useEffect(() => {
-    const fetchToken = async (): Promise<void> => {
-      if (knobs.current.connectionString && knobs.current.displayName) {
-        const newChatConfig = await createUserAndThread(knobs.current.connectionString, knobs.current.displayName);
-        await addBotToThread(knobs.current.connectionString, newChatConfig);
-        setChatConfig(newChatConfig);
-      }
-    };
-    fetchToken();
-  }, [knobs]);
-
-  return (
-    <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
-      {chatConfig ? <ContosoChatContainer config={chatConfig} /> : <ConfigHintBanner />}
-    </div>
-  );
-};
-
-const ContosoChatContainer = (props: { config: ChatConfig | undefined }): JSX.Element => {
-  const { config } = props;
-
-  // Creating an adapter is asynchronous.
-  // An update to `config` triggers a new adapter creation, via the useEffect block.
-  // When the adapter becomes ready, the state update triggers a re-render of the ChatComposite.
-  const [adapter, setAdapter] = useState<ChatAdapter>();
-  useEffect(() => {
-    if (config) {
-      const createAdapter = async (): Promise<void> => {
-        setAdapter(
-          await createAzureCommunicationChatAdapter(
-            config.token,
-            config.endpointUrl,
-            config.threadId,
-            config.displayName
-          )
-        );
-      };
-      createAdapter();
-    }
-  }, [config]);
-
-  return (
-    <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
-      {adapter ? <ChatComposite adapter={adapter} /> : <h3>Loading...</h3>}
-    </div>
-  );
-};
-
-const ConfigHintBanner = (): JSX.Element => {
-  const emptyConfigTips = COMPOSITE_STRING_REQUIREDCONNECTIONSTRING.replace('{0}', 'Chat');
-  const emptyConfigParametersTips = 'Or you can fill out the required params to do so.';
-  return <>{CompositeConnectionParamsErrMessage([emptyConfigTips, emptyConfigParametersTips])}</>;
 };
