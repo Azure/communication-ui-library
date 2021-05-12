@@ -5,10 +5,10 @@
 ```ts
 
 import { ChatClient } from '@azure/communication-chat';
-import { ChatClientState as ChatClientState_2 } from '@azure/acs-chat-declarative';
+import { ChatClientState as ChatClientState_2 } from 'chat-stateful-client';
 import { ChatMessage as ChatMessage_2 } from '@azure/communication-chat';
 import { ChatMessageReadReceipt } from '@azure/communication-chat';
-import { ChatMessageWithStatus as ChatMessageWithStatus_2 } from '@azure/acs-chat-declarative';
+import { ChatMessageWithStatus as ChatMessageWithStatus_2 } from 'chat-stateful-client';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationIdentifier } from '@azure/communication-common';
@@ -19,19 +19,25 @@ import { IButtonProps } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { Message as Message_2 } from 'react-components';
+import { MessageThread as MessageThread_2 } from 'react-components';
 import { PartialTheme } from '@fluentui/react-theme-provider';
 import { PersonaPresence } from '@fluentui/react';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
 import * as reselect from 'reselect';
+import { SendBox as SendBox_2 } from 'react-components';
 import { SizeValue } from '@fluentui/react-northstar';
-import { StatefulChatClient as StatefulChatClient_2 } from '@azure/acs-chat-declarative';
+import { StatefulChatClient as StatefulChatClient_2 } from 'chat-stateful-client';
 import { Theme } from '@fluentui/react-theme-provider';
-import { TypingIndicatorEvent as TypingIndicatorEvent_2 } from '@azure/acs-chat-declarative';
+import { TypingIndicator as TypingIndicator_2 } from 'react-components';
+import { TypingIndicatorEvent as TypingIndicatorEvent_2 } from 'chat-stateful-client';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 
 // @public
 export const answerButtonProps: IButtonProps;
+
+// @public (undocumented)
+export type AreEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
 // @public (undocumented)
 export interface BaseCustomStylesProps {
@@ -277,6 +283,9 @@ export type FunctionWithKey<KeyT, ArgsT extends any[], RetT> = (key: KeyT, ...ar
 export const getCommunicationIdentifierAsKey: (identifier: CommunicationIdentifier) => CommunicationIdentifierAsKey;
 
 // @public (undocumented)
+export type GetSelector<Component> = AreEqual<Component, typeof SendBox_2> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread_2> extends true ? typeof chatThreadSelector : AreEqual<Component, typeof TypingIndicator_2> extends true ? typeof typingIndicatorSelector : never;
+
+// @public (undocumented)
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;
 
 // @public (undocumented)
@@ -505,11 +514,11 @@ export interface SendBoxStylesProps extends BaseCustomStylesProps {
 // @public (undocumented)
 export interface StatefulChatClient extends ChatClient {
     // (undocumented)
+    getState(): ChatClientState;
+    // (undocumented)
     offStateChange(handler: (state: ChatClientState) => void): void;
     // (undocumented)
     onStateChange(handler: (state: ChatClientState) => void): void;
-    // (undocumented)
-    state: ChatClientState;
 }
 
 // @public
@@ -571,7 +580,7 @@ export const useChatThreadClient: () => ChatThreadClient;
 export const useHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, PropsT>>;
 
 // @public (undocumented)
-export const usePropsFor: <SelectorT extends (state: ChatClientState_2, props: any) => any>(component: React_2.FunctionComponent<any>) => ReturnType<SelectorT>;
+export const usePropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => ReturnType<GetSelector<Component>> & Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, Parameters<Component>[0]>>;
 
 // @public (undocumented)
 export const useSelector: <SelectorT extends (state: ChatClientState_2, props: any) => any>(selector: SelectorT, selectorProps?: Parameters<SelectorT>[1] | undefined) => ReturnType<SelectorT>;

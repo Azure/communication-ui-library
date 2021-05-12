@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
   "comment": "Upgrade to Calling SDK version 1.0.1-beta.1",
-  "packageName": "@azure/acs-calling-declarative",
+  "packageName": "calling-stateful-client",
   "email": "allenhwang@microsoft.com",
   "dependentChangeType": "patch"
 }
