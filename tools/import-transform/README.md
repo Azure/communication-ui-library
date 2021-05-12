@@ -1,6 +1,6 @@
 # Import Transformer
 
-This tool is used in this repo to rewrite the import and require lines in the build files of the meta package.
+Import Transformer is used in this repo to rewrite the import and require lines in the build files of the `@azure/communication-react` package.
 
 ## Configuration
 
@@ -35,11 +35,11 @@ When this is transpiled the resultant javascript output will remain unchanged:
 import { fn } from '@internal/component-binding';
 ```
 
-Now if an external user was to consumer this transpiled output from an npm package, their build system will try to import `fn` from `'@internal/component-binding'` - but that package doesn't exist as an npm package so their build system will break.
+Now if an external user was to consume this transpiled output from an npm package, their build system will try to import `fn` from `'@internal/component-binding'` - but that package doesn't exist as an npm package so their build system will break.
 
 ## How this tool solves the issue
 
-An example contents of a meta package produced in this repo may look like:
+For example, contents of the `@azure/communication-react` package produced in this repo may look like:
 
 ```text
 /dist/dist-esm/react-components/index.js

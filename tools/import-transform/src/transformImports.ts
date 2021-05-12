@@ -44,7 +44,6 @@
 // │                         │
 // └─────────────────────────┘
 
-import yargs from 'yargs';
 import fs from 'fs';
 import path from 'path';
 import { exit } from 'process';
@@ -55,21 +54,14 @@ type TransformImportConfig = {
   buildFolderRoots: BuildFolderRoots;
   packageTranslations: PackageTransforms;
 };
+export type Logger = {
+  error: (...data: any[]) => void;
+  debug: (...data: any[]) => void;
+  info: (...data: any[]) => void;
+};
 
-const { argv } = yargs
-  .option('v', {
-    alias: 'verbose',
-    description: 'Run with verbose output enabled',
-    type: 'boolean'
-  })
-  .option('s', {
-    alias: 'silent',
-    description: 'Run with no output except errors. Note: this has no effect if verbose output is enabled.',
-    type: 'boolean'
-  });
-
-const { silent, verbose } = argv;
-const log = verbose ? console.log : () => {};
+// Overwritable logger singleton, defaults to console logging;
+let logger: Logger = console;
 
 // Variables for tracking number of changes
 let linesChangedCount: number;
@@ -86,7 +78,7 @@ export function transformFileImports(
   packageTranslations: PackageTransforms,
   dirLevel: number
 ): void {
-  log(`File found (dirLevel: ${dirLevel})`, file);
+  logger.debug(`File found (dirLevel: ${dirLevel})`, file);
   const backTravel = '../'.repeat(dirLevel);
 
   const fileContent = fs.readFileSync(file, 'utf-8');
@@ -97,7 +89,7 @@ export function transformFileImports(
       for (const packageBaseName of Object.keys(packageTranslations)) {
         if (line.includes(packageBaseName)) {
           const newImport = backTravel + packageTranslations[packageBaseName];
-          log(`Replacing ${packageBaseName} in ${line} with ${newImport}`);
+          logger.debug(`Replacing ${packageBaseName} in ${line} with ${newImport}`);
           line = line.replace(packageBaseName, newImport);
           changeOccurred = true;
           linesChangedCount++;
@@ -120,7 +112,7 @@ export function transformFileImports(
  * @param dirLevel - directory distance relative to the initial recursion directory level
  */
 function recurseThroughFolder(folder: string, packageTranslations: PackageTransforms, dirLevel: number): void {
-  log(`Searching folder (dirLevel: ${dirLevel})`, folder);
+  logger.debug(`Searching folder (dirLevel: ${dirLevel})`, folder);
 
   const dirContents = fs.readdirSync(folder, { withFileTypes: true });
 
@@ -146,9 +138,9 @@ function recurseThroughFolder(folder: string, packageTranslations: PackageTransf
 function transformImports(config: TransformImportConfig): void {
   for (const folder of config.buildFolderRoots) {
     const folderPath = path.resolve(process.cwd(), folder);
-    log(`Folder:`, folderPath);
+    logger.debug(`Folder:`, folderPath);
     if (!fs.existsSync(folderPath)) {
-      console.error(`❌ ERROR: folder not found at ${folderPath}`);
+      logger.error(`❌ ERROR: folder not found at ${folderPath}`);
       exit(1);
     }
     recurseThroughFolder(folderPath, config.packageTranslations, 0);
@@ -158,24 +150,24 @@ function transformImports(config: TransformImportConfig): void {
 function getConfig(): TransformImportConfig {
   const configPath = path.resolve(process.cwd(), 'importTransform.config.js');
   if (!fs.existsSync(configPath)) {
-    console.error(`❌ ERROR: config not found at ${configPath}`);
+    logger.error(`❌ ERROR: config not found at ${configPath}`);
     exit(1);
   }
 
   const config = require(configPath);
-  log('✅ config successfully loaded from:', configPath);
+  logger.info('✅ config successfully loaded from:', configPath);
 
   if (!config.buildFolderRoots || !(config.buildFolderRoots.length > 0)) {
-    console.error(`❌ ERROR: Invalid/missing buildFolderRoots in config`);
+    logger.error(`❌ ERROR: Invalid/missing buildFolderRoots in config`);
     exit(1);
   }
 
   if (!config.packageTranslations || !(Object.keys(config.packageTranslations).length > 0)) {
-    console.error(`❌ ERROR: Invalid/missing packageTranslations in config`);
+    logger.error(`❌ ERROR: Invalid/missing packageTranslations in config`);
     exit(1);
   }
 
-  log('✅ config options verified');
+  logger.debug('✅ config options verified');
   return config;
 }
 
@@ -185,17 +177,17 @@ function resetBookkeeping(): void {
   filesSearchedCount = 0;
 }
 
-export function main(): void {
-  if (!silent || verbose) {
-    console.log('Transforming imports...');
+export function main(customLogger?: Logger): void {
+  if (customLogger) {
+    logger = customLogger;
   }
-  resetBookkeeping();
 
+  logger.info('Transforming imports...');
+
+  resetBookkeeping();
   transformImports(getConfig());
 
-  if (!silent || verbose) {
-    console.log(
-      `✅ complete. Files Searched: ${filesSearchedCount}. Files changed: ${filesChangedCount}. Lines changed ${linesChangedCount}.`
-    );
-  }
+  logger.info(
+    `✅ complete. Files Searched: ${filesSearchedCount}. Files changed: ${filesChangedCount}. Lines changed ${linesChangedCount}.`
+  );
 }
