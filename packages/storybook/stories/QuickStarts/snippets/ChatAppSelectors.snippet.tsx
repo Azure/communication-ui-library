@@ -1,8 +1,8 @@
-import { createStatefulChatClient, StatefulChatClient } from 'chat-stateful-client';
 import { sendBoxSelector, chatThreadSelector } from '@azure/acs-chat-selector';
 import { ChatClient, ChatThreadClient } from '@azure/communication-chat';
 import { AzureCommunicationUserCredential } from '@azure/communication-common';
 import { FluentThemeProvider, MessageThread, SendBox, MessageThreadProps, SendBoxProps } from '@azure/communication-ui';
+import { createStatefulChatClient, StatefulChatClient } from 'chat-stateful-client';
 import React, { useState, useEffect } from 'react';
 
 function App(): JSX.Element {
