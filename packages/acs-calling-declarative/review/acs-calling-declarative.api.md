@@ -39,6 +39,7 @@ export interface Call {
     recording: RecordingCallFeature;
     remoteParticipants: Map<string, RemoteParticipant>;
     remoteParticipantsEnded: Map<string, RemoteParticipant>;
+    screenShareRemoteParticipant: string | undefined;
     startTime: Date;
     state: CallState;
     transcription: TranscriptionCallFeature;
@@ -84,6 +85,9 @@ export type DeviceManager = {
     speakers: AudioDeviceInfo[];
     deviceAccess?: DeviceAccess;
 };
+
+// @public
+export function getRemoteParticipantKey(identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind): string;
 
 // @public
 export interface IncomingCall {

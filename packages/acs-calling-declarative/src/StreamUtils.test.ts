@@ -76,6 +76,7 @@ function createMockCall(mockCallId: string): Call {
     recording: { isRecordingActive: false },
     transcription: { isTranscriptionActive: false },
     transfer: { receivedTransferRequests: [], requestedTransfers: [] },
+    screenShareRemoteParticipant: undefined,
     startTime: new Date(),
     endTime: undefined
   };
