@@ -48,6 +48,20 @@ export type CommonProperties1<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
 
+// @public (undocumented)
+export const createDefaultCallingHandlers: (callClient: DeclarativeCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => {
+    onHangUp: () => Promise<void>;
+    onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
+    onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
+    onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
+    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions | undefined) => Call | undefined;
+    onToggleCamera: () => Promise<void>;
+    onToggleMicrophone: () => Promise<void>;
+    onToggleScreenShare: () => Promise<void>;
+    onRenderView: (stream: LocalVideoStream | RemoteVideoStream, options: CreateViewOptions_2) => Promise<void>;
+    onParticipantRemove: (userId: string) => void;
+};
+
 // @public
 export const createDefaultCallingHandlersForComponent: <Props>(declarativeCallClient: DeclarativeCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, _Component: (props: Props) => ReactElement | null) => Pick<{
     onHangUp: () => Promise<void>;
@@ -74,20 +88,6 @@ export const createDefaultCallingHandlersForComponent: <Props>(declarativeCallCl
 }, Props>>;
 
 // @public (undocumented)
-export const createDefaultChatHandlers: (callClient: DeclarativeCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => {
-    onHangUp: () => Promise<void>;
-    onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
-    onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
-    onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
-    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions | undefined) => Call | undefined;
-    onToggleCamera: () => Promise<void>;
-    onToggleMicrophone: () => Promise<void>;
-    onToggleScreenShare: () => Promise<void>;
-    onRenderView: (stream: LocalVideoStream | RemoteVideoStream, options: CreateViewOptions_2) => Promise<void>;
-    onParticipantRemove: (userId: string) => void;
-};
-
-// @public (undocumented)
 export interface CreateViewOptions {
     // (undocumented)
     isMirrored?: boolean;
@@ -96,7 +96,7 @@ export interface CreateViewOptions {
 }
 
 // @public (undocumented)
-export type DefaultCallingHandlers = ReturnType<typeof createDefaultChatHandlers>;
+export type DefaultCallingHandlers = ReturnType<typeof createDefaultCallingHandlers>;
 
 // @public (undocumented)
 export type FunctionWithKey<KeyT, ArgsT extends any[], RetT> = (key: KeyT, ...args: ArgsT) => RetT;
