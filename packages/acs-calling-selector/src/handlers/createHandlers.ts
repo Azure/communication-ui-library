@@ -113,6 +113,10 @@ const createDefaultChatHandlers = memoizeOne(
       await callClient.startRenderVideo(callId, stream, options);
     };
 
+    const onParticipantRemove = (userId: string): void => {
+      call?.removeParticipant({ communicationUserId: userId });
+    };
+
     return {
       onHangUp,
       onSelectCamera,
@@ -122,7 +126,8 @@ const createDefaultChatHandlers = memoizeOne(
       onToggleCamera,
       onToggleMicrophone,
       onToggleScreenShare,
-      onRenderView
+      onRenderView,
+      onParticipantRemove
     };
   }
 );

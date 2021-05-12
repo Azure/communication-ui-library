@@ -17,6 +17,6 @@ export type {
   MessageTypes,
   SystemMessage,
   SystemMessagePayload,
-  WebUiChatParticipant
+  CommunicationParticipant
 } from './types';
 export * from './types/GalleryParticipant';

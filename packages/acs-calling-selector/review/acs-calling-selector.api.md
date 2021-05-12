@@ -10,6 +10,7 @@ import { Call as Call_2 } from '@azure/acs-calling-declarative';
 import { CallAgent } from '@azure/communication-calling';
 import { CallClientState } from '@azure/acs-calling-declarative';
 import * as callingStateful from '@azure/acs-calling-declarative';
+import { CommunicationParticipant } from 'react-components';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CreateViewOptions as CreateViewOptions_2 } from '@azure/communication-calling';
 import { DeclarativeCallClient } from '@azure/acs-calling-declarative';
@@ -58,6 +59,7 @@ export const createDefaultCallingHandlersForComponent: <Props>(declarativeCallCl
     onToggleMicrophone: () => Promise<void> | void;
     onToggleScreenShare: () => Promise<void> | void;
     onRenderView: (stream: LocalVideoStream | RemoteVideoStream, options: CreateViewOptions_2) => Promise<void>;
+    onParticipantRemove: (userId: string) => void;
 }, CommonProperties1<{
     onHangUp: () => Promise<void>;
     onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
@@ -68,6 +70,7 @@ export const createDefaultCallingHandlersForComponent: <Props>(declarativeCallCl
     onToggleMicrophone: () => Promise<void> | void;
     onToggleScreenShare: () => Promise<void> | void;
     onRenderView: (stream: LocalVideoStream | RemoteVideoStream, options: CreateViewOptions_2) => Promise<void>;
+    onParticipantRemove: (userId: string) => void;
 }, Props>>;
 
 // @public (undocumented)
@@ -106,6 +109,9 @@ export const getIncomingCalls: (state: CallClientState) => Map<string, IncomingC
 export const getIncomingCallsEnded: (state: CallClientState) => IncomingCall[];
 
 // @public (undocumented)
+export const getUserId: (state: CallClientState) => string;
+
+// @public (undocumented)
 export type MediaStreamType = 'Video' | 'ScreenSharing';
 
 // @public
@@ -133,6 +139,15 @@ export const optionsButtonSelector: reselect.OutputParametricSelector<callingSta
     selectedMicrophone: AudioDeviceInfo | undefined;
     selectedSpeaker: AudioDeviceInfo | undefined;
     selectedCamera: VideoDeviceInfo | undefined;
+}>;
+
+// @public (undocumented)
+export const participantListSelector: reselect.OutputParametricSelector<callingStateful.CallClientState, CallingBaseSelectorProps, {
+    participants: CommunicationParticipant[];
+    myUserId: string;
+}, (res1: string, res2: string | undefined, res3: callingStateful.Call | undefined) => {
+    participants: CommunicationParticipant[];
+    myUserId: string;
 }>;
 
 // @public (undocumented)

@@ -3,7 +3,7 @@
 
 import { IButtonStyles, IOverflowSetStyles, mergeStyles } from '@fluentui/react';
 
-export const participantStackStyle = mergeStyles({
+export const participantListStyle = mergeStyles({
   maxHeight: '21.875rem',
   overflow: 'auto',
   paddingLeft: '1.125rem',

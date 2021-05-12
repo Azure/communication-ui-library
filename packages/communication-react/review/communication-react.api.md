@@ -13,6 +13,7 @@ import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
+import { CommunicationParticipant as CommunicationParticipant_2 } from 'react-components';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { IButtonProps } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
@@ -28,7 +29,6 @@ import { StatefulChatClient as StatefulChatClient_2 } from '@azure/acs-chat-decl
 import { Theme } from '@fluentui/react-theme-provider';
 import { TypingIndicatorEvent as TypingIndicatorEvent_2 } from '@azure/acs-chat-declarative';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
-import { WebUiChatParticipant as WebUiChatParticipant_2 } from 'react-components';
 
 // @public
 export const answerButtonProps: IButtonProps;
@@ -104,13 +104,13 @@ export type ChatMessageWithStatus = ChatMessage_2 & {
 
 // @public (undocumented)
 export const chatParticipantListSelector: reselect.OutputParametricSelector<ChatClientState_2, ChatBaseSelectorProps, {
-    userId: string;
+    myUserId: string;
     displayName: string;
-    chatParticipants: WebUiChatParticipant_2[];
+    participants: CommunicationParticipant_2[];
 }, (res1: string, res2: Map<string, ChatParticipant>, res3: string) => {
-    userId: string;
+    myUserId: string;
     displayName: string;
-    chatParticipants: WebUiChatParticipant_2[];
+    participants: CommunicationParticipant_2[];
 }>;
 
 // @public
@@ -163,6 +163,16 @@ export type CommunicationIdentifierAsKey = string;
 
 // @public (undocumented)
 export const communicationIdentifierToString: (i: CommunicationIdentifier | undefined) => string;
+
+// @public
+export type CommunicationParticipant = {
+    userId: string;
+    displayName?: string;
+    state?: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
+    isScreenSharing?: boolean;
+    isMuted?: boolean;
+    isSpeaking?: boolean;
+};
 
 // @public
 export enum CommunicationUiErrorSeverity {
@@ -223,7 +233,7 @@ export type DefaultChatHandlers = {
     onMessageSend: (content: string) => Promise<void>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
     onTyping: () => Promise<void>;
-    removeThreadMember: (userId: string) => Promise<void>;
+    onParticipantRemove: (userId: string) => Promise<void>;
     updateThreadTopicName: (topicName: string) => Promise<void>;
     onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
 };
@@ -403,6 +413,18 @@ export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
     menu?: IStyle;
 }
 
+// @public
+export const ParticipantList: (props: ParticipantListProps) => JSX.Element;
+
+// @public
+export type ParticipantListProps = {
+    participants: CommunicationParticipant[];
+    myUserId?: string;
+    onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
+    onRenderAvatar?: (participant: CommunicationParticipant) => JSX.Element | null;
+    onParticipantRemove?: (userId: string) => void;
+};
+
 // @public (undocumented)
 export interface PlaceholderProps {
     avatarName?: string;
@@ -520,17 +542,17 @@ export type TypingIndicatorEvent = Omit<TypingIndicatorReceivedEvent, 'receivedO
 
 // @public
 export interface TypingIndicatorProps {
-    onRenderUsers?: (users: WebUiChatParticipant[]) => JSX.Element;
+    onRenderUsers?: (users: CommunicationParticipant[]) => JSX.Element;
     styles?: TypingIndicatorStylesProps;
     typingString?: string;
-    typingUsers: WebUiChatParticipant[];
+    typingUsers: CommunicationParticipant[];
 }
 
 // @public (undocumented)
 export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClientState_2, ChatBaseSelectorProps, {
-    typingUsers: WebUiChatParticipant_2[];
+    typingUsers: CommunicationParticipant_2[];
 }, (res1: TypingIndicatorEvent_2[], res2: Map<string, ChatParticipant>, res3: string) => {
-    typingUsers: WebUiChatParticipant_2[];
+    typingUsers: CommunicationParticipant_2[];
 }>;
 
 // @public (undocumented)
@@ -629,12 +651,6 @@ export interface VideoTileStylesProps extends BaseCustomStylesProps {
     overlayContainer?: IStyle;
     videoContainer?: IStyle;
 }
-
-// @public
-export type WebUiChatParticipant = {
-    userId: string;
-    displayName?: string;
-};
 
 
 // (No @packageDocumentation comment for this package)
