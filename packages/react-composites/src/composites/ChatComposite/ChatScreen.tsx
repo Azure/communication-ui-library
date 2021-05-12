@@ -4,9 +4,9 @@
 import { mergeStyles, Stack } from '@fluentui/react';
 import React, { useEffect } from 'react';
 import { ErrorBar, MessageThread, SendBox, TypingIndicator } from 'react-components';
-import { useAdapter } from './adapter/GroupChatAdapterProvider';
+import { useAdapter } from './adapter/ChatAdapterProvider';
 import { usePropsFor } from './hooks/usePropsFor';
-import { chatContainer, chatWrapper } from './styles/GroupChat.styles';
+import { chatContainer, chatWrapper } from './styles/Chat.styles';
 
 export type ChatScreenProps = {
   sendBoxMaxLength?: number;

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`storybook snapshot tests Storyshots Composites/Group Chat Group Chat 1`] = `
+exports[`storybook snapshot tests Storyshots Composites/Chat Chat 1`] = `
 <div
   className="css-80 root-0 body-1"
 >
@@ -37,7 +37,7 @@ exports[`storybook snapshot tests Storyshots Composites/Group Chat Group Chat 1`
           }
         >
           <span>
-            Connection String is required to run the Group Chat widget.
+            Connection String is required to run the Chat widget.
           </span>
           <span>
             Or you can fill out the required params to do so.
