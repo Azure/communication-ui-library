@@ -79,7 +79,6 @@ const createIntroductionBot = async (token: string, envUrl: string, threadId: st
 };
 
 const ConfigHintBanner = (): JSX.Element => {
-  const emptyConfigTips = COMPOSITE_STRING_REQUIREDCONNECTIONSTRING.replace('{0}', 'Chat');
-  const emptyConfigParametersTips = 'Or you can fill out the required params to do so.';
-  return <>{CompositeConnectionParamsErrMessage([emptyConfigTips, emptyConfigParametersTips])}</>;
+  const emptyConfigTips = 'Please provide the connection string and display name to use.';
+  return <>{CompositeConnectionParamsErrMessage([emptyConfigTips])}</>;
 };
