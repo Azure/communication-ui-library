@@ -9,7 +9,7 @@ initTelemetry();
 addons.setConfig({
   theme: create({
     base: 'light',
-    brandTitle: 'Azure Communication Services - UI Toolkit'
+    brandTitle: 'Azure Communication Services - UI Library'
   }),
   enableShortcuts: false
 });
