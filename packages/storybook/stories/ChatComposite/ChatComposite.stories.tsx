@@ -109,48 +109,11 @@ const messageArray = [
   'Have fun!'
 ];
 
-const createUser = async (
-  resourceConnectionString: string
-): Promise<{ userId: CommunicationUserIdentifier; token: string }> => {
-  if (!resourceConnectionString) {
-    throw new Error('No ACS connection string provided');
-  }
-
-  const tokenClient = new CommunicationIdentityClient(resourceConnectionString);
-  const userToken = await tokenClient.createUserAndToken(['chat']);
-  return { userId: userToken.user, token: userToken.token };
-};
-
-const createChatClient = (token: string, envUrl: string): ChatClient => {
-  return new ChatClient(envUrl, new AzureCommunicationTokenCredential(token));
-};
-
-const createMessageBot = async (
-  token: string,
-  envUrl: string,
-  threadId: string,
-  user: CommunicationUserIdentifier
-): Promise<void> => {
+const createIntroductionBot = async (token: string, envUrl: string, threadId: string): Promise<void> => {
   const chatClient = new ChatClient(envUrl, new AzureCommunicationTokenCredential(token));
   const threadClient = await chatClient.getChatThreadClient(threadId);
 
   let index = 0;
-
-  console.log(
-    'Bot Configuration: ' +
-      JSON.stringify(
-        {
-          user,
-          token,
-          endpointUrl: envUrl,
-          displayName: 'TestBot',
-          threadId: threadId
-        },
-        null,
-        2
-      )
-  );
-
   setInterval(() => {
     if (index < messageArray.length) {
       const sendMessageRequest = {
@@ -162,27 +125,37 @@ const createMessageBot = async (
   }, 5000);
 };
 
-const createChatConfig = async (resourceConnectionString: string, displayName: string): Promise<ChatConfig> => {
-  const user = await createUser(resourceConnectionString);
-  const bot = await createUser(resourceConnectionString);
+const createUserAndThread = async (resourceConnectionString: string, displayName: string): Promise<ChatConfig> => {
+  const tokenClient = new CommunicationIdentityClient(resourceConnectionString);
+  const user = await tokenClient.createUserAndToken(['chat']);
 
   const endpointUrl = new URL(resourceConnectionString.replace('endpoint=', '').split(';')[0]).toString();
   const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(user.token));
-
   const threadId = (await chatClient.createChatThread({ topic: 'DemoThread' })).chatThread?.id ?? '';
   await chatClient.getChatThreadClient(threadId).addParticipants({
-    participants: [{ id: user.userId }, { id: bot.userId }]
+    participants: [{ id: user.user }]
   });
-  console.log(`threadId: ${threadId}`);
-
-  createMessageBot(bot.token, endpointUrl, threadId, bot.userId);
 
   return {
     token: user.token,
-    endpointUrl: endpointUrl.toString(),
+    endpointUrl: endpointUrl,
     displayName: displayName,
     threadId
   };
+};
+
+const addBotToThread = async (resourceConnectionString: string, chatConfig: ChatConfig): Promise<void> => {
+  const tokenClient = new CommunicationIdentityClient(resourceConnectionString);
+  const bot = await tokenClient.createUserAndToken(['chat']);
+
+  const endpointUrl = new URL(resourceConnectionString.replace('endpoint=', '').split(';')[0]).toString();
+  // Must use the credentials of the thread owner to add more participants.
+  const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(chatConfig.token));
+  await chatClient.getChatThreadClient(chatConfig.threadId).addParticipants({
+    participants: [{ id: bot.user }]
+  });
+
+  createIntroductionBot(bot.token, endpointUrl, chatConfig.threadId);
 };
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
@@ -197,8 +170,10 @@ export const Chat: () => JSX.Element = () => {
 
   useEffect(() => {
     const fetchToken = async (): Promise<void> => {
-      if (knobs.current.connectionString) {
-        setChatConfig(await createChatConfig(knobs.current.connectionString, knobs.current.displayName));
+      if (knobs.current.connectionString && knobs.current.displayName) {
+        const newChatConfig = await createUserAndThread(knobs.current.connectionString, knobs.current.displayName);
+        await addBotToThread(knobs.current.connectionString, newChatConfig);
+        setChatConfig(newChatConfig);
       }
     };
     fetchToken();
@@ -217,7 +192,6 @@ const ContosoChatContainer = (props: { config: ChatConfig | undefined }): JSX.El
   // Creating an adapter is asynchronous.
   // An update to `config` triggers a new adapter creation, via the useEffect block.
   // When the adapter becomes ready, the state update triggers a re-render of the ChatComposite.
-
   const [adapter, setAdapter] = useState<ChatAdapter>();
   useEffect(() => {
     if (config) {
