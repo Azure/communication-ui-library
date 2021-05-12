@@ -20,7 +20,7 @@ import {
 import { ReactElement } from 'react';
 import memoizeOne from 'memoize-one';
 
-export type DefaultCallingHandlers = ReturnType<typeof createDefaultChatHandlers>;
+export type DefaultCallingHandlers = ReturnType<typeof createDefaultCallingHandlers>;
 
 export const areStreamsEqual = (prevStream: LocalVideoStream, newStream: LocalVideoStream): boolean => {
   return !!prevStream && !!newStream && prevStream.source.id === newStream.source.id;
@@ -160,5 +160,6 @@ export const createDefaultCallingHandlersForComponent = <Props>(
   deviceManager: StatefulDeviceManager | undefined,
   call: Call | undefined,
   _Component: (props: Props) => ReactElement | null
-): Common<DefaultCallingHandlers, Props> =>
-  createDefaultChatHandlers(declarativeCallClient, callAgent, deviceManager, call);
+): Common<DefaultCallingHandlers, Props> => {
+  return createDefaultCallingHandlers(declarativeCallClient, callAgent, deviceManager, call);
+};
