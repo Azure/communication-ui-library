@@ -163,11 +163,6 @@ export const ControlBarComponent: (
     }
   }
 
-  const endCallBtnBackground =
-    theme === 'Dark'
-      ? { root: '#c4314b', hovered: '#a42e43', pressed: '#8b2c3d' }
-      : { root: '#a42e43', hovered: '#8b2c3d', pressed: '#772a38' };
-
   return (
     <div
       style={{
@@ -184,14 +179,7 @@ export const ControlBarComponent: (
         <MicrophoneButton showLabel={showLabels} checked={toggleButtons} />
         <ScreenShareButton showLabel={showLabels} checked={toggleButtons} />
         <OptionsButton showLabel={showLabels} menuProps={exampleOptionsMenuProps} />
-        <EndCallButton
-          showLabel={showLabels}
-          styles={{
-            root: { background: endCallBtnBackground.root },
-            rootHovered: { background: endCallBtnBackground.hovered },
-            rootPressed: { background: endCallBtnBackground.pressed }
-          }}
-        />
+        <EndCallButton showLabel={showLabels} />
       </ControlBar>
     </div>
   );

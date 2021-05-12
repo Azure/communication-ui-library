@@ -71,30 +71,10 @@ const getDocs: () => JSX.Element = () => {
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.
-export const EndCall: (
-  args: any,
-  {
-    globals: { theme }
-  }
-) => JSX.Element = (args, { globals: { theme } }) => {
+export const EndCall = (): JSX.Element => {
   const showLabels = boolean('Show Labels', false);
 
-  // This is code to set the color of the background div to show contrast to the control bar based on the theme like shown in the Figma design.
-  const btnBackground =
-    theme === 'Dark'
-      ? { root: '#c4314b', hovered: '#a42e43', pressed: '#8b2c3d' }
-      : { root: '#a42e43', hovered: '#8b2c3d', pressed: '#772a38' };
-
-  return (
-    <EndCallButton
-      showLabel={showLabels}
-      styles={{
-        root: { background: btnBackground.root },
-        rootHovered: { background: btnBackground.hovered },
-        rootPressed: { background: btnBackground.pressed }
-      }}
-    />
-  );
+  return <EndCallButton showLabel={showLabels} />;
 };
 
 export default {

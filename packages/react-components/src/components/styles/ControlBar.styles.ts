@@ -133,15 +133,12 @@ export const controlButtonLabelStyles: IStyle = {
 
 export const endCallControlButtonStyles: IButtonStyles = concatStyleSets(controlButtonStyles, {
   root: {
-    background: palette.red,
     color: palette.white
   },
   rootHovered: {
-    background: palette.redDark,
     color: palette.white
   },
   rootPressed: {
-    background: palette.blackTranslucent40,
     color: palette.white
   },
   label: {

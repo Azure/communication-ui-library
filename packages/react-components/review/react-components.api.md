@@ -23,6 +23,16 @@ export interface BaseCustomStylesProps {
 }
 
 // @public
+export interface CallingTheme {
+    // (undocumented)
+    callingPalette: {
+        callRed: string;
+        callRedDark: string;
+        callRedDarker: string;
+    };
+}
+
+// @public
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
 
 // @public
@@ -90,7 +100,7 @@ export type CustomMessagePayload = {
 };
 
 // @public
-export const darkTheme: PartialTheme;
+export const darkTheme: PartialTheme & CallingTheme;
 
 // @public (undocumented)
 export type DefaultMessageRendererType = (props: MessageProps) => JSX.Element;
@@ -152,7 +162,7 @@ export const labeledAnswerButtonProps: IButtonProps;
 export const labeledRecordButtonProps: IButtonProps;
 
 // @public
-export const lightTheme: PartialTheme;
+export const lightTheme: PartialTheme & CallingTheme;
 
 // @public
 export interface LocalVideoStream {

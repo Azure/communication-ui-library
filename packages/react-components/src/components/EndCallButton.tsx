@@ -4,7 +4,10 @@
 import React from 'react';
 import { DefaultButton, IButtonProps, Label, concatStyleSets, mergeStyles } from '@fluentui/react';
 import { CallEndIcon } from '@fluentui/react-northstar';
+import { useTheme } from '@fluentui/react-theme-provider';
 import { controlButtonLabelStyles, endCallControlButtonStyles } from './styles/ControlBar.styles';
+import { lightTheme, darkTheme } from '../theming/themes';
+import { isDarkThemed } from '../theming/themeUtils';
 
 /**
  * Props for EndCallButton component
@@ -31,7 +34,24 @@ export interface EndCallButtonProps extends IButtonProps {
  */
 export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
   const { showLabel = false, styles, onRenderIcon, onRenderText } = props;
-  const componentStyles = concatStyleSets(endCallControlButtonStyles, styles ?? {});
+
+  const isDarkTheme = isDarkThemed(useTheme());
+
+  const componentStyles = concatStyleSets(
+    endCallControlButtonStyles,
+    {
+      root: {
+        background: isDarkTheme ? darkTheme.callingPalette.callRed : lightTheme.callingPalette.callRed
+      },
+      rootHovered: {
+        background: isDarkTheme ? darkTheme.callingPalette.callRedDark : lightTheme.callingPalette.callRedDark
+      },
+      rootPressed: {
+        background: isDarkTheme ? darkTheme.callingPalette.callRedDarker : lightTheme.callingPalette.callRedDarker
+      }
+    },
+    styles ?? {}
+  );
 
   const defaultRenderIcon = (): JSX.Element => {
     return <CallEndIcon key={'callEndIconKey'} />;
