@@ -11,7 +11,7 @@ List of current packages:
 
 ### Packlets
 
-Packlets are internal libraries we use to ensure correct code seperation.
+Packlets are internal-only libraries we use to ensure correct code seperation.
 
 List of current Packlets:
 
@@ -24,7 +24,7 @@ List of current Packlets:
 
 ## Dependency chain issues when building Packages
 
-Our packlets may reference other packlets, e.g.
+Our packages and packlets often reference other packlets, e.g.
 
 ```javascript
 // @internal/react-components/mycomponent.ts
@@ -40,7 +40,7 @@ import { fn } from '@internal/component-binding';
 
 Now if an external user was to consume this transpiled output from an npm package, their build system will try to import `fn` from `'@internal/component-binding'` - but that package doesn't exist as an npm package so their build system will break.
 
-To solve this issue we make use of [ts-transform-paths](../infrastructure/ttypescript-plugins#@zerollup-ts-transform-paths).
+To solve this issue we make use of [ts-transform-paths](../infrastructure/ttypescript-plugins#zerollupts-transform-paths).
 
 ## Treeshaking
 
