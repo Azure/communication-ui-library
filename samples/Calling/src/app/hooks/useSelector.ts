@@ -32,12 +32,17 @@ export const useSelector = <SelectorT extends (state: CallClientState, props: an
       const newProps = selector(state, selectorProps ?? callIdConfigProps);
       if (propRef.current !== newProps) {
         setProps(newProps);
+        if (callId) {
+          state.calls.get(callId)?.remoteParticipants.forEach((p) => {
+            console.log('Setting State', p.identifier, p.state);
+          });
+        }
       }
     };
     callClient.onStateChange(onStateChange);
     return () => {
       callClient.offStateChange(onStateChange);
     };
-  }, [callClient, selector, selectorProps, callIdConfigProps]);
+  }, [callClient, selector, selectorProps, callIdConfigProps, callId]);
   return props;
 };

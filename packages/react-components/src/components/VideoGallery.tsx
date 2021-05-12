@@ -16,12 +16,23 @@ export interface VideoGalleryProps {
   remoteParticipants?: VideoGalleryRemoteParticipant[];
   onBeforeRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => Promise<void>;
   onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
-  onBeforeRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => Promise<void>;
+  onBeforeRenderRemoteVideoTile?: (userId: string) => Promise<void>;
   onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
 }
 
 const memoizeAllRemoteParticipants = memoizeFnAll(
-  (userId: string, isAvailable?: boolean, videoProvider?: HTMLElement, displayName?: string): JSX.Element => {
+  (
+    onBeforeRenderRemoteVideoTile: any,
+    userId: string,
+    isAvailable?: boolean,
+    videoProvider?: HTMLElement,
+    displayName?: string
+  ): JSX.Element => {
+    console.log('Memoized Func');
+    if (isAvailable && !videoProvider) {
+      console.log('calling onBeforeRenderRemoteVideoTile', userId, isAvailable);
+      onBeforeRenderRemoteVideoTile && onBeforeRenderRemoteVideoTile(userId);
+    }
     return (
       <Stack className={gridStyle} key={userId} grow>
         <VideoTile
@@ -54,6 +65,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const _onRenderLocalVideoTile = useMemo((): JSX.Element => {
     const localVideoStream = localParticipant?.videoStream;
     const isLocalVideoReady = localVideoStream?.isAvailable;
+
+    if (onRenderLocalVideoTile) return onRenderLocalVideoTile(localParticipant);
+
     if (localVideoStream && !isLocalVideoReady) {
       onBeforeRenderLocalVideoTile && onBeforeRenderLocalVideoTile(localParticipant);
     }
@@ -79,14 +93,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     return memoizeAllRemoteParticipants((memoizedRemoteParticipantFn) => {
       // If user provided a custom onRender function return that function.
       if (onRenderRemoteVideoTile) return remoteParticipants.map((participant) => onRenderRemoteVideoTile(participant));
-      // Else generate Remote Video Tiles
+      // Else return Remote Stream Video Tiles
       return remoteParticipants.map((participant) => {
         const remoteVideoStream = participant.videoStream;
         console.log('I am going crazy');
-        if (remoteVideoStream?.isAvailable && !remoteVideoStream?.videoProvider) {
-          onBeforeRenderRemoteVideoTile && onBeforeRenderRemoteVideoTile(participant);
-        }
         return memoizedRemoteParticipantFn(
+          onBeforeRenderRemoteVideoTile,
           participant.userId,
           remoteVideoStream?.isAvailable,
           remoteVideoStream?.videoProvider,
@@ -99,9 +111,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   return (
     <GridLayout styles={styles}>
       <Stack horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
-        {onRenderLocalVideoTile ?? (localParticipant && _onRenderLocalVideoTile)}
+        {localParticipant && _onRenderLocalVideoTile}
       </Stack>
-      {onRenderRemoteVideoTile ?? _onRenderRemoteParticipants}
+      {_onRenderRemoteParticipants}
     </GridLayout>
   );
 };

@@ -58,7 +58,7 @@ export const createDefaultHandlersForComponent: <Props>(declarativeCallClient: D
     onToggleMicrophone: () => Promise<void> | void;
     onToggleScreenShare: () => Promise<void> | void;
     onBeforeRenderLocalVideoTile: (_localParticipant: VideoGalleryLocalParticipant) => Promise<void>;
-    onBeforeRenderRemoteVideoTile: (remoteParticipant: VideoGalleryRemoteParticipant) => Promise<void>;
+    onBeforeRenderRemoteVideoTile: (userId: string) => Promise<void>;
 }, CommonProperties<{
     onHangUp: () => Promise<void>;
     onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
@@ -69,7 +69,7 @@ export const createDefaultHandlersForComponent: <Props>(declarativeCallClient: D
     onToggleMicrophone: () => Promise<void> | void;
     onToggleScreenShare: () => Promise<void> | void;
     onBeforeRenderLocalVideoTile: (_localParticipant: VideoGalleryLocalParticipant) => Promise<void>;
-    onBeforeRenderRemoteVideoTile: (remoteParticipant: VideoGalleryRemoteParticipant) => Promise<void>;
+    onBeforeRenderRemoteVideoTile: (userId: string) => Promise<void>;
 }, Props>>;
 
 // @public (undocumented)
