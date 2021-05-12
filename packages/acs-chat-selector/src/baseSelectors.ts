@@ -7,7 +7,7 @@ import {
   CommunicationIdentifierAsKey,
   TypingIndicatorEvent,
   getCommunicationIdentifierAsKey
-} from '@azure/acs-chat-declarative';
+} from 'chat-stateful-client';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { ChatParticipant, ChatMessageReadReceipt } from '@azure/communication-chat';
 export type ChatBaseSelectorProps = {

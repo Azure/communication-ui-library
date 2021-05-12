@@ -7,6 +7,4 @@ export * from './CommunicationUiError';
 export * from './CustomStylesProps';
 export * from './DevicePermission';
 export * from './GalleryParticipant';
-export * from './ListParticipant';
 export * from './ParticipantStream';
-export * from './WebUiChatParticipant';

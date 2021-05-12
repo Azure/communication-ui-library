@@ -6,22 +6,23 @@
 
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
-import { Call as Call_2 } from '@azure/acs-calling-declarative';
+import { Call as Call_2 } from 'calling-stateful-client';
 import { CallAgent } from '@azure/communication-calling';
-import { CallClientState } from '@azure/acs-calling-declarative';
-import * as callingStateful from '@azure/acs-calling-declarative';
+import { CallClientState } from 'calling-stateful-client';
+import * as callingStateful from 'calling-stateful-client';
+import { CommunicationParticipant } from 'react-components';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CreateViewOptions as CreateViewOptions_2 } from '@azure/communication-calling';
-import { DeclarativeCallClient } from '@azure/acs-calling-declarative';
-import { DeviceManager } from '@azure/acs-calling-declarative';
-import { IncomingCall } from '@azure/acs-calling-declarative';
-import { LocalVideoStream } from '@azure/acs-calling-declarative';
+import { DeclarativeCallClient } from 'calling-stateful-client';
+import { DeviceManager } from 'calling-stateful-client';
+import { IncomingCall } from 'calling-stateful-client';
+import { LocalVideoStream } from 'calling-stateful-client';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { ReactElement } from 'react';
-import { RemoteVideoStream } from '@azure/acs-calling-declarative';
+import { RemoteVideoStream } from 'calling-stateful-client';
 import * as reselect from 'reselect';
 import { StartCallOptions } from '@azure/communication-calling';
-import { StatefulDeviceManager } from '@azure/acs-calling-declarative';
+import { StatefulDeviceManager } from 'calling-stateful-client';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 
@@ -47,6 +48,20 @@ export type CommonProperties1<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
 
+// @public (undocumented)
+export const createDefaultCallingHandlers: (callClient: DeclarativeCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => {
+    onHangUp: () => Promise<void>;
+    onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
+    onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
+    onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
+    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions | undefined) => Call | undefined;
+    onToggleCamera: () => Promise<void>;
+    onToggleMicrophone: () => Promise<void>;
+    onToggleScreenShare: () => Promise<void>;
+    onRenderView: (stream: LocalVideoStream | RemoteVideoStream, options: CreateViewOptions_2) => Promise<void>;
+    onParticipantRemove: (userId: string) => void;
+};
+
 // @public
 export const createDefaultCallingHandlersForComponent: <Props>(declarativeCallClient: DeclarativeCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, _Component: (props: Props) => ReactElement | null) => Pick<{
     onHangUp: () => Promise<void>;
@@ -55,9 +70,10 @@ export const createDefaultCallingHandlersForComponent: <Props>(declarativeCallCl
     onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
     onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions | undefined) => Call | undefined;
     onToggleCamera: () => Promise<void>;
-    onToggleMicrophone: () => Promise<void> | void;
-    onToggleScreenShare: () => Promise<void> | void;
+    onToggleMicrophone: () => Promise<void>;
+    onToggleScreenShare: () => Promise<void>;
     onRenderView: (stream: LocalVideoStream | RemoteVideoStream, options: CreateViewOptions_2) => Promise<void>;
+    onParticipantRemove: (userId: string) => void;
 }, CommonProperties1<{
     onHangUp: () => Promise<void>;
     onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
@@ -65,9 +81,10 @@ export const createDefaultCallingHandlersForComponent: <Props>(declarativeCallCl
     onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
     onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions | undefined) => Call | undefined;
     onToggleCamera: () => Promise<void>;
-    onToggleMicrophone: () => Promise<void> | void;
-    onToggleScreenShare: () => Promise<void> | void;
+    onToggleMicrophone: () => Promise<void>;
+    onToggleScreenShare: () => Promise<void>;
     onRenderView: (stream: LocalVideoStream | RemoteVideoStream, options: CreateViewOptions_2) => Promise<void>;
+    onParticipantRemove: (userId: string) => void;
 }, Props>>;
 
 // @public (undocumented)
@@ -77,6 +94,9 @@ export interface CreateViewOptions {
     // (undocumented)
     scalingMode?: ScalingMode;
 }
+
+// @public (undocumented)
+export type DefaultCallingHandlers = ReturnType<typeof createDefaultCallingHandlers>;
 
 // @public (undocumented)
 export type FunctionWithKey<KeyT, ArgsT extends any[], RetT> = (key: KeyT, ...args: ArgsT) => RetT;
@@ -106,6 +126,9 @@ export const getIncomingCalls: (state: CallClientState) => Map<string, IncomingC
 export const getIncomingCallsEnded: (state: CallClientState) => IncomingCall[];
 
 // @public (undocumented)
+export const getUserId: (state: CallClientState) => string;
+
+// @public (undocumented)
 export type MediaStreamType = 'Video' | 'ScreenSharing';
 
 // @public
@@ -133,6 +156,15 @@ export const optionsButtonSelector: reselect.OutputParametricSelector<callingSta
     selectedMicrophone: AudioDeviceInfo | undefined;
     selectedSpeaker: AudioDeviceInfo | undefined;
     selectedCamera: VideoDeviceInfo | undefined;
+}>;
+
+// @public (undocumented)
+export const participantListSelector: reselect.OutputParametricSelector<callingStateful.CallClientState, CallingBaseSelectorProps, {
+    participants: CommunicationParticipant[];
+    myUserId: string;
+}, (res1: string, res2: string | undefined, res3: callingStateful.Call | undefined) => {
+    participants: CommunicationParticipant[];
+    myUserId: string;
 }>;
 
 // @public (undocumented)

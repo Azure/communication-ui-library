@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
   "comment": "Add commonjs support",
-  "packageName": "@azure/acs-chat-declarative",
+  "packageName": "chat-stateful-client",
   "email": "mail@jamesburnside.com",
   "dependentChangeType": "patch"
 }
