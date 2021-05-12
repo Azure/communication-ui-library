@@ -4,24 +4,24 @@
 import { ChatThreadClientState } from 'chat-stateful-client';
 import { ChatMessage, ChatParticipant } from '@azure/communication-chat';
 
-export type GroupChatUIState = {
+export type ChatUIState = {
   // Self-contained state for composite
   error?: Error;
 };
 
-export type GroupChatClientState = {
+export type ChatClientState = {
   // Properties from backend services
   userId: string;
   displayName: string;
   thread: ChatThreadClientState;
 };
 
-export type GroupChatState = GroupChatUIState & GroupChatClientState;
+export type ChatState = ChatUIState & ChatClientState;
 
-export interface GroupChatAdapter {
-  onStateChange(handler: (state: GroupChatState) => void): void;
-  offStateChange(handler: (state: GroupChatState) => void): void;
-  getState(): GroupChatState;
+export interface ChatAdapter {
+  onStateChange(handler: (state: ChatState) => void): void;
+  offStateChange(handler: (state: ChatState) => void): void;
+  getState(): ChatState;
   sendMessage(content: string): Promise<void>;
   sendReadReceipt(chatMessageId: string): Promise<void>;
   sendTypingIndicator(): Promise<void>;
@@ -34,4 +34,4 @@ export interface GroupChatAdapter {
   on(event: 'error', errorHandler: (e: Error) => void): void;
 }
 
-export type GroupChatEvent = 'messageReceived' | 'participantsJoined' | 'error';
+export type ChatEvent = 'messageReceived' | 'participantsJoined' | 'error';
