@@ -190,47 +190,19 @@ const createChatConfig = async (resourceConnectionString: string, displayName: s
 export const Chat: () => JSX.Element = () => {
   const [chatConfig, setChatConfig] = useState<ChatConfig>();
 
-  const configViaConnectionString = useRef({
+  const knobs = useRef({
     connectionString: text(COMPOSITE_STRING_CONNECTIONSTRING, '', 'Server Simulator'),
     displayName: text('Display Name', '', 'Server Simulator')
   });
 
-  const explicitConfig = useRef({
-    userId: text('User Id', '', 'Required'),
-    token: text('ACS Token', '', 'Required'),
-    endpointUrl: text('Endpoint Url', '', 'Required'),
-    displayName: text('Display Name', '', 'Required'),
-    threadId: text('Thread Id', '', 'Required')
-  });
-
   useEffect(() => {
-    if (
-      explicitConfig.current.userId ||
-      explicitConfig.current.token ||
-      explicitConfig.current.endpointUrl ||
-      explicitConfig.current.displayName ||
-      explicitConfig.current.threadId
-    ) {
-      try {
-        createChatClient(explicitConfig.current.token, explicitConfig.current.endpointUrl);
-        setChatConfig(explicitConfig.current);
-      } catch {
-        setChatConfig(undefined);
+    const fetchToken = async (): Promise<void> => {
+      if (knobs.current.connectionString) {
+        setChatConfig(await createChatConfig(knobs.current.connectionString, knobs.current.displayName));
       }
-    } else {
-      const fetchToken = async (): Promise<void> => {
-        if (configViaConnectionString.current.connectionString) {
-          setChatConfig(
-            await createChatConfig(
-              configViaConnectionString.current.connectionString,
-              configViaConnectionString.current.displayName
-            )
-          );
-        }
-      };
-      fetchToken();
-    }
-  }, [configViaConnectionString, explicitConfig]);
+    };
+    fetchToken();
+  }, [knobs]);
 
   return (
     <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
