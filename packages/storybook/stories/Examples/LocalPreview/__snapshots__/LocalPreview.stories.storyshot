@@ -2,10 +2,10 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Preview 1`] = `
 <div
-  className="css-79 root-0 body-1"
+  className="css-80 root-0 body-1"
 >
   <div
-    className="css-79"
+    className="css-80"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -20,10 +20,10 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
       }
     >
       <div
-        className="css-79 root-0 body-1"
+        className="css-80 root-0 body-1"
       >
         <div
-          className="css-79"
+          className="css-80"
           data-uses-unhanded-props={true}
         >
           <div

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatClientState, ChatThreadClientState } from '@azure/acs-chat-declarative';
+import { ChatClientState, ChatThreadClientState } from 'chat-stateful-client';
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { GroupChatState } from '../adapter/GroupChatAdapter';
 import { useAdapter } from '../adapter/GroupChatAdapterProvider';

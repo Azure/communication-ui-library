@@ -7,7 +7,7 @@ import {
   LocalVideoStream,
   RemoteVideoStream,
   RemoteParticipant
-} from '@azure/acs-calling-declarative';
+} from 'calling-stateful-client';
 import { AudioDeviceInfo, CreateViewOptions, VideoDeviceInfo } from '@azure/communication-calling';
 
 export type GroupCallUIState = {

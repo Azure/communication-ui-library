@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { optionsButtonSelector } from '@azure/acs-calling-selector';
+import React from 'react';
+import { optionsButtonSelector, participantListSelector } from '@azure/acs-calling-selector';
 import { Stack } from '@fluentui/react';
 import {
   fullHeightStyles,
@@ -10,13 +11,12 @@ import {
   settingsContainerStyle
 } from 'app/styles/CommandPanel.styles';
 import { ThemeSelector } from 'app/theming/ThemeSelector';
-import React from 'react';
 import { useCallingContext } from 'react-composites';
 import { Footer } from './Footer';
 import { useHandlers } from './hooks/useHandlers';
 import { useSelector } from './hooks/useSelector';
 import { LocalDeviceSettingsComponent } from './LocalDeviceSettings';
-import { ParticipantStack } from './ParticipantStack';
+import { ParticipantList } from 'react-components';
 
 export enum CommandPanelTypes {
   None = 'none',
@@ -29,6 +29,9 @@ export interface CommandPanelProps {
 }
 
 export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
+  const participantListProps = useSelector(participantListSelector);
+  const participantListHandlers = useHandlers(ParticipantList);
+
   const options = useSelector(optionsButtonSelector, { callId: '' });
   const handlers = useHandlers(LocalDeviceSettingsComponent);
   const { videoDeviceInfo } = useCallingContext();
@@ -40,7 +43,7 @@ export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
       </Stack.Item>
       {props.selectedPane === CommandPanelTypes.People && (
         <Stack.Item styles={fullHeightStyles}>
-          <ParticipantStack />
+          <ParticipantList {...participantListProps} {...participantListHandlers} />
         </Stack.Item>
       )}
       {props.selectedPane === CommandPanelTypes.People && (

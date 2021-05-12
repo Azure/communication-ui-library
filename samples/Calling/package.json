@@ -47,7 +47,7 @@
     ]
   },
   "dependencies": {
-    "@azure/acs-calling-declarative": "~1.0.0-beta",
+    "calling-stateful-client": "~1.0.0-beta",
     "@azure/acs-calling-selector": "~1.0.0-beta",
     "@azure/communication-identity": "1.0.0",
     "@azure/communication-calling": "1.0.1-beta.1",

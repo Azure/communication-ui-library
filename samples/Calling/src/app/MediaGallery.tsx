@@ -3,7 +3,6 @@
 
 import React, { useMemo } from 'react';
 import { VideoGallery, VideoGalleryRemoteParticipant } from 'react-components';
-import { useHandlers } from './hooks/useHandlers';
 import { usePropsFor } from './hooks/usePropsFor';
 import { ScreenShare } from './ScreenShare';
 
@@ -15,7 +14,6 @@ const VideoGalleryStyles = {
 
 export const MediaGallery = (): JSX.Element => {
   const videoGalleryProps = usePropsFor(VideoGallery);
-  const videoGalleryHandlers = useHandlers(VideoGallery);
 
   const remoteParticipants = videoGalleryProps.remoteParticipants;
 
@@ -26,12 +24,8 @@ export const MediaGallery = (): JSX.Element => {
   }, [remoteParticipants]);
 
   return participantWithScreenShare !== undefined && participantWithScreenShare.screenShareStream !== undefined ? (
-    <ScreenShare
-      localParticipant={videoGalleryProps.localParticipant}
-      remoteParticipants={videoGalleryProps.remoteParticipants}
-      onRenderView={videoGalleryHandlers.onRenderView}
-    />
+    <ScreenShare {...videoGalleryProps} />
   ) : (
-    <VideoGallery {...videoGalleryProps} {...videoGalleryHandlers} scalingMode={'Crop'} styles={VideoGalleryStyles} />
+    <VideoGallery {...videoGalleryProps} scalingMode={'Crop'} styles={VideoGalleryStyles} />
   );
 };

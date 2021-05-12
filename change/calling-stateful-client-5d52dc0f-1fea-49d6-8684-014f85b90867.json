@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "rename declarative packages to stateful",
+  "packageName": "calling-stateful-client",
+  "email": "domessin@microsoft.com",
+  "dependentChangeType": "patch"
+}
