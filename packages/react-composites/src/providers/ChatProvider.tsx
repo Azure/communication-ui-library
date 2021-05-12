@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import { ChatClient } from '@azure/communication-chat';
 import { CommunicationUserKind } from '@azure/communication-common';
-import { createStatefulChatClient } from '@azure/acs-chat-declarative';
+import { createStatefulChatClient } from 'chat-stateful-client';
 import { ChatThreadProvider } from './ChatThreadProvider';
 import { AbortSignalLike } from '@azure/core-http';
 import { Spinner } from '@fluentui/react';

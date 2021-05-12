@@ -1,8 +1,8 @@
-import { createStatefulChatClient, StatefulChatClient } from '@azure/acs-chat-declarative';
 import { sendBoxSelector, chatThreadSelector, createDefaultChatHandlersForComponent } from '@azure/acs-chat-selector';
 import { ChatClient, ChatThreadClient } from '@azure/communication-chat';
 import { AzureCommunicationUserCredential } from '@azure/communication-common';
 import { FluentThemeProvider, MessageThread, SendBox, MessageThreadProps, SendBoxProps } from '@azure/communication-ui';
+import { createStatefulChatClient, StatefulChatClient } from 'chat-stateful-client';
 import React, { useState, useEffect } from 'react';
 
 function App(): JSX.Element {
@@ -30,7 +30,7 @@ function App(): JSX.Element {
         // When `statefulChatClient` becomes available, generate a thread client for chat
         setChatThreadClient(await statefulChatClient.getChatThreadClient(threadId));
         // Set your App State using computed props from `statefulChatClient`.
-        updateAppState(statefulChatClient.state);
+        updateAppState(statefulChatClient.getState());
         // Subscribe for changes in `statefulChatClient` state.
         statefulChatClient.onStateChange(updateAppState);
       }

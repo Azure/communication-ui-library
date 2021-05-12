@@ -5,12 +5,12 @@ import { ChatClient } from '@azure/communication-chat';
 import { ChatContext } from './ChatContext';
 import { ChatClientState } from './ChatClientState';
 import { EventSubscriber } from './EventSubscriber';
-import { chatThreadClientDeclaratify } from './ChatThreadClientDeclarative';
+import { chatThreadClientDeclaratify } from './StatefulChatThreadClient';
 import { createDecoratedListThreads } from './iterators/createDecoratedListThreads';
 import { ChatConfig } from './types/ChatConfig';
 
 export interface StatefulChatClient extends ChatClient {
-  state: ChatClientState;
+  getState(): ChatClientState;
   onStateChange(handler: (state: ChatClientState) => void): void;
   offStateChange(handler: (state: ChatClientState) => void): void;
 }
@@ -111,9 +111,9 @@ export const createStatefulChatClient = (chatClient: ChatClient, chatConfig: Cha
     }
   });
 
-  Object.defineProperty(proxy, 'state', {
+  Object.defineProperty(proxy, 'getState', {
     configurable: false,
-    get: () => context?.getState()
+    value: () => context?.getState()
   });
   Object.defineProperty(proxy, 'onStateChange', {
     configurable: false,

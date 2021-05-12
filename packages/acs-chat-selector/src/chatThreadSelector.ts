@@ -8,7 +8,7 @@ import {
   getLatestReadTime,
   getUserId
 } from './baseSelectors';
-import { ChatMessageWithStatus } from '@azure/acs-chat-declarative';
+import { ChatMessageWithStatus } from 'chat-stateful-client';
 // The following need explicitly imported to avoid api-extractor issues.
 // These can be removed once https://github.com/microsoft/rushstack/pull/1916 is fixed.
 // @ts-ignore
@@ -16,7 +16,7 @@ import * as reselect from 'reselect';
 // @ts-ignore
 import { ChatMessageContent, ChatParticipant } from '@azure/communication-chat';
 // @ts-ignore
-import { ChatClientState } from '@azure/acs-chat-declarative';
+import { ChatClientState } from 'chat-stateful-client';
 // @ts-ignore
 import { ChatBaseSelectorProps } from './baseSelectors';
 // @ts-ignore

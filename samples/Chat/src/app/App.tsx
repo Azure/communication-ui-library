@@ -16,7 +16,7 @@ import { refreshTokenAsync } from './utils/refreshToken';
 import { ChatClientProvider, ChatThreadClientProvider } from '@azure/acs-chat-selector';
 import { ChatClient, ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationUserKind } from '@azure/communication-common';
-import { createStatefulChatClient, StatefulChatClient } from '@azure/acs-chat-declarative';
+import { createStatefulChatClient, StatefulChatClient } from 'chat-stateful-client';
 
 console.info(`Thread chat sample using @azure/communication-chat : ${getChatSDKVersion()}`);
 console.info(`Build Date : ${getBuildTime()}`);
