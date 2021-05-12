@@ -30,4 +30,4 @@ Imports to be transformed are configured in the `tsconfig.json` file. The `ts-tr
 
 Currently this plugin is used to fix incorrect import lines when packlets have downstream dependencies on other packlets.
 
-For more information on this issue see: [../architecture/RepoPackagesAndPacklets.md#dependency-chain-issues-when-building-packages]
+For more information on this issue see: [dependency-chain-issues-when-building-packages](../architecture/RepoPackagesAndPacklets.md#dependency-chain-issues-when-building-packages)
