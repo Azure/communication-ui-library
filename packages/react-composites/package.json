@@ -26,7 +26,7 @@
     "postpack": "copyfiles -E \"./*.tgz\" private-preview"
   },
   "dependencies": {
-    "@azure/acs-calling-declarative": "~1.0.0-beta",
+    "calling-stateful-client": "~1.0.0-beta",
     "@azure/acs-calling-selector": "~1.0.0-beta",
     "@azure/communication-identity": "1.0.0",
     "@azure/communication-calling": "1.0.1-beta.1",
@@ -42,7 +42,7 @@
     "@fluentui/react-theme-provider": "^0.18.0",
     "@uifabric/react-hooks": "~7.13.11",
     "copy-to-clipboard": "~3.3.1",
-    "@azure/acs-chat-declarative": "~1.0.0-beta",
+    "chat-stateful-client": "~1.0.0-beta",
     "@azure/acs-chat-selector": "~1.0.0-beta",
     "react-aria-live": "^2.0.5",
     "react-linkify": "^1.0.0-alpha",

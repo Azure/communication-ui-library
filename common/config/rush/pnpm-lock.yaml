@@ -21,9 +21,9 @@ dependencies:
   '@microsoft/applicationinsights-web': 2.6.2
   '@octokit/rest': 18.0.15
   '@rollup/plugin-commonjs': 17.1.0_rollup@2.42.4
-  '@rush-temp/acs-calling-declarative': file:projects/acs-calling-declarative.tgz_prettier@2.0.5+ts-node@9.1.1
+  '@rush-temp/calling-stateful-client': file:projects/calling-stateful-client.tgz_prettier@2.0.5+ts-node@9.1.1
   '@rush-temp/acs-calling-selector': file:projects/acs-calling-selector.tgz_prettier@2.0.5+ts-node@9.1.1
-  '@rush-temp/acs-chat-declarative': file:projects/acs-chat-declarative.tgz_prettier@2.0.5+ts-node@9.1.1
+  '@rush-temp/chat-stateful-client': file:projects/chat-stateful-client.tgz_prettier@2.0.5+ts-node@9.1.1
   '@rush-temp/acs-chat-selector': file:projects/acs-chat-selector.tgz_prettier@2.0.5+ts-node@9.1.1
   '@rush-temp/build-tools': file:projects/build-tools.tgz_typescript@4.1.5
   '@rush-temp/calling': file:projects/calling.tgz_11ce2e494cf42e750705757a01242d16
@@ -20697,7 +20697,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==
-  file:projects/acs-calling-declarative.tgz_prettier@2.0.5+ts-node@9.1.1:
+  file:projects/calling-stateful-client.tgz_prettier@2.0.5+ts-node@9.1.1:
     dependencies:
       '@azure/communication-calling': 1.0.1-beta.1
       '@azure/communication-common': 1.0.0
@@ -20719,14 +20719,14 @@ packages:
       ts-jest: 26.5.3_jest@26.6.0+typescript@4.1.5
       typescript: 4.1.5
     dev: false
-    id: file:projects/acs-calling-declarative.tgz
-    name: '@rush-temp/acs-calling-declarative'
+    id: file:projects/calling-stateful-client.tgz
+    name: '@rush-temp/calling-stateful-client'
     peerDependencies:
       prettier: '*'
       ts-node: '*'
     resolution:
       integrity: sha512-qdSAhivlgGvcyV6tapaHLdttXDo9lelHXWz3qA0+ZnzTD+gMwBQoHQtVE5yD5x1HWHLPD8KdgbR3Wl1JE3LAow==
-      tarball: file:projects/acs-calling-declarative.tgz
+      tarball: file:projects/calling-stateful-client.tgz
     version: 0.0.0
   file:projects/acs-calling-selector.tgz_prettier@2.0.5+ts-node@9.1.1:
     dependencies:
@@ -20760,7 +20760,7 @@ packages:
       integrity: sha512-MCGkppXEkgf/33TTkRcfFtmqiULDAiF9n8OyxzEgGtkXZcyyZ65cqaFnlw0GKJndg0J5U7um1Pm6v7IVOnNiCw==
       tarball: file:projects/acs-calling-selector.tgz
     version: 0.0.0
-  file:projects/acs-chat-declarative.tgz_prettier@2.0.5+ts-node@9.1.1:
+  file:projects/chat-stateful-client.tgz_prettier@2.0.5+ts-node@9.1.1:
     dependencies:
       '@azure/communication-chat': 1.0.0
       '@azure/communication-common': 1.0.0
@@ -20785,14 +20785,14 @@ packages:
       ts-jest: 26.5.3_jest@26.6.0+typescript@4.1.5
       typescript: 4.1.5
     dev: false
-    id: file:projects/acs-chat-declarative.tgz
-    name: '@rush-temp/acs-chat-declarative'
+    id: file:projects/chat-stateful-client.tgz
+    name: '@rush-temp/chat-stateful-client'
     peerDependencies:
       prettier: '*'
       ts-node: '*'
     resolution:
       integrity: sha512-HFRhAX/cHfOCQqWEtUE3LocQJi/yWbJJCtGRP4tOmqpFx1dW4wU6BZrZdWa2wqQKSWtOtTFTPzVQ+qPnTN4n9g==
-      tarball: file:projects/acs-chat-declarative.tgz
+      tarball: file:projects/chat-stateful-client.tgz
     version: 0.0.0
   file:projects/acs-chat-selector.tgz_prettier@2.0.5+ts-node@9.1.1:
     dependencies:
@@ -21443,9 +21443,9 @@ specifiers:
   '@microsoft/applicationinsights-web': ~2.6.2
   '@octokit/rest': ~18.0.6
   '@rollup/plugin-commonjs': ~17.1.0
-  '@rush-temp/acs-calling-declarative': file:./projects/acs-calling-declarative.tgz
+  '@rush-temp/calling-stateful-client': file:./projects/calling-stateful-client.tgz
   '@rush-temp/acs-calling-selector': file:./projects/acs-calling-selector.tgz
-  '@rush-temp/acs-chat-declarative': file:./projects/acs-chat-declarative.tgz
+  '@rush-temp/chat-stateful-client': file:./projects/chat-stateful-client.tgz
   '@rush-temp/acs-chat-selector': file:./projects/acs-chat-selector.tgz
   '@rush-temp/build-tools': file:./projects/build-tools.tgz
   '@rush-temp/calling': file:./projects/calling.tgz

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatClientState, StatefulChatClient } from '@azure/acs-chat-declarative';
+import { ChatClientState, StatefulChatClient } from 'chat-stateful-client';
 import { useChatClient } from '../providers/ChatClientProvider';
 
 import { useState, useEffect, useRef, useMemo } from 'react';

@@ -5,10 +5,10 @@
 ```ts
 
 import { ChatClient } from '@azure/communication-chat';
-import { ChatClientState as ChatClientState_2 } from '@azure/acs-chat-declarative';
+import { ChatClientState as ChatClientState_2 } from 'chat-stateful-client';
 import { ChatMessage as ChatMessage_2 } from '@azure/communication-chat';
 import { ChatMessageReadReceipt } from '@azure/communication-chat';
-import { ChatMessageWithStatus as ChatMessageWithStatus_2 } from '@azure/acs-chat-declarative';
+import { ChatMessageWithStatus as ChatMessageWithStatus_2 } from 'chat-stateful-client';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationIdentifier } from '@azure/communication-common';
@@ -25,9 +25,9 @@ import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
 import * as reselect from 'reselect';
 import { SizeValue } from '@fluentui/react-northstar';
-import { StatefulChatClient as StatefulChatClient_2 } from '@azure/acs-chat-declarative';
+import { StatefulChatClient as StatefulChatClient_2 } from 'chat-stateful-client';
 import { Theme } from '@fluentui/react-theme-provider';
-import { TypingIndicatorEvent as TypingIndicatorEvent_2 } from '@azure/acs-chat-declarative';
+import { TypingIndicatorEvent as TypingIndicatorEvent_2 } from 'chat-stateful-client';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 
 // @public

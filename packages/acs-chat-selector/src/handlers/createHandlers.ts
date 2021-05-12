@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { ReactElement } from 'react';
-import { StatefulChatClient } from '@azure/acs-chat-declarative';
+import { StatefulChatClient } from 'chat-stateful-client';
 import { ChatThreadClient } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
 

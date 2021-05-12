@@ -12,7 +12,7 @@ import {
   VideoGalleryLocalParticipant,
   VideoGalleryRemoteParticipant
 } from 'react-components';
-import { LocalVideoStream, RemoteVideoStream } from '@azure/acs-calling-declarative';
+import { LocalVideoStream, RemoteVideoStream } from 'calling-stateful-client';
 import { memoizeFnAll } from '@azure/acs-calling-selector';
 import {
   aspectRatioBoxContentStyle,

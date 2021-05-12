@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallClientState } from '@azure/acs-calling-declarative';
+import { CallClientState } from 'calling-stateful-client';
 import {
   cameraButtonSelector,
   microphoneButtonSelector,

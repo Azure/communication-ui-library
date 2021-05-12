@@ -1,4 +1,4 @@
-import { createStatefulChatClient, StatefulChatClient } from '@azure/acs-chat-declarative';
+import { createStatefulChatClient, StatefulChatClient } from 'chat-stateful-client';
 import { ChatClient, ChatThreadClient } from '@azure/communication-chat';
 import { AzureCommunicationUserCredential } from '@azure/communication-common';
 import { FluentThemeProvider, MessageThread, SendBox, MessageThreadProps, SendBoxProps } from '@azure/communication-ui';
