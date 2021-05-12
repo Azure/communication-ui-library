@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { callClientDeclaratify, DeclarativeCallClient, StatefulDeviceManager } from 'calling-stateful-client';
+import { createStatefulCallClient, StatefulCallClient, StatefulDeviceManager } from 'calling-stateful-client';
 import {
   AudioDeviceInfo,
   CallAgent,
@@ -22,8 +22,8 @@ export type CallingContextType = {
   setUserId: Dispatch<SetStateAction<string>>;
   displayName: string;
   setDisplayName: Dispatch<SetStateAction<string>>;
-  callClient: DeclarativeCallClient;
-  setCallClient: Dispatch<SetStateAction<DeclarativeCallClient>>;
+  callClient: StatefulCallClient;
+  setCallClient: Dispatch<SetStateAction<StatefulCallClient>>;
   callAgent: CallAgent | undefined;
   setCallAgent: Dispatch<SetStateAction<CallAgent | undefined>>;
   deviceManager: StatefulDeviceManager | undefined;
@@ -57,8 +57,8 @@ const CallingProviderBase = (props: CallingProviderProps & ErrorHandlingProps): 
 
   // if there is no valid token then there is no valid userId
   const userIdFromToken = token ? getIdFromToken(token) : '';
-  const [callClient, setCallClient] = useState<DeclarativeCallClient>(
-    callClientDeclaratify(new CallClient(callClientOptions), userIdFromToken)
+  const [callClient, setCallClient] = useState<StatefulCallClient>(
+    createStatefulCallClient(new CallClient(callClientOptions), userIdFromToken)
   );
   const [callAgent, setCallAgent] = useState<CallAgent | undefined>(undefined);
   const [deviceManager, setDeviceManager] = useState<StatefulDeviceManager | undefined>(undefined);
@@ -167,7 +167,7 @@ export const CallingProvider = (props: CallingProviderProps & ErrorHandlingProps
 
 export const useCallingContext = (): CallingContextType => useValidContext(CallingContext);
 
-export const useCallClient = (): DeclarativeCallClient => {
+export const useCallClient = (): StatefulCallClient => {
   return useValidContext(CallingContext).callClient;
 };
 
