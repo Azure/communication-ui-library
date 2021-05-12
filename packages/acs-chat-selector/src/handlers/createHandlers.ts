@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { ReactElement } from 'react';
-import { StatefulChatClient } from '@azure/acs-chat-declarative';
+import { StatefulChatClient } from 'chat-stateful-client';
 import { ChatThreadClient } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
 
@@ -10,7 +10,7 @@ export type DefaultChatHandlers = {
   onMessageSend: (content: string) => Promise<void>;
   onMessageSeen: (chatMessageId: string) => Promise<void>;
   onTyping: () => Promise<void>;
-  removeThreadMember: (userId: string) => Promise<void>;
+  onParticipantRemove: (userId: string) => Promise<void>;
   updateThreadTopicName: (topicName: string) => Promise<void>;
   onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
 };
@@ -23,7 +23,7 @@ export const createDefaultChatHandlers = memoizeOne(
       onMessageSend: async (content: string) => {
         const sendMessageRequest = {
           content,
-          senderDisplayName: chatClient.state.displayName
+          senderDisplayName: chatClient.getState().displayName
         };
         await chatThreadClient.sendMessage(sendMessageRequest);
       },
@@ -34,7 +34,7 @@ export const createDefaultChatHandlers = memoizeOne(
       onTyping: async () => {
         await chatThreadClient.sendTypingNotification();
       },
-      removeThreadMember: async (userId: string) => {
+      onParticipantRemove: async (userId: string) => {
         await chatThreadClient.removeParticipant({
           communicationUserId: userId
         });
@@ -65,7 +65,7 @@ export type CommonProperties<A, B> = {
   [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
 
-type Common<A, B> = Pick<A, CommonProperties<A, B>>;
+export type Common<A, B> = Pick<A, CommonProperties<A, B>>;
 
 // These could be shared functions between Chat and Calling
 export const defaultHandlerCreator = (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => <Props>(

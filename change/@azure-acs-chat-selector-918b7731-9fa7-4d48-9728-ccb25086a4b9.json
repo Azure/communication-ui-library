@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "change StatefulChatClient.state to getState()",
+  "packageName": "@azure/acs-chat-selector",
+  "email": "domessin@microsoft.com",
+  "dependentChangeType": "patch"
+}

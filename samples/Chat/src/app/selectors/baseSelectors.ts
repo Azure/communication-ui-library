@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatClientState } from '@azure/acs-chat-declarative';
+import { ChatClientState } from 'chat-stateful-client';
 import { ChatBaseSelectorProps, communicationIdentifierToString } from '@azure/acs-chat-selector';
 import { ChatParticipant } from '@azure/communication-chat';
 

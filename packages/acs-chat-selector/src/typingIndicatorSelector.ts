@@ -2,15 +2,15 @@
 // Licensed under the MIT license.
 
 // @ts-ignore
-import { ChatClientState } from '@azure/acs-chat-declarative';
-import { CommunicationIdentifierAsKey, getCommunicationIdentifierAsKey } from '@azure/acs-chat-declarative';
+import { ChatClientState } from 'chat-stateful-client';
+import { CommunicationIdentifierAsKey, getCommunicationIdentifierAsKey } from 'chat-stateful-client';
 // @ts-ignore
 import { ChatBaseSelectorProps } from './baseSelectors';
 import { communicationIdentifierToString, getTypingIndicators, getParticipants, getUserId } from './baseSelectors';
 import * as reselect from 'reselect';
 import { ChatParticipant } from '@azure/communication-chat';
-import { TypingIndicatorEvent } from '@azure/acs-chat-declarative';
-import { WebUiChatParticipant } from 'react-components';
+import { TypingIndicatorEvent } from 'chat-stateful-client';
+import { CommunicationParticipant } from 'react-components';
 import { MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS, PARTICIPANTS_THRESHOLD } from './utils/constants';
 
 const filterTypingIndicators = (typingIndicators: TypingIndicatorEvent[], userId: string): TypingIndicatorEvent[] => {
@@ -34,10 +34,10 @@ const filterTypingIndicators = (typingIndicators: TypingIndicatorEvent[], userId
   return filteredTypingIndicators;
 };
 
-const convertSdkTypingIndicatorsToWebUiChatParticipants = (
+const convertSdkTypingIndicatorsToCommunicationParticipants = (
   typingIndicators: TypingIndicatorEvent[],
   participants: Map<string, ChatParticipant>
-): WebUiChatParticipant[] => {
+): CommunicationParticipant[] => {
   return typingIndicators.map((typingIndicator) => ({
     userId: communicationIdentifierToString(typingIndicator.sender),
     displayName: participants.get(getCommunicationIdentifierAsKey(typingIndicator.sender))?.displayName
@@ -59,7 +59,7 @@ export const typingIndicatorSelector = reselect.createSelector(
     // filter typing indicators to remove those that are from the duplicate users or current user as well as those older than a threshold
     const filteredTypingIndicators = filterTypingIndicators(typingIndicators, userId);
 
-    const typingUsers: WebUiChatParticipant[] = convertSdkTypingIndicatorsToWebUiChatParticipants(
+    const typingUsers: CommunicationParticipant[] = convertSdkTypingIndicatorsToCommunicationParticipants(
       filteredTypingIndicators,
       participants
     );

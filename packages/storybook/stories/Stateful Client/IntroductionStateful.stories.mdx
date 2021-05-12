@@ -1,0 +1,61 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
+
+<Meta title="Introduction to Stateful Client" />
+
+# Introduction to Stateful Client
+
+Azure Communication Service UI Library exposes stateful clients for calling and chat. 
+Stateful clients are a 1:1 representation of the `CallClient` and `ChatClient` exposed by the underlying low-level calling and chat SDKs.
+They simply add a state layer on top of it to help track state that can be rendered as part of the UI.
+They can be used in the same way as low-level clients would be used, so developers can use it to query the service and handle events (i.e. participant added or message recieved).
+Stateful clients are agnostic to any specific state management framework.
+
+## Component Binding with Stateful Clients
+
+To make it simpler to connect the stateful client with UI Components, the UI Library exposes helpers to generate props in the form of selectors and handlers.
+Selectors expose out data from the client state. Handlers provide default methods to handle actions from the UI Components and pass them to the stateful clients.
+These helpers aid in extracting the correct set of props required for different UI Components.
+They expose both data for the UI Components to render such as a message list or a participants remote video, and default handlers for UI Components action such as sending a message.
+For more information on the helpers look at documentation on [TODO SELECTORS LINK]() and [TODO HANDLERS LINK]().
+
+## Installing stateful clients
+
+Stateful clients are found as part of the `@azure/communication-react` package. 
+
+```bash
+
+npm i --save @azure/communication-react
+
+```
+
+## stateFulCallClient and statefulChatClient
+
+Using the `callClient` and `chatClient`, developer can generate a stateful version of the clients.
+REVISE SNIPPETS WITH FINAL PASS
+```tsx
+
+import {StatefulChatClient, StatefulCallClient} from "@azure/communication-react"
+
+const chatClient = new ChatClient(....)
+const statefulChatClient = new StatefulChatClient(chatClient)
+
+const callClient = new CallClient(....)
+const statefulCallClient = new StatefulCallClient(callClient)
+
+```
+
+Developer has access to both clients. The stateful clients are a 1:1 representation. 
+For state to be tracked, developers should use the stateful clients to query the service and listen to events.
+
+## Capabilities
+
+Stateful clients enable developers to access all the APIs that low-level calling and chat SDKs expose. 
+For a complete list of capabilities see [Calling Overview]() and [Chat Overview]().
+At a high level, stateful clients allow developers the following capabilities.
+
+| Capabilties                | Example                                                                                                           |
+|----------------------------|-------------------------------------------------------------------------------------------------------------------|
+| Read state                 | Query the state `statefulClient.state` to access properties such as `statefulClient.state.messsages`
+| Handle state event changes | Subscribe to events `statefulClient.onStateChange()` and unsubscribe from events `statefulClient.offStateChange()` |
+| Send commands              | Mute the microphone `statefulClient.mute()`

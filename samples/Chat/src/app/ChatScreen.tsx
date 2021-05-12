@@ -77,8 +77,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     if (isAllInitialParticipantsFetchedRef.current) {
       let isCurrentUserInChat = false;
       // Check if current user still in chat.
-      for (let i = 0; i < chatParticipantProps.chatParticipants.length; i++) {
-        if (chatParticipantProps.chatParticipants[i].userId === chatParticipantProps.userId) {
+      for (let i = 0; i < chatParticipantProps.participants.length; i++) {
+        if (chatParticipantProps.participants[i].userId === chatParticipantProps.myUserId) {
           isCurrentUserInChat = true;
           break;
         }
@@ -86,7 +86,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       // If there is no match in the participant list, then the current user is no longer in the chat.
       !isCurrentUserInChat && errorHandler();
     }
-  }, [chatParticipantProps.chatParticipants, chatParticipantProps.userId, errorHandler]);
+  }, [chatParticipantProps.participants, chatParticipantProps.myUserId, errorHandler]);
 
   // onRenderAvatar is a contoso callback. We need it to support emoji in Sample App. Sample App is currently on
   // components v0 so we're passing the callback at the component level. This might need further refactoring if this
