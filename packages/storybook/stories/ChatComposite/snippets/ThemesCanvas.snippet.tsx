@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { FluentThemeProvider } from '@azure/communication-react';
 import { ITheme } from '@fluentui/react';
 import { DefaultTheme, DarkTheme, TeamsTheme, WordTheme } from '@fluentui/theme-samples';
 import { text, radios } from '@storybook/addon-knobs';
 import React, { useState, useEffect, useRef } from 'react';
 import { ChatConfig } from 'react-composites';
-import { FluentThemeProvider } from '@azure/communication-react';
 import { COMPOSITE_STRING_CONNECTIONSTRING } from '../../CompositeStringUtils';
 import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE } from '../../constants';
 import { ContosoChatContainer } from './Container.snippet';
