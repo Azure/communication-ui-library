@@ -226,8 +226,8 @@ const ContosoChatContainer = (props: { config: ChatConfig | undefined }): JSX.El
   const { config } = props;
 
   // Creating an adapter is asynchronous.
-  // We trigger adapter creation or update on updated config via useEffect
-  // and trigger a rerender when the adapter becomes ready via useState.
+  // An update to `config` triggers a new adapter creation, via the useEffect block.
+  // When the adapter becomes ready, the state update triggers a re-render of the ChatComposite.
 
   const [adapter, setAdapter] = useState<ChatAdapter>();
   useEffect(() => {
