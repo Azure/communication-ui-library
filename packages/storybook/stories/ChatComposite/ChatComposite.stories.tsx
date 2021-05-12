@@ -7,7 +7,7 @@ import { CommunicationIdentityClient } from '@azure/communication-identity';
 import { Title, Description, Props, Heading, Source } from '@storybook/addon-docs/blocks';
 import { text } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ChatAdapter, ChatConfig, ChatComposite, createAzureCommunicationChatAdapter } from 'react-composites';
 
 import {
@@ -162,7 +162,7 @@ const createMessageBot = async (
   }, 5000);
 };
 
-const createChatConfig = async (resourceConnectionString: string): Promise<ChatConfig> => {
+const createChatConfig = async (resourceConnectionString: string, displayName: string): Promise<ChatConfig> => {
   const user = await createUser(resourceConnectionString);
   const bot = await createUser(resourceConnectionString);
 
@@ -180,7 +180,7 @@ const createChatConfig = async (resourceConnectionString: string): Promise<ChatC
   return {
     token: user.token,
     endpointUrl: endpointUrl.toString(),
-    displayName: 'User1',
+    displayName: displayName,
     threadId
   };
 };
@@ -190,34 +190,47 @@ const createChatConfig = async (resourceConnectionString: string): Promise<ChatC
 export const Chat: () => JSX.Element = () => {
   const [chatConfig, setChatConfig] = useState<ChatConfig>();
 
-  const connectionString = text(COMPOSITE_STRING_CONNECTIONSTRING, '', 'Server Simulator');
+  const configViaConnectionString = useRef({
+    connectionString: text(COMPOSITE_STRING_CONNECTIONSTRING, '', 'Server Simulator'),
+    displayName: text('Display Name', '', 'Server Simulator')
+  });
 
-  const { userId, token, endpointUrl, displayName, threadId } = {
+  const explicitConfig = useRef({
     userId: text('User Id', '', 'Required'),
     token: text('ACS Token', '', 'Required'),
     endpointUrl: text('Endpoint Url', '', 'Required'),
     displayName: text('Display Name', '', 'Required'),
     threadId: text('Thread Id', '', 'Required')
-  };
+  });
 
   useEffect(() => {
-    if (userId || token || endpointUrl || displayName || threadId) {
-      const customizedConfig = { userId, token, endpointUrl, displayName, threadId };
+    if (
+      explicitConfig.current.userId ||
+      explicitConfig.current.token ||
+      explicitConfig.current.endpointUrl ||
+      explicitConfig.current.displayName ||
+      explicitConfig.current.threadId
+    ) {
       try {
-        createChatClient(token, endpointUrl);
-        setChatConfig(customizedConfig);
+        createChatClient(explicitConfig.current.token, explicitConfig.current.endpointUrl);
+        setChatConfig(explicitConfig.current);
       } catch {
         setChatConfig(undefined);
       }
     } else {
       const fetchToken = async (): Promise<void> => {
-        if (connectionString) {
-          setChatConfig(await createChatConfig(connectionString));
+        if (configViaConnectionString.current.connectionString) {
+          setChatConfig(
+            await createChatConfig(
+              configViaConnectionString.current.connectionString,
+              configViaConnectionString.current.displayName
+            )
+          );
         }
       };
       fetchToken();
     }
-  }, [connectionString, userId, token, endpointUrl, displayName, threadId]);
+  }, [configViaConnectionString, explicitConfig]);
 
   return (
     <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
