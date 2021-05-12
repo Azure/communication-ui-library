@@ -68,9 +68,9 @@ export interface CallClientState {
 export interface DeclarativeCallClient extends CallClient {
     offStateChange(handler: (state: CallClientState) => void): void;
     onStateChange(handler: (state: CallClientState) => void): void;
-    startRenderVideo(callId: string, stream: LocalVideoStream | RemoteVideoStream, options?: CreateViewOptions): Promise<void>;
+    startRenderVideo(callId: string | undefined, stream: LocalVideoStream | RemoteVideoStream, options?: CreateViewOptions): Promise<void>;
     state: CallClientState;
-    stopRenderVideo(callId: string, stream: LocalVideoStream | RemoteVideoStream): void;
+    stopRenderVideo(callId: string | undefined, stream: LocalVideoStream | RemoteVideoStream): void;
 }
 
 // @public
@@ -83,6 +83,7 @@ export type DeviceManager = {
     microphones: AudioDeviceInfo[];
     speakers: AudioDeviceInfo[];
     deviceAccess?: DeviceAccess;
+    unparentedViews: VideoStreamRendererView[];
 };
 
 // @public
