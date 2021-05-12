@@ -221,7 +221,7 @@ export const Chat: () => JSX.Element = () => {
 
   return (
     <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
-      {chatConfig ? <ContosoChatContainer config={chatConfig} /> : <ContosoConfigHintBanner />}
+      {chatConfig ? <ContosoChatContainer config={chatConfig} /> : <ConfigHintBanner />}
     </div>
   );
 };
@@ -257,7 +257,7 @@ const ContosoChatContainer = (props: { config: ChatConfig | undefined }): JSX.El
   );
 };
 
-const ContosoConfigHintBanner = (): JSX.Element => {
+const ConfigHintBanner = (): JSX.Element => {
   const emptyConfigTips = COMPOSITE_STRING_REQUIREDCONNECTIONSTRING.replace('{0}', 'Chat');
   const emptyConfigParametersTips = 'Or you can fill out the required params to do so.';
   return <>{CompositeConnectionParamsErrMessage([emptyConfigTips, emptyConfigParametersTips])}</>;
