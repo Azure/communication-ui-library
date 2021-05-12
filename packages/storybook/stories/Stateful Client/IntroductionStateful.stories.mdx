@@ -5,7 +5,7 @@ import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/a
 
 # Introduction to Stateful Client
 
-Azure Communication Service UI Library exposes stateful clients for calling and chat. 
+Azure Communication Service UI Library exposes stateful clients for calling and chat.
 Stateful clients are a 1:1 representation of the `CallClient` and `ChatClient` exposed by the underlying low-level calling and chat SDKs.
 They simply add a state layer on top of it to help track state that can be rendered as part of the UI.
 They can be used in the same way as low-level clients would be used, so developers can use it to query the service and handle events (i.e. participant added or message recieved).
@@ -21,7 +21,7 @@ For more information on the helpers look at documentation on [TODO SELECTORS LIN
 
 ## Installing stateful clients
 
-Stateful clients are found as part of the `@azure/communication-react` package. 
+Stateful clients are found as part of the `@azure/communication-react` package.
 
 ```bash
 
@@ -33,6 +33,7 @@ npm i --save @azure/communication-react
 
 Using the `callClient` and `chatClient`, developer can generate a stateful version of the clients.
 REVISE SNIPPETS WITH FINAL PASS
+
 ```tsx
 
 import {StatefulChatClient, StatefulCallClient} from "@azure/communication-react"
@@ -45,17 +46,17 @@ const statefulCallClient = new StatefulCallClient(callClient)
 
 ```
 
-Developer has access to both clients. The stateful clients are a 1:1 representation. 
+Developer has access to both clients. The stateful clients are a 1:1 representation.
 For state to be tracked, developers should use the stateful clients to query the service and listen to events.
 
 ## Capabilities
 
-Stateful clients enable developers to access all the APIs that low-level calling and chat SDKs expose. 
+Stateful clients enable developers to access all the APIs that low-level calling and chat SDKs expose.
 For a complete list of capabilities see [Calling Overview]() and [Chat Overview]().
 At a high level, stateful clients allow developers the following capabilities.
 
-| Capabilties                | Example                                                                                                           |
-|----------------------------|-------------------------------------------------------------------------------------------------------------------|
-| Read state                 | Query the state `statefulClient.state` to access properties such as `statefulClient.state.messsages`
+| Capabilties                | Example                                                                                                            |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| Read state                 | Query the state `statefulClient.state` to access properties such as `statefulClient.state.messsages`               |
 | Handle state event changes | Subscribe to events `statefulClient.onStateChange()` and unsubscribe from events `statefulClient.offStateChange()` |
-| Send commands              | Mute the microphone `statefulClient.mute()`
+| Send commands              | Mute the microphone `statefulClient.mute()`                                                                        |

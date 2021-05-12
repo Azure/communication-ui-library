@@ -74,7 +74,7 @@ export class ParticipantSubscriber {
           .calls.get(this._callIdRef.callId)
           ?.remoteParticipants.get(this._participantKey)
           ?.videoStreams.get(stream.id);
-        if (existingDeclarativeStream) {
+        if (existingDeclarativeStream && existingDeclarativeStream.videoStreamRendererView) {
           stopRenderVideo(this._context, this._internalContext, this._callIdRef.callId, existingDeclarativeStream);
         }
       }
@@ -117,7 +117,7 @@ export class ParticipantSubscriber {
         .calls.get(this._callIdRef.callId)
         ?.remoteParticipants.get(this._participantKey)
         ?.videoStreams.get(stream.id);
-      if (existingDeclarativeStream) {
+      if (existingDeclarativeStream && existingDeclarativeStream.videoStreamRendererView) {
         stopRenderVideo(this._context, this._internalContext, this._callIdRef.callId, existingDeclarativeStream);
       }
       this._internalContext.removeRemoteVideoStream(this._callIdRef.callId, stream.id);

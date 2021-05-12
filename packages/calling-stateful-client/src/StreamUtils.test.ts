@@ -13,7 +13,13 @@ import { CommunicationUserKind } from '@azure/communication-common';
 import { Call, LocalVideoStream, RemoteParticipant, RemoteVideoStream } from './CallClientState';
 import { CallContext } from './CallContext';
 import { InternalCallContext } from './InternalCallContext';
-import { startRenderVideo, stopRenderVideo, stopRenderVideoAll, stopRenderVideoAllCalls } from './StreamUtils';
+import {
+  MAX_UNPARENTED_VIEWS_LENGTH,
+  startRenderVideo,
+  stopRenderVideo,
+  stopRenderVideoAll,
+  stopRenderVideoAllCalls
+} from './StreamUtils';
 import { createMockRemoteVideoStream } from './TestUtils';
 
 jest.mock('@azure/communication-calling', () => {
@@ -298,5 +304,89 @@ describe('stream utils', () => {
 
     expect(internalContext.getLocalVideoStreamRenderer(mockCallId)).not.toBeDefined();
     expect(context.getState().calls.get(mockCallId)?.localVideoStreams[0].videoStreamRendererView).not.toBeDefined();
+  });
+
+  test('is able to render LocalVideoStream not tied to a call and store in unparented state', async () => {
+    const { context, internalContext } = createContexts();
+    await startRenderVideo(context, internalContext, undefined, {
+      source: { name: 'a', id: 'a', deviceType: 'Unknown' }
+    } as LocalVideoStream);
+    expect(internalContext.getUnparentedStreamAndRenderer(0)).toBeDefined();
+    expect(context.getState().deviceManager.unparentedViews[0]).toBeDefined();
+  });
+
+  test('is able to render LocalVideoStream not tied to a call and stop rendering it by reference find', async () => {
+    const { context, internalContext } = createContexts();
+    const localVideoStream = {
+      source: { name: 'a', id: 'a', deviceType: 'Unknown' }
+    } as LocalVideoStream;
+
+    await startRenderVideo(context, internalContext, undefined, localVideoStream);
+    stopRenderVideo(context, internalContext, undefined, localVideoStream);
+
+    expect(internalContext.getUnparentedStreamAndRenderer(0)).not.toBeDefined();
+    expect(context.getState().deviceManager.unparentedViews[0]).not.toBeDefined();
+  });
+
+  test('is able to render LocalVideoStream not tied to a call and stop rendering it by property find', async () => {
+    const { context, internalContext } = createContexts();
+    const localVideoStream = {
+      source: { name: 'a', id: 'a', deviceType: 'Unknown' },
+      mediaStreamType: 'Video'
+    } as LocalVideoStream;
+    const differentReferenceLocalVideoStream = {
+      source: { name: 'a', id: 'a', deviceType: 'Unknown' },
+      mediaStreamType: 'Video'
+    } as LocalVideoStream;
+
+    await startRenderVideo(context, internalContext, undefined, differentReferenceLocalVideoStream);
+    stopRenderVideo(context, internalContext, undefined, localVideoStream);
+
+    expect(internalContext.getUnparentedStreamAndRenderer(0)).not.toBeDefined();
+    expect(context.getState().deviceManager.unparentedViews[0]).not.toBeDefined();
+  });
+
+  test('is able to render LocalVideoStream not tied to a call and not stop when incorrect stream used', async () => {
+    const { context, internalContext } = createContexts();
+    const localVideoStream = {
+      source: { name: 'a', id: 'a', deviceType: 'Unknown' },
+      mediaStreamType: 'Video'
+    } as LocalVideoStream;
+    const incorrectVideoStream = {
+      source: { name: 'b', id: 'b', deviceType: 'Unknown' },
+      mediaStreamType: 'Video'
+    } as LocalVideoStream;
+
+    await startRenderVideo(context, internalContext, undefined, localVideoStream);
+    let gotException = false;
+    try {
+      stopRenderVideo(context, internalContext, undefined, incorrectVideoStream);
+    } catch (e) {
+      gotException = true;
+    }
+
+    expect(gotException).toBeTruthy();
+    expect(internalContext.getUnparentedStreamAndRenderer(0)).toBeDefined();
+    expect(context.getState().deviceManager.unparentedViews[0]).toBeDefined();
+  });
+
+  test('is able to render LocalVideoStream not tied to a call but not exceed MAX_UNPARENTED_VIEWS_LENGTH', async () => {
+    const { context, internalContext } = createContexts();
+
+    let gotException = false;
+    for (let i = 0; i < MAX_UNPARENTED_VIEWS_LENGTH * 2; i++) {
+      const localVideoStream = {
+        source: { name: i.toString(), id: i.toString(), deviceType: 'Unknown' },
+        mediaStreamType: 'Video'
+      } as LocalVideoStream;
+      try {
+        await startRenderVideo(context, internalContext, undefined, localVideoStream);
+      } catch (e) {
+        gotException = true;
+      }
+    }
+
+    expect(gotException).toBeTruthy();
+    expect(context.getState().deviceManager.unparentedViews.length).toBe(MAX_UNPARENTED_VIEWS_LENGTH);
   });
 });
