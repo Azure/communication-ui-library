@@ -4,15 +4,15 @@
 import { ChatParticipant } from '@azure/communication-chat';
 import {
   CommunicationIdentifierAsKey,
-  TypingIndicator,
+  TypingIndicatorEvent,
   getCommunicationIdentifierAsKey
-} from '@azure/acs-chat-declarative';
+} from 'chat-stateful-client';
 import { typingIndicatorSelector } from './typingIndicatorSelector';
 import { communicationIdentifierToString } from './baseSelectors';
 
 describe('typingIndicatorSelector tests', () => {
   test('should filter typing indicators from participant that is the user', async (): Promise<void> => {
-    const orderedTypingIndicators: TypingIndicator[] = [
+    const orderedTypingIndicators: TypingIndicatorEvent[] = [
       {
         threadId: '1',
         version: '1',
@@ -35,7 +35,7 @@ describe('typingIndicatorSelector tests', () => {
   });
 
   test('should filter duplicate typing indicators from the same participant', async (): Promise<void> => {
-    const orderedTypingIndicators: TypingIndicator[] = [
+    const orderedTypingIndicators: TypingIndicatorEvent[] = [
       {
         threadId: '1',
         version: '1',
@@ -81,7 +81,7 @@ describe('typingIndicatorSelector tests', () => {
   });
 
   test('should list filtered typing indicators from oldest to most recent', async (): Promise<void> => {
-    const orderedTypingIndicators: TypingIndicator[] = [
+    const orderedTypingIndicators: TypingIndicatorEvent[] = [
       {
         threadId: '1',
         version: '1',
@@ -137,7 +137,7 @@ describe('typingIndicatorSelector tests', () => {
   });
 
   test('should filter typing indicators older than 8000 milliseconds', async (): Promise<void> => {
-    const orderedTypingIndicators: TypingIndicator[] = [
+    const orderedTypingIndicators: TypingIndicatorEvent[] = [
       {
         threadId: '1',
         version: '1',
@@ -191,7 +191,7 @@ describe('typingIndicatorSelector tests', () => {
   });
 
   test('should return empty array if there are 20 participants', async (): Promise<void> => {
-    const orderedTypingIndicators: TypingIndicator[] = [
+    const orderedTypingIndicators: TypingIndicatorEvent[] = [
       {
         threadId: '1',
         version: '1',

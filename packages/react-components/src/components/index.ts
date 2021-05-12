@@ -31,6 +31,12 @@ export type { StreamMediaProps } from './StreamMedia';
 export { ParticipantItem } from './ParticipantItem';
 export type { ParticipantItemProps, ParticipantItemStylesProps } from './ParticipantItem';
 
+export { ParticipantList } from './ParticipantList';
+export type { ParticipantListProps } from './ParticipantList';
+
+export { VideoGallery } from './VideoGallery';
+export type { VideoGalleryProps } from './VideoGallery';
+
 export { CameraButton } from './CameraButton';
 export type { CameraButtonProps } from './CameraButton';
 

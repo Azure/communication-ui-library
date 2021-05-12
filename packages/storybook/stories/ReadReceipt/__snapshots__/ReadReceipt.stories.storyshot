@@ -2,10 +2,10 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Read Receipt Read Receipt 1`] = `
 <div
-  className="css-75 root-0 body-1"
+  className="css-80 root-0 body-1"
 >
   <div
-    className="css-75"
+    className="css-80"
     data-uses-unhanded-props={true}
     dir="ltr"
   >

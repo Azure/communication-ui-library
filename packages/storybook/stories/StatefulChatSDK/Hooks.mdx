@@ -1,0 +1,180 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
+
+<Meta title="React Hooks" />
+
+# Hooks
+
+[React Hooks](https://reactjs.org/docs/hooks-intro.html) allows developers to use state and other react features without writing a class component.
+
+While you can choose any state management library such as Redux, we also provide a simple way to power react components with our Stateful SDK. We provide two [custom hooks](https://reactjs.org/docs/hooks-custom.html) in our library, [usePropsFor()](#usePropsFor) and [useSelector()](#useSelector), that allow you to subscribe to changes in the SDK state and bind to our UI components. After binding with the custom hooks a SDK state change will trigger a re-render of the UI component, and events on the component will call into the SDK clients.
+
+## Before you start
+
+Before you start, you need to wrap your whole App with Providers. They give you access to global variables (like Stateful ChatClient/CallClient) for our hooks to consume. There are different Providers for building apps with varying functionality:
+
+### Chat
+
+For your Chat app, use the `ChatClientProvider` and `ChatThreadClientProvider` to give hooks access to the `ChatClient` and `ChatThreadClient`. `StatefulChatClient` and `StatefulChatThreadClient` instances need to be passed to the Provider when you wrap your app, check [ChatSDKIntroduction]() to see how to create them.
+
+```tsx
+ReactDOM.render(
+  <ChatClientProvider chatClient={statefulChatClient}>
+    <ChatThreadClientProvider chatThreadClient={statefulChatThreadClient}>
+      <App />
+    <ChatThreadClientProvider>
+  </ChatClientProvider>,
+  document.getElementById('root')
+);
+```
+
+### Calling
+
+TBD
+
+## usePropsFor() <a name="usePropsFor"></a>
+
+```tsx
+const result: any = usePropsFor(component: React.FunctionalComponent);
+```
+
+If you are using React Component from our communication-react components, usePropsFor is the go-to hook. It provides all the required props to power a feature component. It subscribes to state changes of stateful clients, gets props designed for your component, and triggers a new re-render whenever the props change.
+
+Check [feature component list]() for supported components.
+
+### _usePropsFor_ Example
+
+```tsx
+import React from 'react';
+import { MessageThread } from '@azure/acs-chat-component';
+import { useSelector } from '@azure/acs-chat-selector';
+
+export const ChatScreen = () => {
+  const props = usePropsFor(MessageThread);
+  return <MessageThread {...props} />;
+};
+```
+
+### Under the hood of usePropsFor()
+
+usePropsFor() is a function that provides all you need to run a component in our library. It combines 2 tasks for generating the component's props for you:
+
+1. Finds the right selector designed for the component, then call useSelector()
+2. Constructs a set of handlers tailored for the component
+
+## useSelector() <a name="useSelector"></a>
+
+```ts
+const props: any = useSelector(selector: (state, props) => any, selectorProps: any);
+```
+
+useSelector allows you to provide your own [selector]() function that maps the stateful SDK state to your own props for your own component. It subscribes to state changes and runs the selector every time when anything changes in the state, but note that it will only trigger a component re-render when the return value of the selector changes.
+
+### When to call useSelector()
+
+By default, if you are satisfied with props we prepared for component library, all you need is to call usePropsFor() to power our component. If just one or two props need to be filtered or modified, directly overriding properties from return value of usePropsFor is recommended. But sometimes you might want to call use selector instead when:
+
+1. Override the way how it generates props from state
+2. Write your own components (which we don't provide dedicated selectors for it)
+
+### Basic Example:
+
+```tsx
+const userInfoSelector = (state) => ({
+  id: state.userId
+  userName: state.displayName
+});
+
+const chatInfoProps = useSelector(userInfoSelector);
+
+const ChatInfo = ({id: string, userName: string}) => {
+  return <div> userName: {userName}, id: {id} </div>;
+}
+
+<ChatInfo {...chatInfoProps} />
+```
+
+### Memoizing your selector (Recommended for optimized perf)
+
+While this basic example will work without problems, but it is not a good way to optimize your app perf, we recommend to use the reselect library to enable memoization for selectors to get better performance, check [reselect's official docs](https://redux-toolkit.js.org/api/createSelector#createselector) for more information.
+
+```tsx
+import { createSelector } from 'reselect';
+
+const chatInfoSelector = createSelector([(state) => state.userId, (state) => state.displayName], (id, userName) => ({
+  id,
+  userName
+}));
+
+const chatInfoProps = useSelector(userIdSelector);
+
+const ChatInfo = ({ id: string, userName: string }) => {
+  return (
+    <div>
+      {' '}
+      userName: {userName}, id: {id}{' '}
+    </div>
+  );
+};
+
+<ChatInfo {...chatInfoProps} />;
+```
+
+## Override default behaviors
+
+While we provide a set of default props(which includes data and handler functions) for our UI library component, you might find it doesn't fit all you needs, there are several different ways you can choose to override the default behavior.
+
+### Write your own handler function
+
+In some situations, you may want to override default behavior and place your own API call (like call another service, or call another API in our stateful SDK). Here is an example of how to change the message before using the stateful client to send it.
+
+```tsx
+const sendBoxProps = usePropsFor(SendBox);
+// This hook will get stateful client you created
+const chatThreadClient = useChatThreadClient();
+
+const onMessageSend = useCallback(
+  (message: string) => {
+    const sendMessageRequest = {
+      `✉: ${content}`,
+      senderDisplayName: chatClient.getState().displayName
+    };
+    // directly call into stateful client
+    await chatThreadClient.sendMessage(sendMessageRequest);
+  },
+  [chatThreadClient]
+);
+
+<SendBox {...sendBoxProps} onMessageSend={onMessageSend} />;
+```
+
+### Override selector
+
+With the hooks that we provide it is also possible to override a selector without re-writing the default handlers.
+
+```tsx
+const customSelector = createSelector(....); // create your own selector
+const messageThreadProps = useSelector(customSelector);
+const messageThreadHandlers = useHandlers(MessageThread);
+
+
+<MessageThread {...messageThreadProps} {...messageThreadHandlers} />
+```
+
+### Choose your own overridden combination
+
+By calling useSelector/usePropsFor, you can get the right combination of default selector + overrided handler/default handler + overrided selector for your own needs. You can even entirely override the whole behavior by writing your own handler and selectors:
+
+```tsx
+const customSelector = createSelector(....); // create your own selector
+const messageThreadProps = useSelector(customSelector);
+// This hook will get stateful client you created
+const chatThreadClient = useChatThreadClient();
+
+// Create your own handlers
+const onMessageSeen = useCallback((message: string) => {
+  await chatThreadClient.sendReadReceipt({ chatMessageId });
+}, [chatThreadClient]);
+
+<MessageThread {...messageThreadProps} onMessageSeen={onMessageSeen} />
+```

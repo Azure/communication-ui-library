@@ -53,6 +53,10 @@
     "postpack": "copyfiles -E \"./*.tgz\" private-preview"
   },
   "devDependencies": {
+    "calling-stateful-client": "~1.0.0-beta",
+    "@azure/acs-calling-selector": "~1.0.0-beta",
+    "chat-stateful-client": "~1.0.0-beta",
+    "@azure/acs-chat-selector": "~1.0.0-beta",
     "@microsoft/api-documenter": "~7.12.11",
     "@microsoft/api-extractor": "~7.13.2",
     "@testing-library/jest-dom": "^5.11.4",

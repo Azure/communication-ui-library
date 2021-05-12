@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DeclarativeCallClient } from '@azure/acs-calling-declarative';
-import { createDefaultHandlersForComponent } from '@azure/acs-calling-selector';
+import { DeclarativeCallClient } from 'calling-stateful-client';
+import { createDefaultCallingHandlersForComponent } from '@azure/acs-calling-selector';
 
 import { useCallClient, useCallingContext, useDeviceManager, useCall } from 'react-composites';
 
@@ -15,5 +15,5 @@ export const useHandlers = <PropsT>(component: (props: PropsT) => ReactElement |
   const deviceManager = useDeviceManager();
   const call = useCall();
 
-  return createDefaultHandlersForComponent(callClient, callAgent, deviceManager, call, component);
+  return createDefaultCallingHandlersForComponent(callClient, callAgent, deviceManager, call, component);
 };

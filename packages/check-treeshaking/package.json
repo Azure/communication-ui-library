@@ -14,8 +14,8 @@
   },
   "dependencies": {
     "react-components": "1.0.0-beta",
-    "@azure/acs-chat-declarative": "1.0.0-beta",
-    "@azure/acs-calling-declarative": "1.0.0-beta",
+    "chat-stateful-client": "1.0.0-beta",
+    "calling-stateful-client": "1.0.0-beta",
     "@azure/acs-chat-selector": "1.0.0-beta",
     "@azure/acs-calling-selector": "1.0.0-beta"
   },

@@ -29,11 +29,12 @@ export const InteractiveParticipantListExample: () => JSX.Element = () => {
   const participants = [participant1, participant2, participant3];
 
   return (
-    <>
-      <div style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Participants</div>
-      <Stack style={{ width: '12.5rem' }}>
+    <Stack>
+      <div style={{ fontSize: '1.5rem', marginBottom: '1rem', fontFamily: 'Segoe UI' }}>Participants</div>
+      <Stack>
         {participants.map((participant) => (
           <ParticipantItem
+            key={`${participant.name}Key`}
             name={participant.name}
             menuItems={[
               {
@@ -52,6 +53,6 @@ export const InteractiveParticipantListExample: () => JSX.Element = () => {
           />
         ))}
       </Stack>
-    </>
+    </Stack>
   );
 };

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add selectors and handlers for Calling",
+  "packageName": "calling-stateful-client",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}

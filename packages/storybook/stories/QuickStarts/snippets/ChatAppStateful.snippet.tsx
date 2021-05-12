@@ -1,7 +1,7 @@
-import { chatClientDeclaratify, DeclarativeChatClient } from '@azure/acs-chat-declarative';
 import { ChatClient, ChatThreadClient } from '@azure/communication-chat';
 import { AzureCommunicationUserCredential } from '@azure/communication-common';
 import { FluentThemeProvider, MessageThread, SendBox, MessageThreadProps, SendBoxProps } from '@azure/communication-ui';
+import { createStatefulChatClient, StatefulChatClient } from 'chat-stateful-client';
 import React, { useState, useEffect } from 'react';
 
 function App(): JSX.Element {
@@ -12,7 +12,7 @@ function App(): JSX.Element {
   const threadId = 'INSERT THREAD ID ';
   const displayName = 'INSERT DISPLAY NAME';
 
-  const [statefulChatClient, setStatefulChatClient] = useState<DeclarativeChatClient>();
+  const [statefulChatClient, setStatefulChatClient] = useState<StatefulChatClient>();
   const [chatThreadClient, setChatThreadClient] = useState<ChatThreadClient>();
   const [messageThreadProps] = useState<MessageThreadProps>();
   const [sendBoxProps] = useState<SendBoxProps>();
@@ -28,7 +28,7 @@ function App(): JSX.Element {
 
   //Add state to the low-level chat client
   setStatefulChatClient(
-    chatClientDeclaratify(new ChatClient(endpointUrl, tokenCredential), { userId: userId, displayName: displayName })
+    createStatefulChatClient(new ChatClient(endpointUrl, tokenCredential), { userId: userId, displayName: displayName })
   );
 
   return (

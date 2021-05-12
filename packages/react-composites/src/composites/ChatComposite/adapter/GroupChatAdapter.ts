@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatThreadClientState } from '@azure/acs-chat-declarative';
+import { ChatThreadClientState } from 'chat-stateful-client';
 import { ChatMessage, ChatParticipant } from '@azure/communication-chat';
 
 export type GroupChatUIState = {

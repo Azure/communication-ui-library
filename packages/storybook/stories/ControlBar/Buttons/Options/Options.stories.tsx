@@ -3,7 +3,7 @@
 
 import { OptionsButton } from '@azure/communication-react';
 import { IContextualMenuProps } from '@fluentui/react';
-import { Canvas, Description, Heading, Props, Source, SourceState, Title } from '@storybook/addon-docs/blocks';
+import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import { boolean } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
@@ -26,6 +26,10 @@ const getDocs: () => JSX.Element = () => {
     <>
       <Title>OptionsButton</Title>
       <Description of={OptionsButton} />
+      <Description>
+        Note: When overriding a render, like using `onRenderIcon` or `onRenderText`, don not forget to add a unique key
+        to each element to avoid warning for children in a list.
+      </Description>
 
       <Heading>Importing</Heading>
       <Source code={importStatement} />
@@ -34,29 +38,26 @@ const getDocs: () => JSX.Element = () => {
       <Description>
         The default `OptionsButton` component shows an horizontal `More` icon with no label as in the example below.
       </Description>
-      <Canvas withSource={SourceState.NONE}>
+      <Canvas mdxSource={OptionsButtonDefaultExampleText}>
         <OptionsButtonDefaultExample />
       </Canvas>
-      <Source code={OptionsButtonDefaultExampleText} />
 
       <Heading>OptionsButton with default label</Heading>
       <Description>
         You can display the button label which, by default, will show below the icon as `Options`.
       </Description>
-      <Canvas withSource={SourceState.NONE}>
+      <Canvas mdxSource={OptionsButtonWithLabelExampleText}>
         <OptionsButtonWithLabelExample />
       </Canvas>
-      <Source code={OptionsButtonWithLabelExampleText} />
 
       <Heading>Custom OptionsButton Styles</Heading>
       <Description>
         You can change the styles of the `OptionsButton` as you would customized any Button (styles, primary,
         onRenderIcon, onRenderText, etc... ).
       </Description>
-      <Canvas withSource={SourceState.NONE}>
+      <Canvas mdxSource={OptionsButtonCustomExampleText}>
         <OptionsButtonCustomExample />
       </Canvas>
-      <Source code={OptionsButtonCustomExampleText} />
 
       <Heading>OptionsButton Props</Heading>
       <Description>

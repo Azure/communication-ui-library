@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "change StatefulChatClient.state to getState()",
+  "packageName": "chat-stateful-client",
+  "email": "domessin@microsoft.com",
+  "dependentChangeType": "patch"
+}

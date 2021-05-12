@@ -4,9 +4,9 @@
 // @ts-ignore
 import * as reselect from 'reselect';
 // @ts-ignore
-import * as callingDeclarative from '@azure/acs-calling-declarative';
+import * as callingDeclarative from 'calling-stateful-client';
 // @ts-ignore
-import { BaseSelectorProps } from './baseSelectors';
+import { CallingBaseSelectorProps } from './baseSelectors';
 import { getCall, getDeviceManager } from './baseSelectors';
 // @ts-ignore
 import { AudioDeviceInfo, VideoDeviceInfo } from '@azure/communication-calling';
@@ -36,6 +36,6 @@ export const optionsButtonSelector = reselect.createSelector([getDeviceManager, 
     cameras: deviceManager.cameras,
     selectedMicrophone: deviceManager.selectedMicrophone,
     selectedSpeaker: deviceManager.selectedSpeaker,
-    selectedCamera: call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video')?.source
+    selectedCamera: deviceManager.selectedCamera
   };
 });

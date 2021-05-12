@@ -8,7 +8,7 @@ import {
 } from './styles/TypingIndicator.styles';
 
 import React from 'react';
-import { BaseCustomStylesProps, WebUiChatParticipant } from '../types';
+import { BaseCustomStylesProps, CommunicationParticipant } from '../types';
 import { IStyle, mergeStyles, Stack } from '@fluentui/react';
 
 export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
@@ -23,11 +23,11 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
  */
 export interface TypingIndicatorProps {
   /** List of the typing users. */
-  typingUsers: WebUiChatParticipant[];
+  typingUsers: CommunicationParticipant[];
   /** The string to render after listing all users' display name. For example ' are typing ...'. */
   typingString?: string;
   /** Callback to render typing users */
-  onRenderUsers?: (users: WebUiChatParticipant[]) => JSX.Element;
+  onRenderUsers?: (users: CommunicationParticipant[]) => JSX.Element;
   /**
    * Allows users to pass in an object contains custom CSS styles.
    * @Example
@@ -41,12 +41,12 @@ export interface TypingIndicatorProps {
 const MAXIMUM_LENGTH_OF_TYPING_USERS = 35;
 
 const getDefaultComponents = (
-  typingUsers: WebUiChatParticipant[],
+  typingUsers: CommunicationParticipant[],
   styles?: TypingIndicatorStylesProps
 ): JSX.Element[] => {
   const displayComponents: JSX.Element[] = [];
 
-  const typingUsersMentioned: WebUiChatParticipant[] = [];
+  const typingUsersMentioned: CommunicationParticipant[] = [];
   let countOfUsersMentioned = 0;
   let totalCharacterCount = 0;
 
@@ -68,7 +68,7 @@ const getDefaultComponents = (
     displayComponents.push(
       <span
         className={mergeStyles(typingIndicatorListStyle, styles?.typingUserDisplayName)}
-        key={'typing indicator display string ' + index.toString()}
+        key={`typing indicator display string ${index}`}
       >
         {index < typingUsers.length - 1 ? typingUser.displayName + ', ' : typingUser.displayName}
       </span>
@@ -78,7 +78,7 @@ const getDefaultComponents = (
   const countOfUsersNotMentioned = typingUsers.length - typingUsersMentioned.length;
   if (countOfUsersNotMentioned > 0) {
     displayComponents.push(
-      <span className={mergeStyles(typingIndicatorVerbStyle, styles?.typingString)}>
+      <span className={mergeStyles(typingIndicatorVerbStyle, styles?.typingString)} key={'UsersCountKey'}>
         {` and ${countOfUsersNotMentioned} other${countOfUsersNotMentioned === 1 ? '' : 's'}`}
       </span>
     );
@@ -87,7 +87,7 @@ const getDefaultComponents = (
   return displayComponents;
 };
 
-const defaultTypingString = (typingUsers: WebUiChatParticipant[]): string => {
+const defaultTypingString = (typingUsers: CommunicationParticipant[]): string => {
   return typingUsers.length > 0 ? (typingUsers.length > 1 ? ' are typing...' : ' is typing...') : '';
 };
 
@@ -104,7 +104,7 @@ export const TypingIndicator = (props: TypingIndicatorProps): JSX.Element => {
   return (
     <Stack horizontal className={mergeStyles(typingIndicatorContainerStyle, styles?.root)}>
       {onRenderUsers ? onRenderUsers(typingUsersToRender) : getDefaultComponents(typingUsersToRender, styles)}
-      <span className={mergeStyles(typingIndicatorVerbStyle, styles?.typingString)}>
+      <span className={mergeStyles(typingIndicatorVerbStyle, styles?.typingString)} key={'TypingStringKey'}>
         {typingString ?? defaultTypingString(typingUsersToRender)}
       </span>
     </Stack>

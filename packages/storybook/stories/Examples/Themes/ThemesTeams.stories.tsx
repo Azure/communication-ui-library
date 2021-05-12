@@ -11,10 +11,25 @@ import {
   ScreenShareButton,
   VideoTile
 } from '@azure/communication-react';
+import { Description, Heading, Source, Title } from '@storybook/addon-docs/blocks';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
-import { getDocs } from './ThemesDocs';
+
+const exampleTeamsTheme = require('!!raw-loader!./snippets/ThemesTeams.snippet.tsx').default;
+
+const getDocs: () => JSX.Element = () => {
+  return (
+    <>
+      <Title>Themes</Title>
+      <Description>
+        Example Themes that can be leveraged by developers to provide color schemes to UI Components
+      </Description>
+      <Heading>Teams-Like Theme</Heading>
+      <Source code={exampleTeamsTheme} />
+    </>
+  );
+};
 
 const TeamsTheme = {
   palette: {

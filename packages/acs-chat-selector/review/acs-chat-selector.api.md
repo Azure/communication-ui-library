@@ -4,25 +4,32 @@
 
 ```ts
 
-import { ChatClientState } from '@azure/acs-chat-declarative';
-import { ChatMessageWithStatus } from '@azure/acs-chat-declarative';
+import { ChatClientState } from 'chat-stateful-client';
+import { ChatMessageWithStatus } from 'chat-stateful-client';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationIdentifier } from '@azure/communication-common';
-import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
-import { MessageStatus } from '@azure/acs-chat-declarative';
+import { CommunicationParticipant } from 'react-components';
+import { Message } from 'react-components';
+import { MessageThread } from 'react-components';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
 import * as reselect from 'reselect';
-import { TypingIndicator } from '@azure/acs-chat-declarative';
+import { SendBox } from 'react-components';
+import { StatefulChatClient } from 'chat-stateful-client';
+import { TypingIndicator } from 'react-components';
+import { TypingIndicatorEvent } from 'chat-stateful-client';
 
 // @public (undocumented)
-export type BaseSelectorProps = {
-    threadId: string;
-};
+export type AreEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
 // @public (undocumented)
 export type CallbackType<KeyT, ArgsT extends any[], FnRetT> = (memoizedFn: FunctionWithKey<KeyT, ArgsT, FnRetT>) => FnRetT[];
+
+// @public (undocumented)
+export type ChatBaseSelectorProps = {
+    threadId: string;
+};
 
 // @public
 export const ChatClientProvider: (props: ChatClientProviderProps) => JSX.Element;
@@ -30,34 +37,18 @@ export const ChatClientProvider: (props: ChatClientProviderProps) => JSX.Element
 // @public (undocumented)
 export type ChatClientProviderProps = {
     children: React_2.ReactNode;
-    chatClient: DeclarativeChatClient;
+    chatClient: StatefulChatClient;
 };
 
 // @public (undocumented)
-export type ChatMessage = Message<'chat'>;
-
-// @public
-export type ChatMessagePayload = {
-    messageId?: string;
-    content?: string;
-    createdOn?: Date;
-    senderId?: string;
-    senderDisplayName?: string;
-    status?: MessageStatus;
-    attached?: MessageAttachedStatus | boolean;
-    mine?: boolean;
-    clientMessageId?: string;
-};
-
-// @public (undocumented)
-export const chatParticipantListSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
-    userId: string;
+export const chatParticipantListSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
+    myUserId: string;
     displayName: string;
-    chatParticipants: WebUiChatParticipant[];
+    participants: CommunicationParticipant[];
 }, (res1: string, res2: Map<string, ChatParticipant>, res3: string) => {
-    userId: string;
+    myUserId: string;
     displayName: string;
-    chatParticipants: WebUiChatParticipant[];
+    participants: CommunicationParticipant[];
 }>;
 
 // @public
@@ -70,7 +61,7 @@ export type ChatThreadClientProviderProps = {
 };
 
 // @public (undocumented)
-export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
+export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     userId: string;
     disableReadReceipt: boolean;
     messages: Message<"chat">[];
@@ -82,33 +73,24 @@ export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientSta
 
 // @public (undocumented)
 export type CommonProperties<A, B> = {
-    [P in keyof A & keyof B]: A[P] extends B[P] ? (A[P] extends B[P] ? P : never) : never;
+    [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
 
 // @public (undocumented)
 export const communicationIdentifierToString: (i: CommunicationIdentifier | undefined) => string;
 
 // @public (undocumented)
-export const createDefaultHandlers: (chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient) => DefaultHandlers;
+export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => DefaultChatHandlers;
 
 // @public (undocumented)
-export const createDefaultHandlersForComponent: <Props>(chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultHandlers, CommonProperties<DefaultHandlers, Props>>;
+export const createDefaultChatHandlersForComponent: <Props>(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, Props>>;
 
 // @public (undocumented)
-export type CustomMessage = Message<'custom'>;
-
-// @public (undocumented)
-export type CustomMessagePayload = {
-    messageId: string;
-    content?: string;
-};
-
-// @public (undocumented)
-export type DefaultHandlers = {
+export type DefaultChatHandlers = {
     onMessageSend: (content: string) => Promise<void>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
     onTyping: () => Promise<void>;
-    removeThreadMember: (userId: string) => Promise<void>;
+    onParticipantRemove: (userId: string) => Promise<void>;
     updateThreadTopicName: (topicName: string) => Promise<void>;
     onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
 };
@@ -116,28 +98,14 @@ export type DefaultHandlers = {
 // @public (undocumented)
 export type FunctionWithKey<KeyT, ArgsT extends any[], RetT> = (key: KeyT, ...args: ArgsT) => RetT;
 
+// @public (undocumented)
+export type GetSelector<Component> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof chatThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : never;
+
 // @public
 export const memoizeFnAll: <KeyT, ArgsT extends any[], FnRetT, CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>>(fnToMemoize: FunctionWithKey<KeyT, ArgsT, FnRetT>, shouldCacheUpdate?: (args1: any, args2: any) => boolean) => (callback: CallBackT) => FnRetT[];
 
 // @public (undocumented)
-export type Message<T extends MessageTypes> = {
-    type: T;
-    payload: T extends 'chat' ? ChatMessagePayload : T extends 'system' ? SystemMessagePayload : CustomMessagePayload;
-};
-
-// @public (undocumented)
-export enum MessageAttachedStatus {
-    // (undocumented)
-    BOTTOM = "bottom",
-    // (undocumented)
-    TOP = "top"
-}
-
-// @public (undocumented)
-export type MessageTypes = 'chat' | 'system' | 'custom';
-
-// @public (undocumented)
-export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
+export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     displayName: string;
     userId: string;
     disabled: boolean;
@@ -148,45 +116,29 @@ export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState,
 }>;
 
 // @public (undocumented)
-export type SystemMessage = Message<'system'>;
-
-// @public (undocumented)
-export type SystemMessagePayload = {
-    messageId: string;
-    content?: string;
-    iconName?: string;
-};
-
-// @public (undocumented)
-export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClientState, BaseSelectorProps, {
-    typingUsers: WebUiChatParticipant[];
-}, (res1: TypingIndicator[], res2: Map<string, ChatParticipant>, res3: string) => {
-    typingUsers: WebUiChatParticipant[];
+export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
+    typingUsers: CommunicationParticipant[];
+}, (res1: TypingIndicatorEvent[], res2: Map<string, ChatParticipant>, res3: string) => {
+    typingUsers: CommunicationParticipant[];
 }>;
 
 // @public (undocumented)
-export const useChatClient: () => DeclarativeChatClient;
+export const useChatClient: () => StatefulChatClient;
 
 // @public (undocumented)
 export const useChatThreadClient: () => ChatThreadClient;
 
 // @public (undocumented)
-export const useHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Pick<DefaultHandlers, CommonProperties<DefaultHandlers, PropsT>>;
+export const useHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, PropsT>>;
 
 // @public (undocumented)
-export const usePropsFor: <SelectorT extends (state: ChatClientState, props: any) => any>(component: React_2.FunctionComponent<any>) => ReturnType<SelectorT>;
+export const usePropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => ReturnType<GetSelector<Component>> & Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, Parameters<Component>[0]>>;
 
 // @public (undocumented)
 export const useSelector: <SelectorT extends (state: ChatClientState, props: any) => any>(selector: SelectorT, selectorProps?: Parameters<SelectorT>[1] | undefined) => ReturnType<SelectorT>;
 
 // @public (undocumented)
 export const useThreadId: () => string;
-
-// @public (undocumented)
-export type WebUiChatParticipant = {
-    userId: string;
-    displayName?: string;
-};
 
 
 // (No @packageDocumentation comment for this package)

@@ -8,24 +8,22 @@ import { AbortSignalLike } from '@azure/core-http';
 import { AcceptCallOptions } from '@azure/communication-calling';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
-import { Call } from '@azure/acs-calling-declarative';
+import { Call } from 'calling-stateful-client';
 import { Call as Call_2 } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
-import { CallClient } from '@azure/communication-calling';
 import { CallClientOptions } from '@azure/communication-calling';
 import { CallState } from '@azure/communication-calling';
 import { ChatClient } from '@azure/communication-chat';
 import { ChatMessage as ChatMessage_2 } from '@azure/communication-chat';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
-import { ChatThreadClientState } from '@azure/acs-chat-declarative';
+import { ChatThreadClientState } from 'chat-stateful-client';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { ControlBarProps } from 'react-components';
 import { CreateViewOptions } from '@azure/communication-calling';
-import { DeclarativeChatClient } from '@azure/acs-chat-declarative';
-import { DeviceManager } from '@azure/acs-calling-declarative';
-import { DeviceManager as DeviceManager_2 } from '@azure/communication-calling';
+import { DeclarativeCallClient } from 'calling-stateful-client';
+import { DeviceManager } from 'calling-stateful-client';
 import { Dispatch } from 'react';
 import { ErrorBarProps } from 'react-components';
 import { ErrorInfo } from 'react';
@@ -35,18 +33,20 @@ import { IButtonStyles } from '@fluentui/react';
 import { IncomingCall } from '@azure/communication-calling';
 import { IStyle } from '@fluentui/react';
 import { JoinCallOptions } from '@azure/communication-calling';
-import { LocalVideoStream } from '@azure/acs-calling-declarative';
+import { LocalVideoStream } from 'calling-stateful-client';
 import { LocalVideoStream as LocalVideoStream_2 } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { PhoneNumberKind } from '@azure/communication-common';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
-import { RemoteParticipant } from '@azure/acs-calling-declarative';
+import { RemoteParticipant } from 'calling-stateful-client';
 import { RemoteParticipant as RemoteParticipant_2 } from '@azure/communication-calling';
-import { RemoteVideoStream } from '@azure/acs-calling-declarative';
+import { RemoteVideoStream } from 'calling-stateful-client';
 import { RemoteVideoStream as RemoteVideoStream_2 } from '@azure/communication-calling';
 import { ScalingMode } from '@azure/communication-calling';
 import { SetStateAction } from 'react';
+import { StatefulChatClient } from 'chat-stateful-client';
+import { StatefulDeviceManager } from 'calling-stateful-client';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 
@@ -55,7 +55,7 @@ export const areStreamsEqual: (prevStream: LocalVideoStream_2, newStream: LocalV
 
 // @public (undocumented)
 export class AzureCommunicationChatAdapter implements GroupChatAdapter {
-    constructor(chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient);
+    constructor(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient);
     // (undocumented)
     getState: () => GroupChatState;
     // (undocumented)
@@ -145,12 +145,12 @@ export type CallingContextType = {
     setUserId: Dispatch<SetStateAction<string>>;
     displayName: string;
     setDisplayName: Dispatch<SetStateAction<string>>;
-    callClient: CallClient;
-    setCallClient: Dispatch<SetStateAction<CallClient>>;
+    callClient: DeclarativeCallClient;
+    setCallClient: Dispatch<SetStateAction<DeclarativeCallClient>>;
     callAgent: CallAgent | undefined;
     setCallAgent: Dispatch<SetStateAction<CallAgent | undefined>>;
-    deviceManager: DeviceManager_2 | undefined;
-    setDeviceManager: Dispatch<SetStateAction<DeviceManager_2 | undefined>>;
+    deviceManager: StatefulDeviceManager | undefined;
+    setDeviceManager: Dispatch<SetStateAction<StatefulDeviceManager | undefined>>;
     audioDevicePermission: DevicePermissionState;
     setAudioDevicePermission: Dispatch<SetStateAction<DevicePermissionState>>;
     videoDevicePermission: DevicePermissionState;
@@ -385,9 +385,6 @@ export const CONNECTING = "Connecting";
 
 // @public (undocumented)
 export const convertSdkRemoteParticipantToGalleryParticipant: (remoteParticipantFromSDK: RemoteParticipant_2) => GalleryParticipant;
-
-// @public (undocumented)
-export const convertSdkRemoteParticipantToListParticipant: (participant: RemoteParticipant_2, onRemove?: (() => void) | undefined, onMute?: (() => void) | undefined) => ListParticipant;
 
 // @public (undocumented)
 export const COOL_PERIOD_REFRESH_INVERVAL = 1000;
@@ -715,17 +712,6 @@ export interface JoinCallResult {
 }
 
 // @public (undocumented)
-export type ListParticipant = {
-    key: string;
-    displayName: string;
-    state: string;
-    isScreenSharing: boolean;
-    isMuted: boolean;
-    onRemove?: () => void;
-    onMute?: () => void;
-};
-
-// @public (undocumented)
 export type LocalDeviceSettingsContainerProps = {
     videoDeviceList: VideoDeviceInfo[];
     audioDeviceList: AudioDeviceInfo[];
@@ -933,7 +919,7 @@ export const useCall: () => Call_2 | undefined;
 export const useCallAgent: () => boolean;
 
 // @public (undocumented)
-export const useCallClient: () => CallClient;
+export const useCallClient: () => DeclarativeCallClient;
 
 // @public (undocumented)
 export const useCallContext: () => CallContextType;
@@ -948,12 +934,18 @@ export const useChatClient: () => ChatClient;
 export const useChatThreadClient: () => ChatThreadClient | undefined;
 
 // @public (undocumented)
-export const useDeviceManager: () => DeviceManager_2 | undefined;
+export const useDeviceManager: () => StatefulDeviceManager | undefined;
+
+// @public (undocumented)
+export const useDisplayName: () => string | undefined;
 
 // Warning: (ae-forgotten-export) The symbol "UseGroupCallType" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
 export const useGroupCall: () => UseGroupCallType;
+
+// @public (undocumented)
+export const useIdentifier: () => string | undefined;
 
 // Warning: (ae-forgotten-export) The symbol "UseIncomingCallType" needs to be exported by the entry point index.d.ts
 //
@@ -1035,12 +1027,6 @@ export interface VideoContainerProps {
     // (undocumented)
     videoStreamElement: HTMLElement | null;
 }
-
-// @public
-export type WebUiChatParticipant = {
-    userId: string;
-    displayName?: string;
-};
 
 // @public
 export const WithErrorHandling: (Component: (props: any & ErrorHandlingProps) => JSX.Element, props: any & ErrorHandlingProps) => JSX.Element;

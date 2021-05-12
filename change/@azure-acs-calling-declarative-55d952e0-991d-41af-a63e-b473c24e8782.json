@@ -1,7 +1,7 @@
 {
   "type": "none",
   "comment": "Update to remove usage of npm run",
-  "packageName": "@azure/acs-calling-declarative",
+  "packageName": "calling-stateful-client",
   "email": "mail@jamesburnside.com",
   "dependentChangeType": "none"
 }
