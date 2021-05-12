@@ -22,15 +22,13 @@ export interface VideoGalleryProps {
 
 const memoizeAllRemoteParticipants = memoizeFnAll(
   (
-    onBeforeRenderRemoteVideoTile: any,
     userId: string,
+    onBeforeRenderRemoteVideoTile: any,
     isAvailable?: boolean,
     videoProvider?: HTMLElement,
     displayName?: string
   ): JSX.Element => {
-    console.log('Memoized Func');
     if (isAvailable && !videoProvider) {
-      console.log('calling onBeforeRenderRemoteVideoTile', userId, isAvailable);
       onBeforeRenderRemoteVideoTile && onBeforeRenderRemoteVideoTile(userId);
     }
     return (
@@ -88,18 +86,20 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
    * Utility function for memoized rendering of RemoteParticipants.
    */
   const _onRenderRemoteParticipants = useMemo(() => {
-    console.log('REMOTE PARTS', remoteParticipants);
     if (!remoteParticipants) return null;
+
+    // If user provided a custom onRender function return that function.
+    if (onRenderRemoteVideoTile) {
+      return remoteParticipants.map((participant) => onRenderRemoteVideoTile(participant));
+    }
+
     return memoizeAllRemoteParticipants((memoizedRemoteParticipantFn) => {
-      // If user provided a custom onRender function return that function.
-      if (onRenderRemoteVideoTile) return remoteParticipants.map((participant) => onRenderRemoteVideoTile(participant));
       // Else return Remote Stream Video Tiles
       return remoteParticipants.map((participant) => {
         const remoteVideoStream = participant.videoStream;
-        console.log('I am going crazy');
         return memoizedRemoteParticipantFn(
-          onBeforeRenderRemoteVideoTile,
           participant.userId,
+          onBeforeRenderRemoteVideoTile,
           remoteVideoStream?.isAvailable,
           remoteVideoStream?.videoProvider,
           participant.displayName

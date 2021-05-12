@@ -475,7 +475,7 @@ export interface VideoGalleryProps {
     // (undocumented)
     onBeforeRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => Promise<void>;
     // (undocumented)
-    onBeforeRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => Promise<void>;
+    onBeforeRenderRemoteVideoTile?: (userId: string) => Promise<void>;
     // (undocumented)
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     // (undocumented)

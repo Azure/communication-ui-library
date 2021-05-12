@@ -64,7 +64,6 @@ const videoGalleryRemoteParticipantsFromCall = (call: Call | undefined): VideoGa
 export const videoGallerySelector = createSelector(
   [getCall, getDisplayName, getIdentifier],
   (call: Call | undefined, displayName: string | undefined, identifier: string | undefined) => {
-    console.log('I am going selector');
     return {
       localParticipant: {
         userId: identifier ?? '',

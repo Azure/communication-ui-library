@@ -13,7 +13,7 @@ import {
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
-import { VideoGalleryLocalParticipant } from '../types/VideoGallery';
+import { VideoGalleryLocalParticipant } from 'react-components';
 import { getUserId } from '../utils/participant';
 
 export type DefaultHandlers = ReturnType<typeof createDefaultHandlers>;
@@ -109,7 +109,6 @@ const createDefaultHandlers = memoizeOne(
 
     const onBeforeRenderRemoteVideoTile = async (userId: string): Promise<void> => {
       if (!call) return;
-      // const userId = remoteParticipant.userId;
       const callState = callClient.state.calls.get(call.id);
       if (!callState) throw new Error(`Call Not Found: ${call.id}`);
 

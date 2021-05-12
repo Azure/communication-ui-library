@@ -14,16 +14,15 @@ import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { DeclarativeCallClient } from '@azure/acs-calling-declarative';
 import { DeviceManager } from '@azure/acs-calling-declarative';
 import { IncomingCall } from '@azure/acs-calling-declarative';
-import { LocalVideoStream } from '@azure/acs-calling-declarative';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { ReactElement } from 'react';
-import { RemoteVideoStream } from '@azure/acs-calling-declarative';
 import * as reselect from 'reselect';
 import { StartCallOptions } from '@azure/communication-calling';
 import { StatefulDeviceManager } from '@azure/acs-calling-declarative';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
-import { VideoGalleryRemoteParticipant as VideoGalleryRemoteParticipant_2 } from 'react-components';
+import { VideoGalleryLocalParticipant } from 'react-components';
+import { VideoGalleryRemoteParticipant } from 'react-components';
 
 // @public
 export type BaseSelectorProps = {
@@ -73,14 +72,6 @@ export const createDefaultHandlersForComponent: <Props>(declarativeCallClient: D
 }, Props>>;
 
 // @public (undocumented)
-export interface CreateViewOptions {
-    // (undocumented)
-    isMirrored?: boolean;
-    // (undocumented)
-    scalingMode?: ScalingMode;
-}
-
-// @public (undocumented)
 export type FunctionWithKey<KeyT, ArgsT extends any[], RetT> = (key: KeyT, ...args: ArgsT) => RetT;
 
 // @public (undocumented)
@@ -106,9 +97,6 @@ export const getIncomingCalls: (state: CallClientState) => Map<string, IncomingC
 
 // @public (undocumented)
 export const getIncomingCallsEnded: (state: CallClientState) => IncomingCall[];
-
-// @public (undocumented)
-export type MediaStreamType = 'Video' | 'ScreenSharing';
 
 // @public
 export const memoizeFnAll: <KeyT, ArgsT extends any[], FnRetT, CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>>(fnToMemoize: FunctionWithKey<KeyT, ArgsT, FnRetT>, shouldCacheUpdate?: (args1: any, args2: any) => boolean) => (callback: CallBackT) => FnRetT[];
@@ -138,34 +126,11 @@ export const optionsButtonSelector: reselect.OutputParametricSelector<callingSta
 }>;
 
 // @public (undocumented)
-export type ScalingMode = 'Stretch' | 'Crop' | 'Fit';
-
-// @public (undocumented)
 export const screenShareButtonSelector: reselect.OutputParametricSelector<callingStateful.CallClientState, BaseSelectorProps, {
     checked: boolean | undefined;
 }, (res: callingStateful.Call | undefined) => {
     checked: boolean | undefined;
 }>;
-
-// @public (undocumented)
-export type VideoGalleryLocalParticipant = VideoGalleryParticipant & {
-    isScreenSharingOn: boolean;
-    videoStream?: LocalVideoStream;
-};
-
-// @public (undocumented)
-export type VideoGalleryParticipant = {
-    userId: string;
-    displayName?: string;
-    isMuted: boolean;
-};
-
-// @public (undocumented)
-export type VideoGalleryRemoteParticipant = VideoGalleryParticipant & {
-    isSpeaking: boolean;
-    videoStream?: RemoteVideoStream;
-    screenShareStream?: RemoteVideoStream;
-};
 
 // @public (undocumented)
 export const videoGallerySelector: reselect.OutputParametricSelector<callingStateful.CallClientState, BaseSelectorProps, {
@@ -180,7 +145,7 @@ export const videoGallerySelector: reselect.OutputParametricSelector<callingStat
             videoProvider: HTMLElement | undefined;
         };
     };
-    remoteParticipants: VideoGalleryRemoteParticipant_2[];
+    remoteParticipants: VideoGalleryRemoteParticipant[];
 }, (res1: Call_2 | undefined, res2: string | undefined, res3: string | undefined) => {
     localParticipant: {
         userId: string;
@@ -193,7 +158,7 @@ export const videoGallerySelector: reselect.OutputParametricSelector<callingStat
             videoProvider: HTMLElement | undefined;
         };
     };
-    remoteParticipants: VideoGalleryRemoteParticipant_2[];
+    remoteParticipants: VideoGalleryRemoteParticipant[];
 }>;
 
 

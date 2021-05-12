@@ -7,15 +7,6 @@ export * from './baseSelectors';
 export type { CommonProperties } from './handlers/createHandlers';
 export { videoGallerySelector } from './videoGallerySelector';
 
-export type {
-  VideoGalleryRemoteParticipant,
-  VideoGalleryLocalParticipant,
-  VideoGalleryParticipant,
-  ScalingMode,
-  MediaStreamType,
-  CreateViewOptions
-} from './types/VideoGallery';
-
 export { memoizeFnAll } from './utils/memoizeFnAll';
 export type { FunctionWithKey, CallbackType } from './utils/memoizeFnAll';
 export * from './callControlSelectors';

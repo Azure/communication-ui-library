@@ -5,6 +5,7 @@ import { CallClientState, DeclarativeCallClient } from '@azure/acs-calling-decla
 import { useCall, useCallClient, useDisplayName, useIdentifier } from 'react-composites';
 
 import { useState, useEffect, useRef, useMemo } from 'react';
+import { videoGallerySelector } from '@azure/acs-calling-selector';
 
 export const useSelector = <SelectorT extends (state: CallClientState, props: any) => any>(
   selector: SelectorT,
@@ -32,11 +33,6 @@ export const useSelector = <SelectorT extends (state: CallClientState, props: an
       const newProps = selector(state, selectorProps ?? callIdConfigProps);
       if (propRef.current !== newProps) {
         setProps(newProps);
-        if (callId) {
-          state.calls.get(callId)?.remoteParticipants.forEach((p) => {
-            console.log('Setting State', p.identifier, p.state);
-          });
-        }
       }
     };
     callClient.onStateChange(onStateChange);
