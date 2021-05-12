@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Title, Description, Props, Heading, Source } from '@storybook/addon-docs/blocks';
+import { Title, Description, Heading, Source } from '@storybook/addon-docs/blocks';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { ChatComposite } from 'react-composites';

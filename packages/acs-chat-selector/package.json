@@ -1,7 +1,7 @@
 {
   "name": "@azure/acs-chat-selector",
   "version": "1.0.0-beta",
-  "description": "ACS UI SDK",
+  "description": "Component bindings specific to components that integrate with the Azure Communication Services Chat JavaScript SDK",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
   "types": "dist/acs-chat-selector.d.ts",
@@ -18,18 +18,6 @@
     "api-extractor": "tsc && api-extractor run --local",
     "generate-doc": "api-documenter markdown -i temp -o docGen",
     "postpack": "copyfiles -E \"./*.tgz\" private-preview"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   },
   "dependencies": {
     "chat-stateful-client": "~1.0.0-beta",
