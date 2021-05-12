@@ -2,9 +2,9 @@
 // Licensed under the MIT license.
 
 // @ts-ignore
-import { Call, LocalVideoStream, RemoteParticipant, RemoteVideoStream } from '@azure/acs-calling-declarative';
+import { Call, LocalVideoStream, RemoteParticipant, RemoteVideoStream } from 'calling-stateful-client';
 // @ts-ignore
-import * as callingStateful from '@azure/acs-calling-declarative';
+import * as callingStateful from 'calling-stateful-client';
 // @ts-ignore
 import {
   CommunicationUserKind,

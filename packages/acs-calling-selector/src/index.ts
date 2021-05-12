@@ -3,12 +3,13 @@
 
 export * from './baseSelectors';
 export * from './callControlSelectors';
-export { createDefaultCallingHandlersForComponent } from './handlers/createHandlers';
+export { createDefaultCallingHandlersForComponent, createDefaultCallingHandlers } from './handlers/createHandlers';
 export { videoGallerySelector } from './videoGallerySelector';
+export { participantListSelector } from './participantListSelector';
 export { memoizeFnAll } from './utils/memoizeFnAll';
 
 export type { CallingBaseSelectorProps } from './baseSelectors';
-export type { CommonProperties1 } from './handlers/createHandlers';
+export type { CommonProperties1, DefaultCallingHandlers } from './handlers/createHandlers';
 export type {
   VideoGalleryRemoteParticipant,
   VideoGalleryLocalParticipant,

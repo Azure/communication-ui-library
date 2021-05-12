@@ -1,7 +1,7 @@
 {
   "type": "none",
   "comment": "ensure consistent eslint-plugin-import version across packages",
-  "packageName": "@azure/acs-chat-declarative",
+  "packageName": "chat-stateful-client",
   "email": "mail@jamesburnside.com",
   "dependentChangeType": "none"
 }

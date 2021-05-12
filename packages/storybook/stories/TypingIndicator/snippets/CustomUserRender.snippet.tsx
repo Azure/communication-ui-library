@@ -1,4 +1,4 @@
-import { TypingIndicator, WebUiChatParticipant } from '@azure/communication-react';
+import { TypingIndicator, CommunicationParticipant } from '@azure/communication-react';
 import { mergeStyles } from '@fluentui/react';
 import React from 'react';
 
@@ -15,7 +15,7 @@ export const CustomUserRenderSnippet: () => JSX.Element = () => {
   const verticallyCenterStyle = mergeStyles({ display: 'flex', alignItems: 'center' });
   const spanStyle = mergeStyles({ whiteSpace: 'nowrap', paddingRight: '3px' });
 
-  const onRenderUsers = (users: WebUiChatParticipant[]): JSX.Element => {
+  const onRenderUsers = (users: CommunicationParticipant[]): JSX.Element => {
     return (
       <>
         {users.map((user, index) => (

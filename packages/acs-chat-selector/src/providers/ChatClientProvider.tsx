@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { createContext, useContext } from 'react';
-import { StatefulChatClient } from '@azure/acs-chat-declarative';
+import { StatefulChatClient } from 'chat-stateful-client';
 
 export const ChatClientContext = createContext<StatefulChatClient | undefined>(undefined);
 

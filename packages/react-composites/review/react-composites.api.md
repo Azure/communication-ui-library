@@ -8,7 +8,7 @@ import { AbortSignalLike } from '@azure/core-http';
 import { AcceptCallOptions } from '@azure/communication-calling';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
-import { Call } from '@azure/acs-calling-declarative';
+import { Call } from 'calling-stateful-client';
 import { Call as Call_2 } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallClientOptions } from '@azure/communication-calling';
@@ -17,13 +17,13 @@ import { ChatClient } from '@azure/communication-chat';
 import { ChatMessage as ChatMessage_2 } from '@azure/communication-chat';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
-import { ChatThreadClientState } from '@azure/acs-chat-declarative';
+import { ChatThreadClientState } from 'chat-stateful-client';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { ControlBarProps } from 'react-components';
 import { CreateViewOptions } from '@azure/communication-calling';
-import { DeclarativeCallClient } from '@azure/acs-calling-declarative';
-import { DeviceManager } from '@azure/acs-calling-declarative';
+import { DeclarativeCallClient } from 'calling-stateful-client';
+import { DeviceManager } from 'calling-stateful-client';
 import { Dispatch } from 'react';
 import { ErrorBarProps } from 'react-components';
 import { ErrorInfo } from 'react';
@@ -33,20 +33,20 @@ import { IButtonStyles } from '@fluentui/react';
 import { IncomingCall } from '@azure/communication-calling';
 import { IStyle } from '@fluentui/react';
 import { JoinCallOptions } from '@azure/communication-calling';
-import { LocalVideoStream } from '@azure/acs-calling-declarative';
+import { LocalVideoStream } from 'calling-stateful-client';
 import { LocalVideoStream as LocalVideoStream_2 } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { PhoneNumberKind } from '@azure/communication-common';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
-import { RemoteParticipant } from '@azure/acs-calling-declarative';
+import { RemoteParticipant } from 'calling-stateful-client';
 import { RemoteParticipant as RemoteParticipant_2 } from '@azure/communication-calling';
-import { RemoteVideoStream } from '@azure/acs-calling-declarative';
+import { RemoteVideoStream } from 'calling-stateful-client';
 import { RemoteVideoStream as RemoteVideoStream_2 } from '@azure/communication-calling';
 import { ScalingMode } from '@azure/communication-calling';
 import { SetStateAction } from 'react';
-import { StatefulChatClient } from '@azure/acs-chat-declarative';
-import { StatefulDeviceManager } from '@azure/acs-calling-declarative';
+import { StatefulChatClient } from 'chat-stateful-client';
+import { StatefulDeviceManager } from 'calling-stateful-client';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 
@@ -54,14 +54,14 @@ import { VideoDeviceInfo } from '@azure/communication-calling';
 export const areStreamsEqual: (prevStream: LocalVideoStream_2, newStream: LocalVideoStream_2) => boolean;
 
 // @public (undocumented)
-export class AzureCommunicationChatAdapter implements GroupChatAdapter {
+export class AzureCommunicationChatAdapter implements ChatAdapter {
     constructor(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient);
     // (undocumented)
-    getState: () => GroupChatState;
+    getState: () => ChatState;
     // (undocumented)
     loadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
     // (undocumented)
-    offStateChange: (handler: (state: GroupChatState) => void) => void;
+    offStateChange: (handler: (state: ChatState) => void) => void;
     // (undocumented)
     on(event: 'messageReceived', messageReceivedHandler: (message: ChatMessage_2) => void): void;
     // (undocumented)
@@ -69,7 +69,7 @@ export class AzureCommunicationChatAdapter implements GroupChatAdapter {
     // (undocumented)
     on(event: 'error', errorHandler: (e: Error) => void): void;
     // (undocumented)
-    onStateChange: (handler: (state: GroupChatState) => void) => void;
+    onStateChange: (handler: (state: ChatState) => void) => void;
     // (undocumented)
     removeParticipant: (userId: string) => Promise<void>;
     // (undocumented)
@@ -179,10 +179,40 @@ export interface CallProvider {
 // @public (undocumented)
 export const CallProvider: (props: CallProvider & ErrorHandlingProps) => JSX.Element;
 
-// Warning: (ae-forgotten-export) The symbol "GroupChatProps" needs to be exported by the entry point index.d.ts
+// @public (undocumented)
+export interface ChatAdapter {
+    // (undocumented)
+    getState(): ChatState;
+    // (undocumented)
+    loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
+    // (undocumented)
+    offStateChange(handler: (state: ChatState) => void): void;
+    // (undocumented)
+    on(event: 'messageReceived', messageReceivedHandler: (message: ChatMessage_2) => void): void;
+    // (undocumented)
+    on(event: 'participantsJoined', participantsJoinedHandler: (participant: ChatParticipant) => void): void;
+    // (undocumented)
+    on(event: 'error', errorHandler: (e: Error) => void): void;
+    // (undocumented)
+    onStateChange(handler: (state: ChatState) => void): void;
+    // (undocumented)
+    removeParticipant(userId: string): Promise<void>;
+    // (undocumented)
+    sendMessage(content: string): Promise<void>;
+    // (undocumented)
+    sendReadReceipt(chatMessageId: string): Promise<void>;
+    // (undocumented)
+    sendTypingIndicator(): Promise<void>;
+    // (undocumented)
+    setTopic(topicName: string): Promise<void>;
+    // (undocumented)
+    updateAllParticipants(): Promise<void>;
+}
+
+// Warning: (ae-forgotten-export) The symbol "ChatProps" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
-export const ChatComposite: (props: GroupChatProps) => JSX.Element;
+export const ChatComposite: (props: ChatProps) => JSX.Element;
 
 // @public (undocumented)
 export type ChatConfig = {
@@ -221,6 +251,12 @@ export type ChatMessagePayload = {
 //
 // @public (undocumented)
 export const ChatProvider: (props: ChatProviderProps & ErrorHandlingProps) => JSX.Element;
+
+// Warning: (ae-forgotten-export) The symbol "ChatUIState" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "ChatClientState" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export type ChatState = ChatUIState & ChatClientState;
 
 // Warning: (ae-forgotten-export) The symbol "ChatThreadProviderProps" needs to be exported by the entry point index.d.ts
 //
@@ -385,9 +421,6 @@ export const CONNECTING = "Connecting";
 
 // @public (undocumented)
 export const convertSdkRemoteParticipantToGalleryParticipant: (remoteParticipantFromSDK: RemoteParticipant_2) => GalleryParticipant;
-
-// @public (undocumented)
-export const convertSdkRemoteParticipantToListParticipant: (participant: RemoteParticipant_2, onRemove?: (() => void) | undefined, onMute?: (() => void) | undefined) => ListParticipant;
 
 // @public (undocumented)
 export const COOL_PERIOD_REFRESH_INVERVAL = 1000;
@@ -602,42 +635,6 @@ export type GroupCallUIState = {
 };
 
 // @public (undocumented)
-export interface GroupChatAdapter {
-    // (undocumented)
-    getState(): GroupChatState;
-    // (undocumented)
-    loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
-    // (undocumented)
-    offStateChange(handler: (state: GroupChatState) => void): void;
-    // (undocumented)
-    on(event: 'messageReceived', messageReceivedHandler: (message: ChatMessage_2) => void): void;
-    // (undocumented)
-    on(event: 'participantsJoined', participantsJoinedHandler: (participant: ChatParticipant) => void): void;
-    // (undocumented)
-    on(event: 'error', errorHandler: (e: Error) => void): void;
-    // (undocumented)
-    onStateChange(handler: (state: GroupChatState) => void): void;
-    // (undocumented)
-    removeParticipant(userId: string): Promise<void>;
-    // (undocumented)
-    sendMessage(content: string): Promise<void>;
-    // (undocumented)
-    sendReadReceipt(chatMessageId: string): Promise<void>;
-    // (undocumented)
-    sendTypingIndicator(): Promise<void>;
-    // (undocumented)
-    setTopic(topicName: string): Promise<void>;
-    // (undocumented)
-    updateAllParticipants(): Promise<void>;
-}
-
-// Warning: (ae-forgotten-export) The symbol "GroupChatUIState" needs to be exported by the entry point index.d.ts
-// Warning: (ae-forgotten-export) The symbol "GroupChatClientState" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export type GroupChatState = GroupChatUIState & GroupChatClientState;
-
-// @public (undocumented)
 export const GUID_FOR_INITIAL_TOPIC_NAME = "c774da81-94d5-4652-85c7-6ed0e8dc67e6";
 
 // Warning: (ae-forgotten-export) The symbol "HangupButtonProps" needs to be exported by the entry point index.d.ts
@@ -713,17 +710,6 @@ export interface JoinCallResult {
     // (undocumented)
     groupCallId: string;
 }
-
-// @public (undocumented)
-export type ListParticipant = {
-    key: string;
-    displayName: string;
-    state: string;
-    isScreenSharing: boolean;
-    isMuted: boolean;
-    onRemove?: () => void;
-    onMute?: () => void;
-};
 
 // @public (undocumented)
 export type LocalDeviceSettingsContainerProps = {
@@ -1041,12 +1027,6 @@ export interface VideoContainerProps {
     // (undocumented)
     videoStreamElement: HTMLElement | null;
 }
-
-// @public
-export type WebUiChatParticipant = {
-    userId: string;
-    displayName?: string;
-};
 
 // @public
 export const WithErrorHandling: (Component: (props: any & ErrorHandlingProps) => JSX.Element, props: any & ErrorHandlingProps) => JSX.Element;

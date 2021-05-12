@@ -9,7 +9,7 @@ import { getCoolPeriod, getDisplayName, getUserId } from './baseSelectors';
 // @ts-ignore
 import * as reselect from 'reselect';
 // @ts-ignore
-import { ChatClientState } from '@azure/acs-chat-declarative';
+import { ChatClientState } from 'chat-stateful-client';
 // @ts-ignore
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 // @ts-ignore

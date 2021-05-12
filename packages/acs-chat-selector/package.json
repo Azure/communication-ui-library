@@ -32,7 +32,7 @@
     ]
   },
   "dependencies": {
-    "@azure/acs-chat-declarative": "~1.0.0-beta",
+    "chat-stateful-client": "~1.0.0-beta",
     "@azure/communication-chat": "1.0.0",
     "@azure/communication-common": "1.0.0",
     "react": "^16.13.1",
