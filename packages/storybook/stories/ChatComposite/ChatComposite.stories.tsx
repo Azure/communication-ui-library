@@ -5,62 +5,10 @@ import { Title, Description, Props, Heading, Source } from '@storybook/addon-doc
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { ChatComposite } from 'react-composites';
-
 import { COMPOSITE_FOLDER_PREFIX } from '../constants';
 
-const importStatement = `import { ChatComposite } from 'react-composites';`;
-const usageCode = `import { ChatComposite } from 'react-composites';
-import { AzureCommunicationUserCredential } from '@azure/communication-common';
-import { CommunicationIdentityClient } from "@azure/communication-identity";
-import { ChatClient } from '@azure/communication-chat';
-import ReactDOM from 'react-dom';
-
-// Initialize an Azure Comunnication Services chat user and create a thread
-// This code is for demo purpose. In production this should happen in server side
-// Check [Server folder] for a complete nodejs demo server
-// Please don't show your CONNECTION STRING in any public place
-const connectionString = '[CONNECTION STRING]';
-
-const uri = new URL(connectionString.replace("endpoint=", ""));
-const endpointUrl = \`\${uri.protocol}//\${uri.host}\`;
-
-(async () => {
-  let tokenClient = new CommunicationIdentityClient(connectionString);
-  const user = await tokenClient.createUser();
-  const token = await tokenClient.issueToken(user, ["chat"]);
-  const [adapter, setAdapter] = useState<ChatAdapter>();
-
-  const userAccessTokenCredential =
-    new AzureCommunicationUserCredential(token.token);
-  const chatClient = new ChatClient(endpointUrl, userAccessTokenCredential);
-
-  const threadId = (await chatClient.createChatThread({
-    members:
-      [{ user: token.user }],
-    topic: 'DemoThread'
-  })).threadId;
-
-  useEffect(() => {
-    if (chatConfig) {
-      const createAdapter = async (): Promise<void> => {
-        setAdapter(
-          await createAzureChatAdapter(
-            token,
-            endpointUrl,
-            threadId,
-            'Empty Display Name'
-          )
-        );
-      };
-      createAdapter();
-    }
-  }, [token, endpointUrl, threadId]);
-
-  ReactDOM.render(
-    <ChatComposite adapter= {adapter} />,
-    document.getElementById('root'));
-})();
-`;
+const containerText = require('!!raw-loader!./snippets/Container.snippet.tsx').default;
+const serverText = require('!!raw-loader!./snippets/Server.snippet.tsx').default;
 
 export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/Chat`,
@@ -80,16 +28,28 @@ const getDocs: () => JSX.Element = () => {
   return (
     <>
       <Title>ChatComposite</Title>
-      <Description>ChatComposite is an one-stop component that you can make ACS Chat running.</Description>
+      <Description>
+        ChatComposite brings together key components to provide a full chat experience out of the box.
+      </Description>
 
-      <Heading>Importing</Heading>
-      <Source code={importStatement} />
+      <Heading>Basic usage</Heading>
+      <Description>
+        There are two parts to the composite - a `ChatComposite` react component and a `ChatAdapter` that connects the
+        react component to the backend APIs.
+      </Description>
+      <Description>
+        The key thing to note is that initialization of `ChatAdapter` is asynchronous. Thus, the initialization step
+        requires special handling, as the example code below shows.
+      </Description>
+      <Source code={containerText} />
 
-      <Heading>Example Code</Heading>
-      <Source code={usageCode} />
-
-      <Heading>Props</Heading>
-      <Props of={ChatComposite} />
+      <Heading>Pre-requisites</Heading>
+      <Description>
+        ChatComposite provides the UI for an *existing user* in an *existing thread*. Thus, the user and thread must be
+        created beforehand. Typically, the user and thread are created on a Contoso-owned service, and the `ChatConfig`
+        is served to the client app that then passes it to the ChatComposite.
+      </Description>
+      <Source code={serverText} />
     </>
   );
 };

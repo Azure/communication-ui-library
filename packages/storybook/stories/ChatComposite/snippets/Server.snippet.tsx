@@ -1,3 +1,5 @@
+// Contoso server to create a new user and thread.
+
 import { ChatClient } from '@azure/communication-chat';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { CommunicationIdentityClient } from '@azure/communication-identity';
