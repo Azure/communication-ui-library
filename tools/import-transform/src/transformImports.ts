@@ -59,14 +59,11 @@ export type Logger = {
   debug: (...data: any[]) => void;
   info: (...data: any[]) => void;
 };
-
-// Overwritable logger singleton, defaults to console logging;
-let logger: Logger = console;
-
-// Variables for tracking number of changes
-let linesChangedCount: number;
-let filesChangedCount: number;
-let filesSearchedCount: number;
+type Bookkeeping = {
+  linesChangedCount: number;
+  filesChangedCount: number;
+  filesSearchedCount: number;
+};
 
 /**
  * Transform any matching import and require lines to the mapping provided in packageTranslations.js
@@ -76,7 +73,9 @@ let filesSearchedCount: number;
 export function transformFileImports(
   file: fs.PathLike,
   packageTranslations: PackageTransforms,
-  dirLevel: number
+  dirLevel: number,
+  logger: Logger,
+  bookkeeping?: Bookkeeping
 ): void {
   logger.debug(`File found (dirLevel: ${dirLevel})`, file);
   const backTravel = '../'.repeat(dirLevel);
@@ -92,7 +91,7 @@ export function transformFileImports(
           logger.debug(`Replacing ${packageBaseName} in ${line} with ${newImport}`);
           line = line.replace(packageBaseName, newImport);
           changeOccurred = true;
-          linesChangedCount++;
+          bookkeeping && bookkeeping.linesChangedCount++;
         }
       }
     }
@@ -101,7 +100,7 @@ export function transformFileImports(
 
   // if an import transform happened, write the contents back to the file
   if (changeOccurred) {
-    filesChangedCount++;
+    bookkeeping && bookkeeping.filesChangedCount++;
     fs.writeFileSync(file, newContent);
   }
 }
@@ -111,7 +110,13 @@ export function transformFileImports(
  * @param folder - folder to recurse through
  * @param dirLevel - directory distance relative to the initial recursion directory level
  */
-function recurseThroughFolder(folder: string, packageTranslations: PackageTransforms, dirLevel: number): void {
+function recurseThroughFolder(
+  folder: string,
+  packageTranslations: PackageTransforms,
+  dirLevel: number,
+  logger: Logger,
+  bookkeeping?: Bookkeeping
+): void {
   logger.debug(`Searching folder (dirLevel: ${dirLevel})`, folder);
 
   const dirContents = fs.readdirSync(folder, { withFileTypes: true });
@@ -120,14 +125,16 @@ function recurseThroughFolder(folder: string, packageTranslations: PackageTransf
   dirContents
     .filter((dirent) => dirent.isFile())
     .forEach((dirent) => {
-      filesSearchedCount++;
-      transformFileImports(path.resolve(folder, dirent.name), packageTranslations, dirLevel);
+      bookkeeping && bookkeeping.filesSearchedCount++;
+      transformFileImports(path.resolve(folder, dirent.name), packageTranslations, dirLevel, logger, bookkeeping);
     });
 
   // recursively perform translate on sub dirs
   dirContents
     .filter((dirent) => dirent.isDirectory())
-    .forEach((dirent) => recurseThroughFolder(path.resolve(folder, dirent.name), packageTranslations, ++dirLevel));
+    .forEach((dirent) =>
+      recurseThroughFolder(path.resolve(folder, dirent.name), packageTranslations, ++dirLevel, logger, bookkeeping)
+    );
 }
 
 /**
@@ -135,7 +142,7 @@ function recurseThroughFolder(folder: string, packageTranslations: PackageTransf
  * The transform maps are listed in packageTranslations.js
  * @param config - config file, see readme for options and format
  */
-function transformImports(config: TransformImportConfig): void {
+function transformImports(config: TransformImportConfig, logger: Logger, bookkeeping?: Bookkeeping): void {
   for (const folder of config.buildFolderRoots) {
     const folderPath = path.resolve(process.cwd(), folder);
     logger.debug(`Folder:`, folderPath);
@@ -143,11 +150,11 @@ function transformImports(config: TransformImportConfig): void {
       logger.error(`❌ ERROR: folder not found at ${folderPath}`);
       exit(1);
     }
-    recurseThroughFolder(folderPath, config.packageTranslations, 0);
+    recurseThroughFolder(folderPath, config.packageTranslations, 0, logger, bookkeeping);
   }
 }
 
-function getConfig(): TransformImportConfig {
+function getConfig(logger: Logger): TransformImportConfig {
   const configPath = path.resolve(process.cwd(), 'importTransform.config.js');
   if (!fs.existsSync(configPath)) {
     logger.error(`❌ ERROR: config not found at ${configPath}`);
@@ -171,23 +178,23 @@ function getConfig(): TransformImportConfig {
   return config;
 }
 
-function resetBookkeeping(): void {
-  linesChangedCount = 0;
-  filesChangedCount = 0;
-  filesSearchedCount = 0;
-}
-
 export function main(customLogger?: Logger): void {
-  if (customLogger) {
-    logger = customLogger;
-  }
-
+  const logger = customLogger ?? console;
   logger.info('Transforming imports...');
 
-  resetBookkeeping();
-  transformImports(getConfig());
+  const bookkeeping: Bookkeeping = {
+    linesChangedCount: 0,
+    filesChangedCount: 0,
+    filesSearchedCount: 0
+  };
+
+  const config = getConfig(logger);
+  transformImports(config, logger, bookkeeping);
 
   logger.info(
-    `✅ complete. Files Searched: ${filesSearchedCount}. Files changed: ${filesChangedCount}. Lines changed ${linesChangedCount}.`
+    `✅ Complete.
+      Files Searched: ${bookkeeping.filesSearchedCount}.
+      Files changed: ${bookkeeping.filesChangedCount}.
+      Lines changed ${bookkeeping.linesChangedCount}.`
   );
 }

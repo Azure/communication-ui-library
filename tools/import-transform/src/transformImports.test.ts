@@ -60,31 +60,31 @@ function setupTest(mockFileContents: string) {
 describe('File import transform tests', () => {
   test('transformFileImports rewrites import package correctly', () => {
     setupTest(tests.importTestSingleLine.input);
-    transformFileImports('', testPackageTransform, 0);
+    transformFileImports('', testPackageTransform, 0, console);
     expect(result.trim()).toEqual(tests.importTestSingleLine.expectedOutput);
 
     setupTest(tests.importTestSingleLineDefaultImport.input);
-    transformFileImports('', testPackageTransform, 0);
+    transformFileImports('', testPackageTransform, 0, console);
     expect(result.trim()).toEqual(tests.importTestSingleLineDefaultImport.expectedOutput);
 
     setupTest(tests.importTestDoubleQuotes.input);
-    transformFileImports('', testPackageTransform, 0);
+    transformFileImports('', testPackageTransform, 0, console);
     expect(result.trim()).toEqual(tests.importTestDoubleQuotes.expectedOutput);
 
     setupTest(tests.importTestSingleLineDefaultImport.input);
-    transformFileImports('', testPackageTransform, 0);
+    transformFileImports('', testPackageTransform, 0, console);
     expect(result.trim()).toEqual(tests.importTestSingleLineDefaultImport.expectedOutput);
 
     setupTest(tests.importTestCommentLine.input);
-    transformFileImports('', testPackageTransform, 0);
+    transformFileImports('', testPackageTransform, 0, console);
     expect(result.trim()).toEqual(tests.importTestCommentLine.expectedOutput);
 
     setupTest(tests.importTestNoop.input);
-    transformFileImports('', testPackageTransform, 0);
+    transformFileImports('', testPackageTransform, 0, console);
     expect(result.trim()).toEqual(tests.importTestNoop.expectedOutput);
 
     setupTest(tests.importTestMultiLine.input);
-    transformFileImports('', testPackageTransform, 0);
+    transformFileImports('', testPackageTransform, 0, console);
     expect(result.trim()).toEqual(tests.importTestMultiLine.expectedOutput);
   });
 });
