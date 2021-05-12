@@ -54,14 +54,14 @@ import { VideoDeviceInfo } from '@azure/communication-calling';
 export const areStreamsEqual: (prevStream: LocalVideoStream_2, newStream: LocalVideoStream_2) => boolean;
 
 // @public (undocumented)
-export class AzureCommunicationChatAdapter implements GroupChatAdapter {
+export class AzureCommunicationChatAdapter implements ChatAdapter {
     constructor(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient);
     // (undocumented)
-    getState: () => GroupChatState;
+    getState: () => ChatState;
     // (undocumented)
     loadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
     // (undocumented)
-    offStateChange: (handler: (state: GroupChatState) => void) => void;
+    offStateChange: (handler: (state: ChatState) => void) => void;
     // (undocumented)
     on(event: 'messageReceived', messageReceivedHandler: (message: ChatMessage_2) => void): void;
     // (undocumented)
@@ -69,7 +69,7 @@ export class AzureCommunicationChatAdapter implements GroupChatAdapter {
     // (undocumented)
     on(event: 'error', errorHandler: (e: Error) => void): void;
     // (undocumented)
-    onStateChange: (handler: (state: GroupChatState) => void) => void;
+    onStateChange: (handler: (state: ChatState) => void) => void;
     // (undocumented)
     removeParticipant: (userId: string) => Promise<void>;
     // (undocumented)
@@ -179,10 +179,40 @@ export interface CallProvider {
 // @public (undocumented)
 export const CallProvider: (props: CallProvider & ErrorHandlingProps) => JSX.Element;
 
-// Warning: (ae-forgotten-export) The symbol "GroupChatProps" needs to be exported by the entry point index.d.ts
+// @public (undocumented)
+export interface ChatAdapter {
+    // (undocumented)
+    getState(): ChatState;
+    // (undocumented)
+    loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
+    // (undocumented)
+    offStateChange(handler: (state: ChatState) => void): void;
+    // (undocumented)
+    on(event: 'messageReceived', messageReceivedHandler: (message: ChatMessage_2) => void): void;
+    // (undocumented)
+    on(event: 'participantsJoined', participantsJoinedHandler: (participant: ChatParticipant) => void): void;
+    // (undocumented)
+    on(event: 'error', errorHandler: (e: Error) => void): void;
+    // (undocumented)
+    onStateChange(handler: (state: ChatState) => void): void;
+    // (undocumented)
+    removeParticipant(userId: string): Promise<void>;
+    // (undocumented)
+    sendMessage(content: string): Promise<void>;
+    // (undocumented)
+    sendReadReceipt(chatMessageId: string): Promise<void>;
+    // (undocumented)
+    sendTypingIndicator(): Promise<void>;
+    // (undocumented)
+    setTopic(topicName: string): Promise<void>;
+    // (undocumented)
+    updateAllParticipants(): Promise<void>;
+}
+
+// Warning: (ae-forgotten-export) The symbol "ChatProps" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
-export const ChatComposite: (props: GroupChatProps) => JSX.Element;
+export const ChatComposite: (props: ChatProps) => JSX.Element;
 
 // @public (undocumented)
 export type ChatConfig = {
@@ -221,6 +251,12 @@ export type ChatMessagePayload = {
 //
 // @public (undocumented)
 export const ChatProvider: (props: ChatProviderProps & ErrorHandlingProps) => JSX.Element;
+
+// Warning: (ae-forgotten-export) The symbol "ChatUIState" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "ChatClientState" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export type ChatState = ChatUIState & ChatClientState;
 
 // Warning: (ae-forgotten-export) The symbol "ChatThreadProviderProps" needs to be exported by the entry point index.d.ts
 //
@@ -597,42 +633,6 @@ export type GroupCallUIState = {
     error?: Error;
     page: 'configuration' | 'call';
 };
-
-// @public (undocumented)
-export interface GroupChatAdapter {
-    // (undocumented)
-    getState(): GroupChatState;
-    // (undocumented)
-    loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
-    // (undocumented)
-    offStateChange(handler: (state: GroupChatState) => void): void;
-    // (undocumented)
-    on(event: 'messageReceived', messageReceivedHandler: (message: ChatMessage_2) => void): void;
-    // (undocumented)
-    on(event: 'participantsJoined', participantsJoinedHandler: (participant: ChatParticipant) => void): void;
-    // (undocumented)
-    on(event: 'error', errorHandler: (e: Error) => void): void;
-    // (undocumented)
-    onStateChange(handler: (state: GroupChatState) => void): void;
-    // (undocumented)
-    removeParticipant(userId: string): Promise<void>;
-    // (undocumented)
-    sendMessage(content: string): Promise<void>;
-    // (undocumented)
-    sendReadReceipt(chatMessageId: string): Promise<void>;
-    // (undocumented)
-    sendTypingIndicator(): Promise<void>;
-    // (undocumented)
-    setTopic(topicName: string): Promise<void>;
-    // (undocumented)
-    updateAllParticipants(): Promise<void>;
-}
-
-// Warning: (ae-forgotten-export) The symbol "GroupChatUIState" needs to be exported by the entry point index.d.ts
-// Warning: (ae-forgotten-export) The symbol "GroupChatClientState" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export type GroupChatState = GroupChatUIState & GroupChatClientState;
 
 // @public (undocumented)
 export const GUID_FOR_INITIAL_TOPIC_NAME = "c774da81-94d5-4652-85c7-6ed0e8dc67e6";
