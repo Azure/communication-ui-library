@@ -3174,7 +3174,7 @@ packages:
       react-dom: '>=16.8.0 <17.0.0'
     resolution:
       integrity: sha512-TISxdxKjvHtfDTIvRFT7wRTS7eoe1sMXMwURVX2KX0n557aq1olOCbOaRPycnUQ0a4T4D/LIcvA2i47kvaGMYw==
-  /@fluentui/react/8.14.6_b0d7ca8a0459a1df1ff516252688d92a:
+  /@fluentui/react/8.14.7_b0d7ca8a0459a1df1ff516252688d92a:
     dependencies:
       '@fluentui/date-time-utilities': 8.1.0
       '@fluentui/font-icons-mdl2': 8.1.0_f650913bea380c685c20f94e5dc2f677
@@ -3200,7 +3200,7 @@ packages:
       react: '>=16.8.0 <18.0.0'
       react-dom: '>=16.8.0 <18.0.0'
     resolution:
-      integrity: sha512-8oHSg1FgY+tWN88LtAH8+KGTij8tMHzEOnjxWUbW7diRWBisr8xyfuSy6MAJO27C1OrnLWuaS5EdLvUSZ8aOQw==
+      integrity: sha512-8XDuIdWrmX5LxqE13Dp/GW4xCXdGinZLdEyF7OmZrHfMx2MiBMt9dsKvLcZdO02lvmU1YoXyUT5JHjs+5DnJLA==
   /@fluentui/scheme-utilities/8.1.0_f650913bea380c685c20f94e5dc2f677:
     dependencies:
       '@fluentui/set-version': 8.1.0
@@ -3248,7 +3248,7 @@ packages:
       integrity: sha512-u4l6U47KaMM1mO1q5o9ORJLKj2yMTD/c5hwzLaxbFBf9V50aIeNNI9t/Fqphwiu+cft8T0lBLMFqR9kzxWsBIQ==
   /@fluentui/theme-samples/8.1.5_b0d7ca8a0459a1df1ff516252688d92a:
     dependencies:
-      '@fluentui/react': 8.14.6_b0d7ca8a0459a1df1ff516252688d92a
+      '@fluentui/react': 8.14.7_b0d7ca8a0459a1df1ff516252688d92a
       '@fluentui/scheme-utilities': 8.1.0_f650913bea380c685c20f94e5dc2f677
       '@fluentui/set-version': 8.1.0
       tslib: 2.1.0
