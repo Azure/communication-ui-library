@@ -13,7 +13,7 @@ import { startRenderVideo, stopRenderVideo } from './StreamUtils';
  * Defines the methods that allow CallClient {@Link @azure/communication-calling#CallClient} to be used declaratively.
  * The interface provides access to proxied state and also allows registering a handler for state change events.
  */
-export interface DeclarativeCallClient extends CallClient {
+export interface StatefulCallClient extends CallClient {
   /**
    * Holds all the state that we could proxy from CallClient {@Link @azure/communication-calling#CallClient} as
    * CallClientState {@Link CallClientState}.
@@ -131,16 +131,16 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
 }
 
 /**
- * Creates a declarative CallClient {@Link DeclarativeCallClient} by proxying CallClient
+ * Creates a declarative CallClient {@Link StatefulCallClient} by proxying CallClient
  * {@Link @azure/communication-calling#CallClient} with ProxyCallClient {@Link ProxyCallClient} which then allows access
  * to state in a declarative way.
  *
  * @param callClient - CallClient from SDK to declaratify
  * @param userId - UserId from SDK. This is provided for developer convenience to easily access the userId from the
- *   state. It is not used by DeclarativeCallClient so if you do not have this value or do not want to use this value,
+ *   state. It is not used by StatefulCallClient so if you do not have this value or do not want to use this value,
  *   you could pass any dummy value like empty string.
  */
-export const callClientDeclaratify = (callClient: CallClient, userId: string): DeclarativeCallClient => {
+export const createStatefulCallClient = (callClient: CallClient, userId: string): StatefulCallClient => {
   const context: CallContext = new CallContext(userId);
   const internalContext: InternalCallContext = new InternalCallContext();
 
@@ -173,5 +173,5 @@ export const callClientDeclaratify = (callClient: CallClient, userId: string): D
     }
   });
 
-  return new Proxy(callClient, new ProxyCallClient(context, internalContext)) as DeclarativeCallClient;
+  return new Proxy(callClient, new ProxyCallClient(context, internalContext)) as StatefulCallClient;
 };
