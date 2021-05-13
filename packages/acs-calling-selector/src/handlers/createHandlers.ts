@@ -15,7 +15,8 @@ import {
   StatefulCallClient,
   RemoteVideoStream,
   LocalVideoStream as StatefulLocalVideoStream,
-  StatefulDeviceManager
+  StatefulDeviceManager,
+  DeviceManager
 } from 'calling-stateful-client';
 import { ReactElement } from 'react';
 import memoizeOne from 'memoize-one';
@@ -68,9 +69,7 @@ export const createDefaultCallingHandlers = memoizeOne(
         }
       } else {
         if (callClient.state.deviceManager.selectedCamera) {
-          const previewOn =
-            !!callClient.state.deviceManager.unparentedViews &&
-            !!callClient.state.deviceManager.unparentedViews[0]?.target;
+          const previewOn = isPreviewOn(callClient.state.deviceManager);
           if (previewOn) {
             await callClient.stopRenderVideo(undefined, {
               source: callClient.state.deviceManager.selectedCamera,
@@ -94,40 +93,47 @@ export const createDefaultCallingHandlers = memoizeOne(
     };
 
     const onSelectMicrophone = async (device: AudioDeviceInfo): Promise<void> => {
-      if (!deviceManager) return;
+      if (!deviceManager) {
+        return;
+      }
       return deviceManager.selectMicrophone(device);
     };
 
     const onSelectSpeaker = async (device: AudioDeviceInfo): Promise<void> => {
-      if (!deviceManager) return;
+      if (!deviceManager) {
+        return;
+      }
       return deviceManager.selectSpeaker(device);
     };
 
     const onSelectCamera = async (device: VideoDeviceInfo): Promise<void> => {
-      if (!deviceManager) return;
+      if (!deviceManager) {
+        return;
+      }
       if (call) {
         deviceManager.selectCamera(device);
         const stream = call.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
         return stream?.switchSource(device);
       } else {
-        const previewOn =
-          !!callClient.state.deviceManager.unparentedViews &&
-          !!callClient.state.deviceManager.unparentedViews[0]?.target;
-        if (previewOn) {
-          if (callClient.state.deviceManager.selectedCamera) {
-            await callClient.stopRenderVideo(undefined, {
-              source: callClient.state.deviceManager.selectedCamera,
-              mediaStreamType: 'Video'
-            });
-          }
+        const previewOn = isPreviewOn(callClient.state.deviceManager);
+
+        if (!previewOn) {
           deviceManager.selectCamera(device);
-          await callClient.startRenderVideo(undefined, {
-            source: device,
+          return;
+        }
+
+        // If preview is on, then stop current preview and then start new preview with new device
+        if (callClient.state.deviceManager.selectedCamera) {
+          await callClient.stopRenderVideo(undefined, {
+            source: callClient.state.deviceManager.selectedCamera,
             mediaStreamType: 'Video'
           });
-        } else {
-          deviceManager.selectCamera(device);
         }
+        deviceManager.selectCamera(device);
+        await callClient.startRenderVideo(undefined, {
+          source: device,
+          mediaStreamType: 'Video'
+        });
       }
     };
 
@@ -149,7 +155,9 @@ export const createDefaultCallingHandlers = memoizeOne(
       options: CreateViewOptions
     ): Promise<void> => {
       const callId = call?.id;
-      if (!callId) return;
+      if (!callId) {
+        return;
+      }
       await callClient.startRenderVideo(callId, stream, options);
     };
 
@@ -171,6 +179,10 @@ export const createDefaultCallingHandlers = memoizeOne(
     };
   }
 );
+
+const isPreviewOn = (deviceManager: DeviceManager): boolean => {
+  return !!deviceManager.unparentedViews && !!deviceManager.unparentedViews[0]?.target;
+};
 
 /**
  * Type guard for common properties between two types.

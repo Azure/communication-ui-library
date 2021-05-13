@@ -27,7 +27,7 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
   const { displayName } = useCallingContext();
 
   const options = useSelector(optionsButtonSelector);
-  const handlers = useHandlers(LocalDeviceSettingsComponent);
+  const localDeviceSettingsHandlers = useHandlers(LocalDeviceSettingsComponent);
 
   return (
     <CallConfiguration {...props}>
@@ -40,12 +40,7 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
         setNameLengthExceedLimit={setNameTooLongWarning}
       />
       <div>
-        <LocalDeviceSettingsComponent
-          {...options}
-          onSelectCamera={handlers.onSelectCamera}
-          onSelectMicrophone={handlers.onSelectMicrophone}
-          onSelectSpeaker={handlers.onSelectSpeaker}
-        />
+        <LocalDeviceSettingsComponent {...options} {...localDeviceSettingsHandlers} />
       </div>
       <div>
         <StartCallButton
