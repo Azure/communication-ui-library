@@ -27,9 +27,9 @@ export type ErrorBarProps = {
 };
 
 const errorBarSeverityToMessageBarType = new Map<CommunicationUiErrorSeverity, MessageBarType>([
-  [CommunicationUiErrorSeverity.INFO, MessageBarType.info],
-  [CommunicationUiErrorSeverity.WARNING, MessageBarType.warning],
-  [CommunicationUiErrorSeverity.ERROR, MessageBarType.error]
+  ['Info', MessageBarType.info],
+  ['Warning', MessageBarType.warning],
+  ['Error', MessageBarType.error]
 ]);
 
 /**
@@ -42,8 +42,8 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element | null => {
     severity && errorBarSeverityToMessageBarType.has(severity)
       ? errorBarSeverityToMessageBarType.get(severity)
       : MessageBarType.error;
-  const label = severity ? severity.toString() : CommunicationUiErrorSeverity.ERROR.toString();
-  if (!message || severity === CommunicationUiErrorSeverity.IGNORE) {
+  const label: CommunicationUiErrorSeverity = severity ? severity : 'Error';
+  if (!message || severity === 'Ignore') {
     return null;
   } else {
     return (

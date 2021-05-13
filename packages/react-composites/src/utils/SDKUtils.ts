@@ -128,14 +128,14 @@ export const getIdFromToken = (jwtToken: string): string => {
 // in many places. Returns a CommunicationUiError or undefined if the statusCode is success.
 export const getErrorFromAcsResponseCode = (message: string, statusCode: number): CommunicationUiError | undefined => {
   let errorCode: CommunicationUiErrorCode = CommunicationUiErrorCode.UNKNOWN_STATUS_CODE_ERROR;
-  let severity: CommunicationUiErrorSeverity = CommunicationUiErrorSeverity.WARNING;
+  let severity: CommunicationUiErrorSeverity = 'Warning';
   if (statusCode === OK || statusCode === NO_CONTENT || statusCode === MULTI_STATUS || statusCode === CREATED) {
     return undefined;
   } else if (statusCode === UNAUTHORIZED_STATUS_CODE) {
-    severity = CommunicationUiErrorSeverity.ERROR;
+    severity = 'Error';
     errorCode = CommunicationUiErrorCode.UNAUTHORIZED_ERROR;
   } else if (statusCode === FORBIDDEN_STATUS_CODE) {
-    severity = CommunicationUiErrorSeverity.ERROR;
+    severity = 'Error';
     errorCode = CommunicationUiErrorCode.FORBIDDEN_ERROR;
   } else if (statusCode === TOO_MANY_REQUESTS_STATUS_CODE) {
     errorCode = CommunicationUiErrorCode.TOO_MANY_REQUESTS_ERROR;

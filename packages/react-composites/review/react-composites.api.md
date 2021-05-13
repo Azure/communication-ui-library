@@ -387,16 +387,7 @@ export interface CommunicationUiErrorInfo {
 }
 
 // @public
-export enum CommunicationUiErrorSeverity {
-    // (undocumented)
-    ERROR = "Error",
-    // (undocumented)
-    IGNORE = "Ignore",
-    // (undocumented)
-    INFO = "Info",
-    // (undocumented)
-    WARNING = "Warning"
-}
+export type CommunicationUiErrorSeverity = 'Info' | 'Warning' | 'Error' | 'Ignore';
 
 // @public (undocumented)
 export const compareMessages: (firstMessage: {

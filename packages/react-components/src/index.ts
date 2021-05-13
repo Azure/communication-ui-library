@@ -4,10 +4,9 @@
 export * from './components';
 export * from './theming';
 
-export { CommunicationUiErrorSeverity } from './types';
-
 export type {
   BaseCustomStylesProps,
+  CommunicationUiErrorSeverity,
   ChatMessage,
   ChatMessagePayload,
   CustomMessage,

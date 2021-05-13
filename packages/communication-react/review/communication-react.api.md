@@ -182,16 +182,7 @@ export type CommunicationParticipant = {
 };
 
 // @public
-export enum CommunicationUiErrorSeverity {
-    // (undocumented)
-    ERROR = "Error",
-    // (undocumented)
-    IGNORE = "Ignore",
-    // (undocumented)
-    INFO = "Info",
-    // (undocumented)
-    WARNING = "Warning"
-}
+export type CommunicationUiErrorSeverity = 'Info' | 'Warning' | 'Error' | 'Ignore';
 
 // @public
 export const ControlBar: (props: ControlBarProps) => JSX.Element;
