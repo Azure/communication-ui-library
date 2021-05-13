@@ -10,22 +10,23 @@ import { getTopicName, getUserId, getParticipants } from './baseSelectors';
 const generateDefaultHeaderMessage = (participants: ChatParticipant[], userId: string): string => {
   let header = 'Chat with ';
 
-  const members = participants?.filter(
-    (member: ChatParticipant) => communicationIdentifierToString(member.id) !== userId && member.displayName
+  const participants = participants?.filter(
+    (participant: ChatParticipant) =>
+      communicationIdentifierToString(participant.id) !== userId && participant.displayName
   );
 
-  if (!members?.length) {
+  if (!participants?.length) {
     header += 'yourself';
     return header;
   }
 
   // if we have at least one other participant we want to show names for the first 3
-  const namedMembers = members.slice(0, 3);
-  header += namedMembers.map((member: ChatParticipant) => member.displayName).join(', ');
+  const namedParticipants = participants.slice(0, 3);
+  header += namedParticipants.map((participant: ChatParticipant) => participant.displayName).join(', ');
 
   // if we have more than 3 other participants we want to show the number of other participants
-  if (members.length > 3) {
-    const len = members.length - 3;
+  if (participants.length > 3) {
+    const len = participants.length - 3;
     header += ` and ${len} other participant${len === 1 ? '' : 's'}`;
   }
 
