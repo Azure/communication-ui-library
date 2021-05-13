@@ -39,7 +39,8 @@
     "history": "~5.0.0",
     "react-aria-live": "^2.0.5",
     "react-composites": "1.0.0-beta",
-    "react-linkify": "^1.0.0-alpha"
+    "react-linkify": "^1.0.0-alpha",
+    "@fluentui/theme-samples": "8.1.5"
   },
   "peerDependencies": {
     "react": "^16.13.1",

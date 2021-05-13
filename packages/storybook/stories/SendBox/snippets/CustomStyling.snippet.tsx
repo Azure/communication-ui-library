@@ -14,7 +14,7 @@ export const CustomStylingExample: () => JSX.Element = () => {
     <FluentThemeProvider>
       <div style={{ width: '31.25rem' }}>
         <SendBox
-          onMessageSend={async () => {
+          onSendMessage={async () => {
             return;
           }}
           onTyping={async () => {

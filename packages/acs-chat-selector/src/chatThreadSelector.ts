@@ -99,7 +99,7 @@ export const updateMessagesWithAttached = (chatMessagesWithStatus: ChatMessage[]
       if (index !== messages.length - 1) {
         //the next message has the same sender
         if (messages[index].payload.senderId === messages[index + 1].payload.senderId) {
-          attached = MessageAttachedStatus.TOP;
+          attached = 'top';
         }
       }
     } else {
@@ -111,18 +111,18 @@ export const updateMessagesWithAttached = (chatMessagesWithStatus: ChatMessage[]
             attached = true;
           } else {
             //the next message has a different sender
-            attached = MessageAttachedStatus.BOTTOM;
+            attached = 'bottom';
           }
         } else {
           // this is the last message of the whole messages list
-          attached = MessageAttachedStatus.BOTTOM;
+          attached = 'bottom';
         }
       } else {
         //the previous message has a different sender
         if (index !== messages.length - 1) {
           if (messages[index].payload.senderId === messages[index + 1].payload.senderId) {
             //the next message has the same sender
-            attached = MessageAttachedStatus.TOP;
+            attached = 'top';
           }
         }
       }

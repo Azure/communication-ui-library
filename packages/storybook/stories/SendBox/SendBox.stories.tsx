@@ -83,7 +83,7 @@ export const SendBox = (): JSX.Element => {
     <div style={{ width: '31.25rem' }}>
       <SendBoxComponent
         disabled={boolean('Block button from sending', false, 'Injected by ACS Context')}
-        onMessageSend={async (message) => alert(`sent message: ${message} `)}
+        onSendMessage={async (message) => alert(`sent message: ${message} `)}
         onTyping={(): Promise<void> => {
           console.log(`sending typing notifications`);
           return Promise.resolve();
