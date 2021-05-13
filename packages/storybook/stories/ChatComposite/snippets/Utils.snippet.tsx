@@ -22,7 +22,7 @@ export const addParrotBotToThread = async (
   // Must use the credentials of the thread owner to add more participants.
   const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(chatConfig.token));
   await chatClient.getChatThreadClient(chatConfig.threadId).addParticipants({
-    participants: [{ id: bot.user }]
+    participants: [{ id: bot.user, displayName: 'A simple bot' }]
   });
 
   sendMessagesAsBot(bot.token, endpointUrl, chatConfig.threadId, messages);
@@ -40,11 +40,7 @@ const sendMessagesAsBot = async (
   let index = 0;
   setInterval(() => {
     if (index < messages.length) {
-      const sendMessageRequest = {
-        content: messages[index++],
-        senderDisplayName: 'TestBot'
-      };
-      threadClient.sendMessage(sendMessageRequest);
+      threadClient.sendMessage({ content: messages[index++] });
     }
   }, 5000);
 };

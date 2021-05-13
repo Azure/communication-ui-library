@@ -133,7 +133,7 @@ const sendBoxProps = usePropsFor(SendBox);
 // This hook will get stateful client you created
 const chatThreadClient = useChatThreadClient();
 
-const onMessageSend = useCallback(
+const onSendMessage = useCallback(
   (message: string) => {
     const sendMessageRequest = {
       `✉: ${content}`,
@@ -145,7 +145,7 @@ const onMessageSend = useCallback(
   [chatThreadClient]
 );
 
-<SendBox {...sendBoxProps} onMessageSend={onMessageSend} />;
+<SendBox {...sendBoxProps} onSendMessage={onSendMessage} />;
 ```
 
 ### Override selector
