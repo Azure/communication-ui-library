@@ -38,7 +38,7 @@ export const CustomizationCanvas: () => JSX.Element = () => {
 
 const messageArray = [
   'Welcome to an example on how to add powerful customizations to the ChatComposite',
-  'In this example, Contoso intercepts the messages being sent by the local user and CAPIALIZES THEM ALL.',
+  'In this example, Contoso intercepts the messages being sent by the local user and CAPITALIZES THEM ALL.',
   'The adapter pattern allows for very powerful customizations, should you need them.',
   'Have fun!'
 ];
