@@ -25,7 +25,7 @@ import {
 } from 'react-composites';
 import { useSelector } from './hooks/useSelector';
 import { useHandlers } from './hooks/useHandlers';
-import { optionsButtonSelector } from '@azure/acs-calling-selector';
+import { localPreviewSelector } from '@azure/acs-calling-selector';
 
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { LocalVideoStream } from 'calling-stateful-client';
@@ -35,7 +35,7 @@ type CameraPreviewButtonProps = {
   onPreviewStopVideo: (stream: LocalVideoStream) => Promise<void>;
   device: VideoDeviceInfo;
 };
-const CameraPreviewButton = (props: CameraPreviewButtonProps): JSX.Element | null => {
+export const CameraPreviewButton = (props: CameraPreviewButtonProps): JSX.Element | null => {
   const { checked, onPreviewStartVideo, onPreviewStopVideo, device } = props;
   const onClick = (): void => {
     if (device) {
@@ -60,8 +60,8 @@ const LocalPreviewComponentBase = (
   // const cameraButtonProps = usePropsFor(CameraButton);
   // const cameraButtonHandlers = useHandlers(CameraButton);
   const dummyHandlers = useHandlers(CameraPreviewButton);
-  const optionsButtonProps = useSelector(optionsButtonSelector);
-  const unparentedView = optionsButtonProps.unparentedViews[0];
+  const localPreviewProps = useSelector(localPreviewSelector);
+  const unparentedView = localPreviewProps.unparentedViews[0];
   let videoStreamElement = null;
   if (unparentedView) {
     videoStreamElement = unparentedView.target;
@@ -95,18 +95,20 @@ const LocalPreviewComponentBase = (
             // {...cameraButtonProps}
             checked={previewOn}
             onClick={() => {
-              if (previewOn) {
-                dummyHandlers.onPreviewStopVideo({
-                  source: optionsButtonProps.cameras[0],
-                  mediaStreamType: 'Video'
-                });
-                setPreviewOn(false);
-              } else {
-                dummyHandlers.onPreviewStartVideo({
-                  source: optionsButtonProps.cameras[0],
-                  mediaStreamType: 'Video'
-                });
-                setPreviewOn(true);
+              if (localPreviewProps.selectedCamera) {
+                if (previewOn) {
+                  dummyHandlers.onPreviewStopVideo({
+                    source: localPreviewProps.selectedCamera,
+                    mediaStreamType: 'Video'
+                  });
+                  setPreviewOn(false);
+                } else {
+                  dummyHandlers.onPreviewStartVideo({
+                    source: localPreviewProps.selectedCamera,
+                    mediaStreamType: 'Video'
+                  });
+                  setPreviewOn(true);
+                }
               }
             }}
           />

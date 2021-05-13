@@ -2,15 +2,16 @@
 // Licensed under the MIT license.
 
 import React, { useState } from 'react';
-import { useCallContext, useCallingContext } from 'react-composites';
+import { useCallingContext } from 'react-composites';
 import { localStorageAvailable } from './utils/constants';
 import { saveDisplayNameToLocalStorage } from './utils/AppUtils';
 import { DisplayNameField } from './DisplayNameField';
 import { StartCallButton } from './StartCallButton';
 import { CallConfiguration } from './CallConfiguration';
 import { LocalDeviceSettingsComponent } from './LocalDeviceSettings';
-import { LocalVideoStream, VideoDeviceInfo } from '@azure/communication-calling';
+import { CameraPreviewButton } from './LocalPreview';
 import { optionsButtonSelector } from '@azure/acs-calling-selector';
+import { VideoDeviceInfo } from '@azure/communication-calling';
 import { useSelector } from './hooks/useSelector';
 import { useHandlers } from './hooks/useHandlers';
 
@@ -25,18 +26,11 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
   const [emptyWarning, setEmptyWarning] = useState(false);
   const [nameTooLongWarning, setNameTooLongWarning] = useState(false);
 
-  const { setVideoDeviceInfo, videoDeviceInfo, displayName } = useCallingContext();
-  const { setLocalVideoStream } = useCallContext();
+  const { displayName } = useCallingContext();
 
-  const options = useSelector(optionsButtonSelector, { callId: '' });
+  const options = useSelector(optionsButtonSelector);
   const handlers = useHandlers(LocalDeviceSettingsComponent);
-
-  const onSelectCamera = async (device: VideoDeviceInfo): Promise<void> => {
-    setVideoDeviceInfo(device);
-    const newLocalVideoStream = new LocalVideoStream(device);
-    setLocalVideoStream(newLocalVideoStream);
-    await handlers.onSelectCamera(device);
-  };
+  const localPreviewHandlers = useHandlers(CameraPreviewButton);
 
   return (
     <CallConfiguration {...props}>
@@ -51,8 +45,13 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
       <div>
         <LocalDeviceSettingsComponent
           {...options}
-          selectedCamera={videoDeviceInfo}
-          onSelectCamera={onSelectCamera}
+          onSelectCamera={(device: VideoDeviceInfo) => {
+            if (options.selectedCamera) {
+              localPreviewHandlers.onPreviewStopVideo({ source: options.selectedCamera, mediaStreamType: 'Video' });
+            }
+            localPreviewHandlers.onPreviewStartVideo({ source: device, mediaStreamType: 'Video' });
+            return handlers.onSelectCamera(device);
+          }}
           onSelectMicrophone={handlers.onSelectMicrophone}
           onSelectSpeaker={handlers.onSelectSpeaker}
         />

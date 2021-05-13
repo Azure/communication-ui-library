@@ -68,12 +68,10 @@ export const createDefaultCallingHandlers = memoizeOne(
     };
 
     const onPreviewStartVideo = async (stream: StatefulLocalVideoStream): Promise<void> => {
-      console.log('onPreviewStartVideo');
       await callClient.startRenderVideo(undefined, stream);
     };
 
     const onPreviewStopVideo = async (stream: StatefulLocalVideoStream): Promise<void> => {
-      console.log('onPreviewStopVideo');
       await callClient.stopRenderVideo(undefined, stream);
     };
 
@@ -95,10 +93,12 @@ export const createDefaultCallingHandlers = memoizeOne(
     };
 
     const onSelectCamera = async (device: VideoDeviceInfo): Promise<void> => {
-      if (!call || !deviceManager) return;
+      if (!deviceManager) return;
       deviceManager.selectCamera(device);
-      const stream = call.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
-      return stream?.switchSource(device);
+      if (call) {
+        const stream = call.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
+        return stream?.switchSource(device);
+      }
     };
 
     const onToggleMicrophone = async (): Promise<void> => {

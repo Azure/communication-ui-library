@@ -29,14 +29,13 @@ export const screenShareButtonSelector = reselect.createSelector([getCall], (cal
   };
 });
 
-export const optionsButtonSelector = reselect.createSelector([getDeviceManager, getCall], (deviceManager, call) => {
+export const optionsButtonSelector = reselect.createSelector([getDeviceManager, getCall], (deviceManager) => {
   return {
     microphones: deviceManager.microphones,
     speakers: deviceManager.speakers,
     cameras: deviceManager.cameras,
     selectedMicrophone: deviceManager.selectedMicrophone,
     selectedSpeaker: deviceManager.selectedSpeaker,
-    selectedCamera: deviceManager.selectedCamera,
-    unparentedViews: deviceManager.unparentedViews
+    selectedCamera: deviceManager.selectedCamera
   };
 });

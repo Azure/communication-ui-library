@@ -135,6 +135,15 @@ export const getIncomingCallsEnded: (state: CallClientState) => IncomingCall[];
 export const getUserId: (state: CallClientState) => string;
 
 // @public (undocumented)
+export const localPreviewSelector: reselect.OutputSelector<callingStateful.CallClientState, {
+    selectedCamera: VideoDeviceInfo | undefined;
+    unparentedViews: callingStateful.VideoStreamRendererView[];
+}, (res: callingStateful.DeviceManager) => {
+    selectedCamera: VideoDeviceInfo | undefined;
+    unparentedViews: callingStateful.VideoStreamRendererView[];
+}>;
+
+// @public (undocumented)
 export type MediaStreamType = 'Video' | 'ScreenSharing';
 
 // @public
@@ -155,7 +164,6 @@ export const optionsButtonSelector: reselect.OutputParametricSelector<callingSta
     selectedMicrophone: AudioDeviceInfo | undefined;
     selectedSpeaker: AudioDeviceInfo | undefined;
     selectedCamera: VideoDeviceInfo | undefined;
-    unparentedViews: callingStateful.VideoStreamRendererView[];
 }, (res1: callingStateful.DeviceManager, res2: callingStateful.Call | undefined) => {
     microphones: AudioDeviceInfo[];
     speakers: AudioDeviceInfo[];
@@ -163,7 +171,6 @@ export const optionsButtonSelector: reselect.OutputParametricSelector<callingSta
     selectedMicrophone: AudioDeviceInfo | undefined;
     selectedSpeaker: AudioDeviceInfo | undefined;
     selectedCamera: VideoDeviceInfo | undefined;
-    unparentedViews: callingStateful.VideoStreamRendererView[];
 }>;
 
 // @public (undocumented)
