@@ -1031,4 +1031,118 @@ describe('declarative call client', () => {
     const transfer = featureCache.get(Features.Transfer);
     expect(transfer.emitter.eventNames().length).toBe(0);
   });
+
+  test('should surface screenshare screen when available in state', async () => {
+    const testData = {} as TestData;
+    createClientAndAgentMocks(testData);
+    createDeclarativeClient(testData);
+    await createMockCallAndEmitCallsUpdated(testData);
+    await createMockParticipantAndEmitParticipantUpdated(testData);
+
+    const mockRemoteVideoStream = createMockRemoteVideoStream(false);
+    mockRemoteVideoStream.mediaStreamType = 'ScreenSharing';
+    mockRemoteVideoStream.isAvailable = true;
+    mockRemoteVideoStream.id = 1;
+    testData.mockRemoteParticipant.videoStreams = [mockRemoteVideoStream];
+    testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
+      added: [mockRemoteVideoStream],
+      removed: []
+    });
+
+    await waitWithBreakCondition(
+      () =>
+        testData.declarativeCallClient.state.calls
+          .get(mockCallId)
+          ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))?.videoStreams
+          .size !== 0
+    );
+
+    expect(testData.declarativeCallClient.state.calls.get(mockCallId)?.screenShareRemoteParticipant).toBeDefined();
+  });
+
+  test('should stop surfacing screenshare screen when not available in state', async () => {
+    const testData = {} as TestData;
+    createClientAndAgentMocks(testData);
+    createDeclarativeClient(testData);
+    await createMockCallAndEmitCallsUpdated(testData);
+    await createMockParticipantAndEmitParticipantUpdated(testData);
+
+    const mockRemoteVideoStream = createMockRemoteVideoStream(false);
+    mockRemoteVideoStream.mediaStreamType = 'ScreenSharing';
+    mockRemoteVideoStream.isAvailable = true;
+    mockRemoteVideoStream.id = 1;
+    testData.mockRemoteParticipant.videoStreams = [mockRemoteVideoStream];
+    testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
+      added: [mockRemoteVideoStream],
+      removed: []
+    });
+
+    await waitWithBreakCondition(
+      () =>
+        testData.declarativeCallClient.state.calls
+          .get(mockCallId)
+          ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))?.videoStreams
+          .size !== 0
+    );
+
+    mockRemoteVideoStream.isAvailable = false;
+    testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
+      added: [mockRemoteVideoStream],
+      removed: []
+    });
+
+    expect(testData.declarativeCallClient.state.calls.get(mockCallId)?.screenShareRemoteParticipant).not.toBeDefined();
+  });
+
+  test('should not accidently existing active screenshare screen when another stream is set unavailable', async () => {
+    const testData = {} as TestData;
+    createClientAndAgentMocks(testData);
+    createDeclarativeClient(testData);
+    await createMockCallAndEmitCallsUpdated(testData);
+    await createMockParticipantAndEmitParticipantUpdated(testData);
+
+    // Have an active screenshare
+    const mockRemoteVideoStream = createMockRemoteVideoStream(false);
+    mockRemoteVideoStream.mediaStreamType = 'ScreenSharing';
+    mockRemoteVideoStream.isAvailable = true;
+    mockRemoteVideoStream.id = 1;
+    testData.mockRemoteParticipant.videoStreams = [mockRemoteVideoStream];
+    testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
+      added: [mockRemoteVideoStream],
+      removed: []
+    });
+
+    const secondMockParticipantId = 'aaaaaaaaaaaaaa';
+    const participant2 = createMockRemoteParticipant(secondMockParticipantId);
+    testData.mockCall.emit('remoteParticipantsUpdated', {
+      added: [participant2],
+      removed: []
+    });
+
+    await waitWithBreakCondition(
+      () => testData.declarativeCallClient.state.calls.get(mockCallId)?.remoteParticipants.size === 2
+    );
+
+    // Add a second inactive screenshare and ensure it doesn't overwrite the first one
+    const mockRemoteVideoStream2 = createMockRemoteVideoStream(false);
+    mockRemoteVideoStream2.mediaStreamType = 'ScreenSharing';
+    mockRemoteVideoStream2.isAvailable = false;
+    mockRemoteVideoStream2.id = 1;
+    participant2.videoStreams = [mockRemoteVideoStream2];
+    participant2.emit('videoStreamsUpdated', {
+      added: [mockRemoteVideoStream],
+      removed: []
+    });
+
+    await waitWithBreakCondition(
+      () =>
+        testData.declarativeCallClient.state.calls
+          .get(mockCallId)
+          ?.remoteParticipants.get(
+            getRemoteParticipantKey({ kind: 'communicationUser', communicationUserId: secondMockParticipantId })
+          )?.videoStreams.size !== 0
+    );
+
+    expect(testData.declarativeCallClient.state.calls.get(mockCallId)?.screenShareRemoteParticipant).toBeDefined();
+  });
 });

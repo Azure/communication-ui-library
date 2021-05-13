@@ -199,9 +199,11 @@ export type VideoGalleryRemoteParticipant = VideoGalleryParticipant & {
 
 // @public (undocumented)
 export const videoGallerySelector: reselect.OutputParametricSelector<callingStateful.CallClientState, CallingBaseSelectorProps, {
+    screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
     localParticipant: VideoGalleryLocalParticipant | undefined;
     remoteParticipants: VideoGalleryRemoteParticipant[];
 }, (res1: Call_2 | undefined, res2: string | undefined, res3: string | undefined) => {
+    screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
     localParticipant: VideoGalleryLocalParticipant | undefined;
     remoteParticipants: VideoGalleryRemoteParticipant[];
 }>;

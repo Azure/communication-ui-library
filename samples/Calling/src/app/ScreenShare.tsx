@@ -24,6 +24,7 @@ import {
 } from './styles/MediaGallery.styles';
 
 export type ScreenShareProps = {
+  screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
   localParticipant?: VideoGalleryLocalParticipant;
   remoteParticipants: VideoGalleryRemoteParticipant[];
   onRenderView: (stream: LocalVideoStream | RemoteVideoStream, options: CreateViewOptions) => Promise<void>;
@@ -49,26 +50,21 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
 );
 
 export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
-  const { localParticipant, remoteParticipants, onRenderView } = props;
+  const { screenShareParticipant, localParticipant, remoteParticipants, onRenderView } = props;
 
   const localVideoStream = localParticipant?.videoStream;
   const isLocalVideoReady = localVideoStream?.videoStreamRendererView !== undefined;
-  const participantWithScreenShare: VideoGalleryRemoteParticipant | undefined = useMemo(() => {
-    return remoteParticipants.find((remoteParticipant: VideoGalleryRemoteParticipant) => {
-      return remoteParticipant.screenShareStream?.isAvailable;
-    });
-  }, [remoteParticipants]);
   const isScreenShareAvailable =
-    participantWithScreenShare &&
-    participantWithScreenShare.screenShareStream &&
-    participantWithScreenShare.screenShareStream.isAvailable;
+    screenShareParticipant &&
+    screenShareParticipant.screenShareStream &&
+    screenShareParticipant.screenShareStream.isAvailable;
 
   const screenShareStreamComponent = useMemo(() => {
     if (!isScreenShareAvailable) {
       return;
     }
-    const screenShareStream = participantWithScreenShare?.screenShareStream;
-    const videoStream = participantWithScreenShare?.videoStream;
+    const screenShareStream = screenShareParticipant?.screenShareStream;
+    const videoStream = screenShareParticipant?.videoStream;
     if (screenShareStream?.isAvailable && !screenShareStream?.videoStreamRendererView) {
       onRenderView(screenShareStream, {
         scalingMode: 'Fit'
@@ -96,7 +92,7 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
         videoProvider={<StreamMedia videoStreamElement={screenShareStream?.videoStreamRendererView?.target ?? null} />}
         placeholderProvider={
           <div className={loadingStyle}>
-            <Spinner label={`Loading ${participantWithScreenShare?.displayName}'s screen`} size={SpinnerSize.xSmall} />
+            <Spinner label={`Loading ${screenShareParticipant?.displayName}'s screen`} size={SpinnerSize.xSmall} />
           </div>
         }
         styles={{
@@ -116,7 +112,7 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
         )}
       </VideoTile>
     );
-  }, [isScreenShareAvailable, onRenderView, participantWithScreenShare]);
+  }, [isScreenShareAvailable, onRenderView, screenShareParticipant]);
 
   const layoutLocalParticipant = useMemo(() => {
     if (localVideoStream && !localVideoStream?.videoStreamRendererView) {
@@ -144,10 +140,10 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
 
   const sidePanelRemoteParticipants = useMemo(() => {
     return memoizeAllRemoteParticipants((memoizedRemoteParticipantFn) => {
-      return remoteParticipants && participantWithScreenShare
+      return remoteParticipants && screenShareParticipant
         ? remoteParticipants
             .filter((remoteParticipant: VideoGalleryRemoteParticipant) => {
-              return remoteParticipant.userId !== participantWithScreenShare.userId;
+              return remoteParticipant.userId !== screenShareParticipant.userId;
             })
             .map((participant: VideoGalleryRemoteParticipant, key: number) => {
               const remoteVideoStream = participant.videoStream;
@@ -172,7 +168,7 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
             })
         : [];
     });
-  }, [remoteParticipants, onRenderView, participantWithScreenShare]);
+  }, [remoteParticipants, onRenderView, screenShareParticipant]);
 
   return (
     <>

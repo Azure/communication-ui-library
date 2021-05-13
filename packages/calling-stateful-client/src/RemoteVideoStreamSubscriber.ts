@@ -26,20 +26,20 @@ export class RemoteVideoStreamSubscriber {
 
   private subscribe = (): void => {
     this._remoteVideoStream.on('isAvailableChanged', this.isAvailableChanged);
+    this.checkAndUpdateScreenShareState();
   };
 
   public unsubscribe = (): void => {
     this._remoteVideoStream.off('isAvailableChanged', this.isAvailableChanged);
   };
 
-  private isAvailableChanged = (): void => {
-    this._context.setRemoteVideoStreamIsAvailable(
-      this._callIdRef.callId,
-      this._participantKey,
-      this._remoteVideoStream.id,
-      this._remoteVideoStream.isAvailable
-    );
-
+  /**
+   * Update the state with the active screen share stream. If there is an existing stream will overwrite it if this one
+   * is active (newer stream takes priority). If there is an existing stream and this one is set to unavailable, and the
+   * existing stream is different participant, then don't set the active screen share stream to undefined, else set it
+   * to undefined.
+   */
+  private checkAndUpdateScreenShareState = (): void => {
     if (this._remoteVideoStream.mediaStreamType === 'ScreenSharing') {
       if (this._remoteVideoStream.isAvailable) {
         this._context.setCallScreenShareParticipant(this._callIdRef.callId, this._participantKey);
@@ -78,5 +78,16 @@ export class RemoteVideoStreamSubscriber {
         }
       }
     }
+  };
+
+  private isAvailableChanged = (): void => {
+    this._context.setRemoteVideoStreamIsAvailable(
+      this._callIdRef.callId,
+      this._participantKey,
+      this._remoteVideoStream.id,
+      this._remoteVideoStream.isAvailable
+    );
+
+    this.checkAndUpdateScreenShareState();
   };
 }

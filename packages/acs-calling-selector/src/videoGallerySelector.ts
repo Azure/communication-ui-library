@@ -47,6 +47,34 @@ const getUserId = (
   return userId;
 };
 
+const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
+  key: string,
+  isMuted: boolean,
+  isSpeaking: boolean,
+  videoStreams: Map<number, RemoteVideoStream>,
+  displayName?: string
+): VideoGalleryRemoteParticipant => {
+  const rawVideoStreamsArray = Array.from(videoStreams.values());
+
+  // From the current calling sdk, remote participant videoStreams is actually a tuple. If the first item is Video,
+  // then the second item should be screenshare. If the first item is screenshare then the second item should be video.
+  let videoStream = rawVideoStreamsArray[0];
+  let screenShareStream = rawVideoStreamsArray[1];
+  if (videoStream && videoStream.mediaStreamType === 'ScreenSharing') {
+    videoStream = rawVideoStreamsArray[1];
+    screenShareStream = rawVideoStreamsArray[0];
+  }
+
+  return {
+    userId: key,
+    displayName: displayName,
+    isMuted: isMuted,
+    isSpeaking: isSpeaking,
+    videoStream: videoStream,
+    screenShareStream: screenShareStream
+  };
+};
+
 const memoizedAllConvertRemoteParticipant = memoizeFnAll(
   (
     key: string,
@@ -55,19 +83,7 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     videoStreams: Map<number, RemoteVideoStream>,
     displayName?: string
   ): VideoGalleryRemoteParticipant => {
-    const rawVideoStreamsArray = Array.from(videoStreams.values());
-
-    return {
-      userId: key,
-      displayName: displayName,
-      isMuted: isMuted,
-      isSpeaking: isSpeaking,
-      // From the current calling sdk, remote participant videoStreams is actually a tuple
-      // The first item is always video stream
-      // The second item is always screenshare stream
-      videoStream: rawVideoStreamsArray[0],
-      screenShareStream: rawVideoStreamsArray[1]
-    };
+    return convertRemoteParticipantToVideoGalleryRemoteParticipant(key, isMuted, isSpeaking, videoStreams, displayName);
   }
 );
 
@@ -106,7 +122,19 @@ const convertCallToVideoGalleryLocalParticipants = (
 export const videoGallerySelector = createSelector(
   [getCall, getDisplayName, getIdentifier],
   (call: Call | undefined, displayName: string | undefined, identifier: string | undefined) => {
+    const screenShareRemoteParticipant = call?.screenShareRemoteParticipant
+      ? call.remoteParticipants.get(call.screenShareRemoteParticipant)
+      : undefined;
     return {
+      screenShareParticipant: screenShareRemoteParticipant
+        ? convertRemoteParticipantToVideoGalleryRemoteParticipant(
+            getUserId(screenShareRemoteParticipant.identifier),
+            screenShareRemoteParticipant.isMuted,
+            screenShareRemoteParticipant.isSpeaking,
+            screenShareRemoteParticipant.videoStreams,
+            screenShareRemoteParticipant.displayName
+          )
+        : undefined,
       localParticipant: call ? convertCallToVideoGalleryLocalParticipants(call, displayName, identifier) : undefined,
       remoteParticipants: call
         ? convertRemoteParticipantsToVideoGalleryRemoteParticipants(Array.from(call.remoteParticipants.values()))
