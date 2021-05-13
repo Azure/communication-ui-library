@@ -31,14 +31,14 @@ export const ParticipantManagement = (props: ParticipantManagementProps): JSX.El
             }
           });
 
-          const isYou = member.userId === (userId as string);
+          const me = member.userId === (userId as string);
 
           return (
             <ParticipantItem
               key={member.userId}
               name={member.displayName as string}
-              isYou={isYou}
-              menuItems={isYou ? undefined : menuItems}
+              me={me}
+              menuItems={me ? undefined : menuItems}
               onRenderAvatar={onRenderAvatar ? () => onRenderAvatar(member.userId) : undefined}
             />
           );
