@@ -7,7 +7,7 @@ import { ChatThreadClient } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
 
 export type DefaultChatHandlers = {
-  onMessageSend: (content: string) => Promise<void>;
+  onSendMessage: (content: string) => Promise<void>;
   onMessageSeen: (chatMessageId: string) => Promise<void>;
   onTyping: () => Promise<void>;
   onParticipantRemove: (userId: string) => Promise<void>;
@@ -20,7 +20,7 @@ export const createDefaultChatHandlers = memoizeOne(
   (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient): DefaultChatHandlers => {
     const messageIterator = chatThreadClient.listMessages();
     return {
-      onMessageSend: async (content: string) => {
+      onSendMessage: async (content: string) => {
         const sendMessageRequest = {
           content,
           senderDisplayName: chatClient.getState().displayName
