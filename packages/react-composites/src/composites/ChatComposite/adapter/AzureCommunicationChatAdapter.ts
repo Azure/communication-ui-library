@@ -14,7 +14,7 @@ import { createAzureCommunicationUserCredential, getIdFromToken } from '../../..
 import { ChatAdapter, ChatEvent, ChatState } from './ChatAdapter';
 
 // Context of Chat, which is a centralized context for all state updates
-export class ChatContext {
+class ChatContext {
   private emitter: EventEmitter = new EventEmitter();
   private state: ChatState;
   private threadId: string;
