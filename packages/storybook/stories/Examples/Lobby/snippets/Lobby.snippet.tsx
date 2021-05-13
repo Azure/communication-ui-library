@@ -21,7 +21,7 @@ export const Lobby = (props: LobbyProps): JSX.Element => {
   return (
     <VideoTile
       styles={videoTileStyles}
-      invertVideo={true}
+      isMirrored={true}
       isVideoReady={props.isVideoReady}
       videoProvider={
         // Replace with your own video provider.

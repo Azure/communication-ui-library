@@ -65,7 +65,7 @@ export const titleStyle = mergeStyles({
   fontWeight: 600
 });
 
-export const memberListStyle = mergeStyles({
+export const participantListStyle = mergeStyles({
   height: '100%',
   width: '100%',
   maxHeight: '100%',
