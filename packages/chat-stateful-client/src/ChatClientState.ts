@@ -10,7 +10,7 @@ import {
   isPhoneNumberIdentifier
 } from '@azure/communication-common';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
-import { TypingIndicatorEvent } from './types/TypingIndicatorEvent';
+import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 
 export type ChatClientState = {
   userId: CommunicationIdentifierKind;
@@ -34,7 +34,7 @@ export type ChatThreadClientState = {
   updateThreadMembersError?: boolean;
   failedMessageIds: string[];
   readReceipts: ChatMessageReadReceipt[];
-  typingIndicators: TypingIndicatorEvent[];
+  typingIndicators: TypingIndicatorReceivedEvent[];
   latestReadTime: Date;
 };
 
