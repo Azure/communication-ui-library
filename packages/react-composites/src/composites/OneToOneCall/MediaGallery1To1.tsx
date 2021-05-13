@@ -69,7 +69,7 @@ export const MediaGallery1To1Component = (props: MediaGallery1To1Props): JSX.Ele
           isVideoReady={isLocalVideoReady}
           videoProvider={<StreamMedia videoStreamElement={localVideoStreamElement} />}
           avatarName={localParticipantName}
-          invertVideo={localVideoInverted}
+          isMirrored={localVideoInverted}
         >
           {showLocalParticipantName && (
             <Label className={isLocalVideoReady ? videoHint : disabledVideoHint}>{localParticipantName}</Label>
