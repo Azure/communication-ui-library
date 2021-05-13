@@ -26,7 +26,7 @@ export type ChatHeaderProps = {
   participants: CommunicationParticipant[];
   setSelectedPane: Dispatch<SidePanelTypes>;
   endChatHandler(): void;
-  removeThreadMember?: (userId: string) => Promise<void>;
+  removeThreadParticipant?: (userId: string) => Promise<void>;
   updateThreadTopicName: (topicName: string) => Promise<void>;
 };
 
@@ -110,7 +110,7 @@ export const ChatHeader = (props: ChatHeaderProps): JSX.Element => {
               <DefaultButton
                 className={leaveButtonStyle}
                 onClick={() => {
-                  props.removeThreadMember && props.removeThreadMember(userId);
+                  props.removeThreadParticipant && props.removeThreadParticipant(userId);
                   props.endChatHandler();
                 }}
               >

@@ -110,7 +110,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   };
 
   sendMessage = async (content: string): Promise<void> => {
-    await this.handlers.onMessageSend(content);
+    await this.handlers.onSendMessage(content);
   };
 
   sendReadReceipt = async (chatMessageId: string): Promise<void> => {

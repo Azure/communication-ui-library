@@ -14,7 +14,7 @@ import { enableMapSet } from 'immer';
 import { ChatMessageReadReceipt, ChatParticipant } from '@azure/communication-chat';
 import { CommunicationIdentifierKind, UnknownIdentifierKind } from '@azure/communication-common';
 import { Constants } from './Constants';
-import { TypingIndicatorEvent } from './types/TypingIndicatorEvent';
+import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 import { ChatConfig } from './types/ChatConfig';
 
 enableMapSet();
@@ -274,7 +274,7 @@ export class ChatContext {
     }
   }
 
-  public addTypingIndicator(threadId: string, typingIndicator: TypingIndicatorEvent): void {
+  public addTypingIndicator(threadId: string, typingIndicator: TypingIndicatorReceivedEvent): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         const thread = draft.threads.get(threadId);

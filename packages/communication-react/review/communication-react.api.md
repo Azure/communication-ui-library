@@ -5,32 +5,23 @@
 ```ts
 
 import { ChatClient } from '@azure/communication-chat';
-import { ChatClientState as ChatClientState_2 } from 'chat-stateful-client';
 import { ChatMessage as ChatMessage_2 } from '@azure/communication-chat';
 import { ChatMessageReadReceipt } from '@azure/communication-chat';
-import { ChatMessageWithStatus as ChatMessageWithStatus_2 } from 'chat-stateful-client';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
-import { CommunicationParticipant as CommunicationParticipant_2 } from 'react-components';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { IButtonProps } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
-import { Message as Message_2 } from 'react-components';
-import { MessageThread as MessageThread_2 } from 'react-components';
 import { PartialTheme } from '@fluentui/react-theme-provider';
 import { PersonaPresence } from '@fluentui/react';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
 import * as reselect from 'reselect';
-import { SendBox as SendBox_2 } from 'react-components';
 import { SizeValue } from '@fluentui/react-northstar';
-import { StatefulChatClient as StatefulChatClient_2 } from 'chat-stateful-client';
 import { Theme } from '@fluentui/react-theme-provider';
-import { TypingIndicator as TypingIndicator_2 } from 'react-components';
-import { TypingIndicatorEvent as TypingIndicatorEvent_2 } from 'chat-stateful-client';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 
 // @public
@@ -46,6 +37,16 @@ export interface BaseCustomStylesProps {
 
 // @public (undocumented)
 export type CallbackType<KeyT, ArgsT extends any[], FnRetT> = (memoizedFn: FunctionWithKey<KeyT, ArgsT, FnRetT>) => FnRetT[];
+
+// @public
+export interface CallingTheme {
+    // (undocumented)
+    callingPalette: {
+        callRed: string;
+        callRedDark: string;
+        callRedDarker: string;
+    };
+}
 
 // @public
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
@@ -67,7 +68,7 @@ export const ChatClientProvider: (props: ChatClientProviderProps) => JSX.Element
 // @public (undocumented)
 export type ChatClientProviderProps = {
     children: React_2.ReactNode;
-    chatClient: StatefulChatClient_2;
+    chatClient: StatefulChatClient;
 };
 
 // @public (undocumented)
@@ -109,14 +110,14 @@ export type ChatMessageWithStatus = ChatMessage_2 & {
 };
 
 // @public (undocumented)
-export const chatParticipantListSelector: reselect.OutputParametricSelector<ChatClientState_2, ChatBaseSelectorProps, {
+export const chatParticipantListSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     myUserId: string;
     displayName: string;
-    participants: CommunicationParticipant_2[];
+    participants: CommunicationParticipant[];
 }, (res1: string, res2: Map<string, ChatParticipant>, res3: string) => {
     myUserId: string;
     displayName: string;
-    participants: CommunicationParticipant_2[];
+    participants: CommunicationParticipant[];
 }>;
 
 // @public
@@ -135,11 +136,11 @@ export type ChatThreadClientState = {
     threadId: string;
     properties?: ChatThreadProperties;
     coolPeriod?: Date;
-    getThreadMembersError?: boolean;
-    updateThreadMembersError?: boolean;
+    getThreadParticipantsError?: boolean;
+    updateThreadParticipantsError?: boolean;
     failedMessageIds: string[];
     readReceipts: ChatMessageReadReceipt[];
-    typingIndicators: TypingIndicatorEvent[];
+    typingIndicators: TypingIndicatorReceivedEvent[];
     latestReadTime: Date;
 };
 
@@ -149,14 +150,14 @@ export type ChatThreadProperties = {
 };
 
 // @public (undocumented)
-export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientState_2, ChatBaseSelectorProps, {
+export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     userId: string;
     disableReadReceipt: boolean;
-    messages: Message_2<"chat">[];
-}, (res1: string, res2: Map<string, ChatMessageWithStatus_2>, res3: Date, res4: boolean) => {
+    messages: Message<"chat">[];
+}, (res1: string, res2: Map<string, ChatMessageWithStatus>, res3: Date, res4: boolean) => {
     userId: string;
     disableReadReceipt: boolean;
-    messages: Message_2<"chat">[];
+    messages: Message<"chat">[];
 }>;
 
 // @public (undocumented)
@@ -181,16 +182,7 @@ export type CommunicationParticipant = {
 };
 
 // @public
-export enum CommunicationUiErrorSeverity {
-    // (undocumented)
-    ERROR = "Error",
-    // (undocumented)
-    IGNORE = "Ignore",
-    // (undocumented)
-    INFO = "Info",
-    // (undocumented)
-    WARNING = "Warning"
-}
+export type CommunicationUiErrorSeverity = 'info' | 'warning' | 'error' | 'ignore';
 
 // @public
 export const ControlBar: (props: ControlBarProps) => JSX.Element;
@@ -206,10 +198,10 @@ export interface ControlBarProps {
 }
 
 // @public (undocumented)
-export const createDefaultChatHandlers: (chatClient: StatefulChatClient_2, chatThreadClient: ChatThreadClient) => DefaultChatHandlers;
+export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => DefaultChatHandlers;
 
 // @public (undocumented)
-export const createDefaultChatHandlersForComponent: <Props>(chatClient: StatefulChatClient_2, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, Props>>;
+export const createDefaultChatHandlersForComponent: <Props>(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, Props>>;
 
 // @public (undocumented)
 export const createStatefulChatClient: (chatClient: ChatClient, chatConfig: ChatConfig) => StatefulChatClient;
@@ -232,11 +224,11 @@ export type CustomMessagePayload = {
 };
 
 // @public
-export const darkTheme: PartialTheme;
+export const darkTheme: PartialTheme & CallingTheme;
 
 // @public (undocumented)
 export type DefaultChatHandlers = {
-    onMessageSend: (content: string) => Promise<void>;
+    onSendMessage: (content: string) => Promise<void>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
     onTyping: () => Promise<void>;
     onParticipantRemove: (userId: string) => Promise<void>;
@@ -283,7 +275,7 @@ export type FunctionWithKey<KeyT, ArgsT extends any[], RetT> = (key: KeyT, ...ar
 export const getCommunicationIdentifierAsKey: (identifier: CommunicationIdentifier) => CommunicationIdentifierAsKey;
 
 // @public (undocumented)
-export type GetSelector<Component> = AreEqual<Component, typeof SendBox_2> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread_2> extends true ? typeof chatThreadSelector : AreEqual<Component, typeof TypingIndicator_2> extends true ? typeof typingIndicatorSelector : never;
+export type GetSelector<Component> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof chatThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : never;
 
 // @public (undocumented)
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;
@@ -313,7 +305,7 @@ export const labeledAnswerButtonProps: IButtonProps;
 export const labeledRecordButtonProps: IButtonProps;
 
 // @public
-export const lightTheme: PartialTheme;
+export const lightTheme: PartialTheme & CallingTheme;
 
 // @public
 export interface LocalVideoStream {
@@ -335,12 +327,7 @@ export type Message<T extends MessageTypes> = {
 };
 
 // @public (undocumented)
-export enum MessageAttachedStatus {
-    // (undocumented)
-    BOTTOM = "bottom",
-    // (undocumented)
-    TOP = "top"
-}
+export type MessageAttachedStatus = 'bottom' | 'top';
 
 // @public
 export type MessageProps = {
@@ -483,9 +470,9 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 // @public
 export interface SendBoxProps {
     disabled?: boolean;
-    onMessageSend?: (content: string) => Promise<void>;
     onRenderIcon?: (props: SendBoxProps, isMouseOverSendIcon: boolean) => JSX.Element | null;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
+    onSendMessage?: (content: string) => Promise<void>;
     onTyping?: () => Promise<void>;
     styles?: SendBoxStylesProps;
     supportNewline?: boolean;
@@ -493,7 +480,7 @@ export interface SendBoxProps {
 }
 
 // @public (undocumented)
-export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState_2, ChatBaseSelectorProps, {
+export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     displayName: string;
     userId: string;
     disabled: boolean;
@@ -544,11 +531,6 @@ export type SystemMessagePayload = {
 // @public
 export const TypingIndicator: (props: TypingIndicatorProps) => JSX.Element;
 
-// @public (undocumented)
-export type TypingIndicatorEvent = Omit<TypingIndicatorReceivedEvent, 'receivedOn'> & {
-    receivedOn: Date;
-};
-
 // @public
 export interface TypingIndicatorProps {
     onRenderUsers?: (users: CommunicationParticipant[]) => JSX.Element;
@@ -558,10 +540,10 @@ export interface TypingIndicatorProps {
 }
 
 // @public (undocumented)
-export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClientState_2, ChatBaseSelectorProps, {
-    typingUsers: CommunicationParticipant_2[];
-}, (res1: TypingIndicatorEvent_2[], res2: Map<string, ChatParticipant>, res3: string) => {
-    typingUsers: CommunicationParticipant_2[];
+export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
+    typingUsers: CommunicationParticipant[];
+}, (res1: TypingIndicatorReceivedEvent[], res2: Map<string, ChatParticipant>, res3: string) => {
+    typingUsers: CommunicationParticipant[];
 }>;
 
 // @public (undocumented)
@@ -571,7 +553,7 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
 }
 
 // @public (undocumented)
-export const useChatClient: () => StatefulChatClient_2;
+export const useChatClient: () => StatefulChatClient;
 
 // @public (undocumented)
 export const useChatThreadClient: () => ChatThreadClient;
@@ -583,7 +565,7 @@ export const useHandlers: <PropsT>(component: (props: PropsT) => ReactElement | 
 export const usePropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => ReturnType<GetSelector<Component>> & Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, Parameters<Component>[0]>>;
 
 // @public (undocumented)
-export const useSelector: <SelectorT extends (state: ChatClientState_2, props: any) => any>(selector: SelectorT, selectorProps?: Parameters<SelectorT>[1] | undefined) => ReturnType<SelectorT>;
+export const useSelector: <SelectorT extends (state: ChatClientState, props: any) => any>(selector: SelectorT, selectorProps?: Parameters<SelectorT>[1] | undefined) => ReturnType<SelectorT>;
 
 // @public (undocumented)
 export const useThreadId: () => string;

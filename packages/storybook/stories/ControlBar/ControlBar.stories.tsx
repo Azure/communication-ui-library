@@ -154,15 +154,13 @@ export const ControlBarComponent: (
   const showLabels = boolean('Show Labels', false);
 
   // This is code to set the color of the background div to show contrast to the control bar based on the theme like shown in the Figma design.
-  let background = 'none';
-  if (theme === 'dark') {
+  let background = '#f8f8f8';
+  if (theme === 'Dark') {
     if (layout.startsWith('floating')) {
       background = '#252423';
     } else {
       background = '#161514';
     }
-  } else if (theme === 'light') {
-    background = '#f8f8f8';
   }
 
   return (

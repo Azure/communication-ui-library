@@ -9,12 +9,15 @@ import { ChatBaseSelectorProps } from './baseSelectors';
 import { communicationIdentifierToString, getTypingIndicators, getParticipants, getUserId } from './baseSelectors';
 import * as reselect from 'reselect';
 import { ChatParticipant } from '@azure/communication-chat';
-import { TypingIndicatorEvent } from 'chat-stateful-client';
+import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 import { CommunicationParticipant } from 'react-components';
 import { MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS, PARTICIPANTS_THRESHOLD } from './utils/constants';
 
-const filterTypingIndicators = (typingIndicators: TypingIndicatorEvent[], userId: string): TypingIndicatorEvent[] => {
-  const filteredTypingIndicators: TypingIndicatorEvent[] = [];
+const filterTypingIndicators = (
+  typingIndicators: TypingIndicatorReceivedEvent[],
+  userId: string
+): TypingIndicatorReceivedEvent[] => {
+  const filteredTypingIndicators: TypingIndicatorReceivedEvent[] = [];
   const seen = new Set();
   const date8SecondsAgo = new Date(Date.now() - MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS);
   for (let i = typingIndicators.length - 1; i >= 0; i--) {
@@ -35,7 +38,7 @@ const filterTypingIndicators = (typingIndicators: TypingIndicatorEvent[], userId
 };
 
 const convertSdkTypingIndicatorsToCommunicationParticipants = (
-  typingIndicators: TypingIndicatorEvent[],
+  typingIndicators: TypingIndicatorReceivedEvent[],
   participants: Map<string, ChatParticipant>
 ): CommunicationParticipant[] => {
   return typingIndicators.map((typingIndicator) => ({
@@ -47,7 +50,7 @@ const convertSdkTypingIndicatorsToCommunicationParticipants = (
 export const typingIndicatorSelector = reselect.createSelector(
   [getTypingIndicators, getParticipants, getUserId],
   (
-    typingIndicators: TypingIndicatorEvent[],
+    typingIndicators: TypingIndicatorReceivedEvent[],
     participants: Map<CommunicationIdentifierAsKey, ChatParticipant>,
     userId: string
   ) => {

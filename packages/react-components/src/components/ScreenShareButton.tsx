@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { DefaultButton, IButtonProps, Stack, concatStyleSets, mergeStyles } from '@fluentui/react';
+import { DefaultButton, IButtonProps, Label, concatStyleSets, mergeStyles } from '@fluentui/react';
 import { CallControlCloseTrayIcon, CallControlPresentNewIcon } from '@fluentui/react-northstar';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 
@@ -43,9 +43,9 @@ export const ScreenShareButton = (props: ScreenShareButtonProps): JSX.Element =>
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {
     return (
-      <Stack key={'screenShareLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
+      <Label key={'screenShareLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
         {props?.checked ? 'Stop' : 'Share'}
-      </Stack>
+      </Label>
     );
   };
 

@@ -13,7 +13,6 @@ import * as callingStateful from 'calling-stateful-client';
 import { CommunicationParticipant } from 'react-components';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CreateViewOptions as CreateViewOptions_2 } from '@azure/communication-calling';
-import { DeclarativeCallClient } from 'calling-stateful-client';
 import { DeviceManager } from 'calling-stateful-client';
 import { IncomingCall } from 'calling-stateful-client';
 import { LocalVideoStream } from 'calling-stateful-client';
@@ -22,6 +21,7 @@ import { ReactElement } from 'react';
 import { RemoteVideoStream } from 'calling-stateful-client';
 import * as reselect from 'reselect';
 import { StartCallOptions } from '@azure/communication-calling';
+import { StatefulCallClient } from 'calling-stateful-client';
 import { StatefulDeviceManager } from 'calling-stateful-client';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
@@ -51,7 +51,7 @@ export type CommonProperties1<A, B> = {
 }[keyof A & keyof B];
 
 // @public (undocumented)
-export const createDefaultCallingHandlers: (callClient: DeclarativeCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => {
+export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => {
     onHangUp: () => Promise<void>;
     onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
     onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
@@ -65,7 +65,7 @@ export const createDefaultCallingHandlers: (callClient: DeclarativeCallClient, c
 };
 
 // @public
-export const createDefaultCallingHandlersForComponent: <Props>(declarativeCallClient: DeclarativeCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, _Component: (props: Props) => ReactElement | null) => Pick<{
+export const createDefaultCallingHandlersForComponent: <Props>(callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, _Component: (props: Props) => ReactElement | null) => Pick<{
     onHangUp: () => Promise<void>;
     onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
     onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
