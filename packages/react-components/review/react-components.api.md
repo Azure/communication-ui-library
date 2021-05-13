@@ -339,9 +339,9 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 // @public
 export interface SendBoxProps {
     disabled?: boolean;
-    onMessageSend?: (content: string) => Promise<void>;
     onRenderIcon?: (props: SendBoxProps, isMouseOverSendIcon: boolean) => JSX.Element | null;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
+    onSendMessage?: (content: string) => Promise<void>;
     onTyping?: () => Promise<void>;
     styles?: SendBoxStylesProps;
     supportNewline?: boolean;
