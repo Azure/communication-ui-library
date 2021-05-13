@@ -27,7 +27,7 @@ const errorCodeToMessage = new Map<CommunicationUiErrorCode, string>([
   [CommunicationUiErrorCode.GET_MESSAGE_ERROR, 'Failed to get message'],
   [CommunicationUiErrorCode.SEND_TYPING_NOTIFICATION_ERROR, 'Failed to send typing notification'],
   [CommunicationUiErrorCode.GET_MESSAGES_ERROR, 'Failed to get messages'],
-  [CommunicationUiErrorCode.REMOVE_THREAD_MEMBER_ERROR, 'Failed to remove thread member'],
+  [CommunicationUiErrorCode.REMOVE_THREAD_PARTICIPANT_ERROR, 'Failed to remove thread participant'],
   [CommunicationUiErrorCode.UPDATE_THREAD_ERROR, 'Failed to update thread'],
   [CommunicationUiErrorCode.GET_THREAD_ERROR, 'Failed to get thread'],
   [CommunicationUiErrorCode.QUERY_PERMISSIONS_ERROR, 'Failed to query for permissions'],

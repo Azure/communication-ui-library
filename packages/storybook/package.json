@@ -30,6 +30,7 @@
     "@fluentui/react-icons-northstar": "^0.51.2",
     "@fluentui/react-northstar": "^0.51.2",
     "@fluentui/react-theme-provider": "^0.18.0",
+    "@fluentui/theme-samples": "8.1.5",
     "@microsoft/applicationinsights-react-js": "~3.0.5",
     "@microsoft/applicationinsights-web": "~2.6.2",
     "@uifabric/react-hooks": "~7.13.11",

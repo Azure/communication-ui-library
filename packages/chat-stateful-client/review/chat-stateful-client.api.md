@@ -41,11 +41,11 @@ export type ChatThreadClientState = {
     threadId: string;
     properties?: ChatThreadProperties;
     coolPeriod?: Date;
-    getThreadMembersError?: boolean;
-    updateThreadMembersError?: boolean;
+    getThreadParticipantsError?: boolean;
+    updateThreadParticipantsError?: boolean;
     failedMessageIds: string[];
     readReceipts: ChatMessageReadReceipt[];
-    typingIndicators: TypingIndicatorEvent[];
+    typingIndicators: TypingIndicatorReceivedEvent[];
     latestReadTime: Date;
 };
 
@@ -72,11 +72,6 @@ export interface StatefulChatClient extends ChatClient {
     // (undocumented)
     onStateChange(handler: (state: ChatClientState) => void): void;
 }
-
-// @public (undocumented)
-export type TypingIndicatorEvent = Omit<TypingIndicatorReceivedEvent, 'receivedOn'> & {
-    receivedOn: Date;
-};
 
 
 // (No @packageDocumentation comment for this package)

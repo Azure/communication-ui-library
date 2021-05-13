@@ -5,11 +5,11 @@ import {
   ChatClientState,
   ChatMessageWithStatus,
   CommunicationIdentifierAsKey,
-  TypingIndicatorEvent,
   getCommunicationIdentifierAsKey
 } from 'chat-stateful-client';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { ChatParticipant, ChatMessageReadReceipt } from '@azure/communication-chat';
+import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 export type ChatBaseSelectorProps = {
   threadId: string;
 };
@@ -48,7 +48,10 @@ export const getTopicName = (state: ChatClientState, props: ChatBaseSelectorProp
   return state.threads.get(props.threadId)?.properties?.topic || '';
 };
 
-export const getTypingIndicators = (state: ChatClientState, props: ChatBaseSelectorProps): TypingIndicatorEvent[] => {
+export const getTypingIndicators = (
+  state: ChatClientState,
+  props: ChatBaseSelectorProps
+): TypingIndicatorReceivedEvent[] => {
   return (props.threadId && state.threads.get(props.threadId)?.typingIndicators) || [];
 };
 
