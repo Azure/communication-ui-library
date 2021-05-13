@@ -12,7 +12,7 @@ import { BaseCustomStylesProps } from '../types';
 export type ErrorBarProps = {
   /** Message to show in ErrorBar. */
   message?: string;
-  /** Severity of error to determine type and color of ErrorBar. Defaults to 'Error' type and color red. */
+  /** Severity of error to determine type and color of ErrorBar. Defaults to 'error' type and color red. */
   severity?: CommunicationUiErrorSeverity;
   /** Optional callback called when ErrorBar is closed. */
   onClose?: () => void;
@@ -27,9 +27,9 @@ export type ErrorBarProps = {
 };
 
 const errorBarSeverityToMessageBarType = new Map<CommunicationUiErrorSeverity, MessageBarType>([
-  ['Info', MessageBarType.info],
-  ['Warning', MessageBarType.warning],
-  ['Error', MessageBarType.error]
+  ['info', MessageBarType.info],
+  ['warning', MessageBarType.warning],
+  ['error', MessageBarType.error]
 ]);
 
 /**
@@ -42,8 +42,8 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element | null => {
     severity && errorBarSeverityToMessageBarType.has(severity)
       ? errorBarSeverityToMessageBarType.get(severity)
       : MessageBarType.error;
-  const label: CommunicationUiErrorSeverity = severity ? severity : 'Error';
-  if (!message || severity === 'Ignore') {
+  const label: CommunicationUiErrorSeverity = severity ? severity : 'error';
+  if (!message || severity === 'ignore') {
     return null;
   } else {
     return (

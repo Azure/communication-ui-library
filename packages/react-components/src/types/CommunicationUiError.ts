@@ -45,7 +45,7 @@ export enum CommunicationUiErrorCode {
  * Severity is a rating provided by UI on the impact of the error. It can be used as a rough metric for decision making.
  * If using ErrorBar component, a INFO, WARNING, or ERROR severity will cause the message to be displayed in ErrorBar.
  */
-export type CommunicationUiErrorSeverity = 'Info' | 'Warning' | 'Error' | 'Ignore';
+export type CommunicationUiErrorSeverity = 'info' | 'warning' | 'error' | 'ignore';
 
 export interface CommunicationUiErrorInfo {
   message: string;
@@ -82,7 +82,7 @@ export class CommunicationUiError extends Error implements CommunicationUiErrorI
     super(args.message ?? 'Unknown error');
     this.message = args.message ?? 'Unknown error';
     this._code = args.code ?? CommunicationUiErrorCode.UNKNOWN_ERROR;
-    this._severity = args.severity ?? 'Error';
+    this._severity = args.severity ?? 'error';
     this._originalError = args.error;
     this._errorInfo = args.errorInfo;
   }

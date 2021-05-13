@@ -32,7 +32,7 @@ describe('ErrorBar tests', () => {
 
   test('ErrorBar should display message when message is specified', () => {
     act(() => {
-      render(<ErrorBar message={testMessage} severity={'Error'} />, container);
+      render(<ErrorBar message={testMessage} severity={'error'} />, container);
     });
 
     expect(container.children.length).toBeGreaterThan(0);

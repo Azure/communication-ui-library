@@ -48,7 +48,7 @@ const errorCodeToMessage = new Map<CommunicationUiErrorCode, string>([
 
 export const MapToErrorBarProps = (): ErrorBarProps => {
   const lastError = useLastError();
-  let severity: CommunicationUiErrorSeverity = 'Error';
+  let severity: CommunicationUiErrorSeverity = 'error';
   let message: string | undefined = undefined;
   if (lastError) {
     message = errorCodeToMessage.get(lastError.code);

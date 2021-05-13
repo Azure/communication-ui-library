@@ -387,7 +387,7 @@ export interface CommunicationUiErrorInfo {
 }
 
 // @public
-export type CommunicationUiErrorSeverity = 'Info' | 'Warning' | 'Error' | 'Ignore';
+export type CommunicationUiErrorSeverity = 'info' | 'warning' | 'error' | 'ignore';
 
 // @public (undocumented)
 export const compareMessages: (firstMessage: {

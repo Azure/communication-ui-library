@@ -52,8 +52,8 @@ const getDocs: () => JSX.Element = () => {
 export const ErrorBar = (): JSX.Element | null => {
   const [closed, setClosed] = useState<boolean>(false);
   const message = text('Message', 'This is a sample error message.');
-  const knobOptions: Array<CommunicationUiErrorSeverity> = ['Error', 'Warning', 'Info', 'Ignore'];
-  const severity = select<CommunicationUiErrorSeverity>('Severity', knobOptions, 'Error');
+  const knobOptions: Array<CommunicationUiErrorSeverity> = ['error', 'warning', 'info', 'ignore'];
+  const severity = select<CommunicationUiErrorSeverity>('Severity', knobOptions, 'error');
   const onClearError = (): void => {
     setClosed(true);
   };

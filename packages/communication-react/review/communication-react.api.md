@@ -182,7 +182,7 @@ export type CommunicationParticipant = {
 };
 
 // @public
-export type CommunicationUiErrorSeverity = 'Info' | 'Warning' | 'Error' | 'Ignore';
+export type CommunicationUiErrorSeverity = 'info' | 'warning' | 'error' | 'ignore';
 
 // @public
 export const ControlBar: (props: ControlBarProps) => JSX.Element;
