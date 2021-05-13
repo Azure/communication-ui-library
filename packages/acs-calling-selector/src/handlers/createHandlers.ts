@@ -13,7 +13,7 @@ import {
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
-import { VideoGalleryLocalParticipant } from 'react-components';
+import { CreateViewOptions } from '../types/VideoGallery';
 import { getUserId } from '../utils/participant';
 
 export type DefaultHandlers = ReturnType<typeof createDefaultHandlers>;
@@ -100,14 +100,16 @@ const createDefaultHandlers = memoizeOne(
 
     const onHangUp = async (): Promise<void> => await call?.hangUp();
 
-    const onBeforeRenderLocalVideoTile = async (_localParticipant: VideoGalleryLocalParticipant): Promise<void> => {
+    const onBeforeRenderLocalVideoTile = async (options?: CreateViewOptions): Promise<void> => {
+      console.log('onBeforeRenderLocalVideoTile', options, call);
       if (!call || call.localVideoStreams.length < 1) return;
       const localStream = call.localVideoStreams[0];
       if (!localStream) return;
-      callClient.startRenderVideo(call.id, call.localVideoStreams[0]);
+      callClient.startRenderVideo(call.id, call.localVideoStreams[0], options);
     };
 
-    const onBeforeRenderRemoteVideoTile = async (userId: string): Promise<void> => {
+    const onBeforeRenderRemoteVideoTile = async (userId: string, options?: CreateViewOptions): Promise<void> => {
+      console.log('onBeforeRenderRemoteVideoTile', options);
       if (!call) return;
       const callState = callClient.state.calls.get(call.id);
       if (!callState) throw new Error(`Call Not Found: ${call.id}`);
@@ -130,11 +132,11 @@ const createDefaultHandlers = memoizeOne(
         });
 
       if (remoteVideoStream && remoteVideoStream?.isAvailable && !remoteVideoStream.videoStreamRendererView) {
-        callClient.startRenderVideo(call.id, remoteVideoStream);
+        callClient.startRenderVideo(call.id, remoteVideoStream, options);
       }
 
       if (screenShareStream && screenShareStream.isAvailable && !screenShareStream.videoStreamRendererView) {
-        callClient.startRenderVideo(call.id, screenShareStream);
+        callClient.startRenderVideo(call.id, screenShareStream, options);
       }
     };
 

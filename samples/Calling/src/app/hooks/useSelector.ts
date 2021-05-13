@@ -2,10 +2,9 @@
 // Licensed under the MIT license.
 
 import { CallClientState, DeclarativeCallClient } from '@azure/acs-calling-declarative';
-import { useCall, useCallClient, useDisplayName, useIdentifier } from 'react-composites';
+import { useCall, useCallClient } from 'react-composites';
 
 import { useState, useEffect, useRef, useMemo } from 'react';
-import { videoGallerySelector } from '@azure/acs-calling-selector';
 
 export const useSelector = <SelectorT extends (state: CallClientState, props: any) => any>(
   selector: SelectorT,
@@ -13,16 +12,12 @@ export const useSelector = <SelectorT extends (state: CallClientState, props: an
 ): ReturnType<SelectorT> => {
   const callClient: DeclarativeCallClient = useCallClient() as any;
   const callId = useCall()?.id;
-  const displayName = useDisplayName();
-  const identifier = useIdentifier();
 
   const callIdConfigProps = useMemo(
     () => ({
-      callId,
-      displayName,
-      identifier
+      callId
     }),
-    [callId, displayName, identifier]
+    [callId]
   );
 
   const [props, setProps] = useState(selector(callClient.state, selectorProps ?? callIdConfigProps));

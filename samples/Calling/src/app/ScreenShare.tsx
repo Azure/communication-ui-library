@@ -19,8 +19,9 @@ import {
 export type ScreenShareProps = {
   localParticipant: VideoGalleryLocalParticipant;
   remoteParticipants: VideoGalleryRemoteParticipant[];
-  onBeforeRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => Promise<void>;
-  onBeforeRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => Promise<void>;
+  participantWithScreenShare: VideoGalleryRemoteParticipant;
+  onBeforeRenderLocalVideoTile?: () => Promise<void>;
+  onBeforeRenderRemoteVideoTile?: (userId: string) => Promise<void>;
 };
 
 const memoizeAllRemoteParticipants = memoizeFnAll(
@@ -43,15 +44,16 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
 );
 
 export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
-  const { localParticipant, remoteParticipants, onBeforeRenderRemoteVideoTile, onBeforeRenderLocalVideoTile } = props;
+  const {
+    localParticipant,
+    remoteParticipants,
+    onBeforeRenderRemoteVideoTile,
+    onBeforeRenderLocalVideoTile,
+    participantWithScreenShare
+  } = props;
 
   const localVideoStream = localParticipant?.videoStream;
   const isLocalVideoReady = localVideoStream?.videoProvider !== undefined;
-  const participantWithScreenShare: VideoGalleryRemoteParticipant | undefined = useMemo(() => {
-    return remoteParticipants.find((remoteParticipant: VideoGalleryRemoteParticipant) => {
-      return remoteParticipant.screenShareStream?.isAvailable;
-    });
-  }, [remoteParticipants]);
   const isScreenShareAvailable =
     participantWithScreenShare &&
     participantWithScreenShare.screenShareStream &&
@@ -66,12 +68,12 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
     if (screenShareStream?.isAvailable && !screenShareStream?.videoProvider) {
       participantWithScreenShare &&
         onBeforeRenderRemoteVideoTile &&
-        onBeforeRenderRemoteVideoTile(participantWithScreenShare);
+        onBeforeRenderRemoteVideoTile(participantWithScreenShare.userId);
     }
     if (videoStream?.isAvailable && !videoStream?.videoProvider) {
       participantWithScreenShare &&
         onBeforeRenderRemoteVideoTile &&
-        onBeforeRenderRemoteVideoTile(participantWithScreenShare);
+        onBeforeRenderRemoteVideoTile(participantWithScreenShare.userId);
     }
 
     return (
@@ -104,7 +106,7 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
 
   const layoutLocalParticipant = useMemo(() => {
     if (localVideoStream && !localVideoStream?.videoProvider) {
-      onBeforeRenderLocalVideoTile && onBeforeRenderLocalVideoTile(localParticipant);
+      onBeforeRenderLocalVideoTile && onBeforeRenderLocalVideoTile();
     }
 
     return (
@@ -130,7 +132,7 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
               const remoteVideoStream = participant.videoStream;
 
               if (remoteVideoStream?.isAvailable && !remoteVideoStream?.videoProvider) {
-                onBeforeRenderRemoteVideoTile && onBeforeRenderRemoteVideoTile(participant);
+                onBeforeRenderRemoteVideoTile && onBeforeRenderRemoteVideoTile(participant.userId);
               }
 
               return memoizedRemoteParticipantFn(

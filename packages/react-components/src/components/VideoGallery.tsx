@@ -4,7 +4,12 @@
 import { Label, Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import { disabledVideoHint, gridStyle, videoHint, videoTileStyle } from './styles/VideoGallery.styles';
-import { VideoGalleryRemoteParticipant, VideoGalleryLocalParticipant, BaseCustomStylesProps } from '../types';
+import {
+  VideoGalleryRemoteParticipant,
+  VideoGalleryLocalParticipant,
+  BaseCustomStylesProps,
+  CreateViewOptions
+} from '../types';
 import { GridLayout } from './GridLayout';
 import { StreamMedia } from './StreamMedia';
 import { VideoTile } from './VideoTile';
@@ -14,9 +19,11 @@ export interface VideoGalleryProps {
   styles?: BaseCustomStylesProps;
   localParticipant: VideoGalleryLocalParticipant;
   remoteParticipants?: VideoGalleryRemoteParticipant[];
-  onBeforeRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => Promise<void>;
+  localVideoViewOption?: CreateViewOptions;
+  remoteVideoViewOption?: CreateViewOptions;
+  onBeforeRenderLocalVideoTile?: (options?: CreateViewOptions | undefined) => Promise<void>;
   onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
-  onBeforeRenderRemoteVideoTile?: (userId: string) => Promise<void>;
+  onBeforeRenderRemoteVideoTile?: (userId: string, options?: CreateViewOptions) => Promise<void>;
   onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
 }
 
@@ -26,10 +33,11 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
     onBeforeRenderRemoteVideoTile: any,
     isAvailable?: boolean,
     videoProvider?: HTMLElement,
-    displayName?: string
+    displayName?: string,
+    remoteVideoViewOption?: CreateViewOptions
   ): JSX.Element => {
     if (isAvailable && !videoProvider) {
-      onBeforeRenderRemoteVideoTile && onBeforeRenderRemoteVideoTile(userId);
+      onBeforeRenderRemoteVideoTile && onBeforeRenderRemoteVideoTile(userId, remoteVideoViewOption);
     }
     return (
       <Stack className={gridStyle} key={userId} grow>
@@ -50,6 +58,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const {
     localParticipant,
     remoteParticipants,
+    localVideoViewOption,
+    remoteVideoViewOption,
     onRenderLocalVideoTile,
     onRenderRemoteVideoTile,
     onBeforeRenderLocalVideoTile,
@@ -64,10 +74,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     const localVideoStream = localParticipant?.videoStream;
     const isLocalVideoReady = localVideoStream?.isAvailable;
 
+    console.log(localVideoStream);
+
     if (onRenderLocalVideoTile) return onRenderLocalVideoTile(localParticipant);
 
     if (localVideoStream && !isLocalVideoReady) {
-      onBeforeRenderLocalVideoTile && onBeforeRenderLocalVideoTile(localParticipant);
+      onBeforeRenderLocalVideoTile && onBeforeRenderLocalVideoTile(localVideoViewOption);
     }
     return (
       <VideoTile
@@ -102,11 +114,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           onBeforeRenderRemoteVideoTile,
           remoteVideoStream?.isAvailable,
           remoteVideoStream?.videoProvider,
-          participant.displayName
+          participant.displayName,
+          remoteVideoViewOption
         );
       });
     });
-  }, [remoteParticipants, onRenderRemoteVideoTile, onBeforeRenderRemoteVideoTile]);
+  }, [remoteParticipants, onRenderRemoteVideoTile, onBeforeRenderRemoteVideoTile, remoteVideoViewOption]);
 
   return (
     <GridLayout styles={styles}>

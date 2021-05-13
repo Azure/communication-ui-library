@@ -194,6 +194,14 @@ export interface ControlBarProps {
 }
 
 // @public (undocumented)
+export interface CreateViewOptions {
+    // (undocumented)
+    isMirrored?: boolean;
+    // (undocumented)
+    scalingMode?: 'Stretch' | 'Crop' | 'Fit';
+}
+
+// @public (undocumented)
 export type CustomMessage = Message<'custom'>;
 
 // @public (undocumented)
@@ -473,15 +481,19 @@ export interface VideoGalleryProps {
     // (undocumented)
     localParticipant: VideoGalleryLocalParticipant;
     // (undocumented)
-    onBeforeRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => Promise<void>;
+    localVideoViewOption?: CreateViewOptions;
     // (undocumented)
-    onBeforeRenderRemoteVideoTile?: (userId: string) => Promise<void>;
+    onBeforeRenderLocalVideoTile?: (options?: CreateViewOptions | undefined) => Promise<void>;
+    // (undocumented)
+    onBeforeRenderRemoteVideoTile?: (userId: string, options?: CreateViewOptions) => Promise<void>;
     // (undocumented)
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     // (undocumented)
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     // (undocumented)
     remoteParticipants?: VideoGalleryRemoteParticipant[];
+    // (undocumented)
+    remoteVideoViewOption?: CreateViewOptions;
     // (undocumented)
     styles?: BaseCustomStylesProps;
 }

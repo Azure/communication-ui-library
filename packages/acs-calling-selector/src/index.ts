@@ -10,3 +10,4 @@ export { videoGallerySelector } from './videoGallerySelector';
 export { memoizeFnAll } from './utils/memoizeFnAll';
 export type { FunctionWithKey, CallbackType } from './utils/memoizeFnAll';
 export * from './callControlSelectors';
+export * from './types/VideoGallery';

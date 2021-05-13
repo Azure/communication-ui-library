@@ -12,9 +12,18 @@ import * as reselect from 'reselect';
 // @ts-ignore
 import { getCall, BaseSelectorProps, getDisplayName, getIdentifier, getCallId } from './baseSelectors';
 // @ts-ignore
-import { VideoGalleryLocalParticipant, VideoGalleryRemoteParticipant } from 'react-components';
 import { memoizeFnAll } from './utils/memoizeFnAll';
 import { getUserId } from './utils/participant';
+import { VideoGalleryRemoteParticipant, VideoGalleryStream } from './types/VideoGallery';
+
+const convertRemoteVideoStreamToVideoGalleryStream = (stream: RemoteVideoStream): VideoGalleryStream => {
+  return {
+    id: stream.id,
+    isAvailable: stream.isAvailable,
+    isMirrored: stream.videoStreamRendererView?.isMirrored,
+    videoProvider: stream.videoStreamRendererView?.target
+  };
+};
 
 const memoizedAllConvertRemoteParticipant = memoizeFnAll(
   (
@@ -25,8 +34,16 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     displayName?: string
   ): VideoGalleryRemoteParticipant => {
     const rawVideoStreamsArray = Array.from(videoStreams.values());
-    const remoteVideoStream = rawVideoStreamsArray[0];
-    const screenShareStream = rawVideoStreamsArray[1];
+    let videoStream: VideoGalleryStream | undefined = undefined;
+    if (rawVideoStreamsArray[0].mediaStreamType === 'Video') {
+      videoStream = convertRemoteVideoStreamToVideoGalleryStream(rawVideoStreamsArray[0]);
+    }
+
+    let screenShareStream: VideoGalleryStream | undefined = undefined;
+    if (rawVideoStreamsArray[1].mediaStreamType === 'ScreenSharing') {
+      screenShareStream = convertRemoteVideoStreamToVideoGalleryStream(rawVideoStreamsArray[1]);
+    }
+
     return {
       userId,
       displayName,
@@ -34,12 +51,7 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
       isSpeaking,
       // From the current calling sdk, remote participant videoStreams is actually a tuple
       // The first item is always video stream. The second item is always screenshare stream
-      videoStream: {
-        id: remoteVideoStream.id,
-        isAvailable: remoteVideoStream.isAvailable,
-        isMirrored: remoteVideoStream.videoStreamRendererView?.isMirrored,
-        videoProvider: remoteVideoStream.videoStreamRendererView?.target
-      },
+      videoStream,
       screenShareStream,
       isScreenSharingOn: !!screenShareStream
     };
