@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "added CallingTheme and used it for EndCallButton styles",
+  "packageName": "react-composites",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "patch"
+}
