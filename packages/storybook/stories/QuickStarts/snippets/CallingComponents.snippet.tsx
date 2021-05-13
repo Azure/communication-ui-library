@@ -39,7 +39,7 @@ export const CallingComponents = (): JSX.Element => {
       </div>
 
       {/* Control Bar with default set up */}
-      <ControlBar>
+      <ControlBar styles={{ root: { justifyContent: 'center' } }}>
         <CameraButton checked={videoButtonChecked} onClick={() => setVideoButtonChecked(!videoButtonChecked)} />
         <MicrophoneButton checked={audioButtonChecked} onClick={() => setAudioButtonChecked(!audioButtonChecked)} />
         <ScreenShareButton

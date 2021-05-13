@@ -164,13 +164,24 @@ export const ControlBarComponent: (
   }
 
   return (
-    <ControlBar layout={layout}>
-      <CameraButton showLabel={showLabels} checked={toggleButtons} />
-      <MicrophoneButton showLabel={showLabels} checked={toggleButtons} />
-      <ScreenShareButton showLabel={showLabels} checked={toggleButtons} />
-      <OptionsButton showLabel={showLabels} menuProps={exampleOptionsMenuProps} />
-      <EndCallButton showLabel={showLabels} />
-    </ControlBar>
+    <div
+      style={{
+        width: '100%',
+        height: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        display: 'inherit',
+        background: background
+      }}
+    >
+      <ControlBar layout={layout}>
+        <CameraButton showLabel={showLabels} checked={toggleButtons} />
+        <MicrophoneButton showLabel={showLabels} checked={toggleButtons} />
+        <ScreenShareButton showLabel={showLabels} checked={toggleButtons} />
+        <OptionsButton showLabel={showLabels} menuProps={exampleOptionsMenuProps} />
+        <EndCallButton showLabel={showLabels} />
+      </ControlBar>
+    </div>
   );
 };
 
