@@ -40,11 +40,7 @@ const sendMessagesAsBot = async (
   let index = 0;
   setInterval(() => {
     if (index < messages.length) {
-      const sendMessageRequest = {
-        content: messages[index++],
-        senderDisplayName: 'TestBot'
-      };
-      threadClient.sendMessage(sendMessageRequest);
+      threadClient.sendMessage({ content: messages[index++] });
     }
   }, 5000);
 };
