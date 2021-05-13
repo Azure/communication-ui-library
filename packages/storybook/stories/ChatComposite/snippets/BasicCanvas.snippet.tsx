@@ -36,20 +36,6 @@ export const BasicCanvas: () => JSX.Element = () => {
   );
 };
 
-const addBotToThread = async (resourceConnectionString: string, chatConfig: ChatConfig): Promise<void> => {
-  const tokenClient = new CommunicationIdentityClient(resourceConnectionString);
-  const bot = await tokenClient.createUserAndToken(['chat']);
-
-  const endpointUrl = new URL(resourceConnectionString.replace('endpoint=', '').split(';')[0]).toString();
-  // Must use the credentials of the thread owner to add more participants.
-  const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(chatConfig.token));
-  await chatClient.getChatThreadClient(chatConfig.threadId).addParticipants({
-    participants: [{ id: bot.user, displayName: 'I am a bot' }]
-  });
-
-  createIntroductionBot(bot.token, endpointUrl, chatConfig.threadId);
-};
-
 const messageArray = [
   'Hello ACS!',
   'Congratulations! You can see this message because you successfully passed in a connection string!',

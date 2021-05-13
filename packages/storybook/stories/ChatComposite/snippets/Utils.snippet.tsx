@@ -22,7 +22,7 @@ export const addParrotBotToThread = async (
   // Must use the credentials of the thread owner to add more participants.
   const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(chatConfig.token));
   await chatClient.getChatThreadClient(chatConfig.threadId).addParticipants({
-    participants: [{ id: bot.user }]
+    participants: [{ id: bot.user, displayName: 'A simple bot' }]
   });
 
   sendMessagesAsBot(bot.token, endpointUrl, chatConfig.threadId, messages);
