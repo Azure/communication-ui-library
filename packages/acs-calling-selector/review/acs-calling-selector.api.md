@@ -138,9 +138,11 @@ export const getUserId: (state: CallClientState) => string;
 export const localPreviewSelector: reselect.OutputSelector<callingStateful.CallClientState, {
     selectedCamera: VideoDeviceInfo | undefined;
     unparentedViews: callingStateful.VideoStreamRendererView[];
+    checked: boolean;
 }, (res: callingStateful.DeviceManager) => {
     selectedCamera: VideoDeviceInfo | undefined;
     unparentedViews: callingStateful.VideoStreamRendererView[];
+    checked: boolean;
 }>;
 
 // @public (undocumented)

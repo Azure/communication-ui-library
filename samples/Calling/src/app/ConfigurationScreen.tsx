@@ -9,9 +9,7 @@ import { DisplayNameField } from './DisplayNameField';
 import { StartCallButton } from './StartCallButton';
 import { CallConfiguration } from './CallConfiguration';
 import { LocalDeviceSettingsComponent } from './LocalDeviceSettings';
-import { CameraPreviewButton } from './LocalPreview';
 import { optionsButtonSelector } from '@azure/acs-calling-selector';
-import { VideoDeviceInfo } from '@azure/communication-calling';
 import { useSelector } from './hooks/useSelector';
 import { useHandlers } from './hooks/useHandlers';
 
@@ -30,7 +28,6 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
 
   const options = useSelector(optionsButtonSelector);
   const handlers = useHandlers(LocalDeviceSettingsComponent);
-  const localPreviewHandlers = useHandlers(CameraPreviewButton);
 
   return (
     <CallConfiguration {...props}>
@@ -45,13 +42,7 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
       <div>
         <LocalDeviceSettingsComponent
           {...options}
-          onSelectCamera={(device: VideoDeviceInfo) => {
-            if (options.selectedCamera) {
-              localPreviewHandlers.onPreviewStopVideo({ source: options.selectedCamera, mediaStreamType: 'Video' });
-            }
-            localPreviewHandlers.onPreviewStartVideo({ source: device, mediaStreamType: 'Video' });
-            return handlers.onSelectCamera(device);
-          }}
+          onSelectCamera={handlers.onSelectCamera}
           onSelectMicrophone={handlers.onSelectMicrophone}
           onSelectSpeaker={handlers.onSelectSpeaker}
         />

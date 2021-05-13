@@ -4,7 +4,7 @@
 import { CallVideoOffIcon } from '@fluentui/react-icons-northstar';
 import { Stack, Text } from '@fluentui/react';
 import { localPreviewContainerStyle, cameraOffLabelStyle, localPreviewTileStyle } from './styles/LocalPreview.styles';
-import React, { useState } from 'react';
+import React from 'react';
 import { MapToMediaControlsProps, MediaControlsContainerProps } from './consumers/MapToMediaControlsProps';
 import {
   CameraButton,
@@ -33,20 +33,20 @@ type CameraPreviewButtonProps = {
   checked: boolean;
   onPreviewStartVideo: (stream: LocalVideoStream) => Promise<void>;
   onPreviewStopVideo: (stream: LocalVideoStream) => Promise<void>;
-  device: VideoDeviceInfo;
+  selectedCamera?: VideoDeviceInfo;
 };
 export const CameraPreviewButton = (props: CameraPreviewButtonProps): JSX.Element | null => {
-  const { checked, onPreviewStartVideo, onPreviewStopVideo, device } = props;
+  const { checked, onPreviewStartVideo, onPreviewStopVideo, selectedCamera } = props;
   const onClick = (): void => {
-    if (device) {
+    if (selectedCamera) {
       if (checked) {
-        onPreviewStartVideo({ source: device, mediaStreamType: 'Video' });
+        onPreviewStopVideo({ source: selectedCamera, mediaStreamType: 'Video' });
       } else {
-        onPreviewStopVideo({ source: device, mediaStreamType: 'Video' });
+        onPreviewStartVideo({ source: selectedCamera, mediaStreamType: 'Video' });
       }
     }
   };
-  return <CameraButton onClick={onClick} />;
+  return <CameraButton checked={checked} onClick={onClick} />;
 };
 
 const LocalPreviewComponentBase = (
@@ -59,15 +59,14 @@ const LocalPreviewComponentBase = (
 
   // const cameraButtonProps = usePropsFor(CameraButton);
   // const cameraButtonHandlers = useHandlers(CameraButton);
-  const dummyHandlers = useHandlers(CameraPreviewButton);
+  const cameraPreviewHandlers = useHandlers(CameraPreviewButton);
   const localPreviewProps = useSelector(localPreviewSelector);
+  console.log('localPreviewProps.checked: ' + JSON.stringify(localPreviewProps.checked));
   const unparentedView = localPreviewProps.unparentedViews[0];
   let videoStreamElement = null;
   if (unparentedView) {
     videoStreamElement = unparentedView.target;
   }
-
-  const [previewOn, setPreviewOn] = useState<boolean>(videoStreamElement !== null);
 
   const ErrorBar = connectFuncsToContext(ErrorBarComponent, MapToErrorBarProps);
 
@@ -77,7 +76,7 @@ const LocalPreviewComponentBase = (
     <Stack className={localPreviewContainerStyle}>
       <VideoTile
         styles={localPreviewTileStyle}
-        isVideoReady={previewOn}
+        isVideoReady={localPreviewProps.checked}
         videoProvider={<StreamMedia videoStreamElement={videoStreamElement} />}
         placeholderProvider={
           <Stack style={{ width: '100%', height: '100%' }} verticalAlign="center">
@@ -91,27 +90,7 @@ const LocalPreviewComponentBase = (
         }
       >
         <ControlBar layout="floatingBottom">
-          <CameraButton
-            // {...cameraButtonProps}
-            checked={previewOn}
-            onClick={() => {
-              if (localPreviewProps.selectedCamera) {
-                if (previewOn) {
-                  dummyHandlers.onPreviewStopVideo({
-                    source: localPreviewProps.selectedCamera,
-                    mediaStreamType: 'Video'
-                  });
-                  setPreviewOn(false);
-                } else {
-                  dummyHandlers.onPreviewStartVideo({
-                    source: localPreviewProps.selectedCamera,
-                    mediaStreamType: 'Video'
-                  });
-                  setPreviewOn(true);
-                }
-              }
-            }}
-          />
+          <CameraPreviewButton {...localPreviewProps} {...cameraPreviewHandlers} />
           <MicrophoneButton
             ariaLabel="Microphone Icon"
             disabled={isAudioDisabled}

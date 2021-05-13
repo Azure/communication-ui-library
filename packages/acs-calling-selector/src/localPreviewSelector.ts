@@ -14,6 +14,7 @@ import { AudioDeviceInfo, VideoDeviceInfo } from '@azure/communication-calling';
 export const localPreviewSelector = reselect.createSelector([getDeviceManager], (deviceManager) => {
   return {
     selectedCamera: deviceManager.selectedCamera,
-    unparentedViews: deviceManager.unparentedViews
+    unparentedViews: deviceManager.unparentedViews,
+    checked: Boolean(deviceManager.unparentedViews) && Boolean(deviceManager.unparentedViews[0]?.target)
   };
 });
