@@ -115,7 +115,8 @@ export function stopRenderVideo(
     const index = internalContext.findInUnparentedStreamAndRenderers(stream);
     if (index === -1) {
       // TODO: How to standarize all errors
-      throw new Error('UnparentedStream not found');
+      return;
+      //throw new Error('UnparentedStream not found');
     }
 
     const unparentedRenderer = internalContext.getUnparentedStreamAndRenderer(index);
