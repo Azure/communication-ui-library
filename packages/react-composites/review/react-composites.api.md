@@ -22,7 +22,6 @@ import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { ControlBarProps } from 'react-components';
 import { CreateViewOptions } from '@azure/communication-calling';
-import { DeclarativeCallClient } from 'calling-stateful-client';
 import { DeviceManager } from 'calling-stateful-client';
 import { Dispatch } from 'react';
 import { ErrorBarProps } from 'react-components';
@@ -45,6 +44,7 @@ import { RemoteVideoStream } from 'calling-stateful-client';
 import { RemoteVideoStream as RemoteVideoStream_2 } from '@azure/communication-calling';
 import { ScalingMode } from '@azure/communication-calling';
 import { SetStateAction } from 'react';
+import { StatefulCallClient } from 'calling-stateful-client';
 import { StatefulChatClient } from 'chat-stateful-client';
 import { StatefulDeviceManager } from 'calling-stateful-client';
 import { UnknownIdentifierKind } from '@azure/communication-common';
@@ -145,8 +145,8 @@ export type CallingContextType = {
     setUserId: Dispatch<SetStateAction<string>>;
     displayName: string;
     setDisplayName: Dispatch<SetStateAction<string>>;
-    callClient: DeclarativeCallClient;
-    setCallClient: Dispatch<SetStateAction<DeclarativeCallClient>>;
+    callClient: StatefulCallClient;
+    setCallClient: Dispatch<SetStateAction<StatefulCallClient>>;
     callAgent: CallAgent | undefined;
     setCallAgent: Dispatch<SetStateAction<CallAgent | undefined>>;
     deviceManager: StatefulDeviceManager | undefined;
@@ -330,7 +330,7 @@ export enum CommunicationUiErrorCode {
     // (undocumented)
     QUERY_PERMISSIONS_ERROR = 20,
     // (undocumented)
-    REMOVE_THREAD_MEMBER_ERROR = 17,
+    REMOVE_THREAD_PARTICIPANT_ERROR = 17,
     // (undocumented)
     RENDER_LOCAL_VIDEO_ERROR = 30,
     // (undocumented)
@@ -387,16 +387,7 @@ export interface CommunicationUiErrorInfo {
 }
 
 // @public
-export enum CommunicationUiErrorSeverity {
-    // (undocumented)
-    ERROR = "Error",
-    // (undocumented)
-    IGNORE = "Ignore",
-    // (undocumented)
-    INFO = "Info",
-    // (undocumented)
-    WARNING = "Warning"
-}
+export type CommunicationUiErrorSeverity = 'info' | 'warning' | 'error' | 'ignore';
 
 // @public (undocumented)
 export const compareMessages: (firstMessage: {
@@ -779,12 +770,7 @@ export type Message<T extends MessageTypes> = {
 };
 
 // @public (undocumented)
-export enum MessageAttachedStatus {
-    // (undocumented)
-    BOTTOM = "bottom",
-    // (undocumented)
-    TOP = "top"
-}
+export type MessageAttachedStatus = 'bottom' | 'top';
 
 // @public (undocumented)
 export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
@@ -919,7 +905,7 @@ export const useCall: () => Call_2 | undefined;
 export const useCallAgent: () => boolean;
 
 // @public (undocumented)
-export const useCallClient: () => DeclarativeCallClient;
+export const useCallClient: () => StatefulCallClient;
 
 // @public (undocumented)
 export const useCallContext: () => CallContextType;

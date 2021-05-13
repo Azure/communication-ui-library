@@ -23,6 +23,7 @@ export default {
 } as Meta;
 
 export { BasicCanvas } from './snippets/BasicCanvas.snippet';
+export { ThemesCanvas } from './snippets/ThemesCanvas.snippet';
 
 const getDocs: () => JSX.Element = () => {
   return (
@@ -31,7 +32,6 @@ const getDocs: () => JSX.Element = () => {
       <Description>
         ChatComposite brings together key components to provide a full chat experience out of the box.
       </Description>
-
       <Heading>Basic usage</Heading>
       <Description>
         There are two parts to the composite - a `ChatComposite` react component and a `ChatAdapter` that connects the
@@ -42,7 +42,6 @@ const getDocs: () => JSX.Element = () => {
         requires special handling, as the example code below shows.
       </Description>
       <Source code={containerText} />
-
       <Heading>Prerequisites</Heading>
       <Description>
         ChatComposite provides the UI for an *existing user* in an *existing thread*. Thus, the user and thread must be
@@ -50,6 +49,13 @@ const getDocs: () => JSX.Element = () => {
         is served to the client app that then passes it to the ChatComposite.
       </Description>
       <Source code={serverText} />
+      <Heading>Theming</Heading>
+      <Description>
+        ChatComposite can be themed with Fluent UI themes, just like the base components. Look at the [ChatComposite
+        themes canvas](./?path=/story/composites-chat--themes-canvas) to see theming in action or the [overall theming
+        example](./?path=/docs/examples-themes--teams-theme-component) to see how theming works for all the components
+        in this UI library.
+      </Description>
     </>
   );
 };
