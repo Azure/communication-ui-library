@@ -50,8 +50,7 @@ export async function startRenderVideo(
 
     if (!localVideoStream || localVideoStreamRenderer) {
       // TODO: How to standarize all errors
-      return;
-      // throw new Error('LocalVideoStream not found or Stream is already rendered');
+      throw new Error('LocalVideoStream not found or Stream is already rendered');
     }
 
     const renderer = new VideoStreamRenderer(localVideoStream);
@@ -116,8 +115,7 @@ export function stopRenderVideo(
     const index = internalContext.findInUnparentedStreamAndRenderers(stream);
     if (index === -1) {
       // TODO: How to standarize all errors
-      return;
-      //throw new Error('UnparentedStream not found');
+      throw new Error('UnparentedStream not found');
     }
 
     const unparentedRenderer = internalContext.getUnparentedStreamAndRenderer(index);
