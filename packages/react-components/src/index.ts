@@ -4,7 +4,7 @@
 export * from './components';
 export * from './theming';
 
-export { CommunicationUiErrorSeverity, MessageAttachedStatus } from './types';
+export { CommunicationUiErrorSeverity } from './types';
 
 export type {
   BaseCustomStylesProps,
@@ -13,6 +13,7 @@ export type {
   CustomMessage,
   CustomMessagePayload,
   Message,
+  MessageAttachedStatus,
   MessageStatus,
   MessageTypes,
   SystemMessage,
