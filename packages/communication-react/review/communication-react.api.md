@@ -136,11 +136,11 @@ export type ChatThreadClientState = {
     threadId: string;
     properties?: ChatThreadProperties;
     coolPeriod?: Date;
-    getThreadMembersError?: boolean;
-    updateThreadMembersError?: boolean;
+    getThreadParticipantsError?: boolean;
+    updateThreadParticipantsError?: boolean;
     failedMessageIds: string[];
     readReceipts: ChatMessageReadReceipt[];
-    typingIndicators: TypingIndicatorEvent[];
+    typingIndicators: TypingIndicatorReceivedEvent[];
     latestReadTime: Date;
 };
 
@@ -182,16 +182,7 @@ export type CommunicationParticipant = {
 };
 
 // @public
-export enum CommunicationUiErrorSeverity {
-    // (undocumented)
-    ERROR = "Error",
-    // (undocumented)
-    IGNORE = "Ignore",
-    // (undocumented)
-    INFO = "Info",
-    // (undocumented)
-    WARNING = "Warning"
-}
+export type CommunicationUiErrorSeverity = 'info' | 'warning' | 'error' | 'ignore';
 
 // @public
 export const ControlBar: (props: ControlBarProps) => JSX.Element;
@@ -237,7 +228,7 @@ export const darkTheme: PartialTheme & CallingTheme;
 
 // @public (undocumented)
 export type DefaultChatHandlers = {
-    onMessageSend: (content: string) => Promise<void>;
+    onSendMessage: (content: string) => Promise<void>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
     onTyping: () => Promise<void>;
     onParticipantRemove: (userId: string) => Promise<void>;
@@ -336,12 +327,7 @@ export type Message<T extends MessageTypes> = {
 };
 
 // @public (undocumented)
-export enum MessageAttachedStatus {
-    // (undocumented)
-    BOTTOM = "bottom",
-    // (undocumented)
-    TOP = "top"
-}
+export type MessageAttachedStatus = 'bottom' | 'top';
 
 // @public
 export type MessageProps = {
@@ -484,9 +470,9 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 // @public
 export interface SendBoxProps {
     disabled?: boolean;
-    onMessageSend?: (content: string) => Promise<void>;
     onRenderIcon?: (props: SendBoxProps, isMouseOverSendIcon: boolean) => JSX.Element | null;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
+    onSendMessage?: (content: string) => Promise<void>;
     onTyping?: () => Promise<void>;
     styles?: SendBoxStylesProps;
     supportNewline?: boolean;
@@ -545,11 +531,6 @@ export type SystemMessagePayload = {
 // @public
 export const TypingIndicator: (props: TypingIndicatorProps) => JSX.Element;
 
-// @public (undocumented)
-export type TypingIndicatorEvent = Omit<TypingIndicatorReceivedEvent, 'receivedOn'> & {
-    receivedOn: Date;
-};
-
 // @public
 export interface TypingIndicatorProps {
     onRenderUsers?: (users: CommunicationParticipant[]) => JSX.Element;
@@ -561,7 +542,7 @@ export interface TypingIndicatorProps {
 // @public (undocumented)
 export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     typingUsers: CommunicationParticipant[];
-}, (res1: TypingIndicatorEvent[], res2: Map<string, ChatParticipant>, res3: string) => {
+}, (res1: TypingIndicatorReceivedEvent[], res2: Map<string, ChatParticipant>, res3: string) => {
     typingUsers: CommunicationParticipant[];
 }>;
 

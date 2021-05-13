@@ -4,7 +4,7 @@
 import { mergeStyles } from '@fluentui/react';
 import { Theme } from '@fluentui/react-theme-provider';
 
-export const memberItemContainerStyle = (theme: Theme): string =>
+export const participantItemContainerStyle = (theme: Theme): string =>
   mergeStyles({
     paddingTop: '0.25rem',
     paddingBottom: '0.25rem',
@@ -18,7 +18,7 @@ export const memberItemContainerStyle = (theme: Theme): string =>
     }
   });
 
-export const memberItemNameStyle = mergeStyles({
+export const participantItemNameStyle = mergeStyles({
   fontSize: '0.875rem', // 14px
   fontWeight: 400,
   marginTop: '0.3125rem',
@@ -27,7 +27,7 @@ export const memberItemNameStyle = mergeStyles({
   overflowY: 'hidden'
 });
 
-export const memberItemMeStyle = mergeStyles({
+export const participantItemMeStyle = mergeStyles({
   fontSize: '0.875rem', // 14px
   fontWeight: 400,
   color: '#A19F9D',

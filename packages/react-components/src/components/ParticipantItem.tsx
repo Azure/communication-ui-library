@@ -1,7 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { memberItemContainerStyle, memberItemMeStyle, iconContainerStyle } from './styles/ParticipantItem.styles';
+import {
+  participantItemContainerStyle,
+  participantItemMeStyle,
+  iconContainerStyle
+} from './styles/ParticipantItem.styles';
 import {
   ContextualMenu,
   DirectionalHint,
@@ -86,9 +90,13 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     />
   );
   return (
-    <div ref={containerRef} className={mergeStyles(memberItemContainerStyle(theme), styles?.root)} onClick={showMenu}>
+    <div
+      ref={containerRef}
+      className={mergeStyles(participantItemContainerStyle(theme), styles?.root)}
+      onClick={showMenu}
+    >
       {avatarToUse}
-      {me && <span className={mergeStyles(memberItemMeStyle, styles?.me)}>(you)</span>}
+      {me && <span className={mergeStyles(participantItemMeStyle, styles?.me)}>(you)</span>}
       {onRenderIcon && (
         <Stack className={mergeStyles(iconContainerStyle, styles?.iconContainer)}>{onRenderIcon(props)}</Stack>
       )}

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add ParticipantList to ChatComposite",
+  "packageName": "react-composites",
+  "email": "prprabhu@microsoft.com",
+  "dependentChangeType": "patch"
+}
