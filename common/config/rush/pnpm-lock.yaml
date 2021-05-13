@@ -69,6 +69,7 @@ dependencies:
   '@typescript-eslint/eslint-plugin': 4.18.0_e9e1aa536ec0b34179456e3b69e4968e
   '@typescript-eslint/parser': 4.18.0_eslint@7.22.0+typescript@4.1.5
   '@uifabric/react-hooks': 7.13.12_b0d7ca8a0459a1df1ff516252688d92a
+  '@zerollup/ts-transform-paths': 1.7.18_typescript@4.1.5
   ajv: 6.12.6
   babel-eslint: 10.1.0_eslint@7.22.0
   babel-jest: 26.6.3_@babel+core@7.13.10
@@ -140,6 +141,7 @@ dependencies:
   ts-loader: 8.0.18_typescript@4.1.5+webpack@4.44.2
   ts-node: 9.1.1_typescript@4.1.5
   ts-node-dev: 1.1.6_typescript@4.1.5
+  ttypescript: 1.5.12_ts-node@9.1.1+typescript@4.1.5
   typescript: 4.1.5
   uuid: 8.3.2
   webpack: 4.44.2
@@ -6032,6 +6034,24 @@ packages:
     dev: false
     resolution:
       integrity: sha512-GpSwvyXOcOOlV70vbnzjj4fW5xW/FdUF6nQEt1ENy7m4ZCczi1+/buVUPAqmGfqznsORNFzUMjctTIp8a9tuCQ==
+  /@zerollup/ts-helpers/1.7.18_typescript@4.1.5:
+    dependencies:
+      resolve: 1.20.0
+      typescript: 4.1.5
+    dev: false
+    peerDependencies:
+      typescript: '>=3.7.2'
+    resolution:
+      integrity: sha512-S9zN+y+i5yN/evfWquzSO3lubqPXIsPQf6p9OiPMpRxDx/0totPLF39XoRw48Dav5dSvbIE8D2eAPpXXJxvKwg==
+  /@zerollup/ts-transform-paths/1.7.18_typescript@4.1.5:
+    dependencies:
+      '@zerollup/ts-helpers': 1.7.18_typescript@4.1.5
+      typescript: 4.1.5
+    dev: false
+    peerDependencies:
+      typescript: '>=3.7.2'
+    resolution:
+      integrity: sha512-YPVUxvWQVzRx1OBN0Pmkd58+R9FcfUJuwTaPUSoi5rKxuXMtxevTXdfi0w5mEaIH8b0DfL+wg0wFDHiJE+S2zA==
   /@zkochan/bole/3.0.4:
     dependencies:
       fast-safe-stringify: 1.1.13
@@ -19360,6 +19380,18 @@ packages:
     dev: false
     resolution:
       integrity: sha1-oVe6QC2iTpv5V/mqadUk7tQpAaY=
+  /ttypescript/1.5.12_ts-node@9.1.1+typescript@4.1.5:
+    dependencies:
+      resolve: 1.20.0
+      ts-node: 9.1.1_typescript@4.1.5
+      typescript: 4.1.5
+    dev: false
+    hasBin: true
+    peerDependencies:
+      ts-node: '>=8.0.2'
+      typescript: '>=3.2.2'
+    resolution:
+      integrity: sha512-1ojRyJvpnmgN9kIHmUnQPlEV1gq+VVsxVYjk/NfvMlHSmYxjK5hEvOOU2MQASrbekTUiUM7pR/nXeCc8bzvMOQ==
   /tunnel-agent/0.6.0:
     dependencies:
       safe-buffer: 5.2.1
@@ -21012,6 +21044,7 @@ packages:
       '@types/uuid': 8.3.0
       '@typescript-eslint/eslint-plugin': 4.18.0_e9e1aa536ec0b34179456e3b69e4968e
       '@typescript-eslint/parser': 4.18.0_eslint@7.22.0+typescript@4.1.5
+      '@zerollup/ts-transform-paths': 1.7.18_typescript@4.1.5
       ajv: 6.12.6
       copyfiles: 2.4.1
       eslint: 7.22.0
@@ -21037,6 +21070,7 @@ packages:
       styled-components: 5.2.3_9debf3d425c3eafb0518d6c329d076f5
       ts-jest: 26.5.3_jest@26.6.0+typescript@4.1.5
       ts-node: 9.1.1_typescript@4.1.5
+      ttypescript: 1.5.12_ts-node@9.1.1+typescript@4.1.5
       typescript: 4.1.5
       uuid: 8.3.2
     dev: false
@@ -21046,7 +21080,7 @@ packages:
       jest: '*'
       react-test-renderer: '*'
     resolution:
-      integrity: sha512-1j8WV2LsAQt0hrTBb7mKbDV9ZIOZ6x1RT9rjxuFfyZHzG3dVNEQvVGJ5aJLcnNPJGYnZqFvIqx+XzwrWYBMLLQ==
+      integrity: sha512-fNU4ydnAj390x7OHgD1GJ/cHewEBX5Kr0QgvExVPVRSZT0mFiksXqmGEK5+L5bkO6K5aVA4mgl0343JI0RO+1Q==
       tarball: file:projects/communication-react.tgz
     version: 0.0.0
   file:projects/one-to-one-call.tgz_11ce2e494cf42e750705757a01242d16:
@@ -21489,6 +21523,7 @@ specifiers:
   '@typescript-eslint/eslint-plugin': ^4.12.0
   '@typescript-eslint/parser': ^4.12.0
   '@uifabric/react-hooks': ~7.13.11
+  '@zerollup/ts-transform-paths': ~1.7.18
   ajv: ^6.9.1
   babel-eslint: ^10.0.0
   babel-jest: ^26.6.0
@@ -21560,6 +21595,7 @@ specifiers:
   ts-loader: ^8.0.12
   ts-node: ^9.1.1
   ts-node-dev: ^1.0.0
+  ttypescript: ~1.5.12
   typescript: 4.1.5
   uuid: ^8.1.0
   webpack: 4.44.2
