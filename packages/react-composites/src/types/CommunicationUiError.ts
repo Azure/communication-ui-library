@@ -21,7 +21,7 @@ export enum CommunicationUiErrorCode {
   GET_MESSAGE_ERROR, // ChatThreadClient.getMessage() threw an error.
   SEND_TYPING_NOTIFICATION_ERROR, // ChatThreadClient.sendTypingNotification() threw an error.
   GET_MESSAGES_ERROR, // ChatThreadClient.listMessages() threw an error.
-  REMOVE_THREAD_MEMBER_ERROR, // ChatThreadClient.removeThreadParticipant() threw an error.
+  REMOVE_THREAD_PARTICIPANT_ERROR, // ChatThreadClient.removeThreadParticipant() threw an error.
   UPDATE_THREAD_ERROR, // ChatThreadClient.updateThread() threw an error.
   GET_THREAD_ERROR, // ChatThreadClient.getChatThread() threw an error.
   QUERY_PERMISSIONS_ERROR, // DeviceManager.getPermissionState() threw an error.
