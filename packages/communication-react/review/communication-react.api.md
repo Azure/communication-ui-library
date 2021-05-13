@@ -39,6 +39,16 @@ export interface BaseCustomStylesProps {
 export type CallbackType<KeyT, ArgsT extends any[], FnRetT> = (memoizedFn: FunctionWithKey<KeyT, ArgsT, FnRetT>) => FnRetT[];
 
 // @public
+export interface CallingTheme {
+    // (undocumented)
+    callingPalette: {
+        callRed: string;
+        callRedDark: string;
+        callRedDarker: string;
+    };
+}
+
+// @public
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
 
 // @public
@@ -223,7 +233,7 @@ export type CustomMessagePayload = {
 };
 
 // @public
-export const darkTheme: PartialTheme;
+export const darkTheme: PartialTheme & CallingTheme;
 
 // @public (undocumented)
 export type DefaultChatHandlers = {
@@ -304,7 +314,7 @@ export const labeledAnswerButtonProps: IButtonProps;
 export const labeledRecordButtonProps: IButtonProps;
 
 // @public
-export const lightTheme: PartialTheme;
+export const lightTheme: PartialTheme & CallingTheme;
 
 // @public
 export interface LocalVideoStream {
