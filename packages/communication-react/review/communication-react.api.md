@@ -140,7 +140,7 @@ export type ChatThreadClientState = {
     updateThreadMembersError?: boolean;
     failedMessageIds: string[];
     readReceipts: ChatMessageReadReceipt[];
-    typingIndicators: TypingIndicatorEvent[];
+    typingIndicators: TypingIndicatorReceivedEvent[];
     latestReadTime: Date;
 };
 
@@ -545,11 +545,6 @@ export type SystemMessagePayload = {
 // @public
 export const TypingIndicator: (props: TypingIndicatorProps) => JSX.Element;
 
-// @public (undocumented)
-export type TypingIndicatorEvent = Omit<TypingIndicatorReceivedEvent, 'receivedOn'> & {
-    receivedOn: Date;
-};
-
 // @public
 export interface TypingIndicatorProps {
     onRenderUsers?: (users: CommunicationParticipant[]) => JSX.Element;
@@ -561,7 +556,7 @@ export interface TypingIndicatorProps {
 // @public (undocumented)
 export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     typingUsers: CommunicationParticipant[];
-}, (res1: TypingIndicatorEvent[], res2: Map<string, ChatParticipant>, res3: string) => {
+}, (res1: TypingIndicatorReceivedEvent[], res2: Map<string, ChatParticipant>, res3: string) => {
     typingUsers: CommunicationParticipant[];
 }>;
 
