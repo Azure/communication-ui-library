@@ -67,7 +67,7 @@ const getDocs: () => JSX.Element = () => {
 export const VideoTile: () => JSX.Element = () => {
   const avatarName = text('Avatar Name', 'John Krasinski');
   const isVideoReady = boolean('Is Video Ready', false);
-  const invertVideo = boolean('Invert Video', false);
+  const isMirrored = boolean('Is Mirrored', false);
   const width = number('Width', 400, {
     range: true,
     min: 400,
@@ -86,7 +86,7 @@ export const VideoTile: () => JSX.Element = () => {
       isVideoReady={isVideoReady}
       videoProvider={<StreamMedia videoStreamElement={renderVideoStream()} />}
       avatarName={avatarName}
-      invertVideo={invertVideo}
+      isMirrored={isMirrored}
       styles={{
         root: { height: height, width: width }
       }}
