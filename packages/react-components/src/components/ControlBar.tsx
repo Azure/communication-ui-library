@@ -88,19 +88,21 @@ export const ControlBar = (props: ControlBarProps): JSX.Element => {
   const theme = useTheme();
   const controlBarStyle = controlBarStyles[layout ?? 'horizontal'];
   return (
-    <Stack
-      className={mergeStyles(
-        controlBarStyle,
-        {
-          background:
-            isDarkThemed(theme) && layout?.startsWith('floating')
-              ? theme.palette.neutralQuaternaryAlt
-              : theme.palette.white
-        },
-        styles?.root
-      )}
-    >
-      {props.children}
-    </Stack>
+    <div className={mergeStyles({ position: 'relative', height: '100%', width: '100%' })}>
+      <Stack
+        className={mergeStyles(
+          controlBarStyle,
+          {
+            background:
+              isDarkThemed(theme) && layout?.startsWith('floating')
+                ? theme.palette.neutralQuaternaryAlt
+                : theme.palette.white
+          },
+          styles?.root
+        )}
+      >
+        {props.children}
+      </Stack>
+    </div>
   );
 };
