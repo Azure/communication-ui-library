@@ -14,9 +14,7 @@ function CompletedComponentsApp(): JSX.Element {
           root: { width: '100%' }
         }}
       >
-        <div style={{ height: '100%' }}>
-          <CallingComponents />
-        </div>
+        <CallingComponents />
         <ChatComponents />
       </Stack>
     </FluentThemeProvider>

@@ -1,13 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles, Stack, IButtonProps } from '@fluentui/react';
+import { IButtonProps, IStyle, mergeStyles, Stack } from '@fluentui/react';
 import { useTheme } from '@fluentui/react-theme-provider';
 import { CallIcon, CallRecordingIcon } from '@fluentui/react-northstar';
 import React from 'react';
 import { BaseCustomStylesProps } from '../types';
 import { controlBarStyles, controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 import { isDarkThemed } from '../theming/themeUtils';
+
+const mainDivStyle: IStyle = { position: 'relative', height: '100%', width: '100%' };
 
 /** Fluent UI Button props for recording control */
 export const recordButtonProps: IButtonProps = {
@@ -88,7 +90,7 @@ export const ControlBar = (props: ControlBarProps): JSX.Element => {
   const theme = useTheme();
   const controlBarStyle = controlBarStyles[layout ?? 'horizontal'];
   return (
-    <div className={mergeStyles({ position: 'relative', height: '100%', width: '100%' })}>
+    <div className={mergeStyles(mainDivStyle)}>
       <Stack
         className={mergeStyles(
           controlBarStyle,
