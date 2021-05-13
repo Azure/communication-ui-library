@@ -8,6 +8,7 @@ import { ChatComposite } from 'react-composites';
 import { COMPOSITE_FOLDER_PREFIX } from '../constants';
 
 const containerText = require('!!raw-loader!./snippets/Container.snippet.tsx').default;
+const customizationContainerText = require('!!raw-loader!./snippets/CustomizationContainer.snippet.tsx').default;
 const serverText = require('!!raw-loader!./snippets/Server.snippet.tsx').default;
 
 export default {
@@ -23,6 +24,7 @@ export default {
 } as Meta;
 
 export { BasicCanvas } from './snippets/BasicCanvas.snippet';
+export { CustomizationCanvas } from './snippets/CustomizationCanvas.snippet';
 export { ThemesCanvas } from './snippets/ThemesCanvas.snippet';
 
 const getDocs: () => JSX.Element = () => {
@@ -56,6 +58,15 @@ const getDocs: () => JSX.Element = () => {
         example](./?path=/docs/examples-themes--teams-theme-component) to see how theming works for all the components
         in this UI library.
       </Description>
+
+      <Heading>Adding custom behavior</Heading>
+      <Description>
+        The `ChatAdapter` makes it possible to arbitrarily modify the communication between the `ChatComposite`
+        component and the Azure Communication Services backend. This adds powerful customization possibilities. The
+        [example canvas](./?path=/story/composites-chat--customization-canvas) shows a way to intercept messages entered
+        by the user and modify them before sending them on to the backend.
+      </Description>
+      <Source code={customizationContainerText} />
     </>
   );
 };
