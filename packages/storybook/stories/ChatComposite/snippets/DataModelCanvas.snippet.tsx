@@ -3,28 +3,32 @@
 
 import { text, radios } from '@storybook/addon-knobs';
 import React, { useState, useEffect, useRef } from 'react';
-import { ChatConfig } from 'react-composites';
 import { COMPOSITE_STRING_CONNECTIONSTRING } from '../../CompositeStringUtils';
 import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE } from '../../constants';
-import { ContosoChatContainer } from './Container.snippet';
+import { ContosoChatContainer, ContosoChatContainerProps } from './DataModelContainer.snippet';
 import { createUserAndThread } from './Server.snippet';
 import { ConfigHintBanner, addParrotBotToThread } from './Utils.snippet';
+import { communicationIdentifierToString } from '@azure/communication-react';
 
 export const DataModelCanvas: () => JSX.Element = () => {
-  const [chatConfig, setChatConfig] = useState<ChatConfig>();
+  const [containerProps, setContainerProps] = useState<ContosoChatContainerProps>();
 
   const knobs = useRef({
     connectionString: text(COMPOSITE_STRING_CONNECTIONSTRING, '', 'Server Simulator'),
-    displayName: text('Display Name', '', 'Server Simulator'),
-    theme: radios('Avatar', avatars, 'Cat', 'Server Simulator')
+    displayName: text('Local User Display Name', '', 'Server Simulator'),
+    avatar: radios('Bot Avatar', avatars, 'Default', 'Server Simulator')
   });
 
   useEffect(() => {
     const fetchToken = async (): Promise<void> => {
       if (knobs.current.connectionString && knobs.current.displayName) {
         const newChatConfig = await createUserAndThread(knobs.current.connectionString, knobs.current.displayName);
-        await addParrotBotToThread(knobs.current.connectionString, newChatConfig, messageArray);
-        setChatConfig(newChatConfig);
+        const botUserToken = await addParrotBotToThread(knobs.current.connectionString, newChatConfig, messageArray);
+        setContainerProps({
+          config: newChatConfig,
+          botUserId: communicationIdentifierToString(botUserToken.user),
+          botAvatar: knobs.current.avatar
+        });
       }
     };
     fetchToken();
@@ -32,24 +36,21 @@ export const DataModelCanvas: () => JSX.Element = () => {
 
   return (
     <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
-      {chatConfig ? <ContosoChatContainer config={chatConfig} /> : <ConfigHintBanner />}
+      {containerProps ? <ContosoChatContainer {...containerProps} /> : <ConfigHintBanner />}
     </div>
   );
 };
 
 const avatars = {
+  Default: '🤖',
   Cat: '🐱',
   Fox: '🦊',
-  Koala: '🐨',
-  Monkey: '🐵',
-  Mouse: '🐭',
-  Octopus: '🐙'
+  Koala: '🐨'
 };
 
 const messageArray = [
-  'Welcome to the theming example!',
-  'The ChatComposite can be themed with a Fluent UI theme, just like the base components.',
-  'Here, you can play around with some themes from the @fluentui/theme-samples package.',
-  'To build your own theme, we recommend using https://aka.ms/themedesigner',
+  'Welcome to the custom data model example!',
+  'Your display name is shown in the participant list, so is mine: A simple bot.',
+  'Additionally, you can change my avatar from the default Robot symbol to furrier creatures.',
   'Have fun!'
 ];

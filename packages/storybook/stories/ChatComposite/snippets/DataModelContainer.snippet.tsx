@@ -1,16 +1,14 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChatAdapter, ChatConfig, ChatComposite, createAzureCommunicationChatAdapter } from 'react-composites';
 
 export interface ContosoChatContainerProps {
   config: ChatConfig | undefined;
-  // User ID of the local user.
-  userId: string;
-  // Avatar to use for the local user.
-  avatar: string;
+  botUserId: string;
+  botAvatar: string;
 }
 
 export const ContosoChatContainer = (props: ContosoChatContainerProps): JSX.Element => {
-  const { config, userId: myUserId, avatar } = props;
+  const { config, botUserId, botAvatar } = props;
 
   // Creating an adapter is asynchronous.
   // An update to `config` triggers a new adapter creation, via the useEffect block.
@@ -24,6 +22,8 @@ export const ContosoChatContainer = (props: ContosoChatContainerProps): JSX.Elem
             config.token,
             config.endpointUrl,
             config.threadId,
+
+            // Data model injection: The display name for the local user comes from Contoso's data model.
             config.displayName
           )
         );
@@ -32,9 +32,11 @@ export const ContosoChatContainer = (props: ContosoChatContainerProps): JSX.Elem
     }
   }, [config]);
 
-  const onRenderAvatar = (targetUserId: string): JSX.Element => {
-    if (targetUserId === myUserId) {
-      return <label>{avatar}</label>;
+  // Data model injection: Contoso provides avatars for the chat participants.
+  // Unlike the displayName example above, this sets the avatar for the remote bot participant.
+  const onRenderAvatar = (userId: string): JSX.Element => {
+    if (userId === botUserId) {
+      return <label>{botAvatar}</label>;
     }
     return <label>?</label>;
   };
