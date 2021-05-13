@@ -87,7 +87,7 @@ export const createDefaultChatHandlersForComponent: <Props>(chatClient: Stateful
 
 // @public (undocumented)
 export type DefaultChatHandlers = {
-    onMessageSend: (content: string) => Promise<void>;
+    onSendMessage: (content: string) => Promise<void>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
     onTyping: () => Promise<void>;
     onParticipantRemove: (userId: string) => Promise<void>;
