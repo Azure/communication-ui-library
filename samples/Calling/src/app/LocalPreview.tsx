@@ -4,7 +4,7 @@
 import { CallVideoOffIcon } from '@fluentui/react-icons-northstar';
 import { Stack, Text } from '@fluentui/react';
 import { localPreviewContainerStyle, cameraOffLabelStyle, localPreviewTileStyle } from './styles/LocalPreview.styles';
-import React from 'react';
+import React, { useState } from 'react';
 import { MapToMediaControlsProps, MediaControlsContainerProps } from './consumers/MapToMediaControlsProps';
 import {
   CameraButton,
@@ -16,8 +16,6 @@ import {
 } from 'react-components';
 import {
   connectFuncsToContext,
-  MapToLocalVideoProps,
-  useCallContext,
   ErrorHandlingProps,
   WithErrorHandling,
   CommunicationUiErrorFromError,
@@ -25,30 +23,61 @@ import {
   MapToLocalDeviceSettingsProps,
   LocalDeviceSettingsContainerProps
 } from 'react-composites';
+import { useSelector } from './hooks/useSelector';
+import { useHandlers } from './hooks/useHandlers';
+import { optionsButtonSelector } from '@azure/acs-calling-selector';
+
+import { VideoDeviceInfo } from '@azure/communication-calling';
+import { LocalVideoStream } from 'calling-stateful-client';
+type CameraPreviewButtonProps = {
+  checked: boolean;
+  onPreviewStartVideo: (stream: LocalVideoStream) => Promise<void>;
+  onPreviewStopVideo: (stream: LocalVideoStream) => Promise<void>;
+  device: VideoDeviceInfo;
+};
+const CameraPreviewButton = (props: CameraPreviewButtonProps): JSX.Element | null => {
+  const { checked, onPreviewStartVideo, onPreviewStopVideo, device } = props;
+  const onClick = (): void => {
+    if (device) {
+      if (checked) {
+        onPreviewStartVideo({ source: device, mediaStreamType: 'Video' });
+      } else {
+        onPreviewStopVideo({ source: device, mediaStreamType: 'Video' });
+      }
+    }
+  };
+  return <CameraButton onClick={onClick} />;
+};
 
 const LocalPreviewComponentBase = (
   props: MediaControlsContainerProps & LocalDeviceSettingsContainerProps & ErrorHandlingProps
 ): JSX.Element => {
   const isAudioDisabled = !props.audioDeviceInfo || props.audioDeviceList.length === 0;
-  const isVideoDisabled = !props.videoDeviceInfo || props.videoDeviceList.length === 0 || props.localVideoBusy;
   // get the stream in here instead of the mapper for now
   // we haven't properly properly exported this component to make it re-usable
   // we should create a MapToLocalPreviewProps, instead of using MapToMediaControlsProps and MapToLocalDeviceSettingsProps
-  const { localVideoStream } = useCallContext();
 
-  const { isVideoReady, videoStreamElement } = MapToLocalVideoProps({
-    stream: localVideoStream,
-    scalingMode: 'Crop'
-  });
+  // const cameraButtonProps = usePropsFor(CameraButton);
+  // const cameraButtonHandlers = useHandlers(CameraButton);
+  const dummyHandlers = useHandlers(CameraPreviewButton);
+  const optionsButtonProps = useSelector(optionsButtonSelector);
+  const unparentedView = optionsButtonProps.unparentedViews[0];
+  let videoStreamElement = null;
+  if (unparentedView) {
+    videoStreamElement = unparentedView.target;
+  }
+
+  const [previewOn, setPreviewOn] = useState<boolean>(videoStreamElement !== null);
+
   const ErrorBar = connectFuncsToContext(ErrorBarComponent, MapToErrorBarProps);
 
-  const { localVideoEnabled, isMicrophoneActive } = props;
+  const { isMicrophoneActive } = props;
 
   return (
     <Stack className={localPreviewContainerStyle}>
       <VideoTile
         styles={localPreviewTileStyle}
-        isVideoReady={isVideoReady}
+        isVideoReady={previewOn}
         videoProvider={<StreamMedia videoStreamElement={videoStreamElement} />}
         placeholderProvider={
           <Stack style={{ width: '100%', height: '100%' }} verticalAlign="center">
@@ -63,17 +92,22 @@ const LocalPreviewComponentBase = (
       >
         <ControlBar layout="floatingBottom">
           <CameraButton
-            checked={localVideoEnabled}
-            ariaLabel="Video Icon"
-            disabled={isVideoDisabled}
+            // {...cameraButtonProps}
+            checked={previewOn}
             onClick={() => {
-              props.toggleLocalVideo().catch((error) => {
-                if (props.onErrorCallback) {
-                  props.onErrorCallback(CommunicationUiErrorFromError(error));
-                } else {
-                  throw error;
-                }
-              });
+              if (previewOn) {
+                dummyHandlers.onPreviewStopVideo({
+                  source: optionsButtonProps.cameras[0],
+                  mediaStreamType: 'Video'
+                });
+                setPreviewOn(false);
+              } else {
+                dummyHandlers.onPreviewStartVideo({
+                  source: optionsButtonProps.cameras[0],
+                  mediaStreamType: 'Video'
+                });
+                setPreviewOn(true);
+              }
             }}
           />
           <MicrophoneButton

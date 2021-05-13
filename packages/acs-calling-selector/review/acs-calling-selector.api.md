@@ -60,6 +60,8 @@ export const createDefaultCallingHandlers: (callClient: DeclarativeCallClient, c
     onToggleScreenShare: () => Promise<void>;
     onRenderView: (stream: LocalVideoStream | RemoteVideoStream, options: CreateViewOptions_2) => Promise<void>;
     onParticipantRemove: (userId: string) => void;
+    onPreviewStartVideo: (stream: LocalVideoStream) => Promise<void>;
+    onPreviewStopVideo: (stream: LocalVideoStream) => Promise<void>;
 };
 
 // @public
@@ -74,6 +76,8 @@ export const createDefaultCallingHandlersForComponent: <Props>(declarativeCallCl
     onToggleScreenShare: () => Promise<void>;
     onRenderView: (stream: LocalVideoStream | RemoteVideoStream, options: CreateViewOptions_2) => Promise<void>;
     onParticipantRemove: (userId: string) => void;
+    onPreviewStartVideo: (stream: LocalVideoStream) => Promise<void>;
+    onPreviewStopVideo: (stream: LocalVideoStream) => Promise<void>;
 }, CommonProperties1<{
     onHangUp: () => Promise<void>;
     onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
@@ -85,6 +89,8 @@ export const createDefaultCallingHandlersForComponent: <Props>(declarativeCallCl
     onToggleScreenShare: () => Promise<void>;
     onRenderView: (stream: LocalVideoStream | RemoteVideoStream, options: CreateViewOptions_2) => Promise<void>;
     onParticipantRemove: (userId: string) => void;
+    onPreviewStartVideo: (stream: LocalVideoStream) => Promise<void>;
+    onPreviewStopVideo: (stream: LocalVideoStream) => Promise<void>;
 }, Props>>;
 
 // @public (undocumented)
@@ -149,6 +155,7 @@ export const optionsButtonSelector: reselect.OutputParametricSelector<callingSta
     selectedMicrophone: AudioDeviceInfo | undefined;
     selectedSpeaker: AudioDeviceInfo | undefined;
     selectedCamera: VideoDeviceInfo | undefined;
+    unparentedViews: callingStateful.VideoStreamRendererView[];
 }, (res1: callingStateful.DeviceManager, res2: callingStateful.Call | undefined) => {
     microphones: AudioDeviceInfo[];
     speakers: AudioDeviceInfo[];
@@ -156,6 +163,7 @@ export const optionsButtonSelector: reselect.OutputParametricSelector<callingSta
     selectedMicrophone: AudioDeviceInfo | undefined;
     selectedSpeaker: AudioDeviceInfo | undefined;
     selectedCamera: VideoDeviceInfo | undefined;
+    unparentedViews: callingStateful.VideoStreamRendererView[];
 }>;
 
 // @public (undocumented)

@@ -67,6 +67,16 @@ export const createDefaultCallingHandlers = memoizeOne(
       }
     };
 
+    const onPreviewStartVideo = async (stream: StatefulLocalVideoStream): Promise<void> => {
+      console.log('onPreviewStartVideo');
+      await callClient.startRenderVideo(undefined, stream);
+    };
+
+    const onPreviewStopVideo = async (stream: StatefulLocalVideoStream): Promise<void> => {
+      console.log('onPreviewStopVideo');
+      await callClient.stopRenderVideo(undefined, stream);
+    };
+
     const onStartCall = (
       participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
       options?: StartCallOptions
@@ -127,7 +137,9 @@ export const createDefaultCallingHandlers = memoizeOne(
       onToggleMicrophone,
       onToggleScreenShare,
       onRenderView,
-      onParticipantRemove
+      onParticipantRemove,
+      onPreviewStartVideo,
+      onPreviewStopVideo
     };
   }
 );
