@@ -31,7 +31,7 @@ import {
 import { ReadReceipt, ReadReceiptProps } from './ReadReceipt';
 import { memoizeFnAll } from './utils/memoizeFnAll';
 import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from './SystemMessage';
-const HtmlToReactParser = require('html-to-react').Parser;
+import { Parser } from 'html-to-react';
 
 const NEW_MESSAGES = 'New Messages';
 
@@ -172,14 +172,14 @@ const DefaultSystemMessageRenderer: DefaultMessageRendererType = (props: Message
 };
 
 // https://stackoverflow.com/questions/28899298/extract-the-text-out-of-html-string-using-javascript
-function extractContent(s) {
-  var span = document.createElement('span');
+function extractContent(s): string {
+  const span = document.createElement('span');
   span.innerHTML = s;
   return span.textContent || span.innerText;
 }
 
 const generateRichTextHTMLMessageContent = (payload: ChatMessagePayload): JSX.Element => {
-  const htmlToReactParser = new HtmlToReactParser();
+  const htmlToReactParser = new Parser();
   const liveAuthor = `${payload.senderDisplayName} says `;
   return (
     <div>
