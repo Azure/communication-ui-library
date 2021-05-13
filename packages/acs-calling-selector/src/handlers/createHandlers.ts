@@ -146,7 +146,7 @@ type Common<A, B> = Pick<A, CommonProperties1<A, B>>;
  * the same arguments will return the same handler instances. DeclarativeCallAgent, DeclarativeDeviceManager, and
  * DeclarativeCall may be undefined. If undefined, their associated handlers will not be created and returned.
  *
- * @param StatefulCallClient - StatefulCallClient returned from
+ * @param callClient - StatefulCallClient returned from
  *   {@Link calling-stateful-client#createStatefulCallClient}.
  * @param callAgent - Instance of {@Link @azure/communication-calling#CallClient}.
  * @param deviceManager - Instance of {@Link @azure/communication-calling#DeviceManager}.
@@ -155,11 +155,11 @@ type Common<A, B> = Pick<A, CommonProperties1<A, B>>;
  * @returns
  */
 export const createDefaultCallingHandlersForComponent = <Props>(
-  StatefulCallClient: StatefulCallClient,
+  callClient: StatefulCallClient,
   callAgent: CallAgent | undefined,
   deviceManager: StatefulDeviceManager | undefined,
   call: Call | undefined,
   _Component: (props: Props) => ReactElement | null
 ): Common<DefaultCallingHandlers, Props> => {
-  return createDefaultCallingHandlers(StatefulCallClient, callAgent, deviceManager, call);
+  return createDefaultCallingHandlers(callClient, callAgent, deviceManager, call);
 };
