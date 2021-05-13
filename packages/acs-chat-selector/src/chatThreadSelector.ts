@@ -40,6 +40,7 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
     payload: {
       createdOn: chatMessage.createdOn,
       content: chatMessage.content?.message,
+      type: chatMessage.type,
       status: !isLargeGroup && chatMessage.status === 'delivered' && isSeen ? 'seen' : chatMessage.status,
       senderDisplayName: chatMessage.senderDisplayName,
       senderId: communicationIdentifierToString(chatMessage.sender) ?? userId,
@@ -55,7 +56,12 @@ export const chatThreadSelector = createSelector(
     // A function takes parameter above and generate return value
     const convertedMessages = memoizedAllConvertChatMessage((memoizedFn) =>
       Array.from(chatMessages.values())
-        .filter((message) => message.type.toLowerCase() === 'text' || message.clientMessageId !== undefined)
+        .filter(
+          (message) =>
+            message.type.toLowerCase() === 'text' ||
+            message.type.toLowerCase() === 'richtext/html' ||
+            message.clientMessageId !== undefined
+        )
         .map((message) =>
           memoizedFn(
             message.id ?? message.clientMessageId,

@@ -38,6 +38,7 @@ const isMessageSame = (first: ChatMessagePayload, second: ChatMessagePayload): b
   return (
     first.messageId === second.messageId &&
     first.content === second.content &&
+    first.type === second.type &&
     JSON.stringify(first.createdOn) === JSON.stringify(second.createdOn) &&
     first.senderId === second.senderId &&
     first.senderDisplayName === second.senderDisplayName &&
@@ -169,26 +170,42 @@ const DefaultSystemMessageRenderer: DefaultMessageRendererType = (props: Message
   return <></>;
 };
 
+// https://stackoverflow.com/questions/28899298/extract-the-text-out-of-html-string-using-javascript
+function extractContent(s) {
+  var span = document.createElement('span');
+  span.innerHTML = s;
+  return span.textContent || span.innerText;
+}
+
 const DefaultChatMessageRenderer: DefaultMessageRendererType = (props: MessageProps) => {
   if (props.message.type === 'chat') {
     const payload: ChatMessagePayload = props.message.payload;
     const liveAuthor = `${payload.senderDisplayName} says `;
-    const messageContentItem = (
-      <div>
-        <LiveMessage message={`${payload.mine ? '' : liveAuthor} ${payload.content}`} aria-live="polite" />
-        <Linkify
-          componentDecorator={(decoratedHref: string, decoratedText: string, key: number) => {
-            return (
-              <Link href={decoratedHref} key={key}>
-                {decoratedText}
-              </Link>
-            );
-          }}
-        >
-          {payload.content}
-        </Linkify>
-      </div>
-    );
+    const messageContentItem =
+      payload.type === 'RichText/Html' ? (
+        <div>
+          <LiveMessage
+            message={`${payload.mine ? '' : liveAuthor} ${extractContent(payload.content)}`}
+            aria-live="polite"
+          />
+          {extractContent(payload.content)}
+        </div>
+      ) : (
+        <div>
+          <LiveMessage message={`${payload.mine ? '' : liveAuthor} ${payload.content}`} aria-live="polite" />
+          <Linkify
+            componentDecorator={(decoratedHref: string, decoratedText: string, key: number) => {
+              return (
+                <Link href={decoratedHref} key={key}>
+                  {decoratedText}
+                </Link>
+              );
+            }}
+          >
+            {payload.content}
+          </Linkify>
+        </div>
+      );
     return (
       <Chat.Message
         className={mergeStyles(chatMessageStyle as IStyle, props.messageContainerStyle as IStyle)}
