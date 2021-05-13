@@ -330,7 +330,7 @@ export enum CommunicationUiErrorCode {
     // (undocumented)
     QUERY_PERMISSIONS_ERROR = 20,
     // (undocumented)
-    REMOVE_THREAD_MEMBER_ERROR = 17,
+    REMOVE_THREAD_PARTICIPANT_ERROR = 17,
     // (undocumented)
     RENDER_LOCAL_VIDEO_ERROR = 30,
     // (undocumented)

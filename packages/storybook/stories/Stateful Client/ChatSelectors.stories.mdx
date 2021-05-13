@@ -43,8 +43,8 @@ import { chatParticipantListSelector, CommunicationParticipant } from '@azure/ac
 const threadId = 'CHAT_THREAD_ID';
 const chatParticipantProps = chatParticipantListSelector(state, { threadId });
 
-const Participants = chatParticipantProps.chatParticipants.map((member: CommunicationParticipant) => (
-  <ParticipantItem key={member.userId} name={member.displayName as string} />
+const Participants = chatParticipantProps.chatParticipants.map((participant: CommunicationParticipant) => (
+  <ParticipantItem key={participant.userId} name={participant.displayName as string} />
 ));
 ```
 

@@ -9,37 +9,37 @@ import { Stack, IContextualMenuItem } from '@fluentui/react';
 export type ParticipantManagementProps = {
   userId: string;
   chatParticipants: CommunicationParticipant[];
-  removeThreadMember: (userId: string) => Promise<void>;
+  removeThreadParticipant: (userId: string) => Promise<void>;
   onRenderAvatar?: (userId: string) => JSX.Element;
 };
 
 export const ParticipantManagement = (props: ParticipantManagementProps): JSX.Element => {
-  const { userId, chatParticipants, removeThreadMember, onRenderAvatar } = props;
+  const { userId, chatParticipants, removeThreadParticipant, onRenderAvatar } = props;
 
   return (
     <Stack>
-      {chatParticipants.map((member) => {
-        if (member.displayName ?? member.userId) {
+      {chatParticipants.map((participant) => {
+        if (participant.displayName ?? participant.userId) {
           const menuItems: IContextualMenuItem[] = [];
           menuItems.push({
             key: 'Remove',
             text: 'Remove',
             onClick: () => {
-              removeThreadMember?.(member.userId).catch((error) => {
+              removeThreadParticipant?.(participant.userId).catch((error) => {
                 propagateError(error);
               });
             }
           });
 
-          const isYou = member.userId === (userId as string);
+          const isYou = participant.userId === (userId as string);
 
           return (
             <ParticipantItem
-              key={member.userId}
-              name={(member.displayName as string) || member.userId}
+              key={participant.userId}
+              name={(participant.displayName as string) || participant.userId}
               isYou={isYou}
               menuItems={isYou ? undefined : menuItems}
-              onRenderAvatar={onRenderAvatar ? () => onRenderAvatar(member.userId) : undefined}
+              onRenderAvatar={onRenderAvatar ? () => onRenderAvatar(participant.userId) : undefined}
             />
           );
         }
