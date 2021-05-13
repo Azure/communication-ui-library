@@ -17,7 +17,7 @@ export const EndCallButtonCustomExample: () => JSX.Element = () => {
 
   return (
     <EndCallButton
-      style={{ backgroundColor: 'cyan' }}
+      style={{ background: 'cyan' }}
       key={'endCallCustomBtnKey'}
       showLabel={true}
       onRenderIcon={customOnRenderIcon}

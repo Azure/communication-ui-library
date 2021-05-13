@@ -2,6 +2,15 @@
 // Licensed under the MIT license.
 
 import { LocalVideoStream, RemoteVideoStream, VideoStreamRenderer } from '@azure/communication-calling';
+import { LocalVideoStream as StatefulLocalVideoStream } from './CallClientState';
+
+/**
+ * Used internally in InternalCallContext to be able to hold both the stream and the renderer in the same array.
+ */
+export interface StreamAndRenderer {
+  stream: StatefulLocalVideoStream;
+  renderer: VideoStreamRenderer;
+}
 
 /**
  * Contains internal data used between different Declarative components to share data.
@@ -20,12 +29,17 @@ export class InternalCallContext {
   // CallId -> VideoStreamRenderer
   private _localVideoStreamRenders: Map<string, VideoStreamRenderer>;
 
+  // Stores the original LocalVideoStream used when creating the {@Link VideoStreamRendererView} along with the renderer
+  // {@Link @azure/communication-calling#VideoStreamRenderer} used to create the {@Link VideoStreamRendererView}.
+  private _unparentedStreamAndRenderers: StreamAndRenderer[];
+
   constructor() {
     this._remoteVideoStreams = new Map<string, Map<number, RemoteVideoStream>>();
     this._remoteParticipantKeys = new Map<string, Map<number, string>>();
     this._remoteVideoStreamRenderers = new Map<string, Map<number, VideoStreamRenderer>>();
     this._localVideoStreams = new Map<string, LocalVideoStream>();
     this._localVideoStreamRenders = new Map<string, VideoStreamRenderer>();
+    this._unparentedStreamAndRenderers = [];
   }
 
   public setCallId(newCallId: string, oldCallId: string): void {
@@ -167,7 +181,46 @@ export class InternalCallContext {
     this._localVideoStreamRenders.delete(callId);
   }
 
-  public clearAll(): void {
+  // Returns the index in unparentedStreamAndRenderers or -1 if not found.
+  public findInUnparentedStreamAndRenderers(localVideoStream: StatefulLocalVideoStream): number {
+    // First try to find by referential equality.
+    for (let i = 0; i < this._unparentedStreamAndRenderers.length; i++) {
+      if (this._unparentedStreamAndRenderers[i].stream === localVideoStream) {
+        return i;
+      }
+    }
+    // If not yet found, try find by comparing properties.
+    for (let i = 0; i < this._unparentedStreamAndRenderers.length; i++) {
+      const candidate = this._unparentedStreamAndRenderers[i].stream;
+      if (
+        candidate.source.deviceType === localVideoStream.source.deviceType &&
+        candidate.source.id === localVideoStream.source.id &&
+        candidate.source.name === localVideoStream.source.name &&
+        candidate.mediaStreamType === localVideoStream.mediaStreamType
+      ) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  public getUnparentedStreamAndRenderer(index: number): StreamAndRenderer {
+    return this._unparentedStreamAndRenderers[index];
+  }
+
+  public setUnparentedStreamAndRenderer(
+    localVideoStream: StatefulLocalVideoStream,
+    videoStreamRenderer: VideoStreamRenderer
+  ): void {
+    this._unparentedStreamAndRenderers.push({ stream: localVideoStream, renderer: videoStreamRenderer });
+  }
+
+  public removeUnparentedStreamAndRenderer(index: number): void {
+    this._unparentedStreamAndRenderers.splice(index, 1);
+  }
+
+  // UnparentedStreamAndRenderers are not cleared as they are not part of the Call state.
+  public clearCallRelatedState(): void {
     this._remoteVideoStreams.clear();
     this._remoteParticipantKeys.clear();
     this._remoteVideoStreamRenderers.clear();

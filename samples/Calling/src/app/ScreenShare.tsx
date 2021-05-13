@@ -72,11 +72,21 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
     if (screenShareStream?.isAvailable && !screenShareStream?.videoStreamRendererView) {
       onRenderView(screenShareStream, {
         scalingMode: 'Fit'
+      }).catch((e) => {
+        // Since we are calling this async and not awaiting, there could be an error from try to start render of a
+        // stream that is already rendered. The StatefulClient will handle this so we can ignore this error in the UI
+        // but ideally we should make this await and avoid duplicate calls.
+        console.warn(e.message);
       });
     }
     if (videoStream?.isAvailable && !videoStream?.videoStreamRendererView) {
       onRenderView(videoStream, {
         scalingMode: 'Crop'
+      }).catch((e) => {
+        // Since we are calling this async and not awaiting, there could be an error from try to start render of a
+        // stream that is already rendered. The StatefulClient will handle this so we can ignore this error in the UI
+        // but ideally we should make this await and avoid duplicate calls.
+        console.warn(e.message);
       });
     }
 
@@ -112,6 +122,11 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
     if (localVideoStream && !localVideoStream?.videoStreamRendererView) {
       onRenderView(localVideoStream, {
         scalingMode: 'Crop'
+      }).catch((e) => {
+        // Since we are calling this async and not awaiting, there could be an error from try to start render of a
+        // stream that is already rendered. The StatefulClient will handle this so we can ignore this error in the UI
+        // but ideally we should make this await and avoid duplicate calls.
+        console.warn(e.message);
       });
     }
 
@@ -140,6 +155,11 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
               if (remoteVideoStream?.isAvailable && !remoteVideoStream?.videoStreamRendererView) {
                 onRenderView(remoteVideoStream, {
                   scalingMode: 'Crop'
+                }).catch((e: Error) => {
+                  // Since we are calling this async and not awaiting, there could be an error from try to start render
+                  // of a stream that is already rendered. The StatefulClient will handle this so we can ignore this
+                  // error in the UI but ideally we should make this await and avoid duplicate calls.
+                  console.warn(e.message);
                 });
               }
 

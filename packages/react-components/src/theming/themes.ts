@@ -4,9 +4,20 @@
 import { PartialTheme } from '@fluentui/react-theme-provider';
 
 /**
+ * Theme designed ACS UI SDK calling components
+ */
+export interface CallingTheme {
+  callingPalette: {
+    callRed: string;
+    callRedDark: string;
+    callRedDarker: string;
+  };
+}
+
+/**
  * Light theme designed ACS UI SDK components
  */
-export const lightTheme: PartialTheme = {
+export const lightTheme: PartialTheme & CallingTheme = {
   palette: {
     themePrimary: '#0078d4',
     themeLighterAlt: '#eff6fc',
@@ -30,13 +41,18 @@ export const lightTheme: PartialTheme = {
     neutralDark: '#201f1e',
     black: '#000000',
     white: '#ffffff'
+  },
+  callingPalette: {
+    callRed: '#c4314b',
+    callRedDark: '#a42e43',
+    callRedDarker: '#8b2c3d'
   }
 };
 
 /**
  * Dark theme designed ACS UI SDK components
  */
-export const darkTheme: PartialTheme = {
+export const darkTheme: PartialTheme & CallingTheme = {
   palette: {
     themePrimary: '#2899f5',
     themeLighterAlt: '#02060a',
@@ -60,5 +76,10 @@ export const darkTheme: PartialTheme = {
     neutralDark: '#f4f4f4',
     black: '#f8f8f8',
     white: '#252423'
+  },
+  callingPalette: {
+    callRed: '#a42e43',
+    callRedDark: '#8b2c3d',
+    callRedDarker: '#772a38'
   }
 };

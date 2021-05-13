@@ -36,12 +36,19 @@ export interface DeclarativeCallClient extends CallClient {
    * {@Link VideoStreamRendererView} under the relevant {@Link RemoteVideoStream} or {@Link LocalVideoStream} in the
    * state. Under the hood calls {@Link @azure/communication-calling#VideoStreamRenderer.createView}.
    *
-   * @param callId - CallId of the Call where the stream to start rendering is contained in.
+   * If callId is undefined and stream provided is LocalVideoStream, we will render the LocalVideoStream and store the
+   * resulting {@Link VideoStreamRendererView} under the {@Link CallClientState#DeviceManager.unparentedViews}.
+   *
+   * @param callId - CallId of the Call where the stream to start rendering is contained in. Can be undefined if
+   *   rendering a LocalVideoStream that is not tied to a Call.
    * @param stream - The LocalVideoStream or RemoteVideoStream to start rendering.
    * @param options - Options that are passed to the {@Link @azure/communication-calling#VideoStreamRenderer}.
+   * @throws - Throws error when state-based stream is already started, state-based stream not found in state,
+   *   non-state-based stream reached capacity, or invalid combination of parameters was provided (such as
+   *   RemoteVideoStream with undefined callId).
    */
   startRenderVideo(
-    callId: string,
+    callId: string | undefined,
     stream: LocalVideoStream | RemoteVideoStream,
     options?: CreateViewOptions
   ): Promise<void>;
@@ -50,10 +57,19 @@ export interface DeclarativeCallClient extends CallClient {
    * {@Link VideoStreamRendererView} from the relevant {@Link RemoteVideoStream} or {@Link LocalVideoStream} in the
    * state. Under the hood calls {@Link @azure/communication-calling#VideoStreamRenderer.dispose}.
    *
-   * @param callId - CallId of the Call where the stream to stop rendering is contained in.
+   * If callId is undefined and the stream provided is LocalVideoStream, we will search
+   * {@Link CallClientState#DeviceManager.unparentedViews} for matching LocalVideoStream (best effort) and stop
+   * rendering the best match and remove it from the state. The criteria for the search is:
+   * 1. Passed in LocalVideoStream referential equals LocalVideoStream in state
+   * 2. Passed in LocalVideoStream all properties match all properties for a LocalVideoStream in state
+   *
+   * @param callId - CallId of the Call where the stream to stop rendering is contained in. Can be undefined if
+   *   stop rendering a LocalVideoStream that is not tied to a Call.
    * @param stream - The LocalVideoStream or RemoteVideoStream to start rendering.
+   * @throws - Throws error when stream to stop is not found or invalid combination of parameters as provided (such as
+   *   RemoteVideoStream with undefined callId).
    */
-  stopRenderVideo(callId: string, stream: LocalVideoStream | RemoteVideoStream): void;
+  stopRenderVideo(callId: string | undefined, stream: LocalVideoStream | RemoteVideoStream): void;
 }
 
 /**
@@ -143,7 +159,7 @@ export const callClientDeclaratify = (callClient: CallClient, userId: string): D
   Object.defineProperty(callClient, 'startRenderVideo', {
     configurable: false,
     value: (
-      callId: string,
+      callId: string | undefined,
       stream: LocalVideoStream | RemoteVideoStream,
       options?: CreateViewOptions
     ): Promise<void> => {
@@ -152,7 +168,7 @@ export const callClientDeclaratify = (callClient: CallClient, userId: string): D
   });
   Object.defineProperty(callClient, 'stopRenderVideo', {
     configurable: false,
-    value: (callId: string, stream: LocalVideoStream | RemoteVideoStream): void => {
+    value: (callId: string | undefined, stream: LocalVideoStream | RemoteVideoStream): void => {
       stopRenderVideo(context, internalContext, callId, stream);
     }
   });
