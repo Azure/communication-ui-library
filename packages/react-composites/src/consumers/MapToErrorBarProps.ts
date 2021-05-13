@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ErrorBarProps } from 'react-components';
-import { CommunicationUiErrorCode, CommunicationUiErrorSeverity } from '../types/CommunicationUiError';
+import { ErrorBarProps, CommunicationUiErrorSeverity } from 'react-components';
+import { CommunicationUiErrorCode } from '../types/CommunicationUiError';
 import { useLastError, useSetLastError } from '../providers/ErrorProvider';
 
 /**
