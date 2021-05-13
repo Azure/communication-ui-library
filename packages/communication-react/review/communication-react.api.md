@@ -136,9 +136,6 @@ export type ChatThreadClientState = {
     threadId: string;
     properties?: ChatThreadProperties;
     coolPeriod?: Date;
-    getThreadParticipantsError?: boolean;
-    updateThreadParticipantsError?: boolean;
-    failedMessageIds: string[];
     readReceipts: ChatMessageReadReceipt[];
     typingIndicators: TypingIndicatorReceivedEvent[];
     latestReadTime: Date;
@@ -513,7 +510,7 @@ export const StreamMedia: (props: StreamMediaProps) => JSX.Element;
 
 // @public
 export interface StreamMediaProps {
-    invertVideo?: boolean;
+    isMirrored?: boolean;
     styles?: BaseCustomStylesProps;
     videoStreamElement: HTMLElement | null;
 }
@@ -630,7 +627,7 @@ export const VideoTile: (props: VideoTileProps & PlaceholderProps) => JSX.Elemen
 // @public
 export interface VideoTileProps {
     children?: React_2.ReactNode;
-    invertVideo?: boolean;
+    isMirrored?: boolean;
     isVideoReady?: boolean;
     placeholderProvider?: JSX.Element | null;
     styles?: VideoTileStylesProps;
