@@ -17,7 +17,6 @@ import {
 import { ChatContext } from './ChatContext';
 import { convertChatMessage } from './convertChatMessage';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
-import { TypingIndicatorEvent } from './types/TypingIndicatorEvent';
 
 export class EventSubscriber {
   private chatClient: ChatClient;
@@ -97,14 +96,10 @@ export class EventSubscriber {
     });
   };
 
-  private onTypingIndicatorReceived = (event: TypingIndicatorReceivedEvent): void => {
-    const typingIndicator: TypingIndicatorEvent = {
-      ...event,
-      receivedOn: new Date(event.receivedOn)
-    };
+  private onTypingIndicatorReceived = (typingIndicator: TypingIndicatorReceivedEvent): void => {
     this.chatContext.batch(() => {
-      this.chatContext.createThreadIfNotExist(event.threadId);
-      this.chatContext.addTypingIndicator(event.threadId, typingIndicator);
+      this.chatContext.createThreadIfNotExist(typingIndicator.threadId);
+      this.chatContext.addTypingIndicator(typingIndicator.threadId, typingIndicator);
     });
   };
 
