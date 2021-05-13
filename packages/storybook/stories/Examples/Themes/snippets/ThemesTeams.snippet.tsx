@@ -41,7 +41,7 @@ export const TeamsLikeTheme: () => JSX.Element = () => {
   return (
     <FluentThemeProvider fluentTheme={TeamsTheme}>
       {/*Control Bar with default set up*/}
-      <ControlBar layout={'dockedTop'}>
+      <ControlBar styles={{ root: { justifyContent: 'center' } }}>
         <CameraButton
           onClick={() => {
             /*handle onClick*/
