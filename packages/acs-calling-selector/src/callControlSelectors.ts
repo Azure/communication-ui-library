@@ -11,15 +11,17 @@ import { getCall, getDeviceManager } from './baseSelectors';
 // @ts-ignore
 import { AudioDeviceInfo, VideoDeviceInfo } from '@azure/communication-calling';
 
-export const microphoneButtonSelector = reselect.createSelector([getCall], (call) => {
+export const microphoneButtonSelector = reselect.createSelector([getCall, getDeviceManager], (call, deviceManager) => {
   return {
-    checked: !call?.isMuted
+    disabled: !call,
+    checked: call ? !call.isMuted : false
   };
 });
 
 export const cameraButtonSelector = reselect.createSelector([getCall, getDeviceManager], (call, deviceManager) => {
   const previewOn = !!deviceManager.unparentedViews && !!deviceManager.unparentedViews[0]?.target;
   return {
+    disabled: !deviceManager.selectedCamera,
     checked: previewOn || !!call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video')
   };
 });
