@@ -100,6 +100,7 @@ dependencies:
   events: 3.3.0
   express: 4.16.4
   history: 5.0.0
+  html-to-react: 1.4.5_react@16.14.0
   http-errors: 1.6.3
   husky: 4.3.8
   immer: 8.0.1
@@ -9201,7 +9202,7 @@ packages:
     dependencies:
       domelementtype: 2.1.0
       domhandler: 4.0.0
-      entities: 2.1.0
+      entities: 2.2.0
     dev: false
     resolution:
       integrity: sha512-n6kZFH/KlCrqs/1GHMOd5i2fd/beQHuehKdWvNNffbGHTr/almdhuVvTVFb3V7fglz+nC50fFusu3lY33h12pA==
@@ -9238,6 +9239,14 @@ packages:
     dev: false
     resolution:
       integrity: sha512-JiK04h0Ht5u/80fdLMCEmV4zkNh2BcoMFBmZ/91WtYZ8qVXSKjiw7fXMgFPnHcSZgOo3XdinHvmnDUeMf5R4wA==
+  /domhandler/3.3.0:
+    dependencies:
+      domelementtype: 2.1.0
+    dev: false
+    engines:
+      node: '>= 4'
+    resolution:
+      integrity: sha512-J1C5rIANUbuYK+FuFL98650rihynUOEzRLxW+90bKZRWB6A1X1Tf82GxR1qAWLyfNPRvjqfip3Q5tdYlmAa9lA==
   /domhandler/4.0.0:
     dependencies:
       domelementtype: 2.1.0
@@ -11630,6 +11639,18 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-1qYz89hW3lFDEazhjW0yVAV87lw8lVkrJocr72XmBkMKsoSVJCQx3W8BXsC7hO2qAt8BoVjYjtAcZ9perqGnNg==
+  /html-to-react/1.4.5_react@16.14.0:
+    dependencies:
+      domhandler: 3.3.0
+      htmlparser2: 5.0.1
+      lodash.camelcase: 4.3.0
+      ramda: 0.27.1
+      react: 16.14.0
+    dev: false
+    peerDependencies:
+      react: ^16.0 || ^17.0
+    resolution:
+      integrity: sha512-KONZUDFPg5OodWaQu2ymfkDmU0JA7zB1iPfvyHehTmMUZnk0DS7/TyCMTzsLH6b4BvxX15g88qZCXFhJWktsmA==
   /html-void-elements/1.0.5:
     dev: false
     resolution:
@@ -11683,6 +11704,15 @@ packages:
     dev: false
     resolution:
       integrity: sha512-IgieNijUMbkDovyoKObU1DUhm1iwNYE/fuifEoEHfd1oZKZDaONBSkal7Y01shxsM49R4XaMdGez3WnF9UfiCQ==
+  /htmlparser2/5.0.1:
+    dependencies:
+      domelementtype: 2.1.0
+      domhandler: 3.3.0
+      domutils: 2.5.0
+      entities: 2.2.0
+    dev: false
+    resolution:
+      integrity: sha512-vKZZra6CSe9qsJzh0BjBGXo8dvzNsq/oGvsjfRdOrrryfeD9UOBEEQdeoqCRmKZchF5h2zOBMQ6YuQ0uRUmdbQ==
   /htmlparser2/6.0.1:
     dependencies:
       domelementtype: 2.1.0
@@ -13639,6 +13669,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-DM8tiRZq8Ds2Y8eWU4t1rG4RTZ0=
+  /lodash.camelcase/4.3.0:
+    dev: false
+    resolution:
+      integrity: sha1-soqmKIorn8ZRA1x3EfZathkDMaY=
   /lodash.debounce/4.0.8:
     dev: false
     resolution:
@@ -20977,6 +21011,7 @@ packages:
       eslint-plugin-prettier: 3.3.1_cdac37046eab2e8d6fb794f34ed825c2
       eslint-plugin-react: 7.22.0_eslint@7.22.0
       eslint-plugin-react-hooks: 4.2.0_eslint@7.22.0
+      html-to-react: 1.4.5_react@16.14.0
       husky: 4.3.8
       jest: 26.6.0_ts-node@9.1.1
       jest-fetch-mock: 3.0.3
@@ -21002,7 +21037,7 @@ packages:
       eslint-plugin-jsx-a11y: '*'
       ts-node: '*'
     resolution:
-      integrity: sha512-iDtjy0NBDlGA+FRvCQupwWXqgbSnKe6puPZJqp8urRDmmrcSFB27QIjGXj/mGSRkTsb+JK0PQh2+A4CVQqS9Ig==
+      integrity: sha512-CgfegeRVyegOqLGHMsVsUGgqZcZCmjX9TzzPlkJqJfZ/m8ivlMwPBYwoQf+LbLMwe4GBwuvRFc49oEU39he/Iw==
       tarball: file:projects/chat.tgz
     version: 0.0.0
   file:projects/check-treeshaking.tgz_prettier@2.0.5:
@@ -21554,6 +21589,7 @@ specifiers:
   events: ~3.3.0
   express: ~4.16.1
   history: ~5.0.0
+  html-to-react: ~1.4.5
   http-errors: ~1.6.3
   husky: ^4.3.0
   immer: ~8.0.1

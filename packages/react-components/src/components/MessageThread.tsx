@@ -31,6 +31,7 @@ import {
 import { ReadReceipt, ReadReceiptProps } from './ReadReceipt';
 import { memoizeFnAll } from './utils/memoizeFnAll';
 import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from './SystemMessage';
+const HtmlToReactParser = require('html-to-react').Parser;
 
 const NEW_MESSAGES = 'New Messages';
 
@@ -177,35 +178,45 @@ function extractContent(s) {
   return span.textContent || span.innerText;
 }
 
+const generateRichTextHTMLMessageContent = (payload: ChatMessagePayload): JSX.Element => {
+  const htmlToReactParser = new HtmlToReactParser();
+  const liveAuthor = `${payload.senderDisplayName} says `;
+  return (
+    <div>
+      <LiveMessage
+        message={`${payload.mine ? '' : liveAuthor} ${extractContent(payload.content)}`}
+        aria-live="polite"
+      />
+      {htmlToReactParser.parse(payload.content)}
+    </div>
+  );
+};
+
+const generateTextMessageContent = (payload: ChatMessagePayload): JSX.Element => {
+  const liveAuthor = `${payload.senderDisplayName} says `;
+  return (
+    <div>
+      <LiveMessage message={`${payload.mine ? '' : liveAuthor} ${payload.content}`} aria-live="polite" />
+      <Linkify
+        componentDecorator={(decoratedHref: string, decoratedText: string, key: number) => {
+          return (
+            <Link href={decoratedHref} key={key}>
+              {decoratedText}
+            </Link>
+          );
+        }}
+      >
+        {payload.content}
+      </Linkify>
+    </div>
+  );
+};
+
 const DefaultChatMessageRenderer: DefaultMessageRendererType = (props: MessageProps) => {
   if (props.message.type === 'chat') {
     const payload: ChatMessagePayload = props.message.payload;
-    const liveAuthor = `${payload.senderDisplayName} says `;
     const messageContentItem =
-      payload.type === 'RichText/Html' ? (
-        <div>
-          <LiveMessage
-            message={`${payload.mine ? '' : liveAuthor} ${extractContent(payload.content)}`}
-            aria-live="polite"
-          />
-          {extractContent(payload.content)}
-        </div>
-      ) : (
-        <div>
-          <LiveMessage message={`${payload.mine ? '' : liveAuthor} ${payload.content}`} aria-live="polite" />
-          <Linkify
-            componentDecorator={(decoratedHref: string, decoratedText: string, key: number) => {
-              return (
-                <Link href={decoratedHref} key={key}>
-                  {decoratedText}
-                </Link>
-              );
-            }}
-          >
-            {payload.content}
-          </Linkify>
-        </div>
-      );
+      payload.type === 'text' ? generateTextMessageContent(payload) : generateRichTextHTMLMessageContent(payload);
     return (
       <Chat.Message
         className={mergeStyles(chatMessageStyle as IStyle, props.messageContainerStyle as IStyle)}
