@@ -30,6 +30,7 @@
     "@fluentui/react-icons-northstar": "^0.51.2",
     "@fluentui/react-northstar": "^0.51.2",
     "@fluentui/react-theme-provider": "^0.18.0",
+    "@fluentui/theme-samples": "8.1.5",
     "@microsoft/applicationinsights-react-js": "~3.0.5",
     "@microsoft/applicationinsights-web": "~2.6.2",
     "@uifabric/react-hooks": "~7.13.11",
@@ -38,8 +39,7 @@
     "history": "~5.0.0",
     "react-aria-live": "^2.0.5",
     "react-composites": "1.0.0-beta",
-    "react-linkify": "^1.0.0-alpha",
-    "@fluentui/theme-samples": "8.1.5"
+    "react-linkify": "^1.0.0-alpha"
   },
   "peerDependencies": {
     "react": "^16.13.1",
