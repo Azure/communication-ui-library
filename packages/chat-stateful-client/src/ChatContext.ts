@@ -53,7 +53,6 @@ export class ChatContext {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         draft.threads.set(threadId, {
-          failedMessageIds: [],
           chatMessages: new Map(),
           threadId: threadId,
           properties: properties,
