@@ -18,7 +18,7 @@ import * as reselect from 'reselect';
 import { SendBox } from 'react-components';
 import { StatefulChatClient } from 'chat-stateful-client';
 import { TypingIndicator } from 'react-components';
-import { TypingIndicatorEvent } from 'chat-stateful-client';
+import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 
 // @public (undocumented)
 export type AreEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
@@ -118,7 +118,7 @@ export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState,
 // @public (undocumented)
 export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     typingUsers: CommunicationParticipant[];
-}, (res1: TypingIndicatorEvent[], res2: Map<string, ChatParticipant>, res3: string) => {
+}, (res1: TypingIndicatorReceivedEvent[], res2: Map<string, ChatParticipant>, res3: string) => {
     typingUsers: CommunicationParticipant[];
 }>;
 

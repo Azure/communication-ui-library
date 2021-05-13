@@ -330,7 +330,7 @@ export enum CommunicationUiErrorCode {
     // (undocumented)
     QUERY_PERMISSIONS_ERROR = 20,
     // (undocumented)
-    REMOVE_THREAD_MEMBER_ERROR = 17,
+    REMOVE_THREAD_PARTICIPANT_ERROR = 17,
     // (undocumented)
     RENDER_LOCAL_VIDEO_ERROR = 30,
     // (undocumented)
@@ -387,16 +387,7 @@ export interface CommunicationUiErrorInfo {
 }
 
 // @public
-export enum CommunicationUiErrorSeverity {
-    // (undocumented)
-    ERROR = "Error",
-    // (undocumented)
-    IGNORE = "Ignore",
-    // (undocumented)
-    INFO = "Info",
-    // (undocumented)
-    WARNING = "Warning"
-}
+export type CommunicationUiErrorSeverity = 'info' | 'warning' | 'error' | 'ignore';
 
 // @public (undocumented)
 export const compareMessages: (firstMessage: {
@@ -779,12 +770,7 @@ export type Message<T extends MessageTypes> = {
 };
 
 // @public (undocumented)
-export enum MessageAttachedStatus {
-    // (undocumented)
-    BOTTOM = "bottom",
-    // (undocumented)
-    TOP = "top"
-}
+export type MessageAttachedStatus = 'bottom' | 'top';
 
 // @public (undocumented)
 export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';

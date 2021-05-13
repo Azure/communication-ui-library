@@ -35,6 +35,7 @@
     "chat-stateful-client": "~1.0.0-beta",
     "@azure/communication-chat": "1.0.0",
     "@azure/communication-common": "1.0.0",
+    "@azure/communication-signaling": "1.0.0-beta.5",
     "react": "^16.13.1",
     "react-components": "1.0.0-beta",
     "reselect": "~4.0.0",
