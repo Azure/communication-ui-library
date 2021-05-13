@@ -32,7 +32,7 @@ export interface LocalVideoStream {
   mediaStreamType: MediaStreamType;
   /**
    * {@Link VideoStreamRendererView} is added/removed from state by startRenderVideo/stopRenderVideo in
-   * {@Link DeclarativeCallClient} API.
+   * {@Link StatefulCallClient} API.
    */
   videoStreamRendererView?: VideoStreamRendererView | undefined;
 }
@@ -55,7 +55,7 @@ export interface RemoteVideoStream {
   isAvailable: boolean;
   /**
    * {@Link VideoStreamRendererView} is added/removed from state by startRenderVideo/stopRenderVideo in
-   * {@Link DeclarativeCallClient} API.
+   * {@Link StatefulCallClient} API.
    */
   videoStreamRendererView: VideoStreamRendererView | undefined;
 }
