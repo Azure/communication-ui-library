@@ -15,6 +15,6 @@ export const localPreviewSelector = reselect.createSelector([getDeviceManager], 
   return {
     selectedCamera: deviceManager.selectedCamera,
     unparentedViews: deviceManager.unparentedViews,
-    checked: Boolean(deviceManager.unparentedViews) && Boolean(deviceManager.unparentedViews[0]?.target)
+    checked: deviceManager.unparentedViews && deviceManager.unparentedViews[0]?.target
   };
 });

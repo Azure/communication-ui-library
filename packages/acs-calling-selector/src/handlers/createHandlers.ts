@@ -59,20 +59,31 @@ export const createDefaultCallingHandlers = memoizeOne(
     };
 
     const onToggleCamera = async (): Promise<void> => {
-      const stream = call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
-      if (stream) {
-        await onStopLocalVideo(stream);
+      if (call) {
+        const stream = call.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
+        if (stream) {
+          await onStopLocalVideo(stream);
+        } else {
+          await onStartLocalVideo();
+        }
       } else {
-        await onStartLocalVideo();
+        if (callClient.state.deviceManager.selectedCamera) {
+          const previewOn =
+            !!callClient.state.deviceManager.unparentedViews &&
+            !!callClient.state.deviceManager.unparentedViews[0]?.target;
+          if (previewOn) {
+            await callClient.stopRenderVideo(undefined, {
+              source: callClient.state.deviceManager.selectedCamera,
+              mediaStreamType: 'Video'
+            });
+          } else {
+            await callClient.startRenderVideo(undefined, {
+              source: callClient.state.deviceManager.selectedCamera,
+              mediaStreamType: 'Video'
+            });
+          }
+        }
       }
-    };
-
-    const onPreviewStartVideo = async (stream: StatefulLocalVideoStream): Promise<void> => {
-      await callClient.startRenderVideo(undefined, stream);
-    };
-
-    const onPreviewStopVideo = async (stream: StatefulLocalVideoStream): Promise<void> => {
-      await callClient.stopRenderVideo(undefined, stream);
     };
 
     const onStartCall = (
@@ -94,10 +105,29 @@ export const createDefaultCallingHandlers = memoizeOne(
 
     const onSelectCamera = async (device: VideoDeviceInfo): Promise<void> => {
       if (!deviceManager) return;
-      deviceManager.selectCamera(device);
       if (call) {
+        deviceManager.selectCamera(device);
         const stream = call.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
         return stream?.switchSource(device);
+      } else {
+        const previewOn =
+          !!callClient.state.deviceManager.unparentedViews &&
+          !!callClient.state.deviceManager.unparentedViews[0]?.target;
+        if (previewOn) {
+          if (callClient.state.deviceManager.selectedCamera) {
+            await callClient.stopRenderVideo(undefined, {
+              source: callClient.state.deviceManager.selectedCamera,
+              mediaStreamType: 'Video'
+            });
+          }
+          deviceManager.selectCamera(device);
+          await callClient.startRenderVideo(undefined, {
+            source: device,
+            mediaStreamType: 'Video'
+          });
+        } else {
+          deviceManager.selectCamera(device);
+        }
       }
     };
 
@@ -137,9 +167,7 @@ export const createDefaultCallingHandlers = memoizeOne(
       onToggleMicrophone,
       onToggleScreenShare,
       onRenderView,
-      onParticipantRemove,
-      onPreviewStartVideo,
-      onPreviewStopVideo
+      onParticipantRemove
     };
   }
 );

@@ -24,30 +24,8 @@ import {
   LocalDeviceSettingsContainerProps
 } from 'react-composites';
 import { useSelector } from './hooks/useSelector';
-import { useHandlers } from './hooks/useHandlers';
+import { usePropsFor } from './hooks/usePropsFor';
 import { localPreviewSelector } from '@azure/acs-calling-selector';
-
-import { VideoDeviceInfo } from '@azure/communication-calling';
-import { LocalVideoStream } from 'calling-stateful-client';
-type CameraPreviewButtonProps = {
-  checked: boolean;
-  onPreviewStartVideo: (stream: LocalVideoStream) => Promise<void>;
-  onPreviewStopVideo: (stream: LocalVideoStream) => Promise<void>;
-  selectedCamera?: VideoDeviceInfo;
-};
-export const CameraPreviewButton = (props: CameraPreviewButtonProps): JSX.Element | null => {
-  const { checked, onPreviewStartVideo, onPreviewStopVideo, selectedCamera } = props;
-  const onClick = (): void => {
-    if (selectedCamera) {
-      if (checked) {
-        onPreviewStopVideo({ source: selectedCamera, mediaStreamType: 'Video' });
-      } else {
-        onPreviewStartVideo({ source: selectedCamera, mediaStreamType: 'Video' });
-      }
-    }
-  };
-  return <CameraButton checked={checked} onClick={onClick} />;
-};
 
 const LocalPreviewComponentBase = (
   props: MediaControlsContainerProps & LocalDeviceSettingsContainerProps & ErrorHandlingProps
@@ -57,11 +35,8 @@ const LocalPreviewComponentBase = (
   // we haven't properly properly exported this component to make it re-usable
   // we should create a MapToLocalPreviewProps, instead of using MapToMediaControlsProps and MapToLocalDeviceSettingsProps
 
-  // const cameraButtonProps = usePropsFor(CameraButton);
-  // const cameraButtonHandlers = useHandlers(CameraButton);
-  const cameraPreviewHandlers = useHandlers(CameraPreviewButton);
+  const cameraButtonProps = usePropsFor(CameraButton);
   const localPreviewProps = useSelector(localPreviewSelector);
-  console.log('localPreviewProps.checked: ' + JSON.stringify(localPreviewProps.checked));
   const unparentedView = localPreviewProps.unparentedViews[0];
   let videoStreamElement = null;
   if (unparentedView) {
@@ -90,7 +65,7 @@ const LocalPreviewComponentBase = (
         }
       >
         <ControlBar layout="floatingBottom">
-          <CameraPreviewButton {...localPreviewProps} {...cameraPreviewHandlers} />
+          <CameraButton {...cameraButtonProps} />
           <MicrophoneButton
             ariaLabel="Microphone Icon"
             disabled={isAudioDisabled}

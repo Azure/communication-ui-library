@@ -39,7 +39,7 @@ export type CallingBaseSelectorProps = {
 // @public (undocumented)
 export const cameraButtonSelector: reselect.OutputParametricSelector<callingStateful.CallClientState, CallingBaseSelectorProps, {
     checked: boolean;
-}, (res: callingStateful.Call | undefined) => {
+}, (res1: callingStateful.Call | undefined, res2: callingStateful.DeviceManager) => {
     checked: boolean;
 }>;
 
@@ -60,8 +60,6 @@ export const createDefaultCallingHandlers: (callClient: DeclarativeCallClient, c
     onToggleScreenShare: () => Promise<void>;
     onRenderView: (stream: LocalVideoStream | RemoteVideoStream, options: CreateViewOptions_2) => Promise<void>;
     onParticipantRemove: (userId: string) => void;
-    onPreviewStartVideo: (stream: LocalVideoStream) => Promise<void>;
-    onPreviewStopVideo: (stream: LocalVideoStream) => Promise<void>;
 };
 
 // @public
@@ -76,8 +74,6 @@ export const createDefaultCallingHandlersForComponent: <Props>(declarativeCallCl
     onToggleScreenShare: () => Promise<void>;
     onRenderView: (stream: LocalVideoStream | RemoteVideoStream, options: CreateViewOptions_2) => Promise<void>;
     onParticipantRemove: (userId: string) => void;
-    onPreviewStartVideo: (stream: LocalVideoStream) => Promise<void>;
-    onPreviewStopVideo: (stream: LocalVideoStream) => Promise<void>;
 }, CommonProperties1<{
     onHangUp: () => Promise<void>;
     onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
@@ -89,8 +85,6 @@ export const createDefaultCallingHandlersForComponent: <Props>(declarativeCallCl
     onToggleScreenShare: () => Promise<void>;
     onRenderView: (stream: LocalVideoStream | RemoteVideoStream, options: CreateViewOptions_2) => Promise<void>;
     onParticipantRemove: (userId: string) => void;
-    onPreviewStartVideo: (stream: LocalVideoStream) => Promise<void>;
-    onPreviewStopVideo: (stream: LocalVideoStream) => Promise<void>;
 }, Props>>;
 
 // @public (undocumented)
@@ -138,11 +132,11 @@ export const getUserId: (state: CallClientState) => string;
 export const localPreviewSelector: reselect.OutputSelector<callingStateful.CallClientState, {
     selectedCamera: VideoDeviceInfo | undefined;
     unparentedViews: callingStateful.VideoStreamRendererView[];
-    checked: boolean;
+    checked: HTMLElement;
 }, (res: callingStateful.DeviceManager) => {
     selectedCamera: VideoDeviceInfo | undefined;
     unparentedViews: callingStateful.VideoStreamRendererView[];
-    checked: boolean;
+    checked: HTMLElement;
 }>;
 
 // @public (undocumented)

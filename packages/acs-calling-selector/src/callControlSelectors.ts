@@ -17,9 +17,10 @@ export const microphoneButtonSelector = reselect.createSelector([getCall], (call
   };
 });
 
-export const cameraButtonSelector = reselect.createSelector([getCall], (call) => {
+export const cameraButtonSelector = reselect.createSelector([getCall, getDeviceManager], (call, deviceManager) => {
+  const previewOn = !!deviceManager.unparentedViews && !!deviceManager.unparentedViews[0]?.target;
   return {
-    checked: !!call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video')
+    checked: previewOn || !!call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video')
   };
 });
 
