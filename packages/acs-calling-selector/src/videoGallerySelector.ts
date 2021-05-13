@@ -14,7 +14,7 @@ import { getCall, BaseSelectorProps, getDisplayName, getIdentifier, getCallId } 
 // @ts-ignore
 import { memoizeFnAll } from './utils/memoizeFnAll';
 import { getUserId } from './utils/participant';
-import { VideoGalleryRemoteParticipant, VideoGalleryStream } from './types/VideoGallery';
+import { VideoGalleryRemoteParticipant, VideoGalleryStream } from 'react-components';
 
 const convertRemoteVideoStreamToVideoGalleryStream = (stream: RemoteVideoStream): VideoGalleryStream => {
   return {
@@ -76,6 +76,7 @@ const videoGalleryRemoteParticipantsFromCall = (call: Call | undefined): VideoGa
 export const videoGallerySelector = createSelector(
   [getCall, getDisplayName, getIdentifier],
   (call: Call | undefined, displayName: string | undefined, identifier: string | undefined) => {
+    const localVideoStream = call?.localVideoStreams.find((i) => i.mediaStreamType === 'Video');
     return {
       localParticipant: {
         userId: identifier ?? '',
@@ -83,9 +84,9 @@ export const videoGallerySelector = createSelector(
         isMuted: call?.isMuted,
         isScreenSharingOn: call?.isScreenSharingOn,
         videoStream: {
-          isAvailable: !!call?.localVideoStreams[0],
-          isMirrored: call?.localVideoStreams[0]?.videoStreamRendererView?.isMirrored,
-          videoProvider: call?.localVideoStreams[0]?.videoStreamRendererView?.target
+          isAvailable: !!localVideoStream,
+          isMirrored: localVideoStream?.videoStreamRendererView?.isMirrored,
+          videoProvider: localVideoStream?.videoStreamRendererView?.target
         }
       },
       remoteParticipants: videoGalleryRemoteParticipantsFromCall(call)

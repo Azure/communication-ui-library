@@ -29,7 +29,7 @@ export async function startRenderVideo(
     }
 
     const renderer = new VideoStreamRenderer(remoteVideoStream);
-    const view = await renderer.createView();
+    const view = await renderer.createView(options);
 
     context.setRemoteVideoStreamRendererView(
       callId,

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-export declare interface CreateViewOptions {
+export declare interface VideoStreamOptions {
   isMirrored?: boolean;
   scalingMode?: 'Stretch' | 'Crop' | 'Fit';
 }

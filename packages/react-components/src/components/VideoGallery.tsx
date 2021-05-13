@@ -8,7 +8,7 @@ import {
   VideoGalleryRemoteParticipant,
   VideoGalleryLocalParticipant,
   BaseCustomStylesProps,
-  CreateViewOptions
+  VideoStreamOptions
 } from '../types';
 import { GridLayout } from './GridLayout';
 import { StreamMedia } from './StreamMedia';
@@ -19,25 +19,26 @@ export interface VideoGalleryProps {
   styles?: BaseCustomStylesProps;
   localParticipant: VideoGalleryLocalParticipant;
   remoteParticipants?: VideoGalleryRemoteParticipant[];
-  localVideoViewOption?: CreateViewOptions;
-  remoteVideoViewOption?: CreateViewOptions;
-  onBeforeRenderLocalVideoTile?: (options?: CreateViewOptions | undefined) => Promise<void>;
+  localVideoViewOption?: VideoStreamOptions;
+  remoteVideoViewOption?: VideoStreamOptions;
+  onCreateLocalStreamView?: (options?: VideoStreamOptions | undefined) => Promise<void>;
+  onDisposeLocalStreamView?: () => Promise<void>;
   onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
-  onBeforeRenderRemoteVideoTile?: (userId: string, options?: CreateViewOptions) => Promise<void>;
+  onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
   onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
 }
 
 const memoizeAllRemoteParticipants = memoizeFnAll(
   (
     userId: string,
-    onBeforeRenderRemoteVideoTile: any,
+    onCreateRemoteStreamView: any,
     isAvailable?: boolean,
     videoProvider?: HTMLElement,
     displayName?: string,
-    remoteVideoViewOption?: CreateViewOptions
+    remoteVideoViewOption?: VideoStreamOptions
   ): JSX.Element => {
     if (isAvailable && !videoProvider) {
-      onBeforeRenderRemoteVideoTile && onBeforeRenderRemoteVideoTile(userId, remoteVideoViewOption);
+      onCreateRemoteStreamView && onCreateRemoteStreamView(userId, remoteVideoViewOption);
     }
     return (
       <Stack className={gridStyle} key={userId} grow>
@@ -62,8 +63,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     remoteVideoViewOption,
     onRenderLocalVideoTile,
     onRenderRemoteVideoTile,
-    onBeforeRenderLocalVideoTile,
-    onBeforeRenderRemoteVideoTile,
+    onCreateLocalStreamView,
+    onCreateRemoteStreamView,
     styles
   } = props;
 
@@ -74,12 +75,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     const localVideoStream = localParticipant?.videoStream;
     const isLocalVideoReady = localVideoStream?.isAvailable;
 
-    console.log(localVideoStream);
-
     if (onRenderLocalVideoTile) return onRenderLocalVideoTile(localParticipant);
 
-    if (localVideoStream && !isLocalVideoReady) {
-      onBeforeRenderLocalVideoTile && onBeforeRenderLocalVideoTile(localVideoViewOption);
+    if (localVideoStream && isLocalVideoReady) {
+      onCreateLocalStreamView && onCreateLocalStreamView(localVideoViewOption);
     }
     return (
       <VideoTile
@@ -92,7 +91,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       </VideoTile>
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [localParticipant, localParticipant.videoStream, onBeforeRenderLocalVideoTile]);
+  }, [localParticipant, localParticipant.videoStream, onCreateLocalStreamView]);
 
   /**
    * Utility function for memoized rendering of RemoteParticipants.
@@ -111,7 +110,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         const remoteVideoStream = participant.videoStream;
         return memoizedRemoteParticipantFn(
           participant.userId,
-          onBeforeRenderRemoteVideoTile,
+          onCreateRemoteStreamView,
           remoteVideoStream?.isAvailable,
           remoteVideoStream?.videoProvider,
           participant.displayName,
@@ -119,7 +118,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         );
       });
     });
-  }, [remoteParticipants, onRenderRemoteVideoTile, onBeforeRenderRemoteVideoTile, remoteVideoViewOption]);
+  }, [remoteParticipants, onRenderRemoteVideoTile, onCreateRemoteStreamView, remoteVideoViewOption]);
 
   return (
     <GridLayout styles={styles}>

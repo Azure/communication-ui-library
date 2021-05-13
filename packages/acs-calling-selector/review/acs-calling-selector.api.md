@@ -21,6 +21,8 @@ import { StartCallOptions } from '@azure/communication-calling';
 import { StatefulDeviceManager } from '@azure/acs-calling-declarative';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
+import { VideoGalleryRemoteParticipant } from 'react-components';
+import { VideoStreamOptions } from 'react-components';
 
 // @public
 export type BaseSelectorProps = {
@@ -52,8 +54,8 @@ export const createDefaultHandlersForComponent: <Props>(declarativeCallClient: D
     onToggleCamera: () => Promise<void>;
     onToggleMicrophone: () => Promise<void> | void;
     onToggleScreenShare: () => Promise<void> | void;
-    onBeforeRenderLocalVideoTile: (options?: CreateViewOptions | undefined) => Promise<void>;
-    onBeforeRenderRemoteVideoTile: (userId: string, options?: CreateViewOptions | undefined) => Promise<void>;
+    onCreateLocalStreamView: (options?: VideoStreamOptions | undefined) => Promise<void>;
+    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions | undefined) => Promise<void>;
 }, CommonProperties<{
     onHangUp: () => Promise<void>;
     onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
@@ -63,17 +65,9 @@ export const createDefaultHandlersForComponent: <Props>(declarativeCallClient: D
     onToggleCamera: () => Promise<void>;
     onToggleMicrophone: () => Promise<void> | void;
     onToggleScreenShare: () => Promise<void> | void;
-    onBeforeRenderLocalVideoTile: (options?: CreateViewOptions | undefined) => Promise<void>;
-    onBeforeRenderRemoteVideoTile: (userId: string, options?: CreateViewOptions | undefined) => Promise<void>;
+    onCreateLocalStreamView: (options?: VideoStreamOptions | undefined) => Promise<void>;
+    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions | undefined) => Promise<void>;
 }, Props>>;
-
-// @public (undocumented)
-export interface CreateViewOptions {
-    // (undocumented)
-    isMirrored?: boolean;
-    // (undocumented)
-    scalingMode?: 'Stretch' | 'Crop' | 'Fit';
-}
 
 // @public (undocumented)
 export type FunctionWithKey<KeyT, ArgsT extends any[], RetT> = (key: KeyT, ...args: ArgsT) => RetT;
@@ -137,26 +131,6 @@ export const screenShareButtonSelector: reselect.OutputParametricSelector<callin
 }>;
 
 // @public (undocumented)
-export type VideoGalleryLocalParticipant = VideoGalleryParticipant;
-
-// @public (undocumented)
-export type VideoGalleryParticipant = {
-    userId: string;
-    isMuted?: boolean;
-    displayName?: string;
-    videoStream?: VideoGalleryStream;
-    isScreenSharingOn?: boolean;
-};
-
-// @public (undocumented)
-export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
-    // (undocumented)
-    isSpeaking?: boolean;
-    // (undocumented)
-    screenShareStream?: VideoGalleryStream;
-}
-
-// @public (undocumented)
 export const videoGallerySelector: reselect.OutputParametricSelector<callingStateful.CallClientState, BaseSelectorProps, {
     localParticipant: {
         userId: string;
@@ -184,18 +158,6 @@ export const videoGallerySelector: reselect.OutputParametricSelector<callingStat
     };
     remoteParticipants: VideoGalleryRemoteParticipant[];
 }>;
-
-// @public (undocumented)
-export interface VideoGalleryStream {
-    // (undocumented)
-    id?: number;
-    // (undocumented)
-    isAvailable?: boolean;
-    // (undocumented)
-    isMirrored?: boolean;
-    // (undocumented)
-    videoProvider?: HTMLElement;
-}
 
 
 // (No @packageDocumentation comment for this package)

@@ -5,4 +5,4 @@ export * from './ChatMessage';
 export * from './CommunicationUiError';
 export * from './CustomStylesProps';
 export * from './WebUiChatParticipant';
-export * from './GalleryParticipant';
+export * from './VideoGalleryParticipant';

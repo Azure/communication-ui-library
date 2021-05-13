@@ -36,7 +36,8 @@ export const MediaGallery = (): JSX.Element => {
       {...videoGalleryProps}
       {...videoGalleryHandlers}
       localVideoViewOption={{
-        scalingMode: 'Crop'
+        scalingMode: 'Crop',
+        isMirrored: true
       }}
       remoteVideoViewOption={{
         scalingMode: 'Crop'

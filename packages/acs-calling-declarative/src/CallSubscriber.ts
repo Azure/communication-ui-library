@@ -177,8 +177,11 @@ export class CallSubscriber {
     // At time of writing only one LocalVideoStream is supported by SDK.
     if (event.added.length > 0) {
       const localVideoStreams = [convertSdkLocalStreamToDeclarativeLocalStream(this._call.localVideoStreams[0])];
-      this._context.setCallLocalVideoStream(this._callIdRef.callId, localVideoStreams);
+      // IMPORTANT: The internalContext should be set before context.
+      // This is done to ensure that the internal context has the required data
+      // when component re-renders due to external state changes.
       this._internalContext.setLocalVideoStream(this._callIdRef.callId, this._call.localVideoStreams[0]);
+      this._context.setCallLocalVideoStream(this._callIdRef.callId, localVideoStreams);
     }
     if (event.removed.length > 0) {
       const localVideoStreams = this._context.getState().calls.get(this._callIdRef.callId)?.localVideoStreams;

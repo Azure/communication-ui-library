@@ -194,14 +194,6 @@ export interface ControlBarProps {
 }
 
 // @public (undocumented)
-export interface CreateViewOptions {
-    // (undocumented)
-    isMirrored?: boolean;
-    // (undocumented)
-    scalingMode?: 'Stretch' | 'Crop' | 'Fit';
-}
-
-// @public (undocumented)
 export type CustomMessage = Message<'custom'>;
 
 // @public (undocumented)
@@ -481,11 +473,13 @@ export interface VideoGalleryProps {
     // (undocumented)
     localParticipant: VideoGalleryLocalParticipant;
     // (undocumented)
-    localVideoViewOption?: CreateViewOptions;
+    localVideoViewOption?: VideoStreamOptions;
     // (undocumented)
-    onBeforeRenderLocalVideoTile?: (options?: CreateViewOptions | undefined) => Promise<void>;
+    onCreateLocalStreamView?: (options?: VideoStreamOptions | undefined) => Promise<void>;
     // (undocumented)
-    onBeforeRenderRemoteVideoTile?: (userId: string, options?: CreateViewOptions) => Promise<void>;
+    onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
+    // (undocumented)
+    onDisposeLocalStreamView?: () => Promise<void>;
     // (undocumented)
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     // (undocumented)
@@ -493,7 +487,7 @@ export interface VideoGalleryProps {
     // (undocumented)
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     // (undocumented)
-    remoteVideoViewOption?: CreateViewOptions;
+    remoteVideoViewOption?: VideoStreamOptions;
     // (undocumented)
     styles?: BaseCustomStylesProps;
 }
@@ -516,6 +510,14 @@ export interface VideoGalleryStream {
     isMirrored?: boolean;
     // (undocumented)
     videoProvider?: HTMLElement;
+}
+
+// @public (undocumented)
+export interface VideoStreamOptions {
+    // (undocumented)
+    isMirrored?: boolean;
+    // (undocumented)
+    scalingMode?: 'Stretch' | 'Crop' | 'Fit';
 }
 
 // @public (undocumented)

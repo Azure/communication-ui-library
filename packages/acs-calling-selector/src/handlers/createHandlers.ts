@@ -13,7 +13,7 @@ import {
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
-import { CreateViewOptions } from '../types/VideoGallery';
+import { VideoStreamOptions } from 'react-components';
 import { getUserId } from '../utils/participant';
 
 export type DefaultHandlers = ReturnType<typeof createDefaultHandlers>;
@@ -41,7 +41,6 @@ const createDefaultHandlers = memoizeOne(
       const stream = new LocalVideoStream(videoDeviceInfo);
       if (call && !call.localVideoStreams.find((s) => areStreamsEqual(s, stream))) {
         await call.startVideo(stream);
-        await callClient.startRenderVideo(callId, stream);
       }
     };
 
@@ -49,8 +48,8 @@ const createDefaultHandlers = memoizeOne(
       const callId = call?.id;
       if (!callId) return;
       if (call && call.localVideoStreams.find((s) => areStreamsEqual(s, stream))) {
-        callClient.stopRenderVideo(callId, stream);
         await call.stopVideo(stream);
+        await callClient.stopRenderVideo(callId, stream);
       }
     };
 
@@ -100,16 +99,14 @@ const createDefaultHandlers = memoizeOne(
 
     const onHangUp = async (): Promise<void> => await call?.hangUp();
 
-    const onBeforeRenderLocalVideoTile = async (options?: CreateViewOptions): Promise<void> => {
-      console.log('onBeforeRenderLocalVideoTile', options, call);
+    const onCreateLocalStreamView = async (options?: VideoStreamOptions): Promise<void> => {
       if (!call || call.localVideoStreams.length < 1) return;
-      const localStream = call.localVideoStreams[0];
+      const localStream = call.localVideoStreams.find((item) => item.mediaStreamType === 'Video');
       if (!localStream) return;
-      callClient.startRenderVideo(call.id, call.localVideoStreams[0], options);
+      callClient.startRenderVideo(call.id, localStream, options);
     };
 
-    const onBeforeRenderRemoteVideoTile = async (userId: string, options?: CreateViewOptions): Promise<void> => {
-      console.log('onBeforeRenderRemoteVideoTile', options);
+    const onCreateRemoteStreamView = async (userId: string, options?: VideoStreamOptions): Promise<void> => {
       if (!call) return;
       const callState = callClient.state.calls.get(call.id);
       if (!callState) throw new Error(`Call Not Found: ${call.id}`);
@@ -118,20 +115,12 @@ const createDefaultHandlers = memoizeOne(
         (participant) => getUserId(participant.identifier) === userId
       )?.videoStreams;
 
-      let remoteVideoStream;
-      let screenShareStream;
+      if (!streams) return;
 
-      streams &&
-        Array.from(streams?.values()).forEach((item) => {
-          if (item.mediaStreamType === 'Video') {
-            remoteVideoStream = item;
-          }
-          if (item.mediaStreamType === 'ScreenSharing') {
-            screenShareStream = item;
-          }
-        });
+      const remoteVideoStream = Array.from(streams?.values()).find((i) => i.mediaStreamType === 'Video');
+      const screenShareStream = Array.from(streams?.values()).find((i) => i.mediaStreamType === 'ScreenSharing');
 
-      if (remoteVideoStream && remoteVideoStream?.isAvailable && !remoteVideoStream.videoStreamRendererView) {
+      if (remoteVideoStream && remoteVideoStream.isAvailable && !remoteVideoStream.videoStreamRendererView) {
         callClient.startRenderVideo(call.id, remoteVideoStream, options);
       }
 
@@ -149,8 +138,8 @@ const createDefaultHandlers = memoizeOne(
       onToggleCamera,
       onToggleMicrophone,
       onToggleScreenShare,
-      onBeforeRenderLocalVideoTile,
-      onBeforeRenderRemoteVideoTile
+      onCreateLocalStreamView,
+      onCreateRemoteStreamView
     };
   }
 );
