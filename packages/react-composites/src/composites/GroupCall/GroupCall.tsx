@@ -3,8 +3,8 @@
 
 import { CallingProvider, CallProvider, ErrorProvider } from '../../providers';
 import React, { useEffect, useState } from 'react';
-import GroupCallScreen from './GroupCallScreen';
-import ConfigurationScreen from './ConfigurationScreen';
+import { GroupCallScreen } from './GroupCallScreen';
+import { ConfigurationScreen } from './ConfigurationScreen';
 import { CallClientOptions } from '@azure/communication-calling';
 import { AbortSignalLike } from '@azure/core-http';
 import { groupCallContainer } from './styles/GroupCall.styles';
