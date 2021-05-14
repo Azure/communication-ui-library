@@ -3,9 +3,9 @@
 
 import { text } from '@storybook/addon-knobs';
 import React, { useState, useEffect, useRef } from 'react';
-import { ChatConfig } from 'react-composites';
 import { COMPOSITE_STRING_CONNECTIONSTRING } from '../../CompositeStringUtils';
 import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE } from '../../constants';
+import { ChatConfig } from '../ChatConfig';
 import { ContosoChatContainer } from './Container.snippet';
 import { createUserAndThread } from './Server.snippet';
 import { ConfigHintBanner, addParrotBotToThread } from './Utils.snippet';

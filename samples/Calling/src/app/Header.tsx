@@ -13,7 +13,7 @@ import {
   separatorStyles
 } from './styles/Header.styles';
 
-import { MINI_HEADER_WINDOW_WIDTH } from 'react-composites';
+import { MINI_HEADER_WINDOW_WIDTH } from './utils/constants';
 import { CommandPanelTypes } from './CommandPanel';
 import { CallControls } from './CallControls';
 
