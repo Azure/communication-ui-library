@@ -9,14 +9,7 @@ import { ConfigurationScreen } from './ConfigurationScreen';
 import { GroupCall } from './GroupCall';
 import { HomeScreen } from './HomeScreen';
 import { v1 as createGUID } from 'uuid';
-import {
-  CallProvider,
-  CallClientProvider,
-  CallAgentProvider
-  // CallingProvider,
-  // CommunicationUiErrorInfo,
-  // ErrorProvider,
-} from 'react-composites';
+import { CallProvider, CallClientProvider, CallAgentProvider } from 'react-composites';
 import {
   createRandomDisplayName,
   fetchTokenResponse,
