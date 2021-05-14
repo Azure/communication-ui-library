@@ -49,6 +49,14 @@ export interface CallingTheme {
 }
 
 // @public
+export type CallParticipant = CommunicationParticipant & {
+    state: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
+    isScreenSharing?: boolean;
+    isMuted?: boolean;
+    isSpeaking?: boolean;
+};
+
+// @public
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
 
 // @public
@@ -161,14 +169,6 @@ export type CommonProperties<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
 
-// @public
-export interface CommunicationCallingParticipant extends CommunicationParticipant {
-    isMuted?: boolean;
-    isScreenSharing?: boolean;
-    isSpeaking?: boolean;
-    state: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
-}
-
 // @public (undocumented)
 export type CommunicationIdentifierAsKey = string;
 
@@ -176,10 +176,10 @@ export type CommunicationIdentifierAsKey = string;
 export const communicationIdentifierToString: (i: CommunicationIdentifier | undefined) => string;
 
 // @public
-export interface CommunicationParticipant {
-    displayName?: string;
+export type CommunicationParticipant = {
     userId: string;
-}
+    displayName?: string;
+};
 
 // @public
 export type CommunicationUiErrorSeverity = 'info' | 'warning' | 'error' | 'ignore';

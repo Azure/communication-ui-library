@@ -18,6 +18,6 @@ export type {
   SystemMessage,
   SystemMessagePayload,
   CommunicationParticipant,
-  CommunicationCallingParticipant
+  CallParticipant
 } from './types';
 export * from './types/GalleryParticipant';

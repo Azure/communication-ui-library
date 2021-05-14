@@ -5,5 +5,5 @@ export * from './ChatMessage';
 export * from './CommunicationUiError';
 export * from './CustomStylesProps';
 export * from './CommunicationParticipant';
-export * from './CommunicationCallingParticipant';
+export * from './CallParticipant';
 export * from './GalleryParticipant';

@@ -33,6 +33,14 @@ export interface CallingTheme {
 }
 
 // @public
+export type CallParticipant = CommunicationParticipant & {
+    state: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
+    isScreenSharing?: boolean;
+    isMuted?: boolean;
+    isSpeaking?: boolean;
+};
+
+// @public
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
 
 // @public
@@ -58,18 +66,10 @@ export type ChatMessagePayload = {
 };
 
 // @public
-export interface CommunicationCallingParticipant extends CommunicationParticipant {
-    isMuted?: boolean;
-    isScreenSharing?: boolean;
-    isSpeaking?: boolean;
-    state: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
-}
-
-// @public
-export interface CommunicationParticipant {
-    displayName?: string;
+export type CommunicationParticipant = {
     userId: string;
-}
+    displayName?: string;
+};
 
 // @public
 export type CommunicationUiErrorSeverity = 'info' | 'warning' | 'error' | 'ignore';

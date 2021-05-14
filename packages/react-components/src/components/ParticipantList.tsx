@@ -14,7 +14,7 @@ import {
 import { ParticipantItem } from './ParticipantItem';
 import { MicOffIcon, CallControlPresentNewIcon } from '@fluentui/react-northstar';
 import { participantListStyle, overFlowButtonStyles, overflowSetStyle } from './styles/ParticipantList.styles';
-import { CommunicationParticipant, CommunicationCallingParticipant } from '../types';
+import { CommunicationParticipant, CallParticipant } from '../types';
 
 /**
  * Props for component `ParticipantList`
@@ -38,8 +38,8 @@ const getDefaultRenderer = (
   onRenderAvatar?: (remoteParticipant: CommunicationParticipant) => JSX.Element | null
 ): ((participant: CommunicationParticipant) => JSX.Element | null) => {
   return (participant: CommunicationParticipant) => {
-    // Try to consider CommunicationParticipant as CommunicationCallingParticipant
-    const callingParticipant = participant as CommunicationCallingParticipant;
+    // Try to consider CommunicationParticipant as CallParticipant
+    const callingParticipant = participant as CallParticipant;
 
     let presence: PersonaPresence | undefined = undefined;
     if (callingParticipant) {
@@ -59,6 +59,22 @@ const getDefaultRenderer = (
       });
     }
 
+    const onRenderIcon =
+      callingParticipant?.isScreenSharing || callingParticipant?.isMuted
+        ? () => (
+            <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
+              {callingParticipant.isScreenSharing && <CallControlPresentNewIcon size="small" />}
+              {callingParticipant.isMuted && <MicOffIcon size="small" />}
+            </Stack>
+          )
+        : undefined;
+
+    const renderAvatar = onRenderAvatar
+      ? () => {
+          return onRenderAvatar(participant);
+        }
+      : undefined;
+
     if (participant.displayName) {
       return (
         <ParticipantItem
@@ -66,23 +82,8 @@ const getDefaultRenderer = (
           me={myUserId ? participant.userId === myUserId : false}
           menuItems={menuItems}
           presence={presence}
-          onRenderIcon={
-            callingParticipant
-              ? () => (
-                  <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
-                    {callingParticipant.isScreenSharing && <CallControlPresentNewIcon size="small" />}
-                    {callingParticipant.isMuted && <MicOffIcon size="small" />}
-                  </Stack>
-                )
-              : undefined
-          }
-          onRenderAvatar={
-            onRenderAvatar
-              ? () => {
-                  return onRenderAvatar(participant);
-                }
-              : undefined
-          }
+          onRenderIcon={onRenderIcon}
+          onRenderAvatar={renderAvatar}
         />
       );
     }
