@@ -47,7 +47,8 @@ export const GenerateMockNewChatMessage = (): ChatMessage => {
       createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
       mine: true,
       attached: false,
-      status: 'seen' as MessageStatus
+      status: 'seen' as MessageStatus,
+      type: 'text'
     }
   };
 };
@@ -61,7 +62,8 @@ export const GenerateMockNewChatMessageFromOthers = (): ChatMessage => {
       content: "Sure! Let's checkout calling UI components as well!",
       createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
       mine: false,
-      attached: false
+      attached: false,
+      type: 'text'
     }
   };
 };
@@ -99,7 +101,8 @@ export const GenerateMockHistoryChatMessages = (): ChatMessage[] => {
         content: 'Hi everyone, I created this awesome group chat for us!',
         createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
         mine: true,
-        attached: false
+        attached: false,
+        type: 'text'
       }
     },
     {
@@ -110,7 +113,8 @@ export const GenerateMockHistoryChatMessages = (): ChatMessage[] => {
         content: 'Nice! This looks great!',
         createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
         mine: false,
-        attached: false
+        attached: false,
+        type: 'text'
       }
     },
     {
@@ -121,7 +125,8 @@ export const GenerateMockHistoryChatMessages = (): ChatMessage[] => {
         content: "Yeah agree, let's chat here from now on!",
         createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
         mine: false,
-        attached: false
+        attached: false,
+        type: 'text'
       }
     }
   ];
@@ -137,7 +142,8 @@ export const GenerateMockChatMessages = (): ChatMessage[] => {
         content: 'Hey folks!',
         createdOn: new Date('2020-04-13T00:00:00.000+08:10'),
         mine: true,
-        attached: false
+        attached: false,
+        type: 'text'
       }
     },
     {
@@ -148,7 +154,8 @@ export const GenerateMockChatMessages = (): ChatMessage[] => {
         content: 'Hey how are you?',
         createdOn: new Date('2020-04-13T00:00:00.000+08:09'),
         mine: false,
-        attached: false
+        attached: false,
+        type: 'text'
       }
     },
     {
@@ -159,7 +166,8 @@ export const GenerateMockChatMessages = (): ChatMessage[] => {
         content: 'Hey everyone!',
         createdOn: new Date('2020-04-13T00:00:00.000+08:08'),
         mine: false,
-        attached: false
+        attached: false,
+        type: 'text'
       }
     },
     {
@@ -170,7 +178,8 @@ export const GenerateMockChatMessages = (): ChatMessage[] => {
         content: 'Doing well!',
         createdOn: new Date('2020-04-13T00:00:00.000+08:07'),
         mine: true,
-        attached: false
+        attached: false,
+        type: 'text'
       }
     },
     {
@@ -181,7 +190,8 @@ export const GenerateMockChatMessages = (): ChatMessage[] => {
         content: 'Checking out the new UI Components for Azure Communication Services!',
         createdOn: new Date('2020-04-13T00:00:00.000+08:06'),
         mine: false,
-        attached: 'top' as MessageAttachedStatus
+        attached: 'top' as MessageAttachedStatus,
+        type: 'text'
       }
     },
     {
@@ -192,7 +202,8 @@ export const GenerateMockChatMessages = (): ChatMessage[] => {
         content: 'The chat thread is very responsive.',
         createdOn: new Date('2020-04-13T00:00:00.000+08:05'),
         mine: false,
-        attached: true
+        attached: true,
+        type: 'text'
       }
     },
     {
@@ -203,7 +214,8 @@ export const GenerateMockChatMessages = (): ChatMessage[] => {
         content: 'It even scrolls!',
         createdOn: new Date('2020-04-13T00:00:00.000+08:05'),
         mine: false,
-        attached: 'bottom' as MessageAttachedStatus
+        attached: 'bottom' as MessageAttachedStatus,
+        type: 'text'
       }
     },
     {
@@ -214,7 +226,8 @@ export const GenerateMockChatMessages = (): ChatMessage[] => {
         content: 'Can you customize it?',
         createdOn: new Date('2020-04-13T00:00:00.000+08:04'),
         mine: false,
-        attached: false
+        attached: false,
+        type: 'text'
       }
     },
     {
@@ -225,7 +238,8 @@ export const GenerateMockChatMessages = (): ChatMessage[] => {
         content: 'Yes you can customize it.',
         createdOn: new Date('2020-04-13T00:00:00.000+08:03'),
         mine: false,
-        attached: false
+        attached: false,
+        type: 'text'
       }
     },
     {
@@ -237,7 +251,8 @@ export const GenerateMockChatMessages = (): ChatMessage[] => {
         createdOn: new Date('2020-04-13T00:00:00.000+08:02'),
         mine: true,
         attached: false,
-        status: 'seen' as MessageStatus
+        status: 'seen' as MessageStatus,
+        type: 'text'
       }
     },
     {
@@ -248,7 +263,8 @@ export const GenerateMockChatMessages = (): ChatMessage[] => {
         content: 'Yeah you can combine chat and calling components to build full communication experiences!',
         createdOn: new Date('2020-04-13T00:00:00.000+08:01'),
         mine: false,
-        attached: false
+        attached: false,
+        type: 'text'
       }
     }
   ];
