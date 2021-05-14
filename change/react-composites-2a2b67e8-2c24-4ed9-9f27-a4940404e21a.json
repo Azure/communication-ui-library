@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Merge branch 'main' of github.com:Azure/communication-ui-sdk into task/2444269_Refactor_VideoGallery",
+  "comment": "Add calling handler and selector for VideoGallery and ScreenShare",
   "packageName": "react-composites",
   "email": "anjulgarg@live.com",
   "dependentChangeType": "patch"
