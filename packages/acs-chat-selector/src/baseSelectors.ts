@@ -62,5 +62,5 @@ export const communicationIdentifierToString = (i: CommunicationIdentifier | und
 };
 
 export const parseMessageContentType = (type: string): MessageContentType => {
-  return type === 'text' || type === 'html' || type === 'RichText/Html' ? (type as MessageContentType) : 'unknown';
+  return type === 'text' || type === 'Text' || type === 'html' || type === 'RichText/Html' ? type : 'unknown';
 };

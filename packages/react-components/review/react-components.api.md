@@ -186,7 +186,7 @@ export type Message<T extends MessageTypes> = {
 export type MessageAttachedStatus = 'bottom' | 'top';
 
 // @public (undocumented)
-export type MessageContentType = 'text' | 'html' | 'RichText/Html' | 'unknown';
+export type MessageContentType = 'text' | 'Text' | 'html' | 'RichText/Html' | 'unknown';
 
 // @public
 export type MessageProps = {
