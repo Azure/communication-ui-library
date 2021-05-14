@@ -38,7 +38,7 @@ export const ContosoChatContainer = (props: ContosoChatContainerProps): JSX.Elem
   //
   // Although ChatComposite is not a pure react component, this callback may be passed on to
   // pure components lower in the Component tree.
-  // Thus, it is best practice to memoize this with userCallback() to avoid spurious rendering.
+  // Thus, it is best practice to memoize this with useCallback() to avoid spurious rendering.
   const onRenderAvatar = useCallback(
     (userId: string): JSX.Element => {
       if (userId === botUserId) {
