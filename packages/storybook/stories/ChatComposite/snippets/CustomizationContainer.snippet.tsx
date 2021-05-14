@@ -1,5 +1,6 @@
+import { ChatAdapter, ChatComposite, createAzureCommunicationChatAdapter } from '@azure/communication-react';
 import React, { useState, useEffect } from 'react';
-import { ChatAdapter, ChatConfig, ChatComposite, createAzureCommunicationChatAdapter } from 'react-composites';
+import { ChatConfig } from '../ChatConfig';
 
 export const ContosoChatContainer = (props: { config: ChatConfig | undefined }): JSX.Element => {
   const { config } = props;
