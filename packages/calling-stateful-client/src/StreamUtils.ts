@@ -49,6 +49,10 @@ async function startRenderRemoteVideo(
     throw new Error('RemoteVideoStream rendering is already in progress');
   }
 
+  if (status === 'Stopping') {
+    throw new Error('RemoteVideoStream is in the middle of stopping');
+  }
+
   context.setRemoteVideoStreamRendererView(callId, participantKey, streamId, {
     status: 'InProgress',
     view: undefined
@@ -186,6 +190,10 @@ async function startRenderUnparentedVideo(
 
   if (status && status === 'InProgress') {
     throw new Error('Unparented LocalVideoStream rendering is already in progress');
+  }
+
+  if (status && status === 'Stopping') {
+    throw new Error('Unparented LocalVideoStream is in the middle of stopping');
   }
 
   const localVideoStream = new LocalVideoStream(stream.source);
