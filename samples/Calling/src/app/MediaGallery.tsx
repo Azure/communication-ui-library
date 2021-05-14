@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useMemo, useCallback } from 'react';
+import React, { useEffect, useMemo, useCallback } from 'react';
 import { VideoGallery, VideoGalleryRemoteParticipant } from 'react-components';
 import { usePropsFor } from './hooks/usePropsFor';
 import { ScreenShare } from './ScreenShare';
@@ -12,10 +12,21 @@ const VideoGalleryStyles = {
   }
 };
 
-export const MediaGallery = (): JSX.Element => {
-  const videoGalleryProps = usePropsFor(VideoGallery);
+export interface MediaGalleryProps {
+  isCameraChecked?: boolean;
+  isMicrophoneChecked?: boolean;
+  onStartLocalVideo: () => Promise<void>;
+}
 
+export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
+  const videoGalleryProps = usePropsFor(VideoGallery);
   const remoteParticipants = videoGalleryProps.remoteParticipants;
+
+  useEffect(() => {
+    if (props.isCameraChecked) {
+      props.onStartLocalVideo();
+    }
+  }, [props]);
 
   const participantWithScreenShare: VideoGalleryRemoteParticipant | undefined = useMemo(() => {
     return remoteParticipants.find((remoteParticipant: VideoGalleryRemoteParticipant) => {

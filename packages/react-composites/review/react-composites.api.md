@@ -85,7 +85,9 @@ export enum CommunicationUiErrorCode {
     // (undocumented)
     CREATE_CHAT_THREAD_CLIENT_ERROR = 10,
     // (undocumented)
-    DISPOSE_CALL_AGENT_ERROR = 32,
+    CREATE_DEVICE_MANAGER_ERROR = 32,
+    // (undocumented)
+    DISPOSE_CALL_AGENT_ERROR = 33,
     // (undocumented)
     FORBIDDEN_ERROR = 3,
     // (undocumented)
@@ -99,9 +101,9 @@ export enum CommunicationUiErrorCode {
     // (undocumented)
     INTERNAL_SERVER_ERROR = 6,
     // (undocumented)
-    JOIN_CALL_ERROR = 33,
+    JOIN_CALL_ERROR = 34,
     // (undocumented)
-    LEAVE_CALL_ERROR = 34,
+    LEAVE_CALL_ERROR = 35,
     // (undocumented)
     MESSAGE_EXCEEDED_RETRY_ERROR = 8,
     // (undocumented)

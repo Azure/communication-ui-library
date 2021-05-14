@@ -5,8 +5,10 @@ import {
   cameraButtonSelector,
   microphoneButtonSelector,
   screenShareButtonSelector,
-  videoGallerySelector
+  videoGallerySelector,
+  mediaGallerySelector
 } from '@azure/acs-calling-selector';
+import { MediaGallery } from 'app/MediaGallery';
 import { CameraButton, EndCallButton, MicrophoneButton, ScreenShareButton, VideoGallery } from 'react-components';
 import { useHandlers } from './useHandlers';
 import { useSelector } from './useSelector';
@@ -27,6 +29,8 @@ type GetSelector<Component> = AreEqual<Component, typeof VideoGallery> extends t
   : AreEqual<Component, typeof ScreenShareButton> extends true
   ? typeof screenShareButtonSelector
   : AreEqual<Component, typeof EndCallButton> extends true
+  ? typeof mediaGallerySelector
+  : AreEqual<Component, typeof MediaGallery> extends true
   ? typeof emptySelector
   : never;
 
@@ -49,6 +53,8 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
       return cameraButtonSelector;
     case ScreenShareButton:
       return screenShareButtonSelector;
+    case MediaGallery:
+      return mediaGallerySelector;
     case EndCallButton:
       return emptySelector;
   }
