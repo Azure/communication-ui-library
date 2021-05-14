@@ -12,6 +12,7 @@ import { ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
+import { ErrorInfo } from 'react';
 import { IButtonProps } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
@@ -58,6 +59,36 @@ export interface CameraButtonProps extends IButtonProps {
 }
 
 // @public (undocumented)
+export interface ChatAdapter {
+    // (undocumented)
+    getState(): ChatState;
+    // (undocumented)
+    loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
+    // (undocumented)
+    offStateChange(handler: (state: ChatState) => void): void;
+    // (undocumented)
+    on(event: 'messageReceived', messageReceivedHandler: (message: ChatMessage_2) => void): void;
+    // (undocumented)
+    on(event: 'participantsJoined', participantsJoinedHandler: (participant: ChatParticipant) => void): void;
+    // (undocumented)
+    on(event: 'error', errorHandler: (e: Error) => void): void;
+    // (undocumented)
+    onStateChange(handler: (state: ChatState) => void): void;
+    // (undocumented)
+    removeParticipant(userId: string): Promise<void>;
+    // (undocumented)
+    sendMessage(content: string): Promise<void>;
+    // (undocumented)
+    sendReadReceipt(chatMessageId: string): Promise<void>;
+    // (undocumented)
+    sendTypingIndicator(): Promise<void>;
+    // (undocumented)
+    setTopic(topicName: string): Promise<void>;
+    // (undocumented)
+    updateAllParticipants(): Promise<void>;
+}
+
+// @public (undocumented)
 export type ChatBaseSelectorProps = {
     threadId: string;
 };
@@ -79,10 +110,23 @@ export type ChatClientState = {
 };
 
 // @public (undocumented)
+export const ChatComposite: (props: ChatProps) => JSX.Element;
+
+// @public (undocumented)
+export type ChatCompositeClientState = {
+    userId: string;
+    displayName: string;
+    thread: ChatThreadClientState;
+};
+
+// @public (undocumented)
 export type ChatConfig = {
     userId: CommunicationIdentifierKind;
     displayName: string;
 };
+
+// @public (undocumented)
+export type ChatEvent = 'messageReceived' | 'participantsJoined' | 'error';
 
 // @public (undocumented)
 export type ChatMessage = Message<'chat'>;
@@ -111,6 +155,11 @@ export type ChatMessageWithStatus = ChatMessage_2 & {
 };
 
 // @public (undocumented)
+export type ChatOptions = {
+    sendBoxMaxLength?: number;
+};
+
+// @public (undocumented)
 export const chatParticipantListSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     myUserId: string;
     displayName: string;
@@ -120,6 +169,17 @@ export const chatParticipantListSelector: reselect.OutputParametricSelector<Chat
     displayName: string;
     participants: CommunicationParticipant[];
 }>;
+
+// @public (undocumented)
+export type ChatProps = {
+    adapter: ChatAdapter;
+    onRenderAvatar?: (userId: string) => JSX.Element;
+    onErrorCallback?: (error: CommunicationUiErrorInfo) => void;
+    options?: ChatOptions;
+};
+
+// @public (undocumented)
+export type ChatState = ChatUIState & ChatCompositeClientState;
 
 // @public
 export const ChatThreadClientProvider: (props: ChatThreadClientProviderProps) => JSX.Element;
@@ -158,6 +218,11 @@ export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientSta
 }>;
 
 // @public (undocumented)
+export type ChatUIState = {
+    error?: Error;
+};
+
+// @public (undocumented)
 export type CommonProperties<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
@@ -178,6 +243,94 @@ export type CommunicationParticipant = {
     isSpeaking?: boolean;
 };
 
+// @public (undocumented)
+export enum CommunicationUiErrorCode {
+    // (undocumented)
+    ASK_PERMISSIONS_ERROR = 21,
+    // (undocumented)
+    CONFIGURATION_ERROR = 1,
+    // (undocumented)
+    CREATE_CALL_AGENT_ERROR = 31,
+    // (undocumented)
+    CREATE_CHAT_THREAD_CLIENT_ERROR = 10,
+    // (undocumented)
+    DISPOSE_CALL_AGENT_ERROR = 32,
+    // (undocumented)
+    FORBIDDEN_ERROR = 3,
+    // (undocumented)
+    GET_MESSAGE_ERROR = 14,
+    // (undocumented)
+    GET_MESSAGES_ERROR = 16,
+    // (undocumented)
+    GET_READ_RECEIPT_ERROR = 12,
+    // (undocumented)
+    GET_THREAD_ERROR = 19,
+    // (undocumented)
+    INTERNAL_SERVER_ERROR = 6,
+    // (undocumented)
+    JOIN_CALL_ERROR = 33,
+    // (undocumented)
+    LEAVE_CALL_ERROR = 34,
+    // (undocumented)
+    MESSAGE_EXCEEDED_RETRY_ERROR = 8,
+    // (undocumented)
+    MUTE_ERROR = 24,
+    // (undocumented)
+    QUERY_PERMISSIONS_ERROR = 20,
+    // (undocumented)
+    REMOVE_THREAD_PARTICIPANT_ERROR = 17,
+    // (undocumented)
+    RENDER_LOCAL_VIDEO_ERROR = 30,
+    // (undocumented)
+    RENDER_REMOTE_VIDEO_ERROR = 29,
+    // (undocumented)
+    SEND_MESSAGE_ERROR = 13,
+    // (undocumented)
+    SEND_READ_RECEIPT_ERROR = 11,
+    // (undocumented)
+    SEND_TYPING_NOTIFICATION_ERROR = 15,
+    // (undocumented)
+    SERVICE_UNAVAILABLE_ERROR = 5,
+    // (undocumented)
+    START_REALTIME_NOTIFICATIONS_ERROR = 9,
+    // (undocumented)
+    START_SCREEN_SHARE_ERROR = 27,
+    // (undocumented)
+    START_VIDEO_ERROR = 25,
+    // (undocumented)
+    STOP_SCREEN_SHARE_ERROR = 28,
+    // (undocumented)
+    STOP_VIDEO_ERROR = 26,
+    // (undocumented)
+    SWITCH_VIDEO_SOURCE_ERROR = 22,
+    // (undocumented)
+    TOO_MANY_REQUESTS_ERROR = 4,
+    // (undocumented)
+    UNAUTHORIZED_ERROR = 2,
+    // (undocumented)
+    UNKNOWN_ERROR = 0,
+    // (undocumented)
+    UNKNOWN_STATUS_CODE_ERROR = 7,
+    // (undocumented)
+    UNMUTE_ERROR = 23,
+    // (undocumented)
+    UPDATE_THREAD_ERROR = 18
+}
+
+// @public (undocumented)
+export interface CommunicationUiErrorInfo {
+    // (undocumented)
+    code: CommunicationUiErrorCode;
+    // (undocumented)
+    errorInfo: ErrorInfo | undefined;
+    // (undocumented)
+    message: string;
+    // (undocumented)
+    originalError: Error | undefined;
+    // (undocumented)
+    severity: CommunicationUiErrorSeverity;
+}
+
 // @public
 export type CommunicationUiErrorSeverity = 'info' | 'warning' | 'error' | 'ignore';
 
@@ -193,6 +346,9 @@ export interface ControlBarProps {
     layout?: ControlBarLayoutType;
     styles?: BaseCustomStylesProps;
 }
+
+// @public (undocumented)
+export const createAzureCommunicationChatAdapter: (token: string, endpointUrl: string, threadId: string, displayName: string, refreshTokenCallback?: (() => Promise<string>) | undefined) => Promise<ChatAdapter>;
 
 // @public (undocumented)
 export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => DefaultChatHandlers;

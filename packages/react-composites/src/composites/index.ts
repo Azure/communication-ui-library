@@ -4,4 +4,3 @@
 export * from './ChatComposite';
 export * from './GroupCall';
 export * from './OneToOneCall';
-export * from './common';

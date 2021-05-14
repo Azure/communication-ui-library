@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ENTER_KEY, MAXIMUM_LENGTH_OF_NAME, ErrorHandlingProps, WithErrorHandling } from 'react-composites';
+import { ErrorHandlingProps, WithErrorHandling } from 'react-composites';
 import {
   TextFieldStyleProps,
   inputBoxStyle,
@@ -10,6 +10,7 @@ import {
   labelFontStyle,
   warningStyle
 } from './styles/DisplayNameField.styles';
+import { ENTER_KEY, MAXIMUM_LENGTH_OF_NAME } from './utils/constants';
 
 import React from 'react';
 import { TextField } from '@fluentui/react';

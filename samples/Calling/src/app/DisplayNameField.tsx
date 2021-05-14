@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { ENTER_KEY, MAXIMUM_LENGTH_OF_NAME, ErrorHandlingProps, WithErrorHandling } from 'react-composites';
+import { ErrorHandlingProps, WithErrorHandling } from 'react-composites';
 import {
   TextFieldStyleProps,
   inputBoxStyle,
@@ -12,6 +12,7 @@ import {
   warningStyle
 } from './styles/DisplayNameField.styles';
 import { TextField } from '@fluentui/react';
+import { ENTER_KEY, MAXIMUM_LENGTH_OF_NAME } from './utils/constants';
 
 interface DisplayNameFieldProps {
   setName(displayName: string): void;
