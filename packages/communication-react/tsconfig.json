@@ -9,7 +9,7 @@
       "calling-stateful-client": ["../../calling-stateful-client/src"],
       "chat-stateful-client": ["../../chat-stateful-client/src"],
       "react-components": ["../../react-components/src"],
-      "react-composites": ["../../react-composites/src"]
+      "react-composites": ["../../react-composites/src/index.release"]
     },
     "plugins": [
       {

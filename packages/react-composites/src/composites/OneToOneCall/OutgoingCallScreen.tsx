@@ -42,7 +42,7 @@ export const OutgoingCallScreen = (props: OutgoingCallScreenProps): JSX.Element 
   return (
     <VideoTile
       styles={{ root: { height: '100%', width: '100%' }, videoContainer: { zIndex: -1 } }}
-      videoProvider={<StreamMedia videoStreamElement={videoStreamElement} />}
+      renderElement={<StreamMedia videoStreamElement={videoStreamElement} />}
       isVideoReady={isVideoReady}
       placeholderProvider={<></>}
     >

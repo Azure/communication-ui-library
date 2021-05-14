@@ -6,16 +6,16 @@ export const GridLayoutExample = (): JSX.Element => {
   return (
     <div style={{ height: '530px', width: '830px' }}>
       <GridLayout>
-        <VideoTile styles={videoTileStyles} avatarName={'Michael'}>
+        <VideoTile styles={videoTileStyles} displayName={'Michael'}>
           <label>Michael</label>
         </VideoTile>
-        <VideoTile styles={videoTileStyles} avatarName={'Jim'}>
+        <VideoTile styles={videoTileStyles} displayName={'Jim'}>
           <label>Jim</label>
         </VideoTile>
-        <VideoTile styles={videoTileStyles} avatarName={'Pam'}>
+        <VideoTile styles={videoTileStyles} displayName={'Pam'}>
           <label>Pam</label>
         </VideoTile>
-        <VideoTile styles={videoTileStyles} avatarName={'Dwight'}>
+        <VideoTile styles={videoTileStyles} displayName={'Dwight'}>
           <label>Dwight</label>
         </VideoTile>
       </GridLayout>

@@ -5,15 +5,15 @@ import React from 'react';
 export const BasicParticipantListExample: () => JSX.Element = () => {
   const participants = [
     {
-      name: 'Hal Jordan',
+      displayName: 'Hal Jordan',
       presence: PersonaPresence.online
     },
     {
-      name: 'Barry Allen',
+      displayName: 'Barry Allen',
       presence: PersonaPresence.busy
     },
     {
-      name: 'Bruce Wayne',
+      displayName: 'Bruce Wayne',
       presence: PersonaPresence.away
     }
   ];
@@ -24,7 +24,11 @@ export const BasicParticipantListExample: () => JSX.Element = () => {
       <Stack>
         {participants.map((participant: any) => {
           return (
-            <ParticipantItem key={`${participant.name}Key`} name={participant.name} presence={participant.presence} />
+            <ParticipantItem
+              key={`${participant.displayName}Key`}
+              displayName={participant.displayName}
+              presence={participant.presence}
+            />
           );
         })}
       </Stack>
