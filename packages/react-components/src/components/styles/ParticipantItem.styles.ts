@@ -27,7 +27,7 @@ export const participantItemNameStyle = mergeStyles({
   overflowY: 'hidden'
 });
 
-export const participantItemIsYouStyle = mergeStyles({
+export const participantItemMeStyle = mergeStyles({
   fontSize: '0.875rem', // 14px
   fontWeight: 400,
   color: '#A19F9D',
