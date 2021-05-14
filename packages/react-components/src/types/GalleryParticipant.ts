@@ -47,7 +47,7 @@ export interface LocalVideoStream {
   mediaStreamType: MediaStreamType;
   /**
    * {@Link VideoStreamRendererViewAndStatus} that is managed by startRenderVideo/stopRenderVideo in
-   * {@Link DeclarativeCallClient} API.
+   * {@Link StatefulCallClient} API.
    */
   viewAndStatus: VideoStreamRendererViewAndStatus;
 }
@@ -70,7 +70,7 @@ export interface RemoteVideoStream {
   isAvailable: boolean;
   /**
    * {@Link VideoStreamRendererViewAndStatus} that is managed by startRenderVideo/stopRenderVideo in
-   * {@Link DeclarativeCallClient} API.
+   * {@Link StatefulCallClient} API.
    */
   viewAndStatus: VideoStreamRendererViewAndStatus;
 }

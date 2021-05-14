@@ -21,7 +21,7 @@ export enum CommunicationUiErrorCode {
   GET_MESSAGE_ERROR, // ChatThreadClient.getMessage() threw an error.
   SEND_TYPING_NOTIFICATION_ERROR, // ChatThreadClient.sendTypingNotification() threw an error.
   GET_MESSAGES_ERROR, // ChatThreadClient.listMessages() threw an error.
-  REMOVE_THREAD_MEMBER_ERROR, // ChatThreadClient.removeThreadMember() threw an error.
+  REMOVE_THREAD_PARTICIPANT_ERROR, // ChatThreadClient.removeThreadParticipant() threw an error.
   UPDATE_THREAD_ERROR, // ChatThreadClient.updateThread() threw an error.
   GET_THREAD_ERROR, // ChatThreadClient.getChatThread() threw an error.
   QUERY_PERMISSIONS_ERROR, // DeviceManager.getPermissionState() threw an error.
@@ -45,12 +45,7 @@ export enum CommunicationUiErrorCode {
  * Severity is a rating provided by UI on the impact of the error. It can be used as a rough metric for decision making.
  * If using ErrorBar component, a INFO, WARNING, or ERROR severity will cause the message to be displayed in ErrorBar.
  */
-export enum CommunicationUiErrorSeverity {
-  INFO = 'Info',
-  WARNING = 'Warning',
-  ERROR = 'Error',
-  IGNORE = 'Ignore'
-}
+export type CommunicationUiErrorSeverity = 'info' | 'warning' | 'error' | 'ignore';
 
 export interface CommunicationUiErrorInfo {
   message: string;
@@ -87,7 +82,7 @@ export class CommunicationUiError extends Error implements CommunicationUiErrorI
     super(args.message ?? 'Unknown error');
     this.message = args.message ?? 'Unknown error';
     this._code = args.code ?? CommunicationUiErrorCode.UNKNOWN_ERROR;
-    this._severity = args.severity ?? CommunicationUiErrorSeverity.ERROR;
+    this._severity = args.severity ?? 'error';
     this._originalError = args.error;
     this._errorInfo = args.errorInfo;
   }

@@ -18,7 +18,7 @@ import * as reselect from 'reselect';
 import { SendBox } from 'react-components';
 import { StatefulChatClient } from 'chat-stateful-client';
 import { TypingIndicator } from 'react-components';
-import { TypingIndicatorEvent } from 'chat-stateful-client';
+import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 
 // @public (undocumented)
 export type AreEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
@@ -87,7 +87,7 @@ export const createDefaultChatHandlersForComponent: <Props>(chatClient: Stateful
 
 // @public (undocumented)
 export type DefaultChatHandlers = {
-    onMessageSend: (content: string) => Promise<void>;
+    onSendMessage: (content: string) => Promise<void>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
     onTyping: () => Promise<void>;
     onParticipantRemove: (userId: string) => Promise<void>;
@@ -105,20 +105,18 @@ export type GetSelector<Component> = AreEqual<Component, typeof SendBox> extends
 export const memoizeFnAll: <KeyT, ArgsT extends any[], FnRetT, CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>>(fnToMemoize: FunctionWithKey<KeyT, ArgsT, FnRetT>, shouldCacheUpdate?: (args1: any, args2: any) => boolean) => (callback: CallBackT) => FnRetT[];
 
 // @public (undocumented)
-export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
+export const sendBoxSelector: reselect.OutputSelector<ChatClientState, {
     displayName: string;
     userId: string;
-    disabled: boolean;
-}, (res1: Date, res2: string, res3: string) => {
+}, (res1: string, res2: string) => {
     displayName: string;
     userId: string;
-    disabled: boolean;
 }>;
 
 // @public (undocumented)
 export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     typingUsers: CommunicationParticipant[];
-}, (res1: TypingIndicatorEvent[], res2: Map<string, ChatParticipant>, res3: string) => {
+}, (res1: TypingIndicatorReceivedEvent[], res2: Map<string, ChatParticipant>, res3: string) => {
     typingUsers: CommunicationParticipant[];
 }>;
 

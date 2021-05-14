@@ -5,11 +5,11 @@ import {
   ChatClientState,
   ChatMessageWithStatus,
   CommunicationIdentifierAsKey,
-  TypingIndicatorEvent,
   getCommunicationIdentifierAsKey
 } from 'chat-stateful-client';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { ChatParticipant, ChatMessageReadReceipt } from '@azure/communication-chat';
+import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 export type ChatBaseSelectorProps = {
   threadId: string;
 };
@@ -41,14 +41,14 @@ export const getIsLargeGroup = (state: ChatClientState, props: ChatBaseSelectorP
 export const getLatestReadTime = (state: ChatClientState, props: ChatBaseSelectorProps): Date =>
   (props.threadId && state.threads.get(props.threadId)?.latestReadTime) || new Date(0);
 
-export const getCoolPeriod = (state: ChatClientState, props: ChatBaseSelectorProps): Date =>
-  (props.threadId && state.threads.get(props.threadId)?.coolPeriod) || new Date(0);
-
 export const getTopicName = (state: ChatClientState, props: ChatBaseSelectorProps): string => {
   return state.threads.get(props.threadId)?.properties?.topic || '';
 };
 
-export const getTypingIndicators = (state: ChatClientState, props: ChatBaseSelectorProps): TypingIndicatorEvent[] => {
+export const getTypingIndicators = (
+  state: ChatClientState,
+  props: ChatBaseSelectorProps
+): TypingIndicatorReceivedEvent[] => {
   return (props.threadId && state.threads.get(props.threadId)?.typingIndicators) || [];
 };
 

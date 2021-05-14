@@ -14,7 +14,7 @@ import { enableMapSet } from 'immer';
 import { ChatMessageReadReceipt, ChatParticipant } from '@azure/communication-chat';
 import { CommunicationIdentifierKind, UnknownIdentifierKind } from '@azure/communication-common';
 import { Constants } from './Constants';
-import { TypingIndicatorEvent } from './types/TypingIndicatorEvent';
+import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 import { ChatConfig } from './types/ChatConfig';
 
 enableMapSet();
@@ -28,7 +28,7 @@ export class ChatContext {
   };
   private _batchMode = false;
   private _emitter: EventEmitter = new EventEmitter();
-  private typingIndicatorInterval: NodeJS.Timeout | undefined;
+  private typingIndicatorInterval: number | undefined = undefined;
 
   public setState(state: ChatClientState): void {
     this._state = state;
@@ -53,7 +53,6 @@ export class ChatContext {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         draft.threads.set(threadId, {
-          failedMessageIds: [],
           chatMessages: new Map(),
           threadId: threadId,
           properties: properties,
@@ -243,7 +242,7 @@ export class ChatContext {
 
   private startTypingIndicatorCleanUp(): void {
     if (!this.typingIndicatorInterval) {
-      this.typingIndicatorInterval = setInterval(() => {
+      this.typingIndicatorInterval = window.setInterval(() => {
         let isTypingActive = false;
         let isStateChanged = false;
         const newState = produce(this._state, (draft: ChatClientState) => {
@@ -267,14 +266,14 @@ export class ChatContext {
           this.setState(newState);
         }
         if (!isTypingActive && this.typingIndicatorInterval) {
-          clearInterval(this.typingIndicatorInterval);
+          window.clearInterval(this.typingIndicatorInterval);
           this.typingIndicatorInterval = undefined;
         }
       }, 1000);
     }
   }
 
-  public addTypingIndicator(threadId: string, typingIndicator: TypingIndicatorEvent): void {
+  public addTypingIndicator(threadId: string, typingIndicator: TypingIndicatorReceivedEvent): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         const thread = draft.threads.get(threadId);
