@@ -65,7 +65,7 @@ const getDocs: () => JSX.Element = () => {
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.
 export const VideoTile: () => JSX.Element = () => {
-  const displayName = text('Avatar Name', 'John Krasinski');
+  const displayName = text('Display Name', 'John Krasinski');
   const isVideoReady = boolean('Is Video Ready', false);
   const isMirrored = boolean('Is Mirrored', false);
   const width = number('Width', 400, {

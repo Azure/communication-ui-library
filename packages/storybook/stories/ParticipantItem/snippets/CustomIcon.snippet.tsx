@@ -14,7 +14,12 @@ export const CustomIconExample: () => JSX.Element = () => {
 
   return (
     <Stack>
-      <ParticipantItem displayName="Spongebob" presence={PersonaPresence.online} me={true} onRenderIcon={onRenderIcon} />
+      <ParticipantItem
+        displayName="Spongebob"
+        presence={PersonaPresence.online}
+        me={true}
+        onRenderIcon={onRenderIcon}
+      />
       <ParticipantItem displayName="Patrick" presence={PersonaPresence.online} onRenderIcon={onRenderIcon} />
       <ParticipantItem displayName="Sandy" presence={PersonaPresence.online} onRenderIcon={onRenderIcon} />
     </Stack>
