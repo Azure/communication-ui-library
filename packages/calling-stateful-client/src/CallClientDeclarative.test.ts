@@ -9,6 +9,7 @@ import {
   CreateViewOptions,
   Features,
   LocalVideoStream,
+  MediaStreamType,
   RecordingCallFeature,
   RemoteVideoStream,
   TranscriptionCallFeature,
@@ -30,6 +31,7 @@ import {
   mockoutObjectFreeze,
   MockRecordingCallFeatureImpl,
   MockRemoteParticipant,
+  MockRemoteVideoStream,
   MockTranscriptionCallFeatureImpl,
   MockTransferCallFeatureImpl
 } from './TestUtils';
@@ -78,6 +80,7 @@ interface TestData {
   mockCall: MockCall;
   mockRemoteParticipant: MockRemoteParticipant;
   declarativeCallClient: DeclarativeCallClient;
+  mockRemoteVideoStream: MockRemoteVideoStream;
 }
 
 function createClientAndAgentMocks(testData: TestData): void {
@@ -131,6 +134,32 @@ async function createMockParticipantAndEmitParticipantUpdated(
     waitCondition
       ? waitCondition
       : () => testData.declarativeCallClient.state.calls.get(mockCallId)?.remoteParticipants.size !== 0
+  );
+}
+
+async function createMockRemoteVideoStreamAndEmitVideoStreamsUpdated(
+  isAvailable: boolean,
+  type: MediaStreamType,
+  id: number,
+  testData: TestData
+): Promise<void> {
+  const mockRemoteVideoStream = createMockRemoteVideoStream(isAvailable);
+  mockRemoteVideoStream.mediaStreamType = type;
+  mockRemoteVideoStream.isAvailable = isAvailable;
+  mockRemoteVideoStream.id = id;
+  testData.mockRemoteVideoStream = mockRemoteVideoStream;
+  testData.mockRemoteParticipant.videoStreams = [mockRemoteVideoStream];
+  testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
+    added: [mockRemoteVideoStream],
+    removed: []
+  });
+
+  await waitWithBreakCondition(
+    () =>
+      testData.declarativeCallClient.state.calls
+        .get(mockCallId)
+        ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))?.videoStreams
+        .size !== 0
   );
 }
 
@@ -429,13 +458,7 @@ describe('declarative call client', () => {
     createDeclarativeClient(testData);
     await createMockCallAndEmitCallsUpdated(testData);
     await createMockParticipantAndEmitParticipantUpdated(testData);
-
-    const mockRemoteVideoStream = createMockRemoteVideoStream(false);
-    testData.mockRemoteParticipant.videoStreams = [mockRemoteVideoStream];
-    testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
-      added: [mockRemoteVideoStream],
-      removed: []
-    });
+    await createMockRemoteVideoStreamAndEmitVideoStreamsUpdated(false, 'Video', 1, testData);
 
     const participantKey = getRemoteParticipantKey(testData.mockRemoteParticipant.identifier);
     await waitWithBreakCondition(
@@ -455,13 +478,7 @@ describe('declarative call client', () => {
     createDeclarativeClient(testData);
     await createMockCallAndEmitCallsUpdated(testData);
     await createMockParticipantAndEmitParticipantUpdated(testData);
-
-    const mockRemoteVideoStream = createMockRemoteVideoStream(false);
-    testData.mockRemoteParticipant.videoStreams = [mockRemoteVideoStream];
-    testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
-      added: [mockRemoteVideoStream],
-      removed: []
-    });
+    await createMockRemoteVideoStreamAndEmitVideoStreamsUpdated(false, 'Video', 1, testData);
 
     const participantKey = getRemoteParticipantKey(testData.mockRemoteParticipant.identifier);
     await waitWithBreakCondition(
@@ -473,7 +490,7 @@ describe('declarative call client', () => {
     testData.mockRemoteParticipant.videoStreams = [];
     testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
       added: [],
-      removed: [mockRemoteVideoStream]
+      removed: [testData.mockRemoteVideoStream]
     });
 
     await waitWithBreakCondition(
@@ -493,14 +510,7 @@ describe('declarative call client', () => {
     createDeclarativeClient(testData);
     await createMockCallAndEmitCallsUpdated(testData);
     await createMockParticipantAndEmitParticipantUpdated(testData);
-
-    const mockRemoteVideoStream = createMockRemoteVideoStream(false);
-    mockRemoteVideoStream.id = 1;
-    testData.mockRemoteParticipant.videoStreams = [mockRemoteVideoStream];
-    testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
-      added: [mockRemoteVideoStream],
-      removed: []
-    });
+    await createMockRemoteVideoStreamAndEmitVideoStreamsUpdated(false, 'Video', 1, testData);
 
     const participantKey = getRemoteParticipantKey(testData.mockRemoteParticipant.identifier);
     await waitWithBreakCondition(
@@ -509,8 +519,8 @@ describe('declarative call client', () => {
           .size !== 0
     );
 
-    mockRemoteVideoStream.isAvailable = true;
-    mockRemoteVideoStream.emit('isAvailableChanged');
+    testData.mockRemoteVideoStream.isAvailable = true;
+    testData.mockRemoteVideoStream.emit('isAvailableChanged');
 
     await waitWithBreakCondition(
       () =>
@@ -563,14 +573,7 @@ describe('declarative call client', () => {
     createDeclarativeClient(testData);
     await createMockCallAndEmitCallsUpdated(testData);
     await createMockParticipantAndEmitParticipantUpdated(testData);
-
-    const mockRemoteVideoStream = createMockRemoteVideoStream(false);
-    mockRemoteVideoStream.id = 1;
-    testData.mockRemoteParticipant.videoStreams = [mockRemoteVideoStream];
-    testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
-      added: [mockRemoteVideoStream],
-      removed: []
-    });
+    await createMockRemoteVideoStreamAndEmitVideoStreamsUpdated(false, 'Video', 1, testData);
 
     testData.mockCall.localVideoStreams = [{} as LocalVideoStream];
     testData.mockCall.emit('localVideoStreamsUpdated', {
@@ -641,14 +644,7 @@ describe('declarative call client', () => {
     createDeclarativeClient(testData);
     await createMockCallAndEmitCallsUpdated(testData);
     await createMockParticipantAndEmitParticipantUpdated(testData);
-
-    const mockRemoteVideoStream = createMockRemoteVideoStream(false);
-    mockRemoteVideoStream.id = 1;
-    testData.mockRemoteParticipant.videoStreams = [mockRemoteVideoStream];
-    testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
-      added: [mockRemoteVideoStream],
-      removed: []
-    });
+    await createMockRemoteVideoStreamAndEmitVideoStreamsUpdated(false, 'Video', 1, testData);
 
     testData.mockCall.localVideoStreams = [{} as LocalVideoStream];
     testData.mockCall.emit('localVideoStreamsUpdated', {
@@ -749,14 +745,7 @@ describe('declarative call client', () => {
     createDeclarativeClient(testData);
     await createMockCallAndEmitCallsUpdated(testData);
     await createMockParticipantAndEmitParticipantUpdated(testData);
-
-    const mockRemoteVideoStream = createMockRemoteVideoStream(false);
-    mockRemoteVideoStream.id = 1;
-    testData.mockRemoteParticipant.videoStreams = [mockRemoteVideoStream];
-    testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
-      added: [mockRemoteVideoStream],
-      removed: []
-    });
+    await createMockRemoteVideoStreamAndEmitVideoStreamsUpdated(false, 'Video', 1, testData);
 
     testData.mockCall.localVideoStreams = [{} as LocalVideoStream];
     testData.mockCall.emit('localVideoStreamsUpdated', {
@@ -1038,16 +1027,7 @@ describe('declarative call client', () => {
     createDeclarativeClient(testData);
     await createMockCallAndEmitCallsUpdated(testData);
     await createMockParticipantAndEmitParticipantUpdated(testData);
-
-    const mockRemoteVideoStream = createMockRemoteVideoStream(false);
-    mockRemoteVideoStream.mediaStreamType = 'ScreenSharing';
-    mockRemoteVideoStream.isAvailable = true;
-    mockRemoteVideoStream.id = 1;
-    testData.mockRemoteParticipant.videoStreams = [mockRemoteVideoStream];
-    testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
-      added: [mockRemoteVideoStream],
-      removed: []
-    });
+    await createMockRemoteVideoStreamAndEmitVideoStreamsUpdated(true, 'ScreenSharing', 1, testData);
 
     await waitWithBreakCondition(
       () =>
@@ -1066,16 +1046,7 @@ describe('declarative call client', () => {
     createDeclarativeClient(testData);
     await createMockCallAndEmitCallsUpdated(testData);
     await createMockParticipantAndEmitParticipantUpdated(testData);
-
-    const mockRemoteVideoStream = createMockRemoteVideoStream(false);
-    mockRemoteVideoStream.mediaStreamType = 'ScreenSharing';
-    mockRemoteVideoStream.isAvailable = true;
-    mockRemoteVideoStream.id = 1;
-    testData.mockRemoteParticipant.videoStreams = [mockRemoteVideoStream];
-    testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
-      added: [mockRemoteVideoStream],
-      removed: []
-    });
+    await createMockRemoteVideoStreamAndEmitVideoStreamsUpdated(true, 'ScreenSharing', 1, testData);
 
     await waitWithBreakCondition(
       () =>
@@ -1085,32 +1056,22 @@ describe('declarative call client', () => {
           .size !== 0
     );
 
-    mockRemoteVideoStream.isAvailable = false;
+    testData.mockRemoteVideoStream.isAvailable = false;
     testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
-      added: [mockRemoteVideoStream],
+      added: [testData.mockRemoteVideoStream],
       removed: []
     });
 
     expect(testData.declarativeCallClient.state.calls.get(mockCallId)?.screenShareRemoteParticipant).not.toBeDefined();
   });
 
-  test('should not accidently existing active screenshare screen when another stream is set unavailable', async () => {
+  test('should not delete existing active screenshare screen when another stream is set unavailable', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
     createDeclarativeClient(testData);
     await createMockCallAndEmitCallsUpdated(testData);
     await createMockParticipantAndEmitParticipantUpdated(testData);
-
-    // Have an active screenshare
-    const mockRemoteVideoStream = createMockRemoteVideoStream(false);
-    mockRemoteVideoStream.mediaStreamType = 'ScreenSharing';
-    mockRemoteVideoStream.isAvailable = true;
-    mockRemoteVideoStream.id = 1;
-    testData.mockRemoteParticipant.videoStreams = [mockRemoteVideoStream];
-    testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
-      added: [mockRemoteVideoStream],
-      removed: []
-    });
+    await createMockRemoteVideoStreamAndEmitVideoStreamsUpdated(true, 'ScreenSharing', 1, testData);
 
     const secondMockParticipantId = 'aaaaaaaaaaaaaa';
     const participant2 = createMockRemoteParticipant(secondMockParticipantId);
@@ -1130,7 +1091,7 @@ describe('declarative call client', () => {
     mockRemoteVideoStream2.id = 1;
     participant2.videoStreams = [mockRemoteVideoStream2];
     participant2.emit('videoStreamsUpdated', {
-      added: [mockRemoteVideoStream],
+      added: [mockRemoteVideoStream2],
       removed: []
     });
 
@@ -1144,5 +1105,8 @@ describe('declarative call client', () => {
     );
 
     expect(testData.declarativeCallClient.state.calls.get(mockCallId)?.screenShareRemoteParticipant).toBeDefined();
+    expect(testData.declarativeCallClient.state.calls.get(mockCallId)?.screenShareRemoteParticipant).toBe(
+      getRemoteParticipantKey(testData.mockRemoteParticipant.identifier)
+    );
   });
 });
