@@ -132,9 +132,9 @@ export const getUserId: (state: CallClientState) => string;
 
 // @public (undocumented)
 export const localPreviewSelector: reselect.OutputSelector<callingStateful.CallClientState, {
-    videoStreamElement: HTMLElement | null;
+    videoStreamElement: any;
 }, (res: callingStateful.DeviceManager) => {
-    videoStreamElement: HTMLElement | null;
+    videoStreamElement: any;
 }>;
 
 // @public (undocumented)
