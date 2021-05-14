@@ -76,12 +76,20 @@ export const createDefaultCallingHandlers = memoizeOne(
           if (previewOn) {
             await callClient.stopRenderVideo(undefined, {
               source: callClient.state.deviceManager.selectedCamera,
-              mediaStreamType: 'Video'
+              mediaStreamType: 'Video',
+              viewAndStatus: {
+                status: 'NotRendered',
+                view: undefined
+              }
             });
           } else {
             await callClient.startRenderVideo(undefined, {
               source: callClient.state.deviceManager.selectedCamera,
-              mediaStreamType: 'Video'
+              mediaStreamType: 'Video',
+              viewAndStatus: {
+                status: 'NotRendered',
+                view: undefined
+              }
             });
           }
         }
@@ -129,13 +137,21 @@ export const createDefaultCallingHandlers = memoizeOne(
         if (callClient.state.deviceManager.selectedCamera) {
           await callClient.stopRenderVideo(undefined, {
             source: callClient.state.deviceManager.selectedCamera,
-            mediaStreamType: 'Video'
+            mediaStreamType: 'Video',
+            viewAndStatus: {
+              status: 'NotRendered',
+              view: undefined
+            }
           });
         }
         deviceManager.selectCamera(device);
         await callClient.startRenderVideo(undefined, {
           source: device,
-          mediaStreamType: 'Video'
+          mediaStreamType: 'Video',
+          viewAndStatus: {
+            status: 'NotRendered',
+            view: undefined
+          }
         });
       }
     };
