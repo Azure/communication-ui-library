@@ -13,11 +13,16 @@ export type {
   CustomMessagePayload,
   Message,
   MessageAttachedStatus,
+  MessageContentType,
   MessageStatus,
   MessageTypes,
   SystemMessage,
   SystemMessagePayload,
   CommunicationParticipant,
-  CallParticipant
+  CallParticipant,
+  VideoStreamOptions,
+  VideoGalleryParticipant,
+  VideoGalleryStream,
+  VideoGalleryLocalParticipant,
+  VideoGalleryRemoteParticipant
 } from './types';
-export * from './types/GalleryParticipant';

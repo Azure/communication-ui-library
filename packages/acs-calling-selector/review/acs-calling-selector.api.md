@@ -12,19 +12,18 @@ import { CallClientState } from 'calling-stateful-client';
 import * as callingStateful from 'calling-stateful-client';
 import { CallParticipant } from 'react-components';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
-import { CreateViewOptions as CreateViewOptions_2 } from '@azure/communication-calling';
 import { DeviceManager } from 'calling-stateful-client';
 import { IncomingCall } from 'calling-stateful-client';
-import { LocalVideoStream } from 'calling-stateful-client';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { ReactElement } from 'react';
-import { RemoteVideoStream } from 'calling-stateful-client';
 import * as reselect from 'reselect';
 import { StartCallOptions } from '@azure/communication-calling';
 import { StatefulCallClient } from 'calling-stateful-client';
 import { StatefulDeviceManager } from 'calling-stateful-client';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
+import { VideoGalleryRemoteParticipant } from 'react-components';
+import { VideoStreamOptions } from 'react-components';
 
 // @public (undocumented)
 export type CallbackType<KeyT, ArgsT extends any[], FnRetT> = (memoizedFn: FunctionWithKey<KeyT, ArgsT, FnRetT>) => FnRetT[];
@@ -32,8 +31,6 @@ export type CallbackType<KeyT, ArgsT extends any[], FnRetT> = (memoizedFn: Funct
 // @public
 export type CallingBaseSelectorProps = {
     callId: string;
-    displayName?: string;
-    identifier?: string;
 };
 
 // @public (undocumented)
@@ -60,7 +57,8 @@ export const createDefaultCallingHandlers: (callClient: StatefulCallClient, call
     onToggleCamera: () => Promise<void>;
     onToggleMicrophone: () => Promise<void>;
     onToggleScreenShare: () => Promise<void>;
-    onRenderView: (stream: LocalVideoStream | RemoteVideoStream, options: CreateViewOptions_2) => Promise<void>;
+    onCreateLocalStreamView: (options?: VideoStreamOptions | undefined) => Promise<void>;
+    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions | undefined) => Promise<void>;
     onParticipantRemove: (userId: string) => void;
 };
 
@@ -74,7 +72,8 @@ export const createDefaultCallingHandlersForComponent: <Props>(callClient: State
     onToggleCamera: () => Promise<void>;
     onToggleMicrophone: () => Promise<void>;
     onToggleScreenShare: () => Promise<void>;
-    onRenderView: (stream: LocalVideoStream | RemoteVideoStream, options: CreateViewOptions_2) => Promise<void>;
+    onCreateLocalStreamView: (options?: VideoStreamOptions | undefined) => Promise<void>;
+    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions | undefined) => Promise<void>;
     onParticipantRemove: (userId: string) => void;
 }, CommonProperties1<{
     onHangUp: () => Promise<void>;
@@ -85,17 +84,10 @@ export const createDefaultCallingHandlersForComponent: <Props>(callClient: State
     onToggleCamera: () => Promise<void>;
     onToggleMicrophone: () => Promise<void>;
     onToggleScreenShare: () => Promise<void>;
-    onRenderView: (stream: LocalVideoStream | RemoteVideoStream, options: CreateViewOptions_2) => Promise<void>;
+    onCreateLocalStreamView: (options?: VideoStreamOptions | undefined) => Promise<void>;
+    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions | undefined) => Promise<void>;
     onParticipantRemove: (userId: string) => void;
 }, Props>>;
-
-// @public (undocumented)
-export interface CreateViewOptions {
-    // (undocumented)
-    isMirrored?: boolean;
-    // (undocumented)
-    scalingMode?: ScalingMode;
-}
 
 // @public (undocumented)
 export type DefaultCallingHandlers = ReturnType<typeof createDefaultCallingHandlers>;
@@ -116,10 +108,10 @@ export const getCallsEnded: (state: CallClientState) => Call_2[];
 export const getDeviceManager: (state: CallClientState) => DeviceManager;
 
 // @public (undocumented)
-export const getDisplayName: (state: CallClientState, props: CallingBaseSelectorProps) => string | undefined;
+export const getDisplayName: (state: CallClientState) => string | undefined;
 
 // @public (undocumented)
-export const getIdentifier: (_state: CallClientState, props: CallingBaseSelectorProps) => string | undefined;
+export const getIdentifier: (state: CallClientState) => string | undefined;
 
 // @public (undocumented)
 export const getIncomingCalls: (state: CallClientState) => Map<string, IncomingCall>;
@@ -128,17 +120,11 @@ export const getIncomingCalls: (state: CallClientState) => Map<string, IncomingC
 export const getIncomingCallsEnded: (state: CallClientState) => IncomingCall[];
 
 // @public (undocumented)
-export const getUserId: (state: CallClientState) => string;
-
-// @public (undocumented)
 export const localPreviewSelector: reselect.OutputSelector<callingStateful.CallClientState, {
     videoStreamElement: HTMLElement | null;
 }, (res: callingStateful.DeviceManager) => {
     videoStreamElement: HTMLElement | null;
 }>;
-
-// @public (undocumented)
-export type MediaStreamType = 'Video' | 'ScreenSharing';
 
 // @public
 export const memoizeFnAll: <KeyT, ArgsT extends any[], FnRetT, CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>>(fnToMemoize: FunctionWithKey<KeyT, ArgsT, FnRetT>, shouldCacheUpdate?: (args1: any, args2: any) => boolean) => (callback: CallBackT) => FnRetT[];
@@ -173,13 +159,10 @@ export const optionsButtonSelector: reselect.OutputParametricSelector<callingSta
 export const participantListSelector: reselect.OutputParametricSelector<callingStateful.CallClientState, CallingBaseSelectorProps, {
     participants: CallParticipant[];
     myUserId: string;
-}, (res1: string, res2: string | undefined, res3: callingStateful.Call | undefined) => {
+}, (res1: string | undefined, res2: string | undefined, res3: callingStateful.Call | undefined) => {
     participants: CallParticipant[];
     myUserId: string;
 }>;
-
-// @public (undocumented)
-export type ScalingMode = 'Stretch' | 'Crop' | 'Fit';
 
 // @public (undocumented)
 export const screenShareButtonSelector: reselect.OutputParametricSelector<callingStateful.CallClientState, CallingBaseSelectorProps, {
@@ -189,31 +172,31 @@ export const screenShareButtonSelector: reselect.OutputParametricSelector<callin
 }>;
 
 // @public (undocumented)
-export type VideoGalleryLocalParticipant = VideoGalleryParticipant & {
-    isScreenSharingOn: boolean;
-    videoStream?: LocalVideoStream;
-};
-
-// @public (undocumented)
-export type VideoGalleryParticipant = {
-    userId: string;
-    displayName?: string;
-    isMuted: boolean;
-};
-
-// @public (undocumented)
-export type VideoGalleryRemoteParticipant = VideoGalleryParticipant & {
-    isSpeaking: boolean;
-    videoStream?: RemoteVideoStream;
-    screenShareStream?: RemoteVideoStream;
-};
-
-// @public (undocumented)
 export const videoGallerySelector: reselect.OutputParametricSelector<callingStateful.CallClientState, CallingBaseSelectorProps, {
-    localParticipant: VideoGalleryLocalParticipant | undefined;
+    localParticipant: {
+        userId: string;
+        displayName: string;
+        isMuted: boolean | undefined;
+        isScreenSharingOn: boolean | undefined;
+        videoStream: {
+            isAvailable: boolean;
+            isMirrored: boolean | undefined;
+            renderElement: HTMLElement | undefined;
+        };
+    };
     remoteParticipants: VideoGalleryRemoteParticipant[];
 }, (res1: Call_2 | undefined, res2: string | undefined, res3: string | undefined) => {
-    localParticipant: VideoGalleryLocalParticipant | undefined;
+    localParticipant: {
+        userId: string;
+        displayName: string;
+        isMuted: boolean | undefined;
+        isScreenSharingOn: boolean | undefined;
+        videoStream: {
+            isAvailable: boolean;
+            isMirrored: boolean | undefined;
+            renderElement: HTMLElement | undefined;
+        };
+    };
     remoteParticipants: VideoGalleryRemoteParticipant[];
 }>;
 

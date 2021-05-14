@@ -12,6 +12,7 @@ import { ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
+import { ErrorInfo } from 'react';
 import { IButtonProps } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
@@ -66,6 +67,36 @@ export interface CameraButtonProps extends IButtonProps {
 }
 
 // @public (undocumented)
+export interface ChatAdapter {
+    // (undocumented)
+    getState(): ChatState;
+    // (undocumented)
+    loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
+    // (undocumented)
+    offStateChange(handler: (state: ChatState) => void): void;
+    // (undocumented)
+    on(event: 'messageReceived', messageReceivedHandler: (message: ChatMessage_2) => void): void;
+    // (undocumented)
+    on(event: 'participantsJoined', participantsJoinedHandler: (participant: ChatParticipant) => void): void;
+    // (undocumented)
+    on(event: 'error', errorHandler: (e: Error) => void): void;
+    // (undocumented)
+    onStateChange(handler: (state: ChatState) => void): void;
+    // (undocumented)
+    removeParticipant(userId: string): Promise<void>;
+    // (undocumented)
+    sendMessage(content: string): Promise<void>;
+    // (undocumented)
+    sendReadReceipt(chatMessageId: string): Promise<void>;
+    // (undocumented)
+    sendTypingIndicator(): Promise<void>;
+    // (undocumented)
+    setTopic(topicName: string): Promise<void>;
+    // (undocumented)
+    updateAllParticipants(): Promise<void>;
+}
+
+// @public (undocumented)
 export type ChatBaseSelectorProps = {
     threadId: string;
 };
@@ -87,10 +118,23 @@ export type ChatClientState = {
 };
 
 // @public (undocumented)
+export const ChatComposite: (props: ChatProps) => JSX.Element;
+
+// @public (undocumented)
+export type ChatCompositeClientState = {
+    userId: string;
+    displayName: string;
+    thread: ChatThreadClientState;
+};
+
+// @public (undocumented)
 export type ChatConfig = {
     userId: CommunicationIdentifierKind;
     displayName: string;
 };
+
+// @public (undocumented)
+export type ChatEvent = 'messageReceived' | 'participantsJoined' | 'error';
 
 // @public (undocumented)
 export type ChatMessage = Message<'chat'>;
@@ -106,6 +150,7 @@ export type ChatMessagePayload = {
     attached?: MessageAttachedStatus | boolean;
     mine?: boolean;
     clientMessageId?: string;
+    type: MessageContentType;
 };
 
 // @public (undocumented)
@@ -118,6 +163,11 @@ export type ChatMessageWithStatus = ChatMessage_2 & {
 };
 
 // @public (undocumented)
+export type ChatOptions = {
+    sendBoxMaxLength?: number;
+};
+
+// @public (undocumented)
 export const chatParticipantListSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     myUserId: string;
     displayName: string;
@@ -127,6 +177,17 @@ export const chatParticipantListSelector: reselect.OutputParametricSelector<Chat
     displayName: string;
     participants: CommunicationParticipant[];
 }>;
+
+// @public (undocumented)
+export type ChatProps = {
+    adapter: ChatAdapter;
+    onRenderAvatar?: (userId: string) => JSX.Element;
+    onErrorCallback?: (error: CommunicationUiErrorInfo) => void;
+    options?: ChatOptions;
+};
+
+// @public (undocumented)
+export type ChatState = ChatUIState & ChatCompositeClientState;
 
 // @public
 export const ChatThreadClientProvider: (props: ChatThreadClientProviderProps) => JSX.Element;
@@ -165,6 +226,11 @@ export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientSta
 }>;
 
 // @public (undocumented)
+export type ChatUIState = {
+    error?: Error;
+};
+
+// @public (undocumented)
 export type CommonProperties<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
@@ -180,6 +246,94 @@ export type CommunicationParticipant = {
     userId: string;
     displayName?: string;
 };
+
+// @public (undocumented)
+export enum CommunicationUiErrorCode {
+    // (undocumented)
+    ASK_PERMISSIONS_ERROR = 21,
+    // (undocumented)
+    CONFIGURATION_ERROR = 1,
+    // (undocumented)
+    CREATE_CALL_AGENT_ERROR = 31,
+    // (undocumented)
+    CREATE_CHAT_THREAD_CLIENT_ERROR = 10,
+    // (undocumented)
+    DISPOSE_CALL_AGENT_ERROR = 32,
+    // (undocumented)
+    FORBIDDEN_ERROR = 3,
+    // (undocumented)
+    GET_MESSAGE_ERROR = 14,
+    // (undocumented)
+    GET_MESSAGES_ERROR = 16,
+    // (undocumented)
+    GET_READ_RECEIPT_ERROR = 12,
+    // (undocumented)
+    GET_THREAD_ERROR = 19,
+    // (undocumented)
+    INTERNAL_SERVER_ERROR = 6,
+    // (undocumented)
+    JOIN_CALL_ERROR = 33,
+    // (undocumented)
+    LEAVE_CALL_ERROR = 34,
+    // (undocumented)
+    MESSAGE_EXCEEDED_RETRY_ERROR = 8,
+    // (undocumented)
+    MUTE_ERROR = 24,
+    // (undocumented)
+    QUERY_PERMISSIONS_ERROR = 20,
+    // (undocumented)
+    REMOVE_THREAD_PARTICIPANT_ERROR = 17,
+    // (undocumented)
+    RENDER_LOCAL_VIDEO_ERROR = 30,
+    // (undocumented)
+    RENDER_REMOTE_VIDEO_ERROR = 29,
+    // (undocumented)
+    SEND_MESSAGE_ERROR = 13,
+    // (undocumented)
+    SEND_READ_RECEIPT_ERROR = 11,
+    // (undocumented)
+    SEND_TYPING_NOTIFICATION_ERROR = 15,
+    // (undocumented)
+    SERVICE_UNAVAILABLE_ERROR = 5,
+    // (undocumented)
+    START_REALTIME_NOTIFICATIONS_ERROR = 9,
+    // (undocumented)
+    START_SCREEN_SHARE_ERROR = 27,
+    // (undocumented)
+    START_VIDEO_ERROR = 25,
+    // (undocumented)
+    STOP_SCREEN_SHARE_ERROR = 28,
+    // (undocumented)
+    STOP_VIDEO_ERROR = 26,
+    // (undocumented)
+    SWITCH_VIDEO_SOURCE_ERROR = 22,
+    // (undocumented)
+    TOO_MANY_REQUESTS_ERROR = 4,
+    // (undocumented)
+    UNAUTHORIZED_ERROR = 2,
+    // (undocumented)
+    UNKNOWN_ERROR = 0,
+    // (undocumented)
+    UNKNOWN_STATUS_CODE_ERROR = 7,
+    // (undocumented)
+    UNMUTE_ERROR = 23,
+    // (undocumented)
+    UPDATE_THREAD_ERROR = 18
+}
+
+// @public (undocumented)
+export interface CommunicationUiErrorInfo {
+    // (undocumented)
+    code: CommunicationUiErrorCode;
+    // (undocumented)
+    errorInfo: ErrorInfo | undefined;
+    // (undocumented)
+    message: string;
+    // (undocumented)
+    originalError: Error | undefined;
+    // (undocumented)
+    severity: CommunicationUiErrorSeverity;
+}
 
 // @public
 export type CommunicationUiErrorSeverity = 'info' | 'warning' | 'error' | 'ignore';
@@ -198,6 +352,9 @@ export interface ControlBarProps {
 }
 
 // @public (undocumented)
+export const createAzureCommunicationChatAdapter: (token: string, endpointUrl: string, threadId: string, displayName: string, refreshTokenCallback?: (() => Promise<string>) | undefined) => Promise<ChatAdapter>;
+
+// @public (undocumented)
 export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => DefaultChatHandlers;
 
 // @public (undocumented)
@@ -205,14 +362,6 @@ export const createDefaultChatHandlersForComponent: <Props>(chatClient: Stateful
 
 // @public (undocumented)
 export const createStatefulChatClient: (chatClient: ChatClient, chatConfig: ChatConfig) => StatefulChatClient;
-
-// @public (undocumented)
-export interface CreateViewOptions {
-    // (undocumented)
-    isMirrored?: boolean;
-    // (undocumented)
-    scalingMode?: ScalingMode;
-}
 
 // @public (undocumented)
 export type CustomMessage = Message<'custom'>;
@@ -308,16 +457,6 @@ export const labeledRecordButtonProps: IButtonProps;
 export const lightTheme: PartialTheme & CallingTheme;
 
 // @public
-export interface LocalVideoStream {
-    mediaStreamType: MediaStreamType;
-    source: VideoDeviceInfo;
-    videoStreamRendererView?: VideoStreamRendererView | undefined;
-}
-
-// @public (undocumented)
-export type MediaStreamType = 'Video' | 'ScreenSharing';
-
-// @public
 export const memoizeFnAll: <KeyT, ArgsT extends any[], FnRetT, CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>>(fnToMemoize: FunctionWithKey<KeyT, ArgsT, FnRetT>, shouldCacheUpdate?: (args1: any, args2: any) => boolean) => (callback: CallBackT) => FnRetT[];
 
 // @public (undocumented)
@@ -328,6 +467,9 @@ export type Message<T extends MessageTypes> = {
 
 // @public (undocumented)
 export type MessageAttachedStatus = 'bottom' | 'top';
+
+// @public (undocumented)
+export type MessageContentType = 'text' | 'html' | 'richtext/html' | 'unknown';
 
 // @public
 export type MessageProps = {
@@ -392,9 +534,9 @@ export const ParticipantItem: (props: ParticipantItemProps) => JSX.Element;
 
 // @public
 export interface ParticipantItemProps {
+    displayName: string;
     me?: boolean;
     menuItems?: IContextualMenuItem[];
-    name: string;
     onRenderAvatar?: (props?: ParticipantItemProps) => JSX.Element | null;
     onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
     presence?: PersonaPresence;
@@ -423,7 +565,7 @@ export type ParticipantListProps = {
 
 // @public (undocumented)
 export interface PlaceholderProps {
-    avatarName?: string;
+    displayName?: string;
     noVideoAvailableAriaLabel?: string;
 }
 
@@ -443,17 +585,6 @@ export interface ReadReceiptProps {
 
 // @public
 export const recordButtonProps: IButtonProps;
-
-// @public
-export interface RemoteVideoStream {
-    id: number;
-    isAvailable: boolean;
-    mediaStreamType: MediaStreamType;
-    videoStreamRendererView: VideoStreamRendererView | undefined;
-}
-
-// @public (undocumented)
-export type ScalingMode = 'Stretch' | 'Crop' | 'Fit';
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
@@ -569,57 +700,70 @@ export const useSelector: <SelectorT extends (state: ChatClientState, props: any
 export const useThreadId: () => string;
 
 // @public (undocumented)
-export interface VideoDeviceInfo {
-    readonly deviceType: VideoDeviceType;
-    readonly id: string;
-    readonly name: string;
-}
-
-// @public (undocumented)
-export type VideoDeviceType = 'Unknown' | 'UsbCamera' | 'CaptureAdapter' | 'Virtual';
-
-// @public (undocumented)
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
 // @public (undocumented)
-export type VideoGalleryLocalParticipant = VideoGalleryParticipant & {
-    isScreenSharingOn: boolean;
-    videoStream?: LocalVideoStream;
-};
+export type VideoGalleryLocalParticipant = VideoGalleryParticipant;
 
 // @public (undocumented)
 export type VideoGalleryParticipant = {
     userId: string;
+    isMuted?: boolean;
     displayName?: string;
-    isMuted: boolean;
+    videoStream?: VideoGalleryStream;
+    isScreenSharingOn?: boolean;
 };
 
 // @public (undocumented)
 export interface VideoGalleryProps {
     // (undocumented)
-    localParticipant?: VideoGalleryLocalParticipant;
+    localParticipant: VideoGalleryLocalParticipant;
     // (undocumented)
-    onRenderView(stream: RemoteVideoStream | LocalVideoStream, options?: CreateViewOptions | undefined): Promise<void>;
+    localVideoViewOption?: VideoStreamOptions;
+    // (undocumented)
+    onCreateLocalStreamView?: (options?: VideoStreamOptions | undefined) => Promise<void>;
+    // (undocumented)
+    onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
+    // (undocumented)
+    onDisposeLocalStreamView?: () => Promise<void>;
+    // (undocumented)
+    onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
+    // (undocumented)
+    onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     // (undocumented)
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     // (undocumented)
-    scalingMode: ScalingMode;
+    remoteVideoViewOption?: VideoStreamOptions;
     // (undocumented)
     styles?: BaseCustomStylesProps;
 }
 
 // @public (undocumented)
-export type VideoGalleryRemoteParticipant = VideoGalleryParticipant & {
-    isSpeaking: boolean;
-    videoStream?: RemoteVideoStream;
-    screenShareStream?: RemoteVideoStream;
-};
+export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
+    // (undocumented)
+    isSpeaking?: boolean;
+    // (undocumented)
+    screenShareStream?: VideoGalleryStream;
+}
 
-// @public
-export interface VideoStreamRendererView {
-    isMirrored: boolean;
-    scalingMode: ScalingMode;
-    target: HTMLElement;
+// @public (undocumented)
+export interface VideoGalleryStream {
+    // (undocumented)
+    id?: number;
+    // (undocumented)
+    isAvailable?: boolean;
+    // (undocumented)
+    isMirrored?: boolean;
+    // (undocumented)
+    renderElement?: HTMLElement;
+}
+
+// @public (undocumented)
+export interface VideoStreamOptions {
+    // (undocumented)
+    isMirrored?: boolean;
+    // (undocumented)
+    scalingMode?: 'Stretch' | 'Crop' | 'Fit';
 }
 
 // @public (undocumented)
@@ -631,8 +775,8 @@ export interface VideoTileProps {
     isMirrored?: boolean;
     isVideoReady?: boolean;
     placeholderProvider?: JSX.Element | null;
+    renderElement?: JSX.Element | null;
     styles?: VideoTileStylesProps;
-    videoProvider?: JSX.Element | null;
 }
 
 // @public (undocumented)

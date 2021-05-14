@@ -58,7 +58,7 @@ export const MediaGalleryComponentBase = (props: MediaGalleryContainerProps): JS
 
       return (
         <Stack className={gridStyle} key={key} grow>
-          <RemoteVideoTile stream={stream} scalingMode={'Crop'} label={label} avatarName={label} />
+          <RemoteVideoTile stream={stream} scalingMode={'Crop'} label={label} displayName={label} />
         </Stack>
       );
     });
@@ -69,8 +69,8 @@ export const MediaGalleryComponentBase = (props: MediaGalleryContainerProps): JS
     return (
       <VideoTile
         isVideoReady={localVideoStream.isVideoReady}
-        videoProvider={<StreamMedia videoStreamElement={localVideoStream.videoStreamElement} />}
-        avatarName={localParticipant.displayName}
+        renderElement={<StreamMedia videoStreamElement={localVideoStream.videoStreamElement} />}
+        displayName={localParticipant.displayName}
       >
         <Label className={localVideoStream.isVideoReady ? videoHint : disabledVideoHint}>
           {localParticipant.displayName}

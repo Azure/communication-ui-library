@@ -32,7 +32,7 @@ export type GroupCallCompositeProps = {
 
 type compositePageSubType = 'configuration' | 'groupcall';
 
-export default (props: GroupCallCompositeProps): JSX.Element => {
+export const GroupCall = (props: GroupCallCompositeProps): JSX.Element => {
   const [page, setPage] = useState<compositePageSubType>('configuration');
   const [screenWidth, setScreenWidth] = useState(window?.innerWidth ?? 0);
   useEffect(() => {

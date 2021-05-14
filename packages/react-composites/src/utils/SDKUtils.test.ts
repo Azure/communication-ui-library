@@ -3,7 +3,7 @@
 
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { CommunicationUserKind, PhoneNumberKind, UnknownIdentifierKind } from '@azure/communication-common';
-import { getACSId, isGUID, isInCall, isSelectedDeviceInList } from './SDKUtils';
+import { getACSId, isInCall, isSelectedDeviceInList } from './SDKUtils';
 
 describe('SDKUtils tests', () => {
   describe('getACSId tests', () => {
@@ -93,16 +93,5 @@ describe('SDKUtils tests', () => {
     expect(isInCall('InLobby')).toEqual(true);
     expect(isInCall('Disconnecting')).toEqual(true);
     expect(isInCall('EarlyMedia')).toEqual(true);
-  });
-
-  test('isGUID should return true if string is a GUID and false if not', () => {
-    // false conditions
-    expect(isGUID('')).toEqual(false);
-    expect(isGUID('abc')).toEqual(false);
-    expect(isGUID('989ccfd02a8611ebbdf67f55e6a39f29')).toEqual(false);
-    expect(isGUID('989ccfd0.2a86.11eb.bdf6.7f55e6a39f29')).toEqual(false);
-
-    // true conditions
-    expect(isGUID('989ccfd0-2a86-11eb-bdf6-7f55e6a39f29')).toEqual(true);
   });
 });

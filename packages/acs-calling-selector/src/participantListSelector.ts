@@ -7,7 +7,7 @@ import * as reselect from 'reselect';
 import * as callingDeclarative from 'calling-stateful-client';
 // @ts-ignore
 import { CallingBaseSelectorProps } from './baseSelectors';
-import { getCall, getUserId, getDisplayName } from './baseSelectors';
+import { getCall, getIdentifier, getDisplayName } from './baseSelectors';
 import { CallParticipant } from 'react-components';
 import { getACSId } from './utils/getACSId';
 
@@ -31,7 +31,7 @@ const convertRemoteParticipantsToCommunicationParticipants = (
 };
 
 export const participantListSelector = reselect.createSelector(
-  [getUserId, getDisplayName, getCall],
+  [getIdentifier, getDisplayName, getCall],
   (
     userId,
     displayName,
@@ -45,7 +45,7 @@ export const participantListSelector = reselect.createSelector(
         ? convertRemoteParticipantsToCommunicationParticipants(Array.from(call?.remoteParticipants.values()))
         : [];
     remoteParticipants.push({
-      userId: userId,
+      userId: userId ?? '',
       displayName: displayName,
       isScreenSharing: call?.isScreenSharingOn,
       isMuted: call?.isMuted,
@@ -53,7 +53,7 @@ export const participantListSelector = reselect.createSelector(
     });
     return {
       participants: remoteParticipants,
-      myUserId: userId
+      myUserId: userId ?? ''
     };
   }
 );
