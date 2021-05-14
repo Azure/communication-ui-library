@@ -204,14 +204,6 @@ export const createDefaultChatHandlersForComponent: <Props>(chatClient: Stateful
 export const createStatefulChatClient: (chatClient: ChatClient, chatConfig: ChatConfig) => StatefulChatClient;
 
 // @public (undocumented)
-export interface CreateViewOptions {
-    // (undocumented)
-    isMirrored?: boolean;
-    // (undocumented)
-    scalingMode?: ScalingMode;
-}
-
-// @public (undocumented)
 export type CustomMessage = Message<'custom'>;
 
 // @public (undocumented)
@@ -305,16 +297,6 @@ export const labeledRecordButtonProps: IButtonProps;
 export const lightTheme: PartialTheme & CallingTheme;
 
 // @public
-export interface LocalVideoStream {
-    mediaStreamType: MediaStreamType;
-    source: VideoDeviceInfo;
-    videoStreamRendererView?: VideoStreamRendererView | undefined;
-}
-
-// @public (undocumented)
-export type MediaStreamType = 'Video' | 'ScreenSharing';
-
-// @public
 export const memoizeFnAll: <KeyT, ArgsT extends any[], FnRetT, CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>>(fnToMemoize: FunctionWithKey<KeyT, ArgsT, FnRetT>, shouldCacheUpdate?: (args1: any, args2: any) => boolean) => (callback: CallBackT) => FnRetT[];
 
 // @public (undocumented)
@@ -389,7 +371,7 @@ export const ParticipantItem: (props: ParticipantItemProps) => JSX.Element;
 
 // @public
 export interface ParticipantItemProps {
-    isYou?: boolean;
+    me?: boolean;
     menuItems?: IContextualMenuItem[];
     name: string;
     onRenderAvatar?: (props?: ParticipantItemProps) => JSX.Element | null;
@@ -402,7 +384,7 @@ export interface ParticipantItemProps {
 export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
     avatar?: IStyle;
     iconContainer?: IStyle;
-    isYou?: IStyle;
+    me?: IStyle;
     menu?: IStyle;
 }
 
@@ -440,17 +422,6 @@ export interface ReadReceiptProps {
 
 // @public
 export const recordButtonProps: IButtonProps;
-
-// @public
-export interface RemoteVideoStream {
-    id: number;
-    isAvailable: boolean;
-    mediaStreamType: MediaStreamType;
-    videoStreamRendererView: VideoStreamRendererView | undefined;
-}
-
-// @public (undocumented)
-export type ScalingMode = 'Stretch' | 'Crop' | 'Fit';
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
@@ -568,16 +539,6 @@ export const useSelector: <SelectorT extends (state: ChatClientState, props: any
 export const useThreadId: () => string;
 
 // @public (undocumented)
-export interface VideoDeviceInfo {
-    readonly deviceType: VideoDeviceType;
-    readonly id: string;
-    readonly name: string;
-}
-
-// @public (undocumented)
-export type VideoDeviceType = 'Unknown' | 'UsbCamera' | 'CaptureAdapter' | 'Virtual';
-
-// @public (undocumented)
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
 // @public (undocumented)
@@ -642,13 +603,6 @@ export interface VideoStreamOptions {
     isMirrored?: boolean;
     // (undocumented)
     scalingMode?: 'Stretch' | 'Crop' | 'Fit';
-}
-
-// @public
-export interface VideoStreamRendererView {
-    isMirrored: boolean;
-    scalingMode: ScalingMode;
-    target: HTMLElement;
 }
 
 // @public (undocumented)

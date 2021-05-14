@@ -229,7 +229,7 @@ export const ParticipantItem: (props: ParticipantItemProps) => JSX.Element;
 
 // @public
 export interface ParticipantItemProps {
-    isYou?: boolean;
+    me?: boolean;
     menuItems?: IContextualMenuItem[];
     name: string;
     onRenderAvatar?: (props?: ParticipantItemProps) => JSX.Element | null;
@@ -242,7 +242,7 @@ export interface ParticipantItemProps {
 export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
     avatar?: IStyle;
     iconContainer?: IStyle;
-    isYou?: IStyle;
+    me?: IStyle;
     menu?: IStyle;
 }
 
