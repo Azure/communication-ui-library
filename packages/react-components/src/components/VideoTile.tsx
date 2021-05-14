@@ -33,7 +33,7 @@ export interface VideoTileProps {
   /** Component with the video stream. */
   videoProvider?: JSX.Element | null;
   /** Determines if the video is mirrored or not. */
-  invertVideo?: boolean;
+  isMirrored?: boolean;
   /** Custom Component to render when no video is available. Defaults to a Persona Icon. */
   placeholderProvider?: JSX.Element | null;
 }
@@ -63,7 +63,7 @@ const DefaultPlaceholder = (props: PlaceholderProps): JSX.Element => {
 };
 
 export const VideoTile = (props: VideoTileProps & PlaceholderProps): JSX.Element => {
-  const { styles, isVideoReady, videoProvider, placeholderProvider, invertVideo, children } = props;
+  const { styles, isVideoReady, videoProvider, placeholderProvider, isMirrored, children } = props;
   const theme = useTheme();
   const placeholder = placeholderProvider ?? <DefaultPlaceholder {...props} />;
   return (
@@ -72,7 +72,7 @@ export const VideoTile = (props: VideoTileProps & PlaceholderProps): JSX.Element
         <Stack
           className={mergeStyles(
             videoContainerStyles,
-            invertVideo && {
+            isMirrored && {
               transform: 'scaleX(-1)'
             },
             styles?.videoContainer

@@ -3,7 +3,7 @@
 
 import {
   participantItemContainerStyle,
-  participantItemIsYouStyle,
+  participantItemMeStyle,
   iconContainerStyle
 } from './styles/ParticipantItem.styles';
 import {
@@ -25,7 +25,7 @@ export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
   /** Styles for the avatar. */
   avatar?: IStyle;
   /** Styles for the (You) string. */
-  isYou?: IStyle;
+  me?: IStyle;
   /** Styles for the container of the icon. */
   iconContainer?: IStyle;
   /** Styles for the menu. */
@@ -39,7 +39,7 @@ export interface ParticipantItemProps {
   /** Name of participant. */
   displayName: string;
   /** Optional indicator to show participant is the user. */
-  isYou?: boolean;
+  me?: boolean;
   /** Optional callback returning a JSX element to override avatar. */
   onRenderAvatar?: (props?: ParticipantItemProps) => JSX.Element | null;
   /** Optional array of IContextualMenuItem for contextual menu. */
@@ -63,7 +63,7 @@ export interface ParticipantItemProps {
  * displayName and status as well as optional icons and context menu.
  */
 export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
-  const { displayName, isYou, onRenderAvatar, menuItems, onRenderIcon, presence, styles } = props;
+  const { displayName, me, onRenderAvatar, menuItems, onRenderIcon, presence, styles } = props;
   const [clickEvent, setClickEvent] = useState<MouseEvent | undefined>();
   const [menuHidden, setMenuHidden] = useState<boolean>(true);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -96,7 +96,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
       onClick={showMenu}
     >
       {avatarToUse}
-      {isYou && <span className={mergeStyles(participantItemIsYouStyle, styles?.isYou)}>(you)</span>}
+      {me && <span className={mergeStyles(participantItemMeStyle, styles?.me)}>(you)</span>}
       {onRenderIcon && (
         <Stack className={mergeStyles(iconContainerStyle, styles?.iconContainer)}>{onRenderIcon(props)}</Stack>
       )}

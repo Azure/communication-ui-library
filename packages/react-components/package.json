@@ -34,7 +34,8 @@
     "@fluentui/react-theme-provider": "^0.18.0",
     "@uifabric/react-hooks": "~7.13.11",
     "react-aria-live": "^2.0.5",
-    "react-linkify": "^1.0.0-alpha"
+    "react-linkify": "^1.0.0-alpha",
+    "html-to-react": "~1.4.5"
   },
   "peerDependencies": {
     "react": "^16.13.1",

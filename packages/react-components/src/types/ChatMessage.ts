@@ -4,6 +4,8 @@
 export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
 export type MessageAttachedStatus = 'bottom' | 'top';
 
+export type MessageContentType = 'text' | 'html' | 'RichText/Html' | 'unknown';
+
 export type ChatMessagePayload = {
   messageId?: string;
   content?: string;
@@ -15,6 +17,7 @@ export type ChatMessagePayload = {
   attached?: MessageAttachedStatus | boolean;
   mine?: boolean;
   clientMessageId?: string;
+  type: MessageContentType;
 };
 
 export type SystemMessagePayload = {

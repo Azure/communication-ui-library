@@ -19,7 +19,7 @@ export const CallComponent = (props: TeamsInterop): JSX.Element => {
   return (
     <VideoTile
       styles={videoTileStyles}
-      invertVideo={true}
+      isMirrored={true}
       isVideoReady={true}
       videoProvider={
         // Replace with your own video provider.

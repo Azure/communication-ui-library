@@ -74,7 +74,7 @@ export const ParticipantItem: () => JSX.Element = () => {
   const displayName = text('Name', 'Jim');
   const isScreenSharing = boolean('Is screen sharing', false);
   const isMuted = boolean('Is muted', false);
-  const isYou = boolean('Is You', false);
+  const me = boolean('Is You', false);
   const menuItemsStr = text('Menu items (comma separated)', 'Mute, Remove');
 
   const menuItems = menuItemsStr
@@ -94,7 +94,7 @@ export const ParticipantItem: () => JSX.Element = () => {
     <div style={containerStyle}>
       <ParticipantItemComponent
         displayName={displayName}
-        isYou={isYou}
+        me={me}
         menuItems={menuItems}
         onRenderIcon={() => (
           <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>

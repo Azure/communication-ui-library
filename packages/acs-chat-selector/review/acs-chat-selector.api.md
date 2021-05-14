@@ -87,7 +87,7 @@ export const createDefaultChatHandlersForComponent: <Props>(chatClient: Stateful
 
 // @public (undocumented)
 export type DefaultChatHandlers = {
-    onMessageSend: (content: string) => Promise<void>;
+    onSendMessage: (content: string) => Promise<void>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
     onTyping: () => Promise<void>;
     onParticipantRemove: (userId: string) => Promise<void>;
@@ -105,14 +105,12 @@ export type GetSelector<Component> = AreEqual<Component, typeof SendBox> extends
 export const memoizeFnAll: <KeyT, ArgsT extends any[], FnRetT, CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>>(fnToMemoize: FunctionWithKey<KeyT, ArgsT, FnRetT>, shouldCacheUpdate?: (args1: any, args2: any) => boolean) => (callback: CallBackT) => FnRetT[];
 
 // @public (undocumented)
-export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
+export const sendBoxSelector: reselect.OutputSelector<ChatClientState, {
     displayName: string;
     userId: string;
-    disabled: boolean;
-}, (res1: Date, res2: string, res3: string) => {
+}, (res1: string, res2: string) => {
     displayName: string;
     userId: string;
-    disabled: boolean;
 }>;
 
 // @public (undocumented)

@@ -15,7 +15,7 @@ export const VideoTilePlaceholderExample: () => JSX.Element = () => {
           <StreamMedia videoStreamElement={renderVideoStream()} />
         }
         isVideoReady={false}
-        invertVideo={true}
+        isMirrored={true}
         placeholderProvider={
           <Stack>
             <img

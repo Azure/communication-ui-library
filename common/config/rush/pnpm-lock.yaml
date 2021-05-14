@@ -101,6 +101,7 @@ dependencies:
   events: 3.3.0
   express: 4.16.4
   history: 5.0.0
+  html-to-react: 1.4.5_react@16.14.0
   http-errors: 1.6.3
   husky: 4.3.8
   immer: 8.0.1
@@ -3174,7 +3175,7 @@ packages:
       react-dom: '>=16.8.0 <17.0.0'
     resolution:
       integrity: sha512-TISxdxKjvHtfDTIvRFT7wRTS7eoe1sMXMwURVX2KX0n557aq1olOCbOaRPycnUQ0a4T4D/LIcvA2i47kvaGMYw==
-  /@fluentui/react/8.14.6_b0d7ca8a0459a1df1ff516252688d92a:
+  /@fluentui/react/8.14.7_b0d7ca8a0459a1df1ff516252688d92a:
     dependencies:
       '@fluentui/date-time-utilities': 8.1.0
       '@fluentui/font-icons-mdl2': 8.1.0_f650913bea380c685c20f94e5dc2f677
@@ -3200,7 +3201,7 @@ packages:
       react: '>=16.8.0 <18.0.0'
       react-dom: '>=16.8.0 <18.0.0'
     resolution:
-      integrity: sha512-8oHSg1FgY+tWN88LtAH8+KGTij8tMHzEOnjxWUbW7diRWBisr8xyfuSy6MAJO27C1OrnLWuaS5EdLvUSZ8aOQw==
+      integrity: sha512-8XDuIdWrmX5LxqE13Dp/GW4xCXdGinZLdEyF7OmZrHfMx2MiBMt9dsKvLcZdO02lvmU1YoXyUT5JHjs+5DnJLA==
   /@fluentui/scheme-utilities/8.1.0_f650913bea380c685c20f94e5dc2f677:
     dependencies:
       '@fluentui/set-version': 8.1.0
@@ -3248,7 +3249,7 @@ packages:
       integrity: sha512-u4l6U47KaMM1mO1q5o9ORJLKj2yMTD/c5hwzLaxbFBf9V50aIeNNI9t/Fqphwiu+cft8T0lBLMFqR9kzxWsBIQ==
   /@fluentui/theme-samples/8.1.5_b0d7ca8a0459a1df1ff516252688d92a:
     dependencies:
-      '@fluentui/react': 8.14.6_b0d7ca8a0459a1df1ff516252688d92a
+      '@fluentui/react': 8.14.7_b0d7ca8a0459a1df1ff516252688d92a
       '@fluentui/scheme-utilities': 8.1.0_f650913bea380c685c20f94e5dc2f677
       '@fluentui/set-version': 8.1.0
       tslib: 2.1.0
@@ -9397,7 +9398,7 @@ packages:
     dependencies:
       domelementtype: 2.1.0
       domhandler: 4.0.0
-      entities: 2.1.0
+      entities: 2.2.0
     dev: false
     resolution:
       integrity: sha512-n6kZFH/KlCrqs/1GHMOd5i2fd/beQHuehKdWvNNffbGHTr/almdhuVvTVFb3V7fglz+nC50fFusu3lY33h12pA==
@@ -9434,6 +9435,14 @@ packages:
     dev: false
     resolution:
       integrity: sha512-JiK04h0Ht5u/80fdLMCEmV4zkNh2BcoMFBmZ/91WtYZ8qVXSKjiw7fXMgFPnHcSZgOo3XdinHvmnDUeMf5R4wA==
+  /domhandler/3.3.0:
+    dependencies:
+      domelementtype: 2.1.0
+    dev: false
+    engines:
+      node: '>= 4'
+    resolution:
+      integrity: sha512-J1C5rIANUbuYK+FuFL98650rihynUOEzRLxW+90bKZRWB6A1X1Tf82GxR1qAWLyfNPRvjqfip3Q5tdYlmAa9lA==
   /domhandler/4.0.0:
     dependencies:
       domelementtype: 2.1.0
@@ -11826,6 +11835,18 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-1qYz89hW3lFDEazhjW0yVAV87lw8lVkrJocr72XmBkMKsoSVJCQx3W8BXsC7hO2qAt8BoVjYjtAcZ9perqGnNg==
+  /html-to-react/1.4.5_react@16.14.0:
+    dependencies:
+      domhandler: 3.3.0
+      htmlparser2: 5.0.1
+      lodash.camelcase: 4.3.0
+      ramda: 0.27.1
+      react: 16.14.0
+    dev: false
+    peerDependencies:
+      react: ^16.0 || ^17.0
+    resolution:
+      integrity: sha512-KONZUDFPg5OodWaQu2ymfkDmU0JA7zB1iPfvyHehTmMUZnk0DS7/TyCMTzsLH6b4BvxX15g88qZCXFhJWktsmA==
   /html-void-elements/1.0.5:
     dev: false
     resolution:
@@ -11879,6 +11900,15 @@ packages:
     dev: false
     resolution:
       integrity: sha512-IgieNijUMbkDovyoKObU1DUhm1iwNYE/fuifEoEHfd1oZKZDaONBSkal7Y01shxsM49R4XaMdGez3WnF9UfiCQ==
+  /htmlparser2/5.0.1:
+    dependencies:
+      domelementtype: 2.1.0
+      domhandler: 3.3.0
+      domutils: 2.5.0
+      entities: 2.2.0
+    dev: false
+    resolution:
+      integrity: sha512-vKZZra6CSe9qsJzh0BjBGXo8dvzNsq/oGvsjfRdOrrryfeD9UOBEEQdeoqCRmKZchF5h2zOBMQ6YuQ0uRUmdbQ==
   /htmlparser2/6.0.1:
     dependencies:
       domelementtype: 2.1.0
@@ -13835,6 +13865,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-DM8tiRZq8Ds2Y8eWU4t1rG4RTZ0=
+  /lodash.camelcase/4.3.0:
+    dev: false
+    resolution:
+      integrity: sha1-soqmKIorn8ZRA1x3EfZathkDMaY=
   /lodash.debounce/4.0.8:
     dev: false
     resolution:
@@ -21174,6 +21208,7 @@ packages:
       eslint-plugin-prettier: 3.3.1_cdac37046eab2e8d6fb794f34ed825c2
       eslint-plugin-react: 7.22.0_eslint@7.22.0
       eslint-plugin-react-hooks: 4.2.0_eslint@7.22.0
+      html-to-react: 1.4.5_react@16.14.0
       husky: 4.3.8
       jest: 26.6.0_ts-node@9.1.1
       jest-fetch-mock: 3.0.3
@@ -21389,6 +21424,7 @@ packages:
       eslint-plugin-prettier: 3.3.1_cdac37046eab2e8d6fb794f34ed825c2
       eslint-plugin-react: 7.22.0_eslint@7.22.0
       eslint-plugin-react-hooks: 4.2.0_eslint@7.22.0
+      html-to-react: 1.4.5_react@16.14.0
       husky: 4.3.8
       jest: 26.6.0_ts-node@9.1.1
       jest-fetch-mock: 3.0.3
@@ -21416,7 +21452,7 @@ packages:
     dev: false
     name: '@rush-temp/react-components'
     resolution:
-      integrity: sha512-PFoCgUpUzVigrAP45V17rT/wDTGvKQwZO7R6/PToU0Xs2UWwSbYrFeBPg4uibhlKqhtR9rkOFDpLEHl92RTjaQ==
+      integrity: sha512-Va7D1BAInrJIXq+uJOpAEQPAgb2ASiySxqpVqm6d2CAP8E/32KYN+BCRDXItgt4lZp1m0xw4xZuuYhHSOcEMVw==
       tarball: file:projects/react-components.tgz
     version: 0.0.0
   file:projects/react-composites.tgz:
@@ -21753,6 +21789,7 @@ specifiers:
   events: ~3.3.0
   express: ~4.16.1
   history: ~5.0.0
+  html-to-react: ~1.4.5
   http-errors: ~1.6.3
   husky: ^4.3.0
   immer: ~8.0.1
