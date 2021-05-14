@@ -9,7 +9,6 @@ import { ErrorBar as ErrorBarComponent } from 'react-components';
 import {
   connectFuncsToContext,
   MapToErrorBarProps,
-  MINI_HEADER_WINDOW_WIDTH,
   useCall,
   useCallClient,
   useCallContext,
@@ -28,6 +27,7 @@ import {
   subContainerStyles
 } from './styles/GroupCall.styles';
 import { isInCall } from './utils/AppUtils';
+import { MINI_HEADER_WINDOW_WIDTH } from './utils/constants';
 
 export interface GroupCallProps {
   screenWidth: number;

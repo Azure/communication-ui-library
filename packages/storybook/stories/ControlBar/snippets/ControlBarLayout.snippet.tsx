@@ -7,12 +7,19 @@ import {
   OptionsButton,
   ScreenShareButton
 } from '@azure/communication-react';
-import { Stack } from '@fluentui/react';
 import React from 'react';
+
+const componentMainDivStyle = {
+  display: 'flex',
+  border: 'solid 0.5px lightgray',
+  height: '24rem',
+  alignItems: 'center',
+  justifyContent: 'center'
+};
 
 export const ControlBarLayoutExample: () => JSX.Element = () => {
   return (
-    <Stack style={{ flexFlow: 'row', minHeight: '250px' }}>
+    <div style={componentMainDivStyle}>
       <FluentThemeProvider>
         <ControlBar layout="floatingLeft">
           <CameraButton />
@@ -22,6 +29,6 @@ export const ControlBarLayoutExample: () => JSX.Element = () => {
           <EndCallButton />
         </ControlBar>
       </FluentThemeProvider>
-    </Stack>
+    </div>
   );
 };

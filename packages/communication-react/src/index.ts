@@ -7,3 +7,4 @@
 export * from '../../chat-stateful-client/src';
 export * from '../../acs-chat-selector/src';
 export * from 'react-components';
+export * from 'react-composites';

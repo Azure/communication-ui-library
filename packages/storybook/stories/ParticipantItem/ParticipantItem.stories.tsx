@@ -71,7 +71,7 @@ const onlyUnique = (value: string, index: number, self: string[]): boolean => {
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.
 export const ParticipantItem: () => JSX.Element = () => {
-  const name = text('Name', 'Jim');
+  const displayName = text('Name', 'Jim');
   const isScreenSharing = boolean('Is screen sharing', false);
   const isMuted = boolean('Is muted', false);
   const me = boolean('Is You', false);
@@ -93,7 +93,7 @@ export const ParticipantItem: () => JSX.Element = () => {
   return (
     <div style={containerStyle}>
       <ParticipantItemComponent
-        name={name}
+        displayName={displayName}
         me={me}
         menuItems={menuItems}
         onRenderIcon={() => (

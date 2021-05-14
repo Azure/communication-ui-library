@@ -39,14 +39,14 @@ export interface VideoTileProps {
 }
 
 export interface PlaceholderProps {
-  /** Optional participant avatar name for the VideoTile default placeholder. */
-  avatarName?: string;
+  /** Optional participant display name for the VideoTile default placeholder. */
+  displayName?: string;
   /** Optional property to set the aria label of the video tile if there is no available stream. */
   noVideoAvailableAriaLabel?: string;
 }
 
 const DefaultPlaceholder = (props: PlaceholderProps): JSX.Element => {
-  const { avatarName, noVideoAvailableAriaLabel } = props;
+  const { displayName, noVideoAvailableAriaLabel } = props;
   const personaStyles = { root: { margin: 'auto' } };
   return (
     <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
@@ -54,7 +54,7 @@ const DefaultPlaceholder = (props: PlaceholderProps): JSX.Element => {
         styles={personaStyles}
         size={PersonaSize.size100}
         hidePersonaDetails={true}
-        text={avatarName}
+        text={displayName}
         initialsTextColor="white"
         aria-label={noVideoAvailableAriaLabel}
       />

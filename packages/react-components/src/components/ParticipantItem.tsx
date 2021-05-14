@@ -37,7 +37,7 @@ export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
  */
 export interface ParticipantItemProps {
   /** Name of participant. */
-  name: string;
+  displayName: string;
   /** Optional indicator to show participant is the user. */
   me?: boolean;
   /** Optional callback returning a JSX element to override avatar. */
@@ -60,10 +60,10 @@ export interface ParticipantItemProps {
 
 /**
  * `ParticipantItem` represents a participant in Calling or Chat. `ParticipantItem` displays a participant's avatar,
- * name and status as well as optional icons and context menu.
+ * displayName and status as well as optional icons and context menu.
  */
 export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
-  const { name, me, onRenderAvatar, menuItems, onRenderIcon, presence, styles } = props;
+  const { displayName, me, onRenderAvatar, menuItems, onRenderIcon, presence, styles } = props;
   const [clickEvent, setClickEvent] = useState<MouseEvent | undefined>();
   const [menuHidden, setMenuHidden] = useState<boolean>(true);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -81,7 +81,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
 
   const avatarToUse = (
     <Persona
-      text={name}
+      text={displayName}
       size={PersonaSize.size32}
       presence={presence}
       onRenderPersonaCoin={onRenderAvatar ? () => onRenderAvatar(props) : undefined}
