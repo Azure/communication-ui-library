@@ -16,7 +16,7 @@ import { refreshTokenAsync } from './utils/refreshToken';
 import { ChatClientProvider, ChatThreadClientProvider } from '@azure/acs-chat-selector';
 import { ChatClient, ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationUserKind } from '@azure/communication-common';
-import { chatClientDeclaratify, DeclarativeChatClient } from '@azure/acs-chat-declarative';
+import { createStatefulChatClient, StatefulChatClient } from 'chat-stateful-client';
 
 console.info(`Thread chat sample using @azure/communication-chat : ${getChatSDKVersion()}`);
 console.info(`Build Date : ${getBuildTime()}`);
@@ -30,7 +30,7 @@ export default (): JSX.Element => {
   const [displayName, setDisplayName] = useState('');
   const [threadId, setThreadId] = useState('');
   const [endpointUrl, setEndpointUrl] = useState('');
-  const [chatClient, setChatClient] = useState<DeclarativeChatClient>();
+  const [chatClient, setChatClient] = useState<StatefulChatClient>();
   const [chatThreadClient, setChatThreadClient] = useState<ChatThreadClient>();
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export default (): JSX.Element => {
       // This hack can be removed when `getIdFromToken` is dropped in favour of actually passing in user credentials.
       const userIdKind = { kind: 'communicationUser', communicationUserId: userId } as CommunicationUserKind;
       const createClient = async (): Promise<void> => {
-        const chatClient = chatClientDeclaratify(
+        const chatClient = createStatefulChatClient(
           new ChatClient(endpointUrl, createAzureCommunicationUserCredential(token, refreshTokenAsync(userId))),
           { userId: userIdKind, displayName }
         );

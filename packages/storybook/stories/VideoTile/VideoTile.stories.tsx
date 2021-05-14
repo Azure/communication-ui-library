@@ -67,7 +67,7 @@ const getDocs: () => JSX.Element = () => {
 export const VideoTile: () => JSX.Element = () => {
   const avatarName = text('Avatar Name', 'John Krasinski');
   const isVideoReady = boolean('Is Video Ready', false);
-  const isMirrored = boolean('Mirror Video', false);
+  const isMirrored = boolean('Is Mirrored', false);
   const width = number('Width', 400, {
     range: true,
     min: 400,

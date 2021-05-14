@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DeclarativeCallClient, StatefulDeviceManager } from '@azure/acs-calling-declarative';
 import {
   AudioDeviceInfo,
   Call,
@@ -11,20 +10,21 @@ import {
   VideoDeviceInfo
 } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
+import { StatefulCallClient, StatefulDeviceManager } from 'calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
 import { VideoStreamOptions } from 'react-components';
 import { getUserId } from '../utils/participant';
 
-export type DefaultHandlers = ReturnType<typeof createDefaultHandlers>;
+export type DefaultCallingHandlers = ReturnType<typeof createDefaultCallingHandlers>;
 
 export const areStreamsEqual = (prevStream: LocalVideoStream, newStream: LocalVideoStream): boolean => {
   return !!prevStream && !!newStream && prevStream.source.id === newStream.source.id;
 };
 
-const createDefaultHandlers = memoizeOne(
+export const createDefaultCallingHandlers = memoizeOne(
   (
-    callClient: DeclarativeCallClient,
+    callClient: StatefulCallClient,
     callAgent: CallAgent | undefined,
     deviceManager: StatefulDeviceManager | undefined,
     call: Call | undefined
@@ -86,16 +86,16 @@ const createDefaultHandlers = memoizeOne(
       return stream?.switchSource(device);
     };
 
-    const onToggleMicrophone = (): Promise<void> | void => {
-      return call?.isMuted ? call?.unmute() : call?.mute();
+    const onToggleMicrophone = async (): Promise<void> => {
+      return call?.isMuted ? await call?.unmute() : await call?.mute();
     };
 
-    const onStartScreenShare = (): Promise<void> | void => call?.startScreenSharing();
+    const onStartScreenShare = async (): Promise<void> => await call?.startScreenSharing();
 
-    const onStopScreenShare = (): Promise<void> | void => call?.stopScreenSharing();
+    const onStopScreenShare = async (): Promise<void> => await call?.stopScreenSharing();
 
-    const onToggleScreenShare = (): Promise<void> | void =>
-      call?.isScreenSharingOn ? onStopScreenShare() : onStartScreenShare();
+    const onToggleScreenShare = async (): Promise<void> =>
+      call?.isScreenSharingOn ? await onStopScreenShare() : await onStartScreenShare();
 
     const onHangUp = async (): Promise<void> => await call?.hangUp();
 
@@ -129,6 +129,10 @@ const createDefaultHandlers = memoizeOne(
       }
     };
 
+    const onParticipantRemove = (userId: string): void => {
+      call?.removeParticipant({ communicationUserId: userId });
+    };
+
     return {
       onHangUp,
       onSelectCamera,
@@ -139,7 +143,8 @@ const createDefaultHandlers = memoizeOne(
       onToggleMicrophone,
       onToggleScreenShare,
       onCreateLocalStreamView,
-      onCreateRemoteStreamView
+      onCreateRemoteStreamView,
+      onParticipantRemove
     };
   }
 );
@@ -147,29 +152,31 @@ const createDefaultHandlers = memoizeOne(
 /**
  * Type guard for common properties between two types.
  */
-export type CommonProperties<A, B> = {
+export type CommonProperties1<A, B> = {
   [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
 
-type Common<A, B> = Pick<A, CommonProperties<A, B>>;
+type Common<A, B> = Pick<A, CommonProperties1<A, B>>;
 
 /**
  * Create a set of default handlers for given component. Memoization is applied to the result. Multiple invokations with
  * the same arguments will return the same handler instances. DeclarativeCallAgent, DeclarativeDeviceManager, and
  * DeclarativeCall may be undefined. If undefined, their associated handlers will not be created and returned.
  *
- * @param declarativeCallClient - DeclarativeCallClient returned from
- *   {@Link @azure/acs-calling-declarative#callClientDeclaratify}.
+ * @param callClient - StatefulCallClient returned from
+ *   {@Link calling-stateful-client#createStatefulCallClient}.
  * @param callAgent - Instance of {@Link @azure/communication-calling#CallClient}.
  * @param deviceManager - Instance of {@Link @azure/communication-calling#DeviceManager}.
  * @param call - Instance of {@Link @azure/communication-calling#Call}.
  * @param _ - React component that you want to generate handlers for.
  * @returns
  */
-export const createDefaultHandlersForComponent = <Props>(
-  declarativeCallClient: DeclarativeCallClient,
+export const createDefaultCallingHandlersForComponent = <Props>(
+  callClient: StatefulCallClient,
   callAgent: CallAgent | undefined,
   deviceManager: StatefulDeviceManager | undefined,
   call: Call | undefined,
   _Component: (props: Props) => ReactElement | null
-): Common<DefaultHandlers, Props> => createDefaultHandlers(declarativeCallClient, callAgent, deviceManager, call);
+): Common<DefaultCallingHandlers, Props> => {
+  return createDefaultCallingHandlers(callClient, callAgent, deviceManager, call);
+};

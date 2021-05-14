@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { DefaultButton, IButtonProps, Stack, concatStyleSets, mergeStyles } from '@fluentui/react';
+import { DefaultButton, IButtonProps, Label, concatStyleSets, mergeStyles } from '@fluentui/react';
 import { MoreIcon } from '@fluentui/react-northstar';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 
@@ -34,9 +34,9 @@ export const OptionsButton = (props: OptionsButtonProps): JSX.Element => {
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {
     return (
-      <Stack key={'optionsLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
+      <Label key={'optionsLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
         {'Options'}
-      </Stack>
+      </Label>
     );
   };
 

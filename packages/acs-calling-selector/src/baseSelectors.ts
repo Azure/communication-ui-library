@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Call, CallClientState, DeviceManager, IncomingCall } from '@azure/acs-calling-declarative';
+import { Call, CallClientState, DeviceManager, IncomingCall } from 'calling-stateful-client';
 
 /**
- * Common props used to reference declarative client state.
+ * Common props used to reference calling declarative client state.
  */
-export type BaseSelectorProps = {
+export type CallingBaseSelectorProps = {
   callId: string;
 };
 
@@ -20,7 +20,7 @@ export const getIncomingCallsEnded = (state: CallClientState): IncomingCall[] =>
 
 export const getDeviceManager = (state: CallClientState): DeviceManager => state.deviceManager;
 
-export const getCall = (state: CallClientState, props: BaseSelectorProps): Call | undefined =>
+export const getCall = (state: CallClientState, props: CallingBaseSelectorProps): Call | undefined =>
   state.calls.get(props.callId);
 
 export const getDisplayName = (state: CallClientState): string | undefined => state.callAgent?.displayName;

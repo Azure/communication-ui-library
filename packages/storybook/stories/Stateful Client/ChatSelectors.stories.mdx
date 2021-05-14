@@ -38,13 +38,13 @@ const chatThreadProps = chatThreadSelector(state, { threadId });
 The `chatParticipantListSelector` provides a list of chat participants that can be used to render a list of [ParticipantItem](?path=/docs/ui-components-participantitem--participant-item-component) component.
 
 ```tsx
-import { chatParticipantListSelector, WebUiChatParticipant } from '@azure/acs-chat-selector';
+import { chatParticipantListSelector, CommunicationParticipant } from '@azure/acs-chat-selector';
 
 const threadId = 'CHAT_THREAD_ID';
 const chatParticipantProps = chatParticipantListSelector(state, { threadId });
 
-const Participants = chatParticipantProps.chatParticipants.map((member: WebUiChatParticipant) => (
-  <ParticipantItem key={member.userId} name={member.displayName as string} />
+const Participants = chatParticipantProps.chatParticipants.map((participant: CommunicationParticipant) => (
+  <ParticipantItem key={participant.userId} name={participant.displayName as string} />
 ));
 ```
 

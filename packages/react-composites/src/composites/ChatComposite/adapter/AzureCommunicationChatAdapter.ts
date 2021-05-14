@@ -1,18 +1,22 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { chatClientDeclaratify, ChatClientState, DeclarativeChatClient } from '@azure/acs-chat-declarative';
-import { DefaultHandlers, communicationIdentifierToString, createDefaultHandlers } from '@azure/acs-chat-selector';
+import { createStatefulChatClient, ChatClientState, StatefulChatClient } from 'chat-stateful-client';
+import {
+  DefaultChatHandlers,
+  communicationIdentifierToString,
+  createDefaultChatHandlers
+} from '@azure/acs-chat-selector';
 import { ChatClient, ChatMessage, ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationUserKind } from '@azure/communication-signaling';
 import EventEmitter from 'events';
 import { createAzureCommunicationUserCredential, getIdFromToken } from '../../../utils';
-import { GroupChatAdapter, GroupChatEvent, GroupChatState } from './GroupChatAdapter';
+import { ChatAdapter, ChatEvent, ChatState } from './ChatAdapter';
 
-// Context of GroupChat, which is a centralized context for all state updates
-export class GroupChatContext {
+// Context of Chat, which is a centralized context for all state updates
+export class ChatContext {
   private emitter: EventEmitter = new EventEmitter();
-  private state: GroupChatState;
+  private state: ChatState;
   private threadId: string;
 
   constructor(clientState: ChatClientState, threadId: string) {
@@ -26,20 +30,20 @@ export class GroupChatContext {
     };
   }
 
-  public onStateChange(handler: (_uiState: GroupChatState) => void): void {
+  public onStateChange(handler: (_uiState: ChatState) => void): void {
     this.emitter.on('stateChanged', handler);
   }
 
-  public offStateChange(handler: (_uiState: GroupChatState) => void): void {
+  public offStateChange(handler: (_uiState: ChatState) => void): void {
     this.emitter.off('stateChanged', handler);
   }
 
-  public setState(state: GroupChatState): void {
+  public setState(state: ChatState): void {
     this.state = state;
     this.emitter.emit('stateChanged', this.state);
   }
 
-  public getState(): GroupChatState {
+  public getState(): ChatState {
     return this.state;
   }
 
@@ -58,16 +62,16 @@ export class GroupChatContext {
   }
 }
 
-export class AzureCommunicationChatAdapter implements GroupChatAdapter {
-  private chatClient: DeclarativeChatClient;
+export class AzureCommunicationChatAdapter implements ChatAdapter {
+  private chatClient: StatefulChatClient;
   private chatThreadClient: ChatThreadClient;
-  private context: GroupChatContext;
-  private handlers: DefaultHandlers;
+  private context: ChatContext;
+  private handlers: DefaultChatHandlers;
 
-  constructor(chatClient: DeclarativeChatClient, chatThreadClient: ChatThreadClient) {
+  constructor(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) {
     this.chatClient = chatClient;
     this.chatThreadClient = chatThreadClient;
-    this.context = new GroupChatContext(chatClient.state, chatThreadClient.threadId);
+    this.context = new ChatContext(chatClient.getState(), chatThreadClient.threadId);
     const onStateChange = (clientState: ChatClientState): void => {
       // unsubscribe when the instance gets disposed
       if (!this) {
@@ -77,7 +81,7 @@ export class AzureCommunicationChatAdapter implements GroupChatAdapter {
       this.context.updateClientState(clientState);
     };
 
-    this.handlers = createDefaultHandlers(chatClient, chatThreadClient);
+    this.handlers = createDefaultChatHandlers(chatClient, chatThreadClient);
 
     this.chatClient.onStateChange(onStateChange);
   }
@@ -93,20 +97,20 @@ export class AzureCommunicationChatAdapter implements GroupChatAdapter {
     }
   };
 
-  public getState = (): GroupChatState => {
+  public getState = (): ChatState => {
     return this.context.getState();
   };
 
-  public onStateChange = (handler: (state: GroupChatState) => void): void => {
+  public onStateChange = (handler: (state: ChatState) => void): void => {
     this.context.onStateChange(handler);
   };
 
-  public offStateChange = (handler: (state: GroupChatState) => void): void => {
+  public offStateChange = (handler: (state: ChatState) => void): void => {
     this.context.offStateChange(handler);
   };
 
   sendMessage = async (content: string): Promise<void> => {
-    await this.handlers.onMessageSend(content);
+    await this.handlers.onSendMessage(content);
   };
 
   sendReadReceipt = async (chatMessageId: string): Promise<void> => {
@@ -118,7 +122,7 @@ export class AzureCommunicationChatAdapter implements GroupChatAdapter {
   };
 
   removeParticipant = async (userId: string): Promise<void> => {
-    await this.handlers.removeThreadMember(userId);
+    await this.handlers.onParticipantRemove(userId);
   };
 
   setTopic = async (topicName: string): Promise<void> => {
@@ -134,7 +138,7 @@ export class AzureCommunicationChatAdapter implements GroupChatAdapter {
   on(event: 'error', errorHandler: (e: Error) => void): void;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public on(_event: GroupChatEvent, _listener: (e: any) => void): void {
+  public on(_event: ChatEvent, _listener: (e: any) => void): void {
     // Need to be implemented from chatClient
     throw 'Not implemented yet';
   }
@@ -151,7 +155,7 @@ export const createAzureCommunicationChatAdapter = async (
 
   // This hack can be removed when `getIdFromToken` is dropped in favour of actually passing in user credentials.
   const userId = <CommunicationUserKind>{ kind: 'communicationUser', communicationUserId: rawUserId };
-  const chatClient = chatClientDeclaratify(
+  const chatClient = createStatefulChatClient(
     new ChatClient(endpointUrl, createAzureCommunicationUserCredential(token, refreshTokenCallback)),
     { userId, displayName }
   );

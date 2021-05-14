@@ -1,9 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatClientState } from '@azure/acs-chat-declarative';
-import { chatThreadSelector, sendBoxSelector, typingIndicatorSelector } from '@azure/acs-chat-selector';
-import { MessageThread, SendBox, TypingIndicator } from 'react-components';
+import { ChatClientState } from 'chat-stateful-client';
+import {
+  chatThreadSelector,
+  chatParticipantListSelector,
+  sendBoxSelector,
+  typingIndicatorSelector
+} from '@azure/acs-chat-selector';
+import { MessageThread, ParticipantList, SendBox, TypingIndicator } from 'react-components';
 
 import React from 'react';
 import { useHandlers } from './useHandlers';
@@ -19,10 +24,12 @@ export const usePropsFor = <SelectorT extends (state: ChatClientState, props: an
 
 export const getSelector = (component: React.FunctionComponent<any>): Selector => {
   switch (component) {
-    case SendBox:
-      return sendBoxSelector;
     case MessageThread:
       return chatThreadSelector;
+    case ParticipantList:
+      return chatParticipantListSelector;
+    case SendBox:
+      return sendBoxSelector;
     case TypingIndicator:
       return typingIndicatorSelector;
   }

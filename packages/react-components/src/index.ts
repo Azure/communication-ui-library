@@ -4,6 +4,24 @@
 export * from './components';
 export * from './theming';
 
-export { CommunicationUiErrorSeverity } from './types';
-
-export * from './types';
+export type {
+  BaseCustomStylesProps,
+  CommunicationUiErrorSeverity,
+  ChatMessage,
+  ChatMessagePayload,
+  CustomMessage,
+  CustomMessagePayload,
+  Message,
+  MessageAttachedStatus,
+  MessageStatus,
+  MessageTypes,
+  SystemMessage,
+  SystemMessagePayload,
+  CommunicationParticipant,
+  VideoStreamOptions,
+  VideoGalleryParticipant,
+  VideoGalleryStream,
+  VideoGalleryLocalParticipant,
+  VideoGalleryRemoteParticipant
+} from './types';
+export * from './types/GalleryParticipant';

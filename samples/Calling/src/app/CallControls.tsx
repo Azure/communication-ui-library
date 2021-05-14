@@ -1,9 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
+import React, { useCallback } from 'react';
 import { ControlBar, MicrophoneButton, CameraButton, ScreenShareButton, EndCallButton } from 'react-components';
-import { useHandlers } from './hooks/useHandlers';
 import { usePropsFor } from './hooks/usePropsFor';
 import {
   controlBarStyle,
@@ -19,26 +18,22 @@ export type CallControlsProps = {
 export const CallControls = (props: CallControlsProps): JSX.Element => {
   const { compressedMode, onEndCallClick } = props;
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
-  const microphoneButtonHandlers = useHandlers(MicrophoneButton);
   const cameraButtonProps = usePropsFor(CameraButton);
-  const cameraButtonHandlers = useHandlers(CameraButton);
   const screenShareButtonProps = usePropsFor(ScreenShareButton);
-  const screenShareButtonHandlers = useHandlers(ScreenShareButton);
-  const hangUpButtonHandlers = useHandlers(EndCallButton);
-  const hangUpFunctionFromDeclarative = hangUpButtonHandlers.onHangUp;
-
-  hangUpButtonHandlers.onHangUp = async () => {
-    await hangUpFunctionFromDeclarative();
+  const hangUpButtonProps = usePropsFor(EndCallButton);
+  const onHangUp = useCallback(async () => {
+    await hangUpButtonProps.onHangUp();
     onEndCallClick();
-  };
+  }, [hangUpButtonProps, onEndCallClick]);
 
   return (
     <ControlBar styles={controlBarStyle}>
-      <MicrophoneButton {...microphoneButtonProps} {...microphoneButtonHandlers} />
-      <CameraButton {...cameraButtonProps} {...cameraButtonHandlers} />
-      <ScreenShareButton {...screenShareButtonProps} {...screenShareButtonHandlers} />
+      <CameraButton {...cameraButtonProps} />
+      <MicrophoneButton {...microphoneButtonProps} />
+      <ScreenShareButton {...screenShareButtonProps} />
       <EndCallButton
-        {...hangUpButtonHandlers}
+        {...hangUpButtonProps}
+        onHangUp={onHangUp}
         styles={!compressedMode ? groupCallLeaveButtonStyle : groupCallLeaveButtonCompressedStyle}
         text={!compressedMode ? 'Leave' : ''}
       />

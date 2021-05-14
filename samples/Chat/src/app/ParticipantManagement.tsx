@@ -2,44 +2,44 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { WebUiChatParticipant, ParticipantItem } from 'react-components';
+import { CommunicationParticipant, ParticipantItem } from 'react-components';
 import { propagateError } from 'react-composites';
 import { Stack, IContextualMenuItem } from '@fluentui/react';
 
 export type ParticipantManagementProps = {
   userId: string;
-  chatParticipants: WebUiChatParticipant[];
-  removeThreadMember: (userId: string) => Promise<void>;
+  chatParticipants: CommunicationParticipant[];
+  removeThreadParticipant: (userId: string) => Promise<void>;
   onRenderAvatar?: (userId: string) => JSX.Element;
 };
 
 export const ParticipantManagement = (props: ParticipantManagementProps): JSX.Element => {
-  const { userId, chatParticipants, removeThreadMember, onRenderAvatar } = props;
+  const { userId, chatParticipants, removeThreadParticipant, onRenderAvatar } = props;
 
   return (
     <Stack>
-      {chatParticipants.map((member) => {
-        if (member.displayName !== undefined) {
+      {chatParticipants.map((participant) => {
+        if (participant.displayName !== undefined) {
           const menuItems: IContextualMenuItem[] = [];
           menuItems.push({
             key: 'Remove',
             text: 'Remove',
             onClick: () => {
-              removeThreadMember?.(member.userId).catch((error) => {
+              removeThreadParticipant?.(participant.userId).catch((error) => {
                 propagateError(error);
               });
             }
           });
 
-          const isYou = member.userId === (userId as string);
+          const isYou = participant.userId === (userId as string);
 
           return (
             <ParticipantItem
-              key={member.userId}
-              name={member.displayName as string}
+              key={participant.userId}
+              name={participant.displayName as string}
               isYou={isYou}
               menuItems={isYou ? undefined : menuItems}
-              onRenderAvatar={onRenderAvatar ? () => onRenderAvatar(member.userId) : undefined}
+              onRenderAvatar={onRenderAvatar ? () => onRenderAvatar(participant.userId) : undefined}
             />
           );
         }

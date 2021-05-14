@@ -5,7 +5,6 @@
 ```ts
 
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
-import { ErrorInfo } from 'react';
 import { IButtonProps } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
@@ -21,6 +20,16 @@ export const answerButtonProps: IButtonProps;
 // @public (undocumented)
 export interface BaseCustomStylesProps {
     root?: IStyle;
+}
+
+// @public
+export interface CallingTheme {
+    // (undocumented)
+    callingPalette: {
+        callRed: string;
+        callRedDark: string;
+        callRedDarker: string;
+    };
 }
 
 // @public
@@ -49,136 +58,17 @@ export type ChatMessagePayload = {
 };
 
 // @public
-export class CommunicationUiError extends Error implements CommunicationUiErrorInfo {
-    constructor(args: CommunicationUiErrorArgs);
-    // (undocumented)
-    get code(): CommunicationUiErrorCode;
-    // (undocumented)
-    get errorInfo(): ErrorInfo | undefined;
-    set errorInfo(errorInfo: ErrorInfo | undefined);
-    // (undocumented)
-    get originalError(): Error | undefined;
-    // (undocumented)
-    get severity(): CommunicationUiErrorSeverity;
-    set severity(severity: CommunicationUiErrorSeverity);
-    }
-
-// @public (undocumented)
-export interface CommunicationUiErrorArgs {
-    // (undocumented)
-    code?: CommunicationUiErrorCode;
-    // (undocumented)
-    error?: Error;
-    // (undocumented)
-    errorInfo?: ErrorInfo;
-    // (undocumented)
-    message?: string;
-    // (undocumented)
-    severity?: CommunicationUiErrorSeverity;
-}
-
-// @public (undocumented)
-export enum CommunicationUiErrorCode {
-    // (undocumented)
-    ASK_PERMISSIONS_ERROR = 21,
-    // (undocumented)
-    CONFIGURATION_ERROR = 1,
-    // (undocumented)
-    CREATE_CALL_AGENT_ERROR = 31,
-    // (undocumented)
-    CREATE_CHAT_THREAD_CLIENT_ERROR = 10,
-    // (undocumented)
-    DISPOSE_CALL_AGENT_ERROR = 32,
-    // (undocumented)
-    FORBIDDEN_ERROR = 3,
-    // (undocumented)
-    GET_MESSAGE_ERROR = 14,
-    // (undocumented)
-    GET_MESSAGES_ERROR = 16,
-    // (undocumented)
-    GET_READ_RECEIPT_ERROR = 12,
-    // (undocumented)
-    GET_THREAD_ERROR = 19,
-    // (undocumented)
-    INTERNAL_SERVER_ERROR = 6,
-    // (undocumented)
-    JOIN_CALL_ERROR = 33,
-    // (undocumented)
-    LEAVE_CALL_ERROR = 34,
-    // (undocumented)
-    MESSAGE_EXCEEDED_RETRY_ERROR = 8,
-    // (undocumented)
-    MUTE_ERROR = 24,
-    // (undocumented)
-    QUERY_PERMISSIONS_ERROR = 20,
-    // (undocumented)
-    REMOVE_THREAD_MEMBER_ERROR = 17,
-    // (undocumented)
-    RENDER_LOCAL_VIDEO_ERROR = 30,
-    // (undocumented)
-    RENDER_REMOTE_VIDEO_ERROR = 29,
-    // (undocumented)
-    SEND_MESSAGE_ERROR = 13,
-    // (undocumented)
-    SEND_READ_RECEIPT_ERROR = 11,
-    // (undocumented)
-    SEND_TYPING_NOTIFICATION_ERROR = 15,
-    // (undocumented)
-    SERVICE_UNAVAILABLE_ERROR = 5,
-    // (undocumented)
-    START_REALTIME_NOTIFICATIONS_ERROR = 9,
-    // (undocumented)
-    START_SCREEN_SHARE_ERROR = 27,
-    // (undocumented)
-    START_VIDEO_ERROR = 25,
-    // (undocumented)
-    STOP_SCREEN_SHARE_ERROR = 28,
-    // (undocumented)
-    STOP_VIDEO_ERROR = 26,
-    // (undocumented)
-    SWITCH_VIDEO_SOURCE_ERROR = 22,
-    // (undocumented)
-    TOO_MANY_REQUESTS_ERROR = 4,
-    // (undocumented)
-    UNAUTHORIZED_ERROR = 2,
-    // (undocumented)
-    UNKNOWN_ERROR = 0,
-    // (undocumented)
-    UNKNOWN_STATUS_CODE_ERROR = 7,
-    // (undocumented)
-    UNMUTE_ERROR = 23,
-    // (undocumented)
-    UPDATE_THREAD_ERROR = 18
-}
-
-// @public (undocumented)
-export const CommunicationUiErrorFromError: (error: any) => CommunicationUiError;
-
-// @public (undocumented)
-export interface CommunicationUiErrorInfo {
-    // (undocumented)
-    code: CommunicationUiErrorCode;
-    // (undocumented)
-    errorInfo: ErrorInfo | undefined;
-    // (undocumented)
-    message: string;
-    // (undocumented)
-    originalError: Error | undefined;
-    // (undocumented)
-    severity: CommunicationUiErrorSeverity;
-}
+export type CommunicationParticipant = {
+    userId: string;
+    displayName?: string;
+    state?: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
+    isScreenSharing?: boolean;
+    isMuted?: boolean;
+    isSpeaking?: boolean;
+};
 
 // @public
-export enum CommunicationUiErrorSeverity {
-    // (undocumented)
-    ERROR = "Error",
-    // (undocumented)
-    IGNORE = "Ignore",
-    // (undocumented)
-    INFO = "Info",
-    // (undocumented)
-    WARNING = "Warning"
-}
+export type CommunicationUiErrorSeverity = 'info' | 'warning' | 'error' | 'ignore';
 
 // @public
 export const ControlBar: (props: ControlBarProps) => JSX.Element;
@@ -194,6 +84,14 @@ export interface ControlBarProps {
 }
 
 // @public (undocumented)
+export interface CreateViewOptions {
+    // (undocumented)
+    isMirrored?: boolean;
+    // (undocumented)
+    scalingMode?: ScalingMode;
+}
+
+// @public (undocumented)
 export type CustomMessage = Message<'custom'>;
 
 // @public (undocumented)
@@ -203,7 +101,7 @@ export type CustomMessagePayload = {
 };
 
 // @public
-export const darkTheme: PartialTheme;
+export const darkTheme: PartialTheme & CallingTheme;
 
 // @public (undocumented)
 export type DefaultMessageRendererType = (props: MessageProps) => JSX.Element;
@@ -265,7 +163,17 @@ export const labeledAnswerButtonProps: IButtonProps;
 export const labeledRecordButtonProps: IButtonProps;
 
 // @public
-export const lightTheme: PartialTheme;
+export const lightTheme: PartialTheme & CallingTheme;
+
+// @public
+export interface LocalVideoStream {
+    mediaStreamType: MediaStreamType;
+    source: VideoDeviceInfo;
+    videoStreamRendererView?: VideoStreamRendererView | undefined;
+}
+
+// @public (undocumented)
+export type MediaStreamType = 'Video' | 'ScreenSharing';
 
 // @public (undocumented)
 export type Message<T extends MessageTypes> = {
@@ -274,12 +182,7 @@ export type Message<T extends MessageTypes> = {
 };
 
 // @public (undocumented)
-export enum MessageAttachedStatus {
-    // (undocumented)
-    BOTTOM = "bottom",
-    // (undocumented)
-    TOP = "top"
-}
+export type MessageAttachedStatus = 'bottom' | 'top';
 
 // @public
 export type MessageProps = {
@@ -361,6 +264,18 @@ export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
     menu?: IStyle;
 }
 
+// @public
+export const ParticipantList: (props: ParticipantListProps) => JSX.Element;
+
+// @public
+export type ParticipantListProps = {
+    participants: CommunicationParticipant[];
+    myUserId?: string;
+    onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
+    onRenderAvatar?: (participant: CommunicationParticipant) => JSX.Element | null;
+    onParticipantRemove?: (userId: string) => void;
+};
+
 // @public (undocumented)
 export interface PlaceholderProps {
     avatarName?: string;
@@ -385,6 +300,17 @@ export interface ReadReceiptProps {
 export const recordButtonProps: IButtonProps;
 
 // @public
+export interface RemoteVideoStream {
+    id: number;
+    isAvailable: boolean;
+    mediaStreamType: MediaStreamType;
+    videoStreamRendererView: VideoStreamRendererView | undefined;
+}
+
+// @public (undocumented)
+export type ScalingMode = 'Stretch' | 'Crop' | 'Fit';
+
+// @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
 
 // @public
@@ -399,9 +325,9 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 // @public
 export interface SendBoxProps {
     disabled?: boolean;
-    onMessageSend?: (content: string) => Promise<void>;
     onRenderIcon?: (props: SendBoxProps, isMouseOverSendIcon: boolean) => JSX.Element | null;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
+    onSendMessage?: (content: string) => Promise<void>;
     onTyping?: () => Promise<void>;
     styles?: SendBoxStylesProps;
     supportNewline?: boolean;
@@ -441,10 +367,10 @@ export const TypingIndicator: (props: TypingIndicatorProps) => JSX.Element;
 
 // @public
 export interface TypingIndicatorProps {
-    onRenderUsers?: (users: WebUiChatParticipant[]) => JSX.Element;
+    onRenderUsers?: (users: CommunicationParticipant[]) => JSX.Element;
     styles?: TypingIndicatorStylesProps;
     typingString?: string;
-    typingUsers: WebUiChatParticipant[];
+    typingUsers: CommunicationParticipant[];
 }
 
 // @public (undocumented)
@@ -452,6 +378,16 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
 }
+
+// @public (undocumented)
+export interface VideoDeviceInfo {
+    readonly deviceType: VideoDeviceType;
+    readonly id: string;
+    readonly name: string;
+}
+
+// @public (undocumented)
+export type VideoDeviceType = 'Unknown' | 'UsbCamera' | 'CaptureAdapter' | 'Virtual';
 
 // @public (undocumented)
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
@@ -520,6 +456,13 @@ export interface VideoStreamOptions {
     scalingMode?: 'Stretch' | 'Crop' | 'Fit';
 }
 
+// @public
+export interface VideoStreamRendererView {
+    isMirrored: boolean;
+    scalingMode: ScalingMode;
+    target: HTMLElement;
+}
+
 // @public (undocumented)
 export const VideoTile: (props: VideoTileProps & PlaceholderProps) => JSX.Element;
 
@@ -538,12 +481,6 @@ export interface VideoTileStylesProps extends BaseCustomStylesProps {
     overlayContainer?: IStyle;
     videoContainer?: IStyle;
 }
-
-// @public
-export type WebUiChatParticipant = {
-    userId: string;
-    displayName?: string;
-};
 
 
 // (No @packageDocumentation comment for this package)

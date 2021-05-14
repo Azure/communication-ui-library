@@ -17,16 +17,16 @@ import {
 } from './styles/ChatHeader.styles';
 import { SidePanelTypes } from './SidePanel';
 import { copyIconStyle } from './styles/InviteFooter.styles';
-import { WebUiChatParticipant } from '@azure/acs-chat-selector';
+import { CommunicationParticipant } from 'react-components';
 
 export type ChatHeaderProps = {
-  userId: string;
+  myUserId: string;
   topicName: string;
   selectedPane: SidePanelTypes;
-  chatParticipants: WebUiChatParticipant[];
+  participants: CommunicationParticipant[];
   setSelectedPane: Dispatch<SidePanelTypes>;
   endChatHandler(): void;
-  removeThreadMember?: (userId: string) => Promise<void>;
+  removeThreadParticipant?: (userId: string) => Promise<void>;
   updateThreadTopicName: (topicName: string) => Promise<void>;
 };
 
@@ -49,7 +49,7 @@ export const ChatHeader = (props: ChatHeaderProps): JSX.Element => {
     if (item.props.itemKey === SidePanelTypes.People) togglePeople(props.selectedPane, props.setSelectedPane);
   };
 
-  const userId = props.userId;
+  const userId = props.myUserId;
 
   const leaveString = 'Leave';
 
@@ -110,7 +110,7 @@ export const ChatHeader = (props: ChatHeaderProps): JSX.Element => {
               <DefaultButton
                 className={leaveButtonStyle}
                 onClick={() => {
-                  props.removeThreadMember && props.removeThreadMember(userId);
+                  props.removeThreadParticipant && props.removeThreadParticipant(userId);
                   props.endChatHandler();
                 }}
               >

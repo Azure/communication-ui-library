@@ -32,9 +32,9 @@ module.exports = {
       ...(config.resolve.alias || {}),
       '@azure/communication-react': path.resolve(__dirname, '../../communication-react/src'),
       'react-composites': path.resolve(__dirname, '../../react-composites/src'),
-      '@azure/acs-chat-declarative': path.resolve(__dirname, '../../acs-chat-declarative/src'),
+      'chat-stateful-client': path.resolve(__dirname, '../../chat-stateful-client/src'),
       '@azure/acs-chat-selector': path.resolve(__dirname, '../../acs-chat-selector/src'),
-      '@azure/acs-calling-declarative': path.resolve(__dirname, '../../acs-calling-declarative/src'),
+      'calling-stateful-client': path.resolve(__dirname, '../../calling-stateful-client/src'),
       '@azure/acs-calling-selector': path.resolve(__dirname, '../../acs-calling-selector/src')
     };
 

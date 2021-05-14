@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatMessage } from '../types/UiChatMessage';
+import { ChatMessage } from 'react-components';
 
 export const compareMessages = (firstMessage: ChatMessage, secondMessage: ChatMessage): number => {
   if (firstMessage.payload.createdOn === undefined) return 1;

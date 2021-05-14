@@ -1,7 +1,7 @@
 {
   "name": "@azure/acs-calling-selector",
   "version": "1.0.0-beta",
-  "description": "ACS UI SDK",
+  "description": "Component bindings specific to components that integrate with the Azure Communication Services Calling JavaScript SDK",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
   "types": "dist/acs-calling-selector.d.ts",
@@ -19,20 +19,8 @@
     "generate-doc": "api-documenter markdown -i temp -o docGen",
     "postpack": "copyfiles -E \"./*.tgz\" private-preview"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
   "dependencies": {
-    "@azure/acs-calling-declarative": "~1.0.0-beta",
+    "calling-stateful-client": "~1.0.0-beta",
     "@azure/communication-common": "1.0.0",
     "@azure/communication-calling": "1.0.1-beta.1",
     "reselect": "~4.0.0",

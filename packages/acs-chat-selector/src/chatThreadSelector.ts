@@ -8,7 +8,7 @@ import {
   getLatestReadTime,
   getUserId
 } from './baseSelectors';
-import { ChatMessageWithStatus } from '@azure/acs-chat-declarative';
+import { ChatMessageWithStatus } from 'chat-stateful-client';
 // The following need explicitly imported to avoid api-extractor issues.
 // These can be removed once https://github.com/microsoft/rushstack/pull/1916 is fixed.
 // @ts-ignore
@@ -16,13 +16,13 @@ import * as reselect from 'reselect';
 // @ts-ignore
 import { ChatMessageContent, ChatParticipant } from '@azure/communication-chat';
 // @ts-ignore
-import { ChatClientState } from '@azure/acs-chat-declarative';
+import { ChatClientState } from 'chat-stateful-client';
 // @ts-ignore
-import { BaseSelectorProps } from './baseSelectors';
+import { ChatBaseSelectorProps } from './baseSelectors';
 // @ts-ignore
 import { memoizeFnAll } from './utils/memoizeFnAll';
 // @ts-ignore
-import { ChatMessage, MessageAttachedStatus, Message, MessageTypes } from './types/UiChatMessage';
+import { ChatMessage, MessageAttachedStatus, Message, MessageTypes } from 'react-components';
 // @ts-ignore
 import { createSelector } from 'reselect';
 // @ts-ignore
@@ -93,7 +93,7 @@ export const updateMessagesWithAttached = (chatMessagesWithStatus: ChatMessage[]
       if (index !== messages.length - 1) {
         //the next message has the same sender
         if (messages[index].payload.senderId === messages[index + 1].payload.senderId) {
-          attached = MessageAttachedStatus.TOP;
+          attached = 'top';
         }
       }
     } else {
@@ -105,18 +105,18 @@ export const updateMessagesWithAttached = (chatMessagesWithStatus: ChatMessage[]
             attached = true;
           } else {
             //the next message has a different sender
-            attached = MessageAttachedStatus.BOTTOM;
+            attached = 'bottom';
           }
         } else {
           // this is the last message of the whole messages list
-          attached = MessageAttachedStatus.BOTTOM;
+          attached = 'bottom';
         }
       } else {
         //the previous message has a different sender
         if (index !== messages.length - 1) {
           if (messages[index].payload.senderId === messages[index + 1].payload.senderId) {
             //the next message has the same sender
-            attached = MessageAttachedStatus.TOP;
+            attached = 'top';
           }
         }
       }

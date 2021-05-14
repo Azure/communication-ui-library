@@ -3,10 +3,10 @@
 
 import { mergeStyles, Stack } from '@fluentui/react';
 import React, { useEffect } from 'react';
-import { ErrorBar, MessageThread, SendBox, TypingIndicator } from 'react-components';
-import { useAdapter } from './adapter/GroupChatAdapterProvider';
+import { ErrorBar, MessageThread, ParticipantList, SendBox, TypingIndicator } from 'react-components';
+import { useAdapter } from './adapter/ChatAdapterProvider';
 import { usePropsFor } from './hooks/usePropsFor';
-import { chatContainer, chatWrapper } from './styles/GroupChat.styles';
+import { chatContainer, chatWrapper } from './styles/Chat.styles';
 
 export type ChatScreenProps = {
   sendBoxMaxLength?: number;
@@ -31,24 +31,30 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     adapter.updateAllParticipants();
   }, [adapter]);
 
+  const messageThreadProps = usePropsFor(MessageThread);
+  const participantListProps = usePropsFor(ParticipantList);
   const sendBoxProps = usePropsFor(SendBox);
   const typingIndicatorProps = usePropsFor(TypingIndicator);
-  const messageThreadProps = usePropsFor(MessageThread);
 
   return (
     <Stack className={chatContainer} grow>
-      <Stack className={chatWrapper} grow>
-        <MessageThread
-          {...messageThreadProps}
-          onRenderAvatar={onRenderAvatar}
-          numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
-        />
-        <Stack.Item align="center" className={sendBoxParentStyle}>
-          <div style={{ paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>
-            <TypingIndicator {...typingIndicatorProps} />
-          </div>
-          <ErrorBar />
-          <SendBox {...sendBoxProps} />
+      <Stack horizontal grow>
+        <Stack className={chatWrapper} grow>
+          <MessageThread
+            {...messageThreadProps}
+            onRenderAvatar={onRenderAvatar}
+            numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
+          />
+          <Stack.Item align="center" className={sendBoxParentStyle}>
+            <div style={{ paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>
+              <TypingIndicator {...typingIndicatorProps} />
+            </div>
+            <ErrorBar />
+            <SendBox {...sendBoxProps} />
+          </Stack.Item>
+        </Stack>
+        <Stack.Item>
+          <ParticipantList {...participantListProps} />
         </Stack.Item>
       </Stack>
     </Stack>

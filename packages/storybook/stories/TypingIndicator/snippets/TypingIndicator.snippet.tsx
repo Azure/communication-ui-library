@@ -1,4 +1,4 @@
-import { TypingIndicator, WebUiChatParticipant } from '@azure/communication-react';
+import { TypingIndicator, CommunicationParticipant } from '@azure/communication-react';
 import React from 'react';
 
 export const TypingIndicatorSnippet: () => JSX.Element = () => {
@@ -8,7 +8,7 @@ export const TypingIndicatorSnippet: () => JSX.Element = () => {
     { userId: '2', displayName: 'User2' }
   ];
 
-  const twentyUsers: WebUiChatParticipant[] = [];
+  const twentyUsers: CommunicationParticipant[] = [];
   for (let idx = 0; idx < 20; idx++) {
     twentyUsers.push({ userId: `${idx}`, displayName: `User${idx}` });
   }

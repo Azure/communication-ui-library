@@ -1,12 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useMemo } from 'react';
-import { Label, mergeStyles, Spinner, SpinnerSize, Stack } from '@fluentui/react';
-import { loadingStyle, videoStreamStyle, videoTileStyle } from './styles/ScreenShare.styles';
-
-import { StreamMedia, VideoTile, VideoGalleryLocalParticipant, VideoGalleryRemoteParticipant } from 'react-components';
 import { memoizeFnAll } from '@azure/acs-calling-selector';
+import { Label, mergeStyles, Spinner, SpinnerSize, Stack } from '@fluentui/react';
+import React, { useMemo } from 'react';
+import { StreamMedia, VideoGalleryLocalParticipant, VideoGalleryRemoteParticipant, VideoTile } from 'react-components';
 import {
   aspectRatioBoxContentStyle,
   aspectRatioBoxStyle,
@@ -15,9 +13,10 @@ import {
   stackContainerStyle,
   videoHint
 } from './styles/MediaGallery.styles';
+import { loadingStyle, videoStreamStyle, videoTileStyle } from './styles/ScreenShare.styles';
 
 export type ScreenShareProps = {
-  localParticipant: VideoGalleryLocalParticipant;
+  localParticipant?: VideoGalleryLocalParticipant;
   remoteParticipants: VideoGalleryRemoteParticipant[];
   participantWithScreenShare: VideoGalleryRemoteParticipant;
   onCreateLocalStreamView?: () => Promise<void>;

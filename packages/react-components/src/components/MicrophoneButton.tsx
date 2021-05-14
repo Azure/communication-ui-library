@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { DefaultButton, IButtonProps, Stack, concatStyleSets, mergeStyles } from '@fluentui/react';
+import { DefaultButton, IButtonProps, Label, concatStyleSets, mergeStyles } from '@fluentui/react';
 import { MicIcon, MicOffIcon } from '@fluentui/react-northstar';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 
@@ -37,9 +37,9 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {
     return (
-      <Stack key={'microphoneLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
+      <Label key={'microphoneLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
         {props?.checked ? 'Mute' : 'Unmute'}
-      </Stack>
+      </Label>
     );
   };
 

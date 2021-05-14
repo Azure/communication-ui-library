@@ -2,17 +2,14 @@
 // Licensed under the MIT license.
 
 import { ChatParticipant } from '@azure/communication-chat';
-import {
-  CommunicationIdentifierAsKey,
-  TypingIndicator,
-  getCommunicationIdentifierAsKey
-} from '@azure/acs-chat-declarative';
+import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
+import { CommunicationIdentifierAsKey, getCommunicationIdentifierAsKey } from 'chat-stateful-client';
 import { typingIndicatorSelector } from './typingIndicatorSelector';
 import { communicationIdentifierToString } from './baseSelectors';
 
 describe('typingIndicatorSelector tests', () => {
   test('should filter typing indicators from participant that is the user', async (): Promise<void> => {
-    const orderedTypingIndicators: TypingIndicator[] = [
+    const orderedTypingIndicators: TypingIndicatorReceivedEvent[] = [
       {
         threadId: '1',
         version: '1',
@@ -35,7 +32,7 @@ describe('typingIndicatorSelector tests', () => {
   });
 
   test('should filter duplicate typing indicators from the same participant', async (): Promise<void> => {
-    const orderedTypingIndicators: TypingIndicator[] = [
+    const orderedTypingIndicators: TypingIndicatorReceivedEvent[] = [
       {
         threadId: '1',
         version: '1',
@@ -81,7 +78,7 @@ describe('typingIndicatorSelector tests', () => {
   });
 
   test('should list filtered typing indicators from oldest to most recent', async (): Promise<void> => {
-    const orderedTypingIndicators: TypingIndicator[] = [
+    const orderedTypingIndicators: TypingIndicatorReceivedEvent[] = [
       {
         threadId: '1',
         version: '1',
@@ -137,7 +134,7 @@ describe('typingIndicatorSelector tests', () => {
   });
 
   test('should filter typing indicators older than 8000 milliseconds', async (): Promise<void> => {
-    const orderedTypingIndicators: TypingIndicator[] = [
+    const orderedTypingIndicators: TypingIndicatorReceivedEvent[] = [
       {
         threadId: '1',
         version: '1',
@@ -191,7 +188,7 @@ describe('typingIndicatorSelector tests', () => {
   });
 
   test('should return empty array if there are 20 participants', async (): Promise<void> => {
-    const orderedTypingIndicators: TypingIndicator[] = [
+    const orderedTypingIndicators: TypingIndicatorReceivedEvent[] = [
       {
         threadId: '1',
         version: '1',

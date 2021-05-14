@@ -2,15 +2,15 @@
 // Licensed under the MIT license.
 
 // @ts-ignore
-import { Call, LocalVideoStream, RemoteParticipant, RemoteVideoStream } from '@azure/acs-calling-declarative';
+import { Call, LocalVideoStream, RemoteParticipant, RemoteVideoStream } from 'calling-stateful-client';
 // @ts-ignore
-import * as callingStateful from '@azure/acs-calling-declarative';
+import * as callingStateful from 'calling-stateful-client';
 // @ts-ignore
 import { createSelector } from 'reselect';
 // @ts-ignore
 import * as reselect from 'reselect';
 // @ts-ignore
-import { getCall, BaseSelectorProps, getDisplayName, getIdentifier, getCallId } from './baseSelectors';
+import { getCall, CallingBaseSelectorProps, getDisplayName, getIdentifier, getCallId } from './baseSelectors';
 // @ts-ignore
 import { memoizeFnAll } from './utils/memoizeFnAll';
 import { getUserId } from './utils/participant';

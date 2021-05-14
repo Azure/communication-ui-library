@@ -3,11 +3,11 @@
 
 import React, { Dispatch } from 'react';
 import { InviteFooter } from './InviteFooter';
-import { ParticipantManagement } from './ParticipantManagement';
 import { SettingsManagementComponent } from './SettingsManagement';
 import { SlideOutPanelComponent } from './SlideOutPanel';
 import { chatParticipantListSelector, useHandlers, useSelector } from '@azure/acs-chat-selector';
 import { chatSettingsSelector } from './selectors/chatSettingsSelector';
+import { ParticipantList, CommunicationParticipant } from 'react-components';
 
 export enum SidePanelTypes {
   None = 'none',
@@ -25,7 +25,7 @@ export const SidePanel = (props: SelectedPaneProps): JSX.Element => {
   const { selectedPane, setSelectedPane, onRenderAvatar } = props;
 
   const chatParticipantProps = useSelector(chatParticipantListSelector);
-  const chatParticipantHandlers = useHandlers(ParticipantManagement);
+  const chatParticipantHandlers = useHandlers(ParticipantList);
   const chatSettingsProps = useSelector(chatSettingsSelector);
   const chatSettingsHandlers = useHandlers(SettingsManagementComponent);
 
@@ -56,7 +56,13 @@ export const SidePanel = (props: SelectedPaneProps): JSX.Element => {
         onRenderFooter={() => <InviteFooter />}
         onClose={() => setSelectedPane(SidePanelTypes.None)}
       >
-        <ParticipantManagement {...chatParticipantProps} {...chatParticipantHandlers} onRenderAvatar={onRenderAvatar} />
+        <ParticipantList
+          {...chatParticipantProps}
+          {...chatParticipantHandlers}
+          onRenderAvatar={
+            onRenderAvatar ? (participant: CommunicationParticipant) => onRenderAvatar(participant.userId) : undefined
+          }
+        />
       </SlideOutPanelComponent>
       <SettingsManagementComponent
         {...chatSettingsProps}
