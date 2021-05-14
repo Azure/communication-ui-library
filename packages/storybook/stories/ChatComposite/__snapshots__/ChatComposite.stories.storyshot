@@ -46,6 +46,147 @@ exports[`storybook snapshot tests Storyshots Composites/Chat Basic Canvas 1`] = 
 </div>
 `;
 
+exports[`storybook snapshot tests Storyshots Composites/Chat Chat 1`] = `
+<div
+  className="css-80 root-0 body-1"
+>
+  <div
+    className="css-80"
+    data-uses-unhanded-props={true}
+    dir="ltr"
+  >
+    <div
+      style={
+        Object {
+          "alignItems": "center",
+          "display": "flex",
+          "height": "100vh",
+          "justifyContent": "center",
+        }
+      }
+    >
+      <div
+        style={
+          Object {
+            "height": "90vh",
+            "width": "90vw",
+          }
+        }
+      >
+        <div
+          className="ms-Stack css-2"
+          style={
+            Object {
+              "height": "100%",
+              "width": "100%",
+            }
+          }
+        >
+          <span>
+            Connection String is required to run the Chat widget.
+          </span>
+          <span>
+            Or you can fill out the required params to do so.
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`storybook snapshot tests Storyshots Composites/Chat Customization Canvas 1`] = `
+<div
+  className="css-80 root-0 body-1"
+>
+  <div
+    className="css-80"
+    data-uses-unhanded-props={true}
+    dir="ltr"
+  >
+    <div
+      style={
+        Object {
+          "alignItems": "center",
+          "display": "flex",
+          "height": "100vh",
+          "justifyContent": "center",
+        }
+      }
+    >
+      <div
+        style={
+          Object {
+            "height": "90vh",
+            "width": "90vw",
+          }
+        }
+      >
+        <div
+          className="ms-Stack css-2"
+          style={
+            Object {
+              "height": "100%",
+              "width": "100%",
+            }
+          }
+        >
+          <span>
+            Please provide the connection string and display name to use.
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`storybook snapshot tests Storyshots Composites/Chat Data Model Canvas 1`] = `
+<div
+  className="css-80 root-0 body-1"
+>
+  <div
+    className="css-80"
+    data-uses-unhanded-props={true}
+    dir="ltr"
+  >
+    <div
+      style={
+        Object {
+          "alignItems": "center",
+          "display": "flex",
+          "height": "100vh",
+          "justifyContent": "center",
+        }
+      }
+    >
+      <div
+        style={
+          Object {
+            "height": "90vh",
+            "width": "90vw",
+          }
+        }
+      >
+        <div
+          className="ms-Stack css-2"
+          style={
+            Object {
+              "height": "100%",
+              "width": "100%",
+            }
+          }
+        >
+          <span>
+            Please provide the connection string and display name to use.
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`storybook snapshot tests Storyshots Composites/Chat Themes Canvas 1`] = `
 <div
   className="css-80 root-0 body-1"
