@@ -30,8 +30,7 @@ export const topicNameLabelStyle = mergeStyles({
   fontSize: '1rem', // 16px
   fontWeight: 600,
   marginRight: '0.125rem',
-  width: '31.25rem',
-  wordBreak: 'break-all',
+  textOverflow: 'ellipsis',
   overflowY: 'hidden'
 });
 

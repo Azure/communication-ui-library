@@ -55,7 +55,7 @@ export const ChatHeader = (props: ChatHeaderProps): JSX.Element => {
 
   return (
     <Stack className={chatHeaderContainerStyle} horizontal={true} horizontalAlign="space-between">
-      <Stack.Item align="center">
+      <Stack.Item align="center" style={{ minWidth: '12.5rem' }}>
         <div className={topicNameLabelStyle}>{props.topicName}</div>
       </Stack.Item>
       <Stack.Item align="center">
