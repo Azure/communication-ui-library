@@ -13,7 +13,7 @@ export interface StreamMediaProps {
   /** Video stream element to render. */
   videoStreamElement: HTMLElement | null;
   /** Decides whether invert the video or not. */
-  invertVideo?: boolean;
+  isMirrored?: boolean;
   /**
    * Allows users to pass in an object contains custom CSS styles.
    * @Example
@@ -30,7 +30,7 @@ export interface StreamMediaProps {
  */
 export const StreamMedia = (props: StreamMediaProps): JSX.Element => {
   const containerEl = useRef<HTMLDivElement>(null);
-  const { invertVideo, videoStreamElement, styles } = props;
+  const { isMirrored, videoStreamElement, styles } = props;
 
   useEffect(() => {
     const container = containerEl.current;
@@ -40,6 +40,6 @@ export const StreamMedia = (props: StreamMediaProps): JSX.Element => {
   }, [videoStreamElement]);
 
   return (
-    <div className={mergeStyles(invertVideo ? invertedVideoStyle : mediaContainer, styles?.root)} ref={containerEl} />
+    <div className={mergeStyles(isMirrored ? invertedVideoStyle : mediaContainer, styles?.root)} ref={containerEl} />
   );
 };
