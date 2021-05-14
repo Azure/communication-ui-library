@@ -166,7 +166,7 @@ const IncomingCallModal = (props: WithTheme<IncomingCallModalProps>): JSX.Elemen
   const mediaGalleryLocalParticipant: JSX.Element = (
     <VideoTile
       isVideoReady={showLocalVideo}
-      videoProvider={<StreamMedia videoStreamElement={localVideoStreamElement} />}
+      renderElement={<StreamMedia videoStreamElement={localVideoStreamElement} />}
       displayName={localParticipantName}
       isMirrored={localVideoInverted}
     />
