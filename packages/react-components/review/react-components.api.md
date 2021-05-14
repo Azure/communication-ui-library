@@ -433,7 +433,7 @@ export interface VideoTileProps {
     children?: React_2.ReactNode;
     isMirrored?: boolean;
     isVideoReady?: boolean;
-    placeholderProvider?: JSX.Element | null;
+    placeholder?: JSX.Element | null;
     renderElement?: JSX.Element | null;
     styles?: VideoTileStylesProps;
 }
