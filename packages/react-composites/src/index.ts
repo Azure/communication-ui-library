@@ -6,6 +6,5 @@ export type {
   CommunicationUiError,
   CommunicationUiErrorArgs,
   CommunicationUiErrorInfo,
-  CommunicationUiErrorSeverity,
   CommunicationUiErrorCode
 } from './types';

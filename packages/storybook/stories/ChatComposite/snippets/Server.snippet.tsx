@@ -3,7 +3,7 @@
 import { ChatClient } from '@azure/communication-chat';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { CommunicationIdentityClient } from '@azure/communication-identity';
-import { ChatConfig } from 'react-composites';
+import { ChatConfig } from '../ChatConfig';
 
 export const createUserAndThread = async (
   resourceConnectionString: string,

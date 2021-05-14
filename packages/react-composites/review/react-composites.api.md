@@ -8,6 +8,7 @@ import { ChatMessage } from '@azure/communication-chat';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { ChatThreadClientState } from 'chat-stateful-client';
+import { CommunicationUiErrorSeverity } from 'react-components';
 import { ErrorInfo } from 'react';
 import { StatefulChatClient } from 'chat-stateful-client';
 
@@ -73,14 +74,14 @@ export interface ChatAdapter {
 }
 
 // @public (undocumented)
-export type ChatClientState = {
+export const ChatComposite: (props: ChatProps) => JSX.Element;
+
+// @public (undocumented)
+export type ChatCompositeClientState = {
     userId: string;
     displayName: string;
     thread: ChatThreadClientState;
 };
-
-// @public (undocumented)
-export const ChatComposite: (props: ChatProps) => JSX.Element;
 
 // @public (undocumented)
 export type ChatEvent = 'messageReceived' | 'participantsJoined' | 'error';
@@ -99,7 +100,7 @@ export type ChatProps = {
 };
 
 // @public (undocumented)
-export type ChatState = ChatUIState & ChatClientState;
+export type ChatState = ChatUIState & ChatCompositeClientState;
 
 // @public (undocumented)
 export type ChatUIState = {
@@ -193,9 +194,6 @@ export interface CommunicationUiErrorInfo {
     // (undocumented)
     severity: CommunicationUiErrorSeverity;
 }
-
-// @public
-export type CommunicationUiErrorSeverity = 'info' | 'warning' | 'error' | 'ignore';
 
 // @public (undocumented)
 export const createAzureCommunicationChatAdapter: (token: string, endpointUrl: string, threadId: string, displayName: string, refreshTokenCallback?: (() => Promise<string>) | undefined) => Promise<AzureCommunicationChatAdapter>;
