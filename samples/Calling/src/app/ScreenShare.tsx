@@ -4,7 +4,13 @@
 import { memoizeFnAll } from '@azure/acs-calling-selector';
 import { Label, mergeStyles, Spinner, SpinnerSize, Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
-import { StreamMedia, VideoGalleryLocalParticipant, VideoGalleryRemoteParticipant, VideoTile } from 'react-components';
+import {
+  StreamMedia,
+  VideoGalleryLocalParticipant,
+  VideoGalleryRemoteParticipant,
+  VideoStreamOptions,
+  VideoTile
+} from 'react-components';
 import {
   aspectRatioBoxContentStyle,
   aspectRatioBoxStyle,
@@ -20,7 +26,7 @@ export type ScreenShareProps = {
   remoteParticipants: VideoGalleryRemoteParticipant[];
   participantWithScreenShare: VideoGalleryRemoteParticipant;
   onCreateLocalStreamView?: () => Promise<void>;
-  onCreateRemoteStreamView?: (userId: string) => Promise<void>;
+  onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
 };
 
 const memoizeAllRemoteParticipants = memoizeFnAll(
@@ -67,7 +73,9 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
     if (screenShareStream?.isAvailable && !screenShareStream?.videoProvider) {
       participantWithScreenShare &&
         onCreateRemoteStreamView &&
-        onCreateRemoteStreamView(participantWithScreenShare.userId);
+        onCreateRemoteStreamView(participantWithScreenShare.userId, {
+          scalingMode: 'Fit'
+        });
     }
     if (videoStream?.isAvailable && !videoStream?.videoProvider) {
       participantWithScreenShare &&

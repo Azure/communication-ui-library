@@ -50,7 +50,8 @@ export async function startRenderVideo(
 
     if (!localVideoStream || localVideoStreamRenderer) {
       // TODO: How to standarize all errors
-      throw new Error('LocalVideoStream not found or Stream is already rendered');
+      // throw new Error('LocalVideoStream not found or Stream is already rendered');
+      return;
     }
 
     const renderer = new VideoStreamRenderer(localVideoStream);

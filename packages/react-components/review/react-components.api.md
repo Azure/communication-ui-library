@@ -84,14 +84,6 @@ export interface ControlBarProps {
 }
 
 // @public (undocumented)
-export interface CreateViewOptions {
-    // (undocumented)
-    isMirrored?: boolean;
-    // (undocumented)
-    scalingMode?: ScalingMode;
-}
-
-// @public (undocumented)
 export type CustomMessage = Message<'custom'>;
 
 // @public (undocumented)
@@ -164,16 +156,6 @@ export const labeledRecordButtonProps: IButtonProps;
 
 // @public
 export const lightTheme: PartialTheme & CallingTheme;
-
-// @public
-export interface LocalVideoStream {
-    mediaStreamType: MediaStreamType;
-    source: VideoDeviceInfo;
-    videoStreamRendererView?: VideoStreamRendererView | undefined;
-}
-
-// @public (undocumented)
-export type MediaStreamType = 'Video' | 'ScreenSharing';
 
 // @public (undocumented)
 export type Message<T extends MessageTypes> = {
@@ -300,17 +282,6 @@ export interface ReadReceiptProps {
 export const recordButtonProps: IButtonProps;
 
 // @public
-export interface RemoteVideoStream {
-    id: number;
-    isAvailable: boolean;
-    mediaStreamType: MediaStreamType;
-    videoStreamRendererView: VideoStreamRendererView | undefined;
-}
-
-// @public (undocumented)
-export type ScalingMode = 'Stretch' | 'Crop' | 'Fit';
-
-// @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
 
 // @public
@@ -380,16 +351,6 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
 }
 
 // @public (undocumented)
-export interface VideoDeviceInfo {
-    readonly deviceType: VideoDeviceType;
-    readonly id: string;
-    readonly name: string;
-}
-
-// @public (undocumented)
-export type VideoDeviceType = 'Unknown' | 'UsbCamera' | 'CaptureAdapter' | 'Virtual';
-
-// @public (undocumented)
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
 // @public (undocumented)
@@ -454,13 +415,6 @@ export interface VideoStreamOptions {
     isMirrored?: boolean;
     // (undocumented)
     scalingMode?: 'Stretch' | 'Crop' | 'Fit';
-}
-
-// @public
-export interface VideoStreamRendererView {
-    isMirrored: boolean;
-    scalingMode: ScalingMode;
-    target: HTMLElement;
 }
 
 // @public (undocumented)

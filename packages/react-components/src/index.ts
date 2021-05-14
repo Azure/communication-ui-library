@@ -24,4 +24,3 @@ export type {
   VideoGalleryLocalParticipant,
   VideoGalleryRemoteParticipant
 } from './types';
-export * from './types/GalleryParticipant';
