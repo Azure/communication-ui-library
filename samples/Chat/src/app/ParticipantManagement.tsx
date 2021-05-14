@@ -19,7 +19,7 @@ export const ParticipantManagement = (props: ParticipantManagementProps): JSX.El
   return (
     <Stack>
       {chatParticipants.map((participant) => {
-        if (participant.displayName !== undefined) {
+        if (participant.displayName ?? participant.userId) {
           const menuItems: IContextualMenuItem[] = [];
           menuItems.push({
             key: 'Remove',
