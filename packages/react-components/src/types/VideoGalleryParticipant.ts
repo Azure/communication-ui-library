@@ -18,7 +18,7 @@ export interface VideoGalleryStream {
   id?: number;
   isAvailable?: boolean;
   isMirrored?: boolean;
-  videoProvider?: HTMLElement;
+  renderElement?: HTMLElement;
 }
 
 // set the required attribs in selector. (Further simplifying our component logic) For example

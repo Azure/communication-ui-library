@@ -69,7 +69,7 @@ export const MediaGalleryComponentBase = (props: MediaGalleryContainerProps): JS
     return (
       <VideoTile
         isVideoReady={localVideoStream.isVideoReady}
-        videoProvider={<StreamMedia videoStreamElement={localVideoStream.videoStreamElement} />}
+        renderElement={<StreamMedia videoStreamElement={localVideoStream.videoStreamElement} />}
         displayName={localParticipant.displayName}
       >
         <Label className={localVideoStream.isVideoReady ? videoHint : disabledVideoHint}>

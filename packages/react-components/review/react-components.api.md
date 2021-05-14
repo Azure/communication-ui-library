@@ -410,7 +410,7 @@ export interface VideoGalleryStream {
     // (undocumented)
     isMirrored?: boolean;
     // (undocumented)
-    videoProvider?: HTMLElement;
+    renderElement?: HTMLElement;
 }
 
 // @public (undocumented)
@@ -430,8 +430,8 @@ export interface VideoTileProps {
     isMirrored?: boolean;
     isVideoReady?: boolean;
     placeholderProvider?: JSX.Element | null;
+    renderElement?: JSX.Element | null;
     styles?: VideoTileStylesProps;
-    videoProvider?: JSX.Element | null;
 }
 
 // @public (undocumented)

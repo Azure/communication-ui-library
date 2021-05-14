@@ -28,6 +28,7 @@ export interface VideoGalleryProps {
   onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
 }
 
+// @todo: replace with React.memo method
 const memoizeAllRemoteParticipants = memoizeFnAll(
   (
     userId: string,
@@ -71,7 +72,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   /**
    * Utility function for meoized rendering of LocalParticipant.
    */
-  const _onRenderLocalVideoTile = useMemo((): JSX.Element => {
+  const defaultOnRenderLocalVideoTile = useMemo((): JSX.Element => {
     const localVideoStream = localParticipant?.videoStream;
     const isLocalVideoReady = localVideoStream?.isAvailable;
 
@@ -96,7 +97,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   /**
    * Utility function for memoized rendering of RemoteParticipants.
    */
-  const _onRenderRemoteParticipants = useMemo(() => {
+  const defaultOnRenderRemoteParticipants = useMemo(() => {
     if (!remoteParticipants) return null;
 
     // If user provided a custom onRender function return that function.
@@ -123,9 +124,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   return (
     <GridLayout styles={styles}>
       <Stack horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
-        {localParticipant && _onRenderLocalVideoTile}
+        {localParticipant && defaultOnRenderLocalVideoTile}
       </Stack>
-      {_onRenderRemoteParticipants}
+      {defaultOnRenderRemoteParticipants}
     </GridLayout>
   );
 };

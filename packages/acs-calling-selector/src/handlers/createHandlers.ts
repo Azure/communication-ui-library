@@ -14,7 +14,7 @@ import { DeviceManager, StatefulCallClient, StatefulDeviceManager } from 'callin
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
 import { VideoStreamOptions } from 'react-components';
-import { getUserId } from '../utils/participant';
+import { getACSId } from '../utils/getACSId';
 
 export type DefaultCallingHandlers = ReturnType<typeof createDefaultCallingHandlers>;
 
@@ -145,7 +145,7 @@ export const createDefaultCallingHandlers = memoizeOne(
     const onHangUp = async (): Promise<void> => await call?.hangUp();
 
     const onCreateLocalStreamView = async (options?: VideoStreamOptions): Promise<void> => {
-      if (!call || call.localVideoStreams.length < 1) return;
+      if (!call || call.localVideoStreams.length === 0) return;
       const localStream = call.localVideoStreams.find((item) => item.mediaStreamType === 'Video');
       if (!localStream) return;
       callClient.startRenderVideo(call.id, localStream, options);
@@ -157,7 +157,7 @@ export const createDefaultCallingHandlers = memoizeOne(
       if (!callState) throw new Error(`Call Not Found: ${call.id}`);
 
       const streams = Array.from(callState.remoteParticipants.values()).find(
-        (participant) => getUserId(participant.identifier) === userId
+        (participant) => getACSId(participant.identifier) === userId
       )?.videoStreams;
 
       if (!streams) return;

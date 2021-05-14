@@ -103,7 +103,7 @@ function VideoTile (props: VideoTileProps): JSX.Element {
   return (
     <Stack className={mergeStyles(rootStyles, styles?.root)}>
         <Stack className={mergeStyles(videoContainerStyles, styles?.videoContainer)}>
-            {videoProvider}
+            {renderElement}
         </Stack>
         <Stack className={mergeStyles(overlayContainerStyles, styles?.overlayContainer)}>
             {children}
