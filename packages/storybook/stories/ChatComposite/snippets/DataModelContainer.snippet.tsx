@@ -1,5 +1,6 @@
+import { ChatAdapter, ChatComposite, createAzureCommunicationChatAdapter } from '@azure/communication-react';
 import React, { useState, useEffect, useCallback } from 'react';
-import { ChatAdapter, ChatConfig, ChatComposite, createAzureCommunicationChatAdapter } from 'react-composites';
+import { ChatConfig } from '../ChatConfig';
 
 export interface ContosoChatContainerProps {
   config: ChatConfig | undefined;
