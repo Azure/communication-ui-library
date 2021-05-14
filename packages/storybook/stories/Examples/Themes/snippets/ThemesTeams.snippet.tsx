@@ -71,7 +71,7 @@ export const TeamsLikeTheme: () => JSX.Element = () => {
         }}
       >
         <GridLayout>
-          <VideoTile isVideoReady={false} videoProvider={null} avatarName={'Michael'}>
+          <VideoTile isVideoReady={false} videoProvider={null} displayName={'Michael'}>
             <label>Michael</label>
           </VideoTile>
         </GridLayout>

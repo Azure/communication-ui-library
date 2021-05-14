@@ -17,7 +17,7 @@ export const VideoTileExample: () => JSX.Element = () => {
           // NOTE: Replace with your own video provider. (An html element with video stream)
           <StreamMedia videoStreamElement={renderVideoStream()} />
         }
-        avatarName={'Jack Reacher'}
+        displayName={'Jack Reacher'}
         invertVideo={true}
         styles={customStyles}
       ></VideoTile>

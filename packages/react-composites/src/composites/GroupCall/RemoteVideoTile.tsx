@@ -13,7 +13,7 @@ export interface RemoteVideoTileProps {
   isVideoReady: boolean;
   videoStreamElement: HTMLElement | null;
   label: string;
-  avatarName?: string;
+  displayName?: string;
 }
 
 const RemoteVideoTileComponentBase = (props: RemoteVideoTileProps): JSX.Element => {
@@ -23,7 +23,7 @@ const RemoteVideoTileComponentBase = (props: RemoteVideoTileProps): JSX.Element 
     <VideoTile
       isVideoReady={isVideoReady}
       videoProvider={<StreamMedia videoStreamElement={videoStreamElement} />}
-      avatarName={label}
+      displayName={label}
     >
       <Label className={isVideoReady ? videoHint : disabledVideoHint}>{label}</Label>
     </VideoTile>

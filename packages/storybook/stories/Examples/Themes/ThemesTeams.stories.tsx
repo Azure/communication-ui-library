@@ -69,7 +69,7 @@ export const TeamsThemeComponent: () => JSX.Element = () => {
           }}
         >
           <GridLayout>
-            <VideoTile isVideoReady={false} videoProvider={null} avatarName={'Michael'}>
+            <VideoTile isVideoReady={false} videoProvider={null} displayName={'Michael'}>
               <label>Michael</label>
 
               {/*Control Bar with default set up*/}
