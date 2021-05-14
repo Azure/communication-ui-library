@@ -9,7 +9,7 @@ import {
   VideoTile
 } from '@azure/communication-react';
 
-import { Stack, IContextualMenuProps } from '@fluentui/react';
+import { Stack, IContextualMenuProps, mergeStyles } from '@fluentui/react';
 import React, { useState } from 'react';
 
 export const CallingComponents = (): JSX.Element => {
@@ -28,7 +28,7 @@ export const CallingComponents = (): JSX.Element => {
   const [screenshareButtonChecked, setScreenshareButtonChecked] = useState<boolean>(false);
 
   return (
-    <Stack>
+    <Stack className={mergeStyles({ height: '100%' })}>
       {/* GridLayout Component relies on the parent's height and width, so it's required to set the height and width on its parent. */}
       <div style={{ height: '30rem', width: '30rem', border: '1px solid' }}>
         <GridLayout>
