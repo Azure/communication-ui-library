@@ -362,11 +362,7 @@ export type DeviceManager = {
   deviceAccess?: DeviceAccess;
   /**
    * Stores created views that are not associated with any Call state (when
-<<<<<<< HEAD
-   * {@Link DeclarativeCallClient#startRenderVideo} is called with undefined callId and defined LocalVideoStream).
-=======
-   * {@Link StatefulCallClient#startRenderVideo} is called with undefined callId and LocalVideoStream).
->>>>>>> origin/main
+   * {@Link StatefulCallClient#startRenderVideo} is called with undefined callId and defined LocalVideoStream).
    */
   unparentedViews: Map<LocalVideoStream, VideoStreamRendererViewAndStatus>;
 };
