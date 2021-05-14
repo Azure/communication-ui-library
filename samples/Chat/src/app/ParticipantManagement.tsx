@@ -19,7 +19,7 @@ export const ParticipantManagement = (props: ParticipantManagementProps): JSX.El
   return (
     <Stack>
       {chatParticipants.map((participant) => {
-        if (participant.displayName !== undefined) {
+        if (participant.displayName ?? participant.userId) {
           const menuItems: IContextualMenuItem[] = [];
           menuItems.push({
             key: 'Remove',
@@ -37,7 +37,7 @@ export const ParticipantManagement = (props: ParticipantManagementProps): JSX.El
             <ParticipantItem
               key={participant.userId}
               name={participant.displayName as string}
-              me={me}
+              isYou={me}
               menuItems={me ? undefined : menuItems}
               onRenderAvatar={onRenderAvatar ? () => onRenderAvatar(participant.userId) : undefined}
             />

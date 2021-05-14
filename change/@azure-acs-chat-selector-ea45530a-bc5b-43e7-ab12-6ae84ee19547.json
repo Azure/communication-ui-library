@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "including message type so we know how to render the message payload",
+  "packageName": "@azure/acs-chat-selector",
+  "email": "alkwa@microsoft.com",
+  "dependentChangeType": "patch"
+}

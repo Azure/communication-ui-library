@@ -55,6 +55,7 @@ export type ChatMessagePayload = {
     attached?: MessageAttachedStatus | boolean;
     mine?: boolean;
     clientMessageId?: string;
+    type: string;
 };
 
 // @public
