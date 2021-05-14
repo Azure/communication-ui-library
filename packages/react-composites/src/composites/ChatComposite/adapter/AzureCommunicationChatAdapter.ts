@@ -150,7 +150,7 @@ export const createAzureCommunicationChatAdapter = async (
   threadId: string,
   displayName: string,
   refreshTokenCallback?: (() => Promise<string>) | undefined
-): Promise<AzureCommunicationChatAdapter> => {
+): Promise<ChatAdapter> => {
   const rawUserId = getIdFromToken(token);
 
   // This hack can be removed when `getIdFromToken` is dropped in favour of actually passing in user credentials.

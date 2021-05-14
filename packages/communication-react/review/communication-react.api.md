@@ -32,37 +32,6 @@ export const answerButtonProps: IButtonProps;
 export type AreEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
 // @public (undocumented)
-export class AzureCommunicationChatAdapter implements ChatAdapter {
-    constructor(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient);
-    // (undocumented)
-    getState: () => ChatState;
-    // (undocumented)
-    loadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
-    // (undocumented)
-    offStateChange: (handler: (state: ChatState) => void) => void;
-    // (undocumented)
-    on(event: 'messageReceived', messageReceivedHandler: (message: ChatMessage_2) => void): void;
-    // (undocumented)
-    on(event: 'participantsJoined', participantsJoinedHandler: (participant: ChatParticipant) => void): void;
-    // (undocumented)
-    on(event: 'error', errorHandler: (e: Error) => void): void;
-    // (undocumented)
-    onStateChange: (handler: (state: ChatState) => void) => void;
-    // (undocumented)
-    removeParticipant: (userId: string) => Promise<void>;
-    // (undocumented)
-    sendMessage: (content: string) => Promise<void>;
-    // (undocumented)
-    sendReadReceipt: (chatMessageId: string) => Promise<void>;
-    // (undocumented)
-    sendTypingIndicator: () => Promise<void>;
-    // (undocumented)
-    setTopic: (topicName: string) => Promise<void>;
-    // (undocumented)
-    updateAllParticipants: () => Promise<void>;
-}
-
-// @public (undocumented)
 export interface BaseCustomStylesProps {
     root?: IStyle;
 }
@@ -378,7 +347,7 @@ export interface ControlBarProps {
 }
 
 // @public (undocumented)
-export const createAzureCommunicationChatAdapter: (token: string, endpointUrl: string, threadId: string, displayName: string, refreshTokenCallback?: (() => Promise<string>) | undefined) => Promise<AzureCommunicationChatAdapter>;
+export const createAzureCommunicationChatAdapter: (token: string, endpointUrl: string, threadId: string, displayName: string, refreshTokenCallback?: (() => Promise<string>) | undefined) => Promise<ChatAdapter>;
 
 // @public (undocumented)
 export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => DefaultChatHandlers;

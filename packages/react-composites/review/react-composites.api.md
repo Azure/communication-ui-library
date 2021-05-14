@@ -6,42 +6,9 @@
 
 import { ChatMessage } from '@azure/communication-chat';
 import { ChatParticipant } from '@azure/communication-chat';
-import { ChatThreadClient } from '@azure/communication-chat';
 import { ChatThreadClientState } from 'chat-stateful-client';
 import { CommunicationUiErrorSeverity } from 'react-components';
 import { ErrorInfo } from 'react';
-import { StatefulChatClient } from 'chat-stateful-client';
-
-// @public (undocumented)
-export class AzureCommunicationChatAdapter implements ChatAdapter {
-    constructor(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient);
-    // (undocumented)
-    getState: () => ChatState;
-    // (undocumented)
-    loadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
-    // (undocumented)
-    offStateChange: (handler: (state: ChatState) => void) => void;
-    // (undocumented)
-    on(event: 'messageReceived', messageReceivedHandler: (message: ChatMessage) => void): void;
-    // (undocumented)
-    on(event: 'participantsJoined', participantsJoinedHandler: (participant: ChatParticipant) => void): void;
-    // (undocumented)
-    on(event: 'error', errorHandler: (e: Error) => void): void;
-    // (undocumented)
-    onStateChange: (handler: (state: ChatState) => void) => void;
-    // (undocumented)
-    removeParticipant: (userId: string) => Promise<void>;
-    // (undocumented)
-    sendMessage: (content: string) => Promise<void>;
-    // (undocumented)
-    sendReadReceipt: (chatMessageId: string) => Promise<void>;
-    // (undocumented)
-    sendTypingIndicator: () => Promise<void>;
-    // (undocumented)
-    setTopic: (topicName: string) => Promise<void>;
-    // (undocumented)
-    updateAllParticipants: () => Promise<void>;
-}
 
 // @public (undocumented)
 export interface ChatAdapter {
@@ -196,7 +163,7 @@ export interface CommunicationUiErrorInfo {
 }
 
 // @public (undocumented)
-export const createAzureCommunicationChatAdapter: (token: string, endpointUrl: string, threadId: string, displayName: string, refreshTokenCallback?: (() => Promise<string>) | undefined) => Promise<AzureCommunicationChatAdapter>;
+export const createAzureCommunicationChatAdapter: (token: string, endpointUrl: string, threadId: string, displayName: string, refreshTokenCallback?: (() => Promise<string>) | undefined) => Promise<ChatAdapter>;
 
 
 // (No @packageDocumentation comment for this package)
