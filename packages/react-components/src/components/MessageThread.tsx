@@ -31,6 +31,7 @@ import {
 import { ReadReceipt, ReadReceiptProps } from './ReadReceipt';
 import { memoizeFnAll } from './utils/memoizeFnAll';
 import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from './SystemMessage';
+import { Parser } from 'html-to-react';
 
 const NEW_MESSAGES = 'New Messages';
 
@@ -38,6 +39,7 @@ const isMessageSame = (first: ChatMessagePayload, second: ChatMessagePayload): b
   return (
     first.messageId === second.messageId &&
     first.content === second.content &&
+    first.type === second.type &&
     JSON.stringify(first.createdOn) === JSON.stringify(second.createdOn) &&
     first.senderId === second.senderId &&
     first.senderDisplayName === second.senderDisplayName &&
@@ -169,26 +171,64 @@ const DefaultSystemMessageRenderer: DefaultMessageRendererType = (props: Message
   return <></>;
 };
 
+// https://stackoverflow.com/questions/28899298/extract-the-text-out-of-html-string-using-javascript
+function extractContent(s): string {
+  const span = document.createElement('span');
+  span.innerHTML = s;
+  return span.textContent || span.innerText;
+}
+
+const generateRichTextHTMLMessageContent = (payload: ChatMessagePayload): JSX.Element => {
+  const htmlToReactParser = new Parser();
+  const liveAuthor = `${payload.senderDisplayName} says `;
+  return (
+    <div>
+      <LiveMessage
+        message={`${payload.mine ? '' : liveAuthor} ${extractContent(payload.content)}`}
+        aria-live="polite"
+      />
+      {htmlToReactParser.parse(payload.content)}
+    </div>
+  );
+};
+
+const generateTextMessageContent = (payload: ChatMessagePayload): JSX.Element => {
+  const liveAuthor = `${payload.senderDisplayName} says `;
+  return (
+    <div>
+      <LiveMessage message={`${payload.mine ? '' : liveAuthor} ${payload.content}`} aria-live="polite" />
+      <Linkify
+        componentDecorator={(decoratedHref: string, decoratedText: string, key: number) => {
+          return (
+            <Link href={decoratedHref} key={key}>
+              {decoratedText}
+            </Link>
+          );
+        }}
+      >
+        {payload.content}
+      </Linkify>
+    </div>
+  );
+};
+
+const generateMessageContent = (payload: ChatMessagePayload) => {
+  switch (payload.type) {
+    case 'text':
+      return generateTextMessageContent(payload);
+    case 'html':
+      return generateRichTextHTMLMessageContent(payload);
+    case 'RichText/Html':
+      return generateRichTextHTMLMessageContent(payload);
+    default:
+      return <></>;
+  }
+};
+
 const DefaultChatMessageRenderer: DefaultMessageRendererType = (props: MessageProps) => {
   if (props.message.type === 'chat') {
     const payload: ChatMessagePayload = props.message.payload;
-    const liveAuthor = `${payload.senderDisplayName} says `;
-    const messageContentItem = (
-      <div>
-        <LiveMessage message={`${payload.mine ? '' : liveAuthor} ${payload.content}`} aria-live="polite" />
-        <Linkify
-          componentDecorator={(decoratedHref: string, decoratedText: string, key: number) => {
-            return (
-              <Link href={decoratedHref} key={key}>
-                {decoratedText}
-              </Link>
-            );
-          }}
-        >
-          {payload.content}
-        </Linkify>
-      </div>
-    );
+    const messageContentItem = generateMessageContent(payload);
     return (
       <Chat.Message
         className={mergeStyles(chatMessageStyle as IStyle, props.messageContainerStyle as IStyle)}

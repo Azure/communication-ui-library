@@ -55,6 +55,7 @@ export type ChatMessagePayload = {
     attached?: MessageAttachedStatus | boolean;
     mine?: boolean;
     clientMessageId?: string;
+    type: MessageContentType;
 };
 
 // @public
@@ -68,16 +69,7 @@ export type CommunicationParticipant = {
 };
 
 // @public
-export enum CommunicationUiErrorSeverity {
-    // (undocumented)
-    ERROR = "Error",
-    // (undocumented)
-    IGNORE = "Ignore",
-    // (undocumented)
-    INFO = "Info",
-    // (undocumented)
-    WARNING = "Warning"
-}
+export type CommunicationUiErrorSeverity = 'info' | 'warning' | 'error' | 'ignore';
 
 // @public
 export const ControlBar: (props: ControlBarProps) => JSX.Element;
@@ -191,12 +183,10 @@ export type Message<T extends MessageTypes> = {
 };
 
 // @public (undocumented)
-export enum MessageAttachedStatus {
-    // (undocumented)
-    BOTTOM = "bottom",
-    // (undocumented)
-    TOP = "top"
-}
+export type MessageAttachedStatus = 'bottom' | 'top';
+
+// @public (undocumented)
+export type MessageContentType = 'text' | 'html' | 'RichText/Html' | 'unknown';
 
 // @public
 export type MessageProps = {
@@ -261,7 +251,7 @@ export const ParticipantItem: (props: ParticipantItemProps) => JSX.Element;
 
 // @public
 export interface ParticipantItemProps {
-    isYou?: boolean;
+    me?: boolean;
     menuItems?: IContextualMenuItem[];
     name: string;
     onRenderAvatar?: (props?: ParticipantItemProps) => JSX.Element | null;
@@ -274,7 +264,7 @@ export interface ParticipantItemProps {
 export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
     avatar?: IStyle;
     iconContainer?: IStyle;
-    isYou?: IStyle;
+    me?: IStyle;
     menu?: IStyle;
 }
 
@@ -339,9 +329,9 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 // @public
 export interface SendBoxProps {
     disabled?: boolean;
-    onMessageSend?: (content: string) => Promise<void>;
     onRenderIcon?: (props: SendBoxProps, isMouseOverSendIcon: boolean) => JSX.Element | null;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
+    onSendMessage?: (content: string) => Promise<void>;
     onTyping?: () => Promise<void>;
     styles?: SendBoxStylesProps;
     supportNewline?: boolean;
@@ -361,7 +351,7 @@ export const StreamMedia: (props: StreamMediaProps) => JSX.Element;
 
 // @public
 export interface StreamMediaProps {
-    invertVideo?: boolean;
+    isMirrored?: boolean;
     styles?: BaseCustomStylesProps;
     videoStreamElement: HTMLElement | null;
 }
@@ -453,7 +443,7 @@ export const VideoTile: (props: VideoTileProps & PlaceholderProps) => JSX.Elemen
 // @public
 export interface VideoTileProps {
     children?: React_2.ReactNode;
-    invertVideo?: boolean;
+    isMirrored?: boolean;
     isVideoReady?: boolean;
     placeholderProvider?: JSX.Element | null;
     styles?: VideoTileStylesProps;

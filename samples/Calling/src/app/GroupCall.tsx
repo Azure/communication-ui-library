@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallClientState, DeclarativeCallClient } from 'calling-stateful-client';
+import { CallClientState, StatefulCallClient } from 'calling-stateful-client';
 import { AudioOptions, CallState } from '@azure/communication-calling';
 import { Label, Overlay, Spinner, Stack } from '@fluentui/react';
 import React, { useEffect, useState } from 'react';
@@ -45,7 +45,7 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
   const { callAgent } = useCallingContext();
   const { setCall, localVideoStream, isMicrophoneEnabled } = useCallContext();
   const call = useCall();
-  const callClient: DeclarativeCallClient = useCallClient();
+  const callClient: StatefulCallClient = useCallClient();
   const [callState, setCallState] = useState<CallState | undefined>(undefined);
   const [isScreenSharingOn, setIsScreenSharingOn] = useState<boolean | undefined>(undefined);
 

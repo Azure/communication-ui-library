@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "remove enums in favor of string literals",
+  "packageName": "react-composites",
+  "email": "mail@jamesburnside.com",
+  "dependentChangeType": "none"
+}

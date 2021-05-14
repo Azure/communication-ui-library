@@ -2,10 +2,9 @@
 // Licensed under the MIT license.
 
 export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
-export enum MessageAttachedStatus {
-  BOTTOM = 'bottom',
-  TOP = 'top'
-}
+export type MessageAttachedStatus = 'bottom' | 'top';
+
+export type MessageContentType = 'text' | 'html' | 'RichText/Html';
 
 export type ChatMessagePayload = {
   messageId?: string;
@@ -18,6 +17,7 @@ export type ChatMessagePayload = {
   attached?: MessageAttachedStatus | boolean;
   mine?: boolean;
   clientMessageId?: string;
+  type: MessageContentType;
 };
 
 export type SystemMessagePayload = {
