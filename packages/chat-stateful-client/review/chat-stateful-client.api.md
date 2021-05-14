@@ -40,7 +40,6 @@ export type ChatThreadClientState = {
     participants: Map<CommunicationIdentifierAsKey, ChatParticipant>;
     threadId: string;
     properties?: ChatThreadProperties;
-    coolPeriod?: Date;
     readReceipts: ChatMessageReadReceipt[];
     typingIndicators: TypingIndicatorReceivedEvent[];
     latestReadTime: Date;

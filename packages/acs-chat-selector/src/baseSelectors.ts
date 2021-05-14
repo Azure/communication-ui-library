@@ -41,9 +41,6 @@ export const getIsLargeGroup = (state: ChatClientState, props: ChatBaseSelectorP
 export const getLatestReadTime = (state: ChatClientState, props: ChatBaseSelectorProps): Date =>
   (props.threadId && state.threads.get(props.threadId)?.latestReadTime) || new Date(0);
 
-export const getCoolPeriod = (state: ChatClientState, props: ChatBaseSelectorProps): Date =>
-  (props.threadId && state.threads.get(props.threadId)?.coolPeriod) || new Date(0);
-
 export const getTopicName = (state: ChatClientState, props: ChatBaseSelectorProps): string => {
   return state.threads.get(props.threadId)?.properties?.topic || '';
 };
