@@ -216,11 +216,9 @@ const generateMessageContent = (payload: ChatMessagePayload) => {
   switch (payload.type) {
     case 'text':
       return generateTextMessageContent(payload);
-    case 'Text':
-      return generateTextMessageContent(payload);
     case 'html':
       return generateRichTextHTMLMessageContent(payload);
-    case 'RichText/Html':
+    case 'richtext/html':
       return generateRichTextHTMLMessageContent(payload);
     default:
       console.warn('unknown message content type');

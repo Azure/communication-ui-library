@@ -4,7 +4,7 @@
 export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
 export type MessageAttachedStatus = 'bottom' | 'top';
 
-export type MessageContentType = 'text' | 'Text' | 'html' | 'RichText/Html' | 'unknown';
+export type MessageContentType = 'text' | 'html' | 'richtext/html' | 'unknown';
 
 export type ChatMessagePayload = {
   messageId?: string;
