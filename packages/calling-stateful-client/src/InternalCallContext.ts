@@ -2,14 +2,14 @@
 // Licensed under the MIT license.
 
 import { LocalVideoStream, RemoteVideoStream, VideoStreamRenderer } from '@azure/communication-calling';
-import { LocalVideoStream as StatefulLocalVideoStream } from './CallClientState';
+import { LocalVideoStream as StatefulLocalVideoStream, VideoStreamRendererViewAndStatus } from './CallClientState';
 
 /**
  * Used internally in InternalCallContext to be able to hold both the stream and the renderer in the same array.
  */
-export interface StreamAndRenderer {
+export interface StreamAndRendererAndStatus {
   stream: StatefulLocalVideoStream;
-  renderer: VideoStreamRenderer;
+  renderer: VideoStreamRendererViewAndStatus;
 }
 
 /**
@@ -29,9 +29,8 @@ export class InternalCallContext {
   // CallId -> VideoStreamRenderer
   private _localVideoStreamRenders: Map<string, VideoStreamRenderer>;
 
-  // Stores the original LocalVideoStream used when creating the {@Link VideoStreamRendererView} along with the renderer
-  // {@Link @azure/communication-calling#VideoStreamRenderer} used to create the {@Link VideoStreamRendererView}.
-  private _unparentedStreamAndRenderers: StreamAndRenderer[];
+  // Used for keeping track of rendered LocalVideoStreams that are not part of a Call.
+  private _unparentedStreamAndRenderers: Map<StatefulLocalVideoStream, VideoStreamRenderer>;
 
   constructor() {
     this._remoteVideoStreams = new Map<string, Map<number, RemoteVideoStream>>();
@@ -39,7 +38,7 @@ export class InternalCallContext {
     this._remoteVideoStreamRenderers = new Map<string, Map<number, VideoStreamRenderer>>();
     this._localVideoStreams = new Map<string, LocalVideoStream>();
     this._localVideoStreamRenders = new Map<string, VideoStreamRenderer>();
-    this._unparentedStreamAndRenderers = [];
+    this._unparentedStreamAndRenderers = new Map<StatefulLocalVideoStream, VideoStreamRenderer>();
   }
 
   public setCallId(newCallId: string, oldCallId: string): void {
@@ -181,42 +180,19 @@ export class InternalCallContext {
     this._localVideoStreamRenders.delete(callId);
   }
 
-  // Returns the index in unparentedStreamAndRenderers or -1 if not found.
-  public findInUnparentedStreamAndRenderers(localVideoStream: StatefulLocalVideoStream): number {
-    // First try to find by referential equality.
-    for (let i = 0; i < this._unparentedStreamAndRenderers.length; i++) {
-      if (this._unparentedStreamAndRenderers[i].stream === localVideoStream) {
-        return i;
-      }
-    }
-    // If not yet found, try find by comparing properties.
-    for (let i = 0; i < this._unparentedStreamAndRenderers.length; i++) {
-      const candidate = this._unparentedStreamAndRenderers[i].stream;
-      if (
-        candidate.source.deviceType === localVideoStream.source.deviceType &&
-        candidate.source.id === localVideoStream.source.id &&
-        candidate.source.name === localVideoStream.source.name &&
-        candidate.mediaStreamType === localVideoStream.mediaStreamType
-      ) {
-        return i;
-      }
-    }
-    return -1;
-  }
-
-  public getUnparentedStreamAndRenderer(index: number): StreamAndRenderer {
-    return this._unparentedStreamAndRenderers[index];
+  public getUnparentedStreamAndRenderer(localVideoStream: StatefulLocalVideoStream): VideoStreamRenderer | undefined {
+    return this._unparentedStreamAndRenderers.get(localVideoStream);
   }
 
   public setUnparentedStreamAndRenderer(
     localVideoStream: StatefulLocalVideoStream,
     videoStreamRenderer: VideoStreamRenderer
   ): void {
-    this._unparentedStreamAndRenderers.push({ stream: localVideoStream, renderer: videoStreamRenderer });
+    this._unparentedStreamAndRenderers.set(localVideoStream, videoStreamRenderer);
   }
 
-  public removeUnparentedStreamAndRenderer(index: number): void {
-    this._unparentedStreamAndRenderers.splice(index, 1);
+  public removeUnparentedStreamAndRenderer(localVideoStream: StatefulLocalVideoStream): void {
+    this._unparentedStreamAndRenderers.delete(localVideoStream);
   }
 
   // UnparentedStreamAndRenderers are not cleared as they are not part of the Call state.

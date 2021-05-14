@@ -612,7 +612,7 @@ describe('declarative call client', () => {
         testData.declarativeCallClient.state.calls
           .get(mockCallId)
           ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
-          ?.videoStreams.get(1)?.videoStreamRendererView !== undefined
+          ?.videoStreams.get(1)?.viewAndStatus.view !== undefined
     );
 
     await waitWithBreakCondition(
@@ -620,18 +620,18 @@ describe('declarative call client', () => {
         testData.declarativeCallClient.state.calls
           .get(mockCallId)
           ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
-          ?.videoStreams.get(1)?.videoStreamRendererView !== undefined
+          ?.videoStreams.get(1)?.viewAndStatus.view !== undefined
     );
 
     expect(
       testData.declarativeCallClient.state.calls
         .get(mockCallId)
         ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
-        ?.videoStreams.get(1)?.videoStreamRendererView
+        ?.videoStreams.get(1)?.viewAndStatus.view
     ).toBeDefined();
 
     expect(
-      testData.declarativeCallClient.state.calls.get(mockCallId)?.localVideoStreams[0].videoStreamRendererView
+      testData.declarativeCallClient.state.calls.get(mockCallId)?.localVideoStreams[0].viewAndStatus.view
     ).toBeDefined();
   });
 
@@ -692,7 +692,7 @@ describe('declarative call client', () => {
         testData.declarativeCallClient.state.calls
           .get(mockCallId)
           ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
-          ?.videoStreams.get(1)?.videoStreamRendererView !== undefined
+          ?.videoStreams.get(1)?.viewAndStatus.view !== undefined
     );
 
     await waitWithBreakCondition(
@@ -700,18 +700,18 @@ describe('declarative call client', () => {
         testData.declarativeCallClient.state.calls
           .get(mockCallId)
           ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
-          ?.videoStreams.get(1)?.videoStreamRendererView !== undefined
+          ?.videoStreams.get(1)?.viewAndStatus.view !== undefined
     );
 
     expect(
       testData.declarativeCallClient.state.calls
         .get(mockCallId)
         ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
-        ?.videoStreams.get(1)?.videoStreamRendererView
+        ?.videoStreams.get(1)?.viewAndStatus.view
     ).toBeDefined();
 
     expect(
-      testData.declarativeCallClient.state.calls.get(mockCallId)?.localVideoStreams[0]?.videoStreamRendererView
+      testData.declarativeCallClient.state.calls.get(mockCallId)?.localVideoStreams[0]?.viewAndStatus.view
     ).toBeDefined();
 
     testData.declarativeCallClient.stopRenderVideo(mockCallId, remoteVideoStream);
@@ -722,12 +722,12 @@ describe('declarative call client', () => {
         testData.declarativeCallClient.state.calls
           .get(mockCallId)
           ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
-          ?.videoStreams.get(1)?.videoStreamRendererView === undefined
+          ?.videoStreams.get(1)?.viewAndStatus.view === undefined
     );
 
     await waitWithBreakCondition(
       () =>
-        testData.declarativeCallClient.state.calls.get(mockCallId)?.localVideoStreams[0]?.videoStreamRendererView ===
+        testData.declarativeCallClient.state.calls.get(mockCallId)?.localVideoStreams[0]?.viewAndStatus.view ===
         undefined
     );
 
@@ -735,11 +735,11 @@ describe('declarative call client', () => {
       testData.declarativeCallClient.state.calls
         .get(mockCallId)
         ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
-        ?.videoStreams.get(1)?.videoStreamRendererView
+        ?.videoStreams.get(1)?.viewAndStatus.view
     ).not.toBeDefined();
 
     expect(
-      testData.declarativeCallClient.state.calls.get(mockCallId)?.localVideoStreams[0].videoStreamRendererView
+      testData.declarativeCallClient.state.calls.get(mockCallId)?.localVideoStreams[0].viewAndStatus.view
     ).not.toBeDefined();
   });
 
@@ -800,24 +800,24 @@ describe('declarative call client', () => {
         testData.declarativeCallClient.state.calls
           .get(mockCallId)
           ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
-          ?.videoStreams.get(1)?.videoStreamRendererView !== undefined
+          ?.videoStreams.get(1)?.viewAndStatus.view !== undefined
     );
 
     await waitWithBreakCondition(
       () =>
-        testData.declarativeCallClient.state.calls.get(mockCallId)?.localVideoStreams[0]?.videoStreamRendererView !==
+        testData.declarativeCallClient.state.calls.get(mockCallId)?.localVideoStreams[0]?.viewAndStatus.view !==
         undefined
     );
 
     expect(
-      testData.declarativeCallClient.state.calls.get(mockCallId)?.localVideoStreams[0]?.videoStreamRendererView
+      testData.declarativeCallClient.state.calls.get(mockCallId)?.localVideoStreams[0]?.viewAndStatus.view
     ).toBeDefined();
 
     expect(
       testData.declarativeCallClient.state.calls
         .get(mockCallId)
         ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
-        ?.videoStreams.get(1)?.videoStreamRendererView
+        ?.videoStreams.get(1)?.viewAndStatus.view
     ).toBeDefined();
 
     testData.mockCallAgent.calls = [];
@@ -831,11 +831,11 @@ describe('declarative call client', () => {
     expect(
       testData.declarativeCallClient.state.callsEnded[0]?.remoteParticipants
         .get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
-        ?.videoStreams.get(1)?.videoStreamRendererView
+        ?.videoStreams.get(1)?.viewAndStatus.view
     ).not.toBeDefined();
 
     expect(
-      testData.declarativeCallClient.state.calls.get(mockCallId)?.localVideoStreams[0]?.videoStreamRendererView
+      testData.declarativeCallClient.state.calls.get(mockCallId)?.localVideoStreams[0]?.viewAndStatus.view
     ).not.toBeDefined();
   });
 

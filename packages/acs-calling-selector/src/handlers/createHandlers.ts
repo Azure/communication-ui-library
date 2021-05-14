@@ -45,7 +45,6 @@ export const createDefaultCallingHandlers = memoizeOne(
       const stream = new LocalVideoStream(videoDeviceInfo);
       if (call && !call.localVideoStreams.find((s) => areStreamsEqual(s, stream))) {
         await call.startVideo(stream);
-        await callClient.startRenderVideo(callId, stream);
       }
     };
 
@@ -53,7 +52,11 @@ export const createDefaultCallingHandlers = memoizeOne(
       const callId = call?.id;
       if (!callId) return;
       if (call && call.localVideoStreams.find((s) => areStreamsEqual(s, stream))) {
-        callClient.stopRenderVideo(callId, stream);
+        callClient.stopRenderVideo(callId, {
+          source: stream.source,
+          mediaStreamType: stream.mediaStreamType,
+          viewAndStatus: { status: 'NotRendered', view: undefined }
+        });
         await call.stopVideo(stream);
       }
     };

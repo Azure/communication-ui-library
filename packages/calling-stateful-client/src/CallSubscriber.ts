@@ -100,7 +100,7 @@ export class CallSubscriber {
     // If we are unsubscribing that means we no longer want to display any video for this call (callEnded or callAgent
     // disposed) and we should not be updating it any more. So if video is rendering we stop rendering.
     const localVideoStreams = this._context.getState().calls.get(this._callIdRef.callId)?.localVideoStreams;
-    if (localVideoStreams && localVideoStreams.length === 1 && localVideoStreams[0].videoStreamRendererView) {
+    if (localVideoStreams && localVideoStreams.length === 1) {
       stopRenderVideo(this._context, this._internalContext, this._callIdRef.callId, localVideoStreams[0]);
     }
 
@@ -177,12 +177,12 @@ export class CallSubscriber {
     // At time of writing only one LocalVideoStream is supported by SDK.
     if (event.added.length > 0) {
       const localVideoStreams = [convertSdkLocalStreamToDeclarativeLocalStream(this._call.localVideoStreams[0])];
-      this._context.setCallLocalVideoStream(this._callIdRef.callId, localVideoStreams);
       this._internalContext.setLocalVideoStream(this._callIdRef.callId, this._call.localVideoStreams[0]);
+      this._context.setCallLocalVideoStream(this._callIdRef.callId, localVideoStreams);
     }
     if (event.removed.length > 0) {
       const localVideoStreams = this._context.getState().calls.get(this._callIdRef.callId)?.localVideoStreams;
-      if (localVideoStreams && localVideoStreams.length === 1 && localVideoStreams[0].videoStreamRendererView) {
+      if (localVideoStreams && localVideoStreams.length === 1) {
         stopRenderVideo(this._context, this._internalContext, this._callIdRef.callId, localVideoStreams[0]);
       }
       this._context.setCallLocalVideoStream(this._callIdRef.callId, []);

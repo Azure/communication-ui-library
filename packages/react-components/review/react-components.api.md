@@ -178,7 +178,7 @@ export const lightTheme: PartialTheme & CallingTheme;
 export interface LocalVideoStream {
     mediaStreamType: MediaStreamType;
     source: VideoDeviceInfo;
-    videoStreamRendererView?: VideoStreamRendererView | undefined;
+    viewAndStatus: VideoStreamRendererViewAndStatus;
 }
 
 // @public (undocumented)
@@ -318,7 +318,7 @@ export interface RemoteVideoStream {
     id: number;
     isAvailable: boolean;
     mediaStreamType: MediaStreamType;
-    videoStreamRendererView: VideoStreamRendererView | undefined;
+    viewAndStatus: VideoStreamRendererViewAndStatus;
 }
 
 // @public (undocumented)
@@ -446,6 +446,17 @@ export interface VideoStreamRendererView {
     scalingMode: ScalingMode;
     target: HTMLElement;
 }
+
+// @public
+export interface VideoStreamRendererViewAndStatus {
+    // (undocumented)
+    status: VideoStreamRendererViewStatus;
+    // (undocumented)
+    view: VideoStreamRendererView | undefined;
+}
+
+// @public
+export type VideoStreamRendererViewStatus = 'NotRendered' | 'InProgress' | 'Completed' | 'Stopping';
 
 // @public (undocumented)
 export const VideoTile: (props: VideoTileProps & PlaceholderProps) => JSX.Element;

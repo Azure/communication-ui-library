@@ -83,7 +83,7 @@ export type DeviceManager = {
     microphones: AudioDeviceInfo[];
     speakers: AudioDeviceInfo[];
     deviceAccess?: DeviceAccess;
-    unparentedViews: VideoStreamRendererView[];
+    unparentedViews: Map<LocalVideoStream, VideoStreamRendererViewAndStatus>;
 };
 
 // @public
@@ -99,7 +99,7 @@ export interface IncomingCall {
 export interface LocalVideoStream {
     mediaStreamType: MediaStreamType;
     source: VideoDeviceInfo;
-    videoStreamRendererView?: VideoStreamRendererView | undefined;
+    viewAndStatus: VideoStreamRendererViewAndStatus;
 }
 
 // @public
@@ -123,7 +123,7 @@ export interface RemoteVideoStream {
     id: number;
     isAvailable: boolean;
     mediaStreamType: MediaStreamType;
-    videoStreamRendererView: VideoStreamRendererView | undefined;
+    viewAndStatus: VideoStreamRendererViewAndStatus;
 }
 
 // @public (undocumented)
@@ -163,6 +163,17 @@ export interface VideoStreamRendererView {
     scalingMode: ScalingMode;
     target: HTMLElement;
 }
+
+// @public
+export interface VideoStreamRendererViewAndStatus {
+    // (undocumented)
+    status: VideoStreamRendererViewStatus;
+    // (undocumented)
+    view: VideoStreamRendererView | undefined;
+}
+
+// @public
+export type VideoStreamRendererViewStatus = 'NotRendered' | 'InProgress' | 'Completed' | 'Stopping';
 
 
 // (No @packageDocumentation comment for this package)

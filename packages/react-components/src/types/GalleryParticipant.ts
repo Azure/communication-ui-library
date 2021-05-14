@@ -19,6 +19,21 @@ export declare interface VideoDeviceInfo {
 }
 
 /**
+ * Stores the status of a video render as rendering could take a long time.
+ */
+export type VideoStreamRendererViewStatus = 'NotRendered' | 'InProgress' | 'Completed' | 'Stopping';
+
+/**
+ * Contains the status {@Link VideoStreamRendererViewStatus} of a render and the view
+ * {@Link VideoStreamRendererView} of that render. The {@Link VideoStreamRendererView} will be undefined if the
+ * {@Link VideoStreamRendererViewStatus} is 'NotRendered' or 'InProgress'.
+ */
+export interface VideoStreamRendererViewAndStatus {
+  status: VideoStreamRendererViewStatus;
+  view: VideoStreamRendererView | undefined;
+}
+
+/**
  * State only version of {@Link @azure/communication-calling#LocalVideoStream}.
  */
 export interface LocalVideoStream {
@@ -31,10 +46,10 @@ export interface LocalVideoStream {
    */
   mediaStreamType: MediaStreamType;
   /**
-   * {@Link VideoStreamRendererView} is added/removed from state by startRenderVideo/stopRenderVideo in
+   * {@Link VideoStreamRendererViewAndStatus} that is managed by startRenderVideo/stopRenderVideo in
    * {@Link DeclarativeCallClient} API.
    */
-  videoStreamRendererView?: VideoStreamRendererView | undefined;
+  viewAndStatus: VideoStreamRendererViewAndStatus;
 }
 
 /**
@@ -54,10 +69,10 @@ export interface RemoteVideoStream {
    */
   isAvailable: boolean;
   /**
-   * {@Link VideoStreamRendererView} is added/removed from state by startRenderVideo/stopRenderVideo in
+   * {@Link VideoStreamRendererViewAndStatus} that is managed by startRenderVideo/stopRenderVideo in
    * {@Link DeclarativeCallClient} API.
    */
-  videoStreamRendererView: VideoStreamRendererView | undefined;
+  viewAndStatus: VideoStreamRendererViewAndStatus;
 }
 
 /**

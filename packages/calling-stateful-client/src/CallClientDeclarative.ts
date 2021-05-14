@@ -37,7 +37,9 @@ export interface DeclarativeCallClient extends CallClient {
    * state. Under the hood calls {@Link @azure/communication-calling#VideoStreamRenderer.createView}.
    *
    * If callId is undefined and stream provided is LocalVideoStream, we will render the LocalVideoStream and store the
-   * resulting {@Link VideoStreamRendererView} under the {@Link CallClientState#DeviceManager.unparentedViews}.
+   * resulting {@Link VideoStreamRendererView} under the {@Link CallClientState#DeviceManager.unparentedViews}. Note
+   * that we use the LocalVideoStream as a reference and different instances of the same LocalVideoStream result in
+   * different views being generated.
    *
    * @param callId - CallId of the Call where the stream to start rendering is contained in. Can be undefined if
    *   rendering a LocalVideoStream that is not tied to a Call.
@@ -58,10 +60,9 @@ export interface DeclarativeCallClient extends CallClient {
    * state. Under the hood calls {@Link @azure/communication-calling#VideoStreamRenderer.dispose}.
    *
    * If callId is undefined and the stream provided is LocalVideoStream, we will search
-   * {@Link CallClientState#DeviceManager.unparentedViews} for matching LocalVideoStream (best effort) and stop
-   * rendering the best match and remove it from the state. The criteria for the search is:
-   * 1. Passed in LocalVideoStream referential equals LocalVideoStream in state
-   * 2. Passed in LocalVideoStream all properties match all properties for a LocalVideoStream in state
+   * {@Link CallClientState#DeviceManager.unparentedViews} for matching LocalVideoStream (by reference) and stop
+   * rendering the found stream and remove it from the state. In order to stop a stream previously started, the same
+   * LocalVideoStream reference must be used.
    *
    * @param callId - CallId of the Call where the stream to stop rendering is contained in. Can be undefined if
    *   stop rendering a LocalVideoStream that is not tied to a Call.

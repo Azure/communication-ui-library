@@ -46,53 +46,50 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
 export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const { localParticipant, remoteParticipants, scalingMode, onRenderView, styles } = props;
   const localVideoStream = localParticipant?.videoStream;
-  const isLocalVideoReady = localVideoStream?.videoStreamRendererView !== undefined;
+  const isLocalVideoNotRendered = localVideoStream?.viewAndStatus.status === 'NotRendered';
+  const isLocalVideoReady = localVideoStream?.viewAndStatus.status === 'Completed';
 
   const localParticipantComponent = useMemo(() => {
-    if (localVideoStream && !localVideoStream?.videoStreamRendererView) {
-      onRenderView(localVideoStream, {
-        scalingMode
-      }).catch((e) => {
-        // Since we are calling this async and not awaiting, there could be an error from try to start render of a
-        // stream that is already rendered. The StatefulClient will handle this so we can ignore this error in the UI
-        // but ideally we should make this await and avoid duplicate calls.
-        console.warn(e.message);
-      });
+    if (localVideoStream && isLocalVideoNotRendered) {
+      onRenderView(localVideoStream, { scalingMode });
     }
 
     return (
       <VideoTile
         isVideoReady={isLocalVideoReady}
-        videoProvider={<StreamMedia videoStreamElement={localVideoStream?.videoStreamRendererView?.target ?? null} />}
+        videoProvider={<StreamMedia videoStreamElement={localVideoStream?.viewAndStatus.view?.target ?? null} />}
         avatarName={localParticipant?.displayName}
         styles={videoTileStyle}
       >
         <Label className={isLocalVideoReady ? videoHint : disabledVideoHint}>{localParticipant?.displayName}</Label>
       </VideoTile>
     );
-  }, [isLocalVideoReady, localParticipant?.displayName, localVideoStream, onRenderView, scalingMode]);
+  }, [
+    isLocalVideoNotRendered,
+    isLocalVideoReady,
+    localParticipant?.displayName,
+    localVideoStream,
+    onRenderView,
+    scalingMode
+  ]);
 
   const gridLayoutRemoteParticipants = useMemo(() => {
     return memoizeAllRemoteParticipants((memoizedRemoteParticipantFn) => {
       return remoteParticipants
         ? remoteParticipants.map((participant, key) => {
             const remoteVideoStream = participant.videoStream;
+            const isRemoteVideoStreamNotRendered = remoteVideoStream?.viewAndStatus.status === 'NotRendered';
 
-            if (remoteVideoStream?.isAvailable && !remoteVideoStream?.videoStreamRendererView) {
-              onRenderView(remoteVideoStream, {
-                scalingMode
-              }).catch((e) => {
-                // Since we are calling this async and not awaiting, there could be an error from try to start render of
-                // a stream that is already rendered. The StatefulClient will handle this so we can ignore this error in
-                // the UI but ideally we should make this await and avoid duplicate calls.
-                console.warn(e.message);
-              });
+            if (remoteVideoStream?.isAvailable && isRemoteVideoStreamNotRendered) {
+              onRenderView(remoteVideoStream, { scalingMode });
             }
 
+            const isRemoteVideoStreamReady =
+              remoteVideoStream?.viewAndStatus.status === 'Completed' && remoteVideoStream?.isAvailable;
             return memoizedRemoteParticipantFn(
               key,
-              remoteVideoStream?.isAvailable,
-              remoteVideoStream?.videoStreamRendererView?.target,
+              isRemoteVideoStreamReady,
+              remoteVideoStream?.viewAndStatus.view?.target,
               participant.displayName
             );
           })

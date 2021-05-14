@@ -51,8 +51,6 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
 export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
   const { localParticipant, remoteParticipants, onRenderView } = props;
 
-  const localVideoStream = localParticipant?.videoStream;
-  const isLocalVideoReady = localVideoStream?.videoStreamRendererView !== undefined;
   const participantWithScreenShare: VideoGalleryRemoteParticipant | undefined = useMemo(() => {
     return remoteParticipants.find((remoteParticipant: VideoGalleryRemoteParticipant) => {
       return remoteParticipant.screenShareStream?.isAvailable;
@@ -68,32 +66,23 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
       return;
     }
     const screenShareStream = participantWithScreenShare?.screenShareStream;
-    const videoStream = participantWithScreenShare?.videoStream;
-    if (screenShareStream?.isAvailable && !screenShareStream?.videoStreamRendererView) {
-      onRenderView(screenShareStream, {
-        scalingMode: 'Fit'
-      }).catch((e) => {
-        // Since we are calling this async and not awaiting, there could be an error from try to start render of a
-        // stream that is already rendered. The StatefulClient will handle this so we can ignore this error in the UI
-        // but ideally we should make this await and avoid duplicate calls.
-        console.warn(e.message);
-      });
+    const isScreenShareStreamNotRendered = screenShareStream?.viewAndStatus.status === 'NotRendered';
+    if (screenShareStream?.isAvailable && isScreenShareStreamNotRendered) {
+      onRenderView(screenShareStream, { scalingMode: 'Fit' });
     }
-    if (videoStream?.isAvailable && !videoStream?.videoStreamRendererView) {
-      onRenderView(videoStream, {
-        scalingMode: 'Crop'
-      }).catch((e) => {
-        // Since we are calling this async and not awaiting, there could be an error from try to start render of a
-        // stream that is already rendered. The StatefulClient will handle this so we can ignore this error in the UI
-        // but ideally we should make this await and avoid duplicate calls.
-        console.warn(e.message);
-      });
+    const videoStream = participantWithScreenShare?.videoStream;
+    const isVideoStreamNotRendered = videoStream?.viewAndStatus.status === 'NotRendered';
+    if (videoStream?.isAvailable && isVideoStreamNotRendered) {
+      onRenderView(videoStream, { scalingMode: 'Crop' });
     }
 
+    const isScreenShareStreamReady =
+      screenShareStream?.viewAndStatus.status === 'Completed' && screenShareStream?.isAvailable;
+    const isVideoReady = videoStream?.viewAndStatus.status === 'Completed' && videoStream?.isAvailable;
     return (
       <VideoTile
-        isVideoReady={screenShareStream?.isAvailable}
-        videoProvider={<StreamMedia videoStreamElement={screenShareStream?.videoStreamRendererView?.target ?? null} />}
+        isVideoReady={isScreenShareStreamReady}
+        videoProvider={<StreamMedia videoStreamElement={screenShareStream?.viewAndStatus.view?.target ?? null} />}
         placeholderProvider={
           <div className={loadingStyle}>
             <Spinner label={`Loading ${participantWithScreenShare?.displayName}'s screen`} size={SpinnerSize.xSmall} />
@@ -103,12 +92,12 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
           overlayContainer: videoStreamStyle
         }}
       >
-        {videoStream && videoStream.isAvailable && videoStream.videoStreamRendererView && (
+        {videoStream && isVideoReady && (
           <Stack horizontalAlign="center" verticalAlign="center" className={aspectRatioBoxStyle}>
             <Stack className={aspectRatioBoxContentStyle}>
               <VideoTile
-                isVideoReady={videoStream.isAvailable}
-                videoProvider={<StreamMedia videoStreamElement={videoStream.videoStreamRendererView.target ?? null} />}
+                isVideoReady={isVideoReady}
+                videoProvider={<StreamMedia videoStreamElement={videoStream.viewAndStatus.view?.target ?? null} />}
                 styles={videoTileStyle}
               />
             </Stack>
@@ -119,28 +108,24 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
   }, [isScreenShareAvailable, onRenderView, participantWithScreenShare]);
 
   const layoutLocalParticipant = useMemo(() => {
-    if (localVideoStream && !localVideoStream?.videoStreamRendererView) {
-      onRenderView(localVideoStream, {
-        scalingMode: 'Crop'
-      }).catch((e) => {
-        // Since we are calling this async and not awaiting, there could be an error from try to start render of a
-        // stream that is already rendered. The StatefulClient will handle this so we can ignore this error in the UI
-        // but ideally we should make this await and avoid duplicate calls.
-        console.warn(e.message);
-      });
+    const localVideoStream = localParticipant?.videoStream;
+    const isLocalVideoStreamNotRendered = localVideoStream?.viewAndStatus.status === 'NotRendered';
+    if (localVideoStream && isLocalVideoStreamNotRendered) {
+      onRenderView(localVideoStream, { scalingMode: 'Crop' });
     }
 
+    const isLocalVideoReady = localVideoStream?.viewAndStatus.status === 'Completed';
     return (
       <VideoTile
         isVideoReady={isLocalVideoReady}
-        videoProvider={<StreamMedia videoStreamElement={localVideoStream?.videoStreamRendererView?.target ?? null} />}
+        videoProvider={<StreamMedia videoStreamElement={localVideoStream?.viewAndStatus.view?.target ?? null} />}
         avatarName={localParticipant?.displayName}
         styles={videoTileStyle}
       >
         <Label className={isLocalVideoReady ? videoHint : disabledVideoHint}>{localParticipant?.displayName}</Label>
       </VideoTile>
     );
-  }, [isLocalVideoReady, localParticipant?.displayName, localVideoStream, onRenderView]);
+  }, [localParticipant?.displayName, localParticipant?.videoStream, onRenderView]);
 
   const sidePanelRemoteParticipants = useMemo(() => {
     return memoizeAllRemoteParticipants((memoizedRemoteParticipantFn) => {
@@ -151,22 +136,18 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
             })
             .map((participant: VideoGalleryRemoteParticipant, key: number) => {
               const remoteVideoStream = participant.videoStream;
+              const isRemoteVideoStreamNotRendered = remoteVideoStream?.viewAndStatus.status === 'NotRendered';
 
-              if (remoteVideoStream?.isAvailable && !remoteVideoStream?.videoStreamRendererView) {
-                onRenderView(remoteVideoStream, {
-                  scalingMode: 'Crop'
-                }).catch((e: Error) => {
-                  // Since we are calling this async and not awaiting, there could be an error from try to start render
-                  // of a stream that is already rendered. The StatefulClient will handle this so we can ignore this
-                  // error in the UI but ideally we should make this await and avoid duplicate calls.
-                  console.warn(e.message);
-                });
+              if (remoteVideoStream?.isAvailable && isRemoteVideoStreamNotRendered) {
+                onRenderView(remoteVideoStream, { scalingMode: 'Crop' });
               }
 
+              const isRemoteVideoReady =
+                remoteVideoStream?.viewAndStatus.status === 'Completed' && remoteVideoStream?.isAvailable;
               return memoizedRemoteParticipantFn(
                 key,
-                remoteVideoStream?.isAvailable,
-                remoteVideoStream?.videoStreamRendererView?.target,
+                isRemoteVideoReady,
+                remoteVideoStream?.viewAndStatus.view?.target,
                 participant.displayName
               );
             })

@@ -18,10 +18,10 @@ import {
   RemoteParticipant,
   RemoteVideoStream,
   IncomingCall,
-  VideoStreamRendererView,
   CallAgent,
   TransferRequest,
-  Transfer
+  Transfer,
+  VideoStreamRendererViewAndStatus
 } from './CallClientState';
 import { getRemoteParticipantKey } from './Converter';
 
@@ -47,7 +47,7 @@ export class CallContext {
         cameras: [],
         microphones: [],
         speakers: [],
-        unparentedViews: []
+        unparentedViews: new Map<LocalVideoStream, VideoStreamRendererViewAndStatus>()
       },
       callAgent: undefined,
       userId: userId
@@ -311,13 +311,13 @@ export class CallContext {
     );
   }
 
-  public setLocalVideoStreamRendererView(callId: string, view: VideoStreamRendererView | undefined): void {
+  public setLocalVideoStreamRendererView(callId: string, view: VideoStreamRendererViewAndStatus): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         const call = draft.calls.get(callId);
         if (call) {
           if (call.localVideoStreams.length > 0) {
-            call.localVideoStreams[0].videoStreamRendererView = view;
+            call.localVideoStreams[0].viewAndStatus = view;
           }
         }
       })
@@ -461,7 +461,7 @@ export class CallContext {
     callId: string,
     participantKey: string,
     streamId: number,
-    view: VideoStreamRendererView | undefined
+    viewAndStatus: VideoStreamRendererViewAndStatus
   ): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
@@ -471,7 +471,7 @@ export class CallContext {
           if (participant) {
             const stream = participant.videoStreams.get(streamId);
             if (stream) {
-              stream.videoStreamRendererView = view;
+              stream.viewAndStatus = viewAndStatus;
             }
           }
         }
@@ -581,18 +581,21 @@ export class CallContext {
     );
   }
 
-  public setDeviceManagerUnparentedView(view: VideoStreamRendererView): void {
+  public setDeviceManagerUnparentedView(
+    localVideoStream: LocalVideoStream,
+    view: VideoStreamRendererViewAndStatus
+  ): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        draft.deviceManager.unparentedViews.push(view);
+        draft.deviceManager.unparentedViews.set(localVideoStream, view);
       })
     );
   }
 
-  public removeDeviceManagerUnparentedView(index: number): void {
+  public removeDeviceManagerUnparentedView(stream: LocalVideoStream): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        draft.deviceManager.unparentedViews.splice(index, 1);
+        draft.deviceManager.unparentedViews.delete(stream);
       })
     );
   }
