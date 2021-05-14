@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add checks to ensure correct status before calling render",
+  "packageName": "react-components",
+  "email": "allenhwang@microsoft.com",
+  "dependentChangeType": "patch"
+}
