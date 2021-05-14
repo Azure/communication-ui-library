@@ -16,7 +16,7 @@ import React from 'react';
 import { TextField } from '@fluentui/react';
 
 interface DisplayNameFieldProps {
-  setName(name: string): void;
+  setName(displayName: string): void;
   setEmptyWarning(isEmpty: boolean): void;
   setNameLengthExceedLimit(isNameLengthExceedLimit: boolean): void;
   isEmpty: boolean;
@@ -58,7 +58,7 @@ const DisplayNameFieldComponent = (props: DisplayNameFieldProps & ErrorHandlingP
         ariaLabel="Choose your name"
         className={isEmpty || isNameLengthExceedLimit ? inputBoxWarningStyle : inputBoxStyle}
         onChange={onNameTextChange}
-        id="name"
+        id="displayName"
         placeholder="Enter your name"
         onKeyDown={(ev) => {
           if (ev.which === ENTER_KEY) {

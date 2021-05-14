@@ -251,9 +251,9 @@ export const ParticipantItem: (props: ParticipantItemProps) => JSX.Element;
 
 // @public
 export interface ParticipantItemProps {
+    displayName: string;
     me?: boolean;
     menuItems?: IContextualMenuItem[];
-    name: string;
     onRenderAvatar?: (props?: ParticipantItemProps) => JSX.Element | null;
     onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
     presence?: PersonaPresence;
@@ -282,7 +282,7 @@ export type ParticipantListProps = {
 
 // @public (undocumented)
 export interface PlaceholderProps {
-    avatarName?: string;
+    displayName?: string;
     noVideoAvailableAriaLabel?: string;
 }
 

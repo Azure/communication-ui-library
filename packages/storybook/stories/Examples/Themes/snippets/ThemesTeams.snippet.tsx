@@ -47,7 +47,7 @@ export const TeamsLikeTheme: () => JSX.Element = () => {
         }}
       >
         <GridLayout>
-          <VideoTile isVideoReady={false} videoProvider={null} avatarName={'Michael'}>
+          <VideoTile isVideoReady={false} videoProvider={null} displayName={'Michael'}>
             {/*Control Bar with default set up*/}
             <ControlBar layout={'dockedTop'}>
               <CameraButton

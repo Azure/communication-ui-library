@@ -19,7 +19,7 @@ export const ENTER_KEY = 13;
 export const MAXIMUM_LENGTH_OF_NAME = 10;
 
 interface DisplayNameFieldProps {
-  setName(name: string): void;
+  setName(displayName: string): void;
   setEmptyWarning(isEmpty: boolean): void;
   setNameLengthExceedLimit(isNameLengthExceedLimit: boolean): void;
   isEmpty: boolean;
@@ -62,7 +62,7 @@ const DisplayNameFieldComponent = (props: DisplayNameFieldProps & ErrorHandlingP
         borderless={true}
         className={isEmpty || isNameLengthExceedLimit ? inputBoxWarningStyle : inputBoxStyle}
         onChange={onNameTextChange}
-        id="name"
+        id="displayName"
         placeholder="Enter your name"
         onKeyDown={(ev) => {
           if (ev.which === ENTER_KEY) {

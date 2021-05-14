@@ -37,7 +37,7 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
           <VideoTile
             isVideoReady={isAvailable}
             videoProvider={<StreamMedia videoStreamElement={target ?? null} />}
-            avatarName={displayName}
+            displayName={displayName}
             styles={videoTileStyle}
           >
             <Label className={isAvailable ? videoHint : disabledVideoHint}>{displayName}</Label>
@@ -134,7 +134,7 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
       <VideoTile
         isVideoReady={isLocalVideoReady}
         videoProvider={<StreamMedia videoStreamElement={localVideoStream?.videoStreamRendererView?.target ?? null} />}
-        avatarName={localParticipant?.displayName}
+        displayName={localParticipant?.displayName}
         styles={videoTileStyle}
       >
         <Label className={isLocalVideoReady ? videoHint : disabledVideoHint}>{localParticipant?.displayName}</Label>

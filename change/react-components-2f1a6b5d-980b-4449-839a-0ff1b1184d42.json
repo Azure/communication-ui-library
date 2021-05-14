@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "update name and avartarName to displayName",
+  "packageName": "react-components",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "patch"
+}
