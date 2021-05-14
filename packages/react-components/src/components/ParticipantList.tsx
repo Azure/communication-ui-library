@@ -57,7 +57,7 @@ const getDefaultRenderer = (
     if (participant.displayName) {
       return (
         <ParticipantItem
-          name={participant.displayName}
+          displayName={participant.displayName}
           isYou={myUserId ? participant.userId === myUserId : false}
           menuItems={menuItems}
           presence={presence}
@@ -114,7 +114,7 @@ const renderParticipants = (
     return (
       <OverflowSet
         key={i}
-        items={[{ key: `${i}`, name: item.displayName, isYou: item.userId === myUserId, ...item }]}
+        items={[{ key: `${i}`, displayName: item.displayName, isYou: item.userId === myUserId, ...item }]}
         role="menubar"
         vertical={false}
         onRenderOverflowButton={onRenderOverflowButton}

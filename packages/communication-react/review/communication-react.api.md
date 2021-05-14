@@ -392,9 +392,9 @@ export const ParticipantItem: (props: ParticipantItemProps) => JSX.Element;
 
 // @public
 export interface ParticipantItemProps {
+    displayName: string;
     isYou?: boolean;
     menuItems?: IContextualMenuItem[];
-    name: string;
     onRenderAvatar?: (props?: ParticipantItemProps) => JSX.Element | null;
     onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
     presence?: PersonaPresence;

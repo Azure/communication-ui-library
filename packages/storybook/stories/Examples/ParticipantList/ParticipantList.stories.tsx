@@ -115,7 +115,7 @@ export const ParticipantListComponent: () => JSX.Element = () => {
             // eslint-disable-next-line react/jsx-key
             <ParticipantItem
               key={'ParticipantItem' + ++reactItemKey}
-              name={p.displayName}
+              displayName={p.displayName}
               presence={p.presence}
               onRenderIcon={() => (
                 <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>

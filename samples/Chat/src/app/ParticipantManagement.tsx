@@ -36,7 +36,7 @@ export const ParticipantManagement = (props: ParticipantManagementProps): JSX.El
           return (
             <ParticipantItem
               key={participant.userId}
-              name={participant.displayName as string}
+              displayName={participant.displayName as string}
               isYou={isYou}
               menuItems={isYou ? undefined : menuItems}
               onRenderAvatar={onRenderAvatar ? () => onRenderAvatar(participant.userId) : undefined}
