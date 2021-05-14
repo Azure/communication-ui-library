@@ -28,8 +28,8 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
 
   return (
     <ControlBar styles={controlBarStyle}>
-      <MicrophoneButton {...microphoneButtonProps} />
       <CameraButton {...cameraButtonProps} />
+      <MicrophoneButton {...microphoneButtonProps} />
       <ScreenShareButton {...screenShareButtonProps} />
       <EndCallButton
         {...hangUpButtonProps}
