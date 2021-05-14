@@ -84,7 +84,7 @@ export const VideoTile: () => JSX.Element = () => {
   return (
     <VideoTileComponent
       isVideoReady={isVideoReady}
-      videoProvider={<StreamMedia videoStreamElement={renderVideoStream()} />}
+      renderElement={<StreamMedia videoStreamElement={renderVideoStream()} />}
       displayName={displayName}
       isMirrored={isMirrored}
       styles={{

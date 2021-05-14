@@ -29,13 +29,7 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
         <LocalDeviceSettings {...options} {...localDeviceSettingsHandlers} />
       </div>
       <div>
-        <StartCallButton
-          onClickHandler={() => {
-            startCallHandler();
-            // joinCall(groupId);
-          }}
-          isDisabled={false}
-        />
+        <StartCallButton onClickHandler={startCallHandler} isDisabled={false} />
       </div>
     </CallConfiguration>
   );
