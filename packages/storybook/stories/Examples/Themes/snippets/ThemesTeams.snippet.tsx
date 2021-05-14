@@ -40,30 +40,6 @@ const TeamsTheme = {
 export const TeamsLikeTheme: () => JSX.Element = () => {
   return (
     <FluentThemeProvider fluentTheme={TeamsTheme}>
-      {/*Control Bar with default set up*/}
-      <ControlBar layout={'dockedTop'}>
-        <CameraButton
-          onClick={() => {
-            /*handle onClick*/
-          }}
-        />
-        <MicrophoneButton
-          onClick={() => {
-            /*handle onClick*/
-          }}
-        />
-        <ScreenShareButton
-          onClick={() => {
-            /*handle onClick*/
-          }}
-        />
-        <EndCallButton
-          onClick={() => {
-            /*handle onClick*/
-          }}
-        />
-      </ControlBar>
-      {/*Control Bar with default set up*/}
       <div
         style={{
           height: '530px',
@@ -72,6 +48,30 @@ export const TeamsLikeTheme: () => JSX.Element = () => {
       >
         <GridLayout>
           <VideoTile isVideoReady={false} videoProvider={null} displayName={'Michael'}>
+            {/*Control Bar with default set up*/}
+            <ControlBar layout={'dockedTop'}>
+              <CameraButton
+                onClick={() => {
+                  /*handle onClick*/
+                }}
+              />
+              <MicrophoneButton
+                onClick={() => {
+                  /*handle onClick*/
+                }}
+              />
+              <ScreenShareButton
+                onClick={() => {
+                  /*handle onClick*/
+                }}
+              />
+              <EndCallButton
+                onClick={() => {
+                  /*handle onClick*/
+                }}
+              />
+            </ControlBar>
+            {/*Control Bar with default set up*/}
             <label>Michael</label>
           </VideoTile>
         </GridLayout>
