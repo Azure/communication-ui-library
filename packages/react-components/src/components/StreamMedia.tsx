@@ -42,7 +42,9 @@ export const StreamMedia = (props: StreamMediaProps): JSX.Element => {
     // the new videoStreamElement. If videoStreamElement is undefined nothing is appended and container should be empty
     // and we don't render anyting.
     container.innerHTML = '';
-    if (videoStreamElement) container.appendChild(videoStreamElement);
+    if (videoStreamElement) {
+      container.appendChild(videoStreamElement);
+    }
   }, [videoStreamElement]);
 
   return (
