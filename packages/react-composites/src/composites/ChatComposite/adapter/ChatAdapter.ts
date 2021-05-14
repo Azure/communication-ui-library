@@ -9,14 +9,14 @@ export type ChatUIState = {
   error?: Error;
 };
 
-export type ChatClientState = {
+export type ChatCompositeClientState = {
   // Properties from backend services
   userId: string;
   displayName: string;
   thread: ChatThreadClientState;
 };
 
-export type ChatState = ChatUIState & ChatClientState;
+export type ChatState = ChatUIState & ChatCompositeClientState;
 
 export interface ChatAdapter {
   onStateChange(handler: (state: ChatState) => void): void;

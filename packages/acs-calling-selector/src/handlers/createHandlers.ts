@@ -10,7 +10,7 @@ import {
   VideoDeviceInfo
 } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
-import { StatefulCallClient, StatefulDeviceManager } from 'calling-stateful-client';
+import { DeviceManager, StatefulCallClient, StatefulDeviceManager } from 'calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
 import { VideoStreamOptions } from 'react-components';
@@ -54,11 +54,28 @@ export const createDefaultCallingHandlers = memoizeOne(
     };
 
     const onToggleCamera = async (): Promise<void> => {
-      const stream = call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
-      if (stream) {
-        await onStopLocalVideo(stream);
+      if (call) {
+        const stream = call.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
+        if (stream) {
+          await onStopLocalVideo(stream);
+        } else {
+          await onStartLocalVideo();
+        }
       } else {
-        await onStartLocalVideo();
+        if (callClient.state.deviceManager.selectedCamera) {
+          const previewOn = isPreviewOn(callClient.state.deviceManager);
+          if (previewOn) {
+            await callClient.stopRenderVideo(undefined, {
+              source: callClient.state.deviceManager.selectedCamera,
+              mediaStreamType: 'Video'
+            });
+          } else {
+            await callClient.startRenderVideo(undefined, {
+              source: callClient.state.deviceManager.selectedCamera,
+              mediaStreamType: 'Video'
+            });
+          }
+        }
       }
     };
 
@@ -70,20 +87,48 @@ export const createDefaultCallingHandlers = memoizeOne(
     };
 
     const onSelectMicrophone = async (device: AudioDeviceInfo): Promise<void> => {
-      if (!deviceManager) return;
+      if (!deviceManager) {
+        return;
+      }
       return deviceManager.selectMicrophone(device);
     };
 
     const onSelectSpeaker = async (device: AudioDeviceInfo): Promise<void> => {
-      if (!deviceManager) return;
+      if (!deviceManager) {
+        return;
+      }
       return deviceManager.selectSpeaker(device);
     };
 
     const onSelectCamera = async (device: VideoDeviceInfo): Promise<void> => {
-      if (!call || !deviceManager) return;
-      deviceManager.selectCamera(device);
-      const stream = call.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
-      return stream?.switchSource(device);
+      if (!deviceManager) {
+        return;
+      }
+      if (call) {
+        deviceManager.selectCamera(device);
+        const stream = call.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
+        return stream?.switchSource(device);
+      } else {
+        const previewOn = isPreviewOn(callClient.state.deviceManager);
+
+        if (!previewOn) {
+          deviceManager.selectCamera(device);
+          return;
+        }
+
+        // If preview is on, then stop current preview and then start new preview with new device
+        if (callClient.state.deviceManager.selectedCamera) {
+          await callClient.stopRenderVideo(undefined, {
+            source: callClient.state.deviceManager.selectedCamera,
+            mediaStreamType: 'Video'
+          });
+        }
+        deviceManager.selectCamera(device);
+        await callClient.startRenderVideo(undefined, {
+          source: device,
+          mediaStreamType: 'Video'
+        });
+      }
     };
 
     const onToggleMicrophone = async (): Promise<void> => {
@@ -148,6 +193,10 @@ export const createDefaultCallingHandlers = memoizeOne(
     };
   }
 );
+
+const isPreviewOn = (deviceManager: DeviceManager): boolean => {
+  return !!deviceManager.unparentedViews && !!deviceManager.unparentedViews[0]?.target;
+};
 
 /**
  * Type guard for common properties between two types.

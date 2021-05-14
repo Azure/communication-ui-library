@@ -30,14 +30,14 @@ export type ScreenShareProps = {
 };
 
 const memoizeAllRemoteParticipants = memoizeFnAll(
-  (userId: string, isAvailable?: boolean, videoProvider?: HTMLElement, displayName?: string): JSX.Element => {
+  (userId: string, isAvailable?: boolean, renderElement?: HTMLElement, displayName?: string): JSX.Element => {
     return (
       <Stack horizontalAlign="center" verticalAlign="center" className={aspectRatioBoxStyle} key={userId}>
         <Stack className={aspectRatioBoxContentStyle}>
           <VideoTile
             isVideoReady={isAvailable}
-            videoProvider={<StreamMedia videoStreamElement={videoProvider ?? null} />}
-            avatarName={displayName}
+            renderElement={<StreamMedia videoStreamElement={renderElement ?? null} />}
+            displayName={displayName}
             styles={videoTileStyle}
           >
             <Label className={isAvailable ? videoHint : disabledVideoHint}>{displayName}</Label>
@@ -58,7 +58,7 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
   } = props;
 
   const localVideoStream = localParticipant?.videoStream;
-  const isLocalVideoReady = localVideoStream?.videoProvider !== undefined;
+  const isLocalVideoReady = localVideoStream?.renderElement !== undefined;
   const isScreenShareAvailable =
     participantWithScreenShare &&
     participantWithScreenShare.screenShareStream &&
@@ -70,14 +70,14 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
     }
     const screenShareStream = participantWithScreenShare?.screenShareStream;
     const videoStream = participantWithScreenShare?.videoStream;
-    if (screenShareStream?.isAvailable && !screenShareStream?.videoProvider) {
+    if (screenShareStream?.isAvailable && !screenShareStream?.renderElement) {
       participantWithScreenShare &&
         onCreateRemoteStreamView &&
         onCreateRemoteStreamView(participantWithScreenShare.userId, {
           scalingMode: 'Fit'
         });
     }
-    if (videoStream?.isAvailable && !videoStream?.videoProvider) {
+    if (videoStream?.isAvailable && !videoStream?.renderElement) {
       participantWithScreenShare &&
         onCreateRemoteStreamView &&
         onCreateRemoteStreamView(participantWithScreenShare.userId);
@@ -86,7 +86,7 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
     return (
       <VideoTile
         isVideoReady={screenShareStream?.isAvailable}
-        videoProvider={<StreamMedia videoStreamElement={screenShareStream?.videoProvider ?? null} />}
+        renderElement={<StreamMedia videoStreamElement={screenShareStream?.renderElement ?? null} />}
         placeholderProvider={
           <div className={loadingStyle}>
             <Spinner label={`Loading ${participantWithScreenShare?.displayName}'s screen`} size={SpinnerSize.xSmall} />
@@ -96,12 +96,12 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
           overlayContainer: videoStreamStyle
         }}
       >
-        {videoStream && videoStream.isAvailable && videoStream.videoProvider && (
+        {videoStream && videoStream.isAvailable && videoStream.renderElement && (
           <Stack horizontalAlign="center" verticalAlign="center" className={aspectRatioBoxStyle}>
             <Stack className={aspectRatioBoxContentStyle}>
               <VideoTile
                 isVideoReady={videoStream.isAvailable}
-                videoProvider={<StreamMedia videoStreamElement={videoStream.videoProvider ?? null} />}
+                renderElement={<StreamMedia videoStreamElement={videoStream.renderElement ?? null} />}
                 styles={videoTileStyle}
               />
             </Stack>
@@ -112,15 +112,15 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
   }, [isScreenShareAvailable, onCreateRemoteStreamView, participantWithScreenShare]);
 
   const layoutLocalParticipant = useMemo(() => {
-    if (localVideoStream && !localVideoStream?.videoProvider) {
+    if (localVideoStream && !localVideoStream?.renderElement) {
       onCreateLocalStreamView && onCreateLocalStreamView();
     }
 
     return (
       <VideoTile
         isVideoReady={isLocalVideoReady}
-        videoProvider={<StreamMedia videoStreamElement={localVideoStream?.videoProvider ?? null} />}
-        avatarName={localParticipant?.displayName}
+        renderElement={<StreamMedia videoStreamElement={localVideoStream?.renderElement ?? null} />}
+        displayName={localParticipant?.displayName}
         styles={videoTileStyle}
       >
         <Label className={isLocalVideoReady ? videoHint : disabledVideoHint}>{localParticipant?.displayName}</Label>
@@ -138,14 +138,14 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
             .map((participant: VideoGalleryRemoteParticipant) => {
               const remoteVideoStream = participant.videoStream;
 
-              if (remoteVideoStream?.isAvailable && !remoteVideoStream?.videoProvider) {
+              if (remoteVideoStream?.isAvailable && !remoteVideoStream?.renderElement) {
                 onCreateRemoteStreamView && onCreateRemoteStreamView(participant.userId);
               }
 
               return memoizedRemoteParticipantFn(
                 participant.userId,
                 remoteVideoStream?.isAvailable,
-                remoteVideoStream?.videoProvider,
+                remoteVideoStream?.renderElement,
                 participant.displayName
               );
             })

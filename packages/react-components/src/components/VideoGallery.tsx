@@ -33,19 +33,19 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
     userId: string,
     onCreateRemoteStreamView: any,
     isAvailable?: boolean,
-    videoProvider?: HTMLElement,
+    renderElement?: HTMLElement,
     displayName?: string,
     remoteVideoViewOption?: VideoStreamOptions
   ): JSX.Element => {
-    if (isAvailable && !videoProvider) {
+    if (isAvailable && !renderElement) {
       onCreateRemoteStreamView && onCreateRemoteStreamView(userId, remoteVideoViewOption);
     }
     return (
       <Stack className={gridStyle} key={userId} grow>
         <VideoTile
           isVideoReady={isAvailable}
-          videoProvider={<StreamMedia videoStreamElement={videoProvider ?? null} />}
-          avatarName={displayName}
+          renderElement={<StreamMedia videoStreamElement={renderElement ?? null} />}
+          displayName={displayName}
           styles={videoTileStyle}
         >
           <Label className={isAvailable ? videoHint : disabledVideoHint}>{displayName}</Label>
@@ -83,8 +83,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     return (
       <VideoTile
         isVideoReady={isLocalVideoReady}
-        videoProvider={<StreamMedia videoStreamElement={localVideoStream?.videoProvider ?? null} />}
-        avatarName={localParticipant?.displayName}
+        renderElement={<StreamMedia videoStreamElement={localVideoStream?.renderElement ?? null} />}
+        displayName={localParticipant?.displayName}
         styles={videoTileStyle}
       >
         <Label className={isLocalVideoReady ? videoHint : disabledVideoHint}>{localParticipant?.displayName}</Label>
@@ -112,7 +112,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           participant.userId,
           onCreateRemoteStreamView,
           remoteVideoStream?.isAvailable,
-          remoteVideoStream?.videoProvider,
+          remoteVideoStream?.renderElement,
           participant.displayName,
           remoteVideoViewOption
         );

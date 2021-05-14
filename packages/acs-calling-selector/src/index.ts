@@ -6,6 +6,7 @@ export * from './callControlSelectors';
 export { createDefaultCallingHandlersForComponent, createDefaultCallingHandlers } from './handlers/createHandlers';
 export { videoGallerySelector } from './videoGallerySelector';
 export { participantListSelector } from './participantListSelector';
+export { localPreviewSelector } from './localPreviewSelector';
 export { memoizeFnAll } from './utils/memoizeFnAll';
 
 export type { CallingBaseSelectorProps } from './baseSelectors';

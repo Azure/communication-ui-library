@@ -106,7 +106,7 @@ export const IncomingCallModal = (props: IncomingCallModalProps): JSX.Element =>
     <VideoTile
       isVideoReady={showLocalVideo}
       videoProvider={<StreamMedia videoStreamElement={localVideoStreamElement} />}
-      avatarName={localParticipantName}
+      displayName={localParticipantName}
       isMirrored={localVideoInverted}
     />
   );

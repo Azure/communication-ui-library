@@ -35,8 +35,10 @@ export type CallingBaseSelectorProps = {
 
 // @public (undocumented)
 export const cameraButtonSelector: reselect.OutputParametricSelector<callingStateful.CallClientState, CallingBaseSelectorProps, {
+    disabled: boolean;
     checked: boolean;
-}, (res: callingStateful.Call | undefined) => {
+}, (res1: callingStateful.Call | undefined, res2: callingStateful.DeviceManager) => {
+    disabled: boolean;
     checked: boolean;
 }>;
 
@@ -117,13 +119,22 @@ export const getIncomingCalls: (state: CallClientState) => Map<string, IncomingC
 // @public (undocumented)
 export const getIncomingCallsEnded: (state: CallClientState) => IncomingCall[];
 
+// @public (undocumented)
+export const localPreviewSelector: reselect.OutputSelector<callingStateful.CallClientState, {
+    videoStreamElement: HTMLElement | null;
+}, (res: callingStateful.DeviceManager) => {
+    videoStreamElement: HTMLElement | null;
+}>;
+
 // @public
 export const memoizeFnAll: <KeyT, ArgsT extends any[], FnRetT, CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>>(fnToMemoize: FunctionWithKey<KeyT, ArgsT, FnRetT>, shouldCacheUpdate?: (args1: any, args2: any) => boolean) => (callback: CallBackT) => FnRetT[];
 
 // @public (undocumented)
 export const microphoneButtonSelector: reselect.OutputParametricSelector<callingStateful.CallClientState, CallingBaseSelectorProps, {
+    disabled: boolean;
     checked: boolean;
-}, (res: callingStateful.Call | undefined) => {
+}, (res1: callingStateful.Call | undefined, res2: callingStateful.DeviceManager) => {
+    disabled: boolean;
     checked: boolean;
 }>;
 
@@ -170,7 +181,7 @@ export const videoGallerySelector: reselect.OutputParametricSelector<callingStat
         videoStream: {
             isAvailable: boolean;
             isMirrored: boolean | undefined;
-            videoProvider: HTMLElement | undefined;
+            renderElement: HTMLElement | undefined;
         };
     };
     remoteParticipants: VideoGalleryRemoteParticipant[];
@@ -183,7 +194,7 @@ export const videoGallerySelector: reselect.OutputParametricSelector<callingStat
         videoStream: {
             isAvailable: boolean;
             isMirrored: boolean | undefined;
-            videoProvider: HTMLElement | undefined;
+            renderElement: HTMLElement | undefined;
         };
     };
     remoteParticipants: VideoGalleryRemoteParticipant[];

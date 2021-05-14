@@ -8,19 +8,19 @@ export const InteractiveParticipantListExample: () => JSX.Element = () => {
   const [isMuted3, setIsMuted3] = useState<any>(false);
 
   const participant1 = {
-    name: 'Peter Parker',
+    displayName: 'Peter Parker',
     presence: PersonaPresence.online,
     isMuted: isMuted1,
     setIsMuted: setIsMuted1
   };
   const participant2 = {
-    name: 'Matthew Murdock',
+    displayName: 'Matthew Murdock',
     presence: PersonaPresence.busy,
     isMuted: isMuted2,
     setIsMuted: setIsMuted2
   };
   const participant3 = {
-    name: 'Frank Castiglione',
+    displayName: 'Frank Castiglione',
     presence: PersonaPresence.away,
     isMuted: isMuted3,
     setIsMuted: setIsMuted3
@@ -34,8 +34,8 @@ export const InteractiveParticipantListExample: () => JSX.Element = () => {
       <Stack>
         {participants.map((participant) => (
           <ParticipantItem
-            key={`${participant.name}Key`}
-            name={participant.name}
+            key={`${participant.displayName}Key`}
+            displayName={participant.displayName}
             menuItems={[
               {
                 key: 'mute',

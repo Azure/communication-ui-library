@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "update name and avatarName to displayName",
+  "packageName": "react-composites",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "patch"
+}
