@@ -34,7 +34,7 @@ export const LocalPreview = (): JSX.Element => {
       <VideoTile
         styles={localPreviewTileStyle}
         isVideoReady={!!localPreviewProps.videoStreamElement}
-        videoProvider={<StreamMedia videoStreamElement={localPreviewProps.videoStreamElement} />}
+        renderElement={<StreamMedia videoStreamElement={localPreviewProps.videoStreamElement} />}
         placeholderProvider={
           <Stack style={{ width: '100%', height: '100%' }} verticalAlign="center">
             <Stack.Item align="center">

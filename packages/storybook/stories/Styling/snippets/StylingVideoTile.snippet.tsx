@@ -13,7 +13,7 @@ export const VideoTileExample: () => JSX.Element = () => {
     <FluentThemeProvider>
       <VideoTile
         isVideoReady={true}
-        videoProvider={
+        renderElement={
           // NOTE: Replace with your own video provider. (An html element with video stream)
           <StreamMedia videoStreamElement={renderVideoStream()} />
         }

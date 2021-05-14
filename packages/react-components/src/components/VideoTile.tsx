@@ -31,7 +31,7 @@ export interface VideoTileProps {
   /** Determines if the static image or video stream should be rendered. */
   isVideoReady?: boolean;
   /** Component with the video stream. */
-  videoProvider?: JSX.Element | null;
+  renderElement?: JSX.Element | null;
   /** Determines if the video is mirrored or not. */
   isMirrored?: boolean;
   /** Custom Component to render when no video is available. Defaults to a Persona Icon. */
@@ -63,12 +63,12 @@ const DefaultPlaceholder = (props: PlaceholderProps): JSX.Element => {
 };
 
 export const VideoTile = (props: VideoTileProps & PlaceholderProps): JSX.Element => {
-  const { styles, isVideoReady, videoProvider, placeholderProvider, isMirrored, children } = props;
+  const { styles, isVideoReady, renderElement, placeholderProvider, isMirrored, children } = props;
   const theme = useTheme();
   const placeholder = placeholderProvider ?? <DefaultPlaceholder {...props} />;
   return (
     <Stack className={mergeStyles(rootStyles, { background: theme.palette.neutralLighter }, styles?.root)}>
-      {isVideoReady && videoProvider ? (
+      {isVideoReady && renderElement ? (
         <Stack
           className={mergeStyles(
             videoContainerStyles,
@@ -78,7 +78,7 @@ export const VideoTile = (props: VideoTileProps & PlaceholderProps): JSX.Element
             styles?.videoContainer
           )}
         >
-          {videoProvider}
+          {renderElement}
         </Stack>
       ) : (
         <Stack className={mergeStyles(videoContainerStyles)}>{placeholder}</Stack>
