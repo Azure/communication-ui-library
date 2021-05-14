@@ -67,7 +67,7 @@ const getDefaultRenderer = (
               {callingParticipant.isMuted && <MicOffIcon size="small" />}
             </Stack>
           )
-        : undefined;
+        : () => <></>;
 
     const renderAvatar = onRenderAvatar
       ? () => {
