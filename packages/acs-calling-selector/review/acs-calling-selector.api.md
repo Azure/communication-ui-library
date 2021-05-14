@@ -38,8 +38,10 @@ export type CallingBaseSelectorProps = {
 
 // @public (undocumented)
 export const cameraButtonSelector: reselect.OutputParametricSelector<callingStateful.CallClientState, CallingBaseSelectorProps, {
+    disabled: boolean;
     checked: boolean;
-}, (res: callingStateful.Call | undefined) => {
+}, (res1: callingStateful.Call | undefined, res2: callingStateful.DeviceManager) => {
+    disabled: boolean;
     checked: boolean;
 }>;
 
@@ -129,6 +131,13 @@ export const getIncomingCallsEnded: (state: CallClientState) => IncomingCall[];
 export const getUserId: (state: CallClientState) => string;
 
 // @public (undocumented)
+export const localPreviewSelector: reselect.OutputSelector<callingStateful.CallClientState, {
+    videoStreamElement: HTMLElement | null;
+}, (res: callingStateful.DeviceManager) => {
+    videoStreamElement: HTMLElement | null;
+}>;
+
+// @public (undocumented)
 export type MediaStreamType = 'Video' | 'ScreenSharing';
 
 // @public
@@ -136,8 +145,10 @@ export const memoizeFnAll: <KeyT, ArgsT extends any[], FnRetT, CallBackT extends
 
 // @public (undocumented)
 export const microphoneButtonSelector: reselect.OutputParametricSelector<callingStateful.CallClientState, CallingBaseSelectorProps, {
+    disabled: boolean;
     checked: boolean;
-}, (res: callingStateful.Call | undefined) => {
+}, (res1: callingStateful.Call | undefined, res2: callingStateful.DeviceManager) => {
+    disabled: boolean;
     checked: boolean;
 }>;
 

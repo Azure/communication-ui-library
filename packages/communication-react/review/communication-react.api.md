@@ -226,7 +226,6 @@ export type ChatThreadClientState = {
     participants: Map<CommunicationIdentifierAsKey, ChatParticipant>;
     threadId: string;
     properties?: ChatThreadProperties;
-    coolPeriod?: Date;
     readReceipts: ChatMessageReadReceipt[];
     typingIndicators: TypingIndicatorReceivedEvent[];
     latestReadTime: Date;
@@ -664,14 +663,12 @@ export interface SendBoxProps {
 }
 
 // @public (undocumented)
-export const sendBoxSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
+export const sendBoxSelector: reselect.OutputSelector<ChatClientState, {
     displayName: string;
     userId: string;
-    disabled: boolean;
-}, (res1: Date, res2: string, res3: string) => {
+}, (res1: string, res2: string) => {
     displayName: string;
     userId: string;
-    disabled: boolean;
 }>;
 
 // @public (undocumented)
