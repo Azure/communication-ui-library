@@ -245,6 +245,7 @@ export type ChatMessagePayload = {
     attached?: MessageAttachedStatus | boolean;
     mine?: boolean;
     clientMessageId?: string;
+    type: MessageContentType;
 };
 
 // Warning: (ae-forgotten-export) The symbol "ChatProviderProps" needs to be exported by the entry point index.d.ts
@@ -771,6 +772,9 @@ export type Message<T extends MessageTypes> = {
 
 // @public (undocumented)
 export type MessageAttachedStatus = 'bottom' | 'top';
+
+// @public (undocumented)
+export type MessageContentType = 'text' | 'html' | 'RichText/Html';
 
 // @public (undocumented)
 export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';

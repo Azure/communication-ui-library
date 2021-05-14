@@ -212,11 +212,23 @@ const generateTextMessageContent = (payload: ChatMessagePayload): JSX.Element =>
   );
 };
 
+const generateMessageContent = (payload: ChatMessagePayload) => {
+  switch (payload.type) {
+    case 'text':
+      return generateTextMessageContent(payload);
+    case 'html':
+      return generateRichTextHTMLMessageContent(payload);
+    case 'RichText/Html':
+      return generateRichTextHTMLMessageContent(payload);
+    default:
+      return <></>;
+  }
+};
+
 const DefaultChatMessageRenderer: DefaultMessageRendererType = (props: MessageProps) => {
   if (props.message.type === 'chat') {
     const payload: ChatMessagePayload = props.message.payload;
-    const messageContentItem =
-      payload.type === 'text' ? generateTextMessageContent(payload) : generateRichTextHTMLMessageContent(payload);
+    const messageContentItem = generateMessageContent(payload);
     return (
       <Chat.Message
         className={mergeStyles(chatMessageStyle as IStyle, props.messageContainerStyle as IStyle)}

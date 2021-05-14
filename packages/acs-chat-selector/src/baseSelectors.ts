@@ -10,6 +10,7 @@ import {
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { ChatParticipant, ChatMessageReadReceipt } from '@azure/communication-chat';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
+import { MessageContentType } from 'react-components';
 export type ChatBaseSelectorProps = {
   threadId: string;
 };
@@ -61,4 +62,8 @@ export const getTypingIndicators = (
 // All instances of IDs must be translated uniformly by the selectors.
 export const communicationIdentifierToString = (i: CommunicationIdentifier | undefined): string => {
   return i ? getCommunicationIdentifierAsKey(i) : '';
+};
+
+export const parseMessageContentType = (type: string): MessageContentType => {
+  return type === 'text' || type === 'html' || type === 'RichText/Html' ? (type as MessageContentType) : 'unknown';
 };

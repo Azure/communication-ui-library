@@ -55,7 +55,7 @@ export type ChatMessagePayload = {
     attached?: MessageAttachedStatus | boolean;
     mine?: boolean;
     clientMessageId?: string;
-    type: string;
+    type: MessageContentType;
 };
 
 // @public
@@ -184,6 +184,9 @@ export type Message<T extends MessageTypes> = {
 
 // @public (undocumented)
 export type MessageAttachedStatus = 'bottom' | 'top';
+
+// @public (undocumented)
+export type MessageContentType = 'text' | 'html' | 'RichText/Html' | 'unknown';
 
 // @public
 export type MessageProps = {
