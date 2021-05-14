@@ -17,6 +17,7 @@ export type {
   MessageTypes,
   SystemMessage,
   SystemMessagePayload,
-  CommunicationParticipant
+  CommunicationParticipant,
+  CommunicationCallingParticipant
 } from './types';
 export * from './types/GalleryParticipant';

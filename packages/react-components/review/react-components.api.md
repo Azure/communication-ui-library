@@ -58,14 +58,24 @@ export type ChatMessagePayload = {
 };
 
 // @public
-export type CommunicationParticipant = {
-    userId: string;
-    displayName?: string;
-    state?: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
-    isScreenSharing?: boolean;
+export interface CommunicationCallingParticipant extends CommunicationParticipant {
+    // (undocumented)
     isMuted?: boolean;
+    // (undocumented)
+    isScreenSharing?: boolean;
+    // (undocumented)
     isSpeaking?: boolean;
-};
+    // (undocumented)
+    state: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
+}
+
+// @public
+export interface CommunicationParticipant {
+    // (undocumented)
+    displayName?: string;
+    // (undocumented)
+    userId: string;
+}
 
 // @public
 export type CommunicationUiErrorSeverity = 'info' | 'warning' | 'error' | 'ignore';

@@ -161,6 +161,18 @@ export type CommonProperties<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
 
+// @public
+export interface CommunicationCallingParticipant extends CommunicationParticipant {
+    // (undocumented)
+    isMuted?: boolean;
+    // (undocumented)
+    isScreenSharing?: boolean;
+    // (undocumented)
+    isSpeaking?: boolean;
+    // (undocumented)
+    state: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
+}
+
 // @public (undocumented)
 export type CommunicationIdentifierAsKey = string;
 
@@ -168,14 +180,12 @@ export type CommunicationIdentifierAsKey = string;
 export const communicationIdentifierToString: (i: CommunicationIdentifier | undefined) => string;
 
 // @public
-export type CommunicationParticipant = {
-    userId: string;
+export interface CommunicationParticipant {
+    // (undocumented)
     displayName?: string;
-    state?: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
-    isScreenSharing?: boolean;
-    isMuted?: boolean;
-    isSpeaking?: boolean;
-};
+    // (undocumented)
+    userId: string;
+}
 
 // @public
 export type CommunicationUiErrorSeverity = 'info' | 'warning' | 'error' | 'ignore';

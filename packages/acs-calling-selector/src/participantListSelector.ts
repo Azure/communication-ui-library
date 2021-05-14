@@ -8,12 +8,12 @@ import * as callingDeclarative from 'calling-stateful-client';
 // @ts-ignore
 import { CallingBaseSelectorProps } from './baseSelectors';
 import { getCall, getUserId, getDisplayName } from './baseSelectors';
-import { CommunicationParticipant } from 'react-components';
+import { CommunicationCallingParticipant } from 'react-components';
 import { getACSId } from './utils/getACSId';
 
 const convertRemoteParticipantsToCommunicationParticipants = (
   remoteParticipants: callingDeclarative.RemoteParticipant[]
-): CommunicationParticipant[] => {
+): CommunicationCallingParticipant[] => {
   return remoteParticipants.map((participant: callingDeclarative.RemoteParticipant) => {
     const isScreenSharing = Array.from(participant.videoStreams.values()).some(
       (videoStream) => videoStream.mediaStreamType === 'ScreenSharing' && videoStream.isAvailable
@@ -37,7 +37,7 @@ export const participantListSelector = reselect.createSelector(
     displayName,
     call
   ): {
-    participants: CommunicationParticipant[];
+    participants: CommunicationCallingParticipant[];
     myUserId: string;
   } => {
     const remoteParticipants =

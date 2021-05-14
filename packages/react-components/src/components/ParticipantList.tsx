@@ -14,7 +14,7 @@ import {
 import { ParticipantItem } from './ParticipantItem';
 import { MicOffIcon, CallControlPresentNewIcon } from '@fluentui/react-northstar';
 import { participantListStyle, overFlowButtonStyles, overflowSetStyle } from './styles/ParticipantList.styles';
-import { CommunicationParticipant } from '../types';
+import { CommunicationParticipant, CommunicationCallingParticipant } from '../types';
 
 /**
  * Props for component `ParticipantList`
@@ -38,11 +38,16 @@ const getDefaultRenderer = (
   onRenderAvatar?: (remoteParticipant: CommunicationParticipant) => JSX.Element | null
 ): ((participant: CommunicationParticipant) => JSX.Element | null) => {
   return (participant: CommunicationParticipant) => {
+    // Try to consider CommunicationParticipant as CommunicationCallingParticipant
+    const callingParticipant = participant as CommunicationCallingParticipant;
+
     let presence: PersonaPresence | undefined = undefined;
-    if (participant.state === 'Connected') {
-      presence = PersonaPresence.online;
-    } else if (participant.state === 'Idle') {
-      presence = PersonaPresence.away;
+    if (callingParticipant) {
+      if (callingParticipant.state === 'Connected') {
+        presence = PersonaPresence.online;
+      } else if (callingParticipant.state === 'Idle') {
+        presence = PersonaPresence.away;
+      }
     }
 
     const menuItems: IContextualMenuItem[] = [];
@@ -61,12 +66,16 @@ const getDefaultRenderer = (
           me={myUserId ? participant.userId === myUserId : false}
           menuItems={menuItems}
           presence={presence}
-          onRenderIcon={() => (
-            <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
-              {participant.isScreenSharing && <CallControlPresentNewIcon size="small" />}
-              {participant.isMuted && <MicOffIcon size="small" />}
-            </Stack>
-          )}
+          onRenderIcon={
+            callingParticipant
+              ? () => (
+                  <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
+                    {callingParticipant.isScreenSharing && <CallControlPresentNewIcon size="small" />}
+                    {callingParticipant.isMuted && <MicOffIcon size="small" />}
+                  </Stack>
+                )
+              : undefined
+          }
           onRenderAvatar={
             onRenderAvatar
               ? () => {
@@ -100,7 +109,7 @@ const renderParticipants = (
 ): (JSX.Element | null)[] => {
   const renderParticipant = onRenderParticipant ?? getDefaultRenderer(myUserId, onParticipantRemove, onRenderAvatar);
   const onRenderItem = (item: IOverflowSetItemProps): JSX.Element | null => {
-    const participant: CommunicationParticipant = {
+    const participant = {
       userId: item.userId,
       displayName: item.displayName,
       state: item.state,
