@@ -1,11 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import ChatComposite from './ChatComposite';
-export {
-  AzureCommunicationChatAdapter,
-  createAzureCommunicationChatAdapter
-} from './adapter/AzureCommunicationChatAdapter';
+export { createAzureCommunicationChatAdapter } from './adapter/AzureCommunicationChatAdapter';
+export * from './adapter/ChatAdapter';
 
-export type { ChatState, ChatAdapter } from './adapter/ChatAdapter';
-export { ChatComposite };
+export { ChatComposite } from './ChatComposite';
+
+export type { ChatProps, ChatOptions } from './ChatComposite';

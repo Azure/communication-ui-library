@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useMemo } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import { VideoGallery, VideoGalleryRemoteParticipant } from 'react-components';
 import { usePropsFor } from './hooks/usePropsFor';
 import { ScreenShare } from './ScreenShare';
@@ -23,9 +23,31 @@ export const MediaGallery = (): JSX.Element => {
     });
   }, [remoteParticipants]);
 
-  return participantWithScreenShare !== undefined && participantWithScreenShare.screenShareStream !== undefined ? (
-    <ScreenShare {...videoGalleryProps} />
-  ) : (
-    <VideoGallery {...videoGalleryProps} scalingMode={'Crop'} styles={VideoGalleryStyles} />
-  );
+  const isScreenShareActive = useCallback((): boolean => {
+    return participantWithScreenShare !== undefined && participantWithScreenShare.screenShareStream !== undefined;
+  }, [participantWithScreenShare]);
+
+  const ScreenShareMemoized = useMemo(() => {
+    if (participantWithScreenShare && isScreenShareActive()) {
+      return <ScreenShare {...videoGalleryProps} participantWithScreenShare={participantWithScreenShare} />;
+    } else return <></>;
+  }, [isScreenShareActive, participantWithScreenShare, videoGalleryProps]);
+
+  const VideoGalleryMemoized = useMemo(() => {
+    return (
+      <VideoGallery
+        {...videoGalleryProps}
+        localVideoViewOption={{
+          scalingMode: 'Crop',
+          isMirrored: true
+        }}
+        remoteVideoViewOption={{
+          scalingMode: 'Crop'
+        }}
+        styles={VideoGalleryStyles}
+      />
+    );
+  }, [videoGalleryProps]);
+
+  return isScreenShareActive() ? ScreenShareMemoized : VideoGalleryMemoized;
 };

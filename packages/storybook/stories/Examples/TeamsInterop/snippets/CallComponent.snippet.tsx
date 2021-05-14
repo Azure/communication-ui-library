@@ -21,7 +21,7 @@ export const CallComponent = (props: TeamsInterop): JSX.Element => {
       styles={videoTileStyles}
       isMirrored={true}
       isVideoReady={true}
-      videoProvider={
+      renderElement={
         // Replace with your own video provider.
         <StreamMedia videoStreamElement={renderVideoStream()} />
       }

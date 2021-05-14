@@ -17,7 +17,7 @@ import {
 } from './styles/SettingsManagement.styles';
 import { inputBoxTextStyle } from './styles/SidePanel.styles';
 import { ThemeSelector } from 'app/theming/ThemeSelector';
-import { ENTER_KEY, MAXIMUM_LENGTH_OF_TOPIC } from 'react-composites';
+import { ENTER_KEY, MAXIMUM_LENGTH_OF_TOPIC } from './utils/constants';
 
 export type SettingsManagementProps = {
   updateThreadTopicName: (topicName: string) => Promise<void>;
