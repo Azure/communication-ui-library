@@ -54,7 +54,7 @@ export interface SendBoxProps {
   /**
    * Optional callback called when message is sent
    */
-  onMessageSend?: (content: string) => Promise<void>;
+  onSendMessage?: (content: string) => Promise<void>;
   /**
    * Optional callback called when user is typing
    */
@@ -99,7 +99,7 @@ const defaultOnRenderSystemMessage = (
  * can also be shown below the `SendBox`.
  */
 export const SendBox = (props: SendBoxProps): JSX.Element => {
-  const { disabled, systemMessage, supportNewline, onMessageSend, onTyping, onRenderIcon, styles } = props;
+  const { disabled, systemMessage, supportNewline, onSendMessage, onTyping, onRenderIcon, styles } = props;
 
   const [textValue, setTextValue] = useState('');
   const [textValueOverflow, setTextValueOverflow] = useState(false);
@@ -116,7 +116,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     }
     // we dont want to send empty messages including spaces, newlines, tabs
     if (!EMPTY_MESSAGE_REGEX.test(textValue)) {
-      onMessageSend && onMessageSend(textValue);
+      onSendMessage && onSendMessage(textValue);
       setTextValue('');
     }
     sendTextFieldRef.current?.focus();

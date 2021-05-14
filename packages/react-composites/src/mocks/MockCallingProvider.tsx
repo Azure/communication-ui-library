@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { callClientDeclaratify, DeclarativeCallClient, StatefulDeviceManager } from 'calling-stateful-client';
+import { createStatefulCallClient, StatefulCallClient, StatefulDeviceManager } from 'calling-stateful-client';
 import {
   AudioDeviceInfo,
   CallAgent,
@@ -31,7 +31,7 @@ interface CallingProviderProps {
  * @returns
  */
 export const MockCallingProvider = (props: CallingProviderProps & ErrorHandlingProps): JSX.Element => {
-  const [callClient, setCallClient] = useState<DeclarativeCallClient>(callClientDeclaratify(new CallClient(), ''));
+  const [callClient, setCallClient] = useState<StatefulCallClient>(createStatefulCallClient(new CallClient(), ''));
   const [callAgent, setCallAgent] = useState<CallAgent | undefined>(undefined);
   const [deviceManager, setDeviceManager] = useState<StatefulDeviceManager | undefined>(undefined);
   const [userId, setUserId] = useState<string>('');

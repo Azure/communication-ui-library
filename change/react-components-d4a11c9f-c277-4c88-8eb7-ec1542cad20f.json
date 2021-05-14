@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update from renaming declarative to stateful",
+  "packageName": "react-components",
+  "email": "mail@jamesburnside.com",
+  "dependentChangeType": "patch"
+}
