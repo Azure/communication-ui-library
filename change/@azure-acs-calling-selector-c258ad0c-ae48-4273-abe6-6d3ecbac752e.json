@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Merge branch 'main' of github.com:Azure/communication-ui-sdk into task/2444269_Refactor_VideoGallery",
+  "packageName": "@azure/acs-calling-selector",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}
