@@ -29,9 +29,6 @@ export type ChatThreadClientState = {
   participants: Map<CommunicationIdentifierAsKey, ChatParticipant>;
   threadId: string;
   properties?: ChatThreadProperties;
-  getThreadParticipantsError?: boolean;
-  updateThreadParticipantsError?: boolean;
-  failedMessageIds: string[];
   readReceipts: ChatMessageReadReceipt[];
   typingIndicators: TypingIndicatorReceivedEvent[];
   latestReadTime: Date;
