@@ -11,7 +11,6 @@ import {
   settingsContainerStyle
 } from 'app/styles/CommandPanel.styles';
 import { ThemeSelector } from 'app/theming/ThemeSelector';
-import { useCallingContext } from 'react-composites';
 import { Footer } from './Footer';
 import { useHandlers } from './hooks/useHandlers';
 import { useSelector } from './hooks/useSelector';
@@ -34,7 +33,6 @@ export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
 
   const options = useSelector(optionsButtonSelector, { callId: '' });
   const handlers = useHandlers(LocalDeviceSettingsComponent);
-  const { videoDeviceInfo } = useCallingContext();
 
   return (
     <Stack styles={fullHeightStyles} tokens={{ childrenGap: '1.5rem' }}>
@@ -56,7 +54,6 @@ export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
           <div className={settingsContainerStyle}>
             <LocalDeviceSettingsComponent
               {...options}
-              selectedCamera={videoDeviceInfo}
               onSelectCamera={handlers.onSelectCamera}
               onSelectMicrophone={handlers.onSelectMicrophone}
               onSelectSpeaker={handlers.onSelectSpeaker}
