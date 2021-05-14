@@ -13,6 +13,7 @@ export type {
   CustomMessagePayload,
   Message,
   MessageAttachedStatus,
+  MessageContentType,
   MessageStatus,
   MessageTypes,
   SystemMessage,
