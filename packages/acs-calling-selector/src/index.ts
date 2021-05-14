@@ -11,12 +11,4 @@ export { memoizeFnAll } from './utils/memoizeFnAll';
 
 export type { CallingBaseSelectorProps } from './baseSelectors';
 export type { CommonProperties1, DefaultCallingHandlers } from './handlers/createHandlers';
-export type {
-  VideoGalleryRemoteParticipant,
-  VideoGalleryLocalParticipant,
-  VideoGalleryParticipant,
-  ScalingMode,
-  MediaStreamType,
-  CreateViewOptions
-} from './types/VideoGallery';
 export type { FunctionWithKey, CallbackType } from './utils/memoizeFnAll';

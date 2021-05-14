@@ -22,7 +22,7 @@ const RemoteVideoTileComponentBase = (props: RemoteVideoTileProps): JSX.Element 
   return (
     <VideoTile
       isVideoReady={isVideoReady}
-      videoProvider={<StreamMedia videoStreamElement={videoStreamElement} />}
+      renderElement={<StreamMedia videoStreamElement={videoStreamElement} />}
       displayName={label}
     >
       <Label className={isVideoReady ? videoHint : disabledVideoHint}>{label}</Label>

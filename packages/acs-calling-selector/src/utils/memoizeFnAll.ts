@@ -14,7 +14,7 @@ const argsCmp = (args1: any[], args2: any[], objCmp: (obj1: any, obj2: any) => b
  * The function memoize a series of function calls in a single pass,
  * it memoizes all the args and return in a single run of the callback function, and read it in the next round of execution
  * note: this is a memory opimized function which will only memoize one round of bulk calls
- * @param  fnToMemoize - the function needs to be bulk memorized, key paramter need to be provided as cache id
+ * @param  fnToMemoize - the function needs to be bulk memorized and a key key paramter needs to be provided as cache id
  * @param  shouldCacheUpdate - the validate function for comparing 2 argument, return true when 2 args are equal
  * @returns callback function includes a series calls of memoizedFn, and each call will get cache result if args are the same(according to shouldCacheUpdate fn)
  * @example

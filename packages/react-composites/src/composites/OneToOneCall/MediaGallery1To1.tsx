@@ -67,7 +67,7 @@ export const MediaGallery1To1Component = (props: MediaGallery1To1Props): JSX.Ele
       <Stack className={localMediaGalleryTileStyle}>
         <VideoTile
           isVideoReady={isLocalVideoReady}
-          videoProvider={<StreamMedia videoStreamElement={localVideoStreamElement} />}
+          renderElement={<StreamMedia videoStreamElement={localVideoStreamElement} />}
           displayName={localParticipantName}
           isMirrored={localVideoInverted}
         >

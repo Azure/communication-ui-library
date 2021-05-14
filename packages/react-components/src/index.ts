@@ -18,6 +18,10 @@ export type {
   MessageTypes,
   SystemMessage,
   SystemMessagePayload,
-  CommunicationParticipant
+  CommunicationParticipant,
+  VideoStreamOptions,
+  VideoGalleryParticipant,
+  VideoGalleryStream,
+  VideoGalleryLocalParticipant,
+  VideoGalleryRemoteParticipant
 } from './types';
-export * from './types/GalleryParticipant';

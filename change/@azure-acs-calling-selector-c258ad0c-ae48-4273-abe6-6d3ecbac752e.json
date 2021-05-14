@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add calling handler and selector for VideoGallery and ScreenShare",
+  "packageName": "@azure/acs-calling-selector",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}

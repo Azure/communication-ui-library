@@ -10,7 +10,7 @@ export const VideoTilePlaceholderExample: () => JSX.Element = () => {
       <VideoTile
         styles={videoTileStyles}
         displayName={'Maximus Aurelius'}
-        videoProvider={
+        renderElement={
           // NOTE: Replace with your own video provider. (An html element with video stream)
           <StreamMedia videoStreamElement={renderVideoStream()} />
         }
