@@ -59,21 +59,15 @@ export type ChatMessagePayload = {
 
 // @public
 export interface CommunicationCallingParticipant extends CommunicationParticipant {
-    // (undocumented)
     isMuted?: boolean;
-    // (undocumented)
     isScreenSharing?: boolean;
-    // (undocumented)
     isSpeaking?: boolean;
-    // (undocumented)
     state: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
 }
 
 // @public
 export interface CommunicationParticipant {
-    // (undocumented)
     displayName?: string;
-    // (undocumented)
     userId: string;
 }
 

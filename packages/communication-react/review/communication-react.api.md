@@ -163,13 +163,9 @@ export type CommonProperties<A, B> = {
 
 // @public
 export interface CommunicationCallingParticipant extends CommunicationParticipant {
-    // (undocumented)
     isMuted?: boolean;
-    // (undocumented)
     isScreenSharing?: boolean;
-    // (undocumented)
     isSpeaking?: boolean;
-    // (undocumented)
     state: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
 }
 
@@ -181,9 +177,7 @@ export const communicationIdentifierToString: (i: CommunicationIdentifier | unde
 
 // @public
 export interface CommunicationParticipant {
-    // (undocumented)
     displayName?: string;
-    // (undocumented)
     userId: string;
 }
 
