@@ -7,7 +7,7 @@ import {
   getIsLargeGroup,
   getLatestReadTime,
   getUserId,
-  parseMessageContentType
+  sanitizedMessageContentType
 } from './baseSelectors';
 import { ChatMessageWithStatus } from 'chat-stateful-client';
 // The following need explicitly imported to avoid api-extractor issues.
@@ -41,7 +41,7 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
     payload: {
       createdOn: chatMessage.createdOn,
       content: chatMessage.content?.message,
-      type: parseMessageContentType(chatMessage.type),
+      type: sanitizedMessageContentType(chatMessage.type),
       status: !isLargeGroup && chatMessage.status === 'delivered' && isSeen ? 'seen' : chatMessage.status,
       senderDisplayName: chatMessage.senderDisplayName,
       senderId: communicationIdentifierToString(chatMessage.sender) ?? userId,

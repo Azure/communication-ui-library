@@ -61,6 +61,9 @@ export const communicationIdentifierToString = (i: CommunicationIdentifier | und
   return i ? getCommunicationIdentifierAsKey(i) : '';
 };
 
-export const parseMessageContentType = (type: string): MessageContentType => {
-  return type === 'text' || type === 'html' || type === 'RichText/Html' ? (type as MessageContentType) : 'unknown';
+export const sanitizedMessageContentType = (type: string): MessageContentType => {
+  const lowerCaseType = type.toLowerCase();
+  return lowerCaseType === 'text' || lowerCaseType === 'html' || lowerCaseType === 'richtext/html'
+    ? lowerCaseType
+    : 'unknown';
 };
