@@ -16,5 +16,5 @@ export const ParticipantItemExample: () => JSX.Element = () => {
     }
   ];
 
-  return <ParticipantItem name="Johnny Bravo" menuItems={menuItems} presence={PersonaPresence.online} />;
+  return <ParticipantItem displayName="Johnny Bravo" menuItems={menuItems} presence={PersonaPresence.online} />;
 };

@@ -9,13 +9,13 @@ export const VideoTilePlaceholderExample: () => JSX.Element = () => {
     <FluentThemeProvider>
       <VideoTile
         styles={videoTileStyles}
-        avatarName={'Maximus Aurelius'}
+        displayName={'Maximus Aurelius'}
         videoProvider={
           // NOTE: Replace with your own video provider. (An html element with video stream)
           <StreamMedia videoStreamElement={renderVideoStream()} />
         }
         isVideoReady={false}
-        invertVideo={true}
+        isMirrored={true}
         placeholderProvider={
           <Stack>
             <img

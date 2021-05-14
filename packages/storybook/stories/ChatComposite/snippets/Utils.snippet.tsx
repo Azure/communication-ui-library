@@ -5,9 +5,9 @@ import { ChatClient } from '@azure/communication-chat';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-identity';
 import React from 'react';
-import { ChatConfig } from 'react-composites';
 
 import { CompositeConnectionParamsErrMessage } from '../../CompositeStringUtils';
+import { ChatConfig } from '../ChatConfig';
 
 // Adds a bot to the thread that sends out provided canned messages one by one.
 export const addParrotBotToThread = async (

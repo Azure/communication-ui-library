@@ -55,6 +55,7 @@ export type ChatMessagePayload = {
     attached?: MessageAttachedStatus | boolean;
     mine?: boolean;
     clientMessageId?: string;
+    type: MessageContentType;
 };
 
 // @public
@@ -184,6 +185,9 @@ export type Message<T extends MessageTypes> = {
 // @public (undocumented)
 export type MessageAttachedStatus = 'bottom' | 'top';
 
+// @public (undocumented)
+export type MessageContentType = 'text' | 'html' | 'RichText/Html' | 'unknown';
+
 // @public
 export type MessageProps = {
     message: ChatMessage | SystemMessage | CustomMessage;
@@ -247,9 +251,9 @@ export const ParticipantItem: (props: ParticipantItemProps) => JSX.Element;
 
 // @public
 export interface ParticipantItemProps {
-    isYou?: boolean;
+    displayName: string;
+    me?: boolean;
     menuItems?: IContextualMenuItem[];
-    name: string;
     onRenderAvatar?: (props?: ParticipantItemProps) => JSX.Element | null;
     onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
     presence?: PersonaPresence;
@@ -260,7 +264,7 @@ export interface ParticipantItemProps {
 export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
     avatar?: IStyle;
     iconContainer?: IStyle;
-    isYou?: IStyle;
+    me?: IStyle;
     menu?: IStyle;
 }
 
@@ -278,7 +282,7 @@ export type ParticipantListProps = {
 
 // @public (undocumented)
 export interface PlaceholderProps {
-    avatarName?: string;
+    displayName?: string;
     noVideoAvailableAriaLabel?: string;
 }
 
@@ -347,7 +351,7 @@ export const StreamMedia: (props: StreamMediaProps) => JSX.Element;
 
 // @public
 export interface StreamMediaProps {
-    invertVideo?: boolean;
+    isMirrored?: boolean;
     styles?: BaseCustomStylesProps;
     videoStreamElement: HTMLElement | null;
 }
@@ -439,7 +443,7 @@ export const VideoTile: (props: VideoTileProps & PlaceholderProps) => JSX.Elemen
 // @public
 export interface VideoTileProps {
     children?: React_2.ReactNode;
-    invertVideo?: boolean;
+    isMirrored?: boolean;
     isVideoReady?: boolean;
     placeholderProvider?: JSX.Element | null;
     styles?: VideoTileStylesProps;

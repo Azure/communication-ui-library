@@ -10,6 +10,7 @@ import {
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { ChatParticipant, ChatMessageReadReceipt } from '@azure/communication-chat';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
+import { MessageContentType } from 'react-components';
 export type ChatBaseSelectorProps = {
   threadId: string;
 };
@@ -41,9 +42,6 @@ export const getIsLargeGroup = (state: ChatClientState, props: ChatBaseSelectorP
 export const getLatestReadTime = (state: ChatClientState, props: ChatBaseSelectorProps): Date =>
   (props.threadId && state.threads.get(props.threadId)?.latestReadTime) || new Date(0);
 
-export const getCoolPeriod = (state: ChatClientState, props: ChatBaseSelectorProps): Date =>
-  (props.threadId && state.threads.get(props.threadId)?.coolPeriod) || new Date(0);
-
 export const getTopicName = (state: ChatClientState, props: ChatBaseSelectorProps): string => {
   return state.threads.get(props.threadId)?.properties?.topic || '';
 };
@@ -61,4 +59,8 @@ export const getTypingIndicators = (
 // All instances of IDs must be translated uniformly by the selectors.
 export const communicationIdentifierToString = (i: CommunicationIdentifier | undefined): string => {
   return i ? getCommunicationIdentifierAsKey(i) : '';
+};
+
+export const parseMessageContentType = (type: string): MessageContentType => {
+  return type === 'text' || type === 'html' || type === 'RichText/Html' ? (type as MessageContentType) : 'unknown';
 };

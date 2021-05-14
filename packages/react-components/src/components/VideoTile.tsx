@@ -33,20 +33,20 @@ export interface VideoTileProps {
   /** Component with the video stream. */
   videoProvider?: JSX.Element | null;
   /** Determines if the video is mirrored or not. */
-  invertVideo?: boolean;
+  isMirrored?: boolean;
   /** Custom Component to render when no video is available. Defaults to a Persona Icon. */
   placeholderProvider?: JSX.Element | null;
 }
 
 export interface PlaceholderProps {
-  /** Optional participant avatar name for the VideoTile default placeholder. */
-  avatarName?: string;
+  /** Optional participant display name for the VideoTile default placeholder. */
+  displayName?: string;
   /** Optional property to set the aria label of the video tile if there is no available stream. */
   noVideoAvailableAriaLabel?: string;
 }
 
 const DefaultPlaceholder = (props: PlaceholderProps): JSX.Element => {
-  const { avatarName, noVideoAvailableAriaLabel } = props;
+  const { displayName, noVideoAvailableAriaLabel } = props;
   const personaStyles = { root: { margin: 'auto' } };
   return (
     <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
@@ -54,7 +54,7 @@ const DefaultPlaceholder = (props: PlaceholderProps): JSX.Element => {
         styles={personaStyles}
         size={PersonaSize.size100}
         hidePersonaDetails={true}
-        text={avatarName}
+        text={displayName}
         initialsTextColor="white"
         aria-label={noVideoAvailableAriaLabel}
       />
@@ -63,7 +63,7 @@ const DefaultPlaceholder = (props: PlaceholderProps): JSX.Element => {
 };
 
 export const VideoTile = (props: VideoTileProps & PlaceholderProps): JSX.Element => {
-  const { styles, isVideoReady, videoProvider, placeholderProvider, invertVideo, children } = props;
+  const { styles, isVideoReady, videoProvider, placeholderProvider, isMirrored, children } = props;
   const theme = useTheme();
   const placeholder = placeholderProvider ?? <DefaultPlaceholder {...props} />;
   return (
@@ -72,7 +72,7 @@ export const VideoTile = (props: VideoTileProps & PlaceholderProps): JSX.Element
         <Stack
           className={mergeStyles(
             videoContainerStyles,
-            invertVideo && {
+            isMirrored && {
               transform: 'scaleX(-1)'
             },
             styles?.videoContainer

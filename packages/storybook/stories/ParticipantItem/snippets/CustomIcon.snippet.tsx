@@ -4,9 +4,9 @@ import React from 'react';
 
 export const CustomIconExample: () => JSX.Element = () => {
   const onRenderIcon = (props?: ParticipantItemProps): JSX.Element | null => {
-    if (props?.name === 'Patrick') {
+    if (props?.displayName === 'Patrick') {
       return <Icon iconName="FavoriteStar" />;
-    } else if (props?.isYou) {
+    } else if (props?.me) {
       return null;
     }
     return <Icon iconName="AddFriend" />;
@@ -14,9 +14,14 @@ export const CustomIconExample: () => JSX.Element = () => {
 
   return (
     <Stack>
-      <ParticipantItem name="Spongebob" presence={PersonaPresence.online} isYou={true} onRenderIcon={onRenderIcon} />
-      <ParticipantItem name="Patrick" presence={PersonaPresence.online} onRenderIcon={onRenderIcon} />
-      <ParticipantItem name="Sandy" presence={PersonaPresence.online} onRenderIcon={onRenderIcon} />
+      <ParticipantItem
+        displayName="Spongebob"
+        presence={PersonaPresence.online}
+        me={true}
+        onRenderIcon={onRenderIcon}
+      />
+      <ParticipantItem displayName="Patrick" presence={PersonaPresence.online} onRenderIcon={onRenderIcon} />
+      <ParticipantItem displayName="Sandy" presence={PersonaPresence.online} onRenderIcon={onRenderIcon} />
     </Stack>
   );
 };

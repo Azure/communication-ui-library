@@ -70,7 +70,7 @@ export interface TransferCallFeature {
    */
   receivedTransferRequests: TransferRequest[];
   /**
-   * These are requests initiated by the local user using {@Link DeclarativeCallClient.transfer}. Only
+   * These are requests initiated by the local user using {@Link StatefulCallClient.transfer}. Only
    * MAX_TRANSFER_REQUEST_LENGTH number of TransferRequest are kept in this array with the older ones being replaced by
    * newer ones.
    */
@@ -124,7 +124,7 @@ export interface LocalVideoStream {
   mediaStreamType: MediaStreamType;
   /**
    * {@Link VideoStreamRendererView} is added/removed from state by startRenderVideo/stopRenderVideo in
-   * {@Link DeclarativeCallClient} API.
+   * {@Link StatefulCallClient} API.
    */
   videoStreamRendererView?: VideoStreamRendererView | undefined;
 }
@@ -147,7 +147,7 @@ export interface RemoteVideoStream {
   isAvailable: boolean;
   /**
    * {@Link VideoStreamRendererView} is added/removed from state by startRenderVideo/stopRenderVideo in
-   * {@Link DeclarativeCallClient} API.
+   * {@Link StatefulCallClient} API.
    */
   videoStreamRendererView: VideoStreamRendererView | undefined;
 }
@@ -347,13 +347,13 @@ export type DeviceManager = {
   deviceAccess?: DeviceAccess;
   /**
    * Stores created views that are not associated with any Call state (when
-   * {@Link DeclarativeCallClient#startRenderVideo} is called with undefined callId and LocalVideoStream).
+   * {@Link StatefulCallClient#startRenderVideo} is called with undefined callId and LocalVideoStream).
    */
   unparentedViews: VideoStreamRendererView[];
 };
 
 /**
- * Container for all of the state data proxied by {@Link DeclarativeCallClient}. Calls is a map of Call.id to Call
+ * Container for all of the state data proxied by {@Link StatefulCallClient}. Calls is a map of Call.id to Call
  * {@Link Call}.
  */
 export interface CallClientState {

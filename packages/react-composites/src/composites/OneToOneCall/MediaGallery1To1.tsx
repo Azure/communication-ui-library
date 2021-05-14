@@ -57,7 +57,7 @@ export const MediaGallery1To1Component = (props: MediaGallery1To1Props): JSX.Ele
         stream={stream}
         scalingMode={remoteVideoScalingMode ?? 'Crop'}
         label={remoteParticipantName}
-        avatarName={remoteParticipantName}
+        displayName={remoteParticipantName}
       />
     </Stack>
   );
@@ -68,8 +68,8 @@ export const MediaGallery1To1Component = (props: MediaGallery1To1Props): JSX.Ele
         <VideoTile
           isVideoReady={isLocalVideoReady}
           videoProvider={<StreamMedia videoStreamElement={localVideoStreamElement} />}
-          avatarName={localParticipantName}
-          invertVideo={localVideoInverted}
+          displayName={localParticipantName}
+          isMirrored={localVideoInverted}
         >
           {showLocalParticipantName && (
             <Label className={isLocalVideoReady ? videoHint : disabledVideoHint}>{localParticipantName}</Label>

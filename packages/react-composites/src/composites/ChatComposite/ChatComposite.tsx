@@ -14,13 +14,13 @@ export type ChatProps = {
   options?: ChatOptions;
 };
 
-type ChatOptions = {
+export type ChatOptions = {
   sendBoxMaxLength?: number; // Limit max send box length, when change viewport size
   // messagesPerPage?: number; // Number of messages per page - smaller for better perf
   // supportNewline: boolean; // Whether to support new line (shift+enter) in textArea, disable until ACS backend supports line switch
 };
 
-export default (props: ChatProps): JSX.Element => {
+export const ChatComposite = (props: ChatProps): JSX.Element => {
   const { adapter, options, onRenderAvatar } = props;
 
   return (
