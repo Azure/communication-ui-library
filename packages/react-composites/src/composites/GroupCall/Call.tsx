@@ -3,15 +3,16 @@
 
 import { CallingProvider, CallProvider, ErrorProvider } from '../../providers';
 import React, { useEffect, useState } from 'react';
-import { GroupCallScreen } from './GroupCallScreen';
+import { CallScreen } from './CallScreen';
 import { ConfigurationScreen } from './ConfigurationScreen';
 import { CallClientOptions } from '@azure/communication-calling';
 import { AbortSignalLike } from '@azure/core-http';
-import { groupCallContainer } from './styles/GroupCall.styles';
+import { callContainer } from './styles/Call.styles';
 import { Stack } from '@fluentui/react';
 import { CommunicationUiErrorInfo } from '../../types';
+import { v1 as createGUID } from 'uuid';
 
-export type GroupCallCompositeProps = {
+export type CallCompositeProps = {
   /** Display name in the group call */
   displayName: string;
   /** User Id */
@@ -30,9 +31,9 @@ export type GroupCallCompositeProps = {
   onErrorCallback?: (error: CommunicationUiErrorInfo) => void;
 };
 
-type compositePageSubType = 'configuration' | 'groupcall';
+type compositePageSubType = 'configuration' | 'call';
 
-export const GroupCall = (props: GroupCallCompositeProps): JSX.Element => {
+export const Call = (props: CallCompositeProps): JSX.Element => {
   const [page, setPage] = useState<compositePageSubType>('configuration');
   const [screenWidth, setScreenWidth] = useState(window?.innerWidth ?? 0);
   useEffect(() => {
@@ -44,6 +45,7 @@ export const GroupCall = (props: GroupCallCompositeProps): JSX.Element => {
     window.addEventListener('resize', setWindowWidth);
     return () => window.removeEventListener('resize', setWindowWidth);
   }, []);
+  const [callProviderKey, setCallProviderKey] = useState<string>(createGUID());
 
   const { displayName, groupId, token, callClientOptions, refreshTokenCallback, onEndCall, onErrorCallback } = props;
 
@@ -55,32 +57,41 @@ export const GroupCall = (props: GroupCallCompositeProps): JSX.Element => {
         callClientOptions={callClientOptions}
         refreshTokenCallback={refreshTokenCallback}
       >
-        <CallProvider>
-          <Stack className={groupCallContainer} grow>
-            {(() => {
-              switch (page) {
-                case 'configuration': {
-                  return (
+        <Stack className={callContainer} grow>
+          {(() => {
+            switch (page) {
+              case 'configuration': {
+                return (
+                  <CallProvider key={'configuration-call-provider-key'}>
                     <ConfigurationScreen
                       screenWidth={screenWidth}
-                      startCallHandler={(): void => setPage('groupcall')}
+                      startCallHandler={(): void => setPage('call')}
                       groupId={groupId}
                     />
-                  );
-                }
-                case 'groupcall': {
-                  return (
-                    <GroupCallScreen
-                      endCallHandler={(): void => (onEndCall ? onEndCall() : setPage('configuration'))}
+                  </CallProvider>
+                );
+              }
+              case 'call': {
+                return (
+                  <CallProvider key={callProviderKey}>
+                    <CallScreen
+                      endCallHandler={(): void => {
+                        if (onEndCall) {
+                          onEndCall();
+                        } else {
+                          setPage('configuration');
+                          setCallProviderKey(createGUID());
+                        }
+                      }}
                       screenWidth={screenWidth}
                       groupId={groupId}
                     />
-                  );
-                }
+                  </CallProvider>
+                );
               }
-            })()}
-          </Stack>
-        </CallProvider>
+            }
+          })()}
+        </Stack>
       </CallingProvider>
     </ErrorProvider>
   );

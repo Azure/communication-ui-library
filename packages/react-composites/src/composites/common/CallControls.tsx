@@ -282,7 +282,7 @@ export type GroupCallControlsProps = {
   compressedMode: boolean;
 };
 
-export const GroupCallControls = (props: GroupCallControlsProps): JSX.Element => {
+export const CallControls = (props: GroupCallControlsProps): JSX.Element => {
   const { compressedMode, onEndCallClick } = props;
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
   const cameraButtonProps = usePropsFor(CameraButton);

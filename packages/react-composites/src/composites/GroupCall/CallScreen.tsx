@@ -11,21 +11,21 @@ import {
   subContainerStyles,
   headerCenteredContainer,
   headerContainer
-} from './styles/GroupCallScreen.styles';
+} from './styles/CallScreen.styles';
 
 import { MediaGallery } from './MediaGallery';
 import { connectFuncsToContext, MapToErrorBarProps } from '../../consumers';
 import { isInCall } from '../../utils/SDKUtils';
 import { ErrorHandlingProps } from '../../providers/ErrorProvider';
 import { ErrorBar as ErrorBarComponent } from 'react-components';
-import { GroupCallControls } from '../common/CallControls';
+import { CallControls } from '../common/CallControls';
 import { useCall, useCallClient, useCallContext, useCallingContext } from '../../providers';
 import { CallClientState, StatefulCallClient } from 'calling-stateful-client';
 import { AudioOptions, CallState } from '@azure/communication-calling';
 
 export const MINI_HEADER_WINDOW_WIDTH = 450;
 
-export interface GroupCallProps {
+export interface CallScreenProps {
   screenWidth: number;
   endCallHandler(): void;
   groupId: string;
@@ -33,7 +33,7 @@ export interface GroupCallProps {
 
 const spinnerLabel = 'Initializing call client...';
 
-export const GroupCallScreen = (props: GroupCallProps & ErrorHandlingProps): JSX.Element => {
+export const CallScreen = (props: CallScreenProps & ErrorHandlingProps): JSX.Element => {
   const { groupId, screenWidth, endCallHandler } = props;
 
   const ErrorBar = connectFuncsToContext(ErrorBarComponent, MapToErrorBarProps);
@@ -44,12 +44,14 @@ export const GroupCallScreen = (props: GroupCallProps & ErrorHandlingProps): JSX
   const callClient: StatefulCallClient = useCallClient();
   const [callState, setCallState] = useState<CallState | undefined>(undefined);
   const [isScreenSharingOn, setIsScreenSharingOn] = useState<boolean | undefined>(undefined);
+  const [joinedCall, setJoinedCall] = useState<boolean>(false);
 
-  // To use useProps to get these states, we need to create another file wrapping GroupCall,
+  // To use useProps to get these states, we need to create another file wrapping Call,
   // It seems unnecessary in this case, so we get the updated states using this approach.
   useEffect(() => {
     const onStateChange = (state: CallClientState): void => {
       call?.id && setCallState(state.calls.get(call.id)?.state);
+      console.log(call?.id && state.calls.get(call.id)?.state);
       call?.id && setIsScreenSharingOn(state.calls.get(call.id)?.isScreenSharingOn);
     };
 
@@ -64,7 +66,7 @@ export const GroupCallScreen = (props: GroupCallProps & ErrorHandlingProps): JSX
     if (isInCall(callState ?? 'None')) {
       document.title = `${groupId} group call sample`;
     } else {
-      if (!isInCall(callState ?? 'None') && callAgent) {
+      if (!isInCall(callState ?? 'None') && callAgent && !joinedCall) {
         const audioOptions: AudioOptions = { muted: !isMicrophoneEnabled };
         const videoOptions = { localVideoStreams: localVideoStream ? [localVideoStream] : undefined };
 
@@ -78,9 +80,10 @@ export const GroupCallScreen = (props: GroupCallProps & ErrorHandlingProps): JSX
           }
         );
         setCall(call);
+        setJoinedCall(true);
       }
     }
-  }, [callState, groupId, callAgent, setCall, isMicrophoneEnabled, localVideoStream]);
+  }, [callState, groupId, callAgent, setCall, isMicrophoneEnabled, localVideoStream, joinedCall]);
 
   return (
     <>
@@ -88,10 +91,7 @@ export const GroupCallScreen = (props: GroupCallProps & ErrorHandlingProps): JSX
         <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow>
           <Stack.Item styles={headerStyles}>
             <Stack className={props.screenWidth > MINI_HEADER_WINDOW_WIDTH ? headerContainer : headerCenteredContainer}>
-              <GroupCallControls
-                onEndCallClick={endCallHandler}
-                compressedMode={screenWidth <= MINI_HEADER_WINDOW_WIDTH}
-              />
+              <CallControls onEndCallClick={endCallHandler} compressedMode={screenWidth <= MINI_HEADER_WINDOW_WIDTH} />
             </Stack>
             <ErrorBar />
           </Stack.Item>
