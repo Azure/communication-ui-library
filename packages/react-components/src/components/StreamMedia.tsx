@@ -45,6 +45,10 @@ export const StreamMedia = (props: StreamMediaProps): JSX.Element => {
     if (videoStreamElement) {
       container.appendChild(videoStreamElement);
     }
+
+    return () => {
+      container.innerHTML = '';
+    };
   }, [videoStreamElement]);
 
   return (
