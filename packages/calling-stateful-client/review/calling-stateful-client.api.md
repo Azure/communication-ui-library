@@ -121,9 +121,9 @@ export interface RemoteVideoStream {
 export interface StatefulCallClient extends CallClient {
     offStateChange(handler: (state: CallClientState) => void): void;
     onStateChange(handler: (state: CallClientState) => void): void;
-    startRenderVideo(callId: string | undefined, stream: LocalVideoStream | RemoteVideoStream, options?: CreateViewOptions): Promise<void>;
+    startRenderVideo(callId: string | undefined, participantId: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | undefined, stream: LocalVideoStream | RemoteVideoStream, options?: CreateViewOptions): Promise<void>;
     state: CallClientState;
-    stopRenderVideo(callId: string | undefined, stream: LocalVideoStream | RemoteVideoStream): void;
+    stopRenderVideo(callId: string | undefined, participantId: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | undefined, stream: LocalVideoStream | RemoteVideoStream): void;
 }
 
 // @public (undocumented)

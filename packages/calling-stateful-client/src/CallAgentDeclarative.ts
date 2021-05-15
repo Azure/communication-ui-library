@@ -8,7 +8,7 @@ import { CallSubscriber } from './CallSubscriber';
 import { convertSdkCallToDeclarativeCall, convertSdkIncomingCallToDeclarativeIncomingCall } from './Converter';
 import { IncomingCallSubscriber } from './IncomingCallSubscriber';
 import { InternalCallContext } from './InternalCallContext';
-import { stopRenderVideoAll, stopRenderVideoAllCalls } from './StreamUtils';
+import { stopRenderAllVideosForCall, stopRenderAllVideosForAllCalls } from './StreamUtils';
 
 /**
  * ProxyCallAgent proxies CallAgent and saves any returned state in the given context. It will subscribe to all state
@@ -71,7 +71,7 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
       this.addCall(call);
     }
     for (const call of event.removed) {
-      stopRenderVideoAll(this._context, this._internalContext, call.id);
+      stopRenderAllVideosForCall(this._context, this._internalContext, call.id);
       const callSubscriber = this._callSubscribers.get(call);
       if (callSubscriber) {
         callSubscriber.unsubscribe();
@@ -172,7 +172,7 @@ export const callAgentDeclaratify = (
   // Make sure there are no existing call data if creating a new CallAgentDeclarative (if creating a new
   // CallAgentDeclarative after disposing of the hold one will mean context have old call state). TODO: should we stop
   // rendering when the previous callAgent is disposed?
-  stopRenderVideoAllCalls(context, internalContext);
+  stopRenderAllVideosForAllCalls(context, internalContext);
 
   context.clearCallRelatedState();
   internalContext.clearCallRelatedState();

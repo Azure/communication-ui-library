@@ -49,7 +49,7 @@ export const createDefaultCallingHandlers = memoizeOne(
       if (!callId) return;
       if (call && call.localVideoStreams.find((s) => areStreamsEqual(s, stream))) {
         await call.stopVideo(stream);
-        await callClient.stopRenderVideo(callId, stream);
+        await callClient.stopRenderVideo(callId, undefined, stream);
       }
     };
 
@@ -65,12 +65,12 @@ export const createDefaultCallingHandlers = memoizeOne(
         if (callClient.state.deviceManager.selectedCamera) {
           const previewOn = isPreviewOn(callClient.state.deviceManager);
           if (previewOn) {
-            await callClient.stopRenderVideo(undefined, {
+            await callClient.stopRenderVideo(undefined, undefined, {
               source: callClient.state.deviceManager.selectedCamera,
               mediaStreamType: 'Video'
             });
           } else {
-            await callClient.startRenderVideo(undefined, {
+            await callClient.startRenderVideo(undefined, undefined, {
               source: callClient.state.deviceManager.selectedCamera,
               mediaStreamType: 'Video'
             });
@@ -118,13 +118,13 @@ export const createDefaultCallingHandlers = memoizeOne(
 
         // If preview is on, then stop current preview and then start new preview with new device
         if (callClient.state.deviceManager.selectedCamera) {
-          await callClient.stopRenderVideo(undefined, {
+          await callClient.stopRenderVideo(undefined, undefined, {
             source: callClient.state.deviceManager.selectedCamera,
             mediaStreamType: 'Video'
           });
         }
         deviceManager.selectCamera(device);
-        await callClient.startRenderVideo(undefined, {
+        await callClient.startRenderVideo(undefined, undefined, {
           source: device,
           mediaStreamType: 'Video'
         });
@@ -148,7 +148,7 @@ export const createDefaultCallingHandlers = memoizeOne(
       if (!call || call.localVideoStreams.length === 0) return;
       const localStream = call.localVideoStreams.find((item) => item.mediaStreamType === 'Video');
       if (!localStream) return;
-      callClient.startRenderVideo(call.id, localStream, options);
+      callClient.startRenderVideo(call.id, undefined, localStream, options);
     };
 
     const onCreateRemoteStreamView = async (userId: string, options?: VideoStreamOptions): Promise<void> => {
@@ -156,21 +156,27 @@ export const createDefaultCallingHandlers = memoizeOne(
       const callState = callClient.state.calls.get(call.id);
       if (!callState) throw new Error(`Call Not Found: ${call.id}`);
 
-      const streams = Array.from(callState.remoteParticipants.values()).find(
+      const participant = Array.from(callState.remoteParticipants.values()).find(
         (participant) => getACSId(participant.identifier) === userId
-      )?.videoStreams;
+      );
 
-      if (!streams) return;
+      if (!participant || !participant.videoStreams) {
+        return;
+      }
 
-      const remoteVideoStream = Array.from(streams?.values()).find((i) => i.mediaStreamType === 'Video');
-      const screenShareStream = Array.from(streams?.values()).find((i) => i.mediaStreamType === 'ScreenSharing');
+      const remoteVideoStream = Array.from(participant.videoStreams.values()).find(
+        (i) => i.mediaStreamType === 'Video'
+      );
+      const screenShareStream = Array.from(participant.videoStreams.values()).find(
+        (i) => i.mediaStreamType === 'ScreenSharing'
+      );
 
       if (remoteVideoStream && remoteVideoStream.isAvailable && !remoteVideoStream.videoStreamRendererView) {
-        callClient.startRenderVideo(call.id, remoteVideoStream, options);
+        callClient.startRenderVideo(call.id, participant.identifier, remoteVideoStream, options);
       }
 
       if (screenShareStream && screenShareStream.isAvailable && !screenShareStream.videoStreamRendererView) {
-        callClient.startRenderVideo(call.id, screenShareStream, options);
+        callClient.startRenderVideo(call.id, participant.identifier, screenShareStream, options);
       }
     };
 

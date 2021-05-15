@@ -46,8 +46,14 @@ export class ParticipantSubscriber {
 
     if (this._participant.videoStreams.length > 0) {
       for (const stream of this._participant.videoStreams) {
+        this._internalContext.setRemoteStreamAndRenderer(
+          this._callIdRef.callId,
+          this._participantKey,
+          stream.id,
+          stream,
+          undefined
+        );
         this.addRemoteVideoStreamSubscriber(stream);
-        this._internalContext.setRemoteVideoStream(this._callIdRef.callId, this._participantKey, stream);
       }
       this._context.setRemoteVideoStreams(
         this._callIdRef.callId,
@@ -69,14 +75,14 @@ export class ParticipantSubscriber {
     // as it doesn't make sense to render for an ended participant.
     if (this._participant.videoStreams.length > 0) {
       for (const stream of this._participant.videoStreams) {
-        const existingDeclarativeStream = this._context
-          .getState()
-          .calls.get(this._callIdRef.callId)
-          ?.remoteParticipants.get(this._participantKey)
-          ?.videoStreams.get(stream.id);
-        if (existingDeclarativeStream && existingDeclarativeStream.videoStreamRendererView) {
-          stopRenderVideo(this._context, this._internalContext, this._callIdRef.callId, existingDeclarativeStream);
-        }
+        stopRenderVideo(
+          this._context,
+          this._internalContext,
+          this._callIdRef.callId,
+          this._participantKey,
+          convertSdkRemoteStreamToDeclarativeRemoteStream(stream)
+        );
+        this._internalContext.removeRemoteStreamAndRenderer(this._callIdRef.callId, this._participantKey, stream.id);
       }
     }
   };
@@ -112,20 +118,25 @@ export class ParticipantSubscriber {
   private videoStreamsUpdated = (event: { added: RemoteVideoStream[]; removed: RemoteVideoStream[] }): void => {
     for (const stream of event.removed) {
       this._remoteVideoStreamSubscribers.get(stream.id)?.unsubscribe();
-      const existingDeclarativeStream = this._context
-        .getState()
-        .calls.get(this._callIdRef.callId)
-        ?.remoteParticipants.get(this._participantKey)
-        ?.videoStreams.get(stream.id);
-      if (existingDeclarativeStream && existingDeclarativeStream.videoStreamRendererView) {
-        stopRenderVideo(this._context, this._internalContext, this._callIdRef.callId, existingDeclarativeStream);
-      }
-      this._internalContext.removeRemoteVideoStream(this._callIdRef.callId, stream.id);
+      stopRenderVideo(
+        this._context,
+        this._internalContext,
+        this._callIdRef.callId,
+        this._participantKey,
+        convertSdkRemoteStreamToDeclarativeRemoteStream(stream)
+      );
+      this._internalContext.removeRemoteStreamAndRenderer(this._callIdRef.callId, this._participantKey, stream.id);
     }
 
     for (const stream of event.added) {
+      this._internalContext.setRemoteStreamAndRenderer(
+        this._callIdRef.callId,
+        this._participantKey,
+        stream.id,
+        stream,
+        undefined
+      );
       this.addRemoteVideoStreamSubscriber(stream);
-      this._internalContext.setRemoteVideoStream(this._callIdRef.callId, this._participantKey, stream);
     }
 
     this._context.setRemoteVideoStreams(
