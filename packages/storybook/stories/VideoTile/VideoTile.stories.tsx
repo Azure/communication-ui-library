@@ -42,7 +42,7 @@ const getDocs: () => JSX.Element = () => {
       <Subheading>Custom Placeholder</Subheading>
       <Description>
         A custom placeholder can be provided to override the default Persona avatar by providing a JSX element to the
-        `placeholderProvider` prop.
+        `placeholder` prop.
       </Description>
       <Canvas mdxSource={VideoTilePlaceholderText}>
         <VideoTilePlaceholderExample />

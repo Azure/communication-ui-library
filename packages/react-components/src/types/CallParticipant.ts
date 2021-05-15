@@ -4,11 +4,15 @@
 import { CommunicationParticipant } from './CommunicationParticipant';
 
 /**
- * `CommunicationParticipant` type represents a Chat or Calling participant's state
+ * `CallParticipant` represents a Calling participant's state
  */
-export type CommunicationCallingParticipant = CommunicationParticipant & {
+export type CallParticipant = CommunicationParticipant & {
+  /** State of calling participant */
   state: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
+  /** Whether calling participant is screen sharing */
   isScreenSharing?: boolean;
+  /** Whether calling participant is muted */
   isMuted?: boolean;
+  /** Whether calling participant is speaking */
   isSpeaking?: boolean;
 };

@@ -17,7 +17,7 @@ const ScreenShareComponent = (props: ScreenShareContainerProps): JSX.Element => 
       <VideoTile
         isVideoReady={isScreenShareRenderAvailable}
         renderElement={<StreamMedia videoStreamElement={screenShareRender} />}
-        placeholderProvider={
+        placeholder={
           <div className={loadingStyle}>
             <Spinner label={`Loading ${displayName}'s screen`} size={SpinnerSize.xSmall} />
           </div>
