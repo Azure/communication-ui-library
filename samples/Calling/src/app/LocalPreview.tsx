@@ -19,10 +19,6 @@ import { usePropsFor } from './hooks/usePropsFor';
 import { localPreviewSelector } from '@azure/acs-calling-selector';
 
 export const LocalPreview = (): JSX.Element => {
-  // get the stream in here instead of the mapper for now
-  // we haven't properly properly exported this component to make it re-usable
-  // we should create a MapToLocalPreviewProps, instead of using MapToMediaControlsProps and MapToLocalDeviceSettingsProps
-
   const cameraButtonProps = usePropsFor(CameraButton);
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
   const localPreviewProps = useSelector(localPreviewSelector);

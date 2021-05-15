@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-export { GroupCall } from './GroupCall';
+export { Call } from './Call';
 export * from './adapter';
 
-export type { GroupCallCompositeProps } from './GroupCall';
+export type { CallCompositeProps } from './Call';
