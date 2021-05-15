@@ -50,6 +50,14 @@ export interface CallingTheme {
 }
 
 // @public
+export type CallParticipant = CommunicationParticipant & {
+    state: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
+    isScreenSharing?: boolean;
+    isMuted?: boolean;
+    isSpeaking?: boolean;
+};
+
+// @public
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
 
 // @public
@@ -237,10 +245,6 @@ export const communicationIdentifierToString: (i: CommunicationIdentifier | unde
 export type CommunicationParticipant = {
     userId: string;
     displayName?: string;
-    state?: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
-    isScreenSharing?: boolean;
-    isMuted?: boolean;
-    isSpeaking?: boolean;
 };
 
 // @public (undocumented)
@@ -770,7 +774,7 @@ export interface VideoTileProps {
     children?: React_2.ReactNode;
     isMirrored?: boolean;
     isVideoReady?: boolean;
-    placeholderProvider?: JSX.Element | null;
+    placeholder?: JSX.Element | null;
     renderElement?: JSX.Element | null;
     styles?: VideoTileStylesProps;
 }

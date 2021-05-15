@@ -35,7 +35,7 @@ export interface VideoTileProps {
   /** Determines if the video is mirrored or not. */
   isMirrored?: boolean;
   /** Custom Component to render when no video is available. Defaults to a Persona Icon. */
-  placeholderProvider?: JSX.Element | null;
+  placeholder?: JSX.Element | null;
 }
 
 export interface PlaceholderProps {
@@ -63,9 +63,8 @@ const DefaultPlaceholder = (props: PlaceholderProps): JSX.Element => {
 };
 
 export const VideoTile = (props: VideoTileProps & PlaceholderProps): JSX.Element => {
-  const { styles, isVideoReady, renderElement, placeholderProvider, isMirrored, children } = props;
+  const { styles, isVideoReady, renderElement, placeholder, isMirrored, children } = props;
   const theme = useTheme();
-  const placeholder = placeholderProvider ?? <DefaultPlaceholder {...props} />;
   return (
     <Stack className={mergeStyles(rootStyles, { background: theme.palette.neutralLighter }, styles?.root)}>
       {isVideoReady && renderElement ? (
@@ -81,7 +80,7 @@ export const VideoTile = (props: VideoTileProps & PlaceholderProps): JSX.Element
           {renderElement}
         </Stack>
       ) : (
-        <Stack className={mergeStyles(videoContainerStyles)}>{placeholder}</Stack>
+        <Stack className={mergeStyles(videoContainerStyles)}>{placeholder ?? <DefaultPlaceholder {...props} />}</Stack>
       )}
       {children && <Stack className={mergeStyles(overlayContainerStyles, styles?.overlayContainer)}>{children}</Stack>}
     </Stack>

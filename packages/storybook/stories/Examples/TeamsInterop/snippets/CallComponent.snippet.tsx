@@ -25,7 +25,7 @@ export const CallComponent = (props: TeamsInterop): JSX.Element => {
         // Replace with your own video provider.
         <StreamMedia videoStreamElement={renderVideoStream()} />
       }
-      placeholderProvider={<></>}
+      placeholder={<></>}
     >
       {/* Optional Banner */}
       <Banner {...props} />

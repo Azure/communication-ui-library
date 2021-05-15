@@ -10,7 +10,7 @@ import { Call as Call_2 } from 'calling-stateful-client';
 import { CallAgent } from '@azure/communication-calling';
 import { CallClientState } from 'calling-stateful-client';
 import * as callingStateful from 'calling-stateful-client';
-import { CommunicationParticipant } from 'react-components';
+import { CallParticipant } from 'react-components';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { DeviceManager } from 'calling-stateful-client';
 import { IncomingCall } from 'calling-stateful-client';
@@ -157,10 +157,10 @@ export const optionsButtonSelector: reselect.OutputParametricSelector<callingSta
 
 // @public (undocumented)
 export const participantListSelector: reselect.OutputParametricSelector<callingStateful.CallClientState, CallingBaseSelectorProps, {
-    participants: CommunicationParticipant[];
+    participants: CallParticipant[];
     myUserId: string;
 }, (res1: string | undefined, res2: string | undefined, res3: callingStateful.Call | undefined) => {
-    participants: CommunicationParticipant[];
+    participants: CallParticipant[];
     myUserId: string;
 }>;
 
