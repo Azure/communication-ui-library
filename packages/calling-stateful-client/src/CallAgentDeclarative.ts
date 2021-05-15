@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Call, CallAgent, CallEndReason, IncomingCall } from '@azure/communication-calling';
+import { Call, CallAgent, CallEndReason, CollectionUpdatedEvent, IncomingCall } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
 import { callDeclaratify, DeclarativeCall } from './CallDeclarative';
 import { CallSubscriber } from './CallSubscriber';
@@ -22,6 +22,7 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
   private _callSubscribers: Map<Call, CallSubscriber>;
   private _incomingCallSubscribers: Map<string, IncomingCallSubscriber>;
   private _declarativeCalls: Map<Call, DeclarativeCall>;
+  private _externalCallsUpdatedListeners: Set<CollectionUpdatedEvent<Call>>;
 
   constructor(callAgent: CallAgent, context: CallContext, internalContext: InternalCallContext) {
     this._callAgent = callAgent;
@@ -30,6 +31,7 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
     this._callSubscribers = new Map<Call, CallSubscriber>();
     this._incomingCallSubscribers = new Map<string, IncomingCallSubscriber>();
     this._declarativeCalls = new Map<Call, DeclarativeCall>();
+    this._externalCallsUpdatedListeners = new Set<CollectionUpdatedEvent<Call>>();
     this.subscribe();
   }
 
@@ -67,9 +69,12 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
   };
 
   private callsUpdated = (event: { added: Call[]; removed: Call[] }): void => {
+    const addedStatefulCall: DeclarativeCall[] = [];
     for (const call of event.added) {
-      this.addCall(call);
+      const statefulCall = this.addCall(call);
+      addedStatefulCall.push(statefulCall);
     }
+    const removedStatefulCall: DeclarativeCall[] = [];
     for (const call of event.removed) {
       stopRenderVideoAll(this._context, this._internalContext, call.id);
       const callSubscriber = this._callSubscribers.get(call);
@@ -81,8 +86,15 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
       const declarativeCall = this._declarativeCalls.get(call);
       if (declarativeCall) {
         declarativeCall.unsubscribe();
+        removedStatefulCall.push(declarativeCall);
         this._declarativeCalls.delete(call);
+      } else {
+        removedStatefulCall.push(callDeclaratify(call, this._context));
       }
+    }
+
+    for (const externalCallsUpdatedListener of this._externalCallsUpdatedListeners) {
+      externalCallsUpdatedListener({ added: addedStatefulCall, removed: removedStatefulCall });
     }
   };
 
@@ -106,17 +118,17 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
     this._context.setIncomingCall(convertSdkIncomingCallToDeclarativeIncomingCall(event.incomingCall));
   };
 
-  private addCall = (call: Call): void => {
+  private addCall = (call: Call): DeclarativeCall => {
     this._callSubscribers.get(call)?.unsubscribe();
 
     // For API extentions we need to have the call in the state when we are subscribing as we may want to update the
     // state during the subscription process in the subscriber so we add the call to state before subscribing.
     this._context.setCall(convertSdkCallToDeclarativeCall(call));
     this._callSubscribers.set(call, new CallSubscriber(call, this._context, this._internalContext));
-    this.getOrCreateDeclarativeCall(call);
+    return this.getOrCreateDeclarativeCall(call);
   };
 
-  private getOrCreateDeclarativeCall = (call: Call): Call => {
+  private getOrCreateDeclarativeCall = (call: Call): DeclarativeCall => {
     const declarativeCall = this._declarativeCalls.get(call);
     if (declarativeCall) {
       return declarativeCall;
@@ -141,6 +153,31 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
           const call = target.join(...args);
           this.addCall(call);
           return this.getOrCreateDeclarativeCall(call);
+        };
+      }
+      case 'calls': {
+        return Array.from(this._declarativeCalls.values());
+      }
+      case 'on': {
+        return (...args: Parameters<CallAgent['on']>): void => {
+          const isCallsUpdated = args[0] === 'callsUpdated';
+          if (isCallsUpdated) {
+            const listener = args[1];
+            this._externalCallsUpdatedListeners.add(listener);
+          } else {
+            target.on(...args);
+          }
+        };
+      }
+      case 'off': {
+        return (...args: Parameters<CallAgent['off']>): void => {
+          const isCallsUpdated = args[0] === 'callsUpdated';
+          if (isCallsUpdated) {
+            const listener = args[1];
+            this._externalCallsUpdatedListeners.delete(listener);
+          } else {
+            target.off(...args);
+          }
         };
       }
       case 'dispose': {
