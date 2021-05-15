@@ -1,5 +1,5 @@
 import { ChatAdapter, ChatComposite, createAzureCommunicationChatAdapter } from '@azure/communication-react';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { ChatConfig } from '../ChatConfig';
 
 export interface ContosoChatContainerProps {
@@ -35,11 +35,18 @@ export const ContosoChatContainer = (props: ContosoChatContainerProps): JSX.Elem
 
   // Data model injection: Contoso provides avatars for the chat participants.
   // Unlike the displayName example above, this sets the avatar for the remote bot participant.
-  const onRenderAvatar = (userId: string): JSX.Element => {
-    if (userId === botUserId) {
-      return <label>{botAvatar}</label>;
-    }
-    return <label>?</label>;
-  };
+  //
+  // Although ChatComposite is not a pure react component, this callback may be passed on to
+  // pure components lower in the Component tree.
+  // Thus, it is best practice to memoize this with useCallback() to avoid spurious rendering.
+  const onRenderAvatar = useCallback(
+    (userId: string): JSX.Element => {
+      if (userId === botUserId) {
+        return <label>{botAvatar}</label>;
+      }
+      return <label>?</label>;
+    },
+    [botUserId, botAvatar]
+  );
   return <>{adapter ? <ChatComposite adapter={adapter} onRenderAvatar={onRenderAvatar} /> : <h3>Loading...</h3>}</>;
 };

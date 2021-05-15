@@ -16,7 +16,7 @@ export const VideoTilePlaceholderExample: () => JSX.Element = () => {
         }
         isVideoReady={false}
         isMirrored={true}
-        placeholderProvider={
+        placeholder={
           <Stack>
             <img
               src="https://media.giphy.com/media/4Zo41lhzKt6iZ8xff9/giphy.gif"

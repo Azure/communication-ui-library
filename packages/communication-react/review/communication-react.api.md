@@ -115,6 +115,14 @@ export interface CallingTheme {
 }
 
 // @public
+export type CallParticipant = CommunicationParticipant & {
+    state: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
+    isScreenSharing?: boolean;
+    isMuted?: boolean;
+    isSpeaking?: boolean;
+};
+
+// @public
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
 
 // @public
@@ -316,10 +324,6 @@ export const communicationIdentifierToString: (i: CommunicationIdentifier | unde
 export type CommunicationParticipant = {
     userId: string;
     displayName?: string;
-    state?: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
-    isScreenSharing?: boolean;
-    isMuted?: boolean;
-    isSpeaking?: boolean;
 };
 
 // @public (undocumented)
@@ -774,10 +778,10 @@ export type ParticipantListProps = {
 
 // @public (undocumented)
 export const participantListSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
-    participants: CommunicationParticipant[];
+    participants: CallParticipant[];
     myUserId: string;
 }, (res1: string | undefined, res2: string | undefined, res3: Call | undefined) => {
-    participants: CommunicationParticipant[];
+    participants: CallParticipant[];
     myUserId: string;
 }>;
 
@@ -1099,7 +1103,7 @@ export interface VideoTileProps {
     children?: React_2.ReactNode;
     isMirrored?: boolean;
     isVideoReady?: boolean;
-    placeholderProvider?: JSX.Element | null;
+    placeholder?: JSX.Element | null;
     renderElement?: JSX.Element | null;
     styles?: VideoTileStylesProps;
 }

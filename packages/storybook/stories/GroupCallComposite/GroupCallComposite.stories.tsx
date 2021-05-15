@@ -7,7 +7,7 @@ import { text } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useEffect, useState } from 'react';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
-import { GroupCall as GroupCallComposite } from 'react-composites';
+import { Call as GroupCallComposite } from 'react-composites';
 import { v1 as createGUID } from 'uuid';
 
 import {

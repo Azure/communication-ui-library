@@ -19,8 +19,13 @@ import {
 } from '../../consumers';
 import { CallControlBarContainerProps, MapToCallControlBarProps } from '../common/consumers/MapToCallControlBarProps';
 import { ErrorHandlingProps } from '../../providers';
-import { isLocalScreenShareSupportedInBrowser, propagateError, WithErrorHandling } from '../../utils';
-import { groupCallLeaveButtonCompressedStyle, groupCallLeaveButtonStyle } from './styles/CallControls.styles';
+import { isLocalScreenShareSupportedInBrowser, propagateError } from '../../utils';
+import {
+  controlBarStyle,
+  groupCallLeaveButtonCompressedStyle,
+  groupCallLeaveButtonStyle
+} from './styles/CallControls.styles';
+import { usePropsFor } from '../GroupCall/hooks/usePropsFor';
 
 const CallOptionsButton = (props: LocalDeviceSettingsContainerProps): JSX.Element => {
   const {
@@ -272,80 +277,38 @@ export const CallControlBar = (props: ControlBarProps & CallControlBarProps & Er
 
 export const CallControlBarComponent = connectFuncsToContext(CallControlBar, MapToCallControlBarProps);
 
-export interface GroupCallControlBarProps extends CallControlBarContainerProps {
-  /** Determines media control button layout. */
-  compressedMode: boolean;
-  /** Callback when call ends */
+export type GroupCallControlsProps = {
   onEndCallClick(): void;
-}
+  compressedMode: boolean;
+};
 
-export const GroupCallControlBar = (
-  props: ControlBarProps & GroupCallControlBarProps & ErrorHandlingProps
-): JSX.Element => {
-  const {
-    localVideoEnabled,
-    onEndCallClick,
-    cameraPermission,
-    micPermission,
-    isRemoteScreenShareActive,
-    localVideoBusy,
-    toggleLocalVideo,
-    toggleMicrophone,
-    isMicrophoneActive,
-    toggleScreenShare,
-    isLocalScreenShareActive,
-    compressedMode,
-    onErrorCallback
-  } = props;
-
-  const cameraDisabled = cameraPermission === 'Denied';
-  const micDisabled = micPermission === 'Denied';
-  const screenShareDisabled = isRemoteScreenShareActive;
+export const CallControls = (props: GroupCallControlsProps): JSX.Element => {
+  const { compressedMode, onEndCallClick } = props;
+  const microphoneButtonProps = usePropsFor(MicrophoneButton);
+  const cameraButtonProps = usePropsFor(CameraButton);
+  const screenShareButtonProps = usePropsFor(ScreenShareButton);
+  const hangUpButtonProps = usePropsFor(EndCallButton);
+  const onHangUp = useCallback(async () => {
+    await hangUpButtonProps.onHangUp();
+    onEndCallClick();
+  }, [hangUpButtonProps, onEndCallClick]);
 
   return (
-    <ControlBar {...props}>
+    <ControlBar styles={controlBarStyle}>
       <CameraButton
-        checked={localVideoEnabled}
-        disabled={cameraDisabled || localVideoBusy}
-        onClick={() => {
-          toggleLocalVideo().catch((error) => {
-            propagateError(error, onErrorCallback);
-          });
+        {...cameraButtonProps}
+        onToggleCamera={() => {
+          return cameraButtonProps.onToggleCamera().catch((e) => console.log(e));
         }}
       />
-      <MicrophoneButton
-        checked={isMicrophoneActive}
-        disabled={micDisabled}
-        onClick={() => {
-          toggleMicrophone().catch((error) => {
-            propagateError(error, onErrorCallback);
-          });
-        }}
+      <MicrophoneButton {...microphoneButtonProps} />
+      <ScreenShareButton {...screenShareButtonProps} />
+      <EndCallButton
+        {...hangUpButtonProps}
+        onHangUp={onHangUp}
+        styles={!compressedMode ? groupCallLeaveButtonStyle : groupCallLeaveButtonCompressedStyle}
+        text={!compressedMode ? 'Leave' : ''}
       />
-      {isLocalScreenShareSupportedInBrowser() && (
-        <ScreenShareButton
-          checked={isLocalScreenShareActive}
-          disabled={screenShareDisabled}
-          onClick={() => {
-            toggleScreenShare().catch((error) => {
-              propagateError(error, onErrorCallback);
-            });
-          }}
-        />
-      )}
-      <div>
-        <HangupButtonComponent
-          onEndCallClick={onEndCallClick}
-          text={!compressedMode ? 'Leave' : ''}
-          styles={!compressedMode ? groupCallLeaveButtonStyle : groupCallLeaveButtonCompressedStyle}
-        />
-      </div>
     </ControlBar>
   );
 };
-
-export const GroupCallControlBarComponent = connectFuncsToContext(
-  (props: ControlBarProps & GroupCallControlBarProps & ErrorHandlingProps) =>
-    WithErrorHandling(GroupCallControlBar, props),
-  MapToCallControlBarProps
-);

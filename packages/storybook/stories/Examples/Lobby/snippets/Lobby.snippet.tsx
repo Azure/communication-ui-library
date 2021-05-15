@@ -27,7 +27,7 @@ export const Lobby = (props: LobbyProps): JSX.Element => {
         // Replace with your own video provider.
         <StreamMedia videoStreamElement={renderVideoStream()} />
       }
-      placeholderProvider={<></>}
+      placeholder={<></>}
     >
       <div
         style={{

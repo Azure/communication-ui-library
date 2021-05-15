@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "ParticipantList selector changed return to to CommunicationCallingParticipant",
+  "packageName": "@azure/acs-calling-selector",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
