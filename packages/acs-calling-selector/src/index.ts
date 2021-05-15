@@ -10,5 +10,5 @@ export { localPreviewSelector } from './localPreviewSelector';
 export { memoizeFnAll } from './utils/memoizeFnAll';
 
 export type { CallingBaseSelectorProps } from './baseSelectors';
-export type { CommonProperties1, DefaultCallingHandlers } from './handlers/createHandlers';
+export type { CommonProperties_2, DefaultCallingHandlers } from './handlers/createHandlers';
 export type { FunctionWithKey, CallbackType } from './utils/memoizeFnAll';
