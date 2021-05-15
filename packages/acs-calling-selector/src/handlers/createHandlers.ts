@@ -48,8 +48,13 @@ export const createDefaultCallingHandlers = memoizeOne(
       const callId = call?.id;
       if (!callId) return;
       if (call && call.localVideoStreams.find((s) => areStreamsEqual(s, stream))) {
-        await callClient.stopRenderVideo(callId, stream);
+        // This is the correct order to stop video,
+        // if we stopRenderVideo first,
+        // VideoGallery will try to start the video again (because view is undefined and isAvailable is still true)
+        // However, this correct order will throw an error "VideoStreamRenderer not found" from stopRenderVideo.
+        // We will need a fix for this.
         await call.stopVideo(stream);
+        await callClient.stopRenderVideo(callId, stream);
       }
     };
 
