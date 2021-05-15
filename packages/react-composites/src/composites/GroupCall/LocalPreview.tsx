@@ -50,7 +50,7 @@ const LocalPreviewComponentBase = (
         styles={localPreviewTileStyle}
         isVideoReady={isVideoReady}
         renderElement={<StreamMedia videoStreamElement={videoStreamElement} />}
-        placeholderProvider={
+        placeholder={
           <Stack style={{ width: '100%', height: '100%' }} verticalAlign="center">
             <Stack.Item align="center">
               <CallVideoOffIcon />

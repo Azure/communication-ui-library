@@ -41,7 +41,7 @@ export const OneToOneCallLayout: () => JSX.Element = () => {
         <VideoTile
           isVideoReady={false}
           // A placeholder element for my video stream
-          placeholderProvider={
+          placeholder={
             <Persona
               styles={{ root: { margin: 'auto' } }}
               size={PersonaSize.size56}
