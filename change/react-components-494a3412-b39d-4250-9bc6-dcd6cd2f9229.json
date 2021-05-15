@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "renamed VideoTile props placeholderProvider to placeholder and videoProvider to video",
+  "comment": "renamed VideoTile props placeholderProvider to placeholder",
   "packageName": "react-components",
   "email": "alcail@microsoft.com",
   "dependentChangeType": "patch"
