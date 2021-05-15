@@ -47,7 +47,8 @@ export interface StatefulCallClient extends CallClient {
    *
    * @param callId - CallId of the Call where the stream to start rendering is contained in. Can be undefined if
    *   rendering a LocalVideoStream that is not tied to a Call.
-   * @param participantId - {@Link RemoteParticipant.identifier}. Could be undefined if rendering LocalVideoStream.
+   * @param participantId - {@Link RemoteParticipant.identifier} associated with the given RemoteVideoStream. Could be
+   *   undefined if rendering LocalVideoStream.
    * @param stream - The LocalVideoStream or RemoteVideoStream to start rendering.
    * @param options - Options that are passed to the {@Link @azure/communication-calling#VideoStreamRenderer}.
    * @throws - Throws error when state-based stream is already started, state-based stream not found in state,
@@ -73,10 +74,9 @@ export interface StatefulCallClient extends CallClient {
    *
    * @param callId - CallId of the Call where the stream to stop rendering is contained in. Can be undefined if
    *   stop rendering a LocalVideoStream that is not tied to a Call.
-   * @param participantId - {@Link RemoteParticipant.identifier}. Could be undefined if rendering LocalVideoStream.
+   * @param participantId - {@Link RemoteParticipant.identifier} associated with the given RemoteVideoStream. Could be
+   *   undefined if rendering LocalVideoStream.
    * @param stream - The LocalVideoStream or RemoteVideoStream to start rendering.
-   * @throws - Throws error when stream to stop is not found or invalid combination of parameters as provided (such as
-   *   RemoteVideoStream with undefined callId).
    */
   stopRenderVideo(
     callId: string | undefined,

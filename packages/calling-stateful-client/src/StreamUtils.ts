@@ -52,7 +52,7 @@ export async function startRenderVideo(
 
     if (!remoteStreamAndRenderer || remoteStreamAndRenderer.renderer) {
       // TODO: How to standarize all errors
-      throw new Error('RemoteVideoStream not found  or Stream is already rendered');
+      throw new Error('RemoteVideoStream not found or Stream is already rendered');
     }
 
     const renderer = new VideoStreamRenderer(remoteStreamAndRenderer.stream);
