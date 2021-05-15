@@ -49,7 +49,7 @@ export const createDefaultCallingHandlers = memoizeOne(
       if (!callId) return;
       if (call && call.localVideoStreams.find((s) => areStreamsEqual(s, stream))) {
         await call.stopVideo(stream);
-        await callClient.stopRenderVideo(callId, stream);
+        await callClient.disposeView(callId, stream);
       }
     };
 
@@ -65,12 +65,12 @@ export const createDefaultCallingHandlers = memoizeOne(
         if (callClient.state.deviceManager.selectedCamera) {
           const previewOn = isPreviewOn(callClient.state.deviceManager);
           if (previewOn) {
-            await callClient.stopRenderVideo(undefined, {
+            await callClient.disposeView(undefined, {
               source: callClient.state.deviceManager.selectedCamera,
               mediaStreamType: 'Video'
             });
           } else {
-            await callClient.startRenderVideo(undefined, {
+            await callClient.createView(undefined, {
               source: callClient.state.deviceManager.selectedCamera,
               mediaStreamType: 'Video'
             });
@@ -118,13 +118,13 @@ export const createDefaultCallingHandlers = memoizeOne(
 
         // If preview is on, then stop current preview and then start new preview with new device
         if (callClient.state.deviceManager.selectedCamera) {
-          await callClient.stopRenderVideo(undefined, {
+          await callClient.disposeView(undefined, {
             source: callClient.state.deviceManager.selectedCamera,
             mediaStreamType: 'Video'
           });
         }
         deviceManager.selectCamera(device);
-        await callClient.startRenderVideo(undefined, {
+        await callClient.createView(undefined, {
           source: device,
           mediaStreamType: 'Video'
         });
@@ -148,7 +148,7 @@ export const createDefaultCallingHandlers = memoizeOne(
       if (!call || call.localVideoStreams.length === 0) return;
       const localStream = call.localVideoStreams.find((item) => item.mediaStreamType === 'Video');
       if (!localStream) return;
-      callClient.startRenderVideo(call.id, localStream, options);
+      callClient.createView(call.id, localStream, options);
     };
 
     const onCreateRemoteStreamView = async (userId: string, options?: VideoStreamOptions): Promise<void> => {
@@ -166,11 +166,11 @@ export const createDefaultCallingHandlers = memoizeOne(
       const screenShareStream = Array.from(streams?.values()).find((i) => i.mediaStreamType === 'ScreenSharing');
 
       if (remoteVideoStream && remoteVideoStream.isAvailable && !remoteVideoStream.videoStreamRendererView) {
-        callClient.startRenderVideo(call.id, remoteVideoStream, options);
+        callClient.createView(call.id, remoteVideoStream, options);
       }
 
       if (screenShareStream && screenShareStream.isAvailable && !screenShareStream.videoStreamRendererView) {
-        callClient.startRenderVideo(call.id, screenShareStream, options);
+        callClient.createView(call.id, screenShareStream, options);
       }
     };
 
