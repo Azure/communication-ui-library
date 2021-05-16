@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "renamed startRenderVideo to createView and stoprRenderVideo to disposeView",
+  "comment": "renamed startRenderVideo to createView and stopRenderVideo to disposeView",
   "packageName": "@azure/acs-calling-selector",
   "email": "alcail@microsoft.com",
   "dependentChangeType": "patch"
