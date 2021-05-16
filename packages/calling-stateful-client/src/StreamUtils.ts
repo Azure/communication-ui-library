@@ -14,7 +14,7 @@ import { InternalCallContext } from './InternalCallContext';
 // TODO: How can we make this configurable?
 export const MAX_UNPARENTED_VIEWS_LENGTH = 10;
 
-export async function startRenderVideo(
+export async function createView(
   context: CallContext,
   internalContext: InternalCallContext,
   callId: string | undefined,
@@ -76,7 +76,7 @@ export async function startRenderVideo(
   }
 }
 
-export function stopRenderVideo(
+export function disposeView(
   context: CallContext,
   internalContext: InternalCallContext,
   callId: string | undefined,
@@ -130,7 +130,11 @@ export function stopRenderVideo(
 }
 
 // Only stops videos that are tied to a Call.
-export function stopRenderVideoAll(context: CallContext, internalContext: InternalCallContext, callId: string): void {
+export function disposeAllViewsFromCall(
+  context: CallContext,
+  internalContext: InternalCallContext,
+  callId: string
+): void {
   const streams = internalContext.getRemoteVideoStreams(callId);
   if (streams) {
     for (const [streamId] of streams.entries()) {
@@ -138,7 +142,7 @@ export function stopRenderVideoAll(context: CallContext, internalContext: Intern
       if (stream) {
         // We don't want to accept SDK stream as parameter but we also don't cache the declarative stream so we have to
         // convert the SDK stream to declarative stream which is not pretty so this could use some further refactoring.
-        stopRenderVideo(context, internalContext, callId, convertSdkRemoteStreamToDeclarativeRemoteStream(stream));
+        disposeView(context, internalContext, callId, convertSdkRemoteStreamToDeclarativeRemoteStream(stream));
       }
     }
   }
@@ -146,13 +150,14 @@ export function stopRenderVideoAll(context: CallContext, internalContext: Intern
   // convert the SDK stream to declarative stream which is not pretty so this could use some further refactoring.
   const localVideoStream = internalContext.getLocalVideoStream(callId);
   if (localVideoStream) {
-    stopRenderVideo(context, internalContext, callId, convertSdkLocalStreamToDeclarativeLocalStream(localVideoStream));
+    disposeView(context, internalContext, callId, convertSdkLocalStreamToDeclarativeLocalStream(localVideoStream));
   }
 }
 
-export function stopRenderVideoAllCalls(context: CallContext, internalContext: InternalCallContext): void {
+// stops all videos from all calls
+export function disposeAllViews(context: CallContext, internalContext: InternalCallContext): void {
   const remoteVideoStreams = internalContext.getRemoteVideoStreamsAll();
   for (const [callId] of remoteVideoStreams) {
-    stopRenderVideoAll(context, internalContext, callId);
+    disposeAllViewsFromCall(context, internalContext, callId);
   }
 }

@@ -882,11 +882,11 @@ export interface SendBoxStylesProps extends BaseCustomStylesProps {
 
 // @public
 export interface StatefulCallClient extends CallClient {
+    createView(callId: string | undefined, stream: LocalVideoStream | RemoteVideoStream, options?: CreateViewOptions): Promise<void>;
+    disposeView(callId: string | undefined, stream: LocalVideoStream | RemoteVideoStream): void;
     offStateChange(handler: (state: CallClientState) => void): void;
     onStateChange(handler: (state: CallClientState) => void): void;
-    startRenderVideo(callId: string | undefined, stream: LocalVideoStream | RemoteVideoStream, options?: CreateViewOptions): Promise<void>;
     state: CallClientState;
-    stopRenderVideo(callId: string | undefined, stream: LocalVideoStream | RemoteVideoStream): void;
 }
 
 // @public (undocumented)
