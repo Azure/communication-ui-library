@@ -48,8 +48,8 @@ export const createDefaultCallingHandlers = memoizeOne(
       const callId = call?.id;
       if (!callId) return;
       if (call && call.localVideoStreams.find((s) => areStreamsEqual(s, stream))) {
-        await call.stopVideo(stream);
         await callClient.disposeView(callId, stream);
+        await call.stopVideo(stream);
       }
     };
 
@@ -201,11 +201,11 @@ const isPreviewOn = (deviceManager: DeviceManager): boolean => {
 /**
  * Type guard for common properties between two types.
  */
-export type CommonProperties1<A, B> = {
+export type CommonProperties_2<A, B> = {
   [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
 
-type Common<A, B> = Pick<A, CommonProperties1<A, B>>;
+type Common<A, B> = Pick<A, CommonProperties_2<A, B>>;
 
 /**
  * Create a set of default handlers for given component. Memoization is applied to the result. Multiple invokations with

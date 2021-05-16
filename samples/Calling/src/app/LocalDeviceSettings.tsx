@@ -27,7 +27,7 @@ export interface LocalDeviceSettingsType {
   onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
 }
 
-export const LocalDeviceSettingsComponent = (props: LocalDeviceSettingsType): JSX.Element => {
+export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element => {
   const theme = useTheme();
   const defaultPlaceHolder = 'Select an option';
   const cameraLabel = 'Camera';
