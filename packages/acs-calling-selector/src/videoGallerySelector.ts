@@ -2,9 +2,7 @@
 // Licensed under the MIT license.
 
 // @ts-ignore
-import { Call, LocalVideoStream, RemoteParticipant, RemoteVideoStream } from 'calling-stateful-client';
-// @ts-ignore
-import * as callingStateful from 'calling-stateful-client';
+import { Call, CallClientState, RemoteParticipant, RemoteVideoStream } from 'calling-stateful-client';
 // @ts-ignore
 import { createSelector } from 'reselect';
 // @ts-ignore

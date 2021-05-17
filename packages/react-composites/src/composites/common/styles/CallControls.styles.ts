@@ -26,3 +26,9 @@ export const groupCallLeaveButtonCompressedStyle = {
     flexFlow: 'row'
   }
 };
+
+export const controlBarStyle = {
+  root: {
+    marginRight: '.5rem'
+  }
+};

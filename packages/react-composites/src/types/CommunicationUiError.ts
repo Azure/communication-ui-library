@@ -37,6 +37,7 @@ export enum CommunicationUiErrorCode {
   RENDER_REMOTE_VIDEO_ERROR, // Renderer.createView() threw an error.
   RENDER_LOCAL_VIDEO_ERROR, // Renderer.createView() threw an error.
   CREATE_CALL_AGENT_ERROR, // CallClient.createCallAgent() threw an error.
+  CREATE_DEVICE_MANAGER_ERROR, // CallClient.createCallAgent() threw an error.
   DISPOSE_CALL_AGENT_ERROR, // CallAgent.dispose() threw an error.
   JOIN_CALL_ERROR, // CallAgent.join() threw an error.
   LEAVE_CALL_ERROR // CallAgent.hangup() threw an error or no call exists.
