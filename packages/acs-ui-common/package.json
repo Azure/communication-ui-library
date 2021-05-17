@@ -10,7 +10,7 @@
     "build:esm": "tsc",
     "build:cjs": "rollup -c --silent --failAfterWarnings",
     "build:watch": "rushx build",
-    "test": "jest",
+    "test": "echo TODO",
     "test:coverage": "npm run test -- --coverage",
     "lint": "eslint \"*/**/*.{ts,tsx}\"",
     "lint:fix": "npm run lint -- --fix",
