@@ -81,13 +81,9 @@ export interface GroupCallAdapter {
 
   stopScreenShare(): Promise<void>;
 
-  startRenderVideo(
-    callId: string,
-    stream: LocalVideoStream | RemoteVideoStream,
-    options?: CreateViewOptions
-  ): Promise<void>;
+  createView(callId: string, stream: LocalVideoStream | RemoteVideoStream, options?: CreateViewOptions): Promise<void>;
 
-  stopRenderVideo(callId: string, stream: LocalVideoStream | RemoteVideoStream): void;
+  disposeView(callId: string, stream: LocalVideoStream | RemoteVideoStream): void;
 
   on(event: 'incomingCall', listener: IncomingCallListener): void;
 
