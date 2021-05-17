@@ -39,8 +39,9 @@ export default (): JSX.Element => {
       const userIdKind = { kind: 'communicationUser', communicationUserId: userId } as CommunicationUserKind;
       const createClient = async (): Promise<void> => {
         const chatClient = createStatefulChatClient(
-          new ChatClient(endpointUrl, createAzureCommunicationUserCredential(token, refreshTokenAsync(userId))),
-          { userId: userIdKind, displayName }
+          { userId: userIdKind, displayName },
+          endpointUrl,
+          createAzureCommunicationUserCredential(token, refreshTokenAsync(userId))
         );
 
         setChatClient(chatClient);
