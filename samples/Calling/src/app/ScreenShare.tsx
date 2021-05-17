@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { memoizeFnAll } from '@azure/acs-calling-selector';
-import { Label, mergeStyles, Spinner, SpinnerSize, Stack } from '@fluentui/react';
+import { mergeStyles, Spinner, SpinnerSize, Stack, Text } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import {
   StreamMedia,
@@ -40,7 +40,7 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
             displayName={displayName}
             styles={videoTileStyle}
           >
-            <Label className={isAvailable ? videoHint : disabledVideoHint}>{displayName}</Label>
+            <Text className={isAvailable ? videoHint : disabledVideoHint}>{displayName}</Text>
           </VideoTile>
         </Stack>
       </Stack>
@@ -123,7 +123,7 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
         displayName={localParticipant?.displayName}
         styles={videoTileStyle}
       >
-        <Label className={isLocalVideoReady ? videoHint : disabledVideoHint}>{localParticipant?.displayName}</Label>
+        <Text className={isLocalVideoReady ? videoHint : disabledVideoHint}>{localParticipant?.displayName}</Text>
       </VideoTile>
     );
   }, [isLocalVideoReady, localParticipant, localVideoStream, onCreateLocalStreamView]);

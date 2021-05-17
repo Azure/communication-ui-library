@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Label, Stack } from '@fluentui/react';
+import { Stack, Text } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import { disabledVideoHint, gridStyle, videoHint, videoTileStyle } from './styles/VideoGallery.styles';
 import {
@@ -49,7 +49,7 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
           displayName={displayName}
           styles={videoTileStyle}
         >
-          <Label className={isAvailable ? videoHint : disabledVideoHint}>{displayName}</Label>
+          <Text className={isAvailable ? videoHint : disabledVideoHint}>{displayName}</Text>
         </VideoTile>
       </Stack>
     );
@@ -88,7 +88,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         displayName={localParticipant?.displayName}
         styles={videoTileStyle}
       >
-        <Label className={isLocalVideoReady ? videoHint : disabledVideoHint}>{localParticipant?.displayName}</Label>
+        <Text className={isLocalVideoReady ? videoHint : disabledVideoHint}>{localParticipant?.displayName}</Text>
       </VideoTile>
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
