@@ -15,13 +15,13 @@ import {
   CameraButton
 } from 'react-components';
 import { usePropsFor } from './hooks/usePropsFor';
-import { useSelector } from './hooks/useSelector';
 import { localPreviewSelector } from '@azure/acs-calling-selector';
+import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 
 export const LocalPreview = (): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
-  const localPreviewProps = useSelector(localPreviewSelector);
+  const localPreviewProps = useAdaptedSelector(localPreviewSelector);
 
   const ErrorBar = connectFuncsToContext(ErrorBarComponent, MapToErrorBarProps);
 

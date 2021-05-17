@@ -29,9 +29,9 @@ export const createDefaultCallingHandlers = memoizeOne(
     deviceManager: StatefulDeviceManager | undefined,
     call: Call | undefined
   ) => {
-    const onStartLocalVideo = async (): Promise<void> => {
+    const onStartLocalVideo = async (): Promise<LocalVideoStream | void> => {
       const callId = call?.id;
-      let videoDeviceInfo = callClient.state.deviceManager.selectedCamera;
+      let videoDeviceInfo = callClient.getState().deviceManager.selectedCamera;
       if (!videoDeviceInfo) {
         const cameras = await deviceManager?.getCameras();
         videoDeviceInfo = cameras && cameras.length > 0 ? cameras[0] : undefined;
@@ -42,14 +42,15 @@ export const createDefaultCallingHandlers = memoizeOne(
       if (call && !call.localVideoStreams.find((s) => areStreamsEqual(s, stream))) {
         await call.startVideo(stream);
       }
+      return stream;
     };
 
     const onStopLocalVideo = async (stream: LocalVideoStream): Promise<void> => {
       const callId = call?.id;
       if (!callId) return;
       if (call && call.localVideoStreams.find((s) => areStreamsEqual(s, stream))) {
-        await callClient.stopRenderVideo(callId, stream);
         await call.stopVideo(stream);
+        await callClient.stopRenderVideo(callId, stream);
       }
     };
 
@@ -62,16 +63,17 @@ export const createDefaultCallingHandlers = memoizeOne(
           await onStartLocalVideo();
         }
       } else {
-        if (callClient.state.deviceManager.selectedCamera) {
-          const previewOn = isPreviewOn(callClient.state.deviceManager);
+        const selectedCamera = callClient.getState().deviceManager.selectedCamera;
+        if (selectedCamera) {
+          const previewOn = isPreviewOn(callClient.getState().deviceManager);
           if (previewOn) {
             await callClient.stopRenderVideo(undefined, {
-              source: callClient.state.deviceManager.selectedCamera,
+              source: selectedCamera,
               mediaStreamType: 'Video'
             });
           } else {
             await callClient.startRenderVideo(undefined, {
-              source: callClient.state.deviceManager.selectedCamera,
+              source: selectedCamera,
               mediaStreamType: 'Video'
             });
           }
@@ -109,17 +111,18 @@ export const createDefaultCallingHandlers = memoizeOne(
         const stream = call.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
         return stream?.switchSource(device);
       } else {
-        const previewOn = isPreviewOn(callClient.state.deviceManager);
+        const previewOn = isPreviewOn(callClient.getState().deviceManager);
 
         if (!previewOn) {
           deviceManager.selectCamera(device);
           return;
         }
 
+        const selectedCamera = callClient.getState().deviceManager.selectedCamera;
         // If preview is on, then stop current preview and then start new preview with new device
-        if (callClient.state.deviceManager.selectedCamera) {
+        if (selectedCamera) {
           await callClient.stopRenderVideo(undefined, {
-            source: callClient.state.deviceManager.selectedCamera,
+            source: selectedCamera,
             mediaStreamType: 'Video'
           });
         }
@@ -153,7 +156,7 @@ export const createDefaultCallingHandlers = memoizeOne(
 
     const onCreateRemoteStreamView = async (userId: string, options?: VideoStreamOptions): Promise<void> => {
       if (!call) return;
-      const callState = callClient.state.calls.get(call.id);
+      const callState = callClient.getState().calls.get(call.id);
       if (!callState) throw new Error(`Call Not Found: ${call.id}`);
 
       const streams = Array.from(callState.remoteParticipants.values()).find(
@@ -184,6 +187,8 @@ export const createDefaultCallingHandlers = memoizeOne(
       onSelectMicrophone,
       onSelectSpeaker,
       onStartCall,
+      onStartScreenShare,
+      onStopScreenShare,
       onToggleCamera,
       onToggleMicrophone,
       onToggleScreenShare,

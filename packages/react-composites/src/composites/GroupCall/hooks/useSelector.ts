@@ -1,43 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallClientState, StatefulCallClient } from 'calling-stateful-client';
-import { useCall, useCallClient, useDisplayName, useIdentifier } from '../../../providers';
+import { CallState } from '../adapter/CallAdapter';
+import { useSelectorWithAdaptation } from './useAdaptedSelector';
 
-import { useState, useEffect, useRef, useMemo } from 'react';
-
-export const useSelector = <SelectorT extends (state: CallClientState, props: any) => any>(
+// This function highly depends on chatClient.onChange event
+// It will be moved into selector folder when the ChatClientProvide when refactor finished
+export const useSelector = <SelectorT extends (state: CallState, props: any) => any>(
   selector: SelectorT,
   selectorProps?: Parameters<SelectorT>[1]
 ): ReturnType<SelectorT> => {
-  const callClient: StatefulCallClient = useCallClient() as any;
-  const callId = useCall()?.id;
-  const displayName = useDisplayName();
-  const identifier = useIdentifier();
-
-  const callIdConfigProps = useMemo(
-    () => ({
-      callId,
-      displayName,
-      identifier
-    }),
-    [callId, displayName, identifier]
-  );
-
-  const [props, setProps] = useState(selector(callClient.state, selectorProps ?? callIdConfigProps));
-  const propRef = useRef(props);
-  propRef.current = props;
-  useEffect(() => {
-    const onStateChange = (state: CallClientState): void => {
-      const newProps = selector(state, selectorProps ?? callIdConfigProps);
-      if (propRef.current !== newProps) {
-        setProps(newProps);
-      }
-    };
-    callClient.onStateChange(onStateChange);
-    return () => {
-      callClient.offStateChange(onStateChange);
-    };
-  }, [callClient, selector, selectorProps, callIdConfigProps]);
-  return props;
+  // use selector with no adaptation
+  return useSelectorWithAdaptation(selector, (state) => state, selectorProps);
 };
