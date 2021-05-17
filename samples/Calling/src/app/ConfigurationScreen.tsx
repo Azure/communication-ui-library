@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useState } from 'react';
-import { CallClientProvider } from 'react-composites';
+import { useCallClientContext } from 'react-composites';
 import { localStorageAvailable } from './utils/constants';
 import { saveDisplayNameToLocalStorage } from './utils/AppUtils';
 import { DisplayNameField } from './DisplayNameField';
@@ -24,7 +24,7 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
   const [emptyWarning, setEmptyWarning] = useState(false);
   const [nameTooLongWarning, setNameTooLongWarning] = useState(false);
 
-  const { displayName } = CallClientProvider.useCallClientContext();
+  const { displayName } = useCallClientContext();
 
   const options = useSelector(optionsButtonSelector);
   const localDeviceSettingsHandlers = useHandlers(LocalDeviceSettings);

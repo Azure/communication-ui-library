@@ -2,8 +2,8 @@
 // Licensed under the MIT license.
 
 import { AudioDeviceInfo, DeviceManager } from '@azure/communication-calling';
-import { useCallingContext } from '../../../providers';
 import { useEffect } from 'react';
+import { useCallingContext } from '../providers/CallingProvider';
 
 export default (): void => {
   const { audioDevicePermission, setAudioDeviceInfo, setAudioDeviceList, deviceManager } = useCallingContext();

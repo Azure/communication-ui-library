@@ -5,10 +5,11 @@ import { Stack } from '@fluentui/react';
 import React, { useEffect } from 'react';
 import { StreamMedia, VideoTile } from 'react-components';
 import { OutgoingCallControlBarComponent } from './CallControls';
-import { useCallContext, useCallingContext } from '../../providers';
+import { useCallContext } from '../../providers';
 import { MapToCallControlBarProps } from './consumers/MapToCallControlBarProps';
 import { MapToLocalVideoProps } from './consumers/MapToVideoProps';
 import { useMicrophone } from './hooks/useMicrophone';
+import { useCallingContext } from './providers/CallingProvider';
 
 export interface OutgoingCallScreenProps {
   callState: string;

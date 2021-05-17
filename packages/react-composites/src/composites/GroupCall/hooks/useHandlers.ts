@@ -4,14 +4,14 @@
 import { StatefulCallClient } from 'calling-stateful-client';
 import { createDefaultCallingHandlersForComponent } from '@azure/acs-calling-selector';
 
-import { useCallClient, useCallingContext, useDeviceManager, useCall } from '../../../providers';
+import { useCallClient, useCallAgent, useDeviceManager, useCall } from '../../../providers';
 
 import { ReactElement } from 'react';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
 export const useHandlers = <PropsT>(component: (props: PropsT) => ReactElement | null) => {
   const callClient: StatefulCallClient = useCallClient() as any;
-  const callAgent = useCallingContext().callAgent;
+  const callAgent = useCallAgent();
   const deviceManager = useDeviceManager();
   const call = useCall();
 

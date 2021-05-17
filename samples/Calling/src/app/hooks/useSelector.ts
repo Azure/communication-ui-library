@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { CallClientState, StatefulCallClient } from 'calling-stateful-client';
-import { useCall, CallClientProvider } from 'react-composites';
+import { useCall, useCallClient } from 'react-composites';
 
 import { useState, useEffect, useRef, useMemo } from 'react';
 
@@ -10,7 +10,7 @@ export const useSelector = <SelectorT extends (state: CallClientState, props: an
   selector: SelectorT,
   selectorProps?: Parameters<SelectorT>[1]
 ): ReturnType<SelectorT> => {
-  const callClient: StatefulCallClient = CallClientProvider.useCallClient() as any;
+  const callClient: StatefulCallClient = useCallClient() as any;
   const callId = useCall()?.id;
 
   const callIdConfigProps = useMemo(

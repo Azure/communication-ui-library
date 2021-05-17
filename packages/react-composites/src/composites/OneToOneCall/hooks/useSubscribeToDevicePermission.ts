@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallingContext } from '../../../providers';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { CommunicationUiErrorCode, CommunicationUiError } from '../../../types/CommunicationUiError';
 import { useTriggerOnErrorCallback } from '../../../providers/ErrorProvider';
 import { propagateError } from '../../../utils/SDKUtils';
 import { DevicePermissionState, DevicePermissionType } from '../../../types/DevicePermission';
+import { CallingContext } from '../providers/CallingProvider';
 
 // uses the device manager which abstracts away the HTML5 permission system
 // device manager will be able to get the initial real state

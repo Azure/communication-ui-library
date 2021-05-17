@@ -3,7 +3,8 @@
 
 import { useCallback } from 'react';
 import { CommunicationUiErrorCode, CommunicationUiError } from '../../../types/CommunicationUiError';
-import { useCallContext, useCallingContext } from '../../../providers';
+import { useCallContext } from '../../../providers';
+import { useCallingContext } from '../providers/CallingProvider';
 
 type UseMicrophoneType = {
   unmute: () => Promise<void>;

@@ -4,7 +4,8 @@
 import { AudioOptions, Call, GroupLocator, HangUpOptions, JoinCallOptions } from '@azure/communication-calling';
 import { useCallback } from 'react';
 import { CommunicationUiErrorCode, CommunicationUiError } from '../../../types/CommunicationUiError';
-import { useCallingContext, useCallContext } from '../../../providers';
+import { useCallContext } from '../../../providers';
+import { useCallingContext } from '../providers/CallingProvider';
 
 export type UseGroupCallType = {
   leave: (hangupCallOptions: HangUpOptions) => Promise<void>;

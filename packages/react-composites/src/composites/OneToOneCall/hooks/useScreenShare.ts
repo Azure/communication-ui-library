@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { useCallContext, useCallingContext } from '../../../providers';
+import { useCallContext } from '../../../providers';
 import { useCallback, useEffect } from 'react';
 import { CommunicationUiErrorCode, CommunicationUiError } from '../../../types/CommunicationUiError';
+import { useCallingContext } from '../providers/CallingProvider';
 
 type useScreenShareType = {
   startScreenShare: () => Promise<void>;

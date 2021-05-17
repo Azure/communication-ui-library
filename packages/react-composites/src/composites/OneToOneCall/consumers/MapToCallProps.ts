@@ -2,9 +2,10 @@
 // Licensed under the MIT license.
 
 import { CallState, HangUpOptions } from '@azure/communication-calling';
-import { useCallContext, useCallingContext } from '../../../providers';
+import { useCallContext } from '../../../providers';
 import { ParticipantStream } from '../../../types/ParticipantStream';
 import { useOutgoingCall } from '../hooks/useOutgoingCall';
+import { useCallingContext } from '../providers/CallingProvider';
 
 export type CallContainerProps = {
   isCallInitialized: boolean;

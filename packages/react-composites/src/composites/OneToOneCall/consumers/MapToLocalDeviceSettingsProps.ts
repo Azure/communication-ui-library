@@ -5,7 +5,7 @@ import { AudioDeviceInfo, LocalVideoStream, VideoDeviceInfo } from '@azure/commu
 import useSubscribeToDevicePermission from '../hooks/useSubscribeToDevicePermission';
 import useSubscribeToAudioDeviceList from '../hooks/useSubscribeToAudioDeviceList';
 import useSubscribeToVideoDeviceList from '../hooks/useSubscribeToVideoDeviceList';
-import { useCallingContext } from '../../../providers/CallingProvider';
+import { useCallingContext } from '../providers/CallingProvider';
 import { useCallContext } from '../../../providers';
 import { CommunicationUiErrorCode, CommunicationUiError } from '../../../types/CommunicationUiError';
 import { useTriggerOnErrorCallback } from '../../../providers/ErrorProvider';

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallingProvider, CallProvider, ErrorProvider } from '../../providers';
+import { CallProvider, ErrorProvider } from '../../providers';
 import React, { useEffect, useState } from 'react';
 import { CallScreen } from './CallScreen';
 import { ConfigurationScreen } from './ConfigurationScreen';
@@ -11,6 +11,7 @@ import { callContainer } from './styles/Call.styles';
 import { Stack } from '@fluentui/react';
 import { CommunicationUiErrorInfo } from '../../types';
 import { v1 as createGUID } from 'uuid';
+import { CallingProvider } from '../OneToOneCall/providers/CallingProvider';
 
 export type CallCompositeProps = {
   /** Display name in the group call */

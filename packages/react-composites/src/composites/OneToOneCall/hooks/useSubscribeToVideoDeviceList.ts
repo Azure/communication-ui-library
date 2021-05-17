@@ -2,8 +2,8 @@
 // Licensed under the MIT license.
 
 import { DeviceManager, VideoDeviceInfo } from '@azure/communication-calling';
-import { useCallingContext } from '../../../providers';
 import { useEffect } from 'react';
+import { useCallingContext } from '../providers/CallingProvider';
 import { isSelectedDeviceInList } from '../utils/SDKUtils';
 
 export default (): void => {

@@ -52,7 +52,7 @@ const App = (): JSX.Element => {
   const [screenWidth, setScreenWidth] = useState(window?.innerWidth ?? 0);
   const [token, setToken] = useState('');
   const [userId, setUserId] = useState('');
-  const [displayName, setDisplayName] = useState('');
+  const [displayName, setDisplayName] = useState(defaultDisplayName);
 
   useEffect(() => {
     const setWindowWidth = (): void => {
@@ -100,7 +100,7 @@ const App = (): JSX.Element => {
         );
       case 'call':
         return (
-          <CallAgentProvider.CallAgentProvider displayName={displayName} token={token}>
+          <CallAgentProvider displayName={displayName} token={token}>
             <CallProvider>
               <GroupCall
                 endCallHandler={(): void => {
@@ -110,7 +110,7 @@ const App = (): JSX.Element => {
                 groupId={getGroupId()}
               />
             </CallProvider>
-          </CallAgentProvider.CallAgentProvider>
+          </CallAgentProvider>
         );
       default:
         return <>Invalid Page</>;
@@ -138,13 +138,9 @@ const App = (): JSX.Element => {
       }
       default:
         return (
-          <CallClientProvider.CallClientProvider
-            token={token}
-            displayName={displayName ? displayName : defaultDisplayName}
-            refreshTokenCallback={refreshTokenAsync(userId)}
-          >
+          <CallClientProvider token={token} displayName={displayName} refreshTokenCallback={refreshTokenAsync(userId)}>
             {renderPage(page)}
-          </CallClientProvider.CallClientProvider>
+          </CallClientProvider>
         );
     }
   };

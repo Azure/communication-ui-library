@@ -96,4 +96,9 @@ const CallAgentProviderBase = (props: CallAgentProviderProps): JSX.Element => {
 export const CallAgentProvider = (props: CallAgentProviderProps): JSX.Element => <CallAgentProviderBase {...props} />;
 
 export const useCallAgentContext = (): CallAgentContextType => useValidContext(CallAgentContext);
+
 export const useCallAgent = (): CallAgent | undefined => useContext(CallAgentContext)?.callAgent;
+
+export const useDisplayName = (): string | undefined => {
+  return useValidContext(CallAgentContext).displayName;
+};

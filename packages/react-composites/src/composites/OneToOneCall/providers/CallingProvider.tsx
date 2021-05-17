@@ -11,11 +11,16 @@ import {
 } from '@azure/communication-calling';
 import { AbortSignalLike } from '@azure/core-http';
 import React, { createContext, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
-import { CommunicationUiError, CommunicationUiErrorCode } from '../types/CommunicationUiError';
-import { DevicePermissionState } from '../types/DevicePermission';
-import { createAzureCommunicationUserCredential, getIdFromToken, propagateError, useValidContext } from '../utils';
-import { WithErrorHandling } from '../utils/WithErrorHandling';
-import { ErrorHandlingProps } from './ErrorProvider';
+import { CommunicationUiError, CommunicationUiErrorCode } from '../../../types/CommunicationUiError';
+import { DevicePermissionState } from '../../../types/DevicePermission';
+import {
+  createAzureCommunicationUserCredential,
+  getIdFromToken,
+  propagateError,
+  useValidContext
+} from '../../../utils';
+import { WithErrorHandling } from '../../../utils/WithErrorHandling';
+import { ErrorHandlingProps } from '../../../providers/ErrorProvider';
 
 export type CallingContextType = {
   userId: string;

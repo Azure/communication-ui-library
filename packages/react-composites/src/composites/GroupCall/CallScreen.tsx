@@ -19,7 +19,7 @@ import { isInCall } from '../../utils/SDKUtils';
 import { ErrorHandlingProps } from '../../providers/ErrorProvider';
 import { ErrorBar as ErrorBarComponent } from 'react-components';
 import { CallControls } from './CallControls';
-import { useCall, useCallClient, useCallContext, useCallingContext } from '../../providers';
+import { useCall, useCallClient, useCallContext, useCallAgent } from '../../providers';
 import { CallClientState, StatefulCallClient } from 'calling-stateful-client';
 import { AudioOptions, CallState } from '@azure/communication-calling';
 
@@ -38,7 +38,7 @@ export const CallScreen = (props: CallScreenProps & ErrorHandlingProps): JSX.Ele
 
   const ErrorBar = connectFuncsToContext(ErrorBarComponent, MapToErrorBarProps);
 
-  const { callAgent } = useCallingContext();
+  const callAgent = useCallAgent();
   const { setCall, localVideoStream, isMicrophoneEnabled } = useCallContext();
   const call = useCall();
   const callClient: StatefulCallClient = useCallClient();
