@@ -51,7 +51,6 @@ export const CallScreen = (props: CallScreenProps & ErrorHandlingProps): JSX.Ele
   useEffect(() => {
     const onStateChange = (state: CallClientState): void => {
       call?.id && setCallState(state.calls.get(call.id)?.state);
-      console.log(call?.id && state.calls.get(call.id)?.state);
       call?.id && setIsScreenSharingOn(state.calls.get(call.id)?.isScreenSharingOn);
     };
 
