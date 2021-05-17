@@ -2,13 +2,8 @@
 // Licensed under the MIT license.
 
 import { ChatMessageReadReceipt, ChatParticipant } from '@azure/communication-chat';
-import {
-  CommunicationIdentifier,
-  CommunicationIdentifierKind,
-  isCommunicationUserIdentifier,
-  isMicrosoftTeamsUserIdentifier,
-  isPhoneNumberIdentifier
-} from '@azure/communication-common';
+import { CommunicationIdentifier, CommunicationIdentifierKind } from '@azure/communication-common';
+import { flattenedCommunicationIdentifier } from 'acs-ui-common';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 
@@ -50,14 +45,5 @@ export type ChatThreadProperties = {
 export type CommunicationIdentifierAsKey = string;
 
 export const getCommunicationIdentifierAsKey = (identifier: CommunicationIdentifier): CommunicationIdentifierAsKey => {
-  if (isCommunicationUserIdentifier(identifier)) {
-    return identifier.communicationUserId;
-  }
-  if (isMicrosoftTeamsUserIdentifier(identifier)) {
-    return identifier.microsoftTeamsUserId;
-  }
-  if (isPhoneNumberIdentifier(identifier)) {
-    return identifier.phoneNumber;
-  }
-  return identifier.id;
+  return flattenedCommunicationIdentifier(identifier) as CommunicationIdentifierAsKey;
 };
