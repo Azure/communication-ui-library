@@ -31,15 +31,13 @@ npm i --save ./{path to chat-stateful-client tarball}
 ```tsx
 import { ChatClient } from '@azure/communication-chat';
 import { createStatefulChatClient } from 'chat-stateful-client';
-import { AzureCommunicationTokenCredential } from "@azure/communication-common";
+import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 
 const endpointUrl = '<ENDPOINT>';
 const userAccessToken = '<USER_ACCESS_TOKEN>';
 const tokenCredential = new AzureCommunicationTokenCredential(userAccessToken);
 
-const StatefulChatClient = createStatefulChatClient(
-  new ChatClient(endpointUrl, tokenCredential, { userId, displayName }
-)
+const StatefulChatClient = createStatefulChatClient({ userId, displayName }, endpointUrl, tokenCredential);
 
 // You can then use the `StatefulChatClient` in the same way as a `ChatClient` with a slight variation.
 // Details about the variation in usage are documented below under `Usage` section.

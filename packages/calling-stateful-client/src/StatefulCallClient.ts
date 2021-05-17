@@ -137,7 +137,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
 }
 
 /**
- * Creates a declarative CallClient {@Link StatefulCallClient} by proxying CallClient
+ * Creates a stateful CallClient {@Link StatefulCallClient} by proxying CallClient
  * {@Link @azure/communication-calling#CallClient} with ProxyCallClient {@Link ProxyCallClient} which then allows access
  * to state in a declarative way.
  *

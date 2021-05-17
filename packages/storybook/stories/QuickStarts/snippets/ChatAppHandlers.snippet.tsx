@@ -41,7 +41,7 @@ function App(): JSX.Element {
 
   //Add state to the low-level chat client
   setStatefulChatClient(
-    createStatefulChatClient(new ChatClient(endpointUrl, tokenCredential), { userId: userId, displayName: displayName })
+    createStatefulChatClient({ userId: userId, displayName: displayName }, endpointUrl, tokenCredential)
   );
 
   //Generate Handlers for Message Thread and SendBox off the stateful client to handle events from the UI Components

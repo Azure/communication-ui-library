@@ -1,13 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatClient } from '@azure/communication-chat';
+import { ChatClient, ChatClientOptions } from '@azure/communication-chat';
 import { ChatContext } from './ChatContext';
 import { ChatClientState } from './ChatClientState';
 import { EventSubscriber } from './EventSubscriber';
 import { chatThreadClientDeclaratify } from './StatefulChatThreadClient';
 import { createDecoratedListThreads } from './iterators/createDecoratedListThreads';
 import { ChatConfig } from './types/ChatConfig';
+import { CommunicationTokenCredential } from '@azure/communication-common';
 
 export interface StatefulChatClient extends ChatClient {
   getState(): ChatClientState;
@@ -90,7 +91,23 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
   }
 };
 
-export const createStatefulChatClient = (chatClient: ChatClient, chatConfig: ChatConfig): StatefulChatClient => {
+/**
+ * Creates a stateful ChatClient {@Link StatefulChatClient} by proxying ChatClient
+ * {@Link @azure/communication-chat#ChatClient} with ProxyChatClient {@Link ProxyChatClient} which then allows access
+ * to state in a declarative way.
+ *
+ * @param chatConfig - {@Link ChatConfig}
+ * @param endpoint - {@Link @azure/communication-chat#ChatClient}
+ * @param credential - {@Link @azure/communication-chat#ChatClient}
+ * @param callClientOptions - {@Link @azure/communication-chat#ChatClientOptions}
+ */
+export const createStatefulChatClient = (
+  chatConfig: ChatConfig,
+  endpoint: string,
+  credential: CommunicationTokenCredential,
+  options?: ChatClientOptions
+): StatefulChatClient => {
+  const chatClient = new ChatClient(endpoint, credential, options);
   const context = new ChatContext();
   let eventSubscriber: EventSubscriber;
 
