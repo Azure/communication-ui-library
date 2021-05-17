@@ -6,6 +6,7 @@
 
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';
+import { CallClientOptions } from '@azure/communication-calling';
 import { CallDirection } from '@azure/communication-calling';
 import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
@@ -62,7 +63,7 @@ export interface CallClientState {
 }
 
 // @public
-export const createStatefulCallClient: (callClient: CallClient, userId: string) => StatefulCallClient;
+export const createStatefulCallClient: (userId: string, callClientOptions?: CallClientOptions | undefined) => StatefulCallClient;
 
 // @public
 export type DeviceManager = {

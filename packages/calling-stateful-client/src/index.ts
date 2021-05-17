@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-export { createStatefulCallClient } from './CallClientDeclarative';
-export type { StatefulCallClient } from './CallClientDeclarative';
+export { createStatefulCallClient } from './StatefulCallClient';
+export type { StatefulCallClient } from './StatefulCallClient';
 export type { StatefulDeviceManager } from './DeviceManagerDeclarative';
 export type {
   Call,

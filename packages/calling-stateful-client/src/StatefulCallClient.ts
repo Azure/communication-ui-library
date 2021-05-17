@@ -2,7 +2,13 @@
 // Licensed under the MIT license.
 
 import { deviceManagerDeclaratify } from './DeviceManagerDeclarative';
-import { CallAgent, CallClient, CreateViewOptions, DeviceManager } from '@azure/communication-calling';
+import {
+  CallAgent,
+  CallClient,
+  CallClientOptions,
+  CreateViewOptions,
+  DeviceManager
+} from '@azure/communication-calling';
 import { CallClientState, LocalVideoStream, RemoteVideoStream } from './CallClientState';
 import { CallContext } from './CallContext';
 import { callAgentDeclaratify } from './CallAgentDeclarative';
@@ -135,12 +141,13 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
  * {@Link @azure/communication-calling#CallClient} with ProxyCallClient {@Link ProxyCallClient} which then allows access
  * to state in a declarative way.
  *
- * @param callClient - CallClient from SDK to declaratify
  * @param userId - UserId from SDK. This is provided for developer convenience to easily access the userId from the
  *   state. It is not used by StatefulCallClient so if you do not have this value or do not want to use this value,
  *   you could pass any dummy value like empty string.
+ * @param callClientOptions - {@Link @azure/communication-calling#CallClientOptions}
  */
-export const createStatefulCallClient = (callClient: CallClient, userId: string): StatefulCallClient => {
+export const createStatefulCallClient = (userId: string, callClientOptions?: CallClientOptions): StatefulCallClient => {
+  const callClient = new CallClient(callClientOptions);
   const context: CallContext = new CallContext(userId);
   const internalContext: InternalCallContext = new InternalCallContext();
 

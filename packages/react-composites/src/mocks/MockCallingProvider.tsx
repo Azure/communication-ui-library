@@ -2,13 +2,7 @@
 // Licensed under the MIT license.
 
 import { createStatefulCallClient, StatefulCallClient, StatefulDeviceManager } from 'calling-stateful-client';
-import {
-  AudioDeviceInfo,
-  CallAgent,
-  CallClient,
-  CallClientOptions,
-  VideoDeviceInfo
-} from '@azure/communication-calling';
+import { AudioDeviceInfo, CallAgent, CallClientOptions, VideoDeviceInfo } from '@azure/communication-calling';
 import { AbortSignalLike } from '@azure/core-http';
 import React, { useState } from 'react';
 import { CallingContext, CallingContextType } from '../providers/CallingProvider';
@@ -31,7 +25,7 @@ interface CallingProviderProps {
  * @returns
  */
 export const MockCallingProvider = (props: CallingProviderProps & ErrorHandlingProps): JSX.Element => {
-  const [callClient, setCallClient] = useState<StatefulCallClient>(createStatefulCallClient(new CallClient(), ''));
+  const [callClient, setCallClient] = useState<StatefulCallClient>(createStatefulCallClient(''));
   const [callAgent, setCallAgent] = useState<CallAgent | undefined>(undefined);
   const [deviceManager, setDeviceManager] = useState<StatefulDeviceManager | undefined>(undefined);
   const [userId, setUserId] = useState<string>('');

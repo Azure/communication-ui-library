@@ -99,7 +99,7 @@ export class MockTranscriptionCallFeatureImpl implements TranscriptionCallFeatur
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function addMockEmitter(object: any): any {
+export function setMockEmitter(object: any): any {
   object.emitter = new EventEmitter();
   object.on = (event: any, listener: any): void => {
     object.emitter.on(event, listener);
@@ -120,7 +120,7 @@ export function createMockCall(mockCallId: string): MockCall {
     localVideoStreams: [] as ReadonlyArray<LocalVideoStream>,
     api: createMockApiFeatures(new Map())
   } as MockCall;
-  return addMockEmitter(mockCall);
+  return setMockEmitter(mockCall);
 }
 
 export function createMockRemoteParticipant(mockCommunicationUserId: string): MockRemoteParticipant {
@@ -128,17 +128,17 @@ export function createMockRemoteParticipant(mockCommunicationUserId: string): Mo
     identifier: { kind: 'communicationUser', communicationUserId: mockCommunicationUserId },
     videoStreams: [] as ReadonlyArray<RemoteVideoStream>
   } as MockRemoteParticipant;
-  return addMockEmitter(mockRemoteParticipant);
+  return setMockEmitter(mockRemoteParticipant);
 }
 
 export function createMockIncomingCall(mockCallId: string): MockIncomingCall {
   const mockIncomingCall = { id: mockCallId } as MockIncomingCall;
-  return addMockEmitter(mockIncomingCall);
+  return setMockEmitter(mockIncomingCall);
 }
 
 export function createMockRemoteVideoStream(mockIsAvailable: boolean): MockRemoteVideoStream {
   const mockRemoteVideoStream = { isAvailable: mockIsAvailable } as MockRemoteVideoStream;
-  return addMockEmitter(mockRemoteVideoStream);
+  return setMockEmitter(mockRemoteVideoStream);
 }
 
 /**
@@ -159,13 +159,13 @@ export function createMockApiFeatures(
       return feature as FeatureT;
     } else {
       // Default one if none provided
-      const generic = addMockEmitter({
+      const generic = setMockEmitter({
         name: 'Default',
         isRecordingActive: false,
         isTranscriptionActive: false,
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         transfer(target: TransferToParticipant, transferOptions?: TransferToParticipantOptions): Transfer {
-          return addMockEmitter({ state: 'None' });
+          return setMockEmitter({ state: 'None' });
         }
       });
       return generic;
