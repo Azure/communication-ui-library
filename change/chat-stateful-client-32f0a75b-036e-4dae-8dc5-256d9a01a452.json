@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update createStatefulCallClient to create the underlying call client internally",
+  "packageName": "chat-stateful-client",
+  "email": "mail@jamesburnside.com",
+  "dependentChangeType": "patch"
+}
