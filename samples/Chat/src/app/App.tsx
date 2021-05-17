@@ -14,7 +14,7 @@ import { getThreadId } from './utils/getThreadId';
 import { ErrorProvider, CommunicationUiErrorInfo } from 'react-composites';
 import { refreshTokenAsync } from './utils/refreshToken';
 import { ChatClientProvider, ChatThreadClientProvider } from '@azure/acs-chat-selector';
-import { ChatClient, ChatThreadClient } from '@azure/communication-chat';
+import { ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { createStatefulChatClient, StatefulChatClient } from 'chat-stateful-client';
 
