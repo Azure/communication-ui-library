@@ -43,6 +43,9 @@ export const parameters = {
         'Styling',
         'Theming',
         'Localization',
+        'Accessibility',
+        'Custom User Data Model',
+        'Feedback',
         STATEFUL_CLIENT_PREFIX,
         [
           'Overview',
