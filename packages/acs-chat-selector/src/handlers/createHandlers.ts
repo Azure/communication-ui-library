@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { ReactElement } from 'react';
+import { CommonProperties } from 'acs-ui-common';
 import { StatefulChatClient } from 'chat-stateful-client';
 import { ChatThreadClient } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
@@ -60,10 +61,6 @@ export const createDefaultChatHandlers = memoizeOne(
     };
   }
 );
-
-export type CommonProperties<A, B> = {
-  [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
-}[keyof A & keyof B];
 
 export type Common<A, B> = Pick<A, CommonProperties<A, B>>;
 

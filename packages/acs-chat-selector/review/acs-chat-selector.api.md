@@ -72,18 +72,13 @@ export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientSta
 }>;
 
 // @public (undocumented)
-export type CommonProperties<A, B> = {
-    [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
-}[keyof A & keyof B];
-
-// @public (undocumented)
 export const communicationIdentifierToString: (i: CommunicationIdentifier | undefined) => string;
 
 // @public (undocumented)
 export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => DefaultChatHandlers;
 
 // @public (undocumented)
-export const createDefaultChatHandlersForComponent: <Props>(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, Props>>;
+export const createDefaultChatHandlersForComponent: <Props>(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultChatHandlers, any>;
 
 // @public (undocumented)
 export type DefaultChatHandlers = {
@@ -127,10 +122,10 @@ export const useChatClient: () => StatefulChatClient;
 export const useChatThreadClient: () => ChatThreadClient;
 
 // @public (undocumented)
-export const useHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, PropsT>>;
+export const useHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Pick<DefaultChatHandlers, any>;
 
 // @public (undocumented)
-export const usePropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => ReturnType<GetSelector<Component>> & Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, Parameters<Component>[0]>>;
+export const usePropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => ReturnType<GetSelector<Component>> & Pick<DefaultChatHandlers, any>;
 
 // @public (undocumented)
 export const useSelector: <SelectorT extends (state: ChatClientState, props: any) => any>(selector: SelectorT, selectorProps?: Parameters<SelectorT>[1] | undefined) => ReturnType<SelectorT>;
