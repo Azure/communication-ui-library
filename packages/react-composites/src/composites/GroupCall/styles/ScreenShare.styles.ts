@@ -17,3 +17,9 @@ export const loadingStyle = mergeStyles({
   display: 'flex',
   justifyContent: 'center'
 });
+
+export const videoTileStyle = {
+  root: {
+    borderRadius: '.25rem'
+  }
+};

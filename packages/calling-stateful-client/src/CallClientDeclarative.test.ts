@@ -559,7 +559,7 @@ describe('declarative call client', () => {
     ).toBe(1);
   });
 
-  test('should render the stream and add to state when startRenderVideo is called', async () => {
+  test('should render the stream and add to state when createView is called', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
     createDeclarativeClient(testData);
@@ -599,14 +599,14 @@ describe('declarative call client', () => {
     if (!remoteVideoStream) {
       expect(remoteVideoStream).toBeDefined();
     } else {
-      testData.mockStatefulCallClient.startRenderVideo(mockCallId, remoteVideoStream);
+      testData.mockStatefulCallClient.createView(mockCallId, remoteVideoStream);
     }
 
     const localVideoStream = testData.mockStatefulCallClient.state.calls.get(mockCallId)?.localVideoStreams[0];
     if (!localVideoStream) {
       expect(localVideoStream).toBeDefined();
     } else {
-      testData.mockStatefulCallClient.startRenderVideo(mockCallId, localVideoStream);
+      testData.mockStatefulCallClient.createView(mockCallId, localVideoStream);
     }
 
     await waitWithBreakCondition(
@@ -637,7 +637,7 @@ describe('declarative call client', () => {
     ).toBeDefined();
   });
 
-  test('should stop rendering the stream and remove from state when stopRenderVideo is called', async () => {
+  test('should stop rendering the stream and remove from state when disposeView is called', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
     createDeclarativeClient(testData);
@@ -678,7 +678,7 @@ describe('declarative call client', () => {
       expect(remoteVideoStream).toBeDefined();
       return;
     } else {
-      testData.mockStatefulCallClient.startRenderVideo(mockCallId, remoteVideoStream);
+      testData.mockStatefulCallClient.createView(mockCallId, remoteVideoStream);
     }
 
     const localVideoStream = testData.mockStatefulCallClient.state.calls.get(mockCallId)?.localVideoStreams[0];
@@ -686,7 +686,7 @@ describe('declarative call client', () => {
       expect(localVideoStream).toBeDefined();
       return;
     } else {
-      testData.mockStatefulCallClient.startRenderVideo(mockCallId, localVideoStream);
+      testData.mockStatefulCallClient.createView(mockCallId, localVideoStream);
     }
 
     await waitWithBreakCondition(
@@ -716,8 +716,8 @@ describe('declarative call client', () => {
       testData.mockStatefulCallClient.state.calls.get(mockCallId)?.localVideoStreams[0]?.videoStreamRendererView
     ).toBeDefined();
 
-    testData.mockStatefulCallClient.stopRenderVideo(mockCallId, remoteVideoStream);
-    testData.mockStatefulCallClient.stopRenderVideo(mockCallId, localVideoStream);
+    testData.mockStatefulCallClient.disposeView(mockCallId, remoteVideoStream);
+    testData.mockStatefulCallClient.disposeView(mockCallId, localVideoStream);
 
     await waitWithBreakCondition(
       () =>
@@ -786,7 +786,7 @@ describe('declarative call client', () => {
       expect(remoteVideoStream).toBeDefined();
       return;
     } else {
-      testData.mockStatefulCallClient.startRenderVideo(mockCallId, remoteVideoStream);
+      testData.mockStatefulCallClient.createView(mockCallId, remoteVideoStream);
     }
 
     const localVideoStream = testData.mockStatefulCallClient.state.calls.get(mockCallId)?.localVideoStreams[0];
@@ -794,7 +794,7 @@ describe('declarative call client', () => {
       expect(localVideoStream).toBeDefined();
       return;
     } else {
-      testData.mockStatefulCallClient.startRenderVideo(mockCallId, localVideoStream);
+      testData.mockStatefulCallClient.createView(mockCallId, localVideoStream);
     }
 
     await waitWithBreakCondition(

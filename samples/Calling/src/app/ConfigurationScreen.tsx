@@ -2,13 +2,13 @@
 // Licensed under the MIT license.
 
 import React, { useState } from 'react';
-import { useCallingContext } from 'react-composites';
+import { CallClientProvider } from 'react-composites';
 import { localStorageAvailable } from './utils/constants';
 import { saveDisplayNameToLocalStorage } from './utils/AppUtils';
 import { DisplayNameField } from './DisplayNameField';
 import { StartCallButton } from './StartCallButton';
 import { CallConfiguration } from './CallConfiguration';
-import { LocalDeviceSettingsComponent } from './LocalDeviceSettings';
+import { LocalDeviceSettings } from './LocalDeviceSettings';
 import { optionsButtonSelector } from '@azure/acs-calling-selector';
 import { useSelector } from './hooks/useSelector';
 import { useHandlers } from './hooks/useHandlers';
@@ -24,10 +24,10 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
   const [emptyWarning, setEmptyWarning] = useState(false);
   const [nameTooLongWarning, setNameTooLongWarning] = useState(false);
 
-  const { displayName } = useCallingContext();
+  const { displayName } = CallClientProvider.useCallClientContext();
 
   const options = useSelector(optionsButtonSelector);
-  const localDeviceSettingsHandlers = useHandlers(LocalDeviceSettingsComponent);
+  const localDeviceSettingsHandlers = useHandlers(LocalDeviceSettings);
 
   return (
     <CallConfiguration {...props}>
@@ -40,7 +40,7 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
         setNameLengthExceedLimit={setNameTooLongWarning}
       />
       <div>
-        <LocalDeviceSettingsComponent {...options} {...localDeviceSettingsHandlers} />
+        <LocalDeviceSettings {...options} {...localDeviceSettingsHandlers} />
       </div>
       <div>
         <StartCallButton

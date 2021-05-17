@@ -2,8 +2,6 @@
 // Licensed under the MIT license.
 
 // Todo: move these away from default exports
-import useSubscribeToAudioDeviceList from './useSubscribeToAudioDeviceList';
-import useCallAgent from './useCallAgent';
 import useLocalVideo from './useLocalVideo';
 import useSubscribeToDevicePermission from './useSubscribeToDevicePermission';
 import useLocalVideoStreamRenderer from './useLocalVideoStreamRenderer';
@@ -12,8 +10,6 @@ import useScreenShare from './useScreenShare';
 import useSubscribeToVideoDeviceList from './useSubscribeToVideoDeviceList';
 
 export {
-  useSubscribeToAudioDeviceList,
-  useCallAgent,
   useLocalVideo,
   useSubscribeToDevicePermission,
   useLocalVideoStreamRenderer,

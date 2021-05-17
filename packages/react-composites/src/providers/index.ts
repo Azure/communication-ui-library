@@ -8,3 +8,5 @@ export * from './ChatProviderHelper';
 export * from './ChatThreadProvider';
 export * from './IncomingCallsProvider';
 export * from './ErrorProvider';
+export * as CallClientProvider from './CallClientProvider';
+export * as CallAgentProvider from './CallAgentProvider';
