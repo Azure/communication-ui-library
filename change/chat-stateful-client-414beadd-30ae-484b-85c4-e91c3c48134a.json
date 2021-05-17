@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "bugfix: Persist fetched chat thread properties",
+  "packageName": "chat-stateful-client",
+  "email": "prprabhu@microsoft.com",
+  "dependentChangeType": "patch"
+}
