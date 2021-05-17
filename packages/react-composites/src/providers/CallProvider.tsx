@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { createContext, useState, Dispatch, SetStateAction } from 'react';
+import React, { useContext, createContext, useState, Dispatch, SetStateAction } from 'react';
 import { Call, CallState, LocalVideoStream, RemoteParticipant } from '@azure/communication-calling';
 import { ParticipantStream } from '../types/ParticipantStream';
 import { useValidContext } from '../utils';
@@ -78,5 +78,5 @@ export const CallProvider = (props: CallProvider & ErrorHandlingProps): JSX.Elem
 export const useCallContext = (): CallContextType => useValidContext(CallContext);
 
 export const useCall = (): Call | undefined => {
-  return useValidContext(CallContext).call;
+  return useContext(CallContext)?.call;
 };
