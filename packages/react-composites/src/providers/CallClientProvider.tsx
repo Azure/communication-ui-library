@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { AudioDeviceInfo, CallClient, CallClientOptions, VideoDeviceInfo } from '@azure/communication-calling';
+import { CallClient, CallClientOptions } from '@azure/communication-calling';
 import { AbortSignalLike } from '@azure/core-http';
 import { createStatefulCallClient, StatefulCallClient, StatefulDeviceManager } from 'calling-stateful-client';
 import React, { createContext, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
@@ -22,14 +22,9 @@ export type CallClientContextType = {
   setAudioDevicePermission: Dispatch<SetStateAction<DevicePermissionState>>;
   videoDevicePermission: DevicePermissionState;
   setVideoDevicePermission: Dispatch<SetStateAction<DevicePermissionState>>;
-  videoDeviceInfo: VideoDeviceInfo | undefined;
-  setVideoDeviceInfo: Dispatch<SetStateAction<VideoDeviceInfo | undefined>>;
-  videoDeviceList: VideoDeviceInfo[];
-  setVideoDeviceList: Dispatch<SetStateAction<VideoDeviceInfo[]>>;
-  audioDeviceInfo: AudioDeviceInfo | undefined;
-  setAudioDeviceInfo: Dispatch<SetStateAction<AudioDeviceInfo | undefined>>;
-  audioDeviceList: AudioDeviceInfo[];
-  setAudioDeviceList: Dispatch<SetStateAction<AudioDeviceInfo[]>>;
+
+  isCallStartedWithCameraOn?: boolean;
+  setIsCallStartedWithCameraOn: Dispatch<SetStateAction<boolean>>;
 };
 
 export const CallClientContext = createContext<CallClientContextType | undefined>(undefined);
@@ -56,10 +51,7 @@ const CallClientProviderBase = (props: CallClientProvider): JSX.Element => {
   const [displayName, setDisplayName] = useState<string>(initialDisplayName);
   const [audioDevicePermission, setAudioDevicePermission] = useState<DevicePermissionState>('Unknown');
   const [videoDevicePermission, setVideoDevicePermission] = useState<DevicePermissionState>('Unknown');
-  const [videoDeviceInfo, setVideoDeviceInfo] = useState<VideoDeviceInfo | undefined>(undefined);
-  const [videoDeviceList, setVideoDeviceList] = useState<VideoDeviceInfo[]>([]);
-  const [audioDeviceInfo, setAudioDeviceInfo] = useState<AudioDeviceInfo | undefined>(undefined);
-  const [audioDeviceList, setAudioDeviceList] = useState<AudioDeviceInfo[]>([]);
+  const [isCallStartedWithCameraOn, setIsCallStartedWithCameraOn] = useState(false);
   const refreshTokenCallbackRefContainer = useRef(refreshTokenCallback);
 
   // Update the state if the props change
@@ -105,14 +97,8 @@ const CallClientProviderBase = (props: CallClientProvider): JSX.Element => {
     setAudioDevicePermission,
     videoDevicePermission,
     setVideoDevicePermission,
-    videoDeviceInfo,
-    setVideoDeviceInfo,
-    videoDeviceList,
-    setVideoDeviceList,
-    audioDeviceInfo,
-    setAudioDeviceInfo,
-    audioDeviceList,
-    setAudioDeviceList
+    isCallStartedWithCameraOn,
+    setIsCallStartedWithCameraOn
   };
 
   return <CallClientContext.Provider value={initialState}>{props.children}</CallClientContext.Provider>;

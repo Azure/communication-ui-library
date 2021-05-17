@@ -9,7 +9,6 @@ import { Call } from '@azure/communication-calling';
 import { Call as Call_2 } from 'calling-stateful-client';
 import { CallAgent } from '@azure/communication-calling';
 import { CallClientState } from 'calling-stateful-client';
-import * as callingDeclarative from 'calling-stateful-client';
 import { CallParticipant } from 'react-components';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { DeviceManager } from 'calling-stateful-client';
@@ -130,11 +129,9 @@ export const localPreviewSelector: reselect.OutputSelector<CallClientState, {
 }>;
 
 // @public (undocumented)
-export const mediaGallerySelector: reselect.OutputParametricSelector<callingDeclarative.CallClientState, CallingBaseSelectorProps, {
-    isCameraChecked: boolean;
+export const mediaGallerySelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     isVideoStreamOn: boolean;
-}, (res1: callingDeclarative.Call | undefined, res2: callingDeclarative.DeviceManager) => {
-    isCameraChecked: boolean;
+}, (res: Call_2 | undefined) => {
     isVideoStreamOn: boolean;
 }>;
 

@@ -1,15 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { mediaGallerySelector } from '@azure/acs-calling-selector';
 import { AudioOptions, CallState } from '@azure/communication-calling';
 import { Label, Overlay, Spinner, Stack } from '@fluentui/react';
 import { CallClientState, StatefulCallClient } from 'calling-stateful-client';
 import React, { useEffect, useState } from 'react';
-import { CallAgentProvider, CallClientProvider } from 'react-composites';
-import { useCall, useCallContext } from 'react-composites';
+import { CallAgentProvider, CallClientProvider, useCall, useCallContext } from 'react-composites';
 import { CommandPanel, CommandPanelTypes } from './CommandPanel';
 import { Header } from './Header';
-import { usePropsFor } from './hooks/usePropsFor';
+import { useHandlers } from './hooks/useHandlers';
+import { useSelector } from './hooks/useSelector';
 import { MediaGallery } from './MediaGallery';
 import {
   activeContainerClassName,
@@ -39,10 +40,13 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
   const { setCall, isMicrophoneEnabled } = useCallContext();
   const call = useCall();
   const callClient: StatefulCallClient = CallClientProvider.useCallClient();
+  const { isCallStartedWithCameraOn } = CallClientProvider.useCallClientContext();
+
   const [callState, setCallState] = useState<CallState | undefined>(undefined);
   const [isScreenSharingOn, setIsScreenSharingOn] = useState<boolean | undefined>(undefined);
 
-  const mediaGalleryProps = usePropsFor(MediaGallery);
+  const mediaGalleryProps = useSelector(mediaGallerySelector);
+  const mediaGalleryHandlers = useHandlers(MediaGallery);
 
   // To use useProps to get these states, we need to create another file wrapping GroupCall,
   // It seems unnecessary in this case, so we get the updated states using this approach.
@@ -99,7 +103,11 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
               callState === 'Connected' && (
                 <>
                   <Stack.Item grow styles={activeContainerClassName}>
-                    <MediaGallery {...mediaGalleryProps} />
+                    <MediaGallery
+                      {...mediaGalleryProps}
+                      {...mediaGalleryHandlers}
+                      isCameraChecked={isCallStartedWithCameraOn}
+                    />
                   </Stack.Item>
                   {selectedPane !== CommandPanelTypes.None &&
                     (window.innerWidth > MINI_HEADER_WINDOW_WIDTH ? (

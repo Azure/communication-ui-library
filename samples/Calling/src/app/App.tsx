@@ -88,7 +88,7 @@ const App = (): JSX.Element => {
     window.history.pushState({}, document.title, window.location.href + '?groupId=' + getGroupId());
   };
 
-  const defaultPageHandler = (page: string): JSX.Element => {
+  const renderPage = (page: string): JSX.Element => {
     switch (page) {
       case 'configuration':
         return (
@@ -139,12 +139,11 @@ const App = (): JSX.Element => {
       default:
         return (
           <CallClientProvider.CallClientProvider
-            key="configuration-calling-provider"
             token={token}
             displayName={displayName ? displayName : defaultDisplayName}
             refreshTokenCallback={refreshTokenAsync(userId)}
           >
-            {defaultPageHandler(page)}
+            {renderPage(page)}
           </CallClientProvider.CallClientProvider>
         );
     }
