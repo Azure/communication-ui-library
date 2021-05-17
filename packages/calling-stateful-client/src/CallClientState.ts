@@ -350,6 +350,12 @@ export type DeviceManager = {
    * {@Link StatefulCallClient#createView} is called with undefined callId and LocalVideoStream).
    */
   unparentedViews: VideoStreamRendererView[];
+  /**
+   * Stores the state of the microphone before and after a call is started. This is provided by the stateful layer
+   * and exists in the Calling SDK but only when a call is started. It must be explicitly set before use and does
+   * not persist across instances of the stateful client.
+   */
+  isMicrophoneActive: boolean;
 };
 
 /**

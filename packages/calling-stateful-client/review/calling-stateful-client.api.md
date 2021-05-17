@@ -75,6 +75,7 @@ export type DeviceManager = {
     speakers: AudioDeviceInfo[];
     deviceAccess?: DeviceAccess;
     unparentedViews: VideoStreamRendererView[];
+    isMicrophoneActive: boolean;
 };
 
 // @public
@@ -130,6 +131,8 @@ export interface StatefulCallClient extends CallClient {
 export interface StatefulDeviceManager extends DeviceManager_2 {
     // (undocumented)
     selectCamera: (VideoDeviceInfo: any) => void;
+    // (undocumented)
+    setMicrophoneActive: (boolean: any) => void;
 }
 
 // @public

@@ -6,6 +6,7 @@ import { CallContext } from './CallContext';
 
 export interface StatefulDeviceManager extends DeviceManager {
   selectCamera: (VideoDeviceInfo) => void;
+  setMicrophoneActive: (boolean) => void;
 }
 
 /**
@@ -72,6 +73,10 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
 
   private selectedMicrophoneChanged = (): void => {
     this._context.setDeviceManagerSelectedMicrophone(this._deviceManager.selectedMicrophone);
+  };
+
+  public setMicrophoneActive = (isActive: boolean): void => {
+    this._context.setDeviceManagerIsMicrophoneActive(isActive);
   };
 
   private selectedSpeakerChanged = (): void => {
@@ -149,6 +154,10 @@ export const deviceManagerDeclaratify = (deviceManager: DeviceManager, context: 
   Object.defineProperty(deviceManager, 'selectCamera', {
     configurable: false,
     value: (videoDeviceInfo: VideoDeviceInfo) => proxyDeviceManager.selectCamera(videoDeviceInfo)
+  });
+  Object.defineProperty(deviceManager, 'setMicrophoneActive', {
+    configurable: false,
+    value: (isActive: boolean) => proxyDeviceManager.setMicrophoneActive(isActive)
   });
   return new Proxy(deviceManager, proxyDeviceManager) as StatefulDeviceManager;
 };

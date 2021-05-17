@@ -531,6 +531,7 @@ export type DeviceManager = {
     speakers: AudioDeviceInfo[];
     deviceAccess?: DeviceAccess;
     unparentedViews: VideoStreamRendererView[];
+    isMicrophoneActive: boolean;
 };
 
 // @public
@@ -722,10 +723,8 @@ export interface MicrophoneButtonProps extends IButtonProps {
 
 // @public (undocumented)
 export const microphoneButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
-    disabled: boolean;
     checked: boolean;
 }, (res1: Call | undefined, res2: DeviceManager) => {
-    disabled: boolean;
     checked: boolean;
 }>;
 
@@ -915,6 +914,8 @@ export interface StatefulChatClient extends ChatClient {
 export interface StatefulDeviceManager extends DeviceManager_2 {
     // (undocumented)
     selectCamera: (VideoDeviceInfo: any) => void;
+    // (undocumented)
+    setMicrophoneActive: (boolean: any) => void;
 }
 
 // @public

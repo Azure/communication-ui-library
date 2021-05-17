@@ -47,7 +47,8 @@ export class CallContext {
         cameras: [],
         microphones: [],
         speakers: [],
-        unparentedViews: []
+        unparentedViews: [],
+        isMicrophoneActive: false
       },
       callAgent: undefined,
       userId: userId
@@ -529,6 +530,14 @@ export class CallContext {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         draft.deviceManager.selectedMicrophone = selectedMicrophone;
+      })
+    );
+  }
+
+  public setDeviceManagerIsMicrophoneActive(isActive: boolean): void {
+    this.setState(
+      produce(this._state, (draft: CallClientState) => {
+        draft.deviceManager.isMicrophoneActive = isActive;
       })
     );
   }

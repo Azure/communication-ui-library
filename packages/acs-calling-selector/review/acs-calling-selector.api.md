@@ -140,10 +140,8 @@ export const memoizeFnAll: <KeyT, ArgsT extends any[], FnRetT, CallBackT extends
 
 // @public (undocumented)
 export const microphoneButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
-    disabled: boolean;
     checked: boolean;
 }, (res1: Call_2 | undefined, res2: DeviceManager) => {
-    disabled: boolean;
     checked: boolean;
 }>;
 

@@ -13,8 +13,7 @@ import { AudioDeviceInfo, VideoDeviceInfo } from '@azure/communication-calling';
 
 export const microphoneButtonSelector = reselect.createSelector([getCall, getDeviceManager], (call, deviceManager) => {
   return {
-    disabled: !call,
-    checked: call ? !call.isMuted : false
+    checked: deviceManager.isMicrophoneActive
   };
 });
 

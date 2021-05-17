@@ -124,6 +124,9 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
 
     const newDeclarativeCall = callDeclaratify(call, this._context);
     this._declarativeCalls.set(call, newDeclarativeCall as DeclarativeCall);
+    if (this._context.getState().deviceManager.isMicrophoneActive) {
+      newDeclarativeCall.unmute();
+    }
     return newDeclarativeCall;
   };
 
