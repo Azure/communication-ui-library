@@ -64,6 +64,11 @@ const createCompositeHandlers = memoizeOne(
       return adapter.getState().call?.isScreenSharingOn
         ? await adapter.stopScreenShare()
         : await adapter.startScreenShare();
+    },
+    onStartLocalVideo: async () => {
+      if (adapter.getState().call) {
+        return adapter.startCamera();
+      }
     }
   })
 );

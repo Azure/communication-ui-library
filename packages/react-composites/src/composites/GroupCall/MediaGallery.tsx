@@ -1,10 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
+import { useEffect } from 'react';
 import { VideoGallery, VideoGalleryRemoteParticipant } from 'react-components';
+import { useSelector } from './hooks/useSelector';
 import { usePropsFor } from './hooks/usePropsFor';
 import { ScreenShare } from './ScreenShare';
+import { getIsPreviewCameraOn } from './selectors/baseSelectors';
 
 const VideoGalleryStyles = {
   root: {
@@ -12,10 +15,24 @@ const VideoGalleryStyles = {
   }
 };
 
-export const MediaGallery = (): JSX.Element => {
-  const videoGalleryProps = usePropsFor(VideoGallery);
+export interface MediaGalleryProps {
+  isVideoStreamOn?: boolean;
+  onStartLocalVideo: () => Promise<void>;
+}
 
+export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
+  const videoGalleryProps = usePropsFor(VideoGallery);
   const remoteParticipants = videoGalleryProps.remoteParticipants;
+  const [isButtonStatusSynced, setIsButtonStatusSynced] = useState(false);
+
+  const isPreviewCameraOn = useSelector(getIsPreviewCameraOn);
+
+  useEffect(() => {
+    if (isPreviewCameraOn && !props.isVideoStreamOn && !isButtonStatusSynced) {
+      props.onStartLocalVideo();
+    }
+    setIsButtonStatusSynced(true);
+  }, [isButtonStatusSynced, isPreviewCameraOn, props]);
 
   const participantWithScreenShare: VideoGalleryRemoteParticipant | undefined = useMemo(() => {
     return remoteParticipants.find((remoteParticipant: VideoGalleryRemoteParticipant) => {

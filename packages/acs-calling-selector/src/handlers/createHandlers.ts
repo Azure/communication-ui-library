@@ -29,7 +29,7 @@ export const createDefaultCallingHandlers = memoizeOne(
     deviceManager: StatefulDeviceManager | undefined,
     call: Call | undefined
   ) => {
-    const onStartLocalVideo = async (): Promise<LocalVideoStream | void> => {
+    const onStartLocalVideo = async (): Promise<void> => {
       const callId = call?.id;
       let videoDeviceInfo = callClient.getState().deviceManager.selectedCamera;
       if (!videoDeviceInfo) {
@@ -42,16 +42,14 @@ export const createDefaultCallingHandlers = memoizeOne(
       if (call && !call.localVideoStreams.find((s) => areStreamsEqual(s, stream))) {
         await call.startVideo(stream);
       }
-      return stream;
     };
 
     const onStopLocalVideo = async (stream: LocalVideoStream): Promise<void> => {
       const callId = call?.id;
       if (!callId) return;
       if (call && call.localVideoStreams.find((s) => areStreamsEqual(s, stream))) {
-        await callClient.disposeView(callId, stream);
         await call.stopVideo(stream);
-        await callClient.stopRenderVideo(callId, stream);
+        await callClient.disposeView(callId, stream);
       }
     };
 

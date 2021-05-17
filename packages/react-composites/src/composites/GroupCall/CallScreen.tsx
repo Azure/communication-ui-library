@@ -22,6 +22,8 @@ import { CallControls } from '../common/CallControls';
 import { useAdapter } from './adapter/CallAdapterProvider';
 import { useSelector } from './hooks/useSelector';
 import { callStatusSelector } from './selectors/callStatusSelector';
+import { mediaGallerySelector } from './selectors/mediaGallerySelector';
+import { useHandlers } from './hooks/useHandlers';
 
 export const MINI_HEADER_WINDOW_WIDTH = 450;
 
@@ -42,6 +44,9 @@ export const CallScreen = (props: CallScreenProps & ErrorHandlingProps): JSX.Ele
   // To use useProps to get these states, we need to create another file wrapping Call,
   // It seems unnecessary in this case, so we get the updated states using this approach.
   const { callStatus, isScreenShareOn } = useSelector(callStatusSelector);
+
+  const mediaGalleryProps = useSelector(mediaGallerySelector);
+  const mediaGalleryHandlers = useHandlers(MediaGallery);
 
   const adapter = useAdapter();
 
@@ -67,7 +72,7 @@ export const CallScreen = (props: CallScreenProps & ErrorHandlingProps): JSX.Ele
               callStatus === 'Connected' && (
                 <Stack styles={containerStyles} grow>
                   <Stack.Item grow styles={activeContainerClassName}>
-                    <MediaGallery />
+                    <MediaGallery {...mediaGalleryProps} {...mediaGalleryHandlers} />
                   </Stack.Item>
                 </Stack>
               )
