@@ -1,22 +1,22 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { AudioOptions, Call, HangUpOptions, JoinCallOptions } from '@azure/communication-calling';
+import { AudioOptions, Call, GroupLocator, HangUpOptions, JoinCallOptions } from '@azure/communication-calling';
 import { useCallback } from 'react';
-import { CommunicationUiErrorCode, CommunicationUiError } from '../types/CommunicationUiError';
-import { useCallingContext, useCallContext } from '../providers';
+import { CommunicationUiErrorCode, CommunicationUiError } from '../../../types/CommunicationUiError';
+import { useCallingContext, useCallContext } from '../../../providers';
 
-export type UseTeamsCallType = {
+export type UseGroupCallType = {
   leave: (hangupCallOptions: HangUpOptions) => Promise<void>;
-  join: (meetingLink: string, joinCallOptions?: JoinCallOptions) => Call;
+  join: (context: GroupLocator, joinCallOptions?: JoinCallOptions) => Call;
 };
 
-export const useTeamsCall = (): UseTeamsCallType => {
+export const useGroupCall = (): UseGroupCallType => {
   const { callAgent } = useCallingContext();
-  const { call, localVideoStream, isMicrophoneEnabled } = useCallContext();
+  const { call, setCall, localVideoStream, isMicrophoneEnabled } = useCallContext();
 
   const join = useCallback(
-    (meetingLink: string, joinCallOptions?: JoinCallOptions): Call => {
+    (context: GroupLocator, joinCallOptions?: JoinCallOptions): Call => {
       if (!callAgent) {
         throw new CommunicationUiError({
           message: 'CallAgent is undefined',
@@ -24,13 +24,16 @@ export const useTeamsCall = (): UseTeamsCallType => {
         });
       }
 
-      const audioOptions: AudioOptions = joinCallOptions?.audioOptions || { muted: !isMicrophoneEnabled };
-      const videoOptions = joinCallOptions?.videoOptions || {
-        localVideoStreams: localVideoStream ? [localVideoStream] : undefined
-      };
+      const audioOptions: AudioOptions = { muted: !isMicrophoneEnabled };
+      const videoOptions = { localVideoStreams: localVideoStream ? [localVideoStream] : undefined };
 
       try {
-        return callAgent.join({ meetingLink: meetingLink }, { videoOptions, audioOptions });
+        const call = callAgent.join(context, {
+          videoOptions: joinCallOptions?.videoOptions ?? videoOptions,
+          audioOptions: joinCallOptions?.audioOptions ?? audioOptions
+        });
+        setCall(call);
+        return call;
       } catch (error) {
         throw new CommunicationUiError({
           message: 'Error joining call',
@@ -39,6 +42,7 @@ export const useTeamsCall = (): UseTeamsCallType => {
         });
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [callAgent, isMicrophoneEnabled, localVideoStream]
   );
 
@@ -52,6 +56,7 @@ export const useTeamsCall = (): UseTeamsCallType => {
       }
       try {
         await call.hangUp(hangupCallOptions);
+        setCall(undefined);
       } catch (error) {
         throw new CommunicationUiError({
           message: 'Error hanging up call',
@@ -60,6 +65,7 @@ export const useTeamsCall = (): UseTeamsCallType => {
         });
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [call]
   );
 

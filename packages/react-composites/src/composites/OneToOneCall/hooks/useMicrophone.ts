@@ -2,8 +2,8 @@
 // Licensed under the MIT license.
 
 import { useCallback } from 'react';
-import { CommunicationUiErrorCode, CommunicationUiError } from '../types/CommunicationUiError';
-import { useCallContext, useCallingContext } from '../providers';
+import { CommunicationUiErrorCode, CommunicationUiError } from '../../../types/CommunicationUiError';
+import { useCallContext, useCallingContext } from '../../../providers';
 
 type UseMicrophoneType = {
   unmute: () => Promise<void>;

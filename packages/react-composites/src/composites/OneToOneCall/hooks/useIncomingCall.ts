@@ -2,7 +2,8 @@
 // Licensed under the MIT license.
 
 import { AcceptCallOptions, IncomingCall } from '@azure/communication-calling';
-import { useCallContext, useIncomingCallsContext } from '../providers';
+import { useCallContext } from '../../../providers';
+import { useIncomingCallsContext } from '../providers';
 
 export type UseIncomingCallType = {
   accept: (incomingCall: IncomingCall, acceptCallOptions?: AcceptCallOptions) => Promise<void>;

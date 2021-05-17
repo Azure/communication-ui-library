@@ -7,11 +7,11 @@ import {
   CreateViewOptions,
   VideoStreamRendererView
 } from '@azure/communication-calling';
-import { useCallContext } from '../providers';
+import { useCallContext } from '../../../providers';
 import { useEffect, useRef, useState } from 'react';
-import { CommunicationUiErrorCode, CommunicationUiError } from '../types/CommunicationUiError';
-import { useTriggerOnErrorCallback } from '../providers/ErrorProvider';
-import { propagateError } from '../utils/SDKUtils';
+import { CommunicationUiErrorCode, CommunicationUiError } from '../../../types/CommunicationUiError';
+import { useTriggerOnErrorCallback } from '../../../providers/ErrorProvider';
+import { propagateError } from '../../../utils/SDKUtils';
 
 export type UseLocalVideoStreamType = {
   render: HTMLElement | null;

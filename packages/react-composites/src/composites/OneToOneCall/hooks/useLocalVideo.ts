@@ -3,9 +3,9 @@
 
 import { LocalVideoStream, VideoDeviceInfo } from '@azure/communication-calling';
 import { useCallback } from 'react';
-import { CommunicationUiErrorCode, CommunicationUiError } from '../types/CommunicationUiError';
-import { useCallContext } from '../providers';
-import { areStreamsEqual } from '../utils';
+import { CommunicationUiErrorCode, CommunicationUiError } from '../../../types/CommunicationUiError';
+import { useCallContext } from '../../../providers';
+import { areStreamsEqual } from '../utils/SDKUtils';
 
 export type useLocalVideoType = {
   startLocalVideo: (videoDeviceInfo: VideoDeviceInfo) => Promise<void>;

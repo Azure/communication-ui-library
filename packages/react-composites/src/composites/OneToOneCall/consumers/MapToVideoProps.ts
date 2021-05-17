@@ -2,7 +2,8 @@
 // Licensed under the MIT license.
 
 import { LocalVideoStream, RemoteVideoStream, ScalingMode } from '@azure/communication-calling';
-import { useRemoteVideoStreamRenderer, useLocalVideoStreamRenderer } from '../hooks';
+import useLocalVideoStreamRenderer from '../hooks/useLocalVideoStreamRenderer';
+import useRemoteVideoStreamRenderer from '../hooks/useRemoteVideoStreamRenderer';
 
 export interface VideoContainerProps {
   isVideoReady: boolean;

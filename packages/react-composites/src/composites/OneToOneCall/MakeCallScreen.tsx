@@ -6,7 +6,8 @@ import { CallIcon, VideoCameraEmphasisIcon } from '@fluentui/react-icons-northst
 import copy from 'copy-to-clipboard';
 import React, { useState } from 'react';
 import { useCallContext } from '../../providers';
-import { useOutgoingCall, useSubscribeToDevicePermission } from '../../hooks';
+import { useOutgoingCall } from './hooks/useOutgoingCall';
+import useSubscribeToDevicePermission from './hooks/useSubscribeToDevicePermission';
 import {
   buttonIconStyle,
   buttonStackTokens,

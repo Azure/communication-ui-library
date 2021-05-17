@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { AudioDeviceInfo, DeviceManager } from '@azure/communication-calling';
-import { useCallingContext } from '../providers';
+import { useCallingContext } from '../../../providers';
 import { useEffect } from 'react';
 
 export default (): void => {

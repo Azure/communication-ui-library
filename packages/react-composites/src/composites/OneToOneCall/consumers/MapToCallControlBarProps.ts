@@ -4,16 +4,14 @@
 import { HangUpOptions } from '@azure/communication-calling';
 import { useCallContext, useCallingContext } from '../../../providers';
 import { CommunicationUiErrorCode, CommunicationUiError, DevicePermissionState } from '../../../types';
-import {
-  useSubscribeToDevicePermission,
-  useLocalVideo,
-  useMicrophone,
-  useScreenShare,
-  useSubscribeToVideoDeviceList,
-  useGroupCall
-} from '../../../hooks';
 
 import { useCallback } from 'react';
+import useSubscribeToDevicePermission from '../hooks/useSubscribeToDevicePermission';
+import useSubscribeToVideoDeviceList from '../hooks/useSubscribeToVideoDeviceList';
+import { useGroupCall } from '../hooks/useGroupCall';
+import { useMicrophone } from '../hooks/useMicrophone';
+import useLocalVideo from '../hooks/useLocalVideo';
+import useScreenShare from '../hooks/useScreenShare';
 
 export type CallControlBarContainerProps = {
   /** Determines icon for mic toggle button. */
