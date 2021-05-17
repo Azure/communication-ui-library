@@ -309,11 +309,6 @@ export type CommonProperties<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
 
-// @public
-export type CommonProperties_2<A, B> = {
-    [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
-}[keyof A & keyof B];
-
 // @public (undocumented)
 export type CommunicationIdentifierAsKey = string;
 
@@ -465,7 +460,7 @@ export const createDefaultCallingHandlersForComponent: <Props>(callClient: State
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions | undefined) => Promise<void>;
     onParticipantRemove: (userId: string) => void;
     onStartLocalVideo: () => Promise<void>;
-}, CommonProperties_2<{
+}, CommonProperties<{
     onHangUp: () => Promise<void>;
     onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
     onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
@@ -891,6 +886,9 @@ export interface SendBoxStylesProps extends BaseCustomStylesProps {
     systemMessage?: IStyle;
     textField?: IStyle;
 }
+
+// @public (undocumented)
+export const Sentinel = true;
 
 // @public
 export interface StatefulCallClient extends CallClient {
