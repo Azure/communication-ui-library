@@ -55,7 +55,7 @@ export const disabledVideoHint = mergeStyles({
 });
 
 export const videoHint = mergeStyles(disabledVideoHint, {
-  backgroundColor: '#605e5c',
+  backgroundColor: 'rgba(0, 0, 0, 0.5)',
   boxShadow: '0 0 1px 0 rgba(0,0,0,.5)',
   color: '#f3f2f1'
 });
