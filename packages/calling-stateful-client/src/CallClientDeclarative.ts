@@ -7,7 +7,7 @@ import { CallClientState, LocalVideoStream, RemoteVideoStream } from './CallClie
 import { CallContext } from './CallContext';
 import { callAgentDeclaratify } from './CallAgentDeclarative';
 import { InternalCallContext } from './InternalCallContext';
-import { startRenderVideo, stopRenderVideo } from './StreamUtils';
+import { createView, disposeView } from './StreamUtils';
 
 /**
  * Defines the methods that allow CallClient {@Link @azure/communication-calling#CallClient} to be used declaratively.
@@ -47,7 +47,7 @@ export interface StatefulCallClient extends CallClient {
    *   non-state-based stream reached capacity, or invalid combination of parameters was provided (such as
    *   RemoteVideoStream with undefined callId).
    */
-  startRenderVideo(
+  createView(
     callId: string | undefined,
     stream: LocalVideoStream | RemoteVideoStream,
     options?: CreateViewOptions
@@ -69,7 +69,7 @@ export interface StatefulCallClient extends CallClient {
    * @throws - Throws error when stream to stop is not found or invalid combination of parameters as provided (such as
    *   RemoteVideoStream with undefined callId).
    */
-  stopRenderVideo(callId: string | undefined, stream: LocalVideoStream | RemoteVideoStream): void;
+  disposeView(callId: string | undefined, stream: LocalVideoStream | RemoteVideoStream): void;
 }
 
 /**
@@ -156,20 +156,20 @@ export const createStatefulCallClient = (callClient: CallClient, userId: string)
     configurable: false,
     value: (handler: (state: CallClientState) => void) => context.offStateChange(handler)
   });
-  Object.defineProperty(callClient, 'startRenderVideo', {
+  Object.defineProperty(callClient, 'createView', {
     configurable: false,
     value: (
       callId: string | undefined,
       stream: LocalVideoStream | RemoteVideoStream,
       options?: CreateViewOptions
     ): Promise<void> => {
-      return startRenderVideo(context, internalContext, callId, stream, options);
+      return createView(context, internalContext, callId, stream, options);
     }
   });
-  Object.defineProperty(callClient, 'stopRenderVideo', {
+  Object.defineProperty(callClient, 'disposeView', {
     configurable: false,
     value: (callId: string | undefined, stream: LocalVideoStream | RemoteVideoStream): void => {
-      stopRenderVideo(context, internalContext, callId, stream);
+      disposeView(context, internalContext, callId, stream);
     }
   });
 

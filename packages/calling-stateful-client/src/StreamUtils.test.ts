@@ -15,10 +15,10 @@ import { CallContext } from './CallContext';
 import { InternalCallContext } from './InternalCallContext';
 import {
   MAX_UNPARENTED_VIEWS_LENGTH,
-  startRenderVideo,
-  stopRenderVideo,
-  stopRenderVideoAll,
-  stopRenderVideoAllCalls
+  createView,
+  disposeView,
+  disposeAllViewsFromCall,
+  disposeAllViews
 } from './StreamUtils';
 import { createMockRemoteVideoStream } from './TestUtils';
 
@@ -132,14 +132,14 @@ function addSdkLocalStream(internalContext: InternalCallContext, callId: string)
 }
 
 describe('stream utils', () => {
-  test('stores the correct state and start rendering when startRenderVideo is called on remote stream', async () => {
+  test('stores the correct state and start rendering when createView is called on remote stream', async () => {
     const { context, internalContext } = createContexts();
     const call = createMockCall(mockCallId);
     const remoteVideoStream = addMockRemoteStreamAndParticipant(call, mockParticipantKey, mockStreamId);
     context.setCall(call);
     addSdkRemoteStream(internalContext, mockCallId, mockParticipantKey, mockStreamId);
 
-    await startRenderVideo(context, internalContext, mockCallId, remoteVideoStream);
+    await createView(context, internalContext, mockCallId, remoteVideoStream);
 
     expect(internalContext.getRemoteParticipantKey(mockCallId, mockStreamId)).toBe(mockParticipantKey);
     expect(internalContext.getRemoteVideoStreamRenderer(mockCallId, mockStreamId)).toBeDefined();
@@ -152,16 +152,16 @@ describe('stream utils', () => {
     ).toBeDefined();
   });
 
-  test('cleans up state and stop rendering when stopRenderVideo is called on remote stream', async () => {
+  test('cleans up state and stop rendering when disposeView is called on remote stream', async () => {
     const { context, internalContext } = createContexts();
     const call = createMockCall(mockCallId);
     const remoteVideoStream = addMockRemoteStreamAndParticipant(call, mockParticipantKey, mockStreamId);
     context.setCall(call);
     addSdkRemoteStream(internalContext, mockCallId, mockParticipantKey, mockStreamId);
 
-    await startRenderVideo(context, internalContext, mockCallId, remoteVideoStream);
+    await createView(context, internalContext, mockCallId, remoteVideoStream);
 
-    stopRenderVideo(context, internalContext, mockCallId, remoteVideoStream);
+    disposeView(context, internalContext, mockCallId, remoteVideoStream);
 
     expect(internalContext.getRemoteVideoStreamRenderer(mockCallId, mockStreamId)).not.toBeDefined();
     expect(
@@ -173,7 +173,7 @@ describe('stream utils', () => {
     ).not.toBeDefined();
   });
 
-  test('cleans up state and stop rendering when stopRenderVideoAll is called on multiple remote streams', async () => {
+  test('cleans up state and stop rendering when disposeAllViewsFromCall is called on multiple remote streams', async () => {
     const { context, internalContext } = createContexts();
     const call = createMockCall(mockCallId);
     const remoteVideoStream = addMockRemoteStreamAndParticipant(call, mockParticipantKey, mockStreamId);
@@ -182,8 +182,8 @@ describe('stream utils', () => {
     addSdkRemoteStream(internalContext, mockCallId, mockParticipantKey, mockStreamId);
     addSdkRemoteStream(internalContext, mockCallId, mockParticipantKey2, mockStreamId2);
 
-    await startRenderVideo(context, internalContext, mockCallId, remoteVideoStream);
-    await startRenderVideo(context, internalContext, mockCallId, remoteVideoStream2);
+    await createView(context, internalContext, mockCallId, remoteVideoStream);
+    await createView(context, internalContext, mockCallId, remoteVideoStream2);
 
     expect(internalContext.getRemoteParticipantKey(mockCallId, mockStreamId)).toBe(mockParticipantKey);
     expect(internalContext.getRemoteParticipantKey(mockCallId, mockStreamId2)).toBe(mockParticipantKey2);
@@ -204,7 +204,7 @@ describe('stream utils', () => {
         ?.videoStreams.get(mockStreamId2)?.videoStreamRendererView
     ).toBeDefined();
 
-    stopRenderVideoAll(context, internalContext, mockCallId);
+    disposeAllViewsFromCall(context, internalContext, mockCallId);
 
     expect(internalContext.getRemoteVideoStreamRenderer(mockCallId, mockStreamId)).not.toBeDefined();
     expect(internalContext.getRemoteVideoStreamRenderer(mockCallId, mockStreamId2)).not.toBeDefined();
@@ -224,7 +224,7 @@ describe('stream utils', () => {
     ).not.toBeDefined();
   });
 
-  test('cleans up state and stop rendering if stopRenderVideoAllCalls called on multiple remote streams', async () => {
+  test('cleans up state and stop rendering if disposeAllViews called on multiple remote streams', async () => {
     const { context, internalContext } = createContexts();
     const call = createMockCall(mockCallId);
     const remoteVideoStream = addMockRemoteStreamAndParticipant(call, mockParticipantKey, mockStreamId);
@@ -235,8 +235,8 @@ describe('stream utils', () => {
     addSdkRemoteStream(internalContext, mockCallId, mockParticipantKey, mockStreamId);
     addSdkRemoteStream(internalContext, mockCallId2, mockParticipantKey2, mockStreamId2);
 
-    await startRenderVideo(context, internalContext, mockCallId, remoteVideoStream);
-    await startRenderVideo(context, internalContext, mockCallId2, remoteVideoStream2);
+    await createView(context, internalContext, mockCallId, remoteVideoStream);
+    await createView(context, internalContext, mockCallId2, remoteVideoStream2);
 
     expect(internalContext.getRemoteParticipantKey(mockCallId, mockStreamId)).toBe(mockParticipantKey);
     expect(internalContext.getRemoteParticipantKey(mockCallId2, mockStreamId2)).toBe(mockParticipantKey2);
@@ -257,7 +257,7 @@ describe('stream utils', () => {
         ?.videoStreams.get(mockStreamId2)?.videoStreamRendererView
     ).toBeDefined();
 
-    stopRenderVideoAllCalls(context, internalContext);
+    disposeAllViews(context, internalContext);
 
     expect(internalContext.getRemoteVideoStreamRenderer(mockCallId, mockStreamId)).not.toBeDefined();
     expect(internalContext.getRemoteVideoStreamRenderer(mockCallId2, mockStreamId2)).not.toBeDefined();
@@ -277,30 +277,30 @@ describe('stream utils', () => {
     ).not.toBeDefined();
   });
 
-  test('stores the correct state and start rendering when startRenderVideo is called on local stream', async () => {
+  test('stores the correct state and start rendering when createView is called on local stream', async () => {
     const { context, internalContext } = createContexts();
     const call = createMockCall(mockCallId);
     addMockLocalStream(call);
     context.setCall(call);
     addSdkLocalStream(internalContext, mockCallId);
 
-    await startRenderVideo(context, internalContext, mockCallId, {} as LocalVideoStream);
+    await createView(context, internalContext, mockCallId, {} as LocalVideoStream);
 
     expect(internalContext.getLocalVideoStream(mockCallId)).toBeDefined();
     expect(internalContext.getLocalVideoStreamRenderer(mockCallId)).toBeDefined();
     expect(context.getState().calls.get(mockCallId)?.localVideoStreams[0].videoStreamRendererView).toBeDefined();
   });
 
-  test('cleans up state and stop rendering when stopRenderVideo is called on remote stream', async () => {
+  test('cleans up state and stop rendering when disposeView is called on remote stream', async () => {
     const { context, internalContext } = createContexts();
     const call = createMockCall(mockCallId);
     addMockLocalStream(call);
     context.setCall(call);
     addSdkLocalStream(internalContext, mockCallId);
 
-    await startRenderVideo(context, internalContext, mockCallId, {} as LocalVideoStream);
+    await createView(context, internalContext, mockCallId, {} as LocalVideoStream);
 
-    stopRenderVideo(context, internalContext, mockCallId, {} as LocalVideoStream);
+    disposeView(context, internalContext, mockCallId, {} as LocalVideoStream);
 
     expect(internalContext.getLocalVideoStreamRenderer(mockCallId)).not.toBeDefined();
     expect(context.getState().calls.get(mockCallId)?.localVideoStreams[0].videoStreamRendererView).not.toBeDefined();
@@ -308,7 +308,7 @@ describe('stream utils', () => {
 
   test('is able to render LocalVideoStream not tied to a call and store in unparented state', async () => {
     const { context, internalContext } = createContexts();
-    await startRenderVideo(context, internalContext, undefined, {
+    await createView(context, internalContext, undefined, {
       source: { name: 'a', id: 'a', deviceType: 'Unknown' }
     } as LocalVideoStream);
     expect(internalContext.getUnparentedStreamAndRenderer(0)).toBeDefined();
@@ -321,8 +321,8 @@ describe('stream utils', () => {
       source: { name: 'a', id: 'a', deviceType: 'Unknown' }
     } as LocalVideoStream;
 
-    await startRenderVideo(context, internalContext, undefined, localVideoStream);
-    stopRenderVideo(context, internalContext, undefined, localVideoStream);
+    await createView(context, internalContext, undefined, localVideoStream);
+    disposeView(context, internalContext, undefined, localVideoStream);
 
     expect(internalContext.getUnparentedStreamAndRenderer(0)).not.toBeDefined();
     expect(context.getState().deviceManager.unparentedViews[0]).not.toBeDefined();
@@ -339,8 +339,8 @@ describe('stream utils', () => {
       mediaStreamType: 'Video'
     } as LocalVideoStream;
 
-    await startRenderVideo(context, internalContext, undefined, differentReferenceLocalVideoStream);
-    stopRenderVideo(context, internalContext, undefined, localVideoStream);
+    await createView(context, internalContext, undefined, differentReferenceLocalVideoStream);
+    disposeView(context, internalContext, undefined, localVideoStream);
 
     expect(internalContext.getUnparentedStreamAndRenderer(0)).not.toBeDefined();
     expect(context.getState().deviceManager.unparentedViews[0]).not.toBeDefined();
@@ -357,10 +357,10 @@ describe('stream utils', () => {
       mediaStreamType: 'Video'
     } as LocalVideoStream;
 
-    await startRenderVideo(context, internalContext, undefined, localVideoStream);
+    await createView(context, internalContext, undefined, localVideoStream);
     let gotException = false;
     try {
-      stopRenderVideo(context, internalContext, undefined, incorrectVideoStream);
+      disposeView(context, internalContext, undefined, incorrectVideoStream);
     } catch (e) {
       gotException = true;
     }
@@ -380,7 +380,7 @@ describe('stream utils', () => {
         mediaStreamType: 'Video'
       } as LocalVideoStream;
       try {
-        await startRenderVideo(context, internalContext, undefined, localVideoStream);
+        await createView(context, internalContext, undefined, localVideoStream);
       } catch (e) {
         gotException = true;
       }

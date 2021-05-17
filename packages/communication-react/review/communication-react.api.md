@@ -337,7 +337,9 @@ export enum CommunicationUiErrorCode {
     // (undocumented)
     CREATE_CHAT_THREAD_CLIENT_ERROR = 10,
     // (undocumented)
-    DISPOSE_CALL_AGENT_ERROR = 32,
+    CREATE_DEVICE_MANAGER_ERROR = 32,
+    // (undocumented)
+    DISPOSE_CALL_AGENT_ERROR = 33,
     // (undocumented)
     FORBIDDEN_ERROR = 3,
     // (undocumented)
@@ -351,9 +353,9 @@ export enum CommunicationUiErrorCode {
     // (undocumented)
     INTERNAL_SERVER_ERROR = 6,
     // (undocumented)
-    JOIN_CALL_ERROR = 33,
+    JOIN_CALL_ERROR = 34,
     // (undocumented)
-    LEAVE_CALL_ERROR = 34,
+    LEAVE_CALL_ERROR = 35,
     // (undocumented)
     MESSAGE_EXCEEDED_RETRY_ERROR = 8,
     // (undocumented)
@@ -446,6 +448,7 @@ export const createDefaultCallingHandlers: (callClient: StatefulCallClient, call
     onCreateLocalStreamView: (options?: VideoStreamOptions | undefined) => Promise<void>;
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions | undefined) => Promise<void>;
     onParticipantRemove: (userId: string) => void;
+    onStartLocalVideo: () => Promise<void>;
 };
 
 // @public
@@ -461,6 +464,7 @@ export const createDefaultCallingHandlersForComponent: <Props>(callClient: State
     onCreateLocalStreamView: (options?: VideoStreamOptions | undefined) => Promise<void>;
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions | undefined) => Promise<void>;
     onParticipantRemove: (userId: string) => void;
+    onStartLocalVideo: () => Promise<void>;
 }, CommonProperties_2<{
     onHangUp: () => Promise<void>;
     onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
@@ -473,6 +477,7 @@ export const createDefaultCallingHandlersForComponent: <Props>(callClient: State
     onCreateLocalStreamView: (options?: VideoStreamOptions | undefined) => Promise<void>;
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions | undefined) => Promise<void>;
     onParticipantRemove: (userId: string) => void;
+    onStartLocalVideo: () => Promise<void>;
 }, Props>>;
 
 // @public (undocumented)
@@ -642,6 +647,13 @@ export interface LocalVideoStream {
     source: VideoDeviceInfo;
     videoStreamRendererView?: VideoStreamRendererView | undefined;
 }
+
+// @public (undocumented)
+export const mediaGallerySelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
+    isVideoStreamOn: boolean;
+}, (res: Call | undefined) => {
+    isVideoStreamOn: boolean;
+}>;
 
 // @public
 export const memoizeFnAll: <KeyT, ArgsT extends any[], FnRetT, CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>>(fnToMemoize: FunctionWithKey<KeyT, ArgsT, FnRetT>, shouldCacheUpdate?: (args1: any, args2: any) => boolean) => (callback: CallBackT) => FnRetT[];
@@ -882,11 +894,11 @@ export interface SendBoxStylesProps extends BaseCustomStylesProps {
 
 // @public
 export interface StatefulCallClient extends CallClient {
+    createView(callId: string | undefined, stream: LocalVideoStream | RemoteVideoStream, options?: CreateViewOptions): Promise<void>;
+    disposeView(callId: string | undefined, stream: LocalVideoStream | RemoteVideoStream): void;
     offStateChange(handler: (state: CallClientState) => void): void;
     onStateChange(handler: (state: CallClientState) => void): void;
-    startRenderVideo(callId: string | undefined, stream: LocalVideoStream | RemoteVideoStream, options?: CreateViewOptions): Promise<void>;
     state: CallClientState;
-    stopRenderVideo(callId: string | undefined, stream: LocalVideoStream | RemoteVideoStream): void;
 }
 
 // @public (undocumented)
