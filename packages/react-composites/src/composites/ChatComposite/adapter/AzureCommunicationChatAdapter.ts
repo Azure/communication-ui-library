@@ -86,14 +86,14 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.chatClient.onStateChange(onStateChange);
   }
 
-  updateAllParticipants = async (): Promise<void> => {
+  hydrate = async (): Promise<void> => {
     try {
-      const tp = await this.chatThreadClient.getProperties();
-      console.log('Hydrated chat thread properties', tp);
+      await this.chatThreadClient.getProperties();
     } catch (e) {
       console.log(e);
     }
 
+    // Fetch all participants who joined before the local user.
     try {
       for await (const _page of this.chatThreadClient.listParticipants().byPage({
         // Fetch 100 participants per page by default.

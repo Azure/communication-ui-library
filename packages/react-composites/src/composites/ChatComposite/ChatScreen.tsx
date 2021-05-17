@@ -28,10 +28,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   const adapter = useAdapter();
 
-  // This code gets all participants who joined the chat earlier than the current user.
-  // We need to do this to update the adapter's state.
   useEffect(() => {
-    adapter.updateAllParticipants();
+    adapter.hydrate();
   }, [adapter]);
 
   const messageThreadProps = usePropsFor(MessageThread);
@@ -70,7 +68,7 @@ type HeaderProps = {
   topic: string;
 };
 
-export const ChatHeader = (props: HeaderProps): JSX.Element => {
+const ChatHeader = (props: HeaderProps): JSX.Element => {
   return (
     <Stack className={chatHeaderContainerStyle} horizontal>
       <Stack.Item align="center" style={{ minWidth: '12.5rem' }}>
