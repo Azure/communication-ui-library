@@ -3,17 +3,17 @@
 
 import { Label, Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
-import { disabledVideoHint, gridStyle, videoHint, videoTileStyle } from './styles/VideoGallery.styles';
 import {
-  VideoGalleryRemoteParticipant,
-  VideoGalleryLocalParticipant,
   BaseCustomStylesProps,
+  VideoGalleryLocalParticipant,
+  VideoGalleryRemoteParticipant,
   VideoStreamOptions
 } from '../types';
 import { GridLayout } from './GridLayout';
 import { StreamMedia } from './StreamMedia';
-import { VideoTile } from './VideoTile';
+import { disabledVideoHint, gridStyle, videoHint, videoTileStyle } from './styles/VideoGallery.styles';
 import { memoizeFnAll } from './utils/memoizeFnAll';
+import { VideoTile } from './VideoTile';
 
 export interface VideoGalleryProps {
   styles?: BaseCustomStylesProps;
