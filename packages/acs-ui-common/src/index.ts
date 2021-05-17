@@ -5,4 +5,4 @@
 // because the generated javascript files are empty.
 export const MakeNPMHappy = true;
 
-export * from './selectors';
+export type { CommonProperties } from './selectors';

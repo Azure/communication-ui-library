@@ -10,6 +10,7 @@ import { Call as Call_2 } from 'calling-stateful-client';
 import { CallAgent } from '@azure/communication-calling';
 import { CallClientState } from 'calling-stateful-client';
 import { CallParticipant } from 'react-components';
+import { CommonProperties } from 'acs-ui-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { DeviceManager } from 'calling-stateful-client';
 import { IncomingCall } from 'calling-stateful-client';
@@ -71,7 +72,20 @@ export const createDefaultCallingHandlersForComponent: <Props>(callClient: State
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions | undefined) => Promise<void>;
     onParticipantRemove: (userId: string) => void;
     onStartLocalVideo: () => Promise<void>;
-}, any>;
+}, CommonProperties<{
+    onHangUp: () => Promise<void>;
+    onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
+    onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
+    onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
+    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions | undefined) => Call | undefined;
+    onToggleCamera: () => Promise<void>;
+    onToggleMicrophone: () => Promise<void>;
+    onToggleScreenShare: () => Promise<void>;
+    onCreateLocalStreamView: (options?: VideoStreamOptions | undefined) => Promise<void>;
+    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions | undefined) => Promise<void>;
+    onParticipantRemove: (userId: string) => void;
+    onStartLocalVideo: () => Promise<void>;
+}, Props>>;
 
 // @public (undocumented)
 export type DefaultCallingHandlers = ReturnType<typeof createDefaultCallingHandlers>;
