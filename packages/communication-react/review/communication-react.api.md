@@ -644,6 +644,9 @@ export interface LocalVideoStream {
 }
 
 // @public (undocumented)
+export const MakeNPMHappy = true;
+
+// @public (undocumented)
 export const mediaGallerySelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     isVideoStreamOn: boolean;
 }, (res: Call | undefined) => {
@@ -886,9 +889,6 @@ export interface SendBoxStylesProps extends BaseCustomStylesProps {
     systemMessage?: IStyle;
     textField?: IStyle;
 }
-
-// @public (undocumented)
-export const Sentinel = true;
 
 // @public
 export interface StatefulCallClient extends CallClient {
