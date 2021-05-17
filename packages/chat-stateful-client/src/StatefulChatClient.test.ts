@@ -47,7 +47,10 @@ const emptyAsyncFunctionWithResponse = async (): Promise<any> => {
   return { _response: {} as any };
 };
 
-const eventHandlers = { value: {} };
+const mockEventHandlersRef = { value: {} };
+beforeEach(() => {
+  mockEventHandlersRef.value = {};
+});
 
 function createMockChatClient(): ChatClient {
   const mockChatClient: ChatClient = {} as any;
@@ -72,12 +75,12 @@ function createMockChatClient(): ChatClient {
   };
 
   mockChatClient.on = ((event: Parameters<ChatClient['on']>[0], listener: (e: Event) => void) => {
-    eventHandlers.value[event] = listener;
+    mockEventHandlersRef.value[event] = listener;
   }) as any;
 
   mockChatClient.off = ((event: Parameters<ChatClient['on']>[0], listener: (e: Event) => void) => {
-    if (eventHandlers.value[event] === listener) {
-      eventHandlers.value[event] = undefined;
+    if (mockEventHandlersRef.value[event] === listener) {
+      mockEventHandlersRef.value[event] = undefined;
     }
   }) as any;
 
@@ -101,7 +104,7 @@ type StatefulChatClientWithEventTrigger = StatefulChatClient & {
 };
 
 function createStatefulChatClientMock(): StatefulChatClientWithEventTrigger {
-  eventHandlers.value = {};
+  mockEventHandlersRef.value = {};
   const declarativeClient = createStatefulChatClient(
     {
       displayName: '',
@@ -113,7 +116,7 @@ function createStatefulChatClientMock(): StatefulChatClientWithEventTrigger {
 
   Object.defineProperty(declarativeClient, 'triggerEvent', {
     value: async (eventName: string, e: any): Promise<void> => {
-      const handler = eventHandlers.value[eventName];
+      const handler = mockEventHandlersRef.value[eventName];
       if (handler !== undefined) {
         await handler(e);
       }

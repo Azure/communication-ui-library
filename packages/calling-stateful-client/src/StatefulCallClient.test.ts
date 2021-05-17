@@ -17,7 +17,7 @@ import {
 import { createStatefulCallClient, StatefulCallClient } from './StatefulCallClient';
 import { getRemoteParticipantKey } from './Converter';
 import {
-  setMockEmitter,
+  addMockEmitter,
   createMockApiFeatures,
   createMockCall,
   createMockRemoteParticipant,
@@ -84,7 +84,7 @@ interface TestData {
 
 function createClientAndAgentMocks(testData: TestData): void {
   mockCallAgent = { calls: [] as ReadonlyArray<Call>, displayName: mockDisplayName } as MockCallAgent;
-  setMockEmitter(mockCallAgent);
+  addMockEmitter(mockCallAgent);
   testData.mockCallAgent = mockCallAgent;
   testData.mockStatefulCallClient = createStatefulCallClient(mockUserId);
 }
@@ -818,7 +818,7 @@ describe('Stateful call client', () => {
     createClientAndAgentMocks(testData);
     const mockCall = createMockCall(mockCallId);
     const featureCache = new Map<any, any>();
-    featureCache.set(Features.Recording, setMockEmitter({ name: 'Default', isRecordingActive: true }));
+    featureCache.set(Features.Recording, addMockEmitter({ name: 'Default', isRecordingActive: true }));
     mockCall.api = createMockApiFeatures(featureCache);
     await createMockCallAndEmitCallsUpdated(testData, undefined, mockCall);
 
@@ -834,7 +834,7 @@ describe('Stateful call client', () => {
     createClientAndAgentMocks(testData);
     const mockCall = createMockCall(mockCallId);
     const featureCache = new Map<any, any>();
-    featureCache.set(Features.Transcription, setMockEmitter({ name: 'Default', isTranscriptionActive: true }));
+    featureCache.set(Features.Transcription, addMockEmitter({ name: 'Default', isTranscriptionActive: true }));
     mockCall.api = createMockApiFeatures(featureCache);
     await createMockCallAndEmitCallsUpdated(testData, undefined, mockCall);
 
@@ -850,7 +850,7 @@ describe('Stateful call client', () => {
     createClientAndAgentMocks(testData);
     const mockCall = createMockCall(mockCallId);
     const featureCache = new Map<any, any>();
-    featureCache.set(Features.Recording, setMockEmitter({ name: 'Default', isRecordingActive: true }));
+    featureCache.set(Features.Recording, addMockEmitter({ name: 'Default', isRecordingActive: true }));
     mockCall.api = createMockApiFeatures(featureCache);
     await createMockCallAndEmitCallsUpdated(testData, undefined, mockCall);
 
@@ -876,7 +876,7 @@ describe('Stateful call client', () => {
     createClientAndAgentMocks(testData);
     const mockCall = createMockCall(mockCallId);
     const featureCache = new Map<any, any>();
-    featureCache.set(Features.Transcription, setMockEmitter({ name: 'Default', isTranscriptionActive: true }));
+    featureCache.set(Features.Transcription, addMockEmitter({ name: 'Default', isTranscriptionActive: true }));
     mockCall.api = createMockApiFeatures(featureCache);
     await createMockCallAndEmitCallsUpdated(testData, undefined, mockCall);
 
@@ -904,7 +904,7 @@ describe('Stateful call client', () => {
     createClientAndAgentMocks(testData);
     const mockCall = createMockCall(mockCallId);
     const featureCache = new Map<any, any>();
-    featureCache.set(Features.Recording, setMockEmitter({ name: 'Default', isRecordingActive: true }));
+    featureCache.set(Features.Recording, addMockEmitter({ name: 'Default', isRecordingActive: true }));
     mockCall.api = createMockApiFeatures(featureCache);
     await createMockCallAndEmitCallsUpdated(testData, undefined, mockCall);
 
@@ -933,7 +933,7 @@ describe('Stateful call client', () => {
     createClientAndAgentMocks(testData);
     const mockCall = createMockCall(mockCallId);
     const featureCache = new Map<any, any>();
-    featureCache.set(Features.Transcription, setMockEmitter({ name: 'Default', isTranscriptionActive: true }));
+    featureCache.set(Features.Transcription, addMockEmitter({ name: 'Default', isTranscriptionActive: true }));
     mockCall.api = createMockApiFeatures(featureCache);
     await createMockCallAndEmitCallsUpdated(testData, undefined, mockCall);
 
@@ -959,7 +959,7 @@ describe('Stateful call client', () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
     const mockCall = createMockCall(mockCallId);
-    const transfer = setMockEmitter({ name: 'Default' });
+    const transfer = addMockEmitter({ name: 'Default' });
     const featureCache = new Map<any, any>();
     featureCache.set(Features.Transfer, transfer);
     mockCall.api = createMockApiFeatures(featureCache);
@@ -982,7 +982,7 @@ describe('Stateful call client', () => {
     createClientAndAgentMocks(testData);
     const mockCall = createMockCall(mockCallId);
     const featureCache = new Map<any, any>();
-    featureCache.set(Features.Transfer, setMockEmitter({ name: 'Default' }));
+    featureCache.set(Features.Transfer, addMockEmitter({ name: 'Default' }));
     mockCall.api = createMockApiFeatures(featureCache);
     await createMockCallAndEmitCallsUpdated(testData, undefined, mockCall);
 

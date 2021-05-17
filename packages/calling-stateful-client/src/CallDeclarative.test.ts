@@ -13,7 +13,7 @@ import { CallContext } from './CallContext';
 import { callDeclaratify, DeclarativeCall } from './CallDeclarative';
 import { convertSdkCallToDeclarativeCall } from './Converter';
 import {
-  setMockEmitter,
+  addMockEmitter,
   createMockApiFeatures,
   createMockCall,
   MockRecordingCallFeatureImpl,
@@ -26,7 +26,7 @@ jest.mock('@azure/communication-calling', () => {
   return {
     TransferCallFeature: {
       transfer: () => {
-        return setMockEmitter({ state: 'None' });
+        return addMockEmitter({ state: 'None' });
       }
     },
     Features: {
