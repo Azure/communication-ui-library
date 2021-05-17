@@ -3,10 +3,13 @@
 
 import { mergeStyles, Stack } from '@fluentui/react';
 import React, { useEffect } from 'react';
+import { ChatClientState } from 'chat-stateful-client';
+import { ChatBaseSelectorProps } from '@azure/acs-chat-selector';
 import { ErrorBar, MessageThread, ParticipantList, SendBox, TypingIndicator } from 'react-components';
 import { useAdapter } from './adapter/ChatAdapterProvider';
+import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
-import { chatContainer, chatWrapper } from './styles/Chat.styles';
+import { chatContainer, chatHeaderContainerStyle, chatWrapper, topicNameLabelStyle } from './styles/Chat.styles';
 
 export type ChatScreenProps = {
   sendBoxMaxLength?: number;
@@ -35,9 +38,11 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const participantListProps = usePropsFor(ParticipantList);
   const sendBoxProps = usePropsFor(SendBox);
   const typingIndicatorProps = usePropsFor(TypingIndicator);
+  const headerProps = useAdaptedSelector(getHeaderProps);
 
   return (
     <Stack className={chatContainer} grow>
+      <ChatHeader {...headerProps} />
       <Stack horizontal grow>
         <Stack className={chatWrapper} grow>
           <MessageThread
@@ -59,4 +64,24 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       </Stack>
     </Stack>
   );
+};
+
+type HeaderProps = {
+  topic: string;
+};
+
+export const ChatHeader = (props: HeaderProps): JSX.Element => {
+  return (
+    <Stack className={chatHeaderContainerStyle} horizontal>
+      <Stack.Item align="center" style={{ minWidth: '12.5rem' }}>
+        <div className={topicNameLabelStyle}>{props.topic}</div>
+      </Stack.Item>
+    </Stack>
+  );
+};
+
+const getHeaderProps = (state: ChatClientState, props: ChatBaseSelectorProps): HeaderProps => {
+  return {
+    topic: state.threads.get(props.threadId)?.properties?.topic || ''
+  };
 };
