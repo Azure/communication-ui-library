@@ -3,7 +3,7 @@
 
 import { ChatClient } from '@azure/communication-chat';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
-import { CommunicationIdentityClient } from '@azure/communication-identity';
+import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-identity';
 import React from 'react';
 
 import { CompositeConnectionParamsErrMessage } from '../../CompositeStringUtils';
@@ -14,7 +14,7 @@ export const addParrotBotToThread = async (
   resourceConnectionString: string,
   chatConfig: ChatConfig,
   messages: string[]
-): Promise<void> => {
+): Promise<CommunicationUserToken> => {
   const tokenClient = new CommunicationIdentityClient(resourceConnectionString);
   const bot = await tokenClient.createUserAndToken(['chat']);
 
@@ -26,6 +26,7 @@ export const addParrotBotToThread = async (
   });
 
   sendMessagesAsBot(bot.token, endpointUrl, chatConfig.threadId, messages);
+  return bot;
 };
 
 const sendMessagesAsBot = async (

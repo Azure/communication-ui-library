@@ -3,7 +3,7 @@
 
 import { mergeStyles } from '@fluentui/react';
 
-export const groupCallContainer = mergeStyles({
+export const callContainer = mergeStyles({
   height: '100%',
   width: '100%',
   overflow: 'auto',

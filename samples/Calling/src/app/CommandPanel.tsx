@@ -14,7 +14,7 @@ import { ThemeSelector } from 'app/theming/ThemeSelector';
 import { Footer } from './Footer';
 import { useHandlers } from './hooks/useHandlers';
 import { useSelector } from './hooks/useSelector';
-import { LocalDeviceSettingsComponent } from './LocalDeviceSettings';
+import { LocalDeviceSettings } from './LocalDeviceSettings';
 import { ParticipantList } from 'react-components';
 
 export enum CommandPanelTypes {
@@ -32,7 +32,7 @@ export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
   const participantListHandlers = useHandlers(ParticipantList);
 
   const options = useSelector(optionsButtonSelector, { callId: '' });
-  const handlers = useHandlers(LocalDeviceSettingsComponent);
+  const handlers = useHandlers(LocalDeviceSettings);
 
   return (
     <Stack styles={fullHeightStyles} tokens={{ childrenGap: '1.5rem' }}>
@@ -52,7 +52,7 @@ export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
       {props.selectedPane === CommandPanelTypes.Settings && (
         <Stack.Item>
           <div className={settingsContainerStyle}>
-            <LocalDeviceSettingsComponent
+            <LocalDeviceSettings
               {...options}
               onSelectCamera={handlers.onSelectCamera}
               onSelectMicrophone={handlers.onSelectMicrophone}

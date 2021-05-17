@@ -19,6 +19,7 @@ export type {
   SystemMessage,
   SystemMessagePayload,
   CommunicationParticipant,
+  CallParticipant,
   VideoStreamOptions,
   VideoGalleryParticipant,
   VideoGalleryStream,

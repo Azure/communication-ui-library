@@ -4,7 +4,6 @@
 export * from './ConnectContext';
 
 export * from './MapToCallProps';
-export * from './MapToCallConfigurationProps';
 export * from './MapToVideoProps';
 export * from './MapToLocalDeviceSettingsProps';
 
