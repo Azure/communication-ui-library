@@ -132,8 +132,10 @@ export const localPreviewSelector: reselect.OutputSelector<callingDeclarative.Ca
 // @public (undocumented)
 export const mediaGallerySelector: reselect.OutputParametricSelector<callingDeclarative.CallClientState, CallingBaseSelectorProps, {
     isCameraChecked: boolean;
+    isVideoStreamOn: boolean;
 }, (res1: callingDeclarative.Call | undefined, res2: callingDeclarative.DeviceManager) => {
     isCameraChecked: boolean;
+    isVideoStreamOn: boolean;
 }>;
 
 // @public

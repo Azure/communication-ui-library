@@ -13,6 +13,7 @@ const VideoGalleryStyles = {
 };
 
 export interface MediaGalleryProps {
+  isVideoStreamOn?: boolean;
   isCameraChecked?: boolean;
   isMicrophoneChecked?: boolean;
   onStartLocalVideo: () => Promise<void>;
@@ -23,7 +24,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const remoteParticipants = videoGalleryProps.remoteParticipants;
 
   useEffect(() => {
-    if (props.isCameraChecked) {
+    if (props.isCameraChecked && !props.isVideoStreamOn) {
       props.onStartLocalVideo();
     }
   }, [props]);
