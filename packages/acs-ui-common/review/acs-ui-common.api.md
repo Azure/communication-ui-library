@@ -10,7 +10,7 @@ export type CommonProperties<A, B> = {
 }[keyof A & keyof B];
 
 // @public (undocumented)
-export const Sentinel = true;
+export const MakeNPMHappy = true;
 
 
 // (No @packageDocumentation comment for this package)

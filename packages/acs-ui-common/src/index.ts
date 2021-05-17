@@ -3,6 +3,6 @@
 
 // This package (currently) only exports abstract types. This makes npm unhappy
 // because the generated javascript files are empty.
-export const Sentinel = true;
+export const MakeNPMHappy = true;
 
 export * from './selectors';
