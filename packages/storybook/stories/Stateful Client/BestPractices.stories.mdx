@@ -9,17 +9,17 @@ We are sharing some of our recommended best practices when handling state with A
 
 ## Use the stateful clients
 
-Managing the complex state of a calling or chat sesion can be complex. This was a complex problem we found we were in and we think many of our developer community
+Managing the complex state of a calling or chat sesion can be challenging. This was a complex problem we found we were in and we think many of our developer community
 will run into this challenge themselves. We wanted to find a convenient way to store this information on the client in a way that plays nicely with our components we are offering.
 By using the stateful client for calling or chat, you are on our recommended path for powering your own communications experience using Azure Communication Services.
 
 ## Use usePropsFor
 
-If you are using our provided UI Components, usePropsFor will help you get integrated with the underlying functionality quickly. This provides a series of properties our
+If you are using our provided UI Components, `usePropsFor` will help you get integrated with the underlying functionality quickly. This provides a series of properties our
 provided components are expecting from the stateful client to render an experience your users will be expecting. This is the fastest way to get your experience up and running with Azure Communication Services.
 
 ## You can use your own UI components
 
-Today you can use useSelector to connect your own components to create your own experiences! We use useSelector under the hood when you leverage our usePropsFor hook.
+Today you can use `useSelector` to connect your own components to create your own experiences! We use `useSelector` under the hood when you leverage our `usePropsFor` hook.
 We wanted to ensure that developers wanting to create custom components had the same development path that we were using as well. Using this development path allows
 you to start on the path that we use as well to create amazing components.

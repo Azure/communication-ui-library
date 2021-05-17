@@ -13,7 +13,7 @@ Stateful clients are agnostic to any specific state management framework.
 
 ## Component Binding with Stateful Clients
 
-To make it simpler to connect the stateful client with UI Components, the UI Library exposes helpers to generate props in the form of selectors and usePropsFor.
+To make it simpler to connect the stateful client with UI Components, the UI Library exposes helpers to generate props in the form of `useSelectors` and `usePropsFor`.
 Selectors expose out data from the client state. Handlers provide default methods to handle actions from the UI Components and pass them to the stateful clients.
 These helpers aid in extracting the correct set of props required for different UI Components.
 They expose both data for the UI Components to render such as a message list or a participants remote video, and default handlers for UI Components action such as sending a message.
