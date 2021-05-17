@@ -45,11 +45,14 @@ export const parameters = {
         'Localization',
         STATEFUL_CLIENT_PREFIX,
         [
-          'What is it',
+          'Overview',
           'Best Practices',
-          'Handlers',
-          'Selectors',
-          'FAQ',
+          'React Hooks',
+          [
+            'Setting up',
+            'UsePropsFor',
+            'UseSelector'
+          ],
           'Reference'
         ],
         QUICKSTARTS_FOLDER_PREFIX,
