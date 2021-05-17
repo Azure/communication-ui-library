@@ -15,6 +15,8 @@ export interface ChatAdapter {
     // (undocumented)
     getState(): ChatState;
     // (undocumented)
+    hydrate(): Promise<void>;
+    // (undocumented)
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     // (undocumented)
     offStateChange(handler: (state: ChatState) => void): void;
@@ -36,8 +38,6 @@ export interface ChatAdapter {
     sendTypingIndicator(): Promise<void>;
     // (undocumented)
     setTopic(topicName: string): Promise<void>;
-    // (undocumented)
-    updateAllParticipants(): Promise<void>;
 }
 
 // @public (undocumented)
