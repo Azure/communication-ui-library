@@ -189,7 +189,8 @@ export const createDefaultCallingHandlers = memoizeOne(
       onToggleScreenShare,
       onCreateLocalStreamView,
       onCreateRemoteStreamView,
-      onParticipantRemove
+      onParticipantRemove,
+      onStartLocalVideo
     };
   }
 );

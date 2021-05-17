@@ -59,6 +59,7 @@ export const createDefaultCallingHandlers: (callClient: StatefulCallClient, call
     onCreateLocalStreamView: (options?: VideoStreamOptions | undefined) => Promise<void>;
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions | undefined) => Promise<void>;
     onParticipantRemove: (userId: string) => void;
+    onStartLocalVideo: () => Promise<void>;
 };
 
 // @public
@@ -74,6 +75,7 @@ export const createDefaultCallingHandlersForComponent: <Props>(callClient: State
     onCreateLocalStreamView: (options?: VideoStreamOptions | undefined) => Promise<void>;
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions | undefined) => Promise<void>;
     onParticipantRemove: (userId: string) => void;
+    onStartLocalVideo: () => Promise<void>;
 }, CommonProperties_2<{
     onHangUp: () => Promise<void>;
     onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
@@ -86,6 +88,7 @@ export const createDefaultCallingHandlersForComponent: <Props>(callClient: State
     onCreateLocalStreamView: (options?: VideoStreamOptions | undefined) => Promise<void>;
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions | undefined) => Promise<void>;
     onParticipantRemove: (userId: string) => void;
+    onStartLocalVideo: () => Promise<void>;
 }, Props>>;
 
 // @public (undocumented)
@@ -123,6 +126,13 @@ export const localPreviewSelector: reselect.OutputSelector<CallClientState, {
     videoStreamElement: HTMLElement | null;
 }, (res: DeviceManager) => {
     videoStreamElement: HTMLElement | null;
+}>;
+
+// @public (undocumented)
+export const mediaGallerySelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
+    isVideoStreamOn: boolean;
+}, (res: Call_2 | undefined) => {
+    isVideoStreamOn: boolean;
 }>;
 
 // @public
