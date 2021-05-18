@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "removed all Text or Label children of VideoTile component as displayName is now fully part of it ",
+  "comment": "removed all Text/Label children of VideoTile, also renamed local/remoteParticipantName to local/remoteParticipantDisplay name and removed label props from RemoteVideoTile ",
   "packageName": "react-composites",
   "email": "alcail@microsoft.com",
   "dependentChangeType": "patch"
