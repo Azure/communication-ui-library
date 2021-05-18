@@ -5,25 +5,17 @@ import { CallVideoOffIcon } from '@fluentui/react-icons-northstar';
 import { Stack, Text } from '@fluentui/react';
 import React from 'react';
 import { localPreviewContainerStyle, cameraOffLabelStyle, localPreviewTileStyle } from './styles/LocalPreview.styles';
-import { connectFuncsToContext, MapToErrorBarProps } from '../../consumers';
-import {
-  StreamMedia,
-  VideoTile,
-  ErrorBar as ErrorBarComponent,
-  MicrophoneButton,
-  ControlBar,
-  CameraButton
-} from 'react-components';
+import { StreamMedia, VideoTile, MicrophoneButton, ControlBar, CameraButton } from 'react-components';
 import { usePropsFor } from './hooks/usePropsFor';
 import { useSelector } from './hooks/useSelector';
 import { localPreviewSelector } from '@azure/acs-calling-selector';
+import { useCallClientContext } from '../../providers';
 
 export const LocalPreview = (): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
   const localPreviewProps = useSelector(localPreviewSelector);
-
-  const ErrorBar = connectFuncsToContext(ErrorBarComponent, MapToErrorBarProps);
+  const { setIsCallStartedWithCameraOn } = useCallClientContext();
 
   return (
     <Stack className={localPreviewContainerStyle}>
@@ -43,11 +35,16 @@ export const LocalPreview = (): JSX.Element => {
         }
       >
         <ControlBar layout="floatingBottom">
-          <CameraButton {...cameraButtonProps} />
+          <CameraButton
+            {...cameraButtonProps}
+            onToggleCamera={async () => {
+              setIsCallStartedWithCameraOn(!cameraButtonProps.checked);
+              cameraButtonProps.onToggleCamera();
+            }}
+          />
           <MicrophoneButton {...microphoneButtonProps} />
         </ControlBar>
       </VideoTile>
-      <ErrorBar />
     </Stack>
   );
 };

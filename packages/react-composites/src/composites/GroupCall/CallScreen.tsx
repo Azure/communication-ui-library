@@ -19,9 +19,12 @@ import { isInCall } from '../../utils/SDKUtils';
 import { ErrorHandlingProps } from '../../providers/ErrorProvider';
 import { ErrorBar as ErrorBarComponent } from 'react-components';
 import { CallControls } from './CallControls';
-import { useCall, useCallClient, useCallContext, useCallAgent } from '../../providers';
+import { useCall, useCallClient, useCallContext, useCallAgent, useCallClientContext } from '../../providers';
 import { CallClientState, StatefulCallClient } from 'calling-stateful-client';
 import { AudioOptions, CallState } from '@azure/communication-calling';
+import { useSelector } from './hooks/useSelector';
+import { mediaGallerySelector } from '@azure/acs-calling-selector';
+import { useHandlers } from './hooks/useHandlers';
 
 export const MINI_HEADER_WINDOW_WIDTH = 450;
 
@@ -42,9 +45,14 @@ export const CallScreen = (props: CallScreenProps & ErrorHandlingProps): JSX.Ele
   const { setCall, isMicrophoneEnabled } = useCallContext();
   const call = useCall();
   const callClient: StatefulCallClient = useCallClient();
+  const { isCallStartedWithCameraOn } = useCallClientContext();
+
   const [callState, setCallState] = useState<CallState | undefined>(undefined);
   const [isScreenSharingOn, setIsScreenSharingOn] = useState<boolean | undefined>(undefined);
   const [joinedCall, setJoinedCall] = useState<boolean>(false);
+
+  const mediaGalleryProps = useSelector(mediaGallerySelector);
+  const mediaGalleryHandlers = useHandlers(MediaGallery);
 
   // To use useProps to get these states, we need to create another file wrapping Call,
   // It seems unnecessary in this case, so we get the updated states using this approach.
@@ -99,7 +107,11 @@ export const CallScreen = (props: CallScreenProps & ErrorHandlingProps): JSX.Ele
               callState === 'Connected' && (
                 <Stack styles={containerStyles} grow>
                   <Stack.Item grow styles={activeContainerClassName}>
-                    <MediaGallery />
+                    <MediaGallery
+                      {...mediaGalleryProps}
+                      {...mediaGalleryHandlers}
+                      isCameraChecked={isCallStartedWithCameraOn}
+                    />
                   </Stack.Item>
                 </Stack>
               )
