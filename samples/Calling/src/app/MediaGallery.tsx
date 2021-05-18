@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useEffect, useMemo, useCallback } from 'react';
-import { VideoGallery, VideoGalleryRemoteParticipant } from 'react-components';
+import React, { useEffect, useMemo } from 'react';
+import { VideoGallery } from 'react-components';
 import { usePropsFor } from './hooks/usePropsFor';
 import { ScreenShare } from './ScreenShare';
 
@@ -24,7 +24,6 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const isScreenShareActive = useMemo(() => {
     return videoGalleryProps.screenShareParticipant !== undefined;
   }, [videoGalleryProps]);
-  const remoteParticipants = videoGalleryProps.remoteParticipants;
 
   useEffect(() => {
     if (props.isCameraChecked && !props.isVideoStreamOn) {
@@ -48,5 +47,5 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     );
   }, [videoGalleryProps]);
 
-  return isScreenShareActive() ? <ScreenShare {...videoGalleryProps} /> : VideoGalleryMemoized;
+  return isScreenShareActive ? <ScreenShare {...videoGalleryProps} /> : VideoGalleryMemoized;
 };
