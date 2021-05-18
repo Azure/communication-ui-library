@@ -7,7 +7,7 @@
 
 Azure Communication Services UI Library is a collection of JavaScript libraries that can be used to easily build fast, responsive communication web applications.
 
-We also have a number of samples to try out features and get your development kick started 🚀
+We have interactive storybook pages in our storybook📖 to try out features and get your development kick started 🚀.
 
 ## Getting Started
 
@@ -24,13 +24,7 @@ If you're wondering where to get started, here are a few scenarios to help you g
 
 ## Samples
 
-Check out our samples or deploy your own version of the sample to see how easy it is to get started.
-
-Sample | Description | Deploy to Azure | Run locally
------- | ----------- | ------ | ---------- |
-Chat | A group chat application you can invite your friends and colleagues to. | [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure-Samples%2Fcommunication-services-web-calling-hero%2Fmain%2Fdeploy%2Fazuredeploy.json) | [Chat instructions](./samples/Chat/README.md)
-Group Call | A group calling application you can invite your friends and colleagues to. | [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure-Samples%2Fcommunication-services-web-calling-hero%2Fmain%2Fdeploy%2Fazuredeploy.json) | [Calling instructions](./samples/Calling/README.md)
-One to One Call | A one-to-one calling application where you can make a direct call to a friend or colleague. | [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure-Samples%2Fcommunication-services-web-calling-hero%2Fmain%2Fdeploy%2Fazuredeploy.json) | [One-To-One Call instructions](./samples/OneToOne/README.md)
+🚧 We are doing some additional work to finalize our samples to use the package this repository generates but for now we suggest using storybook🚧. 
 
 ## Features and Benefits
 
