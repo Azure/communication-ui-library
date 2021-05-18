@@ -25,10 +25,12 @@
     "@azure/communication-chat": "1.0.0",
     "@azure/communication-common": "1.0.0",
     "@azure/communication-signaling": "1.0.0-beta.5",
-    "react": "^16.13.1",
     "react-components": "1.0.0-beta",
     "reselect": "~4.0.0",
     "memoize-one": "~5.1.1"
+  },
+  "peerDependencies": {
+    "react": "^16.13.1"
   },
   "devDependencies": {
     "@microsoft/api-documenter": "~7.12.11",
