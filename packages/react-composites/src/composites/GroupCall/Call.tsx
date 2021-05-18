@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallProvider, ErrorProvider } from '../../providers';
+import { CallAgentProvider, CallClientProvider, CallProvider, ErrorProvider } from '../../providers';
 import React, { useEffect, useState } from 'react';
 import { CallScreen } from './CallScreen';
 import { ConfigurationScreen } from './ConfigurationScreen';
@@ -11,7 +11,6 @@ import { callContainer } from './styles/Call.styles';
 import { Stack } from '@fluentui/react';
 import { CommunicationUiErrorInfo } from '../../types';
 import { v1 as createGUID } from 'uuid';
-import { CallingProvider } from '../OneToOneCall/providers/CallingProvider';
 
 export type CallCompositeProps = {
   /** Display name in the group call */
@@ -52,48 +51,46 @@ export const Call = (props: CallCompositeProps): JSX.Element => {
 
   return (
     <ErrorProvider onErrorCallback={onErrorCallback}>
-      <CallingProvider
+      <CallClientProvider
         token={token}
         displayName={displayName}
         callClientOptions={callClientOptions}
         refreshTokenCallback={refreshTokenCallback}
       >
-        <Stack className={callContainer} grow>
-          {(() => {
-            switch (page) {
-              case 'configuration': {
-                return (
-                  <CallProvider key={'configuration-call-provider-key'}>
-                    <ConfigurationScreen
-                      screenWidth={screenWidth}
-                      startCallHandler={(): void => setPage('call')}
-                      groupId={groupId}
-                    />
-                  </CallProvider>
-                );
+        <CallAgentProvider displayName={displayName} token={token}>
+          <Stack className={callContainer} grow>
+            {(() => {
+              switch (page) {
+                case 'configuration': {
+                  return (
+                    <CallProvider key={'configuration-call-provider-key'}>
+                      <ConfigurationScreen screenWidth={screenWidth} startCallHandler={(): void => setPage('call')} />
+                    </CallProvider>
+                  );
+                }
+                case 'call': {
+                  return (
+                    <CallProvider key={callProviderKey}>
+                      <CallScreen
+                        endCallHandler={(): void => {
+                          if (onEndCall) {
+                            onEndCall();
+                          } else {
+                            setPage('configuration');
+                            setCallProviderKey(createGUID());
+                          }
+                        }}
+                        screenWidth={screenWidth}
+                        groupId={groupId}
+                      />
+                    </CallProvider>
+                  );
+                }
               }
-              case 'call': {
-                return (
-                  <CallProvider key={callProviderKey}>
-                    <CallScreen
-                      endCallHandler={(): void => {
-                        if (onEndCall) {
-                          onEndCall();
-                        } else {
-                          setPage('configuration');
-                          setCallProviderKey(createGUID());
-                        }
-                      }}
-                      screenWidth={screenWidth}
-                      groupId={groupId}
-                    />
-                  </CallProvider>
-                );
-              }
-            }
-          })()}
-        </Stack>
-      </CallingProvider>
+            })()}
+          </Stack>
+        </CallAgentProvider>
+      </CallClientProvider>
     </ErrorProvider>
   );
 };

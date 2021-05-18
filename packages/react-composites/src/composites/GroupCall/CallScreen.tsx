@@ -39,7 +39,7 @@ export const CallScreen = (props: CallScreenProps & ErrorHandlingProps): JSX.Ele
   const ErrorBar = connectFuncsToContext(ErrorBarComponent, MapToErrorBarProps);
 
   const callAgent = useCallAgent();
-  const { setCall, localVideoStream, isMicrophoneEnabled } = useCallContext();
+  const { setCall, isMicrophoneEnabled } = useCallContext();
   const call = useCall();
   const callClient: StatefulCallClient = useCallClient();
   const [callState, setCallState] = useState<CallState | undefined>(undefined);
@@ -51,7 +51,6 @@ export const CallScreen = (props: CallScreenProps & ErrorHandlingProps): JSX.Ele
   useEffect(() => {
     const onStateChange = (state: CallClientState): void => {
       call?.id && setCallState(state.calls.get(call.id)?.state);
-      console.log(call?.id && state.calls.get(call.id)?.state);
       call?.id && setIsScreenSharingOn(state.calls.get(call.id)?.isScreenSharingOn);
     };
 
@@ -68,7 +67,7 @@ export const CallScreen = (props: CallScreenProps & ErrorHandlingProps): JSX.Ele
     } else {
       if (!isInCall(callState ?? 'None') && callAgent && !joinedCall) {
         const audioOptions: AudioOptions = { muted: !isMicrophoneEnabled };
-        const videoOptions = { localVideoStreams: localVideoStream ? [localVideoStream] : undefined };
+        const videoOptions = { localVideoStreams: undefined };
 
         const call = callAgent.join(
           {
@@ -83,7 +82,7 @@ export const CallScreen = (props: CallScreenProps & ErrorHandlingProps): JSX.Ele
         setJoinedCall(true);
       }
     }
-  }, [callState, groupId, callAgent, setCall, isMicrophoneEnabled, localVideoStream, joinedCall]);
+  }, [callState, groupId, callAgent, setCall, isMicrophoneEnabled, joinedCall]);
 
   return (
     <>

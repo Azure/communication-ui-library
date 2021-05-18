@@ -48,8 +48,8 @@ export const createDefaultCallingHandlers = memoizeOne(
       const callId = call?.id;
       if (!callId) return;
       if (call && call.localVideoStreams.find((s) => areStreamsEqual(s, stream))) {
-        await callClient.disposeView(callId, stream);
         await call.stopVideo(stream);
+        await callClient.disposeView(callId, stream);
       }
     };
 

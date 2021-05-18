@@ -14,7 +14,6 @@ import { StartCallButton } from './StartCallButton';
 export interface ConfigurationScreenProps {
   screenWidth: number;
   startCallHandler(): void;
-  groupId: string;
 }
 
 export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Element => {

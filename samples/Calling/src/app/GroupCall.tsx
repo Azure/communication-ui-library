@@ -44,6 +44,7 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
 
   const [callState, setCallState] = useState<CallState | undefined>(undefined);
   const [isScreenSharingOn, setIsScreenSharingOn] = useState<boolean | undefined>(undefined);
+  const [joinedCall, setJoinedCall] = useState<boolean>(false);
 
   const mediaGalleryProps = useSelector(mediaGallerySelector);
   const mediaGalleryHandlers = useHandlers(MediaGallery);
@@ -64,13 +65,12 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
   }, [call?.id, callClient]);
 
   useEffect(() => {
-    const localStream = call?.localVideoStreams.find((i) => i.mediaStreamType === 'Video');
     if (isInCall(callState ?? 'None')) {
       document.title = `${groupId} group call sample`;
     } else {
-      if (!isInCall(callState ?? 'None') && callAgent) {
+      if (!isInCall(callState ?? 'None') && callAgent && !joinedCall) {
         const audioOptions: AudioOptions = { muted: !isMicrophoneEnabled };
-        const videoOptions = { localVideoStreams: localStream ? [localStream] : undefined };
+        const videoOptions = { localVideoStreams: undefined };
 
         const call = callAgent.join(
           {
@@ -82,9 +82,10 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
           }
         );
         setCall(call);
+        setJoinedCall(true);
       }
     }
-  }, [call?.localVideoStreams, callAgent, callState, groupId, isMicrophoneEnabled, setCall]);
+  }, [callAgent, callState, groupId, isMicrophoneEnabled, joinedCall, setCall]);
 
   return (
     <>
