@@ -27,11 +27,11 @@ stages:
               targetType: 'inline'
               script: rush install
 
-          - task: PowerShell@2
-            displayName: "changelog check"
-            inputs:
-              targetType: 'inline'
-              script: rush changelog:check
+          # - task: PowerShell@2
+          #   displayName: "changelog check"
+          #   inputs:
+          #     targetType: 'inline'
+          #     script: rush changelog:check
 
           - task: PowerShell@2
             displayName: lint check
