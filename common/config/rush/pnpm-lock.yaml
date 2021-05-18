@@ -21076,6 +21076,7 @@ packages:
       '@microsoft/api-documenter': 7.12.12
       '@microsoft/api-extractor': 7.13.2
       '@types/jest': 26.0.22
+      '@types/react': 16.14.5
       '@typescript-eslint/eslint-plugin': 4.18.0_e9e1aa536ec0b34179456e3b69e4968e
       '@typescript-eslint/parser': 4.18.0_eslint@7.22.0+typescript@4.1.5
       copyfiles: 2.4.1
@@ -21097,7 +21098,7 @@ packages:
       prettier: '*'
       ts-node: '*'
     resolution:
-      integrity: sha512-chENbqNh4Yv1fqK1F2wMibksvth8aq0fTplbvAyuGbbQvTGD+MuapIxXvOjKWaOAorK0HYCak+rQ2h0SFiC0AQ==
+      integrity: sha512-S9Msr/daSCqH/4XIkUqtpyZgcfHsGojXEx65eBbENAEMldQP6pglHhtEFZAOokCgbsxDm3jIIFx9V3n+ecyP1A==
       tarball: file:projects/calling-stateful-client.tgz
     version: 0.0.0
   file:projects/calling.tgz_11ce2e494cf42e750705757a01242d16:
@@ -21177,6 +21178,7 @@ packages:
       '@microsoft/api-documenter': 7.12.12
       '@microsoft/api-extractor': 7.13.2
       '@types/jest': 26.0.22
+      '@types/react': 16.14.5
       '@typescript-eslint/eslint-plugin': 4.18.0_e9e1aa536ec0b34179456e3b69e4968e
       '@typescript-eslint/parser': 4.18.0_eslint@7.22.0+typescript@4.1.5
       copyfiles: 2.4.1
@@ -21199,7 +21201,7 @@ packages:
       prettier: '*'
       ts-node: '*'
     resolution:
-      integrity: sha512-JY3jEIDeUeOIzzHxtolLtEy3vkoQL7MnRnv0JHd3Lzgp+2JsvIU7SVb2D28EfXkYXnIE/aLzl/RFtdrF0036gQ==
+      integrity: sha512-mgDYTzzuUWGK3JyypvcW0xn1yUCJNJSM3dKHbu2w+JsTmpCm/7qAfqBmlBrzixbp61AxOd8KecUU868/2UoyjQ==
       tarball: file:projects/chat-stateful-client.tgz
     version: 0.0.0
   file:projects/chat.tgz_8b323bbfb8846b74e94de977a6557f29:
@@ -21551,6 +21553,7 @@ packages:
       react-linkify: 1.0.0-alpha
       react-test-renderer: 16.14.0_react@16.14.0
       regenerator-runtime: 0.13.7
+      reselect: 4.0.0
       rollup: 2.42.4
       source-map-explorer: 2.5.2
       styled-components: 5.2.3_9debf3d425c3eafb0518d6c329d076f5
@@ -21562,7 +21565,7 @@ packages:
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-sbrkSD2hy1TML+LEYq4neX8hpOfTmP/np0UUdDMwV6Ba2Qv7tcGo0O1Rz0C0uZyMHAX0SigCIYOmG5Ak4aeiKA==
+      integrity: sha512-A/0MWauogqDz9jrkZ50Zsez0bI3yaVwD73g6eDY7wHozEDAFLPx5PnIPllMA60WYWdw3ycnIAlBSigRZ2FaFgw==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/server.tgz:
