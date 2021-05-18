@@ -86,7 +86,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.chatClient.onStateChange(onStateChange);
   }
 
-  hydrate = async (): Promise<void> => {
+  fetchInitialData = async (): Promise<void> => {
     try {
       await this.chatThreadClient.getProperties();
     } catch (e) {

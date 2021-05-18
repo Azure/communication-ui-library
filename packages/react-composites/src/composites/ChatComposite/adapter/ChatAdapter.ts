@@ -22,10 +22,12 @@ export interface ChatAdapter {
   onStateChange(handler: (state: ChatState) => void): void;
   offStateChange(handler: (state: ChatState) => void): void;
   getState(): ChatState;
-  // Fetch initial state for the Chat adapter.
-  //
-  // Performs the minimal fetch necessary for ChatComposite and API methods.
-  hydrate(): Promise<void>;
+  /*
+   * Fetch initial state for the Chat adapter.
+   *
+   * Performs the minimal fetch necessary for ChatComposite and API methods.
+   */
+  fetchInitialData(): Promise<void>;
   sendMessage(content: string): Promise<void>;
   sendReadReceipt(chatMessageId: string): Promise<void>;
   sendTypingIndicator(): Promise<void>;
