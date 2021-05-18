@@ -23,6 +23,44 @@ const convertRemoteVideoStreamToVideoGalleryStream = (stream: RemoteVideoStream)
   };
 };
 
+const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
+  userId: string,
+  isMuted: boolean,
+  isSpeaking: boolean,
+  videoStreams: Map<number, RemoteVideoStream>,
+  displayName?: string
+): VideoGalleryRemoteParticipant => {
+  const rawVideoStreamsArray = Array.from(videoStreams.values());
+  let videoStream: VideoGalleryStream | undefined = undefined;
+  let screenShareStream: VideoGalleryStream | undefined = undefined;
+
+  if (rawVideoStreamsArray[0]) {
+    if (rawVideoStreamsArray[0].mediaStreamType === 'Video') {
+      videoStream = convertRemoteVideoStreamToVideoGalleryStream(rawVideoStreamsArray[0]);
+    } else {
+      screenShareStream = convertRemoteVideoStreamToVideoGalleryStream(rawVideoStreamsArray[0]);
+    }
+  }
+
+  if (rawVideoStreamsArray[1]) {
+    if (rawVideoStreamsArray[1].mediaStreamType === 'ScreenSharing') {
+      screenShareStream = convertRemoteVideoStreamToVideoGalleryStream(rawVideoStreamsArray[1]);
+    } else {
+      videoStream = convertRemoteVideoStreamToVideoGalleryStream(rawVideoStreamsArray[1]);
+    }
+  }
+
+  return {
+    userId,
+    displayName,
+    isMuted,
+    isSpeaking,
+    videoStream,
+    screenShareStream,
+    isScreenSharingOn: screenShareStream !== undefined && screenShareStream.isAvailable
+  };
+};
+
 const memoizedAllConvertRemoteParticipant = memoizeFnAll(
   (
     userId: string,
@@ -31,28 +69,13 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     videoStreams: Map<number, RemoteVideoStream>,
     displayName?: string
   ): VideoGalleryRemoteParticipant => {
-    const rawVideoStreamsArray = Array.from(videoStreams.values());
-    let videoStream: VideoGalleryStream | undefined = undefined;
-    if (rawVideoStreamsArray[0].mediaStreamType === 'Video') {
-      videoStream = convertRemoteVideoStreamToVideoGalleryStream(rawVideoStreamsArray[0]);
-    }
-
-    let screenShareStream: VideoGalleryStream | undefined = undefined;
-    if (rawVideoStreamsArray[1].mediaStreamType === 'ScreenSharing') {
-      screenShareStream = convertRemoteVideoStreamToVideoGalleryStream(rawVideoStreamsArray[1]);
-    }
-
-    return {
+    return convertRemoteParticipantToVideoGalleryRemoteParticipant(
       userId,
-      displayName,
       isMuted,
       isSpeaking,
-      // From the current calling sdk, remote participant videoStreams is actually a tuple
-      // The first item is always video stream. The second item is always screenshare stream
-      videoStream,
-      screenShareStream,
-      isScreenSharingOn: !!screenShareStream
-    };
+      videoStreams,
+      displayName
+    );
   }
 );
 
@@ -74,8 +97,20 @@ const videoGalleryRemoteParticipantsFromCall = (call: Call | undefined): VideoGa
 export const videoGallerySelector = createSelector(
   [getCall, getDisplayName, getIdentifier],
   (call: Call | undefined, displayName: string | undefined, identifier: string | undefined) => {
+    const screenShareRemoteParticipant = call?.screenShareRemoteParticipant
+      ? call.remoteParticipants.get(call.screenShareRemoteParticipant)
+      : undefined;
     const localVideoStream = call?.localVideoStreams.find((i) => i.mediaStreamType === 'Video');
     return {
+      screenShareParticipant: screenShareRemoteParticipant
+        ? convertRemoteParticipantToVideoGalleryRemoteParticipant(
+            getACSId(screenShareRemoteParticipant.identifier),
+            screenShareRemoteParticipant.isMuted,
+            screenShareRemoteParticipant.isSpeaking,
+            screenShareRemoteParticipant.videoStreams,
+            screenShareRemoteParticipant.displayName
+          )
+        : undefined,
       localParticipant: {
         userId: identifier ?? '',
         displayName: displayName ?? '',
