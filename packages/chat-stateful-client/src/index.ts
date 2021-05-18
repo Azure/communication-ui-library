@@ -4,7 +4,7 @@
 export { createStatefulChatClient } from './StatefulChatClient';
 export { getCommunicationIdentifierAsKey } from './ChatClientState';
 
-export type { StatefulChatClientArgs, StatefulChatClient } from './StatefulChatClient';
+export type { StatefulChatClient, StatefulChatClientArgs, StatefulChatClientOptions } from './StatefulChatClient';
 export type { ChatMessageWithStatus, ChatMessageStatus } from './types/ChatMessageWithStatus';
 export type {
   ChatClientState,

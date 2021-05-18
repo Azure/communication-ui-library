@@ -73,6 +73,9 @@ export type StatefulChatClientArgs = {
     credential: CommunicationTokenCredential;
 };
 
+// @public
+export type StatefulChatClientOptions = ChatClientOptions;
+
 
 // (No @packageDocumentation comment for this package)
 

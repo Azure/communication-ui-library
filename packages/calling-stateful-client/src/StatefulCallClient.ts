@@ -149,13 +149,18 @@ export type StatefulCallClientArgs = {
 };
 
 /**
+ * Pptions to construct the stateful call client with
+ */
+export type StatefulCallClientOptions = CallClientOptions;
+
+/**
  * Creates a stateful CallClient {@Link StatefulCallClient} by proxying CallClient
  * {@Link @azure/communication-calling#CallClient} with ProxyCallClient {@Link ProxyCallClient} which then allows access
  * to state in a declarative way.
  */
 export const createStatefulCallClient = (
   callClientArgs: StatefulCallClientArgs,
-  callClientOptions?: CallClientOptions
+  callClientOptions?: StatefulCallClientOptions
 ): StatefulCallClient => {
   const callClient = new CallClient(callClientOptions);
   const context: CallContext = new CallContext(callClientArgs.userId);

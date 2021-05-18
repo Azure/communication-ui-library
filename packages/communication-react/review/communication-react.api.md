@@ -907,6 +907,9 @@ export type StatefulCallClientArgs = {
     userId: string;
 };
 
+// @public
+export type StatefulCallClientOptions = CallClientOptions;
+
 // @public (undocumented)
 export interface StatefulChatClient extends ChatClient {
     // (undocumented)
@@ -924,6 +927,9 @@ export type StatefulChatClientArgs = {
     endpoint: string;
     credential: CommunicationTokenCredential;
 };
+
+// @public
+export type StatefulChatClientOptions = ChatClientOptions;
 
 // @public (undocumented)
 export interface StatefulDeviceManager extends DeviceManager_2 {

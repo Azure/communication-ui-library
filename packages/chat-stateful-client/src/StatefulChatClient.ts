@@ -101,13 +101,18 @@ export type StatefulChatClientArgs = {
 };
 
 /**
+ * Options to construct the stateful chat client with
+ */
+export type StatefulChatClientOptions = ChatClientOptions;
+
+/**
  * Creates a stateful ChatClient {@Link StatefulChatClient} by proxying ChatClient
  * {@Link @azure/communication-chat#ChatClient} with ProxyChatClient {@Link ProxyChatClient} which then allows access
  * to state in a declarative way.
  */
 export const createStatefulChatClient = (
   args: StatefulChatClientArgs,
-  options?: ChatClientOptions
+  options?: StatefulChatClientOptions
 ): StatefulChatClient => {
   const chatClient = new ChatClient(args.endpoint, args.credential, options);
   const context = new ChatContext();

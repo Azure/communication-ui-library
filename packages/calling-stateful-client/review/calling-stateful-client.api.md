@@ -132,6 +132,9 @@ export type StatefulCallClientArgs = {
     userId: string;
 };
 
+// @public
+export type StatefulCallClientOptions = CallClientOptions;
+
 // @public (undocumented)
 export interface StatefulDeviceManager extends DeviceManager_2 {
     // (undocumented)
