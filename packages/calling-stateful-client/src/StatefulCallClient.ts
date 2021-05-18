@@ -2,7 +2,13 @@
 // Licensed under the MIT license.
 
 import { deviceManagerDeclaratify } from './DeviceManagerDeclarative';
-import { CallAgent, CallClient, CreateViewOptions, DeviceManager } from '@azure/communication-calling';
+import {
+  CallAgent,
+  CallClient,
+  CallClientOptions,
+  CreateViewOptions,
+  DeviceManager
+} from '@azure/communication-calling';
 import { CallClientState, LocalVideoStream, RemoteVideoStream } from './CallClientState';
 import { CallContext } from './CallContext';
 import { callAgentDeclaratify } from './CallAgentDeclarative';
@@ -131,17 +137,33 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
 }
 
 /**
- * Creates a declarative CallClient {@Link StatefulCallClient} by proxying CallClient
+ * Required arguments to construct the stateful call client
+ */
+export type StatefulCallClientArgs = {
+  /**
+   * UserId from SDK. This is provided for developer convenience to easily access the userId from the
+   * state. It is not used by StatefulCallClient so if you do not have this value or do not want to use this value,
+   * you could pass any dummy value like empty string.
+   */
+  userId: string;
+};
+
+/**
+ * Pptions to construct the stateful call client with
+ */
+export type StatefulCallClientOptions = CallClientOptions;
+
+/**
+ * Creates a stateful CallClient {@Link StatefulCallClient} by proxying CallClient
  * {@Link @azure/communication-calling#CallClient} with ProxyCallClient {@Link ProxyCallClient} which then allows access
  * to state in a declarative way.
- *
- * @param callClient - CallClient from SDK to declaratify
- * @param userId - UserId from SDK. This is provided for developer convenience to easily access the userId from the
- *   state. It is not used by StatefulCallClient so if you do not have this value or do not want to use this value,
- *   you could pass any dummy value like empty string.
  */
-export const createStatefulCallClient = (callClient: CallClient, userId: string): StatefulCallClient => {
-  const context: CallContext = new CallContext(userId);
+export const createStatefulCallClient = (
+  callClientArgs: StatefulCallClientArgs,
+  callClientOptions?: StatefulCallClientOptions
+): StatefulCallClient => {
+  const callClient = new CallClient(callClientOptions);
+  const context: CallContext = new CallContext(callClientArgs.userId);
   const internalContext: InternalCallContext = new InternalCallContext();
 
   Object.defineProperty(callClient, 'getState', {

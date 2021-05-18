@@ -15,7 +15,6 @@ import { ChatMessageReadReceipt, ChatParticipant } from '@azure/communication-ch
 import { CommunicationIdentifierKind, UnknownIdentifierKind } from '@azure/communication-common';
 import { Constants } from './Constants';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
-import { ChatConfig } from './types/ChatConfig';
 
 enableMapSet();
 
@@ -65,11 +64,11 @@ export class ChatContext {
     );
   }
 
-  public updateChatConfig(config: ChatConfig): void {
+  public updateChatConfig(userId: CommunicationIdentifierKind, displayName: string): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
-        draft.displayName = config.displayName;
-        draft.userId = config.userId;
+        draft.displayName = displayName;
+        draft.userId = userId;
       })
     );
   }
