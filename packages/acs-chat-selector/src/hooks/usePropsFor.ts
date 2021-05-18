@@ -8,7 +8,9 @@ import { sendBoxSelector } from '../sendBoxSelector';
 import { chatThreadSelector } from '../chatThreadSelector';
 import { typingIndicatorSelector } from '../typingIndicatorSelector';
 // @ts-ignore
-import { Common, DefaultChatHandlers, CommonProperties } from '../handlers/createHandlers';
+import { CommonProperties } from 'acs-ui-common';
+// @ts-ignore
+import { Common, DefaultChatHandlers } from '../handlers/createHandlers';
 
 export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component

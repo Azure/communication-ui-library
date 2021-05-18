@@ -309,11 +309,6 @@ export type CommonProperties<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
 
-// @public
-export type CommonProperties_2<A, B> = {
-    [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
-}[keyof A & keyof B];
-
 // @public (undocumented)
 export type CommunicationIdentifierAsKey = string;
 
@@ -469,7 +464,7 @@ export const createDefaultCallingHandlersForComponent: <Props>(callClient: State
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions | undefined) => Promise<void>;
     onParticipantRemove: (userId: string) => void;
     onStartLocalVideo: () => Promise<void>;
-}, CommonProperties_2<{
+}, CommonProperties<{
     onHangUp: () => Promise<void>;
     onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
     onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
@@ -653,6 +648,9 @@ export interface LocalVideoStream {
     source: VideoDeviceInfo;
     videoStreamRendererView?: VideoStreamRendererView | undefined;
 }
+
+// @public (undocumented)
+export const MakeNPMHappy = true;
 
 // @public (undocumented)
 export const mediaGallerySelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {

@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CommonProperties, DefaultChatHandlers } from '@azure/acs-chat-selector';
+import { CommonProperties } from 'acs-ui-common';
+import { DefaultChatHandlers } from '@azure/acs-chat-selector';
 
 import { ReactElement } from 'react';
 import memoizeOne from 'memoize-one';

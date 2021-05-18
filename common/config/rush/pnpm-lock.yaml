@@ -22,6 +22,7 @@ dependencies:
   '@rollup/plugin-commonjs': 17.1.0_rollup@2.42.4
   '@rush-temp/acs-calling-selector': file:projects/acs-calling-selector.tgz_prettier@2.0.5+ts-node@9.1.1
   '@rush-temp/acs-chat-selector': file:projects/acs-chat-selector.tgz_prettier@2.0.5+ts-node@9.1.1
+  '@rush-temp/acs-ui-common': file:projects/acs-ui-common.tgz_prettier@2.0.5+ts-node@9.1.1
   '@rush-temp/build-tools': file:projects/build-tools.tgz_typescript@4.1.5
   '@rush-temp/calling': file:projects/calling.tgz_11ce2e494cf42e750705757a01242d16
   '@rush-temp/calling-stateful-client': file:projects/calling-stateful-client.tgz_prettier@2.0.5+ts-node@9.1.1
@@ -21018,8 +21019,36 @@ packages:
       prettier: '*'
       ts-node: '*'
     resolution:
-      integrity: sha512-hokask9KPnOvwVYDVmwo+udYOVLy2IYlvpLYBQaAWVW843i2K1cfrpCOqoTMwjtpXblNpeVIn7VG73FQVq6I5g==
+      integrity: sha512-fPnHiIpL1XZ7JHhhAdAtZa9OkIYokbApFAJ5uzduQQst/I0RvH15Pp02czY2Sblr+dUZu7KxApld09QJ05LlhA==
       tarball: file:projects/acs-chat-selector.tgz
+    version: 0.0.0
+  file:projects/acs-ui-common.tgz_prettier@2.0.5+ts-node@9.1.1:
+    dependencies:
+      '@azure/communication-common': 1.0.0
+      '@microsoft/api-documenter': 7.12.12
+      '@microsoft/api-extractor': 7.13.2
+      '@types/jest': 26.0.22
+      '@typescript-eslint/eslint-plugin': 4.18.0_e9e1aa536ec0b34179456e3b69e4968e
+      '@typescript-eslint/parser': 4.18.0_eslint@7.22.0+typescript@4.1.5
+      copyfiles: 2.4.1
+      eslint: 7.22.0
+      eslint-config-prettier: 6.15.0_eslint@7.22.0
+      eslint-plugin-header: 3.1.1_eslint@7.22.0
+      eslint-plugin-import: 2.22.1_eslint@7.22.0
+      eslint-plugin-prettier: 3.3.1_cdac37046eab2e8d6fb794f34ed825c2
+      jest: 26.6.0_ts-node@9.1.1
+      rollup: 2.42.4
+      ts-jest: 26.5.3_jest@26.6.0+typescript@4.1.5
+      typescript: 4.1.5
+    dev: false
+    id: file:projects/acs-ui-common.tgz
+    name: '@rush-temp/acs-ui-common'
+    peerDependencies:
+      prettier: '*'
+      ts-node: '*'
+    resolution:
+      integrity: sha512-ORVrAGGTiiHtFxjPYbEOe309XuLdM57yz7ol9aIDgotU0m/66zSwQSLfqDbj12ENCniImpXdlehAiSJrRQjOpA==
+      tarball: file:projects/acs-ui-common.tgz
     version: 0.0.0
   file:projects/build-tools.tgz_typescript@4.1.5:
     dependencies:
@@ -21254,7 +21283,7 @@ packages:
     peerDependencies:
       prettier: '*'
     resolution:
-      integrity: sha512-JtvDB+N7RWDWQWLen9ZMc1FHVe405Uos8n3+hZmmSozu170zmQex0Pagj9o8R4DaByG7yZOIujv1aWTrdVCZRw==
+      integrity: sha512-Qu1YQ+DwqaDwR6pi3DMfqHTUxuAGdTrBAkZO4CuJ7IpbNeIhCNqft96aO9CnwewbM5g9JsWsqWI4c/Rt6Lp0Zg==
       tarball: file:projects/check-treeshaking.tgz
     version: 0.0.0
   file:projects/communication-react.tgz_86ada2f0781d42aae29c9b7c11ee1a9f:
@@ -21713,6 +21742,7 @@ specifiers:
   '@rollup/plugin-commonjs': ~17.1.0
   '@rush-temp/acs-calling-selector': file:./projects/acs-calling-selector.tgz
   '@rush-temp/acs-chat-selector': file:./projects/acs-chat-selector.tgz
+  '@rush-temp/acs-ui-common': file:./projects/acs-ui-common.tgz
   '@rush-temp/build-tools': file:./projects/build-tools.tgz
   '@rush-temp/calling': file:./projects/calling.tgz
   '@rush-temp/calling-stateful-client': file:./projects/calling-stateful-client.tgz
