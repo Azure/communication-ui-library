@@ -72,11 +72,7 @@ export const CallScreen = (props: CallScreenProps & ErrorHandlingProps): JSX.Ele
               callStatus === 'Connected' && (
                 <Stack styles={containerStyles} grow>
                   <Stack.Item grow styles={activeContainerClassName}>
-                    <MediaGallery
-                      {...mediaGalleryProps}
-                      {...mediaGalleryHandlers}
-                      // isCameraChecked={isCallStartedWithCameraOn}
-                    />
+                    <MediaGallery {...mediaGalleryProps} {...mediaGalleryHandlers} />
                   </Stack.Item>
                 </Stack>
               )

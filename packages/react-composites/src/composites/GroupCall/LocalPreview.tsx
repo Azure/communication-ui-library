@@ -36,7 +36,6 @@ export const LocalPreview = (): JSX.Element => {
           <CameraButton
             {...cameraButtonProps}
             onToggleCamera={async () => {
-              // setIsCallStartedWithCameraOn(!cameraButtonProps.checked);
               cameraButtonProps.onToggleCamera();
             }}
           />
