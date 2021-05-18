@@ -7,7 +7,7 @@
 
 Azure Communication Services UI Library is a collection of JavaScript libraries that can be used to easily build fast, responsive communication web applications.
 
-We have interactive storybook pages in our storybook📖 to try out features and get your development kick started 🚀.
+We have interactive storybook pages in our storybook📖 to try out features and examples to get your development kick started 🚀.
 
 ## Getting Started
 
@@ -25,6 +25,7 @@ If you're wondering where to get started, here are a few scenarios to help you g
 ## Samples
 
 🚧 We are doing some additional work to finalize our samples to use the package this repository generates but for now we suggest using storybook🚧. 
+Check out [Storybook](https://azure.github.io/communication-ui-sdk) to try out this UI Library.
 
 ## Features and Benefits
 
