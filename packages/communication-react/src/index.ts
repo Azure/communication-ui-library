@@ -11,7 +11,6 @@ export * from '../../react-composites/src/index.release';
 // Manually re-export acs-chat-selector as several methods are duplicates of acs-calling-selector
 // TODO: integrate a better solution for sharing like code across packages
 export {
-  communicationIdentifierToString,
   createDefaultChatHandlers,
   createDefaultChatHandlersForComponent,
   ChatClientProvider,
@@ -20,8 +19,7 @@ export {
   useChatThreadClient,
   useThreadId,
   usePropsFor,
-  useSelector,
-  useHandlers,
+  useSelector as useChatSelector,
   chatThreadSelector,
   typingIndicatorSelector,
   sendBoxSelector,
