@@ -4,8 +4,8 @@
 import { AudioOptions, JoinCallOptions, LocalVideoStream } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { useEffect } from 'react';
-import { useCallContext } from '../../../providers';
 import { useCallingContext } from '../providers/CallingProvider';
+import { useCallContext } from '../providers/CallProvider';
 
 export type UseOutgoingCallType = {
   makeCall: (receiver: CommunicationUserIdentifier, joinCallOptions?: JoinCallOptions) => void;

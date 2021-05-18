@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useState } from 'react';
-import { useCallClientContext } from 'react-composites';
+// import { useCallClientContext } from 'react-composites';
 import { localStorageAvailable } from './utils/constants';
 import { saveDisplayNameToLocalStorage } from './utils/AppUtils';
 import { DisplayNameField } from './DisplayNameField';
@@ -16,15 +16,16 @@ import { useHandlers } from './hooks/useHandlers';
 export interface ConfigurationScreenProps {
   screenWidth: number;
   startCallHandler(): void;
+  displayName: string;
   onDisplayNameUpdate: (displayName: string) => void;
 }
 
 export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Element => {
-  const { startCallHandler, onDisplayNameUpdate } = props;
+  const { startCallHandler, onDisplayNameUpdate, displayName } = props;
   const [emptyWarning, setEmptyWarning] = useState(false);
   const [nameTooLongWarning, setNameTooLongWarning] = useState(false);
 
-  const { displayName } = useCallClientContext();
+  // const { displayName } = useCallClientContext();
 
   const options = useSelector(optionsButtonSelector);
   const localDeviceSettingsHandlers = useHandlers(LocalDeviceSettings);

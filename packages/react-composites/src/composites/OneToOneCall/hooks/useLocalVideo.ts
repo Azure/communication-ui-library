@@ -4,7 +4,7 @@
 import { LocalVideoStream, VideoDeviceInfo } from '@azure/communication-calling';
 import { useCallback } from 'react';
 import { CommunicationUiErrorCode, CommunicationUiError } from '../../../types/CommunicationUiError';
-import { useCallContext } from '../../../providers';
+import { useCallContext } from '../providers/CallProvider';
 import { areStreamsEqual } from '../utils/SDKUtils';
 
 export type useLocalVideoType = {

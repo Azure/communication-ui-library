@@ -3,7 +3,7 @@
 
 import { LocalVideoStream, RemoteParticipant } from '@azure/communication-calling';
 import { useEffect, useRef, useState } from 'react';
-import { useCallContext } from '../../../providers';
+import { useCallContext } from '../providers/CallProvider';
 import { useCallingContext } from '../providers/CallingProvider';
 import { GalleryParticipant } from '../types/GalleryParticipant';
 import { convertSdkRemoteParticipantToGalleryParticipant } from '../utils/TypeConverter';

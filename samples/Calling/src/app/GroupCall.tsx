@@ -6,7 +6,7 @@ import { AudioOptions, CallState } from '@azure/communication-calling';
 import { Label, Overlay, Spinner, Stack } from '@fluentui/react';
 import { CallClientState, StatefulCallClient } from 'calling-stateful-client';
 import React, { useEffect, useState } from 'react';
-import { useCallAgent, useCallClient, useCallClientContext, useCall, useCallContext } from 'react-composites';
+import { useCallAgent, useCallClient, useCall, useCallContext } from 'react-composites';
 import { CommandPanel, CommandPanelTypes } from './CommandPanel';
 import { Header } from './Header';
 import { useHandlers } from './hooks/useHandlers';
@@ -37,10 +37,9 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
   const { groupId, screenWidth, endCallHandler } = props;
 
   const callAgent = useCallAgent();
-  const { setCall, isMicrophoneEnabled } = useCallContext();
+  const { setCall } = useCallContext();
   const call = useCall();
   const callClient: StatefulCallClient = useCallClient();
-  const { isCallStartedWithCameraOn } = useCallClientContext();
 
   const [callState, setCallState] = useState<CallState | undefined>(undefined);
   const [isScreenSharingOn, setIsScreenSharingOn] = useState<boolean | undefined>(undefined);
@@ -69,7 +68,8 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
       document.title = `${groupId} group call sample`;
     } else {
       if (!isInCall(callState ?? 'None') && callAgent && !joinedCall) {
-        const audioOptions: AudioOptions = { muted: !isMicrophoneEnabled };
+        // Removed isMicrophoneEnabled state from CallProvider, will need to integrate with Miguel's fix for mic later.
+        const audioOptions: AudioOptions = { muted: true };
         const videoOptions = { localVideoStreams: undefined };
 
         const call = callAgent.join(
@@ -85,7 +85,7 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
         setJoinedCall(true);
       }
     }
-  }, [callAgent, callState, groupId, isMicrophoneEnabled, joinedCall, setCall]);
+  }, [callAgent, callState, groupId, joinedCall, setCall]);
 
   return (
     <>
@@ -104,11 +104,7 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
               callState === 'Connected' && (
                 <>
                   <Stack.Item grow styles={activeContainerClassName}>
-                    <MediaGallery
-                      {...mediaGalleryProps}
-                      {...mediaGalleryHandlers}
-                      isCameraChecked={isCallStartedWithCameraOn}
-                    />
+                    <MediaGallery {...mediaGalleryProps} {...mediaGalleryHandlers} />
                   </Stack.Item>
                   {selectedPane !== CommandPanelTypes.None &&
                     (window.innerWidth > MINI_HEADER_WINDOW_WIDTH ? (

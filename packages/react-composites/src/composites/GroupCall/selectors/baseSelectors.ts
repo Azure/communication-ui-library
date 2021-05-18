@@ -3,7 +3,7 @@
 
 import { CallState as CallStatus } from '@azure/communication-calling';
 import { Call, DeviceManager } from 'calling-stateful-client';
-import { CallState } from '../adapter';
+import { CallState } from '../adapter/CallAdapter';
 
 export const getCall = (state: CallState): Call | undefined => state.call;
 export const getCallStatus = (state: CallState): CallStatus => state.call?.state ?? 'None';

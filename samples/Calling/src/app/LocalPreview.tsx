@@ -9,13 +9,11 @@ import { CameraButton, ControlBar, MicrophoneButton, StreamMedia, VideoTile } fr
 import { useSelector } from './hooks/useSelector';
 import { usePropsFor } from './hooks/usePropsFor';
 import { localPreviewSelector } from '@azure/acs-calling-selector';
-import { useCallClientContext } from 'react-composites';
 
 export const LocalPreview = (): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
   const localPreviewProps = useSelector(localPreviewSelector);
-  const { setIsCallStartedWithCameraOn } = useCallClientContext();
 
   return (
     <Stack className={localPreviewContainerStyle}>
@@ -38,7 +36,6 @@ export const LocalPreview = (): JSX.Element => {
           <CameraButton
             {...cameraButtonProps}
             onToggleCamera={async () => {
-              setIsCallStartedWithCameraOn(!cameraButtonProps.checked);
               cameraButtonProps.onToggleCamera();
             }}
           />

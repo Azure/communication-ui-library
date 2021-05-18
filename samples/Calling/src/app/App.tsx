@@ -93,6 +93,7 @@ const App = (): JSX.Element => {
       case 'configuration':
         return (
           <ConfigurationScreen
+            displayName={displayName}
             screenWidth={screenWidth}
             startCallHandler={(): void => setPage('call')}
             onDisplayNameUpdate={setDisplayName}
@@ -138,7 +139,7 @@ const App = (): JSX.Element => {
       }
       default:
         return (
-          <CallClientProvider token={token} displayName={displayName} refreshTokenCallback={refreshTokenAsync(userId)}>
+          <CallClientProvider token={token} refreshTokenCallback={refreshTokenAsync(userId)}>
             {renderPage(page)}
           </CallClientProvider>
         );

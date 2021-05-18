@@ -16,7 +16,6 @@ const VideoGalleryStyles = {
 
 export interface MediaGalleryProps {
   isVideoStreamOn?: boolean;
-  isCameraChecked?: boolean;
   isMicrophoneChecked?: boolean;
   onStartLocalVideo: () => Promise<void>;
 }
@@ -34,12 +33,6 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     }
     setIsButtonStatusSynced(true);
   }, [isButtonStatusSynced, isPreviewCameraOn, props]);
-
-  useEffect(() => {
-    if (props.isCameraChecked && !props.isVideoStreamOn) {
-      props.onStartLocalVideo();
-    }
-  }, [props]);
 
   const participantWithScreenShare: VideoGalleryRemoteParticipant | undefined = useMemo(() => {
     return remoteParticipants.find((remoteParticipant: VideoGalleryRemoteParticipant) => {
