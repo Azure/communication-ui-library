@@ -15,6 +15,7 @@ import { CommunicationUserKind } from '@azure/communication-common';
 import { CreateViewOptions } from '@azure/communication-calling';
 import { DeviceAccess } from '@azure/communication-calling';
 import { DeviceManager as DeviceManager_2 } from '@azure/communication-calling';
+import { FlatCommunicationIdentifier } from 'acs-ui-common';
 import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
@@ -37,8 +38,8 @@ export interface Call {
     isScreenSharingOn: boolean;
     localVideoStreams: LocalVideoStream[];
     recording: RecordingCallFeature;
-    remoteParticipants: Map<string, RemoteParticipant>;
-    remoteParticipantsEnded: Map<string, RemoteParticipant>;
+    remoteParticipants: Map<FlatCommunicationIdentifier, RemoteParticipant>;
+    remoteParticipantsEnded: Map<FlatCommunicationIdentifier, RemoteParticipant>;
     startTime: Date;
     state: CallState;
     transcription: TranscriptionCallFeature;

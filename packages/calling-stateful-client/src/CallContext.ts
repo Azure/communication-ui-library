@@ -11,6 +11,7 @@ import {
 import EventEmitter from 'events';
 import { enableMapSet, produce } from 'immer';
 import { CallEndReason, CallState, RemoteParticipantState } from '@azure/communication-calling';
+import { FlatCommunicationIdentifier, toFlatCommunicationIdentifier } from 'acs-ui-common';
 import {
   Call,
   CallClientState,
@@ -23,7 +24,6 @@ import {
   TransferRequest,
   Transfer
 } from './CallClientState';
-import { getRemoteParticipantKey } from './Converter';
 
 enableMapSet();
 
@@ -180,17 +180,17 @@ export class CallContext {
   public setCallRemoteParticipants(
     callId: string,
     addRemoteParticipant: RemoteParticipant[],
-    removeRemoteParticipant: string[]
+    removeRemoteParticipant: FlatCommunicationIdentifier[]
   ): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         const call = draft.calls.get(callId);
         if (call) {
-          removeRemoteParticipant.forEach((id: string) => {
+          removeRemoteParticipant.forEach((id: FlatCommunicationIdentifier) => {
             call.remoteParticipants.delete(id);
           });
           addRemoteParticipant.forEach((participant: RemoteParticipant) => {
-            call.remoteParticipants.set(getRemoteParticipantKey(participant.identifier), participant);
+            call.remoteParticipants.set(toFlatCommunicationIdentifier(participant.identifier), participant);
           });
         }
       })
@@ -200,17 +200,17 @@ export class CallContext {
   public setCallRemoteParticipantsEnded(
     callId: string,
     addRemoteParticipant: RemoteParticipant[],
-    removeRemoteParticipant: string[]
+    removeRemoteParticipant: FlatCommunicationIdentifier[]
   ): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         const call = draft.calls.get(callId);
         if (call) {
-          removeRemoteParticipant.forEach((id: string) => {
+          removeRemoteParticipant.forEach((id: FlatCommunicationIdentifier) => {
             call.remoteParticipantsEnded.delete(id);
           });
           addRemoteParticipant.forEach((participant: RemoteParticipant) => {
-            call.remoteParticipantsEnded.set(getRemoteParticipantKey(participant.identifier), participant);
+            call.remoteParticipantsEnded.set(toFlatCommunicationIdentifier(participant.identifier), participant);
           });
         }
       })
@@ -324,7 +324,11 @@ export class CallContext {
     );
   }
 
-  public setParticipantState(callId: string, participantKey: string, state: RemoteParticipantState): void {
+  public setParticipantState(
+    callId: string,
+    participantKey: FlatCommunicationIdentifier,
+    state: RemoteParticipantState
+  ): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         const call = draft.calls.get(callId);
@@ -338,7 +342,7 @@ export class CallContext {
     );
   }
 
-  public setParticipantIsMuted(callId: string, participantKey: string, muted: boolean): void {
+  public setParticipantIsMuted(callId: string, participantKey: FlatCommunicationIdentifier, muted: boolean): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         const call = draft.calls.get(callId);
@@ -352,7 +356,11 @@ export class CallContext {
     );
   }
 
-  public setParticipantDisplayName(callId: string, participantKey: string, displayName: string): void {
+  public setParticipantDisplayName(
+    callId: string,
+    participantKey: FlatCommunicationIdentifier,
+    displayName: string
+  ): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         const call = draft.calls.get(callId);
@@ -366,7 +374,11 @@ export class CallContext {
     );
   }
 
-  public setParticipantIsSpeaking(callId: string, participantKey: string, isSpeaking: boolean): void {
+  public setParticipantIsSpeaking(
+    callId: string,
+    participantKey: FlatCommunicationIdentifier,
+    isSpeaking: boolean
+  ): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         const call = draft.calls.get(callId);
@@ -380,7 +392,11 @@ export class CallContext {
     );
   }
 
-  public setParticipantVideoStream(callId: string, participantKey: string, stream: RemoteVideoStream): void {
+  public setParticipantVideoStream(
+    callId: string,
+    participantKey: FlatCommunicationIdentifier,
+    stream: RemoteVideoStream
+  ): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         const call = draft.calls.get(callId);
@@ -404,7 +420,7 @@ export class CallContext {
 
   public setRemoteVideoStreamIsAvailable(
     callId: string,
-    participantKey: string,
+    participantKey: FlatCommunicationIdentifier,
     streamId: number,
     isAvailable: boolean
   ): void {
@@ -426,7 +442,7 @@ export class CallContext {
 
   public setRemoteVideoStreams(
     callId: string,
-    participantKey: string,
+    participantKey: FlatCommunicationIdentifier,
     addRemoteVideoStream: RemoteVideoStream[],
     removeRemoteVideoStream: number[]
   ): void {
@@ -459,7 +475,7 @@ export class CallContext {
 
   public setRemoteVideoStreamRendererView(
     callId: string,
-    participantKey: string,
+    participantKey: FlatCommunicationIdentifier,
     streamId: number,
     view: VideoStreamRendererView | undefined
   ): void {

@@ -23,6 +23,7 @@ import {
   PhoneNumberKind,
   UnknownIdentifierKind
 } from '@azure/communication-common';
+import { FlatCommunicationIdentifier } from 'acs-ui-common';
 
 /**
  * State only version of {@Link @azure/communication-calling#TransferRequestedEventArgs}. At the time of writing
@@ -245,14 +246,14 @@ export interface Call {
   localVideoStreams: LocalVideoStream[];
   /**
    * Proxy of {@Link @azure/communication-calling#Call.remoteParticipants}. Map of identifier
-   * {@Link Converter.getRemoteParticipantKey} to {@Link RemoteParticipant}
+   * {@Link acs-ui-common#FlatCommunicationIdentifier} to {@Link RemoteParticipant}
    */
-  remoteParticipants: Map<string, RemoteParticipant>;
+  remoteParticipants: Map<FlatCommunicationIdentifier, RemoteParticipant>;
   /**
    * Stores remote participants that have left the call so that the callEndReason could be retrieved. Map of identifier
-   * {@Link Converter.getRemoteParticipantKey} to {@Link RemoteParticipant}
+   * {@Link acs-ui-common#FlatCommunicationIdentifier} to {@Link RemoteParticipant}
    */
-  remoteParticipantsEnded: Map<string, RemoteParticipant>;
+  remoteParticipantsEnded: Map<FlatCommunicationIdentifier, RemoteParticipant>;
   /**
    * Proxy of {@Link @azure/communication-calling#TranscriptionCallFeature}.
    */

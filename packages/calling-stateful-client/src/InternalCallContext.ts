@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { LocalVideoStream, RemoteVideoStream, VideoStreamRenderer } from '@azure/communication-calling';
+import { FlatCommunicationIdentifier } from 'acs-ui-common';
 import { LocalVideoStream as StatefulLocalVideoStream } from './CallClientState';
 
 /**
@@ -18,8 +19,8 @@ export interface StreamAndRenderer {
 export class InternalCallContext {
   // CallId -> <StreamId, RemoteVideoStream>
   private _remoteVideoStreams: Map<string, Map<number, RemoteVideoStream>>;
-  // CallId -> <StreamId, ParticipantKey>
-  private _remoteParticipantKeys: Map<string, Map<number, string>>;
+  // CallId -> <StreamId, FlatCommunicationIdentifier>
+  private _remoteParticipantKeys: Map<string, Map<number, FlatCommunicationIdentifier>>;
   // CallId -> <StreamId, VideoStreamRenderer>
   private _remoteVideoStreamRenderers: Map<string, Map<number, VideoStreamRenderer>>;
 
@@ -35,7 +36,7 @@ export class InternalCallContext {
 
   constructor() {
     this._remoteVideoStreams = new Map<string, Map<number, RemoteVideoStream>>();
-    this._remoteParticipantKeys = new Map<string, Map<number, string>>();
+    this._remoteParticipantKeys = new Map<string, Map<number, FlatCommunicationIdentifier>>();
     this._remoteVideoStreamRenderers = new Map<string, Map<number, VideoStreamRenderer>>();
     this._localVideoStreams = new Map<string, LocalVideoStream>();
     this._localVideoStreamRenders = new Map<string, VideoStreamRenderer>();
@@ -84,7 +85,7 @@ export class InternalCallContext {
     return undefined;
   }
 
-  public getRemoteParticipantKey(callId: string, streamId: number): string | undefined {
+  public getRemoteParticipantKey(callId: string, streamId: number): FlatCommunicationIdentifier | undefined {
     const remoteParticipants = this._remoteParticipantKeys.get(callId);
     if (remoteParticipants) {
       return remoteParticipants.get(streamId);
@@ -92,7 +93,11 @@ export class InternalCallContext {
     return undefined;
   }
 
-  public setRemoteVideoStream(callId: string, participantKey: string, remoteVideoStream: RemoteVideoStream): void {
+  public setRemoteVideoStream(
+    callId: string,
+    participantKey: FlatCommunicationIdentifier,
+    remoteVideoStream: RemoteVideoStream
+  ): void {
     let remoteVideoStreams = this._remoteVideoStreams.get(callId);
     if (!remoteVideoStreams) {
       remoteVideoStreams = new Map<number, RemoteVideoStream>();
