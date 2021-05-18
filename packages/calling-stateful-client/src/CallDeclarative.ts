@@ -61,7 +61,7 @@ class ProxyCall implements ProxyHandler<Call> {
  * context)
  *
  * @param call - Call from SDK
- * @param context - CallContext from CallClientDeclarative
+ * @param context - CallContext from StatefulCallClient
  */
 export const callDeclaratify = (call: Call, context: CallContext): DeclarativeCall => {
   const proxyCall = new ProxyCall(call, context);

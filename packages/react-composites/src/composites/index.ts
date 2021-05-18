@@ -4,3 +4,4 @@
 export * from './ChatComposite';
 export * from './GroupCall';
 export * from './OneToOneCall';
+export { ErrorBar } from './common';

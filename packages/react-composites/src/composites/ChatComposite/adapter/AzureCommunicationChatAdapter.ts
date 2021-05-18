@@ -3,7 +3,8 @@
 
 import { createStatefulChatClient, ChatClientState, StatefulChatClient } from 'chat-stateful-client';
 import { DefaultChatHandlers, createDefaultChatHandlers } from '@azure/acs-chat-selector';
-import { ChatClient, ChatMessage, ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
+import { ChatMessage, ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
+
 import { CommunicationUserKind } from '@azure/communication-signaling';
 import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import EventEmitter from 'events';
@@ -152,10 +153,12 @@ export const createAzureCommunicationChatAdapter = async (
 
   // This hack can be removed when `getIdFromToken` is dropped in favour of actually passing in user credentials.
   const userId = <CommunicationUserKind>{ kind: 'communicationUser', communicationUserId: rawUserId };
-  const chatClient = createStatefulChatClient(
-    new ChatClient(endpointUrl, createAzureCommunicationUserCredential(token, refreshTokenCallback)),
-    { userId, displayName }
-  );
+  const chatClient = createStatefulChatClient({
+    userId,
+    displayName,
+    endpoint: endpointUrl,
+    credential: createAzureCommunicationUserCredential(token, refreshTokenCallback)
+  });
   const chatThreadClient = await chatClient.getChatThreadClient(threadId);
 
   chatClient.startRealtimeNotifications();

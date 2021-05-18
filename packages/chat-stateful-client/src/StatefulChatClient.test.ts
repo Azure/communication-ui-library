@@ -43,21 +43,19 @@ const mockListChatThreads = (): any => {
   return createMockIterator(mockChatThreads);
 };
 
-jest.mock('@azure/communication-chat');
-
 const emptyAsyncFunctionWithResponse = async (): Promise<any> => {
   return { _response: {} as any };
 };
 
-type StatefulChatClientWithEventTrigger = StatefulChatClient & {
-  triggerEvent: (eventName: string, e: any) => Promise<void>;
-};
+const mockEventHandlersRef = { value: {} };
+beforeEach(() => {
+  mockEventHandlersRef.value = {};
+});
 
-function createMockChatClientAndDeclaratify(): StatefulChatClientWithEventTrigger {
-  const mockClient = new ChatClient('', new MockCommunicationUserCredential());
-  const eventHandlers = {};
+function createMockChatClient(): ChatClient {
+  const mockChatClient: ChatClient = {} as any;
 
-  mockClient.createChatThread = async (request) => {
+  mockChatClient.createChatThread = async (request) => {
     return {
       chatThread: {
         id: 'chatThreadId',
@@ -68,35 +66,55 @@ function createMockChatClientAndDeclaratify(): StatefulChatClientWithEventTrigge
     };
   };
 
-  mockClient.listChatThreads = mockListChatThreads;
+  mockChatClient.listChatThreads = mockListChatThreads;
 
-  mockClient.deleteChatThread = emptyAsyncFunctionWithResponse;
+  mockChatClient.deleteChatThread = emptyAsyncFunctionWithResponse;
 
-  mockClient.getChatThreadClient = (threadId) => {
+  mockChatClient.getChatThreadClient = (threadId) => {
     return createMockChatThreadClient(threadId);
   };
 
-  mockClient.on = ((event: Parameters<ChatClient['on']>[0], listener: (e: Event) => void) => {
-    eventHandlers[event] = listener;
+  mockChatClient.on = ((event: Parameters<ChatClient['on']>[0], listener: (e: Event) => void) => {
+    mockEventHandlersRef.value[event] = listener;
   }) as any;
 
-  mockClient.off = ((event: Parameters<ChatClient['on']>[0], listener: (e: Event) => void) => {
-    if (eventHandlers[event] === listener) {
-      eventHandlers[event] = undefined;
+  mockChatClient.off = ((event: Parameters<ChatClient['on']>[0], listener: (e: Event) => void) => {
+    if (mockEventHandlersRef.value[event] === listener) {
+      mockEventHandlersRef.value[event] = undefined;
     }
   }) as any;
 
-  const declarativeClient = createStatefulChatClient(mockClient, {
-    displayName: '',
-    userId: { kind: 'communicationUser', communicationUserId: 'userId1' }
-  });
+  mockChatClient.startRealtimeNotifications = emptyAsyncFunctionWithResponse;
+  mockChatClient.stopRealtimeNotifications = emptyAsyncFunctionWithResponse;
 
-  mockClient.startRealtimeNotifications = emptyAsyncFunctionWithResponse;
-  mockClient.stopRealtimeNotifications = emptyAsyncFunctionWithResponse;
+  return mockChatClient;
+}
+
+jest.mock('@azure/communication-chat', () => {
+  return {
+    ...jest.requireActual('@azure/communication-chat'),
+    ChatClient: jest.fn().mockImplementation(() => {
+      return createMockChatClient();
+    })
+  };
+});
+
+type StatefulChatClientWithEventTrigger = StatefulChatClient & {
+  triggerEvent: (eventName: string, e: any) => Promise<void>;
+};
+
+function createStatefulChatClientMock(): StatefulChatClientWithEventTrigger {
+  mockEventHandlersRef.value = {};
+  const declarativeClient = createStatefulChatClient({
+    displayName: '',
+    userId: { kind: 'communicationUser', communicationUserId: 'userId1' },
+    endpoint: '',
+    credential: new MockCommunicationUserCredential()
+  });
 
   Object.defineProperty(declarativeClient, 'triggerEvent', {
     value: async (eventName: string, e: any): Promise<void> => {
-      const handler = eventHandlers[eventName];
+      const handler = mockEventHandlersRef.value[eventName];
       if (handler !== undefined) {
         await handler(e);
       }
@@ -108,7 +126,7 @@ function createMockChatClientAndDeclaratify(): StatefulChatClientWithEventTrigge
 
 describe('declarative chatThread list iterators', () => {
   test('declarative listChatThreads should proxy listChatThreads iterator and store it in internal state', async () => {
-    const client = createMockChatClientAndDeclaratify();
+    const client = createStatefulChatClientMock();
     const chatThreads = client.listChatThreads();
     const proxiedThreads: ChatThreadItem[] = [];
     for await (const thread of chatThreads) {
@@ -119,7 +137,7 @@ describe('declarative chatThread list iterators', () => {
   });
 
   test('declarative listChatThreads should proxy listChatThreads paged iterator and store it in internal state', async () => {
-    const client = createMockChatClientAndDeclaratify();
+    const client = createStatefulChatClientMock();
     const pages = client.listChatThreads().byPage();
     const proxiedThreads: ChatThreadItem[] = [];
     for await (const page of pages) {
@@ -135,7 +153,7 @@ describe('declarative chatThread list iterators', () => {
 
 describe('declarative chatClient basic api functions', () => {
   test('set internal store correctly when proxy getChatThreadClient and deleteThread', async () => {
-    const client = createMockChatClientAndDeclaratify();
+    const client = createStatefulChatClientMock();
     await client.getChatThreadClient(mockChatThreads[0].id);
 
     expect(client.getState().threads.size).toBe(1);
@@ -147,7 +165,7 @@ describe('declarative chatClient basic api functions', () => {
   });
 
   test('set internal store correctly when proxy createChatThread', async () => {
-    const client = createMockChatClientAndDeclaratify();
+    const client = createStatefulChatClientMock();
     const topic = 'topic';
 
     const response = await client.createChatThread({ topic });
@@ -161,7 +179,7 @@ describe('declarative chatClient basic api functions', () => {
   });
 
   test('declaratify chatThreadClient when return getChatThreadClient', async () => {
-    const client = createMockChatClientAndDeclaratify();
+    const client = createStatefulChatClientMock();
     const threadId = 'threadId';
     const chatThreadClient = client.getChatThreadClient(threadId);
 
@@ -176,7 +194,7 @@ describe('declarative chatClient basic api functions', () => {
 describe('declarative chatClient subscribe to event properly after startRealtimeNotification', () => {
   let client: StatefulChatClientWithEventTrigger;
   beforeEach(() => {
-    client = createMockChatClientAndDeclaratify();
+    client = createStatefulChatClientMock();
     client.startRealtimeNotifications();
   });
 
@@ -355,7 +373,7 @@ describe('declarative chatClient subscribe to event properly after startRealtime
 describe('declarative chatClient unsubscribe', () => {
   test('unsubscribe events correctly ', async () => {
     const threadId = 'threadId1';
-    const client = createMockChatClientAndDeclaratify();
+    const client = createStatefulChatClientMock();
     await client.startRealtimeNotifications();
 
     await client.stopRealtimeNotifications();
@@ -377,7 +395,7 @@ describe('declarative chatClient unsubscribe', () => {
 
 describe('declarative chatClient onStateChange', () => {
   test('will be triggered when state gets updated', async () => {
-    const client = createMockChatClientAndDeclaratify();
+    const client = createStatefulChatClientMock();
 
     let state: ChatClientState = client.getState();
     let onChangeCalled = false;
@@ -394,7 +412,7 @@ describe('declarative chatClient onStateChange', () => {
   });
 
   test('offStateChange will unsubscribe correctly', async () => {
-    const client = createMockChatClientAndDeclaratify();
+    const client = createStatefulChatClientMock();
 
     let onChangeCalledTimes = 0;
 

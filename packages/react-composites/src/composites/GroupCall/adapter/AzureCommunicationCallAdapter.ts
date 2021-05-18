@@ -12,7 +12,6 @@ import {
 import {
   CallAgent,
   Call,
-  CallClient,
   CallClientOptions,
   AudioOptions,
   LocalVideoStream as SDKLocalVideoStream,
@@ -305,7 +304,7 @@ export const createAzureCommunicationCallAdapter = async (
 ): Promise<CallAdapter> => {
   const userId = getIdFromToken(token);
 
-  const callClient = createStatefulCallClient(new CallClient(callClientOptions), userId);
+  const callClient = createStatefulCallClient({ userId }, callClientOptions);
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
   const callAgent = await callClient.createCallAgent(
     createAzureCommunicationUserCredential(token, refreshTokenCallback),

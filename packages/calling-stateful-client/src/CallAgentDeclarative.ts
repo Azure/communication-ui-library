@@ -161,8 +161,8 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
  * the given context.
  *
  * @param callAgent - CallAgent from SDK
- * @param context - CallContext from CallClientDeclarative
- * @param internalContext- InternalCallContext from CallClientDeclarative
+ * @param context - CallContext from StatefulCallClient
+ * @param internalContext- InternalCallContext from StatefulCallClient
  */
 export const callAgentDeclaratify = (
   callAgent: CallAgent,
