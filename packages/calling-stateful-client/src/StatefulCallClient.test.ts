@@ -3,8 +3,6 @@
 
 import {
   Call,
-  CallAgent,
-  CallClient,
   CallFeatureFactoryType,
   CreateViewOptions,
   Features,
@@ -16,7 +14,7 @@ import {
   VideoDeviceInfo,
   VideoStreamRendererView
 } from '@azure/communication-calling';
-import { createStatefulCallClient, StatefulCallClient } from './CallClientDeclarative';
+import { createStatefulCallClient, StatefulCallClient } from './StatefulCallClient';
 import { getRemoteParticipantKey } from './Converter';
 import {
   addMockEmitter,
@@ -36,10 +34,21 @@ import {
 
 mockoutObjectFreeze();
 
+const mockCallId = 'a';
+const mockCallId2 = 'b';
+const mockParticipantCommunicationUserId = 'c';
+const mockDisplayName = 'd';
+const mockUserId = 'e';
+
+let mockCallAgent: MockCallAgent;
 jest.mock('@azure/communication-calling', () => {
   return {
     CallClient: jest.fn().mockImplementation(() => {
-      return {};
+      return {
+        createCallAgent: () => {
+          return Promise.resolve(mockCallAgent);
+        }
+      };
     }),
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     VideoStreamRenderer: jest.fn().mockImplementation((videoStream: LocalVideoStream | RemoteVideoStream) => {
@@ -66,14 +75,7 @@ jest.mock('@azure/communication-calling', () => {
   };
 });
 
-const mockCallId = 'a';
-const mockCallId2 = 'b';
-const mockParticipantCommunicationUserId = 'c';
-const mockDisplayName = 'd';
-const mockUserId = 'e';
-
 interface TestData {
-  mockCallClient: any;
   mockCallAgent: MockCallAgent;
   mockCall: MockCall;
   mockRemoteParticipant: MockRemoteParticipant;
@@ -81,18 +83,10 @@ interface TestData {
 }
 
 function createClientAndAgentMocks(testData: TestData): void {
-  const mockCallClient = new CallClient();
-  const mockCallAgent = { calls: [] as ReadonlyArray<Call>, displayName: mockDisplayName } as MockCallAgent;
+  mockCallAgent = { calls: [] as ReadonlyArray<Call>, displayName: mockDisplayName } as MockCallAgent;
   addMockEmitter(mockCallAgent);
-  mockCallClient.createCallAgent = (): Promise<CallAgent> => {
-    return Promise.resolve(mockCallAgent);
-  };
-  testData.mockCallClient = mockCallClient;
   testData.mockCallAgent = mockCallAgent;
-}
-
-function createDeclarativeClient(testData: TestData): void {
-  testData.mockStatefulCallClient = createStatefulCallClient(testData.mockCallClient, '');
+  testData.mockStatefulCallClient = createStatefulCallClient({ userId: mockUserId });
 }
 
 async function createMockCallAndEmitCallsUpdated(
@@ -158,17 +152,15 @@ async function waitWithBreakCondition(breakCondition: () => boolean): Promise<vo
   }
 }
 
-describe('declarative call client', () => {
+describe('Stateful call client', () => {
   test('should allow developer to specify userId and provide access to it in state', async () => {
-    const callClient = new CallClient();
-    const StatefulCallClient = createStatefulCallClient(callClient, mockUserId);
+    const StatefulCallClient = createStatefulCallClient({ userId: mockUserId });
     expect(StatefulCallClient.getState().userId).toBe(mockUserId);
   });
 
   test('should update callAgent state and have displayName when callAgent is created', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
-    createDeclarativeClient(testData);
     await createMockCallAndEmitCallsUpdated(testData);
 
     expect(testData.mockStatefulCallClient.getState().callAgent).toBeDefined();
@@ -178,7 +170,6 @@ describe('declarative call client', () => {
   test('should update state when call added in `callUpdated` event and subscribe to call', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
-    createDeclarativeClient(testData);
     expect(testData.mockStatefulCallClient.getState().calls.size).toBe(0);
     await createMockCallAndEmitCallsUpdated(testData);
     expect(testData.mockStatefulCallClient.getState().calls.size).toBe(1);
@@ -188,7 +179,6 @@ describe('declarative call client', () => {
   test('should update state when call removed in `callUpdated` event and unsubscribe to call', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
-    createDeclarativeClient(testData);
     await createMockCallAndEmitCallsUpdated(testData);
 
     testData.mockCallAgent.calls = [];
@@ -204,7 +194,6 @@ describe('declarative call client', () => {
   test('should update state when call `stateChanged` event', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
-    createDeclarativeClient(testData);
     await createMockCallAndEmitCallsUpdated(testData);
 
     testData.mockCall.state = 'InLobby';
@@ -219,7 +208,6 @@ describe('declarative call client', () => {
   test('should update state when call `idChanged` event and update participantListeners', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
-    createDeclarativeClient(testData);
     await createMockCallAndEmitCallsUpdated(testData);
     await createMockParticipantAndEmitParticipantUpdated(testData);
 
@@ -254,7 +242,6 @@ describe('declarative call client', () => {
   test('should update state when call `isScreenSharingOnChanged` event', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
-    createDeclarativeClient(testData);
     await createMockCallAndEmitCallsUpdated(testData);
 
     const oldIsScreenSharingOn = testData.mockCall.isScreenSharingOn;
@@ -273,7 +260,6 @@ describe('declarative call client', () => {
   test('should update state when call added local video `localVideoStreamsUpdated` event', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
-    createDeclarativeClient(testData);
     await createMockCallAndEmitCallsUpdated(testData);
 
     testData.mockCall.localVideoStreams = [{} as LocalVideoStream];
@@ -291,7 +277,6 @@ describe('declarative call client', () => {
   test('should update state when call remove local video `localVideoStreamsUpdated` event', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
-    createDeclarativeClient(testData);
     await createMockCallAndEmitCallsUpdated(testData);
 
     testData.mockCall.localVideoStreams = [
@@ -317,7 +302,6 @@ describe('declarative call client', () => {
   test('should update state when participant added in `remoteParticipantsUpdated` and subscribe to it', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
-    createDeclarativeClient(testData);
     await createMockCallAndEmitCallsUpdated(testData);
     await createMockParticipantAndEmitParticipantUpdated(testData);
     expect(testData.mockStatefulCallClient.getState().calls.get(mockCallId)?.remoteParticipants.size).toBe(1);
@@ -327,7 +311,6 @@ describe('declarative call client', () => {
   test('should update state when participant removed in `remoteParticipantsUpdated` and unsubscribe toit', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
-    createDeclarativeClient(testData);
     await createMockCallAndEmitCallsUpdated(testData);
     await createMockParticipantAndEmitParticipantUpdated(testData);
 
@@ -347,7 +330,6 @@ describe('declarative call client', () => {
   test('should update state when participant `stateChanged`', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
-    createDeclarativeClient(testData);
     await createMockCallAndEmitCallsUpdated(testData);
     await createMockParticipantAndEmitParticipantUpdated(testData);
 
@@ -368,7 +350,6 @@ describe('declarative call client', () => {
   test('should update state when participant `isMutedChanged`', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
-    createDeclarativeClient(testData);
     await createMockCallAndEmitCallsUpdated(testData);
     await createMockParticipantAndEmitParticipantUpdated(testData);
 
@@ -390,7 +371,6 @@ describe('declarative call client', () => {
   test('should update state when participant `displayNameChanged`', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
-    createDeclarativeClient(testData);
     await createMockCallAndEmitCallsUpdated(testData);
     await createMockParticipantAndEmitParticipantUpdated(testData);
 
@@ -412,7 +392,6 @@ describe('declarative call client', () => {
   test('should update state when participant `isSpeakingChanged`', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
-    createDeclarativeClient(testData);
     await createMockCallAndEmitCallsUpdated(testData);
     await createMockParticipantAndEmitParticipantUpdated(testData);
 
@@ -435,7 +414,6 @@ describe('declarative call client', () => {
   test('should update state when participant added remote video `videoStreamsUpdated`', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
-    createDeclarativeClient(testData);
     await createMockCallAndEmitCallsUpdated(testData);
     await createMockParticipantAndEmitParticipantUpdated(testData);
 
@@ -461,7 +439,6 @@ describe('declarative call client', () => {
   test('should update state when participant removed remote video `videoStreamsUpdated`', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
-    createDeclarativeClient(testData);
     await createMockCallAndEmitCallsUpdated(testData);
     await createMockParticipantAndEmitParticipantUpdated(testData);
 
@@ -499,7 +476,6 @@ describe('declarative call client', () => {
   test('should update state when remote video stream emits `isAvailableChanged`', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
-    createDeclarativeClient(testData);
     await createMockCallAndEmitCallsUpdated(testData);
     await createMockParticipantAndEmitParticipantUpdated(testData);
 
@@ -541,7 +517,6 @@ describe('declarative call client', () => {
   test('should move participant to ended when participant is removed', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
-    createDeclarativeClient(testData);
     await createMockCallAndEmitCallsUpdated(testData);
     await createMockParticipantAndEmitParticipantUpdated(testData);
 
@@ -571,7 +546,6 @@ describe('declarative call client', () => {
   test('should render the stream and add to state when createView is called', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
-    createDeclarativeClient(testData);
     await createMockCallAndEmitCallsUpdated(testData);
     await createMockParticipantAndEmitParticipantUpdated(testData);
 
@@ -654,7 +628,6 @@ describe('declarative call client', () => {
   test('should stop rendering the stream and remove from state when disposeView is called', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
-    createDeclarativeClient(testData);
     await createMockCallAndEmitCallsUpdated(testData);
     await createMockParticipantAndEmitParticipantUpdated(testData);
 
@@ -769,7 +742,6 @@ describe('declarative call client', () => {
   test('should stop rendering the stream and remove from state when call ends', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
-    createDeclarativeClient(testData);
     await createMockCallAndEmitCallsUpdated(testData);
     await createMockParticipantAndEmitParticipantUpdated(testData);
 
@@ -870,7 +842,6 @@ describe('declarative call client', () => {
   test('should detect if call already has recording active', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
-    createDeclarativeClient(testData);
     const mockCall = createMockCall(mockCallId);
     const featureCache = new Map<any, any>();
     featureCache.set(Features.Recording, addMockEmitter({ name: 'Default', isRecordingActive: true }));
@@ -887,7 +858,6 @@ describe('declarative call client', () => {
   test('should detect if call already has transcription active', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
-    createDeclarativeClient(testData);
     const mockCall = createMockCall(mockCallId);
     const featureCache = new Map<any, any>();
     featureCache.set(Features.Transcription, addMockEmitter({ name: 'Default', isTranscriptionActive: true }));
@@ -907,7 +877,6 @@ describe('declarative call client', () => {
   test('should detect recording changes in call', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
-    createDeclarativeClient(testData);
     const mockCall = createMockCall(mockCallId);
     const featureCache = new Map<any, any>();
     featureCache.set(Features.Recording, addMockEmitter({ name: 'Default', isRecordingActive: true }));
@@ -934,7 +903,6 @@ describe('declarative call client', () => {
   test('should detect transcription changes in call', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
-    createDeclarativeClient(testData);
     const mockCall = createMockCall(mockCallId);
     const featureCache = new Map<any, any>();
     featureCache.set(Features.Transcription, addMockEmitter({ name: 'Default', isTranscriptionActive: true }));
@@ -967,7 +935,6 @@ describe('declarative call client', () => {
   test('should unsubscribe to recording changes when call ended', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
-    createDeclarativeClient(testData);
     const mockCall = createMockCall(mockCallId);
     const featureCache = new Map<any, any>();
     featureCache.set(Features.Recording, addMockEmitter({ name: 'Default', isRecordingActive: true }));
@@ -999,7 +966,6 @@ describe('declarative call client', () => {
   test('should unsubscribe to transcription changes when call ended', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
-    createDeclarativeClient(testData);
     const mockCall = createMockCall(mockCallId);
     const featureCache = new Map<any, any>();
     featureCache.set(Features.Transcription, addMockEmitter({ name: 'Default', isTranscriptionActive: true }));
@@ -1030,7 +996,6 @@ describe('declarative call client', () => {
   test('should detect transfer requests in call', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
-    createDeclarativeClient(testData);
     const mockCall = createMockCall(mockCallId);
     const transfer = addMockEmitter({ name: 'Default' });
     const featureCache = new Map<any, any>();
@@ -1054,7 +1019,6 @@ describe('declarative call client', () => {
   test('should unsubscribe to transfer requests when call ended', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
-    createDeclarativeClient(testData);
     const mockCall = createMockCall(mockCallId);
     const featureCache = new Map<any, any>();
     featureCache.set(Features.Transfer, addMockEmitter({ name: 'Default' }));
