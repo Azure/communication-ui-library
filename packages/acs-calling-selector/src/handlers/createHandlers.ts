@@ -138,7 +138,7 @@ export const createDefaultCallingHandlers = memoizeOne(
       const toggledIsActive = !callClient.state.deviceManager.isMicrophoneActive;
       await deviceManager.setMicrophoneActive(toggledIsActive);
       if (call) {
-        toggledIsActive ? call.unmute() : call.mute();
+        toggledIsActive ? await call?.unmute() : await call?.mute();
       }
     };
 
