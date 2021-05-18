@@ -5,7 +5,8 @@ import { mergeStyles, Stack } from '@fluentui/react';
 import React, { useEffect } from 'react';
 import { ChatClientState } from 'chat-stateful-client';
 import { ChatBaseSelectorProps } from '@azure/acs-chat-selector';
-import { ErrorBar, MessageThread, ParticipantList, SendBox, TypingIndicator } from 'react-components';
+import { MessageThread, ParticipantList, SendBox, TypingIndicator } from 'react-components';
+import { ErrorBar } from '../common/ErrorBar';
 import { useAdapter } from './adapter/ChatAdapterProvider';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
@@ -29,7 +30,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const adapter = useAdapter();
 
   useEffect(() => {
-    adapter.hydrate();
+    adapter.fetchInitialData();
   }, [adapter]);
 
   const messageThreadProps = usePropsFor(MessageThread);

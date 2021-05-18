@@ -1,11 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CommunicationUiErrorSeverity, ErrorBar as ErrorBarComponent } from '@azure/communication-react';
+/**
+ * THIS COMPONENT HAS BEEN REMOVED FROM REACT-COMPONENTS PACKAGE.
+ * AS SUCH THIS STORY HAS BEEN MARKED 'REMOVED' HOWEVER MAY BE RETURNED
+ * WHEN THE COMPOSITE ERROR HANDLING STORY HAS BEEN COMPLETED.
+ */
+
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import { text, select } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
+import { CommunicationUiErrorSeverity, ErrorBar as ErrorBarComponent } from 'react-composites';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { ErrorBarExample } from './snippets/ErrorBar.snippet';

@@ -7,7 +7,6 @@
 import { ChatMessage } from '@azure/communication-chat';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClientState } from 'chat-stateful-client';
-import { CommunicationUiErrorSeverity } from 'react-components';
 import { ErrorInfo } from 'react';
 
 // @public (undocumented)
@@ -163,6 +162,9 @@ export interface CommunicationUiErrorInfo {
     // (undocumented)
     severity: CommunicationUiErrorSeverity;
 }
+
+// @public
+export type CommunicationUiErrorSeverity = 'info' | 'warning' | 'error' | 'ignore';
 
 // @public (undocumented)
 export const createAzureCommunicationChatAdapter: (token: string, endpointUrl: string, threadId: string, displayName: string, refreshTokenCallback?: (() => Promise<string>) | undefined) => Promise<ChatAdapter>;
