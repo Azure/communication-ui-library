@@ -28,7 +28,12 @@ function App(): JSX.Element {
 
   //Add state to the low-level chat client
   setStatefulChatClient(
-    createStatefulChatClient({ userId: userId, displayName: displayName }, endpointUrl, tokenCredential)
+    createStatefulChatClient({
+      userId: userId,
+      displayName: displayName,
+      endpoint: endpointUrl,
+      credential: tokenCredential
+    })
   );
 
   return (

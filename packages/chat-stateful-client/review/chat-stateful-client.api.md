@@ -22,12 +22,6 @@ export type ChatClientState = {
 };
 
 // @public (undocumented)
-export type ChatConfig = {
-    userId: CommunicationIdentifierKind;
-    displayName: string;
-};
-
-// @public (undocumented)
 export type ChatMessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
 
 // @public (undocumented)
@@ -56,7 +50,7 @@ export type ChatThreadProperties = {
 export type CommunicationIdentifierAsKey = string;
 
 // @public
-export const createStatefulChatClient: (chatConfig: ChatConfig, endpoint: string, credential: CommunicationTokenCredential, options?: ChatClientOptions | undefined) => StatefulChatClient;
+export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: ChatClientOptions | undefined) => StatefulChatClient;
 
 // @public (undocumented)
 export const getCommunicationIdentifierAsKey: (identifier: CommunicationIdentifier) => CommunicationIdentifierAsKey;
@@ -70,6 +64,14 @@ export interface StatefulChatClient extends ChatClient {
     // (undocumented)
     onStateChange(handler: (state: ChatClientState) => void): void;
 }
+
+// @public
+export type StatefulChatClientArgs = {
+    userId: CommunicationIdentifierKind;
+    displayName: string;
+    endpoint: string;
+    credential: CommunicationTokenCredential;
+};
 
 
 // (No @packageDocumentation comment for this package)

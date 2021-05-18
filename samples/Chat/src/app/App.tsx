@@ -38,11 +38,12 @@ export default (): JSX.Element => {
       // This hack can be removed when `getIdFromToken` is dropped in favour of actually passing in user credentials.
       const userIdKind = { kind: 'communicationUser', communicationUserId: userId } as CommunicationUserKind;
       const createClient = async (): Promise<void> => {
-        const chatClient = createStatefulChatClient(
-          { userId: userIdKind, displayName },
-          endpointUrl,
-          createAzureCommunicationUserCredential(token, refreshTokenAsync(userId))
-        );
+        const chatClient = createStatefulChatClient({
+          userId: userIdKind,
+          displayName,
+          endpoint: endpointUrl,
+          credential: createAzureCommunicationUserCredential(token, refreshTokenAsync(userId))
+        });
 
         setChatClient(chatClient);
         setChatThreadClient(await chatClient.getChatThreadClient(threadId));

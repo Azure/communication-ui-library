@@ -25,7 +25,7 @@ interface CallingProviderProps {
  * @returns
  */
 export const MockCallingProvider = (props: CallingProviderProps & ErrorHandlingProps): JSX.Element => {
-  const [callClient, setCallClient] = useState<StatefulCallClient>(createStatefulCallClient(''));
+  const [callClient, setCallClient] = useState<StatefulCallClient>(createStatefulCallClient({ userId: '' }));
   const [callAgent, setCallAgent] = useState<CallAgent | undefined>(undefined);
   const [deviceManager, setDeviceManager] = useState<StatefulDeviceManager | undefined>(undefined);
   const [userId, setUserId] = useState<string>('');

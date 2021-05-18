@@ -155,11 +155,12 @@ export const createAzureCommunicationChatAdapter = async (
 
   // This hack can be removed when `getIdFromToken` is dropped in favour of actually passing in user credentials.
   const userId = <CommunicationUserKind>{ kind: 'communicationUser', communicationUserId: rawUserId };
-  const chatClient = createStatefulChatClient(
-    { userId, displayName },
-    endpointUrl,
-    createAzureCommunicationUserCredential(token, refreshTokenCallback)
-  );
+  const chatClient = createStatefulChatClient({
+    userId,
+    displayName,
+    endpoint: endpointUrl,
+    credential: createAzureCommunicationUserCredential(token, refreshTokenCallback)
+  });
   const chatThreadClient = await chatClient.getChatThreadClient(threadId);
 
   chatClient.startRealtimeNotifications();

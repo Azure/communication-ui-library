@@ -7,8 +7,7 @@ import { ChatClientState } from './ChatClientState';
 import { EventSubscriber } from './EventSubscriber';
 import { chatThreadClientDeclaratify } from './StatefulChatThreadClient';
 import { createDecoratedListThreads } from './iterators/createDecoratedListThreads';
-import { ChatConfig } from './types/ChatConfig';
-import { CommunicationTokenCredential } from '@azure/communication-common';
+import { CommunicationIdentifierKind, CommunicationTokenCredential } from '@azure/communication-common';
 
 export interface StatefulChatClient extends ChatClient {
   getState(): ChatClientState;
@@ -92,26 +91,29 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
 };
 
 /**
+ * Required arguments to construct the stateful chat client
+ */
+export type StatefulChatClientArgs = {
+  userId: CommunicationIdentifierKind;
+  displayName: string;
+  endpoint: string;
+  credential: CommunicationTokenCredential;
+};
+
+/**
  * Creates a stateful ChatClient {@Link StatefulChatClient} by proxying ChatClient
  * {@Link @azure/communication-chat#ChatClient} with ProxyChatClient {@Link ProxyChatClient} which then allows access
  * to state in a declarative way.
- *
- * @param chatConfig - {@Link ChatConfig}
- * @param endpoint - {@Link @azure/communication-chat#ChatClient}
- * @param credential - {@Link @azure/communication-chat#ChatClient}
- * @param callClientOptions - {@Link @azure/communication-chat#ChatClientOptions}
  */
 export const createStatefulChatClient = (
-  chatConfig: ChatConfig,
-  endpoint: string,
-  credential: CommunicationTokenCredential,
+  args: StatefulChatClientArgs,
   options?: ChatClientOptions
 ): StatefulChatClient => {
-  const chatClient = new ChatClient(endpoint, credential, options);
+  const chatClient = new ChatClient(args.endpoint, args.credential, options);
   const context = new ChatContext();
   let eventSubscriber: EventSubscriber;
 
-  context.updateChatConfig(chatConfig);
+  context.updateChatConfig(args.userId, args.displayName);
 
   const proxy = new Proxy(chatClient, proxyChatClient);
 

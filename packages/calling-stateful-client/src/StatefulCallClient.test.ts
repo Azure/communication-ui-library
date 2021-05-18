@@ -86,7 +86,7 @@ function createClientAndAgentMocks(testData: TestData): void {
   mockCallAgent = { calls: [] as ReadonlyArray<Call>, displayName: mockDisplayName } as MockCallAgent;
   addMockEmitter(mockCallAgent);
   testData.mockCallAgent = mockCallAgent;
-  testData.mockStatefulCallClient = createStatefulCallClient(mockUserId);
+  testData.mockStatefulCallClient = createStatefulCallClient({ userId: mockUserId });
 }
 
 async function createMockCallAndEmitCallsUpdated(
@@ -154,7 +154,7 @@ async function waitWithBreakCondition(breakCondition: () => boolean): Promise<vo
 
 describe('Stateful call client', () => {
   test('should allow developer to specify userId and provide access to it in state', async () => {
-    const StatefulCallClient = createStatefulCallClient(mockUserId, {});
+    const StatefulCallClient = createStatefulCallClient({ userId: mockUserId });
     expect(StatefulCallClient.state.userId).toBe(mockUserId);
   });
 

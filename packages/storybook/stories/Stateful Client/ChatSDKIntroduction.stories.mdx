@@ -37,7 +37,12 @@ const endpointUrl = '<ENDPOINT>';
 const userAccessToken = '<USER_ACCESS_TOKEN>';
 const tokenCredential = new AzureCommunicationTokenCredential(userAccessToken);
 
-const StatefulChatClient = createStatefulChatClient({ userId, displayName }, endpointUrl, tokenCredential);
+const StatefulChatClient = createStatefulChatClient({
+  userId: userId,
+  displayName: displayName,
+  endpoint: endpointUrl,
+  credential: tokenCredential
+});
 
 // You can then use the `StatefulChatClient` in the same way as a `ChatClient` with a slight variation.
 // Details about the variation in usage are documented below under `Usage` section.

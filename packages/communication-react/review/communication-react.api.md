@@ -205,12 +205,6 @@ export type ChatCompositeClientState = {
 };
 
 // @public (undocumented)
-export type ChatConfig = {
-    userId: CommunicationIdentifierKind;
-    displayName: string;
-};
-
-// @public (undocumented)
 export type ChatEvent = 'messageReceived' | 'participantsJoined' | 'error';
 
 // @public (undocumented)
@@ -490,10 +484,10 @@ export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThr
 export const createDefaultChatHandlersForComponent: <Props>(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, Props>>;
 
 // @public
-export const createStatefulCallClient: (userId: string, callClientOptions?: CallClientOptions | undefined) => StatefulCallClient;
+export const createStatefulCallClient: (callClientArgs: StatefulCallClientArgs, callClientOptions?: CallClientOptions | undefined) => StatefulCallClient;
 
 // @public
-export const createStatefulChatClient: (chatConfig: ChatConfig, endpoint: string, credential: CommunicationTokenCredential, options?: ChatClientOptions | undefined) => StatefulChatClient;
+export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: ChatClientOptions | undefined) => StatefulChatClient;
 
 // @public (undocumented)
 export type CustomMessage = Message<'custom'>;
@@ -904,6 +898,11 @@ export interface StatefulCallClient extends CallClient {
     state: CallClientState;
 }
 
+// @public
+export type StatefulCallClientArgs = {
+    userId: string;
+};
+
 // @public (undocumented)
 export interface StatefulChatClient extends ChatClient {
     // (undocumented)
@@ -913,6 +912,14 @@ export interface StatefulChatClient extends ChatClient {
     // (undocumented)
     onStateChange(handler: (state: ChatClientState) => void): void;
 }
+
+// @public
+export type StatefulChatClientArgs = {
+    userId: CommunicationIdentifierKind;
+    displayName: string;
+    endpoint: string;
+    credential: CommunicationTokenCredential;
+};
 
 // @public (undocumented)
 export interface StatefulDeviceManager extends DeviceManager_2 {

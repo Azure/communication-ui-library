@@ -44,7 +44,7 @@ const CallClientProviderBase = (props: CallClientProvider): JSX.Element => {
   const userIdFromToken = token ? getIdFromToken(token) : '';
 
   const [callClient, setCallClient] = useState<StatefulCallClient>(
-    createStatefulCallClient(userIdFromToken, callClientOptions)
+    createStatefulCallClient({ userId: userIdFromToken }, callClientOptions)
   );
   const [deviceManager, setDeviceManager] = useState<StatefulDeviceManager | undefined>(undefined);
   const [userId, setUserId] = useState<string>(userIdFromToken);

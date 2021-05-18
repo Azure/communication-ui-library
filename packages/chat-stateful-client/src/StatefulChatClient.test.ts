@@ -105,14 +105,12 @@ type StatefulChatClientWithEventTrigger = StatefulChatClient & {
 
 function createStatefulChatClientMock(): StatefulChatClientWithEventTrigger {
   mockEventHandlersRef.value = {};
-  const declarativeClient = createStatefulChatClient(
-    {
-      displayName: '',
-      userId: { kind: 'communicationUser', communicationUserId: 'userId1' }
-    },
-    '',
-    new MockCommunicationUserCredential()
-  );
+  const declarativeClient = createStatefulChatClient({
+    displayName: '',
+    userId: { kind: 'communicationUser', communicationUserId: 'userId1' },
+    endpoint: '',
+    credential: new MockCommunicationUserCredential()
+  });
 
   Object.defineProperty(declarativeClient, 'triggerEvent', {
     value: async (eventName: string, e: any): Promise<void> => {

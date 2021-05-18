@@ -137,18 +137,28 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
 }
 
 /**
+ * Required arguments to construct the stateful call client
+ */
+export type StatefulCallClientArgs = {
+  /**
+   * UserId from SDK. This is provided for developer convenience to easily access the userId from the
+   * state. It is not used by StatefulCallClient so if you do not have this value or do not want to use this value,
+   * you could pass any dummy value like empty string.
+   */
+  userId: string;
+};
+
+/**
  * Creates a stateful CallClient {@Link StatefulCallClient} by proxying CallClient
  * {@Link @azure/communication-calling#CallClient} with ProxyCallClient {@Link ProxyCallClient} which then allows access
  * to state in a declarative way.
- *
- * @param userId - UserId from SDK. This is provided for developer convenience to easily access the userId from the
- *   state. It is not used by StatefulCallClient so if you do not have this value or do not want to use this value,
- *   you could pass any dummy value like empty string.
- * @param callClientOptions - {@Link @azure/communication-calling#CallClientOptions}
  */
-export const createStatefulCallClient = (userId: string, callClientOptions?: CallClientOptions): StatefulCallClient => {
+export const createStatefulCallClient = (
+  callClientArgs: StatefulCallClientArgs,
+  callClientOptions?: CallClientOptions
+): StatefulCallClient => {
   const callClient = new CallClient(callClientOptions);
-  const context: CallContext = new CallContext(userId);
+  const context: CallContext = new CallContext(callClientArgs.userId);
   const internalContext: InternalCallContext = new InternalCallContext();
 
   Object.defineProperty(callClient, 'state', {
