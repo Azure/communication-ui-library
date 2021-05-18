@@ -10,6 +10,7 @@ import { Call as Call_2 } from 'calling-stateful-client';
 import { CallAgent } from '@azure/communication-calling';
 import { CallClientState } from 'calling-stateful-client';
 import { CallParticipant } from 'react-components';
+import { CommonProperties } from 'acs-ui-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { DeviceManager } from 'calling-stateful-client';
 import { IncomingCall } from 'calling-stateful-client';
@@ -41,11 +42,6 @@ export const cameraButtonSelector: reselect.OutputParametricSelector<CallClientS
     checked: boolean;
 }>;
 
-// @public
-export type CommonProperties_2<A, B> = {
-    [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
-}[keyof A & keyof B];
-
 // @public (undocumented)
 export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => {
     onHangUp: () => Promise<void>;
@@ -53,6 +49,8 @@ export const createDefaultCallingHandlers: (callClient: StatefulCallClient, call
     onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
     onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
     onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions | undefined) => Call | undefined;
+    onStartScreenShare: () => Promise<void>;
+    onStopScreenShare: () => Promise<void>;
     onToggleCamera: () => Promise<void>;
     onToggleMicrophone: () => Promise<void>;
     onToggleScreenShare: () => Promise<void>;
@@ -69,6 +67,8 @@ export const createDefaultCallingHandlersForComponent: <Props>(callClient: State
     onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
     onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
     onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions | undefined) => Call | undefined;
+    onStartScreenShare: () => Promise<void>;
+    onStopScreenShare: () => Promise<void>;
     onToggleCamera: () => Promise<void>;
     onToggleMicrophone: () => Promise<void>;
     onToggleScreenShare: () => Promise<void>;
@@ -76,12 +76,14 @@ export const createDefaultCallingHandlersForComponent: <Props>(callClient: State
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions | undefined) => Promise<void>;
     onParticipantRemove: (userId: string) => void;
     onStartLocalVideo: () => Promise<void>;
-}, CommonProperties_2<{
+}, CommonProperties<{
     onHangUp: () => Promise<void>;
     onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
     onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
     onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
     onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions | undefined) => Call | undefined;
+    onStartScreenShare: () => Promise<void>;
+    onStopScreenShare: () => Promise<void>;
     onToggleCamera: () => Promise<void>;
     onToggleMicrophone: () => Promise<void>;
     onToggleScreenShare: () => Promise<void>;

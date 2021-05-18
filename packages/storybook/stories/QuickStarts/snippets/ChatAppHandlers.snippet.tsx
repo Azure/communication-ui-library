@@ -1,7 +1,13 @@
 import { sendBoxSelector, chatThreadSelector, createDefaultChatHandlersForComponent } from '@azure/acs-chat-selector';
 import { ChatClient, ChatThreadClient } from '@azure/communication-chat';
-import { AzureCommunicationUserCredential } from '@azure/communication-common';
-import { FluentThemeProvider, MessageThread, SendBox, MessageThreadProps, SendBoxProps } from '@azure/communication-ui';
+import { AzureCommunicationTokenCredential } from '@azure/communication-common';
+import {
+  FluentThemeProvider,
+  MessageThread,
+  SendBox,
+  MessageThreadProps,
+  SendBoxProps
+} from '@azure/communication-react';
 import { createStatefulChatClient, StatefulChatClient } from 'chat-stateful-client';
 import React, { useState, useEffect } from 'react';
 
@@ -9,7 +15,7 @@ function App(): JSX.Element {
   const endpointUrl = 'INSERT ENDPOINT URL FOR RESOURCE';
   const userAccessToken = 'INSERT ACCESS TOKEN FOR RESOURCE';
   const userId = 'INSERT USER ID';
-  const tokenCredential = new AzureCommunicationUserCredential(userAccessToken);
+  const tokenCredential = new AzureCommunicationTokenCredential(userAccessToken);
   const threadId = 'INSERT THREAD ID ';
   const displayName = 'INSERT DISPLAY NAME';
 

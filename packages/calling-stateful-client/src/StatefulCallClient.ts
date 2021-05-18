@@ -24,7 +24,7 @@ export interface StatefulCallClient extends CallClient {
    * Holds all the state that we could proxy from CallClient {@Link @azure/communication-calling#CallClient} as
    * CallClientState {@Link CallClientState}.
    */
-  state: CallClientState;
+  getState(): CallClientState;
   /**
    * Allows a handler to be registered for 'stateChanged' events.
    *
@@ -161,9 +161,9 @@ export const createStatefulCallClient = (
   const context: CallContext = new CallContext(callClientArgs.userId);
   const internalContext: InternalCallContext = new InternalCallContext();
 
-  Object.defineProperty(callClient, 'state', {
+  Object.defineProperty(callClient, 'getState', {
     configurable: false,
-    get: () => context.getState()
+    value: () => context.getState()
   });
   Object.defineProperty(callClient, 'onStateChange', {
     configurable: false,
