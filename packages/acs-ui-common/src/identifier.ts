@@ -28,3 +28,9 @@ export const toFlatCommunicationIdentifier = (id: CommunicationIdentifier): Flat
   }
   return id.id;
 };
+
+export const fromFlatCommunicationIdentifier = (id: FlatCommunicationIdentifier): CommunicationIdentifier => {
+  // This implementation is currently a hack that only works with ACS identifiers.
+  // TODO: Make `toFlatCommunicationIdentifier` not be lossy so this can reverse the process.
+  return { communicationUserId: id };
+};
