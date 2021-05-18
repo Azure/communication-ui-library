@@ -13,7 +13,9 @@ function TestCallClientComponent(props: DefaultCallingHandlers): ReactElement | 
 }
 
 class MockCallClient {
-  state: any;
+  getState(): any {
+    throw new Error('Method not implemented.');
+  }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onStateChange(handler: (state: any) => void): void {
     throw new Error('Method not implemented.');

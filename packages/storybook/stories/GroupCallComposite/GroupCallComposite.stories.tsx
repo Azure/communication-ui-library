@@ -7,7 +7,7 @@ import { text } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useEffect, useState } from 'react';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
-import { Call as GroupCallComposite } from 'react-composites';
+import { Call as GroupCallComposite, CallAdapter, createAzureCommunicationCallAdapter } from 'react-composites';
 import { v1 as createGUID } from 'uuid';
 
 import {
@@ -93,16 +93,20 @@ export const GroupCall: () => JSX.Element = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [connectionString]);
 
+  const [adapter, setAdapter] = useState<CallAdapter>();
+
+  useEffect(() => {
+    if (token && userId && groupId) {
+      const createAdapter = async (): Promise<void> => {
+        setAdapter(await createAzureCommunicationCallAdapter(token, groupId, 'test name'));
+      };
+      createAdapter();
+    }
+  }, [token, userId, groupId]);
+
   return (
     <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
-      {connectionString && (
-        <GroupCallComposite
-          displayName={`user${Math.ceil(Math.random() * 1000)}`}
-          userId={userId}
-          groupId={groupId}
-          token={token}
-        />
-      )}
+      {adapter && <GroupCallComposite adapter={adapter} />}
       {!connectionString && CompositeConnectionParamsErrMessage([emptyConfigTips])}
     </div>
   );
