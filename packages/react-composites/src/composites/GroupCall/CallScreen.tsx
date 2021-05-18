@@ -19,75 +19,47 @@ import { isInCall } from '../../utils/SDKUtils';
 import { ErrorHandlingProps } from '../../providers/ErrorProvider';
 import { ErrorBar as ErrorBarComponent } from 'react-components';
 import { CallControls } from '../common/CallControls';
-import { useCall, useCallClient, useCallContext, useCallingContext } from '../../providers';
-import { CallClientState, StatefulCallClient } from 'calling-stateful-client';
-import { AudioOptions, CallState } from '@azure/communication-calling';
+import { useAdapter } from './adapter/CallAdapterProvider';
+import { useSelector } from './hooks/useSelector';
+import { callStatusSelector } from './selectors/callStatusSelector';
+import { mediaGallerySelector } from './selectors/mediaGallerySelector';
+import { useHandlers } from './hooks/useHandlers';
 
 export const MINI_HEADER_WINDOW_WIDTH = 450;
 
 export interface CallScreenProps {
   screenWidth: number;
   endCallHandler(): void;
-  groupId: string;
 }
 
 const spinnerLabel = 'Initializing call client...';
 
 export const CallScreen = (props: CallScreenProps & ErrorHandlingProps): JSX.Element => {
-  const { groupId, screenWidth, endCallHandler } = props;
+  const { screenWidth, endCallHandler } = props;
 
   const ErrorBar = connectFuncsToContext(ErrorBarComponent, MapToErrorBarProps);
 
-  const { callAgent } = useCallingContext();
-  const { setCall, localVideoStream, isMicrophoneEnabled } = useCallContext();
-  const call = useCall();
-  const callClient: StatefulCallClient = useCallClient();
-  const [callState, setCallState] = useState<CallState | undefined>(undefined);
-  const [isScreenSharingOn, setIsScreenSharingOn] = useState<boolean | undefined>(undefined);
   const [joinedCall, setJoinedCall] = useState<boolean>(false);
 
   // To use useProps to get these states, we need to create another file wrapping Call,
   // It seems unnecessary in this case, so we get the updated states using this approach.
-  useEffect(() => {
-    const onStateChange = (state: CallClientState): void => {
-      call?.id && setCallState(state.calls.get(call.id)?.state);
-      console.log(call?.id && state.calls.get(call.id)?.state);
-      call?.id && setIsScreenSharingOn(state.calls.get(call.id)?.isScreenSharingOn);
-    };
+  const { callStatus, isScreenShareOn } = useSelector(callStatusSelector);
 
-    callClient.onStateChange(onStateChange);
+  const mediaGalleryProps = useSelector(mediaGallerySelector);
+  const mediaGalleryHandlers = useHandlers(MediaGallery);
 
-    return () => {
-      callClient.offStateChange(onStateChange);
-    };
-  }, [call?.id, callClient]);
+  const adapter = useAdapter();
 
   useEffect(() => {
-    if (isInCall(callState ?? 'None')) {
-      document.title = `${groupId} group call sample`;
-    } else {
-      if (!isInCall(callState ?? 'None') && callAgent && !joinedCall) {
-        const audioOptions: AudioOptions = { muted: !isMicrophoneEnabled };
-        const videoOptions = { localVideoStreams: localVideoStream ? [localVideoStream] : undefined };
-
-        const call = callAgent.join(
-          {
-            groupId
-          },
-          {
-            audioOptions,
-            videoOptions
-          }
-        );
-        setCall(call);
-        setJoinedCall(true);
-      }
+    if (!joinedCall) {
+      adapter.joinCall();
     }
-  }, [callState, groupId, callAgent, setCall, isMicrophoneEnabled, localVideoStream, joinedCall]);
+    setJoinedCall(true);
+  }, [adapter, joinedCall]);
 
   return (
     <>
-      {isInCall(call?.state ?? 'None') ? (
+      {isInCall(callStatus ?? 'None') ? (
         <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow>
           <Stack.Item styles={headerStyles}>
             <Stack className={props.screenWidth > MINI_HEADER_WINDOW_WIDTH ? headerContainer : headerCenteredContainer}>
@@ -96,11 +68,11 @@ export const CallScreen = (props: CallScreenProps & ErrorHandlingProps): JSX.Ele
             <ErrorBar />
           </Stack.Item>
           <Stack.Item styles={subContainerStyles} grow>
-            {!isScreenSharingOn ? (
-              callState === 'Connected' && (
+            {!isScreenShareOn ? (
+              callStatus === 'Connected' && (
                 <Stack styles={containerStyles} grow>
                   <Stack.Item grow styles={activeContainerClassName}>
-                    <MediaGallery />
+                    <MediaGallery {...mediaGalleryProps} {...mediaGalleryHandlers} />
                   </Stack.Item>
                 </Stack>
               )
