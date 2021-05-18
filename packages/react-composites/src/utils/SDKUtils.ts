@@ -119,3 +119,32 @@ export const isLocalScreenShareSupportedInBrowser = (): boolean => {
     (/chrome/i.test(navigator.userAgent.toLowerCase()) || /safari/i.test(navigator.userAgent.toLowerCase()))
   );
 };
+
+/**
+ * Generates an identifier string for a given RemoteParticipant.identifier.
+ *
+ * @param identifier
+ */
+export function getRemoteParticipantKey(
+  identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind
+): string {
+  let id = '';
+  switch (identifier.kind) {
+    case 'communicationUser': {
+      id = identifier.communicationUserId;
+      break;
+    }
+    case 'phoneNumber': {
+      id = identifier.phoneNumber;
+      break;
+    }
+    case 'microsoftTeamsUser': {
+      id = identifier.microsoftTeamsUserId;
+      break;
+    }
+    default: {
+      id = identifier.id;
+    }
+  }
+  return `${identifier.kind}_${id}`;
+}

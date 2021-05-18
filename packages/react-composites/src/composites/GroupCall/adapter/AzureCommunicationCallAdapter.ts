@@ -17,12 +17,31 @@ import {
   AudioOptions,
   LocalVideoStream as SDKLocalVideoStream,
   AudioDeviceInfo,
-  VideoDeviceInfo
+  VideoDeviceInfo,
+  RemoteParticipant
 } from '@azure/communication-calling';
 import { EventEmitter } from 'events';
-import { CallAdapter, CallEvent, CallState, IncomingCallListener, ParticipantJoinedListener } from './CallAdapter';
-import { createAzureCommunicationUserCredential, getIdFromToken, isInCall } from '../../../utils';
+import {
+  CallAdapter,
+  CallEvent,
+  CallIdChangedListener,
+  CallState,
+  DisplaynameChangedListener,
+  IsMuteChangedListener,
+  IsScreenSharingOnChangedListener,
+  IsSpeakingChangedListener,
+  ParticipantJoinedListener,
+  ParticipantLeftListener
+} from './CallAdapter';
+import {
+  createAzureCommunicationUserCredential,
+  getIdFromToken,
+  getRemoteParticipantKey,
+  isInCall
+} from '../../../utils';
 import { VideoStreamOptions } from 'react-components';
+import { CommunicationUserKind } from '@azure/communication-common';
+import { ParticipantSubscriber } from './ParticipantSubcriber';
 
 // Context of Chat, which is a centralized context for all state updates
 class CallContext {
@@ -92,6 +111,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   private call: Call | undefined;
   private context: CallContext;
   private handlers: DefaultCallingHandlers;
+  private participantSubscribers = new Map<string, ParticipantSubscriber>();
+  private emitter: EventEmitter = new EventEmitter();
   private onClientStateChange: (clientState: CallClientState) => void;
 
   constructor(
@@ -159,6 +180,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       // Resync state after callId is set
       this.context.updateClientState(this.callClient.getState());
       this.handlers = createDefaultCallingHandlers(this.callClient, this.callAgent, this.deviceManager, call);
+      this.subscribeCallEvents();
     }
   }
 
@@ -172,6 +194,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   public async leaveCall(): Promise<void> {
     await this.handlers.onHangUp();
+    this.unsubscribeCallEvents();
     this.call = undefined;
     this.handlers = createDefaultCallingHandlers(this.callClient, this.callAgent, this.deviceManager, undefined);
     this.context.setCallId(undefined);
@@ -266,27 +289,101 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.context.offStateChange(handler);
   }
 
-  on(event: 'incomingCall', listener: IncomingCallListener): void;
   on(event: 'participantJoined', participantsJoinedHandler: ParticipantJoinedListener): void;
+  on(event: 'participantsLeft', participantsLeftHandler: ParticipantLeftListener): void;
+  on(event: 'isMutedChanged', isMuteChanged: IsMuteChangedListener): void;
+  on(event: 'callIdChanged', idChangedListner: CallIdChangedListener): void;
+  on(event: 'isScreenSharingOnChanged', participantsJoinedHandler: IsScreenSharingOnChangedListener): void;
+  on(event: 'displayNameChanged', participantsJoinedHandler: DisplaynameChangedListener): void;
+  on(event: 'isSpeakingChanged', participantsJoinedHandler: IsSpeakingChangedListener): void;
   on(event: 'error', errorHandler: (e: Error) => void): void;
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public on(_event: CallEvent, _listener: (e: any) => void): void {
-    // Need to be implemented from chatClient
-    throw 'Not implemented yet';
+  public on(event: CallEvent, listener: (e: any) => void): void {
+    this.emitter.on(event, listener);
   }
 
-  off(event: 'incomingCall', listener: IncomingCallListener): void;
-  off(event: 'participantJoined', listener: ParticipantJoinedListener): void;
+  private subscribeCallEvents(): void {
+    this.call?.on('remoteParticipantsUpdated', this.onRemoteParticipantsUpdated);
+    this.call?.on('isMutedChanged', this.isMyMutedChanged);
+    this.call?.on('isScreenSharingOnChanged', this.isScreenSharingOnChanged);
+    this.call?.on('idChanged', this.callIdChanged);
+  }
+
+  private unsubscribeCallEvents(): void {
+    for (const subscriber of this.participantSubscribers.values()) {
+      subscriber.unsubscribeAll();
+    }
+    this.call?.off('remoteParticipantsUpdated', this.onRemoteParticipantsUpdated);
+    this.call?.off('isMutedChanged', this.isMyMutedChanged);
+    this.call?.off('isScreenSharingOnChanged', this.isScreenSharingOnChanged);
+    this.call?.off('idChanged', this.callIdChanged);
+  }
+
+  private isMyMutedChanged = (): void => {
+    this.emitter.emit('isMutedChanged', {
+      participantId: createCommunicationIdentifier(this.getState().userId),
+      isMuted: this.call?.isMuted
+    });
+  };
+
+  private onRemoteParticipantsUpdated = ({
+    added,
+    removed
+  }: {
+    added: RemoteParticipant[];
+    removed: RemoteParticipant[];
+  }): void => {
+    if (added && added.length > 0) {
+      this.emitter.emit('participantsJoined', added);
+    }
+    if (removed && removed.length > 0) {
+      this.emitter.emit('participantsLeft', removed);
+    }
+
+    added.forEach((participant) => {
+      this.participantSubscribers.set(
+        getRemoteParticipantKey(participant.identifier),
+        new ParticipantSubscriber(participant, this.emitter)
+      );
+    });
+
+    removed.forEach((participant) => {
+      const subscriber = this.participantSubscribers.get(getRemoteParticipantKey(participant.identifier));
+      subscriber && subscriber.unsubscribeAll();
+    });
+  };
+
+  private isScreenSharingOnChanged = (): void => {
+    this.emitter.emit('isScreenSharingOnChanged', { isScreenSharingOn: this.call?.isScreenSharingOn });
+  };
+
+  private callIdChanged = (): void => {
+    this.context.setCallId(this.call?.id);
+    // Resync state after callId is set
+    this.context.updateClientState(this.callClient.getState());
+    this.emitter.emit('isIdChanged', { callId: this.callIdChanged });
+  };
+
+  off(event: 'participantJoined', participantsJoinedHandler: ParticipantJoinedListener): void;
+  off(event: 'participantsLeft', participantsLeftHandler: ParticipantLeftListener): void;
+  off(event: 'isMutedChanged', isMuteChanged: IsMuteChangedListener): void;
+  off(event: 'callIdChanged', idChangedListner: CallIdChangedListener): void;
+  off(event: 'isScreenSharingOnChanged', participantsJoinedHandler: IsScreenSharingOnChangedListener): void;
+  off(event: 'displayNameChanged', participantsJoinedHandler: DisplaynameChangedListener): void;
+  off(event: 'isSpeakingChanged', participantsJoinedHandler: IsSpeakingChangedListener): void;
   off(event: 'error', errorHandler: (e: Error) => void): void;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public off(_event: CallEvent, _listener: (_e: any) => void): void {
-    throw new Error('Method not implemented.');
+
+  public off(event: CallEvent, listener: (e: any) => void): void {
+    this.emitter.off(event, listener);
   }
 }
 
 const isPreviewOn = (deviceManager: DeviceManager): boolean => {
   return !!deviceManager.unparentedViews && !!deviceManager.unparentedViews[0]?.target;
+};
+
+const createCommunicationIdentifier = (rawId: string): CommunicationUserKind => {
+  return { kind: 'communicationUser', communicationUserId: rawId };
 };
 
 export const createAzureCommunicationCallAdapter = async (
