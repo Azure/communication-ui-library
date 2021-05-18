@@ -11,7 +11,7 @@ export const ScreenShareLayout: () => JSX.Element = () => {
   const width = number('Width (px)', 850, mediaGalleryWidthOptions);
   const height = number('Height (px)', mediaGalleryHeightDefault, mediaGalleryHeightOptions);
 
-  const defaultParticipants = ['Michael', 'Jim', 'Pam', 'Dwight', 'Kelly', 'Ryan', 'Andy'];
+  const MockParticipantDisplayNames = ['Michael', 'Jim', 'Pam', 'Dwight', 'Kelly', 'Ryan', 'Andy'];
 
   const sidePanelWidthRatio = select('Side Panel Width Ratio', ['30%', '35%', '40%', '45%', '50%'], '30%');
   const sidePanelTileAspectRatio = select(
@@ -55,19 +55,19 @@ export const ScreenShareLayout: () => JSX.Element = () => {
     border: '.063rem'
   };
 
-  const participantsComponents = defaultParticipants.map((participant, index) => {
+  const participantsComponents = MockParticipantDisplayNames.map((participantDisplayName, index) => {
     return (
       <Stack className={aspectRatioBoxStyle} key={index}>
         <Stack className={aspectRatioBoxContentStyle}>
           <VideoTile
             isVideoReady={false}
-            displayName={participant}
+            displayName={participantDisplayName}
             placeholder={
               <Persona
                 styles={{ root: { margin: 'auto' } }}
                 size={PersonaSize.size56}
                 hidePersonaDetails={true}
-                text={participant}
+                text={participantDisplayName}
                 initialsTextColor="white"
               />
             }

@@ -12,18 +12,17 @@ import { MapToRemoteVideoProps } from './consumers/MapToVideoProps';
 export interface RemoteVideoTileProps {
   isVideoReady: boolean;
   videoStreamElement: HTMLElement | null;
-  label?: string;
   displayName?: string;
 }
 
 const RemoteVideoTileComponentBase = (props: RemoteVideoTileProps): JSX.Element => {
-  const { isVideoReady, videoStreamElement, label } = props;
+  const { displayName, isVideoReady, videoStreamElement } = props;
 
   return (
     <VideoTile
       isVideoReady={isVideoReady}
       renderElement={<StreamMedia videoStreamElement={videoStreamElement} />}
-      displayName={label}
+      displayName={displayName}
       styles={{ displayNameStyles: isVideoReady ? videoHint : disabledVideoHint }}
     />
   );

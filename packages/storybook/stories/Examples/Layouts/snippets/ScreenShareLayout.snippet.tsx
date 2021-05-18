@@ -3,7 +3,7 @@ import { mergeStyles, Persona, PersonaSize, Stack } from '@fluentui/react';
 import React from 'react';
 
 export const ScreenShareLayoutExample: () => JSX.Element = () => {
-  const defaultParticipants = ['Michael', 'Jim', 'Pam', 'Dwight', 'Kelly', 'Ryan', 'Andy'];
+  const MockParticipantDisplayNames = ['Michael', 'Jim', 'Pam', 'Dwight', 'Kelly', 'Ryan', 'Andy'];
 
   const aspectRatioBoxStyle = mergeStyles({
     borderWidth: '.063rem .063rem .025rem .063rem',
@@ -38,19 +38,19 @@ export const ScreenShareLayoutExample: () => JSX.Element = () => {
     border: '.063rem'
   };
 
-  const participantsComponents = defaultParticipants.map((participant, index) => {
+  const participantsComponents = MockParticipantDisplayNames.map((participantDisplayName, index) => {
     return (
       <Stack className={aspectRatioBoxStyle} key={index}>
         <Stack className={aspectRatioBoxContentStyle}>
           <VideoTile
             isVideoReady={false}
-            displayName={participant}
+            displayName={participantDisplayName}
             placeholder={
               <Persona
                 styles={{ root: { margin: 'auto' } }}
                 size={PersonaSize.size56}
                 hidePersonaDetails={true}
-                text={participant}
+                text={participantDisplayName}
                 initialsTextColor="white"
               />
             }
