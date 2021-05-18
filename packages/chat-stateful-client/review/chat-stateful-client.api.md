@@ -5,10 +5,12 @@
 ```ts
 
 import { ChatClient } from '@azure/communication-chat';
+import { ChatClientOptions } from '@azure/communication-chat';
 import { ChatMessage } from '@azure/communication-chat';
 import { ChatMessageReadReceipt } from '@azure/communication-chat';
 import { ChatParticipant } from '@azure/communication-chat';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
+import { CommunicationTokenCredential } from '@azure/communication-common';
 import { FlatCommunicationIdentifier } from 'acs-ui-common';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 
@@ -17,12 +19,6 @@ export type ChatClientState = {
     userId: CommunicationIdentifierKind;
     displayName: string;
     threads: Map<string, ChatThreadClientState>;
-};
-
-// @public (undocumented)
-export type ChatConfig = {
-    userId: CommunicationIdentifierKind;
-    displayName: string;
 };
 
 // @public (undocumented)
@@ -50,8 +46,8 @@ export type ChatThreadProperties = {
     topic?: string;
 };
 
-// @public (undocumented)
-export const createStatefulChatClient: (chatClient: ChatClient, chatConfig: ChatConfig) => StatefulChatClient;
+// @public
+export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: ChatClientOptions | undefined) => StatefulChatClient;
 
 // @public (undocumented)
 export interface StatefulChatClient extends ChatClient {
@@ -62,6 +58,17 @@ export interface StatefulChatClient extends ChatClient {
     // (undocumented)
     onStateChange(handler: (state: ChatClientState) => void): void;
 }
+
+// @public
+export type StatefulChatClientArgs = {
+    userId: CommunicationIdentifierKind;
+    displayName: string;
+    endpoint: string;
+    credential: CommunicationTokenCredential;
+};
+
+// @public
+export type StatefulChatClientOptions = ChatClientOptions;
 
 
 // (No @packageDocumentation comment for this package)
