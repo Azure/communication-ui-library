@@ -246,12 +246,12 @@ export interface Call {
   localVideoStreams: LocalVideoStream[];
   /**
    * Proxy of {@Link @azure/communication-calling#Call.remoteParticipants}. Map of identifier
-   * {@Link acs-ui-common#FlatCommunicationIdentifier} to {@Link RemoteParticipant}
+   * {@Link @azure/communication-react#FlatCommunicationIdentifier} to {@Link RemoteParticipant}
    */
   remoteParticipants: Map<FlatCommunicationIdentifier, RemoteParticipant>;
   /**
    * Stores remote participants that have left the call so that the callEndReason could be retrieved. Map of identifier
-   * {@Link acs-ui-common#FlatCommunicationIdentifier} to {@Link RemoteParticipant}
+   * {@Link @azure/communication-react#FlatCommunicationIdentifier} to {@Link RemoteParticipant}
    */
   remoteParticipantsEnded: Map<FlatCommunicationIdentifier, RemoteParticipant>;
   /**

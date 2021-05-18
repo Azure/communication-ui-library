@@ -11,7 +11,7 @@ export type CommonProperties<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
 
-// @public (undocumented)
+// @public
 export type FlatCommunicationIdentifier = string;
 
 // @public (undocumented)

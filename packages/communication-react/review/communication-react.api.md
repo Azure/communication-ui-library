@@ -534,7 +534,7 @@ export interface EndCallButtonProps extends IButtonProps {
     showLabel?: boolean;
 }
 
-// @public (undocumented)
+// @public
 export type FlatCommunicationIdentifier = string;
 
 // @public
