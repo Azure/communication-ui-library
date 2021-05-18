@@ -25,8 +25,6 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
   const [emptyWarning, setEmptyWarning] = useState(false);
   const [nameTooLongWarning, setNameTooLongWarning] = useState(false);
 
-  // const { displayName } = useCallClientContext();
-
   const options = useSelector(optionsButtonSelector);
   const localDeviceSettingsHandlers = useHandlers(LocalDeviceSettings);
 

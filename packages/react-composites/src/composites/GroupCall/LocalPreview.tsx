@@ -35,9 +35,9 @@ export const LocalPreview = (): JSX.Element => {
         <ControlBar layout="floatingBottom">
           <CameraButton
             {...cameraButtonProps}
-            onToggleCamera={async () => {
-              cameraButtonProps.onToggleCamera();
-            }}
+            // onToggleCamera={async () => {
+            //   cameraButtonProps.onToggleCamera();
+            // }}
           />
           <MicrophoneButton {...microphoneButtonProps} />
         </ControlBar>
