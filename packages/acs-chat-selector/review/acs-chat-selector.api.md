@@ -8,6 +8,7 @@ import { ChatClientState } from 'chat-stateful-client';
 import { ChatMessageWithStatus } from 'chat-stateful-client';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
+import { CommonProperties } from 'acs-ui-common';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationParticipant } from 'react-components';
 import { Message } from 'react-components';
@@ -70,11 +71,6 @@ export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientSta
     disableReadReceipt: boolean;
     messages: Message<"chat">[];
 }>;
-
-// @public (undocumented)
-export type CommonProperties<A, B> = {
-    [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
-}[keyof A & keyof B];
 
 // @public (undocumented)
 export const communicationIdentifierToString: (i: CommunicationIdentifier | undefined) => string;
