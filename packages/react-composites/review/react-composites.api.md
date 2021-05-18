@@ -12,9 +12,9 @@ import { ErrorInfo } from 'react';
 // @public (undocumented)
 export interface ChatAdapter {
     // (undocumented)
-    getState(): ChatState;
+    fetchInitialData(): Promise<void>;
     // (undocumented)
-    hydrate(): Promise<void>;
+    getState(): ChatState;
     // (undocumented)
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     // (undocumented)
