@@ -31,18 +31,13 @@ export interface OptionsButtonProps extends IButtonProps {
 }
 
 /**
- * `OptionsButton` allows you to easily create a component for rendering an options button. It can be used in your ControlBar component for example.
- * This button should contain dropdown menu items you can define through its property `menuProps`.
- * This `menuProps` property is of type [IContextualMenuProps](https://developer.microsoft.com/en-us/fluentui#/controls/web/contextualmenu#IContextualMenuProps).
- *
- * @param props - of type OptionsButtonProps
+ * Generates default menuprops for an OptionsButton if the props contain device
+ * information and device change handlers.
+ * @param props OptionsButtonProps
+ * @returns MenuProps
  */
-export const OptionsButton = (props: OptionsButtonProps): JSX.Element => {
+const generateDefaultMenuProps = (props: OptionsButtonProps): { items: Array<any> } => {
   const {
-    showLabel = false,
-    styles,
-    onRenderIcon,
-    onRenderText,
     microphones,
     speakers,
     cameras,
@@ -54,68 +49,76 @@ export const OptionsButton = (props: OptionsButtonProps): JSX.Element => {
     onSelectSpeaker
   } = props;
 
-  let defaultMenuProps;
-  if (
-    microphones &&
-    speakers &&
-    cameras &&
-    selectedMicrophone &&
-    selectedSpeaker &&
-    selectedCamera &&
-    onSelectCamera &&
-    onSelectMicrophone &&
-    onSelectSpeaker
-  ) {
-    defaultMenuProps = {
-      items: [
-        {
-          key: '1',
-          name: 'Choose Camera',
-          iconProps: { iconName: 'LocationCircle' },
-          subMenuProps: {
-            items: cameras.map((val) => ({
-              key: val.id,
-              text: val.name,
-              title: val.name,
-              canCheck: true,
-              isChecked: val.id === selectedCamera?.id,
-              onClick: () => onSelectCamera(val)
-            }))
-          }
-        },
-        {
-          key: '2',
-          name: 'Choose Microphone',
-          iconProps: { iconName: 'LocationCircle' },
-          subMenuProps: {
-            items: microphones.map((val) => ({
-              key: val.id,
-              text: val.name,
-              title: val.name,
-              canCheck: true,
-              isChecked: val.id === selectedMicrophone?.id,
-              onClick: () => onSelectMicrophone(val)
-            }))
-          }
-        },
-        {
-          key: '3',
-          name: 'Choose Speaker',
-          iconProps: { iconName: 'LocationCircle' },
-          subMenuProps: {
-            items: speakers.map((val) => ({
-              key: val.id,
-              text: val.name,
-              title: val.name,
-              canCheck: true,
-              isChecked: val.id === selectedSpeaker?.id,
-              onClick: () => onSelectSpeaker(val)
-            }))
-          }
-        }
-      ]
-    };
+  const defaultMenuProps: { items: Array<any> } = { items: [] };
+
+  if (cameras && selectedCamera && onSelectCamera) {
+    defaultMenuProps.items.push({
+      key: '1',
+      name: 'Choose Camera',
+      iconProps: { iconName: 'LocationCircle' },
+      subMenuProps: {
+        items: cameras.map((val) => ({
+          key: val.id,
+          text: val.name,
+          title: val.name,
+          canCheck: true,
+          isChecked: val.id === selectedCamera?.id,
+          onClick: () => onSelectCamera(val)
+        }))
+      }
+    });
   }
+
+  if (microphones && selectedMicrophone && onSelectMicrophone) {
+    defaultMenuProps.items.push({
+      key: '2',
+      name: 'Choose Microphone',
+      iconProps: { iconName: 'LocationCircle' },
+      subMenuProps: {
+        items: microphones.map((val) => ({
+          key: val.id,
+          text: val.name,
+          title: val.name,
+          canCheck: true,
+          isChecked: val.id === selectedMicrophone?.id,
+          onClick: () => onSelectMicrophone(val)
+        }))
+      }
+    });
+  }
+
+  if (speakers && selectedSpeaker && onSelectSpeaker) {
+    defaultMenuProps.items.push({
+      key: '2',
+      name: 'Choose Microphone',
+      iconProps: { iconName: 'LocationCircle' },
+      subMenuProps: {
+        items: speakers.map((val) => ({
+          key: val.id,
+          text: val.name,
+          title: val.name,
+          canCheck: true,
+          isChecked: val.id === selectedSpeaker?.id,
+          onClick: () => onSelectSpeaker(val)
+        }))
+      }
+    });
+  }
+
+  return defaultMenuProps;
+};
+
+/**
+ * `OptionsButton` allows you to easily create a component for rendering an options button. It can be used in your ControlBar component for example.
+ * This button should contain dropdown menu items you can define through its property `menuProps`.
+ * This `menuProps` property is of type [IContextualMenuProps](https://developer.microsoft.com/en-us/fluentui#/controls/web/contextualmenu#IContextualMenuProps).
+ *
+ * @param props - of type OptionsButtonProps
+ */
+export const OptionsButton = (props: OptionsButtonProps): JSX.Element => {
+  const { showLabel = false, styles, onRenderIcon, onRenderText } = props;
+
+  const defaultMenuProps = generateDefaultMenuProps(props);
 
   const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
 

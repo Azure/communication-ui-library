@@ -87,6 +87,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         renderElement={<StreamMedia videoStreamElement={localVideoStream?.renderElement ?? null} />}
         displayName={localParticipant?.displayName}
         styles={videoTileStyle}
+        isMirrored={true}
       >
         <Text className={isLocalVideoReady ? videoHint : disabledVideoHint}>{localParticipant?.displayName}</Text>
       </VideoTile>

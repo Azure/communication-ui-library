@@ -74,7 +74,7 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
     if (!isInCall(callState ?? 'None') && callAgent) {
       const audioOptions: AudioOptions = { muted: !isMicrophoneEnabled };
       try {
-        const call = callAgent.join(callLocator, { audioOptions });
+        const call = callAgent.join(callLocator as GroupLocator, { audioOptions });
         setCall(call);
       } catch (error) {
         console.log(error);

@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { DefaultButton, PrimaryButton, Stack, Link } from '@fluentui/react';
+import { DefaultButton, PrimaryButton, Stack } from '@fluentui/react';
 import { VideoCameraEmphasisIcon } from '@fluentui/react-icons-northstar';
 import {
   endCallContainerStyle,

@@ -1,15 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { Link, MessageBar } from '@fluentui/react';
 import React, { useEffect, useState } from 'react';
+import { Link, MessageBar } from '@fluentui/react';
 
 export type ComplianceBannerProps = {
-  callTranscribeState: boolean;
-  callRecordState: boolean;
+  callTranscribeState?: boolean;
+  callRecordState?: boolean;
 };
 export const ComplianceBanner = (props: ComplianceBannerProps): JSX.Element => {
-  const [previousCallTranscribeState, setPreviousCallTranscribeState] = useState(false);
-  const [previousCallRecordState, setPreviousCallRecordState] = useState(false);
+  const [previousCallTranscribeState, setPreviousCallTranscribeState] = useState<boolean | undefined>(false);
+  const [previousCallRecordState, setPreviousCallRecordState] = useState<boolean | undefined>(false);
   const [variant, setVariant] = useState(0);
 
   const TRANSCRIPTION_STOPPED_STILL_RECORDING = 1;
