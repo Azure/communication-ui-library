@@ -6,6 +6,7 @@
     "paths": {
       "@azure/acs-chat-selector": ["../../acs-chat-selector/src"],
       "@azure/acs-calling-selector": ["../../acs-calling-selector/src"],
+      "acs-ui-common": ["../../acs-ui-common/src"],
       "calling-stateful-client": ["../../calling-stateful-client/src"],
       "chat-stateful-client": ["../../chat-stateful-client/src"],
       "react-components": ["../../react-components/src"],
