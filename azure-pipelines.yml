@@ -19,36 +19,36 @@ stages:
             displayName: "Install rush"
             inputs:
               command: "custom"
-              customCommand: npm install -g @microsoft/rush
+              customCommand: install -g @microsoft/rush
 
-          - task: Npm@1
-            displayName: "npm i"
+          - task: PowerShell@2
+            displayName: "Install dependencies"
             inputs:
-              command: "custom"
-              customCommand: rush install
+              targetType: 'inline'
+              script: rush install
 
-          - task: Npm@1
+          - task: PowerShell@2
             displayName: "changelog check"
             inputs:
-              command: "custom"
-              customCommand: rush changelog:check
+              targetType: 'inline'
+              script: rush changelog:check
 
-          - task: Npm@1
+          - task: PowerShell@2
             displayName: lint check
             inputs:
-                command: "custom"
-                customCommand: rush lint
+                targetType: 'inline'
+                script: rush lint
 
-          - task: Npm@1
+          - task: PowerShell@2
             displayName: "Build Packages and Samples"
             inputs:
-                command: "custom"
-                customCommand: rush build
+                targetType: 'inline'
+                script: rush build
 
-          - task: Npm@1
+          - task: PowerShell@2
             displayName: "Run Tests"
             inputs:
-                command: "custom"
-                customCommand: rush test
+                targetType: 'inline'
+                script: rush test
             env:
               CI: true
