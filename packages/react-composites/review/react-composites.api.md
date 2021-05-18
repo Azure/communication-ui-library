@@ -9,6 +9,7 @@ import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClientState } from 'chat-stateful-client';
 import { CommunicationUiErrorSeverity } from 'react-components';
 import { ErrorInfo } from 'react';
+import { FlatCommunicationIdentifier } from 'acs-ui-common';
 
 // @public (undocumented)
 export interface ChatAdapter {
@@ -45,7 +46,7 @@ export const ChatComposite: (props: ChatProps) => JSX.Element;
 
 // @public (undocumented)
 export type ChatCompositeClientState = {
-    userId: string;
+    userId: FlatCommunicationIdentifier;
     displayName: string;
     thread: ChatThreadClientState;
 };

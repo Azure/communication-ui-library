@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { ReactElement } from 'react';
-import { CommonProperties } from 'acs-ui-common';
+import { CommonProperties, FlatCommunicationIdentifier } from 'acs-ui-common';
 import { StatefulChatClient } from 'chat-stateful-client';
 import { ChatThreadClient } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
@@ -11,7 +11,7 @@ export type DefaultChatHandlers = {
   onSendMessage: (content: string) => Promise<void>;
   onMessageSeen: (chatMessageId: string) => Promise<void>;
   onTyping: () => Promise<void>;
-  onParticipantRemove: (userId: string) => Promise<void>;
+  onParticipantRemove: (userId: FlatCommunicationIdentifier) => Promise<void>;
   updateThreadTopicName: (topicName: string) => Promise<void>;
   onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
 };
@@ -35,7 +35,8 @@ export const createDefaultChatHandlers = memoizeOne(
       onTyping: async () => {
         await chatThreadClient.sendTypingNotification();
       },
-      onParticipantRemove: async (userId: string) => {
+      onParticipantRemove: async (userId: FlatCommunicationIdentifier) => {
+        // TODO(prprabhu): Add, and use a two-way converter for identifiers.
         await chatThreadClient.removeParticipant({
           communicationUserId: userId
         });

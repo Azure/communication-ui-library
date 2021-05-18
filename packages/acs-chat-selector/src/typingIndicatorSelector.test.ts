@@ -3,9 +3,9 @@
 
 import { ChatParticipant } from '@azure/communication-chat';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
+import { flattenedCommunicationIdentifier } from 'acs-ui-common';
 import { CommunicationIdentifierAsKey, getCommunicationIdentifierAsKey } from 'chat-stateful-client';
 import { typingIndicatorSelector } from './typingIndicatorSelector';
-import { communicationIdentifierToString } from './baseSelectors';
 
 describe('typingIndicatorSelector tests', () => {
   test('should filter typing indicators from participant that is the user', async (): Promise<void> => {
@@ -24,7 +24,7 @@ describe('typingIndicatorSelector tests', () => {
     const result = typingIndicatorSelector.resultFunc(
       orderedTypingIndicators,
       participants,
-      communicationIdentifierToString({
+      flattenedCommunicationIdentifier({
         communicationUserId: '1'
       })
     );
@@ -62,14 +62,14 @@ describe('typingIndicatorSelector tests', () => {
     const result = typingIndicatorSelector.resultFunc(
       orderedTypingIndicators,
       participants,
-      communicationIdentifierToString({
+      flattenedCommunicationIdentifier({
         communicationUserId: '1'
       })
     );
     expect(result.typingUsers.length).toEqual(1);
     expect(result.typingUsers).toEqual([
       {
-        userId: communicationIdentifierToString({
+        userId: flattenedCommunicationIdentifier({
           communicationUserId: '2'
         }),
         displayName: 'User2'
@@ -121,15 +121,15 @@ describe('typingIndicatorSelector tests', () => {
     const result = typingIndicatorSelector.resultFunc(
       orderedTypingIndicators,
       participants,
-      communicationIdentifierToString({
+      flattenedCommunicationIdentifier({
         communicationUserId: '1'
       })
     );
     expect(result.typingUsers.length).toEqual(3);
     expect(result.typingUsers).toEqual([
-      { userId: communicationIdentifierToString({ communicationUserId: '4' }), displayName: 'User4' },
-      { userId: communicationIdentifierToString({ communicationUserId: '2' }), displayName: 'User2' },
-      { userId: communicationIdentifierToString({ communicationUserId: '3' }), displayName: 'User3' }
+      { userId: flattenedCommunicationIdentifier({ communicationUserId: '4' }), displayName: 'User4' },
+      { userId: flattenedCommunicationIdentifier({ communicationUserId: '2' }), displayName: 'User2' },
+      { userId: flattenedCommunicationIdentifier({ communicationUserId: '3' }), displayName: 'User3' }
     ]);
   });
 
@@ -177,13 +177,13 @@ describe('typingIndicatorSelector tests', () => {
     const result = typingIndicatorSelector.resultFunc(
       orderedTypingIndicators,
       participants,
-      communicationIdentifierToString({
+      flattenedCommunicationIdentifier({
         communicationUserId: '1'
       })
     );
     expect(result.typingUsers.length).toEqual(1);
     expect(result.typingUsers).toEqual([
-      { userId: communicationIdentifierToString({ communicationUserId: '6' }), displayName: 'User6' }
+      { userId: flattenedCommunicationIdentifier({ communicationUserId: '6' }), displayName: 'User6' }
     ]);
   });
 
@@ -205,7 +205,7 @@ describe('typingIndicatorSelector tests', () => {
     const result = typingIndicatorSelector.resultFunc(
       orderedTypingIndicators,
       participants,
-      communicationIdentifierToString({
+      flattenedCommunicationIdentifier({
         communicationUserId: '1'
       })
     );

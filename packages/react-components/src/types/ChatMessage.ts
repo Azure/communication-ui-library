@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { FlatCommunicationIdentifier } from 'acs-ui-common';
+
 export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
 export type MessageAttachedStatus = 'bottom' | 'top';
 
@@ -11,7 +13,7 @@ export type ChatMessagePayload = {
   content?: string;
   // ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`
   createdOn?: Date;
-  senderId?: string;
+  senderId?: FlatCommunicationIdentifier;
   senderDisplayName?: string;
   status?: MessageStatus;
   attached?: MessageAttachedStatus | boolean;

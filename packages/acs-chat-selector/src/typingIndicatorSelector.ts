@@ -6,23 +6,24 @@ import { ChatClientState } from 'chat-stateful-client';
 import { CommunicationIdentifierAsKey, getCommunicationIdentifierAsKey } from 'chat-stateful-client';
 // @ts-ignore
 import { ChatBaseSelectorProps } from './baseSelectors';
-import { communicationIdentifierToString, getTypingIndicators, getParticipants, getUserId } from './baseSelectors';
+import { getTypingIndicators, getParticipants, getUserId } from './baseSelectors';
 import * as reselect from 'reselect';
 import { ChatParticipant } from '@azure/communication-chat';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
+import { FlatCommunicationIdentifier, flattenedCommunicationIdentifier } from 'acs-ui-common';
 import { CommunicationParticipant } from 'react-components';
 import { MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS, PARTICIPANTS_THRESHOLD } from './utils/constants';
 
 const filterTypingIndicators = (
   typingIndicators: TypingIndicatorReceivedEvent[],
-  userId: string
+  userId: FlatCommunicationIdentifier
 ): TypingIndicatorReceivedEvent[] => {
   const filteredTypingIndicators: TypingIndicatorReceivedEvent[] = [];
   const seen = new Set();
   const date8SecondsAgo = new Date(Date.now() - MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS);
   for (let i = typingIndicators.length - 1; i >= 0; i--) {
     const typingIndicator = typingIndicators[i];
-    if (communicationIdentifierToString(typingIndicator.sender) === userId) {
+    if (flattenedCommunicationIdentifier(typingIndicator.sender) === userId) {
       continue;
     }
     if (typingIndicator.receivedOn < date8SecondsAgo) {
@@ -42,7 +43,7 @@ const convertSdkTypingIndicatorsToCommunicationParticipants = (
   participants: Map<string, ChatParticipant>
 ): CommunicationParticipant[] => {
   return typingIndicators.map((typingIndicator) => ({
-    userId: communicationIdentifierToString(typingIndicator.sender),
+    userId: flattenedCommunicationIdentifier(typingIndicator.sender),
     displayName: participants.get(getCommunicationIdentifierAsKey(typingIndicator.sender))?.displayName
   }));
 };

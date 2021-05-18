@@ -5,6 +5,7 @@
 ```ts
 
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
+import { FlatCommunicationIdentifier } from 'acs-ui-common';
 import { IButtonProps } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
@@ -57,7 +58,7 @@ export type ChatMessagePayload = {
     messageId?: string;
     content?: string;
     createdOn?: Date;
-    senderId?: string;
+    senderId?: FlatCommunicationIdentifier;
     senderDisplayName?: string;
     status?: MessageStatus;
     attached?: MessageAttachedStatus | boolean;
@@ -68,7 +69,7 @@ export type ChatMessagePayload = {
 
 // @public
 export type CommunicationParticipant = {
-    userId: string;
+    userId: FlatCommunicationIdentifier;
     displayName?: string;
 };
 
@@ -260,7 +261,7 @@ export const ParticipantList: (props: ParticipantListProps) => JSX.Element;
 // @public
 export type ParticipantListProps = {
     participants: CommunicationParticipant[];
-    myUserId?: string;
+    myUserId?: FlatCommunicationIdentifier;
     onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
     onRenderAvatar?: (participant: CommunicationParticipant) => JSX.Element | null;
     onParticipantRemove?: (userId: string) => void;
@@ -366,7 +367,7 @@ export type VideoGalleryLocalParticipant = VideoGalleryParticipant;
 
 // @public (undocumented)
 export type VideoGalleryParticipant = {
-    userId: string;
+    userId: FlatCommunicationIdentifier;
     isMuted?: boolean;
     displayName?: string;
     videoStream?: VideoGalleryStream;

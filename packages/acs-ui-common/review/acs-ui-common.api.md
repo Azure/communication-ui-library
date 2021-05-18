@@ -15,7 +15,7 @@ export type CommonProperties<A, B> = {
 export type FlatCommunicationIdentifier = string;
 
 // @public (undocumented)
-export const flattenedCommunicationIdentifier: (id: CommunicationIdentifier | undefined) => FlatCommunicationIdentifier | undefined;
+export const flattenedCommunicationIdentifier: (id: CommunicationIdentifier) => FlatCommunicationIdentifier;
 
 
 // (No @packageDocumentation comment for this package)

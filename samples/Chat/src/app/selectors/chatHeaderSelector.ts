@@ -1,18 +1,18 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { communicationIdentifierToString } from '@azure/acs-chat-selector';
 import { ChatParticipant } from '@azure/communication-chat';
+import { FlatCommunicationIdentifier, flattenedCommunicationIdentifier } from 'acs-ui-common';
 import { existsTopicName } from 'app/utils/utils';
 import { createSelector } from 'reselect';
 import { getTopicName, getUserId, getParticipants } from './baseSelectors';
 
-const generateDefaultHeaderMessage = (participants: ChatParticipant[], userId: string): string => {
+const generateDefaultHeaderMessage = (participants: ChatParticipant[], userId: FlatCommunicationIdentifier): string => {
   let header = 'Chat with ';
 
   const remoteParticipantsWithNames = participants?.filter(
     (participant: ChatParticipant) =>
-      communicationIdentifierToString(participant.id) !== userId && participant.displayName
+      flattenedCommunicationIdentifier(participant.id) !== userId && participant.displayName
   );
 
   if (!remoteParticipantsWithNames?.length) {

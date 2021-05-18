@@ -12,6 +12,7 @@ import {
   PersonaPresence
 } from '@fluentui/react';
 import { ParticipantItem } from './ParticipantItem';
+import { FlatCommunicationIdentifier } from 'acs-ui-common';
 import { MicOffIcon, CallControlPresentNewIcon } from '@fluentui/react-northstar';
 import { participantListStyle, overFlowButtonStyles, overflowSetStyle } from './styles/ParticipantList.styles';
 import { CommunicationParticipant, CallParticipant } from '../types';
@@ -23,7 +24,7 @@ export type ParticipantListProps = {
   /** Remote participants in user call */
   participants: CommunicationParticipant[];
   /** User ID of user */
-  myUserId?: string;
+  myUserId?: FlatCommunicationIdentifier;
   /** Optional callback to render each participant. If no callback is provided, each participant will be rendered with `ParticipantItem`  */
   onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
   /** Optional callback to render the avatar for each participant. This property will have no effect if `onRenderParticipant` is assigned.  */
@@ -33,7 +34,7 @@ export type ParticipantListProps = {
 };
 
 const getDefaultRenderer = (
-  myUserId?: string,
+  myUserId?: FlatCommunicationIdentifier,
   onParticipantRemove?: (userId: string) => void,
   onRenderAvatar?: (remoteParticipant: CommunicationParticipant) => JSX.Element | null
 ): ((participant: CommunicationParticipant) => JSX.Element | null) => {
@@ -103,7 +104,7 @@ const onRenderOverflowButton = (overflowItems: unknown): JSX.Element => (
 
 const renderParticipants = (
   participants: CommunicationParticipant[],
-  myUserId?: string,
+  myUserId?: FlatCommunicationIdentifier,
   onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null,
   onRenderAvatar?: (participant: CommunicationParticipant) => JSX.Element | null,
   onParticipantRemove?: (userId: string) => void

@@ -2,13 +2,13 @@
 // Licensed under the MIT license.
 
 import {
-  communicationIdentifierToString,
   getChatMessages,
   getIsLargeGroup,
   getLatestReadTime,
   getUserId,
   sanitizedMessageContentType
 } from './baseSelectors';
+import { FlatCommunicationIdentifier, flattenedCommunicationIdentifier } from 'acs-ui-common';
 import { ChatMessageWithStatus } from 'chat-stateful-client';
 // The following need explicitly imported to avoid api-extractor issues.
 // These can be removed once https://github.com/microsoft/rushstack/pull/1916 is fixed.
@@ -33,7 +33,7 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
   (
     _key: string,
     chatMessage: ChatMessageWithStatus,
-    userId: string,
+    userId: FlatCommunicationIdentifier,
     isSeen: boolean,
     isLargeGroup: boolean
   ): ChatMessage => ({
@@ -44,7 +44,7 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
       type: sanitizedMessageContentType(chatMessage.type),
       status: !isLargeGroup && chatMessage.status === 'delivered' && isSeen ? 'seen' : chatMessage.status,
       senderDisplayName: chatMessage.senderDisplayName,
-      senderId: communicationIdentifierToString(chatMessage.sender) ?? userId,
+      senderId: chatMessage.sender !== undefined ? flattenedCommunicationIdentifier(chatMessage.sender) : userId,
       messageId: chatMessage.id,
       clientMessageId: chatMessage.clientMessageId
     }
@@ -83,7 +83,10 @@ export const chatThreadSelector = createSelector(
   }
 );
 
-export const updateMessagesWithAttached = (chatMessagesWithStatus: ChatMessage[], userId: string): void => {
+export const updateMessagesWithAttached = (
+  chatMessagesWithStatus: ChatMessage[],
+  userId: FlatCommunicationIdentifier
+): void => {
   chatMessagesWithStatus.sort(compareMessages);
 
   chatMessagesWithStatus.forEach((message, index, messages) => {
