@@ -57,7 +57,6 @@ export const MediaGallery1To1Component = (props: MediaGallery1To1Props): JSX.Ele
       <RemoteVideoTile
         stream={stream}
         scalingMode={remoteVideoScalingMode ?? 'Crop'}
-        label={remoteParticipantDisplayName}
         displayName={remoteParticipantDisplayName}
       />
     </Stack>
