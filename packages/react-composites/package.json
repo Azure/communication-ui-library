@@ -26,6 +26,7 @@
     "postpack": "copyfiles -E \"./*.tgz\" private-preview"
   },
   "dependencies": {
+    "acs-ui-common": "~1.0.0-beta",
     "calling-stateful-client": "~1.0.0-beta",
     "@azure/acs-calling-selector": "~1.0.0-beta",
     "@azure/communication-identity": "1.0.0",

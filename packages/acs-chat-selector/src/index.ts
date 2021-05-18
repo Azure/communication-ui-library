@@ -21,6 +21,6 @@ export type { ChatClientProviderProps } from './providers/ChatClientProvider';
 export type { ChatThreadClientProviderProps } from './providers/ChatThreadClientProvider';
 export type { FunctionWithKey, CallbackType } from './utils/memoizeFnAll';
 export type { ChatBaseSelectorProps } from './baseSelectors';
-export type { DefaultChatHandlers, CommonProperties } from './handlers/createHandlers';
+export type { DefaultChatHandlers } from './handlers/createHandlers';
 export type { GetSelector } from './hooks/usePropsFor';
 export type { AreEqual } from './hooks/usePropsFor';
