@@ -5,11 +5,13 @@
 ```ts
 
 import { ChatClient } from '@azure/communication-chat';
+import { ChatClientOptions } from '@azure/communication-chat';
 import { ChatMessage } from '@azure/communication-chat';
 import { ChatMessageReadReceipt } from '@azure/communication-chat';
 import { ChatParticipant } from '@azure/communication-chat';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
+import { CommunicationTokenCredential } from '@azure/communication-common';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 
 // @public (undocumented)
@@ -17,12 +19,6 @@ export type ChatClientState = {
     userId: CommunicationIdentifierKind;
     displayName: string;
     threads: Map<string, ChatThreadClientState>;
-};
-
-// @public (undocumented)
-export type ChatConfig = {
-    userId: CommunicationIdentifierKind;
-    displayName: string;
 };
 
 // @public (undocumented)
@@ -53,8 +49,8 @@ export type ChatThreadProperties = {
 // @public (undocumented)
 export type CommunicationIdentifierAsKey = string;
 
-// @public (undocumented)
-export const createStatefulChatClient: (chatClient: ChatClient, chatConfig: ChatConfig) => StatefulChatClient;
+// @public
+export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: ChatClientOptions | undefined) => StatefulChatClient;
 
 // @public (undocumented)
 export const getCommunicationIdentifierAsKey: (identifier: CommunicationIdentifier) => CommunicationIdentifierAsKey;
@@ -68,6 +64,17 @@ export interface StatefulChatClient extends ChatClient {
     // (undocumented)
     onStateChange(handler: (state: ChatClientState) => void): void;
 }
+
+// @public
+export type StatefulChatClientArgs = {
+    userId: CommunicationIdentifierKind;
+    displayName: string;
+    endpoint: string;
+    credential: CommunicationTokenCredential;
+};
+
+// @public
+export type StatefulChatClientOptions = ChatClientOptions;
 
 
 // (No @packageDocumentation comment for this package)

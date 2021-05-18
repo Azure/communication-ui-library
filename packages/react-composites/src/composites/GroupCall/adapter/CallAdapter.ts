@@ -1,34 +1,26 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  Call,
-  DeviceManager as Devices,
-  LocalVideoStream,
-  RemoteVideoStream,
-  RemoteParticipant
-} from 'calling-stateful-client';
-import { AudioDeviceInfo, CreateViewOptions, VideoDeviceInfo } from '@azure/communication-calling';
+import { Call, DeviceManager as Devices, RemoteParticipant } from 'calling-stateful-client';
+import { AudioDeviceInfo, VideoDeviceInfo, Call as SDKCall } from '@azure/communication-calling';
+import { VideoStreamOptions } from 'react-components';
 
-export type GroupCallUIState = {
+export type CallingUIState = {
   // Self-contained state for composite
   error?: Error;
+  isMicrophoneEnabled: boolean;
   page: 'configuration' | 'call';
 };
 
-export type GroupCallClientState = {
+export type CallingClientState = {
   // Properties from backend services
   userId: string;
-  displayName: string;
-  call: Call;
+  displayName?: string;
+  call?: Call;
   devices: Devices;
 };
 
-export interface JoinCallResult {
-  groupCallId: string;
-}
-
-export type GroupCallState = GroupCallUIState & GroupCallClientState;
+export type CallState = CallingUIState & CallingClientState;
 
 export type IncomingCallListener = (event: {
   callId: string;
@@ -46,44 +38,50 @@ export type IncomingCallListener = (event: {
 
 export type ParticipantJoinedListener = (event: { participant: RemoteParticipant }) => Promise<void>;
 
-export interface GroupCallAdapter {
-  onStateChange(handler: (state: GroupCallState) => void): void;
+export interface CallAdapter {
+  onStateChange(handler: (state: CallState) => void): void;
 
-  offStateChange(handler: (state: GroupCallState) => void): void;
+  offStateChange(handler: (state: CallState) => void): void;
 
-  getState(): GroupCallState;
+  getState(): CallState;
 
-  dispose(): Promise<void>;
+  dispose(): void;
 
-  setDisplayName(displayName: string): void;
-
-  joinCall(groupCallId?: string): Promise<JoinCallResult>;
+  joinCall(): Promise<void>;
 
   leaveCall(forEveryone?: boolean): Promise<void>;
 
-  setCamera(source: VideoDeviceInfo): Promise<void>;
+  setCamera(sourceId: VideoDeviceInfo): Promise<void>;
 
-  setMicrophone(source: AudioDeviceInfo): Promise<void>;
+  setMicrophone(sourceId: AudioDeviceInfo): Promise<void>;
+
+  setSpeaker(sourceId: AudioDeviceInfo): Promise<void>;
 
   queryCameras(): Promise<VideoDeviceInfo[]>;
 
   queryMicrophones(): Promise<AudioDeviceInfo[]>;
 
+  querySpeakers(): Promise<AudioDeviceInfo[]>;
+
   startCamera(): Promise<void>;
 
   stopCamera(): Promise<void>;
+
+  onToggleCamera(): Promise<void>;
 
   mute(): Promise<void>;
 
   unmute(): Promise<void>;
 
+  startCall(participants: string[]): SDKCall | undefined;
+
   startScreenShare(): Promise<void>;
 
   stopScreenShare(): Promise<void>;
 
-  createView(callId: string, stream: LocalVideoStream | RemoteVideoStream, options?: CreateViewOptions): Promise<void>;
+  removeParticipant(userId: string): Promise<void>;
 
-  disposeView(callId: string, stream: LocalVideoStream | RemoteVideoStream): void;
+  createStreamView(userId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
 
   on(event: 'incomingCall', listener: IncomingCallListener): void;
 
@@ -97,3 +95,5 @@ export interface GroupCallAdapter {
 
   off(event: 'error', errorHandler: (e: Error) => void): void;
 }
+
+export type CallEvent = 'incomingCall' | 'participantJoined' | 'error';

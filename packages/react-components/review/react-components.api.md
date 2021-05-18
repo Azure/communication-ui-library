@@ -73,9 +73,6 @@ export type CommunicationParticipant = {
 };
 
 // @public
-export type CommunicationUiErrorSeverity = 'info' | 'warning' | 'error' | 'ignore';
-
-// @public
 export const ControlBar: (props: ControlBarProps) => JSX.Element;
 
 // @public (undocumented)
@@ -111,17 +108,6 @@ export interface EndCallButtonProps extends IButtonProps {
     onHangUp?: () => Promise<void>;
     showLabel?: boolean;
 }
-
-// @public
-export const ErrorBar: (props: ErrorBarProps) => JSX.Element | null;
-
-// @public
-export type ErrorBarProps = {
-    message?: string;
-    severity?: CommunicationUiErrorSeverity;
-    onClose?: () => void;
-    styles?: BaseCustomStylesProps;
-};
 
 // @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
