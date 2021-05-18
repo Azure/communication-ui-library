@@ -1,10 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useEffect, useMemo, useCallback } from 'react';
+import React, { useCallback, useMemo, useState, useEffect } from 'react';
 import { VideoGallery, VideoGalleryRemoteParticipant } from 'react-components';
+import { useSelector } from './hooks/useSelector';
 import { usePropsFor } from './hooks/usePropsFor';
 import { ScreenShare } from './ScreenShare';
+import { getIsPreviewCameraOn } from './selectors/baseSelectors';
 
 const VideoGalleryStyles = {
   root: {
@@ -22,6 +24,16 @@ export interface MediaGalleryProps {
 export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const videoGalleryProps = usePropsFor(VideoGallery);
   const remoteParticipants = videoGalleryProps.remoteParticipants;
+  const [isButtonStatusSynced, setIsButtonStatusSynced] = useState(false);
+
+  const isPreviewCameraOn = useSelector(getIsPreviewCameraOn);
+
+  useEffect(() => {
+    if (isPreviewCameraOn && !props.isVideoStreamOn && !isButtonStatusSynced) {
+      props.onStartLocalVideo();
+    }
+    setIsButtonStatusSynced(true);
+  }, [isButtonStatusSynced, isPreviewCameraOn, props]);
 
   useEffect(() => {
     if (props.isCameraChecked && !props.isVideoStreamOn) {

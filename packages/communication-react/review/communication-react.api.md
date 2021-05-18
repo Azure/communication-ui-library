@@ -309,11 +309,6 @@ export type CommonProperties<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
 
-// @public
-export type CommonProperties_2<A, B> = {
-    [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
-}[keyof A & keyof B];
-
 // @public (undocumented)
 export type CommunicationIdentifierAsKey = string;
 
@@ -442,6 +437,8 @@ export const createDefaultCallingHandlers: (callClient: StatefulCallClient, call
     onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
     onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
     onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions | undefined) => Call_2 | undefined;
+    onStartScreenShare: () => Promise<void>;
+    onStopScreenShare: () => Promise<void>;
     onToggleCamera: () => Promise<void>;
     onToggleMicrophone: () => Promise<void>;
     onToggleScreenShare: () => Promise<void>;
@@ -458,6 +455,8 @@ export const createDefaultCallingHandlersForComponent: <Props>(callClient: State
     onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
     onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
     onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions | undefined) => Call_2 | undefined;
+    onStartScreenShare: () => Promise<void>;
+    onStopScreenShare: () => Promise<void>;
     onToggleCamera: () => Promise<void>;
     onToggleMicrophone: () => Promise<void>;
     onToggleScreenShare: () => Promise<void>;
@@ -465,12 +464,14 @@ export const createDefaultCallingHandlersForComponent: <Props>(callClient: State
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions | undefined) => Promise<void>;
     onParticipantRemove: (userId: string) => void;
     onStartLocalVideo: () => Promise<void>;
-}, CommonProperties_2<{
+}, CommonProperties<{
     onHangUp: () => Promise<void>;
     onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
     onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
     onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
     onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions | undefined) => Call_2 | undefined;
+    onStartScreenShare: () => Promise<void>;
+    onStopScreenShare: () => Promise<void>;
     onToggleCamera: () => Promise<void>;
     onToggleMicrophone: () => Promise<void>;
     onToggleScreenShare: () => Promise<void>;
@@ -647,6 +648,9 @@ export interface LocalVideoStream {
     source: VideoDeviceInfo;
     videoStreamRendererView?: VideoStreamRendererView | undefined;
 }
+
+// @public (undocumented)
+export const MakeNPMHappy = true;
 
 // @public (undocumented)
 export const mediaGallerySelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
@@ -896,9 +900,9 @@ export interface SendBoxStylesProps extends BaseCustomStylesProps {
 export interface StatefulCallClient extends CallClient {
     createView(callId: string | undefined, stream: LocalVideoStream | RemoteVideoStream, options?: CreateViewOptions): Promise<void>;
     disposeView(callId: string | undefined, stream: LocalVideoStream | RemoteVideoStream): void;
+    getState(): CallClientState;
     offStateChange(handler: (state: CallClientState) => void): void;
     onStateChange(handler: (state: CallClientState) => void): void;
-    state: CallClientState;
 }
 
 // @public (undocumented)

@@ -8,13 +8,13 @@ import {
   videoGallerySelector
 } from '@azure/acs-calling-selector';
 import { CameraButton, EndCallButton, MicrophoneButton, ScreenShareButton, VideoGallery } from 'react-components';
+import { useAdaptedSelector } from './useAdaptedSelector';
 import { useHandlers } from './useHandlers';
-import { useSelector } from './useSelector';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
 export const usePropsFor = <Component extends (props: any) => JSX.Element>(component: Component) => {
   const selector = getSelector(component);
-  return { ...useSelector(selector), ...useHandlers<Parameters<Component>[0]>(component) };
+  return { ...useAdaptedSelector(selector), ...useHandlers<Parameters<Component>[0]>(component) };
 };
 
 const emptySelector = (): Record<string, never> => ({});

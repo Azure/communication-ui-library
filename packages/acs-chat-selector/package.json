@@ -20,6 +20,7 @@
     "postpack": "copyfiles -E \"./*.tgz\" private-preview"
   },
   "dependencies": {
+    "acs-ui-common": "~1.0.0-beta",
     "chat-stateful-client": "~1.0.0-beta",
     "@azure/communication-chat": "1.0.0",
     "@azure/communication-common": "1.0.0",

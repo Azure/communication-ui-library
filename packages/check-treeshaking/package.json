@@ -13,6 +13,7 @@
     "lint:quiet": "npm run lint -- --quiet"
   },
   "dependencies": {
+    "acs-ui-common": "1.0.0-beta",
     "react-components": "1.0.0-beta",
     "chat-stateful-client": "1.0.0-beta",
     "calling-stateful-client": "1.0.0-beta",

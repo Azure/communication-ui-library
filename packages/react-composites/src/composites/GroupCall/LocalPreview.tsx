@@ -7,15 +7,13 @@ import React from 'react';
 import { localPreviewContainerStyle, cameraOffLabelStyle, localPreviewTileStyle } from './styles/LocalPreview.styles';
 import { StreamMedia, VideoTile, MicrophoneButton, ControlBar, CameraButton } from 'react-components';
 import { usePropsFor } from './hooks/usePropsFor';
-import { useSelector } from './hooks/useSelector';
 import { localPreviewSelector } from '@azure/acs-calling-selector';
-import { useCallClientContext } from '../../providers';
+import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 
 export const LocalPreview = (): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
-  const localPreviewProps = useSelector(localPreviewSelector);
-  const { setIsCallStartedWithCameraOn } = useCallClientContext();
+  const localPreviewProps = useAdaptedSelector(localPreviewSelector);
 
   return (
     <Stack className={localPreviewContainerStyle}>
@@ -38,7 +36,7 @@ export const LocalPreview = (): JSX.Element => {
           <CameraButton
             {...cameraButtonProps}
             onToggleCamera={async () => {
-              setIsCallStartedWithCameraOn(!cameraButtonProps.checked);
+              // setIsCallStartedWithCameraOn(!cameraButtonProps.checked);
               cameraButtonProps.onToggleCamera();
             }}
           />
