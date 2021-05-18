@@ -66,6 +66,7 @@ const getDocs: () => JSX.Element = () => {
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.
 export const VideoTile: () => JSX.Element = () => {
   const displayName = text('Display Name', 'John Krasinski');
+  const showDisplayName = boolean('Is displayName shown', true);
   const isVideoReady = boolean('Is Video Ready', false);
   const isMirrored = boolean('Is Mirrored', false);
   const width = number('Width', 400, {
@@ -86,6 +87,7 @@ export const VideoTile: () => JSX.Element = () => {
       isVideoReady={isVideoReady}
       renderElement={<StreamMedia videoStreamElement={renderVideoStream()} />}
       displayName={displayName}
+      showDisplayName={showDisplayName}
       isMirrored={isMirrored}
       styles={{
         root: { height: height, width: width }
