@@ -24,30 +24,40 @@ const convertRemoteVideoStreamToVideoGalleryStream = (stream: RemoteVideoStream)
 };
 
 const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
-  key: string,
+  userId: string,
   isMuted: boolean,
   isSpeaking: boolean,
   videoStreams: Map<number, RemoteVideoStream>,
   displayName?: string
 ): VideoGalleryRemoteParticipant => {
   const rawVideoStreamsArray = Array.from(videoStreams.values());
+  let videoStream: VideoGalleryStream | undefined = undefined;
+  let screenShareStream: VideoGalleryStream | undefined = undefined;
 
-  // From the current calling sdk, remote participant videoStreams is actually a tuple. If the first item is Video,
-  // then the second item should be screenshare. If the first item is screenshare then the second item should be video.
-  let videoStream = rawVideoStreamsArray[0];
-  let screenShareStream = rawVideoStreamsArray[1];
-  if (videoStream && videoStream.mediaStreamType === 'ScreenSharing') {
-    videoStream = rawVideoStreamsArray[1];
-    screenShareStream = rawVideoStreamsArray[0];
+  if (rawVideoStreamsArray[0]) {
+    if (rawVideoStreamsArray[0].mediaStreamType === 'Video') {
+      videoStream = convertRemoteVideoStreamToVideoGalleryStream(rawVideoStreamsArray[0]);
+    } else {
+      screenShareStream = convertRemoteVideoStreamToVideoGalleryStream(rawVideoStreamsArray[0]);
+    }
+  }
+
+  if (rawVideoStreamsArray[1]) {
+    if (rawVideoStreamsArray[1].mediaStreamType === 'ScreenSharing') {
+      screenShareStream = convertRemoteVideoStreamToVideoGalleryStream(rawVideoStreamsArray[1]);
+    } else {
+      videoStream = convertRemoteVideoStreamToVideoGalleryStream(rawVideoStreamsArray[1]);
+    }
   }
 
   return {
-    userId: key,
-    displayName: displayName,
-    isMuted: isMuted,
-    isSpeaking: isSpeaking,
-    videoStream: videoStream,
-    screenShareStream: screenShareStream
+    userId,
+    displayName,
+    isMuted,
+    isSpeaking,
+    videoStream,
+    screenShareStream,
+    isScreenSharingOn: screenShareStream !== undefined && screenShareStream.isAvailable
   };
 };
 
@@ -59,28 +69,13 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     videoStreams: Map<number, RemoteVideoStream>,
     displayName?: string
   ): VideoGalleryRemoteParticipant => {
-    const rawVideoStreamsArray = Array.from(videoStreams.values());
-    let videoStream: VideoGalleryStream | undefined = undefined;
-    if (rawVideoStreamsArray[0].mediaStreamType === 'Video') {
-      videoStream = convertRemoteVideoStreamToVideoGalleryStream(rawVideoStreamsArray[0]);
-    }
-
-    let screenShareStream: VideoGalleryStream | undefined = undefined;
-    if (rawVideoStreamsArray[1].mediaStreamType === 'ScreenSharing') {
-      screenShareStream = convertRemoteVideoStreamToVideoGalleryStream(rawVideoStreamsArray[1]);
-    }
-
-    return {
+    return convertRemoteParticipantToVideoGalleryRemoteParticipant(
       userId,
-      displayName,
       isMuted,
       isSpeaking,
-      // From the current calling sdk, remote participant videoStreams is actually a tuple
-      // The first item is always video stream. The second item is always screenshare stream
-      videoStream,
-      screenShareStream,
-      isScreenSharingOn: !!screenShareStream
-    };
+      videoStreams,
+      displayName
+    );
   }
 );
 

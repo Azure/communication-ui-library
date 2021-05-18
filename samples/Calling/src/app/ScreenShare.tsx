@@ -149,7 +149,7 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
             })
         : [];
     });
-  }, [remoteParticipants, participantWithScreenShare, onCreateRemoteStreamView]);
+  }, [remoteParticipants, onCreateRemoteStreamView, screenShareParticipant]);
 
   return (
     <>
