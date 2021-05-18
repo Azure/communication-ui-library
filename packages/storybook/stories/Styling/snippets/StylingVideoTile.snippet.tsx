@@ -20,7 +20,7 @@ export const VideoTileExample: () => JSX.Element = () => {
         displayName={'Jack Reacher'}
         isMirrored={true}
         styles={customStyles}
-      ></VideoTile>
+      />
     </FluentThemeProvider>
   );
 };

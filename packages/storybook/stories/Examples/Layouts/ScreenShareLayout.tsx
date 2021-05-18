@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { VideoTile } from '@azure/communication-react';
-import { Stack, mergeStyles, PersonaSize, Persona, Label } from '@fluentui/react';
+import { Stack, mergeStyles, PersonaSize, Persona } from '@fluentui/react';
 import { number, select } from '@storybook/addon-knobs';
 import React from 'react';
 import { mediaGalleryWidthOptions, mediaGalleryHeightDefault, mediaGalleryHeightOptions } from '../../constants';
@@ -55,20 +55,13 @@ export const ScreenShareLayout: () => JSX.Element = () => {
     border: '.063rem'
   };
 
-  const videoLabelStyle = mergeStyles({
-    bottom: '5%',
-    left: '2%',
-    overflow: 'hidden',
-    position: 'absolute',
-    maxWidth: '95%'
-  });
-
   const participantsComponents = defaultParticipants.map((participant, index) => {
     return (
       <Stack className={aspectRatioBoxStyle} key={index}>
         <Stack className={aspectRatioBoxContentStyle}>
           <VideoTile
             isVideoReady={false}
+            displayName={participant}
             placeholder={
               <Persona
                 styles={{ root: { margin: 'auto' } }}
@@ -78,9 +71,7 @@ export const ScreenShareLayout: () => JSX.Element = () => {
                 initialsTextColor="white"
               />
             }
-          >
-            <Label className={videoLabelStyle}>{participant}</Label>
-          </VideoTile>
+          />
         </Stack>
       </Stack>
     );

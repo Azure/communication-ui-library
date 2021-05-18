@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Text } from '@fluentui/react';
 import React from 'react';
 import { StreamMedia, VideoTile } from 'react-components';
 import { WithErrorHandling } from '../../utils';
@@ -25,9 +24,8 @@ const RemoteVideoTileComponentBase = (props: RemoteVideoTileProps): JSX.Element 
       isVideoReady={isVideoReady}
       renderElement={<StreamMedia videoStreamElement={videoStreamElement} />}
       displayName={label}
-    >
-      <Text className={isVideoReady ? videoHint : disabledVideoHint}>{label}</Text>
-    </VideoTile>
+      styles={{ displayNameStyles: isVideoReady ? videoHint : disabledVideoHint }}
+    />
   );
 };
 

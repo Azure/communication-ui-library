@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { Stack, Text } from '@fluentui/react';
+import { Stack } from '@fluentui/react';
 import {
   disabledVideoHint,
   localMediaGalleryTileStyle,
@@ -70,12 +70,10 @@ export const MediaGallery1To1Component = (props: MediaGallery1To1Props): JSX.Ele
           isVideoReady={isLocalVideoReady}
           renderElement={<StreamMedia videoStreamElement={localVideoStreamElement} />}
           displayName={localParticipantName}
+          showDisplayName={showLocalParticipantName}
+          styles={{ displayNameStyles: isLocalVideoReady ? videoHint : disabledVideoHint }}
           isMirrored={localVideoInverted}
-        >
-          {showLocalParticipantName && (
-            <Text className={isLocalVideoReady ? videoHint : disabledVideoHint}>{localParticipantName}</Text>
-          )}
-        </VideoTile>
+        />
       </Stack>
     </Stack.Item>
   );
