@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "removed all Text or Label children of VideoTile component as displayName is now fully part of it ",
+  "packageName": "react-composites",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "merged PlaceholderProps in VideoTileProps and added displayName and showDisplayName props to it, also added displayNameStyles to VideoTileStylesProps",
+  "packageName": "react-components",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "patch"
+}
