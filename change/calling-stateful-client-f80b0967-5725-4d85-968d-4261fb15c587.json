@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Introduce common identifier format",
+  "packageName": "calling-stateful-client",
+  "email": "prprabhu@microsoft.com",
+  "dependentChangeType": "patch"
+}
