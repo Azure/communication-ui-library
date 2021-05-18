@@ -53,6 +53,7 @@ const App = (): JSX.Element => {
   const [token, setToken] = useState('');
   const [userId, setUserId] = useState('');
   const [displayName, setDisplayName] = useState('');
+  const [teamsMeetingLink, setTeamsMeetingLink] = useState<string>();
 
   useEffect(() => {
     const setWindowWidth = (): void => {
@@ -94,7 +95,10 @@ const App = (): JSX.Element => {
         return (
           <ConfigurationScreen
             screenWidth={screenWidth}
-            startCallHandler={(): void => setPage('call')}
+            startCallHandler={(data): void => {
+              data?.meetingLink && setTeamsMeetingLink(data?.meetingLink);
+              setPage('call');
+            }}
             onDisplayNameUpdate={setDisplayName}
           />
         );
@@ -107,7 +111,15 @@ const App = (): JSX.Element => {
                   setPage('endCall');
                 }}
                 screenWidth={screenWidth}
-                groupId={getGroupId()}
+                groupLocator={
+                  teamsMeetingLink
+                    ? {
+                        meetingLink: teamsMeetingLink
+                      }
+                    : {
+                        groupId: getGroupId()
+                      }
+                }
               />
             </CallProvider>
           </CallAgentProvider.CallAgentProvider>

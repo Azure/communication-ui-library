@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mediaGallerySelector } from '@azure/acs-calling-selector';
-import { AudioOptions, CallState } from '@azure/communication-calling';
+import { mediaGallerySelector, lobbySelector, complianceBannerSelector } from '@azure/acs-calling-selector';
+import { AudioOptions, CallState, GroupLocator, MeetingLocator } from '@azure/communication-calling';
 import { Label, Overlay, Spinner, Stack } from '@fluentui/react';
 import { CallClientState, StatefulCallClient } from 'calling-stateful-client';
 import React, { useEffect, useState } from 'react';
@@ -23,18 +23,20 @@ import {
 } from './styles/GroupCall.styles';
 import { isInCall } from './utils/AppUtils';
 import { MINI_HEADER_WINDOW_WIDTH } from './utils/constants';
+import { Lobby } from './Lobby';
+import { ComplianceBanner } from './ComplianceBanner';
 
 export interface GroupCallProps {
   screenWidth: number;
   endCallHandler(): void;
-  groupId: string;
+  groupLocator: GroupLocator | MeetingLocator;
 }
 
 const spinnerLabel = 'Initializing call client...';
 
 export const GroupCall = (props: GroupCallProps): JSX.Element => {
   const [selectedPane, setSelectedPane] = useState(CommandPanelTypes.None);
-  const { groupId, screenWidth, endCallHandler } = props;
+  const { groupLocator, screenWidth, endCallHandler } = props;
 
   const callAgent = CallAgentProvider.useCallAgent();
   const { setCall, isMicrophoneEnabled } = useCallContext();
@@ -48,6 +50,11 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
   const mediaGalleryProps = useSelector(mediaGallerySelector);
   const mediaGalleryHandlers = useHandlers(MediaGallery);
 
+  const lobbyProps = useSelector(lobbySelector);
+  const lobbyHandlers = useHandlers(Lobby);
+
+  const complianceBannerProps = useSelector(complianceBannerSelector);
+
   // To use useProps to get these states, we need to create another file wrapping GroupCall,
   // It seems unnecessary in this case, so we get the updated states using this approach.
   useEffect(() => {
@@ -55,36 +62,33 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
       call?.id && setCallState(state.calls.get(call.id)?.state);
       call?.id && setIsScreenSharingOn(state.calls.get(call.id)?.isScreenSharingOn);
     };
-
     callClient.onStateChange(onStateChange);
-
     return () => {
       callClient.offStateChange(onStateChange);
     };
   }, [call?.id, callClient]);
 
   useEffect(() => {
-    const localStream = call?.localVideoStreams.find((i) => i.mediaStreamType === 'Video');
-    if (isInCall(callState ?? 'None')) {
-      document.title = `${groupId} group call sample`;
-    } else {
-      if (!isInCall(callState ?? 'None') && callAgent) {
-        const audioOptions: AudioOptions = { muted: !isMicrophoneEnabled };
-        const videoOptions = { localVideoStreams: localStream ? [localStream] : undefined };
-
-        const call = callAgent.join(
-          {
-            groupId
-          },
-          {
-            audioOptions,
-            videoOptions
-          }
-        );
-        setCall(call);
-      }
+    if (!isInCall(callState ?? 'None') && callAgent) {
+      const audioOptions: AudioOptions = { muted: !isMicrophoneEnabled };
+      const call = callAgent.join(groupLocator, { audioOptions });
+      setCall(call);
     }
-  }, [call?.localVideoStreams, callAgent, callState, groupId, isMicrophoneEnabled, setCall]);
+  }, [call?.localVideoStreams, callAgent, callState, groupLocator, isMicrophoneEnabled, setCall]);
+
+  if ('meetingLink' in groupLocator) {
+    if (callState && ['Connecting', 'Ringing', 'InLobby'].includes(callState)) {
+      return (
+        <Lobby
+          callState={callState}
+          {...lobbyProps}
+          {...lobbyHandlers}
+          isCameraChecked={isCallStartedWithCameraOn}
+          onEndCallClick={endCallHandler}
+        />
+      );
+    }
+  }
 
   return (
     <>
@@ -97,6 +101,9 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
               endCallHandler={endCallHandler}
               screenWidth={screenWidth}
             />
+          </Stack.Item>
+          <Stack.Item>
+            <ComplianceBanner {...complianceBannerProps} />
           </Stack.Item>
           <Stack styles={subContainerStyles} grow horizontal>
             {!isScreenSharingOn ? (
