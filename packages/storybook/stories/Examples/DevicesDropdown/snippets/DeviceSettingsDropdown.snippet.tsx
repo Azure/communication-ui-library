@@ -5,10 +5,10 @@ import React from 'react';
 
 export interface DeviceSettingsProps {
   devices: string[];
-  onChanged: (option: IDropdownOption, index?: number) => void;
+  onChange: (event: React.FormEvent<HTMLDivElement>, option?: IDropdownOption, index?: number) => void;
 }
 
-export const DeviceSettingDropdownExample = ({ devices, onChanged }: DeviceSettingsProps): JSX.Element => {
+export const DeviceSettingDropdownExample = ({ devices, onChange }: DeviceSettingsProps): JSX.Element => {
   const theme = useTheme();
 
   return (
@@ -16,7 +16,7 @@ export const DeviceSettingDropdownExample = ({ devices, onChanged }: DeviceSetti
       <Dropdown
         style={{ width: '15rem' }}
         placeholder="Select an option"
-        onChanged={onChanged}
+        onChange={onChange}
         options={devices.map((device) => {
           return {
             selected: false,

@@ -51,7 +51,7 @@ export const DeviceSettings: () => JSX.Element = () => {
   return (
     <DeviceSettingDropdownExample
       devices={cameras}
-      onChanged={(option) => {
+      onChange={(_, option) => {
         alert(option.text);
       }}
     />
