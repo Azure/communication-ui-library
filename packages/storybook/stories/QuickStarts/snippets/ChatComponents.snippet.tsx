@@ -1,4 +1,10 @@
-import { MessageThread, ChatMessage as WebUiChatMessage, SendBox, MessageStatus } from '@azure/communication-react';
+import {
+  MessageThread,
+  ChatMessage as WebUiChatMessage,
+  SendBox,
+  MessageStatus,
+  MessageContentType
+} from '@azure/communication-react';
 import React from 'react';
 
 export const ChatComponents = (): JSX.Element => {
@@ -8,6 +14,7 @@ export const ChatComponents = (): JSX.Element => {
       {
         type: 'chat',
         payload: {
+          type: 'text' as MessageContentType,
           senderId: '1',
           senderDisplayName: 'User1',
           messageId: Math.random().toString(),
@@ -15,12 +22,13 @@ export const ChatComponents = (): JSX.Element => {
           createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
           mine: true,
           attached: false,
-          statusToRender: 'seen' as MessageStatus
+          status: 'seen' as MessageStatus
         }
       },
       {
         type: 'chat',
         payload: {
+          type: 'text' as MessageContentType,
           senderId: '2',
           senderDisplayName: 'User2',
           messageId: Math.random().toString(),
@@ -33,6 +41,7 @@ export const ChatComponents = (): JSX.Element => {
       {
         type: 'chat',
         payload: {
+          type: 'text' as MessageContentType,
           senderId: '3',
           senderDisplayName: 'User3',
           messageId: Math.random().toString(),
@@ -55,7 +64,7 @@ export const ChatComponents = (): JSX.Element => {
         onSendMessage={async () => {
           return;
         }}
-        onSendTypingNotification={async () => {
+        onTyping={async () => {
           return;
         }}
       />
