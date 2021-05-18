@@ -1,0 +1,54 @@
+
+pr:
+ - main
+
+stages:
+  - stage: buildStage
+    displayName: Build and Test
+
+    jobs:
+      - job: build
+        displayName: Build
+        steps:
+          - task: UseNode@1
+            displayName: "Ensure Node version is latest"
+            inputs:
+              version: "12.x"
+
+          - task: Npm@1
+            displayName: "Install rush"
+            inputs:
+              command: "custom"
+              customCommand: install -g @microsoft/rush
+
+          - task: PowerShell@2
+            displayName: "Install dependencies"
+            inputs:
+              targetType: 'inline'
+              script: rush install
+
+          # - task: PowerShell@2
+          #   displayName: "changelog check"
+          #   inputs:
+          #     targetType: 'inline'
+          #     script: rush changelog:check
+
+          - task: PowerShell@2
+            displayName: lint check
+            inputs:
+                targetType: 'inline'
+                script: rush lint
+
+          - task: PowerShell@2
+            displayName: "Build Packages and Samples"
+            inputs:
+                targetType: 'inline'
+                script: rush build
+
+          - task: PowerShell@2
+            displayName: "Run Tests"
+            inputs:
+                targetType: 'inline'
+                script: rush test
+            env:
+              CI: true
