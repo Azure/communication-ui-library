@@ -17,7 +17,7 @@ import { MediaGallery } from './MediaGallery';
 import { connectFuncsToContext, MapToErrorBarProps } from '../../consumers';
 import { isInCall } from '../../utils/SDKUtils';
 import { ErrorHandlingProps } from '../../providers/ErrorProvider';
-import { ErrorBar as ErrorBarComponent } from 'react-components';
+import { ErrorBar as ErrorBarComponent } from '../common/ErrorBar';
 import { CallControls } from '../common/CallControls';
 import { useAdapter } from './adapter/CallAdapterProvider';
 import { useSelector } from './hooks/useSelector';
