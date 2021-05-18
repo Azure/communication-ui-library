@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { FlatCommunicationIdentifier, toFlatCommunicationIdentifier } from 'acs-ui-common';
 // @ts-ignore
 import { Call, CallClientState, RemoteParticipant, RemoteVideoStream } from 'calling-stateful-client';
 // @ts-ignore
@@ -11,7 +12,6 @@ import * as reselect from 'reselect';
 import { getCall, CallingBaseSelectorProps, getDisplayName, getIdentifier, getCallId } from './baseSelectors';
 // @ts-ignore
 import { memoizeFnAll } from './utils/memoizeFnAll';
-import { getACSId } from './utils/getACSId';
 import { VideoGalleryRemoteParticipant, VideoGalleryStream } from 'react-components';
 
 const convertRemoteVideoStreamToVideoGalleryStream = (stream: RemoteVideoStream): VideoGalleryStream => {
@@ -25,7 +25,7 @@ const convertRemoteVideoStreamToVideoGalleryStream = (stream: RemoteVideoStream)
 
 const memoizedAllConvertRemoteParticipant = memoizeFnAll(
   (
-    userId: string,
+    userId: FlatCommunicationIdentifier,
     isMuted: boolean,
     isSpeaking: boolean,
     videoStreams: Map<number, RemoteVideoStream>,
@@ -61,7 +61,7 @@ const videoGalleryRemoteParticipantsFromCall = (call: Call | undefined): VideoGa
   return memoizedAllConvertRemoteParticipant((memoizedFn) => {
     return Array.from(call.remoteParticipants.values()).map((participant: RemoteParticipant) => {
       return memoizedFn(
-        getACSId(participant.identifier),
+        toFlatCommunicationIdentifier(participant.identifier),
         participant.isMuted,
         participant.isSpeaking,
         participant.videoStreams,
@@ -73,11 +73,11 @@ const videoGalleryRemoteParticipantsFromCall = (call: Call | undefined): VideoGa
 
 export const videoGallerySelector = createSelector(
   [getCall, getDisplayName, getIdentifier],
-  (call: Call | undefined, displayName: string | undefined, identifier: string | undefined) => {
+  (call: Call | undefined, displayName: string | undefined, identifier: FlatCommunicationIdentifier) => {
     const localVideoStream = call?.localVideoStreams.find((i) => i.mediaStreamType === 'Video');
     return {
       localParticipant: {
-        userId: identifier ?? '',
+        userId: identifier,
         displayName: displayName ?? '',
         isMuted: call?.isMuted,
         isScreenSharingOn: call?.isScreenSharingOn,

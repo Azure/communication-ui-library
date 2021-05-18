@@ -59,7 +59,7 @@ export interface CallClientState {
     deviceManager: DeviceManager;
     incomingCalls: Map<string, IncomingCall>;
     incomingCallsEnded: IncomingCall[];
-    userId: string;
+    userId: FlatCommunicationIdentifier;
 }
 
 // @public

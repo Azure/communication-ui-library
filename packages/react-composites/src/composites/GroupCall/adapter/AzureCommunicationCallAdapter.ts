@@ -23,6 +23,8 @@ import { EventEmitter } from 'events';
 import { CallAdapter, CallEvent, CallState, IncomingCallListener, ParticipantJoinedListener } from './CallAdapter';
 import { createAzureCommunicationUserCredential, getIdFromToken, isInCall } from '../../../utils';
 import { VideoStreamOptions } from 'react-components';
+import { FlatCommunicationIdentifier, fromFlatCommunicationIdentifier } from 'acs-ui-common';
+import { CommunicationUserIdentifier } from '@azure/communication-signaling';
 
 // Context of Chat, which is a centralized context for all state updates
 class CallContext {
@@ -162,7 +164,10 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     }
   }
 
-  public async createStreamView(userId?: string, options?: VideoStreamOptions | undefined): Promise<void> {
+  public async createStreamView(
+    userId?: FlatCommunicationIdentifier,
+    options?: VideoStreamOptions | undefined
+  ): Promise<void> {
     if (userId === undefined) {
       await this.handlers.onCreateLocalStreamView(options);
     } else {
@@ -241,16 +246,18 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 
   //TODO: a better way to expose option parameter
-  public startCall(participants: string[]): Call | undefined {
-    const idsToAdd = participants.map((participant) => ({
-      kind: 'communicationUser',
-      communicationUserId: participant
-    }));
+  public startCall(participants: FlatCommunicationIdentifier[]): Call | undefined {
+    const idsToAdd = participants.map((participant) => {
+      // FIXME: `onStartCall` does not allow a Teams user.
+      // Need some way to return an error if a Teams user is provided.
+      const backendId = fromFlatCommunicationIdentifier(participant) as CommunicationUserIdentifier;
+      return backendId;
+    });
 
     return this.handlers.onStartCall(idsToAdd);
   }
 
-  public async removeParticipant(userId: string): Promise<void> {
+  public async removeParticipant(userId: FlatCommunicationIdentifier): Promise<void> {
     this.handlers.onParticipantRemove(userId);
   }
 

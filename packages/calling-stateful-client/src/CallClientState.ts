@@ -393,8 +393,8 @@ export interface CallClientState {
    */
   callAgent: CallAgent | undefined;
   /**
-   * Stores a userId string. This is not used by the stateful client and is provided here as a convenience for the
+   * Stores a userId. This is not used by the stateful client and is provided here as a convenience for the
    * developer for easier access to userId. Must be passed in at initialization of the stateful client.
    */
-  userId: string;
+  userId: FlatCommunicationIdentifier;
 }

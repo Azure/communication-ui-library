@@ -13,6 +13,7 @@ import { CallParticipant } from 'react-components';
 import { CommonProperties } from 'acs-ui-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { DeviceManager } from 'calling-stateful-client';
+import { FlatCommunicationIdentifier } from 'acs-ui-common';
 import { IncomingCall } from 'calling-stateful-client';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { ReactElement } from 'react';
@@ -55,8 +56,8 @@ export const createDefaultCallingHandlers: (callClient: StatefulCallClient, call
     onToggleMicrophone: () => Promise<void>;
     onToggleScreenShare: () => Promise<void>;
     onCreateLocalStreamView: (options?: VideoStreamOptions | undefined) => Promise<void>;
-    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions | undefined) => Promise<void>;
-    onParticipantRemove: (userId: string) => void;
+    onCreateRemoteStreamView: (userId: FlatCommunicationIdentifier, options?: VideoStreamOptions | undefined) => Promise<void>;
+    onParticipantRemove: (userId: FlatCommunicationIdentifier) => void;
     onStartLocalVideo: () => Promise<void>;
 };
 
@@ -73,8 +74,8 @@ export const createDefaultCallingHandlersForComponent: <Props>(callClient: State
     onToggleMicrophone: () => Promise<void>;
     onToggleScreenShare: () => Promise<void>;
     onCreateLocalStreamView: (options?: VideoStreamOptions | undefined) => Promise<void>;
-    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions | undefined) => Promise<void>;
-    onParticipantRemove: (userId: string) => void;
+    onCreateRemoteStreamView: (userId: FlatCommunicationIdentifier, options?: VideoStreamOptions | undefined) => Promise<void>;
+    onParticipantRemove: (userId: FlatCommunicationIdentifier) => void;
     onStartLocalVideo: () => Promise<void>;
 }, CommonProperties<{
     onHangUp: () => Promise<void>;
@@ -88,8 +89,8 @@ export const createDefaultCallingHandlersForComponent: <Props>(callClient: State
     onToggleMicrophone: () => Promise<void>;
     onToggleScreenShare: () => Promise<void>;
     onCreateLocalStreamView: (options?: VideoStreamOptions | undefined) => Promise<void>;
-    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions | undefined) => Promise<void>;
-    onParticipantRemove: (userId: string) => void;
+    onCreateRemoteStreamView: (userId: FlatCommunicationIdentifier, options?: VideoStreamOptions | undefined) => Promise<void>;
+    onParticipantRemove: (userId: FlatCommunicationIdentifier) => void;
     onStartLocalVideo: () => Promise<void>;
 }, Props>>;
 
@@ -115,7 +116,7 @@ export const getDeviceManager: (state: CallClientState) => DeviceManager;
 export const getDisplayName: (state: CallClientState) => string | undefined;
 
 // @public (undocumented)
-export const getIdentifier: (state: CallClientState) => string | undefined;
+export const getIdentifier: (state: CallClientState) => FlatCommunicationIdentifier;
 
 // @public (undocumented)
 export const getIncomingCalls: (state: CallClientState) => Map<string, IncomingCall>;
@@ -169,10 +170,10 @@ export const optionsButtonSelector: reselect.OutputParametricSelector<CallClient
 // @public (undocumented)
 export const participantListSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     participants: CallParticipant[];
-    myUserId: string;
-}, (res1: string | undefined, res2: string | undefined, res3: Call_2 | undefined) => {
+    myUserId: FlatCommunicationIdentifier;
+}, (res1: string, res2: string | undefined, res3: Call_2 | undefined) => {
     participants: CallParticipant[];
-    myUserId: string;
+    myUserId: FlatCommunicationIdentifier;
 }>;
 
 // @public (undocumented)
@@ -196,7 +197,7 @@ export const videoGallerySelector: reselect.OutputParametricSelector<CallClientS
         };
     };
     remoteParticipants: VideoGalleryRemoteParticipant[];
-}, (res1: Call_2 | undefined, res2: string | undefined, res3: string | undefined) => {
+}, (res1: Call_2 | undefined, res2: string | undefined, res3: string) => {
     localParticipant: {
         userId: string;
         displayName: string;

@@ -4,6 +4,7 @@
 import { Call, DeviceManager as Devices, RemoteParticipant } from 'calling-stateful-client';
 import { AudioDeviceInfo, VideoDeviceInfo, Call as SDKCall } from '@azure/communication-calling';
 import { VideoStreamOptions } from 'react-components';
+import { FlatCommunicationIdentifier } from 'acs-ui-common';
 
 export type CallingUIState = {
   // Self-contained state for composite
@@ -14,7 +15,7 @@ export type CallingUIState = {
 
 export type CallingClientState = {
   // Properties from backend services
-  userId: string;
+  userId: FlatCommunicationIdentifier;
   displayName?: string;
   call?: Call;
   devices: Devices;
@@ -24,7 +25,7 @@ export type CallState = CallingUIState & CallingClientState;
 
 export type IncomingCallListener = (event: {
   callId: string;
-  callerId: string;
+  callerId: FlatCommunicationIdentifier;
   callerDisplayName?: string;
   /**
    * Invoke to accept the call.
@@ -73,15 +74,15 @@ export interface CallAdapter {
 
   unmute(): Promise<void>;
 
-  startCall(participants: string[]): SDKCall | undefined;
+  startCall(participants: FlatCommunicationIdentifier[]): SDKCall | undefined;
 
   startScreenShare(): Promise<void>;
 
   stopScreenShare(): Promise<void>;
 
-  removeParticipant(userId: string): Promise<void>;
+  removeParticipant(userId: FlatCommunicationIdentifier): Promise<void>;
 
-  createStreamView(userId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
+  createStreamView(userId?: FlatCommunicationIdentifier, options?: VideoStreamOptions | undefined): Promise<void>;
 
   on(event: 'incomingCall', listener: IncomingCallListener): void;
 

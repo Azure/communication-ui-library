@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { FlatCommunicationIdentifier, toFlatCommunicationIdentifier } from 'acs-ui-common';
 // @ts-ignore
 import { RemoteParticipant, CallClientState, Call } from 'calling-stateful-client';
 // @ts-ignore
@@ -9,7 +10,6 @@ import * as reselect from 'reselect';
 import { CallingBaseSelectorProps } from './baseSelectors';
 import { getCall, getIdentifier, getDisplayName } from './baseSelectors';
 import { CallParticipant } from 'react-components';
-import { getACSId } from './utils/getACSId';
 
 const convertRemoteParticipantsToCommunicationParticipants = (
   remoteParticipants: RemoteParticipant[]
@@ -20,7 +20,7 @@ const convertRemoteParticipantsToCommunicationParticipants = (
     );
 
     return {
-      userId: getACSId(participant.identifier),
+      userId: toFlatCommunicationIdentifier(participant.identifier),
       displayName: participant.displayName,
       state: participant.state,
       isMuted: participant.isMuted,
@@ -38,14 +38,14 @@ export const participantListSelector = reselect.createSelector(
     call
   ): {
     participants: CallParticipant[];
-    myUserId: string;
+    myUserId: FlatCommunicationIdentifier;
   } => {
     const remoteParticipants =
       call && call?.remoteParticipants
         ? convertRemoteParticipantsToCommunicationParticipants(Array.from(call?.remoteParticipants.values()))
         : [];
     remoteParticipants.push({
-      userId: userId ?? '',
+      userId: userId,
       displayName: displayName,
       isScreenSharing: call?.isScreenSharingOn,
       isMuted: call?.isMuted,
@@ -53,7 +53,7 @@ export const participantListSelector = reselect.createSelector(
     });
     return {
       participants: remoteParticipants,
-      myUserId: userId ?? ''
+      myUserId: userId
     };
   }
 );

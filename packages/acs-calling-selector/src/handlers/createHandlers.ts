@@ -10,12 +10,16 @@ import {
   VideoDeviceInfo
 } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
-import { CommonProperties } from 'acs-ui-common';
+import {
+  CommonProperties,
+  FlatCommunicationIdentifier,
+  fromFlatCommunicationIdentifier,
+  toFlatCommunicationIdentifier
+} from 'acs-ui-common';
 import { DeviceManager, StatefulCallClient, StatefulDeviceManager } from 'calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
 import { VideoStreamOptions } from 'react-components';
-import { getACSId } from '../utils/getACSId';
 
 export type DefaultCallingHandlers = ReturnType<typeof createDefaultCallingHandlers>;
 
@@ -81,6 +85,7 @@ export const createDefaultCallingHandlers = memoizeOne(
       }
     };
 
+    // FIXME: onStartCall API should use FlatCommunicationIdentifier, not the underlying SDK types.
     const onStartCall = (
       participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
       options?: StartCallOptions
@@ -154,13 +159,16 @@ export const createDefaultCallingHandlers = memoizeOne(
       callClient.createView(call.id, localStream, options);
     };
 
-    const onCreateRemoteStreamView = async (userId: string, options?: VideoStreamOptions): Promise<void> => {
+    const onCreateRemoteStreamView = async (
+      userId: FlatCommunicationIdentifier,
+      options?: VideoStreamOptions
+    ): Promise<void> => {
       if (!call) return;
       const callState = callClient.getState().calls.get(call.id);
       if (!callState) throw new Error(`Call Not Found: ${call.id}`);
 
       const streams = Array.from(callState.remoteParticipants.values()).find(
-        (participant) => getACSId(participant.identifier) === userId
+        (participant) => toFlatCommunicationIdentifier(participant.identifier) === userId
       )?.videoStreams;
 
       if (!streams) return;
@@ -177,8 +185,8 @@ export const createDefaultCallingHandlers = memoizeOne(
       }
     };
 
-    const onParticipantRemove = (userId: string): void => {
-      call?.removeParticipant({ communicationUserId: userId });
+    const onParticipantRemove = (userId: FlatCommunicationIdentifier): void => {
+      call?.removeParticipant(fromFlatCommunicationIdentifier(userId));
     };
 
     return {
