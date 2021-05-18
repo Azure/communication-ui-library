@@ -1,6 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/**
+ * THIS COMPOSITE HAS BEEN REMOVED FROM STORYBOOK.
+ * WHEN THE COMPOSITE HAS BEEN FULLY TESTED AND IS EXPORTED
+ * FROM THE REACT-COMPOSITES PACKAGE THIS STORY SHOULD BE
+ * REVIVED.
+ */
+
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-identity';
 import { Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
