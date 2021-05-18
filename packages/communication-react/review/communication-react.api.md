@@ -541,17 +541,6 @@ export interface EndCallButtonProps extends IButtonProps {
 }
 
 // @public
-export const ErrorBar: (props: ErrorBarProps) => JSX.Element | null;
-
-// @public
-export type ErrorBarProps = {
-    message?: string;
-    severity?: CommunicationUiErrorSeverity;
-    onClose?: () => void;
-    styles?: BaseCustomStylesProps;
-};
-
-// @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
 
 // @public

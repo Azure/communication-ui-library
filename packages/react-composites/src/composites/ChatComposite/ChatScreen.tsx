@@ -3,7 +3,8 @@
 
 import { mergeStyles, Stack } from '@fluentui/react';
 import React, { useEffect } from 'react';
-import { ErrorBar, MessageThread, ParticipantList, SendBox, TypingIndicator } from 'react-components';
+import { MessageThread, ParticipantList, SendBox, TypingIndicator } from 'react-components';
+import { ErrorBar } from '../common/ErrorBar';
 import { useAdapter } from './adapter/ChatAdapterProvider';
 import { usePropsFor } from './hooks/usePropsFor';
 import { chatContainer, chatWrapper } from './styles/Chat.styles';
