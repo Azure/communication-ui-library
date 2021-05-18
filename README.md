@@ -24,8 +24,9 @@ If you're wondering where to get started, here are a few scenarios to help you g
 
 ## Samples
 
-🚧 We are doing some additional work to finalize our samples to use the package this repository generates but for now we suggest using storybook🚧. 
-Check out [Storybook](https://azure.github.io/communication-ui-sdk) to try out this UI Library.
+🚧 We are doing some additional work to finalize our samples to use the package this repository generates but for now we suggest using storybook🚧.
+
+Check out [Storybook](https://azure.github.io/communication-ui-sdk) to try out this UI Library today!
 
 ## Features and Benefits
 
