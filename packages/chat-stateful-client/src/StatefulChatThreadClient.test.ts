@@ -14,6 +14,8 @@ import {
 
 const threadId = '1';
 
+jest.mock('@azure/communication-chat');
+
 const createMockChatClientAndDeclaratify = (context: ChatContext): ChatThreadClient => {
   const declarativeChatThreadClient = chatThreadClientDeclaratify(createMockChatThreadClient(threadId), context);
   return declarativeChatThreadClient;
