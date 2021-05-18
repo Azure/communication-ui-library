@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { ENTER_KEY, MAXIMUM_LENGTH_OF_NAME, ErrorHandlingProps, WithErrorHandling } from 'react-composites';
 import {
   TextFieldStyleProps,
   inputBoxStyle,
@@ -12,9 +11,10 @@ import {
   warningStyle
 } from './styles/DisplayNameField.styles';
 import { TextField } from '@fluentui/react';
+import { ENTER_KEY, MAXIMUM_LENGTH_OF_NAME } from './utils/constants';
 
 interface DisplayNameFieldProps {
-  setName(name: string): void;
+  setName(displayName: string): void;
   setEmptyWarning(isEmpty: boolean): void;
   setNameLengthExceedLimit(isNameLengthExceedLimit: boolean): void;
   isEmpty: boolean;
@@ -23,7 +23,7 @@ interface DisplayNameFieldProps {
   validateName?(): void;
 }
 
-const DisplayNameFieldComponent = (props: DisplayNameFieldProps & ErrorHandlingProps): JSX.Element => {
+export const DisplayNameField = (props: DisplayNameFieldProps): JSX.Element => {
   const {
     setName,
     setEmptyWarning,
@@ -56,7 +56,7 @@ const DisplayNameFieldComponent = (props: DisplayNameFieldProps & ErrorHandlingP
         ariaLabel="Choose your name"
         className={isEmpty || isNameLengthExceedLimit ? inputBoxWarningStyle : inputBoxStyle}
         onChange={onNameTextChange}
-        id="name"
+        id="displayName"
         placeholder="Enter your name"
         onKeyDown={(ev) => {
           if (ev.which === ENTER_KEY) {
@@ -81,6 +81,3 @@ const DisplayNameFieldComponent = (props: DisplayNameFieldProps & ErrorHandlingP
     </div>
   );
 };
-
-export const DisplayNameField = (props: DisplayNameFieldProps & ErrorHandlingProps): JSX.Element =>
-  WithErrorHandling(DisplayNameFieldComponent, props);

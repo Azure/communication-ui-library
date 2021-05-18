@@ -123,7 +123,7 @@ export interface LocalVideoStream {
    */
   mediaStreamType: MediaStreamType;
   /**
-   * {@Link VideoStreamRendererView} is added/removed from state by startRenderVideo/stopRenderVideo in
+   * {@Link VideoStreamRendererView} is added/removed from state by createView/disposeView in
    * {@Link StatefulCallClient} API.
    */
   videoStreamRendererView?: VideoStreamRendererView | undefined;
@@ -146,7 +146,7 @@ export interface RemoteVideoStream {
    */
   isAvailable: boolean;
   /**
-   * {@Link VideoStreamRendererView} is added/removed from state by startRenderVideo/stopRenderVideo in
+   * {@Link VideoStreamRendererView} is added/removed from state by createView/disposeView in
    * {@Link StatefulCallClient} API.
    */
   videoStreamRendererView: VideoStreamRendererView | undefined;
@@ -355,7 +355,7 @@ export type DeviceManager = {
   deviceAccess?: DeviceAccess;
   /**
    * Stores created views that are not associated with any Call state (when
-   * {@Link StatefulCallClient#startRenderVideo} is called with undefined callId and LocalVideoStream).
+   * {@Link StatefulCallClient#createView} is called with undefined callId and LocalVideoStream).
    */
   unparentedViews: VideoStreamRendererView[];
 };

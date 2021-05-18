@@ -35,13 +35,13 @@ export const OneToOneCallLayout: () => JSX.Element = () => {
         styles={{
           overlayContainer: videoStreamStyle
         }}
-        avatarName={'Holly'}
+        displayName={'Holly'}
       >
         {/* Video component for my video stream stream */}
         <VideoTile
           isVideoReady={false}
           // A placeholder element for my video stream
-          placeholderProvider={
+          placeholder={
             <Persona
               styles={{ root: { margin: 'auto' } }}
               size={PersonaSize.size56}

@@ -14,21 +14,9 @@ import { AudioDeviceInfo, CallState, LocalVideoStream, VideoDeviceInfo } from '@
 import {
   CommunicationUiErrorCode,
   CommunicationUiError,
-  CommunicationUiErrorSeverity,
   CommunicationUiErrorFromError,
   CommunicationUiErrorInfo
 } from '../types/CommunicationUiError';
-import {
-  TOO_MANY_REQUESTS_STATUS_CODE,
-  UNAUTHORIZED_STATUS_CODE,
-  FORBIDDEN_STATUS_CODE,
-  SERVICE_UNAVAILABLE_STATUS_CODE,
-  INTERNAL_SERVER_ERROR_STATUS_CODE,
-  MULTI_STATUS,
-  OK,
-  NO_CONTENT,
-  CREATED
-} from '../constants/chatConstants';
 
 export const getACSId = (
   identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind
@@ -54,14 +42,6 @@ export function isSelectedDeviceInList<T extends AudioDeviceInfo | VideoDeviceIn
 }
 
 export const isInCall = (callState: CallState): boolean => !!(callState !== 'None' && callState !== 'Disconnected');
-
-/**
- * Check if a given string is a GUID.
- * Regex expression from: https://stackoverflow.com/a/13653180
- * @param str - string to check
- */
-export const isGUID = (str: string): boolean =>
-  !!str.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
 
 export const areStreamsEqual = (prevStream: LocalVideoStream, newStream: LocalVideoStream): boolean => {
   return !!prevStream && !!newStream && prevStream.source.id === newStream.source.id;
@@ -122,29 +102,6 @@ export const getIdFromToken = (jwtToken: string): string => {
     message: 'Invalid access token',
     code: CommunicationUiErrorCode.CONFIGURATION_ERROR
   });
-};
-
-// Helper function to get CommunicationUiError from ACS resource server response status code since we need to do this
-// in many places. Returns a CommunicationUiError or undefined if the statusCode is success.
-export const getErrorFromAcsResponseCode = (message: string, statusCode: number): CommunicationUiError | undefined => {
-  let errorCode: CommunicationUiErrorCode = CommunicationUiErrorCode.UNKNOWN_STATUS_CODE_ERROR;
-  let severity: CommunicationUiErrorSeverity = 'warning';
-  if (statusCode === OK || statusCode === NO_CONTENT || statusCode === MULTI_STATUS || statusCode === CREATED) {
-    return undefined;
-  } else if (statusCode === UNAUTHORIZED_STATUS_CODE) {
-    severity = 'error';
-    errorCode = CommunicationUiErrorCode.UNAUTHORIZED_ERROR;
-  } else if (statusCode === FORBIDDEN_STATUS_CODE) {
-    severity = 'error';
-    errorCode = CommunicationUiErrorCode.FORBIDDEN_ERROR;
-  } else if (statusCode === TOO_MANY_REQUESTS_STATUS_CODE) {
-    errorCode = CommunicationUiErrorCode.TOO_MANY_REQUESTS_ERROR;
-  } else if (statusCode === SERVICE_UNAVAILABLE_STATUS_CODE) {
-    errorCode = CommunicationUiErrorCode.SERVICE_UNAVAILABLE_ERROR;
-  } else if (statusCode === INTERNAL_SERVER_ERROR_STATUS_CODE) {
-    errorCode = CommunicationUiErrorCode.INTERNAL_SERVER_ERROR;
-  }
-  return new CommunicationUiError({ message: message + statusCode, code: errorCode, severity: severity });
 };
 
 export const propagateError = (error: Error, onErrorCallback?: (error: CommunicationUiErrorInfo) => void): void => {

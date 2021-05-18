@@ -23,11 +23,11 @@ export const Lobby = (props: LobbyProps): JSX.Element => {
       styles={videoTileStyles}
       isMirrored={true}
       isVideoReady={props.isVideoReady}
-      videoProvider={
+      renderElement={
         // Replace with your own video provider.
         <StreamMedia videoStreamElement={renderVideoStream()} />
       }
-      placeholderProvider={<></>}
+      placeholder={<></>}
     >
       <div
         style={{

@@ -2,19 +2,19 @@
 // Licensed under the MIT license.
 
 // @ts-ignore
+import { RemoteParticipant, CallClientState, Call } from 'calling-stateful-client';
+// @ts-ignore
 import * as reselect from 'reselect';
 // @ts-ignore
-import * as callingDeclarative from 'calling-stateful-client';
-// @ts-ignore
 import { CallingBaseSelectorProps } from './baseSelectors';
-import { getCall, getUserId, getDisplayName } from './baseSelectors';
-import { CommunicationParticipant } from 'react-components';
+import { getCall, getIdentifier, getDisplayName } from './baseSelectors';
+import { CallParticipant } from 'react-components';
 import { getACSId } from './utils/getACSId';
 
 const convertRemoteParticipantsToCommunicationParticipants = (
-  remoteParticipants: callingDeclarative.RemoteParticipant[]
-): CommunicationParticipant[] => {
-  return remoteParticipants.map((participant: callingDeclarative.RemoteParticipant) => {
+  remoteParticipants: RemoteParticipant[]
+): CallParticipant[] => {
+  return remoteParticipants.map((participant: RemoteParticipant) => {
     const isScreenSharing = Array.from(participant.videoStreams.values()).some(
       (videoStream) => videoStream.mediaStreamType === 'ScreenSharing' && videoStream.isAvailable
     );
@@ -31,13 +31,13 @@ const convertRemoteParticipantsToCommunicationParticipants = (
 };
 
 export const participantListSelector = reselect.createSelector(
-  [getUserId, getDisplayName, getCall],
+  [getIdentifier, getDisplayName, getCall],
   (
     userId,
     displayName,
     call
   ): {
-    participants: CommunicationParticipant[];
+    participants: CallParticipant[];
     myUserId: string;
   } => {
     const remoteParticipants =
@@ -45,7 +45,7 @@ export const participantListSelector = reselect.createSelector(
         ? convertRemoteParticipantsToCommunicationParticipants(Array.from(call?.remoteParticipants.values()))
         : [];
     remoteParticipants.push({
-      userId: userId,
+      userId: userId ?? '',
       displayName: displayName,
       isScreenSharing: call?.isScreenSharingOn,
       isMuted: call?.isMuted,
@@ -53,7 +53,7 @@ export const participantListSelector = reselect.createSelector(
     });
     return {
       participants: remoteParticipants,
-      myUserId: userId
+      myUserId: userId ?? ''
     };
   }
 );

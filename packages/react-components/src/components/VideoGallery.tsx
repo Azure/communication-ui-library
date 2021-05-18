@@ -1,42 +1,55 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Label, Stack } from '@fluentui/react';
+import { Stack, Text } from '@fluentui/react';
 import React, { useMemo } from 'react';
-import { disabledVideoHint, gridStyle, videoHint, videoTileStyle } from './styles/VideoGallery.styles';
 import {
-  VideoGalleryRemoteParticipant,
+  BaseCustomStylesProps,
   VideoGalleryLocalParticipant,
-  ScalingMode,
-  CreateViewOptions,
-  RemoteVideoStream,
-  LocalVideoStream,
-  BaseCustomStylesProps
+  VideoGalleryRemoteParticipant,
+  VideoStreamOptions
 } from '../types';
 import { GridLayout } from './GridLayout';
 import { StreamMedia } from './StreamMedia';
-import { VideoTile } from './VideoTile';
+import { disabledVideoHint, gridStyle, videoHint, videoTileStyle } from './styles/VideoGallery.styles';
 import { memoizeFnAll } from './utils/memoizeFnAll';
+import { VideoTile } from './VideoTile';
 
 export interface VideoGalleryProps {
   styles?: BaseCustomStylesProps;
+  localParticipant: VideoGalleryLocalParticipant;
   remoteParticipants?: VideoGalleryRemoteParticipant[];
-  localParticipant?: VideoGalleryLocalParticipant;
-  scalingMode: ScalingMode;
-  onRenderView(stream: RemoteVideoStream | LocalVideoStream, options?: CreateViewOptions | undefined): Promise<void>;
+  localVideoViewOption?: VideoStreamOptions;
+  remoteVideoViewOption?: VideoStreamOptions;
+  onCreateLocalStreamView?: (options?: VideoStreamOptions | undefined) => Promise<void>;
+  onDisposeLocalStreamView?: () => Promise<void>;
+  onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
+  onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
+  onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
 }
 
+// @todo: replace with React.memo method
 const memoizeAllRemoteParticipants = memoizeFnAll(
-  (remoteParticipantkey: number, isAvailable?: boolean, target?: HTMLElement, displayName?: string): JSX.Element => {
+  (
+    userId: string,
+    onCreateRemoteStreamView: any,
+    isAvailable?: boolean,
+    renderElement?: HTMLElement,
+    displayName?: string,
+    remoteVideoViewOption?: VideoStreamOptions
+  ): JSX.Element => {
+    if (isAvailable && !renderElement) {
+      onCreateRemoteStreamView && onCreateRemoteStreamView(userId, remoteVideoViewOption);
+    }
     return (
-      <Stack className={gridStyle} key={remoteParticipantkey} grow>
+      <Stack className={gridStyle} key={userId} grow>
         <VideoTile
           isVideoReady={isAvailable}
-          videoProvider={<StreamMedia videoStreamElement={target ?? null} />}
-          avatarName={displayName}
+          renderElement={<StreamMedia videoStreamElement={renderElement ?? null} />}
+          displayName={displayName}
           styles={videoTileStyle}
         >
-          <Label className={isAvailable ? videoHint : disabledVideoHint}>{displayName}</Label>
+          <Text className={isAvailable ? videoHint : disabledVideoHint}>{displayName}</Text>
         </VideoTile>
       </Stack>
     );
@@ -44,68 +57,76 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
 );
 
 export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
-  const { localParticipant, remoteParticipants, scalingMode, onRenderView, styles } = props;
-  const localVideoStream = localParticipant?.videoStream;
-  const isLocalVideoReady = localVideoStream?.videoStreamRendererView !== undefined;
+  const {
+    localParticipant,
+    remoteParticipants,
+    localVideoViewOption,
+    remoteVideoViewOption,
+    onRenderLocalVideoTile,
+    onRenderRemoteVideoTile,
+    onCreateLocalStreamView,
+    onCreateRemoteStreamView,
+    styles
+  } = props;
 
-  const localParticipantComponent = useMemo(() => {
-    if (localVideoStream && !localVideoStream?.videoStreamRendererView) {
-      onRenderView(localVideoStream, {
-        scalingMode
-      }).catch((e) => {
-        // Since we are calling this async and not awaiting, there could be an error from try to start render of a
-        // stream that is already rendered. The StatefulClient will handle this so we can ignore this error in the UI
-        // but ideally we should make this await and avoid duplicate calls.
-        console.warn(e.message);
-      });
+  /**
+   * Utility function for meoized rendering of LocalParticipant.
+   */
+  const defaultOnRenderLocalVideoTile = useMemo((): JSX.Element => {
+    const localVideoStream = localParticipant?.videoStream;
+    const isLocalVideoReady = localVideoStream?.isAvailable;
+
+    if (onRenderLocalVideoTile) return onRenderLocalVideoTile(localParticipant);
+
+    if (localVideoStream && isLocalVideoReady) {
+      onCreateLocalStreamView && onCreateLocalStreamView(localVideoViewOption);
     }
-
     return (
       <VideoTile
         isVideoReady={isLocalVideoReady}
-        videoProvider={<StreamMedia videoStreamElement={localVideoStream?.videoStreamRendererView?.target ?? null} />}
-        avatarName={localParticipant?.displayName}
+        renderElement={<StreamMedia videoStreamElement={localVideoStream?.renderElement ?? null} />}
+        displayName={localParticipant?.displayName}
         styles={videoTileStyle}
       >
-        <Label className={isLocalVideoReady ? videoHint : disabledVideoHint}>{localParticipant?.displayName}</Label>
+        <Text className={isLocalVideoReady ? videoHint : disabledVideoHint}>{localParticipant?.displayName}</Text>
       </VideoTile>
     );
-  }, [isLocalVideoReady, localParticipant?.displayName, localVideoStream, onRenderView, scalingMode]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [localParticipant, localParticipant.videoStream, onCreateLocalStreamView]);
 
-  const gridLayoutRemoteParticipants = useMemo(() => {
+  /**
+   * Utility function for memoized rendering of RemoteParticipants.
+   */
+  const defaultOnRenderRemoteParticipants = useMemo(() => {
+    if (!remoteParticipants) return null;
+
+    // If user provided a custom onRender function return that function.
+    if (onRenderRemoteVideoTile) {
+      return remoteParticipants.map((participant) => onRenderRemoteVideoTile(participant));
+    }
+
     return memoizeAllRemoteParticipants((memoizedRemoteParticipantFn) => {
-      return remoteParticipants
-        ? remoteParticipants.map((participant, key) => {
-            const remoteVideoStream = participant.videoStream;
-
-            if (remoteVideoStream?.isAvailable && !remoteVideoStream?.videoStreamRendererView) {
-              onRenderView(remoteVideoStream, {
-                scalingMode
-              }).catch((e) => {
-                // Since we are calling this async and not awaiting, there could be an error from try to start render of
-                // a stream that is already rendered. The StatefulClient will handle this so we can ignore this error in
-                // the UI but ideally we should make this await and avoid duplicate calls.
-                console.warn(e.message);
-              });
-            }
-
-            return memoizedRemoteParticipantFn(
-              key,
-              remoteVideoStream?.isAvailable,
-              remoteVideoStream?.videoStreamRendererView?.target,
-              participant.displayName
-            );
-          })
-        : [];
+      // Else return Remote Stream Video Tiles
+      return remoteParticipants.map((participant) => {
+        const remoteVideoStream = participant.videoStream;
+        return memoizedRemoteParticipantFn(
+          participant.userId,
+          onCreateRemoteStreamView,
+          remoteVideoStream?.isAvailable,
+          remoteVideoStream?.renderElement,
+          participant.displayName,
+          remoteVideoViewOption
+        );
+      });
     });
-  }, [remoteParticipants, onRenderView, scalingMode]);
+  }, [remoteParticipants, onRenderRemoteVideoTile, onCreateRemoteStreamView, remoteVideoViewOption]);
 
   return (
     <GridLayout styles={styles}>
       <Stack horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
-        {localParticipant && localParticipantComponent}
+        {localParticipant && defaultOnRenderLocalVideoTile}
       </Stack>
-      {gridLayoutRemoteParticipants}
+      {defaultOnRenderRemoteParticipants}
     </GridLayout>
   );
 };

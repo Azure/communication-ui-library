@@ -90,6 +90,7 @@
     "react-dom": "^16.13.1",
     "react-is": "~17.0.1",
     "react-components": "1.0.0-beta",
+    "react-composites": "1.0.0-beta",
     "regenerator-runtime": "^0.13.7",
     "rollup": "~2.42.4",
     "source-map-explorer": "^2.5.0",

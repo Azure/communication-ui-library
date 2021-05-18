@@ -4,22 +4,27 @@
 // @ts-ignore
 import * as reselect from 'reselect';
 // @ts-ignore
-import * as callingDeclarative from 'calling-stateful-client';
+import { Call, CallClientState, DeviceManager } from 'calling-stateful-client';
 // @ts-ignore
 import { CallingBaseSelectorProps } from './baseSelectors';
 import { getCall, getDeviceManager } from './baseSelectors';
 // @ts-ignore
 import { AudioDeviceInfo, VideoDeviceInfo } from '@azure/communication-calling';
 
-export const microphoneButtonSelector = reselect.createSelector([getCall], (call) => {
+export const microphoneButtonSelector = reselect.createSelector([getCall, getDeviceManager], (call, deviceManager) => {
   return {
-    checked: !call?.isMuted
+    disabled: !call,
+    checked: call ? !call.isMuted : false
   };
 });
 
-export const cameraButtonSelector = reselect.createSelector([getCall], (call) => {
+export const cameraButtonSelector = reselect.createSelector([getCall, getDeviceManager], (call, deviceManager) => {
+  const previewOn = !!deviceManager.unparentedViews && !!deviceManager.unparentedViews[0]?.target;
+  const localVideoFromCall = call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
+
   return {
-    checked: !!call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video')
+    disabled: !deviceManager.selectedCamera,
+    checked: call ? !!localVideoFromCall : previewOn
   };
 });
 
@@ -29,7 +34,7 @@ export const screenShareButtonSelector = reselect.createSelector([getCall], (cal
   };
 });
 
-export const optionsButtonSelector = reselect.createSelector([getDeviceManager, getCall], (deviceManager, call) => {
+export const optionsButtonSelector = reselect.createSelector([getDeviceManager, getCall], (deviceManager) => {
   return {
     microphones: deviceManager.microphones,
     speakers: deviceManager.speakers,

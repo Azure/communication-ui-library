@@ -123,11 +123,11 @@ export interface RemoteVideoStream {
 
 // @public
 export interface StatefulCallClient extends CallClient {
+    createView(callId: string | undefined, stream: LocalVideoStream | RemoteVideoStream, options?: CreateViewOptions): Promise<void>;
+    disposeView(callId: string | undefined, stream: LocalVideoStream | RemoteVideoStream): void;
+    getState(): CallClientState;
     offStateChange(handler: (state: CallClientState) => void): void;
     onStateChange(handler: (state: CallClientState) => void): void;
-    startRenderVideo(callId: string | undefined, stream: LocalVideoStream | RemoteVideoStream, options?: CreateViewOptions): Promise<void>;
-    state: CallClientState;
-    stopRenderVideo(callId: string | undefined, stream: LocalVideoStream | RemoteVideoStream): void;
 }
 
 // @public (undocumented)

@@ -61,8 +61,8 @@ export const LocalPreviewExample = ({
               isVideoReady={isVideoAvailable}
               // Here this storybook example isn't connected with Azure Communication Services
               // We would suggest you replace this videoStreamElement below with a rendered video stream from the calling SDK
-              videoProvider={<StreamMedia videoStreamElement={renderVideoStream()} />}
-              placeholderProvider={
+              renderElement={<StreamMedia videoStreamElement={renderVideoStream()} />}
+              placeholder={
                 <Stack style={{ width: '100\u0025', height: '100\u0025' }} verticalAlign="center">
                   <Stack.Item align="center">
                     <CallVideoOffIcon />

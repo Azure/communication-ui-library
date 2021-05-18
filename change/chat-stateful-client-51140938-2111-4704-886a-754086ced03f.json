@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix pipeline dependencies error",
+  "packageName": "chat-stateful-client",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}

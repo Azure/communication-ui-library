@@ -26,6 +26,7 @@
     "postpack": "copyfiles -E \"./*.tgz\" private-preview"
   },
   "dependencies": {
+    "acs-ui-common": "~1.0.0-beta",
     "calling-stateful-client": "~1.0.0-beta",
     "@azure/acs-calling-selector": "~1.0.0-beta",
     "@azure/communication-identity": "1.0.0",
@@ -47,7 +48,9 @@
     "react-linkify": "^1.0.0-alpha",
     "memoize-one": "~5.2.1",
     "events": "~3.3.0",
-    "react-components": "1.0.0-beta"
+    "react-components": "1.0.0-beta",
+    "uuid": "^8.1.0",
+    "reselect": "~4.0.0"
   },
   "peerDependencies": {
     "react": "^16.13.1",

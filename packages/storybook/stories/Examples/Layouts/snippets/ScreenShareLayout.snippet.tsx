@@ -52,7 +52,7 @@ export const ScreenShareLayoutExample: () => JSX.Element = () => {
         <Stack className={aspectRatioBoxContentStyle}>
           <VideoTile
             isVideoReady={false}
-            placeholderProvider={
+            placeholder={
               <Persona
                 styles={{ root: { margin: 'auto' } }}
                 size={PersonaSize.size56}
@@ -87,7 +87,7 @@ export const ScreenShareLayoutExample: () => JSX.Element = () => {
             overlayContainer: videoStreamStyle
           }}
           // A placeholder element for the screen share stream
-          placeholderProvider={
+          placeholder={
             <Stack className={mergeStyles({ height: '100\u0025' })}>
               <Stack verticalAlign="center" horizontalAlign="center" className={mergeStyles({ height: '100\u0025' })}>
                 Your Screen Share Stream
@@ -99,7 +99,7 @@ export const ScreenShareLayoutExample: () => JSX.Element = () => {
           <VideoTile
             isVideoReady={false}
             // A placeholder element for screen sharer's video stream
-            placeholderProvider={
+            placeholder={
               <Persona
                 styles={{ root: { margin: 'auto' } }}
                 size={PersonaSize.size56}

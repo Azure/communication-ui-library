@@ -1,40 +1,169 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
-import { Spinner, SpinnerSize } from '@fluentui/react';
-import { loadingStyle, videoStreamStyle } from './styles/ScreenShare.styles';
+import { memoizeFnAll } from '@azure/acs-calling-selector';
+import { mergeStyles, Spinner, SpinnerSize, Stack, Text } from '@fluentui/react';
+import React, { useMemo } from 'react';
+import {
+  StreamMedia,
+  VideoGalleryLocalParticipant,
+  VideoGalleryRemoteParticipant,
+  VideoStreamOptions,
+  VideoTile
+} from 'react-components';
+import {
+  aspectRatioBoxContentStyle,
+  aspectRatioBoxStyle,
+  disabledVideoHint,
+  screenShareContainerStyle,
+  stackContainerStyle,
+  videoHint
+} from './styles/MediaGallery.styles';
+import { loadingStyle, videoStreamStyle, videoTileStyle } from './styles/ScreenShare.styles';
 
-import { connectFuncsToContext } from '../../consumers';
-import { MapToScreenShareProps, ScreenShareContainerProps } from './consumers/MapToScreenShareProps';
-import { StreamMedia, VideoTile } from 'react-components';
+export type ScreenShareProps = {
+  localParticipant?: VideoGalleryLocalParticipant;
+  remoteParticipants: VideoGalleryRemoteParticipant[];
+  participantWithScreenShare: VideoGalleryRemoteParticipant;
+  onCreateLocalStreamView?: () => Promise<void>;
+  onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
+};
 
-const ScreenShareComponent = (props: ScreenShareContainerProps): JSX.Element => {
-  const { displayName, videoRender, isVideoRenderAvailable, screenShareRender, isScreenShareRenderAvailable } = props;
+const memoizeAllRemoteParticipants = memoizeFnAll(
+  (userId: string, isAvailable?: boolean, renderElement?: HTMLElement, displayName?: string): JSX.Element => {
+    return (
+      <Stack horizontalAlign="center" verticalAlign="center" className={aspectRatioBoxStyle} key={userId}>
+        <Stack className={aspectRatioBoxContentStyle}>
+          <VideoTile
+            isVideoReady={isAvailable}
+            renderElement={<StreamMedia videoStreamElement={renderElement ?? null} />}
+            displayName={displayName}
+            styles={videoTileStyle}
+          >
+            <Text className={isAvailable ? videoHint : disabledVideoHint}>{displayName}</Text>
+          </VideoTile>
+        </Stack>
+      </Stack>
+    );
+  }
+);
 
-  return (
-    <>
+export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
+  const {
+    localParticipant,
+    remoteParticipants,
+    onCreateRemoteStreamView,
+    onCreateLocalStreamView,
+    participantWithScreenShare
+  } = props;
+
+  const localVideoStream = localParticipant?.videoStream;
+  const isLocalVideoReady = localVideoStream?.renderElement !== undefined;
+  const isScreenShareAvailable =
+    participantWithScreenShare &&
+    participantWithScreenShare.screenShareStream &&
+    participantWithScreenShare.screenShareStream.isAvailable;
+
+  const screenShareStreamComponent = useMemo(() => {
+    if (!isScreenShareAvailable) {
+      return;
+    }
+    const screenShareStream = participantWithScreenShare?.screenShareStream;
+    const videoStream = participantWithScreenShare?.videoStream;
+    if (screenShareStream?.isAvailable && !screenShareStream?.renderElement) {
+      participantWithScreenShare &&
+        onCreateRemoteStreamView &&
+        onCreateRemoteStreamView(participantWithScreenShare.userId, {
+          scalingMode: 'Fit'
+        });
+    }
+    if (videoStream?.isAvailable && !videoStream?.renderElement) {
+      participantWithScreenShare &&
+        onCreateRemoteStreamView &&
+        onCreateRemoteStreamView(participantWithScreenShare.userId);
+    }
+
+    return (
       <VideoTile
-        isVideoReady={isScreenShareRenderAvailable}
-        videoProvider={<StreamMedia videoStreamElement={screenShareRender} />}
-        placeholderProvider={
+        isVideoReady={screenShareStream?.isAvailable}
+        renderElement={<StreamMedia videoStreamElement={screenShareStream?.renderElement ?? null} />}
+        placeholder={
           <div className={loadingStyle}>
-            <Spinner label={`Loading ${displayName}'s screen`} size={SpinnerSize.xSmall} />
+            <Spinner label={`Loading ${participantWithScreenShare?.displayName}'s screen`} size={SpinnerSize.xSmall} />
           </div>
         }
         styles={{
           overlayContainer: videoStreamStyle
         }}
       >
-        {isVideoRenderAvailable && isScreenShareRenderAvailable && (
-          <VideoTile
-            isVideoReady={isVideoRenderAvailable}
-            videoProvider={<StreamMedia videoStreamElement={videoRender} />}
-          />
+        {videoStream && videoStream.isAvailable && videoStream.renderElement && (
+          <Stack horizontalAlign="center" verticalAlign="center" className={aspectRatioBoxStyle}>
+            <Stack className={aspectRatioBoxContentStyle}>
+              <VideoTile
+                isVideoReady={videoStream.isAvailable}
+                renderElement={<StreamMedia videoStreamElement={videoStream.renderElement ?? null} />}
+                styles={videoTileStyle}
+              />
+            </Stack>
+          </Stack>
         )}
       </VideoTile>
+    );
+  }, [isScreenShareAvailable, onCreateRemoteStreamView, participantWithScreenShare]);
+
+  const layoutLocalParticipant = useMemo(() => {
+    if (localVideoStream && !localVideoStream?.renderElement) {
+      onCreateLocalStreamView && onCreateLocalStreamView();
+    }
+
+    return (
+      <VideoTile
+        isVideoReady={isLocalVideoReady}
+        renderElement={<StreamMedia videoStreamElement={localVideoStream?.renderElement ?? null} />}
+        displayName={localParticipant?.displayName}
+        styles={videoTileStyle}
+      >
+        <Text className={isLocalVideoReady ? videoHint : disabledVideoHint}>{localParticipant?.displayName}</Text>
+      </VideoTile>
+    );
+  }, [isLocalVideoReady, localParticipant, localVideoStream, onCreateLocalStreamView]);
+
+  const sidePanelRemoteParticipants = useMemo(() => {
+    return memoizeAllRemoteParticipants((memoizedRemoteParticipantFn) => {
+      return remoteParticipants && participantWithScreenShare
+        ? remoteParticipants
+            .filter((remoteParticipant: VideoGalleryRemoteParticipant) => {
+              return remoteParticipant.userId !== participantWithScreenShare.userId;
+            })
+            .map((participant: VideoGalleryRemoteParticipant) => {
+              const remoteVideoStream = participant.videoStream;
+
+              if (remoteVideoStream?.isAvailable && !remoteVideoStream?.renderElement) {
+                onCreateRemoteStreamView && onCreateRemoteStreamView(participant.userId);
+              }
+
+              return memoizedRemoteParticipantFn(
+                participant.userId,
+                remoteVideoStream?.isAvailable,
+                remoteVideoStream?.renderElement,
+                participant.displayName
+              );
+            })
+        : [];
+    });
+  }, [remoteParticipants, participantWithScreenShare, onCreateRemoteStreamView]);
+
+  return (
+    <>
+      <div className={stackContainerStyle}>
+        <Stack grow className={mergeStyles({ height: '100%', overflow: 'auto' })}>
+          <Stack horizontalAlign="center" verticalAlign="center" className={aspectRatioBoxStyle}>
+            <Stack className={aspectRatioBoxContentStyle}>{layoutLocalParticipant}</Stack>
+          </Stack>
+          {sidePanelRemoteParticipants}
+        </Stack>
+      </div>
+      <div className={screenShareContainerStyle}>{screenShareStreamComponent}</div>
     </>
   );
 };
-
-export default connectFuncsToContext(ScreenShareComponent, MapToScreenShareProps);

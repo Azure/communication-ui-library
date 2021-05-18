@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { GridLayout as GridLayoutComponent, VideoTile, StreamMedia } from '@azure/communication-react';
+import { Text } from '@fluentui/react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
 import { number, object } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
@@ -83,11 +84,11 @@ export const GridLayout: () => JSX.Element = () => {
     return (
       <VideoTile
         isVideoReady={participant.isVideoReady}
-        videoProvider={<StreamMedia videoStreamElement={participant.isVideoReady ? renderVideoStream() : null} />}
-        avatarName={participant.displayName}
+        renderElement={<StreamMedia videoStreamElement={participant.isVideoReady ? renderVideoStream() : null} />}
+        displayName={participant.displayName}
         key={index}
       >
-        <label>{participant.displayName}</label>
+        <Text>{participant.displayName}</Text>
       </VideoTile>
     );
   });

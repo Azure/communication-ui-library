@@ -33,7 +33,7 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Example</Heading>
       <Subheading>Default Usage</Subheading>
       <Description>
-        The default VideoTile component shows a Persona with the initials of `avatarName` when no video is available.
+        The default VideoTile component shows a Persona with the initials of `displayName` when no video is available.
       </Description>
       <Canvas mdxSource={VideoTileExampleText}>
         <VideoTileExample />
@@ -42,7 +42,7 @@ const getDocs: () => JSX.Element = () => {
       <Subheading>Custom Placeholder</Subheading>
       <Description>
         A custom placeholder can be provided to override the default Persona avatar by providing a JSX element to the
-        `placeholderProvider` prop.
+        `placeholder` prop.
       </Description>
       <Canvas mdxSource={VideoTilePlaceholderText}>
         <VideoTilePlaceholderExample />
@@ -65,7 +65,7 @@ const getDocs: () => JSX.Element = () => {
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.
 export const VideoTile: () => JSX.Element = () => {
-  const avatarName = text('Avatar Name', 'John Krasinski');
+  const displayName = text('Display Name', 'John Krasinski');
   const isVideoReady = boolean('Is Video Ready', false);
   const isMirrored = boolean('Is Mirrored', false);
   const width = number('Width', 400, {
@@ -84,8 +84,8 @@ export const VideoTile: () => JSX.Element = () => {
   return (
     <VideoTileComponent
       isVideoReady={isVideoReady}
-      videoProvider={<StreamMedia videoStreamElement={renderVideoStream()} />}
-      avatarName={avatarName}
+      renderElement={<StreamMedia videoStreamElement={renderVideoStream()} />}
+      displayName={displayName}
       isMirrored={isMirrored}
       styles={{
         root: { height: height, width: width }

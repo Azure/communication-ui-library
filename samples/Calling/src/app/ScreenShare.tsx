@@ -1,19 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { memoizeFnAll } from '@azure/acs-calling-selector';
+import { mergeStyles, Spinner, SpinnerSize, Stack, Text } from '@fluentui/react';
 import React, { useMemo } from 'react';
-import { Label, mergeStyles, Spinner, SpinnerSize, Stack } from '@fluentui/react';
-import { loadingStyle, videoStreamStyle, videoTileStyle } from './styles/ScreenShare.styles';
-
 import {
   StreamMedia,
-  VideoTile,
-  CreateViewOptions,
   VideoGalleryLocalParticipant,
-  VideoGalleryRemoteParticipant
+  VideoGalleryRemoteParticipant,
+  VideoStreamOptions,
+  VideoTile
 } from 'react-components';
-import { LocalVideoStream, RemoteVideoStream } from 'calling-stateful-client';
-import { memoizeFnAll } from '@azure/acs-calling-selector';
 import {
   aspectRatioBoxContentStyle,
   aspectRatioBoxStyle,
@@ -22,26 +19,28 @@ import {
   stackContainerStyle,
   videoHint
 } from './styles/MediaGallery.styles';
+import { loadingStyle, videoStreamStyle, videoTileStyle } from './styles/ScreenShare.styles';
 
 export type ScreenShareProps = {
   screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
   localParticipant?: VideoGalleryLocalParticipant;
   remoteParticipants: VideoGalleryRemoteParticipant[];
-  onRenderView: (stream: LocalVideoStream | RemoteVideoStream, options: CreateViewOptions) => Promise<void>;
+  onCreateLocalStreamView?: () => Promise<void>;
+  onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
 };
 
 const memoizeAllRemoteParticipants = memoizeFnAll(
-  (remoteParticipantkey: number, isAvailable?: boolean, target?: HTMLElement, displayName?: string): JSX.Element => {
+  (userId: string, isAvailable?: boolean, renderElement?: HTMLElement, displayName?: string): JSX.Element => {
     return (
-      <Stack horizontalAlign="center" verticalAlign="center" className={aspectRatioBoxStyle} key={remoteParticipantkey}>
+      <Stack horizontalAlign="center" verticalAlign="center" className={aspectRatioBoxStyle} key={userId}>
         <Stack className={aspectRatioBoxContentStyle}>
           <VideoTile
             isVideoReady={isAvailable}
-            videoProvider={<StreamMedia videoStreamElement={target ?? null} />}
-            avatarName={displayName}
+            renderElement={<StreamMedia videoStreamElement={renderElement ?? null} />}
+            displayName={displayName}
             styles={videoTileStyle}
           >
-            <Label className={isAvailable ? videoHint : disabledVideoHint}>{displayName}</Label>
+            <Text className={isAvailable ? videoHint : disabledVideoHint}>{displayName}</Text>
           </VideoTile>
         </Stack>
       </Stack>
@@ -50,10 +49,16 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
 );
 
 export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
-  const { screenShareParticipant, localParticipant, remoteParticipants, onRenderView } = props;
+  const {
+    screenShareParticipant,
+    localParticipant,
+    remoteParticipants,
+    onCreateRemoteStreamView,
+    onCreateLocalStreamView
+  } = props;
 
   const localVideoStream = localParticipant?.videoStream;
-  const isLocalVideoReady = localVideoStream?.videoStreamRendererView !== undefined;
+  const isLocalVideoReady = localVideoStream?.renderElement !== undefined;
   const isScreenShareAvailable =
     screenShareParticipant &&
     screenShareParticipant.screenShareStream &&
@@ -65,32 +70,22 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
     }
     const screenShareStream = screenShareParticipant?.screenShareStream;
     const videoStream = screenShareParticipant?.videoStream;
-    if (screenShareStream?.isAvailable && !screenShareStream?.videoStreamRendererView) {
-      onRenderView(screenShareStream, {
-        scalingMode: 'Fit'
-      }).catch((e) => {
-        // Since we are calling this async and not awaiting, there could be an error from try to start render of a
-        // stream that is already rendered. The StatefulClient will handle this so we can ignore this error in the UI
-        // but ideally we should make this await and avoid duplicate calls.
-        console.warn(e.message);
-      });
+    if (screenShareStream?.isAvailable && !screenShareStream?.renderElement) {
+      screenShareParticipant &&
+        onCreateRemoteStreamView &&
+        onCreateRemoteStreamView(screenShareParticipant.userId, {
+          scalingMode: 'Fit'
+        });
     }
-    if (videoStream?.isAvailable && !videoStream?.videoStreamRendererView) {
-      onRenderView(videoStream, {
-        scalingMode: 'Crop'
-      }).catch((e) => {
-        // Since we are calling this async and not awaiting, there could be an error from try to start render of a
-        // stream that is already rendered. The StatefulClient will handle this so we can ignore this error in the UI
-        // but ideally we should make this await and avoid duplicate calls.
-        console.warn(e.message);
-      });
+    if (videoStream?.isAvailable && !videoStream?.renderElement) {
+      screenShareParticipant && onCreateRemoteStreamView && onCreateRemoteStreamView(screenShareParticipant.userId);
     }
 
     return (
       <VideoTile
         isVideoReady={screenShareStream?.isAvailable}
-        videoProvider={<StreamMedia videoStreamElement={screenShareStream?.videoStreamRendererView?.target ?? null} />}
-        placeholderProvider={
+        renderElement={<StreamMedia videoStreamElement={screenShareStream?.renderElement ?? null} />}
+        placeholder={
           <div className={loadingStyle}>
             <Spinner label={`Loading ${screenShareParticipant?.displayName}'s screen`} size={SpinnerSize.xSmall} />
           </div>
@@ -99,12 +94,12 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
           overlayContainer: videoStreamStyle
         }}
       >
-        {videoStream && videoStream.isAvailable && videoStream.videoStreamRendererView && (
+        {videoStream && videoStream.isAvailable && videoStream.renderElement && (
           <Stack horizontalAlign="center" verticalAlign="center" className={aspectRatioBoxStyle}>
             <Stack className={aspectRatioBoxContentStyle}>
               <VideoTile
                 isVideoReady={videoStream.isAvailable}
-                videoProvider={<StreamMedia videoStreamElement={videoStream.videoStreamRendererView.target ?? null} />}
+                renderElement={<StreamMedia videoStreamElement={videoStream.renderElement ?? null} />}
                 styles={videoTileStyle}
               />
             </Stack>
@@ -112,31 +107,24 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
         )}
       </VideoTile>
     );
-  }, [isScreenShareAvailable, onRenderView, screenShareParticipant]);
+  }, [isScreenShareAvailable, onCreateRemoteStreamView, screenShareParticipant]);
 
   const layoutLocalParticipant = useMemo(() => {
-    if (localVideoStream && !localVideoStream?.videoStreamRendererView) {
-      onRenderView(localVideoStream, {
-        scalingMode: 'Crop'
-      }).catch((e) => {
-        // Since we are calling this async and not awaiting, there could be an error from try to start render of a
-        // stream that is already rendered. The StatefulClient will handle this so we can ignore this error in the UI
-        // but ideally we should make this await and avoid duplicate calls.
-        console.warn(e.message);
-      });
+    if (localVideoStream && !localVideoStream?.renderElement) {
+      onCreateLocalStreamView && onCreateLocalStreamView();
     }
 
     return (
       <VideoTile
         isVideoReady={isLocalVideoReady}
-        videoProvider={<StreamMedia videoStreamElement={localVideoStream?.videoStreamRendererView?.target ?? null} />}
-        avatarName={localParticipant?.displayName}
+        renderElement={<StreamMedia videoStreamElement={localVideoStream?.renderElement ?? null} />}
+        displayName={localParticipant?.displayName}
         styles={videoTileStyle}
       >
-        <Label className={isLocalVideoReady ? videoHint : disabledVideoHint}>{localParticipant?.displayName}</Label>
+        <Text className={isLocalVideoReady ? videoHint : disabledVideoHint}>{localParticipant?.displayName}</Text>
       </VideoTile>
     );
-  }, [isLocalVideoReady, localParticipant?.displayName, localVideoStream, onRenderView]);
+  }, [isLocalVideoReady, localParticipant, localVideoStream, onCreateLocalStreamView]);
 
   const sidePanelRemoteParticipants = useMemo(() => {
     return memoizeAllRemoteParticipants((memoizedRemoteParticipantFn) => {
@@ -145,30 +133,23 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
             .filter((remoteParticipant: VideoGalleryRemoteParticipant) => {
               return remoteParticipant.userId !== screenShareParticipant.userId;
             })
-            .map((participant: VideoGalleryRemoteParticipant, key: number) => {
+            .map((participant: VideoGalleryRemoteParticipant) => {
               const remoteVideoStream = participant.videoStream;
 
-              if (remoteVideoStream?.isAvailable && !remoteVideoStream?.videoStreamRendererView) {
-                onRenderView(remoteVideoStream, {
-                  scalingMode: 'Crop'
-                }).catch((e: Error) => {
-                  // Since we are calling this async and not awaiting, there could be an error from try to start render
-                  // of a stream that is already rendered. The StatefulClient will handle this so we can ignore this
-                  // error in the UI but ideally we should make this await and avoid duplicate calls.
-                  console.warn(e.message);
-                });
+              if (remoteVideoStream?.isAvailable && !remoteVideoStream?.renderElement) {
+                onCreateRemoteStreamView && onCreateRemoteStreamView(participant.userId);
               }
 
               return memoizedRemoteParticipantFn(
-                key,
+                participant.userId,
                 remoteVideoStream?.isAvailable,
-                remoteVideoStream?.videoStreamRendererView?.target,
+                remoteVideoStream?.renderElement,
                 participant.displayName
               );
             })
         : [];
     });
-  }, [remoteParticipants, onRenderView, screenShareParticipant]);
+  }, [remoteParticipants, participantWithScreenShare, onCreateRemoteStreamView]);
 
   return (
     <>
