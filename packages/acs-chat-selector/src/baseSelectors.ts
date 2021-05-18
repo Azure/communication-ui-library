@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatClientState, ChatMessageWithStatus, CommunicationIdentifierAsKey } from 'chat-stateful-client';
+import { ChatClientState, ChatMessageWithStatus } from 'chat-stateful-client';
 import { ChatParticipant, ChatMessageReadReceipt } from '@azure/communication-chat';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 import { FlatCommunicationIdentifier, flattenedCommunicationIdentifier } from 'acs-ui-common';
@@ -27,7 +27,7 @@ export const getReadReceipts = (state: ChatClientState, props: ChatBaseSelectorP
 export const getParticipants = (
   state: ChatClientState,
   props: ChatBaseSelectorProps
-): Map<CommunicationIdentifierAsKey, ChatParticipant> =>
+): Map<FlatCommunicationIdentifier, ChatParticipant> =>
   (props.threadId && state.threads.get(props.threadId)?.participants) || new Map();
 
 export const getIsLargeGroup = (state: ChatClientState, props: ChatBaseSelectorProps): boolean => {

@@ -3,8 +3,7 @@
 
 import { ChatParticipant } from '@azure/communication-chat';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
-import { flattenedCommunicationIdentifier } from 'acs-ui-common';
-import { CommunicationIdentifierAsKey, getCommunicationIdentifierAsKey } from 'chat-stateful-client';
+import { FlatCommunicationIdentifier, flattenedCommunicationIdentifier } from 'acs-ui-common';
 import { typingIndicatorSelector } from './typingIndicatorSelector';
 
 describe('typingIndicatorSelector tests', () => {
@@ -50,12 +49,12 @@ describe('typingIndicatorSelector tests', () => {
         receivedOn: new Date()
       }
     ];
-    const participants: Map<CommunicationIdentifierAsKey, ChatParticipant> = new Map();
-    participants.set(getCommunicationIdentifierAsKey({ communicationUserId: '1' }), {
+    const participants: Map<FlatCommunicationIdentifier, ChatParticipant> = new Map();
+    participants.set(flattenedCommunicationIdentifier({ communicationUserId: '1' }), {
       id: { communicationUserId: '1' },
       displayName: 'User1'
     });
-    participants.set(getCommunicationIdentifierAsKey({ communicationUserId: '2' }), {
+    participants.set(flattenedCommunicationIdentifier({ communicationUserId: '2' }), {
       id: { communicationUserId: '2' },
       displayName: 'User2'
     });
@@ -105,16 +104,16 @@ describe('typingIndicatorSelector tests', () => {
       }
     ];
 
-    const participants: Map<CommunicationIdentifierAsKey, ChatParticipant> = new Map();
-    participants.set(getCommunicationIdentifierAsKey({ communicationUserId: '2' }), {
+    const participants: Map<FlatCommunicationIdentifier, ChatParticipant> = new Map();
+    participants.set(flattenedCommunicationIdentifier({ communicationUserId: '2' }), {
       id: { communicationUserId: '2' },
       displayName: 'User2'
     });
-    participants.set(getCommunicationIdentifierAsKey({ communicationUserId: '3' }), {
+    participants.set(flattenedCommunicationIdentifier({ communicationUserId: '3' }), {
       id: { communicationUserId: '3' },
       displayName: 'User3'
     });
-    participants.set(getCommunicationIdentifierAsKey({ communicationUserId: '4' }), {
+    participants.set(flattenedCommunicationIdentifier({ communicationUserId: '4' }), {
       id: { communicationUserId: '4' },
       displayName: 'User4'
     });
@@ -161,16 +160,16 @@ describe('typingIndicatorSelector tests', () => {
       }
     ];
 
-    const participants: Map<CommunicationIdentifierAsKey, ChatParticipant> = new Map();
-    participants.set(getCommunicationIdentifierAsKey({ communicationUserId: '5' }), {
+    const participants: Map<FlatCommunicationIdentifier, ChatParticipant> = new Map();
+    participants.set(flattenedCommunicationIdentifier({ communicationUserId: '5' }), {
       id: { communicationUserId: '5' },
       displayName: 'User5'
     });
-    participants.set(getCommunicationIdentifierAsKey({ communicationUserId: '6' }), {
+    participants.set(flattenedCommunicationIdentifier({ communicationUserId: '6' }), {
       id: { communicationUserId: '6' },
       displayName: 'User6'
     });
-    participants.set(getCommunicationIdentifierAsKey({ communicationUserId: '7' }), {
+    participants.set(flattenedCommunicationIdentifier({ communicationUserId: '7' }), {
       id: { communicationUserId: '7' },
       displayName: 'User7'
     });

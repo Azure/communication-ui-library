@@ -10,6 +10,7 @@ import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { CommonProperties } from 'acs-ui-common';
 import { CommunicationParticipant } from 'react-components';
+import { FlatCommunicationIdentifier } from 'acs-ui-common';
 import { Message } from 'react-components';
 import { MessageThread } from 'react-components';
 import { default as React_2 } from 'react';
@@ -82,7 +83,7 @@ export type DefaultChatHandlers = {
     onSendMessage: (content: string) => Promise<void>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
     onTyping: () => Promise<void>;
-    onParticipantRemove: (userId: string) => Promise<void>;
+    onParticipantRemove: (userId: FlatCommunicationIdentifier) => Promise<void>;
     updateThreadTopicName: (topicName: string) => Promise<void>;
     onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
 };
