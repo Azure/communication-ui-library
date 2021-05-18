@@ -1,10 +1,4 @@
-import {
-  FluentThemeProvider,
-  getDisplayName,
-  StreamMedia,
-  VideoTile,
-  VideoTileStylesProps
-} from '@azure/communication-react';
+import { FluentThemeProvider, StreamMedia, VideoTile, VideoTileStylesProps } from '@azure/communication-react';
 import React from 'react';
 import { renderVideoStream } from '../../utils';
 
