@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallClient, CallClientOptions } from '@azure/communication-calling';
+import { CallClientOptions } from '@azure/communication-calling';
 import { AbortSignalLike } from '@azure/core-http';
 import { createStatefulCallClient, StatefulCallClient, StatefulDeviceManager } from 'calling-stateful-client';
 import React, { createContext, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
@@ -44,7 +44,7 @@ const CallClientProviderBase = (props: CallClientProvider): JSX.Element => {
   const userIdFromToken = token ? getIdFromToken(token) : '';
 
   const [callClient, setCallClient] = useState<StatefulCallClient>(
-    createStatefulCallClient(new CallClient(callClientOptions), userIdFromToken)
+    createStatefulCallClient({ userId: userIdFromToken }, callClientOptions)
   );
   const [deviceManager, setDeviceManager] = useState<StatefulDeviceManager | undefined>(undefined);
   const [userId, setUserId] = useState<string>(userIdFromToken);

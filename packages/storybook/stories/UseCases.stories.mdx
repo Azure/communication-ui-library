@@ -47,7 +47,7 @@ To take full advantage of these capabilities we recommend using the UI Component
 |              | Chat title changed                               |
 | Participants | Participant roster                               |
 
-## Supported identities:
+## Supported Identities
 
 An Azure Communication Services identity is required to initialize the stateful client libraries and authenticate to the service.
 For more information on authentication, see [Authentication](https://docs.microsoft.com/azure/communication-services/concepts/authentication) and [Access Tokens](https://docs.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-javascript)
@@ -77,7 +77,7 @@ This is a key area of differentiation between Composites and UI Components, wher
 | Call control layout can be modified                 | ✔          | ✔             |
 | Data models can be injected to modify user metadata | ✔          | ✔             |
 
-## Observability:
+## Observability
 
 As part of the decoupled state management architecture of the UI Library, developers are able to access the stateful calling and chat clients directly.
 Developers can hook into the stateful client to read the state, handle events and override behavior to pass onto the UI Components.
@@ -89,7 +89,7 @@ Developers can hook into the stateful client to read the state, handle events an
 | Client events can be accessed and handled        | ✔          | ✔             | Handle a participant join a call or intercept a message coming into a thread |
 | UI events can be accessed and handled            | ✔          | ✔             | Handle mute button click or chat send button to add your own logic           |
 
-## Recommended architecture
+## Recommended Architecture
 
 ![UI Library recommended architecture with client-server architecture](images/ui-library-architecture.png)
 

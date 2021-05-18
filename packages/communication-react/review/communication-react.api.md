@@ -8,17 +8,20 @@ import { AudioDeviceInfo } from '@azure/communication-calling';
 import { Call as Call_2 } from '@azure/communication-calling';
 import { CallAgent as CallAgent_2 } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';
+import { CallClientOptions } from '@azure/communication-calling';
 import { CallDirection } from '@azure/communication-calling';
 import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
 import { CallState } from '@azure/communication-calling';
 import { ChatClient } from '@azure/communication-chat';
+import { ChatClientOptions } from '@azure/communication-chat';
 import { ChatMessage as ChatMessage_2 } from '@azure/communication-chat';
 import { ChatMessageReadReceipt } from '@azure/communication-chat';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
+import { CommunicationTokenCredential } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
@@ -202,12 +205,6 @@ export type ChatCompositeClientState = {
 };
 
 // @public (undocumented)
-export type ChatConfig = {
-    userId: CommunicationIdentifierKind;
-    displayName: string;
-};
-
-// @public (undocumented)
 export type ChatEvent = 'messageReceived' | 'participantsJoined' | 'error';
 
 // @public (undocumented)
@@ -306,11 +303,6 @@ export type ChatUIState = {
 
 // @public (undocumented)
 export type CommonProperties<A, B> = {
-    [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
-}[keyof A & keyof B];
-
-// @public
-export type CommonProperties_2<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
 
@@ -442,6 +434,8 @@ export const createDefaultCallingHandlers: (callClient: StatefulCallClient, call
     onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
     onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
     onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions | undefined) => Call_2 | undefined;
+    onStartScreenShare: () => Promise<void>;
+    onStopScreenShare: () => Promise<void>;
     onToggleCamera: () => Promise<void>;
     onToggleMicrophone: () => Promise<void>;
     onToggleScreenShare: () => Promise<void>;
@@ -458,6 +452,8 @@ export const createDefaultCallingHandlersForComponent: <Props>(callClient: State
     onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
     onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
     onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions | undefined) => Call_2 | undefined;
+    onStartScreenShare: () => Promise<void>;
+    onStopScreenShare: () => Promise<void>;
     onToggleCamera: () => Promise<void>;
     onToggleMicrophone: () => Promise<void>;
     onToggleScreenShare: () => Promise<void>;
@@ -465,12 +461,14 @@ export const createDefaultCallingHandlersForComponent: <Props>(callClient: State
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions | undefined) => Promise<void>;
     onParticipantRemove: (userId: string) => void;
     onStartLocalVideo: () => Promise<void>;
-}, CommonProperties_2<{
+}, CommonProperties<{
     onHangUp: () => Promise<void>;
     onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
     onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
     onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
     onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions | undefined) => Call_2 | undefined;
+    onStartScreenShare: () => Promise<void>;
+    onStopScreenShare: () => Promise<void>;
     onToggleCamera: () => Promise<void>;
     onToggleMicrophone: () => Promise<void>;
     onToggleScreenShare: () => Promise<void>;
@@ -487,10 +485,10 @@ export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThr
 export const createDefaultChatHandlersForComponent: <Props>(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, Props>>;
 
 // @public
-export const createStatefulCallClient: (callClient: CallClient, userId: string) => StatefulCallClient;
+export const createStatefulCallClient: (callClientArgs: StatefulCallClientArgs, callClientOptions?: CallClientOptions | undefined) => StatefulCallClient;
 
-// @public (undocumented)
-export const createStatefulChatClient: (chatClient: ChatClient, chatConfig: ChatConfig) => StatefulChatClient;
+// @public
+export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: ChatClientOptions | undefined) => StatefulChatClient;
 
 // @public (undocumented)
 export type CustomMessage = Message<'custom'>;
@@ -541,17 +539,6 @@ export interface EndCallButtonProps extends IButtonProps {
     onHangUp?: () => Promise<void>;
     showLabel?: boolean;
 }
-
-// @public
-export const ErrorBar: (props: ErrorBarProps) => JSX.Element | null;
-
-// @public
-export type ErrorBarProps = {
-    message?: string;
-    severity?: CommunicationUiErrorSeverity;
-    onClose?: () => void;
-    styles?: BaseCustomStylesProps;
-};
 
 // @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
@@ -647,6 +634,9 @@ export interface LocalVideoStream {
     source: VideoDeviceInfo;
     videoStreamRendererView?: VideoStreamRendererView | undefined;
 }
+
+// @public (undocumented)
+export const MakeNPMHappy = true;
 
 // @public (undocumented)
 export const mediaGallerySelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
@@ -896,10 +886,18 @@ export interface SendBoxStylesProps extends BaseCustomStylesProps {
 export interface StatefulCallClient extends CallClient {
     createView(callId: string | undefined, stream: LocalVideoStream | RemoteVideoStream, options?: CreateViewOptions): Promise<void>;
     disposeView(callId: string | undefined, stream: LocalVideoStream | RemoteVideoStream): void;
+    getState(): CallClientState;
     offStateChange(handler: (state: CallClientState) => void): void;
     onStateChange(handler: (state: CallClientState) => void): void;
-    state: CallClientState;
 }
+
+// @public
+export type StatefulCallClientArgs = {
+    userId: string;
+};
+
+// @public
+export type StatefulCallClientOptions = CallClientOptions;
 
 // @public (undocumented)
 export interface StatefulChatClient extends ChatClient {
@@ -910,6 +908,17 @@ export interface StatefulChatClient extends ChatClient {
     // (undocumented)
     onStateChange(handler: (state: ChatClientState) => void): void;
 }
+
+// @public
+export type StatefulChatClientArgs = {
+    userId: CommunicationIdentifierKind;
+    displayName: string;
+    endpoint: string;
+    credential: CommunicationTokenCredential;
+};
+
+// @public
+export type StatefulChatClientOptions = ChatClientOptions;
 
 // @public (undocumented)
 export interface StatefulDeviceManager extends DeviceManager_2 {

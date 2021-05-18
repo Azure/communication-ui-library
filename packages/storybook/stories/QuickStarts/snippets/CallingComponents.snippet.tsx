@@ -9,7 +9,7 @@ import {
   VideoTile
 } from '@azure/communication-react';
 
-import { Stack, IContextualMenuProps, mergeStyles } from '@fluentui/react';
+import { IContextualMenuProps, mergeStyles, Stack, Text } from '@fluentui/react';
 import React, { useState } from 'react';
 
 export const CallingComponents = (): JSX.Element => {
@@ -33,7 +33,7 @@ export const CallingComponents = (): JSX.Element => {
       <div style={{ height: '30rem', width: '30rem', border: '1px solid' }}>
         <GridLayout>
           <VideoTile isVideoReady={false} renderElement={null} displayName={'Michael'}>
-            <label>Michael</label>
+            <Text>Michael</Text>
           </VideoTile>
         </GridLayout>
       </div>
