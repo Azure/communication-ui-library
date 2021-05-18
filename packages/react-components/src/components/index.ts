@@ -7,9 +7,6 @@ export type { TypingIndicatorProps, TypingIndicatorStylesProps } from './TypingI
 export { GridLayout } from './GridLayout';
 export type { GridLayoutProps, GridLayoutType } from './GridLayout';
 
-export { ErrorBar } from './ErrorBar';
-export type { ErrorBarProps } from './ErrorBar';
-
 export { SendBox } from './SendBox';
 export type { SendBoxProps, SendBoxStylesProps } from './SendBox';
 

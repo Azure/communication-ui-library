@@ -6,14 +6,8 @@ import { Stack, Text } from '@fluentui/react';
 import React from 'react';
 import { localPreviewContainerStyle, cameraOffLabelStyle, localPreviewTileStyle } from './styles/LocalPreview.styles';
 import { connectFuncsToContext, MapToErrorBarProps } from '../../consumers';
-import {
-  StreamMedia,
-  VideoTile,
-  ErrorBar as ErrorBarComponent,
-  MicrophoneButton,
-  ControlBar,
-  CameraButton
-} from 'react-components';
+import { StreamMedia, VideoTile, MicrophoneButton, ControlBar, CameraButton } from 'react-components';
+import { ErrorBar as ErrorBarComponent } from '../common/ErrorBar';
 import { usePropsFor } from './hooks/usePropsFor';
 import { localPreviewSelector } from '@azure/acs-calling-selector';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
