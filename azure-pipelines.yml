@@ -2,6 +2,9 @@
 pr:
  - main
 
+pool:
+  name: ess-corp-w10-f-vs2019-1615-eu
+
 stages:
   - stage: buildStage
     displayName: Build and Test
