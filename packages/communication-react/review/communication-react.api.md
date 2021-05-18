@@ -146,6 +146,8 @@ export const cameraButtonSelector: reselect.OutputParametricSelector<CallClientS
 // @public (undocumented)
 export interface ChatAdapter {
     // (undocumented)
+    fetchInitialData(): Promise<void>;
+    // (undocumented)
     getState(): ChatState;
     // (undocumented)
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
@@ -169,8 +171,6 @@ export interface ChatAdapter {
     sendTypingIndicator(): Promise<void>;
     // (undocumented)
     setTopic(topicName: string): Promise<void>;
-    // (undocumented)
-    updateAllParticipants(): Promise<void>;
 }
 
 // @public (undocumented)
