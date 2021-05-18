@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CommonProperties_2 as CommonProperties, DefaultCallingHandlers } from '@azure/acs-calling-selector';
-
+import { DefaultCallingHandlers } from '@azure/acs-calling-selector';
+import { CommonProperties } from 'acs-ui-common';
 import { ReactElement } from 'react';
 import memoizeOne from 'memoize-one';
 import { CallAdapter } from '..';
 import { useAdapter } from '../adapter/CallAdapterProvider';
-import { CommunicationUserIdentifier } from '@azure/communication-common';
+import { CommunicationUserIdentifier, isCommunicationUserIdentifier } from '@azure/communication-common';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
 export const useHandlers = <PropsT>(
@@ -42,8 +42,7 @@ const createCompositeHandlers = memoizeOne(
     },
     onStartCall: (participants) => {
       const participantList = participants.filter((participant) => {
-        if ('communicationUserId' in participant) return true;
-        else return false;
+        return isCommunicationUserIdentifier(participant);
       }) as CommunicationUserIdentifier[];
       const rawIds = participantList.map((id) => id.communicationUserId);
       return adapter.startCall(rawIds);

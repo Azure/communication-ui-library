@@ -31,7 +31,6 @@ class CallContext {
   private callId: string | undefined;
 
   constructor(clientState: CallClientState) {
-    // if (!call) throw 'Cannot find call by callId, please initialize call before use!';
     this.state = {
       isMicrophoneEnabled: false,
       userId: clientState.userId,
@@ -73,7 +72,6 @@ class CallContext {
 
   public updateClientState(clientState: CallClientState): void {
     const call = clientState.calls.get(this.callId ?? '');
-    //if (!thread) throw 'Cannot find threadId, please make sure thread state is still in Stateful ChatClient.';
     this.setState({
       ...this.state,
       userId: clientState.userId,
@@ -130,15 +128,19 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   public queryCameras(): Promise<VideoDeviceInfo[]> {
     return this.deviceManager.getCameras();
   }
+
   public queryMicrophones(): Promise<AudioDeviceInfo[]> {
     return this.deviceManager.getMicrophones();
   }
+
   public async querySpeakers(): Promise<AudioDeviceInfo[]> {
     return this.deviceManager.getSpeakers();
   }
 
   public async joinCall(): Promise<void> {
-    if (!isInCall(this.getState().call?.state ?? 'None')) {
+    if (isInCall(this.getState().call?.state ?? 'None')) {
+      throw new Error('You are already in the call!');
+    } else {
       const audioOptions: AudioOptions = { muted: !this.getState().isMicrophoneEnabled };
       // TODO: find a way to expose stream to here
       const videoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
@@ -157,8 +159,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       // Resync state after callId is set
       this.context.updateClientState(this.callClient.getState());
       this.handlers = createDefaultCallingHandlers(this.callClient, this.callAgent, this.deviceManager, call);
-    } else {
-      throw 'You are already in the call!';
     }
   }
 
