@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { FlatCommunicationIdentifier, flattenedCommunicationIdentifier } from 'acs-ui-common';
+import { FlatCommunicationIdentifier, toFlatCommunicationIdentifier } from 'acs-ui-common';
 import { ChatClientState } from 'chat-stateful-client';
 import { ChatBaseSelectorProps } from '@azure/acs-chat-selector';
 import { ChatParticipant } from '@azure/communication-chat';
 
 export const getUserId = (state: ChatClientState): FlatCommunicationIdentifier =>
-  flattenedCommunicationIdentifier(state.userId);
+  toFlatCommunicationIdentifier(state.userId);
 
 export const getTopicName = (state: ChatClientState, props: ChatBaseSelectorProps): string => {
   return state.threads.get(props.threadId)?.properties?.topic || '';

@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { ChatParticipant } from '@azure/communication-chat';
-import { FlatCommunicationIdentifier, flattenedCommunicationIdentifier } from 'acs-ui-common';
+import { FlatCommunicationIdentifier, toFlatCommunicationIdentifier } from 'acs-ui-common';
 import { existsTopicName } from 'app/utils/utils';
 import { createSelector } from 'reselect';
 import { getTopicName, getUserId, getParticipants } from './baseSelectors';
@@ -12,7 +12,7 @@ const generateDefaultHeaderMessage = (participants: ChatParticipant[], userId: F
 
   const remoteParticipantsWithNames = participants?.filter(
     (participant: ChatParticipant) =>
-      flattenedCommunicationIdentifier(participant.id) !== userId && participant.displayName
+      toFlatCommunicationIdentifier(participant.id) !== userId && participant.displayName
   );
 
   if (!remoteParticipantsWithNames?.length) {

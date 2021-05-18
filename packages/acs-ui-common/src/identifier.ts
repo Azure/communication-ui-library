@@ -16,7 +16,7 @@ import {
 // - it can be used as keys into a Map to store data for the user.
 export type FlatCommunicationIdentifier = string;
 
-export const flattenedCommunicationIdentifier = (id: CommunicationIdentifier): FlatCommunicationIdentifier => {
+export const toFlatCommunicationIdentifier = (id: CommunicationIdentifier): FlatCommunicationIdentifier => {
   if (isCommunicationUserIdentifier(id)) {
     return id.communicationUserId;
   }

@@ -4,7 +4,7 @@
 import { ChatClientState, ChatMessageWithStatus } from 'chat-stateful-client';
 import { ChatParticipant, ChatMessageReadReceipt } from '@azure/communication-chat';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
-import { FlatCommunicationIdentifier, flattenedCommunicationIdentifier } from 'acs-ui-common';
+import { FlatCommunicationIdentifier, toFlatCommunicationIdentifier } from 'acs-ui-common';
 import { MessageContentType } from 'react-components';
 export type ChatBaseSelectorProps = {
   threadId: string;
@@ -12,7 +12,7 @@ export type ChatBaseSelectorProps = {
 
 export const getSelectorProps = <T>(_: ChatClientState, props: T): T => props;
 export const getUserId = (state: ChatClientState): FlatCommunicationIdentifier =>
-  flattenedCommunicationIdentifier(state.userId);
+  toFlatCommunicationIdentifier(state.userId);
 
 export const getDisplayName = (state: ChatClientState): string => state.displayName;
 export const getChatMessages = (

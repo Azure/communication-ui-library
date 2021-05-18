@@ -5,7 +5,7 @@ import { createStatefulChatClient, ChatClientState, StatefulChatClient } from 'c
 import { DefaultChatHandlers, createDefaultChatHandlers } from '@azure/acs-chat-selector';
 import { ChatClient, ChatMessage, ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationUserKind } from '@azure/communication-signaling';
-import { flattenedCommunicationIdentifier } from 'acs-ui-common';
+import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import EventEmitter from 'events';
 import { createAzureCommunicationUserCredential, getIdFromToken } from '../../../utils';
 import { ChatAdapter, ChatEvent, ChatState } from './ChatAdapter';
@@ -21,7 +21,7 @@ class ChatContext {
     this.threadId = threadId;
     if (!thread) throw 'Cannot find threadId, please initialize thread before use!';
     this.state = {
-      userId: flattenedCommunicationIdentifier(clientState.userId),
+      userId: toFlatCommunicationIdentifier(clientState.userId),
       displayName: clientState.displayName,
       thread
     };
@@ -52,7 +52,7 @@ class ChatContext {
     const thread = clientState.threads.get(this.threadId);
     if (!thread) throw 'Cannot find threadId, please make sure thread state is still in Stateful ChatClient.';
     this.setState({
-      userId: flattenedCommunicationIdentifier(clientState.userId),
+      userId: toFlatCommunicationIdentifier(clientState.userId),
       displayName: clientState.displayName,
       thread
     });

@@ -8,7 +8,7 @@ import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 import { enableMapSet } from 'immer';
 import { ChatMessageReadReceipt, ChatParticipant } from '@azure/communication-chat';
 import { CommunicationIdentifierKind, UnknownIdentifierKind } from '@azure/communication-common';
-import { flattenedCommunicationIdentifier } from 'acs-ui-common';
+import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import { Constants } from './Constants';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 import { ChatConfig } from './types/ChatConfig';
@@ -179,7 +179,7 @@ export class ChatContext {
       produce(this._state, (draft: ChatClientState) => {
         const participants = draft.threads.get(threadId)?.participants;
         if (participants) {
-          participants.set(flattenedCommunicationIdentifier(participant.id), participant);
+          participants.set(toFlatCommunicationIdentifier(participant.id), participant);
         }
       })
     );
@@ -191,7 +191,7 @@ export class ChatContext {
         const participantsMap = draft.threads.get(threadId)?.participants;
         if (participantsMap) {
           for (const participant of participants) {
-            participantsMap.set(flattenedCommunicationIdentifier(participant.id), participant);
+            participantsMap.set(toFlatCommunicationIdentifier(participant.id), participant);
           }
         }
       })
@@ -204,7 +204,7 @@ export class ChatContext {
         const participants = draft.threads.get(threadId)?.participants;
         if (participants) {
           participantIds.forEach((id) => {
-            participants.delete(flattenedCommunicationIdentifier(id));
+            participants.delete(toFlatCommunicationIdentifier(id));
           });
         }
       })
@@ -215,7 +215,7 @@ export class ChatContext {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         const participants = draft.threads.get(threadId)?.participants;
-        participants?.delete(flattenedCommunicationIdentifier(participantId));
+        participants?.delete(toFlatCommunicationIdentifier(participantId));
       })
     );
   }
@@ -311,9 +311,9 @@ export class ChatContext {
   private filterTypingIndicatorForUser(thread: ChatThreadClientState, userId?: CommunicationIdentifierKind): void {
     if (!userId) return;
     const typingIndicators = thread.typingIndicators;
-    const userIdAsKey = flattenedCommunicationIdentifier(userId);
+    const userIdAsKey = toFlatCommunicationIdentifier(userId);
     const filteredTypingIndicators = typingIndicators.filter(
-      (typingIndicator) => flattenedCommunicationIdentifier(typingIndicator.sender) !== userIdAsKey
+      (typingIndicator) => toFlatCommunicationIdentifier(typingIndicator.sender) !== userIdAsKey
     );
     if (filteredTypingIndicators.length !== typingIndicators.length) {
       thread.typingIndicators = filteredTypingIndicators;

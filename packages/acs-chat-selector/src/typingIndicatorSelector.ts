@@ -9,7 +9,7 @@ import { getTypingIndicators, getParticipants, getUserId } from './baseSelectors
 import * as reselect from 'reselect';
 import { ChatParticipant } from '@azure/communication-chat';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
-import { FlatCommunicationIdentifier, flattenedCommunicationIdentifier } from 'acs-ui-common';
+import { FlatCommunicationIdentifier, toFlatCommunicationIdentifier } from 'acs-ui-common';
 import { CommunicationParticipant } from 'react-components';
 import { MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS, PARTICIPANTS_THRESHOLD } from './utils/constants';
 
@@ -22,16 +22,16 @@ const filterTypingIndicators = (
   const date8SecondsAgo = new Date(Date.now() - MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS);
   for (let i = typingIndicators.length - 1; i >= 0; i--) {
     const typingIndicator = typingIndicators[i];
-    if (flattenedCommunicationIdentifier(typingIndicator.sender) === userId) {
+    if (toFlatCommunicationIdentifier(typingIndicator.sender) === userId) {
       continue;
     }
     if (typingIndicator.receivedOn < date8SecondsAgo) {
       continue;
     }
-    if (seen.has(flattenedCommunicationIdentifier(typingIndicator.sender))) {
+    if (seen.has(toFlatCommunicationIdentifier(typingIndicator.sender))) {
       continue;
     }
-    seen.add(flattenedCommunicationIdentifier(typingIndicator.sender));
+    seen.add(toFlatCommunicationIdentifier(typingIndicator.sender));
     filteredTypingIndicators.push(typingIndicator);
   }
   return filteredTypingIndicators;
@@ -42,8 +42,8 @@ const convertSdkTypingIndicatorsToCommunicationParticipants = (
   participants: Map<string, ChatParticipant>
 ): CommunicationParticipant[] => {
   return typingIndicators.map((typingIndicator) => ({
-    userId: flattenedCommunicationIdentifier(typingIndicator.sender),
-    displayName: participants.get(flattenedCommunicationIdentifier(typingIndicator.sender))?.displayName
+    userId: toFlatCommunicationIdentifier(typingIndicator.sender),
+    displayName: participants.get(toFlatCommunicationIdentifier(typingIndicator.sender))?.displayName
   }));
 };
 
