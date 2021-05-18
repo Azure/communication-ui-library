@@ -77,6 +77,7 @@ export interface Call {
     recording: RecordingCallFeature;
     remoteParticipants: Map<string, RemoteParticipant>;
     remoteParticipantsEnded: Map<string, RemoteParticipant>;
+    screenShareRemoteParticipant: string | undefined;
     startTime: Date;
     state: CallState;
     transcription: TranscriptionCallFeature;
@@ -576,6 +577,9 @@ export const getIncomingCalls: (state: CallClientState) => Map<string, IncomingC
 // @public (undocumented)
 export const getIncomingCallsEnded: (state: CallClientState) => IncomingCall[];
 
+// @public
+export function getRemoteParticipantKey(identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind): string;
+
 // @public (undocumented)
 export type GetSelector<Component> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof chatThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : never;
 
@@ -1056,6 +1060,7 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
 
 // @public (undocumented)
 export const videoGallerySelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
+    screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
     localParticipant: {
         userId: string;
         displayName: string;
@@ -1069,6 +1074,7 @@ export const videoGallerySelector: reselect.OutputParametricSelector<CallClientS
     };
     remoteParticipants: VideoGalleryRemoteParticipant[];
 }, (res1: Call | undefined, res2: string | undefined, res3: string | undefined) => {
+    screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
     localParticipant: {
         userId: string;
         displayName: string;

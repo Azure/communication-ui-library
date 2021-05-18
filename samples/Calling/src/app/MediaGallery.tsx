@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useEffect, useMemo, useCallback } from 'react';
-import { VideoGallery, VideoGalleryRemoteParticipant } from 'react-components';
+import React, { useEffect, useMemo } from 'react';
+import { VideoGallery } from 'react-components';
 import { usePropsFor } from './hooks/usePropsFor';
 import { ScreenShare } from './ScreenShare';
 
@@ -21,29 +21,15 @@ export interface MediaGalleryProps {
 
 export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const videoGalleryProps = usePropsFor(VideoGallery);
-  const remoteParticipants = videoGalleryProps.remoteParticipants;
+  const isScreenShareActive = useMemo(() => {
+    return videoGalleryProps.screenShareParticipant !== undefined;
+  }, [videoGalleryProps]);
 
   useEffect(() => {
     if (props.isCameraChecked && !props.isVideoStreamOn) {
       props.onStartLocalVideo();
     }
   }, [props]);
-
-  const participantWithScreenShare: VideoGalleryRemoteParticipant | undefined = useMemo(() => {
-    return remoteParticipants.find((remoteParticipant: VideoGalleryRemoteParticipant) => {
-      return remoteParticipant.screenShareStream?.isAvailable;
-    });
-  }, [remoteParticipants]);
-
-  const isScreenShareActive = useCallback((): boolean => {
-    return participantWithScreenShare !== undefined && participantWithScreenShare.screenShareStream !== undefined;
-  }, [participantWithScreenShare]);
-
-  const ScreenShareMemoized = useMemo(() => {
-    if (participantWithScreenShare && isScreenShareActive()) {
-      return <ScreenShare {...videoGalleryProps} participantWithScreenShare={participantWithScreenShare} />;
-    } else return <></>;
-  }, [isScreenShareActive, participantWithScreenShare, videoGalleryProps]);
 
   const VideoGalleryMemoized = useMemo(() => {
     return (
@@ -61,5 +47,5 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     );
   }, [videoGalleryProps]);
 
-  return isScreenShareActive() ? ScreenShareMemoized : VideoGalleryMemoized;
+  return isScreenShareActive ? <ScreenShare {...videoGalleryProps} /> : VideoGalleryMemoized;
 };

@@ -184,6 +184,7 @@ export const screenShareButtonSelector: reselect.OutputParametricSelector<CallCl
 
 // @public (undocumented)
 export const videoGallerySelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
+    screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
     localParticipant: {
         userId: string;
         displayName: string;
@@ -197,6 +198,7 @@ export const videoGallerySelector: reselect.OutputParametricSelector<CallClientS
     };
     remoteParticipants: VideoGalleryRemoteParticipant[];
 }, (res1: Call_2 | undefined, res2: string | undefined, res3: string | undefined) => {
+    screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
     localParticipant: {
         userId: string;
         displayName: string;
