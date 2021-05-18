@@ -1032,7 +1032,6 @@ describe('Stateful call client', () => {
   test('should surface screenshare screen when available in state', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
-    createDeclarativeClient(testData);
     await createMockCallAndEmitCallsUpdated(testData);
     await createMockParticipantAndEmitParticipantUpdated(testData);
     await createMockRemoteVideoStreamAndEmitVideoStreamsUpdated(true, 'ScreenSharing', 1, testData);
@@ -1054,7 +1053,6 @@ describe('Stateful call client', () => {
   test('should stop surfacing screenshare screen when not available in state', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
-    createDeclarativeClient(testData);
     await createMockCallAndEmitCallsUpdated(testData);
     await createMockParticipantAndEmitParticipantUpdated(testData);
     await createMockRemoteVideoStreamAndEmitVideoStreamsUpdated(true, 'ScreenSharing', 1, testData);
@@ -1082,7 +1080,6 @@ describe('Stateful call client', () => {
   test('should not delete existing active screenshare screen when another stream is set unavailable', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
-    createDeclarativeClient(testData);
     await createMockCallAndEmitCallsUpdated(testData);
     await createMockParticipantAndEmitParticipantUpdated(testData);
     await createMockRemoteVideoStreamAndEmitVideoStreamsUpdated(true, 'ScreenSharing', 1, testData);
