@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, initializeIcons } from '@fluentui/react';
 
 import EndCall from './EndCall';
+import CallError from './CallError';
 import { ConfigurationScreen } from './ConfigurationScreen';
 import { GroupCall } from './GroupCall';
 import { HomeScreen } from './HomeScreen';
@@ -110,8 +111,11 @@ const App = (): JSX.Element => {
                 endCallHandler={(): void => {
                   setPage('endCall');
                 }}
+                callErrorHandler={() => {
+                  setPage('callError');
+                }}
                 screenWidth={screenWidth}
-                groupLocator={
+                callLocator={
                   teamsMeetingLink
                     ? {
                         meetingLink: teamsMeetingLink
@@ -147,6 +151,9 @@ const App = (): JSX.Element => {
       }
       case 'endCall': {
         return <EndCall rejoinHandler={() => setPage('configuration')} homeHandler={navigateToHomePage} />;
+      }
+      case 'callError': {
+        return <CallError rejoinHandler={() => setPage('configuration')} homeHandler={navigateToHomePage} />;
       }
       default:
         return (

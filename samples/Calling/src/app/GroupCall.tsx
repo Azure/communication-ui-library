@@ -29,14 +29,15 @@ import { ComplianceBanner } from './ComplianceBanner';
 export interface GroupCallProps {
   screenWidth: number;
   endCallHandler(): void;
-  groupLocator: GroupLocator | MeetingLocator;
+  callErrorHandler(): void;
+  callLocator: GroupLocator | MeetingLocator;
 }
 
 const spinnerLabel = 'Initializing call client...';
 
 export const GroupCall = (props: GroupCallProps): JSX.Element => {
   const [selectedPane, setSelectedPane] = useState(CommandPanelTypes.None);
-  const { groupLocator, screenWidth, endCallHandler } = props;
+  const { callLocator, screenWidth, endCallHandler, callErrorHandler } = props;
 
   const callAgent = CallAgentProvider.useCallAgent();
   const { setCall, isMicrophoneEnabled } = useCallContext();
@@ -69,14 +70,30 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
   }, [call?.id, callClient]);
 
   useEffect(() => {
+    console.log('END REASON', call?.callEndReason);
     if (!isInCall(callState ?? 'None') && callAgent) {
       const audioOptions: AudioOptions = { muted: !isMicrophoneEnabled };
-      const call = callAgent.join(groupLocator, { audioOptions });
-      setCall(call);
+      try {
+        const call = callAgent.join(callLocator, { audioOptions });
+        setCall(call);
+      } catch (error) {
+        console.log(error);
+        callErrorHandler();
+      }
     }
-  }, [call?.localVideoStreams, callAgent, callState, groupLocator, isMicrophoneEnabled, setCall]);
+  }, [
+    call?.localVideoStreams,
+    callAgent,
+    callState,
+    callLocator,
+    isMicrophoneEnabled,
+    setCall,
+    call?.callEndReason,
+    call,
+    callErrorHandler
+  ]);
 
-  if ('meetingLink' in groupLocator) {
+  if ('meetingLink' in callLocator) {
     if (callState && ['Connecting', 'Ringing', 'InLobby'].includes(callState)) {
       return (
         <Lobby
