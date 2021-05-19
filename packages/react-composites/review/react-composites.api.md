@@ -186,14 +186,21 @@ export interface CallAdapter {
 }
 
 // @public (undocumented)
-export type CallAdapterState = CallUiState & CallClientState;
-
-// @public (undocumented)
-export type CallClientState = {
+export type CallAdapterClientState = {
     userId: string;
     displayName?: string;
     call?: CallState;
     devices: DeviceManagerState;
+};
+
+// @public (undocumented)
+export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
+
+// @public (undocumented)
+export type CallAdapterUiState = {
+    error?: Error;
+    isMicrophoneEnabled: boolean;
+    page: 'configuration' | 'call';
 };
 
 // @public (undocumented)
@@ -215,13 +222,6 @@ export type CallIdChangedListener = (event: {
 
 // @public (undocumented)
 export type CallIdentifierKinds = CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind;
-
-// @public (undocumented)
-export type CallUiState = {
-    error?: Error;
-    isMicrophoneEnabled: boolean;
-    page: 'configuration' | 'call';
-};
 
 // @public (undocumented)
 export interface ChatAdapter {
