@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useState } from 'react';
+import { GroupLocator, MeetingLocator } from '@azure/communication-calling';
 import { localStorageAvailable } from './utils/constants';
 import { saveDisplayNameToLocalStorage } from './utils/AppUtils';
 import { DisplayNameField } from './DisplayNameField';
@@ -12,19 +13,18 @@ import { optionsButtonSelector } from '@azure/acs-calling-selector';
 import { useSelector } from './hooks/useSelector';
 import { useHandlers } from './hooks/useHandlers';
 import { TeamsMeetingLinkField } from './TeamsMeetingLinkField';
-import { CallClientProvider } from 'react-composites';
 
 export interface ConfigurationScreenProps {
   screenWidth: number;
-  startCallHandler: (data?: { meetingLink?: string }) => void;
+  startCallHandler: (data?: { callLocator: GroupLocator | MeetingLocator }) => void;
+  displayName: string;
   onDisplayNameUpdate: (displayName: string) => void;
 }
 
 export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Element => {
-  const { startCallHandler, onDisplayNameUpdate } = props;
+  const { startCallHandler, onDisplayNameUpdate, displayName } = props;
   const [emptyWarning, setEmptyWarning] = useState(false);
   const [nameTooLongWarning, setNameTooLongWarning] = useState(false);
-  const { displayName } = CallClientProvider.useCallClientContext();
   const [teamsMeetingLink, setTeamsMeetingLink] = useState<string>();
 
   const options = useSelector(optionsButtonSelector);
@@ -58,7 +58,7 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
               saveDisplayNameToLocalStorage(displayName);
             }
             if (teamsMeetingLink) {
-              startCallHandler({ meetingLink: teamsMeetingLink });
+              startCallHandler({ callLocator: { meetingLink: teamsMeetingLink } });
             } else {
               startCallHandler();
             }

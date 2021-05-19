@@ -63,7 +63,7 @@ const generateDefaultMenuProps = (props: OptionsButtonProps): { items: Array<any
           title: val.name,
           canCheck: true,
           isChecked: val.id === selectedCamera?.id,
-          onClick: () => onSelectCamera(val)
+          onClick: () => !(val.id === selectedCamera?.id) && onSelectCamera(val)
         }))
       }
     });
@@ -81,7 +81,7 @@ const generateDefaultMenuProps = (props: OptionsButtonProps): { items: Array<any
           title: val.name,
           canCheck: true,
           isChecked: val.id === selectedMicrophone?.id,
-          onClick: () => onSelectMicrophone(val)
+          onClick: () => !(val.id === selectedMicrophone?.id) && onSelectMicrophone(val)
         }))
       }
     });
@@ -99,7 +99,7 @@ const generateDefaultMenuProps = (props: OptionsButtonProps): { items: Array<any
           title: val.name,
           canCheck: true,
           isChecked: val.id === selectedSpeaker?.id,
-          onClick: () => onSelectSpeaker(val)
+          onClick: () => !(val.id === selectedSpeaker?.id) && onSelectSpeaker(val)
         }))
       }
     });

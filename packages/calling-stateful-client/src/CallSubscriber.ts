@@ -2,12 +2,12 @@
 // Licensed under the MIT license.
 
 import { Call, Features, LocalVideoStream, RemoteParticipant } from '@azure/communication-calling';
+import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import { CallContext } from './CallContext';
 import { CallIdRef } from './CallIdRef';
 import {
   convertSdkLocalStreamToDeclarativeLocalStream,
-  convertSdkParticipantToDeclarativeParticipant,
-  getRemoteParticipantKey
+  convertSdkParticipantToDeclarativeParticipant
 } from './Converter';
 import { ReceivedTransferSubscriber } from './ReceivedTransferSubscriber';
 import { InternalCallContext } from './InternalCallContext';
@@ -110,7 +110,7 @@ export class CallSubscriber {
   };
 
   private addParticipantListener(participant: RemoteParticipant): void {
-    const participantKey = getRemoteParticipantKey(participant.identifier);
+    const participantKey = toFlatCommunicationIdentifier(participant.identifier);
     this._participantSubscribers.get(participantKey)?.unsubscribe();
     this._participantSubscribers.set(
       participantKey,
@@ -119,7 +119,7 @@ export class CallSubscriber {
   }
 
   private removeParticipantListener(participant: RemoteParticipant): void {
-    const participantKey = getRemoteParticipantKey(participant.identifier);
+    const participantKey = toFlatCommunicationIdentifier(participant.identifier);
     const participantSubscriber = this._participantSubscribers.get(participantKey);
     if (participantSubscriber) {
       participantSubscriber.unsubscribe();
@@ -159,7 +159,7 @@ export class CallSubscriber {
       this._callIdRef.callId,
       event.removed.map(convertSdkParticipantToDeclarativeParticipant),
       event.added.map((participant: RemoteParticipant) => {
-        return getRemoteParticipantKey(participant.identifier);
+        return toFlatCommunicationIdentifier(participant.identifier);
       })
     );
 
@@ -168,7 +168,7 @@ export class CallSubscriber {
       this._callIdRef.callId,
       event.added.map(convertSdkParticipantToDeclarativeParticipant),
       event.removed.map((participant: RemoteParticipant) => {
-        return getRemoteParticipantKey(participant.identifier);
+        return toFlatCommunicationIdentifier(participant.identifier);
       })
     );
   };

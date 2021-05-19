@@ -68,6 +68,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "^4.0.2",
     "reactstrap": "^8.4.1",
+    "reselect": "~4.0.0",
     "uuid": "^8.1.0"
   },
   "devDependencies": {

@@ -1,9 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StreamMedia, VideoGalleryLocalParticipant, VideoStreamOptions, VideoTile } from 'react-components';
 import { useTheme } from '@fluentui/react-theme-provider';
 import { LobbyCallControlBar } from './LobbyControlBar';
+import { useSelector } from './hooks/useSelector';
+import { getIsPreviewCameraOn } from './selectors/baseSelectors';
 
 export interface LobbyProps {
   callState: string;
@@ -19,6 +21,9 @@ export const Lobby = (props: LobbyProps): JSX.Element => {
   const theme = useTheme();
   const palette = theme.palette;
 
+  const [isButtonStatusSynced, setIsButtonStatusSynced] = useState(false);
+  const isPreviewCameraOn = useSelector(getIsPreviewCameraOn);
+
   const localVideoStream = props.localParticipant?.videoStream;
   const isVideoReady = localVideoStream?.isAvailable;
   const renderElement = props.localParticipant.videoStream?.renderElement;
@@ -31,15 +36,24 @@ export const Lobby = (props: LobbyProps): JSX.Element => {
   };
 
   useEffect(() => {
-    if (props.callState === 'InLobby' && props.isCameraChecked && !isVideoReady) {
-      props.onStartLocalVideo().catch(() => console.log('Can not start video'));
+    if (
+      props.callState === 'InLobby' &&
+      isPreviewCameraOn &&
+      !isButtonStatusSynced &&
+      !isVideoReady &&
+      !renderElement
+    ) {
+      props.onStartLocalVideo().catch((err) => console.log('Can not start video', err));
+      setIsButtonStatusSynced(true);
     }
-  });
+  }, [isButtonStatusSynced, isPreviewCameraOn, isVideoReady, props, renderElement]);
 
   useEffect(() => {
     if (localVideoStream && isVideoReady) {
       props.onCreateLocalStreamView &&
-        props.onCreateLocalStreamView(props.localVideoViewOption).catch(() => console.log('Can not render video'));
+        props
+          .onCreateLocalStreamView(props.localVideoViewOption)
+          .catch((err) => console.log('Can not render video', err));
     }
   }, [isVideoReady, localVideoStream, props, renderElement]);
 

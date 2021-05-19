@@ -287,12 +287,6 @@ export type ParticipantListProps = {
     onParticipantRemove?: (userId: string) => void;
 };
 
-// @public (undocumented)
-export interface PlaceholderProps {
-    displayName?: string;
-    noVideoAvailableAriaLabel?: string;
-}
-
 // @public
 export const ReadReceipt: (props: ReadReceiptProps) => JSX.Element;
 
@@ -405,7 +399,7 @@ export interface VideoGalleryProps {
     // (undocumented)
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
     // (undocumented)
-    onDisposeLocalStreamView?: () => Promise<void>;
+    onDisposeLocalStreamView?: () => void;
     // (undocumented)
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     // (undocumented)
@@ -447,20 +441,24 @@ export interface VideoStreamOptions {
 }
 
 // @public (undocumented)
-export const VideoTile: (props: VideoTileProps & PlaceholderProps) => JSX.Element;
+export const VideoTile: (props: VideoTileProps) => JSX.Element;
 
 // @public
 export interface VideoTileProps {
     children?: React_2.ReactNode;
+    displayName?: string;
     isMirrored?: boolean;
     isVideoReady?: boolean;
+    noVideoAvailableAriaLabel?: string;
     placeholder?: JSX.Element | null;
     renderElement?: JSX.Element | null;
+    showDisplayName?: boolean;
     styles?: VideoTileStylesProps;
 }
 
 // @public (undocumented)
 export interface VideoTileStylesProps extends BaseCustomStylesProps {
+    displayNameContainer?: IStyle;
     overlayContainer?: IStyle;
     videoContainer?: IStyle;
 }

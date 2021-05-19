@@ -4,7 +4,6 @@ import { useTheme } from '@fluentui/react-theme-provider';
 import React, { useCallback } from 'react';
 import { CameraButton, ControlBar, EndCallButton, MicrophoneButton, OptionsButton } from 'react-components';
 import { usePropsFor } from './hooks/usePropsFor';
-import { CallClientProvider } from 'react-composites';
 
 export interface LobbyCallControlBarProps {
   onEndCallClick(): void;
@@ -13,7 +12,6 @@ export interface LobbyCallControlBarProps {
 export const LobbyCallControlBar = (props: LobbyCallControlBarProps): JSX.Element => {
   const theme = useTheme();
 
-  const { setIsCallStartedWithCameraOn } = CallClientProvider.useCallClientContext();
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
   const cameraButtonProps = usePropsFor(CameraButton);
   const optionsButtonProps = usePropsFor(OptionsButton);
@@ -32,7 +30,6 @@ export const LobbyCallControlBar = (props: LobbyCallControlBarProps): JSX.Elemen
         showLabel={true}
         {...cameraButtonProps}
         onToggleCamera={async () => {
-          setIsCallStartedWithCameraOn(!cameraButtonProps.checked);
           cameraButtonProps.onToggleCamera();
         }}
       />

@@ -1,14 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mediaGallerySelector, lobbySelector, complianceBannerSelector } from '@azure/acs-calling-selector';
+import { mediaGallerySelector, complianceBannerSelector } from '@azure/acs-calling-selector';
 import { AudioOptions, CallState, GroupLocator, MeetingLocator } from '@azure/communication-calling';
 import { Label, Overlay, Spinner, Stack } from '@fluentui/react';
 import { CallClientState, StatefulCallClient } from 'calling-stateful-client';
 import React, { useEffect, useState } from 'react';
-import { CallAgentProvider, CallClientProvider, useCall, useCallContext } from 'react-composites';
+import { useCallAgent, useCallClient, useCall, useCallContext } from 'react-composites';
 import { CommandPanel, CommandPanelTypes } from './CommandPanel';
 import { Header } from './Header';
+import { lobbySelector } from './selectors/lobbySelector';
 import { useHandlers } from './hooks/useHandlers';
 import { useSelector } from './hooks/useSelector';
 import { MediaGallery } from './MediaGallery';
@@ -39,14 +40,14 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
   const [selectedPane, setSelectedPane] = useState(CommandPanelTypes.None);
   const { callLocator, screenWidth, endCallHandler, callErrorHandler } = props;
 
-  const callAgent = CallAgentProvider.useCallAgent();
-  const { setCall, isMicrophoneEnabled } = useCallContext();
+  const callAgent = useCallAgent();
+  const { setCall } = useCallContext();
   const call = useCall();
-  const callClient: StatefulCallClient = CallClientProvider.useCallClient();
-  const { isCallStartedWithCameraOn } = CallClientProvider.useCallClientContext();
+  const callClient: StatefulCallClient = useCallClient();
 
   const [callState, setCallState] = useState<CallState | undefined>(undefined);
   const [isScreenSharingOn, setIsScreenSharingOn] = useState<boolean | undefined>(undefined);
+  const [joinedCall, setJoinedCall] = useState<boolean>(false);
 
   const mediaGalleryProps = useSelector(mediaGallerySelector);
   const mediaGalleryHandlers = useHandlers(MediaGallery);
@@ -71,39 +72,22 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
 
   useEffect(() => {
     console.log('END REASON', call?.callEndReason);
-    if (!isInCall(callState ?? 'None') && callAgent) {
-      const audioOptions: AudioOptions = { muted: !isMicrophoneEnabled };
+    if (!isInCall(callState ?? 'None') && callAgent && !joinedCall) {
+      const audioOptions: AudioOptions = { muted: true };
       try {
         const call = callAgent.join(callLocator as GroupLocator, { audioOptions });
         setCall(call);
+        setJoinedCall(true);
       } catch (error) {
         console.log(error);
         callErrorHandler();
       }
     }
-  }, [
-    call?.localVideoStreams,
-    callAgent,
-    callState,
-    callLocator,
-    isMicrophoneEnabled,
-    setCall,
-    call?.callEndReason,
-    call,
-    callErrorHandler
-  ]);
+  }, [call?.callEndReason, callAgent, callErrorHandler, callLocator, callState, joinedCall, setCall]);
 
   if ('meetingLink' in callLocator) {
     if (callState && ['Connecting', 'Ringing', 'InLobby'].includes(callState)) {
-      return (
-        <Lobby
-          callState={callState}
-          {...lobbyProps}
-          {...lobbyHandlers}
-          isCameraChecked={isCallStartedWithCameraOn}
-          onEndCallClick={endCallHandler}
-        />
-      );
+      return <Lobby callState={callState} {...lobbyProps} {...lobbyHandlers} onEndCallClick={endCallHandler} />;
     }
   }
 
@@ -127,11 +111,7 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
               callState === 'Connected' && (
                 <>
                   <Stack.Item grow styles={activeContainerClassName}>
-                    <MediaGallery
-                      {...mediaGalleryProps}
-                      {...mediaGalleryHandlers}
-                      isCameraChecked={isCallStartedWithCameraOn}
-                    />
+                    <MediaGallery {...mediaGalleryProps} {...mediaGalleryHandlers} />
                   </Stack.Item>
                   {selectedPane !== CommandPanelTypes.None &&
                     (window.innerWidth > MINI_HEADER_WINDOW_WIDTH ? (

@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { mergeStyles, MessageBar, MessageBarType } from '@fluentui/react';
-import { CommunicationUiErrorSeverity } from '../../types/CommunicationUiError';
+import { CommunicationUiErrorSeverity } from '../../types';
 import { BaseCustomStylesProps } from 'react-components';
 
 /**
