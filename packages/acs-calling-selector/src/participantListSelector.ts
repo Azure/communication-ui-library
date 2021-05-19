@@ -3,7 +3,7 @@
 
 import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 // @ts-ignore
-import { RemoteParticipant, CallClientState, Call } from 'calling-stateful-client';
+import { RemoteParticipant, CallClientState, CallState } from 'calling-stateful-client';
 // @ts-ignore
 import * as reselect from 'reselect';
 // @ts-ignore

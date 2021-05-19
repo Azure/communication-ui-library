@@ -5,10 +5,10 @@
 ```ts
 
 import { AudioDeviceInfo } from '@azure/communication-calling';
-import { Call } from 'calling-stateful-client';
-import { Call as Call_2 } from '@azure/communication-calling';
+import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallClientOptions } from '@azure/communication-calling';
+import { CallState } from 'calling-stateful-client';
 import { ChatMessage } from '@azure/communication-chat';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClientState } from 'chat-stateful-client';
@@ -92,7 +92,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     setSpeaker(device: AudioDeviceInfo): Promise<void>;
     // (undocumented)
-    startCall(participants: string[]): Call_2 | undefined;
+    startCall(participants: string[]): Call | undefined;
     // (undocumented)
     startCamera(): Promise<void>;
     // (undocumented)
@@ -172,7 +172,7 @@ export interface CallAdapter {
     // (undocumented)
     setSpeaker(sourceId: AudioDeviceInfo): Promise<void>;
     // (undocumented)
-    startCall(participants: string[]): Call_2 | undefined;
+    startCall(participants: string[]): Call | undefined;
     // (undocumented)
     startCamera(): Promise<void>;
     // (undocumented)
@@ -209,7 +209,7 @@ export type CallIdentifierKinds = CommunicationUserKind | PhoneNumberKind | Micr
 export type CallingClientState = {
     userId: string;
     displayName?: string;
-    call?: Call;
+    call?: CallState;
     devices: DeviceManagerState;
 };
 

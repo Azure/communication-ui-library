@@ -10,7 +10,7 @@ import { CallClientOptions } from '@azure/communication-calling';
 import { CallDirection } from '@azure/communication-calling';
 import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
-import { CallState } from '@azure/communication-calling';
+import { CallState as CallState_2 } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { CreateViewOptions } from '@azure/communication-calling';
@@ -28,7 +28,23 @@ import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 
 // @public
-export interface Call {
+export interface CallAgentState {
+    displayName?: string;
+}
+
+// @public
+export interface CallClientState {
+    callAgent: CallAgentState | undefined;
+    calls: Map<string, CallState>;
+    callsEnded: CallState[];
+    deviceManager: DeviceManagerState;
+    incomingCalls: Map<string, IncomingCall>;
+    incomingCallsEnded: IncomingCall[];
+    userId: string;
+}
+
+// @public
+export interface CallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
     direction: CallDirection;
@@ -42,25 +58,9 @@ export interface Call {
     remoteParticipantsEnded: Map<string, RemoteParticipant>;
     screenShareRemoteParticipant: string | undefined;
     startTime: Date;
-    state: CallState;
+    state: CallState_2;
     transcription: TranscriptionCallFeature;
     transfer: TransferCallFeature;
-}
-
-// @public
-export interface CallAgentState {
-    displayName?: string;
-}
-
-// @public
-export interface CallClientState {
-    callAgent: CallAgentState | undefined;
-    calls: Map<string, Call>;
-    callsEnded: Call[];
-    deviceManager: DeviceManagerState;
-    incomingCalls: Map<string, IncomingCall>;
-    incomingCallsEnded: IncomingCall[];
-    userId: string;
 }
 
 // @public

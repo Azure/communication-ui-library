@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Call, DeviceManagerState, RemoteParticipant } from 'calling-stateful-client';
-import { AudioDeviceInfo, VideoDeviceInfo, Call as SDKCall } from '@azure/communication-calling';
+import { CallState, DeviceManagerState, RemoteParticipant } from 'calling-stateful-client';
+import { AudioDeviceInfo, VideoDeviceInfo, Call } from '@azure/communication-calling';
 import { VideoStreamOptions } from 'react-components';
 import type {
   CommunicationUserKind,
@@ -22,7 +22,7 @@ export type CallingClientState = {
   // Properties from backend services
   userId: string;
   displayName?: string;
-  call?: Call;
+  call?: CallState;
   devices: DeviceManagerState;
 };
 
@@ -97,7 +97,7 @@ export interface CallAdapter {
 
   unmute(): Promise<void>;
 
-  startCall(participants: string[]): SDKCall | undefined;
+  startCall(participants: string[]): Call | undefined;
 
   startScreenShare(): Promise<void>;
 
