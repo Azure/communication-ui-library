@@ -10,12 +10,11 @@ import {
   VideoDeviceInfo
 } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
-import { CommonProperties } from 'acs-ui-common';
+import { CommonProperties, fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from 'acs-ui-common';
 import { DeviceManagerState, StatefulCallClient, StatefulDeviceManager } from 'calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
 import { VideoStreamOptions } from 'react-components';
-import { getACSId } from '../utils/getACSId';
 
 export type DefaultCallingHandlers = ReturnType<typeof createDefaultCallingHandlers>;
 
@@ -81,6 +80,7 @@ export const createDefaultCallingHandlers = memoizeOne(
       }
     };
 
+    // FIXME: onStartCall API should use string, not the underlying SDK types.
     const onStartCall = (
       participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
       options?: StartCallOptions
@@ -160,7 +160,7 @@ export const createDefaultCallingHandlers = memoizeOne(
       if (!callState) throw new Error(`Call Not Found: ${call.id}`);
 
       const streams = Array.from(callState.remoteParticipants.values()).find(
-        (participant) => getACSId(participant.identifier) === userId
+        (participant) => toFlatCommunicationIdentifier(participant.identifier) === userId
       )?.videoStreams;
 
       if (!streams) return;
@@ -178,7 +178,7 @@ export const createDefaultCallingHandlers = memoizeOne(
     };
 
     const onParticipantRemove = (userId: string): void => {
-      call?.removeParticipant({ communicationUserId: userId });
+      call?.removeParticipant(fromFlatCommunicationIdentifier(userId));
     };
 
     return {

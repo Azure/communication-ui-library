@@ -80,9 +80,6 @@ export type DeviceManagerState = {
 };
 
 // @public
-export function getRemoteParticipantKey(identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind): string;
-
-// @public
 export interface IncomingCall {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;

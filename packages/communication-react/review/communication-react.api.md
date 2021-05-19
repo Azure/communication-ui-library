@@ -472,7 +472,7 @@ export type ChatThreadClientProviderProps = {
 // @public (undocumented)
 export type ChatThreadClientState = {
     chatMessages: Map<string, ChatMessageWithStatus>;
-    participants: Map<CommunicationIdentifierAsKey, ChatParticipant>;
+    participants: Map<string, ChatParticipant>;
     threadId: string;
     properties?: ChatThreadProperties;
     readReceipts: ChatMessageReadReceipt[];
@@ -505,9 +505,6 @@ export type ChatUIState = {
 export type CommonProperties<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
-
-// @public (undocumented)
-export type CommunicationIdentifierAsKey = string;
 
 // @public
 export type CommunicationParticipant = {
@@ -756,6 +753,9 @@ export interface FluentThemeProviderProps {
 }
 
 // @public (undocumented)
+export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
+
+// @public (undocumented)
 export type FunctionWithKey<KeyT, ArgsT extends any[], RetT> = (key: KeyT, ...args: ArgsT) => RetT;
 
 // @public (undocumented)
@@ -768,25 +768,19 @@ export const getCalls: (state: CallClientState) => Map<string, Call>;
 export const getCallsEnded: (state: CallClientState) => Call[];
 
 // @public (undocumented)
-export const getCommunicationIdentifierAsKey: (identifier: CommunicationIdentifier) => CommunicationIdentifierAsKey;
-
-// @public (undocumented)
 export const getDeviceManager: (state: CallClientState) => DeviceManagerState;
 
 // @public (undocumented)
 export const getDisplayName: (state: CallClientState) => string | undefined;
 
 // @public (undocumented)
-export const getIdentifier: (state: CallClientState) => string | undefined;
+export const getIdentifier: (state: CallClientState) => string;
 
 // @public (undocumented)
 export const getIncomingCalls: (state: CallClientState) => Map<string, IncomingCall>;
 
 // @public (undocumented)
 export const getIncomingCallsEnded: (state: CallClientState) => IncomingCall[];
-
-// @public
-export function getRemoteParticipantKey(identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind): string;
 
 // @public (undocumented)
 export type GetSelector<Component> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof chatThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : never;
@@ -869,9 +863,6 @@ export interface LocalVideoStream {
     source: VideoDeviceInfo;
     videoStreamRendererView?: VideoStreamRendererView | undefined;
 }
-
-// @public (undocumented)
-export const MakeNPMHappy = true;
 
 // @public (undocumented)
 export const mediaGallerySelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
@@ -1027,7 +1018,7 @@ export type ParticipantListProps = {
 export const participantListSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     participants: CallParticipant[];
     myUserId: string;
-}, (res1: string | undefined, res2: string | undefined, res3: Call | undefined) => {
+}, (res1: string, res2: string | undefined, res3: Call | undefined) => {
     participants: CallParticipant[];
     myUserId: string;
 }>;
@@ -1186,6 +1177,9 @@ export type SystemMessagePayload = {
 };
 
 // @public
+export const toFlatCommunicationIdentifier: (id: CommunicationIdentifier) => string;
+
+// @public
 export interface TranscriptionCallFeature {
     isTranscriptionActive: boolean;
 }
@@ -1311,7 +1305,7 @@ export const videoGallerySelector: reselect.OutputParametricSelector<CallClientS
         };
     };
     remoteParticipants: VideoGalleryRemoteParticipant[];
-}, (res1: Call | undefined, res2: string | undefined, res3: string | undefined) => {
+}, (res1: Call | undefined, res2: string | undefined, res3: string) => {
     screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
     localParticipant: {
         userId: string;

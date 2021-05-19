@@ -58,6 +58,7 @@
     "@fluentui/react-theme-provider": "^0.18.0",
     "@types/react-aria-live": "^2.0.0",
     "@types/react-linkify": "^1.0.0",
+    "acs-ui-common": "~1.0.0-beta",
     "json-stringify-safe": "^5.0.1",
     "office-ui-fabric-react": "^7.160.2",
     "preval.macro": "^5.0.0",

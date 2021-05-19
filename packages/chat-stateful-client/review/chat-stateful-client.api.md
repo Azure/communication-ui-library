@@ -9,7 +9,6 @@ import { ChatClientOptions } from '@azure/communication-chat';
 import { ChatMessage } from '@azure/communication-chat';
 import { ChatMessageReadReceipt } from '@azure/communication-chat';
 import { ChatParticipant } from '@azure/communication-chat';
-import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
@@ -33,7 +32,7 @@ export type ChatMessageWithStatus = ChatMessage & {
 // @public (undocumented)
 export type ChatThreadClientState = {
     chatMessages: Map<string, ChatMessageWithStatus>;
-    participants: Map<CommunicationIdentifierAsKey, ChatParticipant>;
+    participants: Map<string, ChatParticipant>;
     threadId: string;
     properties?: ChatThreadProperties;
     readReceipts: ChatMessageReadReceipt[];
@@ -46,14 +45,8 @@ export type ChatThreadProperties = {
     topic?: string;
 };
 
-// @public (undocumented)
-export type CommunicationIdentifierAsKey = string;
-
 // @public
 export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: ChatClientOptions | undefined) => StatefulChatClient;
-
-// @public (undocumented)
-export const getCommunicationIdentifierAsKey: (identifier: CommunicationIdentifier) => CommunicationIdentifierAsKey;
 
 // @public (undocumented)
 export interface StatefulChatClient extends ChatClient {

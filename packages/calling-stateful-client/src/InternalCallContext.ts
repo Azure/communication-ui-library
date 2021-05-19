@@ -18,7 +18,7 @@ export interface StreamAndRenderer {
 export class InternalCallContext {
   // CallId -> <StreamId, RemoteVideoStream>
   private _remoteVideoStreams: Map<string, Map<number, RemoteVideoStream>>;
-  // CallId -> <StreamId, ParticipantKey>
+  // CallId -> <StreamId, string>
   private _remoteParticipantKeys: Map<string, Map<number, string>>;
   // CallId -> <StreamId, VideoStreamRenderer>
   private _remoteVideoStreamRenderers: Map<string, Map<number, VideoStreamRenderer>>;

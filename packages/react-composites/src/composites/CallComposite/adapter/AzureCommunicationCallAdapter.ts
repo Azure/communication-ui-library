@@ -32,13 +32,10 @@ import {
   ParticipantJoinedListener,
   ParticipantLeftListener
 } from './CallAdapter';
-import {
-  createAzureCommunicationUserCredential,
-  getIdFromToken,
-  getRemoteParticipantKey,
-  isInCall
-} from '../../../utils';
+import { createAzureCommunicationUserCredential, getIdFromToken, isInCall } from '../../../utils';
 import { VideoStreamOptions } from 'react-components';
+import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from 'acs-ui-common';
+import { CommunicationUserIdentifier } from '@azure/communication-signaling';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 
@@ -264,10 +261,12 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   //TODO: a better way to expose option parameter
   public startCall(participants: string[]): Call | undefined {
-    const idsToAdd = participants.map((participant) => ({
-      kind: 'communicationUser',
-      communicationUserId: participant
-    }));
+    const idsToAdd = participants.map((participant) => {
+      // FIXME: `onStartCall` does not allow a Teams user.
+      // Need some way to return an error if a Teams user is provided.
+      const backendId = fromFlatCommunicationIdentifier(participant) as CommunicationUserIdentifier;
+      return backendId;
+    });
 
     return this.handlers.onStartCall(idsToAdd);
   }
@@ -345,15 +344,15 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
     added.forEach((participant) => {
       this.participantSubscribers.set(
-        getRemoteParticipantKey(participant.identifier),
+        toFlatCommunicationIdentifier(participant.identifier),
         new ParticipantSubscriber(participant, this.emitter)
       );
     });
 
     removed.forEach((participant) => {
-      const subscriber = this.participantSubscribers.get(getRemoteParticipantKey(participant.identifier));
+      const subscriber = this.participantSubscribers.get(toFlatCommunicationIdentifier(participant.identifier));
       subscriber && subscriber.unsubscribeAll();
-      this.participantSubscribers.delete(getRemoteParticipantKey(participant.identifier));
+      this.participantSubscribers.delete(toFlatCommunicationIdentifier(participant.identifier));
     });
   };
 

@@ -25,4 +25,4 @@ export const getCall = (state: CallClientState, props: CallingBaseSelectorProps)
 
 export const getDisplayName = (state: CallClientState): string | undefined => state.callAgent?.displayName;
 
-export const getIdentifier = (state: CallClientState): string | undefined => state.userId;
+export const getIdentifier = (state: CallClientState): string => state.userId;
