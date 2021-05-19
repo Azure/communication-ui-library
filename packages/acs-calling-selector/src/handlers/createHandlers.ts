@@ -16,6 +16,9 @@ import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
 import { VideoStreamOptions } from 'react-components';
 
+// @ts-ignore
+import { CommonProperties } from 'acs-ui-common';
+
 export type DefaultCallingHandlers = ReturnType<typeof createDefaultCallingHandlers>;
 
 export const areStreamsEqual = (prevStream: LocalVideoStream, newStream: LocalVideoStream): boolean => {
