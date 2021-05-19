@@ -29,7 +29,6 @@
     "acs-ui-common": "~1.0.0-beta",
     "calling-stateful-client": "~1.0.0-beta",
     "@azure/acs-calling-selector": "~1.0.0-beta",
-    "@azure/communication-identity": "1.0.0",
     "@azure/communication-calling": "1.0.1-beta.1",
     "@azure/communication-chat": "1.0.0",
     "@azure/communication-common": "1.0.0",

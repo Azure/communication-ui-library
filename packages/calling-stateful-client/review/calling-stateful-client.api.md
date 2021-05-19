@@ -6,6 +6,7 @@
 
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';
+import { CallClientOptions } from '@azure/communication-calling';
 import { CallDirection } from '@azure/communication-calling';
 import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
@@ -39,6 +40,7 @@ export interface Call {
     recording: RecordingCallFeature;
     remoteParticipants: Map<string, RemoteParticipant>;
     remoteParticipantsEnded: Map<string, RemoteParticipant>;
+    screenShareRemoteParticipant: string | undefined;
     startTime: Date;
     state: CallState;
     transcription: TranscriptionCallFeature;
@@ -62,7 +64,7 @@ export interface CallClientState {
 }
 
 // @public
-export const createStatefulCallClient: (callClient: CallClient, userId: string) => StatefulCallClient;
+export const createStatefulCallClient: (callClientArgs: StatefulCallClientArgs, callClientOptions?: CallClientOptions | undefined) => StatefulCallClient;
 
 // @public
 export type DeviceManager = {
@@ -76,6 +78,9 @@ export type DeviceManager = {
     deviceAccess?: DeviceAccess;
     unparentedViews: VideoStreamRendererView[];
 };
+
+// @public
+export function getRemoteParticipantKey(identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind): string;
 
 // @public
 export interface IncomingCall {
@@ -125,6 +130,14 @@ export interface StatefulCallClient extends CallClient {
     offStateChange(handler: (state: CallClientState) => void): void;
     onStateChange(handler: (state: CallClientState) => void): void;
 }
+
+// @public
+export type StatefulCallClientArgs = {
+    userId: string;
+};
+
+// @public
+export type StatefulCallClientOptions = CallClientOptions;
 
 // @public (undocumented)
 export interface StatefulDeviceManager extends DeviceManager_2 {

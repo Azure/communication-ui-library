@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ErrorBar as ErrorBarComponent, SendBox, TypingIndicator, MessageThread } from 'react-components';
-import { connectFuncsToContext, MapToErrorBarProps } from 'react-composites';
+import { SendBox, TypingIndicator, MessageThread } from 'react-components';
+import { connectFuncsToContext, MapToErrorBarProps, ErrorBar as ErrorBarComponent } from 'react-composites';
 import { Stack } from '@fluentui/react';
 import React, { useEffect, useMemo } from 'react';
 import { chatAreaContainerStyle, sendBoxParentStyle } from './styles/ChatArea.styles';

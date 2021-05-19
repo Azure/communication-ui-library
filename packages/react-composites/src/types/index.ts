@@ -3,3 +3,4 @@
 
 export * from './CommunicationUiError';
 export * from './DevicePermission';
+export * from './CommunicationUiError';
