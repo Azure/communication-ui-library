@@ -19,6 +19,8 @@ export interface ConfigurationScreenProps {
   startCallHandler: (data?: { callLocator: GroupLocator | MeetingLocator }) => void;
   displayName: string;
   onDisplayNameUpdate: (displayName: string) => void;
+  isMicrophoneOn: boolean;
+  setIsMicrophoneOn: (isEnabled: boolean) => void;
 }
 
 export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Element => {

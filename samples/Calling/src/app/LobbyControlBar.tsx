@@ -6,6 +6,7 @@ import { CameraButton, ControlBar, EndCallButton, MicrophoneButton, OptionsButto
 import { usePropsFor } from './hooks/usePropsFor';
 
 export interface LobbyCallControlBarProps {
+  isMicrophoneChecked?: boolean;
   onEndCallClick(): void;
 }
 

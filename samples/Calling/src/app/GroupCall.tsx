@@ -32,13 +32,14 @@ export interface GroupCallProps {
   endCallHandler(): void;
   callErrorHandler(): void;
   callLocator: GroupLocator | MeetingLocator;
+  isMicrophoneOn: boolean;
 }
 
 const spinnerLabel = 'Initializing call client...';
 
 export const GroupCall = (props: GroupCallProps): JSX.Element => {
   const [selectedPane, setSelectedPane] = useState(CommandPanelTypes.None);
-  const { callLocator, screenWidth, endCallHandler, callErrorHandler } = props;
+  const { callLocator, screenWidth, endCallHandler, callErrorHandler, isMicrophoneOn } = props;
 
   const callAgent = useCallAgent();
   const { setCall } = useCallContext();
@@ -71,9 +72,8 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
   }, [call?.id, callClient]);
 
   useEffect(() => {
-    console.log('END REASON', call?.callEndReason);
     if (!isInCall(callState ?? 'None') && callAgent && !joinedCall) {
-      const audioOptions: AudioOptions = { muted: true };
+      const audioOptions: AudioOptions = { muted: !isMicrophoneOn };
       try {
         const call = callAgent.join(callLocator as GroupLocator, { audioOptions });
         setCall(call);
@@ -83,7 +83,7 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
         callErrorHandler();
       }
     }
-  }, [call?.callEndReason, callAgent, callErrorHandler, callLocator, callState, joinedCall, setCall]);
+  }, [call?.callEndReason, callAgent, callErrorHandler, callLocator, callState, isMicrophoneOn, joinedCall, setCall]);
 
   if ('meetingLink' in callLocator) {
     if (callState && ['Connecting', 'Ringing', 'InLobby'].includes(callState)) {
@@ -93,7 +93,7 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
 
   return (
     <>
-      {isInCall(call?.state ?? 'None') ? (
+      {callState && isInCall(call?.state ?? 'None') ? (
         <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow>
           <Stack.Item styles={headerStyles}>
             <Header
