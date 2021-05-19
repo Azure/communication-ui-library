@@ -292,7 +292,10 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   on(event: 'participantsLeft', participantLeftListener: ParticipantLeftListener): void;
   on(event: 'isMutedChanged', isMuteChangedListener: IsMuteChangedListener): void;
   on(event: 'callIdChanged', callIdChangedListener: CallIdChangedListener): void;
-  on(event: 'isScreenSharingActiveChanged', isScreenSharingOnChangedListener: IsScreenSharingOnChangedListener): void;
+  on(
+    event: 'isLocalScreenSharingActiveChanged',
+    isScreenSharingOnChangedListener: IsScreenSharingOnChangedListener
+  ): void;
   on(event: 'displayNameChanged', displaynameChangedListener: DisplaynameChangedListener): void;
   on(event: 'isSpeakingChanged', isSpeakingChangedListener: IsSpeakingChangedListener): void;
   on(event: 'error', errorHandler: (e: Error) => void): void;
@@ -312,6 +315,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     for (const subscriber of this.participantSubscribers.values()) {
       subscriber.unsubscribeAll();
     }
+    this.participantSubscribers.clear();
     this.call?.off('remoteParticipantsUpdated', this.onRemoteParticipantsUpdated);
     this.call?.off('isMutedChanged', this.isMyMutedChanged);
     this.call?.off('isScreenSharingOnChanged', this.isScreenSharingOnChanged);
@@ -349,11 +353,12 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     removed.forEach((participant) => {
       const subscriber = this.participantSubscribers.get(getRemoteParticipantKey(participant.identifier));
       subscriber && subscriber.unsubscribeAll();
+      this.participantSubscribers.delete(getRemoteParticipantKey(participant.identifier));
     });
   };
 
   private isScreenSharingOnChanged = (): void => {
-    this.emitter.emit('isScreenSharingActiveChanged', { isScreenSharingOn: this.call?.isScreenSharingOn });
+    this.emitter.emit('isScreenLocalSharingActiveChanged', { isScreenSharingOn: this.call?.isScreenSharingOn });
   };
 
   private callIdChanged = (): void => {
@@ -367,7 +372,10 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   off(event: 'participantsLeft', participantsLeftHandler: ParticipantLeftListener): void;
   off(event: 'isMutedChanged', isMuteChangedListener: IsMuteChangedListener): void;
   off(event: 'callIdChanged', callIdChangedListener: CallIdChangedListener): void;
-  off(event: 'isScreenSharingActiveChanged', isScreenSharingOnChangedListener: IsScreenSharingOnChangedListener): void;
+  off(
+    event: 'isLocalScreenSharingActiveChanged',
+    isScreenSharingOnChangedListener: IsScreenSharingOnChangedListener
+  ): void;
   off(event: 'displayNameChanged', displaynameChangedListener: DisplaynameChangedListener): void;
   off(event: 'isSpeakingChanged', isSpeakingChangedListener: IsSpeakingChangedListener): void;
   off(event: 'error', errorHandler: (e: Error) => void): void;
