@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-
-import { Dispatch, useCallback } from 'react';
+import React, { Dispatch, useCallback } from 'react';
 import { InviteFooter } from './InviteFooter';
 import { SettingsManagementComponent } from './SettingsManagement';
 import { SlideOutPanelComponent } from './SlideOutPanel';
