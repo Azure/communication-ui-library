@@ -43,6 +43,7 @@ import { ReactElement } from 'react';
 import { RemoteParticipantState } from '@azure/communication-calling';
 import * as reselect from 'reselect';
 import { ScalingMode } from '@azure/communication-calling';
+import { SendChatMessageResult } from '@azure/communication-chat';
 import { SizeValue } from '@fluentui/react-northstar';
 import { StartCallOptions } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react-theme-provider';
@@ -352,11 +353,33 @@ export interface ChatAdapter {
     // (undocumented)
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     // (undocumented)
+    off(event: 'messageReceived', messageReceivedListener: MessageReceivedListener): void;
+    // (undocumented)
+    off(event: 'messageSent', messageSentListener: MessageSentListener): void;
+    // (undocumented)
+    off(event: 'messageRead', messageReadListener: MessageReadListener): void;
+    // (undocumented)
+    off(event: 'participantsAdded', participantsEventHandler: ParticipantsAddedEventListener): void;
+    // (undocumented)
+    off(event: 'participantsRemoved', participantsEventHandler: ParticipantsRemovedEventListener): void;
+    // (undocumented)
+    off(event: 'topicChanged', topicChangedListener: TopicChangedListener): void;
+    // (undocumented)
+    off(event: 'error', errorHandler: (e: Error) => void): void;
+    // (undocumented)
     offStateChange(handler: (state: ChatState) => void): void;
     // (undocumented)
-    on(event: 'messageReceived', messageReceivedHandler: (message: ChatMessage_2) => void): void;
+    on(event: 'messageReceived', messageReceivedListener: MessageReceivedListener): void;
     // (undocumented)
-    on(event: 'participantsJoined', participantsJoinedHandler: (participant: ChatParticipant) => void): void;
+    on(event: 'messageSent', messageSentListener: MessageSentListener): void;
+    // (undocumented)
+    on(event: 'messageRead', messageReadListener: MessageReadListener): void;
+    // (undocumented)
+    on(event: 'participantsAdded', participantsEventHandler: ParticipantsAddedEventListener): void;
+    // (undocumented)
+    on(event: 'participantsRemoved', participantsEventHandler: ParticipantsRemovedEventListener): void;
+    // (undocumented)
+    on(event: 'topicChanged', topicChangedListener: TopicChangedListener): void;
     // (undocumented)
     on(event: 'error', errorHandler: (e: Error) => void): void;
     // (undocumented)
@@ -364,7 +387,7 @@ export interface ChatAdapter {
     // (undocumented)
     removeParticipant(userId: string): Promise<void>;
     // (undocumented)
-    sendMessage(content: string): Promise<void>;
+    sendMessage(content: string): Promise<SendChatMessageResult>;
     // (undocumented)
     sendReadReceipt(chatMessageId: string): Promise<void>;
     // (undocumented)
@@ -405,7 +428,7 @@ export type ChatCompositeClientState = {
 };
 
 // @public (undocumented)
-export type ChatEvent = 'messageReceived' | 'participantsJoined' | 'error';
+export type ChatEvent = 'messageReceived' | 'messageSent' | 'messageRead' | 'participantsAdded' | 'participantsRemoved' | 'topicChanged' | 'error';
 
 // @public (undocumented)
 export type ChatMessage = Message<'chat'>;
@@ -707,7 +730,7 @@ export type DefaultCallingHandlers = ReturnType<typeof createDefaultCallingHandl
 
 // @public (undocumented)
 export type DefaultChatHandlers = {
-    onSendMessage: (content: string) => Promise<void>;
+    onSendMessage: (content: string) => Promise<SendChatMessageResult>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
     onTyping: () => Promise<void>;
     onParticipantRemove: (userId: string) => Promise<void>;
@@ -902,6 +925,20 @@ export type MessageProps = {
 };
 
 // @public (undocumented)
+export type MessageReadListener = (event: {
+    message: ChatMessage_2;
+    readBy: CommunicationUserKind;
+}) => void;
+
+// @public (undocumented)
+export type MessageReceivedListener = (event: {
+    message: ChatMessage_2;
+}) => void;
+
+// @public (undocumented)
+export type MessageSentListener = MessageReceivedListener;
+
+// @public (undocumented)
 export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
 
 // @public
@@ -1031,6 +1068,25 @@ export const participantListSelector: reselect.OutputParametricSelector<CallClie
     participants: CallParticipant[];
     myUserId: string;
 }>;
+
+// @public (undocumented)
+export type ParticipantsAddedEventListener = (event: {
+    participantsAdded: ChatParticipant[];
+    addedBy: ChatParticipant;
+}) => void;
+
+// @public (undocumented)
+export type ParticipantsRemovedEventListener = (event: {
+    participantsRemoved: ChatParticipant[];
+    removedBy: ChatParticipant;
+}) => void;
+
+// @public (undocumented)
+export interface PlaceholderProps {
+    displayName?: string;
+    noVideoAvailableAriaLabel?: string;
+    userId?: string;
+}
 
 // @public
 export const ReadReceipt: (props: ReadReceiptProps) => JSX.Element;
@@ -1184,6 +1240,11 @@ export type SystemMessagePayload = {
     content?: string;
     iconName?: string;
 };
+
+// @public (undocumented)
+export type TopicChangedListener = (event: {
+    topic: string;
+}) => void;
 
 // @public
 export interface TranscriptionCallFeature {

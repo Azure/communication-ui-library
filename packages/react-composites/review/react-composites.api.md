@@ -9,8 +9,8 @@ import { Call } from 'calling-stateful-client';
 import { Call as Call_2 } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallClientOptions } from '@azure/communication-calling';
-import { ChatMessage } from '@azure/communication-chat';
-import { ChatParticipant } from '@azure/communication-chat';
+import type { ChatMessage } from '@azure/communication-chat';
+import type { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClientState } from 'chat-stateful-client';
 import type { CommunicationUserKind } from '@azure/communication-common';
 import { DeviceManager } from 'calling-stateful-client';
@@ -18,6 +18,7 @@ import { ErrorInfo } from 'react';
 import type { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import type { PhoneNumberKind } from '@azure/communication-common';
 import { RemoteParticipant } from 'calling-stateful-client';
+import type { SendChatMessageResult } from '@azure/communication-chat';
 import { StatefulCallClient } from 'calling-stateful-client';
 import { StatefulDeviceManager } from 'calling-stateful-client';
 import type { UnknownIdentifierKind } from '@azure/communication-common';
@@ -232,11 +233,33 @@ export interface ChatAdapter {
     // (undocumented)
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     // (undocumented)
+    off(event: 'messageReceived', messageReceivedListener: MessageReceivedListener): void;
+    // (undocumented)
+    off(event: 'messageSent', messageSentListener: MessageSentListener): void;
+    // (undocumented)
+    off(event: 'messageRead', messageReadListener: MessageReadListener): void;
+    // (undocumented)
+    off(event: 'participantsAdded', participantsEventHandler: ParticipantsAddedEventListener): void;
+    // (undocumented)
+    off(event: 'participantsRemoved', participantsEventHandler: ParticipantsRemovedEventListener): void;
+    // (undocumented)
+    off(event: 'topicChanged', topicChangedListener: TopicChangedListener): void;
+    // (undocumented)
+    off(event: 'error', errorHandler: (e: Error) => void): void;
+    // (undocumented)
     offStateChange(handler: (state: ChatState) => void): void;
     // (undocumented)
-    on(event: 'messageReceived', messageReceivedHandler: (message: ChatMessage) => void): void;
+    on(event: 'messageReceived', messageReceivedListener: MessageReceivedListener): void;
     // (undocumented)
-    on(event: 'participantsJoined', participantsJoinedHandler: (participant: ChatParticipant) => void): void;
+    on(event: 'messageSent', messageSentListener: MessageSentListener): void;
+    // (undocumented)
+    on(event: 'messageRead', messageReadListener: MessageReadListener): void;
+    // (undocumented)
+    on(event: 'participantsAdded', participantsEventHandler: ParticipantsAddedEventListener): void;
+    // (undocumented)
+    on(event: 'participantsRemoved', participantsEventHandler: ParticipantsRemovedEventListener): void;
+    // (undocumented)
+    on(event: 'topicChanged', topicChangedListener: TopicChangedListener): void;
     // (undocumented)
     on(event: 'error', errorHandler: (e: Error) => void): void;
     // (undocumented)
@@ -244,7 +267,7 @@ export interface ChatAdapter {
     // (undocumented)
     removeParticipant(userId: string): Promise<void>;
     // (undocumented)
-    sendMessage(content: string): Promise<void>;
+    sendMessage(content: string): Promise<SendChatMessageResult>;
     // (undocumented)
     sendReadReceipt(chatMessageId: string): Promise<void>;
     // (undocumented)
@@ -264,7 +287,7 @@ export type ChatCompositeClientState = {
 };
 
 // @public (undocumented)
-export type ChatEvent = 'messageReceived' | 'participantsJoined' | 'error';
+export type ChatEvent = 'messageReceived' | 'messageSent' | 'messageRead' | 'participantsAdded' | 'participantsRemoved' | 'topicChanged' | 'error';
 
 // @public (undocumented)
 export type ChatOptions = {
@@ -402,21 +425,18 @@ export type IncomingCallListener = (event: {
 }) => Promise<void>;
 
 // @public (undocumented)
-export type IsMuteChangedListener = (event: {
-    identifier: CallIdentifierKinds;
-    isMuted: boolean;
+export type MessageReadListener = (event: {
+    message: ChatMessage;
+    readBy: CommunicationUserKind;
 }) => void;
 
 // @public (undocumented)
-export type IsScreenSharingOnChangedListener = (event: {
-    isScreenSharingOn: boolean;
+export type MessageReceivedListener = (event: {
+    message: ChatMessage;
 }) => void;
 
 // @public (undocumented)
-export type IsSpeakingChangedListener = (event: {
-    identifier: CallIdentifierKinds;
-    isSpeaking: boolean;
-}) => void;
+export type MessageSentListener = MessageReceivedListener;
 
 // @public (undocumented)
 export type ParticipantJoinedListener = (event: {
@@ -426,6 +446,23 @@ export type ParticipantJoinedListener = (event: {
 // @public (undocumented)
 export type ParticipantLeftListener = (event: {
     removed: RemoteParticipant[];
+}) => void;
+
+// @public (undocumented)
+export type ParticipantsAddedEventListener = (event: {
+    participantsAdded: ChatParticipant[];
+    addedBy: ChatParticipant;
+}) => void;
+
+// @public (undocumented)
+export type ParticipantsRemovedEventListener = (event: {
+    participantsRemoved: ChatParticipant[];
+    removedBy: ChatParticipant;
+}) => void;
+
+// @public (undocumented)
+export type TopicChangedListener = (event: {
+    topic: string;
 }) => void;
 
 
