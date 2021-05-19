@@ -12,7 +12,7 @@ import {
 import { GridLayout } from './GridLayout';
 import { StreamMedia } from './StreamMedia';
 import { disabledVideoHint, gridStyle, videoHint, videoTileStyle } from './styles/VideoGallery.styles';
-import { memoizeFnAll } from './utils/memoizeFnAll';
+import { memoizeFnAll } from 'acs-ui-common';
 import { VideoTile } from './VideoTile';
 
 export interface VideoGalleryProps {

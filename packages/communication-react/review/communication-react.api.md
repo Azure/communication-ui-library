@@ -88,9 +88,6 @@ export interface CallAgent {
     displayName?: string;
 }
 
-// @public (undocumented)
-export type CallbackType<KeyT, ArgsT extends any[], FnRetT> = (memoizedFn: FunctionWithKey<KeyT, ArgsT, FnRetT>) => FnRetT[];
-
 // @public
 export interface CallClientState {
     callAgent: CallAgent | undefined;
@@ -550,9 +547,6 @@ export interface FluentThemeProviderProps {
 }
 
 // @public (undocumented)
-export type FunctionWithKey<KeyT, ArgsT extends any[], RetT> = (key: KeyT, ...args: ArgsT) => RetT;
-
-// @public (undocumented)
 export const getCall: (state: CallClientState, props: CallingBaseSelectorProps) => Call | undefined;
 
 // @public (undocumented)
@@ -636,17 +630,11 @@ export interface LocalVideoStream {
 }
 
 // @public (undocumented)
-export const MakeNPMHappy = true;
-
-// @public (undocumented)
 export const mediaGallerySelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     isVideoStreamOn: boolean;
 }, (res: Call | undefined) => {
     isVideoStreamOn: boolean;
 }>;
-
-// @public
-export const memoizeFnAll: <KeyT, ArgsT extends any[], FnRetT, CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>>(fnToMemoize: FunctionWithKey<KeyT, ArgsT, FnRetT>, shouldCacheUpdate?: (args1: any, args2: any) => boolean) => (callback: CallBackT) => FnRetT[];
 
 // @public (undocumented)
 export type Message<T extends MessageTypes> = {

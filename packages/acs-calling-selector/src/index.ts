@@ -8,8 +8,6 @@ export { mediaGallerySelector } from './mediaGallerySelector';
 export { videoGallerySelector } from './videoGallerySelector';
 export { participantListSelector } from './participantListSelector';
 export { localPreviewSelector } from './localPreviewSelector';
-export { memoizeFnAll } from './utils/memoizeFnAll';
 
 export type { CallingBaseSelectorProps } from './baseSelectors';
 export type { DefaultCallingHandlers } from './handlers/createHandlers';
-export type { FunctionWithKey, CallbackType } from './utils/memoizeFnAll';
