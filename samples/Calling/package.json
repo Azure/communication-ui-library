@@ -47,7 +47,6 @@
     ]
   },
   "dependencies": {
-    "calling-stateful-client": "~1.0.0-beta",
     "@azure/acs-calling-selector": "~1.0.0-beta",
     "@azure/communication-identity": "1.0.0",
     "@azure/communication-calling": "1.0.1-beta.1",
@@ -58,6 +57,8 @@
     "@fluentui/react-icons-northstar": "^0.51.2",
     "@fluentui/react-northstar": "^0.51.2",
     "@fluentui/react-theme-provider": "^0.18.0",
+    "acs-ui-common": "1.0.0-beta",
+    "calling-stateful-client": "~1.0.0-beta",
     "jquery": "^3.5.1",
     "merge": "^2.1.1",
     "preval.macro": "^5.0.0",

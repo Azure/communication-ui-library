@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-export * from '../../acs-ui-common/src';
+export { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '../../acs-ui-common/src';
+export type { CommonProperties } from '../../acs-ui-common/src';
+
 export * from '../../calling-stateful-client/src';
 export * from '../../acs-calling-selector/src';
 export * from '../../chat-stateful-client/src';

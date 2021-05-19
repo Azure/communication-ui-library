@@ -21,7 +21,7 @@ import { ChatClientState } from 'chat-stateful-client';
 // @ts-ignore
 import { ChatBaseSelectorProps } from './baseSelectors';
 // @ts-ignore
-import { memoizeFnAll } from './utils/memoizeFnAll';
+import { memoizeFnAll } from 'acs-ui-common';
 // @ts-ignore
 import { ChatMessage, MessageAttachedStatus, Message, MessageTypes } from 'react-components';
 // @ts-ignore
