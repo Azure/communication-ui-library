@@ -11,12 +11,12 @@ import { ErrorScreen } from './ErrorScreen';
 import HomeScreen from './HomeScreen';
 import ConfigurationScreen from './ConfigurationScreen';
 import { getThreadId } from './utils/getThreadId';
-import { ErrorProvider, CommunicationUiErrorInfo } from 'react-composites';
+import { ErrorProvider, CommunicationUiErrorInfo } from '@azure/communication-react';
 import { refreshTokenAsync } from './utils/refreshToken';
-import { ChatClientProvider, ChatThreadClientProvider } from '@azure/acs-chat-selector';
+import { ChatClientProvider, ChatThreadClientProvider } from '@azure/communication-react';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationUserKind } from '@azure/communication-common';
-import { createStatefulChatClient, StatefulChatClient } from 'chat-stateful-client';
+import { createStatefulChatClient, StatefulChatClient } from '@azure/communication-react';
 
 console.info(`Thread chat sample using @azure/communication-chat : ${getChatSDKVersion()}`);
 console.info(`Build Date : ${getBuildTime()}`);

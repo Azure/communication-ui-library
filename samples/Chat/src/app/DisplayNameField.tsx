@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ErrorHandlingProps, WithErrorHandling } from 'react-composites';
+import { ErrorHandlingProps, WithErrorHandling } from '@azure/communication-react';
 import {
   TextFieldStyleProps,
   inputBoxStyle,

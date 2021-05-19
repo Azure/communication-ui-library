@@ -5,9 +5,9 @@ import React, { Dispatch } from 'react';
 import { InviteFooter } from './InviteFooter';
 import { SettingsManagementComponent } from './SettingsManagement';
 import { SlideOutPanelComponent } from './SlideOutPanel';
-import { chatParticipantListSelector, useHandlers, useSelector } from '@azure/acs-chat-selector';
+import { chatParticipantListSelector, useHandlers, useSelector } from '@azure/communication-react';
 import { chatSettingsSelector } from './selectors/chatSettingsSelector';
-import { ParticipantList, CommunicationParticipant } from 'react-components';
+import { ParticipantList, CommunicationParticipant } from '@azure/communication-react';
 
 export enum SidePanelTypes {
   None = 'none',

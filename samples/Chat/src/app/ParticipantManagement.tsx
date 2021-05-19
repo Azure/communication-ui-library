@@ -2,8 +2,8 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { CommunicationParticipant, ParticipantItem } from 'react-components';
-import { propagateError } from 'react-composites';
+import { CommunicationParticipant, ParticipantItem } from '@azure/communication-react';
+import { propagateError } from '@azure/communication-react';
 import { Stack, IContextualMenuItem } from '@fluentui/react';
 
 export type ParticipantManagementProps = {

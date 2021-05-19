@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { SendBox, TypingIndicator, MessageThread } from 'react-components';
-import { connectFuncsToContext, MapToErrorBarProps, ErrorBar as ErrorBarComponent } from 'react-composites';
+import { SendBox, TypingIndicator, MessageThread } from '@azure/communication-react';
+import { connectFuncsToContext, MapToErrorBarProps, ErrorBar as ErrorBarComponent } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import React, { useEffect, useMemo } from 'react';
 import { chatAreaContainerStyle, sendBoxParentStyle } from './styles/ChatArea.styles';
-import { usePropsFor } from '@azure/acs-chat-selector';
+import { usePropsFor } from '@azure/communication-react';
 
 export interface ChatAreaProps {
   onRenderAvatar?: (userId: string) => JSX.Element;

@@ -15,7 +15,7 @@ import {
   useHandlers,
   useSelector,
   useThreadId
-} from '@azure/acs-chat-selector';
+} from '@azure/communication-react';
 import { chatHeaderSelector } from './selectors/chatHeaderSelector';
 
 // These props are passed in when this component is referenced in JSX and not found in context
