@@ -860,33 +860,6 @@ export const labeledRecordButtonProps: IButtonProps;
 export const lightTheme: PartialTheme & CallingTheme;
 
 // @public (undocumented)
-export const lobbySelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
-    localParticipant: {
-        userId: string;
-        displayName: string;
-        isMuted: boolean | undefined;
-        isScreenSharingOn: boolean | undefined;
-        videoStream: {
-            isAvailable: boolean;
-            isMirrored: boolean | undefined;
-            renderElement: HTMLElement | undefined;
-        };
-    };
-}, (res1: Call | undefined, res2: string | undefined, res3: string) => {
-    localParticipant: {
-        userId: string;
-        displayName: string;
-        isMuted: boolean | undefined;
-        isScreenSharingOn: boolean | undefined;
-        videoStream: {
-            isAvailable: boolean;
-            isMirrored: boolean | undefined;
-            renderElement: HTMLElement | undefined;
-        };
-    };
-}>;
-
-// @public (undocumented)
 export const localPreviewSelector: reselect.OutputSelector<CallClientState, {
     videoStreamElement: HTMLElement | null;
 }, (res: DeviceManagerState) => {
@@ -1340,7 +1313,7 @@ export interface VideoGalleryProps {
     // (undocumented)
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
     // (undocumented)
-    onDisposeLocalStreamView?: () => Promise<void>;
+    onDisposeLocalStreamView?: () => void;
     // (undocumented)
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     // (undocumented)
