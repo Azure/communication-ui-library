@@ -1,16 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  AzureCommunicationTokenCredential,
-  CommunicationUserKind,
-  MicrosoftTeamsUserKind,
-  PhoneNumberKind,
-  CommunicationTokenRefreshOptions,
-  UnknownIdentifierKind
-} from '@azure/communication-common';
+import { AzureCommunicationTokenCredential, CommunicationTokenRefreshOptions } from '@azure/communication-common';
 
-import { AudioDeviceInfo, CallState, LocalVideoStream, VideoDeviceInfo } from '@azure/communication-calling';
+import { CallState } from '@azure/communication-calling';
 import {
   CommunicationUiErrorCode,
   CommunicationUiError,
@@ -18,37 +11,7 @@ import {
   CommunicationUiErrorInfo
 } from '../types/CommunicationUiError';
 
-export const getACSId = (
-  identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind
-): string => {
-  switch (identifier.kind) {
-    case 'communicationUser': {
-      return identifier.communicationUserId;
-    }
-    case 'phoneNumber': {
-      return identifier.phoneNumber;
-    }
-    case 'microsoftTeamsUser': {
-      return identifier.microsoftTeamsUserId;
-    }
-    default: {
-      return identifier.id;
-    }
-  }
-};
-
-export function isSelectedDeviceInList<T extends AudioDeviceInfo | VideoDeviceInfo>(device: T, list: T[]): boolean {
-  return !!list.find((item) => item.name === device.name);
-}
-
 export const isInCall = (callState: CallState): boolean => !!(callState !== 'None' && callState !== 'Disconnected');
-
-export const areStreamsEqual = (prevStream: LocalVideoStream, newStream: LocalVideoStream): boolean => {
-  return !!prevStream && !!newStream && prevStream.source.id === newStream.source.id;
-};
-
-export const isMobileSession = (): boolean =>
-  !!window.navigator.userAgent.match(/(iPad|iPhone|iPod|Android|webOS|BlackBerry|Windows Phone)/g);
 
 // Create AzureCommunicationUserCredential using optional refreshTokenCallback if provided. If callback is provided then
 // identity must also be provided for callback to be used.
@@ -110,12 +73,4 @@ export const propagateError = (error: Error, onErrorCallback?: (error: Communica
   } else {
     throw error;
   }
-};
-
-// Only support Desktop -- Chrome | Edge (Chromium) | Safari
-export const isLocalScreenShareSupportedInBrowser = (): boolean => {
-  return (
-    !isMobileSession() &&
-    (/chrome/i.test(navigator.userAgent.toLowerCase()) || /safari/i.test(navigator.userAgent.toLowerCase()))
-  );
 };

@@ -5,9 +5,10 @@ import { Text } from '@fluentui/react';
 import React from 'react';
 import { StreamMedia, VideoTile } from 'react-components';
 import { WithErrorHandling } from '../../utils';
-import { connectFuncsToContext, MapToRemoteVideoProps } from '../../consumers';
+import { connectFuncsToContext } from '../../consumers';
 import { ErrorHandlingProps } from '../../providers';
 import { disabledVideoHint, videoHint } from './styles/MediaGallery1To1.styles';
+import { MapToRemoteVideoProps } from './consumers/MapToVideoProps';
 
 export interface RemoteVideoTileProps {
   isVideoReady: boolean;
