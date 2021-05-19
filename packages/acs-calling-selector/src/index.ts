@@ -6,6 +6,7 @@ export * from './callControlSelectors';
 export { createDefaultCallingHandlersForComponent, createDefaultCallingHandlers } from './handlers/createHandlers';
 export { mediaGallerySelector } from './mediaGallerySelector';
 export { videoGallerySelector } from './videoGallerySelector';
+export { complianceBannerSelector } from './complianceBannerSelector';
 export { participantListSelector } from './participantListSelector';
 export { localPreviewSelector } from './localPreviewSelector';
 

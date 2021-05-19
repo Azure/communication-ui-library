@@ -40,6 +40,15 @@ export const cameraButtonSelector: reselect.OutputParametricSelector<CallClientS
 }>;
 
 // @public (undocumented)
+export const complianceBannerSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
+    callTranscribeState: boolean | undefined;
+    callRecordState: boolean | undefined;
+}, (res: Call_2 | undefined) => {
+    callTranscribeState: boolean | undefined;
+    callRecordState: boolean | undefined;
+}>;
+
+// @public (undocumented)
 export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => {
     onHangUp: () => Promise<void>;
     onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
