@@ -9,7 +9,7 @@ import { callContainer } from './styles/Call.styles';
 import { Stack } from '@fluentui/react';
 import { CommunicationUiErrorInfo } from '../../types';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
-import { CallAdapter, CallCompositePage } from './adapter/CallAdapter';
+import { CallAdapter } from './adapter/CallAdapter';
 import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
 
