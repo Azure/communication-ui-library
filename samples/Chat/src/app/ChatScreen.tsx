@@ -8,8 +8,7 @@ import { onRenderAvatar } from './Avatar';
 import { ChatHeader } from './ChatHeader';
 import { ChatArea } from './ChatArea';
 import { SidePanel, SidePanelTypes } from './SidePanel';
-import { useChatClient, useChatThreadClient, useChatSelector, useThreadId } from '@azure/communication-react';
-import { chatHeaderSelector } from './selectors/chatHeaderSelector';
+import { useChatClient, useChatThreadClient, useThreadId } from '@azure/communication-react';
 import { ParticipantList } from 'react-components';
 import { usePropsFor } from './hooks/usePropsFor';
 
@@ -63,8 +62,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     document.getElementById('sendbox')?.focus();
   }, []);
 
-  const chatHeaderProps = useChatSelector(chatHeaderSelector);
-  const chatHeaderHandlers = useHandlers(ChatHeader);
+  const chatHeaderProps = usePropsFor(ChatHeader);
   const chatParticipantProps = usePropsFor(ParticipantList);
 
   useEffect(() => {
@@ -90,7 +88,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     <Stack className={chatScreenContainerStyle}>
       <ChatHeader
         {...chatHeaderProps}
-        {...chatHeaderHandlers}
         {...chatParticipantProps}
         endChatHandler={endChatHandler}
         selectedPane={selectedPane}
