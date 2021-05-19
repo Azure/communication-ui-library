@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { mediaGallerySelector } from '@azure/acs-calling-selector';
-import { AudioOptions, CallState } from '@azure/communication-calling';
+import { AudioOptions, CallState as CallStatus } from '@azure/communication-calling';
 import { Label, Overlay, Spinner, Stack } from '@fluentui/react';
 import { CallClientState, StatefulCallClient } from 'calling-stateful-client';
 import React, { useEffect, useState } from 'react';
@@ -41,7 +41,7 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
   const call = useCall();
   const callClient: StatefulCallClient = useCallClient();
 
-  const [callState, setCallState] = useState<CallState | undefined>(undefined);
+  const [callState, setCallState] = useState<CallStatus | undefined>(undefined);
   const [isScreenSharingOn, setIsScreenSharingOn] = useState<boolean | undefined>(undefined);
   const [joinedCall, setJoinedCall] = useState<boolean>(false);
 

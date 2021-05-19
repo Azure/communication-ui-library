@@ -10,7 +10,7 @@ import {
 } from '@azure/communication-calling';
 import EventEmitter from 'events';
 import { enableMapSet, produce } from 'immer';
-import { CallEndReason, CallState, RemoteParticipantState } from '@azure/communication-calling';
+import { CallEndReason, CallState as CallStatus, RemoteParticipantState } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import {
   Call,
@@ -143,7 +143,7 @@ export class CallContext {
     );
   }
 
-  public setCallState(callId: string, state: CallState): void {
+  public setCallState(callId: string, state: CallStatus): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         const call = draft.calls.get(callId);

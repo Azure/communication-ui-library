@@ -6,7 +6,7 @@ import {
   CallDirection,
   CallEndReason,
   CallerInfo,
-  CallState,
+  CallState as CallStatus,
   DeviceAccess,
   MediaStreamType,
   RemoteParticipantState,
@@ -222,7 +222,7 @@ export interface Call {
   /**
    * Proxy of {@Link @azure/communication-calling#Call.state}
    */
-  state: CallState;
+  state: CallStatus;
   /**
    * Proxy of {@Link @azure/communication-calling#Call.callEndReason}
    */

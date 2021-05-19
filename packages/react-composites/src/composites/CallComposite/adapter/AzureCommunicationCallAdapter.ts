@@ -24,7 +24,7 @@ import {
   CallAdapter,
   CallEvent,
   CallIdChangedListener,
-  CallState,
+  CallStatus,
   DisplaynameChangedListener,
   IsMuteChangedListener,
   IsScreenSharingOnChangedListener,
@@ -42,7 +42,7 @@ import { ParticipantSubscriber } from './ParticipantSubcriber';
 // Context of Chat, which is a centralized context for all state updates
 class CallContext {
   private emitter: EventEmitter = new EventEmitter();
-  private state: CallState;
+  private state: CallStatus;
   private callId: string | undefined;
 
   constructor(clientState: CallClientState) {
@@ -56,20 +56,20 @@ class CallContext {
     };
   }
 
-  public onStateChange(handler: (_uiState: CallState) => void): void {
+  public onStateChange(handler: (_uiState: CallStatus) => void): void {
     this.emitter.on('stateChanged', handler);
   }
 
-  public offStateChange(handler: (_uiState: CallState) => void): void {
+  public offStateChange(handler: (_uiState: CallStatus) => void): void {
     this.emitter.off('stateChanged', handler);
   }
 
-  public setState(state: CallState): void {
+  public setState(state: CallStatus): void {
     this.state = state;
     this.emitter.emit('stateChanged', this.state);
   }
 
-  public getState(): CallState {
+  public getState(): CallStatus {
     return this.state;
   }
 
@@ -275,15 +275,15 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.handlers.onParticipantRemove(userId);
   }
 
-  public getState(): CallState {
+  public getState(): CallStatus {
     return this.context.getState();
   }
 
-  public onStateChange(handler: (state: CallState) => void): void {
+  public onStateChange(handler: (state: CallStatus) => void): void {
     this.context.onStateChange(handler);
   }
 
-  public offStateChange(handler: (state: CallState) => void): void {
+  public offStateChange(handler: (state: CallStatus) => void): void {
     this.context.offStateChange(handler);
   }
 

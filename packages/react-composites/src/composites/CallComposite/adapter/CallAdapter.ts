@@ -26,7 +26,7 @@ export type CallingClientState = {
   devices: DeviceManagerState;
 };
 
-export type CallState = CallingUIState & CallingClientState;
+export type CallStatus = CallingUIState & CallingClientState;
 
 export type IncomingCallListener = (event: {
   callId: string;
@@ -63,11 +63,11 @@ export type IsSpeakingChangedListener = (event: { identifier: CallIdentifierKind
 export type DisplaynameChangedListener = (event: { participantId: CallIdentifierKinds; displayName: string }) => void;
 
 export interface CallAdapter {
-  onStateChange(handler: (state: CallState) => void): void;
+  onStateChange(handler: (state: CallStatus) => void): void;
 
-  offStateChange(handler: (state: CallState) => void): void;
+  offStateChange(handler: (state: CallStatus) => void): void;
 
-  getState(): CallState;
+  getState(): CallStatus;
 
   dispose(): void;
 
