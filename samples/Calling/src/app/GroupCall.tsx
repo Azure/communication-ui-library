@@ -54,7 +54,6 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
   const handlers = useAzureCommunicationHandlers();
 
   const lobbyProps = useSelector(lobbySelector);
-  const lobbyHandlers = useHandlers(Lobby);
 
   const complianceBannerProps = useSelector(complianceBannerSelector);
 
@@ -87,7 +86,15 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
 
   if ('meetingLink' in callLocator) {
     if (callState && ['Connecting', 'Ringing', 'InLobby'].includes(callState)) {
-      return <Lobby callState={callState} {...lobbyProps} {...lobbyHandlers} onEndCallClick={endCallHandler} />;
+      return (
+        <Lobby
+          callState={callState}
+          {...lobbyProps}
+          onStartLocalVideo={handlers.onStartLocalVideo}
+          onCreateLocalStreamView={handlers.onCreateLocalStreamView}
+          onEndCallClick={endCallHandler}
+        />
+      );
     }
   }
 
