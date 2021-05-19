@@ -423,7 +423,7 @@ export interface VideoTileProps {
 
 // @public (undocumented)
 export interface VideoTileStylesProps extends BaseCustomStylesProps {
-    displayNameStyles?: IStyle;
+    displayNameContainer?: IStyle;
     overlayContainer?: IStyle;
     videoContainer?: IStyle;
 }

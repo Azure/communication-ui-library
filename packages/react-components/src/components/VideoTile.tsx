@@ -19,7 +19,7 @@ export interface VideoTileStylesProps extends BaseCustomStylesProps {
   /** Styles for container overlayed on the video container. */
   overlayContainer?: IStyle;
   /** Styles for displayName on the video container. */
-  displayNameStyles?: IStyle;
+  displayNameContainer?: IStyle;
 }
 
 /**
@@ -110,7 +110,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
         <Stack className={mergeStyles(videoContainerStyles)}>{placeholder ?? <DefaultPlaceholder {...props} />}</Stack>
       )}
       {displayName && showDisplayName && (
-        <Text className={mergeStyles(isVideoReady ? videoHint : disabledVideoHint, styles?.displayNameStyles)}>
+        <Text className={mergeStyles(isVideoReady ? videoHint : disabledVideoHint, styles?.displayNameContainer)}>
           {displayName}
         </Text>
       )}

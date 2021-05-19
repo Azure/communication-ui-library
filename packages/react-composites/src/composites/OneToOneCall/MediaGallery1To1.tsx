@@ -70,7 +70,7 @@ export const MediaGallery1To1Component = (props: MediaGallery1To1Props): JSX.Ele
           renderElement={<StreamMedia videoStreamElement={localVideoStreamElement} />}
           displayName={localParticipantDisplayName}
           showDisplayName={showLocalParticipantName}
-          styles={{ displayNameStyles: isLocalVideoReady ? videoHint : disabledVideoHint }}
+          styles={{ displayNameContainer: isLocalVideoReady ? videoHint : disabledVideoHint }}
           isMirrored={localVideoInverted}
         />
       </Stack>

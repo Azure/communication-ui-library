@@ -23,7 +23,7 @@ const RemoteVideoTileComponentBase = (props: RemoteVideoTileProps): JSX.Element 
       isVideoReady={isVideoReady}
       renderElement={<StreamMedia videoStreamElement={videoStreamElement} />}
       displayName={displayName}
-      styles={{ displayNameStyles: isVideoReady ? videoHint : disabledVideoHint }}
+      styles={{ displayNameContainer: isVideoReady ? videoHint : disabledVideoHint }}
     />
   );
 };
