@@ -10,23 +10,24 @@ import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 
-const MessageStatusIndicatorExampleText = require('!!raw-loader!./snippets/MessageStatusIndicator.snippet.tsx').default;
+const DefaultMessageStatusIndicatorsExampleText = require('!!raw-loader!./snippets/AllDefaultIndicators.snippet.tsx')
+  .default;
 
 const importStatement = `import { MessageStatus, MessageStatusIndicator } from '@azure/communication-react';`;
 
-const MessageStatusIndicatorExamples: () => JSX.Element = () => (
+const MessageStatusIndicatorsExample: () => JSX.Element = () => (
   <>
     <span style={{ margin: '0 5px' }}>
-      <MessageStatusIndicatorComponent messageStatus={'delivered'} />
+      <MessageStatusIndicatorComponent status={'delivered'} />
     </span>
     <span style={{ margin: '0 5px' }}>
-      <MessageStatusIndicatorComponent messageStatus={'seen'} />
+      <MessageStatusIndicatorComponent status={'seen'} />
     </span>
     <span style={{ margin: '0 5px' }}>
-      <MessageStatusIndicatorComponent messageStatus={'sending'} />
+      <MessageStatusIndicatorComponent status={'sending'} />
     </span>
     <span style={{ margin: '0 5px' }}>
-      <MessageStatusIndicatorComponent messageStatus={'failed'} />
+      <MessageStatusIndicatorComponent status={'failed'} />
     </span>
   </>
 );
@@ -44,9 +45,9 @@ const getDocs: () => JSX.Element = () => {
       <Source code={importStatement} />
 
       <Heading>Example</Heading>
-      <Canvas mdxSource={MessageStatusIndicatorExampleText}>
+      <Canvas mdxSource={DefaultMessageStatusIndicatorsExampleText}>
         <Provider theme={teamsTheme}>
-          <MessageStatusIndicatorExamples />
+          <MessageStatusIndicatorsExample />
         </Provider>
       </Canvas>
 
@@ -71,7 +72,7 @@ export default {
 export const MessageStatusIndicator = (): JSX.Element => {
   return (
     <MessageStatusIndicatorComponent
-      messageStatus={select<MessageStatus>('Message Status', ['delivered', 'sending', 'seen', 'failed'], 'delivered')}
+      status={select<MessageStatus>('Message Status', ['delivered', 'sending', 'seen', 'failed'], 'delivered')}
       deliveredTooltipText={text('Delivered icon tooltip text', 'Sent')}
       sendingTooltipText={text('Sending icon tooltip text', 'Sending')}
       seenTooltipText={text('Seen icon tooltip text', 'Seen')}

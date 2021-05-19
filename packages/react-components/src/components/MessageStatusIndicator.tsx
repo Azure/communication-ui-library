@@ -18,7 +18,7 @@ import { BaseCustomStylesProps } from '../types';
  */
 export interface MessageStatusIndicatorProps {
   /** Message status that determines the icon to display. */
-  messageStatus?: MessageStatus;
+  status?: MessageStatus;
   /** Text to display in the delivered message icon tooltip. */
   deliveredTooltipText?: string;
   /** Text to display in the seen message icon tooltip. */
@@ -44,7 +44,7 @@ export interface MessageStatusIndicatorProps {
  */
 export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.Element => {
   const {
-    messageStatus,
+    status,
     deliveredTooltipText = 'Sent',
     seenTooltipText = 'Seen',
     sendingTooltipText = 'Sending',
@@ -53,7 +53,7 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
     styles
   } = props;
 
-  switch (messageStatus) {
+  switch (status) {
     case 'failed':
       return (
         <TooltipHost content={failedToSendTooltipText}>
