@@ -358,7 +358,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   };
 
   private isScreenSharingOnChanged = (): void => {
-    this.emitter.emit('isScreenLocalSharingActiveChanged', { isScreenSharingOn: this.call?.isScreenSharingOn });
+    this.emitter.emit('isLocalScreenSharingActiveChanged', { isScreenSharingOn: this.call?.isScreenSharingOn });
   };
 
   private callIdChanged = (): void => {
