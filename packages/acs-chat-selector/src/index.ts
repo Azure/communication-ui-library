@@ -13,7 +13,6 @@ export { useHandlers } from './hooks/useHandlers';
 export { chatThreadSelector } from './chatThreadSelector';
 export { typingIndicatorSelector } from './typingIndicatorSelector';
 export { sendBoxSelector } from './sendBoxSelector';
-export { chatParticipantListSelector } from './chatParticipantListSelector';
 // ---- //
 
 export type { ChatClientProviderProps } from './providers/ChatClientProvider';

@@ -22,8 +22,7 @@ export {
   useSelector as useChatSelector,
   chatThreadSelector,
   typingIndicatorSelector,
-  sendBoxSelector,
-  chatParticipantListSelector
+  sendBoxSelector
 } from '../../acs-chat-selector/src';
 
 export type {

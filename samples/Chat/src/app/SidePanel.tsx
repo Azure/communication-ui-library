@@ -5,7 +5,8 @@ import React, { Dispatch } from 'react';
 import { InviteFooter } from './InviteFooter';
 import { SettingsManagementComponent } from './SettingsManagement';
 import { SlideOutPanelComponent } from './SlideOutPanel';
-import { chatParticipantListSelector, useHandlers, useSelector } from '@azure/acs-chat-selector';
+import { useHandlers, useSelector } from '@azure/acs-chat-selector';
+import { chatParticipantListSelector } from './selectors/chatParticipantListSelector';
 import { chatSettingsSelector } from './selectors/chatSettingsSelector';
 import { ParticipantList, CommunicationParticipant } from 'react-components';
 

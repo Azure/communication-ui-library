@@ -439,17 +439,6 @@ export type ChatOptions = {
 };
 
 // @public (undocumented)
-export const chatParticipantListSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
-    myUserId: string;
-    displayName: string;
-    participants: CommunicationParticipant[];
-}, (res1: string, res2: Map<string, ChatParticipant>, res3: string) => {
-    myUserId: string;
-    displayName: string;
-    participants: CommunicationParticipant[];
-}>;
-
-// @public (undocumented)
 export type ChatProps = {
     adapter: ChatAdapter;
     onRenderAvatar?: (userId: string) => JSX.Element;

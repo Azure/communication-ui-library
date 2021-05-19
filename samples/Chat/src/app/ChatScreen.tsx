@@ -8,15 +8,10 @@ import { onRenderAvatar } from './Avatar';
 import { ChatHeader } from './ChatHeader';
 import { ChatArea } from './ChatArea';
 import { SidePanel, SidePanelTypes } from './SidePanel';
-import {
-  chatParticipantListSelector,
-  useChatClient,
-  useChatThreadClient,
-  useHandlers,
-  useSelector,
-  useThreadId
-} from '@azure/acs-chat-selector';
+import { useChatClient, useChatThreadClient, useChatSelector, useThreadId } from '@azure/communication-react';
 import { chatHeaderSelector } from './selectors/chatHeaderSelector';
+import { ParticipantList } from 'react-components';
+import { usePropsFor } from './hooks/usePropsFor';
 
 // These props are passed in when this component is referenced in JSX and not found in context
 interface ChatScreenProps {
@@ -68,9 +63,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     document.getElementById('sendbox')?.focus();
   }, []);
 
-  const chatHeaderProps = useSelector(chatHeaderSelector);
+  const chatHeaderProps = useChatSelector(chatHeaderSelector);
   const chatHeaderHandlers = useHandlers(ChatHeader);
-  const chatParticipantProps = useSelector(chatParticipantListSelector);
+  const chatParticipantProps = usePropsFor(ParticipantList);
 
   useEffect(() => {
     // We only want to check if we've fetched all the existing participants.

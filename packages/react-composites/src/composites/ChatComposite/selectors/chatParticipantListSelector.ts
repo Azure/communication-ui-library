@@ -4,12 +4,16 @@
 // @ts-ignore
 import { ChatClientState } from 'chat-stateful-client';
 // @ts-ignore
-import { ChatBaseSelectorProps } from './baseSelectors';
-import { getUserId, getDisplayName, getParticipants } from './baseSelectors';
+import { ChatBaseSelectorProps } from '@azure/acs-chat-selector';
 import * as reselect from 'reselect';
 import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import { ChatParticipant } from '@azure/communication-chat';
 import { CommunicationParticipant } from 'react-components';
+
+const getUserId = (state: ChatClientState): string => toFlatCommunicationIdentifier(state.userId);
+const getDisplayName = (state: ChatClientState): string => state.displayName;
+const getParticipants = (state: ChatClientState, props: ChatBaseSelectorProps): Map<string, ChatParticipant> =>
+  (props.threadId && state.threads.get(props.threadId)?.participants) || new Map();
 
 const convertChatParticipantsToCommunicationParticipants = (
   chatParticipants: ChatParticipant[]
