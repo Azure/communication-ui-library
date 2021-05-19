@@ -83,7 +83,7 @@ export interface TransferCallFeature {
  * flatten CallAgent.displayName and put it in CallClientState because it would be ambiguious that displayName is
  * actually reliant on the creation/existence of CallAgent to be available.
  */
-export interface CallAgent {
+export interface CallAgentState {
   /**
    * Proxy of {@Link @azure/communication-calling#CallAgent.displayName}.
    */
@@ -398,7 +398,7 @@ export interface CallClientState {
    * Proxy of {@Link @azure/communication-calling#CallAgent} without the calls property. Provides access to displayName
    * but only available if CallAgent has been created.
    */
-  callAgent: CallAgent | undefined;
+  callAgent: CallAgentState | undefined;
   /**
    * Stores a userId string. This is not used by the stateful client and is provided here as a convenience for the
    * developer for easier access to userId. Must be passed in at initialization of the stateful client.

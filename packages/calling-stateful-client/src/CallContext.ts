@@ -19,7 +19,7 @@ import {
   RemoteVideoStream,
   IncomingCall,
   VideoStreamRendererView,
-  CallAgent,
+  CallAgentState,
   TransferRequest,
   Transfer
 } from './CallClientState';
@@ -87,7 +87,7 @@ export class CallContext {
     );
   }
 
-  public setCallAgent(callAgent: CallAgent): void {
+  public setCallAgent(callAgent: CallAgentState): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         draft.callAgent = callAgent;
