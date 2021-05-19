@@ -8,7 +8,7 @@ import {
   PhoneNumberKind,
   UnknownIdentifierKind
 } from '@azure/communication-common';
-import { LocalVideoStream as StatefulLocalVideoStream, RemoteVideoStream } from './CallClientState';
+import { LocalVideoStreamState, RemoteVideoStreamState } from './CallClientState';
 import { CallContext } from './CallContext';
 import {
   convertSdkLocalStreamToDeclarativeLocalStream,
@@ -32,7 +32,7 @@ export async function createView(
     | UnknownIdentifierKind
     | string
     | undefined,
-  stream: StatefulLocalVideoStream | RemoteVideoStream,
+  stream: LocalVideoStreamState | RemoteVideoStreamState,
   options?: CreateViewOptions
 ): Promise<void> {
   if ('id' in stream && callId && participantId) {
@@ -114,7 +114,7 @@ export function disposeView(
     | UnknownIdentifierKind
     | string
     | undefined,
-  stream: StatefulLocalVideoStream | RemoteVideoStream
+  stream: LocalVideoStreamState | RemoteVideoStreamState
 ): void {
   if ('id' in stream && callId && participantId) {
     // Stop rendering RemoteVideoStream that is part of a Call
