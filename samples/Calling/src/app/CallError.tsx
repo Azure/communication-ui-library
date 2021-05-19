@@ -15,13 +15,13 @@ import {
   bottomStackFooterStyle
 } from './styles/EndCall.styles';
 
-export interface EndCallProps {
+export interface CallErrorProps {
   rejoinHandler(): void;
   homeHandler(): void;
 }
 
-export default function EndCall(props: EndCallProps): JSX.Element {
-  const title = 'Error joing the Call';
+export default function CallError(props: CallErrorProps): JSX.Element {
+  const title = 'Error joining the Call';
   const goHomePage = 'Go to Homepage';
   const rejoinCall = 'Retry Call';
 
