@@ -3,9 +3,10 @@
 
 import { LocalVideoStream, RemoteParticipant } from '@azure/communication-calling';
 import { useEffect, useRef, useState } from 'react';
-import { useCallContext, useCallingContext } from '../../../providers';
-import { GalleryParticipant } from '../../../types/GalleryParticipant';
-import { convertSdkRemoteParticipantToGalleryParticipant } from '../../../utils/TypeConverter';
+import { useCallContext } from '../providers/CallProvider';
+import { useCallingContext } from '../providers/CallingProvider';
+import { GalleryParticipant } from '../types/GalleryParticipant';
+import { convertSdkRemoteParticipantToGalleryParticipant } from '../utils/TypeConverter';
 
 export type MediaGallery1To1ContainerProps = {
   /** Determines the local participant label and avatar. */
