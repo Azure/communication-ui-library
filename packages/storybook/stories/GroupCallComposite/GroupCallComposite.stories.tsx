@@ -7,7 +7,11 @@ import { text } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useEffect, useState } from 'react';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
-import { Call as GroupCallComposite, CallAdapter, createAzureCommunicationCallAdapter } from 'react-composites';
+import {
+  CallComposite as GroupCallComposite,
+  CallAdapter,
+  createAzureCommunicationCallAdapter
+} from 'react-composites';
 import { v1 as createGUID } from 'uuid';
 
 import {

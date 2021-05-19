@@ -6,8 +6,8 @@ import React, { useEffect } from 'react';
 import { activeContainerClassName, containerStyles, loadingStyle } from './styles/CallScreen.styles';
 import MediaFullScreen from './MediaFullScreen';
 import { connectFuncsToContext } from '../../consumers/ConnectContext';
-import { CallContainerProps, MapToOneToOneCallProps } from '../../consumers/MapToCallProps';
-import { CallControlBarComponent } from '../common/CallControls';
+import { CallContainerProps, MapToOneToOneCallProps } from './consumers/MapToCallProps';
+import { CallControlBarComponent } from './CallControls';
 import { MediaGallery1To1 } from './MediaGallery1To1';
 import { OutgoingCallScreen } from './OutgoingCallScreen';
 

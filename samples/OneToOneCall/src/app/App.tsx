@@ -19,7 +19,7 @@ const SpinnerWith: (spinnerText: string) => JSX.Element = (spinnerText: string) 
   </Stack>
 );
 
-const randomName = createRandomDisplayName();
+const randomDisplayName = createRandomDisplayName();
 
 const App = (): JSX.Element => {
   const [token, setToken] = useState('');
@@ -49,7 +49,7 @@ const App = (): JSX.Element => {
       return SpinnerWith('Getting token from server...');
     }
 
-    return <OneToOneCall displayName={randomName} token={token} />;
+    return <OneToOneCall displayName={randomDisplayName} token={token} />;
   };
 
   return getContent();

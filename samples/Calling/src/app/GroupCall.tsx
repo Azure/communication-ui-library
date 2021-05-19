@@ -6,7 +6,7 @@ import { AudioOptions, CallState } from '@azure/communication-calling';
 import { Label, Overlay, Spinner, Stack } from '@fluentui/react';
 import { CallClientState, StatefulCallClient } from 'calling-stateful-client';
 import React, { useEffect, useState } from 'react';
-import { CallAgentProvider, CallClientProvider, useCall, useCallContext } from 'react-composites';
+import { useCallAgent, useCallClient, useCall, useCallContext } from 'react-composites';
 import { CommandPanel, CommandPanelTypes } from './CommandPanel';
 import { Header } from './Header';
 import { useHandlers } from './hooks/useHandlers';
@@ -36,14 +36,14 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
   const [selectedPane, setSelectedPane] = useState(CommandPanelTypes.None);
   const { groupId, screenWidth, endCallHandler } = props;
 
-  const callAgent = CallAgentProvider.useCallAgent();
-  const { setCall, isMicrophoneEnabled } = useCallContext();
+  const callAgent = useCallAgent();
+  const { setCall } = useCallContext();
   const call = useCall();
-  const callClient: StatefulCallClient = CallClientProvider.useCallClient();
-  const { isCallStartedWithCameraOn } = CallClientProvider.useCallClientContext();
+  const callClient: StatefulCallClient = useCallClient();
 
   const [callState, setCallState] = useState<CallState | undefined>(undefined);
   const [isScreenSharingOn, setIsScreenSharingOn] = useState<boolean | undefined>(undefined);
+  const [joinedCall, setJoinedCall] = useState<boolean>(false);
 
   const mediaGalleryProps = useSelector(mediaGallerySelector);
   const mediaGalleryHandlers = useHandlers(MediaGallery);
@@ -64,13 +64,13 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
   }, [call?.id, callClient]);
 
   useEffect(() => {
-    const localStream = call?.localVideoStreams.find((i) => i.mediaStreamType === 'Video');
     if (isInCall(callState ?? 'None')) {
       document.title = `${groupId} group call sample`;
     } else {
-      if (!isInCall(callState ?? 'None') && callAgent) {
-        const audioOptions: AudioOptions = { muted: !isMicrophoneEnabled };
-        const videoOptions = { localVideoStreams: localStream ? [localStream] : undefined };
+      if (!isInCall(callState ?? 'None') && callAgent && !joinedCall) {
+        // Removed isMicrophoneEnabled state from CallProvider, will need to integrate with Miguel's fix for mic later.
+        const audioOptions: AudioOptions = { muted: true };
+        const videoOptions = { localVideoStreams: undefined };
 
         const call = callAgent.join(
           {
@@ -82,9 +82,10 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
           }
         );
         setCall(call);
+        setJoinedCall(true);
       }
     }
-  }, [call?.localVideoStreams, callAgent, callState, groupId, isMicrophoneEnabled, setCall]);
+  }, [callAgent, callState, groupId, joinedCall, setCall]);
 
   return (
     <>
@@ -103,11 +104,7 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
               callState === 'Connected' && (
                 <>
                   <Stack.Item grow styles={activeContainerClassName}>
-                    <MediaGallery
-                      {...mediaGalleryProps}
-                      {...mediaGalleryHandlers}
-                      isCameraChecked={isCallStartedWithCameraOn}
-                    />
+                    <MediaGallery {...mediaGalleryProps} {...mediaGalleryHandlers} />
                   </Stack.Item>
                   {selectedPane !== CommandPanelTypes.None &&
                     (window.innerWidth > MINI_HEADER_WINDOW_WIDTH ? (
