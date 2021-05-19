@@ -25,7 +25,7 @@ export interface VideoTileStylesProps extends BaseCustomStylesProps {
 /**
  * Props for VideoTile component
  */
-export interface VideoTileProps {
+export interface VideoTileProps extends PlaceholderProps {
   /** React Child components. Child Components will show as overlay component in the VideoTile. */
   children?: React.ReactNode;
   /**
@@ -47,22 +47,18 @@ export interface VideoTileProps {
     props: PlaceholderProps,
     defaultOnRender: (props: PlaceholderProps) => JSX.Element
   ) => JSX.Element | null;
-  /** Optional participant display name for the VideoTile default placeholder. */
-  displayName?: string;
   /**
    * Whether the displayName is displayed or not.
    *
    * @defaultValue `true`
    */
   showDisplayName?: boolean;
-  /** Optional property to set the aria label of the video tile if there is no available stream. */
-  noVideoAvailableAriaLabel?: string;
 }
 
-interface PlaceholderProps {
-  /** Optional participant display name for the VideoTile default placeholder. */
+export interface PlaceholderProps {
   /** user id for the VideoTile placeholder. */
   userId?: string;
+  /** Optional participant display name for the VideoTile default placeholder. */
   displayName?: string;
   /** Optional property to set the aria label of the video tile if there is no available stream. */
   noVideoAvailableAriaLabel?: string;
@@ -95,8 +91,11 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     renderElement,
     showDisplayName = true,
     styles,
-    ...placeHolderProps
+    userId,
+    noVideoAvailableAriaLabel
   } = props;
+
+  const placeHolderProps = { userId, displayName, noVideoAvailableAriaLabel };
   const theme = useTheme();
   return (
     <Stack className={mergeStyles(rootStyles, { background: theme.palette.neutralLighter }, styles?.root)}>
