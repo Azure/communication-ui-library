@@ -28,13 +28,14 @@ export interface GroupCallProps {
   screenWidth: number;
   endCallHandler(): void;
   groupId: string;
+  isMicrophoneOn: boolean;
 }
 
 const spinnerLabel = 'Initializing call client...';
 
 export const GroupCall = (props: GroupCallProps): JSX.Element => {
   const [selectedPane, setSelectedPane] = useState(CommandPanelTypes.None);
-  const { groupId, screenWidth, endCallHandler } = props;
+  const { groupId, screenWidth, endCallHandler, isMicrophoneOn } = props;
 
   const callAgent = useCallAgent();
   const { setCall } = useCallContext();
@@ -68,8 +69,7 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
       document.title = `${groupId} group call sample`;
     } else {
       if (!isInCall(callState ?? 'None') && callAgent && !joinedCall) {
-        // Removed isMicrophoneEnabled state from CallProvider, will need to integrate with Miguel's fix for mic later.
-        const audioOptions: AudioOptions = { muted: true };
+        const audioOptions: AudioOptions = { muted: !isMicrophoneOn };
         const videoOptions = { localVideoStreams: undefined };
 
         const call = callAgent.join(
@@ -85,7 +85,7 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
         setJoinedCall(true);
       }
     }
-  }, [callAgent, callState, groupId, joinedCall, setCall]);
+  }, [callAgent, callState, groupId, joinedCall, isMicrophoneOn, setCall]);
 
   return (
     <>
