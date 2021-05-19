@@ -73,9 +73,6 @@ export type CommunicationParticipant = {
 };
 
 // @public
-export type CommunicationUiErrorSeverity = 'info' | 'warning' | 'error' | 'ignore';
-
-// @public
 export const ControlBar: (props: ControlBarProps) => JSX.Element;
 
 // @public (undocumented)
@@ -111,17 +108,6 @@ export interface EndCallButtonProps extends IButtonProps {
     onHangUp?: () => Promise<void>;
     showLabel?: boolean;
 }
-
-// @public
-export const ErrorBar: (props: ErrorBarProps) => JSX.Element | null;
-
-// @public
-export type ErrorBarProps = {
-    message?: string;
-    severity?: CommunicationUiErrorSeverity;
-    onClose?: () => void;
-    styles?: BaseCustomStylesProps;
-};
 
 // @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
@@ -265,12 +251,6 @@ export type ParticipantListProps = {
     onRenderAvatar?: (participant: CommunicationParticipant) => JSX.Element | null;
     onParticipantRemove?: (userId: string) => void;
 };
-
-// @public (undocumented)
-export interface PlaceholderProps {
-    displayName?: string;
-    noVideoAvailableAriaLabel?: string;
-}
 
 // @public
 export const ReadReceipt: (props: ReadReceiptProps) => JSX.Element;
@@ -426,20 +406,24 @@ export interface VideoStreamOptions {
 }
 
 // @public (undocumented)
-export const VideoTile: (props: VideoTileProps & PlaceholderProps) => JSX.Element;
+export const VideoTile: (props: VideoTileProps) => JSX.Element;
 
 // @public
 export interface VideoTileProps {
     children?: React_2.ReactNode;
+    displayName?: string;
     isMirrored?: boolean;
     isVideoReady?: boolean;
+    noVideoAvailableAriaLabel?: string;
     placeholder?: JSX.Element | null;
     renderElement?: JSX.Element | null;
+    showDisplayName?: boolean;
     styles?: VideoTileStylesProps;
 }
 
 // @public (undocumented)
 export interface VideoTileStylesProps extends BaseCustomStylesProps {
+    displayNameContainer?: IStyle;
     overlayContainer?: IStyle;
     videoContainer?: IStyle;
 }

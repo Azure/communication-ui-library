@@ -1,19 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Label, Stack } from '@fluentui/react';
+import { Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
-import { disabledVideoHint, gridStyle, videoHint, videoTileStyle } from './styles/VideoGallery.styles';
 import {
-  VideoGalleryRemoteParticipant,
-  VideoGalleryLocalParticipant,
   BaseCustomStylesProps,
+  VideoGalleryLocalParticipant,
+  VideoGalleryRemoteParticipant,
   VideoStreamOptions
 } from '../types';
 import { GridLayout } from './GridLayout';
 import { StreamMedia } from './StreamMedia';
-import { VideoTile } from './VideoTile';
+import { gridStyle, videoTileStyle } from './styles/VideoGallery.styles';
 import { memoizeFnAll } from './utils/memoizeFnAll';
+import { VideoTile } from './VideoTile';
 
 export interface VideoGalleryProps {
   styles?: BaseCustomStylesProps;
@@ -48,9 +48,7 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
           renderElement={<StreamMedia videoStreamElement={renderElement ?? null} />}
           displayName={displayName}
           styles={videoTileStyle}
-        >
-          <Label className={isAvailable ? videoHint : disabledVideoHint}>{displayName}</Label>
-        </VideoTile>
+        />
       </Stack>
     );
   }
@@ -87,9 +85,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         renderElement={<StreamMedia videoStreamElement={localVideoStream?.renderElement ?? null} />}
         displayName={localParticipant?.displayName}
         styles={videoTileStyle}
-      >
-        <Label className={isLocalVideoReady ? videoHint : disabledVideoHint}>{localParticipant?.displayName}</Label>
-      </VideoTile>
+      />
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localParticipant, localParticipant.videoStream, onCreateLocalStreamView]);

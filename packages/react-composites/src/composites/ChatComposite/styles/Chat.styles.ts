@@ -17,3 +17,26 @@ export const chatWrapper = mergeStyles({
   paddingBottom: '1rem',
   overflow: 'auto'
 });
+
+export const chatHeaderContainerStyle = mergeStyles({
+  width: '100%',
+  height: 'auto',
+  paddingLeft: '3.25rem',
+  paddingRight: '3.25rem',
+  marginTop: '1rem',
+  selectors: {
+    '@media (max-width: 65rem)': {
+      paddingLeft: '5%',
+      paddingRight: '5%'
+    }
+  },
+  borderBottom: '0.063rem solid #DDDDDD'
+});
+
+export const topicNameLabelStyle = mergeStyles({
+  fontSize: '1rem', // 16px
+  fontWeight: 600,
+  marginRight: '0.125rem',
+  textOverflow: 'ellipsis',
+  overflowY: 'hidden'
+});

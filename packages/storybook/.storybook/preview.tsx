@@ -43,13 +43,19 @@ export const parameters = {
         'Styling',
         'Theming',
         'Localization',
+        'Accessibility',
+        'Custom User Data Model',
+        'Feedback',
         STATEFUL_CLIENT_PREFIX,
         [
-          'What is it',
+          'Overview',
           'Best Practices',
-          'Handlers',
-          'Selectors',
-          'FAQ',
+          'React Hooks',
+          [
+            'Setting up',
+            'UsePropsFor',
+            'UseSelector'
+          ],
           'Reference'
         ],
         QUICKSTARTS_FOLDER_PREFIX,

@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-export { createStatefulCallClient } from './CallClientDeclarative';
-export type { StatefulCallClient } from './CallClientDeclarative';
+export { createStatefulCallClient } from './StatefulCallClient';
+export type { StatefulCallClient, StatefulCallClientArgs, StatefulCallClientOptions } from './StatefulCallClient';
 export type { StatefulDeviceManager } from './DeviceManagerDeclarative';
 export type {
   Call,
@@ -20,3 +20,4 @@ export type {
   TransferCallFeature,
   TransferRequest
 } from './CallClientState';
+export { getRemoteParticipantKey } from './Converter';

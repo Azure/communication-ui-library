@@ -31,7 +31,7 @@ export const useSelector = <SelectorT extends (state: CallClientState, props: an
     [callId]
   );
 
-  const [props, setProps] = useState(selector(callClient.state, selectorProps ?? callIdConfigProps));
+  const [props, setProps] = useState(selector(callClient.getState(), selectorProps ?? callIdConfigProps));
   const propRef = useRef(props);
   propRef.current = props;
   useEffect(() => {

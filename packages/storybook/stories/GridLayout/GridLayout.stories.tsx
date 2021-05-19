@@ -86,9 +86,7 @@ export const GridLayout: () => JSX.Element = () => {
         renderElement={<StreamMedia videoStreamElement={participant.isVideoReady ? renderVideoStream() : null} />}
         displayName={participant.displayName}
         key={index}
-      >
-        <label>{participant.displayName}</label>
-      </VideoTile>
+      />
     );
   });
 

@@ -5,8 +5,10 @@ import { IncomingCall } from '@azure/communication-calling';
 import { Stack } from '@fluentui/react';
 import React, { useEffect, useState } from 'react';
 import { IncomingCallToast, IncomingCallToastProps } from './IncomingCallAlerts';
-import { useIncomingCall, useMicrophone } from '../../hooks';
-import { useCallingContext, IncomingCallsProvider } from '../../providers';
+import { useIncomingCall } from './hooks/useIncomingCall';
+import { useMicrophone } from './hooks/useMicrophone';
+import { IncomingCallsProvider } from './providers';
+import { useCallingContext } from './providers/CallingProvider';
 
 export type IncomingCallProps = {
   onIncomingCallAccepted?: () => void;

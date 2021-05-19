@@ -1,4 +1,10 @@
-import { FluentThemeProvider, MessageThread, SendBox, MessageThreadProps, SendBoxProps } from '@azure/communication-ui';
+import {
+  FluentThemeProvider,
+  MessageThread,
+  SendBox,
+  MessageThreadProps,
+  SendBoxProps
+} from '@azure/communication-react';
 import React, { useState } from 'react';
 
 function App(): JSX.Element {

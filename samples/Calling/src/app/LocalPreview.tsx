@@ -1,33 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import React from 'react';
 import { CallVideoOffIcon } from '@fluentui/react-icons-northstar';
 import { Stack, Text } from '@fluentui/react';
 import { localPreviewContainerStyle, cameraOffLabelStyle, localPreviewTileStyle } from './styles/LocalPreview.styles';
-import React from 'react';
-import {
-  CameraButton,
-  ControlBar,
-  ErrorBar as ErrorBarComponent,
-  MicrophoneButton,
-  StreamMedia,
-  VideoTile
-} from 'react-components';
-import { connectFuncsToContext, MapToErrorBarProps } from 'react-composites';
+import { CameraButton, ControlBar, MicrophoneButton, StreamMedia, VideoTile } from 'react-components';
 import { useSelector } from './hooks/useSelector';
 import { usePropsFor } from './hooks/usePropsFor';
 import { localPreviewSelector } from '@azure/acs-calling-selector';
 
 export const LocalPreview = (): JSX.Element => {
-  // get the stream in here instead of the mapper for now
-  // we haven't properly properly exported this component to make it re-usable
-  // we should create a MapToLocalPreviewProps, instead of using MapToMediaControlsProps and MapToLocalDeviceSettingsProps
-
   const cameraButtonProps = usePropsFor(CameraButton);
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
   const localPreviewProps = useSelector(localPreviewSelector);
-
-  const ErrorBar = connectFuncsToContext(ErrorBarComponent, MapToErrorBarProps);
 
   return (
     <Stack className={localPreviewContainerStyle}>
@@ -51,7 +37,6 @@ export const LocalPreview = (): JSX.Element => {
           <MicrophoneButton {...microphoneButtonProps} />
         </ControlBar>
       </VideoTile>
-      <ErrorBar />
     </Stack>
   );
 };

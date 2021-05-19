@@ -7,7 +7,7 @@ import { CallIdRef } from './CallIdRef';
 import { convertSdkRemoteStreamToDeclarativeRemoteStream, getRemoteParticipantKey } from './Converter';
 import { InternalCallContext } from './InternalCallContext';
 import { RemoteVideoStreamSubscriber } from './RemoteVideoStreamSubscriber';
-import { stopRenderVideo } from './StreamUtils';
+import { disposeView } from './StreamUtils';
 
 /**
  * Keeps track of the listeners assigned to a particular participant because when we get an event from SDK, it doesn't
@@ -75,7 +75,7 @@ export class ParticipantSubscriber {
           ?.remoteParticipants.get(this._participantKey)
           ?.videoStreams.get(stream.id);
         if (existingDeclarativeStream && existingDeclarativeStream.videoStreamRendererView) {
-          stopRenderVideo(this._context, this._internalContext, this._callIdRef.callId, existingDeclarativeStream);
+          disposeView(this._context, this._internalContext, this._callIdRef.callId, existingDeclarativeStream);
         }
       }
     }
@@ -118,7 +118,7 @@ export class ParticipantSubscriber {
         ?.remoteParticipants.get(this._participantKey)
         ?.videoStreams.get(stream.id);
       if (existingDeclarativeStream && existingDeclarativeStream.videoStreamRendererView) {
-        stopRenderVideo(this._context, this._internalContext, this._callIdRef.callId, existingDeclarativeStream);
+        disposeView(this._context, this._internalContext, this._callIdRef.callId, existingDeclarativeStream);
       }
       this._internalContext.removeRemoteVideoStream(this._callIdRef.callId, stream.id);
     }

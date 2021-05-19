@@ -18,6 +18,11 @@
   "telemetryEnabled": false,
   "projects": [
     {
+      "packageName": "acs-ui-common",
+      "projectFolder": "packages/acs-ui-common",
+      "reviewCategory": "internal"
+    },
+    {
       "packageName": "@azure/communication-react",
       "projectFolder": "packages/communication-react",
       "reviewCategory": "production"

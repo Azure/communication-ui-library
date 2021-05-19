@@ -123,7 +123,7 @@ export interface LocalVideoStream {
    */
   mediaStreamType: MediaStreamType;
   /**
-   * {@Link VideoStreamRendererView} is added/removed from state by startRenderVideo/stopRenderVideo in
+   * {@Link VideoStreamRendererView} is added/removed from state by createView/disposeView in
    * {@Link StatefulCallClient} API.
    */
   videoStreamRendererView?: VideoStreamRendererView | undefined;
@@ -146,7 +146,7 @@ export interface RemoteVideoStream {
    */
   isAvailable: boolean;
   /**
-   * {@Link VideoStreamRendererView} is added/removed from state by startRenderVideo/stopRenderVideo in
+   * {@Link VideoStreamRendererView} is added/removed from state by createView/disposeView in
    * {@Link StatefulCallClient} API.
    */
   videoStreamRendererView: VideoStreamRendererView | undefined;
@@ -267,6 +267,14 @@ export interface Call {
    */
   transfer: TransferCallFeature;
   /**
+   * Stores the currently active screenshare participant's key. If there is no screenshare active, then this will be
+   * undefined. You can use this key to access the remoteParticipant data in {@Link Call#remoteParticipants} map.
+   *
+   * Note this only applies to ScreenShare in RemoteParticipant. A local ScreenShare being active will not affect this
+   * property.
+   */
+  screenShareRemoteParticipant: string | undefined;
+  /**
    * Stores the local date when the call started on the client. This is not originally in the SDK but provided by the
    * Declarative layer.
    */
@@ -347,7 +355,7 @@ export type DeviceManager = {
   deviceAccess?: DeviceAccess;
   /**
    * Stores created views that are not associated with any Call state (when
-   * {@Link StatefulCallClient#startRenderVideo} is called with undefined callId and LocalVideoStream).
+   * {@Link StatefulCallClient#createView} is called with undefined callId and LocalVideoStream).
    */
   unparentedViews: VideoStreamRendererView[];
 };

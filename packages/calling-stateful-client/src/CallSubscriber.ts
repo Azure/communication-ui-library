@@ -13,7 +13,7 @@ import { ReceivedTransferSubscriber } from './ReceivedTransferSubscriber';
 import { InternalCallContext } from './InternalCallContext';
 import { ParticipantSubscriber } from './ParticipantSubscriber';
 import { RecordingSubscriber } from './RecordingSubscriber';
-import { stopRenderVideo } from './StreamUtils';
+import { disposeView } from './StreamUtils';
 import { TranscriptionSubscriber } from './TranscriptionSubscriber';
 
 /**
@@ -101,7 +101,7 @@ export class CallSubscriber {
     // disposed) and we should not be updating it any more. So if video is rendering we stop rendering.
     const localVideoStreams = this._context.getState().calls.get(this._callIdRef.callId)?.localVideoStreams;
     if (localVideoStreams && localVideoStreams.length === 1 && localVideoStreams[0].videoStreamRendererView) {
-      stopRenderVideo(this._context, this._internalContext, this._callIdRef.callId, localVideoStreams[0]);
+      disposeView(this._context, this._internalContext, this._callIdRef.callId, localVideoStreams[0]);
     }
 
     this._recordingSubscriber.unsubscribe();
@@ -186,7 +186,7 @@ export class CallSubscriber {
     if (event.removed.length > 0) {
       const localVideoStreams = this._context.getState().calls.get(this._callIdRef.callId)?.localVideoStreams;
       if (localVideoStreams && localVideoStreams.length === 1 && localVideoStreams[0].videoStreamRendererView) {
-        stopRenderVideo(this._context, this._internalContext, this._callIdRef.callId, localVideoStreams[0]);
+        disposeView(this._context, this._internalContext, this._callIdRef.callId, localVideoStreams[0]);
       }
       this._context.setCallLocalVideoStream(this._callIdRef.callId, []);
       this._internalContext.removeLocalVideoStream(this._callIdRef.callId);

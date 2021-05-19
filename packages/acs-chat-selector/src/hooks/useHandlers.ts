@@ -10,9 +10,9 @@ import { useChatThreadClient } from '../providers/ChatThreadClientProvider';
 import { ReactElement } from 'react';
 
 // @ts-ignore
-import { DefaultChatHandlers } from '../handlers/createHandlers';
+import { CommonProperties } from 'acs-ui-common';
 // @ts-ignore
-import { CommonProperties } from '../handlers/createHandlers';
+import { DefaultChatHandlers } from '../handlers/createHandlers';
 
 // This will be moved into selector folder when ChatClientProvide when refactor finished
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
