@@ -9,7 +9,7 @@ import {
   CallState,
   DeviceAccess,
   MediaStreamType,
-  RemoteParticipantState,
+  RemoteParticipantState as RemoteParticipantStatus,
   ScalingMode,
   TransferErrorCode,
   TransferState,
@@ -187,7 +187,7 @@ export interface RemoteParticipant {
   /**
    * Proxy of {@Link @azure/communication-calling#RemoteParticipant.state}.
    */
-  state: RemoteParticipantState;
+  state: RemoteParticipantStatus;
   /**
    * Proxy of {@Link @azure/communication-calling#RemoteParticipant.callEndReason}.
    */
