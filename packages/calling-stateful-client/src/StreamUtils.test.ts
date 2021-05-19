@@ -10,7 +10,7 @@ import {
   VideoDeviceInfo
 } from '@azure/communication-calling';
 import { CommunicationUserKind } from '@azure/communication-common';
-import { Call, LocalVideoStream, RemoteParticipant, RemoteVideoStream } from './CallClientState';
+import { CallState, LocalVideoStream, RemoteParticipant, RemoteVideoStream } from './CallClientState';
 import { CallContext } from './CallContext';
 import { InternalCallContext } from './InternalCallContext';
 import {
@@ -68,8 +68,8 @@ interface TestData {
   internalContext: InternalCallContext;
 }
 
-function createMockCall(mockCallId: string): Call {
-  const call: Call = {
+function createMockCall(mockCallId: string): CallState {
+  const call: CallState = {
     id: mockCallId,
     callerInfo: {} as CallerInfo,
     state: 'None',
@@ -89,7 +89,7 @@ function createMockCall(mockCallId: string): Call {
   return call;
 }
 
-function addMockRemoteStreamAndParticipant(call: Call, key: string, id: number): RemoteVideoStream {
+function addMockRemoteStreamAndParticipant(call: CallState, key: string, id: number): RemoteVideoStream {
   const participant: RemoteParticipant = {
     identifier: {} as CommunicationUserKind,
     state: 'Connected',
@@ -124,7 +124,7 @@ function addSdkRemoteStream(internalContext: InternalCallContext, callId: string
   internalContext.setRemoteVideoStream(callId, key, sdkRemoteVideoStream);
 }
 
-function addMockLocalStream(call: Call): void {
+function addMockLocalStream(call: CallState): void {
   call.localVideoStreams.push({} as LocalVideoStream);
 }
 
