@@ -63,7 +63,7 @@ export type AreEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 export class AzureCommunicationCallAdapter implements CallAdapter {
     constructor(callClient: StatefulCallClient, groupId: string, callAgent: CallAgent_2, deviceManager: StatefulDeviceManager);
     // (undocumented)
-    createStreamView(userId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
+    createStreamView(userId?: FlatCommunicationIdentifier, options?: VideoStreamOptions | undefined): Promise<void>;
     // (undocumented)
     dispose(): void;
     // (undocumented)
@@ -119,7 +119,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     querySpeakers(): Promise<AudioDeviceInfo[]>;
     // (undocumented)
-    removeParticipant(userId: string): Promise<void>;
+    removeParticipant(userId: FlatCommunicationIdentifier): Promise<void>;
     // (undocumented)
     setCamera(device: VideoDeviceInfo): Promise<void>;
     // (undocumented)
@@ -127,7 +127,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     setSpeaker(device: AudioDeviceInfo): Promise<void>;
     // (undocumented)
-    startCall(participants: string[]): Call_2 | undefined;
+    startCall(participants: FlatCommunicationIdentifier[]): Call_2 | undefined;
     // (undocumented)
     startCamera(): Promise<void>;
     // (undocumented)
@@ -156,8 +156,8 @@ export interface Call {
     isScreenSharingOn: boolean;
     localVideoStreams: LocalVideoStream[];
     recording: RecordingCallFeature;
-    remoteParticipants: Map<string, RemoteParticipant>;
-    remoteParticipantsEnded: Map<string, RemoteParticipant>;
+    remoteParticipants: Map<FlatCommunicationIdentifier, RemoteParticipant>;
+    remoteParticipantsEnded: Map<FlatCommunicationIdentifier, RemoteParticipant>;
     screenShareRemoteParticipant: string | undefined;
     startTime: Date;
     state: CallState_2;
@@ -168,7 +168,7 @@ export interface Call {
 // @public (undocumented)
 export interface CallAdapter {
     // (undocumented)
-    createStreamView(userId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
+    createStreamView(userId?: FlatCommunicationIdentifier, options?: VideoStreamOptions | undefined): Promise<void>;
     // (undocumented)
     dispose(): void;
     // (undocumented)
@@ -224,7 +224,7 @@ export interface CallAdapter {
     // (undocumented)
     querySpeakers(): Promise<AudioDeviceInfo[]>;
     // (undocumented)
-    removeParticipant(userId: string): Promise<void>;
+    removeParticipant(userId: FlatCommunicationIdentifier): Promise<void>;
     // (undocumented)
     setCamera(sourceId: VideoDeviceInfo): Promise<void>;
     // (undocumented)
@@ -232,7 +232,7 @@ export interface CallAdapter {
     // (undocumented)
     setSpeaker(sourceId: AudioDeviceInfo): Promise<void>;
     // (undocumented)
-    startCall(participants: string[]): Call_2 | undefined;
+    startCall(participants: FlatCommunicationIdentifier[]): Call_2 | undefined;
     // (undocumented)
     startCamera(): Promise<void>;
     // (undocumented)
@@ -291,7 +291,7 @@ export type CallingBaseSelectorProps = {
 
 // @public (undocumented)
 export type CallingClientState = {
-    userId: string;
+    userId: FlatCommunicationIdentifier;
     displayName?: string;
     call?: Call;
     devices: DeviceManager;
@@ -505,9 +505,6 @@ export type ChatUIState = {
 export type CommonProperties<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
-
-// @public (undocumented)
-export type CommunicationIdentifierAsKey = string;
 
 // @public
 export type CommunicationParticipant = {
@@ -788,9 +785,6 @@ export const getIncomingCalls: (state: CallClientState) => Map<string, IncomingC
 // @public (undocumented)
 export const getIncomingCallsEnded: (state: CallClientState) => IncomingCall[];
 
-// @public
-export function getRemoteParticipantKey(identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind): string;
-
 // @public (undocumented)
 export type GetSelector<Component> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof chatThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : never;
 
@@ -821,7 +815,7 @@ export interface IncomingCall {
 // @public (undocumented)
 export type IncomingCallListener = (event: {
     callId: string;
-    callerId: string;
+    callerId: FlatCommunicationIdentifier;
     callerDisplayName?: string;
     accept: () => Promise<void>;
     reject: () => Promise<void>;
@@ -1314,7 +1308,7 @@ export const videoGallerySelector: reselect.OutputParametricSelector<CallClientS
         };
     };
     remoteParticipants: VideoGalleryRemoteParticipant[];
-}, (res1: Call | undefined, res2: string | undefined, res3: string | undefined) => {
+}, (res1: Call | undefined, res2: string | undefined, res3: string) => {
     screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
     localParticipant: {
         userId: string;

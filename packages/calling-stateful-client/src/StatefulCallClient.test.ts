@@ -153,7 +153,7 @@ async function createMockRemoteVideoStreamAndEmitVideoStreamsUpdated(
       testData.mockStatefulCallClient
         .getState()
         .calls.get(mockCallId)
-        ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))?.videoStreams
+        ?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))?.videoStreams
         .size !== 0
   );
 }
@@ -1041,8 +1041,8 @@ describe('Stateful call client', () => {
         testData.mockStatefulCallClient
           .getState()
           .calls.get(mockCallId)
-          ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))?.videoStreams
-          .size !== 0
+          ?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))
+          ?.videoStreams.size !== 0
     );
 
     expect(
@@ -1062,8 +1062,8 @@ describe('Stateful call client', () => {
         testData.mockStatefulCallClient
           .getState()
           .calls.get(mockCallId)
-          ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))?.videoStreams
-          .size !== 0
+          ?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))
+          ?.videoStreams.size !== 0
     );
 
     testData.mockRemoteVideoStream.isAvailable = false;
@@ -1111,16 +1111,15 @@ describe('Stateful call client', () => {
         testData.mockStatefulCallClient
           .getState()
           .calls.get(mockCallId)
-          ?.remoteParticipants.get(
-            getRemoteParticipantKey({ kind: 'communicationUser', communicationUserId: secondMockParticipantId })
-          )?.videoStreams.size !== 0
+          ?.remoteParticipants.get(toFlatCommunicationIdentifier({ communicationUserId: secondMockParticipantId }))
+          ?.videoStreams.size !== 0
     );
 
     expect(
       testData.mockStatefulCallClient.getState().calls.get(mockCallId)?.screenShareRemoteParticipant
     ).toBeDefined();
     expect(testData.mockStatefulCallClient.getState().calls.get(mockCallId)?.screenShareRemoteParticipant).toBe(
-      getRemoteParticipantKey(testData.mockRemoteParticipant.identifier)
+      toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier)
     );
   });
 });

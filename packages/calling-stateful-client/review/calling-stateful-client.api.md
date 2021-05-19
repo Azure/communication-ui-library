@@ -39,8 +39,8 @@ export interface Call {
     isScreenSharingOn: boolean;
     localVideoStreams: LocalVideoStream[];
     recording: RecordingCallFeature;
-    remoteParticipants: Map<string, RemoteParticipant>;
-    remoteParticipantsEnded: Map<string, RemoteParticipant>;
+    remoteParticipants: Map<FlatCommunicationIdentifier, RemoteParticipant>;
+    remoteParticipantsEnded: Map<FlatCommunicationIdentifier, RemoteParticipant>;
     screenShareRemoteParticipant: string | undefined;
     startTime: Date;
     state: CallState;
@@ -79,9 +79,6 @@ export type DeviceManager = {
     deviceAccess?: DeviceAccess;
     unparentedViews: VideoStreamRendererView[];
 };
-
-// @public
-export function getRemoteParticipantKey(identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind): string;
 
 // @public
 export interface IncomingCall {

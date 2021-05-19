@@ -198,7 +198,7 @@ export const videoGallerySelector: reselect.OutputParametricSelector<CallClientS
         };
     };
     remoteParticipants: VideoGalleryRemoteParticipant[];
-}, (res1: Call_2 | undefined, res2: string | undefined, res3: string | undefined) => {
+}, (res1: Call_2 | undefined, res2: string | undefined, res3: string) => {
     screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
     localParticipant: {
         userId: string;

@@ -1,15 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  AzureCommunicationTokenCredential,
-  CommunicationTokenRefreshOptions,
-  CommunicationUserKind,
-  MicrosoftTeamsUserKind,
-  PhoneNumberKind,
-  UnknownIdentifierKind
-} from '@azure/communication-common';
-
+import { AzureCommunicationTokenCredential, CommunicationTokenRefreshOptions } from '@azure/communication-common';
 import { CallState } from '@azure/communication-calling';
 import {
   CommunicationUiErrorCode,
@@ -81,32 +73,3 @@ export const propagateError = (error: Error, onErrorCallback?: (error: Communica
     throw error;
   }
 };
-
-/**
- * Generates an identifier string for a given RemoteParticipant.identifier.
- *
- * @param identifier
- */
-export function getRemoteParticipantKey(
-  identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind
-): string {
-  let id = '';
-  switch (identifier.kind) {
-    case 'communicationUser': {
-      id = identifier.communicationUserId;
-      break;
-    }
-    case 'phoneNumber': {
-      id = identifier.phoneNumber;
-      break;
-    }
-    case 'microsoftTeamsUser': {
-      id = identifier.microsoftTeamsUserId;
-      break;
-    }
-    default: {
-      id = identifier.id;
-    }
-  }
-  return `${identifier.kind}_${id}`;
-}

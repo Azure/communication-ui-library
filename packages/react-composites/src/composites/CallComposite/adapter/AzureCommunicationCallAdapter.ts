@@ -32,15 +32,13 @@ import {
   ParticipantJoinedListener,
   ParticipantLeftListener
 } from './CallAdapter';
-import {
-  createAzureCommunicationUserCredential,
-  getIdFromToken,
-  // TODO(prprabhu) New code with bad old dep.
-  getRemoteParticipantKey,
-  isInCall
-} from '../../../utils';
+import { createAzureCommunicationUserCredential, getIdFromToken, isInCall } from '../../../utils';
 import { VideoStreamOptions } from 'react-components';
-import { FlatCommunicationIdentifier, fromFlatCommunicationIdentifier } from 'acs-ui-common';
+import {
+  FlatCommunicationIdentifier,
+  fromFlatCommunicationIdentifier,
+  toFlatCommunicationIdentifier
+} from 'acs-ui-common';
 import { CommunicationUserIdentifier } from '@azure/communication-signaling';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
@@ -353,15 +351,15 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
     added.forEach((participant) => {
       this.participantSubscribers.set(
-        getRemoteParticipantKey(participant.identifier),
+        toFlatCommunicationIdentifier(participant.identifier),
         new ParticipantSubscriber(participant, this.emitter)
       );
     });
 
     removed.forEach((participant) => {
-      const subscriber = this.participantSubscribers.get(getRemoteParticipantKey(participant.identifier));
+      const subscriber = this.participantSubscribers.get(toFlatCommunicationIdentifier(participant.identifier));
       subscriber && subscriber.unsubscribeAll();
-      this.participantSubscribers.delete(getRemoteParticipantKey(participant.identifier));
+      this.participantSubscribers.delete(toFlatCommunicationIdentifier(participant.identifier));
     });
   };
 

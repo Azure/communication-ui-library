@@ -20,4 +20,3 @@ export type {
   TransferCallFeature,
   TransferRequest
 } from './CallClientState';
-export { getRemoteParticipantKey } from './Converter';
