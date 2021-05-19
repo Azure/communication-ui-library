@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Stack, Text } from '@fluentui/react';
+import { Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import {
   BaseCustomStylesProps,
@@ -11,9 +11,9 @@ import {
 } from '../types';
 import { GridLayout } from './GridLayout';
 import { StreamMedia } from './StreamMedia';
-import { disabledVideoHint, gridStyle, videoHint, videoTileStyle } from './styles/VideoGallery.styles';
-import { memoizeFnAll } from './utils/memoizeFnAll';
-import { PlaceholderProps, VideoTile } from './VideoTile';
+import { gridStyle, videoTileStyle } from './styles/VideoGallery.styles';
+import { memoizeFnAll } from 'acs-ui-common';
+import { VideoTile, PlaceholderProps } from './VideoTile';
 
 export interface VideoGalleryProps {
   styles?: BaseCustomStylesProps;
@@ -22,7 +22,7 @@ export interface VideoGalleryProps {
   localVideoViewOption?: VideoStreamOptions;
   remoteVideoViewOption?: VideoStreamOptions;
   onCreateLocalStreamView?: (options?: VideoStreamOptions | undefined) => Promise<void>;
-  onDisposeLocalStreamView?: () => Promise<void>;
+  onDisposeLocalStreamView?: () => void;
   onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
   onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
   onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
@@ -51,10 +51,8 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
           renderElement={<StreamMedia videoStreamElement={renderElement ?? null} />}
           displayName={displayName}
           styles={videoTileStyle}
-          onRenderPlaceholder={onRenderAvatar ? onRenderAvatar : undefined}
-        >
-          <Text className={isAvailable ? videoHint : disabledVideoHint}>{displayName}</Text>
-        </VideoTile>
+          onRenderPlaceholder={onRenderAvatar}
+        />
       </Stack>
     );
   }
@@ -93,10 +91,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         renderElement={<StreamMedia videoStreamElement={localVideoStream?.renderElement ?? null} />}
         displayName={localParticipant?.displayName}
         styles={videoTileStyle}
-        onRenderPlaceholder={onRenderAvatar ? onRenderAvatar : undefined}
-      >
-        <Text className={isLocalVideoReady ? videoHint : disabledVideoHint}>{localParticipant?.displayName}</Text>
-      </VideoTile>
+        onRenderPlaceholder={onRenderAvatar}
+      />
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localParticipant, localParticipant.videoStream, onCreateLocalStreamView]);

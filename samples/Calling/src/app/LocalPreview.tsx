@@ -23,9 +23,13 @@ const onRenderPlaceholder = (): JSX.Element => {
   );
 };
 
-export const LocalPreview = (): JSX.Element => {
+export interface LocalPreviewProps {
+  isMicrophoneOn: boolean;
+  setIsMicrophoneOn: (isEnabled: boolean) => void;
+}
+
+export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
-  const microphoneButtonProps = usePropsFor(MicrophoneButton);
   const localPreviewProps = useSelector(localPreviewSelector);
 
   return (
@@ -35,10 +39,16 @@ export const LocalPreview = (): JSX.Element => {
         isVideoReady={!!localPreviewProps.videoStreamElement}
         renderElement={<StreamMedia videoStreamElement={localPreviewProps.videoStreamElement} />}
         onRenderPlaceholder={onRenderPlaceholder}
+        isMirrored={true}
       >
         <ControlBar layout="floatingBottom">
           <CameraButton {...cameraButtonProps} />
-          <MicrophoneButton {...microphoneButtonProps} />
+          <MicrophoneButton
+            checked={props.isMicrophoneOn}
+            onToggleMicrophone={async () => {
+              props.setIsMicrophoneOn(!props.isMicrophoneOn);
+            }}
+          />
         </ControlBar>
       </VideoTile>
     </Stack>

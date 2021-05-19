@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { memoizeFnAll } from '@azure/acs-calling-selector';
-import { mergeStyles, Spinner, SpinnerSize, Stack, Text } from '@fluentui/react';
+import { memoizeFnAll } from 'acs-ui-common';
+import { mergeStyles, Spinner, SpinnerSize, Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import {
   PlaceholderProps,
@@ -15,10 +15,8 @@ import {
 import {
   aspectRatioBoxContentStyle,
   aspectRatioBoxStyle,
-  disabledVideoHint,
   screenShareContainerStyle,
-  stackContainerStyle,
-  videoHint
+  stackContainerStyle
 } from './styles/MediaGallery.styles';
 import { loadingStyle, videoStreamStyle, videoTileStyle } from './styles/ScreenShare.styles';
 
@@ -40,9 +38,7 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
             renderElement={<StreamMedia videoStreamElement={renderElement ?? null} />}
             displayName={displayName}
             styles={videoTileStyle}
-          >
-            <Text className={isAvailable ? videoHint : disabledVideoHint}>{displayName}</Text>
-          </VideoTile>
+          />
         </Stack>
       </Stack>
     );
@@ -124,9 +120,7 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
         renderElement={<StreamMedia videoStreamElement={localVideoStream?.renderElement ?? null} />}
         displayName={localParticipant?.displayName}
         styles={videoTileStyle}
-      >
-        <Text className={isLocalVideoReady ? videoHint : disabledVideoHint}>{localParticipant?.displayName}</Text>
-      </VideoTile>
+      />
     );
   }, [isLocalVideoReady, localParticipant, localVideoStream, onCreateLocalStreamView]);
 
