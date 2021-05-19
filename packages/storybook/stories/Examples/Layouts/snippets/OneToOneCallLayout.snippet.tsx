@@ -22,6 +22,7 @@ export const OneToOneCallLayoutExample: () => JSX.Element = () => {
           overlayContainer: videoStreamStyle
         }}
         displayName={'Holly'}
+        showDisplayName={false}
       >
         {/* Video component for my video stream stream */}
         <VideoTile
