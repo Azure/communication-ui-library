@@ -294,7 +294,7 @@ export type CallingClientState = {
     userId: string;
     displayName?: string;
     call?: Call;
-    devices: DeviceManager;
+    devices: DeviceManagerState;
 };
 
 // @public
