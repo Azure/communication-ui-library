@@ -22,7 +22,7 @@ export interface VideoGalleryProps {
   localVideoViewOption?: VideoStreamOptions;
   remoteVideoViewOption?: VideoStreamOptions;
   onCreateLocalStreamView?: (options?: VideoStreamOptions | undefined) => Promise<void>;
-  onDisposeLocalStreamView?: () => Promise<void>;
+  onDisposeLocalStreamView?: () => void;
   onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
   onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
   onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
