@@ -69,7 +69,7 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
       document.title = `${groupId} group call sample`;
     } else {
       if (!isInCall(callState ?? 'None') && callAgent && !joinedCall) {
-        const audioOptions: AudioOptions = { muted: isMicrophoneOn };
+        const audioOptions: AudioOptions = { muted: !isMicrophoneOn };
         const videoOptions = { localVideoStreams: undefined };
 
         const call = callAgent.join(

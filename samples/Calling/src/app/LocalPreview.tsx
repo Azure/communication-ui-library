@@ -40,9 +40,8 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
           <CameraButton {...cameraButtonProps} />
           <MicrophoneButton
             checked={props.isMicrophoneOn}
-            onToggleMicrophone={() => {
+            onToggleMicrophone={async () => {
               props.setIsMicrophoneOn(!props.isMicrophoneOn);
-              return Promise.resolve();
             }}
           />
         </ControlBar>
