@@ -12,7 +12,7 @@ import {
 import { GridLayout } from './GridLayout';
 import { StreamMedia } from './StreamMedia';
 import { gridStyle, videoTileStyle } from './styles/VideoGallery.styles';
-import { memoizeFnAll } from './utils/memoizeFnAll';
+import { memoizeFnAll } from 'acs-ui-common';
 import { VideoTile } from './VideoTile';
 
 export interface VideoGalleryProps {
@@ -22,7 +22,7 @@ export interface VideoGalleryProps {
   localVideoViewOption?: VideoStreamOptions;
   remoteVideoViewOption?: VideoStreamOptions;
   onCreateLocalStreamView?: (options?: VideoStreamOptions | undefined) => Promise<void>;
-  onDisposeLocalStreamView?: () => Promise<void>;
+  onDisposeLocalStreamView?: () => void;
   onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
   onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
   onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
