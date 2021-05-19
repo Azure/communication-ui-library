@@ -28,16 +28,15 @@ import {
   GenerateMockSystemMessage,
   GenerateMockCustomMessage
 } from './placeholdermessages';
-import { DefaultMessageThreadExample } from './snippets/Default.snippet';
 import { MessageThreadWithCustomAvatarExample } from './snippets/CustomAvatar.snippet';
 import { MessageThreadWithCustomChatContainerExample } from './snippets/CustomChatContainer.snippet';
 import { MessageThreadWithCustomMessageContainerExample } from './snippets/CustomMessageContainer.snippet';
 import { MessageThreadWithCustomMessagesExample } from './snippets/CustomMessages.snippet';
 import { MessageThreadWithCustomMessageStatusIndicatorExample } from './snippets/CustomMessageStatusIndicator.snippet';
+import { DefaultMessageThreadExample } from './snippets/Default.snippet';
 import { MessageThreadWithMessageStatusIndicatorExample } from './snippets/MessageStatusIndicator.snippet';
 import { MessageThreadWithSystemMessagesExample } from './snippets/SystemMessages.snippet';
 
-const DefaultMessageThreadExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
 const MessageThreadWithCustomAvatarExampleText = require('!!raw-loader!./snippets/CustomAvatar.snippet.tsx').default;
 const MessageThreadWithCustomChatContainerExampleText = require('!!raw-loader!./snippets/CustomChatContainer.snippet.tsx')
   .default;
@@ -47,11 +46,12 @@ const MessageThreadWithCustomMessagesExampleText = require('!!raw-loader!./snipp
   .default;
 const MessageThreadWithCustomMessageStatusIndicatorExampleText = require('!!raw-loader!./snippets/CustomMessageStatusIndicator.snippet.tsx')
   .default;
+const DefaultMessageThreadExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
 const MessageThreadWithMessageStatusIndicatorExampleText = require('!!raw-loader!./snippets/MessageStatusIndicator.snippet.tsx')
   .default;
+const ExampleConstantsText = require('!!raw-loader!./snippets/placeholdermessages.ts').default;
 const MessageThreadWithSystemMessagesExampleText = require('!!raw-loader!./snippets/SystemMessages.snippet.tsx')
   .default;
-const ExampleConstantsText = require('!!raw-loader!./snippets/placeholdermessages.ts').default;
 
 const importStatement = `
 import { FluentThemeProvider, MessageThread } from '@azure/communication-react';

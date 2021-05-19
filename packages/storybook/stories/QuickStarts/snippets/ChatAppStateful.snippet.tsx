@@ -1,4 +1,4 @@
-import { ChatClient, ChatThreadClient } from '@azure/communication-chat';
+import { ChatThreadClient } from '@azure/communication-chat';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import {
   FluentThemeProvider,
