@@ -135,7 +135,10 @@ export const createDefaultCallingHandlers = memoizeOne(
     };
 
     const onToggleMicrophone = async (): Promise<void> => {
-      return call?.isMuted ? await call?.unmute() : await call?.mute();
+      if (!call) {
+        throw new Error(`Please invoke onToggleMicrophone after call is started`);
+      }
+      return call.isMuted ? await call.unmute() : await call.mute();
     };
 
     const onStartScreenShare = async (): Promise<void> => await call?.startScreenSharing();
