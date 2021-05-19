@@ -28,7 +28,7 @@ import {
   ChatMessagePayload,
   SystemMessagePayload
 } from '../types';
-import { ReadReceipt, ReadReceiptProps } from './ReadReceipt';
+import { MessageStatusIndicator, MessageStatusIndicatorProps } from './MessageStatusIndicator';
 import { memoizeFnAll } from 'acs-ui-common';
 import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from './SystemMessage';
 import { Parser } from 'html-to-react';
@@ -251,7 +251,7 @@ const memoizeAllMessages = memoizeFnAll(
     disableReadReceipt: boolean,
     onRenderAvatar: ((userId: string) => JSX.Element) | undefined,
     styles: MessageThreadStylesProps | undefined,
-    onRenderReadReceipt: ((readReceiptProps: ReadReceiptProps) => JSX.Element | null) | undefined,
+    onRenderReadReceipt: ((messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null) | undefined,
     defaultChatMessageRenderer: (message: MessageProps) => JSX.Element,
     _attached?: boolean | string,
     statusToRender?: MessageStatus,
@@ -294,7 +294,7 @@ const memoizeAllMessages = memoizeFnAll(
                     messageStatus: statusToRender
                   })
                 ) : (
-                  ReadReceipt({ messageStatus: statusToRender })
+                  MessageStatusIndicator({ messageStatus: statusToRender })
                 )
               ) : (
                 <div className={mergeStyles(noReadReceiptStyle)} />
@@ -382,10 +382,10 @@ export type MessageThreadProps = {
    */
   onMessageSeen?: (messageId: string) => Promise<void>;
   /**
-   * Optional callback to override render of the Read Receipt indicator.
-   * @param readReceiptProps - props of type ReadReceiptProps
+   * Optional callback to override render of the message status indicator.
+   * @param messageStatusIndicatorProps - props of type MessageStatusIndicatorProps
    */
-  onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element | null;
+  onRenderReadReceipt?: (messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null;
   /**
    * Optional callback to override render of the avatar.
    * @param userId - user Id
@@ -431,7 +431,7 @@ export type MessageProps = {
  * @param props - of type MessageThreadProps
  *
  * Users will need to provide at least chat messages and userId to render the `MessageThread` component.
- * Users can also customize `MessageThread` by passing in their own Avatar, `ReadReceipt` icon, `JumpToNewMessageButton`, `LoadPreviousMessagesButton` and the behavior of these controls.
+ * Users can also customize `MessageThread` by passing in their own Avatar, `MessageStatusIndicator` icon, `JumpToNewMessageButton`, `LoadPreviousMessagesButton` and the behavior of these controls.
  *
  * `MessageThread` internally uses the `Chat` & `Chat.Message` component from `@fluentui/react-northstar`. You can checkout the details about these [two components](https://fluentsite.z22.web.core.windows.net/0.53.0/components/chat/props).
  */

@@ -10,8 +10,8 @@ export type { GridLayoutProps, GridLayoutType } from './GridLayout';
 export { SendBox } from './SendBox';
 export type { SendBoxProps, SendBoxStylesProps } from './SendBox';
 
-export { ReadReceipt } from './ReadReceipt';
-export type { ReadReceiptProps } from './ReadReceipt';
+export { MessageStatusIndicator } from './MessageStatusIndicator';
+export type { MessageStatusIndicatorProps } from './MessageStatusIndicator';
 
 export { MessageThread } from './MessageThread';
 export type {
