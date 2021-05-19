@@ -24,6 +24,7 @@ import { useSelector } from './hooks/useSelector';
 import { callStatusSelector } from './selectors/callStatusSelector';
 import { mediaGallerySelector } from './selectors/mediaGallerySelector';
 import { useHandlers } from './hooks/useHandlers';
+import { PlaceholderProps } from 'react-components';
 
 export const MINI_HEADER_WINDOW_WIDTH = 450;
 

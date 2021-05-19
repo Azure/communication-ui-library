@@ -15,6 +15,8 @@ export interface OutgoingCallScreenProps {
   endCallHandler: () => void;
 }
 
+const renderEmptyPlaceholder = (): JSX.Element => <></>;
+
 export const OutgoingCallScreen = (props: OutgoingCallScreenProps): JSX.Element => {
   const { callState, endCallHandler } = props;
   const { localVideoStream, isLocalVideoOn, isMicrophoneEnabled } = useCallContext();
@@ -44,7 +46,7 @@ export const OutgoingCallScreen = (props: OutgoingCallScreenProps): JSX.Element 
       styles={{ root: { height: '100%', width: '100%' }, videoContainer: { zIndex: -1 } }}
       renderElement={<StreamMedia videoStreamElement={videoStreamElement} />}
       isVideoReady={isVideoReady}
-      placeholder={<></>}
+      onRenderPlaceholder={renderEmptyPlaceholder}
     >
       <Stack style={{ width: '100%', height: '100%', background: 'rgb(0, 0, 0, 0.5)' }}>
         <p

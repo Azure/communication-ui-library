@@ -5,6 +5,7 @@ import { memoizeFnAll } from '@azure/acs-calling-selector';
 import { mergeStyles, Spinner, SpinnerSize, Stack, Text } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import {
+  PlaceholderProps,
   StreamMedia,
   VideoGalleryLocalParticipant,
   VideoGalleryRemoteParticipant,
@@ -49,6 +50,12 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
   }
 );
 
+const onRenderPlaceholder = (props: PlaceholderProps): JSX.Element => (
+  <div className={loadingStyle}>
+    <Spinner label={`Loading ${props.displayName}'s screen`} size={SpinnerSize.xSmall} />
+  </div>
+);
+
 export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
   const {
     localParticipant,
@@ -86,13 +93,10 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
 
     return (
       <VideoTile
+        displayName={participantWithScreenShare?.displayName}
         isVideoReady={screenShareStream?.isAvailable}
         renderElement={<StreamMedia videoStreamElement={screenShareStream?.renderElement ?? null} />}
-        placeholder={
-          <div className={loadingStyle}>
-            <Spinner label={`Loading ${participantWithScreenShare?.displayName}'s screen`} size={SpinnerSize.xSmall} />
-          </div>
-        }
+        onRenderPlaceholder={onRenderPlaceholder}
         styles={{
           overlayContainer: videoStreamStyle
         }}

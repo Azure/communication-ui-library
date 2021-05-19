@@ -792,7 +792,7 @@ export const participantListSelector: reselect.OutputParametricSelector<CallClie
 export interface PlaceholderProps {
     displayName?: string;
     noVideoAvailableAriaLabel?: string;
-    userId: string;
+    userId?: string;
 }
 
 // @public

@@ -43,7 +43,7 @@ export interface VideoTileProps {
 
 export interface PlaceholderProps {
   /** user id for the VideoTile placeholder. */
-  userId: string;
+  userId?: string;
   /** Optional participant display name for the VideoTile placeholder. */
   displayName?: string;
   /** Optional property to set the aria label of the video tile if there is no available stream. */

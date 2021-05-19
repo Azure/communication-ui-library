@@ -256,7 +256,7 @@ export type ParticipantListProps = {
 export interface PlaceholderProps {
     displayName?: string;
     noVideoAvailableAriaLabel?: string;
-    userId: string;
+    userId?: string;
 }
 
 // @public
