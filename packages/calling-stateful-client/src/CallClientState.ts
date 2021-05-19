@@ -274,7 +274,7 @@ export interface Call {
    * Note this only applies to ScreenShare in RemoteParticipant. A local ScreenShare being active will not affect this
    * property.
    */
-  screenShareRemoteParticipant: string | undefined;
+  screenShareRemoteParticipant: FlatCommunicationIdentifier | undefined;
   /**
    * Stores the local date when the call started on the client. This is not originally in the SDK but provided by the
    * Declarative layer.

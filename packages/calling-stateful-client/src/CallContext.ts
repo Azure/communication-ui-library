@@ -311,7 +311,7 @@ export class CallContext {
     );
   }
 
-  public setCallScreenShareParticipant(callId: string, participantKey: string | undefined): void {
+  public setCallScreenShareParticipant(callId: string, participantKey: FlatCommunicationIdentifier | undefined): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         const call = draft.calls.get(callId);
