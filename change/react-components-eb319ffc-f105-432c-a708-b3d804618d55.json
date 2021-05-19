@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Drop unused",
+  "comment": "Drop unused button props",
   "packageName": "react-components",
   "email": "prprabhu@microsoft.com",
   "dependentChangeType": "patch"
