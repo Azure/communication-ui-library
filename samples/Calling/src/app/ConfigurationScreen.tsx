@@ -11,7 +11,7 @@ import { CallConfiguration } from './CallConfiguration';
 import { LocalDeviceSettings } from './LocalDeviceSettings';
 import { optionsButtonSelector } from '@azure/acs-calling-selector';
 import { useSelector } from './hooks/useSelector';
-import { useHandlers } from './hooks/useHandlers';
+import { useAzureCommunicationHandlers } from './hooks/useAzureCommunicationHandlers';
 
 export interface ConfigurationScreenProps {
   screenWidth: number;
@@ -26,7 +26,7 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
   const [nameTooLongWarning, setNameTooLongWarning] = useState(false);
 
   const options = useSelector(optionsButtonSelector);
-  const localDeviceSettingsHandlers = useHandlers(LocalDeviceSettings);
+  const handlers = useAzureCommunicationHandlers();
 
   return (
     <CallConfiguration {...props}>
@@ -39,7 +39,12 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
         setNameLengthExceedLimit={setNameTooLongWarning}
       />
       <div>
-        <LocalDeviceSettings {...options} {...localDeviceSettingsHandlers} />
+        <LocalDeviceSettings
+          {...options}
+          onSelectCamera={handlers.onSelectCamera}
+          onSelectMicrophone={handlers.onSelectMicrophone}
+          onSelectSpeaker={handlers.onSelectSpeaker}
+        />
       </div>
       <div>
         <StartCallButton

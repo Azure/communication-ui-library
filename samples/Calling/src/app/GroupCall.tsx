@@ -9,7 +9,7 @@ import React, { useEffect, useState } from 'react';
 import { useCallAgent, useCallClient, useCall, useCallContext } from 'react-composites';
 import { CommandPanel, CommandPanelTypes } from './CommandPanel';
 import { Header } from './Header';
-import { useHandlers } from './hooks/useHandlers';
+import { useAzureCommunicationHandlers } from './hooks/useAzureCommunicationHandlers';
 import { useSelector } from './hooks/useSelector';
 import { MediaGallery } from './MediaGallery';
 import {
@@ -46,7 +46,7 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
   const [joinedCall, setJoinedCall] = useState<boolean>(false);
 
   const mediaGalleryProps = useSelector(mediaGallerySelector);
-  const mediaGalleryHandlers = useHandlers(MediaGallery);
+  const handlers = useAzureCommunicationHandlers();
 
   // To use useProps to get these states, we need to create another file wrapping GroupCall,
   // It seems unnecessary in this case, so we get the updated states using this approach.
@@ -104,7 +104,7 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
               callState === 'Connected' && (
                 <>
                   <Stack.Item grow styles={activeContainerClassName}>
-                    <MediaGallery {...mediaGalleryProps} {...mediaGalleryHandlers} />
+                    <MediaGallery {...mediaGalleryProps} onStartLocalVideo={handlers.onStartLocalVideo} />
                   </Stack.Item>
                   {selectedPane !== CommandPanelTypes.None &&
                     (window.innerWidth > MINI_HEADER_WINDOW_WIDTH ? (
