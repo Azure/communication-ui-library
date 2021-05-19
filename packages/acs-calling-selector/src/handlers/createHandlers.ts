@@ -16,7 +16,7 @@ import {
   fromFlatCommunicationIdentifier,
   toFlatCommunicationIdentifier
 } from 'acs-ui-common';
-import { DeviceManager, StatefulCallClient, StatefulDeviceManager } from 'calling-stateful-client';
+import { DeviceManagerState, StatefulCallClient, StatefulDeviceManager } from 'calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
 import { VideoStreamOptions } from 'react-components';
@@ -208,7 +208,7 @@ export const createDefaultCallingHandlers = memoizeOne(
   }
 );
 
-const isPreviewOn = (deviceManager: DeviceManager): boolean => {
+const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
   return !!deviceManager.unparentedViews && !!deviceManager.unparentedViews[0]?.target;
 };
 

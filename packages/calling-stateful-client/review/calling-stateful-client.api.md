@@ -15,7 +15,7 @@ import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { CreateViewOptions } from '@azure/communication-calling';
 import { DeviceAccess } from '@azure/communication-calling';
-import { DeviceManager as DeviceManager_2 } from '@azure/communication-calling';
+import { DeviceManager } from '@azure/communication-calling';
 import { FlatCommunicationIdentifier } from 'acs-ui-common';
 import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
@@ -41,7 +41,7 @@ export interface Call {
     recording: RecordingCallFeature;
     remoteParticipants: Map<FlatCommunicationIdentifier, RemoteParticipant>;
     remoteParticipantsEnded: Map<FlatCommunicationIdentifier, RemoteParticipant>;
-    screenShareRemoteParticipant: string | undefined;
+    screenShareRemoteParticipant: FlatCommunicationIdentifier | undefined;
     startTime: Date;
     state: CallState;
     transcription: TranscriptionCallFeature;
@@ -49,16 +49,16 @@ export interface Call {
 }
 
 // @public
-export interface CallAgent {
+export interface CallAgentState {
     displayName?: string;
 }
 
 // @public
 export interface CallClientState {
-    callAgent: CallAgent | undefined;
+    callAgent: CallAgentState | undefined;
     calls: Map<string, Call>;
     callsEnded: Call[];
-    deviceManager: DeviceManager;
+    deviceManager: DeviceManagerState;
     incomingCalls: Map<string, IncomingCall>;
     incomingCallsEnded: IncomingCall[];
     userId: FlatCommunicationIdentifier;
@@ -68,7 +68,7 @@ export interface CallClientState {
 export const createStatefulCallClient: (callClientArgs: StatefulCallClientArgs, callClientOptions?: CallClientOptions | undefined) => StatefulCallClient;
 
 // @public
-export type DeviceManager = {
+export type DeviceManagerState = {
     isSpeakerSelectionAvailable: boolean;
     selectedMicrophone?: AudioDeviceInfo;
     selectedSpeaker?: AudioDeviceInfo;
@@ -138,7 +138,7 @@ export type StatefulCallClientArgs = {
 export type StatefulCallClientOptions = CallClientOptions;
 
 // @public (undocumented)
-export interface StatefulDeviceManager extends DeviceManager_2 {
+export interface StatefulDeviceManager extends DeviceManager {
     // (undocumented)
     selectCamera: (VideoDeviceInfo: any) => void;
 }

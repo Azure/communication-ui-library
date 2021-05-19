@@ -6,9 +6,9 @@ export type { StatefulCallClient, StatefulCallClientArgs, StatefulCallClientOpti
 export type { StatefulDeviceManager } from './DeviceManagerDeclarative';
 export type {
   Call,
-  CallAgent,
+  CallAgentState,
   CallClientState,
-  DeviceManager,
+  DeviceManagerState,
   IncomingCall,
   LocalVideoStream,
   RemoteParticipant,

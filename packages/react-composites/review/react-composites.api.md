@@ -13,7 +13,7 @@ import { ChatMessage } from '@azure/communication-chat';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClientState } from 'chat-stateful-client';
 import type { CommunicationUserKind } from '@azure/communication-common';
-import { DeviceManager } from 'calling-stateful-client';
+import { DeviceManagerState } from 'calling-stateful-client';
 import { ErrorInfo } from 'react';
 import { FlatCommunicationIdentifier } from 'acs-ui-common';
 import type { MicrosoftTeamsUserKind } from '@azure/communication-common';
@@ -211,7 +211,7 @@ export type CallingClientState = {
     userId: FlatCommunicationIdentifier;
     displayName?: string;
     call?: Call;
-    devices: DeviceManager;
+    devices: DeviceManagerState;
 };
 
 // @public (undocumented)
