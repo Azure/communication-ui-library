@@ -2,15 +2,7 @@
 // Licensed under the MIT license.
 
 import { LocalVideoStream, RemoteVideoStream, VideoStreamRenderer } from '@azure/communication-calling';
-import { LocalVideoStream as StatefulLocalVideoStream, VideoStreamRendererViewAndStatus } from './CallClientState';
-
-/**
- * Used internally in InternalCallContext to be able to hold both the stream and the renderer in the same array.
- */
-export interface StreamAndRendererAndStatus {
-  stream: StatefulLocalVideoStream;
-  renderer: VideoStreamRendererViewAndStatus;
-}
+import { LocalVideoStream as StatefulLocalVideoStream } from './CallClientState';
 
 /**
  * Contains internal data used between different Declarative components to share data.

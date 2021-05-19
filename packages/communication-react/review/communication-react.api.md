@@ -728,7 +728,7 @@ export type DeviceManager = {
     microphones: AudioDeviceInfo[];
     speakers: AudioDeviceInfo[];
     deviceAccess?: DeviceAccess;
-    unparentedViews: VideoStreamRendererView[];
+    unparentedViews: Map<LocalVideoStream, LocalVideoStream>;
 };
 
 // @public (undocumented)
@@ -858,16 +858,17 @@ export const lightTheme: PartialTheme & CallingTheme;
 
 // @public (undocumented)
 export const localPreviewSelector: reselect.OutputSelector<CallClientState, {
-    videoStreamElement: HTMLElement | null;
+    videoStreamElement: any;
 }, (res: DeviceManager) => {
-    videoStreamElement: HTMLElement | null;
+    videoStreamElement: any;
 }>;
 
 // @public
 export interface LocalVideoStream {
     mediaStreamType: MediaStreamType;
     source: VideoDeviceInfo;
-    viewAndStatus: VideoStreamRendererViewAndStatus;
+    view?: VideoStreamRendererView;
+    viewStatus: VideoStreamRendererViewStatus;
 }
 
 // @public (undocumented)
@@ -875,9 +876,9 @@ export const MakeNPMHappy = true;
 
 // @public (undocumented)
 export const mediaGallerySelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
-    isVideoStreamOn: boolean;
+    isVideoStreamNotRendered: boolean;
 }, (res: Call | undefined) => {
-    isVideoStreamOn: boolean;
+    isVideoStreamNotRendered: boolean;
 }>;
 
 // @public
@@ -1070,7 +1071,8 @@ export interface RemoteVideoStream {
     id: number;
     isAvailable: boolean;
     mediaStreamType: MediaStreamType;
-    viewAndStatus: VideoStreamRendererViewAndStatus;
+    view?: VideoStreamRendererView;
+    viewStatus: VideoStreamRendererViewStatus;
 }
 
 // @public
@@ -1307,6 +1309,7 @@ export const videoGallerySelector: reselect.OutputParametricSelector<CallClientS
         videoStream: {
             isAvailable: boolean;
             isMirrored: boolean | undefined;
+            renderStatus: VideoStreamRendererViewStatus;
             renderElement: HTMLElement | undefined;
         };
     };
@@ -1321,6 +1324,7 @@ export const videoGallerySelector: reselect.OutputParametricSelector<CallClientS
         videoStream: {
             isAvailable: boolean;
             isMirrored: boolean | undefined;
+            renderStatus: VideoStreamRendererViewStatus;
             renderElement: HTMLElement | undefined;
         };
     };
@@ -1337,7 +1341,12 @@ export interface VideoGalleryStream {
     isMirrored?: boolean;
     // (undocumented)
     renderElement?: HTMLElement;
+    // (undocumented)
+    renderStatus: VideoGalleryStreamRenderStatus;
 }
+
+// @public
+export type VideoGalleryStreamRenderStatus = 'NotRendered' | 'Rendering' | 'Rendered' | 'Stopping';
 
 // @public (undocumented)
 export interface VideoStreamOptions {
@@ -1355,15 +1364,7 @@ export interface VideoStreamRendererView {
 }
 
 // @public
-export interface VideoStreamRendererViewAndStatus {
-    // (undocumented)
-    status: VideoStreamRendererViewStatus;
-    // (undocumented)
-    view: VideoStreamRendererView | undefined;
-}
-
-// @public
-export type VideoStreamRendererViewStatus = 'NotRendered' | 'InProgress' | 'Completed' | 'Stopping';
+export type VideoStreamRendererViewStatus = 'NotRendered' | 'Rendering' | 'Rendered' | 'Stopping';
 
 // @public (undocumented)
 export const VideoTile: (props: VideoTileProps) => JSX.Element;

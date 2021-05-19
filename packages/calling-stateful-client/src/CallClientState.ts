@@ -123,10 +123,15 @@ export interface LocalVideoStream {
    */
   mediaStreamType: MediaStreamType;
   /**
-   * {@Link VideoStreamRendererViewAndStatus} that is managed by createView/disposeView in
-   * {@Link StatefulCallClient} API.
+   * {@Link VideoStreamRendererViewStatus} that is managed by createView/disposeView in {@Link StatefulCallClient}. It
+   * will be 'NotRendered'.
    */
-  viewAndStatus: VideoStreamRendererViewAndStatus;
+  viewStatus: VideoStreamRendererViewStatus;
+  /**
+   * {@Link VideoStreamRendererView} that is managed by createView/disposeView in {@Link StatefulCallClient}
+   * API. This can be undefined if the stream has not yet been rendered.
+   */
+  view?: VideoStreamRendererView;
 }
 
 /**
@@ -146,26 +151,23 @@ export interface RemoteVideoStream {
    */
   isAvailable: boolean;
   /**
-   * {@Link VideoStreamRendererViewAndStatus} that is managed by reateView/disposeView in
-   * {@Link StatefulCallClient} API.
+   * {@Link VideoStreamRendererViewStatus} that is managed by createView/disposeView in {@Link StatefulCallClient}. It
+   * will be 'NotRendered'.
    */
-  viewAndStatus: VideoStreamRendererViewAndStatus;
+  viewStatus: VideoStreamRendererViewStatus;
+  /**
+   * {@Link VideoStreamRendererView} that is managed by createView/disposeView in {@Link StatefulCallClient}
+   * API. This can be undefined if the stream has not yet been rendered.
+   */
+  view?: VideoStreamRendererView;
 }
 
 /**
- * Stores the status of a video render as rendering could take a long time.
+ * Stores the status of a video render of a stream as rendering could take a long time. If the status is 'NotRendered'
+ * you can safely call createView on the stream. For other status you should not call createView on the stream.
+ * disposeView can be called on any status. See {@Link RemoteVideoStream} and {@Link LocalVideoStream}.
  */
-export type VideoStreamRendererViewStatus = 'NotRendered' | 'InProgress' | 'Completed' | 'Stopping';
-
-/**
- * Contains the status {@Link VideoStreamRendererViewStatus} of a render and the view
- * {@Link VideoStreamRendererView} of that render. The {@Link VideoStreamRendererView} will be undefined if the
- * {@Link VideoStreamRendererViewStatus} is 'NotRendered' or 'InProgress'.
- */
-export interface VideoStreamRendererViewAndStatus {
-  status: VideoStreamRendererViewStatus;
-  view: VideoStreamRendererView | undefined;
-}
+export type VideoStreamRendererViewStatus = 'NotRendered' | 'Rendering' | 'Rendered' | 'Stopping';
 
 /**
  * State only version of {@Link @azure/communication-calling#VideoStreamRendererView}. TODO: Do we want to provide an
@@ -369,14 +371,12 @@ export type DeviceManager = {
    */
   deviceAccess?: DeviceAccess;
   /**
-   * Stores created views that are not associated with any Call state (when
-<<<<<<< HEAD
-   * {@Link StatefulCallClient#startRenderVideo} is called with undefined callId and defined LocalVideoStream).
-=======
-   * {@Link StatefulCallClient#createView} is called with undefined callId and LocalVideoStream).
->>>>>>> origin/main
+   * Stores created views that are not associated with any Call state (when {@Link StatefulCallClient#createView} is
+   * called with undefined callId and defined LocalVideoStream). The LocalVideoStream key will be the original
+   * reference that createView is called with. The value will be a new LocalVideoStream different than the one used as
+   * they key with an up-to date status and view.
    */
-  unparentedViews: Map<LocalVideoStream, VideoStreamRendererViewAndStatus>;
+  unparentedViews: Map<LocalVideoStream, LocalVideoStream>;
 };
 
 /**

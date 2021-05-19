@@ -24,6 +24,7 @@ import { UnknownIdentifier } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoGalleryRemoteParticipant } from 'react-components';
 import { VideoStreamOptions } from 'react-components';
+import { VideoStreamRendererViewStatus } from 'calling-stateful-client';
 
 // @public (undocumented)
 export type CallbackType<KeyT, ArgsT extends any[], FnRetT> = (memoizedFn: FunctionWithKey<KeyT, ArgsT, FnRetT>) => FnRetT[];
@@ -124,27 +125,17 @@ export const getIncomingCalls: (state: CallClientState) => Map<string, IncomingC
 export const getIncomingCallsEnded: (state: CallClientState) => IncomingCall[];
 
 // @public (undocumented)
-<<<<<<< HEAD
-export const getUserId: (state: CallClientState) => string;
-
-// @public (undocumented)
-export const localPreviewSelector: reselect.OutputSelector<callingStateful.CallClientState, {
-    videoStreamElement: any;
-}, (res: callingStateful.DeviceManager) => {
-    videoStreamElement: any;
-=======
 export const localPreviewSelector: reselect.OutputSelector<CallClientState, {
-    videoStreamElement: HTMLElement | null;
+    videoStreamElement: any;
 }, (res: DeviceManager) => {
-    videoStreamElement: HTMLElement | null;
->>>>>>> origin/main
+    videoStreamElement: any;
 }>;
 
 // @public (undocumented)
 export const mediaGallerySelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
-    isVideoStreamOn: boolean;
+    isVideoStreamNotRendered: boolean;
 }, (res: Call_2 | undefined) => {
-    isVideoStreamOn: boolean;
+    isVideoStreamNotRendered: boolean;
 }>;
 
 // @public
@@ -203,6 +194,7 @@ export const videoGallerySelector: reselect.OutputParametricSelector<CallClientS
         videoStream: {
             isAvailable: boolean;
             isMirrored: boolean | undefined;
+            renderStatus: VideoStreamRendererViewStatus;
             renderElement: HTMLElement | undefined;
         };
     };
@@ -217,6 +209,7 @@ export const videoGallerySelector: reselect.OutputParametricSelector<CallClientS
         videoStream: {
             isAvailable: boolean;
             isMirrored: boolean | undefined;
+            renderStatus: VideoStreamRendererViewStatus;
             renderElement: HTMLElement | undefined;
         };
     };

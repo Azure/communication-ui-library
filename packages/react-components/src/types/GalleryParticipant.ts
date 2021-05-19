@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { VideoGalleryStreamRenderStatus } from './VideoGalleryParticipant';
+
 export declare type VideoDeviceType = 'Unknown' | 'UsbCamera' | 'CaptureAdapter' | 'Virtual';
 
 export declare interface VideoDeviceInfo {
@@ -19,21 +21,6 @@ export declare interface VideoDeviceInfo {
 }
 
 /**
- * Stores the status of a video render as rendering could take a long time.
- */
-export type VideoStreamRendererViewStatus = 'NotRendered' | 'InProgress' | 'Completed' | 'Stopping';
-
-/**
- * Contains the status {@Link VideoStreamRendererViewStatus} of a render and the view
- * {@Link VideoStreamRendererView} of that render. The {@Link VideoStreamRendererView} will be undefined if the
- * {@Link VideoStreamRendererViewStatus} is 'NotRendered' or 'InProgress'.
- */
-export interface VideoStreamRendererViewAndStatus {
-  status: VideoStreamRendererViewStatus;
-  view: VideoStreamRendererView | undefined;
-}
-
-/**
  * State only version of {@Link @azure/communication-calling#LocalVideoStream}.
  */
 export interface LocalVideoStream {
@@ -46,10 +33,15 @@ export interface LocalVideoStream {
    */
   mediaStreamType: MediaStreamType;
   /**
-   * {@Link VideoStreamRendererViewAndStatus} that is managed by startRenderVideo/stopRenderVideo in
-   * {@Link StatefulCallClient} API.
+   * {@Link VideoStreamRendererViewStatus} that is managed by createView/disposeView in {@Link StatefulCallClient}. It
+   * will be 'NotRendered'.
    */
-  viewAndStatus: VideoStreamRendererViewAndStatus;
+  viewStatus: VideoGalleryStreamRenderStatus;
+  /**
+   * {@Link VideoStreamRendererView} that is managed by createView/disposeView in {@Link StatefulCallClient}
+   * API. This can be undefined if the stream has not yet been rendered.
+   */
+  view?: VideoStreamRendererView;
 }
 
 /**
@@ -69,10 +61,15 @@ export interface RemoteVideoStream {
    */
   isAvailable: boolean;
   /**
-   * {@Link VideoStreamRendererViewAndStatus} that is managed by startRenderVideo/stopRenderVideo in
-   * {@Link StatefulCallClient} API.
+   * {@Link VideoStreamRendererViewStatus} that is managed by createView/disposeView in {@Link StatefulCallClient}. It
+   * will be 'NotRendered'.
    */
-  viewAndStatus: VideoStreamRendererViewAndStatus;
+  viewStatus: VideoGalleryStreamRenderStatus;
+  /**
+   * {@Link VideoStreamRendererView} that is managed by createView/disposeView in {@Link StatefulCallClient}
+   * API. This can be undefined if the stream has not yet been rendered.
+   */
+  view?: VideoStreamRendererView;
 }
 
 /**

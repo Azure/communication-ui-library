@@ -5,8 +5,8 @@ import * as reselect from 'reselect';
 import { getCall } from './baseSelectors';
 
 export const mediaGallerySelector = reselect.createSelector([getCall], (call) => {
+  const renderStatus = call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video')?.viewStatus;
   return {
-    isVideoStreamOn: !!call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video')
-      ?.videoStreamRendererView?.target
+    isVideoStreamNotRendered: renderStatus === 'NotRendered'
   };
 });

@@ -14,7 +14,6 @@ export type {
   RemoteParticipant,
   RemoteVideoStream,
   VideoStreamRendererView,
-  VideoStreamRendererViewAndStatus,
   VideoStreamRendererViewStatus,
   RecordingCallFeature,
   TranscriptionCallFeature,

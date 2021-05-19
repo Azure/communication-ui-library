@@ -2,7 +2,15 @@
 // Licensed under the MIT license.
 
 // @ts-ignore
-import { Call, CallClientState, RemoteParticipant, RemoteVideoStream } from 'calling-stateful-client';
+import {
+  Call,
+  // @ts-ignore
+  CallClientState,
+  RemoteParticipant,
+  RemoteVideoStream,
+  // @ts-ignore
+  VideoStreamRendererViewStatus
+} from 'calling-stateful-client';
 // @ts-ignore
 import { createSelector } from 'reselect';
 // @ts-ignore
@@ -18,8 +26,9 @@ const convertRemoteVideoStreamToVideoGalleryStream = (stream: RemoteVideoStream)
   return {
     id: stream.id,
     isAvailable: stream.isAvailable,
-    isMirrored: stream.videoStreamRendererView?.isMirrored,
-    renderElement: stream.videoStreamRendererView?.target
+    isMirrored: stream.view?.isMirrored,
+    renderStatus: stream.viewStatus,
+    renderElement: stream.view?.target
   };
 };
 
@@ -118,8 +127,9 @@ export const videoGallerySelector = createSelector(
         isScreenSharingOn: call?.isScreenSharingOn,
         videoStream: {
           isAvailable: !!localVideoStream,
-          isMirrored: localVideoStream?.videoStreamRendererView?.isMirrored,
-          renderElement: localVideoStream?.videoStreamRendererView?.target
+          isMirrored: localVideoStream?.view?.isMirrored,
+          renderStatus: localVideoStream ? localVideoStream.viewStatus : 'NotRendered',
+          renderElement: localVideoStream?.view?.target
         }
       },
       remoteParticipants: videoGalleryRemoteParticipantsFromCall(call)

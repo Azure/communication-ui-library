@@ -148,19 +148,6 @@ export const labeledRecordButtonProps: IButtonProps;
 // @public
 export const lightTheme: PartialTheme & CallingTheme;
 
-<<<<<<< HEAD
-// @public
-export interface LocalVideoStream {
-    mediaStreamType: MediaStreamType;
-    source: VideoDeviceInfo;
-    viewAndStatus: VideoStreamRendererViewAndStatus;
-}
-
-// @public (undocumented)
-export type MediaStreamType = 'Video' | 'ScreenSharing';
-
-=======
->>>>>>> origin/main
 // @public (undocumented)
 export type Message<T extends MessageTypes> = {
     type: T;
@@ -283,20 +270,6 @@ export interface ReadReceiptProps {
 export const recordButtonProps: IButtonProps;
 
 // @public
-<<<<<<< HEAD
-export interface RemoteVideoStream {
-    id: number;
-    isAvailable: boolean;
-    mediaStreamType: MediaStreamType;
-    viewAndStatus: VideoStreamRendererViewAndStatus;
-}
-
-// @public (undocumented)
-export type ScalingMode = 'Stretch' | 'Crop' | 'Fit';
-
-// @public
-=======
->>>>>>> origin/main
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
 
 // @public
@@ -422,18 +395,12 @@ export interface VideoGalleryStream {
     isMirrored?: boolean;
     // (undocumented)
     renderElement?: HTMLElement;
+    // (undocumented)
+    renderStatus: VideoGalleryStreamRenderStatus;
 }
 
 // @public
-export interface VideoStreamRendererViewAndStatus {
-    // (undocumented)
-    status: VideoStreamRendererViewStatus;
-    // (undocumented)
-    view: VideoStreamRendererView | undefined;
-}
-
-// @public
-export type VideoStreamRendererViewStatus = 'NotRendered' | 'InProgress' | 'Completed' | 'Stopping';
+export type VideoGalleryStreamRenderStatus = 'NotRendered' | 'Rendering' | 'Rendered' | 'Stopping';
 
 // @public (undocumented)
 export interface VideoStreamOptions {

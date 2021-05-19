@@ -7,6 +7,7 @@ import {
   BaseCustomStylesProps,
   VideoGalleryLocalParticipant,
   VideoGalleryRemoteParticipant,
+  VideoGalleryStreamRenderStatus,
   VideoStreamOptions
 } from '../types';
 import { GridLayout } from './GridLayout';
@@ -33,8 +34,8 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
   (
     userId: string,
     onCreateRemoteStreamView: any,
+    renderStatus: VideoGalleryStreamRenderStatus,
     isAvailable?: boolean,
-    renderStatus: VideoStreamRendererViewStatus,
     renderElement?: HTMLElement,
     displayName?: string,
     remoteVideoViewOption?: VideoStreamOptions
@@ -45,7 +46,7 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
     return (
       <Stack className={gridStyle} key={userId} grow>
         <VideoTile
-          isVideoReady={isAvailable && renderStatus === 'Completed'}
+          isVideoReady={isAvailable && renderStatus === 'Rendered'}
           renderElement={<StreamMedia videoStreamElement={renderElement ?? null} />}
           displayName={displayName}
           styles={videoTileStyle}
@@ -73,8 +74,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
    */
   const defaultOnRenderLocalVideoTile = useMemo((): JSX.Element => {
     const localVideoStream = localParticipant?.videoStream;
-    const isLocalVideoNotRendered = localVideoStream?.viewAndStatus.status === 'NotRendered';
-    const isLocalVideoReady = localVideoStream?.viewAndStatus.status === 'Completed';
+    const isLocalVideoNotRendered = localVideoStream?.renderStatus === 'NotRendered';
+    const isLocalVideoReady = localVideoStream?.renderStatus === 'Rendered';
 
     if (onRenderLocalVideoTile) return onRenderLocalVideoTile(localParticipant);
 
@@ -84,7 +85,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     return (
       <VideoTile
         isVideoReady={isLocalVideoReady}
-        renderElement={<StreamMedia videoStreamElement={localVideoStream?.viewAndStatus.view?.target ?? null} />}
+        renderElement={<StreamMedia videoStreamElement={localVideoStream?.renderElement ?? null} />}
         displayName={localParticipant?.displayName}
         styles={videoTileStyle}
       />
@@ -110,9 +111,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         return memoizedRemoteParticipantFn(
           participant.userId,
           onCreateRemoteStreamView,
+          remoteVideoStream ? remoteVideoStream.renderStatus : 'NotRendered',
           remoteVideoStream?.isAvailable,
-          remoteVideoStream?.viewAndStatus.status,
-          remoteVideoStream?.viewAndStatus.view?.target,
+          remoteVideoStream?.renderElement,
           participant.displayName,
           remoteVideoViewOption
         );

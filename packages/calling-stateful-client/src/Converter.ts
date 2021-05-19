@@ -36,7 +36,8 @@ export function convertSdkLocalStreamToDeclarativeLocalStream(
   return {
     source: stream.source,
     mediaStreamType: stream.mediaStreamType,
-    viewAndStatus: { status: 'NotRendered', view: undefined }
+    viewStatus: 'NotRendered',
+    view: undefined
   };
 }
 
@@ -47,7 +48,8 @@ export function convertSdkRemoteStreamToDeclarativeRemoteStream(
     id: stream.id,
     mediaStreamType: stream.mediaStreamType,
     isAvailable: stream.isAvailable,
-    viewAndStatus: { status: 'NotRendered', view: undefined }
+    viewStatus: 'NotRendered',
+    view: undefined
   };
 }
 

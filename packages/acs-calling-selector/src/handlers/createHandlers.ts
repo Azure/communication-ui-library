@@ -53,7 +53,8 @@ export const createDefaultCallingHandlers = memoizeOne(
         await callClient.disposeView(callId, {
           source: stream.source,
           mediaStreamType: stream.mediaStreamType,
-          viewAndStatus: { status: 'NotRendered', view: undefined }
+          viewStatus: 'NotRendered',
+          view: undefined
         });
       }
     };
@@ -74,19 +75,15 @@ export const createDefaultCallingHandlers = memoizeOne(
             await callClient.disposeView(undefined, {
               source: selectedCamera,
               mediaStreamType: 'Video',
-              viewAndStatus: {
-                status: 'NotRendered',
-                view: undefined
-              }
+              viewStatus: 'NotRendered',
+              view: undefined
             });
           } else {
             await callClient.createView(undefined, {
               source: selectedCamera,
               mediaStreamType: 'Video',
-              viewAndStatus: {
-                status: 'NotRendered',
-                view: undefined
-              }
+              viewStatus: 'NotRendered',
+              view: undefined
             });
           }
         }
@@ -136,20 +133,16 @@ export const createDefaultCallingHandlers = memoizeOne(
           await callClient.disposeView(undefined, {
             source: selectedCamera,
             mediaStreamType: 'Video',
-            viewAndStatus: {
-              status: 'NotRendered',
-              view: undefined
-            }
+            viewStatus: 'NotRendered',
+            view: undefined
           });
         }
         deviceManager.selectCamera(device);
         await callClient.createView(undefined, {
           source: device,
           mediaStreamType: 'Video',
-          viewAndStatus: {
-            status: 'NotRendered',
-            view: undefined
-          }
+          viewStatus: 'NotRendered',
+          view: undefined
         });
       }
     };
@@ -168,9 +161,20 @@ export const createDefaultCallingHandlers = memoizeOne(
     const onHangUp = async (): Promise<void> => await call?.hangUp();
 
     const onCreateLocalStreamView = async (options?: VideoStreamOptions): Promise<void> => {
-      if (!call || call.localVideoStreams.length === 0) return;
-      const localStream = call.localVideoStreams.find((item) => item.mediaStreamType === 'Video');
-      if (!localStream) return;
+      if (!call || call.localVideoStreams.length === 0) {
+        return;
+      }
+
+      const callState = callClient.getState().calls.get(call.id);
+      if (!callState) {
+        return;
+      }
+
+      const localStream = callState.localVideoStreams.find((item) => item.mediaStreamType === 'Video');
+      if (!localStream) {
+        return;
+      }
+
       callClient.createView(call.id, localStream, options);
     };
 
@@ -188,11 +192,21 @@ export const createDefaultCallingHandlers = memoizeOne(
       const remoteVideoStream = Array.from(streams?.values()).find((i) => i.mediaStreamType === 'Video');
       const screenShareStream = Array.from(streams?.values()).find((i) => i.mediaStreamType === 'ScreenSharing');
 
-      if (remoteVideoStream && remoteVideoStream.isAvailable && !remoteVideoStream.videoStreamRendererView) {
+      if (
+        remoteVideoStream &&
+        remoteVideoStream.isAvailable &&
+        remoteVideoStream.viewStatus === 'NotRendered' &&
+        !remoteVideoStream.view
+      ) {
         callClient.createView(call.id, remoteVideoStream, options);
       }
 
-      if (screenShareStream && screenShareStream.isAvailable && !screenShareStream.videoStreamRendererView) {
+      if (
+        screenShareStream &&
+        screenShareStream.isAvailable &&
+        screenShareStream.viewStatus === 'NotRendered' &&
+        !screenShareStream.view
+      ) {
         callClient.createView(call.id, screenShareStream, options);
       }
     };
@@ -220,8 +234,11 @@ export const createDefaultCallingHandlers = memoizeOne(
   }
 );
 
+// TODO: extract into an util.
 const isPreviewOn = (deviceManager: DeviceManager): boolean => {
-  return !!deviceManager.unparentedViews && !!deviceManager.unparentedViews[0]?.target;
+  // TODO: we should take in a LocalVideoStream that developer wants to use as their 'Preview' view. We should also
+  // handle cases where 'Preview' view is in progress and not necessary completed.
+  return deviceManager.unparentedViews.values().next().value?.view !== undefined;
 };
 
 type Common<A, B> = Pick<A, CommonProperties<A, B>>;

@@ -15,12 +15,13 @@ const VideoGalleryStyles = {
 };
 
 export interface MediaGalleryProps {
-  isVideoStreamOn?: boolean;
+  isVideoStreamNotRendered: boolean;
   isMicrophoneChecked?: boolean;
   onStartLocalVideo: () => Promise<void>;
 }
 
 export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
+  const { isVideoStreamNotRendered, onStartLocalVideo } = props;
   const videoGalleryProps = usePropsFor(VideoGallery);
   const [isButtonStatusSynced, setIsButtonStatusSynced] = useState(false);
 
@@ -30,11 +31,11 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   }, [videoGalleryProps]);
 
   useEffect(() => {
-    if (isPreviewCameraOn && !props.isVideoStreamOn && !isButtonStatusSynced) {
-      props.onStartLocalVideo();
+    if (isPreviewCameraOn && isVideoStreamNotRendered && !isButtonStatusSynced) {
+      onStartLocalVideo();
     }
     setIsButtonStatusSynced(true);
-  }, [isButtonStatusSynced, isPreviewCameraOn, props]);
+  }, [isButtonStatusSynced, isPreviewCameraOn, isVideoStreamNotRendered, onStartLocalVideo]);
 
   const VideoGalleryMemoized = useMemo(() => {
     return (

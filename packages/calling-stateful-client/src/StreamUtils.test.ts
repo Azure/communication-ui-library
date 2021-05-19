@@ -95,7 +95,8 @@ function addMockRemoteStreamAndParticipant(call: Call, key: string, id: number):
     id: id,
     mediaStreamType: 'Video',
     isAvailable: true,
-    viewAndStatus: { status: 'NotRendered', view: undefined }
+    viewStatus: 'NotRendered',
+    view: undefined
   };
   participant.videoStreams.set(id, remoteVideoStream);
   call.remoteParticipants.set(key, participant);
@@ -119,7 +120,7 @@ function addSdkRemoteStream(internalContext: InternalCallContext, callId: string
 }
 
 function addMockLocalStream(call: Call): void {
-  call.localVideoStreams.push({ viewAndStatus: { status: 'NotRendered', view: undefined } } as LocalVideoStream);
+  call.localVideoStreams.push({ viewStatus: 'NotRendered', view: undefined } as LocalVideoStream);
 }
 
 function addSdkLocalStream(internalContext: InternalCallContext, callId: string): void {
@@ -143,14 +144,14 @@ describe('stream utils', () => {
         .getState()
         .calls.get(mockCallId)
         ?.remoteParticipants.get(mockParticipantKey)
-        ?.videoStreams.get(mockStreamId)?.viewAndStatus.status
-    ).toBe('Completed');
+        ?.videoStreams.get(mockStreamId)?.viewStatus
+    ).toBe('Rendered');
     expect(
       context
         .getState()
         .calls.get(mockCallId)
         ?.remoteParticipants.get(mockParticipantKey)
-        ?.videoStreams.get(mockStreamId)?.viewAndStatus.view
+        ?.videoStreams.get(mockStreamId)?.viewStatus
     ).toBeDefined();
   });
 
@@ -165,8 +166,8 @@ describe('stream utils', () => {
 
     expect(internalContext.getLocalVideoStream(mockCallId)).toBeDefined();
     expect(internalContext.getLocalVideoStreamRenderer(mockCallId)).toBeDefined();
-    expect(context.getState().calls.get(mockCallId)?.localVideoStreams[0].viewAndStatus.status).toBe('Completed');
-    expect(context.getState().calls.get(mockCallId)?.localVideoStreams[0].viewAndStatus.view).toBeDefined();
+    expect(context.getState().calls.get(mockCallId)?.localVideoStreams[0].viewStatus).toBe('Rendered');
+    expect(context.getState().calls.get(mockCallId)?.localVideoStreams[0].view).toBeDefined();
   });
 
   test('cleans up state and stop rendering when disposeView is called on remote stream', async () => {
@@ -186,14 +187,14 @@ describe('stream utils', () => {
         .getState()
         .calls.get(mockCallId)
         ?.remoteParticipants.get(mockParticipantKey)
-        ?.videoStreams.get(mockStreamId)?.viewAndStatus.status
+        ?.videoStreams.get(mockStreamId)?.viewStatus
     ).toBe('NotRendered');
     expect(
       context
         .getState()
         .calls.get(mockCallId)
         ?.remoteParticipants.get(mockParticipantKey)
-        ?.videoStreams.get(mockStreamId)?.viewAndStatus.view
+        ?.videoStreams.get(mockStreamId)?.view
     ).not.toBeDefined();
   });
 
@@ -218,28 +219,28 @@ describe('stream utils', () => {
         .getState()
         .calls.get(mockCallId)
         ?.remoteParticipants.get(mockParticipantKey)
-        ?.videoStreams.get(mockStreamId)?.viewAndStatus.status
-    ).toBe('Completed');
+        ?.videoStreams.get(mockStreamId)?.viewStatus
+    ).toBe('Rendered');
     expect(
       context
         .getState()
         .calls.get(mockCallId)
         ?.remoteParticipants.get(mockParticipantKey)
-        ?.videoStreams.get(mockStreamId)?.viewAndStatus.view
+        ?.videoStreams.get(mockStreamId)?.view
     ).toBeDefined();
     expect(
       context
         .getState()
         .calls.get(mockCallId)
         ?.remoteParticipants.get(mockParticipantKey2)
-        ?.videoStreams.get(mockStreamId2)?.viewAndStatus.status
-    ).toBe('Completed');
+        ?.videoStreams.get(mockStreamId2)?.viewStatus
+    ).toBe('Rendered');
     expect(
       context
         .getState()
         .calls.get(mockCallId)
         ?.remoteParticipants.get(mockParticipantKey2)
-        ?.videoStreams.get(mockStreamId2)?.viewAndStatus.view
+        ?.videoStreams.get(mockStreamId2)?.view
     ).toBeDefined();
 
     disposeAllViewsFromCall(context, internalContext, mockCallId);
@@ -251,28 +252,28 @@ describe('stream utils', () => {
         .getState()
         .calls.get(mockCallId)
         ?.remoteParticipants.get(mockParticipantKey)
-        ?.videoStreams.get(mockStreamId)?.viewAndStatus.status
+        ?.videoStreams.get(mockStreamId)?.viewStatus
     ).toBe('NotRendered');
     expect(
       context
         .getState()
         .calls.get(mockCallId)
         ?.remoteParticipants.get(mockParticipantKey)
-        ?.videoStreams.get(mockStreamId)?.viewAndStatus.view
+        ?.videoStreams.get(mockStreamId)?.view
     ).not.toBeDefined();
     expect(
       context
         .getState()
         .calls.get(mockCallId)
         ?.remoteParticipants.get(mockParticipantKey2)
-        ?.videoStreams.get(mockStreamId2)?.viewAndStatus.status
+        ?.videoStreams.get(mockStreamId2)?.viewStatus
     ).toBe('NotRendered');
     expect(
       context
         .getState()
         .calls.get(mockCallId)
         ?.remoteParticipants.get(mockParticipantKey2)
-        ?.videoStreams.get(mockStreamId2)?.viewAndStatus.view
+        ?.videoStreams.get(mockStreamId2)?.view
     ).not.toBeDefined();
   });
 
@@ -299,28 +300,28 @@ describe('stream utils', () => {
         .getState()
         .calls.get(mockCallId)
         ?.remoteParticipants.get(mockParticipantKey)
-        ?.videoStreams.get(mockStreamId)?.viewAndStatus.status
-    ).toBe('Completed');
+        ?.videoStreams.get(mockStreamId)?.viewStatus
+    ).toBe('Rendered');
     expect(
       context
         .getState()
         .calls.get(mockCallId)
         ?.remoteParticipants.get(mockParticipantKey)
-        ?.videoStreams.get(mockStreamId)?.viewAndStatus.view
+        ?.videoStreams.get(mockStreamId)?.view
     ).toBeDefined();
     expect(
       context
         .getState()
         .calls.get(mockCallId2)
         ?.remoteParticipants.get(mockParticipantKey2)
-        ?.videoStreams.get(mockStreamId2)?.viewAndStatus.status
-    ).toBe('Completed');
+        ?.videoStreams.get(mockStreamId2)?.viewStatus
+    ).toBe('Rendered');
     expect(
       context
         .getState()
         .calls.get(mockCallId2)
         ?.remoteParticipants.get(mockParticipantKey2)
-        ?.videoStreams.get(mockStreamId2)?.viewAndStatus.view
+        ?.videoStreams.get(mockStreamId2)?.view
     ).toBeDefined();
 
     disposeAllViews(context, internalContext);
@@ -332,28 +333,28 @@ describe('stream utils', () => {
         .getState()
         .calls.get(mockCallId)
         ?.remoteParticipants.get(mockParticipantKey)
-        ?.videoStreams.get(mockStreamId)?.viewAndStatus.status
+        ?.videoStreams.get(mockStreamId)?.viewStatus
     ).toBe('NotRendered');
     expect(
       context
         .getState()
         .calls.get(mockCallId)
         ?.remoteParticipants.get(mockParticipantKey)
-        ?.videoStreams.get(mockStreamId)?.viewAndStatus.view
+        ?.videoStreams.get(mockStreamId)?.view
     ).not.toBeDefined();
     expect(
       context
         .getState()
         .calls.get(mockCallId2)
         ?.remoteParticipants.get(mockParticipantKey2)
-        ?.videoStreams.get(mockStreamId2)?.viewAndStatus.status
+        ?.videoStreams.get(mockStreamId2)?.viewStatus
     ).toBe('NotRendered');
     expect(
       context
         .getState()
         .calls.get(mockCallId2)
         ?.remoteParticipants.get(mockParticipantKey2)
-        ?.videoStreams.get(mockStreamId2)?.viewAndStatus.view
+        ?.videoStreams.get(mockStreamId2)?.view
     ).not.toBeDefined();
   });
 
@@ -365,7 +366,7 @@ describe('stream utils', () => {
     await createView(context, internalContext, undefined, localVideoStream);
     expect(internalContext.getUnparentedStreamAndRenderer(localVideoStream)).toBeDefined();
     expect(context.getState().deviceManager.unparentedViews.get(localVideoStream)).toBeDefined();
-    expect(context.getState().deviceManager.unparentedViews.get(localVideoStream)?.status).toBe('Completed');
+    expect(context.getState().deviceManager.unparentedViews.get(localVideoStream)?.viewStatus).toBe('Rendered');
     expect(context.getState().deviceManager.unparentedViews.get(localVideoStream)?.view).toBeDefined();
   });
 
@@ -379,7 +380,8 @@ describe('stream utils', () => {
     disposeView(context, internalContext, undefined, localVideoStream);
 
     expect(internalContext.getUnparentedStreamAndRenderer(localVideoStream)).not.toBeDefined();
-    expect(context.getState().deviceManager.unparentedViews.get(localVideoStream)).not.toBeDefined();
+    expect(context.getState().deviceManager.unparentedViews.get(localVideoStream)?.viewStatus).toBe('NotRendered');
+    expect(context.getState().deviceManager.unparentedViews.get(localVideoStream)?.view).not.toBeDefined();
   });
 
   test('is able to render LocalVideoStream not tied to a call and not stop when incorrect stream used', async () => {
@@ -397,7 +399,7 @@ describe('stream utils', () => {
     disposeView(context, internalContext, undefined, incorrectVideoStream);
 
     expect(internalContext.getUnparentedStreamAndRenderer(localVideoStream)).toBeDefined();
-    expect(context.getState().deviceManager.unparentedViews.get(localVideoStream)?.status).toBe('Completed');
+    expect(context.getState().deviceManager.unparentedViews.get(localVideoStream)?.viewStatus).toBe('Rendered');
     expect(context.getState().deviceManager.unparentedViews.get(localVideoStream)?.view).toBeDefined();
   });
 });
