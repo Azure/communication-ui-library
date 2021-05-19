@@ -52,6 +52,11 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Tile Video Tile
             </div>
           </div>
         </div>
+        <span
+          className="css-78 css-23"
+        >
+          John Krasinski
+        </span>
       </div>
     </div>
   </div>

@@ -94,7 +94,6 @@ export const TeamsThemeComponent: () => JSX.Element = () => {
                 />
               </ControlBar>
               {/*Control Bar with default set up*/}
-              <label>Michael</label>
             </VideoTile>
           </GridLayout>
         </div>

@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-export { communicationIdentifierToString } from './baseSelectors';
 export { createDefaultChatHandlers, createDefaultChatHandlersForComponent } from './handlers/createHandlers';
 export { ChatClientProvider, useChatClient } from './providers/ChatClientProvider';
 export { ChatThreadClientProvider, useChatThreadClient, useThreadId } from './providers/ChatThreadClientProvider';

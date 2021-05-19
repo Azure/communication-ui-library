@@ -7,6 +7,7 @@ import {
   CreateViewOptions,
   Features,
   LocalVideoStream,
+  MediaStreamType,
   RecordingCallFeature,
   RemoteVideoStream,
   TranscriptionCallFeature,
@@ -14,8 +15,8 @@ import {
   VideoDeviceInfo,
   VideoStreamRendererView
 } from '@azure/communication-calling';
+import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import { createStatefulCallClient, StatefulCallClient } from './StatefulCallClient';
-import { getRemoteParticipantKey } from './Converter';
 import {
   addMockEmitter,
   createMockApiFeatures,
@@ -28,6 +29,7 @@ import {
   mockoutObjectFreeze,
   MockRecordingCallFeatureImpl,
   MockRemoteParticipant,
+  MockRemoteVideoStream,
   MockTranscriptionCallFeatureImpl,
   MockTransferCallFeatureImpl
 } from './TestUtils';
@@ -80,6 +82,7 @@ interface TestData {
   mockCall: MockCall;
   mockRemoteParticipant: MockRemoteParticipant;
   mockStatefulCallClient: StatefulCallClient;
+  mockRemoteVideoStream: MockRemoteVideoStream;
 }
 
 function createClientAndAgentMocks(testData: TestData): void {
@@ -125,6 +128,33 @@ async function createMockParticipantAndEmitParticipantUpdated(
     waitCondition
       ? waitCondition
       : () => testData.mockStatefulCallClient.getState().calls.get(mockCallId)?.remoteParticipants.size !== 0
+  );
+}
+
+async function createMockRemoteVideoStreamAndEmitVideoStreamsUpdated(
+  isAvailable: boolean,
+  type: MediaStreamType,
+  id: number,
+  testData: TestData
+): Promise<void> {
+  const mockRemoteVideoStream = createMockRemoteVideoStream(isAvailable);
+  mockRemoteVideoStream.mediaStreamType = type;
+  mockRemoteVideoStream.isAvailable = isAvailable;
+  mockRemoteVideoStream.id = id;
+  testData.mockRemoteVideoStream = mockRemoteVideoStream;
+  testData.mockRemoteParticipant.videoStreams = [mockRemoteVideoStream];
+  testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
+    added: [mockRemoteVideoStream],
+    removed: []
+  });
+
+  await waitWithBreakCondition(
+    () =>
+      testData.mockStatefulCallClient
+        .getState()
+        .calls.get(mockCallId)
+        ?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))?.videoStreams
+        .size !== 0
   );
 }
 
@@ -228,14 +258,14 @@ describe('Stateful call client', () => {
         testData.mockStatefulCallClient
           .getState()
           .calls.get(mockCallId2)
-          ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))?.displayName !==
-        undefined
+          ?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))
+          ?.displayName !== undefined
     );
     expect(
       testData.mockStatefulCallClient
         .getState()
         .calls.get(mockCallId2)
-        ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))?.displayName
+        ?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))?.displayName
     ).toBe('a');
   });
 
@@ -336,7 +366,7 @@ describe('Stateful call client', () => {
     testData.mockRemoteParticipant.state = 'Idle';
     testData.mockRemoteParticipant.emit('stateChanged');
 
-    const participantKey = getRemoteParticipantKey(testData.mockRemoteParticipant.identifier);
+    const participantKey = toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier);
     await waitWithBreakCondition(
       () =>
         testData.mockStatefulCallClient.getState().calls.get(mockCallId)?.remoteParticipants.get(participantKey)
@@ -357,7 +387,7 @@ describe('Stateful call client', () => {
     testData.mockRemoteParticipant.isMuted = !oldIsMuted;
     testData.mockRemoteParticipant.emit('isMutedChanged');
 
-    const participantKey = getRemoteParticipantKey(testData.mockRemoteParticipant.identifier);
+    const participantKey = toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier);
     await waitWithBreakCondition(
       () =>
         testData.mockStatefulCallClient.getState().calls.get(mockCallId)?.remoteParticipants.get(participantKey)
@@ -377,7 +407,7 @@ describe('Stateful call client', () => {
     testData.mockRemoteParticipant.displayName = 'z';
     testData.mockRemoteParticipant.emit('displayNameChanged');
 
-    const participantKey = getRemoteParticipantKey(testData.mockRemoteParticipant.identifier);
+    const participantKey = toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier);
     await waitWithBreakCondition(
       () =>
         testData.mockStatefulCallClient.getState().calls.get(mockCallId)?.remoteParticipants.get(participantKey)
@@ -399,7 +429,7 @@ describe('Stateful call client', () => {
     testData.mockRemoteParticipant.isSpeaking = !oldIsSpeaking;
     testData.mockRemoteParticipant.emit('isSpeakingChanged');
 
-    const participantKey = getRemoteParticipantKey(testData.mockRemoteParticipant.identifier);
+    const participantKey = toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier);
     await waitWithBreakCondition(
       () =>
         testData.mockStatefulCallClient.getState().calls.get(mockCallId)?.remoteParticipants.get(participantKey)
@@ -416,15 +446,9 @@ describe('Stateful call client', () => {
     createClientAndAgentMocks(testData);
     await createMockCallAndEmitCallsUpdated(testData);
     await createMockParticipantAndEmitParticipantUpdated(testData);
+    await createMockRemoteVideoStreamAndEmitVideoStreamsUpdated(false, 'Video', 1, testData);
 
-    const mockRemoteVideoStream = createMockRemoteVideoStream(false);
-    testData.mockRemoteParticipant.videoStreams = [mockRemoteVideoStream];
-    testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
-      added: [mockRemoteVideoStream],
-      removed: []
-    });
-
-    const participantKey = getRemoteParticipantKey(testData.mockRemoteParticipant.identifier);
+    const participantKey = toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier);
     await waitWithBreakCondition(
       () =>
         testData.mockStatefulCallClient.getState().calls.get(mockCallId)?.remoteParticipants.get(participantKey)
@@ -441,15 +465,9 @@ describe('Stateful call client', () => {
     createClientAndAgentMocks(testData);
     await createMockCallAndEmitCallsUpdated(testData);
     await createMockParticipantAndEmitParticipantUpdated(testData);
+    await createMockRemoteVideoStreamAndEmitVideoStreamsUpdated(false, 'Video', 1, testData);
 
-    const mockRemoteVideoStream = createMockRemoteVideoStream(false);
-    testData.mockRemoteParticipant.videoStreams = [mockRemoteVideoStream];
-    testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
-      added: [mockRemoteVideoStream],
-      removed: []
-    });
-
-    const participantKey = getRemoteParticipantKey(testData.mockRemoteParticipant.identifier);
+    const participantKey = toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier);
     await waitWithBreakCondition(
       () =>
         testData.mockStatefulCallClient.getState().calls.get(mockCallId)?.remoteParticipants.get(participantKey)
@@ -459,7 +477,7 @@ describe('Stateful call client', () => {
     testData.mockRemoteParticipant.videoStreams = [];
     testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
       added: [],
-      removed: [mockRemoteVideoStream]
+      removed: [testData.mockRemoteVideoStream]
     });
 
     await waitWithBreakCondition(
@@ -478,24 +496,17 @@ describe('Stateful call client', () => {
     createClientAndAgentMocks(testData);
     await createMockCallAndEmitCallsUpdated(testData);
     await createMockParticipantAndEmitParticipantUpdated(testData);
+    await createMockRemoteVideoStreamAndEmitVideoStreamsUpdated(false, 'Video', 1, testData);
 
-    const mockRemoteVideoStream = createMockRemoteVideoStream(false);
-    mockRemoteVideoStream.id = 1;
-    testData.mockRemoteParticipant.videoStreams = [mockRemoteVideoStream];
-    testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
-      added: [mockRemoteVideoStream],
-      removed: []
-    });
-
-    const participantKey = getRemoteParticipantKey(testData.mockRemoteParticipant.identifier);
+    const participantKey = toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier);
     await waitWithBreakCondition(
       () =>
         testData.mockStatefulCallClient.getState().calls.get(mockCallId)?.remoteParticipants.get(participantKey)
           ?.videoStreams.size !== 0
     );
 
-    mockRemoteVideoStream.isAvailable = true;
-    mockRemoteVideoStream.emit('isAvailableChanged');
+    testData.mockRemoteVideoStream.isAvailable = true;
+    testData.mockRemoteVideoStream.emit('isAvailableChanged');
 
     await waitWithBreakCondition(
       () =>
@@ -534,7 +545,7 @@ describe('Stateful call client', () => {
       () => testData.mockStatefulCallClient.getState().calls.get(mockCallId)?.remoteParticipants.size === 0
     );
 
-    const participantKey = getRemoteParticipantKey(testData.mockRemoteParticipant.identifier);
+    const participantKey = toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier);
     expect(testData.mockStatefulCallClient.getState().calls.get(mockCallId)?.remoteParticipants.size).toBe(0);
     expect(testData.mockStatefulCallClient.getState().calls.get(mockCallId)?.remoteParticipantsEnded.size).toBe(1);
     expect(
@@ -548,14 +559,7 @@ describe('Stateful call client', () => {
     createClientAndAgentMocks(testData);
     await createMockCallAndEmitCallsUpdated(testData);
     await createMockParticipantAndEmitParticipantUpdated(testData);
-
-    const mockRemoteVideoStream = createMockRemoteVideoStream(false);
-    mockRemoteVideoStream.id = 1;
-    testData.mockRemoteParticipant.videoStreams = [mockRemoteVideoStream];
-    testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
-      added: [mockRemoteVideoStream],
-      removed: []
-    });
+    await createMockRemoteVideoStreamAndEmitVideoStreamsUpdated(false, 'Video', 1, testData);
 
     testData.mockCall.localVideoStreams = [{} as LocalVideoStream];
     testData.mockCall.emit('localVideoStreamsUpdated', {
@@ -568,8 +572,8 @@ describe('Stateful call client', () => {
         testData.mockStatefulCallClient
           .getState()
           .calls.get(mockCallId)
-          ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))?.videoStreams
-          .size !== 0
+          ?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))
+          ?.videoStreams.size !== 0
     );
 
     await waitWithBreakCondition(
@@ -579,7 +583,7 @@ describe('Stateful call client', () => {
     const remoteVideoStream = testData.mockStatefulCallClient
       .getState()
       .calls.get(mockCallId)
-      ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
+      ?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))
       ?.videoStreams.get(1);
     if (!remoteVideoStream) {
       expect(remoteVideoStream).toBeDefined();
@@ -599,7 +603,7 @@ describe('Stateful call client', () => {
         testData.mockStatefulCallClient
           .getState()
           .calls.get(mockCallId)
-          ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
+          ?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))
           ?.videoStreams.get(1)?.videoStreamRendererView !== undefined
     );
 
@@ -608,7 +612,7 @@ describe('Stateful call client', () => {
         testData.mockStatefulCallClient
           .getState()
           .calls.get(mockCallId)
-          ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
+          ?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))
           ?.videoStreams.get(1)?.videoStreamRendererView !== undefined
     );
 
@@ -616,7 +620,7 @@ describe('Stateful call client', () => {
       testData.mockStatefulCallClient
         .getState()
         .calls.get(mockCallId)
-        ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
+        ?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))
         ?.videoStreams.get(1)?.videoStreamRendererView
     ).toBeDefined();
 
@@ -630,14 +634,7 @@ describe('Stateful call client', () => {
     createClientAndAgentMocks(testData);
     await createMockCallAndEmitCallsUpdated(testData);
     await createMockParticipantAndEmitParticipantUpdated(testData);
-
-    const mockRemoteVideoStream = createMockRemoteVideoStream(false);
-    mockRemoteVideoStream.id = 1;
-    testData.mockRemoteParticipant.videoStreams = [mockRemoteVideoStream];
-    testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
-      added: [mockRemoteVideoStream],
-      removed: []
-    });
+    await createMockRemoteVideoStreamAndEmitVideoStreamsUpdated(false, 'Video', 1, testData);
 
     testData.mockCall.localVideoStreams = [{} as LocalVideoStream];
     testData.mockCall.emit('localVideoStreamsUpdated', {
@@ -650,8 +647,8 @@ describe('Stateful call client', () => {
         testData.mockStatefulCallClient
           .getState()
           .calls.get(mockCallId)
-          ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))?.videoStreams
-          .size !== 0
+          ?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))
+          ?.videoStreams.size !== 0
     );
 
     await waitWithBreakCondition(
@@ -661,7 +658,7 @@ describe('Stateful call client', () => {
     const remoteVideoStream = testData.mockStatefulCallClient
       .getState()
       .calls.get(mockCallId)
-      ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
+      ?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))
       ?.videoStreams.get(1);
     if (!remoteVideoStream) {
       expect(remoteVideoStream).toBeDefined();
@@ -683,7 +680,7 @@ describe('Stateful call client', () => {
         testData.mockStatefulCallClient
           .getState()
           .calls.get(mockCallId)
-          ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
+          ?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))
           ?.videoStreams.get(1)?.videoStreamRendererView !== undefined
     );
 
@@ -692,7 +689,7 @@ describe('Stateful call client', () => {
         testData.mockStatefulCallClient
           .getState()
           .calls.get(mockCallId)
-          ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
+          ?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))
           ?.videoStreams.get(1)?.videoStreamRendererView !== undefined
     );
 
@@ -700,7 +697,7 @@ describe('Stateful call client', () => {
       testData.mockStatefulCallClient
         .getState()
         .calls.get(mockCallId)
-        ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
+        ?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))
         ?.videoStreams.get(1)?.videoStreamRendererView
     ).toBeDefined();
 
@@ -716,7 +713,7 @@ describe('Stateful call client', () => {
         testData.mockStatefulCallClient
           .getState()
           .calls.get(mockCallId)
-          ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
+          ?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))
           ?.videoStreams.get(1)?.videoStreamRendererView === undefined
     );
 
@@ -730,7 +727,7 @@ describe('Stateful call client', () => {
       testData.mockStatefulCallClient
         .getState()
         .calls.get(mockCallId)
-        ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
+        ?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))
         ?.videoStreams.get(1)?.videoStreamRendererView
     ).not.toBeDefined();
 
@@ -744,14 +741,7 @@ describe('Stateful call client', () => {
     createClientAndAgentMocks(testData);
     await createMockCallAndEmitCallsUpdated(testData);
     await createMockParticipantAndEmitParticipantUpdated(testData);
-
-    const mockRemoteVideoStream = createMockRemoteVideoStream(false);
-    mockRemoteVideoStream.id = 1;
-    testData.mockRemoteParticipant.videoStreams = [mockRemoteVideoStream];
-    testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
-      added: [mockRemoteVideoStream],
-      removed: []
-    });
+    await createMockRemoteVideoStreamAndEmitVideoStreamsUpdated(false, 'Video', 1, testData);
 
     testData.mockCall.localVideoStreams = [{} as LocalVideoStream];
     testData.mockCall.emit('localVideoStreamsUpdated', {
@@ -764,8 +754,8 @@ describe('Stateful call client', () => {
         testData.mockStatefulCallClient
           .getState()
           .calls.get(mockCallId)
-          ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))?.videoStreams
-          .size !== 0
+          ?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))
+          ?.videoStreams.size !== 0
     );
 
     await waitWithBreakCondition(
@@ -775,7 +765,7 @@ describe('Stateful call client', () => {
     const remoteVideoStream = testData.mockStatefulCallClient
       .getState()
       .calls.get(mockCallId)
-      ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
+      ?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))
       ?.videoStreams.get(1);
     if (!remoteVideoStream) {
       expect(remoteVideoStream).toBeDefined();
@@ -797,7 +787,7 @@ describe('Stateful call client', () => {
         testData.mockStatefulCallClient
           .getState()
           .calls.get(mockCallId)
-          ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
+          ?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))
           ?.videoStreams.get(1)?.videoStreamRendererView !== undefined
     );
 
@@ -815,7 +805,7 @@ describe('Stateful call client', () => {
       testData.mockStatefulCallClient
         .getState()
         .calls.get(mockCallId)
-        ?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
+        ?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))
         ?.videoStreams.get(1)?.videoStreamRendererView
     ).toBeDefined();
 
@@ -830,7 +820,7 @@ describe('Stateful call client', () => {
     expect(
       testData.mockStatefulCallClient
         .getState()
-        .callsEnded[0]?.remoteParticipants.get(getRemoteParticipantKey(testData.mockRemoteParticipant.identifier))
+        .callsEnded[0]?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))
         ?.videoStreams.get(1)?.videoStreamRendererView
     ).not.toBeDefined();
 
@@ -1037,5 +1027,99 @@ describe('Stateful call client', () => {
 
     const transfer = featureCache.get(Features.Transfer);
     expect(transfer.emitter.eventNames().length).toBe(0);
+  });
+
+  test('should surface screenshare screen when available in state', async () => {
+    const testData = {} as TestData;
+    createClientAndAgentMocks(testData);
+    await createMockCallAndEmitCallsUpdated(testData);
+    await createMockParticipantAndEmitParticipantUpdated(testData);
+    await createMockRemoteVideoStreamAndEmitVideoStreamsUpdated(true, 'ScreenSharing', 1, testData);
+
+    await waitWithBreakCondition(
+      () =>
+        testData.mockStatefulCallClient
+          .getState()
+          .calls.get(mockCallId)
+          ?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))
+          ?.videoStreams.size !== 0
+    );
+
+    expect(
+      testData.mockStatefulCallClient.getState().calls.get(mockCallId)?.screenShareRemoteParticipant
+    ).toBeDefined();
+  });
+
+  test('should stop surfacing screenshare screen when not available in state', async () => {
+    const testData = {} as TestData;
+    createClientAndAgentMocks(testData);
+    await createMockCallAndEmitCallsUpdated(testData);
+    await createMockParticipantAndEmitParticipantUpdated(testData);
+    await createMockRemoteVideoStreamAndEmitVideoStreamsUpdated(true, 'ScreenSharing', 1, testData);
+
+    await waitWithBreakCondition(
+      () =>
+        testData.mockStatefulCallClient
+          .getState()
+          .calls.get(mockCallId)
+          ?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))
+          ?.videoStreams.size !== 0
+    );
+
+    testData.mockRemoteVideoStream.isAvailable = false;
+    testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
+      added: [testData.mockRemoteVideoStream],
+      removed: []
+    });
+
+    expect(
+      testData.mockStatefulCallClient.getState().calls.get(mockCallId)?.screenShareRemoteParticipant
+    ).not.toBeDefined();
+  });
+
+  test('should not delete existing active screenshare screen when another stream is set unavailable', async () => {
+    const testData = {} as TestData;
+    createClientAndAgentMocks(testData);
+    await createMockCallAndEmitCallsUpdated(testData);
+    await createMockParticipantAndEmitParticipantUpdated(testData);
+    await createMockRemoteVideoStreamAndEmitVideoStreamsUpdated(true, 'ScreenSharing', 1, testData);
+
+    const secondMockParticipantId = 'aaaaaaaaaaaaaa';
+    const participant2 = createMockRemoteParticipant(secondMockParticipantId);
+    testData.mockCall.emit('remoteParticipantsUpdated', {
+      added: [participant2],
+      removed: []
+    });
+
+    await waitWithBreakCondition(
+      () => testData.mockStatefulCallClient.getState().calls.get(mockCallId)?.remoteParticipants.size === 2
+    );
+
+    // Add a second inactive screenshare and ensure it doesn't overwrite the first one
+    const mockRemoteVideoStream2 = createMockRemoteVideoStream(false);
+    mockRemoteVideoStream2.mediaStreamType = 'ScreenSharing';
+    mockRemoteVideoStream2.isAvailable = false;
+    mockRemoteVideoStream2.id = 1;
+    participant2.videoStreams = [mockRemoteVideoStream2];
+    participant2.emit('videoStreamsUpdated', {
+      added: [mockRemoteVideoStream2],
+      removed: []
+    });
+
+    await waitWithBreakCondition(
+      () =>
+        testData.mockStatefulCallClient
+          .getState()
+          .calls.get(mockCallId)
+          ?.remoteParticipants.get(toFlatCommunicationIdentifier({ communicationUserId: secondMockParticipantId }))
+          ?.videoStreams.size !== 0
+    );
+
+    expect(
+      testData.mockStatefulCallClient.getState().calls.get(mockCallId)?.screenShareRemoteParticipant
+    ).toBeDefined();
+    expect(testData.mockStatefulCallClient.getState().calls.get(mockCallId)?.screenShareRemoteParticipant).toBe(
+      toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier)
+    );
   });
 });
