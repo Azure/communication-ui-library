@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 
 import { Stack } from '@fluentui/react';
-import { FlatCommunicationIdentifier } from 'acs-ui-common';
 import React, { useMemo } from 'react';
 import {
   BaseCustomStylesProps,
@@ -32,7 +31,7 @@ export interface VideoGalleryProps {
 // @todo: replace with React.memo method
 const memoizeAllRemoteParticipants = memoizeFnAll(
   (
-    userId: FlatCommunicationIdentifier,
+    userId: string,
     onCreateRemoteStreamView: any,
     isAvailable?: boolean,
     renderElement?: HTMLElement,

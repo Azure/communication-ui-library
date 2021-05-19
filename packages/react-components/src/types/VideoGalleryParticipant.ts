@@ -1,15 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { FlatCommunicationIdentifier } from 'acs-ui-common';
-
 export declare interface VideoStreamOptions {
   isMirrored?: boolean;
   scalingMode?: 'Stretch' | 'Crop' | 'Fit';
 }
 
 export type VideoGalleryParticipant = {
-  userId: FlatCommunicationIdentifier;
+  userId: string;
   isMuted?: boolean;
   displayName?: string;
   videoStream?: VideoGalleryStream;

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { FlatCommunicationIdentifier, toFlatCommunicationIdentifier } from 'acs-ui-common';
+import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 // @ts-ignore
 import { Call, CallClientState, RemoteParticipant, RemoteVideoStream } from 'calling-stateful-client';
 // @ts-ignore
@@ -24,7 +24,7 @@ const convertRemoteVideoStreamToVideoGalleryStream = (stream: RemoteVideoStream)
 };
 
 const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
-  userId: FlatCommunicationIdentifier,
+  userId: string,
   isMuted: boolean,
   isSpeaking: boolean,
   videoStreams: Map<number, RemoteVideoStream>,
@@ -96,7 +96,7 @@ const videoGalleryRemoteParticipantsFromCall = (call: Call | undefined): VideoGa
 
 export const videoGallerySelector = createSelector(
   [getCall, getDisplayName, getIdentifier],
-  (call: Call | undefined, displayName: string | undefined, identifier: FlatCommunicationIdentifier) => {
+  (call: Call | undefined, displayName: string | undefined, identifier: string) => {
     const screenShareRemoteParticipant = call?.screenShareRemoteParticipant
       ? call.remoteParticipants.get(call.screenShareRemoteParticipant)
       : undefined;

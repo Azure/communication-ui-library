@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { FlatCommunicationIdentifier } from 'acs-ui-common';
 import { ChatThreadClientState } from 'chat-stateful-client';
 import { ChatMessage, ChatParticipant } from '@azure/communication-chat';
 
@@ -12,7 +11,7 @@ export type ChatUIState = {
 
 export type ChatCompositeClientState = {
   // Properties from backend services
-  userId: FlatCommunicationIdentifier;
+  userId: string;
   displayName: string;
   thread: ChatThreadClientState;
 };

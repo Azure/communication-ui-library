@@ -23,7 +23,6 @@ import {
   PhoneNumberKind,
   UnknownIdentifierKind
 } from '@azure/communication-common';
-import { FlatCommunicationIdentifier } from 'acs-ui-common';
 
 /**
  * State only version of {@Link @azure/communication-calling#TransferRequestedEventArgs}. At the time of writing
@@ -246,14 +245,14 @@ export interface Call {
   localVideoStreams: LocalVideoStream[];
   /**
    * Proxy of {@Link @azure/communication-calling#Call.remoteParticipants}. Map of identifier
-   * {@Link @azure/communication-react#FlatCommunicationIdentifier} to {@Link RemoteParticipant}
+   * {@Link @azure/communication-react#string} to {@Link RemoteParticipant}
    */
-  remoteParticipants: Map<FlatCommunicationIdentifier, RemoteParticipant>;
+  remoteParticipants: Map<string, RemoteParticipant>;
   /**
    * Stores remote participants that have left the call so that the callEndReason could be retrieved. Map of identifier
-   * {@Link @azure/communication-react#FlatCommunicationIdentifier} to {@Link RemoteParticipant}
+   * {@Link @azure/communication-react#string} to {@Link RemoteParticipant}
    */
-  remoteParticipantsEnded: Map<FlatCommunicationIdentifier, RemoteParticipant>;
+  remoteParticipantsEnded: Map<string, RemoteParticipant>;
   /**
    * Proxy of {@Link @azure/communication-calling#TranscriptionCallFeature}.
    */
@@ -274,7 +273,7 @@ export interface Call {
    * Note this only applies to ScreenShare in RemoteParticipant. A local ScreenShare being active will not affect this
    * property.
    */
-  screenShareRemoteParticipant: FlatCommunicationIdentifier | undefined;
+  screenShareRemoteParticipant: string | undefined;
   /**
    * Stores the local date when the call started on the client. This is not originally in the SDK but provided by the
    * Declarative layer.
@@ -404,5 +403,5 @@ export interface CallClientState {
    * Stores a userId. This is not used by the stateful client and is provided here as a convenience for the
    * developer for easier access to userId. Must be passed in at initialization of the stateful client.
    */
-  userId: FlatCommunicationIdentifier;
+  userId: string;
 }

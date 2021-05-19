@@ -34,11 +34,7 @@ import {
 } from './CallAdapter';
 import { createAzureCommunicationUserCredential, getIdFromToken, isInCall } from '../../../utils';
 import { VideoStreamOptions } from 'react-components';
-import {
-  FlatCommunicationIdentifier,
-  fromFlatCommunicationIdentifier,
-  toFlatCommunicationIdentifier
-} from 'acs-ui-common';
+import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from 'acs-ui-common';
 import { CommunicationUserIdentifier } from '@azure/communication-signaling';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
@@ -184,10 +180,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     }
   }
 
-  public async createStreamView(
-    userId?: FlatCommunicationIdentifier,
-    options?: VideoStreamOptions | undefined
-  ): Promise<void> {
+  public async createStreamView(userId?: string, options?: VideoStreamOptions | undefined): Promise<void> {
     if (userId === undefined) {
       await this.handlers.onCreateLocalStreamView(options);
     } else {
@@ -267,7 +260,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 
   //TODO: a better way to expose option parameter
-  public startCall(participants: FlatCommunicationIdentifier[]): Call | undefined {
+  public startCall(participants: string[]): Call | undefined {
     const idsToAdd = participants.map((participant) => {
       // FIXME: `onStartCall` does not allow a Teams user.
       // Need some way to return an error if a Teams user is provided.
@@ -278,7 +271,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     return this.handlers.onStartCall(idsToAdd);
   }
 
-  public async removeParticipant(userId: FlatCommunicationIdentifier): Promise<void> {
+  public async removeParticipant(userId: string): Promise<void> {
     this.handlers.onParticipantRemove(userId);
   }
 

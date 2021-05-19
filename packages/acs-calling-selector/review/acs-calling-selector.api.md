@@ -13,7 +13,6 @@ import { CallParticipant } from 'react-components';
 import { CommonProperties } from 'acs-ui-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { DeviceManagerState } from 'calling-stateful-client';
-import { FlatCommunicationIdentifier } from 'acs-ui-common';
 import { IncomingCall } from 'calling-stateful-client';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { ReactElement } from 'react';
@@ -56,8 +55,8 @@ export const createDefaultCallingHandlers: (callClient: StatefulCallClient, call
     onToggleMicrophone: () => Promise<void>;
     onToggleScreenShare: () => Promise<void>;
     onCreateLocalStreamView: (options?: VideoStreamOptions | undefined) => Promise<void>;
-    onCreateRemoteStreamView: (userId: FlatCommunicationIdentifier, options?: VideoStreamOptions | undefined) => Promise<void>;
-    onParticipantRemove: (userId: FlatCommunicationIdentifier) => void;
+    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions | undefined) => Promise<void>;
+    onParticipantRemove: (userId: string) => void;
     onStartLocalVideo: () => Promise<void>;
 };
 
@@ -74,8 +73,8 @@ export const createDefaultCallingHandlersForComponent: <Props>(callClient: State
     onToggleMicrophone: () => Promise<void>;
     onToggleScreenShare: () => Promise<void>;
     onCreateLocalStreamView: (options?: VideoStreamOptions | undefined) => Promise<void>;
-    onCreateRemoteStreamView: (userId: FlatCommunicationIdentifier, options?: VideoStreamOptions | undefined) => Promise<void>;
-    onParticipantRemove: (userId: FlatCommunicationIdentifier) => void;
+    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions | undefined) => Promise<void>;
+    onParticipantRemove: (userId: string) => void;
     onStartLocalVideo: () => Promise<void>;
 }, CommonProperties<{
     onHangUp: () => Promise<void>;
@@ -89,8 +88,8 @@ export const createDefaultCallingHandlersForComponent: <Props>(callClient: State
     onToggleMicrophone: () => Promise<void>;
     onToggleScreenShare: () => Promise<void>;
     onCreateLocalStreamView: (options?: VideoStreamOptions | undefined) => Promise<void>;
-    onCreateRemoteStreamView: (userId: FlatCommunicationIdentifier, options?: VideoStreamOptions | undefined) => Promise<void>;
-    onParticipantRemove: (userId: FlatCommunicationIdentifier) => void;
+    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions | undefined) => Promise<void>;
+    onParticipantRemove: (userId: string) => void;
     onStartLocalVideo: () => Promise<void>;
 }, Props>>;
 
@@ -116,7 +115,7 @@ export const getDeviceManager: (state: CallClientState) => DeviceManagerState;
 export const getDisplayName: (state: CallClientState) => string | undefined;
 
 // @public (undocumented)
-export const getIdentifier: (state: CallClientState) => FlatCommunicationIdentifier;
+export const getIdentifier: (state: CallClientState) => string;
 
 // @public (undocumented)
 export const getIncomingCalls: (state: CallClientState) => Map<string, IncomingCall>;
@@ -170,10 +169,10 @@ export const optionsButtonSelector: reselect.OutputParametricSelector<CallClient
 // @public (undocumented)
 export const participantListSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     participants: CallParticipant[];
-    myUserId: FlatCommunicationIdentifier;
+    myUserId: string;
 }, (res1: string, res2: string | undefined, res3: Call_2 | undefined) => {
     participants: CallParticipant[];
-    myUserId: FlatCommunicationIdentifier;
+    myUserId: string;
 }>;
 
 // @public (undocumented)

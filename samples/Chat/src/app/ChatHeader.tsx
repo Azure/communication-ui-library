@@ -17,17 +17,16 @@ import {
 } from './styles/ChatHeader.styles';
 import { SidePanelTypes } from './SidePanel';
 import { copyIconStyle } from './styles/InviteFooter.styles';
-import { FlatCommunicationIdentifier } from 'acs-ui-common';
 import { CommunicationParticipant } from 'react-components';
 
 export type ChatHeaderProps = {
-  myUserId: FlatCommunicationIdentifier;
+  myUserId: string;
   topicName: string;
   selectedPane: SidePanelTypes;
   participants: CommunicationParticipant[];
   setSelectedPane: Dispatch<SidePanelTypes>;
   endChatHandler(): void;
-  removeThreadParticipant?: (userId: FlatCommunicationIdentifier) => Promise<void>;
+  removeThreadParticipant?: (userId: string) => Promise<void>;
   updateThreadTopicName: (topicName: string) => Promise<void>;
 };
 

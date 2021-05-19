@@ -4,15 +4,14 @@
 import { ChatClientState, ChatMessageWithStatus } from 'chat-stateful-client';
 import { ChatParticipant, ChatMessageReadReceipt } from '@azure/communication-chat';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
-import { FlatCommunicationIdentifier, toFlatCommunicationIdentifier } from 'acs-ui-common';
+import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import { MessageContentType } from 'react-components';
 export type ChatBaseSelectorProps = {
   threadId: string;
 };
 
 export const getSelectorProps = <T>(_: ChatClientState, props: T): T => props;
-export const getUserId = (state: ChatClientState): FlatCommunicationIdentifier =>
-  toFlatCommunicationIdentifier(state.userId);
+export const getUserId = (state: ChatClientState): string => toFlatCommunicationIdentifier(state.userId);
 
 export const getDisplayName = (state: ChatClientState): string => state.displayName;
 export const getChatMessages = (
@@ -24,10 +23,7 @@ export const getChatMessages = (
 export const getReadReceipts = (state: ChatClientState, props: ChatBaseSelectorProps): ChatMessageReadReceipt[] =>
   (props.threadId && state.threads.get(props.threadId)?.readReceipts) || [];
 
-export const getParticipants = (
-  state: ChatClientState,
-  props: ChatBaseSelectorProps
-): Map<FlatCommunicationIdentifier, ChatParticipant> =>
+export const getParticipants = (state: ChatClientState, props: ChatBaseSelectorProps): Map<string, ChatParticipant> =>
   (props.threadId && state.threads.get(props.threadId)?.participants) || new Map();
 
 export const getIsLargeGroup = (state: ChatClientState, props: ChatBaseSelectorProps): boolean => {

@@ -3,7 +3,7 @@
 
 import { ChatParticipant } from '@azure/communication-chat';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
-import { FlatCommunicationIdentifier, toFlatCommunicationIdentifier } from 'acs-ui-common';
+import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import { typingIndicatorSelector } from './typingIndicatorSelector';
 
 describe('typingIndicatorSelector tests', () => {
@@ -49,7 +49,7 @@ describe('typingIndicatorSelector tests', () => {
         receivedOn: new Date()
       }
     ];
-    const participants: Map<FlatCommunicationIdentifier, ChatParticipant> = new Map();
+    const participants: Map<string, ChatParticipant> = new Map();
     participants.set(toFlatCommunicationIdentifier({ communicationUserId: '1' }), {
       id: { communicationUserId: '1' },
       displayName: 'User1'
@@ -104,7 +104,7 @@ describe('typingIndicatorSelector tests', () => {
       }
     ];
 
-    const participants: Map<FlatCommunicationIdentifier, ChatParticipant> = new Map();
+    const participants: Map<string, ChatParticipant> = new Map();
     participants.set(toFlatCommunicationIdentifier({ communicationUserId: '2' }), {
       id: { communicationUserId: '2' },
       displayName: 'User2'
@@ -160,7 +160,7 @@ describe('typingIndicatorSelector tests', () => {
       }
     ];
 
-    const participants: Map<FlatCommunicationIdentifier, ChatParticipant> = new Map();
+    const participants: Map<string, ChatParticipant> = new Map();
     participants.set(toFlatCommunicationIdentifier({ communicationUserId: '5' }), {
       id: { communicationUserId: '5' },
       displayName: 'User5'

@@ -3,7 +3,6 @@
 
 import { ChatMessageReadReceipt, ChatParticipant } from '@azure/communication-chat';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
-import { FlatCommunicationIdentifier } from 'acs-ui-common';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 
@@ -19,7 +18,7 @@ export type ChatThreadClientState = {
   //
   // TODO: Consider replacing this Map with Array:
   // - Redux and other data stores can't store objects that contain Map.
-  participants: Map<FlatCommunicationIdentifier, ChatParticipant>;
+  participants: Map<string, ChatParticipant>;
   threadId: string;
   properties?: ChatThreadProperties;
   readReceipts: ChatMessageReadReceipt[];

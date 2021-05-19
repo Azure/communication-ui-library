@@ -9,13 +9,13 @@ import { getTypingIndicators, getParticipants, getUserId } from './baseSelectors
 import * as reselect from 'reselect';
 import { ChatParticipant } from '@azure/communication-chat';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
-import { FlatCommunicationIdentifier, toFlatCommunicationIdentifier } from 'acs-ui-common';
+import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import { CommunicationParticipant } from 'react-components';
 import { MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS, PARTICIPANTS_THRESHOLD } from './utils/constants';
 
 const filterTypingIndicators = (
   typingIndicators: TypingIndicatorReceivedEvent[],
-  userId: FlatCommunicationIdentifier
+  userId: string
 ): TypingIndicatorReceivedEvent[] => {
   const filteredTypingIndicators: TypingIndicatorReceivedEvent[] = [];
   const seen = new Set();
@@ -49,11 +49,7 @@ const convertSdkTypingIndicatorsToCommunicationParticipants = (
 
 export const typingIndicatorSelector = reselect.createSelector(
   [getTypingIndicators, getParticipants, getUserId],
-  (
-    typingIndicators: TypingIndicatorReceivedEvent[],
-    participants: Map<FlatCommunicationIdentifier, ChatParticipant>,
-    userId: FlatCommunicationIdentifier
-  ) => {
+  (typingIndicators: TypingIndicatorReceivedEvent[], participants: Map<string, ChatParticipant>, userId: string) => {
     // if the participant size reaches the threshold then return no typing users
     if (participants.size >= PARTICIPANTS_THRESHOLD) {
       return { typingUsers: [] };

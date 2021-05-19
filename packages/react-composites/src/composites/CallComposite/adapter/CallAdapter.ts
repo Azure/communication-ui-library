@@ -10,7 +10,6 @@ import type {
   MicrosoftTeamsUserKind,
   UnknownIdentifierKind
 } from '@azure/communication-common';
-import { FlatCommunicationIdentifier } from 'acs-ui-common';
 
 export type CallingUIState = {
   // Self-contained state for composite
@@ -21,7 +20,7 @@ export type CallingUIState = {
 
 export type CallingClientState = {
   // Properties from backend services
-  userId: FlatCommunicationIdentifier;
+  userId: string;
   displayName?: string;
   call?: Call;
   devices: DeviceManagerState;
@@ -31,7 +30,7 @@ export type CallState = CallingUIState & CallingClientState;
 
 export type IncomingCallListener = (event: {
   callId: string;
-  callerId: FlatCommunicationIdentifier;
+  callerId: string;
   callerDisplayName?: string;
   /**
    * Invoke to accept the call.
@@ -98,15 +97,15 @@ export interface CallAdapter {
 
   unmute(): Promise<void>;
 
-  startCall(participants: FlatCommunicationIdentifier[]): SDKCall | undefined;
+  startCall(participants: string[]): SDKCall | undefined;
 
   startScreenShare(): Promise<void>;
 
   stopScreenShare(): Promise<void>;
 
-  removeParticipant(userId: FlatCommunicationIdentifier): Promise<void>;
+  removeParticipant(userId: string): Promise<void>;
 
-  createStreamView(userId?: FlatCommunicationIdentifier, options?: VideoStreamOptions | undefined): Promise<void>;
+  createStreamView(userId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
 
   on(event: 'participantsJoined', participantsJoinedHandler: ParticipantJoinedListener): void;
   on(event: 'participantsLeft', participantsLeftHandler: ParticipantLeftListener): void;

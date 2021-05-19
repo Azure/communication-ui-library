@@ -9,16 +9,14 @@ import {
 } from '@azure/communication-common';
 
 /**
- * A string type alias representing a CommunicationIdentifier.
+ * A string representation of a CommunicationIdentifier.
  *
  * This string representation of CommunicationIdentifier is guaranteed to be stable for
  * a unique Communication user. Thus,
  * - it can be used to persist a user's identity in external databases.
  * - it can be used as keys into a Map to store data for the user.
  */
-export type FlatCommunicationIdentifier = string;
-
-export const toFlatCommunicationIdentifier = (id: CommunicationIdentifier): FlatCommunicationIdentifier => {
+export const toFlatCommunicationIdentifier = (id: CommunicationIdentifier): string => {
   if (isCommunicationUserIdentifier(id)) {
     return id.communicationUserId;
   }
@@ -31,7 +29,7 @@ export const toFlatCommunicationIdentifier = (id: CommunicationIdentifier): Flat
   return id.id;
 };
 
-export const fromFlatCommunicationIdentifier = (id: FlatCommunicationIdentifier): CommunicationIdentifier => {
+export const fromFlatCommunicationIdentifier = (id: string): CommunicationIdentifier => {
   // This implementation is currently a hack that only works with ACS identifiers.
   // TODO: Make `toFlatCommunicationIdentifier` not be lossy so this can reverse the process.
   return { communicationUserId: id };

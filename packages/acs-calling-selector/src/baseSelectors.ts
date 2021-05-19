@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { FlatCommunicationIdentifier } from 'acs-ui-common';
 import { Call, CallClientState, DeviceManagerState, IncomingCall } from 'calling-stateful-client';
 
 /**
@@ -26,4 +25,4 @@ export const getCall = (state: CallClientState, props: CallingBaseSelectorProps)
 
 export const getDisplayName = (state: CallClientState): string | undefined => state.callAgent?.displayName;
 
-export const getIdentifier = (state: CallClientState): FlatCommunicationIdentifier => state.userId;
+export const getIdentifier = (state: CallClientState): string => state.userId;

@@ -15,7 +15,6 @@ import { ChatThreadClientState } from 'chat-stateful-client';
 import type { CommunicationUserKind } from '@azure/communication-common';
 import { DeviceManagerState } from 'calling-stateful-client';
 import { ErrorInfo } from 'react';
-import { FlatCommunicationIdentifier } from 'acs-ui-common';
 import type { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import type { PhoneNumberKind } from '@azure/communication-common';
 import { RemoteParticipant } from 'calling-stateful-client';
@@ -29,7 +28,7 @@ import { VideoStreamOptions } from 'react-components';
 export class AzureCommunicationCallAdapter implements CallAdapter {
     constructor(callClient: StatefulCallClient, groupId: string, callAgent: CallAgent, deviceManager: StatefulDeviceManager);
     // (undocumented)
-    createStreamView(userId?: FlatCommunicationIdentifier, options?: VideoStreamOptions | undefined): Promise<void>;
+    createStreamView(userId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
     // (undocumented)
     dispose(): void;
     // (undocumented)
@@ -85,7 +84,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     querySpeakers(): Promise<AudioDeviceInfo[]>;
     // (undocumented)
-    removeParticipant(userId: FlatCommunicationIdentifier): Promise<void>;
+    removeParticipant(userId: string): Promise<void>;
     // (undocumented)
     setCamera(device: VideoDeviceInfo): Promise<void>;
     // (undocumented)
@@ -93,7 +92,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     setSpeaker(device: AudioDeviceInfo): Promise<void>;
     // (undocumented)
-    startCall(participants: FlatCommunicationIdentifier[]): Call_2 | undefined;
+    startCall(participants: string[]): Call_2 | undefined;
     // (undocumented)
     startCamera(): Promise<void>;
     // (undocumented)
@@ -109,7 +108,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 // @public (undocumented)
 export interface CallAdapter {
     // (undocumented)
-    createStreamView(userId?: FlatCommunicationIdentifier, options?: VideoStreamOptions | undefined): Promise<void>;
+    createStreamView(userId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
     // (undocumented)
     dispose(): void;
     // (undocumented)
@@ -165,7 +164,7 @@ export interface CallAdapter {
     // (undocumented)
     querySpeakers(): Promise<AudioDeviceInfo[]>;
     // (undocumented)
-    removeParticipant(userId: FlatCommunicationIdentifier): Promise<void>;
+    removeParticipant(userId: string): Promise<void>;
     // (undocumented)
     setCamera(sourceId: VideoDeviceInfo): Promise<void>;
     // (undocumented)
@@ -173,7 +172,7 @@ export interface CallAdapter {
     // (undocumented)
     setSpeaker(sourceId: AudioDeviceInfo): Promise<void>;
     // (undocumented)
-    startCall(participants: FlatCommunicationIdentifier[]): Call_2 | undefined;
+    startCall(participants: string[]): Call_2 | undefined;
     // (undocumented)
     startCamera(): Promise<void>;
     // (undocumented)
@@ -208,7 +207,7 @@ export type CallIdentifierKinds = CommunicationUserKind | PhoneNumberKind | Micr
 
 // @public (undocumented)
 export type CallingClientState = {
-    userId: FlatCommunicationIdentifier;
+    userId: string;
     displayName?: string;
     call?: Call;
     devices: DeviceManagerState;
@@ -259,7 +258,7 @@ export const ChatComposite: (props: ChatProps) => JSX.Element;
 
 // @public (undocumented)
 export type ChatCompositeClientState = {
-    userId: FlatCommunicationIdentifier;
+    userId: string;
     displayName: string;
     thread: ChatThreadClientState;
 };
@@ -396,7 +395,7 @@ export type DisplaynameChangedListener = (event: {
 // @public (undocumented)
 export type IncomingCallListener = (event: {
     callId: string;
-    callerId: FlatCommunicationIdentifier;
+    callerId: string;
     callerDisplayName?: string;
     accept: () => Promise<void>;
     reject: () => Promise<void>;

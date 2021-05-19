@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Call, Features, LocalVideoStream, RemoteParticipant } from '@azure/communication-calling';
-import { FlatCommunicationIdentifier, toFlatCommunicationIdentifier } from 'acs-ui-common';
+import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import { CallContext } from './CallContext';
 import { CallIdRef } from './CallIdRef';
 import {
@@ -26,7 +26,7 @@ export class CallSubscriber {
   private _callIdRef: CallIdRef;
   private _context: CallContext;
   private _internalContext: InternalCallContext;
-  private _participantSubscribers: Map<FlatCommunicationIdentifier, ParticipantSubscriber>;
+  private _participantSubscribers: Map<string, ParticipantSubscriber>;
   private _recordingSubscriber: RecordingSubscriber;
   private _transcriptionSubscriber: TranscriptionSubscriber;
   private _receivedTransferSubscriber: ReceivedTransferSubscriber;
@@ -36,7 +36,7 @@ export class CallSubscriber {
     this._callIdRef = { callId: call.id };
     this._context = context;
     this._internalContext = internalContext;
-    this._participantSubscribers = new Map<FlatCommunicationIdentifier, ParticipantSubscriber>();
+    this._participantSubscribers = new Map<string, ParticipantSubscriber>();
 
     this._recordingSubscriber = new RecordingSubscriber(
       this._callIdRef,

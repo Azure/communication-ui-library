@@ -63,7 +63,7 @@ export type AreEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 export class AzureCommunicationCallAdapter implements CallAdapter {
     constructor(callClient: StatefulCallClient, groupId: string, callAgent: CallAgent, deviceManager: StatefulDeviceManager);
     // (undocumented)
-    createStreamView(userId?: FlatCommunicationIdentifier, options?: VideoStreamOptions | undefined): Promise<void>;
+    createStreamView(userId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
     // (undocumented)
     dispose(): void;
     // (undocumented)
@@ -119,7 +119,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     querySpeakers(): Promise<AudioDeviceInfo[]>;
     // (undocumented)
-    removeParticipant(userId: FlatCommunicationIdentifier): Promise<void>;
+    removeParticipant(userId: string): Promise<void>;
     // (undocumented)
     setCamera(device: VideoDeviceInfo): Promise<void>;
     // (undocumented)
@@ -127,7 +127,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     setSpeaker(device: AudioDeviceInfo): Promise<void>;
     // (undocumented)
-    startCall(participants: FlatCommunicationIdentifier[]): Call_2 | undefined;
+    startCall(participants: string[]): Call_2 | undefined;
     // (undocumented)
     startCamera(): Promise<void>;
     // (undocumented)
@@ -156,9 +156,9 @@ export interface Call {
     isScreenSharingOn: boolean;
     localVideoStreams: LocalVideoStream[];
     recording: RecordingCallFeature;
-    remoteParticipants: Map<FlatCommunicationIdentifier, RemoteParticipant>;
-    remoteParticipantsEnded: Map<FlatCommunicationIdentifier, RemoteParticipant>;
-    screenShareRemoteParticipant: FlatCommunicationIdentifier | undefined;
+    remoteParticipants: Map<string, RemoteParticipant>;
+    remoteParticipantsEnded: Map<string, RemoteParticipant>;
+    screenShareRemoteParticipant: string | undefined;
     startTime: Date;
     state: CallState_2;
     transcription: TranscriptionCallFeature;
@@ -168,7 +168,7 @@ export interface Call {
 // @public (undocumented)
 export interface CallAdapter {
     // (undocumented)
-    createStreamView(userId?: FlatCommunicationIdentifier, options?: VideoStreamOptions | undefined): Promise<void>;
+    createStreamView(userId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
     // (undocumented)
     dispose(): void;
     // (undocumented)
@@ -224,7 +224,7 @@ export interface CallAdapter {
     // (undocumented)
     querySpeakers(): Promise<AudioDeviceInfo[]>;
     // (undocumented)
-    removeParticipant(userId: FlatCommunicationIdentifier): Promise<void>;
+    removeParticipant(userId: string): Promise<void>;
     // (undocumented)
     setCamera(sourceId: VideoDeviceInfo): Promise<void>;
     // (undocumented)
@@ -232,7 +232,7 @@ export interface CallAdapter {
     // (undocumented)
     setSpeaker(sourceId: AudioDeviceInfo): Promise<void>;
     // (undocumented)
-    startCall(participants: FlatCommunicationIdentifier[]): Call_2 | undefined;
+    startCall(participants: string[]): Call_2 | undefined;
     // (undocumented)
     startCamera(): Promise<void>;
     // (undocumented)
@@ -261,7 +261,7 @@ export interface CallClientState {
     deviceManager: DeviceManagerState;
     incomingCalls: Map<string, IncomingCall>;
     incomingCallsEnded: IncomingCall[];
-    userId: FlatCommunicationIdentifier;
+    userId: string;
 }
 
 // @public (undocumented)
@@ -291,7 +291,7 @@ export type CallingBaseSelectorProps = {
 
 // @public (undocumented)
 export type CallingClientState = {
-    userId: FlatCommunicationIdentifier;
+    userId: string;
     displayName?: string;
     call?: Call;
     devices: DeviceManagerState;
@@ -399,7 +399,7 @@ export const ChatComposite: (props: ChatProps) => JSX.Element;
 
 // @public (undocumented)
 export type ChatCompositeClientState = {
-    userId: FlatCommunicationIdentifier;
+    userId: string;
     displayName: string;
     thread: ChatThreadClientState;
 };
@@ -415,7 +415,7 @@ export type ChatMessagePayload = {
     messageId?: string;
     content?: string;
     createdOn?: Date;
-    senderId?: FlatCommunicationIdentifier;
+    senderId?: string;
     senderDisplayName?: string;
     status?: MessageStatus;
     attached?: MessageAttachedStatus | boolean;
@@ -472,7 +472,7 @@ export type ChatThreadClientProviderProps = {
 // @public (undocumented)
 export type ChatThreadClientState = {
     chatMessages: Map<string, ChatMessageWithStatus>;
-    participants: Map<FlatCommunicationIdentifier, ChatParticipant>;
+    participants: Map<string, ChatParticipant>;
     threadId: string;
     properties?: ChatThreadProperties;
     readReceipts: ChatMessageReadReceipt[];
@@ -508,7 +508,7 @@ export type CommonProperties<A, B> = {
 
 // @public
 export type CommunicationParticipant = {
-    userId: FlatCommunicationIdentifier;
+    userId: string;
     displayName?: string;
 };
 
@@ -637,8 +637,8 @@ export const createDefaultCallingHandlers: (callClient: StatefulCallClient, call
     onToggleMicrophone: () => Promise<void>;
     onToggleScreenShare: () => Promise<void>;
     onCreateLocalStreamView: (options?: VideoStreamOptions | undefined) => Promise<void>;
-    onCreateRemoteStreamView: (userId: FlatCommunicationIdentifier, options?: VideoStreamOptions | undefined) => Promise<void>;
-    onParticipantRemove: (userId: FlatCommunicationIdentifier) => void;
+    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions | undefined) => Promise<void>;
+    onParticipantRemove: (userId: string) => void;
     onStartLocalVideo: () => Promise<void>;
 };
 
@@ -655,8 +655,8 @@ export const createDefaultCallingHandlersForComponent: <Props>(callClient: State
     onToggleMicrophone: () => Promise<void>;
     onToggleScreenShare: () => Promise<void>;
     onCreateLocalStreamView: (options?: VideoStreamOptions | undefined) => Promise<void>;
-    onCreateRemoteStreamView: (userId: FlatCommunicationIdentifier, options?: VideoStreamOptions | undefined) => Promise<void>;
-    onParticipantRemove: (userId: FlatCommunicationIdentifier) => void;
+    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions | undefined) => Promise<void>;
+    onParticipantRemove: (userId: string) => void;
     onStartLocalVideo: () => Promise<void>;
 }, CommonProperties<{
     onHangUp: () => Promise<void>;
@@ -670,8 +670,8 @@ export const createDefaultCallingHandlersForComponent: <Props>(callClient: State
     onToggleMicrophone: () => Promise<void>;
     onToggleScreenShare: () => Promise<void>;
     onCreateLocalStreamView: (options?: VideoStreamOptions | undefined) => Promise<void>;
-    onCreateRemoteStreamView: (userId: FlatCommunicationIdentifier, options?: VideoStreamOptions | undefined) => Promise<void>;
-    onParticipantRemove: (userId: FlatCommunicationIdentifier) => void;
+    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions | undefined) => Promise<void>;
+    onParticipantRemove: (userId: string) => void;
     onStartLocalVideo: () => Promise<void>;
 }, Props>>;
 
@@ -707,7 +707,7 @@ export type DefaultChatHandlers = {
     onSendMessage: (content: string) => Promise<void>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
     onTyping: () => Promise<void>;
-    onParticipantRemove: (userId: FlatCommunicationIdentifier) => Promise<void>;
+    onParticipantRemove: (userId: string) => Promise<void>;
     updateThreadTopicName: (topicName: string) => Promise<void>;
     onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
 };
@@ -744,9 +744,6 @@ export interface EndCallButtonProps extends IButtonProps {
 }
 
 // @public
-export type FlatCommunicationIdentifier = string;
-
-// @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
 
 // @public
@@ -756,7 +753,7 @@ export interface FluentThemeProviderProps {
 }
 
 // @public (undocumented)
-export const fromFlatCommunicationIdentifier: (id: FlatCommunicationIdentifier) => CommunicationIdentifier;
+export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
 // @public (undocumented)
 export type FunctionWithKey<KeyT, ArgsT extends any[], RetT> = (key: KeyT, ...args: ArgsT) => RetT;
@@ -777,7 +774,7 @@ export const getDeviceManager: (state: CallClientState) => DeviceManagerState;
 export const getDisplayName: (state: CallClientState) => string | undefined;
 
 // @public (undocumented)
-export const getIdentifier: (state: CallClientState) => FlatCommunicationIdentifier;
+export const getIdentifier: (state: CallClientState) => string;
 
 // @public (undocumented)
 export const getIncomingCalls: (state: CallClientState) => Map<string, IncomingCall>;
@@ -815,7 +812,7 @@ export interface IncomingCall {
 // @public (undocumented)
 export type IncomingCallListener = (event: {
     callId: string;
-    callerId: FlatCommunicationIdentifier;
+    callerId: string;
     callerDisplayName?: string;
     accept: () => Promise<void>;
     reject: () => Promise<void>;
@@ -1011,7 +1008,7 @@ export const ParticipantList: (props: ParticipantListProps) => JSX.Element;
 // @public
 export type ParticipantListProps = {
     participants: CommunicationParticipant[];
-    myUserId?: FlatCommunicationIdentifier;
+    myUserId?: string;
     onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
     onRenderAvatar?: (participant: CommunicationParticipant) => JSX.Element | null;
     onParticipantRemove?: (userId: string) => void;
@@ -1020,10 +1017,10 @@ export type ParticipantListProps = {
 // @public (undocumented)
 export const participantListSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     participants: CallParticipant[];
-    myUserId: FlatCommunicationIdentifier;
+    myUserId: string;
 }, (res1: string, res2: string | undefined, res3: Call | undefined) => {
     participants: CallParticipant[];
-    myUserId: FlatCommunicationIdentifier;
+    myUserId: string;
 }>;
 
 // @public
@@ -1179,8 +1176,8 @@ export type SystemMessagePayload = {
     iconName?: string;
 };
 
-// @public (undocumented)
-export const toFlatCommunicationIdentifier: (id: CommunicationIdentifier) => FlatCommunicationIdentifier;
+// @public
+export const toFlatCommunicationIdentifier: (id: CommunicationIdentifier) => string;
 
 // @public
 export interface TranscriptionCallFeature {
@@ -1254,7 +1251,7 @@ export type VideoGalleryLocalParticipant = VideoGalleryParticipant;
 
 // @public (undocumented)
 export type VideoGalleryParticipant = {
-    userId: FlatCommunicationIdentifier;
+    userId: string;
     isMuted?: boolean;
     displayName?: string;
     videoStream?: VideoGalleryStream;

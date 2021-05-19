@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { FlatCommunicationIdentifier, toFlatCommunicationIdentifier } from 'acs-ui-common';
+import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 // @ts-ignore
 import { RemoteParticipant, CallClientState, Call } from 'calling-stateful-client';
 // @ts-ignore
@@ -38,7 +38,7 @@ export const participantListSelector = reselect.createSelector(
     call
   ): {
     participants: CallParticipant[];
-    myUserId: FlatCommunicationIdentifier;
+    myUserId: string;
   } => {
     const remoteParticipants =
       call && call?.remoteParticipants

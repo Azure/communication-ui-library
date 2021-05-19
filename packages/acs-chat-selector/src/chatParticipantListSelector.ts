@@ -7,7 +7,7 @@ import { ChatClientState } from 'chat-stateful-client';
 import { ChatBaseSelectorProps } from './baseSelectors';
 import { getUserId, getDisplayName, getParticipants } from './baseSelectors';
 import * as reselect from 'reselect';
-import { FlatCommunicationIdentifier, toFlatCommunicationIdentifier } from 'acs-ui-common';
+import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import { ChatParticipant } from '@azure/communication-chat';
 import { CommunicationParticipant } from 'react-components';
 
@@ -24,7 +24,7 @@ const convertChatParticipantsToCommunicationParticipants = (
 
 export const chatParticipantListSelector = reselect.createSelector(
   [getUserId, getParticipants, getDisplayName],
-  (userId, chatParticipants: Map<FlatCommunicationIdentifier, ChatParticipant>, displayName) => {
+  (userId, chatParticipants: Map<string, ChatParticipant>, displayName) => {
     return {
       myUserId: userId,
       displayName,

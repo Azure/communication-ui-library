@@ -11,7 +11,6 @@ import { ChatMessageReadReceipt } from '@azure/communication-chat';
 import { ChatParticipant } from '@azure/communication-chat';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CommunicationTokenCredential } from '@azure/communication-common';
-import { FlatCommunicationIdentifier } from 'acs-ui-common';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 
 // @public (undocumented)
@@ -33,7 +32,7 @@ export type ChatMessageWithStatus = ChatMessage & {
 // @public (undocumented)
 export type ChatThreadClientState = {
     chatMessages: Map<string, ChatMessageWithStatus>;
-    participants: Map<FlatCommunicationIdentifier, ChatParticipant>;
+    participants: Map<string, ChatParticipant>;
     threadId: string;
     properties?: ChatThreadProperties;
     readReceipts: ChatMessageReadReceipt[];
