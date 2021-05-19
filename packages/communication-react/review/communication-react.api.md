@@ -12,7 +12,7 @@ import { CallClientOptions } from '@azure/communication-calling';
 import { CallDirection } from '@azure/communication-calling';
 import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
-import { CallState as CallState_2 } from '@azure/communication-calling';
+import { CallState } from '@azure/communication-calling';
 import { ChatClient } from '@azure/communication-chat';
 import { ChatClientOptions } from '@azure/communication-chat';
 import { ChatMessage as ChatMessage_2 } from '@azure/communication-chat';
@@ -67,7 +67,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     dispose(): void;
     // (undocumented)
-    getState(): CallState;
+    getState(): CallStatus;
     // (undocumented)
     joinCall(): Promise<void>;
     // (undocumented)
@@ -91,7 +91,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     off(event: 'error', errorHandler: (e: Error) => void): void;
     // (undocumented)
-    offStateChange(handler: (state: CallState) => void): void;
+    offStateChange(handler: (state: CallStatus) => void): void;
     // (undocumented)
     on(event: 'participantsJoined', participantsJoinedListener: ParticipantJoinedListener): void;
     // (undocumented)
@@ -109,7 +109,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     on(event: 'error', errorHandler: (e: Error) => void): void;
     // (undocumented)
-    onStateChange(handler: (state: CallState) => void): void;
+    onStateChange(handler: (state: CallStatus) => void): void;
     // (undocumented)
     onToggleCamera(): Promise<void>;
     // (undocumented)
@@ -160,7 +160,7 @@ export interface Call {
     remoteParticipantsEnded: Map<string, RemoteParticipant>;
     screenShareRemoteParticipant: string | undefined;
     startTime: Date;
-    state: CallState_2;
+    state: CallState;
     transcription: TranscriptionCallFeature;
     transfer: TransferCallFeature;
 }
@@ -172,7 +172,7 @@ export interface CallAdapter {
     // (undocumented)
     dispose(): void;
     // (undocumented)
-    getState(): CallState;
+    getState(): CallStatus;
     // (undocumented)
     joinCall(): Promise<void>;
     // (undocumented)
@@ -196,7 +196,7 @@ export interface CallAdapter {
     // (undocumented)
     off(event: 'error', errorHandler: (e: Error) => void): void;
     // (undocumented)
-    offStateChange(handler: (state: CallState) => void): void;
+    offStateChange(handler: (state: CallStatus) => void): void;
     // (undocumented)
     on(event: 'participantsJoined', participantsJoinedHandler: ParticipantJoinedListener): void;
     // (undocumented)
@@ -214,7 +214,7 @@ export interface CallAdapter {
     // (undocumented)
     on(event: 'error', errorHandler: (e: Error) => void): void;
     // (undocumented)
-    onStateChange(handler: (state: CallState) => void): void;
+    onStateChange(handler: (state: CallStatus) => void): void;
     // (undocumented)
     onToggleCamera(): Promise<void>;
     // (undocumented)
@@ -323,7 +323,7 @@ export type CallParticipant = CommunicationParticipant & {
 };
 
 // @public (undocumented)
-export type CallState = CallingUIState & CallingClientState;
+export type CallStatus = CallingUIState & CallingClientState;
 
 // @public
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
