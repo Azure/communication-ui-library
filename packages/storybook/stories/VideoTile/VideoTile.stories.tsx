@@ -33,7 +33,8 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Example</Heading>
       <Subheading>Default Usage</Subheading>
       <Description>
-        The default VideoTile component shows a Persona with the initials of `displayName` when no video is available.
+        The default VideoTile component shows a displayName and a Persona with the initials of `displayName` when no
+        video is available.
       </Description>
       <Canvas mdxSource={VideoTileExampleText}>
         <VideoTileExample />
@@ -66,6 +67,7 @@ const getDocs: () => JSX.Element = () => {
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.
 export const VideoTile: () => JSX.Element = () => {
   const displayName = text('Display Name', 'John Krasinski');
+  const showDisplayName = boolean('show displayName', true);
   const isVideoReady = boolean('Is Video Ready', false);
   const isMirrored = boolean('Is Mirrored', false);
   const width = number('Width', 400, {
@@ -86,6 +88,7 @@ export const VideoTile: () => JSX.Element = () => {
       isVideoReady={isVideoReady}
       renderElement={<StreamMedia videoStreamElement={renderVideoStream()} />}
       displayName={displayName}
+      showDisplayName={showDisplayName}
       isMirrored={isMirrored}
       styles={{
         root: { height: height, width: width }

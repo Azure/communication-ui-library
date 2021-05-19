@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { Stack, Text } from '@fluentui/react';
+import { Stack } from '@fluentui/react';
 import {
   disabledVideoHint,
   localMediaGalleryTileStyle,
@@ -22,7 +22,7 @@ export interface MediaGallery1To1Props extends MediaGallery1To1ContainerProps {
   /** Determines the remote participant in the media gallery. */
   remoteParticipant: GalleryParticipant | undefined;
   /** Determines the local participant label/avatar. */
-  localParticipantName?: string;
+  localParticipantDisplayName?: string;
   /** Show local participant label */
   showLocalParticipantName?: boolean;
   /** Optional property to set the local media gallery tile scaling mode. */
@@ -35,7 +35,7 @@ export interface MediaGallery1To1Props extends MediaGallery1To1ContainerProps {
 
 export const MediaGallery1To1Component = (props: MediaGallery1To1Props): JSX.Element => {
   const {
-    localParticipantName,
+    localParticipantDisplayName,
     showLocalParticipantName,
     remoteVideoScalingMode,
     localVideoScalingMode,
@@ -44,7 +44,7 @@ export const MediaGallery1To1Component = (props: MediaGallery1To1Props): JSX.Ele
     localVideoStream
   } = props;
 
-  const remoteParticipantName = remoteParticipant?.displayName;
+  const remoteParticipantDisplayName = remoteParticipant?.displayName;
   const stream = remoteParticipant?.videoStream;
 
   const { isVideoReady: isLocalVideoReady, videoStreamElement: localVideoStreamElement } = MapToLocalVideoProps({
@@ -57,8 +57,7 @@ export const MediaGallery1To1Component = (props: MediaGallery1To1Props): JSX.Ele
       <RemoteVideoTile
         stream={stream}
         scalingMode={remoteVideoScalingMode ?? 'Crop'}
-        label={remoteParticipantName}
-        displayName={remoteParticipantName}
+        displayName={remoteParticipantDisplayName}
       />
     </Stack>
   );
@@ -69,13 +68,11 @@ export const MediaGallery1To1Component = (props: MediaGallery1To1Props): JSX.Ele
         <VideoTile
           isVideoReady={isLocalVideoReady}
           renderElement={<StreamMedia videoStreamElement={localVideoStreamElement} />}
-          displayName={localParticipantName}
+          displayName={localParticipantDisplayName}
+          showDisplayName={showLocalParticipantName}
+          styles={{ displayNameContainer: isLocalVideoReady ? videoHint : disabledVideoHint }}
           isMirrored={localVideoInverted}
-        >
-          {showLocalParticipantName && (
-            <Text className={isLocalVideoReady ? videoHint : disabledVideoHint}>{localParticipantName}</Text>
-          )}
-        </VideoTile>
+        />
       </Stack>
     </Stack.Item>
   );
