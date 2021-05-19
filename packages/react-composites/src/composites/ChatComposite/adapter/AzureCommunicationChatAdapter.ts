@@ -2,13 +2,11 @@
 // Licensed under the MIT license.
 
 import { createStatefulChatClient, ChatClientState, StatefulChatClient } from 'chat-stateful-client';
-import {
-  DefaultChatHandlers,
-  communicationIdentifierToString,
-  createDefaultChatHandlers
-} from '@azure/acs-chat-selector';
-import { ChatClient, ChatMessage, ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
+import { DefaultChatHandlers, createDefaultChatHandlers } from '@azure/acs-chat-selector';
+import { ChatMessage, ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
+
 import { CommunicationUserKind } from '@azure/communication-signaling';
+import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import EventEmitter from 'events';
 import { createAzureCommunicationUserCredential, getIdFromToken } from '../../../utils';
 import { ChatAdapter, ChatEvent, ChatState } from './ChatAdapter';
@@ -24,7 +22,7 @@ class ChatContext {
     this.threadId = threadId;
     if (!thread) throw 'Cannot find threadId, please initialize thread before use!';
     this.state = {
-      userId: communicationIdentifierToString(clientState.userId),
+      userId: toFlatCommunicationIdentifier(clientState.userId),
       displayName: clientState.displayName,
       thread
     };
@@ -55,7 +53,7 @@ class ChatContext {
     const thread = clientState.threads.get(this.threadId);
     if (!thread) throw 'Cannot find threadId, please make sure thread state is still in Stateful ChatClient.';
     this.setState({
-      userId: communicationIdentifierToString(clientState.userId),
+      userId: toFlatCommunicationIdentifier(clientState.userId),
       displayName: clientState.displayName,
       thread
     });
@@ -86,7 +84,14 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.chatClient.onStateChange(onStateChange);
   }
 
-  updateAllParticipants = async (): Promise<void> => {
+  fetchInitialData = async (): Promise<void> => {
+    try {
+      await this.chatThreadClient.getProperties();
+    } catch (e) {
+      console.log(e);
+    }
+
+    // Fetch all participants who joined before the local user.
     try {
       for await (const _page of this.chatThreadClient.listParticipants().byPage({
         // Fetch 100 participants per page by default.
@@ -155,10 +160,12 @@ export const createAzureCommunicationChatAdapter = async (
 
   // This hack can be removed when `getIdFromToken` is dropped in favour of actually passing in user credentials.
   const userId = <CommunicationUserKind>{ kind: 'communicationUser', communicationUserId: rawUserId };
-  const chatClient = createStatefulChatClient(
-    new ChatClient(endpointUrl, createAzureCommunicationUserCredential(token, refreshTokenCallback)),
-    { userId, displayName }
-  );
+  const chatClient = createStatefulChatClient({
+    userId,
+    displayName,
+    endpoint: endpointUrl,
+    credential: createAzureCommunicationUserCredential(token, refreshTokenCallback)
+  });
   const chatThreadClient = await chatClient.getChatThreadClient(threadId);
 
   chatClient.startRealtimeNotifications();

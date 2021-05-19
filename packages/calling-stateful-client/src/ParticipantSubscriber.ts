@@ -2,12 +2,13 @@
 // Licensed under the MIT license.
 
 import { RemoteParticipant, RemoteVideoStream } from '@azure/communication-calling';
+import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import { CallContext } from './CallContext';
 import { CallIdRef } from './CallIdRef';
-import { convertSdkRemoteStreamToDeclarativeRemoteStream, getRemoteParticipantKey } from './Converter';
+import { convertSdkRemoteStreamToDeclarativeRemoteStream } from './Converter';
 import { InternalCallContext } from './InternalCallContext';
 import { RemoteVideoStreamSubscriber } from './RemoteVideoStreamSubscriber';
-import { stopRenderVideo } from './StreamUtils';
+import { disposeView } from './StreamUtils';
 
 /**
  * Keeps track of the listeners assigned to a particular participant because when we get an event from SDK, it doesn't
@@ -32,7 +33,7 @@ export class ParticipantSubscriber {
     this._participant = participant;
     this._context = context;
     this._internalContext = internalContext;
-    this._participantKey = getRemoteParticipantKey(this._participant.identifier);
+    this._participantKey = toFlatCommunicationIdentifier(this._participant.identifier);
     this._remoteVideoStreamSubscribers = new Map<number, RemoteVideoStreamSubscriber>();
     this.subscribe();
   }
@@ -75,7 +76,7 @@ export class ParticipantSubscriber {
     // as it doesn't make sense to render for an ended participant.
     if (this._participant.videoStreams.length > 0) {
       for (const stream of this._participant.videoStreams) {
-        stopRenderVideo(
+        disposeView(
           this._context,
           this._internalContext,
           this._callIdRef.callId,
@@ -118,7 +119,7 @@ export class ParticipantSubscriber {
   private videoStreamsUpdated = (event: { added: RemoteVideoStream[]; removed: RemoteVideoStream[] }): void => {
     for (const stream of event.removed) {
       this._remoteVideoStreamSubscribers.get(stream.id)?.unsubscribe();
-      stopRenderVideo(
+      disposeView(
         this._context,
         this._internalContext,
         this._callIdRef.callId,

@@ -12,16 +12,16 @@ import {
 import { CommunicationUserKind } from '@azure/communication-common';
 import { Call, LocalVideoStream, RemoteParticipant, RemoteVideoStream } from './CallClientState';
 import { CallContext } from './CallContext';
-import { getRemoteParticipantKey } from './Converter';
 import { InternalCallContext } from './InternalCallContext';
 import {
   MAX_UNPARENTED_VIEWS_LENGTH,
-  startRenderVideo,
-  stopRenderVideo,
-  stopRenderAllVideosForAllCalls,
-  stopRenderAllVideosForCall
+  createView,
+  disposeView,
+  disposeAllViewsFromCall,
+  disposeAllViews
 } from './StreamUtils';
 import { createMockRemoteVideoStream } from './TestUtils';
+import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 
 jest.mock('@azure/communication-calling', () => {
   return {
@@ -89,6 +89,7 @@ function createMockCall(mockCallId: string): Call {
     recording: { isRecordingActive: false },
     transcription: { isTranscriptionActive: false },
     transfer: { receivedTransferRequests: [], requestedTransfers: [] },
+    screenShareRemoteParticipant: undefined,
     startTime: new Date(),
     endTime: undefined
   };
@@ -114,7 +115,7 @@ function addMockRemoteStreamAndParticipant(
     videoStreamRendererView: undefined
   };
   participant.videoStreams.set(streamId, remoteVideoStream);
-  call.remoteParticipants.set(getRemoteParticipantKey(identifier), participant);
+  call.remoteParticipants.set(toFlatCommunicationIdentifier(identifier), participant);
   return remoteVideoStream;
 }
 
@@ -138,7 +139,7 @@ function addSdkRemoteStream(
   sdkRemoteVideoStream.id = streamId;
   internalContext.setRemoteStreamAndRenderer(
     callId,
-    getRemoteParticipantKey(identifier),
+    toFlatCommunicationIdentifier(identifier),
     streamId,
     sdkRemoteVideoStream,
     undefined
@@ -154,19 +155,19 @@ function addSdkLocalStream(internalContext: InternalCallContext, callId: string)
 }
 
 describe('stream utils', () => {
-  test('stores the correct state and start rendering when startRenderVideo is called on remote stream', async () => {
+  test('stores the correct state and start rendering when createView is called on remote stream', async () => {
     const { context, internalContext } = createContexts();
     const call = createMockCall(mockCallId);
     const remoteVideoStream = addMockRemoteStreamAndParticipant(call, mockParticipantIdentifier, mockStreamId);
     context.setCall(call);
     addSdkRemoteStream(internalContext, mockCallId, mockParticipantIdentifier, mockStreamId);
 
-    await startRenderVideo(context, internalContext, mockCallId, mockParticipantIdentifier, remoteVideoStream);
+    await createView(context, internalContext, mockCallId, mockParticipantIdentifier, remoteVideoStream);
 
     expect(
       internalContext.getRemoteStreamAndRendererForParticipant(
         mockCallId,
-        getRemoteParticipantKey(mockParticipantIdentifier),
+        toFlatCommunicationIdentifier(mockParticipantIdentifier),
         mockStreamId
       )?.renderer
     ).toBeDefined();
@@ -174,26 +175,26 @@ describe('stream utils', () => {
       context
         .getState()
         .calls.get(mockCallId)
-        ?.remoteParticipants.get(getRemoteParticipantKey(mockParticipantIdentifier))
+        ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier))
         ?.videoStreams.get(mockStreamId)?.videoStreamRendererView
     ).toBeDefined();
   });
 
-  test('cleans up state and stop rendering when stopRenderVideo is called on remote stream', async () => {
+  test('cleans up state and stop rendering when disposeView is called on remote stream', async () => {
     const { context, internalContext } = createContexts();
     const call = createMockCall(mockCallId);
     const remoteVideoStream = addMockRemoteStreamAndParticipant(call, mockParticipantIdentifier, mockStreamId);
     context.setCall(call);
     addSdkRemoteStream(internalContext, mockCallId, mockParticipantIdentifier, mockStreamId);
 
-    await startRenderVideo(context, internalContext, mockCallId, mockParticipantIdentifier, remoteVideoStream);
+    await createView(context, internalContext, mockCallId, mockParticipantIdentifier, remoteVideoStream);
 
-    stopRenderVideo(context, internalContext, mockCallId, mockParticipantIdentifier, remoteVideoStream);
+    disposeView(context, internalContext, mockCallId, mockParticipantIdentifier, remoteVideoStream);
 
     expect(
       internalContext.getRemoteStreamAndRendererForParticipant(
         mockCallId,
-        getRemoteParticipantKey(mockParticipantIdentifier),
+        toFlatCommunicationIdentifier(mockParticipantIdentifier),
         mockStreamId
       )?.renderer
     ).not.toBeDefined();
@@ -201,12 +202,12 @@ describe('stream utils', () => {
       context
         .getState()
         .calls.get(mockCallId)
-        ?.remoteParticipants.get(getRemoteParticipantKey(mockParticipantIdentifier))
+        ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier))
         ?.videoStreams.get(mockStreamId)?.videoStreamRendererView
     ).not.toBeDefined();
   });
 
-  test('cleans up state and stop rendering when stopRenderVideoAll is called on multiple remote streams', async () => {
+  test('cleans up state and stop rendering when disposeAllViewsFromCall is called on multiple remote streams', async () => {
     const { context, internalContext } = createContexts();
     const call = createMockCall(mockCallId);
     const remoteVideoStream = addMockRemoteStreamAndParticipant(call, mockParticipantIdentifier, mockStreamId);
@@ -215,20 +216,20 @@ describe('stream utils', () => {
     addSdkRemoteStream(internalContext, mockCallId, mockParticipantIdentifier, mockStreamId);
     addSdkRemoteStream(internalContext, mockCallId, mockParticipantIdentifier2, mockStreamId2);
 
-    await startRenderVideo(context, internalContext, mockCallId, mockParticipantIdentifier, remoteVideoStream);
-    await startRenderVideo(context, internalContext, mockCallId, mockParticipantIdentifier2, remoteVideoStream2);
+    await createView(context, internalContext, mockCallId, mockParticipantIdentifier, remoteVideoStream);
+    await createView(context, internalContext, mockCallId, mockParticipantIdentifier2, remoteVideoStream2);
 
     expect(
       internalContext.getRemoteStreamAndRendererForParticipant(
         mockCallId,
-        getRemoteParticipantKey(mockParticipantIdentifier),
+        toFlatCommunicationIdentifier(mockParticipantIdentifier),
         mockStreamId
       )?.renderer
     ).toBeDefined();
     expect(
       internalContext.getRemoteStreamAndRendererForParticipant(
         mockCallId,
-        getRemoteParticipantKey(mockParticipantIdentifier2),
+        toFlatCommunicationIdentifier(mockParticipantIdentifier2),
         mockStreamId2
       )?.renderer
     ).toBeDefined();
@@ -236,30 +237,30 @@ describe('stream utils', () => {
       context
         .getState()
         .calls.get(mockCallId)
-        ?.remoteParticipants.get(getRemoteParticipantKey(mockParticipantIdentifier))
+        ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier))
         ?.videoStreams.get(mockStreamId)?.videoStreamRendererView
     ).toBeDefined();
     expect(
       context
         .getState()
         .calls.get(mockCallId)
-        ?.remoteParticipants.get(getRemoteParticipantKey(mockParticipantIdentifier2))
+        ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier2))
         ?.videoStreams.get(mockStreamId2)?.videoStreamRendererView
     ).toBeDefined();
 
-    stopRenderAllVideosForCall(context, internalContext, mockCallId);
+    disposeAllViewsFromCall(context, internalContext, mockCallId);
 
     expect(
       internalContext.getRemoteStreamAndRendererForParticipant(
         mockCallId,
-        getRemoteParticipantKey(mockParticipantIdentifier),
+        toFlatCommunicationIdentifier(mockParticipantIdentifier),
         mockStreamId
       )?.renderer
     ).not.toBeDefined();
     expect(
       internalContext.getRemoteStreamAndRendererForParticipant(
         mockCallId,
-        getRemoteParticipantKey(mockParticipantIdentifier2),
+        toFlatCommunicationIdentifier(mockParticipantIdentifier2),
         mockStreamId2
       )?.renderer
     ).not.toBeDefined();
@@ -267,19 +268,19 @@ describe('stream utils', () => {
       context
         .getState()
         .calls.get(mockCallId)
-        ?.remoteParticipants.get(getRemoteParticipantKey(mockParticipantIdentifier))
+        ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier))
         ?.videoStreams.get(mockStreamId)?.videoStreamRendererView
     ).not.toBeDefined();
     expect(
       context
         .getState()
         .calls.get(mockCallId)
-        ?.remoteParticipants.get(getRemoteParticipantKey(mockParticipantIdentifier2))
+        ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier2))
         ?.videoStreams.get(mockStreamId2)?.videoStreamRendererView
     ).not.toBeDefined();
   });
 
-  test('cleans up state and stop rendering if stopRenderVideoAllCalls called on multiple remote streams', async () => {
+  test('cleans up state and stop rendering if disposeAllViews called on multiple remote streams', async () => {
     const { context, internalContext } = createContexts();
     const call = createMockCall(mockCallId);
     const remoteVideoStream = addMockRemoteStreamAndParticipant(call, mockParticipantIdentifier, mockStreamId);
@@ -290,20 +291,20 @@ describe('stream utils', () => {
     addSdkRemoteStream(internalContext, mockCallId, mockParticipantIdentifier, mockStreamId);
     addSdkRemoteStream(internalContext, mockCallId2, mockParticipantIdentifier2, mockStreamId2);
 
-    await startRenderVideo(context, internalContext, mockCallId, mockParticipantIdentifier, remoteVideoStream);
-    await startRenderVideo(context, internalContext, mockCallId2, mockParticipantIdentifier2, remoteVideoStream2);
+    await createView(context, internalContext, mockCallId, mockParticipantIdentifier, remoteVideoStream);
+    await createView(context, internalContext, mockCallId2, mockParticipantIdentifier2, remoteVideoStream2);
 
     expect(
       internalContext.getRemoteStreamAndRendererForParticipant(
         mockCallId,
-        getRemoteParticipantKey(mockParticipantIdentifier),
+        toFlatCommunicationIdentifier(mockParticipantIdentifier),
         mockStreamId
       )?.renderer
     ).toBeDefined();
     expect(
       internalContext.getRemoteStreamAndRendererForParticipant(
         mockCallId2,
-        getRemoteParticipantKey(mockParticipantIdentifier2),
+        toFlatCommunicationIdentifier(mockParticipantIdentifier2),
         mockStreamId2
       )?.renderer
     ).toBeDefined();
@@ -311,30 +312,30 @@ describe('stream utils', () => {
       context
         .getState()
         .calls.get(mockCallId)
-        ?.remoteParticipants.get(getRemoteParticipantKey(mockParticipantIdentifier))
+        ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier))
         ?.videoStreams.get(mockStreamId)?.videoStreamRendererView
     ).toBeDefined();
     expect(
       context
         .getState()
         .calls.get(mockCallId2)
-        ?.remoteParticipants.get(getRemoteParticipantKey(mockParticipantIdentifier2))
+        ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier2))
         ?.videoStreams.get(mockStreamId2)?.videoStreamRendererView
     ).toBeDefined();
 
-    stopRenderAllVideosForAllCalls(context, internalContext);
+    disposeAllViews(context, internalContext);
 
     expect(
       internalContext.getRemoteStreamAndRendererForParticipant(
         mockCallId,
-        getRemoteParticipantKey(mockParticipantIdentifier),
+        toFlatCommunicationIdentifier(mockParticipantIdentifier),
         mockStreamId
       )?.renderer
     ).not.toBeDefined();
     expect(
       internalContext.getRemoteStreamAndRendererForParticipant(
         mockCallId2,
-        getRemoteParticipantKey(mockParticipantIdentifier2),
+        toFlatCommunicationIdentifier(mockParticipantIdentifier2),
         mockStreamId2
       )?.renderer
     ).not.toBeDefined();
@@ -342,41 +343,41 @@ describe('stream utils', () => {
       context
         .getState()
         .calls.get(mockCallId)
-        ?.remoteParticipants.get(getRemoteParticipantKey(mockParticipantIdentifier))
+        ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier))
         ?.videoStreams.get(mockStreamId)?.videoStreamRendererView
     ).not.toBeDefined();
     expect(
       context
         .getState()
         .calls.get(mockCallId2)
-        ?.remoteParticipants.get(getRemoteParticipantKey(mockParticipantIdentifier2))
+        ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier2))
         ?.videoStreams.get(mockStreamId2)?.videoStreamRendererView
     ).not.toBeDefined();
   });
 
-  test('stores the correct state and start rendering when startRenderVideo is called on local stream', async () => {
+  test('stores the correct state and start rendering when createView is called on local stream', async () => {
     const { context, internalContext } = createContexts();
     const call = createMockCall(mockCallId);
     addMockLocalStream(call);
     context.setCall(call);
     addSdkLocalStream(internalContext, mockCallId);
 
-    await startRenderVideo(context, internalContext, mockCallId, undefined, {} as LocalVideoStream);
+    await createView(context, internalContext, mockCallId, undefined, {} as LocalVideoStream);
 
     expect(internalContext.getLocalStreamAndRenderer(mockCallId)?.renderer).toBeDefined();
     expect(context.getState().calls.get(mockCallId)?.localVideoStreams[0].videoStreamRendererView).toBeDefined();
   });
 
-  test('cleans up state and stop rendering when stopRenderVideo is called on remote stream', async () => {
+  test('cleans up state and stop rendering when disposeView is called on remote stream', async () => {
     const { context, internalContext } = createContexts();
     const call = createMockCall(mockCallId);
     addMockLocalStream(call);
     context.setCall(call);
     addSdkLocalStream(internalContext, mockCallId);
 
-    await startRenderVideo(context, internalContext, mockCallId, undefined, {} as LocalVideoStream);
+    await createView(context, internalContext, mockCallId, undefined, {} as LocalVideoStream);
 
-    stopRenderVideo(context, internalContext, mockCallId, undefined, {} as LocalVideoStream);
+    disposeView(context, internalContext, mockCallId, undefined, {} as LocalVideoStream);
 
     expect(internalContext.getLocalStreamAndRenderer(mockCallId)?.renderer).not.toBeDefined();
     expect(context.getState().calls.get(mockCallId)?.localVideoStreams[0].videoStreamRendererView).not.toBeDefined();
@@ -384,7 +385,7 @@ describe('stream utils', () => {
 
   test('is able to render LocalVideoStream not tied to a call and store in unparented state', async () => {
     const { context, internalContext } = createContexts();
-    await startRenderVideo(context, internalContext, undefined, undefined, {
+    await createView(context, internalContext, undefined, undefined, {
       source: { name: 'a', id: 'a', deviceType: 'Unknown' }
     } as LocalVideoStream);
     expect(internalContext.getUnparentedStreamAndRenderer(0)).toBeDefined();
@@ -397,8 +398,8 @@ describe('stream utils', () => {
       source: { name: 'a', id: 'a', deviceType: 'Unknown' }
     } as LocalVideoStream;
 
-    await startRenderVideo(context, internalContext, undefined, undefined, localVideoStream);
-    stopRenderVideo(context, internalContext, undefined, undefined, localVideoStream);
+    await createView(context, internalContext, undefined, undefined, localVideoStream);
+    disposeView(context, internalContext, undefined, undefined, localVideoStream);
 
     expect(internalContext.getUnparentedStreamAndRenderer(0)).not.toBeDefined();
     expect(context.getState().deviceManager.unparentedViews[0]).not.toBeDefined();
@@ -415,8 +416,8 @@ describe('stream utils', () => {
       mediaStreamType: 'Video'
     } as LocalVideoStream;
 
-    await startRenderVideo(context, internalContext, undefined, undefined, differentReferenceLocalVideoStream);
-    stopRenderVideo(context, internalContext, undefined, undefined, localVideoStream);
+    await createView(context, internalContext, undefined, undefined, differentReferenceLocalVideoStream);
+    disposeView(context, internalContext, undefined, undefined, localVideoStream);
 
     expect(internalContext.getUnparentedStreamAndRenderer(0)).not.toBeDefined();
     expect(context.getState().deviceManager.unparentedViews[0]).not.toBeDefined();
@@ -433,8 +434,8 @@ describe('stream utils', () => {
       mediaStreamType: 'Video'
     } as LocalVideoStream;
 
-    await startRenderVideo(context, internalContext, undefined, undefined, localVideoStream);
-    stopRenderVideo(context, internalContext, undefined, undefined, incorrectVideoStream);
+    await createView(context, internalContext, undefined, undefined, localVideoStream);
+    disposeView(context, internalContext, undefined, undefined, incorrectVideoStream);
 
     expect(internalContext.getUnparentedStreamAndRenderer(0)).toBeDefined();
     expect(context.getState().deviceManager.unparentedViews[0]).toBeDefined();
@@ -450,7 +451,7 @@ describe('stream utils', () => {
         mediaStreamType: 'Video'
       } as LocalVideoStream;
       try {
-        await startRenderVideo(context, internalContext, undefined, undefined, localVideoStream);
+        await createView(context, internalContext, undefined, undefined, localVideoStream);
       } catch (e) {
         gotException = true;
       }

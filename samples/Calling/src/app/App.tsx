@@ -9,7 +9,7 @@ import { ConfigurationScreen } from './ConfigurationScreen';
 import { GroupCall } from './GroupCall';
 import { HomeScreen } from './HomeScreen';
 import { v1 as createGUID } from 'uuid';
-import { CallingProvider, CallProvider, CommunicationUiErrorInfo, ErrorProvider } from 'react-composites';
+import { CallProvider, CallClientProvider, CallAgentProvider } from 'react-composites';
 import {
   createRandomDisplayName,
   fetchTokenResponse,
@@ -34,13 +34,26 @@ initializeIcons();
 // Get display name from local storage or generate a new random display name
 const defaultDisplayName = (localStorageAvailable && getDisplayNameFromLocalStorage()) || createRandomDisplayName();
 
+const UnsupportedBrowserPage = (): JSX.Element => {
+  window.document.title = 'Unsupported browser';
+  return (
+    <>
+      <Link href="https://docs.microsoft.com/en-us/azure/communication-services/concepts/voice-video-calling/calling-sdk-features#calling-client-library-browser-support">
+        Learn more
+      </Link>
+      &nbsp;about browsers and platforms supported by the web calling sdk
+    </>
+  );
+};
+
 const App = (): JSX.Element => {
   const [page, setPage] = useState('home');
   const [groupId, setGroupId] = useState('');
   const [screenWidth, setScreenWidth] = useState(window?.innerWidth ?? 0);
   const [token, setToken] = useState('');
   const [userId, setUserId] = useState('');
-  const [displayName, setDisplayName] = useState('');
+  const [displayName, setDisplayName] = useState(defaultDisplayName);
+  const [isMicrophoneOn, setIsMicrophoneOn] = useState(false);
 
   useEffect(() => {
     const setWindowWidth = (): void => {
@@ -68,111 +81,74 @@ const App = (): JSX.Element => {
     return gid;
   };
 
-  const getContent = (): JSX.Element => {
-    const supportedBrowser = !isOnIphoneAndNotSafari();
-    if (supportedBrowser) {
-      switch (page) {
-        case 'home': {
-          return (
-            <HomeScreen
-              startCallHandler={(): void => {
-                window.history.pushState({}, document.title, window.location.href + '?groupId=' + getGroupId());
-              }}
-            />
-          );
-        }
-        case 'configuration': {
-          return (
-            <ErrorProvider
-              onErrorCallback={(error: CommunicationUiErrorInfo) =>
-                console.error('onErrorCallback received error:', error)
-              }
-            >
-              <CallingProvider
-                // Hotfix: CallingProvider internally holds state for `displayName`.
-                // React maps the CallingProvider for configuration and call screen, thus the
-                // update to the `displayName` here is ignored.
-                key="configuration-calling-provider"
-                token={''}
-                displayName={displayName ? displayName : defaultDisplayName}
-                refreshTokenCallback={refreshTokenAsync(userId)}
-              >
-                <CallProvider>
-                  <ConfigurationScreen
-                    screenWidth={screenWidth}
-                    startCallHandler={(): void => setPage('call')}
-                    onDisplayNameUpdate={setDisplayName}
-                  />
-                </CallProvider>
-              </CallingProvider>
-            </ErrorProvider>
-          );
-        }
-        case 'call': {
-          return (
-            <ErrorProvider
-              onErrorCallback={(error: CommunicationUiErrorInfo) =>
-                console.error('onErrorCallback received error:', error)
-              }
-            >
-              <CallingProvider
-                // Hotfix: CallingProvider internally holds state for `displayName`.
-                // React maps the CallingProvider for configuration and call screen, thus the
-                // update to the `displayName` here is ignored.
-                key="call-calling-provider"
-                token={token}
-                displayName={displayName ? displayName : defaultDisplayName}
-                refreshTokenCallback={refreshTokenAsync(userId)}
-              >
-                <CallProvider>
-                  <GroupCall
-                    endCallHandler={(): void => {
-                      setPage('endCall');
-                    }}
-                    screenWidth={screenWidth}
-                    groupId={getGroupId()}
-                  />
-                </CallProvider>
-              </CallingProvider>
-            </ErrorProvider>
-          );
-        }
-        case 'endCall': {
-          return (
-            <EndCall
-              rejoinHandler={(): void => {
-                setPage('configuration');
-              }}
-              homeHandler={(): void => {
-                window.location.href = window.location.href.split('?')[0];
-              }}
-            />
-          );
-        }
-        default:
-          // fallthrough to error page
-          break;
-      }
-    }
-    // page === 'error'
-    window.document.title = 'Unsupported browser';
-    return (
-      <>
-        <Link href="https://docs.microsoft.com/en-us/azure/communication-services/concepts/voice-video-calling/calling-sdk-features#calling-client-library-browser-support">
-          Learn more
-        </Link>
-        &nbsp;about browsers and platforms supported by the web calling sdk
-      </>
-    );
+  const navigateToHomePage = (): void => {
+    window.location.href = window.location.href.split('?')[0];
   };
 
-  if (getGroupIdFromUrl() && page === 'home') {
-    setPage('configuration');
-  }
+  const navigateToStartCallPage = (): void => {
+    window.history.pushState({}, document.title, window.location.href + '?groupId=' + getGroupId());
+  };
 
-  if (isMobileSession() || isSmallScreen()) {
-    console.log('ACS Calling sample: This is experimental behaviour');
-  }
+  const renderPage = (page: string): JSX.Element => {
+    switch (page) {
+      case 'configuration':
+        return (
+          <ConfigurationScreen
+            displayName={displayName}
+            screenWidth={screenWidth}
+            startCallHandler={(): void => setPage('call')}
+            onDisplayNameUpdate={setDisplayName}
+            isMicrophoneOn={isMicrophoneOn}
+            setIsMicrophoneOn={setIsMicrophoneOn}
+          />
+        );
+      case 'call':
+        return (
+          <CallAgentProvider displayName={displayName} token={token}>
+            <CallProvider>
+              <GroupCall
+                endCallHandler={(): void => {
+                  setPage('endCall');
+                }}
+                screenWidth={screenWidth}
+                groupId={getGroupId()}
+                isMicrophoneOn={isMicrophoneOn}
+              />
+            </CallProvider>
+          </CallAgentProvider>
+        );
+      default:
+        return <>Invalid Page</>;
+    }
+  };
+
+  const getContent = (): JSX.Element => {
+    const supportedBrowser = !isOnIphoneAndNotSafari();
+    if (!supportedBrowser) return UnsupportedBrowserPage();
+
+    if (getGroupIdFromUrl() && page === 'home') {
+      setPage('configuration');
+    }
+
+    if (isMobileSession() || isSmallScreen()) {
+      console.log('ACS Calling sample: This is experimental behaviour');
+    }
+
+    switch (page) {
+      case 'home': {
+        return <HomeScreen startCallHandler={navigateToStartCallPage} />;
+      }
+      case 'endCall': {
+        return <EndCall rejoinHandler={() => setPage('configuration')} homeHandler={navigateToHomePage} />;
+      }
+      default:
+        return (
+          <CallClientProvider token={token} refreshTokenCallback={refreshTokenAsync(userId)}>
+            {renderPage(page)}
+          </CallClientProvider>
+        );
+    }
+  };
 
   return getContent();
 };

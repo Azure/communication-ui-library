@@ -51,6 +51,9 @@ export const EndScreen = (props: EndCallProps): JSX.Element => {
     }
   }, [isRejoiningThread, displayName, userId, rejoinHandler]);
 
+  const feedbackLink =
+    'https://docs.microsoft.com/en-us/answers/search.html?c=&includeChildren=&f=&type=question+OR+idea+OR+kbentry+OR+answer+OR+topic+OR+user&redirect=search%2Fsearch&sort=relevance&q=azure-communication-services';
+
   return (
     <Stack verticalAlign="center" tokens={mainStackTokens} className={endCallContainerStyle}>
       <Stack tokens={upperStackTokens}>
@@ -74,8 +77,8 @@ export const EndScreen = (props: EndCallProps): JSX.Element => {
         </Stack>
       </Stack>
       <div className={bottomStackFooterStyle}>
-        <Link href="https://github.com/Azure/Communication/issues">Give Feedback</Link>
-        &nbsp;on this sample app on Github
+        <Link href={feedbackLink}>Give Feedback</Link>
+        &nbsp;on this sample app at Microsoft Q&amp;A
       </div>
     </Stack>
   );

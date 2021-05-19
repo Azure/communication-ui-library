@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { ReactElement } from 'react';
+import { CommonProperties, fromFlatCommunicationIdentifier } from 'acs-ui-common';
 import { StatefulChatClient } from 'chat-stateful-client';
 import { ChatThreadClient } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
@@ -35,9 +36,7 @@ export const createDefaultChatHandlers = memoizeOne(
         await chatThreadClient.sendTypingNotification();
       },
       onParticipantRemove: async (userId: string) => {
-        await chatThreadClient.removeParticipant({
-          communicationUserId: userId
-        });
+        await chatThreadClient.removeParticipant(fromFlatCommunicationIdentifier(userId));
       },
       updateThreadTopicName: async (topicName: string) => {
         await chatThreadClient.updateTopic(topicName);
@@ -60,10 +59,6 @@ export const createDefaultChatHandlers = memoizeOne(
     };
   }
 );
-
-export type CommonProperties<A, B> = {
-  [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
-}[keyof A & keyof B];
 
 export type Common<A, B> = Pick<A, CommonProperties<A, B>>;
 

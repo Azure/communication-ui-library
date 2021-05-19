@@ -138,7 +138,7 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
  * will put state updates in the given context.
  *
  * @param deviceManager - DeviceManager from SDK
- * @param context - CallContext from CallClientDeclarative
+ * @param context - CallContext from StatefulCallClient
  */
 export const deviceManagerDeclaratify = (deviceManager: DeviceManager, context: CallContext): DeviceManager => {
   const proxyDeviceManager = new ProxyDeviceManager(deviceManager, context);

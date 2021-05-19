@@ -72,7 +72,7 @@ class ProxyTransferCallFeature implements ProxyHandler<TransferCallFeature> {
  * transfer calls to update the state properly.
  *
  * @param transfer - TransferCallFeature from SDK
- * @param context - CallContext from CallClientDeclarative
+ * @param context - CallContext from StatefulCallClient
  */
 export const transferCallFeatureDeclaratify = (
   call: Call,

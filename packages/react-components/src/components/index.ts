@@ -7,9 +7,6 @@ export type { TypingIndicatorProps, TypingIndicatorStylesProps } from './TypingI
 export { GridLayout } from './GridLayout';
 export type { GridLayoutProps, GridLayoutType } from './GridLayout';
 
-export { ErrorBar } from './ErrorBar';
-export type { ErrorBarProps } from './ErrorBar';
-
 export { SendBox } from './SendBox';
 export type { SendBoxProps, SendBoxStylesProps } from './SendBox';
 
@@ -62,4 +59,4 @@ export { ScreenShareButton } from './ScreenShareButton';
 export type { ScreenShareButtonProps } from './ScreenShareButton';
 
 export { VideoTile } from './VideoTile';
-export type { VideoTileProps, VideoTileStylesProps, PlaceholderProps } from './VideoTile';
+export type { VideoTileProps, VideoTileStylesProps } from './VideoTile';

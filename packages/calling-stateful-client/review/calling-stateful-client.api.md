@@ -6,6 +6,7 @@
 
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';
+import { CallClientOptions } from '@azure/communication-calling';
 import { CallDirection } from '@azure/communication-calling';
 import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
@@ -14,7 +15,7 @@ import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { CreateViewOptions } from '@azure/communication-calling';
 import { DeviceAccess } from '@azure/communication-calling';
-import { DeviceManager as DeviceManager_2 } from '@azure/communication-calling';
+import { DeviceManager } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
@@ -39,6 +40,7 @@ export interface Call {
     recording: RecordingCallFeature;
     remoteParticipants: Map<string, RemoteParticipant>;
     remoteParticipantsEnded: Map<string, RemoteParticipant>;
+    screenShareRemoteParticipant: string | undefined;
     startTime: Date;
     state: CallState;
     transcription: TranscriptionCallFeature;
@@ -46,26 +48,26 @@ export interface Call {
 }
 
 // @public
-export interface CallAgent {
+export interface CallAgentState {
     displayName?: string;
 }
 
 // @public
 export interface CallClientState {
-    callAgent: CallAgent | undefined;
+    callAgent: CallAgentState | undefined;
     calls: Map<string, Call>;
     callsEnded: Call[];
-    deviceManager: DeviceManager;
+    deviceManager: DeviceManagerState;
     incomingCalls: Map<string, IncomingCall>;
     incomingCallsEnded: IncomingCall[];
     userId: string;
 }
 
 // @public
-export const createStatefulCallClient: (callClient: CallClient, userId: string) => StatefulCallClient;
+export const createStatefulCallClient: (callClientArgs: StatefulCallClientArgs, callClientOptions?: CallClientOptions | undefined) => StatefulCallClient;
 
 // @public
-export type DeviceManager = {
+export type DeviceManagerState = {
     isSpeakerSelectionAvailable: boolean;
     selectedMicrophone?: AudioDeviceInfo;
     selectedSpeaker?: AudioDeviceInfo;
@@ -119,15 +121,23 @@ export interface RemoteVideoStream {
 
 // @public
 export interface StatefulCallClient extends CallClient {
+    createView(callId: string | undefined, participantId: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | undefined, stream: LocalVideoStream | RemoteVideoStream, options?: CreateViewOptions): Promise<void>;
+    disposeView(callId: string | undefined, participantId: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | undefined, stream: LocalVideoStream | RemoteVideoStream): void;
+    getState(): CallClientState;
     offStateChange(handler: (state: CallClientState) => void): void;
     onStateChange(handler: (state: CallClientState) => void): void;
-    startRenderVideo(callId: string | undefined, participantId: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | undefined, stream: LocalVideoStream | RemoteVideoStream, options?: CreateViewOptions): Promise<void>;
-    state: CallClientState;
-    stopRenderVideo(callId: string | undefined, participantId: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | undefined, stream: LocalVideoStream | RemoteVideoStream): void;
 }
 
+// @public
+export type StatefulCallClientArgs = {
+    userId: string;
+};
+
+// @public
+export type StatefulCallClientOptions = CallClientOptions;
+
 // @public (undocumented)
-export interface StatefulDeviceManager extends DeviceManager_2 {
+export interface StatefulDeviceManager extends DeviceManager {
     // (undocumented)
     selectCamera: (VideoDeviceInfo: any) => void;
 }

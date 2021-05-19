@@ -11,6 +11,7 @@ import {
 import EventEmitter from 'events';
 import { enableMapSet, produce } from 'immer';
 import { CallEndReason, CallState, RemoteParticipantState } from '@azure/communication-calling';
+import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import {
   Call,
   CallClientState,
@@ -19,11 +20,10 @@ import {
   RemoteVideoStream,
   IncomingCall,
   VideoStreamRendererView,
-  CallAgent,
+  CallAgentState,
   TransferRequest,
   Transfer
 } from './CallClientState';
-import { getRemoteParticipantKey } from './Converter';
 
 enableMapSet();
 
@@ -87,7 +87,7 @@ export class CallContext {
     );
   }
 
-  public setCallAgent(callAgent: CallAgent): void {
+  public setCallAgent(callAgent: CallAgentState): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         draft.callAgent = callAgent;
@@ -190,7 +190,7 @@ export class CallContext {
             call.remoteParticipants.delete(id);
           });
           addRemoteParticipant.forEach((participant: RemoteParticipant) => {
-            call.remoteParticipants.set(getRemoteParticipantKey(participant.identifier), participant);
+            call.remoteParticipants.set(toFlatCommunicationIdentifier(participant.identifier), participant);
           });
         }
       })
@@ -210,7 +210,7 @@ export class CallContext {
             call.remoteParticipantsEnded.delete(id);
           });
           addRemoteParticipant.forEach((participant: RemoteParticipant) => {
-            call.remoteParticipantsEnded.set(getRemoteParticipantKey(participant.identifier), participant);
+            call.remoteParticipantsEnded.set(toFlatCommunicationIdentifier(participant.identifier), participant);
           });
         }
       })
@@ -306,6 +306,17 @@ export class CallContext {
               break;
             }
           }
+        }
+      })
+    );
+  }
+
+  public setCallScreenShareParticipant(callId: string, participantKey: string | undefined): void {
+    this.setState(
+      produce(this._state, (draft: CallClientState) => {
+        const call = draft.calls.get(callId);
+        if (call) {
+          call.screenShareRemoteParticipant = participantKey;
         }
       })
     );
