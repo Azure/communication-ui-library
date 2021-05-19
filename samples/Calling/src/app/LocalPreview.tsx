@@ -31,7 +31,6 @@ export const LocalPreview = (): JSX.Element => {
   return (
     <Stack className={localPreviewContainerStyle}>
       <VideoTile
-        userId={'LocalUser'}
         styles={localPreviewTileStyle}
         isVideoReady={!!localPreviewProps.videoStreamElement}
         renderElement={<StreamMedia videoStreamElement={localPreviewProps.videoStreamElement} />}
