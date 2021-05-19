@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Drop unused",
+  "packageName": "react-components",
+  "email": "prprabhu@microsoft.com",
+  "dependentChangeType": "patch"
+}
