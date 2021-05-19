@@ -25,9 +25,6 @@ import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoGalleryRemoteParticipant } from 'react-components';
 import { VideoStreamOptions } from 'react-components';
 
-// @public (undocumented)
-export type CallbackType<KeyT, ArgsT extends any[], FnRetT> = (memoizedFn: FunctionWithKey<KeyT, ArgsT, FnRetT>) => FnRetT[];
-
 // @public
 export type CallingBaseSelectorProps = {
     callId: string;
@@ -97,9 +94,6 @@ export const createDefaultCallingHandlersForComponent: <Props>(callClient: State
 export type DefaultCallingHandlers = ReturnType<typeof createDefaultCallingHandlers>;
 
 // @public (undocumented)
-export type FunctionWithKey<KeyT, ArgsT extends any[], RetT> = (key: KeyT, ...args: ArgsT) => RetT;
-
-// @public (undocumented)
 export const getCall: (state: CallClientState, props: CallingBaseSelectorProps) => Call_2 | undefined;
 
 // @public (undocumented)
@@ -136,9 +130,6 @@ export const mediaGallerySelector: reselect.OutputParametricSelector<CallClientS
 }, (res: Call_2 | undefined) => {
     isVideoStreamOn: boolean;
 }>;
-
-// @public
-export const memoizeFnAll: <KeyT, ArgsT extends any[], FnRetT, CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>>(fnToMemoize: FunctionWithKey<KeyT, ArgsT, FnRetT>, shouldCacheUpdate?: (args1: any, args2: any) => boolean) => (callback: CallBackT) => FnRetT[];
 
 // @public (undocumented)
 export const microphoneButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {

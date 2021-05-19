@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 
 export { createDefaultChatHandlers, createDefaultChatHandlersForComponent } from './handlers/createHandlers';
-export { memoizeFnAll } from './utils/memoizeFnAll';
 export { ChatClientProvider, useChatClient } from './providers/ChatClientProvider';
 export { ChatThreadClientProvider, useChatThreadClient, useThreadId } from './providers/ChatThreadClientProvider';
 export { usePropsFor } from './hooks/usePropsFor';
@@ -18,7 +17,6 @@ export { chatParticipantListSelector } from './chatParticipantListSelector';
 
 export type { ChatClientProviderProps } from './providers/ChatClientProvider';
 export type { ChatThreadClientProviderProps } from './providers/ChatThreadClientProvider';
-export type { FunctionWithKey, CallbackType } from './utils/memoizeFnAll';
 export type { ChatBaseSelectorProps } from './baseSelectors';
 export type { DefaultChatHandlers } from './handlers/createHandlers';
 export type { GetSelector } from './hooks/usePropsFor';
