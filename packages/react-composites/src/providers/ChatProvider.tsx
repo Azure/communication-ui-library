@@ -50,10 +50,12 @@ const ChatProviderBase = (props: ChatProviderProps & ErrorHandlingProps): JSX.El
   const userId = { kind: 'communicationUser', communicationUserId: rawUserId } as CommunicationUserKind;
 
   const [chatClient, setChatClient] = useState<ChatClient>(
-    createStatefulChatClient(
-      new ChatClient(props.endpointUrl, createAzureCommunicationUserCredential(token, props.refreshTokenCallback)),
-      { userId: userId, displayName }
-    )
+    createStatefulChatClient({
+      userId: userId,
+      displayName,
+      endpoint: props.endpointUrl,
+      credential: createAzureCommunicationUserCredential(token, props.refreshTokenCallback)
+    })
   );
   const [chatProviderState, setChatProviderState] = useState<number>(CHATPROVIDER_LOADING_STATE);
 

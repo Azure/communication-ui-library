@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Surface active screenshare in Stateful",
+  "packageName": "calling-stateful-client",
+  "email": "allenhwang@microsoft.com",
+  "dependentChangeType": "patch"
+}

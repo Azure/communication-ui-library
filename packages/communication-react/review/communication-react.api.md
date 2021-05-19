@@ -8,17 +8,20 @@ import { AudioDeviceInfo } from '@azure/communication-calling';
 import { Call as Call_2 } from '@azure/communication-calling';
 import { CallAgent as CallAgent_2 } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';
+import { CallClientOptions } from '@azure/communication-calling';
 import { CallDirection } from '@azure/communication-calling';
 import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
 import { CallState } from '@azure/communication-calling';
 import { ChatClient } from '@azure/communication-chat';
+import { ChatClientOptions } from '@azure/communication-chat';
 import { ChatMessage as ChatMessage_2 } from '@azure/communication-chat';
 import { ChatMessageReadReceipt } from '@azure/communication-chat';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
+import { CommunicationTokenCredential } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
@@ -74,6 +77,7 @@ export interface Call {
     recording: RecordingCallFeature;
     remoteParticipants: Map<string, RemoteParticipant>;
     remoteParticipantsEnded: Map<string, RemoteParticipant>;
+    screenShareRemoteParticipant: string | undefined;
     startTime: Date;
     state: CallState;
     transcription: TranscriptionCallFeature;
@@ -143,6 +147,8 @@ export const cameraButtonSelector: reselect.OutputParametricSelector<CallClientS
 // @public (undocumented)
 export interface ChatAdapter {
     // (undocumented)
+    fetchInitialData(): Promise<void>;
+    // (undocumented)
     getState(): ChatState;
     // (undocumented)
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
@@ -166,8 +172,6 @@ export interface ChatAdapter {
     sendTypingIndicator(): Promise<void>;
     // (undocumented)
     setTopic(topicName: string): Promise<void>;
-    // (undocumented)
-    updateAllParticipants(): Promise<void>;
 }
 
 // @public (undocumented)
@@ -199,12 +203,6 @@ export type ChatCompositeClientState = {
     userId: string;
     displayName: string;
     thread: ChatThreadClientState;
-};
-
-// @public (undocumented)
-export type ChatConfig = {
-    userId: CommunicationIdentifierKind;
-    displayName: string;
 };
 
 // @public (undocumented)
@@ -311,9 +309,6 @@ export type CommonProperties<A, B> = {
 
 // @public (undocumented)
 export type CommunicationIdentifierAsKey = string;
-
-// @public (undocumented)
-export const communicationIdentifierToString: (i: CommunicationIdentifier | undefined) => string;
 
 // @public
 export type CommunicationParticipant = {
@@ -488,10 +483,10 @@ export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThr
 export const createDefaultChatHandlersForComponent: <Props>(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, Props>>;
 
 // @public
-export const createStatefulCallClient: (callClient: CallClient, userId: string) => StatefulCallClient;
+export const createStatefulCallClient: (callClientArgs: StatefulCallClientArgs, callClientOptions?: CallClientOptions | undefined) => StatefulCallClient;
 
-// @public (undocumented)
-export const createStatefulChatClient: (chatClient: ChatClient, chatConfig: ChatConfig) => StatefulChatClient;
+// @public
+export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: ChatClientOptions | undefined) => StatefulChatClient;
 
 // @public (undocumented)
 export type CustomMessage = Message<'custom'>;
@@ -544,17 +539,6 @@ export interface EndCallButtonProps extends IButtonProps {
 }
 
 // @public
-export const ErrorBar: (props: ErrorBarProps) => JSX.Element | null;
-
-// @public
-export type ErrorBarProps = {
-    message?: string;
-    severity?: CommunicationUiErrorSeverity;
-    onClose?: () => void;
-    styles?: BaseCustomStylesProps;
-};
-
-// @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
 
 // @public
@@ -592,6 +576,9 @@ export const getIncomingCalls: (state: CallClientState) => Map<string, IncomingC
 
 // @public (undocumented)
 export const getIncomingCallsEnded: (state: CallClientState) => IncomingCall[];
+
+// @public
+export function getRemoteParticipantKey(identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind): string;
 
 // @public (undocumented)
 export type GetSelector<Component> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof chatThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : never;
@@ -906,6 +893,14 @@ export interface StatefulCallClient extends CallClient {
     onStateChange(handler: (state: CallClientState) => void): void;
 }
 
+// @public
+export type StatefulCallClientArgs = {
+    userId: string;
+};
+
+// @public
+export type StatefulCallClientOptions = CallClientOptions;
+
 // @public (undocumented)
 export interface StatefulChatClient extends ChatClient {
     // (undocumented)
@@ -915,6 +910,17 @@ export interface StatefulChatClient extends ChatClient {
     // (undocumented)
     onStateChange(handler: (state: ChatClientState) => void): void;
 }
+
+// @public
+export type StatefulChatClientArgs = {
+    userId: CommunicationIdentifierKind;
+    displayName: string;
+    endpoint: string;
+    credential: CommunicationTokenCredential;
+};
+
+// @public
+export type StatefulChatClientOptions = ChatClientOptions;
 
 // @public (undocumented)
 export interface StatefulDeviceManager extends DeviceManager_2 {
@@ -995,16 +1001,13 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
 export const useChatClient: () => StatefulChatClient;
 
 // @public (undocumented)
+export const useChatSelector: <SelectorT extends (state: ChatClientState, props: any) => any>(selector: SelectorT, selectorProps?: Parameters<SelectorT>[1] | undefined) => ReturnType<SelectorT>;
+
+// @public (undocumented)
 export const useChatThreadClient: () => ChatThreadClient;
 
 // @public (undocumented)
-export const useHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, PropsT>>;
-
-// @public (undocumented)
 export const usePropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => ReturnType<GetSelector<Component>> & Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, Parameters<Component>[0]>>;
-
-// @public (undocumented)
-export const useSelector: <SelectorT extends (state: ChatClientState, props: any) => any>(selector: SelectorT, selectorProps?: Parameters<SelectorT>[1] | undefined) => ReturnType<SelectorT>;
 
 // @public (undocumented)
 export const useThreadId: () => string;
@@ -1060,6 +1063,7 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
 
 // @public (undocumented)
 export const videoGallerySelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
+    screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
     localParticipant: {
         userId: string;
         displayName: string;
@@ -1073,6 +1077,7 @@ export const videoGallerySelector: reselect.OutputParametricSelector<CallClientS
     };
     remoteParticipants: VideoGalleryRemoteParticipant[];
 }, (res1: Call | undefined, res2: string | undefined, res3: string | undefined) => {
+    screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
     localParticipant: {
         userId: string;
         displayName: string;

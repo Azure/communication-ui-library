@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatClient } from '@azure/communication-chat';
+import { ChatClient, ChatClientOptions } from '@azure/communication-chat';
 import { ChatContext } from './ChatContext';
 import { ChatClientState } from './ChatClientState';
 import { EventSubscriber } from './EventSubscriber';
 import { chatThreadClientDeclaratify } from './StatefulChatThreadClient';
 import { createDecoratedListThreads } from './iterators/createDecoratedListThreads';
-import { ChatConfig } from './types/ChatConfig';
+import { CommunicationIdentifierKind, CommunicationTokenCredential } from '@azure/communication-common';
 
 export interface StatefulChatClient extends ChatClient {
   getState(): ChatClientState;
@@ -90,11 +90,35 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
   }
 };
 
-export const createStatefulChatClient = (chatClient: ChatClient, chatConfig: ChatConfig): StatefulChatClient => {
+/**
+ * Required arguments to construct the stateful chat client
+ */
+export type StatefulChatClientArgs = {
+  userId: CommunicationIdentifierKind;
+  displayName: string;
+  endpoint: string;
+  credential: CommunicationTokenCredential;
+};
+
+/**
+ * Options to construct the stateful chat client with
+ */
+export type StatefulChatClientOptions = ChatClientOptions;
+
+/**
+ * Creates a stateful ChatClient {@Link StatefulChatClient} by proxying ChatClient
+ * {@Link @azure/communication-chat#ChatClient} with ProxyChatClient {@Link ProxyChatClient} which then allows access
+ * to state in a declarative way.
+ */
+export const createStatefulChatClient = (
+  args: StatefulChatClientArgs,
+  options?: StatefulChatClientOptions
+): StatefulChatClient => {
+  const chatClient = new ChatClient(args.endpoint, args.credential, options);
   const context = new ChatContext();
   let eventSubscriber: EventSubscriber;
 
-  context.updateChatConfig(chatConfig);
+  context.updateChatConfig(args.userId, args.displayName);
 
   const proxy = new Proxy(chatClient, proxyChatClient);
 
