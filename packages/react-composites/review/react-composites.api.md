@@ -14,6 +14,7 @@ import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClientState } from 'chat-stateful-client';
 import { DeviceManager } from 'calling-stateful-client';
 import { ErrorInfo } from 'react';
+import { PlaceholderProps } from 'react-components';
 import { RemoteParticipant } from 'calling-stateful-client';
 import { StatefulCallClient } from 'calling-stateful-client';
 import { StatefulDeviceManager } from 'calling-stateful-client';
@@ -147,6 +148,7 @@ export const CallComposite: (props: CallCompositeProps) => JSX.Element;
 // @public (undocumented)
 export type CallCompositeProps = {
     adapter: CallAdapter;
+    onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
     onErrorCallback?: (error: CommunicationUiErrorInfo) => void;
 };
 
