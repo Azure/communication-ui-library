@@ -10,7 +10,7 @@ import {
   VideoDeviceInfo
 } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
-import { CommonProperties, fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from 'acs-ui-common';
+import { Common, fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from 'acs-ui-common';
 import { DeviceManagerState, StatefulCallClient, StatefulDeviceManager } from 'calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
@@ -203,8 +203,6 @@ export const createDefaultCallingHandlers = memoizeOne(
 const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
   return !!deviceManager.unparentedViews && !!deviceManager.unparentedViews[0]?.target;
 };
-
-type Common<A, B> = Pick<A, CommonProperties<A, B>>;
 
 /**
  * Create a set of default handlers for given component. Memoization is applied to the result. Multiple invokations with
