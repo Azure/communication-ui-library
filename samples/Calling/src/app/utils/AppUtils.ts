@@ -23,7 +23,7 @@ export const fetchTokenResponse = async (): Promise<any> => {
 /**
  * Quick helper function to map a call state to an isInCall boolean
  */
-export const isInCall = (callState: CallStatus): boolean => !!(callState !== 'None' && callState !== 'Disconnected');
+export const isInCall = (callStatus: CallStatus): boolean => !!(callStatus !== 'None' && callStatus !== 'Disconnected');
 
 /**
  * Generate a random user name.
