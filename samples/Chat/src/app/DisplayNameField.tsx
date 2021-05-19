@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ErrorHandlingProps, WithErrorHandling } from '@azure/communication-react';
 import {
   TextFieldStyleProps,
   inputBoxStyle,
@@ -25,7 +24,11 @@ interface DisplayNameFieldProps {
   validateName?(): void;
 }
 
+/*
+TODO(prprabhu): ErrorHandlingProps is not exported by the public API.
 const DisplayNameFieldComponent = (props: DisplayNameFieldProps & ErrorHandlingProps): JSX.Element => {
+*/
+const DisplayNameFieldComponent = (props: DisplayNameFieldProps): JSX.Element => {
   const {
     setName,
     setEmptyWarning,
@@ -84,5 +87,10 @@ const DisplayNameFieldComponent = (props: DisplayNameFieldProps & ErrorHandlingP
   );
 };
 
+/*
+TODO(prprabhu): WithErrorHandling is not exposed by public API.
 export const DisplayNameField = (props: DisplayNameFieldProps & ErrorHandlingProps): JSX.Element =>
   WithErrorHandling(DisplayNameFieldComponent, props);
+*/
+
+export const DisplayNameField = DisplayNameFieldComponent;

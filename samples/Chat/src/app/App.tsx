@@ -11,7 +11,6 @@ import { ErrorScreen } from './ErrorScreen';
 import HomeScreen from './HomeScreen';
 import ConfigurationScreen from './ConfigurationScreen';
 import { getThreadId } from './utils/getThreadId';
-import { ErrorProvider, CommunicationUiErrorInfo } from '@azure/communication-react';
 import { refreshTokenAsync } from './utils/refreshToken';
 import { ChatClientProvider, ChatThreadClientProvider } from '@azure/communication-react';
 import { ChatThreadClient } from '@azure/communication-chat';
@@ -72,9 +71,13 @@ export default (): JSX.Element => {
       );
     } else if (page === 'chat') {
       return (
+        <>
+          {/*
+        TODO(prprabhu) Not exported from public API yet.
         <ErrorProvider
           onErrorCallback={(error: CommunicationUiErrorInfo) => console.error('onErrorCallback received error:', error)}
         >
+        */}
           {chatClient && chatThreadClient ? (
             <ChatClientProvider chatClient={chatClient}>
               <ChatThreadClientProvider chatThreadClient={chatThreadClient}>
@@ -93,7 +96,10 @@ export default (): JSX.Element => {
           ) : (
             <Spinner label={'Loading...'} ariaLive="assertive" labelPosition="top" />
           )}
+          {/*
         </ErrorProvider>
+          */}
+        </>
       );
     } else if (page === 'end') {
       return (
