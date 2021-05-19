@@ -3,7 +3,7 @@
 
 import React, { useCallback, useMemo, useState } from 'react';
 import { useEffect } from 'react';
-import { VideoGallery, VideoGalleryRemoteParticipant } from 'react-components';
+import { PlaceholderProps, VideoGallery, VideoGalleryRemoteParticipant } from 'react-components';
 import { useSelector } from './hooks/useSelector';
 import { usePropsFor } from './hooks/usePropsFor';
 import { ScreenShare } from './ScreenShare';
@@ -18,6 +18,7 @@ const VideoGalleryStyles = {
 export interface MediaGalleryProps {
   isVideoStreamOn?: boolean;
   onStartLocalVideo: () => Promise<void>;
+  onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
 }
 
 export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
@@ -62,9 +63,10 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
           scalingMode: 'Crop'
         }}
         styles={VideoGalleryStyles}
+        onRenderAvatar={props.onRenderAvatar}
       />
     );
-  }, [videoGalleryProps]);
+  }, [props.onRenderAvatar, videoGalleryProps]);
 
   return isScreenShareActive() ? ScreenShareMemoized : VideoGalleryMemoized;
 };

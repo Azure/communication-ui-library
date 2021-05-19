@@ -35,11 +35,16 @@ export interface VideoTileProps {
   /** Determines if the video is mirrored or not. */
   isMirrored?: boolean;
   /** Custom Component to render when no video is available. Defaults to a Persona Icon. */
-  placeholder?: JSX.Element | null;
+  onRenderPlaceholder?: (
+    props: PlaceholderProps,
+    defaultOnRender: (props: PlaceholderProps) => JSX.Element
+  ) => JSX.Element | null;
 }
 
 export interface PlaceholderProps {
-  /** Optional participant display name for the VideoTile default placeholder. */
+  /** user id for the VideoTile placeholder. */
+  userId: string;
+  /** Optional participant display name for the VideoTile placeholder. */
   displayName?: string;
   /** Optional property to set the aria label of the video tile if there is no available stream. */
   noVideoAvailableAriaLabel?: string;
@@ -63,7 +68,7 @@ const DefaultPlaceholder = (props: PlaceholderProps): JSX.Element => {
 };
 
 export const VideoTile = (props: VideoTileProps & PlaceholderProps): JSX.Element => {
-  const { styles, isVideoReady, renderElement, placeholder, isMirrored, children } = props;
+  const { styles, isVideoReady, renderElement, onRenderPlaceholder, isMirrored, children, ...placeHolderProps } = props;
   const theme = useTheme();
   return (
     <Stack className={mergeStyles(rootStyles, { background: theme.palette.neutralLighter }, styles?.root)}>
@@ -80,7 +85,13 @@ export const VideoTile = (props: VideoTileProps & PlaceholderProps): JSX.Element
           {renderElement}
         </Stack>
       ) : (
-        <Stack className={mergeStyles(videoContainerStyles)}>{placeholder ?? <DefaultPlaceholder {...props} />}</Stack>
+        <Stack className={mergeStyles(videoContainerStyles)}>
+          {onRenderPlaceholder ? (
+            onRenderPlaceholder(placeHolderProps, DefaultPlaceholder)
+          ) : (
+            <DefaultPlaceholder {...placeHolderProps} />
+          )}
+        </Stack>
       )}
       {children && <Stack className={mergeStyles(overlayContainerStyles, styles?.overlayContainer)}>{children}</Stack>}
     </Stack>

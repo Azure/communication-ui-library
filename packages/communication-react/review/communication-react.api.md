@@ -805,6 +805,7 @@ export const participantListSelector: reselect.OutputParametricSelector<CallClie
 export interface PlaceholderProps {
     displayName?: string;
     noVideoAvailableAriaLabel?: string;
+    userId: string;
 }
 
 // @public
@@ -1036,6 +1037,8 @@ export interface VideoGalleryProps {
     // (undocumented)
     onDisposeLocalStreamView?: () => Promise<void>;
     // (undocumented)
+    onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+    // (undocumented)
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     // (undocumented)
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
@@ -1119,7 +1122,7 @@ export interface VideoTileProps {
     children?: React_2.ReactNode;
     isMirrored?: boolean;
     isVideoReady?: boolean;
-    placeholder?: JSX.Element | null;
+    onRenderPlaceholder?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element | null;
     renderElement?: JSX.Element | null;
     styles?: VideoTileStylesProps;
 }

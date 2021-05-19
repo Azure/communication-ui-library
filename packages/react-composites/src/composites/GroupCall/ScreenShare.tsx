@@ -35,6 +35,7 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
       <Stack horizontalAlign="center" verticalAlign="center" className={aspectRatioBoxStyle} key={userId}>
         <Stack className={aspectRatioBoxContentStyle}>
           <VideoTile
+            userId={userId}
             isVideoReady={isAvailable}
             renderElement={<StreamMedia videoStreamElement={renderElement ?? null} />}
             displayName={displayName}

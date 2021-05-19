@@ -11,6 +11,19 @@ import { usePropsFor } from './hooks/usePropsFor';
 import { localPreviewSelector } from '@azure/acs-calling-selector';
 import { CallClientProvider } from 'react-composites';
 
+const onRenderPlaceholder = (): JSX.Element => {
+  return (
+    <Stack style={{ width: '100%', height: '100%' }} verticalAlign="center">
+      <Stack.Item align="center">
+        <CallVideoOffIcon />
+      </Stack.Item>
+      <Stack.Item align="center">
+        <Text className={cameraOffLabelStyle}>Your camera is turned off</Text>
+      </Stack.Item>
+    </Stack>
+  );
+};
+
 export const LocalPreview = (): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
@@ -20,19 +33,11 @@ export const LocalPreview = (): JSX.Element => {
   return (
     <Stack className={localPreviewContainerStyle}>
       <VideoTile
+        userId={'LocalUser'}
         styles={localPreviewTileStyle}
         isVideoReady={!!localPreviewProps.videoStreamElement}
         renderElement={<StreamMedia videoStreamElement={localPreviewProps.videoStreamElement} />}
-        placeholder={
-          <Stack style={{ width: '100%', height: '100%' }} verticalAlign="center">
-            <Stack.Item align="center">
-              <CallVideoOffIcon />
-            </Stack.Item>
-            <Stack.Item align="center">
-              <Text className={cameraOffLabelStyle}>Your camera is turned off</Text>
-            </Stack.Item>
-          </Stack>
-        }
+        onRenderPlaceholder={onRenderPlaceholder}
       >
         <ControlBar layout="floatingBottom">
           <CameraButton

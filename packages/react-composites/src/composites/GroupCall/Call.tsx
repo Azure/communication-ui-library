@@ -10,9 +10,11 @@ import { Stack } from '@fluentui/react';
 import { CommunicationUiErrorInfo } from '../../types';
 import { CallAdapterProvider } from './adapter/CallAdapterProvider';
 import { CallAdapter } from '.';
+import { PlaceholderProps } from 'react-components';
 
 export type CallCompositeProps = {
   adapter: CallAdapter;
+  onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
   /** Optional callback to call when error is detected */
   onErrorCallback?: (error: CommunicationUiErrorInfo) => void;
 };
@@ -58,6 +60,7 @@ export const Call = (props: CallCompositeProps): JSX.Element => {
                       await adapter.leaveCall();
                     }}
                     screenWidth={screenWidth}
+                    onRenderAvatar={props.onRenderAvatar}
                   />
                 );
               }
