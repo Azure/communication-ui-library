@@ -173,7 +173,10 @@ exports[`storybook snapshot tests Storyshots Examples/Lobby Lobby 1`] = `
                 </span>
               </button>
               <button
-                className="ms-Button ms-Button--default root-21"
+                aria-expanded={false}
+                aria-haspopup={true}
+                aria-owns={null}
+                className="ms-Button ms-Button--default ms-Button--hasMenu root-21"
                 data-is-focusable={true}
                 onClick={[Function]}
                 onKeyDown={[Function]}
