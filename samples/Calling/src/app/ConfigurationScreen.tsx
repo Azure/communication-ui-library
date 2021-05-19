@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useState } from 'react';
-// import { useCallClientContext } from 'react-composites';
+import { GroupLocator, MeetingLocator } from '@azure/communication-calling';
 import { localStorageAvailable } from './utils/constants';
 import { saveDisplayNameToLocalStorage } from './utils/AppUtils';
 import { DisplayNameField } from './DisplayNameField';
@@ -12,18 +12,22 @@ import { LocalDeviceSettings } from './LocalDeviceSettings';
 import { optionsButtonSelector } from '@azure/acs-calling-selector';
 import { useSelector } from './hooks/useSelector';
 import { useAzureCommunicationHandlers } from './hooks/useAzureCommunicationHandlers';
+import { TeamsMeetingLinkField } from './TeamsMeetingLinkField';
 
 export interface ConfigurationScreenProps {
   screenWidth: number;
-  startCallHandler(): void;
+  startCallHandler: (data?: { callLocator: GroupLocator | MeetingLocator }) => void;
   displayName: string;
   onDisplayNameUpdate: (displayName: string) => void;
+  isMicrophoneOn: boolean;
+  setIsMicrophoneOn: (isEnabled: boolean) => void;
 }
 
 export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Element => {
   const { startCallHandler, onDisplayNameUpdate, displayName } = props;
   const [emptyWarning, setEmptyWarning] = useState(false);
   const [nameTooLongWarning, setNameTooLongWarning] = useState(false);
+  const [teamsMeetingLink, setTeamsMeetingLink] = useState<string>();
 
   const options = useSelector(optionsButtonSelector);
   const handlers = useAzureCommunicationHandlers();
@@ -46,13 +50,25 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
           onSelectSpeaker={handlers.onSelectSpeaker}
         />
       </div>
+      <div style={{ marginTop: '32px', marginBottom: '16px' }}>
+        <TeamsMeetingLinkField
+          setMeetingLink={(link) => {
+            setTeamsMeetingLink(link);
+          }}
+        />
+      </div>
       <div>
         <StartCallButton
+          buttonText={teamsMeetingLink ? 'Join Teams Meeting' : undefined}
           onClickHandler={async () => {
             if (localStorageAvailable) {
               saveDisplayNameToLocalStorage(displayName);
             }
-            startCallHandler();
+            if (teamsMeetingLink) {
+              startCallHandler({ callLocator: { meetingLink: teamsMeetingLink } });
+            } else {
+              startCallHandler();
+            }
           }}
           isDisabled={!displayName || emptyWarning || nameTooLongWarning}
         />
