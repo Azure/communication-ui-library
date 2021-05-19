@@ -101,7 +101,8 @@ class CallContext {
       displayName: clientState.callAgent?.displayName,
       call,
       devices: clientState.deviceManager,
-      isLocalPreviewMicrophoneEnabled: call?.isMuted === undefined ? false : !call?.isMuted
+      isLocalPreviewMicrophoneEnabled:
+        call?.isMuted === undefined ? this.state.isLocalPreviewMicrophoneEnabled : !call?.isMuted
     });
   }
 }
@@ -205,6 +206,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // Resync state after callId is set
     this.context.updateClientState(this.callClient.getState());
     this.stopCamera();
+    this.mute();
   }
 
   public async setCamera(device: VideoDeviceInfo): Promise<void> {
