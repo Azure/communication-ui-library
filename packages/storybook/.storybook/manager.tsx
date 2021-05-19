@@ -9,7 +9,9 @@ initTelemetry();
 addons.setConfig({
   theme: create({
     base: 'light',
-    brandTitle: 'Azure Communication Services - UI Library'
+    brandTitle: 'Azure Communication Services - UI Library',
+    brandUrl: 'https://azure.github.io/communication-ui-sdk/',
+    brandImage: './images/sidebar-header.png'
   }),
   enableShortcuts: false
 });
