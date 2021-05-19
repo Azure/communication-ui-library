@@ -1,10 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { VideoGallery } from 'react-components';
 import { usePropsFor } from './hooks/usePropsFor';
+import { useSelector } from './hooks/useSelector';
 import { ScreenShare } from './ScreenShare';
+import { getIsPreviewCameraOn } from './selectors/baseSelectors';
 
 const VideoGalleryStyles = {
   root: {
@@ -14,22 +16,25 @@ const VideoGalleryStyles = {
 
 export interface MediaGalleryProps {
   isVideoStreamOn?: boolean;
-  isCameraChecked?: boolean;
   isMicrophoneChecked?: boolean;
   onStartLocalVideo: () => Promise<void>;
 }
 
 export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const videoGalleryProps = usePropsFor(VideoGallery);
+  const [isButtonStatusSynced, setIsButtonStatusSynced] = useState(false);
+
+  const isPreviewCameraOn = useSelector(getIsPreviewCameraOn);
   const isScreenShareActive = useMemo(() => {
     return videoGalleryProps.screenShareParticipant !== undefined;
   }, [videoGalleryProps]);
 
   useEffect(() => {
-    if (props.isCameraChecked && !props.isVideoStreamOn) {
+    if (isPreviewCameraOn && !props.isVideoStreamOn && !isButtonStatusSynced) {
       props.onStartLocalVideo();
     }
-  }, [props]);
+    setIsButtonStatusSynced(true);
+  }, [isButtonStatusSynced, isPreviewCameraOn, props]);
 
   const VideoGalleryMemoized = useMemo(() => {
     return (

@@ -77,17 +77,22 @@ exports[`storybook snapshot tests Storyshots Examples/Themes Teams Theme Compone
                       </div>
                     </div>
                   </div>
+                  <span
+                    className="css-78 css-25"
+                  >
+                    Michael
+                  </span>
                   <div
-                    className="ms-Stack css-25"
+                    className="ms-Stack css-26"
                   >
                     <div
-                      className="css-26"
+                      className="css-27"
                     >
                       <div
-                        className="ms-Stack css-28"
+                        className="ms-Stack css-29"
                       >
                         <button
-                          className="ms-Button ms-Button--default root-29"
+                          className="ms-Button ms-Button--default root-30"
                           data-is-focusable={true}
                           onClick={[Function]}
                           onKeyDown={[Function]}
@@ -98,7 +103,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes Teams Theme Compone
                           type="button"
                         >
                           <span
-                            className="ms-Button-flexContainer flexContainer-30"
+                            className="ms-Button-flexContainer flexContainer-31"
                             data-automationid="splitbuttonprimary"
                           >
                             <span
@@ -140,7 +145,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes Teams Theme Compone
                           </span>
                         </button>
                         <button
-                          className="ms-Button ms-Button--default root-29"
+                          className="ms-Button ms-Button--default root-30"
                           data-is-focusable={true}
                           onClick={[Function]}
                           onKeyDown={[Function]}
@@ -151,7 +156,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes Teams Theme Compone
                           type="button"
                         >
                           <span
-                            className="ms-Button-flexContainer flexContainer-30"
+                            className="ms-Button-flexContainer flexContainer-31"
                             data-automationid="splitbuttonprimary"
                           >
                             <span
@@ -196,7 +201,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes Teams Theme Compone
                           </span>
                         </button>
                         <button
-                          className="ms-Button ms-Button--default root-29"
+                          className="ms-Button ms-Button--default root-30"
                           data-is-focusable={true}
                           onClick={[Function]}
                           onKeyDown={[Function]}
@@ -207,7 +212,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes Teams Theme Compone
                           type="button"
                         >
                           <span
-                            className="ms-Button-flexContainer flexContainer-30"
+                            className="ms-Button-flexContainer flexContainer-31"
                             data-automationid="splitbuttonprimary"
                           >
                             <span
@@ -240,7 +245,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes Teams Theme Compone
                           </span>
                         </button>
                         <button
-                          className="ms-Button ms-Button--default root-37"
+                          className="ms-Button ms-Button--default root-38"
                           data-is-focusable={true}
                           onClick={[Function]}
                           onKeyDown={[Function]}
@@ -251,7 +256,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes Teams Theme Compone
                           type="button"
                         >
                           <span
-                            className="ms-Button-flexContainer flexContainer-30"
+                            className="ms-Button-flexContainer flexContainer-31"
                             data-automationid="splitbuttonprimary"
                           >
                             <span
@@ -279,9 +284,6 @@ exports[`storybook snapshot tests Storyshots Examples/Themes Teams Theme Compone
                         </button>
                       </div>
                     </div>
-                    <label>
-                      Michael
-                    </label>
                   </div>
                 </div>
               </div>
