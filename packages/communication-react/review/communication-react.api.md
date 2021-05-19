@@ -61,7 +61,7 @@ export type AreEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
 // @public (undocumented)
 export class AzureCommunicationCallAdapter implements CallAdapter {
-    constructor(callClient: StatefulCallClient, groupId: string, callAgent: CallAgent_2, deviceManager: StatefulDeviceManager);
+    constructor(callClient: StatefulCallClient, groupId: string, callAgent: CallAgent, deviceManager: StatefulDeviceManager);
     // (undocumented)
     createStreamView(userId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
     // (undocumented)
