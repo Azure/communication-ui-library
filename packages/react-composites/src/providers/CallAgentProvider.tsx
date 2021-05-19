@@ -5,14 +5,10 @@ import { CallAgent } from '@azure/communication-calling';
 import { AbortSignalLike } from '@azure/core-http';
 import React, { createContext, Dispatch, SetStateAction, useEffect, useRef, useState, useContext } from 'react';
 import { CommunicationUiError, CommunicationUiErrorCode } from '../types/CommunicationUiError';
-import { createAzureCommunicationUserCredential, getIdFromToken, useValidContext } from '../utils';
+import { createAzureCommunicationUserCredential, useValidContext } from '../utils';
 import { useCallClient } from './CallClientProvider';
 
 export type CallAgentContextType = {
-  userId: string;
-  setUserId: Dispatch<SetStateAction<string>>;
-  displayName: string;
-  setDisplayName: Dispatch<SetStateAction<string>>;
   callAgent: CallAgent | undefined;
   setCallAgent: Dispatch<SetStateAction<CallAgent | undefined>>;
 };
@@ -30,10 +26,7 @@ const CallAgentProviderBase = (props: CallAgentProviderProps): JSX.Element => {
   const { token, displayName: initialDisplayName, refreshTokenCallback } = props;
 
   // if there is no valid token then there is no valid userId
-  const userIdFromToken = token ? getIdFromToken(token) : '';
   const [callAgent, setCallAgent] = useState<CallAgent | undefined>(undefined);
-  const [userId, setUserId] = useState<string>(userIdFromToken);
-  const [displayName, setDisplayName] = useState<string>(initialDisplayName);
   const refreshTokenCallbackRefContainer = useRef(refreshTokenCallback);
 
   const callClient = useCallClient();
@@ -43,10 +36,6 @@ const CallAgentProviderBase = (props: CallAgentProviderProps): JSX.Element => {
     refreshTokenCallbackRefContainer.current = refreshTokenCallback;
   }, [refreshTokenCallback]);
 
-  useEffect(() => {
-    setUserId(userIdFromToken);
-  }, [userIdFromToken]);
-
   /**
    * Initialize the Call Agent and clean it up when the Context unmounts.
    */
@@ -54,7 +43,7 @@ const CallAgentProviderBase = (props: CallAgentProviderProps): JSX.Element => {
     if (token && !callAgent) {
       const userCredential = createAzureCommunicationUserCredential(token, refreshTokenCallbackRefContainer.current);
       callClient
-        .createCallAgent(userCredential, { displayName: displayName })
+        .createCallAgent(userCredential, { displayName: initialDisplayName })
         .then((agent) => {
           setCallAgent(agent);
         })
@@ -79,15 +68,11 @@ const CallAgentProviderBase = (props: CallAgentProviderProps): JSX.Element => {
         });
       });
     };
-  }, [callAgent, callClient, displayName, token]);
+  }, [callAgent, callClient, initialDisplayName, token]);
 
   const initialState: CallAgentContextType = {
     callAgent,
-    setCallAgent,
-    userId,
-    setUserId,
-    displayName,
-    setDisplayName
+    setCallAgent
   };
 
   return <CallAgentContext.Provider value={initialState}>{props.children}</CallAgentContext.Provider>;
@@ -96,4 +81,9 @@ const CallAgentProviderBase = (props: CallAgentProviderProps): JSX.Element => {
 export const CallAgentProvider = (props: CallAgentProviderProps): JSX.Element => <CallAgentProviderBase {...props} />;
 
 export const useCallAgentContext = (): CallAgentContextType => useValidContext(CallAgentContext);
+
 export const useCallAgent = (): CallAgent | undefined => useContext(CallAgentContext)?.callAgent;
+
+export const useDisplayName = (): string | undefined => {
+  return useValidContext(CallAgentContext).callAgent?.displayName;
+};

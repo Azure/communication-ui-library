@@ -1,10 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useEffect, useMemo, useCallback } from 'react';
-import { VideoGallery, VideoGalleryRemoteParticipant } from 'react-components';
+import React, { useEffect, useMemo, useState } from 'react';
+import { VideoGallery } from 'react-components';
 import { usePropsFor } from './hooks/usePropsFor';
+import { useSelector } from './hooks/useSelector';
 import { ScreenShare } from './ScreenShare';
+import { getIsPreviewCameraOn } from './selectors/baseSelectors';
 
 const VideoGalleryStyles = {
   root: {
@@ -14,36 +16,25 @@ const VideoGalleryStyles = {
 
 export interface MediaGalleryProps {
   isVideoStreamOn?: boolean;
-  isCameraChecked?: boolean;
   isMicrophoneChecked?: boolean;
   onStartLocalVideo: () => Promise<void>;
 }
 
 export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const videoGalleryProps = usePropsFor(VideoGallery);
-  const remoteParticipants = videoGalleryProps.remoteParticipants;
+  const [isButtonStatusSynced, setIsButtonStatusSynced] = useState(false);
+
+  const isPreviewCameraOn = useSelector(getIsPreviewCameraOn);
+  const isScreenShareActive = useMemo(() => {
+    return videoGalleryProps.screenShareParticipant !== undefined;
+  }, [videoGalleryProps]);
 
   useEffect(() => {
-    if (props.isCameraChecked && !props.isVideoStreamOn) {
+    if (isPreviewCameraOn && !props.isVideoStreamOn && !isButtonStatusSynced) {
       props.onStartLocalVideo();
     }
-  }, [props]);
-
-  const participantWithScreenShare: VideoGalleryRemoteParticipant | undefined = useMemo(() => {
-    return remoteParticipants.find((remoteParticipant: VideoGalleryRemoteParticipant) => {
-      return remoteParticipant.screenShareStream?.isAvailable;
-    });
-  }, [remoteParticipants]);
-
-  const isScreenShareActive = useCallback((): boolean => {
-    return participantWithScreenShare !== undefined && participantWithScreenShare.screenShareStream !== undefined;
-  }, [participantWithScreenShare]);
-
-  const ScreenShareMemoized = useMemo(() => {
-    if (participantWithScreenShare && isScreenShareActive()) {
-      return <ScreenShare {...videoGalleryProps} participantWithScreenShare={participantWithScreenShare} />;
-    } else return <></>;
-  }, [isScreenShareActive, participantWithScreenShare, videoGalleryProps]);
+    setIsButtonStatusSynced(true);
+  }, [isButtonStatusSynced, isPreviewCameraOn, props]);
 
   const VideoGalleryMemoized = useMemo(() => {
     return (
@@ -61,5 +52,5 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     );
   }, [videoGalleryProps]);
 
-  return isScreenShareActive() ? ScreenShareMemoized : VideoGalleryMemoized;
+  return isScreenShareActive ? <ScreenShare {...videoGalleryProps} /> : VideoGalleryMemoized;
 };
