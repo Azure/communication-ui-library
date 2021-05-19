@@ -5,7 +5,7 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 
 import memoizeOne from 'memoize-one';
 import { useAdapter } from '../adapter/CallAdapterProvider';
-import { CallStatus } from '../adapter/CallAdapter';
+import { CallingAdapterState } from '../adapter/CallAdapter';
 import { CallState, CallClientState, DeviceManagerState } from 'calling-stateful-client';
 
 // This function highly depends on chatClient.onChange event
@@ -19,7 +19,7 @@ export const useAdaptedSelector = <SelectorT extends (state: CallClientState, pr
 
 export const useSelectorWithAdaptation = <
   SelectorT extends (state: ReturnType<AdaptFuncT>, props: any) => any,
-  AdaptFuncT extends (state: CallStatus) => any
+  AdaptFuncT extends (state: CallingAdapterState) => any
 >(
   selector: SelectorT,
   adaptState: AdaptFuncT,
@@ -40,7 +40,7 @@ export const useSelectorWithAdaptation = <
   propRef.current = props;
 
   useEffect(() => {
-    const onStateChange = (state: CallStatus): void => {
+    const onStateChange = (state: CallingAdapterState): void => {
       const newProps = selector(adaptState(state), selectorProps ?? callConfigProps);
       if (propRef.current !== newProps) {
         setProps(newProps);
@@ -75,7 +75,7 @@ const memoizeCallMap = memoizeOne(
   (call?: CallState): Map<string, CallState> => (call ? new Map([[call.id, call]]) : new Map([]))
 );
 
-const adaptCompositeState = (compositeState: CallStatus): CallClientState => {
+const adaptCompositeState = (compositeState: CallingAdapterState): CallClientState => {
   const call = compositeState.call;
   const callMap = memoizeCallMap(call);
   return memoizeState(compositeState.userId, compositeState.devices, callMap, compositeState.displayName);

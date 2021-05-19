@@ -41,7 +41,7 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
   const call = useCall();
   const callClient: StatefulCallClient = useCallClient();
 
-  const [callState, setCallState] = useState<CallStatus | undefined>(undefined);
+  const [callStatus, setCallStatus] = useState<CallStatus | undefined>(undefined);
   const [isScreenSharingOn, setIsScreenSharingOn] = useState<boolean | undefined>(undefined);
   const [joinedCall, setJoinedCall] = useState<boolean>(false);
 
@@ -52,7 +52,7 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
   // It seems unnecessary in this case, so we get the updated states using this approach.
   useEffect(() => {
     const onStateChange = (state: CallClientState): void => {
-      call?.id && setCallState(state.calls.get(call.id)?.state);
+      call?.id && setCallStatus(state.calls.get(call.id)?.state);
       call?.id && setIsScreenSharingOn(state.calls.get(call.id)?.isScreenSharingOn);
     };
 
@@ -64,10 +64,10 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
   }, [call?.id, callClient]);
 
   useEffect(() => {
-    if (isInCall(callState ?? 'None')) {
+    if (isInCall(callStatus ?? 'None')) {
       document.title = `${groupId} group call sample`;
     } else {
-      if (!isInCall(callState ?? 'None') && callAgent && !joinedCall) {
+      if (!isInCall(callStatus ?? 'None') && callAgent && !joinedCall) {
         // Removed isMicrophoneEnabled state from CallProvider, will need to integrate with Miguel's fix for mic later.
         const audioOptions: AudioOptions = { muted: true };
         const videoOptions = { localVideoStreams: undefined };
@@ -85,7 +85,7 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
         setJoinedCall(true);
       }
     }
-  }, [callAgent, callState, groupId, joinedCall, setCall]);
+  }, [callAgent, callStatus, groupId, joinedCall, setCall]);
 
   return (
     <>
@@ -101,7 +101,7 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
           </Stack.Item>
           <Stack styles={subContainerStyles} grow horizontal>
             {!isScreenSharingOn ? (
-              callState === 'Connected' && (
+              callStatus === 'Connected' && (
                 <>
                   <Stack.Item grow styles={activeContainerClassName}>
                     <MediaGallery {...mediaGalleryProps} {...mediaGalleryHandlers} />
