@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Stack, Text } from '@fluentui/react';
+import { Stack } from '@fluentui/react';
 import { FlatCommunicationIdentifier } from 'acs-ui-common';
 import React, { useMemo } from 'react';
 import {
@@ -12,7 +12,7 @@ import {
 } from '../types';
 import { GridLayout } from './GridLayout';
 import { StreamMedia } from './StreamMedia';
-import { disabledVideoHint, gridStyle, videoHint, videoTileStyle } from './styles/VideoGallery.styles';
+import { gridStyle, videoTileStyle } from './styles/VideoGallery.styles';
 import { memoizeFnAll } from './utils/memoizeFnAll';
 import { VideoTile } from './VideoTile';
 
@@ -49,9 +49,7 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
           renderElement={<StreamMedia videoStreamElement={renderElement ?? null} />}
           displayName={displayName}
           styles={videoTileStyle}
-        >
-          <Text className={isAvailable ? videoHint : disabledVideoHint}>{displayName}</Text>
-        </VideoTile>
+        />
       </Stack>
     );
   }
@@ -88,9 +86,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         renderElement={<StreamMedia videoStreamElement={localVideoStream?.renderElement ?? null} />}
         displayName={localParticipant?.displayName}
         styles={videoTileStyle}
-      >
-        <Text className={isLocalVideoReady ? videoHint : disabledVideoHint}>{localParticipant?.displayName}</Text>
-      </VideoTile>
+      />
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localParticipant, localParticipant.videoStream, onCreateLocalStreamView]);

@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { VideoTile } from '@azure/communication-react';
-import { Stack, mergeStyles, PersonaSize, Persona, Label } from '@fluentui/react';
+import { Stack, mergeStyles, PersonaSize, Persona } from '@fluentui/react';
 import { number, select } from '@storybook/addon-knobs';
 import React from 'react';
 import { mediaGalleryWidthOptions, mediaGalleryHeightDefault, mediaGalleryHeightOptions } from '../../constants';
@@ -11,7 +11,7 @@ export const ScreenShareLayout: () => JSX.Element = () => {
   const width = number('Width (px)', 850, mediaGalleryWidthOptions);
   const height = number('Height (px)', mediaGalleryHeightDefault, mediaGalleryHeightOptions);
 
-  const defaultParticipants = ['Michael', 'Jim', 'Pam', 'Dwight', 'Kelly', 'Ryan', 'Andy'];
+  const MockParticipantDisplayNames = ['Michael', 'Jim', 'Pam', 'Dwight', 'Kelly', 'Ryan', 'Andy'];
 
   const sidePanelWidthRatio = select('Side Panel Width Ratio', ['30%', '35%', '40%', '45%', '50%'], '30%');
   const sidePanelTileAspectRatio = select(
@@ -55,32 +55,23 @@ export const ScreenShareLayout: () => JSX.Element = () => {
     border: '.063rem'
   };
 
-  const videoLabelStyle = mergeStyles({
-    bottom: '5%',
-    left: '2%',
-    overflow: 'hidden',
-    position: 'absolute',
-    maxWidth: '95%'
-  });
-
-  const participantsComponents = defaultParticipants.map((participant, index) => {
+  const participantsComponents = MockParticipantDisplayNames.map((participantDisplayName, index) => {
     return (
       <Stack className={aspectRatioBoxStyle} key={index}>
         <Stack className={aspectRatioBoxContentStyle}>
           <VideoTile
             isVideoReady={false}
+            displayName={participantDisplayName}
             placeholder={
               <Persona
                 styles={{ root: { margin: 'auto' } }}
                 size={PersonaSize.size56}
                 hidePersonaDetails={true}
-                text={participant}
+                text={participantDisplayName}
                 initialsTextColor="white"
               />
             }
-          >
-            <Label className={videoLabelStyle}>{participant}</Label>
-          </VideoTile>
+          />
         </Stack>
       </Stack>
     );

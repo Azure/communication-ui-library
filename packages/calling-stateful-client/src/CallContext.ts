@@ -311,6 +311,17 @@ export class CallContext {
     );
   }
 
+  public setCallScreenShareParticipant(callId: string, participantKey: string | undefined): void {
+    this.setState(
+      produce(this._state, (draft: CallClientState) => {
+        const call = draft.calls.get(callId);
+        if (call) {
+          call.screenShareRemoteParticipant = participantKey;
+        }
+      })
+    );
+  }
+
   public setLocalVideoStreamRendererView(callId: string, view: VideoStreamRendererView | undefined): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
