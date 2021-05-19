@@ -53,6 +53,7 @@ const App = (): JSX.Element => {
   const [token, setToken] = useState('');
   const [userId, setUserId] = useState('');
   const [displayName, setDisplayName] = useState(defaultDisplayName);
+  const [isMicrophoneOn, setIsMicrophoneOn] = useState(false);
 
   useEffect(() => {
     const setWindowWidth = (): void => {
@@ -97,6 +98,8 @@ const App = (): JSX.Element => {
             screenWidth={screenWidth}
             startCallHandler={(): void => setPage('call')}
             onDisplayNameUpdate={setDisplayName}
+            isMicrophoneOn={isMicrophoneOn}
+            setIsMicrophoneOn={setIsMicrophoneOn}
           />
         );
       case 'call':
@@ -109,6 +112,7 @@ const App = (): JSX.Element => {
                 }}
                 screenWidth={screenWidth}
                 groupId={getGroupId()}
+                isMicrophoneOn={isMicrophoneOn}
               />
             </CallProvider>
           </CallAgentProvider>

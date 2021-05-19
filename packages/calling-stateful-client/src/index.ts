@@ -8,7 +8,7 @@ export type {
   Call,
   CallAgentState,
   CallClientState,
-  DeviceManager,
+  DeviceManagerState,
   IncomingCall,
   LocalVideoStream,
   RemoteParticipant,
@@ -20,4 +20,3 @@ export type {
   TransferCallFeature,
   TransferRequest
 } from './CallClientState';
-export { getRemoteParticipantKey } from './Converter';

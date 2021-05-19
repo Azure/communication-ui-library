@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Rename DeviceManager to avoid name conflict",
+  "packageName": "calling-stateful-client",
+  "email": "prprabhu@microsoft.com",
+  "dependentChangeType": "patch"
+}

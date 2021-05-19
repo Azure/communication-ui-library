@@ -2,13 +2,13 @@
 // Licensed under the MIT license.
 
 import {
-  communicationIdentifierToString,
   getChatMessages,
   getIsLargeGroup,
   getLatestReadTime,
   getUserId,
   sanitizedMessageContentType
 } from './baseSelectors';
+import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import { ChatMessageWithStatus } from 'chat-stateful-client';
 // The following need explicitly imported to avoid api-extractor issues.
 // These can be removed once https://github.com/microsoft/rushstack/pull/1916 is fixed.
@@ -21,7 +21,7 @@ import { ChatClientState } from 'chat-stateful-client';
 // @ts-ignore
 import { ChatBaseSelectorProps } from './baseSelectors';
 // @ts-ignore
-import { memoizeFnAll } from './utils/memoizeFnAll';
+import { memoizeFnAll } from 'acs-ui-common';
 // @ts-ignore
 import { ChatMessage, MessageAttachedStatus, Message, MessageTypes } from 'react-components';
 // @ts-ignore
@@ -44,7 +44,7 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
       type: sanitizedMessageContentType(chatMessage.type),
       status: !isLargeGroup && chatMessage.status === 'delivered' && isSeen ? 'seen' : chatMessage.status,
       senderDisplayName: chatMessage.senderDisplayName,
-      senderId: communicationIdentifierToString(chatMessage.sender) ?? userId,
+      senderId: chatMessage.sender !== undefined ? toFlatCommunicationIdentifier(chatMessage.sender) : userId,
       messageId: chatMessage.id,
       clientMessageId: chatMessage.clientMessageId
     }
