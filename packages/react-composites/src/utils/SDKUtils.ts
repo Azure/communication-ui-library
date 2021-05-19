@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 
 import { AzureCommunicationTokenCredential, CommunicationTokenRefreshOptions } from '@azure/communication-common';
-
 import { CallState } from '@azure/communication-calling';
 import {
   CommunicationUiErrorCode,

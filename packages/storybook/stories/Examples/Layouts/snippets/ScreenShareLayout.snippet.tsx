@@ -1,9 +1,9 @@
 import { VideoTile } from '@azure/communication-react';
-import { Label, mergeStyles, Persona, PersonaSize, Stack } from '@fluentui/react';
+import { mergeStyles, Persona, PersonaSize, Stack } from '@fluentui/react';
 import React from 'react';
 
 export const ScreenShareLayoutExample: () => JSX.Element = () => {
-  const defaultParticipants = ['Michael', 'Jim', 'Pam', 'Dwight', 'Kelly', 'Ryan', 'Andy'];
+  const MockParticipantDisplayNames = ['Michael', 'Jim', 'Pam', 'Dwight', 'Kelly', 'Ryan', 'Andy'];
 
   const aspectRatioBoxStyle = mergeStyles({
     borderWidth: '.063rem .063rem .025rem .063rem',
@@ -38,33 +38,23 @@ export const ScreenShareLayoutExample: () => JSX.Element = () => {
     border: '.063rem'
   };
 
-  const videoLabelStyle = mergeStyles({
-    bottom: '5\u0025',
-    left: '2\u0025',
-    overflow: 'hidden',
-    position: 'absolute',
-    maxWidth: '95\u0025'
-  });
-
-  const participantsComponents = defaultParticipants.map((participant, index) => {
+  const participantsComponents = MockParticipantDisplayNames.map((participantDisplayName, index) => {
     return (
       <Stack className={aspectRatioBoxStyle} key={index}>
         <Stack className={aspectRatioBoxContentStyle}>
           <VideoTile
             isVideoReady={false}
+            displayName={participantDisplayName}
             placeholder={
               <Persona
                 styles={{ root: { margin: 'auto' } }}
                 size={PersonaSize.size56}
                 hidePersonaDetails={true}
-                text={participant}
+                text={participantDisplayName}
                 initialsTextColor="white"
               />
             }
-          >
-            {/* The overlay component we want to render in a videoTile, in this case, we want to render a label. */}
-            <Label className={videoLabelStyle}>{participant}</Label>
-          </VideoTile>
+          />
         </Stack>
       </Stack>
     );

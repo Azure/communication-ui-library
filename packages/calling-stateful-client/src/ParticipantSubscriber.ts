@@ -2,9 +2,10 @@
 // Licensed under the MIT license.
 
 import { RemoteParticipant, RemoteVideoStream } from '@azure/communication-calling';
+import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import { CallContext } from './CallContext';
 import { CallIdRef } from './CallIdRef';
-import { convertSdkRemoteStreamToDeclarativeRemoteStream, getRemoteParticipantKey } from './Converter';
+import { convertSdkRemoteStreamToDeclarativeRemoteStream } from './Converter';
 import { InternalCallContext } from './InternalCallContext';
 import { RemoteVideoStreamSubscriber } from './RemoteVideoStreamSubscriber';
 import { disposeView } from './StreamUtils';
@@ -32,7 +33,7 @@ export class ParticipantSubscriber {
     this._participant = participant;
     this._context = context;
     this._internalContext = internalContext;
-    this._participantKey = getRemoteParticipantKey(this._participant.identifier);
+    this._participantKey = toFlatCommunicationIdentifier(this._participant.identifier);
     this._remoteVideoStreamSubscribers = new Map<number, RemoteVideoStreamSubscriber>();
     this.subscribe();
   }

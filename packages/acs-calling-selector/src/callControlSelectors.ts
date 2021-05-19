@@ -4,7 +4,7 @@
 // @ts-ignore
 import * as reselect from 'reselect';
 // @ts-ignore
-import { Call, CallClientState, DeviceManager } from 'calling-stateful-client';
+import { Call, CallClientState, DeviceManagerState } from 'calling-stateful-client';
 // @ts-ignore
 import { CallingBaseSelectorProps } from './baseSelectors';
 import { getCall, getDeviceManager } from './baseSelectors';
