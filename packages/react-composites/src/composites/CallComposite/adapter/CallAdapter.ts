@@ -11,14 +11,14 @@ import type {
   UnknownIdentifierKind
 } from '@azure/communication-common';
 
-export type CallingUIState = {
+export type CallUiState = {
   // Self-contained state for composite
   error?: Error;
   isMicrophoneEnabled: boolean;
   page: 'configuration' | 'call';
 };
 
-export type CallingClientState = {
+export type CallClientState = {
   // Properties from backend services
   userId: string;
   displayName?: string;
@@ -26,7 +26,7 @@ export type CallingClientState = {
   devices: DeviceManagerState;
 };
 
-export type CallingAdapterState = CallingUIState & CallingClientState;
+export type CallAdapterState = CallUiState & CallClientState;
 
 export type IncomingCallListener = (event: {
   callId: string;
@@ -63,11 +63,11 @@ export type IsSpeakingChangedListener = (event: { identifier: CallIdentifierKind
 export type DisplaynameChangedListener = (event: { participantId: CallIdentifierKinds; displayName: string }) => void;
 
 export interface CallAdapter {
-  onStateChange(handler: (state: CallingAdapterState) => void): void;
+  onStateChange(handler: (state: CallAdapterState) => void): void;
 
-  offStateChange(handler: (state: CallingAdapterState) => void): void;
+  offStateChange(handler: (state: CallAdapterState) => void): void;
 
-  getState(): CallingAdapterState;
+  getState(): CallAdapterState;
 
   dispose(): void;
 

@@ -32,7 +32,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     dispose(): void;
     // (undocumented)
-    getState(): CallingAdapterState;
+    getState(): CallAdapterState;
     // (undocumented)
     joinCall(): Promise<void>;
     // (undocumented)
@@ -56,7 +56,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     off(event: 'error', errorHandler: (e: Error) => void): void;
     // (undocumented)
-    offStateChange(handler: (state: CallingAdapterState) => void): void;
+    offStateChange(handler: (state: CallAdapterState) => void): void;
     // (undocumented)
     on(event: 'participantsJoined', participantsJoinedListener: ParticipantJoinedListener): void;
     // (undocumented)
@@ -74,7 +74,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     on(event: 'error', errorHandler: (e: Error) => void): void;
     // (undocumented)
-    onStateChange(handler: (state: CallingAdapterState) => void): void;
+    onStateChange(handler: (state: CallAdapterState) => void): void;
     // (undocumented)
     onToggleCamera(): Promise<void>;
     // (undocumented)
@@ -112,7 +112,7 @@ export interface CallAdapter {
     // (undocumented)
     dispose(): void;
     // (undocumented)
-    getState(): CallingAdapterState;
+    getState(): CallAdapterState;
     // (undocumented)
     joinCall(): Promise<void>;
     // (undocumented)
@@ -136,7 +136,7 @@ export interface CallAdapter {
     // (undocumented)
     off(event: 'error', errorHandler: (e: Error) => void): void;
     // (undocumented)
-    offStateChange(handler: (state: CallingAdapterState) => void): void;
+    offStateChange(handler: (state: CallAdapterState) => void): void;
     // (undocumented)
     on(event: 'participantsJoined', participantsJoinedHandler: ParticipantJoinedListener): void;
     // (undocumented)
@@ -154,7 +154,7 @@ export interface CallAdapter {
     // (undocumented)
     on(event: 'error', errorHandler: (e: Error) => void): void;
     // (undocumented)
-    onStateChange(handler: (state: CallingAdapterState) => void): void;
+    onStateChange(handler: (state: CallAdapterState) => void): void;
     // (undocumented)
     onToggleCamera(): Promise<void>;
     // (undocumented)
@@ -186,6 +186,17 @@ export interface CallAdapter {
 }
 
 // @public (undocumented)
+export type CallAdapterState = CallUiState & CallClientState;
+
+// @public (undocumented)
+export type CallClientState = {
+    userId: string;
+    displayName?: string;
+    call?: CallState;
+    devices: DeviceManagerState;
+};
+
+// @public (undocumented)
 export const CallComposite: (props: CallCompositeProps) => JSX.Element;
 
 // @public (undocumented)
@@ -206,18 +217,7 @@ export type CallIdChangedListener = (event: {
 export type CallIdentifierKinds = CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind;
 
 // @public (undocumented)
-export type CallingAdapterState = CallingUIState & CallingClientState;
-
-// @public (undocumented)
-export type CallingClientState = {
-    userId: string;
-    displayName?: string;
-    call?: CallState;
-    devices: DeviceManagerState;
-};
-
-// @public (undocumented)
-export type CallingUIState = {
+export type CallUiState = {
     error?: Error;
     isMicrophoneEnabled: boolean;
     page: 'configuration' | 'call';

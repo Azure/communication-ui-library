@@ -24,7 +24,7 @@ import {
   CallAdapter,
   CallEvent,
   CallIdChangedListener,
-  CallingAdapterState,
+  CallAdapterState,
   DisplaynameChangedListener,
   IsMuteChangedListener,
   IsScreenSharingOnChangedListener,
@@ -42,7 +42,7 @@ import { ParticipantSubscriber } from './ParticipantSubcriber';
 // Context of Chat, which is a centralized context for all state updates
 class CallContext {
   private emitter: EventEmitter = new EventEmitter();
-  private state: CallingAdapterState;
+  private state: CallAdapterState;
   private callId: string | undefined;
 
   constructor(clientState: CallClientState) {
@@ -56,20 +56,20 @@ class CallContext {
     };
   }
 
-  public onStateChange(handler: (_uiState: CallingAdapterState) => void): void {
+  public onStateChange(handler: (_uiState: CallAdapterState) => void): void {
     this.emitter.on('stateChanged', handler);
   }
 
-  public offStateChange(handler: (_uiState: CallingAdapterState) => void): void {
+  public offStateChange(handler: (_uiState: CallAdapterState) => void): void {
     this.emitter.off('stateChanged', handler);
   }
 
-  public setState(state: CallingAdapterState): void {
+  public setState(state: CallAdapterState): void {
     this.state = state;
     this.emitter.emit('stateChanged', this.state);
   }
 
-  public getState(): CallingAdapterState {
+  public getState(): CallAdapterState {
     return this.state;
   }
 
@@ -275,15 +275,15 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.handlers.onParticipantRemove(userId);
   }
 
-  public getState(): CallingAdapterState {
+  public getState(): CallAdapterState {
     return this.context.getState();
   }
 
-  public onStateChange(handler: (state: CallingAdapterState) => void): void {
+  public onStateChange(handler: (state: CallAdapterState) => void): void {
     this.context.onStateChange(handler);
   }
 
-  public offStateChange(handler: (state: CallingAdapterState) => void): void {
+  public offStateChange(handler: (state: CallAdapterState) => void): void {
     this.context.offStateChange(handler);
   }
 
