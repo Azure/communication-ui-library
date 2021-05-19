@@ -319,7 +319,7 @@ export interface IncomingCall {
  * This type is meant to encapsulate all the state inside {@Link @azure/communication-calling#DeviceManager}. For
  * optional parameters they may not be available until permission is granted by the user.
  */
-export type DeviceManager = {
+export type DeviceManagerState = {
   /**
    * Proxy of {@Link @azure/communication-calling#DeviceManager.isSpeakerSelectionAvailable}.
    */
@@ -393,7 +393,7 @@ export interface CallClientState {
   /**
    * Proxy of {@Link @azure/communication-calling#DeviceManager} and its events.
    */
-  deviceManager: DeviceManager;
+  deviceManager: DeviceManagerState;
   /**
    * Proxy of {@Link @azure/communication-calling#CallAgent} without the calls property. Provides access to displayName
    * but only available if CallAgent has been created.

@@ -7,7 +7,7 @@ import {
   StatefulDeviceManager,
   StatefulCallClient,
   createStatefulCallClient,
-  DeviceManager
+  DeviceManagerState
 } from 'calling-stateful-client';
 import {
   CallAgent,
@@ -385,7 +385,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 }
 
-const isPreviewOn = (deviceManager: DeviceManager): boolean => {
+const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
   return !!deviceManager.unparentedViews && !!deviceManager.unparentedViews[0]?.target;
 };
 

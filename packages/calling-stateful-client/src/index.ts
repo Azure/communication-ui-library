@@ -8,7 +8,7 @@ export type {
   Call,
   CallAgentState,
   CallClientState,
-  DeviceManager,
+  DeviceManagerState,
   IncomingCall,
   LocalVideoStream,
   RemoteParticipant,

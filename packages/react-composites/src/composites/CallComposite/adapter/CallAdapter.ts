@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Call, DeviceManager as Devices, RemoteParticipant } from 'calling-stateful-client';
+import { Call, DeviceManagerState, RemoteParticipant } from 'calling-stateful-client';
 import { AudioDeviceInfo, VideoDeviceInfo, Call as SDKCall } from '@azure/communication-calling';
 import { VideoStreamOptions } from 'react-components';
 import type {
@@ -23,7 +23,7 @@ export type CallingClientState = {
   userId: string;
   displayName?: string;
   call?: Call;
-  devices: Devices;
+  devices: DeviceManagerState;
 };
 
 export type CallState = CallingUIState & CallingClientState;
