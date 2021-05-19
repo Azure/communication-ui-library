@@ -127,6 +127,13 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
           return result;
         };
       }
+      case 'getProperties': {
+        return async (...args: Parameters<ChatThreadClient['getProperties']>) => {
+          const result = await chatThreadClient.getProperties(...args);
+          this._context.updateThread(chatThreadClient.threadId, result);
+          return result;
+        };
+      }
       default:
         return Reflect.get(chatThreadClient, prop);
     }

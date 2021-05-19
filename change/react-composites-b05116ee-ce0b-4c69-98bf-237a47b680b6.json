@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "adding in MessageContentType for different message rendering in message thread",
+  "packageName": "react-composites",
+  "email": "alkwa@microsoft.com",
+  "dependentChangeType": "patch"
+}

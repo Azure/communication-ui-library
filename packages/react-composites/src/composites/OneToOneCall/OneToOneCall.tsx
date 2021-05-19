@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallingProvider, CallProvider } from '../../providers';
+import { CallProvider } from '../../providers';
 import React, { useCallback, useEffect, useState } from 'react';
 import { CallClientOptions } from '@azure/communication-calling';
 import { AbortSignalLike } from '@azure/core-http';
@@ -13,6 +13,7 @@ import { CallListener } from './CallListener';
 import { incomingCallHost } from './styles/App.styles';
 import { ErrorProvider } from '../../providers';
 import { CommunicationUiErrorInfo } from '../../types';
+import { CallingProvider } from './providers/CallingProvider';
 
 export type OneToOneCallCompositeProps = {
   /** Display name in the call */

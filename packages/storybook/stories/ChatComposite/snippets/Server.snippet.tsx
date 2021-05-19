@@ -3,7 +3,7 @@
 import { ChatClient } from '@azure/communication-chat';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { CommunicationIdentityClient } from '@azure/communication-identity';
-import { ChatConfig } from 'react-composites';
+import { ChatConfig } from '../ChatConfig';
 
 export const createUserAndThread = async (
   resourceConnectionString: string,
@@ -18,6 +18,7 @@ export const createUserAndThread = async (
   await chatClient.getChatThreadClient(threadId).addParticipants({
     participants: [{ id: user.user, displayName: displayName }]
   });
+  await chatClient.getChatThreadClient(threadId).updateTopic('Chat with a friendly bot');
 
   return {
     token: user.token,

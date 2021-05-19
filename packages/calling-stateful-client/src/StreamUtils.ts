@@ -31,6 +31,7 @@ async function startRenderRemoteVideo(
     throw new Error('RemoteParticipant not found in state');
   }
 
+<<<<<<< HEAD
   const status = context
     .getState()
     .calls.get(callId)
@@ -102,6 +103,9 @@ async function startRenderRemoteVideo(
 }
 
 async function startRenderLocalVideo(
+=======
+export async function createView(
+>>>>>>> origin/main
   context: CallContext,
   internalContext: InternalCallContext,
   callId: string,
@@ -196,6 +200,7 @@ async function startRenderUnparentedVideo(
     throw new Error('Unparented LocalVideoStream is in the middle of stopping');
   }
 
+<<<<<<< HEAD
   const localVideoStream = new LocalVideoStream(stream.source);
   const renderer = new VideoStreamRenderer(localVideoStream);
 
@@ -280,6 +285,12 @@ function stopRenderRemoteVideo(
       }
     } else {
       // No existing stream in state, so nothing we can do here.
+=======
+    if (!localVideoStream || localVideoStreamRenderer) {
+      // TODO: How to standarize all errors
+      // throw new Error('LocalVideoStream not found or Stream is already rendered');
+      return;
+>>>>>>> origin/main
     }
   }
 }
@@ -354,7 +365,7 @@ export function startRenderVideo(
   }
 }
 
-export function stopRenderVideo(
+export function disposeView(
   context: CallContext,
   internalContext: InternalCallContext,
   callId: string | undefined,
@@ -375,7 +386,11 @@ export function stopRenderVideo(
 }
 
 // Only stops videos that are tied to a Call.
-export function stopRenderVideoAll(context: CallContext, internalContext: InternalCallContext, callId: string): void {
+export function disposeAllViewsFromCall(
+  context: CallContext,
+  internalContext: InternalCallContext,
+  callId: string
+): void {
   const streams = internalContext.getRemoteVideoStreams(callId);
   if (streams) {
     for (const [streamId] of streams.entries()) {
@@ -383,7 +398,7 @@ export function stopRenderVideoAll(context: CallContext, internalContext: Intern
       if (stream) {
         // We don't want to accept SDK stream as parameter but we also don't cache the declarative stream so we have to
         // convert the SDK stream to declarative stream which is not pretty so this could use some further refactoring.
-        stopRenderVideo(context, internalContext, callId, convertSdkRemoteStreamToDeclarativeRemoteStream(stream));
+        disposeView(context, internalContext, callId, convertSdkRemoteStreamToDeclarativeRemoteStream(stream));
       }
     }
   }
@@ -391,13 +406,14 @@ export function stopRenderVideoAll(context: CallContext, internalContext: Intern
   // convert the SDK stream to declarative stream which is not pretty so this could use some further refactoring.
   const localVideoStream = internalContext.getLocalVideoStream(callId);
   if (localVideoStream) {
-    stopRenderVideo(context, internalContext, callId, convertSdkLocalStreamToDeclarativeLocalStream(localVideoStream));
+    disposeView(context, internalContext, callId, convertSdkLocalStreamToDeclarativeLocalStream(localVideoStream));
   }
 }
 
-export function stopRenderVideoAllCalls(context: CallContext, internalContext: InternalCallContext): void {
+// stops all videos from all calls
+export function disposeAllViews(context: CallContext, internalContext: InternalCallContext): void {
   const remoteVideoStreams = internalContext.getRemoteVideoStreamsAll();
   for (const [callId] of remoteVideoStreams) {
-    stopRenderVideoAll(context, internalContext, callId);
+    disposeAllViewsFromCall(context, internalContext, callId);
   }
 }

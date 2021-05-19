@@ -9,26 +9,31 @@ export type ChatUIState = {
   error?: Error;
 };
 
-export type ChatClientState = {
+export type ChatCompositeClientState = {
   // Properties from backend services
   userId: string;
   displayName: string;
   thread: ChatThreadClientState;
 };
 
-export type ChatState = ChatUIState & ChatClientState;
+export type ChatState = ChatUIState & ChatCompositeClientState;
 
 export interface ChatAdapter {
   onStateChange(handler: (state: ChatState) => void): void;
   offStateChange(handler: (state: ChatState) => void): void;
   getState(): ChatState;
+  /*
+   * Fetch initial state for the Chat adapter.
+   *
+   * Performs the minimal fetch necessary for ChatComposite and API methods.
+   */
+  fetchInitialData(): Promise<void>;
   sendMessage(content: string): Promise<void>;
   sendReadReceipt(chatMessageId: string): Promise<void>;
   sendTypingIndicator(): Promise<void>;
   removeParticipant(userId: string): Promise<void>;
   setTopic(topicName: string): Promise<void>;
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
-  updateAllParticipants(): Promise<void>;
   on(event: 'messageReceived', messageReceivedHandler: (message: ChatMessage) => void): void;
   on(event: 'participantsJoined', participantsJoinedHandler: (participant: ChatParticipant) => void): void;
   on(event: 'error', errorHandler: (e: Error) => void): void;

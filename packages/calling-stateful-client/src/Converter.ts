@@ -72,7 +72,7 @@ export function convertSdkParticipantToDeclarativeParticipant(
 /**
  * Generates an identifier string for a given RemoteParticipant.identifier.
  *
- * @param identifier
+ * @param identifier - {@Link RemoteParticipant#identifier}
  */
 export function getRemoteParticipantKey(
   identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind
@@ -121,6 +121,7 @@ export function convertSdkCallToDeclarativeCall(call: SdkCall): DeclarativeCall 
     recording: { isRecordingActive: false },
     transcription: { isTranscriptionActive: false },
     transfer: { receivedTransferRequests: [], requestedTransfers: [] },
+    screenShareRemoteParticipant: undefined,
     startTime: new Date(),
     endTime: undefined
   };

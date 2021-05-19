@@ -8,8 +8,8 @@ export const VideoTileExample: () => JSX.Element = () => {
     <FluentThemeProvider>
       <VideoTile
         styles={videoTileStyles}
-        avatarName={'Maximus Aurelius'}
-        videoProvider={
+        displayName={'Maximus Aurelius'}
+        renderElement={
           // NOTE: Replace with your own video provider. (An html element with video stream)
           <StreamMedia videoStreamElement={renderVideoStream()} />
         }

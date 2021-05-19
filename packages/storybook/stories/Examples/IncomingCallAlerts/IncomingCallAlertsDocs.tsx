@@ -132,7 +132,7 @@ interface IncomingCallModalProps extends IncomingCallToastProps {
   /** A Caller's subtitle. Displayed right below the callers name */
   callerTitle?: string;
   /** Receiver's Name */
-  localParticipantName?: string;
+  localParticipantDisplayName?: string;
   /** If set to 'true', mirrors the local video preview of the receiver */
   localVideoInverted?: boolean;
   /** Toggle local video preview on or off */
@@ -150,7 +150,7 @@ const IncomingCallModal = (props: WithTheme<IncomingCallModalProps>): JSX.Elemen
     callerName,
     callerNameAlt,
     callerTitle,
-    localParticipantName,
+    localParticipantDisplayName,
     localVideoInverted,
     onClickAccept,
     onClickReject,
@@ -166,8 +166,8 @@ const IncomingCallModal = (props: WithTheme<IncomingCallModalProps>): JSX.Elemen
   const mediaGalleryLocalParticipant: JSX.Element = (
     <VideoTile
       isVideoReady={showLocalVideo}
-      videoProvider={<StreamMedia videoStreamElement={localVideoStreamElement} />}
-      avatarName={localParticipantName}
+      renderElement={<StreamMedia videoStreamElement={localVideoStreamElement} />}
+      displayName={localParticipantDisplayName}
       isMirrored={localVideoInverted}
     />
   );
