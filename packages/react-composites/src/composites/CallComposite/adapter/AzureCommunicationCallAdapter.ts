@@ -22,6 +22,7 @@ import {
 import { EventEmitter } from 'events';
 import {
   CallAdapter,
+  CallCompositePage,
   CallEvent,
   CallIdChangedListener,
   CallState,
@@ -50,7 +51,7 @@ class CallContext {
 
   constructor(clientState: CallClientState) {
     this.state = {
-      isMicrophoneEnabled: false,
+      isLocalPreviewMicrophoneEnabled: false,
       userId: clientState.userId,
       displayName: clientState.callAgent?.displayName,
       devices: clientState.deviceManager,
@@ -76,12 +77,16 @@ class CallContext {
     return this.state;
   }
 
+  public setPage(page: CallCompositePage): void {
+    this.setState({ ...this.state, page });
+  }
+
   public setError(error: Error): void {
     this.setState({ ...this.state, error });
   }
 
-  public setIsMicrophoneEnabled(isMicrophoneEnabled: boolean): void {
-    this.setState({ ...this.state, isMicrophoneEnabled });
+  public setIsLocalMicrophoneEnabled(isLocalPreviewMicrophoneEnabled: boolean): void {
+    this.setState({ ...this.state, isLocalPreviewMicrophoneEnabled });
   }
 
   public setCallId(callId: string | undefined): void {
@@ -96,7 +101,7 @@ class CallContext {
       displayName: clientState.callAgent?.displayName,
       call,
       devices: clientState.deviceManager,
-      isMicrophoneEnabled: call?.isMuted === undefined ? false : !call?.isMuted
+      isLocalPreviewMicrophoneEnabled: call?.isMuted === undefined ? false : !call?.isMuted
     });
   }
 }
@@ -157,11 +162,11 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     return this.deviceManager.getSpeakers();
   }
 
-  public async joinCall(): Promise<void> {
+  public async joinCall(microphoneOn?: boolean): Promise<void> {
     if (isInCall(this.getState().call?.state ?? 'None')) {
       throw new Error('You are already in the call!');
     } else {
-      const audioOptions: AudioOptions = { muted: !this.getState().isMicrophoneEnabled };
+      const audioOptions: AudioOptions = { muted: microphoneOn ?? !this.getState().isLocalPreviewMicrophoneEnabled };
       // TODO: find a way to expose stream to here
       const videoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
 
@@ -242,14 +247,14 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   public async mute(): Promise<void> {
     if (!this.call) {
-      this.context.setIsMicrophoneEnabled(true);
+      this.context.setIsLocalMicrophoneEnabled(false);
     }
     await this.call?.mute();
   }
 
   public async unmute(): Promise<void> {
     if (!this.call) {
-      this.context.setIsMicrophoneEnabled(false);
+      this.context.setIsLocalMicrophoneEnabled(true);
     }
     await this.call?.unmute();
   }
@@ -327,6 +332,10 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       participantId: createCommunicationIdentifier(this.getState().userId),
       isMuted: this.call?.isMuted
     });
+  };
+
+  public setPage = (page: CallCompositePage): void => {
+    this.context.setPage(page);
   };
 
   private onRemoteParticipantsUpdated = ({

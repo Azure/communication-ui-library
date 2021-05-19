@@ -11,11 +11,13 @@ import type {
   UnknownIdentifierKind
 } from '@azure/communication-common';
 
+export type CallCompositePage = 'configuration' | 'call';
+
 export type CallingUIState = {
   // Self-contained state for composite
   error?: Error;
-  isMicrophoneEnabled: boolean;
-  page: 'configuration' | 'call';
+  isLocalPreviewMicrophoneEnabled: boolean;
+  page: CallCompositePage;
 };
 
 export type CallingClientState = {
@@ -71,7 +73,7 @@ export interface CallAdapter {
 
   dispose(): void;
 
-  joinCall(): Promise<void>;
+  joinCall(microphoneOn?: boolean): Promise<void>;
 
   leaveCall(forEveryone?: boolean): Promise<void>;
 
@@ -104,6 +106,8 @@ export interface CallAdapter {
   stopScreenShare(): Promise<void>;
 
   removeParticipant(userId: string): Promise<void>;
+
+  setPage(page: CallCompositePage): void;
 
   createStreamView(userId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
 
