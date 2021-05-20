@@ -96,6 +96,10 @@ export const ParticipantListComponent: () => JSX.Element = () => {
   const stackStyle = { width: '12.5rem' };
   let reactItemKey = 0;
 
+  const tokenProps = {
+    childrenGap: '0.5rem'
+  };
+
   return (
     <Stack>
       <h1 style={headingStyle}>Participants</h1>
@@ -117,12 +121,12 @@ export const ParticipantListComponent: () => JSX.Element = () => {
           return (
             // eslint-disable-next-line react/jsx-key
             <ParticipantItem
-              key={'ParticipantItem' + ++reactItemKey}
+              key={`ParticipantItem' ${++reactItemKey}`}
               displayName={p.displayName}
               me={'me' === p.displayName}
               presence={p.presence}
               onRenderIcon={() => (
-                <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
+                <Stack horizontal={true} tokens={tokenProps}>
                   {p.displayName === screenSharer && <CallControlPresentNewIcon size="small" />}
                   {p.isMuted && <MicOffIcon size="small" />}
                 </Stack>
@@ -137,7 +141,7 @@ export const ParticipantListComponent: () => JSX.Element = () => {
 };
 
 export default {
-  title: `${EXAMPLES_FOLDER_PREFIX}/ParticipantList`,
+  title: `${EXAMPLES_FOLDER_PREFIX}/Participant List`,
   component: ParticipantListComponent,
   parameters: {
     docs: {
