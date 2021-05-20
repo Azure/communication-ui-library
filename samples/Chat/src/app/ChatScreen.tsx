@@ -12,7 +12,7 @@ import {
   chatParticipantListSelector,
   useChatClient,
   useChatThreadClient,
-  useSelector,
+  useChatSelector,
   useThreadId
 } from '@azure/acs-chat-selector';
 import { chatHeaderSelector } from './selectors/chatHeaderSelector';
@@ -67,7 +67,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     document.getElementById('sendbox')?.focus();
   }, []);
 
-  const chatHeaderProps = useSelector(chatHeaderSelector);
+  const chatHeaderProps = useChatSelector(chatHeaderSelector);
 
   const updateThreadTopicName = useCallback(
     async (topicName: string) => {
@@ -76,7 +76,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [chatThreadClient]
   );
 
-  const chatParticipantProps = useSelector(chatParticipantListSelector);
+  const chatParticipantProps = useChatSelector(chatParticipantListSelector);
 
   useEffect(() => {
     // We only want to check if we've fetched all the existing participants.
