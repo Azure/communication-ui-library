@@ -2,9 +2,10 @@
 // Licensed under the MIT license.
 
 import { RemoteParticipant, RemoteVideoStream } from '@azure/communication-calling';
+import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import { CallContext } from './CallContext';
 import { CallIdRef } from './CallIdRef';
-import { convertSdkRemoteStreamToDeclarativeRemoteStream, getRemoteParticipantKey } from './Converter';
+import { convertSdkRemoteStreamToDeclarativeRemoteStream } from './Converter';
 import { InternalCallContext } from './InternalCallContext';
 import { RemoteVideoStreamSubscriber } from './RemoteVideoStreamSubscriber';
 import { disposeView } from './StreamUtils';
@@ -32,7 +33,7 @@ export class ParticipantSubscriber {
     this._participant = participant;
     this._context = context;
     this._internalContext = internalContext;
-    this._participantKey = getRemoteParticipantKey(this._participant.identifier);
+    this._participantKey = toFlatCommunicationIdentifier(this._participant.identifier);
     this._remoteVideoStreamSubscribers = new Map<number, RemoteVideoStreamSubscriber>();
     this.subscribe();
   }
@@ -46,8 +47,14 @@ export class ParticipantSubscriber {
 
     if (this._participant.videoStreams.length > 0) {
       for (const stream of this._participant.videoStreams) {
+        this._internalContext.setRemoteStreamAndRenderer(
+          this._callIdRef.callId,
+          this._participantKey,
+          stream.id,
+          stream,
+          undefined
+        );
         this.addRemoteVideoStreamSubscriber(stream);
-        this._internalContext.setRemoteVideoStream(this._callIdRef.callId, this._participantKey, stream);
       }
       this._context.setRemoteVideoStreams(
         this._callIdRef.callId,
@@ -69,14 +76,14 @@ export class ParticipantSubscriber {
     // as it doesn't make sense to render for an ended participant.
     if (this._participant.videoStreams.length > 0) {
       for (const stream of this._participant.videoStreams) {
-        const existingDeclarativeStream = this._context
-          .getState()
-          .calls.get(this._callIdRef.callId)
-          ?.remoteParticipants.get(this._participantKey)
-          ?.videoStreams.get(stream.id);
-        if (existingDeclarativeStream) {
-          disposeView(this._context, this._internalContext, this._callIdRef.callId, existingDeclarativeStream);
-        }
+        disposeView(
+          this._context,
+          this._internalContext,
+          this._callIdRef.callId,
+          this._participantKey,
+          convertSdkRemoteStreamToDeclarativeRemoteStream(stream)
+        );
+        this._internalContext.removeRemoteStreamAndRenderer(this._callIdRef.callId, this._participantKey, stream.id);
       }
     }
   };
@@ -112,20 +119,25 @@ export class ParticipantSubscriber {
   private videoStreamsUpdated = (event: { added: RemoteVideoStream[]; removed: RemoteVideoStream[] }): void => {
     for (const stream of event.removed) {
       this._remoteVideoStreamSubscribers.get(stream.id)?.unsubscribe();
-      const existingDeclarativeStream = this._context
-        .getState()
-        .calls.get(this._callIdRef.callId)
-        ?.remoteParticipants.get(this._participantKey)
-        ?.videoStreams.get(stream.id);
-      if (existingDeclarativeStream) {
-        disposeView(this._context, this._internalContext, this._callIdRef.callId, existingDeclarativeStream);
-      }
-      this._internalContext.removeRemoteVideoStream(this._callIdRef.callId, stream.id);
+      disposeView(
+        this._context,
+        this._internalContext,
+        this._callIdRef.callId,
+        this._participantKey,
+        convertSdkRemoteStreamToDeclarativeRemoteStream(stream)
+      );
+      this._internalContext.removeRemoteStreamAndRenderer(this._callIdRef.callId, this._participantKey, stream.id);
     }
 
     for (const stream of event.added) {
+      this._internalContext.setRemoteStreamAndRenderer(
+        this._callIdRef.callId,
+        this._participantKey,
+        stream.id,
+        stream,
+        undefined
+      );
       this.addRemoteVideoStreamSubscriber(stream);
-      this._internalContext.setRemoteVideoStream(this._callIdRef.callId, this._participantKey, stream);
     }
 
     this._context.setRemoteVideoStreams(

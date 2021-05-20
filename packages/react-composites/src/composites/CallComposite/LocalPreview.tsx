@@ -3,17 +3,26 @@
 
 import { CallVideoOffIcon } from '@fluentui/react-icons-northstar';
 import { Stack, Text } from '@fluentui/react';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { localPreviewContainerStyle, cameraOffLabelStyle, localPreviewTileStyle } from './styles/LocalPreview.styles';
 import { StreamMedia, VideoTile, MicrophoneButton, ControlBar, CameraButton } from 'react-components';
 import { usePropsFor } from './hooks/usePropsFor';
 import { localPreviewSelector } from '@azure/acs-calling-selector';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
+import { useSelector } from './hooks/useSelector';
+import { getLocalMicrophoneEnabled } from './selectors/baseSelectors';
+import { useAdapter } from './adapter/CallAdapterProvider';
 
 export const LocalPreview = (): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
-  const microphoneButtonProps = usePropsFor(MicrophoneButton);
   const localPreviewProps = useAdaptedSelector(localPreviewSelector);
+
+  const isLocalMicrophoneEnabled = useSelector(getLocalMicrophoneEnabled);
+  const adapter = useAdapter();
+
+  const onToggleMic = useCallback(async () => {
+    isLocalMicrophoneEnabled ? adapter.mute() : adapter.unmute();
+  }, [adapter, isLocalMicrophoneEnabled]);
 
   return (
     <Stack className={localPreviewContainerStyle}>
@@ -33,13 +42,8 @@ export const LocalPreview = (): JSX.Element => {
         }
       >
         <ControlBar layout="floatingBottom">
-          <CameraButton
-            {...cameraButtonProps}
-            // onToggleCamera={async () => {
-            //   cameraButtonProps.onToggleCamera();
-            // }}
-          />
-          <MicrophoneButton {...microphoneButtonProps} />
+          <CameraButton {...cameraButtonProps} />
+          <MicrophoneButton checked={isLocalMicrophoneEnabled} onToggleMicrophone={onToggleMic} />
         </ControlBar>
       </VideoTile>
     </Stack>

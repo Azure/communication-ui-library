@@ -10,9 +10,13 @@ import { useSelector } from './hooks/useSelector';
 import { usePropsFor } from './hooks/usePropsFor';
 import { localPreviewSelector } from '@azure/acs-calling-selector';
 
-export const LocalPreview = (): JSX.Element => {
+export interface LocalPreviewProps {
+  isMicrophoneOn: boolean;
+  setIsMicrophoneOn: (isEnabled: boolean) => void;
+}
+
+export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
-  const microphoneButtonProps = usePropsFor(MicrophoneButton);
   const localPreviewProps = useSelector(localPreviewSelector);
 
   return (
@@ -21,6 +25,7 @@ export const LocalPreview = (): JSX.Element => {
         styles={localPreviewTileStyle}
         isVideoReady={!!localPreviewProps.videoStreamElement}
         renderElement={<StreamMedia videoStreamElement={localPreviewProps.videoStreamElement} />}
+        isMirrored={true}
         placeholder={
           <Stack style={{ width: '100%', height: '100%' }} verticalAlign="center">
             <Stack.Item align="center">
@@ -34,7 +39,12 @@ export const LocalPreview = (): JSX.Element => {
       >
         <ControlBar layout="floatingBottom">
           <CameraButton {...cameraButtonProps} />
-          <MicrophoneButton {...microphoneButtonProps} />
+          <MicrophoneButton
+            checked={props.isMicrophoneOn}
+            onToggleMicrophone={async () => {
+              props.setIsMicrophoneOn(!props.isMicrophoneOn);
+            }}
+          />
         </ControlBar>
       </VideoTile>
     </Stack>

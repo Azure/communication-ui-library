@@ -29,7 +29,7 @@ import {
   SystemMessagePayload
 } from '../types';
 import { ReadReceipt, ReadReceiptProps } from './ReadReceipt';
-import { memoizeFnAll } from './utils/memoizeFnAll';
+import { memoizeFnAll } from 'acs-ui-common';
 import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from './SystemMessage';
 import { Parser } from 'html-to-react';
 

@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useEffect, useMemo, useState } from 'react';
-import { VideoGallery } from 'react-components';
+import { VideoGallery, VideoStreamOptions } from 'react-components';
 import { usePropsFor } from './hooks/usePropsFor';
 import { useSelector } from './hooks/useSelector';
 import { ScreenShare } from './ScreenShare';
@@ -13,6 +13,15 @@ const VideoGalleryStyles = {
     height: 'auto'
   }
 };
+
+const localVideoViewOption = {
+  scalingMode: 'Crop',
+  isMirrored: true
+} as VideoStreamOptions;
+
+const remoteVideoViewOption = {
+  scalingMode: 'Crop'
+} as VideoStreamOptions;
 
 export interface MediaGalleryProps {
   isVideoStreamNotRendered: boolean;
@@ -41,13 +50,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     return (
       <VideoGallery
         {...videoGalleryProps}
-        localVideoViewOption={{
-          scalingMode: 'Crop',
-          isMirrored: true
-        }}
-        remoteVideoViewOption={{
-          scalingMode: 'Crop'
-        }}
+        localVideoViewOption={localVideoViewOption}
+        remoteVideoViewOption={remoteVideoViewOption}
         styles={VideoGalleryStyles}
       />
     );

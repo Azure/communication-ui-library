@@ -2,6 +2,12 @@
 // Licensed under the MIT license.
 
 import { CreateViewOptions, LocalVideoStream, VideoStreamRenderer } from '@azure/communication-calling';
+import {
+  CommunicationUserKind,
+  MicrosoftTeamsUserKind,
+  PhoneNumberKind,
+  UnknownIdentifierKind
+} from '@azure/communication-common';
 import { LocalVideoStream as StatefulLocalVideoStream, RemoteVideoStream } from './CallClientState';
 import { CallContext } from './CallContext';
 import {
@@ -10,25 +16,38 @@ import {
   convertFromSDKToDeclarativeVideoStreamRendererView
 } from './Converter';
 import { InternalCallContext } from './InternalCallContext';
+import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 
 async function createViewRemoteVideo(
   context: CallContext,
   internalContext: InternalCallContext,
   callId: string,
+  participantId: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | string,
   stream: RemoteVideoStream,
   options?: CreateViewOptions
 ): Promise<void> {
+  // Render RemoteVideoStream that is part of a Call
   const streamId = stream.id;
-  const remoteVideoStream = internalContext.getRemoteVideoStream(callId, streamId);
-  const participantKey = internalContext.getRemoteParticipantKey(callId, streamId);
-  const videoStreamRenderer = internalContext.getRemoteVideoStreamRenderer(callId, streamId);
+  let participantKey;
+  if (typeof participantId === 'string') {
+    participantKey = participantId;
+  } else {
+    participantKey = toFlatCommunicationIdentifier(participantId);
+  }
+  const remoteStreamAndRenderer = internalContext.getRemoteStreamAndRendererForParticipant(
+    callId,
+    participantKey,
+    streamId
+  );
 
-  if (!remoteVideoStream) {
-    throw new Error('RemoteVideoStream not found in state');
+  if (!remoteStreamAndRenderer) {
+    console.warn('RemoteVideoStream not found in state');
+    return;
   }
 
-  if (!participantKey) {
-    throw new Error('RemoteParticipant not found in state');
+  if (remoteStreamAndRenderer.renderer) {
+    console.warn('RemoteVideoStream rendering already started or completed');
+    return;
   }
 
   const status = context
@@ -38,22 +57,26 @@ async function createViewRemoteVideo(
     ?.videoStreams.get(streamId)?.viewStatus;
 
   if (!status) {
-    throw new Error('StreamId not found in state');
+    console.warn('StreamId not found in state');
+    return;
   }
 
-  if (videoStreamRenderer || status === 'Rendered') {
-    throw new Error('RemoteVideoStream is already rendered');
+  if (status === 'Rendered') {
+    console.warn('RemoteVideoStream is already rendered');
+    return;
   }
 
   if (status === 'Rendering') {
-    throw new Error('RemoteVideoStream rendering is already in progress');
+    console.warn('RemoteVideoStream rendering is already in progress');
+    return;
   }
 
   if (status === 'Stopping') {
-    throw new Error('RemoteVideoStream is in the middle of stopping');
+    console.warn('RemoteVideoStream is in the middle of stopping');
+    return;
   }
 
-  const renderer = new VideoStreamRenderer(remoteVideoStream);
+  const renderer = new VideoStreamRenderer(remoteStreamAndRenderer.stream);
 
   context.setRemoteVideoStreamRendererView(callId, participantKey, streamId, 'Rendering', undefined);
 
@@ -74,12 +97,25 @@ async function createViewRemoteVideo(
     if (refreshStatus === 'Stopping') {
       // Stop render was called on this stream after we had started rendering. We will dispose this view and do not
       // put the view into the state.
-      internalContext.removeRemoteVideoStreamRenderer(callId, streamId);
+      renderer.dispose();
+      internalContext.setRemoteStreamAndRenderer(
+        callId,
+        participantKey,
+        streamId,
+        remoteStreamAndRenderer.stream,
+        undefined
+      );
       context.setRemoteVideoStreamRendererView(callId, participantKey, streamId, 'NotRendered', undefined);
     } else {
       // The stream still exists and status is not telling us to stop rendering. Complete the render process by
       // updating the state.
-      internalContext.setRemoteVideoStreamRenderer(callId, streamId, renderer);
+      internalContext.setRemoteStreamAndRenderer(
+        callId,
+        participantKey,
+        streamId,
+        remoteStreamAndRenderer.stream,
+        renderer
+      );
       context.setRemoteVideoStreamRendererView(
         callId,
         participantKey,
@@ -91,7 +127,7 @@ async function createViewRemoteVideo(
   } else {
     // Stream was deleted from state and we have no where to put the rendered view, so dispose it and return.
     renderer.dispose();
-    internalContext.removeRemoteVideoStreamRenderer(callId, streamId);
+    internalContext.removeRemoteStreamAndRenderer(callId, participantKey, streamId);
   }
 }
 
@@ -99,30 +135,38 @@ async function createViewLocalVideo(
   context: CallContext,
   internalContext: InternalCallContext,
   callId: string,
-  stream: StatefulLocalVideoStream,
   options?: CreateViewOptions
 ): Promise<void> {
-  const localVideoStream = internalContext.getLocalVideoStream(callId);
-  const localVideoStreamRenderer = internalContext.getLocalVideoStreamRenderer(callId);
+  // Render LocalVideoStream that is part of a Call
+  const localStreamAndRenderer = internalContext.getLocalStreamAndRenderer(callId);
   const status = context.getState().calls.get(callId)?.localVideoStreams[0]?.viewStatus;
 
-  if (!localVideoStream || !status) {
-    throw new Error('LocalVideoStream not found in state');
+  if (!localStreamAndRenderer || !status) {
+    console.warn('LocalVideoStream not found in state');
+    return;
   }
 
-  if (localVideoStreamRenderer || status === 'Rendered') {
-    throw new Error('LocalVideoStream is already rendered');
+  if (localStreamAndRenderer.renderer) {
+    console.warn('LocalVideoStream rendering started or completed');
+    return;
+  }
+
+  if (status === 'Rendered') {
+    console.warn('LocalVideoStream is already rendered');
+    return;
   }
 
   if (status === 'Rendering') {
-    throw new Error('LocalVideoStream rendering is already in progress');
+    console.warn('LocalVideoStream rendering is already in progress');
+    return;
   }
 
   if (status === 'Stopping') {
-    throw new Error('LocalVideoStream is in the middle of stopping');
+    console.warn('LocalVideoStream is in the middle of stopping');
+    return;
   }
 
-  const renderer = new VideoStreamRenderer(localVideoStream);
+  const renderer = new VideoStreamRenderer(localStreamAndRenderer.stream);
 
   context.setLocalVideoStreamRendererView(callId, 'Rendering', undefined);
 
@@ -142,12 +186,12 @@ async function createViewLocalVideo(
       // Stop render was called on this stream after we had started rendering. We will dispose this view and do not
       // put the view into the state.
       renderer.dispose();
-      internalContext.removeLocalVideoStreamRenderer(callId);
+      internalContext.setLocalStreamAndRenderer(callId, localStreamAndRenderer.stream, undefined);
       context.setLocalVideoStreamRendererView(callId, 'NotRendered', undefined);
     } else {
       // The stream still exists and status is not telling us to stop rendering. Complete the render process by
       // updating the state.
-      internalContext.setLocalVideoStreamRenderer(callId, renderer);
+      internalContext.setLocalStreamAndRenderer(callId, localStreamAndRenderer.stream, renderer);
       context.setLocalVideoStreamRendererView(
         callId,
         'Rendered',
@@ -157,7 +201,7 @@ async function createViewLocalVideo(
   } else {
     // Stream was deleted from state and we have no where to put the rendered view, so dispose it and return.
     renderer.dispose();
-    internalContext.removeLocalVideoStreamRenderer(callId);
+    internalContext.removeLocalStreamAndRenderer(callId);
   }
 }
 
@@ -170,15 +214,18 @@ async function createViewUnparentedVideo(
   const status = context.getState().deviceManager.unparentedViews.get(stream)?.viewStatus;
 
   if (status && status === 'Rendered') {
-    throw new Error('Unparented LocalVideoStream is already rendered');
+    console.warn('Unparented LocalVideoStream is already rendered');
+    return;
   }
 
   if (status && status === 'Rendering') {
-    throw new Error('Unparented LocalVideoStream rendering is already in progress');
+    console.warn('Unparented LocalVideoStream rendering is already in progress');
+    return;
   }
 
   if (status && status === 'Stopping') {
-    throw new Error('Unparented LocalVideoStream is in the middle of stopping');
+    console.warn('Unparented LocalVideoStream is in the middle of stopping');
+    return;
   }
 
   const localVideoStream = new LocalVideoStream(stream.source);
@@ -225,22 +272,38 @@ function disposeViewRemoteVideo(
   context: CallContext,
   internalContext: InternalCallContext,
   callId: string,
+  participantId: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | string,
   stream: RemoteVideoStream
 ): void {
   const streamId = stream.id;
 
   // Cleanup internal renderer
-  const videoStreamRenderer = internalContext.getRemoteVideoStreamRenderer(callId, streamId);
-  if (videoStreamRenderer) {
-    videoStreamRenderer.dispose();
-    internalContext.removeRemoteVideoStreamRenderer(callId, streamId);
+  let participantKey;
+  if (typeof participantId === 'string') {
+    participantKey = participantId;
+  } else {
+    participantKey = toFlatCommunicationIdentifier(participantId);
+  }
+  const remoteStreamAndRenderer = internalContext.getRemoteStreamAndRendererForParticipant(
+    callId,
+    participantKey,
+    streamId
+  );
+  if (remoteStreamAndRenderer && remoteStreamAndRenderer.renderer) {
+    remoteStreamAndRenderer.renderer.dispose();
+    internalContext.setRemoteStreamAndRenderer(
+      callId,
+      participantKey,
+      streamId,
+      remoteStreamAndRenderer.stream,
+      undefined
+    );
   }
 
   // Cleanup views in state
-  const participantKey = internalContext.getRemoteParticipantKey(callId, streamId);
   if (participantKey) {
-    // If the status is Rendering then set it to Stopping so eventually when the startRenderVideo finishes awaiting
-    // it can check the state and then dispose/stop the render.
+    // If the status is Rendering then set it to Stopping so eventually when the createView finishes awaiting it can
+    // check the state and then dispose/stop the render.
     const status = context
       .getState()
       .calls.get(callId)
@@ -260,10 +323,10 @@ function disposeViewRemoteVideo(
 
 function disposeViewLocalVideo(context: CallContext, internalContext: InternalCallContext, callId: string): void {
   // Cleanup internal renderer
-  const videoStreamRenderer = internalContext.getLocalVideoStreamRenderer(callId);
-  if (videoStreamRenderer) {
-    videoStreamRenderer.dispose();
-    internalContext.removeLocalVideoStreamRenderer(callId);
+  const localStreamAndRenderer = internalContext.getLocalStreamAndRenderer(callId);
+  if (localStreamAndRenderer && localStreamAndRenderer.renderer) {
+    localStreamAndRenderer.renderer.dispose();
+    internalContext.setLocalStreamAndRenderer(callId, localStreamAndRenderer.stream, undefined);
   }
 
   // Cleanup views in state
@@ -295,8 +358,8 @@ function disposeViewUnparentedVideo(
   // Cleanup views in state
   const state = context.getState().deviceManager.unparentedViews.get(stream)?.viewStatus;
   if (state) {
-    // If the status is Rendering then set it to Stopping so eventually when the startRenderVideo finishes awaiting
-    // it can check the state and then dispose/stop the render.
+    // If the status is Rendering then set it to Stopping so eventually when the createView finishes awaiting it can
+    // check the state and then dispose/stop the render.
     if (state === 'Rendering') {
       context.setDeviceManagerUnparentedView(stream, 'Stopping', undefined);
     } else {
@@ -311,20 +374,28 @@ export function createView(
   context: CallContext,
   internalContext: InternalCallContext,
   callId: string | undefined,
+  participantId:
+    | CommunicationUserKind
+    | PhoneNumberKind
+    | MicrosoftTeamsUserKind
+    | UnknownIdentifierKind
+    | string
+    | undefined,
   stream: StatefulLocalVideoStream | RemoteVideoStream,
   options?: CreateViewOptions
 ): Promise<void> {
-  if ('id' in stream && callId) {
+  if ('id' in stream && callId && participantId) {
     // Render RemoteVideoStream that is part of a Call
-    return createViewRemoteVideo(context, internalContext, callId, stream, options);
+    return createViewRemoteVideo(context, internalContext, callId, participantId, stream, options);
   } else if (!('id' in stream) && callId) {
     // Render LocalVideoStream that is part of a Call
-    return createViewLocalVideo(context, internalContext, callId, stream, options);
+    return createViewLocalVideo(context, internalContext, callId, options);
   } else if (!('id' in stream) && !callId) {
     // Render LocalVideoStream that is not part of a Call
     return createViewUnparentedVideo(context, internalContext, stream, options);
   } else {
-    throw new Error('Invalid combination of parameters');
+    console.warn('Invalid combination of parameters');
+    return Promise.resolve();
   }
 }
 
@@ -332,11 +403,18 @@ export function disposeView(
   context: CallContext,
   internalContext: InternalCallContext,
   callId: string | undefined,
+  participantId:
+    | CommunicationUserKind
+    | PhoneNumberKind
+    | MicrosoftTeamsUserKind
+    | UnknownIdentifierKind
+    | string
+    | undefined,
   stream: StatefulLocalVideoStream | RemoteVideoStream
 ): void {
-  if ('id' in stream && callId) {
+  if ('id' in stream && callId && participantId) {
     // Stop rendering RemoteVideoStream that is part of a Call
-    disposeViewRemoteVideo(context, internalContext, callId, stream);
+    disposeViewRemoteVideo(context, internalContext, callId, participantId, stream);
   } else if (!('id' in stream) && callId) {
     // Stop rendering LocalVideoStream that is part of a Call
     disposeViewLocalVideo(context, internalContext, callId);
@@ -344,7 +422,8 @@ export function disposeView(
     // Stop rendering LocalVideoStream that is not part of a Call
     disposeViewUnparentedVideo(context, internalContext, stream);
   } else {
-    throw new Error('Invalid combination of parameters');
+    console.warn('Invalid combination of parameters');
+    return;
   }
 }
 
@@ -354,29 +433,39 @@ export function disposeAllViewsFromCall(
   internalContext: InternalCallContext,
   callId: string
 ): void {
-  const streams = internalContext.getRemoteVideoStreams(callId);
-  if (streams) {
-    for (const [streamId] of streams.entries()) {
-      const stream = internalContext.getRemoteVideoStream(callId, streamId);
-      if (stream) {
+  const callStreams = internalContext.getRemoteStreamAndRenderersForCall(callId);
+  if (callStreams) {
+    for (const [participantKey, participantStreams] of callStreams.entries()) {
+      for (const [_, remoteStreamAndRenderer] of participantStreams.entries()) {
         // We don't want to accept SDK stream as parameter but we also don't cache the declarative stream so we have to
         // convert the SDK stream to declarative stream which is not pretty so this could use some further refactoring.
-        disposeView(context, internalContext, callId, convertSdkRemoteStreamToDeclarativeRemoteStream(stream));
+        disposeView(
+          context,
+          internalContext,
+          callId,
+          participantKey,
+          convertSdkRemoteStreamToDeclarativeRemoteStream(remoteStreamAndRenderer.stream)
+        );
       }
     }
   }
-  // We don't want to accept SDK stream as parameter but we also don't cache the declarative stream so we have to
-  // convert the SDK stream to declarative stream which is not pretty so this could use some further refactoring.
-  const localVideoStream = internalContext.getLocalVideoStream(callId);
-  if (localVideoStream) {
-    disposeView(context, internalContext, callId, convertSdkLocalStreamToDeclarativeLocalStream(localVideoStream));
+  const localStreamAndRenderer = internalContext.getLocalStreamAndRenderer(callId);
+  if (localStreamAndRenderer && localStreamAndRenderer.renderer) {
+    // We don't want to accept SDK stream as parameter but we also don't cache the declarative stream so we have to
+    // convert the SDK stream to declarative stream which is not pretty so this could use some further refactoring.
+    disposeView(
+      context,
+      internalContext,
+      callId,
+      undefined,
+      convertSdkLocalStreamToDeclarativeLocalStream(localStreamAndRenderer.stream)
+    );
   }
 }
 
-// stops all videos from all calls
 export function disposeAllViews(context: CallContext, internalContext: InternalCallContext): void {
-  const remoteVideoStreams = internalContext.getRemoteVideoStreamsAll();
-  for (const [callId] of remoteVideoStreams) {
+  const remoteStreamAndRenderers = internalContext.getRemoteStreamAndRenderersAll();
+  for (const [callId] of remoteStreamAndRenderers.entries()) {
     disposeAllViewsFromCall(context, internalContext, callId);
   }
 }

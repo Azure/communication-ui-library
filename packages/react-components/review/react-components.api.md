@@ -215,7 +215,42 @@ export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
 
 // @public
 export interface OptionsButtonProps extends IButtonProps {
+    // (undocumented)
+    cameras?: [{
+        id: string;
+        name: string;
+    }];
+    microphones?: [{
+        id: string;
+        name: string;
+    }];
+    // (undocumented)
+    onSelectCamera?: (device: any) => Promise<void>;
+    // (undocumented)
+    onSelectMicrophone?: (device: any) => Promise<void>;
+    // (undocumented)
+    onSelectSpeaker?: (device: any) => Promise<void>;
+    // (undocumented)
+    selectedCamera?: {
+        id: string;
+        name: string;
+    };
+    // (undocumented)
+    selectedMicrophone?: {
+        id: string;
+        name: string;
+    };
+    // (undocumented)
+    selectedSpeaker?: {
+        id: string;
+        name: string;
+    };
     showLabel?: boolean;
+    // (undocumented)
+    speakers?: [{
+        id: string;
+        name: string;
+    }];
 }
 
 // @public
@@ -364,7 +399,7 @@ export interface VideoGalleryProps {
     // (undocumented)
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
     // (undocumented)
-    onDisposeLocalStreamView?: () => Promise<void>;
+    onDisposeLocalStreamView?: () => void;
     // (undocumented)
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     // (undocumented)

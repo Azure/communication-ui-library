@@ -7,7 +7,7 @@ import {
   StatefulDeviceManager,
   StatefulCallClient,
   createStatefulCallClient,
-  DeviceManager
+  DeviceManagerState
 } from 'calling-stateful-client';
 import {
   CallAgent,
@@ -22,6 +22,7 @@ import {
 import { EventEmitter } from 'events';
 import {
   CallAdapter,
+  CallCompositePage,
   CallEvent,
   CallIdChangedListener,
   CallState,
@@ -32,13 +33,10 @@ import {
   ParticipantJoinedListener,
   ParticipantLeftListener
 } from './CallAdapter';
-import {
-  createAzureCommunicationUserCredential,
-  getIdFromToken,
-  getRemoteParticipantKey,
-  isInCall
-} from '../../../utils';
+import { createAzureCommunicationUserCredential, getIdFromToken, isInCall } from '../../../utils';
 import { VideoStreamOptions } from 'react-components';
+import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from 'acs-ui-common';
+import { CommunicationUserIdentifier } from '@azure/communication-signaling';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 
@@ -50,7 +48,7 @@ class CallContext {
 
   constructor(clientState: CallClientState) {
     this.state = {
-      isMicrophoneEnabled: false,
+      isLocalPreviewMicrophoneEnabled: false,
       userId: clientState.userId,
       displayName: clientState.callAgent?.displayName,
       devices: clientState.deviceManager,
@@ -76,12 +74,16 @@ class CallContext {
     return this.state;
   }
 
+  public setPage(page: CallCompositePage): void {
+    this.setState({ ...this.state, page });
+  }
+
   public setError(error: Error): void {
     this.setState({ ...this.state, error });
   }
 
-  public setIsMicrophoneEnabled(isMicrophoneEnabled: boolean): void {
-    this.setState({ ...this.state, isMicrophoneEnabled });
+  public setIsLocalMicrophoneEnabled(isLocalPreviewMicrophoneEnabled: boolean): void {
+    this.setState({ ...this.state, isLocalPreviewMicrophoneEnabled });
   }
 
   public setCallId(callId: string | undefined): void {
@@ -96,7 +98,8 @@ class CallContext {
       displayName: clientState.callAgent?.displayName,
       call,
       devices: clientState.deviceManager,
-      isMicrophoneEnabled: call?.isMuted === undefined ? false : !call?.isMuted
+      isLocalPreviewMicrophoneEnabled:
+        call?.isMuted === undefined ? this.state.isLocalPreviewMicrophoneEnabled : !call?.isMuted
     });
   }
 }
@@ -157,11 +160,11 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     return this.deviceManager.getSpeakers();
   }
 
-  public async joinCall(): Promise<void> {
+  public async joinCall(microphoneOn?: boolean): Promise<void> {
     if (isInCall(this.getState().call?.state ?? 'None')) {
       throw new Error('You are already in the call!');
     } else {
-      const audioOptions: AudioOptions = { muted: !this.getState().isMicrophoneEnabled };
+      const audioOptions: AudioOptions = { muted: microphoneOn ?? !this.getState().isLocalPreviewMicrophoneEnabled };
       // TODO: find a way to expose stream to here
       const videoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
 
@@ -200,6 +203,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // Resync state after callId is set
     this.context.updateClientState(this.callClient.getState());
     this.stopCamera();
+    this.mute();
   }
 
   public async setCamera(device: VideoDeviceInfo): Promise<void> {
@@ -242,14 +246,14 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   public async mute(): Promise<void> {
     if (!this.call) {
-      this.context.setIsMicrophoneEnabled(true);
+      this.context.setIsLocalMicrophoneEnabled(false);
     }
     await this.call?.mute();
   }
 
   public async unmute(): Promise<void> {
     if (!this.call) {
-      this.context.setIsMicrophoneEnabled(false);
+      this.context.setIsLocalMicrophoneEnabled(true);
     }
     await this.call?.unmute();
   }
@@ -264,10 +268,12 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   //TODO: a better way to expose option parameter
   public startCall(participants: string[]): Call | undefined {
-    const idsToAdd = participants.map((participant) => ({
-      kind: 'communicationUser',
-      communicationUserId: participant
-    }));
+    const idsToAdd = participants.map((participant) => {
+      // FIXME: `onStartCall` does not allow a Teams user.
+      // Need some way to return an error if a Teams user is provided.
+      const backendId = fromFlatCommunicationIdentifier(participant) as CommunicationUserIdentifier;
+      return backendId;
+    });
 
     return this.handlers.onStartCall(idsToAdd);
   }
@@ -329,6 +335,10 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     });
   };
 
+  public setPage = (page: CallCompositePage): void => {
+    this.context.setPage(page);
+  };
+
   private onRemoteParticipantsUpdated = ({
     added,
     removed
@@ -345,15 +355,15 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
     added.forEach((participant) => {
       this.participantSubscribers.set(
-        getRemoteParticipantKey(participant.identifier),
+        toFlatCommunicationIdentifier(participant.identifier),
         new ParticipantSubscriber(participant, this.emitter)
       );
     });
 
     removed.forEach((participant) => {
-      const subscriber = this.participantSubscribers.get(getRemoteParticipantKey(participant.identifier));
+      const subscriber = this.participantSubscribers.get(toFlatCommunicationIdentifier(participant.identifier));
       subscriber && subscriber.unsubscribeAll();
-      this.participantSubscribers.delete(getRemoteParticipantKey(participant.identifier));
+      this.participantSubscribers.delete(toFlatCommunicationIdentifier(participant.identifier));
     });
   };
 
@@ -385,7 +395,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 }
 
-const isPreviewOn = (deviceManager: DeviceManager): boolean => {
+const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
   // TODO: we should take in a LocalVideoStream that developer wants to use as their 'Preview' view. We should also
   // handle cases where 'Preview' view is in progress and not necessary completed.
   return deviceManager.unparentedViews.values().next().value?.view !== undefined;

@@ -3,9 +3,8 @@
 
 import { ChatParticipant } from '@azure/communication-chat';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
-import { CommunicationIdentifierAsKey, getCommunicationIdentifierAsKey } from 'chat-stateful-client';
+import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import { typingIndicatorSelector } from './typingIndicatorSelector';
-import { communicationIdentifierToString } from './baseSelectors';
 
 describe('typingIndicatorSelector tests', () => {
   test('should filter typing indicators from participant that is the user', async (): Promise<void> => {
@@ -24,7 +23,7 @@ describe('typingIndicatorSelector tests', () => {
     const result = typingIndicatorSelector.resultFunc(
       orderedTypingIndicators,
       participants,
-      communicationIdentifierToString({
+      toFlatCommunicationIdentifier({
         communicationUserId: '1'
       })
     );
@@ -50,26 +49,26 @@ describe('typingIndicatorSelector tests', () => {
         receivedOn: new Date()
       }
     ];
-    const participants: Map<CommunicationIdentifierAsKey, ChatParticipant> = new Map();
-    participants.set(getCommunicationIdentifierAsKey({ communicationUserId: '1' }), {
+    const participants: Map<string, ChatParticipant> = new Map();
+    participants.set(toFlatCommunicationIdentifier({ communicationUserId: '1' }), {
       id: { communicationUserId: '1' },
       displayName: 'User1'
     });
-    participants.set(getCommunicationIdentifierAsKey({ communicationUserId: '2' }), {
+    participants.set(toFlatCommunicationIdentifier({ communicationUserId: '2' }), {
       id: { communicationUserId: '2' },
       displayName: 'User2'
     });
     const result = typingIndicatorSelector.resultFunc(
       orderedTypingIndicators,
       participants,
-      communicationIdentifierToString({
+      toFlatCommunicationIdentifier({
         communicationUserId: '1'
       })
     );
     expect(result.typingUsers.length).toEqual(1);
     expect(result.typingUsers).toEqual([
       {
-        userId: communicationIdentifierToString({
+        userId: toFlatCommunicationIdentifier({
           communicationUserId: '2'
         }),
         displayName: 'User2'
@@ -105,31 +104,31 @@ describe('typingIndicatorSelector tests', () => {
       }
     ];
 
-    const participants: Map<CommunicationIdentifierAsKey, ChatParticipant> = new Map();
-    participants.set(getCommunicationIdentifierAsKey({ communicationUserId: '2' }), {
+    const participants: Map<string, ChatParticipant> = new Map();
+    participants.set(toFlatCommunicationIdentifier({ communicationUserId: '2' }), {
       id: { communicationUserId: '2' },
       displayName: 'User2'
     });
-    participants.set(getCommunicationIdentifierAsKey({ communicationUserId: '3' }), {
+    participants.set(toFlatCommunicationIdentifier({ communicationUserId: '3' }), {
       id: { communicationUserId: '3' },
       displayName: 'User3'
     });
-    participants.set(getCommunicationIdentifierAsKey({ communicationUserId: '4' }), {
+    participants.set(toFlatCommunicationIdentifier({ communicationUserId: '4' }), {
       id: { communicationUserId: '4' },
       displayName: 'User4'
     });
     const result = typingIndicatorSelector.resultFunc(
       orderedTypingIndicators,
       participants,
-      communicationIdentifierToString({
+      toFlatCommunicationIdentifier({
         communicationUserId: '1'
       })
     );
     expect(result.typingUsers.length).toEqual(3);
     expect(result.typingUsers).toEqual([
-      { userId: communicationIdentifierToString({ communicationUserId: '4' }), displayName: 'User4' },
-      { userId: communicationIdentifierToString({ communicationUserId: '2' }), displayName: 'User2' },
-      { userId: communicationIdentifierToString({ communicationUserId: '3' }), displayName: 'User3' }
+      { userId: toFlatCommunicationIdentifier({ communicationUserId: '4' }), displayName: 'User4' },
+      { userId: toFlatCommunicationIdentifier({ communicationUserId: '2' }), displayName: 'User2' },
+      { userId: toFlatCommunicationIdentifier({ communicationUserId: '3' }), displayName: 'User3' }
     ]);
   });
 
@@ -161,29 +160,29 @@ describe('typingIndicatorSelector tests', () => {
       }
     ];
 
-    const participants: Map<CommunicationIdentifierAsKey, ChatParticipant> = new Map();
-    participants.set(getCommunicationIdentifierAsKey({ communicationUserId: '5' }), {
+    const participants: Map<string, ChatParticipant> = new Map();
+    participants.set(toFlatCommunicationIdentifier({ communicationUserId: '5' }), {
       id: { communicationUserId: '5' },
       displayName: 'User5'
     });
-    participants.set(getCommunicationIdentifierAsKey({ communicationUserId: '6' }), {
+    participants.set(toFlatCommunicationIdentifier({ communicationUserId: '6' }), {
       id: { communicationUserId: '6' },
       displayName: 'User6'
     });
-    participants.set(getCommunicationIdentifierAsKey({ communicationUserId: '7' }), {
+    participants.set(toFlatCommunicationIdentifier({ communicationUserId: '7' }), {
       id: { communicationUserId: '7' },
       displayName: 'User7'
     });
     const result = typingIndicatorSelector.resultFunc(
       orderedTypingIndicators,
       participants,
-      communicationIdentifierToString({
+      toFlatCommunicationIdentifier({
         communicationUserId: '1'
       })
     );
     expect(result.typingUsers.length).toEqual(1);
     expect(result.typingUsers).toEqual([
-      { userId: communicationIdentifierToString({ communicationUserId: '6' }), displayName: 'User6' }
+      { userId: toFlatCommunicationIdentifier({ communicationUserId: '6' }), displayName: 'User6' }
     ]);
   });
 
@@ -205,7 +204,7 @@ describe('typingIndicatorSelector tests', () => {
     const result = typingIndicatorSelector.resultFunc(
       orderedTypingIndicators,
       participants,
-      communicationIdentifierToString({
+      toFlatCommunicationIdentifier({
         communicationUserId: '1'
       })
     );

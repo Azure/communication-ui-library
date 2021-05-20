@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 // @ts-ignore
 import {
   Call,
@@ -17,9 +18,7 @@ import { createSelector } from 'reselect';
 import * as reselect from 'reselect';
 // @ts-ignore
 import { getCall, CallingBaseSelectorProps, getDisplayName, getIdentifier, getCallId } from './baseSelectors';
-// @ts-ignore
-import { memoizeFnAll } from './utils/memoizeFnAll';
-import { getACSId } from './utils/getACSId';
+import { memoizeFnAll } from 'acs-ui-common';
 import { VideoGalleryRemoteParticipant, VideoGalleryStream } from 'react-components';
 
 const convertRemoteVideoStreamToVideoGalleryStream = (stream: RemoteVideoStream): VideoGalleryStream => {
@@ -93,7 +92,7 @@ const videoGalleryRemoteParticipantsFromCall = (call: Call | undefined): VideoGa
   return memoizedAllConvertRemoteParticipant((memoizedFn) => {
     return Array.from(call.remoteParticipants.values()).map((participant: RemoteParticipant) => {
       return memoizedFn(
-        getACSId(participant.identifier),
+        toFlatCommunicationIdentifier(participant.identifier),
         participant.isMuted,
         participant.isSpeaking,
         participant.videoStreams,
@@ -105,7 +104,7 @@ const videoGalleryRemoteParticipantsFromCall = (call: Call | undefined): VideoGa
 
 export const videoGallerySelector = createSelector(
   [getCall, getDisplayName, getIdentifier],
-  (call: Call | undefined, displayName: string | undefined, identifier: string | undefined) => {
+  (call: Call | undefined, displayName: string | undefined, identifier: string) => {
     const screenShareRemoteParticipant = call?.screenShareRemoteParticipant
       ? call.remoteParticipants.get(call.screenShareRemoteParticipant)
       : undefined;
@@ -113,7 +112,7 @@ export const videoGallerySelector = createSelector(
     return {
       screenShareParticipant: screenShareRemoteParticipant
         ? convertRemoteParticipantToVideoGalleryRemoteParticipant(
-            getACSId(screenShareRemoteParticipant.identifier),
+            toFlatCommunicationIdentifier(screenShareRemoteParticipant.identifier),
             screenShareRemoteParticipant.isMuted,
             screenShareRemoteParticipant.isSpeaking,
             screenShareRemoteParticipant.videoStreams,
@@ -121,7 +120,7 @@ export const videoGallerySelector = createSelector(
           )
         : undefined,
       localParticipant: {
-        userId: identifier ?? '',
+        userId: identifier,
         displayName: displayName ?? '',
         isMuted: call?.isMuted,
         isScreenSharingOn: call?.isScreenSharingOn,

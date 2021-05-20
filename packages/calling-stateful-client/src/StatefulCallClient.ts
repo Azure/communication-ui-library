@@ -14,6 +14,12 @@ import { CallContext } from './CallContext';
 import { callAgentDeclaratify } from './CallAgentDeclarative';
 import { InternalCallContext } from './InternalCallContext';
 import { createView, disposeView } from './StreamUtils';
+import {
+  CommunicationUserKind,
+  MicrosoftTeamsUserKind,
+  PhoneNumberKind,
+  UnknownIdentifierKind
+} from '@azure/communication-common';
 
 /**
  * Defines the methods that allow CallClient {@Link @azure/communication-calling#CallClient} to be used declaratively.
@@ -49,6 +55,8 @@ export interface StatefulCallClient extends CallClient {
    *
    * @param callId - CallId of the Call where the stream to start rendering is contained in. Can be undefined if
    *   rendering a LocalVideoStream that is not tied to a Call.
+   * @param participantId - {@Link RemoteParticipant.identifier} associated with the given RemoteVideoStream. Could be
+   *   undefined if rendering LocalVideoStream.
    * @param stream - The LocalVideoStream or RemoteVideoStream to start rendering.
    * @param options - Options that are passed to the {@Link @azure/communication-calling#VideoStreamRenderer}.
    * @throws - Throws error when state-based stream is already started, state-based stream not found in state,
@@ -57,6 +65,7 @@ export interface StatefulCallClient extends CallClient {
    */
   createView(
     callId: string | undefined,
+    participantId: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | undefined,
     stream: LocalVideoStream | RemoteVideoStream,
     options?: CreateViewOptions
   ): Promise<void>;
@@ -72,11 +81,15 @@ export interface StatefulCallClient extends CallClient {
    *
    * @param callId - CallId of the Call where the stream to stop rendering is contained in. Can be undefined if
    *   stop rendering a LocalVideoStream that is not tied to a Call.
+   * @param participantId - {@Link RemoteParticipant.identifier} associated with the given RemoteVideoStream. Could be
+   *   undefined if rendering LocalVideoStream.
    * @param stream - The LocalVideoStream or RemoteVideoStream to start rendering.
-   * @throws - Throws error when stream to stop is not found or invalid combination of parameters as provided (such as
-   *   RemoteVideoStream with undefined callId).
    */
-  disposeView(callId: string | undefined, stream: LocalVideoStream | RemoteVideoStream): void;
+  disposeView(
+    callId: string | undefined,
+    participantId: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | undefined,
+    stream: LocalVideoStream | RemoteVideoStream
+  ): void;
 }
 
 /**
@@ -183,16 +196,33 @@ export const createStatefulCallClient = (
     configurable: false,
     value: (
       callId: string | undefined,
+      participantId:
+        | CommunicationUserKind
+        | PhoneNumberKind
+        | MicrosoftTeamsUserKind
+        | UnknownIdentifierKind
+        | string
+        | undefined,
       stream: LocalVideoStream | RemoteVideoStream,
       options?: CreateViewOptions
     ): Promise<void> => {
-      return createView(context, internalContext, callId, stream, options);
+      return createView(context, internalContext, callId, participantId, stream, options);
     }
   });
   Object.defineProperty(callClient, 'disposeView', {
     configurable: false,
-    value: (callId: string | undefined, stream: LocalVideoStream | RemoteVideoStream): void => {
-      disposeView(context, internalContext, callId, stream);
+    value: (
+      callId: string | undefined,
+      participantId:
+        | CommunicationUserKind
+        | PhoneNumberKind
+        | MicrosoftTeamsUserKind
+        | UnknownIdentifierKind
+        | string
+        | undefined,
+      stream: LocalVideoStream | RemoteVideoStream
+    ): void => {
+      disposeView(context, internalContext, callId, participantId, stream);
     }
   });
 
