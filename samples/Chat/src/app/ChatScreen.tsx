@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { chatScreenBottomContainerStyle, chatScreenContainerStyle } from './styles/ChatScreen.styles';
 import { Stack } from '@fluentui/react';
 import { onRenderAvatar } from './Avatar';
@@ -12,7 +12,6 @@ import {
   chatParticipantListSelector,
   useChatClient,
   useChatThreadClient,
-  useHandlers,
   useSelector,
   useThreadId
 } from '@azure/acs-chat-selector';
@@ -69,7 +68,14 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   }, []);
 
   const chatHeaderProps = useSelector(chatHeaderSelector);
-  const chatHeaderHandlers = useHandlers(ChatHeader);
+
+  const updateThreadTopicName = useCallback(
+    async (topicName: string) => {
+      await chatThreadClient.updateTopic(topicName);
+    },
+    [chatThreadClient]
+  );
+
   const chatParticipantProps = useSelector(chatParticipantListSelector);
 
   useEffect(() => {
@@ -95,8 +101,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     <Stack className={chatScreenContainerStyle}>
       <ChatHeader
         {...chatHeaderProps}
-        {...chatHeaderHandlers}
         {...chatParticipantProps}
+        updateThreadTopicName={updateThreadTopicName}
         endChatHandler={endChatHandler}
         selectedPane={selectedPane}
         setSelectedPane={setSelectedPane}
