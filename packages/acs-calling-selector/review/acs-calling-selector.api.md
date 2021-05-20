@@ -40,15 +40,6 @@ export const cameraButtonSelector: reselect.OutputParametricSelector<CallClientS
 }>;
 
 // @public (undocumented)
-export const complianceBannerSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
-    callTranscribeState: boolean | undefined;
-    callRecordState: boolean | undefined;
-}, (res: Call_2 | undefined) => {
-    callTranscribeState: boolean | undefined;
-    callRecordState: boolean | undefined;
-}>;
-
-// @public (undocumented)
 export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => {
     onHangUp: () => Promise<void>;
     onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
@@ -125,20 +116,6 @@ export const getIncomingCalls: (state: CallClientState) => Map<string, IncomingC
 
 // @public (undocumented)
 export const getIncomingCallsEnded: (state: CallClientState) => IncomingCallState[];
-
-// @public (undocumented)
-export const localPreviewSelector: reselect.OutputSelector<CallClientState, {
-    videoStreamElement: HTMLElement | null;
-}, (res: DeviceManagerState) => {
-    videoStreamElement: HTMLElement | null;
-}>;
-
-// @public (undocumented)
-export const mediaGallerySelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
-    isVideoStreamOn: boolean;
-}, (res: Call_2 | undefined) => {
-    isVideoStreamOn: boolean;
-}>;
 
 // @public (undocumented)
 export const microphoneButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
