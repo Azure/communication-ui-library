@@ -1,11 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  participantItemContainerStyle,
-  participantItemMeStyle,
-  iconContainerStyle
-} from './styles/ParticipantItem.styles';
+import { participantItemContainerStyle, iconContainerStyle } from './styles/ParticipantItem.styles';
 import {
   ContextualMenu,
   DirectionalHint,
@@ -63,7 +59,7 @@ export interface ParticipantItemProps {
  * displayName and status as well as optional icons and context menu.
  */
 export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
-  const { displayName, me, onRenderAvatar, menuItems, onRenderIcon, presence, styles } = props;
+  const { displayName, onRenderAvatar, menuItems, onRenderIcon, presence, styles } = props;
   const [clickEvent, setClickEvent] = useState<MouseEvent | undefined>();
   const [menuHidden, setMenuHidden] = useState<boolean>(true);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -96,7 +92,6 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
       onClick={showMenu}
     >
       {avatarToUse}
-      {me && <span className={mergeStyles(participantItemMeStyle, styles?.me)}>(you)</span>}
       {onRenderIcon && (
         <Stack className={mergeStyles(iconContainerStyle, styles?.iconContainer)}>{onRenderIcon(props)}</Stack>
       )}
