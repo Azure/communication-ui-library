@@ -4,13 +4,30 @@
 
 ```ts
 
+import { CommunicationIdentifier } from '@azure/communication-common';
+
+// @public (undocumented)
+export type CallbackType<KeyT, ArgsT extends any[], FnRetT> = (memoizedFn: FunctionWithKey<KeyT, ArgsT, FnRetT>) => FnRetT[];
+
+// @public (undocumented)
+export type Common<A, B> = Pick<A, CommonProperties<A, B>>;
+
 // @public (undocumented)
 export type CommonProperties<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
 
 // @public (undocumented)
-export const MakeNPMHappy = true;
+export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
+
+// @public (undocumented)
+export type FunctionWithKey<KeyT, ArgsT extends any[], RetT> = (key: KeyT, ...args: ArgsT) => RetT;
+
+// @public
+export const memoizeFnAll: <KeyT, ArgsT extends any[], FnRetT, CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>>(fnToMemoize: FunctionWithKey<KeyT, ArgsT, FnRetT>, shouldCacheUpdate?: (args1: any, args2: any) => boolean) => (callback: CallBackT) => FnRetT[];
+
+// @public
+export const toFlatCommunicationIdentifier: (id: CommunicationIdentifier) => string;
 
 
 // (No @packageDocumentation comment for this package)

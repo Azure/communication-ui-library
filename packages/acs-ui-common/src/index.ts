@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-// This package (currently) only exports abstract types. This makes npm unhappy
-// because the generated javascript files are empty.
-export const MakeNPMHappy = true;
+export { memoizeFnAll } from './memoizeFnAll';
+export { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from './identifier';
 
-export type { CommonProperties } from './selectors';
+export type { Common, CommonProperties } from './commonProperties';
+export type { CallbackType, FunctionWithKey } from './memoizeFnAll';

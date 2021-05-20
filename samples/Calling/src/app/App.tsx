@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, initializeIcons } from '@fluentui/react';
 
 import EndCall from './EndCall';
+import CallError from './CallError';
 import { ConfigurationScreen } from './ConfigurationScreen';
 import { GroupCall } from './GroupCall';
 import { HomeScreen } from './HomeScreen';
@@ -52,7 +53,9 @@ const App = (): JSX.Element => {
   const [screenWidth, setScreenWidth] = useState(window?.innerWidth ?? 0);
   const [token, setToken] = useState('');
   const [userId, setUserId] = useState('');
+  const [teamsMeetingLink, setTeamsMeetingLink] = useState<string>();
   const [displayName, setDisplayName] = useState(defaultDisplayName);
+  const [isMicrophoneOn, setIsMicrophoneOn] = useState(false);
 
   useEffect(() => {
     const setWindowWidth = (): void => {
@@ -95,8 +98,15 @@ const App = (): JSX.Element => {
           <ConfigurationScreen
             displayName={displayName}
             screenWidth={screenWidth}
-            startCallHandler={(): void => setPage('call')}
+            startCallHandler={(data): void => {
+              if (data?.callLocator && 'meetingLink' in data?.callLocator) {
+                setTeamsMeetingLink(data?.callLocator.meetingLink);
+              }
+              setPage('call');
+            }}
             onDisplayNameUpdate={setDisplayName}
+            isMicrophoneOn={isMicrophoneOn}
+            setIsMicrophoneOn={setIsMicrophoneOn}
           />
         );
       case 'call':
@@ -107,8 +117,20 @@ const App = (): JSX.Element => {
                 endCallHandler={(): void => {
                   setPage('endCall');
                 }}
+                callErrorHandler={() => {
+                  setPage('callError');
+                }}
                 screenWidth={screenWidth}
-                groupId={getGroupId()}
+                callLocator={
+                  teamsMeetingLink
+                    ? {
+                        meetingLink: teamsMeetingLink
+                      }
+                    : {
+                        groupId: getGroupId()
+                      }
+                }
+                isMicrophoneOn={isMicrophoneOn}
               />
             </CallProvider>
           </CallAgentProvider>
@@ -136,6 +158,9 @@ const App = (): JSX.Element => {
       }
       case 'endCall': {
         return <EndCall rejoinHandler={() => setPage('configuration')} homeHandler={navigateToHomePage} />;
+      }
+      case 'callError': {
+        return <CallError rejoinHandler={() => setPage('configuration')} homeHandler={navigateToHomePage} />;
       }
       default:
         return (

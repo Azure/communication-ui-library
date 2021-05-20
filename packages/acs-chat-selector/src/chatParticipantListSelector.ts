@@ -5,9 +5,9 @@
 import { ChatClientState } from 'chat-stateful-client';
 // @ts-ignore
 import { ChatBaseSelectorProps } from './baseSelectors';
-import { CommunicationIdentifierAsKey } from 'chat-stateful-client';
-import { communicationIdentifierToString, getUserId, getDisplayName, getParticipants } from './baseSelectors';
+import { getUserId, getDisplayName, getParticipants } from './baseSelectors';
 import * as reselect from 'reselect';
+import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import { ChatParticipant } from '@azure/communication-chat';
 import { CommunicationParticipant } from 'react-components';
 
@@ -16,19 +16,39 @@ const convertChatParticipantsToCommunicationParticipants = (
 ): CommunicationParticipant[] => {
   return chatParticipants.map((participant: ChatParticipant) => {
     return {
-      userId: communicationIdentifierToString(participant.id),
+      userId: toFlatCommunicationIdentifier(participant.id),
       displayName: participant.displayName
     };
   });
 };
 
+/**
+ * get the index of moderator to help updating its display name if they are the local user or removing them from list of participants otherwise
+ */
+const moderatorIndex = (participants: CommunicationParticipant[]): number => {
+  return participants.map((p) => p.displayName).indexOf(undefined);
+};
+
 export const chatParticipantListSelector = reselect.createSelector(
   [getUserId, getParticipants, getDisplayName],
-  (userId, chatParticipants: Map<CommunicationIdentifierAsKey, ChatParticipant>, displayName) => {
+  (userId, chatParticipants: Map<string, ChatParticipant>, displayName) => {
+    let participants = convertChatParticipantsToCommunicationParticipants(Array.from(chatParticipants.values()));
+    if (0 !== participants.length) {
+      const moderatorIdx = moderatorIndex(participants);
+
+      if (-1 !== moderatorIdx) {
+        const userIndex = participants.map((p) => p.userId).indexOf(userId);
+        if (moderatorIdx === userIndex) {
+          participants[moderatorIdx].displayName = displayName;
+        } else {
+          participants = participants.filter((p) => p.displayName);
+        }
+      }
+    }
+
     return {
       myUserId: userId,
-      displayName,
-      participants: convertChatParticipantsToCommunicationParticipants(Array.from(chatParticipants.values()))
+      participants: participants
     };
   }
 );

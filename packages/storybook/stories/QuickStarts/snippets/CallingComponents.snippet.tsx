@@ -23,6 +23,12 @@ export const CallingComponents = (): JSX.Element => {
       }
     ]
   };
+
+  const controlBarStyle = {
+    root: {
+      justifyContent: 'center'
+    }
+  };
   const [videoButtonChecked, setVideoButtonChecked] = useState<boolean>(false);
   const [audioButtonChecked, setAudioButtonChecked] = useState<boolean>(false);
   const [screenshareButtonChecked, setScreenshareButtonChecked] = useState<boolean>(false);
@@ -37,7 +43,7 @@ export const CallingComponents = (): JSX.Element => {
       </div>
 
       {/* Control Bar with default set up */}
-      <ControlBar styles={{ root: { justifyContent: 'center' } }}>
+      <ControlBar styles={controlBarStyle}>
         <CameraButton checked={videoButtonChecked} onClick={() => setVideoButtonChecked(!videoButtonChecked)} />
         <MicrophoneButton checked={audioButtonChecked} onClick={() => setAudioButtonChecked(!audioButtonChecked)} />
         <ScreenShareButton

@@ -6,18 +6,17 @@ export type { StatefulCallClient, StatefulCallClientArgs, StatefulCallClientOpti
 export type { StatefulDeviceManager } from './DeviceManagerDeclarative';
 export type {
   Call,
-  CallAgent,
+  CallAgentState,
   CallClientState,
-  DeviceManager,
-  IncomingCall,
-  LocalVideoStream,
-  RemoteParticipant,
-  RemoteVideoStream,
-  VideoStreamRendererView,
+  DeviceManagerState,
+  IncomingCallState,
+  LocalVideoStreamState,
+  RemoteParticipantState,
+  RemoteVideoStreamState,
+  VideoStreamRendererViewState,
   RecordingCallFeature,
   TranscriptionCallFeature,
   Transfer,
   TransferCallFeature,
   TransferRequest
 } from './CallClientState';
-export { getRemoteParticipantKey } from './Converter';

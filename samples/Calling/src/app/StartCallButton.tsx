@@ -9,9 +9,10 @@ import { VideoCameraEmphasisIcon } from '@fluentui/react-icons-northstar';
 export interface StartCallButtonProps {
   onClickHandler: () => void;
   isDisabled: boolean;
+  buttonText?: string;
 }
 
-const buttonText = 'Start call';
+const buttonText = 'Start Call';
 
 export const StartCallButton = (props: StartCallButtonProps): JSX.Element => {
   const { isDisabled, onClickHandler } = props;
@@ -19,7 +20,7 @@ export const StartCallButton = (props: StartCallButtonProps): JSX.Element => {
   return (
     <PrimaryButton disabled={isDisabled} className={buttonStyle} onClick={onClickHandler}>
       <VideoCameraEmphasisIcon className={videoCameraIconStyle} size="medium" />
-      {buttonText}
+      {props.buttonText ?? buttonText}
     </PrimaryButton>
   );
 };

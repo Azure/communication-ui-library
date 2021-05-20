@@ -2,16 +2,30 @@
 // Licensed under the MIT license.
 
 import { createStatefulChatClient, ChatClientState, StatefulChatClient } from 'chat-stateful-client';
-import {
-  DefaultChatHandlers,
-  communicationIdentifierToString,
-  createDefaultChatHandlers
-} from '@azure/acs-chat-selector';
-import { ChatMessage, ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
-import { CommunicationUserKind } from '@azure/communication-signaling';
+import { DefaultChatHandlers, createDefaultChatHandlers } from '@azure/acs-chat-selector';
+import { ChatMessage, ChatThreadClient } from '@azure/communication-chat';
+
+import type {
+  ChatMessageReceivedEvent,
+  ChatThreadPropertiesUpdatedEvent,
+  CommunicationUserKind,
+  ParticipantsAddedEvent,
+  ParticipantsRemovedEvent,
+  ReadReceiptReceivedEvent
+} from '@azure/communication-signaling';
+import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import EventEmitter from 'events';
 import { createAzureCommunicationUserCredential, getIdFromToken } from '../../../utils';
-import { ChatAdapter, ChatEvent, ChatState } from './ChatAdapter';
+import {
+  ChatAdapter,
+  ChatEvent,
+  ChatState,
+  MessageReadListener,
+  MessageReceivedListener,
+  ParticipantsAddedListener,
+  ParticipantsRemovedListener,
+  TopicChangedListener
+} from './ChatAdapter';
 
 // Context of Chat, which is a centralized context for all state updates
 class ChatContext {
@@ -24,7 +38,7 @@ class ChatContext {
     this.threadId = threadId;
     if (!thread) throw 'Cannot find threadId, please initialize thread before use!';
     this.state = {
-      userId: communicationIdentifierToString(clientState.userId),
+      userId: toFlatCommunicationIdentifier(clientState.userId),
       displayName: clientState.displayName,
       thread
     };
@@ -55,7 +69,7 @@ class ChatContext {
     const thread = clientState.threads.get(this.threadId);
     if (!thread) throw 'Cannot find threadId, please make sure thread state is still in Stateful ChatClient.';
     this.setState({
-      userId: communicationIdentifierToString(clientState.userId),
+      userId: toFlatCommunicationIdentifier(clientState.userId),
       displayName: clientState.displayName,
       thread
     });
@@ -67,6 +81,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   private chatThreadClient: ChatThreadClient;
   private context: ChatContext;
   private handlers: DefaultChatHandlers;
+  private emitter: EventEmitter = new EventEmitter();
 
   constructor(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) {
     this.chatClient = chatClient;
@@ -84,6 +99,11 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.handlers = createDefaultChatHandlers(chatClient, chatThreadClient);
 
     this.chatClient.onStateChange(onStateChange);
+    this.subscribeAllEvents();
+  }
+
+  dispose(): void {
+    this.unsubscribeAllEvents();
   }
 
   fetchInitialData = async (): Promise<void> => {
@@ -140,16 +160,88 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     return await this.handlers.onLoadPreviousChatMessages(messagesToLoad);
   };
 
-  on(event: 'messageReceived', messageReceivedHandler: (message: ChatMessage) => void): void;
-  on(event: 'participantsJoined', participantsJoinedHandler: (participant: ChatParticipant) => void): void;
-  on(event: 'error', errorHandler: (e: Error) => void): void;
+  messageReceivedListener = (event: ChatMessageReceivedEvent): void => {
+    const message = convertEventToChatMessage(event);
+    this.emitter.emit('messageReceived', { message });
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public on(_event: ChatEvent, _listener: (e: any) => void): void {
-    // Need to be implemented from chatClient
-    throw 'Not implemented yet';
+    const currentUserId = toFlatCommunicationIdentifier(this.chatClient.getState().userId);
+    if (message?.sender && toFlatCommunicationIdentifier(message.sender) === currentUserId) {
+      this.emitter.emit('messageSent', { message });
+    }
+  };
+
+  messageReadListener = ({ chatMessageId, recipient }: ReadReceiptReceivedEvent): void => {
+    const message = this.getState().thread.chatMessages.get(chatMessageId);
+    if (message) {
+      this.emitter.emit('messageRead', { message, readBy: recipient });
+    }
+  };
+
+  participantsAddedListener = ({ addedBy, participantsAdded }: ParticipantsAddedEvent): void => {
+    this.emitter.emit('participantsAdded', { addedBy, participantsAdded });
+  };
+
+  participantsRemovedListener = ({ removedBy, participantsRemoved }: ParticipantsRemovedEvent): void => {
+    this.emitter.emit('participantsRemoved', { removedBy, participantsRemoved });
+  };
+
+  chatThreadPropertiesUpdatedListener = (event: ChatThreadPropertiesUpdatedEvent): void => {
+    this.emitter.emit('topicChanged', { topic: event.properties.topic });
+  };
+
+  subscribeAllEvents = (): void => {
+    this.chatClient.on('chatThreadPropertiesUpdated', this.chatThreadPropertiesUpdatedListener);
+    this.chatClient.on('participantsAdded', this.participantsAddedListener);
+    this.chatClient.on('participantsRemoved', this.participantsRemovedListener);
+    this.chatClient.on('chatMessageReceived', this.messageReceivedListener);
+    this.chatClient.on('readReceiptReceived', this.messageReadListener);
+    this.chatClient.on('participantsRemoved', this.participantsRemovedListener);
+  };
+
+  unsubscribeAllEvents = (): void => {
+    this.chatClient.off('chatThreadPropertiesUpdated', this.chatThreadPropertiesUpdatedListener);
+    this.chatClient.off('participantsAdded', this.participantsAddedListener);
+    this.chatClient.off('participantsRemoved', this.participantsRemovedListener);
+    this.chatClient.off('chatMessageReceived', this.messageReceivedListener);
+    this.chatClient.off('readReceiptReceived', this.messageReadListener);
+    this.chatClient.off('participantsRemoved', this.participantsRemovedListener);
+  };
+
+  on(event: 'messageReceived', listener: MessageReceivedListener): void;
+  on(event: 'messageSent', listener: MessageReceivedListener): void;
+  on(event: 'messageRead', listener: MessageReadListener): void;
+  on(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
+  on(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
+  on(event: 'topicChanged', listener: TopicChangedListener): void;
+  on(event: 'error', listener: (e: Error) => void): void;
+  on(event: ChatEvent, listener: (e: any) => void): void {
+    this.emitter.on(event, listener);
+  }
+
+  off(event: 'messageReceived', listener: MessageReceivedListener): void;
+  off(event: 'messageSent', listener: MessageReceivedListener): void;
+  off(event: 'messageRead', listener: MessageReadListener): void;
+  off(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
+  off(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
+  off(event: 'topicChanged', listener: TopicChangedListener): void;
+  off(event: 'error', listener: (e: Error) => void): void;
+  off(event: ChatEvent, listener: (e: any) => void): void {
+    this.emitter.off(event, listener);
   }
 }
+
+const convertEventToChatMessage = (event: ChatMessageReceivedEvent): ChatMessage => {
+  return {
+    id: event.id,
+    version: event.version,
+    content: { message: event.message },
+    type: event.type,
+    sender: event.sender,
+    senderDisplayName: event.senderDisplayName,
+    sequenceId: '',
+    createdOn: new Date(event.createdOn)
+  };
+};
 
 export const createAzureCommunicationChatAdapter = async (
   token: string,

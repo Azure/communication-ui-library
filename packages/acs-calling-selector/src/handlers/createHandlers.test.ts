@@ -21,11 +21,11 @@ class MockCallClient {
     throw new Error('Method not implemented.');
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  createView(callId: string, stream: any, options?: any): Promise<void> {
+  createView(callId: string, participantId: any, stream: any, options?: any): Promise<void> {
     throw new Error('Method not implemented.');
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  disposeView(callId: string, stream: any): void {
+  disposeView(callId: string, participantId: any, stream: any): void {
     throw new Error('Method not implemented.');
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

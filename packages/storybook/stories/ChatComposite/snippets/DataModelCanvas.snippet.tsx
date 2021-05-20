@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { communicationIdentifierToString } from '@azure/communication-react';
+import { toFlatCommunicationIdentifier } from '@azure/communication-react';
 import { text, radios } from '@storybook/addon-knobs';
 import React, { useState, useEffect, useRef } from 'react';
 import { COMPOSITE_STRING_CONNECTIONSTRING } from '../../CompositeStringUtils';
@@ -22,11 +22,16 @@ export const DataModelCanvas: () => JSX.Element = () => {
   useEffect(() => {
     const fetchToken = async (): Promise<void> => {
       if (knobs.current.connectionString && knobs.current.displayName) {
-        const newChatConfig = await createUserAndThread(knobs.current.connectionString, knobs.current.displayName);
-        const botUserToken = await addParrotBotToThread(knobs.current.connectionString, newChatConfig, messageArray);
+        const newPrerequisites = await createUserAndThread(knobs.current.connectionString, knobs.current.displayName);
+        const botUserToken = await addParrotBotToThread(
+          knobs.current.connectionString,
+          newPrerequisites.token,
+          newPrerequisites.threadId,
+          messageArray
+        );
         setContainerProps({
-          config: newChatConfig,
-          botUserId: communicationIdentifierToString(botUserToken.user),
+          ...newPrerequisites,
+          botUserId: toFlatCommunicationIdentifier(botUserToken.user),
           botAvatar: knobs.current.avatar
         });
       }

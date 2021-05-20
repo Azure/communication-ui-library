@@ -6,7 +6,7 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import memoizeOne from 'memoize-one';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CallState } from '../adapter/CallAdapter';
-import { Call, CallClientState, DeviceManager } from 'calling-stateful-client';
+import { Call, CallClientState, DeviceManagerState } from 'calling-stateful-client';
 
 // This function highly depends on chatClient.onChange event
 // It will be moved into selector folder when the ChatClientProvide when refactor finished
@@ -69,7 +69,12 @@ export const useSelectorWithAdaptation = <
 };
 
 const memoizeState = memoizeOne(
-  (userId: string, deviceManager: DeviceManager, calls: Map<string, Call>, displayName?: string): CallClientState => ({
+  (
+    userId: string,
+    deviceManager: DeviceManagerState,
+    calls: Map<string, Call>,
+    displayName?: string
+  ): CallClientState => ({
     userId,
     incomingCalls: new Map([]),
     incomingCallsEnded: [],

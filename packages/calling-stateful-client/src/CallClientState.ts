@@ -9,7 +9,7 @@ import {
   CallState,
   DeviceAccess,
   MediaStreamType,
-  RemoteParticipantState,
+  RemoteParticipantState as RemoteParticipantStatus,
   ScalingMode,
   TransferErrorCode,
   TransferState,
@@ -83,7 +83,7 @@ export interface TransferCallFeature {
  * flatten CallAgent.displayName and put it in CallClientState because it would be ambiguious that displayName is
  * actually reliant on the creation/existence of CallAgent to be available.
  */
-export interface CallAgent {
+export interface CallAgentState {
   /**
    * Proxy of {@Link @azure/communication-calling#CallAgent.displayName}.
    */
@@ -113,7 +113,7 @@ export interface RecordingCallFeature {
 /**
  * State only version of {@Link @azure/communication-calling#LocalVideoStream}.
  */
-export interface LocalVideoStream {
+export interface LocalVideoStreamState {
   /**
    * Proxy of {@Link @azure/communication-calling#LocalVideoStream.source}.
    */
@@ -126,13 +126,13 @@ export interface LocalVideoStream {
    * {@Link VideoStreamRendererView} is added/removed from state by createView/disposeView in
    * {@Link StatefulCallClient} API.
    */
-  videoStreamRendererView?: VideoStreamRendererView | undefined;
+  videoStreamRendererView?: VideoStreamRendererViewState | undefined;
 }
 
 /**
  * State only version of {@Link @azure/communication-calling#RemoteVideoStream}.
  */
-export interface RemoteVideoStream {
+export interface RemoteVideoStreamState {
   /**
    * Proxy of {@Link @azure/communication-calling#RemoteVideoStream.id}.
    */
@@ -149,7 +149,7 @@ export interface RemoteVideoStream {
    * {@Link VideoStreamRendererView} is added/removed from state by createView/disposeView in
    * {@Link StatefulCallClient} API.
    */
-  videoStreamRendererView: VideoStreamRendererView | undefined;
+  videoStreamRendererView: VideoStreamRendererViewState | undefined;
 }
 
 /**
@@ -157,7 +157,7 @@ export interface RemoteVideoStream {
  * API for updateScalingMode? There is a way to change scaling mode which is to stop the video and start it again with
  * the desired scaling mode option.
  */
-export interface VideoStreamRendererView {
+export interface VideoStreamRendererViewState {
   /**
    * Proxy of {@Link @azure/communication-calling#VideoStreamRendererView.scalingMode}.
    */
@@ -175,7 +175,7 @@ export interface VideoStreamRendererView {
 /**
  * State only version of {@Link @azure/communication-calling#RemoteParticipant}.
  */
-export interface RemoteParticipant {
+export interface RemoteParticipantState {
   /**
    * Proxy of {@Link @azure/communication-calling#RemoteParticipant.identifier}.
    */
@@ -187,7 +187,7 @@ export interface RemoteParticipant {
   /**
    * Proxy of {@Link @azure/communication-calling#RemoteParticipant.state}.
    */
-  state: RemoteParticipantState;
+  state: RemoteParticipantStatus;
   /**
    * Proxy of {@Link @azure/communication-calling#RemoteParticipant.callEndReason}.
    */
@@ -196,7 +196,7 @@ export interface RemoteParticipant {
    * Proxy of {@Link @azure/communication-calling#RemoteParticipant.videoStreams} as a map of
    * {@Link @azure/communication-calling#RemoteVideoStream.id} to {@Link RemoteVideoStream}.
    */
-  videoStreams: Map<number, RemoteVideoStream>;
+  videoStreams: Map<number, RemoteVideoStreamState>;
   /**
    * Proxy of {@Link @azure/communication-calling#RemoteParticipant.isMuted}.
    */
@@ -242,17 +242,17 @@ export interface Call {
   /**
    * Proxy of {@Link @azure/communication-calling#Call.localVideoStreams}.
    */
-  localVideoStreams: LocalVideoStream[];
+  localVideoStreams: LocalVideoStreamState[];
   /**
    * Proxy of {@Link @azure/communication-calling#Call.remoteParticipants}. Map of identifier
-   * {@Link Converter.getRemoteParticipantKey} to {@Link RemoteParticipant}
+   * {@Link @azure/communication-react#string} to {@Link RemoteParticipant}
    */
-  remoteParticipants: Map<string, RemoteParticipant>;
+  remoteParticipants: Map<string, RemoteParticipantState>;
   /**
    * Stores remote participants that have left the call so that the callEndReason could be retrieved. Map of identifier
-   * {@Link Converter.getRemoteParticipantKey} to {@Link RemoteParticipant}
+   * {@Link @azure/communication-react#string} to {@Link RemoteParticipant}
    */
-  remoteParticipantsEnded: Map<string, RemoteParticipant>;
+  remoteParticipantsEnded: Map<string, RemoteParticipantState>;
   /**
    * Proxy of {@Link @azure/communication-calling#TranscriptionCallFeature}.
    */
@@ -290,7 +290,7 @@ export interface Call {
  * State only version of {@Link @azure/communication-calling#IncomingCall}. CallEndReason is added by the declarative
  * layer based on received events.
  */
-export interface IncomingCall {
+export interface IncomingCallState {
   /**
    * Proxy of {@Link @azure/communication-calling#IncomingCall.id}.
    */
@@ -319,7 +319,7 @@ export interface IncomingCall {
  * This type is meant to encapsulate all the state inside {@Link @azure/communication-calling#DeviceManager}. For
  * optional parameters they may not be available until permission is granted by the user.
  */
-export type DeviceManager = {
+export type DeviceManagerState = {
   /**
    * Proxy of {@Link @azure/communication-calling#DeviceManager.isSpeakerSelectionAvailable}.
    */
@@ -357,7 +357,7 @@ export type DeviceManager = {
    * Stores created views that are not associated with any Call state (when
    * {@Link StatefulCallClient#createView} is called with undefined callId and LocalVideoStream).
    */
-  unparentedViews: VideoStreamRendererView[];
+  unparentedViews: VideoStreamRendererViewState[];
 };
 
 /**
@@ -381,7 +381,7 @@ export interface CallClientState {
    * in the event 'incomingCall' emitted by {@Link @azure/communication-calling#CallAgent}. It is keyed by
    * IncomingCall.id.
    */
-  incomingCalls: Map<string, IncomingCall>;
+  incomingCalls: Map<string, IncomingCallState>;
   /**
    * Incoming Calls that have ended are stored here so the callEndReason could be checked. It is a array of IncomingCall
    * {@Link IncomingCall} received in the event 'incomingCall' emitted by
@@ -389,18 +389,18 @@ export interface CallClientState {
    * is sorted by endTime ascending. Only MAX_CALL_HISTORY_LENGTH number of IncomingCalls are kept in this array with
    * the older ones being replaced by newer ones.
    */
-  incomingCallsEnded: IncomingCall[];
+  incomingCallsEnded: IncomingCallState[];
   /**
    * Proxy of {@Link @azure/communication-calling#DeviceManager} and its events.
    */
-  deviceManager: DeviceManager;
+  deviceManager: DeviceManagerState;
   /**
    * Proxy of {@Link @azure/communication-calling#CallAgent} without the calls property. Provides access to displayName
    * but only available if CallAgent has been created.
    */
-  callAgent: CallAgent | undefined;
+  callAgent: CallAgentState | undefined;
   /**
-   * Stores a userId string. This is not used by the stateful client and is provided here as a convenience for the
+   * Stores a userId. This is not used by the stateful client and is provided here as a convenience for the
    * developer for easier access to userId. Must be passed in at initialization of the stateful client.
    */
   userId: string;
