@@ -35,7 +35,8 @@ module.exports = {
       'chat-stateful-client': path.resolve(__dirname, '../../chat-stateful-client/src'),
       '@azure/acs-chat-selector': path.resolve(__dirname, '../../acs-chat-selector/src'),
       'calling-stateful-client': path.resolve(__dirname, '../../calling-stateful-client/src'),
-      '@azure/acs-calling-selector': path.resolve(__dirname, '../../acs-calling-selector/src')
+      '@azure/acs-calling-selector': path.resolve(__dirname, '../../acs-calling-selector/src'),
+      'acs-ui-common': path.resolve(__dirname, '../../acs-ui-common/src')
     };
 
     return config;

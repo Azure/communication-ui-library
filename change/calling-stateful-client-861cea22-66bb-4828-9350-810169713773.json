@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Prevent collision of streamid to alter state of different participants",
+  "packageName": "calling-stateful-client",
+  "email": "allenhwang@microsoft.com",
+  "dependentChangeType": "patch"
+}
