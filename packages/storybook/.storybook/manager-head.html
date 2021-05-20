@@ -14,6 +14,35 @@
 
 <script src="https://wcpstatic.microsoft.com/mscc/lib/v2/wcp-consent.js"></script>
 <script>
+  
+  function addManageCookiesLink() {
+    const sidebarContainer = document.getElementById('storybook-explorer-menu');
+    if (!sidebarContainer) {
+      // sidebar container has not loaded in the page yet, retry in 500ms
+      setTimeout(addManageCookiesLink, 500);
+      return false;
+    }
+
+    const linkId = 'manage-cookies';
+    const existingLinkContainer = document.getElementById(linkId);
+    if (existingLinkContainer) {
+      sidebarContainer.removeChild(existingLinkContainer);
+    }
+
+    const linkContainer = document.createElement('div');
+    linkContainer.id = linkId;
+    linkContainer.style = 'text-align: center';
+    const manageCookiesLink = document.createElement('a');
+    manageCookiesLink.href = "javascript:;";
+    manageCookiesLink.innerHTML = 'Manage Cookies';
+    manageCookiesLink.style='color: #1EA7FD; font-size: 0.75rem;'
+    manageCookiesLink.onclick = () => {
+      window.siteConsent?.manageConsent();
+    }
+    linkContainer.appendChild(manageCookiesLink);
+    sidebarContainer.appendChild(linkContainer);
+  }
+
   window.addEventListener('load', () => {
     const cookieBannerId = 'cookie-banner';
     const cookieBannerContainer = document.createElement('div');
@@ -28,11 +57,17 @@
       if (!err) {
         siteConsent = _siteConsent; // siteConsent is used to get the current consent
         window.cookieConsentChanged && window.cookieConsentChanged(); // call callback now cookie library has finished initializing
+
+        if (siteConsent?.isConsentRequired) {
+          addManageCookiesLink();
+        }
       } else {
         console.log(`Error initializing WcpConsent: ${err}`);
       }
     }
 
     window.WcpConsent && WcpConsent.init('en-US', cookieBannerId, initCallback, onConsentChanged, WcpConsent.themes.light);
+
+    addManageCookiesLink();
   });
 </script>
