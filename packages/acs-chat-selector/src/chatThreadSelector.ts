@@ -77,7 +77,7 @@ export const chatThreadSelector = createSelector(
     updateMessagesWithAttached(convertedMessages, userId);
     return {
       userId,
-      disableReadReceipt: isLargeGroup,
+      showMessageStatus: !isLargeGroup,
       messages: convertedMessages
     };
   }

@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { LocalVideoStream, RemoteVideoStream, VideoStreamRenderer } from '@azure/communication-calling';
-import { LocalVideoStream as StatefulLocalVideoStream } from './CallClientState';
+import { LocalVideoStreamState } from './CallClientState';
 
 /**
  * Internally tracked render status. Stores the status of a video render of a stream as rendering could take a long
@@ -48,12 +48,12 @@ export class InternalCallContext {
   private _localRenderInfos: Map<string, LocalRenderInfo>;
 
   // Used for keeping track of rendered LocalVideoStreams that are not part of a Call.
-  private _unparentedRenderInfos: Map<StatefulLocalVideoStream, LocalRenderInfo>;
+  private _unparentedRenderInfos: Map<LocalVideoStreamState, LocalRenderInfo>;
 
   constructor() {
     this._remoteRenderInfos = new Map<string, Map<string, Map<number, RemoteRenderInfo>>>();
     this._localRenderInfos = new Map<string, LocalRenderInfo>();
-    this._unparentedRenderInfos = new Map<StatefulLocalVideoStream, LocalRenderInfo>();
+    this._unparentedRenderInfos = new Map<LocalVideoStreamState, LocalRenderInfo>();
   }
 
   public setCallId(newCallId: string, oldCallId: string): void {
@@ -148,12 +148,12 @@ export class InternalCallContext {
     this._localRenderInfos.delete(callId);
   }
 
-  public getUnparentedRenderInfo(localVideoStream: StatefulLocalVideoStream): LocalRenderInfo | undefined {
+  public getUnparentedRenderInfo(localVideoStream: LocalVideoStreamState): LocalRenderInfo | undefined {
     return this._unparentedRenderInfos.get(localVideoStream);
   }
 
   public setUnparentedRenderInfo(
-    statefulStream: StatefulLocalVideoStream,
+    statefulStream: LocalVideoStreamState,
     stream: LocalVideoStream,
     status: RenderStatus,
     renderer: VideoStreamRenderer | undefined
@@ -161,7 +161,7 @@ export class InternalCallContext {
     this._unparentedRenderInfos.set(statefulStream, { stream, status, renderer });
   }
 
-  public deleteUnparentedRenderInfo(localVideoStream: StatefulLocalVideoStream): void {
+  public deleteUnparentedRenderInfo(localVideoStream: LocalVideoStreamState): void {
     this._unparentedRenderInfos.delete(localVideoStream);
   }
 

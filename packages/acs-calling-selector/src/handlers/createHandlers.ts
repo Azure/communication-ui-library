@@ -10,11 +10,14 @@ import {
   VideoDeviceInfo
 } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
-import { CommonProperties, fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from 'acs-ui-common';
+import { Common, fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from 'acs-ui-common';
 import { DeviceManagerState, StatefulCallClient, StatefulDeviceManager } from 'calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
 import { VideoStreamOptions } from 'react-components';
+
+// @ts-ignore
+import { CommonProperties } from 'acs-ui-common';
 
 export type DefaultCallingHandlers = ReturnType<typeof createDefaultCallingHandlers>;
 
@@ -229,8 +232,6 @@ const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
   // handle cases where 'Preview' view is in progress and not necessary completed.
   return deviceManager.unparentedViews.values().next().value?.view !== undefined;
 };
-
-type Common<A, B> = Pick<A, CommonProperties<A, B>>;
 
 /**
  * Create a set of default handlers for given component. Memoization is applied to the result. Multiple invokations with

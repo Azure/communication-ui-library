@@ -1,6 +1,34 @@
-import { VideoTile } from '@azure/communication-react';
+import { PlaceholderProps, VideoTile } from '@azure/communication-react';
 import { mergeStyles, Persona, PersonaSize, Stack } from '@fluentui/react';
 import React from 'react';
+
+const renderPersona = (props: PlaceholderProps): JSX.Element => (
+  <Persona
+    styles={{ root: { margin: 'auto' } }}
+    size={PersonaSize.size56}
+    hidePersonaDetails={true}
+    text={props.displayName}
+    initialsTextColor="white"
+  />
+);
+
+const renderScreenSharePlaceholder = (): JSX.Element => (
+  <Stack className={mergeStyles({ height: '100%' })}>
+    <Stack verticalAlign="center" horizontalAlign="center" className={mergeStyles({ height: '100%' })}>
+      Your Screen Share Stream
+    </Stack>
+  </Stack>
+);
+
+const renderSharePersonaPlaceholder = (): JSX.Element => (
+  <Persona
+    styles={{ root: { margin: 'auto' } }}
+    size={PersonaSize.size56}
+    hidePersonaDetails={true}
+    text={'Toby'}
+    initialsTextColor="white"
+  />
+);
 
 export const ScreenShareLayoutExample: () => JSX.Element = () => {
   const MockParticipantDisplayNames = ['Michael', 'Jim', 'Pam', 'Dwight', 'Kelly', 'Ryan', 'Andy'];
@@ -42,19 +70,7 @@ export const ScreenShareLayoutExample: () => JSX.Element = () => {
     return (
       <Stack className={aspectRatioBoxStyle} key={index}>
         <Stack className={aspectRatioBoxContentStyle}>
-          <VideoTile
-            isVideoReady={false}
-            displayName={participantDisplayName}
-            placeholder={
-              <Persona
-                styles={{ root: { margin: 'auto' } }}
-                size={PersonaSize.size56}
-                hidePersonaDetails={true}
-                text={participantDisplayName}
-                initialsTextColor="white"
-              />
-            }
-          />
+          <VideoTile isVideoReady={false} displayName={participantDisplayName} onRenderPlaceholder={renderPersona} />
         </Stack>
       </Stack>
     );
@@ -77,27 +93,13 @@ export const ScreenShareLayoutExample: () => JSX.Element = () => {
             overlayContainer: videoStreamStyle
           }}
           // A placeholder element for the screen share stream
-          placeholder={
-            <Stack className={mergeStyles({ height: '100\u0025' })}>
-              <Stack verticalAlign="center" horizontalAlign="center" className={mergeStyles({ height: '100\u0025' })}>
-                Your Screen Share Stream
-              </Stack>
-            </Stack>
-          }
+          onRenderPlaceholder={renderScreenSharePlaceholder}
         >
           {/* We want to render another overlay videoTile inside the parent videoTile for screen sharer's video */}
           <VideoTile
             isVideoReady={false}
             // A placeholder element for screen sharer's video stream
-            placeholder={
-              <Persona
-                styles={{ root: { margin: 'auto' } }}
-                size={PersonaSize.size56}
-                hidePersonaDetails={true}
-                text={'Toby'}
-                initialsTextColor="white"
-              />
-            }
+            onRenderPlaceholder={renderSharePersonaPlaceholder}
           >
             {/* We do not want to add any overlay component for this videoTile, so we do not add children for this videoTile. */}
           </VideoTile>

@@ -7,10 +7,8 @@ import {
   Call,
   // @ts-ignore
   CallClientState,
-  RemoteParticipant,
-  RemoteVideoStream,
-  // @ts-ignore
-  VideoStreamRendererViewStatus
+  RemoteParticipantState,
+  RemoteVideoStreamState
 } from 'calling-stateful-client';
 // @ts-ignore
 import { createSelector } from 'reselect';
@@ -21,7 +19,7 @@ import { getCall, CallingBaseSelectorProps, getDisplayName, getIdentifier, getCa
 import { memoizeFnAll } from 'acs-ui-common';
 import { VideoGalleryRemoteParticipant, VideoGalleryStream } from 'react-components';
 
-const convertRemoteVideoStreamToVideoGalleryStream = (stream: RemoteVideoStream): VideoGalleryStream => {
+const convertRemoteVideoStreamToVideoGalleryStream = (stream: RemoteVideoStreamState): VideoGalleryStream => {
   return {
     id: stream.id,
     isAvailable: stream.isAvailable,
@@ -34,7 +32,7 @@ const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   userId: string,
   isMuted: boolean,
   isSpeaking: boolean,
-  videoStreams: Map<number, RemoteVideoStream>,
+  videoStreams: Map<number, RemoteVideoStreamState>,
   displayName?: string
 ): VideoGalleryRemoteParticipant => {
   const rawVideoStreamsArray = Array.from(videoStreams.values());
@@ -73,7 +71,7 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     userId: string,
     isMuted: boolean,
     isSpeaking: boolean,
-    videoStreams: Map<number, RemoteVideoStream>,
+    videoStreams: Map<number, RemoteVideoStreamState>,
     displayName?: string
   ): VideoGalleryRemoteParticipant => {
     return convertRemoteParticipantToVideoGalleryRemoteParticipant(
@@ -89,7 +87,7 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
 const videoGalleryRemoteParticipantsFromCall = (call: Call | undefined): VideoGalleryRemoteParticipant[] => {
   if (!call || !call.remoteParticipants) return [];
   return memoizedAllConvertRemoteParticipant((memoizedFn) => {
-    return Array.from(call.remoteParticipants.values()).map((participant: RemoteParticipant) => {
+    return Array.from(call.remoteParticipants.values()).map((participant: RemoteParticipantState) => {
       return memoizedFn(
         toFlatCommunicationIdentifier(participant.identifier),
         participant.isMuted,

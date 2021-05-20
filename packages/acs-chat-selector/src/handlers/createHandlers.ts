@@ -2,10 +2,13 @@
 // Licensed under the MIT license.
 
 import { ReactElement } from 'react';
-import { CommonProperties, fromFlatCommunicationIdentifier } from 'acs-ui-common';
+import { Common, fromFlatCommunicationIdentifier } from 'acs-ui-common';
 import { StatefulChatClient } from 'chat-stateful-client';
 import { ChatThreadClient } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
+
+// @ts-ignore
+import { CommonProperties } from 'acs-ui-common';
 
 export type DefaultChatHandlers = {
   onSendMessage: (content: string) => Promise<void>;
@@ -59,8 +62,6 @@ export const createDefaultChatHandlers = memoizeOne(
     };
   }
 );
-
-export type Common<A, B> = Pick<A, CommonProperties<A, B>>;
 
 // These could be shared functions between Chat and Calling
 export const defaultHandlerCreator = (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => <Props>(

@@ -9,7 +9,7 @@ import {
   CreateViewOptions,
   DeviceManager
 } from '@azure/communication-calling';
-import { CallClientState, LocalVideoStream, RemoteVideoStream } from './CallClientState';
+import { CallClientState, LocalVideoStreamState, RemoteVideoStreamState } from './CallClientState';
 import { CallContext } from './CallContext';
 import { callAgentDeclaratify } from './CallAgentDeclarative';
 import { InternalCallContext } from './InternalCallContext';
@@ -66,7 +66,7 @@ export interface StatefulCallClient extends CallClient {
   createView(
     callId: string | undefined,
     participantId: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | undefined,
-    stream: LocalVideoStream | RemoteVideoStream,
+    stream: LocalVideoStreamState | RemoteVideoStreamState,
     options?: CreateViewOptions
   ): Promise<void>;
   /**
@@ -88,7 +88,7 @@ export interface StatefulCallClient extends CallClient {
   disposeView(
     callId: string | undefined,
     participantId: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | undefined,
-    stream: LocalVideoStream | RemoteVideoStream
+    stream: LocalVideoStreamState | RemoteVideoStreamState
   ): void;
 }
 
@@ -203,7 +203,7 @@ export const createStatefulCallClient = (
         | UnknownIdentifierKind
         | string
         | undefined,
-      stream: LocalVideoStream | RemoteVideoStream,
+      stream: LocalVideoStreamState | RemoteVideoStreamState,
       options?: CreateViewOptions
     ): Promise<void> => {
       return createView(context, internalContext, callId, participantId, stream, options);
@@ -220,7 +220,7 @@ export const createStatefulCallClient = (
         | UnknownIdentifierKind
         | string
         | undefined,
-      stream: LocalVideoStream | RemoteVideoStream
+      stream: LocalVideoStreamState | RemoteVideoStreamState
     ): void => {
       disposeView(context, internalContext, callId, participantId, stream);
     }

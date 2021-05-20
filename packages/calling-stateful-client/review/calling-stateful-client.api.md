@@ -20,7 +20,7 @@ import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { PhoneNumberKind } from '@azure/communication-common';
-import { RemoteParticipantState } from '@azure/communication-calling';
+import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
 import { ScalingMode } from '@azure/communication-calling';
 import { TransferErrorCode } from '@azure/communication-calling';
 import { TransferState } from '@azure/communication-calling';
@@ -36,10 +36,10 @@ export interface Call {
     id: string;
     isMuted: boolean;
     isScreenSharingOn: boolean;
-    localVideoStreams: LocalVideoStream[];
+    localVideoStreams: LocalVideoStreamState[];
     recording: RecordingCallFeature;
-    remoteParticipants: Map<string, RemoteParticipant>;
-    remoteParticipantsEnded: Map<string, RemoteParticipant>;
+    remoteParticipants: Map<string, RemoteParticipantState>;
+    remoteParticipantsEnded: Map<string, RemoteParticipantState>;
     screenShareRemoteParticipant: string | undefined;
     startTime: Date;
     state: CallState;
@@ -58,8 +58,8 @@ export interface CallClientState {
     calls: Map<string, Call>;
     callsEnded: Call[];
     deviceManager: DeviceManagerState;
-    incomingCalls: Map<string, IncomingCall>;
-    incomingCallsEnded: IncomingCall[];
+    incomingCalls: Map<string, IncomingCallState>;
+    incomingCallsEnded: IncomingCallState[];
     userId: string;
 }
 
@@ -76,11 +76,11 @@ export type DeviceManagerState = {
     microphones: AudioDeviceInfo[];
     speakers: AudioDeviceInfo[];
     deviceAccess?: DeviceAccess;
-    unparentedViews: Map<LocalVideoStream, LocalVideoStream>;
+    unparentedViews: Map<LocalVideoStreamState, LocalVideoStreamState>;
 };
 
 // @public
-export interface IncomingCall {
+export interface IncomingCallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
     endTime: Date | undefined;
@@ -89,10 +89,10 @@ export interface IncomingCall {
 }
 
 // @public
-export interface LocalVideoStream {
+export interface LocalVideoStreamState {
     mediaStreamType: MediaStreamType;
     source: VideoDeviceInfo;
-    view?: VideoStreamRendererView;
+    view?: VideoStreamRendererViewState;
 }
 
 // @public
@@ -101,28 +101,28 @@ export interface RecordingCallFeature {
 }
 
 // @public
-export interface RemoteParticipant {
+export interface RemoteParticipantState {
     callEndReason?: CallEndReason;
     displayName?: string;
     identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind;
     isMuted: boolean;
     isSpeaking: boolean;
-    state: RemoteParticipantState;
-    videoStreams: Map<number, RemoteVideoStream>;
+    state: RemoteParticipantState_2;
+    videoStreams: Map<number, RemoteVideoStreamState>;
 }
 
 // @public
-export interface RemoteVideoStream {
+export interface RemoteVideoStreamState {
     id: number;
     isAvailable: boolean;
     mediaStreamType: MediaStreamType;
-    view?: VideoStreamRendererView;
+    view?: VideoStreamRendererViewState;
 }
 
 // @public
 export interface StatefulCallClient extends CallClient {
-    createView(callId: string | undefined, participantId: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | undefined, stream: LocalVideoStream | RemoteVideoStream, options?: CreateViewOptions): Promise<void>;
-    disposeView(callId: string | undefined, participantId: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | undefined, stream: LocalVideoStream | RemoteVideoStream): void;
+    createView(callId: string | undefined, participantId: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<void>;
+    disposeView(callId: string | undefined, participantId: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
     getState(): CallClientState;
     offStateChange(handler: (state: CallClientState) => void): void;
     onStateChange(handler: (state: CallClientState) => void): void;
@@ -168,7 +168,7 @@ export interface TransferRequest {
 }
 
 // @public
-export interface VideoStreamRendererView {
+export interface VideoStreamRendererViewState {
     isMirrored: boolean;
     scalingMode: ScalingMode;
     target: HTMLElement;

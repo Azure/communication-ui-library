@@ -8,7 +8,7 @@ import {
   PhoneNumberKind,
   UnknownIdentifierKind
 } from '@azure/communication-common';
-import { LocalVideoStream as StatefulLocalVideoStream, RemoteVideoStream } from './CallClientState';
+import { LocalVideoStreamState, RemoteVideoStreamState } from './CallClientState';
 import { CallContext } from './CallContext';
 import {
   convertSdkLocalStreamToDeclarativeLocalStream,
@@ -23,7 +23,7 @@ async function createViewRemoteVideo(
   internalContext: InternalCallContext,
   callId: string,
   participantId: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | string,
-  stream: RemoteVideoStream,
+  stream: RemoteVideoStreamState,
   options?: CreateViewOptions
 ): Promise<void> {
   // Render RemoteVideoStream that is part of a Call
@@ -181,7 +181,7 @@ async function createViewLocalVideo(
 async function createViewUnparentedVideo(
   context: CallContext,
   internalContext: InternalCallContext,
-  stream: StatefulLocalVideoStream,
+  stream: LocalVideoStreamState,
   options?: CreateViewOptions
 ): Promise<void> {
   const renderInfo = internalContext.getUnparentedRenderInfo(stream);
@@ -249,7 +249,7 @@ function disposeViewRemoteVideo(
   internalContext: InternalCallContext,
   callId: string,
   participantId: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | string,
-  stream: RemoteVideoStream
+  stream: RemoteVideoStreamState
 ): void {
   const streamId = stream.id;
 
@@ -306,7 +306,7 @@ function disposeViewLocalVideo(context: CallContext, internalContext: InternalCa
 function disposeViewUnparentedVideo(
   context: CallContext,
   internalContext: InternalCallContext,
-  stream: StatefulLocalVideoStream
+  stream: LocalVideoStreamState
 ): void {
   context.setDeviceManagerUnparentedView(stream, undefined);
 
@@ -337,7 +337,7 @@ export function createView(
     | UnknownIdentifierKind
     | string
     | undefined,
-  stream: StatefulLocalVideoStream | RemoteVideoStream,
+  stream: LocalVideoStreamState | RemoteVideoStreamState,
   options?: CreateViewOptions
 ): Promise<void> {
   if ('id' in stream && callId && participantId) {
@@ -366,7 +366,7 @@ export function disposeView(
     | UnknownIdentifierKind
     | string
     | undefined,
-  stream: StatefulLocalVideoStream | RemoteVideoStream
+  stream: LocalVideoStreamState | RemoteVideoStreamState
 ): void {
   if ('id' in stream && callId && participantId) {
     // Stop rendering RemoteVideoStream that is part of a Call

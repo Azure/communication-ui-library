@@ -28,31 +28,30 @@ import {
   GenerateMockSystemMessage,
   GenerateMockCustomMessage
 } from './placeholdermessages';
-import { DefaultMessageThreadExample } from './snippets/MessageThread.snippet';
-import { MessageThreadWithCustomAvatarExample } from './snippets/MessageThreadWithCustomAvatar.snippet';
-import { MessageThreadWithCustomChatContainerExample } from './snippets/MessageThreadWithCustomChatContainer.snippet';
-import { MessageThreadWithCustomMessageContainerExample } from './snippets/MessageThreadWithCustomMessageContainer.snippet';
-import { MessageThreadWithCustomMessagesExample } from './snippets/MessageThreadWithCustomMessages.snippet';
-import { MessageThreadWithCustomReadReceiptExample } from './snippets/MessageThreadWithCustomReadReceipt.snippet';
-import { MessageThreadWithReadReceiptExample } from './snippets/MessageThreadWithReadReceipt.snippet';
-import { MessageThreadWithSystemMessagesExample } from './snippets/MessageThreadWithSystemMessages.snippet';
+import { MessageThreadWithCustomAvatarExample } from './snippets/CustomAvatar.snippet';
+import { MessageThreadWithCustomChatContainerExample } from './snippets/CustomChatContainer.snippet';
+import { MessageThreadWithCustomMessageContainerExample } from './snippets/CustomMessageContainer.snippet';
+import { MessageThreadWithCustomMessagesExample } from './snippets/CustomMessages.snippet';
+import { MessageThreadWithCustomMessageStatusIndicatorExample } from './snippets/CustomMessageStatusIndicator.snippet';
+import { DefaultMessageThreadExample } from './snippets/Default.snippet';
+import { MessageThreadWithMessageStatusIndicatorExample } from './snippets/MessageStatusIndicator.snippet';
+import { MessageThreadWithSystemMessagesExample } from './snippets/SystemMessages.snippet';
 
-const DefaultMessageThreadExampleText = require('!!raw-loader!./snippets/MessageThread.snippet.tsx').default;
-const MessageThreadWithCustomAvatarExampleText = require('!!raw-loader!./snippets/MessageThreadWithCustomAvatar.snippet.tsx')
+const MessageThreadWithCustomAvatarExampleText = require('!!raw-loader!./snippets/CustomAvatar.snippet.tsx').default;
+const MessageThreadWithCustomChatContainerExampleText = require('!!raw-loader!./snippets/CustomChatContainer.snippet.tsx')
   .default;
-const MessageThreadWithCustomChatContainerExampleText = require('!!raw-loader!./snippets/MessageThreadWithCustomChatContainer.snippet.tsx')
+const MessageThreadWithCustomMessageContainerExampleText = require('!!raw-loader!./snippets/CustomMessageContainer.snippet.tsx')
   .default;
-const MessageThreadWithCustomMessageContainerExampleText = require('!!raw-loader!./snippets/MessageThreadWithCustomMessageContainer.snippet.tsx')
+const MessageThreadWithCustomMessagesExampleText = require('!!raw-loader!./snippets/CustomMessages.snippet.tsx')
   .default;
-const MessageThreadWithCustomMessagesExampleText = require('!!raw-loader!./snippets/MessageThreadWithCustomMessages.snippet.tsx')
+const MessageThreadWithCustomMessageStatusIndicatorExampleText = require('!!raw-loader!./snippets/CustomMessageStatusIndicator.snippet.tsx')
   .default;
-const MessageThreadWithCustomReadReceiptExampleText = require('!!raw-loader!./snippets/MessageThreadWithCustomReadReceipt.snippet.tsx')
-  .default;
-const MessageThreadWithReadReceiptExampleText = require('!!raw-loader!./snippets/MessageThreadWithReadReceipt.snippet.tsx')
-  .default;
-const MessageThreadWithSystemMessagesExampleText = require('!!raw-loader!./snippets/MessageThreadWithSystemMessages.snippet.tsx')
+const DefaultMessageThreadExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
+const MessageThreadWithMessageStatusIndicatorExampleText = require('!!raw-loader!./snippets/MessageStatusIndicator.snippet.tsx')
   .default;
 const ExampleConstantsText = require('!!raw-loader!./snippets/placeholdermessages.ts').default;
+const MessageThreadWithSystemMessagesExampleText = require('!!raw-loader!./snippets/SystemMessages.snippet.tsx')
+  .default;
 
 const importStatement = `
 import { FluentThemeProvider, MessageThread } from '@azure/communication-react';
@@ -114,20 +113,21 @@ const getDocs: () => JSX.Element = () => {
         <MessageThreadWithCustomMessageContainerExample />
       </Canvas>
 
-      <Heading>Default Read Receipt</Heading>
-      <Canvas mdxSource={MessageThreadWithReadReceiptExampleText}>
-        <MessageThreadWithReadReceiptExample />
+      <Heading>Default Message Status Indicator</Heading>
+      <Canvas mdxSource={MessageThreadWithMessageStatusIndicatorExampleText}>
+        <MessageThreadWithMessageStatusIndicatorExample />
       </Canvas>
 
-      <Heading>Cutomized Read Receipt</Heading>
+      <Heading>Cutom Message Status Indicator</Heading>
       <Description>
-        The example below shows how to render a `custom` read receipt with `onRenderReadReceipt` in `MessageThread`
+        The example below shows how to render a `custom` message status indicator with `onRenderMessageStatus` in
+        `MessageThread`
       </Description>
-      <Canvas mdxSource={MessageThreadWithCustomReadReceiptExampleText}>
-        <MessageThreadWithCustomReadReceiptExample />
+      <Canvas mdxSource={MessageThreadWithCustomMessageStatusIndicatorExampleText}>
+        <MessageThreadWithCustomMessageStatusIndicatorExample />
       </Canvas>
 
-      <Heading>Customized Avatar</Heading>
+      <Heading>Custom Avatar</Heading>
       <Canvas mdxSource={MessageThreadWithCustomAvatarExampleText}>
         <MessageThreadWithCustomAvatarExample />
       </Canvas>
@@ -148,7 +148,7 @@ export const MessageThread: () => JSX.Element = () => {
   const [chatMessages, setChatMessages] = useState<(SystemMessage | CustomMessage | ChatMessage)[]>(
     GenerateMockChatMessages()
   );
-  const showReadReceipt = boolean('Enable Message Read Receipt', true);
+  const showMessageStatus = boolean('Enable Message Status Indicator', true);
   const enableJumpToNewMessageButton = boolean('Enable Jump To New Message', true);
 
   const onSendNewMessage = (): void => {
@@ -193,7 +193,7 @@ export const MessageThread: () => JSX.Element = () => {
         styles={MessageThreadStyles}
         userId={UserOne.senderId}
         messages={chatMessages}
-        disableReadReceipt={!showReadReceipt}
+        showMessageStatus={showMessageStatus}
         disableJumpToNewMessageButton={!enableJumpToNewMessageButton}
         onLoadPreviousChatMessages={onLoadPreviousMessages}
         onRenderMessage={onRenderMessage}

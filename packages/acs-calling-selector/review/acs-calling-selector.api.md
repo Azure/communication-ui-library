@@ -13,7 +13,7 @@ import { CallParticipant } from 'react-components';
 import { CommonProperties } from 'acs-ui-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { DeviceManagerState } from 'calling-stateful-client';
-import { IncomingCall } from 'calling-stateful-client';
+import { IncomingCallState } from 'calling-stateful-client';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { ReactElement } from 'react';
 import * as reselect from 'reselect';
@@ -37,15 +37,6 @@ export const cameraButtonSelector: reselect.OutputParametricSelector<CallClientS
 }, (res1: Call_2 | undefined, res2: DeviceManagerState) => {
     disabled: boolean;
     checked: boolean;
-}>;
-
-// @public (undocumented)
-export const complianceBannerSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
-    callTranscribeState: boolean | undefined;
-    callRecordState: boolean | undefined;
-}, (res: Call_2 | undefined) => {
-    callTranscribeState: boolean | undefined;
-    callRecordState: boolean | undefined;
 }>;
 
 // @public (undocumented)
@@ -121,24 +112,10 @@ export const getDisplayName: (state: CallClientState) => string | undefined;
 export const getIdentifier: (state: CallClientState) => string;
 
 // @public (undocumented)
-export const getIncomingCalls: (state: CallClientState) => Map<string, IncomingCall>;
+export const getIncomingCalls: (state: CallClientState) => Map<string, IncomingCallState>;
 
 // @public (undocumented)
-export const getIncomingCallsEnded: (state: CallClientState) => IncomingCall[];
-
-// @public (undocumented)
-export const localPreviewSelector: reselect.OutputSelector<CallClientState, {
-    videoStreamElement: HTMLElement | null;
-}, (res: DeviceManagerState) => {
-    videoStreamElement: HTMLElement | null;
-}>;
-
-// @public (undocumented)
-export const mediaGallerySelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
-    isVideoStreamOn: boolean;
-}, (res: Call_2 | undefined) => {
-    isVideoStreamOn: boolean;
-}>;
+export const getIncomingCallsEnded: (state: CallClientState) => IncomingCallState[];
 
 // @public (undocumented)
 export const microphoneButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {

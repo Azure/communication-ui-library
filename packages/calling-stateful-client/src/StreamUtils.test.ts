@@ -10,7 +10,7 @@ import {
   VideoDeviceInfo
 } from '@azure/communication-calling';
 import { CommunicationUserKind } from '@azure/communication-common';
-import { Call, LocalVideoStream, RemoteParticipant, RemoteVideoStream } from './CallClientState';
+import { Call, LocalVideoStreamState, RemoteParticipantState, RemoteVideoStreamState } from './CallClientState';
 import { CallContext } from './CallContext';
 import { InternalCallContext } from './InternalCallContext';
 import { createView, disposeView, disposeAllViewsFromCall, disposeAllViews } from './StreamUtils';
@@ -78,8 +78,8 @@ function createMockCall(mockCallId: string): Call {
     isMuted: true,
     isScreenSharingOn: false,
     localVideoStreams: [],
-    remoteParticipants: new Map<string, RemoteParticipant>(),
-    remoteParticipantsEnded: new Map<string, RemoteParticipant>(),
+    remoteParticipants: new Map<string, RemoteParticipantState>(),
+    remoteParticipantsEnded: new Map<string, RemoteParticipantState>(),
     recording: { isRecordingActive: false },
     transcription: { isTranscriptionActive: false },
     transfer: { receivedTransferRequests: [], requestedTransfers: [] },
@@ -94,15 +94,15 @@ function addMockRemoteStreamAndParticipant(
   call: Call,
   identifier: CommunicationUserKind,
   streamId: number
-): RemoteVideoStream {
-  const participant: RemoteParticipant = {
+): RemoteVideoStreamState {
+  const participant: RemoteParticipantState = {
     identifier: identifier,
     state: 'Connected',
-    videoStreams: new Map<number, RemoteVideoStream>(),
+    videoStreams: new Map<number, RemoteVideoStreamState>(),
     isMuted: true,
     isSpeaking: false
   };
-  const remoteVideoStream: RemoteVideoStream = {
+  const remoteVideoStream: RemoteVideoStreamState = {
     id: streamId,
     mediaStreamType: 'Video',
     isAvailable: true,
@@ -142,7 +142,7 @@ function addSdkRemoteStream(
 }
 
 function addMockLocalStream(call: Call): void {
-  call.localVideoStreams.push({ view: undefined } as LocalVideoStream);
+  call.localVideoStreams.push({ view: undefined } as LocalVideoStreamState);
 }
 
 function addSdkLocalStream(internalContext: InternalCallContext, callId: string): void {
@@ -189,7 +189,7 @@ describe('stream utils', () => {
     context.setCall(call);
     addSdkLocalStream(internalContext, mockCallId);
 
-    await createView(context, internalContext, mockCallId, mockParticipantIdentifier, {} as LocalVideoStream);
+    await createView(context, internalContext, mockCallId, mockParticipantIdentifier, {} as LocalVideoStreamState);
 
     expect(internalContext.getLocalRenderInfo(mockCallId)).toBeDefined();
     expect(internalContext.getLocalRenderInfo(mockCallId)?.stream).toBeDefined();
@@ -440,7 +440,7 @@ describe('stream utils', () => {
     const { context, internalContext } = createContexts();
     const localVideoStream = {
       source: { name: 'a', id: 'a', deviceType: 'Unknown' }
-    } as LocalVideoStream;
+    } as LocalVideoStreamState;
     await createView(context, internalContext, undefined, undefined, localVideoStream);
     expect(internalContext.getUnparentedRenderInfo(localVideoStream)).toBeDefined();
     expect(internalContext.getUnparentedRenderInfo(localVideoStream)?.status).toBe('Rendered');
@@ -452,7 +452,7 @@ describe('stream utils', () => {
     const { context, internalContext } = createContexts();
     const localVideoStream = {
       source: { name: 'a', id: 'a', deviceType: 'Unknown' }
-    } as LocalVideoStream;
+    } as LocalVideoStreamState;
 
     await createView(context, internalContext, undefined, undefined, localVideoStream);
     disposeView(context, internalContext, undefined, undefined, localVideoStream);
@@ -466,11 +466,11 @@ describe('stream utils', () => {
     const localVideoStream = {
       source: { name: 'a', id: 'a', deviceType: 'Unknown' },
       mediaStreamType: 'Video'
-    } as LocalVideoStream;
+    } as LocalVideoStreamState;
     const incorrectVideoStream = {
       source: { name: 'b', id: 'b', deviceType: 'Unknown' },
       mediaStreamType: 'Video'
-    } as LocalVideoStream;
+    } as LocalVideoStreamState;
 
     await createView(context, internalContext, undefined, undefined, localVideoStream);
     disposeView(context, internalContext, undefined, undefined, incorrectVideoStream);

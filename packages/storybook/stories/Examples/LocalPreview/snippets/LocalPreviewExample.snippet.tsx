@@ -9,7 +9,7 @@ import {
 import { Stack, mergeStyles, Text } from '@fluentui/react';
 import { CallVideoOffIcon } from '@fluentui/react-northstar';
 import { useTheme } from '@fluentui/react-theme-provider';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { renderVideoStream } from '../../../utils';
 
 export interface LocalPreviewProps {
@@ -51,6 +51,20 @@ export const LocalPreviewExample = ({
     color: palette.neutralTertiary
   });
 
+  const renderCameraOffPlaceholder = useCallback(
+    () => (
+      <Stack style={{ width: '100\u0025', height: '100\u0025' }} verticalAlign="center">
+        <Stack.Item align="center">
+          <CallVideoOffIcon />
+        </Stack.Item>
+        <Stack.Item align="center">
+          <Text className={cameraOffLabelStyle}>Your camera is turned off</Text>
+        </Stack.Item>
+      </Stack>
+    ),
+    [cameraOffLabelStyle]
+  );
+
   return (
     <FluentThemeProvider fluentTheme={theme}>
       <Stack style={{ width: '100\u0025', height: '100\u0025' }} verticalAlign="center">
@@ -62,16 +76,7 @@ export const LocalPreviewExample = ({
               // Here this storybook example isn't connected with Azure Communication Services
               // We would suggest you replace this videoStreamElement below with a rendered video stream from the calling SDK
               renderElement={<StreamMedia videoStreamElement={renderVideoStream()} />}
-              placeholder={
-                <Stack style={{ width: '100\u0025', height: '100\u0025' }} verticalAlign="center">
-                  <Stack.Item align="center">
-                    <CallVideoOffIcon />
-                  </Stack.Item>
-                  <Stack.Item align="center">
-                    <Text className={cameraOffLabelStyle}>Your camera is turned off</Text>
-                  </Stack.Item>
-                </Stack>
-              }
+              onRenderPlaceholder={renderCameraOffPlaceholder}
             >
               <ControlBar layout="floatingBottom">
                 <CameraButton disabled={!isCameraEnabled} checked={camera} onClick={() => setCamera(!camera)} />
