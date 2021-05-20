@@ -8,7 +8,7 @@ import { ChatClientState } from 'chat-stateful-client';
 import { ChatMessageWithStatus } from 'chat-stateful-client';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
-import { CommunicationIdentifier } from '@azure/communication-common';
+import { CommonProperties } from 'acs-ui-common';
 import { CommunicationParticipant } from 'react-components';
 import { Message } from 'react-components';
 import { MessageThread } from 'react-components';
@@ -22,9 +22,6 @@ import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 
 // @public (undocumented)
 export type AreEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
-
-// @public (undocumented)
-export type CallbackType<KeyT, ArgsT extends any[], FnRetT> = (memoizedFn: FunctionWithKey<KeyT, ArgsT, FnRetT>) => FnRetT[];
 
 // @public (undocumented)
 export type ChatBaseSelectorProps = {
@@ -63,21 +60,13 @@ export type ChatThreadClientProviderProps = {
 // @public (undocumented)
 export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     userId: string;
-    disableReadReceipt: boolean;
+    showMessageStatus: boolean;
     messages: Message<"chat">[];
 }, (res1: string, res2: Map<string, ChatMessageWithStatus>, res3: Date, res4: boolean) => {
     userId: string;
-    disableReadReceipt: boolean;
+    showMessageStatus: boolean;
     messages: Message<"chat">[];
 }>;
-
-// @public (undocumented)
-export type CommonProperties<A, B> = {
-    [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
-}[keyof A & keyof B];
-
-// @public (undocumented)
-export const communicationIdentifierToString: (i: CommunicationIdentifier | undefined) => string;
 
 // @public (undocumented)
 export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => DefaultChatHandlers;
@@ -96,13 +85,7 @@ export type DefaultChatHandlers = {
 };
 
 // @public (undocumented)
-export type FunctionWithKey<KeyT, ArgsT extends any[], RetT> = (key: KeyT, ...args: ArgsT) => RetT;
-
-// @public (undocumented)
 export type GetSelector<Component> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof chatThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : never;
-
-// @public
-export const memoizeFnAll: <KeyT, ArgsT extends any[], FnRetT, CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>>(fnToMemoize: FunctionWithKey<KeyT, ArgsT, FnRetT>, shouldCacheUpdate?: (args1: any, args2: any) => boolean) => (callback: CallBackT) => FnRetT[];
 
 // @public (undocumented)
 export const sendBoxSelector: reselect.OutputSelector<ChatClientState, {
@@ -124,16 +107,13 @@ export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClie
 export const useChatClient: () => StatefulChatClient;
 
 // @public (undocumented)
+export const useChatSelector: <SelectorT extends (state: ChatClientState, props: any) => any>(selector: SelectorT, selectorProps?: Parameters<SelectorT>[1] | undefined) => ReturnType<SelectorT>;
+
+// @public (undocumented)
 export const useChatThreadClient: () => ChatThreadClient;
 
 // @public (undocumented)
-export const useHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, PropsT>>;
-
-// @public (undocumented)
 export const usePropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => ReturnType<GetSelector<Component>> & Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, Parameters<Component>[0]>>;
-
-// @public (undocumented)
-export const useSelector: <SelectorT extends (state: ChatClientState, props: any) => any>(selector: SelectorT, selectorProps?: Parameters<SelectorT>[1] | undefined) => ReturnType<SelectorT>;
 
 // @public (undocumented)
 export const useThreadId: () => string;

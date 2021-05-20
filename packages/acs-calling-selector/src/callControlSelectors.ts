@@ -4,7 +4,7 @@
 // @ts-ignore
 import * as reselect from 'reselect';
 // @ts-ignore
-import * as callingDeclarative from 'calling-stateful-client';
+import { Call, CallClientState, DeviceManagerState } from 'calling-stateful-client';
 // @ts-ignore
 import { CallingBaseSelectorProps } from './baseSelectors';
 import { getCall, getDeviceManager } from './baseSelectors';
@@ -20,9 +20,11 @@ export const microphoneButtonSelector = reselect.createSelector([getCall, getDev
 
 export const cameraButtonSelector = reselect.createSelector([getCall, getDeviceManager], (call, deviceManager) => {
   const previewOn = !!deviceManager.unparentedViews && !!deviceManager.unparentedViews[0]?.target;
+  const localVideoFromCall = call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
+
   return {
     disabled: !deviceManager.selectedCamera,
-    checked: previewOn || !!call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video')
+    checked: call ? !!localVideoFromCall : previewOn
   };
 });
 

@@ -3,20 +3,16 @@
 
 import { StatefulChatClient } from 'chat-stateful-client';
 import { createDefaultChatHandlersForComponent } from '../handlers/createHandlers';
-
 import { useChatClient } from '../providers/ChatClientProvider';
 import { useChatThreadClient } from '../providers/ChatThreadClientProvider';
-
 import { ReactElement } from 'react';
-
+import { Common } from 'acs-ui-common';
 // @ts-ignore
 import { DefaultChatHandlers } from '../handlers/createHandlers';
-// @ts-ignore
-import { CommonProperties } from '../handlers/createHandlers';
 
-// This will be moved into selector folder when ChatClientProvide when refactor finished
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
-export const useHandlers = <PropsT>(component: (props: PropsT) => ReactElement | null) => {
+export const useHandlers = <PropsT>(
+  component: (props: PropsT) => ReactElement | null
+): Common<DefaultChatHandlers, PropsT> => {
   const chatClient: StatefulChatClient = useChatClient() as any;
   const chatThreadClient = useChatThreadClient();
   if (!chatThreadClient) {

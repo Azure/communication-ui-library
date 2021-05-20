@@ -1,47 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IButtonProps, IStyle, mergeStyles, Stack } from '@fluentui/react';
+import { IStyle, mergeStyles, Stack } from '@fluentui/react';
 import { useTheme } from '@fluentui/react-theme-provider';
-import { CallIcon, CallRecordingIcon } from '@fluentui/react-northstar';
 import React from 'react';
 import { BaseCustomStylesProps } from '../types';
-import { controlBarStyles, controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
+import { controlBarStyles } from './styles/ControlBar.styles';
 import { isDarkThemed } from '../theming/themeUtils';
 
 const mainDivStyle: IStyle = { position: 'relative', height: '100%', width: '100%' };
-
-/** Fluent UI Button props for recording control */
-export const recordButtonProps: IButtonProps = {
-  onRenderIcon: (): JSX.Element => <CallRecordingIcon />,
-  styles: controlButtonStyles
-};
-
-/** Fluent UI Button props for recording control with label */
-export const labeledRecordButtonProps: IButtonProps = {
-  ...recordButtonProps,
-  onRenderText: (props?: IButtonProps): JSX.Element => {
-    if (props?.checked) {
-      return <Stack className={mergeStyles(controlButtonLabelStyles)}>Stop</Stack>;
-    } else {
-      return <Stack className={mergeStyles(controlButtonLabelStyles)}>Record</Stack>;
-    }
-  }
-};
-
-/** Fluent UI Button props for call answering control */
-export const answerButtonProps: IButtonProps = {
-  onRenderIcon: (): JSX.Element => <CallIcon />,
-  styles: controlButtonStyles
-};
-
-/** Fluent UI Button props for call answering control with label */
-export const labeledAnswerButtonProps: IButtonProps = {
-  ...answerButtonProps,
-  onRenderText: (): JSX.Element => {
-    return <Stack className={mergeStyles(controlButtonLabelStyles)}>Answer</Stack>;
-  }
-};
 
 export type ControlBarLayoutType =
   | 'horizontal'

@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "fix deps",
+  "packageName": "@azure/acs-chat-selector",
+  "email": "mail@jamesburnside.com",
+  "dependentChangeType": "none"
+}

@@ -69,13 +69,11 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
                 </div>
               </div>
             </div>
-            <div
-              className="ms-Stack css-24"
+            <span
+              className="css-78 css-24"
             >
-              <label>
-                Michael
-              </label>
-            </div>
+              Michael
+            </span>
           </div>
           <div
             className="ms-Stack css-5"
@@ -110,13 +108,11 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
                 </div>
               </div>
             </div>
-            <div
-              className="ms-Stack css-24"
+            <span
+              className="css-78 css-24"
             >
-              <label>
-                Jim
-              </label>
-            </div>
+              Jim
+            </span>
           </div>
           <div
             className="ms-Stack css-5"
@@ -151,13 +147,11 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
                 </div>
               </div>
             </div>
-            <div
-              className="ms-Stack css-24"
+            <span
+              className="css-78 css-24"
             >
-              <label>
-                Pam
-              </label>
-            </div>
+              Pam
+            </span>
           </div>
           <div
             className="ms-Stack css-5"
@@ -192,13 +186,11 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
                 </div>
               </div>
             </div>
-            <div
-              className="ms-Stack css-24"
+            <span
+              className="css-78 css-24"
             >
-              <label>
-                Dwight
-              </label>
-            </div>
+              Dwight
+            </span>
           </div>
         </div>
       </div>

@@ -3,13 +3,13 @@
 
 // @ts-ignore
 import { ChatClientState } from 'chat-stateful-client';
-import { CommunicationIdentifierAsKey, getCommunicationIdentifierAsKey } from 'chat-stateful-client';
 // @ts-ignore
 import { ChatBaseSelectorProps } from './baseSelectors';
-import { communicationIdentifierToString, getTypingIndicators, getParticipants, getUserId } from './baseSelectors';
+import { getTypingIndicators, getParticipants, getUserId } from './baseSelectors';
 import * as reselect from 'reselect';
 import { ChatParticipant } from '@azure/communication-chat';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
+import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import { CommunicationParticipant } from 'react-components';
 import { MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS, PARTICIPANTS_THRESHOLD } from './utils/constants';
 
@@ -22,16 +22,16 @@ const filterTypingIndicators = (
   const date8SecondsAgo = new Date(Date.now() - MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS);
   for (let i = typingIndicators.length - 1; i >= 0; i--) {
     const typingIndicator = typingIndicators[i];
-    if (communicationIdentifierToString(typingIndicator.sender) === userId) {
+    if (toFlatCommunicationIdentifier(typingIndicator.sender) === userId) {
       continue;
     }
     if (typingIndicator.receivedOn < date8SecondsAgo) {
       continue;
     }
-    if (seen.has(getCommunicationIdentifierAsKey(typingIndicator.sender))) {
+    if (seen.has(toFlatCommunicationIdentifier(typingIndicator.sender))) {
       continue;
     }
-    seen.add(getCommunicationIdentifierAsKey(typingIndicator.sender));
+    seen.add(toFlatCommunicationIdentifier(typingIndicator.sender));
     filteredTypingIndicators.push(typingIndicator);
   }
   return filteredTypingIndicators;
@@ -42,18 +42,14 @@ const convertSdkTypingIndicatorsToCommunicationParticipants = (
   participants: Map<string, ChatParticipant>
 ): CommunicationParticipant[] => {
   return typingIndicators.map((typingIndicator) => ({
-    userId: communicationIdentifierToString(typingIndicator.sender),
-    displayName: participants.get(getCommunicationIdentifierAsKey(typingIndicator.sender))?.displayName
+    userId: toFlatCommunicationIdentifier(typingIndicator.sender),
+    displayName: participants.get(toFlatCommunicationIdentifier(typingIndicator.sender))?.displayName
   }));
 };
 
 export const typingIndicatorSelector = reselect.createSelector(
   [getTypingIndicators, getParticipants, getUserId],
-  (
-    typingIndicators: TypingIndicatorReceivedEvent[],
-    participants: Map<CommunicationIdentifierAsKey, ChatParticipant>,
-    userId: string
-  ) => {
+  (typingIndicators: TypingIndicatorReceivedEvent[], participants: Map<string, ChatParticipant>, userId: string) => {
     // if the participant size reaches the threshold then return no typing users
     if (participants.size >= PARTICIPANTS_THRESHOLD) {
       return { typingUsers: [] };

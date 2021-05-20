@@ -1,26 +1,26 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { toFlatCommunicationIdentifier } from 'acs-ui-common';
+// @ts-ignore
+import { RemoteParticipant, CallClientState, Call } from 'calling-stateful-client';
 // @ts-ignore
 import * as reselect from 'reselect';
-// @ts-ignore
-import * as callingDeclarative from 'calling-stateful-client';
 // @ts-ignore
 import { CallingBaseSelectorProps } from './baseSelectors';
 import { getCall, getIdentifier, getDisplayName } from './baseSelectors';
 import { CallParticipant } from 'react-components';
-import { getACSId } from './utils/getACSId';
 
 const convertRemoteParticipantsToCommunicationParticipants = (
-  remoteParticipants: callingDeclarative.RemoteParticipant[]
+  remoteParticipants: RemoteParticipant[]
 ): CallParticipant[] => {
-  return remoteParticipants.map((participant: callingDeclarative.RemoteParticipant) => {
+  return remoteParticipants.map((participant: RemoteParticipant) => {
     const isScreenSharing = Array.from(participant.videoStreams.values()).some(
       (videoStream) => videoStream.mediaStreamType === 'ScreenSharing' && videoStream.isAvailable
     );
 
     return {
-      userId: getACSId(participant.identifier),
+      userId: toFlatCommunicationIdentifier(participant.identifier),
       displayName: participant.displayName,
       state: participant.state,
       isMuted: participant.isMuted,
@@ -45,7 +45,7 @@ export const participantListSelector = reselect.createSelector(
         ? convertRemoteParticipantsToCommunicationParticipants(Array.from(call?.remoteParticipants.values()))
         : [];
     remoteParticipants.push({
-      userId: userId ?? '',
+      userId: userId,
       displayName: displayName,
       isScreenSharing: call?.isScreenSharingOn,
       isMuted: call?.isMuted,
@@ -53,7 +53,7 @@ export const participantListSelector = reselect.createSelector(
     });
     return {
       participants: remoteParticipants,
-      myUserId: userId ?? ''
+      myUserId: userId
     };
   }
 );

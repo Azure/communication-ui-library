@@ -27,7 +27,6 @@ exports[`storybook snapshot tests Storyshots Composites/Group Call Group Call 1`
           }
         }
       >
-        
         <div
           className="ms-Stack css-2"
           style={

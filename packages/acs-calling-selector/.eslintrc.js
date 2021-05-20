@@ -60,7 +60,11 @@ module.exports = {
         'videoGallerySelector.ts',
         'callControlSelectors.ts',
         'participantListSelector.ts',
-        'localPreviewSelector.ts'
+        'localPreviewSelector.ts',
+        'mediaGallerySelector.ts',
+        'createHandlers.ts',
+        'lobbySelector.ts',
+        'complianceBannerSelector.ts'
       ],
       rules: {
         '@typescript-eslint/ban-ts-comment': 'off',

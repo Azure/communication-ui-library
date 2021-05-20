@@ -11,14 +11,8 @@ import {
   TransferRequestedEventArgs,
   Transfer
 } from '@azure/communication-calling';
-import {
-  CommunicationUserIdentifier,
-  CommunicationUserKind,
-  MicrosoftTeamsUserKind,
-  PhoneNumberIdentifier,
-  PhoneNumberKind,
-  UnknownIdentifierKind
-} from '@azure/communication-common';
+import { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
+import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import {
   Call as DeclarativeCall,
   RemoteParticipant as DeclarativeRemoteParticipant,
@@ -69,41 +63,12 @@ export function convertSdkParticipantToDeclarativeParticipant(
   };
 }
 
-/**
- * Generates an identifier string for a given RemoteParticipant.identifier.
- *
- * @param identifier
- */
-export function getRemoteParticipantKey(
-  identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind
-): string {
-  let id = '';
-  switch (identifier.kind) {
-    case 'communicationUser': {
-      id = identifier.communicationUserId;
-      break;
-    }
-    case 'phoneNumber': {
-      id = identifier.phoneNumber;
-      break;
-    }
-    case 'microsoftTeamsUser': {
-      id = identifier.microsoftTeamsUserId;
-      break;
-    }
-    default: {
-      id = identifier.id;
-    }
-  }
-  return `${identifier.kind}_${id}`;
-}
-
 // Note at the time of writing only one LocalVideoStream is supported by the SDK.
 export function convertSdkCallToDeclarativeCall(call: SdkCall): DeclarativeCall {
   const declarativeRemoteParticipants = new Map<string, DeclarativeRemoteParticipant>();
   call.remoteParticipants.forEach((participant: SdkRemoteParticipant) => {
     declarativeRemoteParticipants.set(
-      getRemoteParticipantKey(participant.identifier),
+      toFlatCommunicationIdentifier(participant.identifier),
       convertSdkParticipantToDeclarativeParticipant(participant)
     );
   });
@@ -121,6 +86,7 @@ export function convertSdkCallToDeclarativeCall(call: SdkCall): DeclarativeCall 
     recording: { isRecordingActive: false },
     transcription: { isTranscriptionActive: false },
     transfer: { receivedTransferRequests: [], requestedTransfers: [] },
+    screenShareRemoteParticipant: undefined,
     startTime: new Date(),
     endTime: undefined
   };

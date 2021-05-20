@@ -10,11 +10,14 @@ import {
   VideoDeviceInfo
 } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
-import { DeviceManager, StatefulCallClient, StatefulDeviceManager } from 'calling-stateful-client';
+import { Common, fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from 'acs-ui-common';
+import { DeviceManagerState, StatefulCallClient, StatefulDeviceManager } from 'calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
 import { VideoStreamOptions } from 'react-components';
-import { getACSId } from '../utils/getACSId';
+
+// @ts-ignore
+import { CommonProperties } from 'acs-ui-common';
 
 export type DefaultCallingHandlers = ReturnType<typeof createDefaultCallingHandlers>;
 
@@ -31,7 +34,7 @@ export const createDefaultCallingHandlers = memoizeOne(
   ) => {
     const onStartLocalVideo = async (): Promise<void> => {
       const callId = call?.id;
-      let videoDeviceInfo = callClient.state.deviceManager.selectedCamera;
+      let videoDeviceInfo = callClient.getState().deviceManager.selectedCamera;
       if (!videoDeviceInfo) {
         const cameras = await deviceManager?.getCameras();
         videoDeviceInfo = cameras && cameras.length > 0 ? cameras[0] : undefined;
@@ -49,7 +52,7 @@ export const createDefaultCallingHandlers = memoizeOne(
       if (!callId) return;
       if (call && call.localVideoStreams.find((s) => areStreamsEqual(s, stream))) {
         await call.stopVideo(stream);
-        await callClient.stopRenderVideo(callId, stream);
+        await callClient.disposeView(callId, undefined, stream);
       }
     };
 
@@ -62,16 +65,17 @@ export const createDefaultCallingHandlers = memoizeOne(
           await onStartLocalVideo();
         }
       } else {
-        if (callClient.state.deviceManager.selectedCamera) {
-          const previewOn = isPreviewOn(callClient.state.deviceManager);
+        const selectedCamera = callClient.getState().deviceManager.selectedCamera;
+        if (selectedCamera) {
+          const previewOn = isPreviewOn(callClient.getState().deviceManager);
           if (previewOn) {
-            await callClient.stopRenderVideo(undefined, {
-              source: callClient.state.deviceManager.selectedCamera,
+            await callClient.disposeView(undefined, undefined, {
+              source: selectedCamera,
               mediaStreamType: 'Video'
             });
           } else {
-            await callClient.startRenderVideo(undefined, {
-              source: callClient.state.deviceManager.selectedCamera,
+            await callClient.createView(undefined, undefined, {
+              source: selectedCamera,
               mediaStreamType: 'Video'
             });
           }
@@ -79,6 +83,7 @@ export const createDefaultCallingHandlers = memoizeOne(
       }
     };
 
+    // FIXME: onStartCall API should use string, not the underlying SDK types.
     const onStartCall = (
       participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
       options?: StartCallOptions
@@ -109,22 +114,23 @@ export const createDefaultCallingHandlers = memoizeOne(
         const stream = call.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
         return stream?.switchSource(device);
       } else {
-        const previewOn = isPreviewOn(callClient.state.deviceManager);
+        const previewOn = isPreviewOn(callClient.getState().deviceManager);
 
         if (!previewOn) {
           deviceManager.selectCamera(device);
           return;
         }
 
+        const selectedCamera = callClient.getState().deviceManager.selectedCamera;
         // If preview is on, then stop current preview and then start new preview with new device
-        if (callClient.state.deviceManager.selectedCamera) {
-          await callClient.stopRenderVideo(undefined, {
-            source: callClient.state.deviceManager.selectedCamera,
+        if (selectedCamera) {
+          await callClient.disposeView(undefined, undefined, {
+            source: selectedCamera,
             mediaStreamType: 'Video'
           });
         }
         deviceManager.selectCamera(device);
-        await callClient.startRenderVideo(undefined, {
+        await callClient.createView(undefined, undefined, {
           source: device,
           mediaStreamType: 'Video'
         });
@@ -132,7 +138,10 @@ export const createDefaultCallingHandlers = memoizeOne(
     };
 
     const onToggleMicrophone = async (): Promise<void> => {
-      return call?.isMuted ? await call?.unmute() : await call?.mute();
+      if (!call) {
+        throw new Error(`Please invoke onToggleMicrophone after call is started`);
+      }
+      return call.isMuted ? await call.unmute() : await call.mute();
     };
 
     const onStartScreenShare = async (): Promise<void> => await call?.startScreenSharing();
@@ -148,34 +157,40 @@ export const createDefaultCallingHandlers = memoizeOne(
       if (!call || call.localVideoStreams.length === 0) return;
       const localStream = call.localVideoStreams.find((item) => item.mediaStreamType === 'Video');
       if (!localStream) return;
-      callClient.startRenderVideo(call.id, localStream, options);
+      callClient.createView(call.id, undefined, localStream, options);
     };
 
     const onCreateRemoteStreamView = async (userId: string, options?: VideoStreamOptions): Promise<void> => {
       if (!call) return;
-      const callState = callClient.state.calls.get(call.id);
+      const callState = callClient.getState().calls.get(call.id);
       if (!callState) throw new Error(`Call Not Found: ${call.id}`);
 
-      const streams = Array.from(callState.remoteParticipants.values()).find(
-        (participant) => getACSId(participant.identifier) === userId
-      )?.videoStreams;
+      const participant = Array.from(callState.remoteParticipants.values()).find(
+        (participant) => toFlatCommunicationIdentifier(participant.identifier) === userId
+      );
 
-      if (!streams) return;
+      if (!participant || !participant.videoStreams) {
+        return;
+      }
 
-      const remoteVideoStream = Array.from(streams?.values()).find((i) => i.mediaStreamType === 'Video');
-      const screenShareStream = Array.from(streams?.values()).find((i) => i.mediaStreamType === 'ScreenSharing');
+      const remoteVideoStream = Array.from(participant.videoStreams.values()).find(
+        (i) => i.mediaStreamType === 'Video'
+      );
+      const screenShareStream = Array.from(participant.videoStreams.values()).find(
+        (i) => i.mediaStreamType === 'ScreenSharing'
+      );
 
       if (remoteVideoStream && remoteVideoStream.isAvailable && !remoteVideoStream.videoStreamRendererView) {
-        callClient.startRenderVideo(call.id, remoteVideoStream, options);
+        callClient.createView(call.id, participant.identifier, remoteVideoStream, options);
       }
 
       if (screenShareStream && screenShareStream.isAvailable && !screenShareStream.videoStreamRendererView) {
-        callClient.startRenderVideo(call.id, screenShareStream, options);
+        callClient.createView(call.id, participant.identifier, screenShareStream, options);
       }
     };
 
     const onParticipantRemove = (userId: string): void => {
-      call?.removeParticipant({ communicationUserId: userId });
+      call?.removeParticipant(fromFlatCommunicationIdentifier(userId));
     };
 
     return {
@@ -184,28 +199,22 @@ export const createDefaultCallingHandlers = memoizeOne(
       onSelectMicrophone,
       onSelectSpeaker,
       onStartCall,
+      onStartScreenShare,
+      onStopScreenShare,
       onToggleCamera,
       onToggleMicrophone,
       onToggleScreenShare,
       onCreateLocalStreamView,
       onCreateRemoteStreamView,
-      onParticipantRemove
+      onParticipantRemove,
+      onStartLocalVideo
     };
   }
 );
 
-const isPreviewOn = (deviceManager: DeviceManager): boolean => {
+const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
   return !!deviceManager.unparentedViews && !!deviceManager.unparentedViews[0]?.target;
 };
-
-/**
- * Type guard for common properties between two types.
- */
-export type CommonProperties1<A, B> = {
-  [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
-}[keyof A & keyof B];
-
-type Common<A, B> = Pick<A, CommonProperties1<A, B>>;
 
 /**
  * Create a set of default handlers for given component. Memoization is applied to the result. Multiple invokations with

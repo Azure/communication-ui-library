@@ -7,7 +7,7 @@ import { Spinner, SpinnerSize } from '@fluentui/react';
 import { fullScreenStyle, hiddenFullScreenStyle, loadingStyle } from './styles/MediaFullScreen.styles';
 
 import { ParticipantStream } from '../../types/ParticipantStream';
-import { getACSId } from '../../utils';
+import { getACSId } from './utils/SDKUtils';
 
 export interface MediaFullScreenProps {
   activeScreenShareStream: ParticipantStream;

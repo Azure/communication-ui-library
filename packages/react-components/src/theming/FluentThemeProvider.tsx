@@ -33,11 +33,10 @@ const initialFluentNorthstarTheme = mergeThemes(teamsTheme, {
 });
 
 /**
- * @description Provider to apply theme ACS UI SDK core components. ACS UI SDK core components are built
- * with components mostly from [Fluent UI](https://developer.microsoft.com/en-us/fluentui#/controls/web)
- * and a few from [Fluent React Northstar](https://fluentsite.z22.web.core.windows.net/0.53.0). So we
- * theme from Fluent UI is used to align the few components from Fluent React Northstar.
- * @param props - FluentThemeProviderProps
+ * @description Provider to apply a Fluent theme across this library's react components.
+ * @remarks Components in this library are composed primarily from [Fluent UI](https://developer.microsoft.com/en-us/fluentui#/controls/web),
+ * controls, and also from [Fluent React Northstar](https://fluentsite.z22.web.core.windows.net/0.53.0) controls.
+ * This provider handles applying any theme provided to both the underlying Fluent UI controls, as well as the Fluent React Northstar controls.
  */
 export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Element => {
   const { fluentTheme, children } = props;

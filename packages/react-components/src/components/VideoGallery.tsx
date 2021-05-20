@@ -1,19 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Label, Stack } from '@fluentui/react';
+import { Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
-import { disabledVideoHint, gridStyle, videoHint, videoTileStyle } from './styles/VideoGallery.styles';
 import {
-  VideoGalleryRemoteParticipant,
-  VideoGalleryLocalParticipant,
   BaseCustomStylesProps,
+  VideoGalleryLocalParticipant,
+  VideoGalleryRemoteParticipant,
   VideoStreamOptions
 } from '../types';
 import { GridLayout } from './GridLayout';
 import { StreamMedia } from './StreamMedia';
-import { VideoTile } from './VideoTile';
-import { memoizeFnAll } from './utils/memoizeFnAll';
+import { gridStyle, videoTileStyle } from './styles/VideoGallery.styles';
+import { memoizeFnAll } from 'acs-ui-common';
+import { VideoTile, PlaceholderProps } from './VideoTile';
 
 export interface VideoGalleryProps {
   styles?: BaseCustomStylesProps;
@@ -22,10 +22,11 @@ export interface VideoGalleryProps {
   localVideoViewOption?: VideoStreamOptions;
   remoteVideoViewOption?: VideoStreamOptions;
   onCreateLocalStreamView?: (options?: VideoStreamOptions | undefined) => Promise<void>;
-  onDisposeLocalStreamView?: () => Promise<void>;
+  onDisposeLocalStreamView?: () => void;
   onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
   onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
   onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
+  onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
 }
 
 // @todo: replace with React.memo method
@@ -36,7 +37,8 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
     isAvailable?: boolean,
     renderElement?: HTMLElement,
     displayName?: string,
-    remoteVideoViewOption?: VideoStreamOptions
+    remoteVideoViewOption?: VideoStreamOptions,
+    onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element
   ): JSX.Element => {
     if (isAvailable && !renderElement) {
       onCreateRemoteStreamView && onCreateRemoteStreamView(userId, remoteVideoViewOption);
@@ -44,13 +46,13 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
     return (
       <Stack className={gridStyle} key={userId} grow>
         <VideoTile
+          userId={userId}
           isVideoReady={isAvailable}
           renderElement={<StreamMedia videoStreamElement={renderElement ?? null} />}
           displayName={displayName}
           styles={videoTileStyle}
-        >
-          <Label className={isAvailable ? videoHint : disabledVideoHint}>{displayName}</Label>
-        </VideoTile>
+          onRenderPlaceholder={onRenderAvatar}
+        />
       </Stack>
     );
   }
@@ -66,7 +68,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onRenderRemoteVideoTile,
     onCreateLocalStreamView,
     onCreateRemoteStreamView,
-    styles
+    styles,
+    onRenderAvatar
   } = props;
 
   /**
@@ -83,13 +86,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     }
     return (
       <VideoTile
+        userId={localParticipant.userId}
         isVideoReady={isLocalVideoReady}
         renderElement={<StreamMedia videoStreamElement={localVideoStream?.renderElement ?? null} />}
         displayName={localParticipant?.displayName}
         styles={videoTileStyle}
-      >
-        <Label className={isLocalVideoReady ? videoHint : disabledVideoHint}>{localParticipant?.displayName}</Label>
-      </VideoTile>
+        onRenderPlaceholder={onRenderAvatar}
+      />
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localParticipant, localParticipant.videoStream, onCreateLocalStreamView]);

@@ -2,4 +2,5 @@
 // Licensed under the MIT license.
 
 export * from './composites/ChatComposite';
-export type { CommunicationUiErrorInfo, CommunicationUiErrorCode } from './types';
+export * from './composites/CallComposite';
+export type { CommunicationUiErrorInfo, CommunicationUiErrorCode, CommunicationUiErrorSeverity } from './types';

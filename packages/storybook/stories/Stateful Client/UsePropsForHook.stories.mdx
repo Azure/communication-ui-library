@@ -1,0 +1,34 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
+
+<Meta title="Stateful Client/React Hooks/UsePropsFor" />
+
+# usePropsFor() <a name="usePropsFor"></a>
+
+```tsx
+const result: any = usePropsFor(component: React.FunctionalComponent);
+```
+
+If you are using React Component from our communication-react components, usePropsFor is the go-to hook. It provides all the required props to power a feature component. It subscribes to state changes of stateful clients, gets props designed for your component, and triggers a new re-render whenever the props change.
+
+Check [feature component list]() for supported components.
+
+### _usePropsFor_ Example
+
+```tsx
+import React from 'react';
+import { MessageThread } from '@azure/acs-chat-component';
+import { useSelector } from '@azure/acs-chat-selector';
+
+export const ChatScreen = () => {
+  const props = usePropsFor(MessageThread);
+  return <MessageThread {...props} />;
+};
+```
+
+### Under the hood of usePropsFor()
+
+usePropsFor() is a function that provides all you need to run a component in our library. It combines 2 tasks for generating the component's props for you:
+
+1. Finds the right selector designed for the component, then call useSelector()
+2. Constructs a set of handlers tailored for the component

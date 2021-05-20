@@ -13,17 +13,19 @@ function TestCallClientComponent(props: DefaultCallingHandlers): ReactElement | 
 }
 
 class MockCallClient {
-  state: any;
+  getState(): any {
+    throw new Error('Method not implemented.');
+  }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onStateChange(handler: (state: any) => void): void {
     throw new Error('Method not implemented.');
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  startRenderVideo(callId: string, stream: any, options?: any): Promise<void> {
+  createView(callId: string, participantId: any, stream: any, options?: any): Promise<void> {
     throw new Error('Method not implemented.');
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  stopRenderVideo(callId: string, stream: any): void {
+  disposeView(callId: string, participantId: any, stream: any): void {
     throw new Error('Method not implemented.');
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
