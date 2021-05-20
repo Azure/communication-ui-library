@@ -10,6 +10,9 @@ import { CommunicationIdentifier } from '@azure/communication-common';
 export type CallbackType<KeyT, ArgsT extends any[], FnRetT> = (memoizedFn: FunctionWithKey<KeyT, ArgsT, FnRetT>) => FnRetT[];
 
 // @public (undocumented)
+export type Common<A, B> = Pick<A, CommonProperties<A, B>>;
+
+// @public (undocumented)
 export type CommonProperties<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
