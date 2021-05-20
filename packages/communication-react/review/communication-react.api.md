@@ -1404,15 +1404,13 @@ export interface VideoStreamRendererView {
 export const VideoTile: (props: VideoTileProps) => JSX.Element;
 
 // @public
-export interface VideoTileProps {
+export interface VideoTileProps extends PlaceholderProps {
     children?: React_2.ReactNode;
-    displayName?: string;
     isMirrored?: boolean;
     isVideoReady?: boolean;
-    noVideoAvailableAriaLabel?: string;
     onRenderPlaceholder?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element | null;
     renderElement?: JSX.Element | null;
-    showDisplayName?: boolean;W
+    showDisplayName?: boolean;
     styles?: VideoTileStylesProps;
 }
 

@@ -17,7 +17,7 @@ const onRenderPlaceholder = (): JSX.Element => {
         <CallVideoOffIcon />
       </Stack.Item>
       <Stack.Item align="center">
-        <Text className={cameraOffLabelStyle}>Your camera is turned off</Text>
+        <Text className={cameraOffLabelStyle}>Your camera is turned off.</Text>
       </Stack.Item>
     </Stack>
   );
