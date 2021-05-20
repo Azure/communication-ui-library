@@ -23,6 +23,7 @@ export default {
 } as Meta;
 
 export { BasicCanvas } from './snippets/BasicCanvas.snippet';
+export { ExternalCallCanvas } from './snippets/ExternalCallCanvas.snippet';
 export { DataModelCanvas } from './snippets/DataModelCanvas.snippet';
 export { ThemesCanvas } from './snippets/ThemesCanvas.snippet';
 
@@ -58,6 +59,13 @@ const getDocs: () => JSX.Element = () => {
         themes canvas](./?path=/story/composites-call--themes-canvas) to see theming in action or the [overall theming
         example](./?path=/docs/examples-themes--teams-theme-component) to see how theming works for all the components
         in this UI library.
+      </Description>
+
+      <Heading>Joining an existing Call</Heading>
+      <Description>
+        The [external call canvas](./?path=/story/composites-call--external-call-canvas) provides an easy playground to
+        join an existing Azure Communication Services group call or an existing Teams meeting. This is useful if you
+        want to explore the composite with multiple users.
       </Description>
     </>
   );

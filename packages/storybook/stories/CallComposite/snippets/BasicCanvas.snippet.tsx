@@ -27,6 +27,7 @@ export const BasicCanvas: () => JSX.Element = () => {
     fetchPrerequisites();
   }, [knobs]);
 
+  console.log(prerequisites);
   return (
     <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
       {prerequisites ? (

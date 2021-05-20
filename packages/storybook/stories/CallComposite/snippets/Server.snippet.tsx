@@ -9,7 +9,6 @@ export const createUserAndGroup = async (resourceConnectionString: string): Prom
   return {
     token: user.token,
     endpointUrl: new URL(resourceConnectionString.replace('endpoint=', '').split(';')[0]).toString(),
-    userId: user.user.communicationUserId,
 
     // Contoso creates a group call and provides the group ID to the client application.
     // Alternatively, the client application could join an existing teams meeting.

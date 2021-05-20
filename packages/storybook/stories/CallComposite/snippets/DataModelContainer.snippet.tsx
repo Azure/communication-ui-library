@@ -5,7 +5,6 @@ import { CallComposite, CallAdapter, createAzureCommunicationCallAdapter } from 
 export type ContainerProps = {
   endpointUrl: string;
   token: string;
-  userId: string;
   groupId: string;
   displayName: string;
   avatarInitials: string;
@@ -15,7 +14,7 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
   const [adapter, setAdapter] = useState<CallAdapter>();
 
   useEffect(() => {
-    if (props.token && props.userId && props.groupId) {
+    if (props.token && props.groupId) {
       const createAdapter = async (): Promise<void> => {
         setAdapter(await createAzureCommunicationCallAdapter(props.token, props.groupId, props.displayName));
       };
