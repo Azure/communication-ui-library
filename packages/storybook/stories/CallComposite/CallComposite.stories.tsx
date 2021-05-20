@@ -23,6 +23,7 @@ export default {
 } as Meta;
 
 export { BasicCanvas } from './snippets/BasicCanvas.snippet';
+export { DataModelCanvas } from './snippets/DataModelCanvas.snippet';
 export { ThemesCanvas } from './snippets/ThemesCanvas.snippet';
 
 const getDocs: () => JSX.Element = () => {
