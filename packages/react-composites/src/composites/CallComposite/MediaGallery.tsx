@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useMemo, useState, useEffect } from 'react';
-import { VideoGallery, VideoStreamOptions } from 'react-components';
+import { VideoGallery, PlaceholderProps, VideoStreamOptions } from 'react-components';
 import { useSelector } from './hooks/useSelector';
 import { usePropsFor } from './hooks/usePropsFor';
 import { ScreenShare } from './ScreenShare';
@@ -27,6 +27,7 @@ export interface MediaGalleryProps {
   isVideoStreamOn?: boolean;
   isMicrophoneChecked?: boolean;
   onStartLocalVideo: () => Promise<void>;
+  onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
 }
 
 export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
@@ -52,9 +53,10 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         localVideoViewOption={localVideoViewOption}
         remoteVideoViewOption={remoteVideoViewOption}
         styles={VideoGalleryStyles}
+        onRenderAvatar={props.onRenderAvatar}
       />
     );
-  }, [videoGalleryProps]);
+  }, [props.onRenderAvatar, videoGalleryProps]);
 
   return isScreenShareActive ? <ScreenShare {...videoGalleryProps} /> : VideoGalleryMemoized;
 };
