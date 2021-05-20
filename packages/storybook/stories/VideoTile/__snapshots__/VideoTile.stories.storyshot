@@ -20,28 +20,28 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Tile Video Tile
       }
     >
       <div
-        className="ms-Stack css-4"
+        className="ms-Stack css-5"
       >
         <div
-          className="ms-Stack css-5"
+          className="ms-Stack css-6"
         >
           <div
-            className="ms-Stack css-7"
+            className="ms-Stack css-8"
           >
             <div
-              className="ms-Persona ms-Persona--size100 root-8"
+              className="ms-Persona ms-Persona--size100 root-9"
             >
               <div
-                className="ms-Persona-coin ms-Persona--size100 coin-15"
+                className="ms-Persona-coin ms-Persona--size100 coin-16"
                 role="presentation"
               >
                 <div
-                  className="ms-Persona-imageArea imageArea-17"
+                  className="ms-Persona-imageArea imageArea-18"
                   role="presentation"
                 >
                   <div
                     aria-hidden="true"
-                    className="ms-Persona-initials initials-20"
+                    className="ms-Persona-initials initials-21"
                   >
                     <span>
                       JK
@@ -52,6 +52,11 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Tile Video Tile
             </div>
           </div>
         </div>
+        <span
+          className="css-78 css-24"
+        >
+          John Krasinski
+        </span>
       </div>
     </div>
   </div>

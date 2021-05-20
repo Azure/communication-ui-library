@@ -4,16 +4,19 @@
 import { Stack } from '@fluentui/react';
 import React, { useEffect } from 'react';
 import { StreamMedia, VideoTile } from 'react-components';
-import { OutgoingCallControlBarComponent } from '../common/CallControls';
-import { MapToLocalVideoProps } from '../../consumers';
-import { useCallContext, useCallingContext } from '../../providers';
-import { MapToCallControlBarProps } from '../common/consumers/MapToCallControlBarProps';
-import { useMicrophone } from '../../hooks';
+import { OutgoingCallControlBarComponent } from './CallControls';
+import { MapToCallControlBarProps } from './consumers/MapToCallControlBarProps';
+import { MapToLocalVideoProps } from './consumers/MapToVideoProps';
+import { useMicrophone } from './hooks/useMicrophone';
+import { useCallingContext } from './providers/CallingProvider';
+import { useCallContext } from './providers/CallProvider';
 
 export interface OutgoingCallScreenProps {
   callState: string;
   endCallHandler: () => void;
 }
+
+const renderEmptyPlaceholder = (): JSX.Element => <></>;
 
 export const OutgoingCallScreen = (props: OutgoingCallScreenProps): JSX.Element => {
   const { callState, endCallHandler } = props;
@@ -42,9 +45,9 @@ export const OutgoingCallScreen = (props: OutgoingCallScreenProps): JSX.Element 
   return (
     <VideoTile
       styles={{ root: { height: '100%', width: '100%' }, videoContainer: { zIndex: -1 } }}
-      videoProvider={<StreamMedia videoStreamElement={videoStreamElement} />}
+      renderElement={<StreamMedia videoStreamElement={videoStreamElement} />}
       isVideoReady={isVideoReady}
-      placeholderProvider={<></>}
+      onRenderPlaceholder={renderEmptyPlaceholder}
     >
       <Stack style={{ width: '100%', height: '100%', background: 'rgb(0, 0, 0, 0.5)' }}>
         <p

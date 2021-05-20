@@ -1,26 +1,27 @@
-import { FluentThemeProvider, StreamMedia, VideoTile } from '@azure/communication-react';
+import { FluentThemeProvider, StreamMedia, VideoTile, VideoTileStylesProps } from '@azure/communication-react';
 import React from 'react';
 import { renderVideoStream } from '../../utils';
 
 export const VideoTileExample: () => JSX.Element = () => {
-  const customStyles = {
+  const customStyles: VideoTileStylesProps = {
     root: { height: '300px', width: '400px' },
     videoContainer: { border: '5px solid firebrick' },
-    overlayContainer: { background: 'rgba(165, 13, 13, 0.5)' }
+    overlayContainer: { background: 'rgba(165, 13, 13, 0.5)' },
+    displayNameContainer: { top: '1rem', bottom: 'auto', right: '1rem', left: 'auto', backgroundColor: 'blue' }
   };
 
   return (
     <FluentThemeProvider>
       <VideoTile
         isVideoReady={true}
-        videoProvider={
+        renderElement={
           // NOTE: Replace with your own video provider. (An html element with video stream)
           <StreamMedia videoStreamElement={renderVideoStream()} />
         }
-        avatarName={'Jack Reacher'}
+        displayName={'Jack Reacher'}
         isMirrored={true}
         styles={customStyles}
-      ></VideoTile>
+      />
     </FluentThemeProvider>
   );
 };

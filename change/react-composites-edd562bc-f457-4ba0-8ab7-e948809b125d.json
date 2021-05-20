@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add event support for chat composite",
+  "packageName": "react-composites",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}

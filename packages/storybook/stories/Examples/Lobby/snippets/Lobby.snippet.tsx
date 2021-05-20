@@ -9,6 +9,8 @@ export interface LobbyProps {
   callStateText: string;
 }
 
+const renderEmptyElement = (): JSX.Element => <></>;
+
 export const Lobby = (props: LobbyProps): JSX.Element => {
   const theme = useTheme();
   const palette = theme.palette;
@@ -23,11 +25,11 @@ export const Lobby = (props: LobbyProps): JSX.Element => {
       styles={videoTileStyles}
       isMirrored={true}
       isVideoReady={props.isVideoReady}
-      videoProvider={
+      renderElement={
         // Replace with your own video provider.
         <StreamMedia videoStreamElement={renderVideoStream()} />
       }
-      placeholderProvider={<></>}
+      onRenderPlaceholder={renderEmptyElement}
     >
       <div
         style={{

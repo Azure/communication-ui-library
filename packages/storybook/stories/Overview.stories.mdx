@@ -1,9 +1,41 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
+import { Stack } from '@fluentui/react';
 
 <Meta title="Overview" />
 
-# UI Library Overview
+<Stack horizontal horizontalAlign="space-between" style={{ backgroundColor: '#EFF6FC', padding: '2.25rem' }}>
+  <Stack.Item align="center">
+    <h2
+      style={{
+        fontFamily: '"Segoe UI", sans-serif',
+        color: 'rgba(0,0,0,.5)',
+        fontSize: '1.125rem',
+        fontWeight: '500',
+        border: 'none',
+        margin: '0rem 0rem 0.25rem 0rem',
+        lineHeight: '1.5rem'
+      }}
+    >
+      Azure Communication Services
+    </h2>
+    <h1
+      style={{
+        fontFamily: '"Segoe UI", sans-serif',
+        color: '#0078D4',
+        fontWeight: '600',
+        fontSize: '2rem',
+        margin: '0rem',
+        lineHeight: '2.5rem'
+      }}
+    >
+      UI Library
+    </h1>
+  </Stack.Item>
+  <Stack.Item align="center">
+    <img src="images/hero.png" alt="UI Library hero image" style={{ maxHeight: '18.75rem' }} />
+  </Stack.Item>
+</Stack>
 
 Azure Communication Services - UI Library makes it easy for you to build modern communications user experiences using Azure Communication Services.
 It gives you a library of production-ready UI components that you can drop into your applications:
@@ -29,7 +61,7 @@ Stateful clients are found as part of the `@azure/communication-react` package.
 npm i --save @azure/communication-react
 ```
 
-## Composites overview
+## Composites Overview
 
 Composites are higher-level components composed of UI components that deliver turn-key solutions for common communication scenarios using Azure Communication Services.
 Developers can easily instantiate the Composite using an Azure Communication Services access token and the required configuration attributed for call or chat.
@@ -39,24 +71,23 @@ Developers can easily instantiate the Composite using an Azure Communication Ser
 | [Group Calling](/?path=/docs/composites-groupcall--group-call-composite) | Calling experience that allows users to start or join a call. Inside the experience users can configure their devices, participate in the call with video and see other participants, including those with video turn on. For Teams Interop is includes lobby functionality for user to wait to be admitted. |
 | [Group Chat](/?path=/docs/composites-groupchat--group-chat-composite)    | Chat experience where user can send and receive messages. Thread events like typing, reads, participants entering and leaving are displayed to the user as part of the chat thread.                                                                                                                          |
 
-## UI Component overview
+## UI Component Overview
 
 Pure UI Components that can be leveraged by developers to compose communication experiences, from stitching video tiles into a grid to showcase remote participants, to organizing components to fit your applications specifications.
 UI Components support customization to give the components the right feel and look to match an applications branding and style.
 
-| Area    | Component                                                                                   | Description                                                                                        |
-| ------- | ------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| Calling | [Grid Layout](/?path=/story/ui-components-gridlayout--grid-layout-component)                | Grid component to organize Video Tiles into an NxN grid                                            |
-|         | [Video Tile](/?path=/story/ui-components-videotile--video-tile-component)                   | Component that displays video stream when available and a default static component when not        |
-|         | [Control Bar](/?path=/story/ui-components-controlbar--control-bar-component)                | Container to organize DefaultButtons to hook up to specific call actions like mute or share screen |
-| Chat    | [Message Thread](/?path=/story/ui-components-messagethread--message-thread-component)       | Container that renders chat messages, system messages and custom messages                          |
-|         | [Send Box](/?path=/story/ui-components-sendbox--send-box-component)                         | Text input component with a discrete send button                                                   |
-|         | [Read Receipt](/?path=/story/ui-components-readreceipt--read-reciept-icon-component)        | Multi-state read receipt component to show state of sent message                                   |
-|         | [Typing indicator](/?path=/story/ui-components-typingindicator--typing-indicator-component) | Text component to render the participants who are actively typing on a thread                      |
-| Common  | [Participant Item](/?path=/story/ui-components-participantitem--participant-item-component) | Common component to render a call or chat participant including avatar and display name            |
-|         | [Error Bar](/?path=/story/ui-components-errorbar--error-bar-component)                      | Common error bar with multiple built-in states to show user events                                 |
+| Area    | Component                                                                                                          | Description                                                                                        |
+| ------- | ------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------- |
+| Calling | [Grid Layout](/?path=/story/ui-components-gridlayout--grid-layout-component)                                       | Grid component to organize Video Tiles into an NxN grid                                            |
+|         | [Video Tile](/?path=/story/ui-components-videotile--video-tile-component)                                          | Component that displays video stream when available and a default static component when not        |
+|         | [Control Bar](/?path=/story/ui-components-controlbar--control-bar-component)                                       | Container to organize DefaultButtons to hook up to specific call actions like mute or share screen |
+| Chat    | [Message Thread](/?path=/story/ui-components-messagethread--message-thread-component)                              | Container that renders chat messages, system messages and custom messages                          |
+|         | [Send Box](/?path=/story/ui-components-sendbox--send-box-component)                                                | Text input component with a discrete send button                                                   |
+|         | [Message Status Indicator](/?path=/story/ui-components-messagestatusindicator--message-status-indicator-component) | Multi-state message status indicator component to show status of sent message                      |
+|         | [Typing indicator](/?path=/story/ui-components-typingindicator--typing-indicator-component)                        | Text component to render the participants who are actively typing on a thread                      |
+| Common  | [Participant Item](/?path=/story/ui-components-participantitem--participant-item-component)                        | Common component to render a call or chat participant including avatar and display name            |
 
-## What UI artifact is best for my project?
+## What UI Artifact is Best for my Project?
 
 Understanding these requirements will help you choose the right client library:
 

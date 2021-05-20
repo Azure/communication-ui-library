@@ -9,7 +9,8 @@ initTelemetry();
 addons.setConfig({
   theme: create({
     base: 'light',
-    brandTitle: 'Azure Communication Services - UI Library'
+    brandTitle: 'Azure Communication Services - UI Library',
+    brandImage: './images/sidebar-header.png'
   }),
   enableShortcuts: false
 });
@@ -19,8 +20,8 @@ addons.register('toolbar', () => {
     title: 'Theme',
     //👇 Sets the type of UI element in Storybook
     type: types.TOOL,
-    //👇 Shows the Toolbar UI element if either the Canvas or Docs tab is active
-    match: ({ viewMode }) => !!(viewMode && viewMode.match(/^(story|docs)$/)),
+    //👇 Shows the Toolbar UI element only when Canvas tab is active. Also excluding it from teams theme story.
+    match: ({ viewMode, storyId }) => !!(viewMode && viewMode.match(/^(story)$/)) && !!(storyId && !storyId.match(/(teams-theme-component)$/)),
     render: ({ active }) => <ThemeToolTipWithPanel active={active} />
   });
 });

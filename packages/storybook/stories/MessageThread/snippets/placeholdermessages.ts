@@ -17,7 +17,8 @@ export const GetHistoryChatMessages = (): ChatMessage[] => {
         createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
         mine: true,
         attached: false,
-        status: 'seen' as MessageStatus
+        status: 'seen' as MessageStatus,
+        type: 'text'
       }
     },
     {
@@ -29,7 +30,8 @@ export const GetHistoryChatMessages = (): ChatMessage[] => {
         content: 'Nice! This looks great!',
         createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
         mine: false,
-        attached: false
+        attached: false,
+        type: 'text'
       }
     },
     {
@@ -41,7 +43,8 @@ export const GetHistoryChatMessages = (): ChatMessage[] => {
         content: "Yeah agree, let's chat here from now on!",
         createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
         mine: false,
-        attached: false
+        attached: false,
+        type: 'text'
       }
     }
   ];

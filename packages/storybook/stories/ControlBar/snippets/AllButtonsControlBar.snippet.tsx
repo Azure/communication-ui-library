@@ -5,11 +5,9 @@ import {
   FluentThemeProvider,
   MicrophoneButton,
   OptionsButton,
-  ScreenShareButton,
-  answerButtonProps,
-  recordButtonProps
+  ScreenShareButton
 } from '@azure/communication-react';
-import { DefaultButton, IContextualMenuProps } from '@fluentui/react';
+import { IContextualMenuProps } from '@fluentui/react';
 import React from 'react';
 
 export const AllButtonsControlBarExample: () => JSX.Element = () => {
@@ -38,18 +36,6 @@ export const AllButtonsControlBarExample: () => JSX.Element = () => {
           }}
         />
         <ScreenShareButton
-          onClick={() => {
-            /*handle onClick*/
-          }}
-        />
-        <DefaultButton
-          {...recordButtonProps}
-          onClick={() => {
-            /*handle onClick*/
-          }}
-        />
-        <DefaultButton
-          {...answerButtonProps}
           onClick={() => {
             /*handle onClick*/
           }}

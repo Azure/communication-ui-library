@@ -4,7 +4,7 @@
 import { AzureCommunicationTokenCredential, CommunicationTokenRefreshOptions } from '@azure/communication-common';
 
 import preval from 'preval.macro';
-import { GUID_FOR_INITIAL_TOPIC_NAME } from 'react-composites';
+import { GUID_FOR_INITIAL_TOPIC_NAME } from './constants';
 
 export const getBuildTime = (): string => {
   const dateTimeStamp = preval`module.exports = new Date().toLocaleString();`;

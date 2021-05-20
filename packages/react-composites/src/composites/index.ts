@@ -2,6 +2,6 @@
 // Licensed under the MIT license.
 
 export * from './ChatComposite';
-export * from './GroupCall';
+export * from './CallComposite';
 export * from './OneToOneCall';
-export * from './common';
+export { ErrorBar } from './common';

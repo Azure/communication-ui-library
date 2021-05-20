@@ -238,32 +238,37 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
                           </div>
                         </div>
                         <div
-                          className="ms-Stack css-120 css-48"
+                          className="ms-Stack css-122 css-48"
                         >
                           <div
-                            className="ms-Stack css-51"
+                            className="ms-Stack css-52"
                           >
                             <div
-                              className="ms-Stack css-52"
+                              className="ms-Stack css-53"
                             >
                               <div
                                 className="css-70"
                               />
                             </div>
+                            <span
+                              className="css-79 css-54"
+                            >
+                              John Doe
+                            </span>
                           </div>
                         </div>
                       </div>
                       <div
-                        className="ms-Dialog-actions actions-53"
+                        className="ms-Dialog-actions actions-55"
                       >
                         <div
-                          className="ms-Dialog-actionsRight actionsRight-55"
+                          className="ms-Dialog-actionsRight actionsRight-57"
                         >
                           <span
-                            className="ms-Dialog-action action-54"
+                            className="ms-Dialog-action action-56"
                           >
                             <button
-                              className="ms-Button ms-Button--default root-56"
+                              className="ms-Button ms-Button--default root-58"
                               data-is-focusable={true}
                               onClick={[Function]}
                               onKeyDown={[Function]}
@@ -314,10 +319,10 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
                             </button>
                           </span>
                           <span
-                            className="ms-Dialog-action action-54"
+                            className="ms-Dialog-action action-56"
                           >
                             <button
-                              className="ms-Button ms-Button--default root-56"
+                              className="ms-Button ms-Button--default root-58"
                               data-is-focusable={true}
                               onClick={[Function]}
                               onKeyDown={[Function]}
@@ -341,7 +346,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
                                   className="ms-Button-textContainer textContainer-23"
                                 >
                                   <span
-                                    className="ms-Button-label label-57"
+                                    className="ms-Button-label label-59"
                                     id="id__8"
                                   >
                                     Accept
@@ -351,10 +356,10 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
                             </button>
                           </span>
                           <span
-                            className="ms-Dialog-action action-54"
+                            className="ms-Dialog-action action-56"
                           >
                             <button
-                              className="ms-Button ms-Button--default root-56"
+                              className="ms-Button ms-Button--default root-58"
                               data-is-focusable={true}
                               onClick={[Function]}
                               onKeyDown={[Function]}
@@ -378,7 +383,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
                                   className="ms-Button-textContainer textContainer-23"
                                 >
                                   <span
-                                    className="ms-Button-label label-57"
+                                    className="ms-Button-label label-59"
                                     id="id__11"
                                   >
                                     Decline
@@ -437,10 +442,10 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
         className="ms-Stack css-2"
       >
         <div
-          className="ms-Stack css-116 css-3"
+          className="ms-Stack css-118 css-3"
         >
           <div
-            className="ms-Stack css-117 css-4"
+            className="ms-Stack css-119 css-4"
           >
             <div
               aria-label="John Doe"
@@ -504,7 +509,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
             className="ms-Stack css-21"
           >
             <button
-              className="ms-Button ms-Button--default css-119 root-22"
+              className="ms-Button ms-Button--default css-121 root-22"
               data-is-focusable={true}
               onClick={[Function]}
               onKeyDown={[Function]}
@@ -542,7 +547,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
               </span>
             </button>
             <button
-              className="ms-Button ms-Button--default css-118 root-22"
+              className="ms-Button ms-Button--default css-120 root-22"
               data-is-focusable={true}
               onClick={[Function]}
               onKeyDown={[Function]}

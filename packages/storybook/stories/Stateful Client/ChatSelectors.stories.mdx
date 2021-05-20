@@ -44,7 +44,7 @@ const threadId = 'CHAT_THREAD_ID';
 const chatParticipantProps = chatParticipantListSelector(state, { threadId });
 
 const Participants = chatParticipantProps.chatParticipants.map((participant: CommunicationParticipant) => (
-  <ParticipantItem key={participant.userId} name={participant.displayName as string} />
+  <ParticipantItem key={participant.userId} displayName={participant.displayName as string} />
 ));
 ```
 

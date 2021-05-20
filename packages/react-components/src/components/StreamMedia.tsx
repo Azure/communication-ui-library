@@ -12,7 +12,7 @@ import { mergeStyles } from '@fluentui/react';
 export interface StreamMediaProps {
   /** Video stream element to render. */
   videoStreamElement: HTMLElement | null;
-  /** Decides whether invert the video or not. */
+  /** Decides whether to mirror the video or not. */
   isMirrored?: boolean;
   /**
    * Allows users to pass in an object contains custom CSS styles.

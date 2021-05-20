@@ -1,12 +1,4 @@
 {
   "extends": "../../common/config/api-extractor/api-extractor.json",
-  "messages": {
-    // remove override when ae-forgotten-exports are fixed
-    "extractorMessageReporting": {
-      "ae-forgotten-export": {
-        "logLevel": "error",
-        "addToApiReportFile": true
-      }
-    }
-  }
+  "mainEntryPointFilePath": "<projectFolder>/dist/dist-esm/index.release.d.ts"
 }

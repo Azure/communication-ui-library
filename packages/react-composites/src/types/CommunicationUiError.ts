@@ -3,6 +3,12 @@
 
 import { ErrorInfo } from 'react';
 
+/**
+ * Severity is a rating provided by UI on the impact of the error. It can be used as a rough metric for decision making.
+ * If using ErrorBar component, a INFO, WARNING, or ERROR severity will cause the message to be displayed in ErrorBar.
+ */
+export type CommunicationUiErrorSeverity = 'info' | 'warning' | 'error' | 'ignore';
+
 export enum CommunicationUiErrorCode {
   UNKNOWN_ERROR, // Any error we don't know about that may happen unexpectedly.
   CONFIGURATION_ERROR, // Errors related to configuration issue such as invalid connectionString.
@@ -36,16 +42,11 @@ export enum CommunicationUiErrorCode {
   RENDER_REMOTE_VIDEO_ERROR, // Renderer.createView() threw an error.
   RENDER_LOCAL_VIDEO_ERROR, // Renderer.createView() threw an error.
   CREATE_CALL_AGENT_ERROR, // CallClient.createCallAgent() threw an error.
+  CREATE_DEVICE_MANAGER_ERROR, // CallClient.createCallAgent() threw an error.
   DISPOSE_CALL_AGENT_ERROR, // CallAgent.dispose() threw an error.
   JOIN_CALL_ERROR, // CallAgent.join() threw an error.
   LEAVE_CALL_ERROR // CallAgent.hangup() threw an error or no call exists.
 }
-
-/**
- * Severity is a rating provided by UI on the impact of the error. It can be used as a rough metric for decision making.
- * If using ErrorBar component, a INFO, WARNING, or ERROR severity will cause the message to be displayed in ErrorBar.
- */
-export type CommunicationUiErrorSeverity = 'info' | 'warning' | 'error' | 'ignore';
 
 export interface CommunicationUiErrorInfo {
   message: string;

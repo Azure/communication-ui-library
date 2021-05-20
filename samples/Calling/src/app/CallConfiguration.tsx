@@ -14,8 +14,9 @@ import { LocalPreview } from './LocalPreview';
 
 export interface CallConfigurationProps {
   screenWidth: number;
-  startCallHandler(): void;
   children: React.ReactNode;
+  isMicrophoneOn: boolean;
+  setIsMicrophoneOn: (isEnabled: boolean) => void;
 }
 
 export const CallConfiguration = (props: CallConfigurationProps): JSX.Element => {
@@ -31,7 +32,7 @@ export const CallConfiguration = (props: CallConfigurationProps): JSX.Element =>
         tokens={screenWidth > 750 ? configurationStackTokens : undefined}
         grow
       >
-        <LocalPreview />
+        <LocalPreview {...props} />
         <Stack className={localSettingsContainerStyle}>{props.children}</Stack>
       </Stack>
     </Stack>

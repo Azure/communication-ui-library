@@ -6,17 +6,22 @@ export * from './theming';
 
 export type {
   BaseCustomStylesProps,
-  CommunicationUiErrorSeverity,
   ChatMessage,
   ChatMessagePayload,
   CustomMessage,
   CustomMessagePayload,
   Message,
   MessageAttachedStatus,
+  MessageContentType,
   MessageStatus,
   MessageTypes,
   SystemMessage,
   SystemMessagePayload,
-  CommunicationParticipant
+  CommunicationParticipant,
+  CallParticipant,
+  VideoStreamOptions,
+  VideoGalleryParticipant,
+  VideoGalleryStream,
+  VideoGalleryLocalParticipant,
+  VideoGalleryRemoteParticipant
 } from './types';
-export * from './types/GalleryParticipant';

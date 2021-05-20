@@ -20,6 +20,7 @@ import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier }
 import EventEmitter from 'events';
 import { callAgentDeclaratify } from './CallAgentDeclarative';
 import { CallContext, MAX_CALL_HISTORY_LENGTH } from './CallContext';
+import { DeclarativeCall } from './CallDeclarative';
 import { InternalCallContext } from './InternalCallContext';
 import {
   createMockCall,
@@ -59,6 +60,55 @@ class MockCallAgent implements CallAgent {
   calls: MockCall[] = [];
   displayName = undefined;
   emitter = new EventEmitter();
+
+  startCall(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    options?: StartCallOptions
+  ): Call {
+    const remoteParticipant = createMockRemoteParticipant(mockRemoteParticipantId);
+    const call = createMockCall(mockCallId);
+    call.remoteParticipants = [remoteParticipant];
+    return call;
+  }
+  join(groupLocator: GroupLocator, options?: JoinCallOptions): Call;
+  join(groupChatCallLocator: GroupChatCallLocator, options?: JoinCallOptions): Call;
+  join(meetingLocator: MeetingLocator, options?: JoinCallOptions): Call;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  join(meetingLocator: any, options?: any): Call {
+    const remoteParticipant = createMockRemoteParticipant(mockRemoteParticipantId);
+    const call = createMockCall(mockCallId);
+    call.remoteParticipants = [remoteParticipant];
+    return call;
+  }
+  dispose(): Promise<void> {
+    return Promise.resolve();
+  }
+  on(event: 'incomingCall', listener: IncomingCallEvent): void;
+  on(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
+  on(event: any, listener: any): void {
+    this.emitter.on(event, listener);
+  }
+  off(event: 'incomingCall', listener: IncomingCallEvent): void;
+  off(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
+  off(event: any, listener: any): void {
+    this.emitter.off(event, listener);
+  }
+
+  emit(event: string, data: any): void {
+    this.emitter.emit(event, data);
+  }
+}
+
+class MockCallAgentWithMultipleCalls implements CallAgent {
+  calls: MockCall[] = [];
+  displayName = undefined;
+  emitter = new EventEmitter();
+
+  constructor(calls: MockCall[]) {
+    this.calls = calls;
+  }
 
   startCall(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -148,7 +198,7 @@ describe('declarative call agent', () => {
     mockCallAgent.calls = [];
     callAgentDeclaratify(mockCallAgent, context, internalContext);
     expect(context.getState().calls.size).toBe(0);
-    expect(internalContext.getRemoteVideoStreamsAll().size).toBe(0);
+    expect(internalContext.getRemoteStreamAndRenderersAll().size).toBe(0);
   });
 
   test('should update state with new call when startCall is invoked', () => {
@@ -269,5 +319,39 @@ describe('declarative call agent', () => {
     await waitWithBreakCondition(() => context.getState().incomingCalls.size === 0);
 
     expect(context.getState().incomingCallsEnded.length).toBe(MAX_CALL_HISTORY_LENGTH);
+  });
+
+  test('should wrap the calls property and the onCallsUpdated and return DeclarativeCall when accessed', async () => {
+    const mockCallOne = createMockCall('mockCallIdOne');
+    const mockCallTwo = createMockCall('mockCallIdTwo');
+    const mockCallAgent = new MockCallAgentWithMultipleCalls([mockCallOne, mockCallTwo]);
+    const context = new CallContext('');
+    const internalContext = new InternalCallContext();
+    const declarativeCallAgent = callAgentDeclaratify(mockCallAgent, context, internalContext);
+
+    expect(declarativeCallAgent.calls.length).toBe(2);
+    expect((declarativeCallAgent.calls[0] as DeclarativeCall).unsubscribe).toBeDefined();
+    expect((declarativeCallAgent.calls[1] as DeclarativeCall).unsubscribe).toBeDefined();
+
+    let receivedEvent: any | undefined = undefined;
+    const callsUpdatedListener = (event: { added: Call[]; removed: Call[] }): void => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      receivedEvent = event;
+    };
+    declarativeCallAgent.on('callsUpdated', callsUpdatedListener);
+    mockCallAgent.emit('callsUpdated', {
+      added: [createMockCall('mockCallIdThree')],
+      removed: [createMockCall('mockCallIdFour')]
+    });
+
+    await waitWithBreakCondition(() => receivedEvent !== undefined);
+
+    expect(receivedEvent).toBeDefined();
+    expect(receivedEvent.added).toBeDefined();
+    expect(receivedEvent.added[0]).toBeDefined();
+    expect((receivedEvent.added[0] as DeclarativeCall).unsubscribe).toBeDefined();
+    expect(receivedEvent.removed).toBeDefined();
+    expect(receivedEvent.removed[0]).toBeDefined();
+    expect((receivedEvent.removed[0] as DeclarativeCall).unsubscribe).toBeDefined();
   });
 });

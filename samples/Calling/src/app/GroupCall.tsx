@@ -1,22 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallClientState, StatefulCallClient } from 'calling-stateful-client';
-import { AudioOptions, CallState } from '@azure/communication-calling';
+import { mediaGallerySelector, complianceBannerSelector } from '@azure/acs-calling-selector';
+import { AudioOptions, CallState, GroupLocator, MeetingLocator } from '@azure/communication-calling';
 import { Label, Overlay, Spinner, Stack } from '@fluentui/react';
+import { CallClientState, StatefulCallClient } from 'calling-stateful-client';
 import React, { useEffect, useState } from 'react';
-import { ErrorBar as ErrorBarComponent } from 'react-components';
-import {
-  connectFuncsToContext,
-  MapToErrorBarProps,
-  MINI_HEADER_WINDOW_WIDTH,
-  useCall,
-  useCallClient,
-  useCallContext,
-  useCallingContext
-} from 'react-composites';
+import { useCallAgent, useCallClient, useCall, useCallContext } from 'react-composites';
 import { CommandPanel, CommandPanelTypes } from './CommandPanel';
 import { Header } from './Header';
+import { useAzureCommunicationHandlers } from './hooks/useAzureCommunicationHandlers';
+import { lobbySelector } from './selectors/lobbySelector';
+import { useSelector } from './hooks/useSelector';
 import { MediaGallery } from './MediaGallery';
 import {
   activeContainerClassName,
@@ -28,26 +23,39 @@ import {
   subContainerStyles
 } from './styles/GroupCall.styles';
 import { isInCall } from './utils/AppUtils';
+import { MINI_HEADER_WINDOW_WIDTH } from './utils/constants';
+import { Lobby } from './Lobby';
+import { ComplianceBanner } from './ComplianceBanner';
 
 export interface GroupCallProps {
   screenWidth: number;
   endCallHandler(): void;
-  groupId: string;
+  callErrorHandler(): void;
+  callLocator: GroupLocator | MeetingLocator;
+  isMicrophoneOn: boolean;
 }
 
 const spinnerLabel = 'Initializing call client...';
 
 export const GroupCall = (props: GroupCallProps): JSX.Element => {
   const [selectedPane, setSelectedPane] = useState(CommandPanelTypes.None);
-  const { groupId, screenWidth, endCallHandler } = props;
-  const ErrorBar = connectFuncsToContext(ErrorBarComponent, MapToErrorBarProps);
+  const { callLocator, screenWidth, endCallHandler, callErrorHandler, isMicrophoneOn } = props;
 
-  const { callAgent } = useCallingContext();
-  const { setCall, localVideoStream, isMicrophoneEnabled } = useCallContext();
+  const callAgent = useCallAgent();
+  const { setCall } = useCallContext();
   const call = useCall();
   const callClient: StatefulCallClient = useCallClient();
+
   const [callState, setCallState] = useState<CallState | undefined>(undefined);
   const [isScreenSharingOn, setIsScreenSharingOn] = useState<boolean | undefined>(undefined);
+  const [joinedCall, setJoinedCall] = useState<boolean>(false);
+
+  const mediaGalleryProps = useSelector(mediaGallerySelector);
+  const handlers = useAzureCommunicationHandlers();
+
+  const lobbyProps = useSelector(lobbySelector);
+
+  const complianceBannerProps = useSelector(complianceBannerSelector);
 
   // To use useProps to get these states, we need to create another file wrapping GroupCall,
   // It seems unnecessary in this case, so we get the updated states using this approach.
@@ -56,39 +64,43 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
       call?.id && setCallState(state.calls.get(call.id)?.state);
       call?.id && setIsScreenSharingOn(state.calls.get(call.id)?.isScreenSharingOn);
     };
-
     callClient.onStateChange(onStateChange);
-
     return () => {
       callClient.offStateChange(onStateChange);
     };
   }, [call?.id, callClient]);
 
   useEffect(() => {
-    if (isInCall(callState ?? 'None')) {
-      document.title = `${groupId} group call sample`;
-    } else {
-      if (!isInCall(callState ?? 'None') && callAgent) {
-        const audioOptions: AudioOptions = { muted: !isMicrophoneEnabled };
-        const videoOptions = { localVideoStreams: localVideoStream ? [localVideoStream] : undefined };
-
-        const call = callAgent.join(
-          {
-            groupId
-          },
-          {
-            audioOptions,
-            videoOptions
-          }
-        );
+    if (!isInCall(callState ?? 'None') && callAgent && !joinedCall) {
+      const audioOptions: AudioOptions = { muted: !isMicrophoneOn };
+      try {
+        const call = callAgent.join(callLocator as GroupLocator, { audioOptions });
         setCall(call);
+        setJoinedCall(true);
+      } catch (error) {
+        console.log(error);
+        callErrorHandler();
       }
     }
-  }, [callState, groupId, callAgent, setCall, isMicrophoneEnabled, localVideoStream]);
+  }, [call?.callEndReason, callAgent, callErrorHandler, callLocator, callState, isMicrophoneOn, joinedCall, setCall]);
+
+  if ('meetingLink' in callLocator) {
+    if (callState && ['Connecting', 'Ringing', 'InLobby'].includes(callState)) {
+      return (
+        <Lobby
+          callState={callState}
+          {...lobbyProps}
+          onStartLocalVideo={handlers.onStartLocalVideo}
+          onCreateLocalStreamView={handlers.onCreateLocalStreamView}
+          onEndCallClick={endCallHandler}
+        />
+      );
+    }
+  }
 
   return (
     <>
-      {isInCall(call?.state ?? 'None') ? (
+      {callState && isInCall(call?.state ?? 'None') ? (
         <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow>
           <Stack.Item styles={headerStyles}>
             <Header
@@ -97,14 +109,16 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
               endCallHandler={endCallHandler}
               screenWidth={screenWidth}
             />
-            <ErrorBar />
+          </Stack.Item>
+          <Stack.Item>
+            <ComplianceBanner {...complianceBannerProps} />
           </Stack.Item>
           <Stack styles={subContainerStyles} grow horizontal>
             {!isScreenSharingOn ? (
               callState === 'Connected' && (
                 <>
                   <Stack.Item grow styles={activeContainerClassName}>
-                    <MediaGallery />
+                    <MediaGallery {...mediaGalleryProps} onStartLocalVideo={handlers.onStartLocalVideo} />
                   </Stack.Item>
                   {selectedPane !== CommandPanelTypes.None &&
                     (window.innerWidth > MINI_HEADER_WINDOW_WIDTH ? (

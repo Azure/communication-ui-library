@@ -2,18 +2,18 @@
 // Licensed under the MIT license.
 
 import { Call, Features, LocalVideoStream, RemoteParticipant } from '@azure/communication-calling';
+import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import { CallContext } from './CallContext';
 import { CallIdRef } from './CallIdRef';
 import {
   convertSdkLocalStreamToDeclarativeLocalStream,
-  convertSdkParticipantToDeclarativeParticipant,
-  getRemoteParticipantKey
+  convertSdkParticipantToDeclarativeParticipant
 } from './Converter';
 import { ReceivedTransferSubscriber } from './ReceivedTransferSubscriber';
 import { InternalCallContext } from './InternalCallContext';
 import { ParticipantSubscriber } from './ParticipantSubscriber';
 import { RecordingSubscriber } from './RecordingSubscriber';
-import { stopRenderVideo } from './StreamUtils';
+import { disposeView } from './StreamUtils';
 import { TranscriptionSubscriber } from './TranscriptionSubscriber';
 
 /**
@@ -67,6 +67,15 @@ export class CallSubscriber {
     this._call.on('localVideoStreamsUpdated', this.localVideoStreamsUpdated);
     this._call.on('isMutedChanged', this.isMuteChanged);
 
+    // At time of writing only one LocalVideoStream is supported by SDK.
+    if (this._call.localVideoStreams.length > 0) {
+      this._internalContext.setLocalStreamAndRenderer(
+        this._callIdRef.callId,
+        this._call.localVideoStreams[0],
+        undefined
+      );
+    }
+
     if (this._call.remoteParticipants.length > 0) {
       this._call.remoteParticipants.forEach((participant: RemoteParticipant) => {
         this.addParticipantListener(participant);
@@ -77,10 +86,6 @@ export class CallSubscriber {
         this._call.remoteParticipants.map(convertSdkParticipantToDeclarativeParticipant),
         []
       );
-    }
-    // At time of writing only one LocalVideoStream is supported by SDK.
-    if (this._call.localVideoStreams.length > 0) {
-      this._internalContext.setLocalVideoStream(this._callIdRef.callId, this._call.localVideoStreams[0]);
     }
   };
 
@@ -99,18 +104,24 @@ export class CallSubscriber {
 
     // If we are unsubscribing that means we no longer want to display any video for this call (callEnded or callAgent
     // disposed) and we should not be updating it any more. So if video is rendering we stop rendering.
-    const localVideoStreams = this._context.getState().calls.get(this._callIdRef.callId)?.localVideoStreams;
-    if (localVideoStreams && localVideoStreams.length === 1 && localVideoStreams[0].videoStreamRendererView) {
-      stopRenderVideo(this._context, this._internalContext, this._callIdRef.callId, localVideoStreams[0]);
+    if (this._call.localVideoStreams && this._call.localVideoStreams[0]) {
+      disposeView(
+        this._context,
+        this._internalContext,
+        this._callIdRef.callId,
+        undefined,
+        convertSdkLocalStreamToDeclarativeLocalStream(this._call.localVideoStreams[0])
+      );
     }
 
+    this._internalContext.removeLocalStreamAndRenderer(this._callIdRef.callId);
     this._recordingSubscriber.unsubscribe();
     this._transcriptionSubscriber.unsubscribe();
     this._receivedTransferSubscriber.unsubscribe();
   };
 
   private addParticipantListener(participant: RemoteParticipant): void {
-    const participantKey = getRemoteParticipantKey(participant.identifier);
+    const participantKey = toFlatCommunicationIdentifier(participant.identifier);
     this._participantSubscribers.get(participantKey)?.unsubscribe();
     this._participantSubscribers.set(
       participantKey,
@@ -119,7 +130,7 @@ export class CallSubscriber {
   }
 
   private removeParticipantListener(participant: RemoteParticipant): void {
-    const participantKey = getRemoteParticipantKey(participant.identifier);
+    const participantKey = toFlatCommunicationIdentifier(participant.identifier);
     const participantSubscriber = this._participantSubscribers.get(participantKey);
     if (participantSubscriber) {
       participantSubscriber.unsubscribe();
@@ -132,8 +143,8 @@ export class CallSubscriber {
   };
 
   private idChanged = (): void => {
-    this._context.setCallId(this._call.id, this._callIdRef.callId);
     this._internalContext.setCallId(this._call.id, this._callIdRef.callId);
+    this._context.setCallId(this._call.id, this._callIdRef.callId);
     this._callIdRef.callId = this._call.id;
   };
 
@@ -159,7 +170,7 @@ export class CallSubscriber {
       this._callIdRef.callId,
       event.removed.map(convertSdkParticipantToDeclarativeParticipant),
       event.added.map((participant: RemoteParticipant) => {
-        return getRemoteParticipantKey(participant.identifier);
+        return toFlatCommunicationIdentifier(participant.identifier);
       })
     );
 
@@ -168,7 +179,7 @@ export class CallSubscriber {
       this._callIdRef.callId,
       event.added.map(convertSdkParticipantToDeclarativeParticipant),
       event.removed.map((participant: RemoteParticipant) => {
-        return getRemoteParticipantKey(participant.identifier);
+        return toFlatCommunicationIdentifier(participant.identifier);
       })
     );
   };
@@ -177,16 +188,25 @@ export class CallSubscriber {
     // At time of writing only one LocalVideoStream is supported by SDK.
     if (event.added.length > 0) {
       const localVideoStreams = [convertSdkLocalStreamToDeclarativeLocalStream(this._call.localVideoStreams[0])];
+      // IMPORTANT: The internalContext should be set before context. This is done to ensure that the internal context
+      // has the required data when component re-renders due to external state changes.
+      this._internalContext.setLocalStreamAndRenderer(
+        this._callIdRef.callId,
+        this._call.localVideoStreams[0],
+        undefined
+      );
       this._context.setCallLocalVideoStream(this._callIdRef.callId, localVideoStreams);
-      this._internalContext.setLocalVideoStream(this._callIdRef.callId, this._call.localVideoStreams[0]);
     }
     if (event.removed.length > 0) {
-      const localVideoStreams = this._context.getState().calls.get(this._callIdRef.callId)?.localVideoStreams;
-      if (localVideoStreams && localVideoStreams.length === 1 && localVideoStreams[0].videoStreamRendererView) {
-        stopRenderVideo(this._context, this._internalContext, this._callIdRef.callId, localVideoStreams[0]);
-      }
+      disposeView(
+        this._context,
+        this._internalContext,
+        this._callIdRef.callId,
+        undefined,
+        convertSdkLocalStreamToDeclarativeLocalStream(event.removed[0])
+      );
+      this._internalContext.removeLocalStreamAndRenderer(this._callIdRef.callId);
       this._context.setCallLocalVideoStream(this._callIdRef.callId, []);
-      this._internalContext.removeLocalVideoStream(this._callIdRef.callId);
     }
   };
 }

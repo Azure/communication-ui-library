@@ -2,12 +2,13 @@
 // Licensed under the MIT license.
 
 import {
-  communicationIdentifierToString,
   getChatMessages,
   getIsLargeGroup,
   getLatestReadTime,
-  getUserId
+  getUserId,
+  sanitizedMessageContentType
 } from './baseSelectors';
+import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import { ChatMessageWithStatus } from 'chat-stateful-client';
 // The following need explicitly imported to avoid api-extractor issues.
 // These can be removed once https://github.com/microsoft/rushstack/pull/1916 is fixed.
@@ -20,7 +21,7 @@ import { ChatClientState } from 'chat-stateful-client';
 // @ts-ignore
 import { ChatBaseSelectorProps } from './baseSelectors';
 // @ts-ignore
-import { memoizeFnAll } from './utils/memoizeFnAll';
+import { memoizeFnAll } from 'acs-ui-common';
 // @ts-ignore
 import { ChatMessage, MessageAttachedStatus, Message, MessageTypes } from 'react-components';
 // @ts-ignore
@@ -40,9 +41,10 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
     payload: {
       createdOn: chatMessage.createdOn,
       content: chatMessage.content?.message,
+      type: sanitizedMessageContentType(chatMessage.type),
       status: !isLargeGroup && chatMessage.status === 'delivered' && isSeen ? 'seen' : chatMessage.status,
       senderDisplayName: chatMessage.senderDisplayName,
-      senderId: communicationIdentifierToString(chatMessage.sender) ?? userId,
+      senderId: chatMessage.sender !== undefined ? toFlatCommunicationIdentifier(chatMessage.sender) : userId,
       messageId: chatMessage.id,
       clientMessageId: chatMessage.clientMessageId
     }
@@ -55,7 +57,12 @@ export const chatThreadSelector = createSelector(
     // A function takes parameter above and generate return value
     const convertedMessages = memoizedAllConvertChatMessage((memoizedFn) =>
       Array.from(chatMessages.values())
-        .filter((message) => message.type.toLowerCase() === 'text' || message.clientMessageId !== undefined)
+        .filter(
+          (message) =>
+            message.type.toLowerCase() === 'text' ||
+            message.type.toLowerCase() === 'richtext/html' ||
+            message.clientMessageId !== undefined
+        )
         .map((message) =>
           memoizedFn(
             message.id ?? message.clientMessageId,
@@ -70,7 +77,7 @@ export const chatThreadSelector = createSelector(
     updateMessagesWithAttached(convertedMessages, userId);
     return {
       userId,
-      disableReadReceipt: isLargeGroup,
+      showMessageStatus: !isLargeGroup,
       messages: convertedMessages
     };
   }

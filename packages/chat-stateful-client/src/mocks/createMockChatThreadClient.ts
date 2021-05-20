@@ -61,8 +61,6 @@ const mockListReadReceipt = (): any => {
   return createMockIterator(mockReadReceipts);
 };
 
-jest.mock('@azure/communication-chat');
-
 const emptyAsyncFunctionWithResponse = async (): Promise<any> => {
   return { _response: {} as any };
 };

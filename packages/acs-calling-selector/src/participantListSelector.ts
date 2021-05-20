@@ -1,26 +1,26 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { toFlatCommunicationIdentifier } from 'acs-ui-common';
+// @ts-ignore
+import { RemoteParticipant, CallClientState, Call } from 'calling-stateful-client';
 // @ts-ignore
 import * as reselect from 'reselect';
 // @ts-ignore
-import * as callingDeclarative from 'calling-stateful-client';
-// @ts-ignore
 import { CallingBaseSelectorProps } from './baseSelectors';
-import { getCall, getUserId, getDisplayName } from './baseSelectors';
-import { CommunicationParticipant } from 'react-components';
-import { getACSId } from './utils/getACSId';
+import { getCall, getIdentifier, getDisplayName } from './baseSelectors';
+import { CallParticipant } from 'react-components';
 
 const convertRemoteParticipantsToCommunicationParticipants = (
-  remoteParticipants: callingDeclarative.RemoteParticipant[]
-): CommunicationParticipant[] => {
-  return remoteParticipants.map((participant: callingDeclarative.RemoteParticipant) => {
+  remoteParticipants: RemoteParticipant[]
+): CallParticipant[] => {
+  return remoteParticipants.map((participant: RemoteParticipant) => {
     const isScreenSharing = Array.from(participant.videoStreams.values()).some(
       (videoStream) => videoStream.mediaStreamType === 'ScreenSharing' && videoStream.isAvailable
     );
 
     return {
-      userId: getACSId(participant.identifier),
+      userId: toFlatCommunicationIdentifier(participant.identifier),
       displayName: participant.displayName,
       state: participant.state,
       isMuted: participant.isMuted,
@@ -31,13 +31,13 @@ const convertRemoteParticipantsToCommunicationParticipants = (
 };
 
 export const participantListSelector = reselect.createSelector(
-  [getUserId, getDisplayName, getCall],
+  [getIdentifier, getDisplayName, getCall],
   (
     userId,
     displayName,
     call
   ): {
-    participants: CommunicationParticipant[];
+    participants: CallParticipant[];
     myUserId: string;
   } => {
     const remoteParticipants =

@@ -1,5 +1,5 @@
 import { OptionsButton } from '@azure/communication-react';
-import { IButtonProps, Icon, IContextualMenuProps, Label } from '@fluentui/react';
+import { Icon, IContextualMenuProps, Label } from '@fluentui/react';
 import React from 'react';
 
 const exampleOptionsMenuProps: IContextualMenuProps = {
@@ -20,7 +20,7 @@ export const OptionsButtonCustomExample: () => JSX.Element = () => {
     );
   };
 
-  const customOnRenderText = (props?: IButtonProps): JSX.Element => {
+  const customOnRenderText = (): JSX.Element => {
     return (
       <Label key={'optionsCustomLabelKey'} style={{ color: 'darkviolet', fontStyle: 'italic' }}>
         More
