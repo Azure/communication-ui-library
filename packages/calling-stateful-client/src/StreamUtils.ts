@@ -69,44 +69,46 @@ async function createViewRemoteVideo(
   }
 
   const refreshedRenderInfo = internalContext.getRemoteRenderInfoForParticipant(callId, participantKey, streamId);
-  if (refreshedRenderInfo) {
-    if (refreshedRenderInfo.status === 'Stopping') {
-      // Stop render was called on this stream after we had started rendering. We will dispose this view and do not
-      // put the view into the state.
-      renderer.dispose();
-      internalContext.setRemoteRenderInfo(
-        callId,
-        participantKey,
-        streamId,
-        refreshedRenderInfo.stream,
-        'NotRendered',
-        undefined
-      );
-      context.setRemoteVideoStreamRendererView(callId, participantKey, streamId, undefined);
-    } else {
-      // The stream still exists and status is not telling us to stop rendering. Complete the render process by
-      // updating the state.
-      internalContext.setRemoteRenderInfo(
-        callId,
-        participantKey,
-        streamId,
-        refreshedRenderInfo.stream,
-        'Rendered',
-        renderer
-      );
-      context.setRemoteVideoStreamRendererView(
-        callId,
-        participantKey,
-        streamId,
-        convertFromSDKToDeclarativeVideoStreamRendererView(view)
-      );
-    }
-  } else {
+  if (!refreshedRenderInfo) {
     // RenderInfo was removed. This should not happen unless stream was removed from the call so dispose the renderer
     // and clean up state.
     renderer.dispose();
     context.setRemoteVideoStreamRendererView(callId, participantKey, streamId, undefined);
+    return;
   }
+
+  if (refreshedRenderInfo.status === 'Stopping') {
+    // Stop render was called on this stream after we had started rendering. We will dispose this view and do not
+    // put the view into the state.
+    renderer.dispose();
+    internalContext.setRemoteRenderInfo(
+      callId,
+      participantKey,
+      streamId,
+      refreshedRenderInfo.stream,
+      'NotRendered',
+      undefined
+    );
+    context.setRemoteVideoStreamRendererView(callId, participantKey, streamId, undefined);
+    return;
+  }
+
+  // Else the stream still exists and status is not telling us to stop rendering. Complete the render process by
+  // updating the state.
+  internalContext.setRemoteRenderInfo(
+    callId,
+    participantKey,
+    streamId,
+    refreshedRenderInfo.stream,
+    'Rendered',
+    renderer
+  );
+  context.setRemoteVideoStreamRendererView(
+    callId,
+    participantKey,
+    streamId,
+    convertFromSDKToDeclarativeVideoStreamRendererView(view)
+  );
 }
 
 async function createViewLocalVideo(
@@ -153,25 +155,27 @@ async function createViewLocalVideo(
   // Since render could take some time, we need to check if the stream is still valid and if we received a signal to
   // stop rendering.
   const refreshedRenderInfo = internalContext.getLocalRenderInfo(callId);
-  if (refreshedRenderInfo) {
-    if (refreshedRenderInfo.status === 'Stopping') {
-      // Stop render was called on this stream after we had started rendering. We will dispose this view and do not
-      // put the view into the state.
-      renderer.dispose();
-      internalContext.setLocalRenderInfo(callId, refreshedRenderInfo.stream, 'NotRendered', undefined);
-      context.setLocalVideoStreamRendererView(callId, undefined);
-    } else {
-      // The stream still exists and status is not telling us to stop rendering. Complete the render process by
-      // updating the state.
-      internalContext.setLocalRenderInfo(callId, refreshedRenderInfo.stream, 'Rendered', renderer);
-      context.setLocalVideoStreamRendererView(callId, convertFromSDKToDeclarativeVideoStreamRendererView(view));
-    }
-  } else {
+  if (!refreshedRenderInfo) {
     // RenderInfo was removed. This should not happen unless stream was removed from the call so dispose the renderer
     // and clean up the state.
     renderer.dispose();
     context.setLocalVideoStreamRendererView(callId, undefined);
+    return;
   }
+
+  if (refreshedRenderInfo.status === 'Stopping') {
+    // Stop render was called on this stream after we had started rendering. We will dispose this view and do not
+    // put the view into the state.
+    renderer.dispose();
+    internalContext.setLocalRenderInfo(callId, refreshedRenderInfo.stream, 'NotRendered', undefined);
+    context.setLocalVideoStreamRendererView(callId, undefined);
+    return;
+  }
+
+  // Else The stream still exists and status is not telling us to stop rendering. Complete the render process by
+  // updating the state.
+  internalContext.setLocalRenderInfo(callId, refreshedRenderInfo.stream, 'Rendered', renderer);
+  context.setLocalVideoStreamRendererView(callId, convertFromSDKToDeclarativeVideoStreamRendererView(view));
 }
 
 async function createViewUnparentedVideo(
@@ -216,26 +220,28 @@ async function createViewUnparentedVideo(
   // Since render could take some time, we need to check if the stream is still valid and if we received a signal to
   // stop rendering.
   const refreshedRenderInfo = internalContext.getUnparentedRenderInfo(stream);
-  if (refreshedRenderInfo) {
-    if (refreshedRenderInfo.status === 'Stopping') {
-      // Stop render was called on this stream after we had started rendering. We will dispose this view and do not
-      // put the view into the state. Special case for unparented views, delete them from state when stopped to free up
-      // the memory since we were the ones generating this and not tied to any Call state.
-      internalContext.deleteUnparentedRenderInfo(stream);
-      context.setDeviceManagerUnparentedView(stream, undefined);
-    } else {
-      // The stream still exists and status is not telling us to stop rendering. Complete the render process by
-      // updating the state.
-      internalContext.setUnparentedRenderInfo(stream, localVideoStream, 'Rendered', renderer);
-      context.setDeviceManagerUnparentedView(stream, convertFromSDKToDeclarativeVideoStreamRendererView(view));
-    }
-  } else {
+  if (!refreshedRenderInfo) {
     // Unparented stream's RenderInfo was deleted. Currently this shouldn't happen but if it does we'll just dispose the
     // renderer and clean up state. If developer wanted the stream they could call this function again and that should
     // generate new working state via this function.
     renderer.dispose();
     context.setDeviceManagerUnparentedView(stream, undefined);
+    return;
   }
+
+  if (refreshedRenderInfo.status === 'Stopping') {
+    // Stop render was called on this stream after we had started rendering. We will dispose this view and do not
+    // put the view into the state. Special case for unparented views, delete them from state when stopped to free up
+    // the memory since we were the ones generating this and not tied to any Call state.
+    internalContext.deleteUnparentedRenderInfo(stream);
+    context.setDeviceManagerUnparentedView(stream, undefined);
+    return;
+  }
+
+  // Else the stream still exists and status is not telling us to stop rendering. Complete the render process by
+  // updating the state.
+  internalContext.setUnparentedRenderInfo(stream, localVideoStream, 'Rendered', renderer);
+  context.setDeviceManagerUnparentedView(stream, convertFromSDKToDeclarativeVideoStreamRendererView(view));
 }
 
 function disposeViewRemoteVideo(
@@ -253,51 +259,48 @@ function disposeViewRemoteVideo(
   } else {
     participantKey = toFlatCommunicationIdentifier(participantId);
   }
-  const renderInfo = internalContext.getRemoteRenderInfoForParticipant(callId, participantKey, streamId);
-  if (renderInfo) {
-    // Sets the status and also renderer. I think we need to always set renderer to undefined since in all status when
-    // cleaned up should have renderer as undefined. If the status is 'Rendered' and renderer is not defined it should
-    // be cleaned up below so we can set it to undefined here.
-    if (renderInfo.status === 'Rendering') {
-      internalContext.setRemoteRenderInfo(callId, participantKey, streamId, renderInfo.stream, 'Stopping', undefined);
-    } else {
-      internalContext.setRemoteRenderInfo(
-        callId,
-        participantKey,
-        streamId,
-        renderInfo.stream,
-        'NotRendered',
-        undefined
-      );
-    }
-
-    if (renderInfo.renderer) {
-      renderInfo.renderer.dispose();
-    }
-  }
 
   context.setRemoteVideoStreamRendererView(callId, participantKey, streamId, undefined);
+
+  const renderInfo = internalContext.getRemoteRenderInfoForParticipant(callId, participantKey, streamId);
+  if (!renderInfo) {
+    return;
+  }
+
+  // Sets the status and also renderer. I think we need to always set renderer to undefined since in all status when
+  // cleaned up should have renderer as undefined. If the status is 'Rendered' and renderer is not defined it should
+  // be cleaned up below so we can set it to undefined here.
+  if (renderInfo.status === 'Rendering') {
+    internalContext.setRemoteRenderInfo(callId, participantKey, streamId, renderInfo.stream, 'Stopping', undefined);
+  } else {
+    internalContext.setRemoteRenderInfo(callId, participantKey, streamId, renderInfo.stream, 'NotRendered', undefined);
+  }
+
+  if (renderInfo.renderer) {
+    renderInfo.renderer.dispose();
+  }
 }
 
 function disposeViewLocalVideo(context: CallContext, internalContext: InternalCallContext, callId: string): void {
-  // Cleanup internal renderer
-  const renderInfo = internalContext.getLocalRenderInfo(callId);
-  if (renderInfo) {
-    // Sets the status and also renderer. I think we need to always set renderer to undefined since in all status when
-    // cleaned up should have renderer as undefined. If the status is 'Rendered' and renderer is not defined it should
-    // be cleaned up below so we can set it to undefined here.
-    if (renderInfo.status === 'Rendering') {
-      internalContext.setLocalRenderInfo(callId, renderInfo.stream, 'Stopping', undefined);
-    } else {
-      internalContext.setLocalRenderInfo(callId, renderInfo.stream, 'NotRendered', undefined);
-    }
+  context.setLocalVideoStreamRendererView(callId, undefined);
 
-    if (renderInfo.renderer) {
-      renderInfo.renderer.dispose();
-    }
+  const renderInfo = internalContext.getLocalRenderInfo(callId);
+  if (!renderInfo) {
+    return;
   }
 
-  context.setLocalVideoStreamRendererView(callId, undefined);
+  // Sets the status and also renderer. I think we need to always set renderer to undefined since in all status when
+  // cleaned up should have renderer as undefined. If the status is 'Rendered' and renderer is not defined it should
+  // be cleaned up below so we can set it to undefined here.
+  if (renderInfo.status === 'Rendering') {
+    internalContext.setLocalRenderInfo(callId, renderInfo.stream, 'Stopping', undefined);
+  } else {
+    internalContext.setLocalRenderInfo(callId, renderInfo.stream, 'NotRendered', undefined);
+  }
+
+  if (renderInfo.renderer) {
+    renderInfo.renderer.dispose();
+  }
 }
 
 function disposeViewUnparentedVideo(
@@ -305,20 +308,22 @@ function disposeViewUnparentedVideo(
   internalContext: InternalCallContext,
   stream: StatefulLocalVideoStream
 ): void {
-  const renderInfo = internalContext.getUnparentedRenderInfo(stream);
-  if (renderInfo) {
-    if (renderInfo.status === 'Rendering') {
-      internalContext.setUnparentedRenderInfo(stream, renderInfo.stream, 'Stopping', undefined);
-    } else {
-      internalContext.deleteUnparentedRenderInfo(stream);
-    }
+  context.setDeviceManagerUnparentedView(stream, undefined);
 
-    if (renderInfo.renderer) {
-      renderInfo.renderer.dispose();
-    }
+  const renderInfo = internalContext.getUnparentedRenderInfo(stream);
+  if (!renderInfo) {
+    return;
   }
 
-  context.setDeviceManagerUnparentedView(stream, undefined);
+  if (renderInfo.status === 'Rendering') {
+    internalContext.setUnparentedRenderInfo(stream, renderInfo.stream, 'Stopping', undefined);
+  } else {
+    internalContext.deleteUnparentedRenderInfo(stream);
+  }
+
+  if (renderInfo.renderer) {
+    renderInfo.renderer.dispose();
+  }
 }
 
 export function createView(
