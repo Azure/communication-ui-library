@@ -27,7 +27,7 @@ export const TeamsThemeComponent: () => JSX.Element = () => {
 };
 
 export default {
-  title: `${EXAMPLES_FOLDER_PREFIX}/Teams Theme`,
+  title: `${EXAMPLES_FOLDER_PREFIX}/Themes`,
   parameters: {
     docs: {
       page: () => getDocs()
