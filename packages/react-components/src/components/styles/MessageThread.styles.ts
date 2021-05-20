@@ -27,7 +27,7 @@ export const messageThreadContainerStyle = mergeStyles({
   position: 'relative'
 });
 
-export const noReadReceiptStyle = mergeStyles({
+export const noMessageStatusStyle = mergeStyles({
   width: '1rem'
 });
 
@@ -48,7 +48,7 @@ export const chatMessageStyle: CSSProperties = {
   overflowY: 'hidden'
 };
 
-export const readReceiptContainerStyle = (mine: boolean): string =>
+export const messageStatusContainerStyle = (mine: boolean): string =>
   mergeStyles({
     marginLeft: mine ? '1rem' : '0rem'
   });

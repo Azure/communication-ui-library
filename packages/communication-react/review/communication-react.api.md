@@ -517,11 +517,11 @@ export type ChatThreadProperties = {
 // @public (undocumented)
 export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     userId: string;
-    disableReadReceipt: boolean;
+    showMessageStatus: boolean;
     messages: Message<"chat">[];
 }, (res1: string, res2: Map<string, ChatMessageWithStatus>, res3: Date, res4: boolean) => {
     userId: string;
-    disableReadReceipt: boolean;
+    showMessageStatus: boolean;
     messages: Message<"chat">[];
 }>;
 
@@ -942,6 +942,20 @@ export type MessageSentListener = MessageReceivedListener;
 export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
 
 // @public
+export const MessageStatusIndicator: (props: MessageStatusIndicatorProps) => JSX.Element;
+
+// @public
+export interface MessageStatusIndicatorProps {
+    deliveredTooltipText?: string;
+    failedToSendTooltipText?: string;
+    seenTooltipText?: string;
+    sendingTooltipText?: string;
+    size?: SizeValue;
+    status?: MessageStatus;
+    styles?: BaseCustomStylesProps;
+}
+
+// @public
 export const MessageThread: (props: MessageThreadProps) => JSX.Element;
 
 // @public
@@ -950,10 +964,10 @@ export type MessageThreadProps = {
     messages: (ChatMessage | SystemMessage | CustomMessage)[];
     styles?: MessageThreadStylesProps;
     disableJumpToNewMessageButton?: boolean;
-    disableReadReceipt?: boolean;
+    showMessageStatus?: boolean;
     numberOfChatMessagesToReload?: number;
     onMessageSeen?: (messageId: string) => Promise<void>;
-    onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element | null;
+    onRenderMessageStatus?: (messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null;
     onRenderAvatar?: (userId: string) => JSX.Element;
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
@@ -965,8 +979,8 @@ export interface MessageThreadStylesProps extends BaseCustomStylesProps {
     chatContainer?: ComponentSlotStyle;
     chatMessageContainer?: ComponentSlotStyle;
     loadPreviousMessagesButtonContainer?: IStyle;
+    messageStatusContainer?: (mine: boolean) => IStyle;
     newMessageButtonContainer?: IStyle;
-    readReceiptContainer?: (mine: boolean) => IStyle;
     systemMessageContainer?: ComponentSlotStyle;
 }
 
@@ -1121,20 +1135,6 @@ export interface PlaceholderProps {
     displayName?: string;
     noVideoAvailableAriaLabel?: string;
     userId?: string;
-}
-
-// @public
-export const ReadReceipt: (props: ReadReceiptProps) => JSX.Element;
-
-// @public
-export interface ReadReceiptProps {
-    deliveredTooltipText?: string;
-    failedToSendTooltipText?: string;
-    messageStatus?: MessageStatus;
-    seenTooltipText?: string;
-    sendingTooltipText?: string;
-    size?: SizeValue;
-    styles?: BaseCustomStylesProps;
 }
 
 // @public

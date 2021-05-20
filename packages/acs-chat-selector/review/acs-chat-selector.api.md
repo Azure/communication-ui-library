@@ -60,11 +60,11 @@ export type ChatThreadClientProviderProps = {
 // @public (undocumented)
 export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     userId: string;
-    disableReadReceipt: boolean;
+    showMessageStatus: boolean;
     messages: Message<"chat">[];
 }, (res1: string, res2: Map<string, ChatMessageWithStatus>, res3: Date, res4: boolean) => {
     userId: string;
-    disableReadReceipt: boolean;
+    showMessageStatus: boolean;
     messages: Message<"chat">[];
 }>;
 
