@@ -9,8 +9,8 @@ import React, { useEffect, useState } from 'react';
 import { useCallClient, useCall } from 'react-composites';
 import { CommandPanel, CommandPanelTypes } from './CommandPanel';
 import { Header } from './Header';
+import { useAzureCommunicationHandlers } from './hooks/useAzureCommunicationHandlers';
 import { lobbySelector } from './selectors/lobbySelector';
-import { useHandlers } from './hooks/useHandlers';
 import { useSelector } from './hooks/useSelector';
 import { MediaGallery } from './MediaGallery';
 import {
@@ -48,10 +48,9 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
   const [isScreenSharingOn, setIsScreenSharingOn] = useState<boolean | undefined>(undefined);
 
   const mediaGalleryProps = useSelector(mediaGallerySelector);
-  const mediaGalleryHandlers = useHandlers(MediaGallery);
+  const handlers = useAzureCommunicationHandlers();
 
   const lobbyProps = useSelector(lobbySelector);
-  const lobbyHandlers = useHandlers(Lobby);
 
   const complianceBannerProps = useSelector(complianceBannerSelector);
 
@@ -70,7 +69,15 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
 
   if ('meetingLink' in callLocator) {
     if (callState && ['Connecting', 'Ringing', 'InLobby'].includes(callState)) {
-      return <Lobby callState={callState} {...lobbyProps} {...lobbyHandlers} onEndCallClick={endCallHandler} />;
+      return (
+        <Lobby
+          callState={callState}
+          {...lobbyProps}
+          onStartLocalVideo={handlers.onStartLocalVideo}
+          onCreateLocalStreamView={handlers.onCreateLocalStreamView}
+          onEndCallClick={endCallHandler}
+        />
+      );
     }
   }
 
@@ -94,7 +101,7 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
               callState === 'Connected' && (
                 <>
                   <Stack.Item grow styles={activeContainerClassName}>
-                    <MediaGallery {...mediaGalleryProps} {...mediaGalleryHandlers} />
+                    <MediaGallery {...mediaGalleryProps} onStartLocalVideo={handlers.onStartLocalVideo} />
                   </Stack.Item>
                   {selectedPane !== CommandPanelTypes.None &&
                     (window.innerWidth > MINI_HEADER_WINDOW_WIDTH ? (

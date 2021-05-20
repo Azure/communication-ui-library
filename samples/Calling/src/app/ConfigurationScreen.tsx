@@ -11,7 +11,7 @@ import { CallConfiguration } from './CallConfiguration';
 import { LocalDeviceSettings } from './LocalDeviceSettings';
 import { optionsButtonSelector } from '@azure/acs-calling-selector';
 import { useSelector } from './hooks/useSelector';
-import { useHandlers } from './hooks/useHandlers';
+import { useAzureCommunicationHandlers } from './hooks/useAzureCommunicationHandlers';
 import { TeamsMeetingLinkField } from './TeamsMeetingLinkField';
 
 export interface ConfigurationScreenProps {
@@ -30,7 +30,7 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
   const [teamsMeetingLink, setTeamsMeetingLink] = useState<string>();
 
   const options = useSelector(optionsButtonSelector);
-  const localDeviceSettingsHandlers = useHandlers(LocalDeviceSettings);
+  const handlers = useAzureCommunicationHandlers();
 
   return (
     <CallConfiguration {...props}>
@@ -43,7 +43,12 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
         setNameLengthExceedLimit={setNameTooLongWarning}
       />
       <div>
-        <LocalDeviceSettings {...options} {...localDeviceSettingsHandlers} />
+        <LocalDeviceSettings
+          {...options}
+          onSelectCamera={handlers.onSelectCamera}
+          onSelectMicrophone={handlers.onSelectMicrophone}
+          onSelectSpeaker={handlers.onSelectSpeaker}
+        />
       </div>
       <div style={{ marginTop: '32px', marginBottom: '16px' }}>
         <TeamsMeetingLinkField

@@ -17,6 +17,8 @@ export interface LobbyProps {
   onEndCallClick: () => void;
 }
 
+const onRenderEmptyPlaceholder = (): JSX.Element => <></>;
+
 export const Lobby = (props: LobbyProps): JSX.Element => {
   const theme = useTheme();
   const palette = theme.palette;
@@ -63,7 +65,7 @@ export const Lobby = (props: LobbyProps): JSX.Element => {
       isMirrored={true}
       isVideoReady={isVideoReady}
       renderElement={<StreamMedia videoStreamElement={renderElement ?? null} />}
-      placeholder={<></>}
+      onRenderPlaceholder={onRenderEmptyPlaceholder}
     >
       <div
         style={{

@@ -13,6 +13,16 @@ import {
   mediaGalleryHeightOptions
 } from '../../constants';
 
+const renderPersona = (): JSX.Element => (
+  <Persona
+    styles={{ root: { margin: 'auto' } }}
+    size={PersonaSize.size56}
+    hidePersonaDetails={true}
+    text={'Toby'}
+    initialsTextColor="white"
+  />
+);
+
 export const OneToOneCallLayout: () => JSX.Element = () => {
   const width = number('Width (px)', mediaGalleryWidthDefault, mediaGalleryWidthOptions);
   const height = number('Height (px)', mediaGalleryHeightDefault, mediaGalleryHeightOptions);
@@ -41,16 +51,8 @@ export const OneToOneCallLayout: () => JSX.Element = () => {
         {/* Video component for my video stream stream */}
         <VideoTile
           isVideoReady={false}
-          // A placeholder element for my video stream
-          placeholder={
-            <Persona
-              styles={{ root: { margin: 'auto' } }}
-              size={PersonaSize.size56}
-              hidePersonaDetails={true}
-              text={'Toby'}
-              initialsTextColor="white"
-            />
-          }
+          // A render placeholder function for my video stream
+          onRenderPlaceholder={renderPersona}
         />
       </VideoTile>
     </Stack>
