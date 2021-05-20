@@ -19,7 +19,6 @@ import type { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import type { PhoneNumberKind } from '@azure/communication-common';
 import { PlaceholderProps } from 'react-components';
 import { RemoteParticipant } from 'calling-stateful-client';
-import type { SendChatMessageResult } from '@azure/communication-chat';
 import { StatefulCallClient } from 'calling-stateful-client';
 import { StatefulDeviceManager } from 'calling-stateful-client';
 import type { UnknownIdentifierKind } from '@azure/communication-common';
@@ -278,7 +277,7 @@ export interface ChatAdapter {
     // (undocumented)
     removeParticipant(userId: string): Promise<void>;
     // (undocumented)
-    sendMessage(content: string): Promise<SendChatMessageResult>;
+    sendMessage(content: string): Promise<void>;
     // (undocumented)
     sendReadReceipt(chatMessageId: string): Promise<void>;
     // (undocumented)
