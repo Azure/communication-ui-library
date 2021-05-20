@@ -7,7 +7,7 @@ import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
 
 import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
-import { CallComponent } from './snippets/CallComponent.snippet';
+import { Banner } from './snippets/Banner.snippet';
 
 const CallComponentText = require('!!raw-loader!./snippets/CallComponent.snippet.tsx').default;
 const TeamsInteropText = require('!!raw-loader!./snippets/ComplianceBannerExample.snippet.tsx').default;
@@ -61,7 +61,7 @@ export const ComplianceBanner: () => JSX.Element = () => {
 
   // TODO: Fix dark theming.
   // Once https://github.com/Azure/communication-ui-sdk/pull/169 lands, same fix should be applied here.
-  return <CallComponent {...teamsInterop} />;
+  return <Banner {...teamsInterop} />;
 };
 
 export default {
