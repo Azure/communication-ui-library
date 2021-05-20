@@ -46,6 +46,7 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
   }
 );
 
+// A non-undefined display name is needed for this render, and that is coming from VideoTile props below
 const onRenderPlaceholder = (props: PlaceholderProps): JSX.Element => (
   <div className={loadingStyle}>
     <Spinner label={`Loading ${props.displayName}'s screen`} size={SpinnerSize.xSmall} />
