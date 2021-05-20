@@ -13,6 +13,19 @@ import { useSelector } from './hooks/useSelector';
 import { getLocalMicrophoneEnabled } from './selectors/baseSelectors';
 import { useAdapter } from './adapter/CallAdapterProvider';
 
+const onRenderPlaceholder = (): JSX.Element => {
+  return (
+    <Stack style={{ width: '100%', height: '100%' }} verticalAlign="center">
+      <Stack.Item align="center">
+        <CallVideoOffIcon />
+      </Stack.Item>
+      <Stack.Item align="center">
+        <Text className={cameraOffLabelStyle}>Your camera is turned off.</Text>
+      </Stack.Item>
+    </Stack>
+  );
+};
+
 export const LocalPreview = (): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
   const localPreviewProps = useAdaptedSelector(localPreviewSelector);
@@ -30,16 +43,7 @@ export const LocalPreview = (): JSX.Element => {
         styles={localPreviewTileStyle}
         isVideoReady={!!localPreviewProps.videoStreamElement}
         renderElement={<StreamMedia videoStreamElement={localPreviewProps.videoStreamElement} />}
-        placeholder={
-          <Stack style={{ width: '100%', height: '100%' }} verticalAlign="center">
-            <Stack.Item align="center">
-              <CallVideoOffIcon />
-            </Stack.Item>
-            <Stack.Item align="center">
-              <Text className={cameraOffLabelStyle}>Your camera is turned off</Text>
-            </Stack.Item>
-          </Stack>
-        }
+        onRenderPlaceholder={onRenderPlaceholder}
       >
         <ControlBar layout="floatingBottom">
           <CameraButton {...cameraButtonProps} />
