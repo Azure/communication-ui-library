@@ -43,6 +43,7 @@ import { ReactElement } from 'react';
 import { RemoteParticipantState } from '@azure/communication-calling';
 import * as reselect from 'reselect';
 import { ScalingMode } from '@azure/communication-calling';
+import { SendChatMessageResult } from '@azure/communication-chat';
 import { SizeValue } from '@fluentui/react-northstar';
 import { StartCallOptions } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react-theme-provider';
@@ -274,6 +275,7 @@ export type CallCompositePage = 'configuration' | 'call';
 // @public (undocumented)
 export type CallCompositeProps = {
     adapter: CallAdapter;
+    onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
     onErrorCallback?: (error: CommunicationUiErrorInfo) => void;
 };
 
@@ -350,25 +352,49 @@ export const cameraButtonSelector: reselect.OutputParametricSelector<CallClientS
 // @public (undocumented)
 export interface ChatAdapter {
     // (undocumented)
+    dispose(): void;
+    // (undocumented)
     fetchInitialData(): Promise<void>;
     // (undocumented)
     getState(): ChatState;
     // (undocumented)
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     // (undocumented)
+    off(event: 'messageReceived', listener: MessageReceivedListener): void;
+    // (undocumented)
+    off(event: 'messageSent', listener: MessageSentListener): void;
+    // (undocumented)
+    off(event: 'messageRead', listener: MessageReadListener): void;
+    // (undocumented)
+    off(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
+    // (undocumented)
+    off(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
+    // (undocumented)
+    off(event: 'topicChanged', listener: TopicChangedListener): void;
+    // (undocumented)
+    off(event: 'error', listener: (e: Error) => void): void;
+    // (undocumented)
     offStateChange(handler: (state: ChatState) => void): void;
     // (undocumented)
-    on(event: 'messageReceived', messageReceivedHandler: (message: ChatMessage_2) => void): void;
+    on(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
-    on(event: 'participantsJoined', participantsJoinedHandler: (participant: ChatParticipant) => void): void;
+    on(event: 'messageSent', listener: MessageSentListener): void;
     // (undocumented)
-    on(event: 'error', errorHandler: (e: Error) => void): void;
+    on(event: 'messageRead', listener: MessageReadListener): void;
+    // (undocumented)
+    on(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
+    // (undocumented)
+    on(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
+    // (undocumented)
+    on(event: 'topicChanged', listener: TopicChangedListener): void;
+    // (undocumented)
+    on(event: 'error', listener: (e: Error) => void): void;
     // (undocumented)
     onStateChange(handler: (state: ChatState) => void): void;
     // (undocumented)
     removeParticipant(userId: string): Promise<void>;
     // (undocumented)
-    sendMessage(content: string): Promise<void>;
+    sendMessage(content: string): Promise<SendChatMessageResult>;
     // (undocumented)
     sendReadReceipt(chatMessageId: string): Promise<void>;
     // (undocumented)
@@ -409,7 +435,7 @@ export type ChatCompositeClientState = {
 };
 
 // @public (undocumented)
-export type ChatEvent = 'messageReceived' | 'participantsJoined' | 'error';
+export type ChatEvent = 'messageReceived' | 'messageSent' | 'messageRead' | 'participantsAdded' | 'participantsRemoved' | 'topicChanged' | 'error';
 
 // @public (undocumented)
 export type ChatMessage = Message<'chat'>;
@@ -717,7 +743,7 @@ export type DefaultCallingHandlers = ReturnType<typeof createDefaultCallingHandl
 
 // @public (undocumented)
 export type DefaultChatHandlers = {
-    onSendMessage: (content: string) => Promise<void>;
+    onSendMessage: (content: string) => Promise<SendChatMessageResult>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
     onTyping: () => Promise<void>;
     onParticipantRemove: (userId: string) => Promise<void>;
@@ -900,6 +926,20 @@ export type MessageProps = {
 };
 
 // @public (undocumented)
+export type MessageReadListener = (event: {
+    message: ChatMessage_2;
+    readBy: CommunicationUserKind;
+}) => void;
+
+// @public (undocumented)
+export type MessageReceivedListener = (event: {
+    message: ChatMessage_2;
+}) => void;
+
+// @public (undocumented)
+export type MessageSentListener = MessageReceivedListener;
+
+// @public (undocumented)
 export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
 
 // @public
@@ -1079,6 +1119,25 @@ export const participantListSelector: reselect.OutputParametricSelector<CallClie
     myUserId: string;
 }>;
 
+// @public (undocumented)
+export type ParticipantsAddedListener = (event: {
+    participantsAdded: ChatParticipant[];
+    addedBy: ChatParticipant;
+}) => void;
+
+// @public (undocumented)
+export type ParticipantsRemovedListener = (event: {
+    participantsRemoved: ChatParticipant[];
+    removedBy: ChatParticipant;
+}) => void;
+
+// @public (undocumented)
+export interface PlaceholderProps {
+    displayName?: string;
+    noVideoAvailableAriaLabel?: string;
+    userId?: string;
+}
+
 // @public
 export const recordButtonProps: IButtonProps;
 
@@ -1221,6 +1280,11 @@ export type SystemMessagePayload = {
 // @public
 export const toFlatCommunicationIdentifier: (id: CommunicationIdentifier) => string;
 
+// @public (undocumented)
+export type TopicChangedListener = (event: {
+    topic: string;
+}) => void;
+
 // @public
 export interface TranscriptionCallFeature {
     isTranscriptionActive: boolean;
@@ -1313,6 +1377,8 @@ export interface VideoGalleryProps {
     // (undocumented)
     onDisposeLocalStreamView?: () => void;
     // (undocumented)
+    onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+    // (undocumented)
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     // (undocumented)
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
@@ -1394,13 +1460,11 @@ export interface VideoStreamRendererView {
 export const VideoTile: (props: VideoTileProps) => JSX.Element;
 
 // @public
-export interface VideoTileProps {
+export interface VideoTileProps extends PlaceholderProps {
     children?: React_2.ReactNode;
-    displayName?: string;
     isMirrored?: boolean;
     isVideoReady?: boolean;
-    noVideoAvailableAriaLabel?: string;
-    placeholder?: JSX.Element | null;
+    onRenderPlaceholder?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element | null;
     renderElement?: JSX.Element | null;
     showDisplayName?: boolean;
     styles?: VideoTileStylesProps;

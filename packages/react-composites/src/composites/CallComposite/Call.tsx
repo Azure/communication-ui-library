@@ -10,16 +10,23 @@ import { Stack } from '@fluentui/react';
 import { CommunicationUiErrorInfo } from '../../types';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
 import { CallAdapter } from './adapter/CallAdapter';
+import { PlaceholderProps } from 'react-components';
 import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
 
 export type CallCompositeProps = {
   adapter: CallAdapter;
+  onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
   /** Optional callback to call when error is detected */
   onErrorCallback?: (error: CommunicationUiErrorInfo) => void;
 };
 
-const MainScreen = ({ screenWidth }: { screenWidth: number }): JSX.Element => {
+type MainScreenProps = {
+  onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+  screenWidth: number;
+};
+
+const MainScreen = ({ screenWidth, onRenderAvatar }: MainScreenProps): JSX.Element => {
   const page = useSelector(getPage);
   const adapter = useAdapter();
 
@@ -32,6 +39,7 @@ const MainScreen = ({ screenWidth }: { screenWidth: number }): JSX.Element => {
           adapter.setPage('configuration');
           await adapter.leaveCall();
         }}
+        onRenderAvatar={onRenderAvatar}
         screenWidth={screenWidth}
       />
     );
@@ -63,7 +71,7 @@ export const Call = (props: CallCompositeProps): JSX.Element => {
     <ErrorProvider onErrorCallback={onErrorCallback}>
       <CallAdapterProvider adapter={adapter}>
         <Stack className={callContainer} grow>
-          <MainScreen screenWidth={screenWidth} />
+          <MainScreen screenWidth={screenWidth} onRenderAvatar={props.onRenderAvatar} />
         </Stack>
       </CallAdapterProvider>
     </ErrorProvider>

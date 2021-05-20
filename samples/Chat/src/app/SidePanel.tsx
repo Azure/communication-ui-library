@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-
-import React, { Dispatch } from 'react';
+import React, { Dispatch, useCallback } from 'react';
 import { InviteFooter } from './InviteFooter';
 import { SettingsManagementComponent } from './SettingsManagement';
 import { SlideOutPanelComponent } from './SlideOutPanel';
-import { chatParticipantListSelector, useHandlers, useSelector } from '@azure/acs-chat-selector';
+import { useSelector, useChatThreadClient, usePropsFor } from '@azure/acs-chat-selector';
 import { chatSettingsSelector } from './selectors/chatSettingsSelector';
 import { ParticipantList, CommunicationParticipant } from 'react-components';
 
@@ -23,11 +22,16 @@ export interface SelectedPaneProps {
 
 export const SidePanel = (props: SelectedPaneProps): JSX.Element => {
   const { selectedPane, setSelectedPane, onRenderAvatar } = props;
+  const chatParticipantProps = usePropsFor(ParticipantList);
 
-  const chatParticipantProps = useSelector(chatParticipantListSelector);
-  const chatParticipantHandlers = useHandlers(ParticipantList);
   const chatSettingsProps = useSelector(chatSettingsSelector);
-  const chatSettingsHandlers = useHandlers(SettingsManagementComponent);
+  const chatThreadClient = useChatThreadClient();
+  const updateThreadTopicName = useCallback(
+    async (topicName: string) => {
+      await chatThreadClient.updateTopic(topicName);
+    },
+    [chatThreadClient]
+  );
 
   return (
     <>
@@ -58,7 +62,6 @@ export const SidePanel = (props: SelectedPaneProps): JSX.Element => {
       >
         <ParticipantList
           {...chatParticipantProps}
-          {...chatParticipantHandlers}
           onRenderAvatar={
             onRenderAvatar ? (participant: CommunicationParticipant) => onRenderAvatar(participant.userId) : undefined
           }
@@ -66,7 +69,7 @@ export const SidePanel = (props: SelectedPaneProps): JSX.Element => {
       </SlideOutPanelComponent>
       <SettingsManagementComponent
         {...chatSettingsProps}
-        {...chatSettingsHandlers}
+        updateThreadTopicName={updateThreadTopicName}
         visible={selectedPane === SidePanelTypes.Settings}
         parentId="settings-management-parent"
         onClose={() => setSelectedPane(SidePanelTypes.None)}

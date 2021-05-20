@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { MessageThread, SendBox, TypingIndicator } from 'react-components';
+import { MessageThread, ParticipantList, SendBox, TypingIndicator } from 'react-components';
 
 import { useHandlers } from './useHandlers';
 import { useSelector } from './useSelector';
@@ -11,6 +11,7 @@ import { typingIndicatorSelector } from '../typingIndicatorSelector';
 import { CommonProperties } from 'acs-ui-common';
 // @ts-ignore
 import { Common, DefaultChatHandlers } from '../handlers/createHandlers';
+import { chatParticipantListSelector } from '../chatParticipantListSelector';
 
 export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component
@@ -43,6 +44,8 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
       return chatThreadSelector;
     case TypingIndicator:
       return typingIndicatorSelector;
+    case ParticipantList:
+      return chatParticipantListSelector;
   }
   throw 'Can\'t find corresponding selector for this component. Please check the supported components from Azure Communication UI Feature Component List.';
 };
