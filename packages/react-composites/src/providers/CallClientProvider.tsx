@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-// import { CallClientOptions } from '@azure/communication-calling';
-// import { AbortSignalLike } from '@azure/core-http';
 import { StatefulCallClient, StatefulDeviceManager } from 'calling-stateful-client';
 import React, { createContext, useEffect, useState } from 'react';
 import { CommunicationUiError, CommunicationUiErrorCode } from '../types/CommunicationUiError';
