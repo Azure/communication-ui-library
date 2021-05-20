@@ -34,7 +34,7 @@
     linkContainer.style = 'text-align: center';
     const manageCookiesLink = document.createElement('a');
     manageCookiesLink.href = "javascript:;";
-    manageCookiesLink.innerHTML = 'Manage Cookies';
+    manageCookiesLink.innerText = 'Manage Cookies';
     manageCookiesLink.style='color: #1EA7FD; font-size: 0.75rem;'
     manageCookiesLink.onclick = () => {
       window.siteConsent?.manageConsent();
