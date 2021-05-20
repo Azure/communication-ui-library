@@ -22,18 +22,28 @@ const convertChatParticipantsToCommunicationParticipants = (
   });
 };
 
+/**
+ * get the index of moderator to help updating its display name if they are the local user or removing them from list of participants otherwise
+ */
+const moderatorIndex = (participants: CommunicationParticipant[]): number => {
+  return participants.map((p) => p.displayName).indexOf(undefined);
+};
+
 export const chatParticipantListSelector = reselect.createSelector(
   [getUserId, getParticipants, getDisplayName],
   (userId, chatParticipants: Map<string, ChatParticipant>, displayName) => {
     let participants = convertChatParticipantsToCommunicationParticipants(Array.from(chatParticipants.values()));
     if (0 !== participants.length) {
-      const userIndex = participants.map((p) => p.userId).indexOf(userId);
-      if (-1 !== userIndex && !participants[userIndex].displayName) {
-        participants[userIndex].displayName = displayName;
-      }
+      const moderatorIdx = moderatorIndex(participants);
 
-      // removing any other undefined participants
-      participants = participants.filter((p) => p.displayName);
+      if (-1 !== moderatorIdx) {
+        const userIndex = participants.map((p) => p.userId).indexOf(userId);
+        if (moderatorIdx === userIndex) {
+          participants[moderatorIdx].displayName = displayName;
+        } else {
+          participants = participants.filter((p) => p.displayName);
+        }
+      }
     }
 
     return {
