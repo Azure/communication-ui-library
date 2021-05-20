@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+// @ts-ignore
 import {
   AudioDeviceInfo,
   Call,

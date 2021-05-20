@@ -3,8 +3,6 @@
 
 import React, { useContext, createContext, useState, useEffect } from 'react';
 import { Call } from '@azure/communication-calling';
-import { WithErrorHandling } from '../utils/WithErrorHandling';
-import { ErrorHandlingProps } from './ErrorProvider';
 
 export type CallContextType = {
   call: Call | undefined;
@@ -33,8 +31,7 @@ const CallProviderBase = (props: CallProviderProps): JSX.Element => {
   return <CallContext.Provider value={initialState}>{children}</CallContext.Provider>;
 };
 
-export const CallProvider = (props: CallProviderProps & ErrorHandlingProps): JSX.Element =>
-  WithErrorHandling(CallProviderBase, props);
+export const CallProvider = (props: CallProviderProps): JSX.Element => <CallProviderBase {...props} />;
 
 export const useCall = (): Call | undefined => {
   return useContext(CallContext)?.call;

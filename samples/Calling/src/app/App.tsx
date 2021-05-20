@@ -11,12 +11,13 @@ import { GroupCall } from './GroupCall';
 import { HomeScreen } from './HomeScreen';
 import { v1 as createGUID } from 'uuid';
 import {
-  CallProvider,
-  CallClientProvider,
-  CallAgentProvider,
+  // CallProvider,
+  // CallClientProvider,
+  // CallAgentProvider,
   CommunicationUiError,
   CommunicationUiErrorCode
 } from 'react-composites';
+import { CallProvider, CallClientProvider, CallAgentProvider } from '@azure/acs-calling-selector';
 import {
   createRandomDisplayName,
   fetchTokenResponse,
