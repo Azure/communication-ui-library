@@ -12,7 +12,7 @@ export const createUserAndGroup = async (resourceConnectionString: string): Prom
     userId: user.user.communicationUserId,
 
     // Contoso creates a group call and provides the group ID to the client application.
-    // Alternatively, he client application could join an existing teams meeting.
+    // Alternatively, the client application could join an existing teams meeting.
     groupId: createGUID()
   };
 };
