@@ -22,10 +22,15 @@ export const DataModelCanvas: () => JSX.Element = () => {
   useEffect(() => {
     const fetchToken = async (): Promise<void> => {
       if (knobs.current.connectionString && knobs.current.displayName) {
-        const newChatConfig = await createUserAndThread(knobs.current.connectionString, knobs.current.displayName);
-        const botUserToken = await addParrotBotToThread(knobs.current.connectionString, newChatConfig, messageArray);
+        const newPrerequisites = await createUserAndThread(knobs.current.connectionString, knobs.current.displayName);
+        const botUserToken = await addParrotBotToThread(
+          knobs.current.connectionString,
+          newPrerequisites.token,
+          newPrerequisites.threadId,
+          messageArray
+        );
         setContainerProps({
-          config: newChatConfig,
+          ...newPrerequisites,
           botUserId: toFlatCommunicationIdentifier(botUserToken.user),
           botAvatar: knobs.current.avatar
         });

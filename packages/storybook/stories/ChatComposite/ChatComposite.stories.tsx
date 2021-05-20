@@ -27,6 +27,7 @@ export default {
 export { BasicCanvas } from './snippets/BasicCanvas.snippet';
 export { CustomizationCanvas } from './snippets/CustomizationCanvas.snippet';
 export { DataModelCanvas } from './snippets/DataModelCanvas.snippet';
+export { JoinChatCanvas } from './snippets/JoinChatCanvas.snippet';
 export { ThemesCanvas } from './snippets/ThemesCanvas.snippet';
 
 const getDocs: () => JSX.Element = () => {
@@ -85,6 +86,13 @@ const getDocs: () => JSX.Element = () => {
         by the user and modify them before sending them on to the backend.
       </Description>
       <Source code={customizationContainerText} />
+
+      <Heading>Joining an existing Chat thread</Heading>
+      <Description>
+        The [join chat canvas](./?path=/story/composites-chat--join-chat-canvas) provides an easy playground to join an
+        existing Azure Communication Services chat thread. This is useful if you want to explore the composite with
+        multiple users.
+      </Description>
     </>
   );
 };
