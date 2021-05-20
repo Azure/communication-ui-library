@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Migrate non-component selectors into package instead of import",
+  "packageName": "react-composites",
+  "email": "mail@jamesburnside.com",
+  "dependentChangeType": "none"
+}

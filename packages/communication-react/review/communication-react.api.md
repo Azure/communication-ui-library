@@ -629,15 +629,6 @@ export interface CommunicationUiErrorInfo {
 // @public
 export type CommunicationUiErrorSeverity = 'info' | 'warning' | 'error' | 'ignore';
 
-// @public (undocumented)
-export const complianceBannerSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
-    callTranscribeState: boolean | undefined;
-    callRecordState: boolean | undefined;
-}, (res: Call | undefined) => {
-    callTranscribeState: boolean | undefined;
-    callRecordState: boolean | undefined;
-}>;
-
 // @public
 export const ControlBar: (props: ControlBarProps) => JSX.Element;
 
@@ -874,26 +865,12 @@ export interface JumpToNewMessageButtonProps {
 // @public
 export const lightTheme: PartialTheme & CallingTheme;
 
-// @public (undocumented)
-export const localPreviewSelector: reselect.OutputSelector<CallClientState, {
-    videoStreamElement: HTMLElement | null;
-}, (res: DeviceManagerState) => {
-    videoStreamElement: HTMLElement | null;
-}>;
-
 // @public
 export interface LocalVideoStreamState {
     mediaStreamType: MediaStreamType;
     source: VideoDeviceInfo;
     videoStreamRendererView?: VideoStreamRendererViewState | undefined;
 }
-
-// @public (undocumented)
-export const mediaGallerySelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
-    isVideoStreamOn: boolean;
-}, (res: Call | undefined) => {
-    isVideoStreamOn: boolean;
-}>;
 
 // @public (undocumented)
 export type Message<T extends MessageTypes> = {
