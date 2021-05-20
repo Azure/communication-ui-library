@@ -14,9 +14,6 @@ import { default as React_2 } from 'react';
 import { SizeValue } from '@fluentui/react-northstar';
 import { Theme } from '@fluentui/react-theme-provider';
 
-// @public
-export const answerButtonProps: IButtonProps;
-
 // @public (undocumented)
 export interface BaseCustomStylesProps {
     root?: IStyle;
@@ -138,12 +135,6 @@ export interface JumpToNewMessageButtonProps {
     // (undocumented)
     onClick: () => void;
 }
-
-// @public
-export const labeledAnswerButtonProps: IButtonProps;
-
-// @public
-export const labeledRecordButtonProps: IButtonProps;
 
 // @public
 export const lightTheme: PartialTheme & CallingTheme;
@@ -307,9 +298,6 @@ export interface PlaceholderProps {
     noVideoAvailableAriaLabel?: string;
     userId?: string;
 }
-
-// @public
-export const recordButtonProps: IButtonProps;
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
