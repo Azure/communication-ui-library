@@ -10,7 +10,7 @@ import { createUserAndGroup } from './Server.snippet';
 import { ConfigHintBanner } from './Utils.snippet';
 
 export const BasicCanvas: () => JSX.Element = () => {
-  const [prerequisites, setPrerequisites] = useState();
+  const [containerProps, setContainerProps] = useState();
 
   const knobs = useRef({
     connectionString: text(COMPOSITE_STRING_CONNECTIONSTRING, '', 'Server Simulator'),
@@ -18,20 +18,20 @@ export const BasicCanvas: () => JSX.Element = () => {
   });
 
   useEffect(() => {
-    const fetchPrerequisites = async (): Promise<void> => {
+    const fetchContainerProps = async (): Promise<void> => {
       if (knobs.current.connectionString && knobs.current.displayName) {
-        const newPrerequisites = await createUserAndGroup(knobs.current.connectionString);
-        setPrerequisites(newPrerequisites);
+        const newProps = await createUserAndGroup(knobs.current.connectionString);
+        setContainerProps(newProps);
       }
     };
-    fetchPrerequisites();
+    fetchContainerProps();
   }, [knobs]);
 
-  console.log(prerequisites);
+  console.log(containerProps);
   return (
     <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
-      {prerequisites ? (
-        <ContosoCallContainer displayName={knobs.current.displayName} {...prerequisites} />
+      {containerProps ? (
+        <ContosoCallContainer displayName={knobs.current.displayName} {...containerProps} />
       ) : (
         <ConfigHintBanner />
       )}

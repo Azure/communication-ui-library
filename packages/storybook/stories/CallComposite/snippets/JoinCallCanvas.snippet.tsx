@@ -4,26 +4,25 @@
 import { text } from '@storybook/addon-knobs';
 import React, { useRef } from 'react';
 import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE } from '../../constants';
-import { ContosoChatContainer } from './Container.snippet';
+import { ContosoCallContainer } from './Container.snippet';
 import { ConfigHintBanner } from './Utils.snippet';
 
-export const ExternalChatCanvas: () => JSX.Element = () => {
+export const JoinCallCanvas: () => JSX.Element = () => {
   const knobs = useRef({
-    endpointUrl: text('Azure Communication Services endpoint URL', '', 'External chat'),
-    threadId: text('Existing thread', '', 'External chat'),
-    token: text('Valid token for user', '', 'External chat'),
-    displayName: text('Display name', '', 'External chat')
+    endpointUrl: text('Azure Communication Services endpoint URL', '', 'External call'),
+    callLocator: text('Call locator (ACS group ID or Teams meeting link)', '', 'External call'),
+    token: text('Valid token for user', '', 'External call'),
+    displayName: text('Display name', '', 'External call')
   });
 
   const areAllKnobsSet =
-    !!knobs.current.endpointUrl && !!knobs.current.threadId && !!knobs.current.token && !!knobs.current.displayName;
-
+    !!knobs.current.endpointUrl && !!knobs.current.callLocator && !!knobs.current.token && !!knobs.current.displayName;
   return (
     <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
       {areAllKnobsSet ? (
-        <ContosoChatContainer
+        <ContosoCallContainer
           endpointUrl={knobs.current.endpointUrl}
-          threadId={knobs.current.threadId}
+          groupId={knobs.current.callLocator}
           token={knobs.current.token}
           displayName={knobs.current.displayName}
         />
