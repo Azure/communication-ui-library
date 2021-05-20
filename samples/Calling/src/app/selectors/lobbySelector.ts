@@ -20,7 +20,6 @@ export const lobbySelector = reselect.createSelector(
         videoStream: {
           isAvailable: !!localVideoStream,
           isMirrored: localVideoStream?.view?.isMirrored,
-          renderStatus: localVideoStream?.viewStatus ?? 'NotRendered',
           renderElement: localVideoStream?.view?.target
         }
       }

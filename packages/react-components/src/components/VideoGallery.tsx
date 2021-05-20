@@ -7,7 +7,6 @@ import {
   BaseCustomStylesProps,
   VideoGalleryLocalParticipant,
   VideoGalleryRemoteParticipant,
-  VideoGalleryStreamRenderStatus,
   VideoStreamOptions
 } from '../types';
 import { GridLayout } from './GridLayout';
@@ -34,19 +33,18 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
   (
     userId: string,
     onCreateRemoteStreamView: any,
-    renderStatus: VideoGalleryStreamRenderStatus,
     isAvailable?: boolean,
     renderElement?: HTMLElement,
     displayName?: string,
     remoteVideoViewOption?: VideoStreamOptions
   ): JSX.Element => {
-    if (isAvailable && !renderElement && renderStatus === 'NotRendered') {
+    if (isAvailable && !renderElement) {
       onCreateRemoteStreamView && onCreateRemoteStreamView(userId, remoteVideoViewOption);
     }
     return (
       <Stack className={gridStyle} key={userId} grow>
         <VideoTile
-          isVideoReady={isAvailable && renderStatus === 'Rendered'}
+          isVideoReady={isAvailable}
           renderElement={<StreamMedia videoStreamElement={renderElement ?? null} />}
           displayName={displayName}
           styles={videoTileStyle}
@@ -74,12 +72,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
    */
   const defaultOnRenderLocalVideoTile = useMemo((): JSX.Element => {
     const localVideoStream = localParticipant?.videoStream;
-    const isLocalVideoNotRendered = localVideoStream?.renderStatus === 'NotRendered';
-    const isLocalVideoReady = localVideoStream?.renderStatus === 'Rendered';
+    const isLocalVideoReady = localVideoStream?.isAvailable;
 
     if (onRenderLocalVideoTile) return onRenderLocalVideoTile(localParticipant);
 
-    if (localVideoStream && isLocalVideoNotRendered) {
+    if (localVideoStream && !localVideoStream.renderElement) {
       onCreateLocalStreamView && onCreateLocalStreamView(localVideoViewOption);
     }
     return (
@@ -111,7 +108,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         return memoizedRemoteParticipantFn(
           participant.userId,
           onCreateRemoteStreamView,
-          remoteVideoStream ? remoteVideoStream.renderStatus : 'NotRendered',
           remoteVideoStream?.isAvailable,
           remoteVideoStream?.renderElement,
           participant.displayName,

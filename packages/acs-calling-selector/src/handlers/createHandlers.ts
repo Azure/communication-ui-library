@@ -51,9 +51,7 @@ export const createDefaultCallingHandlers = memoizeOne(
         await call.stopVideo(stream);
         await callClient.disposeView(callId, undefined, {
           source: stream.source,
-          mediaStreamType: stream.mediaStreamType,
-          viewStatus: 'NotRendered',
-          view: undefined
+          mediaStreamType: stream.mediaStreamType
         });
       }
     };
@@ -73,16 +71,12 @@ export const createDefaultCallingHandlers = memoizeOne(
           if (previewOn) {
             await callClient.disposeView(undefined, undefined, {
               source: selectedCamera,
-              mediaStreamType: 'Video',
-              viewStatus: 'NotRendered',
-              view: undefined
+              mediaStreamType: 'Video'
             });
           } else {
             await callClient.createView(undefined, undefined, {
               source: selectedCamera,
-              mediaStreamType: 'Video',
-              viewStatus: 'NotRendered',
-              view: undefined
+              mediaStreamType: 'Video'
             });
           }
         }
@@ -132,17 +126,13 @@ export const createDefaultCallingHandlers = memoizeOne(
         if (selectedCamera) {
           await callClient.disposeView(undefined, undefined, {
             source: selectedCamera,
-            mediaStreamType: 'Video',
-            viewStatus: 'NotRendered',
-            view: undefined
+            mediaStreamType: 'Video'
           });
         }
         deviceManager.selectCamera(device);
         await callClient.createView(undefined, undefined, {
           source: device,
-          mediaStreamType: 'Video',
-          viewStatus: 'NotRendered',
-          view: undefined
+          mediaStreamType: 'Video'
         });
       }
     };
@@ -201,21 +191,11 @@ export const createDefaultCallingHandlers = memoizeOne(
         (i) => i.mediaStreamType === 'ScreenSharing'
       );
 
-      if (
-        remoteVideoStream &&
-        remoteVideoStream.isAvailable &&
-        remoteVideoStream.viewStatus === 'NotRendered' &&
-        !remoteVideoStream.view
-      ) {
+      if (remoteVideoStream && remoteVideoStream.isAvailable && !remoteVideoStream.view) {
         callClient.createView(call.id, participant.identifier, remoteVideoStream, options);
       }
 
-      if (
-        screenShareStream &&
-        screenShareStream.isAvailable &&
-        screenShareStream.viewStatus === 'NotRendered' &&
-        !screenShareStream.view
-      ) {
+      if (screenShareStream && screenShareStream.isAvailable && !screenShareStream.view) {
         callClient.createView(call.id, participant.identifier, screenShareStream, options);
       }
     };

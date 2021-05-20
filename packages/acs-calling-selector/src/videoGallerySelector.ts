@@ -26,7 +26,6 @@ const convertRemoteVideoStreamToVideoGalleryStream = (stream: RemoteVideoStream)
     id: stream.id,
     isAvailable: stream.isAvailable,
     isMirrored: stream.view?.isMirrored,
-    renderStatus: stream.viewStatus,
     renderElement: stream.view?.target
   };
 };
@@ -127,7 +126,6 @@ export const videoGallerySelector = createSelector(
         videoStream: {
           isAvailable: !!localVideoStream,
           isMirrored: localVideoStream?.view?.isMirrored,
-          renderStatus: localVideoStream ? localVideoStream.viewStatus : 'NotRendered',
           renderElement: localVideoStream?.view?.target
         }
       },

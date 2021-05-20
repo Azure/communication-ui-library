@@ -430,12 +430,7 @@ export interface VideoGalleryStream {
     isMirrored?: boolean;
     // (undocumented)
     renderElement?: HTMLElement;
-    // (undocumented)
-    renderStatus: VideoGalleryStreamRenderStatus;
 }
-
-// @public
-export type VideoGalleryStreamRenderStatus = 'NotRendered' | 'Rendering' | 'Rendered' | 'Stopping';
 
 // @public (undocumented)
 export interface VideoStreamOptions {

@@ -23,6 +23,5 @@ export type {
   VideoGalleryParticipant,
   VideoGalleryStream,
   VideoGalleryLocalParticipant,
-  VideoGalleryRemoteParticipant,
-  VideoGalleryStreamRenderStatus
+  VideoGalleryRemoteParticipant
 } from './types';

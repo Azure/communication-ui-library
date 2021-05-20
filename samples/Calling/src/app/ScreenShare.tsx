@@ -75,15 +75,9 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
       screenShareParticipant && onCreateRemoteStreamView && onCreateRemoteStreamView(screenShareParticipant.userId);
     }
 
-    const isScreenShareStreamReady =
-      screenShareStream?.renderStatus === 'Rendered' &&
-      screenShareStream?.isAvailable &&
-      screenShareStream?.renderElement !== undefined;
-    const isVideoReady =
-      videoStream?.renderStatus === 'Rendered' && videoStream?.isAvailable && videoStream?.renderElement !== undefined;
     return (
       <VideoTile
-        isVideoReady={isScreenShareStreamReady}
+        isVideoReady={screenShareStream?.isAvailable}
         renderElement={<StreamMedia videoStreamElement={screenShareStream?.renderElement ?? null} />}
         placeholder={
           <div className={loadingStyle}>
@@ -98,7 +92,7 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
           <Stack horizontalAlign="center" verticalAlign="center" className={aspectRatioBoxStyle}>
             <Stack className={aspectRatioBoxContentStyle}>
               <VideoTile
-                isVideoReady={isVideoReady}
+                isVideoReady={videoStream.isAvailable}
                 renderElement={<StreamMedia videoStreamElement={videoStream.renderElement ?? null} />}
                 styles={videoTileStyle}
               />
@@ -111,14 +105,12 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
 
   const layoutLocalParticipant = useMemo(() => {
     const localVideoStream = localParticipant?.videoStream;
-    const isLocalVideoNotRendered = localVideoStream?.renderStatus === 'NotRendered';
 
-    if (localVideoStream && !localVideoStream?.renderElement && isLocalVideoNotRendered) {
+    if (localVideoStream && !localVideoStream?.renderElement) {
       onCreateLocalStreamView && onCreateLocalStreamView();
     }
 
-    const isLocalVideoReady =
-      localVideoStream?.renderStatus === 'Rendered' && localVideoStream?.renderElement !== undefined;
+    const isLocalVideoReady = localVideoStream?.renderElement !== undefined;
     return (
       <VideoTile
         isVideoReady={isLocalVideoReady}
@@ -138,23 +130,14 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
             })
             .map((participant: VideoGalleryRemoteParticipant) => {
               const remoteVideoStream = participant.videoStream;
-              const isRemoteVideoStreamNotRendered = remoteVideoStream?.renderStatus === 'NotRendered';
 
-              if (
-                remoteVideoStream?.isAvailable &&
-                !remoteVideoStream?.renderElement &&
-                isRemoteVideoStreamNotRendered
-              ) {
+              if (remoteVideoStream?.isAvailable && !remoteVideoStream?.renderElement) {
                 onCreateRemoteStreamView && onCreateRemoteStreamView(participant.userId);
               }
 
-              const isRemoteVideoReady =
-                remoteVideoStream?.renderStatus === 'Rendered' &&
-                remoteVideoStream?.isAvailable &&
-                remoteVideoStream?.renderElement !== undefined;
               return memoizedRemoteParticipantFn(
                 participant.userId,
-                isRemoteVideoReady,
+                remoteVideoStream?.isAvailable,
                 remoteVideoStream?.renderElement,
                 participant.displayName
               );

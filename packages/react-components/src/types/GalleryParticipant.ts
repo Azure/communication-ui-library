@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { VideoGalleryStreamRenderStatus } from './VideoGalleryParticipant';
-
 export declare type VideoDeviceType = 'Unknown' | 'UsbCamera' | 'CaptureAdapter' | 'Virtual';
 
 export declare interface VideoDeviceInfo {
@@ -33,11 +31,6 @@ export interface LocalVideoStream {
    */
   mediaStreamType: MediaStreamType;
   /**
-   * {@Link VideoStreamRendererViewStatus} that is managed by createView/disposeView in {@Link StatefulCallClient}. It
-   * will be 'NotRendered'.
-   */
-  viewStatus: VideoGalleryStreamRenderStatus;
-  /**
    * {@Link VideoStreamRendererView} that is managed by createView/disposeView in {@Link StatefulCallClient}
    * API. This can be undefined if the stream has not yet been rendered.
    */
@@ -60,11 +53,6 @@ export interface RemoteVideoStream {
    * Proxy of {@Link @azure/communication-calling#RemoteVideoStream.isAvailable}.
    */
   isAvailable: boolean;
-  /**
-   * {@Link VideoStreamRendererViewStatus} that is managed by createView/disposeView in {@Link StatefulCallClient}. It
-   * will be 'NotRendered'.
-   */
-  viewStatus: VideoGalleryStreamRenderStatus;
   /**
    * {@Link VideoStreamRendererView} that is managed by createView/disposeView in {@Link StatefulCallClient}
    * API. This can be undefined if the stream has not yet been rendered.

@@ -22,7 +22,6 @@ import {
   CallAgentState,
   TransferRequest,
   Transfer,
-  VideoStreamRendererViewStatus,
   VideoStreamRendererView
 } from './CallClientState';
 
@@ -323,17 +322,12 @@ export class CallContext {
     );
   }
 
-  public setLocalVideoStreamRendererView(
-    callId: string,
-    status: VideoStreamRendererViewStatus,
-    view: VideoStreamRendererView | undefined
-  ): void {
+  public setLocalVideoStreamRendererView(callId: string, view: VideoStreamRendererView | undefined): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         const call = draft.calls.get(callId);
         if (call) {
           if (call.localVideoStreams.length > 0) {
-            call.localVideoStreams[0].viewStatus = status;
             call.localVideoStreams[0].view = view;
           }
         }
@@ -478,7 +472,6 @@ export class CallContext {
     callId: string,
     participantKey: string,
     streamId: number,
-    status: VideoStreamRendererViewStatus,
     view: VideoStreamRendererView | undefined
   ): void {
     this.setState(
@@ -489,7 +482,6 @@ export class CallContext {
           if (participant) {
             const stream = participant.videoStreams.get(streamId);
             if (stream) {
-              stream.viewStatus = status;
               stream.view = view;
             }
           }
@@ -605,7 +597,6 @@ export class CallContext {
 
   public setDeviceManagerUnparentedView(
     localVideoStream: LocalVideoStream,
-    status: VideoStreamRendererViewStatus,
     view: VideoStreamRendererView | undefined
   ): void {
     this.setState(
@@ -613,7 +604,6 @@ export class CallContext {
         draft.deviceManager.unparentedViews.set(localVideoStream, {
           source: localVideoStream.source,
           mediaStreamType: localVideoStream.mediaStreamType,
-          viewStatus: status,
           view: view
         });
       })

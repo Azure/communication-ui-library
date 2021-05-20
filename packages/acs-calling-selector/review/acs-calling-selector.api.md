@@ -24,7 +24,6 @@ import { UnknownIdentifier } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoGalleryRemoteParticipant } from 'react-components';
 import { VideoStreamOptions } from 'react-components';
-import { VideoStreamRendererViewStatus } from 'calling-stateful-client';
 
 // @public
 export type CallingBaseSelectorProps = {
@@ -136,9 +135,9 @@ export const localPreviewSelector: reselect.OutputSelector<CallClientState, {
 
 // @public (undocumented)
 export const mediaGallerySelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
-    isVideoStreamNotRendered: boolean;
+    isVideoStreamOn: boolean;
 }, (res: Call_2 | undefined) => {
-    isVideoStreamNotRendered: boolean;
+    isVideoStreamOn: boolean;
 }>;
 
 // @public (undocumented)
@@ -194,7 +193,6 @@ export const videoGallerySelector: reselect.OutputParametricSelector<CallClientS
         videoStream: {
             isAvailable: boolean;
             isMirrored: boolean | undefined;
-            renderStatus: VideoStreamRendererViewStatus;
             renderElement: HTMLElement | undefined;
         };
     };
@@ -209,7 +207,6 @@ export const videoGallerySelector: reselect.OutputParametricSelector<CallClientS
         videoStream: {
             isAvailable: boolean;
             isMirrored: boolean | undefined;
-            renderStatus: VideoStreamRendererViewStatus;
             renderElement: HTMLElement | undefined;
         };
     };

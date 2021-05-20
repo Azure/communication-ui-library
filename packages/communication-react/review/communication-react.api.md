@@ -872,14 +872,13 @@ export interface LocalVideoStream {
     mediaStreamType: MediaStreamType;
     source: VideoDeviceInfo;
     view?: VideoStreamRendererView;
-    viewStatus: VideoStreamRendererViewStatus;
 }
 
 // @public (undocumented)
 export const mediaGallerySelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
-    isVideoStreamNotRendered: boolean;
+    isVideoStreamOn: boolean;
 }, (res: Call | undefined) => {
-    isVideoStreamNotRendered: boolean;
+    isVideoStreamOn: boolean;
 }>;
 
 // @public (undocumented)
@@ -1105,7 +1104,6 @@ export interface RemoteVideoStream {
     isAvailable: boolean;
     mediaStreamType: MediaStreamType;
     view?: VideoStreamRendererView;
-    viewStatus: VideoStreamRendererViewStatus;
 }
 
 // @public
@@ -1345,7 +1343,6 @@ export const videoGallerySelector: reselect.OutputParametricSelector<CallClientS
         videoStream: {
             isAvailable: boolean;
             isMirrored: boolean | undefined;
-            renderStatus: VideoStreamRendererViewStatus;
             renderElement: HTMLElement | undefined;
         };
     };
@@ -1360,7 +1357,6 @@ export const videoGallerySelector: reselect.OutputParametricSelector<CallClientS
         videoStream: {
             isAvailable: boolean;
             isMirrored: boolean | undefined;
-            renderStatus: VideoStreamRendererViewStatus;
             renderElement: HTMLElement | undefined;
         };
     };
@@ -1377,12 +1373,7 @@ export interface VideoGalleryStream {
     isMirrored?: boolean;
     // (undocumented)
     renderElement?: HTMLElement;
-    // (undocumented)
-    renderStatus: VideoGalleryStreamRenderStatus;
 }
-
-// @public
-export type VideoGalleryStreamRenderStatus = 'NotRendered' | 'Rendering' | 'Rendered' | 'Stopping';
 
 // @public (undocumented)
 export interface VideoStreamOptions {
@@ -1398,9 +1389,6 @@ export interface VideoStreamRendererView {
     scalingMode: ScalingMode;
     target: HTMLElement;
 }
-
-// @public
-export type VideoStreamRendererViewStatus = 'NotRendered' | 'Rendering' | 'Rendered' | 'Stopping';
 
 // @public (undocumented)
 export const VideoTile: (props: VideoTileProps) => JSX.Element;

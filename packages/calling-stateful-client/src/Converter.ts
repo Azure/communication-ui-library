@@ -30,7 +30,6 @@ export function convertSdkLocalStreamToDeclarativeLocalStream(
   return {
     source: stream.source,
     mediaStreamType: stream.mediaStreamType,
-    viewStatus: 'NotRendered',
     view: undefined
   };
 }
@@ -42,7 +41,6 @@ export function convertSdkRemoteStreamToDeclarativeRemoteStream(
     id: stream.id,
     mediaStreamType: stream.mediaStreamType,
     isAvailable: stream.isAvailable,
-    viewStatus: 'NotRendered',
     view: undefined
   };
 }

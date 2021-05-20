@@ -93,7 +93,6 @@ export interface LocalVideoStream {
     mediaStreamType: MediaStreamType;
     source: VideoDeviceInfo;
     view?: VideoStreamRendererView;
-    viewStatus: VideoStreamRendererViewStatus;
 }
 
 // @public
@@ -118,7 +117,6 @@ export interface RemoteVideoStream {
     isAvailable: boolean;
     mediaStreamType: MediaStreamType;
     view?: VideoStreamRendererView;
-    viewStatus: VideoStreamRendererViewStatus;
 }
 
 // @public
@@ -175,9 +173,6 @@ export interface VideoStreamRendererView {
     scalingMode: ScalingMode;
     target: HTMLElement;
 }
-
-// @public
-export type VideoStreamRendererViewStatus = 'NotRendered' | 'Rendering' | 'Rendered' | 'Stopping';
 
 
 // (No @packageDocumentation comment for this package)
