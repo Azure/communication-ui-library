@@ -10,16 +10,20 @@ import {
 } from '@azure/communication-calling';
 import EventEmitter from 'events';
 import { enableMapSet, produce } from 'immer';
-import { CallEndReason, CallState, RemoteParticipantState } from '@azure/communication-calling';
+import {
+  CallEndReason,
+  CallState,
+  RemoteParticipantState as RemoteParticipantStatus
+} from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import {
   Call,
   CallClientState,
-  LocalVideoStream,
-  RemoteParticipant,
-  RemoteVideoStream,
-  IncomingCall,
-  VideoStreamRendererView,
+  LocalVideoStreamState,
+  RemoteParticipantState,
+  RemoteVideoStreamState,
+  IncomingCallState,
+  VideoStreamRendererViewState,
   CallAgentState,
   TransferRequest,
   Transfer
@@ -40,7 +44,7 @@ export class CallContext {
     this._state = {
       calls: new Map<string, Call>(),
       callsEnded: [],
-      incomingCalls: new Map<string, IncomingCall>(),
+      incomingCalls: new Map<string, IncomingCallState>(),
       incomingCallsEnded: [],
       deviceManager: {
         isSpeakerSelectionAvailable: false,
@@ -179,7 +183,7 @@ export class CallContext {
 
   public setCallRemoteParticipants(
     callId: string,
-    addRemoteParticipant: RemoteParticipant[],
+    addRemoteParticipant: RemoteParticipantState[],
     removeRemoteParticipant: string[]
   ): void {
     this.setState(
@@ -189,7 +193,7 @@ export class CallContext {
           removeRemoteParticipant.forEach((id: string) => {
             call.remoteParticipants.delete(id);
           });
-          addRemoteParticipant.forEach((participant: RemoteParticipant) => {
+          addRemoteParticipant.forEach((participant: RemoteParticipantState) => {
             call.remoteParticipants.set(toFlatCommunicationIdentifier(participant.identifier), participant);
           });
         }
@@ -199,7 +203,7 @@ export class CallContext {
 
   public setCallRemoteParticipantsEnded(
     callId: string,
-    addRemoteParticipant: RemoteParticipant[],
+    addRemoteParticipant: RemoteParticipantState[],
     removeRemoteParticipant: string[]
   ): void {
     this.setState(
@@ -209,7 +213,7 @@ export class CallContext {
           removeRemoteParticipant.forEach((id: string) => {
             call.remoteParticipantsEnded.delete(id);
           });
-          addRemoteParticipant.forEach((participant: RemoteParticipant) => {
+          addRemoteParticipant.forEach((participant: RemoteParticipantState) => {
             call.remoteParticipantsEnded.set(toFlatCommunicationIdentifier(participant.identifier), participant);
           });
         }
@@ -217,7 +221,7 @@ export class CallContext {
     );
   }
 
-  public setCallLocalVideoStream(callId: string, streams: LocalVideoStream[]): void {
+  public setCallLocalVideoStream(callId: string, streams: LocalVideoStreamState[]): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         const call = draft.calls.get(callId);
@@ -322,7 +326,7 @@ export class CallContext {
     );
   }
 
-  public setLocalVideoStreamRendererView(callId: string, view: VideoStreamRendererView | undefined): void {
+  public setLocalVideoStreamRendererView(callId: string, view: VideoStreamRendererViewState | undefined): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         const call = draft.calls.get(callId);
@@ -335,7 +339,7 @@ export class CallContext {
     );
   }
 
-  public setParticipantState(callId: string, participantKey: string, state: RemoteParticipantState): void {
+  public setParticipantState(callId: string, participantKey: string, state: RemoteParticipantStatus): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         const call = draft.calls.get(callId);
@@ -391,7 +395,7 @@ export class CallContext {
     );
   }
 
-  public setParticipantVideoStream(callId: string, participantKey: string, stream: RemoteVideoStream): void {
+  public setParticipantVideoStream(callId: string, participantKey: string, stream: RemoteVideoStreamState): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         const call = draft.calls.get(callId);
@@ -438,7 +442,7 @@ export class CallContext {
   public setRemoteVideoStreams(
     callId: string,
     participantKey: string,
-    addRemoteVideoStream: RemoteVideoStream[],
+    addRemoteVideoStream: RemoteVideoStreamState[],
     removeRemoteVideoStream: number[]
   ): void {
     this.setState(
@@ -472,7 +476,7 @@ export class CallContext {
     callId: string,
     participantKey: string,
     streamId: number,
-    view: VideoStreamRendererView | undefined
+    view: VideoStreamRendererViewState | undefined
   ): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
@@ -490,7 +494,7 @@ export class CallContext {
     );
   }
 
-  public setIncomingCall(call: IncomingCall): void {
+  public setIncomingCall(call: IncomingCallState): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         const existingCall = draft.incomingCalls.get(call.id);
@@ -595,7 +599,7 @@ export class CallContext {
     );
   }
 
-  public setDeviceManagerUnparentedView(view: VideoStreamRendererView): void {
+  public setDeviceManagerUnparentedView(view: VideoStreamRendererViewState): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         draft.deviceManager.unparentedViews.push(view);
