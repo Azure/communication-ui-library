@@ -147,6 +147,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   public dispose(): void {
     this.callClient.offStateChange(this.onClientStateChange);
+    this.callAgent.dispose();
   }
 
   public queryCameras(): Promise<VideoDeviceInfo[]> {
