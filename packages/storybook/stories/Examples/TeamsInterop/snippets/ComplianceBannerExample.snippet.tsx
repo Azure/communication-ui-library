@@ -4,21 +4,21 @@ import React from 'react';
 // State tracking for Teams interop.
 //
 // In a real application, this would be fetched from ACS APIs.
-export interface TeamsInterop {
+export interface ComplianceBannerState {
   recordingEnabled: boolean;
   transcriptionEnabled: boolean;
 }
 
 // Historical state of Teams interop, for computing state transition events.
-export interface TeamsInteropHistory {
-  teamsInteropCurrent: TeamsInterop;
-  teamsInteropPrevious: TeamsInterop;
+export interface ComplianceBannerHistory {
+  teamsInteropCurrent: ComplianceBannerState;
+  teamsInteropPrevious: ComplianceBannerState;
 }
 
 // Return the banner message to display for teams interop.
 //
 // Returns null if no banner needs to be displayed.
-export function bannerMessage(props: TeamsInteropHistory): JSX.Element | null {
+export function bannerMessage(props: ComplianceBannerHistory): JSX.Element | null {
   /*
   This function implements a single transition in a state machine.
   Nodes of the state machine correspond to the possible values of the TeamsInterp tuple:

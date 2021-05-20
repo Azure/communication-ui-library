@@ -1,18 +1,18 @@
 import { StreamMedia, VideoTile } from '@azure/communication-react';
 import React from 'react';
 import { renderVideoStream } from '../../../utils';
-import { ComplianceBannerExample } from './ComplianceBannerExample.snippet';
+import { Banner } from './Banner.snippet';
 import { CallControlBar } from './CallControlBar.snippet';
-import { ComplianceBanner } from './ComplianceBanner.snippet';
+import { ComplianceBannerState } from './ComplianceBannerExample.snippet';
 
 export interface CallProps {
-  teamsInteropCurrent: TeamsInterop;
-  teamsInteropPrevious: TeamsInterop;
+  teamsInteropCurrent: ComplianceBannerState;
+  teamsInteropPrevious: ComplianceBannerState;
 }
 
 const renderEmptyPlacehodler = (): JSX.Element => <></>;
 
-export const CallComponent = (props: TeamsInterop): JSX.Element => {
+export const CallComponent = (props: ComplianceBannerState): JSX.Element => {
   const videoTileStyles = {
     root: { height: '100%', width: '100%' },
     overlayContainer: {}
