@@ -90,6 +90,8 @@ export const ParticipantItem: () => JSX.Element = () => {
 
   const containerStyle = { width: '12rem' };
 
+  const tokenProps = { childrenGap: '0.5rem' };
+
   return (
     <div style={containerStyle}>
       <ParticipantItemComponent
@@ -97,7 +99,7 @@ export const ParticipantItem: () => JSX.Element = () => {
         me={me}
         menuItems={menuItems}
         onRenderIcon={() => (
-          <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
+          <Stack horizontal={true} tokens={tokenProps}>
             {isScreenSharing && <CallControlPresentNewIcon size="small" />}
             {isMuted && <MicOffIcon size="small" />}
           </Stack>

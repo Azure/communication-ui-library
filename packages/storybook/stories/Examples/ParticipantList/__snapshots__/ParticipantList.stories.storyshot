@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`storybook snapshot tests Storyshots Examples/ParticipantList Participant List Component 1`] = `
+exports[`storybook snapshot tests Storyshots Examples/Participant List Participant List Component 1`] = `
 <div
   className="css-80 root-0 body-1"
 >
