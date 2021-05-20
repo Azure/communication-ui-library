@@ -384,10 +384,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   off(event: 'participantsLeft', listener: ParticipantLeftListener): void;
   off(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
   off(event: 'callIdChanged', listener: CallIdChangedListener): void;
-  off(
-    event: 'isLocalScreenSharingActiveChanged',
-    isScreenSharingOnChangedListener: IsScreenSharingOnChangedListener
-  ): void;
+  off(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
   off(event: 'displayNameChanged', listener: DisplaynameChangedListener): void;
   off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   off(event: 'leaveCall', listener: LeaveCallListner): void;
