@@ -42,7 +42,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   return (
     <Stack className={chatContainer} grow>
       <ChatHeader {...headerProps} />
-      <Stack horizontal grow>
+      <Stack horizontal grow style={{ height: '0px' }}>
         <Stack className={chatWrapper} grow>
           <MessageThread
             {...messageThreadProps}
