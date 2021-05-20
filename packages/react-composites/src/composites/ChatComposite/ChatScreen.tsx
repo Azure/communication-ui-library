@@ -42,8 +42,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   return (
     <Stack className={chatContainer} grow>
       <ChatHeader {...headerProps} />
-      <Stack horizontal grow style={{ height: '0px' }}>
-        <Stack className={chatWrapper} grow>
+      <Stack horizontal>
+        <Stack className={chatWrapper}>
           <MessageThread
             {...messageThreadProps}
             onRenderAvatar={onRenderAvatar}
