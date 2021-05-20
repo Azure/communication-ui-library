@@ -1,5 +1,18 @@
-<script src="https://wcpstatic.microsoft.com/mscc/lib/v2/wcp-consent.js"></script>
+<link href="http://fonts.cdnfonts.com/css/segoe-ui-4" rel="stylesheet">
+<link rel="shortcut icon" href="./favicon.ico">
 
+<style>
+  /* Avoid sidebar header image getting very large */
+  .sidebar-header img {
+    max-height: 4rem;
+  }
+  /* Reduce sidebar header image padding from 20px to 10px */
+  .sidebar-header > div:first-child {
+    margin-right: 0.625rem;
+  }
+</style>
+
+<script src="https://wcpstatic.microsoft.com/mscc/lib/v2/wcp-consent.js"></script>
 <script>
   window.addEventListener('load', () => {
     const cookieBannerId = 'cookie-banner';

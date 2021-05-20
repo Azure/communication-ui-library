@@ -17,6 +17,7 @@ import { DeviceManagerState } from 'calling-stateful-client';
 import { ErrorInfo } from 'react';
 import type { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import type { PhoneNumberKind } from '@azure/communication-common';
+import { PlaceholderProps } from 'react-components';
 import { RemoteParticipant } from 'calling-stateful-client';
 import { StatefulCallClient } from 'calling-stateful-client';
 import { StatefulDeviceManager } from 'calling-stateful-client';
@@ -34,7 +35,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     getState(): CallState;
     // (undocumented)
-    joinCall(): Promise<void>;
+    joinCall(microphoneOn?: boolean): Promise<void>;
     // (undocumented)
     leaveCall(): Promise<void>;
     // (undocumented)
@@ -90,6 +91,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     setMicrophone(device: AudioDeviceInfo): Promise<void>;
     // (undocumented)
+    setPage: (page: CallCompositePage) => void;
+    // (undocumented)
     setSpeaker(device: AudioDeviceInfo): Promise<void>;
     // (undocumented)
     startCall(participants: string[]): Call_2 | undefined;
@@ -114,7 +117,7 @@ export interface CallAdapter {
     // (undocumented)
     getState(): CallState;
     // (undocumented)
-    joinCall(): Promise<void>;
+    joinCall(microphoneOn?: boolean): Promise<void>;
     // (undocumented)
     leaveCall(forEveryone?: boolean): Promise<void>;
     // (undocumented)
@@ -170,6 +173,8 @@ export interface CallAdapter {
     // (undocumented)
     setMicrophone(sourceId: AudioDeviceInfo): Promise<void>;
     // (undocumented)
+    setPage(page: CallCompositePage): void;
+    // (undocumented)
     setSpeaker(sourceId: AudioDeviceInfo): Promise<void>;
     // (undocumented)
     startCall(participants: string[]): Call_2 | undefined;
@@ -189,8 +194,12 @@ export interface CallAdapter {
 export const CallComposite: (props: CallCompositeProps) => JSX.Element;
 
 // @public (undocumented)
+export type CallCompositePage = 'configuration' | 'call';
+
+// @public (undocumented)
 export type CallCompositeProps = {
     adapter: CallAdapter;
+    onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
     onErrorCallback?: (error: CommunicationUiErrorInfo) => void;
 };
 
@@ -216,8 +225,8 @@ export type CallingClientState = {
 // @public (undocumented)
 export type CallingUIState = {
     error?: Error;
-    isMicrophoneEnabled: boolean;
-    page: 'configuration' | 'call';
+    isLocalPreviewMicrophoneEnabled: boolean;
+    page: CallCompositePage;
 };
 
 // @public (undocumented)

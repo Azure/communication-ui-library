@@ -215,7 +215,42 @@ export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
 
 // @public
 export interface OptionsButtonProps extends IButtonProps {
+    // (undocumented)
+    cameras?: [{
+        id: string;
+        name: string;
+    }];
+    microphones?: [{
+        id: string;
+        name: string;
+    }];
+    // (undocumented)
+    onSelectCamera?: (device: any) => Promise<void>;
+    // (undocumented)
+    onSelectMicrophone?: (device: any) => Promise<void>;
+    // (undocumented)
+    onSelectSpeaker?: (device: any) => Promise<void>;
+    // (undocumented)
+    selectedCamera?: {
+        id: string;
+        name: string;
+    };
+    // (undocumented)
+    selectedMicrophone?: {
+        id: string;
+        name: string;
+    };
+    // (undocumented)
+    selectedSpeaker?: {
+        id: string;
+        name: string;
+    };
     showLabel?: boolean;
+    // (undocumented)
+    speakers?: [{
+        id: string;
+        name: string;
+    }];
 }
 
 // @public
@@ -251,6 +286,13 @@ export type ParticipantListProps = {
     onRenderAvatar?: (participant: CommunicationParticipant) => JSX.Element | null;
     onParticipantRemove?: (userId: string) => void;
 };
+
+// @public (undocumented)
+export interface PlaceholderProps {
+    displayName?: string;
+    noVideoAvailableAriaLabel?: string;
+    userId?: string;
+}
 
 // @public
 export const ReadReceipt: (props: ReadReceiptProps) => JSX.Element;
@@ -364,7 +406,9 @@ export interface VideoGalleryProps {
     // (undocumented)
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
     // (undocumented)
-    onDisposeLocalStreamView?: () => Promise<void>;
+    onDisposeLocalStreamView?: () => void;
+    // (undocumented)
+    onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
     // (undocumented)
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     // (undocumented)
@@ -409,13 +453,11 @@ export interface VideoStreamOptions {
 export const VideoTile: (props: VideoTileProps) => JSX.Element;
 
 // @public
-export interface VideoTileProps {
+export interface VideoTileProps extends PlaceholderProps {
     children?: React_2.ReactNode;
-    displayName?: string;
     isMirrored?: boolean;
     isVideoReady?: boolean;
-    noVideoAvailableAriaLabel?: string;
-    placeholder?: JSX.Element | null;
+    onRenderPlaceholder?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element | null;
     renderElement?: JSX.Element | null;
     showDisplayName?: boolean;
     styles?: VideoTileStylesProps;

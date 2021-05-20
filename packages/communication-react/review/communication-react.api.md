@@ -69,7 +69,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     getState(): CallState;
     // (undocumented)
-    joinCall(): Promise<void>;
+    joinCall(microphoneOn?: boolean): Promise<void>;
     // (undocumented)
     leaveCall(): Promise<void>;
     // (undocumented)
@@ -125,6 +125,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     setMicrophone(device: AudioDeviceInfo): Promise<void>;
     // (undocumented)
+    setPage: (page: CallCompositePage) => void;
+    // (undocumented)
     setSpeaker(device: AudioDeviceInfo): Promise<void>;
     // (undocumented)
     startCall(participants: string[]): Call_2 | undefined;
@@ -174,7 +176,7 @@ export interface CallAdapter {
     // (undocumented)
     getState(): CallState;
     // (undocumented)
-    joinCall(): Promise<void>;
+    joinCall(microphoneOn?: boolean): Promise<void>;
     // (undocumented)
     leaveCall(forEveryone?: boolean): Promise<void>;
     // (undocumented)
@@ -230,6 +232,8 @@ export interface CallAdapter {
     // (undocumented)
     setMicrophone(sourceId: AudioDeviceInfo): Promise<void>;
     // (undocumented)
+    setPage(page: CallCompositePage): void;
+    // (undocumented)
     setSpeaker(sourceId: AudioDeviceInfo): Promise<void>;
     // (undocumented)
     startCall(participants: string[]): Call_2 | undefined;
@@ -250,9 +254,6 @@ export interface CallAgentState {
     displayName?: string;
 }
 
-// @public (undocumented)
-export type CallbackType<KeyT, ArgsT extends any[], FnRetT> = (memoizedFn: FunctionWithKey<KeyT, ArgsT, FnRetT>) => FnRetT[];
-
 // @public
 export interface CallClientState {
     callAgent: CallAgentState | undefined;
@@ -268,8 +269,12 @@ export interface CallClientState {
 export const CallComposite: (props: CallCompositeProps) => JSX.Element;
 
 // @public (undocumented)
+export type CallCompositePage = 'configuration' | 'call';
+
+// @public (undocumented)
 export type CallCompositeProps = {
     adapter: CallAdapter;
+    onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
     onErrorCallback?: (error: CommunicationUiErrorInfo) => void;
 };
 
@@ -310,8 +315,8 @@ export interface CallingTheme {
 // @public (undocumented)
 export type CallingUIState = {
     error?: Error;
-    isMicrophoneEnabled: boolean;
-    page: 'configuration' | 'call';
+    isLocalPreviewMicrophoneEnabled: boolean;
+    page: CallCompositePage;
 };
 
 // @public
@@ -605,6 +610,15 @@ export interface CommunicationUiErrorInfo {
 // @public
 export type CommunicationUiErrorSeverity = 'info' | 'warning' | 'error' | 'ignore';
 
+// @public (undocumented)
+export const complianceBannerSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
+    callTranscribeState: boolean | undefined;
+    callRecordState: boolean | undefined;
+}, (res: Call | undefined) => {
+    callTranscribeState: boolean | undefined;
+    callRecordState: boolean | undefined;
+}>;
+
 // @public
 export const ControlBar: (props: ControlBarProps) => JSX.Element;
 
@@ -756,9 +770,6 @@ export interface FluentThemeProviderProps {
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
 // @public (undocumented)
-export type FunctionWithKey<KeyT, ArgsT extends any[], RetT> = (key: KeyT, ...args: ArgsT) => RetT;
-
-// @public (undocumented)
 export const getCall: (state: CallClientState, props: CallingBaseSelectorProps) => Call | undefined;
 
 // @public (undocumented)
@@ -871,9 +882,6 @@ export const mediaGallerySelector: reselect.OutputParametricSelector<CallClientS
     isVideoStreamOn: boolean;
 }>;
 
-// @public
-export const memoizeFnAll: <KeyT, ArgsT extends any[], FnRetT, CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>>(fnToMemoize: FunctionWithKey<KeyT, ArgsT, FnRetT>, shouldCacheUpdate?: (args1: any, args2: any) => boolean) => (callback: CallBackT) => FnRetT[];
-
 // @public (undocumented)
 export type Message<T extends MessageTypes> = {
     type: T;
@@ -950,7 +958,42 @@ export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
 
 // @public
 export interface OptionsButtonProps extends IButtonProps {
+    // (undocumented)
+    cameras?: [{
+        id: string;
+        name: string;
+    }];
+    microphones?: [{
+        id: string;
+        name: string;
+    }];
+    // (undocumented)
+    onSelectCamera?: (device: any) => Promise<void>;
+    // (undocumented)
+    onSelectMicrophone?: (device: any) => Promise<void>;
+    // (undocumented)
+    onSelectSpeaker?: (device: any) => Promise<void>;
+    // (undocumented)
+    selectedCamera?: {
+        id: string;
+        name: string;
+    };
+    // (undocumented)
+    selectedMicrophone?: {
+        id: string;
+        name: string;
+    };
+    // (undocumented)
+    selectedSpeaker?: {
+        id: string;
+        name: string;
+    };
     showLabel?: boolean;
+    // (undocumented)
+    speakers?: [{
+        id: string;
+        name: string;
+    }];
 }
 
 // @public (undocumented)
@@ -1022,6 +1065,13 @@ export const participantListSelector: reselect.OutputParametricSelector<CallClie
     participants: CallParticipant[];
     myUserId: string;
 }>;
+
+// @public (undocumented)
+export interface PlaceholderProps {
+    displayName?: string;
+    noVideoAvailableAriaLabel?: string;
+    userId?: string;
+}
 
 // @public
 export const ReadReceipt: (props: ReadReceiptProps) => JSX.Element;
@@ -1114,8 +1164,8 @@ export interface SendBoxStylesProps extends BaseCustomStylesProps {
 
 // @public
 export interface StatefulCallClient extends CallClient {
-    createView(callId: string | undefined, stream: LocalVideoStream | RemoteVideoStream, options?: CreateViewOptions): Promise<void>;
-    disposeView(callId: string | undefined, stream: LocalVideoStream | RemoteVideoStream): void;
+    createView(callId: string | undefined, participantId: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | undefined, stream: LocalVideoStream | RemoteVideoStream, options?: CreateViewOptions): Promise<void>;
+    disposeView(callId: string | undefined, participantId: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | undefined, stream: LocalVideoStream | RemoteVideoStream): void;
     getState(): CallClientState;
     offStateChange(handler: (state: CallClientState) => void): void;
     onStateChange(handler: (state: CallClientState) => void): void;
@@ -1269,7 +1319,9 @@ export interface VideoGalleryProps {
     // (undocumented)
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
     // (undocumented)
-    onDisposeLocalStreamView?: () => Promise<void>;
+    onDisposeLocalStreamView?: () => void;
+    // (undocumented)
+    onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
     // (undocumented)
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     // (undocumented)
@@ -1352,13 +1404,11 @@ export interface VideoStreamRendererView {
 export const VideoTile: (props: VideoTileProps) => JSX.Element;
 
 // @public
-export interface VideoTileProps {
+export interface VideoTileProps extends PlaceholderProps {
     children?: React_2.ReactNode;
-    displayName?: string;
     isMirrored?: boolean;
     isVideoReady?: boolean;
-    noVideoAvailableAriaLabel?: string;
-    placeholder?: JSX.Element | null;
+    onRenderPlaceholder?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element | null;
     renderElement?: JSX.Element | null;
     showDisplayName?: boolean;
     styles?: VideoTileStylesProps;
