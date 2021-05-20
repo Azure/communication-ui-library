@@ -56,8 +56,8 @@ export const ChatComponents = (): JSX.Element => {
 
   return (
     <div style={{ height: '30rem', width: '30rem' }}>
-      {/* Chat thread component with read receipt feature enabled */}
-      <MessageThread userId={'1'} messages={GetHistoryChatMessages()} disableReadReceipt={false} />
+      {/* Chat thread component with message status indicator feature enabled */}
+      <MessageThread userId={'1'} messages={GetHistoryChatMessages()} showMessageStatus={true} />
 
       <SendBox
         disabled={false}

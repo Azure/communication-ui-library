@@ -62,6 +62,7 @@ module.exports = {
         'participantListSelector.ts',
         'localPreviewSelector.ts',
         'mediaGallerySelector.ts',
+        'createHandlers.ts',
         'lobbySelector.ts',
         'complianceBannerSelector.ts'
       ],
