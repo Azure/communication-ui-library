@@ -121,7 +121,13 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
         </Stack>
       )}
       {displayName && showDisplayName && (
-        <Text className={mergeStyles(isVideoReady ? videoHint : disabledVideoHint, styles?.displayNameContainer)}>
+        <Text
+          className={mergeStyles(
+            isVideoReady ? videoHint : disabledVideoHint,
+            { color: isVideoReady ? 'white' : theme.palette.neutralPrimaryAlt },
+            styles?.displayNameContainer
+          )}
+        >
           {displayName}
         </Text>
       )}

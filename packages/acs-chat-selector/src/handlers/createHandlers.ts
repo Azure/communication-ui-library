@@ -4,14 +4,14 @@
 import { ReactElement } from 'react';
 import { Common, fromFlatCommunicationIdentifier } from 'acs-ui-common';
 import { StatefulChatClient } from 'chat-stateful-client';
-import { ChatThreadClient } from '@azure/communication-chat';
+import { ChatThreadClient, SendChatMessageResult } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
 
 // @ts-ignore
 import { CommonProperties } from 'acs-ui-common';
 
 export type DefaultChatHandlers = {
-  onSendMessage: (content: string) => Promise<void>;
+  onSendMessage: (content: string) => Promise<SendChatMessageResult>;
   onMessageSeen: (chatMessageId: string) => Promise<void>;
   onTyping: () => Promise<void>;
   onParticipantRemove: (userId: string) => Promise<void>;
@@ -29,7 +29,7 @@ export const createDefaultChatHandlers = memoizeOne(
           content,
           senderDisplayName: chatClient.getState().displayName
         };
-        await chatThreadClient.sendMessage(sendMessageRequest);
+        return chatThreadClient.sendMessage(sendMessageRequest);
       },
       // This handler is designed for chatThread to consume
       onMessageSeen: async (chatMessageId: string) => {
