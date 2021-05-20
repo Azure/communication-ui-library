@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { chatScreenBottomContainerStyle, chatScreenContainerStyle } from './styles/ChatScreen.styles';
 import { Stack } from '@fluentui/react';
 import { onRenderAvatar } from './Avatar';
@@ -12,8 +12,7 @@ import {
   chatParticipantListSelector,
   useChatClient,
   useChatThreadClient,
-  useHandlers,
-  useSelector,
+  useChatSelector,
   useThreadId
 } from '@azure/acs-chat-selector';
 import { chatHeaderSelector } from './selectors/chatHeaderSelector';
@@ -68,9 +67,16 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     document.getElementById('sendbox')?.focus();
   }, []);
 
-  const chatHeaderProps = useSelector(chatHeaderSelector);
-  const chatHeaderHandlers = useHandlers(ChatHeader);
-  const chatParticipantProps = useSelector(chatParticipantListSelector);
+  const chatHeaderProps = useChatSelector(chatHeaderSelector);
+
+  const updateThreadTopicName = useCallback(
+    async (topicName: string) => {
+      await chatThreadClient.updateTopic(topicName);
+    },
+    [chatThreadClient]
+  );
+
+  const chatParticipantProps = useChatSelector(chatParticipantListSelector);
 
   useEffect(() => {
     // We only want to check if we've fetched all the existing participants.
@@ -95,8 +101,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     <Stack className={chatScreenContainerStyle}>
       <ChatHeader
         {...chatHeaderProps}
-        {...chatHeaderHandlers}
         {...chatParticipantProps}
+        updateThreadTopicName={updateThreadTopicName}
         endChatHandler={endChatHandler}
         selectedPane={selectedPane}
         setSelectedPane={setSelectedPane}
