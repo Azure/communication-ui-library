@@ -25,11 +25,16 @@ const convertChatParticipantsToCommunicationParticipants = (
 export const chatParticipantListSelector = reselect.createSelector(
   [getUserId, getParticipants, getDisplayName],
   (userId, chatParticipants: Map<string, ChatParticipant>, displayName) => {
-    const participants = chatParticipants
-      ? convertChatParticipantsToCommunicationParticipants(Array.from(chatParticipants.values()))
-      : [];
+    let participants = convertChatParticipantsToCommunicationParticipants(Array.from(chatParticipants.values()));
+    if (0 !== participants.length) {
+      const userIndex = participants.map((p) => p.userId).indexOf(userId);
+      if (-1 !== userIndex && !participants[userIndex].displayName) {
+        participants[userIndex].displayName = displayName;
+      }
 
-    participants.push({ userId: userId, displayName: displayName });
+      // removing any other undefined participants
+      participants = participants.filter((p) => p.displayName);
+    }
 
     return {
       myUserId: userId,
