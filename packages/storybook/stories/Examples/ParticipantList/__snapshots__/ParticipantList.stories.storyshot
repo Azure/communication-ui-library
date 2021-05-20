@@ -686,11 +686,6 @@ exports[`storybook snapshot tests Storyshots Examples/ParticipantList Participan
                 />
               </div>
             </div>
-            <span
-              className="css-73"
-            >
-              (you)
-            </span>
             <div
               className="ms-Stack css-74 css-2"
             >
