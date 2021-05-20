@@ -46,9 +46,9 @@ const getDocs: () => JSX.Element = () => {
 
       <Heading>Prerequisites</Heading>
       <Description>
-        CallComposite provides the UI for an *existing user* in an *existing group*. The user and group must be created
-        beforehand. Typically, the user and group are created on a Contoso-owned service and provided to the client
-        application that then passes it to the CallComposite.
+        CallComposite provides the UI for an *existing user* to join a call. The user must be created beforehand.
+        Typically, the user and group call or teams meeting are created on a Contoso-owned service and provided to the
+        client application that then passes it to the CallComposite.
       </Description>
       <Source code={serverText} />
 
