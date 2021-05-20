@@ -1,26 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { CallComposite, CallAdapter, createAzureCommunicationCallAdapter } from 'react-composites';
-import { Prerequisites } from './Server.snippet';
 
-export const ContosoCallContainer = (props: { prerequisites: Prerequisites }): JSX.Element => {
-  const { prerequisites } = props;
+export type ContainerProps = {
+  endpointUrl: string;
+  token: string;
+  userId: string;
+  groupId: string;
+  displayName: string;
+};
 
+export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
   const [adapter, setAdapter] = useState<CallAdapter>();
 
   useEffect(() => {
-    if (prerequisites.token && prerequisites.userId && prerequisites.groupId) {
+    if (props.token && props.userId && props.groupId) {
       const createAdapter = async (): Promise<void> => {
-        setAdapter(
-          await createAzureCommunicationCallAdapter(
-            prerequisites.token,
-            prerequisites.groupId,
-            prerequisites.displayName
-          )
-        );
+        setAdapter(await createAzureCommunicationCallAdapter(props.token, props.groupId, props.displayName));
       };
       createAdapter();
     }
-  }, [prerequisites]);
+  }, [props]);
 
   return <>{adapter && <CallComposite adapter={adapter} />}</>;
 };
