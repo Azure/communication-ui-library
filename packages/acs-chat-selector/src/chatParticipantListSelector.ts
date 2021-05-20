@@ -25,10 +25,15 @@ const convertChatParticipantsToCommunicationParticipants = (
 export const chatParticipantListSelector = reselect.createSelector(
   [getUserId, getParticipants, getDisplayName],
   (userId, chatParticipants: Map<string, ChatParticipant>, displayName) => {
+    const participants = chatParticipants
+      ? convertChatParticipantsToCommunicationParticipants(Array.from(chatParticipants.values()))
+      : [];
+
+    participants.push({ userId: userId, displayName: displayName });
+
     return {
       myUserId: userId,
-      displayName,
-      participants: convertChatParticipantsToCommunicationParticipants(Array.from(chatParticipants.values()))
+      participants: participants
     };
   }
 );
