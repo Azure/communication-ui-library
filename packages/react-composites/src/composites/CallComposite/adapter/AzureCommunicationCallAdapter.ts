@@ -30,6 +30,7 @@ import {
   IsMuteChangedListener,
   IsScreenSharingOnChangedListener,
   IsSpeakingChangedListener,
+  LeaveCallListner,
   ParticipantJoinedListener,
   ParticipantLeftListener
 } from './CallAdapter';
@@ -195,6 +196,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 
   public async leaveCall(): Promise<void> {
+    const callId = this.call?.id;
     await this.handlers.onHangUp();
     this.unsubscribeCallEvents();
     this.call = undefined;
@@ -204,6 +206,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.context.updateClientState(this.callClient.getState());
     this.stopCamera();
     this.mute();
+    this.emitter.emit('leaveCall', { callId });
   }
 
   public async setCamera(device: VideoDeviceInfo): Promise<void> {
@@ -294,16 +297,14 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.context.offStateChange(handler);
   }
 
-  on(event: 'participantsJoined', participantsJoinedListener: ParticipantJoinedListener): void;
-  on(event: 'participantsLeft', participantLeftListener: ParticipantLeftListener): void;
-  on(event: 'isMutedChanged', isMuteChangedListener: IsMuteChangedListener): void;
-  on(event: 'callIdChanged', callIdChangedListener: CallIdChangedListener): void;
-  on(
-    event: 'isLocalScreenSharingActiveChanged',
-    isScreenSharingOnChangedListener: IsScreenSharingOnChangedListener
-  ): void;
-  on(event: 'displayNameChanged', displaynameChangedListener: DisplaynameChangedListener): void;
-  on(event: 'isSpeakingChanged', isSpeakingChangedListener: IsSpeakingChangedListener): void;
+  on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
+  on(event: 'participantsLeft', listener: ParticipantLeftListener): void;
+  on(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
+  on(event: 'callIdChanged', listener: CallIdChangedListener): void;
+  on(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
+  on(event: 'displayNameChanged', listener: DisplaynameChangedListener): void;
+  on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
+  on(event: 'leaveCall', listener: LeaveCallListner): void;
   on(event: 'error', errorHandler: (e: Error) => void): void;
 
   public on(event: CallEvent, listener: (e: any) => void): void {
@@ -378,16 +379,17 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.emitter.emit('callIdChanged', { callId: this.callIdChanged });
   };
 
-  off(event: 'participantsJoined', participantsJoinedHandler: ParticipantJoinedListener): void;
-  off(event: 'participantsLeft', participantsLeftHandler: ParticipantLeftListener): void;
-  off(event: 'isMutedChanged', isMuteChangedListener: IsMuteChangedListener): void;
-  off(event: 'callIdChanged', callIdChangedListener: CallIdChangedListener): void;
+  off(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
+  off(event: 'participantsLeft', listener: ParticipantLeftListener): void;
+  off(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
+  off(event: 'callIdChanged', listener: CallIdChangedListener): void;
   off(
     event: 'isLocalScreenSharingActiveChanged',
     isScreenSharingOnChangedListener: IsScreenSharingOnChangedListener
   ): void;
-  off(event: 'displayNameChanged', displaynameChangedListener: DisplaynameChangedListener): void;
-  off(event: 'isSpeakingChanged', isSpeakingChangedListener: IsSpeakingChangedListener): void;
+  off(event: 'displayNameChanged', listener: DisplaynameChangedListener): void;
+  off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
+  off(event: 'leaveCall', listener: LeaveCallListner): void;
   off(event: 'error', errorHandler: (e: Error) => void): void;
 
   public off(event: CallEvent, listener: (e: any) => void): void {

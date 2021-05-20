@@ -37,7 +37,6 @@ const MainScreen = ({ screenWidth, onRenderAvatar }: MainScreenProps): JSX.Eleme
       <CallScreen
         endCallHandler={async (): Promise<void> => {
           adapter.setPage('configuration');
-          await adapter.leaveCall();
         }}
         onRenderAvatar={onRenderAvatar}
         screenWidth={screenWidth}
