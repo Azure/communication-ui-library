@@ -84,6 +84,10 @@ const App: () => JSX.Element = () => {
     }
   };
 
+  const videoTileStyle = {
+    root: { background: theme.palette.white }
+  };
+
   return (
     <Stack
       style={{
@@ -129,12 +133,7 @@ const App: () => JSX.Element = () => {
         </Stack.Item>
       </Stack>
       <GridLayout>
-        <VideoTile
-          isVideoReady={false}
-          renderElement={null}
-          displayName={'Michael'}
-          styles={{ root: { background: theme.palette.white } }}
-        />
+        <VideoTile isVideoReady={false} renderElement={null} displayName={'Michael'} styles={videoTileStyle} />
       </GridLayout>
     </Stack>
   );
