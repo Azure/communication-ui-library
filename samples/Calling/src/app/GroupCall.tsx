@@ -3,6 +3,7 @@
 
 import { AudioOptions, CallState, GroupLocator, MeetingLocator } from '@azure/communication-calling';
 import { Label, Overlay, Spinner, Stack } from '@fluentui/react';
+import { VideoStreamOptions } from 'react-components';
 import { CallClientState, StatefulCallClient } from 'calling-stateful-client';
 import React, { useEffect, useState } from 'react';
 import { useCallAgent, useCallClient, useCall, useCallContext } from 'react-composites';
@@ -27,6 +28,7 @@ import { isInCall } from './utils/AppUtils';
 import { MINI_HEADER_WINDOW_WIDTH } from './utils/constants';
 import { Lobby } from './Lobby';
 import { ComplianceBanner } from './ComplianceBanner';
+import { useHandlers } from './hooks/useHandlers';
 
 export interface GroupCallProps {
   screenWidth: number;
@@ -37,6 +39,11 @@ export interface GroupCallProps {
 }
 
 const spinnerLabel = 'Initializing call client...';
+
+const localVideoViewOption = {
+  scalingMode: 'Crop',
+  isMirrored: true
+} as VideoStreamOptions;
 
 export const GroupCall = (props: GroupCallProps): JSX.Element => {
   const [selectedPane, setSelectedPane] = useState(CommandPanelTypes.None);
@@ -55,6 +62,7 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
   const handlers = useAzureCommunicationHandlers();
 
   const lobbyProps = useSelector(lobbySelector);
+  const lobbyHandlers = useHandlers(Lobby);
 
   const complianceBannerProps = useSelector(complianceBannerSelector);
 
@@ -91,9 +99,10 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
         <Lobby
           callState={callState}
           {...lobbyProps}
-          onStartLocalVideo={handlers.onStartLocalVideo}
-          onCreateLocalStreamView={handlers.onCreateLocalStreamView}
+          {...lobbyHandlers}
           onEndCallClick={endCallHandler}
+          isMicrophoneChecked={isMicrophoneOn}
+          localVideoViewOption={localVideoViewOption}
         />
       );
     }
