@@ -2,13 +2,13 @@
 // Licensed under the MIT license.
 
 import { LocalVideoStream, RemoteVideoStream, VideoStreamRenderer } from '@azure/communication-calling';
-import { LocalVideoStream as StatefulLocalVideoStream } from './CallClientState';
+import { LocalVideoStreamState } from './CallClientState';
 
 /**
  * Used internally in InternalCallContext to be able to hold both the stream and the renderer in the same array.
  */
 export interface StreamAndRenderer {
-  stream: StatefulLocalVideoStream;
+  stream: LocalVideoStreamState;
   renderer: VideoStreamRenderer;
 }
 
@@ -141,7 +141,7 @@ export class InternalCallContext {
   }
 
   // Returns the index in unparentedStreamAndRenderers or -1 if not found.
-  public findInUnparentedStreamAndRenderers(localVideoStream: StatefulLocalVideoStream): number {
+  public findInUnparentedStreamAndRenderers(localVideoStream: LocalVideoStreamState): number {
     // First try to find by referential equality.
     for (let i = 0; i < this._unparentedStreamAndRenderers.length; i++) {
       if (this._unparentedStreamAndRenderers[i].stream === localVideoStream) {
@@ -168,7 +168,7 @@ export class InternalCallContext {
   }
 
   public setUnparentedStreamAndRenderer(
-    localVideoStream: StatefulLocalVideoStream,
+    localVideoStream: LocalVideoStreamState,
     videoStreamRenderer: VideoStreamRenderer
   ): void {
     this._unparentedStreamAndRenderers.push({ stream: localVideoStream, renderer: videoStreamRenderer });

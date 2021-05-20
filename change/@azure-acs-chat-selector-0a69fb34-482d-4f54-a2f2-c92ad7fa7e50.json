@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "removed displayName from chatParticipantListSelector",
+  "packageName": "@azure/acs-chat-selector",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "patch"
+}
