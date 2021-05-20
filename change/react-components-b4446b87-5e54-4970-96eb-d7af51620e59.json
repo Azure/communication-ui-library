@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "renamed ReadReceipt component to MessageStatusIndicator, onRenderReadReceipt props to onRenderMessageStatus in MessageThread, and readReceiptContainer style to messageStatusContainer ",
+  "packageName": "react-components",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "patch"
+}

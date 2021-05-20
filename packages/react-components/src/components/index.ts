@@ -10,8 +10,8 @@ export type { GridLayoutProps, GridLayoutType } from './GridLayout';
 export { SendBox } from './SendBox';
 export type { SendBoxProps, SendBoxStylesProps } from './SendBox';
 
-export { ReadReceipt } from './ReadReceipt';
-export type { ReadReceiptProps } from './ReadReceipt';
+export { MessageStatusIndicator } from './MessageStatusIndicator';
+export type { MessageStatusIndicatorProps } from './MessageStatusIndicator';
 
 export { MessageThread } from './MessageThread';
 export type {
@@ -59,4 +59,4 @@ export { ScreenShareButton } from './ScreenShareButton';
 export type { ScreenShareButtonProps } from './ScreenShareButton';
 
 export { VideoTile } from './VideoTile';
-export type { VideoTileProps, VideoTileStylesProps } from './VideoTile';
+export type { VideoTileProps, VideoTileStylesProps, PlaceholderProps } from './VideoTile';
