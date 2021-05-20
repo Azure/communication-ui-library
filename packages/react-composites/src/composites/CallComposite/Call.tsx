@@ -8,9 +8,11 @@ import { ConfigurationScreen } from './ConfigurationScreen';
 import { callContainer } from './styles/Call.styles';
 import { Stack } from '@fluentui/react';
 import { CommunicationUiErrorInfo } from '../../types';
-import { CallAdapterProvider } from './adapter/CallAdapterProvider';
+import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
 import { CallAdapter } from './adapter/CallAdapter';
 import { PlaceholderProps } from 'react-components';
+import { useSelector } from './hooks/useSelector';
+import { getPage } from './selectors/baseSelectors';
 
 export type CallCompositeProps = {
   adapter: CallAdapter;
@@ -19,10 +21,32 @@ export type CallCompositeProps = {
   onErrorCallback?: (error: CommunicationUiErrorInfo) => void;
 };
 
-type compositePageSubType = 'configuration' | 'call';
+type MainScreenProps = {
+  onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+  screenWidth: number;
+};
+
+const MainScreen = ({ screenWidth, onRenderAvatar }: MainScreenProps): JSX.Element => {
+  const page = useSelector(getPage);
+  const adapter = useAdapter();
+
+  if (page === 'configuration') {
+    return <ConfigurationScreen screenWidth={screenWidth} startCallHandler={(): void => adapter.setPage('call')} />;
+  } else {
+    return (
+      <CallScreen
+        endCallHandler={async (): Promise<void> => {
+          adapter.setPage('configuration');
+          await adapter.leaveCall();
+        }}
+        onRenderAvatar={onRenderAvatar}
+        screenWidth={screenWidth}
+      />
+    );
+  }
+};
 
 export const Call = (props: CallCompositeProps): JSX.Element => {
-  const [page, setPage] = useState<compositePageSubType>('configuration');
   const [screenWidth, setScreenWidth] = useState(window?.innerWidth ?? 0);
 
   useEffect(() => {
@@ -47,25 +71,7 @@ export const Call = (props: CallCompositeProps): JSX.Element => {
     <ErrorProvider onErrorCallback={onErrorCallback}>
       <CallAdapterProvider adapter={adapter}>
         <Stack className={callContainer} grow>
-          {(() => {
-            switch (page) {
-              case 'configuration': {
-                return <ConfigurationScreen screenWidth={screenWidth} startCallHandler={(): void => setPage('call')} />;
-              }
-              case 'call': {
-                return (
-                  <CallScreen
-                    endCallHandler={async (): Promise<void> => {
-                      setPage('configuration');
-                      await adapter.leaveCall();
-                    }}
-                    screenWidth={screenWidth}
-                    onRenderAvatar={props.onRenderAvatar}
-                  />
-                );
-              }
-            }
-          })()}
+          <MainScreen screenWidth={screenWidth} onRenderAvatar={props.onRenderAvatar} />
         </Stack>
       </CallAdapterProvider>
     </ErrorProvider>

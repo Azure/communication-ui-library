@@ -69,7 +69,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     getState(): CallState;
     // (undocumented)
-    joinCall(): Promise<void>;
+    joinCall(microphoneOn?: boolean): Promise<void>;
     // (undocumented)
     leaveCall(): Promise<void>;
     // (undocumented)
@@ -125,6 +125,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     setMicrophone(device: AudioDeviceInfo): Promise<void>;
     // (undocumented)
+    setPage: (page: CallCompositePage) => void;
+    // (undocumented)
     setSpeaker(device: AudioDeviceInfo): Promise<void>;
     // (undocumented)
     startCall(participants: string[]): Call_2 | undefined;
@@ -174,7 +176,7 @@ export interface CallAdapter {
     // (undocumented)
     getState(): CallState;
     // (undocumented)
-    joinCall(): Promise<void>;
+    joinCall(microphoneOn?: boolean): Promise<void>;
     // (undocumented)
     leaveCall(forEveryone?: boolean): Promise<void>;
     // (undocumented)
@@ -230,6 +232,8 @@ export interface CallAdapter {
     // (undocumented)
     setMicrophone(sourceId: AudioDeviceInfo): Promise<void>;
     // (undocumented)
+    setPage(page: CallCompositePage): void;
+    // (undocumented)
     setSpeaker(sourceId: AudioDeviceInfo): Promise<void>;
     // (undocumented)
     startCall(participants: string[]): Call_2 | undefined;
@@ -263,6 +267,9 @@ export interface CallClientState {
 
 // @public (undocumented)
 export const CallComposite: (props: CallCompositeProps) => JSX.Element;
+
+// @public (undocumented)
+export type CallCompositePage = 'configuration' | 'call';
 
 // @public (undocumented)
 export type CallCompositeProps = {
@@ -308,8 +315,8 @@ export interface CallingTheme {
 // @public (undocumented)
 export type CallingUIState = {
     error?: Error;
-    isMicrophoneEnabled: boolean;
-    page: 'configuration' | 'call';
+    isLocalPreviewMicrophoneEnabled: boolean;
+    page: CallCompositePage;
 };
 
 // @public
@@ -1157,8 +1164,8 @@ export interface SendBoxStylesProps extends BaseCustomStylesProps {
 
 // @public
 export interface StatefulCallClient extends CallClient {
-    createView(callId: string | undefined, stream: LocalVideoStream | RemoteVideoStream, options?: CreateViewOptions): Promise<void>;
-    disposeView(callId: string | undefined, stream: LocalVideoStream | RemoteVideoStream): void;
+    createView(callId: string | undefined, participantId: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | undefined, stream: LocalVideoStream | RemoteVideoStream, options?: CreateViewOptions): Promise<void>;
+    disposeView(callId: string | undefined, participantId: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | undefined, stream: LocalVideoStream | RemoteVideoStream): void;
     getState(): CallClientState;
     offStateChange(handler: (state: CallClientState) => void): void;
     onStateChange(handler: (state: CallClientState) => void): void;
