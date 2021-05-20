@@ -37,13 +37,7 @@ export type { VideoGalleryProps } from './VideoGallery';
 export { CameraButton } from './CameraButton';
 export type { CameraButtonProps } from './CameraButton';
 
-export {
-  ControlBar,
-  answerButtonProps,
-  recordButtonProps,
-  labeledAnswerButtonProps,
-  labeledRecordButtonProps
-} from './ControlBar';
+export { ControlBar } from './ControlBar';
 export type { ControlBarProps, ControlBarLayoutType } from './ControlBar';
 
 export { EndCallButton } from './EndCallButton';

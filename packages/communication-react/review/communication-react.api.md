@@ -53,9 +53,6 @@ import { UnknownIdentifier } from '@azure/communication-common';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 
-// @public
-export const answerButtonProps: IButtonProps;
-
 // @public (undocumented)
 export type AreEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
@@ -877,12 +874,6 @@ export interface JumpToNewMessageButtonProps {
 }
 
 // @public
-export const labeledAnswerButtonProps: IButtonProps;
-
-// @public
-export const labeledRecordButtonProps: IButtonProps;
-
-// @public
 export const lightTheme: PartialTheme & CallingTheme;
 
 // @public (undocumented)
@@ -1136,9 +1127,6 @@ export interface PlaceholderProps {
     noVideoAvailableAriaLabel?: string;
     userId?: string;
 }
-
-// @public
-export const recordButtonProps: IButtonProps;
 
 // @public
 export interface RecordingCallFeature {
