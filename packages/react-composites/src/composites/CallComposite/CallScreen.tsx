@@ -23,6 +23,7 @@ import { useSelector } from './hooks/useSelector';
 import { callStatusSelector } from './selectors/callStatusSelector';
 import { mediaGallerySelector } from './selectors/mediaGallerySelector';
 import { useHandlers } from './hooks/useHandlers';
+import { PlaceholderProps } from 'react-components';
 import { CallControls } from './CallControls';
 
 export const MINI_HEADER_WINDOW_WIDTH = 450;
@@ -30,12 +31,13 @@ export const MINI_HEADER_WINDOW_WIDTH = 450;
 export interface CallScreenProps {
   screenWidth: number;
   endCallHandler(): void;
+  onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
 }
 
 const spinnerLabel = 'Initializing call client...';
 
 export const CallScreen = (props: CallScreenProps & ErrorHandlingProps): JSX.Element => {
-  const { screenWidth, endCallHandler } = props;
+  const { screenWidth, endCallHandler, onRenderAvatar } = props;
 
   const ErrorBar = connectFuncsToContext(ErrorBarComponent, MapToErrorBarProps);
 
@@ -72,7 +74,7 @@ export const CallScreen = (props: CallScreenProps & ErrorHandlingProps): JSX.Ele
               callStatus === 'Connected' && (
                 <Stack styles={containerStyles} grow>
                   <Stack.Item grow styles={activeContainerClassName}>
-                    <MediaGallery {...mediaGalleryProps} {...mediaGalleryHandlers} />
+                    <MediaGallery {...mediaGalleryProps} {...mediaGalleryHandlers} onRenderAvatar={onRenderAvatar} />
                   </Stack.Item>
                 </Stack>
               )
