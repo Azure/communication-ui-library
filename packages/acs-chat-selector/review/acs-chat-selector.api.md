@@ -16,7 +16,6 @@ import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
 import * as reselect from 'reselect';
 import { SendBox } from 'react-components';
-import { SendChatMessageResult } from '@azure/communication-chat';
 import { StatefulChatClient } from 'chat-stateful-client';
 import { TypingIndicator } from 'react-components';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
@@ -77,7 +76,7 @@ export const createDefaultChatHandlersForComponent: <Props>(chatClient: Stateful
 
 // @public (undocumented)
 export type DefaultChatHandlers = {
-    onSendMessage: (content: string) => Promise<SendChatMessageResult>;
+    onSendMessage: (content: string) => Promise<void>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
     onTyping: () => Promise<void>;
     onParticipantRemove: (userId: string) => Promise<void>;
@@ -108,16 +107,13 @@ export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClie
 export const useChatClient: () => StatefulChatClient;
 
 // @public (undocumented)
+export const useChatSelector: <SelectorT extends (state: ChatClientState, props: any) => any>(selector: SelectorT, selectorProps?: Parameters<SelectorT>[1] | undefined) => ReturnType<SelectorT>;
+
+// @public (undocumented)
 export const useChatThreadClient: () => ChatThreadClient;
 
 // @public (undocumented)
-export const useHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, PropsT>>;
-
-// @public (undocumented)
 export const usePropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => ReturnType<GetSelector<Component>> & Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, Parameters<Component>[0]>>;
-
-// @public (undocumented)
-export const useSelector: <SelectorT extends (state: ChatClientState, props: any) => any>(selector: SelectorT, selectorProps?: Parameters<SelectorT>[1] | undefined) => ReturnType<SelectorT>;
 
 // @public (undocumented)
 export const useThreadId: () => string;

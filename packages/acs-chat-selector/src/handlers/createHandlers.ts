@@ -2,13 +2,16 @@
 // Licensed under the MIT license.
 
 import { ReactElement } from 'react';
-import { CommonProperties, fromFlatCommunicationIdentifier } from 'acs-ui-common';
+import { Common, fromFlatCommunicationIdentifier } from 'acs-ui-common';
 import { StatefulChatClient } from 'chat-stateful-client';
-import { ChatThreadClient, SendChatMessageResult } from '@azure/communication-chat';
+import { ChatThreadClient } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
 
+// @ts-ignore
+import { CommonProperties } from 'acs-ui-common';
+
 export type DefaultChatHandlers = {
-  onSendMessage: (content: string) => Promise<SendChatMessageResult>;
+  onSendMessage: (content: string) => Promise<void>;
   onMessageSeen: (chatMessageId: string) => Promise<void>;
   onTyping: () => Promise<void>;
   onParticipantRemove: (userId: string) => Promise<void>;
@@ -26,7 +29,7 @@ export const createDefaultChatHandlers = memoizeOne(
           content,
           senderDisplayName: chatClient.getState().displayName
         };
-        return chatThreadClient.sendMessage(sendMessageRequest);
+        await chatThreadClient.sendMessage(sendMessageRequest);
       },
       // This handler is designed for chatThread to consume
       onMessageSeen: async (chatMessageId: string) => {
@@ -59,8 +62,6 @@ export const createDefaultChatHandlers = memoizeOne(
     };
   }
 );
-
-export type Common<A, B> = Pick<A, CommonProperties<A, B>>;
 
 // These could be shared functions between Chat and Calling
 export const defaultHandlerCreator = (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => <Props>(

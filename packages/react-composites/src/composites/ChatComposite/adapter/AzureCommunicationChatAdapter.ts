@@ -3,7 +3,7 @@
 
 import { createStatefulChatClient, ChatClientState, StatefulChatClient } from 'chat-stateful-client';
 import { DefaultChatHandlers, createDefaultChatHandlers } from '@azure/acs-chat-selector';
-import { ChatMessage, ChatThreadClient, SendChatMessageResult } from '@azure/communication-chat';
+import { ChatMessage, ChatThreadClient } from '@azure/communication-chat';
 
 import type {
   ChatMessageReceivedEvent,
@@ -136,13 +136,8 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.context.offStateChange(handler);
   };
 
-  sendMessage = async (content: string): Promise<SendChatMessageResult> => {
-    const result = await this.handlers.onSendMessage(content);
-    const message = this.getState().thread.chatMessages.get(result.id);
-    if (message) {
-      this.emitter.emit('messageSent', { message });
-    }
-    return result;
+  sendMessage = async (content: string): Promise<void> => {
+    await this.handlers.onSendMessage(content);
   };
 
   sendReadReceipt = async (chatMessageId: string): Promise<void> => {
@@ -166,7 +161,13 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   };
 
   messageReceivedListener = (event: ChatMessageReceivedEvent): void => {
-    this.emitter.emit('messageReceived', { message: convertEventToChatMessage(event) });
+    const message = convertEventToChatMessage(event);
+    this.emitter.emit('messageReceived', { message });
+
+    const currentUserId = toFlatCommunicationIdentifier(this.chatClient.getState().userId);
+    if (message?.sender && toFlatCommunicationIdentifier(message.sender) === currentUserId) {
+      this.emitter.emit('messageSent', { message });
+    }
   };
 
   messageReadListener = ({ chatMessageId, recipient }: ReadReceiptReceivedEvent): void => {

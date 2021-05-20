@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { ChatThreadClientState } from 'chat-stateful-client';
-import type { ChatMessage, ChatParticipant, SendChatMessageResult } from '@azure/communication-chat';
+import type { ChatMessage, ChatParticipant } from '@azure/communication-chat';
 import type { CommunicationUserKind } from '@azure/communication-common';
 
 export type ChatUIState = {
@@ -30,7 +30,7 @@ export interface ChatAdapter {
    * Performs the minimal fetch necessary for ChatComposite and API methods.
    */
   fetchInitialData(): Promise<void>;
-  sendMessage(content: string): Promise<SendChatMessageResult>;
+  sendMessage(content: string): Promise<void>;
   sendReadReceipt(chatMessageId: string): Promise<void>;
   sendTypingIndicator(): Promise<void>;
   removeParticipant(userId: string): Promise<void>;

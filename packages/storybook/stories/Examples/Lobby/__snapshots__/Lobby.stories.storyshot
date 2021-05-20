@@ -24,40 +24,9 @@ exports[`storybook snapshot tests Storyshots Examples/Lobby Lobby 1`] = `
       >
         <div
           className="ms-Stack css-6"
-        >
-          <div
-            className="ms-Stack css-8"
-          >
-            <div
-              className="ms-Persona ms-Persona--size100 root-9"
-            >
-              <div
-                className="ms-Persona-coin ms-Persona--size100 coin-16"
-                role="presentation"
-              >
-                <div
-                  className="ms-Persona-imageArea imageArea-18"
-                  role="presentation"
-                >
-                  <div
-                    aria-hidden="true"
-                    className="ms-Persona-initials initials-21"
-                  >
-                    <i
-                      aria-hidden={true}
-                      className="root-37 root-23"
-                      data-icon-name="Contact"
-                    >
-                      
-                    </i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        />
         <div
-          className="ms-Stack css-26"
+          className="ms-Stack css-7"
         >
           <div
             style={
@@ -94,13 +63,13 @@ exports[`storybook snapshot tests Storyshots Examples/Lobby Lobby 1`] = `
             </p>
           </div>
           <div
-            className="css-27"
+            className="css-8"
           >
             <div
-              className="ms-Stack css-29"
+              className="ms-Stack css-10"
             >
               <button
-                className="ms-Button ms-Button--default is-checked root-30"
+                className="ms-Button ms-Button--default is-checked root-11"
                 data-is-focusable={true}
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -111,7 +80,7 @@ exports[`storybook snapshot tests Storyshots Examples/Lobby Lobby 1`] = `
                 type="button"
               >
                 <span
-                  className="ms-Button-flexContainer flexContainer-31"
+                  className="ms-Button-flexContainer flexContainer-12"
                   data-automationid="splitbuttonprimary"
                 >
                   <span
@@ -142,14 +111,14 @@ exports[`storybook snapshot tests Storyshots Examples/Lobby Lobby 1`] = `
                     </svg>
                   </span>
                   <label
-                    className="ms-Label root-39"
+                    className="ms-Label root-20"
                   >
                     Turn off
                   </label>
                 </span>
               </button>
               <button
-                className="ms-Button ms-Button--default is-checked root-30"
+                className="ms-Button ms-Button--default is-checked root-11"
                 data-is-focusable={true}
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -160,7 +129,7 @@ exports[`storybook snapshot tests Storyshots Examples/Lobby Lobby 1`] = `
                 type="button"
               >
                 <span
-                  className="ms-Button-flexContainer flexContainer-31"
+                  className="ms-Button-flexContainer flexContainer-12"
                   data-automationid="splitbuttonprimary"
                 >
                   <span
@@ -197,7 +166,7 @@ exports[`storybook snapshot tests Storyshots Examples/Lobby Lobby 1`] = `
                     </svg>
                   </span>
                   <label
-                    className="ms-Label root-39"
+                    className="ms-Label root-20"
                   >
                     Mute
                   </label>
@@ -207,7 +176,7 @@ exports[`storybook snapshot tests Storyshots Examples/Lobby Lobby 1`] = `
                 aria-expanded={false}
                 aria-haspopup={true}
                 aria-owns={null}
-                className="ms-Button ms-Button--default ms-Button--hasMenu root-40"
+                className="ms-Button ms-Button--default ms-Button--hasMenu root-21"
                 data-is-focusable={true}
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -218,7 +187,7 @@ exports[`storybook snapshot tests Storyshots Examples/Lobby Lobby 1`] = `
                 type="button"
               >
                 <span
-                  className="ms-Button-flexContainer flexContainer-31"
+                  className="ms-Button-flexContainer flexContainer-12"
                   data-automationid="splitbuttonprimary"
                 >
                   <span
@@ -261,13 +230,13 @@ exports[`storybook snapshot tests Storyshots Examples/Lobby Lobby 1`] = `
                     </svg>
                   </span>
                   <label
-                    className="ms-Label root-39"
+                    className="ms-Label root-20"
                   >
                     Options
                   </label>
                   <i
                     aria-hidden={true}
-                    className="ms-Icon root-37 css-42 ms-Button-menuIcon menuIcon-41"
+                    className="ms-Icon root-37 css-23 ms-Button-menuIcon menuIcon-22"
                     data-icon-name="ChevronDown"
                     hidden={true}
                     role="presentation"
@@ -282,7 +251,7 @@ exports[`storybook snapshot tests Storyshots Examples/Lobby Lobby 1`] = `
                 </span>
               </button>
               <button
-                className="ms-Button ms-Button--default root-43"
+                className="ms-Button ms-Button--default root-24"
                 data-is-focusable={true}
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -299,7 +268,7 @@ exports[`storybook snapshot tests Storyshots Examples/Lobby Lobby 1`] = `
                 type="button"
               >
                 <span
-                  className="ms-Button-flexContainer flexContainer-31"
+                  className="ms-Button-flexContainer flexContainer-12"
                   data-automationid="splitbuttonprimary"
                 >
                   <span
@@ -324,7 +293,7 @@ exports[`storybook snapshot tests Storyshots Examples/Lobby Lobby 1`] = `
                     </svg>
                   </span>
                   <label
-                    className="ms-Label root-46"
+                    className="ms-Label root-27"
                   >
                     Leave call
                   </label>

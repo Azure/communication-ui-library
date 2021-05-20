@@ -7,10 +7,11 @@ import { useSelector } from './useSelector';
 import { sendBoxSelector } from '../sendBoxSelector';
 import { chatThreadSelector } from '../chatThreadSelector';
 import { typingIndicatorSelector } from '../typingIndicatorSelector';
+import { Common } from 'acs-ui-common';
 // @ts-ignore
 import { CommonProperties } from 'acs-ui-common';
 // @ts-ignore
-import { Common, DefaultChatHandlers } from '../handlers/createHandlers';
+import { DefaultChatHandlers } from '../handlers/createHandlers';
 import { chatParticipantListSelector } from '../chatParticipantListSelector';
 
 export const usePropsFor = <Component extends (props: any) => JSX.Element>(

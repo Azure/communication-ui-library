@@ -10,6 +10,8 @@ export interface CallProps {
   teamsInteropPrevious: TeamsInterop;
 }
 
+const renderEmptyPlacehodler = (): JSX.Element => <></>;
+
 export const CallComponent = (props: TeamsInterop): JSX.Element => {
   const videoTileStyles = {
     root: { height: '100%', width: '100%' },
@@ -25,7 +27,7 @@ export const CallComponent = (props: TeamsInterop): JSX.Element => {
         // Replace with your own video provider.
         <StreamMedia videoStreamElement={renderVideoStream()} />
       }
-      placeholder={<></>}
+      onRenderPlaceholder={renderEmptyPlacehodler}
     >
       {/* Optional Banner */}
       <Banner {...props} />
