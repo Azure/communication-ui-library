@@ -36,31 +36,31 @@ export interface ChatAdapter {
   removeParticipant(userId: string): Promise<void>;
   setTopic(topicName: string): Promise<void>;
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
-  on(event: 'messageReceived', messageReceivedListener: MessageReceivedListener): void;
-  on(event: 'messageSent', messageSentListener: MessageSentListener): void;
-  on(event: 'messageRead', messageReadListener: MessageReadListener): void;
-  on(event: 'participantsAdded', participantsEventHandler: ParticipantsAddedEventListener): void;
-  on(event: 'participantsRemoved', participantsEventHandler: ParticipantsRemovedEventListener): void;
-  on(event: 'topicChanged', topicChangedListener: TopicChangedListener): void;
-  on(event: 'error', errorHandler: (e: Error) => void): void;
+  on(event: 'messageReceived', listener: MessageReceivedListener): void;
+  on(event: 'messageSent', listener: MessageSentListener): void;
+  on(event: 'messageRead', listener: MessageReadListener): void;
+  on(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
+  on(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
+  on(event: 'topicChanged', listener: TopicChangedListener): void;
+  on(event: 'error', listener: (e: Error) => void): void;
 
-  off(event: 'messageReceived', messageReceivedListener: MessageReceivedListener): void;
-  off(event: 'messageSent', messageSentListener: MessageSentListener): void;
-  off(event: 'messageRead', messageReadListener: MessageReadListener): void;
-  off(event: 'participantsAdded', participantsEventHandler: ParticipantsAddedEventListener): void;
-  off(event: 'participantsRemoved', participantsEventHandler: ParticipantsRemovedEventListener): void;
-  off(event: 'topicChanged', topicChangedListener: TopicChangedListener): void;
-  off(event: 'error', errorHandler: (e: Error) => void): void;
+  off(event: 'messageReceived', listener: MessageReceivedListener): void;
+  off(event: 'messageSent', listener: MessageSentListener): void;
+  off(event: 'messageRead', listener: MessageReadListener): void;
+  off(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
+  off(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
+  off(event: 'topicChanged', listener: TopicChangedListener): void;
+  off(event: 'error', listener: (e: Error) => void): void;
 }
 
 export type MessageReceivedListener = (event: { message: ChatMessage }) => void;
 export type MessageSentListener = MessageReceivedListener;
 export type MessageReadListener = (event: { message: ChatMessage; readBy: CommunicationUserKind }) => void;
-export type ParticipantsAddedEventListener = (event: {
+export type ParticipantsAddedListener = (event: {
   participantsAdded: ChatParticipant[];
   addedBy: ChatParticipant;
 }) => void;
-export type ParticipantsRemovedEventListener = (event: {
+export type ParticipantsRemovedListener = (event: {
   participantsRemoved: ChatParticipant[];
   removedBy: ChatParticipant;
 }) => void;

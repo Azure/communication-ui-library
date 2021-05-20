@@ -24,8 +24,8 @@ import {
   ChatState,
   MessageReadListener,
   MessageReceivedListener,
-  ParticipantsAddedEventListener,
-  ParticipantsRemovedEventListener,
+  ParticipantsAddedListener,
+  ParticipantsRemovedListener,
   TopicChangedListener
 } from './ChatAdapter';
 
@@ -208,24 +208,24 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.chatClient.off('participantsRemoved', this.participantsRemovedListener);
   };
 
-  on(event: 'messageReceived', messageReceivedListener: MessageReceivedListener): void;
-  on(event: 'messageSent', messageSentListener: MessageReceivedListener): void;
-  on(event: 'messageRead', messageReadListener: MessageReadListener): void;
-  on(event: 'participantsAdded', participantsEventHandler: ParticipantsAddedEventListener): void;
-  on(event: 'participantsRemoved', participantsEventHandler: ParticipantsRemovedEventListener): void;
-  on(event: 'topicChanged', topicChangedListener: TopicChangedListener): void;
-  on(event: 'error', errorHandler: (e: Error) => void): void;
+  on(event: 'messageReceived', listener: MessageReceivedListener): void;
+  on(event: 'messageSent', listener: MessageReceivedListener): void;
+  on(event: 'messageRead', listener: MessageReadListener): void;
+  on(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
+  on(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
+  on(event: 'topicChanged', listener: TopicChangedListener): void;
+  on(event: 'error', listener: (e: Error) => void): void;
   on(event: ChatEvent, listener: (e: any) => void): void {
     this.emitter.on(event, listener);
   }
 
-  off(event: 'messageReceived', messageReceivedListener: MessageReceivedListener): void;
-  off(event: 'messageSent', messageSentListener: MessageReceivedListener): void;
-  off(event: 'messageRead', messageReadListener: MessageReadListener): void;
-  off(event: 'participantsAdded', participantsEventHandler: ParticipantsAddedEventListener): void;
-  off(event: 'participantsRemoved', participantsEventHandler: ParticipantsRemovedEventListener): void;
-  off(event: 'topicChanged', topicChangedListener: TopicChangedListener): void;
-  off(event: 'error', errorHandler: (e: Error) => void): void;
+  off(event: 'messageReceived', listener: MessageReceivedListener): void;
+  off(event: 'messageSent', listener: MessageReceivedListener): void;
+  off(event: 'messageRead', listener: MessageReadListener): void;
+  off(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
+  off(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
+  off(event: 'topicChanged', listener: TopicChangedListener): void;
+  off(event: 'error', listener: (e: Error) => void): void;
   off(event: ChatEvent, listener: (e: any) => void): void {
     this.emitter.off(event, listener);
   }
