@@ -1,9 +1,9 @@
 import { StreamMedia, VideoTile } from '@azure/communication-react';
 import React from 'react';
 import { renderVideoStream } from '../../../utils';
-import { Banner } from './Banner.snippet';
+import { ComplianceBannerExample } from './ComplianceBannerExample.snippet';
 import { CallControlBar } from './CallControlBar.snippet';
-import { TeamsInterop } from './TeamsInterop.snippet';
+import { ComplianceBanner } from './ComplianceBanner.snippet';
 
 export interface CallProps {
   teamsInteropCurrent: TeamsInterop;
