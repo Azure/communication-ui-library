@@ -20,7 +20,25 @@ import { VideoStreamOptions } from 'react-components';
 // @ts-ignore
 import { CommonProperties } from 'acs-ui-common';
 
-export type DefaultCallingHandlers = ReturnType<typeof createDefaultCallingHandlers>;
+export type DefaultCallingHandlers = {
+  onStartLocalVideo: () => Promise<void>;
+  onToggleCamera: () => Promise<void>;
+  onStartCall: (
+    participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
+    options?: StartCallOptions
+  ) => Call | undefined;
+  onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
+  onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
+  onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
+  onToggleMicrophone: () => Promise<void>;
+  onStartScreenShare: () => Promise<void>;
+  onStopScreenShare: () => Promise<void>;
+  onToggleScreenShare: () => Promise<void>;
+  onHangUp: () => Promise<void>;
+  onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void>;
+  onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void>;
+  onParticipantRemove: (userId: string) => void;
+};
 
 export const areStreamsEqual = (prevStream: LocalVideoStream, newStream: LocalVideoStream): boolean => {
   return !!prevStream && !!newStream && prevStream.source.id === newStream.source.id;

@@ -10,7 +10,7 @@ export type CallAgentContextType = {
 
 export const CallAgentContext = createContext<CallAgentContextType | undefined>(undefined);
 
-interface CallAgentProviderProps {
+export interface CallAgentProviderProps {
   children: React.ReactNode;
   callAgent?: CallAgent;
 }

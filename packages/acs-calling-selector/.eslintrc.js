@@ -65,7 +65,8 @@ module.exports = {
         'createHandlers.ts',
         'lobbySelector.ts',
         'complianceBannerSelector.ts',
-        'usePropsFor.ts'
+        'usePropsFor.ts',
+        'useHandlers.ts'
       ],
       rules: {
         '@typescript-eslint/ban-ts-comment': 'off',

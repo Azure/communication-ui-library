@@ -4,6 +4,7 @@
 
 ```ts
 
+import { AreEqual } from 'acs-ui-common';
 import { ChatClientState } from 'chat-stateful-client';
 import { ChatMessageWithStatus } from 'chat-stateful-client';
 import { ChatParticipant } from '@azure/communication-chat';
@@ -19,9 +20,6 @@ import { SendBox } from 'react-components';
 import { StatefulChatClient } from 'chat-stateful-client';
 import { TypingIndicator } from 'react-components';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
-
-// @public (undocumented)
-export type AreEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
 // @public (undocumented)
 export type ChatBaseSelectorProps = {

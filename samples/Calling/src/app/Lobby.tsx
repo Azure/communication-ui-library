@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { StreamMedia, VideoGalleryLocalParticipant, VideoStreamOptions, VideoTile } from 'react-components';
 import { useTheme } from '@fluentui/react-theme-provider';
 import { LobbyCallControlBar } from './LobbyControlBar';
-import { useSelector } from './hooks/useSelector';
+import { useCallingSelector as useSelector } from '@azure/acs-calling-selector';
 import { getIsPreviewCameraOn } from './selectors/baseSelectors';
 
 export interface LobbyProps {

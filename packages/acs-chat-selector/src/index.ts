@@ -19,4 +19,3 @@ export type { ChatThreadClientProviderProps } from './providers/ChatThreadClient
 export type { ChatBaseSelectorProps } from './baseSelectors';
 export type { DefaultChatHandlers } from './handlers/createHandlers';
 export type { GetSelector } from './hooks/usePropsFor';
-export type { AreEqual } from './hooks/usePropsFor';

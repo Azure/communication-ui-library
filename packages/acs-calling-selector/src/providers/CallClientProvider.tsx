@@ -11,12 +11,12 @@ export type CallClientContextType = {
 
 export const CallClientContext = createContext<CallClientContextType | undefined>(undefined);
 
-interface CallClientProvider {
+export interface CallClientProviderProps {
   children: React.ReactNode;
   statefulCallClient: StatefulCallClient;
 }
 
-const CallClientProviderBase = (props: CallClientProvider): JSX.Element => {
+const CallClientProviderBase = (props: CallClientProviderProps): JSX.Element => {
   const { statefulCallClient: defaultStatefulCallClient } = props;
 
   const [statefulCallClient, setStatefulCallClient] = useState<StatefulCallClient>(defaultStatefulCallClient);
@@ -54,7 +54,9 @@ const CallClientProviderBase = (props: CallClientProvider): JSX.Element => {
   return <CallClientContext.Provider value={initialState}>{props.children}</CallClientContext.Provider>;
 };
 
-export const CallClientProvider = (props: CallClientProvider): JSX.Element => <CallClientProviderBase {...props} />;
+export const CallClientProvider = (props: CallClientProviderProps): JSX.Element => (
+  <CallClientProviderBase {...props} />
+);
 
 export const useCallClient = (): StatefulCallClient => {
   const context = useContext(CallClientContext);
