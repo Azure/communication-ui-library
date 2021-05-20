@@ -25,7 +25,7 @@ const renderScreenSharePlaceholder = (): JSX.Element => (
   </Stack>
 );
 
-const renderSharerPlaceholder = (): JSX.Element => (
+const renderSharePersonaPlaceholder = (): JSX.Element => (
   <Persona
     styles={{ root: { margin: 'auto' } }}
     size={PersonaSize.size56}
@@ -116,7 +116,7 @@ export const ScreenShareLayout: () => JSX.Element = () => {
           <VideoTile
             isVideoReady={false}
             // A placeholder element for screen sharer's video stream
-            onRenderPlaceholder={renderSharerPlaceholder}
+            onRenderPlaceholder={renderSharePersonaPlaceholder}
           />
         </VideoTile>
       </Stack.Item>
