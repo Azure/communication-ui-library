@@ -352,41 +352,43 @@ export const cameraButtonSelector: reselect.OutputParametricSelector<CallClientS
 // @public (undocumented)
 export interface ChatAdapter {
     // (undocumented)
+    dispose(): void;
+    // (undocumented)
     fetchInitialData(): Promise<void>;
     // (undocumented)
     getState(): ChatState;
     // (undocumented)
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     // (undocumented)
-    off(event: 'messageReceived', messageReceivedListener: MessageReceivedListener): void;
+    off(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
-    off(event: 'messageSent', messageSentListener: MessageSentListener): void;
+    off(event: 'messageSent', listener: MessageSentListener): void;
     // (undocumented)
-    off(event: 'messageRead', messageReadListener: MessageReadListener): void;
+    off(event: 'messageRead', listener: MessageReadListener): void;
     // (undocumented)
-    off(event: 'participantsAdded', participantsEventHandler: ParticipantsAddedEventListener): void;
+    off(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
     // (undocumented)
-    off(event: 'participantsRemoved', participantsEventHandler: ParticipantsRemovedEventListener): void;
+    off(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
     // (undocumented)
-    off(event: 'topicChanged', topicChangedListener: TopicChangedListener): void;
+    off(event: 'topicChanged', listener: TopicChangedListener): void;
     // (undocumented)
-    off(event: 'error', errorHandler: (e: Error) => void): void;
+    off(event: 'error', listener: (e: Error) => void): void;
     // (undocumented)
     offStateChange(handler: (state: ChatState) => void): void;
     // (undocumented)
-    on(event: 'messageReceived', messageReceivedListener: MessageReceivedListener): void;
+    on(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
-    on(event: 'messageSent', messageSentListener: MessageSentListener): void;
+    on(event: 'messageSent', listener: MessageSentListener): void;
     // (undocumented)
-    on(event: 'messageRead', messageReadListener: MessageReadListener): void;
+    on(event: 'messageRead', listener: MessageReadListener): void;
     // (undocumented)
-    on(event: 'participantsAdded', participantsEventHandler: ParticipantsAddedEventListener): void;
+    on(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
     // (undocumented)
-    on(event: 'participantsRemoved', participantsEventHandler: ParticipantsRemovedEventListener): void;
+    on(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
     // (undocumented)
-    on(event: 'topicChanged', topicChangedListener: TopicChangedListener): void;
+    on(event: 'topicChanged', listener: TopicChangedListener): void;
     // (undocumented)
-    on(event: 'error', errorHandler: (e: Error) => void): void;
+    on(event: 'error', listener: (e: Error) => void): void;
     // (undocumented)
     onStateChange(handler: (state: ChatState) => void): void;
     // (undocumented)
@@ -1104,13 +1106,13 @@ export const participantListSelector: reselect.OutputParametricSelector<CallClie
 }>;
 
 // @public (undocumented)
-export type ParticipantsAddedEventListener = (event: {
+export type ParticipantsAddedListener = (event: {
     participantsAdded: ChatParticipant[];
     addedBy: ChatParticipant;
 }) => void;
 
 // @public (undocumented)
-export type ParticipantsRemovedEventListener = (event: {
+export type ParticipantsRemovedListener = (event: {
     participantsRemoved: ChatParticipant[];
     removedBy: ChatParticipant;
 }) => void;
@@ -1275,13 +1277,13 @@ export type SystemMessagePayload = {
     iconName?: string;
 };
 
+// @public
+export const toFlatCommunicationIdentifier: (id: CommunicationIdentifier) => string;
+
 // @public (undocumented)
 export type TopicChangedListener = (event: {
     topic: string;
 }) => void;
-
-// @public
-export const toFlatCommunicationIdentifier: (id: CommunicationIdentifier) => string;
 
 // @public
 export interface TranscriptionCallFeature {
