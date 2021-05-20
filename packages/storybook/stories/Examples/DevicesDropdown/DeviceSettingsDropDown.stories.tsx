@@ -40,7 +40,7 @@ const getDocs: () => JSX.Element = () => {
         <DeviceSettingDropdownExample
           devices={cameras}
           onChange={(_, option) => {
-            alert(option.text);
+            alert(option?.text);
           }}
         />
       </Canvas>
@@ -52,7 +52,7 @@ export const DeviceSettings: () => JSX.Element = () => {
     <DeviceSettingDropdownExample
       devices={cameras}
       onChange={(_, option) => {
-        alert(option.text);
+        alert(option?.text);
       }}
     />
   );
