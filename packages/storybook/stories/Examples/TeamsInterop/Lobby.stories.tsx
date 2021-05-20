@@ -33,7 +33,7 @@ export const Lobby: () => JSX.Element = () => {
 };
 
 export default {
-  title: `${EXAMPLES_FOLDER_PREFIX}/Lobby`,
+  title: `${EXAMPLES_FOLDER_PREFIX}/Teams Interop`,
   component: Lobby,
   parameters: {
     docs: {

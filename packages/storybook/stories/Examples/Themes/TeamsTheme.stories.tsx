@@ -22,12 +22,12 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-export const TeamsThemeComponent: () => JSX.Element = () => {
+export const Teams: () => JSX.Element = () => {
   return <TeamsTheme />;
 };
 
 export default {
-  title: `${EXAMPLES_FOLDER_PREFIX}/Teams Theme`,
+  title: `${EXAMPLES_FOLDER_PREFIX}/Themes`,
   parameters: {
     docs: {
       page: () => getDocs()

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`storybook snapshot tests Storyshots Examples/Teams Theme Teams Theme Component 1`] = `
+exports[`storybook snapshot tests Storyshots Examples/Themes Teams 1`] = `
 <div
   className="css-80 root-0 body-1"
 >
