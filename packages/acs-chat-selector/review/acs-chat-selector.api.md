@@ -16,7 +16,6 @@ import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
 import * as reselect from 'reselect';
 import { SendBox } from 'react-components';
-import { SendChatMessageResult } from '@azure/communication-chat';
 import { StatefulChatClient } from 'chat-stateful-client';
 import { TypingIndicator } from 'react-components';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
@@ -77,7 +76,7 @@ export const createDefaultChatHandlersForComponent: <Props>(chatClient: Stateful
 
 // @public (undocumented)
 export type DefaultChatHandlers = {
-    onSendMessage: (content: string) => Promise<SendChatMessageResult>;
+    onSendMessage: (content: string) => Promise<void>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
     onTyping: () => Promise<void>;
     onParticipantRemove: (userId: string) => Promise<void>;

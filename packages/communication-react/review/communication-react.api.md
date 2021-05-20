@@ -43,7 +43,6 @@ import { ReactElement } from 'react';
 import { RemoteParticipantState } from '@azure/communication-calling';
 import * as reselect from 'reselect';
 import { ScalingMode } from '@azure/communication-calling';
-import { SendChatMessageResult } from '@azure/communication-chat';
 import { SizeValue } from '@fluentui/react-northstar';
 import { StartCallOptions } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react-theme-provider';
@@ -394,7 +393,7 @@ export interface ChatAdapter {
     // (undocumented)
     removeParticipant(userId: string): Promise<void>;
     // (undocumented)
-    sendMessage(content: string): Promise<SendChatMessageResult>;
+    sendMessage(content: string): Promise<void>;
     // (undocumented)
     sendReadReceipt(chatMessageId: string): Promise<void>;
     // (undocumented)
@@ -743,7 +742,7 @@ export type DefaultCallingHandlers = ReturnType<typeof createDefaultCallingHandl
 
 // @public (undocumented)
 export type DefaultChatHandlers = {
-    onSendMessage: (content: string) => Promise<SendChatMessageResult>;
+    onSendMessage: (content: string) => Promise<void>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
     onTyping: () => Promise<void>;
     onParticipantRemove: (userId: string) => Promise<void>;
