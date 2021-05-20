@@ -10,12 +10,11 @@ import {
   VideoDeviceInfo
 } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
-import { CommonProperties } from 'acs-ui-common';
-import { DeviceManager, StatefulCallClient, StatefulDeviceManager } from 'calling-stateful-client';
+import { CommonProperties, fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from 'acs-ui-common';
+import { DeviceManagerState, StatefulCallClient, StatefulDeviceManager } from 'calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
 import { VideoStreamOptions } from 'react-components';
-import { getACSId } from '../utils/getACSId';
 
 export type DefaultCallingHandlers = ReturnType<typeof createDefaultCallingHandlers>;
 
@@ -50,7 +49,7 @@ export const createDefaultCallingHandlers = memoizeOne(
       if (!callId) return;
       if (call && call.localVideoStreams.find((s) => areStreamsEqual(s, stream))) {
         await call.stopVideo(stream);
-        await callClient.disposeView(callId, stream);
+        await callClient.disposeView(callId, undefined, stream);
       }
     };
 
@@ -67,12 +66,12 @@ export const createDefaultCallingHandlers = memoizeOne(
         if (selectedCamera) {
           const previewOn = isPreviewOn(callClient.getState().deviceManager);
           if (previewOn) {
-            await callClient.disposeView(undefined, {
+            await callClient.disposeView(undefined, undefined, {
               source: selectedCamera,
               mediaStreamType: 'Video'
             });
           } else {
-            await callClient.createView(undefined, {
+            await callClient.createView(undefined, undefined, {
               source: selectedCamera,
               mediaStreamType: 'Video'
             });
@@ -81,6 +80,7 @@ export const createDefaultCallingHandlers = memoizeOne(
       }
     };
 
+    // FIXME: onStartCall API should use string, not the underlying SDK types.
     const onStartCall = (
       participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
       options?: StartCallOptions
@@ -121,13 +121,13 @@ export const createDefaultCallingHandlers = memoizeOne(
         const selectedCamera = callClient.getState().deviceManager.selectedCamera;
         // If preview is on, then stop current preview and then start new preview with new device
         if (selectedCamera) {
-          await callClient.disposeView(undefined, {
+          await callClient.disposeView(undefined, undefined, {
             source: selectedCamera,
             mediaStreamType: 'Video'
           });
         }
         deviceManager.selectCamera(device);
-        await callClient.createView(undefined, {
+        await callClient.createView(undefined, undefined, {
           source: device,
           mediaStreamType: 'Video'
         });
@@ -135,7 +135,10 @@ export const createDefaultCallingHandlers = memoizeOne(
     };
 
     const onToggleMicrophone = async (): Promise<void> => {
-      return call?.isMuted ? await call?.unmute() : await call?.mute();
+      if (!call) {
+        throw new Error(`Please invoke onToggleMicrophone after call is started`);
+      }
+      return call.isMuted ? await call.unmute() : await call.mute();
     };
 
     const onStartScreenShare = async (): Promise<void> => await call?.startScreenSharing();
@@ -151,7 +154,7 @@ export const createDefaultCallingHandlers = memoizeOne(
       if (!call || call.localVideoStreams.length === 0) return;
       const localStream = call.localVideoStreams.find((item) => item.mediaStreamType === 'Video');
       if (!localStream) return;
-      callClient.createView(call.id, localStream, options);
+      callClient.createView(call.id, undefined, localStream, options);
     };
 
     const onCreateRemoteStreamView = async (userId: string, options?: VideoStreamOptions): Promise<void> => {
@@ -159,26 +162,32 @@ export const createDefaultCallingHandlers = memoizeOne(
       const callState = callClient.getState().calls.get(call.id);
       if (!callState) throw new Error(`Call Not Found: ${call.id}`);
 
-      const streams = Array.from(callState.remoteParticipants.values()).find(
-        (participant) => getACSId(participant.identifier) === userId
-      )?.videoStreams;
+      const participant = Array.from(callState.remoteParticipants.values()).find(
+        (participant) => toFlatCommunicationIdentifier(participant.identifier) === userId
+      );
 
-      if (!streams) return;
+      if (!participant || !participant.videoStreams) {
+        return;
+      }
 
-      const remoteVideoStream = Array.from(streams?.values()).find((i) => i.mediaStreamType === 'Video');
-      const screenShareStream = Array.from(streams?.values()).find((i) => i.mediaStreamType === 'ScreenSharing');
+      const remoteVideoStream = Array.from(participant.videoStreams.values()).find(
+        (i) => i.mediaStreamType === 'Video'
+      );
+      const screenShareStream = Array.from(participant.videoStreams.values()).find(
+        (i) => i.mediaStreamType === 'ScreenSharing'
+      );
 
       if (remoteVideoStream && remoteVideoStream.isAvailable && !remoteVideoStream.videoStreamRendererView) {
-        callClient.createView(call.id, remoteVideoStream, options);
+        callClient.createView(call.id, participant.identifier, remoteVideoStream, options);
       }
 
       if (screenShareStream && screenShareStream.isAvailable && !screenShareStream.videoStreamRendererView) {
-        callClient.createView(call.id, screenShareStream, options);
+        callClient.createView(call.id, participant.identifier, screenShareStream, options);
       }
     };
 
     const onParticipantRemove = (userId: string): void => {
-      call?.removeParticipant({ communicationUserId: userId });
+      call?.removeParticipant(fromFlatCommunicationIdentifier(userId));
     };
 
     return {
@@ -200,7 +209,7 @@ export const createDefaultCallingHandlers = memoizeOne(
   }
 );
 
-const isPreviewOn = (deviceManager: DeviceManager): boolean => {
+const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
   return !!deviceManager.unparentedViews && !!deviceManager.unparentedViews[0]?.target;
 };
 

@@ -12,7 +12,7 @@ import { CallClientState } from 'calling-stateful-client';
 import { CallParticipant } from 'react-components';
 import { CommonProperties } from 'acs-ui-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
-import { DeviceManager } from 'calling-stateful-client';
+import { DeviceManagerState } from 'calling-stateful-client';
 import { IncomingCall } from 'calling-stateful-client';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { ReactElement } from 'react';
@@ -25,9 +25,6 @@ import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoGalleryRemoteParticipant } from 'react-components';
 import { VideoStreamOptions } from 'react-components';
 
-// @public (undocumented)
-export type CallbackType<KeyT, ArgsT extends any[], FnRetT> = (memoizedFn: FunctionWithKey<KeyT, ArgsT, FnRetT>) => FnRetT[];
-
 // @public
 export type CallingBaseSelectorProps = {
     callId: string;
@@ -37,9 +34,18 @@ export type CallingBaseSelectorProps = {
 export const cameraButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     disabled: boolean;
     checked: boolean;
-}, (res1: Call_2 | undefined, res2: DeviceManager) => {
+}, (res1: Call_2 | undefined, res2: DeviceManagerState) => {
     disabled: boolean;
     checked: boolean;
+}>;
+
+// @public (undocumented)
+export const complianceBannerSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
+    callTranscribeState: boolean | undefined;
+    callRecordState: boolean | undefined;
+}, (res: Call_2 | undefined) => {
+    callTranscribeState: boolean | undefined;
+    callRecordState: boolean | undefined;
 }>;
 
 // @public (undocumented)
@@ -97,9 +103,6 @@ export const createDefaultCallingHandlersForComponent: <Props>(callClient: State
 export type DefaultCallingHandlers = ReturnType<typeof createDefaultCallingHandlers>;
 
 // @public (undocumented)
-export type FunctionWithKey<KeyT, ArgsT extends any[], RetT> = (key: KeyT, ...args: ArgsT) => RetT;
-
-// @public (undocumented)
 export const getCall: (state: CallClientState, props: CallingBaseSelectorProps) => Call_2 | undefined;
 
 // @public (undocumented)
@@ -109,13 +112,13 @@ export const getCalls: (state: CallClientState) => Map<string, Call_2>;
 export const getCallsEnded: (state: CallClientState) => Call_2[];
 
 // @public (undocumented)
-export const getDeviceManager: (state: CallClientState) => DeviceManager;
+export const getDeviceManager: (state: CallClientState) => DeviceManagerState;
 
 // @public (undocumented)
 export const getDisplayName: (state: CallClientState) => string | undefined;
 
 // @public (undocumented)
-export const getIdentifier: (state: CallClientState) => string | undefined;
+export const getIdentifier: (state: CallClientState) => string;
 
 // @public (undocumented)
 export const getIncomingCalls: (state: CallClientState) => Map<string, IncomingCall>;
@@ -126,7 +129,7 @@ export const getIncomingCallsEnded: (state: CallClientState) => IncomingCall[];
 // @public (undocumented)
 export const localPreviewSelector: reselect.OutputSelector<CallClientState, {
     videoStreamElement: HTMLElement | null;
-}, (res: DeviceManager) => {
+}, (res: DeviceManagerState) => {
     videoStreamElement: HTMLElement | null;
 }>;
 
@@ -137,14 +140,11 @@ export const mediaGallerySelector: reselect.OutputParametricSelector<CallClientS
     isVideoStreamOn: boolean;
 }>;
 
-// @public
-export const memoizeFnAll: <KeyT, ArgsT extends any[], FnRetT, CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>>(fnToMemoize: FunctionWithKey<KeyT, ArgsT, FnRetT>, shouldCacheUpdate?: (args1: any, args2: any) => boolean) => (callback: CallBackT) => FnRetT[];
-
 // @public (undocumented)
 export const microphoneButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     disabled: boolean;
     checked: boolean;
-}, (res1: Call_2 | undefined, res2: DeviceManager) => {
+}, (res1: Call_2 | undefined, res2: DeviceManagerState) => {
     disabled: boolean;
     checked: boolean;
 }>;
@@ -157,7 +157,7 @@ export const optionsButtonSelector: reselect.OutputParametricSelector<CallClient
     selectedMicrophone: AudioDeviceInfo | undefined;
     selectedSpeaker: AudioDeviceInfo | undefined;
     selectedCamera: VideoDeviceInfo | undefined;
-}, (res1: DeviceManager, res2: Call_2 | undefined) => {
+}, (res1: DeviceManagerState, res2: Call_2 | undefined) => {
     microphones: AudioDeviceInfo[];
     speakers: AudioDeviceInfo[];
     cameras: VideoDeviceInfo[];
@@ -170,7 +170,7 @@ export const optionsButtonSelector: reselect.OutputParametricSelector<CallClient
 export const participantListSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     participants: CallParticipant[];
     myUserId: string;
-}, (res1: string | undefined, res2: string | undefined, res3: Call_2 | undefined) => {
+}, (res1: string, res2: string | undefined, res3: Call_2 | undefined) => {
     participants: CallParticipant[];
     myUserId: string;
 }>;
@@ -197,7 +197,7 @@ export const videoGallerySelector: reselect.OutputParametricSelector<CallClientS
         };
     };
     remoteParticipants: VideoGalleryRemoteParticipant[];
-}, (res1: Call_2 | undefined, res2: string | undefined, res3: string | undefined) => {
+}, (res1: Call_2 | undefined, res2: string | undefined, res3: string) => {
     screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
     localParticipant: {
         userId: string;

@@ -13,172 +13,131 @@ export interface StreamAndRenderer {
 }
 
 /**
+ * Used internally in InternalCallContext to be able to hold both the stream and the renderer in the same array.
+ */
+export interface LocalStreamAndRenderer {
+  stream: LocalVideoStream;
+  renderer: VideoStreamRenderer | undefined;
+}
+
+/**
+ * Used internally in InternalCallContext to be able to hold both the stream and the renderer in the same array.
+ */
+export interface RemoteStreamAndRenderer {
+  stream: RemoteVideoStream;
+  renderer: VideoStreamRenderer | undefined;
+}
+
+/**
  * Contains internal data used between different Declarative components to share data.
  */
 export class InternalCallContext {
-  // CallId -> <StreamId, RemoteVideoStream>
-  private _remoteVideoStreams: Map<string, Map<number, RemoteVideoStream>>;
-  // CallId -> <StreamId, ParticipantKey>
-  private _remoteParticipantKeys: Map<string, Map<number, string>>;
-  // CallId -> <StreamId, VideoStreamRenderer>
-  private _remoteVideoStreamRenderers: Map<string, Map<number, VideoStreamRenderer>>;
+  // <CallId, <ParticipantKey, <StreamId, RemoteStreamAndRenderer>>
+  private _remoteStreamAndRenderers: Map<string, Map<string, Map<number, RemoteStreamAndRenderer>>>;
 
-  // At the time of writing only one LocalVideoStream is supported by SDK.
-  // CallId -> LocalVideoStream
-  private _localVideoStreams: Map<string, LocalVideoStream>;
-  // CallId -> VideoStreamRenderer
-  private _localVideoStreamRenders: Map<string, VideoStreamRenderer>;
+  // <CallId, LocalStreamAndRenderer>.
+  private _localStreamAndRenderers: Map<string, LocalStreamAndRenderer>;
 
   // Stores the original LocalVideoStream used when creating the {@Link VideoStreamRendererView} along with the renderer
   // {@Link @azure/communication-calling#VideoStreamRenderer} used to create the {@Link VideoStreamRendererView}.
   private _unparentedStreamAndRenderers: StreamAndRenderer[];
 
   constructor() {
-    this._remoteVideoStreams = new Map<string, Map<number, RemoteVideoStream>>();
-    this._remoteParticipantKeys = new Map<string, Map<number, string>>();
-    this._remoteVideoStreamRenderers = new Map<string, Map<number, VideoStreamRenderer>>();
-    this._localVideoStreams = new Map<string, LocalVideoStream>();
-    this._localVideoStreamRenders = new Map<string, VideoStreamRenderer>();
+    this._remoteStreamAndRenderers = new Map<string, Map<string, Map<number, RemoteStreamAndRenderer>>>();
+    this._localStreamAndRenderers = new Map<string, LocalStreamAndRenderer>();
     this._unparentedStreamAndRenderers = [];
   }
 
   public setCallId(newCallId: string, oldCallId: string): void {
-    const remoteVideoStreams = this._remoteVideoStreams.get(oldCallId);
-    if (remoteVideoStreams) {
-      this._remoteVideoStreams.delete(oldCallId);
-      this._remoteVideoStreams.set(newCallId, remoteVideoStreams);
+    const remoteStreamAndRenderers = this._remoteStreamAndRenderers.get(oldCallId);
+    if (remoteStreamAndRenderers) {
+      this._remoteStreamAndRenderers.delete(oldCallId);
+      this._remoteStreamAndRenderers.set(newCallId, remoteStreamAndRenderers);
     }
 
-    const remoteParticipants = this._remoteParticipantKeys.get(oldCallId);
-    if (remoteParticipants) {
-      this._remoteParticipantKeys.delete(oldCallId);
-      this._remoteParticipantKeys.set(newCallId, remoteParticipants);
-    }
-
-    const localVideoStream = this._localVideoStreams.get(oldCallId);
-    if (localVideoStream) {
-      this._localVideoStreams.delete(oldCallId);
-      this._localVideoStreams.set(newCallId, localVideoStream);
-    }
-
-    const localVideoStreamRenderer = this._localVideoStreamRenders.get(oldCallId);
-    if (localVideoStreamRenderer) {
-      this._localVideoStreamRenders.delete(oldCallId);
-      this._localVideoStreamRenders.set(newCallId, localVideoStreamRenderer);
+    const localStreamAndRenderers = this._localStreamAndRenderers.get(oldCallId);
+    if (localStreamAndRenderers) {
+      this._localStreamAndRenderers.delete(oldCallId);
+      this._localStreamAndRenderers.set(newCallId, localStreamAndRenderers);
     }
   }
 
-  public getRemoteVideoStreamsAll(): Map<string, Map<number, RemoteVideoStream>> {
-    return this._remoteVideoStreams;
+  public getRemoteStreamAndRenderersAll(): Map<string, Map<string, Map<number, RemoteStreamAndRenderer>>> {
+    return this._remoteStreamAndRenderers;
   }
 
-  public getRemoteVideoStreams(callId: string): Map<number, RemoteVideoStream> | undefined {
-    return this._remoteVideoStreams.get(callId);
+  public getRemoteStreamAndRenderersForCall(
+    callId: string
+  ): Map<string, Map<number, RemoteStreamAndRenderer>> | undefined {
+    return this._remoteStreamAndRenderers.get(callId);
   }
 
-  public getRemoteVideoStream(callId: string, streamId: number): RemoteVideoStream | undefined {
-    const remoteVideoStreams = this._remoteVideoStreams.get(callId);
-    if (remoteVideoStreams) {
-      return remoteVideoStreams.get(streamId);
-    }
-    return undefined;
-  }
-
-  public getRemoteParticipantKey(callId: string, streamId: number): string | undefined {
-    const remoteParticipants = this._remoteParticipantKeys.get(callId);
-    if (remoteParticipants) {
-      return remoteParticipants.get(streamId);
-    }
-    return undefined;
-  }
-
-  public setRemoteVideoStream(callId: string, participantKey: string, remoteVideoStream: RemoteVideoStream): void {
-    let remoteVideoStreams = this._remoteVideoStreams.get(callId);
-    if (!remoteVideoStreams) {
-      remoteVideoStreams = new Map<number, RemoteVideoStream>();
-      this._remoteVideoStreams.set(callId, remoteVideoStreams);
-    }
-    remoteVideoStreams.set(remoteVideoStream.id, remoteVideoStream);
-
-    let remoteParticipants = this._remoteParticipantKeys.get(callId);
-    if (!remoteParticipants) {
-      remoteParticipants = new Map<number, string>();
-      this._remoteParticipantKeys.set(callId, remoteParticipants);
-    }
-    remoteParticipants.set(remoteVideoStream.id, participantKey);
-  }
-
-  public removeRemoteVideoStream(callId: string, streamId: number): void {
-    const remoteVideoStreams = this._remoteVideoStreams.get(callId);
-    if (remoteVideoStreams) {
-      remoteVideoStreams.delete(streamId);
-    }
-
-    const remoteParticipants = this._remoteParticipantKeys.get(callId);
-    if (remoteParticipants) {
-      remoteParticipants.delete(streamId);
-    }
-
-    const videoStreamRenderers = this._remoteVideoStreamRenderers.get(callId);
-    if (videoStreamRenderers) {
-      const videoStreamRenderer = videoStreamRenderers.get(streamId);
-      if (videoStreamRenderer) {
-        videoStreamRenderer.dispose();
-        videoStreamRenderers.delete(streamId);
-      }
-    }
-  }
-
-  public getRemoteVideoStreamRenderer(callId: string, streamId: number): VideoStreamRenderer | undefined {
-    const videoStreamRenderers = this._remoteVideoStreamRenderers.get(callId);
-    if (videoStreamRenderers) {
-      return videoStreamRenderers.get(streamId);
-    }
-    return undefined;
-  }
-
-  public setRemoteVideoStreamRenderer(
+  public getRemoteStreamAndRendererForParticipant(
     callId: string,
+    participantKey: string,
+    streamId: number
+  ): RemoteStreamAndRenderer | undefined {
+    const callStreams = this._remoteStreamAndRenderers.get(callId);
+    if (!callStreams) {
+      return undefined;
+    }
+    const participantStreams = callStreams.get(participantKey);
+    if (!participantStreams) {
+      return undefined;
+    }
+    return participantStreams.get(streamId);
+  }
+
+  public setRemoteStreamAndRenderer(
+    callId: string,
+    participantKey: string,
     streamId: number,
-    videoStreamRenderer: VideoStreamRenderer
+    stream: RemoteVideoStream,
+    renderer: VideoStreamRenderer | undefined
   ): void {
-    let videoStreamRenderers = this._remoteVideoStreamRenderers.get(callId);
-    if (!videoStreamRenderers) {
-      videoStreamRenderers = new Map<number, VideoStreamRenderer>();
-      this._remoteVideoStreamRenderers.set(callId, videoStreamRenderers);
+    let callStreams = this._remoteStreamAndRenderers.get(callId);
+    if (!callStreams) {
+      callStreams = new Map<string, Map<number, RemoteStreamAndRenderer>>();
+      this._remoteStreamAndRenderers.set(callId, callStreams);
     }
-    videoStreamRenderers.set(streamId, videoStreamRenderer);
-  }
 
-  public removeRemoteVideoStreamRenderer(callId: string, streamId: number): void {
-    const videoStreamRenderers = this._remoteVideoStreamRenderers.get(callId);
-    if (videoStreamRenderers) {
-      videoStreamRenderers.delete(streamId);
+    let participantStreams = callStreams.get(participantKey);
+    if (!participantStreams) {
+      participantStreams = new Map<number, RemoteStreamAndRenderer>();
+      callStreams.set(participantKey, participantStreams);
     }
+
+    participantStreams.set(streamId, { stream, renderer });
   }
 
-  public setLocalVideoStream(callId: string, localVideoStream: LocalVideoStream): void {
-    this._localVideoStreams.set(callId, localVideoStream);
+  public removeRemoteStreamAndRenderer(callId: string, participantKey: string, streamId: number): void {
+    const callStreams = this._remoteStreamAndRenderers.get(callId);
+    if (!callStreams) {
+      return;
+    }
+
+    const participantStreams = callStreams.get(participantKey);
+    if (!participantStreams) {
+      return;
+    }
+
+    participantStreams.delete(streamId);
   }
 
-  public removeLocalVideoStream(callId: string): void {
-    this._localVideoStreams.delete(callId);
+  public setLocalStreamAndRenderer(
+    callId: string,
+    stream: LocalVideoStream,
+    renderer: VideoStreamRenderer | undefined
+  ): void {
+    this._localStreamAndRenderers.set(callId, { stream: stream, renderer: renderer });
   }
 
-  public getLocalVideoStream(callId: string): LocalVideoStream | undefined {
-    return this._localVideoStreams.get(callId);
+  public getLocalStreamAndRenderer(callId: string): LocalStreamAndRenderer | undefined {
+    return this._localStreamAndRenderers.get(callId);
   }
 
-  public getLocalVideoStreamRenderer(callId: string): VideoStreamRenderer | undefined {
-    return this._localVideoStreamRenders.get(callId);
-  }
-
-  public setLocalVideoStreamRenderer(callId: string, renderer: VideoStreamRenderer): void {
-    this._localVideoStreamRenders.set(callId, renderer);
-  }
-
-  public removeLocalVideoStreamRenderer(callId: string): void {
-    this._localVideoStreamRenders.delete(callId);
+  public removeLocalStreamAndRenderer(callId: string): void {
+    this._localStreamAndRenderers.delete(callId);
   }
 
   // Returns the index in unparentedStreamAndRenderers or -1 if not found.
@@ -221,10 +180,7 @@ export class InternalCallContext {
 
   // UnparentedStreamAndRenderers are not cleared as they are not part of the Call state.
   public clearCallRelatedState(): void {
-    this._remoteVideoStreams.clear();
-    this._remoteParticipantKeys.clear();
-    this._remoteVideoStreamRenderers.clear();
-    this._localVideoStreams.clear();
-    this._localVideoStreamRenders.clear();
+    this._remoteStreamAndRenderers.clear();
+    this._localStreamAndRenderers.clear();
   }
 }

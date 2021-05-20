@@ -1,10 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { memoizeFnAll } from '@azure/acs-calling-selector';
+import { memoizeFnAll } from 'acs-ui-common';
 import { mergeStyles, Spinner, SpinnerSize, Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import {
+  PlaceholderProps,
   StreamMedia,
   VideoGalleryLocalParticipant,
   VideoGalleryRemoteParticipant,
@@ -33,6 +34,7 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
       <Stack horizontalAlign="center" verticalAlign="center" className={aspectRatioBoxStyle} key={userId}>
         <Stack className={aspectRatioBoxContentStyle}>
           <VideoTile
+            userId={userId}
             isVideoReady={isAvailable}
             renderElement={<StreamMedia videoStreamElement={renderElement ?? null} />}
             displayName={displayName}
@@ -42,6 +44,13 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
       </Stack>
     );
   }
+);
+
+// A non-undefined display name is needed for this render, and that is coming from VideoTile props below
+const onRenderPlaceholder = (props: PlaceholderProps): JSX.Element => (
+  <div className={loadingStyle}>
+    <Spinner label={`Loading ${props.displayName}'s screen`} size={SpinnerSize.xSmall} />
+  </div>
 );
 
 export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
@@ -79,13 +88,10 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
 
     return (
       <VideoTile
+        displayName={screenShareParticipant?.displayName}
         isVideoReady={screenShareStream?.isAvailable}
         renderElement={<StreamMedia videoStreamElement={screenShareStream?.renderElement ?? null} />}
-        placeholder={
-          <div className={loadingStyle}>
-            <Spinner label={`Loading ${screenShareParticipant?.displayName}'s screen`} size={SpinnerSize.xSmall} />
-          </div>
-        }
+        onRenderPlaceholder={onRenderPlaceholder}
         styles={{
           overlayContainer: videoStreamStyle
         }}
