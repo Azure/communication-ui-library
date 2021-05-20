@@ -34,7 +34,7 @@ const getTheme = (choice: string): ITheme => {
 };
 
 export const ThemesCanvas: () => JSX.Element = () => {
-  const [prerequisites, setPrerequisites] = useState();
+  const [containerProps, setContainerProps] = useState();
 
   const knobs = useRef({
     connectionString: text(COMPOSITE_STRING_CONNECTIONSTRING, '', 'Server Simulator'),
@@ -43,20 +43,20 @@ export const ThemesCanvas: () => JSX.Element = () => {
   });
 
   useEffect(() => {
-    const fetchPrerequisites = async (): Promise<void> => {
+    const fetchContainerProps = async (): Promise<void> => {
       if (knobs.current.connectionString && knobs.current.displayName) {
-        const newPrerequisites = await createUserAndGroup(knobs.current.connectionString);
-        setPrerequisites(newPrerequisites);
+        const newProps = await createUserAndGroup(knobs.current.connectionString);
+        setContainerProps(newProps);
       }
     };
-    fetchPrerequisites();
+    fetchContainerProps();
   }, [knobs]);
 
   return (
     <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
       <FluentThemeProvider fluentTheme={getTheme(knobs.current.theme)}>
-        {prerequisites ? (
-          <ContosoCallContainer displayName={knobs.current.displayName} {...prerequisites} />
+        {containerProps ? (
+          <ContosoCallContainer displayName={knobs.current.displayName} {...containerProps} />
         ) : (
           <ConfigHintBanner />
         )}
