@@ -6,7 +6,7 @@ import {
   LocalVideoStream,
   MediaStreamType,
   RemoteParticipant,
-  RemoteParticipantState
+  RemoteParticipantState as RemoteParticipantStatus
 } from '@azure/communication-calling';
 import { MockCall, MockCallAgent, MockRemoteVideoStream } from './CallingTypeMocks';
 
@@ -158,7 +158,7 @@ export function mockCallAgent(props?: MockCallProps): MockCallAgent {
 export function mockRemoteParticipant(
   videoStreams?: MockRemoteVideoStream[],
   displayName?: string,
-  state?: RemoteParticipantState,
+  state?: RemoteParticipantStatus,
   isMuted?: boolean
 ): RemoteParticipant {
   return {

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Possible fix for clone stream issue",
+  "packageName": "react-components",
+  "email": "allenhwang@microsoft.com",
+  "dependentChangeType": "patch"
+}
