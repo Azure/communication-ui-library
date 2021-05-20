@@ -22,7 +22,7 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-export const TeamsThemeComponent: () => JSX.Element = () => {
+export const Teams: () => JSX.Element = () => {
   return <TeamsTheme />;
 };
 
