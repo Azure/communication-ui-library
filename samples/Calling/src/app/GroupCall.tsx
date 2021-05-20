@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mediaGallerySelector, complianceBannerSelector } from '@azure/acs-calling-selector';
 import { AudioOptions, CallState, GroupLocator, MeetingLocator } from '@azure/communication-calling';
 import { Label, Overlay, Spinner, Stack } from '@fluentui/react';
 import { CallClientState, StatefulCallClient } from 'calling-stateful-client';
@@ -10,6 +9,8 @@ import { useCallAgent, useCallClient, useCall, useCallContext } from 'react-comp
 import { CommandPanel, CommandPanelTypes } from './CommandPanel';
 import { Header } from './Header';
 import { useAzureCommunicationHandlers } from './hooks/useAzureCommunicationHandlers';
+import { complianceBannerSelector } from './selectors/complianceBannerSelector';
+import { mediaGallerySelector } from './selectors/mediaGallerySelector';
 import { lobbySelector } from './selectors/lobbySelector';
 import { useSelector } from './hooks/useSelector';
 import { MediaGallery } from './MediaGallery';

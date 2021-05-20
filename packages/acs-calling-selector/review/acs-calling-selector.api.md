@@ -22,7 +22,6 @@ import { StatefulCallClient } from 'calling-stateful-client';
 import { StatefulDeviceManager } from 'calling-stateful-client';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
-import { VideoGalleryRemoteParticipant } from 'react-components';
 import { VideoStreamOptions } from 'react-components';
 
 // @public
@@ -37,15 +36,6 @@ export const cameraButtonSelector: reselect.OutputParametricSelector<CallClientS
 }, (res1: Call_2 | undefined, res2: DeviceManagerState) => {
     disabled: boolean;
     checked: boolean;
-}>;
-
-// @public (undocumented)
-export const complianceBannerSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
-    callTranscribeState: boolean | undefined;
-    callRecordState: boolean | undefined;
-}, (res: Call_2 | undefined) => {
-    callTranscribeState: boolean | undefined;
-    callRecordState: boolean | undefined;
 }>;
 
 // @public (undocumented)
@@ -127,20 +117,6 @@ export const getIncomingCalls: (state: CallClientState) => Map<string, IncomingC
 export const getIncomingCallsEnded: (state: CallClientState) => IncomingCall[];
 
 // @public (undocumented)
-export const localPreviewSelector: reselect.OutputSelector<CallClientState, {
-    videoStreamElement: HTMLElement | null;
-}, (res: DeviceManagerState) => {
-    videoStreamElement: HTMLElement | null;
-}>;
-
-// @public (undocumented)
-export const mediaGallerySelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
-    isVideoStreamOn: boolean;
-}, (res: Call_2 | undefined) => {
-    isVideoStreamOn: boolean;
-}>;
-
-// @public (undocumented)
 export const microphoneButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     disabled: boolean;
     checked: boolean;
@@ -180,37 +156,6 @@ export const screenShareButtonSelector: reselect.OutputParametricSelector<CallCl
     checked: boolean | undefined;
 }, (res: Call_2 | undefined) => {
     checked: boolean | undefined;
-}>;
-
-// @public (undocumented)
-export const videoGallerySelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
-    screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
-    localParticipant: {
-        userId: string;
-        displayName: string;
-        isMuted: boolean | undefined;
-        isScreenSharingOn: boolean | undefined;
-        videoStream: {
-            isAvailable: boolean;
-            isMirrored: boolean | undefined;
-            renderElement: HTMLElement | undefined;
-        };
-    };
-    remoteParticipants: VideoGalleryRemoteParticipant[];
-}, (res1: Call_2 | undefined, res2: string | undefined, res3: string) => {
-    screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
-    localParticipant: {
-        userId: string;
-        displayName: string;
-        isMuted: boolean | undefined;
-        isScreenSharingOn: boolean | undefined;
-        videoStream: {
-            isAvailable: boolean;
-            isMirrored: boolean | undefined;
-            renderElement: HTMLElement | undefined;
-        };
-    };
-    remoteParticipants: VideoGalleryRemoteParticipant[];
 }>;
 
 
