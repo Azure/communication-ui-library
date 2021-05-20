@@ -27,6 +27,17 @@ export const useSelectorWithAdaptation = <
 ): ReturnType<SelectorT> => {
   const adapter = useAdapter();
 
+  // Keeps track of whether the current component is mounted or not. If it has unmounted, make sure we do not modify the
+  // state or it will cause React warnings in the console. https://skype.visualstudio.com/SPOOL/_workitems/edit/2453212
+  const mounted = useRef(false);
+
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  });
+
   const callId = adapter.getState().call?.id;
   const callConfigProps = useMemo(
     () => ({
@@ -41,6 +52,9 @@ export const useSelectorWithAdaptation = <
 
   useEffect(() => {
     const onStateChange = (state: CallState): void => {
+      if (!mounted.current) {
+        return;
+      }
       const newProps = selector(adaptState(state), selectorProps ?? callConfigProps);
       if (propRef.current !== newProps) {
         setProps(newProps);
