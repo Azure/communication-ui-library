@@ -23,6 +23,7 @@ export default {
 } as Meta;
 
 export { BasicCanvas } from './snippets/BasicCanvas.snippet';
+export { ThemesCanvas } from './snippets/ThemesCanvas.snippet';
 
 const getDocs: () => JSX.Element = () => {
   return (
@@ -41,6 +42,7 @@ const getDocs: () => JSX.Element = () => {
         requires special handling, as the example code below shows.
       </Description>
       <Source code={containerText} />
+
       <Heading>Prerequisites</Heading>
       <Description>
         CallComposite provides the UI for an *existing user* in an *existing group*. The user and group must be created
@@ -48,6 +50,14 @@ const getDocs: () => JSX.Element = () => {
         application that then passes it to the CallComposite.
       </Description>
       <Source code={serverText} />
+
+      <Heading>Theming</Heading>
+      <Description>
+        CallComposite can be themed with Fluent UI themes, just like the base components. Look at the [CallComposite
+        themes canvas](./?path=/story/composites-call--themes-canvas) to see theming in action or the [overall theming
+        example](./?path=/docs/examples-themes--teams-theme-component) to see how theming works for all the components
+        in this UI library.
+      </Description>
     </>
   );
 };
