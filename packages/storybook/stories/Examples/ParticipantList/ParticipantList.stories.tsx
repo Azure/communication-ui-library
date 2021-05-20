@@ -67,21 +67,24 @@ const personaPresenceMap = {
 
 export const ParticipantListComponent: () => JSX.Element = () => {
   const remoteParticipantsKnob = text('Participants (comma separated)', 'Rick, Daryl, Michonne');
-  const remoteParticipantsArr = remoteParticipantsKnob
+  const participantsArr = remoteParticipantsKnob
     .split(',')
     .map((p) => p.trim())
     .filter((p) => p)
     .filter(onlyUnique);
-  const screenSharer = select('Screensharer', ['None', ...remoteParticipantsArr], 'screensharer');
+  participantsArr.push('me');
+
+  const screenSharer = select('Screensharer', ['None', ...participantsArr], 'screensharer');
   const presenceArr: string[] = [];
   const mutedFlags: boolean[] = [];
-  remoteParticipantsArr.forEach((p) => {
+  participantsArr.forEach((p) => {
     presenceArr.push(
       select('Presence of ' + p, ['None', 'Offline', 'Online', 'Away', 'DoNoDisturb', 'Blocked', 'Busy'], 'Online')
     );
     mutedFlags.push(boolean('Is ' + p + ' muted', false));
   });
-  const remoteParticipants = remoteParticipantsArr.map((p, i) => {
+
+  const participants = participantsArr.map((p, i) => {
     return {
       displayName: p,
       presence: personaPresenceMap[presenceArr[i]],
@@ -101,7 +104,7 @@ export const ParticipantListComponent: () => JSX.Element = () => {
     <Stack>
       <h1 style={headingStyle}>Participants</h1>
       <Stack style={stackStyle}>
-        {remoteParticipants.map((p) => {
+        {participants.map((p) => {
           const menuItems = [
             {
               key: 'mute',
@@ -120,6 +123,7 @@ export const ParticipantListComponent: () => JSX.Element = () => {
             <ParticipantItem
               key={`ParticipantItem' ${++reactItemKey}`}
               displayName={p.displayName}
+              me={'me' === p.displayName}
               presence={p.presence}
               onRenderIcon={() => (
                 <Stack horizontal={true} tokens={tokenProps}>

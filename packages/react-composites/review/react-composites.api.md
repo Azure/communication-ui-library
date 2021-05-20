@@ -18,7 +18,7 @@ import { ErrorInfo } from 'react';
 import type { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import type { PhoneNumberKind } from '@azure/communication-common';
 import { PlaceholderProps } from 'react-components';
-import { RemoteParticipant } from 'calling-stateful-client';
+import { RemoteParticipantState } from 'calling-stateful-client';
 import { StatefulCallClient } from 'calling-stateful-client';
 import { StatefulDeviceManager } from 'calling-stateful-client';
 import type { UnknownIdentifierKind } from '@azure/communication-common';
@@ -467,12 +467,12 @@ export type MessageSentListener = MessageReceivedListener;
 
 // @public (undocumented)
 export type ParticipantJoinedListener = (event: {
-    joined: RemoteParticipant[];
+    joined: RemoteParticipantState[];
 }) => void;
 
 // @public (undocumented)
 export type ParticipantLeftListener = (event: {
-    removed: RemoteParticipant[];
+    removed: RemoteParticipantState[];
 }) => void;
 
 // @public (undocumented)
