@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Fixed VideoTile label. Updated Teams theme story. Updated theme tool availability in storybook.",
+  "comment": "Fixed VideoTile label",
   "packageName": "react-components",
   "email": "miguelgamis@microsoft.com",
   "dependentChangeType": "patch"
