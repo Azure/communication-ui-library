@@ -9,14 +9,15 @@ import { Call } from 'calling-stateful-client';
 import { Call as Call_2 } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallClientOptions } from '@azure/communication-calling';
-import { ChatMessage } from '@azure/communication-chat';
-import { ChatParticipant } from '@azure/communication-chat';
+import type { ChatMessage } from '@azure/communication-chat';
+import type { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClientState } from 'chat-stateful-client';
 import type { CommunicationUserKind } from '@azure/communication-common';
 import { DeviceManagerState } from 'calling-stateful-client';
 import { ErrorInfo } from 'react';
 import type { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import type { PhoneNumberKind } from '@azure/communication-common';
+import { PlaceholderProps } from 'react-components';
 import { RemoteParticipant } from 'calling-stateful-client';
 import { StatefulCallClient } from 'calling-stateful-client';
 import { StatefulDeviceManager } from 'calling-stateful-client';
@@ -34,7 +35,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     getState(): CallState;
     // (undocumented)
-    joinCall(): Promise<void>;
+    joinCall(microphoneOn?: boolean): Promise<void>;
     // (undocumented)
     leaveCall(): Promise<void>;
     // (undocumented)
@@ -90,6 +91,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     setMicrophone(device: AudioDeviceInfo): Promise<void>;
     // (undocumented)
+    setPage: (page: CallCompositePage) => void;
+    // (undocumented)
     setSpeaker(device: AudioDeviceInfo): Promise<void>;
     // (undocumented)
     startCall(participants: string[]): Call_2 | undefined;
@@ -114,7 +117,7 @@ export interface CallAdapter {
     // (undocumented)
     getState(): CallState;
     // (undocumented)
-    joinCall(): Promise<void>;
+    joinCall(microphoneOn?: boolean): Promise<void>;
     // (undocumented)
     leaveCall(forEveryone?: boolean): Promise<void>;
     // (undocumented)
@@ -170,6 +173,8 @@ export interface CallAdapter {
     // (undocumented)
     setMicrophone(sourceId: AudioDeviceInfo): Promise<void>;
     // (undocumented)
+    setPage(page: CallCompositePage): void;
+    // (undocumented)
     setSpeaker(sourceId: AudioDeviceInfo): Promise<void>;
     // (undocumented)
     startCall(participants: string[]): Call_2 | undefined;
@@ -189,8 +194,12 @@ export interface CallAdapter {
 export const CallComposite: (props: CallCompositeProps) => JSX.Element;
 
 // @public (undocumented)
+export type CallCompositePage = 'configuration' | 'call';
+
+// @public (undocumented)
 export type CallCompositeProps = {
     adapter: CallAdapter;
+    onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
     onErrorCallback?: (error: CommunicationUiErrorInfo) => void;
 };
 
@@ -216,8 +225,8 @@ export type CallingClientState = {
 // @public (undocumented)
 export type CallingUIState = {
     error?: Error;
-    isMicrophoneEnabled: boolean;
-    page: 'configuration' | 'call';
+    isLocalPreviewMicrophoneEnabled: boolean;
+    page: CallCompositePage;
 };
 
 // @public (undocumented)
@@ -226,19 +235,43 @@ export type CallState = CallingUIState & CallingClientState;
 // @public (undocumented)
 export interface ChatAdapter {
     // (undocumented)
+    dispose(): void;
+    // (undocumented)
     fetchInitialData(): Promise<void>;
     // (undocumented)
     getState(): ChatState;
     // (undocumented)
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     // (undocumented)
+    off(event: 'messageReceived', listener: MessageReceivedListener): void;
+    // (undocumented)
+    off(event: 'messageSent', listener: MessageSentListener): void;
+    // (undocumented)
+    off(event: 'messageRead', listener: MessageReadListener): void;
+    // (undocumented)
+    off(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
+    // (undocumented)
+    off(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
+    // (undocumented)
+    off(event: 'topicChanged', listener: TopicChangedListener): void;
+    // (undocumented)
+    off(event: 'error', listener: (e: Error) => void): void;
+    // (undocumented)
     offStateChange(handler: (state: ChatState) => void): void;
     // (undocumented)
-    on(event: 'messageReceived', messageReceivedHandler: (message: ChatMessage) => void): void;
+    on(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
-    on(event: 'participantsJoined', participantsJoinedHandler: (participant: ChatParticipant) => void): void;
+    on(event: 'messageSent', listener: MessageSentListener): void;
     // (undocumented)
-    on(event: 'error', errorHandler: (e: Error) => void): void;
+    on(event: 'messageRead', listener: MessageReadListener): void;
+    // (undocumented)
+    on(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
+    // (undocumented)
+    on(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
+    // (undocumented)
+    on(event: 'topicChanged', listener: TopicChangedListener): void;
+    // (undocumented)
+    on(event: 'error', listener: (e: Error) => void): void;
     // (undocumented)
     onStateChange(handler: (state: ChatState) => void): void;
     // (undocumented)
@@ -264,7 +297,7 @@ export type ChatCompositeClientState = {
 };
 
 // @public (undocumented)
-export type ChatEvent = 'messageReceived' | 'participantsJoined' | 'error';
+export type ChatEvent = 'messageReceived' | 'messageSent' | 'messageRead' | 'participantsAdded' | 'participantsRemoved' | 'topicChanged' | 'error';
 
 // @public (undocumented)
 export type ChatOptions = {
@@ -419,6 +452,20 @@ export type IsSpeakingChangedListener = (event: {
 }) => void;
 
 // @public (undocumented)
+export type MessageReadListener = (event: {
+    message: ChatMessage;
+    readBy: CommunicationUserKind;
+}) => void;
+
+// @public (undocumented)
+export type MessageReceivedListener = (event: {
+    message: ChatMessage;
+}) => void;
+
+// @public (undocumented)
+export type MessageSentListener = MessageReceivedListener;
+
+// @public (undocumented)
 export type ParticipantJoinedListener = (event: {
     joined: RemoteParticipant[];
 }) => void;
@@ -426,6 +473,23 @@ export type ParticipantJoinedListener = (event: {
 // @public (undocumented)
 export type ParticipantLeftListener = (event: {
     removed: RemoteParticipant[];
+}) => void;
+
+// @public (undocumented)
+export type ParticipantsAddedListener = (event: {
+    participantsAdded: ChatParticipant[];
+    addedBy: ChatParticipant;
+}) => void;
+
+// @public (undocumented)
+export type ParticipantsRemovedListener = (event: {
+    participantsRemoved: ChatParticipant[];
+    removedBy: ChatParticipant;
+}) => void;
+
+// @public (undocumented)
+export type TopicChangedListener = (event: {
+    topic: string;
 }) => void;
 
 

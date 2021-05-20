@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "renamed disabledReadReceipt props to showMessageStatus",
+  "packageName": "@azure/acs-chat-selector",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "patch"
+}

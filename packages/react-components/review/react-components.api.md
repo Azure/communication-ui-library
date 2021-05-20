@@ -161,6 +161,20 @@ export type MessageProps = {
 export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
 
 // @public
+export const MessageStatusIndicator: (props: MessageStatusIndicatorProps) => JSX.Element;
+
+// @public
+export interface MessageStatusIndicatorProps {
+    deliveredTooltipText?: string;
+    failedToSendTooltipText?: string;
+    seenTooltipText?: string;
+    sendingTooltipText?: string;
+    size?: SizeValue;
+    status?: MessageStatus;
+    styles?: BaseCustomStylesProps;
+}
+
+// @public
 export const MessageThread: (props: MessageThreadProps) => JSX.Element;
 
 // @public
@@ -169,10 +183,10 @@ export type MessageThreadProps = {
     messages: (ChatMessage | SystemMessage | CustomMessage)[];
     styles?: MessageThreadStylesProps;
     disableJumpToNewMessageButton?: boolean;
-    disableReadReceipt?: boolean;
+    showMessageStatus?: boolean;
     numberOfChatMessagesToReload?: number;
     onMessageSeen?: (messageId: string) => Promise<void>;
-    onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element | null;
+    onRenderMessageStatus?: (messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null;
     onRenderAvatar?: (userId: string) => JSX.Element;
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
@@ -184,8 +198,8 @@ export interface MessageThreadStylesProps extends BaseCustomStylesProps {
     chatContainer?: ComponentSlotStyle;
     chatMessageContainer?: ComponentSlotStyle;
     loadPreviousMessagesButtonContainer?: IStyle;
+    messageStatusContainer?: (mine: boolean) => IStyle;
     newMessageButtonContainer?: IStyle;
-    readReceiptContainer?: (mine: boolean) => IStyle;
     systemMessageContainer?: ComponentSlotStyle;
 }
 
@@ -278,18 +292,11 @@ export type ParticipantListProps = {
     onParticipantRemove?: (userId: string) => void;
 };
 
-// @public
-export const ReadReceipt: (props: ReadReceiptProps) => JSX.Element;
-
-// @public
-export interface ReadReceiptProps {
-    deliveredTooltipText?: string;
-    failedToSendTooltipText?: string;
-    messageStatus?: MessageStatus;
-    seenTooltipText?: string;
-    sendingTooltipText?: string;
-    size?: SizeValue;
-    styles?: BaseCustomStylesProps;
+// @public (undocumented)
+export interface PlaceholderProps {
+    displayName?: string;
+    noVideoAvailableAriaLabel?: string;
+    userId?: string;
 }
 
 // @public
@@ -389,6 +396,8 @@ export interface VideoGalleryProps {
     // (undocumented)
     onDisposeLocalStreamView?: () => void;
     // (undocumented)
+    onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+    // (undocumented)
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     // (undocumented)
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
@@ -432,13 +441,11 @@ export interface VideoStreamOptions {
 export const VideoTile: (props: VideoTileProps) => JSX.Element;
 
 // @public
-export interface VideoTileProps {
+export interface VideoTileProps extends PlaceholderProps {
     children?: React_2.ReactNode;
-    displayName?: string;
     isMirrored?: boolean;
     isVideoReady?: boolean;
-    noVideoAvailableAriaLabel?: string;
-    placeholder?: JSX.Element | null;
+    onRenderPlaceholder?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element | null;
     renderElement?: JSX.Element | null;
     showDisplayName?: boolean;
     styles?: VideoTileStylesProps;
