@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Call, DeviceManagerState, RemoteParticipant } from 'calling-stateful-client';
+import { Call, DeviceManagerState, RemoteParticipantState } from 'calling-stateful-client';
 import { AudioDeviceInfo, VideoDeviceInfo, Call as SDKCall } from '@azure/communication-calling';
 import { VideoStreamOptions } from 'react-components';
 import type {
@@ -50,9 +50,9 @@ export type CallIdentifierKinds =
   | MicrosoftTeamsUserKind
   | UnknownIdentifierKind;
 
-export type ParticipantJoinedListener = (event: { joined: RemoteParticipant[] }) => void;
+export type ParticipantJoinedListener = (event: { joined: RemoteParticipantState[] }) => void;
 
-export type ParticipantLeftListener = (event: { removed: RemoteParticipant[] }) => void;
+export type ParticipantLeftListener = (event: { removed: RemoteParticipantState[] }) => void;
 
 export type IsMuteChangedListener = (event: { identifier: CallIdentifierKinds; isMuted: boolean }) => void;
 
