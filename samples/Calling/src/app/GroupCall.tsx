@@ -2,11 +2,11 @@
 // Licensed under the MIT license.
 
 import { mediaGallerySelector, complianceBannerSelector } from '@azure/acs-calling-selector';
-import { AudioOptions, CallState, GroupLocator, MeetingLocator } from '@azure/communication-calling';
+import { CallState, GroupLocator, MeetingLocator } from '@azure/communication-calling';
 import { Label, Overlay, Spinner, Stack } from '@fluentui/react';
 import { CallClientState, StatefulCallClient } from 'calling-stateful-client';
 import React, { useEffect, useState } from 'react';
-import { useCallAgent, useCallClient, useCall, useCallContext } from 'react-composites';
+import { useCallClient, useCall } from 'react-composites';
 import { CommandPanel, CommandPanelTypes } from './CommandPanel';
 import { Header } from './Header';
 import { lobbySelector } from './selectors/lobbySelector';
@@ -35,20 +35,17 @@ export interface GroupCallProps {
   isMicrophoneOn: boolean;
 }
 
-const spinnerLabel = 'Initializing call client...';
+const spinnerLabel = 'Joining the call...';
 
 export const GroupCall = (props: GroupCallProps): JSX.Element => {
   const [selectedPane, setSelectedPane] = useState(CommandPanelTypes.None);
-  const { callLocator, screenWidth, endCallHandler, callErrorHandler, isMicrophoneOn } = props;
+  const { callLocator, screenWidth, endCallHandler } = props;
 
-  const callAgent = useCallAgent();
-  const { setCall } = useCallContext();
   const call = useCall();
   const callClient: StatefulCallClient = useCallClient();
 
   const [callState, setCallState] = useState<CallState | undefined>(undefined);
   const [isScreenSharingOn, setIsScreenSharingOn] = useState<boolean | undefined>(undefined);
-  const [joinedCall, setJoinedCall] = useState<boolean>(false);
 
   const mediaGalleryProps = useSelector(mediaGallerySelector);
   const mediaGalleryHandlers = useHandlers(MediaGallery);
@@ -70,21 +67,6 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
       callClient.offStateChange(onStateChange);
     };
   }, [call?.id, callClient]);
-
-  useEffect(() => {
-    if (!isInCall(callState ?? 'None') && callAgent && !joinedCall) {
-      console.log('joining with callAgent: ', callAgent);
-      const audioOptions: AudioOptions = { muted: !isMicrophoneOn };
-      try {
-        const call = callAgent.join(callLocator as GroupLocator, { audioOptions });
-        setCall(call);
-        setJoinedCall(true);
-      } catch (error) {
-        console.log(error);
-        callErrorHandler();
-      }
-    }
-  }, [call?.callEndReason, callAgent, callErrorHandler, callLocator, callState, isMicrophoneOn, joinedCall, setCall]);
 
   if ('meetingLink' in callLocator) {
     if (callState && ['Connecting', 'Ringing', 'InLobby'].includes(callState)) {

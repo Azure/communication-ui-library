@@ -2,94 +2,28 @@
 // Licensed under the MIT license.
 
 import { CallAgent } from '@azure/communication-calling';
-// import { AbortSignalLike } from '@azure/core-http';
 import React, { createContext, useContext, useEffect, useState } from 'react';
-// import { CommunicationUiError, CommunicationUiErrorCode } from '../types/CommunicationUiError';
-// import { CommunicationUiError, CommunicationUiErrorCode } from '../types/CommunicationUiError';
 import { useValidContext } from '../utils';
-// import { useCallClient } from './CallClientProvider';
 
 export type CallAgentContextType = {
   callAgent: CallAgent | undefined;
-  // setCallAgent: Dispatch<SetStateAction<CallAgent | undefined>>;
 };
 
 export const CallAgentContext = createContext<CallAgentContextType | undefined>(undefined);
 
 interface CallAgentProviderProps {
   children: React.ReactNode;
-  // token: string;
-  // displayName: string;
-  // refreshTokenCallback?: (abortSignal?: AbortSignalLike) => Promise<string>;
   callAgent?: CallAgent;
 }
 
 const CallAgentProviderBase = (props: CallAgentProviderProps): JSX.Element => {
   const { callAgent: defaultCallAgent } = props;
 
-  // if there is no valid token then there is no valid userId
   const [callAgent, setCallAgent] = useState<CallAgent | undefined>(defaultCallAgent);
-  // const callAgentRef = useRef(callAgent);
-  // callAgentRef.current = callAgent;
 
   useEffect(() => {
     setCallAgent(defaultCallAgent);
-
-    // Clean up callAgent when new callAgent is passed in.
-    // This is required because callAgent itself is a singleton.
-    // We need to clean it up before creating another one.
-    // return () => {
-    //   callAgentRef.current?.dispose().catch((error) => {
-    //     throw new CommunicationUiError({
-    //       message: 'Error disposing call agent',
-    //       code: CommunicationUiErrorCode.DISPOSE_CALL_AGENT_ERROR,
-    //       error: error
-    //     });
-    //   });
-    // };
   }, [defaultCallAgent, setCallAgent]);
-  // const refreshTokenCallbackRefContainer = useRef(refreshTokenCallback);
-
-  // const callClient = useCallClient();
-
-  // // Update the state if the props change
-  // useEffect(() => {
-  //   refreshTokenCallbackRefContainer.current = refreshTokenCallback;
-  // }, [refreshTokenCallback]);
-
-  // /**
-  //  * Initialize the Call Agent and clean it up when the Context unmounts.
-  //  */
-  // useEffect(() => {
-  //   if (token && !callAgent) {
-  //     const userCredential = createAzureCommunicationUserCredential(token, refreshTokenCallbackRefContainer.current);
-  //     callClient
-  //       .createCallAgent(userCredential, { displayName: initialDisplayName })
-  //       .then((agent) => {
-  //         setCallAgent(agent);
-  //       })
-  //       .catch((error) => {
-  //         throw new CommunicationUiError({
-  //           message: 'Error creating call agent',
-  //           code: CommunicationUiErrorCode.CREATE_CALL_AGENT_ERROR,
-  //           error: error
-  //         });
-  //       });
-  //   }
-
-  //   // Clean up callAgent whenever the callAgent or userTokenCredential is changed.
-  //   // This is required because callAgent itself is a singleton.
-  //   // We need to clean it up before creating another one.
-  //   return () => {
-  //     callAgent?.dispose().catch((error) => {
-  //       throw new CommunicationUiError({
-  //         message: 'Error disposing call agent',
-  //         code: CommunicationUiErrorCode.DISPOSE_CALL_AGENT_ERROR,
-  //         error: error
-  //       });
-  //     });
-  //   };
-  // }, [callAgent, callClient, initialDisplayName, token]);
 
   const initialState: CallAgentContextType = {
     callAgent

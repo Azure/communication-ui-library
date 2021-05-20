@@ -30,7 +30,6 @@ const CallClientProviderBase = (props: CallClientProvider): JSX.Element => {
    * Update the statefulCallClient based on the new defaultStatefulCallClient
    */
   useEffect(() => {
-    console.log('setting call client');
     setStatefulCallClient(defaultStatefulCallClient);
   }, [defaultStatefulCallClient]);
 
@@ -38,7 +37,6 @@ const CallClientProviderBase = (props: CallClientProvider): JSX.Element => {
    * Initialize the DeviceManager inside CallClientState
    */
   useEffect(() => {
-    console.log('setting device manager');
     statefulCallClient
       .getDeviceManager()
       .then((manager) => {
