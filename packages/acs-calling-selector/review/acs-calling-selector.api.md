@@ -22,6 +22,7 @@ import { StatefulCallClient } from 'calling-stateful-client';
 import { StatefulDeviceManager } from 'calling-stateful-client';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
+import { VideoGalleryRemoteParticipant } from 'react-components';
 import { VideoStreamOptions } from 'react-components';
 
 // @public
@@ -156,6 +157,37 @@ export const screenShareButtonSelector: reselect.OutputParametricSelector<CallCl
     checked: boolean | undefined;
 }, (res: Call_2 | undefined) => {
     checked: boolean | undefined;
+}>;
+
+// @public (undocumented)
+export const videoGallerySelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
+    screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
+    localParticipant: {
+        userId: string;
+        displayName: string;
+        isMuted: boolean | undefined;
+        isScreenSharingOn: boolean | undefined;
+        videoStream: {
+            isAvailable: boolean;
+            isMirrored: boolean | undefined;
+            renderElement: HTMLElement | undefined;
+        };
+    };
+    remoteParticipants: VideoGalleryRemoteParticipant[];
+}, (res1: Call_2 | undefined, res2: string | undefined, res3: string) => {
+    screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
+    localParticipant: {
+        userId: string;
+        displayName: string;
+        isMuted: boolean | undefined;
+        isScreenSharingOn: boolean | undefined;
+        videoStream: {
+            isAvailable: boolean;
+            isMirrored: boolean | undefined;
+            renderElement: HTMLElement | undefined;
+        };
+    };
+    remoteParticipants: VideoGalleryRemoteParticipant[];
 }>;
 
 
