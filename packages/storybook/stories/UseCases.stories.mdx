@@ -13,25 +13,25 @@ To take full advantage of these capabilities we recommend using the UI Component
 
 ## Calling Use Cases
 
-| Area                | Use Cases                                              |
-| ------------------- | ------------------------------------------------------ |
-| Call Types          | Join Teams Meeting                                     |
-|                     | Join Azure Communication Services call with Group Id   |
-| [Teams Interop]     | Call Lobby                                             |
-|                     | Transcription and recording alert banner               |
-| Call Controls       | Mute/unmute call                                       |
-|                     | Video on/off on call                                   |
-|                     | Screen Sharing                                         |
-|                     | End call                                               |
-| Participant Gallery | Remote participants are displayed on grid              |
-|                     | Video preview available throughout call for local user |
-|                     | Default avatars available when video is off            |
-|                     | Shared screen content displayed on participant gallery |
-| Call configuration  | Microphone device management                           |
-|                     | Camera device management                               |
-|                     | Speaker device management                              |
-|                     | Local preview available for user to check video        |
-| Participants        | Participant roster                                     |
+| Area                                                                                            | Use Cases                                              |
+| ----------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| Call Types                                                                                      | Join Teams Meeting                                     |
+|                                                                                                 | Join Azure Communication Services call with Group Id   |
+| [Teams Interop](https://docs.microsoft.com/azure/communication-services/concepts/teams-interop) | Call Lobby                                             |
+|                                                                                                 | Transcription and recording alert banner               |
+| Call Controls                                                                                   | Mute/unmute call                                       |
+|                                                                                                 | Video on/off on call                                   |
+|                                                                                                 | Screen Sharing                                         |
+|                                                                                                 | End call                                               |
+| Participant Gallery                                                                             | Remote participants are displayed on grid              |
+|                                                                                                 | Video preview available throughout call for local user |
+|                                                                                                 | Default avatars available when video is off            |
+|                                                                                                 | Shared screen content displayed on participant gallery |
+| Call configuration                                                                              | Microphone device management                           |
+|                                                                                                 | Camera device management                               |
+|                                                                                                 | Speaker device management                              |
+|                                                                                                 | Local preview available for user to check video        |
+| Participants                                                                                    | Participant roster                                     |
 
 ## Chat Use Cases
 
@@ -54,13 +54,19 @@ For more information on authentication, see [Authentication](https://docs.micros
 
 ## Teams Interop Use Case
 
-For Teams Interop scenarios, developers can leverage UI Library Components to join Teams meetings through Azure Communication Services.
-To enable this, developers can either levarage calling and chat composites directly or use UI Components to build a custom experience.
+For [Teams Interop](https://docs.microsoft.com/azure/communication-services/concepts/teams-interop) scenarios, developers can leverage UI Library Components to join Teams meetings through Azure Communication Services.
+To enable this, developers can either leverage calling and chat composites directly or use UI Components to build a custom experience.
 When enabling applications with both calling and chat, its important to remember that the chat client can't be initialized until the participant has been admitted to the call.
 Once admitted, the chat client can be initialized to join the meeting chat thread.
 See the diagram below for guidance:
 
 ![Teams Interop pattern for calling and chat](images/teams-interop-pattern.png)
+
+When using UI Components to deliver Teams Interop experiences, UI Library provides examples for key pieces of the experience.
+For example:
+
+- [Lobby Example](/?path=/docs/examples-teams-interop--lobby): Sample lobby for participant to wait to be admitted to the call.
+- [Compliance banner](/?path=/docs/examples-teams-interop--compliance-banner): Sample banner to show the user whether the call is being recorded or not.
 
 ## Customization
 
