@@ -1,20 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { getTheme, mergeStyles } from '@fluentui/react';
+import { mergeStyles } from '@fluentui/react';
 
-const palette = getTheme().palette;
-
-export const TextFieldStyleProps = {
+export const textFieldStyle = {
   root: {
     width: '100%',
-    minHeight: '0px',
+    minHeight: '0',
     fontSize: '8.25rem'
   },
   wrapper: {},
   fieldGroup: {
     height: 'auto',
-    minHeight: '0px'
+    minHeight: '0',
+    borderRadius: '0.25rem'
   }
 };
 
@@ -50,17 +49,15 @@ export const sendBoxStyle = mergeStyles({
 export const sendButtonStyle = mergeStyles({
   width: '2.25rem',
   color: 'grey',
-  paddingLeft: '0.5rem',
+  right: '0.125rem',
   cursor: 'pointer',
   display: 'flex',
   justifyContent: 'center',
-  alignItems: 'center'
+  position: 'absolute',
+  top: '0.9375rem'
 });
 
-export const sendIconDiv = mergeStyles({
+export const sendIconStyle = mergeStyles({
   width: '1.0625rem',
-  height: '1.0625rem',
-  '#sendIconWrapper:hover &': {
-    color: palette.themePrimary
-  }
+  height: '1.0625rem'
 });
