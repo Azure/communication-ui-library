@@ -2,7 +2,13 @@
 // Licensed under the MIT license.
 
 import { CreateViewOptions, LocalVideoStream, VideoStreamRenderer } from '@azure/communication-calling';
-import { LocalVideoStream as StatefulLocalVideoStream, RemoteVideoStream } from './CallClientState';
+import {
+  CommunicationUserKind,
+  MicrosoftTeamsUserKind,
+  PhoneNumberKind,
+  UnknownIdentifierKind
+} from '@azure/communication-common';
+import { LocalVideoStreamState, RemoteVideoStreamState } from './CallClientState';
 import { CallContext } from './CallContext';
 import {
   convertSdkLocalStreamToDeclarativeLocalStream,
@@ -10,6 +16,7 @@ import {
   convertFromSDKToDeclarativeVideoStreamRendererView
 } from './Converter';
 import { InternalCallContext } from './InternalCallContext';
+import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 
 // TODO: How can we make this configurable?
 export const MAX_UNPARENTED_VIEWS_LENGTH = 10;
@@ -18,22 +25,37 @@ export async function createView(
   context: CallContext,
   internalContext: InternalCallContext,
   callId: string | undefined,
-  stream: StatefulLocalVideoStream | RemoteVideoStream,
+  participantId:
+    | CommunicationUserKind
+    | PhoneNumberKind
+    | MicrosoftTeamsUserKind
+    | UnknownIdentifierKind
+    | string
+    | undefined,
+  stream: LocalVideoStreamState | RemoteVideoStreamState,
   options?: CreateViewOptions
 ): Promise<void> {
-  if ('id' in stream && callId) {
+  if ('id' in stream && callId && participantId) {
     // Render RemoteVideoStream that is part of a Call
     const streamId = stream.id;
-    const remoteVideoStream = internalContext.getRemoteVideoStream(callId, streamId);
-    const participantKey = internalContext.getRemoteParticipantKey(callId, streamId);
-    const videoStreamRenderer = internalContext.getRemoteVideoStreamRenderer(callId, streamId);
+    let participantKey;
+    if (typeof participantId === 'string') {
+      participantKey = participantId;
+    } else {
+      participantKey = toFlatCommunicationIdentifier(participantId);
+    }
+    const remoteStreamAndRenderer = internalContext.getRemoteStreamAndRendererForParticipant(
+      callId,
+      participantKey,
+      streamId
+    );
 
-    if (!remoteVideoStream || !participantKey || videoStreamRenderer) {
+    if (!remoteStreamAndRenderer || remoteStreamAndRenderer.renderer) {
       // TODO: How to standarize all errors
-      throw new Error('RemoteVideoStream not found, RemoteParticipant not found, or Stream is already rendered');
+      throw new Error('RemoteVideoStream not found or Stream is already rendered');
     }
 
-    const renderer = new VideoStreamRenderer(remoteVideoStream);
+    const renderer = new VideoStreamRenderer(remoteStreamAndRenderer.stream);
     const view = await renderer.createView(options);
 
     context.setRemoteVideoStreamRendererView(
@@ -42,23 +64,28 @@ export async function createView(
       streamId,
       convertFromSDKToDeclarativeVideoStreamRendererView(view)
     );
-    internalContext.setRemoteVideoStreamRenderer(callId, streamId, renderer);
+    internalContext.setRemoteStreamAndRenderer(
+      callId,
+      participantKey,
+      streamId,
+      remoteStreamAndRenderer.stream,
+      renderer
+    );
   } else if (!('id' in stream) && callId) {
     // Render LocalVideoStream that is part of a Call
-    const localVideoStream = internalContext.getLocalVideoStream(callId);
-    const localVideoStreamRenderer = internalContext.getLocalVideoStreamRenderer(callId);
+    const localStreamAndRenderer = internalContext.getLocalStreamAndRenderer(callId);
 
-    if (!localVideoStream || localVideoStreamRenderer) {
+    if (!localStreamAndRenderer || localStreamAndRenderer.renderer) {
       // TODO: How to standarize all errors
       // throw new Error('LocalVideoStream not found or Stream is already rendered');
       return;
     }
 
-    const renderer = new VideoStreamRenderer(localVideoStream);
+    const renderer = new VideoStreamRenderer(localStreamAndRenderer.stream);
     const view = await renderer.createView(options);
 
     context.setLocalVideoStreamRendererView(callId, convertFromSDKToDeclarativeVideoStreamRendererView(view));
-    internalContext.setLocalVideoStreamRenderer(callId, renderer);
+    internalContext.setLocalStreamAndRenderer(callId, localStreamAndRenderer.stream, renderer);
   } else if (!('id' in stream) && !callId) {
     // Render LocalVideoStream that is not part of a Call
     if (context.getState().deviceManager.unparentedViews.length >= MAX_UNPARENTED_VIEWS_LENGTH) {
@@ -80,43 +107,60 @@ export function disposeView(
   context: CallContext,
   internalContext: InternalCallContext,
   callId: string | undefined,
-  stream: StatefulLocalVideoStream | RemoteVideoStream
+  participantId:
+    | CommunicationUserKind
+    | PhoneNumberKind
+    | MicrosoftTeamsUserKind
+    | UnknownIdentifierKind
+    | string
+    | undefined,
+  stream: LocalVideoStreamState | RemoteVideoStreamState
 ): void {
-  if ('id' in stream && callId) {
+  if ('id' in stream && callId && participantId) {
     // Stop rendering RemoteVideoStream that is part of a Call
     const streamId = stream.id;
-    const videoStreamRenderer = internalContext.getRemoteVideoStreamRenderer(callId, streamId);
+    let participantKey;
+    if (typeof participantId === 'string') {
+      participantKey = participantId;
+    } else {
+      participantKey = toFlatCommunicationIdentifier(participantId);
+    }
+    const remoteStreamAndRenderer = internalContext.getRemoteStreamAndRendererForParticipant(
+      callId,
+      participantKey,
+      streamId
+    );
 
-    if (!videoStreamRenderer) {
-      // TODO: How to standarize all errors
-      throw new Error('VideoStreamRenderer not found');
+    if (!remoteStreamAndRenderer || !remoteStreamAndRenderer.renderer) {
+      return;
     }
 
-    videoStreamRenderer.dispose();
+    remoteStreamAndRenderer.renderer.dispose();
 
-    const participantKey = internalContext.getRemoteParticipantKey(callId, streamId);
-    if (participantKey) {
-      context.setRemoteVideoStreamRendererView(callId, participantKey, streamId, undefined);
-    }
-    internalContext.removeRemoteVideoStreamRenderer(callId, streamId);
+    context.setRemoteVideoStreamRendererView(callId, participantKey, streamId, undefined);
+    internalContext.setRemoteStreamAndRenderer(
+      callId,
+      participantKey,
+      streamId,
+      remoteStreamAndRenderer.stream,
+      undefined
+    );
   } else if (!('id' in stream) && callId) {
     // Stop rendering LocalVideoStream that is part of a Call
-    const videoStreamRenderer = internalContext.getLocalVideoStreamRenderer(callId);
+    const localStreamAndRenderer = internalContext.getLocalStreamAndRenderer(callId);
 
-    if (!videoStreamRenderer) {
-      // TODO: How to standarize all errors
-      throw new Error('VideoStreamRenderer not found');
+    if (!localStreamAndRenderer || !localStreamAndRenderer.renderer) {
+      return;
     }
 
-    videoStreamRenderer.dispose();
+    localStreamAndRenderer.renderer.dispose();
     context.setLocalVideoStreamRendererView(callId, undefined);
-    internalContext.removeLocalVideoStreamRenderer(callId);
+    internalContext.setLocalStreamAndRenderer(callId, localStreamAndRenderer.stream, undefined);
   } else if (!('id' in stream) && !callId) {
     // Stop rendering LocalVideoStream that is not part of a Call
     const index = internalContext.findInUnparentedStreamAndRenderers(stream);
     if (index === -1) {
-      // TODO: How to standarize all errors
-      throw new Error('UnparentedStream not found');
+      return;
     }
 
     const unparentedRenderer = internalContext.getUnparentedStreamAndRenderer(index);
@@ -124,8 +168,7 @@ export function disposeView(
     context.removeDeviceManagerUnparentedView(index);
     internalContext.removeUnparentedStreamAndRenderer(index);
   } else {
-    // TODO: How to standarize all errors
-    throw new Error('Invalid combination of parameters');
+    return;
   }
 }
 
@@ -135,29 +178,39 @@ export function disposeAllViewsFromCall(
   internalContext: InternalCallContext,
   callId: string
 ): void {
-  const streams = internalContext.getRemoteVideoStreams(callId);
-  if (streams) {
-    for (const [streamId] of streams.entries()) {
-      const stream = internalContext.getRemoteVideoStream(callId, streamId);
-      if (stream) {
+  const callStreams = internalContext.getRemoteStreamAndRenderersForCall(callId);
+  if (callStreams) {
+    for (const [participantKey, participantStreams] of callStreams.entries()) {
+      for (const [_, remoteStreamAndRenderer] of participantStreams.entries()) {
         // We don't want to accept SDK stream as parameter but we also don't cache the declarative stream so we have to
         // convert the SDK stream to declarative stream which is not pretty so this could use some further refactoring.
-        disposeView(context, internalContext, callId, convertSdkRemoteStreamToDeclarativeRemoteStream(stream));
+        disposeView(
+          context,
+          internalContext,
+          callId,
+          participantKey,
+          convertSdkRemoteStreamToDeclarativeRemoteStream(remoteStreamAndRenderer.stream)
+        );
       }
     }
   }
-  // We don't want to accept SDK stream as parameter but we also don't cache the declarative stream so we have to
-  // convert the SDK stream to declarative stream which is not pretty so this could use some further refactoring.
-  const localVideoStream = internalContext.getLocalVideoStream(callId);
-  if (localVideoStream) {
-    disposeView(context, internalContext, callId, convertSdkLocalStreamToDeclarativeLocalStream(localVideoStream));
+  const localStreamAndRenderer = internalContext.getLocalStreamAndRenderer(callId);
+  if (localStreamAndRenderer && localStreamAndRenderer.renderer) {
+    // We don't want to accept SDK stream as parameter but we also don't cache the declarative stream so we have to
+    // convert the SDK stream to declarative stream which is not pretty so this could use some further refactoring.
+    disposeView(
+      context,
+      internalContext,
+      callId,
+      undefined,
+      convertSdkLocalStreamToDeclarativeLocalStream(localStreamAndRenderer.stream)
+    );
   }
 }
 
-// stops all videos from all calls
 export function disposeAllViews(context: CallContext, internalContext: InternalCallContext): void {
-  const remoteVideoStreams = internalContext.getRemoteVideoStreamsAll();
-  for (const [callId] of remoteVideoStreams) {
+  const remoteStreamAndRenderers = internalContext.getRemoteStreamAndRenderersAll();
+  for (const [callId] of remoteStreamAndRenderers.entries()) {
     disposeAllViewsFromCall(context, internalContext, callId);
   }
 }

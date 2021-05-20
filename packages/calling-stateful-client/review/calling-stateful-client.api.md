@@ -10,7 +10,7 @@ import { CallClientOptions } from '@azure/communication-calling';
 import { CallDirection } from '@azure/communication-calling';
 import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
-import { CallState as CallState_2 } from '@azure/communication-calling';
+import { CallState } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { CreateViewOptions } from '@azure/communication-calling';
@@ -20,12 +20,32 @@ import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { PhoneNumberKind } from '@azure/communication-common';
-import { RemoteParticipantState } from '@azure/communication-calling';
+import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
 import { ScalingMode } from '@azure/communication-calling';
 import { TransferErrorCode } from '@azure/communication-calling';
 import { TransferState } from '@azure/communication-calling';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
+
+// @public
+export interface Call {
+    callEndReason?: CallEndReason;
+    callerInfo: CallerInfo;
+    direction: CallDirection;
+    endTime: Date | undefined;
+    id: string;
+    isMuted: boolean;
+    isScreenSharingOn: boolean;
+    localVideoStreams: LocalVideoStreamState[];
+    recording: RecordingCallFeature;
+    remoteParticipants: Map<string, RemoteParticipantState>;
+    remoteParticipantsEnded: Map<string, RemoteParticipantState>;
+    screenShareRemoteParticipant: string | undefined;
+    startTime: Date;
+    state: CallState;
+    transcription: TranscriptionCallFeature;
+    transfer: TransferCallFeature;
+}
 
 // @public
 export interface CallAgentState {
@@ -35,32 +55,12 @@ export interface CallAgentState {
 // @public
 export interface CallClientState {
     callAgent: CallAgentState | undefined;
-    calls: Map<string, CallState>;
-    callsEnded: CallState[];
+    calls: Map<string, Call>;
+    callsEnded: Call[];
     deviceManager: DeviceManagerState;
-    incomingCalls: Map<string, IncomingCall>;
-    incomingCallsEnded: IncomingCall[];
+    incomingCalls: Map<string, IncomingCallState>;
+    incomingCallsEnded: IncomingCallState[];
     userId: string;
-}
-
-// @public
-export interface CallState {
-    callEndReason?: CallEndReason;
-    callerInfo: CallerInfo;
-    direction: CallDirection;
-    endTime: Date | undefined;
-    id: string;
-    isMuted: boolean;
-    isScreenSharingOn: boolean;
-    localVideoStreams: LocalVideoStream[];
-    recording: RecordingCallFeature;
-    remoteParticipants: Map<string, RemoteParticipant>;
-    remoteParticipantsEnded: Map<string, RemoteParticipant>;
-    screenShareRemoteParticipant: string | undefined;
-    startTime: Date;
-    state: CallState_2;
-    transcription: TranscriptionCallFeature;
-    transfer: TransferCallFeature;
 }
 
 // @public
@@ -76,11 +76,11 @@ export type DeviceManagerState = {
     microphones: AudioDeviceInfo[];
     speakers: AudioDeviceInfo[];
     deviceAccess?: DeviceAccess;
-    unparentedViews: VideoStreamRendererView[];
+    unparentedViews: VideoStreamRendererViewState[];
 };
 
 // @public
-export interface IncomingCall {
+export interface IncomingCallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
     endTime: Date | undefined;
@@ -89,10 +89,10 @@ export interface IncomingCall {
 }
 
 // @public
-export interface LocalVideoStream {
+export interface LocalVideoStreamState {
     mediaStreamType: MediaStreamType;
     source: VideoDeviceInfo;
-    videoStreamRendererView?: VideoStreamRendererView | undefined;
+    videoStreamRendererView?: VideoStreamRendererViewState | undefined;
 }
 
 // @public
@@ -101,28 +101,28 @@ export interface RecordingCallFeature {
 }
 
 // @public
-export interface RemoteParticipant {
+export interface RemoteParticipantState {
     callEndReason?: CallEndReason;
     displayName?: string;
     identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind;
     isMuted: boolean;
     isSpeaking: boolean;
-    state: RemoteParticipantState;
-    videoStreams: Map<number, RemoteVideoStream>;
+    state: RemoteParticipantState_2;
+    videoStreams: Map<number, RemoteVideoStreamState>;
 }
 
 // @public
-export interface RemoteVideoStream {
+export interface RemoteVideoStreamState {
     id: number;
     isAvailable: boolean;
     mediaStreamType: MediaStreamType;
-    videoStreamRendererView: VideoStreamRendererView | undefined;
+    videoStreamRendererView: VideoStreamRendererViewState | undefined;
 }
 
 // @public
 export interface StatefulCallClient extends CallClient {
-    createView(callId: string | undefined, stream: LocalVideoStream | RemoteVideoStream, options?: CreateViewOptions): Promise<void>;
-    disposeView(callId: string | undefined, stream: LocalVideoStream | RemoteVideoStream): void;
+    createView(callId: string | undefined, participantId: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<void>;
+    disposeView(callId: string | undefined, participantId: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
     getState(): CallClientState;
     offStateChange(handler: (state: CallClientState) => void): void;
     onStateChange(handler: (state: CallClientState) => void): void;
@@ -168,7 +168,7 @@ export interface TransferRequest {
 }
 
 // @public
-export interface VideoStreamRendererView {
+export interface VideoStreamRendererViewState {
     isMirrored: boolean;
     scalingMode: ScalingMode;
     target: HTMLElement;

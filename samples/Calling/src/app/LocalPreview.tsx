@@ -8,7 +8,20 @@ import { localPreviewContainerStyle, cameraOffLabelStyle, localPreviewTileStyle 
 import { CameraButton, ControlBar, MicrophoneButton, StreamMedia, VideoTile } from 'react-components';
 import { useSelector } from './hooks/useSelector';
 import { usePropsFor } from './hooks/usePropsFor';
-import { localPreviewSelector } from '@azure/acs-calling-selector';
+import { localPreviewSelector } from './selectors/localPreviewSelector';
+
+const onRenderPlaceholder = (): JSX.Element => {
+  return (
+    <Stack style={{ width: '100%', height: '100%' }} verticalAlign="center">
+      <Stack.Item align="center">
+        <CallVideoOffIcon />
+      </Stack.Item>
+      <Stack.Item align="center">
+        <Text className={cameraOffLabelStyle}>Your camera is turned off.</Text>
+      </Stack.Item>
+    </Stack>
+  );
+};
 
 export interface LocalPreviewProps {
   isMicrophoneOn: boolean;
@@ -25,17 +38,8 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
         styles={localPreviewTileStyle}
         isVideoReady={!!localPreviewProps.videoStreamElement}
         renderElement={<StreamMedia videoStreamElement={localPreviewProps.videoStreamElement} />}
+        onRenderPlaceholder={onRenderPlaceholder}
         isMirrored={true}
-        placeholder={
-          <Stack style={{ width: '100%', height: '100%' }} verticalAlign="center">
-            <Stack.Item align="center">
-              <CallVideoOffIcon />
-            </Stack.Item>
-            <Stack.Item align="center">
-              <Text className={cameraOffLabelStyle}>Your camera is turned off</Text>
-            </Stack.Item>
-          </Stack>
-        }
       >
         <ControlBar layout="floatingBottom">
           <CameraButton {...cameraButtonProps} />

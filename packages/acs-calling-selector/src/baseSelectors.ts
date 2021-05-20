@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallState, CallClientState, DeviceManagerState, IncomingCall } from 'calling-stateful-client';
+import { CallState, CallClientState, DeviceManagerState, IncomingCallState } from 'calling-stateful-client';
 
 /**
  * Common props used to reference calling declarative client state.
@@ -14,9 +14,9 @@ export const getCalls = (state: CallClientState): Map<string, CallState> => stat
 
 export const getCallsEnded = (state: CallClientState): CallState[] => state.callsEnded;
 
-export const getIncomingCalls = (state: CallClientState): Map<string, IncomingCall> => state.incomingCalls;
+export const getIncomingCalls = (state: CallClientState): Map<string, IncomingCallState> => state.incomingCalls;
 
-export const getIncomingCallsEnded = (state: CallClientState): IncomingCall[] => state.incomingCallsEnded;
+export const getIncomingCallsEnded = (state: CallClientState): IncomingCallState[] => state.incomingCallsEnded;
 
 export const getDeviceManager = (state: CallClientState): DeviceManagerState => state.deviceManager;
 

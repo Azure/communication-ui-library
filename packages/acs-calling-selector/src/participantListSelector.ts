@@ -3,7 +3,7 @@
 
 import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 // @ts-ignore
-import { RemoteParticipant, CallClientState, CallState } from 'calling-stateful-client';
+import { RemoteParticipantState, CallClientState, CallState } from 'calling-stateful-client';
 // @ts-ignore
 import * as reselect from 'reselect';
 // @ts-ignore
@@ -12,9 +12,9 @@ import { getCall, getIdentifier, getDisplayName } from './baseSelectors';
 import { CallParticipant } from 'react-components';
 
 const convertRemoteParticipantsToCommunicationParticipants = (
-  remoteParticipants: RemoteParticipant[]
+  remoteParticipants: RemoteParticipantState[]
 ): CallParticipant[] => {
-  return remoteParticipants.map((participant: RemoteParticipant) => {
+  return remoteParticipants.map((participant: RemoteParticipantState) => {
     const isScreenSharing = Array.from(participant.videoStreams.values()).some(
       (videoStream) => videoStream.mediaStreamType === 'ScreenSharing' && videoStream.isAvailable
     );

@@ -1,16 +1,18 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mediaGallerySelector, complianceBannerSelector } from '@azure/acs-calling-selector';
 import { AudioOptions, CallState, GroupLocator, MeetingLocator } from '@azure/communication-calling';
 import { Label, Overlay, Spinner, Stack } from '@fluentui/react';
+import { VideoStreamOptions } from 'react-components';
 import { CallClientState, StatefulCallClient } from 'calling-stateful-client';
 import React, { useEffect, useState } from 'react';
 import { useCallAgent, useCallClient, useCall, useCallContext } from 'react-composites';
 import { CommandPanel, CommandPanelTypes } from './CommandPanel';
 import { Header } from './Header';
+import { useAzureCommunicationHandlers } from './hooks/useAzureCommunicationHandlers';
+import { complianceBannerSelector } from './selectors/complianceBannerSelector';
+import { mediaGallerySelector } from './selectors/mediaGallerySelector';
 import { lobbySelector } from './selectors/lobbySelector';
-import { useHandlers } from './hooks/useHandlers';
 import { useSelector } from './hooks/useSelector';
 import { MediaGallery } from './MediaGallery';
 import {
@@ -26,6 +28,7 @@ import { isInCall } from './utils/AppUtils';
 import { MINI_HEADER_WINDOW_WIDTH } from './utils/constants';
 import { Lobby } from './Lobby';
 import { ComplianceBanner } from './ComplianceBanner';
+import { useHandlers } from './hooks/useHandlers';
 
 export interface GroupCallProps {
   screenWidth: number;
@@ -36,6 +39,11 @@ export interface GroupCallProps {
 }
 
 const spinnerLabel = 'Initializing call client...';
+
+const localVideoViewOption = {
+  scalingMode: 'Crop',
+  isMirrored: true
+} as VideoStreamOptions;
 
 export const GroupCall = (props: GroupCallProps): JSX.Element => {
   const [selectedPane, setSelectedPane] = useState(CommandPanelTypes.None);
@@ -51,7 +59,7 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
   const [joinedCall, setJoinedCall] = useState<boolean>(false);
 
   const mediaGalleryProps = useSelector(mediaGallerySelector);
-  const mediaGalleryHandlers = useHandlers(MediaGallery);
+  const handlers = useAzureCommunicationHandlers();
 
   const lobbyProps = useSelector(lobbySelector);
   const lobbyHandlers = useHandlers(Lobby);
@@ -87,7 +95,16 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
 
   if ('meetingLink' in callLocator) {
     if (callState && ['Connecting', 'Ringing', 'InLobby'].includes(callState)) {
-      return <Lobby callState={callState} {...lobbyProps} {...lobbyHandlers} onEndCallClick={endCallHandler} />;
+      return (
+        <Lobby
+          callState={callState}
+          {...lobbyProps}
+          {...lobbyHandlers}
+          onEndCallClick={endCallHandler}
+          isMicrophoneChecked={isMicrophoneOn}
+          localVideoViewOption={localVideoViewOption}
+        />
+      );
     }
   }
 
@@ -111,7 +128,7 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
               callState === 'Connected' && (
                 <>
                   <Stack.Item grow styles={activeContainerClassName}>
-                    <MediaGallery {...mediaGalleryProps} {...mediaGalleryHandlers} />
+                    <MediaGallery {...mediaGalleryProps} onStartLocalVideo={handlers.onStartLocalVideo} />
                   </Stack.Item>
                   {selectedPane !== CommandPanelTypes.None &&
                     (window.innerWidth > MINI_HEADER_WINDOW_WIDTH ? (

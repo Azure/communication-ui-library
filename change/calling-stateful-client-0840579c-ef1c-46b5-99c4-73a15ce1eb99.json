@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Wrap all sources of Call in StatefulCall",
+  "packageName": "calling-stateful-client",
+  "email": "allenhwang@microsoft.com",
+  "dependentChangeType": "patch"
+}

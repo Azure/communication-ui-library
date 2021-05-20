@@ -15,11 +15,11 @@ import { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/commu
 import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import {
   CallState,
-  RemoteParticipant as DeclarativeRemoteParticipant,
-  RemoteVideoStream as DeclarativeRemoteVideoStream,
-  LocalVideoStream as DeclarativeLocalVideoStream,
-  IncomingCall as DeclarativeIncomingCall,
-  VideoStreamRendererView as DeclarativeVideoStreamRendererView,
+  RemoteParticipantState as DeclarativeRemoteParticipant,
+  RemoteVideoStreamState as DeclarativeRemoteVideoStream,
+  LocalVideoStreamState as DeclarativeLocalVideoStream,
+  IncomingCallState as DeclarativeIncomingCall,
+  VideoStreamRendererViewState as DeclarativeVideoStreamRendererView,
   TransferRequest,
   Transfer as DeclarativeTransfer
 } from './CallClientState';

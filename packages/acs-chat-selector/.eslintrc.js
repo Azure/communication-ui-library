@@ -63,7 +63,8 @@ module.exports = {
         'chatHeaderSelector.ts',
         'typingIndicatorSelector.ts',
         'useHandlers.ts',
-        'usePropsFor.ts'
+        'usePropsFor.ts',
+        'createHandlers.ts'
       ],
       rules: {
         '@typescript-eslint/ban-ts-comment': 'off',

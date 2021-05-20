@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallState, DeviceManagerState, RemoteParticipant } from 'calling-stateful-client';
+import { CallState, DeviceManagerState, RemoteParticipantState } from 'calling-stateful-client';
 import { AudioDeviceInfo, VideoDeviceInfo, Call } from '@azure/communication-calling';
 import { VideoStreamOptions } from 'react-components';
 import type {
@@ -11,11 +11,13 @@ import type {
   UnknownIdentifierKind
 } from '@azure/communication-common';
 
+export type CallCompositePage = 'configuration' | 'call';
+
 export type CallAdapterUiState = {
   // Self-contained state for composite
   error?: Error;
-  isMicrophoneEnabled: boolean;
-  page: 'configuration' | 'call';
+  isLocalPreviewMicrophoneEnabled: boolean;
+  page: CallCompositePage;
 };
 
 export type CallAdapterClientState = {
@@ -48,9 +50,9 @@ export type CallIdentifierKinds =
   | MicrosoftTeamsUserKind
   | UnknownIdentifierKind;
 
-export type ParticipantJoinedListener = (event: { joined: RemoteParticipant[] }) => void;
+export type ParticipantJoinedListener = (event: { joined: RemoteParticipantState[] }) => void;
 
-export type ParticipantLeftListener = (event: { removed: RemoteParticipant[] }) => void;
+export type ParticipantLeftListener = (event: { removed: RemoteParticipantState[] }) => void;
 
 export type IsMuteChangedListener = (event: { identifier: CallIdentifierKinds; isMuted: boolean }) => void;
 
@@ -71,7 +73,7 @@ export interface CallAdapter {
 
   dispose(): void;
 
-  joinCall(): Promise<void>;
+  joinCall(microphoneOn?: boolean): Promise<void>;
 
   leaveCall(forEveryone?: boolean): Promise<void>;
 
@@ -104,6 +106,8 @@ export interface CallAdapter {
   stopScreenShare(): Promise<void>;
 
   removeParticipant(userId: string): Promise<void>;
+
+  setPage(page: CallCompositePage): void;
 
   createStreamView(userId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
 
