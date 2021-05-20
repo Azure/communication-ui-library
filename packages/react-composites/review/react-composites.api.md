@@ -41,37 +41,41 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     mute(): Promise<void>;
     // (undocumented)
-    off(event: 'participantsJoined', participantsJoinedHandler: ParticipantJoinedListener): void;
+    off(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
     // (undocumented)
-    off(event: 'participantsLeft', participantsLeftHandler: ParticipantLeftListener): void;
+    off(event: 'participantsLeft', listener: ParticipantLeftListener): void;
     // (undocumented)
-    off(event: 'isMutedChanged', isMuteChangedListener: IsMuteChangedListener): void;
+    off(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
     // (undocumented)
-    off(event: 'callIdChanged', callIdChangedListener: CallIdChangedListener): void;
+    off(event: 'callIdChanged', listener: CallIdChangedListener): void;
     // (undocumented)
-    off(event: 'isLocalScreenSharingActiveChanged', isScreenSharingOnChangedListener: IsScreenSharingOnChangedListener): void;
+    off(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
     // (undocumented)
-    off(event: 'displayNameChanged', displaynameChangedListener: DisplaynameChangedListener): void;
+    off(event: 'displayNameChanged', listener: DisplaynameChangedListener): void;
     // (undocumented)
-    off(event: 'isSpeakingChanged', isSpeakingChangedListener: IsSpeakingChangedListener): void;
+    off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
+    // (undocumented)
+    off(event: 'leaveCall', listener: LeaveCallListner): void;
     // (undocumented)
     off(event: 'error', errorHandler: (e: Error) => void): void;
     // (undocumented)
     offStateChange(handler: (state: CallState) => void): void;
     // (undocumented)
-    on(event: 'participantsJoined', participantsJoinedListener: ParticipantJoinedListener): void;
+    on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
     // (undocumented)
-    on(event: 'participantsLeft', participantLeftListener: ParticipantLeftListener): void;
+    on(event: 'participantsLeft', listener: ParticipantLeftListener): void;
     // (undocumented)
-    on(event: 'isMutedChanged', isMuteChangedListener: IsMuteChangedListener): void;
+    on(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
     // (undocumented)
-    on(event: 'callIdChanged', callIdChangedListener: CallIdChangedListener): void;
+    on(event: 'callIdChanged', listener: CallIdChangedListener): void;
     // (undocumented)
-    on(event: 'isLocalScreenSharingActiveChanged', isScreenSharingOnChangedListener: IsScreenSharingOnChangedListener): void;
+    on(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
     // (undocumented)
-    on(event: 'displayNameChanged', displaynameChangedListener: DisplaynameChangedListener): void;
+    on(event: 'displayNameChanged', listener: DisplaynameChangedListener): void;
     // (undocumented)
-    on(event: 'isSpeakingChanged', isSpeakingChangedListener: IsSpeakingChangedListener): void;
+    on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
+    // (undocumented)
+    on(event: 'leaveCall', listener: LeaveCallListner): void;
     // (undocumented)
     on(event: 'error', errorHandler: (e: Error) => void): void;
     // (undocumented)
@@ -123,39 +127,43 @@ export interface CallAdapter {
     // (undocumented)
     mute(): Promise<void>;
     // (undocumented)
-    off(event: 'participantsJoined', participantsJoinedHandler: ParticipantJoinedListener): void;
+    off(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
     // (undocumented)
-    off(event: 'participantsLeft', participantsLeftHandler: ParticipantLeftListener): void;
+    off(event: 'participantsLeft', listener: ParticipantLeftListener): void;
     // (undocumented)
-    off(event: 'isMutedChanged', isMuteChanged: IsMuteChangedListener): void;
+    off(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
     // (undocumented)
-    off(event: 'callIdChanged', idChangedListner: CallIdChangedListener): void;
+    off(event: 'callIdChanged', listener: CallIdChangedListener): void;
     // (undocumented)
-    off(event: 'isLocalScreenSharingActiveChanged', participantsJoinedHandler: IsScreenSharingOnChangedListener): void;
+    off(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
     // (undocumented)
-    off(event: 'displayNameChanged', participantsJoinedHandler: DisplaynameChangedListener): void;
+    off(event: 'displayNameChanged', listener: DisplaynameChangedListener): void;
     // (undocumented)
-    off(event: 'isSpeakingChanged', participantsJoinedHandler: IsSpeakingChangedListener): void;
+    off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
     // (undocumented)
-    off(event: 'error', errorHandler: (e: Error) => void): void;
+    off(event: 'leaveCall', listener: LeaveCallListner): void;
+    // (undocumented)
+    off(event: 'error', listener: (e: Error) => void): void;
     // (undocumented)
     offStateChange(handler: (state: CallState) => void): void;
     // (undocumented)
-    on(event: 'participantsJoined', participantsJoinedHandler: ParticipantJoinedListener): void;
+    on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
     // (undocumented)
-    on(event: 'participantsLeft', participantsLeftHandler: ParticipantLeftListener): void;
+    on(event: 'participantsLeft', listener: ParticipantLeftListener): void;
     // (undocumented)
-    on(event: 'isMutedChanged', isMuteChanged: IsMuteChangedListener): void;
+    on(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
     // (undocumented)
-    on(event: 'callIdChanged', idChangedListner: CallIdChangedListener): void;
+    on(event: 'callIdChanged', listener: CallIdChangedListener): void;
     // (undocumented)
-    on(event: 'isLocalScreenSharingActiveChanged', participantsJoinedHandler: IsScreenSharingOnChangedListener): void;
+    on(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
     // (undocumented)
-    on(event: 'displayNameChanged', participantsJoinedHandler: DisplaynameChangedListener): void;
+    on(event: 'displayNameChanged', listener: DisplaynameChangedListener): void;
     // (undocumented)
-    on(event: 'isSpeakingChanged', participantsJoinedHandler: IsSpeakingChangedListener): void;
+    on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
     // (undocumented)
-    on(event: 'error', errorHandler: (e: Error) => void): void;
+    on(event: 'leaveCall', listener: LeaveCallListner): void;
+    // (undocumented)
+    on(event: 'error', listener: (e: Error) => void): void;
     // (undocumented)
     onStateChange(handler: (state: CallState) => void): void;
     // (undocumented)
@@ -204,7 +212,7 @@ export type CallCompositeProps = {
 };
 
 // @public (undocumented)
-export type CallEvent = 'participantsJoined' | 'participantsLeft' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'error';
+export type CallEvent = 'participantsJoined' | 'participantsLeft' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'leaveCall' | 'error';
 
 // @public (undocumented)
 export type CallIdChangedListener = (event: {
@@ -449,6 +457,11 @@ export type IsScreenSharingOnChangedListener = (event: {
 export type IsSpeakingChangedListener = (event: {
     identifier: CallIdentifierKinds;
     isSpeaking: boolean;
+}) => void;
+
+// @public (undocumented)
+export type LeaveCallListner = (event: {
+    callId: string;
 }) => void;
 
 // @public (undocumented)
