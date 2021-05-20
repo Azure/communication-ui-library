@@ -8,7 +8,7 @@ export type { CommunicationUiErrorArgs, CommunicationUiErrorInfo, CommunicationU
 // TODO: remove this once the samples use entirely stateful architecture
 export * from './consumers';
 export * from './providers';
-export { WithErrorHandling, propagateError } from './utils';
+export { WithErrorHandling, propagateError, getIdFromToken, createAzureCommunicationUserCredential } from './utils';
 export {
   CommunicationUiError,
   CommunicationUiErrorCode,

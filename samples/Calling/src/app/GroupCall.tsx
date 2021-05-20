@@ -73,6 +73,7 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
 
   useEffect(() => {
     if (!isInCall(callState ?? 'None') && callAgent && !joinedCall) {
+      console.log('joining with callAgent: ', callAgent);
       const audioOptions: AudioOptions = { muted: !isMicrophoneOn };
       try {
         const call = callAgent.join(callLocator as GroupLocator, { audioOptions });

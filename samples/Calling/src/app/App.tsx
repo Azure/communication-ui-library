@@ -10,7 +10,13 @@ import { ConfigurationScreen } from './ConfigurationScreen';
 import { GroupCall } from './GroupCall';
 import { HomeScreen } from './HomeScreen';
 import { v1 as createGUID } from 'uuid';
-import { CallProvider, CallClientProvider, CallAgentProvider } from 'react-composites';
+import {
+  CallProvider,
+  CallClientProvider,
+  CallAgentProvider,
+  CommunicationUiError,
+  CommunicationUiErrorCode
+} from 'react-composites';
 import {
   createRandomDisplayName,
   fetchTokenResponse,
@@ -20,8 +26,12 @@ import {
   isOnIphoneAndNotSafari,
   isSmallScreen
 } from './utils/AppUtils';
-import { refreshTokenAsync } from './utils/refreshToken';
 import { localStorageAvailable } from './utils/constants';
+import { createStatefulCallClient, StatefulCallClient } from 'calling-stateful-client';
+import { getIdFromToken, createAzureCommunicationUserCredential } from 'react-composites';
+import { CallAgent } from '@azure/communication-calling';
+import { refreshTokenAsync } from './utils/refreshToken';
+// import { createAzureCommunicationUserCredential } from 'react-composites/dist/dist-esm/utils';
 
 const isMobileSession = (): boolean =>
   !!window.navigator.userAgent.match(/(iPad|iPhone|iPod|Android|webOS|BlackBerry|Windows Phone)/g);
@@ -47,6 +57,26 @@ const UnsupportedBrowserPage = (): JSX.Element => {
   );
 };
 
+const createCallAgent = async (
+  statefulCallClient: StatefulCallClient,
+  token: string,
+  displayName: string,
+  userId: string,
+  setCallAgent: React.Dispatch<React.SetStateAction<CallAgent | undefined>>
+): Promise<void> => {
+  const userCredential = createAzureCommunicationUserCredential(token, refreshTokenAsync(userId));
+  try {
+    setCallAgent(await statefulCallClient.createCallAgent(userCredential, { displayName: displayName }));
+    console.log('created new call Agent');
+  } catch (error) {
+    throw new CommunicationUiError({
+      message: 'Error creating call agent',
+      code: CommunicationUiErrorCode.CREATE_CALL_AGENT_ERROR,
+      error: error
+    });
+  }
+};
+
 const App = (): JSX.Element => {
   const [page, setPage] = useState('home');
   const [groupId, setGroupId] = useState('');
@@ -56,6 +86,8 @@ const App = (): JSX.Element => {
   const [teamsMeetingLink, setTeamsMeetingLink] = useState<string>();
   const [displayName, setDisplayName] = useState(defaultDisplayName);
   const [isMicrophoneOn, setIsMicrophoneOn] = useState(false);
+  const [statefulCallClient, setStatefulCallClient] = useState<StatefulCallClient>();
+  const [callAgent, setCallAgent] = useState<CallAgent | undefined>(undefined);
 
   useEffect(() => {
     const setWindowWidth = (): void => {
@@ -74,6 +106,14 @@ const App = (): JSX.Element => {
       setUserId(tokenResponse.user.communicationUserId);
     })();
   }, []);
+
+  useEffect(() => {
+    // if there is no valid token then there is no valid userId
+    const userIdFromToken = token ? getIdFromToken(token) : '';
+    setStatefulCallClient(createStatefulCallClient({ userId: userIdFromToken }));
+  }, [token]);
+
+  // const callAgent = createCallAgent(statefulCallClient, token, displayName, userId);
 
   const getGroupId = (): string => {
     if (groupId) return groupId;
@@ -98,11 +138,17 @@ const App = (): JSX.Element => {
           <ConfigurationScreen
             displayName={displayName}
             screenWidth={screenWidth}
-            startCallHandler={(data): void => {
+            startCallHandler={async (data) => {
               if (data?.callLocator && 'meetingLink' in data?.callLocator) {
                 setTeamsMeetingLink(data?.callLocator.meetingLink);
               }
-              setPage('call');
+              console.log('disposing', callAgent);
+              await callAgent?.dispose();
+              statefulCallClient &&
+                (await createCallAgent(statefulCallClient, token, displayName, userId, setCallAgent));
+              setTimeout(async () => {
+                setPage('call');
+              }, 5000);
             }}
             onDisplayNameUpdate={setDisplayName}
             isMicrophoneOn={isMicrophoneOn}
@@ -111,8 +157,8 @@ const App = (): JSX.Element => {
         );
       case 'call':
         return (
-          <CallAgentProvider displayName={displayName} token={token}>
-            <CallProvider>
+          <CallAgentProvider callAgent={callAgent} key={Math.random()}>
+            <CallProvider key={Math.random()}>
               <GroupCall
                 endCallHandler={(): void => {
                   setPage('endCall');
@@ -144,6 +190,8 @@ const App = (): JSX.Element => {
     const supportedBrowser = !isOnIphoneAndNotSafari();
     if (!supportedBrowser) return UnsupportedBrowserPage();
 
+    if (!statefulCallClient) return <></>;
+
     if (getGroupIdFromUrl() && page === 'home') {
       setPage('configuration');
     }
@@ -163,11 +211,7 @@ const App = (): JSX.Element => {
         return <CallError rejoinHandler={() => setPage('configuration')} homeHandler={navigateToHomePage} />;
       }
       default:
-        return (
-          <CallClientProvider token={token} refreshTokenCallback={refreshTokenAsync(userId)}>
-            {renderPage(page)}
-          </CallClientProvider>
-        );
+        return <CallClientProvider statefulCallClient={statefulCallClient}>{renderPage(page)}</CallClientProvider>;
     }
   };
 

@@ -1,51 +1,45 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallClientOptions } from '@azure/communication-calling';
-import { AbortSignalLike } from '@azure/core-http';
-import { createStatefulCallClient, StatefulCallClient, StatefulDeviceManager } from 'calling-stateful-client';
-import React, { createContext, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+// import { CallClientOptions } from '@azure/communication-calling';
+// import { AbortSignalLike } from '@azure/core-http';
+import { StatefulCallClient, StatefulDeviceManager } from 'calling-stateful-client';
+import React, { createContext, useEffect, useState } from 'react';
 import { CommunicationUiError, CommunicationUiErrorCode } from '../types/CommunicationUiError';
-import { getIdFromToken, useValidContext } from '../utils';
+import { useValidContext } from '../utils';
 
 export type CallClientContextType = {
-  callClient: StatefulCallClient;
-  setCallClient: Dispatch<SetStateAction<StatefulCallClient>>;
+  statefulCallClient: StatefulCallClient;
   deviceManager: StatefulDeviceManager | undefined;
-  setDeviceManager: Dispatch<SetStateAction<StatefulDeviceManager | undefined>>;
 };
 
 export const CallClientContext = createContext<CallClientContextType | undefined>(undefined);
 
 interface CallClientProvider {
   children: React.ReactNode;
-  token: string;
-  callClientOptions?: CallClientOptions;
-  refreshTokenCallback?: (abortSignal?: AbortSignalLike) => Promise<string>;
+  statefulCallClient: StatefulCallClient;
 }
 
 const CallClientProviderBase = (props: CallClientProvider): JSX.Element => {
-  const { token, callClientOptions, refreshTokenCallback } = props;
+  const { statefulCallClient: defaultStatefulCallClient } = props;
 
-  // if there is no valid token then there is no valid userId
-  const userIdFromToken = token ? getIdFromToken(token) : '';
-
-  const [callClient, setCallClient] = useState<StatefulCallClient>(
-    createStatefulCallClient({ userId: userIdFromToken }, callClientOptions)
-  );
+  const [statefulCallClient, setStatefulCallClient] = useState<StatefulCallClient>(defaultStatefulCallClient);
   const [deviceManager, setDeviceManager] = useState<StatefulDeviceManager | undefined>(undefined);
-  const refreshTokenCallbackRefContainer = useRef(refreshTokenCallback);
 
-  // Update the state if the props change
+  /**
+   * Update the statefulCallClient based on the new defaultStatefulCallClient
+   */
   useEffect(() => {
-    refreshTokenCallbackRefContainer.current = refreshTokenCallback;
-  }, [refreshTokenCallback]);
+    console.log('setting call client');
+    setStatefulCallClient(defaultStatefulCallClient);
+  }, [defaultStatefulCallClient]);
 
   /**
    * Initialize the DeviceManager inside CallClientState
    */
   useEffect(() => {
-    callClient
+    console.log('setting device manager');
+    statefulCallClient
       .getDeviceManager()
       .then((manager) => {
         manager.getCameras();
@@ -60,13 +54,11 @@ const CallClientProviderBase = (props: CallClientProvider): JSX.Element => {
           error: error
         });
       });
-  }, [callClient]);
+  }, [statefulCallClient]);
 
   const initialState: CallClientContextType = {
-    callClient,
-    setCallClient,
-    deviceManager,
-    setDeviceManager
+    statefulCallClient,
+    deviceManager
   };
 
   return <CallClientContext.Provider value={initialState}>{props.children}</CallClientContext.Provider>;
@@ -74,10 +66,8 @@ const CallClientProviderBase = (props: CallClientProvider): JSX.Element => {
 
 export const CallClientProvider = (props: CallClientProvider): JSX.Element => <CallClientProviderBase {...props} />;
 
-export const useCallClientContext = (): CallClientContextType => useValidContext(CallClientContext);
-
 export const useCallClient = (): StatefulCallClient => {
-  return useValidContext(CallClientContext).callClient;
+  return useValidContext(CallClientContext).statefulCallClient;
 };
 
 export const useDeviceManager = (): StatefulDeviceManager | undefined => {
