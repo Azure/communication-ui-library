@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { AzureCommunicationTokenCredential, CommunicationTokenRefreshOptions } from '@azure/communication-common';
-import { CallState } from '@azure/communication-calling';
+import { CallState as CallStatus } from '@azure/communication-calling';
 import {
   CommunicationUiErrorCode,
   CommunicationUiError,
@@ -10,7 +10,7 @@ import {
   CommunicationUiErrorInfo
 } from '../types/CommunicationUiError';
 
-export const isInCall = (callState: CallState): boolean => !!(callState !== 'None' && callState !== 'Disconnected');
+export const isInCall = (callStatus: CallStatus): boolean => !!(callStatus !== 'None' && callStatus !== 'Disconnected');
 
 // Create AzureCommunicationUserCredential using optional refreshTokenCallback if provided. If callback is provided then
 // identity must also be provided for callback to be used.

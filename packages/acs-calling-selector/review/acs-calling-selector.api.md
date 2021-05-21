@@ -6,10 +6,10 @@
 
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
-import { Call as Call_2 } from 'calling-stateful-client';
 import { CallAgent } from '@azure/communication-calling';
 import { CallClientState } from 'calling-stateful-client';
 import { CallParticipant } from 'react-components';
+import { CallState } from 'calling-stateful-client';
 import { CommonProperties } from 'acs-ui-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { DeviceManagerState } from 'calling-stateful-client';
@@ -34,7 +34,7 @@ export type CallingBaseSelectorProps = {
 export const cameraButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     disabled: boolean;
     checked: boolean;
-}, (res1: Call_2 | undefined, res2: DeviceManagerState) => {
+}, (res1: CallState | undefined, res2: DeviceManagerState) => {
     disabled: boolean;
     checked: boolean;
 }>;
@@ -94,13 +94,13 @@ export const createDefaultCallingHandlersForComponent: <Props>(callClient: State
 export type DefaultCallingHandlers = ReturnType<typeof createDefaultCallingHandlers>;
 
 // @public (undocumented)
-export const getCall: (state: CallClientState, props: CallingBaseSelectorProps) => Call_2 | undefined;
+export const getCall: (state: CallClientState, props: CallingBaseSelectorProps) => CallState | undefined;
 
 // @public (undocumented)
-export const getCalls: (state: CallClientState) => Map<string, Call_2>;
+export const getCalls: (state: CallClientState) => Map<string, CallState>;
 
 // @public (undocumented)
-export const getCallsEnded: (state: CallClientState) => Call_2[];
+export const getCallsEnded: (state: CallClientState) => CallState[];
 
 // @public (undocumented)
 export const getDeviceManager: (state: CallClientState) => DeviceManagerState;
@@ -121,7 +121,7 @@ export const getIncomingCallsEnded: (state: CallClientState) => IncomingCallStat
 export const microphoneButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     disabled: boolean;
     checked: boolean;
-}, (res1: Call_2 | undefined, res2: DeviceManagerState) => {
+}, (res1: CallState | undefined, res2: DeviceManagerState) => {
     disabled: boolean;
     checked: boolean;
 }>;
@@ -134,7 +134,7 @@ export const optionsButtonSelector: reselect.OutputParametricSelector<CallClient
     selectedMicrophone: AudioDeviceInfo | undefined;
     selectedSpeaker: AudioDeviceInfo | undefined;
     selectedCamera: VideoDeviceInfo | undefined;
-}, (res1: DeviceManagerState, res2: Call_2 | undefined) => {
+}, (res1: DeviceManagerState, res2: CallState | undefined) => {
     microphones: AudioDeviceInfo[];
     speakers: AudioDeviceInfo[];
     cameras: VideoDeviceInfo[];
@@ -147,7 +147,7 @@ export const optionsButtonSelector: reselect.OutputParametricSelector<CallClient
 export const participantListSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     participants: CallParticipant[];
     myUserId: string;
-}, (res1: string, res2: string | undefined, res3: Call_2 | undefined) => {
+}, (res1: string, res2: string | undefined, res3: CallState | undefined) => {
     participants: CallParticipant[];
     myUserId: string;
 }>;
@@ -155,7 +155,7 @@ export const participantListSelector: reselect.OutputParametricSelector<CallClie
 // @public (undocumented)
 export const screenShareButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     checked: boolean | undefined;
-}, (res: Call_2 | undefined) => {
+}, (res: CallState | undefined) => {
     checked: boolean | undefined;
 }>;
 
@@ -174,7 +174,7 @@ export const videoGallerySelector: reselect.OutputParametricSelector<CallClientS
         };
     };
     remoteParticipants: VideoGalleryRemoteParticipant[];
-}, (res1: Call_2 | undefined, res2: string | undefined, res3: string) => {
+}, (res1: CallState | undefined, res2: string | undefined, res3: string) => {
     screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
     localParticipant: {
         userId: string;

@@ -47,11 +47,12 @@ export class ParticipantSubscriber {
 
     if (this._participant.videoStreams.length > 0) {
       for (const stream of this._participant.videoStreams) {
-        this._internalContext.setRemoteStreamAndRenderer(
+        this._internalContext.setRemoteRenderInfo(
           this._callIdRef.callId,
           this._participantKey,
           stream.id,
           stream,
+          'NotRendered',
           undefined
         );
         this.addRemoteVideoStreamSubscriber(stream);
@@ -83,7 +84,7 @@ export class ParticipantSubscriber {
           this._participantKey,
           convertSdkRemoteStreamToDeclarativeRemoteStream(stream)
         );
-        this._internalContext.removeRemoteStreamAndRenderer(this._callIdRef.callId, this._participantKey, stream.id);
+        this._internalContext.deleteRemoteRenderInfo(this._callIdRef.callId, this._participantKey, stream.id);
       }
     }
   };
@@ -126,15 +127,16 @@ export class ParticipantSubscriber {
         this._participantKey,
         convertSdkRemoteStreamToDeclarativeRemoteStream(stream)
       );
-      this._internalContext.removeRemoteStreamAndRenderer(this._callIdRef.callId, this._participantKey, stream.id);
+      this._internalContext.deleteRemoteRenderInfo(this._callIdRef.callId, this._participantKey, stream.id);
     }
 
     for (const stream of event.added) {
-      this._internalContext.setRemoteStreamAndRenderer(
+      this._internalContext.setRemoteRenderInfo(
         this._callIdRef.callId,
         this._participantKey,
         stream.id,
         stream,
+        'NotRendered',
         undefined
       );
       this.addRemoteVideoStreamSubscriber(stream);

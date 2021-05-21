@@ -52,7 +52,10 @@ export const createDefaultCallingHandlers = memoizeOne(
       if (!callId) return;
       if (call && call.localVideoStreams.find((s) => areStreamsEqual(s, stream))) {
         await call.stopVideo(stream);
-        await callClient.disposeView(callId, undefined, stream);
+        await callClient.disposeView(callId, undefined, {
+          source: stream.source,
+          mediaStreamType: stream.mediaStreamType
+        });
       }
     };
 
@@ -154,10 +157,21 @@ export const createDefaultCallingHandlers = memoizeOne(
     const onHangUp = async (): Promise<void> => await call?.hangUp();
 
     const onCreateLocalStreamView = async (options?: VideoStreamOptions): Promise<void> => {
-      if (!call || call.localVideoStreams.length === 0) return;
-      const localStream = call.localVideoStreams.find((item) => item.mediaStreamType === 'Video');
-      if (!localStream) return;
-      callClient.createView(call.id, undefined, localStream, options);
+      if (!call || call.localVideoStreams.length === 0) {
+        return;
+      }
+
+      const callState = callClient.getState().calls.get(call.id);
+      if (!callState) {
+        return;
+      }
+
+      const localStream = callState.localVideoStreams.find((item) => item.mediaStreamType === 'Video');
+      if (!localStream) {
+        return;
+      }
+
+      return callClient.createView(call.id, undefined, localStream, options);
     };
 
     const onCreateRemoteStreamView = async (userId: string, options?: VideoStreamOptions): Promise<void> => {
@@ -180,11 +194,11 @@ export const createDefaultCallingHandlers = memoizeOne(
         (i) => i.mediaStreamType === 'ScreenSharing'
       );
 
-      if (remoteVideoStream && remoteVideoStream.isAvailable && !remoteVideoStream.videoStreamRendererView) {
+      if (remoteVideoStream && remoteVideoStream.isAvailable && !remoteVideoStream.view) {
         callClient.createView(call.id, participant.identifier, remoteVideoStream, options);
       }
 
-      if (screenShareStream && screenShareStream.isAvailable && !screenShareStream.videoStreamRendererView) {
+      if (screenShareStream && screenShareStream.isAvailable && !screenShareStream.view) {
         callClient.createView(call.id, participant.identifier, screenShareStream, options);
       }
     };
@@ -212,8 +226,11 @@ export const createDefaultCallingHandlers = memoizeOne(
   }
 );
 
+// TODO: extract into an util.
 const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
-  return !!deviceManager.unparentedViews && !!deviceManager.unparentedViews[0]?.target;
+  // TODO: we should take in a LocalVideoStream that developer wants to use as their 'Preview' view. We should also
+  // handle cases where 'Preview' view is in progress and not necessary completed.
+  return deviceManager.unparentedViews.values().next().value?.view !== undefined;
 };
 
 /**
