@@ -91,7 +91,7 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
       case 'getCameras': {
         return (): Promise<VideoDeviceInfo[]> => {
           return target.getCameras().then((cameras: VideoDeviceInfo[]) => {
-            this._context.setDeviceManagerCameras(cameras);
+            this._context.setDeviceManagerCameras([...cameras]);
             return cameras;
           });
         };
@@ -99,7 +99,7 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
       case 'getMicrophones': {
         return (): Promise<AudioDeviceInfo[]> => {
           return target.getMicrophones().then((microphones: AudioDeviceInfo[]) => {
-            this._context.setDeviceManagerMicrophones(microphones);
+            this._context.setDeviceManagerMicrophones([...microphones]);
             return microphones;
           });
         };
@@ -107,7 +107,7 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
       case 'getSpeakers': {
         return (): Promise<AudioDeviceInfo[]> => {
           return target.getSpeakers().then((speakers: AudioDeviceInfo[]) => {
-            this._context.setDeviceManagerSpeakers(speakers);
+            this._context.setDeviceManagerSpeakers([...speakers]);
             return speakers;
           });
         };

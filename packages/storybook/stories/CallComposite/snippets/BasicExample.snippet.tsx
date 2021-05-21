@@ -9,7 +9,7 @@ import { ContosoCallContainer } from './Container.snippet';
 import { createUserAndGroup } from './Server.snippet';
 import { ConfigHintBanner } from './Utils.snippet';
 
-export const BasicCanvas: () => JSX.Element = () => {
+export const BasicExample: () => JSX.Element = () => {
   const [containerProps, setContainerProps] = useState();
 
   const knobs = useRef({
@@ -27,7 +27,6 @@ export const BasicCanvas: () => JSX.Element = () => {
     fetchContainerProps();
   }, [knobs]);
 
-  console.log(containerProps);
   return (
     <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
       {containerProps ? (

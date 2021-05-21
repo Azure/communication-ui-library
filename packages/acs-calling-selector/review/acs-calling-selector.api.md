@@ -146,6 +146,15 @@ export type DefaultCallingHandlers = {
 };
 
 // @public (undocumented)
+export const devicePermissionSelector: reselect.OutputSelector<CallClientState, {
+    video: boolean;
+    audio: boolean;
+}, (res: DeviceManagerState) => {
+    video: boolean;
+    audio: boolean;
+}>;
+
+// @public (undocumented)
 export const endCallButtonSelector: () => Record<string, never>;
 
 // @public (undocumented)

@@ -33,5 +33,9 @@ export const Banner = (props: ComplianceBannerState): JSX.Element => {
   }
 
   const msg = bannerMessage(history.current);
-  return msg !== null ? <MessageBar>{msg}</MessageBar> : <></>;
+  return msg !== null ? (
+    <MessageBar>{msg}</MessageBar>
+  ) : (
+    <>Click on the recording or transcription knobs to see how the banner will show the current state</>
+  );
 };
