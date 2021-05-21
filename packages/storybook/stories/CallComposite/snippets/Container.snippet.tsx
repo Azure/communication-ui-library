@@ -37,7 +37,9 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
         if (!adapter) {
           return;
         }
-        await adapter.leaveCall();
+        await adapter.leaveCall().catch((e) => {
+          console.error('Failed to leave call', e);
+        });
         adapter.dispose();
       })();
     };

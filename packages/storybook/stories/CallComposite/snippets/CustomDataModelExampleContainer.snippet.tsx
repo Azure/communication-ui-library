@@ -41,7 +41,9 @@ export const CustomDataModelExampleContainer = (props: ContainerProps): JSX.Elem
         if (!adapter) {
           return;
         }
-        await adapter.leaveCall();
+        await adapter.leaveCall().catch((e) => {
+          console.error('Failed to leave call', e);
+        });
         adapter.dispose();
       })();
     };
