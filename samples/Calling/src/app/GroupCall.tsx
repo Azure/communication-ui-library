@@ -1,19 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { AudioOptions, CallState, GroupLocator, MeetingLocator } from '@azure/communication-calling';
+import { useCallClient, useCall, useCallingSelector as useSelector } from '@azure/acs-calling-selector';
+import { CallState, GroupLocator, MeetingLocator } from '@azure/communication-calling';
 import { Label, Overlay, Spinner, Stack } from '@fluentui/react';
 import { VideoStreamOptions } from 'react-components';
 import { CallClientState, StatefulCallClient } from 'calling-stateful-client';
 import React, { useEffect, useState } from 'react';
-import { useCallAgent, useCallClient, useCall, useCallContext } from 'react-composites';
 import { CommandPanel, CommandPanelTypes } from './CommandPanel';
 import { Header } from './Header';
 import { useAzureCommunicationHandlers } from './hooks/useAzureCommunicationHandlers';
-import { complianceBannerSelector } from './selectors/complianceBannerSelector';
-import { mediaGallerySelector } from './selectors/mediaGallerySelector';
 import { lobbySelector } from './selectors/lobbySelector';
-import { useSelector } from './hooks/useSelector';
 import { MediaGallery } from './MediaGallery';
 import {
   activeContainerClassName,
@@ -28,7 +25,8 @@ import { isInCall } from './utils/AppUtils';
 import { MINI_HEADER_WINDOW_WIDTH } from './utils/constants';
 import { Lobby } from './Lobby';
 import { ComplianceBanner } from './ComplianceBanner';
-import { useHandlers } from './hooks/useHandlers';
+import { mediaGallerySelector } from './selectors/mediaGallerySelector';
+import { complianceBannerSelector } from './selectors/complianceBannerSelector';
 
 export interface GroupCallProps {
   screenWidth: number;
@@ -38,7 +36,7 @@ export interface GroupCallProps {
   isMicrophoneOn: boolean;
 }
 
-const spinnerLabel = 'Initializing call client...';
+const spinnerLabel = 'Joining the call...';
 
 const localVideoViewOption = {
   scalingMode: 'Crop',
@@ -47,22 +45,19 @@ const localVideoViewOption = {
 
 export const GroupCall = (props: GroupCallProps): JSX.Element => {
   const [selectedPane, setSelectedPane] = useState(CommandPanelTypes.None);
-  const { callLocator, screenWidth, endCallHandler, callErrorHandler, isMicrophoneOn } = props;
+  const { callLocator, screenWidth, endCallHandler, isMicrophoneOn } = props;
 
-  const callAgent = useCallAgent();
-  const { setCall } = useCallContext();
   const call = useCall();
   const callClient: StatefulCallClient = useCallClient();
 
   const [callState, setCallState] = useState<CallState | undefined>(undefined);
   const [isScreenSharingOn, setIsScreenSharingOn] = useState<boolean | undefined>(undefined);
-  const [joinedCall, setJoinedCall] = useState<boolean>(false);
 
   const mediaGalleryProps = useSelector(mediaGallerySelector);
   const handlers = useAzureCommunicationHandlers();
 
   const lobbyProps = useSelector(lobbySelector);
-  const lobbyHandlers = useHandlers(Lobby);
+  // const lobbyHandlers = useHandlers(Lobby);
 
   const complianceBannerProps = useSelector(complianceBannerSelector);
 
@@ -79,27 +74,13 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
     };
   }, [call?.id, callClient]);
 
-  useEffect(() => {
-    if (!isInCall(callState ?? 'None') && callAgent && !joinedCall) {
-      const audioOptions: AudioOptions = { muted: !isMicrophoneOn };
-      try {
-        const call = callAgent.join(callLocator as GroupLocator, { audioOptions });
-        setCall(call);
-        setJoinedCall(true);
-      } catch (error) {
-        console.log(error);
-        callErrorHandler();
-      }
-    }
-  }, [call?.callEndReason, callAgent, callErrorHandler, callLocator, callState, isMicrophoneOn, joinedCall, setCall]);
-
   if ('meetingLink' in callLocator) {
     if (callState && ['Connecting', 'Ringing', 'InLobby'].includes(callState)) {
       return (
         <Lobby
           callState={callState}
           {...lobbyProps}
-          {...lobbyHandlers}
+          onStartLocalVideo={handlers.onStartLocalVideo}
           onEndCallClick={endCallHandler}
           isMicrophoneChecked={isMicrophoneOn}
           localVideoViewOption={localVideoViewOption}

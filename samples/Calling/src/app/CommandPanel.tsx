@@ -12,8 +12,7 @@ import {
 } from 'app/styles/CommandPanel.styles';
 import { ThemeSelector } from 'app/theming/ThemeSelector';
 import { Footer } from './Footer';
-import { useHandlers } from './hooks/useHandlers';
-import { useSelector } from './hooks/useSelector';
+import { useCallingSelector as useSelector } from '@azure/acs-calling-selector';
 import { LocalDeviceSettings } from './LocalDeviceSettings';
 import { ParticipantList } from 'react-components';
 import { useAzureCommunicationHandlers } from './hooks/useAzureCommunicationHandlers';
@@ -30,7 +29,6 @@ export interface CommandPanelProps {
 
 export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
   const participantListProps = useSelector(participantListSelector);
-  const participantListHandlers = useHandlers(ParticipantList);
 
   const options = useSelector(optionsButtonSelector, { callId: '' });
   const handlers = useAzureCommunicationHandlers();
@@ -42,7 +40,7 @@ export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
       </Stack.Item>
       {props.selectedPane === CommandPanelTypes.People && (
         <Stack.Item styles={fullHeightStyles}>
-          <ParticipantList {...participantListProps} {...participantListHandlers} />
+          <ParticipantList {...participantListProps} onParticipantRemove={handlers.onParticipantRemove} />
         </Stack.Item>
       )}
       {props.selectedPane === CommandPanelTypes.People && (

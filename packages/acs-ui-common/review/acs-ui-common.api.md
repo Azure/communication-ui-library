@@ -7,6 +7,9 @@
 import { CommunicationIdentifier } from '@azure/communication-common';
 
 // @public (undocumented)
+export type AreEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
+
+// @public (undocumented)
 export type CallbackType<KeyT, ArgsT extends any[], FnRetT> = (memoizedFn: FunctionWithKey<KeyT, ArgsT, FnRetT>) => FnRetT[];
 
 // @public (undocumented)

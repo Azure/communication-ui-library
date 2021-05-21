@@ -3,7 +3,7 @@
 import { useTheme } from '@fluentui/react-theme-provider';
 import React, { useCallback } from 'react';
 import { CameraButton, ControlBar, EndCallButton, MicrophoneButton, OptionsButton } from 'react-components';
-import { usePropsFor } from './hooks/usePropsFor';
+import { useCallingPropsFor as usePropsFor } from '@azure/acs-calling-selector';
 
 export interface LobbyCallControlBarProps {
   isMicrophoneChecked?: boolean;

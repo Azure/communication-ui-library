@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add AreEqual types",
+  "packageName": "acs-ui-common",
+  "email": "easony@microsoft.com",
+  "dependentChangeType": "patch"
+}
