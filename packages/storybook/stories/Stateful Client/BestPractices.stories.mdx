@@ -51,7 +51,7 @@ There are three scenarios to using these APIs:
    You are required to call `createView` with a valid `callId`, `participantIdentifier`, and `remoteVideoStreamState`.
    The `createView` is async and if your architecture can support awaiting for it we recommend you do that.
    Once the `createView` completes the view will be stored under `CallState.RemoteParticipants.[your remote participant].videoStream.[your videostream].view`.
-   If you cannot await the result of `createView`, it is fine to call `createView` again, `createView` will no-op the second call, then at some point you can check the state for the view.
+   If you cannot await the result of `createView`, it is fine to call `createView` again, `createView` will no-op the second call. Once the view has been created, the call state will be automatically updated and you can check the state for the view.
    `CreateView` will not allow creating multiple view of the same stream.
 
 2. _Rendering a LocalVideoStreamState in a Call_
