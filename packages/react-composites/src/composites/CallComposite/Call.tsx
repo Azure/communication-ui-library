@@ -30,6 +30,7 @@ type MainScreenProps = {
 const MainScreen = ({ screenWidth, onRenderAvatar }: MainScreenProps): JSX.Element => {
   const page = useSelector(getPage);
   const adapter = useAdapter();
+  return <Error rejoinHandler={() => adapter.setPage('configuration')} />;
 
   switch (page) {
     case 'configuration':

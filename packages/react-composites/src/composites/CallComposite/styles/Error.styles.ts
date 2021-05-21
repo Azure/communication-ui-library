@@ -16,7 +16,13 @@ export const bottomStackTokens: IStackTokens = {
   childrenGap: '1.4375rem'
 };
 export const endCallContainerStyle = mergeStyles({
-  width: '20.625rem'
+  width: '20.625rem',
+  position: 'absolute',
+  top: '0',
+  bottom: '0',
+  left: '0',
+  right: '0',
+  margin: 'auto'
 });
 export const endCallTitleStyle = mergeStyles({
   fontSize: '1.375rem',
