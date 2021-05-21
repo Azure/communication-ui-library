@@ -29,21 +29,31 @@ npm i --save @azure/communication-react
 
 ```
 
-## stateFulCallClient and statefulChatClient
+## Calling StatefulClient
 
 Using the `callClient` and `chatClient`, developer can generate a stateful version of the clients.
-REVISE SNIPPETS WITH FINAL PASS
 
 ```tsx
+import { StatefulChatClient, StatefulCallClient } from '@azure/communication-react';
 
-import {StatefulChatClient, StatefulCallClient} from "@azure/communication-react"
+const statefulChatClient = new StatefulChatClient(chatClient);
 
-const chatClient = new ChatClient(....)
-const statefulChatClient = new StatefulChatClient(chatClient)
+const statefulCallClient = new StatefulCallClient(callClient);
+```
 
-const callClient = new CallClient(....)
-const statefulCallClient = new StatefulCallClient(callClient)
+Developer has access to both clients. The stateful clients are a 1:1 representation.
+For state to be tracked, developers should use the stateful clients to query the service and listen to events.
 
+## Chat StatefulClient
+
+Using the `callClient` and `chatClient`, developer can generate a stateful version of the clients.
+
+```tsx
+import { StatefulChatClient, StatefulCallClient } from '@azure/communication-react';
+
+const statefulChatClient = new StatefulChatClient(chatClient);
+
+const statefulCallClient = new StatefulCallClient(callClient);
 ```
 
 Developer has access to both clients. The stateful clients are a 1:1 representation.
