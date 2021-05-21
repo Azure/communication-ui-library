@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { CallAgent } from '@azure/communication-calling';
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext } from 'react';
 
 export type CallAgentContextType = {
   callAgent: CallAgent | undefined;
@@ -16,13 +16,7 @@ export interface CallAgentProviderProps {
 }
 
 const CallAgentProviderBase = (props: CallAgentProviderProps): JSX.Element => {
-  const { callAgent: defaultCallAgent } = props;
-
-  const [callAgent, setCallAgent] = useState<CallAgent | undefined>(defaultCallAgent);
-
-  useEffect(() => {
-    setCallAgent(defaultCallAgent);
-  }, [defaultCallAgent, setCallAgent]);
+  const { callAgent } = props;
 
   const initialState: CallAgentContextType = {
     callAgent

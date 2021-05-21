@@ -17,17 +17,9 @@ export interface CallClientProviderProps {
 }
 
 const CallClientProviderBase = (props: CallClientProviderProps): JSX.Element => {
-  const { statefulCallClient: defaultStatefulCallClient } = props;
+  const { statefulCallClient } = props;
 
-  const [statefulCallClient, setStatefulCallClient] = useState<StatefulCallClient>(defaultStatefulCallClient);
   const [deviceManager, setDeviceManager] = useState<StatefulDeviceManager | undefined>(undefined);
-
-  /**
-   * Update the statefulCallClient based on the new defaultStatefulCallClient
-   */
-  useEffect(() => {
-    setStatefulCallClient(defaultStatefulCallClient);
-  }, [defaultStatefulCallClient]);
 
   /**
    * Initialize the DeviceManager inside CallClientState

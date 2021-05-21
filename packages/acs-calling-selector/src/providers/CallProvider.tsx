@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useContext, createContext, useState, useEffect } from 'react';
+import React, { useContext, createContext } from 'react';
 import { Call } from '@azure/communication-calling';
 
 export type CallContextType = {
@@ -16,13 +16,7 @@ export interface CallProviderProps {
 export const CallContext = createContext<CallContextType | undefined>(undefined);
 
 const CallProviderBase = (props: CallProviderProps): JSX.Element => {
-  const { children, call: defaultCall } = props;
-
-  const [call, setCall] = useState<Call | undefined>(defaultCall);
-
-  useEffect(() => {
-    setCall(defaultCall);
-  }, [defaultCall]);
+  const { children, call } = props;
 
   const initialState: CallContextType = {
     call

@@ -10,13 +10,6 @@ import { ConfigurationScreen } from './ConfigurationScreen';
 import { GroupCall } from './GroupCall';
 import { HomeScreen } from './HomeScreen';
 import { v1 as createGUID } from 'uuid';
-import {
-  // CallProvider,
-  // CallClientProvider,
-  // CallAgentProvider,
-  CommunicationUiError,
-  CommunicationUiErrorCode
-} from 'react-composites';
 import { CallProvider, CallClientProvider, CallAgentProvider } from '@azure/acs-calling-selector';
 import {
   createRandomDisplayName,
@@ -90,12 +83,6 @@ const App = (): JSX.Element => {
     })();
   }, []);
 
-  useEffect(() => {
-    // if there is no valid token then there is no valid userId
-    const userIdFromToken = token ? getIdFromToken(token) : '';
-    setStatefulCallClient(createStatefulCallClient({ userId: userIdFromToken }));
-  }, [token]);
-
   const getGroupId = (): string => {
     if (groupId) return groupId;
     const uriGid = getGroupIdFromUrl();
@@ -113,15 +100,24 @@ const App = (): JSX.Element => {
   };
 
   useEffect(() => {
-    if (page === 'createCallClient') {
-      // Generate a new CallClient for the next groupCall, required by calling SDK.
+    // Create a new CallClient when at the home page or at the createCallClient page.
+    if (page === 'createCallClient' || page === 'home') {
       const userIdFromToken = token ? getIdFromToken(token) : '';
       const newStatefulCallClient = createStatefulCallClient({ userId: userIdFromToken });
       setStatefulCallClient(newStatefulCallClient);
-      setPage('configuration');
+      page === 'createCallClient' && setPage('configuration');
     }
   }, [page, token]);
 
+  /**
+   * Routing flow of the sample app: (happy path)
+   * home -> createCallClient -> configuration -> createCallAgent -> groupCall -> endCall
+   *            ^                                                                   |
+   *            | ------------------------------------------------------------------|
+   * CallClient instance can only support one CallAgent. We need to create a new CallClient to create a new CallAgent.
+   * Thus re-creation of the call client is required for joining a new call,
+   * So we need to guarantee that we have created a new client before we enter CallClientProvider.
+   */
   const renderPage = (page: string): JSX.Element => {
     switch (page) {
       case 'configuration':
@@ -152,11 +148,8 @@ const App = (): JSX.Element => {
                 setCall(call);
                 setCallAgent(newCallAgent);
               } catch (error) {
-                throw new CommunicationUiError({
-                  message: 'Error creating call agent',
-                  code: CommunicationUiErrorCode.CREATE_CALL_AGENT_ERROR,
-                  error: error
-                });
+                console.error(error);
+                setPage('callError');
               }
 
               setPage('call');

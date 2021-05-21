@@ -10,12 +10,6 @@ import {
   ScreenShareButton,
   VideoGallery
 } from 'react-components';
-// @ts-ignore
-import { VideoStreamOptions, AudioDeviceInfo, StartCallOptions, Call } from '@azure/communication-calling';
-// @ts-ignore
-import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
-// @ts-ignore
-import { VideoStreamOptions } from 'react-components';
 import {
   cameraButtonSelector,
   microphoneButtonSelector,
@@ -23,6 +17,7 @@ import {
   screenShareButtonSelector
 } from '../callControlSelectors';
 import { videoGallerySelector } from '../videoGallerySelector';
+import { participantListSelector } from '../participantListSelector';
 import { useHandlers } from './useHandlers';
 import { useSelector } from './useSelector';
 import { Common } from 'acs-ui-common';
@@ -30,7 +25,12 @@ import { Common } from 'acs-ui-common';
 import { CommonProperties, AreEqual } from 'acs-ui-common';
 // @ts-ignore
 import { DefaultCallingHandlers } from '../handlers/createHandlers';
-import { participantListSelector } from '../participantListSelector';
+// @ts-ignore
+import { VideoStreamOptions, AudioDeviceInfo, StartCallOptions, Call } from '@azure/communication-calling';
+// @ts-ignore
+import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
+// @ts-ignore
+import { VideoStreamOptions } from 'react-components';
 
 // @ts-ignore
 export const usePropsFor = <Component extends (props: any) => JSX.Element>(
@@ -49,11 +49,11 @@ export type GetSelector<Component> = AreEqual<Component, typeof VideoGallery> ex
   ? typeof cameraButtonSelector
   : AreEqual<Component, typeof ScreenShareButton> extends true
   ? typeof screenShareButtonSelector
-  : AreEqual<Component, typeof EndCallButton> extends true
-  ? typeof optionsButtonSelector
   : AreEqual<Component, typeof OptionsButton> extends true
-  ? typeof participantListSelector
+  ? typeof optionsButtonSelector
   : AreEqual<Component, typeof ParticipantList> extends true
+  ? typeof participantListSelector
+  : AreEqual<Component, typeof EndCallButton> extends true
   ? typeof emptySelector
   : never;
 
