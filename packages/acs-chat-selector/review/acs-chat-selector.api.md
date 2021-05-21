@@ -111,9 +111,6 @@ export const useChatSelector: <SelectorT extends (state: ChatClientState, props:
 // @public (undocumented)
 export const useChatThreadClient: () => ChatThreadClient;
 
-// @public (undocumented)
-export const useThreadId: () => string;
-
 
 // (No @packageDocumentation comment for this package)
 

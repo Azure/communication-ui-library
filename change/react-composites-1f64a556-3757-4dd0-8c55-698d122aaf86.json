@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Move legacy mappers, providers and hooks to 1to1 composite",
-  "packageName": "react-composites",
-  "email": "easony@microsoft.com",
-  "dependentChangeType": "patch"
-}

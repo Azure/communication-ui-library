@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "renamed startRenderVideo to createView and stopRenderVideo to disposeView",
-  "packageName": "react-composites",
-  "email": "alcail@microsoft.com",
-  "dependentChangeType": "patch"
-}

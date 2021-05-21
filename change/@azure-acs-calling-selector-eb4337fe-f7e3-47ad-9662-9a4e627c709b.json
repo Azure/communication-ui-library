@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "[#2404092] Adding stateful attributes to CallClientProvider for starting a call with camera on/off",
-  "packageName": "@azure/acs-calling-selector",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

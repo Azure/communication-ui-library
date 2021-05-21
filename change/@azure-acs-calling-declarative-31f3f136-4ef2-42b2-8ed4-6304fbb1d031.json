@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add ability to render Declarative VideoStreams",
-  "packageName": "calling-stateful-client",
-  "email": "allenhwang@microsoft.com",
-  "dependentChangeType": "patch"
-}

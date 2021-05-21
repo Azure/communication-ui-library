@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Change DeviceManagerState to DeviceManager to be consistent with other objects",
-  "packageName": "@azure/acs-calling-selector",
-  "email": "allenhwang@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,0 +1,262 @@
+{
+  "name": "calling-stateful-client",
+  "entries": [
+    {
+      "date": "Fri, 21 May 2021 16:16:28 GMT",
+      "tag": "calling-stateful-client_v1.0.0-beta.0",
+      "version": "1.0.0-beta.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add rendering status to Stateful views",
+            "author": "allenhwang@microsoft.com",
+            "commit": "316a3e3da82de9cbc8ff2b17e6b750a48f482987",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Rename state-only shadow type for Call",
+            "author": "prprabhu@microsoft.com",
+            "commit": "c9279b6b83fe83fb66f481409ab772fa5c6492de",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Rename DTOs that shadow objects from Calling SDK",
+            "author": "prprabhu@microsoft.com",
+            "commit": "7a9006f767cb2b74ba23f223ef9aab7051759624",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Wrap all sources of Call in StatefulCall",
+            "author": "allenhwang@microsoft.com",
+            "commit": "4196a65ba1e55b4936f17c17e260a829d8760c0a",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Prevent collision of streamid to alter state of different participants",
+            "author": "allenhwang@microsoft.com",
+            "commit": "6bbef4dfcb6925aabc24c5fc88f0b9079192b982",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Introduce common identifier format",
+            "author": "prprabhu@microsoft.com",
+            "commit": "5ae89e5ea40e1f6cbe4a7218694853132dd83850",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Update createStatefulCallClient to create the underlying call client internally",
+            "author": "mail@jamesburnside.com",
+            "commit": "645399bb5b4c5975ae3128dd960d417347392ef4",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Rename stateful CallAgent to CallAgentState",
+            "author": "prprabhu@microsoft.com",
+            "commit": "7af9bd8de025b3aa09658384f07eda8fe82e2d1e",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Update state to getState()",
+            "author": "jinan@microsoft.com",
+            "commit": "72a986961e00b7ca70b6e0f64ec3dddd3c109705",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Surface active screenshare in Stateful",
+            "author": "allenhwang@microsoft.com",
+            "commit": "9d2e850874d1d78cf07363053f1df945e53f784c",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Rename DeviceManager to avoid name conflict",
+            "author": "prprabhu@microsoft.com",
+            "commit": "b39695499e521747786302e7b0ee90e9011b3c42",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Add calling handler and selector for VideoGallery and ScreenShare",
+            "author": "anjulgarg@live.com",
+            "commit": "3321f647e948aaf307a2f69e146ea14fe29853a0",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Update from renaming declarative to stateful",
+            "author": "mail@jamesburnside.com",
+            "commit": "5c5cd639bdadccf200fcca10a80cbc67f611ae90",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Selected camera initialzed as first first camera when cameras are no longer empty.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "1e8aa0d5a8f60b4961db4ed2708d83c2efb739da",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Allow rendering of Streams created outside of state in StatefulCalling",
+            "author": "allenhwang@microsoft.com",
+            "commit": "9dfba8ee9c68fc3504ab31be8df059c75f3441c6",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "renamed startRenderVideo to createView and stopRenderVideo to disposeView",
+            "author": "alcail@microsoft.com",
+            "commit": "70e2f0ddff463a0713fc0438e0d0d4a0765f36b9",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "rename declarative packages to stateful",
+            "author": "domessin@microsoft.com",
+            "commit": "602288c7527f29ec2c3eda8415f5cd8501b928ab",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Upgrade to Calling SDK version 1.0.1-beta.1",
+            "author": "allenhwang@microsoft.com",
+            "commit": "068ccc7d492e6240f6792cc331fc1d4f996b9d93",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Fix copyright header to MIT and add LICENSE files (#225)",
+            "author": "mail@jamesburnside.com",
+            "commit": "a7265cf3343f4431d4a5ab9add788275980ffd2d",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Add recording notice capability to Calling Declarative",
+            "author": "allenhwang@microsoft.com",
+            "commit": "63a35955ed1077e50764b4f1273ec2988ae66a35",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Add proxying for Call mute/unmute and Call/IncomingCall/RemoteParticipant CallEndReason states in Declarative Calling.",
+            "author": "allenhwang@microsoft.com",
+            "commit": "bc6af1c9a5a021e3cf5b4baf8185f07c19005d9a",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Add subscriber for RemoteVideoStream events to capture those state updates for Calling Declarative",
+            "author": "allenhwang@microsoft.com",
+            "commit": "d3a462362fa9fecc5e7751a2be069c872e4229b3",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Add DeclarativeCallAgent and DeclarativeDeviceManager to calling declarative",
+            "author": "allenhwang@microsoft.com",
+            "commit": "50fca014b69423973b884f9a164eafc66bacd894",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Add transcription notice capability to Calling Declarative",
+            "author": "allenhwang@microsoft.com",
+            "commit": "e476866319ba092db1e0b31fc2715e4d44adaba4",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Initial changelog setup",
+            "author": "mail@jamesburnside.com",
+            "commit": "b1004c47c0da5b5ba8e04aef9370851031ef3dc2",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Add selectors and handlers for Calling",
+            "author": "anjulgarg@live.com",
+            "commit": "78cad6eca0b9814304dd8a4528f3a4bfb33fcfa1",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Add proxying of TransferCallFeature state to Calling Declarative",
+            "author": "allenhwang@microsoft.com",
+            "commit": "27a23a7acbfa70a7cb031bd143303314d7e6e636",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Add handler and selector for call controls",
+            "author": "anjulgarg@live.com",
+            "commit": "6168a8007ae1a006e9f2650028496d75ecc7c7ed",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Update `DeclarativeCallClient` with calling SDK version beta.9 and add types. Improve performance by only updating changed state.",
+            "author": "allenhwang@microsoft.com",
+            "commit": "8efd2f5dd0cc0d781837ee6215ffc69cae660dd6",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Add ability to render Declarative VideoStreams",
+            "author": "allenhwang@microsoft.com",
+            "commit": "36a248fdb06aeee4d6da524f7f985e8d20e7ff8a",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Add ability to unregister from stateChange events",
+            "author": "allenhwang@microsoft.com",
+            "commit": "183b26ff19ffc161e83eecfe10df78117daff406",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Add commonjs support",
+            "author": "mail@jamesburnside.com",
+            "commit": "0256e5a737f71c8d86d416fa7f5532f8e3b1403b",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Fix copyright header to MIT and add LICENSE files",
+            "author": "domessin@microsoft.com",
+            "commit": "d7b62e0ea82df089d5fc994170ee0d6cd68f8d0b",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Add api extractor for package",
+            "author": "mail@jamesburnside.com",
+            "commit": "55d164f6ce51618385dabcefd10e2f6ac65daa9e",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Surface userId and displayName in Calling Declarative state",
+            "author": "allenhwang@microsoft.com",
+            "commit": "b8b5439dd399831531ca8879f43138dda1e34341",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Update exports to not conflict with other internal packages",
+            "author": "mail@jamesburnside.com",
+            "commit": "46ec7435b2027b36f2cf28181ffe1edb4f7aa3d6",
+            "package": "calling-stateful-client"
+          }
+        ],
+        "none": [
+          {
+            "comment": "internal build cleanup",
+            "author": "mail@jamesburnside.com",
+            "commit": "7f8440f2a6a911e0911a0212804717216a225ca5",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "fix running test and linting commands",
+            "author": "mail@jamesburnside.com",
+            "commit": "65b7f4421dbf70048d81874bea8f61142ddc17f1",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "ensure consistent eslint-plugin-import version across packages",
+            "author": "mail@jamesburnside.com",
+            "commit": "d3b01cf8bd61e7a2cc8a0f62a9742af125219bc5",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Update to remove usage of npm run",
+            "author": "mail@jamesburnside.com",
+            "commit": "eeb1794d0f58730678f55670962bea36758be46e",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Add initial readme files",
+            "author": "mail@jamesburnside.com",
+            "commit": "6b72826937bd090793ec114574b7af0b855ac252",
+            "package": "calling-stateful-client"
+          }
+        ]
+      }
+    }
+  ]
+}

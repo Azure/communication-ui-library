@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "update onMessageSend to onSendMessage",
-  "packageName": "react-components",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "none"
-}

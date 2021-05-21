@@ -1,5 +1,5 @@
+import { CallComposite, CallAdapter, createAzureCommunicationCallAdapter } from '@azure/communication-react';
 import React, { useState, useEffect } from 'react';
-import { CallComposite, CallAdapter, createAzureCommunicationCallAdapter } from 'react-composites';
 
 export type ContainerProps = {
   token: string;

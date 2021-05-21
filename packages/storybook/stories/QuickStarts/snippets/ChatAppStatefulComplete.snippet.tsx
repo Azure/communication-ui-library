@@ -6,7 +6,7 @@ import {
   ChatThreadClientProvider
 } from '@azure/communication-react';
 import React from 'react';
-import ChatComponents from './ChatComponents';
+import { ChatComponents } from './ChatComponents.snippet';
 
 function App(): JSX.Element {
   const endpointUrl = 'INSERT ENDPOINT URL FOR AZURE COMMUNICATION SERVICES RESOURCE';
@@ -18,7 +18,7 @@ function App(): JSX.Element {
 
   //Instantiate the statefulChatClient
   const statefulChatClient = createStatefulChatClient({
-    userId: userId,
+    userId: { kind: 'communicationUser', communicationUserId: userId },
     displayName: displayName,
     endpoint: endpointUrl,
     credential: tokenCredential
