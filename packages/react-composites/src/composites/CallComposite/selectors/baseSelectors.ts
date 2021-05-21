@@ -12,6 +12,8 @@ export const getIsScreenShareOn = (state: CallAdapterState): boolean => state.ca
 export const getIsPreviewCameraOn = (state: CallAdapterState): boolean => isPreviewOn(state.devices);
 export const getPage = (state: CallAdapterState): 'configuration' | 'call' => state.page;
 export const getLocalMicrophoneEnabled = (state: CallAdapterState): boolean => state.isLocalPreviewMicrophoneEnabled;
+export const getDisplayName = (state: CallAdapterState): string | undefined => state.displayName;
+export const getIdentifier = (state: CallAdapterState): string => state.userId;
 
 const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
   // TODO: we should take in a LocalVideoStream that developer wants to use as their 'Preview' view. We should also
