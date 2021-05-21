@@ -50,3 +50,8 @@ export const ConfigHintBanner = (): JSX.Element => {
   const emptyConfigTips = 'Please provide the connection string and display name to use.';
   return <>{CompositeConnectionParamsErrMessage([emptyConfigTips])}</>;
 };
+
+export const ConfigJoinChatThreadHintBanner = (): JSX.Element => {
+  const emptyConfigTips = 'Please provide a token, thread id, endpoint url, and display name to use.';
+  return <>{CompositeConnectionParamsErrMessage([emptyConfigTips])}</>;
+};
