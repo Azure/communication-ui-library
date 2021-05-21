@@ -3,12 +3,12 @@ import { createStatefulChatClient } from '@azure/communication-react';
 import React from 'react';
 
 function App(): JSX.Element {
-  const endpointUrl = 'INSERT ENDPOINT URL FOR RESOURCE';
-  const userAccessToken = 'INSERT ACCESS TOKEN FOR RESOURCE';
-  const userId = 'INSERT USER ID';
+  const endpointUrl = '<Azure Communication Services Resource Endpoint>';
+  const userAccessToken = '<Azure Communication Services Resource Access Token>';
+  const userId = '<User Id associated to the token>';
   const tokenCredential = new AzureCommunicationTokenCredential(userAccessToken);
-  const threadId = 'INSERT THREAD ID ';
-  const displayName = 'INSERT DISPLAY NAME';
+  const threadId = '<Get thread id from chat service>';
+  const displayName = '<Display Name>';
 
   // Instantiate the statefulChatClient
   const statefulChatClient = createStatefulChatClient({
