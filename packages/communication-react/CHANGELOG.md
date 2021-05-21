@@ -37,7 +37,7 @@ Fri, 21 May 2021 16:16:28 GMT
 * StatefulChatClient
 * StatefulCallClient
 
-### UsePropsFor Components support added
+### UsePropsFor component support added
 
 * ControlBarButtons
 * MessageThread
