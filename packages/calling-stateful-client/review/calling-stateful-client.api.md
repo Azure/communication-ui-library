@@ -76,7 +76,7 @@ export type DeviceManagerState = {
     microphones: AudioDeviceInfo[];
     speakers: AudioDeviceInfo[];
     deviceAccess?: DeviceAccess;
-    unparentedViews: VideoStreamRendererViewState[];
+    unparentedViews: Map<LocalVideoStreamState, LocalVideoStreamState>;
 };
 
 // @public
@@ -92,7 +92,7 @@ export interface IncomingCallState {
 export interface LocalVideoStreamState {
     mediaStreamType: MediaStreamType;
     source: VideoDeviceInfo;
-    videoStreamRendererView?: VideoStreamRendererViewState | undefined;
+    view?: VideoStreamRendererViewState;
 }
 
 // @public
@@ -116,7 +116,7 @@ export interface RemoteVideoStreamState {
     id: number;
     isAvailable: boolean;
     mediaStreamType: MediaStreamType;
-    videoStreamRendererView: VideoStreamRendererViewState | undefined;
+    view?: VideoStreamRendererViewState;
 }
 
 // @public

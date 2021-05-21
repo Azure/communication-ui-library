@@ -749,7 +749,7 @@ export type DeviceManagerState = {
     microphones: AudioDeviceInfo[];
     speakers: AudioDeviceInfo[];
     deviceAccess?: DeviceAccess;
-    unparentedViews: VideoStreamRendererViewState[];
+    unparentedViews: Map<LocalVideoStreamState, LocalVideoStreamState>;
 };
 
 // @public (undocumented)
@@ -869,7 +869,7 @@ export const lightTheme: PartialTheme & CallingTheme;
 export interface LocalVideoStreamState {
     mediaStreamType: MediaStreamType;
     source: VideoDeviceInfo;
-    videoStreamRendererView?: VideoStreamRendererViewState | undefined;
+    view?: VideoStreamRendererViewState;
 }
 
 // @public (undocumented)
@@ -1124,7 +1124,7 @@ export interface RemoteVideoStreamState {
     id: number;
     isAvailable: boolean;
     mediaStreamType: MediaStreamType;
-    videoStreamRendererView: VideoStreamRendererViewState | undefined;
+    view?: VideoStreamRendererViewState;
 }
 
 // @public

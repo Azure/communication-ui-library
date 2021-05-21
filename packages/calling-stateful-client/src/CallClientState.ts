@@ -123,10 +123,10 @@ export interface LocalVideoStreamState {
    */
   mediaStreamType: MediaStreamType;
   /**
-   * {@Link VideoStreamRendererView} is added/removed from state by createView/disposeView in
-   * {@Link StatefulCallClient} API.
+   * {@Link VideoStreamRendererView} that is managed by createView/disposeView in {@Link StatefulCallClient}
+   * API. This can be undefined if the stream has not yet been rendered and defined after createView creates the view.
    */
-  videoStreamRendererView?: VideoStreamRendererViewState | undefined;
+  view?: VideoStreamRendererViewState;
 }
 
 /**
@@ -146,10 +146,10 @@ export interface RemoteVideoStreamState {
    */
   isAvailable: boolean;
   /**
-   * {@Link VideoStreamRendererView} is added/removed from state by createView/disposeView in
-   * {@Link StatefulCallClient} API.
+   * {@Link VideoStreamRendererView} that is managed by createView/disposeView in {@Link StatefulCallClient}
+   * API. This can be undefined if the stream has not yet been rendered and defined after createView creates the view.
    */
-  videoStreamRendererView: VideoStreamRendererViewState | undefined;
+  view?: VideoStreamRendererViewState;
 }
 
 /**
@@ -354,10 +354,12 @@ export type DeviceManagerState = {
    */
   deviceAccess?: DeviceAccess;
   /**
-   * Stores created views that are not associated with any CallState state (when
-   * {@Link StatefulCallClient#createView} is called with undefined callId and LocalVideoStream).
+   * Stores created views that are not associated with any CallState (when {@Link StatefulCallClient#createView} is
+   * called with undefined callId and defined LocalVideoStream). The LocalVideoStream key will be the original
+   * reference that createView is called with. The value will be a new LocalVideoStream different than the one used as
+   * they key with an up-to date status and view.
    */
-  unparentedViews: VideoStreamRendererViewState[];
+  unparentedViews: Map<LocalVideoStreamState, LocalVideoStreamState>;
 };
 
 /**

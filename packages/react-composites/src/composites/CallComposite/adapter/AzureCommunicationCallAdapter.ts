@@ -396,7 +396,9 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 }
 
 const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
-  return !!deviceManager.unparentedViews && !!deviceManager.unparentedViews[0]?.target;
+  // TODO: we should take in a LocalVideoStream that developer wants to use as their 'Preview' view. We should also
+  // handle cases where 'Preview' view is in progress and not necessary completed.
+  return deviceManager.unparentedViews.values().next().value?.view !== undefined;
 };
 
 const createCommunicationIdentifier = (rawId: string): CommunicationUserKind => {

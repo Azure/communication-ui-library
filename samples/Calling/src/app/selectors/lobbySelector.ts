@@ -19,8 +19,8 @@ export const lobbySelector = reselect.createSelector(
         isScreenSharingOn: call?.isScreenSharingOn,
         videoStream: {
           isAvailable: !!localVideoStream,
-          isMirrored: localVideoStream?.videoStreamRendererView?.isMirrored,
-          renderElement: localVideoStream?.videoStreamRendererView?.target
+          isMirrored: localVideoStream?.view?.isMirrored,
+          renderElement: localVideoStream?.view?.target
         }
       }
     };
