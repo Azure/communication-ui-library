@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { mergeStyles, TooltipHost } from '@fluentui/react';
-import { MessageStatus } from '../types/ChatMessage';
+import { MessageStatus } from 'acs-ui-common';
 import { SizeValue } from '@fluentui/react-northstar';
 import {
   MessageStatusIndicatorErrorIconStyle,

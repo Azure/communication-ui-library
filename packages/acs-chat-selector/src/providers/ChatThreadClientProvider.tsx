@@ -29,7 +29,3 @@ export const useChatThreadClient = (): ChatThreadClient => {
     throw 'Please wrap components with ChatThreadClientProvider and initialize a chat thread client before calling the hook.';
   return chatThreadClient;
 };
-
-export const useThreadId = (): string => {
-  return useChatThreadClient().threadId;
-};
