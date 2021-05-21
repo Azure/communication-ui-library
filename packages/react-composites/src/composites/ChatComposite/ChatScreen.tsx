@@ -10,7 +10,13 @@ import { ErrorBar } from '../common/ErrorBar';
 import { useAdapter } from './adapter/ChatAdapterProvider';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
-import { chatContainer, chatHeaderContainerStyle, chatWrapper, topicNameLabelStyle } from './styles/Chat.styles';
+import {
+  chatContainer,
+  chatHeaderContainerStyle,
+  chatWrapper,
+  topicNameLabelStyle,
+  chatArea
+} from './styles/Chat.styles';
 
 export type ChatScreenProps = {
   sendBoxMaxLength?: number;
@@ -42,7 +48,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   return (
     <Stack className={chatContainer} grow>
       <ChatHeader {...headerProps} />
-      <Stack horizontal grow>
+      <Stack className={chatArea} horizontal grow>
         <Stack className={chatWrapper} grow>
           <MessageThread
             {...messageThreadProps}

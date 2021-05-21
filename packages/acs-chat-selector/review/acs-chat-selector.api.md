@@ -38,11 +38,9 @@ export type ChatClientProviderProps = {
 // @public (undocumented)
 export const chatParticipantListSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     myUserId: string;
-    displayName: string;
     participants: CommunicationParticipant[];
 }, (res1: string, res2: Map<string, ChatParticipant>, res3: string) => {
     myUserId: string;
-    displayName: string;
     participants: CommunicationParticipant[];
 }>;
 
@@ -58,11 +56,11 @@ export type ChatThreadClientProviderProps = {
 // @public (undocumented)
 export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     userId: string;
-    disableReadReceipt: boolean;
+    showMessageStatus: boolean;
     messages: Message<"chat">[];
 }, (res1: string, res2: Map<string, ChatMessageWithStatus>, res3: Date, res4: boolean) => {
     userId: string;
-    disableReadReceipt: boolean;
+    showMessageStatus: boolean;
     messages: Message<"chat">[];
 }>;
 

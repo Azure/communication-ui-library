@@ -1,15 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  mediaGallerySelector,
-  complianceBannerSelector,
-  useCallClient,
-  useCall,
-  useCallingSelector as useSelector
-} from '@azure/acs-calling-selector';
+import { useCallClient, useCall, useCallingSelector as useSelector } from '@azure/acs-calling-selector';
 import { CallState, GroupLocator, MeetingLocator } from '@azure/communication-calling';
 import { Label, Overlay, Spinner, Stack } from '@fluentui/react';
+import { VideoStreamOptions } from 'react-components';
 import { CallClientState, StatefulCallClient } from 'calling-stateful-client';
 import React, { useEffect, useState } from 'react';
 import { CommandPanel, CommandPanelTypes } from './CommandPanel';
@@ -30,6 +25,8 @@ import { isInCall } from './utils/AppUtils';
 import { MINI_HEADER_WINDOW_WIDTH } from './utils/constants';
 import { Lobby } from './Lobby';
 import { ComplianceBanner } from './ComplianceBanner';
+import { mediaGallerySelector } from './selectors/mediaGallerySelector';
+import { complianceBannerSelector } from './selectors/complianceBannerSelector';
 
 export interface GroupCallProps {
   screenWidth: number;
@@ -41,9 +38,14 @@ export interface GroupCallProps {
 
 const spinnerLabel = 'Joining the call...';
 
+const localVideoViewOption = {
+  scalingMode: 'Crop',
+  isMirrored: true
+} as VideoStreamOptions;
+
 export const GroupCall = (props: GroupCallProps): JSX.Element => {
   const [selectedPane, setSelectedPane] = useState(CommandPanelTypes.None);
-  const { callLocator, screenWidth, endCallHandler } = props;
+  const { callLocator, screenWidth, endCallHandler, isMicrophoneOn } = props;
 
   const call = useCall();
   const callClient: StatefulCallClient = useCallClient();
@@ -55,6 +57,7 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
   const handlers = useAzureCommunicationHandlers();
 
   const lobbyProps = useSelector(lobbySelector);
+  // const lobbyHandlers = useHandlers(Lobby);
 
   const complianceBannerProps = useSelector(complianceBannerSelector);
 
@@ -78,8 +81,9 @@ export const GroupCall = (props: GroupCallProps): JSX.Element => {
           callState={callState}
           {...lobbyProps}
           onStartLocalVideo={handlers.onStartLocalVideo}
-          onCreateLocalStreamView={handlers.onCreateLocalStreamView}
           onEndCallClick={endCallHandler}
+          isMicrophoneChecked={isMicrophoneOn}
+          localVideoViewOption={localVideoViewOption}
         />
       );
     }

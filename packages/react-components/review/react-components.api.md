@@ -14,9 +14,6 @@ import { default as React_2 } from 'react';
 import { SizeValue } from '@fluentui/react-northstar';
 import { Theme } from '@fluentui/react-theme-provider';
 
-// @public
-export const answerButtonProps: IButtonProps;
-
 // @public (undocumented)
 export interface BaseCustomStylesProps {
     root?: IStyle;
@@ -140,12 +137,6 @@ export interface JumpToNewMessageButtonProps {
 }
 
 // @public
-export const labeledAnswerButtonProps: IButtonProps;
-
-// @public
-export const labeledRecordButtonProps: IButtonProps;
-
-// @public
 export const lightTheme: PartialTheme & CallingTheme;
 
 // @public (undocumented)
@@ -170,6 +161,20 @@ export type MessageProps = {
 export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
 
 // @public
+export const MessageStatusIndicator: (props: MessageStatusIndicatorProps) => JSX.Element;
+
+// @public
+export interface MessageStatusIndicatorProps {
+    deliveredTooltipText?: string;
+    failedToSendTooltipText?: string;
+    seenTooltipText?: string;
+    sendingTooltipText?: string;
+    size?: SizeValue;
+    status?: MessageStatus;
+    styles?: BaseCustomStylesProps;
+}
+
+// @public
 export const MessageThread: (props: MessageThreadProps) => JSX.Element;
 
 // @public
@@ -178,10 +183,10 @@ export type MessageThreadProps = {
     messages: (ChatMessage | SystemMessage | CustomMessage)[];
     styles?: MessageThreadStylesProps;
     disableJumpToNewMessageButton?: boolean;
-    disableReadReceipt?: boolean;
+    showMessageStatus?: boolean;
     numberOfChatMessagesToReload?: number;
     onMessageSeen?: (messageId: string) => Promise<void>;
-    onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element | null;
+    onRenderMessageStatus?: (messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null;
     onRenderAvatar?: (userId: string) => JSX.Element;
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
@@ -193,8 +198,8 @@ export interface MessageThreadStylesProps extends BaseCustomStylesProps {
     chatContainer?: ComponentSlotStyle;
     chatMessageContainer?: ComponentSlotStyle;
     loadPreviousMessagesButtonContainer?: IStyle;
+    messageStatusContainer?: (mine: boolean) => IStyle;
     newMessageButtonContainer?: IStyle;
-    readReceiptContainer?: (mine: boolean) => IStyle;
     systemMessageContainer?: ComponentSlotStyle;
 }
 
@@ -293,23 +298,6 @@ export interface PlaceholderProps {
     noVideoAvailableAriaLabel?: string;
     userId?: string;
 }
-
-// @public
-export const ReadReceipt: (props: ReadReceiptProps) => JSX.Element;
-
-// @public
-export interface ReadReceiptProps {
-    deliveredTooltipText?: string;
-    failedToSendTooltipText?: string;
-    messageStatus?: MessageStatus;
-    seenTooltipText?: string;
-    sendingTooltipText?: string;
-    size?: SizeValue;
-    styles?: BaseCustomStylesProps;
-}
-
-// @public
-export const recordButtonProps: IButtonProps;
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;

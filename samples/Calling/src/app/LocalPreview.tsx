@@ -7,7 +7,7 @@ import { Stack, Text } from '@fluentui/react';
 import { localPreviewContainerStyle, cameraOffLabelStyle, localPreviewTileStyle } from './styles/LocalPreview.styles';
 import { CameraButton, ControlBar, MicrophoneButton, StreamMedia, VideoTile } from 'react-components';
 import { useCallingSelector as useSelector, useCallingPropsFor as usePropsFor } from '@azure/acs-calling-selector';
-import { localPreviewSelector } from '@azure/acs-calling-selector';
+import { localPreviewSelector } from './selectors/localPreviewSelector';
 
 const onRenderPlaceholder = (): JSX.Element => {
   return (

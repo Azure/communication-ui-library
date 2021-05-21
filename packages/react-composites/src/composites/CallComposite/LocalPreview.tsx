@@ -7,8 +7,7 @@ import React, { useCallback } from 'react';
 import { localPreviewContainerStyle, cameraOffLabelStyle, localPreviewTileStyle } from './styles/LocalPreview.styles';
 import { StreamMedia, VideoTile, MicrophoneButton, ControlBar, CameraButton } from 'react-components';
 import { usePropsFor } from './hooks/usePropsFor';
-import { localPreviewSelector } from '@azure/acs-calling-selector';
-import { useAdaptedSelector } from './hooks/useAdaptedSelector';
+import { localPreviewSelector } from './selectors/localPreviewSelector';
 import { useSelector } from './hooks/useSelector';
 import { getLocalMicrophoneEnabled } from './selectors/baseSelectors';
 import { useAdapter } from './adapter/CallAdapterProvider';
@@ -28,7 +27,7 @@ const onRenderPlaceholder = (): JSX.Element => {
 
 export const LocalPreview = (): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
-  const localPreviewProps = useAdaptedSelector(localPreviewSelector);
+  const localPreviewProps = useSelector(localPreviewSelector);
 
   const isLocalMicrophoneEnabled = useSelector(getLocalMicrophoneEnabled);
   const adapter = useAdapter();

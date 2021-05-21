@@ -10,8 +10,8 @@ export type { GridLayoutProps, GridLayoutType } from './GridLayout';
 export { SendBox } from './SendBox';
 export type { SendBoxProps, SendBoxStylesProps } from './SendBox';
 
-export { ReadReceipt } from './ReadReceipt';
-export type { ReadReceiptProps } from './ReadReceipt';
+export { MessageStatusIndicator } from './MessageStatusIndicator';
+export type { MessageStatusIndicatorProps } from './MessageStatusIndicator';
 
 export { MessageThread } from './MessageThread';
 export type {
@@ -37,13 +37,7 @@ export type { VideoGalleryProps } from './VideoGallery';
 export { CameraButton } from './CameraButton';
 export type { CameraButtonProps } from './CameraButton';
 
-export {
-  ControlBar,
-  answerButtonProps,
-  recordButtonProps,
-  labeledAnswerButtonProps,
-  labeledRecordButtonProps
-} from './ControlBar';
+export { ControlBar } from './ControlBar';
 export type { ControlBarProps, ControlBarLayoutType } from './ControlBar';
 
 export { EndCallButton } from './EndCallButton';

@@ -69,9 +69,10 @@ export class CallSubscriber {
 
     // At time of writing only one LocalVideoStream is supported by SDK.
     if (this._call.localVideoStreams.length > 0) {
-      this._internalContext.setLocalStreamAndRenderer(
+      this._internalContext.setLocalRenderInfo(
         this._callIdRef.callId,
         this._call.localVideoStreams[0],
+        'NotRendered',
         undefined
       );
     }
@@ -114,7 +115,7 @@ export class CallSubscriber {
       );
     }
 
-    this._internalContext.removeLocalStreamAndRenderer(this._callIdRef.callId);
+    this._internalContext.deleteLocalRenderInfo(this._callIdRef.callId);
     this._recordingSubscriber.unsubscribe();
     this._transcriptionSubscriber.unsubscribe();
     this._receivedTransferSubscriber.unsubscribe();
@@ -190,9 +191,10 @@ export class CallSubscriber {
       const localVideoStreams = [convertSdkLocalStreamToDeclarativeLocalStream(this._call.localVideoStreams[0])];
       // IMPORTANT: The internalContext should be set before context. This is done to ensure that the internal context
       // has the required data when component re-renders due to external state changes.
-      this._internalContext.setLocalStreamAndRenderer(
+      this._internalContext.setLocalRenderInfo(
         this._callIdRef.callId,
         this._call.localVideoStreams[0],
+        'NotRendered',
         undefined
       );
       this._context.setCallLocalVideoStream(this._callIdRef.callId, localVideoStreams);
@@ -205,7 +207,7 @@ export class CallSubscriber {
         undefined,
         convertSdkLocalStreamToDeclarativeLocalStream(event.removed[0])
       );
-      this._internalContext.removeLocalStreamAndRenderer(this._callIdRef.callId);
+      this._internalContext.deleteLocalRenderInfo(this._callIdRef.callId);
       this._context.setCallLocalVideoStream(this._callIdRef.callId, []);
     }
   };

@@ -13,6 +13,17 @@ export const useSelector = <SelectorT extends (state: CallClientState, props: an
   const callClient: StatefulCallClient = useCallClient() as any;
   const callId = useCall()?.id;
 
+  // Keeps track of whether the current component is mounted or not. If it has unmounted, make sure we do not modify the
+  // state or it will cause React warnings in the console. https://skype.visualstudio.com/SPOOL/_workitems/edit/2453212
+  const mounted = useRef(false);
+
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  });
+
   const callIdConfigProps = useMemo(
     () => ({
       callId
@@ -25,6 +36,9 @@ export const useSelector = <SelectorT extends (state: CallClientState, props: an
   propRef.current = props;
   useEffect(() => {
     const onStateChange = (state: CallClientState): void => {
+      if (!mounted.current) {
+        return;
+      }
       const newProps = selector(state, selectorProps ?? callIdConfigProps);
       if (propRef.current !== newProps) {
         setProps(newProps);
@@ -34,6 +48,6 @@ export const useSelector = <SelectorT extends (state: CallClientState, props: an
     return () => {
       callClient.offStateChange(onStateChange);
     };
-  }, [callClient, selector, selectorProps, callIdConfigProps, callId]);
+  }, [callClient, selector, selectorProps, callIdConfigProps, mounted]);
   return props;
 };

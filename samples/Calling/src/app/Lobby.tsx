@@ -12,6 +12,7 @@ export interface LobbyProps {
   localParticipant: VideoGalleryLocalParticipant;
   localVideoViewOption?: VideoStreamOptions;
   isCameraChecked?: boolean;
+  isMicrophoneChecked?: boolean;
   onCreateLocalStreamView?: (options?: VideoStreamOptions | undefined) => Promise<void>;
   onStartLocalVideo: () => Promise<void>;
   onEndCallClick: () => void;
@@ -62,7 +63,6 @@ export const Lobby = (props: LobbyProps): JSX.Element => {
   return (
     <VideoTile
       styles={videoTileStyles}
-      isMirrored={true}
       isVideoReady={isVideoReady}
       renderElement={<StreamMedia videoStreamElement={renderElement ?? null} />}
       onRenderPlaceholder={onRenderEmptyPlaceholder}
@@ -97,7 +97,7 @@ export const Lobby = (props: LobbyProps): JSX.Element => {
         </p>
       </div>
 
-      <LobbyCallControlBar onEndCallClick={props.onEndCallClick} />
+      <LobbyCallControlBar isMicrophoneChecked={props.isMicrophoneChecked} onEndCallClick={props.onEndCallClick} />
     </VideoTile>
   );
 };
