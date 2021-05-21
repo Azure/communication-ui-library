@@ -26,11 +26,11 @@ import { CommonProperties, AreEqual } from 'acs-ui-common';
 // @ts-ignore
 import { DefaultCallingHandlers } from '../handlers/createHandlers';
 // @ts-ignore
-import { AudioDeviceInfo, StartCallOptions, Call } from '@azure/communication-calling';
+import { AudioDeviceInfo, StartCallOptions, Call, VideoDeviceInfo } from '@azure/communication-calling';
 // @ts-ignore
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 // @ts-ignore
-import { VideoStreamOptions } from 'react-components';
+import { VideoStreamOptions, CallParticipant, VideoGalleryRemoteParticipant } from 'react-components';
 
 // @ts-ignore
 export const usePropsFor = <Component extends (props: any) => JSX.Element>(

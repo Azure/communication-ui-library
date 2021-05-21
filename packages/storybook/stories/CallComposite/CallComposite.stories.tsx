@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Title, Description, Heading, Source, Props } from '@storybook/addon-docs/blocks';
+import { CallComposite } from '@azure/communication-react';
+import { Title, Description, Heading, Source } from '@storybook/addon-docs/blocks';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
-import { CallComposite } from 'react-composites';
 
 import { COMPOSITE_FOLDER_PREFIX } from '../constants';
 
@@ -22,10 +22,10 @@ export default {
   }
 } as Meta;
 
-export { BasicCanvas } from './snippets/BasicCanvas.snippet';
-export { JoinCallCanvas } from './snippets/JoinCallCanvas.snippet';
-export { DataModelCanvas } from './snippets/DataModelCanvas.snippet';
-export { ThemesCanvas } from './snippets/ThemesCanvas.snippet';
+export { BasicExample } from './snippets/BasicExample.snippet';
+export { CustomDataModelExample } from './snippets/CustomDataModelExample.snippet';
+export { ThemeExample } from './snippets/ThemeExample';
+export { JoinExistingCall } from './snippets/JoinExistingCall';
 
 const getDocs: () => JSX.Element = () => {
   return (
@@ -56,15 +56,15 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Theming</Heading>
       <Description>
         CallComposite can be themed with Fluent UI themes, just like the base components. Look at the [CallComposite
-        themes canvas](./?path=/story/composites-call--themes-canvas) to see theming in action or the [overall theming
-        example](./?path=/docs/examples-themes--teams-theme-component) to see how theming works for all the components
-        in this UI library.
+        theme example](./?path=/story/composites-call--custom-theme-example) to see theming in action or the [overall
+        theming example](./?path=/docs/examples-themes--teams-theme-component) to see how theming works for all the
+        components in this UI library.
       </Description>
 
       <Heading>Joining an existing Call</Heading>
       <Description>
-        The [join call canvas](./?path=/story/composites-call--join-call-canvas) provides an easy playground to join an
-        existing Azure Communication Services group call or an existing Teams meeting. This is useful if you want to
+        The [join existing call](./?path=/story/composites-call--join-existing-call) provides an easy playground to join
+        an existing Azure Communication Services group call or an existing Teams meeting. This is useful if you want to
         explore the composite with multiple users.
       </Description>
     </>

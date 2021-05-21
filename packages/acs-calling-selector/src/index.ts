@@ -3,6 +3,7 @@
 
 export * from './baseSelectors';
 export * from './callControlSelectors';
+export * from './devicePermissionSelector';
 export { createDefaultCallingHandlersForComponent, createDefaultCallingHandlers } from './handlers/createHandlers';
 export { participantListSelector } from './participantListSelector';
 export { videoGallerySelector } from './videoGallerySelector';
