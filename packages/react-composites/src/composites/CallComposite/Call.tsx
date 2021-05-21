@@ -1,13 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ErrorProvider } from '../../providers';
 import React, { useEffect, useState } from 'react';
 import { CallScreen } from './CallScreen';
 import { ConfigurationScreen } from './ConfigurationScreen';
 import { callContainer } from './styles/Call.styles';
 import { Stack } from '@fluentui/react';
-import { CommunicationUiErrorInfo } from '../../types';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
 import { CallAdapter } from './adapter/CallAdapter';
 import { PlaceholderProps } from 'react-components';
@@ -25,8 +23,6 @@ export type CallCompositeProps = {
    */
   fluentTheme?: PartialTheme | Theme;
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
-  /** Optional callback to call when error is detected */
-  onErrorCallback?: (error: CommunicationUiErrorInfo) => void;
 };
 
 type MainScreenProps = {
@@ -65,7 +61,7 @@ export const Call = (props: CallCompositeProps): JSX.Element => {
     return () => window.removeEventListener('resize', setWindowWidth);
   }, []);
 
-  const { adapter, fluentTheme, onErrorCallback } = props;
+  const { adapter, fluentTheme } = props;
 
   useEffect(() => {
     (async () => {
@@ -78,13 +74,11 @@ export const Call = (props: CallCompositeProps): JSX.Element => {
 
   return (
     <FluentThemeProvider fluentTheme={fluentTheme}>
-      <ErrorProvider onErrorCallback={onErrorCallback}>
-        <CallAdapterProvider adapter={adapter}>
-          <Stack className={callContainer} grow>
-            <MainScreen screenWidth={screenWidth} onRenderAvatar={props.onRenderAvatar} />
-          </Stack>
-        </CallAdapterProvider>
-      </ErrorProvider>
+      <CallAdapterProvider adapter={adapter}>
+        <Stack className={callContainer} grow>
+          <MainScreen screenWidth={screenWidth} onRenderAvatar={props.onRenderAvatar} />
+        </Stack>
+      </CallAdapterProvider>
     </FluentThemeProvider>
   );
 };

@@ -8,7 +8,7 @@ import {
   CommunicationUiErrorCode,
   CommunicationUiErrorFromError,
   CommunicationUiErrorInfo
-} from '../types/CommunicationUiError';
+} from '../../../types/CommunicationUiError';
 
 export type ErrorHandlingProps = {
   onErrorCallback?: (error: CommunicationUiErrorInfo) => void;

@@ -14,7 +14,7 @@ const customDataModelExampleContainerText = require('!!raw-loader!./snippets/Cus
 const serverText = require('!!raw-loader!./snippets/Server.snippet.tsx').default;
 
 export default {
-  title: `${COMPOSITE_FOLDER_PREFIX}/Chat`,
+  title: `${COMPOSITE_FOLDER_PREFIX}/ChatComposite`,
   component: ChatComposite,
   parameters: {
     useMaxHeightParent: true,

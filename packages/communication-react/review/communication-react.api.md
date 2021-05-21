@@ -28,7 +28,6 @@ import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { CreateViewOptions } from '@azure/communication-calling';
 import { DeviceAccess } from '@azure/communication-calling';
 import { DeviceManager } from '@azure/communication-calling';
-import { ErrorInfo } from 'react';
 import { GroupCallLocator } from '@azure/communication-calling';
 import { IButtonProps } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
@@ -328,7 +327,6 @@ export type CallCompositeProps = {
     adapter: CallAdapter;
     fluentTheme?: PartialTheme | Theme;
     onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
-    onErrorCallback?: (error: CommunicationUiErrorInfo) => void;
 };
 
 // @public (undocumented)
@@ -551,7 +549,6 @@ export type ChatProps = {
     adapter: ChatAdapter;
     fluentTheme?: PartialTheme | Theme;
     onRenderAvatar?: (userId: string) => JSX.Element;
-    onErrorCallback?: (error: CommunicationUiErrorInfo) => void;
     options?: ChatOptions;
 };
 
@@ -609,99 +606,6 @@ export type CommunicationParticipant = {
     userId: string;
     displayName?: string;
 };
-
-// @public (undocumented)
-export enum CommunicationUiErrorCode {
-    // (undocumented)
-    ASK_PERMISSIONS_ERROR = 21,
-    // (undocumented)
-    CONFIGURATION_ERROR = 1,
-    // (undocumented)
-    CREATE_CALL_AGENT_ERROR = 31,
-    // (undocumented)
-    CREATE_CHAT_THREAD_CLIENT_ERROR = 10,
-    // (undocumented)
-    CREATE_DEVICE_MANAGER_ERROR = 32,
-    // (undocumented)
-    DISPOSE_CALL_AGENT_ERROR = 33,
-    // (undocumented)
-    FORBIDDEN_ERROR = 3,
-    // (undocumented)
-    GET_MESSAGE_ERROR = 14,
-    // (undocumented)
-    GET_MESSAGES_ERROR = 16,
-    // (undocumented)
-    GET_READ_RECEIPT_ERROR = 12,
-    // (undocumented)
-    GET_THREAD_ERROR = 19,
-    // (undocumented)
-    INTERNAL_SERVER_ERROR = 6,
-    // (undocumented)
-    JOIN_CALL_ERROR = 34,
-    // (undocumented)
-    LEAVE_CALL_ERROR = 35,
-    // (undocumented)
-    MESSAGE_EXCEEDED_RETRY_ERROR = 8,
-    // (undocumented)
-    MUTE_ERROR = 24,
-    // (undocumented)
-    QUERY_PERMISSIONS_ERROR = 20,
-    // (undocumented)
-    REMOVE_THREAD_PARTICIPANT_ERROR = 17,
-    // (undocumented)
-    RENDER_LOCAL_VIDEO_ERROR = 30,
-    // (undocumented)
-    RENDER_REMOTE_VIDEO_ERROR = 29,
-    // (undocumented)
-    SEND_MESSAGE_ERROR = 13,
-    // (undocumented)
-    SEND_READ_RECEIPT_ERROR = 11,
-    // (undocumented)
-    SEND_TYPING_NOTIFICATION_ERROR = 15,
-    // (undocumented)
-    SERVICE_UNAVAILABLE_ERROR = 5,
-    // (undocumented)
-    START_REALTIME_NOTIFICATIONS_ERROR = 9,
-    // (undocumented)
-    START_SCREEN_SHARE_ERROR = 27,
-    // (undocumented)
-    START_VIDEO_ERROR = 25,
-    // (undocumented)
-    STOP_SCREEN_SHARE_ERROR = 28,
-    // (undocumented)
-    STOP_VIDEO_ERROR = 26,
-    // (undocumented)
-    SWITCH_VIDEO_SOURCE_ERROR = 22,
-    // (undocumented)
-    TOO_MANY_REQUESTS_ERROR = 4,
-    // (undocumented)
-    UNAUTHORIZED_ERROR = 2,
-    // (undocumented)
-    UNKNOWN_ERROR = 0,
-    // (undocumented)
-    UNKNOWN_STATUS_CODE_ERROR = 7,
-    // (undocumented)
-    UNMUTE_ERROR = 23,
-    // (undocumented)
-    UPDATE_THREAD_ERROR = 18
-}
-
-// @public (undocumented)
-export interface CommunicationUiErrorInfo {
-    // (undocumented)
-    code: CommunicationUiErrorCode;
-    // (undocumented)
-    errorInfo: ErrorInfo | undefined;
-    // (undocumented)
-    message: string;
-    // (undocumented)
-    originalError: Error | undefined;
-    // (undocumented)
-    severity: CommunicationUiErrorSeverity;
-}
-
-// @public
-export type CommunicationUiErrorSeverity = 'info' | 'warning' | 'error' | 'ignore';
 
 // @public
 export const ControlBar: (props: ControlBarProps) => JSX.Element;
@@ -1399,13 +1303,13 @@ export const useChatThreadClient: () => ChatThreadClient;
 // @public (undocumented)
 export const useDeviceManager: () => StatefulDeviceManager | undefined;
 
-// @public (undocumented)
+// @public
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export type VideoGalleryLocalParticipant = VideoGalleryParticipant;
 
-// @public (undocumented)
+// @public
 export type VideoGalleryParticipant = {
     userId: string;
     isMuted?: boolean;
@@ -1414,37 +1318,24 @@ export type VideoGalleryParticipant = {
     isScreenSharingOn?: boolean;
 };
 
-// @public (undocumented)
+// @public
 export interface VideoGalleryProps {
-    // (undocumented)
     localParticipant: VideoGalleryLocalParticipant;
-    // (undocumented)
     localVideoViewOption?: VideoStreamOptions;
-    // (undocumented)
     onCreateLocalStreamView?: (options?: VideoStreamOptions | undefined) => Promise<void>;
-    // (undocumented)
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
-    // (undocumented)
     onDisposeLocalStreamView?: () => void;
-    // (undocumented)
     onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
-    // (undocumented)
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
-    // (undocumented)
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
-    // (undocumented)
     remoteParticipants?: VideoGalleryRemoteParticipant[];
-    // (undocumented)
     remoteVideoViewOption?: VideoStreamOptions;
-    // (undocumented)
     styles?: BaseCustomStylesProps;
 }
 
-// @public (undocumented)
+// @public
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
-    // (undocumented)
     isSpeaking?: boolean;
-    // (undocumented)
     screenShareStream?: VideoGalleryStream;
 }
 
@@ -1479,23 +1370,17 @@ export const videoGallerySelector: reselect.OutputParametricSelector<CallClientS
     remoteParticipants: VideoGalleryRemoteParticipant[];
 }>;
 
-// @public (undocumented)
+// @public
 export interface VideoGalleryStream {
-    // (undocumented)
     id?: number;
-    // (undocumented)
     isAvailable?: boolean;
-    // (undocumented)
     isMirrored?: boolean;
-    // (undocumented)
     renderElement?: HTMLElement;
 }
 
-// @public (undocumented)
+// @public
 export interface VideoStreamOptions {
-    // (undocumented)
     isMirrored?: boolean;
-    // (undocumented)
     scalingMode?: 'Stretch' | 'Crop' | 'Fit';
 }
 
