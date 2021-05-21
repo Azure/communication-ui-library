@@ -47,12 +47,32 @@ const statefulCallClient = createStatefulCallClient({
 
 const callAgent = statefulCallClient.createCallAgent(tokenCredential, {displayName: 'Optional User Name'})
 
-const chatThreadClient = await StatefulChatClient.createChatThread({});
+const call = callAgent.join({groupId: <GUID>})
 
 ```
 
-Developer has access to both clients. The stateful clients are a 1:1 representation.
+Developer has access to `statefulCallClient` and `CallAgent`. The stateful clients are a 1:1 representation.
 For state to be tracked, developers should use the stateful clients to query the service and listen to events.
+
+### Accessing the Device Manager
+
+Through the `statefulCallClient`, developers can access the device manager to query the device available for the call.
+
+```tsx
+const deviceManager = await statefulCallClient.getDeviceManager();
+```
+
+The device manager allows developers to access the local video stream to render for the user ahead of joining a call.
+
+```tsx
+const cameras = await deviceManager.getCameras();
+const camera = cameras[0];
+const localCameraStream = new LocalVideoStream(camera);
+const videoStreamRenderer = new VideoStreamRenderer(localCameraStream);
+const view = await videoStreamRenderer.createView();
+```
+
+For more information on the `DeviceManager`, see [Device Management](https://docs.microsoft.com/javascript/api/azure-communication-services/@azure/communication-calling/devicemanager?view=azure-communication-services-js)
 
 ## Chat StatefulClient
 
@@ -78,8 +98,27 @@ const statefulChatClient = createStatefulChatClient({
 const chatThreadClient = await statefulChatClient.createChatThread({});
 ```
 
-Developer has access to both clients. The stateful clients are a 1:1 representation.
+Developer has access `statefulChatClient` and `chatThreadClient`. The stateful clients are a 1:1 representation.
 For state to be tracked, developers should use the stateful clients to query the service and listen to events.
+
+### Access the Chat Thread Client
+
+The Chat Thread Client allows developers to access a variety of methods to query participants and send messages to a thread.
+
+```tsx
+const sendMessageRequest = {
+  content: 'Hello Geeta! Can you share the deck for the conference?'
+};
+
+let sendMessageOptions = {
+  senderDisplayName: 'Jack',
+  type: 'text'
+};
+const sendChatMessageResult = await chatThreadClient.sendMessage(sendMessageRequest, sendMessageOptions);
+const messageId = sendChatMessageResult.id;
+```
+
+For more information on the `ChatThreadClient`, see [ChatThreadClient](https://azuresdkdocs.blob.core.windows.net/$web/javascript/azure-communication-chat/1.0.0/classes/chatthreadclient.html)
 
 ## Capabilities
 
