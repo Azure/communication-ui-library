@@ -10,7 +10,7 @@ import React, { useState, useEffect } from 'react';
 
 function App(): JSX.Element {
   const endpointUrl = 'ADD ENDPOINT URL FOR RESOURCE';
-  const displayName = 'ADD DISPLAYE NAME';
+  const displayName = 'ADD DISPLAY NAME';
   const token = 'ADD ACCESS TOKEN WITH VOIP AND CHAT SCOPE';
 
   //Calling Variables
@@ -24,7 +24,7 @@ function App(): JSX.Element {
   useEffect(() => {
     const createAdapter = async (): Promise<void> => {
       setChatAdapter(await createAzureCommunicationChatAdapter(token, endpointUrl, threadId, displayName));
-      setCallAdapter(await createAzureCommunicationCallAdapter(token, groupId, displayName));
+      setCallAdapter(await createAzureCommunicationCallAdapter(token, { groupId }, displayName));
     };
     createAdapter();
   });

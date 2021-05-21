@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Initial changelog setup",
-  "packageName": "calling-stateful-client",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "patch"
-}

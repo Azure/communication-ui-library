@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add default menu props and selector props to OptionsButton",
-  "packageName": "react-components",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

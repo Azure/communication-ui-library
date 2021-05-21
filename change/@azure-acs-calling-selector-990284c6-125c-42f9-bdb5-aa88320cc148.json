@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update handler to match adapter version of composite",
-  "packageName": "@azure/acs-calling-selector",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}

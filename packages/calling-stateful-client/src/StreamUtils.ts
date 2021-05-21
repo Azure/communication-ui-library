@@ -225,7 +225,7 @@ async function createViewUnparentedVideo(
     // renderer and clean up state. If developer wanted the stream they could call this function again and that should
     // generate new working state via this function.
     renderer.dispose();
-    context.setDeviceManagerUnparentedView(stream, undefined);
+    context.deleteDeviceManagerUnparentedView(stream);
     return;
   }
 
@@ -234,7 +234,7 @@ async function createViewUnparentedVideo(
     // put the view into the state. Special case for unparented views, delete them from state when stopped to free up
     // the memory since we were the ones generating this and not tied to any Call state.
     internalContext.deleteUnparentedRenderInfo(stream);
-    context.setDeviceManagerUnparentedView(stream, undefined);
+    context.deleteDeviceManagerUnparentedView(stream);
     return;
   }
 
@@ -308,7 +308,7 @@ function disposeViewUnparentedVideo(
   internalContext: InternalCallContext,
   stream: LocalVideoStreamState
 ): void {
-  context.setDeviceManagerUnparentedView(stream, undefined);
+  context.deleteDeviceManagerUnparentedView(stream);
 
   const renderInfo = internalContext.getUnparentedRenderInfo(stream);
   if (!renderInfo) {

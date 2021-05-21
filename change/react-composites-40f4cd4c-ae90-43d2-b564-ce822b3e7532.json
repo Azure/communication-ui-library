@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "First stab at GroupCallAdapter interface",
-  "packageName": "react-composites",
-  "email": "domessin@microsoft.com",
-  "dependentChangeType": "patch"
-}

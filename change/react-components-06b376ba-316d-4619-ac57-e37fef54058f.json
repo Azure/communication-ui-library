@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "changing invertedVideo to isMirrored",
-  "packageName": "react-components",
-  "email": "alkwa@microsoft.com",
-  "dependentChangeType": "patch"
-}
