@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Disable microphone and camera if permission is not granted",
+  "packageName": "react-composites",
+  "email": "allenhwang@microsoft.com",
+  "dependentChangeType": "patch"
+}
