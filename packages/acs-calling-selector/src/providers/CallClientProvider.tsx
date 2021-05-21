@@ -5,7 +5,7 @@ import { StatefulCallClient, StatefulDeviceManager } from 'calling-stateful-clie
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 export type CallClientContextType = {
-  statefulCallClient: StatefulCallClient;
+  callClient: StatefulCallClient;
   deviceManager: StatefulDeviceManager | undefined;
 };
 
@@ -13,11 +13,11 @@ export const CallClientContext = createContext<CallClientContextType | undefined
 
 export interface CallClientProviderProps {
   children: React.ReactNode;
-  statefulCallClient: StatefulCallClient;
+  callClient: StatefulCallClient;
 }
 
 const CallClientProviderBase = (props: CallClientProviderProps): JSX.Element => {
-  const { statefulCallClient } = props;
+  const { callClient } = props;
 
   const [deviceManager, setDeviceManager] = useState<StatefulDeviceManager | undefined>(undefined);
 
@@ -25,7 +25,7 @@ const CallClientProviderBase = (props: CallClientProviderProps): JSX.Element => 
    * Initialize the DeviceManager inside CallClientState
    */
   useEffect(() => {
-    statefulCallClient
+    callClient
       .getDeviceManager()
       .then((manager) => {
         manager.getCameras();
@@ -36,10 +36,10 @@ const CallClientProviderBase = (props: CallClientProviderProps): JSX.Element => 
       .catch((error) => {
         throw new Error(error);
       });
-  }, [statefulCallClient]);
+  }, [callClient]);
 
   const initialState: CallClientContextType = {
-    statefulCallClient,
+    callClient,
     deviceManager
   };
 
@@ -55,7 +55,7 @@ export const useCallClient = (): StatefulCallClient => {
   if (context === undefined) {
     throw new Error('CallClient Context is undefined');
   }
-  return context.statefulCallClient;
+  return context.callClient;
 };
 
 export const useDeviceManager = (): StatefulDeviceManager | undefined => {
