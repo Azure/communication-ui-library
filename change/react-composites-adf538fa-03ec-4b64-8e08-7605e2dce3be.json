@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix wrong object passed to StreamMedia",
+  "packageName": "react-composites",
+  "email": "allenhwang@microsoft.com",
+  "dependentChangeType": "patch"
+}
