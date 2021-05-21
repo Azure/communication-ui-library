@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { CallComposite } from '@azure/communication-react';
-import { Title, Description, Heading, Source, Props } from '@storybook/addon-docs/blocks';
+import { Title, Description, Heading, Source } from '@storybook/addon-docs/blocks';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
