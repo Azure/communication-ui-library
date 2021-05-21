@@ -12,12 +12,12 @@ import EventEmitter from 'events';
 import { enableMapSet, produce } from 'immer';
 import {
   CallEndReason,
-  CallState,
+  CallState as CallStatus,
   RemoteParticipantState as RemoteParticipantStatus
 } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import {
-  Call,
+  CallState,
   CallClientState,
   LocalVideoStreamState,
   RemoteParticipantState,
@@ -42,7 +42,7 @@ export class CallContext {
 
   constructor(userId: string) {
     this._state = {
-      calls: new Map<string, Call>(),
+      calls: new Map<string, CallState>(),
       callsEnded: [],
       incomingCalls: new Map<string, IncomingCallState>(),
       incomingCallsEnded: [],
@@ -51,7 +51,7 @@ export class CallContext {
         cameras: [],
         microphones: [],
         speakers: [],
-        unparentedViews: []
+        unparentedViews: new Map<LocalVideoStreamState, LocalVideoStreamState>()
       },
       callAgent: undefined,
       userId: userId
@@ -99,7 +99,7 @@ export class CallContext {
     );
   }
 
-  public setCall(call: Call): void {
+  public setCall(call: CallState): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         const existingCall = draft.calls.get(call.id);
@@ -147,7 +147,7 @@ export class CallContext {
     );
   }
 
-  public setCallState(callId: string, state: CallState): void {
+  public setCallState(callId: string, state: CallStatus): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         const call = draft.calls.get(callId);
@@ -332,7 +332,7 @@ export class CallContext {
         const call = draft.calls.get(callId);
         if (call) {
           if (call.localVideoStreams.length > 0) {
-            call.localVideoStreams[0].videoStreamRendererView = view;
+            call.localVideoStreams[0].view = view;
           }
         }
       })
@@ -486,7 +486,7 @@ export class CallContext {
           if (participant) {
             const stream = participant.videoStreams.get(streamId);
             if (stream) {
-              stream.videoStreamRendererView = view;
+              stream.view = view;
             }
           }
         }
@@ -599,18 +599,17 @@ export class CallContext {
     );
   }
 
-  public setDeviceManagerUnparentedView(view: VideoStreamRendererViewState): void {
+  public setDeviceManagerUnparentedView(
+    localVideoStream: LocalVideoStreamState,
+    view: VideoStreamRendererViewState | undefined
+  ): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        draft.deviceManager.unparentedViews.push(view);
-      })
-    );
-  }
-
-  public removeDeviceManagerUnparentedView(index: number): void {
-    this.setState(
-      produce(this._state, (draft: CallClientState) => {
-        draft.deviceManager.unparentedViews.splice(index, 1);
+        draft.deviceManager.unparentedViews.set(localVideoStream, {
+          source: localVideoStream.source,
+          mediaStreamType: localVideoStream.mediaStreamType,
+          view: view
+        });
       })
     );
   }

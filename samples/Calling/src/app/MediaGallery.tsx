@@ -24,12 +24,13 @@ const remoteVideoViewOption = {
 } as VideoStreamOptions;
 
 export interface MediaGalleryProps {
-  isVideoStreamOn?: boolean;
+  isVideoStreamOn: boolean;
   isMicrophoneChecked?: boolean;
   onStartLocalVideo: () => Promise<void>;
 }
 
 export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
+  const { isVideoStreamOn, onStartLocalVideo } = props;
   const videoGalleryProps = usePropsFor(VideoGallery);
   const [isButtonStatusSynced, setIsButtonStatusSynced] = useState(false);
 
@@ -39,11 +40,11 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   }, [videoGalleryProps]);
 
   useEffect(() => {
-    if (isPreviewCameraOn && !props.isVideoStreamOn && !isButtonStatusSynced) {
-      props.onStartLocalVideo();
+    if (isPreviewCameraOn && !isVideoStreamOn && !isButtonStatusSynced) {
+      onStartLocalVideo();
     }
     setIsButtonStatusSynced(true);
-  }, [isButtonStatusSynced, isPreviewCameraOn, props]);
+  }, [isButtonStatusSynced, isPreviewCameraOn, isVideoStreamOn, onStartLocalVideo]);
 
   const VideoGalleryMemoized = useMemo(() => {
     return (
