@@ -396,6 +396,8 @@ export interface VideoGalleryProps {
     // (undocumented)
     onDisposeLocalStreamView?: () => void;
     // (undocumented)
+    onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
+    // (undocumented)
     onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
     // (undocumented)
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;

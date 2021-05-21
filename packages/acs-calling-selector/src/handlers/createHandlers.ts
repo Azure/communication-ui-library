@@ -121,14 +121,8 @@ export const createDefaultCallingHandlers = memoizeOne(
           return;
         }
 
-        const selectedCamera = callClient.getState().deviceManager.selectedCamera;
-        // If preview is on, then stop current preview and then start new preview with new device
-        if (selectedCamera) {
-          await callClient.disposeView(undefined, undefined, {
-            source: selectedCamera,
-            mediaStreamType: 'Video'
-          });
-        }
+        onDisposeLocalStreamView();
+
         deviceManager.selectCamera(device);
         await callClient.createView(undefined, undefined, {
           source: device,
@@ -189,6 +183,46 @@ export const createDefaultCallingHandlers = memoizeOne(
       }
     };
 
+    const onDisposeRemoteStreamView = async (userId: string): Promise<void> => {
+      if (!call) return;
+      const callState = callClient.getState().calls.get(call.id);
+      if (!callState) throw new Error(`Call Not Found: ${call.id}`);
+
+      const participant = Array.from(callState.remoteParticipants.values()).find(
+        (participant) => toFlatCommunicationIdentifier(participant.identifier) === userId
+      );
+
+      if (!participant || !participant.videoStreams) {
+        return;
+      }
+
+      const remoteVideoStream = Array.from(participant.videoStreams.values()).find(
+        (i) => i.mediaStreamType === 'Video'
+      );
+      const screenShareStream = Array.from(participant.videoStreams.values()).find(
+        (i) => i.mediaStreamType === 'ScreenSharing'
+      );
+
+      if (remoteVideoStream && !remoteVideoStream.isAvailable && remoteVideoStream.view) {
+        callClient.disposeView(call.id, participant.identifier, remoteVideoStream);
+      }
+
+      if (screenShareStream && !screenShareStream.isAvailable && screenShareStream.view) {
+        callClient.disposeView(call.id, participant.identifier, screenShareStream);
+      }
+    };
+
+    const onDisposeLocalStreamView = async (): Promise<void> => {
+      const selectedCamera = callClient.getState().deviceManager.selectedCamera;
+      // If preview is on, then stop current preview and then start new preview with new device
+      if (selectedCamera) {
+        callClient.disposeView(undefined, undefined, {
+          source: selectedCamera,
+          mediaStreamType: 'Video'
+        });
+      }
+    };
+
     const onParticipantRemove = (userId: string): void => {
       call?.removeParticipant(fromFlatCommunicationIdentifier(userId));
     };
@@ -207,7 +241,9 @@ export const createDefaultCallingHandlers = memoizeOne(
       onCreateLocalStreamView,
       onCreateRemoteStreamView,
       onParticipantRemove,
-      onStartLocalVideo
+      onStartLocalVideo,
+      onDisposeRemoteStreamView,
+      onDisposeLocalStreamView
     };
   }
 );

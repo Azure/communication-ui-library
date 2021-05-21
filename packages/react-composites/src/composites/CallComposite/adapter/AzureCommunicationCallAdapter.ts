@@ -194,6 +194,14 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     }
   }
 
+  public async disposeStreamView(userId?: string, options?: VideoStreamOptions | undefined): Promise<void> {
+    if (userId === undefined) {
+      await this.handlers.onDisposeLocalStreamView();
+    } else {
+      await this.handlers.onCreateRemoteStreamView(userId, options);
+    }
+  }
+
   public async leaveCall(): Promise<void> {
     await this.handlers.onHangUp();
     this.unsubscribeCallEvents();
