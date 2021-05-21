@@ -92,7 +92,6 @@ class CallContext {
   }
 
   public setCallId(callId: string | undefined): void {
-    console.log('Setting call id', callId);
     this.callId = callId;
   }
 
@@ -100,7 +99,6 @@ class CallContext {
     const call = clientState.calls.get(this.callId ?? '');
     const endedCall =
       clientState.callsEnded.length > 0 ? clientState.callsEnded[clientState.callsEnded.length - 1] : undefined;
-    console.log(this.callId, call);
     this.setState({
       ...this.state,
       userId: clientState.userId,
