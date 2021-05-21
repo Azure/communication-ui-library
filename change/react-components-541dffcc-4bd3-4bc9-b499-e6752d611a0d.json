@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add MicrophoneButton component to replace DefaultButton for microphone",
-  "packageName": "react-components",
-  "email": "alcail@microsoft.com",
-  "dependentChangeType": "patch"
-}

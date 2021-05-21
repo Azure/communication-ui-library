@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove MapToChatThreadProps",
-  "packageName": "react-components",
-  "email": "easony@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add commonjs support",
-  "packageName": "calling-stateful-client",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "patch"
-}

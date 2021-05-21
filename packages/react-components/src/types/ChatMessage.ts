@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
+import { MessageStatus } from 'acs-ui-common';
+
 export type MessageAttachedStatus = 'bottom' | 'top';
 
 export type MessageContentType = 'text' | 'html' | 'richtext/html' | 'unknown';

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add transcription notice capability to Calling Declarative",
-  "packageName": "calling-stateful-client",
-  "email": "allenhwang@microsoft.com",
-  "dependentChangeType": "patch"
-}

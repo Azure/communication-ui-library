@@ -1,0 +1,20 @@
+{
+  "name": "calling",
+  "entries": [
+    {
+      "date": "Fri, 21 May 2021 16:16:28 GMT",
+      "tag": "calling_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-composites to v1.0.0-beta.0",
+            "author": "allenhwang@microsoft.com",
+            "commit": "6b938ce9dee82e1810788f740f4fbae32537be19",
+            "package": "calling"
+          }
+        ]
+      }
+    }
+  ]
+}

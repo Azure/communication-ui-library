@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Storybook overhaul. Add Table of Contents, Doc sections. Remove hooks, providers and consumer docs.",
-  "packageName": "react-components",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "none"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update sendMessage back to void return value",
-  "packageName": "@azure/acs-chat-selector",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}
