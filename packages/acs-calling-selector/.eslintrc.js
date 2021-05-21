@@ -65,6 +65,7 @@ module.exports = {
         'createHandlers.ts',
         'lobbySelector.ts',
         'complianceBannerSelector.ts',
+        'devicePermissionSelector.ts',
         'usePropsFor.ts',
         'useHandlers.ts'
       ],

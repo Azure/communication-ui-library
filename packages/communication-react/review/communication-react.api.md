@@ -815,6 +815,15 @@ export type DeviceManagerState = {
 };
 
 // @public (undocumented)
+export const devicePermissionSelector: reselect.OutputSelector<CallClientState, {
+    video: boolean;
+    audio: boolean;
+}, (res: DeviceManagerState) => {
+    video: boolean;
+    audio: boolean;
+}>;
+
+// @public (undocumented)
 export type DisplayNameChangedListener = (event: {
     participantId: CallIdentifierKinds;
     displayName: string;
