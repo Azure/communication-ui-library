@@ -229,7 +229,7 @@ export type CallAdapterUiState = {
 export const CallComposite: (props: CallCompositeProps) => JSX.Element;
 
 // @public (undocumented)
-export type CallCompositePage = 'configuration' | 'call';
+export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoiningTeamsMeeting';
 
 // @public (undocumented)
 export type CallCompositeProps = {

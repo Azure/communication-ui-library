@@ -7,7 +7,8 @@ import {
   StatefulDeviceManager,
   StatefulCallClient,
   createStatefulCallClient,
-  DeviceManagerState
+  DeviceManagerState,
+  CallState
 } from 'calling-stateful-client';
 import {
   AudioOptions,
@@ -91,20 +92,29 @@ class CallContext {
   }
 
   public setCallId(callId: string | undefined): void {
+    console.log('Setting call id', callId);
     this.callId = callId;
   }
 
   public updateClientState(clientState: CallClientState): void {
     const call = clientState.calls.get(this.callId ?? '');
+    const endedCall =
+      clientState.callsEnded.length > 0 ? clientState.callsEnded[clientState.callsEnded.length - 1] : undefined;
+    console.log(this.callId, call);
     this.setState({
       ...this.state,
       userId: clientState.userId,
       displayName: clientState.callAgent?.displayName,
       call,
+      endedCall: endedCall,
       devices: clientState.deviceManager,
       isLocalPreviewMicrophoneEnabled:
         call?.isMuted === undefined ? this.state.isLocalPreviewMicrophoneEnabled : !call?.isMuted
     });
+  }
+
+  public setEndedCall(call: CallState): void {
+    this.setState({ ...this.state, endedCall: call });
   }
 }
 
@@ -181,6 +191,10 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       // TODO: find a way to expose stream to here
       const videoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
 
+      this.locator = {
+        meetingLink:
+          'https://teams.microsoft.com/l/meetup-join/19%3ameeting_YTliMDhmMTItYmRiNC00NmJkLTg0NTMtMTU4ZjNiYWUyYWFk%40thread.v2/0?context=%7b%22Tid%22%3a%2272f988bf-86f1-41af-91ab-2d7cd011db47%22%2c%22Oid%22%3a%22990a4f8d-5257-4446-8f6f-763df6703d03%22%7d'
+      };
       const isTeamsMeeting = 'groupId' in this.locator;
 
       if (isTeamsMeeting) {
