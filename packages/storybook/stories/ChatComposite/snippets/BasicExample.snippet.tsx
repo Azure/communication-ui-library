@@ -9,7 +9,7 @@ import { ContosoChatContainer, ContainerProps } from './Container.snippet';
 import { createUserAndThread } from './Server.snippet';
 import { ConfigHintBanner, addParrotBotToThread } from './Utils.snippet';
 
-export const BasicCanvas: () => JSX.Element = () => {
+export const BasicExample: () => JSX.Element = () => {
   const [containerProps, setContainerProps] = useState<ContainerProps>();
 
   const knobs = useRef({

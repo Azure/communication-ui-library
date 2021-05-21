@@ -14,13 +14,16 @@ export type ContainerProps = {
   avatarInitials: string;
 };
 
-export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
+export const CustomDataModelExampleContainer = (props: ContainerProps): JSX.Element => {
   const [adapter, setAdapter] = useState<CallAdapter>();
 
   useEffect(() => {
     if (props.token && props.groupId) {
+      const groupLocator = {
+        groupId: props.groupId
+      };
       const createAdapter = async (): Promise<void> => {
-        setAdapter(await createAzureCommunicationCallAdapter(props.token, props.groupId, props.displayName));
+        setAdapter(await createAzureCommunicationCallAdapter(props.token, groupLocator, props.displayName));
       };
       createAdapter();
     }

@@ -29,6 +29,7 @@ export const groupCallLeaveButtonCompressedStyle = {
 
 export const controlBarStyle = {
   root: {
-    marginRight: '.5rem'
+    marginRight: '.5rem',
+    float: 'right'
   }
 };

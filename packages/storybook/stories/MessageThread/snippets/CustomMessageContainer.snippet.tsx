@@ -3,7 +3,6 @@ import React from 'react';
 import { GetHistoryWithSystemMessages } from './placeholdermessages';
 
 export const MessageThreadWithCustomMessageContainerExample: () => JSX.Element = () => {
-  // Show a customized message containers.
   const messageThreadStyle: MessageThreadStylesProps = {
     chatMessageContainer: {
       fontStyle: 'italic',

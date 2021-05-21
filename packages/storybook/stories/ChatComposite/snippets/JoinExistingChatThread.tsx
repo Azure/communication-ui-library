@@ -5,9 +5,9 @@ import { text } from '@storybook/addon-knobs';
 import React, { useRef } from 'react';
 import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE } from '../../constants';
 import { ContosoChatContainer } from './Container.snippet';
-import { ConfigHintBanner } from './Utils.snippet';
+import { ConfigJoinChatThreadHintBanner } from './Utils.snippet';
 
-export const JoinChatCanvas: () => JSX.Element = () => {
+export const JoinExistingChatThread: () => JSX.Element = () => {
   const knobs = useRef({
     endpointUrl: text('Azure Communication Services endpoint URL', '', 'External chat'),
     threadId: text('Existing thread', '', 'External chat'),
@@ -28,7 +28,7 @@ export const JoinChatCanvas: () => JSX.Element = () => {
           displayName={knobs.current.displayName}
         />
       ) : (
-        <ConfigHintBanner />
+        <ConfigJoinChatThreadHintBanner />
       )}
     </div>
   );
