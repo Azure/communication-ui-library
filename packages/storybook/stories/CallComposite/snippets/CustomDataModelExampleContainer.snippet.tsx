@@ -25,6 +25,24 @@ export const CustomDataModelExampleContainer = (props: ContainerProps): JSX.Elem
     }
   }, [props]);
 
+  // FIXME: There is still a small chance of adapter leak:
+  // - props change triggers the `useEffect` block that queues async adapter creation
+  // - Component unmounts, the following `useEffect` clean up runs but finds an undefined adapter
+  // - async adapter creation succeeds -- adapter is created, and leaked.
+  //
+  // In this scenario, the adapter is never used to join a call etc. but there is still a memory leak.
+  useEffect(() => {
+    return () => {
+      (async () => {
+        if (!adapter) {
+          return;
+        }
+        await adapter.leaveCall();
+        adapter.dispose();
+      })();
+    };
+  }, [adapter]);
+
   const onRenderAvatar = useCallback(
     (onRenderAvatarprops: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element): JSX.Element => {
       onRenderAvatarprops.displayName = `${props.avatarInitials}`;

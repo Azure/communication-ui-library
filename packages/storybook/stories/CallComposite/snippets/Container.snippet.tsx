@@ -23,27 +23,25 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
         createAdapter();
       }
     })();
-    return () => {
-      console.log('Kicking off cleanup');
-      if (adapter) {
-        console.log('disposing');
-        adapter.dispose();
-      }
+  }, [props]);
 
-      /*
+  // FIXME: There is still a small chance of adapter leak:
+  // - props change triggers the `useEffect` block that queues async adapter creation
+  // - Component unmounts, the following `useEffect` clean up runs but finds an undefined adapter
+  // - async adapter creation succeeds -- adapter is created, and leaked.
+  //
+  // In this scenario, the adapter is never used to join a call etc. but there is still a memory leak.
+  useEffect(() => {
+    return () => {
       (async () => {
-        console.log('Running cleanup');
-        // TODO(prprabhu) What if the async creation hasn't completed yet?
         if (!adapter) {
           return;
         }
-        console.log('Leaving call');
         await adapter.leaveCall();
         adapter.dispose();
       })();
-      */
     };
-  }, [props]);
+  }, [adapter]);
 
   return <>{adapter && <CallComposite adapter={adapter} />}</>;
 };
