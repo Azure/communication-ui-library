@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "using message type to render RichText/html messages",
-  "packageName": "react-components",
-  "email": "alkwa@microsoft.com",
-  "dependentChangeType": "patch"
-}

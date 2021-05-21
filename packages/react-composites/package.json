@@ -1,6 +1,6 @@
 {
   "name": "react-composites",
-  "version": "1.0.0-beta",
+  "version": "1.0.0-beta.0",
   "description": "Complete Azure Communication Services experiences",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
@@ -26,9 +26,9 @@
     "postpack": "copyfiles -E \"./*.tgz\" private-preview"
   },
   "dependencies": {
-    "acs-ui-common": "~1.0.0-beta",
-    "calling-stateful-client": "~1.0.0-beta",
-    "@azure/acs-calling-selector": "~1.0.0-beta",
+    "acs-ui-common": "~1.0.0-beta.0",
+    "calling-stateful-client": "~1.0.0-beta.0",
+    "@azure/acs-calling-selector": "~1.0.0-beta.0",
     "@azure/communication-calling": "1.0.1-beta.1",
     "@azure/communication-chat": "1.0.0",
     "@azure/communication-common": "1.0.0",
@@ -41,13 +41,13 @@
     "@fluentui/react-theme-provider": "^0.18.0",
     "@uifabric/react-hooks": "~7.13.11",
     "copy-to-clipboard": "~3.3.1",
-    "chat-stateful-client": "~1.0.0-beta",
-    "@azure/acs-chat-selector": "~1.0.0-beta",
+    "chat-stateful-client": "~1.0.0-beta.0",
+    "@azure/acs-chat-selector": "~1.0.0-beta.0",
     "react-aria-live": "^2.0.5",
     "react-linkify": "^1.0.0-alpha",
     "memoize-one": "~5.2.1",
     "events": "~3.3.0",
-    "react-components": "1.0.0-beta",
+    "react-components": "1.0.0-beta.0",
     "uuid": "^8.1.0",
     "reselect": "~4.0.0"
   },

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add component binding exports to meta package",
-  "packageName": "@azure/acs-calling-selector",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "patch"
-}

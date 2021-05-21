@@ -7,7 +7,7 @@ import { Link, initializeIcons, Spinner } from '@fluentui/react';
 import EndCall from './EndCall';
 import CallError from './CallError';
 import { ConfigurationScreen } from './ConfigurationScreen';
-import { GroupCall } from './GroupCall';
+import { CallScreen } from './CallScreen';
 import { HomeScreen } from './HomeScreen';
 import { v1 as createGUID } from 'uuid';
 import { CallProvider, CallClientProvider, CallAgentProvider } from '@azure/acs-calling-selector';
@@ -120,7 +120,7 @@ const App = (): JSX.Element => {
 
   /**
    * Routing flow of the sample app: (happy path)
-   * home -> createCallClient -> configuration -> createCallAgent -> groupCall -> endCall
+   * home -> createCallClient -> configuration -> createCallAgent -> call -> endCall
    *            ^                                                                   |
    *            | ------------------------------------------------------------------|
    * CallClient instance can only support one CallAgent. We need to create a new CallClient to create a new CallAgent.
@@ -135,23 +135,19 @@ const App = (): JSX.Element => {
             displayName={displayName}
             screenWidth={screenWidth}
             startCallHandler={async (data) => {
+              let meetingLink;
               if (data?.callLocator && 'meetingLink' in data?.callLocator) {
                 setTeamsMeetingLink(data?.callLocator.meetingLink);
+                meetingLink = data?.callLocator.meetingLink;
               }
 
-              // Generate a new CallAgent for the new GroupCall.
+              // Generate a new CallAgent for the new call experience.
               try {
                 const userCredential = createAzureCommunicationUserCredential(token, refreshTokenAsync(userId));
                 setPage('createCallAgent');
                 await callAgent?.dispose();
                 const newCallAgent = await statefulCallClient?.createCallAgent(userCredential, { displayName });
-                const callLocator = teamsMeetingLink
-                  ? {
-                      meetingLink: teamsMeetingLink
-                    }
-                  : {
-                      groupId: getGroupId()
-                    };
+                const callLocator = meetingLink ? { meetingLink } : { groupId: getGroupId() };
                 const audioOptions: AudioOptions = { muted: !isMicrophoneOn };
                 const call = newCallAgent?.join(callLocator as GroupLocator, { audioOptions });
                 setCall(call);
@@ -172,12 +168,13 @@ const App = (): JSX.Element => {
         return (
           <CallAgentProvider callAgent={callAgent}>
             <CallProvider call={call}>
-              <GroupCall
+              <CallScreen
                 endCallHandler={(): void => {
                   setPage('endCall');
                 }}
-                callErrorHandler={() => {
-                  setPage('callError');
+                callErrorHandler={(customErrorPage?: string) => {
+                  if (customErrorPage) setPage(customErrorPage);
+                  else setPage('callError');
                 }}
                 screenWidth={screenWidth}
                 callLocator={
@@ -226,6 +223,16 @@ const App = (): JSX.Element => {
       case 'callError': {
         return <CallError rejoinHandler={() => setPage('createCallClient')} homeHandler={navigateToHomePage} />;
       }
+      case 'teamsMeetingDenied': {
+        return (
+          <CallError
+            title="Error joining Teams Meeting"
+            reason="Access to the Teams meeting was denied."
+            rejoinHandler={() => setPage('createCallClient')}
+            homeHandler={navigateToHomePage}
+          />
+        );
+      }
       case 'createCallClient': {
         return <Spinner label={creatingCallClientspinnerLabel} ariaLive="assertive" labelPosition="top" />;
       }
@@ -239,7 +246,7 @@ const App = (): JSX.Element => {
 
 window.setTimeout(() => {
   try {
-    console.log(`ACS sample group calling app: ${lastUpdated}`);
+    console.log(`ACS sample calling app: ${lastUpdated}`);
   } catch (e) {
     /* continue regardless of error */
   }

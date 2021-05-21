@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { CallComposite } from '@azure/communication-react';
 import { Title, Description, Heading, Source } from '@storybook/addon-docs/blocks';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
-import { CallComposite } from 'react-composites';
 
 import { COMPOSITE_FOLDER_PREFIX } from '../constants';
 
@@ -13,7 +13,7 @@ const containerText = require('!!raw-loader!./snippets/Container.snippet.tsx').d
 const serverText = require('!!raw-loader!./snippets/Server.snippet.tsx').default;
 
 export default {
-  title: `${COMPOSITE_FOLDER_PREFIX}/Call`,
+  title: `${COMPOSITE_FOLDER_PREFIX}/CallComposite`,
   component: CallComposite,
   parameters: {
     docs: {

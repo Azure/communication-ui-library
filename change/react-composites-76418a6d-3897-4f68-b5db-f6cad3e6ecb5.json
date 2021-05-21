@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Prune exports and add chat composite to @azure/communication-react",
-  "packageName": "react-composites",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "patch"
-}

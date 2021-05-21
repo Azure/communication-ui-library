@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Move duplicate memoizefnall definitions to common package",
-  "packageName": "acs-ui-common",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "patch"
-}

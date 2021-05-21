@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add ability to unregister from stateChange events",
-  "packageName": "calling-stateful-client",
-  "email": "allenhwang@microsoft.com",
-  "dependentChangeType": "patch"
-}

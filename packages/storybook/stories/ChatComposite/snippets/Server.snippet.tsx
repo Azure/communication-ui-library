@@ -18,8 +18,8 @@ export const createUserAndThread = async (resourceConnectionString: string, disp
 
   return {
     token: user.token,
-    endpointUrl: endpointUrl,
-    displayName: displayName,
+    endpointUrl,
+    displayName,
     threadId
   };
 };

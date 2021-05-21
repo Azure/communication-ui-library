@@ -13,12 +13,12 @@
     "lint:quiet": "npm run lint -- --quiet"
   },
   "dependencies": {
-    "acs-ui-common": "1.0.0-beta",
-    "react-components": "1.0.0-beta",
-    "chat-stateful-client": "1.0.0-beta",
-    "calling-stateful-client": "1.0.0-beta",
-    "@azure/acs-chat-selector": "1.0.0-beta",
-    "@azure/acs-calling-selector": "1.0.0-beta"
+    "acs-ui-common": "1.0.0-beta.0",
+    "react-components": "1.0.0-beta.0",
+    "chat-stateful-client": "1.0.0-beta.0",
+    "calling-stateful-client": "1.0.0-beta.0",
+    "@azure/acs-chat-selector": "1.0.0-beta.0",
+    "@azure/acs-calling-selector": "1.0.0-beta.0"
   },
   "devDependencies": {
     "webpack": "4.44.2",

@@ -9,7 +9,7 @@ import {
 } from '@azure/communication-calling';
 import { useEffect, useState, useRef } from 'react';
 import { CommunicationUiErrorCode, CommunicationUiError } from '../../../types/CommunicationUiError';
-import { useTriggerOnErrorCallback } from '../../../providers/ErrorProvider';
+import { useTriggerOnErrorCallback } from '../providers/ErrorProvider';
 import { propagateError } from '../../../utils/SDKUtils';
 
 export type UseRemoteVideoStreamType = {
