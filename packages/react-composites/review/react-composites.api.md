@@ -307,7 +307,7 @@ export interface ChatAdapter {
 }
 
 // @public (undocumented)
-export const ChatComposite: (props: ChatProps) => JSX.Element;
+export const ChatComposite: (props: ChatCompositeProps) => JSX.Element;
 
 // @public (undocumented)
 export type ChatCompositeClientState = {
@@ -317,16 +317,16 @@ export type ChatCompositeClientState = {
 };
 
 // @public (undocumented)
-export type ChatOptions = {
-    sendBoxMaxLength?: number;
-};
-
-// @public (undocumented)
-export type ChatProps = {
+export type ChatCompositeProps = {
     adapter: ChatAdapter;
     fluentTheme?: PartialTheme | Theme;
     onRenderAvatar?: (userId: string) => JSX.Element;
     options?: ChatOptions;
+};
+
+// @public (undocumented)
+export type ChatOptions = {
+    sendBoxMaxLength?: number;
 };
 
 // @public (undocumented)

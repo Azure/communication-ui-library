@@ -39,6 +39,11 @@ const sendMessagesAsBot = async (
   const threadClient = await chatClient.getChatThreadClient(threadId);
 
   let index = 0;
+  // Send first message immediately so users aren't staring at an empty chat thread.
+  if (messages.length > 0) {
+    threadClient.sendMessage({ content: messages[index++] });
+  }
+
   setInterval(() => {
     if (index < messages.length) {
       threadClient.sendMessage({ content: messages[index++] });
