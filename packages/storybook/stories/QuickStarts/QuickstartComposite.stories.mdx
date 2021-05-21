@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
-import { GroupCall, GroupChat } from '@azure/communication-react';
+import { CallComposite, ChatComposite } from '@azure/communication-react';
 import { App as QuickstartCompositeExample } from './snippets/QuickstartComposite.snippet.tsx';
 import QuickstartCompositeText from '!!raw-loader!./snippets/QuickstartComposite.snippet.tsx';
 
@@ -70,10 +70,10 @@ npm run start
 
 The following classes and interfaces handle some of the major features of the Azure Communication Services UI client library:
 
-| Name                                                                  | Description                                                                                        |
-| --------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| [GroupCall](/?path=/story/composites-groupcall--group-call-composite) | Composite component that renders a group calling experience with participant gallery and controls. |
-| [GroupChat](/?path=/story/composites-groupchat--group-chat-composite) | Composite component that renders a group chat experience with chat thread and input                |
+| Name                                                          | Description                                                                                  |
+| ------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| [CallComposite](/?path=/story/composites-call--basic-example) | Composite component that renders a calling experience with participant gallery and controls. |
+| [ChatComposite](/?path=/story/composites-chat--basic-example) | Composite component that renders a chat experience with chat thread and input                |
 
 ## Initialize Group Call and Group Chat Composite Components
 

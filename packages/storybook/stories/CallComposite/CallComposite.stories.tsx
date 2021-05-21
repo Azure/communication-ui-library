@@ -13,7 +13,7 @@ const containerText = require('!!raw-loader!./snippets/Container.snippet.tsx').d
 const serverText = require('!!raw-loader!./snippets/Server.snippet.tsx').default;
 
 export default {
-  title: `${COMPOSITE_FOLDER_PREFIX}/Call`,
+  title: `${COMPOSITE_FOLDER_PREFIX}/CallComposite`,
   component: CallComposite,
   parameters: {
     docs: {
