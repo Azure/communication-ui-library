@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { FluentThemeProvider } from '@azure/communication-react';
 import { ITheme } from '@fluentui/react';
 import { DefaultTheme, DarkTheme, TeamsTheme, WordTheme } from '@fluentui/theme-samples';
 import { text, radios } from '@storybook/addon-knobs';
@@ -55,9 +54,11 @@ export const ThemesCanvas: () => JSX.Element = () => {
 
   return (
     <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
-      <FluentThemeProvider fluentTheme={getTheme(knobs.current.theme)}>
-        {containerProps ? <ContosoChatContainer {...containerProps} /> : <ConfigHintBanner />}
-      </FluentThemeProvider>
+      {containerProps ? (
+        <ContosoChatContainer {...containerProps} fluentTheme={getTheme(knobs.current.theme)} />
+      ) : (
+        <ConfigHintBanner />
+      )}
     </div>
   );
 };

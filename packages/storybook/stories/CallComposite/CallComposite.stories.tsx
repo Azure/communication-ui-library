@@ -5,7 +5,7 @@ import { Title, Description, Heading, Source, Props } from '@storybook/addon-doc
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
-import { CallComposite } from 'react-composites';
+import { CallComposite } from '@azure/communication-react';
 
 import { COMPOSITE_FOLDER_PREFIX } from '../constants';
 

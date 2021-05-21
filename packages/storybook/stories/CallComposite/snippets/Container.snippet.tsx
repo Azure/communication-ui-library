@@ -1,11 +1,13 @@
+import { Theme, PartialTheme } from '@fluentui/react-theme-provider';
 import React, { useState, useEffect } from 'react';
-import { CallComposite, CallAdapter, createAzureCommunicationCallAdapter } from 'react-composites';
+import { CallComposite, CallAdapter, createAzureCommunicationCallAdapter } from '@azure/communication-react';
 
 export type ContainerProps = {
   endpointUrl: string;
   token: string;
   groupId: string;
   displayName: string;
+  fluentTheme?: PartialTheme | Theme;
 };
 
 export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
@@ -20,5 +22,5 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
     }
   }, [props]);
 
-  return <>{adapter && <CallComposite adapter={adapter} />}</>;
+  return <>{adapter && <CallComposite adapter={adapter} fluentTheme={props.fluentTheme} />}</>;
 };

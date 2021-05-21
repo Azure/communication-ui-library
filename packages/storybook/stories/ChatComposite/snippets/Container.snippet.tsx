@@ -1,11 +1,13 @@
+import { Theme, PartialTheme } from '@fluentui/react-theme-provider';
 import React, { useState, useEffect } from 'react';
-import { ChatAdapter, ChatComposite, createAzureCommunicationChatAdapter } from 'react-composites';
+import { ChatAdapter, ChatComposite, createAzureCommunicationChatAdapter } from '@azure/communication-react';
 
 export type ContainerProps = {
   token: string;
   displayName: string;
   endpointUrl: string;
   threadId: string;
+  fluentTheme?: PartialTheme | Theme;
 };
 
 export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
@@ -24,5 +26,5 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
     }
   }, [props]);
 
-  return <>{adapter ? <ChatComposite adapter={adapter} /> : <h3>Loading...</h3>}</>;
+  return <>{adapter ? <ChatComposite adapter={adapter} fluentTheme={props.fluentTheme} /> : <h3>Loading...</h3>}</>;
 };
