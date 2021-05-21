@@ -70,6 +70,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     dispose(): void;
     // (undocumented)
+    disposeStreamView(userId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
+    // (undocumented)
     getState(): CallAdapterState;
     // (undocumented)
     isTeamsCall(): boolean;
@@ -164,6 +166,8 @@ export interface CallAdapter {
     createStreamView(userId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
     // (undocumented)
     dispose(): void;
+    // (undocumented)
+    disposeStreamView(userId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
     // (undocumented)
     getState(): CallAdapterState;
     // (undocumented)
@@ -792,6 +796,8 @@ export type DefaultCallingHandlers = {
     onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void>;
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void>;
     onParticipantRemove: (userId: string) => void;
+    onDisposeRemoteStreamView: (userId: string) => Promise<void>;
+    onDisposeLocalStreamView: () => Promise<void>;
 };
 
 // @public (undocumented)

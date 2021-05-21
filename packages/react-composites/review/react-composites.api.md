@@ -38,6 +38,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     dispose(): void;
     // (undocumented)
+    disposeStreamView(userId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
+    // (undocumented)
     getState(): CallAdapterState;
     // (undocumented)
     isTeamsCall(): boolean;
@@ -127,6 +129,8 @@ export interface CallAdapter {
     createStreamView(userId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
     // (undocumented)
     dispose(): void;
+    // (undocumented)
+    disposeStreamView(userId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
     // (undocumented)
     getState(): CallAdapterState;
     // (undocumented)

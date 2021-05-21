@@ -145,6 +145,8 @@ export type DefaultCallingHandlers = {
     onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void>;
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void>;
     onParticipantRemove: (userId: string) => void;
+    onDisposeRemoteStreamView: (userId: string) => Promise<void>;
+    onDisposeLocalStreamView: () => Promise<void>;
 };
 
 // @public (undocumented)
