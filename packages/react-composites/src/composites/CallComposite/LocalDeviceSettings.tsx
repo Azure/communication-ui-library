@@ -22,6 +22,8 @@ export interface LocalDeviceSettingsType {
   selectedCamera?: VideoDeviceInfo;
   selectedMicrophone?: AudioDeviceInfo;
   selectedSpeaker?: AudioDeviceInfo;
+  microphonePermissionGranted: boolean;
+  cameraPermissionGranted: boolean;
   onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
   onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
   onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
@@ -39,9 +41,9 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
       <Dropdown
         label={cameraLabel}
         placeholder={defaultPlaceHolder}
-        options={getDropDownList(props.cameras)}
+        options={getDropDownList(props.cameraPermissionGranted ? props.cameras : [])}
         styles={dropDownStyles(theme)}
-        disabled={props.cameras.length === 0}
+        disabled={!props.cameraPermissionGranted}
         defaultSelectedKey={props.selectedCamera ? props.selectedCamera.id : props.cameras ? props.cameras[0]?.id : ''}
         onChange={(event, option, index) => {
           props.onSelectCamera(props.cameras[index ?? 0]);
@@ -51,8 +53,8 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
         label={micLabel}
         placeholder={defaultPlaceHolder}
         styles={dropDownStyles(theme)}
-        disabled={props.microphones.length === 0}
-        options={getDropDownList(props.microphones)}
+        disabled={!props.microphonePermissionGranted}
+        options={getDropDownList(props.microphonePermissionGranted ? props.microphones : [])}
         defaultSelectedKey={
           props.selectedMicrophone ? props.selectedMicrophone.id : props.microphones ? props.microphones[0]?.id : ''
         }
