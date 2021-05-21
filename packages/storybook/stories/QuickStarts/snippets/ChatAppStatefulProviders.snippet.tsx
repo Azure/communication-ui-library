@@ -1,5 +1,10 @@
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
-import { createStatefulChatClient } from '@azure/communication-react';
+import {
+  createStatefulChatClient,
+  FluentThemeProvider,
+  ChatClientProvider,
+  ChatThreadClientProvider
+} from '@azure/communication-react';
 import React from 'react';
 
 function App(): JSX.Element {
@@ -10,9 +15,9 @@ function App(): JSX.Element {
   const threadId = 'INSERT THREAD ID ';
   const displayName = 'INSERT DISPLAY NAME';
 
-  // Instantiate the statefulChatClient
+  //Instatiate the statefulChatClient
   const statefulChatClient = createStatefulChatClient({
-    userId: { kind: 'communicationUser', communicationUserId: userId },
+    userId: userId,
     displayName: displayName,
     endpoint: endpointUrl,
     credential: tokenCredential
@@ -20,7 +25,13 @@ function App(): JSX.Element {
 
   const chatThreadClient = statefulChatClient.getChatThreadClient(threadId);
 
-  return <></>;
+  return (
+    <FluentThemeProvider>
+      <ChatClientProvider chatClient={statefulChatClient}>
+        <ChatThreadClientProvider chatThreadClient={chatThreadClient}></ChatThreadClientProvider>
+      </ChatClientProvider>
+    </FluentThemeProvider>
+  );
 }
 
 export default App;
