@@ -5,11 +5,11 @@ import { text } from '@storybook/addon-knobs';
 import React, { useState, useEffect, useRef } from 'react';
 import { COMPOSITE_STRING_CONNECTIONSTRING } from '../../CompositeStringUtils';
 import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE } from '../../constants';
-import { ContosoCallContainer } from './DataModelContainer.snippet';
+import { CustomDataModelExampleContainer } from './CustomDataModelExampleContainer.snippet';
 import { createUserAndGroup } from './Server.snippet';
 import { ConfigHintBanner } from './Utils.snippet';
 
-export const DataModelCanvas: () => JSX.Element = () => {
+export const CustomDataModelExample: () => JSX.Element = () => {
   const [containerProps, setupContainerProps] = useState();
 
   const knobs = useRef({
@@ -31,7 +31,7 @@ export const DataModelCanvas: () => JSX.Element = () => {
   return (
     <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
       {containerProps ? (
-        <ContosoCallContainer
+        <CustomDataModelExampleContainer
           displayName={knobs.current.displayName}
           avatarInitials={knobs.current.avatarInitials}
           {...containerProps}
