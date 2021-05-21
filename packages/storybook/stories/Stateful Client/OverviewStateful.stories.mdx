@@ -51,7 +51,7 @@ const call = callAgent.join({groupId: <GUID>})
 
 ```
 
-Developer has access to `statefulCallClient` and `CallAgent`. The stateful clients are a 1:1 representation.
+To interact with the call, developers have access to `statefulCallClient` and `CallAgent`. The stateful clients are a 1:1 representation.
 For state to be tracked, developers should use the stateful clients to query the service and listen to events.
 
 ### Accessing the Device Manager
@@ -98,7 +98,7 @@ const statefulChatClient = createStatefulChatClient({
 const chatThreadClient = await statefulChatClient.createChatThread({});
 ```
 
-Developer has access `statefulChatClient` and `chatThreadClient`. The stateful clients are a 1:1 representation.
+To interact with the chat thread, developers have access `statefulChatClient` and `chatThreadClient`. The stateful clients are a 1:1 representation.
 For state to be tracked, developers should use the stateful clients to query the service and listen to events.
 
 ### Access the Chat Thread Client
