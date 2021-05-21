@@ -79,11 +79,11 @@ const CallingProviderBase = (props: CallingProviderProps & ErrorHandlingProps): 
   useEffect(() => {
     (async () => {
       try {
-        // Need refactor: to support having ConfigurationScreen separate from GroupCall in Calling Sample, we need to
+        // Need refactor: to support having ConfigurationScreen separate from CallScreen in Calling Sample, we need to
         // allow DeviceManager to be created but not create CallAgent because ConfigurationScreen depends on
         // DeviceManager but CallAgent depends on ConfigurationScreen displayName. So the CallingProvider used by
         // ConfigurationScreen will pass in undefined token while all other cases like when CallingProvider is used by
-        // GroupCall or used in composite, you should pass in the valid token.
+        // CallScreen or used in composite, you should pass in the valid token.
         if (token) {
           setCallAgent(
             await callClient.createCallAgent(

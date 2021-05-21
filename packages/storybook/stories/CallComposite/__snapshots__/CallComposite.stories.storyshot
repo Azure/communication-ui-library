@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`storybook snapshot tests Storyshots Composites/Call Basic Example 1`] = `
+exports[`storybook snapshot tests Storyshots Composites/CallComposite Basic Example 1`] = `
 <div
   className="css-80 root-0 body-1"
 >
@@ -46,7 +46,7 @@ exports[`storybook snapshot tests Storyshots Composites/Call Basic Example 1`] =
 </div>
 `;
 
-exports[`storybook snapshot tests Storyshots Composites/Call Custom Data Model Example 1`] = `
+exports[`storybook snapshot tests Storyshots Composites/CallComposite Custom Data Model Example 1`] = `
 <div
   className="css-80 root-0 body-1"
 >
@@ -92,7 +92,7 @@ exports[`storybook snapshot tests Storyshots Composites/Call Custom Data Model E
 </div>
 `;
 
-exports[`storybook snapshot tests Storyshots Composites/Call Join Existing Call 1`] = `
+exports[`storybook snapshot tests Storyshots Composites/CallComposite Join Existing Call 1`] = `
 <div
   className="css-80 root-0 body-1"
 >
@@ -138,7 +138,7 @@ exports[`storybook snapshot tests Storyshots Composites/Call Join Existing Call 
 </div>
 `;
 
-exports[`storybook snapshot tests Storyshots Composites/Call Theme Example 1`] = `
+exports[`storybook snapshot tests Storyshots Composites/CallComposite Theme Example 1`] = `
 <div
   className="css-80 root-0 body-1"
 >

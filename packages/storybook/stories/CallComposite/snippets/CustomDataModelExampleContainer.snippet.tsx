@@ -7,7 +7,6 @@ import {
 import React, { useCallback, useState, useEffect } from 'react';
 
 export type ContainerProps = {
-  endpointUrl: string;
   token: string;
   groupId: string;
   displayName: string;

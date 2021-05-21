@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`storybook snapshot tests Storyshots Composites/Chat Basic Example 1`] = `
+exports[`storybook snapshot tests Storyshots Composites/ChatComposite Basic Example 1`] = `
 <div
   className="css-80 root-0 body-1"
 >
@@ -46,7 +46,7 @@ exports[`storybook snapshot tests Storyshots Composites/Chat Basic Example 1`] =
 </div>
 `;
 
-exports[`storybook snapshot tests Storyshots Composites/Chat Custom Behavior Example 1`] = `
+exports[`storybook snapshot tests Storyshots Composites/ChatComposite Custom Behavior Example 1`] = `
 <div
   className="css-80 root-0 body-1"
 >
@@ -92,7 +92,7 @@ exports[`storybook snapshot tests Storyshots Composites/Chat Custom Behavior Exa
 </div>
 `;
 
-exports[`storybook snapshot tests Storyshots Composites/Chat Custom Data Model Example 1`] = `
+exports[`storybook snapshot tests Storyshots Composites/ChatComposite Custom Data Model Example 1`] = `
 <div
   className="css-80 root-0 body-1"
 >
@@ -138,7 +138,7 @@ exports[`storybook snapshot tests Storyshots Composites/Chat Custom Data Model E
 </div>
 `;
 
-exports[`storybook snapshot tests Storyshots Composites/Chat Join Existing Chat Thread 1`] = `
+exports[`storybook snapshot tests Storyshots Composites/ChatComposite Join Existing Chat Thread 1`] = `
 <div
   className="css-80 root-0 body-1"
 >
@@ -184,7 +184,7 @@ exports[`storybook snapshot tests Storyshots Composites/Chat Join Existing Chat 
 </div>
 `;
 
-exports[`storybook snapshot tests Storyshots Composites/Chat Theme Example 1`] = `
+exports[`storybook snapshot tests Storyshots Composites/ChatComposite Theme Example 1`] = `
 <div
   className="css-80 root-0 body-1"
 >
