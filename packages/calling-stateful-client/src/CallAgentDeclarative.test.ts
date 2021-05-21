@@ -198,7 +198,7 @@ describe('declarative call agent', () => {
     mockCallAgent.calls = [];
     callAgentDeclaratify(mockCallAgent, context, internalContext);
     expect(context.getState().calls.size).toBe(0);
-    expect(internalContext.getRemoteStreamAndRenderersAll().size).toBe(0);
+    expect(internalContext.getRemoteRenderInfos().size).toBe(0);
   });
 
   test('should update state with new call when startCall is invoked', () => {
