@@ -1,51 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`storybook snapshot tests Storyshots Composites/Chat Basic Canvas 1`] = `
-<div
-  className="css-80 root-0 body-1"
->
-  <div
-    className="css-80"
-    data-uses-unhanded-props={true}
-    dir="ltr"
-  >
-    <div
-      style={
-        Object {
-          "alignItems": "center",
-          "display": "flex",
-          "height": "100vh",
-          "justifyContent": "center",
-        }
-      }
-    >
-      <div
-        style={
-          Object {
-            "height": "90vh",
-            "width": "90vw",
-          }
-        }
-      >
-        <div
-          className="ms-Stack css-2"
-          style={
-            Object {
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        >
-          <span>
-            Please provide the connection string and display name to use.
-          </span>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
 exports[`storybook snapshot tests Storyshots Composites/Chat Basic Example 1`] = `
 <div
   className="css-80 root-0 body-1"
@@ -184,98 +138,6 @@ exports[`storybook snapshot tests Storyshots Composites/Chat Custom Data Model E
 </div>
 `;
 
-exports[`storybook snapshot tests Storyshots Composites/Chat Customization Canvas 1`] = `
-<div
-  className="css-80 root-0 body-1"
->
-  <div
-    className="css-80"
-    data-uses-unhanded-props={true}
-    dir="ltr"
-  >
-    <div
-      style={
-        Object {
-          "alignItems": "center",
-          "display": "flex",
-          "height": "100vh",
-          "justifyContent": "center",
-        }
-      }
-    >
-      <div
-        style={
-          Object {
-            "height": "90vh",
-            "width": "90vw",
-          }
-        }
-      >
-        <div
-          className="ms-Stack css-2"
-          style={
-            Object {
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        >
-          <span>
-            Please provide the connection string and display name to use.
-          </span>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`storybook snapshot tests Storyshots Composites/Chat Data Model Canvas 1`] = `
-<div
-  className="css-80 root-0 body-1"
->
-  <div
-    className="css-80"
-    data-uses-unhanded-props={true}
-    dir="ltr"
-  >
-    <div
-      style={
-        Object {
-          "alignItems": "center",
-          "display": "flex",
-          "height": "100vh",
-          "justifyContent": "center",
-        }
-      }
-    >
-      <div
-        style={
-          Object {
-            "height": "90vh",
-            "width": "90vw",
-          }
-        }
-      >
-        <div
-          className="ms-Stack css-2"
-          style={
-            Object {
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        >
-          <span>
-            Please provide the connection string and display name to use.
-          </span>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
 exports[`storybook snapshot tests Storyshots Composites/Chat Join Existing Chat Thread 1`] = `
 <div
   className="css-80 root-0 body-1"
@@ -350,81 +212,17 @@ exports[`storybook snapshot tests Storyshots Composites/Chat Theme Example 1`] =
         }
       >
         <div
-          className="css-80 root-2 body-1"
-        >
-          <div
-            className="css-80"
-            data-uses-unhanded-props={true}
-          >
-            <div
-              className="ms-Stack css-3"
-              style={
-                Object {
-                  "height": "100%",
-                  "width": "100%",
-                }
-              }
-            >
-              <span>
-                Please provide the connection string and display name to use.
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`storybook snapshot tests Storyshots Composites/Chat Themes Canvas 1`] = `
-<div
-  className="css-80 root-0 body-1"
->
-  <div
-    className="css-80"
-    data-uses-unhanded-props={true}
-    dir="ltr"
-  >
-    <div
-      style={
-        Object {
-          "alignItems": "center",
-          "display": "flex",
-          "height": "100vh",
-          "justifyContent": "center",
-        }
-      }
-    >
-      <div
-        style={
-          Object {
-            "height": "90vh",
-            "width": "90vw",
+          className="ms-Stack css-2"
+          style={
+            Object {
+              "height": "100%",
+              "width": "100%",
+            }
           }
-        }
-      >
-        <div
-          className="css-80 root-2 body-1"
         >
-          <div
-            className="css-80"
-            data-uses-unhanded-props={true}
-          >
-            <div
-              className="ms-Stack css-3"
-              style={
-                Object {
-                  "height": "100%",
-                  "width": "100%",
-                }
-              }
-            >
-              <span>
-                Please provide the connection string and display name to use.
-              </span>
-            </div>
-          </div>
+          <span>
+            Please provide the connection string and display name to use.
+          </span>
         </div>
       </div>
     </div>
