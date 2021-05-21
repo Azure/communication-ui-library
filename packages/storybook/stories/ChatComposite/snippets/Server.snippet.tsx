@@ -3,7 +3,13 @@
 import { ChatClient } from '@azure/communication-chat';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { CommunicationIdentityClient } from '@azure/communication-identity';
-import { ChatConfig } from '../ChatConfig';
+
+type ChatConfig = {
+  token: string;
+  endpointUrl: string;
+  displayName: string;
+  threadId: string;
+};
 
 export const createUserAndThread = async (
   resourceConnectionString: string,
@@ -22,8 +28,8 @@ export const createUserAndThread = async (
 
   return {
     token: user.token,
-    endpointUrl: endpointUrl,
-    displayName: displayName,
+    endpointUrl,
+    displayName,
     threadId
   };
 };

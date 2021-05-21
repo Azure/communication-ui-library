@@ -1,6 +1,10 @@
-import { PlaceholderProps } from '@azure/communication-react';
+import {
+  CallComposite,
+  CallAdapter,
+  createAzureCommunicationCallAdapter,
+  PlaceholderProps
+} from '@azure/communication-react';
 import React, { useCallback, useState, useEffect } from 'react';
-import { CallComposite, CallAdapter, createAzureCommunicationCallAdapter } from 'react-composites';
 
 export type ContainerProps = {
   endpointUrl: string;

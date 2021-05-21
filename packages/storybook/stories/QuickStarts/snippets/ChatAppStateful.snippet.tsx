@@ -5,9 +5,10 @@ import {
   MessageThread,
   SendBox,
   MessageThreadProps,
-  SendBoxProps
+  SendBoxProps,
+  StatefulChatClient,
+  createStatefulChatClient
 } from '@azure/communication-react';
-import { createStatefulChatClient, StatefulChatClient } from 'chat-stateful-client';
 import React, { useState, useEffect } from 'react';
 
 function App(): JSX.Element {
@@ -35,7 +36,7 @@ function App(): JSX.Element {
   //Add state to the low-level chat client
   setStatefulChatClient(
     createStatefulChatClient({
-      userId: userId,
+      userId: { kind: 'communicationUser', communicationUserId: userId },
       displayName: displayName,
       endpoint: endpointUrl,
       credential: tokenCredential
