@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add api extractor for package",
-  "packageName": "@azure/acs-chat-selector",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "patch"
-}

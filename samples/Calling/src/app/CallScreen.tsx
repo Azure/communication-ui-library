@@ -31,7 +31,7 @@ import { complianceBannerSelector } from './selectors/complianceBannerSelector';
 export interface CallScreenProps {
   screenWidth: number;
   endCallHandler(): void;
-  callErrorHandler(): void;
+  callErrorHandler(customErrorPage?: 'callError' | 'teamsMeetingDenied'): void;
   callLocator: GroupLocator | MeetingLocator;
   isMicrophoneOn: boolean;
 }
@@ -57,9 +57,16 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const handlers = useAzureCommunicationHandlers();
 
   const lobbyProps = useSelector(lobbySelector);
-  // const lobbyHandlers = useHandlers(Lobby);
 
   const complianceBannerProps = useSelector(complianceBannerSelector);
+
+  useEffect(() => {
+    const callEndReason = call?.callEndReason;
+    if (!callEndReason) return;
+    if (callEndReason.code === 0 && callEndReason.subCode === 5854) {
+      props.callErrorHandler('teamsMeetingDenied');
+    }
+  }, [call?.callEndReason, props]);
 
   // To use useProps to get these states, we need to create another file wrapping GroupCall,
   // It seems unnecessary in this case, so we get the updated states using this approach.
@@ -80,6 +87,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         <Lobby
           callState={callState}
           {...lobbyProps}
+          onCreateLocalStreamView={handlers.onCreateLocalStreamView}
           onStartLocalVideo={handlers.onStartLocalVideo}
           onEndCallClick={endCallHandler}
           isMicrophoneChecked={isMicrophoneOn}

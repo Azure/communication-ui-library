@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update selector types to include rendering status",
-  "packageName": "@azure/acs-calling-selector",
-  "email": "allenhwang@microsoft.com",
-  "dependentChangeType": "patch"
-}

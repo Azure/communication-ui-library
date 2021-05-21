@@ -135,8 +135,10 @@ const App = (): JSX.Element => {
             displayName={displayName}
             screenWidth={screenWidth}
             startCallHandler={async (data) => {
+              let meetingLink;
               if (data?.callLocator && 'meetingLink' in data?.callLocator) {
                 setTeamsMeetingLink(data?.callLocator.meetingLink);
+                meetingLink = data?.callLocator.meetingLink;
               }
 
               // Generate a new CallAgent for the new call experience.
@@ -145,13 +147,7 @@ const App = (): JSX.Element => {
                 setPage('createCallAgent');
                 await callAgent?.dispose();
                 const newCallAgent = await statefulCallClient?.createCallAgent(userCredential, { displayName });
-                const callLocator = teamsMeetingLink
-                  ? {
-                      meetingLink: teamsMeetingLink
-                    }
-                  : {
-                      groupId: getGroupId()
-                    };
+                const callLocator = meetingLink ? { meetingLink } : { groupId: getGroupId() };
                 const audioOptions: AudioOptions = { muted: !isMicrophoneOn };
                 const call = newCallAgent?.join(callLocator as GroupLocator, { audioOptions });
                 setCall(call);
@@ -176,8 +172,9 @@ const App = (): JSX.Element => {
                 endCallHandler={(): void => {
                   setPage('endCall');
                 }}
-                callErrorHandler={() => {
-                  setPage('callError');
+                callErrorHandler={(customErrorPage?: string) => {
+                  if (customErrorPage) setPage(customErrorPage);
+                  else setPage('callError');
                 }}
                 screenWidth={screenWidth}
                 callLocator={
@@ -225,6 +222,16 @@ const App = (): JSX.Element => {
       }
       case 'callError': {
         return <CallError rejoinHandler={() => setPage('createCallClient')} homeHandler={navigateToHomePage} />;
+      }
+      case 'teamsMeetingDenied': {
+        return (
+          <CallError
+            title="Error joining Teams Meeting"
+            reason="Access to the Teams meeting was denied."
+            rejoinHandler={() => setPage('createCallClient')}
+            homeHandler={navigateToHomePage}
+          />
+        );
       }
       case 'createCallClient': {
         return <Spinner label={creatingCallClientspinnerLabel} ariaLive="assertive" labelPosition="top" />;
