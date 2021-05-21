@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IDropdownStyles, IStackTokens, ITextStyles, mergeStyles } from '@fluentui/react';
+import { IDropdownStyles, IStackTokens, mergeStyles } from '@fluentui/react';
 import { Theme } from '@fluentui/react-theme-provider';
 
 export const mainStackTokens: IStackTokens = {
@@ -37,6 +37,9 @@ export const dropDownStyles = (theme: Theme): Partial<IDropdownStyles> => ({
   label: {
     fontWeight: 600,
     fontSize: '0.875rem'
+  },
+  errorMessage: {
+    fontSize: '0.875rem'
   }
 });
 
@@ -47,11 +50,3 @@ export const localSettingsContainer = mergeStyles({
   maxHeight: '19.125rem',
   marginTop: '2.125rem'
 });
-
-export const dropdownAndDeniedTextTokens: IStackTokens = {
-  childrenGap: '0.2rem'
-};
-
-export const permissionDeniedTextStyle = (theme: Theme): Partial<ITextStyles> => {
-  return { root: { color: theme.palette.redDark, marginTop: '0rem', marginBottom: '0rem' } };
-};

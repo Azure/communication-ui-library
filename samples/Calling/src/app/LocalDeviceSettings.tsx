@@ -1,21 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useMemo } from 'react';
-import { IDropdownOption, Dropdown, Stack, Text } from '@fluentui/react';
-import {
-  dropdownAndDeniedTextTokens,
-  dropDownStyles,
-  localSettingsContainer,
-  mainStackTokens,
-  permissionDeniedTextStyle
-} from './styles/LocalDeviceSettings.styles';
+import React from 'react';
+import { IDropdownOption, Dropdown, Stack } from '@fluentui/react';
+import { dropDownStyles, localSettingsContainer, mainStackTokens } from './styles/LocalDeviceSettings.styles';
 import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
 import { useTheme } from '@fluentui/react-theme-provider';
 
 const cameraPermissionDeniedText = 'Your browser is blocking access to your camera.';
 const microphonePermissionDeniedText = 'Your browser is blocking access to your microphone.';
-const permissionDeniedTextSize = 'medium';
 
 const getDropDownList = (list: Array<VideoDeviceInfo | AudioDeviceInfo>): IDropdownOption[] => {
   // Remove duplicates
@@ -54,9 +47,6 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
   const cameraLabel = 'Camera';
   const micLabel = 'Microphone';
   const speakerLabel = 'Speaker';
-  const deniedTextStyle = useMemo(() => {
-    return permissionDeniedTextStyle(theme);
-  }, [theme]);
 
   // TODO: speaker permission is tied to microphone permission (when you request 'audio' permission using the SDK) its
   // actually granting access to query both microphone and speaker. However the browser popup asks you explicity for
@@ -64,68 +54,50 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
 
   return (
     <Stack className={localSettingsContainer} tokens={mainStackTokens}>
-      <Stack tokens={dropdownAndDeniedTextTokens}>
-        <Dropdown
-          label={cameraLabel}
-          placeholder={defaultPlaceHolder}
-          options={props.cameraPermissionGranted ? getDropDownList(props.cameras) : [{ key: 'denied', text: '' }]}
-          styles={dropDownStyles(theme)}
-          disabled={!props.cameraPermissionGranted}
-          defaultSelectedKey={
-            props.cameraPermissionGranted
-              ? props.selectedCamera
-                ? props.selectedCamera.id
-                : props.cameras
-                ? props.cameras[0]?.id
-                : ''
-              : 'denied'
-          }
-          onChange={(event, option, index) => {
-            props.onSelectCamera(props.cameras[index ?? 0]);
-          }}
-        />
-        {props.cameraPermissionGranted ? (
-          <></>
-        ) : (
-          <Text variant={permissionDeniedTextSize} styles={deniedTextStyle}>
-            {cameraPermissionDeniedText}
-          </Text>
-        )}
-      </Stack>
-      <Stack tokens={dropdownAndDeniedTextTokens}>
-        <Dropdown
-          label={micLabel}
-          placeholder={defaultPlaceHolder}
-          styles={dropDownStyles(theme)}
-          disabled={!props.microphonePermissionGranted}
-          options={
-            props.microphonePermissionGranted ? getDropDownList(props.microphones) : [{ key: 'denied', text: '' }]
-          }
-          defaultSelectedKey={
-            props.microphonePermissionGranted
-              ? props.selectedMicrophone
-                ? props.selectedMicrophone.id
-                : props.microphones
-                ? props.microphones[0]?.id
-                : ''
-              : 'denied'
-          }
-          onChange={(
-            event: React.FormEvent<HTMLDivElement>,
-            option?: IDropdownOption | undefined,
-            index?: number | undefined
-          ) => {
-            props.onSelectMicrophone(props.microphones[index ?? 0]);
-          }}
-        />
-        {props.microphonePermissionGranted ? (
-          <></>
-        ) : (
-          <Text variant={permissionDeniedTextSize} styles={deniedTextStyle}>
-            {microphonePermissionDeniedText}
-          </Text>
-        )}
-      </Stack>
+      <Dropdown
+        label={cameraLabel}
+        placeholder={defaultPlaceHolder}
+        options={props.cameraPermissionGranted ? getDropDownList(props.cameras) : [{ key: 'denied', text: '' }]}
+        styles={dropDownStyles(theme)}
+        disabled={!props.cameraPermissionGranted}
+        errorMessage={props.cameraPermissionGranted ? undefined : cameraPermissionDeniedText}
+        defaultSelectedKey={
+          props.cameraPermissionGranted
+            ? props.selectedCamera
+              ? props.selectedCamera.id
+              : props.cameras
+              ? props.cameras[0]?.id
+              : ''
+            : 'denied'
+        }
+        onChange={(event, option, index) => {
+          props.onSelectCamera(props.cameras[index ?? 0]);
+        }}
+      />
+      <Dropdown
+        label={micLabel}
+        placeholder={defaultPlaceHolder}
+        styles={dropDownStyles(theme)}
+        disabled={!props.microphonePermissionGranted}
+        errorMessage={props.microphonePermissionGranted ? undefined : microphonePermissionDeniedText}
+        options={props.microphonePermissionGranted ? getDropDownList(props.microphones) : [{ key: 'denied', text: '' }]}
+        defaultSelectedKey={
+          props.microphonePermissionGranted
+            ? props.selectedMicrophone
+              ? props.selectedMicrophone.id
+              : props.microphones
+              ? props.microphones[0]?.id
+              : ''
+            : 'denied'
+        }
+        onChange={(
+          event: React.FormEvent<HTMLDivElement>,
+          option?: IDropdownOption | undefined,
+          index?: number | undefined
+        ) => {
+          props.onSelectMicrophone(props.microphones[index ?? 0]);
+        }}
+      />
       <Dropdown
         label={speakerLabel}
         placeholder={defaultPlaceHolder}
