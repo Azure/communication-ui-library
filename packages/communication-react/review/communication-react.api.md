@@ -85,11 +85,11 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     off(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
     // (undocumented)
-    off(event: 'displayNameChanged', listener: DisplaynameChangedListener): void;
+    off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
     // (undocumented)
     off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
     // (undocumented)
-    off(event: 'leaveCall', listener: LeaveCallListner): void;
+    off(event: 'callEnded', listener: CallEndedListener): void;
     // (undocumented)
     off(event: 'error', errorHandler: (e: Error) => void): void;
     // (undocumented)
@@ -105,11 +105,11 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     on(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
     // (undocumented)
-    on(event: 'displayNameChanged', listener: DisplaynameChangedListener): void;
+    on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
     // (undocumented)
     on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
     // (undocumented)
-    on(event: 'leaveCall', listener: LeaveCallListner): void;
+    on(event: 'callEnded', listener: CallEndedListener): void;
     // (undocumented)
     on(event: 'error', errorHandler: (e: Error) => void): void;
     // (undocumented)
@@ -198,11 +198,11 @@ export interface CallAdapter {
     // (undocumented)
     off(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
     // (undocumented)
-    off(event: 'displayNameChanged', listener: DisplaynameChangedListener): void;
+    off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
     // (undocumented)
     off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
     // (undocumented)
-    off(event: 'leaveCall', listener: LeaveCallListner): void;
+    off(event: 'callEnded', listener: CallEndedListener): void;
     // (undocumented)
     off(event: 'error', listener: (e: Error) => void): void;
     // (undocumented)
@@ -218,11 +218,11 @@ export interface CallAdapter {
     // (undocumented)
     on(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
     // (undocumented)
-    on(event: 'displayNameChanged', listener: DisplaynameChangedListener): void;
+    on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
     // (undocumented)
     on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
     // (undocumented)
-    on(event: 'leaveCall', listener: LeaveCallListner): void;
+    on(event: 'callEnded', listener: CallEndedListener): void;
     // (undocumented)
     on(event: 'error', listener: (e: Error) => void): void;
     // (undocumented)
@@ -289,7 +289,12 @@ export type CallCompositeProps = {
 };
 
 // @public (undocumented)
-export type CallEvent = 'participantsJoined' | 'participantsLeft' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'leaveCall' | 'error';
+export type CallEndedListener = (event: {
+    callId: string;
+}) => void;
+
+// @public (undocumented)
+export type CallEvent = 'participantsJoined' | 'participantsLeft' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callEnded' | 'error';
 
 // @public (undocumented)
 export type CallIdChangedListener = (event: {
@@ -766,7 +771,7 @@ export type DeviceManagerState = {
 };
 
 // @public (undocumented)
-export type DisplaynameChangedListener = (event: {
+export type DisplayNameChangedListener = (event: {
     participantId: CallIdentifierKinds;
     displayName: string;
 }) => void;
@@ -874,11 +879,6 @@ export interface JumpToNewMessageButtonProps {
     // (undocumented)
     onClick: () => void;
 }
-
-// @public (undocumented)
-export type LeaveCallListner = (event: {
-    callId: string;
-}) => void;
 
 // @public
 export const lightTheme: PartialTheme & CallingTheme;
