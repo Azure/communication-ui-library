@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update createStatefulCallClient to create the underlying call client internally",
-  "packageName": "calling-stateful-client",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Updated onRenderText prop for video button and styling. Removed centering style in FluentThemeProvider.",
-  "packageName": "react-components",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

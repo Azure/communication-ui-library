@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add some basic styling for placeholder in VideoTile",
-  "packageName": "react-components",
-  "email": "easony@microsoft.com",
-  "dependentChangeType": "patch"
-}

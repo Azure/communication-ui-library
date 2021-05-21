@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Introduce common identifier format",
-  "packageName": "chat-stateful-client",
-  "email": "prprabhu@microsoft.com",
-  "dependentChangeType": "patch"
-}

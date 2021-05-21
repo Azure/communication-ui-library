@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Move common type to acs-ui-common",
-  "packageName": "react-composites",
-  "email": "prprabhu@microsoft.com",
-  "dependentChangeType": "patch"
-}

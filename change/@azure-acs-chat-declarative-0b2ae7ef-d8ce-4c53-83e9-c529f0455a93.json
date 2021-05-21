@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add api extractor for package",
-  "packageName": "chat-stateful-client",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "patch"
-}

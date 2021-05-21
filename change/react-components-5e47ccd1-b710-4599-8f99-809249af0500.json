@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Add more examples to Styling. Samples can now be imported directly from .tsx files and displayed in storybook.",
-  "packageName": "react-components",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "none"
-}
