@@ -59,7 +59,7 @@ There are three scenarios to using these APIs:
    Note that this will only work if the `LocalVideoStream` is already part of the call (you’ll have to first call `Call.startVideo` to add the `LocalVideoStream` to the Call).
    Everything else is the same as #1 after this except the view can be found in `CallState.localVideoStreams.(your videostream).view`.
 
-3. _Rendering a LocalVideoStreamState not in a call_
+3. _Rendering a LocalVideoStreamState when not in a call_
    This scenario supports the case if you want to see a video render without adding that stream to the call, for instance `LocalPreview` scenario.
    In this case `createView` requires only a valid `LocalVideoStreamState`.
    `CreateView` will put the created view under `DeviceManagerState.unparentedViews.(your videostream).view`.
