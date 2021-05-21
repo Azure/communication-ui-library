@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useContext } from 'react';
-import { CommunicationUiErrorCode, CommunicationUiError } from '../types/CommunicationUiError';
+import { CommunicationUiError, CommunicationUiErrorCode } from '../../../types';
 
 /**
  * Generic function to ensure the retreived context is valid.

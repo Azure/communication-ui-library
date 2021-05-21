@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CommunicationUiErrorFromError, CommunicationUiError } from '../types/CommunicationUiError';
 import React, { ErrorInfo, ReactNode } from 'react';
+import { CommunicationUiError, CommunicationUiErrorFromError } from '../../../types/CommunicationUiError';
 import { ErrorHandlingProps, useTriggerOnErrorCallback } from '../providers/ErrorProvider';
 
 const ErrorBoundary = class extends React.Component<ErrorHandlingProps> {

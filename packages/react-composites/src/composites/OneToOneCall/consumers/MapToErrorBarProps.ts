@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ErrorBarProps } from '../composites/common/ErrorBar';
-import { CommunicationUiErrorCode, CommunicationUiErrorSeverity } from '../types/CommunicationUiError';
+import { CommunicationUiErrorCode, CommunicationUiErrorSeverity } from '../../../types/CommunicationUiError';
+import { ErrorBarProps } from '../../common';
 import { useLastError, useSetLastError } from '../providers/ErrorProvider';
 
 /**

@@ -4,8 +4,9 @@
 import React, { useContext, createContext, useState, Dispatch, SetStateAction } from 'react';
 import { Call, CallState as CallStatus, LocalVideoStream, RemoteParticipant } from '@azure/communication-calling';
 import { ParticipantStream } from '../../../types/ParticipantStream';
-import { ErrorHandlingProps } from '../../../providers';
-import { useValidContext, WithErrorHandling } from '../../../utils';
+import { ErrorHandlingProps } from '../providers/ErrorProvider';
+import { WithErrorHandling } from '../utils/WithErrorHandling';
+import { useValidContext } from '../utils/ValidContext';
 
 export type CallContextType = {
   call: Call | undefined;
