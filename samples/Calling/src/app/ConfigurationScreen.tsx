@@ -9,7 +9,7 @@ import { DisplayNameField } from './DisplayNameField';
 import { StartCallButton } from './StartCallButton';
 import { CallConfiguration } from './CallConfiguration';
 import { LocalDeviceSettings } from './LocalDeviceSettings';
-import { optionsButtonSelector } from '@azure/acs-calling-selector';
+import { devicePermissionSelector, optionsButtonSelector } from '@azure/acs-calling-selector';
 import { useCallingSelector as useSelector } from '@azure/acs-calling-selector';
 import { useAzureCommunicationHandlers } from './hooks/useAzureCommunicationHandlers';
 import { TeamsMeetingLinkField } from './TeamsMeetingLinkField';
@@ -31,6 +31,7 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
 
   const options = useSelector(optionsButtonSelector);
   const handlers = useAzureCommunicationHandlers();
+  const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useSelector(devicePermissionSelector);
 
   return (
     <CallConfiguration {...props}>
@@ -45,6 +46,8 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
       <div>
         <LocalDeviceSettings
           {...options}
+          cameraPermissionGranted={cameraPermissionGranted}
+          microphonePermissionGranted={microphonePermissionGranted}
           onSelectCamera={handlers.onSelectCamera}
           onSelectMicrophone={handlers.onSelectMicrophone}
           onSelectSpeaker={handlers.onSelectSpeaker}
