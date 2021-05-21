@@ -1386,9 +1386,6 @@ export const useChatThreadClient: () => ChatThreadClient;
 export const useDeviceManager: () => StatefulDeviceManager | undefined;
 
 // @public (undocumented)
-export const useThreadId: () => string;
-
-// @public (undocumented)
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
 // @public (undocumented)

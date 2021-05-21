@@ -12,8 +12,7 @@ import {
   chatParticipantListSelector,
   useChatClient,
   useChatThreadClient,
-  useChatSelector,
-  useThreadId
+  useChatSelector
 } from '@azure/acs-chat-selector';
 import { chatHeaderSelector } from './selectors/chatHeaderSelector';
 
@@ -32,13 +31,12 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   );
   const isAllInitialParticipantsFetchedRef = useRef(false);
 
-  const threadId = useThreadId();
   const chatClient = useChatClient();
   const chatThreadClient = useChatThreadClient();
 
   // Updates the thread state and populates attributes like topic, id, createdBy etc.
   useEffect(() => {
-    chatClient.getChatThreadClient(threadId).getProperties();
+    chatClient.getChatThreadClient(chatThreadClient.threadId).getProperties();
     // eslint-disable-next-line
   }, []);
 
