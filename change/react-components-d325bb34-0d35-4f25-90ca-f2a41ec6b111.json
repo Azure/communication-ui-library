@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix small bugs for chat messages mapper",
-  "packageName": "react-components",
-  "email": "easony@microsoft.com",
-  "dependentChangeType": "patch"
-}

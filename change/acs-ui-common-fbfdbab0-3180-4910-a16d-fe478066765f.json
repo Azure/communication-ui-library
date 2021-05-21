@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Initialize packlet for code common to chat and calling",
-  "packageName": "acs-ui-common",
-  "email": "prprabhu@microsoft.com",
-  "dependentChangeType": "patch"
-}

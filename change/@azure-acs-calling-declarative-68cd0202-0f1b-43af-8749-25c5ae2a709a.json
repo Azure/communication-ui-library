@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add proxying of TransferCallFeature state to Calling Declarative",
-  "packageName": "calling-stateful-client",
-  "email": "allenhwang@microsoft.com",
-  "dependentChangeType": "patch"
-}

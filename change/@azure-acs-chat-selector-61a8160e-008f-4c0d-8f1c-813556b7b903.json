@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Bump package for release",
+  "packageName": "@azure/acs-chat-selector",
+  "email": "mail@jamesburnside.com",
+  "dependentChangeType": "none"
+}

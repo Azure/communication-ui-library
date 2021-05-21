@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix copyright header to MIT and add LICENSE files",
-  "packageName": "react-composites",
-  "email": "domessin@microsoft.com",
-  "dependentChangeType": "patch"
-}

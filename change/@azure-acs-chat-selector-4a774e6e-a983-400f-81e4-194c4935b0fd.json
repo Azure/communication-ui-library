@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "remove enums in favor of string literals",
-  "packageName": "@azure/acs-chat-selector",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "none"
-}

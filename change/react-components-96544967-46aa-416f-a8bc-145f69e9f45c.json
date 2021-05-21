@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Initial changelog setup",
-  "packageName": "react-components",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "parsing a Text message content type as text",
-  "packageName": "react-components",
-  "email": "alkwa@microsoft.com",
-  "dependentChangeType": "patch"
-}
