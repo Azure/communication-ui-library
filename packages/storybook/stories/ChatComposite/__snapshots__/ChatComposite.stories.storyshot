@@ -212,17 +212,26 @@ exports[`storybook snapshot tests Storyshots Composites/Chat Theme Example 1`] =
         }
       >
         <div
-          className="ms-Stack css-2"
-          style={
-            Object {
-              "height": "100%",
-              "width": "100%",
-            }
-          }
+          className="css-80 root-2 body-1"
         >
-          <span>
-            Please provide the connection string and display name to use.
-          </span>
+          <div
+            className="css-80"
+            data-uses-unhanded-props={true}
+          >
+            <div
+              className="ms-Stack css-3"
+              style={
+                Object {
+                  "height": "100%",
+                  "width": "100%",
+                }
+              }
+            >
+              <span>
+                Please provide the connection string and display name to use.
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </div>

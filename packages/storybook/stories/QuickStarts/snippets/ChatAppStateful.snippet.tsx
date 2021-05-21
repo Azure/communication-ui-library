@@ -10,15 +10,17 @@ function App(): JSX.Element {
   const threadId = 'INSERT THREAD ID ';
   const displayName = 'INSERT DISPLAY NAME';
 
-  //Instatiate the statefulChatClient
+  // Instantiate the statefulChatClient
   const statefulChatClient = createStatefulChatClient({
-    userId: userId,
+    userId: { kind: 'communicationUser', communicationUserId: userId },
     displayName: displayName,
     endpoint: endpointUrl,
     credential: tokenCredential
   });
 
+  // Example usage
   const chatThreadClient = statefulChatClient.getChatThreadClient(threadId);
+  chatThreadClient.listParticipants();
 
   return <></>;
 }

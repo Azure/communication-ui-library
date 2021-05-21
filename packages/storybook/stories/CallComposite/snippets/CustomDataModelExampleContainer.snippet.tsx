@@ -1,8 +1,8 @@
 import {
-  PlaceholderProps,
   CallComposite,
   CallAdapter,
-  createAzureCommunicationCallAdapter
+  createAzureCommunicationCallAdapter,
+  PlaceholderProps
 } from '@azure/communication-react';
 import React, { useCallback, useState, useEffect } from 'react';
 
