@@ -1,8 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Call, DeviceManagerState, RemoteParticipantState } from 'calling-stateful-client';
-import { AudioDeviceInfo, VideoDeviceInfo, Call as SDKCall } from '@azure/communication-calling';
+import { Call, DeviceManagerState } from 'calling-stateful-client';
+import type {
+  AudioDeviceInfo,
+  VideoDeviceInfo,
+  Call as SDKCall,
+  PermissionConstraints,
+  RemoteParticipantState
+} from '@azure/communication-calling';
 import { VideoStreamOptions } from 'react-components';
 import type {
   CommunicationUserKind,
@@ -84,6 +90,8 @@ export interface CallAdapter {
   setMicrophone(sourceId: AudioDeviceInfo): Promise<void>;
 
   setSpeaker(sourceId: AudioDeviceInfo): Promise<void>;
+
+  askDevicePermission(constrain: PermissionConstraints): Promise<void>;
 
   queryCameras(): Promise<VideoDeviceInfo[]>;
 

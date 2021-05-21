@@ -17,7 +17,8 @@ import {
   LocalVideoStream as SDKLocalVideoStream,
   AudioDeviceInfo,
   VideoDeviceInfo,
-  RemoteParticipant
+  RemoteParticipant,
+  PermissionConstraints
 } from '@azure/communication-calling';
 import { EventEmitter } from 'events';
 import {
@@ -160,6 +161,10 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   public async querySpeakers(): Promise<AudioDeviceInfo[]> {
     return this.deviceManager.getSpeakers();
+  }
+
+  public async askDevicePermission(constrain: PermissionConstraints): Promise<void> {
+    await this.deviceManager.askDevicePermission(constrain);
   }
 
   public async joinCall(microphoneOn?: boolean): Promise<void> {

@@ -35,6 +35,7 @@ import { IStyle } from '@fluentui/react';
 import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { PartialTheme } from '@fluentui/react-theme-provider';
+import { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaPresence } from '@fluentui/react';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { PhoneNumberKind } from '@azure/communication-common';
@@ -59,6 +60,8 @@ export type AreEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 // @public (undocumented)
 export class AzureCommunicationCallAdapter implements CallAdapter {
     constructor(callClient: StatefulCallClient, groupId: string, callAgent: CallAgent, deviceManager: StatefulDeviceManager);
+    // (undocumented)
+    askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     // (undocumented)
     createStreamView(userId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
     // (undocumented)
@@ -170,6 +173,8 @@ export interface Call {
 
 // @public (undocumented)
 export interface CallAdapter {
+    // (undocumented)
+    askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     // (undocumented)
     createStreamView(userId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
     // (undocumented)
@@ -1068,12 +1073,12 @@ export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
 
 // @public (undocumented)
 export type ParticipantJoinedListener = (event: {
-    joined: RemoteParticipantState[];
+    joined: RemoteParticipantState_2[];
 }) => void;
 
 // @public (undocumented)
 export type ParticipantLeftListener = (event: {
-    removed: RemoteParticipantState[];
+    removed: RemoteParticipantState_2[];
 }) => void;
 
 // @public

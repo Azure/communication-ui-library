@@ -16,9 +16,10 @@ import type { CommunicationUserKind } from '@azure/communication-common';
 import { DeviceManagerState } from 'calling-stateful-client';
 import { ErrorInfo } from 'react';
 import type { MicrosoftTeamsUserKind } from '@azure/communication-common';
+import { PermissionConstraints } from '@azure/communication-calling';
 import type { PhoneNumberKind } from '@azure/communication-common';
 import { PlaceholderProps } from 'react-components';
-import { RemoteParticipantState } from 'calling-stateful-client';
+import type { RemoteParticipantState } from '@azure/communication-calling';
 import { StatefulCallClient } from 'calling-stateful-client';
 import { StatefulDeviceManager } from 'calling-stateful-client';
 import type { UnknownIdentifierKind } from '@azure/communication-common';
@@ -28,6 +29,8 @@ import { VideoStreamOptions } from 'react-components';
 // @public (undocumented)
 export class AzureCommunicationCallAdapter implements CallAdapter {
     constructor(callClient: StatefulCallClient, groupId: string, callAgent: CallAgent, deviceManager: StatefulDeviceManager);
+    // (undocumented)
+    askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     // (undocumented)
     createStreamView(userId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
     // (undocumented)
@@ -114,6 +117,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
 // @public (undocumented)
 export interface CallAdapter {
+    // (undocumented)
+    askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     // (undocumented)
     createStreamView(userId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
     // (undocumented)
