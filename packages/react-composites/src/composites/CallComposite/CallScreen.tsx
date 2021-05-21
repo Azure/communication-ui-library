@@ -14,10 +14,8 @@ import {
 } from './styles/CallScreen.styles';
 
 import { MediaGallery } from './MediaGallery';
-import { connectFuncsToContext, MapToErrorBarProps } from '../../consumers';
 import { isInCall } from '../../utils/SDKUtils';
-import { ErrorHandlingProps } from '../../providers/ErrorProvider';
-import { ErrorBar as ErrorBarComponent } from '../common';
+import { ErrorHandlingProps } from '../OneToOneCall/providers/ErrorProvider';
 import { useAdapter } from './adapter/CallAdapterProvider';
 import { useSelector } from './hooks/useSelector';
 import { callStatusSelector } from './selectors/callStatusSelector';
@@ -38,8 +36,6 @@ const spinnerLabel = 'Initializing call client...';
 
 export const CallScreen = (props: CallScreenProps & ErrorHandlingProps): JSX.Element => {
   const { screenWidth, endCallHandler, onRenderAvatar } = props;
-
-  const ErrorBar = connectFuncsToContext(ErrorBarComponent, MapToErrorBarProps);
 
   const [joinedCall, setJoinedCall] = useState<boolean>(false);
 
@@ -67,7 +63,6 @@ export const CallScreen = (props: CallScreenProps & ErrorHandlingProps): JSX.Ele
             <Stack className={props.screenWidth > MINI_HEADER_WINDOW_WIDTH ? headerContainer : headerCenteredContainer}>
               <CallControls onEndCallClick={endCallHandler} compressedMode={screenWidth <= MINI_HEADER_WINDOW_WIDTH} />
             </Stack>
-            <ErrorBar />
           </Stack.Item>
           <Stack.Item styles={subContainerStyles} grow>
             {!isScreenShareOn ? (

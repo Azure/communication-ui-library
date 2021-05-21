@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ErrorHandlingProps, WithErrorHandling } from 'react-composites';
+import { ErrorHandlingProps } from 'react-composites';
 import {
   TextFieldStyleProps,
   inputBoxStyle,
@@ -84,5 +84,6 @@ const DisplayNameFieldComponent = (props: DisplayNameFieldProps & ErrorHandlingP
   );
 };
 
-export const DisplayNameField = (props: DisplayNameFieldProps & ErrorHandlingProps): JSX.Element =>
-  WithErrorHandling(DisplayNameFieldComponent, props);
+export const DisplayNameField = (props: DisplayNameFieldProps & ErrorHandlingProps): JSX.Element => (
+  <DisplayNameFieldComponent {...props} />
+);
