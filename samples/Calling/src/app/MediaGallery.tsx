@@ -3,8 +3,7 @@
 
 import React, { useEffect, useMemo, useState } from 'react';
 import { VideoGallery, VideoStreamOptions } from 'react-components';
-import { usePropsFor } from './hooks/usePropsFor';
-import { useSelector } from './hooks/useSelector';
+import { useCallingPropsFor as usePropsFor, useCallingSelector as useSelector } from '@azure/acs-calling-selector';
 import { ScreenShare } from './ScreenShare';
 import { getIsPreviewCameraOn } from './selectors/baseSelectors';
 

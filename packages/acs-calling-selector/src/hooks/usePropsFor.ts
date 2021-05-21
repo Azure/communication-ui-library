@@ -2,31 +2,47 @@
 // Licensed under the MIT license.
 
 import {
-  cameraButtonSelector,
-  microphoneButtonSelector,
-  optionsButtonSelector,
-  screenShareButtonSelector,
-  videoGallerySelector
-} from '@azure/acs-calling-selector';
-import {
   CameraButton,
   EndCallButton,
   MicrophoneButton,
   OptionsButton,
+  ParticipantList,
   ScreenShareButton,
   VideoGallery
 } from 'react-components';
+import {
+  cameraButtonSelector,
+  microphoneButtonSelector,
+  optionsButtonSelector,
+  screenShareButtonSelector
+} from '../callControlSelectors';
+import { videoGallerySelector } from '../videoGallerySelector';
+import { participantListSelector } from '../participantListSelector';
 import { useHandlers } from './useHandlers';
 import { useSelector } from './useSelector';
+import { Common } from 'acs-ui-common';
+// @ts-ignore
+import { CommonProperties, AreEqual } from 'acs-ui-common';
+// @ts-ignore
+import { DefaultCallingHandlers } from '../handlers/createHandlers';
+// @ts-ignore
+import { AudioDeviceInfo, StartCallOptions, Call } from '@azure/communication-calling';
+// @ts-ignore
+import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
+// @ts-ignore
+import { VideoStreamOptions } from 'react-components';
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
-export const usePropsFor = <Component extends (props: any) => JSX.Element>(component: Component) => {
+// @ts-ignore
+export const usePropsFor = <Component extends (props: any) => JSX.Element>(
+  component: Component
+): ReturnType<GetSelector<Component>> & Common<DefaultCallingHandlers, Parameters<Component>[0]> => {
   const selector = getSelector(component);
   return { ...useSelector(selector), ...useHandlers<Parameters<Component>[0]>(component) };
 };
 
 const emptySelector = (): Record<string, never> => ({});
-type GetSelector<Component> = AreEqual<Component, typeof VideoGallery> extends true
+export const endCallButtonSelector = emptySelector;
+export type GetSelector<Component> = AreEqual<Component, typeof VideoGallery> extends true
   ? typeof videoGallerySelector
   : AreEqual<Component, typeof MicrophoneButton> extends true
   ? typeof microphoneButtonSelector
@@ -34,13 +50,13 @@ type GetSelector<Component> = AreEqual<Component, typeof VideoGallery> extends t
   ? typeof cameraButtonSelector
   : AreEqual<Component, typeof ScreenShareButton> extends true
   ? typeof screenShareButtonSelector
-  : AreEqual<Component, typeof EndCallButton> extends true
-  ? typeof optionsButtonSelector
   : AreEqual<Component, typeof OptionsButton> extends true
-  ? typeof emptySelector
+  ? typeof optionsButtonSelector
+  : AreEqual<Component, typeof ParticipantList> extends true
+  ? typeof participantListSelector
+  : AreEqual<Component, typeof EndCallButton> extends true
+  ? typeof endCallButtonSelector
   : never;
-
-type AreEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const getSelector = <Component extends (props: any) => JSX.Element | undefined>(
@@ -61,6 +77,8 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
       return screenShareButtonSelector;
     case OptionsButton:
       return optionsButtonSelector;
+    case ParticipantList:
+      return participantListSelector;
     case EndCallButton:
       return emptySelector;
   }
