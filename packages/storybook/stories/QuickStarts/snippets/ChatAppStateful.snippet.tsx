@@ -18,7 +18,7 @@ function App(): JSX.Element {
     credential: tokenCredential
   });
 
-  const statefulChatThreadClient = statefulChatClient.getChatThreadClient(threadId);
+  const chatThreadClient = statefulChatClient.getChatThreadClient(threadId);
 
   return <></>;
 }

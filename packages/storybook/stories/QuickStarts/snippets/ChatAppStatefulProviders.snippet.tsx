@@ -23,12 +23,12 @@ function App(): JSX.Element {
     credential: tokenCredential
   });
 
-  const statefulChatThreadClient = statefulChatClient.getChatThreadClient(threadId);
+  const chatThreadClient = statefulChatClient.getChatThreadClient(threadId);
 
   return (
     <FluentThemeProvider>
       <ChatClientProvider chatClient={statefulChatClient}>
-        <ChatThreadClientProvider chatThreadClient={statefulChatThreadClient}></ChatThreadClientProvider>
+        <ChatThreadClientProvider chatThreadClient={chatThreadClient}></ChatThreadClientProvider>
       </ChatClientProvider>
     </FluentThemeProvider>
   );

@@ -13,11 +13,9 @@ Stateful clients are agnostic to any specific state management framework.
 
 ## Component Binding with Stateful Clients
 
-To make it simpler to connect the stateful client with UI Components, the UI Library exposes helpers to generate props in the form of `useSelectors` and `usePropsFor`.
-Selectors expose out data from the client state. Handlers provide default methods to handle actions from the UI Components and pass them to the stateful clients.
+To make it simpler to connect the stateful client with UI Components, the UI Library exposes helpers , [`usePropsFor`](/?path=/docs/stateful-client-react-hooks-usepropsfor--page) ,to generate props
 These helpers aid in extracting the correct set of props required for different UI Components.
 They expose both data for the UI Components to render such as a message list or a participants remote video, and default handlers for UI Components action such as sending a message.
-For more information on the helpers look at documentation on [TODO SELECTORS LINK]() and [TODO HANDLERS LINK]().
 
 ## Installing stateful clients
 
@@ -31,14 +29,26 @@ npm i --save @azure/communication-react
 
 ## Calling StatefulClient
 
-Using the `callClient` and `chatClient`, developer can generate a stateful version of the clients.
+Using `createStatefulCallClient`, developer can generate a stateful version of the call client.
 
 ```tsx
-import { StatefulChatClient, StatefulCallClient } from '@azure/communication-react';
+import { createStatefulCallClient } from '@azure/communication-react;
+import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 
-const statefulChatClient = new StatefulChatClient(chatClient);
+const endpointUrl = '<ENDPOINT>';
+const userAccessToken = '<USER_ACCESS_TOKEN>';
+const tokenCredential = new AzureCommunicationTokenCredential(userAccessToken);
 
-const statefulCallClient = new StatefulCallClient(callClient);
+const statefulCallClient = createStatefulCallClient({
+  userId: userId,
+});
+
+// You can then use the `statefulCallClient` in the same way as a `CallClient` with a slight variation.
+
+const callAgent = statefulCallClient.createCallAgent(tokenCredential, {displayName: 'Optional User Name'})
+
+const chatThreadClient = await StatefulChatClient.createChatThread({});
+
 ```
 
 Developer has access to both clients. The stateful clients are a 1:1 representation.
@@ -46,14 +56,26 @@ For state to be tracked, developers should use the stateful clients to query the
 
 ## Chat StatefulClient
 
-Using the `callClient` and `chatClient`, developer can generate a stateful version of the clients.
+Using the `createStatefulChatClient`, developer can generate a stateful version of the chat client.
 
 ```tsx
-import { StatefulChatClient, StatefulCallClient } from '@azure/communication-react';
+import { createStatefulChatClient } from '@azure/communication-react;
+import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 
-const statefulChatClient = new StatefulChatClient(chatClient);
+const endpointUrl = '<ENDPOINT>';
+const userAccessToken = '<USER_ACCESS_TOKEN>';
+const tokenCredential = new AzureCommunicationTokenCredential(userAccessToken);
 
-const statefulCallClient = new StatefulCallClient(callClient);
+const statefulChatClient = createStatefulChatClient({
+  userId: userId,
+  displayName: displayName,
+  endpoint: endpointUrl,
+  credential: tokenCredential
+});
+
+// You can then use the `statefulChatClient` in the same way as a `ChatClient` with a slight variation.
+
+const chatThreadClient = await statefulChatClient.createChatThread({});
 ```
 
 Developer has access to both clients. The stateful clients are a 1:1 representation.
@@ -65,7 +87,7 @@ Stateful clients enable developers to access all the APIs that low-level calling
 For a complete list of capabilities see [Calling Overview]() and [Chat Overview]().
 At a high level, stateful clients allow developers the following capabilities.
 
-| Capabilties                | Example                                                                                                            |
+| Capabilities               | Example                                                                                                            |
 | -------------------------- | ------------------------------------------------------------------------------------------------------------------ |
 | Read state                 | Query the state `statefulClient.state` to access properties such as `statefulClient.state.messsages`               |
 | Handle state event changes | Subscribe to events `statefulClient.onStateChange()` and unsubscribe from events `statefulClient.offStateChange()` |
