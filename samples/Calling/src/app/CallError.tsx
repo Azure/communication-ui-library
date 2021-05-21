@@ -18,10 +18,12 @@ import {
 export interface CallErrorProps {
   rejoinHandler(): void;
   homeHandler(): void;
+  title?: string;
+  reason?: string;
 }
 
 export default function CallError(props: CallErrorProps): JSX.Element {
-  const title = 'Error joining the Call';
+  const title = props.title ?? 'Error joining the Call';
   const goHomePage = 'Go to Homepage';
   const rejoinCall = 'Retry Call';
 
@@ -39,11 +41,17 @@ export default function CallError(props: CallErrorProps): JSX.Element {
           </DefaultButton>
         </Stack>
         <div className={bottomStackFooterStyle}>
-          Common reasons for this error:
-          <ul>
-            <li>Incorrect Teams Meeting URL</li>
-            <li>Incorrect Group Call ID</li>
-          </ul>
+          {props.reason ? (
+            props.reason
+          ) : (
+            <>
+              Common reasons for this error:
+              <ul>
+                <li>Incorrect Teams Meeting URL</li>
+                <li>Incorrect Group Call ID</li>
+              </ul>
+            </>
+          )}
         </div>
       </Stack>
     </Stack>
