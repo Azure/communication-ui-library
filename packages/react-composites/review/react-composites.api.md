@@ -247,9 +247,6 @@ export type CallEndedListener = (event: {
 }) => void;
 
 // @public (undocumented)
-export type CallEvent = 'participantsJoined' | 'participantsLeft' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callEnded' | 'error';
-
-// @public (undocumented)
 export type CallIdChangedListener = (event: {
     callId: string;
 }) => void;
@@ -320,9 +317,6 @@ export type ChatCompositeClientState = {
     displayName: string;
     thread: ChatThreadClientState;
 };
-
-// @public (undocumented)
-export type ChatEvent = 'messageReceived' | 'messageSent' | 'messageRead' | 'participantsAdded' | 'participantsRemoved' | 'topicChanged' | 'error';
 
 // @public (undocumented)
 export type ChatOptions = {

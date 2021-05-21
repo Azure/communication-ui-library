@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add rendering status to Stateful views",
-  "packageName": "calling-stateful-client",
-  "email": "allenhwang@microsoft.com",
-  "dependentChangeType": "patch"
-}

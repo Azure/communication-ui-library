@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Selected camera initialzed as first first camera when cameras are no longer empty.",
-  "packageName": "calling-stateful-client",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add handler and selector for call controls",
-  "packageName": "calling-stateful-client",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

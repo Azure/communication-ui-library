@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Initial package check in for selectors",
-  "packageName": "@azure/acs-chat-selector",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "none"
-}

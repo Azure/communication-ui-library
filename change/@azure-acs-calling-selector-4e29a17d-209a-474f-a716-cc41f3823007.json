@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "CameraButton selectors and handlers updated to work before a call is started. Selector for unparented videostream added.",
-  "packageName": "@azure/acs-calling-selector",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}
