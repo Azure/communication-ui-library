@@ -22,8 +22,37 @@ import {
 } from '@azure/communication-common';
 
 /**
- * Defines the methods that allow CallClient {@Link @azure/communication-calling#CallClient} to be used declaratively.
- * The interface provides access to proxied state and also allows registering a handler for state change events.
+ * Defines the methods that allow CallClient {@Link @azure/communication-calling#CallClient} to be used statefully.
+ * The interface provides access to proxied state and also allows registering a handler for state change events. For
+ * state definition see {@Link CallClientState}.
+ *
+ * State change events are driven by:
+ * - Returned data from {@Link @azure/communication-calling#DeviceManager} APIs.
+ * - Returned data from {@Link @azure/communication-calling#CallAgent} APIs.
+ * - Listeners automatically attached to various azure communication-calling objects:
+ *   - CallAgent 'incomingCall'
+ *   - CallAgent 'callsUpdated'
+ *   - DeviceManager 'videoDevicesUpdated'
+ *   - DeviceManager 'audioDevicesUpdated
+ *   - DeviceManager 'selectedMicrophoneChanged'
+ *   - DeviceManager 'selectedSpeakerChanged'
+ *   - Call 'stateChanged'
+ *   - Call 'idChanged'
+ *   - Call 'isMutedChanged'
+ *   - Call 'isScreenSharingOnChanged'
+ *   - Call 'remoteParticipantsUpdated'
+ *   - Call 'localVideoStreamsUpdated'
+ *   - IncomingCall 'callEnded'
+ *   - RemoteParticipant 'stateChanged'
+ *   - RemoteParticipant 'isMutedChanged'
+ *   - RemoteParticipant 'displayNameChanged'
+ *   - RemoteParticipant 'isSpeakingChanged'
+ *   - RemoteParticipant 'videoStreamsUpdated'
+ *   - RemoteVideoStream 'isAvailableChanged'
+ *   - TranscriptionCallFeature 'isTranscriptionActiveChanged'
+ *   - RecordingCallFeature 'isRecordingActiveChanged'
+ *   - Transfer 'stateChanged'
+ *   - TransferCallFeature 'transferRequested'
  */
 export interface StatefulCallClient extends CallClient {
   /**
@@ -44,24 +73,33 @@ export interface StatefulCallClient extends CallClient {
    */
   offStateChange(handler: (state: CallClientState) => void): void;
   /**
-   * Renders a {@Link RemoteVideoStream} or {@Link LocalVideoStream} and stores the resulting
-   * {@Link VideoStreamRendererView} under the relevant {@Link RemoteVideoStream} or {@Link LocalVideoStream} in the
-   * state. Under the hood calls {@Link @azure/communication-calling#VideoStreamRenderer.createView}.
+   * Renders a {@Link RemoteVideoStreamState} or {@Link LocalVideoStreamState} and stores the resulting
+   * {@Link VideoStreamRendererViewState} under the relevant {@Link RemoteVideoStreamState} or
+   * {@Link LocalVideoStreamState} or as unparented view in the state. Under the hood calls
+   * {@Link @azure/communication-calling#VideoStreamRenderer.createView}.
    *
-   * If callId is undefined and stream provided is LocalVideoStream, we will render the LocalVideoStream and store the
-   * resulting {@Link VideoStreamRendererView} under the {@Link CallClientState#DeviceManager.unparentedViews}. Note
-   * that we use the LocalVideoStream as a reference and different instances of the same LocalVideoStream result in
-   * different views being generated.
+   * Scenario 1: Render RemoteVideoStreamState
+   * - CallId is required, participantId is required, and stream of type RemoteVideoStreamState is required
+   * - Resulting {@Link VideoStreamRendererViewState} is stored in the given callId and participantId in
+   * {@Link CallClientState}
    *
-   * @param callId - CallId of the Call where the stream to start rendering is contained in. Can be undefined if
-   *   rendering a LocalVideoStream that is not tied to a Call.
-   * @param participantId - {@Link RemoteParticipant.identifier} associated with the given RemoteVideoStream. Could be
-   *   undefined if rendering LocalVideoStream.
-   * @param stream - The LocalVideoStream or RemoteVideoStream to start rendering.
+   * Scenario 2: Render LocalVideoStreamState for a call
+   * - CallId is required, participantId must be undefined, and stream of type LocalVideoStreamState is required.
+   * - The {@Link @azure/communication-calling#Call.localVideoStreams} must already be started using
+   *   {@Link @azure/communication-calling#Call.startVideo}.
+   * - Resulting {@Link VideoStreamRendererViewState} is stored in the given callId {@Link CallState.localVideoStreams}
+   *   in {@Link CallClientState}.
+   *
+   * - Scenario 2: Render LocalVideoStreamState not part of a call (example rendering camera for local preview)
+   * - CallId must be undefined, participantId must be undefined, and stream of type LocalVideoStreamState is required.
+   * - Resulting {@Link VideoStreamRendererViewState} is stored in under the given LocalVideoStreamState in
+   *   {@Link CallClientState.deviceManager.unparentedViews}
+   *
+   * @param callId - CallId for the given stream. Can be undefined if the stream is not part of any call.
+   * @param participantId - {@Link RemoteParticipant.identifier} associated with the given RemoteVideoStreamState. Could
+   *   be undefined if rendering LocalVideoStreamState.
+   * @param stream - The LocalVideoStreamState or RemoteVideoStreamState to start rendering.
    * @param options - Options that are passed to the {@Link @azure/communication-calling#VideoStreamRenderer}.
-   * @throws - Throws error when state-based stream is already started, state-based stream not found in state,
-   *   non-state-based stream reached capacity, or invalid combination of parameters was provided (such as
-   *   RemoteVideoStream with undefined callId).
    */
   createView(
     callId: string | undefined,
@@ -70,20 +108,28 @@ export interface StatefulCallClient extends CallClient {
     options?: CreateViewOptions
   ): Promise<void>;
   /**
-   * Stops rendering a {@Link RemoteVideoStream} or {@Link LocalVideoStream} and removes the
-   * {@Link VideoStreamRendererView} from the relevant {@Link RemoteVideoStream} or {@Link LocalVideoStream} in the
-   * state. Under the hood calls {@Link @azure/communication-calling#VideoStreamRenderer.dispose}.
+   * Stops rendering a {@Link RemoteVideoStreamState} or {@Link LocalVideoStreamState} and removes the
+   * {@Link VideoStreamRendererView} from the relevant {@Link RemoteVideoStreamState} in {@Link CallClientState} or
+   * {@Link LocalVideoStream} in {@Link CallClientState} or appropriate
+   * {@Link CallClientState.deviceManager.unparentedViews} Under the hood calls
+   * {@Link @azure/communication-calling#VideoStreamRenderer.dispose}.
    *
-   * If callId is undefined and the stream provided is LocalVideoStream, we will search
-   * {@Link CallClientState#DeviceManager.unparentedViews} for matching LocalVideoStream (by reference) and stop
-   * rendering the found stream and remove it from the state. In order to stop a stream previously started, the same
-   * LocalVideoStream reference must be used.
+   * Its important to disposeView to clean up resources properly.
    *
-   * @param callId - CallId of the Call where the stream to stop rendering is contained in. Can be undefined if
-   *   stop rendering a LocalVideoStream that is not tied to a Call.
-   * @param participantId - {@Link RemoteParticipant.identifier} associated with the given RemoteVideoStream. Could be
-   *   undefined if rendering LocalVideoStream.
-   * @param stream - The LocalVideoStream or RemoteVideoStream to start rendering.
+   * Scenario 1: Dispose RemoteVideoStreamState
+   * - CallId is required, participantId is required, and stream of type RemoteVideoStreamState is required
+   *
+   * Scenario 2: Dispose LocalVideoStreamState for a call
+   * - CallId is required, participantId must be undefined, and stream of type LocalVideoStreamState is required.
+   *
+   * - Scenario 2: Dispose LocalVideoStreamState not part of a call
+   * - CallId must be undefined, participantId must be undefined, and stream of type LocalVideoStreamState is required.
+   * - LocalVideoStreamState must be the original one passed to createView.
+   *
+   * @param callId - CallId for the given stream. Can be undefined if the stream is not part of any call.
+   * @param participantId - {@Link RemoteParticipant.identifier} associated with the given RemoteVideoStreamState. Could
+   *   be undefined if disposing LocalVideoStreamState.
+   * @param stream - The LocalVideoStreamState or RemoteVideoStreamState to dispose.
    */
   disposeView(
     callId: string | undefined,
@@ -151,7 +197,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
 }
 
 /**
- * Required arguments to construct the stateful call client
+ * Required arguments to construct the stateful call client.
  */
 export type StatefulCallClientArgs = {
   /**
@@ -163,14 +209,22 @@ export type StatefulCallClientArgs = {
 };
 
 /**
- * Pptions to construct the stateful call client with
+ * Options to construct the stateful call client with.
  */
 export type StatefulCallClientOptions = CallClientOptions;
 
 /**
- * Creates a stateful CallClient {@Link StatefulCallClient} by proxying CallClient
+ * Creates a StatefulCallClient {@Link StatefulCallClient} by proxying CallClient
  * {@Link @azure/communication-calling#CallClient} with ProxyCallClient {@Link ProxyCallClient} which then allows access
  * to state in a declarative way.
+ *
+ * It is important to use the {@Link @azure/communication-calling#DeviceManager} and
+ * {@Link @azure/communication-calling#CallAgent} and {@Link @azure/communication-calling#Call} (and etc.) that are
+ * obtained from the StatefulCallClient in order for their state changes to be proxied properly.
+ *
+ * @param callClientArgs - {@Link StatefulCallClientArgs}
+ * @param callClientOptions - {@Link StatefulCallClientOptions}
+ * @returns
  */
 export const createStatefulCallClient = (
   callClientArgs: StatefulCallClientArgs,
