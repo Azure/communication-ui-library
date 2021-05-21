@@ -197,7 +197,7 @@ export class CallSubscriber {
         'NotRendered',
         undefined
       );
-      this._context.setCallLocalVideoStream(this._callIdRef.callId, localVideoStreams);
+      this._context.setCallLocalVideoStream(this._callIdRef.callId, [...localVideoStreams]);
     }
     if (event.removed.length > 0) {
       disposeView(
