@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "accounting for Text as a message content type",
-  "packageName": "@azure/acs-chat-selector",
-  "email": "alkwa@microsoft.com",
-  "dependentChangeType": "patch"
-}

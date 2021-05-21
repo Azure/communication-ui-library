@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update exports to not conflict with other internal packages",
-  "packageName": "calling-stateful-client",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "patch"
-}

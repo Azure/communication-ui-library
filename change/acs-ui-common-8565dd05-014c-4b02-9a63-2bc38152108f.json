@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Introduce common identifier format",
-  "packageName": "acs-ui-common",
-  "email": "prprabhu@microsoft.com",
-  "dependentChangeType": "patch"
-}

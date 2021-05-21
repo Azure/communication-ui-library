@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Change how we get preview renders to use the new api",
-  "packageName": "react-composites",
-  "email": "allenhwang@microsoft.com",
-  "dependentChangeType": "patch"
-}

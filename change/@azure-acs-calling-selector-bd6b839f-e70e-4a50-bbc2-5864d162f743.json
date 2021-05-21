@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "ensure consistent eslint-plugin-import version across packages",
-  "packageName": "@azure/acs-calling-selector",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "none"
-}

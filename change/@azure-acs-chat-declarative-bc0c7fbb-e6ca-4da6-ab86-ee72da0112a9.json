@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add cleaning up timer for typingIndicator every 8 secs",
-  "packageName": "chat-stateful-client",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}

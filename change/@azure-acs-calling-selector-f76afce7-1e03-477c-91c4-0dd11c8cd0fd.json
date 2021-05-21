@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add calling providers and hooks to the selector package",
-  "packageName": "@azure/acs-calling-selector",
-  "email": "easony@microsoft.com",
-  "dependentChangeType": "patch"
-}

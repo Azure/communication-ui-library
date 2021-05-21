@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add devDependency to bypass node v14 compile",
-  "packageName": "acs-ui-common",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}
