@@ -3,23 +3,28 @@ import React, { useState, useEffect } from 'react';
 import { CallComposite, CallAdapter, createAzureCommunicationCallAdapter } from '@azure/communication-react';
 
 export type ContainerProps = {
-  endpointUrl: string;
   token: string;
-  groupId: string;
+  locator: string;
   displayName: string;
   fluentTheme?: PartialTheme | Theme;
 };
 
+const isTeamsMeetingLink = (link: string): boolean => link.startsWith('https://teams.microsoft.com/l/meetup-join');
 export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
   const [adapter, setAdapter] = useState<CallAdapter>();
 
   useEffect(() => {
-    if (props.token && props.groupId) {
-      const createAdapter = async (): Promise<void> => {
-        setAdapter(await createAzureCommunicationCallAdapter(props.token, props.groupId, props.displayName));
-      };
-      createAdapter();
-    }
+    (async () => {
+      if (props.token && props.locator) {
+        const callLocator = isTeamsMeetingLink(props.locator)
+          ? { meetingLink: props.locator }
+          : { groupId: props.locator };
+        const createAdapter = async (): Promise<void> => {
+          setAdapter(await createAzureCommunicationCallAdapter(props.token, callLocator, props.displayName));
+        };
+        createAdapter();
+      }
+    })();
   }, [props]);
 
   return <>{adapter && <CallComposite adapter={adapter} fluentTheme={props.fluentTheme} />}</>;

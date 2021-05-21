@@ -8,8 +8,9 @@ import { ChatComposite } from '@azure/communication-react';
 import { COMPOSITE_FOLDER_PREFIX } from '../constants';
 
 const containerText = require('!!raw-loader!./snippets/Container.snippet.tsx').default;
-const customizationContainerText = require('!!raw-loader!./snippets/CustomizationContainer.snippet.tsx').default;
-const dataModelContainerText = require('!!raw-loader!./snippets/DataModelContainer.snippet.tsx').default;
+const customBehaviorExampleText = require('!!raw-loader!./snippets/CustomBehaviorExample.snippet.tsx').default;
+const customDataModelExampleContainerText = require('!!raw-loader!./snippets/CustomDataModelExampleContainer.snippet.tsx')
+  .default;
 const serverText = require('!!raw-loader!./snippets/Server.snippet.tsx').default;
 
 export default {
@@ -24,11 +25,11 @@ export default {
   }
 } as Meta;
 
-export { BasicCanvas } from './snippets/BasicCanvas.snippet';
-export { CustomizationCanvas } from './snippets/CustomizationCanvas.snippet';
-export { DataModelCanvas } from './snippets/DataModelCanvas.snippet';
-export { JoinChatCanvas } from './snippets/JoinChatCanvas.snippet';
-export { ThemesCanvas } from './snippets/ThemesCanvas.snippet';
+export { BasicExample } from './snippets/BasicExample.snippet';
+export { CustomBehaviorExample } from './snippets/CustomBehaviorExample.snippet';
+export { CustomDataModelExample } from './snippets/CustomDataModelExample.snippet';
+export { ThemeExample } from './snippets/ThemesExample.snippet';
+export { JoinExistingChatThread } from './snippets/JoinExistingChatThread';
 
 const getDocs: () => JSX.Element = () => {
   return (
@@ -72,26 +73,26 @@ const getDocs: () => JSX.Element = () => {
         identities. Look at the [example canvas](./?path=/story/composites-chat--data-model-canvas) to see how the name
         and avatar displayed for users can be provided by Contoso.
       </Description>
-      <Source code={dataModelContainerText} />
+      <Source code={customDataModelExampleContainerText} />
       <Description>
-        See the [custom data model documentation](?path=/story/custom-user-data-model--page) to understand how custom
-        data model can be injected for all the components in this UI library.
+        See the [Custom data model example documentation](?path=/story/composites-chat--customization-example) to
+        understand how custom data model can be injected for all the components in this UI library.
       </Description>
 
       <Heading>Adding custom behavior</Heading>
       <Description>
         The `ChatAdapter` makes it possible to arbitrarily modify the communication between the `ChatComposite`
         component and the Azure Communication Services backend. This adds powerful customization possibilities. The
-        [example canvas](./?path=/story/composites-chat--customization-canvas) shows a way to intercept messages entered
-        by the user and modify them before sending them on to the backend.
+        [Customized Behavior Example](./?path=/story/composites-chat--custom-behavior-example) shows a way to intercept
+        messages entered by the user and modify them before sending them on to the backend.
       </Description>
-      <Source code={customizationContainerText} />
+      <Source code={customBehaviorExampleText} />
 
       <Heading>Joining an existing Chat thread</Heading>
       <Description>
-        The [join chat canvas](./?path=/story/composites-chat--join-chat-canvas) provides an easy playground to join an
-        existing Azure Communication Services chat thread. This is useful if you want to explore the composite with
-        multiple users.
+        The [join existing chat thread](./?path=/story/composites-chat--join-existing-chat-thread) provides an easy
+        playground to join an existing Azure Communication Services chat thread. This is useful if you want to explore
+        the composite with multiple users.
       </Description>
     </>
   );

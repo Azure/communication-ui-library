@@ -6,12 +6,15 @@ import { text, radios } from '@storybook/addon-knobs';
 import React, { useState, useEffect, useRef } from 'react';
 import { COMPOSITE_STRING_CONNECTIONSTRING } from '../../CompositeStringUtils';
 import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE } from '../../constants';
-import { ContosoChatContainer, ContosoChatContainerProps } from './DataModelContainer.snippet';
+import {
+  CustomDataModelExampleContainer,
+  CustomDataModelExampleContainerProps
+} from './CustomDataModelExampleContainer.snippet';
 import { createUserAndThread } from './Server.snippet';
 import { ConfigHintBanner, addParrotBotToThread } from './Utils.snippet';
 
-export const DataModelCanvas: () => JSX.Element = () => {
-  const [containerProps, setContainerProps] = useState<ContosoChatContainerProps>();
+export const CustomDataModelExample: () => JSX.Element = () => {
+  const [containerProps, setContainerProps] = useState<CustomDataModelExampleContainerProps>();
 
   const knobs = useRef({
     connectionString: text(COMPOSITE_STRING_CONNECTIONSTRING, '', 'Server Simulator'),
@@ -41,7 +44,7 @@ export const DataModelCanvas: () => JSX.Element = () => {
 
   return (
     <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
-      {containerProps ? <ContosoChatContainer {...containerProps} /> : <ConfigHintBanner />}
+      {containerProps ? <CustomDataModelExampleContainer {...containerProps} /> : <ConfigHintBanner />}
     </div>
   );
 };
