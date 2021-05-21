@@ -26,7 +26,7 @@ import { CommonProperties, AreEqual } from 'acs-ui-common';
 // @ts-ignore
 import { DefaultCallingHandlers } from '../handlers/createHandlers';
 // @ts-ignore
-import { VideoStreamOptions, AudioDeviceInfo, StartCallOptions, Call } from '@azure/communication-calling';
+import { AudioDeviceInfo, StartCallOptions, Call } from '@azure/communication-calling';
 // @ts-ignore
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 // @ts-ignore
