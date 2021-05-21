@@ -3,8 +3,7 @@
 
 import * as reselect from 'reselect';
 import { CallState } from 'calling-stateful-client';
-// @ts-ignore
-import { getCall, CallingBaseSelectorProps, getDisplayName, getIdentifier } from './baseSelectors';
+import { getCall, getDisplayName, getIdentifier } from './baseSelectors';
 
 export const lobbySelector = reselect.createSelector(
   [getCall, getDisplayName, getIdentifier],

@@ -74,7 +74,7 @@ export const CallScreen = (props: CallScreenProps & ErrorHandlingProps): JSX.Ele
   }, [adapter, joinedCall]);
 
   if ('isTeamsCall' in adapter) {
-    let azureAdapter = adapter as AzureCommunicationCallAdapter;
+    const azureAdapter = adapter as AzureCommunicationCallAdapter;
     const callState = azureAdapter.getState().call?.state;
     if (
       azureAdapter.isTeamsCall() &&
