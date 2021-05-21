@@ -1,9 +1,9 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
-import ChatApp from '!!raw-loader!./snippets/ChatApp.snippet.tsx';
+import ChatAppStatefulProviders from '!!raw-loader!./snippets/ChatAppStatefulProviders.snippet.tsx';
+import ChatAppStatefulComponents from '!!raw-loader!./snippets/ChatAppStatefulComponents.snippet.tsx';
 import ChatAppStateful from '!!raw-loader!./snippets/ChatAppStateful.snippet.tsx';
-import ChatAppSelectors from '!!raw-loader!./snippets/ChatAppSelectors.snippet.tsx';
-import ChatAppHandlers from '!!raw-loader!./snippets/ChatAppHandlers.snippet.tsx';
+import ChatAppStatefulComplete from '!!raw-loader!./snippets/ChatAppStatefulComplete.snippet.tsx';
 
 <Meta title="Quickstarts/Get started with Stateful Client" />
 
@@ -44,13 +44,12 @@ For this quickstart, we'll be modifying files inside the `src` folder.
 
 ### Install the package
 
-Use the `npm install` command to install the Azure Communication Services UI Library for JavaScript.
-Move the provided tarball (Private Preview) over to the `ui-toolkit-starting-with-stateful` directory. **Make sure to run the `npm i` command inside the `ui-toolkit-starting-with-stateful` directory.**
+Use the `npm install` command to install the `@azure/communication-react` library.
 
 ```bash
 
 # For Private Preview install tarball
-npm install --save ./{path for tarball}
+npm install --save @azure/communication-react
 
 ```
 
@@ -70,54 +69,63 @@ npm run start
 
 The following classes and interfaces from the Azure Communication Services UI client library are referenced in this quickstart:
 
-| Name                                                                                                                            | Description                                                                                          |
-| ------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| [ChatClient](https://azuresdkdocs.blob.core.windows.net/$web/javascript/azure-communication-chat/1.0.0/classes/chatclient.html) | Low-level chat library client.                                                                       |
-| [createStatefulChatClient](/?path=/story/stateful-chat-client-introduction--page)                                               | Method to translate low-level library client into a stateful client for the UI Library               |
-| [statefulChatClient](/?path=/story/stateful-chat-client-introduction--page)                                                     | Stateful chat client based on the low level chat library client.                                     |
-| [chatThreadSelector](/?path=/story/stateful-chat-client-introduction--page)                                                     | Method for generating reactive read-only props for Chat Thread UI Component from Stateful Client     |
-| [sendBoxSelector](/?path=/story/stateful-chat-client-introduction--page)                                                        | Method to generate props for Send Box UI Component from Stateful Client                              |
-| [createDefaultChatHandlersForComponent](/?path=/story/stateful-chat-client-introduction--page)                                  | Method to generate method props for UI Components from Stateful Client to handle UI Component events |
+| Name                                                                                                                            | Description                                                                              |
+| ------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| [ChatClient](https://azuresdkdocs.blob.core.windows.net/$web/javascript/azure-communication-chat/1.0.0/classes/chatclient.html) | Low-level chat library client.                                                           |
+| [createStatefulChatClient](/?path=/story/stateful-client-overview--page)                                                        | Method to translate low-level library client into a stateful client for the UI Library   |
+| [ChatClientProvider](/?path=/story/stateful-client-react-hooks-setting-up--page)                                                | Provider allows access to the Stateful Chat Client to the components inside of it        |
+| [ChatThreadClientProvider](/?path=/story/stateful-client-react-hooks-setting-up--page)                                          | Provider allows access to the Stateful Chat Thread Client to the components inside of it |
+| [usePropsFor](/?path=/story/stateful-client-react-hooks-usepropsfor--page)                                                      | Hook to generate required props to enable UI Components                                  |
 
-## Compose Chat Components
-
-For Chat, we will use the [`MessageThread`](/?path=/docs/ui-components-chatthread--chat-thread-component) and [`SendBox`](/?path=/docs/ui-components-sendbox--send-box-story-book-component) components.
-To start add the code below to `App.tsx`.
-For more information on getting started with UI Components follow the [quickstart](/?path=/story/quickstarts-get-started-with-ui-components--page)
-
-`App.tsx`
-
-<Source code={ChatApp} />
-
-## Instantiate Stateful Chat client in the app
+## Instantiate Stateful Chat client and Chat Thread client in the app
 
 Update the `App.tsx` file to create a `statefulChatClient` off the low-level `ChatClient` using the method `createStatefulChatClient`.
 Make sure to populate the constants at the top of the App code with information from your Azure Communication Services Resource.
 These properties will be used to instantiate the `ChatClient` and `statefulChatClient`. Review [Chat patterns](https://docs.microsoft.com/azure/communication-services/concepts/chat/concepts) for questions on these properties.
 
-`App.tsx`
-
-<Source code={ChatAppStateful} />
-
-## Generate selector props to UI Components
-
-Update the `App.tsx` file to generate selector props off the `statefulChatClient`.
-`statefulChatClient` will be updated asynchronously repeatedly in response to user actions and notifications from the chat server. We mirror these changes into the generated props via `useEffect`.
-The selector props needs to be updated everytime the `statefulChatClient` state changes to make sure they keep up to date.
+Once the `statefulChatClient` is instantiated, we will then generate the `statefulChatThreadClient` off it to join the desired chat thread.
 
 `App.tsx`
 
 <Source code={ChatAppStateful} />
 
-## Generate handler props to UI Components
+## Add Providers to pass state to UI Components
 
-Update the `App.tsx` file to generate handler props off the `statefulChatClient`.
-Handlers will update the `statefulChatClient` whenever the UI Components generate an event such as send a message.
-Update the UI Components to also use handlers as props.
+Next we will add three providers that will encapsulate our UI components.
+First, the `FluentThemeProvider` which provides visual theme to the underlying components.
+Second, the `ChatClientProvider` which provides state from the `statefulChatClient` to the components. For this provider, we will pass the `statefulChatClient` as a prop to the provider.
+Third, the `ChatThreadClientProvider` which provides state from the `statefulChatThreadClient` to the components. For this provider, we will pass the `statefulChatThreadClient` as a prop to the provider.
 
 `App.tsx`
 
-<Source code={ChatAppHandlers} />
+<Source code={ChatAppStatefulProviders} />
+
+Similarly to how we used chat providers for this example, you can use calling providers.
+For more information on [Calling Providers](/?path=/story/stateful-client-react-hooks-setting-up--page).
+
+## Compose Chat Components
+
+Now that we have our structure ready, we will now create our chat experience using UI Components.
+For Chat, we will use the [`MessageThread`](/?path=/docs/ui-components-chatthread--chat-thread-component) and [`SendBox`](/?path=/docs/ui-components-sendbox--send-box-story-book-component) components.
+To start add the code below to a new file `ChatComponents.tsx`.
+For more information on getting started with UI Components follow the [quickstart](/?path=/story/quickstarts-get-started-with-ui-components--page)
+Here we will use the `usePropsFor` hook to connect our components to the stateful clients.
+The `usePropsFor` method takes in the component for which we want props generated, in this case `MessageThread` and `SendBox`.
+
+`ChatComponents.tsx`
+
+<Source code={ChatAppStatefulComponents} />
+
+Similarly to how we used `usePropsFor` with chat UI Components, it can be used for calling UI Components.
+For more information on [usePropsFor](/?path=/story/stateful-client-react-hooks-usepropsfor--page).
+
+## Add Components to the main app
+
+Now that we have configured our providers and the chat components we can put them together.
+
+`App.tsx`
+
+<Source code={ChatAppStatefulComplete} />
 
 ## Run quickstart
 
