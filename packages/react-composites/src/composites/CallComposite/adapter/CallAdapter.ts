@@ -68,9 +68,9 @@ export type IsScreenSharingOnChangedListener = (event: { isScreenSharingOn: bool
 
 export type IsSpeakingChangedListener = (event: { identifier: CallIdentifierKinds; isSpeaking: boolean }) => void;
 
-export type DisplaynameChangedListener = (event: { participantId: CallIdentifierKinds; displayName: string }) => void;
+export type DisplayNameChangedListener = (event: { participantId: CallIdentifierKinds; displayName: string }) => void;
 
-export type LeaveCallListner = (event: { callId: string }) => void;
+export type CallEndedListener = (event: { callId: string }) => void;
 
 export interface CallAdapter {
   onStateChange(handler: (state: CallState) => void): void;
@@ -126,9 +126,9 @@ export interface CallAdapter {
   on(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
   on(event: 'callIdChanged', listener: CallIdChangedListener): void;
   on(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
-  on(event: 'displayNameChanged', listener: DisplaynameChangedListener): void;
+  on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
   on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
-  on(event: 'leaveCall', listener: LeaveCallListner): void;
+  on(event: 'callEnded', listener: CallEndedListener): void;
   on(event: 'error', listener: (e: Error) => void): void;
 
   off(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
@@ -136,9 +136,9 @@ export interface CallAdapter {
   off(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
   off(event: 'callIdChanged', listener: CallIdChangedListener): void;
   off(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
-  off(event: 'displayNameChanged', listener: DisplaynameChangedListener): void;
+  off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
   off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
-  off(event: 'leaveCall', listener: LeaveCallListner): void;
+  off(event: 'callEnded', listener: CallEndedListener): void;
   off(event: 'error', listener: (e: Error) => void): void;
 }
 
@@ -150,5 +150,5 @@ export type CallEvent =
   | 'isLocalScreenSharingActiveChanged'
   | 'displayNameChanged'
   | 'isSpeakingChanged'
-  | 'leaveCall'
+  | 'callEnded'
   | 'error';

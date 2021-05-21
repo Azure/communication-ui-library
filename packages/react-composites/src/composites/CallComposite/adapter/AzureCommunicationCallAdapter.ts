@@ -24,14 +24,14 @@ import { EventEmitter } from 'events';
 import {
   CallAdapter,
   CallCompositePage,
+  CallEndedListener,
   CallEvent,
   CallIdChangedListener,
   CallState,
-  DisplaynameChangedListener,
+  DisplayNameChangedListener,
   IsMuteChangedListener,
   IsScreenSharingOnChangedListener,
   IsSpeakingChangedListener,
-  LeaveCallListner,
   ParticipantJoinedListener,
   ParticipantLeftListener
 } from './CallAdapter';
@@ -212,7 +212,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.context.updateClientState(this.callClient.getState());
     this.stopCamera();
     this.mute();
-    this.emitter.emit('leaveCall', { callId });
+    this.emitter.emit('callEnded', { callId });
   }
 
   public async setCamera(device: VideoDeviceInfo): Promise<void> {
@@ -308,9 +308,9 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   on(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
   on(event: 'callIdChanged', listener: CallIdChangedListener): void;
   on(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
-  on(event: 'displayNameChanged', listener: DisplaynameChangedListener): void;
+  on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
   on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
-  on(event: 'leaveCall', listener: LeaveCallListner): void;
+  on(event: 'callEnded', listener: CallEndedListener): void;
   on(event: 'error', errorHandler: (e: Error) => void): void;
 
   public on(event: CallEvent, listener: (e: any) => void): void {
@@ -390,9 +390,9 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   off(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
   off(event: 'callIdChanged', listener: CallIdChangedListener): void;
   off(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
-  off(event: 'displayNameChanged', listener: DisplaynameChangedListener): void;
+  off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
   off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
-  off(event: 'leaveCall', listener: LeaveCallListner): void;
+  off(event: 'callEnded', listener: CallEndedListener): void;
   off(event: 'error', errorHandler: (e: Error) => void): void;
 
   public off(event: CallEvent, listener: (e: any) => void): void {
