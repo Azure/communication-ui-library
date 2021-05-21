@@ -106,6 +106,15 @@ const App = (): JSX.Element => {
       const newStatefulCallClient = createStatefulCallClient({ userId: userIdFromToken });
       setStatefulCallClient(newStatefulCallClient);
       page === 'createCallClient' && setPage('configuration');
+
+      const askPermissionAndQueryDevices = async (): Promise<void> => {
+        const deviceManager = await newStatefulCallClient.getDeviceManager();
+        await deviceManager.askDevicePermission({ video: true, audio: true });
+        await deviceManager.getCameras();
+        await deviceManager.getMicrophones();
+        await deviceManager.getSpeakers();
+      };
+      askPermissionAndQueryDevices();
     }
   }, [page, token]);
 
