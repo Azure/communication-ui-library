@@ -9,7 +9,7 @@ import React from 'react';
 import ChatComponents from './ChatComponents';
 
 function App(): JSX.Element {
-  const endpointUrl = 'INSERT ENDPOINT URL FOR RESOURCE';
+  const endpointUrl = 'INSERT ENDPOINT URL FOR AZURE COMMUNICATION SERVICES RESOURCE';
   const userAccessToken = 'INSERT ACCESS TOKEN FOR RESOURCE';
   const userId = 'INSERT USER ID';
   const tokenCredential = new AzureCommunicationTokenCredential(userAccessToken);

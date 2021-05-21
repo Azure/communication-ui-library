@@ -7,7 +7,7 @@ import {
 import React, { useState, useEffect } from 'react';
 
 function App(): JSX.Element {
-  const endpointUrl = 'ADD ENDPOINT URL FOR RESOURCE';
+  const endpointUrl = 'ADD ENDPOINT URL FOR AZURE COMMUNICATION SERVICES RESOURCE';
   const displayName = 'ADD DISPLAYE NAME';
   const token = 'ADD ACCESS TOKEN WITH VOIP AND CHAT SCOPE';
 
