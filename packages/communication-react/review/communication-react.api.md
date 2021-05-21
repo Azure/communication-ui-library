@@ -499,13 +499,21 @@ export type ChatClientState = {
 };
 
 // @public (undocumented)
-export const ChatComposite: (props: ChatProps) => JSX.Element;
+export const ChatComposite: (props: ChatCompositeProps) => JSX.Element;
 
 // @public (undocumented)
 export type ChatCompositeClientState = {
     userId: string;
     displayName: string;
     thread: ChatThreadClientState;
+};
+
+// @public (undocumented)
+export type ChatCompositeProps = {
+    adapter: ChatAdapter;
+    onRenderAvatar?: (userId: string) => JSX.Element;
+    onErrorCallback?: (error: CommunicationUiErrorInfo) => void;
+    options?: ChatOptions;
 };
 
 // @public (undocumented)
@@ -544,14 +552,6 @@ export const chatParticipantListSelector: reselect.OutputParametricSelector<Chat
     myUserId: string;
     participants: CommunicationParticipant[];
 }>;
-
-// @public (undocumented)
-export type ChatProps = {
-    adapter: ChatAdapter;
-    onRenderAvatar?: (userId: string) => JSX.Element;
-    onErrorCallback?: (error: CommunicationUiErrorInfo) => void;
-    options?: ChatOptions;
-};
 
 // @public (undocumented)
 export type ChatState = ChatUIState & ChatCompositeClientState;

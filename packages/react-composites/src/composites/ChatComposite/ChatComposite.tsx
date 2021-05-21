@@ -7,7 +7,7 @@ import { ChatScreen } from './ChatScreen';
 import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
 import { ChatAdapter } from './adapter/ChatAdapter';
 
-export type ChatProps = {
+export type ChatCompositeProps = {
   adapter: ChatAdapter;
   onRenderAvatar?: (userId: string) => JSX.Element;
   onErrorCallback?: (error: CommunicationUiErrorInfo) => void;
@@ -20,7 +20,7 @@ export type ChatOptions = {
   // supportNewline: boolean; // Whether to support new line (shift+enter) in textArea, disable until ACS backend supports line switch
 };
 
-export const ChatComposite = (props: ChatProps): JSX.Element => {
+export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
   const { adapter, options, onRenderAvatar } = props;
 
   return (
