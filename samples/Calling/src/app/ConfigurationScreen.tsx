@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { GroupLocator, MeetingLocator } from '@azure/communication-calling';
 import { localStorageAvailable } from './utils/constants';
 import { saveDisplayNameToLocalStorage } from './utils/AppUtils';
@@ -9,7 +9,7 @@ import { DisplayNameField } from './DisplayNameField';
 import { StartCallButton } from './StartCallButton';
 import { CallConfiguration } from './CallConfiguration';
 import { LocalDeviceSettings } from './LocalDeviceSettings';
-import { optionsButtonSelector } from '@azure/acs-calling-selector';
+import { getDeviceManager, optionsButtonSelector } from '@azure/acs-calling-selector';
 import { useSelector } from './hooks/useSelector';
 import { useAzureCommunicationHandlers } from './hooks/useAzureCommunicationHandlers';
 import { TeamsMeetingLinkField } from './TeamsMeetingLinkField';
@@ -28,9 +28,22 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
   const [emptyWarning, setEmptyWarning] = useState(false);
   const [nameTooLongWarning, setNameTooLongWarning] = useState(false);
   const [teamsMeetingLink, setTeamsMeetingLink] = useState<string>();
+  const { deviceManager } = useContext(CallingContext);
 
   const options = useSelector(optionsButtonSelector);
+  const deviceManagerState = useSelector(getDeviceManager);
   const handlers = useAzureCommunicationHandlers();
+
+  useEffect(() => {
+    if (!deviceManagerState.deviceAccess) {
+      const askPermissionAndQueryDevices = async () => {
+        await handlers.askDevicePermission({ video: true, audio: true });
+        adapter.queryCameras();
+        adapter.queryMicrophones();
+        adapter.querySpeakers();
+      };
+    }
+  }, [deviceManagerState]);
 
   return (
     <CallConfiguration {...props}>
@@ -45,6 +58,7 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
       <div>
         <LocalDeviceSettings
           {...options}
+          deviceAccess={deviceManagerState.deviceAccess}
           onSelectCamera={handlers.onSelectCamera}
           onSelectMicrophone={handlers.onSelectMicrophone}
           onSelectSpeaker={handlers.onSelectSpeaker}

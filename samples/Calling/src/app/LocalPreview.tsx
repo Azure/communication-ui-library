@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { CallVideoOffIcon } from '@fluentui/react-icons-northstar';
 import { Stack, Text } from '@fluentui/react';
 import { localPreviewContainerStyle, cameraOffLabelStyle, localPreviewTileStyle } from './styles/LocalPreview.styles';
@@ -9,6 +9,7 @@ import { CameraButton, ControlBar, MicrophoneButton, StreamMedia, VideoTile } fr
 import { useSelector } from './hooks/useSelector';
 import { usePropsFor } from './hooks/usePropsFor';
 import { localPreviewSelector } from './selectors/localPreviewSelector';
+import { DeviceAccess } from '@azure/communication-calling';
 
 const onRenderPlaceholder = (): JSX.Element => {
   return (
@@ -26,11 +27,32 @@ const onRenderPlaceholder = (): JSX.Element => {
 export interface LocalPreviewProps {
   isMicrophoneOn: boolean;
   setIsMicrophoneOn: (isEnabled: boolean) => void;
+  deviceAccess?: DeviceAccess;
 }
 
 export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
   const localPreviewProps = useSelector(localPreviewSelector);
+
+  const cameraPermissionGranted = useMemo(() => {
+    if (!props.deviceAccess || !props.deviceAccess.video) {
+      return false;
+    }
+
+    return true;
+  }, [props.deviceAccess]);
+
+  const microphonePermissionGranted = useMemo(() => {
+    if (!props.deviceAccess || !props.deviceAccess.audio) {
+      return false;
+    }
+
+    return true;
+  }, [props.deviceAccess]);
+
+  console.log('deviceAccess', props.deviceAccess);
+  console.log('camera disabled: ', !cameraPermissionGranted);
+  console.log('microphone disabled: ', !microphonePermissionGranted);
 
   return (
     <Stack className={localPreviewContainerStyle}>
@@ -42,8 +64,9 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
         isMirrored={true}
       >
         <ControlBar layout="floatingBottom">
-          <CameraButton {...cameraButtonProps} />
+          <CameraButton {...cameraButtonProps} disabled={!cameraPermissionGranted} />
           <MicrophoneButton
+            disabled={!microphonePermissionGranted}
             checked={props.isMicrophoneOn}
             onToggleMicrophone={async () => {
               props.setIsMicrophoneOn(!props.isMicrophoneOn);
