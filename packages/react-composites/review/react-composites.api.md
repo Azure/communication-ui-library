@@ -224,6 +224,7 @@ export type CallAdapterUiState = {
     error?: Error;
     isLocalPreviewMicrophoneEnabled: boolean;
     page: CallCompositePage;
+    endedCall?: CallState | undefined;
 };
 
 // @public (undocumented)
