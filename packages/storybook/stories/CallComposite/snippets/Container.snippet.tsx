@@ -23,6 +23,26 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
         createAdapter();
       }
     })();
+    return () => {
+      console.log('Kicking off cleanup');
+      if (adapter) {
+        console.log('disposing');
+        adapter.dispose();
+      }
+
+      /*
+      (async () => {
+        console.log('Running cleanup');
+        // TODO(prprabhu) What if the async creation hasn't completed yet?
+        if (!adapter) {
+          return;
+        }
+        console.log('Leaving call');
+        await adapter.leaveCall();
+        adapter.dispose();
+      })();
+      */
+    };
   }, [props]);
 
   return <>{adapter && <CallComposite adapter={adapter} />}</>;
