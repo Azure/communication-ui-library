@@ -91,10 +91,12 @@ export const createDefaultCallingHandlers = memoizeOne(
         if (selectedCamera) {
           const previewOn = isPreviewOn(callClient.getState().deviceManager);
           if (previewOn) {
-            await callClient.disposeView(undefined, undefined, {
-              source: selectedCamera,
-              mediaStreamType: 'Video'
-            });
+            // TODO: we need to remember which LocalVideoStream was used for LocalPreview and dispose that one. For now
+            // assume any unparented view is a LocalPreview and stop all since those are only used for LocalPreview
+            // currently.
+            for (const stream of callClient.getState().deviceManager.unparentedViews.keys()) {
+              await callClient.disposeView(undefined, undefined, stream);
+            }
           } else {
             await callClient.createView(undefined, undefined, {
               source: selectedCamera,
@@ -146,10 +148,12 @@ export const createDefaultCallingHandlers = memoizeOne(
         const selectedCamera = callClient.getState().deviceManager.selectedCamera;
         // If preview is on, then stop current preview and then start new preview with new device
         if (selectedCamera) {
-          await callClient.disposeView(undefined, undefined, {
-            source: selectedCamera,
-            mediaStreamType: 'Video'
-          });
+          // TODO: we need to remember which LocalVideoStream was used for LocalPreview and dispose that one. For now
+          // assume any unparented view is a LocalPreview and stop all since those are only used for LocalPreview
+          // currently.
+          for (const stream of callClient.getState().deviceManager.unparentedViews.keys()) {
+            await callClient.disposeView(undefined, undefined, stream);
+          }
         }
         deviceManager.selectCamera(device);
         await callClient.createView(undefined, undefined, {
