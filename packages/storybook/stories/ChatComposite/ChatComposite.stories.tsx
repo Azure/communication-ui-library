@@ -14,7 +14,7 @@ const customDataModelExampleContainerText = require('!!raw-loader!./snippets/Cus
 const serverText = require('!!raw-loader!./snippets/Server.snippet.tsx').default;
 
 export default {
-  title: `${COMPOSITE_FOLDER_PREFIX}/Chat`,
+  title: `${COMPOSITE_FOLDER_PREFIX}/ChatComposite`,
   component: ChatComposite,
   parameters: {
     useMaxHeightParent: true,
@@ -52,8 +52,8 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Prerequisites</Heading>
       <Description>
         ChatComposite provides the UI for an *existing user* in an *existing thread*. Thus, the user and thread must be
-        created beforehand. Typically, the user and thread are created on a Contoso-owned service, and the `ChatConfig`
-        is served to the client app that then passes it to the ChatComposite.
+        created beforehand. Typically, the user and thread are created on a Contoso-owned service and authentication
+        tokens are served to the client application that then passes it to the ChatComposite.
       </Description>
       <Source code={serverText} />
 

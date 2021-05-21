@@ -3,9 +3,9 @@
 
 import React from 'react';
 import { StreamMedia, VideoTile } from 'react-components';
-import { WithErrorHandling } from '../../utils';
-import { connectFuncsToContext } from '../../consumers';
-import { ErrorHandlingProps } from '../../providers';
+import { WithErrorHandling } from './utils/WithErrorHandling';
+import { connectFuncsToContext } from './consumers/ConnectContext';
+import { ErrorHandlingProps } from './providers/ErrorProvider';
 import { disabledVideoHint, videoHint } from './styles/MediaGallery1To1.styles';
 import { MapToRemoteVideoProps } from './consumers/MapToVideoProps';
 

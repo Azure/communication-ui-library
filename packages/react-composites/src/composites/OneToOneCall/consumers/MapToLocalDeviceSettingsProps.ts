@@ -8,7 +8,7 @@ import useSubscribeToVideoDeviceList from '../hooks/useSubscribeToVideoDeviceLis
 import { useCallingContext } from '../providers/CallingProvider';
 import { useCallContext } from '../providers/CallProvider';
 import { CommunicationUiErrorCode, CommunicationUiError } from '../../../types/CommunicationUiError';
-import { useTriggerOnErrorCallback } from '../../../providers/ErrorProvider';
+import { useTriggerOnErrorCallback } from '../providers/ErrorProvider';
 import { propagateError } from '../../../utils/SDKUtils';
 
 export type LocalDeviceSettingsContainerProps = {

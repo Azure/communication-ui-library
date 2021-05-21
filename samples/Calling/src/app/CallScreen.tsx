@@ -20,7 +20,7 @@ import {
   overlayStyles,
   paneStyles,
   subContainerStyles
-} from './styles/GroupCall.styles';
+} from './styles/CallScreen.styles';
 import { isInCall } from './utils/AppUtils';
 import { MINI_HEADER_WINDOW_WIDTH } from './utils/constants';
 import { Lobby } from './Lobby';
@@ -28,7 +28,7 @@ import { ComplianceBanner } from './ComplianceBanner';
 import { mediaGallerySelector } from './selectors/mediaGallerySelector';
 import { complianceBannerSelector } from './selectors/complianceBannerSelector';
 
-export interface GroupCallProps {
+export interface CallScreenProps {
   screenWidth: number;
   endCallHandler(): void;
   callErrorHandler(customErrorPage?: 'callError' | 'teamsMeetingDenied'): void;
@@ -43,7 +43,7 @@ const localVideoViewOption = {
   isMirrored: true
 } as VideoStreamOptions;
 
-export const GroupCall = (props: GroupCallProps): JSX.Element => {
+export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const [selectedPane, setSelectedPane] = useState(CommandPanelTypes.None);
   const { callLocator, screenWidth, endCallHandler, isMicrophoneOn } = props;
 
