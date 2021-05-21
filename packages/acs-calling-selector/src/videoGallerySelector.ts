@@ -3,13 +3,7 @@
 
 import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 // @ts-ignore
-import {
-  Call,
-  // @ts-ignore
-  CallClientState,
-  RemoteParticipantState,
-  RemoteVideoStreamState
-} from 'calling-stateful-client';
+import { CallState, CallClientState, RemoteParticipantState, RemoteVideoStreamState } from 'calling-stateful-client';
 // @ts-ignore
 import { createSelector } from 'reselect';
 // @ts-ignore
@@ -84,7 +78,7 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
   }
 );
 
-const videoGalleryRemoteParticipantsFromCall = (call: Call | undefined): VideoGalleryRemoteParticipant[] => {
+const videoGalleryRemoteParticipantsFromCall = (call: CallState | undefined): VideoGalleryRemoteParticipant[] => {
   if (!call || !call.remoteParticipants) return [];
   return memoizedAllConvertRemoteParticipant((memoizedFn) => {
     return Array.from(call.remoteParticipants.values()).map((participant: RemoteParticipantState) => {
@@ -101,7 +95,7 @@ const videoGalleryRemoteParticipantsFromCall = (call: Call | undefined): VideoGa
 
 export const videoGallerySelector = createSelector(
   [getCall, getDisplayName, getIdentifier],
-  (call: Call | undefined, displayName: string | undefined, identifier: string) => {
+  (call: CallState | undefined, displayName: string | undefined, identifier: string) => {
     const screenShareRemoteParticipant = call?.screenShareRemoteParticipant
       ? call.remoteParticipants.get(call.screenShareRemoteParticipant)
       : undefined;

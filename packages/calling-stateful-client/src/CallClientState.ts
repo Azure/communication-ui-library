@@ -6,7 +6,7 @@ import {
   CallDirection,
   CallEndReason,
   CallerInfo,
-  CallState,
+  CallState as CallStatus,
   DeviceAccess,
   MediaStreamType,
   RemoteParticipantState as RemoteParticipantStatus,
@@ -210,7 +210,7 @@ export interface RemoteParticipantState {
 /**
  * State only version of {@Link @azure/communication-calling#Call}.
  */
-export interface Call {
+export interface CallState {
   /**
    * Proxy of {@Link @azure/communication-calling#Call.id}
    */
@@ -222,7 +222,7 @@ export interface Call {
   /**
    * Proxy of {@Link @azure/communication-calling#Call.state}
    */
-  state: CallState;
+  state: CallStatus;
   /**
    * Proxy of {@Link @azure/communication-calling#Call.callEndReason}
    */
@@ -268,7 +268,7 @@ export interface Call {
   transfer: TransferCallFeature;
   /**
    * Stores the currently active screenshare participant's key. If there is no screenshare active, then this will be
-   * undefined. You can use this key to access the remoteParticipant data in {@Link Call#remoteParticipants} map.
+   * undefined. You can use this key to access the remoteParticipant data in {@Link CallState#remoteParticipants} map.
    *
    * Note this only applies to ScreenShare in RemoteParticipant. A local ScreenShare being active will not affect this
    * property.
@@ -354,7 +354,7 @@ export type DeviceManagerState = {
    */
   deviceAccess?: DeviceAccess;
   /**
-   * Stores created views that are not associated with any Call state (when {@Link StatefulCallClient#createView} is
+   * Stores created views that are not associated with any CallState (when {@Link StatefulCallClient#createView} is
    * called with undefined callId and defined LocalVideoStream). The LocalVideoStream key will be the original
    * reference that createView is called with. The value will be a new LocalVideoStream different than the one used as
    * they key with an up-to date status and view.
@@ -363,21 +363,21 @@ export type DeviceManagerState = {
 };
 
 /**
- * Container for all of the state data proxied by {@Link StatefulCallClient}. Calls is a map of Call.id to Call
- * {@Link Call}.
+ * Container for all of the state data proxied by {@Link StatefulCallClient}. Calls is a map of CallState.id to CallState
+ * {@Link CallState}.
  */
 export interface CallClientState {
   /**
-   * Proxy of {@Link @azure/communication-calling#CallAgent.calls} as a map of Call {@Link Call}. It is keyed by
-   * Call.id.
+   * Proxy of {@Link @azure/communication-calling#CallAgent.calls} as a map of CallState {@Link CallState}. It is keyed by
+   * CallState.id.
    */
-  calls: Map<string, Call>;
+  calls: Map<string, CallState>;
   /**
-   * Calls that have ended are stored here so the callEndReason could be checked. It is an array of Call {@Link Call}.
+   * Calls that have ended are stored here so the callEndReason could be checked. It is an array of CallState {@Link CallState}.
    * Calls are pushed on to the array as they end, meaning this is sorted by endTime ascending. Only
    * MAX_CALL_HISTORY_LENGTH number of Calls are kept in this array with the older ones being replaced by newer ones.
    */
-  callsEnded: Call[];
+  callsEnded: CallState[];
   /**
    * Proxy of {@Link @azure/communication-calling#IncomingCall} as a map of IncomingCall {@Link IncomingCall} received
    * in the event 'incomingCall' emitted by {@Link @azure/communication-calling#CallAgent}. It is keyed by

@@ -12,12 +12,12 @@ import EventEmitter from 'events';
 import { enableMapSet, produce } from 'immer';
 import {
   CallEndReason,
-  CallState,
+  CallState as CallStatus,
   RemoteParticipantState as RemoteParticipantStatus
 } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import {
-  Call,
+  CallState,
   CallClientState,
   LocalVideoStreamState,
   RemoteParticipantState,
@@ -42,7 +42,7 @@ export class CallContext {
 
   constructor(userId: string) {
     this._state = {
-      calls: new Map<string, Call>(),
+      calls: new Map<string, CallState>(),
       callsEnded: [],
       incomingCalls: new Map<string, IncomingCallState>(),
       incomingCallsEnded: [],
@@ -99,7 +99,7 @@ export class CallContext {
     );
   }
 
-  public setCall(call: Call): void {
+  public setCall(call: CallState): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         const existingCall = draft.calls.get(call.id);
@@ -147,7 +147,7 @@ export class CallContext {
     );
   }
 
-  public setCallState(callId: string, state: CallState): void {
+  public setCallState(callId: string, state: CallStatus): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         const call = draft.calls.get(callId);

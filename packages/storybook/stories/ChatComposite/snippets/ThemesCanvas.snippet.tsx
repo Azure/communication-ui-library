@@ -8,8 +8,7 @@ import { text, radios } from '@storybook/addon-knobs';
 import React, { useState, useEffect, useRef } from 'react';
 import { COMPOSITE_STRING_CONNECTIONSTRING } from '../../CompositeStringUtils';
 import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE } from '../../constants';
-import { ChatConfig } from '../ChatConfig';
-import { ContosoChatContainer } from './Container.snippet';
+import { ContosoChatContainer, ContainerProps } from './Container.snippet';
 import { createUserAndThread } from './Server.snippet';
 import { ConfigHintBanner, addParrotBotToThread } from './Utils.snippet';
 
@@ -35,7 +34,7 @@ const getTheme = (choice: string): ITheme => {
 };
 
 export const ThemesCanvas: () => JSX.Element = () => {
-  const [chatConfig, setChatConfig] = useState<ChatConfig>();
+  const [containerProps, setContainerProps] = useState<ContainerProps>();
 
   const knobs = useRef({
     connectionString: text(COMPOSITE_STRING_CONNECTIONSTRING, '', 'Server Simulator'),
@@ -46,9 +45,9 @@ export const ThemesCanvas: () => JSX.Element = () => {
   useEffect(() => {
     const fetchToken = async (): Promise<void> => {
       if (knobs.current.connectionString && knobs.current.displayName) {
-        const newChatConfig = await createUserAndThread(knobs.current.connectionString, knobs.current.displayName);
-        await addParrotBotToThread(knobs.current.connectionString, newChatConfig, messageArray);
-        setChatConfig(newChatConfig);
+        const newProps = await createUserAndThread(knobs.current.connectionString, knobs.current.displayName);
+        await addParrotBotToThread(knobs.current.connectionString, newProps.token, newProps.threadId, messageArray);
+        setContainerProps(newProps);
       }
     };
     fetchToken();
@@ -57,7 +56,7 @@ export const ThemesCanvas: () => JSX.Element = () => {
   return (
     <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
       <FluentThemeProvider fluentTheme={getTheme(knobs.current.theme)}>
-        {chatConfig ? <ContosoChatContainer config={chatConfig} /> : <ConfigHintBanner />}
+        {containerProps ? <ContosoChatContainer {...containerProps} /> : <ConfigHintBanner />}
       </FluentThemeProvider>
     </div>
   );
