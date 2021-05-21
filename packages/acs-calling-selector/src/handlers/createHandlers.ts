@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+// @ts-ignore
 import {
   AudioDeviceInfo,
   Call,
@@ -19,7 +20,25 @@ import { VideoStreamOptions } from 'react-components';
 // @ts-ignore
 import { CommonProperties } from 'acs-ui-common';
 
-export type DefaultCallingHandlers = ReturnType<typeof createDefaultCallingHandlers>;
+export type DefaultCallingHandlers = {
+  onStartLocalVideo: () => Promise<void>;
+  onToggleCamera: () => Promise<void>;
+  onStartCall: (
+    participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
+    options?: StartCallOptions
+  ) => Call | undefined;
+  onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
+  onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
+  onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
+  onToggleMicrophone: () => Promise<void>;
+  onStartScreenShare: () => Promise<void>;
+  onStopScreenShare: () => Promise<void>;
+  onToggleScreenShare: () => Promise<void>;
+  onHangUp: () => Promise<void>;
+  onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void>;
+  onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void>;
+  onParticipantRemove: (userId: string) => void;
+};
 
 export const areStreamsEqual = (prevStream: LocalVideoStream, newStream: LocalVideoStream): boolean => {
   return !!prevStream && !!newStream && prevStream.source.id === newStream.source.id;
@@ -72,10 +91,12 @@ export const createDefaultCallingHandlers = memoizeOne(
         if (selectedCamera) {
           const previewOn = isPreviewOn(callClient.getState().deviceManager);
           if (previewOn) {
-            await callClient.disposeView(undefined, undefined, {
-              source: selectedCamera,
-              mediaStreamType: 'Video'
-            });
+            // TODO: we need to remember which LocalVideoStream was used for LocalPreview and dispose that one. For now
+            // assume any unparented view is a LocalPreview and stop all since those are only used for LocalPreview
+            // currently.
+            for (const stream of callClient.getState().deviceManager.unparentedViews.keys()) {
+              await callClient.disposeView(undefined, undefined, stream);
+            }
           } else {
             await callClient.createView(undefined, undefined, {
               source: selectedCamera,
@@ -127,10 +148,12 @@ export const createDefaultCallingHandlers = memoizeOne(
         const selectedCamera = callClient.getState().deviceManager.selectedCamera;
         // If preview is on, then stop current preview and then start new preview with new device
         if (selectedCamera) {
-          await callClient.disposeView(undefined, undefined, {
-            source: selectedCamera,
-            mediaStreamType: 'Video'
-          });
+          // TODO: we need to remember which LocalVideoStream was used for LocalPreview and dispose that one. For now
+          // assume any unparented view is a LocalPreview and stop all since those are only used for LocalPreview
+          // currently.
+          for (const stream of callClient.getState().deviceManager.unparentedViews.keys()) {
+            await callClient.disposeView(undefined, undefined, stream);
+          }
         }
         deviceManager.selectCamera(device);
         await callClient.createView(undefined, undefined, {

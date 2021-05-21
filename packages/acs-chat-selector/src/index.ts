@@ -4,7 +4,7 @@
 export { createDefaultChatHandlers, createDefaultChatHandlersForComponent } from './handlers/createHandlers';
 export { ChatClientProvider, useChatClient } from './providers/ChatClientProvider';
 export { ChatThreadClientProvider, useChatThreadClient, useThreadId } from './providers/ChatThreadClientProvider';
-export { usePropsFor } from './hooks/usePropsFor';
+export { usePropsFor as useChatPropsFor } from './hooks/usePropsFor';
 export { useSelector as useChatSelector } from './hooks/useSelector';
 
 // -- TODO: these exports should be removed in favor of useSelector -- //
@@ -18,5 +18,4 @@ export type { ChatClientProviderProps } from './providers/ChatClientProvider';
 export type { ChatThreadClientProviderProps } from './providers/ChatThreadClientProvider';
 export type { ChatBaseSelectorProps } from './baseSelectors';
 export type { DefaultChatHandlers } from './handlers/createHandlers';
-export type { GetSelector } from './hooks/usePropsFor';
-export type { AreEqual } from './hooks/usePropsFor';
+export type { GetSelector as GetChatSelector } from './hooks/usePropsFor';

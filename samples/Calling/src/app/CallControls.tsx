@@ -3,7 +3,7 @@
 
 import React, { useCallback } from 'react';
 import { ControlBar, MicrophoneButton, CameraButton, ScreenShareButton, EndCallButton } from 'react-components';
-import { usePropsFor } from './hooks/usePropsFor';
+import { useCallingPropsFor as usePropsFor } from '@azure/acs-calling-selector';
 import {
   controlBarStyle,
   groupCallLeaveButtonCompressedStyle,
