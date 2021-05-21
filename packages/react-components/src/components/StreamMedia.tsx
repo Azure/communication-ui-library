@@ -34,9 +34,21 @@ export const StreamMedia = (props: StreamMediaProps): JSX.Element => {
 
   useEffect(() => {
     const container = containerEl.current;
-    if (container && container.childElementCount === 0 && videoStreamElement) {
+    if (!container) {
+      return;
+    }
+
+    // If videoStreamElement changes, we clear the container to make sure we don't have duplicate, and replace it with
+    // the new videoStreamElement. If videoStreamElement is undefined nothing is appended and container should be empty
+    // and we don't render anyting.
+    container.innerHTML = '';
+    if (videoStreamElement) {
       container.appendChild(videoStreamElement);
     }
+
+    return () => {
+      container.innerHTML = '';
+    };
   }, [videoStreamElement]);
 
   return (

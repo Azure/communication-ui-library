@@ -29,12 +29,12 @@ export type ScreenShareProps = {
 };
 
 const memoizeAllRemoteParticipants = memoizeFnAll(
-  (userId: string, isAvailable?: boolean, renderElement?: HTMLElement, displayName?: string): JSX.Element => {
+  (userId: string, isReady?: boolean, renderElement?: HTMLElement, displayName?: string): JSX.Element => {
     return (
       <Stack horizontalAlign="center" verticalAlign="center" className={aspectRatioBoxStyle} key={userId}>
         <Stack className={aspectRatioBoxContentStyle}>
           <VideoTile
-            isVideoReady={isAvailable}
+            isVideoReady={isReady}
             renderElement={<StreamMedia videoStreamElement={renderElement ?? null} />}
             displayName={displayName}
             styles={videoTileStyle}
@@ -61,8 +61,6 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
     onCreateLocalStreamView
   } = props;
 
-  const localVideoStream = localParticipant?.videoStream;
-  const isLocalVideoReady = localVideoStream?.renderElement !== undefined;
   const isScreenShareAvailable =
     screenShareParticipant &&
     screenShareParticipant.screenShareStream &&
@@ -111,10 +109,13 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
   }, [isScreenShareAvailable, onCreateRemoteStreamView, screenShareParticipant]);
 
   const layoutLocalParticipant = useMemo(() => {
+    const localVideoStream = localParticipant?.videoStream;
+
     if (localVideoStream && !localVideoStream?.renderElement) {
       onCreateLocalStreamView && onCreateLocalStreamView();
     }
 
+    const isLocalVideoReady = localVideoStream?.renderElement !== undefined;
     return (
       <VideoTile
         isVideoReady={isLocalVideoReady}
@@ -123,7 +124,7 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
         styles={videoTileStyle}
       />
     );
-  }, [isLocalVideoReady, localParticipant, localVideoStream, onCreateLocalStreamView]);
+  }, [localParticipant, onCreateLocalStreamView]);
 
   const sidePanelRemoteParticipants = useMemo(() => {
     return memoizeAllRemoteParticipants((memoizedRemoteParticipantFn) => {

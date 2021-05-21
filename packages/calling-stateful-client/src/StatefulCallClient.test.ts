@@ -609,7 +609,7 @@ describe('Stateful call client', () => {
           .getState()
           .calls.get(mockCallId)
           ?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))
-          ?.videoStreams.get(1)?.videoStreamRendererView !== undefined
+          ?.videoStreams.get(1)?.view !== undefined
     );
 
     await waitWithBreakCondition(
@@ -618,7 +618,7 @@ describe('Stateful call client', () => {
           .getState()
           .calls.get(mockCallId)
           ?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))
-          ?.videoStreams.get(1)?.videoStreamRendererView !== undefined
+          ?.videoStreams.get(1)?.view !== undefined
     );
 
     expect(
@@ -626,12 +626,10 @@ describe('Stateful call client', () => {
         .getState()
         .calls.get(mockCallId)
         ?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))
-        ?.videoStreams.get(1)?.videoStreamRendererView
+        ?.videoStreams.get(1)?.view
     ).toBeDefined();
 
-    expect(
-      testData.mockStatefulCallClient.getState().calls.get(mockCallId)?.localVideoStreams[0].videoStreamRendererView
-    ).toBeDefined();
+    expect(testData.mockStatefulCallClient.getState().calls.get(mockCallId)?.localVideoStreams[0].view).toBeDefined();
   });
 
   test('should stop rendering the stream and remove from state when disposeView is called', async () => {
@@ -690,7 +688,7 @@ describe('Stateful call client', () => {
           .getState()
           .calls.get(mockCallId)
           ?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))
-          ?.videoStreams.get(1)?.videoStreamRendererView !== undefined
+          ?.videoStreams.get(1)?.view !== undefined
     );
 
     await waitWithBreakCondition(
@@ -699,7 +697,7 @@ describe('Stateful call client', () => {
           .getState()
           .calls.get(mockCallId)
           ?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))
-          ?.videoStreams.get(1)?.videoStreamRendererView !== undefined
+          ?.videoStreams.get(1)?.view !== undefined
     );
 
     expect(
@@ -707,12 +705,10 @@ describe('Stateful call client', () => {
         .getState()
         .calls.get(mockCallId)
         ?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))
-        ?.videoStreams.get(1)?.videoStreamRendererView
+        ?.videoStreams.get(1)?.view
     ).toBeDefined();
 
-    expect(
-      testData.mockStatefulCallClient.getState().calls.get(mockCallId)?.localVideoStreams[0]?.videoStreamRendererView
-    ).toBeDefined();
+    expect(testData.mockStatefulCallClient.getState().calls.get(mockCallId)?.localVideoStreams[0]?.view).toBeDefined();
 
     testData.mockStatefulCallClient.disposeView(
       mockCallId,
@@ -727,13 +723,11 @@ describe('Stateful call client', () => {
           .getState()
           .calls.get(mockCallId)
           ?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))
-          ?.videoStreams.get(1)?.videoStreamRendererView === undefined
+          ?.videoStreams.get(1)?.view === undefined
     );
 
     await waitWithBreakCondition(
-      () =>
-        testData.mockStatefulCallClient.getState().calls.get(mockCallId)?.localVideoStreams[0]
-          ?.videoStreamRendererView === undefined
+      () => testData.mockStatefulCallClient.getState().calls.get(mockCallId)?.localVideoStreams[0]?.view === undefined
     );
 
     expect(
@@ -741,11 +735,11 @@ describe('Stateful call client', () => {
         .getState()
         .calls.get(mockCallId)
         ?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))
-        ?.videoStreams.get(1)?.videoStreamRendererView
+        ?.videoStreams.get(1)?.view
     ).not.toBeDefined();
 
     expect(
-      testData.mockStatefulCallClient.getState().calls.get(mockCallId)?.localVideoStreams[0].videoStreamRendererView
+      testData.mockStatefulCallClient.getState().calls.get(mockCallId)?.localVideoStreams[0].view
     ).not.toBeDefined();
   });
 
@@ -805,25 +799,21 @@ describe('Stateful call client', () => {
           .getState()
           .calls.get(mockCallId)
           ?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))
-          ?.videoStreams.get(1)?.videoStreamRendererView !== undefined
+          ?.videoStreams.get(1)?.view !== undefined
     );
 
     await waitWithBreakCondition(
-      () =>
-        testData.mockStatefulCallClient.getState().calls.get(mockCallId)?.localVideoStreams[0]
-          ?.videoStreamRendererView !== undefined
+      () => testData.mockStatefulCallClient.getState().calls.get(mockCallId)?.localVideoStreams[0]?.view !== undefined
     );
 
-    expect(
-      testData.mockStatefulCallClient.getState().calls.get(mockCallId)?.localVideoStreams[0]?.videoStreamRendererView
-    ).toBeDefined();
+    expect(testData.mockStatefulCallClient.getState().calls.get(mockCallId)?.localVideoStreams[0]?.view).toBeDefined();
 
     expect(
       testData.mockStatefulCallClient
         .getState()
         .calls.get(mockCallId)
         ?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))
-        ?.videoStreams.get(1)?.videoStreamRendererView
+        ?.videoStreams.get(1)?.view
     ).toBeDefined();
 
     testData.mockCallAgent.calls = [];
@@ -838,11 +828,11 @@ describe('Stateful call client', () => {
       testData.mockStatefulCallClient
         .getState()
         .callsEnded[0]?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))
-        ?.videoStreams.get(1)?.videoStreamRendererView
+        ?.videoStreams.get(1)?.view
     ).not.toBeDefined();
 
     expect(
-      testData.mockStatefulCallClient.getState().calls.get(mockCallId)?.localVideoStreams[0]?.videoStreamRendererView
+      testData.mockStatefulCallClient.getState().calls.get(mockCallId)?.localVideoStreams[0]?.view
     ).not.toBeDefined();
   });
 
@@ -1228,7 +1218,7 @@ describe('Stateful call client', () => {
         .getState()
         .calls.get(mockCallId)
         ?.remoteParticipants.get(toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier))
-        ?.videoStreams.get(1)?.videoStreamRendererView
+        ?.videoStreams.get(1)?.view
     ).toBeDefined();
   });
 });

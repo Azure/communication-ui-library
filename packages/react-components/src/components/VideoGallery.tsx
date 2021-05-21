@@ -81,7 +81,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
     if (onRenderLocalVideoTile) return onRenderLocalVideoTile(localParticipant);
 
-    if (localVideoStream && isLocalVideoReady) {
+    if (localVideoStream && !localVideoStream.renderElement) {
       onCreateLocalStreamView && onCreateLocalStreamView(localVideoViewOption);
     }
     return (

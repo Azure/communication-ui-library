@@ -10,16 +10,20 @@ import {
 } from '@azure/communication-calling';
 import EventEmitter from 'events';
 import { enableMapSet, produce } from 'immer';
-import { CallEndReason, CallState, RemoteParticipantState } from '@azure/communication-calling';
+import {
+  CallEndReason,
+  CallState as CallStatus,
+  RemoteParticipantState as RemoteParticipantStatus
+} from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import {
-  Call,
+  CallState,
   CallClientState,
-  LocalVideoStream,
-  RemoteParticipant,
-  RemoteVideoStream,
-  IncomingCall,
-  VideoStreamRendererView,
+  LocalVideoStreamState,
+  RemoteParticipantState,
+  RemoteVideoStreamState,
+  IncomingCallState,
+  VideoStreamRendererViewState,
   CallAgentState,
   TransferRequest,
   Transfer
@@ -38,16 +42,16 @@ export class CallContext {
 
   constructor(userId: string) {
     this._state = {
-      calls: new Map<string, Call>(),
+      calls: new Map<string, CallState>(),
       callsEnded: [],
-      incomingCalls: new Map<string, IncomingCall>(),
+      incomingCalls: new Map<string, IncomingCallState>(),
       incomingCallsEnded: [],
       deviceManager: {
         isSpeakerSelectionAvailable: false,
         cameras: [],
         microphones: [],
         speakers: [],
-        unparentedViews: []
+        unparentedViews: new Map<LocalVideoStreamState, LocalVideoStreamState>()
       },
       callAgent: undefined,
       userId: userId
@@ -95,7 +99,7 @@ export class CallContext {
     );
   }
 
-  public setCall(call: Call): void {
+  public setCall(call: CallState): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         const existingCall = draft.calls.get(call.id);
@@ -143,7 +147,7 @@ export class CallContext {
     );
   }
 
-  public setCallState(callId: string, state: CallState): void {
+  public setCallState(callId: string, state: CallStatus): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         const call = draft.calls.get(callId);
@@ -179,7 +183,7 @@ export class CallContext {
 
   public setCallRemoteParticipants(
     callId: string,
-    addRemoteParticipant: RemoteParticipant[],
+    addRemoteParticipant: RemoteParticipantState[],
     removeRemoteParticipant: string[]
   ): void {
     this.setState(
@@ -189,7 +193,7 @@ export class CallContext {
           removeRemoteParticipant.forEach((id: string) => {
             call.remoteParticipants.delete(id);
           });
-          addRemoteParticipant.forEach((participant: RemoteParticipant) => {
+          addRemoteParticipant.forEach((participant: RemoteParticipantState) => {
             call.remoteParticipants.set(toFlatCommunicationIdentifier(participant.identifier), participant);
           });
         }
@@ -199,7 +203,7 @@ export class CallContext {
 
   public setCallRemoteParticipantsEnded(
     callId: string,
-    addRemoteParticipant: RemoteParticipant[],
+    addRemoteParticipant: RemoteParticipantState[],
     removeRemoteParticipant: string[]
   ): void {
     this.setState(
@@ -209,7 +213,7 @@ export class CallContext {
           removeRemoteParticipant.forEach((id: string) => {
             call.remoteParticipantsEnded.delete(id);
           });
-          addRemoteParticipant.forEach((participant: RemoteParticipant) => {
+          addRemoteParticipant.forEach((participant: RemoteParticipantState) => {
             call.remoteParticipantsEnded.set(toFlatCommunicationIdentifier(participant.identifier), participant);
           });
         }
@@ -217,7 +221,7 @@ export class CallContext {
     );
   }
 
-  public setCallLocalVideoStream(callId: string, streams: LocalVideoStream[]): void {
+  public setCallLocalVideoStream(callId: string, streams: LocalVideoStreamState[]): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         const call = draft.calls.get(callId);
@@ -322,20 +326,20 @@ export class CallContext {
     );
   }
 
-  public setLocalVideoStreamRendererView(callId: string, view: VideoStreamRendererView | undefined): void {
+  public setLocalVideoStreamRendererView(callId: string, view: VideoStreamRendererViewState | undefined): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         const call = draft.calls.get(callId);
         if (call) {
           if (call.localVideoStreams.length > 0) {
-            call.localVideoStreams[0].videoStreamRendererView = view;
+            call.localVideoStreams[0].view = view;
           }
         }
       })
     );
   }
 
-  public setParticipantState(callId: string, participantKey: string, state: RemoteParticipantState): void {
+  public setParticipantState(callId: string, participantKey: string, state: RemoteParticipantStatus): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         const call = draft.calls.get(callId);
@@ -391,7 +395,7 @@ export class CallContext {
     );
   }
 
-  public setParticipantVideoStream(callId: string, participantKey: string, stream: RemoteVideoStream): void {
+  public setParticipantVideoStream(callId: string, participantKey: string, stream: RemoteVideoStreamState): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         const call = draft.calls.get(callId);
@@ -438,7 +442,7 @@ export class CallContext {
   public setRemoteVideoStreams(
     callId: string,
     participantKey: string,
-    addRemoteVideoStream: RemoteVideoStream[],
+    addRemoteVideoStream: RemoteVideoStreamState[],
     removeRemoteVideoStream: number[]
   ): void {
     this.setState(
@@ -472,7 +476,7 @@ export class CallContext {
     callId: string,
     participantKey: string,
     streamId: number,
-    view: VideoStreamRendererView | undefined
+    view: VideoStreamRendererViewState | undefined
   ): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
@@ -482,7 +486,7 @@ export class CallContext {
           if (participant) {
             const stream = participant.videoStreams.get(streamId);
             if (stream) {
-              stream.videoStreamRendererView = view;
+              stream.view = view;
             }
           }
         }
@@ -490,7 +494,7 @@ export class CallContext {
     );
   }
 
-  public setIncomingCall(call: IncomingCall): void {
+  public setIncomingCall(call: IncomingCallState): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         const existingCall = draft.incomingCalls.get(call.id);
@@ -595,18 +599,17 @@ export class CallContext {
     );
   }
 
-  public setDeviceManagerUnparentedView(view: VideoStreamRendererView): void {
+  public setDeviceManagerUnparentedView(
+    localVideoStream: LocalVideoStreamState,
+    view: VideoStreamRendererViewState | undefined
+  ): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        draft.deviceManager.unparentedViews.push(view);
-      })
-    );
-  }
-
-  public removeDeviceManagerUnparentedView(index: number): void {
-    this.setState(
-      produce(this._state, (draft: CallClientState) => {
-        draft.deviceManager.unparentedViews.splice(index, 1);
+        draft.deviceManager.unparentedViews.set(localVideoStream, {
+          source: localVideoStream.source,
+          mediaStreamType: localVideoStream.mediaStreamType,
+          view: view
+        });
       })
     );
   }

@@ -9,7 +9,7 @@ import {
   CreateViewOptions,
   DeviceManager
 } from '@azure/communication-calling';
-import { CallClientState, LocalVideoStream, RemoteVideoStream } from './CallClientState';
+import { CallClientState, LocalVideoStreamState, RemoteVideoStreamState } from './CallClientState';
 import { CallContext } from './CallContext';
 import { callAgentDeclaratify } from './CallAgentDeclarative';
 import { InternalCallContext } from './InternalCallContext';
@@ -49,7 +49,9 @@ export interface StatefulCallClient extends CallClient {
    * state. Under the hood calls {@Link @azure/communication-calling#VideoStreamRenderer.createView}.
    *
    * If callId is undefined and stream provided is LocalVideoStream, we will render the LocalVideoStream and store the
-   * resulting {@Link VideoStreamRendererView} under the {@Link CallClientState#DeviceManager.unparentedViews}.
+   * resulting {@Link VideoStreamRendererView} under the {@Link CallClientState#DeviceManager.unparentedViews}. Note
+   * that we use the LocalVideoStream as a reference and different instances of the same LocalVideoStream result in
+   * different views being generated.
    *
    * @param callId - CallId of the Call where the stream to start rendering is contained in. Can be undefined if
    *   rendering a LocalVideoStream that is not tied to a Call.
@@ -64,7 +66,7 @@ export interface StatefulCallClient extends CallClient {
   createView(
     callId: string | undefined,
     participantId: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | undefined,
-    stream: LocalVideoStream | RemoteVideoStream,
+    stream: LocalVideoStreamState | RemoteVideoStreamState,
     options?: CreateViewOptions
   ): Promise<void>;
   /**
@@ -73,10 +75,9 @@ export interface StatefulCallClient extends CallClient {
    * state. Under the hood calls {@Link @azure/communication-calling#VideoStreamRenderer.dispose}.
    *
    * If callId is undefined and the stream provided is LocalVideoStream, we will search
-   * {@Link CallClientState#DeviceManager.unparentedViews} for matching LocalVideoStream (best effort) and stop
-   * rendering the best match and remove it from the state. The criteria for the search is:
-   * 1. Passed in LocalVideoStream referential equals LocalVideoStream in state
-   * 2. Passed in LocalVideoStream all properties match all properties for a LocalVideoStream in state
+   * {@Link CallClientState#DeviceManager.unparentedViews} for matching LocalVideoStream (by reference) and stop
+   * rendering the found stream and remove it from the state. In order to stop a stream previously started, the same
+   * LocalVideoStream reference must be used.
    *
    * @param callId - CallId of the Call where the stream to stop rendering is contained in. Can be undefined if
    *   stop rendering a LocalVideoStream that is not tied to a Call.
@@ -87,7 +88,7 @@ export interface StatefulCallClient extends CallClient {
   disposeView(
     callId: string | undefined,
     participantId: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | undefined,
-    stream: LocalVideoStream | RemoteVideoStream
+    stream: LocalVideoStreamState | RemoteVideoStreamState
   ): void;
 }
 
@@ -202,7 +203,7 @@ export const createStatefulCallClient = (
         | UnknownIdentifierKind
         | string
         | undefined,
-      stream: LocalVideoStream | RemoteVideoStream,
+      stream: LocalVideoStreamState | RemoteVideoStreamState,
       options?: CreateViewOptions
     ): Promise<void> => {
       return createView(context, internalContext, callId, participantId, stream, options);
@@ -219,7 +220,7 @@ export const createStatefulCallClient = (
         | UnknownIdentifierKind
         | string
         | undefined,
-      stream: LocalVideoStream | RemoteVideoStream
+      stream: LocalVideoStreamState | RemoteVideoStreamState
     ): void => {
       disposeView(context, internalContext, callId, participantId, stream);
     }
