@@ -1,29 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { ChatAdapter, ChatComposite, createAzureCommunicationChatAdapter } from 'react-composites';
-import { ChatConfig } from '../ChatConfig';
 
-export const ContosoChatContainer = (props: { config: ChatConfig | undefined }): JSX.Element => {
-  const { config } = props;
+export type ContainerProps = {
+  token: string;
+  displayName: string;
+  endpointUrl: string;
+  threadId: string;
+};
 
+export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
   // Creating an adapter is asynchronous.
   // An update to `config` triggers a new adapter creation, via the useEffect block.
   // When the adapter becomes ready, the state update triggers a re-render of the ChatComposite.
   const [adapter, setAdapter] = useState<ChatAdapter>();
   useEffect(() => {
-    if (config) {
+    if (props) {
       const createAdapter = async (): Promise<void> => {
         setAdapter(
-          await createAzureCommunicationChatAdapter(
-            config.token,
-            config.endpointUrl,
-            config.threadId,
-            config.displayName
-          )
+          await createAzureCommunicationChatAdapter(props.token, props.endpointUrl, props.threadId, props.displayName)
         );
       };
       createAdapter();
     }
-  }, [config]);
+  }, [props]);
 
   return <>{adapter ? <ChatComposite adapter={adapter} /> : <h3>Loading...</h3>}</>;
 };

@@ -14,7 +14,7 @@ import {
 import { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import {
-  Call as DeclarativeCall,
+  CallState,
   RemoteParticipantState as DeclarativeRemoteParticipant,
   RemoteVideoStreamState as DeclarativeRemoteVideoStream,
   LocalVideoStreamState as DeclarativeLocalVideoStream,
@@ -30,7 +30,7 @@ export function convertSdkLocalStreamToDeclarativeLocalStream(
   return {
     source: stream.source,
     mediaStreamType: stream.mediaStreamType,
-    videoStreamRendererView: undefined
+    view: undefined
   };
 }
 
@@ -41,7 +41,7 @@ export function convertSdkRemoteStreamToDeclarativeRemoteStream(
     id: stream.id,
     mediaStreamType: stream.mediaStreamType,
     isAvailable: stream.isAvailable,
-    videoStreamRendererView: undefined
+    view: undefined
   };
 }
 
@@ -64,7 +64,7 @@ export function convertSdkParticipantToDeclarativeParticipant(
 }
 
 // Note at the time of writing only one LocalVideoStream is supported by the SDK.
-export function convertSdkCallToDeclarativeCall(call: SdkCall): DeclarativeCall {
+export function convertSdkCallToDeclarativeCall(call: SdkCall): CallState {
   const declarativeRemoteParticipants = new Map<string, DeclarativeRemoteParticipant>();
   call.remoteParticipants.forEach((participant: SdkRemoteParticipant) => {
     declarativeRemoteParticipants.set(

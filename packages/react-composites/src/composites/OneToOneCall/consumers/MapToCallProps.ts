@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallState, HangUpOptions } from '@azure/communication-calling';
+import { CallState as CallStatus, HangUpOptions } from '@azure/communication-calling';
 import { ParticipantStream } from '../../../types/ParticipantStream';
 import { useOutgoingCall } from '../hooks/useOutgoingCall';
 import { useCallingContext } from '../providers/CallingProvider';
@@ -9,7 +9,7 @@ import { useCallContext } from '../providers/CallProvider';
 
 export type CallContainerProps = {
   isCallInitialized: boolean;
-  callState: CallState;
+  callState: CallStatus;
   screenShareStream: ParticipantStream | undefined;
   isLocalScreenSharingOn: boolean;
   leaveCall: (hangupCallOptions: HangUpOptions) => Promise<void>;

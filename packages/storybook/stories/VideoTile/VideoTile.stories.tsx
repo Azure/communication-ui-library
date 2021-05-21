@@ -83,6 +83,13 @@ export const VideoTile: () => JSX.Element = () => {
     step: 10
   });
 
+  const videoTileStyles = {
+    root: {
+      height,
+      width
+    }
+  };
+
   return (
     <VideoTileComponent
       isVideoReady={isVideoReady}
@@ -91,7 +98,7 @@ export const VideoTile: () => JSX.Element = () => {
       showDisplayName={showDisplayName}
       isMirrored={isMirrored}
       styles={{
-        root: { height: height, width: width }
+        root: { videoTileStyles }
       }}
     />
   );

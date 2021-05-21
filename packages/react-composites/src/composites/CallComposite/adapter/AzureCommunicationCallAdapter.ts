@@ -25,7 +25,7 @@ import {
   CallCompositePage,
   CallEvent,
   CallIdChangedListener,
-  CallState,
+  CallAdapterState,
   DisplaynameChangedListener,
   IsMuteChangedListener,
   IsScreenSharingOnChangedListener,
@@ -43,7 +43,7 @@ import { ParticipantSubscriber } from './ParticipantSubcriber';
 // Context of Chat, which is a centralized context for all state updates
 class CallContext {
   private emitter: EventEmitter = new EventEmitter();
-  private state: CallState;
+  private state: CallAdapterState;
   private callId: string | undefined;
 
   constructor(clientState: CallClientState) {
@@ -57,20 +57,20 @@ class CallContext {
     };
   }
 
-  public onStateChange(handler: (_uiState: CallState) => void): void {
+  public onStateChange(handler: (_uiState: CallAdapterState) => void): void {
     this.emitter.on('stateChanged', handler);
   }
 
-  public offStateChange(handler: (_uiState: CallState) => void): void {
+  public offStateChange(handler: (_uiState: CallAdapterState) => void): void {
     this.emitter.off('stateChanged', handler);
   }
 
-  public setState(state: CallState): void {
+  public setState(state: CallAdapterState): void {
     this.state = state;
     this.emitter.emit('stateChanged', this.state);
   }
 
-  public getState(): CallState {
+  public getState(): CallAdapterState {
     return this.state;
   }
 
@@ -282,15 +282,15 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.handlers.onParticipantRemove(userId);
   }
 
-  public getState(): CallState {
+  public getState(): CallAdapterState {
     return this.context.getState();
   }
 
-  public onStateChange(handler: (state: CallState) => void): void {
+  public onStateChange(handler: (state: CallAdapterState) => void): void {
     this.context.onStateChange(handler);
   }
 
-  public offStateChange(handler: (state: CallState) => void): void {
+  public offStateChange(handler: (state: CallAdapterState) => void): void {
     this.context.offStateChange(handler);
   }
 
@@ -396,7 +396,9 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 }
 
 const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
-  return !!deviceManager.unparentedViews && !!deviceManager.unparentedViews[0]?.target;
+  // TODO: we should take in a LocalVideoStream that developer wants to use as their 'Preview' view. We should also
+  // handle cases where 'Preview' view is in progress and not necessary completed.
+  return deviceManager.unparentedViews.values().next().value?.view !== undefined;
 };
 
 const createCommunicationIdentifier = (rawId: string): CommunicationUserKind => {
