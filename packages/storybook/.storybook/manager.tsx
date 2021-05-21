@@ -10,7 +10,7 @@ addons.setConfig({
   theme: create({
     base: 'light',
     brandTitle: 'Azure Communication Services - UI Library',
-    brandImage: './images/sidebar-header.png'
+    brandImage: './images/logo.svg'
   }),
   enableShortcuts: false
 });

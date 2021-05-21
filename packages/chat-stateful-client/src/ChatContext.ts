@@ -22,8 +22,13 @@ export class ChatContext {
     threads: new Map()
   };
   private _batchMode = false;
-  private _emitter: EventEmitter = new EventEmitter();
+  private _emitter: EventEmitter;
   private typingIndicatorInterval: number | undefined = undefined;
+
+  constructor() {
+    this._emitter = new EventEmitter();
+    this._emitter.setMaxListeners(50);
+  }
 
   public setState(state: ChatClientState): void {
     this._state = state;

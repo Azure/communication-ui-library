@@ -10,23 +10,27 @@ import {
   DeviceManagerState
 } from 'calling-stateful-client';
 import {
+  AudioOptions,
   CallAgent,
   Call,
   CallClientOptions,
-  AudioOptions,
+  GroupCallLocator,
+  TeamsMeetingLinkLocator,
   LocalVideoStream as SDKLocalVideoStream,
   AudioDeviceInfo,
   VideoDeviceInfo,
-  RemoteParticipant
+  RemoteParticipant,
+  PermissionConstraints
 } from '@azure/communication-calling';
 import { EventEmitter } from 'events';
 import {
   CallAdapter,
   CallCompositePage,
+  CallEndedListener,
   CallEvent,
   CallIdChangedListener,
   CallAdapterState,
-  DisplaynameChangedListener,
+  DisplayNameChangedListener,
   IsMuteChangedListener,
   IsScreenSharingOnChangedListener,
   IsSpeakingChangedListener,
@@ -109,7 +113,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   private callAgent: CallAgent;
   private deviceManager: StatefulDeviceManager;
   private localStream: SDKLocalVideoStream | undefined;
-  private groupId: string;
+  private locator: TeamsMeetingLinkLocator | GroupCallLocator;
   private call: Call | undefined;
   private context: CallContext;
   private handlers: DefaultCallingHandlers;
@@ -119,13 +123,13 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   constructor(
     callClient: StatefulCallClient,
-    groupId: string,
+    locator: TeamsMeetingLinkLocator | GroupCallLocator,
     callAgent: CallAgent,
     deviceManager: StatefulDeviceManager
   ) {
     this.callClient = callClient;
     this.callAgent = callAgent;
-    this.groupId = groupId;
+    this.locator = locator;
     this.deviceManager = deviceManager;
     this.context = new CallContext(callClient.getState());
     const onStateChange = (clientState: CallClientState): void => {
@@ -146,6 +150,11 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   public dispose(): void {
     this.callClient.offStateChange(this.onClientStateChange);
+    this.callAgent.dispose();
+  }
+
+  public isTeamsCall(): boolean {
+    return 'meetingLink' in this.locator;
   }
 
   public queryCameras(): Promise<VideoDeviceInfo[]> {
@@ -160,6 +169,10 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     return this.deviceManager.getSpeakers();
   }
 
+  public async askDevicePermission(constrain: PermissionConstraints): Promise<void> {
+    await this.deviceManager.askDevicePermission(constrain);
+  }
+
   public async joinCall(microphoneOn?: boolean): Promise<void> {
     if (isInCall(this.getState().call?.state ?? 'None')) {
       throw new Error('You are already in the call!');
@@ -168,20 +181,24 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       // TODO: find a way to expose stream to here
       const videoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
 
-      const call = this.callAgent.join(
-        {
-          groupId: this.groupId
-        },
-        {
+      const isTeamsMeeting = 'groupId' in this.locator;
+
+      if (isTeamsMeeting) {
+        this.call = this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
           audioOptions,
           videoOptions
-        }
-      );
-      this.call = call;
-      this.context.setCallId(call.id);
+        });
+      } else {
+        this.call = this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
+          audioOptions,
+          videoOptions
+        });
+      }
+
+      this.context.setCallId(this.call.id);
       // Resync state after callId is set
       this.context.updateClientState(this.callClient.getState());
-      this.handlers = createDefaultCallingHandlers(this.callClient, this.callAgent, this.deviceManager, call);
+      this.handlers = createDefaultCallingHandlers(this.callClient, this.callAgent, this.deviceManager, this.call);
       this.subscribeCallEvents();
     }
   }
@@ -195,6 +212,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 
   public async leaveCall(): Promise<void> {
+    const callId = this.call?.id;
     await this.handlers.onHangUp();
     this.unsubscribeCallEvents();
     this.call = undefined;
@@ -204,6 +222,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.context.updateClientState(this.callClient.getState());
     this.stopCamera();
     this.mute();
+    this.emitter.emit('callEnded', { callId });
   }
 
   public async setCamera(device: VideoDeviceInfo): Promise<void> {
@@ -294,16 +313,14 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.context.offStateChange(handler);
   }
 
-  on(event: 'participantsJoined', participantsJoinedListener: ParticipantJoinedListener): void;
-  on(event: 'participantsLeft', participantLeftListener: ParticipantLeftListener): void;
-  on(event: 'isMutedChanged', isMuteChangedListener: IsMuteChangedListener): void;
-  on(event: 'callIdChanged', callIdChangedListener: CallIdChangedListener): void;
-  on(
-    event: 'isLocalScreenSharingActiveChanged',
-    isScreenSharingOnChangedListener: IsScreenSharingOnChangedListener
-  ): void;
-  on(event: 'displayNameChanged', displaynameChangedListener: DisplaynameChangedListener): void;
-  on(event: 'isSpeakingChanged', isSpeakingChangedListener: IsSpeakingChangedListener): void;
+  on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
+  on(event: 'participantsLeft', listener: ParticipantLeftListener): void;
+  on(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
+  on(event: 'callIdChanged', listener: CallIdChangedListener): void;
+  on(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
+  on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
+  on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
+  on(event: 'callEnded', listener: CallEndedListener): void;
   on(event: 'error', errorHandler: (e: Error) => void): void;
 
   public on(event: CallEvent, listener: (e: any) => void): void {
@@ -378,16 +395,14 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.emitter.emit('callIdChanged', { callId: this.callIdChanged });
   };
 
-  off(event: 'participantsJoined', participantsJoinedHandler: ParticipantJoinedListener): void;
-  off(event: 'participantsLeft', participantsLeftHandler: ParticipantLeftListener): void;
-  off(event: 'isMutedChanged', isMuteChangedListener: IsMuteChangedListener): void;
-  off(event: 'callIdChanged', callIdChangedListener: CallIdChangedListener): void;
-  off(
-    event: 'isLocalScreenSharingActiveChanged',
-    isScreenSharingOnChangedListener: IsScreenSharingOnChangedListener
-  ): void;
-  off(event: 'displayNameChanged', displaynameChangedListener: DisplaynameChangedListener): void;
-  off(event: 'isSpeakingChanged', isSpeakingChangedListener: IsSpeakingChangedListener): void;
+  off(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
+  off(event: 'participantsLeft', listener: ParticipantLeftListener): void;
+  off(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
+  off(event: 'callIdChanged', listener: CallIdChangedListener): void;
+  off(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
+  off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
+  off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
+  off(event: 'callEnded', listener: CallEndedListener): void;
   off(event: 'error', errorHandler: (e: Error) => void): void;
 
   public off(event: CallEvent, listener: (e: any) => void): void {
@@ -407,7 +422,7 @@ const createCommunicationIdentifier = (rawId: string): CommunicationUserKind => 
 
 export const createAzureCommunicationCallAdapter = async (
   token: string,
-  groupId: string,
+  locator: TeamsMeetingLinkLocator | GroupCallLocator,
   displayName: string,
   refreshTokenCallback?: (() => Promise<string>) | undefined,
   callClientOptions?: CallClientOptions
@@ -421,6 +436,6 @@ export const createAzureCommunicationCallAdapter = async (
     { displayName }
   );
 
-  const adapter = new AzureCommunicationCallAdapter(callClient, groupId, callAgent, deviceManager);
+  const adapter = new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager);
   return adapter;
 };

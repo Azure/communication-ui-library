@@ -15,14 +15,18 @@ import {
 
 import { MediaGallery } from './MediaGallery';
 import { isInCall } from '../../utils/SDKUtils';
-import { ErrorHandlingProps } from '../OneToOneCall/providers/ErrorProvider';
+import { complianceBannerSelector } from './selectors/complianceBannerSelector';
 import { useAdapter } from './adapter/CallAdapterProvider';
 import { useSelector } from './hooks/useSelector';
 import { callStatusSelector } from './selectors/callStatusSelector';
 import { mediaGallerySelector } from './selectors/mediaGallerySelector';
 import { useHandlers } from './hooks/useHandlers';
-import { PlaceholderProps } from 'react-components';
+import { PlaceholderProps, VideoStreamOptions } from 'react-components';
 import { CallControls } from './CallControls';
+import { ComplianceBanner } from './ComplianceBanner';
+import { lobbySelector } from './selectors/lobbySelector';
+import { Lobby } from './Lobby';
+import { AzureCommunicationCallAdapter } from './adapter';
 
 export const MINI_HEADER_WINDOW_WIDTH = 450;
 
@@ -34,7 +38,7 @@ export interface CallScreenProps {
 
 const spinnerLabel = 'Initializing call client...';
 
-export const CallScreen = (props: CallScreenProps & ErrorHandlingProps): JSX.Element => {
+export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const { screenWidth, endCallHandler, onRenderAvatar } = props;
 
   const [joinedCall, setJoinedCall] = useState<boolean>(false);
@@ -45,6 +49,15 @@ export const CallScreen = (props: CallScreenProps & ErrorHandlingProps): JSX.Ele
 
   const mediaGalleryProps = useSelector(mediaGallerySelector);
   const mediaGalleryHandlers = useHandlers(MediaGallery);
+  const complianceBannerProps = useSelector(complianceBannerSelector);
+
+  const lobbyProps = useSelector(lobbySelector);
+  const lobbyHandlers = useHandlers(Lobby);
+
+  const localVideoViewOption = {
+    scalingMode: 'Crop',
+    isMirrored: true
+  } as VideoStreamOptions;
 
   const adapter = useAdapter();
 
@@ -55,6 +68,28 @@ export const CallScreen = (props: CallScreenProps & ErrorHandlingProps): JSX.Ele
     setJoinedCall(true);
   }, [adapter, joinedCall]);
 
+  if ('isTeamsCall' in adapter) {
+    const azureAdapter = adapter as AzureCommunicationCallAdapter;
+    const callState = azureAdapter.getState().call?.state;
+    if (
+      azureAdapter.isTeamsCall() &&
+      callState !== undefined &&
+      azureAdapter.getState().call &&
+      ['Connecting', 'Ringing', 'InLobby'].includes(callState)
+    ) {
+      return (
+        <Lobby
+          callState={callState}
+          {...lobbyProps}
+          {...lobbyHandlers}
+          onEndCallClick={endCallHandler}
+          isMicrophoneChecked={azureAdapter.getState().isLocalPreviewMicrophoneEnabled}
+          localVideoViewOption={localVideoViewOption}
+        />
+      );
+    }
+  }
+
   return (
     <>
       {isInCall(callStatus ?? 'None') ? (
@@ -63,6 +98,9 @@ export const CallScreen = (props: CallScreenProps & ErrorHandlingProps): JSX.Ele
             <Stack className={props.screenWidth > MINI_HEADER_WINDOW_WIDTH ? headerContainer : headerCenteredContainer}>
               <CallControls onEndCallClick={endCallHandler} compressedMode={screenWidth <= MINI_HEADER_WINDOW_WIDTH} />
             </Stack>
+          </Stack.Item>
+          <Stack.Item style={{ width: '100%' }}>
+            <ComplianceBanner {...complianceBannerProps} />
           </Stack.Item>
           <Stack.Item styles={subContainerStyles} grow>
             {!isScreenShareOn ? (

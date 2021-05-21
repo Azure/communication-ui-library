@@ -33,7 +33,6 @@ const MainScreen = ({ screenWidth, onRenderAvatar }: MainScreenProps): JSX.Eleme
       <CallScreen
         endCallHandler={async (): Promise<void> => {
           adapter.setPage('configuration');
-          await adapter.leaveCall();
         }}
         onRenderAvatar={onRenderAvatar}
         screenWidth={screenWidth}
@@ -58,9 +57,12 @@ export const Call = (props: CallCompositeProps): JSX.Element => {
   const { adapter } = props;
 
   useEffect(() => {
-    adapter.queryCameras();
-    adapter.queryMicrophones();
-    adapter.querySpeakers();
+    (async () => {
+      await adapter.askDevicePermission({ video: true, audio: true });
+      adapter.queryCameras();
+      adapter.queryMicrophones();
+      adapter.querySpeakers();
+    })();
   }, [adapter]);
 
   return (

@@ -20,7 +20,7 @@ import { CommunicationParticipant, CallParticipant } from '../types';
  * Props for component `ParticipantList`
  */
 export type ParticipantListProps = {
-  /** Remote participants in user call */
+  /** Participants in user call or chat */
   participants: CommunicationParticipant[];
   /** User ID of user */
   myUserId?: string;

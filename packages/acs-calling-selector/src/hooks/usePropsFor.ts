@@ -26,11 +26,11 @@ import { CommonProperties, AreEqual } from 'acs-ui-common';
 // @ts-ignore
 import { DefaultCallingHandlers } from '../handlers/createHandlers';
 // @ts-ignore
-import { VideoStreamOptions, AudioDeviceInfo, StartCallOptions, Call } from '@azure/communication-calling';
+import { AudioDeviceInfo, StartCallOptions, Call, VideoDeviceInfo } from '@azure/communication-calling';
 // @ts-ignore
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 // @ts-ignore
-import { VideoStreamOptions } from 'react-components';
+import { VideoStreamOptions, CallParticipant, VideoGalleryRemoteParticipant } from 'react-components';
 
 // @ts-ignore
 export const usePropsFor = <Component extends (props: any) => JSX.Element>(
@@ -40,7 +40,8 @@ export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   return { ...useSelector(selector), ...useHandlers<Parameters<Component>[0]>(component) };
 };
 
-export const emptySelector = (): Record<string, never> => ({});
+const emptySelector = (): Record<string, never> => ({});
+export const endCallButtonSelector = emptySelector;
 export type GetSelector<Component> = AreEqual<Component, typeof VideoGallery> extends true
   ? typeof videoGallerySelector
   : AreEqual<Component, typeof MicrophoneButton> extends true
@@ -54,7 +55,7 @@ export type GetSelector<Component> = AreEqual<Component, typeof VideoGallery> ex
   : AreEqual<Component, typeof ParticipantList> extends true
   ? typeof participantListSelector
   : AreEqual<Component, typeof EndCallButton> extends true
-  ? typeof emptySelector
+  ? typeof endCallButtonSelector
   : never;
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
