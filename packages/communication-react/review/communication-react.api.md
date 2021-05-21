@@ -340,9 +340,6 @@ export type CallEndedListener = (event: {
 }) => void;
 
 // @public (undocumented)
-export type CallEvent = 'participantsJoined' | 'participantsLeft' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callEnded' | 'error';
-
-// @public (undocumented)
 export type CallIdChangedListener = (event: {
     callId: string;
 }) => void;
@@ -528,12 +525,9 @@ export type ChatMessagePayload = {
 };
 
 // @public (undocumented)
-export type ChatMessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
-
-// @public (undocumented)
 export type ChatMessageWithStatus = ChatMessage_2 & {
     clientMessageId?: string;
-    status: ChatMessageStatus;
+    status: MessageStatus;
 };
 
 // @public (undocumented)
