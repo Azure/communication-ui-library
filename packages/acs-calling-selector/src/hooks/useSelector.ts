@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { CallClientState, StatefulCallClient } from 'calling-stateful-client';
-import { useCall, useCallClient } from 'react-composites';
+import { useCall, useCallClient } from '../providers';
 
 import { useState, useEffect, useRef, useMemo } from 'react';
 
