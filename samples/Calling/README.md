@@ -1,6 +1,6 @@
-# Group Calling Sample
+# Calling Sample
 
-This is a sample application to show how the ACS Calling Web SDK can be used to build a group calling experience.
+This is a sample application to show how the ACS Calling Web SDK can be used to build a calling experience.
 The client-side application is a React based user interface leveraging Microsoft Fluent UI.
 Powering this front-end is a NodeJS web application powered by ExpressJS to connect this application with Azure Communication Services.s.
 
