@@ -29,7 +29,7 @@ import {
  * State change events are driven by:
  * - Returned data from {@Link @azure/communication-calling#DeviceManager} APIs.
  * - Returned data from {@Link @azure/communication-calling#CallAgent} APIs.
- * - Listeners automatically attached to {@Link @azure/communication-calling}:
+ * - Listeners automatically attached to various azure communication-calling objects:
  *   - CallAgent 'incomingCall'
  *   - CallAgent 'callsUpdated'
  *   - DeviceManager 'videoDevicesUpdated'
@@ -222,8 +222,8 @@ export type StatefulCallClientOptions = CallClientOptions;
  * {@Link @azure/communication-calling#CallAgent} and {@Link @azure/communication-calling#Call} (and etc.) that are
  * obtained from the StatefulCallClient in order for their state changes to be proxied properly.
  *
- * @param callClientArgs {@Link StatefulCallClientArgs}
- * @param callClientOptions {@Link StatefulCallClientOptions}
+ * @param callClientArgs - {@Link StatefulCallClientArgs}
+ * @param callClientOptions - {@Link StatefulCallClientOptions}
  * @returns
  */
 export const createStatefulCallClient = (
