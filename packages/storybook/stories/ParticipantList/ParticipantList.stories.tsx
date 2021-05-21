@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { ParticipantList as ParticipantListComponent } from '@azure/communication-react';
-import { PersonaPresence } from '@fluentui/react';
+import { Stack } from '@fluentui/react';
 import { Title, Heading, Description, Canvas, Props } from '@storybook/addon-docs/blocks';
 import { boolean, text, select } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
@@ -114,11 +114,13 @@ export const ParticipantList: () => JSX.Element = () => {
   };
 
   return (
-    <ParticipantListComponent
-      participants={mockParticipants}
-      myUserId={myUserId}
-      onParticipantRemove={onParticipantRemove}
-    />
+    <Stack>
+      <ParticipantListComponent
+        participants={mockParticipants}
+        myUserId={myUserId}
+        onParticipantRemove={onParticipantRemove}
+      />
+    </Stack>
   );
 };
 

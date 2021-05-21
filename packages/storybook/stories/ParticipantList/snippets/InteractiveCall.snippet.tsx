@@ -83,7 +83,7 @@ export const InteractiveCallParticipantListExample: () => JSX.Element = () => {
         />
       );
     }
-    return null;
+    return <></>;
   };
 
   if (participants.length > 0) {
