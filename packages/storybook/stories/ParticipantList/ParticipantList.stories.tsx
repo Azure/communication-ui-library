@@ -26,14 +26,15 @@ const getDocs: () => JSX.Element = () => {
 
       <Heading>Default example for Chat</Heading>
       <Description>
-        ParticipantList for chat is by default a list of default
-        [PartipantItem](./?path=/docs/ui-components-participantitem--participant-item) components.
+        The ParticipantList for chat is by default a list of
+        [PartipantItem](./?path=/docs/ui-components-participantitem--participant-item) components linked with state
+        around each chat participant.
       </Description>
       <Canvas mdxSource={DefaultChatParticipantListExampleText}>
         <DefaultChatParticipantListExample />
       </Canvas>
 
-      <Heading>Default example for Call</Heading>
+      <Heading>Default example for Calling</Heading>
       <Description>
         ParticipantList for chat is by default a list of
         [PartipantItem](./?path=/docs/ui-components-participantitem--participant-item) components with presence linked
