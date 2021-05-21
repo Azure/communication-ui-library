@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add check to avoid modifications after unmount",
+  "packageName": "@azure/acs-chat-selector",
+  "email": "allenhwang@microsoft.com",
+  "dependentChangeType": "patch"
+}
