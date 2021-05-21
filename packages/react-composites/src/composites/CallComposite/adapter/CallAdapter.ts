@@ -1,14 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Call, DeviceManagerState } from 'calling-stateful-client';
+import { CallState, DeviceManagerState } from 'calling-stateful-client';
 import type {
   AudioDeviceInfo,
   VideoDeviceInfo,
-  Call as SDKCall,
+  Call,
   PermissionConstraints,
-  RemoteParticipantState
+  RemoteParticipant
 } from '@azure/communication-calling';
+
 import { VideoStreamOptions } from 'react-components';
 import type {
   CommunicationUserKind,
@@ -19,22 +20,22 @@ import type {
 
 export type CallCompositePage = 'configuration' | 'call';
 
-export type CallingUIState = {
+export type CallAdapterUiState = {
   // Self-contained state for composite
   error?: Error;
   isLocalPreviewMicrophoneEnabled: boolean;
   page: CallCompositePage;
 };
 
-export type CallingClientState = {
+export type CallAdapterClientState = {
   // Properties from backend services
   userId: string;
   displayName?: string;
-  call?: Call;
+  call?: CallState;
   devices: DeviceManagerState;
 };
 
-export type CallState = CallingUIState & CallingClientState;
+export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
 
 export type IncomingCallListener = (event: {
   callId: string;
@@ -56,9 +57,9 @@ export type CallIdentifierKinds =
   | MicrosoftTeamsUserKind
   | UnknownIdentifierKind;
 
-export type ParticipantJoinedListener = (event: { joined: RemoteParticipantState[] }) => void;
+export type ParticipantJoinedListener = (event: { joined: RemoteParticipant[] }) => void;
 
-export type ParticipantLeftListener = (event: { removed: RemoteParticipantState[] }) => void;
+export type ParticipantLeftListener = (event: { removed: RemoteParticipant[] }) => void;
 
 export type IsMuteChangedListener = (event: { identifier: CallIdentifierKinds; isMuted: boolean }) => void;
 
@@ -73,11 +74,11 @@ export type DisplayNameChangedListener = (event: { participantId: CallIdentifier
 export type CallEndedListener = (event: { callId: string }) => void;
 
 export interface CallAdapter {
-  onStateChange(handler: (state: CallState) => void): void;
+  onStateChange(handler: (state: CallAdapterState) => void): void;
 
-  offStateChange(handler: (state: CallState) => void): void;
+  offStateChange(handler: (state: CallAdapterState) => void): void;
 
-  getState(): CallState;
+  getState(): CallAdapterState;
 
   dispose(): void;
 
@@ -109,7 +110,7 @@ export interface CallAdapter {
 
   unmute(): Promise<void>;
 
-  startCall(participants: string[]): SDKCall | undefined;
+  startCall(participants: string[]): Call | undefined;
 
   startScreenShare(): Promise<void>;
 

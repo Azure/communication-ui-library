@@ -4,7 +4,7 @@
 // @ts-ignore
 import * as reselect from 'reselect';
 // @ts-ignore
-import { Call, CallClientState, DeviceManagerState } from 'calling-stateful-client';
+import { CallState, CallClientState, DeviceManagerState } from 'calling-stateful-client';
 // @ts-ignore
 import { CallingBaseSelectorProps } from './baseSelectors';
 import { getCall, getDeviceManager } from './baseSelectors';
@@ -19,7 +19,9 @@ export const microphoneButtonSelector = reselect.createSelector([getCall, getDev
 });
 
 export const cameraButtonSelector = reselect.createSelector([getCall, getDeviceManager], (call, deviceManager) => {
-  const previewOn = !!deviceManager.unparentedViews && !!deviceManager.unparentedViews[0]?.target;
+  // TODO: we should take in a LocalVideoStream that developer wants to use as their 'Preview' view. We should also
+  // handle cases where 'Preview' view is in progress and not necessary completed.
+  const previewOn = deviceManager.unparentedViews.values().next().value?.view !== undefined;
   const localVideoFromCall = call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
 
   return {

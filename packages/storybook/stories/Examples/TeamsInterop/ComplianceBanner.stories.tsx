@@ -7,10 +7,10 @@ import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
 
 import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
-import { CallComponent } from './snippets/CallComponent.snippet';
+import { Banner } from './snippets/Banner.snippet';
 
 const CallComponentText = require('!!raw-loader!./snippets/CallComponent.snippet.tsx').default;
-const TeamsInteropText = require('!!raw-loader!./snippets/TeamsInterop.snippet.tsx').default;
+const TeamsInteropText = require('!!raw-loader!./snippets/ComplianceBannerExample.snippet.tsx').default;
 
 const getDocs: () => JSX.Element = () => {
   return (
@@ -34,7 +34,7 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-export const NoticeBanner: () => JSX.Element = () => {
+export const ComplianceBanner: () => JSX.Element = () => {
   const [teamsInterop, setTeamsInterop] = useState({
     recordingEnabled: false,
     transcriptionEnabled: false
@@ -61,12 +61,12 @@ export const NoticeBanner: () => JSX.Element = () => {
 
   // TODO: Fix dark theming.
   // Once https://github.com/Azure/communication-ui-sdk/pull/169 lands, same fix should be applied here.
-  return <CallComponent {...teamsInterop} />;
+  return <Banner {...teamsInterop} />;
 };
 
 export default {
-  title: `${EXAMPLES_FOLDER_PREFIX}/TeamsInterop`,
-  component: NoticeBanner,
+  title: `${EXAMPLES_FOLDER_PREFIX}/Teams Interop`,
+  component: ComplianceBanner,
   parameters: {
     docs: {
       page: () => getDocs()

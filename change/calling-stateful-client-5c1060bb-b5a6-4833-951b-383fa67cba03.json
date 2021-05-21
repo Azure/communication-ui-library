@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Rename state-only shadow type for Call",
+  "packageName": "calling-stateful-client",
+  "email": "prprabhu@microsoft.com",
+  "dependentChangeType": "patch"
+}

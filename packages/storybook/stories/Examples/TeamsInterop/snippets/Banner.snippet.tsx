@@ -1,8 +1,8 @@
 import { MessageBar } from '@fluentui/react';
 import React, { useRef } from 'react';
-import { bannerMessage, TeamsInterop } from './TeamsInterop.snippet';
+import { bannerMessage, ComplianceBannerState } from './ComplianceBannerExample.snippet';
 
-export const Banner = (props: TeamsInterop): JSX.Element => {
+export const Banner = (props: ComplianceBannerState): JSX.Element => {
   const history = useRef({
     teamsInteropCurrent: {
       recordingEnabled: false,
