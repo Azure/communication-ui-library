@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Exclude config files from npm pack",
-  "packageName": "react-components",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "none"
-}

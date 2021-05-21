@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fixed default theming when no theme is given to FluentThemeProvider.",
-  "packageName": "react-components",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

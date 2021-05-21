@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Decouple composite from ACS client and add implement an acs adapter for the interface",
-  "packageName": "react-composites",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}

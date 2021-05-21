@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Move common type to acs-ui-common",
-  "packageName": "@azure/acs-calling-selector",
-  "email": "prprabhu@microsoft.com",
-  "dependentChangeType": "patch"
-}

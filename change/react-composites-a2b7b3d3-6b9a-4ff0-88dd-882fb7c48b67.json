@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "fix rerender issue",
-  "packageName": "react-composites",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}

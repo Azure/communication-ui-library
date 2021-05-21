@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add memoizeAll to MessageThread to avoid generate unnecessary instances",
-  "packageName": "react-components",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}

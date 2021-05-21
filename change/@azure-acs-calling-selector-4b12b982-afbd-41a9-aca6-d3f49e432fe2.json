@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add Teams Interop to Group Call Sample",
-  "packageName": "@azure/acs-calling-selector",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}
