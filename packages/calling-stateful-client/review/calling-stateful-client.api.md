@@ -136,9 +136,8 @@ export type StatefulCallClientArgs = {
 // @public
 export type StatefulCallClientOptions = CallClientOptions;
 
-// @public (undocumented)
+// @public
 export interface StatefulDeviceManager extends DeviceManager {
-    // (undocumented)
     selectCamera: (VideoDeviceInfo: any) => void;
 }
 

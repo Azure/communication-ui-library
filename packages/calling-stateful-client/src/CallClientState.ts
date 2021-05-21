@@ -42,7 +42,7 @@ export interface Transfer {
    */
   id: number;
   /**
-   * Added by Declarative, stores the targetParticipant passed to
+   * Added by {@Link StatefulClientClient}, stores the targetParticipant passed to
    * {@Link @azure/communication-calling#TransferCallFeature.transfer}
    */
   targetParticipant: CommunicationUserIdentifier | PhoneNumberIdentifier;
@@ -79,9 +79,9 @@ export interface TransferCallFeature {
 
 /**
  * State only version of {@Link @azure/communication-calling#CallAgent} except calls is moved to be a child directly of
- * {@Link CallClientState}. The reason to have CallAgent's state proxied is to provide access to displayName. We don't
- * flatten CallAgent.displayName and put it in CallClientState because it would be ambiguious that displayName is
- * actually reliant on the creation/existence of CallAgent to be available.
+ * {@Link CallClientState} and not included here. The reason to have CallAgent's state proxied is to provide access to
+ * displayName. We don't flatten CallAgent.displayName and put it in CallClientState because it would be ambiguious that
+ * displayName is actually reliant on the creation/existence of CallAgent to be available.
  */
 export interface CallAgentState {
   /**
@@ -91,7 +91,9 @@ export interface CallAgentState {
 }
 
 /**
- * State only version of {@Link @azure/communication-calling#TranscriptionCallFeature}.
+ * State only version of {@Link @azure/communication-calling#TranscriptionCallFeature}. {@Link StatefulCallClient} will
+ * automatically listen for transcription state of the call and update the state exposed by {@Link StatefulCallClient}
+ * accordingly.
  */
 export interface TranscriptionCallFeature {
   /**
@@ -101,7 +103,8 @@ export interface TranscriptionCallFeature {
 }
 
 /**
- * State only version of {@Link @azure/communication-calling#RecordingCallFeature}.
+ * State only version of {@Link @azure/communication-calling#RecordingCallFeature}. {@Link StatefulCallClient} will
+ * automatically listen for recording state of the call and update the state exposed by {@Link StatefulCallClient} accordingly.
  */
 export interface RecordingCallFeature {
   /**
@@ -153,9 +156,11 @@ export interface RemoteVideoStreamState {
 }
 
 /**
- * State only version of {@Link @azure/communication-calling#VideoStreamRendererView}. TODO: Do we want to provide an
- * API for updateScalingMode? There is a way to change scaling mode which is to stop the video and start it again with
- * the desired scaling mode option.
+ * State only version of {@Link @azure/communication-calling#VideoStreamRendererView}. Currently no API is provided to
+ * modify scalingMode after the stream as been rendered by {@Link StatefulCallClient}. In order to change scalingMode
+ * stop rendering the stream and re-start it using the desired scalingMode. This property is added to the state exposed
+ * by {@Link StatefulCallClient} by {@Link StatefulCallClient.createView} and removed by
+ * {@Link StatefulCallClient.disposeView}.
  */
 export interface VideoStreamRendererViewState {
   /**
@@ -173,7 +178,8 @@ export interface VideoStreamRendererViewState {
 }
 
 /**
- * State only version of {@Link @azure/communication-calling#RemoteParticipant}.
+ * State only version of {@Link @azure/communication-calling#RemoteParticipant}. {@Link StatefulCallClient} will
+ * automatically retrieve RemoteParticipants and add their state to the state exposed by {@Link StatefulCallClient}.
  */
 export interface RemoteParticipantState {
   /**
@@ -208,27 +214,28 @@ export interface RemoteParticipantState {
 }
 
 /**
- * State only version of {@Link @azure/communication-calling#Call}.
+ * State only version of {@Link @azure/communication-calling#Call}. {@Link StatefulCallClient} will automatically
+ * retrieve Call's state and add it to the state exposed by {@Link StatefulCallClient}.
  */
 export interface CallState {
   /**
-   * Proxy of {@Link @azure/communication-calling#Call.id}
+   * Proxy of {@Link @azure/communication-calling#Call.id}.
    */
   id: string;
   /**
-   * Proxy of {@Link @azure/communication-calling#Call.callerInfo}
+   * Proxy of {@Link @azure/communication-calling#Call.callerInfo}.
    */
   callerInfo: CallerInfo;
   /**
-   * Proxy of {@Link @azure/communication-calling#Call.state}
+   * Proxy of {@Link @azure/communication-calling#Call.state}.
    */
   state: CallStatus;
   /**
-   * Proxy of {@Link @azure/communication-calling#Call.callEndReason}
+   * Proxy of {@Link @azure/communication-calling#Call.callEndReason}.
    */
   callEndReason?: CallEndReason;
   /**
-   * Proxy of {@Link @azure/communication-calling#Call.direction}
+   * Proxy of {@Link @azure/communication-calling#Call.direction}.
    */
   direction: CallDirection;
   /**
@@ -244,13 +251,15 @@ export interface CallState {
    */
   localVideoStreams: LocalVideoStreamState[];
   /**
-   * Proxy of {@Link @azure/communication-calling#Call.remoteParticipants}. Map of identifier
-   * {@Link @azure/communication-react#string} to {@Link RemoteParticipant}
+   * Proxy of {@Link @azure/communication-calling#Call.remoteParticipants}. Map of flattened
+   * {@Link RemoteParticipantState.identifier} to {@Link RemoteParticipant}. To obtain a flattened
+   * {@Link RemoteParticipantState.identifier}, use {@Link @azure/communication-react#toFlatCommunicationIdentifier}.
    */
   remoteParticipants: Map<string, RemoteParticipantState>;
   /**
-   * Stores remote participants that have left the call so that the callEndReason could be retrieved. Map of identifier
-   * {@Link @azure/communication-react#string} to {@Link RemoteParticipant}
+   * Stores remote participants that have left the call so that the callEndReason could be retrieved. Map of flattened
+   * {@Link RemoteParticipantState.identifier} to {@Link RemoteParticipant}. To obtain a flattened
+   * {@Link RemoteParticipantState.identifier}, use {@Link @azure/communication-react#toFlatCommunicationIdentifier}.
    */
   remoteParticipantsEnded: Map<string, RemoteParticipantState>;
   /**
@@ -268,27 +277,29 @@ export interface CallState {
   transfer: TransferCallFeature;
   /**
    * Stores the currently active screenshare participant's key. If there is no screenshare active, then this will be
-   * undefined. You can use this key to access the remoteParticipant data in {@Link CallState#remoteParticipants} map.
+   * undefined. You can use this key to access the remoteParticipant data in {@Link CallState.remoteParticipants} map.
    *
    * Note this only applies to ScreenShare in RemoteParticipant. A local ScreenShare being active will not affect this
    * property.
+   *
+   * This property is added by the stateful layer and is not a proxy of SDK state
    */
   screenShareRemoteParticipant: string | undefined;
   /**
-   * Stores the local date when the call started on the client. This is not originally in the SDK but provided by the
-   * Declarative layer.
+   * Stores the local date when the call started on the client. This property is added by the stateful layer and is not
+   * a proxy of SDK state.
    */
   startTime: Date;
   /**
-   * Stores the local date when the call ended on the client. This is not originally in the SDK but provided by the
-   * Declarative layer. It is undefined if the call is not ended yet.
+   * Stores the local date when the call ended on the client. This property is added by the stateful layer and is not
+   * a proxy of SDK state.
    */
   endTime: Date | undefined;
 }
 
 /**
- * State only version of {@Link @azure/communication-calling#IncomingCall}. CallEndReason is added by the declarative
- * layer based on received events.
+ * State only version of {@Link @azure/communication-calling#IncomingCall}. {@Link StatefulCallClient} will
+ * automatically detect incoming calls and add their state to the state exposed by {@Link StatefulCallClient}.
  */
 export interface IncomingCallState {
   /**
@@ -301,23 +312,27 @@ export interface IncomingCallState {
   callerInfo: CallerInfo;
   /**
    * Set to the state returned by 'callEnded' event on {@Link @azure/communication-calling#IncomingCall} when received.
+   * This property is added by the stateful layer and is not a proxy of SDK state.
    */
   callEndReason?: CallEndReason;
   /**
-   * Stores the local date when the call started on the client. This is not originally in the SDK but provided by the
-   * Declarative layer.
+   * Stores the local date when the call started on the client. This property is added by the stateful layer and is not
+   * a proxy of SDK state.
    */
   startTime: Date;
   /**
-   * Stores the local date when the call ended on the client. This is not originally in the SDK but provided by the
-   * Declarative layer. It is undefined if the call is not ended yet.
+   * Stores the local date when the call ended on the client. This property is added by the stateful layer and is not a
+   * proxy of SDK state. It is undefined if the call is not ended yet.
    */
   endTime: Date | undefined;
 }
 
 /**
  * This type is meant to encapsulate all the state inside {@Link @azure/communication-calling#DeviceManager}. For
- * optional parameters they may not be available until permission is granted by the user.
+ * optional parameters they may not be available until permission is granted by the user. The cameras, microphones,
+ * speakers, and deviceAccess states will be empty until the corresponding
+ * {@Link @azure/communication-calling#DeviceManager}'s getCameras, getMicrophones, getSpeakers, and askDevicePermission
+ * APIs are called and completed.
  */
 export type DeviceManagerState = {
   /**
@@ -333,8 +348,10 @@ export type DeviceManagerState = {
    */
   selectedSpeaker?: AudioDeviceInfo;
   /**
-   * Stores the selected camera device info. This is provided by the stateful layer and does not exist in the Calling
-   * SDK. It must be explicitly set before use and does not persist across instances of the stateful client.
+   * Stores the selected camera device info. This is added by the stateful layer and does not exist in the Calling SDK.
+   * It is meant as a convenience to the developer. It must be explicitly set before it has any value and does not
+   * persist across instances of the {@Link StatefulCallClient}. The developer controls entirely what this value holds
+   * at any time.
    */
   selectedCamera?: VideoDeviceInfo;
   /**
@@ -354,34 +371,40 @@ export type DeviceManagerState = {
    */
   deviceAccess?: DeviceAccess;
   /**
-   * Stores created views that are not associated with any CallState (when {@Link StatefulCallClient#createView} is
-   * called with undefined callId and defined LocalVideoStream). The LocalVideoStream key will be the original
-   * reference that createView is called with. The value will be a new LocalVideoStream different than the one used as
-   * they key with an up-to date status and view.
+   * Stores created views that are not associated with any CallState (when {@Link StatefulCallClient.createView} is
+   * called with undefined callId, undefined participantId, and defined LocalVideoStream). The key in this map will be
+   * the original reference that {@Link StatefulCallClient.createView} is called with. The value will be a new
+   * LocalVideoStream different than the one used. The value in the map will contain the rendered view. The value in the
+   * map is also considered immutable.
    */
   unparentedViews: Map<LocalVideoStreamState, LocalVideoStreamState>;
 };
 
 /**
- * Container for all of the state data proxied by {@Link StatefulCallClient}. Calls is a map of CallState.id to CallState
- * {@Link CallState}.
+ * Container for all of the state data proxied by {@Link StatefulCallClient}. The calls, callsEnded, incomingCalls, and
+ * incomingCallsEnded states will be automatically provided if a callAgent has been created. The deviceManager will be
+ * empty initially until populated see {@Link DeviceManagerState}. The userId state is provided as a convenience for the
+ * developer and is completely controled and set by the developer.
  */
 export interface CallClientState {
   /**
-   * Proxy of {@Link @azure/communication-calling#CallAgent.calls} as a map of CallState {@Link CallState}. It is keyed by
-   * CallState.id.
+   * Proxy of {@Link @azure/communication-calling#CallAgent.calls} as a map of CallState {@Link CallState}. It is keyed
+   * by {@Link @azure/communication-calling#Call.id}. Please note that {@Link @azure/communication-calling#Call.id}
+   * could change. You should not cache the id itself but the entire {@Link @azure/communication-calling#Call} and then
+   * use the id contained to look up data in this map.
    */
   calls: Map<string, CallState>;
   /**
-   * Calls that have ended are stored here so the callEndReason could be checked. It is an array of CallState {@Link CallState}.
-   * Calls are pushed on to the array as they end, meaning this is sorted by endTime ascending. Only
-   * MAX_CALL_HISTORY_LENGTH number of Calls are kept in this array with the older ones being replaced by newer ones.
+   * Calls that have ended are stored here so the callEndReason could be checked. It is an array of CallState
+   * {@Link CallState}. Calls are pushed on to the array as they end, meaning this is sorted by endTime ascending. Only
+   * {@Link MAX_CALL_HISTORY_LENGTH} number of Calls are kept in this array with the older ones being replaced by newer
+   * ones.
    */
   callsEnded: CallState[];
   /**
    * Proxy of {@Link @azure/communication-calling#IncomingCall} as a map of IncomingCall {@Link IncomingCall} received
    * in the event 'incomingCall' emitted by {@Link @azure/communication-calling#CallAgent}. It is keyed by
-   * IncomingCall.id.
+   * {@Link @azure/communication-calling#IncomingCall.id}.
    */
   incomingCalls: Map<string, IncomingCallState>;
   /**
@@ -393,17 +416,17 @@ export interface CallClientState {
    */
   incomingCallsEnded: IncomingCallState[];
   /**
-   * Proxy of {@Link @azure/communication-calling#DeviceManager} and its events.
+   * Proxy of {@Link @azure/communication-calling#DeviceManager}. Please review {@Link DeviceManagerState}.
    */
   deviceManager: DeviceManagerState;
   /**
-   * Proxy of {@Link @azure/communication-calling#CallAgent} without the calls property. Provides access to displayName
-   * but only available if CallAgent has been created.
+   * Proxy of {@Link @azure/communication-calling#CallAgent}. Please review {@Link CallAgentState}.
    */
   callAgent: CallAgentState | undefined;
   /**
-   * Stores a userId. This is not used by the stateful client and is provided here as a convenience for the
-   * developer for easier access to userId. Must be passed in at initialization of the stateful client.
+   * Stores a userId. This is not used by the {@Link StatefulCallClient} and is provided here as a convenience for the
+   * developer for easier access to userId. Must be passed in at initialization of the {@Link StatefulCallClient}.
+   * Completely controled by the developer.
    */
   userId: string;
 }
