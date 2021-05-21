@@ -17,7 +17,7 @@ function App(): JSX.Element {
 
   //Instatiate the statefulChatClient
   const statefulChatClient = createStatefulChatClient({
-    userId: userId,
+    userId: { kind: 'communicationUser', communicationUserId: userId },
     displayName: displayName,
     endpoint: endpointUrl,
     credential: tokenCredential
@@ -28,7 +28,9 @@ function App(): JSX.Element {
   return (
     <FluentThemeProvider>
       <ChatClientProvider chatClient={statefulChatClient}>
-        <ChatThreadClientProvider chatThreadClient={chatThreadClient}></ChatThreadClientProvider>
+        <ChatThreadClientProvider chatThreadClient={chatThreadClient}>
+          <></>
+        </ChatThreadClientProvider>
       </ChatClientProvider>
     </FluentThemeProvider>
   );

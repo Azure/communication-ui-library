@@ -1,5 +1,5 @@
+import { ChatAdapter, ChatComposite, createAzureCommunicationChatAdapter } from '@azure/communication-react';
 import React, { useState, useEffect } from 'react';
-import { ChatAdapter, ChatComposite, createAzureCommunicationChatAdapter } from 'react-composites';
 
 export type ContainerProps = {
   token: string;
