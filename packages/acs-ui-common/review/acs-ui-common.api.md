@@ -29,6 +29,9 @@ export type FunctionWithKey<KeyT, ArgsT extends any[], RetT> = (key: KeyT, ...ar
 // @public
 export const memoizeFnAll: <KeyT, ArgsT extends any[], FnRetT, CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>>(fnToMemoize: FunctionWithKey<KeyT, ArgsT, FnRetT>, shouldCacheUpdate?: (args1: any, args2: any) => boolean) => (callback: CallBackT) => FnRetT[];
 
+// @public (undocumented)
+export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
+
 // @public
 export const toFlatCommunicationIdentifier: (id: CommunicationIdentifier) => string;
 

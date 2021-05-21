@@ -57,6 +57,7 @@ export class CallContext {
       userId: userId
     };
     this._emitter = new EventEmitter();
+    this._emitter.setMaxListeners(50);
     this._atomicId = 0;
   }
 
@@ -610,6 +611,14 @@ export class CallContext {
           mediaStreamType: localVideoStream.mediaStreamType,
           view: view
         });
+      })
+    );
+  }
+
+  public deleteDeviceManagerUnparentedView(localVideoStream: LocalVideoStreamState): void {
+    this.setState(
+      produce(this._state, (draft: CallClientState) => {
+        draft.deviceManager.unparentedViews.delete(localVideoStream);
       })
     );
   }

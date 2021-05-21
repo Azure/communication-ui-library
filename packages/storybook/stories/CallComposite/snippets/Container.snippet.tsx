@@ -1,10 +1,12 @@
+import { CallComposite, CallAdapter, createAzureCommunicationCallAdapter } from '@azure/communication-react';
+import { Theme, PartialTheme } from '@fluentui/react-theme-provider';
 import React, { useState, useEffect } from 'react';
-import { CallComposite, CallAdapter, createAzureCommunicationCallAdapter } from 'react-composites';
 
 export type ContainerProps = {
   token: string;
   locator: string;
   displayName: string;
+  fluentTheme?: PartialTheme | Theme;
 };
 
 const isTeamsMeetingLink = (link: string): boolean => link.startsWith('https://teams.microsoft.com/l/meetup-join');
@@ -25,5 +27,5 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
     })();
   }, [props]);
 
-  return <>{adapter && <CallComposite adapter={adapter} />}</>;
+  return <>{adapter && <CallComposite adapter={adapter} fluentTheme={props.fluentTheme} />}</>;
 };

@@ -17,6 +17,7 @@ import { DeviceManagerState } from 'calling-stateful-client';
 import { ErrorInfo } from 'react';
 import { GroupCallLocator } from '@azure/communication-calling';
 import type { MicrosoftTeamsUserKind } from '@azure/communication-common';
+import { PartialTheme } from '@fluentui/react-theme-provider';
 import { PermissionConstraints } from '@azure/communication-calling';
 import type { PhoneNumberKind } from '@azure/communication-common';
 import { PlaceholderProps } from 'react-components';
@@ -24,6 +25,7 @@ import type { RemoteParticipant } from '@azure/communication-calling';
 import { StatefulCallClient } from 'calling-stateful-client';
 import { StatefulDeviceManager } from 'calling-stateful-client';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
+import { Theme } from '@fluentui/react-theme-provider';
 import type { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoStreamOptions } from 'react-components';
@@ -234,6 +236,7 @@ export type CallCompositePage = 'configuration' | 'call';
 // @public (undocumented)
 export type CallCompositeProps = {
     adapter: CallAdapter;
+    fluentTheme?: PartialTheme | Theme;
     onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
     onErrorCallback?: (error: CommunicationUiErrorInfo) => void;
 };
@@ -242,9 +245,6 @@ export type CallCompositeProps = {
 export type CallEndedListener = (event: {
     callId: string;
 }) => void;
-
-// @public (undocumented)
-export type CallEvent = 'participantsJoined' | 'participantsLeft' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callEnded' | 'error';
 
 // @public (undocumented)
 export type CallIdChangedListener = (event: {
@@ -319,9 +319,6 @@ export type ChatCompositeClientState = {
 };
 
 // @public (undocumented)
-export type ChatEvent = 'messageReceived' | 'messageSent' | 'messageRead' | 'participantsAdded' | 'participantsRemoved' | 'topicChanged' | 'error';
-
-// @public (undocumented)
 export type ChatOptions = {
     sendBoxMaxLength?: number;
 };
@@ -329,6 +326,7 @@ export type ChatOptions = {
 // @public (undocumented)
 export type ChatProps = {
     adapter: ChatAdapter;
+    fluentTheme?: PartialTheme | Theme;
     onRenderAvatar?: (userId: string) => JSX.Element;
     onErrorCallback?: (error: CommunicationUiErrorInfo) => void;
     options?: ChatOptions;

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove error bar export",
-  "packageName": "react-components",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "patch"
-}

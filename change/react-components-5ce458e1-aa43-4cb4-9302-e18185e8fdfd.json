@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix import for SizeValue in ReadReceipt",
-  "packageName": "react-components",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "patch"
-}

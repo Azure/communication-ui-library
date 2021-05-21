@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 export { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '../../acs-ui-common/src';
-export type { AreEqual, CommonProperties } from '../../acs-ui-common/src';
+export type { AreEqual, CommonProperties, MessageStatus } from '../../acs-ui-common/src';
 
 export * from '../../acs-calling-selector/src';
 export * from '../../acs-chat-selector/src';

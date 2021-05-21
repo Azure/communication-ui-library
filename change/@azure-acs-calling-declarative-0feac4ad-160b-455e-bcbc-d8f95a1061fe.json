@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Surface userId and displayName in Calling Declarative state",
-  "packageName": "calling-stateful-client",
-  "email": "allenhwang@microsoft.com",
-  "dependentChangeType": "patch"
-}

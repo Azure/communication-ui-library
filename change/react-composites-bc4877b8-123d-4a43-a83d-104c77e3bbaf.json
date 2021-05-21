@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Using new local preview in calling composite",
-  "packageName": "react-composites",
-  "email": "alkwa@microsoft.com",
-  "dependentChangeType": "patch"
-}

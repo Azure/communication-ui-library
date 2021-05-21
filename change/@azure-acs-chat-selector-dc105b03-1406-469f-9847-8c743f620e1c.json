@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Introduce common identifier format",
-  "packageName": "@azure/acs-chat-selector",
-  "email": "prprabhu@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -326,6 +326,7 @@ export type CallCompositePage = 'configuration' | 'call';
 // @public (undocumented)
 export type CallCompositeProps = {
     adapter: CallAdapter;
+    fluentTheme?: PartialTheme | Theme;
     onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
     onErrorCallback?: (error: CommunicationUiErrorInfo) => void;
 };
@@ -342,9 +343,6 @@ export type CallContextType = {
 export type CallEndedListener = (event: {
     callId: string;
 }) => void;
-
-// @public (undocumented)
-export type CallEvent = 'participantsJoined' | 'participantsLeft' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callEnded' | 'error';
 
 // @public (undocumented)
 export type CallIdChangedListener = (event: {
@@ -512,9 +510,6 @@ export type ChatCompositeClientState = {
 };
 
 // @public (undocumented)
-export type ChatEvent = 'messageReceived' | 'messageSent' | 'messageRead' | 'participantsAdded' | 'participantsRemoved' | 'topicChanged' | 'error';
-
-// @public (undocumented)
 export type ChatMessage = Message<'chat'>;
 
 // @public (undocumented)
@@ -532,12 +527,9 @@ export type ChatMessagePayload = {
 };
 
 // @public (undocumented)
-export type ChatMessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
-
-// @public (undocumented)
 export type ChatMessageWithStatus = ChatMessage_2 & {
     clientMessageId?: string;
-    status: ChatMessageStatus;
+    status: MessageStatus;
 };
 
 // @public (undocumented)
@@ -557,6 +549,7 @@ export const chatParticipantListSelector: reselect.OutputParametricSelector<Chat
 // @public (undocumented)
 export type ChatProps = {
     adapter: ChatAdapter;
+    fluentTheme?: PartialTheme | Theme;
     onRenderAvatar?: (userId: string) => JSX.Element;
     onErrorCallback?: (error: CommunicationUiErrorInfo) => void;
     options?: ChatOptions;
@@ -817,6 +810,15 @@ export type DeviceManagerState = {
     deviceAccess?: DeviceAccess;
     unparentedViews: Map<LocalVideoStreamState, LocalVideoStreamState>;
 };
+
+// @public (undocumented)
+export const devicePermissionSelector: reselect.OutputSelector<CallClientState, {
+    video: boolean;
+    audio: boolean;
+}, (res: DeviceManagerState) => {
+    video: boolean;
+    audio: boolean;
+}>;
 
 // @public (undocumented)
 export type DisplayNameChangedListener = (event: {
@@ -1397,9 +1399,6 @@ export const useChatThreadClient: () => ChatThreadClient;
 
 // @public (undocumented)
 export const useDeviceManager: () => StatefulDeviceManager | undefined;
-
-// @public (undocumented)
-export const useThreadId: () => string;
 
 // @public
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
