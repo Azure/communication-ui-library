@@ -37,7 +37,7 @@ const getDocs: () => JSX.Element = () => {
       <Description>
         ParticipantList for chat is by default a list of
         [PartipantItem](./?path=/docs/ui-components-participantitem--participant-item) components with presence linked
-        to the participant's call state, as well as icons for microphone and screen sharing states
+        to the participant call state, as well as icons for microphone and screen sharing states
       </Description>
       <Canvas mdxSource={DefaultCallParticipantListExampleText}>
         <DefaultCallParticipantListExample />
@@ -109,7 +109,7 @@ export const ParticipantList: () => JSX.Element = () => {
 
   const myUserId = mockParticipants[mockParticipants.length - 1].userId;
 
-  const onParticipantRemove = (userId: string) => {
+  const onParticipantRemove = (_userId: string): void => {
     // Do something when remove a participant from list
   };
 

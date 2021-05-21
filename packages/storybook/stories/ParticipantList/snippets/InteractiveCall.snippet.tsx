@@ -62,9 +62,8 @@ export const InteractiveCallParticipantListExample: () => JSX.Element = () => {
         key: 'mute',
         text: callingParticipant.isMuted ? 'Unmute' : 'Mute',
         onClick: () => {
-          let newParticipants = [...participants];
+          const newParticipants = [...participants];
           newParticipants[participantIndex].isMuted = !participants[participantIndex].isMuted;
-          console.log(`change of mute state to = ${newParticipants[participantIndex].isMuted}`);
           setParticpants(newParticipants);
         }
       }
@@ -85,10 +84,6 @@ export const InteractiveCallParticipantListExample: () => JSX.Element = () => {
     }
     return <></>;
   };
-
-  if (participants.length > 0) {
-    console.log(`render with Participant is muted = ${participants[0].isMuted}`);
-  }
 
   return (
     <FluentThemeProvider>
