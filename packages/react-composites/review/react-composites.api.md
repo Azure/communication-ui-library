@@ -329,7 +329,6 @@ export type ChatOptions = {
 export type ChatProps = {
     adapter: ChatAdapter;
     onRenderAvatar?: (userId: string) => JSX.Element;
-    onErrorCallback?: (error: CommunicationUiErrorInfo) => void;
     options?: ChatOptions;
 };
 

@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { CommunicationUiErrorInfo } from '../../types/CommunicationUiError';
 import { ChatScreen } from './ChatScreen';
 import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
 import { ChatAdapter } from './adapter/ChatAdapter';
@@ -10,7 +9,6 @@ import { ChatAdapter } from './adapter/ChatAdapter';
 export type ChatProps = {
   adapter: ChatAdapter;
   onRenderAvatar?: (userId: string) => JSX.Element;
-  onErrorCallback?: (error: CommunicationUiErrorInfo) => void;
   options?: ChatOptions;
 };
 
