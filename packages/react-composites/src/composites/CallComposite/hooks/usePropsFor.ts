@@ -4,10 +4,18 @@
 import {
   cameraButtonSelector,
   microphoneButtonSelector,
+  optionsButtonSelector,
   screenShareButtonSelector,
   videoGallerySelector
 } from '@azure/acs-calling-selector';
-import { CameraButton, EndCallButton, MicrophoneButton, ScreenShareButton, VideoGallery } from 'react-components';
+import {
+  CameraButton,
+  EndCallButton,
+  MicrophoneButton,
+  OptionsButton,
+  ScreenShareButton,
+  VideoGallery
+} from 'react-components';
 import { useAdaptedSelector } from './useAdaptedSelector';
 import { useHandlers } from './useHandlers';
 
@@ -49,6 +57,8 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
       return cameraButtonSelector;
     case ScreenShareButton:
       return screenShareButtonSelector;
+    case OptionsButton:
+      return optionsButtonSelector;
     case EndCallButton:
       return emptySelector;
   }

@@ -3,7 +3,7 @@
 import { useTheme } from '@fluentui/react-theme-provider';
 import React, { useCallback } from 'react';
 import { CameraButton, ControlBar, EndCallButton, MicrophoneButton, OptionsButton } from 'react-components';
-import { usePropsFor } from './hooks/usePropsFor';
+import { useCallingPropsFor as usePropsFor } from '@azure/acs-calling-selector';
 
 export interface LobbyCallControlBarProps {
   isMicrophoneChecked?: boolean;
@@ -34,7 +34,7 @@ export const LobbyCallControlBar = (props: LobbyCallControlBarProps): JSX.Elemen
           cameraButtonProps.onToggleCamera();
         }}
       />
-      <MicrophoneButton showLabel={true} {...microphoneButtonProps} />
+      <MicrophoneButton showLabel={true} {...microphoneButtonProps} checked={props.isMicrophoneChecked} />
       <OptionsButton showLabel={true} {...optionsButtonProps} />
       <EndCallButton showLabel={true} style={{ borderRadius: '0.25rem', marginLeft: '0.25rem' }} onHangUp={onHangUp} />
     </ControlBar>

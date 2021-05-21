@@ -10,7 +10,7 @@ import { StartCallButton } from './StartCallButton';
 import { CallConfiguration } from './CallConfiguration';
 import { LocalDeviceSettings } from './LocalDeviceSettings';
 import { optionsButtonSelector } from '@azure/acs-calling-selector';
-import { useSelector } from './hooks/useSelector';
+import { useCallingSelector as useSelector } from '@azure/acs-calling-selector';
 import { useAzureCommunicationHandlers } from './hooks/useAzureCommunicationHandlers';
 import { TeamsMeetingLinkField } from './TeamsMeetingLinkField';
 
