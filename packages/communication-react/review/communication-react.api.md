@@ -1191,9 +1191,8 @@ export type StatefulChatClientArgs = {
 // @public
 export type StatefulChatClientOptions = ChatClientOptions;
 
-// @public (undocumented)
+// @public
 export interface StatefulDeviceManager extends DeviceManager {
-    // (undocumented)
     selectCamera: (VideoDeviceInfo: any) => void;
 }
 
