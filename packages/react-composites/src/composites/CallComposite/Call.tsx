@@ -1,25 +1,29 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ErrorProvider } from '../../providers';
 import React, { useEffect, useState } from 'react';
 import { CallScreen } from './CallScreen';
 import { ConfigurationScreen } from './ConfigurationScreen';
 import { Error } from './Error';
 import { callContainer } from './styles/Call.styles';
 import { Stack } from '@fluentui/react';
-import { CommunicationUiErrorInfo } from '../../types';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
 import { CallAdapter, CallCompositePage } from './adapter/CallAdapter';
 import { PlaceholderProps } from 'react-components';
 import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
+import { Theme, PartialTheme } from '@fluentui/react-theme-provider';
+import { FluentThemeProvider } from 'react-components';
 
 export type CallCompositeProps = {
   adapter: CallAdapter;
+  /**
+   * Fluent theme for the composite.
+   *
+   * Defaults to a light theme if undefined.
+   */
+  fluentTheme?: PartialTheme | Theme;
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
-  /** Optional callback to call when error is detected */
-  onErrorCallback?: (error: CommunicationUiErrorInfo) => void;
 };
 
 type MainScreenProps = {
@@ -30,8 +34,6 @@ type MainScreenProps = {
 const MainScreen = ({ screenWidth, onRenderAvatar }: MainScreenProps): JSX.Element => {
   const page = useSelector(getPage);
   const adapter = useAdapter();
-  return <Error rejoinHandler={() => adapter.setPage('configuration')} />;
-
   switch (page) {
     case 'configuration':
       return <ConfigurationScreen screenWidth={screenWidth} startCallHandler={(): void => adapter.setPage('call')} />;
@@ -74,7 +76,7 @@ export const Call = (props: CallCompositeProps): JSX.Element => {
     return () => window.removeEventListener('resize', setWindowWidth);
   }, []);
 
-  const { adapter, onErrorCallback } = props;
+  const { adapter, fluentTheme } = props;
 
   useEffect(() => {
     (async () => {
@@ -86,12 +88,12 @@ export const Call = (props: CallCompositeProps): JSX.Element => {
   }, [adapter]);
 
   return (
-    <ErrorProvider onErrorCallback={onErrorCallback}>
+    <FluentThemeProvider fluentTheme={fluentTheme}>
       <CallAdapterProvider adapter={adapter}>
         <Stack className={callContainer} grow>
           <MainScreen screenWidth={screenWidth} onRenderAvatar={props.onRenderAvatar} />
         </Stack>
       </CallAdapterProvider>
-    </ErrorProvider>
+    </FluentThemeProvider>
   );
 };

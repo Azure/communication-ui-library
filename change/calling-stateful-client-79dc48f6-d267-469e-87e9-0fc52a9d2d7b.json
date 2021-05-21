@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Allow rendering of Streams created outside of state in StatefulCalling",
-  "packageName": "calling-stateful-client",
-  "email": "allenhwang@microsoft.com",
-  "dependentChangeType": "patch"
-}

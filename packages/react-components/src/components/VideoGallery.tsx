@@ -15,17 +15,38 @@ import { gridStyle, videoTileStyle } from './styles/VideoGallery.styles';
 import { memoizeFnAll } from 'acs-ui-common';
 import { VideoTile, PlaceholderProps } from './VideoTile';
 
+/**
+ * Props for component `VideoGallery`
+ */
 export interface VideoGalleryProps {
+  /**
+   * Allows users to pass an object containing custom CSS styles for the gallery container.
+   *
+   * @Example
+   * ```
+   * <VideoGallery styles={{ root: { border: 'solid 1px red' } }} />
+   * ```
+   */
   styles?: BaseCustomStylesProps;
+  /** Local video particpant */
   localParticipant: VideoGalleryLocalParticipant;
+  /** List of remote video particpants */
   remoteParticipants?: VideoGalleryRemoteParticipant[];
+  /** Local video view options */
   localVideoViewOption?: VideoStreamOptions;
+  /** Remote videos view options */
   remoteVideoViewOption?: VideoStreamOptions;
+  /** Callback to create the local video stream view */
   onCreateLocalStreamView?: (options?: VideoStreamOptions | undefined) => Promise<void>;
+  /** Callback to dispose of the local video stream view */
   onDisposeLocalStreamView?: () => void;
+  /** Callback to render the local video tile*/
   onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
+  /** Callback to create a remote video stream view */
   onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
+  /** Callback to render a remote video tile */
   onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
+  /** Callback to render a particpant avatar */
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
 }
 
@@ -58,6 +79,14 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
   }
 );
 
+/**
+ * VideoGallery represents a `GridLayout` of video tiles for a specific call.
+ * It displays a `VideoTile` for the local user as well as for each remote participants who joined the call.
+ *
+ * @param props - of type `VideoGalleryProps`
+ *
+ * @returns a JSX Element
+ */
 export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const {
     localParticipant,
@@ -118,7 +147,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           remoteVideoStream?.isAvailable,
           remoteVideoStream?.renderElement,
           participant.displayName,
-          remoteVideoViewOption
+          remoteVideoViewOption,
+          onRenderAvatar
         );
       });
     });

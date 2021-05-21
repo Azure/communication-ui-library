@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix local preview mic problem in composite",
-  "packageName": "react-composites",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}

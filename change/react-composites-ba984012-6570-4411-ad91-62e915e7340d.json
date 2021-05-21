@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Removed WebUiChatParticipant type.",
-  "packageName": "react-composites",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

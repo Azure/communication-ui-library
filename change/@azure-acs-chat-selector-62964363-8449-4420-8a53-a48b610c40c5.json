@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add participant list to usePropsFor",
-  "packageName": "@azure/acs-chat-selector",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}

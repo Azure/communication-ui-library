@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove dependency on chat-selector",
-  "packageName": "react-components",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "patch"
-}

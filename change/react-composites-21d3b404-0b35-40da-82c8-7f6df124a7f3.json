@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Move calling providers and hooks to the calling selector package",
-  "packageName": "react-composites",
-  "email": "easony@microsoft.com",
-  "dependentChangeType": "patch"
-}

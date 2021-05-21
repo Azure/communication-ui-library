@@ -6,7 +6,6 @@ import React, { useEffect } from 'react';
 import { ChatClientState } from 'chat-stateful-client';
 import { ChatBaseSelectorProps } from '@azure/acs-chat-selector';
 import { MessageThread, ParticipantList, SendBox, TypingIndicator } from 'react-components';
-import { ErrorBar } from '../common/ErrorBar';
 import { useAdapter } from './adapter/ChatAdapterProvider';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
@@ -59,7 +58,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             <div style={{ paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>
               <TypingIndicator {...typingIndicatorProps} />
             </div>
-            <ErrorBar />
             <SendBox {...sendBoxProps} />
           </Stack.Item>
         </Stack>

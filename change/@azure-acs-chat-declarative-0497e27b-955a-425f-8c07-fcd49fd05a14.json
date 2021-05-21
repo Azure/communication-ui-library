@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update exports to not conflict with other internal packages",
-  "packageName": "chat-stateful-client",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "patch"
-}

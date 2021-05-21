@@ -57,7 +57,7 @@ const App = (): JSX.Element => {
 
 window.setTimeout(() => {
   try {
-    console.log(`ACS sample group calling app: ${lastUpdated}`);
+    console.log(`ACS sample 1 to 1 calling app: ${lastUpdated}`);
   } catch (e) {
     /* continue regardless of error */
   }

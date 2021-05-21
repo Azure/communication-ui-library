@@ -8,6 +8,7 @@ import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { IButtonProps } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
+import { MessageStatus } from 'acs-ui-common';
 import { PartialTheme } from '@fluentui/react-theme-provider';
 import { PersonaPresence } from '@fluentui/react';
 import { default as React_2 } from 'react';
@@ -156,9 +157,6 @@ export type MessageProps = {
     message: ChatMessage | SystemMessage | CustomMessage;
     messageContainerStyle?: ComponentSlotStyle;
 };
-
-// @public (undocumented)
-export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
 
 // @public
 export const MessageStatusIndicator: (props: MessageStatusIndicatorProps) => JSX.Element;
@@ -368,13 +366,13 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
     typingUserDisplayName?: IStyle;
 }
 
-// @public (undocumented)
+// @public
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export type VideoGalleryLocalParticipant = VideoGalleryParticipant;
 
-// @public (undocumented)
+// @public
 export type VideoGalleryParticipant = {
     userId: string;
     isMuted?: boolean;
@@ -383,57 +381,38 @@ export type VideoGalleryParticipant = {
     isScreenSharingOn?: boolean;
 };
 
-// @public (undocumented)
+// @public
 export interface VideoGalleryProps {
-    // (undocumented)
     localParticipant: VideoGalleryLocalParticipant;
-    // (undocumented)
     localVideoViewOption?: VideoStreamOptions;
-    // (undocumented)
     onCreateLocalStreamView?: (options?: VideoStreamOptions | undefined) => Promise<void>;
-    // (undocumented)
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
-    // (undocumented)
     onDisposeLocalStreamView?: () => void;
-    // (undocumented)
     onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
-    // (undocumented)
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
-    // (undocumented)
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
-    // (undocumented)
     remoteParticipants?: VideoGalleryRemoteParticipant[];
-    // (undocumented)
     remoteVideoViewOption?: VideoStreamOptions;
-    // (undocumented)
     styles?: BaseCustomStylesProps;
 }
 
-// @public (undocumented)
+// @public
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
-    // (undocumented)
     isSpeaking?: boolean;
-    // (undocumented)
     screenShareStream?: VideoGalleryStream;
 }
 
-// @public (undocumented)
+// @public
 export interface VideoGalleryStream {
-    // (undocumented)
     id?: number;
-    // (undocumented)
     isAvailable?: boolean;
-    // (undocumented)
     isMirrored?: boolean;
-    // (undocumented)
     renderElement?: HTMLElement;
 }
 
-// @public (undocumented)
+// @public
 export interface VideoStreamOptions {
-    // (undocumented)
     isMirrored?: boolean;
-    // (undocumented)
     scalingMode?: 'Stretch' | 'Crop' | 'Fit';
 }
 

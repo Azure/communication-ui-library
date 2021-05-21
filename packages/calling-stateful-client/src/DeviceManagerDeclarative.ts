@@ -4,7 +4,15 @@
 import { AudioDeviceInfo, DeviceAccess, DeviceManager, VideoDeviceInfo } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
 
+/**
+ * Defines the additional methods added by the stateful on top of {@Link @azure/communication-calling#DeviceManager}.
+ */
 export interface StatefulDeviceManager extends DeviceManager {
+  /**
+   * Sets the selectedCamera in the {@Link DeviceManagerState}. This is completely developer driven and is not tied in
+   * any way to {@Link @azure/communication-calling#DeviceManager}. It is entirely contained in
+   * {@Link StatefulDeviceManager}. See also {@Link DeviceManagerState.selectedCamera}.
+   */
   selectCamera: (VideoDeviceInfo) => void;
 }
 

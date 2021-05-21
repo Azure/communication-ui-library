@@ -8,13 +8,7 @@ import { onRenderAvatar } from './Avatar';
 import { ChatHeader } from './ChatHeader';
 import { ChatArea } from './ChatArea';
 import { SidePanel, SidePanelTypes } from './SidePanel';
-import {
-  chatParticipantListSelector,
-  useChatClient,
-  useChatThreadClient,
-  useChatSelector,
-  useThreadId
-} from '@azure/acs-chat-selector';
+import { chatParticipantListSelector, useChatThreadClient, useChatSelector } from '@azure/acs-chat-selector';
 import { chatHeaderSelector } from './selectors/chatHeaderSelector';
 
 // These props are passed in when this component is referenced in JSX and not found in context
@@ -32,15 +26,12 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   );
   const isAllInitialParticipantsFetchedRef = useRef(false);
 
-  const threadId = useThreadId();
-  const chatClient = useChatClient();
   const chatThreadClient = useChatThreadClient();
 
   // Updates the thread state and populates attributes like topic, id, createdBy etc.
   useEffect(() => {
-    chatClient.getChatThreadClient(threadId).getProperties();
-    // eslint-disable-next-line
-  }, []);
+    chatThreadClient.getProperties();
+  }, [chatThreadClient]);
 
   // This code gets all participants who joined the chat earlier than the current user.
   // We need to do this to make the state in declaritive up to date.

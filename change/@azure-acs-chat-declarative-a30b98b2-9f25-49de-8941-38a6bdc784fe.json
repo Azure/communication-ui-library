@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Add rest of implementation of chatThreadClient, including all the chatThread, chatParticipants, ReadReceipt related state and functions",
-  "packageName": "chat-stateful-client",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "none"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "fix running test and linting commands",
-  "packageName": "calling-stateful-client",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "none"
-}

@@ -24,12 +24,11 @@ import {
   ChatMessage,
   CustomMessage,
   SystemMessage,
-  MessageStatus,
   ChatMessagePayload,
   SystemMessagePayload
 } from '../types';
 import { MessageStatusIndicator, MessageStatusIndicatorProps } from './MessageStatusIndicator';
-import { memoizeFnAll } from 'acs-ui-common';
+import { memoizeFnAll, MessageStatus } from 'acs-ui-common';
 import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from './SystemMessage';
 import { Parser } from 'html-to-react';
 
