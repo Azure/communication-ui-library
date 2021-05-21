@@ -505,9 +505,6 @@ export type ChatCompositeClientState = {
 };
 
 // @public (undocumented)
-export type ChatEvent = 'messageReceived' | 'messageSent' | 'messageRead' | 'participantsAdded' | 'participantsRemoved' | 'topicChanged' | 'error';
-
-// @public (undocumented)
 export type ChatMessage = Message<'chat'>;
 
 // @public (undocumented)

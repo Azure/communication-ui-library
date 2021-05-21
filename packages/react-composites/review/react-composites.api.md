@@ -312,9 +312,6 @@ export type ChatCompositeClientState = {
 };
 
 // @public (undocumented)
-export type ChatEvent = 'messageReceived' | 'messageSent' | 'messageRead' | 'participantsAdded' | 'participantsRemoved' | 'topicChanged' | 'error';
-
-// @public (undocumented)
 export type ChatOptions = {
     sendBoxMaxLength?: number;
 };
