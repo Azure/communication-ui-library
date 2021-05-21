@@ -10,19 +10,18 @@ import { DeviceSettingDropdownExample } from './snippets/DeviceSettingsDropdown.
 
 const DevicesDropdownExampleText = require('!!raw-loader!./snippets/DeviceSettingsDropdown.snippet.tsx').default;
 
-const label = 'Cameras';
-
-const defaultValue = [
-  'Logitech C920S HD Pro Webcam',
-  'Lenovo Essential FHD Webcam',
-  'Aukey PC-LM1E Full HD Webcam',
-  'AVerMedia PW315',
-  'Razer Kiyo'
-];
-
-const cameras = array(label, defaultValue);
-
 const getDocs: () => JSX.Element = () => {
+  const label = 'Cameras';
+
+  const defaultValue = [
+    'Logitech C920S HD Pro Webcam',
+    'Lenovo Essential FHD Webcam',
+    'Aukey PC-LM1E Full HD Webcam',
+    'AVerMedia PW315',
+    'Razer Kiyo'
+  ];
+
+  const cameras = array(label, defaultValue);
   return (
     <>
       <Title>Device Setting</Title>
@@ -48,6 +47,13 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 export const DeviceSettings: () => JSX.Element = () => {
+  const cameras = [
+    'Logitech C920S HD Pro Webcam',
+    'Lenovo Essential FHD Webcam',
+    'Aukey PC-LM1E Full HD Webcam',
+    'AVerMedia PW315',
+    'Razer Kiyo'
+  ];
   return (
     <DeviceSettingDropdownExample
       devices={cameras}

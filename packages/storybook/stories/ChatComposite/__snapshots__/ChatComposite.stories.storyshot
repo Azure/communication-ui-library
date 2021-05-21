@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`storybook snapshot tests Storyshots Composites/Chat Basic Canvas 1`] = `
+exports[`storybook snapshot tests Storyshots Composites/Chat Basic Example 1`] = `
 <div
   className="css-80 root-0 body-1"
 >
@@ -46,7 +46,7 @@ exports[`storybook snapshot tests Storyshots Composites/Chat Basic Canvas 1`] = 
 </div>
 `;
 
-exports[`storybook snapshot tests Storyshots Composites/Chat Customization Canvas 1`] = `
+exports[`storybook snapshot tests Storyshots Composites/Chat Custom Behavior Example 1`] = `
 <div
   className="css-80 root-0 body-1"
 >
@@ -92,7 +92,7 @@ exports[`storybook snapshot tests Storyshots Composites/Chat Customization Canva
 </div>
 `;
 
-exports[`storybook snapshot tests Storyshots Composites/Chat Data Model Canvas 1`] = `
+exports[`storybook snapshot tests Storyshots Composites/Chat Custom Data Model Example 1`] = `
 <div
   className="css-80 root-0 body-1"
 >
@@ -138,7 +138,53 @@ exports[`storybook snapshot tests Storyshots Composites/Chat Data Model Canvas 1
 </div>
 `;
 
-exports[`storybook snapshot tests Storyshots Composites/Chat Themes Canvas 1`] = `
+exports[`storybook snapshot tests Storyshots Composites/Chat Join Existing Chat Thread 1`] = `
+<div
+  className="css-80 root-0 body-1"
+>
+  <div
+    className="css-80"
+    data-uses-unhanded-props={true}
+    dir="ltr"
+  >
+    <div
+      style={
+        Object {
+          "alignItems": "center",
+          "display": "flex",
+          "height": "100vh",
+          "justifyContent": "center",
+        }
+      }
+    >
+      <div
+        style={
+          Object {
+            "height": "90vh",
+            "width": "90vw",
+          }
+        }
+      >
+        <div
+          className="ms-Stack css-2"
+          style={
+            Object {
+              "height": "100%",
+              "width": "100%",
+            }
+          }
+        >
+          <span>
+            Please provide a token, thread id, endpoint url, and display name to use.
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`storybook snapshot tests Storyshots Composites/Chat Theme Example 1`] = `
 <div
   className="css-80 root-0 body-1"
 >

@@ -1,8 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Call, DeviceManagerState, RemoteParticipantState } from 'calling-stateful-client';
-import { AudioDeviceInfo, VideoDeviceInfo, Call as SDKCall } from '@azure/communication-calling';
+import { CallState, DeviceManagerState } from 'calling-stateful-client';
+import type {
+  AudioDeviceInfo,
+  VideoDeviceInfo,
+  Call,
+  PermissionConstraints,
+  RemoteParticipant
+} from '@azure/communication-calling';
+
 import { VideoStreamOptions } from 'react-components';
 import type {
   CommunicationUserKind,
@@ -13,22 +20,22 @@ import type {
 
 export type CallCompositePage = 'configuration' | 'call';
 
-export type CallingUIState = {
+export type CallAdapterUiState = {
   // Self-contained state for composite
   error?: Error;
   isLocalPreviewMicrophoneEnabled: boolean;
   page: CallCompositePage;
 };
 
-export type CallingClientState = {
+export type CallAdapterClientState = {
   // Properties from backend services
   userId: string;
   displayName?: string;
-  call?: Call;
+  call?: CallState;
   devices: DeviceManagerState;
 };
 
-export type CallState = CallingUIState & CallingClientState;
+export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
 
 export type IncomingCallListener = (event: {
   callId: string;
@@ -50,9 +57,9 @@ export type CallIdentifierKinds =
   | MicrosoftTeamsUserKind
   | UnknownIdentifierKind;
 
-export type ParticipantJoinedListener = (event: { joined: RemoteParticipantState[] }) => void;
+export type ParticipantJoinedListener = (event: { joined: RemoteParticipant[] }) => void;
 
-export type ParticipantLeftListener = (event: { removed: RemoteParticipantState[] }) => void;
+export type ParticipantLeftListener = (event: { removed: RemoteParticipant[] }) => void;
 
 export type IsMuteChangedListener = (event: { identifier: CallIdentifierKinds; isMuted: boolean }) => void;
 
@@ -62,14 +69,16 @@ export type IsScreenSharingOnChangedListener = (event: { isScreenSharingOn: bool
 
 export type IsSpeakingChangedListener = (event: { identifier: CallIdentifierKinds; isSpeaking: boolean }) => void;
 
-export type DisplaynameChangedListener = (event: { participantId: CallIdentifierKinds; displayName: string }) => void;
+export type DisplayNameChangedListener = (event: { participantId: CallIdentifierKinds; displayName: string }) => void;
+
+export type CallEndedListener = (event: { callId: string }) => void;
 
 export interface CallAdapter {
-  onStateChange(handler: (state: CallState) => void): void;
+  onStateChange(handler: (state: CallAdapterState) => void): void;
 
-  offStateChange(handler: (state: CallState) => void): void;
+  offStateChange(handler: (state: CallAdapterState) => void): void;
 
-  getState(): CallState;
+  getState(): CallAdapterState;
 
   dispose(): void;
 
@@ -82,6 +91,8 @@ export interface CallAdapter {
   setMicrophone(sourceId: AudioDeviceInfo): Promise<void>;
 
   setSpeaker(sourceId: AudioDeviceInfo): Promise<void>;
+
+  askDevicePermission(constrain: PermissionConstraints): Promise<void>;
 
   queryCameras(): Promise<VideoDeviceInfo[]>;
 
@@ -99,7 +110,7 @@ export interface CallAdapter {
 
   unmute(): Promise<void>;
 
-  startCall(participants: string[]): SDKCall | undefined;
+  startCall(participants: string[]): Call | undefined;
 
   startScreenShare(): Promise<void>;
 
@@ -142,4 +153,5 @@ export type CallEvent =
   | 'isLocalScreenSharingActiveChanged'
   | 'displayNameChanged'
   | 'isSpeakingChanged'
+  | 'callEnded'
   | 'error';

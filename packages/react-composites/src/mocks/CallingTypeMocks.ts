@@ -9,7 +9,7 @@ import {
   CallEndReason,
   CallerInfo,
   CallFeatureFactoryType,
-  CallState,
+  CallState as CallStatus,
   CollectionUpdatedEvent,
   DtmfTone,
   GroupChatCallLocator,
@@ -47,7 +47,7 @@ export declare interface MockCall {
   /**
    * Get the state of this Call.
    */
-  state: CallState;
+  state: CallStatus;
   /**
    * Containing code/subCode indicating how call ended
    */

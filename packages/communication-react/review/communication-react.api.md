@@ -5,7 +5,7 @@
 ```ts
 
 import { AudioDeviceInfo } from '@azure/communication-calling';
-import { Call as Call_2 } from '@azure/communication-calling';
+import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';
 import { CallClientOptions } from '@azure/communication-calling';
@@ -29,22 +29,26 @@ import { CreateViewOptions } from '@azure/communication-calling';
 import { DeviceAccess } from '@azure/communication-calling';
 import { DeviceManager } from '@azure/communication-calling';
 import { ErrorInfo } from 'react';
+import { GroupCallLocator } from '@azure/communication-calling';
 import { IButtonProps } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { PartialTheme } from '@fluentui/react-theme-provider';
+import { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaPresence } from '@fluentui/react';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { PhoneNumberKind } from '@azure/communication-common';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
+import type { RemoteParticipant } from '@azure/communication-calling';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
 import * as reselect from 'reselect';
 import { ScalingMode } from '@azure/communication-calling';
 import { SizeValue } from '@fluentui/react-northstar';
 import { StartCallOptions } from '@azure/communication-calling';
+import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react-theme-provider';
 import { TransferErrorCode } from '@azure/communication-calling';
 import { TransferState } from '@azure/communication-calling';
@@ -58,15 +62,17 @@ export type AreEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
 // @public (undocumented)
 export class AzureCommunicationCallAdapter implements CallAdapter {
-    constructor(callClient: StatefulCallClient, groupId: string, callAgent: CallAgent, deviceManager: StatefulDeviceManager);
+    constructor(callClient: StatefulCallClient, locator: TeamsMeetingLinkLocator | GroupCallLocator, callAgent: CallAgent, deviceManager: StatefulDeviceManager);
+    // (undocumented)
+    askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     // (undocumented)
     createStreamView(userId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
     // (undocumented)
     dispose(): void;
     // (undocumented)
-    disposeStreamView(userId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
-    // (undocumented)
     getState(): CallAdapterState;
+    // (undocumented)
+    isTeamsCall(): boolean;
     // (undocumented)
     joinCall(microphoneOn?: boolean): Promise<void>;
     // (undocumented)
@@ -74,41 +80,45 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     mute(): Promise<void>;
     // (undocumented)
-    off(event: 'participantsJoined', participantsJoinedHandler: ParticipantJoinedListener): void;
+    off(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
     // (undocumented)
-    off(event: 'participantsLeft', participantsLeftHandler: ParticipantLeftListener): void;
+    off(event: 'participantsLeft', listener: ParticipantLeftListener): void;
     // (undocumented)
-    off(event: 'isMutedChanged', isMuteChangedListener: IsMuteChangedListener): void;
+    off(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
     // (undocumented)
-    off(event: 'callIdChanged', callIdChangedListener: CallIdChangedListener): void;
+    off(event: 'callIdChanged', listener: CallIdChangedListener): void;
     // (undocumented)
-    off(event: 'isLocalScreenSharingActiveChanged', isScreenSharingOnChangedListener: IsScreenSharingOnChangedListener): void;
+    off(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
     // (undocumented)
-    off(event: 'displayNameChanged', displaynameChangedListener: DisplaynameChangedListener): void;
+    off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
     // (undocumented)
-    off(event: 'isSpeakingChanged', isSpeakingChangedListener: IsSpeakingChangedListener): void;
+    off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
+    // (undocumented)
+    off(event: 'callEnded', listener: CallEndedListener): void;
     // (undocumented)
     off(event: 'error', errorHandler: (e: Error) => void): void;
     // (undocumented)
-    offStateChange(handler: (state: CallState) => void): void;
+    offStateChange(handler: (state: CallAdapterState) => void): void;
     // (undocumented)
-    on(event: 'participantsJoined', participantsJoinedListener: ParticipantJoinedListener): void;
+    on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
     // (undocumented)
-    on(event: 'participantsLeft', participantLeftListener: ParticipantLeftListener): void;
+    on(event: 'participantsLeft', listener: ParticipantLeftListener): void;
     // (undocumented)
-    on(event: 'isMutedChanged', isMuteChangedListener: IsMuteChangedListener): void;
+    on(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
     // (undocumented)
-    on(event: 'callIdChanged', callIdChangedListener: CallIdChangedListener): void;
+    on(event: 'callIdChanged', listener: CallIdChangedListener): void;
     // (undocumented)
-    on(event: 'isLocalScreenSharingActiveChanged', isScreenSharingOnChangedListener: IsScreenSharingOnChangedListener): void;
+    on(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
     // (undocumented)
-    on(event: 'displayNameChanged', displaynameChangedListener: DisplaynameChangedListener): void;
+    on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
     // (undocumented)
-    on(event: 'isSpeakingChanged', isSpeakingChangedListener: IsSpeakingChangedListener): void;
+    on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
+    // (undocumented)
+    on(event: 'callEnded', listener: CallEndedListener): void;
     // (undocumented)
     on(event: 'error', errorHandler: (e: Error) => void): void;
     // (undocumented)
-    onStateChange(handler: (state: CallState) => void): void;
+    onStateChange(handler: (state: CallAdapterState) => void): void;
     // (undocumented)
     onToggleCamera(): Promise<void>;
     // (undocumented)
@@ -128,7 +138,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     setSpeaker(device: AudioDeviceInfo): Promise<void>;
     // (undocumented)
-    startCall(participants: string[]): Call_2 | undefined;
+    startCall(participants: string[]): Call | undefined;
     // (undocumented)
     startCamera(): Promise<void>;
     // (undocumented)
@@ -146,34 +156,14 @@ export interface BaseCustomStylesProps {
     root?: IStyle;
 }
 
-// @public
-export interface Call {
-    callEndReason?: CallEndReason;
-    callerInfo: CallerInfo;
-    direction: CallDirection;
-    endTime: Date | undefined;
-    id: string;
-    isMuted: boolean;
-    isScreenSharingOn: boolean;
-    localVideoStreams: LocalVideoStreamState[];
-    recording: RecordingCallFeature;
-    remoteParticipants: Map<string, RemoteParticipantState>;
-    remoteParticipantsEnded: Map<string, RemoteParticipantState>;
-    screenShareRemoteParticipant: string | undefined;
-    startTime: Date;
-    state: CallState_2;
-    transcription: TranscriptionCallFeature;
-    transfer: TransferCallFeature;
-}
-
 // @public (undocumented)
 export interface CallAdapter {
+    // (undocumented)
+    askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     // (undocumented)
     createStreamView(userId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
     // (undocumented)
     dispose(): void;
-    // (undocumented)
-    disposeStreamView(userId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
     // (undocumented)
     getState(): CallAdapterState;
     // (undocumented)
@@ -183,41 +173,45 @@ export interface CallAdapter {
     // (undocumented)
     mute(): Promise<void>;
     // (undocumented)
-    off(event: 'participantsJoined', participantsJoinedHandler: ParticipantJoinedListener): void;
+    off(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
     // (undocumented)
-    off(event: 'participantsLeft', participantsLeftHandler: ParticipantLeftListener): void;
+    off(event: 'participantsLeft', listener: ParticipantLeftListener): void;
     // (undocumented)
-    off(event: 'isMutedChanged', isMuteChanged: IsMuteChangedListener): void;
+    off(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
     // (undocumented)
-    off(event: 'callIdChanged', idChangedListner: CallIdChangedListener): void;
+    off(event: 'callIdChanged', listener: CallIdChangedListener): void;
     // (undocumented)
-    off(event: 'isLocalScreenSharingActiveChanged', participantsJoinedHandler: IsScreenSharingOnChangedListener): void;
+    off(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
     // (undocumented)
-    off(event: 'displayNameChanged', participantsJoinedHandler: DisplaynameChangedListener): void;
+    off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
     // (undocumented)
-    off(event: 'isSpeakingChanged', participantsJoinedHandler: IsSpeakingChangedListener): void;
+    off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
     // (undocumented)
-    off(event: 'error', errorHandler: (e: Error) => void): void;
+    off(event: 'callEnded', listener: CallEndedListener): void;
     // (undocumented)
-    offStateChange(handler: (state: CallState) => void): void;
+    off(event: 'error', listener: (e: Error) => void): void;
     // (undocumented)
-    on(event: 'participantsJoined', participantsJoinedHandler: ParticipantJoinedListener): void;
+    offStateChange(handler: (state: CallAdapterState) => void): void;
     // (undocumented)
-    on(event: 'participantsLeft', participantsLeftHandler: ParticipantLeftListener): void;
+    on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
     // (undocumented)
-    on(event: 'isMutedChanged', isMuteChanged: IsMuteChangedListener): void;
+    on(event: 'participantsLeft', listener: ParticipantLeftListener): void;
     // (undocumented)
-    on(event: 'callIdChanged', idChangedListner: CallIdChangedListener): void;
+    on(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
     // (undocumented)
-    on(event: 'isLocalScreenSharingActiveChanged', participantsJoinedHandler: IsScreenSharingOnChangedListener): void;
+    on(event: 'callIdChanged', listener: CallIdChangedListener): void;
     // (undocumented)
-    on(event: 'displayNameChanged', participantsJoinedHandler: DisplaynameChangedListener): void;
+    on(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
     // (undocumented)
-    on(event: 'isSpeakingChanged', participantsJoinedHandler: IsSpeakingChangedListener): void;
+    on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
     // (undocumented)
-    on(event: 'error', errorHandler: (e: Error) => void): void;
+    on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
     // (undocumented)
-    onStateChange(handler: (state: CallState) => void): void;
+    on(event: 'callEnded', listener: CallEndedListener): void;
+    // (undocumented)
+    on(event: 'error', listener: (e: Error) => void): void;
+    // (undocumented)
+    onStateChange(handler: (state: CallAdapterState) => void): void;
     // (undocumented)
     onToggleCamera(): Promise<void>;
     // (undocumented)
@@ -237,7 +231,7 @@ export interface CallAdapter {
     // (undocumented)
     setSpeaker(sourceId: AudioDeviceInfo): Promise<void>;
     // (undocumented)
-    startCall(participants: string[]): Call_2 | undefined;
+    startCall(participants: string[]): Call | undefined;
     // (undocumented)
     startCamera(): Promise<void>;
     // (undocumented)
@@ -250,16 +244,73 @@ export interface CallAdapter {
     unmute(): Promise<void>;
 }
 
+// @public (undocumented)
+export type CallAdapterClientState = {
+    userId: string;
+    displayName?: string;
+    call?: CallState;
+    devices: DeviceManagerState;
+};
+
+// @public (undocumented)
+export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
+
+// @public (undocumented)
+export type CallAdapterUiState = {
+    error?: Error;
+    isLocalPreviewMicrophoneEnabled: boolean;
+    page: CallCompositePage;
+};
+
+// @public (undocumented)
+export const CallAgentContext: React_2.Context<CallAgentContextType | undefined>;
+
+// @public (undocumented)
+export type CallAgentContextType = {
+    callAgent: CallAgent | undefined;
+};
+
+// @public (undocumented)
+export const CallAgentProvider: (props: CallAgentProviderProps) => JSX.Element;
+
+// @public (undocumented)
+export interface CallAgentProviderProps {
+    // (undocumented)
+    callAgent?: CallAgent;
+    // (undocumented)
+    children: React_2.ReactNode;
+}
+
 // @public
 export interface CallAgentState {
     displayName?: string;
 }
 
+// @public (undocumented)
+export const CallClientContext: React_2.Context<CallClientContextType | undefined>;
+
+// @public (undocumented)
+export type CallClientContextType = {
+    statefulCallClient: StatefulCallClient;
+    deviceManager: StatefulDeviceManager | undefined;
+};
+
+// @public (undocumented)
+export const CallClientProvider: (props: CallClientProviderProps) => JSX.Element;
+
+// @public (undocumented)
+export interface CallClientProviderProps {
+    // (undocumented)
+    children: React_2.ReactNode;
+    // (undocumented)
+    statefulCallClient: StatefulCallClient;
+}
+
 // @public
 export interface CallClientState {
     callAgent: CallAgentState | undefined;
-    calls: Map<string, Call>;
-    callsEnded: Call[];
+    calls: Map<string, CallState>;
+    callsEnded: CallState[];
     deviceManager: DeviceManagerState;
     incomingCalls: Map<string, IncomingCallState>;
     incomingCallsEnded: IncomingCallState[];
@@ -280,7 +331,20 @@ export type CallCompositeProps = {
 };
 
 // @public (undocumented)
-export type CallEvent = 'participantsJoined' | 'participantsLeft' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'error';
+export const CallContext: React_2.Context<CallContextType | undefined>;
+
+// @public (undocumented)
+export type CallContextType = {
+    call: Call | undefined;
+};
+
+// @public (undocumented)
+export type CallEndedListener = (event: {
+    callId: string;
+}) => void;
+
+// @public (undocumented)
+export type CallEvent = 'participantsJoined' | 'participantsLeft' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callEnded' | 'error';
 
 // @public (undocumented)
 export type CallIdChangedListener = (event: {
@@ -295,14 +359,6 @@ export type CallingBaseSelectorProps = {
     callId: string;
 };
 
-// @public (undocumented)
-export type CallingClientState = {
-    userId: string;
-    displayName?: string;
-    call?: Call;
-    devices: DeviceManagerState;
-};
-
 // @public
 export interface CallingTheme {
     // (undocumented)
@@ -313,13 +369,6 @@ export interface CallingTheme {
     };
 }
 
-// @public (undocumented)
-export type CallingUIState = {
-    error?: Error;
-    isLocalPreviewMicrophoneEnabled: boolean;
-    page: CallCompositePage;
-};
-
 // @public
 export type CallParticipant = CommunicationParticipant & {
     state: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
@@ -329,7 +378,35 @@ export type CallParticipant = CommunicationParticipant & {
 };
 
 // @public (undocumented)
-export type CallState = CallingUIState & CallingClientState;
+export const CallProvider: (props: CallProviderProps) => JSX.Element;
+
+// @public (undocumented)
+export interface CallProviderProps {
+    // (undocumented)
+    call?: Call;
+    // (undocumented)
+    children: React_2.ReactNode;
+}
+
+// @public
+export interface CallState {
+    callEndReason?: CallEndReason;
+    callerInfo: CallerInfo;
+    direction: CallDirection;
+    endTime: Date | undefined;
+    id: string;
+    isMuted: boolean;
+    isScreenSharingOn: boolean;
+    localVideoStreams: LocalVideoStreamState[];
+    recording: RecordingCallFeature;
+    remoteParticipants: Map<string, RemoteParticipantState>;
+    remoteParticipantsEnded: Map<string, RemoteParticipantState>;
+    screenShareRemoteParticipant: string | undefined;
+    startTime: Date;
+    state: CallState_2;
+    transcription: TranscriptionCallFeature;
+    transfer: TransferCallFeature;
+}
 
 // @public
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
@@ -344,7 +421,7 @@ export interface CameraButtonProps extends IButtonProps {
 export const cameraButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     disabled: boolean;
     checked: boolean;
-}, (res1: Call | undefined, res2: DeviceManagerState) => {
+}, (res1: CallState | undefined, res2: DeviceManagerState) => {
     disabled: boolean;
     checked: boolean;
 }>;
@@ -647,18 +724,18 @@ export interface ControlBarProps {
 }
 
 // @public (undocumented)
-export const createAzureCommunicationCallAdapter: (token: string, groupId: string, displayName: string, refreshTokenCallback?: (() => Promise<string>) | undefined, callClientOptions?: CallClientOptions | undefined) => Promise<CallAdapter>;
+export const createAzureCommunicationCallAdapter: (token: string, locator: TeamsMeetingLinkLocator | GroupCallLocator, displayName: string, refreshTokenCallback?: (() => Promise<string>) | undefined, callClientOptions?: CallClientOptions | undefined) => Promise<CallAdapter>;
 
 // @public (undocumented)
 export const createAzureCommunicationChatAdapter: (token: string, endpointUrl: string, threadId: string, displayName: string, refreshTokenCallback?: (() => Promise<string>) | undefined) => Promise<ChatAdapter>;
 
 // @public (undocumented)
-export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call_2 | undefined) => {
+export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => {
     onHangUp: () => Promise<void>;
     onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
     onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
     onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
-    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions | undefined) => Call_2 | undefined;
+    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions | undefined) => Call | undefined;
     onStartScreenShare: () => Promise<void>;
     onStopScreenShare: () => Promise<void>;
     onToggleCamera: () => Promise<void>;
@@ -673,41 +750,7 @@ export const createDefaultCallingHandlers: (callClient: StatefulCallClient, call
 };
 
 // @public
-export const createDefaultCallingHandlersForComponent: <Props>(callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call_2 | undefined, _Component: (props: Props) => ReactElement | null) => Pick<{
-    onHangUp: () => Promise<void>;
-    onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
-    onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
-    onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
-    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions | undefined) => Call_2 | undefined;
-    onStartScreenShare: () => Promise<void>;
-    onStopScreenShare: () => Promise<void>;
-    onToggleCamera: () => Promise<void>;
-    onToggleMicrophone: () => Promise<void>;
-    onToggleScreenShare: () => Promise<void>;
-    onCreateLocalStreamView: (options?: VideoStreamOptions | undefined) => Promise<void>;
-    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions | undefined) => Promise<void>;
-    onParticipantRemove: (userId: string) => void;
-    onStartLocalVideo: () => Promise<void>;
-    onDisposeRemoteStreamView: (userId: string) => Promise<void>;
-    onDisposeLocalStreamView: () => Promise<void>;
-}, CommonProperties<{
-    onHangUp: () => Promise<void>;
-    onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
-    onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
-    onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
-    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions | undefined) => Call_2 | undefined;
-    onStartScreenShare: () => Promise<void>;
-    onStopScreenShare: () => Promise<void>;
-    onToggleCamera: () => Promise<void>;
-    onToggleMicrophone: () => Promise<void>;
-    onToggleScreenShare: () => Promise<void>;
-    onCreateLocalStreamView: (options?: VideoStreamOptions | undefined) => Promise<void>;
-    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions | undefined) => Promise<void>;
-    onParticipantRemove: (userId: string) => void;
-    onStartLocalVideo: () => Promise<void>;
-    onDisposeRemoteStreamView: (userId: string) => Promise<void>;
-    onDisposeLocalStreamView: () => Promise<void>;
-}, Props>>;
+export const createDefaultCallingHandlersForComponent: <Props>(callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, _Component: (props: Props) => ReactElement | null) => Pick<DefaultCallingHandlers, CommonProperties<DefaultCallingHandlers, Props>>;
 
 // @public (undocumented)
 export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => DefaultChatHandlers;
@@ -734,7 +777,22 @@ export type CustomMessagePayload = {
 export const darkTheme: PartialTheme & CallingTheme;
 
 // @public (undocumented)
-export type DefaultCallingHandlers = ReturnType<typeof createDefaultCallingHandlers>;
+export type DefaultCallingHandlers = {
+    onStartLocalVideo: () => Promise<void>;
+    onToggleCamera: () => Promise<void>;
+    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions) => Call | undefined;
+    onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
+    onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
+    onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
+    onToggleMicrophone: () => Promise<void>;
+    onStartScreenShare: () => Promise<void>;
+    onStopScreenShare: () => Promise<void>;
+    onToggleScreenShare: () => Promise<void>;
+    onHangUp: () => Promise<void>;
+    onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void>;
+    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void>;
+    onParticipantRemove: (userId: string) => void;
+};
 
 // @public (undocumented)
 export type DefaultChatHandlers = {
@@ -759,11 +817,20 @@ export type DeviceManagerState = {
     microphones: AudioDeviceInfo[];
     speakers: AudioDeviceInfo[];
     deviceAccess?: DeviceAccess;
-    unparentedViews: VideoStreamRendererViewState[];
+    unparentedViews: Map<LocalVideoStreamState, LocalVideoStreamState>;
 };
 
 // @public (undocumented)
-export type DisplaynameChangedListener = (event: {
+export const devicePermissionSelector: reselect.OutputSelector<CallClientState, {
+    video: boolean;
+    audio: boolean;
+}, (res: DeviceManagerState) => {
+    video: boolean;
+    audio: boolean;
+}>;
+
+// @public (undocumented)
+export type DisplayNameChangedListener = (event: {
     participantId: CallIdentifierKinds;
     displayName: string;
 }) => void;
@@ -776,6 +843,9 @@ export interface EndCallButtonProps extends IButtonProps {
     onHangUp?: () => Promise<void>;
     showLabel?: boolean;
 }
+
+// @public (undocumented)
+export const endCallButtonSelector: () => Record<string, never>;
 
 // @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
@@ -790,13 +860,19 @@ export interface FluentThemeProviderProps {
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
 // @public (undocumented)
-export const getCall: (state: CallClientState, props: CallingBaseSelectorProps) => Call | undefined;
+export const getCall: (state: CallClientState, props: CallingBaseSelectorProps) => CallState | undefined;
 
 // @public (undocumented)
-export const getCalls: (state: CallClientState) => Map<string, Call>;
+export type GetCallingSelector<Component> = AreEqual<Component, typeof VideoGallery> extends true ? typeof videoGallerySelector : AreEqual<Component, typeof MicrophoneButton> extends true ? typeof microphoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? typeof cameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? typeof screenShareButtonSelector : AreEqual<Component, typeof OptionsButton> extends true ? typeof optionsButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof participantListSelector : AreEqual<Component, typeof EndCallButton> extends true ? typeof endCallButtonSelector : never;
 
 // @public (undocumented)
-export const getCallsEnded: (state: CallClientState) => Call[];
+export const getCalls: (state: CallClientState) => Map<string, CallState>;
+
+// @public (undocumented)
+export const getCallsEnded: (state: CallClientState) => CallState[];
+
+// @public (undocumented)
+export type GetChatSelector<Component> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof chatThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : never;
 
 // @public (undocumented)
 export const getDeviceManager: (state: CallClientState) => DeviceManagerState;
@@ -812,9 +888,6 @@ export const getIncomingCalls: (state: CallClientState) => Map<string, IncomingC
 
 // @public (undocumented)
 export const getIncomingCallsEnded: (state: CallClientState) => IncomingCallState[];
-
-// @public (undocumented)
-export type GetSelector<Component> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof chatThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : never;
 
 // @public (undocumented)
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;
@@ -879,7 +952,7 @@ export const lightTheme: PartialTheme & CallingTheme;
 export interface LocalVideoStreamState {
     mediaStreamType: MediaStreamType;
     source: VideoDeviceInfo;
-    videoStreamRendererView?: VideoStreamRendererViewState | undefined;
+    view?: VideoStreamRendererViewState;
 }
 
 // @public (undocumented)
@@ -976,7 +1049,7 @@ export interface MicrophoneButtonProps extends IButtonProps {
 export const microphoneButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     disabled: boolean;
     checked: boolean;
-}, (res1: Call | undefined, res2: DeviceManagerState) => {
+}, (res1: CallState | undefined, res2: DeviceManagerState) => {
     disabled: boolean;
     checked: boolean;
 }>;
@@ -1032,7 +1105,7 @@ export const optionsButtonSelector: reselect.OutputParametricSelector<CallClient
     selectedMicrophone: AudioDeviceInfo | undefined;
     selectedSpeaker: AudioDeviceInfo | undefined;
     selectedCamera: VideoDeviceInfo | undefined;
-}, (res1: DeviceManagerState, res2: Call | undefined) => {
+}, (res1: DeviceManagerState, res2: CallState | undefined) => {
     microphones: AudioDeviceInfo[];
     speakers: AudioDeviceInfo[];
     cameras: VideoDeviceInfo[];
@@ -1065,12 +1138,12 @@ export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
 
 // @public (undocumented)
 export type ParticipantJoinedListener = (event: {
-    joined: RemoteParticipantState[];
+    joined: RemoteParticipant[];
 }) => void;
 
 // @public (undocumented)
 export type ParticipantLeftListener = (event: {
-    removed: RemoteParticipantState[];
+    removed: RemoteParticipant[];
 }) => void;
 
 // @public
@@ -1089,7 +1162,7 @@ export type ParticipantListProps = {
 export const participantListSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     participants: CallParticipant[];
     myUserId: string;
-}, (res1: string, res2: string | undefined, res3: Call | undefined) => {
+}, (res1: string, res2: string | undefined, res3: CallState | undefined) => {
     participants: CallParticipant[];
     myUserId: string;
 }>;
@@ -1134,7 +1207,7 @@ export interface RemoteVideoStreamState {
     id: number;
     isAvailable: boolean;
     mediaStreamType: MediaStreamType;
-    videoStreamRendererView: VideoStreamRendererViewState | undefined;
+    view?: VideoStreamRendererViewState;
 }
 
 // @public
@@ -1149,7 +1222,7 @@ export interface ScreenShareButtonProps extends IButtonProps {
 // @public (undocumented)
 export const screenShareButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     checked: boolean | undefined;
-}, (res: Call | undefined) => {
+}, (res: CallState | undefined) => {
     checked: boolean | undefined;
 }>;
 
@@ -1307,7 +1380,25 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
 }
 
 // @public (undocumented)
+export const useCall: () => Call | undefined;
+
+// @public (undocumented)
+export const useCallAgent: () => CallAgent | undefined;
+
+// @public (undocumented)
+export const useCallClient: () => StatefulCallClient;
+
+// @public (undocumented)
+export const useCallingPropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => ReturnType<GetCallingSelector<Component>> & Pick<DefaultCallingHandlers, CommonProperties<DefaultCallingHandlers, Parameters<Component>[0]>>;
+
+// @public (undocumented)
+export const useCallingSelector: <SelectorT extends (state: CallClientState, props: any) => any>(selector: SelectorT, selectorProps?: Parameters<SelectorT>[1] | undefined) => ReturnType<SelectorT>;
+
+// @public (undocumented)
 export const useChatClient: () => StatefulChatClient;
+
+// @public (undocumented)
+export const useChatPropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => ReturnType<GetChatSelector<Component>> & Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, Parameters<Component>[0]>>;
 
 // @public (undocumented)
 export const useChatSelector: <SelectorT extends (state: ChatClientState, props: any) => any>(selector: SelectorT, selectorProps?: Parameters<SelectorT>[1] | undefined) => ReturnType<SelectorT>;
@@ -1316,7 +1407,7 @@ export const useChatSelector: <SelectorT extends (state: ChatClientState, props:
 export const useChatThreadClient: () => ChatThreadClient;
 
 // @public (undocumented)
-export const usePropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => ReturnType<GetSelector<Component>> & Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, Parameters<Component>[0]>>;
+export const useDeviceManager: () => StatefulDeviceManager | undefined;
 
 // @public (undocumented)
 export const useThreadId: () => string;
@@ -1387,7 +1478,7 @@ export const videoGallerySelector: reselect.OutputParametricSelector<CallClientS
         };
     };
     remoteParticipants: VideoGalleryRemoteParticipant[];
-}, (res1: Call | undefined, res2: string | undefined, res3: string) => {
+}, (res1: CallState | undefined, res2: string | undefined, res3: string) => {
     screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
     localParticipant: {
         userId: string;

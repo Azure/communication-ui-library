@@ -3,7 +3,11 @@
 import { useTheme } from '@fluentui/react-theme-provider';
 import React, { useCallback } from 'react';
 import { CameraButton, ControlBar, EndCallButton, MicrophoneButton, OptionsButton } from 'react-components';
-import { usePropsFor } from './hooks/usePropsFor';
+import {
+  useCallingPropsFor as usePropsFor,
+  useCallingSelector as useSelector,
+  devicePermissionSelector
+} from '@azure/acs-calling-selector';
 
 export interface LobbyCallControlBarProps {
   isMicrophoneChecked?: boolean;
@@ -21,6 +25,7 @@ export const LobbyCallControlBar = (props: LobbyCallControlBarProps): JSX.Elemen
     await hangUpButtonProps.onHangUp();
     props.onEndCallClick();
   }, [hangUpButtonProps, props]);
+  const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useSelector(devicePermissionSelector);
 
   return (
     <ControlBar
@@ -33,8 +38,14 @@ export const LobbyCallControlBar = (props: LobbyCallControlBarProps): JSX.Elemen
         onToggleCamera={async () => {
           cameraButtonProps.onToggleCamera();
         }}
+        disabled={!cameraPermissionGranted}
       />
-      <MicrophoneButton showLabel={true} {...microphoneButtonProps} checked={props.isMicrophoneChecked} />
+      <MicrophoneButton
+        showLabel={true}
+        {...microphoneButtonProps}
+        checked={props.isMicrophoneChecked}
+        disabled={!microphonePermissionGranted}
+      />
       <OptionsButton showLabel={true} {...optionsButtonProps} />
       <EndCallButton showLabel={true} style={{ borderRadius: '0.25rem', marginLeft: '0.25rem' }} onHangUp={onHangUp} />
     </ControlBar>
