@@ -237,7 +237,7 @@ const App = (): JSX.Element => {
         return <Spinner label={creatingCallClientspinnerLabel} ariaLive="assertive" labelPosition="top" />;
       }
       default:
-        return <CallClientProvider statefulCallClient={statefulCallClient}>{renderPage(page)}</CallClientProvider>;
+        return <CallClientProvider callClient={statefulCallClient}>{renderPage(page)}</CallClientProvider>;
     }
   };
 

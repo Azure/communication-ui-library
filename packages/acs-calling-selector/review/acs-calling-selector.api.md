@@ -58,7 +58,7 @@ export const CallClientContext: React_2.Context<CallClientContextType | undefine
 
 // @public (undocumented)
 export type CallClientContextType = {
-    statefulCallClient: StatefulCallClient;
+    callClient: StatefulCallClient;
     deviceManager: StatefulDeviceManager | undefined;
 };
 
@@ -68,9 +68,9 @@ export const CallClientProvider: (props: CallClientProviderProps) => JSX.Element
 // @public (undocumented)
 export interface CallClientProviderProps {
     // (undocumented)
-    children: React_2.ReactNode;
+    callClient: StatefulCallClient;
     // (undocumented)
-    statefulCallClient: StatefulCallClient;
+    children: React_2.ReactNode;
 }
 
 // @public (undocumented)
