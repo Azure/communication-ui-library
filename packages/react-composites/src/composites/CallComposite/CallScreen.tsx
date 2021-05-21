@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Label, Spinner, Stack } from '@fluentui/react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   activeContainerClassName,
   containerStyles,
@@ -54,9 +54,10 @@ export const CallScreen = (props: CallScreenProps & ErrorHandlingProps): JSX.Ele
   // It seems unnecessary in this case, so we get the updated states using this approach.
   const { callStatus, isScreenShareOn } = useSelector(callStatusSelector);
   const call = useSelector(getCall);
-
-  let callId;
-  if (call) callId = call.id;
+  const currentCallId = useRef('');
+  if (call) {
+    currentCallId.current = call.id;
+  }
 
   const mediaGalleryProps = useSelector(mediaGallerySelector);
   const mediaGalleryHandlers = useHandlers(MediaGallery);
@@ -82,12 +83,12 @@ export const CallScreen = (props: CallScreenProps & ErrorHandlingProps): JSX.Ele
   // Handle Call Join Errors
   useEffect(() => {
     const endedCall = adapter.getState().endedCall;
-    if (endedCall && callId === endedCall?.id) {
+    if (endedCall && currentCallId.current === endedCall?.id) {
       if (endedCall?.callEndReason?.code === 0 && endedCall?.callEndReason.subCode === 5854) {
         callErrorHandler('errorJoiningTeamsMeeting');
       }
     }
-  }, [adapter, call, callErrorHandler, callId]);
+  }, [adapter, call, callErrorHandler]);
 
   if ('isTeamsCall' in adapter) {
     const azureAdapter = adapter as AzureCommunicationCallAdapter;
