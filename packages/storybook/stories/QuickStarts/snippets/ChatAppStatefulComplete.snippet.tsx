@@ -5,8 +5,8 @@ import {
   ChatClientProvider,
   ChatThreadClientProvider
 } from '@azure/communication-react';
-import ChatComponents from './ChatComponents';
 import React from 'react';
+import ChatComponents from './ChatComponents';
 
 function App(): JSX.Element {
   const endpointUrl = 'INSERT ENDPOINT URL FOR RESOURCE';
