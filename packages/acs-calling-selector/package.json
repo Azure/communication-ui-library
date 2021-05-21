@@ -28,6 +28,9 @@
     "memoize-one": "~5.1.1",
     "react-components": "1.0.0-beta"
   },
+  "peerDependencies": {
+    "react": "^16.13.1"
+  },
   "devDependencies": {
     "@microsoft/api-documenter": "~7.12.11",
     "@microsoft/api-extractor": "~7.13.2",

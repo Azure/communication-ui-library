@@ -9,7 +9,7 @@ import { chatThreadSelector } from '../chatThreadSelector';
 import { typingIndicatorSelector } from '../typingIndicatorSelector';
 import { Common } from 'acs-ui-common';
 // @ts-ignore
-import { CommonProperties } from 'acs-ui-common';
+import { CommonProperties, AreEqual } from 'acs-ui-common';
 // @ts-ignore
 import { DefaultChatHandlers } from '../handlers/createHandlers';
 import { chatParticipantListSelector } from '../chatParticipantListSelector';
@@ -28,8 +28,6 @@ export type GetSelector<Component> = AreEqual<Component, typeof SendBox> extends
   : AreEqual<Component, typeof TypingIndicator> extends true
   ? typeof typingIndicatorSelector
   : never;
-
-export type AreEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
 export const getSelector = <Component extends (props: any) => JSX.Element | undefined>(
   component: Component

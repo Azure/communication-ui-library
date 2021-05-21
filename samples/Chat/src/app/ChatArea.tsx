@@ -6,7 +6,7 @@ import { connectFuncsToContext, MapToErrorBarProps, ErrorBar as ErrorBarComponen
 import { Stack } from '@fluentui/react';
 import React, { useEffect, useMemo } from 'react';
 import { chatAreaContainerStyle, sendBoxParentStyle } from './styles/ChatArea.styles';
-import { usePropsFor } from '@azure/acs-chat-selector';
+import { useChatPropsFor as usePropsFor } from '@azure/acs-chat-selector';
 
 export interface ChatAreaProps {
   onRenderAvatar?: (userId: string) => JSX.Element;
