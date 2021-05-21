@@ -8,12 +8,13 @@ export type ContainerProps = {
 };
 
 const isTeamsMeetingLink = (link: string): boolean => link.startsWith('https://teams.microsoft.com/l/meetup-join');
+
 export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
   const [adapter, setAdapter] = useState<CallAdapter>();
 
   useEffect(() => {
     (async () => {
-      if (props.token && props.locator) {
+      if (props.token && props.locator && props.displayName) {
         const callLocator = isTeamsMeetingLink(props.locator)
           ? { meetingLink: props.locator }
           : { groupId: props.locator };
