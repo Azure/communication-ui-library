@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Ignoring typing users with no display name in TypingIndicator component",
-  "packageName": "react-components",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

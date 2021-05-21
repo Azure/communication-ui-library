@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Upgrade selector to use updated Stateful render functions",
-  "packageName": "@azure/acs-calling-selector",
-  "email": "allenhwang@microsoft.com",
-  "dependentChangeType": "patch"
-}

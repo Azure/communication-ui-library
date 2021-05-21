@@ -1,9 +1,9 @@
-import { usePropsFor, MessageThread, SendBox } from '@azure/communication-react';
+import { useChatPropsFor, MessageThread, SendBox } from '@azure/communication-react';
 import React from 'react';
 
 function ChatComponents(): JSX.Element {
-  const messageThreadProps = usePropsFor(MessageThread);
-  const sendBoxProps = usePropsFor(SendBox);
+  const messageThreadProps = useChatPropsFor(MessageThread);
+  const sendBoxProps = useChatPropsFor(SendBox);
 
   return (
     <div style={{ height: '50rem', width: '50rem' }}>

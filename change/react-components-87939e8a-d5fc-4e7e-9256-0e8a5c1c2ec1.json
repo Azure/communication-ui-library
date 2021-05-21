@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "CommunicationCallingParticipant and CommunicationParticipant changed to interface",
-  "packageName": "react-components",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

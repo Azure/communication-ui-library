@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "ControlBar boolean prop added to remap background if floating layout and dark theme is used.",
-  "packageName": "react-components",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update from renaming declarative to stateful",
-  "packageName": "calling-stateful-client",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "patch"
-}

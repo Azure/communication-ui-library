@@ -1,6 +1,6 @@
 {
   "name": "@azure/acs-calling-selector",
-  "version": "1.0.0-beta",
+  "version": "1.0.0-beta.0",
   "description": "Component bindings specific to components that integrate with the Azure Communication Services Calling JavaScript SDK",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
@@ -20,13 +20,13 @@
     "postpack": "copyfiles -E \"./*.tgz\" private-preview"
   },
   "dependencies": {
-    "acs-ui-common": "~1.0.0-beta",
-    "calling-stateful-client": "~1.0.0-beta",
+    "acs-ui-common": "~1.0.0-beta.0",
+    "calling-stateful-client": "~1.0.0-beta.0",
     "@azure/communication-common": "1.0.0",
     "@azure/communication-calling": "1.0.1-beta.1",
     "reselect": "~4.0.0",
     "memoize-one": "~5.1.1",
-    "react-components": "1.0.0-beta"
+    "react-components": "1.0.0-beta.0"
   },
   "peerDependencies": {
     "react": "^16.13.1"

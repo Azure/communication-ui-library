@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update API extractor warnings to be errors",
-  "packageName": "chat-stateful-client",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "none"
-}

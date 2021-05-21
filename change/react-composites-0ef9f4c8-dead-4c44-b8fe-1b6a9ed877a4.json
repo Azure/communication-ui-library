@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add on render avatar for calling composite",
-  "packageName": "react-composites",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}

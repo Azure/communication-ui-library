@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Rename DeviceManager to avoid name conflict",
-  "packageName": "@azure/acs-calling-selector",
-  "email": "prprabhu@microsoft.com",
-  "dependentChangeType": "patch"
-}
