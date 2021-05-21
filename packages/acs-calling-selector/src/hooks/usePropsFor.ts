@@ -40,7 +40,8 @@ export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   return { ...useSelector(selector), ...useHandlers<Parameters<Component>[0]>(component) };
 };
 
-export const emptySelector = (): Record<string, never> => ({});
+const emptySelector = (): Record<string, never> => ({});
+export const endCallButtonSelector = emptySelector;
 export type GetSelector<Component> = AreEqual<Component, typeof VideoGallery> extends true
   ? typeof videoGallerySelector
   : AreEqual<Component, typeof MicrophoneButton> extends true
@@ -54,7 +55,7 @@ export type GetSelector<Component> = AreEqual<Component, typeof VideoGallery> ex
   : AreEqual<Component, typeof ParticipantList> extends true
   ? typeof participantListSelector
   : AreEqual<Component, typeof EndCallButton> extends true
-  ? typeof emptySelector
+  ? typeof endCallButtonSelector
   : never;
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
