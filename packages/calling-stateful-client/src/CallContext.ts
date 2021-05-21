@@ -614,6 +614,14 @@ export class CallContext {
     );
   }
 
+  public deleteDeviceManagerUnparentedView(localVideoStream: LocalVideoStreamState): void {
+    this.setState(
+      produce(this._state, (draft: CallClientState) => {
+        draft.deviceManager.unparentedViews.delete(localVideoStream);
+      })
+    );
+  }
+
   public getAndIncrementAtomicId(): number {
     const id = this._atomicId;
     this._atomicId++;
