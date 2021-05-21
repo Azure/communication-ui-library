@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { optionsButtonSelector } from '@azure/acs-calling-selector';
+import { devicePermissionSelector, optionsButtonSelector } from '@azure/acs-calling-selector';
 import React from 'react';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { CallConfiguration } from './CallConfiguration';
@@ -21,11 +21,19 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
 
   const options = useAdaptedSelector(optionsButtonSelector);
   const localDeviceSettingsHandlers = useHandlers(LocalDeviceSettings);
+  const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useAdaptedSelector(
+    devicePermissionSelector
+  );
 
   return (
     <CallConfiguration {...props}>
       <div>
-        <LocalDeviceSettings {...options} {...localDeviceSettingsHandlers} />
+        <LocalDeviceSettings
+          {...options}
+          {...localDeviceSettingsHandlers}
+          cameraPermissionGranted={cameraPermissionGranted}
+          microphonePermissionGranted={microphonePermissionGranted}
+        />
       </div>
       <div>
         <StartCallButton onClickHandler={startCallHandler} isDisabled={false} />

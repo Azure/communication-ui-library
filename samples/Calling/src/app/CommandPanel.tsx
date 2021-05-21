@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { optionsButtonSelector, participantListSelector } from '@azure/acs-calling-selector';
+import { devicePermissionSelector, optionsButtonSelector, participantListSelector } from '@azure/acs-calling-selector';
 import { Stack } from '@fluentui/react';
 import {
   fullHeightStyles,
@@ -32,6 +32,7 @@ export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
 
   const options = useSelector(optionsButtonSelector, { callId: '' });
   const handlers = useAzureCommunicationHandlers();
+  const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useSelector(devicePermissionSelector);
 
   return (
     <Stack styles={fullHeightStyles} tokens={{ childrenGap: '1.5rem' }}>
@@ -53,6 +54,8 @@ export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
           <div className={settingsContainerStyle}>
             <LocalDeviceSettings
               {...options}
+              cameraPermissionGranted={cameraPermissionGranted}
+              microphonePermissionGranted={microphonePermissionGranted}
               onSelectCamera={handlers.onSelectCamera}
               onSelectMicrophone={handlers.onSelectMicrophone}
               onSelectSpeaker={handlers.onSelectSpeaker}
