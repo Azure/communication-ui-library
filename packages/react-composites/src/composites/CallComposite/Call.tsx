@@ -11,9 +11,17 @@ import { CallAdapter } from './adapter/CallAdapter';
 import { PlaceholderProps } from 'react-components';
 import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
+import { Theme, PartialTheme } from '@fluentui/react-theme-provider';
+import { FluentThemeProvider } from 'react-components';
 
 export type CallCompositeProps = {
   adapter: CallAdapter;
+  /**
+   * Fluent theme for the composite.
+   *
+   * Defaults to a light theme if undefined.
+   */
+  fluentTheme?: PartialTheme | Theme;
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
 };
 
@@ -25,7 +33,6 @@ type MainScreenProps = {
 const MainScreen = ({ screenWidth, onRenderAvatar }: MainScreenProps): JSX.Element => {
   const page = useSelector(getPage);
   const adapter = useAdapter();
-
   if (page === 'configuration') {
     return <ConfigurationScreen screenWidth={screenWidth} startCallHandler={(): void => adapter.setPage('call')} />;
   } else {
@@ -54,7 +61,7 @@ export const Call = (props: CallCompositeProps): JSX.Element => {
     return () => window.removeEventListener('resize', setWindowWidth);
   }, []);
 
-  const { adapter } = props;
+  const { adapter, fluentTheme } = props;
 
   useEffect(() => {
     (async () => {
@@ -66,10 +73,12 @@ export const Call = (props: CallCompositeProps): JSX.Element => {
   }, [adapter]);
 
   return (
-    <CallAdapterProvider adapter={adapter}>
-      <Stack className={callContainer} grow>
-        <MainScreen screenWidth={screenWidth} onRenderAvatar={props.onRenderAvatar} />
-      </Stack>
-    </CallAdapterProvider>
+    <FluentThemeProvider fluentTheme={fluentTheme}>
+      <CallAdapterProvider adapter={adapter}>
+        <Stack className={callContainer} grow>
+          <MainScreen screenWidth={screenWidth} onRenderAvatar={props.onRenderAvatar} />
+        </Stack>
+      </CallAdapterProvider>
+    </FluentThemeProvider>
   );
 };

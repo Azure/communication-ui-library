@@ -325,6 +325,7 @@ export type CallCompositePage = 'configuration' | 'call';
 // @public (undocumented)
 export type CallCompositeProps = {
     adapter: CallAdapter;
+    fluentTheme?: PartialTheme | Theme;
     onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
 };
 
@@ -546,6 +547,7 @@ export const chatParticipantListSelector: reselect.OutputParametricSelector<Chat
 // @public (undocumented)
 export type ChatProps = {
     adapter: ChatAdapter;
+    fluentTheme?: PartialTheme | Theme;
     onRenderAvatar?: (userId: string) => JSX.Element;
     options?: ChatOptions;
 };

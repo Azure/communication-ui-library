@@ -16,6 +16,7 @@ import type { CommunicationUserKind } from '@azure/communication-common';
 import { DeviceManagerState } from 'calling-stateful-client';
 import { GroupCallLocator } from '@azure/communication-calling';
 import type { MicrosoftTeamsUserKind } from '@azure/communication-common';
+import { PartialTheme } from '@fluentui/react-theme-provider';
 import { PermissionConstraints } from '@azure/communication-calling';
 import type { PhoneNumberKind } from '@azure/communication-common';
 import { PlaceholderProps } from 'react-components';
@@ -23,6 +24,7 @@ import type { RemoteParticipant } from '@azure/communication-calling';
 import { StatefulCallClient } from 'calling-stateful-client';
 import { StatefulDeviceManager } from 'calling-stateful-client';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
+import { Theme } from '@fluentui/react-theme-provider';
 import type { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoStreamOptions } from 'react-components';
@@ -233,6 +235,7 @@ export type CallCompositePage = 'configuration' | 'call';
 // @public (undocumented)
 export type CallCompositeProps = {
     adapter: CallAdapter;
+    fluentTheme?: PartialTheme | Theme;
     onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
 };
 
@@ -321,6 +324,7 @@ export type ChatOptions = {
 // @public (undocumented)
 export type ChatProps = {
     adapter: ChatAdapter;
+    fluentTheme?: PartialTheme | Theme;
     onRenderAvatar?: (userId: string) => JSX.Element;
     options?: ChatOptions;
 };
