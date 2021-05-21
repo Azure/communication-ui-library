@@ -3,12 +3,8 @@
 import { ChatClient } from '@azure/communication-chat';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { CommunicationIdentityClient } from '@azure/communication-identity';
-import { ChatConfig } from '../ChatConfig';
 
-export const createUserAndThread = async (
-  resourceConnectionString: string,
-  displayName: string
-): Promise<ChatConfig> => {
+export const createUserAndThread = async (resourceConnectionString: string, displayName: string): Promise<any> => {
   const tokenClient = new CommunicationIdentityClient(resourceConnectionString);
   const user = await tokenClient.createUserAndToken(['chat']);
 
