@@ -33,7 +33,7 @@ export type VideoGalleryParticipant = {
 export interface VideoGalleryStream {
   /** ID of the video stream */
   id?: number;
-  /** Wether the video stream is available or not */
+  /** Whether the video stream is available or not */
   isAvailable?: boolean;
   /** Whether the video stream is mirrored or not */
   isMirrored?: boolean;
