@@ -16,6 +16,17 @@ export const useSelector = <SelectorT extends (state: ChatClientState, props: an
   const chatClient: StatefulChatClient = useChatClient() as any;
   const threadId = useChatThreadClient().threadId;
 
+  // Keeps track of whether the current component is mounted or not. If it has unmounted, make sure we do not modify the
+  // state or it will cause React warnings in the console. https://skype.visualstudio.com/SPOOL/_workitems/edit/2453212
+  const mounted = useRef(false);
+
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  });
+
   const threadConfigProps = useMemo(
     () => ({
       threadId
@@ -28,6 +39,9 @@ export const useSelector = <SelectorT extends (state: ChatClientState, props: an
   propRef.current = props;
   useEffect(() => {
     const onStateChange = (state: ChatClientState): void => {
+      if (!mounted.current) {
+        return;
+      }
       const newProps = selector(state, selectorProps ?? threadConfigProps);
       if (propRef.current !== newProps) {
         setProps(newProps);
