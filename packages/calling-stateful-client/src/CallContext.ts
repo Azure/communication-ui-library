@@ -57,6 +57,7 @@ export class CallContext {
       userId: userId
     };
     this._emitter = new EventEmitter();
+    this._emitter.setMaxListeners(100);
     this._atomicId = 0;
   }
 
