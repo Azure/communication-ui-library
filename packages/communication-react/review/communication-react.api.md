@@ -326,6 +326,7 @@ export type CallCompositePage = 'configuration' | 'call';
 // @public (undocumented)
 export type CallCompositeProps = {
     adapter: CallAdapter;
+    fluentTheme?: PartialTheme | Theme;
     onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
     onErrorCallback?: (error: CommunicationUiErrorInfo) => void;
 };
@@ -548,6 +549,7 @@ export const chatParticipantListSelector: reselect.OutputParametricSelector<Chat
 // @public (undocumented)
 export type ChatProps = {
     adapter: ChatAdapter;
+    fluentTheme?: PartialTheme | Theme;
     onRenderAvatar?: (userId: string) => JSX.Element;
     onErrorCallback?: (error: CommunicationUiErrorInfo) => void;
     options?: ChatOptions;
@@ -1285,9 +1287,8 @@ export type StatefulChatClientArgs = {
 // @public
 export type StatefulChatClientOptions = ChatClientOptions;
 
-// @public (undocumented)
+// @public
 export interface StatefulDeviceManager extends DeviceManager {
-    // (undocumented)
     selectCamera: (VideoDeviceInfo: any) => void;
 }
 
