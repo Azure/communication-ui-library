@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Rename GroupChat* to Chat* in composites",
-  "packageName": "react-composites",
-  "email": "prprabhu@microsoft.com",
-  "dependentChangeType": "patch"
-}

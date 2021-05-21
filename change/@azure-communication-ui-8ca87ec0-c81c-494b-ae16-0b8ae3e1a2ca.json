@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "fix GroupCallLeaveButton style",
-  "packageName": "@azure/communication-ui",
-  "email": "alcail@microsoft.com",
-  "dependentChangeType": "none"
-}

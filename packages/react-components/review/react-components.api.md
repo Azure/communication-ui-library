@@ -8,6 +8,7 @@ import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { IButtonProps } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
+import { MessageStatus } from 'acs-ui-common';
 import { PartialTheme } from '@fluentui/react-theme-provider';
 import { PersonaPresence } from '@fluentui/react';
 import { default as React_2 } from 'react';
@@ -156,9 +157,6 @@ export type MessageProps = {
     message: ChatMessage | SystemMessage | CustomMessage;
     messageContainerStyle?: ComponentSlotStyle;
 };
-
-// @public (undocumented)
-export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
 
 // @public
 export const MessageStatusIndicator: (props: MessageStatusIndicatorProps) => JSX.Element;

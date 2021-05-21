@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Rename stateful CallAgent to CallAgentState",
-  "packageName": "calling-stateful-client",
-  "email": "prprabhu@microsoft.com",
-  "dependentChangeType": "patch"
-}

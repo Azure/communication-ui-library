@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Fix npm pack step",
-  "packageName": "react-composites",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "none"
-}

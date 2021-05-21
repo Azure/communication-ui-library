@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Introduce common identifier format",
-  "packageName": "react-components",
-  "email": "prprabhu@microsoft.com",
-  "dependentChangeType": "patch"
-}

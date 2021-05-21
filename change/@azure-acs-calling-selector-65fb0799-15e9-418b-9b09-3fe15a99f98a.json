@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add initial base selector and handler for calling",
-  "packageName": "@azure/acs-calling-selector",
-  "email": "allenhwang@microsoft.com",
-  "dependentChangeType": "patch"
-}

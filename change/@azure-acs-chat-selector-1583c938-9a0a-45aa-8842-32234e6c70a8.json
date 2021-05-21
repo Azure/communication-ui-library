@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Rename useSelector to useChatSelector",
-  "packageName": "@azure/acs-chat-selector",
-  "email": "easony@microsoft.com",
-  "dependentChangeType": "patch"
-}
