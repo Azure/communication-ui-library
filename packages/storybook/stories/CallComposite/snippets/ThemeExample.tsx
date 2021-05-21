@@ -33,7 +33,7 @@ const getTheme = (choice: string): ITheme => {
   return DefaultTheme;
 };
 
-export const ThemesCanvas: () => JSX.Element = () => {
+export const ThemeExample: () => JSX.Element = () => {
   const [containerProps, setContainerProps] = useState();
 
   const knobs = useRef({

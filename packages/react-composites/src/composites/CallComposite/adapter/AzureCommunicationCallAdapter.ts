@@ -10,10 +10,12 @@ import {
   DeviceManagerState
 } from 'calling-stateful-client';
 import {
+  AudioOptions,
   CallAgent,
   Call,
   CallClientOptions,
-  AudioOptions,
+  GroupCallLocator,
+  TeamsMeetingLinkLocator,
   LocalVideoStream as SDKLocalVideoStream,
   AudioDeviceInfo,
   VideoDeviceInfo,
@@ -111,7 +113,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   private callAgent: CallAgent;
   private deviceManager: StatefulDeviceManager;
   private localStream: SDKLocalVideoStream | undefined;
-  private groupId: string;
+  private locator: TeamsMeetingLinkLocator | GroupCallLocator;
   private call: Call | undefined;
   private context: CallContext;
   private handlers: DefaultCallingHandlers;
@@ -121,13 +123,13 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   constructor(
     callClient: StatefulCallClient,
-    groupId: string,
+    locator: TeamsMeetingLinkLocator | GroupCallLocator,
     callAgent: CallAgent,
     deviceManager: StatefulDeviceManager
   ) {
     this.callClient = callClient;
     this.callAgent = callAgent;
-    this.groupId = groupId;
+    this.locator = locator;
     this.deviceManager = deviceManager;
     this.context = new CallContext(callClient.getState());
     const onStateChange = (clientState: CallClientState): void => {
@@ -149,6 +151,10 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   public dispose(): void {
     this.callClient.offStateChange(this.onClientStateChange);
     this.callAgent.dispose();
+  }
+
+  public isTeamsCall(): boolean {
+    return 'meetingLink' in this.locator;
   }
 
   public queryCameras(): Promise<VideoDeviceInfo[]> {
@@ -175,20 +181,24 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       // TODO: find a way to expose stream to here
       const videoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
 
-      const call = this.callAgent.join(
-        {
-          groupId: this.groupId
-        },
-        {
+      const isTeamsMeeting = 'groupId' in this.locator;
+
+      if (isTeamsMeeting) {
+        this.call = this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
           audioOptions,
           videoOptions
-        }
-      );
-      this.call = call;
-      this.context.setCallId(call.id);
+        });
+      } else {
+        this.call = this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
+          audioOptions,
+          videoOptions
+        });
+      }
+
+      this.context.setCallId(this.call.id);
       // Resync state after callId is set
       this.context.updateClientState(this.callClient.getState());
-      this.handlers = createDefaultCallingHandlers(this.callClient, this.callAgent, this.deviceManager, call);
+      this.handlers = createDefaultCallingHandlers(this.callClient, this.callAgent, this.deviceManager, this.call);
       this.subscribeCallEvents();
     }
   }
@@ -412,7 +422,7 @@ const createCommunicationIdentifier = (rawId: string): CommunicationUserKind => 
 
 export const createAzureCommunicationCallAdapter = async (
   token: string,
-  groupId: string,
+  locator: TeamsMeetingLinkLocator | GroupCallLocator,
   displayName: string,
   refreshTokenCallback?: (() => Promise<string>) | undefined,
   callClientOptions?: CallClientOptions
@@ -426,6 +436,6 @@ export const createAzureCommunicationCallAdapter = async (
     { displayName }
   );
 
-  const adapter = new AzureCommunicationCallAdapter(callClient, groupId, callAgent, deviceManager);
+  const adapter = new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager);
   return adapter;
 };

@@ -1,7 +1,7 @@
 import { ChatAdapter, ChatComposite, createAzureCommunicationChatAdapter } from '@azure/communication-react';
 import React, { useState, useEffect, useCallback } from 'react';
 
-export interface ContosoChatContainerProps {
+export interface CustomDataModelExampleContainerProps {
   token: string;
   displayName: string;
   endpointUrl: string;
@@ -10,7 +10,7 @@ export interface ContosoChatContainerProps {
   botAvatar: string;
 }
 
-export const ContosoChatContainer = (props: ContosoChatContainerProps): JSX.Element => {
+export const CustomDataModelExampleContainer = (props: CustomDataModelExampleContainerProps): JSX.Element => {
   // Creating an adapter is asynchronous.
   // An update to `config` triggers a new adapter creation, via the useEffect block.
   // When the adapter becomes ready, the state update triggers a re-render of the ChatComposite.
