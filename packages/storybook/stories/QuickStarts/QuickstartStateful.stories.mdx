@@ -1,7 +1,7 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import ChatAppStatefulProviders from '!!raw-loader!./snippets/ChatAppStatefulProviders.snippet.tsx';
-import ChatAppStatefulComponents from '!!raw-loader!./snippets/ChatAppStatefulComponents.snippet.tsx';
+import ChatComponentsStateful from '!!raw-loader!./snippets/ChatComponentsStateful.tsx';
 import ChatAppStateful from '!!raw-loader!./snippets/ChatAppStateful.snippet.tsx';
 import ChatAppStatefulComplete from '!!raw-loader!./snippets/ChatAppStatefulComplete.snippet.tsx';
 
@@ -22,7 +22,7 @@ Stateful clients make it easier for developers to build UI applications on top o
 - Knowledge of [UI Library Components](/?path=/story/quickstarts-get-started-with-ui-components--page). We will be using the UI Components in this quickstart.
 - Knowledge of Azure Communication Services [Chat patterns](https://docs.microsoft.com/azure/communication-services/concepts/chat/concepts). You will need to create a thread and a user to that thread to use the UI Library. Look at the [recommended architecture for the UI Library](/?path=/docs/use-cases--page#recommended-architecture)
 
-## Setting up
+## Setting Up
 
 UI Library requires a React environment to be setup as described below. If you already have a React App, you can skip this section.
 
@@ -32,7 +32,6 @@ We'll use the `create-react-app` template for this quickstart. For more informat
 
 ```bash
 
-# Build app in typescript:
 npx create-react-app ui-toolkit-starting-with-stateful --template typescript
 
 cd ui-toolkit-quickstart
@@ -42,13 +41,12 @@ cd ui-toolkit-quickstart
 At the end of this process, you should have a full application inside the folder `ui-toolkit-starting-with-stateful`.
 For this quickstart, we'll be modifying files inside the `src` folder.
 
-### Install the package
+### Install the Package
 
 Use the `npm install` command to install the `@azure/communication-react` library.
 
 ```bash
 
-# For Private Preview install tarball
 npm install --save @azure/communication-react
 
 ```
@@ -65,7 +63,7 @@ npm run start
 
 ```
 
-## Object model
+## Object Model
 
 The following classes and interfaces from the Azure Communication Services UI client library are referenced in this quickstart:
 
@@ -77,7 +75,7 @@ The following classes and interfaces from the Azure Communication Services UI cl
 | [ChatThreadClientProvider](/?path=/story/stateful-client-react-hooks-setting-up--page)                                          | Provider allows access to the Stateful Chat Thread Client to the components inside of it |
 | [usePropsFor](/?path=/story/stateful-client-react-hooks-usepropsfor--page)                                                      | Hook to generate required props to enable UI Components                                  |
 
-## Instantiate Stateful Chat client and Chat Thread client in the app
+## Instantiate Stateful Chat Client and Chat Thread Client
 
 Update the `App.tsx` file to create a `statefulChatClient` off the low-level `ChatClient` using the method `createStatefulChatClient`.
 Make sure to populate the constants at the top of the App code with information from your Azure Communication Services Resource.
@@ -89,7 +87,7 @@ Once the `statefulChatClient` is instantiated, we will then generate the `statef
 
 <Source code={ChatAppStateful} />
 
-## Add Providers to pass state to UI Components
+## Add Providers
 
 Next we will add three providers that will encapsulate our UI components.
 First, the `FluentThemeProvider` which provides visual theme to the underlying components.
@@ -107,19 +105,19 @@ For more information on [Calling Providers](/?path=/story/stateful-client-react-
 
 Now that we have our structure ready, we will now create our chat experience using UI Components.
 For Chat, we will use the [`MessageThread`](/?path=/docs/ui-components-chatthread--chat-thread-component) and [`SendBox`](/?path=/docs/ui-components-sendbox--send-box-story-book-component) components.
-To start add the code below to a new file `ChatComponents.tsx`.
+To start add the code below to a new file `ChatComponentsStateful.tsx`.
 For more information on getting started with UI Components follow the [quickstart](/?path=/story/quickstarts-get-started-with-ui-components--page)
 Here we will use the `usePropsFor` hook to connect our components to the stateful clients.
 The `usePropsFor` method takes in the component for which we want props generated, in this case `MessageThread` and `SendBox`.
 
-`ChatComponents.tsx`
+`ChatComponentsStateful.tsx`
 
-<Source code={ChatAppStatefulComponents} />
+<Source code={ChatComponentsStateful} />
 
 Similarly to how we used `usePropsFor` with chat UI Components, it can be used for calling UI Components.
 For more information on [usePropsFor](/?path=/story/stateful-client-react-hooks-usepropsfor--page).
 
-## Add Components to the main app
+## Add Components to App
 
 Now that we have configured our providers and the chat components we can put them together.
 
@@ -127,7 +125,7 @@ Now that we have configured our providers and the chat components we can put the
 
 <Source code={ChatAppStatefulComplete} />
 
-## Run quickstart
+## Run Quickstart
 
 At this point your app should have two UI Components hooked up to
 To run the code above use the command:
@@ -138,15 +136,15 @@ npm run start
 
 ```
 
-## Clean up resources
+## Clean Up Resources
 
 If you want to clean up and remove a Communication Services subscription, you can delete the resource or resource group.
 Deleting the resource group also deletes any other resources associated with it.
 Learn more about [cleaning up resources](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp#clean-up-resources).
 
-## Next steps
+## Next Steps
 
-[Try UI Library Composite Components](/?path=/story/quickstart-composites--page)
+[Try UI Library Composite Components](/?path=/docs/quickstarts-get-started-with-composites--page)
 
 For more information, see the following resources:
 

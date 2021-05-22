@@ -1,10 +1,10 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import AppText from '!!raw-loader!./snippets/App.snippet.tsx';
-import CallingComponentsText from '!!raw-loader!./snippets/CallingComponents.snippet.tsx';
-import { CallingComponents } from './snippets/CallingComponents.snippet';
-import ChatComponentsText from '!!raw-loader!./snippets/ChatComponents.snippet.tsx';
-import { ChatComponents } from './snippets/ChatComponents.snippet';
+import CallingComponentsText from '!!raw-loader!./snippets/CallingComponents.tsx';
+import { CallingComponents } from './snippets/CallingComponents';
+import ChatComponentsText from '!!raw-loader!./snippets/ChatComponents.tsx';
+import { ChatComponents } from './snippets/ChatComponents';
 import CompletedComponentsAppText from '!!raw-loader!./snippets/CompletedComponentsApp.snippet.tsx';
 import CompletedComponentsApp from './snippets/CompletedComponentsApp.snippet';
 
@@ -14,9 +14,9 @@ import CompletedComponentsApp from './snippets/CompletedComponentsApp.snippet';
 
 Get started with Azure Communication Services by using the UI Library to quickly integrate communication experiences into your applications. In this quickstart, you'll learn how to integrate UI Library base components into your application to build communication experiences.
 
-UI Library components come in two flavors: Base and Composite.
+UI Library components come in two flavors: UI and Composite.
 
-- **Base components** represent discrete communication capabilities; they're the basic building blocks that can be used to build complex communication experiences.
+- **UI components** represent discrete communication capabilities; they're the basic building blocks that can be used to build complex communication experiences.
 - **Composite components** are turn-key experiences for common communication scenarios that have been built using **base components** as building blocks and packaged to be easily integrated into applications.
 
 ## Prerequisites
@@ -25,7 +25,7 @@ UI Library components come in two flavors: Base and Composite.
 - [Node.js](https://nodejs.org/) Active LTS and Maintenance LTS versions (Node 12 Recommended).
 - An active Communication Services resource. [Create a Communication Services resource](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp).
 
-## Setting up
+## Setting Up
 
 UI Library requires a React environment to be setup. Next we will do that. If you already have a React App, you can skip this section.
 
@@ -35,7 +35,6 @@ We'll use the create-react-app template for this quickstart. For more informatio
 
 ```bash
 
-# Build app in typescript:
 npx create-react-app ui-toolkit-quickstart --template typescript
 
 cd ui-toolkit-quickstart
@@ -45,13 +44,12 @@ cd ui-toolkit-quickstart
 At the end of this process, you should have a full application inside the folder `UI-ToolKit-Quickstart`.
 For this quickstart, we'll be modifying files inside the `src` folder.
 
-### Install the package
+### Install the Package
 
 Use the `npm install` command to install the Azure Communication Services UI Library for JavaScript.
 
 ```bash
 
-# For Private Preview install tarball
 npm install --save @azure/communication-react
 
 ```
@@ -68,7 +66,7 @@ npm run start
 
 ```
 
-## Object model
+## Object Model
 
 The following classes and interfaces handle some of the major features of the Azure Communication Services UI client library:
 
@@ -94,7 +92,7 @@ Inside the `FluentThemeProvider`, you can add additional components.
 Next we'll use various UI components to showcase a sample experience.
 You can customize the layout of these components and add any other custom components that you want to render with them.
 
-## Add Calling UI Components
+## Calling UI Components
 
 For Calling, we'll use the [`GridLayout`](/?path=/story/ui-components-gridlayout--grid-layout-component) and [`ControlBar`](/?path=/story/ui-components-controlbar--control-bar-component) components.
 To start, in the `src` folder, create a new file called `CallingComponents.tsx`.
@@ -107,7 +105,7 @@ You can add extra layout and styling around the components.
 
 For this example we added a single `Video Tile` to the grid, but additional can be added.
 
-## Add Chat UI Components
+## Chat UI Components
 
 For Chat, we will use the [`MessageThread`](/?path=/docs/ui-components-chatthread--chat-thread-component) and [`SendBox`](/?path=/docs/ui-components-sendbox--send-box-story-book-component) components.
 To start, in the `src` folder, create a new file called `ChatComponents.tsx`.
@@ -117,7 +115,7 @@ Here we'll initialize a function component that will hold our base components to
 
 <Source code={ChatComponentsText} />
 
-## Add Calling and Chat Components to the main application
+## Add Calling and Chat Components
 
 Back in the `app.tsx` file, we will now add the components to the `FluentThemeProvider` like shown below.
 
@@ -128,7 +126,7 @@ Back in the `app.tsx` file, we will now add the components to the `FluentThemePr
   <CompletedComponentsApp />
 </Canvas>
 
-## Run quickstart
+## Run Quickstart
 
 To run the code above use the command:
 
@@ -138,15 +136,15 @@ npm run start
 
 ```
 
-## Clean up resources
+## Clean Up Resources
 
 If you want to clean up and remove a Communication Services subscription, you can delete the resource or resource group.
 Deleting the resource group also deletes any other resources associated with it.
 Learn more about [cleaning up resources](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp#clean-up-resources).
 
-## Next steps
+## Next Steps
 
-[Try UI Library Composite Components](/?path=/story/quickstart-composites--page)
+[Try UI Library Stateful Client](/?path=/story/quickstarts-get-started-with-stateful-client--page)
 
 For more information, see the following resources:
 

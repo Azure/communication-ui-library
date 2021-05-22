@@ -6,15 +6,15 @@ import {
   ChatThreadClientProvider
 } from '@azure/communication-react';
 import React from 'react';
-import { ChatComponents } from './ChatComponents.snippet';
+import ChatComponents from './ChatComponentsStateful';
 
 function App(): JSX.Element {
-  const endpointUrl = 'INSERT ENDPOINT URL FOR AZURE COMMUNICATION SERVICES RESOURCE';
-  const userAccessToken = 'INSERT ACCESS TOKEN FOR RESOURCE';
-  const userId = 'INSERT USER ID';
+  const endpointUrl = '<Azure Communication Services Resource Endpoint>';
+  const userAccessToken = '<Azure Communication Services Resource Access Token>';
+  const userId = '<User Id associated to the token>';
   const tokenCredential = new AzureCommunicationTokenCredential(userAccessToken);
-  const threadId = 'INSERT THREAD ID ';
-  const displayName = 'INSERT DISPLAY NAME';
+  const threadId = '<Get thread id from chat service>';
+  const displayName = '<Display Name>';
 
   //Instantiate the statefulChatClient
   const statefulChatClient = createStatefulChatClient({
@@ -25,6 +25,9 @@ function App(): JSX.Element {
   });
 
   const chatThreadClient = statefulChatClient.getChatThreadClient(threadId);
+
+  //Listen to notifications
+  statefulChatClient.startRealtimeNotifications();
 
   return (
     <FluentThemeProvider>
