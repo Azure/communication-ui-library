@@ -67,7 +67,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         </Stack>
         <Stack.Item className={participantListWrapper}>
           <Stack className={participantListStack}>
-            <Stack.Item className={listHeader}>In this Chat</Stack.Item>
+            <Stack.Item className={listHeader}>In this chat</Stack.Item>
             <Stack.Item className={participantListStyle}>
               <ParticipantList {...participantListProps} />
             </Stack.Item>
