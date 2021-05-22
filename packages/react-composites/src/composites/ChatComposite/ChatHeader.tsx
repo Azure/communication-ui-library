@@ -3,6 +3,7 @@
 
 import { Stack } from '@fluentui/react';
 import React from 'react';
+import * as reselect from 'reselect';
 import { ChatClientState } from 'chat-stateful-client';
 import { ChatBaseSelectorProps } from '@azure/acs-chat-selector';
 import { chatHeaderContainerStyle, topicNameLabelStyle } from './styles/Chat.styles';
@@ -21,8 +22,15 @@ export const ChatHeader = (props: HeaderProps): JSX.Element => {
   );
 };
 
-export const getHeaderProps = (state: ChatClientState, props: ChatBaseSelectorProps): HeaderProps => {
-  return {
-    topic: state.threads.get(props.threadId)?.properties?.topic || ''
-  };
+// TODO: Consider exporting building-block selectors internally to composites.
+// This will avoid code duplication but still keep the public API clean.
+export const getTopicName = (state: ChatClientState, props: ChatBaseSelectorProps): string => {
+  return state.threads.get(props.threadId)?.properties?.topic || '';
 };
+
+export const getHeaderProps = reselect.createSelector(
+  [getTopicName],
+  (topic): HeaderProps => {
+    return { topic: topic };
+  }
+);
