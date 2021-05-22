@@ -6,7 +6,7 @@ import {
   ChatThreadClientProvider
 } from '@azure/communication-react';
 import React from 'react';
-import { ChatComponents } from './ChatComponents.snippet';
+import ChatComponents from './ChatComponentsStateful';
 
 function App(): JSX.Element {
   const endpointUrl = '<Azure Communication Services Resource Endpoint>';
@@ -25,6 +25,9 @@ function App(): JSX.Element {
   });
 
   const chatThreadClient = statefulChatClient.getChatThreadClient(threadId);
+
+  //Listen to notifications
+  statefulChatClient.startRealtimeNotifications();
 
   return (
     <FluentThemeProvider>

@@ -14,11 +14,11 @@ function App(): JSX.Element {
   //Calling Variables
   //For Group Id, developers can pass any GUID they can generate
   const groupId = '<Developer generated GUID>';
-  const [, setCallAdapter] = useState<CallAdapter>();
+  const [callAdapter, setCallAdapter] = useState<CallAdapter>();
 
   //Chat Variables
   const threadId = '<Get thread id from chat service>';
-  const [, setChatAdapter] = useState<ChatAdapter>();
+  const [chatAdapter, setChatAdapter] = useState<ChatAdapter>();
 
   useEffect(() => {
     const createAdapter = async (): Promise<void> => {
@@ -28,11 +28,7 @@ function App(): JSX.Element {
     createAdapter();
   });
 
-  return (
-    <>
-      <h1>Hooray! You set up adapters 🎉🎉🎉</h1>
-    </>
-  );
+  return <>{callAdapter && chatAdapter && <h1>Hooray! You set up adapters 🎉🎉🎉</h1>}</>;
 }
 
 export default App;

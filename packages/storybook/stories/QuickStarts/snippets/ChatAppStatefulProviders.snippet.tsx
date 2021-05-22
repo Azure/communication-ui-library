@@ -25,11 +25,14 @@ function App(): JSX.Element {
 
   const chatThreadClient = statefulChatClient.getChatThreadClient(threadId);
 
+  //Listen to notifications
+  statefulChatClient.startRealtimeNotifications();
+
   return (
     <FluentThemeProvider>
       <ChatClientProvider chatClient={statefulChatClient}>
         <ChatThreadClientProvider chatThreadClient={chatThreadClient}>
-          <></>
+          <h1>Hooray! You set up providers 🎉🎉🎉</h1>
         </ChatThreadClientProvider>
       </ChatClientProvider>
     </FluentThemeProvider>

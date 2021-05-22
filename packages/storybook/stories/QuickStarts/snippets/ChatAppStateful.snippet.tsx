@@ -18,11 +18,12 @@ function App(): JSX.Element {
     credential: tokenCredential
   });
 
-  // Example usage
   const chatThreadClient = statefulChatClient.getChatThreadClient(threadId);
-  chatThreadClient.listParticipants();
 
-  return <></>;
+  //Listen to notifications
+  statefulChatClient.startRealtimeNotifications();
+
+  return <>{chatThreadClient && <h1>Hooray! You set up chat client 🎉🎉🎉</h1>};</>;
 }
 
 export default App;
