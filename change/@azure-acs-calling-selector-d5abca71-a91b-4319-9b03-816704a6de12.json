@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Update callclientprovider prop from statefulCallClient to just callClient",
+  "packageName": "@azure/acs-calling-selector",
+  "email": "mail@jamesburnside.com",
+  "dependentChangeType": "none"
+}
