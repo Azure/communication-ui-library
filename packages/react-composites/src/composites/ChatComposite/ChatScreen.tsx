@@ -134,7 +134,7 @@ const getThreadStatusProps = reselect.createSelector(
   [getUserId, getParticipants],
   (userId, chatParticipants: Map<string, ChatParticipant>): ThreadStatusProps => {
     return {
-      amIRemovedFromThread: !chatParticipants.has(userId)
+      amIRemovedFromThread: chatParticipants.size > 0 && !chatParticipants.has(userId)
     };
   }
 );
