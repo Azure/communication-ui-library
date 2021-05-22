@@ -4,7 +4,7 @@ import React from 'react';
 function App(): JSX.Element {
   return (
     <FluentThemeProvider>
-     <h1>Hooray! You set up Fluent Theme Provider 🎉🎉🎉</h1>
+      <h1>Hooray! You set up Fluent Theme Provider 🎉🎉🎉</h1>
     </FluentThemeProvider>
   );
 }
