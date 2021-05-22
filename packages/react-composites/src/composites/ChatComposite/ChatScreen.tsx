@@ -4,11 +4,14 @@
 import { mergeStyles, Stack } from '@fluentui/react';
 import React, { useEffect } from 'react';
 import { ChatClientState } from 'chat-stateful-client';
+import * as reselect from 'reselect';
 import { ChatBaseSelectorProps } from '@azure/acs-chat-selector';
+import { ChatParticipant } from '@azure/communication-chat';
 import { MessageThread, ParticipantList, SendBox, TypingIndicator } from 'react-components';
 import { useAdapter } from './adapter/ChatAdapterProvider';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
+import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import {
   chatContainer,
   chatHeaderContainerStyle,
@@ -47,11 +50,13 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const sendBoxProps = usePropsFor(SendBox);
   const typingIndicatorProps = usePropsFor(TypingIndicator);
   const headerProps = useAdaptedSelector(getHeaderProps);
+  const threadStatusProps = useAdaptedSelector(getThreadStatusProps);
 
   return (
     <Stack className={chatContainer} grow>
       <ChatHeader {...headerProps} />
       <Stack className={chatArea} horizontal grow>
+        <ThreadStatus {...threadStatusProps} />
         <Stack className={chatWrapper} grow>
           <MessageThread
             {...messageThreadProps}
@@ -97,3 +102,39 @@ const getHeaderProps = (state: ChatClientState, props: ChatBaseSelectorProps): H
     topic: state.threads.get(props.threadId)?.properties?.topic || ''
   };
 };
+
+type ThreadStatusProps = {
+  amIRemovedFromThread: boolean;
+};
+
+const ThreadStatus = (props: ThreadStatusProps): JSX.Element => {
+  return (
+    <>
+      {props.amIRemovedFromThread ? (
+        <div>
+          <h1>You have been kicked</h1>
+        </div>
+      ) : (
+        <></>
+      )}
+    </>
+  );
+};
+
+// TODO: Consider exporting building-block selectors internally to composites.
+// This will avoid code duplication but still keep the public API clean.
+export const getUserId = (state: ChatClientState): string => toFlatCommunicationIdentifier(state.userId);
+
+// TODO: Consider exporting building-block selectors internally to composites.
+// This will avoid code duplication but still keep the public API clean.
+export const getParticipants = (state: ChatClientState, props: ChatBaseSelectorProps): Map<string, ChatParticipant> =>
+  (props.threadId && state.threads.get(props.threadId)?.participants) || new Map();
+
+const getThreadStatusProps = reselect.createSelector(
+  [getUserId, getParticipants],
+  (userId, chatParticipants: Map<string, ChatParticipant>): ThreadStatusProps => {
+    return {
+      amIRemovedFromThread: !chatParticipants.has(userId)
+    };
+  }
+);
