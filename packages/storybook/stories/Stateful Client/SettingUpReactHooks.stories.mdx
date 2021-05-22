@@ -25,7 +25,7 @@ For more information on creating them, see [Overview](/?path=/docs/stateful-clie
 
 ```tsx
 ReactDOM.render(
-  <ChatClientProvider statefulChatClient={statefulChatClient}>
+  <ChatClientProvider chatClient={statefulChatClient}>
     <ChatThreadClientProvider chatThreadClient={ChatThreadClient}>
       <App />
     </ChatThreadClientProvider>
@@ -42,7 +42,7 @@ For more information on creating them, see [Overview](/?path=/docs/stateful-clie
 
 ```tsx
 ReactDOM.render(
-  <CallClientProvider statefulCallClient={statefulCallClient}>
+  <CallClientProvider callClient={statefulCallClient}>
     <CallAgentProvider callAgent={callAgent}>
       <CallProvider call={call}>
         <App />
