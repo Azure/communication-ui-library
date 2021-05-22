@@ -14,7 +14,11 @@ import {
   chatHeaderContainerStyle,
   chatWrapper,
   topicNameLabelStyle,
-  chatArea
+  chatArea,
+  participantListWrapper,
+  listHeader,
+  participantListStack,
+  participantListStyle
 } from './styles/Chat.styles';
 
 export type ChatScreenProps = {
@@ -61,8 +65,13 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             <SendBox {...sendBoxProps} />
           </Stack.Item>
         </Stack>
-        <Stack.Item>
-          <ParticipantList {...participantListProps} />
+        <Stack.Item className={participantListWrapper}>
+          <Stack className={participantListStack}>
+            <Stack.Item className={listHeader}>In this Chat</Stack.Item>
+            <Stack.Item className={participantListStyle}>
+              <ParticipantList {...participantListProps} />
+            </Stack.Item>
+          </Stack>
         </Stack.Item>
       </Stack>
     </Stack>
