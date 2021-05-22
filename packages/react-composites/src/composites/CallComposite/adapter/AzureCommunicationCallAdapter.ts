@@ -189,10 +189,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       // TODO: find a way to expose stream to here
       const videoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
 
-      this.locator = {
-        meetingLink:
-          'https://teams.microsoft.com/l/meetup-join/19%3ameeting_YTliMDhmMTItYmRiNC00NmJkLTg0NTMtMTU4ZjNiYWUyYWFk%40thread.v2/0?context=%7b%22Tid%22%3a%2272f988bf-86f1-41af-91ab-2d7cd011db47%22%2c%22Oid%22%3a%22990a4f8d-5257-4446-8f6f-763df6703d03%22%7d'
-      };
       const isTeamsMeeting = 'groupId' in this.locator;
 
       if (isTeamsMeeting) {
