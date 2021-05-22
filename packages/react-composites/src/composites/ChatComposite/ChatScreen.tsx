@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles, Stack } from '@fluentui/react';
+import { mergeStyles, Stack, MessageBar, MessageBarType } from '@fluentui/react';
 import React, { useEffect } from 'react';
 import { ChatClientState } from 'chat-stateful-client';
 import * as reselect from 'reselect';
@@ -56,8 +56,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     <Stack className={chatContainer} grow>
       <ChatHeader {...headerProps} />
       <Stack className={chatArea} horizontal grow>
-        <ThreadStatus {...threadStatusProps} />
         <Stack className={chatWrapper} grow>
+          <ThreadStatus {...threadStatusProps} />
           <MessageThread
             {...messageThreadProps}
             onRenderAvatar={onRenderAvatar}
@@ -111,9 +111,7 @@ const ThreadStatus = (props: ThreadStatusProps): JSX.Element => {
   return (
     <>
       {props.amIRemovedFromThread ? (
-        <div>
-          <h1>You have been kicked</h1>
-        </div>
+        <MessageBar messageBarType={MessageBarType.warning}>You no longer have access to the chat.</MessageBar>
       ) : (
         <></>
       )}
@@ -134,6 +132,7 @@ const getThreadStatusProps = reselect.createSelector(
   [getUserId, getParticipants],
   (userId, chatParticipants: Map<string, ChatParticipant>): ThreadStatusProps => {
     return {
+      // Check that participants are not empty to prevent jank before particpants are loaded.
       amIRemovedFromThread: chatParticipants.size > 0 && !chatParticipants.has(userId)
     };
   }
