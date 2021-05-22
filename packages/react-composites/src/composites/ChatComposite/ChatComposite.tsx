@@ -8,7 +8,7 @@ import { ChatAdapter } from './adapter/ChatAdapter';
 import { Theme, PartialTheme } from '@fluentui/react-theme-provider';
 import { FluentThemeProvider } from 'react-components';
 
-export type ChatProps = {
+export type ChatCompositeProps = {
   adapter: ChatAdapter;
   /**
    * Fluent theme for the composite.
@@ -26,7 +26,7 @@ export type ChatOptions = {
   // supportNewline: boolean; // Whether to support new line (shift+enter) in textArea, disable until ACS backend supports line switch
 };
 
-export const ChatComposite = (props: ChatProps): JSX.Element => {
+export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
   const { adapter, fluentTheme, options, onRenderAvatar } = props;
 
   return (
