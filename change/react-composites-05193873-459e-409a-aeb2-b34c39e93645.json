@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "gallery height fix for safari",
+  "packageName": "react-composites",
+  "email": "alkwa@microsoft.com",
+  "dependentChangeType": "patch"
+}

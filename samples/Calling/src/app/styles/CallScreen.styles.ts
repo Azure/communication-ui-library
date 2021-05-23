@@ -19,7 +19,8 @@ export const containerStyles: IStackStyles = {
 export const subContainerStyles: IStackStyles = {
   root: {
     overflow: 'hidden',
-    width: '100%'
+    width: '100%',
+    flexBasis: '0'
   }
 };
 export const paneStyles: IStackItemStyles = {
