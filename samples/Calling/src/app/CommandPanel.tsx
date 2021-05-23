@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { devicePermissionSelector, optionsButtonSelector, participantListSelector } from '@azure/acs-calling-selector';
+import { optionsButtonSelector, participantListSelector } from '@azure/acs-calling-selector';
 import { Stack } from '@fluentui/react';
 import {
   fullHeightStyles,
@@ -16,6 +16,7 @@ import { useCallingSelector as useSelector } from '@azure/acs-calling-selector';
 import { LocalDeviceSettings } from './LocalDeviceSettings';
 import { ParticipantList } from 'react-components';
 import { useAzureCommunicationHandlers } from './hooks/useAzureCommunicationHandlers';
+import { devicePermissionSelector } from './selectors/devicePermissionSelector';
 
 export enum CommandPanelTypes {
   None = 'none',
