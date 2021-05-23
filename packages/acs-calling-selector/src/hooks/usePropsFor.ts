@@ -44,14 +44,14 @@ export const emptySelector = (): Record<string, never> => ({});
 
 export type GetSelector<Component> = AreEqual<Component, typeof VideoGallery> extends true
   ? typeof videoGallerySelector
+  : AreEqual<Component, typeof OptionsButton> extends true
+  ? typeof optionsButtonSelector
   : AreEqual<Component, typeof MicrophoneButton> extends true
   ? typeof microphoneButtonSelector
   : AreEqual<Component, typeof CameraButton> extends true
   ? typeof cameraButtonSelector
   : AreEqual<Component, typeof ScreenShareButton> extends true
   ? typeof screenShareButtonSelector
-  : AreEqual<Component, typeof OptionsButton> extends true
-  ? typeof optionsButtonSelector
   : AreEqual<Component, typeof ParticipantList> extends true
   ? typeof participantListSelector
   : AreEqual<Component, typeof EndCallButton> extends true
