@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "FluentThemeProvider property children changed to optional",
-  "packageName": "react-components",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

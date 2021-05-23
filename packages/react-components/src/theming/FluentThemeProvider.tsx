@@ -12,7 +12,7 @@ import { lightTheme } from './themes';
  */
 export interface FluentThemeProviderProps {
   /** Children to be themed. */
-  children?: React.ReactNode;
+  children: React.ReactNode;
   /** Optional theme state for FluentThemeProvider. Defaults to a light theme if not provided. */
   fluentTheme?: PartialTheme | Theme;
 }
@@ -74,7 +74,7 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
   return (
     <ThemeProvider theme={fluentUITheme} className={wrapper}>
       <Provider theme={fluentNorthstarTheme} className={wrapper}>
-        {children ?? <></>}
+        {children}
       </Provider>
     </ThemeProvider>
   );

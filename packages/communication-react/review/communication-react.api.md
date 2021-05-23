@@ -747,7 +747,7 @@ export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Eleme
 
 // @public
 export interface FluentThemeProviderProps {
-    children?: React_2.ReactNode;
+    children: React_2.ReactNode;
     fluentTheme?: PartialTheme | Theme;
 }
 
