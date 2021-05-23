@@ -19,7 +19,16 @@ exports[`storybook snapshot tests Storyshots Examples/Themes Teams 1`] = `
         }
       }
     >
-      <div>
+      <div
+        style={
+          Object {
+            "height": "100%",
+            "maxHeight": "30rem",
+            "maxWidth": "50rem",
+            "width": "100%",
+          }
+        }
+      >
         <div
           className="css-80 root-2 body-3"
         >
@@ -32,8 +41,8 @@ exports[`storybook snapshot tests Storyshots Examples/Themes Teams 1`] = `
               style={
                 Object {
                   "background": "#1a1a1a",
-                  "height": "530px",
-                  "width": "830px",
+                  "height": "100%",
+                  "width": "100%",
                 }
               }
             >
