@@ -4,10 +4,11 @@
 import React, { useEffect, useState } from 'react';
 import { CallScreen } from './CallScreen';
 import { ConfigurationScreen } from './ConfigurationScreen';
+import { Error } from './Error';
 import { callContainer } from './styles/Call.styles';
 import { Stack } from '@fluentui/react';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
-import { CallAdapter } from './adapter/CallAdapter';
+import { CallAdapter, CallCompositePage } from './adapter/CallAdapter';
 import { PlaceholderProps } from 'react-components';
 import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
@@ -33,18 +34,32 @@ type MainScreenProps = {
 const MainScreen = ({ screenWidth, onRenderAvatar }: MainScreenProps): JSX.Element => {
   const page = useSelector(getPage);
   const adapter = useAdapter();
-  if (page === 'configuration') {
-    return <ConfigurationScreen screenWidth={screenWidth} startCallHandler={(): void => adapter.setPage('call')} />;
-  } else {
-    return (
-      <CallScreen
-        endCallHandler={async (): Promise<void> => {
-          adapter.setPage('configuration');
-        }}
-        onRenderAvatar={onRenderAvatar}
-        screenWidth={screenWidth}
-      />
-    );
+  switch (page) {
+    case 'configuration':
+      return <ConfigurationScreen screenWidth={screenWidth} startCallHandler={(): void => adapter.setPage('call')} />;
+    case 'error':
+      return <Error rejoinHandler={() => adapter.setPage('configuration')} />;
+    case 'errorJoiningTeamsMeeting':
+      return (
+        <Error
+          rejoinHandler={() => adapter.setPage('configuration')}
+          title="Error joining Teams Meeting"
+          reason="Access to the Teams meeting was denied."
+        />
+      );
+    default:
+      return (
+        <CallScreen
+          endCallHandler={async (): Promise<void> => {
+            adapter.setPage('configuration');
+          }}
+          callErrorHandler={(customPage?: CallCompositePage) => {
+            customPage ? adapter.setPage(customPage) : adapter.setPage('error');
+          }}
+          onRenderAvatar={onRenderAvatar}
+          screenWidth={screenWidth}
+        />
+      );
   }
 };
 

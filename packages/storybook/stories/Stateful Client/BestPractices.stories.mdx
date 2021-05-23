@@ -7,7 +7,7 @@ import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/a
 
 We are sharing some of our recommended best practices when handling state with Azure Communication Services UI Library.
 
-## Use the stateful clients
+## Use the Stateful Clients
 
 Managing the complex state of a calling or chat sesion can be challenging. This was a complex problem we found we were in and we think many of our developer community
 will run into this challenge themselves. We wanted to find a convenient way to store this information on the client in a way that plays nicely with our components we are offering.
@@ -18,13 +18,13 @@ By using the stateful client for calling or chat, you are on our recommended pat
 If you are using our provided UI Components, `usePropsFor` will help you get integrated with the underlying functionality quickly. This provides a series of properties our
 provided components are expecting from the stateful client to render an experience your users will be expecting. This is the fastest way to get your experience up and running with Azure Communication Services.
 
-## You can use your own UI components
+## You can use your own UI Components
 
 Today you can use `useSelector` to connect your own components to create your own experiences! We use `useSelector` under the hood when you leverage our `usePropsFor` hook.
 We wanted to ensure that developers wanting to create custom components had the same development path that we were using as well. Using this development path allows
 you to start on the path that we use as well to create amazing components.
 
-## Populating the `DeviceManager` state
+## Populating the `DeviceManager` State
 
 When using Stateful Calling, the call related state will be automatically retrieved for you.
 However, this is not the case for `DeviceManager` state.
@@ -67,14 +67,14 @@ There are three scenarios to using these APIs:
 
 To debug `createView` and `disposeView`, they emit `console.warns` when used incorrectly that can be tracked.
 
-## Track changes to `callId`
+## Track Changes to `callId`
 
 One major gotcha with using Stateful Calling is that `callId` may change and `callId` is used to look up data in Stateful state.
 If you have an old callId and the callId changed, you will not be able to access or find `CallState` in `CallClientState`.
 To work around, we recommend you do not cache the `callId` and instead cache the entire call object.
 The id in the call object will be kept up to date and when ever you access `CallClientState` use the `call.id`.
 
-## Detecting screenshare participant
+## Detecting Screenshare Participant
 
 To make Stateful Calling easier to use we added a `screenshareRemoteParticipant` property to `CallState`.
 If there is a remote participant screensharing, this will allow you to quickly look up that participant’s state by doing something like this:
@@ -86,7 +86,7 @@ CallState.remoteParticipants.get(CallState.screenshareRemoteParticipant);
 This property will be undefined if there are no remote participants screensharing.
 Note that this only applies to remote screenshares and not local screenshares.
 
-## Detecting transcription and recording in Teams Interop scenarios
+## Detecting Transcription and Recording
 
 Stateful Calling will manage transcription/recording for you.
 You only need to simply check the states under `CallState.transcription` and `CallState.recording`.

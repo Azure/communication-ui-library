@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Beautify style of chat composite",
+  "packageName": "react-composites",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}

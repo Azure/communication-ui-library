@@ -110,6 +110,7 @@ export const ParticipantList: () => JSX.Element = () => {
 
   const myUserId = mockParticipants[mockParticipants.length - 1].userId;
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onParticipantRemove = (_userId: string): void => {
     // Do something when remove a participant from list
   };
