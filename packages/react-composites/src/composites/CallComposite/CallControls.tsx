@@ -9,8 +9,8 @@ import {
   groupCallLeaveButtonStyle
 } from './styles/CallControls.styles';
 import { usePropsFor } from './hooks/usePropsFor';
-import { devicePermissionSelector } from '@azure/acs-calling-selector';
-import { useAdaptedSelector } from './hooks/useAdaptedSelector';
+import { devicePermissionSelector } from './selectors/devicePermissionSelector';
+import { useSelector } from './hooks/useSelector';
 
 export type GroupCallControlsProps = {
   onEndCallClick(): void;
@@ -27,9 +27,7 @@ export const CallControls = (props: GroupCallControlsProps): JSX.Element => {
     await hangUpButtonProps.onHangUp();
     onEndCallClick();
   }, [hangUpButtonProps, onEndCallClick]);
-  const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useAdaptedSelector(
-    devicePermissionSelector
-  );
+  const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useSelector(devicePermissionSelector);
 
   return (
     <ControlBar styles={controlBarStyle}>

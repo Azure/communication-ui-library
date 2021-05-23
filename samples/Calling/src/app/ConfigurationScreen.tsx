@@ -9,10 +9,12 @@ import { DisplayNameField } from './DisplayNameField';
 import { StartCallButton } from './StartCallButton';
 import { CallConfiguration } from './CallConfiguration';
 import { LocalDeviceSettings } from './LocalDeviceSettings';
-import { devicePermissionSelector, optionsButtonSelector } from '@azure/acs-calling-selector';
 import { useCallingSelector as useSelector } from '@azure/acs-calling-selector';
 import { useAzureCommunicationHandlers } from './hooks/useAzureCommunicationHandlers';
 import { TeamsMeetingLinkField } from './TeamsMeetingLinkField';
+import { devicePermissionSelector } from './selectors/devicePermissionSelector';
+import { getCallingSelector } from '@azure/acs-calling-selector';
+import { OptionsButton } from 'react-components';
 
 export interface ConfigurationScreenProps {
   screenWidth: number;
@@ -29,7 +31,7 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
   const [nameTooLongWarning, setNameTooLongWarning] = useState(false);
   const [teamsMeetingLink, setTeamsMeetingLink] = useState<string>();
 
-  const options = useSelector(optionsButtonSelector);
+  const options = useSelector(getCallingSelector(OptionsButton));
   const handlers = useAzureCommunicationHandlers();
   const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useSelector(devicePermissionSelector);
 

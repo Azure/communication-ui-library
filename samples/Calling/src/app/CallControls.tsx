@@ -3,13 +3,14 @@
 
 import React, { useCallback } from 'react';
 import { ControlBar, MicrophoneButton, CameraButton, ScreenShareButton, EndCallButton } from 'react-components';
-import { devicePermissionSelector, useCallingPropsFor as usePropsFor } from '@azure/acs-calling-selector';
+import { useCallingPropsFor as usePropsFor } from '@azure/acs-calling-selector';
 import {
   controlBarStyle,
   groupCallLeaveButtonCompressedStyle,
   groupCallLeaveButtonStyle
 } from './styles/CallControls.styles';
 import { useCallingSelector as useSelector } from '@azure/acs-calling-selector';
+import { devicePermissionSelector } from './selectors/devicePermissionSelector';
 
 export type CallControlsProps = {
   onEndCallClick(): void;
