@@ -40,8 +40,15 @@ const teamsTheme = {
 };
 
 export const TeamsTheme: () => JSX.Element = () => {
+  const wrapperStyle = {
+    width: '100%',
+    height: '100%',
+    maxWidth: '50rem',
+    maxHeight: '30rem'
+  };
+
   return (
-    <div>
+    <div style={wrapperStyle}>
       <FluentThemeProvider fluentTheme={teamsTheme}>
         <App />
       </FluentThemeProvider>
@@ -91,8 +98,8 @@ const App: () => JSX.Element = () => {
   return (
     <Stack
       style={{
-        height: '530px',
-        width: '830px',
+        height: '100%',
+        width: '100%',
         background: theme.palette.neutralQuaternaryAlt
       }}
     >
