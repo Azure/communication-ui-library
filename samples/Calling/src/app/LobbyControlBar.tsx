@@ -3,11 +3,8 @@
 import { useTheme } from '@fluentui/react-theme-provider';
 import React, { useCallback } from 'react';
 import { CameraButton, ControlBar, EndCallButton, MicrophoneButton, OptionsButton } from 'react-components';
-import {
-  useCallingPropsFor as usePropsFor,
-  useCallingSelector as useSelector,
-  devicePermissionSelector
-} from '@azure/acs-calling-selector';
+import { useCallingPropsFor as usePropsFor, useCallingSelector as useSelector } from '@azure/acs-calling-selector';
+import { devicePermissionSelector } from './selectors/devicePermissionSelector';
 
 export interface LobbyCallControlBarProps {
   isMicrophoneChecked?: boolean;
