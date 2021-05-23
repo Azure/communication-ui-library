@@ -19,9 +19,9 @@ export interface OptionsButtonProps extends IButtonProps {
   /**
    * Utility props for stateful props.
    */
-  microphones?: [{ id: string; name: string }];
-  speakers?: [{ id: string; name: string }];
-  cameras?: [{ id: string; name: string }];
+  microphones?: { id: string; name: string }[];
+  speakers?: { id: string; name: string }[];
+  cameras?: { id: string; name: string }[];
   selectedMicrophone?: { id: string; name: string };
   selectedSpeaker?: { id: string; name: string };
   selectedCamera?: { id: string; name: string };
