@@ -8,7 +8,7 @@ import { localPreviewContainerStyle, cameraOffLabelStyle, localPreviewTileStyle 
 import { CameraButton, ControlBar, MicrophoneButton, StreamMedia, VideoTile } from 'react-components';
 import { useCallingSelector as useSelector, useCallingPropsFor as usePropsFor } from '@azure/acs-calling-selector';
 import { localPreviewSelector } from './selectors/localPreviewSelector';
-import { devicePermissionSelector } from '@azure/acs-calling-selector';
+import { devicePermissionSelector } from './selectors/devicePermissionSelector';
 
 const onRenderPlaceholder = (): JSX.Element => {
   return (

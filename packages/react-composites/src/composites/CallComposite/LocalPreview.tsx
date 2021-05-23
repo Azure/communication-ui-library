@@ -11,8 +11,7 @@ import { localPreviewSelector } from './selectors/localPreviewSelector';
 import { useSelector } from './hooks/useSelector';
 import { getLocalMicrophoneEnabled } from './selectors/baseSelectors';
 import { useAdapter } from './adapter/CallAdapterProvider';
-import { devicePermissionSelector } from '@azure/acs-calling-selector';
-import { useAdaptedSelector } from './hooks/useAdaptedSelector';
+import { devicePermissionSelector } from './selectors/devicePermissionSelector';
 
 const onRenderPlaceholder = (): JSX.Element => {
   return (
@@ -30,9 +29,7 @@ const onRenderPlaceholder = (): JSX.Element => {
 export const LocalPreview = (): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
   const localPreviewProps = useSelector(localPreviewSelector);
-  const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useAdaptedSelector(
-    devicePermissionSelector
-  );
+  const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useSelector(devicePermissionSelector);
 
   const isLocalMicrophoneEnabled = useSelector(getLocalMicrophoneEnabled);
   const adapter = useAdapter();
