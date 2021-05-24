@@ -1,6 +1,6 @@
 {
   "name": "@azure/communication-react",
-  "version": "1.0.0-beta.0",
+  "version": "1.0.0-beta.1",
   "description": "React library for building modern communication user experiences utilizing Azure Communication Services",
   "keywords": [
     "Communication",
@@ -11,14 +11,14 @@
     "Video conferencing",
     "Teams"
   ],
-  "homepage": "https://azure.github.io/communication-ui-sdk/",
+  "homepage": "https://azure.github.io/communication-ui-library/",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Azure/communication-ui-sdk.git"
+    "url": "https://github.com/Azure/communication-ui-library.git"
   },
   "bugs": {
-    "url": "https://github.com/Azure/communication-ui-sdk/issues/new/choose"
+    "url": "https://github.com/Azure/communication-ui-library/issues/new/choose"
   },
   "types": "dist/communication-react.d.ts",
   "dependencies": {
