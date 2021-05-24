@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add error handler for teams interop call denial",
+  "packageName": "react-composites",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}

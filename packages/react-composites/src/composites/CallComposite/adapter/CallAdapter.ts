@@ -18,13 +18,14 @@ import type {
   UnknownIdentifierKind
 } from '@azure/communication-common';
 
-export type CallCompositePage = 'configuration' | 'call';
+export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoiningTeamsMeeting';
 
 export type CallAdapterUiState = {
   // Self-contained state for composite
   error?: Error;
   isLocalPreviewMicrophoneEnabled: boolean;
   page: CallCompositePage;
+  endedCall?: CallState | undefined;
 };
 
 export type CallAdapterClientState = {

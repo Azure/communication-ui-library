@@ -71,7 +71,7 @@ module.exports = {
   overrides: [
     // disable requiring the license header on snippet files
     {
-      files: ['**/*.snippet.*'],
+      files: ['**/*.snippet.*', '**/snippets/**'],
       rules: {
         'header/header': 'off'
       }
