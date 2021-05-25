@@ -16,8 +16,7 @@
     "lint:fix": "npm run lint -- --fix",
     "lint:quiet": "npm run lint -- --quiet",
     "api-extractor": "tsc && api-extractor run --local",
-    "generate-doc": "api-documenter markdown -i temp -o docGen",
-    "postpack": "copyfiles -E \"./*.tgz\" private-preview"
+    "generate-doc": "api-documenter markdown -i temp -o docGen"
   },
   "dependencies": {
     "@azure/communication-chat": "1.0.0",
