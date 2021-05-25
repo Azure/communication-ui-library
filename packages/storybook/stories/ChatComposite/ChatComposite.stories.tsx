@@ -60,9 +60,9 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Theming</Heading>
       <Description>
         ChatComposite can be themed with Fluent UI themes, just like the base components. Look at the [ChatComposite
-        themes canvas](./?path=/story/composites-chat--themes-canvas) to see theming in action or the [overall theming
-        example](./?path=/docs/examples-themes--teams-theme-component) to see how theming works for all the components
-        in this UI library.
+        themes canvas](./?path=/story/composites-chatcomposite--theme-example) to see theming in action or the [overall
+        theming example](./?path=/story/theming--page) to see how theming works for all the components in this UI
+        library.
       </Description>
 
       <Heading>Custom Data Model</Heading>
@@ -70,29 +70,29 @@ const getDocs: () => JSX.Element = () => {
         It is a primary tenet of Azure Communication Services that customers bring their own user identities. Customers
         then use the Azure Communication Services identity service to create corresponding authentication tokens for
         their users. The ChatComposite allows developers to easily inject custom data associated with these user
-        identities. Look at the [example canvas](./?path=/story/composites-chat--data-model-canvas) to see how the name
-        and avatar displayed for users can be provided by Contoso.
+        identities. Look at the [example canvas](./?path=/story/composites-chatcomposite--custom-data-model-example) to
+        see how the name and avatar displayed for users can be provided by Contoso.
       </Description>
       <Source code={customDataModelExampleContainerText} />
       <Description>
-        See the [Custom data model example documentation](?path=/story/composites-chat--customization-example) to
-        understand how custom data model can be injected for all the components in this UI library.
+        See the [Custom data model example documentation](./?path=/docs/custom-user-data-model--page) to understand how
+        custom data model can be injected for all the components in this UI library.
       </Description>
 
       <Heading>Adding custom behavior</Heading>
       <Description>
         The `ChatAdapter` makes it possible to arbitrarily modify the communication between the `ChatComposite`
         component and the Azure Communication Services backend. This adds powerful customization possibilities. The
-        [Customized Behavior Example](./?path=/story/composites-chat--custom-behavior-example) shows a way to intercept
-        messages entered by the user and modify them before sending them on to the backend.
+        [Customized Behavior Example](./?path=/story/composites-chatcomposite--custom-behavior-example) shows a way to
+        intercept messages entered by the user and modify them before sending them on to the backend.
       </Description>
       <Source code={customBehaviorExampleText} />
 
       <Heading>Joining an existing Chat thread</Heading>
       <Description>
-        The [join existing chat thread](./?path=/story/composites-chat--join-existing-chat-thread) provides an easy
-        playground to join an existing Azure Communication Services chat thread. This is useful if you want to explore
-        the composite with multiple users.
+        The [join existing chat thread](./?path=/story/composites-chatcomposite--join-existing-chat-thread) provides an
+        easy playground to join an existing Azure Communication Services chat thread. This is useful if you want to
+        explore the composite with multiple users.
       </Description>
     </>
   );
