@@ -26,7 +26,10 @@ jobs:
       - name: Build Storybook dependencies
         run: rush build -T storybook
 
-      - name: Build and deploy Storybook
+      - name: Run Storybook tests
+        run: rush test -o storybook
+
+      - name: Deploy Storybook
         if: github.ref == 'refs/heads/main'
         # storybook requires the env vars to be in a .env file for access in the manager.ts
         run: |
