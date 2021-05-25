@@ -1166,6 +1166,7 @@ export interface StatefulCallClient extends CallClient {
 // @public
 export type StatefulCallClientArgs = {
     userId: string;
+    maxListeners?: number;
 };
 
 // @public
@@ -1187,6 +1188,7 @@ export type StatefulChatClientArgs = {
     displayName: string;
     endpoint: string;
     credential: CommunicationTokenCredential;
+    maxListeners?: number;
 };
 
 // @public
