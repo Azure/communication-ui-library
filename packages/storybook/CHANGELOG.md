@@ -10,4 +10,4 @@ Fri, 21 May 2021 16:16:28 GMT
 
 ### Changes
 
-- Bump @azure/communication-react to v1.0.0-beta.0 ([PR #359](https://github.com/azure/communication-ui-sdk/pull/359) by allenhwang@microsoft.com)
+- Bump @azure/communication-react to v1.0.0-beta.1 ([PR #359](https://github.com/azure/communication-ui-sdk/pull/359) by allenhwang@microsoft.com)

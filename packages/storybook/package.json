@@ -18,7 +18,7 @@
     "lint:quiet": "npm run lint -- --quiet"
   },
   "dependencies": {
-    "@azure/acs-chat-selector": "~1.0.0-beta.0",
+    "@azure/acs-chat-selector": "~1.0.0-beta.1",
     "@azure/communication-identity": "1.0.0",
     "@azure/communication-calling": "1.0.1-beta.1",
     "@azure/communication-chat": "1.0.0",
@@ -38,7 +38,7 @@
     "copy-to-clipboard": "~3.3.1",
     "history": "~5.0.0",
     "react-aria-live": "^2.0.5",
-    "react-composites": "1.0.0-beta.0",
+    "react-composites": "1.0.0-beta.1",
     "react-linkify": "^1.0.0-alpha",
     "@fluentui/theme-samples": "8.1.5"
   },

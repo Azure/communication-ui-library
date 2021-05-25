@@ -1,6 +1,6 @@
 {
   "name": "@azure/acs-chat-selector",
-  "version": "1.0.0-beta.0",
+  "version": "1.0.0-beta.1",
   "description": "Component bindings specific to components that integrate with the Azure Communication Services Chat JavaScript SDK",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
@@ -20,12 +20,12 @@
     "postpack": "copyfiles -E \"./*.tgz\" private-preview"
   },
   "dependencies": {
-    "acs-ui-common": "~1.0.0-beta.0",
-    "chat-stateful-client": "~1.0.0-beta.0",
+    "acs-ui-common": "~1.0.0-beta.1",
+    "chat-stateful-client": "~1.0.0-beta.1",
     "@azure/communication-chat": "1.0.0",
     "@azure/communication-common": "1.0.0",
     "@azure/communication-signaling": "1.0.0-beta.5",
-    "react-components": "1.0.0-beta.0",
+    "react-components": "1.0.0-beta.1",
     "reselect": "~4.0.0",
     "memoize-one": "~5.1.1"
   },

@@ -4,7 +4,7 @@ This log was last generated on Fri, 21 May 2021 16:16:28 GMT and should not be m
 
 <!-- Start content -->
 
-## [1.0.0-beta.0](https://github.com/azure/communication-ui-sdk/tree/chat-stateful-client_v1.0.0-beta.0)
+## [1.0.0-beta.1](https://github.com/azure/communication-ui-sdk/tree/chat-stateful-client_v1.0.0-beta.1)
 
 Fri, 21 May 2021 16:16:28 GMT
 
