@@ -2,8 +2,8 @@
 
 # Azure Communication Services UI Library
 
-[![Storybook](https://raw.githubusercontent.com/storybooks/brand/master/badge/badge-storybook.svg)](https://azure.github.io/communication-ui-sdk)
-[![CI build status](https://github.com/Azure/communication-ui-sdk/workflows/CI/badge.svg?branch=main)](https://github.com/Azure/communication-ui-sdk/actions/workflows/ci.yml?query=branch%3Amain)
+[![Storybook](https://raw.githubusercontent.com/storybooks/brand/master/badge/badge-storybook.svg)](https://azure.github.io/communication-ui-library)
+[![CI build status](https://github.com/Azure/communication-ui-library/workflows/CI/badge.svg?branch=main)](https://github.com/Azure/communication-ui-library/actions/workflows/ci.yml?query=branch%3Amain)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-%230074c1.svg)](https://www.typescriptlang.org/)
 
@@ -16,7 +16,7 @@ We have interactive storybook pages in our storybook 📖 to try out features an
 If you're wondering where to get started, here are a few scenarios to help you get going:
 
 * "I want to see what this library can do!"
-  * Check out our [Samples](#samples), our [Storybook](https://azure.github.io/communication-ui-sdk), and read more about the [features and benefits](#features-and-benefits) of the toolkit
+  * Check out our [Samples](#samples), our [Storybook](https://azure.github.io/communication-ui-library), and read more about the [features and benefits](#features-and-benefits) of the toolkit
 * "I want to write my own communication application"
   * We recommend checking out our more comprehensive documentation here first to make the best decision for your application: <https://docs.microsoft.com/en-us/azure/communication-services/concepts/ui-framework/ui-sdk-overview>
 * "I want more information on the packages available to use"
@@ -28,7 +28,7 @@ If you're wondering where to get started, here are a few scenarios to help you g
 
 🚧 We are working on polishing up the samples in this repo 🚧.
 
-Check out [Storybook](https://azure.github.io/communication-ui-sdk) to try out this UI Library today!
+Check out [Storybook](https://azure.github.io/communication-ui-library) to try out this UI Library today!
 
 ## Features and Benefits
 
@@ -36,7 +36,7 @@ Todo: _Why use our toolkit?_
 
 ### Viewing the UI Component Storybook
 
-Explore and play around with the UI components on the [![Storybook](https://raw.githubusercontent.com/storybooks/brand/master/badge/badge-storybook.svg)](https://azure.github.io/communication-ui-sdk)
+Explore and play around with the UI components on the [![Storybook](https://raw.githubusercontent.com/storybooks/brand/master/badge/badge-storybook.svg)](https://azure.github.io/communication-ui-library)
 
 ## Packages
 
@@ -58,4 +58,4 @@ We look forward to building an amazing open source toolkit with you!
 
 * [Repo Documentation](./docs/README.md)
 * [Conceptual Documentation](https://docs.microsoft.com/en-us/azure/communication-services/concepts/ui-framework/ui-sdk-overview)
-* [Quick-start Documentation](https://azure.github.io/communication-ui-sdk/?path=/story/quickstart-ui-components--page)
+* [Quick-start Documentation](https://azure.github.io/communication-ui-library/?path=/story/quickstart-ui-components--page)
