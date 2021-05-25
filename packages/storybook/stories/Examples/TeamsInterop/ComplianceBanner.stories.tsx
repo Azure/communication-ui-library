@@ -60,7 +60,7 @@ export const ComplianceBanner: () => JSX.Element = () => {
   });
 
   // TODO: Fix dark theming.
-  // Once https://github.com/Azure/communication-ui-sdk/pull/169 lands, same fix should be applied here.
+  // Once https://github.com/Azure/communication-ui-library/pull/169 lands, same fix should be applied here.
   return <Banner {...teamsInterop} />;
 };
 

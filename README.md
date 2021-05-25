@@ -2,11 +2,11 @@
 
 # Azure Communication Services UI Library
 
-[![Storybook](https://raw.githubusercontent.com/storybooks/brand/master/badge/badge-storybook.svg)](https://azure.github.io/communication-ui-sdk)
+[![Storybook](https://raw.githubusercontent.com/storybooks/brand/master/badge/badge-storybook.svg)](https://azure.github.io/communication-ui-library)
 [![azure-communication-react npm version](https://badge.fury.io/js/%40azure%2Fcommunication-react.svg)](https://www.npmjs.com/package/@azure/communication-react)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-%230074c1.svg)](https://www.typescriptlang.org/)
-[![CI build status](https://github.com/Azure/communication-ui-sdk/workflows/CI/badge.svg?branch=main)](https://github.com/Azure/communication-ui-sdk/actions/workflows/ci.yml?query=branch%3Amain)
+[![CI build status](https://github.com/Azure/communication-ui-library/workflows/CI/badge.svg?branch=main)](https://github.com/Azure/communication-ui-library/actions/workflows/ci.yml?query=branch%3Amain)
 
 Azure Communication Services UI Library is a collection of JavaScript libraries that can be used to easily build fast, responsive communication web applications.
 
@@ -17,7 +17,7 @@ We have interactive storybook pages in our storybook 📖 to try out features an
 If you're wondering where to get started, here are a few scenarios to help you get going:
 
 * "I want to see what this library can do!"
-  * Check out our [Storybook](https://azure.github.io/communication-ui-sdk) and [Sample Apps](#samples)
+  * Check out our [Storybook](https://azure.github.io/communication-ui-library) and [Sample Apps](#samples)
 * "I want to write my own communication application"
   * We recommend checking out our comprehensive documentation first to make the best decision for your application: <https://docs.microsoft.com/en-us/azure/communication-services/concepts/ui-framework/ui-sdk-overview>
 * "I want more information on the packages available to use"
@@ -35,7 +35,7 @@ A React library providing UI components and  making it simple for you to build m
 
 🚧 We are working on polishing up the samples in this repo 🚧.
 
-Check out [Storybook](https://azure.github.io/communication-ui-sdk) to try out this UI Library today!
+Check out [Storybook](https://azure.github.io/communication-ui-library) to try out this UI Library today!
 
 ## Contributing to the Packages or Samples
 
@@ -47,4 +47,4 @@ We look forward to building an amazing open source library with you!
 
 * [Repo Documentation](./docs/README.md)
 * [Conceptual Documentation](https://docs.microsoft.com/en-us/azure/communication-services/concepts/ui-framework/ui-sdk-overview)
-* [Quick-start Documentation](https://azure.github.io/communication-ui-sdk/?path=/story/quickstart-ui-components--page)
+* [Quick-start Documentation](https://azure.github.io/communication-ui-library/?path=/story/quickstart-ui-components--page)
