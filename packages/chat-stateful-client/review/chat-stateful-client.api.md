@@ -62,6 +62,7 @@ export type StatefulChatClientArgs = {
     displayName: string;
     endpoint: string;
     credential: CommunicationTokenCredential;
+    maxListeners?: number;
 };
 
 // @public

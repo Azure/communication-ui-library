@@ -131,6 +131,7 @@ export interface StatefulCallClient extends CallClient {
 // @public
 export type StatefulCallClientArgs = {
     userId: string;
+    maxListeners?: number;
 };
 
 // @public

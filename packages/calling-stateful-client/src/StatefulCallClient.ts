@@ -197,7 +197,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
 }
 
 /**
- * Required arguments to construct the stateful call client.
+ * Arguments to construct the StatefulCallClient.
  */
 export type StatefulCallClientArgs = {
   /**
@@ -206,10 +206,15 @@ export type StatefulCallClientArgs = {
    * you could pass any dummy value like empty string.
    */
   userId: string;
+  /**
+   * Sets the max listeners limit of the 'stateChange' event. Defaults to the node.js EventEmitter.defaultMaxListeners
+   * if not specified.
+   */
+  maxListeners?: number;
 };
 
 /**
- * Options to construct the stateful call client with.
+ * Options to construct the AzureCallClient with.
  */
 export type StatefulCallClientOptions = CallClientOptions;
 
@@ -231,7 +236,7 @@ export const createStatefulCallClient = (
   callClientOptions?: StatefulCallClientOptions
 ): StatefulCallClient => {
   const callClient = new CallClient(callClientOptions);
-  const context: CallContext = new CallContext(callClientArgs.userId);
+  const context: CallContext = new CallContext(callClientArgs.userId, callClientArgs.maxListeners);
   const internalContext: InternalCallContext = new InternalCallContext();
 
   Object.defineProperty(callClient, 'getState', {

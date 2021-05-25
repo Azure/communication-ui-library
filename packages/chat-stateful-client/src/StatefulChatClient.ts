@@ -98,6 +98,11 @@ export type StatefulChatClientArgs = {
   displayName: string;
   endpoint: string;
   credential: CommunicationTokenCredential;
+  /**
+   * Sets the max listeners limit of the 'stateChange' event. Defaults to the node.js EventEmitter.defaultMaxListeners
+   * if not specified.
+   */
+  maxListeners?: number;
 };
 
 /**
@@ -115,7 +120,7 @@ export const createStatefulChatClient = (
   options?: StatefulChatClientOptions
 ): StatefulChatClient => {
   const chatClient = new ChatClient(args.endpoint, args.credential, options);
-  const context = new ChatContext();
+  const context = new ChatContext(args.maxListeners);
   let eventSubscriber: EventSubscriber;
 
   context.updateChatConfig(args.userId, args.displayName);
