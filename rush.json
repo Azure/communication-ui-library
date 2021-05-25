@@ -12,7 +12,7 @@
     "changeLogUpdateCommitMessage": "Applying package updates. [skip-ci]"
   },
   "repository": {
-    "url": "https://github.com/Azure/communication-ui-sdk",
+    "url": "https://github.com/Azure/communication-ui-library",
     "defaultBranch": "main"
   },
   "telemetryEnabled": false,
