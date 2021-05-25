@@ -10,4 +10,4 @@ Fri, 21 May 2021 16:16:28 GMT
 
 ### Changes
 
-- Bump react-components to v1.0.0-beta.0 ([PR #352](https://github.com/azure/communication-ui-library/pull/352) by alkwa@microsoft.com)
+- Bump react-components to v1.0.0-beta.1 ([PR #352](https://github.com/azure/communication-ui-library/pull/352) by alkwa@microsoft.com)
