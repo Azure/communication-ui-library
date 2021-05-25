@@ -8,7 +8,6 @@ jobs:
   build-and-deploy-storybook:
     name: Build and Deploy Storybook
     runs-on: ubuntu-latest
-    environment: production
     steps:
       - uses: actions/checkout@v2
 
