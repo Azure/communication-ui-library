@@ -22,8 +22,7 @@
     "prettier:check": "prettier --check --config ../../.prettierrc \"**/*.js\" \"**/*.ts\"",
     "lint": "eslint \"*/**/*.{ts,tsx}\"",
     "lint:fix": "npm run lint -- --fix",
-    "lint:quiet": "npm run lint -- --quiet",
-    "postpack": "copyfiles -E \"./*.tgz\" private-preview"
+    "lint:quiet": "npm run lint -- --quiet"
   },
   "dependencies": {
     "acs-ui-common": "~1.0.0-beta.1",
