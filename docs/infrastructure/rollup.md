@@ -40,4 +40,4 @@ However, to support Node versions < v.13.2.0 (for unit testing) and enable consu
 
 ## Configuration Files
 
-The configuration file for rollup can be found under each project root and is called `rollup.config.js`. E.g., [packages/react-components/rollup.config.js](https://github.com/Azure/communication-ui-sdk/blob/main/packages/react-components/rollup.config.js).
+The configuration file for rollup can be found under each project root and is called `rollup.config.js`. E.g., [packages/react-components/rollup.config.js](https://github.com/Azure/communication-ui-library/blob/main/packages/react-components/rollup.config.js).
