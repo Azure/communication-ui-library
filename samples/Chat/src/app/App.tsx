@@ -12,7 +12,7 @@ import HomeScreen from './HomeScreen';
 import ConfigurationScreen from './ConfigurationScreen';
 import { getThreadId } from './utils/getThreadId';
 import { refreshTokenAsync } from './utils/refreshToken';
-import { ChatClientProvider, ChatThreadClientProvider } from '@azure/chat-component-bindings';
+import { ChatClientProvider, ChatThreadClientProvider } from 'chat-component-bindings';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { createStatefulChatClient, StatefulChatClient } from 'chat-stateful-client';

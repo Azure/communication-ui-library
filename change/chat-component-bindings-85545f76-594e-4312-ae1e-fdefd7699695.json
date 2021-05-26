@@ -1,7 +1,7 @@
 {
   "type": "none",
   "comment": "remove useThreadID export",
-  "packageName": "@azure/chat-component-bindings",
+  "packageName": "chat-component-bindings",
   "email": "mail@jamesburnside.com",
   "dependentChangeType": "none"
 }

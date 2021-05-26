@@ -7,7 +7,7 @@ import {
   chatParticipantListSelector,
   sendBoxSelector,
   typingIndicatorSelector
-} from '@azure/chat-component-bindings';
+} from 'chat-component-bindings';
 import { MessageThread, ParticipantList, SendBox, TypingIndicator } from 'react-components';
 
 import React from 'react';

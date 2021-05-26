@@ -15,9 +15,9 @@ Packlets are internal-only libraries we use to ensure correct code seperation.
 
 List of current Packlets:
 
-* `@azure/calling-component-bindings`
+* `calling-component-bindings`
 * `calling-stateful-client`
-* `@azure/chat-component-bindings`
+* `chat-component-bindings`
 * `chat-stateful-client`
 * `react-components`
 * `react-composites`

@@ -27,7 +27,7 @@
   "dependencies": {
     "acs-ui-common": "~1.0.0-beta.1",
     "calling-stateful-client": "~1.0.0-beta.1",
-    "@azure/calling-component-bindings": "~1.0.0-beta.1",
+    "calling-component-bindings": "~1.0.0-beta.1",
     "@azure/communication-calling": "1.0.1-beta.1",
     "@azure/communication-chat": "1.0.0",
     "@azure/communication-common": "1.0.0",
@@ -41,7 +41,7 @@
     "@uifabric/react-hooks": "~7.13.11",
     "copy-to-clipboard": "~3.3.1",
     "chat-stateful-client": "~1.0.0-beta.1",
-    "@azure/chat-component-bindings": "~1.0.0-beta.1",
+    "chat-component-bindings": "~1.0.0-beta.1",
     "react-aria-live": "^2.0.5",
     "react-linkify": "^1.0.0-alpha",
     "memoize-one": "~5.2.1",

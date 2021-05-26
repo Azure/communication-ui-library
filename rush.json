@@ -43,7 +43,7 @@
       "reviewCategory": "internal"
     },
     {
-      "packageName": "@azure/chat-component-bindings",
+      "packageName": "chat-component-bindings",
       "projectFolder": "packages/chat-component-bindings",
       "reviewCategory": "internal"
     },
@@ -53,7 +53,7 @@
       "reviewCategory": "internal"
     },
     {
-      "packageName": "@azure/calling-component-bindings",
+      "packageName": "calling-component-bindings",
       "projectFolder": "packages/calling-component-bindings",
       "reviewCategory": "internal"
     },

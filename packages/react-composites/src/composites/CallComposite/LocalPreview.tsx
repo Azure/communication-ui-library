@@ -11,7 +11,7 @@ import { localPreviewSelector } from './selectors/localPreviewSelector';
 import { useSelector } from './hooks/useSelector';
 import { getLocalMicrophoneEnabled } from './selectors/baseSelectors';
 import { useAdapter } from './adapter/CallAdapterProvider';
-import { devicePermissionSelector } from '@azure/calling-component-bindings';
+import { devicePermissionSelector } from 'calling-component-bindings';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 
 const onRenderPlaceholder = (): JSX.Element => {

@@ -7,7 +7,7 @@ import {
   optionsButtonSelector,
   screenShareButtonSelector,
   videoGallerySelector
-} from '@azure/calling-component-bindings';
+} from 'calling-component-bindings';
 import {
   CameraButton,
   EndCallButton,

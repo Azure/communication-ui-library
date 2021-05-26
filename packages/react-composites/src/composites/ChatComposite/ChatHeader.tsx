@@ -5,7 +5,7 @@ import { Stack } from '@fluentui/react';
 import React from 'react';
 import * as reselect from 'reselect';
 import { ChatClientState } from 'chat-stateful-client';
-import { ChatBaseSelectorProps } from '@azure/chat-component-bindings';
+import { ChatBaseSelectorProps } from 'chat-component-bindings';
 import { chatHeaderContainerStyle, topicNameLabelStyle } from './styles/Chat.styles';
 
 export type HeaderProps = {

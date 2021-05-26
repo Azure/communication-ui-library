@@ -6,12 +6,9 @@ import { CallVideoOffIcon } from '@fluentui/react-icons-northstar';
 import { Stack, Text } from '@fluentui/react';
 import { localPreviewContainerStyle, cameraOffLabelStyle, localPreviewTileStyle } from './styles/LocalPreview.styles';
 import { CameraButton, ControlBar, MicrophoneButton, StreamMedia, VideoTile } from 'react-components';
-import {
-  useCallingSelector as useSelector,
-  useCallingPropsFor as usePropsFor
-} from '@azure/calling-component-bindings';
+import { useCallingSelector as useSelector, useCallingPropsFor as usePropsFor } from 'calling-component-bindings';
 import { localPreviewSelector } from './selectors/localPreviewSelector';
-import { devicePermissionSelector } from '@azure/calling-component-bindings';
+import { devicePermissionSelector } from 'calling-component-bindings';
 
 const onRenderPlaceholder = (): JSX.Element => {
   return (

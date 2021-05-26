@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
   "comment": "Fix for 'no permission warning' everytime",
-  "packageName": "@azure/calling-component-bindings",
+  "packageName": "calling-component-bindings",
   "email": "jinan@microsoft.com",
   "dependentChangeType": "patch"
 }

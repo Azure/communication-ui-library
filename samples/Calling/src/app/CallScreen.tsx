@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { useCallClient, useCall, useCallingSelector as useSelector } from '@azure/calling-component-bindings';
+import { useCallClient, useCall, useCallingSelector as useSelector } from 'calling-component-bindings';
 import { CallState, GroupLocator, MeetingLocator } from '@azure/communication-calling';
 import { Label, Overlay, Spinner, Stack } from '@fluentui/react';
 import { VideoStreamOptions } from 'react-components';

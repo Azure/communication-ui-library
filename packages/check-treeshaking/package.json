@@ -17,8 +17,8 @@
     "react-components": "1.0.0-beta.1",
     "chat-stateful-client": "1.0.0-beta.1",
     "calling-stateful-client": "1.0.0-beta.1",
-    "@azure/chat-component-bindings": "1.0.0-beta.1",
-    "@azure/calling-component-bindings": "1.0.0-beta.1"
+    "chat-component-bindings": "1.0.0-beta.1",
+    "calling-component-bindings": "1.0.0-beta.1"
   },
   "devDependencies": {
     "webpack": "4.44.2",

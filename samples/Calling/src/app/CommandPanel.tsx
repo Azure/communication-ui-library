@@ -2,11 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import {
-  devicePermissionSelector,
-  optionsButtonSelector,
-  participantListSelector
-} from '@azure/calling-component-bindings';
+import { devicePermissionSelector, optionsButtonSelector, participantListSelector } from 'calling-component-bindings';
 import { Stack } from '@fluentui/react';
 import {
   fullHeightStyles,
@@ -16,7 +12,7 @@ import {
 } from 'app/styles/CommandPanel.styles';
 import { ThemeSelector } from 'app/theming/ThemeSelector';
 import { Footer } from './Footer';
-import { useCallingSelector as useSelector } from '@azure/calling-component-bindings';
+import { useCallingSelector as useSelector } from 'calling-component-bindings';
 import { LocalDeviceSettings } from './LocalDeviceSettings';
 import { ParticipantList } from 'react-components';
 import { useAzureCommunicationHandlers } from './hooks/useAzureCommunicationHandlers';

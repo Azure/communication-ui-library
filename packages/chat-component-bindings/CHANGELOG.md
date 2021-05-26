@@ -1,10 +1,10 @@
-# Change Log - @azure/chat-component-bindings
+# Change Log - chat-component-bindings
 
 This log was last generated on Fri, 21 May 2021 16:16:28 GMT and should not be manually modified.
 
 <!-- Start content -->
 
-## [1.0.0-beta.1](https://github.com/azure/communication-ui-library/tree/@azure/chat-component-bindings_v1.0.0-beta.1)
+## [1.0.0-beta.1](https://github.com/azure/communication-ui-library/tree/chat-component-bindings_v1.0.0-beta.1)
 
 Fri, 21 May 2021 16:16:28 GMT
 

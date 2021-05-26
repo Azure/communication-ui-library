@@ -10,7 +10,7 @@ import { ConfigurationScreen } from './ConfigurationScreen';
 import { CallScreen } from './CallScreen';
 import { HomeScreen } from './HomeScreen';
 import { v1 as createGUID } from 'uuid';
-import { CallProvider, CallClientProvider, CallAgentProvider } from '@azure/calling-component-bindings';
+import { CallProvider, CallClientProvider, CallAgentProvider } from 'calling-component-bindings';
 import {
   createRandomDisplayName,
   fetchTokenResponse,

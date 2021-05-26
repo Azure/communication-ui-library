@@ -1,7 +1,7 @@
 {
   "type": "none",
   "comment": "Bump package for release",
-  "packageName": "@azure/calling-component-bindings",
+  "packageName": "calling-component-bindings",
   "email": "mail@jamesburnside.com",
   "dependentChangeType": "none"
 }

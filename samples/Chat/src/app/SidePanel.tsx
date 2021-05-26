@@ -4,7 +4,7 @@ import React, { Dispatch, useCallback } from 'react';
 import { InviteFooter } from './InviteFooter';
 import { SettingsManagementComponent } from './SettingsManagement';
 import { SlideOutPanelComponent } from './SlideOutPanel';
-import { useChatSelector, useChatThreadClient, useChatPropsFor as usePropsFor } from '@azure/chat-component-bindings';
+import { useChatSelector, useChatThreadClient, useChatPropsFor as usePropsFor } from 'chat-component-bindings';
 import { chatSettingsSelector } from './selectors/chatSettingsSelector';
 import { ParticipantList, CommunicationParticipant } from 'react-components';
 
