@@ -1,3 +1,3 @@
-# @Azure/acs-calling-selector
+# @Azure/calling-component-bindings
 
 Todo: _documentation to follow_
