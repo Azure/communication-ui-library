@@ -2,7 +2,15 @@
 // Licensed under the MIT license.
 
 import React, { useState } from 'react';
-import { IStyle, ITextField, mergeStyles, Stack, TextField, concatStyleSets } from '@fluentui/react';
+import {
+  IStyle,
+  ITextField,
+  mergeStyles,
+  Stack,
+  TextField,
+  concatStyleSets,
+  ITextFieldStyleProps
+} from '@fluentui/react';
 import { SendIcon } from '@fluentui/react-northstar';
 import {
   textFieldStyle,
@@ -145,14 +153,11 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
             }
             onTyping && onTyping();
           }}
-          styles={
-            errorMessage
-              ? concatStyleSets(
-                  textFieldStyle,
-                  { fieldGroup: { border: 'solid 0.1875rem #f1707b' } },
-                  { fieldGroup: styles?.textField }
-                )
-              : concatStyleSets(textFieldStyle, { fieldGroup: styles?.textField })
+          styles={(props: ITextFieldStyleProps) =>
+            concatStyleSets(textFieldStyle(props), {
+              fieldGroup: styles?.textField,
+              errorMessage: styles?.systemMessage
+            })
           }
           errorMessage={onRenderSystemMessage ? onRenderSystemMessage(errorMessage) : errorMessage}
         />

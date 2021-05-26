@@ -1,20 +1,32 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles } from '@fluentui/react';
+import { mergeStyles, ITextFieldStyleProps, IStyle } from '@fluentui/react';
 
-export const textFieldStyle = {
-  root: {
-    width: '100%',
-    minHeight: '0',
-    fontSize: '8.25rem'
-  },
-  wrapper: {},
-  fieldGroup: {
-    height: 'auto',
-    minHeight: '0',
-    borderRadius: '0.25rem'
-  }
+export const textFieldStyle = (props: ITextFieldStyleProps): IStyle => {
+  const errorColor = props.hasErrorMessage ? '#f1707b' : 'none';
+  return {
+    root: {
+      width: '100%',
+      minHeight: '0',
+      fontSize: '8.25rem'
+    },
+    wrapper: {},
+    fieldGroup: {
+      height: 'auto',
+      minHeight: '0',
+      borderRadius: '0.25rem',
+      borderColor: errorColor,
+      selectors: {
+        ':hover': { borderColor: errorColor },
+        ':active': { borderColor: errorColor },
+        ':after': { borderColor: errorColor, borderRadius: '0.25rem' }
+      }
+    },
+    errorMessage: {
+      color: errorColor
+    }
+  };
 };
 
 export const sendBoxWrapperStyle = mergeStyles({
@@ -54,7 +66,7 @@ export const sendButtonStyle = mergeStyles({
   display: 'flex',
   justifyContent: 'center',
   position: 'absolute',
-  top: '0.9375rem'
+  top: '0.875rem'
 });
 
 export const sendIconStyle = mergeStyles({
