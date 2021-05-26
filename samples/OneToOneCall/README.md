@@ -37,7 +37,7 @@ The client-side application is a React based user interface. Alongside this fron
 1. Build Calling dependencies
 
     ```bash
-    rush build -t one-to-one-call
+    rush build -T one-to-one-call
     ```
 
 1. Start the calling app

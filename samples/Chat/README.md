@@ -41,7 +41,7 @@ Additional documentation for this sample can be found on [Microsoft Docs](https:
 1. Build Calling dependencies
 
     ```bash
-    rush build -t chat
+    rush build -T chat
     ```
 
 1. Start the calling app

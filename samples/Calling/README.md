@@ -41,7 +41,7 @@ Additional documentation for this sample can be found on [Microsoft Docs](https:
 1. Build Calling dependencies
 
     ```bash
-    rush build -t calling
+    rush build -T calling
     ```
 
 1. Start the calling app
@@ -55,6 +55,7 @@ Additional documentation for this sample can be found on [Microsoft Docs](https:
 
 ## Additional Reading
 
+- [Azure Communication Services - UI Library](https://azure.github.io/communication-ui-library/) - To learn more about what the `@azure/communication-react` package offers.
 - [Azure Communication Calling SDK](https://docs.microsoft.com/azure/communication-services/concepts/voice-video-calling/calling-sdk-features) - To learn more about the calling web sdk
 - [FluentUI](https://developer.microsoft.com/en-us/fluentui#/) - Microsoft powered UI library
 - [React](https://reactjs.org/) - Library for building user interfaces
