@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles, ITextFieldStyleProps, IStyle } from '@fluentui/react';
+import { mergeStyles, IStyle } from '@fluentui/react';
 
-export const textFieldStyle = (props: ITextFieldStyleProps): IStyle => {
-  const errorColor = props.hasErrorMessage ? '#f1707b' : 'none';
+export const textFieldStyle = (errorColor: string, hasErrorMessage: boolean, disabled: boolean): IStyle => {
+  const borderColor = hasErrorMessage ? errorColor : 'none';
   return {
     root: {
       width: '100%',
@@ -16,12 +16,12 @@ export const textFieldStyle = (props: ITextFieldStyleProps): IStyle => {
       height: 'auto',
       minHeight: '0',
       borderRadius: '0.25rem',
-      borderColor: errorColor,
-      borderWidth: props.disabled ? '0px' : '1px',
+      borderColor: borderColor,
+      borderWidth: disabled ? '0px' : '1px',
       selectors: {
-        ':hover': { borderColor: errorColor },
-        ':active': { borderColor: errorColor },
-        ':after': { borderColor: errorColor, borderRadius: '0.25rem' }
+        ':hover': { borderColor: borderColor },
+        ':active': { borderColor: borderColor },
+        ':after': { borderColor: borderColor, borderRadius: '0.25rem' }
       }
     },
     field: {

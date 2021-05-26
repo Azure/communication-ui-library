@@ -2,15 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useState } from 'react';
-import {
-  IStyle,
-  ITextField,
-  mergeStyles,
-  Stack,
-  TextField,
-  concatStyleSets,
-  ITextFieldStyleProps
-} from '@fluentui/react';
+import { IStyle, ITextField, mergeStyles, Stack, TextField, concatStyleSets } from '@fluentui/react';
 import { SendIcon } from '@fluentui/react-northstar';
 import {
   textFieldStyle,
@@ -21,6 +13,7 @@ import {
 } from './styles/SendBox.styles';
 import { BaseCustomStylesProps } from '../types';
 import { useTheme } from '@fluentui/react-theme-provider';
+import { isDarkThemed } from '../theming/themeUtils';
 
 const EMPTY_MESSAGE_REGEX = /^\s*$/;
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
@@ -153,12 +146,13 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
             }
             onTyping && onTyping();
           }}
-          styles={(props: ITextFieldStyleProps) =>
-            concatStyleSets(textFieldStyle(props), {
+          styles={concatStyleSets(
+            textFieldStyle(isDarkThemed(theme) ? '#f1707b' : '#a80000', !!errorMessage, !!disabled),
+            {
               fieldGroup: styles?.textField,
               errorMessage: styles?.systemMessage
-            })
-          }
+            }
+          )}
           disabled={disabled}
           errorMessage={onRenderSystemMessage ? onRenderSystemMessage(errorMessage) : errorMessage}
         />
