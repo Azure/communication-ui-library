@@ -22,8 +22,8 @@ export default {
   }
 } as Meta;
 
-export { BasicExample } from './snippets/BasicExample.snippet';
-export { CustomDataModelExample } from './snippets/CustomDataModelExample.snippet';
+export { BasicExample } from './BasicExample';
+export { CustomDataModelExample } from './CustomDataModelExample';
 export { ThemeExample } from './snippets/ThemeExample';
 export { JoinExistingCall } from './snippets/JoinExistingCall';
 

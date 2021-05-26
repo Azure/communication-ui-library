@@ -4,14 +4,14 @@
 import { toFlatCommunicationIdentifier } from '@azure/communication-react';
 import { text, radios } from '@storybook/addon-knobs';
 import React, { useState, useEffect, useRef } from 'react';
-import { COMPOSITE_STRING_CONNECTIONSTRING } from '../../CompositeStringUtils';
-import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE } from '../../constants';
+import { COMPOSITE_STRING_CONNECTIONSTRING } from '../CompositeStringUtils';
+import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE } from '../constants';
 import {
   CustomDataModelExampleContainer,
   CustomDataModelExampleContainerProps
-} from './CustomDataModelExampleContainer.snippet';
-import { createUserAndThread } from './Server.snippet';
-import { ConfigHintBanner, addParrotBotToThread } from './Utils.snippet';
+} from './snippets/CustomDataModelExampleContainer.snippet';
+import { createUserAndThread } from './snippets/Server.snippet';
+import { ConfigHintBanner, addParrotBotToThread } from './snippets/Utils';
 
 export const CustomDataModelExample: () => JSX.Element = () => {
   const [containerProps, setContainerProps] = useState<CustomDataModelExampleContainerProps>();
