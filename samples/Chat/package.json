@@ -70,7 +70,7 @@
     "react-linkify": "^1.0.0-alpha",
     "react-scripts": "^4.0.2",
     "chat-stateful-client": "~1.0.0-beta.1",
-    "@azure/acs-chat-selector": "~1.0.0-beta.1",
+    "@azure/chat-component-bindings": "~1.0.0-beta.1",
     "reselect": "~4.0.0"
   },
   "devDependencies": {

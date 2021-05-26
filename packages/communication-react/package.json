@@ -69,8 +69,8 @@
     "postpack": "copyfiles -E \"./*.tgz\" release"
   },
   "devDependencies": {
-    "@azure/acs-calling-selector": "~1.0.0-beta.1",
-    "@azure/acs-chat-selector": "~1.0.0-beta.1",
+    "@azure/calling-component-bindings": "~1.0.0-beta.1",
+    "@azure/chat-component-bindings": "~1.0.0-beta.1",
     "@microsoft/api-documenter": "~7.12.11",
     "@microsoft/api-extractor": "~7.13.2",
     "@testing-library/jest-dom": "^5.11.4",

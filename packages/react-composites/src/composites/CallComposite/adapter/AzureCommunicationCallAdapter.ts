@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultCallingHandlers, createDefaultCallingHandlers } from '@azure/acs-calling-selector';
+import { DefaultCallingHandlers, createDefaultCallingHandlers } from '@azure/calling-component-bindings';
 import {
   CallClientState,
   StatefulDeviceManager,

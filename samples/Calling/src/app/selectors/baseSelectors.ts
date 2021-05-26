@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { CallState, CallClientState, DeviceManagerState, IncomingCallState } from 'calling-stateful-client';
-import { CallingBaseSelectorProps } from '@azure/acs-calling-selector';
+import { CallingBaseSelectorProps } from '@azure/calling-component-bindings';
 
 export const getCalls = (state: CallClientState): Map<string, CallState> => state.calls;
 

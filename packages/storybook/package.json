@@ -18,7 +18,7 @@
     "lint:quiet": "npm run lint -- --quiet"
   },
   "dependencies": {
-    "@azure/acs-chat-selector": "~1.0.0-beta.1",
+    "@azure/chat-component-bindings": "~1.0.0-beta.1",
     "@azure/communication-identity": "1.0.0",
     "@azure/communication-calling": "1.0.1-beta.1",
     "@azure/communication-chat": "1.0.0",

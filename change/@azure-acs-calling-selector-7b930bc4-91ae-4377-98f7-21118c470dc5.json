@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
   "comment": "Add selector to retrieve device permissions",
-  "packageName": "@azure/acs-calling-selector",
+  "packageName": "@azure/calling-component-bindings",
   "email": "allenhwang@microsoft.com",
   "dependentChangeType": "patch"
 }

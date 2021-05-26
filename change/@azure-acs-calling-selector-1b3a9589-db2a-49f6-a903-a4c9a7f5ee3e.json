@@ -1,7 +1,7 @@
 {
   "type": "none",
   "comment": "Update package to beta.1",
-  "packageName": "@azure/acs-calling-selector",
+  "packageName": "@azure/calling-component-bindings",
   "email": "mail@jamesburnside.com",
   "dependentChangeType": "none"
 }
