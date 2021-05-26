@@ -88,7 +88,7 @@ export const GenerateMockSystemMessage = (): SystemMessage => {
     payload: {
       messageId: Math.random().toString(),
       iconName: 'PeopleAdd',
-      content: 'User1 added User2 to the chat and shared all chat history.'
+      content: 'Elliot Woodward added Carole Poland to the chat and shared all chat history.'
     }
   };
 };
