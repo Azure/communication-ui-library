@@ -34,10 +34,10 @@ import { MessageThreadWithCustomChatContainerExample } from './snippets/CustomCh
 import { MessageThreadWithCustomMessageContainerExample } from './snippets/CustomMessageContainer.snippet';
 import { MessageThreadWithCustomMessagesExample } from './snippets/CustomMessages.snippet';
 import { MessageThreadWithCustomMessageStatusIndicatorExample } from './snippets/CustomMessageStatusIndicator.snippet';
-import { MessageThreadWithMessageDateExample } from './snippets/WithMessageDate.snippet';
 import { DefaultMessageThreadExample } from './snippets/Default.snippet';
 import { MessageThreadWithMessageStatusIndicatorExample } from './snippets/MessageStatusIndicator.snippet';
 import { MessageThreadWithSystemMessagesExample } from './snippets/SystemMessages.snippet';
+import { MessageThreadWithMessageDateExample } from './snippets/WithMessageDate.snippet';
 
 const MessageThreadWithCustomAvatarExampleText = require('!!raw-loader!./snippets/CustomAvatar.snippet.tsx').default;
 const MessageThreadWithCustomChatContainerExampleText = require('!!raw-loader!./snippets/CustomChatContainer.snippet.tsx')
@@ -48,13 +48,13 @@ const MessageThreadWithCustomMessagesExampleText = require('!!raw-loader!./snipp
   .default;
 const MessageThreadWithCustomMessageStatusIndicatorExampleText = require('!!raw-loader!./snippets/CustomMessageStatusIndicator.snippet.tsx')
   .default;
-const MessageThreadWithMessageDateExampleText = require('!!raw-loader!./snippets/WithMessageDate.snippet.tsx').default;
 const DefaultMessageThreadExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
 const MessageThreadWithMessageStatusIndicatorExampleText = require('!!raw-loader!./snippets/MessageStatusIndicator.snippet.tsx')
   .default;
 const ExampleConstantsText = require('!!raw-loader!./snippets/placeholdermessages.ts').default;
 const MessageThreadWithSystemMessagesExampleText = require('!!raw-loader!./snippets/SystemMessages.snippet.tsx')
   .default;
+const MessageThreadWithMessageDateExampleText = require('!!raw-loader!./snippets/WithMessageDate.snippet.tsx').default;
 
 const importStatement = `
 import { FluentThemeProvider, MessageThread } from '@azure/communication-react';
