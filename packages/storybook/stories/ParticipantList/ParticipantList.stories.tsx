@@ -27,7 +27,7 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Default example for Chat</Heading>
       <Description>
         The ParticipantList for chat is by default a list of
-        [PartipantItem](./?path=/docs/ui-components-participantitem--participant-item) components linked with state
+        [PartipantItem](./?path=/docs/ui-components-participant-item--participant-item) components linked with state
         around each chat participant.
       </Description>
       <Canvas mdxSource={DefaultChatParticipantListExampleText}>
@@ -37,7 +37,7 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Default example for Calling</Heading>
       <Description>
         ParticipantList for calling is by default a list of
-        [PartipantItem](./?path=/docs/ui-components-participantitem--participant-item) components with presence linked
+        [PartipantItem](./?path=/docs/ui-components-participant-item--participant-item) components with presence linked
         to the participant call state, as well as icons for microphone and screen sharing states
       </Description>
       <Canvas mdxSource={DefaultCallParticipantListExampleText}>
@@ -47,10 +47,10 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Interactive Call example</Heading>
       <Description>
         ParticpantList is designed with a rendering override, `onRenderParticipant`, which allows you to have your own
-        design or use the your own [PartipantItem](./?path=/docs/ui-components-participantitem--participant-item)
+        design or use the your own [PartipantItem](./?path=/docs/ui-components-participant-item--participant-item)
         components with their context menu style enabling interaction with this participant. For example, let us add
         menu items and icons to the participants using `menuItems` and `onRenderIcon` properties of
-        [ParticipantItem](./?path=/docs/ui-components-participantitem--participant-item#props) like in the code below.
+        [ParticipantItem](./?path=/docs/ui-components-participant-item--participant-item#props) like in the code below.
       </Description>
       <Description>
         For simplicity, we are using React `useState` to keep the state of every participant to decide which menu items

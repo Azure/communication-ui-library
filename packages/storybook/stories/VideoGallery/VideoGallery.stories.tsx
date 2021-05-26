@@ -29,7 +29,7 @@ const getDocs: () => JSX.Element = () => {
 
       <Heading>Default Example</Heading>
       <Description>
-        VideoGallery is by default a grid of [VideoTile](./?path=/docs/ui-components-videotile--video-tile) components
+        VideoGallery is by default a grid of [VideoTile](./?path=/docs/ui-components-video-tile--video-tile) components
         representing each participant to the call.
       </Description>
       <Canvas mdxSource={DefaultVideoGalleryExampleText}>

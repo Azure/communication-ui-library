@@ -83,12 +83,12 @@ const getDocs: () => JSX.Element = () => {
 
       <Heading>Example</Heading>
       <Description>
-        We recommend using our pre-defined buttons you can find [here](./?path=/docs/ui-components-controlbar-buttons)
-        or `DefaultButton`, a [Button](https://developer.microsoft.com/en-us/fluentui#/controls/web/button) component
-        from Fluent UI, as controls inside `ControlBar`. Pre-defined styles like `controlButtonStyles` or
-        `controlButtonLabelStyles` can also be imported and used as `DefaultButton` styles for easy styling.
-        `FluentThemeProvider` is needed around `ControlBar` to provide theming and icons. Learn more about theming
-        [here](./?path=/docs/theming--page).
+        We recommend using our pre-defined buttons you can start find
+        [here](./?path=/docs/ui-components-controlbar-buttons) or `DefaultButton`, a
+        [Button](https://developer.microsoft.com/en-us/fluentui#/controls/web/button) component from Fluent UI, as
+        controls inside `ControlBar`. Pre-defined styles like `controlButtonStyles` or `controlButtonLabelStyles` can
+        also be imported and used as `DefaultButton` styles for easy styling. `FluentThemeProvider` is needed around
+        `ControlBar` to provide theming and icons. Learn more about theming [here](./?path=/docs/theming--page).
       </Description>
       <Canvas mdxSource={AllButtonsControlBarExampleText}>
         <AllButtonsControlBarExample />
@@ -131,7 +131,7 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Dropdown Options Button</Heading>
       <Description>
         The `OptionsButton` can be used for any dropdown items defined through `menuProps`. For more information, check
-        out the official Fluent UI documentation at https://developer.microsoft.com/en-us/fluentui#/controls/web/button
+        out the [official Fluent UI documentation](https://developer.microsoft.com/en-us/fluentui#/controls/web/button)
       </Description>
       <Canvas mdxSource={OptionsButtonExampleText}>
         <OptionsButtonExample />

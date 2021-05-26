@@ -40,7 +40,7 @@ const getDocs: () => JSX.Element = () => {
       <Description>
         The following example shows how you can render `VideoTile` components inside a grid layout. For styling the
         children video tiles, please read the [VideoTile component
-        docs](./?path=/docs/ui-components-videotile--video-tile-component).
+        docs](./?path=/docs/ui-components-video-tile--video-tile).
       </Description>
       <Canvas mdxSource={GridLayoutExampleText}>
         <GridLayoutExample />
