@@ -7,7 +7,8 @@ import {
   StatefulDeviceManager,
   StatefulCallClient,
   createStatefulCallClient,
-  DeviceManagerState
+  DeviceManagerState,
+  CallState
 } from 'calling-stateful-client';
 import {
   AudioOptions,
@@ -96,15 +97,22 @@ class CallContext {
 
   public updateClientState(clientState: CallClientState): void {
     const call = clientState.calls.get(this.callId ?? '');
+    const endedCall =
+      clientState.callsEnded.length > 0 ? clientState.callsEnded[clientState.callsEnded.length - 1] : undefined;
     this.setState({
       ...this.state,
       userId: clientState.userId,
       displayName: clientState.callAgent?.displayName,
       call,
+      endedCall: endedCall,
       devices: clientState.deviceManager,
       isLocalPreviewMicrophoneEnabled:
         call?.isMuted === undefined ? this.state.isLocalPreviewMicrophoneEnabled : !call?.isMuted
     });
+  }
+
+  public setEndedCall(call: CallState): void {
+    this.setState({ ...this.state, endedCall: call });
   }
 }
 

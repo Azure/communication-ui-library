@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove TypingIndicatorEvent export",
-  "packageName": "chat-stateful-client",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "patch"
-}

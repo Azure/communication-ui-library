@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add memoized selector and VideoGallery component",
-  "packageName": "@azure/communication-ui",
-  "email": "easony@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Removed SwitchableFluentThemeProvider, ThemeSelector, ThemeToggler, NamedTheme, and ThemeCollection.",
-  "packageName": "react-components",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

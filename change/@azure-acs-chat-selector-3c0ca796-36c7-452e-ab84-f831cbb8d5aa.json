@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Updated chatParticipantSelector return object property names. Removed WebUiChatParticipant type.",
-  "packageName": "@azure/acs-chat-selector",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -11,7 +11,7 @@ While you can choose any state management library such as Redux, we also provide
 We provide two [custom hooks](https://reactjs.org/docs/hooks-custom.html) in our library, [usePropsFor()](/?path=/docs/stateful-client-react-hooks-usepropsfor--page) and [useSelector()](/?path=/docs/stateful-client-react-hooks-useselector--page), that allow you to subscribe to changes in the SDK state and bind to our UI components.
 After binding with the custom hooks a SDK state change will trigger a re-render of the UI component, and events on the component will call into the SDK clients.
 
-## Before you start
+## Before you Start
 
 Before you start, you need to wrap your whole App with Providers.
 They give you access to global variables (like Stateful ChatClient/CallClient) for our hooks to consume.
@@ -42,8 +42,8 @@ For more information on creating them, see [Overview](/?path=/docs/stateful-clie
 
 ```tsx
 ReactDOM.render(
-  <CallClientProvider chatClient={statefulChatClient}>
-    <CallAgentProvider chatThreadClient={statefulChatThreadClient}>
+  <CallClientProvider callClient={statefulCallClient}>
+    <CallAgentProvider callAgent={callAgent}>
       <CallProvider call={call}>
         <App />
       </CallProvider>

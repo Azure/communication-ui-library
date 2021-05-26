@@ -11,12 +11,12 @@ import {
   videoHint
 } from './styles/MediaGallery1To1.styles';
 import { ScalingMode } from '@azure/communication-calling';
-import { connectFuncsToContext } from '../../consumers';
 import { GalleryParticipant } from './types/GalleryParticipant';
 import { MapToMediaGallery1To1Props, MediaGallery1To1ContainerProps } from './consumers/MapToMediaGallery1To1Props';
 import { RemoteVideoTile } from './RemoteVideoTile';
 import { StreamMedia, VideoTile } from 'react-components';
 import { MapToLocalVideoProps } from './consumers/MapToVideoProps';
+import { connectFuncsToContext } from './consumers/ConnectContext';
 
 export interface MediaGallery1To1Props extends MediaGallery1To1ContainerProps {
   /** Determines the remote participant in the media gallery. */

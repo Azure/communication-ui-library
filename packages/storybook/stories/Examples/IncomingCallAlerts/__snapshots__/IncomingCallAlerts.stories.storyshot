@@ -238,7 +238,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
                           </div>
                         </div>
                         <div
-                          className="ms-Stack css-172 css-48"
+                          className="ms-Stack css-180 css-48"
                         >
                           <div
                             className="ms-Stack css-52"
@@ -442,10 +442,10 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
         className="ms-Stack css-2"
       >
         <div
-          className="ms-Stack css-168 css-3"
+          className="ms-Stack css-176 css-3"
         >
           <div
-            className="ms-Stack css-169 css-4"
+            className="ms-Stack css-177 css-4"
           >
             <div
               aria-label="John Doe"
@@ -509,7 +509,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
             className="ms-Stack css-21"
           >
             <button
-              className="ms-Button ms-Button--default css-171 root-22"
+              className="ms-Button ms-Button--default css-179 root-22"
               data-is-focusable={true}
               onClick={[Function]}
               onKeyDown={[Function]}
@@ -547,7 +547,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
               </span>
             </button>
             <button
-              className="ms-Button ms-Button--default css-170 root-22"
+              className="ms-Button ms-Button--default css-178 root-22"
               data-is-focusable={true}
               onClick={[Function]}
               onKeyDown={[Function]}

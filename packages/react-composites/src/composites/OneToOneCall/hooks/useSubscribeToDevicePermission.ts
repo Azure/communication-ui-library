@@ -3,7 +3,7 @@
 
 import { useContext, useEffect, useRef, useState } from 'react';
 import { CommunicationUiErrorCode, CommunicationUiError } from '../../../types/CommunicationUiError';
-import { useTriggerOnErrorCallback } from '../../../providers/ErrorProvider';
+import { useTriggerOnErrorCallback } from '../providers/ErrorProvider';
 import { propagateError } from '../../../utils/SDKUtils';
 import { DevicePermissionState, DevicePermissionType } from '../../../types/DevicePermission';
 import { CallingContext } from '../providers/CallingProvider';

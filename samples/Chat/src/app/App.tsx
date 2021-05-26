@@ -11,7 +11,6 @@ import { ErrorScreen } from './ErrorScreen';
 import HomeScreen from './HomeScreen';
 import ConfigurationScreen from './ConfigurationScreen';
 import { getThreadId } from './utils/getThreadId';
-import { ErrorProvider, CommunicationUiErrorInfo } from 'react-composites';
 import { refreshTokenAsync } from './utils/refreshToken';
 import { ChatClientProvider, ChatThreadClientProvider } from '@azure/acs-chat-selector';
 import { ChatThreadClient } from '@azure/communication-chat';
@@ -71,29 +70,23 @@ export default (): JSX.Element => {
         />
       );
     } else if (page === 'chat') {
-      return (
-        <ErrorProvider
-          onErrorCallback={(error: CommunicationUiErrorInfo) => console.error('onErrorCallback received error:', error)}
-        >
-          {chatClient && chatThreadClient ? (
-            <ChatClientProvider chatClient={chatClient}>
-              <ChatThreadClientProvider chatThreadClient={chatThreadClient}>
-                <ChatScreen
-                  endChatHandler={() => {
-                    setPage('end');
-                    // Send up signal that the user wants to leave the chat
-                    // Move to to next screen on success
-                  }}
-                  errorHandler={() => {
-                    setPage('error');
-                  }}
-                />
-              </ChatThreadClientProvider>
-            </ChatClientProvider>
-          ) : (
-            <Spinner label={'Loading...'} ariaLive="assertive" labelPosition="top" />
-          )}
-        </ErrorProvider>
+      return chatClient && chatThreadClient ? (
+        <ChatClientProvider chatClient={chatClient}>
+          <ChatThreadClientProvider chatThreadClient={chatThreadClient}>
+            <ChatScreen
+              endChatHandler={() => {
+                setPage('end');
+                // Send up signal that the user wants to leave the chat
+                // Move to to next screen on success
+              }}
+              errorHandler={() => {
+                setPage('error');
+              }}
+            />
+          </ChatThreadClientProvider>
+        </ChatClientProvider>
+      ) : (
+        <Spinner label={'Loading...'} ariaLive="assertive" labelPosition="top" />
       );
     } else if (page === 'end') {
       return (

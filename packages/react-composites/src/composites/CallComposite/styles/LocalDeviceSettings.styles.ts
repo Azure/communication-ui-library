@@ -35,6 +35,9 @@ export const dropDownStyles = (theme: Theme): Partial<IDropdownStyles> => ({
   label: {
     fontWeight: 600,
     fontSize: '0.875rem'
+  },
+  errorMessage: {
+    fontSize: '0.875rem'
   }
 });
 
@@ -42,6 +45,6 @@ export const localSettingsContainer = mergeStyles({
   width: '100%',
   maxWidth: '18.75rem',
   minWidth: '12.5rem',
-  maxHeight: '14.125rem',
+  maxHeight: '19.125rem',
   marginTop: '2.125rem'
 });

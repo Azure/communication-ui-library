@@ -7,17 +7,18 @@ import {
 import React, { useState, useEffect } from 'react';
 
 function App(): JSX.Element {
-  const endpointUrl = 'ADD ENDPOINT URL FOR AZURE COMMUNICATION SERVICES RESOURCE';
-  const displayName = 'ADD DISPLAY NAME';
-  const token = 'ADD ACCESS TOKEN WITH VOIP AND CHAT SCOPE';
+  const endpointUrl = '<Azure Communication Services Resource Endpoint>';
+  const displayName = '<Display Name>';
+  const token = '<Azure Communication Services Access Token>';
 
   //Calling Variables
-  const groupId = 'ADD GROUP ID TO JOIN';
-  const [, setCallAdapter] = useState<CallAdapter>();
+  //For Group Id, developers can pass any GUID they can generate
+  const groupId = '<Developer generated GUID>';
+  const [callAdapter, setCallAdapter] = useState<CallAdapter>();
 
   //Chat Variables
-  const threadId = 'ADD THREAD ID TO JOIN';
-  const [, setChatAdapter] = useState<ChatAdapter>();
+  const threadId = '<Get thread id from chat service>';
+  const [chatAdapter, setChatAdapter] = useState<ChatAdapter>();
 
   useEffect(() => {
     const createAdapter = async (): Promise<void> => {
@@ -27,7 +28,7 @@ function App(): JSX.Element {
     createAdapter();
   });
 
-  return <></>;
+  return <>{callAdapter && chatAdapter && <h1>Hooray! You set up adapters 🎉🎉🎉</h1>}</>;
 }
 
 export default App;

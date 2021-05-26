@@ -12,8 +12,6 @@ import {
 
 import React from 'react';
 import { TextField } from '@fluentui/react';
-import { ErrorHandlingProps } from '../../providers/ErrorProvider';
-import { WithErrorHandling } from '../../utils/WithErrorHandling';
 
 export const ENTER_KEY = 13;
 export const MAXIMUM_LENGTH_OF_NAME = 10;
@@ -28,7 +26,7 @@ interface DisplayNameFieldProps {
   validateName?(): void;
 }
 
-const DisplayNameFieldComponent = (props: DisplayNameFieldProps & ErrorHandlingProps): JSX.Element => {
+const DisplayNameFieldComponent = (props: DisplayNameFieldProps): JSX.Element => {
   const {
     setName,
     setEmptyWarning,
@@ -87,5 +85,4 @@ const DisplayNameFieldComponent = (props: DisplayNameFieldProps & ErrorHandlingP
   );
 };
 
-export default (props: DisplayNameFieldProps & ErrorHandlingProps): JSX.Element =>
-  WithErrorHandling(DisplayNameFieldComponent, props);
+export default (props: DisplayNameFieldProps): JSX.Element => <DisplayNameFieldComponent {...props} />;

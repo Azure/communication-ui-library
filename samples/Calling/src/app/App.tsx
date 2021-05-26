@@ -7,7 +7,7 @@ import { Link, initializeIcons, Spinner } from '@fluentui/react';
 import EndCall from './EndCall';
 import CallError from './CallError';
 import { ConfigurationScreen } from './ConfigurationScreen';
-import { GroupCall } from './GroupCall';
+import { CallScreen } from './CallScreen';
 import { HomeScreen } from './HomeScreen';
 import { v1 as createGUID } from 'uuid';
 import { CallProvider, CallClientProvider, CallAgentProvider } from '@azure/acs-calling-selector';
@@ -120,7 +120,7 @@ const App = (): JSX.Element => {
 
   /**
    * Routing flow of the sample app: (happy path)
-   * home -> createCallClient -> configuration -> createCallAgent -> groupCall -> endCall
+   * home -> createCallClient -> configuration -> createCallAgent -> call -> endCall
    *            ^                                                                   |
    *            | ------------------------------------------------------------------|
    * CallClient instance can only support one CallAgent. We need to create a new CallClient to create a new CallAgent.
@@ -141,7 +141,7 @@ const App = (): JSX.Element => {
                 meetingLink = data?.callLocator.meetingLink;
               }
 
-              // Generate a new CallAgent for the new GroupCall.
+              // Generate a new CallAgent for the new call experience.
               try {
                 const userCredential = createAzureCommunicationUserCredential(token, refreshTokenAsync(userId));
                 setPage('createCallAgent');
@@ -168,7 +168,7 @@ const App = (): JSX.Element => {
         return (
           <CallAgentProvider callAgent={callAgent}>
             <CallProvider call={call}>
-              <GroupCall
+              <CallScreen
                 endCallHandler={(): void => {
                   setPage('endCall');
                 }}
@@ -237,7 +237,7 @@ const App = (): JSX.Element => {
         return <Spinner label={creatingCallClientspinnerLabel} ariaLive="assertive" labelPosition="top" />;
       }
       default:
-        return <CallClientProvider statefulCallClient={statefulCallClient}>{renderPage(page)}</CallClientProvider>;
+        return <CallClientProvider callClient={statefulCallClient}>{renderPage(page)}</CallClientProvider>;
     }
   };
 
@@ -246,7 +246,7 @@ const App = (): JSX.Element => {
 
 window.setTimeout(() => {
   try {
-    console.log(`ACS sample group calling app: ${lastUpdated}`);
+    console.log(`ACS sample calling app: ${lastUpdated}`);
   } catch (e) {
     /* continue regardless of error */
   }

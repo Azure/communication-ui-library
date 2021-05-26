@@ -10,7 +10,7 @@ import { CallEndScreen } from './CallEndScreen';
 import { getIdFromToken } from '../../utils';
 import { CallListener } from './CallListener';
 import { incomingCallHost } from './styles/App.styles';
-import { ErrorProvider } from '../../providers';
+import { ErrorProvider } from './providers/ErrorProvider';
 import { CommunicationUiErrorInfo } from '../../types';
 import { CallingProvider } from './providers/CallingProvider';
 import { CallProvider } from './providers/CallProvider';

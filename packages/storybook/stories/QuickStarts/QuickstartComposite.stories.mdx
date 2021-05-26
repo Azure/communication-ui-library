@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
-import { GroupCall, GroupChat } from '@azure/communication-react';
+import { CallComposite, ChatComposite } from '@azure/communication-react';
 import QuickstartCompositeComplete from '!!raw-loader!./snippets/QuickstartCompositeComplete.snippet.tsx';
 import QuickstartCompositeAdapter from '!!raw-loader!./snippets/QuickstartCompositeAdapter.snippet.tsx';
 
@@ -10,9 +10,9 @@ import QuickstartCompositeAdapter from '!!raw-loader!./snippets/QuickstartCompos
 
 Get started with Azure Communication Services by using the UI Library to quickly integrate communication experiences into your applications. In this quickstart, you'll learn how to integrate UI Library base components into your application to build communication experiences.
 
-UI Library components come in two flavors: Base and Composite.
+UI Library components come in two flavors: UI and Composite.
 
-- **Base components** represent discrete communication capabilities; they're the basic building blocks that can be used to build complex communication experiences.
+- **UI components** represent discrete communication capabilities; they're the basic building blocks that can be used to build complex communication experiences.
 - **Composite components** are turn-key experiences for common communication scenarios that have been built using **base components** as building blocks and packaged to be easily integrated into applications.
 
 ## Prerequisites
@@ -21,7 +21,7 @@ UI Library components come in two flavors: Base and Composite.
 - [Node.js](https://nodejs.org/) Active LTS and Maintenance LTS versions (Node 12 Recommended).
 - An active Communication Services resource. [Create a Communication Services resource](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp).
 
-## Setting up
+## Setting Up
 
 UI Library requires a React environment to be setup. Next we will do that. If you already have a React App, you can skip this section.
 
@@ -31,7 +31,6 @@ We'll use the create-react-app template for this quickstart. For more informatio
 
 ```bash
 
-# Build app in typescript:
 npx create-react-app ui-toolkit-quickstart-composites --template typescript
 
 cd ui-toolkit-quickstart-composites
@@ -41,13 +40,11 @@ cd ui-toolkit-quickstart-composites
 At the end of this process, you should have a full application inside of the folder `ui-toolkit-quickstart-composites`.
 For this quickstart, we'll be modifying files inside of the `src` folder.
 
-### Install the package
+### Install the Package
 
 Use the `npm install` command to install the Azure Communication Services UI Library for JavaScript.
 
 ```bash
-
-# For Private Preview install tarball
 
 npm install --save @azure/communication-react
 
@@ -65,16 +62,16 @@ npm run start
 
 ```
 
-## Object model
+## Object Model
 
 The following classes and interfaces handle some of the major features of the Azure Communication Services UI client library:
 
-| Name                                               | Description                                                                                        |
-| -------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| [Call](/?path=/docs/composites-call--basic-canvas) | Composite component that renders a group calling experience with participant gallery and controls. |
-| [Chat](/?path=/docs/composites-chat--basic-canvas) | Composite component that renders a group chat experience with chat thread and input                |
+| Name                                                          | Description                                                                                  |
+| ------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| [CallComposite](/?path=/story/composites-call--basic-example) | Composite component that renders a calling experience with participant gallery and controls. |
+| [ChatComposite](/?path=/story/composites-chat--basic-example) | Composite component that renders a chat experience with chat thread and input                |
 
-## Set up adapters for composites
+## Set Up Adapters
 
 Before we initialize the actual composite components, we need to set up the adapters that will power them.
 These adapters take care of the entire state of the composites truly making them a turn-key solution.
@@ -93,7 +90,9 @@ Go to the `src` folder inside of `ui-toolkit-quickstart-composites` and look for
 
 <Source code={QuickstartCompositeAdapter} />
 
-## Initialize Group Call and Group Chat Composite Components
+Next we will initialize the composite components with the adapters.
+
+## Initialize Composites
 
 Go to the `src` folder inside of `ui-toolkit-quickstart-composites` and look for the file `app.tsx`.
 Here we'll drop the following code to initialize our Composite Components for Chat and Calling using the adapters we set up above.
@@ -104,7 +103,7 @@ If needed, you can use both at the same time.
 
 <Source code={QuickstartCompositeComplete} />
 
-## Run quickstart
+## Run Quickstart
 
 To run the code above use the command:
 
@@ -114,15 +113,15 @@ npm run start
 
 ```
 
-## Clean up resources
+## Clean Up Resources
 
 If you want to clean up and remove a Communication Services subscription, you can delete the resource or resource group.
 Deleting the resource group also deletes any other resources associated with it.
 Learn more about [cleaning up resources](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp#clean-up-resources).
 
-## Next steps
+## Next Steps
 
-[Try UI Library UI Components](/?path=/story/quickstart-ui-components--page)
+[Try UI Library UI Components](/?path=/story/quickstarts-get-started-with-ui-components--page)
 
 For more information, see the following resources:
 

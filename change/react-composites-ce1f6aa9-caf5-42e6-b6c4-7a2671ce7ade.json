@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Rename DTOs that shadow objects from Calling SDK",
-  "packageName": "react-composites",
-  "email": "prprabhu@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Rename DTOs that shadow objects from Calling SDK",
-  "packageName": "@azure/acs-calling-selector",
-  "email": "prprabhu@microsoft.com",
-  "dependentChangeType": "patch"
-}

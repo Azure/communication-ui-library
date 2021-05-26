@@ -41,7 +41,8 @@ export const subContainerStyles: IStackStyles = {
     overflow: 'hidden',
     width: '100%',
     flexDirection: 'column',
-    display: 'flex'
+    display: 'flex',
+    flexBasis: '0'
   }
 };
 
