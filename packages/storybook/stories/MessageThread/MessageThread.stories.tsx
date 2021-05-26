@@ -9,7 +9,7 @@ import {
   SystemMessage,
   DefaultMessageRendererType
 } from '@azure/communication-react';
-import { PrimaryButton, Stack } from '@fluentui/react';
+import { Persona, PersonaPresence, PersonaSize, PrimaryButton, Stack } from '@fluentui/react';
 import { Divider } from '@fluentui/react-northstar';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import { boolean } from '@storybook/addon-knobs';
@@ -26,13 +26,15 @@ import {
   MessageThreadContainerStyles,
   MessageThreadStyles,
   GenerateMockSystemMessage,
-  GenerateMockCustomMessage
+  GenerateMockCustomMessage,
+  GetAvatarUrlByUserId
 } from './placeholdermessages';
 import { MessageThreadWithCustomAvatarExample } from './snippets/CustomAvatar.snippet';
 import { MessageThreadWithCustomChatContainerExample } from './snippets/CustomChatContainer.snippet';
 import { MessageThreadWithCustomMessageContainerExample } from './snippets/CustomMessageContainer.snippet';
 import { MessageThreadWithCustomMessagesExample } from './snippets/CustomMessages.snippet';
 import { MessageThreadWithCustomMessageStatusIndicatorExample } from './snippets/CustomMessageStatusIndicator.snippet';
+import { MessageThreadWithMessageDateExample } from './snippets/WithMessageDate.snippet';
 import { DefaultMessageThreadExample } from './snippets/Default.snippet';
 import { MessageThreadWithMessageStatusIndicatorExample } from './snippets/MessageStatusIndicator.snippet';
 import { MessageThreadWithSystemMessagesExample } from './snippets/SystemMessages.snippet';
@@ -46,6 +48,7 @@ const MessageThreadWithCustomMessagesExampleText = require('!!raw-loader!./snipp
   .default;
 const MessageThreadWithCustomMessageStatusIndicatorExampleText = require('!!raw-loader!./snippets/CustomMessageStatusIndicator.snippet.tsx')
   .default;
+const MessageThreadWithMessageDateExampleText = require('!!raw-loader!./snippets/WithMessageDate.snippet.tsx').default;
 const DefaultMessageThreadExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
 const MessageThreadWithMessageStatusIndicatorExampleText = require('!!raw-loader!./snippets/MessageStatusIndicator.snippet.tsx')
   .default;
@@ -74,8 +77,17 @@ const getDocs: () => JSX.Element = () => {
       <Source code={ExampleConstantsText} />
 
       <Heading>Default MessageThread</Heading>
+      <Description>
+        By default, MessageThread displays Chat messages with display name of only for other users and creation time of
+        message when available.
+      </Description>
       <Canvas mdxSource={DefaultMessageThreadExampleText}>
         <DefaultMessageThreadExample />
+      </Canvas>
+
+      <Heading>MessageThread With Message Date</Heading>
+      <Canvas mdxSource={MessageThreadWithMessageDateExampleText}>
+        <MessageThreadWithMessageDateExample />
       </Canvas>
 
       <Heading>System Message</Heading>
@@ -148,6 +160,7 @@ export const MessageThread: () => JSX.Element = () => {
   const [chatMessages, setChatMessages] = useState<(SystemMessage | CustomMessage | ChatMessage)[]>(
     GenerateMockChatMessages()
   );
+  const showMessageDate = boolean('Enable Message Date', true);
   const showMessageStatus = boolean('Enable Message Status Indicator', true);
   const enableJumpToNewMessageButton = boolean('Enable Jump To New Message', true);
 
@@ -193,10 +206,22 @@ export const MessageThread: () => JSX.Element = () => {
         styles={MessageThreadStyles}
         userId={UserOne.senderId}
         messages={chatMessages}
+        showMessageDate={showMessageDate}
         showMessageStatus={showMessageStatus}
         disableJumpToNewMessageButton={!enableJumpToNewMessageButton}
         onLoadPreviousChatMessages={onLoadPreviousMessages}
         onRenderMessage={onRenderMessage}
+        onRenderAvatar={(userId: string) => {
+          return (
+            <Persona
+              size={PersonaSize.size32}
+              hidePersonaDetails
+              presence={PersonaPresence.online}
+              text={userId}
+              imageUrl={GetAvatarUrlByUserId(userId)}
+            />
+          );
+        }}
       />
       {/* We need to use these two buttons to render more messages in the chat thread and showcase the "new message" button.
       Using storybook knobs would trigger the whole story to do a fresh re-render, not just components inside the story. */}
