@@ -159,6 +159,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
               errorMessage: styles?.systemMessage
             })
           }
+          disabled={disabled}
           errorMessage={onRenderSystemMessage ? onRenderSystemMessage(errorMessage) : errorMessage}
         />
 

@@ -17,11 +17,15 @@ export const textFieldStyle = (props: ITextFieldStyleProps): IStyle => {
       minHeight: '0',
       borderRadius: '0.25rem',
       borderColor: errorColor,
+      borderWidth: props.disabled ? '0px' : '1px',
       selectors: {
         ':hover': { borderColor: errorColor },
         ':active': { borderColor: errorColor },
         ':after': { borderColor: errorColor, borderRadius: '0.25rem' }
       }
+    },
+    field: {
+      borderRadius: '0.25rem'
     },
     errorMessage: {
       color: errorColor
