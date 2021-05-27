@@ -82,17 +82,21 @@ export const SendBox = (): JSX.Element => {
   return (
     <div style={{ width: '31.25rem' }}>
       <SendBoxComponent
-        disabled={boolean('Block button from sending', false, 'Injected by ACS Context')}
+        disabled={boolean('Disable SendBox', false, 'Injected by ACS Context')}
         onSendMessage={async (message) => alert(`sent message: ${message} `)}
         onTyping={(): Promise<void> => {
           console.log(`sending typing notifications`);
           return Promise.resolve();
         }}
-        systemMessage={text(
-          'Warning/information message for sendBox',
-          'Please wait 30 seconds to send new messages',
-          'Injected by ACS Context'
-        )}
+        systemMessage={
+          boolean('Has warning/information message', false, 'Injected by ACS Context')
+            ? text(
+                'Warning/information message for SendBox',
+                'Please wait 30 seconds to send new messages',
+                'Injected by ACS Context'
+              )
+            : undefined
+        }
       />
     </div>
   );
