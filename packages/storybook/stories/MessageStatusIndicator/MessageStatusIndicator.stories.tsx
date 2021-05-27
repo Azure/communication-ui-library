@@ -57,19 +57,7 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-export default {
-  title: `${COMPONENT_FOLDER_PREFIX}/Message Status Indicator`,
-  component: MessageStatusIndicatorComponent,
-  parameters: {
-    docs: {
-      page: () => getDocs()
-    }
-  }
-} as Meta;
-
-// This must be the only named export from this module, and must be named to match the storybook path suffix.
-// This ensures that storybook hoists the story instead of creating a folder with a single entry.
-export const MessageStatusIndicator = (): JSX.Element => {
+const MessageStatusIndicatorStory = (): JSX.Element => {
   return (
     <MessageStatusIndicatorComponent
       status={select<MessageStatus>('Message Status', ['delivered', 'sending', 'seen', 'failed'], 'delivered')}
@@ -80,3 +68,18 @@ export const MessageStatusIndicator = (): JSX.Element => {
     />
   );
 };
+
+// This must be the only named export from this module, and must be named to match the storybook path suffix.
+// This ensures that storybook hoists the story instead of creating a folder with a single entry.
+export const MessageStatusIndicator = MessageStatusIndicatorStory.bind({});
+
+export default {
+  id: `${COMPONENT_FOLDER_PREFIX}-messagestatusindicator`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Message Status Indicator`,
+  component: MessageStatusIndicatorComponent,
+  parameters: {
+    docs: {
+      page: () => getDocs()
+    }
+  }
+} as Meta;

@@ -34,7 +34,7 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-export const ComplianceBanner: () => JSX.Element = () => {
+const ComplianceBannerStory: () => JSX.Element = () => {
   const [teamsInterop, setTeamsInterop] = useState({
     recordingEnabled: false,
     transcriptionEnabled: false
@@ -64,8 +64,11 @@ export const ComplianceBanner: () => JSX.Element = () => {
   return <Banner {...teamsInterop} />;
 };
 
+export const ComplianceBanner = ComplianceBannerStory.bind({});
+
 export default {
-  title: `${EXAMPLES_FOLDER_PREFIX}/Teams Interop`,
+  id: `${EXAMPLES_FOLDER_PREFIX}-teamsinterop-compliancebanner`,
+  title: `${EXAMPLES_FOLDER_PREFIX}/Teams Interop/Compliance Banner`,
   component: ComplianceBanner,
   parameters: {
     docs: {
