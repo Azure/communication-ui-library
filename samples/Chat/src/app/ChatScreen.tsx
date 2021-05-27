@@ -8,7 +8,7 @@ import { onRenderAvatar } from './Avatar';
 import { ChatHeader } from './ChatHeader';
 import { ChatArea } from './ChatArea';
 import { SidePanel, SidePanelTypes } from './SidePanel';
-import { chatParticipantListSelector, useChatThreadClient, useChatSelector } from '@azure/acs-chat-selector';
+import { chatParticipantListSelector, useChatThreadClient, useChatSelector } from 'chat-component-bindings';
 import { chatHeaderSelector } from './selectors/chatHeaderSelector';
 
 // These props are passed in when this component is referenced in JSX and not found in context

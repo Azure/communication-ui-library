@@ -43,8 +43,8 @@
       "reviewCategory": "internal"
     },
     {
-      "packageName": "@azure/acs-chat-selector",
-      "projectFolder": "packages/acs-chat-selector",
+      "packageName": "chat-component-bindings",
+      "projectFolder": "packages/chat-component-bindings",
       "reviewCategory": "internal"
     },
     {
@@ -53,8 +53,8 @@
       "reviewCategory": "internal"
     },
     {
-      "packageName": "@azure/acs-calling-selector",
-      "projectFolder": "packages/acs-calling-selector",
+      "packageName": "calling-component-bindings",
+      "projectFolder": "packages/calling-component-bindings",
       "reviewCategory": "internal"
     },
     {

@@ -20,8 +20,8 @@ dependencies:
   '@microsoft/applicationinsights-web': 2.6.2
   '@octokit/rest': 18.0.15
   '@rollup/plugin-commonjs': 17.1.0_rollup@2.42.4
-  '@rush-temp/acs-calling-selector': file:projects/acs-calling-selector.tgz_prettier@2.0.5+ts-node@9.1.1
-  '@rush-temp/acs-chat-selector': file:projects/acs-chat-selector.tgz_prettier@2.0.5+ts-node@9.1.1
+  '@rush-temp/calling-component-bindings': file:projects/calling-component-bindings.tgz_prettier@2.0.5+ts-node@9.1.1
+  '@rush-temp/chat-component-bindings': file:projects/chat-component-bindings.tgz_prettier@2.0.5+ts-node@9.1.1
   '@rush-temp/acs-ui-common': file:projects/acs-ui-common.tgz_prettier@2.0.5+ts-node@9.1.1
   '@rush-temp/build-tools': file:projects/build-tools.tgz_typescript@4.1.5
   '@rush-temp/calling': file:projects/calling.tgz_11ce2e494cf42e750705757a01242d16
@@ -20958,7 +20958,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==
-  file:projects/acs-calling-selector.tgz_prettier@2.0.5+ts-node@9.1.1:
+  file:projects/calling-component-bindings.tgz_prettier@2.0.5+ts-node@9.1.1:
     dependencies:
       '@azure/communication-calling': 1.0.1-beta.1
       '@azure/communication-common': 1.0.0
@@ -20981,16 +20981,16 @@ packages:
       ts-jest: 26.5.3_jest@26.6.0+typescript@4.1.5
       typescript: 4.1.5
     dev: false
-    id: file:projects/acs-calling-selector.tgz
-    name: '@rush-temp/acs-calling-selector'
+    id: file:projects/calling-component-bindings.tgz
+    name: '@rush-temp/calling-component-bindings'
     peerDependencies:
       prettier: '*'
       ts-node: '*'
     resolution:
       integrity: sha512-5kbEcoRIqD1I9loFOIxBs4QN+5pL3GGPurCWt3IbnlfPsyPDQZ2Xojn8P88UeGluq8G/a7cowzN5ca81M14XUA==
-      tarball: file:projects/acs-calling-selector.tgz
+      tarball: file:projects/calling-component-bindings.tgz
     version: 0.0.0
-  file:projects/acs-chat-selector.tgz_prettier@2.0.5+ts-node@9.1.1:
+  file:projects/chat-component-bindings.tgz_prettier@2.0.5+ts-node@9.1.1:
     dependencies:
       '@azure/communication-chat': 1.0.0
       '@azure/communication-common': 1.0.0
@@ -21013,14 +21013,14 @@ packages:
       rollup: 2.42.4
       typescript: 4.1.5
     dev: false
-    id: file:projects/acs-chat-selector.tgz
-    name: '@rush-temp/acs-chat-selector'
+    id: file:projects/chat-component-bindings.tgz
+    name: '@rush-temp/chat-component-bindings'
     peerDependencies:
       prettier: '*'
       ts-node: '*'
     resolution:
       integrity: sha512-fPnHiIpL1XZ7JHhhAdAtZa9OkIYokbApFAJ5uzduQQst/I0RvH15Pp02czY2Sblr+dUZu7KxApld09QJ05LlhA==
-      tarball: file:projects/acs-chat-selector.tgz
+      tarball: file:projects/chat-component-bindings.tgz
     version: 0.0.0
   file:projects/acs-ui-common.tgz_prettier@2.0.5+ts-node@9.1.1:
     dependencies:
@@ -21740,8 +21740,8 @@ specifiers:
   '@microsoft/applicationinsights-web': ~2.6.2
   '@octokit/rest': ~18.0.6
   '@rollup/plugin-commonjs': ~17.1.0
-  '@rush-temp/acs-calling-selector': file:./projects/acs-calling-selector.tgz
-  '@rush-temp/acs-chat-selector': file:./projects/acs-chat-selector.tgz
+  '@rush-temp/calling-component-bindings': file:./projects/calling-component-bindings.tgz
+  '@rush-temp/chat-component-bindings': file:./projects/chat-component-bindings.tgz
   '@rush-temp/acs-ui-common': file:./projects/acs-ui-common.tgz
   '@rush-temp/build-tools': file:./projects/build-tools.tgz
   '@rush-temp/calling': file:./projects/calling.tgz
