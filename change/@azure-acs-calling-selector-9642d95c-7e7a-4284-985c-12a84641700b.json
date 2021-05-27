@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Bump package for release",
-  "packageName": "@azure/acs-calling-selector",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "none"
-}

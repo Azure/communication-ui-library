@@ -7,7 +7,7 @@ import {
   useCallingPropsFor as usePropsFor,
   useCallingSelector as useSelector,
   devicePermissionSelector
-} from '@azure/acs-calling-selector';
+} from 'calling-component-bindings';
 
 export interface LobbyCallControlBarProps {
   isMicrophoneChecked?: boolean;

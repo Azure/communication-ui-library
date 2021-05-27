@@ -33,9 +33,9 @@ module.exports = {
       '@azure/communication-react': path.resolve(__dirname, '../../communication-react/src'),
       'react-composites': path.resolve(__dirname, '../../react-composites/src'),
       'chat-stateful-client': path.resolve(__dirname, '../../chat-stateful-client/src'),
-      '@azure/acs-chat-selector': path.resolve(__dirname, '../../acs-chat-selector/src'),
+      'chat-component-bindings': path.resolve(__dirname, '../../chat-component-bindings/src'),
       'calling-stateful-client': path.resolve(__dirname, '../../calling-stateful-client/src'),
-      '@azure/acs-calling-selector': path.resolve(__dirname, '../../acs-calling-selector/src'),
+      'calling-component-bindings': path.resolve(__dirname, '../../calling-component-bindings/src'),
       'acs-ui-common': path.resolve(__dirname, '../../acs-ui-common/src')
     };
 

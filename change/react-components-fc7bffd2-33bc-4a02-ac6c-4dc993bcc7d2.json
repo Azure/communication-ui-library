@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "added showMessageDate in MessageThreadProps and showDate in MessageProps",
+  "packageName": "react-components",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "patch"
+}

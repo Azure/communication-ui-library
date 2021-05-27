@@ -6,7 +6,7 @@ import {
   useCall,
   useCallingSelector as useSelector,
   devicePermissionSelector
-} from '@azure/acs-calling-selector';
+} from 'calling-component-bindings';
 import { CallState, GroupLocator, MeetingLocator } from '@azure/communication-calling';
 import { Label, Overlay, Spinner, Stack } from '@fluentui/react';
 import { VideoStreamOptions } from 'react-components';

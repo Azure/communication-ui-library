@@ -30,7 +30,7 @@ import { Lobby } from './Lobby';
 import { AzureCommunicationCallAdapter, CallCompositePage } from './adapter';
 import { PermissionsBanner } from '../common/PermissionsBanner';
 import { permissionsBannerContainerStyle } from '../common/styles/PermissionsBanner.styles';
-import { devicePermissionSelector } from '@azure/acs-calling-selector';
+import { devicePermissionSelector } from 'calling-component-bindings';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 
 export const MINI_HEADER_WINDOW_WIDTH = 450;

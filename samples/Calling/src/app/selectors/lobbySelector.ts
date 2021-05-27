@@ -5,7 +5,7 @@ import * as reselect from 'reselect';
 // @ts-ignore
 import { CallState, CallClientState, LocalVideoStream } from 'calling-stateful-client';
 // @ts-ignore
-import { getCall, CallingBaseSelectorProps, getDisplayName, getIdentifier } from '@azure/acs-calling-selector';
+import { getCall, CallingBaseSelectorProps, getDisplayName, getIdentifier } from 'calling-component-bindings';
 
 export const lobbySelector = reselect.createSelector(
   [getCall, getDisplayName, getIdentifier],
