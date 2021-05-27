@@ -3,7 +3,7 @@
 
 import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import { ChatClientState } from 'chat-stateful-client';
-import { ChatBaseSelectorProps } from '@azure/acs-chat-selector';
+import { ChatBaseSelectorProps } from 'chat-component-bindings';
 import { ChatParticipant } from '@azure/communication-chat';
 
 export const getUserId = (state: ChatClientState): string => toFlatCommunicationIdentifier(state.userId);
