@@ -123,8 +123,28 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const textTooLongMessage = textValueOverflow ? TEXT_EXCEEDS_LIMIT : undefined;
   const errorMessage = systemMessage ?? textTooLongMessage;
 
+  const mergedRootStyle = mergeStyles(sendBoxWrapperStyle, styles?.root);
+  const mergedTextFieldStyle = concatStyleSets(
+    textFieldStyle(isDarkThemed(theme) ? '#f1707b' : '#a80000', !!errorMessage, !!disabled),
+    {
+      fieldGroup: styles?.textField,
+      errorMessage: styles?.systemMessage
+    }
+  );
+  const mergedSendButtonStyle = mergeStyles(sendButtonStyle, styles?.sendMessageIconContainer);
+  const mergedSendIconStyle = mergeStyles(
+    sendIconStyle,
+    {
+      color:
+        !!errorMessage || !(textValue || isMouseOverSendIcon)
+          ? theme.palette.neutralTertiary
+          : theme.palette.themePrimary
+    },
+    styles?.sendMessageIcon
+  );
+
   return (
-    <Stack className={mergeStyles(sendBoxWrapperStyle, styles?.root)}>
+    <Stack className={mergedRootStyle}>
       <div style={{ position: 'relative', padding: '0.1875rem' }}>
         <TextField
           multiline
@@ -146,19 +166,13 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
             }
             onTyping && onTyping();
           }}
-          styles={concatStyleSets(
-            textFieldStyle(isDarkThemed(theme) ? '#f1707b' : '#a80000', !!errorMessage, !!disabled),
-            {
-              fieldGroup: styles?.textField,
-              errorMessage: styles?.systemMessage
-            }
-          )}
+          styles={mergedTextFieldStyle}
           disabled={disabled}
           errorMessage={onRenderSystemMessage ? onRenderSystemMessage(errorMessage) : errorMessage}
         />
 
         <div
-          className={mergeStyles(sendButtonStyle, styles?.sendMessageIconContainer)}
+          className={mergedSendButtonStyle}
           onClick={(e) => {
             if (!textValueOverflow) {
               sendMessageOnClick();
@@ -176,19 +190,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           {onRenderIcon ? (
             onRenderIcon(props, isMouseOverSendIcon)
           ) : (
-            <SendIcon
-              className={mergeStyles(
-                sendIconStyle,
-                {
-                  color:
-                    !!errorMessage || !(textValue || isMouseOverSendIcon)
-                      ? theme.palette.neutralTertiary
-                      : theme.palette.themePrimary
-                },
-                styles?.sendMessageIcon
-              )}
-              outline={!!errorMessage || !(textValue || isMouseOverSendIcon)}
-            />
+            <SendIcon className={mergedSendIconStyle} outline={!!errorMessage || !(textValue || isMouseOverSendIcon)} />
           )}
         </div>
       </div>
