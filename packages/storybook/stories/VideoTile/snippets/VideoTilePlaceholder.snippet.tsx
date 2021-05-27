@@ -1,6 +1,6 @@
 import { VideoTile, FluentThemeProvider, StreamMedia } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useVideoStream } from '../../utils';
 
 const onRenderPlaceholder = (): JSX.Element => (

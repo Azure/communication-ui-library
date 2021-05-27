@@ -9,7 +9,7 @@ import {
 import { Stack, mergeStyles, Text } from '@fluentui/react';
 import { CallVideoOffIcon } from '@fluentui/react-northstar';
 import { useTheme } from '@fluentui/react-theme-provider';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useVideoStream } from '../../../utils';
 
 export interface LocalPreviewProps {

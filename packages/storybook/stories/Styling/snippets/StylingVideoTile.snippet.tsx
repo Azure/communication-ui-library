@@ -10,7 +10,7 @@ export const VideoTileExample: () => JSX.Element = () => {
     displayNameContainer: { top: '1rem', bottom: 'auto', right: '1rem', left: 'auto', backgroundColor: 'blue' }
   };
 
-  const videoStreamElement = useVideoStream();
+  const videoStreamElement = useVideoStream(true);
 
   return (
     <FluentThemeProvider>

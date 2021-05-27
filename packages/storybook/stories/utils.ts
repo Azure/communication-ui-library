@@ -43,6 +43,13 @@ const stopRenderVideoStream = (video: HTMLElement | null): void => {
   }
 };
 
+/**
+ * Manages a single video stream. If enabled is true will create and return a video stream. When component is unmounted
+ * will automatically dispose of the video stream.
+ *
+ * @param enabled - If creating a video stream
+ * @returns
+ */
 export const useVideoStream = (enabled: boolean): HTMLElement | null => {
   const mounted = useRef(false);
   useEffect(() => {
@@ -76,4 +83,53 @@ export const useVideoStream = (enabled: boolean): HTMLElement | null => {
   }, [videoStreamElement]);
 
   return videoStreamElement;
+};
+
+/**
+ * Manages multiple videoStreams. The amount is based on the given numberOfStreams parameter. When component is
+ * unmounted will automatically dispose of all the managed video streams.
+ *
+ * @param numberOfStreams - Number of video streams to create
+ * @returns
+ */
+export const useVideoStreams = (numberOfStreams: number): (HTMLElement | null)[] => {
+  const mounted = useRef(false);
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  });
+
+  const [videoStreamElements, setVideoStreamElements] = useState<(HTMLElement | null)[]>([]);
+  useEffect(() => {
+    const newVideoStreamElements: (HTMLElement | null)[] = [];
+    const loadVideos = async (): Promise<void> => {
+      for (let i = 0; i < numberOfStreams; i++) {
+        const videoStreamElement = await renderVideoStream();
+        newVideoStreamElements.push(videoStreamElement);
+      }
+      // Since the render is async, it may finish after the component is unmounted already, in this case we have to make
+      // sure to clean up the stream
+      if (!mounted.current) {
+        for (const videoStreamElement of newVideoStreamElements) {
+          stopRenderVideoStream(videoStreamElement);
+        }
+      } else {
+        setVideoStreamElements(newVideoStreamElements);
+      }
+    };
+    loadVideos();
+  }, [numberOfStreams]);
+
+  // Clean up videoStream if the component unmounts
+  useEffect(() => {
+    return () => {
+      for (const videoStreamElement of videoStreamElements) {
+        stopRenderVideoStream(videoStreamElement);
+      }
+    };
+  }, [videoStreamElements]);
+
+  return videoStreamElements;
 };
