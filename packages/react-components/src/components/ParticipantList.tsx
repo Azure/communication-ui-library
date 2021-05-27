@@ -25,12 +25,13 @@ export type ParticipantListProps = {
   onParticipantRemove?: (userId: string) => void;
 };
 
-const getDefaultRenderer = (
+const defaultRenderer = (
+  participants: CommunicationParticipant[],
   myUserId?: string,
   onParticipantRemove?: (userId: string) => void,
   onRenderAvatar?: (remoteParticipant: CommunicationParticipant) => JSX.Element | null
-): ((participant: CommunicationParticipant, index: number) => JSX.Element | null) => {
-  return (participant: CommunicationParticipant, index: number) => {
+): (JSX.Element | null)[] => {
+  return participants.map((participant: CommunicationParticipant, index: number) => {
     // Try to consider CommunicationParticipant as CallParticipant
     const callingParticipant = participant as CallParticipant;
 
@@ -82,7 +83,7 @@ const getDefaultRenderer = (
       );
     }
     return null;
-  };
+  });
 };
 
 /**
@@ -92,13 +93,11 @@ const getDefaultRenderer = (
 export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
   const { participants, myUserId, onRenderParticipant, onParticipantRemove, onRenderAvatar } = props;
 
-  const renderParticipant = onRenderParticipant ?? getDefaultRenderer(myUserId, onParticipantRemove, onRenderAvatar);
-
   return (
     <Stack className={participantListStyle}>
-      {participants.map((participant: CommunicationParticipant, index: number) => {
-        return renderParticipant(participant, index);
-      })}
+      {onRenderParticipant
+        ? participants.map((participant: CommunicationParticipant) => onRenderParticipant(participant))
+        : defaultRenderer(participants, myUserId, onParticipantRemove, onRenderAvatar)}
     </Stack>
   );
 };
