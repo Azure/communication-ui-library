@@ -81,7 +81,9 @@ export const ParticipantList: () => JSX.Element = () => {
     .filter((p) => p)
     .filter(onlyUnique);
 
-  participantNames.push('You');
+  if (boolean('Include you', true)) {
+    participantNames.push('You');
+  }
 
   const screenSharer = select('Screensharer', ['None', ...participantNames], 'screensharer');
   const callStates: string[] = [];
@@ -116,7 +118,7 @@ export const ParticipantList: () => JSX.Element = () => {
   };
 
   return (
-    <Stack>
+    <Stack style={{ height: '2rem' }}>
       <ParticipantListComponent
         participants={mockParticipants}
         myUserId={myUserId}

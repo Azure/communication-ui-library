@@ -3,19 +3,20 @@
 
 import { participantItemContainerStyle, iconContainerStyle } from './styles/ParticipantItem.styles';
 import {
-  ContextualMenu,
-  DirectionalHint,
   IContextualMenuItem,
   Persona,
   PersonaSize,
   PersonaPresence,
   Stack,
   mergeStyles,
-  IStyle
+  IStyle,
+  ContextualMenu,
+  DirectionalHint
 } from '@fluentui/react';
 import React, { useRef, useState } from 'react';
 import { useTheme } from '@fluentui/react-theme-provider';
 import { BaseCustomStylesProps } from '../types';
+import { MoreIcon } from '@fluentui/react-icons-northstar';
 
 export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
   /** Styles for the avatar. */
@@ -59,21 +60,12 @@ export interface ParticipantItemProps {
  * displayName and status as well as optional icons and context menu.
  */
 export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
-  const { displayName, onRenderAvatar, menuItems, onRenderIcon, presence, styles } = props;
-  const [clickEvent, setClickEvent] = useState<MouseEvent | undefined>();
+  const { displayName, onRenderAvatar, menuItems, onRenderIcon, presence, styles, me } = props;
+  const [itemHovered, setItemHovered] = useState<boolean>(false);
+  const [menuButtonHovered, setMenuButtonHovered] = useState<boolean>(false);
   const [menuHidden, setMenuHidden] = useState<boolean>(true);
   const containerRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
-
-  const showMenu = (clickEvent: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
-    setClickEvent(clickEvent.nativeEvent);
-    setMenuHidden(false);
-  };
-
-  const hideMenu = (): void => {
-    setClickEvent(undefined);
-    setMenuHidden(true);
-  };
 
   const avatarToUse = (
     <Persona
@@ -85,26 +77,54 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
       initialsTextColor="white"
     />
   );
+
+  const meTextStyle = mergeStyles({ color: theme.palette.neutralTertiary }, styles?.me);
+  const contextualMenuStyle = mergeStyles({ background: theme.palette.neutralLighterAlt }, styles?.menu);
+  const menuButtonContainerStyle = mergeStyles({
+    root: {
+      selectors: {
+        '&:hover': { background: 'none' },
+        '&:active': { background: 'none' }
+      }
+    }
+  });
+
   return (
     <div
       ref={containerRef}
-      className={mergeStyles(participantItemContainerStyle(theme), styles?.root)}
-      onClick={showMenu}
+      className={mergeStyles(participantItemContainerStyle, styles?.root)}
+      onMouseEnter={() => setItemHovered(true)}
+      onMouseLeave={() => setItemHovered(false)}
     >
       {avatarToUse}
+      {me && <Stack className={meTextStyle}>{`(you)`}</Stack>}
       {onRenderIcon && (
-        <Stack className={mergeStyles(iconContainerStyle, styles?.iconContainer)}>{onRenderIcon(props)}</Stack>
-      )}
-      {menuItems && (
-        <ContextualMenu
-          items={menuItems}
-          hidden={menuHidden}
-          target={clickEvent ?? containerRef}
-          onItemClick={hideMenu}
-          onDismiss={hideMenu}
-          directionalHint={DirectionalHint.bottomLeftEdge}
-          className={mergeStyles(styles?.menu)}
-        />
+        <Stack horizontal={true} className={mergeStyles(iconContainerStyle, styles?.iconContainer)}>
+          {menuItems && menuItems.length > 0 && (itemHovered || !menuHidden) ? (
+            <div
+              onMouseEnter={() => setMenuButtonHovered(true)}
+              onMouseLeave={() => setMenuButtonHovered(false)}
+              title="More options"
+              className={menuButtonContainerStyle}
+              onClick={() => setMenuHidden(false)}
+            >
+              <MoreIcon outline={!menuButtonHovered} />
+            </div>
+          ) : (
+            onRenderIcon(props)
+          )}
+          {menuItems && (
+            <ContextualMenu
+              items={menuItems}
+              hidden={menuHidden}
+              target={containerRef}
+              onItemClick={() => setMenuHidden(true)}
+              onDismiss={() => setMenuHidden(true)}
+              directionalHint={DirectionalHint.bottomRightEdge}
+              className={contextualMenuStyle}
+            />
+          )}
+        </Stack>
       )}
     </div>
   );

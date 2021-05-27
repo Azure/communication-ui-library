@@ -3,17 +3,10 @@
 
 import React from 'react';
 
-import {
-  IContextualMenuItem,
-  IOverflowSetItemProps,
-  IconButton,
-  OverflowSet,
-  Stack,
-  PersonaPresence
-} from '@fluentui/react';
+import { IContextualMenuItem, Stack, PersonaPresence } from '@fluentui/react';
 import { ParticipantItem } from './ParticipantItem';
 import { MicOffIcon, CallControlPresentNewIcon } from '@fluentui/react-northstar';
-import { participantListStyle, overFlowButtonStyles, overflowSetStyle } from './styles/ParticipantList.styles';
+import { participantListStyle } from './styles/ParticipantList.styles';
 import { CommunicationParticipant, CallParticipant } from '../types';
 
 /**
@@ -91,68 +84,20 @@ const getDefaultRenderer = (
   };
 };
 
-const onRenderOverflowButton = (overflowItems: unknown): JSX.Element => (
-  <IconButton
-    role="menuitem"
-    title="More options"
-    styles={overFlowButtonStyles}
-    menuIconProps={{ iconName: 'More' }}
-    menuProps={{ items: overflowItems as IContextualMenuItem[] }}
-  />
-);
-
-const renderParticipants = (
-  participants: CommunicationParticipant[],
-  myUserId?: string,
-  onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null,
-  onRenderAvatar?: (participant: CommunicationParticipant) => JSX.Element | null,
-  onParticipantRemove?: (userId: string) => void
-): (JSX.Element | null)[] => {
-  const renderParticipant = onRenderParticipant ?? getDefaultRenderer(myUserId, onParticipantRemove, onRenderAvatar);
-  const onRenderItem = (item: IOverflowSetItemProps): JSX.Element | null => {
-    const participant = {
-      userId: item.userId,
-      displayName: item.displayName,
-      state: item.state,
-      isScreenSharing: item.isScreenSharing,
-      isMuted: item.isMuted,
-      isSpeaking: item.isSpeaking
-    };
-    return renderParticipant(participant);
-  };
-  return participants.map((item, i) => {
-    return (
-      <OverflowSet
-        key={i}
-        items={[{ key: `${i}`, displayName: item.displayName, me: item.userId === myUserId, ...item }]}
-        role="menubar"
-        vertical={false}
-        onRenderOverflowButton={onRenderOverflowButton}
-        onRenderItem={onRenderItem}
-        styles={overflowSetStyle}
-      />
-    );
-  });
-};
-
 /**
  * `ParticipantList` renders a list of participants in Calling or Chat. If property `onRenderParticipant` is not
  * assigned then each participant is rendered with `ParticipantItem`.
  */
 export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
-  const allParticipants: CommunicationParticipant[] = [];
-  if (props.participants !== undefined) {
-    props.participants.forEach((participant) => allParticipants.push(participant));
-  }
+  const { participants, myUserId, onRenderParticipant, onParticipantRemove, onRenderAvatar } = props;
+
+  const renderParticipant = onRenderParticipant ?? getDefaultRenderer(myUserId, onParticipantRemove, onRenderAvatar);
+
   return (
     <Stack className={participantListStyle}>
-      {renderParticipants(
-        allParticipants,
-        props.myUserId,
-        props.onRenderParticipant,
-        props.onRenderAvatar,
-        props.onParticipantRemove
-      )}
+      {participants.map((participant: CommunicationParticipant) => {
+        return renderParticipant(participant);
+      })}
     </Stack>
   );
 };
