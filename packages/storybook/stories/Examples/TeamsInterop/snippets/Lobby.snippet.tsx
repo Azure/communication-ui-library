@@ -1,7 +1,7 @@
 import { StreamMedia, VideoTile } from '@azure/communication-react';
 import { useTheme } from '@fluentui/react-theme-provider';
 import React from 'react';
-import { renderVideoStream } from '../../../utils';
+import { useVideoStream } from '../../../utils';
 import { LobbyCallControlBar } from './LobbyControlBar.snippet';
 
 export interface LobbyProps {
@@ -20,6 +20,8 @@ export const Lobby = (props: LobbyProps): JSX.Element => {
     overlayContainer: {}
   };
 
+  const videoStreamElement = useVideoStream(true);
+
   return (
     <VideoTile
       styles={videoTileStyles}
@@ -27,7 +29,7 @@ export const Lobby = (props: LobbyProps): JSX.Element => {
       isVideoReady={props.isVideoReady}
       renderElement={
         // Replace with your own video provider.
-        <StreamMedia videoStreamElement={renderVideoStream()} />
+        <StreamMedia videoStreamElement={videoStreamElement} />
       }
       onRenderPlaceholder={renderEmptyElement}
     >

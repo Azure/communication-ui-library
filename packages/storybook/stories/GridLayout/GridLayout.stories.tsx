@@ -5,7 +5,7 @@ import { GridLayout as GridLayoutComponent, VideoTile, StreamMedia } from '@azur
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
 import { number, object } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
 
 import {
@@ -15,7 +15,7 @@ import {
   mediaGalleryHeightOptions,
   COMPONENT_FOLDER_PREFIX
 } from '../constants';
-import { renderVideoStream } from '../utils';
+import { useVideoStream } from '../utils';
 import { GridLayoutExample } from './snippets/GridLayout.snippet';
 
 const GridLayoutExampleText = require('!!raw-loader!./snippets/GridLayout.snippet').default;
@@ -78,17 +78,29 @@ export const GridLayout: () => JSX.Element = () => {
   ];
 
   const participants = object('Participants', defaultParticipants);
+  const [participantsComponents, setParticipantsComponents] = useState<JSX.Element[]>();
+  useEffect(() => {
+    const videoStreamElements: (HTMLElement | null)[] = [];
+    const participantsComponents = participants.map((participant, index) => {
+      const videoStreamElement = useVideoStream(participant.isVideoReady);
+      videoStreamElements.push(videoStreamElement);
+      return (
+        <VideoTile
+          isVideoReady={participant.isVideoReady}
+          renderElement={<StreamMedia videoStreamElement={videoStreamElement} />}
+          displayName={participant.displayName}
+          key={index}
+        />
+      );
+    });
+    setParticipantsComponents(participantsComponents);
 
-  const participantsComponents = participants.map((participant, index) => {
-    return (
-      <VideoTile
-        isVideoReady={participant.isVideoReady}
-        renderElement={<StreamMedia videoStreamElement={participant.isVideoReady ? renderVideoStream() : null} />}
-        displayName={participant.displayName}
-        key={index}
-      />
-    );
-  });
+    return () => {
+      for (const videoStreamElement of videoStreamElements) {
+        stopRenderVideoStream(videoStreamElement);
+      }
+    };
+  }, [participants]);
 
   return (
     <div

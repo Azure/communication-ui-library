@@ -9,8 +9,8 @@ import {
 import { Stack, mergeStyles, Text } from '@fluentui/react';
 import { CallVideoOffIcon } from '@fluentui/react-northstar';
 import { useTheme } from '@fluentui/react-theme-provider';
-import React, { useCallback, useState } from 'react';
-import { renderVideoStream } from '../../../utils';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useVideoStream } from '../../../utils';
 
 export interface LocalPreviewProps {
   isVideoAvailable: boolean;
@@ -65,6 +65,8 @@ export const LocalPreviewExample = ({
     [cameraOffLabelStyle]
   );
 
+  const videoStreamElement = useVideoStream(true);
+
   return (
     <FluentThemeProvider fluentTheme={theme}>
       <Stack style={{ width: '100\u0025', height: '100\u0025' }} verticalAlign="center">
@@ -75,7 +77,7 @@ export const LocalPreviewExample = ({
               isVideoReady={isVideoAvailable}
               // Here this storybook example isn't connected with Azure Communication Services
               // We would suggest you replace this videoStreamElement below with a rendered video stream from the calling SDK
-              renderElement={<StreamMedia videoStreamElement={renderVideoStream()} />}
+              renderElement={<StreamMedia videoStreamElement={videoStreamElement} />}
               onRenderPlaceholder={renderCameraOffPlaceholder}
             >
               <ControlBar layout="floatingBottom">

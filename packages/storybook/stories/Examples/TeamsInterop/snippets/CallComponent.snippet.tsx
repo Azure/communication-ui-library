@@ -1,6 +1,6 @@
 import { StreamMedia, VideoTile } from '@azure/communication-react';
 import React from 'react';
-import { renderVideoStream } from '../../../utils';
+import { useVideoStream } from '../../../utils';
 import { Banner } from './Banner.snippet';
 import { CallControlBar } from './CallControlBar.snippet';
 import { ComplianceBannerState } from './ComplianceBannerExample.snippet';
@@ -18,6 +18,8 @@ export const CallComponent = (props: ComplianceBannerState): JSX.Element => {
     overlayContainer: {}
   };
 
+  const videoStreamElement = useVideoStream(true);
+
   return (
     <VideoTile
       styles={videoTileStyles}
@@ -25,7 +27,7 @@ export const CallComponent = (props: ComplianceBannerState): JSX.Element => {
       isVideoReady={true}
       renderElement={
         // Replace with your own video provider.
-        <StreamMedia videoStreamElement={renderVideoStream()} />
+        <StreamMedia videoStreamElement={videoStreamElement} />
       }
       onRenderPlaceholder={renderEmptyPlacehodler}
     >

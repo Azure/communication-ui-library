@@ -1,7 +1,7 @@
 import { VideoTile, FluentThemeProvider, StreamMedia } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
-import React from 'react';
-import { renderVideoStream } from '../../utils';
+import React, { useEffect } from 'react';
+import { useVideoStream } from '../../utils';
 
 const onRenderPlaceholder = (): JSX.Element => (
   <Stack>
@@ -22,6 +22,9 @@ const onRenderPlaceholder = (): JSX.Element => (
 );
 export const VideoTilePlaceholderExample: () => JSX.Element = () => {
   const videoTileStyles = { root: { height: '300px', width: '400px', border: '1px solid #999' } };
+
+  const videoStreamElement = useVideoStream(true);
+
   return (
     <FluentThemeProvider>
       <VideoTile
@@ -30,7 +33,7 @@ export const VideoTilePlaceholderExample: () => JSX.Element = () => {
         displayName={'Maximus Aurelius'}
         renderElement={
           // NOTE: Replace with your own video provider. (An html element with video stream)
-          <StreamMedia videoStreamElement={renderVideoStream()} />
+          <StreamMedia videoStreamElement={videoStreamElement} />
         }
         isVideoReady={false}
         isMirrored={true}

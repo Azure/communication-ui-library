@@ -9,7 +9,7 @@ import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { VideoTileExample as VideoTileStylineExample } from '../Styling/snippets/StylingVideoTile.snippet';
-import { renderVideoStream } from '../utils';
+import { useVideoStream } from '../utils';
 import { VideoTileExample } from './snippets/VideoTile.snippet';
 import { VideoTilePlaceholderExample } from './snippets/VideoTilePlaceholder.snippet';
 
@@ -90,10 +90,12 @@ export const VideoTile: () => JSX.Element = () => {
     }
   };
 
+  const videoStreamElement = useVideoStream(true);
+
   return (
     <VideoTileComponent
       isVideoReady={isVideoReady}
-      renderElement={<StreamMedia videoStreamElement={renderVideoStream()} />}
+      renderElement={<StreamMedia videoStreamElement={videoStreamElement} />}
       displayName={displayName}
       showDisplayName={showDisplayName}
       isMirrored={isMirrored}
