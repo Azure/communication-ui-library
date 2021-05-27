@@ -3,11 +3,12 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Linkify from 'react-linkify';
-import { Chat, ChatItemProps, Flex, Ref, ShorthandValue } from '@fluentui/react-northstar';
+import { Chat, ChatItemProps, Flex, Ref, ShorthandValue, Text } from '@fluentui/react-northstar';
 import {
   DownIconStyle,
   newMessageButtonContainerStyle,
   messageThreadContainerStyle,
+  chatMessageDateStyle,
   chatMessageStyle,
   chatStyle,
   newMessageButtonStyle,
@@ -17,7 +18,7 @@ import {
 import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack, Link } from '@fluentui/react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { LiveAnnouncer, LiveMessage } from 'react-aria-live';
-import { formatTimestampForChatMessage } from './utils/Datetime';
+import { formatTimeForChatMessage, formatTimestampForChatMessage } from './utils/Datetime';
 import { delay } from './utils/delay';
 import {
   BaseCustomStylesProps,
@@ -233,9 +234,15 @@ const DefaultChatMessageRenderer: DefaultMessageRendererType = (props: MessagePr
       <Chat.Message
         className={mergeStyles(chatMessageStyle as IStyle, props.messageContainerStyle as IStyle)}
         content={messageContentItem}
-        author={payload.senderDisplayName}
+        author={<Text className={mergeStyles(chatMessageDateStyle as IStyle)}>{payload.senderDisplayName}</Text>}
         mine={payload.mine}
-        timestamp={payload.createdOn ? formatTimestampForChatMessage(payload.createdOn, new Date()) : undefined}
+        timestamp={
+          payload.createdOn
+            ? props.showDate
+              ? formatTimestampForChatMessage(payload.createdOn, new Date())
+              : formatTimeForChatMessage(payload.createdOn)
+            : undefined
+        }
       />
     );
   }
@@ -247,6 +254,7 @@ const memoizeAllMessages = memoizeFnAll(
   (
     _messageKey: string,
     message: ChatMessage | SystemMessage | CustomMessage,
+    showMessageDate: boolean,
     showMessageStatus: boolean,
     onRenderAvatar: ((userId: string) => JSX.Element) | undefined,
     styles: MessageThreadStylesProps | undefined,
@@ -259,7 +267,8 @@ const memoizeAllMessages = memoizeFnAll(
     onRenderMessage?: (message: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element
   ): ShorthandValue<ChatItemProps> => {
     const messageProps: MessageProps = {
-      message: message
+      message: message,
+      showDate: showMessageDate
     };
 
     if (message.type === 'chat') {
@@ -367,6 +376,12 @@ export type MessageThreadProps = {
    */
   disableJumpToNewMessageButton?: boolean;
   /**
+   * Whether the date of each message is displayed or not.
+   *
+   * @defaultValue `false`
+   */
+  showMessageDate?: boolean;
+  /**
    * Whether the status indicator for each message is displayed or not.
    *
    * @defaultValue `false`
@@ -432,6 +447,12 @@ export type MessageProps = {
    * Custom CSS styles for chat message container.
    */
   messageContainerStyle?: ComponentSlotStyle;
+  /**
+   * Whether the date of a message is displayed or not.
+   *
+   * @defaultValue `false`
+   */
+  showDate?: boolean;
 };
 
 /**
@@ -449,6 +470,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     userId,
     styles,
     disableJumpToNewMessageButton = false,
+    showMessageDate = false,
     showMessageStatus = false,
     numberOfChatMessagesToReload = 0,
     onMessageSeen,
@@ -704,6 +726,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             return memoizedMessageFn(
               key ?? 'id_' + index,
               message,
+              showMessageDate,
               showMessageStatus,
               onRenderAvatar,
               styles,
@@ -720,6 +743,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       }),
     [
       messages,
+      showMessageDate,
       showMessageStatus,
       onRenderAvatar,
       styles,

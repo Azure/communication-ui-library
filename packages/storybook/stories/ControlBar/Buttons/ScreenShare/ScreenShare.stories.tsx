@@ -70,18 +70,19 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-// This must be the only named export from this module, and must be named to match the storybook path suffix.
-// This ensures that storybook hoists the story instead of creating a folder with a single entry.
-export const ScreenShare = (): JSX.Element => {
+const ScreenShareStory = (): JSX.Element => {
   const toggleButtons = boolean('Toggle Buttons', false);
   const showLabels = boolean('Show Labels', false);
 
   return <ScreenShareButton showLabel={showLabels} checked={toggleButtons} />;
 };
 
+// This must be the only named export from this module, and must be named to match the storybook path suffix.
+// This ensures that storybook hoists the story instead of creating a folder with a single entry.
+export const ScreenShare = ScreenShareStory.bind({});
+
 export default {
-  // Space in the name is required to match storybook's matching with the camel case component name:
-  // ScreenShare -> Screen Share
+  id: `${COMPONENT_FOLDER_PREFIX}-controlbar-buttons-screenshare`,
   title: `${COMPONENT_FOLDER_PREFIX}/ControlBar/Buttons/Screen Share`,
   component: ScreenShareButton,
   parameters: {

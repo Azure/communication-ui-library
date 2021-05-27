@@ -1,10 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { Stack } from '@fluentui/react';
 import { Title, Heading, Description, Canvas } from '@storybook/addon-docs/blocks';
 import { array } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
+
 import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import { DeviceSettingDropdownExample } from './snippets/DeviceSettingsDropdown.snippet';
 
@@ -46,7 +48,8 @@ const getDocs: () => JSX.Element = () => {
     </>
   );
 };
-export const DeviceSettings: () => JSX.Element = () => {
+
+const DeviceSettingsStory: () => JSX.Element = () => {
   const cameras = [
     'Logitech C920S HD Pro Webcam',
     'Lenovo Essential FHD Webcam',
@@ -55,16 +58,21 @@ export const DeviceSettings: () => JSX.Element = () => {
     'Razer Kiyo'
   ];
   return (
-    <DeviceSettingDropdownExample
-      devices={cameras}
-      onChange={(_, option) => {
-        alert(option?.text);
-      }}
-    />
+    <Stack>
+      <DeviceSettingDropdownExample
+        devices={cameras}
+        onChange={(_, option) => {
+          alert(option?.text);
+        }}
+      />
+    </Stack>
   );
 };
 
+export const DeviceSettings = DeviceSettingsStory.bind({});
+
 export default {
+  id: `${EXAMPLES_FOLDER_PREFIX}-devicesettings`,
   title: `${EXAMPLES_FOLDER_PREFIX}/Device Settings`,
   component: DeviceSettings,
   parameters: {

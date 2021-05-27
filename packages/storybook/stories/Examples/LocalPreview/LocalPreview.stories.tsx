@@ -22,8 +22,8 @@ const getDocs: () => JSX.Element = () => {
         [Stack](https://developer.microsoft.com/en-us/fluentui#/controls/web/stack) as a container as shown in the code
         below. For enabling and disabling the camera or microphone we suggest using the
         [Toggle](https://developer.microsoft.com/en-us/fluentui#/controls/web/toggle) component. The area for showing
-        your local preview is a [VideoTile](./?path=/docs/ui-components-videotile--video-tile-component) which can also
-        be used in our video grid layouts.
+        your local preview is a [VideoTile](./?path=/docs/ui-components-videotile--video-tile) which can also be used in
+        our video grid layouts.
       </Description>
       <Description>
         Note: In the code example, all `%` characters were replaced by their unicode value `\u0025` due to URI malformed
@@ -38,7 +38,7 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-export const LocalPreview: () => JSX.Element = () => {
+const LocalPreviewStory: () => JSX.Element = () => {
   const isVideoAvailable = boolean('Is video available', true);
   const isCameraEnabled = boolean('Is camera available', true);
   const isMicrophoneEnabled = boolean('Is microphone available', true);
@@ -52,7 +52,10 @@ export const LocalPreview: () => JSX.Element = () => {
   );
 };
 
+export const LocalPreview = LocalPreviewStory.bind({});
+
 export default {
+  id: `${EXAMPLES_FOLDER_PREFIX}-localpreview`,
   title: `${EXAMPLES_FOLDER_PREFIX}/Local Preview`,
   component: LocalPreview,
   parameters: {

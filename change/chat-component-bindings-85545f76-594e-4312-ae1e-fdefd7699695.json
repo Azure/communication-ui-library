@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "remove useThreadID export",
+  "packageName": "chat-component-bindings",
+  "email": "mail@jamesburnside.com",
+  "dependentChangeType": "none"
+}

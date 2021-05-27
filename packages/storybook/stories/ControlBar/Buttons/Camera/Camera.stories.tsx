@@ -70,16 +70,19 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-// This must be the only named export from this module, and must be named to match the storybook path suffix.
-// This ensures that storybook hoists the story instead of creating a folder with a single entry.
-export const Camera = (): JSX.Element => {
+const CameraStory = (): JSX.Element => {
   const toggleButtons = boolean('Toggle Buttons', false);
   const showLabels = boolean('Show Labels', false);
 
   return <CameraButton showLabel={showLabels} checked={toggleButtons} />;
 };
 
+// This must be the only named export from this module, and must be named to match the storybook path suffix.
+// This ensures that storybook hoists the story instead of creating a folder with a single entry.
+export const Camera = CameraStory.bind({});
+
 export default {
+  id: `${COMPONENT_FOLDER_PREFIX}-controlbar-buttons-camera`,
   title: `${COMPONENT_FOLDER_PREFIX}/ControlBar/Buttons/Camera`,
   component: CameraButton,
   parameters: {

@@ -14,12 +14,7 @@ import { CallContext } from './CallContext';
 import { callAgentDeclaratify } from './CallAgentDeclarative';
 import { InternalCallContext } from './InternalCallContext';
 import { createView, disposeView } from './StreamUtils';
-import {
-  CommunicationUserKind,
-  MicrosoftTeamsUserKind,
-  PhoneNumberKind,
-  UnknownIdentifierKind
-} from '@azure/communication-common';
+import { CommunicationIdentifierKind } from '@azure/communication-common';
 
 /**
  * Defines the methods that allow CallClient {@Link @azure/communication-calling#CallClient} to be used statefully.
@@ -103,7 +98,7 @@ export interface StatefulCallClient extends CallClient {
    */
   createView(
     callId: string | undefined,
-    participantId: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | undefined,
+    participantId: CommunicationIdentifierKind | undefined,
     stream: LocalVideoStreamState | RemoteVideoStreamState,
     options?: CreateViewOptions
   ): Promise<void>;
@@ -133,7 +128,7 @@ export interface StatefulCallClient extends CallClient {
    */
   disposeView(
     callId: string | undefined,
-    participantId: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | undefined,
+    participantId: CommunicationIdentifierKind | undefined,
     stream: LocalVideoStreamState | RemoteVideoStreamState
   ): void;
 }
@@ -250,13 +245,7 @@ export const createStatefulCallClient = (
     configurable: false,
     value: (
       callId: string | undefined,
-      participantId:
-        | CommunicationUserKind
-        | PhoneNumberKind
-        | MicrosoftTeamsUserKind
-        | UnknownIdentifierKind
-        | string
-        | undefined,
+      participantId: CommunicationIdentifierKind | string | undefined,
       stream: LocalVideoStreamState | RemoteVideoStreamState,
       options?: CreateViewOptions
     ): Promise<void> => {
@@ -267,13 +256,7 @@ export const createStatefulCallClient = (
     configurable: false,
     value: (
       callId: string | undefined,
-      participantId:
-        | CommunicationUserKind
-        | PhoneNumberKind
-        | MicrosoftTeamsUserKind
-        | UnknownIdentifierKind
-        | string
-        | undefined,
+      participantId: CommunicationIdentifierKind | string | undefined,
       stream: LocalVideoStreamState | RemoteVideoStreamState
     ): void => {
       disposeView(context, internalContext, callId, participantId, stream);
