@@ -1,7 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { useCallClient, useCall, useCallingSelector as useSelector } from '@azure/acs-calling-selector';
+import {
+  useCallClient,
+  useCall,
+  useCallingSelector as useSelector,
+  devicePermissionSelector
+} from '@azure/acs-calling-selector';
 import { CallState, GroupLocator, MeetingLocator } from '@azure/communication-calling';
 import { Label, Overlay, Spinner, Stack } from '@fluentui/react';
 import { VideoStreamOptions } from 'react-components';
@@ -27,6 +32,8 @@ import { Lobby } from './Lobby';
 import { ComplianceBanner } from './ComplianceBanner';
 import { mediaGallerySelector } from './selectors/mediaGallerySelector';
 import { complianceBannerSelector } from './selectors/complianceBannerSelector';
+import { PermissionsBanner } from './PermissionsBanner';
+import { permissionsBannerContainerStyle } from './styles/PermissionsBanner.styles';
 
 export interface CallScreenProps {
   screenWidth: number;
@@ -59,6 +66,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const lobbyProps = useSelector(lobbySelector);
 
   const complianceBannerProps = useSelector(complianceBannerSelector);
+
+  const devicePermissions = useSelector(devicePermissionSelector);
 
   useEffect(() => {
     const callEndReason = call?.callEndReason;
@@ -111,6 +120,12 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
           </Stack.Item>
           <Stack.Item>
             <ComplianceBanner {...complianceBannerProps} />
+          </Stack.Item>
+          <Stack.Item style={permissionsBannerContainerStyle}>
+            <PermissionsBanner
+              microphonePermissionGranted={devicePermissions.audio}
+              cameraPermissionGranted={devicePermissions.video}
+            />
           </Stack.Item>
           <Stack styles={subContainerStyles} grow horizontal>
             {!isScreenSharingOn ? (
