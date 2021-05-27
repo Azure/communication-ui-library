@@ -25,7 +25,7 @@ Rush's build command handles this.
 
 Hot reloading is where when a sample or storybook is running and changes are made to local package dependencies, the changes are automatically built and the samples/storybook reloaded.
 
-To achieve this we use a mix of webpack-dev-server that hosts the samples, and a custom Rush command `build:watch`. This command is defined in [common/config/rush/command-line.json](https://github.com/Azure/communication-ui-sdk/blob/main/common/config/rush/command-line.json).
+To achieve this we use a mix of webpack-dev-server that hosts the samples, and a custom Rush command `build:watch`. This command is defined in [common/config/rush/command-line.json](https://github.com/Azure/communication-ui-library/blob/main/common/config/rush/command-line.json).
 
 ## Why Rush
 
@@ -62,4 +62,4 @@ Other useful commands
 * `rush lint` -- perform lint across the whole repo
 * `rush changelog` -- generate change file for the changelog
 
-For more commands check out the official [docs](https://rushjs.io/pages/intro/welcome/) or our custom commands file: [common/config/rush/command-line.json](https://github.com/Azure/communication-ui-sdk/blob/main/common/config/rush/command-line.json).
+For more commands check out the official [docs](https://rushjs.io/pages/intro/welcome/) or our custom commands file: [common/config/rush/command-line.json](https://github.com/Azure/communication-ui-library/blob/main/common/config/rush/command-line.json).

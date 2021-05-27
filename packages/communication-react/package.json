@@ -1,6 +1,6 @@
 {
   "name": "@azure/communication-react",
-  "version": "1.0.0-beta.0",
+  "version": "1.0.0-beta.1",
   "description": "React library for building modern communication user experiences utilizing Azure Communication Services",
   "keywords": [
     "Communication",
@@ -11,14 +11,14 @@
     "Video conferencing",
     "Teams"
   ],
-  "homepage": "https://azure.github.io/communication-ui-sdk/",
+  "homepage": "https://azure.github.io/communication-ui-library/",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Azure/communication-ui-sdk.git"
+    "url": "https://github.com/Azure/communication-ui-library.git"
   },
   "bugs": {
-    "url": "https://github.com/Azure/communication-ui-sdk/issues/new/choose"
+    "url": "https://github.com/Azure/communication-ui-library/issues/new/choose"
   },
   "types": "dist/communication-react.d.ts",
   "dependencies": {
@@ -66,11 +66,11 @@
     "lint": "eslint \"*/**/*.{ts,tsx}\"",
     "lint:fix": "npm run lint -- --fix",
     "lint:quiet": "npm run lint -- --quiet",
-    "postpack": "copyfiles -E \"./*.tgz\" private-preview"
+    "postpack": "copyfiles -E \"./*.tgz\" release"
   },
   "devDependencies": {
-    "@azure/acs-calling-selector": "~1.0.0-beta.0",
-    "@azure/acs-chat-selector": "~1.0.0-beta.0",
+    "@azure/acs-calling-selector": "~1.0.0-beta.1",
+    "@azure/acs-chat-selector": "~1.0.0-beta.1",
     "@microsoft/api-documenter": "~7.12.11",
     "@microsoft/api-extractor": "~7.13.2",
     "@testing-library/jest-dom": "^5.11.4",
@@ -87,8 +87,8 @@
     "@typescript-eslint/parser": "^4.12.0",
     "@zerollup/ts-transform-paths": "~1.7.18",
     "ajv": "^6.9.1",
-    "calling-stateful-client": "~1.0.0-beta.0",
-    "chat-stateful-client": "~1.0.0-beta.0",
+    "calling-stateful-client": "~1.0.0-beta.1",
+    "chat-stateful-client": "~1.0.0-beta.1",
     "copyfiles": "^2.4.1",
     "eslint": "^7.7.0",
     "eslint-config-prettier": "^6.12.0",
@@ -105,8 +105,8 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-is": "~17.0.1",
-    "react-components": "1.0.0-beta.0",
-    "react-composites": "1.0.0-beta.0",
+    "react-components": "1.0.0-beta.1",
+    "react-composites": "1.0.0-beta.1",
     "regenerator-runtime": "^0.13.7",
     "rollup": "~2.42.4",
     "source-map-explorer": "^2.5.0",

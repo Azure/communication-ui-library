@@ -1,6 +1,6 @@
 {
   "name": "react-components",
-  "version": "1.0.0-beta.0",
+  "version": "1.0.0-beta.1",
   "description": "React component library",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
@@ -22,9 +22,7 @@
     "prettier:check": "prettier --check --config ../../.prettierrc \"**/*.js\" \"**/*.ts\"",
     "lint": "eslint \"*/**/*.{ts,tsx}\"",
     "lint:fix": "npm run lint -- --fix",
-    "lint:quiet": "npm run lint -- --quiet",
-    "prepack": "node scripts/cleanse-pkg \"prepublish,build,test,test:coverage,snapshot:update\"",
-    "postpack": "node scripts/restore-pkg && copyfiles -E \"./*.tgz\" private-preview"
+    "lint:quiet": "npm run lint -- --quiet"
   },
   "dependencies": {
     "@fluentui/react": "^7.117.1",
@@ -33,7 +31,7 @@
     "@fluentui/react-northstar": "^0.51.2",
     "@fluentui/react-theme-provider": "^0.18.0",
     "@uifabric/react-hooks": "~7.13.11",
-    "acs-ui-common": "1.0.0-beta.0",
+    "acs-ui-common": "1.0.0-beta.1",
     "react-aria-live": "^2.0.5",
     "react-linkify": "^1.0.0-alpha",
     "html-to-react": "~1.4.5"

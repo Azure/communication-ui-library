@@ -76,7 +76,7 @@ There is currently no GitHub action for creating a hotfix and must be done manua
 
 ### Creating alpha releases
 
-Alpha releases are created nightly using the [.github/workflows/nightly-ci.yml](https://github.com/Azure/communication-ui-sdk/blob/main/.github/workflows/nightly-ci.yml) GitHub action.
+Alpha releases are created nightly using the [.github/workflows/nightly-ci.yml](https://github.com/Azure/communication-ui-library/blob/main/.github/workflows/nightly-ci.yml) GitHub action.
 
 They use beachball's `canary` CLI command to temporarily set all package versions to \<version\>-alpha+yyyymmdd-HHMM, create npm packages of each package and then upload the packages to the azure release pipeline.
 
