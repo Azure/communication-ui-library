@@ -13,6 +13,7 @@ const containerText = require('!!raw-loader!./snippets/Container.snippet.tsx').d
 const serverText = require('!!raw-loader!./snippets/Server.snippet.tsx').default;
 
 export default {
+  id: `${COMPOSITE_FOLDER_PREFIX}-call`,
   title: `${COMPOSITE_FOLDER_PREFIX}/CallComposite`,
   component: CallComposite,
   parameters: {
@@ -56,16 +57,15 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Theming</Heading>
       <Description>
         CallComposite can be themed with Fluent UI themes, just like the base components. Look at the [CallComposite
-        theme example](./?path=/story/composites-callcomposite--theme-example) to see theming in action or the [overall
-        theming example](./?path=/docs/theming--page) to see how theming works for all the components in this UI
-        library.
+        theme example](./?path=/story/composites-call--theme-example) to see theming in action or the [overall theming
+        example](./?path=/docs/theming--page) to see how theming works for all the components in this UI library.
       </Description>
 
       <Heading>Joining an existing Call</Heading>
       <Description>
-        The [join existing call](./?path=/story/composites-callcomposite--join-existing-call) provides an easy
-        playground to join an existing Azure Communication Services group call or an existing Teams meeting. This is
-        useful if you want to explore the composite with multiple users.
+        The [join existing call](./?path=/story/composites-call--join-existing-call) provides an easy playground to join
+        an existing Azure Communication Services group call or an existing Teams meeting. This is useful if you want to
+        explore the composite with multiple users.
       </Description>
     </>
   );

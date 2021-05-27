@@ -3,7 +3,7 @@
 
 import {
   CameraButton,
-  ControlBar,
+  ControlBar as ControlBarComponent,
   EndCallButton,
   MicrophoneButton,
   OptionsButton,
@@ -76,7 +76,7 @@ const getDocs: () => JSX.Element = () => {
   return (
     <>
       <Title>ControlBar</Title>
-      <Description of={ControlBar} />
+      <Description of={ControlBarComponent} />
 
       <Heading>Importing</Heading>
       <Source code={importStatement} />
@@ -138,12 +138,12 @@ const getDocs: () => JSX.Element = () => {
       </Canvas>
 
       <Heading>ControlBar Props</Heading>
-      <Props of={ControlBar} />
+      <Props of={ControlBarComponent} />
     </>
   );
 };
 
-export const ControlBarComponent: (
+const ControlBarStory: (
   args: any,
   {
     globals: { theme }
@@ -174,20 +174,23 @@ export const ControlBarComponent: (
         background: background
       }}
     >
-      <ControlBar layout={layout}>
+      <ControlBarComponent layout={layout}>
         <CameraButton showLabel={showLabels} checked={toggleButtons} />
         <MicrophoneButton showLabel={showLabels} checked={toggleButtons} />
         <ScreenShareButton showLabel={showLabels} checked={toggleButtons} />
         <OptionsButton showLabel={showLabels} menuProps={exampleOptionsMenuProps} />
         <EndCallButton showLabel={showLabels} />
-      </ControlBar>
+      </ControlBarComponent>
     </div>
   );
 };
 
+export const ControlBar = ControlBarStory.bind({});
+
 export default {
+  id: `${COMPONENT_FOLDER_PREFIX}-controlbar`,
   title: `${COMPONENT_FOLDER_PREFIX}/ControlBar`,
-  component: ControlBar,
+  component: ControlBarComponent,
   parameters: {
     docs: {
       page: () => getDocs()

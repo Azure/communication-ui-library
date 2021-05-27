@@ -29,7 +29,7 @@ const getDocs: () => JSX.Element = () => {
 
       <Heading>Default Example</Heading>
       <Description>
-        VideoGallery is by default a grid of [VideoTile](./?path=/docs/ui-components-video-tile--video-tile) components
+        VideoGallery is by default a grid of [VideoTile](./?path=/docs/ui-components-videotile--video-tile) components
         representing each participant to the call.
       </Description>
       <Canvas mdxSource={DefaultVideoGalleryExampleText}>
@@ -67,9 +67,7 @@ const onlyUnique = (value: string, index: number, self: string[]): boolean => {
   return self.indexOf(value) === index;
 };
 
-// This must be the only named export from this module, and must be named to match the storybook path suffix.
-// This ensures that storybook hoists the story instead of creating a folder with a single entry.
-export const VideoGallery: () => JSX.Element = () => {
+const VideoGalleryStory: () => JSX.Element = () => {
   const remoteParticipantsKnob = text('Other participants (comma separated)', 'Rick, Daryl, Michonne, Dwight');
   const remoteParticipants = remoteParticipantsKnob
     .split(',')
@@ -86,7 +84,12 @@ export const VideoGallery: () => JSX.Element = () => {
   return <VideoGalleryComponent localParticipant={MockLocalParticipant} remoteParticipants={remoteParticipants} />;
 };
 
+// This must be the only named export from this module, and must be named to match the storybook path suffix.
+// This ensures that storybook hoists the story instead of creating a folder with a single entry.
+export const VideoGallery = VideoGalleryStory.bind({});
+
 export default {
+  id: `${COMPONENT_FOLDER_PREFIX}-videogallery`,
   title: `${COMPONENT_FOLDER_PREFIX}/Video Gallery`,
   component: VideoGalleryComponent,
   parameters: {

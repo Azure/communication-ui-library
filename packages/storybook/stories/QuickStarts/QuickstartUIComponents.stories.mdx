@@ -8,7 +8,7 @@ import { ChatComponents } from './snippets/ChatComponents';
 import CompletedComponentsAppText from '!!raw-loader!./snippets/CompletedComponentsApp.snippet.tsx';
 import CompletedComponentsApp from './snippets/CompletedComponentsApp.snippet';
 
-<Meta title="Quickstarts/Get started with UI Components" />
+<Meta id="quickstarts-uicomponents" title="Quickstarts/Get started with UI Components" />
 
 # Quickstart: Get started with UI Components
 
@@ -70,14 +70,14 @@ npm run start
 
 The following classes and interfaces handle some of the major features of the Azure Communication Services UI client library:
 
-| Name                                                                        | Description                                                                              |
-| --------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| [FluentThemeProvider](/?path=/story/theming--page)                          | Provider that controls Theming on the components. Can be used to override theme          |
-| [GridLayout](/?path=/story/ui-components-grid-layout--grid-layout)          | Base component that organizes video tiles into a grid                                    |
-| [VideoTile](/?path=/story/ui-components-video-tile--video-tile)             | Base component to render participants either with or without video                       |
-| [ControlBar](/?path=/story/ui-components-controlbar--control-bar-component) | Base component to control call including mute, video, share screen                       |
-| [MessageThread](/?path=/story/ui-components-message-thread--message-thread) | Base component that renders a chat thread with typing indicators, read receipts, etc.    |
-| [SendBox](/?path=/story/ui-components-send-box--send-box)                   | Base component that allows user to input messages that will be sent to the joined thread |
+| Name                                                                       | Description                                                                              |
+| -------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| [FluentThemeProvider](/?path=/story/theming--page)                         | Provider that controls Theming on the components. Can be used to override theme          |
+| [GridLayout](/?path=/story/ui-components-gridlayout--grid-layout)          | Base component that organizes video tiles into a grid                                    |
+| [VideoTile](/?path=/story/ui-components-videotile--video-tile)             | Base component to render participants either with or without video                       |
+| [ControlBar](/?path=/story/ui-components-controlbar--control-bar)          | Base component to control call including mute, video, share screen                       |
+| [MessageThread](/?path=/story/ui-components-messagethread--message-thread) | Base component that renders a chat thread with typing indicators, read receipts, etc.    |
+| [SendBox](/?path=/story/ui-components-sendbox--send-box)                   | Base component that allows user to input messages that will be sent to the joined thread |
 
 ## Set Up Fluent Theme Provider
 
@@ -94,7 +94,7 @@ You can customize the layout of these components and add any other custom compon
 
 ## Calling UI Components
 
-For Calling, we'll use the [`GridLayout`](/?path=/story/ui-components-gridlayout--grid-layout-component) and [`ControlBar`](/?path=/story/ui-components-controlbar--control-bar-component) components.
+For Calling, we'll use the [`GridLayout`](/?path=/story/ui-components-gridlayout--grid-layout-component) and [`ControlBar`](/?path=/story/ui-components-controlbar--control-bar) components.
 To start, in the `src` folder, create a new file called `CallingComponents.tsx`.
 Here we'll initialize a function component that will hold our base components to then import in `app.tsx`.
 You can add extra layout and styling around the components.
@@ -144,7 +144,7 @@ Learn more about [cleaning up resources](https://docs.microsoft.com/azure/commun
 
 ## Next Steps
 
-[Try UI Library Stateful Client](/?path=/story/quickstarts-get-started-with-stateful-client--page)
+[Try UI Library Stateful Client](/?path=/story/quickstarts-statefulclient--page)
 
 For more information, see the following resources:
 

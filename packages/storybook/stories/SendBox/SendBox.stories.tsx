@@ -66,19 +66,7 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-export default {
-  title: `${COMPONENT_FOLDER_PREFIX}/Send Box`,
-  component: SendBoxComponent,
-  parameters: {
-    docs: {
-      page: () => getDocs()
-    }
-  }
-} as Meta;
-
-// This must be the only named export from this module, and must be named to match the storybook path suffix.
-// This ensures that storybook hoists the story instead of creating a folder with a single entry.
-export const SendBox = (): JSX.Element => {
+const SendBoxStory = (): JSX.Element => {
   return (
     <div style={{ width: '31.25rem' }}>
       <SendBoxComponent
@@ -97,3 +85,18 @@ export const SendBox = (): JSX.Element => {
     </div>
   );
 };
+
+// This must be the only named export from this module, and must be named to match the storybook path suffix.
+// This ensures that storybook hoists the story instead of creating a folder with a single entry.
+export const SendBox = SendBoxStory.bind({});
+
+export default {
+  id: `${COMPONENT_FOLDER_PREFIX}-sendbox`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Send Box`,
+  component: SendBoxComponent,
+  parameters: {
+    docs: {
+      page: () => getDocs()
+    }
+  }
+} as Meta;
