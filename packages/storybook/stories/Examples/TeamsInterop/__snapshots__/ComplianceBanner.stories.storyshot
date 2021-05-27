@@ -18,9 +18,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Compliance B
           "justifyContent": "center",
         }
       }
-    >
-      Click on the recording or transcription knobs to see how the banner will show the current state
-    </div>
+    />
   </div>
 </div>
 `;

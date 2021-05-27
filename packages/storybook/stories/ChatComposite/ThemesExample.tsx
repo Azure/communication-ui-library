@@ -5,11 +5,11 @@ import { ITheme } from '@fluentui/react';
 import { DefaultTheme, DarkTheme, TeamsTheme, WordTheme } from '@fluentui/theme-samples';
 import { text, radios } from '@storybook/addon-knobs';
 import React, { useState, useEffect, useRef } from 'react';
-import { COMPOSITE_STRING_CONNECTIONSTRING } from '../../CompositeStringUtils';
-import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE } from '../../constants';
-import { ContosoChatContainer, ContainerProps } from './Container.snippet';
-import { createUserAndThread } from './Server.snippet';
-import { ConfigHintBanner, addParrotBotToThread } from './Utils.snippet';
+import { COMPOSITE_STRING_CONNECTIONSTRING } from '../CompositeStringUtils';
+import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE } from '../constants';
+import { ContosoChatContainer, ContainerProps } from './snippets/Container.snippet';
+import { createUserAndThread } from './snippets/Server.snippet';
+import { ConfigHintBanner, addParrotBotToThread } from './snippets/Utils';
 
 const themeChoices = {
   Default: 'default',

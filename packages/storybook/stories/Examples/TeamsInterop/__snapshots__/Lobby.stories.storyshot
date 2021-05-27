@@ -42,8 +42,16 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
           <div
             style={
               Object {
+                "bottom": 0,
+                "height": "25%",
+                "left": 0,
                 "margin": "auto",
+                "overflow": "none",
+                "position": "absolute",
+                "right": 0,
                 "textAlign": "center",
+                "top": 0,
+                "width": "50%",
                 "zIndex": 0,
               }
             }

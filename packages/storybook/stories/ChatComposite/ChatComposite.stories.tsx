@@ -8,9 +8,9 @@ import React from 'react';
 import { COMPOSITE_FOLDER_PREFIX } from '../constants';
 
 const containerText = require('!!raw-loader!./snippets/Container.snippet.tsx').default;
-const customBehaviorExampleText = require('!!raw-loader!./snippets/CustomBehaviorExample.snippet.tsx').default;
 const customDataModelExampleContainerText = require('!!raw-loader!./snippets/CustomDataModelExampleContainer.snippet.tsx')
   .default;
+const customBehaviorExampleText = require('!!raw-loader!./snippets/CustomizeBehavior.snippet.tsx').default;
 const serverText = require('!!raw-loader!./snippets/Server.snippet.tsx').default;
 
 export default {
@@ -26,10 +26,10 @@ export default {
   }
 } as Meta;
 
-export { BasicExample } from './snippets/BasicExample.snippet';
-export { CustomBehaviorExample } from './snippets/CustomBehaviorExample.snippet';
-export { CustomDataModelExample } from './snippets/CustomDataModelExample.snippet';
-export { ThemeExample } from './snippets/ThemesExample.snippet';
+export { BasicExample } from './BasicExample';
+export { CustomBehaviorExample } from './CustomBehavior';
+export { CustomDataModelExample } from './CustomDataModelExample';
+export { ThemeExample } from './ThemesExample';
 export { JoinExistingChatThread } from './snippets/JoinExistingChatThread';
 
 const getDocs: () => JSX.Element = () => {
@@ -79,7 +79,7 @@ const getDocs: () => JSX.Element = () => {
         custom data model can be injected for all the components in this UI library.
       </Description>
 
-      <Heading>Adding custom behavior</Heading>
+      <Heading>Customize Behavior</Heading>
       <Description>
         The `ChatAdapter` makes it possible to arbitrarily modify the communication between the `ChatComposite`
         component and the Azure Communication Services backend. This adds powerful customization possibilities. The
@@ -88,7 +88,7 @@ const getDocs: () => JSX.Element = () => {
       </Description>
       <Source code={customBehaviorExampleText} />
 
-      <Heading>Joining an existing Chat thread</Heading>
+      <Heading>Joining existing Chat</Heading>
       <Description>
         The [join existing chat thread](./?path=/story/composites-chat--join-existing-chat-thread) provides an easy
         playground to join an existing Azure Communication Services chat thread. This is useful if you want to explore
