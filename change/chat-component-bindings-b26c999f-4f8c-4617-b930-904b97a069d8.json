@@ -1,7 +1,7 @@
 {
   "type": "none",
   "comment": "remove private-preview references",
-  "packageName": "@azure/acs-chat-selector",
+  "packageName": "chat-component-bindings",
   "email": "mail@jamesburnside.com",
   "dependentChangeType": "none"
 }

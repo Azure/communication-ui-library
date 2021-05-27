@@ -4,8 +4,8 @@
     "baseUrl": "./src",
     "outDir": "./dist/dist-esm",
     "paths": {
-      "@azure/acs-chat-selector": ["../../acs-chat-selector/src"],
-      "@azure/acs-calling-selector": ["../../acs-calling-selector/src"],
+      "chat-component-bindings": ["../../chat-component-bindings/src"],
+      "calling-component-bindings": ["../../calling-component-bindings/src"],
       "acs-ui-common": ["../../acs-ui-common/src"],
       "calling-stateful-client": ["../../calling-stateful-client/src"],
       "chat-stateful-client": ["../../chat-stateful-client/src"],
