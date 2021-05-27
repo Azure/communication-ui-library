@@ -142,7 +142,7 @@ async function createViewLocalVideo(
 
   const renderer = new VideoStreamRenderer(renderInfo.stream);
 
-  internalContext.setLocalRenderInfo(callId, renderInfo.stream, 'Rendering', undefined);
+  internalContext.setLocalRenderInfo(callId, renderInfo.stream, 'Rendering', renderer);
 
   let view;
   try {

@@ -52,6 +52,12 @@ export function mockCall(mockProps?: MockCallProps): MockCall {
   return {
     id: 'call id',
     callerInfo: { identifier: undefined },
+    info: {
+      groupId: undefined,
+      getServerCallId: async () => {
+        return '';
+      }
+    },
     state: 'None',
     direction: props.isIncoming ? 'Incoming' : 'Outgoing',
     isMuted: props.isMicrophoneMuted,
