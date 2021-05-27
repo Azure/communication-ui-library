@@ -2,10 +2,10 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Device Settings Device Settings 1`] = `
 <div
-  className="css-80 root-0 body-1"
+  className="css-81 root-0 body-1"
 >
   <div
-    className="css-80"
+    className="css-81"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -20,10 +20,10 @@ exports[`storybook snapshot tests Storyshots Examples/Device Settings Device Set
       }
     >
       <div
-        className="css-80 root-0 body-1"
+        className="css-81 root-0 body-1"
       >
         <div
-          className="css-80"
+          className="css-81"
           data-uses-unhanded-props={true}
         >
           <div
