@@ -9,8 +9,8 @@ import { DisplayNameField } from './DisplayNameField';
 import { StartCallButton } from './StartCallButton';
 import { CallConfiguration } from './CallConfiguration';
 import { LocalDeviceSettings } from './LocalDeviceSettings';
-import { devicePermissionSelector, optionsButtonSelector } from '@azure/acs-calling-selector';
-import { useCallingSelector as useSelector } from '@azure/acs-calling-selector';
+import { devicePermissionSelector, optionsButtonSelector } from 'calling-component-bindings';
+import { useCallingSelector as useSelector } from 'calling-component-bindings';
 import { useAzureCommunicationHandlers } from './hooks/useAzureCommunicationHandlers';
 import { TeamsMeetingLinkField } from './TeamsMeetingLinkField';
 

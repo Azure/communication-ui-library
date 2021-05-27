@@ -9,7 +9,7 @@ import {
   groupCallLeaveButtonStyle
 } from './styles/CallControls.styles';
 import { usePropsFor } from './hooks/usePropsFor';
-import { devicePermissionSelector } from '@azure/acs-calling-selector';
+import { devicePermissionSelector } from 'calling-component-bindings';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 
 export type GroupCallControlsProps = {
