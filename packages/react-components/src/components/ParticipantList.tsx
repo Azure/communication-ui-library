@@ -29,8 +29,8 @@ const getDefaultRenderer = (
   myUserId?: string,
   onParticipantRemove?: (userId: string) => void,
   onRenderAvatar?: (remoteParticipant: CommunicationParticipant) => JSX.Element | null
-): ((participant: CommunicationParticipant) => JSX.Element | null) => {
-  return (participant: CommunicationParticipant) => {
+): ((participant: CommunicationParticipant, index: number) => JSX.Element | null) => {
+  return (participant: CommunicationParticipant, index: number) => {
     // Try to consider CommunicationParticipant as CallParticipant
     const callingParticipant = participant as CallParticipant;
 
@@ -71,6 +71,7 @@ const getDefaultRenderer = (
     if (participant.displayName) {
       return (
         <ParticipantItem
+          key={index}
           displayName={participant.displayName}
           me={myUserId ? participant.userId === myUserId : false}
           menuItems={menuItems}
@@ -95,8 +96,8 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
 
   return (
     <Stack className={participantListStyle}>
-      {participants.map((participant: CommunicationParticipant) => {
-        return renderParticipant(participant);
+      {participants.map((participant: CommunicationParticipant, index: number) => {
+        return renderParticipant(participant, index);
       })}
     </Stack>
   );
