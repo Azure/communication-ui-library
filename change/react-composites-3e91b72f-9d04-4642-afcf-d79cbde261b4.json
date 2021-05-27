@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Create composite package. Migrate files from react-components to new package.",
-  "packageName": "react-composites",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "patch"
-}

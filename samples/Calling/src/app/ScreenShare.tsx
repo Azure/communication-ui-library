@@ -5,6 +5,7 @@ import { memoizeFnAll } from 'acs-ui-common';
 import { mergeStyles, Spinner, SpinnerSize, Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import {
+  PlaceholderProps,
   StreamMedia,
   VideoGalleryLocalParticipant,
   VideoGalleryRemoteParticipant,
@@ -28,12 +29,12 @@ export type ScreenShareProps = {
 };
 
 const memoizeAllRemoteParticipants = memoizeFnAll(
-  (userId: string, isAvailable?: boolean, renderElement?: HTMLElement, displayName?: string): JSX.Element => {
+  (userId: string, isReady?: boolean, renderElement?: HTMLElement, displayName?: string): JSX.Element => {
     return (
       <Stack horizontalAlign="center" verticalAlign="center" className={aspectRatioBoxStyle} key={userId}>
         <Stack className={aspectRatioBoxContentStyle}>
           <VideoTile
-            isVideoReady={isAvailable}
+            isVideoReady={isReady}
             renderElement={<StreamMedia videoStreamElement={renderElement ?? null} />}
             displayName={displayName}
             styles={videoTileStyle}
@@ -42,6 +43,13 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
       </Stack>
     );
   }
+);
+
+// A non-undefined display name is needed for this render, and that is coming from VideoTile props below
+const renderLoadingPlaceholder = (props: PlaceholderProps): JSX.Element => (
+  <div className={loadingStyle}>
+    <Spinner label={`Loading ${props.displayName}'s screen`} size={SpinnerSize.xSmall} />
+  </div>
 );
 
 export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
@@ -53,8 +61,6 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
     onCreateLocalStreamView
   } = props;
 
-  const localVideoStream = localParticipant?.videoStream;
-  const isLocalVideoReady = localVideoStream?.renderElement !== undefined;
   const isScreenShareAvailable =
     screenShareParticipant &&
     screenShareParticipant.screenShareStream &&
@@ -79,13 +85,10 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
 
     return (
       <VideoTile
+        displayName={screenShareParticipant?.displayName}
         isVideoReady={screenShareStream?.isAvailable}
         renderElement={<StreamMedia videoStreamElement={screenShareStream?.renderElement ?? null} />}
-        placeholder={
-          <div className={loadingStyle}>
-            <Spinner label={`Loading ${screenShareParticipant?.displayName}'s screen`} size={SpinnerSize.xSmall} />
-          </div>
-        }
+        onRenderPlaceholder={renderLoadingPlaceholder}
         styles={{
           overlayContainer: videoStreamStyle
         }}
@@ -106,10 +109,13 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
   }, [isScreenShareAvailable, onCreateRemoteStreamView, screenShareParticipant]);
 
   const layoutLocalParticipant = useMemo(() => {
+    const localVideoStream = localParticipant?.videoStream;
+
     if (localVideoStream && !localVideoStream?.renderElement) {
       onCreateLocalStreamView && onCreateLocalStreamView();
     }
 
+    const isLocalVideoReady = localVideoStream?.renderElement !== undefined;
     return (
       <VideoTile
         isVideoReady={isLocalVideoReady}
@@ -118,7 +124,7 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
         styles={videoTileStyle}
       />
     );
-  }, [isLocalVideoReady, localParticipant, localVideoStream, onCreateLocalStreamView]);
+  }, [localParticipant, onCreateLocalStreamView]);
 
   const sidePanelRemoteParticipants = useMemo(() => {
     return memoizeAllRemoteParticipants((memoizedRemoteParticipantFn) => {

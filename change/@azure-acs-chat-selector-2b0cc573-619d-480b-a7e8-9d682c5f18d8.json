@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Temporary TypingIndicator fix for sample chat",
-  "packageName": "@azure/acs-chat-selector",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "none"
-}

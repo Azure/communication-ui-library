@@ -12,9 +12,9 @@ import {
   OptionsButton,
   ScreenShareButton
 } from 'react-components';
-import { connectFuncsToContext } from '../../consumers';
+import { connectFuncsToContext } from './consumers/ConnectContext';
 import { CallControlBarContainerProps, MapToCallControlBarProps } from './consumers/MapToCallControlBarProps';
-import { ErrorHandlingProps } from '../../providers';
+import { ErrorHandlingProps } from './providers/ErrorProvider';
 import { propagateError } from '../../utils';
 import {
   LocalDeviceSettingsContainerProps,

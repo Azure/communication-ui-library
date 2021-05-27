@@ -1,40 +1,65 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ErrorProvider } from '../../providers';
 import React, { useEffect, useState } from 'react';
 import { CallScreen } from './CallScreen';
 import { ConfigurationScreen } from './ConfigurationScreen';
+import { Error } from './Error';
 import { callContainer } from './styles/Call.styles';
 import { Stack } from '@fluentui/react';
-import { CommunicationUiErrorInfo } from '../../types';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
-import { CallAdapter } from './adapter/CallAdapter';
+import { CallAdapter, CallCompositePage } from './adapter/CallAdapter';
+import { PlaceholderProps } from 'react-components';
 import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
+import { Theme, PartialTheme } from '@fluentui/react-theme-provider';
+import { FluentThemeProvider } from 'react-components';
 
 export type CallCompositeProps = {
   adapter: CallAdapter;
-  /** Optional callback to call when error is detected */
-  onErrorCallback?: (error: CommunicationUiErrorInfo) => void;
+  /**
+   * Fluent theme for the composite.
+   *
+   * Defaults to a light theme if undefined.
+   */
+  fluentTheme?: PartialTheme | Theme;
+  onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
 };
 
-const MainScreen = ({ screenWidth }: { screenWidth: number }): JSX.Element => {
+type MainScreenProps = {
+  onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+  screenWidth: number;
+};
+
+const MainScreen = ({ screenWidth, onRenderAvatar }: MainScreenProps): JSX.Element => {
   const page = useSelector(getPage);
   const adapter = useAdapter();
-
-  if (page === 'configuration') {
-    return <ConfigurationScreen screenWidth={screenWidth} startCallHandler={(): void => adapter.setPage('call')} />;
-  } else {
-    return (
-      <CallScreen
-        endCallHandler={async (): Promise<void> => {
-          adapter.setPage('configuration');
-          await adapter.leaveCall();
-        }}
-        screenWidth={screenWidth}
-      />
-    );
+  switch (page) {
+    case 'configuration':
+      return <ConfigurationScreen screenWidth={screenWidth} startCallHandler={(): void => adapter.setPage('call')} />;
+    case 'error':
+      return <Error rejoinHandler={() => adapter.setPage('configuration')} />;
+    case 'errorJoiningTeamsMeeting':
+      return (
+        <Error
+          rejoinHandler={() => adapter.setPage('configuration')}
+          title="Error joining Teams Meeting"
+          reason="Access to the Teams meeting was denied."
+        />
+      );
+    default:
+      return (
+        <CallScreen
+          endCallHandler={async (): Promise<void> => {
+            adapter.setPage('configuration');
+          }}
+          callErrorHandler={(customPage?: CallCompositePage) => {
+            customPage ? adapter.setPage(customPage) : adapter.setPage('error');
+          }}
+          onRenderAvatar={onRenderAvatar}
+          screenWidth={screenWidth}
+        />
+      );
   }
 };
 
@@ -51,21 +76,24 @@ export const Call = (props: CallCompositeProps): JSX.Element => {
     return () => window.removeEventListener('resize', setWindowWidth);
   }, []);
 
-  const { adapter, onErrorCallback } = props;
+  const { adapter, fluentTheme } = props;
 
   useEffect(() => {
-    adapter.queryCameras();
-    adapter.queryMicrophones();
-    adapter.querySpeakers();
+    (async () => {
+      await adapter.askDevicePermission({ video: true, audio: true });
+      adapter.queryCameras();
+      adapter.queryMicrophones();
+      adapter.querySpeakers();
+    })();
   }, [adapter]);
 
   return (
-    <ErrorProvider onErrorCallback={onErrorCallback}>
+    <FluentThemeProvider fluentTheme={fluentTheme}>
       <CallAdapterProvider adapter={adapter}>
         <Stack className={callContainer} grow>
-          <MainScreen screenWidth={screenWidth} />
+          <MainScreen screenWidth={screenWidth} onRenderAvatar={props.onRenderAvatar} />
         </Stack>
       </CallAdapterProvider>
-    </ErrorProvider>
+    </FluentThemeProvider>
   );
 };

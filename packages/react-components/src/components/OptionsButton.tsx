@@ -89,8 +89,8 @@ const generateDefaultMenuProps = (props: OptionsButtonProps): { items: Array<any
 
   if (speakers && selectedSpeaker && onSelectSpeaker) {
     defaultMenuProps.items.push({
-      key: '2',
-      name: 'Choose Microphone',
+      key: '3',
+      name: 'Choose Speaker',
       iconProps: { iconName: 'LocationCircle' },
       subMenuProps: {
         items: speakers.map((val) => ({

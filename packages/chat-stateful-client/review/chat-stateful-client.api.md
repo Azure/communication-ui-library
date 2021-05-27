@@ -11,6 +11,7 @@ import { ChatMessageReadReceipt } from '@azure/communication-chat';
 import { ChatParticipant } from '@azure/communication-chat';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CommunicationTokenCredential } from '@azure/communication-common';
+import { MessageStatus } from 'acs-ui-common';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 
 // @public (undocumented)
@@ -21,12 +22,9 @@ export type ChatClientState = {
 };
 
 // @public (undocumented)
-export type ChatMessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
-
-// @public (undocumented)
 export type ChatMessageWithStatus = ChatMessage & {
     clientMessageId?: string;
-    status: ChatMessageStatus;
+    status: MessageStatus;
 };
 
 // @public (undocumented)

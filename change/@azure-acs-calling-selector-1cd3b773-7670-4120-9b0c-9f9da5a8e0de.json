@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Throwing error when onToggleMicrophone is invoked before call is started.",
-  "packageName": "@azure/acs-calling-selector",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -2,15 +2,15 @@
 // Licensed under the MIT license.
 
 import React, { useEffect, useState } from 'react';
-import { Link, initializeIcons } from '@fluentui/react';
+import { Link, initializeIcons, Spinner } from '@fluentui/react';
 
 import EndCall from './EndCall';
 import CallError from './CallError';
 import { ConfigurationScreen } from './ConfigurationScreen';
-import { GroupCall } from './GroupCall';
+import { CallScreen } from './CallScreen';
 import { HomeScreen } from './HomeScreen';
 import { v1 as createGUID } from 'uuid';
-import { CallProvider, CallClientProvider, CallAgentProvider } from 'react-composites';
+import { CallProvider, CallClientProvider, CallAgentProvider } from 'calling-component-bindings';
 import {
   createRandomDisplayName,
   fetchTokenResponse,
@@ -20,8 +20,11 @@ import {
   isOnIphoneAndNotSafari,
   isSmallScreen
 } from './utils/AppUtils';
-import { refreshTokenAsync } from './utils/refreshToken';
 import { localStorageAvailable } from './utils/constants';
+import { createStatefulCallClient, StatefulCallClient } from 'calling-stateful-client';
+import { getIdFromToken, createAzureCommunicationUserCredential } from 'react-composites';
+import { AudioOptions, Call, CallAgent, GroupLocator } from '@azure/communication-calling';
+import { refreshTokenAsync } from './utils/refreshToken';
 
 const isMobileSession = (): boolean =>
   !!window.navigator.userAgent.match(/(iPad|iPhone|iPod|Android|webOS|BlackBerry|Windows Phone)/g);
@@ -29,6 +32,8 @@ const isMobileSession = (): boolean =>
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const sdkVersion = require('../../package.json').dependencies['@azure/communication-calling'];
 const lastUpdated = `Last Updated ${getBuildTime()} with @azure/communication-calling:${sdkVersion}`;
+const creatingCallClientspinnerLabel = 'Initializing call client...';
+const creatingCallAgentSpinnerLabel = 'Initializing call agent...';
 
 initializeIcons();
 
@@ -56,6 +61,9 @@ const App = (): JSX.Element => {
   const [teamsMeetingLink, setTeamsMeetingLink] = useState<string>();
   const [displayName, setDisplayName] = useState(defaultDisplayName);
   const [isMicrophoneOn, setIsMicrophoneOn] = useState(false);
+  const [statefulCallClient, setStatefulCallClient] = useState<StatefulCallClient>();
+  const [callAgent, setCallAgent] = useState<CallAgent | undefined>(undefined);
+  const [call, setCall] = useState<Call | undefined>(undefined);
 
   useEffect(() => {
     const setWindowWidth = (): void => {
@@ -91,6 +99,34 @@ const App = (): JSX.Element => {
     window.history.pushState({}, document.title, window.location.href + '?groupId=' + getGroupId());
   };
 
+  useEffect(() => {
+    // Create a new CallClient when at the home page or at the createCallClient page.
+    if (page === 'createCallClient' || page === 'home') {
+      const userIdFromToken = token ? getIdFromToken(token) : '';
+      const newStatefulCallClient = createStatefulCallClient({ userId: userIdFromToken });
+      setStatefulCallClient(newStatefulCallClient);
+      page === 'createCallClient' && setPage('configuration');
+
+      const askPermissionAndQueryDevices = async (): Promise<void> => {
+        const deviceManager = await newStatefulCallClient.getDeviceManager();
+        await deviceManager.askDevicePermission({ video: true, audio: true });
+        await deviceManager.getCameras();
+        await deviceManager.getMicrophones();
+        await deviceManager.getSpeakers();
+      };
+      askPermissionAndQueryDevices();
+    }
+  }, [page, token]);
+
+  /**
+   * Routing flow of the sample app: (happy path)
+   * home -> createCallClient -> configuration -> createCallAgent -> call -> endCall
+   *            ^                                                                   |
+   *            | ------------------------------------------------------------------|
+   * CallClient instance can only support one CallAgent. We need to create a new CallClient to create a new CallAgent.
+   * Thus re-creation of the call client is required for joining a new call,
+   * So we need to guarantee that we have created a new client before we enter CallClientProvider.
+   */
   const renderPage = (page: string): JSX.Element => {
     switch (page) {
       case 'configuration':
@@ -98,10 +134,29 @@ const App = (): JSX.Element => {
           <ConfigurationScreen
             displayName={displayName}
             screenWidth={screenWidth}
-            startCallHandler={(data): void => {
+            startCallHandler={async (data) => {
+              let meetingLink;
               if (data?.callLocator && 'meetingLink' in data?.callLocator) {
                 setTeamsMeetingLink(data?.callLocator.meetingLink);
+                meetingLink = data?.callLocator.meetingLink;
               }
+
+              // Generate a new CallAgent for the new call experience.
+              try {
+                const userCredential = createAzureCommunicationUserCredential(token, refreshTokenAsync(userId));
+                setPage('createCallAgent');
+                await callAgent?.dispose();
+                const newCallAgent = await statefulCallClient?.createCallAgent(userCredential, { displayName });
+                const callLocator = meetingLink ? { meetingLink } : { groupId: getGroupId() };
+                const audioOptions: AudioOptions = { muted: !isMicrophoneOn };
+                const call = newCallAgent?.join(callLocator as GroupLocator, { audioOptions });
+                setCall(call);
+                setCallAgent(newCallAgent);
+              } catch (error) {
+                console.error(error);
+                setPage('callError');
+              }
+
               setPage('call');
             }}
             onDisplayNameUpdate={setDisplayName}
@@ -111,14 +166,15 @@ const App = (): JSX.Element => {
         );
       case 'call':
         return (
-          <CallAgentProvider displayName={displayName} token={token}>
-            <CallProvider>
-              <GroupCall
+          <CallAgentProvider callAgent={callAgent}>
+            <CallProvider call={call}>
+              <CallScreen
                 endCallHandler={(): void => {
                   setPage('endCall');
                 }}
-                callErrorHandler={() => {
-                  setPage('callError');
+                callErrorHandler={(customErrorPage?: string) => {
+                  if (customErrorPage) setPage(customErrorPage);
+                  else setPage('callError');
                 }}
                 screenWidth={screenWidth}
                 callLocator={
@@ -135,6 +191,8 @@ const App = (): JSX.Element => {
             </CallProvider>
           </CallAgentProvider>
         );
+      case 'createCallAgent':
+        return <Spinner label={creatingCallAgentSpinnerLabel} ariaLive="assertive" labelPosition="top" />;
       default:
         return <>Invalid Page</>;
     }
@@ -144,8 +202,11 @@ const App = (): JSX.Element => {
     const supportedBrowser = !isOnIphoneAndNotSafari();
     if (!supportedBrowser) return UnsupportedBrowserPage();
 
+    if (!statefulCallClient)
+      return <Spinner label={creatingCallClientspinnerLabel} ariaLive="assertive" labelPosition="top" />;
+
     if (getGroupIdFromUrl() && page === 'home') {
-      setPage('configuration');
+      setPage('createCallClient');
     }
 
     if (isMobileSession() || isSmallScreen()) {
@@ -157,17 +218,26 @@ const App = (): JSX.Element => {
         return <HomeScreen startCallHandler={navigateToStartCallPage} />;
       }
       case 'endCall': {
-        return <EndCall rejoinHandler={() => setPage('configuration')} homeHandler={navigateToHomePage} />;
+        return <EndCall rejoinHandler={() => setPage('createCallClient')} homeHandler={navigateToHomePage} />;
       }
       case 'callError': {
-        return <CallError rejoinHandler={() => setPage('configuration')} homeHandler={navigateToHomePage} />;
+        return <CallError rejoinHandler={() => setPage('createCallClient')} homeHandler={navigateToHomePage} />;
+      }
+      case 'teamsMeetingDenied': {
+        return (
+          <CallError
+            title="Error joining Teams Meeting"
+            reason="Access to the Teams meeting was denied."
+            rejoinHandler={() => setPage('createCallClient')}
+            homeHandler={navigateToHomePage}
+          />
+        );
+      }
+      case 'createCallClient': {
+        return <Spinner label={creatingCallClientspinnerLabel} ariaLive="assertive" labelPosition="top" />;
       }
       default:
-        return (
-          <CallClientProvider token={token} refreshTokenCallback={refreshTokenAsync(userId)}>
-            {renderPage(page)}
-          </CallClientProvider>
-        );
+        return <CallClientProvider callClient={statefulCallClient}>{renderPage(page)}</CallClientProvider>;
     }
   };
 
@@ -176,7 +246,7 @@ const App = (): JSX.Element => {
 
 window.setTimeout(() => {
   try {
-    console.log(`ACS sample group calling app: ${lastUpdated}`);
+    console.log(`ACS sample calling app: ${lastUpdated}`);
   } catch (e) {
     /* continue regardless of error */
   }

@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Complete chatClient's stopRealtimeNotification declarative implementation",
-  "packageName": "chat-stateful-client",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "none"
-}

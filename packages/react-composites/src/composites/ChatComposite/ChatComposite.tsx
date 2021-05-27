@@ -2,15 +2,21 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { CommunicationUiErrorInfo } from '../../types/CommunicationUiError';
 import { ChatScreen } from './ChatScreen';
 import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
 import { ChatAdapter } from './adapter/ChatAdapter';
+import { Theme, PartialTheme } from '@fluentui/react-theme-provider';
+import { FluentThemeProvider } from 'react-components';
 
-export type ChatProps = {
+export type ChatCompositeProps = {
   adapter: ChatAdapter;
+  /**
+   * Fluent theme for the composite.
+   *
+   * Defaults to a light theme if undefined.
+   */
+  fluentTheme?: PartialTheme | Theme;
   onRenderAvatar?: (userId: string) => JSX.Element;
-  onErrorCallback?: (error: CommunicationUiErrorInfo) => void;
   options?: ChatOptions;
 };
 
@@ -20,13 +26,15 @@ export type ChatOptions = {
   // supportNewline: boolean; // Whether to support new line (shift+enter) in textArea, disable until ACS backend supports line switch
 };
 
-export const ChatComposite = (props: ChatProps): JSX.Element => {
-  const { adapter, options, onRenderAvatar } = props;
+export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
+  const { adapter, fluentTheme, options, onRenderAvatar } = props;
 
   return (
-    <ChatAdapterProvider adapter={adapter}>
-      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
-      <ChatScreen sendBoxMaxLength={options?.sendBoxMaxLength} onRenderAvatar={onRenderAvatar} />
-    </ChatAdapterProvider>
+    <FluentThemeProvider fluentTheme={fluentTheme}>
+      <ChatAdapterProvider adapter={adapter}>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+        <ChatScreen sendBoxMaxLength={options?.sendBoxMaxLength} onRenderAvatar={onRenderAvatar} />
+      </ChatAdapterProvider>
+    </FluentThemeProvider>
   );
 };

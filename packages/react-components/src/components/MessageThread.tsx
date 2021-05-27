@@ -3,33 +3,33 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Linkify from 'react-linkify';
-import { Chat, ChatItemProps, Flex, Ref, ShorthandValue } from '@fluentui/react-northstar';
+import { Chat, ChatItemProps, Flex, Ref, ShorthandValue, Text } from '@fluentui/react-northstar';
 import {
   DownIconStyle,
   newMessageButtonContainerStyle,
   messageThreadContainerStyle,
+  chatMessageDateStyle,
   chatMessageStyle,
   chatStyle,
   newMessageButtonStyle,
-  readReceiptContainerStyle,
-  noReadReceiptStyle
+  messageStatusContainerStyle,
+  noMessageStatusStyle
 } from './styles/MessageThread.styles';
 import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack, Link } from '@fluentui/react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { LiveAnnouncer, LiveMessage } from 'react-aria-live';
-import { formatTimestampForChatMessage } from './utils/Datetime';
+import { formatTimeForChatMessage, formatTimestampForChatMessage } from './utils/Datetime';
 import { delay } from './utils/delay';
 import {
   BaseCustomStylesProps,
   ChatMessage,
   CustomMessage,
   SystemMessage,
-  MessageStatus,
   ChatMessagePayload,
   SystemMessagePayload
 } from '../types';
-import { ReadReceipt, ReadReceiptProps } from './ReadReceipt';
-import { memoizeFnAll } from 'acs-ui-common';
+import { MessageStatusIndicator, MessageStatusIndicatorProps } from './MessageStatusIndicator';
+import { memoizeFnAll, MessageStatus } from 'acs-ui-common';
 import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from './SystemMessage';
 import { Parser } from 'html-to-react';
 
@@ -136,8 +136,8 @@ export interface MessageThreadStylesProps extends BaseCustomStylesProps {
   chatMessageContainer?: ComponentSlotStyle;
   /** Styles for system message container. */
   systemMessageContainer?: ComponentSlotStyle;
-  /** Styles for read receipt container. */
-  readReceiptContainer?: (mine: boolean) => IStyle;
+  /** Styles for message status indicator container. */
+  messageStatusContainer?: (mine: boolean) => IStyle;
 }
 
 export interface JumpToNewMessageButtonProps {
@@ -234,9 +234,15 @@ const DefaultChatMessageRenderer: DefaultMessageRendererType = (props: MessagePr
       <Chat.Message
         className={mergeStyles(chatMessageStyle as IStyle, props.messageContainerStyle as IStyle)}
         content={messageContentItem}
-        author={payload.senderDisplayName}
+        author={<Text className={mergeStyles(chatMessageDateStyle as IStyle)}>{payload.senderDisplayName}</Text>}
         mine={payload.mine}
-        timestamp={payload.createdOn ? formatTimestampForChatMessage(payload.createdOn, new Date()) : undefined}
+        timestamp={
+          payload.createdOn
+            ? props.showDate
+              ? formatTimestampForChatMessage(payload.createdOn, new Date())
+              : formatTimeForChatMessage(payload.createdOn)
+            : undefined
+        }
       />
     );
   }
@@ -248,17 +254,21 @@ const memoizeAllMessages = memoizeFnAll(
   (
     _messageKey: string,
     message: ChatMessage | SystemMessage | CustomMessage,
-    disableReadReceipt: boolean,
+    showMessageDate: boolean,
+    showMessageStatus: boolean,
     onRenderAvatar: ((userId: string) => JSX.Element) | undefined,
     styles: MessageThreadStylesProps | undefined,
-    onRenderReadReceipt: ((readReceiptProps: ReadReceiptProps) => JSX.Element | null) | undefined,
+    onRenderMessageStatus:
+      | ((messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null)
+      | undefined,
     defaultChatMessageRenderer: (message: MessageProps) => JSX.Element,
     _attached?: boolean | string,
     statusToRender?: MessageStatus,
     onRenderMessage?: (message: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element
   ): ShorthandValue<ChatItemProps> => {
     const messageProps: MessageProps = {
-      message: message
+      message: message,
+      showDate: showMessageDate
     };
 
     if (message.type === 'chat') {
@@ -284,20 +294,18 @@ const memoizeAllMessages = memoizeFnAll(
             {chatMessageComponent}
             <div
               className={mergeStyles(
-                readReceiptContainerStyle(payload.mine ?? false),
-                styles?.readReceiptContainer ? styles.readReceiptContainer(payload.mine ?? false) : ''
+                messageStatusContainerStyle(payload.mine ?? false),
+                styles?.messageStatusContainer ? styles.messageStatusContainer(payload.mine ?? false) : ''
               )}
             >
-              {!disableReadReceipt && statusToRender ? (
-                onRenderReadReceipt ? (
-                  onRenderReadReceipt({
-                    messageStatus: statusToRender
-                  })
+              {showMessageStatus && statusToRender ? (
+                onRenderMessageStatus ? (
+                  onRenderMessageStatus({ status: statusToRender })
                 ) : (
-                  ReadReceipt({ messageStatus: statusToRender })
+                  MessageStatusIndicator({ status: statusToRender })
                 )
               ) : (
-                <div className={mergeStyles(noReadReceiptStyle)} />
+                <div className={mergeStyles(noMessageStatusStyle)} />
               )}
             </div>
           </Flex>
@@ -363,36 +371,49 @@ export type MessageThreadProps = {
   styles?: MessageThreadStylesProps;
   /**
    * Whether the new message button is disabled or not.
+   *
    * @defaultValue `false`
    */
   disableJumpToNewMessageButton?: boolean;
   /**
-   * Whether the read receipt for each message is disabled or not.
-   * @defaultValue `true`
+   * Whether the date of each message is displayed or not.
+   *
+   * @defaultValue `false`
    */
-  disableReadReceipt?: boolean;
+  showMessageDate?: boolean;
+  /**
+   * Whether the status indicator for each message is displayed or not.
+   *
+   * @defaultValue `false`
+   */
+  showMessageStatus?: boolean;
   /**
    * Number of chat messaegs to reload each time onLoadPreviousChatMessages is called.
+   *
    * @defaultValue 0
    */
   numberOfChatMessagesToReload?: number;
   /**
    * Optional callback to override actions on message being seen.
+   *
    * @param messageId - message Id
    */
   onMessageSeen?: (messageId: string) => Promise<void>;
   /**
-   * Optional callback to override render of the Read Receipt indicator.
-   * @param readReceiptProps - props of type ReadReceiptProps
+   * Optional callback to override render of the message status indicator.
+   *
+   * @param messageStatusIndicatorProps - props of type MessageStatusIndicatorProps
    */
-  onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element | null;
+  onRenderMessageStatus?: (messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null;
   /**
    * Optional callback to override render of the avatar.
+   *
    * @param userId - user Id
    */
   onRenderAvatar?: (userId: string) => JSX.Element;
   /**
    * Optional callback to override render of the button for jumping to the new message.
+   *
    * @param newMessageButtonProps - button props of type JumpToNewMessageButtonProps
    */
   onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
@@ -404,8 +425,10 @@ export type MessageThreadProps = {
   onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
   /**
    * Optional callback to override render of a message.
+   *
    * @param messageProps - props of type MessageProps
    * @param defaultOnRender - default render of type DefaultMessageRendererType
+   *
    * @remarks
    * `defaultOnRender` is not provided for `CustomMessage` and thus only available for `ChatMessage` and `SystemMessage`.
    */
@@ -424,6 +447,12 @@ export type MessageProps = {
    * Custom CSS styles for chat message container.
    */
   messageContainerStyle?: ComponentSlotStyle;
+  /**
+   * Whether the date of a message is displayed or not.
+   *
+   * @defaultValue `false`
+   */
+  showDate?: boolean;
 };
 
 /**
@@ -431,7 +460,7 @@ export type MessageProps = {
  * @param props - of type MessageThreadProps
  *
  * Users will need to provide at least chat messages and userId to render the `MessageThread` component.
- * Users can also customize `MessageThread` by passing in their own Avatar, `ReadReceipt` icon, `JumpToNewMessageButton`, `LoadPreviousMessagesButton` and the behavior of these controls.
+ * Users can also customize `MessageThread` by passing in their own Avatar, `MessageStatusIndicator` icon, `JumpToNewMessageButton`, `LoadPreviousMessagesButton` and the behavior of these controls.
  *
  * `MessageThread` internally uses the `Chat` & `Chat.Message` component from `@fluentui/react-northstar`. You can checkout the details about these [two components](https://fluentsite.z22.web.core.windows.net/0.53.0/components/chat/props).
  */
@@ -441,10 +470,11 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     userId,
     styles,
     disableJumpToNewMessageButton = false,
-    disableReadReceipt = true,
+    showMessageDate = false,
+    showMessageStatus = false,
     numberOfChatMessagesToReload = 0,
     onMessageSeen,
-    onRenderReadReceipt,
+    onRenderMessageStatus,
     onRenderAvatar,
     onLoadPreviousChatMessages,
     onRenderJumpToNewMessageButton,
@@ -501,14 +531,14 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     setChatMessagesInitialized(chatMessagesInitialized);
   };
 
-  // we try to only send those read receipt if user is scrolled to the bottom.
-  const sendReadReceiptIfAtBottom = useCallback(async (): Promise<void> => {
+  // we try to only send those message status if user is scrolled to the bottom.
+  const sendMessageStatusIfAtBottom = useCallback(async (): Promise<void> => {
     if (
       !isAtBottomOfScrollRef.current ||
       !document.hasFocus() ||
       !messagesRef.current ||
       messagesRef.current.length === 0 ||
-      disableReadReceipt
+      !showMessageStatus
     ) {
       return;
     }
@@ -533,14 +563,14 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     } catch (e) {
       console.log('onMessageSeen Error', lastMessage, e);
     }
-  }, [disableReadReceipt, onMessageSeen, chatMessageIdJustSeen]);
+  }, [showMessageStatus, onMessageSeen, chatMessageIdJustSeen]);
 
   const scrollToBottom = useCallback((): void => {
     chatScrollDivRef.current.scrollTop = chatScrollDivRef.current.scrollHeight;
     setExistsNewChatMessage(false);
     setIsAtBottomOfScrollRef(true);
-    sendReadReceiptIfAtBottom();
-  }, [sendReadReceiptIfAtBottom]);
+    sendMessageStatusIfAtBottom();
+  }, [sendMessageStatusIfAtBottom]);
 
   const handleScroll = (): void => {
     const atBottom =
@@ -548,7 +578,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       chatScrollDivRef.current.scrollHeight - chatScrollDivRef.current.clientHeight;
     const atTop = chatScrollDivRef.current.scrollTop === 0;
     if (atBottom) {
-      sendReadReceiptIfAtBottom();
+      sendMessageStatusIfAtBottom();
       if (!isAtBottomOfScrollRef.current) {
         scrollToBottom();
       }
@@ -580,13 +610,13 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
    * unmounts.
    */
   useEffect(() => {
-    window && window.addEventListener('click', sendReadReceiptIfAtBottom);
-    window && window.addEventListener('focus', sendReadReceiptIfAtBottom);
+    window && window.addEventListener('click', sendMessageStatusIfAtBottom);
+    window && window.addEventListener('focus', sendMessageStatusIfAtBottom);
     chatScrollDivRef.current && chatScrollDivRef.current.addEventListener('scroll', handleScroll);
     const chatScrollDiv = chatScrollDivRef.current;
     return () => {
-      window && window.removeEventListener('click', sendReadReceiptIfAtBottom);
-      window && window.removeEventListener('focus', sendReadReceiptIfAtBottom);
+      window && window.removeEventListener('click', sendMessageStatusIfAtBottom);
+      window && window.removeEventListener('focus', sendMessageStatusIfAtBottom);
       chatScrollDiv && chatScrollDiv.removeEventListener('scroll', handleScroll);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -674,7 +704,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
 
             let statusToRender: MessageStatus | undefined = undefined;
             if (message.type === 'chat') {
-              if (!disableReadReceipt && message.payload.mine) {
+              if (showMessageStatus && message.payload.mine) {
                 switch (message.payload.messageId) {
                   case lastSeenChatMessage: {
                     statusToRender = 'seen';
@@ -696,10 +726,11 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             return memoizedMessageFn(
               key ?? 'id_' + index,
               message,
-              disableReadReceipt,
+              showMessageDate,
+              showMessageStatus,
               onRenderAvatar,
               styles,
-              onRenderReadReceipt,
+              onRenderMessageStatus,
               defaultChatMessageRenderer,
               // Temporary solution to make sure we re-render if attach attribute is changed.
               // The proper fix should be in selector.
@@ -712,10 +743,11 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       }),
     [
       messages,
-      disableReadReceipt,
+      showMessageDate,
+      showMessageStatus,
       onRenderAvatar,
       styles,
-      onRenderReadReceipt,
+      onRenderMessageStatus,
       defaultChatMessageRenderer,
       lastSeenChatMessage,
       lastSendingChatMessage,

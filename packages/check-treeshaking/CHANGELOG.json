@@ -1,0 +1,20 @@
+{
+  "name": "check-treeshaking",
+  "entries": [
+    {
+      "date": "Fri, 21 May 2021 16:16:28 GMT",
+      "tag": "check-treeshaking_v0.1.0",
+      "version": "0.1.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-components to v1.0.0-beta.1",
+            "author": "alkwa@microsoft.com",
+            "commit": "299ef421f4917e2faf3d66491563da4fa9826494",
+            "package": "check-treeshaking"
+          }
+        ]
+      }
+    }
+  ]
+}

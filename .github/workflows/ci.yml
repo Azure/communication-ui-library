@@ -68,17 +68,6 @@ jobs:
         env:
           CI: true
 
-      # Deploy Storybook - only perform this step on main branch CI
-      - name: Deploy Storybook
-        if: github.ref == 'refs/heads/main'
-        # storybook requires the env vars to be in a .env file for access in the manager.ts
-        run: |
-          echo TELEMETRY_INSTRUMENTATION_KEY=${{ secrets.TELEMETRY_INSTRUMENTATION_KEY }} > .env
-          npm run deploy-storybook -- --ci
-        working-directory: ./packages/storybook
-        env:
-          GH_TOKEN: ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
-
       # Create a GitHub issue if the CI failed when running on the `main` branch
       - name: Create issue if main branch CI failed
         id: create-issue

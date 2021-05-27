@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Notify ChatComposite user when they leave a thread",
+  "packageName": "react-composites",
+  "email": "prprabhu@microsoft.com",
+  "dependentChangeType": "patch"
+}

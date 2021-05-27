@@ -1,0 +1,52 @@
+{
+  "name": "acs-ui-common",
+  "entries": [
+    {
+      "date": "Fri, 21 May 2021 16:16:28 GMT",
+      "tag": "acs-ui-common_v1.0.0-beta.1",
+      "version": "1.0.0-beta.1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add AreEqual types",
+            "author": "easony@microsoft.com",
+            "commit": "a458a977e42cddc0d2d3d32e2fa71a547316fe1c",
+            "package": "acs-ui-common"
+          },
+          {
+            "comment": "Initialize packlet for code common to chat and calling",
+            "author": "prprabhu@microsoft.com",
+            "commit": "ddffe05acae25c042be42393759d7d8cf4f4de50",
+            "package": "acs-ui-common"
+          },
+          {
+            "comment": "Introduce common identifier format",
+            "author": "prprabhu@microsoft.com",
+            "commit": "5ae89e5ea40e1f6cbe4a7218694853132dd83850",
+            "package": "acs-ui-common"
+          },
+          {
+            "comment": "Add devDependency to bypass node v14 compile",
+            "author": "jinan@microsoft.com",
+            "commit": "72a986961e00b7ca70b6e0f64ec3dddd3c109705",
+            "package": "acs-ui-common"
+          },
+          {
+            "comment": "Move duplicate memoizefnall definitions to common package",
+            "author": "mail@jamesburnside.com",
+            "commit": "b11203aad28ceb459f5cd7f04a4163bfb4832466",
+            "package": "acs-ui-common"
+          }
+        ],
+        "none": [
+          {
+            "comment": "dedupe export",
+            "author": "mail@jamesburnside.com",
+            "commit": "1df1d442338254c600b53178f481551096d178a6",
+            "package": "acs-ui-common"
+          }
+        ]
+      }
+    }
+  ]
+}

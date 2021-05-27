@@ -1,8 +1,8 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
-import { GroupCall, GroupChat } from '@azure/communication-react';
-import { App as QuickstartCompositeExample } from './snippets/QuickstartComposite.snippet.tsx';
-import QuickstartCompositeText from '!!raw-loader!./snippets/QuickstartComposite.snippet.tsx';
+import { CallComposite, ChatComposite } from '@azure/communication-react';
+import QuickstartCompositeComplete from '!!raw-loader!./snippets/QuickstartCompositeComplete.snippet.tsx';
+import QuickstartCompositeAdapter from '!!raw-loader!./snippets/QuickstartCompositeAdapter.snippet.tsx';
 
 <Meta title="Quickstarts/Get started with Composites" />
 
@@ -10,9 +10,9 @@ import QuickstartCompositeText from '!!raw-loader!./snippets/QuickstartComposite
 
 Get started with Azure Communication Services by using the UI Library to quickly integrate communication experiences into your applications. In this quickstart, you'll learn how to integrate UI Library base components into your application to build communication experiences.
 
-UI Library components come in two flavors: Base and Composite.
+UI Library components come in two flavors: UI and Composite.
 
-- **Base components** represent discrete communication capabilities; they're the basic building blocks that can be used to build complex communication experiences.
+- **UI components** represent discrete communication capabilities; they're the basic building blocks that can be used to build complex communication experiences.
 - **Composite components** are turn-key experiences for common communication scenarios that have been built using **base components** as building blocks and packaged to be easily integrated into applications.
 
 ## Prerequisites
@@ -21,7 +21,7 @@ UI Library components come in two flavors: Base and Composite.
 - [Node.js](https://nodejs.org/) Active LTS and Maintenance LTS versions (Node 12 Recommended).
 - An active Communication Services resource. [Create a Communication Services resource](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp).
 
-## Setting up
+## Setting Up
 
 UI Library requires a React environment to be setup. Next we will do that. If you already have a React App, you can skip this section.
 
@@ -31,26 +31,22 @@ We'll use the create-react-app template for this quickstart. For more informatio
 
 ```bash
 
-# Build app in typescript:
-npx create-react-app ui-toolkit-quickstart --template typescript
+npx create-react-app ui-toolkit-quickstart-composites --template typescript
 
-cd ui-toolkit-quickstart
+cd ui-toolkit-quickstart-composites
 
 ```
 
-At the end of this process, you should have a full application inside of the folder `ui-toolkit-quickstart`.
+At the end of this process, you should have a full application inside of the folder `ui-toolkit-quickstart-composites`.
 For this quickstart, we'll be modifying files inside of the `src` folder.
 
-### Install the package
+### Install the Package
 
 Use the `npm install` command to install the Azure Communication Services UI Library for JavaScript.
-Move the provided tarball (Private Preview) over to the `ui-toolkit-quickstart` directory. **Make sure to run the `npm i` command inside the `ui-toolkit-quickstart` directory.**
 
 ```bash
 
-# For Private Preview install tarball
-
-npm install --save ./{path for tarball}
+npm install --save @azure/communication-react
 
 ```
 
@@ -66,36 +62,48 @@ npm run start
 
 ```
 
-## Object model
+## Object Model
 
 The following classes and interfaces handle some of the major features of the Azure Communication Services UI client library:
 
-| Name                                                                  | Description                                                                                        |
-| --------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| [GroupCall](/?path=/story/composites-groupcall--group-call-composite) | Composite component that renders a group calling experience with participant gallery and controls. |
-| [GroupChat](/?path=/story/composites-groupchat--group-chat-composite) | Composite component that renders a group chat experience with chat thread and input                |
+| Name                                                          | Description                                                                                  |
+| ------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| [CallComposite](/?path=/story/composites-call--basic-example) | Composite component that renders a calling experience with participant gallery and controls. |
+| [ChatComposite](/?path=/story/composites-chat--basic-example) | Composite component that renders a chat experience with chat thread and input                |
 
-## Initialize Group Call and Group Chat Composite Components
+## Set Up Adapters
 
-Go to the `src` folder inside of `ui-toolkit-quickstart` and look for the file `app.tsx`.
-Here we'll drop the following code to initialize our Composite Components for Group Chat and Calling.
-You can choose which one to use depending on the type of communication experience you're building.
-If needed, you can use both at the same time.
-To initialize the components, you'll need an access token retrieved from Azure Communication Services.
-For details on how to do get access tokens, see: [create and manage user access tokens](https://docs.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-javascript).
+Before we initialize the actual composite components, we need to set up the adapters that will power them.
+These adapters take care of the entire state of the composites truly making them a turn-key solution.
+To setup the adapters, developers needs to pass information on the call or chat they want to join.
 
-The components don't generate access tokens, group IDs, or thread IDs.
+The adapters require access tokens, group IDs, or thread IDs to be setup.
 These elements come from services that go through the proper steps to generate these IDs and pass them to the client application.
 For more information, see: [Client Server Architecture](https://docs.microsoft.com/azure/communication-services/concepts/client-and-server-architecture).
 For Example: The Group Chat composite expects that the `userId` associated to the `token` being used to initialize it has already been joined to the `threadId` being provided.
 If the token hasn't been joined to the thread ID, then the Group Chat composite will fail.
 For more information on chat, see: [Getting Started with Chat](https://docs.microsoft.com/azure/communication-services/quickstarts/chat/get-started?pivots=programming-language-csharp)
 
+Go to the `src` folder inside of `ui-toolkit-quickstart-composites` and look for the file `app.tsx`.
+
 `App.tsx`
 
-<Source code={QuickstartCompositeText} />
+<Source code={QuickstartCompositeAdapter} />
 
-## Run quickstart
+Next we will initialize the composite components with the adapters.
+
+## Initialize Composites
+
+Go to the `src` folder inside of `ui-toolkit-quickstart-composites` and look for the file `app.tsx`.
+Here we'll drop the following code to initialize our Composite Components for Chat and Calling using the adapters we set up above.
+You can choose which one to use depending on the type of communication experience you're building.
+If needed, you can use both at the same time.
+
+`App.tsx`
+
+<Source code={QuickstartCompositeComplete} />
+
+## Run Quickstart
 
 To run the code above use the command:
 
@@ -105,15 +113,15 @@ npm run start
 
 ```
 
-## Clean up resources
+## Clean Up Resources
 
 If you want to clean up and remove a Communication Services subscription, you can delete the resource or resource group.
 Deleting the resource group also deletes any other resources associated with it.
 Learn more about [cleaning up resources](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp#clean-up-resources).
 
-## Next steps
+## Next Steps
 
-[Try UI Library UI Components](/?path=/story/quickstart-ui-components--page)
+[Try UI Library UI Components](/?path=/story/quickstarts-get-started-with-ui-components--page)
 
 For more information, see the following resources:
 

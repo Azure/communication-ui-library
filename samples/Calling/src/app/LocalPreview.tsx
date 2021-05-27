@@ -6,9 +6,22 @@ import { CallVideoOffIcon } from '@fluentui/react-icons-northstar';
 import { Stack, Text } from '@fluentui/react';
 import { localPreviewContainerStyle, cameraOffLabelStyle, localPreviewTileStyle } from './styles/LocalPreview.styles';
 import { CameraButton, ControlBar, MicrophoneButton, StreamMedia, VideoTile } from 'react-components';
-import { useSelector } from './hooks/useSelector';
-import { usePropsFor } from './hooks/usePropsFor';
-import { localPreviewSelector } from '@azure/acs-calling-selector';
+import { useCallingSelector as useSelector, useCallingPropsFor as usePropsFor } from 'calling-component-bindings';
+import { localPreviewSelector } from './selectors/localPreviewSelector';
+import { devicePermissionSelector } from 'calling-component-bindings';
+
+const onRenderPlaceholder = (): JSX.Element => {
+  return (
+    <Stack style={{ width: '100%', height: '100%' }} verticalAlign="center">
+      <Stack.Item align="center">
+        <CallVideoOffIcon />
+      </Stack.Item>
+      <Stack.Item align="center">
+        <Text className={cameraOffLabelStyle}>Your camera is turned off.</Text>
+      </Stack.Item>
+    </Stack>
+  );
+};
 
 export interface LocalPreviewProps {
   isMicrophoneOn: boolean;
@@ -18,6 +31,7 @@ export interface LocalPreviewProps {
 export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
   const localPreviewProps = useSelector(localPreviewSelector);
+  const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useSelector(devicePermissionSelector);
 
   return (
     <Stack className={localPreviewContainerStyle}>
@@ -25,21 +39,13 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
         styles={localPreviewTileStyle}
         isVideoReady={!!localPreviewProps.videoStreamElement}
         renderElement={<StreamMedia videoStreamElement={localPreviewProps.videoStreamElement} />}
+        onRenderPlaceholder={onRenderPlaceholder}
         isMirrored={true}
-        placeholder={
-          <Stack style={{ width: '100%', height: '100%' }} verticalAlign="center">
-            <Stack.Item align="center">
-              <CallVideoOffIcon />
-            </Stack.Item>
-            <Stack.Item align="center">
-              <Text className={cameraOffLabelStyle}>Your camera is turned off</Text>
-            </Stack.Item>
-          </Stack>
-        }
       >
         <ControlBar layout="floatingBottom">
-          <CameraButton {...cameraButtonProps} />
+          <CameraButton {...cameraButtonProps} disabled={!cameraPermissionGranted} />
           <MicrophoneButton
+            disabled={!microphonePermissionGranted}
             checked={props.isMicrophoneOn}
             onToggleMicrophone={async () => {
               props.setIsMicrophoneOn(!props.isMicrophoneOn);

@@ -1,21 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { chatScreenBottomContainerStyle, chatScreenContainerStyle } from './styles/ChatScreen.styles';
 import { Stack } from '@fluentui/react';
 import { onRenderAvatar } from './Avatar';
 import { ChatHeader } from './ChatHeader';
 import { ChatArea } from './ChatArea';
 import { SidePanel, SidePanelTypes } from './SidePanel';
-import {
-  chatParticipantListSelector,
-  useChatClient,
-  useChatThreadClient,
-  useHandlers,
-  useSelector,
-  useThreadId
-} from '@azure/acs-chat-selector';
+import { chatParticipantListSelector, useChatThreadClient, useChatSelector } from 'chat-component-bindings';
 import { chatHeaderSelector } from './selectors/chatHeaderSelector';
 
 // These props are passed in when this component is referenced in JSX and not found in context
@@ -33,15 +26,12 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   );
   const isAllInitialParticipantsFetchedRef = useRef(false);
 
-  const threadId = useThreadId();
-  const chatClient = useChatClient();
   const chatThreadClient = useChatThreadClient();
 
   // Updates the thread state and populates attributes like topic, id, createdBy etc.
   useEffect(() => {
-    chatClient.getChatThreadClient(threadId).getProperties();
-    // eslint-disable-next-line
-  }, []);
+    chatThreadClient.getProperties();
+  }, [chatThreadClient]);
 
   // This code gets all participants who joined the chat earlier than the current user.
   // We need to do this to make the state in declaritive up to date.
@@ -68,9 +58,16 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     document.getElementById('sendbox')?.focus();
   }, []);
 
-  const chatHeaderProps = useSelector(chatHeaderSelector);
-  const chatHeaderHandlers = useHandlers(ChatHeader);
-  const chatParticipantProps = useSelector(chatParticipantListSelector);
+  const chatHeaderProps = useChatSelector(chatHeaderSelector);
+
+  const updateThreadTopicName = useCallback(
+    async (topicName: string) => {
+      await chatThreadClient.updateTopic(topicName);
+    },
+    [chatThreadClient]
+  );
+
+  const chatParticipantProps = useChatSelector(chatParticipantListSelector);
 
   useEffect(() => {
     // We only want to check if we've fetched all the existing participants.
@@ -95,8 +92,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     <Stack className={chatScreenContainerStyle}>
       <ChatHeader
         {...chatHeaderProps}
-        {...chatHeaderHandlers}
         {...chatParticipantProps}
+        updateThreadTopicName={updateThreadTopicName}
         endChatHandler={endChatHandler}
         selectedPane={selectedPane}
         setSelectedPane={setSelectedPane}

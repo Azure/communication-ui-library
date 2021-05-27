@@ -9,6 +9,8 @@ import {
   groupCallLeaveButtonStyle
 } from './styles/CallControls.styles';
 import { usePropsFor } from './hooks/usePropsFor';
+import { devicePermissionSelector } from 'calling-component-bindings';
+import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 
 export type GroupCallControlsProps = {
   onEndCallClick(): void;
@@ -25,6 +27,9 @@ export const CallControls = (props: GroupCallControlsProps): JSX.Element => {
     await hangUpButtonProps.onHangUp();
     onEndCallClick();
   }, [hangUpButtonProps, onEndCallClick]);
+  const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useAdaptedSelector(
+    devicePermissionSelector
+  );
 
   return (
     <ControlBar styles={controlBarStyle}>
@@ -33,8 +38,9 @@ export const CallControls = (props: GroupCallControlsProps): JSX.Element => {
         onToggleCamera={() => {
           return cameraButtonProps.onToggleCamera().catch((e) => console.log(e));
         }}
+        disabled={!cameraPermissionGranted}
       />
-      <MicrophoneButton {...microphoneButtonProps} />
+      <MicrophoneButton {...microphoneButtonProps} disabled={!microphonePermissionGranted} />
       <ScreenShareButton {...screenShareButtonProps} />
       <EndCallButton
         {...hangUpButtonProps}

@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { optionsButtonSelector, participantListSelector } from '@azure/acs-calling-selector';
+import { devicePermissionSelector, optionsButtonSelector, participantListSelector } from 'calling-component-bindings';
 import { Stack } from '@fluentui/react';
 import {
   fullHeightStyles,
@@ -12,10 +12,10 @@ import {
 } from 'app/styles/CommandPanel.styles';
 import { ThemeSelector } from 'app/theming/ThemeSelector';
 import { Footer } from './Footer';
-import { useHandlers } from './hooks/useHandlers';
-import { useSelector } from './hooks/useSelector';
+import { useCallingSelector as useSelector } from 'calling-component-bindings';
 import { LocalDeviceSettings } from './LocalDeviceSettings';
 import { ParticipantList } from 'react-components';
+import { useAzureCommunicationHandlers } from './hooks/useAzureCommunicationHandlers';
 
 export enum CommandPanelTypes {
   None = 'none',
@@ -29,10 +29,10 @@ export interface CommandPanelProps {
 
 export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
   const participantListProps = useSelector(participantListSelector);
-  const participantListHandlers = useHandlers(ParticipantList);
 
   const options = useSelector(optionsButtonSelector, { callId: '' });
-  const handlers = useHandlers(LocalDeviceSettings);
+  const handlers = useAzureCommunicationHandlers();
+  const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useSelector(devicePermissionSelector);
 
   return (
     <Stack styles={fullHeightStyles} tokens={{ childrenGap: '1.5rem' }}>
@@ -41,7 +41,7 @@ export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
       </Stack.Item>
       {props.selectedPane === CommandPanelTypes.People && (
         <Stack.Item styles={fullHeightStyles}>
-          <ParticipantList {...participantListProps} {...participantListHandlers} />
+          <ParticipantList {...participantListProps} onParticipantRemove={handlers.onParticipantRemove} />
         </Stack.Item>
       )}
       {props.selectedPane === CommandPanelTypes.People && (
@@ -54,6 +54,8 @@ export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
           <div className={settingsContainerStyle}>
             <LocalDeviceSettings
               {...options}
+              cameraPermissionGranted={cameraPermissionGranted}
+              microphonePermissionGranted={microphonePermissionGranted}
               onSelectCamera={handlers.onSelectCamera}
               onSelectMicrophone={handlers.onSelectMicrophone}
               onSelectSpeaker={handlers.onSelectSpeaker}

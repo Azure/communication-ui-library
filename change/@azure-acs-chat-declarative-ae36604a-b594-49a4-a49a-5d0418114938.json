@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update to remove usage of npm run",
-  "packageName": "chat-stateful-client",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "none"
-}

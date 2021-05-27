@@ -2,16 +2,17 @@
 // Licensed under the MIT license.
 
 import React, { useContext, createContext, useState, Dispatch, SetStateAction } from 'react';
-import { Call, CallState, LocalVideoStream, RemoteParticipant } from '@azure/communication-calling';
+import { Call, CallState as CallStatus, LocalVideoStream, RemoteParticipant } from '@azure/communication-calling';
 import { ParticipantStream } from '../../../types/ParticipantStream';
-import { ErrorHandlingProps } from '../../../providers';
-import { useValidContext, WithErrorHandling } from '../../../utils';
+import { ErrorHandlingProps } from '../providers/ErrorProvider';
+import { WithErrorHandling } from '../utils/WithErrorHandling';
+import { useValidContext } from '../utils/ValidContext';
 
 export type CallContextType = {
   call: Call | undefined;
   setCall: Dispatch<SetStateAction<Call | undefined>>;
-  callState: CallState;
-  setCallState: Dispatch<SetStateAction<CallState>>;
+  callState: CallStatus;
+  setCallState: Dispatch<SetStateAction<CallStatus>>;
   participants: RemoteParticipant[];
   setParticipants: Dispatch<SetStateAction<RemoteParticipant[]>>;
   screenShareStream: ParticipantStream | undefined;
@@ -38,7 +39,7 @@ const CallProviderBase = (props: CallProvider): JSX.Element => {
   const { children } = props;
 
   const [call, setCall] = useState<Call | undefined>(undefined);
-  const [callState, setCallState] = useState<CallState>('None');
+  const [callState, setCallState] = useState<CallStatus>('None');
   const [participants, setParticipants] = useState<RemoteParticipant[]>([]);
   const [screenShareStream, setScreenShareStream] = useState<ParticipantStream | undefined>(undefined);
   const [isMicrophoneEnabled, setIsMicrophoneEnabled] = useState<boolean>(false);

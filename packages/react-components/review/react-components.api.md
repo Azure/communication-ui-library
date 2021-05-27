@@ -8,14 +8,12 @@ import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { IButtonProps } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
+import { MessageStatus } from 'acs-ui-common';
 import { PartialTheme } from '@fluentui/react-theme-provider';
 import { PersonaPresence } from '@fluentui/react';
 import { default as React_2 } from 'react';
 import { SizeValue } from '@fluentui/react-northstar';
 import { Theme } from '@fluentui/react-theme-provider';
-
-// @public
-export const answerButtonProps: IButtonProps;
 
 // @public (undocumented)
 export interface BaseCustomStylesProps {
@@ -140,12 +138,6 @@ export interface JumpToNewMessageButtonProps {
 }
 
 // @public
-export const labeledAnswerButtonProps: IButtonProps;
-
-// @public
-export const labeledRecordButtonProps: IButtonProps;
-
-// @public
 export const lightTheme: PartialTheme & CallingTheme;
 
 // @public (undocumented)
@@ -164,10 +156,22 @@ export type MessageContentType = 'text' | 'html' | 'richtext/html' | 'unknown';
 export type MessageProps = {
     message: ChatMessage | SystemMessage | CustomMessage;
     messageContainerStyle?: ComponentSlotStyle;
+    showDate?: boolean;
 };
 
-// @public (undocumented)
-export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
+// @public
+export const MessageStatusIndicator: (props: MessageStatusIndicatorProps) => JSX.Element;
+
+// @public
+export interface MessageStatusIndicatorProps {
+    deliveredTooltipText?: string;
+    failedToSendTooltipText?: string;
+    seenTooltipText?: string;
+    sendingTooltipText?: string;
+    size?: SizeValue;
+    status?: MessageStatus;
+    styles?: BaseCustomStylesProps;
+}
 
 // @public
 export const MessageThread: (props: MessageThreadProps) => JSX.Element;
@@ -178,10 +182,11 @@ export type MessageThreadProps = {
     messages: (ChatMessage | SystemMessage | CustomMessage)[];
     styles?: MessageThreadStylesProps;
     disableJumpToNewMessageButton?: boolean;
-    disableReadReceipt?: boolean;
+    showMessageDate?: boolean;
+    showMessageStatus?: boolean;
     numberOfChatMessagesToReload?: number;
     onMessageSeen?: (messageId: string) => Promise<void>;
-    onRenderReadReceipt?: (readReceiptProps: ReadReceiptProps) => JSX.Element | null;
+    onRenderMessageStatus?: (messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null;
     onRenderAvatar?: (userId: string) => JSX.Element;
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
@@ -193,8 +198,8 @@ export interface MessageThreadStylesProps extends BaseCustomStylesProps {
     chatContainer?: ComponentSlotStyle;
     chatMessageContainer?: ComponentSlotStyle;
     loadPreviousMessagesButtonContainer?: IStyle;
+    messageStatusContainer?: (mine: boolean) => IStyle;
     newMessageButtonContainer?: IStyle;
-    readReceiptContainer?: (mine: boolean) => IStyle;
     systemMessageContainer?: ComponentSlotStyle;
 }
 
@@ -287,22 +292,12 @@ export type ParticipantListProps = {
     onParticipantRemove?: (userId: string) => void;
 };
 
-// @public
-export const ReadReceipt: (props: ReadReceiptProps) => JSX.Element;
-
-// @public
-export interface ReadReceiptProps {
-    deliveredTooltipText?: string;
-    failedToSendTooltipText?: string;
-    messageStatus?: MessageStatus;
-    seenTooltipText?: string;
-    sendingTooltipText?: string;
-    size?: SizeValue;
-    styles?: BaseCustomStylesProps;
+// @public (undocumented)
+export interface PlaceholderProps {
+    displayName?: string;
+    noVideoAvailableAriaLabel?: string;
+    userId?: string;
 }
-
-// @public
-export const recordButtonProps: IButtonProps;
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
@@ -373,13 +368,13 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
     typingUserDisplayName?: IStyle;
 }
 
-// @public (undocumented)
+// @public
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export type VideoGalleryLocalParticipant = VideoGalleryParticipant;
 
-// @public (undocumented)
+// @public
 export type VideoGalleryParticipant = {
     userId: string;
     isMuted?: boolean;
@@ -388,55 +383,38 @@ export type VideoGalleryParticipant = {
     isScreenSharingOn?: boolean;
 };
 
-// @public (undocumented)
+// @public
 export interface VideoGalleryProps {
-    // (undocumented)
     localParticipant: VideoGalleryLocalParticipant;
-    // (undocumented)
     localVideoViewOption?: VideoStreamOptions;
-    // (undocumented)
     onCreateLocalStreamView?: (options?: VideoStreamOptions | undefined) => Promise<void>;
-    // (undocumented)
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
-    // (undocumented)
     onDisposeLocalStreamView?: () => void;
-    // (undocumented)
+    onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
-    // (undocumented)
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
-    // (undocumented)
     remoteParticipants?: VideoGalleryRemoteParticipant[];
-    // (undocumented)
     remoteVideoViewOption?: VideoStreamOptions;
-    // (undocumented)
     styles?: BaseCustomStylesProps;
 }
 
-// @public (undocumented)
+// @public
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
-    // (undocumented)
     isSpeaking?: boolean;
-    // (undocumented)
     screenShareStream?: VideoGalleryStream;
 }
 
-// @public (undocumented)
+// @public
 export interface VideoGalleryStream {
-    // (undocumented)
     id?: number;
-    // (undocumented)
     isAvailable?: boolean;
-    // (undocumented)
     isMirrored?: boolean;
-    // (undocumented)
     renderElement?: HTMLElement;
 }
 
-// @public (undocumented)
+// @public
 export interface VideoStreamOptions {
-    // (undocumented)
     isMirrored?: boolean;
-    // (undocumented)
     scalingMode?: 'Stretch' | 'Crop' | 'Fit';
 }
 
@@ -444,13 +422,11 @@ export interface VideoStreamOptions {
 export const VideoTile: (props: VideoTileProps) => JSX.Element;
 
 // @public
-export interface VideoTileProps {
+export interface VideoTileProps extends PlaceholderProps {
     children?: React_2.ReactNode;
-    displayName?: string;
     isMirrored?: boolean;
     isVideoReady?: boolean;
-    noVideoAvailableAriaLabel?: string;
-    placeholder?: JSX.Element | null;
+    onRenderPlaceholder?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element | null;
     renderElement?: JSX.Element | null;
     showDisplayName?: boolean;
     styles?: VideoTileStylesProps;

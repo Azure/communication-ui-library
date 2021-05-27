@@ -7,12 +7,12 @@ import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/comm
 import React from 'react';
 
 import { CompositeConnectionParamsErrMessage } from '../../CompositeStringUtils';
-import { ChatConfig } from '../ChatConfig';
 
 // Adds a bot to the thread that sends out provided canned messages one by one.
 export const addParrotBotToThread = async (
   resourceConnectionString: string,
-  chatConfig: ChatConfig,
+  token: string,
+  threadId: string,
   messages: string[]
 ): Promise<CommunicationUserToken> => {
   const tokenClient = new CommunicationIdentityClient(resourceConnectionString);
@@ -20,12 +20,12 @@ export const addParrotBotToThread = async (
 
   const endpointUrl = new URL(resourceConnectionString.replace('endpoint=', '').split(';')[0]).toString();
   // Must use the credentials of the thread owner to add more participants.
-  const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(chatConfig.token));
-  await chatClient.getChatThreadClient(chatConfig.threadId).addParticipants({
+  const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(token));
+  await chatClient.getChatThreadClient(threadId).addParticipants({
     participants: [{ id: bot.user, displayName: 'A simple bot' }]
   });
 
-  sendMessagesAsBot(bot.token, endpointUrl, chatConfig.threadId, messages);
+  sendMessagesAsBot(bot.token, endpointUrl, threadId, messages);
   return bot;
 };
 
@@ -39,6 +39,11 @@ const sendMessagesAsBot = async (
   const threadClient = await chatClient.getChatThreadClient(threadId);
 
   let index = 0;
+  // Send first message immediately so users aren't staring at an empty chat thread.
+  if (messages.length > 0) {
+    threadClient.sendMessage({ content: messages[index++] });
+  }
+
   setInterval(() => {
     if (index < messages.length) {
       threadClient.sendMessage({ content: messages[index++] });
@@ -48,5 +53,10 @@ const sendMessagesAsBot = async (
 
 export const ConfigHintBanner = (): JSX.Element => {
   const emptyConfigTips = 'Please provide the connection string and display name to use.';
+  return <>{CompositeConnectionParamsErrMessage([emptyConfigTips])}</>;
+};
+
+export const ConfigJoinChatThreadHintBanner = (): JSX.Element => {
+  const emptyConfigTips = 'Please provide a token, thread id, endpoint url, and display name to use.';
   return <>{CompositeConnectionParamsErrMessage([emptyConfigTips])}</>;
 };

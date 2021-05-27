@@ -3,14 +3,21 @@
 
 import { mergeStyles, Stack } from '@fluentui/react';
 import React, { useEffect } from 'react';
-import { ChatClientState } from 'chat-stateful-client';
-import { ChatBaseSelectorProps } from '@azure/acs-chat-selector';
 import { MessageThread, ParticipantList, SendBox, TypingIndicator } from 'react-components';
-import { ErrorBar } from '../common/ErrorBar';
 import { useAdapter } from './adapter/ChatAdapterProvider';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
-import { chatContainer, chatHeaderContainerStyle, chatWrapper, topicNameLabelStyle } from './styles/Chat.styles';
+import { ChatHeader, getHeaderProps } from './ChatHeader';
+import { ThreadStatus, getThreadStatusProps } from './ThreadStatus';
+import {
+  chatContainer,
+  chatWrapper,
+  chatArea,
+  participantListWrapper,
+  listHeader,
+  participantListStack,
+  participantListStyle
+} from './styles/Chat.styles';
 
 export type ChatScreenProps = {
   sendBoxMaxLength?: number;
@@ -38,12 +45,14 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const sendBoxProps = usePropsFor(SendBox);
   const typingIndicatorProps = usePropsFor(TypingIndicator);
   const headerProps = useAdaptedSelector(getHeaderProps);
+  const threadStatusProps = useAdaptedSelector(getThreadStatusProps);
 
   return (
     <Stack className={chatContainer} grow>
       <ChatHeader {...headerProps} />
-      <Stack horizontal grow>
+      <Stack className={chatArea} horizontal grow>
         <Stack className={chatWrapper} grow>
+          <ThreadStatus {...threadStatusProps} />
           <MessageThread
             {...messageThreadProps}
             onRenderAvatar={onRenderAvatar}
@@ -53,34 +62,18 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             <div style={{ paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>
               <TypingIndicator {...typingIndicatorProps} />
             </div>
-            <ErrorBar />
             <SendBox {...sendBoxProps} />
           </Stack.Item>
         </Stack>
-        <Stack.Item>
-          <ParticipantList {...participantListProps} />
+        <Stack.Item className={participantListWrapper}>
+          <Stack className={participantListStack}>
+            <Stack.Item className={listHeader}>In this chat</Stack.Item>
+            <Stack.Item className={participantListStyle}>
+              <ParticipantList {...participantListProps} />
+            </Stack.Item>
+          </Stack>
         </Stack.Item>
       </Stack>
     </Stack>
   );
-};
-
-type HeaderProps = {
-  topic: string;
-};
-
-const ChatHeader = (props: HeaderProps): JSX.Element => {
-  return (
-    <Stack className={chatHeaderContainerStyle} horizontal>
-      <Stack.Item align="center" style={{ minWidth: '12.5rem' }}>
-        <div className={topicNameLabelStyle}>{props.topic}</div>
-      </Stack.Item>
-    </Stack>
-  );
-};
-
-const getHeaderProps = (state: ChatClientState, props: ChatBaseSelectorProps): HeaderProps => {
-  return {
-    topic: state.threads.get(props.threadId)?.properties?.topic || ''
-  };
 };

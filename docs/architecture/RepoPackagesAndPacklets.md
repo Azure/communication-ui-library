@@ -15,9 +15,9 @@ Packlets are internal-only libraries we use to ensure correct code seperation.
 
 List of current Packlets:
 
-* `@azure/acs-calling-selector`
+* `calling-component-bindings`
 * `calling-stateful-client`
-* `@azure/acs-chat-selector`
+* `chat-component-bindings`
 * `chat-stateful-client`
 * `react-components`
 * `react-composites`
@@ -69,4 +69,4 @@ This tool correctly rewrites the import lines to ensure they have the correct re
 
 ## Treeshaking
 
-To ensure packlets are not referencing unintended modules or other packlets, we use a [check-treeshaking](https://github.com/Azure/communication-ui-sdk/tree/main/packages/check-treeshaking) tool.
+To ensure packlets are not referencing unintended modules or other packlets, we use a [check-treeshaking](https://github.com/Azure/communication-ui-library/tree/main/packages/check-treeshaking) tool.

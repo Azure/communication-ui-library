@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add tooltip when permission is not granted in configuration screen",
+  "packageName": "react-composites",
+  "email": "allenhwang@microsoft.com",
+  "dependentChangeType": "patch"
+}
