@@ -44,7 +44,7 @@ export type ChatThreadProperties = {
 };
 
 // @public
-export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: ChatClientOptions | undefined) => StatefulChatClient;
+export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions | undefined) => StatefulChatClient;
 
 // @public (undocumented)
 export interface StatefulChatClient extends ChatClient {
@@ -62,11 +62,13 @@ export type StatefulChatClientArgs = {
     displayName: string;
     endpoint: string;
     credential: CommunicationTokenCredential;
-    maxListeners?: number;
 };
 
 // @public
-export type StatefulChatClientOptions = ChatClientOptions;
+export type StatefulChatClientOptions = {
+    chatClientOptions: ChatClientOptions;
+    maxStateChangeListeners?: number;
+};
 
 
 // (No @packageDocumentation comment for this package)
