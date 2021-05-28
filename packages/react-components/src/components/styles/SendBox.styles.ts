@@ -1,21 +1,36 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { getTheme, mergeStyles } from '@fluentui/react';
+import { mergeStyles, IStyle } from '@fluentui/react';
 
-const palette = getTheme().palette;
-
-export const TextFieldStyleProps = {
-  root: {
-    width: '100%',
-    minHeight: '0px',
-    fontSize: '8.25rem'
-  },
-  wrapper: {},
-  fieldGroup: {
-    height: 'auto',
-    minHeight: '0px'
-  }
+export const textFieldStyle = (errorColor: string, hasErrorMessage: boolean, disabled: boolean): IStyle => {
+  const borderColor = hasErrorMessage ? errorColor : 'none';
+  return {
+    root: {
+      width: '100%',
+      minHeight: '0',
+      fontSize: '8.25rem'
+    },
+    wrapper: {},
+    fieldGroup: {
+      height: 'auto',
+      minHeight: '0',
+      borderRadius: '0.25rem',
+      borderColor: borderColor,
+      borderWidth: disabled ? '0px' : '1px',
+      selectors: {
+        ':hover': { borderColor: borderColor },
+        ':active': { borderColor: borderColor },
+        ':after': { borderColor: borderColor, borderRadius: '0.25rem' }
+      }
+    },
+    field: {
+      borderRadius: '0.25rem'
+    },
+    errorMessage: {
+      color: errorColor
+    }
+  };
 };
 
 export const sendBoxWrapperStyle = mergeStyles({
@@ -50,17 +65,15 @@ export const sendBoxStyle = mergeStyles({
 export const sendButtonStyle = mergeStyles({
   width: '2.25rem',
   color: 'grey',
-  paddingLeft: '0.5rem',
+  right: '0.125rem',
   cursor: 'pointer',
   display: 'flex',
   justifyContent: 'center',
-  alignItems: 'center'
+  position: 'absolute',
+  top: '0.875rem'
 });
 
-export const sendIconDiv = mergeStyles({
+export const sendIconStyle = mergeStyles({
   width: '1.0625rem',
-  height: '1.0625rem',
-  '#sendIconWrapper:hover &': {
-    color: palette.themePrimary
-  }
+  height: '1.0625rem'
 });

@@ -26,7 +26,7 @@ function App(): JSX.Element {
       setCallAdapter(await createAzureCommunicationCallAdapter(token, { groupId }, displayName));
     };
     createAdapter();
-  });
+  }, []);
 
   return <>{callAdapter && chatAdapter && <h1>Hooray! You set up adapters 🎉🎉🎉</h1>}</>;
 }

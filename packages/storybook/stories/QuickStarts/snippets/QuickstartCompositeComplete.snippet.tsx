@@ -28,7 +28,7 @@ function App(): JSX.Element {
       setCallAdapter(await createAzureCommunicationCallAdapter(token, { groupId }, displayName));
     };
     createAdapter();
-  });
+  }, []);
 
   return (
     <>

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix for 'no permission warning' everytime",
-  "packageName": "@azure/acs-calling-selector",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}

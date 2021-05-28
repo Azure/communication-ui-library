@@ -1,0 +1,238 @@
+{
+  "name": "calling-component-bindings",
+  "entries": [
+    {
+      "date": "Fri, 21 May 2021 16:16:28 GMT",
+      "tag": "calling-component-bindings_v1.0.0-beta.1",
+      "version": "1.0.0-beta.1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add calling providers and hooks to the selector package",
+            "author": "easony@microsoft.com",
+            "commit": "a458a977e42cddc0d2d3d32e2fa71a547316fe1c",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Fix wrong object passed to StreamMedia",
+            "author": "allenhwang@microsoft.com",
+            "commit": "6b938ce9dee82e1810788f740f4fbae32537be19",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Update selector types to include rendering status",
+            "author": "allenhwang@microsoft.com",
+            "commit": "316a3e3da82de9cbc8ff2b17e6b750a48f482987",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Rename DTOs that shadow objects from Calling SDK",
+            "author": "prprabhu@microsoft.com",
+            "commit": "7a9006f767cb2b74ba23f223ef9aab7051759624",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Remove selectors not related to components",
+            "author": "mail@jamesburnside.com",
+            "commit": "9673a1fbed2e7f96a7611ffc240606fef038e5ed",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Rename state-only shadow type for Call",
+            "author": "prprabhu@microsoft.com",
+            "commit": "c9279b6b83fe83fb66f481409ab772fa5c6492de",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Upgrade selector to use updated Stateful render functions",
+            "author": "allenhwang@microsoft.com",
+            "commit": "6bbef4dfcb6925aabc24c5fc88f0b9079192b982",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Add Teams Interop to Group Call Sample",
+            "author": "anjulgarg@live.com",
+            "commit": "3d8c98d16528f6808de5450aca8da091ca61b268",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "[#2404092] Adding stateful attributes to CallClientProvider for starting a call with camera on/off",
+            "author": "anjulgarg@live.com",
+            "commit": "ba94db89af172725b7b1b22b2785a31ccc91049f",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Update handler to match adapter version of composite",
+            "author": "jinan@microsoft.com",
+            "commit": "72a986961e00b7ca70b6e0f64ec3dddd3c109705",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Introduce common identifier format",
+            "author": "prprabhu@microsoft.com",
+            "commit": "5ae89e5ea40e1f6cbe4a7218694853132dd83850",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Update videoGallery selectors to get active screenshare from Stateful",
+            "author": "allenhwang@microsoft.com",
+            "commit": "9d2e850874d1d78cf07363053f1df945e53f784c",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Move common type to acs-ui-common",
+            "author": "prprabhu@microsoft.com",
+            "commit": "ddffe05acae25c042be42393759d7d8cf4f4de50",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Rename DeviceManager to avoid name conflict",
+            "author": "prprabhu@microsoft.com",
+            "commit": "b39695499e521747786302e7b0ee90e9011b3c42",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Throwing error when onToggleMicrophone is invoked before call is started.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "23af2789b2f1bdaaad2cf1cd3b90d568aacd2c23",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "fix bugs",
+            "author": "easony@microsoft.com",
+            "commit": "60d0d837ddafbddf0c407545df218cfedaf63daa",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Change DeviceManagerState to DeviceManager to be consistent with other objects",
+            "author": "allenhwang@microsoft.com",
+            "commit": "b8b5439dd399831531ca8879f43138dda1e34341",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Add initial calling selector package setup",
+            "author": "allenhwang@microsoft.com",
+            "commit": "876a3aad947f14f60b4fa68b8e2ed81485904e5c",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "ParticipantList selector changed return to to CommunicationCallingParticipant",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "ca7062f78858ff26b2578b798e83d7e0ebc201c1",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Add calling handler and selector for VideoGallery and ScreenShare",
+            "author": "anjulgarg@live.com",
+            "commit": "3321f647e948aaf307a2f69e146ea14fe29853a0",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Update handler type to match component",
+            "author": "jinan@microsoft.com",
+            "commit": "738d45f35174857a6d7fd921ca21da77a1817e23",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "renamed startRenderVideo to createView and stopRenderVideo to disposeView",
+            "author": "alcail@microsoft.com",
+            "commit": "70e2f0ddff463a0713fc0438e0d0d4a0765f36b9",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Fix copyright header to MIT and add LICENSE files",
+            "author": "domessin@microsoft.com",
+            "commit": "d7b62e0ea82df089d5fc994170ee0d6cd68f8d0b",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "rename declarative packages to stateful",
+            "author": "domessin@microsoft.com",
+            "commit": "602288c7527f29ec2c3eda8415f5cd8501b928ab",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Rename declarative to stateful",
+            "author": "mail@jamesburnside.com",
+            "commit": "5c5cd639bdadccf200fcca10a80cbc67f611ae90",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Add initial base selector and handler for calling",
+            "author": "allenhwang@microsoft.com",
+            "commit": "fecd45a719493073acc6c2a423840b5bc5db5a00",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Fix copyright header to MIT and add LICENSE files (#225)",
+            "author": "mail@jamesburnside.com",
+            "commit": "a7265cf3343f4431d4a5ab9add788275980ffd2d",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "CameraButton selectors and handlers updated to work before a call is started. Selector for unparented videostream added.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "1e8aa0d5a8f60b4961db4ed2708d83c2efb739da",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Add handler and selector for call controls",
+            "author": "anjulgarg@live.com",
+            "commit": "6168a8007ae1a006e9f2650028496d75ecc7c7ed",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Add component binding exports to meta package",
+            "author": "mail@jamesburnside.com",
+            "commit": "5dad8969357c34e1b60c61e75dc7aec9203f1007",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Add memoized selector and VideoGallery component",
+            "author": "easony@microsoft.com",
+            "commit": "78cad6eca0b9814304dd8a4528f3a4bfb33fcfa1",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Added ParticipantList selector and handler",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "e312872bd229245045b024bb7bd27b481e094048",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Update exports to not conflict with other internal packages",
+            "author": "mail@jamesburnside.com",
+            "commit": "46ec7435b2027b36f2cf28181ffe1edb4f7aa3d6",
+            "package": "calling-component-bindings"
+          }
+        ],
+        "none": [
+          {
+            "comment": "dedupe export",
+            "author": "mail@jamesburnside.com",
+            "commit": "1df1d442338254c600b53178f481551096d178a6",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "dedupe memoizefnall code",
+            "author": "mail@jamesburnside.com",
+            "commit": "b11203aad28ceb459f5cd7f04a4163bfb4832466",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "internal build cleanup",
+            "author": "mail@jamesburnside.com",
+            "commit": "7f8440f2a6a911e0911a0212804717216a225ca5",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "ensure consistent eslint-plugin-import version across packages",
+            "author": "mail@jamesburnside.com",
+            "commit": "d3b01cf8bd61e7a2cc8a0f62a9742af125219bc5",
+            "package": "calling-component-bindings"
+          }
+        ]
+      }
+    }
+  ]
+}

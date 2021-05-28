@@ -1,0 +1,38 @@
+name: Storybook Deploy
+
+on:
+  # Trigger via 'Actions' on GitHub
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy-storybook:
+    name: Build and Deploy Storybook
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+
+      - name: Install Rush
+        run: npm install -g @microsoft/rush
+
+      - name: Install Dependencies
+        run: rush install
+
+      - name: Build Storybook dependencies
+        run: rush build -T storybook
+
+      - name: Run Storybook tests
+        run: rush test -o storybook
+
+      - name: Deploy Storybook
+        # storybook requires the env vars to be in a .env file for access in the manager.ts
+        run: |
+          echo TELEMETRY_INSTRUMENTATION_KEY=${{ secrets.TELEMETRY_INSTRUMENTATION_KEY }} > .env
+          npm run deploy-storybook -- --ci
+        working-directory: ./packages/storybook
+        env:
+          GH_TOKEN: ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
