@@ -108,11 +108,6 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     }
   }
 
-  // if (callState && call?.state === 'Disconnected') {
-  //   console.log('See ya brodyyy');
-  //   callErrorHandler();
-  // }
-
   return (
     <>
       {callState && isInCall(call?.state ?? 'None') ? (
