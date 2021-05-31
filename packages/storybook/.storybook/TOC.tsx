@@ -10,11 +10,11 @@ import { BackToTop, TableOfContents } from 'storybook-docs-toc';
  */
 export const TOC = (props: {children: React.ReactNode}): JSX.Element => {
 
-  const [narrowDocs, setnarrowDocs] = useState(false);
+  const [narrowDocs, setNarrowDocs] = useState(false);
   const [hideToc, setHideToc] = useState(false);
 
   window.matchMedia('(max-width: 1200px)').addEventListener('change', (e) => {
-    setnarrowDocs(e.matches);
+    setNarrowDocs(e.matches);
   })
 
   window.matchMedia('(max-width: 900px)').addEventListener('change', (e) => {
