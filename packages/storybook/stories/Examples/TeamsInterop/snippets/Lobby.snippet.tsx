@@ -67,7 +67,7 @@ export const Lobby = (props: LobbyProps): JSX.Element => {
             margin: '0'
           }}
         >
-          ☕ <br /> {decodeHtmlEntity(props.callStateText)} <br />
+          ☕ <br /> {props.callStateText} <br />
         </p>
         <p
           style={{
@@ -89,10 +89,4 @@ export const Lobby = (props: LobbyProps): JSX.Element => {
       </ControlBar>
     </VideoTile>
   );
-};
-
-export const decodeHtmlEntity = (str: string): string => {
-  return str.replace(/&#(\d+);/g, (match, dec) => {
-    return String.fromCharCode(dec);
-  });
 };

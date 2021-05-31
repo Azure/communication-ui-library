@@ -28,6 +28,9 @@ export default {
   parameters: {
     docs: {
       page: () => getDocs()
+    },
+    knobs: {
+      escapeHTML: false
     }
   }
 } as Meta;
