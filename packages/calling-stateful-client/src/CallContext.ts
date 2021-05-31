@@ -40,7 +40,7 @@ export class CallContext {
   private _emitter: EventEmitter;
   private _atomicId: number;
 
-  constructor(userId: string) {
+  constructor(userId: string, maxListeners?: number) {
     this._state = {
       calls: new Map<string, CallState>(),
       callsEnded: [],
@@ -57,7 +57,9 @@ export class CallContext {
       userId: userId
     };
     this._emitter = new EventEmitter();
-    this._emitter.setMaxListeners(50);
+    if (maxListeners) {
+      this._emitter.setMaxListeners(maxListeners);
+    }
     this._atomicId = 0;
   }
 

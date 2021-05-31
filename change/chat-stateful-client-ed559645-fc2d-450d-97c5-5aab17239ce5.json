@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Make max listeners configurable",
+  "packageName": "chat-stateful-client",
+  "email": "allenhwang@microsoft.com",
+  "dependentChangeType": "patch"
+}
