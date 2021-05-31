@@ -22,7 +22,7 @@ import {
 } from './utils/AppUtils';
 import { localStorageAvailable } from './utils/constants';
 import { createStatefulCallClient, StatefulCallClient } from 'calling-stateful-client';
-import { getIdFromToken, createAzureCommunicationUserCredential } from 'react-composites';
+import { createAzureCommunicationUserCredential } from 'react-composites';
 import { AudioOptions, Call, CallAgent, GroupLocator } from '@azure/communication-calling';
 import { refreshTokenAsync } from './utils/refreshToken';
 
@@ -102,8 +102,8 @@ const App = (): JSX.Element => {
   useEffect(() => {
     // Create a new CallClient when at the home page or at the createCallClient page.
     if (page === 'createCallClient' || page === 'home') {
-      const userIdFromToken = token ? getIdFromToken(token) : '';
-      const newStatefulCallClient = createStatefulCallClient({ userId: userIdFromToken });
+      // This sample app does not use `userId`. The stateful client internally never uses it either.
+      const newStatefulCallClient = createStatefulCallClient({ userId: 'this_id_left_intentionally_blank' });
       setStatefulCallClient(newStatefulCallClient);
       page === 'createCallClient' && setPage('configuration');
 
