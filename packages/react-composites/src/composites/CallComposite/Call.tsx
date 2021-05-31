@@ -47,6 +47,14 @@ const MainScreen = ({ screenWidth, onRenderAvatar }: MainScreenProps): JSX.Eleme
           reason="Access to the Teams meeting was denied."
         />
       );
+    case 'removed':
+      return (
+        <Error
+          rejoinHandler={() => adapter.setPage('configuration')}
+          title="Oops! You are no longer a participant of the call."
+          reason="Access to the meeting has been stopped"
+        />
+      );
     default:
       return (
         <CallScreen
