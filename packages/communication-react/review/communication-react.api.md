@@ -820,7 +820,6 @@ export interface IncomingCallState {
 
 // @public (undocumented)
 export type IsMuteChangedListener = (event: {
-    identifier: CallIdentifierKinds;
     isMuted: boolean;
 }) => void;
 
