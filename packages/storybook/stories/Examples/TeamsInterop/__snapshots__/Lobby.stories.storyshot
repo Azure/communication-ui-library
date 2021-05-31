@@ -42,17 +42,11 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
           <div
             style={
               Object {
-                "bottom": 0,
-                "height": "25%",
-                "left": 0,
-                "margin": "auto",
-                "overflow": "none",
+                "left": "50%",
+                "marginTop": "-34px",
                 "position": "absolute",
-                "right": 0,
-                "textAlign": "center",
-                "top": 0,
-                "width": "50%",
-                "zIndex": 0,
+                "top": "50%",
+                "transform": "translate(-50%, -50%)",
               }
             }
           >
@@ -61,13 +55,29 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 Object {
                   "color": "#323130",
                   "fontSize": "1.75rem",
+                  "margin": "0",
+                  "textAlign": "center",
                 }
               }
             >
               ☕ 
               <br />
                
-              Waiting for others to join
+              You're in the lobby
+               
+              <br />
+            </p>
+            <p
+              style={
+                Object {
+                  "color": "#323130",
+                  "fontSize": "0.75rem",
+                  "margin": "0",
+                  "textAlign": "center",
+                }
+              }
+            >
+              You should be admitted shortly
             </p>
           </div>
           <div
