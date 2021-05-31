@@ -65,7 +65,7 @@ export interface CallState {
 }
 
 // @public
-export const createStatefulCallClient: (callClientArgs: StatefulCallClientArgs, callClientOptions?: CallClientOptions | undefined) => StatefulCallClient;
+export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: StatefulCallClientOptions | undefined) => StatefulCallClient;
 
 // @public
 export type DeviceManagerState = {
@@ -135,7 +135,10 @@ export type StatefulCallClientArgs = {
 };
 
 // @public
-export type StatefulCallClientOptions = CallClientOptions;
+export type StatefulCallClientOptions = {
+    callClientOptions?: CallClientOptions;
+    maxStateChangeListeners?: number;
+};
 
 // @public
 export interface StatefulDeviceManager extends DeviceManager {

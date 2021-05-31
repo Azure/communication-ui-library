@@ -87,6 +87,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     if (endedCall && currentCallId.current === endedCall?.id) {
       if (endedCall?.callEndReason?.code === 0 && endedCall?.callEndReason.subCode === 5854) {
         callErrorHandler('errorJoiningTeamsMeeting');
+      } else if (endedCall?.callEndReason?.code === 0 && endedCall?.callEndReason?.subCode === 5300) {
+        callErrorHandler('removed');
       }
     }
   }, [adapter, call, callErrorHandler]);

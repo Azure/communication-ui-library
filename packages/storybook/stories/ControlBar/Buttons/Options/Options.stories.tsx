@@ -97,15 +97,18 @@ const exampleOptionsMenuProps: IContextualMenuProps = {
   ]
 };
 
-// This must be the only named export from this module, and must be named to match the storybook path suffix.
-// This ensures that storybook hoists the story instead of creating a folder with a single entry.
-export const Options = (): JSX.Element => {
+const OptionsStory = (): JSX.Element => {
   const showLabels = boolean('Show Labels', false);
 
   return <OptionsButton showLabel={showLabels} menuProps={exampleOptionsMenuProps} />;
 };
 
+// This must be the only named export from this module, and must be named to match the storybook path suffix.
+// This ensures that storybook hoists the story instead of creating a folder with a single entry.
+export const Options = OptionsStory.bind({});
+
 export default {
+  id: `${COMPONENT_FOLDER_PREFIX}-controlbar-buttons-options`,
   title: `${COMPONENT_FOLDER_PREFIX}/ControlBar/Buttons/Options`,
   component: OptionsButton,
   parameters: {

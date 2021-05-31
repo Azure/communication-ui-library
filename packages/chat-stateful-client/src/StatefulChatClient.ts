@@ -91,7 +91,7 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
 };
 
 /**
- * Required arguments to construct the stateful chat client
+ * Required arguments to construct the {@Link StatefulChatClient}.
  */
 export type StatefulChatClientArgs = {
   userId: CommunicationIdentifierKind;
@@ -101,9 +101,19 @@ export type StatefulChatClientArgs = {
 };
 
 /**
- * Options to construct the stateful chat client with
+ * Options to construct the {@Link StatefulChatClient} with.
  */
-export type StatefulChatClientOptions = ChatClientOptions;
+export type StatefulChatClientOptions = {
+  /**
+   * Options to construct the {@Link @azure/communication-chat#ChatClient} with.
+   */
+  chatClientOptions: ChatClientOptions;
+  /**
+   * Sets the max listeners limit of the 'stateChange' event. Defaults to the node.js EventEmitter.defaultMaxListeners
+   * if not specified.
+   */
+  maxStateChangeListeners?: number;
+};
 
 /**
  * Creates a stateful ChatClient {@Link StatefulChatClient} by proxying ChatClient
@@ -114,8 +124,8 @@ export const createStatefulChatClient = (
   args: StatefulChatClientArgs,
   options?: StatefulChatClientOptions
 ): StatefulChatClient => {
-  const chatClient = new ChatClient(args.endpoint, args.credential, options);
-  const context = new ChatContext();
+  const chatClient = new ChatClient(args.endpoint, args.credential, options?.chatClientOptions);
+  const context = new ChatContext(options?.maxStateChangeListeners);
   let eventSubscriber: EventSubscriber;
 
   context.updateChatConfig(args.userId, args.displayName);

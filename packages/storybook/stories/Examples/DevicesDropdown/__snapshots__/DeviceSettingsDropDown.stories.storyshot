@@ -20,58 +20,62 @@ exports[`storybook snapshot tests Storyshots Examples/Device Settings Device Set
       }
     >
       <div
-        className="css-81 root-0 body-1"
+        className="ms-Stack css-2"
       >
         <div
-          className="css-81"
-          data-uses-unhanded-props={true}
+          className="css-81 root-0 body-1"
         >
           <div
-            className="ms-Dropdown-container"
+            className="css-81"
+            data-uses-unhanded-props={true}
           >
             <div
-              aria-expanded="false"
-              aria-haspopup="listbox"
-              className="ms-Dropdown dropdown-2"
-              data-is-focusable={true}
-              id="Dropdown0"
-              onBlur={[Function]}
-              onChange={[Function]}
-              onClick={[Function]}
-              onFocus={[Function]}
-              onKeyDown={[Function]}
-              onKeyUp={[Function]}
-              onMouseDown={[Function]}
-              role="listbox"
-              style={
-                Object {
-                  "width": "15rem",
-                }
-              }
-              tabIndex={0}
+              className="ms-Dropdown-container"
             >
-              <span
-                aria-atomic={true}
-                aria-invalid={false}
-                aria-live="polite"
-                aria-setsize={5}
-                className="ms-Dropdown-title ms-Dropdown-titleIsPlaceHolder title-3"
-                id="Dropdown0-option"
-                role="option"
+              <div
+                aria-expanded="false"
+                aria-haspopup="listbox"
+                className="ms-Dropdown dropdown-3"
+                data-is-focusable={true}
+                id="Dropdown0"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                role="listbox"
+                style={
+                  Object {
+                    "width": "15rem",
+                  }
+                }
+                tabIndex={0}
               >
-                Select an option
-              </span>
-              <span
-                className="ms-Dropdown-caretDownWrapper caretDownWrapper-4"
-              >
-                <i
-                  aria-hidden={true}
-                  className="root-37 ms-Dropdown-caretDown caretDown-19"
-                  data-icon-name="ChevronDown"
+                <span
+                  aria-atomic={true}
+                  aria-invalid={false}
+                  aria-live="polite"
+                  aria-setsize={5}
+                  className="ms-Dropdown-title ms-Dropdown-titleIsPlaceHolder title-4"
+                  id="Dropdown0-option"
+                  role="option"
                 >
-                  
-                </i>
-              </span>
+                  Select an option
+                </span>
+                <span
+                  className="ms-Dropdown-caretDownWrapper caretDownWrapper-5"
+                >
+                  <i
+                    aria-hidden={true}
+                    className="root-37 ms-Dropdown-caretDown caretDown-20"
+                    data-icon-name="ChevronDown"
+                  >
+                    
+                  </i>
+                </span>
+              </div>
             </div>
           </div>
         </div>
