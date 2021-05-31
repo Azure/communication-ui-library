@@ -2,6 +2,12 @@ import { mergeStyles } from '@fluentui/react';
 import React, { useState } from 'react';
 import { BackToTop, TableOfContents } from 'storybook-docs-toc';
 
+/**
+ * Table Of Contents component used for displaying a floating table of content
+ * inside Storybook Docs.
+ * @param props 
+ * @returns 
+ */
 export const TOC = (props: {children: React.ReactNode}): JSX.Element => {
 
   const [narrowDocs, setnarrowDocs] = useState(false);
