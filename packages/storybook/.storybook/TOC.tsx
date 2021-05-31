@@ -1,6 +1,9 @@
 import { mergeStyles } from '@fluentui/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BackToTop, TableOfContents } from 'storybook-docs-toc';
+
+const LAPTOP_WIDTH = '(max-width: 1200px)';
+const TABLET_WIDTH = '(max-width: 900px)';
 
 /**
  * Table Of Contents component used for displaying a floating table of content
@@ -10,16 +13,22 @@ import { BackToTop, TableOfContents } from 'storybook-docs-toc';
  */
 export const TOC = (props: {children: React.ReactNode}): JSX.Element => {
 
-  const [narrowDocs, setNarrowDocs] = useState(false);
-  const [hideToc, setHideToc] = useState(false);
+  const [narrowDocs, setNarrowDocs] = useState(window.matchMedia(LAPTOP_WIDTH).matches);
+  const [hideToc, setHideToc] = useState(window.matchMedia(TABLET_WIDTH).matches);
 
-  window.matchMedia('(max-width: 1200px)').addEventListener('change', (e) => {
-    setNarrowDocs(e.matches);
+  useEffect(() => {
+    const setNarrowDocsHandler = (e: MediaQueryListEvent) => setNarrowDocs(e.matches);
+    const setHideTocHandler = (e: MediaQueryListEvent) => setHideToc(e.matches);
+
+    window.matchMedia(LAPTOP_WIDTH).addEventListener('change', setNarrowDocsHandler);
+    window.matchMedia(TABLET_WIDTH).addEventListener('change', setHideTocHandler);
+
+    return () => {
+      window.matchMedia(LAPTOP_WIDTH).removeEventListener('change', setNarrowDocsHandler);
+      window.matchMedia(TABLET_WIDTH).removeEventListener('change', setHideTocHandler);
+    }
   })
 
-  window.matchMedia('(max-width: 900px)').addEventListener('change', (e) => {
-    setHideToc(e.matches);
-  })
 
   const tocStyles = mergeStyles({
     display: hideToc ? 'none' : 'block',
