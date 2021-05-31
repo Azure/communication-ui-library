@@ -18,7 +18,7 @@ import type {
   UnknownIdentifierKind
 } from '@azure/communication-common';
 
-export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoiningTeamsMeeting';
+export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
 
 export type CallAdapterUiState = {
   // Self-contained state for composite
