@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Breaking: Drop Contoso-supplied fixed userId from isMutedChanged event.",
+  "packageName": "react-composites",
+  "email": "prprabhu@microsoft.com",
+  "dependentChangeType": "patch"
+}

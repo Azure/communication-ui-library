@@ -1,0 +1,6 @@
+{
+  "type": "prerelease",
+  "packageName": "react-composites",
+  "email": "prprabhu@microsoft.com",
+  "dependentChangeType": "patch"
+}
