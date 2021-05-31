@@ -41,8 +41,7 @@ import {
 import { createAzureCommunicationUserCredential, getIdFromToken, isInCall } from '../../../utils';
 import { VideoStreamOptions } from 'react-components';
 import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from 'acs-ui-common';
-import { CommunicationUserIdentifier } from '@azure/communication-signaling';
-import { CommunicationUserKind } from '@azure/communication-common';
+import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 
 // Context of Chat, which is a centralized context for all state updates
@@ -337,7 +336,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   private subscribeCallEvents(): void {
     this.call?.on('remoteParticipantsUpdated', this.onRemoteParticipantsUpdated);
-    this.call?.on('isMutedChanged', this.isMyMutedChanged);
+    this.call?.on('isMutedChanged', this.isMutedChanged);
     this.call?.on('isScreenSharingOnChanged', this.isScreenSharingOnChanged);
     this.call?.on('idChanged', this.callIdChanged);
   }
@@ -348,17 +347,10 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     }
     this.participantSubscribers.clear();
     this.call?.off('remoteParticipantsUpdated', this.onRemoteParticipantsUpdated);
-    this.call?.off('isMutedChanged', this.isMyMutedChanged);
+    this.call?.off('isMutedChanged', this.isMutedChanged);
     this.call?.off('isScreenSharingOnChanged', this.isScreenSharingOnChanged);
     this.call?.off('idChanged', this.callIdChanged);
   }
-
-  private isMyMutedChanged = (): void => {
-    this.emitter.emit('isMutedChanged', {
-      participantId: createCommunicationIdentifier(this.getState().userId),
-      isMuted: this.call?.isMuted
-    });
-  };
 
   public setPage = (page: CallCompositePage): void => {
     this.context.setPage(page);
@@ -392,6 +384,10 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     });
   };
 
+  private isMutedChanged = (): void => {
+    this.emitter.emit('isMutedChanged', { isMuted: this.call?.isMuted });
+  };
+
   private isScreenSharingOnChanged = (): void => {
     this.emitter.emit('isLocalScreenSharingActiveChanged', { isScreenSharingOn: this.call?.isScreenSharingOn });
   };
@@ -422,10 +418,6 @@ const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
   // TODO: we should take in a LocalVideoStream that developer wants to use as their 'Preview' view. We should also
   // handle cases where 'Preview' view is in progress and not necessary completed.
   return deviceManager.unparentedViews.values().next().value?.view !== undefined;
-};
-
-const createCommunicationIdentifier = (rawId: string): CommunicationUserKind => {
-  return { kind: 'communicationUser', communicationUserId: rawId };
 };
 
 export const createAzureCommunicationCallAdapter = async (

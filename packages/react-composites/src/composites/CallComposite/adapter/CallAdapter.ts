@@ -62,7 +62,7 @@ export type ParticipantJoinedListener = (event: { joined: RemoteParticipant[] })
 
 export type ParticipantLeftListener = (event: { removed: RemoteParticipant[] }) => void;
 
-export type IsMuteChangedListener = (event: { identifier: CallIdentifierKinds; isMuted: boolean }) => void;
+export type IsMuteChangedListener = (event: { isMuted: boolean }) => void;
 
 export type CallIdChangedListener = (event: { callId: string }) => void;
 
