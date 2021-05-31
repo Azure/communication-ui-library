@@ -113,7 +113,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
           ) : (
             onRenderIcon(props)
           )}
-          {menuItems && (
+          {menuItems && menuItems.length > 0 && (
             <ContextualMenu
               items={menuItems}
               hidden={menuHidden}

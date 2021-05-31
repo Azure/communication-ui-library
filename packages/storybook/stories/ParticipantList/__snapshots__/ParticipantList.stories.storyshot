@@ -175,7 +175,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                         >
                           <div
                             className="ms-FocusZone css-53 ms-ContextualMenu is-open root-23"
-                            data-focuszone-id="FocusZone12"
+                            data-focuszone-id="FocusZone10"
                             onFocus={[Function]}
                             onKeyDown={[Function]}
                             onMouseDownCapture={[Function]}
@@ -368,7 +368,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                         >
                           <div
                             className="ms-FocusZone css-53 ms-ContextualMenu is-open root-23"
-                            data-focuszone-id="FocusZone13"
+                            data-focuszone-id="FocusZone11"
                             onFocus={[Function]}
                             onKeyDown={[Function]}
                             onMouseDownCapture={[Function]}
@@ -561,7 +561,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                         >
                           <div
                             className="ms-FocusZone css-53 ms-ContextualMenu is-open root-23"
-                            data-focuszone-id="FocusZone14"
+                            data-focuszone-id="FocusZone12"
                             onFocus={[Function]}
                             onKeyDown={[Function]}
                             onMouseDownCapture={[Function]}

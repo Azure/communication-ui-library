@@ -25,7 +25,7 @@ export type ParticipantListProps = {
   onParticipantRemove?: (userId: string) => void;
 };
 
-const defaultRenderer = (
+const onRenderParticipantsDefault = (
   participants: CommunicationParticipant[],
   myUserId?: string,
   onParticipantRemove?: (userId: string) => void,
@@ -97,7 +97,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     <Stack className={participantListStyle}>
       {onRenderParticipant
         ? participants.map((participant: CommunicationParticipant) => onRenderParticipant(participant))
-        : defaultRenderer(participants, myUserId, onParticipantRemove, onRenderAvatar)}
+        : onRenderParticipantsDefault(participants, myUserId, onParticipantRemove, onRenderAvatar)}
     </Stack>
   );
 };
