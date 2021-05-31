@@ -118,7 +118,7 @@ const ParticipantListStory: () => JSX.Element = () => {
   };
 
   return (
-    <Stack style={{ height: '2rem' }}>
+    <Stack>
       <ParticipantListComponent
         participants={mockParticipants}
         myUserId={myUserId}
