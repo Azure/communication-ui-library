@@ -25,9 +25,11 @@ export class ChatContext {
   private _emitter: EventEmitter;
   private typingIndicatorInterval: number | undefined = undefined;
 
-  constructor() {
+  constructor(maxListeners?: number) {
     this._emitter = new EventEmitter();
-    this._emitter.setMaxListeners(50);
+    if (maxListeners) {
+      this._emitter.setMaxListeners(maxListeners);
+    }
   }
 
   public setState(state: ChatClientState): void {
