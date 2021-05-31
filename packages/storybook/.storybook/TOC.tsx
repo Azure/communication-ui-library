@@ -4,9 +4,14 @@ import { BackToTop, TableOfContents } from 'storybook-docs-toc';
 
 export const TOC = (props: {children: React.ReactNode}): JSX.Element => {
 
+  const [narrowDocs, setnarrowDocs] = useState(false);
   const [hideToc, setHideToc] = useState(false);
 
   window.matchMedia('(max-width: 1200px)').addEventListener('change', (e) => {
+    setnarrowDocs(e.matches);
+  })
+
+  window.matchMedia('(max-width: 900px)').addEventListener('change', (e) => {
     setHideToc(e.matches);
   })
 
@@ -39,7 +44,7 @@ export const TOC = (props: {children: React.ReactNode}): JSX.Element => {
         <div className={tocStyles}>
           <TableOfContents />
         </div>
-        <div>
+        <div style={narrowDocs ? { maxWidth: '768px' } : {}}>
           {props.children}
         </div>
         <div className={mergeStyles({'> button': { right: 16 }})}>
