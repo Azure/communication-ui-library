@@ -1,6 +1,6 @@
 import { StreamMedia, VideoTile } from '@azure/communication-react';
 import React from 'react';
-import { useVideoStream } from '../../../utils';
+import { useVideoStreams } from '../../../utils';
 import { Banner } from './Banner.snippet';
 import { CallControlBar } from './CallControlBar.snippet';
 import { ComplianceBannerState } from './ComplianceBannerExample.snippet';
@@ -18,7 +18,7 @@ export const CallComponent = (props: ComplianceBannerState): JSX.Element => {
     overlayContainer: {}
   };
 
-  const videoStreamElement = useVideoStream(1)[0];
+  const videoStreamElement = useVideoStreams(1)[0];
 
   return (
     <VideoTile
