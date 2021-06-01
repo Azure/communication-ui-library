@@ -56,7 +56,7 @@ export const Lobby = (props: LobbyProps): JSX.Element => {
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          marginTop: '-34px'
+          marginTop: '2.125rem'
         }}
       >
         <p
