@@ -21,11 +21,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
     >
       <div
         className="ms-Stack css-2"
-        style={
-          Object {
-            "height": "2rem",
-          }
-        }
       >
         <div
           className="ms-Stack css-76 css-2"
