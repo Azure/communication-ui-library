@@ -63,9 +63,7 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-// This must be the only named export from this module, and must be named to match the storybook path suffix.
-// This ensures that storybook hoists the story instead of creating a folder with a single entry.
-export const VideoTile: () => JSX.Element = () => {
+const VideoTileStory: () => JSX.Element = () => {
   const displayName = text('Display Name', 'John Krasinski');
   const showDisplayName = boolean('show displayName', true);
   const isVideoReady = boolean('Is Video Ready', false);
@@ -106,7 +104,12 @@ export const VideoTile: () => JSX.Element = () => {
   );
 };
 
+// This must be the only named export from this module, and must be named to match the storybook path suffix.
+// This ensures that storybook hoists the story instead of creating a folder with a single entry.
+export const VideoTile = VideoTileStory.bind({});
+
 export default {
+  id: `${COMPONENT_FOLDER_PREFIX}-videotile`,
   title: `${COMPONENT_FOLDER_PREFIX}/Video Tile`,
   component: VideoTileComponent,
   parameters: {

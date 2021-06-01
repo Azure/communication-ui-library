@@ -1,36 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`storybook snapshot tests Storyshots Examples/Teams Interop Compliance Banner 1`] = `
+exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 1`] = `
 <div
-  className="css-80 root-0 body-1"
+  className="css-81 root-0 body-1"
 >
   <div
-    className="css-80"
-    data-uses-unhanded-props={true}
-    dir="ltr"
-  >
-    <div
-      style={
-        Object {
-          "alignItems": "center",
-          "display": "flex",
-          "height": "100vh",
-          "justifyContent": "center",
-        }
-      }
-    >
-      Click on the recording or transcription knobs to see how the banner will show the current state
-    </div>
-  </div>
-</div>
-`;
-
-exports[`storybook snapshot tests Storyshots Examples/Teams Interop Lobby 1`] = `
-<div
-  className="css-80 root-0 body-1"
->
-  <div
-    className="css-80"
+    className="css-81"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -67,8 +42,16 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop Lobby 1`] = 
           <div
             style={
               Object {
+                "bottom": 0,
+                "height": "25%",
+                "left": 0,
                 "margin": "auto",
+                "overflow": "none",
+                "position": "absolute",
+                "right": 0,
                 "textAlign": "center",
+                "top": 0,
+                "width": "50%",
                 "zIndex": 0,
               }
             }

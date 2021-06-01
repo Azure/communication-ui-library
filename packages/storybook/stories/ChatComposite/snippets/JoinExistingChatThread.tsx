@@ -5,7 +5,7 @@ import { text } from '@storybook/addon-knobs';
 import React, { useRef } from 'react';
 import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE } from '../../constants';
 import { ContosoChatContainer } from './Container.snippet';
-import { ConfigJoinChatThreadHintBanner } from './Utils.snippet';
+import { ConfigJoinChatThreadHintBanner } from './Utils';
 
 export const JoinExistingChatThread: () => JSX.Element = () => {
   const knobs = useRef({

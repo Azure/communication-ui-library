@@ -4,8 +4,8 @@
 export { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '../../acs-ui-common/src';
 export type { AreEqual, CommonProperties, MessageStatus } from '../../acs-ui-common/src';
 
-export * from '../../acs-calling-selector/src';
-export * from '../../acs-chat-selector/src';
+export * from '../../calling-component-bindings/src';
+export * from '../../chat-component-bindings/src';
 export * from '../../calling-stateful-client/src';
 export * from '../../chat-stateful-client/src';
 export * from '../../react-components/src';

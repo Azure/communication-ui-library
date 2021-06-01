@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultCallingHandlers, createDefaultCallingHandlers } from '@azure/acs-calling-selector';
+import { DefaultCallingHandlers, createDefaultCallingHandlers } from 'calling-component-bindings';
 import {
   CallClientState,
   StatefulDeviceManager,
@@ -437,7 +437,7 @@ export const createAzureCommunicationCallAdapter = async (
 ): Promise<CallAdapter> => {
   const userId = getIdFromToken(token);
 
-  const callClient = createStatefulCallClient({ userId }, callClientOptions);
+  const callClient = createStatefulCallClient({ userId }, { callClientOptions });
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
   const callAgent = await callClient.createCallAgent(
     createAzureCommunicationUserCredential(token, refreshTokenCallback),

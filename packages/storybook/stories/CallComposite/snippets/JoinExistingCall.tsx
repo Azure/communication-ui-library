@@ -5,7 +5,7 @@ import { text } from '@storybook/addon-knobs';
 import React, { useRef } from 'react';
 import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE } from '../../constants';
 import { ContosoCallContainer } from './Container.snippet';
-import { ConfigJoinCallHintBanner } from './Utils.snippet';
+import { ConfigJoinCallHintBanner } from './Utils';
 
 export const JoinExistingCall: () => JSX.Element = () => {
   const knobs = useRef({

@@ -28,6 +28,10 @@ import { ComplianceBanner } from './ComplianceBanner';
 import { lobbySelector } from './selectors/lobbySelector';
 import { Lobby } from './Lobby';
 import { AzureCommunicationCallAdapter, CallCompositePage } from './adapter';
+import { PermissionsBanner } from '../common/PermissionsBanner';
+import { permissionsBannerContainerStyle } from '../common/styles/PermissionsBanner.styles';
+import { devicePermissionSelector } from 'calling-component-bindings';
+import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 
 export const MINI_HEADER_WINDOW_WIDTH = 450;
 
@@ -61,6 +65,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const lobbyProps = useSelector(lobbySelector);
   const lobbyHandlers = useHandlers(Lobby);
 
+  const devicePermissions = useAdaptedSelector(devicePermissionSelector);
+
   const localVideoViewOption = {
     scalingMode: 'Crop',
     isMirrored: true
@@ -81,6 +87,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     if (endedCall && currentCallId.current === endedCall?.id) {
       if (endedCall?.callEndReason?.code === 0 && endedCall?.callEndReason.subCode === 5854) {
         callErrorHandler('errorJoiningTeamsMeeting');
+      } else if (endedCall?.callEndReason?.code === 0 && endedCall?.callEndReason?.subCode === 5300) {
+        callErrorHandler('removed');
       }
     }
   }, [adapter, call, callErrorHandler]);
@@ -118,6 +126,12 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
           </Stack.Item>
           <Stack.Item style={{ width: '100%' }}>
             <ComplianceBanner {...complianceBannerProps} />
+          </Stack.Item>
+          <Stack.Item style={permissionsBannerContainerStyle}>
+            <PermissionsBanner
+              microphonePermissionGranted={devicePermissions.audio}
+              cameraPermissionGranted={devicePermissions.video}
+            />
           </Stack.Item>
           <Stack.Item styles={subContainerStyles} grow>
             {!isScreenShareOn ? (

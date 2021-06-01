@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Label, Stack } from '@fluentui/react';
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 import { activeContainerClassName, containerStyles, loadingStyle } from './styles/CallScreen.styles';
 import MediaFullScreen from './MediaFullScreen';
 import { connectFuncsToContext } from './consumers/ConnectContext';
@@ -10,6 +10,9 @@ import { CallContainerProps, MapToOneToOneCallProps } from './consumers/MapToCal
 import { CallControlBarComponent } from './CallControls';
 import { MediaGallery1To1 } from './MediaGallery1To1';
 import { OutgoingCallScreen } from './OutgoingCallScreen';
+import { CallingContext } from './providers/CallingProvider';
+import { permissionsBannerContainerStyle } from '../common/styles/PermissionsBanner.styles';
+import { PermissionsBanner } from '../common/PermissionsBanner';
 
 export interface OneToOneCallProps extends CallContainerProps {
   screenWidth: number;
@@ -26,6 +29,30 @@ const CallScreenComponent = (props: OneToOneCallProps): JSX.Element => {
     endCallHandler,
     callFailedHandler
   } = props;
+
+  const context = useContext(CallingContext);
+  const deviceAccess = useMemo(() => {
+    if (context) {
+      const cameraPermissionGranted =
+        context.videoDevicePermission === 'Granted'
+          ? true
+          : context.videoDevicePermission === 'Denied'
+          ? false
+          : undefined;
+      const microphonePermissionGranted =
+        context.audioDevicePermission === 'Granted'
+          ? true
+          : context.audioDevicePermission === 'Denied'
+          ? false
+          : undefined;
+      return {
+        cameraPermissionGranted: cameraPermissionGranted,
+        microphonePermissionGranted: microphonePermissionGranted
+      };
+    }
+
+    return { cameraPermissionGranted: undefined, microphonePermissionGranted: undefined };
+  }, [context]);
 
   // In the OneToOne Sample, the handler is used to change the parent OneToOneCall's state. This causes an error:
   // 'Cannot update a component (`OneToOneCall`) while rendering a different component (`CallScreenComponent`)'. Moved
@@ -47,6 +74,9 @@ const CallScreenComponent = (props: OneToOneCallProps): JSX.Element => {
         }}
         onEndCallClick={endCallHandler}
       />
+      <Stack.Item style={permissionsBannerContainerStyle}>
+        <PermissionsBanner {...deviceAccess} />
+      </Stack.Item>
       <Stack.Item styles={containerStyles}>
         {!isLocalScreenSharingOn ? (
           callState === 'Connected' && (

@@ -1,7 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { useCallClient, useCall, useCallingSelector as useSelector } from '@azure/acs-calling-selector';
+import {
+  useCallClient,
+  useCall,
+  useCallingSelector as useSelector,
+  devicePermissionSelector
+} from 'calling-component-bindings';
 import { CallState, GroupLocator, MeetingLocator } from '@azure/communication-calling';
 import { Label, Overlay, Spinner, Stack } from '@fluentui/react';
 import { VideoStreamOptions } from 'react-components';
@@ -27,11 +32,13 @@ import { Lobby } from './Lobby';
 import { ComplianceBanner } from './ComplianceBanner';
 import { mediaGallerySelector } from './selectors/mediaGallerySelector';
 import { complianceBannerSelector } from './selectors/complianceBannerSelector';
+import { PermissionsBanner } from './PermissionsBanner';
+import { permissionsBannerContainerStyle } from './styles/PermissionsBanner.styles';
 
 export interface CallScreenProps {
   screenWidth: number;
   endCallHandler(): void;
-  callErrorHandler(customErrorPage?: 'callError' | 'teamsMeetingDenied'): void;
+  callErrorHandler(customErrorPage?: 'callError' | 'teamsMeetingDenied' | 'removed'): void;
   callLocator: GroupLocator | MeetingLocator;
   isMicrophoneOn: boolean;
 }
@@ -60,11 +67,15 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
 
   const complianceBannerProps = useSelector(complianceBannerSelector);
 
+  const devicePermissions = useSelector(devicePermissionSelector);
+
   useEffect(() => {
     const callEndReason = call?.callEndReason;
     if (!callEndReason) return;
     if (callEndReason.code === 0 && callEndReason.subCode === 5854) {
       props.callErrorHandler('teamsMeetingDenied');
+    } else if (callEndReason.code === 0 && callEndReason.subCode === 5300) {
+      props.callErrorHandler('removed');
     }
   }, [call?.callEndReason, props]);
 
@@ -111,6 +122,12 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
           </Stack.Item>
           <Stack.Item>
             <ComplianceBanner {...complianceBannerProps} />
+          </Stack.Item>
+          <Stack.Item style={permissionsBannerContainerStyle}>
+            <PermissionsBanner
+              microphonePermissionGranted={devicePermissions.audio}
+              cameraPermissionGranted={devicePermissions.video}
+            />
           </Stack.Item>
           <Stack styles={subContainerStyles} grow horizontal>
             {!isScreenSharingOn ? (
