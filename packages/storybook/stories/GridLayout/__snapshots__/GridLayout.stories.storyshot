@@ -2,10 +2,10 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layout 1`] = `
 <div
-  className="css-80 root-0 body-1"
+  className="css-81 root-0 body-1"
 >
   <div
-    className="css-80"
+    className="css-81"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -70,7 +70,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
               </div>
             </div>
             <span
-              className="css-78 css-24"
+              className="css-79 css-24"
             >
               Michael
             </span>
@@ -109,7 +109,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
               </div>
             </div>
             <span
-              className="css-78 css-24"
+              className="css-79 css-24"
             >
               Jim
             </span>
@@ -148,7 +148,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
               </div>
             </div>
             <span
-              className="css-78 css-24"
+              className="css-79 css-24"
             >
               Pam
             </span>
@@ -187,7 +187,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
               </div>
             </div>
             <span
-              className="css-78 css-24"
+              className="css-79 css-24"
             >
               Dwight
             </span>
