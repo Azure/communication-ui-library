@@ -1,6 +1,10 @@
 name: Manual Alpha Package Release
 
 on:
+  # triggering in automated way to appear in github workflows
+  pull_request:
+    branches: [main]
+
   # Allows running workflow manually from the GitHub Actions tab
   workflow_dispatch:
 
