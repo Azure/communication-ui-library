@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "ParticipantItem has menu button when hovered. ParticipantItem showing '(you)' when me property is true. ",
+  "packageName": "react-components",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
