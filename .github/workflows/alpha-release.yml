@@ -50,8 +50,10 @@ jobs:
         run: rush test -t @azure/communication-react
 
       # Push git tags
-      - name: Push git tags
-        run: git push --tags
+      - name: Create and push git tags
+        run: |
+          git tag 1.0.0-alpha-${{ steps.datetime.outputs.datetime }}
+          git push --tags
 
       # Publish package
       - name: Package alpha packages for release
@@ -66,11 +68,12 @@ jobs:
           azcliversion: 2.0.72
           inlineScript: |
             az login --service-principal -u cfb5fe52-8bb2-4901-9056-70449fa2df96 -p ${{ secrets.AZURESDKPARTNERDROPS_SERVICE_PRINCIPAL_KEY }} --tenant 72f988bf-86f1-41af-91ab-2d7cd011db47
+            az extension add --name storage-preview
             az storage azcopy blob upload -s "packages/communication-react/release/*" -c "drops/azure-communication-services/react/npm/1.0.0-alpha-${{ steps.datetime.outputs.datetime }}" --account-name azuresdkpartnerdrops
       # Blocked on: https://github.com/Azure/pipelines/pull/11
       # - uses: Azure/pipelines@v1
       #   with:
       #     azure-devops-project-url: 'https://dev.azure.com/azure-sdk/internal'
       #     azure-pipeline-name: 'azuresdkpartnerdrops to npm'
-      #     azure-devops-token: '${{ secrets.AZURE_DEVOPS_TOKEN }}'
+      #     azure-devops-token: '${{ secrets.AZURE_SDK_RELEASE_PIPELINE_DEVOPS_TOKEN }}'
       #     azure-pipeline-variables: '{"accessLevel": "public", "BlobPath": "azure-communication-services/react/npm/1.0.0-alpha-${{ steps.datetime.outputs.datetime }}", "registry": "https://registry.npmjs.org/", "skipDiff": "latest", "tag": "dev"}'
