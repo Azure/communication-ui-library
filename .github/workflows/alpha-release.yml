@@ -65,8 +65,8 @@ jobs:
         with:
           azcliversion: 2.0.72
           inlineScript: |
-            azcopy login --service-principal --application-id cfb5fe52-8bb2-4901-9056-70449fa2df96
-            azcopy copy "packages/communication-react/release/*" "https://azuresdkpartnerdrops.blob.core.windows.net/drops/azure-communication-services/react/npm/1.0.0-alpha-${{ steps.datetime.outputs.datetime }}"
+            az login --service-principal --application-id cfb5fe52-8bb2-4901-9056-70449fa2df96
+            az storage azcopy blob upload azcopy "packages/communication-react/release/*" "https://azuresdkpartnerdrops.blob.core.windows.net/drops/azure-communication-services/react/npm/1.0.0-alpha-${{ steps.datetime.outputs.datetime }}"
         env:
           AZCOPY_SPA_CLIENT_SECRET: ${{ secrets.AZURESDKPARTNERDROPS_SERVICE_PRINCIPAL_KEY }}
       # Blocked on: https://github.com/Azure/pipelines/pull/11
