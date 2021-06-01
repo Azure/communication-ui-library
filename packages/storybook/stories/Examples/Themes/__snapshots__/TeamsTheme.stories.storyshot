@@ -2,10 +2,10 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
 <div
-  className="css-80 root-0 body-1"
+  className="css-81 root-0 body-1"
 >
   <div
-    className="css-80"
+    className="css-81"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -30,10 +30,10 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
         }
       >
         <div
-          className="css-80 root-2 body-3"
+          className="css-81 root-2 body-3"
         >
           <div
-            className="css-80"
+            className="css-81"
             data-uses-unhanded-props={true}
           >
             <div
@@ -305,7 +305,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                     </div>
                   </div>
                   <span
-                    className="css-78 css-43"
+                    className="css-79 css-43"
                   >
                     Michael
                   </span>

@@ -2,21 +2,17 @@
 // Licensed under the MIT license.
 
 import { mergeStyles } from '@fluentui/react';
-import { Theme } from '@fluentui/react-theme-provider';
 
-export const participantItemContainerStyle = (theme: Theme): string =>
-  mergeStyles({
-    paddingTop: '0.25rem',
-    paddingBottom: '0.25rem',
-    display: 'flex',
-    position: 'relative',
-    maxWidth: '20rem',
-    minWidth: '12rem',
-    cursor: 'pointer',
-    selectors: {
-      '&:hover': { background: theme.palette.neutralLight }
-    }
-  });
+export const participantItemContainerStyle = mergeStyles({
+  paddingTop: '0.25rem',
+  paddingBottom: '0.25rem',
+  display: 'flex',
+  position: 'relative',
+  maxWidth: '20rem',
+  minWidth: '12rem',
+  cursor: 'pointer',
+  alignItems: 'center'
+});
 
 export const participantItemNameStyle = mergeStyles({
   fontSize: '0.875rem', // 14px
@@ -38,7 +34,5 @@ export const iconContainerStyle = mergeStyles({
   position: 'absolute',
   display: 'flex',
   right: '1rem',
-  top: '50%',
-  msTransform: 'translateY(-50%)',
-  transform: 'translateY(-50%)'
+  alignItems: 'center'
 });
