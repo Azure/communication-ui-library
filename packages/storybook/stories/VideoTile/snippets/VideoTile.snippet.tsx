@@ -1,11 +1,11 @@
 import { VideoTile, FluentThemeProvider, StreamMedia } from '@azure/communication-react';
 import React from 'react';
-import { useVideoStream } from '../../utils';
+import { useVideoStreams } from '../../utils';
 
 export const VideoTileExample: () => JSX.Element = () => {
   const videoTileStyles = { root: { height: '300px', width: '400px', border: '1px solid #999' } };
 
-  const videoStreamElement = useVideoStream(true);
+  const videoStreamElement = useVideoStreams(1)[0];
 
   return (
     <FluentThemeProvider>

@@ -18,7 +18,7 @@ export const CallComponent = (props: ComplianceBannerState): JSX.Element => {
     overlayContainer: {}
   };
 
-  const videoStreamElement = useVideoStream(true);
+  const videoStreamElement = useVideoStream(1)[0];
 
   return (
     <VideoTile

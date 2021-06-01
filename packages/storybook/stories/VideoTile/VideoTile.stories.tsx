@@ -9,7 +9,7 @@ import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { VideoTileExample as VideoTileStylineExample } from '../Styling/snippets/StylingVideoTile.snippet';
-import { useVideoStream } from '../utils';
+import { useVideoStreams } from '../utils';
 import { VideoTileExample } from './snippets/VideoTile.snippet';
 import { VideoTilePlaceholderExample } from './snippets/VideoTilePlaceholder.snippet';
 
@@ -90,7 +90,7 @@ export const VideoTile: () => JSX.Element = () => {
     }
   };
 
-  const videoStreamElement = useVideoStream(true);
+  const videoStreamElement = useVideoStreams(1)[0];
 
   return (
     <VideoTileComponent

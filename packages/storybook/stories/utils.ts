@@ -44,48 +44,6 @@ const stopRenderVideoStream = (video: HTMLElement | null): void => {
 };
 
 /**
- * Manages a single video stream. If enabled is true will create and return a video stream. When component is unmounted
- * will automatically dispose of the video stream.
- *
- * @param enabled - If creating a video stream
- * @returns
- */
-export const useVideoStream = (enabled: boolean): HTMLElement | null => {
-  const mounted = useRef(false);
-  useEffect(() => {
-    mounted.current = true;
-    return () => {
-      mounted.current = false;
-    };
-  });
-
-  const [videoStreamElement, setVideoStreamElement] = useState<HTMLElement | null>(null);
-  useEffect(() => {
-    const loadVideo = async (): Promise<void> => {
-      const videoStreamElement = await renderVideoStream();
-      setVideoStreamElement(videoStreamElement);
-      // Since the render is async, it may finish after the component is unmounted already, in this case we have to make
-      // sure to clean up the stream
-      if (!mounted.current) {
-        stopRenderVideoStream(videoStreamElement);
-      }
-    };
-    if (enabled) {
-      loadVideo();
-    }
-  }, [enabled]);
-
-  // Clean up videoStream if the component unmounts
-  useEffect(() => {
-    return () => {
-      stopRenderVideoStream(videoStreamElement);
-    };
-  }, [videoStreamElement]);
-
-  return videoStreamElement;
-};
-
-/**
  * Manages multiple videoStreams. The amount is based on the given numberOfStreams parameter. When component is
  * unmounted will automatically dispose of all the managed video streams.
  *

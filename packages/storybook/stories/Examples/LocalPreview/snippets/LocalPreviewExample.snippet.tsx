@@ -10,7 +10,7 @@ import { Stack, mergeStyles, Text } from '@fluentui/react';
 import { CallVideoOffIcon } from '@fluentui/react-northstar';
 import { useTheme } from '@fluentui/react-theme-provider';
 import React, { useCallback, useState } from 'react';
-import { useVideoStream } from '../../../utils';
+import { useVideoStreams } from '../../../utils';
 
 export interface LocalPreviewProps {
   isVideoAvailable: boolean;
@@ -65,7 +65,7 @@ export const LocalPreviewExample = ({
     [cameraOffLabelStyle]
   );
 
-  const videoStreamElement = useVideoStream(true);
+  const videoStreamElement = useVideoStreams(1)[0];
 
   return (
     <FluentThemeProvider fluentTheme={theme}>

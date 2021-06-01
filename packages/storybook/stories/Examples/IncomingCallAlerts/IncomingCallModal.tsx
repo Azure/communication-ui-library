@@ -4,7 +4,7 @@
 import { text, files, boolean } from '@storybook/addon-knobs';
 import React from 'react';
 import { IncomingCallModal as IncomingCallModalComponent } from 'react-composites';
-import { useVideoStream } from '../../utils';
+import { useVideoStreams } from '../../utils';
 
 export const IncomingCallModal: () => JSX.Element = () => {
   const alertText = text('Alert Text', 'Incoming Video Call');
@@ -17,7 +17,8 @@ export const IncomingCallModal: () => JSX.Element = () => {
   const showLocalVideo = boolean('Show Local Video', true);
   const localVideoInverted = boolean('Invert Local Video', true);
 
-  const videoStreamElement = useVideoStream(localVideoStreamEnabled);
+  const videoStreamElements = useVideoStreams(localVideoStreamEnabled ? 1 : 0);
+  const videoStreamElement = videoStreamElements[0] ? videoStreamElements[0] : null;
 
   return (
     <IncomingCallModalComponent
