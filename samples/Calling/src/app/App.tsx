@@ -233,6 +233,16 @@ const App = (): JSX.Element => {
           />
         );
       }
+      case 'removed': {
+        return (
+          <CallError
+            title="Oops! You are no longer a participant of the call."
+            reason="Access to the meeting has been stopped"
+            rejoinHandler={() => setPage('createCallClient')}
+            homeHandler={navigateToHomePage}
+          />
+        );
+      }
       case 'createCallClient': {
         return <Spinner label={creatingCallClientspinnerLabel} ariaLive="assertive" labelPosition="top" />;
       }
