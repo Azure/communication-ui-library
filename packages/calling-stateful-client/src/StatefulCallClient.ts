@@ -200,7 +200,7 @@ export type StatefulCallClientArgs = {
    * state. It is not used by StatefulCallClient so if you do not have this value or do not want to use this value,
    * you could pass any dummy value like empty string.
    */
-  userId: string;
+  userId?: string;
 };
 
 /**
@@ -232,11 +232,14 @@ export type StatefulCallClientOptions = {
  * @returns
  */
 export const createStatefulCallClient = (
-  args: StatefulCallClientArgs,
+  args?: StatefulCallClientArgs,
   options?: StatefulCallClientOptions
 ): StatefulCallClient => {
   const callClient = new CallClient(options?.callClientOptions);
-  const context: CallContext = new CallContext(args.userId, options?.maxStateChangeListeners);
+  const context: CallContext = new CallContext(
+    args?.userId ?? 'contoso_user_id_not_set',
+    options?.maxStateChangeListeners
+  );
   const internalContext: InternalCallContext = new InternalCallContext();
 
   Object.defineProperty(callClient, 'getState', {
