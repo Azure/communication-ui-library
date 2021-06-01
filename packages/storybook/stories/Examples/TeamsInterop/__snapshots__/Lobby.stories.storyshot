@@ -43,7 +43,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
             style={
               Object {
                 "left": "50%",
-                "marginTop": "-34px",
+                "marginTop": "2.125rem",
                 "position": "absolute",
                 "top": "50%",
                 "transform": "translate(-50%, -50%)",
