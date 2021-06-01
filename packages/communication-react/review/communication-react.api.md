@@ -1048,6 +1048,18 @@ export type ParticipantLeftListener = (event: {
 export const ParticipantList: (props: ParticipantListProps) => JSX.Element;
 
 // @public
+export const ParticipantListButton: (props: ParticipantListButtonProps) => JSX.Element;
+
+// @public
+export interface ParticipantListButtonProps extends IButtonProps {
+    callInviteURL?: string;
+    onMuteAll?: (userId?: string) => void;
+    participantListContainerStyle?: IStyle;
+    participantListProps?: ParticipantListProps;
+    showLabel?: boolean;
+}
+
+// @public
 export type ParticipantListProps = {
     participants: CommunicationParticipant[];
     myUserId?: string;
