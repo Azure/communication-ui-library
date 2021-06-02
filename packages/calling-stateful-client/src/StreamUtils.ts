@@ -2,12 +2,7 @@
 // Licensed under the MIT license.
 
 import { CreateViewOptions, LocalVideoStream, VideoStreamRenderer } from '@azure/communication-calling';
-import {
-  CommunicationUserKind,
-  MicrosoftTeamsUserKind,
-  PhoneNumberKind,
-  UnknownIdentifierKind
-} from '@azure/communication-common';
+import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { LocalVideoStreamState, RemoteVideoStreamState } from './CallClientState';
 import { CallContext } from './CallContext';
 import {
@@ -22,7 +17,7 @@ async function createViewRemoteVideo(
   context: CallContext,
   internalContext: InternalCallContext,
   callId: string,
-  participantId: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | string,
+  participantId: CommunicationIdentifierKind | string,
   stream: RemoteVideoStreamState,
   options?: CreateViewOptions
 ): Promise<void> {
@@ -248,7 +243,7 @@ function disposeViewRemoteVideo(
   context: CallContext,
   internalContext: InternalCallContext,
   callId: string,
-  participantId: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | string,
+  participantId: CommunicationIdentifierKind | string,
   stream: RemoteVideoStreamState
 ): void {
   const streamId = stream.id;
@@ -330,13 +325,7 @@ export function createView(
   context: CallContext,
   internalContext: InternalCallContext,
   callId: string | undefined,
-  participantId:
-    | CommunicationUserKind
-    | PhoneNumberKind
-    | MicrosoftTeamsUserKind
-    | UnknownIdentifierKind
-    | string
-    | undefined,
+  participantId: CommunicationIdentifierKind | string | undefined,
   stream: LocalVideoStreamState | RemoteVideoStreamState,
   options?: CreateViewOptions
 ): Promise<void> {
@@ -359,13 +348,7 @@ export function disposeView(
   context: CallContext,
   internalContext: InternalCallContext,
   callId: string | undefined,
-  participantId:
-    | CommunicationUserKind
-    | PhoneNumberKind
-    | MicrosoftTeamsUserKind
-    | UnknownIdentifierKind
-    | string
-    | undefined,
+  participantId: CommunicationIdentifierKind | string | undefined,
   stream: LocalVideoStreamState | RemoteVideoStreamState
 ): void {
   if ('id' in stream && callId && participantId) {
