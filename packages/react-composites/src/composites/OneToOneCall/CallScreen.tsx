@@ -13,6 +13,8 @@ import { OutgoingCallScreen } from './OutgoingCallScreen';
 import { CallingContext } from './providers/CallingProvider';
 import { permissionsBannerContainerStyle } from '../common/styles/PermissionsBanner.styles';
 import { PermissionsBanner } from '../common/PermissionsBanner';
+import { ScreenSharePopup } from './ScreenSharePopup';
+import useScreenShare from './hooks/useScreenShare';
 
 export interface OneToOneCallProps extends CallContainerProps {
   screenWidth: number;
@@ -29,6 +31,7 @@ const CallScreenComponent = (props: OneToOneCallProps): JSX.Element => {
     endCallHandler,
     callFailedHandler
   } = props;
+  const { stopScreenShare } = useScreenShare();
 
   const context = useContext(CallingContext);
   const deviceAccess = useMemo(() => {
@@ -78,8 +81,8 @@ const CallScreenComponent = (props: OneToOneCallProps): JSX.Element => {
         <PermissionsBanner {...deviceAccess} />
       </Stack.Item>
       <Stack.Item styles={containerStyles}>
-        {!isLocalScreenSharingOn ? (
-          callState === 'Connected' && (
+        {callState === 'Connected' && (
+          <>
             <Stack horizontal styles={containerStyles}>
               {screenShareStream ? (
                 <Stack.Item grow styles={activeContainerClassName}>
@@ -91,11 +94,8 @@ const CallScreenComponent = (props: OneToOneCallProps): JSX.Element => {
                 </Stack.Item>
               )}
             </Stack>
-          )
-        ) : (
-          <div className={loadingStyle}>
-            <Label>Your screen is being shared</Label>
-          </div>
+            {isLocalScreenSharingOn ? <ScreenSharePopup onStopScreenShare={stopScreenShare} /> : <></>}
+          </>
         )}
       </Stack.Item>
     </Stack>

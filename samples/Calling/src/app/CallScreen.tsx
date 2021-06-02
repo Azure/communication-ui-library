@@ -130,20 +130,24 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
             />
           </Stack.Item>
           <Stack styles={subContainerStyles} grow horizontal>
-            <Stack.Item grow styles={activeContainerClassName}>
-              <MediaGallery {...mediaGalleryProps} onStartLocalVideo={handlers.onStartLocalVideo} />
-            </Stack.Item>
-            {selectedPane !== CommandPanelTypes.None &&
-              (window.innerWidth > MINI_HEADER_WINDOW_WIDTH ? (
-                <Stack.Item disableShrink styles={paneStyles}>
-                  <CommandPanel selectedPane={selectedPane} />
+            {callState === 'Connected' && (
+              <>
+                <Stack.Item grow styles={activeContainerClassName}>
+                  <MediaGallery {...mediaGalleryProps} onStartLocalVideo={handlers.onStartLocalVideo} />
                 </Stack.Item>
-              ) : (
-                <Overlay styles={overlayStyles}>
-                  <CommandPanel selectedPane={selectedPane} />
-                </Overlay>
-              ))}
-            {isScreenSharingOn ? <ScreenSharePopup onStopScreenShare={handlers.onStopScreenShare} /> : <></>}
+                {selectedPane !== CommandPanelTypes.None &&
+                  (window.innerWidth > MINI_HEADER_WINDOW_WIDTH ? (
+                    <Stack.Item disableShrink styles={paneStyles}>
+                      <CommandPanel selectedPane={selectedPane} />
+                    </Stack.Item>
+                  ) : (
+                    <Overlay styles={overlayStyles}>
+                      <CommandPanel selectedPane={selectedPane} />
+                    </Overlay>
+                  ))}
+                {isScreenSharingOn ? <ScreenSharePopup onStopScreenShare={handlers.onStopScreenShare} /> : <></>}
+              </>
+            )}
           </Stack>
         </Stack>
       ) : (
