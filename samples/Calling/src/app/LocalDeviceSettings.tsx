@@ -3,16 +3,23 @@
 
 import React from 'react';
 import { IDropdownOption, Dropdown, Stack } from '@fluentui/react';
-import { dropDownStyles, localSettingsContainer, mainStackTokens } from './styles/LocalDeviceSettings.styles';
+import {
+  dropDownStyles,
+  dropDownTitleIconStyles,
+  localSettingsContainer,
+  mainStackTokens
+} from './styles/LocalDeviceSettings.styles';
 import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
 import { useTheme } from '@fluentui/react-theme-provider';
+import { CallVideoIcon, MicIcon } from '@fluentui/react-icons-northstar';
 
 const cameraPermissionDeniedText = 'Your browser is blocking access to your camera.';
 const microphonePermissionDeniedText = 'Your browser is blocking access to your microphone.';
+type iconType = 'Camera' | 'Microphone' | 'Speaker';
 
 const getDropDownList = (list: Array<VideoDeviceInfo | AudioDeviceInfo>): IDropdownOption[] => {
   // Remove duplicates
-  const noDuplicates = new Map();
+  const noDuplicates = new Map<string, VideoDeviceInfo | AudioDeviceInfo>();
   for (const item of list) {
     noDuplicates.set(item.id, item);
   }
@@ -21,10 +28,35 @@ const getDropDownList = (list: Array<VideoDeviceInfo | AudioDeviceInfo>): IDropd
     dropdownList.push({
       val: item,
       key: item.id,
-      text: item.name === '' ? item.deviceType : item.name
+      text: item.name === '' ? item.deviceType : item.name,
+      data: { deviceType: item.deviceType }
     });
   }
   return dropdownList;
+};
+
+const getOptionIcon = (type: iconType): JSX.Element | undefined => {
+  const iconStyles = { marginRight: '8px' };
+
+  if (type === 'Camera') {
+    return <CallVideoIcon style={iconStyles} key={'videoIconKey'} />;
+  } else if (type === 'Microphone' || type === 'Speaker') {
+    return <MicIcon style={iconStyles} key={'microphoneIconKey'} />;
+  } else {
+    return undefined;
+  }
+};
+
+const onRenderTitle = (props: IDropdownOption[] | undefined, iconType: iconType): JSX.Element => {
+  const icon = props && getOptionIcon(iconType);
+  return props ? (
+    <div className={dropDownTitleIconStyles}>
+      {icon}
+      <span>{props[0].text}</span>
+    </div>
+  ) : (
+    <></>
+  );
 };
 
 export interface LocalDeviceSettingsType {
@@ -44,9 +76,6 @@ export interface LocalDeviceSettingsType {
 export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element => {
   const theme = useTheme();
   const defaultPlaceHolder = 'Select an option';
-  const cameraLabel = 'Camera';
-  const micLabel = 'Microphone';
-  const speakerLabel = 'Speaker';
 
   // TODO: speaker permission is tied to microphone permission (when you request 'audio' permission using the SDK) its
   // actually granting access to query both microphone and speaker. However the browser popup asks you explicity for
@@ -55,7 +84,6 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
   return (
     <Stack className={localSettingsContainer} tokens={mainStackTokens}>
       <Dropdown
-        label={cameraLabel}
         placeholder={defaultPlaceHolder}
         options={props.cameraPermissionGranted ? getDropDownList(props.cameras) : [{ key: 'denied', text: '' }]}
         styles={dropDownStyles(theme)}
@@ -73,9 +101,9 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
         onChange={(event, option, index) => {
           props.onSelectCamera(props.cameras[index ?? 0]);
         }}
+        onRenderTitle={(props: IDropdownOption[] | undefined) => onRenderTitle(props, 'Camera')}
       />
       <Dropdown
-        label={micLabel}
         placeholder={defaultPlaceHolder}
         styles={dropDownStyles(theme)}
         disabled={!props.microphonePermissionGranted}
@@ -97,9 +125,9 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
         ) => {
           props.onSelectMicrophone(props.microphones[index ?? 0]);
         }}
+        onRenderTitle={(props: IDropdownOption[] | undefined) => onRenderTitle(props, 'Microphone')}
       />
       <Dropdown
-        label={speakerLabel}
         placeholder={defaultPlaceHolder}
         styles={dropDownStyles(theme)}
         disabled={props.speakers.length === 0}
@@ -114,6 +142,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
         ) => {
           props.onSelectSpeaker(props.speakers[index ?? 0]);
         }}
+        onRenderTitle={(props: IDropdownOption[] | undefined) => onRenderTitle(props, 'Speaker')}
       />
     </Stack>
   );
