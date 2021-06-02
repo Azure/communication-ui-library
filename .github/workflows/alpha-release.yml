@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
+      # Check-out repo
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
@@ -27,7 +27,7 @@ jobs:
       - name: Install dependencies
         run: rush install
 
-        # Get datetime
+      # Get datetime
       - name: Get datetime for alpha release name
         id: datetime
         run: |
