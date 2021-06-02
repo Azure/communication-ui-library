@@ -112,7 +112,7 @@ jobs:
             az storage azcopy blob upload -s "packages/communication-react/release/*" -c "drops/azure-communication-services/react/npm/1.0.0-alpha-${{ steps.datetime.outputs.datetime }}" --account-name azuresdkpartnerdrops
 
       - name: Trigger alpha package release
-        uses: ./azure-pipeline-action-fork
+        uses: ./.github/workflows/azure-pipeline-action-fork
         with:
           azure-devops-project-url: 'https://dev.azure.com/azure-sdk/internal'
           azure-pipeline-name: 'azuresdkpartnerdrops to npm'
