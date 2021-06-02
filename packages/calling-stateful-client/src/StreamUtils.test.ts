@@ -114,7 +114,7 @@ function addMockRemoteStreamAndParticipant(
 }
 
 function createContexts(): TestData {
-  const context = new CallContext('');
+  const context = new CallContext({ kind: 'communicationUser', communicationUserId: '' });
   const internalContext = new InternalCallContext();
 
   return {
