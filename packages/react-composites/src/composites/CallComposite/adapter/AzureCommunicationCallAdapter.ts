@@ -211,19 +211,19 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     }
   }
 
-  public async createStreamView(remoteId?: string, options?: VideoStreamOptions | undefined): Promise<void> {
-    if (remoteId === undefined) {
+  public async createStreamView(remoteUserId?: string, options?: VideoStreamOptions | undefined): Promise<void> {
+    if (remoteUserId === undefined) {
       await this.handlers.onCreateLocalStreamView(options);
     } else {
-      await this.handlers.onCreateRemoteStreamView(remoteId, options);
+      await this.handlers.onCreateRemoteStreamView(remoteUserId, options);
     }
   }
 
-  public async disposeStreamView(remoteId?: string): Promise<void> {
-    if (remoteId === undefined) {
+  public async disposeStreamView(remoteUserId?: string): Promise<void> {
+    if (remoteUserId === undefined) {
       await this.handlers.onDisposeLocalStreamView();
     } else {
-      await this.handlers.onDisposeRemoteStreamView(remoteId);
+      await this.handlers.onDisposeRemoteStreamView(remoteUserId);
     }
   }
 
