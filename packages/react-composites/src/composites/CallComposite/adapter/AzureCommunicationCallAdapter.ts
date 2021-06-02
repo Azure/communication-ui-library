@@ -207,7 +207,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       // Resync state after callId is set
       this.context.updateClientState(this.callClient.getState());
       this.handlers = createDefaultCallingHandlers(this.callClient, this.callAgent, this.deviceManager, this.call);
-      console.log('create default handlers', this.handlers);
       this.subscribeCallEvents();
     }
   }
