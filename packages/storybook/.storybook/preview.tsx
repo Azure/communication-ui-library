@@ -4,9 +4,9 @@
 import React from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { FluentThemeProvider } from '@azure/communication-react';
-import { initializeIcons, loadTheme, mergeStyles } from '@fluentui/react';
-import { DocsContainer } from '@storybook/addon-docs/blocks';
-import { BackToTop, TableOfContents } from 'storybook-docs-toc';
+import { initializeIcons, loadTheme } from '@fluentui/react';
+import { Anchor, DocsContainer } from '@storybook/addon-docs/blocks';
+import { TOC } from './TOC';
 import {
   COMPONENT_FOLDER_PREFIX,
   COMPOSITE_FOLDER_PREFIX,
@@ -24,15 +24,12 @@ export const parameters = {
   layout: 'fullscreen',
   docs: {
     container: props => (
-      <React.Fragment>
-        <div className={mergeStyles({'& nav': { right: 0 }})}>
-          <TableOfContents />
-        </div>
-        <DocsContainer {...props} />
-        <div className={mergeStyles({'> button': { right: 0 }})}>
-          <BackToTop />
-        </div>
-      </React.Fragment>
+      <TOC>
+        <DocsContainer context={props.context}>
+          <Anchor storyId={props.context.id} />
+          {props.children}
+        </DocsContainer>
+      </TOC>
     ),
   },
   options: {

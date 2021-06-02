@@ -1,7 +1,7 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 
-<Meta title="Stateful Client/Overview" />
+<Meta id="statefulclient-overview" title="Stateful Client/Overview" />
 
 # Overview of Stateful Client
 
@@ -13,7 +13,7 @@ Stateful clients are agnostic to any specific state management framework.
 
 ## Component Binding with Stateful Clients
 
-To make it simpler to connect the stateful client with UI Components, the UI Library exposes helpers, [`usePropsFor`](/?path=/docs/stateful-client-react-hooks-usepropsfor--page), to generate props
+To make it simpler to connect the stateful client with UI Components, the UI Library exposes helpers, [`usePropsFor`](/?path=/docs/statefulclient-reacthooks-usepropsfor--page), to generate props
 These helpers aid in extracting the correct set of props required for different UI Components.
 They expose both data for the UI Components to render such as a message list or a participants remote video, and default handlers for UI Components action such as sending a message.
 
@@ -122,7 +122,8 @@ For more information on the `ChatThreadClient`, see [ChatThreadClient](https://a
 ## Capabilities
 
 Stateful clients enable developers to access all the APIs that low-level calling and chat SDKs expose.
-For a complete list of capabilities see [Calling Overview]() and [Chat Overview]().
+For a complete list of capabilities see [Calling Overview](https://docs.microsoft.com/en-us/azure/communication-services/concepts/voice-video-calling/calling-sdk-features) and
+[Chat Overview](https://docs.microsoft.com/en-us/azure/communication-services/concepts/chat/sdk-features).
 At a high level, stateful clients allow developers the following capabilities.
 
 | Capabilities               | Example                                                                                                            |

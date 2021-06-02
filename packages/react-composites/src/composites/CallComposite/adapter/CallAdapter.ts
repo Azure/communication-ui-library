@@ -18,7 +18,7 @@ import type {
   UnknownIdentifierKind
 } from '@azure/communication-common';
 
-export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoiningTeamsMeeting';
+export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
 
 export type CallAdapterUiState = {
   // Self-contained state for composite
@@ -121,7 +121,9 @@ export interface CallAdapter {
 
   setPage(page: CallCompositePage): void;
 
-  createStreamView(userId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
+  createStreamView(remoteUserId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
+
+  disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
 
   on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
   on(event: 'participantsLeft', listener: ParticipantLeftListener): void;

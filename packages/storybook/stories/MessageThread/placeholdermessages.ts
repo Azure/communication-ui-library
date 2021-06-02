@@ -25,16 +25,30 @@ export const MessageThreadStyles = {
 };
 
 export const UserOne = {
-  senderId: '1',
-  senderDisplayName: 'User1'
+  senderId: 'user1',
+  senderDisplayName: 'Elliot Woodward'
 };
 const UserTwo = {
-  senderId: '2',
-  senderDisplayName: 'User2'
+  senderId: 'user2',
+  senderDisplayName: 'Katri Ahokas'
 };
 const UserThree = {
-  senderId: '3',
-  senderDisplayName: 'User3'
+  senderId: 'user3',
+  senderDisplayName: 'Miguel Garcia'
+};
+
+// This is some mock avatars for example purposes.
+export const GetAvatarUrlByUserId = (userId: string): string => {
+  switch (userId) {
+    case 'user1':
+      return 'images/avatars/avatar-4.jpg';
+    case 'user2':
+      return 'images/avatars/avatar-9.jpg';
+    case 'user3':
+      return 'images/avatars/avatar-6.jpg';
+    default:
+      return '';
+  }
 };
 
 export const GenerateMockNewChatMessage = (): ChatMessage => {
@@ -74,7 +88,7 @@ export const GenerateMockSystemMessage = (): SystemMessage => {
     payload: {
       messageId: Math.random().toString(),
       iconName: 'PeopleAdd',
-      content: 'User1 added User2 to the chat and shared all chat history.'
+      content: 'Elliot Woodward added Carole Poland to the chat and shared all chat history.'
     }
   };
 };
