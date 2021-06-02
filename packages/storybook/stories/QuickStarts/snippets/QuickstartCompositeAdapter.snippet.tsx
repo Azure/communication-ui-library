@@ -8,6 +8,7 @@ import React, { useState, useEffect } from 'react';
 
 function App(): JSX.Element {
   const endpointUrl = '<Azure Communication Services Resource Endpoint>';
+  const userId = '<Azure Communication Services Identifier>';
   const displayName = '<Display Name>';
   const token = '<Azure Communication Services Access Token>';
 
@@ -22,7 +23,15 @@ function App(): JSX.Element {
 
   useEffect(() => {
     const createAdapter = async (): Promise<void> => {
-      setChatAdapter(await createAzureCommunicationChatAdapter(token, endpointUrl, threadId, displayName));
+      setChatAdapter(
+        await createAzureCommunicationChatAdapter(
+          { communicationUserId: userId },
+          token,
+          endpointUrl,
+          threadId,
+          displayName
+        )
+      );
       setCallAdapter(await createAzureCommunicationCallAdapter(token, { groupId }, displayName));
     };
     createAdapter();

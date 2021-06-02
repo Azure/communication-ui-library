@@ -1,7 +1,9 @@
+import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { ChatAdapter, ChatComposite, createAzureCommunicationChatAdapter } from '@azure/communication-react';
 import React, { useState, useEffect } from 'react';
 
 export type ContainerProps = {
+  userId: CommunicationUserIdentifier;
   token: string;
   displayName: string;
   endpointUrl: string;
@@ -16,6 +18,7 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
 
     const createAdapter = async (): Promise<void> => {
       const chatAdapter = await createAzureCommunicationChatAdapter(
+        props.userId,
         props.token,
         props.endpointUrl,
         props.threadId,
