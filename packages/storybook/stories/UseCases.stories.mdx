@@ -116,14 +116,17 @@ These client libraries also require the context for the call or chat they will j
 
 | SDK    | Windows            | macOS                | Ubuntu   | Linux    | Android  | iOS        |
 | ------ | ------------------ | -------------------- | -------- | -------- | -------- | ---------- |
-| UI SDK | Chrome\*, new Edge | Chrome\*, Safari\*\* | Chrome\* | Chrome\* | Chrome\* | Safari\*\* |
+| UI SDK - Calling | Chrome\*, new Edge | Chrome\*, Safari\*\* | Chrome\* | Chrome\* | Chrome\*\* | Safari\*\*\* |
+| UI SDK - Chat    | Firefox\*, Chrome\*, new Edge | Firefox\*, Chrome\*, Safari\* | Chrome\* | Chrome\* | Safari\*|
 
-\*Note that the latest version of Chrome is supported in addition to the
+\*Note that the latest version is supported in addition to the
 previous two releases.
 
-\*\*Note that Safari versions 13.1+ are supported. Outgoing video for Safari
-macOS is not yet supported, but it is supported on iOS. Outgoing screen sharing
-is only supported on desktop (macOS).
+\*\*Note that outgoing screen sharing is not supported for Chrome on Android.
+
+\*\*\*Note that Safari versions 13.1+ are supported. 1:1 calls are not supported on Safari. Outgoing video for Safari
+macOS supported only for Safari 14+/macOS 11+. Outgoing screen sharing
+is not supported on iOS, device enumeration (for example Bluetooth) is limited by OS, only one device available.
 
 ## Accessibility
 
