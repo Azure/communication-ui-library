@@ -39,7 +39,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     dispose(): void;
     // (undocumented)
-    disposeStreamView(remoteId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
+    disposeStreamView(remoteId?: string): Promise<void>;
     // (undocumented)
     getState(): CallAdapterState;
     // (undocumented)
