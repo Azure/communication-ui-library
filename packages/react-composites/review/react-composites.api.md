@@ -35,11 +35,11 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     // (undocumented)
-    createStreamView(remoteId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
+    createStreamView(remoteUserId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
     // (undocumented)
     dispose(): void;
     // (undocumented)
-    disposeStreamView(remoteId?: string): Promise<void>;
+    disposeStreamView(remoteUserId?: string): Promise<void>;
     // (undocumented)
     getState(): CallAdapterState;
     // (undocumented)
