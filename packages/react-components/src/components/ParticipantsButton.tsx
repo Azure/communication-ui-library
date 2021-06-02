@@ -15,7 +15,7 @@ import {
 } from '@fluentui/react';
 import { UserFriendsIcon } from '@fluentui/react-northstar';
 import copy from 'copy-to-clipboard';
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { ParticipantList, ParticipantListProps } from './ParticipantList';
 import {
   controlButtonLabelStyles,
@@ -66,103 +66,6 @@ export interface ParticipantsButtonProps extends IButtonProps {
 }
 
 /**
- * Generates default remote participants subMenuprops for a ParticipantsButton if the props contain participantListProps.
- *
- * @param props ParticipantsButtonProps with user exclusion
- * @returns an array of IContextualMenuItem
- */
-const generateDefaultRemoteParticipantsSubMenuProps = (
-  participantListProps: ParticipantListProps,
-  styles?: ParticipantsButtonStylesProps,
-  onMuteAll?: () => void
-): IContextualMenuItem[] => {
-  const items: IContextualMenuItem[] = [];
-
-  if (participantListProps.participants.length > 0) {
-    items.push({
-      key: 'remoteParticipantsKey',
-      text: 'Remote Participant list',
-      onRender: () => {
-        return (
-          <Stack className={mergeStyles(defaultParticipantListContainerStyle, styles?.participantListContainerStyle)}>
-            <ParticipantList {...participantListProps} />
-          </Stack>
-        );
-      }
-    });
-
-    items.push({ key: 'participantsDivider1', itemType: ContextualMenuItemType.Divider });
-
-    if (onMuteAll) {
-      items.push({
-        key: 'muteAllKey',
-        text: 'Mute all',
-        title: 'Mute all',
-        iconProps: { iconName: 'MicOff2' },
-        onClick: () => onMuteAll()
-      });
-    }
-  }
-
-  return items;
-};
-
-/**
- * Generates default menuprops for a ParticipantsButton
- *
- * @param props ParticipantsButtonProps
- * @returns IContextualMenuProps
- */
-const generateDefaultMenuProps = (
-  participantListProps: ParticipantListProps,
-  callInvitationURL?: string,
-  styles?: ParticipantsButtonStylesProps,
-  onMuteAll?: () => void
-): IContextualMenuProps => {
-  const defaultMenuProps: IContextualMenuProps = {
-    items: []
-  };
-
-  if (participantListProps.participants.length > 0) {
-    const remoteParticipantListProps = { ...participantListProps };
-    remoteParticipantListProps.excludeMe = true;
-
-    const participantIds = participantListProps.participants.map((p) => p.userId);
-    let remoteParticipantCount = participantIds.length;
-
-    if (participantListProps.myUserId && participantIds.indexOf(participantListProps.myUserId) !== -1) {
-      remoteParticipantCount -= 1;
-      defaultMenuProps.items.push({
-        key: 'selfParticipantKey',
-        name: 'In this call'
-      });
-    }
-
-    defaultMenuProps.items.push({
-      key: 'remoteParticipantCountKey',
-      name: `${remoteParticipantCount} people`,
-      iconProps: { iconName: 'People' },
-      subMenuProps: {
-        items: generateDefaultRemoteParticipantsSubMenuProps(remoteParticipantListProps, styles, onMuteAll)
-      }
-    });
-  }
-
-  if (callInvitationURL) {
-    defaultMenuProps.items.push({
-      key: 'InviteLinkKey',
-      name: 'Copy invite link',
-      iconProps: { iconName: 'Link' },
-      onClick: () => {
-        return copy(callInvitationURL);
-      }
-    });
-  }
-
-  return defaultMenuProps;
-};
-
-/**
  * `ParticipantsButton` allows you to easily create a component rendering a participants button. It can be used in your ControlBar component for example.
  * This button, by default, contains dropdown menu items defined through its property `menuProps` (user presence, number of remote participants with a list
  * as sub-menu and a copy-to-clipboard button of the call invite URL).
@@ -181,9 +84,103 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     onRenderText
   } = props;
 
-  const defaultMenuProps = React.useMemo(() => {
-    return generateDefaultMenuProps(participantListProps, callInvitationURL, styles, onMuteAll);
-  }, [props.participantListProps.participants, props.participantListProps?.myUserId, props?.callInvitationURL]);
+  participantListProps.excludeMe = true;
+
+  const onMuteAllCallback = useCallback(() => {
+    if (onMuteAll) {
+      onMuteAll();
+    }
+  }, [onMuteAll]);
+
+  const onRenderCallback = useCallback(() => {
+    return (
+      <Stack className={mergeStyles(defaultParticipantListContainerStyle, styles?.participantListContainerStyle)}>
+        <ParticipantList {...participantListProps} />
+      </Stack>
+    );
+  }, [participantListProps, participantListProps.participants, participantListProps?.myUserId, styles]);
+
+  const onCopyCallback = useCallback(() => {
+    if (callInvitationURL) {
+      return copy(callInvitationURL);
+    }
+    return false;
+  }, [callInvitationURL]);
+
+  const generateDefaultRemoteParticipantsSubMenuProps = (): IContextualMenuItem[] => {
+    const items: IContextualMenuItem[] = [];
+
+    if (participantListProps.participants.length > 0) {
+      items.push({
+        key: 'remoteParticipantsKey',
+        text: 'Remote Participant list',
+        onRender: onRenderCallback
+      });
+
+      items.push({ key: 'participantsDivider1', itemType: ContextualMenuItemType.Divider });
+
+      if (onMuteAll) {
+        items.push({
+          key: 'muteAllKey',
+          text: 'Mute all',
+          title: 'Mute all',
+          iconProps: { iconName: 'MicOff2' },
+          onClick: onMuteAllCallback
+        });
+      }
+    }
+
+    return items;
+  };
+
+  const generateDefaultMenuProps = (): IContextualMenuProps => {
+    const defaultMenuProps: IContextualMenuProps = {
+      items: []
+    };
+
+    if (participantListProps.participants.length > 0) {
+      const participantIds = participantListProps.participants.map((p) => p.userId);
+      let participantCount = participantIds.length;
+
+      if (participantListProps.myUserId && participantIds.indexOf(participantListProps.myUserId) !== -1) {
+        participantCount -= 1;
+        defaultMenuProps.items.push({
+          key: 'selfParticipantKey',
+          name: 'In this call'
+        });
+      }
+
+      defaultMenuProps.items.push({
+        key: 'remoteParticipantCountKey',
+        name: `${participantCount} people`,
+        iconProps: { iconName: 'People' },
+        subMenuProps: {
+          items: generateDefaultRemoteParticipantsSubMenuProps()
+        }
+      });
+    }
+
+    if (callInvitationURL) {
+      defaultMenuProps.items.push({
+        key: 'InviteLinkKey',
+        name: 'Copy invite link',
+        iconProps: { iconName: 'Link' },
+        onClick: onCopyCallback
+      });
+    }
+
+    return defaultMenuProps;
+  };
+
+  const defaultMenuProps = useMemo(() => {
+    return generateDefaultMenuProps();
+  }, [
+    participantListProps,
+    participantListProps.participants,
+    participantListProps?.myUserId,
+    callInvitationURL,
+    styles?.participantListContainerStyle
+  ]);
 
   const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
 

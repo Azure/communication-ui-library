@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { IContextualMenuItem, Stack, PersonaPresence } from '@fluentui/react';
 import { ParticipantItem } from './ParticipantItem';
@@ -100,7 +100,7 @@ const onRenderParticipantsDefault = (
 export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
   const { excludeMe = false, myUserId, participants, onParticipantRemove, onRenderAvatar, onRenderParticipant } = props;
 
-  const allParticipants: CommunicationParticipant[] = React.useMemo(() => {
+  const allParticipants: CommunicationParticipant[] = useMemo(() => {
     if (participants !== undefined) {
       if (excludeMe && myUserId) {
         const userIndex = participants.map((p) => p.userId).indexOf(myUserId);
