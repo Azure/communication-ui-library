@@ -5,7 +5,6 @@ import {
   ContextualMenuItemType,
   DefaultButton,
   IButtonProps,
-  IButtonStyles,
   IContextualMenuItem,
   IContextualMenuProps,
   IStyle,
@@ -23,11 +22,12 @@ import {
   controlButtonStyles,
   defaultParticipantListContainerStyle
 } from './styles/ControlBar.styles';
+import { BaseCustomStylesProps } from '../types';
 
 /**
  * Styles Props for ParticipantsButton component
  */
-export interface ParticipantsButtonStylesProps extends IButtonStyles {
+export interface ParticipantsButtonStylesProps extends BaseCustomStylesProps {
   /** Styles of ParticipantList container */
   participantListContainerStyle?: IStyle;
 }
@@ -71,8 +71,11 @@ export interface ParticipantsButtonProps extends IButtonProps {
  * @param props ParticipantsButtonProps with user exclusion
  * @returns an array of IContextualMenuItem
  */
-const generateDefaultRemoteParticipantsSubMenuProps = (props: ParticipantsButtonProps): IContextualMenuItem[] => {
-  const { participantListProps, onMuteAll } = props;
+const generateDefaultRemoteParticipantsSubMenuProps = (
+  participantListProps: ParticipantListProps,
+  styles?: ParticipantsButtonStylesProps,
+  onMuteAll?: () => void
+): IContextualMenuItem[] => {
   const items: IContextualMenuItem[] = [];
 
   if (participantListProps.participants.length > 0) {
@@ -81,9 +84,7 @@ const generateDefaultRemoteParticipantsSubMenuProps = (props: ParticipantsButton
       text: 'Remote Participant list',
       onRender: () => {
         return (
-          <Stack
-            className={mergeStyles(defaultParticipantListContainerStyle, props?.styles?.participantListContainerStyle)}
-          >
+          <Stack className={mergeStyles(defaultParticipantListContainerStyle, styles?.participantListContainerStyle)}>
             <ParticipantList {...participantListProps} />
           </Stack>
         );
@@ -112,16 +113,19 @@ const generateDefaultRemoteParticipantsSubMenuProps = (props: ParticipantsButton
  * @param props ParticipantsButtonProps
  * @returns IContextualMenuProps
  */
-const generateDefaultMenuProps = (props: ParticipantsButtonProps): IContextualMenuProps => {
-  const { participantListProps, callInvitationURL } = props;
-
+const generateDefaultMenuProps = (
+  participantListProps: ParticipantListProps,
+  callInvitationURL?: string,
+  styles?: ParticipantsButtonStylesProps,
+  onMuteAll?: () => void
+): IContextualMenuProps => {
   const defaultMenuProps: IContextualMenuProps = {
     items: []
   };
 
   if (participantListProps.participants.length > 0) {
-    const remoteParticipantsButtonProps = { ...props };
-    remoteParticipantsButtonProps.participantListProps.excludeMe = true;
+    const remoteParticipantListProps = { ...participantListProps };
+    remoteParticipantListProps.excludeMe = true;
 
     const participantIds = participantListProps.participants.map((p) => p.userId);
     let remoteParticipantCount = participantIds.length;
@@ -139,7 +143,7 @@ const generateDefaultMenuProps = (props: ParticipantsButtonProps): IContextualMe
       name: `${remoteParticipantCount} people`,
       iconProps: { iconName: 'People' },
       subMenuProps: {
-        items: generateDefaultRemoteParticipantsSubMenuProps(remoteParticipantsButtonProps)
+        items: generateDefaultRemoteParticipantsSubMenuProps(remoteParticipantListProps, styles, onMuteAll)
       }
     });
   }
@@ -167,10 +171,18 @@ const generateDefaultMenuProps = (props: ParticipantsButtonProps): IContextualMe
  * @param props - of type ParticipantsButtonProps
  */
 export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element => {
-  const { showLabel = false, styles, onRenderIcon, onRenderText } = props;
+  const {
+    participantListProps,
+    showLabel = false,
+    callInvitationURL,
+    styles,
+    onMuteAll,
+    onRenderIcon,
+    onRenderText
+  } = props;
 
   const defaultMenuProps = React.useMemo(() => {
-    return generateDefaultMenuProps(props);
+    return generateDefaultMenuProps(participantListProps, callInvitationURL, styles, onMuteAll);
   }, [props.participantListProps.participants, props.participantListProps?.myUserId, props?.callInvitationURL]);
 
   const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});

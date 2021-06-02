@@ -6,7 +6,6 @@
 
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { IButtonProps } from '@fluentui/react';
-import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { MessageStatus } from 'acs-ui-common';
@@ -307,7 +306,7 @@ export interface ParticipantsButtonProps extends IButtonProps {
 }
 
 // @public
-export interface ParticipantsButtonStylesProps extends IButtonStyles {
+export interface ParticipantsButtonStylesProps extends BaseCustomStylesProps {
     participantListContainerStyle?: IStyle;
 }
 

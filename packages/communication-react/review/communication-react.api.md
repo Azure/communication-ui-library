@@ -30,7 +30,6 @@ import { DeviceAccess } from '@azure/communication-calling';
 import { DeviceManager } from '@azure/communication-calling';
 import { GroupCallLocator } from '@azure/communication-calling';
 import { IButtonProps } from '@fluentui/react';
-import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { MediaStreamType } from '@azure/communication-calling';
@@ -1086,7 +1085,7 @@ export interface ParticipantsButtonProps extends IButtonProps {
 }
 
 // @public
-export interface ParticipantsButtonStylesProps extends IButtonStyles {
+export interface ParticipantsButtonStylesProps extends BaseCustomStylesProps {
     participantListContainerStyle?: IStyle;
 }
 
