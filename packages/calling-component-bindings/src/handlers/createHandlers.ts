@@ -240,11 +240,11 @@ export const createDefaultCallingHandlers = memoizeOne(
         (i) => i.mediaStreamType === 'ScreenSharing'
       );
 
-      if (remoteVideoStream && !remoteVideoStream.isAvailable && remoteVideoStream.view) {
+      if (remoteVideoStream && remoteVideoStream.view) {
         callClient.disposeView(call.id, participant.identifier, remoteVideoStream);
       }
 
-      if (screenShareStream && !screenShareStream.isAvailable && screenShareStream.view) {
+      if (screenShareStream && screenShareStream.view) {
         callClient.disposeView(call.id, participant.identifier, screenShareStream);
       }
     };
