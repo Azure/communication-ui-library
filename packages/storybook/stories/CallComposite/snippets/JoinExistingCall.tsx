@@ -15,7 +15,8 @@ export const JoinExistingCall: () => JSX.Element = () => {
     displayName: text('Display name', '', 'External call')
   });
 
-  const areAllKnobsSet = !!knobs.current.callLocator && !!knobs.current.token && !!knobs.current.displayName;
+  const areAllKnobsSet =
+    !!knobs.current.callLocator && !!knobs.current.userId && !!knobs.current.token && !!knobs.current.displayName;
   return (
     <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
       {areAllKnobsSet ? (
