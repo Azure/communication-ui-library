@@ -64,6 +64,12 @@ const createCompositeHandlers = memoizeOne(
       if (adapter.getState().call) {
         return adapter.startCamera();
       }
+    },
+    onDisposeLocalStreamView: async () => {
+      return adapter.disposeStreamView();
+    },
+    onDisposeRemoteStreamView: async (userId) => {
+      return adapter.disposeStreamView(userId);
     }
   })
 );
