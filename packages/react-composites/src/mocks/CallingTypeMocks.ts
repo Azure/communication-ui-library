@@ -114,7 +114,7 @@ export declare interface MockCall {
   /**
    * Add a participant to this Call.
    * @param identifier - The identifier of the participant to add.
-   * @param options - Additional options for managing the PSTN call. For example, setting the Caller Id phone number in a PSTN call.
+   * @param options - Additional options for managing the PSTN call. For example, setting the Caller Id phone number in a PSTN call.
    * @returns The RemoteParticipant object associated with the successfully added participant.
    */
   addParticipant(identifier: CommunicationUserIdentifier | MicrosoftTeamsUserIdentifier): RemoteParticipant;
