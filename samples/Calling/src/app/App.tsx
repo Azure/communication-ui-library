@@ -102,8 +102,7 @@ const App = (): JSX.Element => {
   useEffect(() => {
     // Create a new CallClient when at the home page or at the createCallClient page.
     if (page === 'createCallClient' || page === 'home') {
-      // This sample app does not use `userId`. The stateful client internally never uses it either.
-      const newStatefulCallClient = createStatefulCallClient({ userId: 'this_id_left_intentionally_blank' });
+      const newStatefulCallClient = createStatefulCallClient({ userId });
       setStatefulCallClient(newStatefulCallClient);
       page === 'createCallClient' && setPage('configuration');
 
