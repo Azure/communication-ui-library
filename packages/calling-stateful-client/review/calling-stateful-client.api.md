@@ -41,7 +41,7 @@ export interface CallClientState {
     deviceManager: DeviceManagerState;
     incomingCalls: Map<string, IncomingCallState>;
     incomingCallsEnded: IncomingCallState[];
-    userId: CommunicationUserIdentifier;
+    userId: CommunicationUserKind;
 }
 
 // @public

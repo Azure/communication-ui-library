@@ -208,9 +208,9 @@ export interface CallAdapter {
     unmute(): Promise<void>;
 }
 
-// @public (undocumented)
+// @public
 export type CallAdapterClientState = {
-    userId: string;
+    userId: CommunicationUserKind;
     displayName?: string;
     call?: CallState;
     devices: DeviceManagerState;
@@ -219,7 +219,7 @@ export type CallAdapterClientState = {
 // @public (undocumented)
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
 
-// @public (undocumented)
+// @public
 export type CallAdapterUiState = {
     error?: Error;
     isLocalPreviewMicrophoneEnabled: boolean;

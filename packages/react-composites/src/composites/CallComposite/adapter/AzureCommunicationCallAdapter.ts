@@ -41,8 +41,7 @@ import {
 import { createAzureCommunicationUserCredential, getIdFromToken, isInCall } from '../../../utils';
 import { VideoStreamOptions } from 'react-components';
 import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from 'acs-ui-common';
-import { CommunicationUserIdentifier } from '@azure/communication-signaling';
-import { CommunicationUserKind } from '@azure/communication-common';
+import { CommunicationUserIdentifier, CommunicationUserKind } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 
 // Context of Chat, which is a centralized context for all state updates
@@ -355,7 +354,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   private isMyMutedChanged = (): void => {
     this.emitter.emit('isMutedChanged', {
-      participantId: createCommunicationIdentifier(this.getState().userId),
+      participantId: this.getState().userId,
       isMuted: this.call?.isMuted
     });
   };
@@ -424,10 +423,6 @@ const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
   return deviceManager.unparentedViews.values().next().value?.view !== undefined;
 };
 
-const createCommunicationIdentifier = (rawId: string): CommunicationUserKind => {
-  return { kind: 'communicationUser', communicationUserId: rawId };
-};
-
 export const createAzureCommunicationCallAdapter = async (
   token: string,
   locator: TeamsMeetingLinkLocator | GroupCallLocator,
@@ -435,7 +430,9 @@ export const createAzureCommunicationCallAdapter = async (
   refreshTokenCallback?: (() => Promise<string>) | undefined,
   callClientOptions?: CallClientOptions
 ): Promise<CallAdapter> => {
-  const userId = getIdFromToken(token);
+  const rawUserId = getIdFromToken(token);
+  // This hack can be removed when `getIdFromToken` is dropped in favour of actually passing in user credentials.
+  const userId = <CommunicationUserKind>{ kind: 'communicationUser', communicationUserId: rawUserId };
 
   const callClient = createStatefulCallClient({ userId }, { callClientOptions });
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;

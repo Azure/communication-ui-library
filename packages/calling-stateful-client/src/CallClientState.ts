@@ -428,5 +428,5 @@ export interface CallClientState {
    * developer for easier access to userId. Must be passed in at initialization of the {@Link StatefulCallClient}.
    * Completely controlled by the developer.
    */
-  userId: CommunicationUserIdentifier;
+  userId: CommunicationUserKind;
 }
