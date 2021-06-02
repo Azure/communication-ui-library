@@ -1329,6 +1329,7 @@ export type VideoGalleryParticipant = {
 
 // @public
 export interface VideoGalleryProps {
+    layout?: 'default' | 'floatingLocalVideo';
     localParticipant: VideoGalleryLocalParticipant;
     localVideoViewOption?: VideoStreamOptions;
     onCreateLocalStreamView?: (options?: VideoStreamOptions | undefined) => Promise<void>;

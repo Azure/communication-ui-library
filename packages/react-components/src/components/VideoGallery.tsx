@@ -11,9 +11,9 @@ import {
 } from '../types';
 import { GridLayout } from './GridLayout';
 import { StreamMedia } from './StreamMedia';
-import { gridStyle, videoTileStyle } from './styles/VideoGallery.styles';
+import { floatingLocalVideoTileStyle, gridStyle, videoTileStyle } from './styles/VideoGallery.styles';
 import { memoizeFnAll } from 'acs-ui-common';
-import { VideoTile, PlaceholderProps } from './VideoTile';
+import { VideoTile, PlaceholderProps, VideoTileStylesProps } from './VideoTile';
 
 /**
  * Props for component `VideoGallery`
@@ -28,6 +28,8 @@ export interface VideoGalleryProps {
    * ```
    */
   styles?: BaseCustomStylesProps;
+  /** Layout of the video tiles. */
+  layout?: 'default' | 'floatingLocalVideo';
   /** Local video particpant */
   localParticipant: VideoGalleryLocalParticipant;
   /** List of remote video particpants */
@@ -98,11 +100,17 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onCreateLocalStreamView,
     onCreateRemoteStreamView,
     styles,
+    layout,
     onRenderAvatar
   } = props;
 
+  let localVideoTileStyles: VideoTileStylesProps = videoTileStyle;
+  if (layout === 'floatingLocalVideo' && remoteParticipants && remoteParticipants.length > 0) {
+    localVideoTileStyles = floatingLocalVideoTileStyle;
+  }
+
   /**
-   * Utility function for meoized rendering of LocalParticipant.
+   * Utility function for memoized rendering of LocalParticipant.
    */
   const defaultOnRenderLocalVideoTile = useMemo((): JSX.Element => {
     const localVideoStream = localParticipant?.videoStream;
@@ -119,7 +127,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         isVideoReady={isLocalVideoReady}
         renderElement={<StreamMedia videoStreamElement={localVideoStream?.renderElement ?? null} />}
         displayName={localParticipant?.displayName}
-        styles={videoTileStyle}
+        styles={localVideoTileStyles}
         onRenderPlaceholder={onRenderAvatar}
       />
     );
@@ -152,7 +160,18 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         );
       });
     });
-  }, [remoteParticipants, onRenderRemoteVideoTile, onCreateRemoteStreamView, remoteVideoViewOption]);
+  }, [remoteParticipants, onRenderRemoteVideoTile, onCreateRemoteStreamView, remoteVideoViewOption, onRenderAvatar]);
+
+  if (layout === 'floatingLocalVideo' && remoteParticipants && remoteParticipants.length > 0) {
+    return (
+      <>
+        <Stack style={{ position: 'absolute', bottom: 0, right: 0 }}>
+          {localParticipant && defaultOnRenderLocalVideoTile}
+        </Stack>
+        <GridLayout styles={styles}>{defaultOnRenderRemoteParticipants}</GridLayout>
+      </>
+    );
+  }
 
   return (
     <GridLayout styles={styles}>
