@@ -3,7 +3,7 @@
 
 import { concatStyleSets, DefaultButton, IButtonProps, Label, mergeStyles } from '@fluentui/react';
 import { CallVideoIcon, CallVideoOffIcon } from '@fluentui/react-northstar';
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 
 /**
@@ -32,6 +32,7 @@ export interface CameraButtonProps extends IButtonProps {
 export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   const { showLabel = false, styles, onRenderIcon, onRenderText } = props;
   const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
+  const [waitForCamera, setWaitForCamera] = useState(false);
 
   const defaultRenderIcon = (props?: IButtonProps): JSX.Element => {
     return props?.checked ? <CallVideoIcon key={'videoIconKey'} /> : <CallVideoOffIcon key={'videoOffIconKey'} />;
@@ -45,10 +46,22 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
     );
   };
 
+  const onToggleCamera = props.onToggleCamera;
+
+  const onToggleClick = useCallback(async () => {
+    // Throttle click on camera, need to await onToggleCamera then allow another click
+    if (onToggleCamera) {
+      setWaitForCamera(true);
+      await onToggleCamera();
+      setWaitForCamera(false);
+    }
+  }, [onToggleCamera]);
+
   return (
     <DefaultButton
       {...props}
-      onClick={props.onToggleCamera ?? props.onClick}
+      disabled={props.disabled || waitForCamera}
+      onClick={onToggleCamera ? onToggleClick : props.onClick}
       styles={componentStyles}
       onRenderIcon={onRenderIcon ?? defaultRenderIcon}
       onRenderText={showLabel ? onRenderText ?? defaultRenderText : undefined}
