@@ -1,6 +1,10 @@
 name: Manual Alpha Package Release
 
 on:
+  # for testing in PR, will be removed
+  push:
+    branches: [main]
+
   # Allows running workflow manually from the GitHub Actions tab
   workflow_dispatch:
 
