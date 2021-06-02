@@ -24,6 +24,12 @@ export type ParticipantListProps = {
   participants: CommunicationParticipant[];
   /** User ID of user */
   myUserId?: string;
+  /**
+   * Wether to exclude the user from the participant list or not
+   *
+   * @defaultValue `false`
+   */
+  excludeMe?: boolean;
   /** Optional callback to render each participant. If no callback is provided, each participant will be rendered with `ParticipantItem`  */
   onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
   /** Optional callback to render the avatar for each participant. This property will have no effect if `onRenderParticipant` is assigned.  */
@@ -34,6 +40,7 @@ export type ParticipantListProps = {
 
 const getDefaultRenderer = (
   myUserId?: string,
+  excludeMe?: boolean,
   onParticipantRemove?: (userId: string) => void,
   onRenderAvatar?: (remoteParticipant: CommunicationParticipant) => JSX.Element | null
 ): ((participant: CommunicationParticipant) => JSX.Element | null) => {
@@ -51,7 +58,7 @@ const getDefaultRenderer = (
     }
 
     const menuItems: IContextualMenuItem[] = [];
-    if (participant.userId !== myUserId && onParticipantRemove) {
+    if ((excludeMe || participant.userId !== myUserId) && onParticipantRemove) {
       menuItems.push({
         key: 'Remove',
         text: 'Remove',
@@ -79,7 +86,7 @@ const getDefaultRenderer = (
       return (
         <ParticipantItem
           displayName={participant.displayName}
-          me={myUserId ? participant.userId === myUserId : false}
+          me={excludeMe || !myUserId ? false : participant.userId === myUserId}
           menuItems={menuItems}
           presence={presence}
           onRenderIcon={onRenderIcon}
@@ -104,11 +111,13 @@ const onRenderOverflowButton = (overflowItems: unknown): JSX.Element => (
 const renderParticipants = (
   participants: CommunicationParticipant[],
   myUserId?: string,
+  excludeMe?: boolean,
   onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null,
   onRenderAvatar?: (participant: CommunicationParticipant) => JSX.Element | null,
   onParticipantRemove?: (userId: string) => void
 ): (JSX.Element | null)[] => {
-  const renderParticipant = onRenderParticipant ?? getDefaultRenderer(myUserId, onParticipantRemove, onRenderAvatar);
+  const renderParticipant =
+    onRenderParticipant ?? getDefaultRenderer(myUserId, excludeMe, onParticipantRemove, onRenderAvatar);
   const onRenderItem = (item: IOverflowSetItemProps): JSX.Element | null => {
     const participant = {
       userId: item.userId,
@@ -118,13 +127,22 @@ const renderParticipants = (
       isMuted: item.isMuted,
       isSpeaking: item.isSpeaking
     };
+
     return renderParticipant(participant);
   };
+
   return participants.map((item, i) => {
     return (
       <OverflowSet
         key={i}
-        items={[{ key: `${i}`, displayName: item.displayName, me: item.userId === myUserId, ...item }]}
+        items={[
+          {
+            key: `${i}`,
+            displayName: item.displayName,
+            me: !excludeMe || item.userId === myUserId,
+            ...item
+          }
+        ]}
         role="menubar"
         vertical={false}
         onRenderOverflowButton={onRenderOverflowButton}
@@ -140,18 +158,35 @@ const renderParticipants = (
  * assigned then each participant is rendered with `ParticipantItem`.
  */
 export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
-  const allParticipants: CommunicationParticipant[] = [];
-  if (props.participants !== undefined) {
-    props.participants.forEach((participant) => allParticipants.push(participant));
-  }
+  const { excludeMe = false, myUserId, participants, onParticipantRemove, onRenderAvatar, onRenderParticipant } = props;
+
+  const allParticipants: CommunicationParticipant[] = React.useMemo(() => {
+    if (participants !== undefined) {
+      if (excludeMe && myUserId) {
+        const userIndex = participants.map((p) => p.userId).indexOf(myUserId);
+
+        if (userIndex !== -1) {
+          const remoteParticipants = [...participants];
+          remoteParticipants.splice(userIndex, 1);
+          return remoteParticipants;
+        }
+      }
+
+      return [...participants];
+    }
+
+    return [];
+  }, [participants, excludeMe, myUserId]);
+
   return (
     <Stack className={participantListStyle}>
       {renderParticipants(
         allParticipants,
-        props.myUserId,
-        props.onRenderParticipant,
-        props.onRenderAvatar,
-        props.onParticipantRemove
+        myUserId,
+        excludeMe,
+        onRenderParticipant,
+        onRenderAvatar,
+        onParticipantRemove
       )}
     </Stack>
   );

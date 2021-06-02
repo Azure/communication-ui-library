@@ -2,16 +2,17 @@
 // Licensed under the MIT license.
 
 import {
-  concatStyleSets,
   ContextualMenuItemType,
   DefaultButton,
   IButtonProps,
+  IButtonStyles,
   IContextualMenuItem,
   IContextualMenuProps,
   IStyle,
   Label,
-  mergeStyles,
-  Stack
+  Stack,
+  concatStyleSets,
+  mergeStyles
 } from '@fluentui/react';
 import { UserFriendsIcon } from '@fluentui/react-northstar';
 import copy from 'copy-to-clipboard';
@@ -24,60 +25,66 @@ import {
 } from './styles/ControlBar.styles';
 
 /**
- * Props for ParticipantListButton component
+ * Styles Props for ParticipantsButton component
  */
-export interface ParticipantListButtonProps extends IButtonProps {
+export interface ParticipantsButtonStylesProps extends IButtonStyles {
+  /** Styles of ParticipantList container */
+  participantListContainerStyle?: IStyle;
+}
+
+/**
+ * Props for ParticipantsButton component
+ */
+export interface ParticipantsButtonProps extends IButtonProps {
   /**
    * Whether the label is displayed or not.
-   * @defaultValue `false`
+   *
+   * @default false
+   *
    */
   showLabel?: boolean;
   /**
    * Props of ParticipantList component
    */
-  participantListProps?: ParticipantListProps;
+  participantListProps: ParticipantListProps;
   /**
-   * Styles of ParticipantList container
+   * Allows users to pass an object containing custom CSS styles.
+   * @Example
+   * ```
+   * <MessageThread styles={{ root: { background: 'blue' } }} />
+   * ```
    */
-  participantListContainerStyle?: IStyle;
+  styles?: ParticipantsButtonStylesProps;
   /**
-   * Call Invite URL
+   * URL to invite new participants to the current call
    */
-  callInviteURL?: string;
+  callInvitationURL?: string;
   /**
    * CallBack to mute all remote participants
-   *
-   * @param userId - ID of user requesting to mute all remote participants
    */
-  onMuteAll?: (userId?: string) => void;
+  onMuteAll?: () => void;
 }
 
 /**
- * Generates default remote participants subMenuprops for a ParticipantListButton if the props contain participantListProps.
+ * Generates default remote participants subMenuprops for a ParticipantsButton if the props contain participantListProps.
  *
- * @param props ParticipantListButtonProps
+ * @param props ParticipantsButtonProps with user exclusion
  * @returns an array of IContextualMenuItem
  */
-const generateDefaultRemoteParticipantsSubMenuProps = (props: ParticipantListButtonProps): IContextualMenuItem[] => {
+const generateDefaultRemoteParticipantsSubMenuProps = (props: ParticipantsButtonProps): IContextualMenuItem[] => {
   const { participantListProps, onMuteAll } = props;
   const items: IContextualMenuItem[] = [];
 
-  if (participantListProps && participantListProps.participants.length > 0) {
-    const remoteParticipantListProps = { ...participantListProps };
-
-    if (participantListProps.myUserId) {
-      remoteParticipantListProps.participants = participantListProps.participants.filter(
-        (p) => p.userId !== participantListProps.myUserId
-      );
-    }
-
+  if (participantListProps.participants.length > 0) {
     items.push({
       key: 'remoteParticipantsKey',
       text: 'Remote Participant list',
       onRender: () => {
         return (
-          <Stack className={mergeStyles(defaultParticipantListContainerStyle, props?.participantListContainerStyle)}>
-            <ParticipantList {...remoteParticipantListProps} />
+          <Stack
+            className={mergeStyles(defaultParticipantListContainerStyle, props?.styles?.participantListContainerStyle)}
+          >
+            <ParticipantList {...participantListProps} />
           </Stack>
         );
       }
@@ -91,7 +98,7 @@ const generateDefaultRemoteParticipantsSubMenuProps = (props: ParticipantListBut
         text: 'Mute all',
         title: 'Mute all',
         iconProps: { iconName: 'MicOff2' },
-        onClick: () => onMuteAll(participantListProps.myUserId)
+        onClick: () => onMuteAll()
       });
     }
   }
@@ -100,23 +107,26 @@ const generateDefaultRemoteParticipantsSubMenuProps = (props: ParticipantListBut
 };
 
 /**
- * Generates default menuprops for a ParticipantListButton
+ * Generates default menuprops for a ParticipantsButton
  *
- * @param props ParticipantListButtonProps
+ * @param props ParticipantsButtonProps
  * @returns IContextualMenuProps
  */
-const generateDefaultMenuProps = (props: ParticipantListButtonProps): IContextualMenuProps => {
-  const { participantListProps, callInviteURL } = props;
+const generateDefaultMenuProps = (props: ParticipantsButtonProps): IContextualMenuProps => {
+  const { participantListProps, callInvitationURL } = props;
 
   const defaultMenuProps: IContextualMenuProps = {
     items: []
   };
 
-  if (participantListProps && participantListProps.participants.length > 0) {
+  if (participantListProps.participants.length > 0) {
+    let remoteParticipantsButtonProps = { ...props };
+    remoteParticipantsButtonProps.participantListProps.excludeMe = true;
+
     const participantIds = participantListProps.participants.map((p) => p.userId);
     let remoteParticipantCount = participantIds.length;
 
-    if (participantListProps.myUserId && participantIds.indexOf(participantListProps?.myUserId) !== -1) {
+    if (participantListProps.myUserId && participantIds.indexOf(participantListProps.myUserId) !== -1) {
       remoteParticipantCount -= 1;
       defaultMenuProps.items.push({
         key: 'selfParticipantKey',
@@ -129,18 +139,18 @@ const generateDefaultMenuProps = (props: ParticipantListButtonProps): IContextua
       name: `${remoteParticipantCount} people`,
       iconProps: { iconName: 'People' },
       subMenuProps: {
-        items: generateDefaultRemoteParticipantsSubMenuProps(props)
+        items: generateDefaultRemoteParticipantsSubMenuProps(remoteParticipantsButtonProps)
       }
     });
   }
 
-  if (callInviteURL) {
+  if (callInvitationURL) {
     defaultMenuProps.items.push({
       key: 'InviteLinkKey',
       name: 'Copy invite link',
       iconProps: { iconName: 'Link' },
       onClick: () => {
-        copy(callInviteURL);
+        return copy(callInvitationURL);
       }
     });
   }
@@ -149,27 +159,31 @@ const generateDefaultMenuProps = (props: ParticipantListButtonProps): IContextua
 };
 
 /**
- * `ParticipantListButton` allows you to easily create a component rendering a ParticipantList button. It can be used in your ControlBar component for example.
+ * `ParticipantsButton` allows you to easily create a component rendering a participants button. It can be used in your ControlBar component for example.
  * This button, by default, contains dropdown menu items defined through its property `menuProps` (user presence, number of remote participants with a list
  * as sub-menu and a copy-to-clipboard button of the call invite URL).
  * This `menuProps` property is of type [IContextualMenuProps](https://developer.microsoft.com/en-us/fluentui#/controls/web/contextualmenu#IContextualMenuProps).
  *
- * @param props - of type ParticipantListButtonProps
+ * @param props - of type ParticipantsButtonProps
  */
-export const ParticipantListButton = (props: ParticipantListButtonProps): JSX.Element => {
+export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element => {
   const { showLabel = false, styles, onRenderIcon, onRenderText } = props;
 
-  const defaultMenuProps = generateDefaultMenuProps(props);
+  const defaultMenuProps = React.useMemo(() => generateDefaultMenuProps(props), [
+    props.participantListProps.participants,
+    props.participantListProps?.myUserId,
+    props?.callInvitationURL
+  ]);
 
   const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
 
   const defaultRenderIcon = (): JSX.Element => {
-    return <UserFriendsIcon key={'participantListIconKey'} />;
+    return <UserFriendsIcon key={'participantsIconKey'} />;
   };
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {
     return (
-      <Label key={'participantListLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
+      <Label key={'participantsLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
         {'Participants'}
       </Label>
     );

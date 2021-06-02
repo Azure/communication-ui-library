@@ -6,6 +6,7 @@
 
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { IButtonProps } from '@fluentui/react';
+import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { MessageStatus } from 'acs-ui-common';
@@ -284,25 +285,31 @@ export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
 export const ParticipantList: (props: ParticipantListProps) => JSX.Element;
 
 // @public
-export const ParticipantListButton: (props: ParticipantListButtonProps) => JSX.Element;
-
-// @public
-export interface ParticipantListButtonProps extends IButtonProps {
-    callInviteURL?: string;
-    onMuteAll?: (userId?: string) => void;
-    participantListContainerStyle?: IStyle;
-    participantListProps?: ParticipantListProps;
-    showLabel?: boolean;
-}
-
-// @public
 export type ParticipantListProps = {
     participants: CommunicationParticipant[];
     myUserId?: string;
+    excludeMe?: boolean;
     onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
     onRenderAvatar?: (participant: CommunicationParticipant) => JSX.Element | null;
     onParticipantRemove?: (userId: string) => void;
 };
+
+// @public
+export const ParticipantsButton: (props: ParticipantsButtonProps) => JSX.Element;
+
+// @public
+export interface ParticipantsButtonProps extends IButtonProps {
+    callInvitationURL?: string;
+    onMuteAll?: () => void;
+    participantListProps: ParticipantListProps;
+    showLabel?: boolean;
+    styles?: ParticipantsButtonStylesProps;
+}
+
+// @public
+export interface ParticipantsButtonStylesProps extends IButtonStyles {
+    participantListContainerStyle?: IStyle;
+}
 
 // @public (undocumented)
 export interface PlaceholderProps {

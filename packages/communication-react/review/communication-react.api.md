@@ -30,6 +30,7 @@ import { DeviceAccess } from '@azure/communication-calling';
 import { DeviceManager } from '@azure/communication-calling';
 import { GroupCallLocator } from '@azure/communication-calling';
 import { IButtonProps } from '@fluentui/react';
+import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { MediaStreamType } from '@azure/communication-calling';
@@ -1048,21 +1049,10 @@ export type ParticipantLeftListener = (event: {
 export const ParticipantList: (props: ParticipantListProps) => JSX.Element;
 
 // @public
-export const ParticipantListButton: (props: ParticipantListButtonProps) => JSX.Element;
-
-// @public
-export interface ParticipantListButtonProps extends IButtonProps {
-    callInviteURL?: string;
-    onMuteAll?: (userId?: string) => void;
-    participantListContainerStyle?: IStyle;
-    participantListProps?: ParticipantListProps;
-    showLabel?: boolean;
-}
-
-// @public
 export type ParticipantListProps = {
     participants: CommunicationParticipant[];
     myUserId?: string;
+    excludeMe?: boolean;
     onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
     onRenderAvatar?: (participant: CommunicationParticipant) => JSX.Element | null;
     onParticipantRemove?: (userId: string) => void;
@@ -1082,6 +1072,23 @@ export type ParticipantsAddedListener = (event: {
     participantsAdded: ChatParticipant[];
     addedBy: ChatParticipant;
 }) => void;
+
+// @public
+export const ParticipantsButton: (props: ParticipantsButtonProps) => JSX.Element;
+
+// @public
+export interface ParticipantsButtonProps extends IButtonProps {
+    callInvitationURL?: string;
+    onMuteAll?: () => void;
+    participantListProps: ParticipantListProps;
+    showLabel?: boolean;
+    styles?: ParticipantsButtonStylesProps;
+}
+
+// @public
+export interface ParticipantsButtonStylesProps extends IButtonStyles {
+    participantListContainerStyle?: IStyle;
+}
 
 // @public (undocumented)
 export type ParticipantsRemovedListener = (event: {
