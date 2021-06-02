@@ -10,7 +10,7 @@ import { ConfigurationScreen } from './ConfigurationScreen';
 import { CallScreen } from './CallScreen';
 import { HomeScreen } from './HomeScreen';
 import { v1 as createGUID } from 'uuid';
-import { CallProvider, CallClientProvider, CallAgentProvider } from '@azure/acs-calling-selector';
+import { CallProvider, CallClientProvider, CallAgentProvider } from 'calling-component-bindings';
 import {
   createRandomDisplayName,
   fetchTokenResponse,
@@ -228,6 +228,16 @@ const App = (): JSX.Element => {
           <CallError
             title="Error joining Teams Meeting"
             reason="Access to the Teams meeting was denied."
+            rejoinHandler={() => setPage('createCallClient')}
+            homeHandler={navigateToHomePage}
+          />
+        );
+      }
+      case 'removed': {
+        return (
+          <CallError
+            title="Oops! You are no longer a participant of the call."
+            reason="Access to the meeting has been stopped"
             rejoinHandler={() => setPage('createCallClient')}
             homeHandler={navigateToHomePage}
           />

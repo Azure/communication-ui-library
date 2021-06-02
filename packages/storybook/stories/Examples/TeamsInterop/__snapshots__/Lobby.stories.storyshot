@@ -1,36 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`storybook snapshot tests Storyshots Examples/Teams Interop Compliance Banner 1`] = `
+exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 1`] = `
 <div
-  className="css-80 root-0 body-1"
+  className="css-81 root-0 body-1"
 >
   <div
-    className="css-80"
-    data-uses-unhanded-props={true}
-    dir="ltr"
-  >
-    <div
-      style={
-        Object {
-          "alignItems": "center",
-          "display": "flex",
-          "height": "100vh",
-          "justifyContent": "center",
-        }
-      }
-    >
-      Click on the recording or transcription knobs to see how the banner will show the current state
-    </div>
-  </div>
-</div>
-`;
-
-exports[`storybook snapshot tests Storyshots Examples/Teams Interop Lobby 1`] = `
-<div
-  className="css-80 root-0 body-1"
->
-  <div
-    className="css-80"
+    className="css-81"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -67,9 +42,11 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop Lobby 1`] = 
           <div
             style={
               Object {
-                "margin": "auto",
-                "textAlign": "center",
-                "zIndex": 0,
+                "left": "50%",
+                "marginTop": "2.125rem",
+                "position": "absolute",
+                "top": "50%",
+                "transform": "translate(-50%, -50%)",
               }
             }
           >
@@ -78,13 +55,29 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop Lobby 1`] = 
                 Object {
                   "color": "#323130",
                   "fontSize": "1.75rem",
+                  "margin": "0",
+                  "textAlign": "center",
                 }
               }
             >
               ☕ 
               <br />
                
-              Waiting for others to join
+              You're in the lobby
+               
+              <br />
+            </p>
+            <p
+              style={
+                Object {
+                  "color": "#323130",
+                  "fontSize": "0.75rem",
+                  "margin": "0",
+                  "textAlign": "center",
+                }
+              }
+            >
+              You should be admitted shortly
             </p>
           </div>
           <div

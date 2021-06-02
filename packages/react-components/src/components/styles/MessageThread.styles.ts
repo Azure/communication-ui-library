@@ -48,6 +48,10 @@ export const chatMessageStyle: CSSProperties = {
   overflowY: 'hidden'
 };
 
+export const chatMessageDateStyle: CSSProperties = {
+  fontWeight: 600
+};
+
 export const messageStatusContainerStyle = (mine: boolean): string =>
   mergeStyles({
     marginLeft: mine ? '1rem' : '0rem'

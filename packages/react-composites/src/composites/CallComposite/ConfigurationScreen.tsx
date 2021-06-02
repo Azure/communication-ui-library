@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { devicePermissionSelector, optionsButtonSelector } from '@azure/acs-calling-selector';
+import { devicePermissionSelector, optionsButtonSelector } from 'calling-component-bindings';
 import React from 'react';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { CallConfiguration } from './CallConfiguration';

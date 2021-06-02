@@ -6,7 +6,7 @@ import {
   useCall,
   useCallingSelector as useSelector,
   devicePermissionSelector
-} from '@azure/acs-calling-selector';
+} from 'calling-component-bindings';
 import { CallState, GroupLocator, MeetingLocator } from '@azure/communication-calling';
 import { Label, Overlay, Spinner, Stack } from '@fluentui/react';
 import { VideoStreamOptions } from 'react-components';
@@ -38,7 +38,7 @@ import { permissionsBannerContainerStyle } from './styles/PermissionsBanner.styl
 export interface CallScreenProps {
   screenWidth: number;
   endCallHandler(): void;
-  callErrorHandler(customErrorPage?: 'callError' | 'teamsMeetingDenied'): void;
+  callErrorHandler(customErrorPage?: 'callError' | 'teamsMeetingDenied' | 'removed'): void;
   callLocator: GroupLocator | MeetingLocator;
   isMicrophoneOn: boolean;
 }
@@ -74,6 +74,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     if (!callEndReason) return;
     if (callEndReason.code === 0 && callEndReason.subCode === 5854) {
       props.callErrorHandler('teamsMeetingDenied');
+    } else if (callEndReason.code === 0 && callEndReason.subCode === 5300) {
+      props.callErrorHandler('removed');
     }
   }, [call?.callEndReason, props]);
 

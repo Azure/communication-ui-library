@@ -73,7 +73,7 @@ const onlyUnique = (value: string, index: number, self: string[]): boolean => {
   return self.indexOf(value) === index;
 };
 
-export const ParticipantList: () => JSX.Element = () => {
+const ParticipantListStory: () => JSX.Element = () => {
   const remoteParticipantsKnob = text('Other participants (comma separated)', 'Rick, Daryl, Michonne');
   const participantNames = remoteParticipantsKnob
     .split(',')
@@ -81,7 +81,9 @@ export const ParticipantList: () => JSX.Element = () => {
     .filter((p) => p)
     .filter(onlyUnique);
 
-  participantNames.push('You');
+  if (boolean('Include you', true)) {
+    participantNames.push('You');
+  }
 
   const screenSharer = select('Screensharer', ['None', ...participantNames], 'screensharer');
   const callStates: string[] = [];
@@ -126,7 +128,10 @@ export const ParticipantList: () => JSX.Element = () => {
   );
 };
 
+export const ParticipantList = ParticipantListStory.bind({});
+
 export default {
+  id: `${COMPONENT_FOLDER_PREFIX}-participantlist`,
   title: `${COMPONENT_FOLDER_PREFIX}/Participant List`,
   component: ParticipantListComponent,
   parameters: {

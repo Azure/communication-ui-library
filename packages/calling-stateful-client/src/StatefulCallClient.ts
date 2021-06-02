@@ -192,7 +192,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
 }
 
 /**
- * Required arguments to construct the stateful call client.
+ * Arguments to construct the StatefulCallClient.
  */
 export type StatefulCallClientArgs = {
   /**
@@ -200,13 +200,23 @@ export type StatefulCallClientArgs = {
    * state. It is not used by StatefulCallClient so if you do not have this value or do not want to use this value,
    * you could pass any dummy value like empty string.
    */
-  userId: string;
+  userId?: string;
 };
 
 /**
- * Options to construct the stateful call client with.
+ * Options to construct the StatefulCallClient with.
  */
-export type StatefulCallClientOptions = CallClientOptions;
+export type StatefulCallClientOptions = {
+  /**
+   * Options to construct the Azure CallClient with.
+   */
+  callClientOptions?: CallClientOptions;
+  /**
+   * Sets the max listeners limit of the 'stateChange' event. Defaults to the node.js EventEmitter.defaultMaxListeners
+   * if not specified.
+   */
+  maxStateChangeListeners?: number;
+};
 
 /**
  * Creates a StatefulCallClient {@Link StatefulCallClient} by proxying CallClient
@@ -217,16 +227,19 @@ export type StatefulCallClientOptions = CallClientOptions;
  * {@Link @azure/communication-calling#CallAgent} and {@Link @azure/communication-calling#Call} (and etc.) that are
  * obtained from the StatefulCallClient in order for their state changes to be proxied properly.
  *
- * @param callClientArgs - {@Link StatefulCallClientArgs}
- * @param callClientOptions - {@Link StatefulCallClientOptions}
+ * @param args - {@Link StatefulCallClientArgs}
+ * @param options - {@Link StatefulCallClientOptions}
  * @returns
  */
 export const createStatefulCallClient = (
-  callClientArgs: StatefulCallClientArgs,
-  callClientOptions?: StatefulCallClientOptions
+  args?: StatefulCallClientArgs,
+  options?: StatefulCallClientOptions
 ): StatefulCallClient => {
-  const callClient = new CallClient(callClientOptions);
-  const context: CallContext = new CallContext(callClientArgs.userId);
+  const callClient = new CallClient(options?.callClientOptions);
+  const context: CallContext = new CallContext(
+    args?.userId ?? 'contoso_user_id_not_set',
+    options?.maxStateChangeListeners
+  );
   const internalContext: InternalCallContext = new InternalCallContext();
 
   Object.defineProperty(callClient, 'getState', {

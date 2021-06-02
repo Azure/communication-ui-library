@@ -325,7 +325,7 @@ export interface CallClientState {
 export const CallComposite: (props: CallCompositeProps) => JSX.Element;
 
 // @public (undocumented)
-export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoiningTeamsMeeting';
+export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
 
 // @public (undocumented)
 export type CallCompositeProps = {
@@ -661,10 +661,10 @@ export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThr
 export const createDefaultChatHandlersForComponent: <Props>(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, Props>>;
 
 // @public
-export const createStatefulCallClient: (callClientArgs: StatefulCallClientArgs, callClientOptions?: CallClientOptions | undefined) => StatefulCallClient;
+export const createStatefulCallClient: (args?: StatefulCallClientArgs | undefined, options?: StatefulCallClientOptions | undefined) => StatefulCallClient;
 
 // @public
-export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: ChatClientOptions | undefined) => StatefulChatClient;
+export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions | undefined) => StatefulChatClient;
 
 // @public (undocumented)
 export type CustomMessage = Message<'custom'>;
@@ -875,6 +875,7 @@ export type MessageContentType = 'text' | 'html' | 'richtext/html' | 'unknown';
 export type MessageProps = {
     message: ChatMessage | SystemMessage | CustomMessage;
     messageContainerStyle?: ComponentSlotStyle;
+    showDate?: boolean;
 };
 
 // @public (undocumented)
@@ -917,6 +918,7 @@ export type MessageThreadProps = {
     messages: (ChatMessage | SystemMessage | CustomMessage)[];
     styles?: MessageThreadStylesProps;
     disableJumpToNewMessageButton?: boolean;
+    showMessageDate?: boolean;
     showMessageStatus?: boolean;
     numberOfChatMessagesToReload?: number;
     onMessageSeen?: (messageId: string) => Promise<void>;
@@ -1173,11 +1175,14 @@ export interface StatefulCallClient extends CallClient {
 
 // @public
 export type StatefulCallClientArgs = {
-    userId: string;
+    userId?: string;
 };
 
 // @public
-export type StatefulCallClientOptions = CallClientOptions;
+export type StatefulCallClientOptions = {
+    callClientOptions?: CallClientOptions;
+    maxStateChangeListeners?: number;
+};
 
 // @public (undocumented)
 export interface StatefulChatClient extends ChatClient {
@@ -1198,7 +1203,10 @@ export type StatefulChatClientArgs = {
 };
 
 // @public
-export type StatefulChatClientOptions = ChatClientOptions;
+export type StatefulChatClientOptions = {
+    chatClientOptions: ChatClientOptions;
+    maxStateChangeListeners?: number;
+};
 
 // @public
 export interface StatefulDeviceManager extends DeviceManager {

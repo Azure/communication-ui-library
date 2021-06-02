@@ -2,10 +2,10 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`] = `
 <div
-  className="css-80 root-0 body-1"
+  className="css-81 root-0 body-1"
 >
   <div
-    className="css-80"
+    className="css-81"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -27,10 +27,15 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
         }
       >
         <div
-          className="ms-Stack css-56 css-2"
+          className="ms-Stack css-56 css-3"
         >
           <div
-            className="ms-Stack css-3"
+            style={
+              Object {
+                "padding": "0.1875rem",
+                "position": "relative",
+              }
+            }
           >
             <div
               className="ms-TextField ms-TextField--multiline root-5"
@@ -45,13 +50,14 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
                     aria-invalid={false}
                     aria-label="Type"
                     className="ms-TextField-field ms-TextField--unresizable css-57 field-8"
+                    disabled={false}
                     id="sendbox"
                     onBlur={[Function]}
                     onChange={[Function]}
                     onFocus={[Function]}
                     onInput={[Function]}
                     onKeyDown={[Function]}
-                    placeholder="Type a new message"
+                    placeholder="Enter a message"
                     value=""
                   />
                 </div>
@@ -66,7 +72,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
             >
               <span
                 aria-hidden="true"
-                className="ui-icon al am an css-59"
+                className="ui-icon al am an css-59 css-2"
                 role="img"
               >
                 <svg
@@ -87,36 +93,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
                   </g>
                 </svg>
               </span>
-            </div>
-          </div>
-          <div
-            className="ms-MessageBar ms-MessageBar-multiline root-17"
-          >
-            <div
-              className="ms-MessageBar-content content-18"
-            >
-              <div
-                aria-hidden={true}
-                className="ms-MessageBar-icon iconContainer-19"
-              >
-                <i
-                  aria-hidden={true}
-                  className="root-37 icon-27"
-                  data-icon-name="Info"
-                >
-                  
-                </i>
-              </div>
-              <div
-                aria-live="polite"
-                className="ms-MessageBar-text text-21"
-                id="MessageBar3"
-                role="status"
-              >
-                <span
-                  className="ms-MessageBar-innerText innerText-22"
-                />
-              </div>
             </div>
           </div>
         </div>

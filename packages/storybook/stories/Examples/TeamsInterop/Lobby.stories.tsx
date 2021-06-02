@@ -1,43 +1,36 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Description, Heading, Source, Title } from '@storybook/addon-docs/blocks';
 import { boolean, text } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import { Lobby as LobbyComponent } from './snippets/Lobby.snippet';
+import { getDocs } from './TeamsInteropDocs';
 
-const LobbyComponentText = require('!!raw-loader!./snippets/Lobby.snippet.tsx').default;
-const LobbyControlBarText = require('!!raw-loader!./snippets/LobbyControlBar.snippet.tsx').default;
+const LobbyStory: () => JSX.Element = () => {
+  const callStateText = text('Call State Text', "You're in the lobby");
+  const callStateSubText = text('Call State Subtext', 'You should be admitted shortly');
+  const isVideoReady = boolean('Show Video', false);
 
-const getDocs: () => JSX.Element = () => {
   return (
-    <>
-      <Title>Lobby Component</Title>
-      <Description>The Lobby component can be used for scenarios where the call is in a waiting state.</Description>
-      <Heading>Create a Lobby ControlBar</Heading>
-      <Source code={LobbyControlBarText} />
-      <Heading>Create a Lobby Component</Heading>
-      <Source code={LobbyComponentText} />
-    </>
+    <LobbyComponent isVideoReady={isVideoReady} callStateText={callStateText} callStateSubText={callStateSubText} />
   );
 };
 
-export const Lobby: () => JSX.Element = () => {
-  const callStateText = text('Call State Text', 'Waiting for others to join');
-  const isVideoReady = boolean('Show Video', false);
-
-  return <LobbyComponent isVideoReady={isVideoReady} callStateText={callStateText} />;
-};
+export const Lobby = LobbyStory.bind({});
 
 export default {
-  title: `${EXAMPLES_FOLDER_PREFIX}/Teams Interop`,
+  id: `${EXAMPLES_FOLDER_PREFIX}-teamsinterop-lobby`,
+  title: `${EXAMPLES_FOLDER_PREFIX}/Teams Interop/Lobby`,
   component: Lobby,
   parameters: {
     docs: {
       page: () => getDocs()
+    },
+    knobs: {
+      escapeHTML: false
     }
   }
 } as Meta;
