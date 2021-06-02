@@ -7,6 +7,7 @@ export const createUserAndGroup = async (resourceConnectionString: string): Prom
   const tokenClient = new CommunicationIdentityClient(resourceConnectionString);
   const user = await tokenClient.createUserAndToken(['voip']);
   return {
+    userId: user.user,
     token: user.token,
     endpointUrl: new URL(resourceConnectionString.replace('endpoint=', '').split(';')[0]).toString(),
 
