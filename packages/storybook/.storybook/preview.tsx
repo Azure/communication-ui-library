@@ -5,7 +5,7 @@ import React from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { FluentThemeProvider } from '@azure/communication-react';
 import { initializeIcons, loadTheme } from '@fluentui/react';
-import { DocsContainer } from '@storybook/addon-docs/blocks';
+import { Anchor, DocsContainer } from '@storybook/addon-docs/blocks';
 import { TOC } from './TOC';
 import {
   COMPONENT_FOLDER_PREFIX,
@@ -25,7 +25,10 @@ export const parameters = {
   docs: {
     container: props => (
       <TOC>
-        <DocsContainer {...props} />
+        <DocsContainer context={props.context}>
+          <Anchor storyId={props.context.id} />
+          {props.children}
+        </DocsContainer>
       </TOC>
     ),
   },
