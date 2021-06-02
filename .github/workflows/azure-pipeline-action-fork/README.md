@@ -1,3 +1,9 @@
+**NOTE: THIS IS A FORK OF https://github.com/Azure/pipelines.**
+
+**THIS SHOULD BE REMOVED ONCE https://github.com/Azure/pipelines/pull/11 AND https://github.com/Azure/pipelines/pull/34 ARE COMPLETED.**
+
+**FORK CONTENTS: https://github.com/JamesBurnside/pipelines/tree/jaburnsi/fixes-for-automated-alpha-release**
+
 # GitHub Action to trigger a run in Azure pipelines
 
 GitHub Actions makes it easy to build, test, and deploy your code right from GitHub. 
