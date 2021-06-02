@@ -4,13 +4,14 @@
 import { getTheme, IButtonStyles, IModalStyleProps, IModalStyles, IStyleFunctionOrObject } from '@fluentui/react';
 import { CSSProperties } from 'react';
 
-const palette = getTheme().palette;
+const theme = getTheme();
+const palette = theme.palette;
 
 export const screenSharePopupModalStyles: IStyleFunctionOrObject<IModalStyleProps, IModalStyles> = {
   root: { width: '100%', height: '100%' },
   main: {
-    boxShadow: '0px 1.2px 3.6px rgba(0, 0, 0, 0.1), 0px 6.4px 14.4px rgba(0, 0, 0, 0.13);',
-    borderRadius: '0.25rem',
+    boxShadow: theme.effects.elevation8,
+    borderRadius: theme.effects.roundedCorner4,
     background: palette.neutralLighterAlt
   }
 };
@@ -30,7 +31,7 @@ export const screenSharePopupModalLabelStyles: CSSProperties = {
 export const screenSharePopupModalButtonStyles: IButtonStyles = {
   root: {
     padding: '0.375rem 0.75rem',
-    boxShadow: '0px 0.3px 0.9px rgba(0, 0, 0, 0.1), 0px 1.6px 3.6px rgba(0, 0, 0, 0.13)',
+    boxShadow: theme.effects.elevation4,
     borderRadius: '0.25rem',
     border: '0rem'
   }
