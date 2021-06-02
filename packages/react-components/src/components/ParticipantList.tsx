@@ -122,7 +122,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     <Stack className={participantListStyle}>
       {onRenderParticipant
         ? participants.map((participant: CommunicationParticipant) => onRenderParticipant(participant))
-        : onRenderParticipantsDefault(participants, myUserId, onParticipantRemove, onRenderAvatar)}
+        : onRenderParticipantsDefault(allParticipants, myUserId, excludeMe, onParticipantRemove, onRenderAvatar)}
     </Stack>
   );
 };

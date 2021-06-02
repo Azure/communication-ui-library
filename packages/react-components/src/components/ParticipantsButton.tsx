@@ -120,7 +120,7 @@ const generateDefaultMenuProps = (props: ParticipantsButtonProps): IContextualMe
   };
 
   if (participantListProps.participants.length > 0) {
-    let remoteParticipantsButtonProps = { ...props };
+    const remoteParticipantsButtonProps = { ...props };
     remoteParticipantsButtonProps.participantListProps.excludeMe = true;
 
     const participantIds = participantListProps.participants.map((p) => p.userId);
@@ -169,11 +169,9 @@ const generateDefaultMenuProps = (props: ParticipantsButtonProps): IContextualMe
 export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element => {
   const { showLabel = false, styles, onRenderIcon, onRenderText } = props;
 
-  const defaultMenuProps = React.useMemo(() => generateDefaultMenuProps(props), [
-    props.participantListProps.participants,
-    props.participantListProps?.myUserId,
-    props?.callInvitationURL
-  ]);
+  const defaultMenuProps = React.useMemo(() => {
+    return generateDefaultMenuProps(props);
+  }, [props.participantListProps.participants, props.participantListProps?.myUserId, props?.callInvitationURL]);
 
   const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
 
