@@ -13,7 +13,7 @@ import { devicePermissionSelector, optionsButtonSelector } from 'calling-compone
 import { useCallingSelector as useSelector } from 'calling-component-bindings';
 import { useAzureCommunicationHandlers } from './hooks/useAzureCommunicationHandlers';
 import { TeamsMeetingLinkField } from './TeamsMeetingLinkField';
-import { containerGapStyle, labelFontStyle, titleContainerStyle } from './styles/ConfiguratonScreen.styles';
+import { containerGapStyle, titleContainerStyle } from './styles/ConfiguratonScreen.styles';
 
 export interface ConfigurationScreenProps {
   screenWidth: number;
@@ -25,7 +25,6 @@ export interface ConfigurationScreenProps {
 }
 
 const title = 'Start a call';
-const devicesLabel = 'Devices';
 
 export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Element => {
   const { startCallHandler, onDisplayNameUpdate, displayName } = props;
@@ -49,7 +48,6 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
         setNameLengthExceedLimit={setNameTooLongWarning}
       />
       <div style={containerGapStyle}>
-        <div className={labelFontStyle}>{devicesLabel}</div>
         <LocalDeviceSettings
           {...options}
           cameraPermissionGranted={cameraPermissionGranted}
