@@ -13,6 +13,7 @@ import React from 'react';
 export interface LobbyProps {
   isVideoReady: boolean;
   callStateText: string;
+  callStateSubText: string;
 }
 
 export const Lobby = (props: LobbyProps): JSX.Element => {
@@ -51,21 +52,32 @@ export const Lobby = (props: LobbyProps): JSX.Element => {
 
       <div
         style={{
-          zIndex: 0,
-          textAlign: 'center',
-          width: '50%',
-          height: '25%',
-          overflow: 'none',
-          margin: 'auto',
           position: 'absolute',
-          top: 0,
-          left: 0,
-          bottom: 0,
-          right: 0
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          marginTop: '2.125rem'
         }}
       >
-        <p style={{ fontSize: '1.75rem', color: props.isVideoReady ? 'white' : palette.neutralPrimary }}>
-          ☕ <br /> {props.callStateText}
+        <p
+          style={{
+            fontSize: '1.75rem',
+            color: props.isVideoReady ? 'white' : palette.neutralPrimary,
+            textAlign: 'center',
+            margin: '0'
+          }}
+        >
+          ☕ <br /> {props.callStateText} <br />
+        </p>
+        <p
+          style={{
+            fontSize: '0.75rem',
+            color: props.isVideoReady ? 'white' : palette.neutralPrimary,
+            textAlign: 'center',
+            margin: '0'
+          }}
+        >
+          {props.callStateSubText}
         </p>
       </div>
 

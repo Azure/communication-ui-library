@@ -22,7 +22,8 @@ import {
   MeetingLocator,
   PropertyChangedEvent,
   RemoteParticipant,
-  StartCallOptions
+  StartCallOptions,
+  CallInfo
 } from '@azure/communication-calling';
 import {
   CommunicationUserIdentifier,
@@ -39,39 +40,44 @@ export declare interface MockCall {
   /**
    * Get the unique Id for this Call.
    */
-  id: string;
+  readonly id: string;
+  /**
+   * Get information about this Call
+   * @beta
+   */
+  readonly info: CallInfo;
   /**
    * Caller Information if the call is incoming.
    */
-  callerInfo: CallerInfo;
+  readonly callerInfo: CallerInfo;
   /**
    * Get the state of this Call.
    */
-  state: CallStatus;
+  readonly state: CallStatus;
   /**
    * Containing code/subCode indicating how call ended
    */
-  callEndReason?: CallEndReason;
+  readonly callEndReason?: CallEndReason;
   /**
    * Get the call direction, whether Incoming or Outgoing.
    */
-  direction: CallDirection;
+  readonly direction: CallDirection;
   /**
    * Whether local user is muted, locally or remotely
    */
-  isMuted: boolean;
+  readonly isMuted: boolean;
   /**
    * Whether screen sharing is on
    */
-  isScreenSharingOn: boolean;
+  readonly isScreenSharingOn: boolean;
   /**
    * Collection of video streams sent to other participants in a call.
    */
-  localVideoStreams: ReadonlyArray<LocalVideoStream>;
+  readonly localVideoStreams: ReadonlyArray<LocalVideoStream>;
   /**
    * Collection of remote participants participating in this call.
    */
-  remoteParticipants: ReadonlyArray<RemoteParticipant>;
+  readonly remoteParticipants: ReadonlyArray<RemoteParticipant>;
   /**
    * Retrieves an initialized and memoized API feature object with extended API.
    * @param cls - The call feature class that provides an object with extended API.

@@ -81,7 +81,9 @@ const ParticipantListStory: () => JSX.Element = () => {
     .filter((p) => p)
     .filter(onlyUnique);
 
-  participantNames.push('You');
+  if (boolean('Include you', true)) {
+    participantNames.push('You');
+  }
 
   const screenSharer = select('Screensharer', ['None', ...participantNames], 'screensharer');
   const callStates: string[] = [];
