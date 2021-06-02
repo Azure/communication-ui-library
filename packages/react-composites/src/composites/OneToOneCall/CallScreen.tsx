@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Label, Stack } from '@fluentui/react';
+import { Stack } from '@fluentui/react';
 import React, { useContext, useEffect, useMemo } from 'react';
-import { activeContainerClassName, containerStyles, loadingStyle } from './styles/CallScreen.styles';
+import { activeContainerClassName, containerStyles } from './styles/CallScreen.styles';
 import MediaFullScreen from './MediaFullScreen';
 import { connectFuncsToContext } from './consumers/ConnectContext';
 import { CallContainerProps, MapToOneToOneCallProps } from './consumers/MapToCallProps';
