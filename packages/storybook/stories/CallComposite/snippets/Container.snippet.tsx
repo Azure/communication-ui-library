@@ -1,8 +1,10 @@
+import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CallComposite, CallAdapter, createAzureCommunicationCallAdapter } from '@azure/communication-react';
 import { Theme, PartialTheme } from '@fluentui/react-theme-provider';
 import React, { useState, useEffect } from 'react';
 
 export type ContainerProps = {
+  userId: CommunicationUserIdentifier;
   token: string;
   locator: string;
   displayName: string;
@@ -21,7 +23,9 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
           ? { meetingLink: props.locator }
           : { groupId: props.locator };
         const createAdapter = async (): Promise<void> => {
-          setAdapter(await createAzureCommunicationCallAdapter(props.token, callLocator, props.displayName));
+          setAdapter(
+            await createAzureCommunicationCallAdapter(props.userId, props.token, callLocator, props.displayName)
+          );
         };
         createAdapter();
       }
