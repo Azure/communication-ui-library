@@ -23,7 +23,15 @@ function App(): JSX.Element {
 
   useEffect(() => {
     const createAdapter = async (): Promise<void> => {
-      setChatAdapter(await createAzureCommunicationChatAdapter(token, endpointUrl, threadId, displayName));
+      setChatAdapter(
+        await createAzureCommunicationChatAdapter(
+          { communicationUserId: userId },
+          token,
+          endpointUrl,
+          threadId,
+          displayName
+        )
+      );
       setCallAdapter(
         await createAzureCommunicationCallAdapter({ communicationUserId: userId }, token, { groupId }, displayName)
       );
