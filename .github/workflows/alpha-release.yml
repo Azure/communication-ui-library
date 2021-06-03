@@ -62,7 +62,7 @@ jobs:
         uses: azure/CLI@v1
         with:
           inlineScript: |
-            az login --service-principal -u cfb5fe52-8bb2-4901-9056-70449fa2df96 -p ${{ secrets.AZURESDKPARTNERDROPS_SERVICE_PRINCIPAL_KEY }} --tenant 72f988bf-86f1-41af-91ab-2d7cd011db47
+            az login --service-principal -u ${{ secrets.AZURESDKPARTNERDROPS_CLIENT_ID }} -p ${{ secrets.AZURESDKPARTNERDROPS_SERVICE_PRINCIPAL_KEY }} --tenant ${{ secrets.AZURESDKPARTNERDROPS_TENANT_ID }}
             az extension add --name storage-preview
             az storage azcopy blob upload -s "packages/communication-react/release/*" -c "drops/azure-communication-services/react/npm/1.0.0-alpha-${{ steps.datetime.outputs.datetime }}" --account-name azuresdkpartnerdrops
 
