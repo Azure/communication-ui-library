@@ -2,10 +2,10 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Video Tile Video Tile 1`] = `
 <div
-  className="css-81 root-0 body-1"
+  className="css-82 root-0 body-1"
 >
   <div
-    className="css-81"
+    className="css-82"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -53,7 +53,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Tile Video Tile
           </div>
         </div>
         <span
-          className="css-79 css-24"
+          className="css-80 css-24"
         >
           John Krasinski
         </span>

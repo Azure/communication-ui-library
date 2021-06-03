@@ -2,10 +2,10 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Layouts One To One Call Layout 1`] = `
 <div
-  className="css-81 root-0 body-1"
+  className="css-82 root-0 body-1"
 >
   <div
-    className="css-81"
+    className="css-82"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -105,10 +105,10 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts One To One Call La
 
 exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layout 1`] = `
 <div
-  className="css-81 root-0 body-1"
+  className="css-82 root-0 body-1"
 >
   <div
-    className="css-81"
+    className="css-82"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -174,7 +174,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layou
                     </div>
                   </div>
                   <span
-                    className="css-79 css-33"
+                    className="css-80 css-33"
                   >
                     Michael
                   </span>
@@ -217,7 +217,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layou
                     </div>
                   </div>
                   <span
-                    className="css-79 css-33"
+                    className="css-80 css-33"
                   >
                     Jim
                   </span>
@@ -260,7 +260,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layou
                     </div>
                   </div>
                   <span
-                    className="css-79 css-33"
+                    className="css-80 css-33"
                   >
                     Pam
                   </span>
@@ -303,7 +303,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layou
                     </div>
                   </div>
                   <span
-                    className="css-79 css-33"
+                    className="css-80 css-33"
                   >
                     Dwight
                   </span>
@@ -346,7 +346,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layou
                     </div>
                   </div>
                   <span
-                    className="css-79 css-33"
+                    className="css-80 css-33"
                   >
                     Kelly
                   </span>
@@ -389,7 +389,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layou
                     </div>
                   </div>
                   <span
-                    className="css-79 css-33"
+                    className="css-80 css-33"
                   >
                     Ryan
                   </span>
@@ -432,7 +432,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layou
                     </div>
                   </div>
                   <span
-                    className="css-79 css-33"
+                    className="css-80 css-33"
                   >
                     Andy
                   </span>
