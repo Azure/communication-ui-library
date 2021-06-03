@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { IDropdownOption, Dropdown, Stack } from '@fluentui/react';
+import { IDropdownOption, Dropdown, Stack, mergeStyles } from '@fluentui/react';
 import {
   dropDownStyles,
   dropDownTitleIconStyles,
@@ -36,14 +36,14 @@ const getDropDownList = (list: Array<VideoDeviceInfo | AudioDeviceInfo>): IDropd
 };
 
 const getOptionIcon = (type: iconType): JSX.Element | undefined => {
-  const iconStyles = { marginRight: '8px' };
+  const iconStyles = mergeStyles({ marginRight: '8px' });
 
   if (type === 'Camera') {
-    return <Video20Filled primaryFill="currentColor" style={iconStyles} key={'videoIconKey'} />;
+    return <Video20Filled primaryFill="currentColor" className={iconStyles} key={'videoIconKey'} />;
   } else if (type === 'Microphone') {
-    return <MicOn20Filled primaryFill="currentColor" style={iconStyles} key={'microphoneIconKey'} />;
+    return <MicOn20Filled primaryFill="currentColor" className={iconStyles} key={'microphoneIconKey'} />;
   } else if (type === 'Speaker') {
-    return <Speaker220Filled primaryFill="currentColor" style={iconStyles} key={'speakerIconKey'} />;
+    return <Speaker220Filled primaryFill="currentColor" className={iconStyles} key={'speakerIconKey'} />;
   } else {
     return undefined;
   }

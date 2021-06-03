@@ -108,7 +108,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
               className={menuButtonContainerStyle}
               onClick={() => setMenuHidden(false)}
             >
-              {menuButtonHovered ? (
+              {!menuButtonHovered ? (
                 <MoreHorizontal20Regular primaryFill="currentColor" />
               ) : (
                 <MoreHorizontal20Filled primaryFill="currentColor" />
