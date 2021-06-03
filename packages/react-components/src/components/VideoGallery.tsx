@@ -177,9 +177,9 @@ const RemoteVideoTile = React.memo(
       if (isAvailable && !renderElement) {
         onCreateRemoteStreamView && onCreateRemoteStreamView(userId, remoteVideoViewOption);
       }
-      if (!isAvailable) {
+      return () => {
         onDisposeRemoteStreamView && onDisposeRemoteStreamView(userId);
-      }
+      };
     }, [
       isAvailable,
       onCreateRemoteStreamView,
@@ -188,12 +188,6 @@ const RemoteVideoTile = React.memo(
       renderElement,
       userId
     ]);
-
-    useEffect(() => {
-      return () => {
-        onDisposeRemoteStreamView && onDisposeRemoteStreamView(userId);
-      };
-    }, [onDisposeRemoteStreamView, userId]);
 
     return (
       <Stack className={gridStyle} key={userId} grow>
