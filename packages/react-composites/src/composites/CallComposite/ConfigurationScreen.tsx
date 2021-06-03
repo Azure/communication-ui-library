@@ -36,7 +36,7 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
         />
       </div>
       <div>
-        <StartCallButton onClickHandler={startCallHandler} isDisabled={false} />
+        <StartCallButton onClickHandler={startCallHandler} isDisabled={!microphonePermissionGranted} />
       </div>
     </CallConfiguration>
   );
