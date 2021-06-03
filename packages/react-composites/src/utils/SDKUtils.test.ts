@@ -4,7 +4,7 @@
 import { isInCall } from './SDKUtils';
 
 describe('SDKUtils tests', () => {
-  describe('getACSId tests', () => {
+  describe('isInCall tests', () => {
     afterAll(() => {
       jest.resetAllMocks();
     });
