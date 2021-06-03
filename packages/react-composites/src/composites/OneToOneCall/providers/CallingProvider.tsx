@@ -7,8 +7,9 @@ import { AbortSignalLike } from '@azure/core-http';
 import React, { createContext, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { CommunicationUiError, CommunicationUiErrorCode } from '../../../types/CommunicationUiError';
 import { DevicePermissionState } from '../../../types/DevicePermission';
-import { createAzureCommunicationUserCredential, getIdFromToken, propagateError } from '../../../utils';
+import { createAzureCommunicationUserCredential, propagateError } from '../../../utils';
 import { ErrorHandlingProps } from './ErrorProvider';
+import { getIdFromToken } from '../utils/SDKUtils';
 import { WithErrorHandling } from '../utils/WithErrorHandling';
 import { useValidContext } from '../utils/ValidContext';
 
