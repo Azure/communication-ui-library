@@ -1,7 +1,9 @@
+import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { ChatAdapter, ChatComposite, createAzureCommunicationChatAdapter } from '@azure/communication-react';
 import React, { useState, useEffect, useCallback } from 'react';
 
 export interface CustomDataModelExampleContainerProps {
+  userId: CommunicationUserIdentifier;
   token: string;
   displayName: string;
   endpointUrl: string;
@@ -20,6 +22,7 @@ export const CustomDataModelExampleContainer = (props: CustomDataModelExampleCon
       const createAdapter = async (): Promise<void> => {
         setAdapter(
           await createAzureCommunicationChatAdapter(
+            props.userId,
             props.token,
             props.endpointUrl,
             props.threadId,

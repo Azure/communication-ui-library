@@ -31,6 +31,7 @@
     "@fluentui/react-northstar": "^0.51.2",
     "@fluentui/react-theme-provider": "^0.18.0",
     "@uifabric/react-hooks": "~7.13.11",
+    "copy-to-clipboard": "~3.3.1",
     "acs-ui-common": "1.0.0-beta.1",
     "react-aria-live": "^2.0.5",
     "react-linkify": "^1.0.0-alpha",

@@ -58,13 +58,19 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
         isMirrored={true}
       >
         <ControlBar layout="floatingBottom">
-          <CameraButton {...cameraButtonProps} onToggleCamera={onToggleCamera} disabled={!cameraPermissionGranted} />
+          <CameraButton
+            {...cameraButtonProps}
+            disabled={!cameraPermissionGranted}
+            showLabel={true}
+            onToggleCamera={onToggleCamera}
+          />
           <MicrophoneButton
             disabled={!microphonePermissionGranted}
             checked={props.isMicrophoneOn}
             onToggleMicrophone={async () => {
               props.setIsMicrophoneOn(!props.isMicrophoneOn);
             }}
+            showLabel={true}
           />
         </ControlBar>
       </VideoTile>
