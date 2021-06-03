@@ -45,10 +45,18 @@ jobs:
       - name: Test @azure/communication-react package
         run: rush test -t @azure/communication-react
 
+      # Retrieve new version to tag and publish release with
+      - name: Retrieve new version from package.json
+        id: version
+        run: |
+          ver=$(jq .version packages/communication-react/package.json)
+          echo version: $ver
+          echo "::set-output name=version::$ver"
+
       # Push git tags
       - name: Create and push git tags
         run: |
-          git tag 1.0.0-alpha-${{ steps.datetime.outputs.datetime }}
+          git tag ${{ steps.version.outputs.version }}
           git push --tags
 
       # Publish package
@@ -64,16 +72,16 @@ jobs:
           inlineScript: |
             az login --service-principal -u ${{ secrets.AZURESDKPARTNERDROPS_CLIENT_ID }} -p ${{ secrets.AZURESDKPARTNERDROPS_SERVICE_PRINCIPAL_KEY }} --tenant ${{ secrets.AZURESDKPARTNERDROPS_TENANT_ID }}
             az extension add --name storage-preview
-            az storage azcopy blob upload -s "packages/communication-react/release/*" -c "drops/azure-communication-services/react/npm/1.0.0-alpha-${{ steps.datetime.outputs.datetime }}" --account-name azuresdkpartnerdrops
+            az storage azcopy blob upload -s "packages/communication-react/release/*" -c "drops/azure-communication-services/react/npm/${{ steps.version.outputs.version }}" --account-name azuresdkpartnerdrops
 
       - name: Install github actions dependencies
         run: npm i
         working-directory: ./.github/workflows/azure-pipeline-action-fork
 
-      - name: Trigger alpha package release
+      - name: Trigger alpha package release pipeline
         uses: ./.github/workflows/azure-pipeline-action-fork
         with:
           azure-devops-project-url: 'https://dev.azure.com/azure-sdk/internal'
           azure-pipeline-name: 'azuresdkpartnerdrops to npm'
           azure-devops-token: '${{ secrets.AZURE_SDK_RELEASE_PIPELINE_DEVOPS_TOKEN }}'
-          azure-pipeline-variables: '{"accessLevel": "public", "BlobPath": "azure-communication-services/react/npm/1.0.0-alpha-${{ steps.datetime.outputs.datetime }}", "registry": "https://registry.npmjs.org/", "skipDiff": "False", "tag": "dev"}'
+          azure-pipeline-variables: '{"accessLevel": "public", "BlobPath": "azure-communication-services/react/npm/${{ steps.version.outputs.version }}", "registry": "https://registry.npmjs.org/", "skipDiff": "False", "tag": "dev"}'
