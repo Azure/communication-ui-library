@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { IContextualMenuItem, Stack, PersonaPresence } from '@fluentui/react';
 import { ParticipantItem } from './ParticipantItem';
@@ -17,6 +17,12 @@ export type ParticipantListProps = {
   participants: CommunicationParticipant[];
   /** User ID of user */
   myUserId?: string;
+  /**
+   * If set to `true`, excludes the local participant from the participant list with use of `myUserId` props (required in this case).
+   *
+   * @defaultValue `false`
+   */
+  excludeMe?: boolean;
   /** Optional callback to render each participant. If no callback is provided, each participant will be rendered with `ParticipantItem`  */
   onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
   /** Optional callback to render the avatar for each participant. This property will have no effect if `onRenderParticipant` is assigned.  */
@@ -72,7 +78,7 @@ const onRenderParticipantsDefault = (
     if (participant.displayName) {
       return (
         <ParticipantItem
-          key={index}
+          key={participant.userId}
           displayName={participant.displayName}
           me={myUserId ? participant.userId === myUserId : false}
           menuItems={menuItems}
@@ -91,13 +97,34 @@ const onRenderParticipantsDefault = (
  * assigned then each participant is rendered with `ParticipantItem`.
  */
 export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
-  const { participants, myUserId, onRenderParticipant, onParticipantRemove, onRenderAvatar } = props;
+  const { excludeMe = false, myUserId, participants, onParticipantRemove, onRenderAvatar, onRenderParticipant } = props;
+
+  const allParticipants: CommunicationParticipant[] = useMemo(() => {
+    if (participants === undefined) {
+      return [];
+    }
+
+    if (!excludeMe || !myUserId) {
+      return [...participants];
+    }
+
+    const userIndex = participants.map((p) => p.userId).indexOf(myUserId);
+
+    if (userIndex === -1) {
+      return [...participants];
+    }
+
+    const remoteParticipants = [...participants];
+    remoteParticipants.splice(userIndex, 1);
+
+    return remoteParticipants;
+  }, [participants, excludeMe, myUserId]);
 
   return (
     <Stack className={participantListStyle}>
       {onRenderParticipant
         ? participants.map((participant: CommunicationParticipant) => onRenderParticipant(participant))
-        : onRenderParticipantsDefault(participants, myUserId, onParticipantRemove, onRenderAvatar)}
+        : onRenderParticipantsDefault(allParticipants, myUserId, onParticipantRemove, onRenderAvatar)}
     </Stack>
   );
 };

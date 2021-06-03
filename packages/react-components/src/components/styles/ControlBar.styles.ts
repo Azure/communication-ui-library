@@ -145,3 +145,7 @@ export const endCallControlButtonStyles: IButtonStyles = concatStyleSets(control
     color: palette.whiteTranslucent40
   }
 });
+
+export const defaultParticipantListContainerStyle: IStyle = {
+  maxHeight: '20rem'
+};
