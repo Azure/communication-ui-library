@@ -38,11 +38,10 @@ import {
   ParticipantJoinedListener,
   ParticipantLeftListener
 } from './CallAdapter';
-import { createAzureCommunicationUserCredential, getIdFromToken, isInCall } from '../../../utils';
+import { createAzureCommunicationUserCredential, isInCall } from '../../../utils';
 import { VideoStreamOptions } from 'react-components';
 import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from 'acs-ui-common';
-import { CommunicationUserIdentifier } from '@azure/communication-signaling';
-import { CommunicationUserKind } from '@azure/communication-common';
+import { CommunicationUserKind, CommunicationUserIdentifier } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 
 // Context of Chat, which is a centralized context for all state updates
@@ -211,11 +210,19 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     }
   }
 
-  public async createStreamView(userId?: string, options?: VideoStreamOptions | undefined): Promise<void> {
-    if (userId === undefined) {
+  public async createStreamView(remoteUserId?: string, options?: VideoStreamOptions | undefined): Promise<void> {
+    if (remoteUserId === undefined) {
       await this.handlers.onCreateLocalStreamView(options);
     } else {
-      await this.handlers.onCreateRemoteStreamView(userId, options);
+      await this.handlers.onCreateRemoteStreamView(remoteUserId, options);
+    }
+  }
+
+  public async disposeStreamView(remoteUserId?: string): Promise<void> {
+    if (remoteUserId === undefined) {
+      await this.handlers.onDisposeLocalStreamView();
+    } else {
+      await this.handlers.onDisposeRemoteStreamView(remoteUserId);
     }
   }
 
@@ -429,15 +436,14 @@ const createCommunicationIdentifier = (rawId: string): CommunicationUserKind => 
 };
 
 export const createAzureCommunicationCallAdapter = async (
+  userId: CommunicationUserIdentifier,
   token: string,
   locator: TeamsMeetingLinkLocator | GroupCallLocator,
   displayName: string,
   refreshTokenCallback?: (() => Promise<string>) | undefined,
   callClientOptions?: CallClientOptions
 ): Promise<CallAdapter> => {
-  const userId = getIdFromToken(token);
-
-  const callClient = createStatefulCallClient({ userId }, { callClientOptions });
+  const callClient = createStatefulCallClient({ userId: userId.communicationUserId }, { callClientOptions });
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
   const callAgent = await callClient.createCallAgent(
     createAzureCommunicationUserCredential(token, refreshTokenCallback),
