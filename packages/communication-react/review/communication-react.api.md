@@ -626,10 +626,10 @@ export interface ControlBarProps {
 }
 
 // @public (undocumented)
-export const createAzureCommunicationCallAdapter: (token: string, locator: TeamsMeetingLinkLocator | GroupCallLocator, displayName: string, refreshTokenCallback?: (() => Promise<string>) | undefined, callClientOptions?: CallClientOptions | undefined) => Promise<CallAdapter>;
+export const createAzureCommunicationCallAdapter: (userId: CommunicationUserIdentifier, token: string, locator: TeamsMeetingLinkLocator | GroupCallLocator, displayName: string, refreshTokenCallback?: (() => Promise<string>) | undefined, callClientOptions?: CallClientOptions | undefined) => Promise<CallAdapter>;
 
 // @public (undocumented)
-export const createAzureCommunicationChatAdapter: (token: string, endpointUrl: string, threadId: string, displayName: string, refreshTokenCallback?: (() => Promise<string>) | undefined) => Promise<ChatAdapter>;
+export const createAzureCommunicationChatAdapter: (userId: CommunicationUserIdentifier, token: string, endpointUrl: string, threadId: string, displayName: string, refreshTokenCallback?: (() => Promise<string>) | undefined) => Promise<ChatAdapter>;
 
 // @public (undocumented)
 export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => {
@@ -1059,6 +1059,7 @@ export const ParticipantList: (props: ParticipantListProps) => JSX.Element;
 export type ParticipantListProps = {
     participants: CommunicationParticipant[];
     myUserId?: string;
+    excludeMe?: boolean;
     onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
     onRenderAvatar?: (participant: CommunicationParticipant) => JSX.Element | null;
     onParticipantRemove?: (userId: string) => void;
@@ -1078,6 +1079,23 @@ export type ParticipantsAddedListener = (event: {
     participantsAdded: ChatParticipant[];
     addedBy: ChatParticipant;
 }) => void;
+
+// @public
+export const ParticipantsButton: (props: ParticipantsButtonProps) => JSX.Element;
+
+// @public
+export interface ParticipantsButtonProps extends IButtonProps {
+    callInvitationURL?: string;
+    onMuteAll?: () => void;
+    participantListProps: ParticipantListProps;
+    showLabel?: boolean;
+    styles?: ParticipantsButtonStylesProps;
+}
+
+// @public
+export interface ParticipantsButtonStylesProps extends BaseCustomStylesProps {
+    participantListContainerStyle?: IStyle;
+}
 
 // @public (undocumented)
 export type ParticipantsRemovedListener = (event: {

@@ -1,3 +1,4 @@
+import { CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   CallComposite,
   CallAdapter,
@@ -7,6 +8,7 @@ import {
 import React, { useCallback, useState, useEffect } from 'react';
 
 export type ContainerProps = {
+  userId: CommunicationUserIdentifier;
   token: string;
   groupId: string;
   displayName: string;
@@ -22,7 +24,9 @@ export const CustomDataModelExampleContainer = (props: ContainerProps): JSX.Elem
         groupId: props.groupId
       };
       const createAdapter = async (): Promise<void> => {
-        setAdapter(await createAzureCommunicationCallAdapter(props.token, groupLocator, props.displayName));
+        setAdapter(
+          await createAzureCommunicationCallAdapter(props.userId, props.token, groupLocator, props.displayName)
+        );
       };
       createAdapter();
     }
