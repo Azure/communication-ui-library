@@ -19,8 +19,6 @@ export const getCall = (state: CallClientState, props: CallingBaseSelectorProps)
 
 export const getDisplayName = (state: CallClientState): string | undefined => state.callAgent?.displayName;
 
-export const getIdentifier = (state: CallClientState): string => state.userId;
-
 export const getIsPreviewCameraOn = (state: CallClientState): boolean => isPreviewOn(state.deviceManager);
 
 // TODO: we should take in a LocalVideoStream that developer wants to use as their 'Preview' view. We should also handle
