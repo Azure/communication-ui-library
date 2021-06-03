@@ -726,11 +726,11 @@ export type DeviceManagerState = {
 
 // @public (undocumented)
 export const devicePermissionSelector: reselect.OutputSelector<CallClientState, {
-    video: boolean;
-    audio: boolean;
+    video: boolean | undefined;
+    audio: boolean | undefined;
 }, (res: DeviceManagerState) => {
-    video: boolean;
-    audio: boolean;
+    video: boolean | undefined;
+    audio: boolean | undefined;
 }>;
 
 // @public (undocumented)
