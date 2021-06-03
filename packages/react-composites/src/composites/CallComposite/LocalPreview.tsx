@@ -50,11 +50,12 @@ export const LocalPreview = (): JSX.Element => {
         onRenderPlaceholder={onRenderPlaceholder}
       >
         <ControlBar layout="floatingBottom">
-          <CameraButton {...cameraButtonProps} disabled={!cameraPermissionGranted} />
+          <CameraButton {...cameraButtonProps} disabled={!cameraPermissionGranted} showLabel={true} />
           <MicrophoneButton
             checked={isLocalMicrophoneEnabled}
             onToggleMicrophone={onToggleMic}
             disabled={!microphonePermissionGranted}
+            showLabel={true}
           />
         </ControlBar>
       </VideoTile>
