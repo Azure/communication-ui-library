@@ -137,7 +137,7 @@ export const OptionsButton = (props: OptionsButtonProps): JSX.Element => {
   return (
     <DefaultButton
       {...props}
-      menuProps={defaultMenuProps ?? props.menuProps}
+      menuProps={props.menuProps ?? defaultMenuProps}
       menuIconProps={{ hidden: true }}
       styles={componentStyles}
       onRenderIcon={onRenderIcon ?? defaultRenderIcon}
