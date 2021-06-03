@@ -38,15 +38,20 @@ export const CallControls = (props: GroupCallControlsProps): JSX.Element => {
         onToggleCamera={() => {
           return cameraButtonProps.onToggleCamera().catch((e) => console.log(e));
         }}
+        showLabel={!compressedMode}
         disabled={!cameraPermissionGranted}
       />
-      <MicrophoneButton {...microphoneButtonProps} disabled={!microphonePermissionGranted} />
-      <ScreenShareButton {...screenShareButtonProps} />
+      <MicrophoneButton
+        {...microphoneButtonProps}
+        showLabel={!compressedMode}
+        disabled={!microphonePermissionGranted}
+      />
+      <ScreenShareButton {...screenShareButtonProps} showLabel={!compressedMode} />
       <EndCallButton
         {...hangUpButtonProps}
         onHangUp={onHangUp}
         styles={!compressedMode ? groupCallLeaveButtonStyle : groupCallLeaveButtonCompressedStyle}
-        text={!compressedMode ? 'Leave' : ''}
+        showLabel={!compressedMode}
       />
     </ControlBar>
   );
