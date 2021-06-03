@@ -5,11 +5,11 @@ import { IDropdownStyles, IStackTokens, mergeStyles } from '@fluentui/react';
 import { Theme } from '@fluentui/react-theme-provider';
 
 export const mainStackTokens: IStackTokens = {
-  childrenGap: '1.5rem'
+  childrenGap: '1rem'
 };
 
 export const micStackTokens: IStackTokens = {
-  childrenGap: '0.75rem'
+  childrenGap: '1rem'
 };
 
 export const dropDownStyles = (theme: Theme): Partial<IDropdownStyles> => ({
@@ -46,5 +46,14 @@ export const localSettingsContainer = mergeStyles({
   maxWidth: '18.75rem',
   minWidth: '12.5rem',
   maxHeight: '19.125rem',
-  marginTop: '2.125rem'
+  marginTop: '.313rem'
+});
+
+export const dropDownTitleIconStyles = mergeStyles({
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  minWidth: '0',
+  maxWidth: '100%',
+  overflowWrap: 'break-word',
+  margin: '.063rem'
 });
