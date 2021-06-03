@@ -3,5 +3,4 @@
 
 export * from './ChatComposite';
 export * from './CallComposite';
-export * from './OneToOneCall';
 export { ErrorBar } from './common';
