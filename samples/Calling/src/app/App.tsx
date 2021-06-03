@@ -102,7 +102,9 @@ const App = (): JSX.Element => {
   useEffect(() => {
     // Create a new CallClient when at the home page or at the createCallClient page.
     if (page === 'createCallClient' || page === 'home') {
-      const newStatefulCallClient = createStatefulCallClient({ userId });
+      const newStatefulCallClient = createStatefulCallClient({
+        userId: { kind: 'communicationUser', communicationUserId: userId }
+      });
       setStatefulCallClient(newStatefulCallClient);
       page === 'createCallClient' && setPage('configuration');
 

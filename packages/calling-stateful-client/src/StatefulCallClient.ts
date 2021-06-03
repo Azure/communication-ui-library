@@ -14,7 +14,7 @@ import { CallContext } from './CallContext';
 import { callAgentDeclaratify } from './CallAgentDeclarative';
 import { InternalCallContext } from './InternalCallContext';
 import { createView, disposeView } from './StreamUtils';
-import { CommunicationIdentifierKind } from '@azure/communication-common';
+import { CommunicationIdentifierKind, CommunicationUserKind } from '@azure/communication-common';
 
 /**
  * Defines the methods that allow CallClient {@Link @azure/communication-calling#CallClient} to be used statefully.
@@ -197,10 +197,9 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
 export type StatefulCallClientArgs = {
   /**
    * UserId from SDK. This is provided for developer convenience to easily access the userId from the
-   * state. It is not used by StatefulCallClient so if you do not have this value or do not want to use this value,
-   * you could pass any dummy value like empty string.
+   * state. It is not used by StatefulCallClient.
    */
-  userId?: string;
+  userId: CommunicationUserKind;
 };
 
 /**
@@ -232,14 +231,11 @@ export type StatefulCallClientOptions = {
  * @returns
  */
 export const createStatefulCallClient = (
-  args?: StatefulCallClientArgs,
+  args: StatefulCallClientArgs,
   options?: StatefulCallClientOptions
 ): StatefulCallClient => {
   const callClient = new CallClient(options?.callClientOptions);
-  const context: CallContext = new CallContext(
-    args?.userId ?? 'contoso_user_id_not_set',
-    options?.maxStateChangeListeners
-  );
+  const context: CallContext = new CallContext(args.userId, options?.maxStateChangeListeners);
   const internalContext: InternalCallContext = new InternalCallContext();
 
   Object.defineProperty(callClient, 'getState', {
