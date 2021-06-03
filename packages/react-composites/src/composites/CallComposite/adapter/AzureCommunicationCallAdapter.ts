@@ -41,7 +41,7 @@ import {
 import { createAzureCommunicationUserCredential, isInCall } from '../../../utils';
 import { VideoStreamOptions } from 'react-components';
 import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from 'acs-ui-common';
-import { CommunicationUserKind, CommunicationUserIdentifier } from '@azure/communication-common';
+import { CommunicationUserIdentifier, CommunicationUserKind, getIdentifierKind } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 
 // Context of Chat, which is a centralized context for all state updates
@@ -362,7 +362,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   private isMyMutedChanged = (): void => {
     this.emitter.emit('isMutedChanged', {
-      participantId: createCommunicationIdentifier(this.getState().userId),
+      participantId: this.getState().userId,
       isMuted: this.call?.isMuted
     });
   };
@@ -431,10 +431,6 @@ const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
   return deviceManager.unparentedViews.values().next().value?.view !== undefined;
 };
 
-const createCommunicationIdentifier = (rawId: string): CommunicationUserKind => {
-  return { kind: 'communicationUser', communicationUserId: rawId };
-};
-
 export const createAzureCommunicationCallAdapter = async (
   userId: CommunicationUserIdentifier,
   token: string,
@@ -443,7 +439,10 @@ export const createAzureCommunicationCallAdapter = async (
   refreshTokenCallback?: (() => Promise<string>) | undefined,
   callClientOptions?: CallClientOptions
 ): Promise<CallAdapter> => {
-  const callClient = createStatefulCallClient({ userId: userId.communicationUserId }, { callClientOptions });
+  const callClient = createStatefulCallClient(
+    { userId: getIdentifierKind(userId) as CommunicationUserKind },
+    { callClientOptions }
+  );
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
   const callAgent = await callClient.createCallAgent(
     createAzureCommunicationUserCredential(token, refreshTokenCallback),
