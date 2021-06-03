@@ -3,7 +3,7 @@
 
 import { VideoGallery as VideoGalleryComponent } from '@azure/communication-react';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
-import { text } from '@storybook/addon-knobs';
+import { text, select } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
@@ -17,6 +17,8 @@ const CustomStyleVideoGalleryExampleText = require('!!raw-loader!./snippets/Cust
 const DefaultVideoGalleryExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
 
 const importStatement = `import { VideoGallery } from '@azure/communication-react';`;
+
+const VIDEO_GALLERY_LAYOUTS = ['default', 'floatingLocalVideo'] as const;
 
 const getDocs: () => JSX.Element = () => {
   return (
@@ -81,7 +83,15 @@ const VideoGalleryStory: () => JSX.Element = () => {
       };
     });
 
-  return <VideoGalleryComponent localParticipant={MockLocalParticipant} remoteParticipants={remoteParticipants} />;
+  const layout = select('Layout', VIDEO_GALLERY_LAYOUTS, 'default');
+
+  return (
+    <VideoGalleryComponent
+      layout={layout}
+      localParticipant={MockLocalParticipant}
+      remoteParticipants={remoteParticipants}
+    />
+  );
 };
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
