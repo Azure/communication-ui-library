@@ -1,12 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
 import { OptionsButton } from '@azure/communication-react';
 import { IContextualMenuProps } from '@fluentui/react';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import { boolean } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
+import { OptionsButtonProps } from '../../../../../react-composites/node_modules/react-components/dist/react-components';
 
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
 import { OptionsButtonCustomExample } from './snippets/Custom.snippet';
@@ -97,10 +99,27 @@ const exampleOptionsMenuProps: IContextualMenuProps = {
   ]
 };
 
+const examplesCameras: VideoDeviceInfo[] = [
+  { id: 'camera1', name: 'Full HD Webcam', deviceType: 'UsbCamera' },
+  { id: 'camera2', name: 'Macbook Pro Webcam', deviceType: 'UsbCamera' }
+];
+
+const exampleMicrophones: AudioDeviceInfo[] = [
+  { id: 'mic1', name: 'Realtek HD Audio', isSystemDefault: true, deviceType: 'Microphone' },
+  { id: 'mic2', name: 'Macbook Pro Mic', isSystemDefault: true, deviceType: 'Microphone' }
+];
+
+const exampleOptionProps: OptionsButtonProps = {
+  cameras: examplesCameras,
+  microphones: exampleMicrophones,
+  selectedCamera: examplesCameras[0],
+  selectedMicrophone: exampleMicrophones[0]
+};
+
 const OptionsStory = (): JSX.Element => {
   const showLabels = boolean('Show Labels', false);
 
-  return <OptionsButton showLabel={showLabels} menuProps={exampleOptionsMenuProps} />;
+  return <OptionsButton showLabel={showLabels} {...exampleOptionProps} />;
 };
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
