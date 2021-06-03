@@ -189,8 +189,6 @@ const RemoteVideoTile = React.memo(
       userId
     ]);
 
-    console.log('Rerender');
-
     useEffect(() => {
       return () => {
         onDisposeRemoteStreamView && onDisposeRemoteStreamView(userId);
