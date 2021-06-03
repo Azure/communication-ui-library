@@ -16,12 +16,8 @@ export const callControlsContainer = mergeStyles({
 
   overflow: 'hidden',
   flexDirection: 'row',
-  justifyContent: 'flex-end',
   alignItems: 'center',
-  marginBottom: 2
-});
-
-export const centeredCallControlsContainer = mergeStyles(callControlsContainer, {
+  marginBottom: 2,
   justifyContent: 'center'
 });
 

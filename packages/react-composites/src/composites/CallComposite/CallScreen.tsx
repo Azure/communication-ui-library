@@ -144,11 +144,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
             )}
           </Stack.Item>
           <Stack.Item styles={callControlsStyles}>
-            <Stack
-              className={
-                props.screenWidth > MINI_HEADER_WINDOW_WIDTH ? callControlsContainer : centeredCallControlsContainer
-              }
-            >
+            <Stack className={callControlsContainer}>
               <CallControls onEndCallClick={endCallHandler} compressedMode={screenWidth <= MINI_HEADER_WINDOW_WIDTH} />
             </Stack>
           </Stack.Item>

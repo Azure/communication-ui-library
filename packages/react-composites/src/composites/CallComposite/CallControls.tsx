@@ -32,7 +32,7 @@ export const CallControls = (props: GroupCallControlsProps): JSX.Element => {
   );
 
   return (
-    <ControlBar styles={controlBarStyle}>
+    <ControlBar layout="dockedBottom">
       <CameraButton
         {...cameraButtonProps}
         onToggleCamera={() => {
