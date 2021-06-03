@@ -9,7 +9,6 @@ import {
   callControlsStyles,
   loadingStyle,
   subContainerStyles,
-  centeredCallControlsContainer,
   callControlsContainer
 } from './styles/CallScreen.styles';
 

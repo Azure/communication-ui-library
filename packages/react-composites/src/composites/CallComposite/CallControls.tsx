@@ -3,11 +3,7 @@
 
 import React, { useCallback } from 'react';
 import { CameraButton, ControlBar, EndCallButton, MicrophoneButton, ScreenShareButton } from 'react-components';
-import {
-  controlBarStyle,
-  groupCallLeaveButtonCompressedStyle,
-  groupCallLeaveButtonStyle
-} from './styles/CallControls.styles';
+import { groupCallLeaveButtonCompressedStyle, groupCallLeaveButtonStyle } from './styles/CallControls.styles';
 import { usePropsFor } from './hooks/usePropsFor';
 import { devicePermissionSelector } from 'calling-component-bindings';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
