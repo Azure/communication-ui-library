@@ -34,7 +34,6 @@ export default (): JSX.Element => {
 
   useEffect(() => {
     if (token && userId && displayName && threadId && endpointUrl) {
-      // This hack can be removed when `getIdFromToken` is dropped in favour of actually passing in user credentials.
       const userIdKind = { kind: 'communicationUser', communicationUserId: userId } as CommunicationUserKind;
       const createClient = async (): Promise<void> => {
         const chatClient = createStatefulChatClient({
