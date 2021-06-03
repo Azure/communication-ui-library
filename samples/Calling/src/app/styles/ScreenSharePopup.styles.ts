@@ -1,19 +1,21 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { getTheme, IButtonStyles, IModalStyleProps, IModalStyles, IStyleFunctionOrObject } from '@fluentui/react';
+import { IButtonStyles, IModalStyleProps, IModalStyles, IStyleFunctionOrObject } from '@fluentui/react';
+import { Theme } from '@fluentui/react-theme-provider';
 import { CSSProperties } from 'react';
 
-const theme = getTheme();
-const palette = theme.palette;
-
-export const screenSharePopupModalStyles: IStyleFunctionOrObject<IModalStyleProps, IModalStyles> = {
-  root: { width: '100%', height: '100%' },
-  main: {
-    boxShadow: theme.effects.elevation8,
-    borderRadius: theme.effects.roundedCorner4,
-    background: palette.neutralLighterAlt
-  }
+export const getScreenSharePopupModalStyles = (
+  theme: Theme
+): IStyleFunctionOrObject<IModalStyleProps, IModalStyles> => {
+  return {
+    root: { width: '100%', height: '100%' },
+    main: {
+      boxShadow: theme.effects.elevation8,
+      borderRadius: theme.effects.roundedCorner4,
+      background: theme.palette.neutralLighterAlt
+    }
+  };
 };
 
 export const screenSharePopupModalStackStyles: CSSProperties = {
@@ -28,11 +30,13 @@ export const screenSharePopupModalLabelStyles: CSSProperties = {
   fontWeight: 'normal'
 };
 
-export const screenSharePopupModalButtonStyles: IButtonStyles = {
-  root: {
-    padding: '0.375rem 0.75rem',
-    boxShadow: theme.effects.elevation4,
-    borderRadius: '0.25rem',
-    border: '0rem'
-  }
+export const getScreenSharePopupModalButtonStyles = (theme: Theme): IButtonStyles => {
+  return {
+    root: {
+      padding: '0.375rem 0.75rem',
+      border: '0rem',
+      boxShadow: theme.effects.elevation4,
+      borderRadius: theme.effects.roundedCorner4
+    }
+  };
 };

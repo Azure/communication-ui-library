@@ -3,12 +3,13 @@
 
 import { ContextualMenu, DefaultButton, IDragOptions, Label, Modal, Stack } from '@fluentui/react';
 import { CallControlPresentNewIcon, CallControlStopPresentingNewIcon } from '@fluentui/react-icons-northstar';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useTheme } from '@fluentui/react-theme-provider';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
-  screenSharePopupModalButtonStyles,
+  getScreenSharePopupModalButtonStyles,
+  getScreenSharePopupModalStyles,
   screenSharePopupModalLabelStyles,
-  screenSharePopupModalStackStyles,
-  screenSharePopupModalStyles
+  screenSharePopupModalStackStyles
 } from './styles/ScreenSharePopup.styles';
 
 const STOP_SCREENSHARE_BUTTON_TEXT = 'Stop presenting';
@@ -32,6 +33,16 @@ export const ScreenSharePopup = (props: ScreenSharePopupProps): JSX.Element => {
   const { onStopScreenShare } = props;
   const [stoppingInProgress, setStoppingInProgress] = useState(false);
 
+  const theme = useTheme();
+
+  const screenSharePopupModalStylesThemed = useMemo(() => {
+    return getScreenSharePopupModalStyles(theme);
+  }, [theme]);
+
+  const screenSharePopupModalButtonStylesThemed = useMemo(() => {
+    return getScreenSharePopupModalButtonStyles(theme);
+  }, [theme]);
+
   const isMounted = useRef(false);
 
   useEffect(() => {
@@ -50,14 +61,14 @@ export const ScreenSharePopup = (props: ScreenSharePopupProps): JSX.Element => {
   }, [onStopScreenShare]);
 
   return (
-    <Modal isOpen={true} isModeless={true} dragOptions={DRAG_OPTIONS} styles={screenSharePopupModalStyles}>
+    <Modal isOpen={true} isModeless={true} dragOptions={DRAG_OPTIONS} styles={screenSharePopupModalStylesThemed}>
       <Stack style={screenSharePopupModalStackStyles} horizontalAlign={'center'}>
         <Stack verticalFill={true} verticalAlign={'center'} horizontalAlign={'center'}>
           <CallControlPresentNewIcon disabled={true} size={'larger'} />
           <Label style={screenSharePopupModalLabelStyles}>{STOP_SCREENSHARE_LABEL_TEXT}</Label>
         </Stack>
         <DefaultButton
-          styles={screenSharePopupModalButtonStyles}
+          styles={screenSharePopupModalButtonStylesThemed}
           onRenderIcon={onRenderStopScreenShareIcon}
           onClick={onStopScreenShareClicked}
           text={STOP_SCREENSHARE_BUTTON_TEXT}
