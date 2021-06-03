@@ -4,7 +4,7 @@
 export * from './composites';
 export type { CommunicationUiErrorArgs, CommunicationUiErrorInfo, CommunicationUiErrorSeverity } from './types';
 
-export { propagateError, getIdFromToken, createAzureCommunicationUserCredential } from './utils';
+export { propagateError, createAzureCommunicationUserCredential } from './utils';
 export {
   CommunicationUiError,
   CommunicationUiErrorCode,

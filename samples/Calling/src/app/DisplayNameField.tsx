@@ -7,11 +7,11 @@ import {
   inputBoxStyle,
   inputBoxTextStyle,
   inputBoxWarningStyle,
-  labelFontStyle,
   warningStyle
 } from './styles/DisplayNameField.styles';
 import { TextField } from '@fluentui/react';
 import { ENTER_KEY, MAXIMUM_LENGTH_OF_NAME } from './utils/constants';
+import { labelFontStyle } from './styles/ConfiguratonScreen.styles';
 
 interface DisplayNameFieldProps {
   setName(displayName: string): void;
