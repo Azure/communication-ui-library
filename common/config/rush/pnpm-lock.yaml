@@ -7,8 +7,7 @@ dependencies:
   '@babel/preset-env': 7.13.10_@babel+core@7.13.10
   '@babel/preset-react': 7.12.13_@babel+core@7.13.10
   '@fluentui/react': 7.164.1_b0d7ca8a0459a1df1ff516252688d92a
-  '@fluentui/react-icons': 0.3.10_b0d7ca8a0459a1df1ff516252688d92a
-  '@fluentui/react-icons-northstar': 0.51.7_b0d7ca8a0459a1df1ff516252688d92a
+  '@fluentui/react-icons': 1.1.127
   '@fluentui/react-northstar': 0.51.7_b0d7ca8a0459a1df1ff516252688d92a
   '@fluentui/react-theme-provider': 0.18.5_b0d7ca8a0459a1df1ff516252688d92a
   '@fluentui/theme-samples': 8.1.5_b0d7ca8a0459a1df1ff516252688d92a
@@ -3009,23 +3008,10 @@ packages:
       react-dom: ^16.8.0
     resolution:
       integrity: sha512-9p0DQcGng+CA/sTnjxxaGWC8CH/OhwZCIEwp3srMeIkPaeWG7jKIOCTjRh87l5XhaeaYds6b88zET7axAHoXvw==
-  /@fluentui/react-icons/0.3.10_b0d7ca8a0459a1df1ff516252688d92a:
-    dependencies:
-      '@microsoft/load-themed-styles': 1.10.151
-      '@types/react-dom': 16.9.11
-      '@uifabric/set-version': 7.0.24
-      '@uifabric/utilities': 7.33.5_b0d7ca8a0459a1df1ff516252688d92a
-      react: 16.14.0
-      react-dom: 16.14.0_react@16.14.0
-      tslib: 1.14.1
+  /@fluentui/react-icons/1.1.127:
     dev: false
-    peerDependencies:
-      '@types/react': '*'
-      '@types/react-dom': '>=16.8.0 <17.0.0'
-      react: '>=16.8.0 <17.0.0'
-      react-dom: '>=16.8.0 <17.0.0'
     resolution:
-      integrity: sha512-b2Y5ZcvY+/3xAg7pDcHAgLXIp8BbCfKM47Yh+uQAAH1S4THAetKpmFUOugJRHye3sr4ZDBk2QdSjUt4MXrDTsQ==
+      integrity: sha512-vrCMgVb8Fb4IJ2fkyesL5U/R1zWI9UysvPs6A9sRWIS55IMjCY4Ge2YCmkK1CseDlSQNc/noWaIw/nJReED8Lg==
   /@fluentui/react-northstar-fela-renderer/0.51.7_react-dom@16.14.0+react@16.14.0:
     dependencies:
       '@babel/runtime': 7.13.10
@@ -21143,7 +21129,7 @@ packages:
       ts-node: '*'
       webpack: '*'
     resolution:
-      integrity: sha512-jicpUMI+FO3NPtATrcbujTe/g21Oh5aDskO7mNPfzm6Rjjo2Vf+04rNTqkxhGBGfEqXZPt5VJsUAdj+lU27bmw==
+      integrity: sha512-1rQ+SHsmokIfMNZQcvSuP75SWpEV5EgtutXHjfQtmCjioyTfm9M2SXXYGdCzGp/Qb96BaTcb423mXGpAxvSwIg==
       tarball: file:projects/calling.tgz
     version: 0.0.0
   file:projects/chat-component-bindings.tgz_prettier@2.0.5+ts-node@9.1.1:
@@ -21273,7 +21259,7 @@ packages:
       eslint-plugin-jsx-a11y: '*'
       ts-node: '*'
     resolution:
-      integrity: sha512-cyubyifjPJ1SBC8jTxoZpXBJR4eKmh6GYq8UfCwwmAppYElpeliVKTDCFIM5bqL2GSQMhBmKpq5BT1FKyW8rWQ==
+      integrity: sha512-iOB0WNydYOBYbRaPXBUfRf+6DDXG2Goa/8OBcuT0mdC+7mTO0T8nIcfgqWH/CMd5gFU0WEMolTPXOXUit6C25g==
       tarball: file:projects/chat.tgz
     version: 0.0.0
   file:projects/check-treeshaking.tgz_prettier@2.0.5:
@@ -21303,7 +21289,7 @@ packages:
       '@azure/core-http': 1.2.4
       '@azure/core-paging': 1.1.3
       '@fluentui/react': 7.164.1_b0d7ca8a0459a1df1ff516252688d92a
-      '@fluentui/react-icons': 0.3.10_b0d7ca8a0459a1df1ff516252688d92a
+      '@fluentui/react-icons': 1.1.127
       '@fluentui/react-icons-northstar': 0.51.7_b0d7ca8a0459a1df1ff516252688d92a
       '@fluentui/react-northstar': 0.51.7_b0d7ca8a0459a1df1ff516252688d92a
       '@fluentui/react-theme-provider': 0.18.5_b0d7ca8a0459a1df1ff516252688d92a
@@ -21365,7 +21351,7 @@ packages:
       jest: '*'
       react-test-renderer: '*'
     resolution:
-      integrity: sha512-aUHlPqSO4Gsj/BaznJEOdosH9SY1KjD0gsFNIhrYUi9IJjJOnxPL4UvUOO114SdNfaNhIALL4Haz8Sdf80XBRw==
+      integrity: sha512-Oq5tBJXnESWqeHncAcU9ZkFw7IGKfba8XrMBi9ORigiTTkZACcXpoIAas4WLAUQdkgmnQHia/z+wIde3SLlzrw==
       tarball: file:projects/communication-react.tgz
     version: 0.0.0
   file:projects/one-to-one-call.tgz_11ce2e494cf42e750705757a01242d16:
@@ -21435,7 +21421,7 @@ packages:
       ts-node: '*'
       webpack: '*'
     resolution:
-      integrity: sha512-qKAhlZALOAuQ7rpyuD3nXOI9wDzj4YmNU6HW5CTXVXYckVvLs3U/ec2vWJZ9VxaZnWpX8COD5gJaDMlUWLW2Pg==
+      integrity: sha512-dDbNh0H4LBJII5d7qLCroVU36D6x+pj/Q2PUXQ3RTn01CNoU7z95ybEjUWaooMHW3L2P7LQjsjQbk9Mas+JzNg==
       tarball: file:projects/one-to-one-call.tgz
     version: 0.0.0
   file:projects/react-components.tgz:
@@ -21443,7 +21429,7 @@ packages:
       '@babel/core': 7.13.10
       '@babel/preset-env': 7.13.10_@babel+core@7.13.10
       '@fluentui/react': 7.164.1_b0d7ca8a0459a1df1ff516252688d92a
-      '@fluentui/react-icons': 0.3.10_b0d7ca8a0459a1df1ff516252688d92a
+      '@fluentui/react-icons': 1.1.127
       '@fluentui/react-icons-northstar': 0.51.7_b0d7ca8a0459a1df1ff516252688d92a
       '@fluentui/react-northstar': 0.51.7_b0d7ca8a0459a1df1ff516252688d92a
       '@fluentui/react-theme-provider': 0.18.5_b0d7ca8a0459a1df1ff516252688d92a
@@ -21467,6 +21453,7 @@ packages:
       babel-jest: 26.6.3_@babel+core@7.13.10
       babel-loader: 8.1.0_6d2d9db439f797dbe04a64efdbcf144a
       concurrently: 5.3.0
+      copy-to-clipboard: 3.3.1
       copyfiles: 2.4.1
       core-js: 3.9.1
       eslint: 7.22.0
@@ -21505,7 +21492,7 @@ packages:
     dev: false
     name: '@rush-temp/react-components'
     resolution:
-      integrity: sha512-prq4odcgrEJO5350B2N1dYzyw8e7ainFoPBNl1CVDCeiJnDb5kHGG5oN3CF9A9Puq5XBiNexv2qfuvqoc0KCVg==
+      integrity: sha512-XZbDaoloR4Yi/gmxjRuIamzLPWJ4LSA6ItZDqZqQTNHHZ7IHxZSZWJ1dgqFQScSH7hR1auGfwhr5d5WOmCQvUw==
       tarball: file:projects/react-components.tgz
     version: 0.0.0
   file:projects/react-composites.tgz:
@@ -21522,7 +21509,7 @@ packages:
       '@babel/core': 7.13.10
       '@babel/preset-env': 7.13.10_@babel+core@7.13.10
       '@fluentui/react': 7.164.1_b0d7ca8a0459a1df1ff516252688d92a
-      '@fluentui/react-icons': 0.3.10_b0d7ca8a0459a1df1ff516252688d92a
+      '@fluentui/react-icons': 1.1.127
       '@fluentui/react-icons-northstar': 0.51.7_b0d7ca8a0459a1df1ff516252688d92a
       '@fluentui/react-northstar': 0.51.7_b0d7ca8a0459a1df1ff516252688d92a
       '@fluentui/react-theme-provider': 0.18.5_b0d7ca8a0459a1df1ff516252688d92a
@@ -21587,7 +21574,7 @@ packages:
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-urKdGFTT7O8Ozu5syO/2tBptQRHlFBNpTbNA5yccNx02F5DHbFruBnnFrts4V23O59hA00tx+pEWV0gCh9Bl8Q==
+      integrity: sha512-MW/Q0gIltlO/LFzfXySFY+zCpwl1kIOWhOBbBRqplpH594Anz4Grnlrj9MNP/oO1cokGBaCI3efRoi5YRcPVpQ==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/server.tgz:
@@ -21653,7 +21640,7 @@ packages:
       '@babel/core': 7.13.10
       '@babel/preset-env': 7.13.10_@babel+core@7.13.10
       '@fluentui/react': 7.164.1_b0d7ca8a0459a1df1ff516252688d92a
-      '@fluentui/react-icons': 0.3.10_b0d7ca8a0459a1df1ff516252688d92a
+      '@fluentui/react-icons': 1.1.127
       '@fluentui/react-icons-northstar': 0.51.7_b0d7ca8a0459a1df1ff516252688d92a
       '@fluentui/react-northstar': 0.51.7_b0d7ca8a0459a1df1ff516252688d92a
       '@fluentui/react-theme-provider': 0.18.5_b0d7ca8a0459a1df1ff516252688d92a
@@ -21736,7 +21723,7 @@ packages:
     dev: false
     name: '@rush-temp/storybook'
     resolution:
-      integrity: sha512-oAiFxfatL+uTkIG6Df/jqRYN00Wraz14MOh8gPq9NpMhSngq9dvOAGa+2hjK2KXKZgykz+zoZgaPZmQ2zZfFDg==
+      integrity: sha512-nbmx1jv3jvQ2Ftjr09LK0xdtH7vo1p5F5PokBEHVEo9L9RDUpIaB++P0UQjqxgM51KBHnmlFSE16VTRPZ7t9mw==
       tarball: file:projects/storybook.tgz
     version: 0.0.0
 registry: ''
@@ -21749,8 +21736,7 @@ specifiers:
   '@babel/preset-env': ^7.12.7
   '@babel/preset-react': ^7.12.7
   '@fluentui/react': ^7.117.1
-  '@fluentui/react-icons': ^0.3.9
-  '@fluentui/react-icons-northstar': ^0.51.2
+  '@fluentui/react-icons': ~1.1.127
   '@fluentui/react-northstar': ^0.51.2
   '@fluentui/react-theme-provider': ^0.18.0
   '@fluentui/theme-samples': 8.1.5

@@ -55,7 +55,6 @@
     "@azure/core-http": "^1.2.3",
     "@babel/preset-react": "^7.12.7",
     "@fluentui/react": "^7.117.1",
-    "@fluentui/react-icons-northstar": "^0.51.2",
     "@fluentui/react-northstar": "^0.51.2",
     "@fluentui/react-theme-provider": "^0.18.0",
     "jquery": "^3.5.1",
