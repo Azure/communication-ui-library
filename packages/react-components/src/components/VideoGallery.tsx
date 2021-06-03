@@ -11,7 +11,12 @@ import {
 } from '../types';
 import { GridLayout } from './GridLayout';
 import { StreamMedia } from './StreamMedia';
-import { floatingLocalVideoTileStyle, gridStyle, videoTileStyle } from './styles/VideoGallery.styles';
+import {
+  floatingLocalVideoTileContainerStyle,
+  floatingLocalVideoTileStyle,
+  gridStyle,
+  videoTileStyle
+} from './styles/VideoGallery.styles';
 import { memoizeFnAll } from 'acs-ui-common';
 import { VideoTile, PlaceholderProps, VideoTileStylesProps } from './VideoTile';
 
@@ -112,7 +117,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   } = props;
 
   let localVideoTileStyles: VideoTileStylesProps = videoTileStyle;
-  if (layout === 'floatingLocalVideo' && remoteParticipants && remoteParticipants.length > 0) {
+
+  const shouldFloatLocalVideo = (): boolean =>
+    !!(layout === 'floatingLocalVideo' && remoteParticipants && remoteParticipants.length > 0);
+
+  if (shouldFloatLocalVideo()) {
     localVideoTileStyles = floatingLocalVideoTileStyle;
   }
 
@@ -168,12 +177,19 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         );
       });
     });
-  }, [remoteParticipants, onRenderRemoteVideoTile, onCreateRemoteStreamView, remoteVideoViewOption, onRenderAvatar]);
+  }, [
+    remoteParticipants,
+    onRenderRemoteVideoTile,
+    onCreateRemoteStreamView,
+    onDisposeRemoteStreamView,
+    remoteVideoViewOption,
+    onRenderAvatar
+  ]);
 
-  if (layout === 'floatingLocalVideo' && remoteParticipants && remoteParticipants.length > 0) {
+  if (shouldFloatLocalVideo()) {
     return (
       <>
-        <Stack style={{ position: 'absolute', bottom: 0, right: 0 }}>
+        <Stack className={floatingLocalVideoTileContainerStyle}>
           {localParticipant && defaultOnRenderLocalVideoTile}
         </Stack>
         <GridLayout styles={styles}>{defaultOnRenderRemoteParticipants}</GridLayout>

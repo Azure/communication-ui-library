@@ -21,6 +21,12 @@ export const videoTileStyle = {
   }
 };
 
+export const floatingLocalVideoTileContainerStyle = mergeStyles({
+  position: 'absolute',
+  bottom: 0,
+  right: 0
+});
+
 export const floatingLocalVideoTileStyle: VideoTileStylesProps = {
   root: {
     position: 'absolute',
