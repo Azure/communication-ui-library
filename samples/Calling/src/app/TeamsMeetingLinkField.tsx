@@ -2,12 +2,8 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import {
-  TextFieldStyleProps,
-  inputBoxStyle,
-  inputBoxTextStyle,
-  labelFontStyle
-} from './styles/DisplayNameField.styles';
+import { TextFieldStyleProps, inputBoxStyle, inputBoxTextStyle } from './styles/DisplayNameField.styles';
+import { labelFontStyle } from './styles/ConfiguratonScreen.styles';
 import { TextField } from '@fluentui/react';
 
 interface TeamsMeetingLinkFieldProps {
