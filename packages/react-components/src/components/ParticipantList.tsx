@@ -18,7 +18,7 @@ export type ParticipantListProps = {
   /** User ID of user */
   myUserId?: string;
   /**
-   * Wether to exclude the user from the participant list or not
+   * If set to `true`, excludes the local participant from the participant list with use of `myUserId` props (required in this case).
    *
    * @defaultValue `false`
    */
@@ -34,7 +34,6 @@ export type ParticipantListProps = {
 const onRenderParticipantsDefault = (
   participants: CommunicationParticipant[],
   myUserId?: string,
-  excludeMe?: boolean,
   onParticipantRemove?: (userId: string) => void,
   onRenderAvatar?: (remoteParticipant: CommunicationParticipant) => JSX.Element | null
 ): (JSX.Element | null)[] => {
@@ -52,7 +51,7 @@ const onRenderParticipantsDefault = (
     }
 
     const menuItems: IContextualMenuItem[] = [];
-    if ((excludeMe || participant.userId !== myUserId) && onParticipantRemove) {
+    if (participant.userId !== myUserId && onParticipantRemove) {
       menuItems.push({
         key: 'Remove',
         text: 'Remove',
@@ -79,9 +78,9 @@ const onRenderParticipantsDefault = (
     if (participant.displayName) {
       return (
         <ParticipantItem
-          key={index}
+          key={participant.userId}
           displayName={participant.displayName}
-          me={excludeMe || !myUserId ? false : participant.userId === myUserId}
+          me={myUserId ? participant.userId === myUserId : false}
           menuItems={menuItems}
           presence={presence}
           onRenderIcon={onRenderIcon}
@@ -101,28 +100,31 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
   const { excludeMe = false, myUserId, participants, onParticipantRemove, onRenderAvatar, onRenderParticipant } = props;
 
   const allParticipants: CommunicationParticipant[] = useMemo(() => {
-    if (participants !== undefined) {
-      if (excludeMe && myUserId) {
-        const userIndex = participants.map((p) => p.userId).indexOf(myUserId);
+    if (participants === undefined) {
+      return [];
+    }
 
-        if (userIndex !== -1) {
-          const remoteParticipants = [...participants];
-          remoteParticipants.splice(userIndex, 1);
-          return remoteParticipants;
-        }
-      }
-
+    if (!excludeMe || !myUserId) {
       return [...participants];
     }
 
-    return [];
+    const userIndex = participants.map((p) => p.userId).indexOf(myUserId);
+
+    if (userIndex === -1) {
+      return [...participants];
+    }
+
+    const remoteParticipants = [...participants];
+    remoteParticipants.splice(userIndex, 1);
+
+    return remoteParticipants;
   }, [participants, excludeMe, myUserId]);
 
   return (
     <Stack className={participantListStyle}>
       {onRenderParticipant
         ? participants.map((participant: CommunicationParticipant) => onRenderParticipant(participant))
-        : onRenderParticipantsDefault(allParticipants, myUserId, excludeMe, onParticipantRemove, onRenderAvatar)}
+        : onRenderParticipantsDefault(allParticipants, myUserId, onParticipantRemove, onRenderAvatar)}
     </Stack>
   );
 };

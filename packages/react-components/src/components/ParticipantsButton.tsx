@@ -84,21 +84,20 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     onRenderText
   } = props;
 
-  participantListProps.excludeMe = true;
-
   const onMuteAllCallback = useCallback(() => {
     if (onMuteAll) {
       onMuteAll();
     }
   }, [onMuteAll]);
 
+  // Rendering of ParticipantList excluding the local user as we display them on their own in the context menu
   const onRenderCallback = useCallback(() => {
     return (
       <Stack className={mergeStyles(defaultParticipantListContainerStyle, styles?.participantListContainerStyle)}>
-        <ParticipantList {...participantListProps} />
+        <ParticipantList {...participantListProps} excludeMe={true} />
       </Stack>
     );
-  }, [participantListProps, participantListProps.participants, participantListProps?.myUserId, styles]);
+  }, [participantListProps, styles]);
 
   const onCopyCallback = useCallback(() => {
     if (callInvitationURL) {
@@ -133,8 +132,8 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     return items;
   };
 
-  const generateDefaultMenuProps = (): IContextualMenuProps => {
-    const defaultMenuProps: IContextualMenuProps = {
+  const defaultMenuProps = useMemo((): IContextualMenuProps => {
+    const menuProps: IContextualMenuProps = {
       items: []
     };
 
@@ -144,13 +143,13 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
 
       if (participantListProps.myUserId && participantIds.indexOf(participantListProps.myUserId) !== -1) {
         participantCount -= 1;
-        defaultMenuProps.items.push({
+        menuProps.items.push({
           key: 'selfParticipantKey',
           name: 'In this call'
         });
       }
 
-      defaultMenuProps.items.push({
+      menuProps.items.push({
         key: 'remoteParticipantCountKey',
         name: `${participantCount} people`,
         iconProps: { iconName: 'People' },
@@ -161,7 +160,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     }
 
     if (callInvitationURL) {
-      defaultMenuProps.items.push({
+      menuProps.items.push({
         key: 'InviteLinkKey',
         name: 'Copy invite link',
         iconProps: { iconName: 'Link' },
@@ -169,11 +168,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
       });
     }
 
-    return defaultMenuProps;
-  };
-
-  const defaultMenuProps = useMemo(() => {
-    return generateDefaultMenuProps();
+    return menuProps;
   }, [
     participantListProps,
     participantListProps.participants,
@@ -191,7 +186,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {
     return (
       <Label key={'participantsLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
-        {'Participants'}
+        {'People'}
       </Label>
     );
   };
