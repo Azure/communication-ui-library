@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Store userId as CommunicationUserKind",
+  "packageName": "calling-stateful-client",
+  "email": "prprabhu@microsoft.com",
+  "dependentChangeType": "patch"
+}
