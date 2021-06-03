@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { DefaultButton, IButtonProps, Label, concatStyleSets, mergeStyles } from '@fluentui/react';
-import { CallControlCloseTrayIcon, CallControlPresentNewIcon } from '@fluentui/react-northstar';
+import { ShareScreenStart20Filled, ShareScreenStop20Filled } from '@fluentui/react-icons';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 
 /**
@@ -35,9 +35,9 @@ export const ScreenShareButton = (props: ScreenShareButtonProps): JSX.Element =>
 
   const defaultRenderIcon = (props?: IButtonProps): JSX.Element => {
     return props?.checked ? (
-      <CallControlCloseTrayIcon key={'screenShareIconKey'} />
+      <ShareScreenStop20Filled key={'screenShareIconKey'} primaryFill="currentColor" />
     ) : (
-      <CallControlPresentNewIcon key={'screenShareBorderedIconKey'} bordered={false} />
+      <ShareScreenStart20Filled key={'screenShareBorderedIconKey'} primaryFill="currentColor" />
     );
   };
 

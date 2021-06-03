@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { DefaultButton, IButtonProps, Label, concatStyleSets, mergeStyles } from '@fluentui/react';
-import { CallEndIcon } from '@fluentui/react-northstar';
+import { CallEnd20Filled } from '@fluentui/react-icons';
 import { useTheme } from '@fluentui/react-theme-provider';
 import { controlButtonLabelStyles, endCallControlButtonStyles } from './styles/ControlBar.styles';
 import { lightTheme, darkTheme } from '../theming/themes';
@@ -54,7 +54,7 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
   );
 
   const defaultRenderIcon = (): JSX.Element => {
-    return <CallEndIcon key={'callEndIconKey'} />;
+    return <CallEnd20Filled primaryFill="currentColor" key={'callEndIconKey'} />;
   };
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {

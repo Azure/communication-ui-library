@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { concatStyleSets, DefaultButton, IButtonProps, Label, mergeStyles } from '@fluentui/react';
-import { CallVideoIcon, CallVideoOffIcon } from '@fluentui/react-northstar';
+import { Video20Filled, VideoOff20Filled } from '@fluentui/react-icons';
 import React, { useCallback, useState } from 'react';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 
@@ -35,7 +35,11 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   const [waitForCamera, setWaitForCamera] = useState(false);
 
   const defaultRenderIcon = (props?: IButtonProps): JSX.Element => {
-    return props?.checked ? <CallVideoIcon key={'videoIconKey'} /> : <CallVideoOffIcon key={'videoOffIconKey'} />;
+    return props?.checked ? (
+      <Video20Filled key={'videoIconKey'} primaryFill="currentColor" />
+    ) : (
+      <VideoOff20Filled key={'videoOffIconKey'} primaryFill="currentColor" />
+    );
   };
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {

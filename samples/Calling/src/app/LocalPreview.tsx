@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { CallVideoOffIcon } from '@fluentui/react-icons-northstar';
+import { VideoOff20Filled } from '@fluentui/react-icons';
 import { Stack, Text } from '@fluentui/react';
 import { localPreviewContainerStyle, cameraOffLabelStyle, localPreviewTileStyle } from './styles/LocalPreview.styles';
 import { CameraButton, ControlBar, MicrophoneButton, StreamMedia, VideoTile } from 'react-components';
@@ -14,7 +14,7 @@ const onRenderPlaceholder = (): JSX.Element => {
   return (
     <Stack style={{ width: '100%', height: '100%' }} verticalAlign="center">
       <Stack.Item align="center">
-        <CallVideoOffIcon />
+        <VideoOff20Filled primaryFill="currentColor" />
       </Stack.Item>
       <Stack.Item align="center">
         <Text className={cameraOffLabelStyle}>Your camera is turned off.</Text>

@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { DefaultButton, Separator, Stack } from '@fluentui/react';
-import { SettingsIcon, UserFriendsIcon } from '@fluentui/react-icons-northstar';
+import { Settings20Filled, Settings20Regular, People20Filled, People20Regular } from '@fluentui/react-icons';
 import React from 'react';
 import {
   controlButtonStyles,
@@ -45,12 +45,10 @@ export const Header = (props: HeaderProps): JSX.Element => {
       <Stack.Item>
         <DefaultButton
           onRenderIcon={() => {
-            return (
-              <SettingsIcon
-                outline={props.selectedPane === CommandPanelTypes.Settings ? false : true}
-                size="medium"
-                className={props.selectedPane === CommandPanelTypes.Settings ? itemSelectedStyle : ''}
-              />
+            return props.selectedPane === CommandPanelTypes.Settings ? (
+              <Settings20Filled primaryFill="currentColor" className={itemSelectedStyle} />
+            ) : (
+              <Settings20Regular primaryFill="currentColor" />
             );
           }}
           onClick={() => {
@@ -60,12 +58,10 @@ export const Header = (props: HeaderProps): JSX.Element => {
         />
         <DefaultButton
           onRenderIcon={() => {
-            return (
-              <UserFriendsIcon
-                outline={props.selectedPane === CommandPanelTypes.People ? false : true}
-                size="medium"
-                className={props.selectedPane === CommandPanelTypes.People ? itemSelectedStyle : ''}
-              />
+            return props.selectedPane === CommandPanelTypes.People ? (
+              <People20Filled primaryFill="currentColor" className={itemSelectedStyle} />
+            ) : (
+              <People20Regular primaryFill="currentColor" />
             );
           }}
           onClick={() => {

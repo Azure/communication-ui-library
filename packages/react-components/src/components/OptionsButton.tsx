@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { DefaultButton, IButtonProps, Label, concatStyleSets, mergeStyles } from '@fluentui/react';
-import { MoreIcon } from '@fluentui/react-northstar';
+import { MoreHorizontal20Filled } from '@fluentui/react-icons';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 
 /**
@@ -123,7 +123,7 @@ export const OptionsButton = (props: OptionsButtonProps): JSX.Element => {
   const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
 
   const defaultRenderIcon = (): JSX.Element => {
-    return <MoreIcon key={'optionsIconKey'} />;
+    return <MoreHorizontal20Filled primaryFill="currentColor" key={'optionsIconKey'} />;
   };
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {

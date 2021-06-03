@@ -57,3 +57,7 @@ export const dropDownTitleIconStyles = mergeStyles({
   overflowWrap: 'break-word',
   margin: '.063rem'
 });
+
+export const optionIconStyles = mergeStyles({
+  marginRight: '8px'
+});

@@ -3,8 +3,8 @@
 
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
 import { ParticipantItem as ParticipantItemComponent } from '@azure/communication-react';
-import { Stack } from '@fluentui/react';
-import { MicOffIcon, CallControlPresentNewIcon } from '@fluentui/react-northstar';
+import { Stack, mergeStyles } from '@fluentui/react';
+import { MicOff20Filled, ShareScreenStart20Filled } from '@fluentui/react-icons';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
 import { boolean, text } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
@@ -98,8 +98,10 @@ const ParticipantItemStory: () => JSX.Element = () => {
         menuItems={menuItems}
         onRenderIcon={() => (
           <Stack horizontal={true} tokens={tokenProps}>
-            {isScreenSharing && <CallControlPresentNewIcon size="small" />}
-            {isMuted && <MicOffIcon size="small" />}
+            {isScreenSharing && (
+              <ShareScreenStart20Filled primaryFill="currentColor" className={mergeStyles({ height: '0.875rem' })} />
+            )}
+            {isMuted && <MicOff20Filled primaryFill="currentColor" className={mergeStyles({ height: '0.875rem' })} />}
           </Stack>
         )}
       />

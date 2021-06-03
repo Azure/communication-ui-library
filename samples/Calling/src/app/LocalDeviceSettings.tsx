@@ -11,7 +11,7 @@ import {
 } from './styles/LocalDeviceSettings.styles';
 import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
 import { useTheme } from '@fluentui/react-theme-provider';
-import { CallVideoIcon, MicIcon, VolumeUpIcon } from '@fluentui/react-icons-northstar';
+import { Video20Filled, MicOn20Filled, Speaker220Filled } from '@fluentui/react-icons';
 
 const cameraPermissionDeniedText = 'Your browser is blocking access to your camera.';
 const microphonePermissionDeniedText = 'Your browser is blocking access to your microphone.';
@@ -39,11 +39,11 @@ const getOptionIcon = (type: iconType): JSX.Element | undefined => {
   const iconStyles = { marginRight: '8px' };
 
   if (type === 'Camera') {
-    return <CallVideoIcon style={iconStyles} key={'videoIconKey'} />;
+    return <Video20Filled primaryFill="currentColor" style={iconStyles} key={'videoIconKey'} />;
   } else if (type === 'Microphone') {
-    return <MicIcon style={iconStyles} key={'microphoneIconKey'} />;
+    return <MicOn20Filled primaryFill="currentColor" style={iconStyles} key={'microphoneIconKey'} />;
   } else if (type === 'Speaker') {
-    return <VolumeUpIcon style={iconStyles} key={'speakerIconKey'} />;
+    return <Speaker220Filled primaryFill="currentColor" style={iconStyles} key={'speakerIconKey'} />;
   } else {
     return undefined;
   }

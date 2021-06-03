@@ -17,7 +17,7 @@ import {
   videoCameraIconStyle
 } from './styles/HomeScreen.styles';
 
-import { ChatIcon } from '@fluentui/react-icons-northstar';
+import { Chat20Filled } from '@fluentui/react-icons';
 import heroSVG from '../assets/hero.svg';
 import { getThreadId } from './utils/getThreadId';
 import { createThread } from './utils/createThread';
@@ -111,7 +111,7 @@ export default (): JSX.Element => {
                 onCreateThread();
               }}
             >
-              <ChatIcon className={videoCameraIconStyle} size="medium" />
+              <Chat20Filled className={videoCameraIconStyle} primaryFill="currentColor" />
               <div className={startChatTextStyle}>{startChatButtonText}</div>
             </PrimaryButton>
             <ThemeSelector label="Theme" horizontal={true} />
