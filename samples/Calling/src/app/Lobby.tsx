@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import React, { useEffect, useState } from 'react';
-import { StreamMedia, VideoGalleryLocalParticipant, VideoStreamOptions, VideoTile } from 'react-components';
+import { StreamMedia, VideoStreamOptions, VideoTile, VideoGalleryStream } from 'react-components';
 import { useTheme } from '@fluentui/react-theme-provider';
 import { LobbyCallControlBar } from './LobbyControlBar';
 import { useCallingSelector as useSelector } from 'calling-component-bindings';
@@ -9,7 +9,7 @@ import { getIsPreviewCameraOn } from './selectors/baseSelectors';
 
 export interface LobbyProps {
   callState: string;
-  localParticipant: VideoGalleryLocalParticipant;
+  localParticipantVideoStream: VideoGalleryStream;
   localVideoViewOption?: VideoStreamOptions;
   isCameraChecked?: boolean;
   isMicrophoneChecked?: boolean;
@@ -27,9 +27,9 @@ export const Lobby = (props: LobbyProps): JSX.Element => {
   const [isButtonStatusSynced, setIsButtonStatusSynced] = useState(false);
   const isPreviewCameraOn = useSelector(getIsPreviewCameraOn);
 
-  const localVideoStream = props.localParticipant?.videoStream;
-  const isVideoReady = localVideoStream?.isAvailable;
-  const renderElement = props.localParticipant.videoStream?.renderElement;
+  const videoStream = props.localParticipantVideoStream;
+  const isVideoReady = videoStream.isAvailable;
+  const renderElement = videoStream.renderElement;
 
   const callStateText = props.callState === 'InLobby' ? 'Waiting to be admitted' : 'Connecting...';
 
@@ -52,13 +52,13 @@ export const Lobby = (props: LobbyProps): JSX.Element => {
   }, [isButtonStatusSynced, isPreviewCameraOn, isVideoReady, props, renderElement]);
 
   useEffect(() => {
-    if (localVideoStream && isVideoReady) {
+    if (videoStream && isVideoReady) {
       props.onCreateLocalStreamView &&
         props
           .onCreateLocalStreamView(props.localVideoViewOption)
           .catch((err) => console.log('Can not render video', err));
     }
-  }, [isVideoReady, localVideoStream, props, renderElement]);
+  }, [isVideoReady, videoStream, props, renderElement]);
 
   return (
     <VideoTile

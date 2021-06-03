@@ -13,6 +13,7 @@ import { devicePermissionSelector, optionsButtonSelector } from 'calling-compone
 import { useCallingSelector as useSelector } from 'calling-component-bindings';
 import { useAzureCommunicationHandlers } from './hooks/useAzureCommunicationHandlers';
 import { TeamsMeetingLinkField } from './TeamsMeetingLinkField';
+import { containerGapStyle, titleContainerStyle } from './styles/ConfiguratonScreen.styles';
 
 export interface ConfigurationScreenProps {
   screenWidth: number;
@@ -22,6 +23,8 @@ export interface ConfigurationScreenProps {
   isMicrophoneOn: boolean;
   setIsMicrophoneOn: (isEnabled: boolean) => void;
 }
+
+const title = 'Start a call';
 
 export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Element => {
   const { startCallHandler, onDisplayNameUpdate, displayName } = props;
@@ -35,6 +38,7 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
 
   return (
     <CallConfiguration {...props}>
+      <div className={titleContainerStyle}>{title}</div>
       <DisplayNameField
         setName={onDisplayNameUpdate}
         defaultName={displayName}
@@ -43,7 +47,7 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
         isNameLengthExceedLimit={nameTooLongWarning}
         setNameLengthExceedLimit={setNameTooLongWarning}
       />
-      <div>
+      <div style={containerGapStyle}>
         <LocalDeviceSettings
           {...options}
           cameraPermissionGranted={cameraPermissionGranted}
@@ -53,7 +57,7 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
           onSelectSpeaker={handlers.onSelectSpeaker}
         />
       </div>
-      <div style={{ marginTop: '32px', marginBottom: '16px' }}>
+      <div style={containerGapStyle}>
         <TeamsMeetingLinkField
           setMeetingLink={(link) => {
             setTeamsMeetingLink(link);
