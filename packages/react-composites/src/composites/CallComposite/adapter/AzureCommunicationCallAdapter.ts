@@ -210,7 +210,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     }
   }
 
-  public async createStreamView(remoteUserId?: string, options?: VideoStreamOptions | undefined): Promise<void> {
+  public async createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void> {
     if (remoteUserId === undefined) {
       await this.handlers.onCreateLocalStreamView(options);
     } else {
