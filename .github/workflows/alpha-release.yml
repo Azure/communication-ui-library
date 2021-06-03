@@ -1,59 +1,14 @@
-name: Nightly CI/CD
+name: Manual Alpha Package Release
 
 on:
-  schedule:
-    # minute 0, hour 2 UTC which is 6pm in PST (5pm PDT), any day of month, any month, any day of the week
-    # if we want to support only Mon - Fri we need to change the check how we look for new changes. Currently we
-    # check for any new changes in the last 24 hours regardless of day)
-    - cron: '0 2 * * *'
-
-  # Allows you to run this workflow manually from the Actions tab
+  # Allows running workflow manually from the GitHub Actions tab
   workflow_dispatch:
 
 jobs:
-  checkForChanges:
-    name: Check for new changes
-    outputs:
-      hasChanged: ${{ steps.checkChange.outputs.hasChanged }}
+  build_and_test:
+    name: Build and Test
     runs-on: ubuntu-latest
-    steps:
-      # Check-out repo
-      - uses: actions/checkout@v2
 
-      # Check if any changes have been pushed to main since last release
-      - name: Check latest commit age
-        id: checkChange
-        # Here we query the github rest api for the commits, use jq (json parser) to grab the first commit and put contents into $HOME/commit.json
-        # Note: we ignore commits made by the bot account that commits the auto version bump changes.
-        # Then get the timestamp date for the first commit and check if it was over a day old.
-        run: |
-          curl -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' -sL https://api.github.com/repos/${{ github.repository }}/commits | jq -r '[.[] | select(.author.login != "github-action-bot")][0]' > $HOME/commit.json
-
-          commitdate=$(jq -r '.commit.author.date' $HOME/commit.json)
-          commiturl=$(jq -r '.url' $HOME/commit.json)
-          echo Last commit: $commiturl
-          echo Last commit date \(UTC\): $commitdate
-
-          timestamp=$(date --utc -d "$commitdate" +%s)
-          echo Commit timestamp: $timestamp
-
-          currentTimestamp=$(date --utc +%s)
-          echo Current timestamp: $currentTimestamp
-
-          days=$(( ($currentTimestamp - $timestamp ) / 86400 ))
-          echo Days since last commit: $days
-
-          if [ $days = "0" ]; then
-            echo "::set-output name=hasChanged::true"
-          else
-            echo "::set-output name=hasChanged::false"
-          fi
-
-  release:
-    name: Create alpha releases
-    needs: checkForChanges
-    if: needs.checkForChanges.outputs.hasChanged == 'true'
-    runs-on: ubuntu-latest
     steps:
       # Check-out repo
       - uses: actions/checkout@v2
