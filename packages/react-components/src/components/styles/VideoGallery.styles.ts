@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles, getTheme } from '@fluentui/react';
+import { mergeStyles, getTheme, IModalStyleProps, IModalStyles, IStyleFunctionOrObject } from '@fluentui/react';
 import { VideoTileStylesProps } from '../VideoTile';
 
 const theme = getTheme();
@@ -21,21 +21,31 @@ export const videoTileStyle = {
   }
 };
 
-export const floatingLocalVideoTileContainerStyle = mergeStyles({
-  position: 'absolute',
-  bottom: 0,
-  right: 0
-});
+export const floatingLocalVideoModalStyle: IStyleFunctionOrObject<IModalStyleProps, IModalStyles> = {
+  root: {
+    width: '100%',
+    height: '100%',
+    overflow: 'hidden'
+  },
+  main: {
+    minWidth: '11.25rem',
+    minHeight: '7rem',
+    boxShadow: theme.effects.elevation8,
+    borderRadius: theme.effects.roundedCorner4,
+    position: 'absolute',
+    bottom: '1rem',
+    right: '1rem'
+  }
+};
 
 export const floatingLocalVideoTileStyle: VideoTileStylesProps = {
   root: {
     position: 'absolute',
     zIndex: 1,
-    bottom: '1rem',
-    right: '1rem',
+    bottom: '0',
+    right: '0',
     width: '11.25rem',
     height: '7rem',
-    borderRadius: theme.effects.roundedCorner4,
-    boxShadow: theme.effects.elevation8
+    borderRadius: theme.effects.roundedCorner4
   }
 };

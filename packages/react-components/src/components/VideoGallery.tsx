@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Stack } from '@fluentui/react';
+import { Stack, Modal, IDragOptions, ContextualMenu } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import {
   BaseCustomStylesProps,
@@ -12,7 +12,7 @@ import {
 import { GridLayout } from './GridLayout';
 import { StreamMedia } from './StreamMedia';
 import {
-  floatingLocalVideoTileContainerStyle,
+  floatingLocalVideoModalStyle,
   floatingLocalVideoTileStyle,
   gridStyle,
   videoTileStyle
@@ -91,6 +91,13 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
     );
   }
 );
+
+const DRAG_OPTIONS: IDragOptions = {
+  moveMenuItemText: 'Move',
+  closeMenuItemText: 'Close',
+  menu: ContextualMenu,
+  keepInBounds: true
+};
 
 /**
  * VideoGallery represents a `GridLayout` of video tiles for a specific call.
@@ -189,9 +196,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   if (shouldFloatLocalVideo()) {
     return (
       <>
-        <Stack className={floatingLocalVideoTileContainerStyle}>
+        <Modal isOpen={true} isModeless={true} dragOptions={DRAG_OPTIONS} styles={floatingLocalVideoModalStyle}>
           {localParticipant && defaultOnRenderLocalVideoTile}
-        </Stack>
+        </Modal>
         <GridLayout styles={styles}>{defaultOnRenderRemoteParticipants}</GridLayout>
       </>
     );
