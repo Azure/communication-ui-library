@@ -3,19 +3,17 @@
 
 import { IStackItemStyles, IStackStyles, mergeStyles } from '@fluentui/react';
 
-const headerShadow = 'rgba(0, 0, 0, 0.133) 0px 1.6px 3.6px 0px, rgba(0, 0, 0, 0.11) 0px 0.3px 0.9px 0px';
-
-export const headerStyles: IStackItemStyles = {
+export const callControlsStyles: IStackItemStyles = {
   root: {
     width: '100%'
   }
 };
 
-export const headerContainer = mergeStyles({
+export const callControlsContainer = mergeStyles({
   width: '100%',
   height: '3.875rem',
   padding: '0.0625rem 0',
-  boxShadow: headerShadow,
+
   overflow: 'hidden',
   flexDirection: 'row',
   justifyContent: 'flex-end',
@@ -23,7 +21,7 @@ export const headerContainer = mergeStyles({
   marginBottom: 2
 });
 
-export const headerCenteredContainer = mergeStyles(headerContainer, {
+export const centeredCallControlsContainer = mergeStyles(callControlsContainer, {
   justifyContent: 'center'
 });
 
