@@ -87,7 +87,7 @@ export interface CallAdapter {
 
   leaveCall(forEveryone?: boolean): Promise<void>;
 
-  setCamera(sourceId: VideoDeviceInfo): Promise<void>;
+  setCamera(sourceId: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
 
   setMicrophone(sourceId: AudioDeviceInfo): Promise<void>;
 
@@ -105,7 +105,7 @@ export interface CallAdapter {
 
   stopCamera(): Promise<void>;
 
-  onToggleCamera(): Promise<void>;
+  onToggleCamera(options?: VideoStreamOptions): Promise<void>;
 
   mute(): Promise<void>;
 

@@ -2,7 +2,14 @@
 // Licensed under the MIT license.
 
 import React, { useCallback } from 'react';
-import { CameraButton, ControlBar, EndCallButton, MicrophoneButton, ScreenShareButton } from 'react-components';
+import {
+  CameraButton,
+  ControlBar,
+  EndCallButton,
+  MicrophoneButton,
+  ScreenShareButton,
+  VideoStreamOptions
+} from 'react-components';
 import {
   controlBarStyle,
   groupCallLeaveButtonCompressedStyle,
@@ -11,6 +18,11 @@ import {
 import { usePropsFor } from './hooks/usePropsFor';
 import { devicePermissionSelector } from 'calling-component-bindings';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
+
+const localVideoViewOption = {
+  scalingMode: 'Crop',
+  isMirrored: true
+} as VideoStreamOptions;
 
 export type GroupCallControlsProps = {
   onEndCallClick(): void;
@@ -36,7 +48,7 @@ export const CallControls = (props: GroupCallControlsProps): JSX.Element => {
       <CameraButton
         {...cameraButtonProps}
         onToggleCamera={() => {
-          return cameraButtonProps.onToggleCamera().catch((e) => console.log(e));
+          return cameraButtonProps.onToggleCamera(localVideoViewOption).catch((e) => console.log(e));
         }}
         disabled={!cameraPermissionGranted}
       />

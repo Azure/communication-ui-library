@@ -6,6 +6,7 @@ import { IDropdownOption, Dropdown, Stack } from '@fluentui/react';
 import { dropDownStyles, localSettingsContainer, mainStackTokens } from './styles/LocalDeviceSettings.styles';
 import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
 import { useTheme } from '@fluentui/react-theme-provider';
+import { VideoStreamOptions } from 'react-components';
 
 const cameraPermissionDeniedText = 'Your browser is blocking access to your camera.';
 const microphonePermissionDeniedText = 'Your browser is blocking access to your microphone.';
@@ -27,6 +28,11 @@ const getDropDownList = (list: Array<VideoDeviceInfo | AudioDeviceInfo>): IDropd
   return dropdownList;
 };
 
+const localVideoViewOption = {
+  scalingMode: 'Crop',
+  isMirrored: true
+} as VideoStreamOptions;
+
 export interface LocalDeviceSettingsType {
   cameras: VideoDeviceInfo[];
   microphones: AudioDeviceInfo[];
@@ -36,7 +42,7 @@ export interface LocalDeviceSettingsType {
   selectedSpeaker?: AudioDeviceInfo;
   microphonePermissionGranted: boolean;
   cameraPermissionGranted: boolean;
-  onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
+  onSelectCamera: (device: VideoDeviceInfo, options?: VideoStreamOptions) => Promise<void>;
   onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
   onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
 }
@@ -71,7 +77,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
             : 'denied'
         }
         onChange={(event, option, index) => {
-          props.onSelectCamera(props.cameras[index ?? 0]);
+          props.onSelectCamera(props.cameras[index ?? 0], localVideoViewOption);
         }}
       />
       <Dropdown

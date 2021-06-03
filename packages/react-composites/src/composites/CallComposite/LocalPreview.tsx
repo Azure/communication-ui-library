@@ -5,7 +5,14 @@ import { CallVideoOffIcon } from '@fluentui/react-icons-northstar';
 import { Stack, Text } from '@fluentui/react';
 import React, { useCallback } from 'react';
 import { localPreviewContainerStyle, cameraOffLabelStyle, localPreviewTileStyle } from './styles/LocalPreview.styles';
-import { StreamMedia, VideoTile, MicrophoneButton, ControlBar, CameraButton } from 'react-components';
+import {
+  StreamMedia,
+  VideoTile,
+  MicrophoneButton,
+  ControlBar,
+  CameraButton,
+  VideoStreamOptions
+} from 'react-components';
 import { usePropsFor } from './hooks/usePropsFor';
 import { localPreviewSelector } from './selectors/localPreviewSelector';
 import { useSelector } from './hooks/useSelector';
@@ -27,6 +34,11 @@ const onRenderPlaceholder = (): JSX.Element => {
   );
 };
 
+const localVideoViewOption = {
+  scalingMode: 'Crop',
+  isMirrored: true
+} as VideoStreamOptions;
+
 export const LocalPreview = (): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
   const localPreviewProps = useSelector(localPreviewSelector);
@@ -41,6 +53,10 @@ export const LocalPreview = (): JSX.Element => {
     isLocalMicrophoneEnabled ? adapter.mute() : adapter.unmute();
   }, [adapter, isLocalMicrophoneEnabled]);
 
+  const onToggleCamera = async (): Promise<void> => {
+    await cameraButtonProps.onToggleCamera(localVideoViewOption);
+  };
+
   return (
     <Stack className={localPreviewContainerStyle}>
       <VideoTile
@@ -50,7 +66,7 @@ export const LocalPreview = (): JSX.Element => {
         onRenderPlaceholder={onRenderPlaceholder}
       >
         <ControlBar layout="floatingBottom">
-          <CameraButton {...cameraButtonProps} disabled={!cameraPermissionGranted} />
+          <CameraButton {...cameraButtonProps} disabled={!cameraPermissionGranted} onToggleCamera={onToggleCamera} />
           <MicrophoneButton
             checked={isLocalMicrophoneEnabled}
             onToggleMicrophone={onToggleMic}

@@ -5,7 +5,14 @@ import React from 'react';
 import { CallVideoOffIcon } from '@fluentui/react-icons-northstar';
 import { Stack, Text } from '@fluentui/react';
 import { localPreviewContainerStyle, cameraOffLabelStyle, localPreviewTileStyle } from './styles/LocalPreview.styles';
-import { CameraButton, ControlBar, MicrophoneButton, StreamMedia, VideoTile } from 'react-components';
+import {
+  CameraButton,
+  ControlBar,
+  MicrophoneButton,
+  StreamMedia,
+  VideoStreamOptions,
+  VideoTile
+} from 'react-components';
 import { useCallingSelector as useSelector, useCallingPropsFor as usePropsFor } from 'calling-component-bindings';
 import { localPreviewSelector } from './selectors/localPreviewSelector';
 import { devicePermissionSelector } from 'calling-component-bindings';
@@ -23,6 +30,11 @@ const onRenderPlaceholder = (): JSX.Element => {
   );
 };
 
+const localVideoViewOption = {
+  scalingMode: 'Crop',
+  isMirrored: true
+} as VideoStreamOptions;
+
 export interface LocalPreviewProps {
   isMicrophoneOn: boolean;
   setIsMicrophoneOn: (isEnabled: boolean) => void;
@@ -32,6 +44,9 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
   const localPreviewProps = useSelector(localPreviewSelector);
   const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useSelector(devicePermissionSelector);
+  const onToggleCamera = async (): Promise<void> => {
+    await cameraButtonProps.onToggleCamera(localVideoViewOption);
+  };
 
   return (
     <Stack className={localPreviewContainerStyle}>
@@ -43,7 +58,7 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
         isMirrored={true}
       >
         <ControlBar layout="floatingBottom">
-          <CameraButton {...cameraButtonProps} disabled={!cameraPermissionGranted} />
+          <CameraButton {...cameraButtonProps} onToggleCamera={onToggleCamera} disabled={!cameraPermissionGranted} />
           <MicrophoneButton
             disabled={!microphonePermissionGranted}
             checked={props.isMicrophoneOn}

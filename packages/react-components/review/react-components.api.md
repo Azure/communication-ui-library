@@ -43,7 +43,7 @@ export const CameraButton: (props: CameraButtonProps) => JSX.Element;
 
 // @public
 export interface CameraButtonProps extends IButtonProps {
-    onToggleCamera?: () => Promise<void>;
+    onToggleCamera?: (options?: VideoStreamOptions) => Promise<void>;
     showLabel?: boolean;
 }
 

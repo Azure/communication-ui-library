@@ -101,7 +101,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     removeParticipant(userId: string): Promise<void>;
     // (undocumented)
-    setCamera(device: VideoDeviceInfo): Promise<void>;
+    setCamera(device: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
     // (undocumented)
     setMicrophone(device: AudioDeviceInfo): Promise<void>;
     // (undocumented)
@@ -191,7 +191,7 @@ export interface CallAdapter {
     // (undocumented)
     removeParticipant(userId: string): Promise<void>;
     // (undocumented)
-    setCamera(sourceId: VideoDeviceInfo): Promise<void>;
+    setCamera(sourceId: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
     // (undocumented)
     setMicrophone(sourceId: AudioDeviceInfo): Promise<void>;
     // (undocumented)

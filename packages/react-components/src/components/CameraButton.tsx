@@ -4,6 +4,7 @@
 import { concatStyleSets, DefaultButton, IButtonProps, Label, mergeStyles } from '@fluentui/react';
 import { CallVideoIcon, CallVideoOffIcon } from '@fluentui/react-northstar';
 import React, { useCallback, useState } from 'react';
+import { VideoStreamOptions } from '../types';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 
 /**
@@ -20,7 +21,7 @@ export interface CameraButtonProps extends IButtonProps {
    * Utility property for using this component with `communication react eventHandlers`.
    * Maps directly to the `onClick` property.
    */
-  onToggleCamera?: () => Promise<void>;
+  onToggleCamera?: (options?: VideoStreamOptions) => Promise<void>;
 }
 
 /**
