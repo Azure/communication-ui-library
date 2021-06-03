@@ -1,6 +1,6 @@
 import { FluentThemeProvider, StreamMedia, VideoTile, VideoTileStylesProps } from '@azure/communication-react';
 import React from 'react';
-import { renderVideoStream } from '../../utils';
+import { useVideoStreams } from '../../utils';
 
 export const VideoTileExample: () => JSX.Element = () => {
   const customStyles: VideoTileStylesProps = {
@@ -10,13 +10,15 @@ export const VideoTileExample: () => JSX.Element = () => {
     displayNameContainer: { top: '1rem', bottom: 'auto', right: '1rem', left: 'auto', backgroundColor: 'blue' }
   };
 
+  const videoStreamElement = useVideoStreams(1)[0];
+
   return (
     <FluentThemeProvider>
       <VideoTile
         isVideoReady={true}
         renderElement={
           // NOTE: Replace with your own video provider. (An html element with video stream)
-          <StreamMedia videoStreamElement={renderVideoStream()} />
+          <StreamMedia videoStreamElement={videoStreamElement} />
         }
         displayName={'Jack Reacher'}
         isMirrored={true}

@@ -46,6 +46,8 @@ export interface VideoGalleryProps {
   onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
   /** Callback to render a remote video tile */
   onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
+
+  onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
   /** Callback to render a particpant avatar */
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
 }
@@ -55,6 +57,7 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
   (
     userId: string,
     onCreateRemoteStreamView: any,
+    onDisposeRemoteStreamView?: (userId: string) => Promise<void>,
     isAvailable?: boolean,
     renderElement?: HTMLElement,
     displayName?: string,
@@ -63,6 +66,9 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
   ): JSX.Element => {
     if (isAvailable && !renderElement) {
       onCreateRemoteStreamView && onCreateRemoteStreamView(userId, remoteVideoViewOption);
+    }
+    if (!isAvailable) {
+      onDisposeRemoteStreamView && onDisposeRemoteStreamView(userId);
     }
     return (
       <Stack className={gridStyle} key={userId} grow>
@@ -97,6 +103,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onRenderRemoteVideoTile,
     onCreateLocalStreamView,
     onCreateRemoteStreamView,
+    onDisposeRemoteStreamView,
     styles,
     onRenderAvatar
   } = props;
@@ -144,6 +151,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         return memoizedRemoteParticipantFn(
           participant.userId,
           onCreateRemoteStreamView,
+          onDisposeRemoteStreamView,
           remoteVideoStream?.isAvailable,
           remoteVideoStream?.renderElement,
           participant.displayName,
