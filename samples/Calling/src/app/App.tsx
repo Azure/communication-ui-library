@@ -115,7 +115,7 @@ const App = (): JSX.Element => {
       };
       askPermissionAndQueryDevices();
     }
-  }, [page, token]);
+  }, [page, token, userId]);
 
   /**
    * Routing flow of the sample app: (happy path)
