@@ -10,11 +10,14 @@ import { CallConfiguration } from './CallConfiguration';
 import { useHandlers } from './hooks/useHandlers';
 import { LocalDeviceSettings } from './LocalDeviceSettings';
 import { StartCallButton } from './StartCallButton';
+import { titleContainerStyle } from './styles/ConfigurationScreen.styles';
 
 export interface ConfigurationScreenProps {
   screenWidth: number;
   startCallHandler(): void;
 }
+
+const title = 'Start a call';
 
 export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Element => {
   const { startCallHandler } = props;
@@ -27,6 +30,7 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
 
   return (
     <CallConfiguration {...props}>
+      <div className={titleContainerStyle}>{title}</div>
       <div>
         <LocalDeviceSettings
           {...options}
