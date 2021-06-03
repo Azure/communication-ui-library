@@ -65,9 +65,11 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     // (undocumented)
-    createStreamView(userId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
+    createStreamView(remoteUserId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
     // (undocumented)
     dispose(): void;
+    // (undocumented)
+    disposeStreamView(remoteUserId?: string): Promise<void>;
     // (undocumented)
     getState(): CallAdapterState;
     // (undocumented)
@@ -160,9 +162,11 @@ export interface CallAdapter {
     // (undocumented)
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     // (undocumented)
-    createStreamView(userId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
+    createStreamView(remoteUserId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
     // (undocumented)
     dispose(): void;
+    // (undocumented)
+    disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
     // (undocumented)
     getState(): CallAdapterState;
     // (undocumented)
@@ -622,10 +626,10 @@ export interface ControlBarProps {
 }
 
 // @public (undocumented)
-export const createAzureCommunicationCallAdapter: (token: string, locator: TeamsMeetingLinkLocator | GroupCallLocator, displayName: string, refreshTokenCallback?: (() => Promise<string>) | undefined, callClientOptions?: CallClientOptions | undefined) => Promise<CallAdapter>;
+export const createAzureCommunicationCallAdapter: (userId: CommunicationUserIdentifier, token: string, locator: TeamsMeetingLinkLocator | GroupCallLocator, displayName: string, refreshTokenCallback?: (() => Promise<string>) | undefined, callClientOptions?: CallClientOptions | undefined) => Promise<CallAdapter>;
 
 // @public (undocumented)
-export const createAzureCommunicationChatAdapter: (token: string, endpointUrl: string, threadId: string, displayName: string, refreshTokenCallback?: (() => Promise<string>) | undefined) => Promise<ChatAdapter>;
+export const createAzureCommunicationChatAdapter: (userId: CommunicationUserIdentifier, token: string, endpointUrl: string, threadId: string, displayName: string, refreshTokenCallback?: (() => Promise<string>) | undefined) => Promise<ChatAdapter>;
 
 // @public (undocumented)
 export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => {
@@ -643,6 +647,8 @@ export const createDefaultCallingHandlers: (callClient: StatefulCallClient, call
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions | undefined) => Promise<void>;
     onParticipantRemove: (userId: string) => void;
     onStartLocalVideo: () => Promise<void>;
+    onDisposeRemoteStreamView: (userId: string) => Promise<void>;
+    onDisposeLocalStreamView: () => Promise<void>;
 };
 
 // @public
@@ -688,6 +694,8 @@ export type DefaultCallingHandlers = {
     onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void>;
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void>;
     onParticipantRemove: (userId: string) => void;
+    onDisposeRemoteStreamView: (userId: string) => Promise<void>;
+    onDisposeLocalStreamView: () => Promise<void>;
 };
 
 // @public (undocumented)
@@ -1335,6 +1343,8 @@ export interface VideoGalleryProps {
     onCreateLocalStreamView?: (options?: VideoStreamOptions | undefined) => Promise<void>;
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
     onDisposeLocalStreamView?: () => void;
+    // (undocumented)
+    onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
     onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
