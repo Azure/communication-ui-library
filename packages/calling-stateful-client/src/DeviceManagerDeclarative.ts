@@ -141,7 +141,8 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
   }
 }
 
-/** Temporary helper function to dedupe duplicate audio and video devices obtained from SDK */
+// TODO: Remove this when SDK no longer returns duplicate audio and video devices
+/** Helper function to dedupe duplicate audio and video devices obtained from SDK */
 const dedupeById = <T extends { id: string }>(devices: T[]): T[] => {
   const ids = new Set();
   const uniqueDevices: T[] = [];
