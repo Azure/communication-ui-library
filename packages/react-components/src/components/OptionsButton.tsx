@@ -17,17 +17,41 @@ export interface OptionsButtonProps extends IButtonProps {
   showLabel?: boolean;
 
   /**
-   * Utility props for stateful props.
+   * Available microphones for selection
    */
   microphones?: { id: string; name: string }[];
+  /**
+   * Available speakers for selection
+   */
   speakers?: { id: string; name: string }[];
+  /**
+   * Available cameras for selection
+   */
   cameras?: { id: string; name: string }[];
+  /**
+   * Microphone that is shown as currently selected
+   */
   selectedMicrophone?: { id: string; name: string };
+  /**
+   * Speaker that is shown as currently selected
+   */
   selectedSpeaker?: { id: string; name: string };
+  /**
+   * Camera that is shown as currently selected
+   */
   selectedCamera?: { id: string; name: string };
-  onSelectCamera?: (device: any) => void;
-  onSelectMicrophone?: (device: any) => void;
-  onSelectSpeaker?: (device: any) => void;
+  /**
+   * Callback when a camera is selected
+   */
+  onSelectCamera?: (device: any) => Promise<void>;
+  /**
+   * Callback when a microphone is selected
+   */
+  onSelectMicrophone?: (device: any) => Promise<void>;
+  /**
+   * Speaker when a speaker is selected
+   */
+  onSelectSpeaker?: (device: any) => Promise<void>;
 }
 
 /**
@@ -65,7 +89,7 @@ const generateDefaultMenuProps = (props: OptionsButtonProps): { items: Array<ICo
           canCheck: true,
           isChecked: val.id === selectedCamera?.id,
           onClick: () => {
-            if (val.id !== selectedSpeaker?.id) {
+            if (val.id !== selectedCamera?.id) {
               onSelectCamera(val);
             }
           }
@@ -88,7 +112,7 @@ const generateDefaultMenuProps = (props: OptionsButtonProps): { items: Array<ICo
           canCheck: true,
           isChecked: val.id === selectedMicrophone?.id,
           onClick: () => {
-            if (val.id !== selectedSpeaker?.id) {
+            if (val.id !== selectedMicrophone?.id) {
               onSelectMicrophone(val);
             }
           }
