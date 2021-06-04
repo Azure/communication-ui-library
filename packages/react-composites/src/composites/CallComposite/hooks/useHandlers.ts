@@ -30,8 +30,8 @@ const createCompositeHandlers = memoizeOne(
     onParticipantRemove: async (userId) => {
       await adapter.removeParticipant(userId);
     },
-    onSelectCamera: async (deviceInfo) => {
-      await adapter.setCamera(deviceInfo);
+    onSelectCamera: async (deviceInfo, options) => {
+      await adapter.setCamera(deviceInfo, options);
     },
     onSelectMicrophone: async (deviceInfo) => {
       await adapter.setMicrophone(deviceInfo);
@@ -49,8 +49,8 @@ const createCompositeHandlers = memoizeOne(
     onStopScreenShare: async () => {
       await adapter.stopScreenShare();
     },
-    onToggleCamera: async () => {
-      await adapter.onToggleCamera();
+    onToggleCamera: async (options) => {
+      await adapter.onToggleCamera(options);
     },
     onToggleMicrophone: async () => {
       return adapter.getState().call?.isMuted ? await adapter.unmute() : await adapter.mute();

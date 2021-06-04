@@ -60,7 +60,7 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {
     return (
       <Label key={'callEndLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
-        {'Leave call'}
+        Leave
       </Label>
     );
   };

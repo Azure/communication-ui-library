@@ -22,14 +22,14 @@ import { CommonProperties } from 'acs-ui-common';
 
 export type DefaultCallingHandlers = {
   onStartLocalVideo: () => Promise<void>;
-  onToggleCamera: () => Promise<void>;
+  onToggleCamera: (options?: VideoStreamOptions) => Promise<void>;
   onStartCall: (
     participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
     options?: StartCallOptions
   ) => Call | undefined;
   onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
   onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
-  onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
+  onSelectCamera: (device: VideoDeviceInfo, options?: VideoStreamOptions) => Promise<void>;
   onToggleMicrophone: () => Promise<void>;
   onStartScreenShare: () => Promise<void>;
   onStopScreenShare: () => Promise<void>;
@@ -80,7 +80,7 @@ export const createDefaultCallingHandlers = memoizeOne(
       }
     };
 
-    const onToggleCamera = async (): Promise<void> => {
+    const onToggleCamera = async (options?: VideoStreamOptions): Promise<void> => {
       if (call) {
         const stream = call.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
         if (stream) {
@@ -100,10 +100,15 @@ export const createDefaultCallingHandlers = memoizeOne(
               await callClient.disposeView(undefined, undefined, stream);
             }
           } else {
-            await callClient.createView(undefined, undefined, {
-              source: selectedCamera,
-              mediaStreamType: 'Video'
-            });
+            await callClient.createView(
+              undefined,
+              undefined,
+              {
+                source: selectedCamera,
+                mediaStreamType: 'Video'
+              },
+              options
+            );
           }
         }
       }
@@ -131,7 +136,7 @@ export const createDefaultCallingHandlers = memoizeOne(
       return deviceManager.selectSpeaker(device);
     };
 
-    const onSelectCamera = async (device: VideoDeviceInfo): Promise<void> => {
+    const onSelectCamera = async (device: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void> => {
       if (!deviceManager) {
         return;
       }
@@ -150,10 +155,15 @@ export const createDefaultCallingHandlers = memoizeOne(
         onDisposeLocalStreamView();
 
         deviceManager.selectCamera(device);
-        await callClient.createView(undefined, undefined, {
-          source: device,
-          mediaStreamType: 'Video'
-        });
+        await callClient.createView(
+          undefined,
+          undefined,
+          {
+            source: device,
+            mediaStreamType: 'Video'
+          },
+          options
+        );
       }
     };
 
