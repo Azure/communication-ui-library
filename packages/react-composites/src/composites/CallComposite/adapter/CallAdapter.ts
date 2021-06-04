@@ -91,7 +91,7 @@ export interface CallAdapter {
 
   leaveCall(forEveryone?: boolean): Promise<void>;
 
-  setCamera(sourceId: VideoDeviceInfo): Promise<void>;
+  setCamera(sourceId: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
 
   setMicrophone(sourceId: AudioDeviceInfo): Promise<void>;
 
@@ -109,7 +109,7 @@ export interface CallAdapter {
 
   stopCamera(): Promise<void>;
 
-  onToggleCamera(): Promise<void>;
+  onToggleCamera(options?: VideoStreamOptions): Promise<void>;
 
   mute(): Promise<void>;
 
@@ -125,9 +125,9 @@ export interface CallAdapter {
 
   setPage(page: CallCompositePage): void;
 
-  createStreamView(remoteUserId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
+  createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
 
-  disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
+  disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
 
   on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
   on(event: 'participantsLeft', listener: ParticipantLeftListener): void;

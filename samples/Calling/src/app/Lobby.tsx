@@ -13,7 +13,7 @@ export interface LobbyProps {
   localVideoViewOption?: VideoStreamOptions;
   isCameraChecked?: boolean;
   isMicrophoneChecked?: boolean;
-  onCreateLocalStreamView?: (options?: VideoStreamOptions | undefined) => Promise<void>;
+  onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void>;
   onStartLocalVideo: () => Promise<void>;
   onEndCallClick: () => void;
 }
