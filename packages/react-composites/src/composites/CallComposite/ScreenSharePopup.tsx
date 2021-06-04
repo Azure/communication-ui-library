@@ -60,22 +60,27 @@ export const ScreenSharePopup = (props: ScreenSharePopupProps): JSX.Element => {
     }
   }, [onStopScreenShare]);
 
+  // Beware: The FocusTrapCallout is a workaround to allow users to tab-navigate out of the Modal. There is an open
+  // issue here: https://github.com/microsoft/fluentui/issues/16179
+
   return (
-    <Modal isOpen={true} isModeless={true} dragOptions={DRAG_OPTIONS} styles={screenSharePopupModalStylesThemed}>
-      <Stack style={screenSharePopupModalStackStyles} horizontalAlign={'center'}>
-        <Stack verticalFill={true} verticalAlign={'center'} horizontalAlign={'center'}>
-          <CallControlPresentNewIcon disabled={true} size={'larger'} />
-          <Label style={screenSharePopupModalLabelStyles}>{STOP_SCREENSHARE_LABEL_TEXT}</Label>
+    <>
+      <Modal isOpen={true} isModeless={true} dragOptions={DRAG_OPTIONS} styles={screenSharePopupModalStylesThemed}>
+        <Stack style={screenSharePopupModalStackStyles} horizontalAlign={'center'}>
+          <Stack verticalFill={true} verticalAlign={'center'} horizontalAlign={'center'}>
+            <CallControlPresentNewIcon disabled={true} size={'larger'} />
+            <Label style={screenSharePopupModalLabelStyles}>{STOP_SCREENSHARE_LABEL_TEXT}</Label>
+          </Stack>
+          <DefaultButton
+            styles={screenSharePopupModalButtonStylesThemed}
+            onRenderIcon={onRenderStopScreenShareIcon}
+            onClick={onStopScreenShareClicked}
+            text={STOP_SCREENSHARE_BUTTON_TEXT}
+            disabled={stoppingInProgress}
+          />
         </Stack>
-        <DefaultButton
-          styles={screenSharePopupModalButtonStylesThemed}
-          onRenderIcon={onRenderStopScreenShareIcon}
-          onClick={onStopScreenShareClicked}
-          text={STOP_SCREENSHARE_BUTTON_TEXT}
-          disabled={stoppingInProgress}
-        />
-      </Stack>
-      <FocusTrapCallout></FocusTrapCallout>
-    </Modal>
+        <FocusTrapCallout focusTrapProps={{ isClickableOutsideFocusTrap: true }}></FocusTrapCallout>
+      </Modal>
+    </>
   );
 };
