@@ -17,6 +17,7 @@ export const createUserAndThread = async (resourceConnectionString: string, disp
   await chatClient.getChatThreadClient(threadId).updateTopic('Chat with a friendly bot');
 
   return {
+    userId: user.user,
     token: user.token,
     endpointUrl,
     displayName,

@@ -426,7 +426,7 @@ export interface CallClientState {
   /**
    * Stores a userId. This is not used by the {@Link StatefulCallClient} and is provided here as a convenience for the
    * developer for easier access to userId. Must be passed in at initialization of the {@Link StatefulCallClient}.
-   * Completely controled by the developer.
+   * Completely controlled by the developer.
    */
-  userId: string;
+  userId: CommunicationUserKind;
 }

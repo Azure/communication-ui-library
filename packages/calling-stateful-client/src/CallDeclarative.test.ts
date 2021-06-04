@@ -57,7 +57,7 @@ describe('declarative call', () => {
     mockCall.remoteParticipants = [];
     mockCall.api = createMockApiFeatures(new Map());
 
-    const context = new CallContext('');
+    const context = new CallContext({ kind: 'communicationUser', communicationUserId: '' });
     context.setCall(convertSdkCallToDeclarativeCall(mockCall));
 
     const declarativeCall = callDeclaratify(mockCall, context);
@@ -89,7 +89,7 @@ describe('declarative call', () => {
     mockCall.remoteParticipants = [];
     mockCall.api = createMockApiFeatures(new Map());
 
-    const context = new CallContext('');
+    const context = new CallContext({ kind: 'communicationUser', communicationUserId: '' });
     context.setCall(convertSdkCallToDeclarativeCall(mockCall));
 
     const declarativeCall = callDeclaratify(mockCall, context) as DeclarativeCall;

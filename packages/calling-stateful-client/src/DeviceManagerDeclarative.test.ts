@@ -117,7 +117,7 @@ function createDeclarativeDeviceManager(): {
   callContext: CallContext;
 } {
   const mockDeviceManager = new MockDeviceManager();
-  const context = new CallContext('');
+  const context = new CallContext({ kind: 'communicationUser', communicationUserId: '' });
   return {
     declarativeDeviceManager: deviceManagerDeclaratify(mockDeviceManager, context),
     mockDeviceManager: mockDeviceManager,

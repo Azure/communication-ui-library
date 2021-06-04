@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { CallState as SDKCallStatus } from '@azure/communication-calling';
+import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import { CallState, DeviceManagerState } from 'calling-stateful-client';
 import { CallAdapterState, CallCompositePage } from '../adapter/CallAdapter';
 
@@ -13,7 +14,7 @@ export const getIsPreviewCameraOn = (state: CallAdapterState): boolean => isPrev
 export const getPage = (state: CallAdapterState): CallCompositePage => state.page;
 export const getLocalMicrophoneEnabled = (state: CallAdapterState): boolean => state.isLocalPreviewMicrophoneEnabled;
 export const getDisplayName = (state: CallAdapterState): string | undefined => state.displayName;
-export const getIdentifier = (state: CallAdapterState): string => state.userId;
+export const getIdentifier = (state: CallAdapterState): string => toFlatCommunicationIdentifier(state.userId);
 
 const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
   // TODO: we should take in a LocalVideoStream that developer wants to use as their 'Preview' view. We should also

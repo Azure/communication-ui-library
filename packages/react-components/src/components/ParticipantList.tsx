@@ -1,19 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
+import React, { useMemo } from 'react';
 
-import {
-  IContextualMenuItem,
-  IOverflowSetItemProps,
-  IconButton,
-  OverflowSet,
-  Stack,
-  PersonaPresence
-} from '@fluentui/react';
+import { IContextualMenuItem, Stack, PersonaPresence } from '@fluentui/react';
 import { ParticipantItem } from './ParticipantItem';
 import { MicOffIcon, CallControlPresentNewIcon } from '@fluentui/react-northstar';
-import { participantListStyle, overFlowButtonStyles, overflowSetStyle } from './styles/ParticipantList.styles';
+import { participantListStyle } from './styles/ParticipantList.styles';
 import { CommunicationParticipant, CallParticipant } from '../types';
 
 /**
@@ -24,6 +17,12 @@ export type ParticipantListProps = {
   participants: CommunicationParticipant[];
   /** User ID of user */
   myUserId?: string;
+  /**
+   * If set to `true`, excludes the local participant from the participant list with use of `myUserId` props (required in this case).
+   *
+   * @defaultValue `false`
+   */
+  excludeMe?: boolean;
   /** Optional callback to render each participant. If no callback is provided, each participant will be rendered with `ParticipantItem`  */
   onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
   /** Optional callback to render the avatar for each participant. This property will have no effect if `onRenderParticipant` is assigned.  */
@@ -32,12 +31,13 @@ export type ParticipantListProps = {
   onParticipantRemove?: (userId: string) => void;
 };
 
-const getDefaultRenderer = (
+const onRenderParticipantsDefault = (
+  participants: CommunicationParticipant[],
   myUserId?: string,
   onParticipantRemove?: (userId: string) => void,
   onRenderAvatar?: (remoteParticipant: CommunicationParticipant) => JSX.Element | null
-): ((participant: CommunicationParticipant) => JSX.Element | null) => {
-  return (participant: CommunicationParticipant) => {
+): (JSX.Element | null)[] => {
+  return participants.map((participant: CommunicationParticipant, index: number) => {
     // Try to consider CommunicationParticipant as CallParticipant
     const callingParticipant = participant as CallParticipant;
 
@@ -78,6 +78,7 @@ const getDefaultRenderer = (
     if (participant.displayName) {
       return (
         <ParticipantItem
+          key={participant.userId}
           displayName={participant.displayName}
           me={myUserId ? participant.userId === myUserId : false}
           menuItems={menuItems}
@@ -88,50 +89,6 @@ const getDefaultRenderer = (
       );
     }
     return null;
-  };
-};
-
-const onRenderOverflowButton = (overflowItems: unknown): JSX.Element => (
-  <IconButton
-    role="menuitem"
-    title="More options"
-    styles={overFlowButtonStyles}
-    menuIconProps={{ iconName: 'More' }}
-    menuProps={{ items: overflowItems as IContextualMenuItem[] }}
-  />
-);
-
-const renderParticipants = (
-  participants: CommunicationParticipant[],
-  myUserId?: string,
-  onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null,
-  onRenderAvatar?: (participant: CommunicationParticipant) => JSX.Element | null,
-  onParticipantRemove?: (userId: string) => void
-): (JSX.Element | null)[] => {
-  const renderParticipant = onRenderParticipant ?? getDefaultRenderer(myUserId, onParticipantRemove, onRenderAvatar);
-  const onRenderItem = (item: IOverflowSetItemProps): JSX.Element | null => {
-    const participant = {
-      userId: item.userId,
-      displayName: item.displayName,
-      state: item.state,
-      isScreenSharing: item.isScreenSharing,
-      isMuted: item.isMuted,
-      isSpeaking: item.isSpeaking
-    };
-    return renderParticipant(participant);
-  };
-  return participants.map((item, i) => {
-    return (
-      <OverflowSet
-        key={i}
-        items={[{ key: `${i}`, displayName: item.displayName, me: item.userId === myUserId, ...item }]}
-        role="menubar"
-        vertical={false}
-        onRenderOverflowButton={onRenderOverflowButton}
-        onRenderItem={onRenderItem}
-        styles={overflowSetStyle}
-      />
-    );
   });
 };
 
@@ -140,19 +97,34 @@ const renderParticipants = (
  * assigned then each participant is rendered with `ParticipantItem`.
  */
 export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
-  const allParticipants: CommunicationParticipant[] = [];
-  if (props.participants !== undefined) {
-    props.participants.forEach((participant) => allParticipants.push(participant));
-  }
+  const { excludeMe = false, myUserId, participants, onParticipantRemove, onRenderAvatar, onRenderParticipant } = props;
+
+  const allParticipants: CommunicationParticipant[] = useMemo(() => {
+    if (participants === undefined) {
+      return [];
+    }
+
+    if (!excludeMe || !myUserId) {
+      return [...participants];
+    }
+
+    const userIndex = participants.map((p) => p.userId).indexOf(myUserId);
+
+    if (userIndex === -1) {
+      return [...participants];
+    }
+
+    const remoteParticipants = [...participants];
+    remoteParticipants.splice(userIndex, 1);
+
+    return remoteParticipants;
+  }, [participants, excludeMe, myUserId]);
+
   return (
     <Stack className={participantListStyle}>
-      {renderParticipants(
-        allParticipants,
-        props.myUserId,
-        props.onRenderParticipant,
-        props.onRenderAvatar,
-        props.onParticipantRemove
-      )}
+      {onRenderParticipant
+        ? participants.map((participant: CommunicationParticipant) => onRenderParticipant(participant))
+        : onRenderParticipantsDefault(allParticipants, myUserId, onParticipantRemove, onRenderAvatar)}
     </Stack>
   );
 };
