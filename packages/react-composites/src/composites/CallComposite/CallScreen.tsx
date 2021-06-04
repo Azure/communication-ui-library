@@ -6,11 +6,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import {
   activeContainerClassName,
   containerStyles,
-  headerStyles,
+  callControlsStyles,
   loadingStyle,
   subContainerStyles,
-  headerCenteredContainer,
-  headerContainer
+  callControlsContainer
 } from './styles/CallScreen.styles';
 
 import { MediaGallery } from './MediaGallery';
@@ -119,11 +118,6 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     <>
       {isInCall(callStatus ?? 'None') ? (
         <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow>
-          <Stack.Item styles={headerStyles}>
-            <Stack className={props.screenWidth > MINI_HEADER_WINDOW_WIDTH ? headerContainer : headerCenteredContainer}>
-              <CallControls onEndCallClick={endCallHandler} compressedMode={screenWidth <= MINI_HEADER_WINDOW_WIDTH} />
-            </Stack>
-          </Stack.Item>
           <Stack.Item style={{ width: '100%' }}>
             <ComplianceBanner {...complianceBannerProps} />
           </Stack.Item>
@@ -147,6 +141,11 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
                 <Label>Your screen is being shared</Label>
               </div>
             )}
+          </Stack.Item>
+          <Stack.Item styles={callControlsStyles}>
+            <Stack className={callControlsContainer}>
+              <CallControls onEndCallClick={endCallHandler} compressedMode={screenWidth <= MINI_HEADER_WINDOW_WIDTH} />
+            </Stack>
           </Stack.Item>
         </Stack>
       ) : (
