@@ -2,11 +2,14 @@
 // Licensed under the MIT license.
 
 import {
+  CallParticipant,
   CameraButton,
   ControlBar as ControlBarComponent,
   EndCallButton,
   MicrophoneButton,
   OptionsButton,
+  ParticipantsButton,
+  ParticipantListProps,
   ScreenShareButton
 } from '@azure/communication-react';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
@@ -39,6 +42,42 @@ const CONTROL_BAR_LAYOUTS = [
   'floatingLeft',
   'floatingRight'
 ] as const;
+
+const mockParticipants: CallParticipant[] = [
+  {
+    userId: 'user1',
+    displayName: 'You',
+    state: 'Connected',
+    isMuted: true,
+    isScreenSharing: false
+  },
+  {
+    userId: 'user2',
+    displayName: 'Hal Jordan',
+    state: 'Connected',
+    isMuted: true,
+    isScreenSharing: true
+  },
+  {
+    userId: 'user3',
+    displayName: 'Barry Allen',
+    state: 'Idle',
+    isMuted: false,
+    isScreenSharing: false
+  },
+  {
+    userId: 'user4',
+    displayName: 'Bruce Wayne',
+    state: 'Connecting',
+    isMuted: false,
+    isScreenSharing: false
+  }
+];
+
+const mockParticipantsProps: ParticipantListProps = {
+  participants: mockParticipants,
+  myUserId: 'user1'
+};
 
 const exampleOptionsMenuProps = {
   items: [
@@ -178,6 +217,12 @@ const ControlBarStory: (
         <CameraButton showLabel={showLabels} checked={toggleButtons} />
         <MicrophoneButton showLabel={showLabels} checked={toggleButtons} />
         <ScreenShareButton showLabel={showLabels} checked={toggleButtons} />
+        <ParticipantsButton
+          showLabel={showLabels}
+          participantListProps={mockParticipantsProps}
+          callInvitationURL={'URL to copy'}
+          onMuteAll={() => {}}
+        />
         <OptionsButton showLabel={showLabels} menuProps={exampleOptionsMenuProps} />
         <EndCallButton showLabel={showLabels} />
       </ControlBarComponent>
