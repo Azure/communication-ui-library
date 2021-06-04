@@ -29,14 +29,7 @@ export const CallControls = (props: GroupCallControlsProps): JSX.Element => {
 
   return (
     <ControlBar layout="dockedBottom">
-      <CameraButton
-        {...cameraButtonProps}
-        onToggleCamera={() => {
-          return cameraButtonProps.onToggleCamera().catch((e) => console.log(e));
-        }}
-        showLabel={!compressedMode}
-        disabled={!cameraPermissionGranted}
-      />
+      <CameraButton {...cameraButtonProps} showLabel={!compressedMode} disabled={!cameraPermissionGranted} />
       <MicrophoneButton
         {...microphoneButtonProps}
         showLabel={!compressedMode}
