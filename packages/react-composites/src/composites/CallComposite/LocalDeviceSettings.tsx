@@ -49,7 +49,7 @@ const getOptionIcon = (type: iconType): JSX.Element | undefined => {
   }
 };
 
-const onRenderTitle = (props: IDropdownOption[] | undefined, iconType: iconType): JSX.Element => {
+const onRenderTitle = (iconType: iconType, props?: IDropdownOption[]): JSX.Element => {
   const icon = props && getOptionIcon(iconType);
   return props ? (
     <div className={dropDownTitleIconStyles}>
@@ -111,7 +111,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
         onChange={(event, option, index) => {
           props.onSelectCamera(props.cameras[index ?? 0], localVideoViewOption);
         }}
-        onRenderTitle={(props: IDropdownOption[] | undefined) => onRenderTitle(props, 'Camera')}
+        onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Camera', props)}
       />
       <Dropdown
         label={soundLabel}
@@ -136,7 +136,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
         ) => {
           props.onSelectMicrophone(props.microphones[index ?? 0]);
         }}
-        onRenderTitle={(props: IDropdownOption[] | undefined) => onRenderTitle(props, 'Microphone')}
+        onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Microphone', props)}
       />
       <Dropdown
         placeholder={defaultPlaceHolder}
@@ -153,7 +153,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
         ) => {
           props.onSelectSpeaker(props.speakers[index ?? 0]);
         }}
-        onRenderTitle={(props: IDropdownOption[] | undefined) => onRenderTitle(props, 'Speaker')}
+        onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Speaker', props)}
       />
     </Stack>
   );

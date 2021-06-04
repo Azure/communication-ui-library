@@ -61,13 +61,10 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
     // Throttle click on camera, need to await onToggleCamera then allow another click
     if (onToggleCamera) {
       setWaitForCamera(true);
-      console.log(localVideoViewOption);
       await onToggleCamera(localVideoViewOption ?? defaultLocalVideoViewOption);
       setWaitForCamera(false);
     }
   }, [localVideoViewOption, onToggleCamera]);
-
-  console.log(onToggleCamera);
 
   return (
     <DefaultButton
