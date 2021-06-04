@@ -60,7 +60,7 @@ export interface OptionsButtonProps extends IButtonProps {
  * @param props OptionsButtonProps
  * @returns MenuProps
  */
-const generateDefaultMenuProps = (props: OptionsButtonProps): { items: Array<IContextualMenuItem> } | undefined => {
+const generateDefaultMenuProps = (props: OptionsButtonProps): { items: IContextualMenuItem[] } | undefined => {
   const {
     microphones,
     speakers,
@@ -73,7 +73,7 @@ const generateDefaultMenuProps = (props: OptionsButtonProps): { items: Array<ICo
     onSelectSpeaker
   } = props;
 
-  let defaultMenuProps: { items: Array<IContextualMenuItem> } | undefined = undefined;
+  let defaultMenuProps: { items: IContextualMenuItem[] } | undefined = undefined;
 
   if (cameras && selectedCamera && onSelectCamera) {
     defaultMenuProps = defaultMenuProps ?? { items: [] };
