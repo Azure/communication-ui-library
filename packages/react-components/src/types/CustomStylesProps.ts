@@ -14,4 +14,4 @@ export interface BaseCustomStylesProps {
 /**
  * custom styles props for button components, extension on fluentUI IButtonStyles
  */
-export interface ButtonCustomStylesProps extends IButtonStyles {}
+export type ButtonCustomStylesProps = IButtonStyles;

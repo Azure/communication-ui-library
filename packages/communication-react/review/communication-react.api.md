@@ -159,8 +159,7 @@ export interface BaseCustomStylesProps {
 }
 
 // @public
-export interface ButtonCustomStylesProps extends IButtonStyles {
-}
+export type ButtonCustomStylesProps = IButtonStyles;
 
 // @public (undocumented)
 export interface CallAdapter {
