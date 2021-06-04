@@ -7,6 +7,20 @@ import { MoreIcon } from '@fluentui/react-northstar';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 
 /**
+ * Device to represent a camera, microphone, or speaker for component OptionsButton component
+ */
+export interface OptionsDevice {
+  /**
+   * Device unique identifier
+   */
+  id: string;
+  /**
+   * Device name
+   */
+  name: string;
+}
+
+/**
  * Props for OptionsButton component
  */
 export interface OptionsButtonProps extends IButtonProps {
@@ -15,31 +29,30 @@ export interface OptionsButtonProps extends IButtonProps {
    * @defaultValue `false`
    */
   showLabel?: boolean;
-
   /**
    * Available microphones for selection
    */
-  microphones?: { id: string; name: string }[];
+  microphones?: OptionsDevice[];
   /**
    * Available speakers for selection
    */
-  speakers?: { id: string; name: string }[];
+  speakers?: OptionsDevice[];
   /**
    * Available cameras for selection
    */
-  cameras?: { id: string; name: string }[];
+  cameras?: OptionsDevice[];
   /**
    * Microphone that is shown as currently selected
    */
-  selectedMicrophone?: { id: string; name: string };
+  selectedMicrophone?: OptionsDevice;
   /**
    * Speaker that is shown as currently selected
    */
-  selectedSpeaker?: { id: string; name: string };
+  selectedSpeaker?: OptionsDevice;
   /**
    * Camera that is shown as currently selected
    */
-  selectedCamera?: { id: string; name: string };
+  selectedCamera?: OptionsDevice;
   /**
    * Callback when a camera is selected
    */

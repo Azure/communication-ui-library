@@ -966,34 +966,16 @@ export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
 
 // @public
 export interface OptionsButtonProps extends IButtonProps {
-    cameras?: {
-        id: string;
-        name: string;
-    }[];
-    microphones?: {
-        id: string;
-        name: string;
-    }[];
+    cameras?: OptionsDevice[];
+    microphones?: OptionsDevice[];
     onSelectCamera?: (device: any) => Promise<void>;
     onSelectMicrophone?: (device: any) => Promise<void>;
     onSelectSpeaker?: (device: any) => Promise<void>;
-    selectedCamera?: {
-        id: string;
-        name: string;
-    };
-    selectedMicrophone?: {
-        id: string;
-        name: string;
-    };
-    selectedSpeaker?: {
-        id: string;
-        name: string;
-    };
+    selectedCamera?: OptionsDevice;
+    selectedMicrophone?: OptionsDevice;
+    selectedSpeaker?: OptionsDevice;
     showLabel?: boolean;
-    speakers?: {
-        id: string;
-        name: string;
-    }[];
+    speakers?: OptionsDevice[];
 }
 
 // @public (undocumented)
@@ -1012,6 +994,12 @@ export const optionsButtonSelector: reselect.OutputParametricSelector<CallClient
     selectedSpeaker: AudioDeviceInfo | undefined;
     selectedCamera: VideoDeviceInfo | undefined;
 }>;
+
+// @public
+export interface OptionsDevice {
+    id: string;
+    name: string;
+}
 
 // @public
 export const ParticipantItem: (props: ParticipantItemProps) => JSX.Element;
