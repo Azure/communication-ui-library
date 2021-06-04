@@ -41,7 +41,7 @@ export interface CallClientState {
     deviceManager: DeviceManagerState;
     incomingCalls: Map<string, IncomingCallState>;
     incomingCallsEnded: IncomingCallState[];
-    userId: string;
+    userId: CommunicationUserKind;
 }
 
 // @public
@@ -65,7 +65,7 @@ export interface CallState {
 }
 
 // @public
-export const createStatefulCallClient: (args?: StatefulCallClientArgs | undefined, options?: StatefulCallClientOptions | undefined) => StatefulCallClient;
+export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: StatefulCallClientOptions | undefined) => StatefulCallClient;
 
 // @public
 export type DeviceManagerState = {
@@ -131,7 +131,7 @@ export interface StatefulCallClient extends CallClient {
 
 // @public
 export type StatefulCallClientArgs = {
-    userId?: string;
+    userId: CommunicationUserKind;
 };
 
 // @public

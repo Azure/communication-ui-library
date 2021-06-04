@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Stack } from '@fluentui/react';
+import { Stack, Modal, IDragOptions, ContextualMenu } from '@fluentui/react';
 import React, { useEffect, useMemo } from 'react';
 import {
   BaseCustomStylesProps,
@@ -11,8 +11,13 @@ import {
 } from '../types';
 import { GridLayout } from './GridLayout';
 import { StreamMedia } from './StreamMedia';
-import { gridStyle, videoTileStyle } from './styles/VideoGallery.styles';
-import { VideoTile, PlaceholderProps } from './VideoTile';
+import {
+  floatingLocalVideoModalStyle,
+  floatingLocalVideoTileStyle,
+  gridStyle,
+  videoTileStyle
+} from './styles/VideoGallery.styles';
+import { VideoTile, PlaceholderProps, VideoTileStylesProps } from './VideoTile';
 
 /**
  * Props for component `VideoGallery`
@@ -27,6 +32,8 @@ export interface VideoGalleryProps {
    * ```
    */
   styles?: BaseCustomStylesProps;
+  /** Layout of the video tiles. */
+  layout?: 'default' | 'floatingLocalVideo';
   /** Local video particpant */
   localParticipant: VideoGalleryLocalParticipant;
   /** List of remote video particpants */
@@ -51,6 +58,13 @@ export interface VideoGalleryProps {
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
 }
 
+const DRAG_OPTIONS: IDragOptions = {
+  moveMenuItemText: 'Move',
+  closeMenuItemText: 'Close',
+  menu: ContextualMenu,
+  keepInBounds: true
+};
+
 /**
  * VideoGallery represents a `GridLayout` of video tiles for a specific call.
  * It displays a `VideoTile` for the local user as well as for each remote participants who joined the call.
@@ -71,11 +85,21 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onCreateRemoteStreamView,
     onDisposeRemoteStreamView,
     styles,
+    layout,
     onRenderAvatar
   } = props;
 
+  let localVideoTileStyles: VideoTileStylesProps = videoTileStyle;
+
+  const shouldFloatLocalVideo = (): boolean =>
+    !!(layout === 'floatingLocalVideo' && remoteParticipants && remoteParticipants.length > 0);
+
+  if (shouldFloatLocalVideo()) {
+    localVideoTileStyles = floatingLocalVideoTileStyle;
+  }
+
   /**
-   * Utility function for meoized rendering of LocalParticipant.
+   * Utility function for memoized rendering of LocalParticipant.
    */
   const defaultOnRenderLocalVideoTile = useMemo((): JSX.Element => {
     const localVideoStream = localParticipant?.videoStream;
@@ -92,7 +116,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         isVideoReady={isLocalVideoReady}
         renderElement={<StreamMedia videoStreamElement={localVideoStream?.renderElement ?? null} />}
         displayName={localParticipant?.displayName}
-        styles={videoTileStyle}
+        styles={localVideoTileStyles}
         onRenderPlaceholder={onRenderAvatar}
       />
     );
@@ -137,6 +161,17 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     remoteVideoViewOption,
     onRenderAvatar
   ]);
+
+  if (shouldFloatLocalVideo()) {
+    return (
+      <>
+        <Modal isOpen={true} isModeless={true} dragOptions={DRAG_OPTIONS} styles={floatingLocalVideoModalStyle}>
+          {localParticipant && defaultOnRenderLocalVideoTile}
+        </Modal>
+        <GridLayout styles={styles}>{defaultOnRenderRemoteParticipants}</GridLayout>
+      </>
+    );
+  }
 
   return (
     <GridLayout styles={styles}>
