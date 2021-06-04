@@ -60,6 +60,9 @@ export const AllButtonsControlBarExample: () => JSX.Element = () => {
       }
     ]
   };
+  const onMuteAll = () => {
+    // your implementation to mute all participant
+  };
 
   return (
     <FluentThemeProvider>
@@ -82,7 +85,7 @@ export const AllButtonsControlBarExample: () => JSX.Element = () => {
         <ParticipantsButton
           participantListProps={mockParticipantsProps}
           callInvitationURL={'URL to copy'}
-          onMuteAll={() => {}}
+          onMuteAll={onMuteAll}
         />
         <OptionsButton menuProps={exampleOptionsMenuProps} />
         <EndCallButton

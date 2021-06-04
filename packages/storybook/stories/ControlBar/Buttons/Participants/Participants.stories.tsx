@@ -156,12 +156,15 @@ const ParticipantsStory = (): JSX.Element => {
     participants: mockParticipants,
     myUserId: myUserId
   };
+  const onMuteAll = () => {
+    // your implementation to mute all participant
+  };
   return (
     <ParticipantsButton
       showLabel={showLabels}
       participantListProps={mockParticipantsProps}
       callInvitationURL={callInvitationURL}
-      onMuteAll={isMuteAllAvailable ? () => {} : undefined}
+      onMuteAll={isMuteAllAvailable ? onMuteAll : undefined}
     />
   );
 };

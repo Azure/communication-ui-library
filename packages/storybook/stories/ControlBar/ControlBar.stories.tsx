@@ -202,6 +202,10 @@ const ControlBarStory: (
     }
   }
 
+  const onMuteAll = () => {
+    // your implementation to mute all participant
+  };
+
   return (
     <div
       style={{
@@ -221,7 +225,7 @@ const ControlBarStory: (
           showLabel={showLabels}
           participantListProps={mockParticipantsProps}
           callInvitationURL={'URL to copy'}
-          onMuteAll={() => {}}
+          onMuteAll={onMuteAll}
         />
         <OptionsButton showLabel={showLabels} menuProps={exampleOptionsMenuProps} />
         <EndCallButton showLabel={showLabels} />
