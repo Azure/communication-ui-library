@@ -7,8 +7,9 @@ import { AbortSignalLike } from '@azure/core-http';
 import React, { createContext, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { CommunicationUiError, CommunicationUiErrorCode } from '../../../types/CommunicationUiError';
 import { DevicePermissionState } from '../../../types/DevicePermission';
-import { createAzureCommunicationUserCredential, getIdFromToken, propagateError } from '../../../utils';
+import { createAzureCommunicationUserCredential, propagateError } from '../../../utils';
 import { ErrorHandlingProps } from './ErrorProvider';
+import { getIdFromToken } from '../utils/SDKUtils';
 import { WithErrorHandling } from '../utils/WithErrorHandling';
 import { useValidContext } from '../utils/ValidContext';
 
@@ -53,7 +54,10 @@ const CallingProviderBase = (props: CallingProviderProps & ErrorHandlingProps): 
   // if there is no valid token then there is no valid userId
   const userIdFromToken = token ? getIdFromToken(token) : '';
   const [callClient, setCallClient] = useState<StatefulCallClient>(
-    createStatefulCallClient({ userId: userIdFromToken }, { callClientOptions })
+    createStatefulCallClient(
+      { userId: { kind: 'communicationUser', communicationUserId: userIdFromToken } },
+      { callClientOptions }
+    )
   );
   const [callAgent, setCallAgent] = useState<CallAgent | undefined>(undefined);
   const [deviceManager, setDeviceManager] = useState<StatefulDeviceManager | undefined>(undefined);

@@ -20,17 +20,21 @@ import type {
 
 export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
 
+/**
+ * Purely UI related adapter state.
+ */
 export type CallAdapterUiState = {
-  // Self-contained state for composite
   error?: Error;
   isLocalPreviewMicrophoneEnabled: boolean;
   page: CallCompositePage;
   endedCall?: CallState | undefined;
 };
 
+/**
+ * State from the backend ACS services.
+ */
 export type CallAdapterClientState = {
-  // Properties from backend services
-  userId: string;
+  userId: CommunicationUserKind;
   displayName?: string;
   call?: CallState;
   devices: DeviceManagerState;
