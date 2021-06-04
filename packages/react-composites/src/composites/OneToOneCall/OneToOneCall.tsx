@@ -7,7 +7,7 @@ import { AbortSignalLike } from '@azure/core-http';
 import { MakeCallScreen } from './MakeCallScreen';
 import CallScreen from './CallScreen';
 import { CallEndScreen } from './CallEndScreen';
-import { getIdFromToken } from '../../utils';
+import { getIdFromToken } from './utils/SDKUtils';
 import { CallListener } from './CallListener';
 import { incomingCallHost } from './styles/App.styles';
 import { ErrorProvider } from './providers/ErrorProvider';

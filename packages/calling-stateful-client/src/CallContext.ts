@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { CommunicationUserKind } from '@azure/communication-common';
 import {
   AudioDeviceInfo,
   DeviceAccess,
@@ -40,7 +41,7 @@ export class CallContext {
   private _emitter: EventEmitter;
   private _atomicId: number;
 
-  constructor(userId: string, maxListeners?: number) {
+  constructor(userId: CommunicationUserKind, maxListeners = 50) {
     this._state = {
       calls: new Map<string, CallState>(),
       callsEnded: [],
@@ -57,9 +58,8 @@ export class CallContext {
       userId: userId
     };
     this._emitter = new EventEmitter();
-    if (maxListeners) {
-      this._emitter.setMaxListeners(maxListeners);
-    }
+    this._emitter.setMaxListeners(maxListeners);
+
     this._atomicId = 0;
   }
 

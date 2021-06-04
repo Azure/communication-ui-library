@@ -5,7 +5,9 @@
   "main": "lib/main.js",
   "dependencies": {
     "@actions/core": "^1.2.6",
-    "@types/q": "^1.5.2"
+    "@types/q": "^1.5.2",
+    "typed-rest-client": ">=1.8.4",
+    "underscore": ">=1.12.1"
   },
   "devDependencies": {
     "@types/jest": "^25.2.2",
