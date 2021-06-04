@@ -67,8 +67,8 @@ export interface ParticipantsButtonProps extends IButtonProps {
 
 /**
  * `ParticipantsButton` allows you to easily create a component rendering a participants button. It can be used in your ControlBar component for example.
- * This button contains dropdown menu items defined through its property `menuProps`. By default, it can display user presence, number of remote participants with a list
- * as sub-menu and an options to mute all participants, as well as a copy-to-clipboard button to copy the call invitation URL.
+ * This button contains dropdown menu items defined through its property `menuProps`. By default, it can display user presence, number of remote participants with the full list
+ * as sub-menu and an option to mute all participants, as well as a copy-to-clipboard button to copy the call invitation URL.
  * This `menuProps` can be fully redefined and its property is of type [IContextualMenuProps](https://developer.microsoft.com/en-us/fluentui#/controls/web/contextualmenu#IContextualMenuProps).
  *
  * @param props - of type ParticipantsButtonProps

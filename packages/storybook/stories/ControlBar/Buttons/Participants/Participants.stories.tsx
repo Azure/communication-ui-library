@@ -8,7 +8,6 @@ import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
-// import { OptionsButtonCustomExample } from './snippets/Custom.snippet';
 import { ParticipantsButtonDefaultExample } from './snippets/Default.snippet';
 import { ParticipantsButtonWithCallLinkExample } from './snippets/WithCallLink.snippet';
 import { ParticipantsButtonWithCustomRenderExample } from './snippets/WithCustomRender.snippet';
@@ -17,7 +16,6 @@ import { ParticipantsButtonWithLabelExample } from './snippets/WithLabel.snippet
 import { ParticipantsButtonWithMuteAllOptionExample } from './snippets/WithMuteAllOption.snippet';
 import { ParticipantsButtonWithUserExcludeFromListExample } from './snippets/WithUserExcludeFromList.snippet';
 
-// const OptionsButtonCustomExampleText = require('!!raw-loader!./snippets/Custom.snippet.tsx').default;
 const ParticipantsButtonDefaultExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
 const ParticipantsButtonWithCallLinkExampleText = require('!!raw-loader!./snippets/WithCallLink.snippet.tsx').default;
 const ParticipantsButtonWithCustomRenderExampleText = require('!!raw-loader!./snippets/WithCustomRender.snippet.tsx')
