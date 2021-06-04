@@ -2,9 +2,23 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { DefaultButton, IButtonProps, Label, concatStyleSets, mergeStyles } from '@fluentui/react';
+import { DefaultButton, IButtonProps, IContextualMenuItem, Label, concatStyleSets, mergeStyles } from '@fluentui/react';
 import { MoreIcon } from '@fluentui/react-northstar';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
+
+/**
+ * Device to represent a camera, microphone, or speaker for component OptionsButton component
+ */
+export interface OptionsDevice {
+  /**
+   * Device unique identifier
+   */
+  id: string;
+  /**
+   * Device name
+   */
+  name: string;
+}
 
 /**
  * Props for OptionsButton component
@@ -15,18 +29,41 @@ export interface OptionsButtonProps extends IButtonProps {
    * @defaultValue `false`
    */
   showLabel?: boolean;
-
   /**
-   * Utility props for stateful props.
+   * Available microphones for selection
    */
-  microphones?: [{ id: string; name: string }];
-  speakers?: [{ id: string; name: string }];
-  cameras?: [{ id: string; name: string }];
-  selectedMicrophone?: { id: string; name: string };
-  selectedSpeaker?: { id: string; name: string };
-  selectedCamera?: { id: string; name: string };
+  microphones?: OptionsDevice[];
+  /**
+   * Available speakers for selection
+   */
+  speakers?: OptionsDevice[];
+  /**
+   * Available cameras for selection
+   */
+  cameras?: OptionsDevice[];
+  /**
+   * Microphone that is shown as currently selected
+   */
+  selectedMicrophone?: OptionsDevice;
+  /**
+   * Speaker that is shown as currently selected
+   */
+  selectedSpeaker?: OptionsDevice;
+  /**
+   * Camera that is shown as currently selected
+   */
+  selectedCamera?: OptionsDevice;
+  /**
+   * Callback when a camera is selected
+   */
   onSelectCamera?: (device: any) => Promise<void>;
+  /**
+   * Callback when a microphone is selected
+   */
   onSelectMicrophone?: (device: any) => Promise<void>;
+  /**
+   * Speaker when a speaker is selected
+   */
   onSelectSpeaker?: (device: any) => Promise<void>;
 }
 
@@ -36,7 +73,7 @@ export interface OptionsButtonProps extends IButtonProps {
  * @param props OptionsButtonProps
  * @returns MenuProps
  */
-const generateDefaultMenuProps = (props: OptionsButtonProps): { items: Array<any> } => {
+const generateDefaultMenuProps = (props: OptionsButtonProps): { items: IContextualMenuItem[] } | undefined => {
   const {
     microphones,
     speakers,
@@ -49,9 +86,10 @@ const generateDefaultMenuProps = (props: OptionsButtonProps): { items: Array<any
     onSelectSpeaker
   } = props;
 
-  const defaultMenuProps: { items: Array<any> } = { items: [] };
+  let defaultMenuProps: { items: IContextualMenuItem[] } | undefined = undefined;
 
   if (cameras && selectedCamera && onSelectCamera) {
+    defaultMenuProps = defaultMenuProps ?? { items: [] };
     defaultMenuProps.items.push({
       key: '1',
       name: 'Choose Camera',
@@ -63,13 +101,18 @@ const generateDefaultMenuProps = (props: OptionsButtonProps): { items: Array<any
           title: val.name,
           canCheck: true,
           isChecked: val.id === selectedCamera?.id,
-          onClick: () => !(val.id === selectedCamera?.id) && onSelectCamera(val)
+          onClick: () => {
+            if (val.id !== selectedCamera?.id) {
+              onSelectCamera(val);
+            }
+          }
         }))
       }
     });
   }
 
   if (microphones && selectedMicrophone && onSelectMicrophone) {
+    defaultMenuProps = defaultMenuProps ?? { items: [] };
     defaultMenuProps.items.push({
       key: '2',
       name: 'Choose Microphone',
@@ -81,13 +124,18 @@ const generateDefaultMenuProps = (props: OptionsButtonProps): { items: Array<any
           title: val.name,
           canCheck: true,
           isChecked: val.id === selectedMicrophone?.id,
-          onClick: () => !(val.id === selectedMicrophone?.id) && onSelectMicrophone(val)
+          onClick: () => {
+            if (val.id !== selectedMicrophone?.id) {
+              onSelectMicrophone(val);
+            }
+          }
         }))
       }
     });
   }
 
   if (speakers && selectedSpeaker && onSelectSpeaker) {
+    defaultMenuProps = defaultMenuProps ?? { items: [] };
     defaultMenuProps.items.push({
       key: '3',
       name: 'Choose Speaker',
@@ -99,7 +147,11 @@ const generateDefaultMenuProps = (props: OptionsButtonProps): { items: Array<any
           title: val.name,
           canCheck: true,
           isChecked: val.id === selectedSpeaker?.id,
-          onClick: () => !(val.id === selectedSpeaker?.id) && onSelectSpeaker(val)
+          onClick: () => {
+            if (val.id !== selectedSpeaker?.id) {
+              onSelectSpeaker(val);
+            }
+          }
         }))
       }
     });

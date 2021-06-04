@@ -2,15 +2,14 @@
 // Licensed under the MIT license.
 
 import { OptionsButton } from '@azure/communication-react';
-import { IContextualMenuProps } from '@fluentui/react';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
-import { boolean } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
 import { OptionsButtonCustomExample } from './snippets/Custom.snippet';
 import { OptionsButtonDefaultExample } from './snippets/Default.snippet';
+import { OptionsButtonWithKnobs } from './snippets/OptionsButtonWithKnobs.snippet';
 import { OptionsButtonWithLabelExample } from './snippets/WithLabel.snippet';
 
 const OptionsButtonCustomExampleText = require('!!raw-loader!./snippets/Custom.snippet.tsx').default;
@@ -70,37 +69,8 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-const exampleOptionsMenuProps: IContextualMenuProps = {
-  items: [
-    {
-      key: '1',
-      name: 'Choose Camera',
-      iconProps: { iconName: 'LocationCircle' },
-      subMenuProps: {
-        items: [
-          { key: 'camera1', text: 'Full HD Webcam', title: 'Full HD Webcam', canCheck: true, isChecked: true },
-          { key: 'camera2', text: 'Macbook Pro Webcam', title: 'Macbook Pro Webcam' }
-        ]
-      }
-    },
-    {
-      key: '2',
-      name: 'Choose Microphone',
-      iconProps: { iconName: 'LocationCircle' },
-      subMenuProps: {
-        items: [
-          { key: 'mic1', text: 'Realtek HD Audio', title: 'Realtek HD Audio' },
-          { key: 'mic2', text: 'Macbook Pro Mic', title: 'Macbook Pro Mic', canCheck: true, isChecked: true }
-        ]
-      }
-    }
-  ]
-};
-
 const OptionsStory = (): JSX.Element => {
-  const showLabels = boolean('Show Labels', false);
-
-  return <OptionsButton showLabel={showLabels} menuProps={exampleOptionsMenuProps} />;
+  return <OptionsButtonWithKnobs />;
 };
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.

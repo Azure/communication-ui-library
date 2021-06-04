@@ -6,7 +6,6 @@ import {
   ControlBar as ControlBarComponent,
   EndCallButton,
   MicrophoneButton,
-  OptionsButton,
   ScreenShareButton
 } from '@azure/communication-react';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
@@ -15,6 +14,7 @@ import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { OptionsButtonWithKnobs } from './Buttons/Options/snippets/OptionsButtonWithKnobs.snippet';
 import { AllButtonsControlBarExample } from './snippets/AllButtonsControlBar.snippet';
 import { ControlBarLayoutExample } from './snippets/ControlBarLayout.snippet';
 import { CustomButtonsExample } from './snippets/CustomButtons.snippet';
@@ -39,33 +39,6 @@ const CONTROL_BAR_LAYOUTS = [
   'floatingLeft',
   'floatingRight'
 ] as const;
-
-const exampleOptionsMenuProps = {
-  items: [
-    {
-      key: '1',
-      name: 'Choose Camera',
-      iconProps: { iconName: 'LocationCircle' },
-      subMenuProps: {
-        items: [
-          { key: 'camera1', text: 'Full HD Webcam', title: 'Full HD Webcam', canCheck: true, isChecked: true },
-          { key: 'camera2', text: 'Macbook Pro Webcam', title: 'Macbook Pro Webcam' }
-        ]
-      }
-    },
-    {
-      key: '2',
-      name: 'Choose Microphone',
-      iconProps: { iconName: 'LocationCircle' },
-      subMenuProps: {
-        items: [
-          { key: 'mic1', text: 'Realtek HD Audio', title: 'Realtek HD Audio' },
-          { key: 'mic2', text: 'Macbook Pro Mic', title: 'Macbook Pro Mic', canCheck: true, isChecked: true }
-        ]
-      }
-    }
-  ]
-};
 
 const importStatement = `
 import { FluentThemeProvider, ControlBar } from '@azure/communication-react';
@@ -178,7 +151,7 @@ const ControlBarStory: (
         <CameraButton showLabel={showLabels} checked={toggleButtons} />
         <MicrophoneButton showLabel={showLabels} checked={toggleButtons} />
         <ScreenShareButton showLabel={showLabels} checked={toggleButtons} />
-        <OptionsButton showLabel={showLabels} menuProps={exampleOptionsMenuProps} />
+        <OptionsButtonWithKnobs showLabel={showLabels} />
         <EndCallButton showLabel={showLabels} />
       </ControlBarComponent>
     </div>
