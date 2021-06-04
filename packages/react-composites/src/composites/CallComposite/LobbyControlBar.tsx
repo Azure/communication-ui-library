@@ -2,20 +2,8 @@
 // Licensed under the MIT license.
 import { useTheme } from '@fluentui/react-theme-provider';
 import React, { useCallback } from 'react';
-import {
-  CameraButton,
-  ControlBar,
-  EndCallButton,
-  MicrophoneButton,
-  OptionsButton,
-  VideoStreamOptions
-} from 'react-components';
+import { CameraButton, ControlBar, EndCallButton, MicrophoneButton, OptionsButton } from 'react-components';
 import { usePropsFor } from './hooks/usePropsFor';
-
-const localVideoViewOption = {
-  scalingMode: 'Crop',
-  isMirrored: true
-} as VideoStreamOptions;
 
 export interface LobbyCallControlBarProps {
   isMicrophoneChecked?: boolean;
@@ -39,13 +27,7 @@ export const LobbyCallControlBar = (props: LobbyCallControlBarProps): JSX.Elemen
       layout="dockedBottom"
       styles={{ root: { background: theme.palette.white, minHeight: '4.25rem', alignItems: 'center' } }}
     >
-      <CameraButton
-        showLabel={true}
-        {...cameraButtonProps}
-        onToggleCamera={async () => {
-          cameraButtonProps.onToggleCamera(localVideoViewOption);
-        }}
-      />
+      <CameraButton showLabel={true} {...cameraButtonProps} />
       <MicrophoneButton showLabel={true} {...microphoneButtonProps} checked={props.isMicrophoneChecked} />
       <OptionsButton showLabel={true} {...optionsButtonProps} />
       <EndCallButton showLabel={true} style={{ borderRadius: '0.25rem', marginLeft: '0.25rem' }} onHangUp={onHangUp} />

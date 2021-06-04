@@ -7,6 +7,11 @@ import React, { useCallback, useState } from 'react';
 import { VideoStreamOptions } from '../types';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 
+const defaultLocalVideoViewOption = {
+  scalingMode: 'Crop',
+  isMirrored: true
+} as VideoStreamOptions;
+
 /**
  * Props for CameraButton component
  */
@@ -22,6 +27,11 @@ export interface CameraButtonProps extends IButtonProps {
    * Maps directly to the `onClick` property.
    */
   onToggleCamera?: (options?: VideoStreamOptions) => Promise<void>;
+
+  /**
+   * Options for rendering local video view.
+   */
+  localVideoViewOption?: VideoStreamOptions;
 }
 
 /**
@@ -31,7 +41,7 @@ export interface CameraButtonProps extends IButtonProps {
  * @param props - of type CameraButtonProps
  */
 export const CameraButton = (props: CameraButtonProps): JSX.Element => {
-  const { showLabel = false, styles, onRenderIcon, onRenderText } = props;
+  const { showLabel = false, styles, onRenderIcon, onRenderText, localVideoViewOption, onToggleCamera } = props;
   const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
   const [waitForCamera, setWaitForCamera] = useState(false);
 
@@ -47,16 +57,17 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
     );
   };
 
-  const onToggleCamera = props.onToggleCamera;
-
   const onToggleClick = useCallback(async () => {
     // Throttle click on camera, need to await onToggleCamera then allow another click
     if (onToggleCamera) {
       setWaitForCamera(true);
-      await onToggleCamera();
+      console.log(localVideoViewOption);
+      await onToggleCamera(localVideoViewOption ?? defaultLocalVideoViewOption);
       setWaitForCamera(false);
     }
-  }, [onToggleCamera]);
+  }, [localVideoViewOption, onToggleCamera]);
+
+  console.log(onToggleCamera);
 
   return (
     <DefaultButton
