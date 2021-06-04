@@ -36,7 +36,7 @@ const getDropDownList = (list: Array<VideoDeviceInfo | AudioDeviceInfo>): IDropd
 };
 
 const getOptionIcon = (type: iconType): JSX.Element | undefined => {
-  const iconStyles = mergeStyles({ marginRight: '8px' });
+  const iconStyles = mergeStyles({ marginRight: '8px', verticalAlign: 'text-top' });
 
   if (type === 'Camera') {
     return <Video20Filled primaryFill="currentColor" className={iconStyles} key={'videoIconKey'} />;

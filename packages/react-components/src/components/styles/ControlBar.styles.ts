@@ -117,7 +117,10 @@ export const controlButtonStyles: IButtonStyles = {
     border: 'none',
     borderRadius: 0,
     minHeight: '3.5rem',
-    minWidth: '3.5rem'
+    minWidth: '3.5rem',
+    svg: {
+      verticalAlign: 'text-top'
+    }
   },
   flexContainer: {
     flexFlow: 'column',
@@ -127,8 +130,7 @@ export const controlButtonStyles: IButtonStyles = {
 
 export const controlButtonLabelStyles: IStyle = {
   fontSize: '0.625rem',
-  lineHeight: '1rem',
-  marginTop: '0.125rem'
+  lineHeight: '1rem'
 };
 
 export const endCallControlButtonStyles: IButtonStyles = concatStyleSets(controlButtonStyles, {

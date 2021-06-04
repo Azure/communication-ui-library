@@ -59,5 +59,6 @@ export const dropDownTitleIconStyles = mergeStyles({
 });
 
 export const optionIconStyles = mergeStyles({
-  marginRight: '8px'
+  marginRight: '8px',
+  verticalAlign: 'text-top'
 });
