@@ -958,20 +958,20 @@ export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
 // @public
 export interface OptionsButtonProps extends IButtonProps {
     // (undocumented)
-    cameras?: [{
+    cameras?: {
         id: string;
         name: string;
-    }];
-    microphones?: [{
+    }[];
+    microphones?: {
         id: string;
         name: string;
-    }];
+    }[];
     // (undocumented)
-    onSelectCamera?: (device: any) => Promise<void>;
+    onSelectCamera?: (device: any) => void;
     // (undocumented)
-    onSelectMicrophone?: (device: any) => Promise<void>;
+    onSelectMicrophone?: (device: any) => void;
     // (undocumented)
-    onSelectSpeaker?: (device: any) => Promise<void>;
+    onSelectSpeaker?: (device: any) => void;
     // (undocumented)
     selectedCamera?: {
         id: string;
@@ -989,10 +989,10 @@ export interface OptionsButtonProps extends IButtonProps {
     };
     showLabel?: boolean;
     // (undocumented)
-    speakers?: [{
+    speakers?: {
         id: string;
         name: string;
-    }];
+    }[];
 }
 
 // @public (undocumented)

@@ -230,11 +230,11 @@ export interface OptionsButtonProps extends IButtonProps {
         name: string;
     }[];
     // (undocumented)
-    onSelectCamera?: (device: any) => Promise<void>;
+    onSelectCamera?: (device: any) => void;
     // (undocumented)
-    onSelectMicrophone?: (device: any) => Promise<void>;
+    onSelectMicrophone?: (device: any) => void;
     // (undocumented)
-    onSelectSpeaker?: (device: any) => Promise<void>;
+    onSelectSpeaker?: (device: any) => void;
     // (undocumented)
     selectedCamera?: {
         id: string;
