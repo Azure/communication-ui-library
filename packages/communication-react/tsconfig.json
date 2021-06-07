@@ -1,0 +1,24 @@
+{
+  "extends": "../../common/config/tsc/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "outDir": "./dist/dist-esm",
+    "paths": {
+      "chat-component-bindings": ["../../chat-component-bindings/src"],
+      "calling-component-bindings": ["../../calling-component-bindings/src"],
+      "acs-ui-common": ["../../acs-ui-common/src"],
+      "calling-stateful-client": ["../../calling-stateful-client/src"],
+      "chat-stateful-client": ["../../chat-stateful-client/src"],
+      "react-components": ["../../react-components/src"],
+      "react-composites": ["../../react-composites/src/index.release"]
+    },
+    "plugins": [
+      {
+        "transform": "@zerollup/ts-transform-paths"
+      }
+    ]
+  },
+  "typeRoots": ["./node_modules/@types"],
+  "include": ["src/**/*"],
+  "exclude": ["dist", "node_modules"]
+}

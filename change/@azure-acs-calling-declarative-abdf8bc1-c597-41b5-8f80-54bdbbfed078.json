@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add DeclarativeCallAgent and DeclarativeDeviceManager to calling declarative",
-  "packageName": "@azure/acs-calling-declarative",
-  "email": "allenhwang@microsoft.com",
-  "dependentChangeType": "patch"
-}

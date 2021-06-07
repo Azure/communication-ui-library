@@ -1,4 +1,7 @@
-import { ChatMessage, CustomMessage, MessageStatus, SystemMessage } from '@azure/communication-ui';
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+import { ChatMessage, CustomMessage, MessageStatus, SystemMessage } from '@azure/communication-react';
 
 // This is some mock messages for example purposes.
 // For actual projects, you can get chat messages from declarative/selectors for ACS.
@@ -7,38 +10,41 @@ export const GetHistoryChatMessages = (): ChatMessage[] => {
     {
       type: 'chat',
       payload: {
-        senderId: '1',
-        senderDisplayName: 'User1',
+        senderId: 'user1',
+        senderDisplayName: 'Kat Larsson',
         messageId: Math.random().toString(),
         content: 'Hi everyone, I created this awesome group chat for us!',
         createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
         mine: true,
         attached: false,
-        status: 'seen' as MessageStatus
+        status: 'seen' as MessageStatus,
+        type: 'text'
       }
     },
     {
       type: 'chat',
       payload: {
-        senderId: '2',
-        senderDisplayName: 'User2',
+        senderId: 'user2',
+        senderDisplayName: 'Robert Tolbert',
         messageId: Math.random().toString(),
         content: 'Nice! This looks great!',
         createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
         mine: false,
-        attached: false
+        attached: false,
+        type: 'text'
       }
     },
     {
       type: 'chat',
       payload: {
-        senderId: '3',
-        senderDisplayName: 'User3',
+        senderId: 'user3',
+        senderDisplayName: 'Carole Poland',
         messageId: Math.random().toString(),
         content: "Yeah agree, let's chat here from now on!",
         createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
         mine: false,
-        attached: false
+        attached: false,
+        type: 'text'
       }
     }
   ];
@@ -52,7 +58,7 @@ export const GetHistoryWithSystemMessages = (): (SystemMessage | ChatMessage)[] 
       payload: {
         messageId: Math.random().toString(),
         iconName: 'PeopleAdd',
-        content: 'User1 is added to the chat'
+        content: 'Miguel Garcia is added to the chat'
       }
     }
   ];
@@ -71,4 +77,18 @@ export const GetHistoryWithCustomMessages = (): (CustomMessage | ChatMessage)[] 
     },
     ...GetHistoryChatMessages()
   ];
+};
+
+// This is some mock avatars for example purposes.
+export const GetAvatarUrlByUserId = (userId: string): string => {
+  switch (userId) {
+    case 'user1':
+      return 'images/avatars/avatar-1.jpg';
+    case 'user2':
+      return 'images/avatars/avatar-2.jpg';
+    case 'user3':
+      return 'images/avatars/avatar-8.jpg';
+    default:
+      return '';
+  }
 };

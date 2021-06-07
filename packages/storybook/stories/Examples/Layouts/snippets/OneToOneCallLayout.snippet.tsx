@@ -1,6 +1,16 @@
-import { VideoTile } from '@azure/communication-ui';
+import { VideoTile } from '@azure/communication-react';
 import { mergeStyles, Persona, PersonaSize, Stack } from '@fluentui/react';
 import React from 'react';
+
+const renderPersona = (): JSX.Element => (
+  <Persona
+    styles={{ root: { margin: 'auto' } }}
+    size={PersonaSize.size56}
+    hidePersonaDetails={true}
+    text={'Toby'}
+    initialsTextColor="white"
+  />
+);
 
 export const OneToOneCallLayoutExample: () => JSX.Element = () => {
   const videoStreamStyle = mergeStyles({
@@ -9,8 +19,8 @@ export const OneToOneCallLayoutExample: () => JSX.Element = () => {
     position: 'absolute',
     bottom: '.25rem',
     right: '.25rem',
-    height: '25%',
-    width: '30%'
+    height: '25\u0025',
+    width: '30\u0025'
   });
 
   return (
@@ -21,21 +31,14 @@ export const OneToOneCallLayoutExample: () => JSX.Element = () => {
         styles={{
           overlayContainer: videoStreamStyle
         }}
-        avatarName={'Holly'}
+        displayName={'Holly'}
+        showDisplayName={false}
       >
         {/* Video component for my video stream stream */}
         <VideoTile
           isVideoReady={false}
-          // A placeholder element for my video stream
-          placeholderProvider={
-            <Persona
-              styles={{ root: { margin: 'auto' } }}
-              size={PersonaSize.size56}
-              hidePersonaDetails={true}
-              text={'Toby'}
-              initialsTextColor="white"
-            />
-          }
+          // A render placeholder function for my video stream
+          onRenderPlaceholder={renderPersona}
         />
       </VideoTile>
     </Stack>

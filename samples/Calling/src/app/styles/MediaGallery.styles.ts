@@ -1,8 +1,7 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import { getTheme, mergeStyles } from '@fluentui/react';
-
-const palette = getTheme().palette;
+import { mergeStyles } from '@fluentui/react';
 
 const videoBaseStyle = mergeStyles({
   border: 0,
@@ -39,26 +38,4 @@ export const screenShareContainerStyle = mergeStyles({
   height: '100%',
   width: '75%',
   position: 'relative'
-});
-
-export const disabledVideoHint = mergeStyles({
-  bottom: '5%',
-  height: '1.75rem',
-  boxShadow: 'none',
-  fontSize: '1.25rem',
-  lineHeight: '1.0625rem',
-  textAlign: 'left',
-  left: '2%',
-  overflow: 'hidden',
-  position: 'absolute',
-  padding: '0.25rem',
-  whiteSpace: 'nowrap',
-  maxWidth: '95%',
-  borderRadius: 4
-});
-
-export const videoHint = mergeStyles(disabledVideoHint, {
-  backgroundColor: palette.neutralSecondary,
-  boxShadow: '0 0 1px 0 rgba(0,0,0,.16)',
-  color: palette.white
 });

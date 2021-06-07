@@ -1,8 +1,9 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import React, { useEffect, useState } from 'react';
 import { initializeIcons, loadTheme, Spinner, Stack } from '@fluentui/react';
-import { OneToOneCall } from '@azure/communication-ui';
+import { OneToOneCall } from 'react-composites';
 import { createRandomDisplayName, fetchTokenResponse, getBuildTime, supportedBrowser } from './utils/AppUtils';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -18,7 +19,7 @@ const SpinnerWith: (spinnerText: string) => JSX.Element = (spinnerText: string) 
   </Stack>
 );
 
-const randomName = createRandomDisplayName();
+const randomDisplayName = createRandomDisplayName();
 
 const App = (): JSX.Element => {
   const [token, setToken] = useState('');
@@ -48,7 +49,7 @@ const App = (): JSX.Element => {
       return SpinnerWith('Getting token from server...');
     }
 
-    return <OneToOneCall displayName={randomName} token={token} />;
+    return <OneToOneCall displayName={randomDisplayName} token={token} />;
   };
 
   return getContent();
@@ -56,7 +57,7 @@ const App = (): JSX.Element => {
 
 window.setTimeout(() => {
   try {
-    console.log(`ACS sample group calling app: ${lastUpdated}`);
+    console.log(`ACS sample 1 to 1 calling app: ${lastUpdated}`);
   } catch (e) {
     /* continue regardless of error */
   }

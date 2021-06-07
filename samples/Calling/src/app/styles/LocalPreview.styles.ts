@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { IStackTokens, IToggleStyles, getTheme, mergeStyles, IImageStyles } from '@fluentui/react';
 
@@ -23,6 +24,7 @@ export const toggleButtonsBarToken: IStackTokens = {
 };
 
 export const localPreviewContainerStyle = mergeStyles({
+  borderRadius: '.25rem',
   maxWidth: '25rem',
   minWidth: '12.5rem',
   width: '100%',
@@ -30,10 +32,23 @@ export const localPreviewContainerStyle = mergeStyles({
   maxHeight: '18.75rem',
   minHeight: '16.875rem',
   background: palette.neutralLighter,
-  color: palette.neutralPrimaryAlt
+  color: palette.neutralTertiary
+});
+
+export const cameraOffLabelStyle = mergeStyles({
+  fontFamily: 'Segoe UI Regular',
+  fontSize: '0.625rem', // 10px
+  color: palette.neutralTertiary
 });
 
 export const toggleButtonsBarStyle = mergeStyles({
   height: '2.8125rem',
   width: '100%'
 });
+
+export const localPreviewTileStyle = {
+  root: {
+    borderRadius: '.25rem',
+    minHeight: '14rem'
+  }
+};

@@ -1,27 +1,41 @@
-import React from 'react';
 import {
-  FluentThemeProvider,
-  audioButtonProps,
+  CameraButton,
   ControlBar,
-  hangupButtonProps,
-  optionsButtonProps,
-  screenShareButtonProps,
-  videoButtonProps
-} from '@azure/communication-ui';
-import { Stack, DefaultButton } from '@fluentui/react';
+  EndCallButton,
+  FluentThemeProvider,
+  MicrophoneButton,
+  OptionsButton,
+  ParticipantListProps,
+  ParticipantsButton,
+  ScreenShareButton
+} from '@azure/communication-react';
+import React from 'react';
+
+const componentMainDivStyle = {
+  display: 'flex',
+  border: 'solid 0.5px lightgray',
+  height: '24rem',
+  alignItems: 'center',
+  justifyContent: 'center'
+};
+
+const mockParticipantsProps: ParticipantListProps = {
+  participants: []
+};
 
 export const ControlBarLayoutExample: () => JSX.Element = () => {
   return (
-    <Stack style={{ flexFlow: 'row', minHeight: '250px' }}>
+    <div style={componentMainDivStyle}>
       <FluentThemeProvider>
         <ControlBar layout="floatingLeft">
-          <DefaultButton {...videoButtonProps} />
-          <DefaultButton {...audioButtonProps} />
-          <DefaultButton {...screenShareButtonProps} />
-          <DefaultButton {...optionsButtonProps} />
-          <DefaultButton {...hangupButtonProps} />
+          <CameraButton />
+          <MicrophoneButton />
+          <ScreenShareButton />
+          <ParticipantsButton participantListProps={mockParticipantsProps} />
+          <OptionsButton />
+          <EndCallButton />
         </ControlBar>
       </FluentThemeProvider>
-    </Stack>
+    </div>
   );
 };

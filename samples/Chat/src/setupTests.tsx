@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 // jest-dom adds custom jest matchers for asserting on DOM nodes.
 // allows you to do things like:

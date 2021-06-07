@@ -1,6 +1,6 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import { ENTER_KEY, MAXIMUM_LENGTH_OF_NAME, ErrorHandlingProps, WithErrorHandling } from '@azure/communication-ui';
 import {
   TextFieldStyleProps,
   inputBoxStyle,
@@ -9,12 +9,13 @@ import {
   labelFontStyle,
   warningStyle
 } from './styles/DisplayNameField.styles';
+import { ENTER_KEY, MAXIMUM_LENGTH_OF_NAME } from './utils/constants';
 
 import React from 'react';
 import { TextField } from '@fluentui/react';
 
 interface DisplayNameFieldProps {
-  setName(name: string): void;
+  setName(displayName: string): void;
   setEmptyWarning(isEmpty: boolean): void;
   setNameLengthExceedLimit(isNameLengthExceedLimit: boolean): void;
   isEmpty: boolean;
@@ -23,7 +24,7 @@ interface DisplayNameFieldProps {
   validateName?(): void;
 }
 
-const DisplayNameFieldComponent = (props: DisplayNameFieldProps & ErrorHandlingProps): JSX.Element => {
+const DisplayNameFieldComponent = (props: DisplayNameFieldProps): JSX.Element => {
   const {
     setName,
     setEmptyWarning,
@@ -56,7 +57,7 @@ const DisplayNameFieldComponent = (props: DisplayNameFieldProps & ErrorHandlingP
         ariaLabel="Choose your name"
         className={isEmpty || isNameLengthExceedLimit ? inputBoxWarningStyle : inputBoxStyle}
         onChange={onNameTextChange}
-        id="name"
+        id="displayName"
         placeholder="Enter your name"
         onKeyDown={(ev) => {
           if (ev.which === ENTER_KEY) {
@@ -82,5 +83,4 @@ const DisplayNameFieldComponent = (props: DisplayNameFieldProps & ErrorHandlingP
   );
 };
 
-export const DisplayNameField = (props: DisplayNameFieldProps & ErrorHandlingProps): JSX.Element =>
-  WithErrorHandling(DisplayNameFieldComponent, props);
+export const DisplayNameField = (props: DisplayNameFieldProps): JSX.Element => <DisplayNameFieldComponent {...props} />;

@@ -1,15 +1,12 @@
-// © Microsoft Corporation. All rights reserved.
-
-import React, { Dispatch, useMemo } from 'react';
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+import React, { Dispatch, useCallback } from 'react';
 import { InviteFooter } from './InviteFooter';
-import { ParticipantManagement } from './ParticipantManagement';
 import { SettingsManagementComponent } from './SettingsManagement';
 import { SlideOutPanelComponent } from './SlideOutPanel';
-import { useSelector } from './hooks/useSelector';
-import { useThreadId } from '@azure/communication-ui';
-import { useHandlers } from './hooks/useHandlers';
-import { chatParticipantListSelector } from '@azure/acs-chat-selector';
+import { useChatSelector, useChatThreadClient, useChatPropsFor as usePropsFor } from 'chat-component-bindings';
 import { chatSettingsSelector } from './selectors/chatSettingsSelector';
+import { ParticipantList, CommunicationParticipant } from 'react-components';
 
 export enum SidePanelTypes {
   None = 'none',
@@ -25,14 +22,16 @@ export interface SelectedPaneProps {
 
 export const SidePanel = (props: SelectedPaneProps): JSX.Element => {
   const { selectedPane, setSelectedPane, onRenderAvatar } = props;
-  const threadId = useThreadId();
-  const selectorConfig = useMemo(() => {
-    return { threadId };
-  }, [threadId]);
-  const chatParticipantProps = useSelector(chatParticipantListSelector, selectorConfig);
-  const chatParticipantHandlers = useHandlers(ParticipantManagement);
-  const chatSettingsProps = useSelector(chatSettingsSelector, selectorConfig);
-  const chatSettingsHandlers = useHandlers(SettingsManagementComponent);
+  const chatParticipantProps = usePropsFor(ParticipantList);
+
+  const chatSettingsProps = useChatSelector(chatSettingsSelector);
+  const chatThreadClient = useChatThreadClient();
+  const updateThreadTopicName = useCallback(
+    async (topicName: string) => {
+      await chatThreadClient.updateTopic(topicName);
+    },
+    [chatThreadClient]
+  );
 
   return (
     <>
@@ -61,11 +60,16 @@ export const SidePanel = (props: SelectedPaneProps): JSX.Element => {
         onRenderFooter={() => <InviteFooter />}
         onClose={() => setSelectedPane(SidePanelTypes.None)}
       >
-        <ParticipantManagement {...chatParticipantProps} {...chatParticipantHandlers} onRenderAvatar={onRenderAvatar} />
+        <ParticipantList
+          {...chatParticipantProps}
+          onRenderAvatar={
+            onRenderAvatar ? (participant: CommunicationParticipant) => onRenderAvatar(participant.userId) : undefined
+          }
+        />
       </SlideOutPanelComponent>
       <SettingsManagementComponent
         {...chatSettingsProps}
-        {...chatSettingsHandlers}
+        updateThreadTopicName={updateThreadTopicName}
         visible={selectedPane === SidePanelTypes.Settings}
         parentId="settings-management-parent"
         onClose={() => setSelectedPane(SidePanelTypes.None)}

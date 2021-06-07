@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { mergeStyles } from '@fluentui/react';
 
@@ -12,7 +13,7 @@ export const buttonStyle = mergeStyles({
   fontSize: '0.875rem', // 14px
   height: '2.75rem',
   width: '100%',
-  marginTop: '2.125rem',
+  marginTop: '1.25rem',
   maxWidth: '18.75rem',
   minWidth: '12.5rem'
 });

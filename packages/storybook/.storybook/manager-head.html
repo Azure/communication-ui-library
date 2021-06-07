@@ -1,0 +1,81 @@
+<meta name="title" content="Azure Communication Services UI Library">
+<meta name="description"
+  content="Azure Communication Services UI Library makes it easy for you to build modern communications user experiences using Azure Communication Services. It gives you a library of production-ready UI components that you can drop into your applications.">
+
+<meta property="og:title" content="Azure Communication Services UI Library" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://azure.github.io/communication-ui-sdk/" />
+<meta property="og:image" content="https://azure.github.io/communication-ui-sdk/images/ui-library-cover-image.png" />
+
+<link href="https://fonts.cdnfonts.com/css/segoe-ui-4" rel="stylesheet">
+<link rel="shortcut icon" href="./favicon.ico">
+
+<style>
+  /* Avoid sidebar header image getting very large */
+  .sidebar-header img {
+    max-height: 4rem;
+  }
+
+  /* Reduce sidebar header image padding from 20px to 10px */
+  .sidebar-header>div:first-child {
+    margin-right: 0.625rem;
+  }
+</style>
+
+<script src="https://wcpstatic.microsoft.com/mscc/lib/v2/wcp-consent.js"></script>
+<script>
+
+  function addManageCookiesLink() {
+    const sidebarContainer = document.getElementById('storybook-explorer-menu');
+    if (!sidebarContainer) {
+      // sidebar container has not loaded in the page yet, retry in 500ms
+      setTimeout(addManageCookiesLink, 500);
+      return false;
+    }
+
+    const linkId = 'manage-cookies';
+    const existingLinkContainer = document.getElementById(linkId);
+    if (existingLinkContainer) {
+      sidebarContainer.removeChild(existingLinkContainer);
+    }
+
+    const linkContainer = document.createElement('div');
+    linkContainer.id = linkId;
+    linkContainer.style = 'text-align: center';
+    const manageCookiesLink = document.createElement('a');
+    manageCookiesLink.href = "javascript:;";
+    manageCookiesLink.innerText = 'Manage Cookies';
+    manageCookiesLink.style = 'color: #1EA7FD; font-size: 0.75rem;'
+    manageCookiesLink.onclick = () => {
+      window.siteConsent?.manageConsent();
+    }
+    linkContainer.appendChild(manageCookiesLink);
+    sidebarContainer.appendChild(linkContainer);
+  }
+
+  window.addEventListener('load', () => {
+    const cookieBannerId = 'cookie-banner';
+    const cookieBannerContainer = document.createElement('div');
+    cookieBannerContainer.id = cookieBannerId;
+    document.body.insertBefore(cookieBannerContainer, document.body.firstChild);
+
+    function onConsentChanged(categoryPreferences) {
+      window.cookieConsentChanged && window.cookieConsentChanged();
+    }
+
+    function initCallback(err, _siteConsent) {
+      if (!err) {
+        siteConsent = _siteConsent; // siteConsent is used to get the current consent
+        window.cookieConsentChanged && window.cookieConsentChanged(); // call callback now cookie library has finished initializing
+
+        if (siteConsent?.isConsentRequired) {
+          addManageCookiesLink();
+        }
+      } else {
+        console.log(`Error initializing WcpConsent: ${err}`);
+      }
+    }
+
+    window.WcpConsent && WcpConsent.init('en-US', cookieBannerId, initCallback, onConsentChanged, WcpConsent.themes.light);
+  });
+</script>

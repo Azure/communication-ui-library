@@ -68,6 +68,6 @@ jobs:
             -X POST \
             -H 'Accept: application/vnd.github.v3+json' \
             -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
-            https://api.github.com/repos/Azure/communication-ui-sdk/pulls \
+            https://api.github.com/repos/Azure/communication-ui-library/pulls \
             -d '{ "title":"Package Version Bump - ${{ steps.datetime.outputs.datetime }}", "head":"release/${{ steps.datetime.outputs.datetime }}", "base":"main", "body":"PR setup by the automated version bump github action. Please review." }'
             --fail

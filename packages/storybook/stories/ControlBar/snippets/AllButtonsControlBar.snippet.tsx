@@ -1,16 +1,53 @@
-import React from 'react';
 import {
-  FluentThemeProvider,
+  CallParticipant,
+  CameraButton,
   ControlBar,
-  answerButtonProps,
-  audioButtonProps,
-  hangupButtonProps,
-  recordButtonProps,
-  optionsButtonProps,
-  screenShareButtonProps,
-  videoButtonProps
-} from '@azure/communication-ui';
-import { DefaultButton, IContextualMenuProps } from '@fluentui/react';
+  EndCallButton,
+  FluentThemeProvider,
+  MicrophoneButton,
+  OptionsButton,
+  ParticipantListProps,
+  ParticipantsButton,
+  ScreenShareButton
+} from '@azure/communication-react';
+import { IContextualMenuProps } from '@fluentui/react';
+import React from 'react';
+
+const mockParticipants: CallParticipant[] = [
+  {
+    userId: 'user1',
+    displayName: 'You',
+    state: 'Connected',
+    isMuted: true,
+    isScreenSharing: false
+  },
+  {
+    userId: 'user2',
+    displayName: 'Hal Jordan',
+    state: 'Connected',
+    isMuted: true,
+    isScreenSharing: true
+  },
+  {
+    userId: 'user3',
+    displayName: 'Barry Allen',
+    state: 'Idle',
+    isMuted: false,
+    isScreenSharing: false
+  },
+  {
+    userId: 'user4',
+    displayName: 'Bruce Wayne',
+    state: 'Connecting',
+    isMuted: false,
+    isScreenSharing: false
+  }
+];
+
+const mockParticipantsProps: ParticipantListProps = {
+  participants: mockParticipants,
+  myUserId: 'user1'
+};
 
 export const AllButtonsControlBarExample: () => JSX.Element = () => {
   const exampleOptionsMenuProps: IContextualMenuProps = {
@@ -23,43 +60,35 @@ export const AllButtonsControlBarExample: () => JSX.Element = () => {
       }
     ]
   };
+  const onMuteAll = () => {
+    // your implementation to mute all participants
+  };
 
   return (
     <FluentThemeProvider>
       <ControlBar layout={'horizontal'}>
-        <DefaultButton
-          {...videoButtonProps}
+        <CameraButton
           onClick={() => {
             /*handle onClick*/
           }}
         />
-        <DefaultButton
-          {...audioButtonProps}
+        <MicrophoneButton
           onClick={() => {
             /*handle onClick*/
           }}
         />
-        <DefaultButton
-          {...screenShareButtonProps}
+        <ScreenShareButton
           onClick={() => {
             /*handle onClick*/
           }}
         />
-        <DefaultButton
-          {...recordButtonProps}
-          onClick={() => {
-            /*handle onClick*/
-          }}
+        <ParticipantsButton
+          participantListProps={mockParticipantsProps}
+          callInvitationURL={'URL to copy'}
+          onMuteAll={onMuteAll}
         />
-        <DefaultButton
-          {...answerButtonProps}
-          onClick={() => {
-            /*handle onClick*/
-          }}
-        />
-        <DefaultButton {...optionsButtonProps} menuProps={exampleOptionsMenuProps} />
-        <DefaultButton
-          {...hangupButtonProps}
+        <OptionsButton menuProps={exampleOptionsMenuProps} />
+        <EndCallButton
           onClick={() => {
             /*handle onClick*/
           }}

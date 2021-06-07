@@ -1,6 +1,6 @@
-import React from 'react';
-import { ParticipantItem } from '@azure/communication-ui';
+import { ParticipantItem } from '@azure/communication-react';
 import { PersonaPresence } from '@fluentui/react';
+import React from 'react';
 
 export const CustomAvatarExample: () => JSX.Element = () => {
   const avatarStyle = {
@@ -17,11 +17,8 @@ export const CustomAvatarExample: () => JSX.Element = () => {
       />
     );
   };
-  const containerStyle = { width: '12rem' };
 
   return (
-    <div style={containerStyle}>
-      <ParticipantItem name="Annie Lindqvist" presence={PersonaPresence.online} onRenderAvatar={onRenderAvatar} />
-    </div>
+    <ParticipantItem displayName="Annie Lindqvist" presence={PersonaPresence.online} onRenderAvatar={onRenderAvatar} />
   );
 };

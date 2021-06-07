@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Serialize userId from state",
+  "packageName": "calling-component-bindings",
+  "email": "prprabhu@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -1,8 +1,9 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import React, { useState } from 'react';
-import { getBuildTime, getChatSDKVersion } from './utils/utils';
-import { initializeIcons } from '@fluentui/react';
+import React, { useEffect, useState } from 'react';
+import { createAzureCommunicationUserCredential, getBuildTime, getChatSDKVersion } from './utils/utils';
+import { initializeIcons, Spinner } from '@fluentui/react';
 
 import { ChatScreen } from './ChatScreen';
 import { EndScreen } from './EndScreen';
@@ -10,8 +11,11 @@ import { ErrorScreen } from './ErrorScreen';
 import HomeScreen from './HomeScreen';
 import ConfigurationScreen from './ConfigurationScreen';
 import { getThreadId } from './utils/getThreadId';
-import { ChatProvider, ErrorProvider, CommunicationUiErrorInfo } from '@azure/communication-ui';
 import { refreshTokenAsync } from './utils/refreshToken';
+import { ChatClientProvider, ChatThreadClientProvider } from 'chat-component-bindings';
+import { ChatThreadClient } from '@azure/communication-chat';
+import { CommunicationUserKind } from '@azure/communication-common';
+import { createStatefulChatClient, StatefulChatClient } from 'chat-stateful-client';
 
 console.info(`Thread chat sample using @azure/communication-chat : ${getChatSDKVersion()}`);
 console.info(`Build Date : ${getBuildTime()}`);
@@ -25,6 +29,28 @@ export default (): JSX.Element => {
   const [displayName, setDisplayName] = useState('');
   const [threadId, setThreadId] = useState('');
   const [endpointUrl, setEndpointUrl] = useState('');
+  const [chatClient, setChatClient] = useState<StatefulChatClient>();
+  const [chatThreadClient, setChatThreadClient] = useState<ChatThreadClient>();
+
+  useEffect(() => {
+    if (token && userId && displayName && threadId && endpointUrl) {
+      const userIdKind = { kind: 'communicationUser', communicationUserId: userId } as CommunicationUserKind;
+      const createClient = async (): Promise<void> => {
+        const chatClient = createStatefulChatClient({
+          userId: userIdKind,
+          displayName,
+          endpoint: endpointUrl,
+          credential: createAzureCommunicationUserCredential(token, refreshTokenAsync(userId))
+        });
+
+        setChatClient(chatClient);
+        setChatThreadClient(await chatClient.getChatThreadClient(threadId));
+
+        chatClient.startRealtimeNotifications();
+      };
+      createClient();
+    }
+  }, [displayName, endpointUrl, threadId, token, userId]);
 
   const getComponent = (): JSX.Element => {
     if (page === 'home') {
@@ -43,17 +69,9 @@ export default (): JSX.Element => {
         />
       );
     } else if (page === 'chat') {
-      return (
-        <ErrorProvider
-          onErrorCallback={(error: CommunicationUiErrorInfo) => console.error('onErrorCallback received error:', error)}
-        >
-          <ChatProvider
-            token={token}
-            displayName={displayName}
-            threadId={threadId}
-            endpointUrl={endpointUrl}
-            refreshTokenCallback={refreshTokenAsync(userId)}
-          >
+      return chatClient && chatThreadClient ? (
+        <ChatClientProvider chatClient={chatClient}>
+          <ChatThreadClientProvider chatThreadClient={chatThreadClient}>
             <ChatScreen
               endChatHandler={() => {
                 setPage('end');
@@ -64,8 +82,10 @@ export default (): JSX.Element => {
                 setPage('error');
               }}
             />
-          </ChatProvider>
-        </ErrorProvider>
+          </ChatThreadClientProvider>
+        </ChatClientProvider>
+      ) : (
+        <Spinner label={'Loading...'} ariaLive="assertive" labelPosition="top" />
       );
     } else if (page === 'end') {
       return (

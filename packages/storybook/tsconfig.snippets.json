@@ -1,0 +1,9 @@
+{
+  "extends": "../../common/config/tsc/tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "typeRoots": ["./node_modules/@types"],
+  "include": ["stories/**/*.snippet.tsx", "stories/**/*.snippet.ts"],
+  "exclude": ["dist", "node_modules"]
+}

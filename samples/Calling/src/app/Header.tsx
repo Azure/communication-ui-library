@@ -1,8 +1,9 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { DefaultButton, Separator, Stack } from '@fluentui/react';
-import React from 'react';
 import { SettingsIcon, UserFriendsIcon } from '@fluentui/react-icons-northstar';
+import React from 'react';
 import {
   controlButtonStyles,
   headerCenteredContainer,
@@ -12,8 +13,9 @@ import {
   separatorStyles
 } from './styles/Header.styles';
 
-import { MINI_HEADER_WINDOW_WIDTH, GroupCallControlBarComponent } from '@azure/communication-ui';
+import { MINI_HEADER_WINDOW_WIDTH } from './utils/constants';
 import { CommandPanelTypes } from './CommandPanel';
+import { CallControls } from './CallControls';
 
 export interface HeaderProps {
   selectedPane: CommandPanelTypes;
@@ -40,45 +42,51 @@ export const Header = (props: HeaderProps): JSX.Element => {
       id="header"
       className={props.screenWidth > MINI_HEADER_WINDOW_WIDTH ? headerContainer : headerCenteredContainer}
     >
-      <DefaultButton
-        onRenderIcon={() => {
-          return (
-            <SettingsIcon
-              outline={props.selectedPane === CommandPanelTypes.Settings ? false : true}
-              size="medium"
-              className={props.selectedPane === CommandPanelTypes.Settings ? itemSelectedStyle : ''}
-            />
-          );
-        }}
-        onClick={() => {
-          toggleOptions(props.selectedPane, props.setSelectedPane);
-        }}
-        styles={controlButtonStyles}
-      />
-      <DefaultButton
-        onRenderIcon={() => {
-          return (
-            <UserFriendsIcon
-              outline={props.selectedPane === CommandPanelTypes.People ? false : true}
-              size="medium"
-              className={props.selectedPane === CommandPanelTypes.People ? itemSelectedStyle : ''}
-            />
-          );
-        }}
-        onClick={() => {
-          togglePeople(props.selectedPane, props.setSelectedPane);
-        }}
-        styles={controlButtonStyles}
-      />
-      {props.screenWidth > MINI_HEADER_WINDOW_WIDTH && (
-        <div className={separatorContainerStyle}>
-          <Separator styles={separatorStyles} vertical={true} />
-        </div>
-      )}
-      <GroupCallControlBarComponent
-        onEndCallClick={props.endCallHandler}
-        compressedMode={props.screenWidth <= MINI_HEADER_WINDOW_WIDTH}
-      />
+      <Stack.Item>
+        <DefaultButton
+          onRenderIcon={() => {
+            return (
+              <SettingsIcon
+                outline={props.selectedPane === CommandPanelTypes.Settings ? false : true}
+                size="medium"
+                className={props.selectedPane === CommandPanelTypes.Settings ? itemSelectedStyle : ''}
+              />
+            );
+          }}
+          onClick={() => {
+            toggleOptions(props.selectedPane, props.setSelectedPane);
+          }}
+          styles={controlButtonStyles}
+        />
+        <DefaultButton
+          onRenderIcon={() => {
+            return (
+              <UserFriendsIcon
+                outline={props.selectedPane === CommandPanelTypes.People ? false : true}
+                size="medium"
+                className={props.selectedPane === CommandPanelTypes.People ? itemSelectedStyle : ''}
+              />
+            );
+          }}
+          onClick={() => {
+            togglePeople(props.selectedPane, props.setSelectedPane);
+          }}
+          styles={controlButtonStyles}
+        />
+      </Stack.Item>
+      <Stack.Item>
+        {props.screenWidth > MINI_HEADER_WINDOW_WIDTH && (
+          <div className={separatorContainerStyle}>
+            <Separator styles={separatorStyles} vertical={true} />
+          </div>
+        )}
+      </Stack.Item>
+      <Stack.Item>
+        <CallControls
+          onEndCallClick={props.endCallHandler}
+          compressedMode={props.screenWidth <= MINI_HEADER_WINDOW_WIDTH}
+        />
+      </Stack.Item>
     </Stack>
   );
 };

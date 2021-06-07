@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { Description, Heading, Source, Title } from '@storybook/addon-docs/blocks';
 import React from 'react';
@@ -103,7 +104,7 @@ const IncomingCallToast = (props: IncomingCallToastProps): JSX.Element => {
 `;
 
 const exampleIncomingCallModal = `
-import { StreamMedia, VideoTile } from '@azure/communication-ui';
+import { StreamMedia, VideoTile } from '@azure/communication-react';
 import { DefaultButton, Persona, PersonaSize, Stack, Dialog, DialogType, DialogFooter } from '@fluentui/react';
 import { CallEndIcon, CallIcon, CallVideoIcon, CallVideoOffIcon } from '@fluentui/react-northstar';
 import { getTheme, mergeStyles } from '@fluentui/react';
@@ -131,7 +132,7 @@ interface IncomingCallModalProps extends IncomingCallToastProps {
   /** A Caller's subtitle. Displayed right below the callers name */
   callerTitle?: string;
   /** Receiver's Name */
-  localParticipantName?: string;
+  localParticipantDisplayName?: string;
   /** If set to 'true', mirrors the local video preview of the receiver */
   localVideoInverted?: boolean;
   /** Toggle local video preview on or off */
@@ -149,7 +150,7 @@ const IncomingCallModal = (props: WithTheme<IncomingCallModalProps>): JSX.Elemen
     callerName,
     callerNameAlt,
     callerTitle,
-    localParticipantName,
+    localParticipantDisplayName,
     localVideoInverted,
     onClickAccept,
     onClickReject,
@@ -165,9 +166,9 @@ const IncomingCallModal = (props: WithTheme<IncomingCallModalProps>): JSX.Elemen
   const mediaGalleryLocalParticipant: JSX.Element = (
     <VideoTile
       isVideoReady={showLocalVideo}
-      videoProvider={<StreamMedia videoStreamElement={localVideoStreamElement} />}
-      avatarName={localParticipantName}
-      invertVideo={localVideoInverted}
+      renderElement={<StreamMedia videoStreamElement={localVideoStreamElement} />}
+      displayName={localParticipantDisplayName}
+      isMirrored={localVideoInverted}
     />
   );
 
