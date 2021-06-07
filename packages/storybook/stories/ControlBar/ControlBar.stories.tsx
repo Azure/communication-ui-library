@@ -1,27 +1,34 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
+import {
+  CallParticipant,
+  CameraButton,
+  ControlBar as ControlBarComponent,
+  EndCallButton,
+  MicrophoneButton,
+  ParticipantsButton,
+  ParticipantListProps,
+  ScreenShareButton
+} from '@azure/communication-react';
+import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
+import { boolean, select } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import {
-  ControlBar,
-  audioButtonProps,
-  hangupButtonProps,
-  labeledVideoButtonProps,
-  labeledAudioButtonProps,
-  labeledScreenShareButtonProps,
-  labeledOptionsButtonProps,
-  labeledHangupButtonProps,
-  optionsButtonProps,
-  screenShareButtonProps,
-  videoButtonProps,
-  LIGHT,
-  DARK,
-  THEMES
-} from '@azure/communication-ui';
-import { boolean, select } from '@storybook/addon-knobs';
-import { getDocs } from './ControlBarDocs';
-import { DefaultButton } from '@fluentui/react';
+
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { OptionsButtonWithKnobs } from './Buttons/Options/snippets/OptionsButtonWithKnobs.snippet';
+import { AllButtonsControlBarExample } from './snippets/AllButtonsControlBar.snippet';
+import { ControlBarLayoutExample } from './snippets/ControlBarLayout.snippet';
+import { CustomButtonsExample } from './snippets/CustomButtons.snippet';
+import { CustomControlBarStylesExample } from './snippets/CustomControlBarStyles.snippet';
+import { OptionsButtonExample } from './snippets/OptionsButton.snippet';
+
+const AllButtonsControlBarExampleText = require('!!raw-loader!./snippets/AllButtonsControlBar.snippet.tsx').default;
+const ControlBarLayoutExampleText = require('!!raw-loader!./snippets/ControlBarLayout.snippet.tsx').default;
+const CustomButtonsExampleText = require('!!raw-loader!./snippets/CustomButtons.snippet.tsx').default;
+const CustomControlBarStylesExampleText = require('!!raw-loader!./snippets/CustomControlBarStyles.snippet.tsx').default;
+const OptionsButtonExampleText = require('!!raw-loader!./snippets/OptionsButton.snippet.tsx').default;
 
 const CONTROL_BAR_LAYOUTS = [
   'horizontal',
@@ -36,34 +43,119 @@ const CONTROL_BAR_LAYOUTS = [
   'floatingRight'
 ] as const;
 
-const exampleOptionsMenuProps = {
-  items: [
-    {
-      key: '1',
-      name: 'Choose Camera',
-      iconProps: { iconName: 'LocationCircle' },
-      subMenuProps: {
-        items: [
-          { key: 'camera1', text: 'Full HD Webcam', title: 'Full HD Webcam', canCheck: true, isChecked: true },
-          { key: 'camera2', text: 'Macbook Pro Webcam', title: 'Macbook Pro Webcam' }
-        ]
-      }
-    },
-    {
-      key: '2',
-      name: 'Choose Microphone',
-      iconProps: { iconName: 'LocationCircle' },
-      subMenuProps: {
-        items: [
-          { key: 'mic1', text: 'Realtek HD Audio', title: 'Realtek HD Audio' },
-          { key: 'mic2', text: 'Macbook Pro Mic', title: 'Macbook Pro Mic', canCheck: true, isChecked: true }
-        ]
-      }
-    }
-  ]
+const mockParticipants: CallParticipant[] = [
+  {
+    userId: 'user1',
+    displayName: 'You',
+    state: 'Connected',
+    isMuted: true,
+    isScreenSharing: false
+  },
+  {
+    userId: 'user2',
+    displayName: 'Hal Jordan',
+    state: 'Connected',
+    isMuted: true,
+    isScreenSharing: true
+  },
+  {
+    userId: 'user3',
+    displayName: 'Barry Allen',
+    state: 'Idle',
+    isMuted: false,
+    isScreenSharing: false
+  },
+  {
+    userId: 'user4',
+    displayName: 'Bruce Wayne',
+    state: 'Connecting',
+    isMuted: false,
+    isScreenSharing: false
+  }
+];
+
+const mockParticipantsProps: ParticipantListProps = {
+  participants: mockParticipants,
+  myUserId: 'user1'
 };
 
-export const ControlBarComponent: (
+const importStatement = `
+import { FluentThemeProvider, ControlBar } from '@azure/communication-react';
+import { DefaultButton } from '@fluentui/react';
+`;
+
+const getDocs: () => JSX.Element = () => {
+  return (
+    <>
+      <Title>ControlBar</Title>
+      <Description of={ControlBarComponent} />
+
+      <Heading>Importing</Heading>
+      <Source code={importStatement} />
+
+      <Heading>Example</Heading>
+      <Description>
+        We recommend using our pre-defined buttons you can start find
+        [here](./?path=/docs/ui-components-controlbar-buttons) or `DefaultButton`, a
+        [Button](https://developer.microsoft.com/en-us/fluentui#/controls/web/button) component from Fluent UI, as
+        controls inside `ControlBar`. Pre-defined styles like `controlButtonStyles` or `controlButtonLabelStyles` can
+        also be imported and used as `DefaultButton` styles for easy styling. `FluentThemeProvider` is needed around
+        `ControlBar` to provide theming and icons. Learn more about theming [here](./?path=/docs/theming--page).
+      </Description>
+      <Canvas mdxSource={AllButtonsControlBarExampleText}>
+        <AllButtonsControlBarExample />
+      </Canvas>
+      <Description>
+        Note: In the example above, `menuProps` is a property of `Button`. The property type is
+        [IContextualMenuProps](https://developer.microsoft.com/en-us/fluentui#/controls/web/contextualmenu#IContextualMenuProps),
+        an interface for defining dropdown menu items.
+      </Description>
+
+      <Heading>Layouts</Heading>
+      <Description>
+        You can change the layout of `ControlBar` by providing a preset layout to the `layout` prop. Preset layouts are
+        `horizontal`, `vertical`, `dockedTop`, `dockedBottom`, `dockedLeft`, `dockedRight`, `floatingTop`,
+        `floatingBottom`, `floatingLeft` and `floatingRight`.
+      </Description>
+      <Canvas mdxSource={ControlBarLayoutExampleText}>
+        <ControlBarLayoutExample />
+      </Canvas>
+
+      <Heading>Custom ControlBar Styles</Heading>
+      <Description>
+        You can change the styles of the `ControlBar` by customizing its `styles` prop like in the example below.
+      </Description>
+      <Canvas mdxSource={CustomControlBarStylesExampleText}>
+        <CustomControlBarStylesExample />
+      </Canvas>
+
+      <Heading>Custom Buttons</Heading>
+      <Description>
+        You can also easily change the styles of included button components. They are built on Fluent UI `DefaultButton`
+        and accept all the same props. In the example below we import `CameraButton` and `MicrophoneButton` for the 1st
+        and 2nd buttons and style our own hang up button for the 3rd button. Learn more about styling
+        [here](./?path=/docs/styling--page).
+      </Description>
+      <Canvas mdxSource={CustomButtonsExampleText}>
+        <CustomButtonsExample />
+      </Canvas>
+
+      <Heading>Dropdown Options Button</Heading>
+      <Description>
+        The `OptionsButton` can be used for any dropdown items defined through `menuProps`. For more information, check
+        out the [official Fluent UI documentation](https://developer.microsoft.com/en-us/fluentui#/controls/web/button)
+      </Description>
+      <Canvas mdxSource={OptionsButtonExampleText}>
+        <OptionsButtonExample />
+      </Canvas>
+
+      <Heading>ControlBar Props</Heading>
+      <Props of={ControlBarComponent} />
+    </>
+  );
+};
+
+const ControlBarStory: (
   args: any,
   {
     globals: { theme }
@@ -73,19 +165,19 @@ export const ControlBarComponent: (
   const toggleButtons = boolean('Toggle Buttons', false);
   const showLabels = boolean('Show Labels', false);
 
-  let background = THEMES[theme]?.palette?.white;
-  let controlBarBackground = THEMES[theme]?.palette?.white;
-
-  if (theme === DARK) {
+  // This is code to set the color of the background div to show contrast to the control bar based on the theme like shown in the Figma design.
+  let background = '#f8f8f8';
+  if (theme === 'Dark') {
     if (layout.startsWith('floating')) {
       background = '#252423';
-      controlBarBackground = THEMES[DARK]?.palette?.neutralLight;
     } else {
       background = '#161514';
     }
-  } else if (theme === LIGHT) {
-    background = '#f8f8f8';
   }
+
+  const onMuteAll = () => {
+    // your implementation to mute all participants
+  };
 
   return (
     <div
@@ -98,26 +190,29 @@ export const ControlBarComponent: (
         background: background
       }}
     >
-      <ControlBar layout={layout} styles={{ root: { background: controlBarBackground } }}>
-        <DefaultButton {...(showLabels ? labeledVideoButtonProps : videoButtonProps)} checked={toggleButtons} />
-        <DefaultButton {...(showLabels ? labeledAudioButtonProps : audioButtonProps)} checked={toggleButtons} />
-        <DefaultButton
-          {...(showLabels ? labeledScreenShareButtonProps : screenShareButtonProps)}
-          checked={toggleButtons}
+      <ControlBarComponent layout={layout}>
+        <CameraButton showLabel={showLabels} checked={toggleButtons} />
+        <MicrophoneButton showLabel={showLabels} checked={toggleButtons} />
+        <ScreenShareButton showLabel={showLabels} checked={toggleButtons} />
+        <ParticipantsButton
+          showLabel={showLabels}
+          participantListProps={mockParticipantsProps}
+          callInvitationURL={'URL to copy'}
+          onMuteAll={onMuteAll}
         />
-        <DefaultButton
-          {...(showLabels ? labeledOptionsButtonProps : optionsButtonProps)}
-          menuProps={exampleOptionsMenuProps}
-        />
-        <DefaultButton {...(showLabels ? labeledHangupButtonProps : hangupButtonProps)} />
-      </ControlBar>
+        <OptionsButtonWithKnobs showLabel={showLabels} />
+        <EndCallButton showLabel={showLabels} />
+      </ControlBarComponent>
     </div>
   );
 };
 
+export const ControlBar = ControlBarStory.bind({});
+
 export default {
+  id: `${COMPONENT_FOLDER_PREFIX}-controlbar`,
   title: `${COMPONENT_FOLDER_PREFIX}/ControlBar`,
-  component: ControlBar,
+  component: ControlBarComponent,
   parameters: {
     docs: {
       page: () => getDocs()

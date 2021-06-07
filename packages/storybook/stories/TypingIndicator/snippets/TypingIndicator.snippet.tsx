@@ -1,5 +1,5 @@
+import { TypingIndicator, CommunicationParticipant } from '@azure/communication-react';
 import React from 'react';
-import { TypingIndicator, WebUiChatParticipant } from '@azure/communication-ui';
 
 export const TypingIndicatorSnippet: () => JSX.Element = () => {
   const oneTypingUsers = [{ userId: '1', displayName: 'User1' }];
@@ -7,9 +7,11 @@ export const TypingIndicatorSnippet: () => JSX.Element = () => {
     { userId: '1', displayName: 'User1' },
     { userId: '2', displayName: 'User2' }
   ];
-  const twentyUsers: WebUiChatParticipant[] = Array(20)
-    .fill(1, 20)
-    .map((x, i) => ({ userId: `${i}`, displayName: `User${i}` }));
+
+  const twentyUsers: CommunicationParticipant[] = [];
+  for (let idx = 0; idx < 20; idx++) {
+    twentyUsers.push({ userId: `${idx}`, displayName: `User${idx}` });
+  }
 
   return (
     <>

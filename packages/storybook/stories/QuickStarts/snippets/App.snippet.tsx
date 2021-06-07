@@ -1,8 +1,12 @@
-import { FluentThemeProvider } from '@azure/communication-ui';
+import { FluentThemeProvider } from '@azure/communication-react';
 import React from 'react';
 
-function App() {
-  return <FluentThemeProvider>{/*Add Components!*/}</FluentThemeProvider>;
+function App(): JSX.Element {
+  return (
+    <FluentThemeProvider>
+      <h1>Hooray! You set up Fluent Theme Provider 🎉🎉🎉</h1>
+    </FluentThemeProvider>
+  );
 }
 
 export default App;

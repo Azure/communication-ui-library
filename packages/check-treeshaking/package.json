@@ -1,0 +1,32 @@
+{
+  "name": "check-treeshaking",
+  "version": "0.1.0",
+  "private": "true",
+  "description": "Utility to ensure proper dependencies across modules",
+  "scripts": {
+    "build": "npx webpack",
+    "build:watch": "echo skip",
+    "test": "echo skip",
+    "test:coverage": "echo skip",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "lint:fix": "npm run lint -- --fix",
+    "lint:quiet": "npm run lint -- --quiet"
+  },
+  "dependencies": {
+    "acs-ui-common": "1.0.0-beta.1",
+    "react-components": "1.0.0-beta.1",
+    "chat-stateful-client": "1.0.0-beta.1",
+    "calling-stateful-client": "1.0.0-beta.1",
+    "chat-component-bindings": "1.0.0-beta.1",
+    "calling-component-bindings": "1.0.0-beta.1"
+  },
+  "devDependencies": {
+    "webpack": "4.44.2",
+    "webpack-cli": "4.5.0",
+    "eslint": "^7.7.0",
+    "eslint-config-prettier": "^6.12.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-header": "^3.1.0",
+    "eslint-plugin-import": "~2.22.1"
+  }
+}

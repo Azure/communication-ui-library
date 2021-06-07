@@ -1,6 +1,8 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { ChatParticipant } from '@azure/communication-chat';
+import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import { existsTopicName } from 'app/utils/utils';
 import { createSelector } from 'reselect';
 import { getTopicName, getUserId, getParticipants } from './baseSelectors';
@@ -8,22 +10,23 @@ import { getTopicName, getUserId, getParticipants } from './baseSelectors';
 const generateDefaultHeaderMessage = (participants: ChatParticipant[], userId: string): string => {
   let header = 'Chat with ';
 
-  const members = participants?.filter(
-    (member: ChatParticipant) => member.user.communicationUserId !== userId && member.displayName
+  const remoteParticipantsWithNames = participants?.filter(
+    (participant: ChatParticipant) =>
+      toFlatCommunicationIdentifier(participant.id) !== userId && participant.displayName
   );
 
-  if (!members?.length) {
+  if (!remoteParticipantsWithNames?.length) {
     header += 'yourself';
     return header;
   }
 
   // if we have at least one other participant we want to show names for the first 3
-  const namedMembers = members.slice(0, 3);
-  header += namedMembers.map((member: ChatParticipant) => member.displayName).join(', ');
+  const namedParticipants = remoteParticipantsWithNames.slice(0, 3);
+  header += namedParticipants.map((participant: ChatParticipant) => participant.displayName).join(', ');
 
   // if we have more than 3 other participants we want to show the number of other participants
-  if (members.length > 3) {
-    const len = members.length - 3;
+  if (remoteParticipantsWithNames.length > 3) {
+    const len = remoteParticipantsWithNames.length - 3;
     header += ` and ${len} other participant${len === 1 ? '' : 's'}`;
   }
 

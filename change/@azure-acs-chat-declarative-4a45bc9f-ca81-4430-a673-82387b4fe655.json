@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "fix running test and linting commands",
-  "packageName": "@azure/acs-chat-declarative",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "none"
-}

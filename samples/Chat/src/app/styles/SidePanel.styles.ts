@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { IStackStyles, IStackTokens, ITextFieldStyles, getTheme, mergeStyles } from '@fluentui/react';
 
@@ -64,7 +65,7 @@ export const titleStyle = mergeStyles({
   fontWeight: 600
 });
 
-export const memberListStyle = mergeStyles({
+export const participantListStyle = mergeStyles({
   height: '100%',
   width: '100%',
   maxHeight: '100%',

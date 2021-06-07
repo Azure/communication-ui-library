@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update calling sdk to 1.1.0-beta1",
+  "packageName": "calling-component-bindings",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Standardize the export names for components. Pure components should export as XXXComponent from now on; Export all types and interfaces as well",
-  "packageName": "@azure/communication-ui",
-  "email": "easony@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { mergeStyles } from '@fluentui/react';
 
@@ -13,7 +14,6 @@ export const TextFieldStyleProps = {
 
 export const inputBoxStyle = mergeStyles({
   boxSizing: 'border-box',
-  height: '2.5rem',
   width: '18.75rem',
   borderRadius: '0.125rem'
 });
@@ -42,17 +42,6 @@ export const inputBoxWarningStyle = mergeStyles({
   width: '18.75rem',
   borderRadius: '2px',
   fontSize: '0.875rem'
-});
-
-export const labelFontStyle = mergeStyles({
-  fontSize: '0.875rem',
-  fontWeight: 600,
-  boxSizing: 'border-box',
-  boxShadow: 'none',
-  margin: 0,
-  display: 'inline-block',
-  padding: '5px 0px',
-  overflowWrap: 'break-word'
 });
 
 export const warningStyle = mergeStyles({

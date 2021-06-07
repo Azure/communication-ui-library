@@ -1,6 +1,6 @@
-import React from 'react';
-import { ParticipantItem } from '@azure/communication-ui';
+import { ParticipantItem } from '@azure/communication-react';
 import { IContextualMenuItem, PersonaPresence } from '@fluentui/react';
+import React from 'react';
 
 export const ParticipantItemExample: () => JSX.Element = () => {
   const menuItems: IContextualMenuItem[] = [
@@ -15,11 +15,6 @@ export const ParticipantItemExample: () => JSX.Element = () => {
       onClick: () => alert('Remove')
     }
   ];
-  const containerStyle = { width: '12rem' };
 
-  return (
-    <div style={containerStyle}>
-      <ParticipantItem name="Johnny Bravo" menuItems={menuItems} presence={PersonaPresence.online} />
-    </div>
-  );
+  return <ParticipantItem displayName="Johnny Bravo" menuItems={menuItems} presence={PersonaPresence.online} />;
 };

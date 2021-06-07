@@ -1,24 +1,78 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import React from 'react';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
-import { Meta } from '@storybook/react/types-6-0';
-import { boolean, text } from '@storybook/addon-knobs';
-import { ParticipantItem } from '@azure/communication-ui';
-import { getDocs } from './ParticipantItemDocs';
+import { ParticipantItem as ParticipantItemComponent } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { MicOffIcon, CallControlPresentNewIcon } from '@fluentui/react-northstar';
+import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
+import { boolean, text } from '@storybook/addon-knobs';
+import { Meta } from '@storybook/react/types-6-0';
+import React from 'react';
+
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { CustomAvatarExample } from './snippets/CustomAvatar.snippet';
+import { CustomIconExample } from './snippets/CustomIcon.snippet';
+import { ParticipantItemExample } from './snippets/ParticipantItem.snippet';
+
+const CustomAvatarExampleText = require('!!raw-loader!./snippets/CustomAvatar.snippet.tsx').default;
+const CustomIconExampleText = require('!!raw-loader!./snippets/CustomIcon.snippet.tsx').default;
+const ParticipantItemExampleText = require('!!raw-loader!./snippets/ParticipantItem.snippet.tsx').default;
+
+const importStatement = `
+import { ParticipantItem, ParticipantItemProps } from '@azure/communication-react';
+import { IContextualMenuItem, PersonaPresence } from '@fluentui/react';`;
+
+const getDocs: () => JSX.Element = () => {
+  return (
+    <>
+      <Title>ParticipantItem</Title>
+      <Description of={ParticipantItemComponent} />
+
+      <Heading>Importing</Heading>
+      <Source code={importStatement} />
+
+      <Heading>Usage</Heading>
+      <Description>
+        Here is an example of how to use `ParticipantItem.` In this example, the `menuItems` property is used to add a
+        context menu. The type of `menuItems` is an array of
+        [IContextualMenuItem](https://developer.microsoft.com/en-us/fluentui#/controls/web/contextualmenu#IContextualMenuItem).
+        Click on the rendered participant below to see the menu items.
+      </Description>
+      <Canvas mdxSource={ParticipantItemExampleText}>
+        <ParticipantItemExample />
+      </Canvas>
+
+      <Heading>Custom avatar</Heading>
+      <Description>
+        To customize the avatar, use the `onRenderAvatar` property like in the example below. We recommend the avatar
+        element to be within 32 by 32 pixels.
+      </Description>
+      <Canvas mdxSource={CustomAvatarExampleText}>
+        <CustomAvatarExample />
+      </Canvas>
+
+      <Heading>Add icon</Heading>
+      <Description>To add an icon, use the `onRenderIcon` property like in the example below.</Description>
+      <Canvas mdxSource={CustomIconExampleText}>
+        <CustomIconExample />
+      </Canvas>
+
+      <Heading>Props</Heading>
+      <Props of={ParticipantItemComponent} />
+    </>
+  );
+};
 
 const onlyUnique = (value: string, index: number, self: string[]): boolean => {
   return self.indexOf(value) === index;
 };
 
-export const ParticipantItemComponent: () => JSX.Element = () => {
-  const name = text('Name', 'Jim');
+const ParticipantItemStory: () => JSX.Element = () => {
+  const displayName = text('Name', 'Jim');
   const isScreenSharing = boolean('Is screen sharing', false);
   const isMuted = boolean('Is muted', false);
-  const isYou = boolean('Is You', false);
+  const me = boolean('Is You', false);
   const menuItemsStr = text('Menu items (comma separated)', 'Mute, Remove');
 
   const menuItems = menuItemsStr
@@ -34,14 +88,16 @@ export const ParticipantItemComponent: () => JSX.Element = () => {
 
   const containerStyle = { width: '12rem' };
 
+  const tokenProps = { childrenGap: '0.5rem' };
+
   return (
     <div style={containerStyle}>
-      <ParticipantItem
-        name={name}
-        isYou={isYou}
+      <ParticipantItemComponent
+        displayName={displayName}
+        me={me}
         menuItems={menuItems}
         onRenderIcon={() => (
-          <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
+          <Stack horizontal={true} tokens={tokenProps}>
             {isScreenSharing && <CallControlPresentNewIcon size="small" />}
             {isMuted && <MicOffIcon size="small" />}
           </Stack>
@@ -51,9 +107,14 @@ export const ParticipantItemComponent: () => JSX.Element = () => {
   );
 };
 
+// This must be the only named export from this module, and must be named to match the storybook path suffix.
+// This ensures that storybook hoists the story instead of creating a folder with a single entry.
+export const ParticipantItem = ParticipantItemStory.bind({});
+
 export default {
-  title: `${COMPONENT_FOLDER_PREFIX}/ParticipantItem`,
-  component: ParticipantItem,
+  id: `${COMPONENT_FOLDER_PREFIX}-participantitem`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Participant Item`,
+  component: ParticipantItemComponent,
   parameters: {
     docs: {
       page: () => getDocs()

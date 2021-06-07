@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Clean up and update tsdoc",
+  "packageName": "calling-stateful-client",
+  "email": "allenhwang@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -1,43 +1,45 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import React from 'react';
-import { WebUiChatParticipant, ParticipantItem, propagateError } from '@azure/communication-ui';
+import { CommunicationParticipant, ParticipantItem } from 'react-components';
+import { propagateError } from 'react-composites';
 import { Stack, IContextualMenuItem } from '@fluentui/react';
 
 export type ParticipantManagementProps = {
   userId: string;
-  chatParticipants: WebUiChatParticipant[];
-  removeThreadMember: (userId: string) => Promise<void>;
+  chatParticipants: CommunicationParticipant[];
+  removeThreadParticipant: (userId: string) => Promise<void>;
   onRenderAvatar?: (userId: string) => JSX.Element;
 };
 
 export const ParticipantManagement = (props: ParticipantManagementProps): JSX.Element => {
-  const { userId, chatParticipants, removeThreadMember, onRenderAvatar } = props;
+  const { userId, chatParticipants, removeThreadParticipant, onRenderAvatar } = props;
 
   return (
     <Stack>
-      {chatParticipants.map((member) => {
-        if (member.displayName !== undefined) {
+      {chatParticipants.map((participant) => {
+        if (participant.displayName ?? participant.userId) {
           const menuItems: IContextualMenuItem[] = [];
           menuItems.push({
             key: 'Remove',
             text: 'Remove',
             onClick: () => {
-              removeThreadMember?.(member.userId).catch((error) => {
+              removeThreadParticipant?.(participant.userId).catch((error) => {
                 propagateError(error);
               });
             }
           });
 
-          const isYou = member.userId === (userId as string);
+          const me = participant.userId === (userId as string);
 
           return (
             <ParticipantItem
-              key={member.userId}
-              name={member.displayName as string}
-              isYou={isYou}
-              menuItems={isYou ? undefined : menuItems}
-              onRenderAvatar={onRenderAvatar ? () => onRenderAvatar(member.userId) : undefined}
+              key={participant.userId}
+              displayName={participant.displayName as string}
+              me={me}
+              menuItems={me ? undefined : menuItems}
+              onRenderAvatar={onRenderAvatar ? () => onRenderAvatar(participant.userId) : undefined}
             />
           );
         }

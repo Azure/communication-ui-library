@@ -1,6 +1,7 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import { CallState } from '@azure/communication-calling';
+import { CallState as CallStatus } from '@azure/communication-calling';
 import preval from 'preval.macro';
 import { LocalStorageKeys } from './constants';
 
@@ -22,7 +23,7 @@ export const fetchTokenResponse = async (): Promise<any> => {
 /**
  * Quick helper function to map a call state to an isInCall boolean
  */
-export const isInCall = (callState: CallState): boolean => !!(callState !== 'None' && callState !== 'Disconnected');
+export const isInCall = (callStatus: CallStatus): boolean => !!(callStatus !== 'None' && callStatus !== 'Disconnected');
 
 /**
  * Generate a random user name.

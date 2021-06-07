@@ -1,114 +1,61 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
-import React, { useMemo } from 'react';
-import {
-  connectFuncsToContext,
-  StreamMedia,
-  VideoTile,
-  GridLayout,
-  MapToLocalVideoProps,
-  convertSdkRemoteParticipantToGalleryParticipant,
-  ErrorHandlingProps,
-  WithErrorHandling
-} from '@azure/communication-ui';
-import { MapToMediaGalleryProps, MediaGalleryContainerProps } from './consumers/MapToMediaGalleryProps';
-import { Label, mergeStyles, Stack } from '@fluentui/react';
-import ScreenShareComponent from './ScreenShare';
-import {
-  aspectRatioBoxContentStyle,
-  aspectRatioBoxStyle,
-  disabledVideoHint,
-  gridStyle,
-  screenShareContainerStyle,
-  stackContainerStyle,
-  videoHint
-} from './styles/MediaGallery.styles';
-import { RemoteVideoTile } from './RemoteVideoTile';
+import React, { useEffect, useMemo, useState } from 'react';
+import { VideoGallery, VideoStreamOptions } from 'react-components';
+import { useCallingPropsFor as usePropsFor, useCallingSelector as useSelector } from 'calling-component-bindings';
+import { ScreenShare } from './ScreenShare';
+import { getIsPreviewCameraOn } from './selectors/baseSelectors';
 
-export const MediaGalleryComponentBase = (props: MediaGalleryContainerProps): JSX.Element => {
-  const { localParticipant, remoteParticipants, screenShareStream } = props;
-
-  const localVideoStream = MapToLocalVideoProps({
-    stream: localParticipant.videoStream,
-    scalingMode: 'Crop'
-  });
-
-  const sidePanelRemoteParticipants = useMemo(() => {
-    return remoteParticipants
-      .filter((remoteParticipant) => {
-        const screenShareParticipant =
-          screenShareStream && convertSdkRemoteParticipantToGalleryParticipant(screenShareStream.user);
-        return remoteParticipant.userId !== screenShareParticipant?.userId;
-      })
-      .map((participant, key) => {
-        const label = participant.displayName;
-        const stream = participant.videoStream;
-
-        return (
-          <Stack horizontalAlign="center" verticalAlign="center" className={aspectRatioBoxStyle} key={key}>
-            <Stack className={aspectRatioBoxContentStyle}>
-              <RemoteVideoTile stream={stream} scalingMode={'Crop'} label={label} />
-            </Stack>
-          </Stack>
-        );
-      });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [remoteParticipants, screenShareStream]);
-
-  const gridLayoutRemoteParticipants = useMemo(() => {
-    return remoteParticipants.map((participant, key) => {
-      const label = participant.displayName;
-      const stream = participant.videoStream;
-
-      return (
-        <Stack className={gridStyle} key={key} grow>
-          <RemoteVideoTile stream={stream} scalingMode={'Crop'} label={label} avatarName={label} />
-        </Stack>
-      );
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [remoteParticipants]);
-
-  const layoutLocalParticipant = useMemo(() => {
-    return (
-      <VideoTile
-        isVideoReady={localVideoStream.isVideoReady}
-        videoProvider={<StreamMedia videoStreamElement={localVideoStream.videoStreamElement} />}
-        avatarName={localParticipant.displayName}
-      >
-        <Label className={localVideoStream.isVideoReady ? videoHint : disabledVideoHint}>
-          {localParticipant.displayName}
-        </Label>
-      </VideoTile>
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [localParticipant, localVideoStream]);
-
-  return screenShareStream !== undefined ? (
-    <>
-      <div className={stackContainerStyle}>
-        <Stack grow className={mergeStyles({ height: '100%', overflow: 'auto' })}>
-          <Stack horizontalAlign="center" verticalAlign="center" className={aspectRatioBoxStyle}>
-            <Stack className={aspectRatioBoxContentStyle}>{layoutLocalParticipant}</Stack>
-          </Stack>
-          {sidePanelRemoteParticipants}
-        </Stack>
-      </div>
-      <div className={screenShareContainerStyle}>
-        <ScreenShareComponent screenShareScalingMode={'Fit'} screenShareStream={screenShareStream} />
-      </div>
-    </>
-  ) : (
-    <GridLayout>
-      <Stack horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
-        {layoutLocalParticipant}
-      </Stack>
-      {gridLayoutRemoteParticipants}
-    </GridLayout>
-  );
+const VideoGalleryStyles = {
+  root: {
+    height: 'auto'
+  }
 };
 
-export const MediaGalleryComponent = (props: MediaGalleryContainerProps & ErrorHandlingProps): JSX.Element =>
-  WithErrorHandling(MediaGalleryComponentBase, props);
+const localVideoViewOption = {
+  scalingMode: 'Crop',
+  isMirrored: true
+} as VideoStreamOptions;
 
-export default connectFuncsToContext(MediaGalleryComponent, MapToMediaGalleryProps);
+const remoteVideoViewOption = {
+  scalingMode: 'Crop'
+} as VideoStreamOptions;
+
+export interface MediaGalleryProps {
+  isVideoStreamOn: boolean;
+  isMicrophoneChecked?: boolean;
+  onStartLocalVideo: () => Promise<void>;
+}
+
+export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
+  const { isVideoStreamOn, onStartLocalVideo } = props;
+  const videoGalleryProps = usePropsFor(VideoGallery);
+  const [isButtonStatusSynced, setIsButtonStatusSynced] = useState(false);
+
+  const isPreviewCameraOn = useSelector(getIsPreviewCameraOn);
+  const isScreenShareActive = useMemo(() => {
+    return videoGalleryProps.screenShareParticipant !== undefined;
+  }, [videoGalleryProps]);
+
+  useEffect(() => {
+    if (isPreviewCameraOn && !isVideoStreamOn && !isButtonStatusSynced) {
+      onStartLocalVideo();
+    }
+    setIsButtonStatusSynced(true);
+  }, [isButtonStatusSynced, isPreviewCameraOn, isVideoStreamOn, onStartLocalVideo]);
+
+  const VideoGalleryMemoized = useMemo(() => {
+    return (
+      <VideoGallery
+        {...videoGalleryProps}
+        localVideoViewOption={localVideoViewOption}
+        remoteVideoViewOption={remoteVideoViewOption}
+        styles={VideoGalleryStyles}
+        layout="floatingLocalVideo"
+      />
+    );
+  }, [videoGalleryProps]);
+
+  return isScreenShareActive ? <ScreenShare {...videoGalleryProps} /> : VideoGalleryMemoized;
+};

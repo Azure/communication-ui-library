@@ -1,4 +1,5 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 const path = require('path');
 
@@ -29,8 +30,14 @@ module.exports = {
     // Note: This triggers babel to retranspile all package dependency files during webpack's compilation step.
     config.resolve.alias = {
       ...(config.resolve.alias || {}),
-      "@azure/communication-ui": path.resolve(__dirname, "../../communication-ui/src")
-    }
+      '@azure/communication-react': path.resolve(__dirname, '../../communication-react/src'),
+      'react-composites': path.resolve(__dirname, '../../react-composites/src'),
+      'chat-stateful-client': path.resolve(__dirname, '../../chat-stateful-client/src'),
+      'chat-component-bindings': path.resolve(__dirname, '../../chat-component-bindings/src'),
+      'calling-stateful-client': path.resolve(__dirname, '../../calling-stateful-client/src'),
+      'calling-component-bindings': path.resolve(__dirname, '../../calling-component-bindings/src'),
+      'acs-ui-common': path.resolve(__dirname, '../../acs-ui-common/src')
+    };
 
     return config;
   }

@@ -1,4 +1,6 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import React, { useEffect, useState } from 'react';
 import { Icon, Panel, PrimaryButton, Stack, TextField } from '@fluentui/react';
 import {
@@ -14,7 +16,8 @@ import {
   settingsTopicWarningStyle
 } from './styles/SettingsManagement.styles';
 import { inputBoxTextStyle } from './styles/SidePanel.styles';
-import { ENTER_KEY, MAXIMUM_LENGTH_OF_TOPIC, ThemeSelector } from '@azure/communication-ui';
+import { ThemeSelector } from 'app/theming/ThemeSelector';
+import { ENTER_KEY, MAXIMUM_LENGTH_OF_TOPIC } from './utils/constants';
 
 export type SettingsManagementProps = {
   updateThreadTopicName: (topicName: string) => Promise<void>;
@@ -27,28 +30,38 @@ export type SettingsManagementProps = {
 
 export const SettingsManagementComponent = (props: SettingsManagementProps): JSX.Element => {
   const { updateThreadTopicName, topicName, visible, parentId, onClose, onRenderFooter } = props;
-  const [edittedTopicName, setEdittedTopicName] = useState('');
+  const [editedTopicName, setEditedTopicName] = useState('');
   const [isOpen, setIsOpen] = useState<boolean>(visible ? visible : false);
-  const [isEditingTopicName, setIsEditingTopicName] = useState(false);
-  const [isTopicNameOverflow, setTopicNameOverflow] = useState(false);
   const [isSavingTopicName, setIsSavingTopicName] = useState(false);
+  const [topicValidationError, setTopicValidationError] = useState<string | undefined>(undefined);
 
-  const onTopicNameTextChange = (event: any): void => {
-    setIsEditingTopicName(true);
-    setEdittedTopicName(event.target.value);
-    if (event.target.value.length > MAXIMUM_LENGTH_OF_TOPIC) {
-      setTopicNameOverflow(true);
+  useEffect(() => {
+    if (topicName && editedTopicName.length === 0 && topicName?.length > 0) {
+      setEditedTopicName(topicName);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [topicName]);
+
+  const validateTopic = (input: string): void => {
+    if (input.length > MAXIMUM_LENGTH_OF_TOPIC) {
+      setTopicValidationError(`Topic cannot be over ${MAXIMUM_LENGTH_OF_TOPIC} characters`);
+    } else if (input.length <= 0) {
+      setTopicValidationError('Topic cannot be blank');
     } else {
-      setTopicNameOverflow(false);
+      setTopicValidationError(undefined);
     }
   };
 
-  const onTopicNameSubmit = async (): Promise<void> => {
-    if (edittedTopicName.length > MAXIMUM_LENGTH_OF_TOPIC) return;
+  const onChangeTopicName = (event: any): void => {
+    setEditedTopicName(event.target.value);
+    validateTopic(event.target.value);
+  };
+
+  const onSubmitTopicName = async (): Promise<void> => {
+    if (topicValidationError || editedTopicName.length === 0) return;
     setIsSavingTopicName(true);
-    await updateThreadTopicName(edittedTopicName);
+    await updateThreadTopicName(editedTopicName);
     setIsSavingTopicName(false);
-    setIsEditingTopicName(false);
     setTimeout(() => {
       document.getElementById('focusButton')?.focus();
     }, 100);
@@ -88,29 +101,26 @@ export const SettingsManagementComponent = (props: SettingsManagementProps): JSX
           <div className={settingsGroupNameStyle}>Group Name</div>
           <TextField
             key={topicName}
-            className={isTopicNameOverflow ? settingsGroupNameInputBoxWarningStyle : settingsGroupNameInputBoxStyle}
+            className={topicValidationError ? settingsGroupNameInputBoxWarningStyle : settingsGroupNameInputBoxStyle}
             inputClassName={inputBoxTextStyle}
             borderless={true}
-            defaultValue={isEditingTopicName ? edittedTopicName : topicName ? topicName : ''}
-            placeholder={topicName ? undefined : 'Type a group name'}
+            value={editedTopicName}
+            placeholder={editedTopicName.length > 0 ? undefined : 'Type a group name'}
             autoComplete="off"
-            onSubmit={onTopicNameSubmit}
-            onChange={onTopicNameTextChange}
+            onSubmit={onSubmitTopicName}
+            onChange={onChangeTopicName}
             onKeyUp={(ev) => {
               if (ev.which === ENTER_KEY) {
-                onTopicNameSubmit();
+                onSubmitTopicName();
               }
             }}
           />
-          {(isTopicNameOverflow && (
-            <div className={settingsTopicWarningStyle}> Topic cannot be over 30 characters </div>
-          )) ||
-            (!isTopicNameOverflow && <div className={settingsTopicWarningStyle} />)}
+          <div className={settingsTopicWarningStyle}> {topicValidationError} </div>
           <PrimaryButton
             id="editThreadTopicButton"
             className={settingsSaveChatNameButtonStyle}
-            onClick={() => onTopicNameSubmit()}
-            disabled={isSavingTopicName}
+            onClick={onSubmitTopicName}
+            disabled={isSavingTopicName || !!topicValidationError}
           >
             <Icon iconName="Save" className={settingsTextFieldIconStyle} />
             <div className={settingsSaveButtonTextStyle}>{isSavingTopicName ? 'Saving...' : 'Save'}</div>

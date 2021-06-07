@@ -1,14 +1,15 @@
-// © Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import { IDropdownStyles, IStackTokens, mergeStyles } from '@fluentui/react';
 import { Theme } from '@fluentui/react-theme-provider';
 
 export const mainStackTokens: IStackTokens = {
-  childrenGap: '1.5rem'
+  childrenGap: '1rem'
 };
 
 export const micStackTokens: IStackTokens = {
-  childrenGap: '0.75rem'
+  childrenGap: '1rem'
 };
 
 export const dropDownStyles = (theme: Theme): Partial<IDropdownStyles> => ({
@@ -36,6 +37,9 @@ export const dropDownStyles = (theme: Theme): Partial<IDropdownStyles> => ({
   label: {
     fontWeight: 600,
     fontSize: '0.875rem'
+  },
+  errorMessage: {
+    fontSize: '0.875rem'
   }
 });
 
@@ -43,6 +47,15 @@ export const localSettingsContainer = mergeStyles({
   width: '100%',
   maxWidth: '18.75rem',
   minWidth: '12.5rem',
-  maxHeight: '14.125rem',
-  marginTop: '2.125rem'
+  maxHeight: '19.125rem',
+  marginTop: '.313rem'
+});
+
+export const dropDownTitleIconStyles = mergeStyles({
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  minWidth: '0',
+  maxWidth: '100%',
+  overflowWrap: 'break-word',
+  margin: '.063rem'
 });

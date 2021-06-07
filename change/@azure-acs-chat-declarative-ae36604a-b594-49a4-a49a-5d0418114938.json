@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update to remove usage of npm run",
-  "packageName": "@azure/acs-chat-declarative",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "none"
-}

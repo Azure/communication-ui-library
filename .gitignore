@@ -83,10 +83,14 @@ common/autoinstallers/*/.npmrc
 # Test reporter results
 junit.xml
 
+# tsdoc
+tsdoc-metadata.json
+
 # Common build folders
 dist/
 build/
 temp/
 docGen/
-private-preview/
-private-preview.zip
+
+# Release outputs
+release/

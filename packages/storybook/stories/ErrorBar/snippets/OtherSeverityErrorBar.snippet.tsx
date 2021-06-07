@@ -1,12 +1,12 @@
 import React from 'react';
-import { ErrorBar, CommunicationUiErrorSeverity } from '@azure/communication-ui';
+import { ErrorBar } from 'react-composites';
 
 export const OtherSeverityErrorBarExample: () => JSX.Element = () => {
   return (
     <>
-      <ErrorBar message="This is a info message" severity={CommunicationUiErrorSeverity.INFO} />
-      <ErrorBar message="This is a warning message" severity={CommunicationUiErrorSeverity.WARNING} />
-      <ErrorBar message="This message will not be shown" severity={CommunicationUiErrorSeverity.IGNORE} />
+      <ErrorBar message="This is a info message" severity={'info'} />
+      <ErrorBar message="This is a warning message" severity={'warning'} />
+      <ErrorBar message="This message will not be shown" severity={'error'} />
     </>
   );
 };
