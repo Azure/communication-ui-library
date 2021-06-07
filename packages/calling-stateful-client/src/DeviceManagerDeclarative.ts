@@ -70,12 +70,12 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
   };
 
   private videoDevicesUpdated = async (): Promise<void> => {
-    this._context.setDeviceManagerCameras(await this._deviceManager.getCameras());
+    this._context.setDeviceManagerCameras(dedupeById(await this._deviceManager.getCameras()));
   };
 
   private audioDevicesUpdated = async (): Promise<void> => {
-    this._context.setDeviceManagerMicrophones(await this._deviceManager.getMicrophones());
-    this._context.setDeviceManagerSpeakers(await this._deviceManager.getSpeakers());
+    this._context.setDeviceManagerMicrophones(dedupeById(await this._deviceManager.getMicrophones()));
+    this._context.setDeviceManagerSpeakers(dedupeById(await this._deviceManager.getSpeakers()));
   };
 
   private selectedMicrophoneChanged = (): void => {
@@ -91,7 +91,7 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
       case 'getCameras': {
         return (): Promise<VideoDeviceInfo[]> => {
           return target.getCameras().then((cameras: VideoDeviceInfo[]) => {
-            this._context.setDeviceManagerCameras([...cameras]);
+            this._context.setDeviceManagerCameras(dedupeById(cameras));
             return cameras;
           });
         };
@@ -99,7 +99,7 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
       case 'getMicrophones': {
         return (): Promise<AudioDeviceInfo[]> => {
           return target.getMicrophones().then((microphones: AudioDeviceInfo[]) => {
-            this._context.setDeviceManagerMicrophones([...microphones]);
+            this._context.setDeviceManagerMicrophones(dedupeById(microphones));
             return microphones;
           });
         };
@@ -107,7 +107,7 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
       case 'getSpeakers': {
         return (): Promise<AudioDeviceInfo[]> => {
           return target.getSpeakers().then((speakers: AudioDeviceInfo[]) => {
-            this._context.setDeviceManagerSpeakers([...speakers]);
+            this._context.setDeviceManagerSpeakers(dedupeById(speakers));
             return speakers;
           });
         };
@@ -140,6 +140,20 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
     }
   }
 }
+
+// TODO: Remove this when SDK no longer returns duplicate audio and video devices
+/** Helper function to dedupe duplicate audio and video devices obtained from SDK */
+const dedupeById = <T extends { id: string }>(devices: T[]): T[] => {
+  const ids = new Set();
+  const uniqueDevices: T[] = [];
+  devices.forEach((device: T) => {
+    if (!ids.has(device.id)) {
+      uniqueDevices.push(device);
+      ids.add(device.id);
+    }
+  });
+  return uniqueDevices;
+};
 
 /**
  * Creates a declarative DeviceManager by proxying DeviceManager with ProxyDeviceManager. The declarative DeviceManager
