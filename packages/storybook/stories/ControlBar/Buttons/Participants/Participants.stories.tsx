@@ -38,7 +38,7 @@ const getDocs: () => JSX.Element = () => {
       <Title>ParticipantsButton</Title>
       <Description of={ParticipantsButton} />
       <Description>
-        Note: When overriding a render, like using `onRenderIcon` or `onRenderText`, don not forget to add a unique key
+        Note: When overriding a render, like using `onRenderIcon` or `onRenderText`, do not forget to add a unique key
         to each element to avoid warning for children in a list.
       </Description>
 
@@ -92,9 +92,9 @@ const getDocs: () => JSX.Element = () => {
 
       <Heading>ParticipantsButton with cutom styles</Heading>
       <Description>
-        You can change the styles of `ParticipantsButton` through its `styles` props as you would customized any Button
+        You can change the styles of `ParticipantsButton` through its `styles` props as you would customize any Button
         styles (root, label, etc..) with the addition of customizing the participant list container like shown in the
-        example below..
+        example below.
       </Description>
       <Canvas mdxSource={ParticipantsButtonWithCustomStylesExampleText}>
         <ParticipantsButtonWithCustomStylesExample />
@@ -155,7 +155,7 @@ const ParticipantsStory = (): JSX.Element => {
     myUserId: myUserId
   };
   const onMuteAll = () => {
-    // your implementation to mute all participant
+    // your implementation to mute all participants
   };
   return (
     <ParticipantsButton

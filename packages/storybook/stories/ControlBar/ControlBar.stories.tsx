@@ -203,7 +203,7 @@ const ControlBarStory: (
   }
 
   const onMuteAll = () => {
-    // your implementation to mute all participant
+    // your implementation to mute all participants
   };
 
   return (

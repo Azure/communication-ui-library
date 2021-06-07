@@ -72,7 +72,7 @@ const mockParticipantsProps: ParticipantListProps = {
 const mockCallLink = 'URL to invite new participants to the current call (https://...)';
 
 const onMuteAll = () => {
-  // your implementation to mute all participant
+  // your implementation to mute all participants
 };
 
 export const ParticipantsButtonWithCustomRenderExample: () => JSX.Element = () => {
@@ -83,7 +83,7 @@ export const ParticipantsButtonWithCustomRenderExample: () => JSX.Element = () =
   const customOnRenderText = (): JSX.Element => {
     return (
       <Label key={'participantsCustomLabelKey'} style={{ color: 'darkviolet', fontStyle: 'italic' }}>
-        who is an this call
+        who is on this call
       </Label>
     );
   };

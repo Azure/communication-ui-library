@@ -46,7 +46,7 @@ const mockParticipantsProps: ParticipantListProps = {
 const mockCallLink = 'URL to invite new participants to the current call (https://...)';
 
 const onMuteAll = () => {
-  // your implementation to mute all participant
+  // your implementation to mute all participants
 };
 
 export const ParticipantsButtonWithMuteAllOptionExample: () => JSX.Element = () => {
