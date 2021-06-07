@@ -6,6 +6,7 @@ export * from './theming';
 
 export type {
   BaseCustomStylesProps,
+  ButtonCustomStylesProps,
   ChatMessage,
   ChatMessagePayload,
   CustomMessage,

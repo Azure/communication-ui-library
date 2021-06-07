@@ -30,6 +30,7 @@ import { DeviceAccess } from '@azure/communication-calling';
 import { DeviceManager } from '@azure/communication-calling';
 import { GroupCallLocator } from '@azure/communication-calling';
 import { IButtonProps } from '@fluentui/react';
+import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { MediaStreamType } from '@azure/communication-calling';
@@ -152,10 +153,13 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     unmute(): Promise<void>;
     }
 
-// @public (undocumented)
+// @public
 export interface BaseCustomStylesProps {
     root?: IStyle;
 }
+
+// @public
+export type ButtonCustomStylesProps = IButtonStyles;
 
 // @public (undocumented)
 export interface CallAdapter {
@@ -1074,7 +1078,7 @@ export interface ParticipantsButtonProps extends IButtonProps {
 }
 
 // @public
-export interface ParticipantsButtonStylesProps extends BaseCustomStylesProps {
+export interface ParticipantsButtonStylesProps extends ButtonCustomStylesProps {
     participantListContainerStyle?: IStyle;
 }
 
