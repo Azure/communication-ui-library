@@ -2,19 +2,19 @@
 
 Selectors/handlers are what we provide to our customers to connect our communication UI library with our declarative client(Calling and Chat).
 
-There are several principles for writing selectors/handlers we exporting from our library, either for perf or code styles:
+There are several principles for writing selectors/handlers that we are exporting from our library, either for perf or code styles:
 
 ## Selectors package is tailored for what we have in our component package
 
-*In order to provide a smooth experience for bridging stateful client to our component library, each feature component we provide in our component library need to be able to find the right selector to power itself.*
+*In order to provide a smooth experience for bridging stateful client to our component library, each feature component we provide in our component library needs to be able to find the right selector to power itself.*
 
-Feature components is defined as a component which can handled a specific part of our chat, calling function without any other component involved, it requires data from ACS and calls functions in client. 
+A Feature components is defined as a component which can handle a specific part of our chat and calling function without any other component involved, it requires data from ACS and calls functions in client. 
 
 For example,
 
 MessageThread, SendBox are considered as feature components.
 
-Basic, atomic, non-feature components like CommonButton or ReadReceipt not included, it's more like a UI element instead of something can work independently
+Basic, atomic, non-feature components like CommonButton or ReadReceipt are not included, it's more like a UI element instead of something that can work independently.
 
 ## One selector/handlers props are able to drive one component - no multiple selectors
 
@@ -41,7 +41,7 @@ const messageThreadProps = messageThreadSelector(state);
 
 ## Selector/Handlers return props name must match function type props name of component
 
-To make code style cleaner and simple, we use Object spread operator to pass props and handlers to a component whenever it is possible, which requires all selector/handlers return type, name must matched component props.
+To make code style cleaner and simple, we use Object spread operator to pass props and handlers to a component whenever it is possible, which requires all selector/handlers return type, name must matched component props. 
 
 Do:
 ```typescript
@@ -99,19 +99,19 @@ const ItemsDisplay = React.memo((displayStr) => {
 });
 ```
 
-In 'better' version, selector generates string inside, which will keep the same when items counts grows more than 10. Under this case, perf is not an issue any more.
+In 'better' version, selector generates string inside, which will keep the same when items count grows more than 10. Under this case, perf is not an issue any more.
 
 ### 2. Returning basic types is preferred 
 
-Similar to point 1, try not to put object in props when possible, the implementation of compare function for React.memo to determine whether to re-render is comparing the reference(similar to ===), so basic types are preffered because they are always equal when in the same value:
+Similar to point 1, try not to put object in props when possible, the implementation of compare function for React.memo to determine whether to re-render is comparing the reference(similar to ===), so basic types are preferred because they are always equal when in the same value:
 
 ```typescript
 const obj1 = {foo: 'bar'};
 const obj2 = {foo: 'bar'};
-obj1 === obj2; // return false
+obj1 === obj2; // returns false
 const foo1 = 'bar';
 const foo2 = 'bar';
-foo1 === foo2; // return true because if it is basic type
+foo1 === foo2; // returns true because comparison is between basic types
 ```
 
 Here is a bad example of selector:
@@ -125,7 +125,7 @@ const itemSelector = createSelector([getItems], (items) => { itemsInfo: {
 }});
 ```
 
-When you pass return props to a pure component, whether itemCount or itemName is changed or not, re-render will happen, because you are creating a new object every time
+When we pass return props to a pure component, whether itemCount or itemName is changed or not, re-render will happen, because a new object prop is created every time
 
 Do:
 ```typescript
@@ -136,13 +136,13 @@ const itemSelector = createSelector([getItems], (items) => {
 });
 ```
 
-return basic type directly so the compare function will always consider there is no change when values are identical.
+Return only basic types directly so the compare function will always consider there is no change when values are identical.
 
 ### 3. Return same object references in array when possible 
 
 Stateful client guarantees its immutability of state: When a single item in an array changes, it creates a new instance for itself and creates a new array reference, but keeps all the other elements the same reference.
 
-Reselect provides a nice memoize feature for selectors, but when an array is passed as a parameter, every element will be iterated again in the function, and all elements in new generated array will be new instance:
+Reselect provides a nice memoize feature for selectors, but when an array is passed as a parameter, every element will be iterated again in the function, and all elements in newly generated array will be a new instance:
 
 Don't:
 ```typescript
@@ -154,7 +154,7 @@ const itemSelector = createSelector([getItems], (items) => {
 });
 ```
 
-This will generate every reshapedItem every even just one element is changed in items array, which is not perf friendly. What might be a better design is:
+This will generate every eshapedItem every time even just one element is changed in items array, which is not perf friendly. A better design would look like:
 
 Do:
 ```typescript
@@ -164,8 +164,8 @@ const itemSelector = createSelector([getItems], (items) => {
     foodItems: items.filter(item => item === 'food')
 });
 ```
-By not generating new objects, we will be able to enjoy the immutablity from state provided by stateful client, and keep the rest of unchanged element refs the same.
+By not generating new objects, we will be able to enjoy the immutability from state provided by stateful client, and keep the rest of unchanged element refs the same.
 
 *What if I do need a reshape?*
 
-In a lot of cases, reshaping or generating new object is not avoidable, so don't break your own design by bothering generating new objects. And under most situations, array sizes are limited, we don't need to worry too much about perf when we handle it properly later in components. There might be some extreme cases like chatMessages, which could grow into a size like 10k, when this happens, doing a memoize element by element will help. Check *memoizeFnAll.ts* util function for more details
+In a lot of cases, reshaping or generating new object is not avoidable, so don't break your own design by avoiding generating new objects. And under most situations, array sizes are limited, we don't need to worry too much about perf when we handle it properly later in components. There might be some extreme cases like chatMessages, which could grow into a size like 10k, when this happens, doing a memoize element by element will help. Check *memoizeFnAll.ts* util function for more details.
