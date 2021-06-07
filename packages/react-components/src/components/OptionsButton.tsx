@@ -11,7 +11,7 @@ import {
   mergeStyles,
   ContextualMenuItemType
 } from '@fluentui/react';
-import { MoreIcon } from '@fluentui/react-northstar';
+import { SettingsIcon } from '@fluentui/react-northstar';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 
 /**
@@ -190,7 +190,7 @@ export const OptionsButton = (props: OptionsButtonProps): JSX.Element => {
   const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
 
   const defaultRenderIcon = (): JSX.Element => {
-    return <MoreIcon key={'optionsIconKey'} />;
+    return <SettingsIcon key="optionsIconKey" />;
   };
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {
