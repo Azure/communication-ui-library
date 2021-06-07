@@ -2,8 +2,16 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { DefaultButton, IButtonProps, IContextualMenuItem, Label, concatStyleSets, mergeStyles } from '@fluentui/react';
-import { MoreIcon } from '@fluentui/react-northstar';
+import {
+  DefaultButton,
+  IButtonProps,
+  IContextualMenuItem,
+  Label,
+  concatStyleSets,
+  mergeStyles,
+  ContextualMenuItemType
+} from '@fluentui/react';
+import { SettingsIcon } from '@fluentui/react-northstar';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 
 /**
@@ -86,24 +94,25 @@ const generateDefaultMenuProps = (props: OptionsButtonProps): { items: IContextu
     onSelectSpeaker
   } = props;
 
-  let defaultMenuProps: { items: IContextualMenuItem[] } | undefined = undefined;
+  const defaultMenuProps: { items: IContextualMenuItem[] } = { items: [] };
 
   if (cameras && selectedCamera && onSelectCamera) {
-    defaultMenuProps = defaultMenuProps ?? { items: [] };
     defaultMenuProps.items.push({
-      key: '1',
-      name: 'Choose Camera',
-      iconProps: { iconName: 'LocationCircle' },
-      subMenuProps: {
-        items: cameras.map((val) => ({
-          key: val.id,
-          text: val.name,
-          title: val.name,
+      key: 'sectionCamera',
+      title: 'Choose Camera',
+      itemType: ContextualMenuItemType.Section,
+      sectionProps: {
+        title: 'Camera',
+        items: cameras.map((camera) => ({
+          key: camera.id,
+          text: camera.name,
+          title: camera.name,
+          iconProps: { iconName: 'Camera' },
           canCheck: true,
-          isChecked: val.id === selectedCamera?.id,
+          isChecked: camera.id === selectedCamera?.id,
           onClick: () => {
-            if (val.id !== selectedCamera?.id) {
-              onSelectCamera(val);
+            if (camera.id !== selectedCamera?.id) {
+              onSelectCamera(camera);
             }
           }
         }))
@@ -112,21 +121,22 @@ const generateDefaultMenuProps = (props: OptionsButtonProps): { items: IContextu
   }
 
   if (microphones && selectedMicrophone && onSelectMicrophone) {
-    defaultMenuProps = defaultMenuProps ?? { items: [] };
     defaultMenuProps.items.push({
-      key: '2',
-      name: 'Choose Microphone',
-      iconProps: { iconName: 'LocationCircle' },
-      subMenuProps: {
-        items: microphones.map((val) => ({
-          key: val.id,
-          text: val.name,
-          title: val.name,
+      key: 'sectionMicrophone',
+      title: 'Choose Microphone',
+      itemType: ContextualMenuItemType.Section,
+      sectionProps: {
+        title: 'Microphone',
+        items: microphones.map((micophone) => ({
+          key: micophone.id,
+          text: micophone.name,
+          title: micophone.name,
+          iconProps: { iconName: 'Microphone' },
           canCheck: true,
-          isChecked: val.id === selectedMicrophone?.id,
+          isChecked: micophone.id === selectedMicrophone?.id,
           onClick: () => {
-            if (val.id !== selectedMicrophone?.id) {
-              onSelectMicrophone(val);
+            if (micophone.id !== selectedMicrophone?.id) {
+              onSelectMicrophone(micophone);
             }
           }
         }))
@@ -135,21 +145,22 @@ const generateDefaultMenuProps = (props: OptionsButtonProps): { items: IContextu
   }
 
   if (speakers && selectedSpeaker && onSelectSpeaker) {
-    defaultMenuProps = defaultMenuProps ?? { items: [] };
     defaultMenuProps.items.push({
-      key: '3',
-      name: 'Choose Speaker',
-      iconProps: { iconName: 'LocationCircle' },
-      subMenuProps: {
-        items: speakers.map((val) => ({
-          key: val.id,
-          text: val.name,
-          title: val.name,
+      key: 'sectionSpeaker',
+      title: 'Choose Speaker',
+      itemType: ContextualMenuItemType.Section,
+      sectionProps: {
+        title: 'Speaker',
+        items: speakers.map((speaker) => ({
+          key: speaker.id,
+          text: speaker.name,
+          title: speaker.name,
+          iconProps: { iconName: 'Volume1' },
           canCheck: true,
-          isChecked: val.id === selectedSpeaker?.id,
+          isChecked: speaker.id === selectedSpeaker?.id,
           onClick: () => {
-            if (val.id !== selectedSpeaker?.id) {
-              onSelectSpeaker(val);
+            if (speaker.id !== selectedSpeaker?.id) {
+              onSelectSpeaker(speaker);
             }
           }
         }))
@@ -157,6 +168,10 @@ const generateDefaultMenuProps = (props: OptionsButtonProps): { items: IContextu
     });
   }
 
+  if (defaultMenuProps.items.length === 0) {
+    // Avoids creating an empty context menu.
+    return undefined;
+  }
   return defaultMenuProps;
 };
 
@@ -175,7 +190,7 @@ export const OptionsButton = (props: OptionsButtonProps): JSX.Element => {
   const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
 
   const defaultRenderIcon = (): JSX.Element => {
-    return <MoreIcon key={'optionsIconKey'} />;
+    return <SettingsIcon key="optionsIconKey" />;
   };
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {
