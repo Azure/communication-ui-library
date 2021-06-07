@@ -8,7 +8,7 @@ import {
   devicePermissionSelector
 } from 'calling-component-bindings';
 import { CallState, GroupLocator, MeetingLocator } from '@azure/communication-calling';
-import { Label, Overlay, Spinner, Stack } from '@fluentui/react';
+import { Overlay, Spinner, Stack } from '@fluentui/react';
 import { VideoStreamOptions } from 'react-components';
 import { CallClientState, StatefulCallClient } from 'calling-stateful-client';
 import React, { useEffect, useState } from 'react';
@@ -21,7 +21,6 @@ import {
   activeContainerClassName,
   containerStyles,
   headerStyles,
-  loadingStyle,
   overlayStyles,
   paneStyles,
   subContainerStyles
@@ -34,6 +33,7 @@ import { mediaGallerySelector } from './selectors/mediaGallerySelector';
 import { complianceBannerSelector } from './selectors/complianceBannerSelector';
 import { PermissionsBanner } from './PermissionsBanner';
 import { permissionsBannerContainerStyle } from './styles/PermissionsBanner.styles';
+import { ScreenSharePopup } from './ScreenSharePopup';
 
 export interface CallScreenProps {
   screenWidth: number;
@@ -130,28 +130,23 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
             />
           </Stack.Item>
           <Stack styles={subContainerStyles} grow horizontal>
-            {!isScreenSharingOn ? (
-              callState === 'Connected' && (
-                <>
-                  <Stack.Item grow styles={activeContainerClassName}>
-                    <MediaGallery {...mediaGalleryProps} onStartLocalVideo={handlers.onStartLocalVideo} />
-                  </Stack.Item>
-                  {selectedPane !== CommandPanelTypes.None &&
-                    (window.innerWidth > MINI_HEADER_WINDOW_WIDTH ? (
-                      <Stack.Item disableShrink styles={paneStyles}>
-                        <CommandPanel selectedPane={selectedPane} />
-                      </Stack.Item>
-                    ) : (
-                      <Overlay styles={overlayStyles}>
-                        <CommandPanel selectedPane={selectedPane} />
-                      </Overlay>
-                    ))}
-                </>
-              )
-            ) : (
-              <Stack horizontalAlign="center" verticalAlign="center" styles={loadingStyle}>
-                <Label>Your screen is being shared</Label>
-              </Stack>
+            {callState === 'Connected' && (
+              <>
+                <Stack.Item grow styles={activeContainerClassName}>
+                  <MediaGallery {...mediaGalleryProps} onStartLocalVideo={handlers.onStartLocalVideo} />
+                </Stack.Item>
+                {selectedPane !== CommandPanelTypes.None &&
+                  (window.innerWidth > MINI_HEADER_WINDOW_WIDTH ? (
+                    <Stack.Item disableShrink styles={paneStyles}>
+                      <CommandPanel selectedPane={selectedPane} />
+                    </Stack.Item>
+                  ) : (
+                    <Overlay styles={overlayStyles}>
+                      <CommandPanel selectedPane={selectedPane} />
+                    </Overlay>
+                  ))}
+                {isScreenSharingOn ? <ScreenSharePopup onStopScreenShare={handlers.onStopScreenShare} /> : <></>}
+              </>
             )}
           </Stack>
         </Stack>
