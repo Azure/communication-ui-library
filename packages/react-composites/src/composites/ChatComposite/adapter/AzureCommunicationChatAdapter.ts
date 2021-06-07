@@ -110,7 +110,8 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     try {
       await this.chatThreadClient.getProperties();
     } catch (e) {
-      console.log(e);
+      this.context.setError(e);
+      this.emitter.emit('error', e);
     }
 
     // Fetch all participants who joined before the local user.
@@ -120,7 +121,8 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
         maxPageSize: 100
       }));
     } catch (e) {
-      console.log(e);
+      this.context.setError(e);
+      this.emitter.emit('error', e);
     }
   };
 
@@ -137,27 +139,57 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   };
 
   sendMessage = async (content: string): Promise<void> => {
-    await this.handlers.onSendMessage(content);
+    try {
+      await this.handlers.onSendMessage(content);
+    } catch (e) {
+      this.context.setError(e);
+      this.emitter.emit('error', e);
+    }
   };
 
   sendReadReceipt = async (chatMessageId: string): Promise<void> => {
-    await this.handlers.onMessageSeen(chatMessageId);
+    try {
+      await this.handlers.onMessageSeen(chatMessageId);
+    } catch (e) {
+      this.context.setError(e);
+      this.emitter.emit('error', e);
+    }
   };
 
   sendTypingIndicator = async (): Promise<void> => {
-    await this.handlers.onTyping();
+    try {
+      await this.handlers.onTyping();
+    } catch (e) {
+      this.context.setError(e);
+      this.emitter.emit('error', e);
+    }
   };
 
   removeParticipant = async (userId: string): Promise<void> => {
-    await this.handlers.onParticipantRemove(userId);
+    try {
+      await this.handlers.onParticipantRemove(userId);
+    } catch (e) {
+      this.context.setError(e);
+      this.emitter.emit('error', e);
+    }
   };
 
   setTopic = async (topicName: string): Promise<void> => {
-    await this.handlers.updateThreadTopicName(topicName);
+    try {
+      await this.handlers.updateThreadTopicName(topicName);
+    } catch (e) {
+      this.emitter.emit('error', e);
+    }
   };
 
   loadPreviousChatMessages = async (messagesToLoad: number): Promise<boolean> => {
-    return await this.handlers.onLoadPreviousChatMessages(messagesToLoad);
+    try {
+      return await this.handlers.onLoadPreviousChatMessages(messagesToLoad);
+    } catch (e) {
+      this.context.setError(e);
+      this.emitter.emit('error', e);
+      return false;
+    }
   };
 
   messageReceivedListener = (event: ChatMessageReceivedEvent): void => {

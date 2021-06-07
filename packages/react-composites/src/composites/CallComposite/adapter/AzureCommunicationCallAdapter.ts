@@ -157,7 +157,10 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   public dispose(): void {
     this.callClient.offStateChange(this.onClientStateChange);
-    this.callAgent.dispose();
+    this.callAgent.dispose().catch((e) => {
+      this.context.setError(e);
+      this.emitter.emit('error', e);
+    });
   }
 
   public isTeamsCall(): boolean {
@@ -165,24 +168,50 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 
   public queryCameras(): Promise<VideoDeviceInfo[]> {
-    return this.deviceManager.getCameras();
+    try {
+      return this.deviceManager.getCameras();
+    } catch (e) {
+      this.context.setError(e);
+      this.emitter.emit('error', e);
+      return Promise.resolve([] as VideoDeviceInfo[]);
+    }
   }
 
   public queryMicrophones(): Promise<AudioDeviceInfo[]> {
-    return this.deviceManager.getMicrophones();
+    try {
+      return this.deviceManager.getMicrophones();
+    } catch (e) {
+      this.context.setError(e);
+      this.emitter.emit('error', e);
+      return Promise.resolve([] as AudioDeviceInfo[]);
+    }
   }
 
   public async querySpeakers(): Promise<AudioDeviceInfo[]> {
-    return this.deviceManager.getSpeakers();
+    try {
+      return this.deviceManager.getSpeakers();
+    } catch (e) {
+      this.context.setError(e);
+      this.emitter.emit('error', e);
+      return Promise.resolve([] as AudioDeviceInfo[]);
+    }
   }
 
   public async askDevicePermission(constrain: PermissionConstraints): Promise<void> {
-    await this.deviceManager.askDevicePermission(constrain);
+    try {
+      await this.deviceManager.askDevicePermission(constrain);
+    } catch (e) {
+      this.context.setError(e);
+      this.emitter.emit('error', e);
+    }
   }
 
   public async joinCall(microphoneOn?: boolean): Promise<void> {
     if (isInCall(this.getState().call?.state ?? 'None')) {
-      throw new Error('You are already in the call!');
+      const e = new Error('You are already in the call!');
+      this.context.setError(e);
+      this.emitter.emit('error', e);
+      return;
     } else {
       const audioOptions: AudioOptions = { muted: microphoneOn ?? !this.getState().isLocalPreviewMicrophoneEnabled };
       // TODO: find a way to expose stream to here
@@ -190,16 +219,22 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
       const isTeamsMeeting = 'groupId' in this.locator;
 
-      if (isTeamsMeeting) {
-        this.call = this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
-          audioOptions,
-          videoOptions
-        });
-      } else {
-        this.call = this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
-          audioOptions,
-          videoOptions
-        });
+      try {
+        if (isTeamsMeeting) {
+          this.call = this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
+            audioOptions,
+            videoOptions
+          });
+        } else {
+          this.call = this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
+            audioOptions,
+            videoOptions
+          });
+        }
+      } catch (e) {
+        this.context.setError(e);
+        this.emitter.emit('error', e);
+        return;
       }
 
       this.context.setCallId(this.call.id);
@@ -211,58 +246,105 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 
   public async createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void> {
-    if (remoteUserId === undefined) {
-      await this.handlers.onCreateLocalStreamView(options);
-    } else {
-      await this.handlers.onCreateRemoteStreamView(remoteUserId, options);
+    try {
+      if (remoteUserId === undefined) {
+        await this.handlers.onCreateLocalStreamView(options);
+      } else {
+        await this.handlers.onCreateRemoteStreamView(remoteUserId, options);
+      }
+    } catch (e) {
+      this.context.setError(e);
+      this.emitter.emit('error', e);
     }
   }
 
   public async disposeStreamView(remoteUserId?: string): Promise<void> {
-    if (remoteUserId === undefined) {
-      await this.handlers.onDisposeLocalStreamView();
-    } else {
-      await this.handlers.onDisposeRemoteStreamView(remoteUserId);
+    try {
+      if (remoteUserId === undefined) {
+        await this.handlers.onDisposeLocalStreamView();
+      } else {
+        await this.handlers.onDisposeRemoteStreamView(remoteUserId);
+      }
+    } catch (e) {
+      this.context.setError(e);
+      this.emitter.emit('error', e);
     }
   }
 
   public async leaveCall(): Promise<void> {
     const callId = this.call?.id;
-    await this.handlers.onHangUp();
+    this.stopCamera();
+    this.mute();
+
+    try {
+      await this.handlers.onHangUp();
+    } catch (e) {
+      this.context.setError(e);
+      this.emitter.emit('error', e);
+      return;
+    }
     this.unsubscribeCallEvents();
     this.call = undefined;
     this.handlers = createDefaultCallingHandlers(this.callClient, this.callAgent, this.deviceManager, undefined);
     this.context.setCallId(undefined);
     // Resync state after callId is set
     this.context.updateClientState(this.callClient.getState());
-    this.stopCamera();
-    this.mute();
     this.emitter.emit('callEnded', { callId });
   }
 
   public async setCamera(device: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void> {
-    await this.handlers.onSelectCamera(device, options);
+    try {
+      await this.handlers.onSelectCamera(device, options);
+    } catch (e) {
+      this.context.setError(e);
+      this.emitter.emit('error', e);
+    }
   }
 
   public async setMicrophone(device: AudioDeviceInfo): Promise<void> {
-    await this.handlers.onSelectMicrophone(device);
+    try {
+      await this.handlers.onSelectMicrophone(device);
+    } catch (e) {
+      this.context.setError(e);
+      this.emitter.emit('error', e);
+    }
   }
 
   public async setSpeaker(device: AudioDeviceInfo): Promise<void> {
-    await this.handlers.onSelectSpeaker(device);
+    try {
+      await this.handlers.onSelectSpeaker(device);
+    } catch (e) {
+      this.context.setError(e);
+      this.emitter.emit('error', e);
+    }
   }
 
   public async onToggleCamera(options?: VideoStreamOptions): Promise<void> {
-    await this.handlers.onToggleCamera(options);
+    try {
+      await this.handlers.onToggleCamera(options);
+    } catch (e) {
+      this.context.setError(e);
+      this.emitter.emit('error', e);
+    }
   }
 
   //TODO: seperate onToggleCamera logic in Handler
   public async startCamera(): Promise<void> {
-    if (!this.isCameraOn()) await this.handlers.onToggleCamera();
+    try {
+      if (!this.isCameraOn()) await this.handlers.onToggleCamera();
+    } catch (e) {
+      this.context.setError(e);
+      this.emitter.emit('error', e);
+    }
   }
 
   public async stopCamera(): Promise<void> {
-    if (this.isCameraOn()) await this.handlers.onToggleCamera();
+    try {
+      if (this.isCameraOn()) await this.handlers.onToggleCamera();
+    } catch (e) {
+      this.context.setError(e);
+      this.emitter.emit('error', e);
+    }
   }
 
   private isCameraOn(): boolean {
@@ -282,22 +364,42 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     if (!this.call) {
       this.context.setIsLocalMicrophoneEnabled(false);
     }
-    await this.call?.mute();
+    try {
+      await this.call?.mute();
+    } catch (e) {
+      this.context.setError(e);
+      this.emitter.emit('error', e);
+    }
   }
 
   public async unmute(): Promise<void> {
     if (!this.call) {
       this.context.setIsLocalMicrophoneEnabled(true);
     }
-    await this.call?.unmute();
+    try {
+      await this.call?.unmute();
+    } catch (e) {
+      this.context.setError(e);
+      this.emitter.emit('error', e);
+    }
   }
 
   public async startScreenShare(): Promise<void> {
-    if (!this.call?.isScreenSharingOn) await this.handlers.onToggleScreenShare();
+    try {
+      if (!this.call?.isScreenSharingOn) await this.handlers.onToggleScreenShare();
+    } catch (e) {
+      this.context.setError(e);
+      this.emitter.emit('error', e);
+    }
   }
 
   public async stopScreenShare(): Promise<void> {
-    if (this.call?.isScreenSharingOn) await this.handlers.onToggleScreenShare();
+    try {
+      if (this.call?.isScreenSharingOn) await this.handlers.onToggleScreenShare();
+    } catch (e) {
+      this.context.setError(e);
+      this.emitter.emit('error', e);
+    }
   }
 
   //TODO: a better way to expose option parameter
@@ -309,11 +411,22 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       return backendId;
     });
 
-    return this.handlers.onStartCall(idsToAdd);
+    try {
+      return this.handlers.onStartCall(idsToAdd);
+    } catch (e) {
+      this.context.setError(e);
+      this.emitter.emit('error', e);
+      return undefined;
+    }
   }
 
   public async removeParticipant(userId: string): Promise<void> {
-    this.handlers.onParticipantRemove(userId);
+    try {
+      await this.handlers.onParticipantRemove(userId);
+    } catch (e) {
+      this.context.setError(e);
+      this.emitter.emit('error', e);
+    }
   }
 
   public getState(): CallAdapterState {
