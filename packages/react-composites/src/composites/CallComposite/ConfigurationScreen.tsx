@@ -13,11 +13,14 @@ import { devicePermissionSelector } from './selectors/devicePermissionSelector';
 import { useSelector } from './hooks/useSelector';
 import { OptionsButton } from 'react-components';
 import { getCallingSelector } from '@azure/acs-calling-selector';
+import { titleContainerStyle } from './styles/ConfigurationScreen.styles';
 
 export interface ConfigurationScreenProps {
   screenWidth: number;
   startCallHandler(): void;
 }
+
+const title = 'Start a call';
 
 export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Element => {
   const { startCallHandler } = props;
@@ -28,6 +31,7 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
 
   return (
     <CallConfiguration {...props}>
+      <div className={titleContainerStyle}>{title}</div>
       <div>
         <LocalDeviceSettings
           {...options}

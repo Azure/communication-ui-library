@@ -2,9 +2,31 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { DefaultButton, IButtonProps, Label, concatStyleSets, mergeStyles } from '@fluentui/react';
-import { MoreIcon } from '@fluentui/react-northstar';
+import {
+  DefaultButton,
+  IButtonProps,
+  IContextualMenuItem,
+  Label,
+  concatStyleSets,
+  mergeStyles,
+  ContextualMenuItemType
+} from '@fluentui/react';
+import { SettingsIcon } from '@fluentui/react-northstar';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
+
+/**
+ * Device to represent a camera, microphone, or speaker for component OptionsButton component
+ */
+export interface OptionsDevice {
+  /**
+   * Device unique identifier
+   */
+  id: string;
+  /**
+   * Device name
+   */
+  name: string;
+}
 
 /**
  * Props for OptionsButton component
@@ -15,18 +37,41 @@ export interface OptionsButtonProps extends IButtonProps {
    * @defaultValue `false`
    */
   showLabel?: boolean;
-
   /**
-   * Utility props for stateful props.
+   * Available microphones for selection
    */
-  microphones?: { id: string; name: string }[];
-  speakers?: { id: string; name: string }[];
-  cameras?: { id: string; name: string }[];
-  selectedMicrophone?: { id: string; name: string };
-  selectedSpeaker?: { id: string; name: string };
-  selectedCamera?: { id: string; name: string };
+  microphones?: OptionsDevice[];
+  /**
+   * Available speakers for selection
+   */
+  speakers?: OptionsDevice[];
+  /**
+   * Available cameras for selection
+   */
+  cameras?: OptionsDevice[];
+  /**
+   * Microphone that is shown as currently selected
+   */
+  selectedMicrophone?: OptionsDevice;
+  /**
+   * Speaker that is shown as currently selected
+   */
+  selectedSpeaker?: OptionsDevice;
+  /**
+   * Camera that is shown as currently selected
+   */
+  selectedCamera?: OptionsDevice;
+  /**
+   * Callback when a camera is selected
+   */
   onSelectCamera?: (device: any) => Promise<void>;
+  /**
+   * Callback when a microphone is selected
+   */
   onSelectMicrophone?: (device: any) => Promise<void>;
+  /**
+   * Speaker when a speaker is selected
+   */
   onSelectSpeaker?: (device: any) => Promise<void>;
 }
 
@@ -36,7 +81,7 @@ export interface OptionsButtonProps extends IButtonProps {
  * @param props OptionsButtonProps
  * @returns MenuProps
  */
-const generateDefaultMenuProps = (props: OptionsButtonProps): { items: Array<any> } => {
+const generateDefaultMenuProps = (props: OptionsButtonProps): { items: IContextualMenuItem[] } | undefined => {
   const {
     microphones,
     speakers,
@@ -49,21 +94,27 @@ const generateDefaultMenuProps = (props: OptionsButtonProps): { items: Array<any
     onSelectSpeaker
   } = props;
 
-  const defaultMenuProps: { items: Array<any> } = { items: [] };
+  const defaultMenuProps: { items: IContextualMenuItem[] } = { items: [] };
 
   if (cameras && selectedCamera && onSelectCamera) {
     defaultMenuProps.items.push({
-      key: '1',
-      name: 'Choose Camera',
-      iconProps: { iconName: 'LocationCircle' },
-      subMenuProps: {
-        items: cameras.map((val) => ({
-          key: val.id,
-          text: val.name,
-          title: val.name,
+      key: 'sectionCamera',
+      title: 'Choose Camera',
+      itemType: ContextualMenuItemType.Section,
+      sectionProps: {
+        title: 'Camera',
+        items: cameras.map((camera) => ({
+          key: camera.id,
+          text: camera.name,
+          title: camera.name,
+          iconProps: { iconName: 'Camera' },
           canCheck: true,
-          isChecked: val.id === selectedCamera?.id,
-          onClick: () => !(val.id === selectedCamera?.id) && onSelectCamera(val)
+          isChecked: camera.id === selectedCamera?.id,
+          onClick: () => {
+            if (camera.id !== selectedCamera?.id) {
+              onSelectCamera(camera);
+            }
+          }
         }))
       }
     });
@@ -71,17 +122,23 @@ const generateDefaultMenuProps = (props: OptionsButtonProps): { items: Array<any
 
   if (microphones && selectedMicrophone && onSelectMicrophone) {
     defaultMenuProps.items.push({
-      key: '2',
-      name: 'Choose Microphone',
-      iconProps: { iconName: 'LocationCircle' },
-      subMenuProps: {
-        items: microphones.map((val) => ({
-          key: val.id,
-          text: val.name,
-          title: val.name,
+      key: 'sectionMicrophone',
+      title: 'Choose Microphone',
+      itemType: ContextualMenuItemType.Section,
+      sectionProps: {
+        title: 'Microphone',
+        items: microphones.map((micophone) => ({
+          key: micophone.id,
+          text: micophone.name,
+          title: micophone.name,
+          iconProps: { iconName: 'Microphone' },
           canCheck: true,
-          isChecked: val.id === selectedMicrophone?.id,
-          onClick: () => !(val.id === selectedMicrophone?.id) && onSelectMicrophone(val)
+          isChecked: micophone.id === selectedMicrophone?.id,
+          onClick: () => {
+            if (micophone.id !== selectedMicrophone?.id) {
+              onSelectMicrophone(micophone);
+            }
+          }
         }))
       }
     });
@@ -89,22 +146,32 @@ const generateDefaultMenuProps = (props: OptionsButtonProps): { items: Array<any
 
   if (speakers && selectedSpeaker && onSelectSpeaker) {
     defaultMenuProps.items.push({
-      key: '3',
-      name: 'Choose Speaker',
-      iconProps: { iconName: 'LocationCircle' },
-      subMenuProps: {
-        items: speakers.map((val) => ({
-          key: val.id,
-          text: val.name,
-          title: val.name,
+      key: 'sectionSpeaker',
+      title: 'Choose Speaker',
+      itemType: ContextualMenuItemType.Section,
+      sectionProps: {
+        title: 'Speaker',
+        items: speakers.map((speaker) => ({
+          key: speaker.id,
+          text: speaker.name,
+          title: speaker.name,
+          iconProps: { iconName: 'Volume1' },
           canCheck: true,
-          isChecked: val.id === selectedSpeaker?.id,
-          onClick: () => !(val.id === selectedSpeaker?.id) && onSelectSpeaker(val)
+          isChecked: speaker.id === selectedSpeaker?.id,
+          onClick: () => {
+            if (speaker.id !== selectedSpeaker?.id) {
+              onSelectSpeaker(speaker);
+            }
+          }
         }))
       }
     });
   }
 
+  if (defaultMenuProps.items.length === 0) {
+    // Avoids creating an empty context menu.
+    return undefined;
+  }
   return defaultMenuProps;
 };
 
@@ -123,7 +190,7 @@ export const OptionsButton = (props: OptionsButtonProps): JSX.Element => {
   const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
 
   const defaultRenderIcon = (): JSX.Element => {
-    return <MoreIcon key={'optionsIconKey'} />;
+    return <SettingsIcon key="optionsIconKey" />;
   };
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {
@@ -137,7 +204,7 @@ export const OptionsButton = (props: OptionsButtonProps): JSX.Element => {
   return (
     <DefaultButton
       {...props}
-      menuProps={defaultMenuProps ?? props.menuProps}
+      menuProps={props.menuProps ?? defaultMenuProps}
       menuIconProps={{ hidden: true }}
       styles={componentStyles}
       onRenderIcon={onRenderIcon ?? defaultRenderIcon}

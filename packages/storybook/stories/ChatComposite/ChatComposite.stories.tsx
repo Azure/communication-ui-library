@@ -8,12 +8,13 @@ import React from 'react';
 import { COMPOSITE_FOLDER_PREFIX } from '../constants';
 
 const containerText = require('!!raw-loader!./snippets/Container.snippet.tsx').default;
-const customBehaviorExampleText = require('!!raw-loader!./snippets/CustomBehaviorExample.snippet.tsx').default;
 const customDataModelExampleContainerText = require('!!raw-loader!./snippets/CustomDataModelExampleContainer.snippet.tsx')
   .default;
+const customBehaviorExampleText = require('!!raw-loader!./snippets/CustomizeBehavior.snippet.tsx').default;
 const serverText = require('!!raw-loader!./snippets/Server.snippet.tsx').default;
 
 export default {
+  id: `${COMPOSITE_FOLDER_PREFIX}-chat`,
   title: `${COMPOSITE_FOLDER_PREFIX}/ChatComposite`,
   component: ChatComposite,
   parameters: {
@@ -25,10 +26,10 @@ export default {
   }
 } as Meta;
 
-export { BasicExample } from './snippets/BasicExample.snippet';
-export { CustomBehaviorExample } from './snippets/CustomBehaviorExample.snippet';
-export { CustomDataModelExample } from './snippets/CustomDataModelExample.snippet';
-export { ThemeExample } from './snippets/ThemesExample.snippet';
+export { BasicExample } from './BasicExample';
+export { CustomBehaviorExample } from './CustomBehavior';
+export { CustomDataModelExample } from './CustomDataModelExample';
+export { ThemeExample } from './ThemesExample';
 export { JoinExistingChatThread } from './snippets/JoinExistingChatThread';
 
 const getDocs: () => JSX.Element = () => {
@@ -60,9 +61,8 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Theming</Heading>
       <Description>
         ChatComposite can be themed with Fluent UI themes, just like the base components. Look at the [ChatComposite
-        themes canvas](./?path=/story/composites-chat--themes-canvas) to see theming in action or the [overall theming
-        example](./?path=/docs/examples-themes--teams-theme-component) to see how theming works for all the components
-        in this UI library.
+        themes canvas](./?path=/story/composites-chat--theme-example) to see theming in action or the [overall theming
+        example](./?path=/story/theming--page) to see how theming works for all the components in this UI library.
       </Description>
 
       <Heading>Custom Data Model</Heading>
@@ -70,16 +70,16 @@ const getDocs: () => JSX.Element = () => {
         It is a primary tenet of Azure Communication Services that customers bring their own user identities. Customers
         then use the Azure Communication Services identity service to create corresponding authentication tokens for
         their users. The ChatComposite allows developers to easily inject custom data associated with these user
-        identities. Look at the [example canvas](./?path=/story/composites-chat--data-model-canvas) to see how the name
-        and avatar displayed for users can be provided by Contoso.
+        identities. Look at the [example canvas](./?path=/story/composites-chat--custom-data-model-example) to see how
+        the name and avatar displayed for users can be provided by Contoso.
       </Description>
       <Source code={customDataModelExampleContainerText} />
       <Description>
-        See the [Custom data model example documentation](?path=/story/composites-chat--customization-example) to
-        understand how custom data model can be injected for all the components in this UI library.
+        See the [Custom data model example documentation](./?path=/docs/customuserdatamodel--page) to understand how
+        custom data model can be injected for all the components in this UI library.
       </Description>
 
-      <Heading>Adding custom behavior</Heading>
+      <Heading>Customize Behavior</Heading>
       <Description>
         The `ChatAdapter` makes it possible to arbitrarily modify the communication between the `ChatComposite`
         component and the Azure Communication Services backend. This adds powerful customization possibilities. The
@@ -88,7 +88,7 @@ const getDocs: () => JSX.Element = () => {
       </Description>
       <Source code={customBehaviorExampleText} />
 
-      <Heading>Joining an existing Chat thread</Heading>
+      <Heading>Joining existing Chat</Heading>
       <Description>
         The [join existing chat thread](./?path=/story/composites-chat--join-existing-chat-thread) provides an easy
         playground to join an existing Azure Communication Services chat thread. This is useful if you want to explore

@@ -1,7 +1,7 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 
-<Meta title="Stateful Client/Best Practices" />
+<Meta id="statefulclient-bestpractices" title="Stateful Client/Best Practices" />
 
 # Best Practices
 
@@ -30,10 +30,10 @@ When using Stateful Calling, the call related state will be automatically retrie
 However, this is not the case for `DeviceManager` state.
 To be able to retrieve `DeviceManager` state from the `StatefulCallClient`’s state, you must trigger the appropriate APIs to populate the `DeviceManager` state.
 
-`DeviceManager.askPermission()` – this must be called to ask for device permissions from the user. The result of their decisions will be stored in DeviceManagerState.deviceAccess.
-`DeviceManager.getCameras()` – When called, the result will be stored in DeviceManagerState.cameras.
-`DeviceManager.getMicrophones()` – When called, the result will be stored in DeviceManagerState.microphones.
-`DeviceManager.getSpeakers()` – When called, the result will be stored in DeviceManagerState.speakers
+- `DeviceManager.askPermission()` – this must be called to ask for device permissions from the user. The result of their decisions will be stored in DeviceManagerState.deviceAccess.
+- `DeviceManager.getCameras()` – When called, the result will be stored in DeviceManagerState.cameras.
+- `DeviceManager.getMicrophones()` – When called, the result will be stored in DeviceManagerState.microphones.
+- `DeviceManager.getSpeakers()` – When called, the result will be stored in DeviceManagerState.speakers
 
 ## Use of `selectedCamera` inside the `DeviceManager`
 

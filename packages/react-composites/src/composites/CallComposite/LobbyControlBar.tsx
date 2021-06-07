@@ -27,13 +27,7 @@ export const LobbyCallControlBar = (props: LobbyCallControlBarProps): JSX.Elemen
       layout="dockedBottom"
       styles={{ root: { background: theme.palette.white, minHeight: '4.25rem', alignItems: 'center' } }}
     >
-      <CameraButton
-        showLabel={true}
-        {...cameraButtonProps}
-        onToggleCamera={async () => {
-          cameraButtonProps.onToggleCamera();
-        }}
-      />
+      <CameraButton showLabel={true} {...cameraButtonProps} />
       <MicrophoneButton showLabel={true} {...microphoneButtonProps} checked={props.isMicrophoneChecked} />
       <OptionsButton showLabel={true} {...optionsButtonProps} />
       <EndCallButton showLabel={true} style={{ borderRadius: '0.25rem', marginLeft: '0.25rem' }} onHangUp={onHangUp} />

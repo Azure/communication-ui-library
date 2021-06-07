@@ -2,11 +2,13 @@
 // Licensed under the MIT license.
 
 import {
+  CallParticipant,
   CameraButton,
-  ControlBar,
+  ControlBar as ControlBarComponent,
   EndCallButton,
   MicrophoneButton,
-  OptionsButton,
+  ParticipantsButton,
+  ParticipantListProps,
   ScreenShareButton
 } from '@azure/communication-react';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
@@ -15,6 +17,7 @@ import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { OptionsButtonWithKnobs } from './Buttons/Options/snippets/OptionsButtonWithKnobs.snippet';
 import { AllButtonsControlBarExample } from './snippets/AllButtonsControlBar.snippet';
 import { ControlBarLayoutExample } from './snippets/ControlBarLayout.snippet';
 import { CustomButtonsExample } from './snippets/CustomButtons.snippet';
@@ -40,31 +43,40 @@ const CONTROL_BAR_LAYOUTS = [
   'floatingRight'
 ] as const;
 
-const exampleOptionsMenuProps = {
-  items: [
-    {
-      key: '1',
-      name: 'Choose Camera',
-      iconProps: { iconName: 'LocationCircle' },
-      subMenuProps: {
-        items: [
-          { key: 'camera1', text: 'Full HD Webcam', title: 'Full HD Webcam', canCheck: true, isChecked: true },
-          { key: 'camera2', text: 'Macbook Pro Webcam', title: 'Macbook Pro Webcam' }
-        ]
-      }
-    },
-    {
-      key: '2',
-      name: 'Choose Microphone',
-      iconProps: { iconName: 'LocationCircle' },
-      subMenuProps: {
-        items: [
-          { key: 'mic1', text: 'Realtek HD Audio', title: 'Realtek HD Audio' },
-          { key: 'mic2', text: 'Macbook Pro Mic', title: 'Macbook Pro Mic', canCheck: true, isChecked: true }
-        ]
-      }
-    }
-  ]
+const mockParticipants: CallParticipant[] = [
+  {
+    userId: 'user1',
+    displayName: 'You',
+    state: 'Connected',
+    isMuted: true,
+    isScreenSharing: false
+  },
+  {
+    userId: 'user2',
+    displayName: 'Hal Jordan',
+    state: 'Connected',
+    isMuted: true,
+    isScreenSharing: true
+  },
+  {
+    userId: 'user3',
+    displayName: 'Barry Allen',
+    state: 'Idle',
+    isMuted: false,
+    isScreenSharing: false
+  },
+  {
+    userId: 'user4',
+    displayName: 'Bruce Wayne',
+    state: 'Connecting',
+    isMuted: false,
+    isScreenSharing: false
+  }
+];
+
+const mockParticipantsProps: ParticipantListProps = {
+  participants: mockParticipants,
+  myUserId: 'user1'
 };
 
 const importStatement = `
@@ -76,19 +88,19 @@ const getDocs: () => JSX.Element = () => {
   return (
     <>
       <Title>ControlBar</Title>
-      <Description of={ControlBar} />
+      <Description of={ControlBarComponent} />
 
       <Heading>Importing</Heading>
       <Source code={importStatement} />
 
       <Heading>Example</Heading>
       <Description>
-        We recommend using our pre-defined buttons you can find [here](./?path=/docs/ui-components-controlbar-buttons)
-        or `DefaultButton`, a [Button](https://developer.microsoft.com/en-us/fluentui#/controls/web/button) component
-        from Fluent UI, as controls inside `ControlBar`. Pre-defined styles like `controlButtonStyles` or
-        `controlButtonLabelStyles` can also be imported and used as `DefaultButton` styles for easy styling.
-        `FluentThemeProvider` is needed around `ControlBar` to provide theming and icons. Learn more about theming
-        [here](./?path=/docs/theming--page).
+        We recommend using our pre-defined buttons you can start find
+        [here](./?path=/docs/ui-components-controlbar-buttons) or `DefaultButton`, a
+        [Button](https://developer.microsoft.com/en-us/fluentui#/controls/web/button) component from Fluent UI, as
+        controls inside `ControlBar`. Pre-defined styles like `controlButtonStyles` or `controlButtonLabelStyles` can
+        also be imported and used as `DefaultButton` styles for easy styling. `FluentThemeProvider` is needed around
+        `ControlBar` to provide theming and icons. Learn more about theming [here](./?path=/docs/theming--page).
       </Description>
       <Canvas mdxSource={AllButtonsControlBarExampleText}>
         <AllButtonsControlBarExample />
@@ -131,19 +143,19 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Dropdown Options Button</Heading>
       <Description>
         The `OptionsButton` can be used for any dropdown items defined through `menuProps`. For more information, check
-        out the official Fluent UI documentation at https://developer.microsoft.com/en-us/fluentui#/controls/web/button
+        out the [official Fluent UI documentation](https://developer.microsoft.com/en-us/fluentui#/controls/web/button)
       </Description>
       <Canvas mdxSource={OptionsButtonExampleText}>
         <OptionsButtonExample />
       </Canvas>
 
       <Heading>ControlBar Props</Heading>
-      <Props of={ControlBar} />
+      <Props of={ControlBarComponent} />
     </>
   );
 };
 
-export const ControlBarComponent: (
+const ControlBarStory: (
   args: any,
   {
     globals: { theme }
@@ -163,6 +175,10 @@ export const ControlBarComponent: (
     }
   }
 
+  const onMuteAll = () => {
+    // your implementation to mute all participants
+  };
+
   return (
     <div
       style={{
@@ -174,20 +190,29 @@ export const ControlBarComponent: (
         background: background
       }}
     >
-      <ControlBar layout={layout}>
+      <ControlBarComponent layout={layout}>
         <CameraButton showLabel={showLabels} checked={toggleButtons} />
         <MicrophoneButton showLabel={showLabels} checked={toggleButtons} />
         <ScreenShareButton showLabel={showLabels} checked={toggleButtons} />
-        <OptionsButton showLabel={showLabels} menuProps={exampleOptionsMenuProps} />
+        <ParticipantsButton
+          showLabel={showLabels}
+          participantListProps={mockParticipantsProps}
+          callInvitationURL={'URL to copy'}
+          onMuteAll={onMuteAll}
+        />
+        <OptionsButtonWithKnobs showLabel={showLabels} />
         <EndCallButton showLabel={showLabels} />
-      </ControlBar>
+      </ControlBarComponent>
     </div>
   );
 };
 
+export const ControlBar = ControlBarStory.bind({});
+
 export default {
+  id: `${COMPONENT_FOLDER_PREFIX}-controlbar`,
   title: `${COMPONENT_FOLDER_PREFIX}/ControlBar`,
-  component: ControlBar,
+  component: ControlBarComponent,
   parameters: {
     docs: {
       page: () => getDocs()

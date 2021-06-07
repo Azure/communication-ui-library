@@ -6,6 +6,7 @@
 
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { IButtonProps } from '@fluentui/react';
+import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { MessageStatus } from 'acs-ui-common';
@@ -15,10 +16,13 @@ import { default as React_2 } from 'react';
 import { SizeValue } from '@fluentui/react-northstar';
 import { Theme } from '@fluentui/react-theme-provider';
 
-// @public (undocumented)
+// @public
 export interface BaseCustomStylesProps {
     root?: IStyle;
 }
+
+// @public
+export type ButtonCustomStylesProps = IButtonStyles;
 
 // @public
 export interface CallingTheme {
@@ -43,7 +47,8 @@ export const CameraButton: (props: CameraButtonProps) => JSX.Element;
 
 // @public
 export interface CameraButtonProps extends IButtonProps {
-    onToggleCamera?: () => Promise<void>;
+    localVideoViewOption?: VideoStreamOptions;
+    onToggleCamera?: (options?: VideoStreamOptions) => Promise<void>;
     showLabel?: boolean;
 }
 
@@ -156,6 +161,7 @@ export type MessageContentType = 'text' | 'html' | 'richtext/html' | 'unknown';
 export type MessageProps = {
     message: ChatMessage | SystemMessage | CustomMessage;
     messageContainerStyle?: ComponentSlotStyle;
+    showDate?: boolean;
 };
 
 // @public
@@ -181,6 +187,7 @@ export type MessageThreadProps = {
     messages: (ChatMessage | SystemMessage | CustomMessage)[];
     styles?: MessageThreadStylesProps;
     disableJumpToNewMessageButton?: boolean;
+    showMessageDate?: boolean;
     showMessageStatus?: boolean;
     numberOfChatMessagesToReload?: number;
     onMessageSeen?: (messageId: string) => Promise<void>;
@@ -218,42 +225,22 @@ export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
 
 // @public
 export interface OptionsButtonProps extends IButtonProps {
-    // (undocumented)
-    cameras?: {
-        id: string;
-        name: string;
-    }[];
-    microphones?: {
-        id: string;
-        name: string;
-    }[];
-    // (undocumented)
+    cameras?: OptionsDevice[];
+    microphones?: OptionsDevice[];
     onSelectCamera?: (device: any) => Promise<void>;
-    // (undocumented)
     onSelectMicrophone?: (device: any) => Promise<void>;
-    // (undocumented)
     onSelectSpeaker?: (device: any) => Promise<void>;
-    // (undocumented)
-    selectedCamera?: {
-        id: string;
-        name: string;
-    };
-    // (undocumented)
-    selectedMicrophone?: {
-        id: string;
-        name: string;
-    };
-    // (undocumented)
-    selectedSpeaker?: {
-        id: string;
-        name: string;
-    };
+    selectedCamera?: OptionsDevice;
+    selectedMicrophone?: OptionsDevice;
+    selectedSpeaker?: OptionsDevice;
     showLabel?: boolean;
-    // (undocumented)
-    speakers?: {
-        id: string;
-        name: string;
-    }[];
+    speakers?: OptionsDevice[];
+}
+
+// @public
+export interface OptionsDevice {
+    id: string;
+    name: string;
 }
 
 // @public
@@ -285,10 +272,28 @@ export const ParticipantList: (props: ParticipantListProps) => JSX.Element;
 export type ParticipantListProps = {
     participants: CommunicationParticipant[];
     myUserId?: string;
+    excludeMe?: boolean;
     onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
     onRenderAvatar?: (participant: CommunicationParticipant) => JSX.Element | null;
     onParticipantRemove?: (userId: string) => void;
 };
+
+// @public
+export const ParticipantsButton: (props: ParticipantsButtonProps) => JSX.Element;
+
+// @public
+export interface ParticipantsButtonProps extends IButtonProps {
+    callInvitationURL?: string;
+    onMuteAll?: () => void;
+    participantListProps: ParticipantListProps;
+    showLabel?: boolean;
+    styles?: ParticipantsButtonStylesProps;
+}
+
+// @public
+export interface ParticipantsButtonStylesProps extends ButtonCustomStylesProps {
+    participantListContainerStyle?: IStyle;
+}
 
 // @public (undocumented)
 export interface PlaceholderProps {
@@ -383,11 +388,14 @@ export type VideoGalleryParticipant = {
 
 // @public
 export interface VideoGalleryProps {
+    layout?: 'default' | 'floatingLocalVideo';
     localParticipant: VideoGalleryLocalParticipant;
     localVideoViewOption?: VideoStreamOptions;
-    onCreateLocalStreamView?: (options?: VideoStreamOptions | undefined) => Promise<void>;
+    onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void>;
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
     onDisposeLocalStreamView?: () => void;
+    // (undocumented)
+    onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
     onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;

@@ -76,9 +76,9 @@ There is currently no GitHub action for creating a hotfix and must be done manua
 
 ### Creating alpha releases
 
-Alpha releases are created nightly using the [.github/workflows/nightly-ci.yml](https://github.com/Azure/communication-ui-sdk/blob/main/.github/workflows/nightly-ci.yml) GitHub action.
+Alpha releases are created nightly using the [.github/workflows/nightly-ci.yml](https://github.com/Azure/communication-ui-library/blob/main/.github/workflows/nightly-ci.yml) GitHub action.
 
-They use beachball's `canary` CLI command to temporarily set all package versions to \<version\>-alpha+yyyymmdd-HHMM, create npm packages of each package and then upload the packages to the azure release pipeline.
+They use beachball's `canary` CLI command to temporarily set all package versions to \<version\>-alpha-yyyymmdd-HHMM, then package up the npm packages and upload the packages to the azure release pipeline.
 
 ### Creating beta releases
 
@@ -88,6 +88,8 @@ To create a beta release, ensure the above conditions then follow the instructio
 
 ## Publishing packages
 
-To ensure our packages are part of the `@Azure` organization our packages are published using Azure's publishing pipeline.
+To ensure our packages are part of the `@azure` organization our packages are published using [Azure's publishing pipeline](https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/1/Partner-Release-Pipeline).
 
-This is currently being setup, _more documentation to follow_.
+This requires us to first upload the tarball of the package we wish to publish to their blob storage, then trigger their release pipeline. This can be done manually or by GitHub actions.
+
+Currently alpha package releases are entirely done through GitHub actions (see [.github/workflows/nightly-ci.yml](https://github.com/Azure/communication-ui-library/blob/main/.github/workflows/nightly-ci.yml)). This requires the use of internal keys and tokens. For more information on these, or how to update them, see: [Updating npm publishing credentials](../references/updating-npm-publishing-credentials.md).

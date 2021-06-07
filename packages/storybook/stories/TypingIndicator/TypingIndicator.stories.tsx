@@ -57,9 +57,7 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-// This must be the only named export from this module, and must be named to match the storybook path suffix.
-// This ensures that storybook hoists the story instead of creating a folder with a single entry.
-export const TypingIndicator: () => JSX.Element = () => {
+const TypingIndicatorStory: () => JSX.Element = () => {
   const typingUsers = object('Typing Users', [
     {
       userId: '1',
@@ -75,7 +73,12 @@ export const TypingIndicator: () => JSX.Element = () => {
   return <TypingIndicatorComponent typingUsers={typingUsers} typingString={typingString} />;
 };
 
+// This must be the only named export from this module, and must be named to match the storybook path suffix.
+// This ensures that storybook hoists the story instead of creating a folder with a single entry.
+export const TypingIndicator = TypingIndicatorStory.bind({});
+
 export default {
+  id: `${COMPONENT_FOLDER_PREFIX}-typingindicator`,
   title: `${COMPONENT_FOLDER_PREFIX}/Typing Indicator`,
   component: TypingIndicatorComponent,
   parameters: {

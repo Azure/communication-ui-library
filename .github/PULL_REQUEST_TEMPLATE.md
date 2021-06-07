@@ -12,7 +12,7 @@
 <!--- Review the list and check the boxes that apply. -->
 
 - [ ] I have updated the project documentation to reflect my changes if necessary.
-- [ ] I have read the [CONTRIBUTING](https://github.com/Azure/communication-ui-sdk/blob/main/CONTRIBUTING.md) documentation.
+- [ ] I have read the [CONTRIBUTING](https://github.com/Azure/communication-ui-library/blob/main/CONTRIBUTING.md) documentation.
 
 **Is this a breaking change?**
 

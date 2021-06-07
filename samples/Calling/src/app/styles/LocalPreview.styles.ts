@@ -24,6 +24,7 @@ export const toggleButtonsBarToken: IStackTokens = {
 };
 
 export const localPreviewContainerStyle = mergeStyles({
+  borderRadius: '.25rem',
   maxWidth: '25rem',
   minWidth: '12.5rem',
   width: '100%',
@@ -47,6 +48,7 @@ export const toggleButtonsBarStyle = mergeStyles({
 
 export const localPreviewTileStyle = {
   root: {
+    borderRadius: '.25rem',
     minHeight: '14rem'
   }
 };

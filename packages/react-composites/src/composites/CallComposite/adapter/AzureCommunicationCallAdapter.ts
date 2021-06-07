@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultCallingHandlers, createDefaultCallingHandlers } from '@azure/acs-calling-selector';
+import { DefaultCallingHandlers, createDefaultCallingHandlers } from 'calling-component-bindings';
 import {
   CallClientState,
   StatefulDeviceManager,
@@ -38,11 +38,10 @@ import {
   ParticipantJoinedListener,
   ParticipantLeftListener
 } from './CallAdapter';
-import { createAzureCommunicationUserCredential, getIdFromToken, isInCall } from '../../../utils';
+import { createAzureCommunicationUserCredential, isInCall } from '../../../utils';
 import { VideoStreamOptions } from 'react-components';
 import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from 'acs-ui-common';
-import { CommunicationUserIdentifier } from '@azure/communication-signaling';
-import { CommunicationUserKind } from '@azure/communication-common';
+import { CommunicationUserIdentifier, CommunicationUserKind, getIdentifierKind } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 
 // Context of Chat, which is a centralized context for all state updates
@@ -211,11 +210,19 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     }
   }
 
-  public async createStreamView(userId?: string, options?: VideoStreamOptions | undefined): Promise<void> {
-    if (userId === undefined) {
+  public async createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void> {
+    if (remoteUserId === undefined) {
       await this.handlers.onCreateLocalStreamView(options);
     } else {
-      await this.handlers.onCreateRemoteStreamView(userId, options);
+      await this.handlers.onCreateRemoteStreamView(remoteUserId, options);
+    }
+  }
+
+  public async disposeStreamView(remoteUserId?: string): Promise<void> {
+    if (remoteUserId === undefined) {
+      await this.handlers.onDisposeLocalStreamView();
+    } else {
+      await this.handlers.onDisposeRemoteStreamView(remoteUserId);
     }
   }
 
@@ -233,8 +240,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.emitter.emit('callEnded', { callId });
   }
 
-  public async setCamera(device: VideoDeviceInfo): Promise<void> {
-    await this.handlers.onSelectCamera(device);
+  public async setCamera(device: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void> {
+    await this.handlers.onSelectCamera(device, options);
   }
 
   public async setMicrophone(device: AudioDeviceInfo): Promise<void> {
@@ -245,8 +252,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     await this.handlers.onSelectSpeaker(device);
   }
 
-  public async onToggleCamera(): Promise<void> {
-    await this.handlers.onToggleCamera();
+  public async onToggleCamera(options?: VideoStreamOptions): Promise<void> {
+    await this.handlers.onToggleCamera(options);
   }
 
   //TODO: seperate onToggleCamera logic in Handler
@@ -355,7 +362,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   private isMyMutedChanged = (): void => {
     this.emitter.emit('isMutedChanged', {
-      participantId: createCommunicationIdentifier(this.getState().userId),
+      participantId: this.getState().userId,
       isMuted: this.call?.isMuted
     });
   };
@@ -424,20 +431,18 @@ const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
   return deviceManager.unparentedViews.values().next().value?.view !== undefined;
 };
 
-const createCommunicationIdentifier = (rawId: string): CommunicationUserKind => {
-  return { kind: 'communicationUser', communicationUserId: rawId };
-};
-
 export const createAzureCommunicationCallAdapter = async (
+  userId: CommunicationUserIdentifier,
   token: string,
   locator: TeamsMeetingLinkLocator | GroupCallLocator,
   displayName: string,
   refreshTokenCallback?: (() => Promise<string>) | undefined,
   callClientOptions?: CallClientOptions
 ): Promise<CallAdapter> => {
-  const userId = getIdFromToken(token);
-
-  const callClient = createStatefulCallClient({ userId }, callClientOptions);
+  const callClient = createStatefulCallClient(
+    { userId: getIdentifierKind(userId) as CommunicationUserKind },
+    { callClientOptions }
+  );
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
   const callAgent = await callClient.createCallAgent(
     createAzureCommunicationUserCredential(token, refreshTokenCallback),

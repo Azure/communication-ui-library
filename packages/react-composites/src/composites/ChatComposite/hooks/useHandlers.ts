@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { CommonProperties } from 'acs-ui-common';
-import { DefaultChatHandlers } from '@azure/acs-chat-selector';
+import { DefaultChatHandlers } from 'chat-component-bindings';
 
 import { ReactElement } from 'react';
 import memoizeOne from 'memoize-one';

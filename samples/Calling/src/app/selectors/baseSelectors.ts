@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { CallState, CallClientState, DeviceManagerState, IncomingCallState } from 'calling-stateful-client';
-import { CallingBaseSelectorProps } from '@azure/acs-calling-selector';
+import { CallingBaseSelectorProps } from 'calling-component-bindings';
 
 export const getCalls = (state: CallClientState): Map<string, CallState> => state.calls;
 
@@ -18,8 +18,6 @@ export const getCall = (state: CallClientState, props: CallingBaseSelectorProps)
   state.calls.get(props.callId);
 
 export const getDisplayName = (state: CallClientState): string | undefined => state.callAgent?.displayName;
-
-export const getIdentifier = (state: CallClientState): string => state.userId;
 
 export const getIsPreviewCameraOn = (state: CallClientState): boolean => isPreviewOn(state.deviceManager);
 

@@ -5,7 +5,7 @@ import { GridLayout as GridLayoutComponent, VideoTile, StreamMedia } from '@azur
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
 import { number, object } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
-import React from 'react';
+import React, { useMemo } from 'react';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
 
 import {
@@ -15,7 +15,7 @@ import {
   mediaGalleryHeightOptions,
   COMPONENT_FOLDER_PREFIX
 } from '../constants';
-import { renderVideoStream } from '../utils';
+import { useVideoStreams } from '../utils';
 import { GridLayoutExample } from './snippets/GridLayout.snippet';
 
 const GridLayoutExampleText = require('!!raw-loader!./snippets/GridLayout.snippet').default;
@@ -40,7 +40,7 @@ const getDocs: () => JSX.Element = () => {
       <Description>
         The following example shows how you can render `VideoTile` components inside a grid layout. For styling the
         children video tiles, please read the [VideoTile component
-        docs](./?path=/docs/ui-components-videotile--video-tile-component).
+        docs](./?path=/docs/ui-components-videotile--video-tile).
       </Description>
       <Canvas mdxSource={GridLayoutExampleText}>
         <GridLayoutExample />
@@ -52,9 +52,7 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-// This must be the only named export from this module, and must be named to match the storybook path suffix.
-// This ensures that storybook hoists the story instead of creating a folder with a single entry.
-export const GridLayout: () => JSX.Element = () => {
+const GridLayoutStory: () => JSX.Element = () => {
   const width = number('Width', mediaGalleryWidthDefault, mediaGalleryWidthOptions);
   const height = number('Height', mediaGalleryHeightDefault, mediaGalleryHeightOptions);
 
@@ -79,16 +77,30 @@ export const GridLayout: () => JSX.Element = () => {
 
   const participants = object('Participants', defaultParticipants);
 
-  const participantsComponents = participants.map((participant, index) => {
-    return (
-      <VideoTile
-        isVideoReady={participant.isVideoReady}
-        renderElement={<StreamMedia videoStreamElement={participant.isVideoReady ? renderVideoStream() : null} />}
-        displayName={participant.displayName}
-        key={index}
-      />
-    );
-  });
+  const videoStreamElements = useVideoStreams(
+    participants.filter((participant) => {
+      return participant.isVideoReady;
+    }).length
+  );
+
+  const participantsComponents = useMemo(() => {
+    let videoStreamElementIndex = 0;
+    return participants.map((participant, index) => {
+      let videoStreamElement: HTMLElement | null = null;
+      if (participant.isVideoReady) {
+        videoStreamElement = videoStreamElements[videoStreamElementIndex];
+        videoStreamElementIndex++;
+      }
+      return (
+        <VideoTile
+          isVideoReady={participant.isVideoReady}
+          renderElement={<StreamMedia videoStreamElement={videoStreamElement} />}
+          displayName={participant.displayName}
+          key={index}
+        />
+      );
+    });
+  }, [participants, videoStreamElements]);
 
   return (
     <div
@@ -102,7 +114,12 @@ export const GridLayout: () => JSX.Element = () => {
   );
 };
 
+// This must be the only named export from this module, and must be named to match the storybook path suffix.
+// This ensures that storybook hoists the story instead of creating a folder with a single entry.
+export const GridLayout = GridLayoutStory.bind({});
+
 export default {
+  id: `${COMPONENT_FOLDER_PREFIX}-gridlayout`,
   title: `${COMPONENT_FOLDER_PREFIX}/Grid Layout`,
   component: GridLayoutComponent,
   parameters: {

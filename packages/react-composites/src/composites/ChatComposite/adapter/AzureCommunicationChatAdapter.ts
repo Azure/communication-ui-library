@@ -2,20 +2,20 @@
 // Licensed under the MIT license.
 
 import { createStatefulChatClient, ChatClientState, StatefulChatClient } from 'chat-stateful-client';
-import { DefaultChatHandlers, createDefaultChatHandlers } from '@azure/acs-chat-selector';
+import { DefaultChatHandlers, createDefaultChatHandlers } from 'chat-component-bindings';
 import { ChatMessage, ChatThreadClient } from '@azure/communication-chat';
 
+import { CommunicationUserIdentifier, CommunicationUserKind, getIdentifierKind } from '@azure/communication-common';
 import type {
   ChatMessageReceivedEvent,
   ChatThreadPropertiesUpdatedEvent,
-  CommunicationUserKind,
   ParticipantsAddedEvent,
   ParticipantsRemovedEvent,
   ReadReceiptReceivedEvent
 } from '@azure/communication-signaling';
 import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import EventEmitter from 'events';
-import { createAzureCommunicationUserCredential, getIdFromToken } from '../../../utils';
+import { createAzureCommunicationUserCredential } from '../../../utils';
 import {
   ChatAdapter,
   ChatEvent,
@@ -244,18 +244,15 @@ const convertEventToChatMessage = (event: ChatMessageReceivedEvent): ChatMessage
 };
 
 export const createAzureCommunicationChatAdapter = async (
+  userId: CommunicationUserIdentifier,
   token: string,
   endpointUrl: string,
   threadId: string,
   displayName: string,
   refreshTokenCallback?: (() => Promise<string>) | undefined
 ): Promise<ChatAdapter> => {
-  const rawUserId = getIdFromToken(token);
-
-  // This hack can be removed when `getIdFromToken` is dropped in favour of actually passing in user credentials.
-  const userId = <CommunicationUserKind>{ kind: 'communicationUser', communicationUserId: rawUserId };
   const chatClient = createStatefulChatClient({
-    userId,
+    userId: getIdentifierKind(userId) as CommunicationUserKind,
     displayName,
     endpoint: endpointUrl,
     credential: createAzureCommunicationUserCredential(token, refreshTokenCallback)

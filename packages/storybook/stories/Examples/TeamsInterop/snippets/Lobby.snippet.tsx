@@ -1,15 +1,20 @@
-import { StreamMedia, VideoTile } from '@azure/communication-react';
+import {
+  StreamMedia,
+  VideoTile,
+  CameraButton,
+  ControlBar,
+  EndCallButton,
+  MicrophoneButton,
+  OptionsButton
+} from '@azure/communication-react';
 import { useTheme } from '@fluentui/react-theme-provider';
 import React from 'react';
-import { renderVideoStream } from '../../../utils';
-import { LobbyCallControlBar } from './LobbyControlBar.snippet';
 
 export interface LobbyProps {
   isVideoReady: boolean;
   callStateText: string;
+  callStateSubText: string;
 }
-
-const renderEmptyElement = (): JSX.Element => <></>;
 
 export const Lobby = (props: LobbyProps): JSX.Element => {
   const theme = useTheme();
@@ -20,16 +25,20 @@ export const Lobby = (props: LobbyProps): JSX.Element => {
     overlayContainer: {}
   };
 
+  const ControlBarStyles = {
+    root: { background: theme.palette.white, minHeight: '4.25rem', alignItems: 'center' }
+  };
+
   return (
     <VideoTile
       styles={videoTileStyles}
       isMirrored={true}
       isVideoReady={props.isVideoReady}
+      onRenderPlaceholder={() => <></>}
       renderElement={
-        // Replace with your own video provider.
-        <StreamMedia videoStreamElement={renderVideoStream()} />
+        // Replace with your own html local video render element.
+        <StreamMedia videoStreamElement={{} as any} />
       }
-      onRenderPlaceholder={renderEmptyElement}
     >
       <div
         style={{
@@ -41,13 +50,43 @@ export const Lobby = (props: LobbyProps): JSX.Element => {
         }}
       />
 
-      <div style={{ textAlign: 'center', margin: 'auto', zIndex: 0 }}>
-        <p style={{ fontSize: '1.75rem', color: props.isVideoReady ? 'white' : palette.neutralPrimary }}>
-          ☕ <br /> {props.callStateText}
+      <div
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          marginTop: '-2.125rem'
+        }}
+      >
+        <p
+          style={{
+            fontSize: '1.75rem',
+            color: props.isVideoReady ? 'white' : palette.neutralPrimary,
+            textAlign: 'center',
+            margin: '0'
+          }}
+        >
+          ☕ <br /> {props.callStateText} <br />
+        </p>
+        <p
+          style={{
+            fontSize: '0.75rem',
+            color: props.isVideoReady ? 'white' : palette.neutralPrimary,
+            textAlign: 'center',
+            margin: '0'
+          }}
+        >
+          {props.callStateSubText}
         </p>
       </div>
 
-      <LobbyCallControlBar />
+      <ControlBar layout="dockedBottom" styles={ControlBarStyles}>
+        <CameraButton showLabel={true} checked={true} />
+        <MicrophoneButton showLabel={true} checked={true} />
+        <OptionsButton showLabel={true} />
+        <EndCallButton showLabel={true} style={{ borderRadius: '0.25rem', marginLeft: '0.25rem' }} />
+      </ControlBar>
     </VideoTile>
   );
 };

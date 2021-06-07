@@ -6,7 +6,7 @@ import { CallVideoOffIcon } from '@fluentui/react-icons-northstar';
 import { Stack, Text } from '@fluentui/react';
 import { localPreviewContainerStyle, cameraOffLabelStyle, localPreviewTileStyle } from './styles/LocalPreview.styles';
 import { CameraButton, ControlBar, MicrophoneButton, StreamMedia, VideoTile } from 'react-components';
-import { useCallingSelector as useSelector, useCallingPropsFor as usePropsFor } from '@azure/acs-calling-selector';
+import { useCallingSelector as useSelector, useCallingPropsFor as usePropsFor } from 'calling-component-bindings';
 import { localPreviewSelector } from './selectors/localPreviewSelector';
 import { devicePermissionSelector } from './selectors/devicePermissionSelector';
 
@@ -43,13 +43,14 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
         isMirrored={true}
       >
         <ControlBar layout="floatingBottom">
-          <CameraButton {...cameraButtonProps} disabled={!cameraPermissionGranted} />
+          <CameraButton {...cameraButtonProps} disabled={!cameraPermissionGranted} showLabel={true} />
           <MicrophoneButton
             disabled={!microphonePermissionGranted}
             checked={props.isMicrophoneOn}
             onToggleMicrophone={async () => {
               props.setIsMicrophoneOn(!props.isMicrophoneOn);
             }}
+            showLabel={true}
           />
         </ControlBar>
       </VideoTile>

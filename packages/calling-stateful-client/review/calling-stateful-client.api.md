@@ -11,6 +11,7 @@ import { CallDirection } from '@azure/communication-calling';
 import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
 import { CallState as CallState_2 } from '@azure/communication-calling';
+import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { CreateViewOptions } from '@azure/communication-calling';
@@ -40,7 +41,7 @@ export interface CallClientState {
     deviceManager: DeviceManagerState;
     incomingCalls: Map<string, IncomingCallState>;
     incomingCallsEnded: IncomingCallState[];
-    userId: string;
+    userId: CommunicationUserKind;
 }
 
 // @public
@@ -64,7 +65,7 @@ export interface CallState {
 }
 
 // @public
-export const createStatefulCallClient: (callClientArgs: StatefulCallClientArgs, callClientOptions?: CallClientOptions | undefined) => StatefulCallClient;
+export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: StatefulCallClientOptions | undefined) => StatefulCallClient;
 
 // @public
 export type DeviceManagerState = {
@@ -121,8 +122,8 @@ export interface RemoteVideoStreamState {
 
 // @public
 export interface StatefulCallClient extends CallClient {
-    createView(callId: string | undefined, participantId: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<void>;
-    disposeView(callId: string | undefined, participantId: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
+    createView(callId: string | undefined, participantId: CommunicationIdentifierKind | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<void>;
+    disposeView(callId: string | undefined, participantId: CommunicationIdentifierKind | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
     getState(): CallClientState;
     offStateChange(handler: (state: CallClientState) => void): void;
     onStateChange(handler: (state: CallClientState) => void): void;
@@ -130,11 +131,14 @@ export interface StatefulCallClient extends CallClient {
 
 // @public
 export type StatefulCallClientArgs = {
-    userId: string;
+    userId: CommunicationUserKind;
 };
 
 // @public
-export type StatefulCallClientOptions = CallClientOptions;
+export type StatefulCallClientOptions = {
+    callClientOptions?: CallClientOptions;
+    maxStateChangeListeners?: number;
+};
 
 // @public
 export interface StatefulDeviceManager extends DeviceManager {

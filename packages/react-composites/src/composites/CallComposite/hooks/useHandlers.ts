@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultCallingHandlers } from '@azure/acs-calling-selector';
+import { DefaultCallingHandlers } from 'calling-component-bindings';
 import { CommonProperties, toFlatCommunicationIdentifier } from 'acs-ui-common';
 import { ReactElement } from 'react';
 import memoizeOne from 'memoize-one';
@@ -30,8 +30,8 @@ const createCompositeHandlers = memoizeOne(
     onParticipantRemove: async (userId) => {
       await adapter.removeParticipant(userId);
     },
-    onSelectCamera: async (deviceInfo) => {
-      await adapter.setCamera(deviceInfo);
+    onSelectCamera: async (deviceInfo, options) => {
+      await adapter.setCamera(deviceInfo, options);
     },
     onSelectMicrophone: async (deviceInfo) => {
       await adapter.setMicrophone(deviceInfo);
@@ -49,8 +49,8 @@ const createCompositeHandlers = memoizeOne(
     onStopScreenShare: async () => {
       await adapter.stopScreenShare();
     },
-    onToggleCamera: async () => {
-      await adapter.onToggleCamera();
+    onToggleCamera: async (options) => {
+      await adapter.onToggleCamera(options);
     },
     onToggleMicrophone: async () => {
       return adapter.getState().call?.isMuted ? await adapter.unmute() : await adapter.mute();
@@ -64,6 +64,12 @@ const createCompositeHandlers = memoizeOne(
       if (adapter.getState().call) {
         return adapter.startCamera();
       }
+    },
+    onDisposeLocalStreamView: async () => {
+      return adapter.disposeStreamView();
+    },
+    onDisposeRemoteStreamView: async (userId) => {
+      return adapter.disposeStreamView(userId);
     }
   })
 );

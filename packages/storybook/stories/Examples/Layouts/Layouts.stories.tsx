@@ -59,6 +59,7 @@ export { OneToOneCallLayout } from './OneToOneCallLayout';
 export { ScreenShareLayout } from './ScreenShareLayout';
 
 export default {
+  id: `${EXAMPLES_FOLDER_PREFIX}-layouts`,
   title: `${EXAMPLES_FOLDER_PREFIX}/Layouts`,
   parameters: {
     docs: {

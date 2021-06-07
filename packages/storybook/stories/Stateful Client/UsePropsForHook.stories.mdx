@@ -1,7 +1,7 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 
-<Meta title="Stateful Client/React Hooks/UsePropsFor" />
+<Meta id="statefulclient-reacthooks-usepropsfor" title="Stateful Client/React Hooks/UsePropsFor" />
 
 # usePropsFor <a name="usePropsFor"></a>
 
@@ -10,7 +10,7 @@ It provides all the required props to power a feature component.
 It subscribes to state changes of stateful clients, gets props designed for your component, and triggers a re-render whenever the props change.
 `UsePropsFor` comes in two flavors: `UseCallPropsFor` and `UseChatPropsFor`.
 
-To see a full end-to-end example using usePropsFor, see [Getting Started with StatefulClient](/?path=/docs/quickstarts-get-started-with-stateful-client--page)
+To see a full end-to-end example using usePropsFor, see [Getting Started with StatefulClient](/?path=/docs/quickstarts-statefulclient--page)
 
 ## _useCallPropsFor_ Example
 
@@ -27,16 +27,16 @@ export const ChatScreen = () => {
 
 `useCallPropsFor` supports the following call components:
 
-- [ControlBar Buttons](/?path=/docs/ui-components-controlbar--control-bar-component)
-- [VideoGallery](/?path=/docs/ui-components-video-gallery--video-gallery)
-- [ParticipantList](/?path=/docs/ui-components-participant-list--participant-list)
+- [ControlBar Buttons](/?path=/docs/ui-components-controlbar--control-bar)
+- [VideoGallery](/?path=/docs/ui-components-videogallery--video-gallery)
+- [ParticipantList](/?path=/docs/ui-components-participantlist--participant-list)
 
 ## _useChatPropsFor_ Example
 
 ```tsx
 import React from 'react';
 import { MessageThread } from '@azure/acs-chat-component';
-import { useChatPropsFor } from '@azure/acs-chat-selector';
+import { useChatPropsFor } from 'chat-component-bindings';
 
 export const ChatScreen = () => {
   const props = useChatPropsFor(MessageThread);
@@ -46,10 +46,10 @@ export const ChatScreen = () => {
 
 `useChatPropsFor` supports the following chat components:
 
-- [MessageThread](/?path=/docs/ui-components-message-thread--message-thread)
-- [SendBox](/?path=/docs/ui-components-send-box--send-box)
-- [TypingIndicator](/?path=/docs/ui-components-typing-indicator--typing-indicator)
-- [ParticipantList](/?path=/docs/ui-components-participant-list--participant-list)
+- [MessageThread](/?path=/docs/ui-components-messagethread--message-thread)
+- [SendBox](/?path=/docs/ui-components-sendbox--send-box)
+- [TypingIndicator](/?path=/docs/ui-components-typingindicator--typing-indicator)
+- [ParticipantList](/?path=/docs/ui-components-participantlist--participant-list)
 
 ## Under the Hood of usePropsFor
 
@@ -65,4 +65,4 @@ You can use the usePropsFor function for your own custom components by matching 
 By passing the component that matches your custom components prop structure, you can then use the outputted props on your own custom component.
 This means you could build your own `Video Gallery` with a custom layout using our `Grid Layout` and `Video Tile` components, and still leverage our usePropsFor helper.
 In cases, where matching the prop structure is not possible, the stateful clients can still be leveraged to extract and maintain your own props.
-For more information, see [useSelector](/?path=/docs/stateful-client-react-hooks-useselector--page).
+For more information, see [useSelector](/?path=/docs/statefulclient-reacthooks-useselector--page).

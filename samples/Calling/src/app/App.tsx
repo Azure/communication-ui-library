@@ -10,7 +10,7 @@ import { ConfigurationScreen } from './ConfigurationScreen';
 import { CallScreen } from './CallScreen';
 import { HomeScreen } from './HomeScreen';
 import { v1 as createGUID } from 'uuid';
-import { CallProvider, CallClientProvider, CallAgentProvider } from '@azure/acs-calling-selector';
+import { CallProvider, CallClientProvider, CallAgentProvider } from 'calling-component-bindings';
 import {
   createRandomDisplayName,
   fetchTokenResponse,
@@ -22,7 +22,7 @@ import {
 } from './utils/AppUtils';
 import { localStorageAvailable } from './utils/constants';
 import { createStatefulCallClient, StatefulCallClient } from 'calling-stateful-client';
-import { getIdFromToken, createAzureCommunicationUserCredential } from 'react-composites';
+import { createAzureCommunicationUserCredential } from 'react-composites';
 import { AudioOptions, Call, CallAgent, GroupLocator } from '@azure/communication-calling';
 import { refreshTokenAsync } from './utils/refreshToken';
 
@@ -102,8 +102,9 @@ const App = (): JSX.Element => {
   useEffect(() => {
     // Create a new CallClient when at the home page or at the createCallClient page.
     if (page === 'createCallClient' || page === 'home') {
-      const userIdFromToken = token ? getIdFromToken(token) : '';
-      const newStatefulCallClient = createStatefulCallClient({ userId: userIdFromToken });
+      const newStatefulCallClient = createStatefulCallClient({
+        userId: { kind: 'communicationUser', communicationUserId: userId }
+      });
       setStatefulCallClient(newStatefulCallClient);
       page === 'createCallClient' && setPage('configuration');
 
@@ -116,7 +117,7 @@ const App = (): JSX.Element => {
       };
       askPermissionAndQueryDevices();
     }
-  }, [page, token]);
+  }, [page, token, userId]);
 
   /**
    * Routing flow of the sample app: (happy path)
@@ -228,6 +229,16 @@ const App = (): JSX.Element => {
           <CallError
             title="Error joining Teams Meeting"
             reason="Access to the Teams meeting was denied."
+            rejoinHandler={() => setPage('createCallClient')}
+            homeHandler={navigateToHomePage}
+          />
+        );
+      }
+      case 'removed': {
+        return (
+          <CallError
+            title="Oops! You are no longer a participant of the call."
+            reason="Access to the meeting has been stopped"
             rejoinHandler={() => setPage('createCallClient')}
             homeHandler={navigateToHomePage}
           />

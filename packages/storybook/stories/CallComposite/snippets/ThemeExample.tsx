@@ -9,7 +9,7 @@ import { COMPOSITE_STRING_CONNECTIONSTRING } from '../../CompositeStringUtils';
 import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE } from '../../constants';
 import { ContosoCallContainer } from './Container.snippet';
 import { createUserAndGroup } from './Server.snippet';
-import { ConfigHintBanner } from './Utils.snippet';
+import { ConfigHintBanner } from './Utils';
 
 const themeChoices = {
   Default: 'default',

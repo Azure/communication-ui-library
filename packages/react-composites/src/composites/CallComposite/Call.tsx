@@ -5,14 +5,13 @@ import React, { useEffect, useState } from 'react';
 import { CallScreen } from './CallScreen';
 import { ConfigurationScreen } from './ConfigurationScreen';
 import { Error } from './Error';
-import { callContainer } from './styles/Call.styles';
-import { Stack } from '@fluentui/react';
+import { mergeStyles, Stack } from '@fluentui/react';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
 import { CallAdapter, CallCompositePage } from './adapter/CallAdapter';
 import { PlaceholderProps } from 'react-components';
 import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
-import { Theme, PartialTheme } from '@fluentui/react-theme-provider';
+import { Theme, PartialTheme, useTheme } from '@fluentui/react-theme-provider';
 import { FluentThemeProvider } from 'react-components';
 
 export type CallCompositeProps = {
@@ -47,6 +46,14 @@ const MainScreen = ({ screenWidth, onRenderAvatar }: MainScreenProps): JSX.Eleme
           reason="Access to the Teams meeting was denied."
         />
       );
+    case 'removed':
+      return (
+        <Error
+          rejoinHandler={() => adapter.setPage('configuration')}
+          title="Oops! You are no longer a participant of the call."
+          reason="Access to the meeting has been stopped"
+        />
+      );
     default:
       return (
         <CallScreen
@@ -65,6 +72,7 @@ const MainScreen = ({ screenWidth, onRenderAvatar }: MainScreenProps): JSX.Eleme
 
 export const Call = (props: CallCompositeProps): JSX.Element => {
   const [screenWidth, setScreenWidth] = useState(window?.innerWidth ?? 0);
+  const theme = useTheme();
 
   useEffect(() => {
     const setWindowWidth = (): void => {
@@ -90,10 +98,21 @@ export const Call = (props: CallCompositeProps): JSX.Element => {
   return (
     <FluentThemeProvider fluentTheme={fluentTheme}>
       <CallAdapterProvider adapter={adapter}>
-        <Stack className={callContainer} grow>
+        <Stack className={callContainerStyle(theme)} grow>
           <MainScreen screenWidth={screenWidth} onRenderAvatar={props.onRenderAvatar} />
         </Stack>
       </CallAdapterProvider>
     </FluentThemeProvider>
   );
+};
+
+export const callContainerStyle = (theme: Theme): string => {
+  return mergeStyles({
+    height: '100%',
+    width: '100%',
+    overflow: 'auto',
+    minHeight: '30rem',
+    minWidth: '50rem',
+    boxShadow: theme.effects.elevation4
+  });
 };

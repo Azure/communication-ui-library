@@ -13,6 +13,7 @@ const containerText = require('!!raw-loader!./snippets/Container.snippet.tsx').d
 const serverText = require('!!raw-loader!./snippets/Server.snippet.tsx').default;
 
 export default {
+  id: `${COMPOSITE_FOLDER_PREFIX}-call`,
   title: `${COMPOSITE_FOLDER_PREFIX}/CallComposite`,
   component: CallComposite,
   parameters: {
@@ -22,8 +23,8 @@ export default {
   }
 } as Meta;
 
-export { BasicExample } from './snippets/BasicExample.snippet';
-export { CustomDataModelExample } from './snippets/CustomDataModelExample.snippet';
+export { BasicExample } from './BasicExample';
+export { CustomDataModelExample } from './CustomDataModelExample';
 export { ThemeExample } from './snippets/ThemeExample';
 export { JoinExistingCall } from './snippets/JoinExistingCall';
 
@@ -56,9 +57,8 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Theming</Heading>
       <Description>
         CallComposite can be themed with Fluent UI themes, just like the base components. Look at the [CallComposite
-        theme example](./?path=/story/composites-call--custom-theme-example) to see theming in action or the [overall
-        theming example](./?path=/docs/examples-themes--teams-theme-component) to see how theming works for all the
-        components in this UI library.
+        theme example](./?path=/story/composites-call--theme-example) to see theming in action or the [overall theming
+        example](./?path=/docs/theming--page) to see how theming works for all the components in this UI library.
       </Description>
 
       <Heading>Joining an existing Call</Heading>

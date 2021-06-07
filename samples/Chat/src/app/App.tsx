@@ -12,7 +12,7 @@ import HomeScreen from './HomeScreen';
 import ConfigurationScreen from './ConfigurationScreen';
 import { getThreadId } from './utils/getThreadId';
 import { refreshTokenAsync } from './utils/refreshToken';
-import { ChatClientProvider, ChatThreadClientProvider } from '@azure/acs-chat-selector';
+import { ChatClientProvider, ChatThreadClientProvider } from 'chat-component-bindings';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { createStatefulChatClient, StatefulChatClient } from 'chat-stateful-client';
@@ -34,7 +34,6 @@ export default (): JSX.Element => {
 
   useEffect(() => {
     if (token && userId && displayName && threadId && endpointUrl) {
-      // This hack can be removed when `getIdFromToken` is dropped in favour of actually passing in user credentials.
       const userIdKind = { kind: 'communicationUser', communicationUserId: userId } as CommunicationUserKind;
       const createClient = async (): Promise<void> => {
         const chatClient = createStatefulChatClient({

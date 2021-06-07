@@ -7,6 +7,7 @@ import memoizeOne from 'memoize-one';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CallAdapterState } from '../adapter/CallAdapter';
 import { CallState, CallClientState, DeviceManagerState } from 'calling-stateful-client';
+import { CommunicationUserKind } from '@azure/communication-common';
 
 // This function highly depends on chatClient.onChange event
 // It will be moved into selector folder when the ChatClientProvide when refactor finished
@@ -70,7 +71,7 @@ export const useSelectorWithAdaptation = <
 
 const memoizeState = memoizeOne(
   (
-    userId: string,
+    userId: CommunicationUserKind,
     deviceManager: DeviceManagerState,
     calls: Map<string, CallState>,
     displayName?: string

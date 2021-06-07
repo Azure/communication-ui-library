@@ -1,8 +1,10 @@
+import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CallComposite, CallAdapter, createAzureCommunicationCallAdapter } from '@azure/communication-react';
 import { Theme, PartialTheme } from '@fluentui/react-theme-provider';
 import React, { useState, useEffect } from 'react';
 
 export type ContainerProps = {
+  userId: CommunicationUserIdentifier;
   token: string;
   locator: string;
   displayName: string;
@@ -21,19 +23,15 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
           ? { meetingLink: props.locator }
           : { groupId: props.locator };
         const createAdapter = async (): Promise<void> => {
-          setAdapter(await createAzureCommunicationCallAdapter(props.token, callLocator, props.displayName));
+          setAdapter(
+            await createAzureCommunicationCallAdapter(props.userId, props.token, callLocator, props.displayName)
+          );
         };
         createAdapter();
       }
     })();
   }, [props]);
 
-  // FIXME: There is still a small chance of adapter leak:
-  // - props change triggers the `useEffect` block that queues async adapter creation
-  // - Component unmounts, the following `useEffect` clean up runs but finds an undefined adapter
-  // - async adapter creation succeeds -- adapter is created, and leaked.
-  //
-  // In this scenario, the adapter is never used to join a call etc. but there is still a memory leak.
   useEffect(() => {
     return () => {
       (async () => {
