@@ -1,8 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultButton, Persona, PersonaSize, Stack, Dialog, DialogType, DialogFooter } from '@fluentui/react';
-import { useTheme } from '@fluentui/react-theme-provider';
+import {
+  DefaultButton,
+  Persona,
+  PersonaSize,
+  Stack,
+  Dialog,
+  DialogType,
+  DialogFooter,
+  useTheme
+} from '@fluentui/react';
 import { CallEndIcon, CallIcon, CallVideoIcon, CallVideoOffIcon } from '@fluentui/react-northstar';
 import React from 'react';
 import {

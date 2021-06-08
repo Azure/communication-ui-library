@@ -55,7 +55,6 @@
     "@fluentui/react": "~8.17.2",
     "@fluentui/react-icons-northstar": "^0.51.2",
     "@fluentui/react-northstar": "^0.51.2",
-    "@fluentui/react-theme-provider": "^0.18.0",
     "@types/react-aria-live": "^2.0.0",
     "@types/react-linkify": "^1.0.0",
     "acs-ui-common": "~1.0.0-beta.1",
