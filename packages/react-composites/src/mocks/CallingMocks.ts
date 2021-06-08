@@ -2,32 +2,21 @@
 // Licensed under the MIT license.
 
 import {
-  AddPhoneNumberOptions,
   AudioDeviceInfo,
   Call,
   CallAgent,
   CallAgentOptions,
   CallApiFeature,
-  CallClient,
-  CallDirection,
-  CallerInfo,
   CallFeatureFactoryType,
-  CallState,
-  CollectionUpdatedEvent,
   CreateViewOptions,
   DeviceAccess,
   DeviceManager,
   DtmfTone,
-  GroupChatCallLocator,
-  GroupLocator,
   HangUpOptions,
-  IncomingCallEvent,
   JoinCallOptions,
   LocalVideoStream,
   MediaStreamType,
-  MeetingLocator,
   PermissionConstraints,
-  PropertyChangedEvent,
   RemoteParticipant,
   RemoteParticipantState as RemoteParticipantStatus,
   StartCallOptions,
@@ -239,330 +228,261 @@ export function mockRemoteVideoStream(type?: MediaStreamType, isAvailable?: bool
 export type CallOverrides = Partial<Call>;
 
 export function createMockCall(callOverrides?: CallOverrides): Call {
-  class MockCall implements Call {
-    public id = '';
-    public info = {
+  return {
+    id: '',
+    info: {
       groupId: undefined,
       getServerCallId: async () => {
         return '';
       }
-    };
-    public callerInfo: CallerInfo = { identifier: undefined };
-    public state: CallState = 'None';
-    public direction: CallDirection = 'Incoming';
-    public isMuted = true;
-    public isScreenSharingOn = false;
-    public localVideoStreams: LocalVideoStream[] = [];
-    public remoteParticipants: RemoteParticipant[] = [];
-
-    public api<TFeature extends CallApiFeature>(cls: CallFeatureFactoryType<TFeature>): TFeature {
+    },
+    callerInfo: { identifier: undefined },
+    state: 'None',
+    direction: 'Incoming',
+    isMuted: true,
+    isScreenSharingOn: false,
+    localVideoStreams: [] as LocalVideoStream[],
+    remoteParticipants: [] as RemoteParticipant[],
+    api: <TFeature extends CallApiFeature>(cls: CallFeatureFactoryType<TFeature>): TFeature => {
       if (callOverrides?.api) {
         return callOverrides.api(cls);
       }
       return {} as TFeature;
-    }
-
-    public hangUp(options?: HangUpOptions): Promise<void> {
+    },
+    hangUp: (options?: HangUpOptions): Promise<void> => {
       if (callOverrides?.hangUp) {
         return callOverrides.hangUp(options);
       }
       return Promise.resolve();
-    }
-
-    public mute(): Promise<void> {
+    },
+    mute: (): Promise<void> => {
       if (callOverrides?.mute) {
         return callOverrides.mute();
       }
       return Promise.resolve();
-    }
-
-    public unmute(): Promise<void> {
+    },
+    unmute: (): Promise<void> => {
       if (callOverrides?.unmute) {
         return callOverrides.unmute();
       }
       return Promise.resolve();
-    }
-
-    public sendDtmf(dtmfTone: DtmfTone): Promise<void> {
+    },
+    sendDtmf: (dtmfTone: DtmfTone): Promise<void> => {
       if (callOverrides?.sendDtmf) {
         return callOverrides.sendDtmf(dtmfTone);
       }
       return Promise.resolve();
-    }
-
-    public startVideo(localVideoStream: LocalVideoStream): Promise<void> {
+    },
+    startVideo: (localVideoStream: LocalVideoStream): Promise<void> => {
       if (callOverrides?.startVideo) {
         return callOverrides.startVideo(localVideoStream);
       }
       return Promise.resolve();
-    }
-
-    public stopVideo(localVideoStream: LocalVideoStream): Promise<void> {
+    },
+    stopVideo: (localVideoStream: LocalVideoStream): Promise<void> => {
       if (callOverrides?.stopVideo) {
         return callOverrides.stopVideo(localVideoStream);
       }
       return Promise.resolve();
-    }
-
-    public addParticipant(identifier: CommunicationUserIdentifier | MicrosoftTeamsUserIdentifier): RemoteParticipant;
-    public addParticipant(identifier: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): RemoteParticipant;
-    public addParticipant(identifier: any, options?: any): RemoteParticipant {
+    },
+    addParticipant: (identifier: any, options?: any): RemoteParticipant => {
       if (callOverrides?.addParticipant) {
         return callOverrides.addParticipant(identifier, options);
       }
       return {} as RemoteParticipant;
-    }
-
-    public removeParticipant(
+    },
+    removeParticipant: (
       identifier: CommunicationUserIdentifier | PhoneNumberIdentifier | MicrosoftTeamsUserIdentifier | UnknownIdentifier
-    ): Promise<void> {
+    ): Promise<void> => {
       if (callOverrides?.removeParticipant) {
         return callOverrides.removeParticipant(identifier);
       }
       return Promise.resolve();
-    }
-
-    public hold(): Promise<void> {
+    },
+    hold: (): Promise<void> => {
       if (callOverrides?.hold) {
         return callOverrides.hold();
       }
       return Promise.resolve();
-    }
-
-    public resume(): Promise<void> {
+    },
+    resume: (): Promise<void> => {
       if (callOverrides?.resume) {
         return callOverrides.resume();
       }
       return Promise.resolve();
-    }
-
-    public startScreenSharing(): Promise<void> {
+    },
+    startScreenSharing: (): Promise<void> => {
       if (callOverrides?.startScreenSharing) {
         return callOverrides.startScreenSharing();
       }
       return Promise.resolve();
-    }
-
-    public stopScreenSharing(): Promise<void> {
+    },
+    stopScreenSharing: (): Promise<void> => {
       if (callOverrides?.stopScreenSharing) {
         return callOverrides.stopScreenSharing();
       }
       return Promise.resolve();
-    }
-
-    public on(event: 'stateChanged', listener: PropertyChangedEvent): void;
-    public on(event: 'idChanged', listener: PropertyChangedEvent): void;
-    public on(event: 'isMutedChanged', listener: PropertyChangedEvent): void;
-    public on(event: 'isScreenSharingOnChanged', listener: PropertyChangedEvent): void;
-    public on(event: 'remoteParticipantsUpdated', listener: CollectionUpdatedEvent<RemoteParticipant>): void;
-    public on(event: 'localVideoStreamsUpdated', listener: CollectionUpdatedEvent<LocalVideoStream>): void;
-    public on(event: any, listener: any): void {
+    },
+    on: (event: any, listener: any): void => {
       if (callOverrides?.on) {
         callOverrides.on(event, listener);
       }
-    }
-
-    public off(event: 'stateChanged', listener: PropertyChangedEvent): void;
-    public off(event: 'idChanged', listener: PropertyChangedEvent): void;
-    public off(event: 'isMutedChanged', listener: PropertyChangedEvent): void;
-    public off(event: 'isScreenSharingOnChanged', listener: PropertyChangedEvent): void;
-    public off(event: 'remoteParticipantsUpdated', listener: CollectionUpdatedEvent<RemoteParticipant>): void;
-    public off(event: 'localVideoStreamsUpdated', listener: CollectionUpdatedEvent<LocalVideoStream>): void;
-    public off(event: any, listener: any): void {
+    },
+    off: (event: any, listener: any): void => {
       if (callOverrides?.off) {
         callOverrides.off(event, listener);
       }
     }
-  }
-
-  return new MockCall();
+  } as Call;
 }
 
-export type AgentOverrides = Partial<CallAgent>;
+export type CallAgentOverrides = Partial<CallAgent>;
 
-export function createMockCallAgent(agentOverrides?: AgentOverrides, callOverrides?: CallOverrides): CallAgent {
-  class MockCallAgent implements CallAgent {
-    public calls: Call[] = [];
-
-    public startCall(
+export function createMockCallAgent(agentOverrides?: CallAgentOverrides, callOverrides?: CallOverrides): CallAgent {
+  return {
+    calls: [] as Call[],
+    startCall: (
       participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
       options?: StartCallOptions
-    ): Call {
+    ): Call => {
       if (agentOverrides?.startCall) {
         return agentOverrides.startCall(participants, options);
       }
       return createMockCall(callOverrides);
-    }
-
-    public join(groupLocator: GroupLocator, options?: JoinCallOptions): Call;
-    public join(groupChatCallLocator: GroupChatCallLocator, options?: JoinCallOptions): Call;
-    public join(meetingLocator: MeetingLocator, options?: JoinCallOptions): Call;
-    public join(locator: any, options?: JoinCallOptions): Call {
+    },
+    join: (locator: any, options?: JoinCallOptions): Call => {
       if (agentOverrides?.join) {
         return agentOverrides.join(locator, options);
       }
       return createMockCall(callOverrides);
-    }
-
-    public dispose(): Promise<void> {
+    },
+    dispose: (): Promise<void> => {
       if (agentOverrides?.dispose) {
         return agentOverrides.dispose();
       }
       return Promise.resolve();
-    }
-
-    public on(event: string, listener: IncomingCallEvent): void;
-    public on(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
-    public on(event: any, listener: any): void {
+    },
+    on: (event: any, listener: any): void => {
       if (agentOverrides?.on) {
         return agentOverrides.on(event, listener);
       }
-    }
-
-    public off(event: 'incomingCall', listener: IncomingCallEvent): void;
-    public off(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
-    public off(event: any, listener: any): void {
+    },
+    off: (event: any, listener: any): void => {
       if (agentOverrides?.off) {
         return agentOverrides.off(event, listener);
       }
     }
-  }
-
-  return new MockCallAgent();
+  } as CallAgent;
 }
 
 export type DeviceManagerOverrides = Partial<DeviceManager>;
 
 export function createMockDeviceManager(deviceManagerOverrides?: DeviceManagerOverrides): DeviceManager {
-  class MockDeviceManager implements DeviceManager {
-    public isSpeakerSelectionAvailable = false;
-
-    public getCameras(): Promise<VideoDeviceInfo[]> {
+  return {
+    isSpeakerSelectionAvailable: false,
+    getCameras: (): Promise<VideoDeviceInfo[]> => {
       if (deviceManagerOverrides?.getCameras) {
         return deviceManagerOverrides.getCameras();
       }
       return Promise.resolve([] as VideoDeviceInfo[]);
-    }
-
-    public getMicrophones(): Promise<AudioDeviceInfo[]> {
+    },
+    getMicrophones: (): Promise<AudioDeviceInfo[]> => {
       if (deviceManagerOverrides?.getMicrophones) {
         return deviceManagerOverrides.getMicrophones();
       }
       return Promise.resolve([] as AudioDeviceInfo[]);
-    }
-
-    public getSpeakers(): Promise<AudioDeviceInfo[]> {
+    },
+    getSpeakers: (): Promise<AudioDeviceInfo[]> => {
       if (deviceManagerOverrides?.getSpeakers) {
         return deviceManagerOverrides.getSpeakers();
       }
       return Promise.resolve([] as AudioDeviceInfo[]);
-    }
-
-    public selectMicrophone(microphoneDevice: AudioDeviceInfo): Promise<void> {
+    },
+    selectMicrophone: (microphoneDevice: AudioDeviceInfo): Promise<void> => {
       if (deviceManagerOverrides?.selectMicrophone) {
         return deviceManagerOverrides.selectMicrophone(microphoneDevice);
       }
       return Promise.resolve();
-    }
-
-    public selectSpeaker(speakerDevice: AudioDeviceInfo): Promise<void> {
+    },
+    selectSpeaker: (speakerDevice: AudioDeviceInfo): Promise<void> => {
       if (deviceManagerOverrides?.selectSpeaker) {
         return deviceManagerOverrides.selectSpeaker(speakerDevice);
       }
       return Promise.resolve();
-    }
-
-    public askDevicePermission(permissionConstraints: PermissionConstraints): Promise<DeviceAccess> {
+    },
+    askDevicePermission: (permissionConstraints: PermissionConstraints): Promise<DeviceAccess> => {
       if (deviceManagerOverrides?.askDevicePermission) {
         return deviceManagerOverrides.askDevicePermission(permissionConstraints);
       }
       return Promise.resolve({} as DeviceAccess);
-    }
-
-    public on(event: 'videoDevicesUpdated', listener: CollectionUpdatedEvent<VideoDeviceInfo>): void;
-    public on(event: 'audioDevicesUpdated', listener: CollectionUpdatedEvent<AudioDeviceInfo>): void;
-    public on(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
-    public on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
-    public on(event: any, listener: any): void {
+    },
+    on: (event: any, listener: any): void => {
       if (deviceManagerOverrides?.on) {
         deviceManagerOverrides.on(event, listener);
       }
-    }
-
-    public off(event: 'videoDevicesUpdated', listener: CollectionUpdatedEvent<VideoDeviceInfo>): void;
-    public off(event: 'audioDevicesUpdated', listener: CollectionUpdatedEvent<AudioDeviceInfo>): void;
-    public off(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
-    public off(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
-    public off(event: any, listener: any): void {
+    },
+    off: (event: any, listener: any): void => {
       if (deviceManagerOverrides?.off) {
         deviceManagerOverrides.off(event, listener);
       }
     }
-  }
-
-  return new MockDeviceManager();
+  } as DeviceManager;
 }
 
 export type StatefulOverrides = Partial<StatefulCallClient>;
 
 export function createMockStatefulCallClient(
   statefulOverrides?: StatefulOverrides,
-  agentOverrides?: AgentOverrides,
+  agentOverrides?: CallAgentOverrides,
   deviceManagerOverrides?: DeviceManagerOverrides,
   callOverrides?: CallOverrides
 ): StatefulCallClient {
-  class MockStatefulCallClient extends CallClient implements StatefulCallClient {
-    public getState(): CallClientState {
+  return {
+    getState: (): CallClientState => {
       if (statefulOverrides?.getState) {
         return statefulOverrides.getState();
       }
       return {} as CallClientState;
-    }
-
-    public onStateChange(handler: (state: CallClientState) => void): void {
+    },
+    onStateChange: (handler: (state: CallClientState) => void): void => {
       if (statefulOverrides?.onStateChange) {
         statefulOverrides.onStateChange(handler);
       }
-    }
-
-    public offStateChange(handler: (state: CallClientState) => void): void {
+    },
+    offStateChange: (handler: (state: CallClientState) => void): void => {
       if (statefulOverrides?.offStateChange) {
         statefulOverrides.offStateChange(handler);
       }
-    }
-
-    public createView(
+    },
+    createView: (
       callId: string | undefined,
       participantId: CommunicationIdentifierKind | undefined,
       stream: LocalVideoStreamState | RemoteVideoStreamState,
       options?: CreateViewOptions
-    ): Promise<void> {
+    ): Promise<void> => {
       if (statefulOverrides?.createView) {
         return statefulOverrides.createView(callId, participantId, stream, options);
       }
       return Promise.resolve();
-    }
-
-    public disposeView(
+    },
+    disposeView: (
       callId: string | undefined,
       participantId: CommunicationIdentifierKind | undefined,
       stream: LocalVideoStreamState | RemoteVideoStreamState
-    ): void {
+    ): void => {
       if (statefulOverrides?.disposeView) {
         statefulOverrides.disposeView(callId, participantId, stream);
       }
-    }
-
-    public createCallAgent(
+    },
+    createCallAgent: (
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       tokenCredential: CommunicationTokenCredential,
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       options?: CallAgentOptions
-    ): Promise<CallAgent> {
+    ): Promise<CallAgent> => {
       return Promise.resolve(createMockCallAgent(agentOverrides, callOverrides));
-    }
-
-    public getDeviceManager(): Promise<DeviceManager> {
+    },
+    getDeviceManager: (): Promise<DeviceManager> => {
       const deviceManager = createMockDeviceManager(deviceManagerOverrides);
       Object.defineProperty(deviceManager, 'selectCamera', {
         configurable: false,
@@ -571,6 +491,5 @@ export function createMockStatefulCallClient(
       });
       return Promise.resolve(deviceManager);
     }
-  }
-  return new MockStatefulCallClient();
+  } as StatefulCallClient;
 }
