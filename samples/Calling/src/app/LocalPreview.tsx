@@ -31,7 +31,7 @@ export interface LocalPreviewProps {
 export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
   const localPreviewProps = useSelector(localPreviewSelector);
-  const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useSelector(devicePermissionSelector);
+  const { audio: microphonePermissionGranted } = useSelector(devicePermissionSelector);
 
   return (
     <Stack className={localPreviewContainerStyle}>
@@ -43,7 +43,7 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
         isMirrored={true}
       >
         <ControlBar layout="floatingBottom">
-          <CameraButton {...cameraButtonProps} disabled={!cameraPermissionGranted} showLabel={true} />
+          <CameraButton {...cameraButtonProps} showLabel={true} />
           <MicrophoneButton
             disabled={!microphonePermissionGranted}
             checked={props.isMicrophoneOn}

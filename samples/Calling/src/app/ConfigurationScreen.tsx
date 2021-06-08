@@ -9,11 +9,10 @@ import { DisplayNameField } from './DisplayNameField';
 import { StartCallButton } from './StartCallButton';
 import { CallConfiguration } from './CallConfiguration';
 import { LocalDeviceSettings } from './LocalDeviceSettings';
-import { useCallingSelector as useSelector } from '@azure/acs-calling-bindings';
+import { useCallingSelector as useSelector, getCallingSelector } from 'calling-component-bindings';
 import { useAzureCommunicationHandlers } from './hooks/useAzureCommunicationHandlers';
 import { TeamsMeetingLinkField } from './TeamsMeetingLinkField';
 import { devicePermissionSelector } from './selectors/devicePermissionSelector';
-import { getCallingSelector } from '@azure/acs-calling-bindings';
 import { OptionsButton } from 'react-components';
 import { containerGapStyle, titleContainerStyle } from './styles/ConfiguratonScreen.styles';
 
