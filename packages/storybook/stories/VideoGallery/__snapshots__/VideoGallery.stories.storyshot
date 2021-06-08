@@ -2,10 +2,10 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video Gallery 1`] = `
 <div
-  className="css-81 root-0 body-1"
+  className="css-126 root-0 body-1"
 >
   <div
-    className="css-81"
+    className="css-126"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -20,7 +20,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
       }
     >
       <div
-        className="css-55"
+        className="css-100"
         style={
           Object {
             "gridTemplateColumns": "repeat(3, 1fr)",
@@ -29,7 +29,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
         }
       >
         <div
-          className="ms-Stack css-78 css-2"
+          className="ms-Stack css-123 css-2"
         >
           <div
             className="ms-Stack css-6"
@@ -65,14 +65,14 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
               </div>
             </div>
             <span
-              className="css-79 css-25"
+              className="css-124 css-25"
             >
               You
             </span>
           </div>
         </div>
         <div
-          className="ms-Stack css-78 css-26"
+          className="ms-Stack css-123 css-26"
         >
           <div
             className="ms-Stack css-6"
@@ -108,14 +108,14 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
               </div>
             </div>
             <span
-              className="css-79 css-25"
+              className="css-124 css-25"
             >
               Rick
             </span>
           </div>
         </div>
         <div
-          className="ms-Stack css-78 css-26"
+          className="ms-Stack css-123 css-26"
         >
           <div
             className="ms-Stack css-6"
@@ -151,14 +151,14 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
               </div>
             </div>
             <span
-              className="css-79 css-25"
+              className="css-124 css-25"
             >
               Daryl
             </span>
           </div>
         </div>
         <div
-          className="ms-Stack css-78 css-26"
+          className="ms-Stack css-123 css-26"
         >
           <div
             className="ms-Stack css-6"
@@ -194,14 +194,14 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
               </div>
             </div>
             <span
-              className="css-79 css-25"
+              className="css-124 css-25"
             >
               Michonne
             </span>
           </div>
         </div>
         <div
-          className="ms-Stack css-78 css-26"
+          className="ms-Stack css-123 css-26"
         >
           <div
             className="ms-Stack css-6"
@@ -237,7 +237,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
               </div>
             </div>
             <span
-              className="css-79 css-25"
+              className="css-124 css-25"
             >
               Dwight
             </span>

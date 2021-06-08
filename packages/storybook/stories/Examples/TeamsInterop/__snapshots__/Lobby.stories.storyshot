@@ -2,10 +2,10 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 1`] = `
 <div
-  className="css-81 root-0 body-1"
+  className="css-126 root-0 body-1"
 >
   <div
-    className="css-81"
+    className="css-126"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -241,7 +241,6 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                     className="ms-Icon root-37 css-23 ms-Button-menuIcon menuIcon-22"
                     data-icon-name="ChevronDown"
                     hidden={true}
-                    role="presentation"
                     style={
                       Object {
                         "fontFamily": "\\"FabricMDL2Icons\\"",

@@ -2,10 +2,10 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Participant Item Participant Item 1`] = `
 <div
-  className="css-81 root-0 body-1"
+  className="css-126 root-0 body-1"
 >
   <div
-    className="css-81"
+    className="css-126"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -27,7 +27,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant Item Part
         }
       >
         <div
-          className="css-72"
+          className="css-117"
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
@@ -85,7 +85,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant Item Part
             </div>
           </div>
           <div
-            className="ms-Stack css-75 css-21"
+            className="ms-Stack css-120 css-21"
           >
             <div
               className="ms-Stack css-22"
@@ -155,7 +155,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant Item Part
                       onScroll={[Function]}
                       style={
                         Object {
-                          "maxHeight": 752,
+                          "maxHeight": undefined,
                           "outline": "none",
                           "overflowY": undefined,
                         }
@@ -166,6 +166,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant Item Part
                         onFocusCapture={[Function]}
                         onKeyDown={[Function]}
                         onKeyUp={[Function]}
+                        role="menu"
                         tabIndex={-1}
                       >
                         <div
@@ -179,7 +180,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant Item Part
                             className="ms-ContextualMenu-list is-open list-25"
                             onKeyDown={[Function]}
                             onKeyUp={[Function]}
-                            role="menu"
+                            role="presentation"
                           >
                             <li
                               className="ms-ContextualMenu-item item-28"

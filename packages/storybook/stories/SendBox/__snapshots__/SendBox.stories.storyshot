@@ -2,10 +2,10 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`] = `
 <div
-  className="css-81 root-0 body-1"
+  className="css-126 root-0 body-1"
 >
   <div
-    className="css-81"
+    className="css-126"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -27,7 +27,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
         }
       >
         <div
-          className="ms-Stack css-56 css-3"
+          className="ms-Stack css-101 css-3"
         >
           <div
             style={
@@ -49,7 +49,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
                   <textarea
                     aria-invalid={false}
                     aria-label="Type"
-                    className="ms-TextField-field ms-TextField--unresizable css-57 field-8"
+                    className="ms-TextField-field ms-TextField--unresizable css-102 field-8"
                     disabled={false}
                     id="sendbox"
                     onBlur={[Function]}
@@ -64,7 +64,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
               </div>
             </div>
             <div
-              className="css-58"
+              className="css-103"
               id="sendIconWrapper"
               onClick={[Function]}
               onMouseEnter={[Function]}
@@ -72,7 +72,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
             >
               <span
                 aria-hidden="true"
-                className="ui-icon al am an css-59 css-2"
+                className="ui-icon al am an css-104 css-2"
                 role="img"
               >
                 <svg

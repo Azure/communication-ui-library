@@ -2,10 +2,10 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Typing Indicator Typing Indicator 1`] = `
 <div
-  className="css-81 root-0 body-1"
+  className="css-126 root-0 body-1"
 >
   <div
-    className="css-81"
+    className="css-126"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -20,20 +20,20 @@ exports[`storybook snapshot tests Storyshots UI Components/Typing Indicator Typi
       }
     >
       <div
-        className="ms-Stack css-52 css-2"
+        className="ms-Stack css-97 css-2"
       >
         <span
-          className="css-53"
+          className="css-98"
         >
           User1, 
         </span>
         <span
-          className="css-53"
+          className="css-98"
         >
           User2
         </span>
         <span
-          className="css-53"
+          className="css-98"
         >
            are typing...
         </span>

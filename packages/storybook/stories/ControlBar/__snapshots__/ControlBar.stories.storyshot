@@ -2,10 +2,10 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/ControlBar Control Bar 1`] = `
 <div
-  className="css-81 root-0 body-1"
+  className="css-126 root-0 body-1"
 >
   <div
-    className="css-81"
+    className="css-126"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -191,9 +191,9 @@ exports[`storybook snapshot tests Storyshots UI Components/ControlBar Control Ba
               </span>
             </button>
             <button
+              aria-controls={null}
               aria-expanded={false}
               aria-haspopup={true}
-              aria-owns={null}
               className="ms-Button ms-Button--default ms-Button--hasMenu root-5"
               data-is-focusable={true}
               onClick={[Function]}
@@ -234,7 +234,6 @@ exports[`storybook snapshot tests Storyshots UI Components/ControlBar Control Ba
                   className="ms-Icon root-37 css-13 ms-Button-menuIcon menuIcon-10"
                   data-icon-name="ChevronDown"
                   hidden={true}
-                  role="presentation"
                   style={
                     Object {
                       "fontFamily": "\\"FabricMDL2Icons\\"",
@@ -246,9 +245,9 @@ exports[`storybook snapshot tests Storyshots UI Components/ControlBar Control Ba
               </span>
             </button>
             <button
+              aria-controls={null}
               aria-expanded={false}
               aria-haspopup={true}
-              aria-owns={null}
               className="ms-Button ms-Button--default ms-Button--hasMenu root-5"
               data-is-focusable={true}
               onClick={[Function]}
@@ -294,7 +293,6 @@ exports[`storybook snapshot tests Storyshots UI Components/ControlBar Control Ba
                   className="ms-Icon root-37 css-13 ms-Button-menuIcon menuIcon-10"
                   data-icon-name="ChevronDown"
                   hidden={true}
-                  role="presentation"
                   style={
                     Object {
                       "fontFamily": "\\"FabricMDL2Icons\\"",

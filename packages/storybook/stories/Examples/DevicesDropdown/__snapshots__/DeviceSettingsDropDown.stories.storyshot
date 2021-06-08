@@ -2,10 +2,10 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Device Settings Device Settings 1`] = `
 <div
-  className="css-81 root-0 body-1"
+  className="css-126 root-0 body-1"
 >
   <div
-    className="css-81"
+    className="css-126"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -23,10 +23,10 @@ exports[`storybook snapshot tests Storyshots Examples/Device Settings Device Set
         className="ms-Stack css-2"
       >
         <div
-          className="css-81 root-0 body-1"
+          className="css-126 root-0 body-1"
         >
           <div
-            className="css-81"
+            className="css-126"
             data-uses-unhanded-props={true}
           >
             <div
@@ -37,6 +37,7 @@ exports[`storybook snapshot tests Storyshots Examples/Device Settings Device Set
                 aria-haspopup="listbox"
                 className="ms-Dropdown dropdown-3"
                 data-is-focusable={true}
+                data-ktp-target={true}
                 id="Dropdown0"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -45,7 +46,7 @@ exports[`storybook snapshot tests Storyshots Examples/Device Settings Device Set
                 onKeyDown={[Function]}
                 onKeyUp={[Function]}
                 onMouseDown={[Function]}
-                role="listbox"
+                role="combobox"
                 style={
                   Object {
                     "width": "15rem",
@@ -57,10 +58,8 @@ exports[`storybook snapshot tests Storyshots Examples/Device Settings Device Set
                   aria-atomic={true}
                   aria-invalid={false}
                   aria-live="polite"
-                  aria-setsize={5}
                   className="ms-Dropdown-title ms-Dropdown-titleIsPlaceHolder title-4"
                   id="Dropdown0-option"
-                  role="option"
                 >
                   Select an option
                 </span>
