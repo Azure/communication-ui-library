@@ -26,8 +26,7 @@ export async function run() {
     const client = new github.GitHub(token);
 
     console.log('github.context.payload');
-    console.log(github.context.action);
-    console.log(github.context.payload.pull_request);
+    console.log(github.context.payload);
 
     const { data: pullRequest } = await client.pulls.get({
       owner: github.context.repo.owner,
