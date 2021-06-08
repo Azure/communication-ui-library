@@ -8,6 +8,11 @@ jobs:
   triage:
     runs-on: ubuntu-latest
     steps:
+      # Check-out repo
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
       - uses: ./.github/custom-actions/pr-labeler/
         with:
           repo-token: '${{ secrets.GITHUB_TOKEN }}'
