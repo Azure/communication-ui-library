@@ -4,7 +4,7 @@
 export { createDefaultChatHandlers, createDefaultChatHandlersForComponent } from './handlers/createHandlers';
 export { ChatClientProvider, useChatClient } from './providers/ChatClientProvider';
 export { ChatThreadClientProvider, useChatThreadClient } from './providers/ChatThreadClientProvider';
-export { usePropsFor as useChatPropsFor } from './hooks/usePropsFor';
+export { usePropsFor as useChatPropsFor, getSelector as getChatSelector } from './hooks/usePropsFor';
 export { useSelector as useChatSelector } from './hooks/useSelector';
 
 // -- TODO: these exports should be removed in favor of useSelector -- //

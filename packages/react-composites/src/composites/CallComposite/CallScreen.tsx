@@ -1,13 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Label, Spinner, Stack } from '@fluentui/react';
+import { Spinner, Stack } from '@fluentui/react';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   activeContainerClassName,
   containerStyles,
   callControlsStyles,
-  loadingStyle,
   subContainerStyles,
   callControlsContainer
 } from './styles/CallScreen.styles';
@@ -29,8 +28,8 @@ import { Lobby } from './Lobby';
 import { AzureCommunicationCallAdapter, CallCompositePage } from './adapter';
 import { PermissionsBanner } from '../common/PermissionsBanner';
 import { permissionsBannerContainerStyle } from '../common/styles/PermissionsBanner.styles';
-import { devicePermissionSelector } from 'calling-component-bindings';
-import { useAdaptedSelector } from './hooks/useAdaptedSelector';
+import { devicePermissionSelector } from './selectors/devicePermissionSelector';
+import { ScreenSharePopup } from './ScreenSharePopup';
 
 export const MINI_HEADER_WINDOW_WIDTH = 450;
 
@@ -64,7 +63,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const lobbyProps = useSelector(lobbySelector);
   const lobbyHandlers = useHandlers(Lobby);
 
-  const devicePermissions = useAdaptedSelector(devicePermissionSelector);
+  const devicePermissions = useSelector(devicePermissionSelector);
 
   const localVideoViewOption = {
     scalingMode: 'Crop',
@@ -128,18 +127,23 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
             />
           </Stack.Item>
           <Stack.Item styles={subContainerStyles} grow>
-            {!isScreenShareOn ? (
-              callStatus === 'Connected' && (
+            {callStatus === 'Connected' && (
+              <>
                 <Stack styles={containerStyles} grow>
                   <Stack.Item grow styles={activeContainerClassName}>
                     <MediaGallery {...mediaGalleryProps} {...mediaGalleryHandlers} onRenderAvatar={onRenderAvatar} />
                   </Stack.Item>
                 </Stack>
-              )
-            ) : (
-              <div className={loadingStyle}>
-                <Label>Your screen is being shared</Label>
-              </div>
+                {isScreenShareOn ? (
+                  <ScreenSharePopup
+                    onStopScreenShare={() => {
+                      return adapter.stopScreenShare();
+                    }}
+                  />
+                ) : (
+                  <></>
+                )}
+              </>
             )}
           </Stack.Item>
           <Stack.Item styles={callControlsStyles}>
