@@ -2,10 +2,10 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
 <div
-  className="css-126 root-0 body-1"
+  className="css-82 body-0"
 >
   <div
-    className="css-126"
+    className="css-82"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -30,14 +30,14 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
         }
       >
         <div
-          className="css-126 root-2 body-3"
+          className="css-82 body-1"
         >
           <div
-            className="css-126"
+            className="css-82"
             data-uses-unhanded-props={true}
           >
             <div
-              className="ms-Stack css-5"
+              className="ms-Stack css-3"
               style={
                 Object {
                   "background": "#1a1a1a",
@@ -47,19 +47,19 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
               }
             >
               <div
-                className="ms-Stack css-6"
+                className="ms-Stack css-4"
               >
                 <div
-                  className="ms-StackItem css-7"
+                  className="ms-StackItem css-5"
                 >
                   <div
-                    className="css-8"
+                    className="css-6"
                   >
                     <div
-                      className="ms-Stack css-10"
+                      className="ms-Stack css-8"
                     >
                       <button
-                        className="ms-Button ms-Button--default root-11"
+                        className="ms-Button ms-Button--default root-9"
                         data-is-focusable={true}
                         onClick={[Function]}
                         onKeyDown={[Function]}
@@ -70,7 +70,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         type="button"
                       >
                         <span
-                          className="ms-Button-flexContainer flexContainer-12"
+                          className="ms-Button-flexContainer flexContainer-10"
                           data-automationid="splitbuttonprimary"
                         >
                           <span
@@ -112,7 +112,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         </span>
                       </button>
                       <button
-                        className="ms-Button ms-Button--default root-11"
+                        className="ms-Button ms-Button--default root-9"
                         data-is-focusable={true}
                         onClick={[Function]}
                         onKeyDown={[Function]}
@@ -123,7 +123,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         type="button"
                       >
                         <span
-                          className="ms-Button-flexContainer flexContainer-12"
+                          className="ms-Button-flexContainer flexContainer-10"
                           data-automationid="splitbuttonprimary"
                         >
                           <span
@@ -168,7 +168,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         </span>
                       </button>
                       <button
-                        className="ms-Button ms-Button--default root-11"
+                        className="ms-Button ms-Button--default root-9"
                         data-is-focusable={true}
                         onClick={[Function]}
                         onKeyDown={[Function]}
@@ -179,7 +179,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         type="button"
                       >
                         <span
-                          className="ms-Button-flexContainer flexContainer-12"
+                          className="ms-Button-flexContainer flexContainer-10"
                           data-automationid="splitbuttonprimary"
                         >
                           <span
@@ -212,7 +212,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         </span>
                       </button>
                       <button
-                        className="ms-Button ms-Button--default root-19"
+                        className="ms-Button ms-Button--default root-17"
                         data-is-focusable={true}
                         onClick={[Function]}
                         onKeyDown={[Function]}
@@ -223,7 +223,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         type="button"
                       >
                         <span
-                          className="ms-Button-flexContainer flexContainer-12"
+                          className="ms-Button-flexContainer flexContainer-10"
                           data-automationid="splitbuttonprimary"
                         >
                           <span
@@ -263,7 +263,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                 </div>
               </div>
               <div
-                className="css-100"
+                className="css-56"
                 style={
                   Object {
                     "gridTemplateColumns": "repeat(1, 1fr)",
@@ -272,28 +272,28 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                 }
               >
                 <div
-                  className="ms-Stack css-24"
+                  className="ms-Stack css-22"
                 >
                   <div
-                    className="ms-Stack css-25"
+                    className="ms-Stack css-23"
                   >
                     <div
-                      className="ms-Stack css-27"
+                      className="ms-Stack css-25"
                     >
                       <div
-                        className="ms-Persona ms-Persona--size100 root-28"
+                        className="ms-Persona ms-Persona--size100 root-26"
                       >
                         <div
-                          className="ms-Persona-coin ms-Persona--size100 coin-35"
+                          className="ms-Persona-coin ms-Persona--size100 coin-33"
                           role="presentation"
                         >
                           <div
-                            className="ms-Persona-imageArea imageArea-37"
+                            className="ms-Persona-imageArea imageArea-35"
                             role="presentation"
                           >
                             <div
                               aria-hidden="true"
-                              className="ms-Persona-initials initials-40"
+                              className="ms-Persona-initials initials-38"
                             >
                               <span>
                                 M
@@ -305,7 +305,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                     </div>
                   </div>
                   <span
-                    className="css-124 css-43"
+                    className="css-80 css-41"
                   >
                     Michael
                   </span>

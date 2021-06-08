@@ -2,10 +2,10 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Device Settings Device Settings 1`] = `
 <div
-  className="css-126 root-0 body-1"
+  className="css-82 body-0"
 >
   <div
-    className="css-126"
+    className="css-82"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -20,13 +20,13 @@ exports[`storybook snapshot tests Storyshots Examples/Device Settings Device Set
       }
     >
       <div
-        className="ms-Stack css-2"
+        className="ms-Stack css-1"
       >
         <div
-          className="css-126 root-0 body-1"
+          className="css-82 body-0"
         >
           <div
-            className="css-126"
+            className="css-82"
             data-uses-unhanded-props={true}
           >
             <div
@@ -35,7 +35,7 @@ exports[`storybook snapshot tests Storyshots Examples/Device Settings Device Set
               <div
                 aria-expanded="false"
                 aria-haspopup="listbox"
-                className="ms-Dropdown dropdown-3"
+                className="ms-Dropdown dropdown-2"
                 data-is-focusable={true}
                 data-ktp-target={true}
                 id="Dropdown0"
@@ -58,17 +58,17 @@ exports[`storybook snapshot tests Storyshots Examples/Device Settings Device Set
                   aria-atomic={true}
                   aria-invalid={false}
                   aria-live="polite"
-                  className="ms-Dropdown-title ms-Dropdown-titleIsPlaceHolder title-4"
+                  className="ms-Dropdown-title ms-Dropdown-titleIsPlaceHolder title-3"
                   id="Dropdown0-option"
                 >
                   Select an option
                 </span>
                 <span
-                  className="ms-Dropdown-caretDownWrapper caretDownWrapper-5"
+                  className="ms-Dropdown-caretDownWrapper caretDownWrapper-4"
                 >
                   <i
                     aria-hidden={true}
-                    className="root-37 ms-Dropdown-caretDown caretDown-20"
+                    className="root-37 ms-Dropdown-caretDown caretDown-19"
                     data-icon-name="ChevronDown"
                   >
                     
