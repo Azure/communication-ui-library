@@ -11,12 +11,7 @@ import {
 } from '../types';
 import { GridLayout } from './GridLayout';
 import { StreamMedia } from './StreamMedia';
-import {
-  floatingLocalVideoModalStyle,
-  floatingLocalVideoTileStyle,
-  gridStyle,
-  videoTileStyle
-} from './styles/VideoGallery.styles';
+import { floatingLocalVideoModalStyle, floatingLocalVideoTileStyle, gridStyle } from './styles/VideoGallery.styles';
 import { VideoTile, PlaceholderProps, VideoTileStylesProps } from './VideoTile';
 
 /**
@@ -89,7 +84,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onRenderAvatar
   } = props;
 
-  let localVideoTileStyles: VideoTileStylesProps = videoTileStyle;
+  let localVideoTileStyles: VideoTileStylesProps = {};
 
   const shouldFloatLocalVideo = (): boolean =>
     !!(layout === 'floatingLocalVideo' && remoteParticipants && remoteParticipants.length > 0);
@@ -237,7 +232,6 @@ const RemoteVideoTile = React.memo(
           isVideoReady={isAvailable}
           renderElement={<StreamMedia videoStreamElement={renderElement ?? null} />}
           displayName={displayName}
-          styles={videoTileStyle}
           onRenderPlaceholder={onRenderAvatar}
         />
       </Stack>

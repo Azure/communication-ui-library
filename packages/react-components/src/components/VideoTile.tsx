@@ -10,7 +10,6 @@ import {
   videoContainerStyles,
   videoHint
 } from './styles/VideoTile.styles';
-import { useTheme } from '@fluentui/react-theme-provider';
 import { BaseCustomStylesProps } from '../types';
 
 export interface VideoTileStylesProps extends BaseCustomStylesProps {
@@ -96,9 +95,9 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   } = props;
 
   const placeHolderProps = { userId, displayName, noVideoAvailableAriaLabel };
-  const theme = useTheme();
+
   return (
-    <Stack className={mergeStyles(rootStyles, { background: theme.palette.neutralLighter }, styles?.root)}>
+    <Stack className={mergeStyles(rootStyles, styles?.root)}>
       {isVideoReady && renderElement ? (
         <Stack
           className={mergeStyles(
@@ -121,13 +120,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
         </Stack>
       )}
       {displayName && showDisplayName && (
-        <Text
-          className={mergeStyles(
-            isVideoReady ? videoHint : disabledVideoHint,
-            { color: isVideoReady ? 'white' : theme.palette.neutralPrimaryAlt },
-            styles?.displayNameContainer
-          )}
-        >
+        <Text className={mergeStyles(isVideoReady ? videoHint : disabledVideoHint, styles?.displayNameContainer)}>
           {displayName}
         </Text>
       )}

@@ -24,24 +24,23 @@ export const remoteMediaGalleryTileStyle = mergeStyles({
   background: palette.neutralLighterAlt
 });
 
-export const videoHint = mergeStyles({
-  backgroundColor: palette.neutralSecondary,
-  bottom: '5%',
-  boxShadow: '0 0 1px 0 rgba(0,0,0,.5)',
-  color: palette.neutralLighter,
+export const disabledVideoHint = mergeStyles({
+  bottom: '0.46875rem',
+  boxShadow: 'none',
   textAlign: 'left',
-  left: '2%',
+  left: '0.5rem',
   overflow: 'hidden',
   position: 'absolute',
   padding: '0.25rem',
-  lineHeight: '1.4286rem',
+  fontSize: '12px',
+  fontWeight: 600,
+  lineHeight: '1rem',
   whiteSpace: 'nowrap',
   maxWidth: '95%',
-  borderRadius: 4
+  borderRadius: 4,
+  color: palette.neutralPrimary
 });
 
-export const disabledVideoHint = mergeStyles(videoHint, {
-  backgroundColor: 'transparent',
-  color: palette.neutralSecondary,
-  boxShadow: 'none'
+export const videoHint = mergeStyles(disabledVideoHint, {
+  backgroundColor: 'rgba(255, 255, 255, 0.8)'
 });
