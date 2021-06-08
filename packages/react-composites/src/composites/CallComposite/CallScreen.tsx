@@ -29,8 +29,7 @@ import { Lobby } from './Lobby';
 import { AzureCommunicationCallAdapter, CallCompositePage } from './adapter';
 import { PermissionsBanner } from '../common/PermissionsBanner';
 import { permissionsBannerContainerStyle } from '../common/styles/PermissionsBanner.styles';
-import { devicePermissionSelector } from 'calling-component-bindings';
-import { useAdaptedSelector } from './hooks/useAdaptedSelector';
+import { devicePermissionSelector } from './selectors/devicePermissionSelector';
 
 export const MINI_HEADER_WINDOW_WIDTH = 450;
 
@@ -64,7 +63,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const lobbyProps = useSelector(lobbySelector);
   const lobbyHandlers = useHandlers(Lobby);
 
-  const devicePermissions = useAdaptedSelector(devicePermissionSelector);
+  const devicePermissions = useSelector(devicePermissionSelector);
 
   const localVideoViewOption = {
     scalingMode: 'Crop',

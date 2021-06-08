@@ -29,7 +29,7 @@ const onRenderPlaceholder = (): JSX.Element => {
 export const LocalPreview = (): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
   const localPreviewProps = useSelector(localPreviewSelector);
-  const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useSelector(devicePermissionSelector);
+  const { audio: microphonePermissionGranted } = useSelector(devicePermissionSelector);
 
   const isLocalMicrophoneEnabled = useSelector(getLocalMicrophoneEnabled);
   const adapter = useAdapter();
@@ -47,7 +47,7 @@ export const LocalPreview = (): JSX.Element => {
         onRenderPlaceholder={onRenderPlaceholder}
       >
         <ControlBar layout="floatingBottom">
-          <CameraButton {...cameraButtonProps} disabled={!cameraPermissionGranted} showLabel={true} />
+          <CameraButton {...cameraButtonProps} showLabel={true} />
           <MicrophoneButton
             checked={isLocalMicrophoneEnabled}
             onToggleMicrophone={onToggleMic}

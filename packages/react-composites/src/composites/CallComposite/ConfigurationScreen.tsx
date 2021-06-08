@@ -12,7 +12,7 @@ import { StartCallButton } from './StartCallButton';
 import { devicePermissionSelector } from './selectors/devicePermissionSelector';
 import { useSelector } from './hooks/useSelector';
 import { OptionsButton } from 'react-components';
-import { getCallingSelector } from '@azure/acs-calling-selector';
+import { getCallingSelector } from 'calling-component-bindings';
 import { titleContainerStyle } from './styles/ConfigurationScreen.styles';
 
 export interface ConfigurationScreenProps {
