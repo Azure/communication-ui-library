@@ -53,7 +53,7 @@
     "@azure/communication-common": "1.0.0",
     "@azure/core-http": "^1.2.3",
     "@babel/preset-react": "^7.12.7",
-    "@fluentui/react": "^7.117.1",
+    "@fluentui/react": "~8.17.2",
     "@fluentui/react-icons-northstar": "^0.51.2",
     "@fluentui/react-northstar": "^0.51.2",
     "@fluentui/react-theme-provider": "^0.18.0",
