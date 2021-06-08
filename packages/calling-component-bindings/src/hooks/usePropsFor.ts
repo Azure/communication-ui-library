@@ -17,6 +17,7 @@ import {
   screenShareButtonSelector
 } from '../callControlSelectors';
 import { videoGallerySelector } from '../videoGallerySelector';
+import { participantsButtonSelector } from '../participantsButtonSelector';
 import { participantListSelector } from '../participantListSelector';
 import { useHandlers } from './useHandlers';
 import { useSelector } from './useSelector';
@@ -30,7 +31,12 @@ import { AudioDeviceInfo, StartCallOptions, Call, VideoDeviceInfo } from '@azure
 // @ts-ignore
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 // @ts-ignore
-import { VideoStreamOptions, CallParticipant, VideoGalleryRemoteParticipant } from 'react-components';
+import {
+  VideoStreamOptions,
+  CallParticipant,
+  ParticipantsButton,
+  VideoGalleryRemoteParticipant
+} from 'react-components';
 
 // @ts-ignore
 export const usePropsFor = <Component extends (props: any) => JSX.Element>(
@@ -52,6 +58,8 @@ export type GetSelector<Component> = AreEqual<Component, typeof VideoGallery> ex
   ? typeof screenShareButtonSelector
   : AreEqual<Component, typeof OptionsButton> extends true
   ? typeof optionsButtonSelector
+  : AreEqual<Component, typeof ParticipantsButton> extends true
+  ? typeof participantsButtonSelector
   : AreEqual<Component, typeof ParticipantList> extends true
   ? typeof participantListSelector
   : AreEqual<Component, typeof EndCallButton> extends true
@@ -77,6 +85,8 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
       return screenShareButtonSelector;
     case OptionsButton:
       return optionsButtonSelector;
+    case ParticipantsButton:
+      return participantsButtonSelector;
     case ParticipantList:
       return participantListSelector;
     case EndCallButton:

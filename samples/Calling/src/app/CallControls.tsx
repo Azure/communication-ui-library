@@ -2,7 +2,14 @@
 // Licensed under the MIT license.
 
 import React, { useCallback } from 'react';
-import { ControlBar, MicrophoneButton, CameraButton, ScreenShareButton, EndCallButton } from 'react-components';
+import {
+  ControlBar,
+  MicrophoneButton,
+  CameraButton,
+  ParticipantsButton,
+  ScreenShareButton,
+  EndCallButton
+} from 'react-components';
 import { devicePermissionSelector, useCallingPropsFor as usePropsFor } from 'calling-component-bindings';
 import {
   controlBarStyle,
@@ -22,6 +29,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
   const screenShareButtonProps = usePropsFor(ScreenShareButton);
   const hangUpButtonProps = usePropsFor(EndCallButton);
+  const participantsButtonProps = usePropsFor(ParticipantsButton);
   const onHangUp = useCallback(async () => {
     await hangUpButtonProps.onHangUp();
     onEndCallClick();
@@ -33,6 +41,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       <CameraButton {...cameraButtonProps} disabled={!cameraPermissionGranted} />
       <MicrophoneButton {...microphoneButtonProps} disabled={!microphonePermissionGranted} />
       <ScreenShareButton {...screenShareButtonProps} />
+      <ParticipantsButton {...participantsButtonProps} />
       <EndCallButton
         {...hangUpButtonProps}
         onHangUp={onHangUp}
