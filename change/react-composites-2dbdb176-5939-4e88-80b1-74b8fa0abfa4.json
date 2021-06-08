@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Set default state of permission to true Move deviceManager to outside selector package Remove usage of optionSelector, use getSelector instead",
+  "packageName": "react-composites",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}
