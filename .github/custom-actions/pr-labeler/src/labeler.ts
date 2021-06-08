@@ -12,12 +12,12 @@ type StringOrMatchConfig = string | MatchConfig;
 
 export async function run() {
   try {
-    const token = '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'; //core.getInput("repo-token", { required: true });
-    const configPath = 'common/config/pr-labeler/pr-labeler-config.yml'; //core.getInput("configuration-path", { required: true });
-    const syncLabels = true; //!!core.getInput("sync-labels", { required: false });
-    const onlyLastCommit = true; //!!core.getInput("compare-last-commit-only", { required: false });
+    const token = core.getInput('repo-token', { required: true });
+    const configPath = core.getInput('configuration-path', { required: true });
+    const syncLabels = !!core.getInput('sync-labels', { required: false });
+    const onlyLastCommit = !!core.getInput('compare-last-commit-only', { required: false });
 
-    const prNumber = 444; //getPrNumber();
+    const prNumber = getPrNumber();
     if (!prNumber) {
       console.log('Could not get pull request number from context, exiting');
       return;

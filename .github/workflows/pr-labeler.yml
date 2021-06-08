@@ -13,7 +13,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: .github/custom-actions/pr-labeler/
+      - uses: ./.github/custom-actions/pr-labeler/
         with:
           repo-token: '${{ secrets.GITHUB_TOKEN }}'
           configuration-path: common/config/pr-labeler/pr-labeler-config.yml
