@@ -2,13 +2,13 @@ name: 'Pull Request Labeler'
 
 on:
   pull_request:
-    branches: [main]
+    branches: [jaburnsi/label-breaking-changes-prs]
 
 jobs:
   triage:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/labeler@v3
+      - uses: ./.github/custom-actions/pr-labeler/
         with:
           repo-token: '${{ secrets.GITHUB_TOKEN }}'
           configuration-path: common/config/pr-labeler/pr-labeler-config.yml
