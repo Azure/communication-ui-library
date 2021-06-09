@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Theme } from '@fluentui/react-theme-provider';
+import { Theme } from '@fluentui/react';
 
 export const isDarkThemed = (theme: Theme): boolean => {
   const themeBlackBrightness = getPerceptualBrightnessOfHexColor(theme.palette.black);

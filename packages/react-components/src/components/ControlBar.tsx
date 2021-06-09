@@ -1,8 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStyle, mergeStyles, Stack } from '@fluentui/react';
-import { useTheme } from '@fluentui/react-theme-provider';
+import { IStyle, mergeStyles, Stack, useTheme } from '@fluentui/react';
 import React from 'react';
 import { BaseCustomStylesProps } from '../types';
 import { controlBarStyles } from './styles/ControlBar.styles';

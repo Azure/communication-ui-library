@@ -8,8 +8,7 @@ import {
   ScreenShareButton,
   VideoTile
 } from '@azure/communication-react';
-import { Stack, mergeStyles } from '@fluentui/react';
-import { useTheme } from '@fluentui/react-theme-provider';
+import { Stack, mergeStyles, useTheme } from '@fluentui/react';
 import React from 'react';
 
 const teamsTheme = {

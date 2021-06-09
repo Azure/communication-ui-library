@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add undefined case to device permission selector",
+  "packageName": "calling-component-bindings",
+  "email": "allenhwang@microsoft.com",
+  "dependentChangeType": "patch"
+}

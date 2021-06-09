@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStyle, mergeStyles, Persona, PersonaSize, Stack, Text } from '@fluentui/react';
+import { IStyle, mergeStyles, Persona, PersonaSize, Stack, Text, useTheme } from '@fluentui/react';
 import React from 'react';
 import {
   disabledVideoHint,

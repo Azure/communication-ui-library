@@ -2,10 +2,10 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incoming Call Modal 1`] = `
 <div
-  className="css-81 root-0 body-1"
+  className="css-82 body-0"
 >
   <div
-    className="css-81"
+    className="css-82"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -23,7 +23,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
         className="ms-layer"
       >
         <div
-          className="ms-Fabric ms-Layer-content content-11"
+          className="ms-Fabric ms-Layer-content content-10"
           onBlur={[Function]}
           onChange={[Function]}
           onClick={[Function]}
@@ -68,23 +68,22 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
             }
           >
             <div
-              className="ms-Modal is-open ms-Dialog root-4"
+              className="ms-Modal is-open ms-Dialog root-3"
               role="document"
             >
               <div
-                className="ms-Overlay ms-Overlay--dark root-13"
+                aria-hidden={true}
+                className="ms-Overlay ms-Overlay--dark root-12"
               />
               <div
-                className="ms-Dialog-main main-5"
-                data-id="Modal1"
-                onBlur={[Function]}
-                onFocus={[Function]}
+                className="ms-Dialog-main main-4"
+                id="ModalFocusTrapZone1"
+                onBlurCapture={[Function]}
                 onFocusCapture={[Function]}
               >
                 <div
                   aria-hidden={true}
                   data-is-visible={true}
-                  onFocus={[Function]}
                   style={
                     Object {
                       "pointerEvents": "none",
@@ -94,29 +93,29 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
                   tabIndex={0}
                 />
                 <div
-                  className="ms-Modal-scrollableContent scrollableContent-6"
+                  className="ms-Modal-scrollableContent scrollableContent-5"
                   data-is-scrollable={true}
                 >
                   <div
-                    className="content-14"
+                    className="content-13"
                   >
                     <div
-                      className="ms-Dialog-header header-16"
+                      className="ms-Dialog-header header-15"
                     >
                       <div
                         aria-level={1}
-                        className="ms-Dialog-title title-19"
+                        className="ms-Dialog-title title-18"
                         id="Dialog0-title"
                         role="heading"
                       >
                         Incoming Video Call
                       </div>
                       <div
-                        className="topButton-20"
+                        className="topButton-19"
                       >
                         <button
                           aria-label="Close"
-                          className="ms-Button ms-Button--icon ms-Dialog-button ms-Dialog-button--close root-21"
+                          className="ms-Button ms-Button--icon ms-Dialog-button ms-Dialog-button--close root-20"
                           data-is-focusable={true}
                           onClick={[Function]}
                           onKeyDown={[Function]}
@@ -128,14 +127,13 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
                           type="button"
                         >
                           <span
-                            className="ms-Button-flexContainer flexContainer-22"
+                            className="ms-Button-flexContainer flexContainer-21"
                             data-automationid="splitbuttonprimary"
                           >
                             <i
                               aria-hidden={true}
-                              className="ms-Icon root-37 css-29 ms-Button-icon icon-24"
+                              className="ms-Icon root-37 css-28 ms-Button-icon icon-23"
                               data-icon-name="Cancel"
-                              role="presentation"
                               style={
                                 Object {
                                   "fontFamily": "\\"FabricMDL2Icons\\"",
@@ -149,16 +147,16 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
                       </div>
                     </div>
                     <div
-                      className="ms-Dialog-inner inner-17"
+                      className="ms-Dialog-inner inner-16"
                     >
                       <div
-                        className="ms-Dialog-content innerContent-18"
+                        className="ms-Dialog-content innerContent-17"
                       >
                         <div
-                          className="ms-Stack css-30"
+                          className="ms-Stack css-29"
                         >
                           <div
-                            className="ms-Stack css-31"
+                            className="ms-Stack css-30"
                             style={
                               Object {
                                 "marginRight": "0.5rem",
@@ -167,19 +165,19 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
                           >
                             <div
                               aria-label="Maximus Aurelius"
-                              className="ms-Persona ms-Persona--size40 root-32"
+                              className="ms-Persona ms-Persona--size40 root-31"
                             >
                               <div
-                                className="ms-Persona-coin ms-Persona--size40 coin-39"
+                                className="ms-Persona-coin ms-Persona--size40 coin-38"
                                 role="presentation"
                               >
                                 <div
-                                  className="ms-Persona-imageArea imageArea-41"
+                                  className="ms-Persona-imageArea imageArea-40"
                                   role="presentation"
                                 >
                                   <div
                                     aria-hidden="true"
-                                    className="ms-Persona-initials initials-44"
+                                    className="ms-Persona-initials initials-43"
                                   >
                                     <span>
                                       MA
@@ -190,7 +188,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
                             </div>
                           </div>
                           <div
-                            className="ms-Stack css-47"
+                            className="ms-Stack css-46"
                             style={
                               Object {
                                 "alignItems": "flex-start",
@@ -198,7 +196,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
                             }
                           >
                             <div
-                              className="ms-Stack css-48"
+                              className="ms-Stack css-47"
                               style={
                                 Object {
                                   "color": "#000000",
@@ -223,7 +221,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
                               </span>
                             </div>
                             <div
-                              className="ms-Stack css-48"
+                              className="ms-Stack css-47"
                               style={
                                 Object {
                                   "color": "#201f1e",
@@ -238,7 +236,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
                           </div>
                         </div>
                         <div
-                          className="ms-Stack css-181 css-48"
+                          className="ms-Stack css-184 css-47"
                         >
                           <div
                             className="ms-Stack css-51"
@@ -247,11 +245,11 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
                               className="ms-Stack css-52"
                             >
                               <div
-                                className="css-70"
+                                className="css-71"
                               />
                             </div>
                             <span
-                              className="css-80 css-53"
+                              className="css-81 css-53"
                             >
                               John Doe
                             </span>
@@ -285,7 +283,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
                               type="button"
                             >
                               <span
-                                className="ms-Button-flexContainer flexContainer-22"
+                                className="ms-Button-flexContainer flexContainer-21"
                                 data-automationid="splitbuttonprimary"
                               >
                                 <span
@@ -339,11 +337,11 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
                               type="button"
                             >
                               <span
-                                className="ms-Button-flexContainer flexContainer-22"
+                                className="ms-Button-flexContainer flexContainer-21"
                                 data-automationid="splitbuttonprimary"
                               >
                                 <span
-                                  className="ms-Button-textContainer textContainer-23"
+                                  className="ms-Button-textContainer textContainer-22"
                                 >
                                   <span
                                     className="ms-Button-label label-58"
@@ -376,11 +374,11 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
                               type="button"
                             >
                               <span
-                                className="ms-Button-flexContainer flexContainer-22"
+                                className="ms-Button-flexContainer flexContainer-21"
                                 data-automationid="splitbuttonprimary"
                               >
                                 <span
-                                  className="ms-Button-textContainer textContainer-23"
+                                  className="ms-Button-textContainer textContainer-22"
                                 >
                                   <span
                                     className="ms-Button-label label-58"
@@ -400,7 +398,6 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
                 <div
                   aria-hidden={true}
                   data-is-visible={true}
-                  onFocus={[Function]}
                   style={
                     Object {
                       "pointerEvents": "none",
@@ -421,10 +418,10 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
 
 exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incoming Call Toast 1`] = `
 <div
-  className="css-81 root-0 body-1"
+  className="css-82 body-0"
 >
   <div
-    className="css-81"
+    className="css-82"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -439,29 +436,29 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
       }
     >
       <div
-        className="ms-Stack css-2"
+        className="ms-Stack css-1"
       >
         <div
-          className="ms-Stack css-177 css-3"
+          className="ms-Stack css-180 css-2"
         >
           <div
-            className="ms-Stack css-178 css-4"
+            className="ms-Stack css-181 css-3"
           >
             <div
               aria-label="John Doe"
-              className="ms-Persona ms-Persona--size40 root-5"
+              className="ms-Persona ms-Persona--size40 root-4"
             >
               <div
-                className="ms-Persona-coin ms-Persona--size40 coin-12"
+                className="ms-Persona-coin ms-Persona--size40 coin-11"
                 role="presentation"
               >
                 <div
-                  className="ms-Persona-imageArea imageArea-14"
+                  className="ms-Persona-imageArea imageArea-13"
                   role="presentation"
                 >
                   <div
                     aria-hidden="true"
-                    className="ms-Persona-initials initials-17"
+                    className="ms-Persona-initials initials-16"
                   >
                     <span>
                       JD
@@ -472,7 +469,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
             </div>
           </div>
           <div
-            className="ms-Stack css-20"
+            className="ms-Stack css-19"
             style={
               Object {
                 "alignItems": "flex-start",
@@ -481,7 +478,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
             }
           >
             <div
-              className="ms-Stack css-2"
+              className="ms-Stack css-1"
               style={
                 Object {
                   "fontSize": "0.875rem",
@@ -493,7 +490,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
               </b>
             </div>
             <div
-              className="ms-Stack css-2"
+              className="ms-Stack css-1"
               style={
                 Object {
                   "fontSize": "0.75rem",
@@ -506,10 +503,10 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
             </div>
           </div>
           <div
-            className="ms-Stack css-21"
+            className="ms-Stack css-20"
           >
             <button
-              className="ms-Button ms-Button--default css-180 root-22"
+              className="ms-Button ms-Button--default css-183 root-21"
               data-is-focusable={true}
               onClick={[Function]}
               onKeyDown={[Function]}
@@ -520,7 +517,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
               type="button"
             >
               <span
-                className="ms-Button-flexContainer flexContainer-23"
+                className="ms-Button-flexContainer flexContainer-22"
                 data-automationid="splitbuttonprimary"
               >
                 <span
@@ -547,7 +544,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
               </span>
             </button>
             <button
-              className="ms-Button ms-Button--default css-179 root-22"
+              className="ms-Button ms-Button--default css-182 root-21"
               data-is-focusable={true}
               onClick={[Function]}
               onKeyDown={[Function]}
@@ -558,7 +555,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
               type="button"
             >
               <span
-                className="ms-Button-flexContainer flexContainer-23"
+                className="ms-Button-flexContainer flexContainer-22"
                 data-automationid="splitbuttonprimary"
               >
                 <span

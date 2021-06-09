@@ -1,8 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IButtonStyles, IModalStyleProps, IModalStyles, IStyleFunctionOrObject } from '@fluentui/react';
-import { Theme } from '@fluentui/react-theme-provider';
+import { IButtonStyles, IModalStyleProps, IModalStyles, IStyleFunctionOrObject, Theme } from '@fluentui/react';
 import { CSSProperties } from 'react';
 
 export const getScreenSharePopupModalStyles = (

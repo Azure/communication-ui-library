@@ -1,9 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ContextualMenu, DefaultButton, FocusTrapCallout, IDragOptions, Label, Modal, Stack } from '@fluentui/react';
+import {
+  ContextualMenu,
+  DefaultButton,
+  FocusTrapCallout,
+  IDragOptions,
+  Label,
+  Modal,
+  Stack,
+  useTheme
+} from '@fluentui/react';
 import { CallControlPresentNewIcon, CallControlStopPresentingNewIcon } from '@fluentui/react-icons-northstar';
-import { useTheme } from '@fluentui/react-theme-provider';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   getScreenSharePopupModalButtonStyles,

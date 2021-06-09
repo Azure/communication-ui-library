@@ -7,7 +7,7 @@ import {
   MicrophoneButton,
   OptionsButton
 } from '@azure/communication-react';
-import { useTheme } from '@fluentui/react-theme-provider';
+import { useTheme } from '@fluentui/react';
 import React from 'react';
 
 export interface LobbyProps {
