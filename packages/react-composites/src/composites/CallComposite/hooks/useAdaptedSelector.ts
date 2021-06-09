@@ -73,7 +73,7 @@ const memoizeState = memoizeOne(
   (
     userId: CommunicationUserKind,
     deviceManager: DeviceManagerState,
-    calls: Map<string, CallState>,
+    call: CallState | undefined,
     displayName?: string
   ): CallClientState => ({
     userId,
@@ -82,16 +82,11 @@ const memoizeState = memoizeOne(
     callsEnded: [],
     deviceManager,
     callAgent: { displayName },
-    calls
+    calls: call ? [call] : []
   })
-);
-
-const memoizeCallMap = memoizeOne(
-  (call?: CallState): Map<string, CallState> => (call ? new Map([[call.id, call]]) : new Map([]))
 );
 
 const adaptCompositeState = (compositeState: CallAdapterState): CallClientState => {
   const call = compositeState.call;
-  const callMap = memoizeCallMap(call);
-  return memoizeState(compositeState.userId, compositeState.devices, callMap, compositeState.displayName);
+  return memoizeState(compositeState.userId, compositeState.devices, call, compositeState.displayName);
 };

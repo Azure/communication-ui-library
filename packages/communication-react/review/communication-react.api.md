@@ -317,7 +317,7 @@ export interface CallClientProviderProps {
 // @public
 export interface CallClientState {
     callAgent: CallAgentState | undefined;
-    calls: Map<string, CallState>;
+    calls: CallState[];
     callsEnded: CallState[];
     deviceManager: DeviceManagerState;
     incomingCalls: Map<string, IncomingCallState>;
@@ -769,7 +769,7 @@ export type GetCallingSelector<Component> = AreEqual<Component, typeof VideoGall
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
 
 // @public (undocumented)
-export const getCalls: (state: CallClientState) => Map<string, CallState>;
+export const getCalls: (state: CallClientState) => CallState[];
 
 // @public (undocumented)
 export const getCallsEnded: (state: CallClientState) => CallState[];
