@@ -105,7 +105,7 @@ export class CallContext {
   public setCall(call: CallState): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const existingCall = draft.calls.find((candidate) => candidate.id === call.id);
+        const existingCall = draft.calls.find((c) => c.id === call.id);
         if (existingCall) {
           existingCall.callerInfo = call.callerInfo;
           existingCall.state = call.state;
@@ -128,7 +128,7 @@ export class CallContext {
   public removeCall(callId: string): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const callIndex = draft.calls.findIndex((candidate) => candidate.id === callId);
+        const callIndex = draft.calls.findIndex((c) => c.id === callId);
         if (callIndex !== -1) {
           draft.calls.splice(callIndex, 1);
         }
@@ -139,7 +139,7 @@ export class CallContext {
   public setCallEnded(callId: string, callEndReason: CallEndReason | undefined): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const callIndex = draft.calls.findIndex((candidate) => candidate.id === callId);
+        const callIndex = draft.calls.findIndex((c) => c.id === callId);
         if (callIndex !== -1) {
           const [call] = draft.calls.splice(callIndex, 1);
           call.endTime = new Date();
@@ -156,7 +156,7 @@ export class CallContext {
   public setCallState(callId: string, state: CallStatus): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.find((candidate) => candidate.id === callId);
+        const call = draft.calls.find((c) => c.id === callId);
         if (call) {
           call.state = state;
         }
@@ -167,7 +167,7 @@ export class CallContext {
   public setCallId(newCallId: string, oldCallId: string): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.find((candidate) => candidate.id === oldCallId);
+        const call = draft.calls.find((c) => c.id === oldCallId);
         if (call) {
           call.id = newCallId;
         }
@@ -178,7 +178,7 @@ export class CallContext {
   public setCallIsScreenSharingOn(callId: string, isScreenSharingOn: boolean): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.find((candidate) => candidate.id === callId);
+        const call = draft.calls.find((c) => c.id === callId);
         if (call) {
           call.isScreenSharingOn = isScreenSharingOn;
         }
@@ -193,7 +193,7 @@ export class CallContext {
   ): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.find((candidate) => candidate.id === callId);
+        const call = draft.calls.find((c) => c.id === callId);
         if (call) {
           removeRemoteParticipant.forEach((id: string) => {
             call.remoteParticipants.delete(id);
@@ -213,7 +213,7 @@ export class CallContext {
   ): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.find((candidate) => candidate.id === callId);
+        const call = draft.calls.find((c) => c.id === callId);
         if (call) {
           removeRemoteParticipant.forEach((id: string) => {
             call.remoteParticipantsEnded.delete(id);
@@ -229,7 +229,7 @@ export class CallContext {
   public setCallLocalVideoStream(callId: string, streams: LocalVideoStreamState[]): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.find((candidate) => candidate.id === callId);
+        const call = draft.calls.find((c) => c.id === callId);
         if (call) {
           call.localVideoStreams = streams;
         }
@@ -240,7 +240,7 @@ export class CallContext {
   public setCallIsMicrophoneMuted(callId: string, isMicrophoneMuted: boolean): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.find((candidate) => candidate.id === callId);
+        const call = draft.calls.find((c) => c.id === callId);
         if (call) {
           call.isMuted = isMicrophoneMuted;
         }
@@ -251,7 +251,7 @@ export class CallContext {
   public setCallRecordingActive(callId: string, isRecordingActive: boolean): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.find((candidate) => candidate.id === callId);
+        const call = draft.calls.find((c) => c.id === callId);
         if (call) {
           call.recording.isRecordingActive = isRecordingActive;
         }
@@ -262,7 +262,7 @@ export class CallContext {
   public setCallTranscriptionActive(callId: string, isTranscriptionActive: boolean): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.find((candidate) => candidate.id === callId);
+        const call = draft.calls.find((c) => c.id === callId);
         if (call) {
           call.transcription.isTranscriptionActive = isTranscriptionActive;
         }
@@ -273,7 +273,7 @@ export class CallContext {
   public setCallReceivedTransferRequest(callId: string, transfer: TransferRequest): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.find((candidate) => candidate.id === callId);
+        const call = draft.calls.find((c) => c.id === callId);
         if (call) {
           if (call.transfer.receivedTransferRequests.length >= MAX_TRANSFER_REQUEST_LENGTH) {
             call.transfer.receivedTransferRequests.shift();
@@ -287,7 +287,7 @@ export class CallContext {
   public setCallRequestedTransfer(callId: string, transfer: Transfer): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.find((candidate) => candidate.id === callId);
+        const call = draft.calls.find((c) => c.id === callId);
         if (call) {
           if (call.transfer.requestedTransfers.length >= MAX_TRANSFER_REQUEST_LENGTH) {
             call.transfer.requestedTransfers.shift();
@@ -306,7 +306,7 @@ export class CallContext {
   ): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.find((candidate) => candidate.id === callId);
+        const call = draft.calls.find((c) => c.id === callId);
         if (call) {
           for (const requestedTransfer of call.transfer.requestedTransfers) {
             if (requestedTransfer.id === transferId) {
@@ -323,7 +323,7 @@ export class CallContext {
   public setCallScreenShareParticipant(callId: string, participantKey: string | undefined): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.find((candidate) => candidate.id === callId);
+        const call = draft.calls.find((c) => c.id === callId);
         if (call) {
           call.screenShareRemoteParticipant = participantKey;
         }
@@ -334,7 +334,7 @@ export class CallContext {
   public setLocalVideoStreamRendererView(callId: string, view: VideoStreamRendererViewState | undefined): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.find((candidate) => candidate.id === callId);
+        const call = draft.calls.find((c) => c.id === callId);
         if (call) {
           if (call.localVideoStreams.length > 0) {
             call.localVideoStreams[0].view = view;
@@ -347,7 +347,7 @@ export class CallContext {
   public setParticipantState(callId: string, participantKey: string, state: RemoteParticipantStatus): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.find((candidate) => candidate.id === callId);
+        const call = draft.calls.find((c) => c.id === callId);
         if (call) {
           const participant = call.remoteParticipants.get(participantKey);
           if (participant) {
@@ -361,7 +361,7 @@ export class CallContext {
   public setParticipantIsMuted(callId: string, participantKey: string, muted: boolean): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.find((candidate) => candidate.id === callId);
+        const call = draft.calls.find((c) => c.id === callId);
         if (call) {
           const participant = call.remoteParticipants.get(participantKey);
           if (participant) {
@@ -375,7 +375,7 @@ export class CallContext {
   public setParticipantDisplayName(callId: string, participantKey: string, displayName: string): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.find((candidate) => candidate.id === callId);
+        const call = draft.calls.find((c) => c.id === callId);
         if (call) {
           const participant = call.remoteParticipants.get(participantKey);
           if (participant) {
@@ -389,7 +389,7 @@ export class CallContext {
   public setParticipantIsSpeaking(callId: string, participantKey: string, isSpeaking: boolean): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.find((candidate) => candidate.id === callId);
+        const call = draft.calls.find((c) => c.id === callId);
         if (call) {
           const participant = call.remoteParticipants.get(participantKey);
           if (participant) {
@@ -403,7 +403,7 @@ export class CallContext {
   public setParticipantVideoStream(callId: string, participantKey: string, stream: RemoteVideoStreamState): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.find((candidate) => candidate.id === callId);
+        const call = draft.calls.find((c) => c.id === callId);
         if (call) {
           const participant = call.remoteParticipants.get(participantKey);
           if (participant) {
@@ -430,7 +430,7 @@ export class CallContext {
   ): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.find((candidate) => candidate.id === callId);
+        const call = draft.calls.find((c) => c.id === callId);
         if (call) {
           const participant = call.remoteParticipants.get(participantKey);
           if (participant) {
@@ -452,7 +452,7 @@ export class CallContext {
   ): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.find((candidate) => candidate.id === callId);
+        const call = draft.calls.find((c) => c.id === callId);
         if (call) {
           const participant = call.remoteParticipants.get(participantKey);
           if (participant) {
@@ -485,7 +485,7 @@ export class CallContext {
   ): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.find((candidate) => candidate.id === callId);
+        const call = draft.calls.find((c) => c.id === callId);
         if (call) {
           const participant = call.remoteParticipants.get(participantKey);
           if (participant) {

@@ -176,7 +176,7 @@ describe('stream utils', () => {
     expect(
       context
         .getState()
-        .calls.find((candidate) => candidate.id === mockCallId)
+        .calls.find((c) => c.id === mockCallId)
         ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier))
         ?.videoStreams.get(mockStreamId)?.view
     ).toBeDefined();
@@ -195,9 +195,7 @@ describe('stream utils', () => {
     expect(internalContext.getLocalRenderInfo(mockCallId)?.stream).toBeDefined();
     expect(internalContext.getLocalRenderInfo(mockCallId)?.renderer).toBeDefined();
     expect(internalContext.getLocalRenderInfo(mockCallId)?.status).toBe('Rendered');
-    expect(
-      context.getState().calls.find((candidate) => candidate.id === mockCallId)?.localVideoStreams[0].view
-    ).toBeDefined();
+    expect(context.getState().calls.find((c) => c.id === mockCallId)?.localVideoStreams[0].view).toBeDefined();
   });
 
   test('cleans up state and stop rendering when disposeView is called on remote stream', async () => {
@@ -228,7 +226,7 @@ describe('stream utils', () => {
     expect(
       context
         .getState()
-        .calls.find((candidate) => candidate.id === mockCallId)
+        .calls.find((c) => c.id === mockCallId)
         ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier))
         ?.videoStreams.get(mockStreamId)?.view
     ).not.toBeDefined();
@@ -270,7 +268,7 @@ describe('stream utils', () => {
     expect(
       context
         .getState()
-        .calls.find((candidate) => candidate.id === mockCallId)
+        .calls.find((c) => c.id === mockCallId)
         ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier))
         ?.videoStreams.get(mockStreamId)?.view
     ).toBeDefined();
@@ -284,7 +282,7 @@ describe('stream utils', () => {
     expect(
       context
         .getState()
-        .calls.find((candidate) => candidate.id === mockCallId)
+        .calls.find((c) => c.id === mockCallId)
         ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier2))
         ?.videoStreams.get(mockStreamId2)?.view
     ).toBeDefined();
@@ -315,7 +313,7 @@ describe('stream utils', () => {
     expect(
       context
         .getState()
-        .calls.find((candidate) => candidate.id === mockCallId)
+        .calls.find((c) => c.id === mockCallId)
         ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier))
         ?.videoStreams.get(mockStreamId)?.view
     ).not.toBeDefined();
@@ -329,7 +327,7 @@ describe('stream utils', () => {
     expect(
       context
         .getState()
-        .calls.find((candidate) => candidate.id === mockCallId)
+        .calls.find((c) => c.id === mockCallId)
         ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier2))
         ?.videoStreams.get(mockStreamId2)?.view
     ).not.toBeDefined();
@@ -373,7 +371,7 @@ describe('stream utils', () => {
     expect(
       context
         .getState()
-        .calls.find((candidate) => candidate.id === mockCallId)
+        .calls.find((c) => c.id === mockCallId)
         ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier))
         ?.videoStreams.get(mockStreamId)?.view
     ).toBeDefined();
@@ -387,7 +385,7 @@ describe('stream utils', () => {
     expect(
       context
         .getState()
-        .calls.find((candidate) => candidate.id === mockCallId2)
+        .calls.find((c) => c.id === mockCallId2)
         ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier2))
         ?.videoStreams.get(mockStreamId2)?.view
     ).toBeDefined();
@@ -418,7 +416,7 @@ describe('stream utils', () => {
     expect(
       context
         .getState()
-        .calls.find((candidate) => candidate.id === mockCallId)
+        .calls.find((c) => c.id === mockCallId)
         ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier))
         ?.videoStreams.get(mockStreamId)?.view
     ).not.toBeDefined();
@@ -432,7 +430,7 @@ describe('stream utils', () => {
     expect(
       context
         .getState()
-        .calls.find((candidate) => candidate.id === mockCallId2)
+        .calls.find((c) => c.id === mockCallId2)
         ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier2))
         ?.videoStreams.get(mockStreamId2)?.view
     ).not.toBeDefined();

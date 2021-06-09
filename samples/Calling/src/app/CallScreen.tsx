@@ -79,7 +79,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   // It seems unnecessary in this case, so we get the updated states using this approach.
   useEffect(() => {
     const onStateChange = (state: CallClientState): void => {
-      const statefulCall = call?.id ? state.calls.find((candidate) => candidate.id === call.id) : undefined;
+      const statefulCall = call?.id ? state.calls.find((c) => c.id === call.id) : undefined;
       if (!statefulCall) {
         return;
       }

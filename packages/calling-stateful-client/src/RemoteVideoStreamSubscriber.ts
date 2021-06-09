@@ -58,9 +58,8 @@ export class RemoteVideoStreamSubscriber {
       return;
     }
 
-    const existingScreenShare = this._context
-      .getState()
-      .calls.find((candidate) => candidate.id === this._callIdRef.callId)?.screenShareRemoteParticipant;
+    const existingScreenShare = this._context.getState().calls.find((c) => c.id === this._callIdRef.callId)
+      ?.screenShareRemoteParticipant;
 
     // If somehow we end up with an event where a RemoteParticipant's ScreenShare stream is set to
     // unavailable but there exists already another different participant actively sharing, and they are still
@@ -72,7 +71,7 @@ export class RemoteVideoStreamSubscriber {
 
     const streams = this._context
       .getState()
-      .calls.find((candidate) => candidate.id === this._callIdRef.callId)
+      .calls.find((c) => c.id === this._callIdRef.callId)
       ?.remoteParticipants.get(existingScreenShare)?.videoStreams;
 
     if (!streams) {
