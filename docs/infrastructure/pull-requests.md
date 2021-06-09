@@ -16,7 +16,7 @@ The github action can be found at [.github/workflows/ci.yml](https://github.com/
 
 ### Upcoming API PR Gate
 
-While we are public preview we accept there will be breaking changes. Once we hit general release (v1.0.0) we will no longer allow breaking changes. After general release we will block any changes to the public api file. This means any new functionality that is being exported must be tagged [@beta](https://api-extractor.com/pages/tsdoc/tag_beta/). Once we are ready to export the functionality marked `beta`, we will mark all such functionality as `public` and pull those changes in to the public `api.md` files accordingly.
+While we are public preview, we accept there will be breaking changes. Once we hit general release (v1.0.0) we will no longer allow breaking changes. After general release we will block any changes to the public api file. This means any new functionality that is being exported must be tagged [@beta](https://api-extractor.com/pages/tsdoc/tag_beta/). Once we are ready to export the functionality marked `beta`, we will mark all such functionality as `public` and pull those changes in to the public `api.md` files accordingly.
 
 ## PR Templates
 
