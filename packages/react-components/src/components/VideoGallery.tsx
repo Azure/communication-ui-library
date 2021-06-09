@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Stack, Modal, IDragOptions, ContextualMenu } from '@fluentui/react';
-import React, { useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import {
   BaseCustomStylesProps,
   VideoGalleryLocalParticipant,
@@ -11,12 +11,7 @@ import {
 } from '../types';
 import { GridLayout } from './GridLayout';
 import { StreamMedia } from './StreamMedia';
-import {
-  floatingLocalVideoModalStyle,
-  floatingLocalVideoTileStyle,
-  gridStyle,
-  videoTileStyle
-} from './styles/VideoGallery.styles';
+import { floatingLocalVideoModalStyle, floatingLocalVideoTileStyle, gridStyle } from './styles/VideoGallery.styles';
 import { VideoTile, PlaceholderProps, VideoTileStylesProps } from './VideoTile';
 
 /**
@@ -89,14 +84,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onRenderAvatar
   } = props;
 
-  let localVideoTileStyles: VideoTileStylesProps = videoTileStyle;
-
-  const shouldFloatLocalVideo = (): boolean =>
-    !!(layout === 'floatingLocalVideo' && remoteParticipants && remoteParticipants.length > 0);
-
-  if (shouldFloatLocalVideo()) {
-    localVideoTileStyles = floatingLocalVideoTileStyle;
-  }
+  const shouldFloatLocalVideo = useCallback((): boolean => {
+    return !!(layout === 'floatingLocalVideo' && remoteParticipants && remoteParticipants.length > 0);
+  }, [layout, remoteParticipants]);
 
   /**
    * Utility function for memoized rendering of LocalParticipant.
@@ -106,6 +96,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     const isLocalVideoReady = localVideoStream?.isAvailable;
 
     if (onRenderLocalVideoTile) return onRenderLocalVideoTile(localParticipant);
+
+    let localVideoTileStyles: VideoTileStylesProps = {};
+    if (shouldFloatLocalVideo()) {
+      localVideoTileStyles = floatingLocalVideoTileStyle;
+    }
 
     if (localVideoStream && !localVideoStream.renderElement) {
       onCreateLocalStreamView && onCreateLocalStreamView(localVideoViewOption);
@@ -121,7 +116,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       />
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [localParticipant, localParticipant.videoStream, onCreateLocalStreamView]);
+  }, [localParticipant, localParticipant.videoStream, onCreateLocalStreamView, onRenderLocalVideoTile, onRenderAvatar]);
 
   /**
    * Utility function for memoized rendering of RemoteParticipants.
@@ -237,7 +232,6 @@ const RemoteVideoTile = React.memo(
           isVideoReady={isAvailable}
           renderElement={<StreamMedia videoStreamElement={renderElement ?? null} />}
           displayName={displayName}
-          styles={videoTileStyle}
           onRenderPlaceholder={onRenderAvatar}
         />
       </Stack>
