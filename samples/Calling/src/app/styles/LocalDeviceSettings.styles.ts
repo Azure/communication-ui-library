@@ -1,8 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IDropdownStyles, IStackTokens, mergeStyles } from '@fluentui/react';
-import { Theme } from '@fluentui/react-theme-provider';
+import { IDropdownStyles, IStackTokens, Theme, mergeStyles } from '@fluentui/react';
 
 export const mainStackTokens: IStackTokens = {
   childrenGap: '1rem'

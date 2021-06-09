@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { PartialTheme } from '@fluentui/react-theme-provider';
+import { PartialTheme } from '@fluentui/react';
 
 /**
  * Theme designed ACS UI SDK calling components

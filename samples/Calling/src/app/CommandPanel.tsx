@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { devicePermissionSelector, optionsButtonSelector } from 'calling-component-bindings';
 import { Stack } from '@fluentui/react';
 import {
   fullHeightStyles,
@@ -13,7 +12,9 @@ import {
 import { ThemeSelector } from 'app/theming/ThemeSelector';
 import { useCallingSelector as useSelector } from 'calling-component-bindings';
 import { LocalDeviceSettings } from './LocalDeviceSettings';
+import { OptionsButton } from 'react-components';
 import { useAzureCommunicationHandlers } from './hooks/useAzureCommunicationHandlers';
+import { devicePermissionSelector } from './selectors/devicePermissionSelector';
 
 export enum CommandPanelTypes {
   None = 'none',
@@ -25,7 +26,7 @@ export interface CommandPanelProps {
 }
 
 export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
-  const options = useSelector(optionsButtonSelector, { callId: '' });
+  const options = useSelector(getCallingSelector(OptionsButton), { callId: '' });
   const handlers = useAzureCommunicationHandlers();
   const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useSelector(devicePermissionSelector);
 

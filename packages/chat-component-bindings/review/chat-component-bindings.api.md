@@ -84,6 +84,9 @@ export type DefaultChatHandlers = {
 export type GetChatSelector<Component> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof chatThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : never;
 
 // @public (undocumented)
+export const getChatSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetChatSelector<Component>;
+
+// @public (undocumented)
 export const sendBoxSelector: reselect.OutputSelector<ChatClientState, {
     displayName: string;
     userId: string;

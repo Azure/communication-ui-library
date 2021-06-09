@@ -3,7 +3,7 @@
 
 import React, { useState, useMemo, createContext, useContext } from 'react';
 import { FluentThemeProvider, lightTheme, darkTheme } from 'react-components';
-import { Theme, PartialTheme } from '@fluentui/react-theme-provider';
+import { Theme, PartialTheme } from '@fluentui/react';
 
 /**
  * A theme with an associated name.

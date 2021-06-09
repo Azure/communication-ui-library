@@ -5,13 +5,12 @@ import React, { useEffect, useState } from 'react';
 import { CallScreen } from './CallScreen';
 import { ConfigurationScreen } from './ConfigurationScreen';
 import { Error } from './Error';
-import { mergeStyles, Stack } from '@fluentui/react';
+import { mergeStyles, Stack, Theme, PartialTheme, useTheme } from '@fluentui/react';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
 import { CallAdapter, CallCompositePage } from './adapter/CallAdapter';
 import { PlaceholderProps } from 'react-components';
 import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
-import { Theme, PartialTheme, useTheme } from '@fluentui/react-theme-provider';
 import { FluentThemeProvider } from 'react-components';
 
 export type CallCompositeProps = {

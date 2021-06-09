@@ -2,17 +2,28 @@
 
 Releases can be created manually or by using the created GitHub actions (preferred).
 
+All new major/minor releases and new beta releases should be posted on the [internal releases Teams channel](https://teams.microsoft.com/l/channel/19%3ae12aa149c0b44318b245ae8c30365880%40thread.skype/ACS%2520Deployment%2520Announcements?groupId=3e9c1fc3-39df-4486-a26a-456d80e80f82&tenantId=72f988bf-86f1-41af-91ab-2d7cd011db47).
+
+## Ensuring release quality
+
+We must do due diligence in testing our packages before any new major/minor or beta release (alpha releases are exempt). To do so a release branch should be created at least 1 week before release and thoroughly bug bashed. All critical bugs must be fixed.
+
+### Release branches
+
+The release branch is a short lived branch used to ensure high release quality. The release branch is merged into main at the end of its lifecycle, however, any bug fixes submitted to this branch while active should also be cherry-picked into main to ensure minimal merge conflicts.
+
 ## Creating a release through GitHub actions (Preferred)
 
 1. Trigger the "Bump npm packages and create changelogs" GitHub action
-    Enter the branch or tag you are looking to create a release off. Likely this will be a tag of an alpha build that has been well tested.
-1. This will bump the package versions, generate the changelog and put up a PR into main.
-1. Next, review the changelog in the PR and prune the changelog as necessary -- ensure the changelog looks good and changelog lines that equate to small PRs for the same feature are combined. For more information see: [Pruning a Changelog](../references/pruning-a-changelog.md)
+    Enter the branch or tag you are looking to create a release off. This should will usually be a release branch that has been thoroughly tested.
+1. The triggered GitHub action will bump the package versions, generate the changelog and put up a PR into main.
+1. Review the changelog in the PR and prune the changelog as necessary -- ensure the changelog looks good and changelog lines that equate to small PRs for the same feature are combined. For more information see: [Pruning a Changelog](../references/pruning-a-changelog.md).
 1. Also double check the package versions are as expected.
-1. Complete the PR into main _without deleting the branch_ (or restore the branch if you accidentally forget to not delete it on completion)
+1. Complete the PR into main _without deleting the branch_ (or restore the branch if you accidentally forget to not delete it on completion).
 1. Run the "Publish npm packages" GitHub action and enter the branch name from the previous step
     * Enter the tag also if desired, if releasing a new public version the tag name will be `latest`. A beta release would be `next` and an alpha release would be `dev`.
 1. Ensure the action completes successfully then verify on <https://www.npmjs.com/> that the package(s) published successfully.
+1. Post that a new release has happened on the [internal releases Teams channel](https://teams.microsoft.com/l/channel/19%3ae12aa149c0b44318b245ae8c30365880%40thread.skype/ACS%2520Deployment%2520Announcements?groupId=3e9c1fc3-39df-4486-a26a-456d80e80f82&tenantId=72f988bf-86f1-41af-91ab-2d7cd011db47).
 
 ## Manually creating a release
 
@@ -23,7 +34,7 @@ To manually create a release:
 
     ```bash
     git fetch --all # Ensure you have the latest remote details
-    git checkout v.1.2.3 # Checkout a git tag
+    git checkout v.1.2.3 # Checkout a git tag or release branch
     git checkout -b release/manual/v.1.2.4 # Create feature branch
     ```
 
@@ -36,8 +47,9 @@ To manually create a release:
     This will bump the package versions, as well as delete the change files and generate the changelog.
 1. Prune the changelog (see [Pruning a Changelog](../references/pruning-a-changelog.md))
 1. Put up a PR of the changes into main
-1. When the PR is completed, _on your release branch_, upload the packages to azure publishing pipelines - more details to follow once the publishing is set up.
+1. When the PR is completed, _on your release branch_, upload the packages to azure publishing pipelines and trigger the release pipeline. For information on how to do this, see the [Azure SDK partner release wiki](https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/1/Partner-Release-Pipeline).
 1. Once the action has completed, verify on <https://www.npmjs.com/> that the package(s) published successfully.
+1. Post that a new release has happened on the [internal releases Teams channel](https://teams.microsoft.com/l/channel/19%3ae12aa149c0b44318b245ae8c30365880%40thread.skype/ACS%2520Deployment%2520Announcements?groupId=3e9c1fc3-39df-4486-a26a-456d80e80f82&tenantId=72f988bf-86f1-41af-91ab-2d7cd011db47).
 
 ## Submitting a hotfix
 

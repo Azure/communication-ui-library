@@ -9,10 +9,11 @@ import { DisplayNameField } from './DisplayNameField';
 import { StartCallButton } from './StartCallButton';
 import { CallConfiguration } from './CallConfiguration';
 import { LocalDeviceSettings } from './LocalDeviceSettings';
-import { devicePermissionSelector, optionsButtonSelector } from 'calling-component-bindings';
-import { useCallingSelector as useSelector } from 'calling-component-bindings';
+import { useCallingSelector as useSelector, getCallingSelector } from 'calling-component-bindings';
 import { useAzureCommunicationHandlers } from './hooks/useAzureCommunicationHandlers';
 import { TeamsMeetingLinkField } from './TeamsMeetingLinkField';
+import { devicePermissionSelector } from './selectors/devicePermissionSelector';
+import { OptionsButton } from 'react-components';
 import { containerGapStyle, titleContainerStyle } from './styles/ConfiguratonScreen.styles';
 
 export interface ConfigurationScreenProps {
@@ -32,7 +33,7 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
   const [nameTooLongWarning, setNameTooLongWarning] = useState(false);
   const [teamsMeetingLink, setTeamsMeetingLink] = useState<string>();
 
-  const options = useSelector(optionsButtonSelector);
+  const options = useSelector(getCallingSelector(OptionsButton));
   const handlers = useAzureCommunicationHandlers();
   const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useSelector(devicePermissionSelector);
 
@@ -77,7 +78,7 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
               startCallHandler();
             }
           }}
-          isDisabled={!displayName || emptyWarning || nameTooLongWarning}
+          isDisabled={!displayName || emptyWarning || nameTooLongWarning || !microphonePermissionGranted}
         />
       </div>
     </CallConfiguration>
