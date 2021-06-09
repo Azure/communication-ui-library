@@ -10,7 +10,7 @@ import {
   settingsContainerStyle
 } from 'app/styles/CommandPanel.styles';
 import { ThemeSelector } from 'app/theming/ThemeSelector';
-import { useCallingSelector as useSelector } from 'calling-component-bindings';
+import { useCallingSelector as useSelector, getCallingSelector } from 'calling-component-bindings';
 import { LocalDeviceSettings } from './LocalDeviceSettings';
 import { OptionsButton } from 'react-components';
 import { useAzureCommunicationHandlers } from './hooks/useAzureCommunicationHandlers';
