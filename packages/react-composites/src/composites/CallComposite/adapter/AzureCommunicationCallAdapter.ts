@@ -208,7 +208,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   public async joinCall(microphoneOn?: boolean): Promise<void> {
     if (isInCall(this.getState().call?.state ?? 'None')) {
-      const e = new Error('You are already in the call!');
+      const e = new Error('Error joining call - user is already in the call');
       this.context.setError(e);
       this.emitter.emit('error', e);
       return;
