@@ -21,10 +21,11 @@ import { useCallingSelector as useSelector } from 'calling-component-bindings';
 export type CallControlsProps = {
   onEndCallClick(): void;
   compressedMode: boolean;
+  callInvitationURL?: string;
 };
 
 export const CallControls = (props: CallControlsProps): JSX.Element => {
-  const { compressedMode, onEndCallClick } = props;
+  const { callInvitationURL, compressedMode, onEndCallClick } = props;
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
   const cameraButtonProps = usePropsFor(CameraButton);
   const screenShareButtonProps = usePropsFor(ScreenShareButton);
@@ -41,7 +42,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       <CameraButton {...cameraButtonProps} disabled={!cameraPermissionGranted} />
       <MicrophoneButton {...microphoneButtonProps} disabled={!microphonePermissionGranted} />
       <ScreenShareButton {...screenShareButtonProps} />
-      <ParticipantsButton {...participantsButtonProps} />
+      <ParticipantsButton {...participantsButtonProps} callInvitationURL={callInvitationURL} />
       <EndCallButton
         {...hangUpButtonProps}
         onHangUp={onHangUp}

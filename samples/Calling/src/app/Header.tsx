@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { DefaultButton, Separator, Stack } from '@fluentui/react';
-import { SettingsIcon, UserFriendsIcon } from '@fluentui/react-icons-northstar';
+import { SettingsIcon } from '@fluentui/react-icons-northstar';
 import React from 'react';
 import {
   controlButtonStyles,
@@ -22,15 +22,10 @@ export interface HeaderProps {
   setSelectedPane(selectedPane: CommandPanelTypes): void;
   endCallHandler(): void;
   screenWidth: number;
+  callInvitationURL?: string;
 }
 
 export const Header = (props: HeaderProps): JSX.Element => {
-  const togglePeople = (selectedPane: string, setSelectedPane: (pane: CommandPanelTypes) => void): void => {
-    return selectedPane !== CommandPanelTypes.People
-      ? setSelectedPane(CommandPanelTypes.People)
-      : setSelectedPane(CommandPanelTypes.None);
-  };
-
   const toggleOptions = (selectedPane: string, setSelectedPane: (pane: CommandPanelTypes) => void): void => {
     return selectedPane !== CommandPanelTypes.Settings
       ? setSelectedPane(CommandPanelTypes.Settings)
@@ -58,21 +53,6 @@ export const Header = (props: HeaderProps): JSX.Element => {
           }}
           styles={controlButtonStyles}
         />
-        <DefaultButton
-          onRenderIcon={() => {
-            return (
-              <UserFriendsIcon
-                outline={props.selectedPane === CommandPanelTypes.People ? false : true}
-                size="medium"
-                className={props.selectedPane === CommandPanelTypes.People ? itemSelectedStyle : ''}
-              />
-            );
-          }}
-          onClick={() => {
-            togglePeople(props.selectedPane, props.setSelectedPane);
-          }}
-          styles={controlButtonStyles}
-        />
       </Stack.Item>
       <Stack.Item>
         {props.screenWidth > MINI_HEADER_WINDOW_WIDTH && (
@@ -85,6 +65,7 @@ export const Header = (props: HeaderProps): JSX.Element => {
         <CallControls
           onEndCallClick={props.endCallHandler}
           compressedMode={props.screenWidth <= MINI_HEADER_WINDOW_WIDTH}
+          callInvitationURL={props?.callInvitationURL}
         />
       </Stack.Item>
     </Stack>

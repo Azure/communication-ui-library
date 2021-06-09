@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { devicePermissionSelector, optionsButtonSelector, participantListSelector } from 'calling-component-bindings';
+import { devicePermissionSelector, optionsButtonSelector } from 'calling-component-bindings';
 import { Stack } from '@fluentui/react';
 import {
   fullHeightStyles,
@@ -11,15 +11,12 @@ import {
   settingsContainerStyle
 } from 'app/styles/CommandPanel.styles';
 import { ThemeSelector } from 'app/theming/ThemeSelector';
-import { Footer } from './Footer';
 import { useCallingSelector as useSelector } from 'calling-component-bindings';
 import { LocalDeviceSettings } from './LocalDeviceSettings';
-import { ParticipantList } from 'react-components';
 import { useAzureCommunicationHandlers } from './hooks/useAzureCommunicationHandlers';
 
 export enum CommandPanelTypes {
   None = 'none',
-  People = 'People',
   Settings = 'Settings'
 }
 
@@ -28,8 +25,6 @@ export interface CommandPanelProps {
 }
 
 export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
-  const participantListProps = useSelector(participantListSelector);
-
   const options = useSelector(optionsButtonSelector, { callId: '' });
   const handlers = useAzureCommunicationHandlers();
   const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useSelector(devicePermissionSelector);
@@ -39,16 +34,6 @@ export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
       <Stack.Item className={paneHeaderStyle}>
         <div className={paneHeaderTextStyle}>{props.selectedPane}</div>
       </Stack.Item>
-      {props.selectedPane === CommandPanelTypes.People && (
-        <Stack.Item styles={fullHeightStyles}>
-          <ParticipantList {...participantListProps} onParticipantRemove={handlers.onParticipantRemove} />
-        </Stack.Item>
-      )}
-      {props.selectedPane === CommandPanelTypes.People && (
-        <Stack.Item>
-          <Footer />
-        </Stack.Item>
-      )}
       {props.selectedPane === CommandPanelTypes.Settings && (
         <Stack.Item>
           <div className={settingsContainerStyle}>

@@ -188,6 +188,7 @@ const App = (): JSX.Element => {
                       }
                 }
                 isMicrophoneOn={isMicrophoneOn}
+                callInvitationURL={window.location.href}
               />
             </CallProvider>
           </CallAgentProvider>

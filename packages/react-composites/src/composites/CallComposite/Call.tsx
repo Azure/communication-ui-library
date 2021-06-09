@@ -22,15 +22,17 @@ export type CallCompositeProps = {
    * Defaults to a light theme if undefined.
    */
   fluentTheme?: PartialTheme | Theme;
+  callInvitationURL?: string;
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
 };
 
 type MainScreenProps = {
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
   screenWidth: number;
+  callInvitationURL?: string;
 };
 
-const MainScreen = ({ screenWidth, onRenderAvatar }: MainScreenProps): JSX.Element => {
+const MainScreen = ({ screenWidth, callInvitationURL, onRenderAvatar }: MainScreenProps): JSX.Element => {
   const page = useSelector(getPage);
   const adapter = useAdapter();
   switch (page) {
@@ -65,6 +67,8 @@ const MainScreen = ({ screenWidth, onRenderAvatar }: MainScreenProps): JSX.Eleme
           }}
           onRenderAvatar={onRenderAvatar}
           screenWidth={screenWidth}
+          showParticipants={true}
+          callInvitationURL={callInvitationURL}
         />
       );
   }
@@ -84,7 +88,7 @@ export const Call = (props: CallCompositeProps): JSX.Element => {
     return () => window.removeEventListener('resize', setWindowWidth);
   }, []);
 
-  const { adapter, fluentTheme } = props;
+  const { adapter, callInvitationURL, fluentTheme } = props;
 
   useEffect(() => {
     (async () => {
@@ -99,7 +103,11 @@ export const Call = (props: CallCompositeProps): JSX.Element => {
     <FluentThemeProvider fluentTheme={fluentTheme}>
       <CallAdapterProvider adapter={adapter}>
         <Stack className={callContainerStyle(theme)} grow>
-          <MainScreen screenWidth={screenWidth} onRenderAvatar={props.onRenderAvatar} />
+          <MainScreen
+            screenWidth={screenWidth}
+            onRenderAvatar={props.onRenderAvatar}
+            callInvitationURL={callInvitationURL}
+          />
         </Stack>
       </CallAdapterProvider>
     </FluentThemeProvider>

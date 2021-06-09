@@ -335,6 +335,7 @@ export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoini
 export type CallCompositeProps = {
     adapter: CallAdapter;
     fluentTheme?: PartialTheme | Theme;
+    callInvitationURL?: string;
     onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
 };
 
@@ -772,7 +773,7 @@ export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdent
 export const getCall: (state: CallClientState, props: CallingBaseSelectorProps) => CallState | undefined;
 
 // @public (undocumented)
-export type GetCallingSelector<Component> = AreEqual<Component, typeof VideoGallery> extends true ? typeof videoGallerySelector : AreEqual<Component, typeof MicrophoneButton> extends true ? typeof microphoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? typeof cameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? typeof screenShareButtonSelector : AreEqual<Component, typeof OptionsButton> extends true ? typeof optionsButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof participantListSelector : AreEqual<Component, typeof EndCallButton> extends true ? typeof endCallButtonSelector : never;
+export type GetCallingSelector<Component> = AreEqual<Component, typeof VideoGallery> extends true ? typeof videoGallerySelector : AreEqual<Component, typeof MicrophoneButton> extends true ? typeof microphoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? typeof cameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? typeof screenShareButtonSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? typeof participantsButtonSelector : AreEqual<Component, typeof OptionsButton> extends true ? typeof optionsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? typeof endCallButtonSelector : never;
 
 // @public (undocumented)
 export const getCalls: (state: CallClientState) => Map<string, CallState>;
@@ -1051,15 +1052,6 @@ export type ParticipantListProps = {
 };
 
 // @public (undocumented)
-export const participantListSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
-    participants: CallParticipant[];
-    myUserId: string;
-}, (res1: string, res2: string | undefined, res3: CallState | undefined) => {
-    participants: CallParticipant[];
-    myUserId: string;
-}>;
-
-// @public (undocumented)
 export type ParticipantsAddedListener = (event: {
     participantsAdded: ChatParticipant[];
     addedBy: ChatParticipant;
@@ -1076,6 +1068,21 @@ export interface ParticipantsButtonProps extends IButtonProps {
     showLabel?: boolean;
     styles?: ParticipantsButtonStylesProps;
 }
+
+// @public (undocumented)
+export const participantsButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
+    participantListProps: {
+        participants: CallParticipant[];
+        myUserId: string;
+    };
+    callInvitationURL?: string | undefined;
+}, (res1: string, res2: string | undefined, res3: CallState | undefined) => {
+    participantListProps: {
+        participants: CallParticipant[];
+        myUserId: string;
+    };
+    callInvitationURL?: string | undefined;
+}>;
 
 // @public
 export interface ParticipantsButtonStylesProps extends ButtonCustomStylesProps {

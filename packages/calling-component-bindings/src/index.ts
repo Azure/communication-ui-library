@@ -6,7 +6,6 @@ export * from './callControlSelectors';
 export * from './devicePermissionSelector';
 export { createDefaultCallingHandlersForComponent, createDefaultCallingHandlers } from './handlers/createHandlers';
 export { participantsButtonSelector } from './participantsButtonSelector';
-export { participantListSelector } from './participantListSelector';
 export { videoGallerySelector } from './videoGallerySelector';
 
 export type { CallingBaseSelectorProps } from './baseSelectors';
