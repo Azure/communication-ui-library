@@ -2,9 +2,12 @@
 // Licensed under the MIT license.
 
 import { toFlatCommunicationIdentifier } from 'acs-ui-common';
+// @ts-ignore
 import { RemoteParticipantState } from 'calling-stateful-client';
-import * as reselect from 'reselect';
-import { getCall, getDisplayName, getIdentifier } from './baseSelectors';
+// @ts-ignore
+import { createSelector } from 'reselect';
+// @ts-ignore
+import { getCall, getIdentifier, getDisplayName } from './baseSelectors';
 import { CallParticipant } from 'react-components';
 
 const convertRemoteParticipantsToCommunicationParticipants = (
@@ -26,7 +29,7 @@ const convertRemoteParticipantsToCommunicationParticipants = (
   });
 };
 
-export const participantsButtonSelector = reselect.createSelector(
+export const participantsButtonSelector = createSelector(
   [getIdentifier, getDisplayName, getCall],
   (
     userId,
