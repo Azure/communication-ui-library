@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultPalette as palette, mergeStyles } from '@fluentui/react';
+import { DefaultPalette as palette, getTheme, mergeStyles } from '@fluentui/react';
+
+const theme = getTheme();
 
 export const mediaGallery1To1Style = mergeStyles({
   position: 'relative',
@@ -37,8 +39,7 @@ export const disabledVideoHint = mergeStyles({
   lineHeight: '1rem',
   whiteSpace: 'nowrap',
   maxWidth: '95%',
-  borderRadius: 4,
-  color: palette.neutralPrimary
+  borderRadius: theme.effects.roundedCorner4
 });
 
 export const videoHint = mergeStyles(disabledVideoHint, {

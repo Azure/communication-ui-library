@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Stack, Modal, IDragOptions, ContextualMenu } from '@fluentui/react';
-import React, { useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import {
   BaseCustomStylesProps,
   VideoGalleryLocalParticipant,
@@ -84,14 +84,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onRenderAvatar
   } = props;
 
-  let localVideoTileStyles: VideoTileStylesProps = {};
-
-  const shouldFloatLocalVideo = (): boolean =>
-    !!(layout === 'floatingLocalVideo' && remoteParticipants && remoteParticipants.length > 0);
-
-  if (shouldFloatLocalVideo()) {
-    localVideoTileStyles = floatingLocalVideoTileStyle;
-  }
+  const shouldFloatLocalVideo = useCallback((): boolean => {
+    return !!(layout === 'floatingLocalVideo' && remoteParticipants && remoteParticipants.length > 0);
+  }, [layout, remoteParticipants]);
 
   /**
    * Utility function for memoized rendering of LocalParticipant.
@@ -101,6 +96,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     const isLocalVideoReady = localVideoStream?.isAvailable;
 
     if (onRenderLocalVideoTile) return onRenderLocalVideoTile(localParticipant);
+
+    let localVideoTileStyles: VideoTileStylesProps = {};
+    if (shouldFloatLocalVideo()) {
+      localVideoTileStyles = floatingLocalVideoTileStyle;
+    }
 
     if (localVideoStream && !localVideoStream.renderElement) {
       onCreateLocalStreamView && onCreateLocalStreamView(localVideoViewOption);
@@ -116,7 +116,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       />
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [localParticipant, localParticipant.videoStream, onCreateLocalStreamView]);
+  }, [localParticipant, localParticipant.videoStream, onCreateLocalStreamView, onRenderLocalVideoTile, onRenderAvatar]);
 
   /**
    * Utility function for memoized rendering of RemoteParticipants.

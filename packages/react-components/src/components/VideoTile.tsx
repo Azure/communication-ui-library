@@ -1,7 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStyle, mergeStyles, Persona, PersonaSize, Stack, Text, useTheme } from '@fluentui/react';
+import {
+  DefaultPalette as palette,
+  IStyle,
+  mergeStyles,
+  Persona,
+  PersonaSize,
+  Stack,
+  Text,
+  useTheme
+} from '@fluentui/react';
 import React from 'react';
 import {
   disabledVideoHint,
@@ -95,9 +104,10 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   } = props;
 
   const placeHolderProps = { userId, displayName, noVideoAvailableAriaLabel };
+  const theme = useTheme();
 
   return (
-    <Stack className={mergeStyles(rootStyles, styles?.root)}>
+    <Stack className={mergeStyles(rootStyles, { background: theme.palette.neutralLighter }, styles?.root)}>
       {isVideoReady && renderElement ? (
         <Stack
           className={mergeStyles(
@@ -120,7 +130,14 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
         </Stack>
       )}
       {displayName && showDisplayName && (
-        <Text className={mergeStyles(isVideoReady ? videoHint : disabledVideoHint, styles?.displayNameContainer)}>
+        <Text
+          className={mergeStyles(
+            isVideoReady ? videoHint : disabledVideoHint,
+            // when video is on, the displayName has a grey-ish background, so no use of theme
+            { color: isVideoReady ? palette.neutralPrimary : theme.palette.neutralPrimary },
+            styles?.displayNameContainer
+          )}
+        >
           {displayName}
         </Text>
       )}

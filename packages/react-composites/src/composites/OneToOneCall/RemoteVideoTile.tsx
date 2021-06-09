@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { mergeStyles, useTheme } from '@fluentui/react';
 import React from 'react';
 import { StreamMedia, VideoTile } from 'react-components';
 import { WithErrorHandling } from './utils/WithErrorHandling';
@@ -17,13 +18,18 @@ export interface RemoteVideoTileProps {
 
 const RemoteVideoTileComponentBase = (props: RemoteVideoTileProps): JSX.Element => {
   const { displayName, isVideoReady, videoStreamElement } = props;
+  const theme = useTheme();
 
   return (
     <VideoTile
       isVideoReady={isVideoReady}
       renderElement={<StreamMedia videoStreamElement={videoStreamElement} />}
       displayName={displayName}
-      styles={{ displayNameContainer: isVideoReady ? videoHint : disabledVideoHint }}
+      styles={{
+        displayNameContainer: mergeStyles(isVideoReady ? videoHint : disabledVideoHint, {
+          color: theme.palette.neutralPrimary
+        })
+      }}
     />
   );
 };

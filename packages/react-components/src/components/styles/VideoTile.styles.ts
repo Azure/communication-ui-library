@@ -1,14 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultPalette as palette, IStyle, mergeStyles } from '@fluentui/react';
+import { IStyle, getTheme, mergeStyles } from '@fluentui/react';
+
+const theme = getTheme();
 
 export const rootStyles: IStyle = {
   position: 'relative',
   height: '100%',
   width: '100%',
-  background: palette.neutralLighter,
-  borderRadius: 4
+  borderRadius: theme.effects.roundedCorner4
 };
 
 export const videoContainerStyles: IStyle = {
@@ -43,8 +44,7 @@ export const disabledVideoHint = mergeStyles({
   lineHeight: '1rem',
   whiteSpace: 'nowrap',
   maxWidth: '95%',
-  borderRadius: 4,
-  color: palette.neutralPrimary
+  borderRadius: theme.effects.roundedCorner4
 });
 
 export const videoHint = mergeStyles(disabledVideoHint, {
