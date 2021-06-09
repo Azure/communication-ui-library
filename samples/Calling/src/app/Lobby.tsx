@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 import React, { useEffect, useState } from 'react';
 import { StreamMedia, VideoStreamOptions, VideoTile, VideoGalleryStream } from 'react-components';
-import { useTheme } from '@fluentui/react-theme-provider';
+import { useTheme } from '@fluentui/react';
 import { LobbyCallControlBar } from './LobbyControlBar';
 import { useCallingSelector as useSelector } from 'calling-component-bindings';
 import { getIsPreviewCameraOn } from './selectors/baseSelectors';
