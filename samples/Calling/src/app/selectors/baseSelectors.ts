@@ -4,8 +4,6 @@
 import { CallState, CallClientState, DeviceManagerState, IncomingCallState } from 'calling-stateful-client';
 import { CallingBaseSelectorProps } from 'calling-component-bindings';
 
-export const getCalls = (state: CallClientState): Map<string, CallState> => state.calls;
-
 export const getCallsEnded = (state: CallClientState): CallState[] => state.callsEnded;
 
 export const getIncomingCalls = (state: CallClientState): Map<string, IncomingCallState> => state.incomingCalls;
@@ -15,7 +13,7 @@ export const getIncomingCallsEnded = (state: CallClientState): IncomingCallState
 export const getDeviceManager = (state: CallClientState): DeviceManagerState => state.deviceManager;
 
 export const getCall = (state: CallClientState, props: CallingBaseSelectorProps): CallState | undefined =>
-  state.calls.get(props.callId);
+  state.calls.find((candidate) => candidate.id === props.callId);
 
 export const getDisplayName = (state: CallClientState): string | undefined => state.callAgent?.displayName;
 
