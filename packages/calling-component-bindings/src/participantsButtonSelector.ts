@@ -58,8 +58,7 @@ export const participantsButtonSelector = reselect.createSelector(
       participantListProps: {
         participants: participants,
         myUserId: userId
-      },
-      callInvitationURL: undefined
+      }
     };
   }
 );

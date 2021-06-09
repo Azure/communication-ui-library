@@ -32,7 +32,6 @@ import { AudioDeviceInfo, StartCallOptions, Call, VideoDeviceInfo } from '@azure
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 // @ts-ignore
 import { VideoStreamOptions, CallParticipant, VideoGalleryRemoteParticipant } from 'react-components';
-// @ts-ignore
 import { ParticipantsButton } from 'react-components';
 
 // @ts-ignore

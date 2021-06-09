@@ -7,7 +7,6 @@ import {
   IButtonProps,
   IContextualMenuItem,
   IContextualMenuProps,
-  IContextualMenuStyles,
   IStyle,
   Label,
   Stack,
@@ -136,7 +135,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
   const defaultMenuProps = useMemo((): IContextualMenuProps => {
     const menuProps: IContextualMenuProps = {
       title: 'In this call',
-      styles: participantsButtonMenuPropsStyle as IContextualMenuStyles,
+      styles: participantsButtonMenuPropsStyle,
       items: []
     };
 
