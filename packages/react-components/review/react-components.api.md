@@ -10,11 +10,11 @@ import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { MessageStatus } from 'acs-ui-common';
-import { PartialTheme } from '@fluentui/react-theme-provider';
+import { PartialTheme } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
 import { default as React_2 } from 'react';
 import { SizeValue } from '@fluentui/react-northstar';
-import { Theme } from '@fluentui/react-theme-provider';
+import { Theme } from '@fluentui/react';
 
 // @public
 export interface BaseCustomStylesProps {

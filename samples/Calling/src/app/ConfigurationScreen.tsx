@@ -78,7 +78,7 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
               startCallHandler();
             }
           }}
-          isDisabled={!displayName || emptyWarning || nameTooLongWarning}
+          isDisabled={!displayName || emptyWarning || nameTooLongWarning || !microphonePermissionGranted}
         />
       </div>
     </CallConfiguration>

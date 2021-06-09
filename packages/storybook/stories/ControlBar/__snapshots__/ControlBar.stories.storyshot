@@ -2,10 +2,10 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/ControlBar Control Bar 1`] = `
 <div
-  className="css-81 root-0 body-1"
+  className="css-82 body-0"
 >
   <div
-    className="css-81"
+    className="css-82"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -32,13 +32,13 @@ exports[`storybook snapshot tests Storyshots UI Components/ControlBar Control Ba
         }
       >
         <div
-          className="css-2"
+          className="css-1"
         >
           <div
-            className="ms-Stack css-4"
+            className="ms-Stack css-3"
           >
             <button
-              className="ms-Button ms-Button--default root-5"
+              className="ms-Button ms-Button--default root-4"
               data-is-focusable={true}
               onClick={[Function]}
               onKeyDown={[Function]}
@@ -49,7 +49,7 @@ exports[`storybook snapshot tests Storyshots UI Components/ControlBar Control Ba
               type="button"
             >
               <span
-                className="ms-Button-flexContainer flexContainer-6"
+                className="ms-Button-flexContainer flexContainer-5"
                 data-automationid="splitbuttonprimary"
               >
                 <span
@@ -91,7 +91,7 @@ exports[`storybook snapshot tests Storyshots UI Components/ControlBar Control Ba
               </span>
             </button>
             <button
-              className="ms-Button ms-Button--default root-5"
+              className="ms-Button ms-Button--default root-4"
               data-is-focusable={true}
               onClick={[Function]}
               onKeyDown={[Function]}
@@ -102,7 +102,7 @@ exports[`storybook snapshot tests Storyshots UI Components/ControlBar Control Ba
               type="button"
             >
               <span
-                className="ms-Button-flexContainer flexContainer-6"
+                className="ms-Button-flexContainer flexContainer-5"
                 data-automationid="splitbuttonprimary"
               >
                 <span
@@ -147,7 +147,7 @@ exports[`storybook snapshot tests Storyshots UI Components/ControlBar Control Ba
               </span>
             </button>
             <button
-              className="ms-Button ms-Button--default root-5"
+              className="ms-Button ms-Button--default root-4"
               data-is-focusable={true}
               onClick={[Function]}
               onKeyDown={[Function]}
@@ -158,7 +158,7 @@ exports[`storybook snapshot tests Storyshots UI Components/ControlBar Control Ba
               type="button"
             >
               <span
-                className="ms-Button-flexContainer flexContainer-6"
+                className="ms-Button-flexContainer flexContainer-5"
                 data-automationid="splitbuttonprimary"
               >
                 <span
@@ -191,10 +191,10 @@ exports[`storybook snapshot tests Storyshots UI Components/ControlBar Control Ba
               </span>
             </button>
             <button
+              aria-controls={null}
               aria-expanded={false}
               aria-haspopup={true}
-              aria-owns={null}
-              className="ms-Button ms-Button--default ms-Button--hasMenu root-5"
+              className="ms-Button ms-Button--default ms-Button--hasMenu root-4"
               data-is-focusable={true}
               onClick={[Function]}
               onKeyDown={[Function]}
@@ -205,7 +205,7 @@ exports[`storybook snapshot tests Storyshots UI Components/ControlBar Control Ba
               type="button"
             >
               <span
-                className="ms-Button-flexContainer flexContainer-6"
+                className="ms-Button-flexContainer flexContainer-5"
                 data-automationid="splitbuttonprimary"
               >
                 <span
@@ -231,10 +231,9 @@ exports[`storybook snapshot tests Storyshots UI Components/ControlBar Control Ba
                 </span>
                 <i
                   aria-hidden={true}
-                  className="ms-Icon root-37 css-13 ms-Button-menuIcon menuIcon-10"
+                  className="ms-Icon root-37 css-12 ms-Button-menuIcon menuIcon-9"
                   data-icon-name="ChevronDown"
                   hidden={true}
-                  role="presentation"
                   style={
                     Object {
                       "fontFamily": "\\"FabricMDL2Icons\\"",
@@ -246,10 +245,10 @@ exports[`storybook snapshot tests Storyshots UI Components/ControlBar Control Ba
               </span>
             </button>
             <button
+              aria-controls={null}
               aria-expanded={false}
               aria-haspopup={true}
-              aria-owns={null}
-              className="ms-Button ms-Button--default ms-Button--hasMenu root-5"
+              className="ms-Button ms-Button--default ms-Button--hasMenu root-4"
               data-is-focusable={true}
               onClick={[Function]}
               onKeyDown={[Function]}
@@ -260,7 +259,7 @@ exports[`storybook snapshot tests Storyshots UI Components/ControlBar Control Ba
               type="button"
             >
               <span
-                className="ms-Button-flexContainer flexContainer-6"
+                className="ms-Button-flexContainer flexContainer-5"
                 data-automationid="splitbuttonprimary"
               >
                 <span
@@ -291,10 +290,9 @@ exports[`storybook snapshot tests Storyshots UI Components/ControlBar Control Ba
                 </span>
                 <i
                   aria-hidden={true}
-                  className="ms-Icon root-37 css-13 ms-Button-menuIcon menuIcon-10"
+                  className="ms-Icon root-37 css-12 ms-Button-menuIcon menuIcon-9"
                   data-icon-name="ChevronDown"
                   hidden={true}
-                  role="presentation"
                   style={
                     Object {
                       "fontFamily": "\\"FabricMDL2Icons\\"",
@@ -306,7 +304,7 @@ exports[`storybook snapshot tests Storyshots UI Components/ControlBar Control Ba
               </span>
             </button>
             <button
-              className="ms-Button ms-Button--default root-14"
+              className="ms-Button ms-Button--default root-13"
               data-is-focusable={true}
               onClick={[Function]}
               onKeyDown={[Function]}
@@ -317,7 +315,7 @@ exports[`storybook snapshot tests Storyshots UI Components/ControlBar Control Ba
               type="button"
             >
               <span
-                className="ms-Button-flexContainer flexContainer-6"
+                className="ms-Button-flexContainer flexContainer-5"
                 data-automationid="splitbuttonprimary"
               >
                 <span
