@@ -2,12 +2,8 @@
 // Licensed under the MIT license.
 
 import { toFlatCommunicationIdentifier } from 'acs-ui-common';
-// @ts-ignore
-import { RemoteParticipantState, CallClientState, CallState } from 'calling-stateful-client';
-// @ts-ignore
+import { RemoteParticipantState } from 'calling-stateful-client';
 import * as reselect from 'reselect';
-// @ts-ignore
-import { CallingBaseSelectorProps } from './baseSelectors';
 import { getCall, getDisplayName, getIdentifier } from './baseSelectors';
 import { CallParticipant } from 'react-components';
 
