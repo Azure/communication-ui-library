@@ -43,7 +43,7 @@ export interface VideoGalleryProps {
   /** Remote videos view options */
   remoteVideoViewOption?: VideoStreamOptions;
   /** Callback to create the local video stream view */
-  onCreateLocalStreamView?: (options?: VideoStreamOptions | undefined) => Promise<void>;
+  onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void>;
   /** Callback to dispose of the local video stream view */
   onDisposeLocalStreamView?: () => void;
   /** Callback to render the local video tile*/

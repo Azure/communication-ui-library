@@ -5,8 +5,6 @@ import React, { useCallback } from 'react';
 import { CameraButton, ControlBar, EndCallButton, MicrophoneButton, ScreenShareButton } from 'react-components';
 import { groupCallLeaveButtonCompressedStyle, groupCallLeaveButtonStyle } from './styles/CallControls.styles';
 import { usePropsFor } from './hooks/usePropsFor';
-import { devicePermissionSelector } from 'calling-component-bindings';
-import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 
 export type GroupCallControlsProps = {
   onEndCallClick(): void;
@@ -23,25 +21,11 @@ export const CallControls = (props: GroupCallControlsProps): JSX.Element => {
     await hangUpButtonProps.onHangUp();
     onEndCallClick();
   }, [hangUpButtonProps, onEndCallClick]);
-  const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useAdaptedSelector(
-    devicePermissionSelector
-  );
 
   return (
     <ControlBar layout="dockedBottom">
-      <CameraButton
-        {...cameraButtonProps}
-        onToggleCamera={() => {
-          return cameraButtonProps.onToggleCamera().catch((e) => console.log(e));
-        }}
-        showLabel={!compressedMode}
-        disabled={!cameraPermissionGranted}
-      />
-      <MicrophoneButton
-        {...microphoneButtonProps}
-        showLabel={!compressedMode}
-        disabled={!microphonePermissionGranted}
-      />
+      <CameraButton {...cameraButtonProps} showLabel={!compressedMode} />
+      <MicrophoneButton {...microphoneButtonProps} showLabel={!compressedMode} />
       <ScreenShareButton {...screenShareButtonProps} showLabel={!compressedMode} />
       <EndCallButton
         {...hangUpButtonProps}
