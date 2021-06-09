@@ -35,9 +35,16 @@ import { VideoStreamOptions, CallParticipant, VideoGalleryRemoteParticipant } fr
 // @ts-ignore
 export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component
-): ReturnType<GetSelector<Component>> & Common<DefaultCallingHandlers, Parameters<Component>[0]> => {
+): GetSelector<Component> extends (props: any) => any
+  ? ReturnType<GetSelector<Component>> & Common<DefaultCallingHandlers, Parameters<Component>[0]>
+  : undefined => {
   const selector = getSelector(component);
-  return { ...useSelector(selector), ...useHandlers<Parameters<Component>[0]>(component) };
+  const props = useSelector(selector);
+  const handlers = useHandlers<Parameters<Component>[0]>(component);
+  if (props !== undefined) {
+    return { ...props, ...handlers } as any;
+  }
+  return undefined as any;
 };
 
 export const emptySelector = (): Record<string, never> => ({});
@@ -56,7 +63,7 @@ export type GetSelector<Component> = AreEqual<Component, typeof VideoGallery> ex
   ? typeof participantListSelector
   : AreEqual<Component, typeof EndCallButton> extends true
   ? typeof emptySelector
-  : never;
+  : undefined;
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const getSelector = <Component extends (props: any) => JSX.Element | undefined>(
@@ -82,5 +89,6 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
     case EndCallButton:
       return emptySelector;
   }
-  throw 'Can\'t find corresponding selector for this component. Please check the supported components from Azure Communication UI Feature Component List.';
+  return undefined;
+  // throw 'Can\'t find corresponding selector for this component. Please check the supported components from Azure Communication UI Feature Component List.';
 };
