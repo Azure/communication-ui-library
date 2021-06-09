@@ -6,6 +6,7 @@
 
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { IButtonProps } from '@fluentui/react';
+import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { MessageStatus } from 'acs-ui-common';
@@ -15,10 +16,13 @@ import { default as React_2 } from 'react';
 import { SizeValue } from '@fluentui/react-northstar';
 import { Theme } from '@fluentui/react-theme-provider';
 
-// @public (undocumented)
+// @public
 export interface BaseCustomStylesProps {
     root?: IStyle;
 }
+
+// @public
+export type ButtonCustomStylesProps = IButtonStyles;
 
 // @public
 export interface CallingTheme {
@@ -287,7 +291,7 @@ export interface ParticipantsButtonProps extends IButtonProps {
 }
 
 // @public
-export interface ParticipantsButtonStylesProps extends BaseCustomStylesProps {
+export interface ParticipantsButtonStylesProps extends ButtonCustomStylesProps {
     participantListContainerStyle?: IStyle;
 }
 

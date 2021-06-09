@@ -49,7 +49,7 @@ jobs:
       - name: Retrieve new version from package.json
         id: version
         run: |
-          ver=$(jq .version packages/communication-react/package.json)
+          ver=$(jq -r .version packages/communication-react/package.json)
           echo version: $ver
           echo "::set-output name=version::$ver"
 
