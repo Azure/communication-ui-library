@@ -8,7 +8,7 @@ import {
   CallAgentOverrides,
   createMockStatefulCallClient,
   DeviceManagerOverrides,
-  StatefulOverrides,
+  StatefulCallClientOverrides,
   waitWithBreakCondition
 } from '../../../mocks';
 import { AzureCommunicationCallAdapter } from './AzureCommunicationCallAdapter';
@@ -21,7 +21,7 @@ const PERMISSION_ERROR_MESSAGE = 'permission error';
 const JOIN_ERROR_MESSAGE = 'join error';
 const START_ERROR_MESSAGE = 'start error';
 
-const STATEFUL_OVERRIDES: StatefulOverrides = {
+const STATEFUL_OVERRIDES: StatefulCallClientOverrides = {
   getState: () => {
     return {
       calls: new Map<string, CallState>(),

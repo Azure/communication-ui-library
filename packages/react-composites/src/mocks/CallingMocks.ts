@@ -429,10 +429,10 @@ export function createMockDeviceManager(deviceManagerOverrides?: DeviceManagerOv
   } as DeviceManager;
 }
 
-export type StatefulOverrides = Partial<StatefulCallClient>;
+export type StatefulCallClientOverrides = Partial<StatefulCallClient>;
 
 export function createMockStatefulCallClient(
-  statefulOverrides?: StatefulOverrides,
+  statefulOverrides?: StatefulCallClientOverrides,
   agentOverrides?: CallAgentOverrides,
   deviceManagerOverrides?: DeviceManagerOverrides,
   callOverrides?: CallOverrides

@@ -103,7 +103,12 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   dispose(): void {
-    this.unsubscribeAllEvents();
+    try {
+      this.unsubscribeAllEvents();
+    } catch (e) {
+      this.context.setError(e);
+      this.emitter.emit('error', e);
+    }
   }
 
   fetchInitialData = async (): Promise<void> => {
@@ -178,6 +183,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     try {
       await this.handlers.updateThreadTopicName(topicName);
     } catch (e) {
+      this.context.setError(e);
       this.emitter.emit('error', e);
     }
   };
