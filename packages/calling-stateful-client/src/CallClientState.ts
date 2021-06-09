@@ -393,7 +393,7 @@ export interface CallClientState {
    * could change. You should not cache the id itself but the entire {@Link @azure/communication-calling#Call} and then
    * use the id contained to look up data in this map.
    */
-  calls: Map<string, CallState>;
+  calls: CallState[];
   /**
    * Calls that have ended are stored here so the callEndReason could be checked. It is an array of CallState
    * {@Link CallState}. Calls are pushed on to the array as they end, meaning this is sorted by endTime ascending. Only

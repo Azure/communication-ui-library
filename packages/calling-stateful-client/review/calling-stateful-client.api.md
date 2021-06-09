@@ -36,7 +36,7 @@ export interface CallAgentState {
 // @public
 export interface CallClientState {
     callAgent: CallAgentState | undefined;
-    calls: Map<string, CallState>;
+    calls: CallState[];
     callsEnded: CallState[];
     deviceManager: DeviceManagerState;
     incomingCalls: Map<string, IncomingCallState>;

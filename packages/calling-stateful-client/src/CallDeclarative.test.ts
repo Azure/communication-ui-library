@@ -66,17 +66,25 @@ describe('declarative call', () => {
 
     const transfer = declarativeTransfer.transfer({ targetParticipant: { communicationUserId: 'a' } }) as any;
 
-    expect(context.getState().calls.get(mockCallId)?.transfer.requestedTransfers.length).toBe(1);
-    expect(context.getState().calls.get(mockCallId)?.transfer.requestedTransfers[0].state).toBe('None');
+    expect(
+      context.getState().calls.find((candidate) => candidate.id === mockCallId)?.transfer.requestedTransfers.length
+    ).toBe(1);
+    expect(
+      context.getState().calls.find((candidate) => candidate.id === mockCallId)?.transfer.requestedTransfers[0].state
+    ).toBe('None');
 
     transfer.state = 'Transferred';
     transfer.emit('stateChanged');
 
     await waitWithBreakCondition(
-      () => context.getState().calls.get(mockCallId)?.transfer.requestedTransfers[0].state !== 'None'
+      () =>
+        context.getState().calls.find((candidate) => candidate.id === mockCallId)?.transfer.requestedTransfers[0]
+          .state !== 'None'
     );
 
-    expect(context.getState().calls.get(mockCallId)?.transfer.requestedTransfers[0].state).toBe('Transferred');
+    expect(
+      context.getState().calls.find((candidate) => candidate.id === mockCallId)?.transfer.requestedTransfers[0].state
+    ).toBe('Transferred');
   });
 
   test('when unsubscribe called unsubscribes from DeclarativeTransferCallFeature', async () => {
