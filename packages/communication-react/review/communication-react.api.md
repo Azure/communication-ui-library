@@ -320,7 +320,7 @@ export interface CallClientState {
     calls: CallState[];
     callsEnded: CallState[];
     deviceManager: DeviceManagerState;
-    incomingCalls: Map<string, IncomingCallState>;
+    incomingCalls: IncomingCallState[];
     incomingCallsEnded: IncomingCallState[];
     userId: CommunicationUserKind;
 }
@@ -790,7 +790,7 @@ export const getDisplayName: (state: CallClientState) => string | undefined;
 export const getIdentifier: (state: CallClientState) => string;
 
 // @public (undocumented)
-export const getIncomingCalls: (state: CallClientState) => Map<string, IncomingCallState>;
+export const getIncomingCalls: (state: CallClientState) => IncomingCallState[];
 
 // @public (undocumented)
 export const getIncomingCallsEnded: (state: CallClientState) => IncomingCallState[];

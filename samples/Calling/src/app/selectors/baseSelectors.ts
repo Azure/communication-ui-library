@@ -6,7 +6,7 @@ import { CallingBaseSelectorProps } from 'calling-component-bindings';
 
 export const getCallsEnded = (state: CallClientState): CallState[] => state.callsEnded;
 
-export const getIncomingCalls = (state: CallClientState): Map<string, IncomingCallState> => state.incomingCalls;
+export const getIncomingCalls = (state: CallClientState): IncomingCallState[] => state.incomingCalls;
 
 export const getIncomingCallsEnded = (state: CallClientState): IncomingCallState[] => state.incomingCallsEnded;
 
