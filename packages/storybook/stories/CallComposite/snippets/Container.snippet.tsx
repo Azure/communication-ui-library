@@ -9,6 +9,7 @@ export type ContainerProps = {
   locator: string;
   displayName: string;
   fluentTheme?: PartialTheme | Theme;
+  callInvitationURL?: string;
 };
 
 const isTeamsMeetingLink = (link: string): boolean => link.startsWith('https://teams.microsoft.com/l/meetup-join');
@@ -46,5 +47,11 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
     };
   }, [adapter]);
 
-  return <>{adapter && <CallComposite adapter={adapter} fluentTheme={props.fluentTheme} />}</>;
+  return (
+    <>
+      {adapter && (
+        <CallComposite adapter={adapter} fluentTheme={props.fluentTheme} callInvitationURL={props?.callInvitationURL} />
+      )}
+    </>
+  );
 };
