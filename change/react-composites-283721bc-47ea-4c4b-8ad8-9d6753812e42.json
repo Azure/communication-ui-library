@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Expose calls as array instead of map",
+  "packageName": "react-composites",
+  "email": "prprabhu@microsoft.com",
+  "dependentChangeType": "patch"
+}
