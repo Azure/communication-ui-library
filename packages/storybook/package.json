@@ -41,10 +41,6 @@
     "react-linkify": "^1.0.0-alpha",
     "@fluentui/theme-samples": "8.1.5"
   },
-  "peerDependencies": {
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
-  },
   "devDependencies": {
     "@babel/core": "^7.12.7",
     "@babel/preset-env": "^7.12.7",

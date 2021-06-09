@@ -28,7 +28,8 @@
     "react-components": "1.0.0-beta.1"
   },
   "peerDependencies": {
-    "react": "^16.13.1"
+    "@types/react": ">=16.8.0 <18.0.0",
+    "react": ">=16.8.0 <18.0.0"
   },
   "devDependencies": {
     "@microsoft/api-documenter": "~7.12.11",

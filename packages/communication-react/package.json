@@ -46,8 +46,10 @@
     "uuid": "^8.1.0"
   },
   "peerDependencies": {
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "@types/react": ">=16.8.0 <18.0.0",
+    "@types/react-dom": ">=16.8.0 <18.0.0",
+    "react": ">=16.8.0 <18.0.0",
+    "react-dom": ">=16.8.0 <18.0.0"
   },
   "main": "./dist/dist-cjs/communication-react/index.js",
   "module": "./dist/dist-esm/communication-react/src/index.js",
