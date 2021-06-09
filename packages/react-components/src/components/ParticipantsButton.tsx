@@ -7,6 +7,7 @@ import {
   IButtonProps,
   IContextualMenuItem,
   IContextualMenuProps,
+  IContextualMenuStyles,
   IStyle,
   Label,
   Stack,
@@ -20,7 +21,8 @@ import { ParticipantList, ParticipantListProps } from './ParticipantList';
 import {
   controlButtonLabelStyles,
   controlButtonStyles,
-  defaultParticipantListContainerStyle
+  defaultParticipantListContainerStyle,
+  participantsButtonMenuPropsStyle
 } from './styles/ControlBar.styles';
 import { ButtonCustomStylesProps } from '../types';
 
@@ -67,7 +69,7 @@ export interface ParticipantsButtonProps extends IButtonProps {
 
 /**
  * `ParticipantsButton` allows you to easily create a component rendering a participants button. It can be used in your ControlBar component for example.
- * This button contains dropdown menu items defined through its property `menuProps`. By default, it can display user presence, number of remote participants with the full list
+ * This button contains dropdown menu items defined through its property `menuProps`. By default, it can display the number of remote participants with the full list
  * as sub-menu and an option to mute all participants, as well as a copy-to-clipboard button to copy the call invitation URL.
  * This `menuProps` can be fully redefined and its property is of type [IContextualMenuProps](https://developer.microsoft.com/en-us/fluentui#/controls/web/contextualmenu#IContextualMenuProps).
  *
@@ -90,11 +92,10 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     }
   }, [onMuteAll]);
 
-  // Rendering of ParticipantList excluding the local user as we display them on their own in the context menu
   const onRenderCallback = useCallback(() => {
     return (
       <Stack className={mergeStyles(defaultParticipantListContainerStyle, styles?.participantListContainerStyle)}>
-        <ParticipantList {...participantListProps} excludeMe={true} />
+        <ParticipantList {...participantListProps} />
       </Stack>
     );
   }, [participantListProps, styles]);
@@ -106,13 +107,13 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     return false;
   }, [callInvitationURL]);
 
-  const generateDefaultRemoteParticipantsSubMenuProps = (): IContextualMenuItem[] => {
+  const generateDefaultParticipantsSubMenuProps = (): IContextualMenuItem[] => {
     const items: IContextualMenuItem[] = [];
 
     if (participantListProps.participants.length > 0) {
       items.push({
-        key: 'remoteParticipantsKey',
-        text: 'Remote Participant list',
+        key: 'participantListMenuItemKey',
+        text: 'Participant list',
         onRender: onRenderCallback
       });
 
@@ -134,27 +135,25 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
 
   const defaultMenuProps = useMemo((): IContextualMenuProps => {
     const menuProps: IContextualMenuProps = {
+      title: 'In this call',
+      styles: participantsButtonMenuPropsStyle as IContextualMenuStyles,
       items: []
     };
 
     if (participantListProps.participants.length > 0) {
       const participantIds = participantListProps.participants.map((p) => p.userId);
-      let participantCount = participantIds.length;
 
-      if (participantListProps.myUserId && participantIds.indexOf(participantListProps.myUserId) !== -1) {
+      let participantCount = participantIds.length;
+      if (participantListProps.excludeMe) {
         participantCount -= 1;
-        menuProps.items.push({
-          key: 'selfParticipantKey',
-          name: 'In this call'
-        });
       }
 
       menuProps.items.push({
-        key: 'remoteParticipantCountKey',
+        key: 'participantCountKey',
         name: `${participantCount} people`,
         iconProps: { iconName: 'People' },
         subMenuProps: {
-          items: generateDefaultRemoteParticipantsSubMenuProps()
+          items: generateDefaultParticipantsSubMenuProps()
         }
       });
     }

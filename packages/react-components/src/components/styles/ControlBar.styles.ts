@@ -146,6 +146,15 @@ export const endCallControlButtonStyles: IButtonStyles = concatStyleSets(control
   }
 });
 
+export const participantsButtonMenuPropsStyle = {
+  title: {
+    background: 'initial',
+    paddingLeft: '.5rem',
+    fontWeight: 600,
+    fontSize: '.75rem'
+  }
+};
+
 export const defaultParticipantListContainerStyle: IStyle = {
   maxHeight: '20rem'
 };

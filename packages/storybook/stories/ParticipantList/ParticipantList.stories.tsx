@@ -12,10 +12,13 @@ import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { DefaultCallParticipantListExample } from './snippets/DefaultCall.snippet';
 import { DefaultChatParticipantListExample } from './snippets/DefaultChat.snippet';
 import { InteractiveCallParticipantListExample } from './snippets/InteractiveCall.snippet';
+import { ParticipantListWithExcludedUserExample } from './snippets/WithExcludedUser.snippet';
 
 const DefaultCallParticipantListExampleText = require('!!raw-loader!./snippets/DefaultCall.snippet.tsx').default;
 const DefaultChatParticipantListExampleText = require('!!raw-loader!./snippets/DefaultChat.snippet.tsx').default;
 const InteractiveCallParticipantListExampleText = require('!!raw-loader!./snippets/InteractiveCall.snippet.tsx')
+  .default;
+const ParticipantListWithExcludedUserExampleText = require('!!raw-loader!./snippets/WithExcludedUser.snippet.tsx')
   .default;
 
 const getDocs: () => JSX.Element = () => {
@@ -42,6 +45,12 @@ const getDocs: () => JSX.Element = () => {
       </Description>
       <Canvas mdxSource={DefaultCallParticipantListExampleText}>
         <DefaultCallParticipantListExample />
+      </Canvas>
+
+      <Heading>ParticipantList with local user excluded from the list</Heading>
+      <Description>Local user can be excluded from the participant list like shown in the example below.</Description>
+      <Canvas mdxSource={ParticipantListWithExcludedUserExampleText}>
+        <ParticipantListWithExcludedUserExample />
       </Canvas>
 
       <Heading>Interactive Call example</Heading>
