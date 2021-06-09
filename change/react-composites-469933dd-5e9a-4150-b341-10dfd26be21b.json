@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Hook up error listeners for adapter",
+  "packageName": "react-composites",
+  "email": "allenhwang@microsoft.com",
+  "dependentChangeType": "patch"
+}
