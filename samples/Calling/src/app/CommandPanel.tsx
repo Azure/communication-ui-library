@@ -12,9 +12,14 @@ import {
 } from 'app/styles/CommandPanel.styles';
 import { ThemeSelector } from 'app/theming/ThemeSelector';
 import { Footer } from './Footer';
-import { useCallingSelector as useSelector, getCallingSelector, useCallingPropsFor } from 'calling-component-bindings';
 import { LocalDeviceSettings } from './LocalDeviceSettings';
-import { OptionsButton, ParticipantList } from 'react-components';
+import {
+  OptionsButton,
+  ParticipantList,
+  useSelector,
+  getCallingSelector,
+  usePropsFor
+} from '@azure/communication-react';
 import { useAzureCommunicationHandlers } from './hooks/useAzureCommunicationHandlers';
 import { devicePermissionSelector } from './selectors/devicePermissionSelector';
 
@@ -29,7 +34,7 @@ export interface CommandPanelProps {
 }
 
 export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
-  const participantListProps = useCallingPropsFor(ParticipantList);
+  const participantListProps = usePropsFor(ParticipantList);
 
   const options = useSelector(getCallingSelector(OptionsButton), { callId: '' });
   const handlers = useAzureCommunicationHandlers();

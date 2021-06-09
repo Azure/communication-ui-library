@@ -1,9 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { toFlatCommunicationIdentifier } from 'acs-ui-common';
-import { ChatClientState } from 'chat-stateful-client';
-import { ChatBaseSelectorProps } from 'chat-component-bindings';
+import { ChatBaseSelectorProps, toFlatCommunicationIdentifier, ChatClientState } from '@azure/communication-react';
 import { ChatParticipant } from '@azure/communication-chat';
 
 export const getUserId = (state: ChatClientState): string => toFlatCommunicationIdentifier(state.userId);
