@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "added participantsButtonSelector and removed participantListSelector",
+  "packageName": "calling-component-bindings",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "patch"
+}
