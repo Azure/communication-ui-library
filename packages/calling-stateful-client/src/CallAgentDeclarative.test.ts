@@ -258,15 +258,15 @@ describe('declarative call agent', () => {
     const mockIncomingCall = createMockIncomingCall(mockCallId);
     mockCallAgent.emit('incomingCall', { incomingCall: mockIncomingCall });
 
-    await waitWithBreakCondition(() => context.getState().incomingCalls.size !== 0);
+    await waitWithBreakCondition(() => context.getState().incomingCalls.length !== 0);
 
-    expect(context.getState().incomingCalls.size).toBe(1);
+    expect(context.getState().incomingCalls.length).toBe(1);
 
     mockIncomingCall.emit('callEnded', { callEndReason: { code: 1 } });
 
     await waitWithBreakCondition(() => context.getState().incomingCallsEnded.length !== 0);
 
-    expect(context.getState().incomingCalls.size).toBe(0);
+    expect(context.getState().incomingCalls.length).toBe(0);
     expect(context.getState().incomingCallsEnded.length).toBe(1);
     expect(context.getState().incomingCallsEnded[0].callEndReason?.code).toBe(1);
     expect(context.getState().incomingCallsEnded[0].endTime).toBeTruthy();
@@ -310,13 +310,13 @@ describe('declarative call agent', () => {
       mockCallAgent.emit('incomingCall', { incomingCall: mockIncomingCall });
     }
 
-    await waitWithBreakCondition(() => context.getState().incomingCalls.size === numberOfCalls);
+    await waitWithBreakCondition(() => context.getState().incomingCalls.length === numberOfCalls);
 
     for (const mockIncomingCall of mockIncomingCalls) {
       mockIncomingCall.emit('callEnded', { callEndReason: { code: 1 } });
     }
 
-    await waitWithBreakCondition(() => context.getState().incomingCalls.size === 0);
+    await waitWithBreakCondition(() => context.getState().incomingCalls.length === 0);
 
     expect(context.getState().incomingCallsEnded.length).toBe(MAX_CALL_HISTORY_LENGTH);
   });

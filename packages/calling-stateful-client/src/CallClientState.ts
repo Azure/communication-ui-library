@@ -388,10 +388,7 @@ export type DeviceManagerState = {
  */
 export interface CallClientState {
   /**
-   * Proxy of {@Link @azure/communication-calling#CallAgent.calls} as a map of CallState {@Link CallState}. It is keyed
-   * by {@Link @azure/communication-calling#Call.id}. Please note that {@Link @azure/communication-calling#Call.id}
-   * could change. You should not cache the id itself but the entire {@Link @azure/communication-calling#Call} and then
-   * use the id contained to look up data in this map.
+   * Proxy of {@Link @azure/communication-calling#CallAgent.calls} as an array of CallState {@Link CallState}.
    */
   calls: CallState[];
   /**
@@ -402,11 +399,10 @@ export interface CallClientState {
    */
   callsEnded: CallState[];
   /**
-   * Proxy of {@Link @azure/communication-calling#IncomingCall} as a map of IncomingCall {@Link IncomingCall} received
-   * in the event 'incomingCall' emitted by {@Link @azure/communication-calling#CallAgent}. It is keyed by
-   * {@Link @azure/communication-calling#IncomingCall.id}.
+   * Proxy of {@Link @azure/communication-calling#IncomingCall} as an array of IncomingCall {@Link IncomingCall} received
+   * in the event 'incomingCall' emitted by {@Link @azure/communication-calling#CallAgent}.
    */
-  incomingCalls: Map<string, IncomingCallState>;
+  incomingCalls: IncomingCallState[];
   /**
    * Incoming Calls that have ended are stored here so the callEndReason could be checked. It is a array of IncomingCall
    * {@Link IncomingCall} received in the event 'incomingCall' emitted by

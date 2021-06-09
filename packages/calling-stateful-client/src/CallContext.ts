@@ -45,7 +45,7 @@ export class CallContext {
     this._state = {
       calls: [],
       callsEnded: [],
-      incomingCalls: new Map<string, IncomingCallState>(),
+      incomingCalls: [],
       incomingCallsEnded: [],
       deviceManager: {
         isSpeakerSelectionAvailable: false,
@@ -87,7 +87,7 @@ export class CallContext {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         draft.calls.splice(0, draft.calls.length);
-        draft.incomingCalls.clear();
+        draft.incomingCalls.splice(0, draft.incomingCalls.length);
         draft.callsEnded.splice(0, draft.callsEnded.length);
         draft.incomingCallsEnded.splice(0, draft.incomingCallsEnded.length);
       })
@@ -502,11 +502,11 @@ export class CallContext {
   public setIncomingCall(call: IncomingCallState): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const existingCall = draft.incomingCalls.get(call.id);
+        const existingCall = draft.incomingCalls.find((c) => c.id === call.id);
         if (existingCall) {
           existingCall.callerInfo = call.callerInfo;
         } else {
-          draft.incomingCalls.set(call.id, call);
+          draft.incomingCalls.push(call);
         }
       })
     );
@@ -515,7 +515,10 @@ export class CallContext {
   public removeIncomingCall(callId: string): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        draft.incomingCalls.delete(callId);
+        const callIndex = draft.incomingCalls.findIndex((c) => c.id === callId);
+        if (callIndex !== -1) {
+          draft.incomingCalls.splice(callIndex, 1);
+        }
       })
     );
   }
@@ -523,11 +526,11 @@ export class CallContext {
   public setIncomingCallEnded(callId: string, callEndReason: CallEndReason | undefined): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.incomingCalls.get(callId);
-        if (call) {
+        const callIndex = draft.incomingCalls.findIndex((c) => c.id === callId);
+        if (callIndex !== -1) {
+          const [call] = draft.incomingCalls.splice(callIndex, 1);
           call.endTime = new Date();
           call.callEndReason = callEndReason;
-          draft.incomingCalls.delete(callId);
           if (draft.incomingCallsEnded.length >= MAX_CALL_HISTORY_LENGTH) {
             draft.incomingCallsEnded.shift();
           }

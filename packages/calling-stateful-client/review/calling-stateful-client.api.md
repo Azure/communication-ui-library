@@ -39,7 +39,7 @@ export interface CallClientState {
     calls: CallState[];
     callsEnded: CallState[];
     deviceManager: DeviceManagerState;
-    incomingCalls: Map<string, IncomingCallState>;
+    incomingCalls: IncomingCallState[];
     incomingCallsEnded: IncomingCallState[];
     userId: CommunicationUserKind;
 }
