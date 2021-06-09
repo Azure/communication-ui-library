@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStyle, mergeStyles, Persona, PersonaSize, Stack, Text } from '@fluentui/react';
+import { IStyle, mergeStyles, Persona, PersonaSize, Stack, Text, useTheme } from '@fluentui/react';
 import React from 'react';
 import {
   disabledVideoHint,
@@ -10,7 +10,6 @@ import {
   videoContainerStyles,
   videoHint
 } from './styles/VideoTile.styles';
-import { useTheme } from '@fluentui/react-theme-provider';
 import { BaseCustomStylesProps } from '../types';
 
 export interface VideoTileStylesProps extends BaseCustomStylesProps {

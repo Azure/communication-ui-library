@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { IDropdownOption, Dropdown, Stack } from '@fluentui/react';
+import { IDropdownOption, Dropdown, Stack, useTheme } from '@fluentui/react';
 import {
   dropDownStyles,
   dropDownTitleIconStyles,
@@ -10,7 +10,6 @@ import {
   mainStackTokens
 } from './styles/LocalDeviceSettings.styles';
 import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
-import { useTheme } from '@fluentui/react-theme-provider';
 import { VideoStreamOptions } from 'react-components';
 import { CallVideoIcon, MicIcon, VolumeUpIcon } from '@fluentui/react-icons-northstar';
 
