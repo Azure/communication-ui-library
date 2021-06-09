@@ -38,7 +38,8 @@ export const ThemeExample: () => JSX.Element = () => {
   const knobs = useRef({
     connectionString: text(COMPOSITE_STRING_CONNECTIONSTRING, '', 'Server Simulator'),
     displayName: text('Display Name', '', 'Server Simulator'),
-    theme: radios('Theme', themeChoices, 'Default', 'Server Simulator')
+    theme: radios('Theme', themeChoices, 'Default', 'Server Simulator'),
+    callInvitationURL: text('Optional URL to invite other participants to the call', '', 'Server Simulator')
   });
 
   useEffect(() => {
@@ -58,6 +59,7 @@ export const ThemeExample: () => JSX.Element = () => {
           displayName={knobs.current.displayName}
           fluentTheme={getTheme(knobs.current.theme)}
           {...containerProps}
+          callInvitationURL={knobs.current.callInvitationURL}
         />
       ) : (
         <ConfigHintBanner />

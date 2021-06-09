@@ -12,7 +12,8 @@ export const JoinExistingCall: () => JSX.Element = () => {
     callLocator: text('Call locator (ACS group ID or Teams meeting link)', '', 'External call'),
     userId: text('User identifier for user', '', 'External call'),
     token: text('Valid token for user', '', 'External call'),
-    displayName: text('Display name', '', 'External call')
+    displayName: text('Display name', '', 'External call'),
+    callInvitationURL: text('Optional URL to invite other participants to the call', '', 'External call')
   });
 
   const areAllKnobsSet =
@@ -25,6 +26,7 @@ export const JoinExistingCall: () => JSX.Element = () => {
           userId={{ communicationUserId: knobs.current.userId }}
           token={knobs.current.token}
           displayName={knobs.current.displayName}
+          callInvitationURL={knobs.current.callInvitationURL}
         />
       ) : (
         <ConfigJoinCallHintBanner />

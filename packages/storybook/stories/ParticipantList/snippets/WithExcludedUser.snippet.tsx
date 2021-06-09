@@ -1,9 +1,5 @@
-import {
-  CallParticipant,
-  FluentThemeProvider,
-  ParticipantsButton,
-  ParticipantListProps
-} from '@azure/communication-react';
+import { CallParticipant, FluentThemeProvider, ParticipantList } from '@azure/communication-react';
+import { Stack } from '@fluentui/react';
 import React from 'react';
 
 const mockParticipants: CallParticipant[] = [
@@ -37,25 +33,13 @@ const mockParticipants: CallParticipant[] = [
   }
 ];
 
-const mockParticipantsProps: ParticipantListProps = {
-  participants: mockParticipants,
-  myUserId: 'user1'
-};
-
-const mockCallLink = 'URL to invite new participants to the current call (https://...)';
-
-const onMuteAll = () => {
-  // your implementation to mute all participants
-};
-
-export const ParticipantsButtonWithMuteAllOptionExample: () => JSX.Element = () => {
+export const ParticipantListWithExcludedUserExample: () => JSX.Element = () => {
   return (
     <FluentThemeProvider>
-      <ParticipantsButton
-        participantListProps={mockParticipantsProps}
-        callInvitationURL={mockCallLink}
-        onMuteAll={onMuteAll}
-      />
+      <Stack>
+        <div style={{ fontSize: '1.5rem', marginBottom: '1rem', fontFamily: 'Segoe UI' }}>Participants</div>
+        <ParticipantList participants={mockParticipants} myUserId={'user1'} excludeMe={true} />
+      </Stack>
     </FluentThemeProvider>
   );
 };

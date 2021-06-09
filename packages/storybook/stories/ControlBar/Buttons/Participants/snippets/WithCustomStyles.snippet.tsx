@@ -40,8 +40,7 @@ const mockParticipants: CallParticipant[] = [
 
 const mockParticipantsProps: ParticipantListProps = {
   participants: mockParticipants,
-  myUserId: 'user1',
-  excludeMe: true
+  myUserId: 'user1'
 };
 
 const mockCallLink = 'URL to invite new participants to the current call (https://...)';
