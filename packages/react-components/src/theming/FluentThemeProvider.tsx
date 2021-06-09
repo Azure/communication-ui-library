@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { mergeStyles } from '@fluentui/react';
-import { ThemeProvider, Theme, PartialTheme } from '@fluentui/react-theme-provider';
+import { ThemeProvider, Theme, PartialTheme } from '@fluentui/react';
 import { mergeThemes, Provider, teamsTheme, ThemeInput } from '@fluentui/react-northstar';
 import { lightTheme } from './themes';
 

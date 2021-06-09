@@ -1,6 +1,6 @@
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { ChatAdapter, ChatComposite, createAzureCommunicationChatAdapter } from '@azure/communication-react';
-import { Theme, PartialTheme } from '@fluentui/react-theme-provider';
+import { Theme, PartialTheme } from '@fluentui/react';
 import React, { useState, useEffect } from 'react';
 
 export type ContainerProps = {

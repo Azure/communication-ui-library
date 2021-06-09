@@ -2,10 +2,10 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Layouts One To One Call Layout 1`] = `
 <div
-  className="css-81 root-0 body-1"
+  className="css-82 body-0"
 >
   <div
-    className="css-81"
+    className="css-82"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -20,7 +20,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts One To One Call La
       }
     >
       <div
-        className="ms-Stack css-3"
+        className="ms-Stack css-2"
         style={
           Object {
             "border": "1px",
@@ -30,28 +30,28 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts One To One Call La
         }
       >
         <div
-          className="ms-Stack css-7"
+          className="ms-Stack css-6"
         >
           <div
-            className="ms-Stack css-8"
+            className="ms-Stack css-7"
           >
             <div
-              className="ms-Stack css-10"
+              className="ms-Stack css-9"
             >
               <div
-                className="ms-Persona ms-Persona--size100 root-11"
+                className="ms-Persona ms-Persona--size100 root-10"
               >
                 <div
-                  className="ms-Persona-coin ms-Persona--size100 coin-18"
+                  className="ms-Persona-coin ms-Persona--size100 coin-17"
                   role="presentation"
                 >
                   <div
-                    className="ms-Persona-imageArea imageArea-20"
+                    className="ms-Persona-imageArea imageArea-19"
                     role="presentation"
                   >
                     <div
                       aria-hidden="true"
-                      className="ms-Persona-initials initials-23"
+                      className="ms-Persona-initials initials-22"
                     >
                       <span>
                         H
@@ -63,28 +63,28 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts One To One Call La
             </div>
           </div>
           <div
-            className="ms-Stack css-26"
+            className="ms-Stack css-25"
           >
             <div
-              className="ms-Stack css-7"
+              className="ms-Stack css-6"
             >
               <div
-                className="ms-Stack css-8"
+                className="ms-Stack css-7"
               >
                 <div
-                  className="ms-Persona ms-Persona--size56 root-27"
+                  className="ms-Persona ms-Persona--size56 root-26"
                 >
                   <div
-                    className="ms-Persona-coin ms-Persona--size56 coin-18"
+                    className="ms-Persona-coin ms-Persona--size56 coin-17"
                     role="presentation"
                   >
                     <div
-                      className="ms-Persona-imageArea imageArea-30"
+                      className="ms-Persona-imageArea imageArea-29"
                       role="presentation"
                     >
                       <div
                         aria-hidden="true"
-                        className="ms-Persona-initials initials-33"
+                        className="ms-Persona-initials initials-32"
                       >
                         <span>
                           T
@@ -105,10 +105,10 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts One To One Call La
 
 exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layout 1`] = `
 <div
-  className="css-81 root-0 body-1"
+  className="css-82 body-0"
 >
   <div
-    className="css-81"
+    className="css-82"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -123,7 +123,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layou
       }
     >
       <div
-        className="ms-Stack css-8"
+        className="ms-Stack css-7"
         style={
           Object {
             "border": ".063rem",
@@ -133,37 +133,37 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layou
         }
       >
         <div
-          className="ms-StackItem css-9"
+          className="ms-StackItem css-8"
         >
           <div
-            className="ms-Stack css-10"
+            className="ms-Stack css-9"
           >
             <div
-              className="ms-Stack css-11"
+              className="ms-Stack css-10"
             >
               <div
-                className="ms-Stack css-12"
+                className="ms-Stack css-11"
               >
                 <div
-                  className="ms-Stack css-16"
+                  className="ms-Stack css-15"
                 >
                   <div
-                    className="ms-Stack css-17"
+                    className="ms-Stack css-16"
                   >
                     <div
-                      className="ms-Persona ms-Persona--size56 root-18"
+                      className="ms-Persona ms-Persona--size56 root-17"
                     >
                       <div
-                        className="ms-Persona-coin ms-Persona--size56 coin-25"
+                        className="ms-Persona-coin ms-Persona--size56 coin-24"
                         role="presentation"
                       >
                         <div
-                          className="ms-Persona-imageArea imageArea-27"
+                          className="ms-Persona-imageArea imageArea-26"
                           role="presentation"
                         >
                           <div
                             aria-hidden="true"
-                            className="ms-Persona-initials initials-30"
+                            className="ms-Persona-initials initials-29"
                           >
                             <span>
                               M
@@ -174,7 +174,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layou
                     </div>
                   </div>
                   <span
-                    className="css-79 css-33"
+                    className="css-80 css-32"
                   >
                     Michael
                   </span>
@@ -182,31 +182,31 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layou
               </div>
             </div>
             <div
-              className="ms-Stack css-11"
+              className="ms-Stack css-10"
             >
               <div
-                className="ms-Stack css-12"
+                className="ms-Stack css-11"
               >
                 <div
-                  className="ms-Stack css-16"
+                  className="ms-Stack css-15"
                 >
                   <div
-                    className="ms-Stack css-17"
+                    className="ms-Stack css-16"
                   >
                     <div
-                      className="ms-Persona ms-Persona--size56 root-18"
+                      className="ms-Persona ms-Persona--size56 root-17"
                     >
                       <div
-                        className="ms-Persona-coin ms-Persona--size56 coin-25"
+                        className="ms-Persona-coin ms-Persona--size56 coin-24"
                         role="presentation"
                       >
                         <div
-                          className="ms-Persona-imageArea imageArea-27"
+                          className="ms-Persona-imageArea imageArea-26"
                           role="presentation"
                         >
                           <div
                             aria-hidden="true"
-                            className="ms-Persona-initials initials-34"
+                            className="ms-Persona-initials initials-33"
                           >
                             <span>
                               J
@@ -217,7 +217,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layou
                     </div>
                   </div>
                   <span
-                    className="css-79 css-33"
+                    className="css-80 css-32"
                   >
                     Jim
                   </span>
@@ -225,31 +225,31 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layou
               </div>
             </div>
             <div
-              className="ms-Stack css-11"
+              className="ms-Stack css-10"
             >
               <div
-                className="ms-Stack css-12"
+                className="ms-Stack css-11"
               >
                 <div
-                  className="ms-Stack css-16"
+                  className="ms-Stack css-15"
                 >
                   <div
-                    className="ms-Stack css-17"
+                    className="ms-Stack css-16"
                   >
                     <div
-                      className="ms-Persona ms-Persona--size56 root-18"
+                      className="ms-Persona ms-Persona--size56 root-17"
                     >
                       <div
-                        className="ms-Persona-coin ms-Persona--size56 coin-25"
+                        className="ms-Persona-coin ms-Persona--size56 coin-24"
                         role="presentation"
                       >
                         <div
-                          className="ms-Persona-imageArea imageArea-27"
+                          className="ms-Persona-imageArea imageArea-26"
                           role="presentation"
                         >
                           <div
                             aria-hidden="true"
-                            className="ms-Persona-initials initials-35"
+                            className="ms-Persona-initials initials-34"
                           >
                             <span>
                               P
@@ -260,7 +260,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layou
                     </div>
                   </div>
                   <span
-                    className="css-79 css-33"
+                    className="css-80 css-32"
                   >
                     Pam
                   </span>
@@ -268,31 +268,31 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layou
               </div>
             </div>
             <div
-              className="ms-Stack css-11"
+              className="ms-Stack css-10"
             >
               <div
-                className="ms-Stack css-12"
+                className="ms-Stack css-11"
               >
                 <div
-                  className="ms-Stack css-16"
+                  className="ms-Stack css-15"
                 >
                   <div
-                    className="ms-Stack css-17"
+                    className="ms-Stack css-16"
                   >
                     <div
-                      className="ms-Persona ms-Persona--size56 root-18"
+                      className="ms-Persona ms-Persona--size56 root-17"
                     >
                       <div
-                        className="ms-Persona-coin ms-Persona--size56 coin-25"
+                        className="ms-Persona-coin ms-Persona--size56 coin-24"
                         role="presentation"
                       >
                         <div
-                          className="ms-Persona-imageArea imageArea-27"
+                          className="ms-Persona-imageArea imageArea-26"
                           role="presentation"
                         >
                           <div
                             aria-hidden="true"
-                            className="ms-Persona-initials initials-36"
+                            className="ms-Persona-initials initials-35"
                           >
                             <span>
                               D
@@ -303,7 +303,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layou
                     </div>
                   </div>
                   <span
-                    className="css-79 css-33"
+                    className="css-80 css-32"
                   >
                     Dwight
                   </span>
@@ -311,31 +311,31 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layou
               </div>
             </div>
             <div
-              className="ms-Stack css-11"
+              className="ms-Stack css-10"
             >
               <div
-                className="ms-Stack css-12"
+                className="ms-Stack css-11"
               >
                 <div
-                  className="ms-Stack css-16"
+                  className="ms-Stack css-15"
                 >
                   <div
-                    className="ms-Stack css-17"
+                    className="ms-Stack css-16"
                   >
                     <div
-                      className="ms-Persona ms-Persona--size56 root-18"
+                      className="ms-Persona ms-Persona--size56 root-17"
                     >
                       <div
-                        className="ms-Persona-coin ms-Persona--size56 coin-25"
+                        className="ms-Persona-coin ms-Persona--size56 coin-24"
                         role="presentation"
                       >
                         <div
-                          className="ms-Persona-imageArea imageArea-27"
+                          className="ms-Persona-imageArea imageArea-26"
                           role="presentation"
                         >
                           <div
                             aria-hidden="true"
-                            className="ms-Persona-initials initials-37"
+                            className="ms-Persona-initials initials-36"
                           >
                             <span>
                               K
@@ -346,7 +346,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layou
                     </div>
                   </div>
                   <span
-                    className="css-79 css-33"
+                    className="css-80 css-32"
                   >
                     Kelly
                   </span>
@@ -354,31 +354,31 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layou
               </div>
             </div>
             <div
-              className="ms-Stack css-11"
+              className="ms-Stack css-10"
             >
               <div
-                className="ms-Stack css-12"
+                className="ms-Stack css-11"
               >
                 <div
-                  className="ms-Stack css-16"
+                  className="ms-Stack css-15"
                 >
                   <div
-                    className="ms-Stack css-17"
+                    className="ms-Stack css-16"
                   >
                     <div
-                      className="ms-Persona ms-Persona--size56 root-18"
+                      className="ms-Persona ms-Persona--size56 root-17"
                     >
                       <div
-                        className="ms-Persona-coin ms-Persona--size56 coin-25"
+                        className="ms-Persona-coin ms-Persona--size56 coin-24"
                         role="presentation"
                       >
                         <div
-                          className="ms-Persona-imageArea imageArea-27"
+                          className="ms-Persona-imageArea imageArea-26"
                           role="presentation"
                         >
                           <div
                             aria-hidden="true"
-                            className="ms-Persona-initials initials-38"
+                            className="ms-Persona-initials initials-37"
                           >
                             <span>
                               R
@@ -389,7 +389,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layou
                     </div>
                   </div>
                   <span
-                    className="css-79 css-33"
+                    className="css-80 css-32"
                   >
                     Ryan
                   </span>
@@ -397,31 +397,31 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layou
               </div>
             </div>
             <div
-              className="ms-Stack css-11"
+              className="ms-Stack css-10"
             >
               <div
-                className="ms-Stack css-12"
+                className="ms-Stack css-11"
               >
                 <div
-                  className="ms-Stack css-16"
+                  className="ms-Stack css-15"
                 >
                   <div
-                    className="ms-Stack css-17"
+                    className="ms-Stack css-16"
                   >
                     <div
-                      className="ms-Persona ms-Persona--size56 root-18"
+                      className="ms-Persona ms-Persona--size56 root-17"
                     >
                       <div
-                        className="ms-Persona-coin ms-Persona--size56 coin-25"
+                        className="ms-Persona-coin ms-Persona--size56 coin-24"
                         role="presentation"
                       >
                         <div
-                          className="ms-Persona-imageArea imageArea-27"
+                          className="ms-Persona-imageArea imageArea-26"
                           role="presentation"
                         >
                           <div
                             aria-hidden="true"
-                            className="ms-Persona-initials initials-39"
+                            className="ms-Persona-initials initials-38"
                           >
                             <span>
                               A
@@ -432,7 +432,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layou
                     </div>
                   </div>
                   <span
-                    className="css-79 css-33"
+                    className="css-80 css-32"
                   >
                     Andy
                   </span>
@@ -442,47 +442,47 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layou
           </div>
         </div>
         <div
-          className="ms-StackItem css-40"
+          className="ms-StackItem css-39"
         >
           <div
-            className="ms-Stack css-16"
+            className="ms-Stack css-15"
           >
             <div
-              className="ms-Stack css-17"
+              className="ms-Stack css-16"
             >
               <div
-                className="ms-Stack css-42"
+                className="ms-Stack css-41"
               >
                 <div
-                  className="ms-Stack css-43"
+                  className="ms-Stack css-42"
                 >
                   Your Screen Share Stream
                 </div>
               </div>
             </div>
             <div
-              className="ms-Stack css-44"
+              className="ms-Stack css-43"
             >
               <div
-                className="ms-Stack css-16"
+                className="ms-Stack css-15"
               >
                 <div
-                  className="ms-Stack css-17"
+                  className="ms-Stack css-16"
                 >
                   <div
-                    className="ms-Persona ms-Persona--size56 root-18"
+                    className="ms-Persona ms-Persona--size56 root-17"
                   >
                     <div
-                      className="ms-Persona-coin ms-Persona--size56 coin-25"
+                      className="ms-Persona-coin ms-Persona--size56 coin-24"
                       role="presentation"
                     >
                       <div
-                        className="ms-Persona-imageArea imageArea-27"
+                        className="ms-Persona-imageArea imageArea-26"
                         role="presentation"
                       >
                         <div
                           aria-hidden="true"
-                          className="ms-Persona-initials initials-45"
+                          className="ms-Persona-initials initials-44"
                         >
                           <span>
                             T
