@@ -6,6 +6,7 @@ import {
   EndCallButton,
   MicrophoneButton,
   OptionsButton,
+  ParticipantList,
   ScreenShareButton,
   VideoGallery
 } from 'react-components';
@@ -16,6 +17,7 @@ import {
   screenShareButtonSelector
 } from '../callControlSelectors';
 import { videoGallerySelector } from '../videoGallerySelector';
+import { participantListSelector } from '../participantListSelector';
 import { participantsButtonSelector } from '../participantsButtonSelector';
 import { useHandlers } from './useHandlers';
 import { useSelector } from './useSelector';
@@ -53,6 +55,8 @@ export type GetSelector<Component> = AreEqual<Component, typeof VideoGallery> ex
   ? typeof cameraButtonSelector
   : AreEqual<Component, typeof ScreenShareButton> extends true
   ? typeof screenShareButtonSelector
+  : AreEqual<Component, typeof ParticipantList> extends true
+  ? typeof participantListSelector
   : AreEqual<Component, typeof ParticipantsButton> extends true
   ? typeof participantsButtonSelector
   : AreEqual<Component, typeof EndCallButton> extends true
@@ -78,6 +82,8 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
       return screenShareButtonSelector;
     case OptionsButton:
       return optionsButtonSelector;
+    case ParticipantList:
+      return participantListSelector;
     case ParticipantsButton:
       return participantsButtonSelector;
     case EndCallButton:

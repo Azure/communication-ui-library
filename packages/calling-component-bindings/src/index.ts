@@ -4,6 +4,7 @@
 export * from './baseSelectors';
 export * from './callControlSelectors';
 export { createDefaultCallingHandlersForComponent, createDefaultCallingHandlers } from './handlers/createHandlers';
+export { participantListSelector } from './participantListSelector';
 export { participantsButtonSelector } from './participantsButtonSelector';
 export { videoGallerySelector } from './videoGallerySelector';
 
