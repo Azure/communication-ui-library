@@ -41,10 +41,6 @@
     "react-linkify": "^1.0.0-alpha",
     "@fluentui/theme-samples": "8.1.5"
   },
-  "peerDependencies": {
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
-  },
   "devDependencies": {
     "@babel/core": "^7.12.7",
     "@babel/preset-env": "^7.12.7",
@@ -87,7 +83,7 @@
     "eslint-config-prettier": "^6.12.0",
     "eslint-plugin-header": "^3.1.0",
     "eslint-plugin-import": "~2.22.1",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react-hooks": "^4.1.2",
     "eslint-plugin-react": "^7.18.3",
