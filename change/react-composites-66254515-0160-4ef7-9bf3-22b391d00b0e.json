@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "add ParticipantsButtonSelector to calling composite",
+  "packageName": "react-composites",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "patch"
+}

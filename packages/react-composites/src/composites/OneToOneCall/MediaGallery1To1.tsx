@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { Stack } from '@fluentui/react';
+import { Stack, mergeStyles, useTheme } from '@fluentui/react';
 import {
   disabledVideoHint,
   localMediaGalleryTileStyle,
@@ -44,6 +44,8 @@ export const MediaGallery1To1Component = (props: MediaGallery1To1Props): JSX.Ele
     localVideoStream
   } = props;
 
+  const theme = useTheme();
+
   const remoteParticipantDisplayName = remoteParticipant?.displayName;
   const stream = remoteParticipant?.videoStream;
 
@@ -70,7 +72,11 @@ export const MediaGallery1To1Component = (props: MediaGallery1To1Props): JSX.Ele
           renderElement={<StreamMedia videoStreamElement={localVideoStreamElement} />}
           displayName={localParticipantDisplayName}
           showDisplayName={showLocalParticipantName}
-          styles={{ displayNameContainer: isLocalVideoReady ? videoHint : disabledVideoHint }}
+          styles={{
+            displayNameContainer: mergeStyles(isLocalVideoReady ? videoHint : disabledVideoHint, {
+              color: theme.palette.neutralPrimary
+            })
+          }}
           isMirrored={localVideoInverted}
         />
       </Stack>

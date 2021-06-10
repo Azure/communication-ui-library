@@ -60,6 +60,7 @@ module.exports = {
         'videoGallerySelector.ts',
         'callControlSelectors.ts',
         'participantListSelector.ts',
+        'participantsButtonSelector.ts',
         'localPreviewSelector.ts',
         'mediaGallerySelector.ts',
         'createHandlers.ts',

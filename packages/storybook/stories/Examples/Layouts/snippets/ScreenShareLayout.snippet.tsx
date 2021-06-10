@@ -13,8 +13,8 @@ const renderPersona = (props: PlaceholderProps): JSX.Element => (
 );
 
 const renderScreenSharePlaceholder = (): JSX.Element => (
-  <Stack className={mergeStyles({ height: '100%' })}>
-    <Stack verticalAlign="center" horizontalAlign="center" className={mergeStyles({ height: '100%' })}>
+  <Stack className={mergeStyles({ height: '100\u0025' })}>
+    <Stack verticalAlign="center" horizontalAlign="center" className={mergeStyles({ height: '100\u0025' })}>
       Your Screen Share Stream
     </Stack>
   </Stack>

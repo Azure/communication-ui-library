@@ -128,7 +128,7 @@ const onlyUnique = (value: string, index: number, self: string[]): boolean => {
 const ParticipantsStory = (): JSX.Element => {
   const showLabels = boolean('Show Labels', false);
   const isMuteAllAvailable = boolean('User option to mute all participants is availble', false);
-  const callInvitationURL = text('Call URL to copy', 'https.bing.com');
+  const callInvitationURL = text('Call URL to copy', 'https://bing.com');
   const participantsKnob = text(
     'Participants (comma separated with You being local user)',
     'You, Hal Jordan, Barry Allen, Bruce Wayne'

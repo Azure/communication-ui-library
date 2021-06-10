@@ -72,8 +72,8 @@ export interface LocalDeviceSettingsType {
   selectedCamera?: VideoDeviceInfo;
   selectedMicrophone?: AudioDeviceInfo;
   selectedSpeaker?: AudioDeviceInfo;
-  microphonePermissionGranted: boolean;
-  cameraPermissionGranted: boolean;
+  microphonePermissionGranted: boolean | undefined;
+  cameraPermissionGranted: boolean | undefined;
   onSelectCamera: (device: VideoDeviceInfo, options?: VideoStreamOptions) => Promise<void>;
   onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
   onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
@@ -94,10 +94,16 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
       <Dropdown
         label={cameraLabel}
         placeholder={defaultPlaceHolder}
-        options={props.cameraPermissionGranted ? getDropDownList(props.cameras) : [{ key: 'denied', text: '' }]}
+        options={
+          props.cameraPermissionGranted ? getDropDownList(props.cameras) : [{ key: 'deniedOrUnknown', text: '' }]
+        }
         styles={dropDownStyles(theme)}
         disabled={!props.cameraPermissionGranted}
-        errorMessage={props.cameraPermissionGranted ? undefined : cameraPermissionDeniedText}
+        errorMessage={
+          props.cameraPermissionGranted === undefined || props.cameraPermissionGranted
+            ? undefined
+            : cameraPermissionDeniedText
+        }
         defaultSelectedKey={
           props.cameraPermissionGranted
             ? props.selectedCamera
@@ -105,7 +111,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
               : props.cameras
               ? props.cameras[0]?.id
               : ''
-            : 'denied'
+            : 'deniedOrUnknown'
         }
         onChange={(event, option, index) => {
           props.onSelectCamera(props.cameras[index ?? 0], localVideoViewOption);
@@ -117,8 +123,16 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
         placeholder={defaultPlaceHolder}
         styles={dropDownStyles(theme)}
         disabled={!props.microphonePermissionGranted}
-        errorMessage={props.microphonePermissionGranted ? undefined : microphonePermissionDeniedText}
-        options={props.microphonePermissionGranted ? getDropDownList(props.microphones) : [{ key: 'denied', text: '' }]}
+        errorMessage={
+          props.microphonePermissionGranted === undefined || props.microphonePermissionGranted
+            ? undefined
+            : microphonePermissionDeniedText
+        }
+        options={
+          props.microphonePermissionGranted
+            ? getDropDownList(props.microphones)
+            : [{ key: 'deniedOrUnknown', text: '' }]
+        }
         defaultSelectedKey={
           props.microphonePermissionGranted
             ? props.selectedMicrophone
@@ -126,7 +140,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
               : props.microphones
               ? props.microphones[0]?.id
               : ''
-            : 'denied'
+            : 'deniedOrUnknown'
         }
         onChange={(
           event: React.FormEvent<HTMLDivElement>,
