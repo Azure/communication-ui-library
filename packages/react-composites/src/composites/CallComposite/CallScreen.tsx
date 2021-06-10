@@ -34,7 +34,9 @@ import { ScreenSharePopup } from './ScreenSharePopup';
 export const MINI_HEADER_WINDOW_WIDTH = 450;
 
 export interface CallScreenProps {
+  callInvitationURL?: string;
   screenWidth: number;
+  showParticipants?: boolean;
   endCallHandler(): void;
   callErrorHandler(customPage?: CallCompositePage): void;
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
@@ -43,7 +45,7 @@ export interface CallScreenProps {
 const spinnerLabel = 'Initializing call client...';
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
-  const { screenWidth, endCallHandler, callErrorHandler, onRenderAvatar } = props;
+  const { callInvitationURL, screenWidth, showParticipants, endCallHandler, callErrorHandler, onRenderAvatar } = props;
 
   const [joinedCall, setJoinedCall] = useState<boolean>(false);
 
@@ -148,7 +150,12 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
           </Stack.Item>
           <Stack.Item styles={callControlsStyles}>
             <Stack className={callControlsContainer}>
-              <CallControls onEndCallClick={endCallHandler} compressedMode={screenWidth <= MINI_HEADER_WINDOW_WIDTH} />
+              <CallControls
+                onEndCallClick={endCallHandler}
+                compressedMode={screenWidth <= MINI_HEADER_WINDOW_WIDTH}
+                showParticipants={showParticipants}
+                callInvitationURL={callInvitationURL}
+              />
             </Stack>
           </Stack.Item>
         </Stack>

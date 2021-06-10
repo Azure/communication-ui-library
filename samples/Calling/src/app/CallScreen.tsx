@@ -37,6 +37,7 @@ export interface CallScreenProps {
   callErrorHandler(customErrorPage?: 'callError' | 'teamsMeetingDenied' | 'removed'): void;
   callLocator: GroupLocator | MeetingLocator;
   isMicrophoneOn: boolean;
+  callInvitationURL?: string;
 }
 
 const spinnerLabel = 'Joining the call...';
@@ -48,7 +49,7 @@ const localVideoViewOption = {
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const [selectedPane, setSelectedPane] = useState(CommandPanelTypes.None);
-  const { callLocator, screenWidth, endCallHandler, isMicrophoneOn } = props;
+  const { callInvitationURL, callLocator, screenWidth, endCallHandler, isMicrophoneOn } = props;
 
   const call = useCall();
   const callClient: StatefulCallClient = useCallClient();
@@ -114,6 +115,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
               setSelectedPane={setSelectedPane}
               endCallHandler={endCallHandler}
               screenWidth={screenWidth}
+              callInvitationURL={callInvitationURL}
             />
           </Stack.Item>
           <Stack.Item>

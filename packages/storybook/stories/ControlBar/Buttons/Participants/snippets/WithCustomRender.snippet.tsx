@@ -65,7 +65,6 @@ const customOnRenderAvatar = (participant: CommunicationParticipant) => {
 const mockParticipantsProps: ParticipantListProps = {
   participants: mockParticipants,
   myUserId: 'user1',
-  excludeMe: true,
   onRenderAvatar: (participant: CommunicationParticipant) => customOnRenderAvatar(participant)
 };
 

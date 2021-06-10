@@ -18,7 +18,7 @@ import {
   screenShareContainerStyle,
   stackContainerStyle
 } from './styles/MediaGallery.styles';
-import { loadingStyle, videoStreamStyle, videoTileStyle } from './styles/ScreenShare.styles';
+import { loadingStyle, videoStreamStyle } from './styles/ScreenShare.styles';
 
 export type ScreenShareProps = {
   screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
@@ -37,7 +37,6 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
             isVideoReady={isReady}
             renderElement={<StreamMedia videoStreamElement={renderElement ?? null} />}
             displayName={displayName}
-            styles={videoTileStyle}
           />
         </Stack>
       </Stack>
@@ -99,7 +98,6 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
               <VideoTile
                 isVideoReady={videoStream.isAvailable}
                 renderElement={<StreamMedia videoStreamElement={videoStream.renderElement ?? null} />}
-                styles={videoTileStyle}
               />
             </Stack>
           </Stack>
@@ -121,7 +119,6 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
         isVideoReady={isLocalVideoReady}
         renderElement={<StreamMedia videoStreamElement={localVideoStream?.renderElement ?? null} />}
         displayName={localParticipant?.displayName}
-        styles={videoTileStyle}
       />
     );
   }, [localParticipant, onCreateLocalStreamView]);
