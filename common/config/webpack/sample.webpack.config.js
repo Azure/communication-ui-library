@@ -78,6 +78,26 @@ const webpackConfig = (sampleRootDir, env) => ({
       {
         path: '/refreshToken/*',
         target: 'http://[::1]:8080'
+      },
+      {
+        path: '/isValidThread/*',
+        target: 'http://[::1]:8080'
+      },
+      {
+        path: '/createThread',
+        target: 'http://[::1]:8080'
+      },
+      {
+        path: '/userConfig/*',
+        target: 'http://[::1]:8080'
+      },
+      {
+        path: '/getEndpointUrl',
+        target: 'http://[::1]:8080'
+      },
+      {
+        path: '/addUser/*',
+        target: 'http://[::1]:8080'
       }
     ]
   }
