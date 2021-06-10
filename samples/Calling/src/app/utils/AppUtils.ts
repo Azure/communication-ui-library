@@ -2,16 +2,13 @@
 // Licensed under the MIT license.
 
 import { CallState as CallStatus } from '@azure/communication-calling';
-// import preval from 'preval.macro';
 import { LocalStorageKeys } from './constants';
 
 /**
  * Get ACS user token from the Contoso server.
  */
 export const fetchTokenResponse = async (): Promise<any> => {
-  console.log('performing fetch');
   const response = await fetch('/token');
-  console.log(response);
   if (response.ok) {
     const responseAsJson = await response.json(); //(await response.json())?.value?.token;
     const token = responseAsJson.token;
@@ -67,7 +64,5 @@ export const isOnIphoneAndNotSafari = (): boolean => {
 
 export const isSmallScreen = (): boolean => window.innerWidth < 700 || window.innerHeight < 400;
 
-export const getBuildTime = (): string => {
-  const dateTimeStamp = ''; //preval`module.exports = new Date().toLocaleString();`;
-  return dateTimeStamp;
-};
+declare let __BUILDTIME__: string; // Injected by webpack
+export const getBuildTime = (): string => __BUILDTIME__;
