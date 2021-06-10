@@ -74,7 +74,7 @@
     "calling-component-bindings": "~1.0.0-beta.1",
     "chat-component-bindings": "~1.0.0-beta.1",
     "@microsoft/api-documenter": "~7.12.11",
-    "@microsoft/api-extractor": "../../common/config/api-extractor/fork-pr-1916/microsoft-api-extractor-7.13.2-pr1916.1.0.tgz",
+    "@microsoft/api-extractor": "../../common/config/api-extractor/fork-pr-1916/microsoft-api-extractor-7.16.1-pr1916.1.0.tgz",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react-hooks": "^3.4.2",
     "@types/jest": "^26.0.20",
