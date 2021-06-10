@@ -22,19 +22,10 @@ import { participantsButtonSelector } from '../participantsButtonSelector';
 import { useHandlers } from './useHandlers';
 import { useSelector } from './useSelector';
 import { Common } from 'acs-ui-common';
-// @ts-ignore
-import { CommonProperties, AreEqual } from 'acs-ui-common';
-// @ts-ignore
+import { AreEqual } from 'acs-ui-common';
 import { DefaultCallingHandlers } from '../handlers/createHandlers';
-// @ts-ignore
-import { AudioDeviceInfo, StartCallOptions, Call, VideoDeviceInfo } from '@azure/communication-calling';
-// @ts-ignore
-import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
-// @ts-ignore
-import { VideoStreamOptions, CallParticipant, VideoGalleryRemoteParticipant } from 'react-components';
 import { ParticipantsButton } from 'react-components';
 
-// @ts-ignore
 export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component
 ): ReturnType<GetSelector<Component>> & Common<DefaultCallingHandlers, Parameters<Component>[0]> => {

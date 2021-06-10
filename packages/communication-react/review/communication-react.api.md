@@ -35,6 +35,8 @@ import { IContextualMenuItem } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
+import { OutputParametricSelector } from 'reselect';
+import { OutputSelector } from 'reselect';
 import { PartialTheme } from '@fluentui/react';
 import { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaPresence } from '@fluentui/react';
@@ -428,7 +430,7 @@ export interface CameraButtonProps extends IButtonProps {
 export const cameraButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     disabled: boolean;
     checked: boolean;
-}, (res1: CallState | undefined, res2: DeviceManagerState) => {
+}, (res1: CallState| undefined, res2: DeviceManagerState) => {
     disabled: boolean;
     checked: boolean;
 }>;
@@ -592,7 +594,7 @@ export type ChatThreadProperties = {
 };
 
 // @public (undocumented)
-export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
+export const chatThreadSelector: OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     userId: string;
     showMessageStatus: boolean;
     messages: Message<"chat">[];
@@ -958,7 +960,7 @@ export interface MicrophoneButtonProps extends IButtonProps {
 export const microphoneButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     disabled: boolean;
     checked: boolean;
-}, (res1: CallState | undefined, res2: DeviceManagerState) => {
+}, (res1: CallState| undefined, res2: DeviceManagerState) => {
     disabled: boolean;
     checked: boolean;
 }>;
@@ -985,16 +987,16 @@ export const optionsButtonSelector: reselect.OutputParametricSelector<CallClient
     microphones: AudioDeviceInfo[];
     speakers: AudioDeviceInfo[];
     cameras: VideoDeviceInfo[];
-    selectedMicrophone: AudioDeviceInfo | undefined;
-    selectedSpeaker: AudioDeviceInfo | undefined;
-    selectedCamera: VideoDeviceInfo | undefined;
-}, (res1: DeviceManagerState, res2: CallState | undefined) => {
+    selectedMicrophone: AudioDeviceInfo| undefined;
+    selectedSpeaker: AudioDeviceInfo| undefined;
+    selectedCamera: VideoDeviceInfo| undefined;
+}, (res1: DeviceManagerState, res2: CallState| undefined) => {
     microphones: AudioDeviceInfo[];
     speakers: AudioDeviceInfo[];
     cameras: VideoDeviceInfo[];
-    selectedMicrophone: AudioDeviceInfo | undefined;
-    selectedSpeaker: AudioDeviceInfo | undefined;
-    selectedCamera: VideoDeviceInfo | undefined;
+    selectedMicrophone: AudioDeviceInfo| undefined;
+    selectedSpeaker: AudioDeviceInfo| undefined;
+    selectedCamera: VideoDeviceInfo| undefined;
 }>;
 
 // @public
@@ -1052,7 +1054,7 @@ export type ParticipantListProps = {
 export const participantListSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     participants: CallParticipant[];
     myUserId: string;
-}, (res1: string, res2: string | undefined, res3: CallState | undefined) => {
+}, (res1: string, res2: string | undefined, res3: CallState| undefined) => {
     participants: CallParticipant[];
     myUserId: string;
 }>;
@@ -1082,7 +1084,7 @@ export const participantsButtonSelector: reselect.OutputParametricSelector<CallC
         myUserId: string;
     };
     callInvitationURL?: string | undefined;
-}, (res1: string, res2: string | undefined, res3: CallState | undefined) => {
+}, (res1: string, res2: string | undefined, res3: CallState| undefined) => {
     participantListProps: {
         participants: CallParticipant[];
         myUserId: string;
@@ -1144,7 +1146,7 @@ export interface ScreenShareButtonProps extends IButtonProps {
 // @public (undocumented)
 export const screenShareButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     checked: boolean | undefined;
-}, (res: CallState | undefined) => {
+}, (res: CallState| undefined) => {
     checked: boolean | undefined;
 }>;
 
@@ -1164,7 +1166,7 @@ export interface SendBoxProps {
 }
 
 // @public (undocumented)
-export const sendBoxSelector: reselect.OutputSelector<ChatClientState, {
+export const sendBoxSelector: OutputSelector<ChatClientState, {
     displayName: string;
     userId: string;
 }, (res1: string, res2: string) => {
@@ -1376,7 +1378,7 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
 }
 
 // @public (undocumented)
-export const videoGallerySelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
+export const videoGallerySelector: OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
     localParticipant: {
         userId: string;

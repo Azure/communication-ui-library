@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@microsoft/api-documenter": "~7.12.11",
-    "@microsoft/api-extractor": "~7.13.2",
+    "@microsoft/api-extractor": "../../common/config/api-extractor/fork-pr-1916/microsoft-api-extractor-7.13.2-pr1916.1.0.tgz",
     "@types/jest": "^26.0.20",
     "@typescript-eslint/eslint-plugin": "^4.12.0",
     "@typescript-eslint/parser": "^4.12.0",
