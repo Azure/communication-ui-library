@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-// @ts-ignore
 import {
   AudioDeviceInfo,
   Call,
@@ -16,9 +15,6 @@ import { DeviceManagerState, StatefulCallClient, StatefulDeviceManager } from 'c
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
 import { VideoStreamOptions } from 'react-components';
-
-// @ts-ignore
-import { CommonProperties } from 'acs-ui-common';
 
 export type DefaultCallingHandlers = {
   onStartLocalVideo: () => Promise<void>;

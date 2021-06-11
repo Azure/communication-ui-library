@@ -35,6 +35,8 @@ import { IContextualMenuItem } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
+import { OutputParametricSelector } from 'reselect';
+import { OutputSelector } from 'reselect';
 import { PartialTheme } from '@fluentui/react';
 import { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaPresence } from '@fluentui/react';
@@ -596,7 +598,7 @@ export type ChatThreadProperties = {
 };
 
 // @public (undocumented)
-export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
+export const chatThreadSelector: OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     userId: string;
     showMessageStatus: boolean;
     messages: Message<"chat">[];
@@ -1172,7 +1174,7 @@ export interface SendBoxProps {
 }
 
 // @public (undocumented)
-export const sendBoxSelector: reselect.OutputSelector<ChatClientState, {
+export const sendBoxSelector: OutputSelector<ChatClientState, {
     displayName: string;
     userId: string;
 }, (res1: string, res2: string) => {
@@ -1384,7 +1386,7 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
 }
 
 // @public (undocumented)
-export const videoGallerySelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
+export const videoGallerySelector: OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
     localParticipant: {
         userId: string;

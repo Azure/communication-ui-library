@@ -19,6 +19,7 @@ import { EndCallButton } from 'react-components';
 import { IncomingCallState } from 'calling-stateful-client';
 import { MicrophoneButton } from 'react-components';
 import { OptionsButton } from 'react-components';
+import { OutputParametricSelector } from 'reselect';
 import { ParticipantList } from 'react-components';
 import { ParticipantsButton } from 'react-components';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
@@ -263,7 +264,7 @@ export const useCallingSelector: <SelectorT extends (state: CallClientState, pro
 export const useDeviceManager: () => StatefulDeviceManager | undefined;
 
 // @public (undocumented)
-export const videoGallerySelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
+export const videoGallerySelector: OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
     localParticipant: {
         userId: string;
