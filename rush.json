@@ -86,11 +86,12 @@
       "packageName": "build-tools",
       "projectFolder": "common/config",
       "reviewCategory": "tools"
-    },
-    {
-      "packageName": "check-treeshaking",
-      "projectFolder": "packages/check-treeshaking",
-      "reviewCategory": "tools"
     }
+    // Not working with the latest webpack: https://github.com/webpack/webpack/issues/2090#issuecomment-634301000
+    // {
+    //   "packageName": "check-treeshaking",
+    //   "projectFolder": "packages/check-treeshaking",
+    //   "reviewCategory": "tools"
+    // }
   ]
 }
