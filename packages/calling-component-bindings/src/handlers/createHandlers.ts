@@ -188,7 +188,7 @@ export const createDefaultCallingHandlers = memoizeOne(
         return;
       }
 
-      const callState = callClient.getState().calls.get(call.id);
+      const callState = callClient.getState().calls[call.id];
       if (!callState) {
         return;
       }
@@ -203,7 +203,7 @@ export const createDefaultCallingHandlers = memoizeOne(
 
     const onCreateRemoteStreamView = async (userId: string, options?: VideoStreamOptions): Promise<void> => {
       if (!call) return;
-      const callState = callClient.getState().calls.get(call.id);
+      const callState = callClient.getState().calls[call.id];
       if (!callState) throw new Error(`Call Not Found: ${call.id}`);
 
       const participant = Array.from(callState.remoteParticipants.values()).find(
@@ -232,7 +232,7 @@ export const createDefaultCallingHandlers = memoizeOne(
 
     const onDisposeRemoteStreamView = async (userId: string): Promise<void> => {
       if (!call) return;
-      const callState = callClient.getState().calls.get(call.id);
+      const callState = callClient.getState().calls[call.id];
       if (!callState) throw new Error(`Call Not Found: ${call.id}`);
 
       const participant = Array.from(callState.remoteParticipants.values()).find(

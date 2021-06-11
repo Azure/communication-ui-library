@@ -95,7 +95,10 @@ class CallContext {
   }
 
   public updateClientState(clientState: CallClientState): void {
-    const call = clientState.calls.get(this.callId ?? '');
+    if (!this.callId) {
+      return;
+    }
+    const call = clientState.calls[this.callId];
     const endedCall =
       clientState.callsEnded.length > 0 ? clientState.callsEnded[clientState.callsEnded.length - 1] : undefined;
     this.setState({
