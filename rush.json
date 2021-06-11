@@ -86,6 +86,13 @@
       "packageName": "build-tools",
       "projectFolder": "common/config",
       "reviewCategory": "tools"
+    },
+    // We rely on the following fix: https://github.com/microsoft/rushstack/pull/1916
+    // This package should be removed once that fix has been published.
+    {
+      "packageName": "@microsoft/api-extractor",
+      "projectFolder": "packages/api-extractor-fork",
+      "reviewCategory": "tools"
     }
     // Not working with the latest webpack: https://github.com/webpack/webpack/issues/2090#issuecomment-634301000
     // {
