@@ -1,0 +1,11 @@
+{
+  "VW5XHQ": {
+    "col": 33,
+    "defaultMessage": "(you)",
+    "description": "Text indicating which item in a list is the user",
+    "end": 2740,
+    "file": "src/components/ParticipantItem.tsx",
+    "line": 72,
+    "start": 2638
+  }
+}

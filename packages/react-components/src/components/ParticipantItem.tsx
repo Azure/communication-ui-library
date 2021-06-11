@@ -17,6 +17,7 @@ import {
 import React, { useRef, useState } from 'react';
 import { BaseCustomStylesProps } from '../types';
 import { MoreIcon } from '@fluentui/react-icons-northstar';
+import { useLocale } from '../localization/LocalizationProvider';
 
 export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
   /** Styles for the avatar. */
@@ -66,6 +67,9 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
   const [menuHidden, setMenuHidden] = useState<boolean>(true);
   const containerRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
+  const { strings } = useLocale();
+
+  const isMeText = strings.participant_item_me_text;
 
   const avatarToUse = (
     <Persona
@@ -97,7 +101,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
       onMouseLeave={() => setItemHovered(false)}
     >
       {avatarToUse}
-      {me && <Stack className={meTextStyle}>{`(you)`}</Stack>}
+      {me && <Stack className={meTextStyle}>{isMeText}</Stack>}
       {onRenderIcon && (
         <Stack horizontal={true} className={mergeStyles(iconContainerStyle, styles?.iconContainer)}>
           {menuItems && menuItems.length > 0 && (itemHovered || !menuHidden) ? (

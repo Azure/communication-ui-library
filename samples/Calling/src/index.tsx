@@ -6,12 +6,15 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './app/App';
 import { SwitchableFluentThemeProvider } from './app/theming/SwitchableFluentThemeProvider';
+import { LocalizationProvider, locales } from 'react-components';
 
 ReactDOM.render(
   <SwitchableFluentThemeProvider scopeId="SampleCallingApp">
-    <div className="wrapper">
-      <App />
-    </div>
+    <LocalizationProvider locales={locales}>
+      <div className="wrapper">
+        <App />
+      </div>
+    </LocalizationProvider>
   </SwitchableFluentThemeProvider>,
   document.getElementById('root')
 );

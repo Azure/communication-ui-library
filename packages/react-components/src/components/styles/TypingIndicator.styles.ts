@@ -9,15 +9,7 @@ export const typingIndicatorContainerStyle = mergeStyles({
   alignItems: 'center'
 });
 
-export const typingIndicatorListStyle = mergeStyles({
-  fontWeight: 400,
-  whiteSpace: 'nowrap',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  paddingRight: '0.1875rem'
-});
-
-export const typingIndicatorVerbStyle = mergeStyles({
+export const typingIndicatorStringStyle = mergeStyles({
   fontWeight: 400,
   whiteSpace: 'nowrap',
   overflow: 'hidden',

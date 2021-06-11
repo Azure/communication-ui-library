@@ -1,0 +1,7 @@
+{
+  "participant_item_me_text": "(you)",
+  "typing_indicator_singular": "{users} is typing ...",
+  "typing_indicator_plural": "{users} are typing ...",
+  "typing_indicator_shortened_plural": "{users} and 1 other are typing ...",
+  "typing_indicator_shortened_plural_2": "{users} and {numOthers} others are typing ..."
+}

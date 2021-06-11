@@ -137,6 +137,30 @@ export interface GridLayoutProps {
 export type GridLayoutType = 'standard';
 
 // @public (undocumented)
+export interface ILocale {
+    // (undocumented)
+    displayName: string;
+    // (undocumented)
+    englishName: string;
+    // (undocumented)
+    locale: string;
+    // (undocumented)
+    rtl: boolean;
+}
+
+// @public (undocumented)
+export interface ILocaleContext {
+    // (undocumented)
+    locale: string;
+    // (undocumented)
+    locales: ILocale[];
+    // (undocumented)
+    setLocale: (locale: string, forceReload?: boolean) => void;
+    // (undocumented)
+    strings: Record<string, string>;
+}
+
+// @public (undocumented)
 export interface JumpToNewMessageButtonProps {
     // (undocumented)
     onClick: () => void;
@@ -144,6 +168,25 @@ export interface JumpToNewMessageButtonProps {
 
 // @public
 export const lightTheme: PartialTheme & CallingTheme;
+
+// @public (undocumented)
+export const loadLocaleData: (locale: string) => Promise<Record<string, string>>;
+
+// @public (undocumented)
+export const LocaleContext: React_2.Context<ILocaleContext>;
+
+// @public (undocumented)
+export const locales: ILocale[];
+
+// @public (undocumented)
+export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
+
+// @public (undocumented)
+export type LocalizationProviderProps = {
+    locales: ILocale[];
+    storage?: Storage;
+    children: React_2.ReactNode;
+};
 
 // @public (undocumented)
 export type Message<T extends MessageTypes> = {
@@ -361,7 +404,6 @@ export const TypingIndicator: (props: TypingIndicatorProps) => JSX.Element;
 export interface TypingIndicatorProps {
     onRenderUsers?: (users: CommunicationParticipant[]) => JSX.Element;
     styles?: TypingIndicatorStylesProps;
-    typingString?: string;
     typingUsers: CommunicationParticipant[];
 }
 
@@ -370,6 +412,9 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
 }
+
+// @public (undocumented)
+export const useLocale: () => ILocaleContext;
 
 // @public
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;

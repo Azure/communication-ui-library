@@ -1,15 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  typingIndicatorContainerStyle,
-  typingIndicatorListStyle,
-  typingIndicatorVerbStyle
-} from './styles/TypingIndicator.styles';
+import { typingIndicatorContainerStyle, typingIndicatorStringStyle } from './styles/TypingIndicator.styles';
 
 import React from 'react';
 import { BaseCustomStylesProps, CommunicationParticipant } from '../types';
 import { IStyle, mergeStyles, Stack } from '@fluentui/react';
+import { useLocale } from '../localization/LocalizationProvider';
+import { IObjectMap } from '../localization/localizationUtils';
 
 export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
   /** Styles for each typing user's displayName. */
@@ -24,8 +22,6 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
 export interface TypingIndicatorProps {
   /** List of the typing users. */
   typingUsers: CommunicationParticipant[];
-  /** The string to render after listing all users' display name. For example ' are typing ...'. */
-  typingString?: string;
   /** Callback to render typing users */
   onRenderUsers?: (users: CommunicationParticipant[]) => JSX.Element;
   /**
@@ -40,13 +36,13 @@ export interface TypingIndicatorProps {
 
 const MAXIMUM_LENGTH_OF_TYPING_USERS = 35;
 
-const getDefaultComponents = (
+const getIndicatorComponents = (
   typingUsers: CommunicationParticipant[],
+  strings: Record<string, string>,
+  onRenderUsers?: (users: CommunicationParticipant[]) => JSX.Element,
   styles?: TypingIndicatorStylesProps
-): JSX.Element[] => {
-  const displayComponents: JSX.Element[] = [];
-
-  const typingUsersMentioned: CommunicationParticipant[] = [];
+): JSX.Element => {
+  const typingUsersMentioned: string[] = [];
   let countOfUsersMentioned = 0;
   let totalCharacterCount = 0;
 
@@ -56,7 +52,9 @@ const getDefaultComponents = (
     const additionalCharCount =
       2 * (countOfUsersMentioned - 1) + (typingUser.displayName ? typingUser.displayName.length : 0);
     if (totalCharacterCount + additionalCharCount <= MAXIMUM_LENGTH_OF_TYPING_USERS || countOfUsersMentioned === 1) {
-      typingUsersMentioned.push(typingUser);
+      if (typingUser.displayName) {
+        typingUsersMentioned.push(typingUser.displayName);
+      }
       totalCharacterCount += additionalCharCount;
       countOfUsersMentioned += 1;
     } else {
@@ -64,49 +62,74 @@ const getDefaultComponents = (
     }
   }
 
-  typingUsersMentioned.forEach((typingUser, index) => {
-    displayComponents.push(
-      <span
-        className={mergeStyles(typingIndicatorListStyle, styles?.typingUserDisplayName)}
-        key={`typing indicator display string ${index}`}
-      >
-        {index < typingUsers.length - 1 ? typingUser.displayName + ', ' : typingUser.displayName}
-      </span>
-    );
-  });
-
   const countOfUsersNotMentioned = typingUsers.length - typingUsersMentioned.length;
-  if (countOfUsersNotMentioned > 0) {
-    displayComponents.push(
-      <span className={mergeStyles(typingIndicatorVerbStyle, styles?.typingString)} key={'UsersCountKey'}>
-        {` and ${countOfUsersNotMentioned} other${countOfUsersNotMentioned === 1 ? '' : 's'}`}
-      </span>
-    );
+
+  let typingString = '';
+  if (typingUsers.length === 1) {
+    typingString = strings.typing_indicator_singular;
+  } else if (typingUsers.length > 1 && countOfUsersNotMentioned === 0) {
+    typingString = strings.typing_indicator_plural;
+  } else if (typingUsers.length > 1 && countOfUsersNotMentioned === 1) {
+    typingString = strings.typing_indicator_shortened_plural;
+  } else if (typingUsers.length > 1 && countOfUsersNotMentioned > 1) {
+    typingString = strings.typing_indicator_shortened_plural_2;
   }
 
-  return displayComponents;
+  return (
+    <Stack horizontal className={mergeStyles(typingIndicatorStringStyle, styles?.typingString)} key="typingStringKey">
+      {formatElements(typingString, {
+        users: onRenderUsers ? (
+          onRenderUsers(typingUsers)
+        ) : (
+          <Stack className={mergeStyles(typingIndicatorStringStyle, styles?.typingUserDisplayName)}>
+            {typingUsersMentioned.join(', ')}
+          </Stack>
+        ),
+        numOthers: <>`${countOfUsersNotMentioned}`</>
+      })}
+    </Stack>
+  );
 };
 
-const defaultTypingString = (typingUsers: CommunicationParticipant[]): string => {
-  return typingUsers.length > 0 ? (typingUsers.length > 1 ? ' are typing...' : ' is typing...') : '';
+const formatElements = (str: string, vars: IObjectMap<JSX.Element>): JSX.Element[] => {
+  if (!str) {
+    return [];
+  }
+  if (!vars) {
+    return [];
+  }
+
+  const elements: JSX.Element[] = [];
+  const placeholdersRegex = /{(\w+)}/g;
+  const regex = RegExp(placeholdersRegex);
+  let array: RegExpExecArray | null = regex.exec(str);
+  let prev = 0;
+  while (array !== null) {
+    if (prev !== array.index) {
+      elements.push(<>{str.substring(prev, array.index)}</>);
+    }
+    elements.push(vars[array[0].substring(1, array[0].length - 1)]);
+    prev = regex.lastIndex;
+    array = regex.exec(str);
+  }
+  elements.push(<>{str.substring(prev)}</>);
+  return elements;
 };
 
 /**
  * Typing Indicator is used to notify users if there are any other users typing in the thread.
  */
 export const TypingIndicator = (props: TypingIndicatorProps): JSX.Element => {
-  const { typingUsers, typingString, onRenderUsers, styles } = props;
+  const { typingUsers, onRenderUsers, styles } = props;
+  const { strings } = useLocale();
 
   const typingUsersToRender = onRenderUsers
     ? typingUsers
     : typingUsers.filter((typingUser) => typingUser.displayName !== undefined);
 
   return (
-    <Stack horizontal className={mergeStyles(typingIndicatorContainerStyle, styles?.root)}>
-      {onRenderUsers ? onRenderUsers(typingUsersToRender) : getDefaultComponents(typingUsersToRender, styles)}
-      <span className={mergeStyles(typingIndicatorVerbStyle, styles?.typingString)} key={'TypingStringKey'}>
-        {typingString ?? defaultTypingString(typingUsersToRender)}
-      </span>
+    <Stack className={mergeStyles(typingIndicatorContainerStyle, styles?.root)}>
+      {getIndicatorComponents(typingUsersToRender, strings, onRenderUsers, styles)}
     </Stack>
   );
 };
