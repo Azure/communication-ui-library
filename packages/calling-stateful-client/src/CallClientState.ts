@@ -251,17 +251,19 @@ export interface CallState {
    */
   localVideoStreams: LocalVideoStreamState[];
   /**
-   * Proxy of {@Link @azure/communication-calling#Call.remoteParticipants}. Map of flattened
-   * {@Link RemoteParticipantState.identifier} to {@Link RemoteParticipant}. To obtain a flattened
-   * {@Link RemoteParticipantState.identifier}, use {@Link @azure/communication-react#toFlatCommunicationIdentifier}.
+   * Proxy of {@Link @azure/communication-calling#Call.remoteParticipants}.
+   * Object with {@Link RemoteParticipant} fields keyed by flattened {@Link RemoteParticipantState.identifier}.
+   * To obtain a flattened {@Link RemoteParticipantState.identifier}, use
+   * {@Link @azure/communication-react#toFlatCommunicationIdentifier}.
    */
-  remoteParticipants: Map<string, RemoteParticipantState>;
+  remoteParticipants: { [keys: string]: RemoteParticipantState };
   /**
-   * Stores remote participants that have left the call so that the callEndReason could be retrieved. Map of flattened
-   * {@Link RemoteParticipantState.identifier} to {@Link RemoteParticipant}. To obtain a flattened
-   * {@Link RemoteParticipantState.identifier}, use {@Link @azure/communication-react#toFlatCommunicationIdentifier}.
+   * Stores remote participants that have left the call so that the callEndReason could be retrieved.
+   * Object with {@Link RemoteParticipant} fields keyed by flattened {@Link RemoteParticipantState.identifier}.
+   * To obtain a flattened {@Link RemoteParticipantState.identifier}, use
+   * {@Link @azure/communication-react#toFlatCommunicationIdentifier}.
    */
-  remoteParticipantsEnded: Map<string, RemoteParticipantState>;
+  remoteParticipantsEnded: { [keys: string]: RemoteParticipantState };
   /**
    * Proxy of {@Link @azure/communication-calling#TranscriptionCallFeature}.
    */

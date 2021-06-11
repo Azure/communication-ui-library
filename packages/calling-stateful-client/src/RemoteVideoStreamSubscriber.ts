@@ -69,10 +69,8 @@ export class RemoteVideoStreamSubscriber {
       return;
     }
 
-    const streams = this._context
-      .getState()
-      .calls.get(this._callIdRef.callId)
-      ?.remoteParticipants.get(existingScreenShare)?.videoStreams;
+    const streams = this._context.getState().calls.get(this._callIdRef.callId)?.remoteParticipants[existingScreenShare]
+      ?.videoStreams;
 
     if (!streams) {
       this._context.setCallScreenShareParticipant(this._callIdRef.callId, undefined);

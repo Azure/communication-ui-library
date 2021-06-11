@@ -78,8 +78,8 @@ function createMockCall(mockCallId: string): CallState {
     isMuted: true,
     isScreenSharingOn: false,
     localVideoStreams: [],
-    remoteParticipants: new Map<string, RemoteParticipantState>(),
-    remoteParticipantsEnded: new Map<string, RemoteParticipantState>(),
+    remoteParticipants: {},
+    remoteParticipantsEnded: {},
     recording: { isRecordingActive: false },
     transcription: { isTranscriptionActive: false },
     transfer: { receivedTransferRequests: [], requestedTransfers: [] },
@@ -109,7 +109,7 @@ function addMockRemoteStreamAndParticipant(
     view: undefined
   };
   participant.videoStreams.set(streamId, remoteVideoStream);
-  call.remoteParticipants.set(toFlatCommunicationIdentifier(identifier), participant);
+  call.remoteParticipants[toFlatCommunicationIdentifier(identifier)] = participant;
   return remoteVideoStream;
 }
 
@@ -177,8 +177,8 @@ describe('stream utils', () => {
       context
         .getState()
         .calls.get(mockCallId)
-        ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier))
-        ?.videoStreams.get(mockStreamId)?.view
+        ?.remoteParticipants[toFlatCommunicationIdentifier(mockParticipantIdentifier)]?.videoStreams.get(mockStreamId)
+        ?.view
     ).toBeDefined();
   });
 
@@ -227,8 +227,8 @@ describe('stream utils', () => {
       context
         .getState()
         .calls.get(mockCallId)
-        ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier))
-        ?.videoStreams.get(mockStreamId)?.view
+        ?.remoteParticipants[toFlatCommunicationIdentifier(mockParticipantIdentifier)]?.videoStreams.get(mockStreamId)
+        ?.view
     ).not.toBeDefined();
   });
 
@@ -269,8 +269,8 @@ describe('stream utils', () => {
       context
         .getState()
         .calls.get(mockCallId)
-        ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier))
-        ?.videoStreams.get(mockStreamId)?.view
+        ?.remoteParticipants[toFlatCommunicationIdentifier(mockParticipantIdentifier)]?.videoStreams.get(mockStreamId)
+        ?.view
     ).toBeDefined();
     expect(
       internalContext.getRemoteRenderInfoForParticipant(
@@ -283,8 +283,8 @@ describe('stream utils', () => {
       context
         .getState()
         .calls.get(mockCallId)
-        ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier2))
-        ?.videoStreams.get(mockStreamId2)?.view
+        ?.remoteParticipants[toFlatCommunicationIdentifier(mockParticipantIdentifier2)]?.videoStreams.get(mockStreamId2)
+        ?.view
     ).toBeDefined();
 
     disposeAllViewsFromCall(context, internalContext, mockCallId);
@@ -314,8 +314,8 @@ describe('stream utils', () => {
       context
         .getState()
         .calls.get(mockCallId)
-        ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier))
-        ?.videoStreams.get(mockStreamId)?.view
+        ?.remoteParticipants[toFlatCommunicationIdentifier(mockParticipantIdentifier)]?.videoStreams.get(mockStreamId)
+        ?.view
     ).not.toBeDefined();
     expect(
       internalContext.getRemoteRenderInfoForParticipant(
@@ -328,8 +328,8 @@ describe('stream utils', () => {
       context
         .getState()
         .calls.get(mockCallId)
-        ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier2))
-        ?.videoStreams.get(mockStreamId2)?.view
+        ?.remoteParticipants[toFlatCommunicationIdentifier(mockParticipantIdentifier2)]?.videoStreams.get(mockStreamId2)
+        ?.view
     ).not.toBeDefined();
   });
 
@@ -372,8 +372,8 @@ describe('stream utils', () => {
       context
         .getState()
         .calls.get(mockCallId)
-        ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier))
-        ?.videoStreams.get(mockStreamId)?.view
+        ?.remoteParticipants[toFlatCommunicationIdentifier(mockParticipantIdentifier)]?.videoStreams.get(mockStreamId)
+        ?.view
     ).toBeDefined();
     expect(
       internalContext.getRemoteRenderInfoForParticipant(
@@ -386,8 +386,8 @@ describe('stream utils', () => {
       context
         .getState()
         .calls.get(mockCallId2)
-        ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier2))
-        ?.videoStreams.get(mockStreamId2)?.view
+        ?.remoteParticipants[toFlatCommunicationIdentifier(mockParticipantIdentifier2)]?.videoStreams.get(mockStreamId2)
+        ?.view
     ).toBeDefined();
 
     disposeAllViews(context, internalContext);
@@ -417,8 +417,8 @@ describe('stream utils', () => {
       context
         .getState()
         .calls.get(mockCallId)
-        ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier))
-        ?.videoStreams.get(mockStreamId)?.view
+        ?.remoteParticipants[toFlatCommunicationIdentifier(mockParticipantIdentifier)]?.videoStreams.get(mockStreamId)
+        ?.view
     ).not.toBeDefined();
     expect(
       internalContext.getRemoteRenderInfoForParticipant(
@@ -431,8 +431,8 @@ describe('stream utils', () => {
       context
         .getState()
         .calls.get(mockCallId2)
-        ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier2))
-        ?.videoStreams.get(mockStreamId2)?.view
+        ?.remoteParticipants[toFlatCommunicationIdentifier(mockParticipantIdentifier2)]?.videoStreams.get(mockStreamId2)
+        ?.view
     ).not.toBeDefined();
   });
 

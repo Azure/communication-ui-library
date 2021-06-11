@@ -194,10 +194,10 @@ export class CallContext {
         const call = draft.calls.get(callId);
         if (call) {
           removeRemoteParticipant.forEach((id: string) => {
-            call.remoteParticipants.delete(id);
+            delete call.remoteParticipants[id];
           });
           addRemoteParticipant.forEach((participant: RemoteParticipantState) => {
-            call.remoteParticipants.set(toFlatCommunicationIdentifier(participant.identifier), participant);
+            call.remoteParticipants[toFlatCommunicationIdentifier(participant.identifier)] = participant;
           });
         }
       })
@@ -214,10 +214,10 @@ export class CallContext {
         const call = draft.calls.get(callId);
         if (call) {
           removeRemoteParticipant.forEach((id: string) => {
-            call.remoteParticipantsEnded.delete(id);
+            delete call.remoteParticipantsEnded[id];
           });
           addRemoteParticipant.forEach((participant: RemoteParticipantState) => {
-            call.remoteParticipantsEnded.set(toFlatCommunicationIdentifier(participant.identifier), participant);
+            call.remoteParticipantsEnded[toFlatCommunicationIdentifier(participant.identifier)] = participant;
           });
         }
       })
@@ -347,7 +347,7 @@ export class CallContext {
       produce(this._state, (draft: CallClientState) => {
         const call = draft.calls.get(callId);
         if (call) {
-          const participant = call.remoteParticipants.get(participantKey);
+          const participant = call.remoteParticipants[participantKey];
           if (participant) {
             participant.state = state;
           }
@@ -361,7 +361,7 @@ export class CallContext {
       produce(this._state, (draft: CallClientState) => {
         const call = draft.calls.get(callId);
         if (call) {
-          const participant = call.remoteParticipants.get(participantKey);
+          const participant = call.remoteParticipants[participantKey];
           if (participant) {
             participant.isMuted = muted;
           }
@@ -375,7 +375,7 @@ export class CallContext {
       produce(this._state, (draft: CallClientState) => {
         const call = draft.calls.get(callId);
         if (call) {
-          const participant = call.remoteParticipants.get(participantKey);
+          const participant = call.remoteParticipants[participantKey];
           if (participant) {
             participant.displayName = displayName;
           }
@@ -389,7 +389,7 @@ export class CallContext {
       produce(this._state, (draft: CallClientState) => {
         const call = draft.calls.get(callId);
         if (call) {
-          const participant = call.remoteParticipants.get(participantKey);
+          const participant = call.remoteParticipants[participantKey];
           if (participant) {
             participant.isSpeaking = isSpeaking;
           }
@@ -403,7 +403,7 @@ export class CallContext {
       produce(this._state, (draft: CallClientState) => {
         const call = draft.calls.get(callId);
         if (call) {
-          const participant = call.remoteParticipants.get(participantKey);
+          const participant = call.remoteParticipants[participantKey];
           if (participant) {
             // Set is called by subscriber will not modify any rendered stream so if there is existing stream only
             // modify the values that subscriber has access to.
@@ -430,7 +430,7 @@ export class CallContext {
       produce(this._state, (draft: CallClientState) => {
         const call = draft.calls.get(callId);
         if (call) {
-          const participant = call.remoteParticipants.get(participantKey);
+          const participant = call.remoteParticipants[participantKey];
           if (participant) {
             const stream = participant.videoStreams.get(streamId);
             if (stream) {
@@ -452,7 +452,7 @@ export class CallContext {
       produce(this._state, (draft: CallClientState) => {
         const call = draft.calls.get(callId);
         if (call) {
-          const participant = call.remoteParticipants.get(participantKey);
+          const participant = call.remoteParticipants[participantKey];
           if (participant) {
             for (const id of removeRemoteVideoStream) {
               participant.videoStreams.delete(id);
@@ -485,7 +485,7 @@ export class CallContext {
       produce(this._state, (draft: CallClientState) => {
         const call = draft.calls.get(callId);
         if (call) {
-          const participant = call.remoteParticipants.get(participantKey);
+          const participant = call.remoteParticipants[participantKey];
           if (participant) {
             const stream = participant.videoStreams.get(streamId);
             if (stream) {
