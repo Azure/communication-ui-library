@@ -42,8 +42,8 @@
     "@fluentui/theme-samples": "8.1.5"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.7",
-    "@babel/preset-env": "^7.12.7",
+    "@babel/core": "7.13.10",
+    "@babel/preset-env": "7.13.10",
     "@mdx-js/react": "^1.6.22",
     "@microsoft/api-documenter": "~7.12.11",
     "@microsoft/api-extractor": "~7.13.2",
