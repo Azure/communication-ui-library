@@ -12,5 +12,7 @@ export const getTopicName = (state: ChatClientState, props: ChatBaseSelectorProp
   return state.threads.get(props.threadId)?.properties?.topic || '';
 };
 
-export const getParticipants = (state: ChatClientState, props: ChatBaseSelectorProps): Map<string, ChatParticipant> =>
-  (props.threadId && state.threads.get(props.threadId)?.participants) || new Map();
+export const getParticipants = (
+  state: ChatClientState,
+  props: ChatBaseSelectorProps
+): { [key: string]: ChatParticipant } => (props.threadId && state.threads.get(props.threadId)?.participants) || {};
