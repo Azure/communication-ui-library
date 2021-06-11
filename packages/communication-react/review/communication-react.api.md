@@ -560,7 +560,9 @@ export type ChatOptions = {
 export const chatParticipantListSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     myUserId: string;
     participants: CommunicationParticipant[];
-}, (res1: string, res2: Map<string, ChatParticipant>, res3: string) => {
+}, (res1: string, res2: {
+    [key: string]: ChatParticipant;
+}, res3: string) => {
     myUserId: string;
     participants: CommunicationParticipant[];
 }>;
@@ -580,7 +582,9 @@ export type ChatThreadClientProviderProps = {
 // @public (undocumented)
 export type ChatThreadClientState = {
     chatMessages: Map<string, ChatMessageWithStatus>;
-    participants: Map<string, ChatParticipant>;
+    participants: {
+        [key: string]: ChatParticipant;
+    };
     threadId: string;
     properties?: ChatThreadProperties;
     readReceipts: ChatMessageReadReceipt[];
@@ -1298,7 +1302,9 @@ export interface TypingIndicatorProps {
 // @public (undocumented)
 export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     typingUsers: CommunicationParticipant[];
-}, (res1: TypingIndicatorReceivedEvent[], res2: Map<string, ChatParticipant>, res3: string) => {
+}, (res1: TypingIndicatorReceivedEvent[], res2: {
+    [key: string]: ChatParticipant;
+}, res3: string) => {
     typingUsers: CommunicationParticipant[];
 }>;
 

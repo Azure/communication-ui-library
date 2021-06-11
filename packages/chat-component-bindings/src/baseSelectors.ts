@@ -23,12 +23,14 @@ export const getChatMessages = (
 export const getReadReceipts = (state: ChatClientState, props: ChatBaseSelectorProps): ChatMessageReadReceipt[] =>
   (props.threadId && state.threads.get(props.threadId)?.readReceipts) || [];
 
-export const getParticipants = (state: ChatClientState, props: ChatBaseSelectorProps): Map<string, ChatParticipant> =>
-  (props.threadId && state.threads.get(props.threadId)?.participants) || new Map();
+export const getParticipants = (
+  state: ChatClientState,
+  props: ChatBaseSelectorProps
+): { [key: string]: ChatParticipant } => (props.threadId && state.threads.get(props.threadId)?.participants) || {};
 
 export const getIsLargeGroup = (state: ChatClientState, props: ChatBaseSelectorProps): boolean => {
   const participants = state.threads.get(props.threadId)?.participants;
-  return !!participants && participants.size > 20;
+  return !!participants && Object.values(participants).length > 20;
 };
 
 export const getLatestReadTime = (state: ChatClientState, props: ChatBaseSelectorProps): Date =>

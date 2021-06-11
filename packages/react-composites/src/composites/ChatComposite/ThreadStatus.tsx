@@ -31,15 +31,18 @@ export const getUserId = (state: ChatClientState): string => toFlatCommunication
 
 // TODO: Consider exporting building-block selectors internally to composites.
 // This will avoid code duplication but still keep the public API clean.
-export const getParticipants = (state: ChatClientState, props: ChatBaseSelectorProps): Map<string, ChatParticipant> =>
-  (props.threadId && state.threads.get(props.threadId)?.participants) || new Map();
+export const getParticipants = (
+  state: ChatClientState,
+  props: ChatBaseSelectorProps
+): { [key: string]: ChatParticipant } => (props.threadId && state.threads.get(props.threadId)?.participants) || {};
 
 export const getThreadStatusProps = reselect.createSelector(
   [getUserId, getParticipants],
-  (userId, chatParticipants: Map<string, ChatParticipant>): ThreadStatusProps => {
+  (userId, chatParticipants: { [key: string]: ChatParticipant }): ThreadStatusProps => {
     return {
       // Check that participants are not empty to prevent jank before particpants are loaded.
-      amIRemovedFromThread: chatParticipants.size > 0 && !chatParticipants.has(userId)
+      amIRemovedFromThread:
+        Object.values(chatParticipants).length > 0 && !Object.prototype.hasOwnProperty.call(chatParticipants, userId)
     };
   }
 );
