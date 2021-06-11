@@ -69,21 +69,19 @@ export const useSelectorWithAdaptation = <
 };
 
 const memoizeState = memoizeOne(
-  (userId: CommunicationIdentifierKind, displayName: string, threads: Map<string, ChatThreadClientState>) => ({
+  (userId: CommunicationIdentifierKind, displayName: string, threads: { [key: string]: ChatThreadClientState }) => ({
     userId,
     displayName,
     threads
   })
 );
 
-const memoizeThreadMap = memoizeOne((thread: ChatThreadClientState) => new Map([[thread.threadId, thread]]));
+const memoizeThreads = memoizeOne((thread: ChatThreadClientState) => ({ [thread.threadId]: thread }));
 
 const adaptCompositeState = (compositeState: ChatState): ChatClientState => {
-  const thread = compositeState.thread;
-  const threadMap = memoizeThreadMap(thread);
   return memoizeState(
     { kind: 'communicationUser', communicationUserId: compositeState.userId },
     compositeState.displayName,
-    threadMap
+    memoizeThreads(compositeState.thread)
   );
 };

@@ -25,7 +25,7 @@ export const ChatHeader = (props: HeaderProps): JSX.Element => {
 // TODO: Consider exporting building-block selectors internally to composites.
 // This will avoid code duplication but still keep the public API clean.
 export const getTopicName = (state: ChatClientState, props: ChatBaseSelectorProps): string => {
-  return state.threads.get(props.threadId)?.properties?.topic || '';
+  return state.threads[props.threadId]?.properties?.topic || '';
 };
 
 export const getHeaderProps = reselect.createSelector(
