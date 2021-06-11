@@ -21,6 +21,12 @@ export const locales: ILocale[] = [
     englishName: 'French',
     displayName: 'Français',
     rtl: false
+  },
+  {
+    locale: 'ar',
+    englishName: 'Arabic',
+    displayName: 'عربى',
+    rtl: true
   }
 ];
 
@@ -28,8 +34,8 @@ export const loadLocaleData = async (locale: string): Promise<Record<string, str
   switch (locale) {
     // case 'fr-FR':
     //   return (await import('./fr-FR.json')).default;
-    // case 'es-ES':
-    //   return (await import('./es-ES.json')).default;
+    case 'ar':
+      return (await import('./translated/ar.json')).default;
     case 'en-US':
     default:
       return (await import('./translated/en-US.json')).default;

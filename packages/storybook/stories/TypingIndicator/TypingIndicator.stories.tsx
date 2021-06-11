@@ -1,8 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { TypingIndicator as TypingIndicatorComponent, CommunicationParticipant } from '@azure/communication-react';
-import { Persona, Stack } from '@fluentui/react';
+import {
+  TypingIndicator as TypingIndicatorComponent,
+  CommunicationParticipant,
+  useLocale
+} from '@azure/communication-react';
+import { Persona, Stack, mergeStyles } from '@fluentui/react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
 import { object } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
@@ -69,20 +73,25 @@ const TypingIndicatorStory: () => JSX.Element = () => {
       displayName: 'User2'
     }
   ]);
+  const { locale, locales } = useLocale();
+  const loc = locales.find((l) => l.locale === locale);
   return (
-    <TypingIndicatorComponent
-      typingUsers={typingUsers}
-      // onRenderUsers={(users: CommunicationParticipant[]) => {
-      //   return (
-      //     <Stack horizontal>
-      //       {users.map((user: CommunicationParticipant, index: number) => (
-      //         <Persona text={user.displayName} key={index} />
-      //       ))}
-      //     </Stack>
-      //   );
-      // }}
-      styles={{ typingUserDisplayName: { color: 'blue' }, typingString: { color: 'red' } }}
-    />
+    <Stack horizontal className={mergeStyles({ direction: loc?.rtl ? 'rtl' : 'ltr' })}>
+      <TypingIndicatorComponent
+        typingUsers={typingUsers}
+        // onRenderUsers={(users: CommunicationParticipant[]) => {
+        //   return (
+        //     <Stack horizontal>
+        //       {users.map((user: CommunicationParticipant, index: number) => (
+        //         <Persona text={user.displayName} key={index} />
+        //       ))}
+        //     </Stack>
+        //   );
+        // }}
+        styles={{ typingUserDisplayName: { color: 'blue' }, typingString: { color: 'red' } }}
+      />
+      <p>Test</p>
+    </Stack>
   );
 };
 

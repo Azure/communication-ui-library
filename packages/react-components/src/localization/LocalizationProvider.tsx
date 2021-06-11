@@ -3,7 +3,7 @@
 
 import React, { createContext, useState, useMemo, useContext, useCallback, useEffect } from 'react';
 import { loadLocaleData, locales } from './loadLocaleData';
-import defaultStrings from './translated/en-US.json';
+import defaultStrings from './translated/ar.json';
 
 const LOCALE_CACHE_KEY = 'locale';
 
@@ -32,13 +32,14 @@ const defaultLocaleContext: ILocaleContext = {
 export const LocaleContext = createContext<ILocaleContext>(defaultLocaleContext);
 
 export type LocalizationProviderProps = {
+  initialLocale: string;
   locales: ILocale[];
   storage?: Storage;
   children: React.ReactNode;
 };
 
 export const LocalizationProvider = (props: LocalizationProviderProps): JSX.Element => {
-  const { children, locales, storage } = props;
+  const { children, initialLocale, locales, storage } = props;
 
   useEffect(() => {
     if (storage) {
@@ -52,8 +53,19 @@ export const LocalizationProvider = (props: LocalizationProviderProps): JSX.Elem
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const [locale, _setLocale] = useState(defaultLocaleContext.locale);
-  const [strings, setStrings] = useState<Record<string, string>>(defaultStrings);
+  const [locale, _setLocale] = useState(initialLocale);
+  const [strings, setStrings] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    const loc = locales.find((l) => l.locale === initialLocale);
+    if (loc) {
+      document.documentElement.lang = loc.locale;
+      console.log('loc.rtl: ' + loc.rtl);
+      document.documentElement.dir = loc.rtl ? 'rtl' : 'ltr';
+      _setLocale(loc.locale);
+    }
+    loadLocaleData(initialLocale).then((res) => setStrings(res));
+  }, [initialLocale, locales]);
 
   const setLocale = useCallback(
     async (locale: string, forceReload?: boolean) => {

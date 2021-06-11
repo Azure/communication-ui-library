@@ -183,6 +183,7 @@ export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Ele
 
 // @public (undocumented)
 export type LocalizationProviderProps = {
+    initialLocale: string;
     locales: ILocale[];
     storage?: Storage;
     children: React_2.ReactNode;
