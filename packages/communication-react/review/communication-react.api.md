@@ -407,8 +407,12 @@ export interface CallState {
     isScreenSharingOn: boolean;
     localVideoStreams: LocalVideoStreamState[];
     recording: RecordingCallFeature;
-    remoteParticipants: Map<string, RemoteParticipantState>;
-    remoteParticipantsEnded: Map<string, RemoteParticipantState>;
+    remoteParticipants: {
+        [keys: string]: RemoteParticipantState;
+    };
+    remoteParticipantsEnded: {
+        [keys: string]: RemoteParticipantState;
+    };
     screenShareRemoteParticipant: string | undefined;
     startTime: Date;
     state: CallState_2;
@@ -1123,7 +1127,9 @@ export interface RemoteParticipantState {
     isMuted: boolean;
     isSpeaking: boolean;
     state: RemoteParticipantState_2;
-    videoStreams: Map<number, RemoteVideoStreamState>;
+    videoStreams: {
+        [key: number]: RemoteVideoStreamState;
+    };
 }
 
 // @public
