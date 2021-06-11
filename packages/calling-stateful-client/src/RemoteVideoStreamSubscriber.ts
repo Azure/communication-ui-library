@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { RemoteVideoStream } from '@azure/communication-calling';
+import { RemoteVideoStreamState } from './CallClientState';
 import { CallContext } from './CallContext';
 import { CallIdRef } from './CallIdRef';
 
@@ -33,8 +34,8 @@ export class RemoteVideoStreamSubscriber {
     this._remoteVideoStream.off('isAvailableChanged', this.isAvailableChanged);
   };
 
-  private includesActiveScreenShareStream = (streams): boolean => {
-    for (const [_, stream] of streams.entries()) {
+  private includesActiveScreenShareStream = (streams: { [key: number]: RemoteVideoStreamState }): boolean => {
+    for (const stream of Object.values(streams)) {
       if (stream.mediaStreamType === 'ScreenSharing' && stream.isAvailable) {
         return true;
       }
