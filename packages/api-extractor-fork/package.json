@@ -1,4 +1,5 @@
 {
+	"private": true,
 	"name": "@microsoft/api-extractor",
 	"version": "7.16.1-pr1916.1.0",
 	"description": "Analyze the exported API for a TypeScript library and generate reviews, documentation, and .d.ts rollups",
