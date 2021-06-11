@@ -3697,10 +3697,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-ww2fYpuPPWhlKENk7g3Ynbqm6R5zqXOnbXuyELCiM/zjZq+hMlNOsiV/LgwCH81+i5FkeZA/IB/BgWGoAuXJwA==
-  /@octokit/openapi-types/7.3.1:
+  /@octokit/openapi-types/7.3.2:
     dev: false
     resolution:
-      integrity: sha512-C1b1RthFhay9AdKBu71kCUAfLzwoPLgMclKoLwWh1nnsGpawXf+iN8edb6Orts/PEEj29PvspHjANCUhhNz1aA==
+      integrity: sha512-oJhK/yhl9Gt430OrZOzAl2wJqR0No9445vmZ9Ey8GjUZUpwuu/vmEFP0TDhDXdpGDoxD6/EIFHJEcY8nHXpDTA==
   /@octokit/plugin-paginate-rest/2.13.4_@octokit+core@3.4.0:
     dependencies:
       '@octokit/core': 3.4.0
@@ -3758,7 +3758,7 @@ packages:
       integrity: sha512-MBlZl0KeuvFMJ3210hG5xhh/jtYmMDLd5WmO49Wg4Rfg0odeivntWAyq3KofJDP2G8jskCaaOaZBKo0TeO9tFA==
   /@octokit/types/6.16.3:
     dependencies:
-      '@octokit/openapi-types': 7.3.1
+      '@octokit/openapi-types': 7.3.2
     dev: false
     resolution:
       integrity: sha512-hn281+UUPqLBTKLwD35xbCK6kJ2l/oGD5ZZ9FEAcW8W/467fIshVAIw3NY1+48QAglpx0q85W3BnsZdIYAF+tw==
