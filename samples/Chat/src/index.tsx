@@ -11,7 +11,7 @@ import { LocalizationProvider, locales } from 'react-components';
 if (document.getElementById('root') !== undefined) {
   ReactDOM.render(
     <SwitchableFluentThemeProvider scopeId="SampleChatApp">
-      <LocalizationProvider initialLocale="ar" locales={locales}>
+      <LocalizationProvider storage={localStorage} initialLocale="ar" locales={locales}>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
         <div className="wrapper">
           <App />

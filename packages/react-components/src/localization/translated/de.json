@@ -1,0 +1,8 @@
+{
+  "participant_item_me_text": "(Sie)",
+  "typing_indicator_singular": "{users} tippt ...",
+  "typing_indicator_plural": "{users} tippen gerade ...",
+  "typing_indicator_shortened_plural": "{users} und 1 anderer tippen gerade ...",
+  "typing_indicator_shortened_plural_2": "{users} und {numOthers} andere tippen gerade ...",
+  "end_call_button_text": "Verlassen"
+}

@@ -11,6 +11,7 @@ import {
   settingsContainerStyle
 } from 'app/styles/CommandPanel.styles';
 import { ThemeSelector } from 'app/theming/ThemeSelector';
+import { LanguageSelector } from 'app/localization/LanguageSelector';
 import { Footer } from './Footer';
 import { useCallingSelector as useSelector, getCallingSelector, useCallingPropsFor } from 'calling-component-bindings';
 import { LocalDeviceSettings } from './LocalDeviceSettings';
@@ -68,6 +69,13 @@ export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
         <Stack.Item>
           <div className={settingsContainerStyle}>
             <ThemeSelector label="Theme" />
+          </div>
+        </Stack.Item>
+      )}
+      {props.selectedPane === CommandPanelTypes.Settings && (
+        <Stack.Item>
+          <div className={settingsContainerStyle}>
+            <LanguageSelector />
           </div>
         </Stack.Item>
       )}

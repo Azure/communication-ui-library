@@ -3,7 +3,7 @@
 
 import React, { createContext, useState, useMemo, useContext, useCallback, useEffect } from 'react';
 import { loadLocaleData, locales } from './loadLocaleData';
-import defaultStrings from './translated/ar.json';
+import defaultStrings from './translated/en-US.json';
 
 const LOCALE_CACHE_KEY = 'locale';
 

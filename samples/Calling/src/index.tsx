@@ -10,7 +10,7 @@ import { LocalizationProvider, locales } from 'react-components';
 
 ReactDOM.render(
   <SwitchableFluentThemeProvider scopeId="SampleCallingApp">
-    <LocalizationProvider initialLocale="en-US" locales={locales}>
+    <LocalizationProvider storage={localStorage} initialLocale="en-US" locales={locales}>
       <div className="wrapper">
         <App />
       </div>

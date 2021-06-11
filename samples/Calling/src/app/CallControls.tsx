@@ -2,7 +2,14 @@
 // Licensed under the MIT license.
 
 import React, { useCallback } from 'react';
-import { ControlBar, MicrophoneButton, CameraButton, ScreenShareButton, EndCallButton } from 'react-components';
+import {
+  ControlBar,
+  MicrophoneButton,
+  CameraButton,
+  ScreenShareButton,
+  EndCallButton,
+  useLocale
+} from 'react-components';
 import {
   controlBarStyle,
   groupCallLeaveButtonCompressedStyle,
@@ -26,6 +33,8 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     onEndCallClick();
   }, [hangUpButtonProps, onEndCallClick]);
 
+  const endCallButtonText = useLocale().strings.end_call_button_text;
+
   return (
     <ControlBar styles={controlBarStyle}>
       <CameraButton {...cameraButtonProps} />
@@ -35,7 +44,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
         {...hangUpButtonProps}
         onHangUp={onHangUp}
         styles={!compressedMode ? groupCallLeaveButtonStyle : groupCallLeaveButtonCompressedStyle}
-        text={!compressedMode ? 'Leave' : ''}
+        text={!compressedMode ? endCallButtonText : ''}
       />
     </ControlBar>
   );

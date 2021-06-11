@@ -70,6 +70,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
   const { strings } = useLocale();
 
   const isMeText = strings.participant_item_me_text;
+  const menuTitle = strings.participant_item_menu_title;
 
   const avatarToUse = (
     <Persona
@@ -108,7 +109,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
             <div
               onMouseEnter={() => setMenuButtonHovered(true)}
               onMouseLeave={() => setMenuButtonHovered(false)}
-              title="More options"
+              title={menuTitle}
               className={menuButtonContainerStyle}
               onClick={() => setMenuHidden(false)}
             >

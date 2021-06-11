@@ -11,15 +11,9 @@ export const locales: ILocale[] = [
     rtl: false
   },
   {
-    locale: 'es-ES',
-    englishName: 'Spanish',
-    displayName: 'Español',
-    rtl: false
-  },
-  {
-    locale: 'fr-FR',
-    englishName: 'French',
-    displayName: 'Français',
+    locale: 'de',
+    englishName: 'German',
+    displayName: 'Deutsche',
     rtl: false
   },
   {
@@ -32,10 +26,10 @@ export const locales: ILocale[] = [
 
 export const loadLocaleData = async (locale: string): Promise<Record<string, string>> => {
   switch (locale) {
-    // case 'fr-FR':
-    //   return (await import('./fr-FR.json')).default;
     case 'ar':
       return (await import('./translated/ar.json')).default;
+    case 'de':
+      return (await import('./translated/de.json')).default;
     case 'en-US':
     default:
       return (await import('./translated/en-US.json')).default;

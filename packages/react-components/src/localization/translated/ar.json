@@ -3,5 +3,6 @@
   "typing_indicator_singular": "... ج يكتب  {users}",
   "typing_indicator_plural": "... يكتبون  {users}",
   "typing_indicator_shortened_plural": "... ج وشخص آخر يكتبون  {users}",
-  "typing_indicator_shortened_plural_2": "... آخرون يكتبون {numOthers} ج و  {users}"
+  "typing_indicator_shortened_plural_2": "... آخرون يكتبون {numOthers} ج و  {users}",
+  "end_call_button_text": "غادر"
 }

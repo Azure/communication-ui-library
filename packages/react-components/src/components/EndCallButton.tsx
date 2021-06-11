@@ -7,6 +7,7 @@ import { CallEndIcon } from '@fluentui/react-northstar';
 import { controlButtonLabelStyles, endCallControlButtonStyles } from './styles/ControlBar.styles';
 import { lightTheme, darkTheme } from '../theming/themes';
 import { isDarkThemed } from '../theming/themeUtils';
+import { useLocale } from '../localization';
 
 /**
  * Props for EndCallButton component
@@ -35,6 +36,7 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
   const { showLabel = false, styles, onRenderIcon, onRenderText } = props;
 
   const isDarkTheme = isDarkThemed(useTheme());
+  const { strings } = useLocale();
 
   const componentStyles = concatStyleSets(
     endCallControlButtonStyles,
@@ -59,7 +61,7 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {
     return (
       <Label key={'callEndLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
-        Leave
+        {strings.end_call_button_text}
       </Label>
     );
   };
