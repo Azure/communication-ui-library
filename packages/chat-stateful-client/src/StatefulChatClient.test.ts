@@ -133,7 +133,7 @@ describe('declarative chatThread list iterators', () => {
       proxiedThreads.push(thread);
     }
     expect(proxiedThreads.length).toBe(mockChatThreads.length);
-    expect(client.getState().threads.size).toBe(mockChatThreads.length);
+    expect(Object.keys(client.getState().threads).length).toBe(mockChatThreads.length);
   });
 
   test('declarative listChatThreads should proxy listChatThreads paged iterator and store it in internal state', async () => {
@@ -147,7 +147,7 @@ describe('declarative chatThread list iterators', () => {
     }
 
     expect(proxiedThreads.length).toBe(mockChatThreads.length);
-    expect(client.getState().threads.size).toBe(mockChatThreads.length);
+    expect(Object.keys(client.getState().threads).length).toBe(mockChatThreads.length);
   });
 });
 
@@ -156,12 +156,12 @@ describe('declarative chatClient basic api functions', () => {
     const client = createStatefulChatClientMock();
     await client.getChatThreadClient(mockChatThreads[0].id);
 
-    expect(client.getState().threads.size).toBe(1);
-    expect(client.getState().threads.get(mockChatThreads[0].id)).toBeDefined();
+    expect(Object.keys(client.getState().threads).length).toBe(1);
+    expect(client.getState().threads[mockChatThreads[0].id]).toBeDefined();
 
     await client.deleteChatThread(mockChatThreads[0].id);
 
-    expect(client.getState().threads.size).toBe(0);
+    expect(Object.keys(client.getState().threads).length).toBe(0);
   });
 
   test('set internal store correctly when proxy createChatThread', async () => {
@@ -171,9 +171,9 @@ describe('declarative chatClient basic api functions', () => {
     const response = await client.createChatThread({ topic });
     const threadId = response.chatThread?.id ?? '';
 
-    expect(client.getState().threads.size).toBe(1);
+    expect(Object.keys(client.getState().threads).length).toBe(1);
 
-    const thread = client.getState().threads.get(threadId);
+    const thread = client.getState().threads[threadId];
     expect(thread).toBeDefined();
     expect(thread?.properties?.topic).toBe(topic);
   });
@@ -183,11 +183,11 @@ describe('declarative chatClient basic api functions', () => {
     const threadId = 'threadId';
     const chatThreadClient = client.getChatThreadClient(threadId);
 
-    expect(client.getState().threads.get(threadId)).toBeDefined();
+    expect(client.getState().threads[threadId]).toBeDefined();
 
     await chatThreadClient.sendMessage({ content: 'test' });
 
-    expect(client.getState().threads.get(threadId)?.chatMessages.size).toBe(1);
+    expect(client.getState().threads[threadId]?.chatMessages.size).toBe(1);
   });
 });
 
@@ -216,8 +216,8 @@ describe('declarative chatClient subscribe to event properly after startRealtime
 
     await client.triggerEvent('chatThreadCreated', event);
 
-    expect(client.getState().threads.get(threadId)).toBeDefined();
-    expect(client.getState().threads.get(threadId)?.properties?.topic).toBe(topic);
+    expect(client.getState().threads[threadId]).toBeDefined();
+    expect(client.getState().threads[threadId]?.properties?.topic).toBe(topic);
 
     // edit event
 
@@ -230,7 +230,7 @@ describe('declarative chatClient subscribe to event properly after startRealtime
     };
     await client.triggerEvent('chatThreadPropertiesUpdated', editEvent);
 
-    expect(client.getState().threads.get(threadId)?.properties?.topic).toBe(editedTopic);
+    expect(client.getState().threads[threadId]?.properties?.topic).toBe(editedTopic);
 
     // delete event
     const deletedEvent: ChatThreadDeletedEvent = {
@@ -239,7 +239,7 @@ describe('declarative chatClient subscribe to event properly after startRealtime
       deletedOn: new Date('01-01-2020')
     };
     await client.triggerEvent('chatThreadDeleted', deletedEvent);
-    expect(client.getState().threads.size).toBe(0);
+    expect(Object.keys(client.getState().threads).length).toBe(0);
   });
 
   test('set internal store correctly when receive chatMessage related events', async () => {
@@ -259,7 +259,7 @@ describe('declarative chatClient subscribe to event properly after startRealtime
 
     await client.triggerEvent('chatMessageReceived', event);
 
-    expect(client.getState().threads.get(threadId)?.chatMessages.get(messageId)).toBeDefined();
+    expect(client.getState().threads[threadId]?.chatMessages.get(messageId)).toBeDefined();
 
     // edit event
     const message = 'editedContent';
@@ -270,7 +270,7 @@ describe('declarative chatClient subscribe to event properly after startRealtime
     };
     await client.triggerEvent('chatMessageEdited', editedEvent);
 
-    expect(client.getState().threads.get(threadId)?.chatMessages.get(messageId)?.content?.message).toBe(message);
+    expect(client.getState().threads[threadId]?.chatMessages.get(messageId)?.content?.message).toBe(message);
 
     // delete event
     const deleteEvent: ChatMessageDeletedEvent = {
@@ -280,7 +280,7 @@ describe('declarative chatClient subscribe to event properly after startRealtime
 
     await client.triggerEvent('chatMessageDeleted', deleteEvent);
 
-    expect(client.getState().threads.get(threadId)?.chatMessages.size).toBe(0);
+    expect(client.getState().threads[threadId]?.chatMessages.size).toBe(0);
   });
 
   test('set internal store correctly when receive participant related events', async () => {
@@ -295,7 +295,7 @@ describe('declarative chatClient subscribe to event properly after startRealtime
     };
     await client.triggerEvent('participantsAdded', addedEvent);
 
-    expect(client.getState().threads.get(threadId)?.participants.size).toBe(2);
+    expect(client.getState().threads[threadId]?.participants.size).toBe(2);
 
     // remove event
     const removedEvent: ParticipantsRemovedEvent = {
@@ -307,7 +307,7 @@ describe('declarative chatClient subscribe to event properly after startRealtime
     };
     await client.triggerEvent('participantsRemoved', removedEvent);
 
-    expect(client.getState().threads.get(threadId)?.participants.size).toBe(1);
+    expect(client.getState().threads[threadId]?.participants.size).toBe(1);
   });
 
   test('set internal store correctly when receive typingIndicator events', async () => {
@@ -325,7 +325,7 @@ describe('declarative chatClient subscribe to event properly after startRealtime
     await client.triggerEvent('typingIndicatorReceived', addedEvent);
     await client.triggerEvent('typingIndicatorReceived', addedEvent);
 
-    expect(client.getState().threads.get(threadId)?.typingIndicators.length).toBe(2);
+    expect(client.getState().threads[threadId]?.typingIndicators.length).toBe(2);
   });
 
   test('only maintain recent 30s typingIndicator', async () => {
@@ -344,7 +344,7 @@ describe('declarative chatClient subscribe to event properly after startRealtime
 
     jest.advanceTimersByTime(1500);
 
-    expect(client.getState().threads.get(threadId)?.typingIndicators.length).toBe(0);
+    expect(client.getState().threads[threadId]?.typingIndicators.length).toBe(0);
   });
 
   test('set internal store correctly when receive readReceiptReceived events', async () => {
@@ -363,10 +363,10 @@ describe('declarative chatClient subscribe to event properly after startRealtime
 
     client.triggerEvent('readReceiptReceived', addedEvent);
 
-    expect(client.getState().threads.get(threadId)?.readReceipts.length).toBe(1);
-    expect(client.getState().threads.get(threadId)?.readReceipts[0].chatMessageId).toBe(messageId);
+    expect(client.getState().threads[threadId]?.readReceipts.length).toBe(1);
+    expect(client.getState().threads[threadId]?.readReceipts[0].chatMessageId).toBe(messageId);
 
-    expect(client.getState().threads.get(threadId)?.latestReadTime).toEqual(readOn);
+    expect(client.getState().threads[threadId]?.latestReadTime).toEqual(readOn);
   });
 });
 
@@ -389,7 +389,7 @@ describe('declarative chatClient unsubscribe', () => {
 
     client.triggerEvent('readReceiptReceived', addedEvent);
 
-    expect(client.getState().threads.get(threadId)?.readReceipts).toBe(undefined);
+    expect(client.getState().threads[threadId]?.readReceipts).toBe(undefined);
   });
 });
 
@@ -408,7 +408,7 @@ describe('declarative chatClient onStateChange', () => {
     await client.createChatThread({ topic: 'topic' });
 
     expect(onChangeCalled).toBeTruthy();
-    expect(state.threads.size).toBe(1);
+    expect(Object.keys(state.threads).length).toBe(1);
   });
 
   test('offStateChange will unsubscribe correctly', async () => {

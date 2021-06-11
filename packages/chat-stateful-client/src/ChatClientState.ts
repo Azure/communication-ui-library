@@ -9,7 +9,11 @@ import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 export type ChatClientState = {
   userId: CommunicationIdentifierKind;
   displayName: string;
-  threads: Map<string, ChatThreadClientState>;
+  /**
+   * Chat threads joined by the current user.
+   * Object with {@Link ChatThreadClientState} fields, keyed by {@Link ChatThreadClientState.threadId}.
+   */
+  threads: { [key: string]: ChatThreadClientState };
 };
 
 export type ChatThreadClientState = {
