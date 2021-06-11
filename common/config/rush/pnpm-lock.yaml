@@ -7,7 +7,6 @@ dependencies:
   '@rush-temp/chat': file:projects/chat.tgz
   '@rush-temp/chat-component-bindings': file:projects/chat-component-bindings.tgz
   '@rush-temp/chat-stateful-client': file:projects/chat-stateful-client.tgz
-  '@rush-temp/check-treeshaking': file:projects/check-treeshaking.tgz
   '@rush-temp/communication-react': file:projects/communication-react.tgz
   '@rush-temp/one-to-one-call': file:projects/one-to-one-call.tgz
   '@rush-temp/react-components': file:projects/react-components.tgz
@@ -706,12 +705,12 @@ packages:
       '@babel/core': ^7.0.0-0
     resolution:
       integrity: sha512-q/PLpv5Ko4dVc1LYMpCY7RVAAO4uk55qPwrIuJ5QJ8c6cVuAmhu7I/49JOppXL6gXf7ZHzpRVEUZdYoPLM04Gg==
-  /@babel/plugin-proposal-decorators/7.14.5_@babel+core@7.13.10:
+  /@babel/plugin-proposal-decorators/7.14.5_@babel+core@7.14.5:
     dependencies:
-      '@babel/core': 7.13.10
-      '@babel/helper-create-class-features-plugin': 7.14.5_@babel+core@7.13.10
+      '@babel/core': 7.14.5
+      '@babel/helper-create-class-features-plugin': 7.14.5_@babel+core@7.14.5
       '@babel/helper-plugin-utils': 7.14.5
-      '@babel/plugin-syntax-decorators': 7.14.5_@babel+core@7.13.10
+      '@babel/plugin-syntax-decorators': 7.14.5_@babel+core@7.14.5
     dev: false
     engines:
       node: '>=6.9.0'
@@ -743,11 +742,11 @@ packages:
       '@babel/core': ^7.0.0-0
     resolution:
       integrity: sha512-ExjiNYc3HDN5PXJx+bwC50GIx/KKanX2HiggnIUAYedbARdImiCU4RhhHfdf0Kd7JNXGpsBBBCOm+bBVy3Gb0g==
-  /@babel/plugin-proposal-export-default-from/7.14.5_@babel+core@7.13.10:
+  /@babel/plugin-proposal-export-default-from/7.14.5_@babel+core@7.14.5:
     dependencies:
-      '@babel/core': 7.13.10
+      '@babel/core': 7.14.5
       '@babel/helper-plugin-utils': 7.14.5
-      '@babel/plugin-syntax-export-default-from': 7.14.5_@babel+core@7.13.10
+      '@babel/plugin-syntax-export-default-from': 7.14.5_@babel+core@7.14.5
     dev: false
     engines:
       node: '>=6.9.0'
@@ -878,7 +877,7 @@ packages:
   /@babel/plugin-proposal-object-rest-spread/7.12.1_@babel+core@7.12.9:
     dependencies:
       '@babel/core': 7.12.9
-      '@babel/helper-plugin-utils': 7.10.4
+      '@babel/helper-plugin-utils': 7.14.5
       '@babel/plugin-syntax-object-rest-spread': 7.8.3_@babel+core@7.12.9
       '@babel/plugin-transform-parameters': 7.14.5_@babel+core@7.12.9
     dev: false
@@ -1068,9 +1067,9 @@ packages:
       '@babel/core': ^7.0.0-0
     resolution:
       integrity: sha512-fm4idjKla0YahUNgFNLCB0qySdsoPiZP3iQE3rky0mBUtMZ23yDJ9SJdg6dXTSDnulOVqiF3Hgr9nbXvXTQZYA==
-  /@babel/plugin-syntax-decorators/7.14.5_@babel+core@7.13.10:
+  /@babel/plugin-syntax-decorators/7.14.5_@babel+core@7.14.5:
     dependencies:
-      '@babel/core': 7.13.10
+      '@babel/core': 7.14.5
       '@babel/helper-plugin-utils': 7.14.5
     dev: false
     engines:
@@ -1097,9 +1096,9 @@ packages:
       '@babel/core': ^7.0.0-0
     resolution:
       integrity: sha512-5gdGbFon+PszYzqs83S3E5mpi7/y/8M9eC90MRTZfduQOYW76ig6SOSPNe41IG5LoP3FGBn2N0RjVDSQiS94kQ==
-  /@babel/plugin-syntax-export-default-from/7.14.5_@babel+core@7.13.10:
+  /@babel/plugin-syntax-export-default-from/7.14.5_@babel+core@7.14.5:
     dependencies:
-      '@babel/core': 7.13.10
+      '@babel/core': 7.14.5
       '@babel/helper-plugin-utils': 7.14.5
     dev: false
     engines:
@@ -1343,9 +1342,9 @@ packages:
       '@babel/core': ^7.0.0-0
     resolution:
       integrity: sha512-hx++upLv5U1rgYfwe1xBQUhRmU41NEvpUvrp8jkrSCdvGSnM5/qdRMtylJ6PG5OFkBaHkbTAKTnd3/YyESRHFw==
-  /@babel/plugin-syntax-typescript/7.14.5_@babel+core@7.13.10:
+  /@babel/plugin-syntax-typescript/7.14.5_@babel+core@7.14.5:
     dependencies:
-      '@babel/core': 7.13.10
+      '@babel/core': 7.14.5
       '@babel/helper-plugin-utils': 7.14.5
     dev: false
     engines:
@@ -2181,12 +2180,12 @@ packages:
       '@babel/core': ^7.0.0-0
     resolution:
       integrity: sha512-lXzLD30ffCWseTbMQzrvDWqljvZlHkXU+CnseMhkMNqU1sASnCsz3tSzAaH3vCUXb9PHeUb90ZT1BdFTm1xxJw==
-  /@babel/plugin-transform-typescript/7.14.5_@babel+core@7.13.10:
+  /@babel/plugin-transform-typescript/7.14.5_@babel+core@7.14.5:
     dependencies:
-      '@babel/core': 7.13.10
-      '@babel/helper-create-class-features-plugin': 7.14.5_@babel+core@7.13.10
+      '@babel/core': 7.14.5
+      '@babel/helper-create-class-features-plugin': 7.14.5_@babel+core@7.14.5
       '@babel/helper-plugin-utils': 7.14.5
-      '@babel/plugin-syntax-typescript': 7.14.5_@babel+core@7.13.10
+      '@babel/plugin-syntax-typescript': 7.14.5_@babel+core@7.14.5
     dev: false
     engines:
       node: '>=6.9.0'
@@ -2463,12 +2462,12 @@ packages:
       '@babel/core': ^7.0.0-0
     resolution:
       integrity: sha512-XFxBkjyObLvBaAvkx1Ie95Iaq4S/GUEIrejyrntQ/VCMKUYvKLoyKxOBzJ2kjA3b6rC9/KL6KXfDC2GqvLiNqQ==
-  /@babel/preset-typescript/7.14.5_@babel+core@7.13.10:
+  /@babel/preset-typescript/7.14.5_@babel+core@7.14.5:
     dependencies:
-      '@babel/core': 7.13.10
+      '@babel/core': 7.14.5
       '@babel/helper-plugin-utils': 7.14.5
       '@babel/helper-validator-option': 7.14.5
-      '@babel/plugin-transform-typescript': 7.14.5_@babel+core@7.13.10
+      '@babel/plugin-transform-typescript': 7.14.5_@babel+core@7.14.5
     dev: false
     engines:
       node: '>=6.9.0'
@@ -2476,9 +2475,9 @@ packages:
       '@babel/core': ^7.0.0-0
     resolution:
       integrity: sha512-u4zO6CdbRKbS9TypMqrlGH7sd2TAJppZwn3c/ZRLeO/wGsbddxgbPDUZVNrie3JWYLQ9vpineKlsrWFvO6Pwkw==
-  /@babel/register/7.14.5_@babel+core@7.13.10:
+  /@babel/register/7.14.5_@babel+core@7.14.5:
     dependencies:
-      '@babel/core': 7.13.10
+      '@babel/core': 7.14.5
       clone-deep: 4.0.1
       find-cache-dir: 2.1.0
       make-dir: 2.1.0
@@ -3470,7 +3469,7 @@ packages:
     dependencies:
       '@types/istanbul-lib-coverage': 2.0.3
       '@types/istanbul-reports': 3.0.1
-      '@types/node': 14.17.3
+      '@types/node': 15.12.2
       '@types/yargs': 15.0.13
       chalk: 4.1.1
     dev: false
@@ -3544,23 +3543,14 @@ packages:
     dev: false
     resolution:
       integrity: sha512-oeHZW83JWjIVoCDvdwI5nsZGPxThbq4gZTLAYNeJGZE/mKEO0iayMPGmI3EllJBjwQsFvNVU+O/HGULhB2to/g==
-  /@microsoft/api-extractor/7.13.5:
+  /@microsoft/api-extractor-model/7.13.3:
     dependencies:
-      '@microsoft/api-extractor-model': 7.12.5
-      '@microsoft/tsdoc': 0.12.24
-      '@rushstack/node-core-library': 3.36.2
-      '@rushstack/rig-package': 0.2.12
-      '@rushstack/ts-command-line': 4.7.10
-      colors: 1.2.5
-      lodash: 4.17.21
-      resolve: 1.17.0
-      semver: 7.3.5
-      source-map: 0.6.1
-      typescript: 4.1.5
+      '@microsoft/tsdoc': 0.13.2
+      '@microsoft/tsdoc-config': 0.15.2
+      '@rushstack/node-core-library': 3.39.0
     dev: false
-    hasBin: true
     resolution:
-      integrity: sha512-03RyL5dKn/tbt0Q8DQSFSaiV7nFgrfPElHoYA4QwGORK/7mbGg4kdhXL+UgO55BkSUniTPMe0Vtt1rIyt/3lng==
+      integrity: sha512-uXilAhu2GcvyY/0NwVRk3AN7TFYjkPnjHLV2UywTTz9uglS+Af0YjNrCy+aaK8qXtfbFWdBzkH9N2XU8/YBeRQ==
   /@microsoft/applicationinsights-analytics-js/2.6.3:
     dependencies:
       '@microsoft/applicationinsights-common': 2.6.3
@@ -3653,10 +3643,23 @@ packages:
     dev: false
     resolution:
       integrity: sha512-H23Igl7KmYU1AfhhV06D0uJYD81524hpwj2JJLvlDuP9M/UDuRAIwD4CPZblObBDTxNctoVvGgNhTVGMwj7Nzw==
+  /@microsoft/tsdoc-config/0.15.2:
+    dependencies:
+      '@microsoft/tsdoc': 0.13.2
+      ajv: 6.12.6
+      jju: 1.4.0
+      resolve: 1.19.0
+    dev: false
+    resolution:
+      integrity: sha512-mK19b2wJHSdNf8znXSMYVShAHktVr/ib0Ck2FA3lsVBSEhSI/TfXT7DJQkAYgcztTuwazGcg58ZjYdk0hTCVrA==
   /@microsoft/tsdoc/0.12.24:
     dev: false
     resolution:
       integrity: sha512-Mfmij13RUTmHEMi9vRUhMXD7rnGR2VvxeNYtaGtaJ4redwwjT4UXYJ+nzmVJF7hhd4pn/Fx5sncDKxMVFJSWPg==
+  /@microsoft/tsdoc/0.13.2:
+    dev: false
+    resolution:
+      integrity: sha512-WrHvO8PDL8wd8T2+zBGKrMwVL5IyzR3ryWUsl0PXgEV0QHup4mTLi0QcATefGI6Gx9Anu7vthPyyyLpY0EpiQg==
   /@mrmlnc/readdir-enhanced/2.2.1:
     dependencies:
       call-me-maybe: 1.0.1
@@ -4012,6 +4015,20 @@ packages:
     dev: false
     resolution:
       integrity: sha512-5J8xSY/PuCKR+yfxS497l0PP43kBUeD86S4eS3RzrmMle04J4522MWal8mk1T1EIDpYpgi8qScannU9oVxoStA==
+  /@rushstack/node-core-library/3.39.0:
+    dependencies:
+      '@types/node': 10.17.13
+      colors: 1.2.5
+      fs-extra: 7.0.1
+      import-lazy: 4.0.0
+      jju: 1.4.0
+      resolve: 1.17.0
+      semver: 7.3.5
+      timsort: 0.3.0
+      z-schema: 3.18.4
+    dev: false
+    resolution:
+      integrity: sha512-kgu3+7/zOBkZU0+NdJb1rcHcpk3/oTjn5c8cg5nUTn+JDjEw58yG83SoeJEcRNNdl11dGX0lKG2PxPsjCokZOQ==
   /@rushstack/rig-package/0.2.12:
     dependencies:
       resolve: 1.17.0
@@ -4127,11 +4144,11 @@ packages:
       integrity: sha512-IJgZWD2E9eLKj8DJLA9lT63N4jPfVneFJ05gnPco01ZJCEiDAo7babP5Ns2UTJDUaQEtX0m04UoIkidcteWKsA==
   /@storybook/addon-docs/6.1.21_0ca509be832a59f2b37650b68fcb6e32:
     dependencies:
-      '@babel/core': 7.13.10
+      '@babel/core': 7.14.5
       '@babel/generator': 7.14.5
       '@babel/parser': 7.14.5
-      '@babel/plugin-transform-react-jsx': 7.14.5_@babel+core@7.13.10
-      '@babel/preset-env': 7.13.10_@babel+core@7.13.10
+      '@babel/plugin-transform-react-jsx': 7.14.5_@babel+core@7.14.5
+      '@babel/preset-env': 7.13.10_@babel+core@7.14.5
       '@jest/transform': 26.6.2
       '@mdx-js/loader': 1.6.22_react@16.14.0
       '@mdx-js/mdx': 1.6.22
@@ -4644,28 +4661,28 @@ packages:
       integrity: sha512-xQmbX/oYQK1QsAGN8hriXX5SUKOoTUe3L4dVaVHxJqy7MReRWJpprJmCpbAPJzWS6WCbDFfCM5kVEexHLOzJlQ==
   /@storybook/core/6.1.21_b6e446b36ff583f2c06e3940b2876b42:
     dependencies:
-      '@babel/core': 7.13.10
-      '@babel/plugin-proposal-class-properties': 7.14.5_@babel+core@7.13.10
-      '@babel/plugin-proposal-decorators': 7.14.5_@babel+core@7.13.10
-      '@babel/plugin-proposal-export-default-from': 7.14.5_@babel+core@7.13.10
-      '@babel/plugin-proposal-nullish-coalescing-operator': 7.14.5_@babel+core@7.13.10
-      '@babel/plugin-proposal-object-rest-spread': 7.14.5_@babel+core@7.13.10
-      '@babel/plugin-proposal-optional-chaining': 7.14.5_@babel+core@7.13.10
-      '@babel/plugin-proposal-private-methods': 7.14.5_@babel+core@7.13.10
-      '@babel/plugin-syntax-dynamic-import': 7.8.3_@babel+core@7.13.10
-      '@babel/plugin-transform-arrow-functions': 7.14.5_@babel+core@7.13.10
-      '@babel/plugin-transform-block-scoping': 7.14.5_@babel+core@7.13.10
-      '@babel/plugin-transform-classes': 7.14.5_@babel+core@7.13.10
-      '@babel/plugin-transform-destructuring': 7.14.5_@babel+core@7.13.10
-      '@babel/plugin-transform-for-of': 7.14.5_@babel+core@7.13.10
-      '@babel/plugin-transform-parameters': 7.14.5_@babel+core@7.13.10
-      '@babel/plugin-transform-shorthand-properties': 7.14.5_@babel+core@7.13.10
-      '@babel/plugin-transform-spread': 7.14.5_@babel+core@7.13.10
-      '@babel/plugin-transform-template-literals': 7.14.5_@babel+core@7.13.10
-      '@babel/preset-env': 7.13.10_@babel+core@7.13.10
-      '@babel/preset-react': 7.14.5_@babel+core@7.13.10
-      '@babel/preset-typescript': 7.14.5_@babel+core@7.13.10
-      '@babel/register': 7.14.5_@babel+core@7.13.10
+      '@babel/core': 7.14.5
+      '@babel/plugin-proposal-class-properties': 7.14.5_@babel+core@7.14.5
+      '@babel/plugin-proposal-decorators': 7.14.5_@babel+core@7.14.5
+      '@babel/plugin-proposal-export-default-from': 7.14.5_@babel+core@7.14.5
+      '@babel/plugin-proposal-nullish-coalescing-operator': 7.14.5_@babel+core@7.14.5
+      '@babel/plugin-proposal-object-rest-spread': 7.14.5_@babel+core@7.14.5
+      '@babel/plugin-proposal-optional-chaining': 7.14.5_@babel+core@7.14.5
+      '@babel/plugin-proposal-private-methods': 7.14.5_@babel+core@7.14.5
+      '@babel/plugin-syntax-dynamic-import': 7.8.3_@babel+core@7.14.5
+      '@babel/plugin-transform-arrow-functions': 7.14.5_@babel+core@7.14.5
+      '@babel/plugin-transform-block-scoping': 7.14.5_@babel+core@7.14.5
+      '@babel/plugin-transform-classes': 7.14.5_@babel+core@7.14.5
+      '@babel/plugin-transform-destructuring': 7.14.5_@babel+core@7.14.5
+      '@babel/plugin-transform-for-of': 7.14.5_@babel+core@7.14.5
+      '@babel/plugin-transform-parameters': 7.14.5_@babel+core@7.14.5
+      '@babel/plugin-transform-shorthand-properties': 7.14.5_@babel+core@7.14.5
+      '@babel/plugin-transform-spread': 7.14.5_@babel+core@7.14.5
+      '@babel/plugin-transform-template-literals': 7.14.5_@babel+core@7.14.5
+      '@babel/preset-env': 7.13.10_@babel+core@7.14.5
+      '@babel/preset-react': 7.14.5_@babel+core@7.14.5
+      '@babel/preset-typescript': 7.14.5_@babel+core@7.14.5
+      '@babel/register': 7.14.5_@babel+core@7.14.5
       '@storybook/addons': 6.1.21_react-dom@16.13.1+react@16.14.0
       '@storybook/api': 6.1.21_react-dom@16.13.1+react@16.14.0
       '@storybook/channel-postmessage': 6.1.21
@@ -4686,7 +4703,7 @@ packages:
       airbnb-js-shims: 2.2.1
       ansi-to-html: 0.6.15
       autoprefixer: 9.8.6
-      babel-loader: 8.1.0_c68979f8893c692eeb1a0b70960ae2d4
+      babel-loader: 8.1.0_802eaa88f56443e8614799ffa818327a
       babel-plugin-emotion: 10.2.2
       babel-plugin-macros: 2.8.0
       babel-preset-minify: 0.5.1
@@ -5050,7 +5067,7 @@ packages:
   /@types/body-parser/1.19.0:
     dependencies:
       '@types/connect': 3.4.34
-      '@types/node': 14.17.3
+      '@types/node': 15.12.2
     dev: false
     resolution:
       integrity: sha512-W98JrE0j2K78swW4ukqMleo8R7h/pFETjM2DQ90MF6XK2i4LO4W3gQ71Lt4w3bfm2EvVSyWHplECvB5sK22yFQ==
@@ -5060,7 +5077,7 @@ packages:
       integrity: sha512-TbH79tcyi9FHwbyboOKeRachRq63mSuWYXOflsNO9ZyE5ClQ/JaozNKl+aWUq87qPNsXasXxi2AbgfwIJ+8GQw==
   /@types/cheerio/0.22.29:
     dependencies:
-      '@types/node': 14.17.3
+      '@types/node': 15.12.2
     dev: false
     resolution:
       integrity: sha512-rNX1PsrDPxiNiyLnRKiW2NXHJFHqx0Fl3J2WsZq0MTBspa/FgwlqhXJE2crIcc+/2IglLHtSWw7g053oUR8fOg==
@@ -5083,7 +5100,7 @@ packages:
       integrity: sha512-rr+OQyAjxze7GgWrSaJwydHStIhHq2lvY3BOC2Mj7KnzI7XK0Uw1TOOdI9lDoajEbSWLiYgoo4f1R51erQfhPQ==
   /@types/connect/3.4.34:
     dependencies:
-      '@types/node': 14.17.3
+      '@types/node': 15.12.2
     dev: false
     resolution:
       integrity: sha512-ePPA/JuI+X0vb+gSWlPKOY0NdNAie/rPUqX2GUPpbZwiKTkSPhjXWuee47E4MtE54QVzGCQMQkAL6JhV2E1+cQ==
@@ -5110,13 +5127,13 @@ packages:
   /@types/eslint-scope/3.7.0:
     dependencies:
       '@types/eslint': 7.2.13
-      '@types/estree': 0.0.47
+      '@types/estree': 0.0.48
     dev: false
     resolution:
       integrity: sha512-O/ql2+rrCUe2W2rs7wMR+GqPRcgB6UiqN5RhrR5xruFlY7l9YLMn0ZkDzjoHLeiFkR8MCQZVudUuuvQ2BLC9Qw==
   /@types/eslint/7.2.13:
     dependencies:
-      '@types/estree': 0.0.47
+      '@types/estree': 0.0.48
       '@types/json-schema': 7.0.7
     dev: false
     resolution:
@@ -5135,7 +5152,7 @@ packages:
       integrity: sha512-LfZwXoGUDo0C3me81HXgkBg5CTQYb6xzEl+fNmbO4JdRiSKQ8A0GD1OBBvKAIsbCUgoyAty7m99GqqMQe784ew==
   /@types/express-serve-static-core/4.17.21:
     dependencies:
-      '@types/node': 14.17.3
+      '@types/node': 15.12.2
       '@types/qs': 6.9.6
       '@types/range-parser': 1.2.3
     dev: false
@@ -5157,7 +5174,7 @@ packages:
   /@types/glob/7.1.3:
     dependencies:
       '@types/minimatch': 3.0.4
-      '@types/node': 14.17.3
+      '@types/node': 15.12.2
     dev: false
     resolution:
       integrity: sha512-SEYeGAIQIQX8NN6LDKprLjbrd5dARM5EXsd8GI/A5l0apYI1fGMWgPHSe4ZKL4eozlAyI+doUE9XbYS4xCkQ1w==
@@ -5268,13 +5285,13 @@ packages:
       integrity: sha512-1z8k4wzFnNjVK/tlxvrWuK5WMt6mydWWP7+zvH5eFep4oj+UkrfiJTRtjCeBXNpwaA/FYqqtb4/QS4ianFpIRA==
   /@types/morgan/1.9.2:
     dependencies:
-      '@types/node': 14.17.3
+      '@types/node': 15.12.2
     dev: false
     resolution:
       integrity: sha512-edtGMEdit146JwwIeyQeHHg9yID4WSolQPxpEorHmN3KuytuCHyn2ELNr5Uxy8SerniFbbkmgKMrGM933am5BQ==
   /@types/node-fetch/2.5.10:
     dependencies:
-      '@types/node': 14.17.3
+      '@types/node': 15.12.2
       form-data: 3.0.1
     dev: false
     resolution:
@@ -5397,7 +5414,7 @@ packages:
   /@types/serve-static/1.13.9:
     dependencies:
       '@types/mime': 1.3.2
-      '@types/node': 14.17.3
+      '@types/node': 15.12.2
     dev: false
     resolution:
       integrity: sha512-ZFqF6qa48XsPdjXV5Gsz0Zqmux2PerNd3a/ktL45mHpa19cuMi/cL8tcxdAx497yRh+QtYPuofjT9oWw9P7nkA==
@@ -5420,7 +5437,7 @@ packages:
   /@types/superagent/4.1.11:
     dependencies:
       '@types/cookiejar': 2.1.2
-      '@types/node': 14.17.3
+      '@types/node': 15.12.2
     dev: false
     resolution:
       integrity: sha512-cZkWBXZI+jESnUTp8RDGBmk1Zn2MkScP4V5bjD7DyqB7L0WNWpblh4KX5K/6aTqxFZMhfo1bhi2cwoAEDVBBJw==
@@ -5448,7 +5465,7 @@ packages:
       integrity: sha512-G4JdzEcq61fUyV6wVW9ebHWEiLK2iQvaBuCHHn9eMSbZzVh4Z4wHnUGIvQOYCCYeu5DnUtFyNYuAAgbSaO/43Q==
   /@types/tunnel/0.0.1:
     dependencies:
-      '@types/node': 14.17.3
+      '@types/node': 15.12.2
     dev: false
     resolution:
       integrity: sha512-AOqu6bQu5MSWwYvehMXLukFHnupHrpZ8nvgae5Ggie9UwzDR1CCwoXgSSWNZJuyOlCdfdsWMA5F2LlmvyoTv8A==
@@ -5478,7 +5495,7 @@ packages:
       integrity: sha512-Cwg6+FQogkImRMF5nu5bKsLoZlwNCzpEyvxIzJM0ZgkkuKP7TrmQ3suOvNKKG1O4luxXZroKGo0mMC5EN5gPBA==
   /@types/webpack-sources/2.1.0:
     dependencies:
-      '@types/node': 14.17.3
+      '@types/node': 15.12.2
       '@types/source-list-map': 0.1.2
       source-map: 0.7.3
     dev: false
@@ -5486,7 +5503,7 @@ packages:
       integrity: sha512-LXn/oYIpBeucgP1EIJbKQ2/4ZmpvRl+dlrFdX7+94SKRUV3Evy3FsfMZY318vGhkWUS5MPhtOM3w1/hCOAOXcg==
   /@types/webpack/4.41.29:
     dependencies:
-      '@types/node': 14.17.3
+      '@types/node': 15.12.2
       '@types/tapable': 1.0.7
       '@types/uglify-js': 3.13.0
       '@types/webpack-sources': 2.1.0
@@ -6639,6 +6656,23 @@ packages:
       webpack: '>=2'
     resolution:
       integrity: sha512-7q7nC1tYOrqvUrN3LQK4GwSk/TQorZSOlO9C+RZDZpODgyN4ZlCqE5q9cDsyWOliN+aU9B4JX01xK9eJXowJLw==
+  /babel-loader/8.1.0_802eaa88f56443e8614799ffa818327a:
+    dependencies:
+      '@babel/core': 7.14.5
+      find-cache-dir: 2.1.0
+      loader-utils: 1.4.0
+      mkdirp: 0.5.5
+      pify: 4.0.1
+      schema-utils: 2.7.1
+      webpack: 4.46.0
+    dev: false
+    engines:
+      node: '>= 6.9'
+    peerDependencies:
+      '@babel/core': ^7.0.0
+      webpack: '>=2'
+    resolution:
+      integrity: sha512-7q7nC1tYOrqvUrN3LQK4GwSk/TQorZSOlO9C+RZDZpODgyN4ZlCqE5q9cDsyWOliN+aU9B4JX01xK9eJXowJLw==
   /babel-loader/8.1.0_be4b5a2e27f85c129e0cacc759b45f7c:
     dependencies:
       '@babel/core': 7.14.5
@@ -6648,23 +6682,6 @@ packages:
       pify: 4.0.1
       schema-utils: 2.7.1
       webpack: 5.38.1_webpack-cli@4.7.2
-    dev: false
-    engines:
-      node: '>= 6.9'
-    peerDependencies:
-      '@babel/core': ^7.0.0
-      webpack: '>=2'
-    resolution:
-      integrity: sha512-7q7nC1tYOrqvUrN3LQK4GwSk/TQorZSOlO9C+RZDZpODgyN4ZlCqE5q9cDsyWOliN+aU9B4JX01xK9eJXowJLw==
-  /babel-loader/8.1.0_c68979f8893c692eeb1a0b70960ae2d4:
-    dependencies:
-      '@babel/core': 7.13.10
-      find-cache-dir: 2.1.0
-      loader-utils: 1.4.0
-      mkdirp: 0.5.5
-      pify: 4.0.1
-      schema-utils: 2.7.1
-      webpack: 4.46.0
     dev: false
     engines:
       node: '>= 6.9'
@@ -8933,7 +8950,7 @@ packages:
   /downshift/5.0.5_react@16.14.0:
     dependencies:
       '@babel/runtime': 7.14.5
-      compute-scroll-into-view: 1.0.11
+      compute-scroll-into-view: 1.0.17
       prop-types: 15.7.2
       react: 16.14.0
       react-is: 16.13.1
@@ -12604,7 +12621,7 @@ packages:
       integrity: sha512-KWYVV1c4i+jbMpaBC+U++4Va0cp8OisU185o73T1vo99hqi7w8tSJfUXYswwqqrjzwxa6KpRK54WhPvwf5w6PQ==
   /jest-worker/27.0.2:
     dependencies:
-      '@types/node': 14.17.3
+      '@types/node': 15.12.2
       merge-stream: 2.0.0
       supports-color: 8.1.1
     dev: false
@@ -15165,7 +15182,7 @@ packages:
       integrity: sha512-MPLbF8vzRwAG3GcjdL+OHQlhgtWsLTXs+7uJiHfEeT3Ur7IsZaNYqRTLQ9sj2nB6M6jylcPCeCmH7qbszJmecg==
   /react-docgen/5.4.0:
     dependencies:
-      '@babel/core': 7.13.10
+      '@babel/core': 7.14.5
       '@babel/generator': 7.14.5
       '@babel/runtime': 7.14.5
       ast-types: 0.14.2
@@ -15926,6 +15943,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-ic+7JYiV8Vi2yzQGFWOkiZD5Z9z7O2Zhm9XMaTxdJExKasieFCr+yXZ/WmXsckHiKl12ar0y6XiXDx3m4RHn1w==
+  /resolve/1.19.0:
+    dependencies:
+      is-core-module: 2.4.0
+      path-parse: 1.0.7
+    dev: false
+    resolution:
+      integrity: sha512-rArEXAgsBG4UgRGcynxWIWKFvh/XZCcS8UJdHhwy91zwAvCZIbcs+vAbflgBnNjYMs/i/i+/Ux6IZhML1yPvxg==
   /resolve/1.20.0:
     dependencies:
       is-core-module: 2.4.0
@@ -17722,6 +17746,13 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-6OSu9PTIzmn9TCDiovULTnET6BgXtDYL4Gg4szY+cGsc3JP1dQL8qvE8kShTRx1NIw4Q9IBHlwODjkjWEtMUyA==
+  /typescript/4.3.2:
+    dev: false
+    engines:
+      node: '>=4.2.0'
+    hasBin: true
+    resolution:
+      integrity: sha512-zZ4hShnmnoVnAHpVHWpTcxdv7dWP60S2FsydQLV8V5PbS3FifjWFFRiHSWpDJahly88PRyV5teTSLoq4eG7mKw==
   /uc.micro/1.0.6:
     dev: false
     resolution:
@@ -18851,11 +18882,32 @@ packages:
     dev: false
     resolution:
       integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==
+  file:../config/api-extractor/fork-pr-1916/microsoft-api-extractor-7.16.1-pr1916.1.0.tgz:
+    dependencies:
+      '@microsoft/api-extractor-model': 7.13.3
+      '@microsoft/tsdoc': 0.13.2
+      '@microsoft/tsdoc-config': 0.15.2
+      '@rushstack/node-core-library': 3.39.0
+      '@rushstack/rig-package': 0.2.12
+      '@rushstack/ts-command-line': 4.7.10
+      colors: 1.2.5
+      lodash: 4.17.21
+      resolve: 1.17.0
+      semver: 7.3.5
+      source-map: 0.6.1
+      typescript: 4.3.2
+    dev: false
+    hasBin: true
+    name: '@microsoft/api-extractor'
+    resolution:
+      integrity: sha512-BgSvhoAWr9J1viQoIGn1EtgwaTcfGXbUfy1iXHlT5fdPIAXLacw6nxpGmNy9z1UsmixvtRd7SgVyHaqmsie8Gw==
+      tarball: file:../config/api-extractor/fork-pr-1916/microsoft-api-extractor-7.16.1-pr1916.1.0.tgz
+    version: 7.16.1-pr1916.1.0
   file:projects/acs-ui-common.tgz:
     dependencies:
       '@azure/communication-common': 1.0.0
       '@microsoft/api-documenter': 7.12.22
-      '@microsoft/api-extractor': 7.13.5
+      '@microsoft/api-extractor': file:../config/api-extractor/fork-pr-1916/microsoft-api-extractor-7.16.1-pr1916.1.0.tgz
       '@types/jest': 26.0.23
       '@types/react': 16.14.8
       '@typescript-eslint/eslint-plugin': 4.26.1_d9234535ce978faec7f143463b937dd6
@@ -18874,7 +18926,7 @@ packages:
     dev: false
     name: '@rush-temp/acs-ui-common'
     resolution:
-      integrity: sha512-YmOUM+Wgj+R5kQn+Haeud2ru4uMv2XFrgrICZidb7bgSMXpXmZvhnXaVr2Kvwbyr1x6ImxcBEkaRuWPfa5+BRw==
+      integrity: sha512-bhE1fcBAkah0IorcJAvpwmboVaTZ6Y4gP3Ln/vZ0e1KsnkNfXL1T5gEklZqxoU0HzdZesvARWCt/fooz+1gIWA==
       tarball: file:projects/acs-ui-common.tgz
     version: 0.0.0
   file:projects/build-tools.tgz:
@@ -18899,7 +18951,7 @@ packages:
       '@azure/communication-calling': 1.1.0-beta.1
       '@azure/communication-common': 1.0.0
       '@microsoft/api-documenter': 7.12.22
-      '@microsoft/api-extractor': 7.13.5
+      '@microsoft/api-extractor': file:../config/api-extractor/fork-pr-1916/microsoft-api-extractor-7.16.1-pr1916.1.0.tgz
       '@types/jest': 26.0.23
       '@types/react': 16.14.8
       '@typescript-eslint/eslint-plugin': 4.26.1_d9234535ce978faec7f143463b937dd6
@@ -18921,7 +18973,7 @@ packages:
     dev: false
     name: '@rush-temp/calling-component-bindings'
     resolution:
-      integrity: sha512-UpOXE1XfySBAARa0aPn8k9BYJLGBKaty4Ss2aF9EftJGGVGnbtbTjrsg8lWG0ZuH7Y9jtk0kNWmWFrLKc0bQ1Q==
+      integrity: sha512-fNPv4arpIrxZ/izL4W/6r9LgjNhKet8RrLbysDW4zOkRBN4aGi4BNEiULsoXa/+JaZUFArj0IeQnrkA4zDHZuw==
       tarball: file:projects/calling-component-bindings.tgz
     version: 0.0.0
   file:projects/calling-stateful-client.tgz:
@@ -18929,7 +18981,7 @@ packages:
       '@azure/communication-calling': 1.1.0-beta.1
       '@azure/communication-common': 1.0.0
       '@microsoft/api-documenter': 7.12.22
-      '@microsoft/api-extractor': 7.13.5
+      '@microsoft/api-extractor': file:../config/api-extractor/fork-pr-1916/microsoft-api-extractor-7.16.1-pr1916.1.0.tgz
       '@types/jest': 26.0.23
       '@types/react': 16.14.8
       '@typescript-eslint/eslint-plugin': 4.26.1_d9234535ce978faec7f143463b937dd6
@@ -18950,7 +19002,7 @@ packages:
     dev: false
     name: '@rush-temp/calling-stateful-client'
     resolution:
-      integrity: sha512-k/ynsqDC02rdrG7b87R/0MIN2ciBHOsZXKx4mu39+ti84Bi08OuVmjwDl8EBcaJ41Q9mIwjkt/bVas0WS8NVBA==
+      integrity: sha512-N1lYBZlvWGdyrI7AhiLtjCJF7EtxIGhA3UNFfXWsI6B+L16tautjDyi/gNIS3OF5ti1DXv3gaiWbzgtq1XxTeQ==
       tarball: file:projects/calling-stateful-client.tgz
     version: 0.0.0
   file:projects/calling.tgz:
@@ -19027,7 +19079,7 @@ packages:
       '@azure/communication-common': 1.0.0
       '@azure/communication-signaling': 1.0.0-beta.5
       '@microsoft/api-documenter': 7.12.22
-      '@microsoft/api-extractor': 7.13.5
+      '@microsoft/api-extractor': file:../config/api-extractor/fork-pr-1916/microsoft-api-extractor-7.16.1-pr1916.1.0.tgz
       '@types/jest': 26.0.23
       '@types/react': 16.14.8
       copyfiles: 2.4.1
@@ -19046,7 +19098,7 @@ packages:
     dev: false
     name: '@rush-temp/chat-component-bindings'
     resolution:
-      integrity: sha512-lhjj8+/G33Is3ntZ0GqM7tVDs0ved17Bz+yfeBYLDN9+2VgUDJNoj15Hs4Ww4B49w11hO2AADG73pEieXm/mzg==
+      integrity: sha512-SWHD49+AF+FwTlzhC7BDs8d99MQYdhqa7+Bd/eti6wv4bLdP0Pq1TAKG/V8BUGiSRAg94IrDPzFbb2I8G8T0Dw==
       tarball: file:projects/chat-component-bindings.tgz
     version: 0.0.0
   file:projects/chat-stateful-client.tgz:
@@ -19056,7 +19108,7 @@ packages:
       '@azure/communication-signaling': 1.0.0-beta.5
       '@azure/core-paging': 1.1.3
       '@microsoft/api-documenter': 7.12.22
-      '@microsoft/api-extractor': 7.13.5
+      '@microsoft/api-extractor': file:../config/api-extractor/fork-pr-1916/microsoft-api-extractor-7.16.1-pr1916.1.0.tgz
       '@types/jest': 26.0.23
       '@types/react': 16.14.8
       '@typescript-eslint/eslint-plugin': 4.26.1_d9234535ce978faec7f143463b937dd6
@@ -19078,7 +19130,7 @@ packages:
     dev: false
     name: '@rush-temp/chat-stateful-client'
     resolution:
-      integrity: sha512-vSUVrf6cCdTrlkSTeHscCyfglXSqdAk2cstjdGpTSl9vYEOCc7o9q/1VTlHTDZtIw7Rntq3k0+t6inRTH60zGg==
+      integrity: sha512-cwHz/Ps0Ws5I7SGKV15NZHPF+TrMkfUSuWPZIjnVmHyRbTGrAoy5+rqYYsRlJzFl/SCePPxvjVLH/jSzJ/YlvA==
       tarball: file:projects/chat-stateful-client.tgz
     version: 0.0.0
   file:projects/chat.tgz:
@@ -19140,24 +19192,8 @@ packages:
     dev: false
     name: '@rush-temp/chat'
     resolution:
-      integrity: sha512-A7aieZaXSYqV1BiJwmAJAlu6RYE132r2gwlY0I1xqWNlIcHd/sOS5MGnY8F0Nvh6PJH3aef8lxeJ+/J80ZTkoQ==
+      integrity: sha512-myBPfloPlhEgc3Py4/FBKQKxkf7vzX5GijxOYIE79J+1ah6z3l/IiJaJbaRaEIQSQeELpYAdcobcWeMqN74UTw==
       tarball: file:projects/chat.tgz
-    version: 0.0.0
-  file:projects/check-treeshaking.tgz:
-    dependencies:
-      eslint: 7.28.0
-      eslint-config-prettier: 6.15.0_eslint@7.28.0
-      eslint-plugin-header: 3.1.1_eslint@7.28.0
-      eslint-plugin-import: 2.22.1_eslint@7.28.0
-      eslint-plugin-prettier: 3.4.0_e616481e84558ef94f17b2359041046a
-      prettier: 2.0.5
-      webpack: 5.38.1_webpack-cli@4.7.2
-      webpack-cli: 4.7.2_webpack@5.38.1
-    dev: false
-    name: '@rush-temp/check-treeshaking'
-    resolution:
-      integrity: sha512-Bzf1GLrxIEWqn1UuBDhqG7WzflN0k+V1l44/yhkLvqieeapMVVuYC/GxdUS/LtazMrf2yadG7solBj21tyyygQ==
-      tarball: file:projects/check-treeshaking.tgz
     version: 0.0.0
   file:projects/communication-react.tgz:
     dependencies:
@@ -19172,7 +19208,7 @@ packages:
       '@fluentui/react-icons-northstar': 0.51.7_ef89b9d44e70903856bf583071c7248b
       '@fluentui/react-northstar': 0.51.7_ef89b9d44e70903856bf583071c7248b
       '@microsoft/api-documenter': 7.12.22
-      '@microsoft/api-extractor': 7.13.5
+      '@microsoft/api-extractor': file:../config/api-extractor/fork-pr-1916/microsoft-api-extractor-7.16.1-pr1916.1.0.tgz
       '@testing-library/jest-dom': 5.14.1
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
       '@types/jest': 26.0.23
@@ -19227,7 +19263,7 @@ packages:
     dev: false
     name: '@rush-temp/communication-react'
     resolution:
-      integrity: sha512-pppCkIaEz9kpdOQOrtAKcqFreg95an02etO+uC4utU90tucP6oXMaqSALIDFr4EPuU89GX9aTg0ab6/3aBNXaA==
+      integrity: sha512-0hBHwvDUppEzW/VV2X2GotKa5ZHg2Mu0MMAeSDDqraJW68sKkUcDKoQGLtVlIZRXfFk58vPZgY3eZeit54Wf+g==
       tarball: file:projects/communication-react.tgz
     version: 0.0.0
   file:projects/one-to-one-call.tgz:
@@ -19308,7 +19344,7 @@ packages:
       '@fluentui/react-northstar': 0.51.7_ef89b9d44e70903856bf583071c7248b
       '@mdx-js/react': 1.6.22_react@16.14.0
       '@microsoft/api-documenter': 7.12.22
-      '@microsoft/api-extractor': 7.13.5
+      '@microsoft/api-extractor': file:../config/api-extractor/fork-pr-1916/microsoft-api-extractor-7.16.1-pr1916.1.0.tgz
       '@testing-library/jest-dom': 5.14.1
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
       '@types/jest': 26.0.23
@@ -19365,7 +19401,7 @@ packages:
     dev: false
     name: '@rush-temp/react-components'
     resolution:
-      integrity: sha512-l4BXS4mEgvDO6TLAD0tHTyu2ftYVkfe5dJmvKiSvdknhI/OAHcsLdvCAWh9rfvH2dcBIDEIpbjh41estQ8qMzg==
+      integrity: sha512-XYGLP1nSiDJap6k6gEEErfH8SeuNaJEhSW9a1q5Z1eFsoRhabYbTmiCP9t9VYSSZV49xGuxfrH9z/p/yZxZeCQ==
       tarball: file:projects/react-components.tgz
     version: 0.0.0
   file:projects/react-composites.tgz:
@@ -19383,7 +19419,7 @@ packages:
       '@fluentui/react-northstar': 0.51.7_ef89b9d44e70903856bf583071c7248b
       '@mdx-js/react': 1.6.22_react@16.14.0
       '@microsoft/api-documenter': 7.12.22
-      '@microsoft/api-extractor': 7.13.5
+      '@microsoft/api-extractor': file:../config/api-extractor/fork-pr-1916/microsoft-api-extractor-7.16.1-pr1916.1.0.tgz
       '@testing-library/jest-dom': 5.14.1
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
       '@types/jest': 26.0.23
@@ -19442,7 +19478,7 @@ packages:
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-+s4S6HQodDRjoCuWOdqcptXRB5hu4LtoYgjFipg/Kr+b6zXYb+q2r5bUOTeJGtISA4WjD8M9LWJ5acJ/IEW/Vw==
+      integrity: sha512-Hck6wCENJQAsP0WQu0AlPV6J/v0KxglgmeRx7j+boES7/f4k8ga8plQ1ItuI3tiqdbnMV13ESZgIZYbsv0sHRQ==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/server.tgz:
@@ -19513,7 +19549,7 @@ packages:
       '@fluentui/theme-samples': 8.1.5_ef89b9d44e70903856bf583071c7248b
       '@mdx-js/react': 1.6.22_react@16.14.0
       '@microsoft/api-documenter': 7.12.22
-      '@microsoft/api-extractor': 7.13.5
+      '@microsoft/api-extractor': file:../config/api-extractor/fork-pr-1916/microsoft-api-extractor-7.16.1-pr1916.1.0.tgz
       '@microsoft/applicationinsights-react-js': 3.0.5_react@16.14.0
       '@microsoft/applicationinsights-web': 2.6.3
       '@storybook/addon-actions': 6.1.21_d225d9c534f73d28105b13f0a78c1790
@@ -19589,9 +19625,10 @@ packages:
     dev: false
     name: '@rush-temp/storybook'
     resolution:
-      integrity: sha512-4WCNdygJ3kViJ0ujJsTM2/zAnOboOotQoV20/YDG+id0LxASKneSj+CQhXNHXH5EZ9TATDwTDr4IyXcGPGwcZg==
+      integrity: sha512-UN6TKAGiKsreBmzZx8d4Dn781rFDtN8GDvWxpmjCXIQUVbFGeJ27tDyTGT78oXDnVm2BZTmDo5HqmUsuxsSxWg==
       tarball: file:projects/storybook.tgz
     version: 0.0.0
+registry: ''
 specifiers:
   '@rush-temp/acs-ui-common': file:./projects/acs-ui-common.tgz
   '@rush-temp/build-tools': file:./projects/build-tools.tgz
@@ -19601,7 +19638,6 @@ specifiers:
   '@rush-temp/chat': file:./projects/chat.tgz
   '@rush-temp/chat-component-bindings': file:./projects/chat-component-bindings.tgz
   '@rush-temp/chat-stateful-client': file:./projects/chat-stateful-client.tgz
-  '@rush-temp/check-treeshaking': file:./projects/check-treeshaking.tgz
   '@rush-temp/communication-react': file:./projects/communication-react.tgz
   '@rush-temp/one-to-one-call': file:./projects/one-to-one-call.tgz
   '@rush-temp/react-components': file:./projects/react-components.tgz
