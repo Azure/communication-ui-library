@@ -37,7 +37,7 @@ jobs:
 
       # Install dependencies
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.40.7
+        run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
 
