@@ -1,9 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -53,26 +50,19 @@ const webpackConfig = (sampleAppDir, env) => ({
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: './public/index.html'
-    }),
+    new HtmlWebpackPlugin({ template: './public/index.html' }),
     new webpack.DefinePlugin({
       'process.env.PRODUCTION': env.production || !env.development,
-      'process.env.NAME': JSON.stringify(require(path.resolve(sampleAppDir, './package.json')).name),
-      'process.env.VERSION': JSON.stringify(require(path.resolve(sampleAppDir, './package.json')).version)
+      'process.env.NAME': JSON.stringify(require(path.resolve(sampleAppDir, 'package.json')).name),
+      'process.env.VERSION': JSON.stringify(require(path.resolve(sampleAppDir, 'package.json')).version)
     }),
-    new webpack.DefinePlugin({
-      __BUILDTIME__: JSON.stringify(new Date().toLocaleString())
-    })
+    new webpack.DefinePlugin({ __BUILDTIME__: JSON.stringify(new Date().toLocaleString()) })
   ],
   devServer: {
-    // run app on port 3000
     port: 3000,
-    // support hot reloading changes
-    hot: false,
-    // open browser automatically in default
+    hot: true,
     open: true,
-    // proxy api requests to the token server
+    contentBase: path.resolve(sampleAppDir, 'public'),
     proxy: [
       {
         path: '/token',
