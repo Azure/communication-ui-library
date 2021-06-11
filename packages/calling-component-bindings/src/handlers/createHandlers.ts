@@ -202,7 +202,7 @@ export const createDefaultCallingHandlers = memoizeOne(
       const callState = callClient.getState().calls.get(call.id);
       if (!callState) throw new Error(`Call Not Found: ${call.id}`);
 
-      const participant = Array.from(callState.remoteParticipants.values()).find(
+      const participant = Object.values(callState.remoteParticipants).find(
         (participant) => toFlatCommunicationIdentifier(participant.identifier) === userId
       );
 
@@ -210,10 +210,8 @@ export const createDefaultCallingHandlers = memoizeOne(
         return;
       }
 
-      const remoteVideoStream = Array.from(participant.videoStreams.values()).find(
-        (i) => i.mediaStreamType === 'Video'
-      );
-      const screenShareStream = Array.from(participant.videoStreams.values()).find(
+      const remoteVideoStream = Object.values(participant.videoStreams).find((i) => i.mediaStreamType === 'Video');
+      const screenShareStream = Object.values(participant.videoStreams).find(
         (i) => i.mediaStreamType === 'ScreenSharing'
       );
 
@@ -231,7 +229,7 @@ export const createDefaultCallingHandlers = memoizeOne(
       const callState = callClient.getState().calls.get(call.id);
       if (!callState) throw new Error(`Call Not Found: ${call.id}`);
 
-      const participant = Array.from(callState.remoteParticipants.values()).find(
+      const participant = Object.values(callState.remoteParticipants).find(
         (participant) => toFlatCommunicationIdentifier(participant.identifier) === userId
       );
 
@@ -239,10 +237,8 @@ export const createDefaultCallingHandlers = memoizeOne(
         return;
       }
 
-      const remoteVideoStream = Array.from(participant.videoStreams.values()).find(
-        (i) => i.mediaStreamType === 'Video'
-      );
-      const screenShareStream = Array.from(participant.videoStreams.values()).find(
+      const remoteVideoStream = Object.values(participant.videoStreams).find((i) => i.mediaStreamType === 'Video');
+      const screenShareStream = Object.values(participant.videoStreams).find(
         (i) => i.mediaStreamType === 'ScreenSharing'
       );
 
