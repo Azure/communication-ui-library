@@ -407,12 +407,12 @@ export class CallContext {
           if (participant) {
             // Set is called by subscriber will not modify any rendered stream so if there is existing stream only
             // modify the values that subscriber has access to.
-            const existingStream = participant.videoStreams.get(stream.id);
+            const existingStream = participant.videoStreams[stream.id];
             if (existingStream) {
               existingStream.isAvailable = stream.isAvailable;
               existingStream.mediaStreamType = stream.mediaStreamType;
             } else {
-              participant.videoStreams.set(stream.id, stream);
+              participant.videoStreams[stream.id] = stream;
             }
           }
         }
@@ -432,7 +432,7 @@ export class CallContext {
         if (call) {
           const participant = call.remoteParticipants[participantKey];
           if (participant) {
-            const stream = participant.videoStreams.get(streamId);
+            const stream = participant.videoStreams[streamId];
             if (stream) {
               stream.isAvailable = isAvailable;
             }
@@ -455,18 +455,18 @@ export class CallContext {
           const participant = call.remoteParticipants[participantKey];
           if (participant) {
             for (const id of removeRemoteVideoStream) {
-              participant.videoStreams.delete(id);
+              delete participant.videoStreams[id];
             }
 
             for (const newStream of addRemoteVideoStream) {
               // This should only be called by the subscriber and some properties are add by other components so if the
               // stream already exists, only update the values that subscriber knows about.
-              const stream = participant.videoStreams.get(newStream.id);
+              const stream = participant.videoStreams[newStream.id];
               if (stream) {
                 stream.mediaStreamType = newStream.mediaStreamType;
                 stream.isAvailable = newStream.isAvailable;
               } else {
-                participant.videoStreams.set(newStream.id, newStream);
+                participant.videoStreams[newStream.id] = newStream;
               }
             }
           }
@@ -487,7 +487,7 @@ export class CallContext {
         if (call) {
           const participant = call.remoteParticipants[participantKey];
           if (participant) {
-            const stream = participant.videoStreams.get(streamId);
+            const stream = participant.videoStreams[streamId];
             if (stream) {
               stream.view = view;
             }

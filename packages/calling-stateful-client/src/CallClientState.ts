@@ -199,10 +199,10 @@ export interface RemoteParticipantState {
    */
   callEndReason?: CallEndReason;
   /**
-   * Proxy of {@Link @azure/communication-calling#RemoteParticipant.videoStreams} as a map of
-   * {@Link @azure/communication-calling#RemoteVideoStream.id} to {@Link RemoteVideoStream}.
+   * Proxy of {@Link @azure/communication-calling#RemoteParticipant.videoStreams} as an object with
+   * {@Link RemoteVideoStream} fields keyed by {@Link @azure/communication-calling#RemoteVideoStream.id}.
    */
-  videoStreams: Map<number, RemoteVideoStreamState>;
+  videoStreams: { [key: number]: RemoteVideoStreamState };
   /**
    * Proxy of {@Link @azure/communication-calling#RemoteParticipant.isMuted}.
    */
@@ -279,7 +279,7 @@ export interface CallState {
   transfer: TransferCallFeature;
   /**
    * Stores the currently active screenshare participant's key. If there is no screenshare active, then this will be
-   * undefined. You can use this key to access the remoteParticipant data in {@Link CallState.remoteParticipants} map.
+   * undefined. You can use this key to access the remoteParticipant data in {@Link CallState.remoteParticipants} object.
    *
    * Note this only applies to ScreenShare in RemoteParticipant. A local ScreenShare being active will not affect this
    * property.

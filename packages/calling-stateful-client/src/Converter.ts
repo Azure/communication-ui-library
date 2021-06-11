@@ -48,9 +48,9 @@ export function convertSdkRemoteStreamToDeclarativeRemoteStream(
 export function convertSdkParticipantToDeclarativeParticipant(
   participant: SdkRemoteParticipant
 ): DeclarativeRemoteParticipant {
-  const declarativeVideoStreams = new Map<number, DeclarativeRemoteVideoStream>();
+  const declarativeVideoStreams = {};
   for (const videoStream of participant.videoStreams) {
-    declarativeVideoStreams.set(videoStream.id, convertSdkRemoteStreamToDeclarativeRemoteStream(videoStream));
+    declarativeVideoStreams[videoStream.id] = convertSdkRemoteStreamToDeclarativeRemoteStream(videoStream);
   }
   return {
     identifier: participant.identifier,

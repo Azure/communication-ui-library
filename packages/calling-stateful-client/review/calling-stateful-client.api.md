@@ -113,7 +113,9 @@ export interface RemoteParticipantState {
     isMuted: boolean;
     isSpeaking: boolean;
     state: RemoteParticipantState_2;
-    videoStreams: Map<number, RemoteVideoStreamState>;
+    videoStreams: {
+        [key: number]: RemoteVideoStreamState;
+    };
 }
 
 // @public
