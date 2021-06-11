@@ -7,9 +7,6 @@ import { StatefulChatClient } from 'chat-stateful-client';
 import { ChatThreadClient } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
 
-// @ts-ignore
-import { CommonProperties } from 'acs-ui-common';
-
 export type DefaultChatHandlers = {
   onSendMessage: (content: string) => Promise<void>;
   onMessageSeen: (chatMessageId: string) => Promise<void>;
