@@ -55,7 +55,7 @@ export class ChatContext {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         draft.threads.set(threadId, {
-          chatMessages: new Map(),
+          chatMessages: {},
           threadId: threadId,
           properties: properties,
           participants: new Map(),
@@ -123,7 +123,7 @@ export class ChatContext {
     );
   }
 
-  public setChatMessages(threadId: string, messages: Map<string, ChatMessageWithStatus>): void {
+  public setChatMessages(threadId: string, messages: { [key: string]: ChatMessageWithStatus }): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         const threadState = draft.threads.get(threadId);
@@ -134,7 +134,7 @@ export class ChatContext {
         // remove typing indicator when receive messages
         const thread = draft.threads.get(threadId);
         if (thread) {
-          for (const message of messages.values()) {
+          for (const message of Object.values(messages)) {
             this.filterTypingIndicatorForUser(thread, message.sender);
           }
         }
@@ -145,7 +145,7 @@ export class ChatContext {
   public updateChatMessageContent(threadId: string, messagesId: string, content: string | undefined): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
-        const chatMessage = draft.threads.get(threadId)?.chatMessages.get(messagesId);
+        const chatMessage = draft.threads.get(threadId)?.chatMessages[messagesId];
         if (chatMessage) {
           if (!chatMessage.content) {
             chatMessage.content = {};
@@ -161,9 +161,9 @@ export class ChatContext {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         const chatMessages = draft.threads.get(threadId)?.chatMessages;
-        const message: ChatMessageWithStatus | undefined = chatMessages ? chatMessages.get(localId) : undefined;
+        const message: ChatMessageWithStatus | undefined = chatMessages ? chatMessages[localId] : undefined;
         if (chatMessages && message && message.clientMessageId) {
-          chatMessages.delete(message.clientMessageId);
+          delete chatMessages[message.clientMessageId];
           localMessageDeleted = true;
         }
       })
@@ -175,7 +175,9 @@ export class ChatContext {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         const chatMessages = draft.threads.get(threadId)?.chatMessages;
-        chatMessages?.delete(id);
+        if (chatMessages) {
+          delete chatMessages[id];
+        }
       })
     );
   }
@@ -296,11 +298,11 @@ export class ChatContext {
       this.setState(
         produce(this._state, (draft: ChatClientState) => {
           const threadMessages = draft.threads.get(threadId)?.chatMessages;
-          const isLocalIdInMap = threadMessages && clientMessageId && threadMessages.get(clientMessageId);
+          const isLocalIdInMap = threadMessages && clientMessageId && threadMessages[clientMessageId];
           const messageKey = !messageId || isLocalIdInMap ? clientMessageId : messageId;
 
           if (threadMessages && messageKey) {
-            threadMessages.set(messageKey, message);
+            threadMessages[messageKey] = message;
           }
 
           // remove typing indicator when receive a message from a user
