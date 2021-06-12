@@ -1,28 +1,28 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ILocale } from './LocalizationProvider';
+import { LocaleCollection } from './LocalizationProvider';
 
-export const locales: ILocale[] = [
-  {
+export const locales: LocaleCollection = {
+  'en-US': {
     locale: 'en-US',
     englishName: 'English (US)',
     displayName: 'English (US)',
     rtl: false
   },
-  {
+  de: {
     locale: 'de',
     englishName: 'German',
     displayName: 'Deutsche',
     rtl: false
   },
-  {
+  ar: {
     locale: 'ar',
     englishName: 'Arabic',
     displayName: 'عربى',
     rtl: true
   }
-];
+};
 
 export const loadLocaleData = async (locale: string): Promise<Record<string, string>> => {
   switch (locale) {

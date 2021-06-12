@@ -21,9 +21,9 @@ export const LanguageSelector = (): JSX.Element => {
 
   return (
     <Dropdown
-      options={locales.map((loc) => ({
-        key: loc.locale,
-        text: loc.displayName
+      options={Object.keys(locales).map((loc) => ({
+        key: loc,
+        text: locales[loc].displayName
       }))}
       onChange={onChange}
       label="Select a language"

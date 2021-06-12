@@ -5,7 +5,7 @@ import React, { createContext, useState, useMemo, useContext, useCallback, useEf
 import { loadLocaleData, locales } from './loadLocaleData';
 import defaultStrings from './translated/en-US.json';
 
-const LOCALE_CACHE_KEY = 'locale';
+const LOCALE_CACHE_KEY = 'AzureCommunicationUI_Locale';
 
 export interface ILocale {
   locale: string;
@@ -14,15 +14,20 @@ export interface ILocale {
   rtl: boolean;
 }
 
+/**
+ * Collection of NamedThemes
+ */
+export type LocaleCollection = Record<string, ILocale>;
+
 export interface ILocaleContext {
   locale: string;
-  locales: ILocale[];
+  locales: LocaleCollection;
   strings: Record<string, string>;
   setLocale: (locale: string, forceReload?: boolean) => void;
 }
 
 const defaultLocaleContext: ILocaleContext = {
-  locale: locales[0].locale,
+  locale: 'en-US',
   locales: locales,
   strings: defaultStrings,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
@@ -33,7 +38,7 @@ export const LocaleContext = createContext<ILocaleContext>(defaultLocaleContext)
 
 export type LocalizationProviderProps = {
   initialLocale: string;
-  locales: ILocale[];
+  locales: LocaleCollection;
   storage?: Storage;
   children: React.ReactNode;
 };
@@ -57,19 +62,18 @@ export const LocalizationProvider = (props: LocalizationProviderProps): JSX.Elem
   const [strings, setStrings] = useState<Record<string, string>>({});
 
   useEffect(() => {
-    const loc = locales.find((l) => l.locale === initialLocale);
+    const loc = locales[initialLocale];
     if (loc) {
       document.documentElement.lang = loc.locale;
-      console.log('loc.rtl: ' + loc.rtl);
       document.documentElement.dir = loc.rtl ? 'rtl' : 'ltr';
       _setLocale(loc.locale);
     }
-    loadLocaleData(initialLocale).then((res) => setStrings(res));
+    loadLocaleData(initialLocale).then((strings) => setStrings(strings));
   }, [initialLocale, locales]);
 
   const setLocale = useCallback(
     async (locale: string, forceReload?: boolean) => {
-      const loc = locales.find((l) => l.locale === locale);
+      const loc = locales[locale];
 
       if (loc) {
         if (storage) {
