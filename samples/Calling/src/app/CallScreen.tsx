@@ -65,8 +65,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
 
   const devicePermissions = useSelector(devicePermissionSelector);
 
-  const { locales, locale } = useLocale();
-  const rtl = locales[locale].rtl;
+  const { locale } = useLocale();
 
   useEffect(() => {
     const callEndReason = call?.callEndReason;
@@ -113,7 +112,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         <Stack
           horizontalAlign="center"
           verticalAlign="center"
-          styles={concatStyleSets(containerStyles, { root: { direction: rtl ? 'rtl' : 'ltr ' } })}
+          styles={concatStyleSets(containerStyles, { root: { direction: locale.rtl ? 'rtl' : 'ltr ' } })}
           grow
         >
           <Stack.Item styles={headerStyles}>

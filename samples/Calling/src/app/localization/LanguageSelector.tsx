@@ -27,7 +27,7 @@ export const LanguageSelector = (): JSX.Element => {
       }))}
       onChange={onChange}
       label="Select a language"
-      selectedKey={locale}
+      selectedKey={locale.locale}
     />
   );
 };

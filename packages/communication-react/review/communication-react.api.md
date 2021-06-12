@@ -825,9 +825,9 @@ export interface ILocale {
 // @public (undocumented)
 export interface ILocaleContext {
     // (undocumented)
-    locale: string;
+    locale: ILocale;
     // (undocumented)
-    locales: ILocale[];
+    locales: LocaleCollection;
     // (undocumented)
     setLocale: (locale: string, forceReload?: boolean) => void;
     // (undocumented)
@@ -881,11 +881,14 @@ export const lightTheme: PartialTheme & CallingTheme;
 // @public (undocumented)
 export const loadLocaleData: (locale: string) => Promise<Record<string, string>>;
 
+// @public
+export type LocaleCollection = Record<string, ILocale>;
+
 // @public (undocumented)
 export const LocaleContext: React_2.Context<ILocaleContext>;
 
 // @public (undocumented)
-export const locales: ILocale[];
+export const locales: LocaleCollection;
 
 // @public (undocumented)
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
@@ -893,7 +896,7 @@ export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Ele
 // @public (undocumented)
 export type LocalizationProviderProps = {
     initialLocale: string;
-    locales: ILocale[];
+    locales: LocaleCollection;
     storage?: Storage;
     children: React_2.ReactNode;
 };

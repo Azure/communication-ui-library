@@ -20,14 +20,14 @@ export interface ILocale {
 export type LocaleCollection = Record<string, ILocale>;
 
 export interface ILocaleContext {
-  locale: string;
+  locale: ILocale;
   locales: LocaleCollection;
   strings: Record<string, string>;
   setLocale: (locale: string, forceReload?: boolean) => void;
 }
 
 const defaultLocaleContext: ILocaleContext = {
-  locale: 'en-US',
+  locale: locales['en-US'],
   locales: locales,
   strings: defaultStrings,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
@@ -52,24 +52,18 @@ export const LocalizationProvider = (props: LocalizationProviderProps): JSX.Elem
       if (cachedLocale) {
         setLocale(cachedLocale);
       } else {
-        storage.setItem(LOCALE_CACHE_KEY, locale);
+        storage.setItem(LOCALE_CACHE_KEY, locale.locale);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const [locale, _setLocale] = useState(initialLocale);
-  const [strings, setStrings] = useState<Record<string, string>>({});
+  if (!locales[initialLocale]) {
+    throw new Error('Initial locale assigned is not in locale collection assigned.');
+  }
 
-  useEffect(() => {
-    const loc = locales[initialLocale];
-    if (loc) {
-      document.documentElement.lang = loc.locale;
-      document.documentElement.dir = loc.rtl ? 'rtl' : 'ltr';
-      _setLocale(loc.locale);
-    }
-    loadLocaleData(initialLocale).then((strings) => setStrings(strings));
-  }, [initialLocale, locales]);
+  const [locale, _setLocale] = useState<ILocale>(locales[initialLocale]);
+  const [strings, setStrings] = useState<Record<string, string>>({});
 
   const setLocale = useCallback(
     async (locale: string, forceReload?: boolean) => {
@@ -85,7 +79,7 @@ export const LocalizationProvider = (props: LocalizationProviderProps): JSX.Elem
         } else if (loadLocaleData) {
           const localeData = await loadLocaleData(loc.locale);
           setStrings(localeData);
-          _setLocale(loc.locale);
+          _setLocale(loc);
 
           document.documentElement.lang = loc.locale;
           document.documentElement.dir = loc.rtl ? 'rtl' : 'ltr';
@@ -98,6 +92,10 @@ export const LocalizationProvider = (props: LocalizationProviderProps): JSX.Elem
     },
     [locales, storage]
   );
+
+  useEffect(() => {
+    setLocale(locale.locale);
+  }, [locale, setLocale]);
 
   const localeMemo = useMemo<ILocaleContext>(
     () => ({
@@ -112,4 +110,4 @@ export const LocalizationProvider = (props: LocalizationProviderProps): JSX.Elem
   return <LocaleContext.Provider value={localeMemo}>{children}</LocaleContext.Provider>;
 };
 
-export const useLocale = () => useContext(LocaleContext);
+export const useLocale = (): ILocaleContext => useContext(LocaleContext);

@@ -151,7 +151,7 @@ export interface ILocale {
 // @public (undocumented)
 export interface ILocaleContext {
     // (undocumented)
-    locale: string;
+    locale: ILocale;
     // (undocumented)
     locales: LocaleCollection;
     // (undocumented)
