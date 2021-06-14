@@ -1,5 +1,4 @@
-import { DefaultButton } from '@fluentui/react';
-import { useTheme } from '@fluentui/react-theme-provider';
+import { DefaultButton, useTheme } from '@fluentui/react';
 import React from 'react';
 
 export const ThemedButton = (): JSX.Element => {

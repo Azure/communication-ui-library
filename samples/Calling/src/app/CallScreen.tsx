@@ -1,14 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  useCallClient,
-  useCall,
-  useCallingSelector as useSelector,
-  devicePermissionSelector
-} from 'calling-component-bindings';
+import { useCallClient, useCall, useCallingSelector as useSelector } from 'calling-component-bindings';
 import { CallState, GroupLocator, MeetingLocator } from '@azure/communication-calling';
-import { Label, Overlay, Spinner, Stack } from '@fluentui/react';
+import { Overlay, Spinner, Stack } from '@fluentui/react';
 import { VideoStreamOptions } from 'react-components';
 import { CallClientState, StatefulCallClient } from 'calling-stateful-client';
 import React, { useEffect, useState } from 'react';
@@ -21,7 +16,6 @@ import {
   activeContainerClassName,
   containerStyles,
   headerStyles,
-  loadingStyle,
   overlayStyles,
   paneStyles,
   subContainerStyles
@@ -34,6 +28,8 @@ import { mediaGallerySelector } from './selectors/mediaGallerySelector';
 import { complianceBannerSelector } from './selectors/complianceBannerSelector';
 import { PermissionsBanner } from './PermissionsBanner';
 import { permissionsBannerContainerStyle } from './styles/PermissionsBanner.styles';
+import { devicePermissionSelector } from './selectors/devicePermissionSelector';
+import { ScreenSharePopup } from './ScreenSharePopup';
 
 export interface CallScreenProps {
   screenWidth: number;
@@ -41,6 +37,7 @@ export interface CallScreenProps {
   callErrorHandler(customErrorPage?: 'callError' | 'teamsMeetingDenied' | 'removed'): void;
   callLocator: GroupLocator | MeetingLocator;
   isMicrophoneOn: boolean;
+  callInvitationURL?: string;
 }
 
 const spinnerLabel = 'Joining the call...';
@@ -52,7 +49,7 @@ const localVideoViewOption = {
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const [selectedPane, setSelectedPane] = useState(CommandPanelTypes.None);
-  const { callLocator, screenWidth, endCallHandler, isMicrophoneOn } = props;
+  const { callInvitationURL, callLocator, screenWidth, endCallHandler, isMicrophoneOn } = props;
 
   const call = useCall();
   const callClient: StatefulCallClient = useCallClient();
@@ -118,6 +115,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
               setSelectedPane={setSelectedPane}
               endCallHandler={endCallHandler}
               screenWidth={screenWidth}
+              callInvitationURL={callInvitationURL}
             />
           </Stack.Item>
           <Stack.Item>
@@ -130,28 +128,23 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
             />
           </Stack.Item>
           <Stack styles={subContainerStyles} grow horizontal>
-            {!isScreenSharingOn ? (
-              callState === 'Connected' && (
-                <>
-                  <Stack.Item grow styles={activeContainerClassName}>
-                    <MediaGallery {...mediaGalleryProps} onStartLocalVideo={handlers.onStartLocalVideo} />
-                  </Stack.Item>
-                  {selectedPane !== CommandPanelTypes.None &&
-                    (window.innerWidth > MINI_HEADER_WINDOW_WIDTH ? (
-                      <Stack.Item disableShrink styles={paneStyles}>
-                        <CommandPanel selectedPane={selectedPane} />
-                      </Stack.Item>
-                    ) : (
-                      <Overlay styles={overlayStyles}>
-                        <CommandPanel selectedPane={selectedPane} />
-                      </Overlay>
-                    ))}
-                </>
-              )
-            ) : (
-              <Stack horizontalAlign="center" verticalAlign="center" styles={loadingStyle}>
-                <Label>Your screen is being shared</Label>
-              </Stack>
+            {callState === 'Connected' && (
+              <>
+                <Stack.Item grow styles={activeContainerClassName}>
+                  <MediaGallery {...mediaGalleryProps} onStartLocalVideo={handlers.onStartLocalVideo} />
+                </Stack.Item>
+                {selectedPane !== CommandPanelTypes.None &&
+                  (window.innerWidth > MINI_HEADER_WINDOW_WIDTH ? (
+                    <Stack.Item disableShrink styles={paneStyles}>
+                      <CommandPanel selectedPane={selectedPane} />
+                    </Stack.Item>
+                  ) : (
+                    <Overlay styles={overlayStyles}>
+                      <CommandPanel selectedPane={selectedPane} />
+                    </Overlay>
+                  ))}
+                {isScreenSharingOn ? <ScreenSharePopup onStopScreenShare={handlers.onStopScreenShare} /> : <></>}
+              </>
             )}
           </Stack>
         </Stack>

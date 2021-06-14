@@ -2,10 +2,10 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
 <div
-  className="css-81 root-0 body-1"
+  className="css-82 body-0"
 >
   <div
-    className="css-81"
+    className="css-82"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -30,14 +30,14 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
         }
       >
         <div
-          className="css-81 root-2 body-3"
+          className="css-82 body-1"
         >
           <div
-            className="css-81"
+            className="css-82"
             data-uses-unhanded-props={true}
           >
             <div
-              className="ms-Stack css-5"
+              className="ms-Stack css-3"
               style={
                 Object {
                   "background": "#1a1a1a",
@@ -47,19 +47,19 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
               }
             >
               <div
-                className="ms-Stack css-6"
+                className="ms-Stack css-4"
               >
                 <div
-                  className="ms-StackItem css-7"
+                  className="ms-StackItem css-5"
                 >
                   <div
-                    className="css-8"
+                    className="css-6"
                   >
                     <div
-                      className="ms-Stack css-10"
+                      className="ms-Stack css-8"
                     >
                       <button
-                        className="ms-Button ms-Button--default root-11"
+                        className="ms-Button ms-Button--default root-9"
                         data-is-focusable={true}
                         onClick={[Function]}
                         onKeyDown={[Function]}
@@ -70,32 +70,35 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         type="button"
                       >
                         <span
-                          className="ms-Button-flexContainer flexContainer-12"
+                          className="ms-Button-flexContainer flexContainer-10"
                           data-automationid="splitbuttonprimary"
                         >
-                          <svg
-                            height={20}
-                            viewBox="0 0 20 20"
-                            width={20}
-                            xmlns="http://www.w3.org/2000/svg"
+                          <span
+                            aria-hidden={true}
+                            primaryFill="currentColor"
                           >
-                            <path
-                              d="M2.85 2.15a.5.5 0 10-.7.7L3.5 4.21A2.5 2.5 0 002 6.5v7A2.5 2.5 0 004.5 16h6a2.5 2.5 0 002.5-2.3l4.15 4.15a.5.5 0 00.7-.7l-15-15z"
+                            <svg
                               fill="currentColor"
-                            />
-                            <path
-                              d="M16.76 14.43l-1.4-1.2L14 11.88V7.93l2.77-2.31a.75.75 0 011.23.57v7.67c0 .64-.75.99-1.24.57z"
-                              fill="currentColor"
-                            />
-                            <path
-                              d="M13 10.88L6.12 4h4.38A2.5 2.5 0 0113 6.5v4.38z"
-                              fill="currentColor"
-                            />
-                          </svg>
+                              height={20}
+                              viewBox="0 0 20 20"
+                              width={20}
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M2.85 2.15a.5.5 0 10-.7.7L3.5 4.21A2.5 2.5 0 002 6.5v7A2.5 2.5 0 004.5 16h6a2.5 2.5 0 002.5-2.3l4.15 4.15a.5.5 0 00.7-.7l-15-15z"
+                              />
+                              <path
+                                d="M16.76 14.43l-1.4-1.2L14 11.88V7.93l2.77-2.31a.75.75 0 011.23.57v7.67c0 .64-.75.99-1.24.57z"
+                              />
+                              <path
+                                d="M13 10.88L6.12 4h4.38A2.5 2.5 0 0113 6.5v4.38z"
+                              />
+                            </svg>
+                          </span>
                         </span>
                       </button>
                       <button
-                        className="ms-Button ms-Button--default root-11"
+                        className="ms-Button ms-Button--default root-9"
                         data-is-focusable={true}
                         onClick={[Function]}
                         onKeyDown={[Function]}
@@ -106,32 +109,35 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         type="button"
                       >
                         <span
-                          className="ms-Button-flexContainer flexContainer-12"
+                          className="ms-Button-flexContainer flexContainer-10"
                           data-automationid="splitbuttonprimary"
                         >
-                          <svg
-                            height={20}
-                            viewBox="0 0 20 20"
-                            width={20}
-                            xmlns="http://www.w3.org/2000/svg"
+                          <span
+                            aria-hidden={true}
+                            primaryFill="currentColor"
                           >
-                            <path
-                              d="M13 10a3 3 0 01-.1.78L7 4.88A3 3 0 0113 5v5z"
+                            <svg
                               fill="currentColor"
-                            />
-                            <path
-                              d="M7 7.7V10a3 3 0 004.74 2.45l1.07 1.07A4.5 4.5 0 015.5 10a.5.5 0 00-1.01 0 5.5 5.5 0 005 5.48v2.02a.5.5 0 001 0v-2.02a5.48 5.48 0 003.02-1.25l3.63 3.62a.5.5 0 00.7-.7l-15-15a.5.5 0 10-.7.7L7 7.71z"
-                              fill="currentColor"
-                            />
-                            <path
-                              d="M14.8 12.68c.45-.8.7-1.7.7-2.68a.5.5 0 00-1 0c0 .7-.16 1.35-.44 1.94l.74.74z"
-                              fill="currentColor"
-                            />
-                          </svg>
+                              height={20}
+                              viewBox="0 0 20 20"
+                              width={20}
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M13 10a3 3 0 01-.1.78L7 4.88A3 3 0 0113 5v5z"
+                              />
+                              <path
+                                d="M7 7.7V10a3 3 0 004.74 2.45l1.07 1.07A4.5 4.5 0 015.5 10a.5.5 0 00-1.01 0 5.5 5.5 0 005 5.48v2.02a.5.5 0 001 0v-2.02a5.48 5.48 0 003.02-1.25l3.63 3.62a.5.5 0 00.7-.7l-15-15a.5.5 0 10-.7.7L7 7.71z"
+                              />
+                              <path
+                                d="M14.8 12.68c.45-.8.7-1.7.7-2.68a.5.5 0 00-1 0c0 .7-.16 1.35-.44 1.94l.74.74z"
+                              />
+                            </svg>
+                          </span>
                         </span>
                       </button>
                       <button
-                        className="ms-Button ms-Button--default root-11"
+                        className="ms-Button ms-Button--default root-9"
                         data-is-focusable={true}
                         onClick={[Function]}
                         onKeyDown={[Function]}
@@ -142,24 +148,29 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         type="button"
                       >
                         <span
-                          className="ms-Button-flexContainer flexContainer-12"
+                          className="ms-Button-flexContainer flexContainer-10"
                           data-automationid="splitbuttonprimary"
                         >
-                          <svg
-                            height={20}
-                            viewBox="0 0 20 20"
-                            width={20}
-                            xmlns="http://www.w3.org/2000/svg"
+                          <span
+                            aria-hidden={true}
+                            primaryFill="currentColor"
                           >
-                            <path
-                              d="M4 4a2 2 0 00-2 2v8c0 1.1.9 2 2 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm6 10a.5.5 0 01-.5-.5V7.7L7.85 9.36a.5.5 0 11-.7-.7l2.5-2.5c.2-.2.5-.2.7 0l2.5 2.5a.5.5 0 01-.7.7L10.5 7.71v5.79a.5.5 0 01-.5.5z"
+                            <svg
                               fill="currentColor"
-                            />
-                          </svg>
+                              height={20}
+                              viewBox="0 0 20 20"
+                              width={20}
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M4 4a2 2 0 00-2 2v8c0 1.1.9 2 2 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm6 10a.5.5 0 01-.5-.5V7.7L7.85 9.36a.5.5 0 11-.7-.7l2.5-2.5c.2-.2.5-.2.7 0l2.5 2.5a.5.5 0 01-.7.7L10.5 7.71v5.79a.5.5 0 01-.5.5z"
+                              />
+                            </svg>
+                          </span>
                         </span>
                       </button>
                       <button
-                        className="ms-Button ms-Button--default root-19"
+                        className="ms-Button ms-Button--default root-17"
                         data-is-focusable={true}
                         onClick={[Function]}
                         onKeyDown={[Function]}
@@ -170,20 +181,25 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         type="button"
                       >
                         <span
-                          className="ms-Button-flexContainer flexContainer-12"
+                          className="ms-Button-flexContainer flexContainer-10"
                           data-automationid="splitbuttonprimary"
                         >
-                          <svg
-                            height={20}
-                            viewBox="0 0 20 20"
-                            width={20}
-                            xmlns="http://www.w3.org/2000/svg"
+                          <span
+                            aria-hidden={true}
+                            primaryFill="currentColor"
                           >
-                            <path
-                              d="M17.96 10.94l-.16.83c-.15.78-.87 1.3-1.7 1.22l-1.63-.16c-.72-.07-1.25-.59-1.47-1.33-.3-1-.5-1.75-.5-1.75a6.63 6.63 0 00-5 0s-.2.75-.5 1.75c-.2.67-.5 1.26-1.2 1.33l-1.63.16c-.81.08-1.6-.43-1.82-1.2l-.25-.84c-.25-.82-.03-1.7.58-2.28C4.1 7.3 6.67 6.51 9.99 6.5c3.33 0 5.6.78 7.16 2.16.66.58.97 1.46.8 2.28z"
+                            <svg
                               fill="currentColor"
-                            />
-                          </svg>
+                              height={20}
+                              viewBox="0 0 20 20"
+                              width={20}
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M17.96 10.94l-.16.83c-.15.78-.87 1.3-1.7 1.22l-1.63-.16c-.72-.07-1.25-.59-1.47-1.33-.3-1-.5-1.75-.5-1.75a6.63 6.63 0 00-5 0s-.2.75-.5 1.75c-.2.67-.5 1.26-1.2 1.33l-1.63.16c-.81.08-1.6-.43-1.82-1.2l-.25-.84c-.25-.82-.03-1.7.58-2.28C4.1 7.3 6.67 6.51 9.99 6.5c3.33 0 5.6.78 7.16 2.16.66.58.97 1.46.8 2.28z"
+                              />
+                            </svg>
+                          </span>
                           <span
                             style={
                               Object {
@@ -200,7 +216,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                 </div>
               </div>
               <div
-                className="css-55"
+                className="css-56"
                 style={
                   Object {
                     "gridTemplateColumns": "repeat(1, 1fr)",
@@ -209,28 +225,28 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                 }
               >
                 <div
-                  className="ms-Stack css-24"
+                  className="ms-Stack css-22"
                 >
                   <div
-                    className="ms-Stack css-25"
+                    className="ms-Stack css-23"
                   >
                     <div
-                      className="ms-Stack css-27"
+                      className="ms-Stack css-25"
                     >
                       <div
-                        className="ms-Persona ms-Persona--size100 root-28"
+                        className="ms-Persona ms-Persona--size100 root-26"
                       >
                         <div
-                          className="ms-Persona-coin ms-Persona--size100 coin-35"
+                          className="ms-Persona-coin ms-Persona--size100 coin-33"
                           role="presentation"
                         >
                           <div
-                            className="ms-Persona-imageArea imageArea-37"
+                            className="ms-Persona-imageArea imageArea-35"
                             role="presentation"
                           >
                             <div
                               aria-hidden="true"
-                              className="ms-Persona-initials initials-40"
+                              className="ms-Persona-initials initials-38"
                             >
                               <span>
                                 M
@@ -242,7 +258,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                     </div>
                   </div>
                   <span
-                    className="css-79 css-43"
+                    className="css-80 css-41"
                   >
                     Michael
                   </span>

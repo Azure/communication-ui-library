@@ -15,7 +15,8 @@ export const CustomDataModelExample: () => JSX.Element = () => {
   const knobs = useRef({
     connectionString: text(COMPOSITE_STRING_CONNECTIONSTRING, '', 'Server Simulator'),
     displayName: text('Display Name', '', 'Server Simulator'),
-    avatarInitials: text('Avatar initials', 'A B', 'Server Simulator')
+    avatarInitials: text('Avatar initials', 'A B', 'Server Simulator'),
+    callInvitationURL: text('Optional URL to invite other participants to the call', '', 'Server Simulator')
   });
 
   useEffect(() => {
@@ -35,6 +36,7 @@ export const CustomDataModelExample: () => JSX.Element = () => {
           displayName={knobs.current.displayName}
           avatarInitials={knobs.current.avatarInitials}
           {...containerProps}
+          callInvitationURL={knobs.current.callInvitationURL}
         />
       ) : (
         <ConfigHintBanner />

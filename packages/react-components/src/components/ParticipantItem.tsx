@@ -11,10 +11,10 @@ import {
   mergeStyles,
   IStyle,
   ContextualMenu,
-  DirectionalHint
+  DirectionalHint,
+  useTheme
 } from '@fluentui/react';
 import React, { useRef, useState } from 'react';
-import { useTheme } from '@fluentui/react-theme-provider';
 import { BaseCustomStylesProps } from '../types';
 import { MoreHorizontal20Filled, MoreHorizontal20Regular } from '@fluentui/react-icons';
 

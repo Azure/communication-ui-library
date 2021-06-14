@@ -25,10 +25,9 @@
     "lint:quiet": "npm run lint -- --quiet"
   },
   "dependencies": {
-    "@fluentui/react": "^7.117.1",
+    "@fluentui/react": "~8.17.2",
     "@fluentui/react-icons": "~1.1.127",
     "@fluentui/react-northstar": "^0.51.2",
-    "@fluentui/react-theme-provider": "^0.18.0",
     "@uifabric/react-hooks": "~7.13.11",
     "copy-to-clipboard": "~3.3.1",
     "acs-ui-common": "1.0.0-beta.1",
@@ -37,15 +36,17 @@
     "html-to-react": "~1.4.5"
   },
   "peerDependencies": {
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "@types/react": ">=16.8.0 <18.0.0",
+    "@types/react-dom": ">=16.8.0 <18.0.0",
+    "react": ">=16.8.0 <18.0.0",
+    "react-dom": ">=16.8.0 <18.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.7",
-    "@babel/preset-env": "^7.12.7",
+    "@babel/preset-env": "7.13.10",
     "@mdx-js/react": "^1.6.22",
     "@microsoft/api-documenter": "~7.12.11",
-    "@microsoft/api-extractor": "~7.13.2",
+    "@microsoft/api-extractor": "7.16.1-pr1916.1.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react-hooks": "^3.4.2",
     "@types/jest": "^26.0.20",
@@ -67,7 +68,7 @@
     "eslint-config-prettier": "^6.12.0",
     "eslint-plugin-header": "^3.1.0",
     "eslint-plugin-import": "~2.22.1",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react-hooks": "^4.1.2",
     "eslint-plugin-react": "^7.18.3",
@@ -81,10 +82,10 @@
     "node-forge": "0.10.0",
     "prettier": "2.0.5",
     "pretty-quick": "^3.1.0",
-    "react-dom": "^16.13.1",
+    "react-dom": "16.13.1",
     "react-is": "~17.0.1",
     "react-test-renderer": "^16.14.0",
-    "react": "^16.13.1",
+    "react": "~16.14.0",
     "regenerator-runtime": "^0.13.7",
     "rollup": "~2.42.4",
     "source-map-explorer": "^2.5.0",
@@ -93,7 +94,7 @@
     "ts-node": "^9.1.1",
     "typescript": "4.1.5",
     "uuid": "^8.1.0",
-    "webpack": "4.44.2"
+    "webpack": "5.38.1"
   },
   "beachball": {
     "tag": "next",

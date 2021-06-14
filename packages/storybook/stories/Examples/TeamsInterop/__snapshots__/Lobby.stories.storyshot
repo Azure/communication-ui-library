@@ -2,10 +2,10 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 1`] = `
 <div
-  className="css-81 root-0 body-1"
+  className="css-82 body-0"
 >
   <div
-    className="css-81"
+    className="css-82"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -20,13 +20,13 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
       }
     >
       <div
-        className="ms-Stack css-5"
+        className="ms-Stack css-4"
       >
         <div
-          className="ms-Stack css-6"
+          className="ms-Stack css-5"
         />
         <div
-          className="ms-Stack css-7"
+          className="ms-Stack css-6"
         >
           <div
             style={
@@ -43,7 +43,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
             style={
               Object {
                 "left": "50%",
-                "marginTop": "2.125rem",
+                "marginTop": "-2.125rem",
                 "position": "absolute",
                 "top": "50%",
                 "transform": "translate(-50%, -50%)",
@@ -81,13 +81,13 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
             </p>
           </div>
           <div
-            className="css-8"
+            className="css-7"
           >
             <div
-              className="ms-Stack css-10"
+              className="ms-Stack css-9"
             >
               <button
-                className="ms-Button ms-Button--default is-checked root-11"
+                className="ms-Button ms-Button--default is-checked root-10"
                 data-is-focusable={true}
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -98,33 +98,37 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 type="button"
               >
                 <span
-                  className="ms-Button-flexContainer flexContainer-12"
+                  className="ms-Button-flexContainer flexContainer-11"
                   data-automationid="splitbuttonprimary"
                 >
-                  <svg
-                    height={20}
-                    viewBox="0 0 20 20"
-                    width={20}
-                    xmlns="http://www.w3.org/2000/svg"
+                  <span
+                    aria-hidden={true}
+                    primaryFill="currentColor"
                   >
-                    <path
-                      d="M13 6.5A2.5 2.5 0 0010.5 4h-6A2.5 2.5 0 002 6.5v7A2.5 2.5 0 004.5 16h6a2.5 2.5 0 002.5-2.5v-7z"
+                    <svg
                       fill="currentColor"
-                    />
-                    <path
-                      d="M14 7.93v4.15l2.76 2.35a.75.75 0 001.24-.57V6.2a.75.75 0 00-1.23-.57L14 7.93z"
-                      fill="currentColor"
-                    />
-                  </svg>
+                      height={20}
+                      viewBox="0 0 20 20"
+                      width={20}
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M13 6.5A2.5 2.5 0 0010.5 4h-6A2.5 2.5 0 002 6.5v7A2.5 2.5 0 004.5 16h6a2.5 2.5 0 002.5-2.5v-7z"
+                      />
+                      <path
+                        d="M14 7.93v4.15l2.76 2.35a.75.75 0 001.24-.57V6.2a.75.75 0 00-1.23-.57L14 7.93z"
+                      />
+                    </svg>
+                  </span>
                   <label
-                    className="ms-Label root-20"
+                    className="ms-Label root-19"
                   >
                     Turn off
                   </label>
                 </span>
               </button>
               <button
-                className="ms-Button ms-Button--default is-checked root-11"
+                className="ms-Button ms-Button--default is-checked root-10"
                 data-is-focusable={true}
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -135,36 +139,37 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 type="button"
               >
                 <span
-                  className="ms-Button-flexContainer flexContainer-12"
+                  className="ms-Button-flexContainer flexContainer-11"
                   data-automationid="splitbuttonprimary"
                 >
-                  <svg
-                    height={20}
-                    viewBox="0 0 20 20"
-                    width={20}
-                    xmlns="http://www.w3.org/2000/svg"
+                  <span
+                    aria-hidden={true}
+                    primaryFill="currentColor"
                   >
-                    <path
-                      d="M5.5 10a.5.5 0 00-1 0 5.5 5.5 0 005 5.48v2.02a.5.5 0 001 0v-2.02c2.8-.26 5-2.61 5-5.48a.5.5 0 00-1 0 4.5 4.5 0 11-9 0z"
+                    <svg
                       fill="currentColor"
-                    />
-                    <path
-                      d="M13 10a3 3 0 01-6 0V5a3 3 0 016 0v5z"
-                      fill="currentColor"
-                    />
-                  </svg>
+                      height={20}
+                      viewBox="0 0 20 20"
+                      width={20}
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.5 10a.5.5 0 00-1 0 5.5 5.5 0 005 5.48v2.02a.5.5 0 001 0v-2.02c2.8-.26 5-2.61 5-5.48a.5.5 0 00-1 0 4.5 4.5 0 11-9 0z"
+                      />
+                      <path
+                        d="M13 10a3 3 0 01-6 0V5a3 3 0 016 0v5z"
+                      />
+                    </svg>
+                  </span>
                   <label
-                    className="ms-Label root-20"
+                    className="ms-Label root-19"
                   >
                     Mute
                   </label>
                 </span>
               </button>
               <button
-                aria-expanded={false}
-                aria-haspopup={true}
-                aria-owns={null}
-                className="ms-Button ms-Button--default ms-Button--hasMenu root-21"
+                className="ms-Button ms-Button--default root-20"
                 data-is-focusable={true}
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -175,39 +180,41 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 type="button"
               >
                 <span
-                  className="ms-Button-flexContainer flexContainer-12"
+                  className="ms-Button-flexContainer flexContainer-11"
                   data-automationid="splitbuttonprimary"
                 >
-                  <svg
-                    height={20}
-                    viewBox="0 0 20 20"
-                    width={20}
-                    xmlns="http://www.w3.org/2000/svg"
+                  <span
+                    aria-hidden={true}
+                    primaryFill="currentColor"
                   >
-                    <path
-                      d="M6.75 10a1.75 1.75 0 11-3.5 0 1.75 1.75 0 013.5 0z"
+                    <svg
                       fill="currentColor"
-                    />
-                    <path
-                      d="M11.75 10a1.75 1.75 0 11-3.5 0 1.75 1.75 0 013.5 0z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M15 11.75a1.75 1.75 0 100-3.5 1.75 1.75 0 000 3.5z"
-                      fill="currentColor"
-                    />
-                  </svg>
+                      height={20}
+                      viewBox="0 0 20 20"
+                      width={20}
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M6.75 10a1.75 1.75 0 11-3.5 0 1.75 1.75 0 013.5 0z"
+                      />
+                      <path
+                        d="M11.75 10a1.75 1.75 0 11-3.5 0 1.75 1.75 0 013.5 0z"
+                      />
+                      <path
+                        d="M15 11.75a1.75 1.75 0 100-3.5 1.75 1.75 0 000 3.5z"
+                      />
+                    </svg>
+                  </span>
                   <label
-                    className="ms-Label root-20"
+                    className="ms-Label root-19"
                   >
                     Options
                   </label>
                   <i
                     aria-hidden={true}
-                    className="ms-Icon root-37 css-23 ms-Button-menuIcon menuIcon-22"
+                    className="ms-Icon root-37 css-22 ms-Button-menuIcon menuIcon-21"
                     data-icon-name="ChevronDown"
                     hidden={true}
-                    role="presentation"
                     style={
                       Object {
                         "fontFamily": "\\"FabricMDL2Icons\\"",
@@ -219,7 +226,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 </span>
               </button>
               <button
-                className="ms-Button ms-Button--default root-24"
+                className="ms-Button ms-Button--default root-23"
                 data-is-focusable={true}
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -236,24 +243,29 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 type="button"
               >
                 <span
-                  className="ms-Button-flexContainer flexContainer-12"
+                  className="ms-Button-flexContainer flexContainer-11"
                   data-automationid="splitbuttonprimary"
                 >
-                  <svg
-                    height={20}
-                    viewBox="0 0 20 20"
-                    width={20}
-                    xmlns="http://www.w3.org/2000/svg"
+                  <span
+                    aria-hidden={true}
+                    primaryFill="currentColor"
                   >
-                    <path
-                      d="M17.96 10.94l-.16.83c-.15.78-.87 1.3-1.7 1.22l-1.63-.16c-.72-.07-1.25-.59-1.47-1.33-.3-1-.5-1.75-.5-1.75a6.63 6.63 0 00-5 0s-.2.75-.5 1.75c-.2.67-.5 1.26-1.2 1.33l-1.63.16c-.81.08-1.6-.43-1.82-1.2l-.25-.84c-.25-.82-.03-1.7.58-2.28C4.1 7.3 6.67 6.51 9.99 6.5c3.33 0 5.6.78 7.16 2.16.66.58.97 1.46.8 2.28z"
+                    <svg
                       fill="currentColor"
-                    />
-                  </svg>
+                      height={20}
+                      viewBox="0 0 20 20"
+                      width={20}
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M17.96 10.94l-.16.83c-.15.78-.87 1.3-1.7 1.22l-1.63-.16c-.72-.07-1.25-.59-1.47-1.33-.3-1-.5-1.75-.5-1.75a6.63 6.63 0 00-5 0s-.2.75-.5 1.75c-.2.67-.5 1.26-1.2 1.33l-1.63.16c-.81.08-1.6-.43-1.82-1.2l-.25-.84c-.25-.82-.03-1.7.58-2.28C4.1 7.3 6.67 6.51 9.99 6.5c3.33 0 5.6.78 7.16 2.16.66.58.97 1.46.8 2.28z"
+                      />
+                    </svg>
+                  </span>
                   <label
-                    className="ms-Label root-27"
+                    className="ms-Label root-26"
                   >
-                    Leave call
+                    Leave
                   </label>
                 </span>
               </button>

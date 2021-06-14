@@ -6,9 +6,8 @@ import {
   MicrophoneButton,
   FluentThemeProvider
 } from '@azure/communication-react';
-import { Stack, mergeStyles, Text } from '@fluentui/react';
+import { Stack, mergeStyles, Text, useTheme } from '@fluentui/react';
 import { VideoOff20Filled } from '@fluentui/react-icons';
-import { useTheme } from '@fluentui/react-theme-provider';
 import React, { useCallback, useState } from 'react';
 import { useVideoStreams } from '../../../utils';
 

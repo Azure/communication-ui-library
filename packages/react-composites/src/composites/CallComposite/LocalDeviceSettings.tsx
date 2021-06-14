@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { IDropdownOption, Dropdown, Stack } from '@fluentui/react';
+import { IDropdownOption, Dropdown, Stack, useTheme } from '@fluentui/react';
 import {
   dropDownStyles,
   dropDownTitleIconStyles,
@@ -11,8 +11,8 @@ import {
   optionIconStyles
 } from './styles/LocalDeviceSettings.styles';
 import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
-import { useTheme } from '@fluentui/react-theme-provider';
 import { Video20Filled, MicOn20Filled, Speaker220Filled } from '@fluentui/react-icons';
+import { VideoStreamOptions } from 'react-components';
 
 const cameraPermissionDeniedText = 'Your browser is blocking access to your camera.';
 const microphonePermissionDeniedText = 'Your browser is blocking access to your microphone.';
@@ -47,7 +47,7 @@ const getOptionIcon = (type: iconType): JSX.Element | undefined => {
   }
 };
 
-const onRenderTitle = (props: IDropdownOption[] | undefined, iconType: iconType): JSX.Element => {
+const onRenderTitle = (iconType: iconType, props?: IDropdownOption[]): JSX.Element => {
   const icon = props && getOptionIcon(iconType);
   return props ? (
     <div className={dropDownTitleIconStyles}>
@@ -59,6 +59,11 @@ const onRenderTitle = (props: IDropdownOption[] | undefined, iconType: iconType)
   );
 };
 
+const localVideoViewOption = {
+  scalingMode: 'Crop',
+  isMirrored: true
+} as VideoStreamOptions;
+
 export interface LocalDeviceSettingsType {
   cameras: VideoDeviceInfo[];
   microphones: AudioDeviceInfo[];
@@ -66,9 +71,9 @@ export interface LocalDeviceSettingsType {
   selectedCamera?: VideoDeviceInfo;
   selectedMicrophone?: AudioDeviceInfo;
   selectedSpeaker?: AudioDeviceInfo;
-  microphonePermissionGranted: boolean;
-  cameraPermissionGranted: boolean;
-  onSelectCamera: (device: VideoDeviceInfo) => Promise<void>;
+  microphonePermissionGranted: boolean | undefined;
+  cameraPermissionGranted: boolean | undefined;
+  onSelectCamera: (device: VideoDeviceInfo, options?: VideoStreamOptions) => Promise<void>;
   onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
   onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
 }
@@ -88,10 +93,16 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
       <Dropdown
         label={cameraLabel}
         placeholder={defaultPlaceHolder}
-        options={props.cameraPermissionGranted ? getDropDownList(props.cameras) : [{ key: 'denied', text: '' }]}
+        options={
+          props.cameraPermissionGranted ? getDropDownList(props.cameras) : [{ key: 'deniedOrUnknown', text: '' }]
+        }
         styles={dropDownStyles(theme)}
         disabled={!props.cameraPermissionGranted}
-        errorMessage={props.cameraPermissionGranted ? undefined : cameraPermissionDeniedText}
+        errorMessage={
+          props.cameraPermissionGranted === undefined || props.cameraPermissionGranted
+            ? undefined
+            : cameraPermissionDeniedText
+        }
         defaultSelectedKey={
           props.cameraPermissionGranted
             ? props.selectedCamera
@@ -99,20 +110,28 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
               : props.cameras
               ? props.cameras[0]?.id
               : ''
-            : 'denied'
+            : 'deniedOrUnknown'
         }
         onChange={(event, option, index) => {
-          props.onSelectCamera(props.cameras[index ?? 0]);
+          props.onSelectCamera(props.cameras[index ?? 0], localVideoViewOption);
         }}
-        onRenderTitle={(props: IDropdownOption[] | undefined) => onRenderTitle(props, 'Camera')}
+        onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Camera', props)}
       />
       <Dropdown
         label={soundLabel}
         placeholder={defaultPlaceHolder}
         styles={dropDownStyles(theme)}
         disabled={!props.microphonePermissionGranted}
-        errorMessage={props.microphonePermissionGranted ? undefined : microphonePermissionDeniedText}
-        options={props.microphonePermissionGranted ? getDropDownList(props.microphones) : [{ key: 'denied', text: '' }]}
+        errorMessage={
+          props.microphonePermissionGranted === undefined || props.microphonePermissionGranted
+            ? undefined
+            : microphonePermissionDeniedText
+        }
+        options={
+          props.microphonePermissionGranted
+            ? getDropDownList(props.microphones)
+            : [{ key: 'deniedOrUnknown', text: '' }]
+        }
         defaultSelectedKey={
           props.microphonePermissionGranted
             ? props.selectedMicrophone
@@ -120,7 +139,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
               : props.microphones
               ? props.microphones[0]?.id
               : ''
-            : 'denied'
+            : 'deniedOrUnknown'
         }
         onChange={(
           event: React.FormEvent<HTMLDivElement>,
@@ -129,7 +148,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
         ) => {
           props.onSelectMicrophone(props.microphones[index ?? 0]);
         }}
-        onRenderTitle={(props: IDropdownOption[] | undefined) => onRenderTitle(props, 'Microphone')}
+        onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Microphone', props)}
       />
       <Dropdown
         placeholder={defaultPlaceHolder}
@@ -146,7 +165,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
         ) => {
           props.onSelectSpeaker(props.speakers[index ?? 0]);
         }}
-        onRenderTitle={(props: IDropdownOption[] | undefined) => onRenderTitle(props, 'Speaker')}
+        onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Speaker', props)}
       />
     </Stack>
   );

@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { DefaultButton, Separator, Stack } from '@fluentui/react';
-import { Settings20Filled, Settings20Regular, People20Filled, People20Regular } from '@fluentui/react-icons';
+import { Settings20Filled, Settings20Regular } from '@fluentui/react-icons';
 import React from 'react';
 import {
   controlButtonStyles,
@@ -22,15 +22,10 @@ export interface HeaderProps {
   setSelectedPane(selectedPane: CommandPanelTypes): void;
   endCallHandler(): void;
   screenWidth: number;
+  callInvitationURL?: string;
 }
 
 export const Header = (props: HeaderProps): JSX.Element => {
-  const togglePeople = (selectedPane: string, setSelectedPane: (pane: CommandPanelTypes) => void): void => {
-    return selectedPane !== CommandPanelTypes.People
-      ? setSelectedPane(CommandPanelTypes.People)
-      : setSelectedPane(CommandPanelTypes.None);
-  };
-
   const toggleOptions = (selectedPane: string, setSelectedPane: (pane: CommandPanelTypes) => void): void => {
     return selectedPane !== CommandPanelTypes.Settings
       ? setSelectedPane(CommandPanelTypes.Settings)
@@ -56,19 +51,6 @@ export const Header = (props: HeaderProps): JSX.Element => {
           }}
           styles={controlButtonStyles}
         />
-        <DefaultButton
-          onRenderIcon={() => {
-            return props.selectedPane === CommandPanelTypes.People ? (
-              <People20Filled primaryFill="currentColor" className={itemSelectedStyle} />
-            ) : (
-              <People20Regular primaryFill="currentColor" />
-            );
-          }}
-          onClick={() => {
-            togglePeople(props.selectedPane, props.setSelectedPane);
-          }}
-          styles={controlButtonStyles}
-        />
       </Stack.Item>
       <Stack.Item>
         {props.screenWidth > MINI_HEADER_WINDOW_WIDTH && (
@@ -81,6 +63,7 @@ export const Header = (props: HeaderProps): JSX.Element => {
         <CallControls
           onEndCallClick={props.endCallHandler}
           compressedMode={props.screenWidth <= MINI_HEADER_WINDOW_WIDTH}
+          callInvitationURL={props?.callInvitationURL}
         />
       </Stack.Item>
     </Stack>

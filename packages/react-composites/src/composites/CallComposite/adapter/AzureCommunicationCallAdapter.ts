@@ -210,7 +210,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     }
   }
 
-  public async createStreamView(remoteUserId?: string, options?: VideoStreamOptions | undefined): Promise<void> {
+  public async createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void> {
     if (remoteUserId === undefined) {
       await this.handlers.onCreateLocalStreamView(options);
     } else {
@@ -240,8 +240,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.emitter.emit('callEnded', { callId });
   }
 
-  public async setCamera(device: VideoDeviceInfo): Promise<void> {
-    await this.handlers.onSelectCamera(device);
+  public async setCamera(device: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void> {
+    await this.handlers.onSelectCamera(device, options);
   }
 
   public async setMicrophone(device: AudioDeviceInfo): Promise<void> {
@@ -252,8 +252,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     await this.handlers.onSelectSpeaker(device);
   }
 
-  public async onToggleCamera(): Promise<void> {
-    await this.handlers.onToggleCamera();
+  public async onToggleCamera(options?: VideoStreamOptions): Promise<void> {
+    await this.handlers.onToggleCamera(options);
   }
 
   //TODO: seperate onToggleCamera logic in Handler

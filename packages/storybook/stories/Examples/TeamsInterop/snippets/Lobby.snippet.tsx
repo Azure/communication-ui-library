@@ -7,7 +7,7 @@ import {
   MicrophoneButton,
   OptionsButton
 } from '@azure/communication-react';
-import { useTheme } from '@fluentui/react-theme-provider';
+import { useTheme } from '@fluentui/react';
 import React from 'react';
 
 export interface LobbyProps {
@@ -56,7 +56,7 @@ export const Lobby = (props: LobbyProps): JSX.Element => {
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          marginTop: '2.125rem'
+          marginTop: '-2.125rem'
         }}
       >
         <p

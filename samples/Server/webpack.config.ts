@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import path from 'path';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 
