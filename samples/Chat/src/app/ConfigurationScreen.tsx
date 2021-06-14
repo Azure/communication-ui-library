@@ -21,9 +21,9 @@ import {
 import { ChatIcon } from '@fluentui/react-icons-northstar';
 import { DisplayNameField } from './DisplayNameField';
 import { sendEmojiRequest } from './utils/setEmoji';
-import { getToken } from 'app/utils/getToken';
+import { getToken } from './utils/getToken';
 import { getThreadId } from './utils/getThreadId';
-import { joinThread } from 'app/utils/joinThread';
+import { joinThread } from './utils/joinThread';
 import { getEndpointUrl } from './utils/getEndpointUrl';
 import { checkThreadValid } from './utils/checkThreadValid';
 

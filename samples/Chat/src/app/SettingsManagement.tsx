@@ -16,7 +16,7 @@ import {
   settingsTopicWarningStyle
 } from './styles/SettingsManagement.styles';
 import { inputBoxTextStyle } from './styles/SidePanel.styles';
-import { ThemeSelector } from 'app/theming/ThemeSelector';
+import { ThemeSelector } from './theming/ThemeSelector';
 import { ENTER_KEY, MAXIMUM_LENGTH_OF_TOPIC } from './utils/constants';
 
 export type SettingsManagementProps = {

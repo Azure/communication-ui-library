@@ -1,0 +1,73 @@
+{
+	"private": true,
+	"name": "@microsoft/api-extractor",
+	"version": "7.16.1-pr1916.1.0",
+	"description": "Analyze the exported API for a TypeScript library and generate reviews, documentation, and .d.ts rollups",
+	"keywords": [
+		"typescript",
+		"API",
+		"JSDoc",
+		"AEDoc",
+		"TSDoc",
+		"generate",
+		"documentation",
+		"declaration",
+		"dts",
+		".d.ts",
+		"rollup",
+		"bundle",
+		"compiler",
+		"alpha",
+		"beta"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/microsoft/rushstack/tree/master/apps/api-extractor"
+	},
+	"homepage": "https://api-extractor.com",
+	"main": "lib/index.js",
+	"typings": "dist/rollup.d.ts",
+	"bin": {
+		"api-extractor": "./bin/api-extractor"
+	},
+	"license": "MIT",
+	"dependencies": {
+		"@microsoft/api-extractor-model": "7.13.3",
+		"@microsoft/tsdoc-config": "~0.15.2",
+		"@microsoft/tsdoc": "0.13.2",
+		"@rushstack/node-core-library": "3.39.0",
+		"@rushstack/rig-package": "0.2.12",
+		"@rushstack/ts-command-line": "4.7.10",
+		"colors": "~1.2.1",
+		"lodash": "~4.17.15",
+		"resolve": "~1.17.0",
+		"semver": "~7.3.0",
+		"source-map": "~0.6.1",
+		"typescript": "4.1.5"
+	},
+	"devDependencies": {
+		"@rushstack/eslint-config": "2.3.4",
+		"@rushstack/heft": "0.28.0",
+		"@rushstack/heft-node-rig": "1.0.8",
+		"@types/heft-jest": "1.0.1",
+		"@types/lodash": "4.14.116",
+		"@types/node": "10.17.13",
+		"@types/resolve": "1.17.1",
+		"@types/semver": "7.3.5",
+		"eslint-config-prettier": "^6.12.0",
+		"eslint-plugin-header": "^3.1.0",
+		"eslint-plugin-import": "~2.22.1",
+		"eslint-plugin-prettier": "^3.1.4",
+		"eslint": "^7.7.0",
+		"prettier": "2.0.5"
+	},
+	"scripts": {
+		"build": "",
+		"build:watch": "",
+		"test": "",
+		"test:coverage": "",
+		"lint": "",
+		"lint:fix": "",
+		"lint:quiet": ""
+	}
+}
