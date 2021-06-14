@@ -52,27 +52,6 @@ module.exports = {
       env: {
         jest: true
       }
-    },
-    {
-      // remove ban on files affected by https://github.com/microsoft/rushstack/pull/1916.
-      // This should be removed once this issue is fixed.
-      files: [
-        'videoGallerySelector.ts',
-        'callControlSelectors.ts',
-        'participantListSelector.ts',
-        'localPreviewSelector.ts',
-        'mediaGallerySelector.ts',
-        'createHandlers.ts',
-        'lobbySelector.ts',
-        'complianceBannerSelector.ts',
-        'devicePermissionSelector.ts',
-        'usePropsFor.ts',
-        'useHandlers.ts'
-      ],
-      rules: {
-        '@typescript-eslint/ban-ts-comment': 'off',
-        '@typescript-eslint/no-unused-vars': 'off'
-      }
     }
   ]
 };

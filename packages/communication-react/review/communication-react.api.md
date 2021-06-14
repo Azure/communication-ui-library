@@ -35,6 +35,8 @@ import { IContextualMenuItem } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
+import { OutputParametricSelector } from 'reselect';
+import { OutputSelector } from 'reselect';
 import { PartialTheme } from '@fluentui/react';
 import { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaPresence } from '@fluentui/react';
@@ -335,6 +337,7 @@ export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoini
 export type CallCompositeProps = {
     adapter: CallAdapter;
     fluentTheme?: PartialTheme | Theme;
+    callInvitationURL?: string;
     onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
 };
 
@@ -576,7 +579,9 @@ export type ChatThreadClientProviderProps = {
 
 // @public (undocumented)
 export type ChatThreadClientState = {
-    chatMessages: Map<string, ChatMessageWithStatus>;
+    chatMessages: {
+        [key: string]: ChatMessageWithStatus;
+    };
     participants: Map<string, ChatParticipant>;
     threadId: string;
     properties?: ChatThreadProperties;
@@ -591,11 +596,13 @@ export type ChatThreadProperties = {
 };
 
 // @public (undocumented)
-export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
+export const chatThreadSelector: OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     userId: string;
     showMessageStatus: boolean;
     messages: Message<"chat">[];
-}, (res1: string, res2: Map<string, ChatMessageWithStatus>, res3: Date, res4: boolean) => {
+}, (res1: string, res2: {
+    [key: string]: ChatMessageWithStatus;
+}, res3: Date, res4: boolean) => {
     userId: string;
     showMessageStatus: boolean;
     messages: Message<"chat">[];
@@ -763,7 +770,7 @@ export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdent
 export const getCall: (state: CallClientState, props: CallingBaseSelectorProps) => CallState | undefined;
 
 // @public (undocumented)
-export type GetCallingSelector<Component> = AreEqual<Component, typeof VideoGallery> extends true ? typeof videoGallerySelector : AreEqual<Component, typeof OptionsButton> extends true ? typeof optionsButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? typeof microphoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? typeof cameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? typeof screenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof participantListSelector : AreEqual<Component, typeof EndCallButton> extends true ? typeof emptySelector : never;
+export type GetCallingSelector<Component> = AreEqual<Component, typeof VideoGallery> extends true ? typeof videoGallerySelector : AreEqual<Component, typeof OptionsButton> extends true ? typeof optionsButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? typeof microphoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? typeof cameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? typeof screenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof participantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? typeof participantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? typeof emptySelector : never;
 
 // @public (undocumented)
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
@@ -1074,6 +1081,21 @@ export interface ParticipantsButtonProps extends IButtonProps {
     styles?: ParticipantsButtonStylesProps;
 }
 
+// @public (undocumented)
+export const participantsButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
+    participantListProps: {
+        participants: CallParticipant[];
+        myUserId: string;
+    };
+    callInvitationURL?: string | undefined;
+}, (res1: string, res2: string | undefined, res3: CallState | undefined) => {
+    participantListProps: {
+        participants: CallParticipant[];
+        myUserId: string;
+    };
+    callInvitationURL?: string | undefined;
+}>;
+
 // @public
 export interface ParticipantsButtonStylesProps extends ButtonCustomStylesProps {
     participantListContainerStyle?: IStyle;
@@ -1148,7 +1170,7 @@ export interface SendBoxProps {
 }
 
 // @public (undocumented)
-export const sendBoxSelector: reselect.OutputSelector<ChatClientState, {
+export const sendBoxSelector: OutputSelector<ChatClientState, {
     displayName: string;
     userId: string;
 }, (res1: string, res2: string) => {
@@ -1360,7 +1382,7 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
 }
 
 // @public (undocumented)
-export const videoGallerySelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
+export const videoGallerySelector: OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
     localParticipant: {
         userId: string;

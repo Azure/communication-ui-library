@@ -2,25 +2,22 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-
 import { Stack } from '@fluentui/react';
 import {
   fullHeightStyles,
   paneHeaderStyle,
   paneHeaderTextStyle,
   settingsContainerStyle
-} from 'app/styles/CommandPanel.styles';
-import { ThemeSelector } from 'app/theming/ThemeSelector';
-import { Footer } from './Footer';
-import { useCallingSelector as useSelector, getCallingSelector, useCallingPropsFor } from 'calling-component-bindings';
+} from './styles/CommandPanel.styles';
+import { ThemeSelector } from './theming/ThemeSelector';
+import { useCallingSelector as useSelector, getCallingSelector } from 'calling-component-bindings';
 import { LocalDeviceSettings } from './LocalDeviceSettings';
-import { OptionsButton, ParticipantList } from 'react-components';
+import { OptionsButton } from 'react-components';
 import { useAzureCommunicationHandlers } from './hooks/useAzureCommunicationHandlers';
 import { devicePermissionSelector } from './selectors/devicePermissionSelector';
 
 export enum CommandPanelTypes {
   None = 'none',
-  People = 'People',
   Settings = 'Settings'
 }
 
@@ -29,8 +26,6 @@ export interface CommandPanelProps {
 }
 
 export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
-  const participantListProps = useCallingPropsFor(ParticipantList);
-
   const options = useSelector(getCallingSelector(OptionsButton), { callId: '' });
   const handlers = useAzureCommunicationHandlers();
   const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useSelector(devicePermissionSelector);
@@ -40,16 +35,6 @@ export const CommandPanel = (props: CommandPanelProps): JSX.Element => {
       <Stack.Item className={paneHeaderStyle}>
         <div className={paneHeaderTextStyle}>{props.selectedPane}</div>
       </Stack.Item>
-      {props.selectedPane === CommandPanelTypes.People && (
-        <Stack.Item styles={fullHeightStyles}>
-          <ParticipantList {...participantListProps} onParticipantRemove={handlers.onParticipantRemove} />
-        </Stack.Item>
-      )}
-      {props.selectedPane === CommandPanelTypes.People && (
-        <Stack.Item>
-          <Footer />
-        </Stack.Item>
-      )}
       {props.selectedPane === CommandPanelTypes.Settings && (
         <Stack.Item>
           <div className={settingsContainerStyle}>

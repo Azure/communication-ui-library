@@ -26,14 +26,14 @@ jobs:
         run: git checkout ${{ github.event.inputs.release-branch }}
 
       # Ensure node version is great enough
-      - name: Use Node.js v12.x
+      - name: Use Node.js v14.x
         uses: actions/setup-node@v1
         with:
-          node-version: '12.x'
+          node-version: '14.x'
 
       # Install dependencies
       - name: Install rush
-        run: npm install -g @microsoft/rush
+        run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
 
