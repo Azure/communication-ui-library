@@ -1,12 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  TypingIndicator as TypingIndicatorComponent,
-  CommunicationParticipant,
-  useLocale
-} from '@azure/communication-react';
-import { Persona, Stack, mergeStyles } from '@fluentui/react';
+import { TypingIndicator as TypingIndicatorComponent } from '@azure/communication-react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
 import { object } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
@@ -73,24 +68,7 @@ const TypingIndicatorStory: () => JSX.Element = () => {
       displayName: 'User2'
     }
   ]);
-  const { locale } = useLocale();
-  return (
-    <Stack horizontal className={mergeStyles({ direction: locale?.rtl ? 'rtl' : 'ltr' })}>
-      <TypingIndicatorComponent
-        typingUsers={typingUsers}
-        // onRenderUsers={(users: CommunicationParticipant[]) => {
-        //   return (
-        //     <Stack horizontal>
-        //       {users.map((user: CommunicationParticipant, index: number) => (
-        //         <Persona text={user.displayName} key={index} />
-        //       ))}
-        //     </Stack>
-        //   );
-        // }}
-        styles={{ typingUserDisplayName: { color: 'blue' }, typingString: { color: 'red' } }}
-      />
-    </Stack>
-  );
+  return <TypingIndicatorComponent typingUsers={typingUsers} />;
 };
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.

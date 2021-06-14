@@ -37,8 +37,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
   }, [hangUpButtonProps, onEndCallClick]);
 
   const strings = useLocale().strings;
-  console.log('strings: ' + JSON.stringify(strings));
-  const endCallButtonText = strings.end_call_button_text;
 
   return (
     <ControlBar styles={controlBarStyle}>
@@ -50,7 +48,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
         {...hangUpButtonProps}
         onHangUp={onHangUp}
         styles={!compressedMode ? groupCallLeaveButtonStyle : groupCallLeaveButtonCompressedStyle}
-        text={!compressedMode ? endCallButtonText : ''}
+        text={!compressedMode ? strings.end_call_button_text : ''}
       />
     </ControlBar>
   );

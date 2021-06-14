@@ -26,7 +26,7 @@ export const CallConfiguration = (props: CallConfigurationProps): JSX.Element =>
 
   const mainContainerStyle = useMemo(() => {
     return getMainContainerStyle(locale.rtl);
-  }, [locale]);
+  }, [locale.rtl]);
 
   return (
     <Stack className={mainContainerStyle} horizontalAlign="center" verticalAlign="center" grow>
