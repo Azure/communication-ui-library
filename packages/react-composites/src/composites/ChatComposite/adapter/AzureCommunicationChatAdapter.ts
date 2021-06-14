@@ -29,7 +29,7 @@ import {
 import { withErrorHandling } from '../../../utils/ErrorUtils';
 
 // Context of Chat, which is a centralized context for all state updates
-export class ChatContext {
+class ChatContext {
   private emitter: EventEmitter = new EventEmitter();
   private state: ChatState;
   private threadId: string;

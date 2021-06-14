@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallContext } from '../composites/CallComposite/adapter/AzureCommunicationCallAdapter';
-import { ChatContext } from '../composites/ChatComposite/adapter/AzureCommunicationChatAdapter';
 import EventEmitter from 'events';
 
 /**
@@ -15,7 +13,7 @@ import EventEmitter from 'events';
  * @returns
  */
 export async function withErrorHandling<T>(
-  context: ChatContext | CallContext,
+  context: { setError: (error: Error) => void },
   emitter: EventEmitter,
   functionToWrap: () => Promise<T>,
   defaultReturn: Promise<T>

@@ -46,7 +46,7 @@ import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { withErrorHandling } from '../../../utils/ErrorUtils';
 
 // Context of Chat, which is a centralized context for all state updates
-export class CallContext {
+class CallContext {
   private emitter: EventEmitter = new EventEmitter();
   private state: CallAdapterState;
   private callId: string | undefined;
