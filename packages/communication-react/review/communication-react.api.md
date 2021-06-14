@@ -66,23 +66,23 @@ export type AreEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 export class AzureCommunicationCallAdapter implements CallAdapter {
     constructor(callClient: StatefulCallClient, locator: TeamsMeetingLinkLocator | GroupCallLocator, callAgent: CallAgent, deviceManager: StatefulDeviceManager);
     // (undocumented)
-    askDevicePermission(constrain: PermissionConstraints): Promise<void>;
+    askDevicePermission: (constrain: PermissionConstraints) => Promise<void>;
     // (undocumented)
-    createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    createStreamView: (remoteUserId?: string | undefined, options?: VideoStreamOptions | undefined) => Promise<void>;
     // (undocumented)
-    dispose(): void;
+    dispose: () => Promise<void>;
     // (undocumented)
-    disposeStreamView(remoteUserId?: string): Promise<void>;
+    disposeStreamView: (remoteUserId?: string | undefined) => Promise<void>;
     // (undocumented)
-    getState(): CallAdapterState;
+    getState: () => CallAdapterState;
     // (undocumented)
-    isTeamsCall(): boolean;
+    isTeamsCall: () => boolean;
     // (undocumented)
-    joinCall(microphoneOn?: boolean): Promise<void>;
+    joinCall: (microphoneOn?: boolean | undefined) => Promise<void>;
     // (undocumented)
-    leaveCall(): Promise<void>;
+    leaveCall: () => Promise<void>;
     // (undocumented)
-    mute(): Promise<void>;
+    mute: () => Promise<void>;
     // (undocumented)
     off(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
     // (undocumented)
@@ -102,7 +102,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     off(event: 'error', errorHandler: (e: Error) => void): void;
     // (undocumented)
-    offStateChange(handler: (state: CallAdapterState) => void): void;
+    offStateChange: (handler: (state: CallAdapterState) => void) => void;
     // (undocumented)
     on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
     // (undocumented)
@@ -122,37 +122,37 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     on(event: 'error', errorHandler: (e: Error) => void): void;
     // (undocumented)
-    onStateChange(handler: (state: CallAdapterState) => void): void;
+    onStateChange: (handler: (state: CallAdapterState) => void) => void;
     // (undocumented)
-    onToggleCamera(options?: VideoStreamOptions): Promise<void>;
+    onToggleCamera: (options?: VideoStreamOptions | undefined) => Promise<void>;
     // (undocumented)
-    queryCameras(): Promise<VideoDeviceInfo[]>;
+    queryCameras: () => Promise<VideoDeviceInfo[]>;
     // (undocumented)
-    queryMicrophones(): Promise<AudioDeviceInfo[]>;
+    queryMicrophones: () => Promise<AudioDeviceInfo[]>;
     // (undocumented)
-    querySpeakers(): Promise<AudioDeviceInfo[]>;
+    querySpeakers: () => Promise<AudioDeviceInfo[]>;
     // (undocumented)
-    removeParticipant(userId: string): Promise<void>;
+    removeParticipant: (userId: string) => Promise<void>;
     // (undocumented)
-    setCamera(device: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
+    setCamera: (device: VideoDeviceInfo, options?: VideoStreamOptions | undefined) => Promise<void>;
     // (undocumented)
-    setMicrophone(device: AudioDeviceInfo): Promise<void>;
+    setMicrophone: (device: AudioDeviceInfo) => Promise<void>;
     // (undocumented)
     setPage: (page: CallCompositePage) => void;
     // (undocumented)
-    setSpeaker(device: AudioDeviceInfo): Promise<void>;
+    setSpeaker: (device: AudioDeviceInfo) => Promise<void>;
     // (undocumented)
-    startCall(participants: string[]): Call | undefined;
+    startCall: (participants: string[]) => Call | undefined;
     // (undocumented)
-    startCamera(): Promise<void>;
+    startCamera: () => Promise<void>;
     // (undocumented)
-    startScreenShare(): Promise<void>;
+    startScreenShare: () => Promise<void>;
     // (undocumented)
-    stopCamera(): Promise<void>;
+    stopCamera: () => Promise<void>;
     // (undocumented)
-    stopScreenShare(): Promise<void>;
+    stopScreenShare: () => Promise<void>;
     // (undocumented)
-    unmute(): Promise<void>;
+    unmute: () => Promise<void>;
     }
 
 // @public
@@ -170,7 +170,7 @@ export interface CallAdapter {
     // (undocumented)
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // (undocumented)
-    dispose(): void;
+    dispose(): Promise<void>;
     // (undocumented)
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // (undocumented)
