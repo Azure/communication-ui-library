@@ -28,53 +28,59 @@ jobs:
           node-version: '14.x'
 
       # Install dependencies
-      - name: Install rush
-        run: npm install -g @microsoft/rush@5.47.0
-      - name: Install dependencies
-        run: rush install
+      # - name: Install rush
+      #   run: npm install -g @microsoft/rush@5.47.0
+      # - name: Install dependencies
+      #   run: rush install
 
-      # Perform changelog check
-      - name: Check the necessary change file has been submitted
-        run: rush changelog:check
+      # # Perform changelog check
+      # - name: Check the necessary change file has been submitted
+      #   run: rush changelog:check
 
-      # Perform lint check
-      - name: Run linter
-        run: rush lint
+      # # Perform lint check
+      # - name: Run linter
+      #   run: rush lint
 
-      # Builds
-      - name: Build Packages and Samples
-        run: rush build
+      # # Builds
+      # - name: Build Packages and Samples
+      #   run: rush build
 
-      # Verify no uncommitted api extractor changes
-      - name: API Extractor Check
-        run: |
-          DIFF_FILE="APIChanges.diff"
-          git diff --output=$DIFF_FILE --exit-code **/review/**.md
-          DIFF_STATUS=$?
-          echo "Exit code for git diff for changes in api review files: $DIFF_STATUS"
-          if [$DIFF_STATUS -ne 0]
-          then
-              echo "API CHANGES FOUND - PLEASE RUN 'rushx api-extractor' IN THE APPROPRIATE PACKAGE(S)"
-              echo "Changes:"
-              cat $DIFF_FILE
-              exit 1
-          else
-            echo "Success, no new api changes found."
-          fi
+      # # Verify no uncommitted api extractor changes
+      # - name: API Extractor Check
+      #   run: |
+      #     DIFF_FILE="APIChanges.diff"
+      #     git diff --output=$DIFF_FILE --exit-code **/review/**.md
+      #     DIFF_STATUS=$?
+      #     echo "Exit code for git diff for changes in api review files: $DIFF_STATUS"
+      #     if [$DIFF_STATUS -ne 0]
+      #     then
+      #         echo "API CHANGES FOUND - PLEASE RUN 'rushx api-extractor' IN THE APPROPRIATE PACKAGE(S)"
+      #         echo "Changes:"
+      #         cat $DIFF_FILE
+      #         exit 1
+      #     else
+      #       echo "Success, no new api changes found."
+      #     fi
 
-      # Run tests
-      - name: Run Tests
-        run: rush test
-        env:
-          CI: true
+      # # Run tests
+      # - name: Run Tests
+      #   run: rush test
+      #   env:
+      #     CI: true
 
       # Create a GitHub issue if the CI failed when running on the `main` branch
       - name: Create issue if main branch CI failed
         id: create-issue
         if: failure() && github.ref == 'refs/heads/main'
-        uses: JasonEtco/create-an-issue@v2.4.0
-        with:
-          filename: .github/failed_ci_build_template.md
-          update_existing: true
+        run: |
+          # check for an issue that is already open
+          curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/search/issues?q=org:Azure+repo:communication-ui-library+label:CI_FAILURE+state:open > $HOME/ci_issues.json
+          issue_count=$(jq -r '.total_count' $HOME/ci_issues.json)
+          if [$issue_count -lt 0]
+          then
+            echo "No need to create new issue, one already exists"
+          else
+            curl -X POST -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/Azure/communication-ui-library/issues -d '{"title":"TEST_IGNORE Main branch CI Failed", "body": "Main CI Pipeline has failed. Please investigate."}'
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
