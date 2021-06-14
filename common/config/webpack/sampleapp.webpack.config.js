@@ -23,7 +23,7 @@ const webpackConfig = (sampleAppDir, env) => ({
     }
   },
   output: {
-    path: path.join(sampleAppDir, '/dist'),
+    path: path.join(sampleAppDir, env.production ? '/dist/build' : 'dist'),
     filename: 'build.js'
   },
   module: {
