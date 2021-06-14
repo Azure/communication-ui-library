@@ -80,7 +80,7 @@ jobs:
           then
             echo "No need to create new issue, one already exists"
           else
-            curl -X POST -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/Azure/communication-ui-library/issues -d '{"title":"[TEST IGNORE] Main branch CI Failed", "body": "Main CI Pipeline has failed. Please investigate.", "labels":"[CI_FAILURE]"}'
+            curl -X POST -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/Azure/communication-ui-library/issues -d '{"title":"[TEST IGNORE] Main branch CI Failed", "body": "Main CI Pipeline has failed. Please investigate.", "labels":["CI_FAILURE"]}'
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
