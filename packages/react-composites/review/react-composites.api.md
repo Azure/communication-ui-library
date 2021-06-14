@@ -8,7 +8,6 @@ import { AudioDeviceInfo } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallClientOptions } from '@azure/communication-calling';
-import { CallClientState } from 'calling-stateful-client';
 import { CallState } from 'calling-stateful-client';
 import type { ChatMessage } from '@azure/communication-chat';
 import type { ChatParticipant } from '@azure/communication-chat';
@@ -245,31 +244,6 @@ export type CallCompositeProps = {
     fluentTheme?: PartialTheme | Theme;
     onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
 };
-
-// @public (undocumented)
-export class CallContext {
-    constructor(clientState: CallClientState);
-    // (undocumented)
-    getState(): CallAdapterState;
-    // (undocumented)
-    offStateChange(handler: (_uiState: CallAdapterState) => void): void;
-    // (undocumented)
-    onStateChange(handler: (_uiState: CallAdapterState) => void): void;
-    // (undocumented)
-    setCallId(callId: string | undefined): void;
-    // (undocumented)
-    setEndedCall(call: CallState): void;
-    // (undocumented)
-    setError(error: Error): void;
-    // (undocumented)
-    setIsLocalMicrophoneEnabled(isLocalPreviewMicrophoneEnabled: boolean): void;
-    // (undocumented)
-    setPage(page: CallCompositePage): void;
-    // (undocumented)
-    setState(state: CallAdapterState): void;
-    // (undocumented)
-    updateClientState(clientState: CallClientState): void;
-}
 
 // @public (undocumented)
 export type CallEndedListener = (event: {
