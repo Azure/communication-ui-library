@@ -39,13 +39,13 @@ export const LocaleContext = createContext<ILocaleContext>(defaultLocaleContext)
 export type LocalizationProviderProps = {
   initialLocale: string;
   locales: LocaleCollection;
-  localeDataLoader?: (locale: string) => Promise<Record<string, string>>;
+  localeStringsLoader?: (locale: string) => Promise<Record<string, string>>;
   storage?: Storage;
   children: React.ReactNode;
 };
 
 export const LocalizationProvider = (props: LocalizationProviderProps): JSX.Element => {
-  const { children, initialLocale, locales, storage, localeDataLoader } = props;
+  const { children, initialLocale, locales, storage, localeStringsLoader } = props;
 
   useEffect(() => {
     if (storage) {
@@ -66,7 +66,7 @@ export const LocalizationProvider = (props: LocalizationProviderProps): JSX.Elem
   const [locale, _setLocale] = useState<ILocale>(locales[initialLocale]);
   const [strings, setStrings] = useState<Record<string, string>>({});
 
-  const loadLocaleData = localeDataLoader ?? defaultLocaleDataLoader;
+  const loadLocaleStrings = localeStringsLoader ?? defaultLocaleDataLoader;
 
   const setLocale = useCallback(
     async (locale: string, forceReload?: boolean) => {
@@ -79,8 +79,8 @@ export const LocalizationProvider = (props: LocalizationProviderProps): JSX.Elem
 
         if (forceReload) {
           window.location.reload();
-        } else if (loadLocaleData) {
-          const localeData = await loadLocaleData(loc.locale);
+        } else if (loadLocaleStrings) {
+          const localeData = await loadLocaleStrings(loc.locale);
           setStrings(localeData);
           _setLocale(loc);
 
@@ -93,7 +93,7 @@ export const LocalizationProvider = (props: LocalizationProviderProps): JSX.Elem
         throw new Error(`Attempted to set an unregistered locale "${locale}"`);
       }
     },
-    [locales, storage, loadLocaleData]
+    [locales, storage, loadLocaleStrings]
   );
 
   useEffect(() => {

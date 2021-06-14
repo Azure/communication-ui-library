@@ -10,7 +10,7 @@ const createComponentWithLocalization = (
   props: {
     initialLocale: string;
     locales: LocaleCollection;
-    localeLoader?: (locale: string) => Promise<Record<string, string>>;
+    localeStringsLoader?: (locale: string) => Promise<Record<string, string>>;
   }
 ): any => {
   return renderer.create(<LocalizationProvider {...props}>{children}</LocalizationProvider>);

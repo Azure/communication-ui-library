@@ -37,15 +37,17 @@
     "html-to-react": "~1.4.5"
   },
   "peerDependencies": {
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "@types/react": ">=16.8.0 <18.0.0",
+    "@types/react-dom": ">=16.8.0 <18.0.0",
+    "react": ">=16.8.0 <18.0.0",
+    "react-dom": ">=16.8.0 <18.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.7",
     "@babel/preset-env": "^7.12.7",
     "@mdx-js/react": "^1.6.22",
     "@microsoft/api-documenter": "~7.12.11",
-    "@microsoft/api-extractor": "~7.13.2",
+    "@microsoft/api-extractor": "../../common/config/api-extractor/fork-pr-1916/microsoft-api-extractor-7.16.1-pr1916.1.0.tgz",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react-hooks": "^3.4.2",
     "@types/jest": "^26.0.20",
@@ -67,7 +69,7 @@
     "eslint-config-prettier": "^6.12.0",
     "eslint-plugin-header": "^3.1.0",
     "eslint-plugin-import": "~2.22.1",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react-hooks": "^4.1.2",
     "eslint-plugin-react": "^7.18.3",

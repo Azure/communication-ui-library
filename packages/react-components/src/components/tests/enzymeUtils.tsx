@@ -5,28 +5,31 @@ import React from 'react';
 import { mount, shallow, ShallowWrapper } from 'enzyme';
 import { LocalizationProvider } from '../../localization/LocalizationProvider';
 
-const strings = import('../../localization/translated/en-US.json');
 const initialLocale = 'en-US';
 const locales = { 'en-US': { locale: '', englishName: '', displayName: '', rtl: false } };
 
-export const mountWithLocalization = (node: React.ReactNode): ShallowWrapper => {
+export const mountWithLocalization = (node: React.ReactElement, strings: Record<string, string>): ShallowWrapper => {
   return mount(node, {
     wrappingComponent: LocalizationProvider,
     wrappingComponentProps: {
       locales,
       initialLocale,
-      strings
+      localeStringsLoader: async () => {
+        return strings;
+      }
     }
   });
 };
 
-export const shallowWithIntl = (node: React.ReactNode): ShallowWrapper => {
+export const shallowWithLocalization = (node: React.ReactElement, strings: Record<string, string>): ShallowWrapper => {
   return shallow(node, {
     wrappingComponent: LocalizationProvider,
     wrappingComponentProps: {
       locales,
       initialLocale,
-      strings
+      localeStringsLoader: async () => {
+        return strings;
+      }
     }
   });
 };

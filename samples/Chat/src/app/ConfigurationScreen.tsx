@@ -2,8 +2,7 @@
 // Licensed under the MIT license.
 
 import { CAT, FOX, KOALA, MONKEY, MOUSE, OCTOPUS } from './utils/utils';
-import { FocusZone, FocusZoneDirection } from 'office-ui-fabric-react/lib/FocusZone';
-import { PrimaryButton, Spinner, Stack } from '@fluentui/react';
+import { FocusZone, FocusZoneDirection, PrimaryButton, Spinner, Stack } from '@fluentui/react';
 import React, { useCallback, useEffect, useState } from 'react';
 import { buttonStyle, chatIconStyle, mainContainerStyle } from './styles/ConfigurationScreen.styles';
 import {

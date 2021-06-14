@@ -104,15 +104,16 @@ const formatElements = (str: string, vars: IObjectMap<JSX.Element>): JSX.Element
   const regex = RegExp(placeholdersRegex);
   let array: RegExpExecArray | null = regex.exec(str);
   let prev = 0;
+  let elementKey = 1;
   while (array !== null) {
     if (prev !== array.index) {
-      elements.push(<>{str.substring(prev, array.index)}</>);
+      elements.push(<span key={elementKey++}>{str.substring(prev, array.index)}</span>);
     }
-    elements.push(vars[array[0].substring(1, array[0].length - 1)]);
+    elements.push(<span key={elementKey++}>{vars[array[0].substring(1, array[0].length - 1)]}</span>);
     prev = regex.lastIndex;
     array = regex.exec(str);
   }
-  elements.push(<>{str.substring(prev)}</>);
+  elements.push(<span key={elementKey++}>{str.substring(prev)}</span>);
   return elements;
 };
 

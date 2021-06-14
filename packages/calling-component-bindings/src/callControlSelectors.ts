@@ -1,15 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-// @ts-ignore
 import * as reselect from 'reselect';
-// @ts-ignore
-import { CallState, CallClientState, DeviceManagerState } from 'calling-stateful-client';
-// @ts-ignore
-import { CallingBaseSelectorProps } from './baseSelectors';
 import { getCall, getDeviceManager } from './baseSelectors';
-// @ts-ignore
-import { AudioDeviceInfo, VideoDeviceInfo } from '@azure/communication-calling';
 
 export const microphoneButtonSelector = reselect.createSelector([getCall, getDeviceManager], (call, deviceManager) => {
   const permission = deviceManager.deviceAccess ? deviceManager.deviceAccess.audio : true;

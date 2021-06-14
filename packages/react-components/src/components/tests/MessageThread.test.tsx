@@ -6,8 +6,9 @@ import { MessageThread } from '../MessageThread';
 import { ChatMessage } from '../../types';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import germanStrings from '../../localization/translated/de.json';
 import { mountWithLocalization } from './enzymeUtils';
+import { act } from 'react-dom/test-utils';
+import germanStrings from '../../localization/translated/de.json';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -18,8 +19,8 @@ const twentyFourHoursAgo = (): Date => {
 };
 
 describe('Message date should be formatted correctly', () => {
-  it('Should', () => {
-    const message: ChatMessage = {
+  test('Should translate "Yesterday" to German', async () => {
+    const sampleMessage: ChatMessage = {
       type: 'chat',
       payload: {
         senderId: 'user3',
@@ -33,8 +34,10 @@ describe('Message date should be formatted correctly', () => {
       }
     };
     const component = mountWithLocalization(
-      <MessageThread userId="user1" messages={[message]} showMessageDate={true} />
+      <MessageThread userId="user1" messages={[sampleMessage]} showMessageDate={true} />,
+      germanStrings
     );
+    await act(async () => component);
     expect(component.html()).toContain(germanStrings.yesterday);
   });
 });

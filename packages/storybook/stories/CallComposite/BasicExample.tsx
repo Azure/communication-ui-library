@@ -14,7 +14,8 @@ export const BasicExample: () => JSX.Element = () => {
 
   const knobs = useRef({
     connectionString: text(COMPOSITE_STRING_CONNECTIONSTRING, '', 'Server Simulator'),
-    displayName: text('Display Name', '', 'Server Simulator')
+    displayName: text('Display Name', '', 'Server Simulator'),
+    callInvitationURL: text('Optional URL to invite other participants to the call', '', 'Server Simulator')
   });
 
   useEffect(() => {
@@ -30,7 +31,11 @@ export const BasicExample: () => JSX.Element = () => {
   return (
     <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
       {containerProps ? (
-        <ContosoCallContainer displayName={knobs.current.displayName} {...containerProps} />
+        <ContosoCallContainer
+          displayName={knobs.current.displayName}
+          {...containerProps}
+          callInvitationURL={knobs.current.callInvitationURL}
+        />
       ) : (
         <ConfigHintBanner />
       )}

@@ -188,7 +188,7 @@ export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Ele
 export type LocalizationProviderProps = {
     initialLocale: string;
     locales: LocaleCollection;
-    localeDataLoader?: (locale: string) => Promise<Record<string, string>>;
+    localeStringsLoader?: (locale: string) => Promise<Record<string, string>>;
     storage?: Storage;
     children: React_2.ReactNode;
 };

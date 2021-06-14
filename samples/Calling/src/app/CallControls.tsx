@@ -6,6 +6,7 @@ import {
   ControlBar,
   MicrophoneButton,
   CameraButton,
+  ParticipantsButton,
   ScreenShareButton,
   EndCallButton,
   useLocale
@@ -20,14 +21,16 @@ import { useCallingPropsFor as usePropsFor } from 'calling-component-bindings';
 export type CallControlsProps = {
   onEndCallClick(): void;
   compressedMode: boolean;
+  callInvitationURL?: string;
 };
 
 export const CallControls = (props: CallControlsProps): JSX.Element => {
-  const { compressedMode, onEndCallClick } = props;
+  const { callInvitationURL, compressedMode, onEndCallClick } = props;
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
   const cameraButtonProps = usePropsFor(CameraButton);
   const screenShareButtonProps = usePropsFor(ScreenShareButton);
   const hangUpButtonProps = usePropsFor(EndCallButton);
+  const participantsButtonProps = usePropsFor(ParticipantsButton);
   const onHangUp = useCallback(async () => {
     await hangUpButtonProps.onHangUp();
     onEndCallClick();
@@ -42,6 +45,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       <CameraButton {...cameraButtonProps} />
       <MicrophoneButton {...microphoneButtonProps} />
       <ScreenShareButton {...screenShareButtonProps} />
+      <ParticipantsButton {...participantsButtonProps} callInvitationURL={callInvitationURL} />
       <EndCallButton
         {...hangUpButtonProps}
         onHangUp={onHangUp}
