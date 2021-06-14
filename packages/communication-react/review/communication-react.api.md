@@ -717,7 +717,7 @@ export type DefaultChatHandlers = {
 };
 
 // @public (undocumented)
-export const defaultLocaleDataLoader: (locale: string) => Promise<Record<string, string>>;
+export const defaultLocaleStringsLoader: (locale: string) => Promise<Record<string, string>>;
 
 // @public (undocumented)
 export type DefaultMessageRendererType = (props: MessageProps) => JSX.Element;

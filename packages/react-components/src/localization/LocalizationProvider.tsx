@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { createContext, useState, useMemo, useContext, useCallback, useEffect } from 'react';
-import { defaultLocaleDataLoader, locales } from './loadLocaleData';
+import { defaultLocaleStringsLoader, locales } from './loadLocaleStrings';
 import defaultStrings from './translated/en-US.json';
 
 const LOCALE_CACHE_KEY = 'AzureCommunicationUI_Locale';
@@ -66,7 +66,7 @@ export const LocalizationProvider = (props: LocalizationProviderProps): JSX.Elem
   const [locale, _setLocale] = useState<ILocale>(locales[initialLocale]);
   const [strings, setStrings] = useState<Record<string, string>>({});
 
-  const loadLocaleStrings = localeStringsLoader ?? defaultLocaleDataLoader;
+  const loadLocaleStrings = localeStringsLoader ?? defaultLocaleStringsLoader;
 
   const setLocale = useCallback(
     async (locale: string, forceReload?: boolean) => {
@@ -87,7 +87,7 @@ export const LocalizationProvider = (props: LocalizationProviderProps): JSX.Elem
           document.documentElement.lang = loc.locale;
           document.documentElement.dir = loc.rtl ? 'rtl' : 'ltr';
         } else {
-          throw new Error('Attempted to load a locale without registering a localeLoader handler');
+          throw new Error('Attempted to load a locale without registering a localeStringsLoader handler');
         }
       } else {
         throw new Error(`Attempted to set an unregistered locale "${locale}"`);
