@@ -73,10 +73,9 @@ const TypingIndicatorStory: () => JSX.Element = () => {
       displayName: 'User2'
     }
   ]);
-  const { locale, locales } = useLocale();
-  const loc = locales.find((l) => l.locale === locale);
+  const { locale } = useLocale();
   return (
-    <Stack horizontal className={mergeStyles({ direction: loc?.rtl ? 'rtl' : 'ltr' })}>
+    <Stack horizontal className={mergeStyles({ direction: locale?.rtl ? 'rtl' : 'ltr' })}>
       <TypingIndicatorComponent
         typingUsers={typingUsers}
         // onRenderUsers={(users: CommunicationParticipant[]) => {
@@ -90,7 +89,6 @@ const TypingIndicatorStory: () => JSX.Element = () => {
         // }}
         styles={{ typingUserDisplayName: { color: 'blue' }, typingString: { color: 'red' } }}
       />
-      <p>Test</p>
     </Stack>
   );
 };

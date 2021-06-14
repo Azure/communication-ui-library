@@ -24,7 +24,7 @@ export const locales: LocaleCollection = {
   }
 };
 
-export const loadLocaleData = async (locale: string): Promise<Record<string, string>> => {
+export const defaultLocaleDataLoader = async (locale: string): Promise<Record<string, string>> => {
   switch (locale) {
     case 'ar':
       return (await import('./translated/ar.json')).default;

@@ -125,6 +125,7 @@ export const globalTypes = {
       icon: 'globe',
       items: [
         { value: 'en-US', right: '🇺🇸', title: 'English' },
+        { value: 'de', right: '🇩🇪', title: 'German' },
         { value: 'ar', right: '🇸🇦', title: 'Arabic' }
       ],
     },

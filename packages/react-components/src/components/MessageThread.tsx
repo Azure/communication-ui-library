@@ -32,6 +32,7 @@ import { MessageStatusIndicator, MessageStatusIndicatorProps } from './MessageSt
 import { memoizeFnAll, MessageStatus } from 'acs-ui-common';
 import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from './SystemMessage';
 import { Parser } from 'html-to-react';
+import { useLocale } from '../localization';
 
 const NEW_MESSAGES = 'New Messages';
 
@@ -212,7 +213,7 @@ const generateTextMessageContent = (payload: ChatMessagePayload): JSX.Element =>
   );
 };
 
-const generateMessageContent = (payload: ChatMessagePayload) => {
+const generateMessageContent = (payload: ChatMessagePayload): JSX.Element => {
   switch (payload.type) {
     case 'text':
       return generateTextMessageContent(payload);
@@ -239,7 +240,7 @@ const DefaultChatMessageRenderer: DefaultMessageRendererType = (props: MessagePr
         timestamp={
           payload.createdOn
             ? props.showDate
-              ? formatTimestampForChatMessage(payload.createdOn, new Date())
+              ? formatTimestampForChatMessage(payload.createdOn, new Date(), props.strings)
               : formatTimeForChatMessage(payload.createdOn)
             : undefined
         }
@@ -262,13 +263,15 @@ const memoizeAllMessages = memoizeFnAll(
       | ((messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null)
       | undefined,
     defaultChatMessageRenderer: (message: MessageProps) => JSX.Element,
+    strings: Record<string, string>,
     _attached?: boolean | string,
     statusToRender?: MessageStatus,
     onRenderMessage?: (message: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element
   ): ShorthandValue<ChatItemProps> => {
     const messageProps: MessageProps = {
       message: message,
-      showDate: showMessageDate
+      showDate: showMessageDate,
+      strings: strings
     };
 
     if (message.type === 'chat') {
@@ -443,6 +446,10 @@ export type MessageProps = {
    * Message to render. It can type `ChatMessage` or `SystemMessage` or `CustomMessage`.
    */
   message: ChatMessage | SystemMessage | CustomMessage;
+  /**
+   * Strings from locale.
+   */
+  strings: Record<string, string>;
   /**
    * Custom CSS styles for chat message container.
    */
@@ -692,6 +699,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     [new Date().toDateString()]
   );
 
+  const { strings } = useLocale();
+
   const messagesToDisplay = useMemo(
     () =>
       memoizeAllMessages((memoizedMessageFn) => {
@@ -732,6 +741,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
               styles,
               onRenderMessageStatus,
               defaultChatMessageRenderer,
+              strings,
               // Temporary solution to make sure we re-render if attach attribute is changed.
               // The proper fix should be in selector.
               message.type === 'chat' ? message.payload.attached : undefined,
@@ -752,7 +762,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       lastSeenChatMessage,
       lastSendingChatMessage,
       lastDeliveredChatMessage,
-      onRenderMessage
+      onRenderMessage,
+      strings
     ]
   );
 

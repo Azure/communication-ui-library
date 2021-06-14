@@ -33,7 +33,9 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     onEndCallClick();
   }, [hangUpButtonProps, onEndCallClick]);
 
-  const endCallButtonText = useLocale().strings.end_call_button_text;
+  const strings = useLocale().strings;
+  console.log('strings: ' + JSON.stringify(strings));
+  const endCallButtonText = strings.end_call_button_text;
 
   return (
     <ControlBar styles={controlBarStyle}>

@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-const weekDayToDayName = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
 export const formatTimeForChatMessage = (messageDate: Date): string => {
   let hours = messageDate.getHours();
   let minutes = messageDate.getMinutes().toString();
@@ -52,7 +50,11 @@ export const formatDateForChatMessage = (messageDate: Date): string => {
  * @param messageDate - date of message
  * @param currentDate - date used as offset to create the user friendly timestamp (e.g. to create 'Yesterday' instead of an absolute date)
  */
-export const formatTimestampForChatMessage = (messageDate: Date, todayDate: Date): string => {
+export const formatTimestampForChatMessage = (
+  messageDate: Date,
+  todayDate: Date,
+  strings: Record<string, string>
+): string => {
   // If message was in the same day timestamp string is just the time like '1:30 p.m.'.
   const startOfDay = new Date(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate());
   if (messageDate > startOfDay) {
@@ -62,7 +64,7 @@ export const formatTimestampForChatMessage = (messageDate: Date, todayDate: Date
   // If message was yesterday then timestamp string is like this 'Yesterday 1:30 p.m.'.
   const yesterdayDate = new Date(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate() - 1);
   if (messageDate > yesterdayDate) {
-    return 'Yesterday ' + formatTimeForChatMessage(messageDate);
+    return strings.yesterday + ' ' + formatTimeForChatMessage(messageDate);
   }
 
   // If message was before Sunday and today is Sunday (start of week) then timestamp string is like
@@ -75,9 +77,31 @@ export const formatTimestampForChatMessage = (messageDate: Date, todayDate: Date
   // If message was before first day of the week then timestamp string is like Monday 1:30 p.m.
   const firstDayOfTheWeekDate = new Date(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate() - weekDay);
   if (messageDate > firstDayOfTheWeekDate) {
-    return weekDayToDayName[messageDate.getDay()] + ' ' + formatTimeForChatMessage(messageDate);
+    const day = weekDayToDayName(messageDate.getDay(), strings);
+    return (day !== '' ? day : formatDateForChatMessage(messageDate)) + ' ' + formatTimeForChatMessage(messageDate);
   }
 
   // If message date is in previous or older weeks then timestamp string is like 2021-01-10 1:30 p.m.
   return formatDateForChatMessage(messageDate) + ' ' + formatTimeForChatMessage(messageDate);
+};
+
+const weekDayToDayName = (day: number, strings: Record<string, string>): string => {
+  switch (day) {
+    case 0:
+      return strings.sunday;
+    case 1:
+      return strings.monday;
+    case 2:
+      return strings.tuesday;
+    case 3:
+      return strings.wednesday;
+    case 4:
+      return strings.thursday;
+    case 5:
+      return strings.friday;
+    case 6:
+      return strings.saturday;
+    default:
+      return '';
+  }
 };

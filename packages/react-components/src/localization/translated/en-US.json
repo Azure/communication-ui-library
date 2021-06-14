@@ -4,5 +4,21 @@
   "typing_indicator_plural": "{users} are typing ...",
   "typing_indicator_shortened_plural": "{users} and 1 other are typing ...",
   "typing_indicator_shortened_plural_2": "{users} and {numOthers} others are typing ...",
-  "end_call_button_text": "Leave"
+  "end_call_button_text": "Leave",
+  "camera_button_on_text": "Turn off",
+  "camera_button_off_text": "Turn on",
+  "microphone_button_on_text": "Mute",
+  "microphone_button_off_text": "Unmute",
+  "screenshare_button_on_text": "Stop",
+  "screenshare_button_off_text": "Share",
+  "options_button_text": "Options",
+  "participants_button_text": "Participants",
+  "yesterday": "Yesterday",
+  "sunday": "Sunday",
+  "monday": "Monday",
+  "tuesday": "Tuesday",
+  "wednesday": "Wednesday",
+  "thursday": "Thursday",
+  "friday": "Friday",
+  "saturday": "Saturday"
 }

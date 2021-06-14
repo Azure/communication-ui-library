@@ -3,7 +3,8 @@
 
 import { concatStyleSets, DefaultButton, IButtonProps, Label, mergeStyles } from '@fluentui/react';
 import { CallVideoIcon, CallVideoOffIcon } from '@fluentui/react-northstar';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useMemo } from 'react';
+import { useLocale } from '../localization';
 import { VideoStreamOptions } from '../types';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 
@@ -49,13 +50,18 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
     return props?.checked ? <CallVideoIcon key={'videoIconKey'} /> : <CallVideoOffIcon key={'videoOffIconKey'} />;
   };
 
-  const defaultRenderText = (props?: IButtonProps): JSX.Element => {
-    return (
-      <Label key={'videoLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
-        {props?.checked ? 'Turn off' : 'Turn on'}
-      </Label>
-    );
-  };
+  const strings = useLocale().strings;
+
+  const defaultRenderText = useMemo(
+    () => (props?: IButtonProps): JSX.Element => {
+      return (
+        <Label key={'videoLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
+          {props?.checked ? strings.camera_button_on_text : strings.camera_button_off_text}
+        </Label>
+      );
+    },
+    [strings]
+  );
 
   const onToggleClick = useCallback(async () => {
     // Throttle click on camera, need to await onToggleCamera then allow another click

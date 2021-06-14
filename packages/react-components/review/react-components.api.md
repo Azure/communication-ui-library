@@ -101,6 +101,9 @@ export type CustomMessagePayload = {
 export const darkTheme: PartialTheme & CallingTheme;
 
 // @public (undocumented)
+export const defaultLocaleDataLoader: (locale: string) => Promise<Record<string, string>>;
+
+// @public (undocumented)
 export type DefaultMessageRendererType = (props: MessageProps) => JSX.Element;
 
 // @public
@@ -169,9 +172,6 @@ export interface JumpToNewMessageButtonProps {
 // @public
 export const lightTheme: PartialTheme & CallingTheme;
 
-// @public (undocumented)
-export const loadLocaleData: (locale: string) => Promise<Record<string, string>>;
-
 // @public
 export type LocaleCollection = Record<string, ILocale>;
 
@@ -188,6 +188,7 @@ export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Ele
 export type LocalizationProviderProps = {
     initialLocale: string;
     locales: LocaleCollection;
+    localeDataLoader?: (locale: string) => Promise<Record<string, string>>;
     storage?: Storage;
     children: React_2.ReactNode;
 };
@@ -207,6 +208,7 @@ export type MessageContentType = 'text' | 'html' | 'richtext/html' | 'unknown';
 // @public
 export type MessageProps = {
     message: ChatMessage | SystemMessage | CustomMessage;
+    strings: Record<string, string>;
     messageContainerStyle?: ComponentSlotStyle;
     showDate?: boolean;
 };

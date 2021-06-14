@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { createContext, useState, useMemo, useContext, useCallback, useEffect } from 'react';
-import { loadLocaleData, locales } from './loadLocaleData';
+import { defaultLocaleDataLoader, locales } from './loadLocaleData';
 import defaultStrings from './translated/en-US.json';
 
 const LOCALE_CACHE_KEY = 'AzureCommunicationUI_Locale';
@@ -39,12 +39,13 @@ export const LocaleContext = createContext<ILocaleContext>(defaultLocaleContext)
 export type LocalizationProviderProps = {
   initialLocale: string;
   locales: LocaleCollection;
+  localeDataLoader?: (locale: string) => Promise<Record<string, string>>;
   storage?: Storage;
   children: React.ReactNode;
 };
 
 export const LocalizationProvider = (props: LocalizationProviderProps): JSX.Element => {
-  const { children, initialLocale, locales, storage } = props;
+  const { children, initialLocale, locales, storage, localeDataLoader } = props;
 
   useEffect(() => {
     if (storage) {
@@ -64,6 +65,8 @@ export const LocalizationProvider = (props: LocalizationProviderProps): JSX.Elem
 
   const [locale, _setLocale] = useState<ILocale>(locales[initialLocale]);
   const [strings, setStrings] = useState<Record<string, string>>({});
+
+  const loadLocaleData = localeDataLoader ?? defaultLocaleDataLoader;
 
   const setLocale = useCallback(
     async (locale: string, forceReload?: boolean) => {
@@ -90,12 +93,12 @@ export const LocalizationProvider = (props: LocalizationProviderProps): JSX.Elem
         throw new Error(`Attempted to set an unregistered locale "${locale}"`);
       }
     },
-    [locales, storage]
+    [locales, storage, loadLocaleData]
   );
 
   useEffect(() => {
-    setLocale(locale.locale);
-  }, [locale, setLocale]);
+    setLocale(initialLocale);
+  }, [initialLocale, setLocale]);
 
   const localeMemo = useMemo<ILocaleContext>(
     () => ({

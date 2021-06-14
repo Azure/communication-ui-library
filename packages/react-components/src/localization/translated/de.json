@@ -4,5 +4,21 @@
   "typing_indicator_plural": "{users} tippen gerade ...",
   "typing_indicator_shortened_plural": "{users} und 1 anderer tippen gerade ...",
   "typing_indicator_shortened_plural_2": "{users} und {numOthers} andere tippen gerade ...",
-  "end_call_button_text": "Verlassen"
+  "end_call_button_text": "Verlassen",
+  "camera_button_on_text": "Ausschalten",
+  "camera_button_off_text": "Einschalten",
+  "microphone_button_on_text": "Stumm",
+  "microphone_button_off_text": "Einschalten",
+  "screenshare_button_on_text": "Halt",
+  "screenshare_button_off_text": "Teilen",
+  "options_button_text": "Optionen",
+  "participants_button_text": "Teilnehmer",
+  "yesterday": "Gestern",
+  "sunday": "Sonntag",
+  "monday": "Montag",
+  "tuesday": "Dienstag",
+  "wednesday": "Mittwoch",
+  "thursday": "Donnerstag",
+  "friday": "Freitag",
+  "saturday": "Samstag"
 }

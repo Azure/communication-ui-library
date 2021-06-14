@@ -4,5 +4,21 @@
   "typing_indicator_plural": "... يكتبون  {users}",
   "typing_indicator_shortened_plural": "... ج وشخص آخر يكتبون  {users}",
   "typing_indicator_shortened_plural_2": "... آخرون يكتبون {numOthers} ج و  {users}",
-  "end_call_button_text": "غادر"
+  "end_call_button_text": "غادر",
+  "camera_button_on_text": "طفئه",
+  "camera_button_off_text": "شغله",
+  "microphone_button_on_text": "صامت",
+  "microphone_button_off_text": "شغله",
+  "screenshare_button_on_text": "قف",
+  "screenshare_button_off_text": "تبين",
+  "options_button_text": "خيارات",
+  "participants_button_text": "مشاركون",
+  "yesterday": "أمس",
+  "sunday": "الأحد",
+  "monday": "الاثنين",
+  "tuesday": "يوم الثلاثاء",
+  "wednesday": "الأربعاء",
+  "thursday": "يوم الخميس",
+  "friday": "جمعة",
+  "saturday": "السبت"
 }
