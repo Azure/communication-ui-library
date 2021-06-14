@@ -11,7 +11,7 @@ router.post('/:userId', async function (req, res, next) {
   //const userConfig = JSON.parse(req.body);
   userIdToUserConfigMap.set(req.params['userId'], {
     emoji: userConfig['Emoji'],
-    id: req.params['threadId']
+    id: (req.params as any)['threadId']
   });
 
   res.sendStatus(200);

@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 
 import { CallState as CallStatus } from '@azure/communication-calling';
-import preval from 'preval.macro';
 import { LocalStorageKeys } from './constants';
 
 /**
@@ -17,7 +16,7 @@ export const fetchTokenResponse = async (): Promise<any> => {
       return responseAsJson;
     }
   }
-  throw new Error('Invalid token response');
+  throw 'Invalid token response';
 };
 
 /**
@@ -65,7 +64,5 @@ export const isOnIphoneAndNotSafari = (): boolean => {
 
 export const isSmallScreen = (): boolean => window.innerWidth < 700 || window.innerHeight < 400;
 
-export const getBuildTime = (): string => {
-  const dateTimeStamp = preval`module.exports = new Date().toLocaleString();`;
-  return dateTimeStamp;
-};
+declare let __BUILDTIME__: string; // Injected by webpack
+export const getBuildTime = (): string => __BUILDTIME__;
