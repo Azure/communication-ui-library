@@ -28,11 +28,11 @@ jobs:
       - name: Build Projects
         run: rush build
 
-      - name: Package Group Calling Sample Artifact
+      - name: Package Calling Sample Artifact
         run: rushx package
         working-directory: ./samples/Calling
 
-      - name: 'Deploy Group Calling Sample WebApp'
+      - name: 'Deploy Calling Sample WebApp'
         uses: azure/webapps-deploy@v2
         with:
           app-name: acs-ui-dev-web-calling-hero
