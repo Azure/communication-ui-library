@@ -68,11 +68,6 @@
       "reviewCategory": "sample"
     },
     {
-      "packageName": "one-to-one-call",
-      "projectFolder": "samples/OneToOneCall",
-      "reviewCategory": "sample"
-    },
-    {
       "packageName": "server",
       "projectFolder": "samples/Server",
       "reviewCategory": "sample"
