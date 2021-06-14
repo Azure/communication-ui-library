@@ -85,7 +85,7 @@ export interface CallAdapter {
 
   getState(): CallAdapterState;
 
-  dispose(): void;
+  dispose(): Promise<void>;
 
   joinCall(microphoneOn?: boolean): Promise<void>;
 

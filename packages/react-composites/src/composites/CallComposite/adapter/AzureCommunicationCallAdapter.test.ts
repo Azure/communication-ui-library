@@ -8,8 +8,7 @@ import {
   CallAgentOverrides,
   createMockStatefulCallClient,
   DeviceManagerOverrides,
-  StatefulCallClientOverrides,
-  waitWithBreakCondition
+  StatefulCallClientOverrides
 } from '../../../mocks';
 import { AzureCommunicationCallAdapter } from './AzureCommunicationCallAdapter';
 
@@ -98,9 +97,7 @@ describe('AzureCommunicationCallAdapter', () => {
 
     adapter.on('error', errorListener);
 
-    adapter.dispose();
-
-    await waitWithBreakCondition(() => error !== undefined);
+    await adapter.dispose();
 
     expect(error?.message).toBe(DISPOSE_ERROR_MESSAGE);
     expect(adapter.getState().error?.message).toBe(DISPOSE_ERROR_MESSAGE);

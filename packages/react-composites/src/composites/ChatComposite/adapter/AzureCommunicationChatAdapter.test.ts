@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 
 import { ChatClientState, ChatThreadClientState } from 'chat-stateful-client';
-import { waitWithBreakCondition } from '../../../mocks';
 import {
   ChatThreadClientOverrides,
   createMockStatefulChatClient,
@@ -68,8 +67,6 @@ describe('AzureCommunicationChatAdapter', () => {
     adapter.on('error', errorListener);
 
     adapter.dispose();
-
-    await waitWithBreakCondition(() => error !== undefined);
 
     expect(error?.message).toBe(UNSUBSCRIBE_ERROR);
     expect(adapter.getState().error?.message).toBe(UNSUBSCRIBE_ERROR);
