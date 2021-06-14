@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { getTheme, IStyle, IButtonStyles, concatStyleSets } from '@fluentui/react';
+import { getTheme, IStyle, IButtonStyles, IContextualMenuStyles, concatStyleSets } from '@fluentui/react';
 
 const theme = getTheme();
 const palette = theme.palette;
@@ -142,9 +142,19 @@ export const endCallControlButtonStyles: IButtonStyles = concatStyleSets(control
     color: palette.white
   },
   label: {
-    color: palette.whiteTranslucent40
+    color: palette.white
   }
 });
+
+// making it Partial as IContextualMenuStyles has all its props non-optional and we only need title to be defined here
+export const participantsButtonMenuPropsStyle: Partial<IContextualMenuStyles> = {
+  title: {
+    background: 'initial',
+    paddingLeft: '.5rem',
+    fontWeight: 600,
+    fontSize: '.75rem'
+  }
+};
 
 export const defaultParticipantListContainerStyle: IStyle = {
   maxHeight: '20rem'

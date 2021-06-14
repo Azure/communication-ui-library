@@ -2,10 +2,10 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/ControlBar/Buttons/End Call End Call 1`] = `
 <div
-  className="css-81 root-0 body-1"
+  className="css-82 body-0"
 >
   <div
-    className="css-81"
+    className="css-82"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -20,7 +20,7 @@ exports[`storybook snapshot tests Storyshots UI Components/ControlBar/Buttons/En
       }
     >
       <button
-        className="ms-Button ms-Button--default root-2"
+        className="ms-Button ms-Button--default root-1"
         data-is-focusable={true}
         onClick={[Function]}
         onKeyDown={[Function]}
@@ -31,7 +31,7 @@ exports[`storybook snapshot tests Storyshots UI Components/ControlBar/Buttons/En
         type="button"
       >
         <span
-          className="ms-Button-flexContainer flexContainer-3"
+          className="ms-Button-flexContainer flexContainer-2"
           data-automationid="splitbuttonprimary"
         >
           <span

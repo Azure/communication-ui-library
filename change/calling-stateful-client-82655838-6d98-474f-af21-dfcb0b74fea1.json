@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix maxListener warnings",
+  "packageName": "calling-stateful-client",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}

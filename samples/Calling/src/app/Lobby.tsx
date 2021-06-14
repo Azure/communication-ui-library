@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 import React, { useEffect, useState } from 'react';
 import { StreamMedia, VideoStreamOptions, VideoTile, VideoGalleryStream } from 'react-components';
-import { useTheme } from '@fluentui/react-theme-provider';
+import { useTheme } from '@fluentui/react';
 import { LobbyCallControlBar } from './LobbyControlBar';
 import { useCallingSelector as useSelector } from 'calling-component-bindings';
 import { getIsPreviewCameraOn } from './selectors/baseSelectors';
@@ -13,7 +13,7 @@ export interface LobbyProps {
   localVideoViewOption?: VideoStreamOptions;
   isCameraChecked?: boolean;
   isMicrophoneChecked?: boolean;
-  onCreateLocalStreamView?: (options?: VideoStreamOptions | undefined) => Promise<void>;
+  onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void>;
   onStartLocalVideo: () => Promise<void>;
   onEndCallClick: () => void;
 }

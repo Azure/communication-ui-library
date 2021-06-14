@@ -17,7 +17,7 @@ import type { CommunicationUserKind } from '@azure/communication-common';
 import { DeviceManagerState } from 'calling-stateful-client';
 import { GroupCallLocator } from '@azure/communication-calling';
 import type { MicrosoftTeamsUserKind } from '@azure/communication-common';
-import { PartialTheme } from '@fluentui/react-theme-provider';
+import { PartialTheme } from '@fluentui/react';
 import { PermissionConstraints } from '@azure/communication-calling';
 import type { PhoneNumberKind } from '@azure/communication-common';
 import { PlaceholderProps } from 'react-components';
@@ -25,7 +25,7 @@ import type { RemoteParticipant } from '@azure/communication-calling';
 import { StatefulCallClient } from 'calling-stateful-client';
 import { StatefulDeviceManager } from 'calling-stateful-client';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
-import { Theme } from '@fluentui/react-theme-provider';
+import { Theme } from '@fluentui/react';
 import type { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoStreamOptions } from 'react-components';
@@ -36,7 +36,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     // (undocumented)
-    createStreamView(remoteUserId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
+    createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // (undocumented)
     dispose(): void;
     // (undocumented)
@@ -92,7 +92,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     onStateChange(handler: (state: CallAdapterState) => void): void;
     // (undocumented)
-    onToggleCamera(): Promise<void>;
+    onToggleCamera(options?: VideoStreamOptions): Promise<void>;
     // (undocumented)
     queryCameras(): Promise<VideoDeviceInfo[]>;
     // (undocumented)
@@ -102,7 +102,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     removeParticipant(userId: string): Promise<void>;
     // (undocumented)
-    setCamera(device: VideoDeviceInfo): Promise<void>;
+    setCamera(device: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
     // (undocumented)
     setMicrophone(device: AudioDeviceInfo): Promise<void>;
     // (undocumented)
@@ -128,11 +128,11 @@ export interface CallAdapter {
     // (undocumented)
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     // (undocumented)
-    createStreamView(remoteUserId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
+    createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // (undocumented)
     dispose(): void;
     // (undocumented)
-    disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions | undefined): Promise<void>;
+    disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // (undocumented)
     getState(): CallAdapterState;
     // (undocumented)
@@ -182,7 +182,7 @@ export interface CallAdapter {
     // (undocumented)
     onStateChange(handler: (state: CallAdapterState) => void): void;
     // (undocumented)
-    onToggleCamera(): Promise<void>;
+    onToggleCamera(options?: VideoStreamOptions): Promise<void>;
     // (undocumented)
     queryCameras(): Promise<VideoDeviceInfo[]>;
     // (undocumented)
@@ -192,7 +192,7 @@ export interface CallAdapter {
     // (undocumented)
     removeParticipant(userId: string): Promise<void>;
     // (undocumented)
-    setCamera(sourceId: VideoDeviceInfo): Promise<void>;
+    setCamera(sourceId: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
     // (undocumented)
     setMicrophone(sourceId: AudioDeviceInfo): Promise<void>;
     // (undocumented)
@@ -213,9 +213,9 @@ export interface CallAdapter {
     unmute(): Promise<void>;
 }
 
-// @public (undocumented)
+// @public
 export type CallAdapterClientState = {
-    userId: string;
+    userId: CommunicationUserKind;
     displayName?: string;
     call?: CallState;
     devices: DeviceManagerState;
@@ -224,7 +224,7 @@ export type CallAdapterClientState = {
 // @public (undocumented)
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
 
-// @public (undocumented)
+// @public
 export type CallAdapterUiState = {
     error?: Error;
     isLocalPreviewMicrophoneEnabled: boolean;
@@ -242,6 +242,7 @@ export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoini
 export type CallCompositeProps = {
     adapter: CallAdapter;
     fluentTheme?: PartialTheme | Theme;
+    callInvitationURL?: string;
     onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
 };
 

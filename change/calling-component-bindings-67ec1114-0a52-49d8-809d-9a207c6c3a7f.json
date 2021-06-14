@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Update to use api-extractor fork with bug fix for type imports",
+  "packageName": "calling-component-bindings",
+  "email": "mail@jamesburnside.com",
+  "dependentChangeType": "none"
+}

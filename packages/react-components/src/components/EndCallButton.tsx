@@ -2,9 +2,8 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { DefaultButton, IButtonProps, Label, concatStyleSets, mergeStyles } from '@fluentui/react';
+import { DefaultButton, IButtonProps, Label, concatStyleSets, mergeStyles, useTheme } from '@fluentui/react';
 import { CallEndIcon } from '@fluentui/react-northstar';
-import { useTheme } from '@fluentui/react-theme-provider';
 import { controlButtonLabelStyles, endCallControlButtonStyles } from './styles/ControlBar.styles';
 import { lightTheme, darkTheme } from '../theming/themes';
 import { isDarkThemed } from '../theming/themeUtils';
@@ -60,7 +59,7 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {
     return (
       <Label key={'callEndLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
-        {'Leave call'}
+        Leave
       </Label>
     );
   };

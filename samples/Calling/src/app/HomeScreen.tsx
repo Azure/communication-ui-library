@@ -18,7 +18,7 @@ import {
   upperStackStyle,
   listItemStyle
 } from './styles/HomeScreen.styles';
-import { ThemeSelector } from 'app/theming/ThemeSelector';
+import { ThemeSelector } from './theming/ThemeSelector';
 
 export interface HomeScreenProps {
   startCallHandler(): void;

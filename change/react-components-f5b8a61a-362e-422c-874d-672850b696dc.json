@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Replace memoizeFn with react.memo Fix maxListener warning by default",
+  "packageName": "react-components",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}

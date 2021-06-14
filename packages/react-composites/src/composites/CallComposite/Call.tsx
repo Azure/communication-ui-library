@@ -5,14 +5,12 @@ import React, { useEffect, useState } from 'react';
 import { CallScreen } from './CallScreen';
 import { ConfigurationScreen } from './ConfigurationScreen';
 import { Error } from './Error';
-import { callContainer } from './styles/Call.styles';
-import { Stack } from '@fluentui/react';
+import { mergeStyles, Stack, Theme, PartialTheme, useTheme } from '@fluentui/react';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
 import { CallAdapter, CallCompositePage } from './adapter/CallAdapter';
 import { PlaceholderProps } from 'react-components';
 import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
-import { Theme, PartialTheme } from '@fluentui/react-theme-provider';
 import { FluentThemeProvider } from 'react-components';
 
 export type CallCompositeProps = {
@@ -23,15 +21,17 @@ export type CallCompositeProps = {
    * Defaults to a light theme if undefined.
    */
   fluentTheme?: PartialTheme | Theme;
+  callInvitationURL?: string;
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
 };
 
 type MainScreenProps = {
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
   screenWidth: number;
+  callInvitationURL?: string;
 };
 
-const MainScreen = ({ screenWidth, onRenderAvatar }: MainScreenProps): JSX.Element => {
+const MainScreen = ({ screenWidth, callInvitationURL, onRenderAvatar }: MainScreenProps): JSX.Element => {
   const page = useSelector(getPage);
   const adapter = useAdapter();
   switch (page) {
@@ -66,6 +66,8 @@ const MainScreen = ({ screenWidth, onRenderAvatar }: MainScreenProps): JSX.Eleme
           }}
           onRenderAvatar={onRenderAvatar}
           screenWidth={screenWidth}
+          showParticipants={true}
+          callInvitationURL={callInvitationURL}
         />
       );
   }
@@ -73,6 +75,7 @@ const MainScreen = ({ screenWidth, onRenderAvatar }: MainScreenProps): JSX.Eleme
 
 export const Call = (props: CallCompositeProps): JSX.Element => {
   const [screenWidth, setScreenWidth] = useState(window?.innerWidth ?? 0);
+  const theme = useTheme();
 
   useEffect(() => {
     const setWindowWidth = (): void => {
@@ -84,7 +87,7 @@ export const Call = (props: CallCompositeProps): JSX.Element => {
     return () => window.removeEventListener('resize', setWindowWidth);
   }, []);
 
-  const { adapter, fluentTheme } = props;
+  const { adapter, callInvitationURL, fluentTheme } = props;
 
   useEffect(() => {
     (async () => {
@@ -98,10 +101,25 @@ export const Call = (props: CallCompositeProps): JSX.Element => {
   return (
     <FluentThemeProvider fluentTheme={fluentTheme}>
       <CallAdapterProvider adapter={adapter}>
-        <Stack className={callContainer} grow>
-          <MainScreen screenWidth={screenWidth} onRenderAvatar={props.onRenderAvatar} />
+        <Stack className={callContainerStyle(theme)} grow>
+          <MainScreen
+            screenWidth={screenWidth}
+            onRenderAvatar={props.onRenderAvatar}
+            callInvitationURL={callInvitationURL}
+          />
         </Stack>
       </CallAdapterProvider>
     </FluentThemeProvider>
   );
+};
+
+export const callContainerStyle = (theme: Theme): string => {
+  return mergeStyles({
+    height: '100%',
+    width: '100%',
+    overflow: 'auto',
+    minHeight: '30rem',
+    minWidth: '50rem',
+    boxShadow: theme.effects.elevation4
+  });
 };

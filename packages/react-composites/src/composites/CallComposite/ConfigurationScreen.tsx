@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { devicePermissionSelector, optionsButtonSelector } from 'calling-component-bindings';
 import React from 'react';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { CallConfiguration } from './CallConfiguration';
@@ -10,6 +9,10 @@ import { CallConfiguration } from './CallConfiguration';
 import { useHandlers } from './hooks/useHandlers';
 import { LocalDeviceSettings } from './LocalDeviceSettings';
 import { StartCallButton } from './StartCallButton';
+import { devicePermissionSelector } from './selectors/devicePermissionSelector';
+import { useSelector } from './hooks/useSelector';
+import { OptionsButton } from 'react-components';
+import { getCallingSelector } from 'calling-component-bindings';
 import { titleContainerStyle } from './styles/ConfigurationScreen.styles';
 
 export interface ConfigurationScreenProps {
@@ -22,11 +25,9 @@ const title = 'Start a call';
 export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Element => {
   const { startCallHandler } = props;
 
-  const options = useAdaptedSelector(optionsButtonSelector);
+  const options = useAdaptedSelector(getCallingSelector(OptionsButton));
   const localDeviceSettingsHandlers = useHandlers(LocalDeviceSettings);
-  const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useAdaptedSelector(
-    devicePermissionSelector
-  );
+  const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useSelector(devicePermissionSelector);
 
   return (
     <CallConfiguration {...props}>
@@ -40,7 +41,7 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
         />
       </div>
       <div>
-        <StartCallButton onClickHandler={startCallHandler} isDisabled={false} />
+        <StartCallButton onClickHandler={startCallHandler} isDisabled={!microphonePermissionGranted} />
       </div>
     </CallConfiguration>
   );

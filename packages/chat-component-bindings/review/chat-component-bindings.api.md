@@ -13,6 +13,8 @@ import { CommonProperties } from 'acs-ui-common';
 import { CommunicationParticipant } from 'react-components';
 import { Message } from 'react-components';
 import { MessageThread } from 'react-components';
+import { OutputParametricSelector } from 'reselect';
+import { OutputSelector } from 'reselect';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
 import * as reselect from 'reselect';
@@ -54,7 +56,7 @@ export type ChatThreadClientProviderProps = {
 };
 
 // @public (undocumented)
-export const chatThreadSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
+export const chatThreadSelector: OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     userId: string;
     showMessageStatus: boolean;
     messages: Message<"chat">[];
@@ -84,7 +86,10 @@ export type DefaultChatHandlers = {
 export type GetChatSelector<Component> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof chatThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : never;
 
 // @public (undocumented)
-export const sendBoxSelector: reselect.OutputSelector<ChatClientState, {
+export const getChatSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetChatSelector<Component>;
+
+// @public (undocumented)
+export const sendBoxSelector: OutputSelector<ChatClientState, {
     displayName: string;
     userId: string;
 }, (res1: string, res2: string) => {

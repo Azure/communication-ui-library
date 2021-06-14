@@ -5,7 +5,7 @@ import React from 'react';
 import { ChatScreen } from './ChatScreen';
 import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
 import { ChatAdapter } from './adapter/ChatAdapter';
-import { Theme, PartialTheme } from '@fluentui/react-theme-provider';
+import { Theme, PartialTheme } from '@fluentui/react';
 import { FluentThemeProvider } from 'react-components';
 
 export type ChatCompositeProps = {
