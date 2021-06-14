@@ -1,0 +1,1 @@
+{"version":3,"file":"StringWriter.d.ts","sourceRoot":"","sources":["../../src/generators/StringWriter.ts"],"names":[],"mappings":"AAGA,OAAO,EAAE,aAAa,EAAE,MAAM,kBAAkB,CAAC;AAGjD,qBAAa,YAAY;IACvB,SAAgB,aAAa,EAAE,aAAa,CAAuB;IAE5D,KAAK,CAAC,CAAC,EAAE,MAAM,GAAG,IAAI;IAItB,SAAS,CAAC,CAAC,GAAE,MAAW,GAAG,IAAI;IAO/B,QAAQ,IAAI,MAAM;CAG1B"}

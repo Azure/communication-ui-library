@@ -8,8 +8,8 @@ import {
   paneHeaderStyle,
   paneHeaderTextStyle,
   settingsContainerStyle
-} from 'app/styles/CommandPanel.styles';
-import { ThemeSelector } from 'app/theming/ThemeSelector';
+} from './styles/CommandPanel.styles';
+import { ThemeSelector } from './theming/ThemeSelector';
 import { useCallingSelector as useSelector, getCallingSelector } from 'calling-component-bindings';
 import { LocalDeviceSettings } from './LocalDeviceSettings';
 import { OptionsButton } from 'react-components';

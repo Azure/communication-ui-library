@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import preval from 'preval.macro';
-
 /**
  * Get ACS user token from the Contoso server.
  */
@@ -41,7 +39,5 @@ export const isOnIphoneAndNotSafari = (): boolean => {
 
 export const supportedBrowser = (): boolean => !isOnIphoneAndNotSafari();
 
-export const getBuildTime = (): string => {
-  const dateTimeStamp = preval`module.exports = new Date().toLocaleString();`;
-  return dateTimeStamp;
-};
+declare let __BUILDTIME__: string; // Injected by webpack
+export const getBuildTime = (): string => __BUILDTIME__;
