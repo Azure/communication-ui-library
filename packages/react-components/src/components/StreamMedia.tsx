@@ -11,7 +11,7 @@ import { mergeStyles } from '@fluentui/react';
  */
 export interface StreamMediaProps {
   /** Video stream element to render. */
-  videoStreamElement: HTMLElement | null;
+  videoStreamElement: HTMLElement | null | undefined;
   /** Decides whether to mirror the video or not. */
   isMirrored?: boolean;
   /**

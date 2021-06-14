@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Stack, Modal, IDragOptions, ContextualMenu } from '@fluentui/react';
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   BaseCustomStylesProps,
   VideoGalleryLocalParticipant,
@@ -69,6 +69,9 @@ const DRAG_OPTIONS: IDragOptions = {
  * @returns a JSX Element
  */
 export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
+  const [sortedRemoteParticipants, setSortedRemoteParticipants] = useState<VideoGalleryRemoteParticipant[] | undefined>(
+    undefined
+  );
   const {
     localParticipant,
     remoteParticipants,
@@ -83,6 +86,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     layout,
     onRenderAvatar
   } = props;
+
+  useEffect(() => {
+    sortRemoteVideoTiles();
+  }, [remoteParticipants]);
 
   const shouldFloatLocalVideo = useCallback((): boolean => {
     return !!(layout === 'floatingLocalVideo' && remoteParticipants && remoteParticipants.length > 0);
@@ -118,19 +125,46 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localParticipant, localParticipant.videoStream, onCreateLocalStreamView, onRenderLocalVideoTile, onRenderAvatar]);
 
+  const sortRemoteVideoTiles = useCallback(() => {
+    if (!remoteParticipants) {
+      setSortedRemoteParticipants(undefined);
+      return;
+    }
+
+    const newParticipants = remoteParticipants.sort((p1, p2) => {
+      console.log(`comparing ${p1.displayName} and ${p2.displayName} streams`);
+      if (!p1?.videoStream?.renderElement?.childElementCount && !p2?.videoStream?.renderElement?.childElementCount) {
+        console.log(`- both undefined stream`);
+        return 0;
+      }
+      if (!p1?.videoStream?.renderElement?.childElementCount) {
+        console.log(`- ${p1.displayName} undefined stream`);
+        return 1;
+      }
+      if (!p2?.videoStream?.renderElement?.childElementCount) {
+        console.log(`- ${p2.displayName} undefined stream`);
+        return -1;
+      }
+
+      console.log(`- both defined stream`);
+      return 0;
+    });
+    setSortedRemoteParticipants(newParticipants);
+  }, [remoteParticipants]);
+
   /**
    * Utility function for memoized rendering of RemoteParticipants.
    */
   const defaultOnRenderRemoteParticipants = useMemo(() => {
-    if (!remoteParticipants) return null;
+    if (!sortedRemoteParticipants) return null;
 
     // If user provided a custom onRender function return that function.
     if (onRenderRemoteVideoTile) {
-      return remoteParticipants.map((participant) => onRenderRemoteVideoTile(participant));
+      return sortedRemoteParticipants.map((participant) => onRenderRemoteVideoTile(participant));
     }
 
     // Else return Remote Stream Video Tiles
-    return remoteParticipants.map(
+    return sortedRemoteParticipants.map(
       (participant): JSX.Element => {
         const remoteVideoStream = participant.videoStream;
         return (
@@ -144,12 +178,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             displayName={participant.displayName}
             remoteVideoViewOption={remoteVideoViewOption}
             onRenderAvatar={onRenderAvatar}
+            onVideoStreamChange={sortRemoteVideoTiles}
           />
         );
       }
     );
   }, [
-    remoteParticipants,
+    sortedRemoteParticipants,
     onRenderRemoteVideoTile,
     onCreateRemoteStreamView,
     onDisposeRemoteStreamView,
@@ -192,6 +227,7 @@ const RemoteVideoTile = React.memo(
       props: PlaceholderProps,
       defaultOnRender: (props: PlaceholderProps) => JSX.Element
     ) => JSX.Element;
+    onVideoStreamChange(): void;
   }) => {
     const {
       isAvailable,
@@ -201,8 +237,11 @@ const RemoteVideoTile = React.memo(
       renderElement,
       userId,
       displayName,
-      onRenderAvatar
+      onRenderAvatar,
+      onVideoStreamChange
     } = props;
+    const [videoStreamElement, setVideoStreamElement] = useState<JSX.Element | undefined>(undefined);
+
     useEffect(() => {
       if (isAvailable && !renderElement) {
         onCreateRemoteStreamView && onCreateRemoteStreamView(userId, remoteVideoViewOption);
@@ -225,12 +264,32 @@ const RemoteVideoTile = React.memo(
       };
     }, [onDisposeRemoteStreamView, userId]);
 
+    useEffect(() => {
+      console.log(`Element count is undefined = ${!renderElement?.childElementCount} for user ${displayName}`);
+      if (!renderElement || !renderElement.childElementCount) {
+        setVideoStreamElement(undefined);
+      } else {
+        setVideoStreamElement(<StreamMedia videoStreamElement={renderElement} />);
+      }
+
+      onVideoStreamChange();
+    }, [renderElement]);
+
+    //     const renderVideoStreamElement = useMemo(() => {
+    //       console.log(`Element count is undefined = ${!renderElement?.childElementCount} for user ${displayName}`)
+    //       if (!renderElement || !renderElement.childElementCount) {
+    //         return undefined;
+    //       }
+
+    //       return <StreamMedia videoStreamElement={renderElement} />
+    //     }, [renderElement]);
+
     return (
       <Stack className={gridStyle} key={userId} grow>
         <VideoTile
           userId={userId}
           isVideoReady={isAvailable}
-          renderElement={<StreamMedia videoStreamElement={renderElement ?? null} />}
+          renderElement={videoStreamElement}
           displayName={displayName}
           onRenderPlaceholder={onRenderAvatar}
         />
