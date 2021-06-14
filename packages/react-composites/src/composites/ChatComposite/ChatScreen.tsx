@@ -48,7 +48,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const threadStatusProps = useAdaptedSelector(getThreadStatusProps);
 
   return (
-    <Stack className={chatContainer} grow>
+    <Stack id="ChatComposite" className={chatContainer} grow>
       <ChatHeader {...headerProps} />
       <Stack className={chatArea} horizontal grow>
         <Stack className={chatWrapper} grow>
