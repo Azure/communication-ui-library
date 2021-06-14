@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Replace Map with Object in chatMessages",
+  "packageName": "chat-stateful-client",
+  "email": "prprabhu@microsoft.com",
+  "dependentChangeType": "patch"
+}

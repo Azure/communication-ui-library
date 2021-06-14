@@ -47,7 +47,7 @@ export class EventSubscriber {
     const newMessage = this.convertEventToChatMessage(event);
     // Because of bug in chatMessageReceived event, if we already have that particular message in context, we want to
     // make sure to not overwrite the sequenceId when calling setChatMessage.
-    const existingMessage = this.chatContext.getState().threads.get(event.threadId)?.chatMessages.get(event.id);
+    const existingMessage = this.chatContext.getState().threads.get(event.threadId)?.chatMessages[event.id];
     if (existingMessage) {
       newMessage.sequenceId = existingMessage.sequenceId;
     }
