@@ -116,7 +116,7 @@ jobs:
       # Run tests
       - name: Build
         run: rushx storybook
-        working-directory: ./package/storybook
+        working-directory: ./packages/storybook
 
   tests:
     name: Run Tests
