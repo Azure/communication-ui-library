@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Stack, Modal, IDragOptions, ContextualMenu } from '@fluentui/react';
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   BaseCustomStylesProps,
   VideoGalleryLocalParticipant,
@@ -60,6 +60,26 @@ const DRAG_OPTIONS: IDragOptions = {
   keepInBounds: true
 };
 
+const sortParticipants = (participants: VideoGalleryRemoteParticipant[] | undefined) => {
+  if (!participants) {
+    return [];
+  }
+
+  return participants.sort((p1, p2) => {
+    if (!p1?.videoStream?.renderElement?.childElementCount && !p2?.videoStream?.renderElement?.childElementCount) {
+      return 0;
+    }
+    if (!p1?.videoStream?.renderElement?.childElementCount) {
+      return 1;
+    }
+    if (!p2?.videoStream?.renderElement?.childElementCount) {
+      return -1;
+    }
+
+    return 0;
+  });
+};
+
 /**
  * VideoGallery represents a `GridLayout` of video tiles for a specific call.
  * It displays a `VideoTile` for the local user as well as for each remote participants who joined the call.
@@ -83,6 +103,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     layout,
     onRenderAvatar
   } = props;
+  const [sortedRemoteParticipants, setSortedRemoteParticipants] = useState<VideoGalleryRemoteParticipant[]>([]);
+
+  useEffect(() => {
+    setSortedRemoteParticipants(sortParticipants(remoteParticipants));
+  }, [remoteParticipants]);
 
   const shouldFloatLocalVideo = useCallback((): boolean => {
     return !!(layout === 'floatingLocalVideo' && remoteParticipants && remoteParticipants.length > 0);
@@ -122,15 +147,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
    * Utility function for memoized rendering of RemoteParticipants.
    */
   const defaultOnRenderRemoteParticipants = useMemo(() => {
-    if (!remoteParticipants) return null;
-
     // If user provided a custom onRender function return that function.
     if (onRenderRemoteVideoTile) {
-      return remoteParticipants.map((participant) => onRenderRemoteVideoTile(participant));
+      return sortedRemoteParticipants.map((participant) => onRenderRemoteVideoTile(participant));
     }
 
     // Else return Remote Stream Video Tiles
-    return remoteParticipants.map(
+    return sortedRemoteParticipants.map(
       (participant): JSX.Element => {
         const remoteVideoStream = participant.videoStream;
         return (
@@ -149,7 +172,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       }
     );
   }, [
-    remoteParticipants,
+    sortedRemoteParticipants,
     onRenderRemoteVideoTile,
     onCreateRemoteStreamView,
     onDisposeRemoteStreamView,
@@ -225,12 +248,23 @@ const RemoteVideoTile = React.memo(
       };
     }, [onDisposeRemoteStreamView, userId]);
 
+    const renderVideoStreamElement = useMemo(() => {
+      // Checking if renderElement is well defined or not as calling SDK has a number of video streams limitation which
+      // implies that, after their threshold, all streams have no child (blank video)
+      if (!renderElement || !renderElement.childElementCount) {
+        // Returning `undefined` results in the placeholder with avatar being shown
+        return undefined;
+      }
+
+      return <StreamMedia videoStreamElement={renderElement} />;
+    }, [renderElement, renderElement?.childElementCount]);
+
     return (
       <Stack className={gridStyle} key={userId} grow>
         <VideoTile
           userId={userId}
           isVideoReady={isAvailable}
-          renderElement={<StreamMedia videoStreamElement={renderElement ?? null} />}
+          renderElement={renderVideoStreamElement}
           displayName={displayName}
           onRenderPlaceholder={onRenderAvatar}
         />
