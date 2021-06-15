@@ -79,12 +79,7 @@ export const CallBackend = (): JSX.Element => {
         </Stack>
       </Stack.Item>
 
-      <Stack.Item
-        className={mergeStyles({
-          background: theme.palette.neutralLighter,
-          padding: 15
-        })}
-      >
+      <Stack.Item>
         <CopyableResponse response={response} />
       </Stack.Item>
     </Stack>
@@ -95,7 +90,7 @@ export const ChatBackend = (): JSX.Element => {
   const theme = useTheme();
 
   const [connectionString, setConnectionString] = useState('');
-  const [response, setResponse] = useState();
+  const [responses, setResponses] = useState();
   const [errorMessage, setErrorMessage] = useState('');
   const [displayNames, setDisplayNames] = useState(['']);
 
@@ -103,11 +98,11 @@ export const ChatBackend = (): JSX.Element => {
   const onGenerateClick = useCallback(async () => {
     createUserAndThread(connectionString, displayNames)
       .then((response) => {
-        setResponse(response);
+        setResponses(response);
         setErrorMessage('');
       })
       .catch((reason) => {
-        setResponse(undefined);
+        setResponses(undefined);
         setErrorMessage(reason.toString());
       });
   }, [connectionString, displayNames]);
@@ -148,13 +143,8 @@ export const ChatBackend = (): JSX.Element => {
         </Stack>
       </Stack.Item>
 
-      <Stack.Item
-        className={mergeStyles({
-          background: theme.palette.neutralLighter,
-          padding: 15
-        })}
-      >
-        <CopyableResponse response={response} />
+      <Stack.Item>
+        <CopyableResponses responses={responses} />
       </Stack.Item>
     </Stack>
   );
@@ -242,8 +232,29 @@ const DisplayNamesInput = (props: DisplayNamesInputProps): JSX.Element => {
   );
 };
 
+const CopyableResponses = (props: { responses: unknown[] | undefined }): JSX.Element => {
+  const { responses } = props;
+  if (responses === undefined) {
+    return <CopyableResponse response={undefined} />;
+  }
+  return (
+    <Stack
+      tokens={nestedStackTokens}
+      className={mergeStyles({
+        width: '100%'
+      })}
+    >
+      {responses.map((response, i) => (
+        <Stack.Item key={`response.${i}`}>
+          <CopyableResponse response={response} />
+        </Stack.Item>
+      ))}
+    </Stack>
+  );
+};
 const CopyableResponse = (props: { response: unknown | undefined }): JSX.Element => {
   const { response } = props;
+  const theme = useTheme();
 
   if (response === undefined) {
     return <Text>Tip: Connection string can be found from the azure portal.</Text>;
@@ -251,7 +262,12 @@ const CopyableResponse = (props: { response: unknown | undefined }): JSX.Element
 
   const lines = JSON.stringify(response, null, 2).split(/\r?\n/);
   return (
-    <Stack>
+    <Stack
+      className={mergeStyles({
+        background: theme.palette.neutralLighter,
+        padding: 15
+      })}
+    >
       <Stack.Item>
         {lines.map((line) => (
           <Text block nowrap key={line}>
