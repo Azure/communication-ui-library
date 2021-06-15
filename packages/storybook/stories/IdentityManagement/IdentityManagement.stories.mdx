@@ -1,14 +1,35 @@
-import { Meta, Story } from '@storybook/addon-docs/blocks';
-import * as stories from './IdentityManagement.stories.tsx';
+import { Canvas, Meta, Story } from '@storybook/addon-docs/blocks';
+import * as stories from './IdentityManagement.stories';
+
+import CallBackendText from '!!raw-loader!./snippets/CallBackend.snippet.ts';
 
 <Meta id="identitymanagement" title="Identity Managemment" />
 
-# Button
+# Identity Management
 
-I can define a story with the function imported from CSF:
+It is a primary tenet of Azure Communication Services that customers bring their own user identities. Customers
+then use the Azure Communication Services identity service to create corresponding authentication tokens for
+their users. Interaction with Azure Communication Services identity services is a privileged operation. Customers
+should deploy a secure service for identity management that serves just the short-lived Azure Communication Services
+identity tokens to the client application. These short-lived identity tokens are all that the client application
+needs to interact with the Azure Communication Services like Chat and Calling.
 
-<Canvas childrenGap="2">
+## Identity Management for Calling
+
+Azure Communication Services calling SDK requires a user identity, token and an identifier for the call to join.
+A typical implementation of the backend service that mints the user token might look so:
+
+[TODO: Fix Source]
+
+<Source code={stories.CallBackendText} />
+
+The following utility canvas uses the same logic to mint user tokens. You can use this to generate the data needed for
+the [`CallComposite` stories in this storybook](/?path=/story/composites-call--basic-example).
+
+<Canvas withSource="none">
   <Story story={stories.CallBackend} />
 </Canvas>
 
-Something else here.
+## Identity Management for Chat
+
+TODO
