@@ -17,7 +17,13 @@ export type ChatClientState = {
 };
 
 export type ChatThreadClientState = {
-  chatMessages: Map<string, ChatMessageWithStatus>;
+  /**
+   * Messages in this thread.
+   * Object with {@Link ChatMessageWithStatus} entries
+   * Local messages are keyed by keyed by {@Link ChatMessageWithStatus.clientMessageId}.
+   * Remote messages are keyed by {@Link @azure/communication-chat#ChatMessage.id}.
+   */
+  chatMessages: { [key: string]: ChatMessageWithStatus };
   // Keys are stringified CommunicationIdentifier objects.
   //
   // TODO: Consider replacing this Map with Array:

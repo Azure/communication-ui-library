@@ -31,7 +31,9 @@ export type ChatMessageWithStatus = ChatMessage & {
 
 // @public (undocumented)
 export type ChatThreadClientState = {
-    chatMessages: Map<string, ChatMessageWithStatus>;
+    chatMessages: {
+        [key: string]: ChatMessageWithStatus;
+    };
     participants: Map<string, ChatParticipant>;
     threadId: string;
     properties?: ChatThreadProperties;

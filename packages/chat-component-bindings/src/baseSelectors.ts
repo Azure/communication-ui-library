@@ -17,7 +17,7 @@ export const getDisplayName = (state: ChatClientState): string => state.displayN
 export const getChatMessages = (
   state: ChatClientState,
   props: ChatBaseSelectorProps
-): Map<string, ChatMessageWithStatus> => (props.threadId && state.threads[props.threadId]?.chatMessages) || new Map();
+): { [key: string]: ChatMessageWithStatus } => (props.threadId && state.threads[props.threadId]?.chatMessages) || {};
 
 export const getReadReceipts = (state: ChatClientState, props: ChatBaseSelectorProps): ChatMessageReadReceipt[] =>
   (props.threadId && state.threads[props.threadId]?.readReceipts) || [];

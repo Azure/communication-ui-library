@@ -187,7 +187,7 @@ describe('declarative chatClient basic api functions', () => {
 
     await chatThreadClient.sendMessage({ content: 'test' });
 
-    expect(client.getState().threads[threadId]?.chatMessages.size).toBe(1);
+    expect(Object.values(client.getState().threads[threadId]?.chatMessages ?? {}).length).toBe(1);
   });
 });
 
@@ -259,7 +259,7 @@ describe('declarative chatClient subscribe to event properly after startRealtime
 
     await client.triggerEvent('chatMessageReceived', event);
 
-    expect(client.getState().threads[threadId]?.chatMessages.get(messageId)).toBeDefined();
+    expect(client.getState().threads[threadId]?.chatMessages[messageId]).toBeDefined();
 
     // edit event
     const message = 'editedContent';
@@ -270,7 +270,7 @@ describe('declarative chatClient subscribe to event properly after startRealtime
     };
     await client.triggerEvent('chatMessageEdited', editedEvent);
 
-    expect(client.getState().threads[threadId]?.chatMessages.get(messageId)?.content?.message).toBe(message);
+    expect(client.getState().threads[threadId]?.chatMessages[messageId]?.content?.message).toBe(message);
 
     // delete event
     const deleteEvent: ChatMessageDeletedEvent = {
@@ -280,7 +280,7 @@ describe('declarative chatClient subscribe to event properly after startRealtime
 
     await client.triggerEvent('chatMessageDeleted', deleteEvent);
 
-    expect(client.getState().threads[threadId]?.chatMessages.size).toBe(0);
+    expect(Object.values(client.getState().threads[threadId]?.chatMessages ?? {}).length).toBe(0);
   });
 
   test('set internal store correctly when receive participant related events', async () => {

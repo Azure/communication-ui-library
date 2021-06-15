@@ -171,7 +171,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   };
 
   messageReadListener = ({ chatMessageId, recipient }: ReadReceiptReceivedEvent): void => {
-    const message = this.getState().thread.chatMessages.get(chatMessageId);
+    const message = this.getState().thread.chatMessages[chatMessageId];
     if (message) {
       this.emitter.emit('messageRead', { message, readBy: recipient });
     }
