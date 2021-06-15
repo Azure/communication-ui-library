@@ -44,7 +44,6 @@ export const CallBackend = (): JSX.Element => {
         setResponse(undefined);
         setErrorMessage(reason.toString());
       });
-    setResponse(await createUserAndGroup(connectionString));
   }, [connectionString]);
 
   return (
@@ -98,10 +97,11 @@ export const ChatBackend = (): JSX.Element => {
   const [connectionString, setConnectionString] = useState('');
   const [response, setResponse] = useState();
   const [errorMessage, setErrorMessage] = useState('');
+  const [displayNames, setDisplayNames] = useState(['']);
 
   const onConnectionStringChange = useCallback((_, value) => setConnectionString(value ?? ''), []);
   const onGenerateClick = useCallback(async () => {
-    createUserAndGroup(connectionString)
+    createUserAndThread(connectionString, displayNames)
       .then((response) => {
         setResponse(response);
         setErrorMessage('');
@@ -110,10 +110,7 @@ export const ChatBackend = (): JSX.Element => {
         setResponse(undefined);
         setErrorMessage(reason.toString());
       });
-    setResponse(await createUserAndGroup(connectionString));
-  }, [connectionString]);
-
-  const logEmAll = useCallback((names) => console.log(names), []);
+  }, [connectionString, displayNames]);
 
   return (
     <Stack
@@ -143,7 +140,7 @@ export const ChatBackend = (): JSX.Element => {
             />
           </Stack.Item>
           <Stack.Item>
-            <DisplayNamesInput onChange={logEmAll} />
+            <DisplayNamesInput displayNames={displayNames} setDisplayNames={setDisplayNames} />
           </Stack.Item>
           <Stack.Item>
             <PrimaryButton text="Generate" onClick={onGenerateClick} />
@@ -164,34 +161,32 @@ export const ChatBackend = (): JSX.Element => {
 };
 
 interface DisplayNamesInputProps {
-  onChange(displayNames: string[]);
+  displayNames: string[];
+  setDisplayNames: (displayNames: string[]) => void;
 }
 
 const DisplayNamesInput = (props: DisplayNamesInputProps): JSX.Element => {
-  const { onChange } = props;
-  const [displayNames, setDisplayNames] = useState(['']);
+  const { displayNames, setDisplayNames } = props;
 
   const onTextChange = useCallback(
     (i: number, value: string | undefined) => {
+      // TODO: `draft` is unnecessary.
       const draft = [...displayNames];
       draft[i] = value ?? '';
       setDisplayNames(draft);
-      onChange(draft);
     },
-    [displayNames, onChange]
+    [displayNames, setDisplayNames]
   );
   const onAddParticipant = useCallback(() => {
     const draft = [...displayNames];
     draft.push('');
     setDisplayNames(draft);
-    onChange(draft);
-  }, [displayNames, onChange]);
+  }, [displayNames, setDisplayNames]);
   const onRemoveParticipant = useCallback(() => {
     const draft = [...displayNames];
     draft.splice(draft.length - 1, 1);
     setDisplayNames(draft);
-    onChange(draft);
-  }, [displayNames, onChange]);
+  }, [displayNames, setDisplayNames]);
 
   return (
     <Stack
