@@ -22,14 +22,14 @@ jobs:
           fetch-depth: 0
 
       # Ensure node version is great enough
-      - name: Use Node.js v12.x
+      - name: Use Node.js v14.x
         uses: actions/setup-node@v1
         with:
-          node-version: '12.x'
+          node-version: '14.x'
 
       # Install dependencies
       - name: Install rush
-        run: npm install -g @microsoft/rush
+        run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
 
@@ -72,9 +72,14 @@ jobs:
       - name: Create issue if main branch CI failed
         id: create-issue
         if: failure() && github.ref == 'refs/heads/main'
-        uses: JasonEtco/create-an-issue@v2.4.0
-        with:
-          filename: .github/failed_ci_build_template.md
-          update_existing: true
+        run: |
+          # check for an issue that is already open
+          curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/search/issues?q=org:Azure+repo:communication-ui-library+label:CI_FAILURE+state:open > $HOME/ci_issues.json
+          issue_count=$(jq -r '.total_count' $HOME/ci_issues.json)
+          if [ $issue_count -gt 0 ]; then
+            echo "No need to create new issue, one already exists"
+          else
+            curl -X POST -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/Azure/communication-ui-library/issues -d '{"title":"Main branch CI Failed", "body": "Main CI Pipeline has failed. Please investigate.", "labels":["CI_FAILURE"]}'
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

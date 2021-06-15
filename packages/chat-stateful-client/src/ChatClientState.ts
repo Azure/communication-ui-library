@@ -9,11 +9,21 @@ import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 export type ChatClientState = {
   userId: CommunicationIdentifierKind;
   displayName: string;
-  threads: Map<string, ChatThreadClientState>;
+  /**
+   * Chat threads joined by the current user.
+   * Object with {@Link ChatThreadClientState} fields, keyed by {@Link ChatThreadClientState.threadId}.
+   */
+  threads: { [key: string]: ChatThreadClientState };
 };
 
 export type ChatThreadClientState = {
-  chatMessages: Map<string, ChatMessageWithStatus>;
+  /**
+   * Messages in this thread.
+   * Object with {@Link ChatMessageWithStatus} entries
+   * Local messages are keyed by keyed by {@Link ChatMessageWithStatus.clientMessageId}.
+   * Remote messages are keyed by {@Link @azure/communication-chat#ChatMessage.id}.
+   */
+  chatMessages: { [key: string]: ChatMessageWithStatus };
   // Keys are stringified CommunicationIdentifier objects.
   //
   // TODO: Consider replacing this Map with Array:

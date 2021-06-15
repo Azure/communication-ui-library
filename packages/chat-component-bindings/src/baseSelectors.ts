@@ -17,32 +17,31 @@ export const getDisplayName = (state: ChatClientState): string => state.displayN
 export const getChatMessages = (
   state: ChatClientState,
   props: ChatBaseSelectorProps
-): Map<string, ChatMessageWithStatus> =>
-  (props.threadId && state.threads.get(props.threadId)?.chatMessages) || new Map();
+): { [key: string]: ChatMessageWithStatus } => (props.threadId && state.threads[props.threadId]?.chatMessages) || {};
 
 export const getReadReceipts = (state: ChatClientState, props: ChatBaseSelectorProps): ChatMessageReadReceipt[] =>
-  (props.threadId && state.threads.get(props.threadId)?.readReceipts) || [];
+  (props.threadId && state.threads[props.threadId]?.readReceipts) || [];
 
 export const getParticipants = (state: ChatClientState, props: ChatBaseSelectorProps): Map<string, ChatParticipant> =>
-  (props.threadId && state.threads.get(props.threadId)?.participants) || new Map();
+  (props.threadId && state.threads[props.threadId]?.participants) || new Map();
 
 export const getIsLargeGroup = (state: ChatClientState, props: ChatBaseSelectorProps): boolean => {
-  const participants = state.threads.get(props.threadId)?.participants;
+  const participants = state.threads[props.threadId]?.participants;
   return !!participants && participants.size > 20;
 };
 
 export const getLatestReadTime = (state: ChatClientState, props: ChatBaseSelectorProps): Date =>
-  (props.threadId && state.threads.get(props.threadId)?.latestReadTime) || new Date(0);
+  (props.threadId && state.threads[props.threadId]?.latestReadTime) || new Date(0);
 
 export const getTopicName = (state: ChatClientState, props: ChatBaseSelectorProps): string => {
-  return state.threads.get(props.threadId)?.properties?.topic || '';
+  return state.threads[props.threadId]?.properties?.topic || '';
 };
 
 export const getTypingIndicators = (
   state: ChatClientState,
   props: ChatBaseSelectorProps
 ): TypingIndicatorReceivedEvent[] => {
-  return (props.threadId && state.threads.get(props.threadId)?.typingIndicators) || [];
+  return (props.threadId && state.threads[props.threadId]?.typingIndicators) || [];
 };
 
 export const sanitizedMessageContentType = (type: string): MessageContentType => {

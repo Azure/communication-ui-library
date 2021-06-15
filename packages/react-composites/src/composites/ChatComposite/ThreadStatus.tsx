@@ -32,7 +32,7 @@ export const getUserId = (state: ChatClientState): string => toFlatCommunication
 // TODO: Consider exporting building-block selectors internally to composites.
 // This will avoid code duplication but still keep the public API clean.
 export const getParticipants = (state: ChatClientState, props: ChatBaseSelectorProps): Map<string, ChatParticipant> =>
-  (props.threadId && state.threads.get(props.threadId)?.participants) || new Map();
+  (props.threadId && state.threads[props.threadId]?.participants) || new Map();
 
 export const getThreadStatusProps = reselect.createSelector(
   [getUserId, getParticipants],

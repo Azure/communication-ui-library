@@ -21,7 +21,7 @@ import { ChatIcon } from '@fluentui/react-icons-northstar';
 import heroSVG from '../assets/hero.svg';
 import { getThreadId } from './utils/getThreadId';
 import { createThread } from './utils/createThread';
-import { ThemeSelector } from 'app/theming/ThemeSelector';
+import { ThemeSelector } from './theming/ThemeSelector';
 
 const imageStyleProps: IImageStyles = {
   image: {

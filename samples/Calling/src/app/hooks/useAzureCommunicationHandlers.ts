@@ -9,7 +9,6 @@ import {
   useDeviceManager
 } from 'calling-component-bindings';
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
-export const useAzureCommunicationHandlers = () => {
+export const useAzureCommunicationHandlers = (): any => {
   return createDefaultCallingHandlers(useCallClient(), useCallAgent(), useDeviceManager(), useCall());
 };
