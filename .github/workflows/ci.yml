@@ -77,7 +77,7 @@ jobs:
       - name: Install dependencies
         run: rush install
       - name: Build
-        run: rush build -o storybook
+        run: rush build -t storybook
       - name: Tests
         run: rush test -o storybook
 
