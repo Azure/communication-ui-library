@@ -3,8 +3,8 @@
 
 import { useCallClient, useCall, useCallingSelector as useSelector } from 'calling-component-bindings';
 import { CallState, GroupLocator, MeetingLocator } from '@azure/communication-calling';
-import { Overlay, Spinner, Stack, concatStyleSets } from '@fluentui/react';
-import { VideoStreamOptions, useLocale } from 'react-components';
+import { Overlay, Spinner, Stack } from '@fluentui/react';
+import { VideoStreamOptions } from 'react-components';
 import { CallClientState, StatefulCallClient } from 'calling-stateful-client';
 import React, { useEffect, useState } from 'react';
 import { CommandPanel, CommandPanelTypes } from './CommandPanel';
@@ -66,8 +66,6 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
 
   const devicePermissions = useSelector(devicePermissionSelector);
 
-  const { locale } = useLocale();
-
   useEffect(() => {
     const callEndReason = call?.callEndReason;
     if (!callEndReason) return;
@@ -110,12 +108,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   return (
     <>
       {callState && isInCall(call?.state ?? 'None') ? (
-        <Stack
-          horizontalAlign="center"
-          verticalAlign="center"
-          styles={concatStyleSets(containerStyles, { root: { direction: locale.rtl ? 'rtl' : 'ltr ' } })}
-          grow
-        >
+        <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow>
           <Stack.Item styles={headerStyles}>
             <Header
               selectedPane={selectedPane}

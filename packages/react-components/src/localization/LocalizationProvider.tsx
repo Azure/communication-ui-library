@@ -110,7 +110,13 @@ export const LocalizationProvider = (props: LocalizationProviderProps): JSX.Elem
     [locale, locales, strings, setLocale]
   );
 
-  return <LocaleContext.Provider value={localeMemo}>{children}</LocaleContext.Provider>;
+  return (
+    <LocaleContext.Provider value={localeMemo}>
+      <body className="ms-Fabric" dir={localeMemo.locale.rtl ? 'rtl' : 'ltr'}>
+        {children}
+      </body>
+    </LocaleContext.Provider>
+  );
 };
 
 export const useLocale = (): ILocaleContext => useContext(LocaleContext);

@@ -2,16 +2,15 @@
 // Licensed under the MIT license.
 
 import { Stack } from '@fluentui/react';
-import React, { useMemo } from 'react';
+import React from 'react';
 import {
   configurationStackTokens,
   fullScreenStyle,
   localSettingsContainerStyle,
-  getMainContainerStyle,
+  mainContainerStyle,
   verticalStackStyle
 } from './styles/CallConfiguration.styles';
 import { LocalPreview } from './LocalPreview';
-import { useLocale } from 'react-components';
 
 export interface CallConfigurationProps {
   screenWidth: number;
@@ -22,12 +21,6 @@ export interface CallConfigurationProps {
 
 export const CallConfiguration = (props: CallConfigurationProps): JSX.Element => {
   const { screenWidth } = props;
-  const { locale } = useLocale();
-
-  const mainContainerStyle = useMemo(() => {
-    return getMainContainerStyle(locale.rtl);
-  }, [locale.rtl]);
-
   return (
     <Stack className={mainContainerStyle} horizontalAlign="center" verticalAlign="center" grow>
       <Stack
