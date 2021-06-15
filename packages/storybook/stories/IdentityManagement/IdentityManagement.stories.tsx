@@ -135,6 +135,9 @@ export const ChatBackend = (): JSX.Element => {
             />
           </Stack.Item>
           <Stack.Item>
+            <Text>Chat participants:</Text>
+          </Stack.Item>
+          <Stack.Item>
             <DisplayNamesInput displayNames={displayNames} setDisplayNames={setDisplayNames} />
           </Stack.Item>
           <Stack.Item>
