@@ -8,12 +8,14 @@ export const createUserAndGroup = async (resourceConnectionString: string): Prom
   const tokenClient = new CommunicationIdentityClient(resourceConnectionString);
   const user = await tokenClient.createUserAndToken(['voip']);
   return {
-    userId: user.user,
+    userId: user.user.communicationUserId,
     token: user.token,
     endpointUrl: new URL(resourceConnectionString.replace('endpoint=', '').split(';')[0]).toString(),
 
-    // Contoso creates a group call and provides the group ID to the client application.
+    // Backend server creates a group call and provides the group ID to the client application.
     // Alternatively, the client application could join an existing teams meeting.
+    //
+    // In this trivial example, a random ID is generated each time.
     locator: createGUID()
   };
 };
