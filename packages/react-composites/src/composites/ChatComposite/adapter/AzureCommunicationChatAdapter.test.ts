@@ -38,8 +38,8 @@ const THREAD_OVERRIDES: ChatThreadClientOverrides = {
 
 const STATEFUL_OVERRIDES: StatefulChatClientOverrides = {
   getState: () => {
-    const threads = new Map<string, ChatThreadClientState>();
-    threads.set(MOCK_THREADID, {} as ChatThreadClientState);
+    const threads = {};
+    threads[MOCK_THREADID] = {} as ChatThreadClientState;
     return {
       userId: { kind: 'communicationUser', communicationUserId: '' },
       threads

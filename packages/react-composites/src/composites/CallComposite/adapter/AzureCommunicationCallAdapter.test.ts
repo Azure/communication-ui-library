@@ -3,7 +3,7 @@
 
 import { AudioDeviceInfo, VideoDeviceInfo } from '@azure/communication-calling';
 import { CommunicationUserKind } from '@azure/communication-common';
-import { CallState, IncomingCallState, LocalVideoStreamState, StatefulDeviceManager } from 'calling-stateful-client';
+import { CallState, IncomingCallState, StatefulDeviceManager } from 'calling-stateful-client';
 import {
   CallAgentOverrides,
   createMockStatefulCallClient,
@@ -23,16 +23,16 @@ const START_ERROR_MESSAGE = 'start error';
 const STATEFUL_OVERRIDES: StatefulCallClientOverrides = {
   getState: () => {
     return {
-      calls: new Map<string, CallState>(),
+      calls: {},
       callsEnded: [] as CallState[],
-      incomingCalls: new Map<string, IncomingCallState>(),
+      incomingCalls: {},
       incomingCallsEnded: [] as IncomingCallState[],
       deviceManager: {
         isSpeakerSelectionAvailable: false,
         cameras: [] as VideoDeviceInfo[],
         microphones: [] as AudioDeviceInfo[],
         speakers: [] as AudioDeviceInfo[],
-        unparentedViews: new Map<LocalVideoStreamState, LocalVideoStreamState>()
+        unparentedViews: []
       },
       callAgent: undefined,
       userId: { kind: 'communicationUser', communicationUserId: '' } as CommunicationUserKind
