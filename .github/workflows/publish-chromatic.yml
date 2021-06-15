@@ -26,10 +26,23 @@ jobs:
       - name: Build Storybook dependencies
         run: rush build -T storybook
 
-      - name: Publish to Chromatic
+      - name: Publish Chromatic
+        id: publish_chromatic
         uses: chromaui/action@v1
         with:
           workingDir: ./packages/storybook
           buildScriptName: build
           token: ${{ secrets.GITHUB_TOKEN }}
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+
+      - name: Add Storybook URL as Issue Comment
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Storybook URL ${{ steps.publish_chromatic.outputs.storybookUrl }}'
+            })
