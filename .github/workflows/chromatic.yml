@@ -1,0 +1,40 @@
+name: 'Chromatic'
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  chromatic-deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: Install Rush
+        run: npm install -g @microsoft/rush@5.47.0
+
+      - name: Install Dependencies
+        run: rush install
+
+      - name: Install Chromatic
+        run: npm i -g chromatic
+
+      # - name: Publish to Chromatic
+      # working-directory: ./packages/storybook
+      # run: chromatic --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }} -b build
+      # 👇 Adds Chromatic as a step in the workflow
+      - name: Publish to Chromatic
+        uses: chromaui/action@v1
+        # Chromatic GitHub Action options
+        with:
+          workingDir: ./packages/storybook
+          buildScriptName: build
+          # token: ${{ secrets.GITHUB_TOKEN }}
+          # 👇 Chromatic projectToken, refer to the manage page to obtain it.
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
