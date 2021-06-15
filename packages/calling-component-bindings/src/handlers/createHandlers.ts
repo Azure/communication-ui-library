@@ -92,9 +92,9 @@ export const createDefaultCallingHandlers = memoizeOne(
             // TODO: we need to remember which LocalVideoStream was used for LocalPreview and dispose that one. For now
             // assume any unparented view is a LocalPreview and stop all since those are only used for LocalPreview
             // currently.
-            for (const stream of callClient.getState().deviceManager.unparentedViews.keys()) {
-              await callClient.disposeView(undefined, undefined, stream);
-            }
+            callClient.getState().deviceManager.unparentedViews.forEach(async (view) => {
+              await callClient.disposeView(undefined, undefined, view);
+            });
           } else {
             await callClient.createView(
               undefined,
@@ -262,9 +262,9 @@ export const createDefaultCallingHandlers = memoizeOne(
         // TODO: we need to remember which LocalVideoStream was used for LocalPreview and dispose that one. For now
         // assume any unparented view is a LocalPreview and stop all since those are only used for LocalPreview
         // currently.
-        for (const stream of callClient.getState().deviceManager.unparentedViews.keys()) {
-          await callClient.disposeView(undefined, undefined, stream);
-        }
+        callClient.getState().deviceManager.unparentedViews.forEach(async (view) => {
+          await callClient.disposeView(undefined, undefined, view);
+        });
       }
     };
 
@@ -297,7 +297,7 @@ export const createDefaultCallingHandlers = memoizeOne(
 const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
   // TODO: we should take in a LocalVideoStream that developer wants to use as their 'Preview' view. We should also
   // handle cases where 'Preview' view is in progress and not necessary completed.
-  return deviceManager.unparentedViews.values().next().value?.view !== undefined;
+  return deviceManager.unparentedViews.length > 0 && deviceManager.unparentedViews[0].view !== undefined;
 };
 
 /**

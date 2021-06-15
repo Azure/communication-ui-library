@@ -372,12 +372,12 @@ export type DeviceManagerState = {
   deviceAccess?: DeviceAccess;
   /**
    * Stores created views that are not associated with any CallState (when {@Link StatefulCallClient.createView} is
-   * called with undefined callId, undefined participantId, and defined LocalVideoStream). The key in this map will be
-   * the original reference that {@Link StatefulCallClient.createView} is called with. The value will be a new
-   * LocalVideoStream different than the one used. The value in the map will contain the rendered view. The value in the
-   * map is also considered immutable.
+   * called with undefined callId, undefined participantId, and defined LocalVideoStream).
+   *
+   * The values in this array are generated internally when {@Link StatefulCallClient.createView} is called and are
+   * considered immutable.
    */
-  unparentedViews: Map<LocalVideoStreamState, LocalVideoStreamState>;
+  unparentedViews: LocalVideoStreamState[];
 };
 
 /**
