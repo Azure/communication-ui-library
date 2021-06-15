@@ -52,7 +52,7 @@ export class CallContext {
         cameras: [],
         microphones: [],
         speakers: [],
-        unparentedViews: new Map<LocalVideoStreamState, LocalVideoStreamState>()
+        unparentedViews: []
       },
       callAgent: undefined,
       userId: userId
@@ -608,7 +608,7 @@ export class CallContext {
   ): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        draft.deviceManager.unparentedViews.set(localVideoStream, {
+        draft.deviceManager.unparentedViews.push({
           source: localVideoStream.source,
           mediaStreamType: localVideoStream.mediaStreamType,
           view: view
@@ -620,7 +620,14 @@ export class CallContext {
   public deleteDeviceManagerUnparentedView(localVideoStream: LocalVideoStreamState): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        draft.deviceManager.unparentedViews.delete(localVideoStream);
+        const foundIndex = draft.deviceManager.unparentedViews.findIndex(
+          (stream) =>
+            stream.source.id === localVideoStream.source.id &&
+            stream.mediaStreamType === localVideoStream.mediaStreamType
+        );
+        if (foundIndex !== -1) {
+          draft.deviceManager.unparentedViews.splice(foundIndex, 1);
+        }
       })
     );
   }

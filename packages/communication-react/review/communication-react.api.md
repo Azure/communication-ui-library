@@ -737,7 +737,7 @@ export type DeviceManagerState = {
     microphones: AudioDeviceInfo[];
     speakers: AudioDeviceInfo[];
     deviceAccess?: DeviceAccess;
-    unparentedViews: Map<LocalVideoStreamState, LocalVideoStreamState>;
+    unparentedViews: LocalVideoStreamState[];
 };
 
 // @public (undocumented)
