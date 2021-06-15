@@ -511,7 +511,9 @@ export type ChatClientProviderProps = {
 export type ChatClientState = {
     userId: CommunicationIdentifierKind;
     displayName: string;
-    threads: Map<string, ChatThreadClientState>;
+    threads: {
+        [key: string]: ChatThreadClientState;
+    };
 };
 
 // @public (undocumented)
