@@ -249,7 +249,7 @@ const RemoteVideoTile = React.memo(
     }, [onDisposeRemoteStreamView, userId]);
 
     const renderVideoStreamElement = useMemo(() => {
-      // Checking if renderElement is well defined or not as calling SDK has a number of video streams limitation which 
+      // Checking if renderElement is well defined or not as calling SDK has a number of video streams limitation which
       // implies that, after their threshold, all streams have no child (blank video)
       if (!renderElement || !renderElement.childElementCount) {
         // Returning `undefined` results in the placeholder with avatar being shown
