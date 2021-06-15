@@ -13,12 +13,16 @@ import {
   useTheme
 } from '@fluentui/react';
 import copy from 'copy-to-clipboard';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { createUserAndGroup } from './snippets/CallBackend.snippet';
 
-const verticalGapStackTokens: IStackTokens = {
+const containerStackTokens: IStackTokens = {
   childrenGap: 10,
-  padding: 10
+  padding: 15
+};
+
+const nestedStackTokens: IStackTokens = {
+  childrenGap: 10
 };
 
 export const CallBackend = (): JSX.Element => {
@@ -26,58 +30,58 @@ export const CallBackend = (): JSX.Element => {
 
   const [connectionString, setConnectionString] = useState('');
   const [response, setResponse] = useState();
-  // TODO: Error handling when connection string is wrong.
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const onConnectionStringChange = useCallback((_, value) => setConnectionString(value ?? ''), []);
+  const onGenerateClick = useCallback(async () => {
+    createUserAndGroup(connectionString)
+      .then((response) => {
+        setResponse(response);
+        setErrorMessage('');
+      })
+      .catch((reason) => {
+        setResponse(undefined);
+        setErrorMessage(reason.toString());
+      });
+    setResponse(await createUserAndGroup(connectionString));
+  }, [connectionString]);
+
   return (
     <Stack
-      tokens={verticalGapStackTokens}
+      tokens={containerStackTokens}
       className={mergeStyles({
         background: theme.palette.neutralLighterAlt,
-        width: '75vw'
+        boxShadow: theme.effects.elevation4,
+        width: '75%'
       })}
     >
-      <Stack.Item
-        styles={{
-          root: {
-            background: theme.palette.neutralLight,
-            color: theme.palette.themePrimary,
-            padding: 5
-          }
-        }}
-      >
+      <Stack.Item>
         <Stack
-          tokens={verticalGapStackTokens}
+          tokens={nestedStackTokens}
           className={mergeStyles({
             width: '100%'
           })}
         >
-          <Stack.Item
-            className={mergeStyles({
-              background: theme.palette.neutralLight,
-              color: theme.palette.themePrimary
-            })}
-          >
+          <Stack.Item>
             <TextField
               required
               className={mergeStyles({
                 width: '100%'
               })}
               placeholder="Enter a valid connection string"
-              onChange={(_, value) => setConnectionString(value ?? '')}
+              onChange={onConnectionStringChange}
+              errorMessage={errorMessage}
             />
           </Stack.Item>
           <Stack.Item>
-            <PrimaryButton
-              text="Generate"
-              onClick={async () => setResponse(await createUserAndGroup(connectionString))}
-            />
+            <PrimaryButton text="Generate" onClick={onGenerateClick} />
           </Stack.Item>
         </Stack>
       </Stack.Item>
 
       <Stack.Item
         className={mergeStyles({
-          background: theme.palette.neutralLight,
-          color: theme.palette.themePrimary,
+          background: theme.palette.neutralLighter,
           padding: 15
         })}
       >
@@ -91,7 +95,7 @@ const CopyableResponse = (props: { response: unknown | undefined }): JSX.Element
   const { response } = props;
 
   if (response === undefined) {
-    return <Text>Please enter connection string to continue...</Text>;
+    return <Text>Tip: Connection string can be found from the azure portal.</Text>;
   }
 
   const lines = JSON.stringify(response, null, 2).split(/\r?\n/);
