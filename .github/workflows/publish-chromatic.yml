@@ -4,9 +4,9 @@ on:
   pull_request:
     branches: [main]
     paths:
-      - /packages/storybook/**
-      - /packages/react-components/**
-      - /packages/react-composites/**
+      - ./packages/storybook/**
+      - ./packages/react-components/**
+      - ./packages/react-composites/**
   workflow_dispatch:
 
 jobs:
