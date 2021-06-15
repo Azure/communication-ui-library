@@ -6,6 +6,7 @@ import cors from 'cors';
 import createError from 'http-errors';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
+import path from 'path';
 
 import issueToken from './routes/issueToken';
 import refreshToken from './routes/refreshToken';
@@ -21,7 +22,7 @@ app.use(logger('tiny'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static('build'));
+app.use(express.static(path.resolve(__dirname, 'build')));
 
 app.use('/createThread', cors(), createThread);
 app.use('/addUser', cors(), addUser);

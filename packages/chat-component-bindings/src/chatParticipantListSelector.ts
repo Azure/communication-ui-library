@@ -1,10 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-// @ts-ignore
-import { ChatClientState } from 'chat-stateful-client';
-// @ts-ignore
-import { ChatBaseSelectorProps } from './baseSelectors';
 import { getUserId, getDisplayName, getParticipants } from './baseSelectors';
 import * as reselect from 'reselect';
 import { toFlatCommunicationIdentifier } from 'acs-ui-common';

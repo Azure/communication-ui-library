@@ -1,10 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-// @ts-ignore
-import { ChatClientState } from 'chat-stateful-client';
-// @ts-ignore
-import { ChatBaseSelectorProps } from './baseSelectors';
 import { getTypingIndicators, getParticipants, getUserId } from './baseSelectors';
 import * as reselect from 'reselect';
 import { ChatParticipant } from '@azure/communication-chat';

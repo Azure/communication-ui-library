@@ -2,14 +2,9 @@
 // Licensed under the MIT license.
 
 import { toFlatCommunicationIdentifier } from 'acs-ui-common';
-// @ts-ignore
-import { CallState, CallClientState, RemoteParticipantState, RemoteVideoStreamState } from 'calling-stateful-client';
-// @ts-ignore
+import { CallState, RemoteParticipantState, RemoteVideoStreamState } from 'calling-stateful-client';
 import { createSelector } from 'reselect';
-// @ts-ignore
-import * as reselect from 'reselect';
-// @ts-ignore
-import { getCall, CallingBaseSelectorProps, getDisplayName, getIdentifier, getCallId } from './baseSelectors';
+import { getCall, getDisplayName, getIdentifier } from './baseSelectors';
 import { memoizeFnAll } from 'acs-ui-common';
 import { VideoGalleryRemoteParticipant, VideoGalleryStream } from 'react-components';
 
