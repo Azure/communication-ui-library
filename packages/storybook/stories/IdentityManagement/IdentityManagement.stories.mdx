@@ -21,7 +21,7 @@ A typical implementation of the backend service that mints the user token might 
 
 [TODO: Fix Source]
 
-<Source code={stories.CallBackendText} />
+<Source code={CallBackendText} />
 
 The following utility canvas uses the same logic to mint user tokens. You can use this to generate the data needed for
 the [`CallComposite` stories in this storybook](/?path=/story/composites-call--basic-example).
@@ -32,4 +32,6 @@ the [`CallComposite` stories in this storybook](/?path=/story/composites-call--b
 
 ## Identity Management for Chat
 
-TODO
+<Canvas withSource="none">
+  <Story story={stories.ChatBackend} />
+</Canvas>

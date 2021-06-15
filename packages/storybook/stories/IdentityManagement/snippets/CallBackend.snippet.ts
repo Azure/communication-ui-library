@@ -1,4 +1,4 @@
-// Logic to create an Azure Communication Services user and group.
+// Logic to create an Azure Communication Services Calling user and group.
 // Resides in a secure backend server. The connection string is never exposed to the client application.
 
 import { CommunicationIdentityClient } from '@azure/communication-identity';
