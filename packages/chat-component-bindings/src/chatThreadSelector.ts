@@ -42,7 +42,7 @@ export const chatThreadSelector = createSelector(
   (userId, chatMessages, latestReadTime, isLargeGroup) => {
     // A function takes parameter above and generate return value
     const convertedMessages = memoizedAllConvertChatMessage((memoizedFn) =>
-      Array.from(chatMessages.values())
+      Object.values(chatMessages)
         .filter(
           (message) =>
             message.type.toLowerCase() === 'text' ||
