@@ -15,4 +15,4 @@ export const getTopicName = (state: ChatClientState, props: ChatBaseSelectorProp
 export const getParticipants = (
   state: ChatClientState,
   props: ChatBaseSelectorProps
-): { [key: string]: ChatParticipant } => (props.threadId && state.threads[threadId]?.participants) || {};
+): { [key: string]: ChatParticipant } => (props.threadId && state.threads[props.threadId]?.participants) || {};
