@@ -27,9 +27,6 @@ jobs:
       - name: Install Dependencies
         run: rush install
 
-      - name: Build Storybook dependencies
-        run: rush build -T storybook
-
       - name: Publish Chromatic
         id: publish_chromatic
         uses: chromaui/action@v1
