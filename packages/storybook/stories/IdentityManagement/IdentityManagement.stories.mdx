@@ -1,4 +1,4 @@
-import { Canvas, Meta, Story } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, Source, Story } from '@storybook/addon-docs/blocks';
 import * as stories from './IdentityManagement.stories';
 
 import CallBackendText from '!!raw-loader!./snippets/CallBackend.snippet.ts';
@@ -15,13 +15,11 @@ should deploy a secure service for identity management that serves just the shor
 identity tokens to the client application. These short-lived identity tokens are all that the client application
 needs to interact with the Azure Communication Services like Chat and Calling.
 
-## Identity Management for Calling
+## Calling
 
 Azure Communication Services Calling SDK requires a user identity, token and an identifier for the call to join.
 
 A typical implementation of the backend service that mints the user token might look so:
-
-[TODO: Fix Source]
 
 <Source code={CallBackendText} />
 
@@ -32,7 +30,7 @@ the [`CallComposite` stories in this storybook](/?path=/story/composites-call--b
   <Story story={stories.CallBackend} />
 </Canvas>
 
-## Identity Management for Chat
+## Chat
 
 Azure Communication Services Chat SDK requires a user identity and token. Additionally, participants in a chat must be explicitly
 added to the chat thread (Compare this to Calling SDK, where a participant may join a call using the group ID).
