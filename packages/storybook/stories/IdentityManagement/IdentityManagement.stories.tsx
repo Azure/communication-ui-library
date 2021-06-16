@@ -255,6 +255,7 @@ const CopyableResponses = (props: { responses: unknown[] | undefined }): JSX.Ele
     </Stack>
   );
 };
+
 const CopyableResponse = (props: { response: unknown | undefined }): JSX.Element => {
   const { response } = props;
   const theme = useTheme();

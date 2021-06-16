@@ -2,6 +2,7 @@ import { Canvas, Meta, Story } from '@storybook/addon-docs/blocks';
 import * as stories from './IdentityManagement.stories';
 
 import CallBackendText from '!!raw-loader!./snippets/CallBackend.snippet.ts';
+import ChatBackendText from '!!raw-loader!./snippets/ChatBackend.snippet.ts';
 
 <Meta id="identitymanagement" title="Identity Managemment" />
 
@@ -16,14 +17,15 @@ needs to interact with the Azure Communication Services like Chat and Calling.
 
 ## Identity Management for Calling
 
-Azure Communication Services calling SDK requires a user identity, token and an identifier for the call to join.
+Azure Communication Services Calling SDK requires a user identity, token and an identifier for the call to join.
+
 A typical implementation of the backend service that mints the user token might look so:
 
 [TODO: Fix Source]
 
 <Source code={CallBackendText} />
 
-The following utility canvas uses the same logic to mint user tokens. You can use this to generate the data needed for
+The following utility canvas is backed by the same logic to mint tokens. You can use this to generate the data needed for
 the [`CallComposite` stories in this storybook](/?path=/story/composites-call--basic-example).
 
 <Canvas withSource="none">
@@ -31,6 +33,16 @@ the [`CallComposite` stories in this storybook](/?path=/story/composites-call--b
 </Canvas>
 
 ## Identity Management for Chat
+
+Azure Communication Services Chat SDK requires a user identity and token. Additionally, participants in a chat must be explicitly
+added to the chat thread (Compare this to Calling SDK, where a participant may join a call using the group ID).
+
+A typical implementation of the backend service that mints the user tokens and adds them to a chat thread might look so:
+
+<Source code={ChatBackendText} />
+
+The following utility canvas is backed by the same logic to mint tokens and create threads. You can use this to generate the
+data needed for the [`ChatComposite` stories in this storybook](/?path=/docs/composites-chat--basic-example).
 
 <Canvas withSource="none">
   <Story story={stories.ChatBackend} />
