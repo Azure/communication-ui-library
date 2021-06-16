@@ -19,6 +19,17 @@ export const useSelector = <
   const chatClient: StatefulChatClient | undefined = useContext(ChatClientContext);
   const threadId = useContext(ChatThreadClientContext)?.threadId;
 
+  // Keeps track of whether the current component is mounted or not. If it has unmounted, make sure we do not modify the
+  // state or it will cause React warnings in the console. https://skype.visualstudio.com/SPOOL/_workitems/edit/2453212
+  const mounted = useRef(false);
+
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  });
+
   const threadConfigProps = useMemo(
     () => ({
       threadId
