@@ -90,5 +90,4 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
       return emptySelector;
   }
   return undefined;
-  // throw 'Can\'t find corresponding selector for this component. Please check the supported components from Azure Communication UI Feature Component List.';
 };
