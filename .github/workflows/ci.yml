@@ -79,8 +79,7 @@ jobs:
       - name: Build
         run: rush build -o storybook
       - name: Tests
-        run: rushx test:ci
-        working-directory: packages/storybook
+        run: rush test -o storybook
 
   build_calling_sample:
     name: Build Calling Sample
