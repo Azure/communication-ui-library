@@ -34,7 +34,7 @@ class ChatContext {
   private threadId: string;
 
   constructor(clientState: ChatClientState, threadId: string) {
-    const thread = clientState.threads.get(threadId);
+    const thread = clientState.threads[threadId];
     this.threadId = threadId;
     if (!thread) throw 'Cannot find threadId, please initialize thread before use!';
     this.state = {
@@ -66,7 +66,7 @@ class ChatContext {
   }
 
   public updateClientState(clientState: ChatClientState): void {
-    const thread = clientState.threads.get(this.threadId);
+    const thread = clientState.threads[this.threadId];
     if (!thread) throw 'Cannot find threadId, please make sure thread state is still in Stateful ChatClient.';
     this.setState({
       userId: toFlatCommunicationIdentifier(clientState.userId),

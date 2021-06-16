@@ -27,8 +27,8 @@ const moderatorIndex = (participants: CommunicationParticipant[]): number => {
 
 export const chatParticipantListSelector = reselect.createSelector(
   [getUserId, getParticipants, getDisplayName],
-  (userId, chatParticipants: Map<string, ChatParticipant>, displayName) => {
-    let participants = convertChatParticipantsToCommunicationParticipants(Array.from(chatParticipants.values()));
+  (userId, chatParticipants: { [key: string]: ChatParticipant }, displayName) => {
+    let participants = convertChatParticipantsToCommunicationParticipants(Object.values(chatParticipants));
     if (0 !== participants.length) {
       const moderatorIdx = moderatorIndex(participants);
 

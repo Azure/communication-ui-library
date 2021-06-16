@@ -65,7 +65,7 @@ const getDocs: () => JSX.Element = () => {
 
 const VideoTileStory: () => JSX.Element = () => {
   const displayName = text('Display Name', 'John Krasinski');
-  const showDisplayName = boolean('show displayName', true);
+  const showDisplayName = boolean('Show Display Name', true);
   const isVideoReady = boolean('Is Video Ready', false);
   const isMirrored = boolean('Is Mirrored', false);
   const width = number('Width', 400, {

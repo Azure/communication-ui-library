@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update to use Array for unparentedViews",
+  "packageName": "calling-component-bindings",
+  "email": "prprabhu@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -319,10 +319,14 @@ export interface CallClientProviderProps {
 // @public
 export interface CallClientState {
     callAgent: CallAgentState | undefined;
-    calls: Map<string, CallState>;
+    calls: {
+        [key: string]: CallState;
+    };
     callsEnded: CallState[];
     deviceManager: DeviceManagerState;
-    incomingCalls: Map<string, IncomingCallState>;
+    incomingCalls: {
+        [key: string]: IncomingCallState;
+    };
     incomingCallsEnded: IncomingCallState[];
     userId: CommunicationUserKind;
 }
@@ -511,7 +515,9 @@ export type ChatClientProviderProps = {
 export type ChatClientState = {
     userId: CommunicationIdentifierKind;
     displayName: string;
-    threads: Map<string, ChatThreadClientState>;
+    threads: {
+        [key: string]: ChatThreadClientState;
+    };
 };
 
 // @public (undocumented)
@@ -564,7 +570,9 @@ export type ChatOptions = {
 export const chatParticipantListSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     myUserId: string;
     participants: CommunicationParticipant[];
-}, (res1: string, res2: Map<string, ChatParticipant>, res3: string) => {
+}, (res1: string, res2: {
+    [key: string]: ChatParticipant;
+}, res3: string) => {
     myUserId: string;
     participants: CommunicationParticipant[];
 }>;
@@ -586,7 +594,9 @@ export type ChatThreadClientState = {
     chatMessages: {
         [key: string]: ChatMessageWithStatus;
     };
-    participants: Map<string, ChatParticipant>;
+    participants: {
+        [key: string]: ChatParticipant;
+    };
     threadId: string;
     properties?: ChatThreadProperties;
     readReceipts: ChatMessageReadReceipt[];
@@ -737,7 +747,7 @@ export type DeviceManagerState = {
     microphones: AudioDeviceInfo[];
     speakers: AudioDeviceInfo[];
     deviceAccess?: DeviceAccess;
-    unparentedViews: Map<LocalVideoStreamState, LocalVideoStreamState>;
+    unparentedViews: LocalVideoStreamState[];
 };
 
 // @public (undocumented)
@@ -780,7 +790,9 @@ export type GetCallingSelector<Component> = AreEqual<Component, typeof VideoGall
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
 
 // @public (undocumented)
-export const getCalls: (state: CallClientState) => Map<string, CallState>;
+export const getCalls: (state: CallClientState) => {
+    [key: string]: CallState;
+};
 
 // @public (undocumented)
 export const getCallsEnded: (state: CallClientState) => CallState[];
@@ -801,7 +813,9 @@ export const getDisplayName: (state: CallClientState) => string | undefined;
 export const getIdentifier: (state: CallClientState) => string;
 
 // @public (undocumented)
-export const getIncomingCalls: (state: CallClientState) => Map<string, IncomingCallState>;
+export const getIncomingCalls: (state: CallClientState) => {
+    [key: string]: IncomingCallState;
+};
 
 // @public (undocumented)
 export const getIncomingCallsEnded: (state: CallClientState) => IncomingCallState[];
@@ -1308,7 +1322,9 @@ export interface TypingIndicatorProps {
 // @public (undocumented)
 export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     typingUsers: CommunicationParticipant[];
-}, (res1: TypingIndicatorReceivedEvent[], res2: Map<string, ChatParticipant>, res3: string) => {
+}, (res1: TypingIndicatorReceivedEvent[], res2: {
+    [key: string]: ChatParticipant;
+}, res3: string) => {
     typingUsers: CommunicationParticipant[];
 }>;
 

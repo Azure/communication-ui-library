@@ -43,16 +43,16 @@ export class CallContext {
 
   constructor(userId: CommunicationUserKind, maxListeners = 50) {
     this._state = {
-      calls: new Map<string, CallState>(),
+      calls: {},
       callsEnded: [],
-      incomingCalls: new Map<string, IncomingCallState>(),
+      incomingCalls: {},
       incomingCallsEnded: [],
       deviceManager: {
         isSpeakerSelectionAvailable: false,
         cameras: [],
         microphones: [],
         speakers: [],
-        unparentedViews: new Map<LocalVideoStreamState, LocalVideoStreamState>()
+        unparentedViews: []
       },
       callAgent: undefined,
       userId: userId
@@ -86,8 +86,8 @@ export class CallContext {
   public clearCallRelatedState(): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        draft.calls.clear();
-        draft.incomingCalls.clear();
+        draft.calls = {};
+        draft.incomingCalls = {};
         draft.callsEnded.splice(0, draft.callsEnded.length);
         draft.incomingCallsEnded.splice(0, draft.incomingCallsEnded.length);
       })
@@ -105,7 +105,7 @@ export class CallContext {
   public setCall(call: CallState): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const existingCall = draft.calls.get(call.id);
+        const existingCall = draft.calls[call.id];
         if (existingCall) {
           existingCall.callerInfo = call.callerInfo;
           existingCall.state = call.state;
@@ -119,7 +119,7 @@ export class CallContext {
           existingCall.recording.isRecordingActive = call.recording.isRecordingActive;
           // We don't update the startTime and endTime if we are updating an existing active call
         } else {
-          draft.calls.set(call.id, call);
+          draft.calls[call.id] = call;
         }
       })
     );
@@ -128,7 +128,7 @@ export class CallContext {
   public removeCall(callId: string): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        draft.calls.delete(callId);
+        delete draft.calls[callId];
       })
     );
   }
@@ -136,11 +136,11 @@ export class CallContext {
   public setCallEnded(callId: string, callEndReason: CallEndReason | undefined): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.get(callId);
+        const call = draft.calls[callId];
         if (call) {
           call.endTime = new Date();
           call.callEndReason = callEndReason;
-          draft.calls.delete(callId);
+          delete draft.calls[callId];
           if (draft.callsEnded.length >= MAX_CALL_HISTORY_LENGTH) {
             draft.callsEnded.shift();
           }
@@ -153,7 +153,7 @@ export class CallContext {
   public setCallState(callId: string, state: CallStatus): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.get(callId);
+        const call = draft.calls[callId];
         if (call) {
           call.state = state;
         }
@@ -164,10 +164,10 @@ export class CallContext {
   public setCallId(newCallId: string, oldCallId: string): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.get(oldCallId);
+        const call = draft.calls[oldCallId];
         if (call) {
-          draft.calls.delete(oldCallId);
-          draft.calls.set(newCallId, call);
+          delete draft.calls[oldCallId];
+          draft.calls[newCallId] = call;
         }
       })
     );
@@ -176,7 +176,7 @@ export class CallContext {
   public setCallIsScreenSharingOn(callId: string, isScreenSharingOn: boolean): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.get(callId);
+        const call = draft.calls[callId];
         if (call) {
           call.isScreenSharingOn = isScreenSharingOn;
         }
@@ -191,7 +191,7 @@ export class CallContext {
   ): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.get(callId);
+        const call = draft.calls[callId];
         if (call) {
           removeRemoteParticipant.forEach((id: string) => {
             delete call.remoteParticipants[id];
@@ -211,7 +211,7 @@ export class CallContext {
   ): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.get(callId);
+        const call = draft.calls[callId];
         if (call) {
           removeRemoteParticipant.forEach((id: string) => {
             delete call.remoteParticipantsEnded[id];
@@ -227,7 +227,7 @@ export class CallContext {
   public setCallLocalVideoStream(callId: string, streams: LocalVideoStreamState[]): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.get(callId);
+        const call = draft.calls[callId];
         if (call) {
           call.localVideoStreams = streams;
         }
@@ -238,7 +238,7 @@ export class CallContext {
   public setCallIsMicrophoneMuted(callId: string, isMicrophoneMuted: boolean): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.get(callId);
+        const call = draft.calls[callId];
         if (call) {
           call.isMuted = isMicrophoneMuted;
         }
@@ -249,7 +249,7 @@ export class CallContext {
   public setCallRecordingActive(callId: string, isRecordingActive: boolean): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.get(callId);
+        const call = draft.calls[callId];
         if (call) {
           call.recording.isRecordingActive = isRecordingActive;
         }
@@ -260,7 +260,7 @@ export class CallContext {
   public setCallTranscriptionActive(callId: string, isTranscriptionActive: boolean): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.get(callId);
+        const call = draft.calls[callId];
         if (call) {
           call.transcription.isTranscriptionActive = isTranscriptionActive;
         }
@@ -271,7 +271,7 @@ export class CallContext {
   public setCallReceivedTransferRequest(callId: string, transfer: TransferRequest): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.get(callId);
+        const call = draft.calls[callId];
         if (call) {
           if (call.transfer.receivedTransferRequests.length >= MAX_TRANSFER_REQUEST_LENGTH) {
             call.transfer.receivedTransferRequests.shift();
@@ -285,7 +285,7 @@ export class CallContext {
   public setCallRequestedTransfer(callId: string, transfer: Transfer): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.get(callId);
+        const call = draft.calls[callId];
         if (call) {
           if (call.transfer.requestedTransfers.length >= MAX_TRANSFER_REQUEST_LENGTH) {
             call.transfer.requestedTransfers.shift();
@@ -304,7 +304,7 @@ export class CallContext {
   ): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.get(callId);
+        const call = draft.calls[callId];
         if (call) {
           for (const requestedTransfer of call.transfer.requestedTransfers) {
             if (requestedTransfer.id === transferId) {
@@ -321,7 +321,7 @@ export class CallContext {
   public setCallScreenShareParticipant(callId: string, participantKey: string | undefined): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.get(callId);
+        const call = draft.calls[callId];
         if (call) {
           call.screenShareRemoteParticipant = participantKey;
         }
@@ -332,7 +332,7 @@ export class CallContext {
   public setLocalVideoStreamRendererView(callId: string, view: VideoStreamRendererViewState | undefined): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.get(callId);
+        const call = draft.calls[callId];
         if (call) {
           if (call.localVideoStreams.length > 0) {
             call.localVideoStreams[0].view = view;
@@ -345,7 +345,7 @@ export class CallContext {
   public setParticipantState(callId: string, participantKey: string, state: RemoteParticipantStatus): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.get(callId);
+        const call = draft.calls[callId];
         if (call) {
           const participant = call.remoteParticipants[participantKey];
           if (participant) {
@@ -359,7 +359,7 @@ export class CallContext {
   public setParticipantIsMuted(callId: string, participantKey: string, muted: boolean): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.get(callId);
+        const call = draft.calls[callId];
         if (call) {
           const participant = call.remoteParticipants[participantKey];
           if (participant) {
@@ -373,7 +373,7 @@ export class CallContext {
   public setParticipantDisplayName(callId: string, participantKey: string, displayName: string): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.get(callId);
+        const call = draft.calls[callId];
         if (call) {
           const participant = call.remoteParticipants[participantKey];
           if (participant) {
@@ -387,7 +387,7 @@ export class CallContext {
   public setParticipantIsSpeaking(callId: string, participantKey: string, isSpeaking: boolean): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.get(callId);
+        const call = draft.calls[callId];
         if (call) {
           const participant = call.remoteParticipants[participantKey];
           if (participant) {
@@ -401,7 +401,7 @@ export class CallContext {
   public setParticipantVideoStream(callId: string, participantKey: string, stream: RemoteVideoStreamState): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.get(callId);
+        const call = draft.calls[callId];
         if (call) {
           const participant = call.remoteParticipants[participantKey];
           if (participant) {
@@ -428,7 +428,7 @@ export class CallContext {
   ): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.get(callId);
+        const call = draft.calls[callId];
         if (call) {
           const participant = call.remoteParticipants[participantKey];
           if (participant) {
@@ -450,7 +450,7 @@ export class CallContext {
   ): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.get(callId);
+        const call = draft.calls[callId];
         if (call) {
           const participant = call.remoteParticipants[participantKey];
           if (participant) {
@@ -483,7 +483,7 @@ export class CallContext {
   ): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls.get(callId);
+        const call = draft.calls[callId];
         if (call) {
           const participant = call.remoteParticipants[participantKey];
           if (participant) {
@@ -500,11 +500,11 @@ export class CallContext {
   public setIncomingCall(call: IncomingCallState): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const existingCall = draft.incomingCalls.get(call.id);
+        const existingCall = draft.incomingCalls[call.id];
         if (existingCall) {
           existingCall.callerInfo = call.callerInfo;
         } else {
-          draft.incomingCalls.set(call.id, call);
+          draft.incomingCalls[call.id] = call;
         }
       })
     );
@@ -513,7 +513,7 @@ export class CallContext {
   public removeIncomingCall(callId: string): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        draft.incomingCalls.delete(callId);
+        delete draft.incomingCalls[callId];
       })
     );
   }
@@ -521,11 +521,11 @@ export class CallContext {
   public setIncomingCallEnded(callId: string, callEndReason: CallEndReason | undefined): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        const call = draft.incomingCalls.get(callId);
+        const call = draft.incomingCalls[callId];
         if (call) {
           call.endTime = new Date();
           call.callEndReason = callEndReason;
-          draft.incomingCalls.delete(callId);
+          delete draft.incomingCalls[callId];
           if (draft.incomingCallsEnded.length >= MAX_CALL_HISTORY_LENGTH) {
             draft.incomingCallsEnded.shift();
           }
@@ -608,7 +608,7 @@ export class CallContext {
   ): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        draft.deviceManager.unparentedViews.set(localVideoStream, {
+        draft.deviceManager.unparentedViews.push({
           source: localVideoStream.source,
           mediaStreamType: localVideoStream.mediaStreamType,
           view: view
@@ -620,7 +620,14 @@ export class CallContext {
   public deleteDeviceManagerUnparentedView(localVideoStream: LocalVideoStreamState): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        draft.deviceManager.unparentedViews.delete(localVideoStream);
+        const foundIndex = draft.deviceManager.unparentedViews.findIndex(
+          (stream) =>
+            stream.source.id === localVideoStream.source.id &&
+            stream.mediaStreamType === localVideoStream.mediaStreamType
+        );
+        if (foundIndex !== -1) {
+          draft.deviceManager.unparentedViews.splice(foundIndex, 1);
+        }
       })
     );
   }
