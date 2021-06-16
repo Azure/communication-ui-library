@@ -176,8 +176,7 @@ describe('stream utils', () => {
     expect(
       context
         .getState()
-        .calls.get(mockCallId)
-        ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier))
+        .calls[mockCallId]?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier))
         ?.videoStreams.get(mockStreamId)?.view
     ).toBeDefined();
   });
@@ -195,7 +194,7 @@ describe('stream utils', () => {
     expect(internalContext.getLocalRenderInfo(mockCallId)?.stream).toBeDefined();
     expect(internalContext.getLocalRenderInfo(mockCallId)?.renderer).toBeDefined();
     expect(internalContext.getLocalRenderInfo(mockCallId)?.status).toBe('Rendered');
-    expect(context.getState().calls.get(mockCallId)?.localVideoStreams[0].view).toBeDefined();
+    expect(context.getState().calls[mockCallId]?.localVideoStreams[0].view).toBeDefined();
   });
 
   test('cleans up state and stop rendering when disposeView is called on remote stream', async () => {
@@ -226,8 +225,7 @@ describe('stream utils', () => {
     expect(
       context
         .getState()
-        .calls.get(mockCallId)
-        ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier))
+        .calls[mockCallId]?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier))
         ?.videoStreams.get(mockStreamId)?.view
     ).not.toBeDefined();
   });
@@ -268,8 +266,7 @@ describe('stream utils', () => {
     expect(
       context
         .getState()
-        .calls.get(mockCallId)
-        ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier))
+        .calls[mockCallId]?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier))
         ?.videoStreams.get(mockStreamId)?.view
     ).toBeDefined();
     expect(
@@ -282,8 +279,7 @@ describe('stream utils', () => {
     expect(
       context
         .getState()
-        .calls.get(mockCallId)
-        ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier2))
+        .calls[mockCallId]?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier2))
         ?.videoStreams.get(mockStreamId2)?.view
     ).toBeDefined();
 
@@ -313,8 +309,7 @@ describe('stream utils', () => {
     expect(
       context
         .getState()
-        .calls.get(mockCallId)
-        ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier))
+        .calls[mockCallId]?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier))
         ?.videoStreams.get(mockStreamId)?.view
     ).not.toBeDefined();
     expect(
@@ -327,8 +322,7 @@ describe('stream utils', () => {
     expect(
       context
         .getState()
-        .calls.get(mockCallId)
-        ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier2))
+        .calls[mockCallId]?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier2))
         ?.videoStreams.get(mockStreamId2)?.view
     ).not.toBeDefined();
   });
@@ -371,8 +365,7 @@ describe('stream utils', () => {
     expect(
       context
         .getState()
-        .calls.get(mockCallId)
-        ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier))
+        .calls[mockCallId]?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier))
         ?.videoStreams.get(mockStreamId)?.view
     ).toBeDefined();
     expect(
@@ -385,8 +378,7 @@ describe('stream utils', () => {
     expect(
       context
         .getState()
-        .calls.get(mockCallId2)
-        ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier2))
+        .calls[mockCallId2]?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier2))
         ?.videoStreams.get(mockStreamId2)?.view
     ).toBeDefined();
 
@@ -416,8 +408,7 @@ describe('stream utils', () => {
     expect(
       context
         .getState()
-        .calls.get(mockCallId)
-        ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier))
+        .calls[mockCallId]?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier))
         ?.videoStreams.get(mockStreamId)?.view
     ).not.toBeDefined();
     expect(
@@ -430,8 +421,7 @@ describe('stream utils', () => {
     expect(
       context
         .getState()
-        .calls.get(mockCallId2)
-        ?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier2))
+        .calls[mockCallId2]?.remoteParticipants.get(toFlatCommunicationIdentifier(mockParticipantIdentifier2))
         ?.videoStreams.get(mockStreamId2)?.view
     ).not.toBeDefined();
   });
@@ -444,8 +434,10 @@ describe('stream utils', () => {
     await createView(context, internalContext, undefined, undefined, localVideoStream);
     expect(internalContext.getUnparentedRenderInfo(localVideoStream)).toBeDefined();
     expect(internalContext.getUnparentedRenderInfo(localVideoStream)?.status).toBe('Rendered');
-    expect(context.getState().deviceManager.unparentedViews.get(localVideoStream)).toBeDefined();
-    expect(context.getState().deviceManager.unparentedViews.get(localVideoStream)?.view).toBeDefined();
+
+    const views = context.getState().deviceManager.unparentedViews;
+    expect(views.length).toBe(1);
+    expect(views[0].view).toBeDefined();
   });
 
   test('is able to render LocalVideoStream not tied to a call and stop rendering it by reference find', async () => {
@@ -458,7 +450,7 @@ describe('stream utils', () => {
     disposeView(context, internalContext, undefined, undefined, localVideoStream);
 
     expect(internalContext.getUnparentedRenderInfo(localVideoStream)).not.toBeDefined();
-    expect(context.getState().deviceManager.unparentedViews.get(localVideoStream)?.view).not.toBeDefined();
+    expect(context.getState().deviceManager.unparentedViews.length).toBe(0);
   });
 
   test('is able to render LocalVideoStream not tied to a call and not stop when incorrect stream used', async () => {
@@ -477,6 +469,9 @@ describe('stream utils', () => {
 
     expect(internalContext.getUnparentedRenderInfo(localVideoStream)).toBeDefined();
     expect(internalContext.getUnparentedRenderInfo(localVideoStream)?.status).toBe('Rendered');
-    expect(context.getState().deviceManager.unparentedViews.get(localVideoStream)?.view).toBeDefined();
+
+    const views = context.getState().deviceManager.unparentedViews;
+    expect(views.length).toBe(1);
+    expect(views[0].view).toBeDefined();
   });
 });
