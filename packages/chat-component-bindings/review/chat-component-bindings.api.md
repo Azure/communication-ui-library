@@ -62,7 +62,9 @@ export const chatThreadSelector: OutputParametricSelector<ChatClientState, ChatB
     userId: string;
     showMessageStatus: boolean;
     messages: Message<"chat">[];
-}, (res1: string, res2: Map<string, ChatMessageWithStatus>, res3: Date, res4: boolean) => {
+}, (res1: string, res2: {
+    [key: string]: ChatMessageWithStatus;
+}, res3: Date, res4: boolean) => {
     userId: string;
     showMessageStatus: boolean;
     messages: Message<"chat">[];

@@ -34,7 +34,7 @@ export const getUserId = (state: ChatClientState): string => toFlatCommunication
 export const getParticipants = (
   state: ChatClientState,
   props: ChatBaseSelectorProps
-): { [key: string]: ChatParticipant } => (props.threadId && state.threads.get(props.threadId)?.participants) || {};
+): { [key: string]: ChatParticipant } => (props.threadId && state.threads[threadId]?.participants) || {};
 
 export const getThreadStatusProps = reselect.createSelector(
   [getUserId, getParticipants],
