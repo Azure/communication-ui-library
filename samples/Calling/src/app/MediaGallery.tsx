@@ -55,7 +55,15 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         layout="floatingLocalVideo"
       />
     );
-  }, [videoGalleryProps]);
+  }, [
+    videoGalleryProps.localParticipant,
+    videoGalleryProps.screenShareParticipant,
+    videoGalleryProps.remoteParticipants,
+    videoGalleryProps.onCreateLocalStreamView,
+    videoGalleryProps.onCreateRemoteStreamView,
+    videoGalleryProps.onDisposeLocalStreamView,
+    videoGalleryProps.onDisposeRemoteStreamView
+  ]);
 
   return isScreenShareActive ? <ScreenShare {...videoGalleryProps} /> : VideoGalleryMemoized;
 };
