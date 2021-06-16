@@ -54,7 +54,7 @@ describe('declarative chatThreadClient list iterators', () => {
       proxiedParticipants.push(participant);
     }
     expect(proxiedParticipants.length).toBe(mockParticipants.length);
-    expect(context.getState().threads[threadId]?.participants.size).toBe(mockParticipants.length);
+    expect(Object.keys(context.getState().threads[threadId]?.participants ?? {}).length).toBe(mockParticipants.length);
   });
 
   test('declarative listParticipants should proxy listParticipants paged iterator and store it in internal state', async () => {
@@ -67,7 +67,7 @@ describe('declarative chatThreadClient list iterators', () => {
       }
     }
     expect(proxiedParticipants.length).toBe(mockParticipants.length);
-    expect(context.getState().threads[threadId]?.participants.size).toBe(mockParticipants.length);
+    expect(Object.keys(context.getState().threads[threadId]?.participants ?? {}).length).toBe(mockParticipants.length);
   });
 
   test('declarative listReadReceipts should proxy listReadReceipts iterator and store it in internal state', async () => {
@@ -165,13 +165,15 @@ describe('declarative chatThreadClient basic api functions', () => {
       participants
     });
 
-    const participantsInContext = context.getState().threads[threadId]?.participants;
-    expect(participantsInContext?.size).toBe(2);
+    const participantsInContext = context.getState().threads[threadId]?.participants ?? {};
+    expect(Object.keys(participantsInContext).length).toBe(2);
 
     // Test removal function
     await mockClient.removeParticipant(participants[0].id);
 
-    const participantsAfterRemoval = Array.from(context.getState().threads[threadId]?.participants.values() ?? []);
+    const participantsAfterRemoval = Array.from(
+      Object.values(context.getState().threads[threadId]?.participants ?? {}) ?? []
+    );
     expect(participantsAfterRemoval.length).toBe(1);
     expect(participantsAfterRemoval[0]).toEqual(participants[1]);
   });

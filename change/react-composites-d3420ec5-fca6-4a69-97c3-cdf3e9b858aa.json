@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update to use Object for chat participants",
+  "packageName": "react-composites",
+  "email": "prprabhu@microsoft.com",
+  "dependentChangeType": "patch"
+}

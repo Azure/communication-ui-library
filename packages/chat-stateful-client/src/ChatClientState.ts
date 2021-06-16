@@ -24,11 +24,13 @@ export type ChatThreadClientState = {
    * Remote messages are keyed by {@Link @azure/communication-chat#ChatMessage.id}.
    */
   chatMessages: { [key: string]: ChatMessageWithStatus };
-  // Keys are stringified CommunicationIdentifier objects.
-  //
-  // TODO: Consider replacing this Map with Array:
-  // - Redux and other data stores can't store objects that contain Map.
-  participants: Map<string, ChatParticipant>;
+  /**
+   * Participants of this chat thread.
+   *
+   * Object with {@Link @azure/communication-chat#ChatParticipant} fields,
+   * keyed by {@Link @azure/communication-chat#ChatParticipant.id}.
+   */
+  participants: { [key: string]: ChatParticipant };
   threadId: string;
   properties?: ChatThreadProperties;
   readReceipts: ChatMessageReadReceipt[];
