@@ -2,13 +2,14 @@
 // Licensed under the MIT license.
 
 import {
+  IconButton,
+  IIconProps,
   IStackTokens,
+  Link,
+  PrimaryButton,
   Stack,
   Text,
   TextField,
-  PrimaryButton,
-  IconButton,
-  IIconProps,
   mergeStyles,
   useTheme
 } from '@fluentui/react';
@@ -261,7 +262,15 @@ const CopyableResponse = (props: { response: unknown | undefined }): JSX.Element
   const theme = useTheme();
 
   if (response === undefined) {
-    return <Text>Tip: Connection string can be found from the azure portal.</Text>;
+    return (
+      <Text>
+        Tip: Connection string can be{' '}
+        <Link href="https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp#access-your-connection-strings-and-service-endpoints">
+          found from the azure portal.
+        </Link>
+        .
+      </Text>
+    );
   }
 
   const lines = JSON.stringify(response, null, 2).split(/\r?\n/);
