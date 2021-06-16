@@ -77,10 +77,7 @@ jobs:
       - name: Install dependencies
         run: rush install
       - name: Build
-        # Ideally we could do `rush build -o storybook`
-        # but the webpack aliases aren't being picked
-        # up by the storybook build...
-        run: rush build -t storybook
+        run: rush build -o storybook
       - name: Tests
         run: rushx test:ci
         working-directory: packages/storybook

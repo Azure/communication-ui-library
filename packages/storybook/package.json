@@ -112,5 +112,14 @@
     "typescript": "4.1.5",
     "uuid": "^8.1.0",
     "webpack": "5.38.1"
+  },
+  "browser": {
+    "@azure/communication-react": "../communication-react/src",
+    "react-composites": "../react-composites/src",
+    "chat-stateful-client": "../chat-stateful-client/src",
+    "chat-component-bindings": "../chat-component-bindings/src",
+    "calling-stateful-client": "../calling-stateful-client/src",
+    "calling-component-bindings": "../calling-component-bindings/src",
+    "acs-ui-common": "../acs-ui-common/src"
   }
 }
