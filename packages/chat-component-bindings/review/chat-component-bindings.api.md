@@ -41,7 +41,9 @@ export type ChatClientProviderProps = {
 export const chatParticipantListSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     myUserId: string;
     participants: CommunicationParticipant[];
-}, (res1: string, res2: Map<string, ChatParticipant>, res3: string) => {
+}, (res1: string, res2: {
+    [key: string]: ChatParticipant;
+}, res3: string) => {
     myUserId: string;
     participants: CommunicationParticipant[];
 }>;
@@ -60,7 +62,9 @@ export const chatThreadSelector: OutputParametricSelector<ChatClientState, ChatB
     userId: string;
     showMessageStatus: boolean;
     messages: Message<"chat">[];
-}, (res1: string, res2: Map<string, ChatMessageWithStatus>, res3: Date, res4: boolean) => {
+}, (res1: string, res2: {
+    [key: string]: ChatMessageWithStatus;
+}, res3: Date, res4: boolean) => {
     userId: string;
     showMessageStatus: boolean;
     messages: Message<"chat">[];
@@ -100,7 +104,9 @@ export const sendBoxSelector: OutputSelector<ChatClientState, {
 // @public (undocumented)
 export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     typingUsers: CommunicationParticipant[];
-}, (res1: TypingIndicatorReceivedEvent[], res2: Map<string, ChatParticipant>, res3: string) => {
+}, (res1: TypingIndicatorReceivedEvent[], res2: {
+    [key: string]: ChatParticipant;
+}, res3: string) => {
     typingUsers: CommunicationParticipant[];
 }>;
 

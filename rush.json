@@ -1,6 +1,6 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush.schema.json",
-  "rushVersion": "5.40.7",
+  "rushVersion": "5.47.0",
   "pnpmVersion": "5.17.3",
   "pnpmOptions": {
     "strictPeerDependencies": true
@@ -68,11 +68,6 @@
       "reviewCategory": "sample"
     },
     {
-      "packageName": "one-to-one-call",
-      "projectFolder": "samples/OneToOneCall",
-      "reviewCategory": "sample"
-    },
-    {
       "packageName": "server",
       "projectFolder": "samples/Server",
       "reviewCategory": "sample"
@@ -87,10 +82,18 @@
       "projectFolder": "common/config",
       "reviewCategory": "tools"
     },
+    // We rely on the following fix: https://github.com/microsoft/rushstack/pull/1916
+    // This package should be removed once that fix has been published.
     {
-      "packageName": "check-treeshaking",
-      "projectFolder": "packages/check-treeshaking",
+      "packageName": "@microsoft/api-extractor",
+      "projectFolder": "packages/api-extractor-fork",
       "reviewCategory": "tools"
     }
+    // Not working with the latest webpack: https://github.com/webpack/webpack/issues/2090#issuecomment-634301000
+    // {
+    //   "packageName": "check-treeshaking",
+    //   "projectFolder": "packages/check-treeshaking",
+    //   "reviewCategory": "tools"
+    // }
   ]
 }
