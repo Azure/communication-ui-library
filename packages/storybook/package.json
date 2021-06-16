@@ -8,6 +8,7 @@
     "start": "start-storybook -p 6006 -s stories,./public --no-manager-cache --quiet --loglevel warn",
     "deploy-storybook": "storybook-to-ghpages --script build",
     "test": "rush build -T storybook && npm run test:snippets && jest",
+    "test:ci": "npm run test:snippets && jest",
     "test:coverage": "npm run test -- --coverage",
     "test:snippets": "tsc --p tsconfig.snippets.json",
     "snapshot:update": "npm run test -- --update-snapshot",
