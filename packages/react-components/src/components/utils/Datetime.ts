@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { ILocaleKeys } from '../../localization/LocalizationProvider';
+
 export const formatTimeForChatMessage = (messageDate: Date): string => {
   let hours = messageDate.getHours();
   let minutes = messageDate.getMinutes().toString();
@@ -50,11 +52,7 @@ export const formatDateForChatMessage = (messageDate: Date): string => {
  * @param messageDate - date of message
  * @param currentDate - date used as offset to create the user friendly timestamp (e.g. to create 'Yesterday' instead of an absolute date)
  */
-export const formatTimestampForChatMessage = (
-  messageDate: Date,
-  todayDate: Date,
-  strings: Record<string, string>
-): string => {
+export const formatTimestampForChatMessage = (messageDate: Date, todayDate: Date, strings: ILocaleKeys): string => {
   // If message was in the same day timestamp string is just the time like '1:30 p.m.'.
   const startOfDay = new Date(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate());
   if (messageDate > startOfDay) {
@@ -85,7 +83,7 @@ export const formatTimestampForChatMessage = (
   return formatDateForChatMessage(messageDate) + ' ' + formatTimeForChatMessage(messageDate);
 };
 
-const weekDayToDayName = (day: number, strings: Record<string, string>): string => {
+const weekDayToDayName = (day: number, strings: ILocaleKeys): string => {
   switch (day) {
     case 0:
       return strings.sunday;

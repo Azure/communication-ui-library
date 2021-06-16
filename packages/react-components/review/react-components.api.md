@@ -101,7 +101,7 @@ export type CustomMessagePayload = {
 export const darkTheme: PartialTheme & CallingTheme;
 
 // @public (undocumented)
-export const defaultLocaleStringsLoader: (locale: string) => Promise<Record<string, string>>;
+export const defaultLocaleStringsLoader: (locale: string) => Promise<ILocaleKeys>;
 
 // @public (undocumented)
 export type DefaultMessageRendererType = (props: MessageProps) => JSX.Element;
@@ -151,17 +151,23 @@ export interface ILocale {
     rtl: boolean;
 }
 
+// @public
+export type ILocaleCollection = Record<string, ILocale>;
+
 // @public (undocumented)
 export interface ILocaleContext {
     // (undocumented)
     locale: ILocale;
     // (undocumented)
-    locales: LocaleCollection;
+    locales: ILocaleCollection;
     // (undocumented)
     setLocale: (locale: string, forceReload?: boolean) => void;
     // (undocumented)
-    strings: Record<string, string>;
+    strings: ILocaleKeys;
 }
+
+// @public (undocumented)
+export type ILocaleKeys = Record<string, string>;
 
 // @public (undocumented)
 export interface JumpToNewMessageButtonProps {
@@ -172,14 +178,11 @@ export interface JumpToNewMessageButtonProps {
 // @public
 export const lightTheme: PartialTheme & CallingTheme;
 
-// @public
-export type LocaleCollection = Record<string, ILocale>;
-
 // @public (undocumented)
 export const LocaleContext: React_2.Context<ILocaleContext>;
 
 // @public (undocumented)
-export const locales: LocaleCollection;
+export const locales: ILocaleCollection;
 
 // @public (undocumented)
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
@@ -187,8 +190,8 @@ export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Ele
 // @public (undocumented)
 export type LocalizationProviderProps = {
     initialLocale: string;
-    locales: LocaleCollection;
-    localeStringsLoader?: (locale: string) => Promise<Record<string, string>>;
+    locales: ILocaleCollection;
+    localeStringsLoader?: (locale: string) => Promise<ILocaleKeys>;
     storage?: Storage;
     children: React_2.ReactNode;
 };
@@ -208,7 +211,7 @@ export type MessageContentType = 'text' | 'html' | 'richtext/html' | 'unknown';
 // @public
 export type MessageProps = {
     message: ChatMessage | SystemMessage | CustomMessage;
-    strings: Record<string, string>;
+    strings: ILocaleKeys;
     messageContainerStyle?: ComponentSlotStyle;
     showDate?: boolean;
 };

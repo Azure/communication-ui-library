@@ -6,7 +6,7 @@ import { typingIndicatorContainerStyle, typingIndicatorStringStyle } from './sty
 import React from 'react';
 import { BaseCustomStylesProps, CommunicationParticipant } from '../types';
 import { IStyle, mergeStyles, Stack } from '@fluentui/react';
-import { useLocale } from '../localization/LocalizationProvider';
+import { ILocaleKeys, useLocale } from '../localization/LocalizationProvider';
 import { IObjectMap } from '../localization/localizationUtils';
 
 export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
@@ -38,7 +38,7 @@ const MAXIMUM_LENGTH_OF_TYPING_USERS = 35;
 
 const getIndicatorComponents = (
   typingUsers: CommunicationParticipant[],
-  strings: Record<string, string>,
+  strings: ILocaleKeys,
   onRenderUsers?: (users: CommunicationParticipant[]) => JSX.Element,
   styles?: TypingIndicatorStylesProps
 ): JSX.Element => {

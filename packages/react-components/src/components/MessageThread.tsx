@@ -32,7 +32,7 @@ import { MessageStatusIndicator, MessageStatusIndicatorProps } from './MessageSt
 import { memoizeFnAll, MessageStatus } from 'acs-ui-common';
 import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from './SystemMessage';
 import { Parser } from 'html-to-react';
-import { useLocale } from '../localization';
+import { ILocaleKeys, useLocale } from '../localization';
 
 const NEW_MESSAGES = 'New Messages';
 
@@ -263,7 +263,7 @@ const memoizeAllMessages = memoizeFnAll(
       | ((messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null)
       | undefined,
     defaultChatMessageRenderer: (message: MessageProps) => JSX.Element,
-    strings: Record<string, string>,
+    strings: ILocaleKeys,
     _attached?: boolean | string,
     statusToRender?: MessageStatus,
     onRenderMessage?: (message: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element
@@ -449,7 +449,7 @@ export type MessageProps = {
   /**
    * Strings from locale.
    */
-  strings: Record<string, string>;
+  strings: ILocaleKeys;
   /**
    * Custom CSS styles for chat message container.
    */

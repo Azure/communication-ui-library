@@ -15,14 +15,16 @@ export interface ILocale {
 }
 
 /**
- * Collection of NamedThemes
+ * Collection of ILocale
  */
-export type LocaleCollection = Record<string, ILocale>;
+export type ILocaleCollection = Record<string, ILocale>;
+
+export type ILocaleKeys = Record<string, string>;
 
 export interface ILocaleContext {
   locale: ILocale;
-  locales: LocaleCollection;
-  strings: Record<string, string>;
+  locales: ILocaleCollection;
+  strings: ILocaleKeys;
   setLocale: (locale: string, forceReload?: boolean) => void;
 }
 
@@ -38,8 +40,8 @@ export const LocaleContext = createContext<ILocaleContext>(defaultLocaleContext)
 
 export type LocalizationProviderProps = {
   initialLocale: string;
-  locales: LocaleCollection;
-  localeStringsLoader?: (locale: string) => Promise<Record<string, string>>;
+  locales: ILocaleCollection;
+  localeStringsLoader?: (locale: string) => Promise<ILocaleKeys>;
   storage?: Storage;
   children: React.ReactNode;
 };
@@ -64,7 +66,7 @@ export const LocalizationProvider = (props: LocalizationProviderProps): JSX.Elem
   }
 
   const [locale, _setLocale] = useState<ILocale>(locales[initialLocale]);
-  const [strings, setStrings] = useState<Record<string, string>>({});
+  const [strings, setStrings] = useState<ILocaleKeys>({});
 
   const loadLocaleStrings = localeStringsLoader ?? defaultLocaleStringsLoader;
 

@@ -3,12 +3,12 @@
 
 import React from 'react';
 import { mount, shallow, ShallowWrapper } from 'enzyme';
-import { LocalizationProvider } from '../../localization/LocalizationProvider';
+import { LocalizationProvider, ILocaleKeys } from '../../localization/LocalizationProvider';
 
 const initialLocale = 'en-US';
 const locales = { 'en-US': { locale: '', englishName: '', displayName: '', rtl: false } };
 
-export const mountWithLocalization = (node: React.ReactElement, strings: Record<string, string>): ShallowWrapper => {
+export const mountWithLocalization = (node: React.ReactElement, strings: ILocaleKeys): ShallowWrapper => {
   return mount(node, {
     wrappingComponent: LocalizationProvider,
     wrappingComponentProps: {
@@ -21,7 +21,7 @@ export const mountWithLocalization = (node: React.ReactElement, strings: Record<
   });
 };
 
-export const shallowWithLocalization = (node: React.ReactElement, strings: Record<string, string>): ShallowWrapper => {
+export const shallowWithLocalization = (node: React.ReactElement, strings: ILocaleKeys): ShallowWrapper => {
   return shallow(node, {
     wrappingComponent: LocalizationProvider,
     wrappingComponentProps: {

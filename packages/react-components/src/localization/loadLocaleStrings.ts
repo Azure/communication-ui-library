@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { LocaleCollection } from './LocalizationProvider';
+import { ILocaleCollection, ILocaleKeys } from './LocalizationProvider';
 
-export const locales: LocaleCollection = {
+export const locales: ILocaleCollection = {
   'en-US': {
     locale: 'en-US',
     englishName: 'English (US)',
@@ -24,7 +24,7 @@ export const locales: LocaleCollection = {
   }
 };
 
-export const defaultLocaleStringsLoader = async (locale: string): Promise<Record<string, string>> => {
+export const defaultLocaleStringsLoader = async (locale: string): Promise<ILocaleKeys> => {
   switch (locale) {
     case 'ar':
       return (await import('./translated/ar.json')).default;
