@@ -1,24 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Compliance Banner Compliance Banner 1`] = `
-<div
-  className="css-82 body-0"
+<body
+  className="ms-Fabric"
+  dir="ltr"
 >
   <div
-    className="css-82"
-    data-uses-unhanded-props={true}
-    dir="ltr"
+    className="css-82 body-0"
   >
     <div
-      style={
-        Object {
-          "alignItems": "center",
-          "display": "flex",
-          "height": "100vh",
-          "justifyContent": "center",
+      className="css-82"
+      data-uses-unhanded-props={true}
+      dir="ltr"
+    >
+      <div
+        style={
+          Object {
+            "alignItems": "center",
+            "display": "flex",
+            "height": "100vh",
+            "justifyContent": "center",
+          }
         }
-      }
-    />
+      />
+    </div>
   </div>
-</div>
+</body>
 `;

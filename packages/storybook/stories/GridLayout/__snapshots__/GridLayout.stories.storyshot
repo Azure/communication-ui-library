@@ -1,200 +1,205 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layout 1`] = `
-<div
-  className="css-82 body-0"
+<body
+  className="ms-Fabric"
+  dir="ltr"
 >
   <div
-    className="css-82"
-    data-uses-unhanded-props={true}
-    dir="ltr"
+    className="css-82 body-0"
   >
     <div
-      style={
-        Object {
-          "alignItems": "center",
-          "display": "flex",
-          "height": "100vh",
-          "justifyContent": "center",
-        }
-      }
+      className="css-82"
+      data-uses-unhanded-props={true}
+      dir="ltr"
     >
       <div
         style={
           Object {
-            "height": "500px",
-            "width": "600px",
+            "alignItems": "center",
+            "display": "flex",
+            "height": "100vh",
+            "justifyContent": "center",
           }
         }
       >
         <div
-          className="css-56"
           style={
             Object {
-              "gridTemplateColumns": "repeat(2, 1fr)",
-              "gridTemplateRows": "repeat(2, minmax(0, 1fr))",
+              "height": "500px",
+              "width": "600px",
             }
           }
         >
           <div
-            className="ms-Stack css-4"
+            className="css-56"
+            style={
+              Object {
+                "gridTemplateColumns": "repeat(2, 1fr)",
+                "gridTemplateRows": "repeat(2, minmax(0, 1fr))",
+              }
+            }
           >
             <div
-              className="ms-Stack css-5"
+              className="ms-Stack css-4"
             >
               <div
-                className="ms-Stack css-7"
+                className="ms-Stack css-5"
               >
                 <div
-                  className="ms-Persona ms-Persona--size100 root-8"
+                  className="ms-Stack css-7"
                 >
                   <div
-                    className="ms-Persona-coin ms-Persona--size100 coin-15"
-                    role="presentation"
+                    className="ms-Persona ms-Persona--size100 root-8"
                   >
                     <div
-                      className="ms-Persona-imageArea imageArea-17"
+                      className="ms-Persona-coin ms-Persona--size100 coin-15"
                       role="presentation"
                     >
                       <div
-                        aria-hidden="true"
-                        className="ms-Persona-initials initials-20"
+                        className="ms-Persona-imageArea imageArea-17"
+                        role="presentation"
                       >
-                        <span>
-                          M
-                        </span>
+                        <div
+                          aria-hidden="true"
+                          className="ms-Persona-initials initials-20"
+                        >
+                          <span>
+                            M
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+              <span
+                className="css-80 css-23"
+              >
+                Michael
+              </span>
             </div>
-            <span
-              className="css-80 css-23"
-            >
-              Michael
-            </span>
-          </div>
-          <div
-            className="ms-Stack css-4"
-          >
             <div
-              className="ms-Stack css-5"
+              className="ms-Stack css-4"
             >
               <div
-                className="ms-Stack css-7"
+                className="ms-Stack css-5"
               >
                 <div
-                  className="ms-Persona ms-Persona--size100 root-8"
+                  className="ms-Stack css-7"
                 >
                   <div
-                    className="ms-Persona-coin ms-Persona--size100 coin-15"
-                    role="presentation"
+                    className="ms-Persona ms-Persona--size100 root-8"
                   >
                     <div
-                      className="ms-Persona-imageArea imageArea-17"
+                      className="ms-Persona-coin ms-Persona--size100 coin-15"
                       role="presentation"
                     >
                       <div
-                        aria-hidden="true"
-                        className="ms-Persona-initials initials-24"
+                        className="ms-Persona-imageArea imageArea-17"
+                        role="presentation"
                       >
-                        <span>
-                          J
-                        </span>
+                        <div
+                          aria-hidden="true"
+                          className="ms-Persona-initials initials-24"
+                        >
+                          <span>
+                            J
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+              <span
+                className="css-80 css-23"
+              >
+                Jim
+              </span>
             </div>
-            <span
-              className="css-80 css-23"
-            >
-              Jim
-            </span>
-          </div>
-          <div
-            className="ms-Stack css-4"
-          >
             <div
-              className="ms-Stack css-5"
+              className="ms-Stack css-4"
             >
               <div
-                className="ms-Stack css-7"
+                className="ms-Stack css-5"
               >
                 <div
-                  className="ms-Persona ms-Persona--size100 root-8"
+                  className="ms-Stack css-7"
                 >
                   <div
-                    className="ms-Persona-coin ms-Persona--size100 coin-15"
-                    role="presentation"
+                    className="ms-Persona ms-Persona--size100 root-8"
                   >
                     <div
-                      className="ms-Persona-imageArea imageArea-17"
+                      className="ms-Persona-coin ms-Persona--size100 coin-15"
                       role="presentation"
                     >
                       <div
-                        aria-hidden="true"
-                        className="ms-Persona-initials initials-25"
+                        className="ms-Persona-imageArea imageArea-17"
+                        role="presentation"
                       >
-                        <span>
-                          P
-                        </span>
+                        <div
+                          aria-hidden="true"
+                          className="ms-Persona-initials initials-25"
+                        >
+                          <span>
+                            P
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+              <span
+                className="css-80 css-23"
+              >
+                Pam
+              </span>
             </div>
-            <span
-              className="css-80 css-23"
-            >
-              Pam
-            </span>
-          </div>
-          <div
-            className="ms-Stack css-4"
-          >
             <div
-              className="ms-Stack css-5"
+              className="ms-Stack css-4"
             >
               <div
-                className="ms-Stack css-7"
+                className="ms-Stack css-5"
               >
                 <div
-                  className="ms-Persona ms-Persona--size100 root-8"
+                  className="ms-Stack css-7"
                 >
                   <div
-                    className="ms-Persona-coin ms-Persona--size100 coin-15"
-                    role="presentation"
+                    className="ms-Persona ms-Persona--size100 root-8"
                   >
                     <div
-                      className="ms-Persona-imageArea imageArea-17"
+                      className="ms-Persona-coin ms-Persona--size100 coin-15"
                       role="presentation"
                     >
                       <div
-                        aria-hidden="true"
-                        className="ms-Persona-initials initials-26"
+                        className="ms-Persona-imageArea imageArea-17"
+                        role="presentation"
                       >
-                        <span>
-                          D
-                        </span>
+                        <div
+                          aria-hidden="true"
+                          className="ms-Persona-initials initials-26"
+                        >
+                          <span>
+                            D
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+              <span
+                className="css-80 css-23"
+              >
+                Dwight
+              </span>
             </div>
-            <span
-              className="css-80 css-23"
-            >
-              Dwight
-            </span>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</body>
 `;

@@ -1,79 +1,84 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`storybook snapshot tests Storyshots Examples/Device Settings Device Settings 1`] = `
-<div
-  className="css-82 body-0"
+<body
+  className="ms-Fabric"
+  dir="ltr"
 >
   <div
-    className="css-82"
-    data-uses-unhanded-props={true}
-    dir="ltr"
+    className="css-82 body-0"
   >
     <div
-      style={
-        Object {
-          "alignItems": "center",
-          "display": "flex",
-          "height": "100vh",
-          "justifyContent": "center",
-        }
-      }
+      className="css-82"
+      data-uses-unhanded-props={true}
+      dir="ltr"
     >
       <div
-        className="ms-Stack css-1"
+        style={
+          Object {
+            "alignItems": "center",
+            "display": "flex",
+            "height": "100vh",
+            "justifyContent": "center",
+          }
+        }
       >
         <div
-          className="css-82 body-0"
+          className="ms-Stack css-1"
         >
           <div
-            className="css-82"
-            data-uses-unhanded-props={true}
+            className="css-82 body-0"
           >
             <div
-              className="ms-Dropdown-container"
+              className="css-82"
+              data-uses-unhanded-props={true}
             >
               <div
-                aria-expanded="false"
-                aria-haspopup="listbox"
-                className="ms-Dropdown dropdown-2"
-                data-is-focusable={true}
-                data-ktp-target={true}
-                id="Dropdown0"
-                onBlur={[Function]}
-                onChange={[Function]}
-                onClick={[Function]}
-                onFocus={[Function]}
-                onKeyDown={[Function]}
-                onKeyUp={[Function]}
-                onMouseDown={[Function]}
-                role="combobox"
-                style={
-                  Object {
-                    "width": "15rem",
-                  }
-                }
-                tabIndex={0}
+                className="ms-Dropdown-container"
               >
-                <span
-                  aria-atomic={true}
-                  aria-invalid={false}
-                  aria-live="polite"
-                  className="ms-Dropdown-title ms-Dropdown-titleIsPlaceHolder title-3"
-                  id="Dropdown0-option"
+                <div
+                  aria-expanded="false"
+                  aria-haspopup="listbox"
+                  className="ms-Dropdown dropdown-2"
+                  data-is-focusable={true}
+                  data-ktp-target={true}
+                  id="Dropdown0"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onClick={[Function]}
+                  onFocus={[Function]}
+                  onKeyDown={[Function]}
+                  onKeyUp={[Function]}
+                  onMouseDown={[Function]}
+                  role="combobox"
+                  style={
+                    Object {
+                      "width": "15rem",
+                    }
+                  }
+                  tabIndex={0}
                 >
-                  Select an option
-                </span>
-                <span
-                  className="ms-Dropdown-caretDownWrapper caretDownWrapper-4"
-                >
-                  <i
-                    aria-hidden={true}
-                    className="root-37 ms-Dropdown-caretDown caretDown-19"
-                    data-icon-name="ChevronDown"
+                  <span
+                    aria-atomic={true}
+                    aria-invalid={false}
+                    aria-live="polite"
+                    className="ms-Dropdown-title ms-Dropdown-titleIsPlaceHolder title-3"
+                    id="Dropdown0-option"
                   >
-                    
-                  </i>
-                </span>
+                    Select an option
+                  </span>
+                  <span
+                    className="ms-Dropdown-caretDownWrapper caretDownWrapper-4"
+                  >
+                    <i
+                      aria-hidden={true}
+                      className="root-37 ms-Dropdown-caretDown caretDown-19"
+                      data-icon-name="ChevronDown"
+                    >
+                      
+                    </i>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -81,5 +86,5 @@ exports[`storybook snapshot tests Storyshots Examples/Device Settings Device Set
       </div>
     </div>
   </div>
-</div>
+</body>
 `;
