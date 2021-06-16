@@ -73,6 +73,11 @@
       "reviewCategory": "sample"
     },
     {
+      "packageName": "basic-sample-composites",
+      "projectFolder": "samples/StaticHtmlComposites",
+      "reviewCategory": "sample"
+    },
+    {
       "packageName": "storybook",
       "projectFolder": "packages/storybook",
       "reviewCategory": "tools"
