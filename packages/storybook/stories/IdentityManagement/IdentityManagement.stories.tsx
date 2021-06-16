@@ -266,7 +266,7 @@ const CopyableResponse = (props: { response: unknown | undefined }): JSX.Element
       <Text>
         Connection string can be{' '}
         <Link href="https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp#access-your-connection-strings-and-service-endpoints">
-          found from the azure portal
+          generated on azure portal
         </Link>
         .
       </Text>

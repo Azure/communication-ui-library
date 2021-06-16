@@ -8,12 +8,14 @@ import ChatBackendText from '!!raw-loader!./snippets/ChatBackend.snippet.ts';
 
 # Identity Management
 
-It is a primary tenet of Azure Communication Services that customers bring their own user identities. Customers
-then use the Azure Communication Services identity service to create corresponding authentication tokens for
-their users. Interaction with Azure Communication Services identity services is a privileged operation. Customers
-should deploy a secure service for identity management that serves just the short-lived Azure Communication Services
-identity tokens to the client application. These short-lived identity tokens are all that the client application
-needs to interact with the Azure Communication Services like Chat and Calling.
+Azure Communication Services is an [identity-agnostic service][doc-acs-identities].
+Customers generate Azure Communication Services identities and tokens corresponding to their users via the identity
+service. Interaction with Azure Communication Services identity service is a privileged operation. Customers should
+deploy a secure backend service that interacts with the identity service and serves just the short-lived Azure
+Communication Services identity tokens to the client application. These short-lived identity tokens are all that the
+client application needs to interact with the Azure Communication Services like Chat and Calling.
+
+[doc-acs-identities]: https://docs.microsoft.com/en-us/azure/communication-services/concepts/identity-model
 
 ## Calling
 
