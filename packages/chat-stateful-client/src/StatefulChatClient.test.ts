@@ -295,7 +295,7 @@ describe('declarative chatClient subscribe to event properly after startRealtime
     };
     await client.triggerEvent('participantsAdded', addedEvent);
 
-    expect(client.getState().threads[threadId]?.participants.size).toBe(2);
+    expect(Object.keys(client.getState().threads[threadId]?.participants ?? {}).length).toBe(2);
 
     // remove event
     const removedEvent: ParticipantsRemovedEvent = {
@@ -307,7 +307,7 @@ describe('declarative chatClient subscribe to event properly after startRealtime
     };
     await client.triggerEvent('participantsRemoved', removedEvent);
 
-    expect(client.getState().threads[threadId]?.participants.size).toBe(1);
+    expect(Object.keys(client.getState().threads[threadId]?.participants ?? {}).length).toBe(1);
   });
 
   test('set internal store correctly when receive typingIndicator events', async () => {
