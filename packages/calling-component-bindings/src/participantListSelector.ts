@@ -11,7 +11,7 @@ const convertRemoteParticipantsToCommunicationParticipants = (
   remoteParticipants: RemoteParticipantState[]
 ): CallParticipant[] => {
   return remoteParticipants.map((participant: RemoteParticipantState) => {
-    const isScreenSharing = Array.from(participant.videoStreams.values()).some(
+    const isScreenSharing = Object.values(participant.videoStreams).some(
       (videoStream) => videoStream.mediaStreamType === 'ScreenSharing' && videoStream.isAvailable
     );
 
@@ -38,7 +38,7 @@ export const participantListSelector = reselect.createSelector(
   } => {
     const remoteParticipants =
       call && call?.remoteParticipants
-        ? convertRemoteParticipantsToCommunicationParticipants(Array.from(call?.remoteParticipants.values()))
+        ? convertRemoteParticipantsToCommunicationParticipants(Object.values(call?.remoteParticipants))
         : [];
     remoteParticipants.push({
       userId: userId,
