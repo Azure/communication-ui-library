@@ -44,7 +44,10 @@ export const usePropsFor = <Component extends (props: any) => JSX.Element>(
 
 export const emptySelector = (): Record<string, never> => ({});
 
-export type GetSelector<Component> = AreEqual<Component, typeof VideoGallery> extends true
+export type GetSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<
+  Component,
+  typeof VideoGallery
+> extends true
   ? typeof videoGallerySelector
   : AreEqual<Component, typeof OptionsButton> extends true
   ? typeof optionsButtonSelector
