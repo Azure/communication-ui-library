@@ -37,7 +37,7 @@ describe('Message date should be formatted correctly', () => {
     };
     const component = mountWithLocalization(
       <MessageThread userId="user1" messages={[sampleMessage]} showMessageDate={true} />,
-      { locale: 'de', rtl: false, strings }
+      { lang: 'de', rtl: false, strings }
     );
     await act(async () => component);
     expect(component.text()).toContain(strings.yesterday);

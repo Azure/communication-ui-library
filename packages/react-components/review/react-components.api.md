@@ -141,11 +141,8 @@ export type GridLayoutType = 'standard';
 
 // @public
 export interface ILocale {
-    // (undocumented)
-    locale: string;
-    // (undocumented)
+    lang: string;
     rtl: boolean;
-    // (undocumented)
     strings: ILocaleKeys;
 }
 

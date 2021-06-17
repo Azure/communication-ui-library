@@ -10,15 +10,15 @@ import { act } from 'react-dom/test-utils';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe('TypingIndicator should format string correctly', () => {
-  test('ParticipantItem snapshot in en-US', async () => {
+describe('ParticipantItem should work with localization', () => {
+  test('Should use localized string', async () => {
     const strings = {
       participant_item_me_text: Math.random().toString()
     };
     const component = mountWithLocalization(<ParticipantItem displayName="Mark" me={true} />, {
-      locale: Math.random().toString(),
-      strings: strings,
-      rtl: false
+      lang: Math.random().toString(),
+      rtl: false,
+      strings
     });
     await act(async () => component);
     component.update();
