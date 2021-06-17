@@ -2,11 +2,11 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { MessageThread } from '../MessageThread';
-import { ChatMessage } from '../../types';
+import { MessageThread } from './MessageThread';
+import { ChatMessage } from '../types';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import { mountWithLocalization } from './enzymeUtils';
+import { mountWithLocalization } from './utils/enzymeUtils';
 import { act } from 'react-dom/test-utils';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -18,7 +18,7 @@ const twentyFourHoursAgo = (): Date => {
 };
 
 describe('Message date should be formatted correctly', () => {
-  test('Should translate "Yesterday"', async () => {
+  test('Should locale string for "Yesterday"', async () => {
     const strings = {
       yesterday: Math.random().toString()
     };
