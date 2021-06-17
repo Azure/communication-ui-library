@@ -17,7 +17,6 @@ import {
 } from './styles/SettingsManagement.styles';
 import { inputBoxTextStyle } from './styles/SidePanel.styles';
 import { ThemeSelector } from './theming/ThemeSelector';
-import { LanguageSelector } from './localization/LanguageSelector';
 import { ENTER_KEY, MAXIMUM_LENGTH_OF_TOPIC } from './utils/constants';
 
 export type SettingsManagementProps = {
@@ -129,9 +128,6 @@ export const SettingsManagementComponent = (props: SettingsManagementProps): JSX
         </div>
         <div className={settingsGroupNameStyle}>
           <ThemeSelector label="Theme" />
-        </div>
-        <div className={settingsGroupNameStyle}>
-          <LanguageSelector />
         </div>
       </Stack>
     </Panel>
