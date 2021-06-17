@@ -23,6 +23,7 @@ Looking to make a contribution to this repo? Check out our guide for a walk-thro
 - [API extractor](./infrastructure/api-extractor.md) - Preventing breaking changes
 - [Beachball](./infrastructure/beachball.md) - Package version bumper and changelog generator
 - [Creating a new npm package release](./infrastructure/creating-a-release.md) - Instructions on creating new npm releases
+- [Chromatic](./infrastructure/chromatic.md) - Chromatic visual testing
 - [ESLint and Prettier](./infrastructure/linting.md) - Code style enforcing
 - [GitHub Issue templates](./infrastructure/issue-templates.md) - GitHub bug and feature request templates
 - [Jest](./infrastructure/jest.md) - Unit test framework

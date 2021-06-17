@@ -7,7 +7,7 @@ on:
       - packages/storybook/**
       - packages/react-components/**
       - packages/react-composites/**
-  workflow_dispatch:
+      - packages/communication-react/**
 
 jobs:
   chromatic_deployment:
