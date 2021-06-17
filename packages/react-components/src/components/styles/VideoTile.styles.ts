@@ -39,8 +39,6 @@ export const disabledVideoHint = mergeStyles({
   overflow: 'hidden',
   position: 'absolute',
   padding: '0.25rem',
-  fontSize: '12px',
-  fontWeight: 600,
   lineHeight: '1rem',
   whiteSpace: 'nowrap',
   maxWidth: '95%',
