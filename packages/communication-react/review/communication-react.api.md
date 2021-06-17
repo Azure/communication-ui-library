@@ -896,92 +896,11 @@ export const lightTheme: PartialTheme & CallingTheme;
 export const LocaleContext: React_2.Context<ILocale>;
 
 // @public (undocumented)
-export const locales: {
-    'en-US': {
-        locale: {
-            locale: string;
-            strings: {
-                participant_item_me_text: string;
-                typing_indicator_singular: string;
-                typing_indicator_plural: string;
-                typing_indicator_shortened_plural: string;
-                typing_indicator_shortened_plural_2: string;
-                end_call_button_text: string;
-                camera_button_on_text: string;
-                camera_button_off_text: string;
-                microphone_button_on_text: string;
-                microphone_button_off_text: string;
-                yesterday: string;
-                sunday: string;
-                monday: string;
-                tuesday: string;
-                wednesday: string;
-                thursday: string;
-                friday: string;
-                saturday: string;
-            };
-            rtl: boolean;
-        };
-        englishName: string;
-        displayName: string;
-    };
-    de: {
-        locale: {
-            locale: string;
-            strings: {
-                participant_item_me_text: string;
-                typing_indicator_singular: string;
-                typing_indicator_plural: string;
-                typing_indicator_shortened_plural: string;
-                typing_indicator_shortened_plural_2: string;
-                end_call_button_text: string;
-                camera_button_on_text: string;
-                camera_button_off_text: string;
-                microphone_button_on_text: string;
-                microphone_button_off_text: string;
-                yesterday: string;
-                sunday: string;
-                monday: string;
-                tuesday: string;
-                wednesday: string;
-                thursday: string;
-                friday: string;
-                saturday: string;
-            };
-            rtl: boolean;
-        };
-        englishName: string;
-        displayName: string;
-    };
-    ar: {
-        locale: {
-            locale: string;
-            strings: {
-                participant_item_me_text: string;
-                typing_indicator_singular: string;
-                typing_indicator_plural: string;
-                typing_indicator_shortened_plural: string;
-                typing_indicator_shortened_plural_2: string;
-                end_call_button_text: string;
-                camera_button_on_text: string;
-                camera_button_off_text: string;
-                microphone_button_on_text: string;
-                microphone_button_off_text: string;
-                yesterday: string;
-                sunday: string;
-                monday: string;
-                tuesday: string;
-                wednesday: string;
-                thursday: string;
-                friday: string;
-                saturday: string;
-            };
-            rtl: boolean;
-        };
-        englishName: string;
-        displayName: string;
-    };
-};
+export const locales: Record<string, {
+    locale: ILocale;
+    englishName: string;
+    displayName: string;
+}>;
 
 // @public
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
