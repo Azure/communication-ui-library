@@ -40,7 +40,7 @@ export const chatHeaderSelector = createSelector(
       userId,
       topicName: existsTopicName(topicName)
         ? topicName
-        : generateDefaultHeaderMessage(Array.from(participants.values()), userId)
+        : generateDefaultHeaderMessage(Object.values(participants), userId)
     };
   }
 );
