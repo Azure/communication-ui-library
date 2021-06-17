@@ -4,7 +4,7 @@
 import React, { createContext, useState, useMemo, useContext, useCallback, useEffect } from 'react';
 import { ILocale, ILocaleKeys, LocalizationProvider, locales } from 'react-components';
 
-const LOCALE_CACHE_KEY = 'AzureCommunicationUI_Locale';
+const LOCALE_CACHE_KEY = 'AzureCommunicationUI_Chat_Locale';
 
 export interface NamedLocale {
   locale: ILocale;
@@ -20,7 +20,7 @@ export type LocaleCollection = Record<string, NamedLocale>;
 export interface ISwitchableLocaleContext {
   locale: ILocale;
   locales: LocaleCollection;
-  setLocale: (locale: string, forceReload?: boolean) => void;
+  setLocale: (locale: string) => void;
 }
 
 const defaultLocaleContext: ISwitchableLocaleContext = {
