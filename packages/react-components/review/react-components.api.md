@@ -297,9 +297,9 @@ export interface ParticipantsButtonStylesProps extends ButtonCustomStylesProps {
 
 // @public (undocumented)
 export interface PlaceholderProps {
-    displayName?: string;
-    noVideoAvailableAriaLabel?: string;
-    userId?: string;
+    displayName?: string | undefined;
+    noVideoAvailableAriaLabel?: string | undefined;
+    userId?: string | undefined;
 }
 
 // @public
@@ -401,6 +401,8 @@ export interface VideoGalleryProps {
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoViewOption?: VideoStreamOptions;
+    showDisplayName?: boolean;
+    showMuteIndicator?: boolean;
     styles?: BaseCustomStylesProps;
 }
 
@@ -431,10 +433,12 @@ export const VideoTile: (props: VideoTileProps) => JSX.Element;
 export interface VideoTileProps extends PlaceholderProps {
     children?: React_2.ReactNode;
     isMirrored?: boolean;
-    isVideoReady?: boolean;
-    onRenderPlaceholder?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element | null;
-    renderElement?: JSX.Element | null;
-    showDisplayName?: boolean;
+    isMuted?: boolean | undefined;
+    isVideoReady?: boolean | undefined;
+    onRenderPlaceholder?: ((props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element | null) | undefined;
+    renderElement?: JSX.Element | null | undefined;
+    showDisplayName?: boolean | undefined;
+    showMuteIndicator?: boolean | undefined;
     styles?: VideoTileStylesProps;
 }
 
