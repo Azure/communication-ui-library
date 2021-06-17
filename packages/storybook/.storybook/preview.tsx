@@ -82,10 +82,10 @@ const withThemeProvider = (Story: any, context: any) => {
 };
 
 const withLocalization = (Story: any, context: any) => {
-  const locale = context.globals.locale as string;
+  const localeKey = context.globals.locale as string;
 
   return (
-    <LocalizationProvider locale={locales[locale].locale} >
+    <LocalizationProvider locale={locales[localeKey].locale} >
       <Story {...context} />
     </LocalizationProvider>
   );

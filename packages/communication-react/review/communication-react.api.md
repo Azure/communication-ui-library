@@ -840,8 +840,6 @@ export type GridLayoutType = 'standard';
 
 // @public
 export interface ILocale {
-    lang: string;
-    rtl: boolean;
     strings: ILocaleKeys;
 }
 

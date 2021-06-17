@@ -15,11 +15,7 @@ describe('ParticipantItem should work with localization', () => {
     const strings = {
       participant_item_me_text: Math.random().toString()
     };
-    const component = mountWithLocalization(<ParticipantItem displayName="Mark" me={true} />, {
-      lang: Math.random().toString(),
-      rtl: false,
-      strings
-    });
+    const component = mountWithLocalization(<ParticipantItem displayName="Mark" me={true} />, { strings });
     await act(async () => component);
     component.update();
     expect(component.text()).toContain(strings.participant_item_me_text);

@@ -18,11 +18,7 @@ describe('TypingIndicator should format string correctly', () => {
     };
     const component = mountWithLocalization(
       <TypingIndicator typingUsers={[{ userId: 'user2', displayName: 'Claire' }]} />,
-      {
-        lang: Math.random().toString(),
-        rtl: false,
-        strings
-      }
+      { strings }
     );
     await act(async () => component);
     component.update();
