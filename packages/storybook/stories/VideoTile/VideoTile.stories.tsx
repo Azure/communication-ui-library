@@ -66,8 +66,10 @@ const getDocs: () => JSX.Element = () => {
 const VideoTileStory: () => JSX.Element = () => {
   const displayName = text('Display Name', 'John Krasinski');
   const showDisplayName = boolean('Show Display Name', true);
+  const showMuteIndicator = boolean('Show Mute Indicator', true);
   const isVideoReady = boolean('Is Video Ready', false);
   const isMirrored = boolean('Is Mirrored', false);
+  const isMuted = boolean('Is Muted', false);
   const width = number('Width', 400, {
     range: true,
     min: 400,
@@ -96,7 +98,9 @@ const VideoTileStory: () => JSX.Element = () => {
       renderElement={<StreamMedia videoStreamElement={videoStreamElement} />}
       displayName={displayName}
       showDisplayName={showDisplayName}
+      showMuteIndicator={showMuteIndicator}
       isMirrored={isMirrored}
+      isMuted={isMuted}
       styles={{
         root: { videoTileStyles }
       }}
