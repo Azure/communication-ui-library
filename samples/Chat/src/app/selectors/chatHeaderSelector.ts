@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { ChatParticipant } from '@azure/communication-chat';
-import { toFlatCommunicationIdentifier } from 'acs-ui-common';
+import { toFlatCommunicationIdentifier } from '@azure/communication-react';
 import { existsTopicName } from '../utils/utils';
 import { createSelector } from 'reselect';
 import { getTopicName, getUserId, getParticipants } from './baseSelectors';
