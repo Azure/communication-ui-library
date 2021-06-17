@@ -1,99 +1,94 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`storybook snapshot tests Storyshots Examples/Layouts One To One Call Layout 1`] = `
-<body
-  className="ms-Fabric"
-  dir="ltr"
+<div
+  className="css-82 body-0"
 >
   <div
-    className="css-82 body-0"
+    className="css-82"
+    data-uses-unhanded-props={true}
+    dir="ltr"
   >
     <div
-      className="css-82"
-      data-uses-unhanded-props={true}
-      dir="ltr"
+      style={
+        Object {
+          "alignItems": "center",
+          "display": "flex",
+          "height": "100vh",
+          "justifyContent": "center",
+        }
+      }
     >
       <div
+        className="ms-Stack css-2"
         style={
           Object {
-            "alignItems": "center",
-            "display": "flex",
-            "height": "100vh",
-            "justifyContent": "center",
+            "border": "1px",
+            "height": "500px",
+            "width": "600px",
           }
         }
       >
         <div
-          className="ms-Stack css-2"
-          style={
-            Object {
-              "border": "1px",
-              "height": "500px",
-              "width": "600px",
-            }
-          }
+          className="ms-Stack css-6"
         >
           <div
-            className="ms-Stack css-6"
+            className="ms-Stack css-7"
           >
             <div
-              className="ms-Stack css-7"
+              className="ms-Stack css-9"
             >
               <div
-                className="ms-Stack css-9"
+                className="ms-Persona ms-Persona--size100 root-10"
               >
                 <div
-                  className="ms-Persona ms-Persona--size100 root-10"
+                  className="ms-Persona-coin ms-Persona--size100 coin-17"
+                  role="presentation"
                 >
                   <div
-                    className="ms-Persona-coin ms-Persona--size100 coin-17"
+                    className="ms-Persona-imageArea imageArea-19"
                     role="presentation"
                   >
                     <div
-                      className="ms-Persona-imageArea imageArea-19"
-                      role="presentation"
+                      aria-hidden="true"
+                      className="ms-Persona-initials initials-22"
                     >
-                      <div
-                        aria-hidden="true"
-                        className="ms-Persona-initials initials-22"
-                      >
-                        <span>
-                          H
-                        </span>
-                      </div>
+                      <span>
+                        H
+                      </span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
+          <div
+            className="ms-Stack css-25"
+          >
             <div
-              className="ms-Stack css-25"
+              className="ms-Stack css-6"
             >
               <div
-                className="ms-Stack css-6"
+                className="ms-Stack css-7"
               >
                 <div
-                  className="ms-Stack css-7"
+                  className="ms-Persona ms-Persona--size56 root-26"
                 >
                   <div
-                    className="ms-Persona ms-Persona--size56 root-26"
+                    className="ms-Persona-coin ms-Persona--size56 coin-17"
+                    role="presentation"
                   >
                     <div
-                      className="ms-Persona-coin ms-Persona--size56 coin-17"
+                      className="ms-Persona-imageArea imageArea-29"
                       role="presentation"
                     >
                       <div
-                        className="ms-Persona-imageArea imageArea-29"
-                        role="presentation"
+                        aria-hidden="true"
+                        className="ms-Persona-initials initials-32"
                       >
-                        <div
-                          aria-hidden="true"
-                          className="ms-Persona-initials initials-32"
-                        >
-                          <span>
-                            T
-                          </span>
-                        </div>
+                        <span>
+                          T
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -105,372 +100,49 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts One To One Call La
       </div>
     </div>
   </div>
-</body>
+</div>
 `;
 
 exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layout 1`] = `
-<body
-  className="ms-Fabric"
-  dir="ltr"
+<div
+  className="css-82 body-0"
 >
   <div
-    className="css-82 body-0"
+    className="css-82"
+    data-uses-unhanded-props={true}
+    dir="ltr"
   >
     <div
-      className="css-82"
-      data-uses-unhanded-props={true}
-      dir="ltr"
+      style={
+        Object {
+          "alignItems": "center",
+          "display": "flex",
+          "height": "100vh",
+          "justifyContent": "center",
+        }
+      }
     >
       <div
+        className="ms-Stack css-7"
         style={
           Object {
-            "alignItems": "center",
-            "display": "flex",
-            "height": "100vh",
-            "justifyContent": "center",
+            "border": ".063rem",
+            "height": "500px",
+            "width": "850px",
           }
         }
       >
         <div
-          className="ms-Stack css-7"
-          style={
-            Object {
-              "border": ".063rem",
-              "height": "500px",
-              "width": "850px",
-            }
-          }
+          className="ms-StackItem css-8"
         >
           <div
-            className="ms-StackItem css-8"
+            className="ms-Stack css-9"
           >
             <div
-              className="ms-Stack css-9"
+              className="ms-Stack css-10"
             >
               <div
-                className="ms-Stack css-10"
-              >
-                <div
-                  className="ms-Stack css-11"
-                >
-                  <div
-                    className="ms-Stack css-15"
-                  >
-                    <div
-                      className="ms-Stack css-16"
-                    >
-                      <div
-                        className="ms-Persona ms-Persona--size56 root-17"
-                      >
-                        <div
-                          className="ms-Persona-coin ms-Persona--size56 coin-24"
-                          role="presentation"
-                        >
-                          <div
-                            className="ms-Persona-imageArea imageArea-26"
-                            role="presentation"
-                          >
-                            <div
-                              aria-hidden="true"
-                              className="ms-Persona-initials initials-29"
-                            >
-                              <span>
-                                M
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <span
-                      className="css-80 css-32"
-                    >
-                      Michael
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="ms-Stack css-10"
-              >
-                <div
-                  className="ms-Stack css-11"
-                >
-                  <div
-                    className="ms-Stack css-15"
-                  >
-                    <div
-                      className="ms-Stack css-16"
-                    >
-                      <div
-                        className="ms-Persona ms-Persona--size56 root-17"
-                      >
-                        <div
-                          className="ms-Persona-coin ms-Persona--size56 coin-24"
-                          role="presentation"
-                        >
-                          <div
-                            className="ms-Persona-imageArea imageArea-26"
-                            role="presentation"
-                          >
-                            <div
-                              aria-hidden="true"
-                              className="ms-Persona-initials initials-33"
-                            >
-                              <span>
-                                J
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <span
-                      className="css-80 css-32"
-                    >
-                      Jim
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="ms-Stack css-10"
-              >
-                <div
-                  className="ms-Stack css-11"
-                >
-                  <div
-                    className="ms-Stack css-15"
-                  >
-                    <div
-                      className="ms-Stack css-16"
-                    >
-                      <div
-                        className="ms-Persona ms-Persona--size56 root-17"
-                      >
-                        <div
-                          className="ms-Persona-coin ms-Persona--size56 coin-24"
-                          role="presentation"
-                        >
-                          <div
-                            className="ms-Persona-imageArea imageArea-26"
-                            role="presentation"
-                          >
-                            <div
-                              aria-hidden="true"
-                              className="ms-Persona-initials initials-34"
-                            >
-                              <span>
-                                P
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <span
-                      className="css-80 css-32"
-                    >
-                      Pam
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="ms-Stack css-10"
-              >
-                <div
-                  className="ms-Stack css-11"
-                >
-                  <div
-                    className="ms-Stack css-15"
-                  >
-                    <div
-                      className="ms-Stack css-16"
-                    >
-                      <div
-                        className="ms-Persona ms-Persona--size56 root-17"
-                      >
-                        <div
-                          className="ms-Persona-coin ms-Persona--size56 coin-24"
-                          role="presentation"
-                        >
-                          <div
-                            className="ms-Persona-imageArea imageArea-26"
-                            role="presentation"
-                          >
-                            <div
-                              aria-hidden="true"
-                              className="ms-Persona-initials initials-35"
-                            >
-                              <span>
-                                D
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <span
-                      className="css-80 css-32"
-                    >
-                      Dwight
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="ms-Stack css-10"
-              >
-                <div
-                  className="ms-Stack css-11"
-                >
-                  <div
-                    className="ms-Stack css-15"
-                  >
-                    <div
-                      className="ms-Stack css-16"
-                    >
-                      <div
-                        className="ms-Persona ms-Persona--size56 root-17"
-                      >
-                        <div
-                          className="ms-Persona-coin ms-Persona--size56 coin-24"
-                          role="presentation"
-                        >
-                          <div
-                            className="ms-Persona-imageArea imageArea-26"
-                            role="presentation"
-                          >
-                            <div
-                              aria-hidden="true"
-                              className="ms-Persona-initials initials-36"
-                            >
-                              <span>
-                                K
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <span
-                      className="css-80 css-32"
-                    >
-                      Kelly
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="ms-Stack css-10"
-              >
-                <div
-                  className="ms-Stack css-11"
-                >
-                  <div
-                    className="ms-Stack css-15"
-                  >
-                    <div
-                      className="ms-Stack css-16"
-                    >
-                      <div
-                        className="ms-Persona ms-Persona--size56 root-17"
-                      >
-                        <div
-                          className="ms-Persona-coin ms-Persona--size56 coin-24"
-                          role="presentation"
-                        >
-                          <div
-                            className="ms-Persona-imageArea imageArea-26"
-                            role="presentation"
-                          >
-                            <div
-                              aria-hidden="true"
-                              className="ms-Persona-initials initials-37"
-                            >
-                              <span>
-                                R
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <span
-                      className="css-80 css-32"
-                    >
-                      Ryan
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="ms-Stack css-10"
-              >
-                <div
-                  className="ms-Stack css-11"
-                >
-                  <div
-                    className="ms-Stack css-15"
-                  >
-                    <div
-                      className="ms-Stack css-16"
-                    >
-                      <div
-                        className="ms-Persona ms-Persona--size56 root-17"
-                      >
-                        <div
-                          className="ms-Persona-coin ms-Persona--size56 coin-24"
-                          role="presentation"
-                        >
-                          <div
-                            className="ms-Persona-imageArea imageArea-26"
-                            role="presentation"
-                          >
-                            <div
-                              aria-hidden="true"
-                              className="ms-Persona-initials initials-38"
-                            >
-                              <span>
-                                A
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <span
-                      className="css-80 css-32"
-                    >
-                      Andy
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="ms-StackItem css-39"
-          >
-            <div
-              className="ms-Stack css-15"
-            >
-              <div
-                className="ms-Stack css-16"
-              >
-                <div
-                  className="ms-Stack css-41"
-                >
-                  <div
-                    className="ms-Stack css-42"
-                  >
-                    Your Screen Share Stream
-                  </div>
-                </div>
-              </div>
-              <div
-                className="ms-Stack css-43"
+                className="ms-Stack css-11"
               >
                 <div
                   className="ms-Stack css-15"
@@ -491,12 +163,330 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layou
                         >
                           <div
                             aria-hidden="true"
-                            className="ms-Persona-initials initials-44"
+                            className="ms-Persona-initials initials-29"
                           >
                             <span>
-                              T
+                              M
                             </span>
                           </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <span
+                    className="css-80 css-32"
+                  >
+                    Michael
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              className="ms-Stack css-10"
+            >
+              <div
+                className="ms-Stack css-11"
+              >
+                <div
+                  className="ms-Stack css-15"
+                >
+                  <div
+                    className="ms-Stack css-16"
+                  >
+                    <div
+                      className="ms-Persona ms-Persona--size56 root-17"
+                    >
+                      <div
+                        className="ms-Persona-coin ms-Persona--size56 coin-24"
+                        role="presentation"
+                      >
+                        <div
+                          className="ms-Persona-imageArea imageArea-26"
+                          role="presentation"
+                        >
+                          <div
+                            aria-hidden="true"
+                            className="ms-Persona-initials initials-33"
+                          >
+                            <span>
+                              J
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <span
+                    className="css-80 css-32"
+                  >
+                    Jim
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              className="ms-Stack css-10"
+            >
+              <div
+                className="ms-Stack css-11"
+              >
+                <div
+                  className="ms-Stack css-15"
+                >
+                  <div
+                    className="ms-Stack css-16"
+                  >
+                    <div
+                      className="ms-Persona ms-Persona--size56 root-17"
+                    >
+                      <div
+                        className="ms-Persona-coin ms-Persona--size56 coin-24"
+                        role="presentation"
+                      >
+                        <div
+                          className="ms-Persona-imageArea imageArea-26"
+                          role="presentation"
+                        >
+                          <div
+                            aria-hidden="true"
+                            className="ms-Persona-initials initials-34"
+                          >
+                            <span>
+                              P
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <span
+                    className="css-80 css-32"
+                  >
+                    Pam
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              className="ms-Stack css-10"
+            >
+              <div
+                className="ms-Stack css-11"
+              >
+                <div
+                  className="ms-Stack css-15"
+                >
+                  <div
+                    className="ms-Stack css-16"
+                  >
+                    <div
+                      className="ms-Persona ms-Persona--size56 root-17"
+                    >
+                      <div
+                        className="ms-Persona-coin ms-Persona--size56 coin-24"
+                        role="presentation"
+                      >
+                        <div
+                          className="ms-Persona-imageArea imageArea-26"
+                          role="presentation"
+                        >
+                          <div
+                            aria-hidden="true"
+                            className="ms-Persona-initials initials-35"
+                          >
+                            <span>
+                              D
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <span
+                    className="css-80 css-32"
+                  >
+                    Dwight
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              className="ms-Stack css-10"
+            >
+              <div
+                className="ms-Stack css-11"
+              >
+                <div
+                  className="ms-Stack css-15"
+                >
+                  <div
+                    className="ms-Stack css-16"
+                  >
+                    <div
+                      className="ms-Persona ms-Persona--size56 root-17"
+                    >
+                      <div
+                        className="ms-Persona-coin ms-Persona--size56 coin-24"
+                        role="presentation"
+                      >
+                        <div
+                          className="ms-Persona-imageArea imageArea-26"
+                          role="presentation"
+                        >
+                          <div
+                            aria-hidden="true"
+                            className="ms-Persona-initials initials-36"
+                          >
+                            <span>
+                              K
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <span
+                    className="css-80 css-32"
+                  >
+                    Kelly
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              className="ms-Stack css-10"
+            >
+              <div
+                className="ms-Stack css-11"
+              >
+                <div
+                  className="ms-Stack css-15"
+                >
+                  <div
+                    className="ms-Stack css-16"
+                  >
+                    <div
+                      className="ms-Persona ms-Persona--size56 root-17"
+                    >
+                      <div
+                        className="ms-Persona-coin ms-Persona--size56 coin-24"
+                        role="presentation"
+                      >
+                        <div
+                          className="ms-Persona-imageArea imageArea-26"
+                          role="presentation"
+                        >
+                          <div
+                            aria-hidden="true"
+                            className="ms-Persona-initials initials-37"
+                          >
+                            <span>
+                              R
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <span
+                    className="css-80 css-32"
+                  >
+                    Ryan
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              className="ms-Stack css-10"
+            >
+              <div
+                className="ms-Stack css-11"
+              >
+                <div
+                  className="ms-Stack css-15"
+                >
+                  <div
+                    className="ms-Stack css-16"
+                  >
+                    <div
+                      className="ms-Persona ms-Persona--size56 root-17"
+                    >
+                      <div
+                        className="ms-Persona-coin ms-Persona--size56 coin-24"
+                        role="presentation"
+                      >
+                        <div
+                          className="ms-Persona-imageArea imageArea-26"
+                          role="presentation"
+                        >
+                          <div
+                            aria-hidden="true"
+                            className="ms-Persona-initials initials-38"
+                          >
+                            <span>
+                              A
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <span
+                    className="css-80 css-32"
+                  >
+                    Andy
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="ms-StackItem css-39"
+        >
+          <div
+            className="ms-Stack css-15"
+          >
+            <div
+              className="ms-Stack css-16"
+            >
+              <div
+                className="ms-Stack css-41"
+              >
+                <div
+                  className="ms-Stack css-42"
+                >
+                  Your Screen Share Stream
+                </div>
+              </div>
+            </div>
+            <div
+              className="ms-Stack css-43"
+            >
+              <div
+                className="ms-Stack css-15"
+              >
+                <div
+                  className="ms-Stack css-16"
+                >
+                  <div
+                    className="ms-Persona ms-Persona--size56 root-17"
+                  >
+                    <div
+                      className="ms-Persona-coin ms-Persona--size56 coin-24"
+                      role="presentation"
+                    >
+                      <div
+                        className="ms-Persona-imageArea imageArea-26"
+                        role="presentation"
+                      >
+                        <div
+                          aria-hidden="true"
+                          className="ms-Persona-initials initials-44"
+                        >
+                          <span>
+                            T
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -509,5 +499,5 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layou
       </div>
     </div>
   </div>
-</body>
+</div>
 `;
