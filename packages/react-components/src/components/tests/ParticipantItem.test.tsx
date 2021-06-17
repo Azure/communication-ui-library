@@ -4,11 +4,11 @@
 import React from 'react';
 import createComponentWithLocalization from './createComponentWithLocalization';
 import { ParticipantItem } from '../ParticipantItem';
+import englishStrings from '../../localization/translated/en-US.json';
 
 test('ParticipantItem snapshot in en-US', async () => {
   const component = createComponentWithLocalization(<ParticipantItem displayName="Mark" me={true} />, {
-    initialLocale: 'en-US',
-    locales: { 'en-US': { locale: '', englishName: '', displayName: '', rtl: false } }
+    locale: { locale: 'en-US', rtl: false, strings: englishStrings }
   });
 
   expect(component).toMatchSnapshot();

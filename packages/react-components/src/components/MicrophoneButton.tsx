@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useMemo } from 'react';
+import React, { useCallback } from 'react';
 import { DefaultButton, IButtonProps, Label, concatStyleSets, mergeStyles } from '@fluentui/react';
 import { MicIcon, MicOffIcon } from '@fluentui/react-northstar';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
@@ -38,8 +38,8 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
     return props?.checked ? <MicIcon key={'microphoneIconKey'} /> : <MicOffIcon key={'microphoneOffIconKey'} />;
   };
 
-  const defaultRenderText = useMemo(
-    () => (props?: IButtonProps): JSX.Element => {
+  const defaultRenderText = useCallback(
+    (props?: IButtonProps): JSX.Element => {
       return (
         <Label key={'microphoneLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
           {props?.checked ? strings.microphone_button_on_text : strings.microphone_button_off_text}

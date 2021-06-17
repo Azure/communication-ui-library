@@ -4,10 +4,10 @@
 import React, { useCallback } from 'react';
 import { Dropdown, IDropdownOption } from '@fluentui/react';
 
-import { useLocale } from 'react-components';
+import { useSwitchableLocale } from '../localization/SwitchableLocalizationProvider';
 
 export const LanguageSelector = (): JSX.Element => {
-  const { locale, setLocale, locales } = useLocale();
+  const { locale, setLocale, locales } = useSwitchableLocale();
 
   const onChange = useCallback(
     (event: React.FormEvent<HTMLDivElement>, option?: IDropdownOption | undefined) => {

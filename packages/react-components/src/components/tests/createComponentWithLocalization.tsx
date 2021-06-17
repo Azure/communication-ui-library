@@ -3,16 +3,9 @@
 
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { LocalizationProvider, ILocaleCollection, ILocaleKeys } from '../../localization/LocalizationProvider';
+import { LocalizationProvider, ILocale } from '../../localization/LocalizationProvider';
 
-const createComponentWithLocalization = (
-  children: React.ReactNode,
-  props: {
-    initialLocale: string;
-    locales: ILocaleCollection;
-    localeStringsLoader?: (locale: string) => Promise<ILocaleKeys>;
-  }
-): any => {
+const createComponentWithLocalization = (children: React.ReactNode, props: { locale: ILocale }): any => {
   return renderer.create(<LocalizationProvider {...props}>{children}</LocalizationProvider>);
 };
 

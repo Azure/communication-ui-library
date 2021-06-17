@@ -6,15 +6,16 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './app/App';
 import { SwitchableFluentThemeProvider } from './app/theming/SwitchableFluentThemeProvider';
-import { LocalizationProvider, locales } from 'react-components';
+import { SwitchableLocalizationProvider } from './app/localization/SwitchableLocalizationProvider';
+import { locales } from 'react-components';
 
 ReactDOM.render(
   <SwitchableFluentThemeProvider scopeId="SampleCallingApp">
-    <LocalizationProvider storage={localStorage} initialLocale="en-US" locales={locales}>
+    <SwitchableLocalizationProvider storage={localStorage} selectedLocale="en-US" locales={locales}>
       <div className="wrapper">
         <App />
       </div>
-    </LocalizationProvider>
+    </SwitchableLocalizationProvider>
   </SwitchableFluentThemeProvider>,
   document.getElementById('root')
 );

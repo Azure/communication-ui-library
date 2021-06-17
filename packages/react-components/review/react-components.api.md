@@ -101,9 +101,6 @@ export type CustomMessagePayload = {
 export const darkTheme: PartialTheme & CallingTheme;
 
 // @public (undocumented)
-export const defaultLocaleStringsLoader: (locale: string) => Promise<ILocaleKeys>;
-
-// @public (undocumented)
 export type DefaultMessageRendererType = (props: MessageProps) => JSX.Element;
 
 // @public
@@ -142,26 +139,9 @@ export type GridLayoutType = 'standard';
 // @public (undocumented)
 export interface ILocale {
     // (undocumented)
-    displayName: string;
-    // (undocumented)
-    englishName: string;
-    // (undocumented)
     locale: string;
     // (undocumented)
     rtl: boolean;
-}
-
-// @public
-export type ILocaleCollection = Record<string, ILocale>;
-
-// @public (undocumented)
-export interface ILocaleContext {
-    // (undocumented)
-    locale: ILocale;
-    // (undocumented)
-    locales: ILocaleCollection;
-    // (undocumented)
-    setLocale: (locale: string, forceReload?: boolean) => void;
     // (undocumented)
     strings: ILocaleKeys;
 }
@@ -179,20 +159,114 @@ export interface JumpToNewMessageButtonProps {
 export const lightTheme: PartialTheme & CallingTheme;
 
 // @public (undocumented)
-export const LocaleContext: React_2.Context<ILocaleContext>;
+export const LocaleContext: React_2.Context<ILocale>;
 
 // @public (undocumented)
-export const locales: ILocaleCollection;
+export const locales: {
+    'en-US': {
+        locale: {
+            locale: string;
+            strings: {
+                participant_item_me_text: string;
+                typing_indicator_singular: string;
+                typing_indicator_plural: string;
+                typing_indicator_shortened_plural: string;
+                typing_indicator_shortened_plural_2: string;
+                end_call_button_text: string;
+                camera_button_on_text: string;
+                camera_button_off_text: string;
+                microphone_button_on_text: string;
+                microphone_button_off_text: string;
+                screenshare_button_on_text: string;
+                screenshare_button_off_text: string;
+                options_button_text: string;
+                participants_button_text: string;
+                yesterday: string;
+                sunday: string;
+                monday: string;
+                tuesday: string;
+                wednesday: string;
+                thursday: string;
+                friday: string;
+                saturday: string;
+            };
+            rtl: boolean;
+        };
+        englishName: string;
+        displayName: string;
+    };
+    de: {
+        locale: {
+            locale: string;
+            strings: {
+                participant_item_me_text: string;
+                typing_indicator_singular: string;
+                typing_indicator_plural: string;
+                typing_indicator_shortened_plural: string;
+                typing_indicator_shortened_plural_2: string;
+                end_call_button_text: string;
+                camera_button_on_text: string;
+                camera_button_off_text: string;
+                microphone_button_on_text: string;
+                microphone_button_off_text: string;
+                screenshare_button_on_text: string;
+                screenshare_button_off_text: string;
+                options_button_text: string;
+                participants_button_text: string;
+                yesterday: string;
+                sunday: string;
+                monday: string;
+                tuesday: string;
+                wednesday: string;
+                thursday: string;
+                friday: string;
+                saturday: string;
+            };
+            rtl: boolean;
+        };
+        englishName: string;
+        displayName: string;
+    };
+    ar: {
+        locale: {
+            locale: string;
+            strings: {
+                participant_item_me_text: string;
+                typing_indicator_singular: string;
+                typing_indicator_plural: string;
+                typing_indicator_shortened_plural: string;
+                typing_indicator_shortened_plural_2: string;
+                end_call_button_text: string;
+                camera_button_on_text: string;
+                camera_button_off_text: string;
+                microphone_button_on_text: string;
+                microphone_button_off_text: string;
+                screenshare_button_on_text: string;
+                screenshare_button_off_text: string;
+                options_button_text: string;
+                participants_button_text: string;
+                yesterday: string;
+                sunday: string;
+                monday: string;
+                tuesday: string;
+                wednesday: string;
+                thursday: string;
+                friday: string;
+                saturday: string;
+            };
+            rtl: boolean;
+        };
+        englishName: string;
+        displayName: string;
+    };
+};
 
 // @public (undocumented)
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
 
 // @public (undocumented)
 export type LocalizationProviderProps = {
-    initialLocale: string;
-    locales: ILocaleCollection;
-    localeStringsLoader?: (locale: string) => Promise<ILocaleKeys>;
-    storage?: Storage;
+    locale: ILocale;
     children: React_2.ReactNode;
 };
 
@@ -423,7 +497,7 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
 }
 
 // @public (undocumented)
-export const useLocale: () => ILocaleContext;
+export const useLocale: () => ILocale;
 
 // @public
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;

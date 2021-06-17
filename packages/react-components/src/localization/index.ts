@@ -2,4 +2,4 @@
 // Licensed under the MIT license.
 
 export * from './LocalizationProvider';
-export * from './loadLocaleStrings';
+export * from './locales';

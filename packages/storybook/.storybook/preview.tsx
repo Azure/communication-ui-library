@@ -85,7 +85,7 @@ const withLocalization = (Story: any, context: any) => {
   const locale = context.globals.locale as string;
 
   return (
-    <LocalizationProvider initialLocale={locale} locales={locales} >
+    <LocalizationProvider locale={locales[locale].locale} >
       <Story {...context} />
     </LocalizationProvider>
   );
@@ -124,9 +124,9 @@ export const globalTypes = {
     toolbar: {
       icon: 'globe',
       items: [
-        { value: 'en-US', right: '🇺🇸', title: 'English' },
-        { value: 'de', right: '🇩🇪', title: 'German' },
-        { value: 'ar', right: '🇸🇦', title: 'Arabic' }
+        { value: 'en-US', title: 'English' },
+        { value: 'de', title: 'German' },
+        { value: 'ar', title: 'Arabic' }
       ],
     },
   }

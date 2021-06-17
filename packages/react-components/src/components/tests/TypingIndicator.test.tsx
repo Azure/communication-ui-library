@@ -7,18 +7,23 @@ import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { mountWithLocalization } from './enzymeUtils';
 import { act } from 'react-dom/test-utils';
-import englishStrings from '../../localization/translated/en-US.json';
 
 Enzyme.configure({ adapter: new Adapter() });
 
 test('TypingIndicator test in english', async () => {
+  const randomText = Math.random().toString();
+  const strings = {
+    typing_indicator_singular: '{users} ' + randomText
+  };
   const component = mountWithLocalization(
     <TypingIndicator typingUsers={[{ userId: 'user2', displayName: 'Claire' }]} />,
-    englishStrings
+    {
+      locale: Math.random().toString(),
+      strings: strings,
+      rtl: false
+    }
   );
   await act(async () => component);
   component.update();
-  expect(component.html()).toBe(
-    '<div class="ms-Stack css-56"><div class="ms-Stack css-57"><span><div class="ms-Stack css-58">Claire</div></span><span> is typing ...</span></div></div>'
-  );
+  expect(component.text()).toBe('Claire ' + randomText);
 });
