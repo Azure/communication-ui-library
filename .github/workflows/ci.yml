@@ -28,7 +28,9 @@ jobs:
       - name: Restore node_modules from cache
         uses: actions/cache@v2
         with:
-          path: common/temp/pnpm-store
+          path: |
+            common/temp/pnpm-store
+            common/temp/node_modules
           key: ${{ runner.os }}-${{ hashFiles('common\config\rush\pnpm-lock.yaml') }}
       # Install dependencies
       - name: Install rush
