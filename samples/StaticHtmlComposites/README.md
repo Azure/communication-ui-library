@@ -1,4 +1,4 @@
-# Basic Sample for using CallComposite and ChatComposite
+# Basic sample for using CallComposite and ChatComposite
 
 This sample is the bare minimum to embed Calling or Chat in your web app without needing to set up React. It consists of the following files:
 
@@ -19,8 +19,6 @@ This sample is the bare minimum to embed Calling or Chat in your web app without
 rush update
 ```
 
-> Note: There is currently a bug in the local `@azure/communication-react` package. Run `npm install` instead to install the in-market package from npm.
-
 ### Bundle the app
 ```
 rushx build
@@ -36,3 +34,11 @@ rushx start
 ```
 
 The basic app is accessible on http://localhost:3000.
+
+
+## Basic app
+
+
+![Basic app screenshot](./app.png)
+
+
