@@ -12,6 +12,22 @@ const defaultLocalVideoViewOption = {
   isMirrored: true
 } as VideoStreamOptions;
 
+interface CameraButtonStrings {
+  /**
+   * Label to indicate that pressing the button will turn off camera.
+   *
+   * Setting the underlying button `text` directly overrides this string.
+   */
+  turnOff?: string;
+
+  /**
+   * Label to indicate that pressing the button will turn on camera.
+   *
+   * Setting the underlying button `text` directly overrides this string.
+   */
+  turnOn?: string;
+}
+
 /**
  * Props for CameraButton component
  */
@@ -32,6 +48,8 @@ export interface CameraButtonProps extends IButtonProps {
    * Options for rendering local video view.
    */
   localVideoViewOption?: VideoStreamOptions;
+
+  strings?: CameraButtonStrings;
 }
 
 /**

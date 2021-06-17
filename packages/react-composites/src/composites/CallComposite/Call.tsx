@@ -11,7 +11,7 @@ import { CallAdapter, CallCompositePage } from './adapter/CallAdapter';
 import { PlaceholderProps } from 'react-components';
 import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
-import { FluentThemeProvider } from 'react-components';
+import { FluentThemeProvider, LocalizationProps } from 'react-components';
 
 export type CallCompositeProps = {
   adapter: CallAdapter;
@@ -21,6 +21,14 @@ export type CallCompositeProps = {
    * Defaults to a light theme if undefined.
    */
   fluentTheme?: PartialTheme | Theme;
+  /**
+   * pprabhu comment: Works by using a LocalicationProvider internally, but key is that customers can override the
+   * strings for each component or just choose locale, and don't have to bother with the provider.
+   *
+   * Customers can also skip this entirely, and get en-us.
+   */
+  localization?: LocalizationProps;
+
   callInvitationURL?: string;
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
 };
