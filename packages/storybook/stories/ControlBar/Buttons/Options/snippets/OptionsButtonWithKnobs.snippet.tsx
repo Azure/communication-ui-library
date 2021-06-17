@@ -1,10 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { OptionsButton } from '@azure/communication-react';
+import { OptionsButton, OptionsButtonProps } from '@azure/communication-react';
 import { boolean, object } from '@storybook/addon-knobs';
 import React, { useState } from 'react';
-import { OptionsButtonProps } from 'react-composites/node_modules/react-components';
 
 export const OptionsButtonWithKnobs = (props: { showLabel?: boolean }): JSX.Element => {
   const showLabel = props.showLabel ?? boolean('Show Label', false);
