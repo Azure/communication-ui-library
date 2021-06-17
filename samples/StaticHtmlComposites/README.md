@@ -26,7 +26,7 @@ rushx build
 
 ### Set your connection string
 
-Replace the `ResourceConnectionString` in the `samples/Server/appsettings.json` file with the connection string
+Replace the `ResourceConnectionString` in the `samples/Server/appsettings.json` file with the connection string from your Azure Communication Services resource, which is listed in the Azure Portal under *Keys*.
 
 ### Launch the servers
 ```
@@ -35,9 +35,11 @@ rushx start
 
 The basic app is accessible on http://localhost:3000.
 
+## Note about package versions
+
+>  This sample uses the `@azure/communication-react` package from within this repo, which can slightly diverge from the `latest` package on npm. If you copy this sample to bootstrap your own app and use the public npm package, you might need to fix the call signatures in `composites.js` file. Alternatively, you can install the `dev` tagged package from npm which is updated daily and should likely match the in-repo version.
 
 ## Basic app
-
 
 ![Basic app screenshot](./app.png)
 
