@@ -31,12 +31,16 @@ export const ChatArea = (props: ChatAreaProps): JSX.Element => {
 
   return (
     <Stack className={chatAreaContainerStyle}>
-      <MessageThread {...chatThreadProps} onRenderAvatar={props.onRenderAvatar} numberOfChatMessagesToReload={5} />
+      <MessageThread
+        {...(chatThreadProps as any)}
+        onRenderAvatar={props.onRenderAvatar}
+        numberOfChatMessagesToReload={5}
+      />
       <Stack.Item align="center" className={sendBoxParentStyle}>
         <div style={{ paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>
-          <TypingIndicator {...typingIndicatorProps} />
+          <TypingIndicator {...(typingIndicatorProps as any)} />
         </div>
-        <SendBox {...sendBoxProps} />
+        <SendBox {...(sendBoxProps as any)} />
       </Stack.Item>
     </Stack>
   );
