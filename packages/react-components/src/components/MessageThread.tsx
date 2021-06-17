@@ -240,7 +240,7 @@ const DefaultChatMessageRenderer: DefaultMessageRendererType = (props: MessagePr
         timestamp={
           payload.createdOn
             ? props.showDate
-              ? formatTimestampForChatMessage(payload.createdOn, new Date(), props.strings)
+              ? formatTimestampForChatMessage(payload.createdOn, new Date(), props.dateStrings)
               : formatTimeForChatMessage(payload.createdOn)
             : undefined
         }
@@ -263,7 +263,7 @@ const memoizeAllMessages = memoizeFnAll(
       | ((messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null)
       | undefined,
     defaultChatMessageRenderer: (message: MessageProps) => JSX.Element,
-    strings: ILocaleKeys,
+    dateStrings: ILocaleKeys,
     _attached?: boolean | string,
     statusToRender?: MessageStatus,
     onRenderMessage?: (message: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element
@@ -271,7 +271,7 @@ const memoizeAllMessages = memoizeFnAll(
     const messageProps: MessageProps = {
       message: message,
       showDate: showMessageDate,
-      strings: strings
+      dateStrings: dateStrings
     };
 
     if (message.type === 'chat') {
@@ -436,6 +436,19 @@ export type MessageThreadProps = {
    * `defaultOnRender` is not provided for `CustomMessage` and thus only available for `ChatMessage` and `SystemMessage`.
    */
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+  /**
+   * Optional localized strings to use for message dates
+   */
+  dateStrings?: {
+    sunday: string;
+    monday: string;
+    tuesday: string;
+    wednesday: string;
+    thursday: string;
+    friday: string;
+    saturday: string;
+    yesterday: string;
+  };
 };
 
 /**
@@ -447,9 +460,9 @@ export type MessageProps = {
    */
   message: ChatMessage | SystemMessage | CustomMessage;
   /**
-   * Strings from locale.
+   * Localized strings to use for message dates
    */
-  strings: ILocaleKeys;
+  dateStrings: ILocaleKeys;
   /**
    * Custom CSS styles for chat message container.
    */
@@ -700,6 +713,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   );
 
   const { strings } = useLocale();
+  const dateStrings = props.dateStrings ?? strings;
 
   const messagesToDisplay = useMemo(
     () =>
@@ -741,7 +755,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
               styles,
               onRenderMessageStatus,
               defaultChatMessageRenderer,
-              strings,
+              dateStrings,
               // Temporary solution to make sure we re-render if attach attribute is changed.
               // The proper fix should be in selector.
               message.type === 'chat' ? message.payload.attached : undefined,
@@ -763,7 +777,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       lastSendingChatMessage,
       lastDeliveredChatMessage,
       onRenderMessage,
-      strings
+      dateStrings
     ]
   );
 

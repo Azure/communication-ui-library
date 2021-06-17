@@ -48,6 +48,8 @@ export const CameraButton: (props: CameraButtonProps) => JSX.Element;
 // @public
 export interface CameraButtonProps extends IButtonProps {
     localVideoViewOption?: VideoStreamOptions;
+    offText?: string;
+    onText?: string;
     onToggleCamera?: (options?: VideoStreamOptions) => Promise<void>;
     showLabel?: boolean;
 }
@@ -110,6 +112,7 @@ export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
 export interface EndCallButtonProps extends IButtonProps {
     onHangUp?: () => Promise<void>;
     showLabel?: boolean;
+    text?: string;
 }
 
 // @public
@@ -177,10 +180,6 @@ export const locales: {
                 camera_button_off_text: string;
                 microphone_button_on_text: string;
                 microphone_button_off_text: string;
-                screenshare_button_on_text: string;
-                screenshare_button_off_text: string;
-                options_button_text: string;
-                participants_button_text: string;
                 yesterday: string;
                 sunday: string;
                 monday: string;
@@ -209,10 +208,6 @@ export const locales: {
                 camera_button_off_text: string;
                 microphone_button_on_text: string;
                 microphone_button_off_text: string;
-                screenshare_button_on_text: string;
-                screenshare_button_off_text: string;
-                options_button_text: string;
-                participants_button_text: string;
                 yesterday: string;
                 sunday: string;
                 monday: string;
@@ -241,10 +236,6 @@ export const locales: {
                 camera_button_off_text: string;
                 microphone_button_on_text: string;
                 microphone_button_off_text: string;
-                screenshare_button_on_text: string;
-                screenshare_button_off_text: string;
-                options_button_text: string;
-                participants_button_text: string;
                 yesterday: string;
                 sunday: string;
                 monday: string;
@@ -285,7 +276,7 @@ export type MessageContentType = 'text' | 'html' | 'richtext/html' | 'unknown';
 // @public
 export type MessageProps = {
     message: ChatMessage | SystemMessage | CustomMessage;
-    strings: ILocaleKeys;
+    dateStrings: ILocaleKeys;
     messageContainerStyle?: ComponentSlotStyle;
     showDate?: boolean;
 };
@@ -322,6 +313,16 @@ export type MessageThreadProps = {
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+    dateStrings?: {
+        sunday: string;
+        monday: string;
+        tuesday: string;
+        wednesday: string;
+        thursday: string;
+        friday: string;
+        saturday: string;
+        yesterday: string;
+    };
 };
 
 // @public (undocumented)
@@ -342,6 +343,8 @@ export const MicrophoneButton: (props: MicrophoneButtonProps) => JSX.Element;
 
 // @public
 export interface MicrophoneButtonProps extends IButtonProps {
+    offText?: string;
+    onText?: string;
     onToggleMicrophone?: () => Promise<void>;
     showLabel?: boolean;
 }
@@ -375,8 +378,10 @@ export const ParticipantItem: (props: ParticipantItemProps) => JSX.Element;
 // @public
 export interface ParticipantItemProps {
     displayName: string;
+    isMeText?: string;
     me?: boolean;
     menuItems?: IContextualMenuItem[];
+    menuTitle?: string;
     onRenderAvatar?: (props?: ParticipantItemProps) => JSX.Element | null;
     onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
     presence?: PersonaPresence;

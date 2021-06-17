@@ -33,6 +33,15 @@ export interface CameraButtonProps extends IButtonProps {
    * Options for rendering local video view.
    */
   localVideoViewOption?: VideoStreamOptions;
+  /**
+   * Optional string to override button label when button is on.
+   */
+  onText?: string;
+
+  /**
+   * Optional string to override button label when button is off.
+   */
+  offText?: string;
 }
 
 /**
@@ -50,17 +59,19 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
     return props?.checked ? <CallVideoIcon key={'videoIconKey'} /> : <CallVideoOffIcon key={'videoOffIconKey'} />;
   };
 
-  const strings = useLocale().strings;
+  const { strings } = useLocale();
+  const onText = props.onText ?? strings.camera_button_on_text;
+  const offText = props.offText ?? strings.camera_button_off_text;
 
   const defaultRenderText = useCallback(
     (props?: IButtonProps): JSX.Element => {
       return (
         <Label key={'videoLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
-          {props?.checked ? strings.camera_button_on_text : strings.camera_button_off_text}
+          {props?.checked ? onText : offText}
         </Label>
       );
     },
-    [strings]
+    [onText, offText]
   );
 
   const onToggleClick = useCallback(async () => {

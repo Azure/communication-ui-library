@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
+import React, { useCallback } from 'react';
 import { DefaultButton, IButtonProps, Label, concatStyleSets, mergeStyles, useTheme } from '@fluentui/react';
 import { CallEndIcon } from '@fluentui/react-northstar';
 import { controlButtonLabelStyles, endCallControlButtonStyles } from './styles/ControlBar.styles';
@@ -25,6 +25,11 @@ export interface EndCallButtonProps extends IButtonProps {
    * Maps directly to the `onClick` property.
    */
   onHangUp?: () => Promise<void>;
+
+  /**
+   * Optional string to override button label.
+   */
+  text?: string;
 }
 
 /**
@@ -37,6 +42,7 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
 
   const isDarkTheme = isDarkThemed(useTheme());
   const { strings } = useLocale();
+  const text = props.text ?? strings.end_call_button_text;
 
   const componentStyles = concatStyleSets(
     endCallControlButtonStyles,
@@ -58,13 +64,16 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
     return <CallEndIcon key={'callEndIconKey'} />;
   };
 
-  const defaultRenderText = (props?: IButtonProps): JSX.Element => {
-    return (
-      <Label key={'callEndLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
-        {strings.end_call_button_text}
-      </Label>
-    );
-  };
+  const defaultRenderText = useCallback(
+    (props?: IButtonProps): JSX.Element => {
+      return (
+        <Label key={'callEndLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
+          {text}
+        </Label>
+      );
+    },
+    [text]
+  );
 
   return (
     <DefaultButton

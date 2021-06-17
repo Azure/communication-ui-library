@@ -22,6 +22,16 @@ export interface MicrophoneButtonProps extends IButtonProps {
    * Maps directly to the `onClick` property.
    */
   onToggleMicrophone?: () => Promise<void>;
+
+  /**
+   * Optional string to override button label when button is on.
+   */
+  onText?: string;
+
+  /**
+   * Optional string to override button label when button is off.
+   */
+  offText?: string;
 }
 
 /**
@@ -33,6 +43,8 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
 
   const strings = useLocale().strings;
+  const onText = props.onText ?? strings.camera_button_on_text;
+  const offText = props.offText ?? strings.camera_button_off_text;
 
   const defaultRenderIcon = (props?: IButtonProps): JSX.Element => {
     return props?.checked ? <MicIcon key={'microphoneIconKey'} /> : <MicOffIcon key={'microphoneOffIconKey'} />;
@@ -42,11 +54,11 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
     (props?: IButtonProps): JSX.Element => {
       return (
         <Label key={'microphoneLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
-          {props?.checked ? strings.microphone_button_on_text : strings.microphone_button_off_text}
+          {props?.checked ? onText : offText}
         </Label>
       );
     },
-    [strings]
+    [onText, offText]
   );
 
   return (

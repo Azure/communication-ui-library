@@ -54,6 +54,14 @@ export interface ParticipantItemProps {
    * ```
    */
   styles?: ParticipantItemStylesProps;
+  /**
+   * Optional string to override text that showing when participant is me
+   */
+  isMeText?: string;
+  /**
+   * Optional string to over text when hovering over menu button
+   */
+  menuTitle?: string;
 }
 
 /**
@@ -69,8 +77,8 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
   const theme = useTheme();
   const { strings } = useLocale();
 
-  const isMeText = strings.participant_item_me_text;
-  const menuTitle = strings.participant_item_menu_title;
+  const isMeText = props.isMeText ?? strings.participant_item_me_text;
+  const menuTitle = props.menuTitle ?? strings.participant_item_menu_title;
 
   const avatarToUse = (
     <Persona
