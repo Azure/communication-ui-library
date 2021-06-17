@@ -6,7 +6,9 @@
   "scripts": {
     "build": "webpack",
     "start": "concurrently \"cd ../Server && rushx start:dev\" \"rushx start:app\"",
-    "start:app": "http-server -p 3000"
+    "start:app": "http-server -p 3000",
+    "lint": "echo skip",
+    "lint:fix": "echo skip"
   },
   "license": "MIT",
   "dependencies": {
