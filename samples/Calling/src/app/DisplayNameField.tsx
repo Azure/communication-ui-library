@@ -11,14 +11,13 @@ import {
 } from './styles/DisplayNameField.styles';
 import { TextField } from '@fluentui/react';
 import { ENTER_KEY, MAXIMUM_LENGTH_OF_NAME } from './utils/constants';
-import { labelFontStyle } from './styles/ConfiguratonScreen.styles';
 
 interface DisplayNameFieldProps {
   setName(displayName: string): void;
-  setEmptyWarning(isEmpty: boolean): void;
-  setNameLengthExceedLimit(isNameLengthExceedLimit: boolean): void;
-  isEmpty: boolean;
-  isNameLengthExceedLimit: boolean;
+  setEmptyWarning?(isEmpty: boolean): void;
+  setNameLengthExceedLimit?(isNameLengthExceedLimit: boolean): void;
+  isEmpty?: boolean;
+  isNameLengthExceedLimit?: boolean;
   defaultName?: string;
   validateName?(): void;
 }
@@ -36,48 +35,45 @@ export const DisplayNameField = (props: DisplayNameFieldProps): JSX.Element => {
 
   const onNameTextChange = (event: any): void => {
     setName(event.target.value);
-    if (!event.target.value) {
+    if (setEmptyWarning && !event.target.value) {
       setEmptyWarning(true);
-    } else if (event.target.value.length > MAXIMUM_LENGTH_OF_NAME) {
+    } else if (setNameLengthExceedLimit && event.target.value.length > MAXIMUM_LENGTH_OF_NAME) {
       setNameLengthExceedLimit(true);
     } else {
-      setEmptyWarning(false);
-      setNameLengthExceedLimit(false);
+      setEmptyWarning && setEmptyWarning(false);
+      setNameLengthExceedLimit && setNameLengthExceedLimit(false);
     }
   };
 
   return (
-    <div>
-      <div className={labelFontStyle}>Name</div>
-      <TextField
-        autoComplete="off"
-        defaultValue={defaultName}
-        inputClassName={inputBoxTextStyle}
-        ariaLabel="Choose your name"
-        className={isEmpty || isNameLengthExceedLimit ? inputBoxWarningStyle : inputBoxStyle}
-        onChange={onNameTextChange}
-        id="displayName"
-        placeholder="Enter your name"
-        onKeyDown={(ev) => {
-          if (ev.which === ENTER_KEY) {
-            validateName && validateName();
-          }
-        }}
-        styles={TextFieldStyleProps}
-        errorMessage={
-          isEmpty ? (
-            <div role="alert" className={warningStyle}>
-              {' '}
-              Name cannot be empty{' '}
-            </div>
-          ) : isNameLengthExceedLimit ? (
-            <div role="alert" className={warningStyle}>
-              {' '}
-              Name cannot be over 10 characters{' '}
-            </div>
-          ) : undefined
+    <TextField
+      autoComplete="off"
+      defaultValue={defaultName}
+      inputClassName={inputBoxTextStyle}
+      ariaLabel="Choose your name"
+      className={isEmpty || isNameLengthExceedLimit ? inputBoxWarningStyle : inputBoxStyle}
+      onChange={onNameTextChange}
+      id="displayName"
+      placeholder="Enter a name"
+      onKeyDown={(ev) => {
+        if (ev.which === ENTER_KEY) {
+          validateName && validateName();
         }
-      />
-    </div>
+      }}
+      styles={TextFieldStyleProps}
+      errorMessage={
+        isEmpty ? (
+          <div role="alert" className={warningStyle}>
+            {' '}
+            Name cannot be empty{' '}
+          </div>
+        ) : isNameLengthExceedLimit ? (
+          <div role="alert" className={warningStyle}>
+            {' '}
+            Name cannot be over 10 characters{' '}
+          </div>
+        ) : undefined
+      }
+    />
   );
 };

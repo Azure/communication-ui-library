@@ -32,7 +32,6 @@ import { devicePermissionSelector } from './selectors/devicePermissionSelector';
 import { ScreenSharePopup } from './ScreenSharePopup';
 
 export interface CallScreenProps {
-  screenWidth: number;
   endCallHandler(): void;
   callErrorHandler(customErrorPage?: 'callError' | 'teamsMeetingDenied' | 'removed'): void;
   callLocator: GroupLocator | MeetingLocator;

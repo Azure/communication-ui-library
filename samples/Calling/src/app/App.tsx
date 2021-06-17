@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useEffect, useState } from 'react';
-import { Link, initializeIcons, Spinner } from '@fluentui/react';
+import { initializeIcons, Spinner } from '@fluentui/react';
 
 import EndCall from './EndCall';
 import CallError from './CallError';
@@ -12,68 +12,46 @@ import { HomeScreen } from './HomeScreen';
 import { v1 as createGUID } from 'uuid';
 import { CallProvider, CallClientProvider, CallAgentProvider } from 'calling-component-bindings';
 import {
-  createRandomDisplayName,
   fetchTokenResponse,
-  getBuildTime,
-  getDisplayNameFromLocalStorage,
+  buildTime,
+  callingSDKVersion,
   getGroupIdFromUrl,
   isOnIphoneAndNotSafari,
   isSmallScreen
 } from './utils/AppUtils';
-import { localStorageAvailable } from './utils/constants';
 import { createStatefulCallClient, StatefulCallClient } from 'calling-stateful-client';
 import { createAzureCommunicationUserCredential } from 'react-composites';
 import { AudioOptions, Call, CallAgent, GroupLocator } from '@azure/communication-calling';
 import { refreshTokenAsync } from './utils/refreshToken';
+import { UnsupportedBrowserPage } from './UnsupportedBrowserPage';
 
 const isMobileSession = (): boolean =>
   !!window.navigator.userAgent.match(/(iPad|iPhone|iPod|Android|webOS|BlackBerry|Windows Phone)/g);
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const sdkVersion = require('../../package.json').dependencies['@azure/communication-calling'];
-const lastUpdated = `Last Updated ${getBuildTime()} with @azure/communication-calling:${sdkVersion}`;
+console.log(
+  `ACS sample calling app. Last Updated ${buildTime} Using @azure/communication-calling:${callingSDKVersion}`
+);
+
 const creatingCallClientspinnerLabel = 'Initializing call client...';
 const creatingCallAgentSpinnerLabel = 'Initializing call agent...';
 
 initializeIcons();
 
-// Get display name from local storage or generate a new random display name
-const defaultDisplayName = (localStorageAvailable && getDisplayNameFromLocalStorage()) || createRandomDisplayName();
-
-const UnsupportedBrowserPage = (): JSX.Element => {
-  window.document.title = 'Unsupported browser';
-  return (
-    <>
-      <Link href="https://docs.microsoft.com/en-us/azure/communication-services/concepts/voice-video-calling/calling-sdk-features#calling-client-library-browser-support">
-        Learn more
-      </Link>
-      &nbsp;about browsers and platforms supported by the web calling sdk
-    </>
-  );
+const navigateToHomePage = (): void => {
+  window.location.href = window.location.href.split('?')[0];
 };
 
 const App = (): JSX.Element => {
   const [page, setPage] = useState('home');
   const [groupId, setGroupId] = useState('');
-  const [screenWidth, setScreenWidth] = useState(window?.innerWidth ?? 0);
   const [token, setToken] = useState('');
   const [userId, setUserId] = useState('');
   const [teamsMeetingLink, setTeamsMeetingLink] = useState<string>();
-  const [displayName, setDisplayName] = useState(defaultDisplayName);
+  const [displayName, setDisplayName] = useState<string>('');
   const [isMicrophoneOn, setIsMicrophoneOn] = useState(false);
   const [statefulCallClient, setStatefulCallClient] = useState<StatefulCallClient>();
   const [callAgent, setCallAgent] = useState<CallAgent | undefined>(undefined);
   const [call, setCall] = useState<Call | undefined>(undefined);
-
-  useEffect(() => {
-    const setWindowWidth = (): void => {
-      const width = typeof window !== 'undefined' ? window.innerWidth : 0;
-      setScreenWidth(width);
-    };
-    setWindowWidth();
-    window.addEventListener('resize', setWindowWidth);
-    return () => window.removeEventListener('resize', setWindowWidth);
-  }, []);
 
   useEffect(() => {
     (async () => {
@@ -89,14 +67,6 @@ const App = (): JSX.Element => {
     const gid = uriGid ? uriGid : createGUID();
     setGroupId(gid);
     return gid;
-  };
-
-  const navigateToHomePage = (): void => {
-    window.location.href = window.location.href.split('?')[0];
-  };
-
-  const navigateToStartCallPage = (): void => {
-    window.history.pushState({}, document.title, window.location.href + '?groupId=' + getGroupId());
   };
 
   useEffect(() => {
@@ -134,7 +104,6 @@ const App = (): JSX.Element => {
         return (
           <ConfigurationScreen
             displayName={displayName}
-            screenWidth={screenWidth}
             startCallHandler={async (data) => {
               let meetingLink;
               if (data?.callLocator && 'meetingLink' in data?.callLocator) {
@@ -160,7 +129,6 @@ const App = (): JSX.Element => {
 
               setPage('call');
             }}
-            onDisplayNameUpdate={setDisplayName}
             isMicrophoneOn={isMicrophoneOn}
             setIsMicrophoneOn={setIsMicrophoneOn}
           />
@@ -177,7 +145,6 @@ const App = (): JSX.Element => {
                   if (customErrorPage) setPage(customErrorPage);
                   else setPage('callError');
                 }}
-                screenWidth={screenWidth}
                 callLocator={
                   teamsMeetingLink
                     ? {
@@ -202,7 +169,7 @@ const App = (): JSX.Element => {
 
   const getContent = (): JSX.Element => {
     const supportedBrowser = !isOnIphoneAndNotSafari();
-    if (!supportedBrowser) return UnsupportedBrowserPage();
+    if (!supportedBrowser) return <UnsupportedBrowserPage />;
 
     if (!statefulCallClient)
       return <Spinner label={creatingCallClientspinnerLabel} ariaLive="assertive" labelPosition="top" />;
@@ -217,7 +184,15 @@ const App = (): JSX.Element => {
 
     switch (page) {
       case 'home': {
-        return <HomeScreen startCallHandler={navigateToStartCallPage} />;
+        return (
+          <HomeScreen
+            startCallHandler={(callDetails) => {
+              setDisplayName(callDetails.displayName);
+              setTeamsMeetingLink(callDetails.teamsLink);
+              setPage('configuration');
+            }}
+          />
+        );
       }
       case 'endCall': {
         return <EndCall rejoinHandler={() => setPage('createCallClient')} homeHandler={navigateToHomePage} />;
@@ -255,13 +230,5 @@ const App = (): JSX.Element => {
 
   return getContent();
 };
-
-window.setTimeout(() => {
-  try {
-    console.log(`ACS sample calling app: ${lastUpdated}`);
-  } catch (e) {
-    /* continue regardless of error */
-  }
-}, 0);
 
 export default App;

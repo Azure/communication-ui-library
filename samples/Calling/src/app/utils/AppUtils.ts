@@ -65,4 +65,7 @@ export const isOnIphoneAndNotSafari = (): boolean => {
 export const isSmallScreen = (): boolean => window.innerWidth < 700 || window.innerHeight < 400;
 
 declare let __BUILDTIME__: string; // Injected by webpack
-export const getBuildTime = (): string => __BUILDTIME__;
+export const buildTime = __BUILDTIME__;
+
+declare let __CALLINGVERSION__: string; // Injected by webpack
+export const callingSDKVersion = __CALLINGVERSION__;
