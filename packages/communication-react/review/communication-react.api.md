@@ -830,7 +830,7 @@ export interface GridLayoutProps {
 // @public (undocumented)
 export type GridLayoutType = 'standard';
 
-// @public (undocumented)
+// @public
 export interface ILocale {
     // (undocumented)
     locale: string;
@@ -840,7 +840,7 @@ export interface ILocale {
     strings: ILocaleKeys;
 }
 
-// @public (undocumented)
+// @public
 export type ILocaleKeys = Record<string, string>;
 
 // @public (undocumented)
@@ -887,7 +887,7 @@ export interface JumpToNewMessageButtonProps {
 // @public
 export const lightTheme: PartialTheme & CallingTheme;
 
-// @public (undocumented)
+// @public
 export const LocaleContext: React_2.Context<ILocale>;
 
 // @public (undocumented)
@@ -978,10 +978,10 @@ export const locales: {
     };
 };
 
-// @public (undocumented)
+// @public
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export type LocalizationProviderProps = {
     locale: ILocale;
     children: React_2.ReactNode;
