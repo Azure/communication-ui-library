@@ -7,7 +7,7 @@ import React from 'react';
 import { BaseCustomStylesProps, CommunicationParticipant } from '../types';
 import { IStyle, mergeStyles, Stack } from '@fluentui/react';
 import { ILocaleKeys, useLocale } from '../localization/LocalizationProvider';
-import { IObjectMap } from '../localization/localizationUtils';
+import { formatElements } from '../localization/localizationUtils';
 
 export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
   /** Styles for each typing user's displayName. */
@@ -89,32 +89,6 @@ const getIndicatorComponents = (
       })}
     </Stack>
   );
-};
-
-const formatElements = (str: string, vars: IObjectMap<JSX.Element>): JSX.Element[] => {
-  if (!str) {
-    return [];
-  }
-  if (!vars) {
-    return [];
-  }
-
-  const elements: JSX.Element[] = [];
-  const placeholdersRegex = /{(\w+)}/g;
-  const regex = RegExp(placeholdersRegex);
-  let array: RegExpExecArray | null = regex.exec(str);
-  let prev = 0;
-  let elementKey = 1;
-  while (array !== null) {
-    if (prev !== array.index) {
-      elements.push(<span key={elementKey++}>{str.substring(prev, array.index)}</span>);
-    }
-    elements.push(<span key={elementKey++}>{vars[array[0].substring(1, array[0].length - 1)]}</span>);
-    prev = regex.lastIndex;
-    array = regex.exec(str);
-  }
-  elements.push(<span key={elementKey++}>{str.substring(prev)}</span>);
-  return elements;
 };
 
 /**
