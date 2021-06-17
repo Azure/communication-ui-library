@@ -40,93 +40,143 @@ const STATEFUL_OVERRIDES: StatefulCallClientOverrides = {
   }
 };
 
-const DEVICEMANAGER_EXCEPTION_OVERRIDES: DeviceManagerOverrides = {
-  getCameras: () => {
-    throw new Error(GET_CAMERA_ERROR_MESSAGE);
-  },
-  getMicrophones: () => {
-    throw new Error(GET_MICROPHONE_ERROR_MESSAGE);
-  },
-  getSpeakers: () => {
-    throw new Error(GET_SPEAKER_ERROR_MESSAGE);
-  },
-  askDevicePermission: () => {
-    throw new Error(PERMISSION_ERROR_MESSAGE);
-  }
-};
-
-const CALLAGENT_EXCEPTION_OVERRIDES: CallAgentOverrides = {
-  join: () => {
-    throw new Error(JOIN_ERROR_MESSAGE);
-  },
-  startCall: () => {
-    throw new Error(START_ERROR_MESSAGE);
-  },
-  dispose: () => {
-    return Promise.reject(new Error(DISPOSE_ERROR_MESSAGE));
-  }
-};
+async function createMockAdapterWithErrorListener(
+  errorListener: (e: Error) => void,
+  statefulOverrides?: StatefulCallClientOverrides,
+  callAgentOverrides?: CallAgentOverrides,
+  deviceManagerOverrides?: DeviceManagerOverrides
+): Promise<AzureCommunicationCallAdapter> {
+  const statefulCallClient = createMockStatefulCallClient(
+    statefulOverrides,
+    callAgentOverrides,
+    deviceManagerOverrides,
+    undefined
+  );
+  const callAgent = await statefulCallClient.createCallAgent({
+    getToken: (): Promise<any> => {
+      return Promise.resolve('');
+    },
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    dispose: () => {}
+  });
+  const deviceManager = await statefulCallClient.getDeviceManager();
+  const adapter = new AzureCommunicationCallAdapter(
+    statefulCallClient,
+    { groupId: '' },
+    callAgent,
+    deviceManager as StatefulDeviceManager
+  );
+  adapter.on('error', errorListener);
+  return adapter;
+}
 
 describe('AzureCommunicationCallAdapter', () => {
-  test('emits error event when error happens', async () => {
+  test('emits error event when dispose() throws an error', async () => {
     let error: Error | undefined;
     const errorListener = (e: Error): void => {
       error = e;
     };
-
-    const statefulCallClient = createMockStatefulCallClient(
-      STATEFUL_OVERRIDES,
-      CALLAGENT_EXCEPTION_OVERRIDES,
-      DEVICEMANAGER_EXCEPTION_OVERRIDES,
-      undefined
-    );
-    const callAgent = await statefulCallClient.createCallAgent({
-      getToken: (): Promise<any> => {
-        return Promise.resolve('');
-      },
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-      dispose: () => {}
+    const adapter = await createMockAdapterWithErrorListener(errorListener, STATEFUL_OVERRIDES, {
+      dispose: () => {
+        return Promise.reject(new Error(DISPOSE_ERROR_MESSAGE));
+      }
     });
-    const deviceManager = await statefulCallClient.getDeviceManager();
-    const adapter = new AzureCommunicationCallAdapter(
-      statefulCallClient,
-      { groupId: '' },
-      callAgent,
-      deviceManager as StatefulDeviceManager
-    );
-
-    adapter.on('error', errorListener);
 
     await adapter.dispose();
-
     expect(error?.message).toBe(DISPOSE_ERROR_MESSAGE);
     expect(adapter.getState().error?.message).toBe(DISPOSE_ERROR_MESSAGE);
+  });
 
+  test('emits error event when queryCameras() throws an error', async () => {
+    let error: Error | undefined;
+    const errorListener = (e: Error): void => {
+      error = e;
+    };
+    const adapter = await createMockAdapterWithErrorListener(errorListener, STATEFUL_OVERRIDES, undefined, {
+      getCameras: () => {
+        throw new Error(GET_CAMERA_ERROR_MESSAGE);
+      }
+    });
     await adapter.queryCameras();
 
     expect(error?.message).toBe(GET_CAMERA_ERROR_MESSAGE);
     expect(adapter.getState().error?.message).toBe(GET_CAMERA_ERROR_MESSAGE);
+  });
 
+  test('emits error event when queryMicrophones() throws an error', async () => {
+    let error: Error | undefined;
+    const errorListener = (e: Error): void => {
+      error = e;
+    };
+    const adapter = await createMockAdapterWithErrorListener(errorListener, STATEFUL_OVERRIDES, undefined, {
+      getMicrophones: () => {
+        throw new Error(GET_MICROPHONE_ERROR_MESSAGE);
+      }
+    });
     await adapter.queryMicrophones();
 
     expect(error?.message).toBe(GET_MICROPHONE_ERROR_MESSAGE);
     expect(adapter.getState().error?.message).toBe(GET_MICROPHONE_ERROR_MESSAGE);
+  });
 
+  test('emits error event when querySpeakers() throws an error', async () => {
+    let error: Error | undefined;
+    const errorListener = (e: Error): void => {
+      error = e;
+    };
+    const adapter = await createMockAdapterWithErrorListener(errorListener, STATEFUL_OVERRIDES, undefined, {
+      getSpeakers: () => {
+        throw new Error(GET_SPEAKER_ERROR_MESSAGE);
+      }
+    });
     await adapter.querySpeakers();
 
     expect(error?.message).toBe(GET_SPEAKER_ERROR_MESSAGE);
     expect(adapter.getState().error?.message).toBe(GET_SPEAKER_ERROR_MESSAGE);
+  });
 
+  test('emits error event when askDevicePermission() throws an error', async () => {
+    let error: Error | undefined;
+    const errorListener = (e: Error): void => {
+      error = e;
+    };
+    const adapter = await createMockAdapterWithErrorListener(errorListener, STATEFUL_OVERRIDES, undefined, {
+      askDevicePermission: () => {
+        throw new Error(PERMISSION_ERROR_MESSAGE);
+      }
+    });
     await adapter.askDevicePermission({ video: true, audio: true });
 
     expect(error?.message).toBe(PERMISSION_ERROR_MESSAGE);
     expect(adapter.getState().error?.message).toBe(PERMISSION_ERROR_MESSAGE);
+  });
 
+  test('emits error event when joinCall() throws an error', async () => {
+    let error: Error | undefined;
+    const errorListener = (e: Error): void => {
+      error = e;
+    };
+    const adapter = await createMockAdapterWithErrorListener(errorListener, STATEFUL_OVERRIDES, {
+      join: () => {
+        throw new Error(JOIN_ERROR_MESSAGE);
+      }
+    });
     await adapter.joinCall();
 
     expect(error?.message).toBe(JOIN_ERROR_MESSAGE);
     expect(adapter.getState().error?.message).toBe(JOIN_ERROR_MESSAGE);
+  });
 
+  test('emits error event when startCall() throws an error', async () => {
+    let error: Error | undefined;
+    const errorListener = (e: Error): void => {
+      error = e;
+    };
+    const adapter = await createMockAdapterWithErrorListener(errorListener, STATEFUL_OVERRIDES, {
+      startCall: () => {
+        throw new Error(START_ERROR_MESSAGE);
+      }
+    });
     await adapter.startCall([]);
 
     expect(error?.message).toBe(START_ERROR_MESSAGE);

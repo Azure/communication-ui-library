@@ -43,7 +43,6 @@ import { VideoStreamOptions } from 'react-components';
 import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from 'acs-ui-common';
 import { CommunicationUserIdentifier, CommunicationUserKind, getIdentifierKind } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
-import { withErrorHandling } from '../../../utils/ErrorUtils';
 
 // Context of Chat, which is a centralized context for all state updates
 class CallContext {
@@ -156,68 +155,43 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.callClient.onStateChange(onStateChange);
   }
 
-  public dispose = async (): Promise<void> => {
+  public async dispose(): Promise<void> {
     this.callClient.offStateChange(this.onClientStateChange);
 
-    return withErrorHandling(
-      this.context,
-      this.emitter,
-      async () => {
-        await this.callAgent.dispose();
-      },
-      Promise.resolve()
-    );
-  };
+    return this.handleAsyncError(async () => {
+      await this.callAgent.dispose();
+    });
+  }
 
-  public isTeamsCall = (): boolean => {
+  public isTeamsCall(): boolean {
     return 'meetingLink' in this.locator;
-  };
+  }
 
-  public queryCameras = (): Promise<VideoDeviceInfo[]> => {
-    return withErrorHandling(
-      this.context,
-      this.emitter,
-      async () => {
-        return await this.deviceManager.getCameras();
-      },
-      Promise.resolve([] as VideoDeviceInfo[])
-    );
-  };
+  public queryCameras(): Promise<VideoDeviceInfo[]> {
+    return this.handleAsyncError(async () => {
+      return await this.deviceManager.getCameras();
+    }, []);
+  }
 
-  public queryMicrophones = (): Promise<AudioDeviceInfo[]> => {
-    return withErrorHandling(
-      this.context,
-      this.emitter,
-      async () => {
-        return await this.deviceManager.getMicrophones();
-      },
-      Promise.resolve([] as AudioDeviceInfo[])
-    );
-  };
+  public queryMicrophones(): Promise<AudioDeviceInfo[]> {
+    return this.handleAsyncError(async () => {
+      return await this.deviceManager.getMicrophones();
+    }, []);
+  }
 
-  public querySpeakers = async (): Promise<AudioDeviceInfo[]> => {
-    return withErrorHandling(
-      this.context,
-      this.emitter,
-      async () => {
-        return await this.deviceManager.getSpeakers();
-      },
-      Promise.resolve([] as AudioDeviceInfo[])
-    );
-  };
+  public async querySpeakers(): Promise<AudioDeviceInfo[]> {
+    return this.handleAsyncError(async () => {
+      return await this.deviceManager.getSpeakers();
+    }, []);
+  }
 
-  public askDevicePermission = async (constrain: PermissionConstraints): Promise<void> => {
-    return withErrorHandling(
-      this.context,
-      this.emitter,
-      async () => {
-        await this.deviceManager.askDevicePermission(constrain);
-      },
-      Promise.resolve()
-    );
-  };
+  public async askDevicePermission(constrain: PermissionConstraints): Promise<void> {
+    return this.handleAsyncError(async () => {
+      await this.deviceManager.askDevicePermission(constrain);
+    });
+  }
 
-  public joinCall = async (microphoneOn?: boolean): Promise<void> => {
+  public async joinCall(microphoneOn?: boolean): Promise<void> {
     if (isInCall(this.getState().call?.state ?? 'None')) {
       const e = new Error('Error joining call - user is already in the call');
       this.context.setError(e);
@@ -230,26 +204,21 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
       const isTeamsMeeting = 'groupId' in this.locator;
 
-      const isJoinedCall = await withErrorHandling(
-        this.context,
-        this.emitter,
-        async () => {
-          if (isTeamsMeeting) {
-            this.call = this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
-              audioOptions,
-              videoOptions
-            });
-          } else {
-            this.call = this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
-              audioOptions,
-              videoOptions
-            });
-          }
+      const isJoinedCall = await this.handleAsyncError(async () => {
+        if (isTeamsMeeting) {
+          this.call = this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
+            audioOptions,
+            videoOptions
+          });
+        } else {
+          this.call = this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
+            audioOptions,
+            videoOptions
+          });
+        }
 
-          return Promise.resolve(true);
-        },
-        Promise.resolve(false)
-      );
+        return true;
+      }, false);
 
       if (!isJoinedCall) {
         return;
@@ -261,52 +230,37 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       this.handlers = createDefaultCallingHandlers(this.callClient, this.callAgent, this.deviceManager, this.call);
       this.subscribeCallEvents();
     }
-  };
+  }
 
-  public createStreamView = async (remoteUserId?: string, options?: VideoStreamOptions): Promise<void> => {
-    return withErrorHandling(
-      this.context,
-      this.emitter,
-      async () => {
-        if (remoteUserId === undefined) {
-          await this.handlers.onCreateLocalStreamView(options);
-        } else {
-          await this.handlers.onCreateRemoteStreamView(remoteUserId, options);
-        }
-      },
-      Promise.resolve()
-    );
-  };
+  public async createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void> {
+    return this.handleAsyncError(async () => {
+      if (remoteUserId === undefined) {
+        await this.handlers.onCreateLocalStreamView(options);
+      } else {
+        await this.handlers.onCreateRemoteStreamView(remoteUserId, options);
+      }
+    });
+  }
 
-  public disposeStreamView = async (remoteUserId?: string): Promise<void> => {
-    return withErrorHandling(
-      this.context,
-      this.emitter,
-      async () => {
-        if (remoteUserId === undefined) {
-          await this.handlers.onDisposeLocalStreamView();
-        } else {
-          await this.handlers.onDisposeRemoteStreamView(remoteUserId);
-        }
-      },
-      Promise.resolve()
-    );
-  };
+  public async disposeStreamView(remoteUserId?: string): Promise<void> {
+    return this.handleAsyncError(async () => {
+      if (remoteUserId === undefined) {
+        await this.handlers.onDisposeLocalStreamView();
+      } else {
+        await this.handlers.onDisposeRemoteStreamView(remoteUserId);
+      }
+    });
+  }
 
-  public leaveCall = async (): Promise<void> => {
+  public async leaveCall(): Promise<void> {
     const callId = this.call?.id;
     this.stopCamera();
     this.mute();
 
-    const isHangUpSuccessful = await withErrorHandling(
-      this.context,
-      this.emitter,
-      async () => {
-        await this.handlers.onHangUp();
-        return true;
-      },
-      Promise.resolve(false)
-    );
+    const isHangUpSuccessful = await this.handleAsyncError(async () => {
+      await this.handlers.onHangUp();
+      return true;
+    }, false);
 
     if (!isHangUpSuccessful) {
       return;
@@ -319,76 +273,46 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // Resync state after callId is set
     this.context.updateClientState(this.callClient.getState());
     this.emitter.emit('callEnded', { callId });
-  };
+  }
 
-  public setCamera = async (device: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void> => {
-    return withErrorHandling(
-      this.context,
-      this.emitter,
-      async () => {
-        await this.handlers.onSelectCamera(device, options);
-      },
-      Promise.resolve()
-    );
-  };
+  public async setCamera(device: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void> {
+    return this.handleAsyncError(async () => {
+      await this.handlers.onSelectCamera(device, options);
+    });
+  }
 
-  public setMicrophone = async (device: AudioDeviceInfo): Promise<void> => {
-    return withErrorHandling(
-      this.context,
-      this.emitter,
-      async () => {
-        await this.handlers.onSelectMicrophone(device);
-      },
-      Promise.resolve()
-    );
-  };
+  public async setMicrophone(device: AudioDeviceInfo): Promise<void> {
+    return this.handleAsyncError(async () => {
+      await this.handlers.onSelectMicrophone(device);
+    });
+  }
 
-  public setSpeaker = async (device: AudioDeviceInfo): Promise<void> => {
-    return withErrorHandling(
-      this.context,
-      this.emitter,
-      async () => {
-        await this.handlers.onSelectSpeaker(device);
-      },
-      Promise.resolve()
-    );
-  };
+  public async setSpeaker(device: AudioDeviceInfo): Promise<void> {
+    return this.handleAsyncError(async () => {
+      await this.handlers.onSelectSpeaker(device);
+    });
+  }
 
-  public onToggleCamera = async (options?: VideoStreamOptions): Promise<void> => {
-    return withErrorHandling(
-      this.context,
-      this.emitter,
-      async () => {
-        await this.handlers.onToggleCamera(options);
-      },
-      Promise.resolve()
-    );
-  };
+  public async onToggleCamera(options?: VideoStreamOptions): Promise<void> {
+    return this.handleAsyncError(async () => {
+      await this.handlers.onToggleCamera(options);
+    });
+  }
 
   //TODO: seperate onToggleCamera logic in Handler
-  public startCamera = async (): Promise<void> => {
-    return withErrorHandling(
-      this.context,
-      this.emitter,
-      async () => {
-        if (!this.isCameraOn()) await this.handlers.onToggleCamera();
-      },
-      Promise.resolve()
-    );
-  };
+  public async startCamera(): Promise<void> {
+    return this.handleAsyncError(async () => {
+      if (!this.isCameraOn()) await this.handlers.onToggleCamera();
+    });
+  }
 
-  public stopCamera = async (): Promise<void> => {
-    return withErrorHandling(
-      this.context,
-      this.emitter,
-      async () => {
-        if (this.isCameraOn()) await this.handlers.onToggleCamera();
-      },
-      Promise.resolve()
-    );
-  };
+  public async stopCamera(): Promise<void> {
+    return this.handleAsyncError(async () => {
+      if (this.isCameraOn()) await this.handlers.onToggleCamera();
+    });
+  }
 
-  private isCameraOn = (): boolean => {
+  private isCameraOn(): boolean {
     if (this.call) {
       const stream = this.call.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
       return !!stream;
@@ -399,62 +323,42 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       }
     }
     return false;
-  };
+  }
 
-  public mute = async (): Promise<void> => {
+  public async mute(): Promise<void> {
     if (!this.call) {
       this.context.setIsLocalMicrophoneEnabled(false);
     }
 
-    return withErrorHandling(
-      this.context,
-      this.emitter,
-      async () => {
-        await this.call?.mute();
-      },
-      Promise.resolve()
-    );
-  };
+    return this.handleAsyncError(async () => {
+      await this.call?.mute();
+    });
+  }
 
-  public unmute = async (): Promise<void> => {
+  public async unmute(): Promise<void> {
     if (!this.call) {
       this.context.setIsLocalMicrophoneEnabled(true);
     }
 
-    return withErrorHandling(
-      this.context,
-      this.emitter,
-      async () => {
-        await this.call?.unmute();
-      },
-      Promise.resolve()
-    );
-  };
+    return this.handleAsyncError(async () => {
+      await this.call?.unmute();
+    });
+  }
 
-  public startScreenShare = async (): Promise<void> => {
-    return withErrorHandling(
-      this.context,
-      this.emitter,
-      async () => {
-        if (!this.call?.isScreenSharingOn) await this.handlers.onToggleScreenShare();
-      },
-      Promise.resolve()
-    );
-  };
+  public async startScreenShare(): Promise<void> {
+    return this.handleAsyncError(async () => {
+      if (!this.call?.isScreenSharingOn) await this.handlers.onToggleScreenShare();
+    });
+  }
 
-  public stopScreenShare = async (): Promise<void> => {
-    return withErrorHandling(
-      this.context,
-      this.emitter,
-      async () => {
-        if (this.call?.isScreenSharingOn) await this.handlers.onToggleScreenShare();
-      },
-      Promise.resolve()
-    );
-  };
+  public async stopScreenShare(): Promise<void> {
+    return this.handleAsyncError(async () => {
+      if (this.call?.isScreenSharingOn) await this.handlers.onToggleScreenShare();
+    });
+  }
 
   //TODO: a better way to expose option parameter
-  public startCall = (participants: string[]): Call | undefined => {
+  public startCall(participants: string[]): Call | undefined {
     const idsToAdd = participants.map((participant) => {
       // FIXME: `onStartCall` does not allow a Teams user.
       // Need some way to return an error if a Teams user is provided.
@@ -469,30 +373,25 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       this.emitter.emit('error', e);
       return undefined;
     }
-  };
+  }
 
-  public removeParticipant = async (userId: string): Promise<void> => {
-    return withErrorHandling(
-      this.context,
-      this.emitter,
-      async () => {
-        await this.handlers.onParticipantRemove(userId);
-      },
-      Promise.resolve()
-    );
-  };
+  public async removeParticipant(userId: string): Promise<void> {
+    return this.handleAsyncError(async () => {
+      await this.handlers.onParticipantRemove(userId);
+    });
+  }
 
-  public getState = (): CallAdapterState => {
+  public getState(): CallAdapterState {
     return this.context.getState();
-  };
+  }
 
-  public onStateChange = (handler: (state: CallAdapterState) => void): void => {
+  public onStateChange(handler: (state: CallAdapterState) => void): void {
     this.context.onStateChange(handler);
-  };
+  }
 
-  public offStateChange = (handler: (state: CallAdapterState) => void): void => {
+  public offStateChange(handler: (state: CallAdapterState) => void): void {
     this.context.offStateChange(handler);
-  };
+  }
 
   on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
   on(event: 'participantsLeft', listener: ParticipantLeftListener): void;
@@ -508,14 +407,14 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.emitter.on(event, listener);
   }
 
-  private subscribeCallEvents = (): void => {
+  private subscribeCallEvents(): void {
     this.call?.on('remoteParticipantsUpdated', this.onRemoteParticipantsUpdated);
     this.call?.on('isMutedChanged', this.isMyMutedChanged);
     this.call?.on('isScreenSharingOnChanged', this.isScreenSharingOnChanged);
     this.call?.on('idChanged', this.callIdChanged);
-  };
+  }
 
-  private unsubscribeCallEvents = (): void => {
+  private unsubscribeCallEvents(): void {
     for (const subscriber of this.participantSubscribers.values()) {
       subscriber.unsubscribeAll();
     }
@@ -524,26 +423,26 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.call?.off('isMutedChanged', this.isMyMutedChanged);
     this.call?.off('isScreenSharingOnChanged', this.isScreenSharingOnChanged);
     this.call?.off('idChanged', this.callIdChanged);
-  };
+  }
 
-  private isMyMutedChanged = (): void => {
+  private isMyMutedChanged(): void {
     this.emitter.emit('isMutedChanged', {
       participantId: this.getState().userId,
       isMuted: this.call?.isMuted
     });
-  };
+  }
 
-  public setPage = (page: CallCompositePage): void => {
+  public setPage(page: CallCompositePage): void {
     this.context.setPage(page);
-  };
+  }
 
-  private onRemoteParticipantsUpdated = ({
+  private onRemoteParticipantsUpdated({
     added,
     removed
   }: {
     added: RemoteParticipant[];
     removed: RemoteParticipant[];
-  }): void => {
+  }): void {
     if (added && added.length > 0) {
       this.emitter.emit('participantsJoined', added);
     }
@@ -563,18 +462,18 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       subscriber && subscriber.unsubscribeAll();
       this.participantSubscribers.delete(toFlatCommunicationIdentifier(participant.identifier));
     });
-  };
+  }
 
-  private isScreenSharingOnChanged = (): void => {
+  private isScreenSharingOnChanged(): void {
     this.emitter.emit('isLocalScreenSharingActiveChanged', { isScreenSharingOn: this.call?.isScreenSharingOn });
-  };
+  }
 
-  private callIdChanged = (): void => {
+  private callIdChanged(): void {
     this.context.setCallId(this.call?.id);
     // Resync state after callId is set
     this.context.updateClientState(this.callClient.getState());
     this.emitter.emit('callIdChanged', { callId: this.callIdChanged });
-  };
+  }
 
   off(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
   off(event: 'participantsLeft', listener: ParticipantLeftListener): void;
@@ -588,6 +487,25 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   public off(event: CallEvent, listener: (e: any) => void): void {
     this.emitter.off(event, listener);
+  }
+
+  /**
+   * Wraps a function with try catch and caught errors are added to context and an 'error' event is emitted.
+   * DefaultReturnIfError is the value to return if an error is caught. You can omit this field if your function returns
+   * void.
+   *
+   * @param functionToWrap - function that might throw error
+   * @param defaultReturnIfError - value to return if error was caught
+   * @returns
+   */
+  private async handleAsyncError<T>(functionToWrap: () => Promise<T>, defaultReturnIfError?: T): Promise<T> {
+    try {
+      return await functionToWrap();
+    } catch (e) {
+      this.context.setError(e);
+      this.emitter.emit('error', e);
+      return Promise.resolve(defaultReturnIfError as T);
+    }
   }
 }
 

@@ -26,7 +26,6 @@ import {
   ParticipantsRemovedListener,
   TopicChangedListener
 } from './ChatAdapter';
-import { withErrorHandling } from '../../../utils/ErrorUtils';
 
 // Context of Chat, which is a centralized context for all state updates
 class ChatContext {
@@ -104,32 +103,22 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   dispose(): void {
-    withErrorHandling(
-      this.context,
-      this.emitter,
-      () => {
-        this.unsubscribeAllEvents();
-        return Promise.resolve();
-      },
-      Promise.resolve()
-    );
+    this.handleAsyncError(() => {
+      this.unsubscribeAllEvents();
+      return Promise.resolve();
+    });
   }
 
   fetchInitialData = (): Promise<void> => {
-    return withErrorHandling(
-      this.context,
-      this.emitter,
-      async () => {
-        await this.chatThreadClient.getProperties();
+    return this.handleAsyncError(async () => {
+      await this.chatThreadClient.getProperties();
 
-        // Fetch all participants who joined before the local user.
-        for await (const _page of this.chatThreadClient.listParticipants().byPage({
-          // Fetch 100 participants per page by default.
-          maxPageSize: 100
-        }));
-      },
-      Promise.resolve()
-    );
+      // Fetch all participants who joined before the local user.
+      for await (const _page of this.chatThreadClient.listParticipants().byPage({
+        // Fetch 100 participants per page by default.
+        maxPageSize: 100
+      }));
+    });
   };
 
   public getState = (): ChatState => {
@@ -145,69 +134,39 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   };
 
   sendMessage = async (content: string): Promise<void> => {
-    return withErrorHandling(
-      this.context,
-      this.emitter,
-      async () => {
-        await this.handlers.onSendMessage(content);
-      },
-      Promise.resolve()
-    );
+    return this.handleAsyncError(async () => {
+      await this.handlers.onSendMessage(content);
+    });
   };
 
   sendReadReceipt = async (chatMessageId: string): Promise<void> => {
-    return withErrorHandling(
-      this.context,
-      this.emitter,
-      async () => {
-        await this.handlers.onMessageSeen(chatMessageId);
-      },
-      Promise.resolve()
-    );
+    return this.handleAsyncError(async () => {
+      await this.handlers.onMessageSeen(chatMessageId);
+    });
   };
 
   sendTypingIndicator = async (): Promise<void> => {
-    return withErrorHandling(
-      this.context,
-      this.emitter,
-      async () => {
-        await this.handlers.onTyping();
-      },
-      Promise.resolve()
-    );
+    return this.handleAsyncError(async () => {
+      await this.handlers.onTyping();
+    });
   };
 
   removeParticipant = async (userId: string): Promise<void> => {
-    return withErrorHandling(
-      this.context,
-      this.emitter,
-      async () => {
-        await this.handlers.onParticipantRemove(userId);
-      },
-      Promise.resolve()
-    );
+    return this.handleAsyncError(async () => {
+      await this.handlers.onParticipantRemove(userId);
+    });
   };
 
   setTopic = async (topicName: string): Promise<void> => {
-    return withErrorHandling(
-      this.context,
-      this.emitter,
-      async () => {
-        await this.handlers.updateThreadTopicName(topicName);
-      },
-      Promise.resolve()
-    );
+    return this.handleAsyncError(async () => {
+      await this.handlers.updateThreadTopicName(topicName);
+    });
   };
 
   loadPreviousChatMessages = async (messagesToLoad: number): Promise<boolean> => {
-    return withErrorHandling(
-      this.context,
-      this.emitter,
-      async () => {
-        return await this.handlers.onLoadPreviousChatMessages(messagesToLoad);
-      },
-      Promise.resolve(false)
-    );
+    return this.handleAsyncError(async () => {
+      return await this.handlers.onLoadPreviousChatMessages(messagesToLoad);
+    });
   };
 
   messageReceivedListener = (event: ChatMessageReceivedEvent): void => {
@@ -277,6 +236,25 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   off(event: 'error', listener: (e: Error) => void): void;
   off(event: ChatEvent, listener: (e: any) => void): void {
     this.emitter.off(event, listener);
+  }
+
+  /**
+   * Wraps a function with try catch and caught errors are added to context and an 'error' event is emitted.
+   * DefaultReturnIfError is the value to return if an error is caught. You can omit this field if your function returns
+   * void.
+   *
+   * @param functionToWrap - function that might throw error
+   * @param defaultReturnIfError - value to return if error was caught
+   * @returns
+   */
+  private async handleAsyncError<T>(functionToWrap: () => Promise<T>, defaultReturnIfError?: T): Promise<T> {
+    try {
+      return await functionToWrap();
+    } catch (e) {
+      this.context.setError(e);
+      this.emitter.emit('error', e);
+      return Promise.resolve(defaultReturnIfError as T);
+    }
   }
 }
 
