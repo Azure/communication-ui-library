@@ -7,7 +7,7 @@ on:
       - packages/storybook/**
       - packages/react-components/**
       - packages/react-composites/**
-  workflow_dispatch:
+      - packages/communication-react/**
 
 jobs:
   chromatic_deployment:
@@ -26,9 +26,6 @@ jobs:
 
       - name: Install Dependencies
         run: rush install
-
-      - name: Build Storybook dependencies
-        run: rush build -T storybook
 
       - name: Publish Chromatic
         id: publish_chromatic
