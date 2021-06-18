@@ -11,6 +11,7 @@ dependencies:
   '@rush-temp/communication-react': file:projects/communication-react.tgz
   '@rush-temp/react-components': file:projects/react-components.tgz
   '@rush-temp/react-composites': file:projects/react-composites.tgz
+  '@rush-temp/sample-static-html-composites': file:projects/sample-static-html-composites.tgz
   '@rush-temp/server': file:projects/server.tgz
   '@rush-temp/storybook': file:projects/storybook.tgz
 lockfileVersion: 5.2
@@ -7629,6 +7630,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==
+  /basic-auth/1.1.0:
+    dev: false
+    engines:
+      node: '>= 0.6'
+    resolution:
+      integrity: sha1-RSIe5Cn37h5QNb4/UVM/HN/SmIQ=
   /basic-auth/2.0.1:
     dependencies:
       safe-buffer: 5.1.2
@@ -8216,6 +8223,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==
+  /charset/1.0.1:
+    dev: false
+    engines:
+      node: '>=4.0.0'
+    resolution:
+      integrity: sha512-6dVyOOYjpfFcL1Y4qChrAoQLRHvj2ziyhcm0QJlhOcAhykL/k1kTUPbeo+87MNRTRdk2OIIsIXbuF3x2wi5EXg==
   /chokidar/2.1.8:
     dependencies:
       anymatch: 2.0.0
@@ -8467,7 +8480,6 @@ packages:
     dev: false
     engines:
       node: '>=0.1.90'
-    optional: true
     resolution:
       integrity: sha512-a+UqTh4kgZg/SlGvfbzDHpgRu7AAQOmmqRHJnxhRZICKFUT91brVhNNt58CMWU9PsBbv3PDCZUHbVxuDiH2mtA==
   /combined-stream/1.0.8:
@@ -8748,6 +8760,12 @@ packages:
       node: '>= 0.10'
     resolution:
       integrity: sha512-KIHbLJqu73RGr/hnbrO9uBeixNGuvSQjul/jdFvS/KFSIH1hWVd1ng7zOHx+YrEfInLG7q4n6GHQ9cDtxv/P6g==
+  /corser/2.0.1:
+    dev: false
+    engines:
+      node: '>= 0.4.0'
+    resolution:
+      integrity: sha1-jtolLsqrWEDc2XXOuQ2TcMgZ/4c=
   /cosmiconfig/5.2.1:
     dependencies:
       import-fresh: 2.0.0
@@ -9593,6 +9611,28 @@ packages:
     dev: false
     resolution:
       integrity: sha1-OoOpBOVDUyh4dMVkt1SThoSamMk=
+  /ecstatic/3.3.2:
+    dependencies:
+      he: 1.2.0
+      mime: 1.6.0
+      minimist: 1.2.5
+      url-join: 2.0.5
+    dev: false
+    hasBin: true
+    resolution:
+      integrity: sha512-fLf9l1hnwrHI2xn9mEDT7KIi22UDqA2jaCwyCbSUJh9a1V+LEUSL/JO/6TIz/QyuBURWUHrFL5Kg2TtO1bkkog==
+  /ecstatic/4.1.4:
+    dependencies:
+      charset: 1.0.1
+      he: 1.2.0
+      mime: 2.5.2
+      minimist: 1.2.5
+      on-finished: 2.3.0
+      url-join: 4.0.1
+    dev: false
+    hasBin: true
+    resolution:
+      integrity: sha512-8E4ZLK4uRuB9pwywGpy/B9vcz4gCp6IY7u4cMbeCINr/fjb1v+0wf0Ae2XlfSnG8xZYnE4uaJBjFkYI0bqcIdw==
   /ee-first/1.1.1:
     dev: false
     resolution:
@@ -10976,6 +11016,17 @@ packages:
     dev: false
     resolution:
       integrity: sha512-3Z4XhFZ3992uIq0XOqb9AreonueSYphE6oYbpt5+3u06JWklbsPkNv3ZKkP9Bz/r+1MWCaMoSQ28P85+1Yc77w==
+  /follow-redirects/1.14.1:
+    dev: false
+    engines:
+      node: '>=4.0'
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
+    resolution:
+      integrity: sha512-HWqDgT7ZEkqRzBvc2s64vSZ/hfOceEol3ac/7tKwzuvEyWx3/4UegXh5oBOIotkGsObyk3xznnSRVADBgWSQVg==
   /follow-redirects/1.14.1_debug@4.3.1:
     dependencies:
       debug: 4.3.1_supports-color@6.1.0
@@ -12007,6 +12058,16 @@ packages:
       debug: '*'
     resolution:
       integrity: sha512-yHYTgWMQO8VvwNS22eLLloAkvungsKdKTLO8AJlftYIKNfJr3GK3zK0ZCfzDDGUBttdGc8xFy1mCitvNKQtC3Q==
+  /http-proxy/1.18.1:
+    dependencies:
+      eventemitter3: 4.0.7
+      follow-redirects: 1.14.1
+      requires-port: 1.0.0
+    dev: false
+    engines:
+      node: '>=8.0.0'
+    resolution:
+      integrity: sha512-7mz/721AbnJwIVbnaSv1Cz3Am0ZLT/UBwkC92VlxhXv/k/BBQfM2fXElQNC27BVGr0uwUpplYPQM9LnaBMR5NQ==
   /http-proxy/1.18.1_debug@4.3.1:
     dependencies:
       eventemitter3: 4.0.7
@@ -12019,6 +12080,24 @@ packages:
       debug: '*'
     resolution:
       integrity: sha512-7mz/721AbnJwIVbnaSv1Cz3Am0ZLT/UBwkC92VlxhXv/k/BBQfM2fXElQNC27BVGr0uwUpplYPQM9LnaBMR5NQ==
+  /http-server/0.12.3:
+    dependencies:
+      basic-auth: 1.1.0
+      colors: 1.4.0
+      corser: 2.0.1
+      ecstatic: 3.3.2
+      http-proxy: 1.18.1
+      minimist: 1.2.5
+      opener: 1.5.2
+      portfinder: 1.0.28
+      secure-compare: 3.0.1
+      union: 0.5.0
+    dev: false
+    engines:
+      node: '>=6'
+    hasBin: true
+    resolution:
+      integrity: sha512-be0dKG6pni92bRjq0kvExtj/NrrAd28/8fCXkaI/4piTwQMSDSLMhWyW0NI1V+DBI3aa1HMlQu46/HjVLfmugA==
   /http-signature/1.2.0:
     dependencies:
       assert-plus: 1.0.0
@@ -15376,6 +15455,11 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-8AV/sCtuzUeTo8gQK5qDZzARrulB3egtLzFgteqB2tcT4Mw7B8Kt7JcDHmltjz6FOAHsvTevk70gZEbhM4ZS9Q==
+  /opener/1.5.2:
+    dev: false
+    hasBin: true
+    resolution:
+      integrity: sha512-ur5UIdyw5Y7yEj9wLzhqXiy6GZ3Mwx0yGI+5sMn2r0N0v3cKJvUmFH5yPP+WXh9e0xfyzyJX95D8l088DNFj7A==
   /opn/5.5.0:
     dependencies:
       is-wsl: 1.1.0
@@ -17672,6 +17756,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-jrBtualyMzOCTT9VMGQRSYR85dE=
+  /secure-compare/3.0.1:
+    dev: false
+    resolution:
+      integrity: sha1-8aAymzCLIh+uN7mXTz1XjQypmeM=
   /select-hose/2.0.0:
     dev: false
     resolution:
@@ -19434,6 +19522,14 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha512-tJfXmxMeWYnczCVs7XAEvIV7ieppALdyepWMkHkwciRpZraG/xwT+s2JN8+pr1+8jCRf80FFzvr+MpQeeoF4Xg==
+  /union/0.5.0:
+    dependencies:
+      qs: 6.10.1
+    dev: false
+    engines:
+      node: '>= 0.8.0'
+    resolution:
+      integrity: sha512-N6uOhuW6zO95P3Mel2I2zMsbsanvvtgn6jVqJv4vbVcz/JN0OkL9suomjQGmWtxJQXOCqUJvquc1sMeNz/IwlA==
   /unique-filename/1.1.1:
     dependencies:
       unique-slug: 2.0.2
@@ -19553,6 +19649,14 @@ packages:
     dev: false
     resolution:
       integrity: sha1-2pN/emLiH+wf0Y1Js1wpNQZ6bHI=
+  /url-join/2.0.5:
+    dev: false
+    resolution:
+      integrity: sha1-WvIvGMBSoACkjXuCxenC4v7tpyg=
+  /url-join/4.0.1:
+    dev: false
+    resolution:
+      integrity: sha512-jk1+QP6ZJqyOiuEI9AEWQfju/nB2Pw466kbA0LEZljHwKeMgd9WrAEgEGxjPDD2+TNbbb37rTyhEfrCXfuKXnA==
   /url-loader/4.1.1_file-loader@6.2.0+webpack@4.46.0:
     dependencies:
       file-loader: 6.2.0_webpack@4.46.0
@@ -20746,7 +20850,7 @@ packages:
     dev: false
     name: '@rush-temp/calling'
     resolution:
-      integrity: sha512-lNBf8jWJ8f94W01vHkwc6IWJtwwtQETfYwe+93CfyV8Q0RUpa5nDgfTeHnBVEiXlZ0VV2Y9A0QGpUM8/BR22yg==
+      integrity: sha512-Bf09rdLQKzO86tyE8xmBAio+2QStU8bnrvAvmb7EXIHZjUHSVC90VpnP6YArLKiD5r1UynJbuXIem0FJSuh16g==
       tarball: file:projects/calling.tgz
     version: 0.0.0
   file:projects/chat-component-bindings.tgz:
@@ -20866,7 +20970,7 @@ packages:
     dev: false
     name: '@rush-temp/chat'
     resolution:
-      integrity: sha512-j1GiSCoIZTBMXoBs5J5cgouHC6wViSPgd1sQ2UpteKPlpxk90GFioLIIrnRr/tS9HSFNn4io/VX3XomBpJnPFA==
+      integrity: sha512-fjIaS4a/a5OAUdcobc3mWrFSy5kgCsvNcPHyjh/ru+7nzFoBhO5PE6aAP+MKTfpet/b4D90ZXFrLEhWtFVR2fw==
       tarball: file:projects/chat.tgz
     version: 0.0.0
   file:projects/communication-react.tgz:
@@ -21084,6 +21188,21 @@ packages:
       integrity: sha512-rPGVH30Okh+XW3VNJCz59YcxAON5xBnh/4Yqr1ZURVSPefxmQdRRqqK7h5T7L2mLARMOR1Ir7lAjPEUN3SLqvw==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
+  file:projects/sample-static-html-composites.tgz:
+    dependencies:
+      concurrently: 5.3.0
+      ecstatic: 4.1.4
+      http-server: 0.12.3
+      react: 16.14.0
+      react-dom: 16.13.1_react@16.14.0
+      webpack: 5.38.1_webpack-cli@4.7.2
+      webpack-cli: 4.7.2_webpack@5.38.1
+    dev: false
+    name: '@rush-temp/sample-static-html-composites'
+    resolution:
+      integrity: sha512-a4+EraCQlDVosozZR3B9lTi8bTvw/Ws+JFLMeUFiL8sLD1j8xkHp+ktZVQJCpgYNuljKqGFSh+CNHv8Z68KNNg==
+      tarball: file:projects/sample-static-html-composites.tgz
+    version: 0.0.0
   file:projects/server.tgz:
     dependencies:
       '@azure/communication-chat': 1.0.0
@@ -21243,5 +21362,6 @@ specifiers:
   '@rush-temp/communication-react': file:./projects/communication-react.tgz
   '@rush-temp/react-components': file:./projects/react-components.tgz
   '@rush-temp/react-composites': file:./projects/react-composites.tgz
+  '@rush-temp/sample-static-html-composites': file:./projects/sample-static-html-composites.tgz
   '@rush-temp/server': file:./projects/server.tgz
   '@rush-temp/storybook': file:./projects/storybook.tgz
