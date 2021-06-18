@@ -1,0 +1,25 @@
+{
+  "name": "sample-static-html-composites",
+  "version": "1.0.0",
+  "description": "Basic bundle for communication react composites and usage on a static HTML page.",
+  "private": true,
+  "scripts": {
+    "build": "webpack",
+    "start": "concurrently \"cd ../Server && rushx start:dev\" \"rushx start:app\"",
+    "start:app": "http-server -p 3000",
+    "lint": "echo skip",
+    "lint:fix": "echo skip"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@azure/communication-react": "~1.0.0-beta.1",
+    "react": "~16.14.0",
+    "react-dom": "16.13.1"
+  },
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "http-server": "^0.12.3",
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.2"
+  }
+}
