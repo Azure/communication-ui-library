@@ -2,27 +2,36 @@
 // Licensed under the MIT license.
 
 import React, { createContext, useContext } from 'react';
+import { CameraButtonStrings } from '../components/CameraButton';
+import { EndCallButtonStrings } from '../components/EndCallButton';
+import { MessageThreadStrings } from '../components/MessageThread';
+import { MicrophoneButtonStrings } from '../components/MicrophoneButton';
+import { ParticipantItemStrings } from '../components/ParticipantItem';
+import { TypingIndicatorStrings } from '../components/TypingIndicator';
 import en_US from './translated/en-US.json';
-
-/**
- * Locale keys to apply to component strings
- */
-export type ILocaleKeys = Record<string, string>;
 
 /**
  * Locale information to change strings in components
  */
 export interface ILocale {
-  /** Set of strings for components */
-  localeStrings: ILocaleKeys;
+  /** Strings for MessageThread */
+  messageThreadStrings: MessageThreadStrings;
+  /** Strings for ParticipantItem */
+  participantItemStrings: ParticipantItemStrings;
+  /** Strings for CameraButton */
+  cameraButtonStrings: CameraButtonStrings;
+  /** Strings for MicrophoneButton */
+  microphoneButtonStrings: MicrophoneButtonStrings;
+  /** Strings for EndCallButton */
+  endCallButtonStrings: EndCallButtonStrings;
+  /** Strings for TypingIndicator */
+  typingIndicatorStrings: TypingIndicatorStrings;
 }
 
 /**
  * Context for providing localized strings to components
  */
-export const LocaleContext = createContext<ILocale>({
-  localeStrings: en_US
-});
+export const LocaleContext = createContext<ILocale>(en_US);
 
 /**
  * Props to LocalizationProvider

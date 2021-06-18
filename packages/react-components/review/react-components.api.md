@@ -48,10 +48,15 @@ export const CameraButton: (props: CameraButtonProps) => JSX.Element;
 // @public
 export interface CameraButtonProps extends IButtonProps {
     localVideoViewOption?: VideoStreamOptions;
-    offText?: string;
-    onText?: string;
     onToggleCamera?: (options?: VideoStreamOptions) => Promise<void>;
     showLabel?: boolean;
+    strings?: CameraButtonStrings;
+}
+
+// @public
+export interface CameraButtonStrings {
+    offText: string;
+    onText: string;
 }
 
 // @public (undocumented)
@@ -112,6 +117,11 @@ export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
 export interface EndCallButtonProps extends IButtonProps {
     onHangUp?: () => Promise<void>;
     showLabel?: boolean;
+    strings?: EndCallButtonStrings;
+}
+
+// @public (undocumented)
+export interface EndCallButtonStrings {
     text?: string;
 }
 
@@ -141,11 +151,13 @@ export type GridLayoutType = 'standard';
 
 // @public
 export interface ILocale {
-    localeStrings: ILocaleKeys;
+    cameraButtonStrings: CameraButtonStrings;
+    endCallButtonStrings: EndCallButtonStrings;
+    messageThreadStrings: MessageThreadStrings;
+    microphoneButtonStrings: MicrophoneButtonStrings;
+    participantItemStrings: ParticipantItemStrings;
+    typingIndicatorStrings: TypingIndicatorStrings;
 }
-
-// @public
-export type ILocaleKeys = Record<string, string>;
 
 // @public (undocumented)
 export interface JumpToNewMessageButtonProps {
@@ -190,9 +202,9 @@ export type MessageContentType = 'text' | 'html' | 'richtext/html' | 'unknown';
 // @public
 export type MessageProps = {
     message: ChatMessage | SystemMessage | CustomMessage;
-    dateStrings: MessageThreadStrings;
     messageContainerStyle?: ComponentSlotStyle;
     showDate?: boolean;
+    strings?: MessageThreadStrings;
 };
 
 // @public
@@ -260,10 +272,15 @@ export const MicrophoneButton: (props: MicrophoneButtonProps) => JSX.Element;
 
 // @public
 export interface MicrophoneButtonProps extends IButtonProps {
-    offText?: string;
-    onText?: string;
     onToggleMicrophone?: () => Promise<void>;
     showLabel?: boolean;
+    strings?: MicrophoneButtonStrings;
+}
+
+// @public
+export interface MicrophoneButtonStrings {
+    offText: string;
+    onText: string;
 }
 
 // @public
@@ -295,14 +312,19 @@ export const ParticipantItem: (props: ParticipantItemProps) => JSX.Element;
 // @public
 export interface ParticipantItemProps {
     displayName: string;
-    isMeText?: string;
     me?: boolean;
     menuItems?: IContextualMenuItem[];
-    menuTitle?: string;
     onRenderAvatar?: (props?: ParticipantItemProps) => JSX.Element | null;
     onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
     presence?: PersonaPresence;
+    strings?: ParticipantItemStrings;
     styles?: ParticipantItemStylesProps;
+}
+
+// @public
+export interface ParticipantItemStrings {
+    isMeText: string;
+    menuTitle: string;
 }
 
 // @public (undocumented)
@@ -408,8 +430,17 @@ export const TypingIndicator: (props: TypingIndicatorProps) => JSX.Element;
 // @public
 export interface TypingIndicatorProps {
     onRenderUsers?: (users: CommunicationParticipant[]) => JSX.Element;
+    strings?: TypingIndicatorStrings;
     styles?: TypingIndicatorStylesProps;
     typingUsers: CommunicationParticipant[];
+}
+
+// @public
+export interface TypingIndicatorStrings {
+    plural: string;
+    shortenedPlural: string;
+    shortenedPlural2: string;
+    singular: string;
 }
 
 // @public (undocumented)

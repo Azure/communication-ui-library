@@ -5,7 +5,7 @@ import React from 'react';
 import { TypingIndicator } from './TypingIndicator';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import { mountWithLocalization } from './utils/enzymeUtils';
+import { mountWithLocalization, createTestLocale } from './utils/testUtils';
 import { act } from 'react-dom/test-utils';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -13,12 +13,10 @@ Enzyme.configure({ adapter: new Adapter() });
 describe('TypingIndicator should format string correctly', () => {
   test('One user case', async () => {
     const randomText = Math.random().toString();
-    const localeStrings = {
-      typing_indicator_singular: '{users} ' + randomText
-    };
+    const testLocale = createTestLocale({ typingIndicatorStrings: { singular: '{users} ' + randomText } });
     const component = mountWithLocalization(
       <TypingIndicator typingUsers={[{ userId: 'user2', displayName: 'Claire' }]} />,
-      { localeStrings }
+      testLocale
     );
     await act(async () => component);
     component.update();

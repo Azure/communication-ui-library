@@ -31,6 +31,16 @@ export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
 }
 
 /**
+ * Strings of ParticipantItem that can be overridden
+ */
+export interface ParticipantItemStrings {
+  /** String shown when participant is me */
+  isMeText: string;
+  /** String shown when hovering over menu button */
+  menuTitle: string;
+}
+
+/**
  * Props for ParticipantItem component
  */
 export interface ParticipantItemProps {
@@ -55,13 +65,9 @@ export interface ParticipantItemProps {
    */
   styles?: ParticipantItemStylesProps;
   /**
-   * Optional string to override text that showing when participant is me
+   * Optional strings to override in component
    */
-  isMeText?: string;
-  /**
-   * Optional string to over text when hovering over menu button
-   */
-  menuTitle?: string;
+  strings?: ParticipantItemStrings;
 }
 
 /**
@@ -75,10 +81,10 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
   const [menuHidden, setMenuHidden] = useState<boolean>(true);
   const containerRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
-  const { localeStrings } = useLocale();
+  const { participantItemStrings } = useLocale();
 
-  const isMeText = props?.isMeText ?? localeStrings.participant_item_me_text;
-  const menuTitle = props?.menuTitle ?? localeStrings.participant_item_menu_title;
+  const isMeText = props.strings?.isMeText ?? participantItemStrings.isMeText;
+  const menuTitle = props.strings?.menuTitle ?? participantItemStrings.menuTitle;
 
   const avatarToUse = (
     <Persona

@@ -6,7 +6,7 @@ import { typingIndicatorContainerStyle, typingIndicatorStringStyle } from './sty
 import React from 'react';
 import { BaseCustomStylesProps, CommunicationParticipant } from '../types';
 import { IStyle, mergeStyles, Stack } from '@fluentui/react';
-import { ILocaleKeys, useLocale } from '../localization/LocalizationProvider';
+import { useLocale } from '../localization/LocalizationProvider';
 import { formatElements } from '../localization/localizationUtils';
 
 export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
@@ -14,6 +14,20 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
   typingUserDisplayName?: IStyle;
   /** Styles for the typing string. */
   typingString?: IStyle;
+}
+
+/**
+ * Strings of TypingIndicator that can be overridden
+ */
+export interface TypingIndicatorStrings {
+  /** String to use when one user is typing */
+  singular: string;
+  /** String to use when multiple users are typing */
+  plural: string;
+  /** String to use when multiple users are typing with one other user abbreviated */
+  shortenedPlural: string;
+  /** String to use when multiple users are typing with multiple other users abbreviated */
+  shortenedPlural2: string;
 }
 
 /**
@@ -32,13 +46,18 @@ export interface TypingIndicatorProps {
    * ```
    */
   styles?: TypingIndicatorStylesProps;
+
+  /**
+   * Optional strings to override in component
+   */
+  strings?: TypingIndicatorStrings;
 }
 
 const MAXIMUM_LENGTH_OF_TYPING_USERS = 35;
 
 const getIndicatorComponents = (
   typingUsers: CommunicationParticipant[],
-  strings: ILocaleKeys,
+  strings: TypingIndicatorStrings,
   onRenderUsers?: (users: CommunicationParticipant[]) => JSX.Element,
   styles?: TypingIndicatorStylesProps
 ): JSX.Element => {
@@ -66,13 +85,13 @@ const getIndicatorComponents = (
 
   let typingString = '';
   if (typingUsers.length === 1) {
-    typingString = strings.typing_indicator_singular;
+    typingString = strings.singular;
   } else if (typingUsers.length > 1 && countOfUsersNotMentioned === 0) {
-    typingString = strings.typing_indicator_plural;
+    typingString = strings.plural;
   } else if (typingUsers.length > 1 && countOfUsersNotMentioned === 1) {
-    typingString = strings.typing_indicator_shortened_plural;
+    typingString = strings.shortenedPlural;
   } else if (typingUsers.length > 1 && countOfUsersNotMentioned > 1) {
-    typingString = strings.typing_indicator_shortened_plural_2;
+    typingString = strings.shortenedPlural2;
   }
 
   return (
@@ -95,8 +114,8 @@ const getIndicatorComponents = (
  * Typing Indicator is used to notify users if there are any other users typing in the thread.
  */
 export const TypingIndicator = (props: TypingIndicatorProps): JSX.Element => {
-  const { typingUsers, onRenderUsers, styles } = props;
-  const { localeStrings } = useLocale();
+  const { typingUsers, onRenderUsers, styles, strings } = props;
+  const { typingIndicatorStrings } = useLocale();
 
   const typingUsersToRender = onRenderUsers
     ? typingUsers
@@ -104,7 +123,7 @@ export const TypingIndicator = (props: TypingIndicatorProps): JSX.Element => {
 
   return (
     <Stack className={mergeStyles(typingIndicatorContainerStyle, styles?.root)}>
-      {getIndicatorComponents(typingUsersToRender, localeStrings, onRenderUsers, styles)}
+      {getIndicatorComponents(typingUsersToRender, strings ?? typingIndicatorStrings, onRenderUsers, styles)}
     </Stack>
   );
 };

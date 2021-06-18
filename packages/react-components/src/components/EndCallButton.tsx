@@ -9,6 +9,16 @@ import { lightTheme, darkTheme } from '../theming/themes';
 import { isDarkThemed } from '../theming/themeUtils';
 import { useLocale } from '../localization';
 
+/*
+ * Strings of EndCallButton that can be overridden
+ */
+export interface EndCallButtonStrings {
+  /**
+   * Label of button
+   */
+  text?: string;
+}
+
 /**
  * Props for EndCallButton component
  */
@@ -27,9 +37,9 @@ export interface EndCallButtonProps extends IButtonProps {
   onHangUp?: () => Promise<void>;
 
   /**
-   * Optional string to override button label.
+   * Optional strings to override in component
    */
-  text?: string;
+  strings?: EndCallButtonStrings;
 }
 
 /**
@@ -41,8 +51,8 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
   const { showLabel = false, styles, onRenderIcon, onRenderText } = props;
 
   const isDarkTheme = isDarkThemed(useTheme());
-  const { localeStrings } = useLocale();
-  const text = props.text ?? localeStrings.end_call_button_text;
+  const { endCallButtonStrings } = useLocale();
+  const text = props.text ?? props.strings?.text ?? endCallButtonStrings.text;
 
   const componentStyles = concatStyleSets(
     endCallControlButtonStyles,

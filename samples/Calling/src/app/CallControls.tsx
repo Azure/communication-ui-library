@@ -8,8 +8,7 @@ import {
   CameraButton,
   ParticipantsButton,
   ScreenShareButton,
-  EndCallButton,
-  useLocale
+  EndCallButton
 } from 'react-components';
 import {
   controlBarStyle,
@@ -36,8 +35,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     onEndCallClick();
   }, [hangUpButtonProps, onEndCallClick]);
 
-  const strings = useLocale().strings;
-
   return (
     <ControlBar styles={controlBarStyle}>
       <CameraButton {...cameraButtonProps} />
@@ -48,7 +45,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
         {...hangUpButtonProps}
         onHangUp={onHangUp}
         styles={!compressedMode ? groupCallLeaveButtonStyle : groupCallLeaveButtonCompressedStyle}
-        text={!compressedMode ? strings.end_call_button_text : ''}
+        text={!compressedMode ? 'Leave' : ''}
       />
     </ControlBar>
   );

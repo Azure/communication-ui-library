@@ -1,20 +1,33 @@
 {
-  "participant_item_me_text": "(you)",
-  "typing_indicator_singular": "{users} is typing ...",
-  "typing_indicator_plural": "{users} are typing ...",
-  "typing_indicator_shortened_plural": "{users} and 1 other are typing ...",
-  "typing_indicator_shortened_plural_2": "{users} and {numOthers} others are typing ...",
-  "end_call_button_text": "Leave",
-  "camera_button_on_text": "Turn off",
-  "camera_button_off_text": "Turn on",
-  "microphone_button_on_text": "Mute",
-  "microphone_button_off_text": "Unmute",
-  "yesterday": "Yesterday",
-  "sunday": "Sunday",
-  "monday": "Monday",
-  "tuesday": "Tuesday",
-  "wednesday": "Wednesday",
-  "thursday": "Thursday",
-  "friday": "Friday",
-  "saturday": "Saturday"
+  "participantItemStrings": {
+    "isMeText": "(you)",
+    "menuTitle": "More Options"
+  },
+  "typingIndicatorStrings": {
+    "singular": "{users} is typing ...",
+    "plural": "{users} are typing ...",
+    "shortenedPlural": "{users} and 1 other are typing ...",
+    "shortenedPlural2": "{users} and {numOthers} others are typing ..."
+  },
+  "endCallButtonStrings": {
+    "text": "Leave"
+  },
+  "cameraButtonStrings": {
+    "onText": "Turn off",
+    "offText": "Turn on"
+  },
+  "microphoneButtonStrings": {
+    "onText": "Mute",
+    "offText": "Unmute"
+  },
+  "messageThreadStrings": {
+    "yesterday": "Yesterday",
+    "sunday": "Sunday",
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday"
+  }
 }

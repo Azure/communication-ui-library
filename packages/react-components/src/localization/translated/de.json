@@ -1,20 +1,33 @@
 {
-  "participant_item_me_text": "(Sie)",
-  "typing_indicator_singular": "{users} tippt ...",
-  "typing_indicator_plural": "{users} tippen gerade ...",
-  "typing_indicator_shortened_plural": "{users} und 1 anderer tippen gerade ...",
-  "typing_indicator_shortened_plural_2": "{users} und {numOthers} andere tippen gerade ...",
-  "end_call_button_text": "Verlassen",
-  "camera_button_on_text": "Ausschalten",
-  "camera_button_off_text": "Einschalten",
-  "microphone_button_on_text": "Stumm",
-  "microphone_button_off_text": "Einschalten",
-  "yesterday": "Gestern",
-  "sunday": "Sonntag",
-  "monday": "Montag",
-  "tuesday": "Dienstag",
-  "wednesday": "Mittwoch",
-  "thursday": "Donnerstag",
-  "friday": "Freitag",
-  "saturday": "Samstag"
+  "participantItemStrings": {
+    "isMeText": "(Sie)",
+    "menuTitle": "Mehr Optionen"
+  },
+  "typingIndicatorStrings": {
+    "singular": "{users} tippt ...",
+    "plural": "{users} tippen gerade ...",
+    "shortenedPlural": "{users} und 1 anderer tippen gerade ...",
+    "shortenedPlural2": "{users} und {numOthers} andere tippen gerade ..."
+  },
+  "endCallButtonStrings": {
+    "text": "Verlassen"
+  },
+  "cameraButtonStrings": {
+    "onText": "Ausschalten",
+    "offText": "Einschalten"
+  },
+  "microphoneButtonStrings": {
+    "onText": "Stumm",
+    "offText": "Einschalten"
+  },
+  "messageThreadStrings": {
+    "yesterday": "Gestern",
+    "sunday": "Sonntag",
+    "monday": "Montag",
+    "tuesday": "Dienstag",
+    "wednesday": "Mittwoch",
+    "thursday": "Donnerstag",
+    "friday": "Freitag",
+    "saturday": "Samstag"
+  }
 }

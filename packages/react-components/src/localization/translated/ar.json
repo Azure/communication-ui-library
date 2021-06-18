@@ -1,20 +1,33 @@
 {
-  "participant_item_me_text": "(أنت)",
-  "typing_indicator_singular": "... ج يكتب  {users}",
-  "typing_indicator_plural": "... يكتبون  {users}",
-  "typing_indicator_shortened_plural": "... ج وشخص آخر يكتبون  {users}",
-  "typing_indicator_shortened_plural_2": "... آخرون يكتبون {numOthers} ج و  {users}",
-  "end_call_button_text": "غادر",
-  "camera_button_on_text": "طفئه",
-  "camera_button_off_text": "شغله",
-  "microphone_button_on_text": "صامت",
-  "microphone_button_off_text": "شغله",
-  "yesterday": "أمس",
-  "sunday": "الأحد",
-  "monday": "الاثنين",
-  "tuesday": "يوم الثلاثاء",
-  "wednesday": "الأربعاء",
-  "thursday": "يوم الخميس",
-  "friday": "جمعة",
-  "saturday": "السبت"
+  "participantItemStrings": {
+    "isMeText": "(أنت)",
+    "menuTitle": "المزيد من الخيارات"
+  },
+  "typingIndicatorStrings": {
+    "singular": "... ج يكتب  {users}",
+    "plural": "... يكتبون  {users}",
+    "shortenedPlural": "... ج وشخص آخر يكتبون  {users}",
+    "shortenedPlural2": "... آخرون يكتبون {numOthers} ج و  {users}"
+  },
+  "endCallButtonStrings": {
+    "text": "غادر"
+  },
+  "cameraButtonStrings": {
+    "onText": "طفئه",
+    "offText": "شغله"
+  },
+  "microphoneButtonStrings": {
+    "onText": "صامت",
+    "offText": "شغله"
+  },
+  "messageThreadStrings": {
+    "yesterday": "أمس",
+    "sunday": "الأحد",
+    "monday": "الاثنين",
+    "tuesday": "يوم الثلاثاء",
+    "wednesday": "الأربعاء",
+    "thursday": "يوم الخميس",
+    "friday": "جمعة",
+    "saturday": "السبت"
+  }
 }

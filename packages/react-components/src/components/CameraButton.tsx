@@ -14,6 +14,16 @@ const defaultLocalVideoViewOption = {
 } as VideoStreamOptions;
 
 /**
+ * Strings of CameraButton that can be overridden
+ */
+export interface CameraButtonStrings {
+  /** Label when button is on. */
+  onText: string;
+  /** Label when button is off. */
+  offText: string;
+}
+
+/**
  * Props for CameraButton component
  */
 export interface CameraButtonProps extends IButtonProps {
@@ -33,15 +43,11 @@ export interface CameraButtonProps extends IButtonProps {
    * Options for rendering local video view.
    */
   localVideoViewOption?: VideoStreamOptions;
-  /**
-   * Optional string to override button label when button is on.
-   */
-  onText?: string;
 
   /**
-   * Optional string to override button label when button is off.
+   * Optional strings to override in component
    */
-  offText?: string;
+  strings?: CameraButtonStrings;
 }
 
 /**
@@ -59,9 +65,9 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
     return props?.checked ? <CallVideoIcon key={'videoIconKey'} /> : <CallVideoOffIcon key={'videoOffIconKey'} />;
   };
 
-  const { localeStrings } = useLocale();
-  const onText = props.onText ?? localeStrings.camera_button_on_text;
-  const offText = props.offText ?? localeStrings.camera_button_off_text;
+  const { cameraButtonStrings } = useLocale();
+  const onText = props.strings?.onText ?? cameraButtonStrings.onText;
+  const offText = props.strings?.offText ?? cameraButtonStrings.offText;
 
   const defaultRenderText = useCallback(
     (props?: IButtonProps): JSX.Element => {

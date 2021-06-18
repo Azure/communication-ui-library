@@ -142,7 +142,7 @@ export interface MessageThreadStylesProps extends BaseCustomStylesProps {
 }
 
 /**
- * Localizable strings for MessageThread
+ * Strings of MessageThread that can be overridden
  */
 export interface MessageThreadStrings {
   /** String for Sunday */
@@ -250,6 +250,7 @@ const generateMessageContent = (payload: ChatMessagePayload): JSX.Element => {
 };
 
 const DefaultChatMessageRenderer: DefaultMessageRendererType = (props: MessageProps) => {
+  const { messageThreadStrings } = useLocale();
   if (props.message.type === 'chat') {
     const payload: ChatMessagePayload = props.message.payload;
     const messageContentItem = generateMessageContent(payload);
@@ -262,7 +263,10 @@ const DefaultChatMessageRenderer: DefaultMessageRendererType = (props: MessagePr
         timestamp={
           payload.createdOn
             ? props.showDate
-              ? formatTimestampForChatMessage(payload.createdOn, new Date(), props.dateStrings)
+              ? formatTimestampForChatMessage(payload.createdOn, new Date(), {
+                  ...messageThreadStrings,
+                  ...props.strings
+                })
               : formatTimeForChatMessage(payload.createdOn)
             : undefined
         }
@@ -285,7 +289,7 @@ const memoizeAllMessages = memoizeFnAll(
       | ((messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null)
       | undefined,
     defaultChatMessageRenderer: (message: MessageProps) => JSX.Element,
-    dateStrings: MessageThreadStrings,
+    strings?: MessageThreadStrings,
     _attached?: boolean | string,
     statusToRender?: MessageStatus,
     onRenderMessage?: (message: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element
@@ -293,7 +297,7 @@ const memoizeAllMessages = memoizeFnAll(
     const messageProps: MessageProps = {
       message: message,
       showDate: showMessageDate,
-      dateStrings: dateStrings
+      strings: strings
     };
 
     if (message.type === 'chat') {
@@ -459,7 +463,7 @@ export type MessageThreadProps = {
    */
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
   /**
-   * Optional localized strings to use for message dates
+   * Optional strings to override in component
    */
   strings?: MessageThreadStrings;
 };
@@ -473,10 +477,6 @@ export type MessageProps = {
    */
   message: ChatMessage | SystemMessage | CustomMessage;
   /**
-   * Localized strings to use for message dates
-   */
-  dateStrings: MessageThreadStrings;
-  /**
    * Custom CSS styles for chat message container.
    */
   messageContainerStyle?: ComponentSlotStyle;
@@ -486,6 +486,10 @@ export type MessageProps = {
    * @defaultValue `false`
    */
   showDate?: boolean;
+  /**
+   * Strings of component that can be overridden
+   */
+  strings?: MessageThreadStrings;
 };
 
 /**
@@ -511,7 +515,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onRenderAvatar,
     onLoadPreviousChatMessages,
     onRenderJumpToNewMessageButton,
-    onRenderMessage
+    onRenderMessage,
+    strings
   } = props;
 
   const [messages, setMessages] = useState<(ChatMessage | SystemMessage | CustomMessage)[]>([]);
@@ -725,22 +730,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     [new Date().toDateString()]
   );
 
-  const { localeStrings } = useLocale();
-  const dateStrings = useMemo<MessageThreadStrings>(() => {
-    return (
-      props.strings ?? {
-        sunday: localeStrings.sunday,
-        monday: localeStrings.monday,
-        tuesday: localeStrings.tuesday,
-        wednesday: localeStrings.wednesday,
-        thursday: localeStrings.thursday,
-        friday: localeStrings.friday,
-        saturday: localeStrings.saturday,
-        yesterday: localeStrings.yesterday
-      }
-    );
-  }, [props.strings, localeStrings]);
-
   const messagesToDisplay = useMemo(
     () =>
       memoizeAllMessages((memoizedMessageFn) => {
@@ -781,7 +770,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
               styles,
               onRenderMessageStatus,
               defaultChatMessageRenderer,
-              dateStrings,
+              strings,
               // Temporary solution to make sure we re-render if attach attribute is changed.
               // The proper fix should be in selector.
               message.type === 'chat' ? message.payload.attached : undefined,
@@ -803,7 +792,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       lastSendingChatMessage,
       lastDeliveredChatMessage,
       onRenderMessage,
-      dateStrings
+      strings
     ]
   );
 

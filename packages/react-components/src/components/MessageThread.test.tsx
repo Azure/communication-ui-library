@@ -6,7 +6,7 @@ import { MessageThread } from './MessageThread';
 import { ChatMessage } from '../types';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import { mountWithLocalization } from './utils/enzymeUtils';
+import { mountWithLocalization, createTestLocale } from './utils/testUtils';
 import { act } from 'react-dom/test-utils';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -19,9 +19,7 @@ const twentyFourHoursAgo = (): Date => {
 
 describe('Message date should be formatted correctly', () => {
   test('Should locale string for "Yesterday"', async () => {
-    const localeStrings = {
-      yesterday: Math.random().toString()
-    };
+    const testLocale = createTestLocale({ messageThreadStrings: { yesterday: Math.random().toString() } });
     const sampleMessage: ChatMessage = {
       type: 'chat',
       payload: {
@@ -37,9 +35,9 @@ describe('Message date should be formatted correctly', () => {
     };
     const component = mountWithLocalization(
       <MessageThread userId="user1" messages={[sampleMessage]} showMessageDate={true} />,
-      { localeStrings }
+      testLocale
     );
     await act(async () => component);
-    expect(component.text()).toContain(localeStrings.yesterday);
+    expect(component.text()).toContain(testLocale.messageThreadStrings.yesterday);
   });
 });

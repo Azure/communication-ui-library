@@ -8,6 +8,16 @@ import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlB
 import { useLocale } from '../localization';
 
 /**
+ * Strings of MicrophoneButton that can be overridden
+ */
+export interface MicrophoneButtonStrings {
+  /** Label when button is on. */
+  onText: string;
+  /** Label when button is off. */
+  offText: string;
+}
+
+/**
  * Props for MicrophoneButton component
  */
 export interface MicrophoneButtonProps extends IButtonProps {
@@ -24,14 +34,9 @@ export interface MicrophoneButtonProps extends IButtonProps {
   onToggleMicrophone?: () => Promise<void>;
 
   /**
-   * Optional string to override button label when button is on.
+   * Optional strings to override in component
    */
-  onText?: string;
-
-  /**
-   * Optional string to override button label when button is off.
-   */
-  offText?: string;
+  strings?: MicrophoneButtonStrings;
 }
 
 /**
@@ -42,9 +47,9 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   const { showLabel = false, styles, onRenderIcon, onRenderText } = props;
   const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
 
-  const { localeStrings } = useLocale();
-  const onText = props.onText ?? localeStrings.microphone_button_on_text;
-  const offText = props.offText ?? localeStrings.microphone_button_off_text;
+  const { microphoneButtonStrings } = useLocale();
+  const onText = props.strings?.onText ?? microphoneButtonStrings.onText;
+  const offText = props.strings?.offText ?? microphoneButtonStrings.offText;
 
   const defaultRenderIcon = (props?: IButtonProps): JSX.Element => {
     return props?.checked ? <MicIcon key={'microphoneIconKey'} /> : <MicOffIcon key={'microphoneOffIconKey'} />;
