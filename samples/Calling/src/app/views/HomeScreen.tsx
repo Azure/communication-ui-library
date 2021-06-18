@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import { Stack, PrimaryButton, Image, ChoiceGroup, IChoiceGroupOption, TextField } from '@fluentui/react';
-import heroSVG from '../assets/hero.svg';
+import heroSVG from '../../assets/hero.svg';
 import {
   imgStyle,
   containerTokens,
@@ -11,10 +11,10 @@ import {
   bodyItemStyle,
   teamsItemStyle,
   buttonStyle
-} from './styles/HomeScreen.styles';
-import { ThemeSelector } from './theming/ThemeSelector';
-import { localStorageAvailable } from './utils/constants';
-import { getDisplayNameFromLocalStorage, saveDisplayNameToLocalStorage } from './utils/AppUtils';
+} from '../styles/HomeScreen.styles';
+import { ThemeSelector } from '../theming/ThemeSelector';
+import { localStorageAvailable } from '../utils/localStorage';
+import { getDisplayNameFromLocalStorage, saveDisplayNameToLocalStorage } from '../utils/localStorage';
 import { DisplayNameField } from './DisplayNameField';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 

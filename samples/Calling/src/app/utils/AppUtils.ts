@@ -1,8 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallState as CallStatus, GroupLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
-import { LocalStorageKeys } from './constants';
+import { GroupLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { v1 as generateGUID } from 'uuid';
 
 /**
@@ -21,27 +20,10 @@ export const fetchTokenResponse = async (): Promise<any> => {
 };
 
 /**
- * Quick helper function to map a call state to an isInCall boolean
- */
-export const isInCall = (callStatus: CallStatus): boolean => !!(callStatus !== 'None' && callStatus !== 'Disconnected');
-
-/**
  * Generate a random user name.
  * @return username in the format user####
  */
 export const createRandomDisplayName = (): string => 'user' + Math.ceil(Math.random() * 1000);
-
-/**
- * Get display name from local storage.
- */
-export const getDisplayNameFromLocalStorage = (): string | null =>
-  window.localStorage.getItem(LocalStorageKeys.DisplayName);
-
-/**
- * Save display name into local storage.
- */
-export const saveDisplayNameToLocalStorage = (displayName: string): void =>
-  window.localStorage.setItem(LocalStorageKeys.DisplayName, displayName);
 
 /**
  * Get group id from the url's query params.
