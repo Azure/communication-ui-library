@@ -2,14 +2,11 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import {
-  TextFieldStyleProps,
-  inputBoxStyle,
-  inputBoxTextStyle,
-  inputBoxWarningStyle
-} from './styles/DisplayNameField.styles';
+import { TextFieldStyleProps, inputBoxStyle, inputBoxTextStyle } from '../styles/DisplayNameField.styles';
 import { TextField } from '@fluentui/react';
-import { ENTER_KEY, MAXIMUM_LENGTH_OF_NAME } from './utils/constants';
+
+export const MAXIMUM_LENGTH_OF_NAME = 10;
+export const ENTER_KEY = 13;
 
 interface DisplayNameFieldProps {
   setName(displayName: string): void;
