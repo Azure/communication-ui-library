@@ -138,9 +138,7 @@ jobs:
       - name: Install dependencies
         run: rush install
       - name: Build
-        run: rush build -o sample-static-html-composites
-      - name: Tests
-        run: rush test -o sample-static-html-composites
+        run: rush build -t sample-static-html-composites
 
   check_failure:
     runs-on: ubuntu-latest
