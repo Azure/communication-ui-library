@@ -13,7 +13,7 @@ import en_US from './translated/en-US.json';
 /**
  * Locale information to change strings in components
  */
-export interface ILocale {
+export interface Locale {
   /** Strings for MessageThread */
   messageThreadStrings: MessageThreadStrings;
   /** Strings for ParticipantItem */
@@ -31,14 +31,14 @@ export interface ILocale {
 /**
  * Context for providing localized strings to components
  */
-export const LocaleContext = createContext<ILocale>(en_US);
+export const LocaleContext = createContext<Locale>(en_US);
 
 /**
  * Props to LocalizationProvider
  */
 export type LocalizationProviderProps = {
   /** Locale context to provide components */
-  locale: ILocale;
+  locale: Locale;
   /** Children to provide locale context. */
   children: React.ReactNode;
 };
@@ -53,4 +53,4 @@ export const LocalizationProvider = (props: LocalizationProviderProps): JSX.Elem
   return <LocaleContext.Provider value={locale}>{children}</LocaleContext.Provider>;
 };
 
-export const useLocale = (): ILocale => useContext(LocaleContext);
+export const useLocale = (): Locale => useContext(LocaleContext);

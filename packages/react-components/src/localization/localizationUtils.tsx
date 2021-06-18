@@ -25,10 +25,6 @@ export const formatString = (str: string, vars: IObjectMap<string>): string => {
 
   // regex to search for the pattern "{}"
   const placeholdersRegex = /{(\w+)}/g;
-
-  // Replace the pattern "{}" with the values passed in as vars
-  // ex: get(ILocaleKeys.local_key_hello, {name: "Foo"}) => "hello Foo"
-  //     "hello {name}" => "hello Foo"
   return str.replace(placeholdersRegex, (_: string, k: string) => vars[k] || `{${k}}`);
 };
 

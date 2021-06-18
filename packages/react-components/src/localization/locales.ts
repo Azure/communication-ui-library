@@ -4,9 +4,9 @@
 import en_US from './translated/en-US.json';
 import de from './translated/de.json';
 import ar from './translated/ar.json';
-import { ILocale } from './LocalizationProvider';
+import { Locale } from './LocalizationProvider';
 
-export const locales: Record<string, { locale: ILocale; englishName: string; displayName: string }> = {
+export const locales: Record<string, { locale: Locale; englishName: string; displayName: string }> = {
   'en-US': {
     locale: en_US,
     englishName: 'English (US)',

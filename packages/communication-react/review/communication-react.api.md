@@ -848,16 +848,6 @@ export interface GridLayoutProps {
 // @public (undocumented)
 export type GridLayoutType = 'standard';
 
-// @public
-export interface ILocale {
-    cameraButtonStrings: CameraButtonStrings;
-    endCallButtonStrings: EndCallButtonStrings;
-    messageThreadStrings: MessageThreadStrings;
-    microphoneButtonStrings: MicrophoneButtonStrings;
-    participantItemStrings: ParticipantItemStrings;
-    typingIndicatorStrings: TypingIndicatorStrings;
-}
-
 // @public (undocumented)
 export type IncomingCallListener = (event: {
     callId: string;
@@ -903,11 +893,21 @@ export interface JumpToNewMessageButtonProps {
 export const lightTheme: PartialTheme & CallingTheme;
 
 // @public
-export const LocaleContext: React_2.Context<ILocale>;
+export interface Locale {
+    cameraButtonStrings: CameraButtonStrings;
+    endCallButtonStrings: EndCallButtonStrings;
+    messageThreadStrings: MessageThreadStrings;
+    microphoneButtonStrings: MicrophoneButtonStrings;
+    participantItemStrings: ParticipantItemStrings;
+    typingIndicatorStrings: TypingIndicatorStrings;
+}
+
+// @public
+export const LocaleContext: React_2.Context<Locale>;
 
 // @public (undocumented)
 export const locales: Record<string, {
-    locale: ILocale;
+    locale: Locale;
     englishName: string;
     displayName: string;
 }>;
@@ -917,7 +917,7 @@ export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Ele
 
 // @public
 export type LocalizationProviderProps = {
-    locale: ILocale;
+    locale: Locale;
     children: React_2.ReactNode;
 };
 
@@ -1443,7 +1443,7 @@ export const useChatThreadClient: () => ChatThreadClient;
 export const useDeviceManager: () => StatefulDeviceManager | undefined;
 
 // @public (undocumented)
-export const useLocale: () => ILocale;
+export const useLocale: () => Locale;
 
 // @public
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
