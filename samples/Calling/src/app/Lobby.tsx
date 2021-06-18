@@ -1,10 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import React, { useEffect, useState } from 'react';
-import { StreamMedia, VideoStreamOptions, VideoTile, VideoGalleryStream } from 'react-components';
+import {
+  useSelector,
+  StreamMedia,
+  VideoStreamOptions,
+  VideoTile,
+  VideoGalleryStream
+} from '@azure/communication-react';
 import { useTheme } from '@fluentui/react';
 import { LobbyCallControlBar } from './LobbyControlBar';
-import { useCallingSelector as useSelector } from 'calling-component-bindings';
 import { getIsPreviewCameraOn } from './selectors/baseSelectors';
 
 export interface LobbyProps {

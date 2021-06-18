@@ -1,11 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { useCallClient, useCall, useCallingSelector as useSelector } from 'calling-component-bindings';
+import {
+  useCallClient,
+  useCall,
+  useSelector,
+  VideoStreamOptions,
+  CallClientState,
+  StatefulCallClient
+} from '@azure/communication-react';
 import { CallState, GroupLocator, MeetingLocator } from '@azure/communication-calling';
 import { Overlay, Spinner, Stack } from '@fluentui/react';
-import { VideoStreamOptions } from 'react-components';
-import { CallClientState, StatefulCallClient } from 'calling-stateful-client';
 import React, { useEffect, useState } from 'react';
 import { CommandPanel, CommandPanelTypes } from './CommandPanel';
 import { Header } from './Header';

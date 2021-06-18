@@ -10,7 +10,7 @@ import {
   mainStackTokens
 } from './styles/LocalDeviceSettings.styles';
 import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
-import { VideoStreamOptions } from 'react-components';
+import { VideoStreamOptions } from '@azure/communication-react';
 import { CallVideoIcon, MicIcon, VolumeUpIcon } from '@fluentui/react-icons-northstar';
 
 const cameraPermissionDeniedText = 'Your browser is blocking access to your camera.';

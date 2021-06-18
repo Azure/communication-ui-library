@@ -2,8 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useEffect, useMemo, useState } from 'react';
-import { VideoGallery, VideoStreamOptions } from 'react-components';
-import { useCallingPropsFor as usePropsFor, useCallingSelector as useSelector } from 'calling-component-bindings';
+import { usePropsFor, useSelector, VideoGallery, VideoStreamOptions } from '@azure/communication-react';
 import { ScreenShare } from './ScreenShare';
 import { getIsPreviewCameraOn } from './selectors/baseSelectors';
 

@@ -2,8 +2,15 @@
 // Licensed under the MIT license.
 import { useTheme } from '@fluentui/react';
 import React, { useCallback } from 'react';
-import { CameraButton, ControlBar, EndCallButton, MicrophoneButton, OptionsButton } from 'react-components';
-import { useCallingPropsFor as usePropsFor, useCallingSelector as useSelector } from 'calling-component-bindings';
+import {
+  usePropsFor,
+  useSelector,
+  CameraButton,
+  ControlBar,
+  EndCallButton,
+  MicrophoneButton,
+  OptionsButton
+} from '@azure/communication-react';
 import { devicePermissionSelector } from './selectors/devicePermissionSelector';
 
 export interface LobbyCallControlBarProps {

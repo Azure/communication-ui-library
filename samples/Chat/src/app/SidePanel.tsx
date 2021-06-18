@@ -4,9 +4,14 @@ import React, { Dispatch, useCallback } from 'react';
 import { InviteFooter } from './InviteFooter';
 import { SettingsManagementComponent } from './SettingsManagement';
 import { SlideOutPanelComponent } from './SlideOutPanel';
-import { useChatSelector, useChatThreadClient, useChatPropsFor as usePropsFor } from 'chat-component-bindings';
+import {
+  useChatSelector,
+  useChatThreadClient,
+  usePropsFor,
+  ParticipantList,
+  CommunicationParticipant
+} from '@azure/communication-react';
 import { chatSettingsSelector } from './selectors/chatSettingsSelector';
-import { ParticipantList, CommunicationParticipant } from 'react-components';
 
 export enum SidePanelTypes {
   None = 'none',

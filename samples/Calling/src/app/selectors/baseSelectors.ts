@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { CallState, CallClientState, DeviceManagerState, IncomingCallState } from 'calling-stateful-client';
-import { CallingBaseSelectorProps } from 'calling-component-bindings';
+import { CallingBaseSelectorProps } from '@azure/communication-react';
 
 export const getCalls = (state: CallClientState): Map<string, CallState> => state.calls;
 

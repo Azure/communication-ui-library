@@ -11,7 +11,7 @@ import {
   VideoGalleryRemoteParticipant,
   VideoStreamOptions,
   VideoTile
-} from 'react-components';
+} from '@azure/communication-react';
 import {
   aspectRatioBoxContentStyle,
   aspectRatioBoxStyle,

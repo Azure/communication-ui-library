@@ -2,14 +2,19 @@
 // Licensed under the MIT license.
 
 import React, { useCallback } from 'react';
-import { ControlBar, MicrophoneButton, CameraButton, ScreenShareButton, EndCallButton } from 'react-components';
 import {
   controlBarStyle,
   groupCallLeaveButtonCompressedStyle,
   groupCallLeaveButtonStyle
 } from './styles/CallControls.styles';
-import { useCallingPropsFor as usePropsFor } from 'calling-component-bindings';
-
+import {
+  usePropsFor,
+  ControlBar,
+  MicrophoneButton,
+  CameraButton,
+  ScreenShareButton,
+  EndCallButton
+} from '@azure/communication-react';
 export type CallControlsProps = {
   onEndCallClick(): void;
   compressedMode: boolean;
