@@ -21,6 +21,8 @@ export const labelFontStyle = mergeStyles({
   overflowWrap: 'break-word'
 });
 
-export const containerGapStyle = {
-  marginTop: '2rem'
+export const buttonStyle = {
+  width: '100%',
+  height: '2.25rem',
+  marginTop: '1.25rem'
 };

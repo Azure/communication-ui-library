@@ -1,83 +1,94 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
-import { Stack, PrimaryButton, Icon, Image, IImageStyles, Link } from '@fluentui/react';
-import { VideoCameraEmphasisIcon } from '@fluentui/react-icons-northstar';
+import React, { useState } from 'react';
+import { Stack, PrimaryButton, Image, ChoiceGroup, IChoiceGroupOption, TextField } from '@fluentui/react';
 import heroSVG from '../assets/hero.svg';
 import {
   imgStyle,
   containerTokens,
-  listStyle,
-  iconStyle,
   headerStyle,
-  upperStackTokens,
-  videoCameraIconStyle,
-  buttonStyle,
-  nestedStackTokens,
-  upperStackStyle,
-  listItemStyle
+  bodyItemStyle,
+  teamsItemStyle,
+  buttonStyle
 } from './styles/HomeScreen.styles';
 import { ThemeSelector } from './theming/ThemeSelector';
+import { localStorageAvailable } from './utils/constants';
+import { getDisplayNameFromLocalStorage, saveDisplayNameToLocalStorage } from './utils/AppUtils';
+import { DisplayNameField } from './DisplayNameField';
+import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 
 export interface HomeScreenProps {
-  startCallHandler(): void;
+  startCallHandler(callDetails: { displayName: string; teamsLink?: TeamsMeetingLinkLocator }): void;
+  joiningExistingCall: boolean;
 }
 
-const imageStyleProps: IImageStyles = {
-  image: {
-    height: '100%',
-    width: '100%'
-  },
-  root: {}
-};
-
 export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
-  const iconName = 'SkypeCircleCheck';
   const imageProps = { src: heroSVG.toString() };
-  const headerTitle = 'Exceptionally simple video calling';
-  const startCallButtonText = 'Start a call';
-  const listItems = [
-    'Customize with your web stack',
-    'Connect with users with seamless collaboration across web',
-    'High quality, low latency capabilities for an uninterrupted calling experience',
-    'Learn about this'
+  const headerTitle = props.joiningExistingCall ? 'Join Call' : 'Start or join a call';
+  const buttonText = 'Next';
+  const callOptions: IChoiceGroupOption[] = [
+    { key: 'ACSCall', text: 'Start a call' },
+    { key: 'TeamsMeeting', text: 'Join a Teams meeting' }
   ];
+
+  // Get display name from local storage if available
+  const defaultDisplayName = localStorageAvailable ? getDisplayNameFromLocalStorage() : null;
+  const [displayName, setDisplayName] = useState<string | undefined>(defaultDisplayName ?? undefined);
+  const [nameTooLongWarning, setNameTooLongWarning] = useState(false);
+
+  const [chosenCallOption, setChosenCallOption] = useState<IChoiceGroupOption>(callOptions[0]);
+  const [teamsLink, setTeamsLink] = useState<TeamsMeetingLinkLocator>();
+
+  const teamsCallChosen: boolean = chosenCallOption.key === 'TeamsMeeting';
+  const buttonEnabled = displayName && !nameTooLongWarning && (!teamsCallChosen || teamsLink);
+
   return (
     <Stack horizontal horizontalAlign="center" verticalAlign="center" tokens={containerTokens}>
-      <Stack className={upperStackStyle} tokens={upperStackTokens}>
+      <Image alt="Welcome to the ACS Calling sample app" className={imgStyle} {...imageProps} />
+      <div>
         <div className={headerStyle}>{headerTitle}</div>
-        <Stack tokens={nestedStackTokens}>
-          <ul className={listStyle}>
-            <li className={listItemStyle}>
-              <Icon className={iconStyle} iconName={iconName} /> {listItems[0]}
-            </li>
-            <li className={listItemStyle}>
-              <Icon className={iconStyle} iconName={iconName} /> {listItems[1]}
-            </li>
-            <li className={listItemStyle}>
-              <Icon className={iconStyle} iconName={iconName} /> {listItems[2]}
-            </li>
-            <li className={listItemStyle}>
-              <Icon className={iconStyle} iconName={iconName} /> {listItems[3]}{' '}
-              <Link href="https://docs.microsoft.com/en-us/azure/communication-services/samples/calling-hero-sample">
-                sample
-              </Link>
-            </li>
-          </ul>
-        </Stack>
-        <PrimaryButton className={buttonStyle} onClick={props.startCallHandler}>
-          <VideoCameraEmphasisIcon className={videoCameraIconStyle} size="medium" />
-          {startCallButtonText}
+        {!props.joiningExistingCall && (
+          <ChoiceGroup
+            className={bodyItemStyle}
+            defaultSelectedKey="ACSCall"
+            options={callOptions}
+            required={true}
+            onChange={(_, option) => option && setChosenCallOption(option)}
+          />
+        )}
+        {teamsCallChosen && (
+          <TextField
+            className={teamsItemStyle}
+            iconProps={{ iconName: 'Link' }}
+            placeholder={'Enter a Teams meeting link'}
+            onChange={(_, newValue) => newValue && setTeamsLink({ meetingLink: newValue })}
+          />
+        )}
+        <div className={bodyItemStyle}>
+          <DisplayNameField
+            defaultName={displayName}
+            setName={setDisplayName}
+            isNameLengthExceedLimit={nameTooLongWarning}
+            setNameLengthExceedLimit={setNameTooLongWarning}
+          />
+        </div>
+        <PrimaryButton
+          disabled={!buttonEnabled}
+          className={buttonStyle}
+          onClick={() => {
+            if (displayName) {
+              saveDisplayNameToLocalStorage(displayName);
+              props.startCallHandler({ displayName, teamsLink });
+            }
+          }}
+        >
+          {buttonText}
         </PrimaryButton>
-        <ThemeSelector label="Theme" horizontal={true} />
-      </Stack>
-      <Image
-        alt="Welcome to the ACS Calling sample app"
-        className={imgStyle}
-        styles={imageStyleProps}
-        {...imageProps}
-      />
+        <div className={bodyItemStyle}>
+          <ThemeSelector label="Theme" horizontal={true} />
+        </div>
+      </div>
     </Stack>
   );
 };

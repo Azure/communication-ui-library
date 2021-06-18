@@ -3,7 +3,7 @@
 
 import { DefaultButton, Separator, Stack } from '@fluentui/react';
 import { SettingsIcon } from '@fluentui/react-icons-northstar';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   controlButtonStyles,
   headerCenteredContainer,
@@ -21,7 +21,6 @@ export interface HeaderProps {
   selectedPane: CommandPanelTypes;
   setSelectedPane(selectedPane: CommandPanelTypes): void;
   endCallHandler(): void;
-  screenWidth: number;
   callInvitationURL?: string;
 }
 
@@ -32,11 +31,19 @@ export const Header = (props: HeaderProps): JSX.Element => {
       : setSelectedPane(CommandPanelTypes.None);
   };
 
+  const [screenWidth, setScreenWidth] = useState(window?.innerWidth ?? 0);
+  useEffect(() => {
+    const setWindowWidth = (): void => {
+      const width = typeof window !== 'undefined' ? window.innerWidth : 0;
+      setScreenWidth(width);
+    };
+    setWindowWidth();
+    window.addEventListener('resize', setWindowWidth);
+    return () => window.removeEventListener('resize', setWindowWidth);
+  }, []);
+
   return (
-    <Stack
-      id="header"
-      className={props.screenWidth > MINI_HEADER_WINDOW_WIDTH ? headerContainer : headerCenteredContainer}
-    >
+    <Stack id="header" className={screenWidth > MINI_HEADER_WINDOW_WIDTH ? headerContainer : headerCenteredContainer}>
       <Stack.Item>
         <DefaultButton
           onRenderIcon={() => {
@@ -55,7 +62,7 @@ export const Header = (props: HeaderProps): JSX.Element => {
         />
       </Stack.Item>
       <Stack.Item>
-        {props.screenWidth > MINI_HEADER_WINDOW_WIDTH && (
+        {screenWidth > MINI_HEADER_WINDOW_WIDTH && (
           <div className={separatorContainerStyle}>
             <Separator styles={separatorStyles} vertical={true} />
           </div>
@@ -64,7 +71,7 @@ export const Header = (props: HeaderProps): JSX.Element => {
       <Stack.Item>
         <CallControls
           onEndCallClick={props.endCallHandler}
-          compressedMode={props.screenWidth <= MINI_HEADER_WINDOW_WIDTH}
+          compressedMode={screenWidth <= MINI_HEADER_WINDOW_WIDTH}
           callInvitationURL={props?.callInvitationURL}
         />
       </Stack.Item>
