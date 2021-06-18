@@ -38,12 +38,6 @@ Additional documentation for this sample can be found on [Microsoft Docs](https:
     rush install
     ```
 
-1. Build Calling dependencies
-
-    ```bash
-    rush build -T calling
-    ```
-
 1. Start the calling app
 
     ```bash
