@@ -8223,6 +8223,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==
+  /charset/1.0.1:
+    dev: false
+    engines:
+      node: '>=4.0.0'
+    resolution:
+      integrity: sha512-6dVyOOYjpfFcL1Y4qChrAoQLRHvj2ziyhcm0QJlhOcAhykL/k1kTUPbeo+87MNRTRdk2OIIsIXbuF3x2wi5EXg==
   /chokidar/2.1.8:
     dependencies:
       anymatch: 2.0.0
@@ -9615,6 +9621,18 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-fLf9l1hnwrHI2xn9mEDT7KIi22UDqA2jaCwyCbSUJh9a1V+LEUSL/JO/6TIz/QyuBURWUHrFL5Kg2TtO1bkkog==
+  /ecstatic/4.1.4:
+    dependencies:
+      charset: 1.0.1
+      he: 1.2.0
+      mime: 2.5.2
+      minimist: 1.2.5
+      on-finished: 2.3.0
+      url-join: 4.0.1
+    dev: false
+    hasBin: true
+    resolution:
+      integrity: sha512-8E4ZLK4uRuB9pwywGpy/B9vcz4gCp6IY7u4cMbeCINr/fjb1v+0wf0Ae2XlfSnG8xZYnE4uaJBjFkYI0bqcIdw==
   /ee-first/1.1.1:
     dev: false
     resolution:
@@ -19635,6 +19653,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-WvIvGMBSoACkjXuCxenC4v7tpyg=
+  /url-join/4.0.1:
+    dev: false
+    resolution:
+      integrity: sha512-jk1+QP6ZJqyOiuEI9AEWQfju/nB2Pw466kbA0LEZljHwKeMgd9WrAEgEGxjPDD2+TNbbb37rTyhEfrCXfuKXnA==
   /url-loader/4.1.1_file-loader@6.2.0+webpack@4.46.0:
     dependencies:
       file-loader: 6.2.0_webpack@4.46.0
@@ -21169,6 +21191,7 @@ packages:
   file:projects/sample-static-html-composites.tgz:
     dependencies:
       concurrently: 5.3.0
+      ecstatic: 4.1.4
       http-server: 0.12.3
       react: 16.14.0
       react-dom: 16.13.1_react@16.14.0
@@ -21177,7 +21200,7 @@ packages:
     dev: false
     name: '@rush-temp/sample-static-html-composites'
     resolution:
-      integrity: sha512-7y26BU3Xrc25OQAlWGEZhp8COQRZtV8lwDMxoI8jsSpFYdHoLWSjMa7kDnTpDFy5vRrq+Jj7s2ylaGYdrUTo2w==
+      integrity: sha512-a4+EraCQlDVosozZR3B9lTi8bTvw/Ws+JFLMeUFiL8sLD1j8xkHp+ktZVQJCpgYNuljKqGFSh+CNHv8Z68KNNg==
       tarball: file:projects/sample-static-html-composites.tgz
     version: 0.0.0
   file:projects/server.tgz:
