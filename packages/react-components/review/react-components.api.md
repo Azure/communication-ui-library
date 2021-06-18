@@ -400,6 +400,7 @@ export interface VideoGalleryProps {
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
+    remoteVideoStreamLimitation?: number;
     remoteVideoViewOption?: VideoStreamOptions;
     styles?: BaseCustomStylesProps;
 }

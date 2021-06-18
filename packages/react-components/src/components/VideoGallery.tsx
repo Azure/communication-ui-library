@@ -37,6 +37,8 @@ export interface VideoGalleryProps {
   localVideoViewOption?: VideoStreamOptions;
   /** Remote videos view options */
   remoteVideoViewOption?: VideoStreamOptions;
+  /** Limitation on number of remote video stream to display */
+  remoteVideoStreamLimitation?: number;
   /** Callback to create the local video stream view */
   onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void>;
   /** Callback to dispose of the local video stream view */
@@ -94,6 +96,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     remoteParticipants,
     localVideoViewOption,
     remoteVideoViewOption,
+    remoteVideoStreamLimitation,
     onRenderLocalVideoTile,
     onRenderRemoteVideoTile,
     onCreateLocalStreamView,
@@ -106,6 +109,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const [sortedRemoteParticipants, setSortedRemoteParticipants] = useState<VideoGalleryRemoteParticipant[]>([]);
 
   useEffect(() => {
+    console.log(`VideoGallery useEffect`);
     setSortedRemoteParticipants(sortParticipants(remoteParticipants));
   }, [remoteParticipants]);
 
@@ -154,7 +158,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
     // Else return Remote Stream Video Tiles
     return sortedRemoteParticipants.map(
-      (participant): JSX.Element => {
+      (participant, index): JSX.Element => {
         const remoteVideoStream = participant.videoStream;
         return (
           <RemoteVideoTile
@@ -163,7 +167,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             onCreateRemoteStreamView={onCreateRemoteStreamView}
             onDisposeRemoteStreamView={onDisposeRemoteStreamView}
             isAvailable={remoteVideoStream?.isAvailable}
-            renderElement={remoteVideoStream?.renderElement}
+            renderElement={
+              !remoteVideoStreamLimitation || index < remoteVideoStreamLimitation
+                ? remoteVideoStream?.renderElement
+                : undefined
+            }
             displayName={participant.displayName}
             remoteVideoViewOption={remoteVideoViewOption}
             onRenderAvatar={onRenderAvatar}

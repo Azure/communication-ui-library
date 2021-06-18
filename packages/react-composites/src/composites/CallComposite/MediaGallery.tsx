@@ -52,12 +52,22 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         {...videoGalleryProps}
         localVideoViewOption={localVideoViewOption}
         remoteVideoViewOption={remoteVideoViewOption}
+        remoteVideoStreamLimitation={1}
         styles={VideoGalleryStyles}
         layout="floatingLocalVideo"
         onRenderAvatar={props.onRenderAvatar}
       />
     );
-  }, [props.onRenderAvatar, videoGalleryProps]);
+  }, [
+    props.onRenderAvatar,
+    videoGalleryProps.localParticipant,
+    videoGalleryProps.screenShareParticipant,
+    videoGalleryProps.remoteParticipants,
+    videoGalleryProps.onCreateLocalStreamView,
+    videoGalleryProps.onCreateRemoteStreamView,
+    videoGalleryProps.onDisposeLocalStreamView,
+    videoGalleryProps.onDisposeRemoteStreamView
+  ]);
 
   return isScreenShareActive ? <ScreenShare {...videoGalleryProps} /> : VideoGalleryMemoized;
 };
