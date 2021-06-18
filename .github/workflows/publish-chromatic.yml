@@ -8,6 +8,8 @@ on:
       - packages/react-components/**
       - packages/react-composites/**
       - packages/communication-react/**
+  push:
+    branches: [main]
 
 jobs:
   chromatic_deployment:
