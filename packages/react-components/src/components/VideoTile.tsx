@@ -105,10 +105,11 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const placeHolderProps = { userId, displayName, noVideoAvailableAriaLabel };
   const theme = useTheme();
+  const displayVideo = isVideoReady && !!renderElement;
 
   return (
     <Stack className={mergeStyles(rootStyles, { background: theme.palette.neutralLighter }, styles?.root)}>
-      {isVideoReady && renderElement ? (
+      {displayVideo ? (
         <Stack
           className={mergeStyles(
             videoContainerStyles,
@@ -132,9 +133,9 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
       {displayName && showDisplayName && (
         <Text
           className={mergeStyles(
-            isVideoReady ? videoHint : disabledVideoHint,
+            displayVideo ? videoHint : disabledVideoHint,
             // when video is on, the displayName has a grey-ish background, so no use of theme
-            { color: isVideoReady ? palette.neutralPrimary : theme.palette.neutralPrimary },
+            { color: displayVideo ? palette.neutralPrimary : theme.palette.neutralPrimary },
             styles?.displayNameContainer
           )}
         >
