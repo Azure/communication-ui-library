@@ -16,14 +16,16 @@ import { ThemeSelector } from './theming/ThemeSelector';
 import { localStorageAvailable } from './utils/constants';
 import { getDisplayNameFromLocalStorage, saveDisplayNameToLocalStorage } from './utils/AppUtils';
 import { DisplayNameField } from './DisplayNameField';
+import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 
 export interface HomeScreenProps {
-  startCallHandler(callDetails: { displayName: string; teamsLink?: string }): void;
+  startCallHandler(callDetails: { displayName: string; teamsLink?: TeamsMeetingLinkLocator }): void;
+  joiningExistingCall: boolean;
 }
 
 export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const imageProps = { src: heroSVG.toString() };
-  const headerTitle = 'Start or join a call';
+  const headerTitle = props.joiningExistingCall ? 'Join Call' : 'Start or join a call';
   const buttonText = 'Next';
   const callOptions: IChoiceGroupOption[] = [
     { key: 'ACSCall', text: 'Start a call' },
@@ -36,7 +38,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const [nameTooLongWarning, setNameTooLongWarning] = useState(false);
 
   const [chosenCallOption, setChosenCallOption] = useState<IChoiceGroupOption>(callOptions[0]);
-  const [teamsLink, setTeamsLink] = useState<string | undefined>(undefined);
+  const [teamsLink, setTeamsLink] = useState<TeamsMeetingLinkLocator>();
 
   const teamsCallChosen: boolean = chosenCallOption.key === 'TeamsMeeting';
   const buttonEnabled = displayName && !nameTooLongWarning && (!teamsCallChosen || teamsLink);
@@ -46,19 +48,21 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
       <Image alt="Welcome to the ACS Calling sample app" className={imgStyle} {...imageProps} />
       <div>
         <div className={headerStyle}>{headerTitle}</div>
-        <ChoiceGroup
-          className={bodyItemStyle}
-          defaultSelectedKey="ACSCall"
-          options={callOptions}
-          required={true}
-          onChange={(_, option) => option && setChosenCallOption(option)}
-        />
+        {!props.joiningExistingCall && (
+          <ChoiceGroup
+            className={bodyItemStyle}
+            defaultSelectedKey="ACSCall"
+            options={callOptions}
+            required={true}
+            onChange={(_, option) => option && setChosenCallOption(option)}
+          />
+        )}
         {teamsCallChosen && (
           <TextField
             className={teamsItemStyle}
             iconProps={{ iconName: 'Link' }}
             placeholder={'Enter a Teams meeting link'}
-            onChange={(_, newValue) => setTeamsLink(newValue)}
+            onChange={(_, newValue) => newValue && setTeamsLink({ meetingLink: newValue })}
           />
         )}
         <div className={bodyItemStyle}>

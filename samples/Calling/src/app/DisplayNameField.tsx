@@ -6,8 +6,7 @@ import {
   TextFieldStyleProps,
   inputBoxStyle,
   inputBoxTextStyle,
-  inputBoxWarningStyle,
-  warningStyle
+  inputBoxWarningStyle
 } from './styles/DisplayNameField.styles';
 import { TextField } from '@fluentui/react';
 import { ENTER_KEY, MAXIMUM_LENGTH_OF_NAME } from './utils/constants';
@@ -62,17 +61,7 @@ export const DisplayNameField = (props: DisplayNameFieldProps): JSX.Element => {
       }}
       styles={TextFieldStyleProps}
       errorMessage={
-        isEmpty ? (
-          <div role="alert" className={warningStyle}>
-            {' '}
-            Name cannot be empty{' '}
-          </div>
-        ) : isNameLengthExceedLimit ? (
-          <div role="alert" className={warningStyle}>
-            {' '}
-            Name cannot be over 10 characters{' '}
-          </div>
-        ) : undefined
+        isEmpty ? 'Name cannot be empty' : isNameLengthExceedLimit ? 'Name cannot be over 10 characters' : undefined
       }
     />
   );

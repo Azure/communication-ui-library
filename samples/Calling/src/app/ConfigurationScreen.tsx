@@ -2,21 +2,22 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { GroupLocator, MeetingLocator } from '@azure/communication-calling';
 import { CallConfiguration } from './CallConfiguration';
 import { LocalDeviceSettings } from './LocalDeviceSettings';
 import { useCallingSelector as useSelector, getCallingSelector } from 'calling-component-bindings';
 import { useAzureCommunicationHandlers } from './hooks/useAzureCommunicationHandlers';
 import { devicePermissionSelector } from './selectors/devicePermissionSelector';
 import { OptionsButton } from 'react-components';
-import { containerGapStyle, titleContainerStyle } from './styles/ConfiguratonScreen.styles';
+import { containerGapStyle, buttonStyle } from './styles/ConfiguratonScreen.styles';
 import { PrimaryButton } from '@fluentui/react';
 
+export type CallJoinType = 'newCall' | 'joinCall' | 'teamsCall';
+
 export interface ConfigurationScreenProps {
-  startCallHandler: (data?: { callLocator: GroupLocator | MeetingLocator }) => void;
+  startCallHandler: () => void;
   isMicrophoneOn: boolean;
   setIsMicrophoneOn: (isEnabled: boolean) => void;
-  callType: 'newCall' | 'joinCall' | 'teamsCall';
+  callType: CallJoinType;
 }
 
 export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Element => {
@@ -27,32 +28,21 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
   const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useSelector(devicePermissionSelector);
 
   const startOrJoinText =
-    callType === 'newCall'
-      ? 'Start call'
-      : callType === 'joinCall'
-      ? 'Join Call'
-      : callType === 'teamsCall'
-      ? 'Join Teams Call'
-      : 'Start or join call';
+    callType === 'newCall' ? 'Start call' : callType === 'teamsCall' ? 'Join Teams Call' : 'Join Call';
 
   return (
-    <CallConfiguration {...props}>
-      <div className={titleContainerStyle}>{startOrJoinText}</div>
-      <div style={containerGapStyle}>
-        <LocalDeviceSettings
-          {...options}
-          cameraPermissionGranted={cameraPermissionGranted}
-          microphonePermissionGranted={microphonePermissionGranted}
-          onSelectCamera={handlers.onSelectCamera}
-          onSelectMicrophone={handlers.onSelectMicrophone}
-          onSelectSpeaker={handlers.onSelectSpeaker}
-        />
-      </div>
-      <div>
-        <PrimaryButton onClick={() => startCallHandler} disabled={!microphonePermissionGranted}>
-          {startOrJoinText}
-        </PrimaryButton>
-      </div>
+    <CallConfiguration {...{ ...props, screenWidth: window.innerWidth }}>
+      <LocalDeviceSettings
+        {...options}
+        cameraPermissionGranted={cameraPermissionGranted}
+        microphonePermissionGranted={microphonePermissionGranted}
+        onSelectCamera={handlers.onSelectCamera}
+        onSelectMicrophone={handlers.onSelectMicrophone}
+        onSelectSpeaker={handlers.onSelectSpeaker}
+      />
+      <PrimaryButton style={buttonStyle} onClick={() => startCallHandler()} disabled={!microphonePermissionGranted}>
+        {startOrJoinText}
+      </PrimaryButton>
     </CallConfiguration>
   );
 };

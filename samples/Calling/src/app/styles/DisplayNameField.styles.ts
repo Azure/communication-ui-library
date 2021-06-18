@@ -34,10 +34,3 @@ export const inputBoxTextStyle = mergeStyles({
     fontWeight: 600
   }
 });
-
-export const inputBoxWarningStyle = mergeStyles({
-  boxSizing: 'border-box',
-  height: '2.5rem',
-  borderRadius: '2px',
-  fontSize: '0.875rem'
-});

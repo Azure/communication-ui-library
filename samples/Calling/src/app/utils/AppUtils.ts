@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallState as CallStatus } from '@azure/communication-calling';
+import { CallState as CallStatus, GroupLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { LocalStorageKeys } from './constants';
+import { v1 as generateGUID } from 'uuid';
 
 /**
  * Get ACS user token from the Contoso server.
@@ -44,11 +45,22 @@ export const saveDisplayNameToLocalStorage = (displayName: string): void =>
 
 /**
  * Get group id from the url's query params.
- * @return groupId string or null
  */
-export const getGroupIdFromUrl = (): string | null => {
+export const getGroupIdFromUrl = (): GroupLocator | undefined => {
   const urlParams = new URLSearchParams(window.location.search);
-  return urlParams.get('groupId');
+  const gid = urlParams.get('groupId');
+  return gid ? { groupId: gid } : undefined;
+};
+
+export const createGroupId = (): GroupLocator => ({ groupId: generateGUID() });
+
+/**
+ * Get teams meeting link from the url's query params.
+ */
+export const getTeamsLinkFromUrl = (): TeamsMeetingLinkLocator | undefined => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const teamsLink = urlParams.get('teamsLink');
+  return teamsLink ? { meetingLink: teamsLink } : undefined;
 };
 
 /*
@@ -62,7 +74,14 @@ export const isOnIphoneAndNotSafari = (): boolean => {
   return userAgent.includes('iPhone') && (userAgent.includes('FxiOS') || userAgent.includes('CriOS'));
 };
 
+export const isMobileSession = (): boolean =>
+  !!window.navigator.userAgent.match(/(iPad|iPhone|iPod|Android|webOS|BlackBerry|Windows Phone)/g);
+
 export const isSmallScreen = (): boolean => window.innerWidth < 700 || window.innerHeight < 400;
+
+export const navigateToHomePage = (): void => {
+  window.location.href = window.location.href.split('?')[0];
+};
 
 declare let __BUILDTIME__: string; // Injected by webpack
 export const buildTime = __BUILDTIME__;
