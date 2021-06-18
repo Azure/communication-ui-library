@@ -9,7 +9,7 @@ import {
   paneFooterStyles,
   paneFooterTokens,
   textFieldStyles
-} from './styles/Footer.styles';
+} from '../styles/Footer.styles';
 
 import React from 'react';
 
