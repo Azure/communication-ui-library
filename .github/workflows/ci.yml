@@ -144,7 +144,8 @@ jobs:
 
   check_failure:
     runs-on: ubuntu-latest
-    needs: [build_packages, build_calling_sample, build_chat_sample, build_storybook]
+    needs:
+      [build_packages, build_calling_sample, build_chat_sample, build_static_html_composites_sample, build_storybook]
     if: failure() && github.ref == 'refs/heads/main'
     name: File issue if main CI failed
     steps:
