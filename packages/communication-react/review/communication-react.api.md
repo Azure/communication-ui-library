@@ -840,7 +840,7 @@ export type GridLayoutType = 'standard';
 
 // @public
 export interface ILocale {
-    strings: ILocaleKeys;
+    localeStrings: ILocaleKeys;
 }
 
 // @public
@@ -931,7 +931,7 @@ export type MessageContentType = 'text' | 'html' | 'richtext/html' | 'unknown';
 // @public
 export type MessageProps = {
     message: ChatMessage | SystemMessage | CustomMessage;
-    dateStrings: ILocaleKeys;
+    dateStrings: MessageThreadStrings;
     messageContainerStyle?: ComponentSlotStyle;
     showDate?: boolean;
 };
@@ -985,17 +985,20 @@ export type MessageThreadProps = {
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
-    dateStrings?: {
-        sunday: string;
-        monday: string;
-        tuesday: string;
-        wednesday: string;
-        thursday: string;
-        friday: string;
-        saturday: string;
-        yesterday: string;
-    };
+    strings?: MessageThreadStrings;
 };
+
+// @public
+export interface MessageThreadStrings {
+    friday: string;
+    monday: string;
+    saturday: string;
+    sunday: string;
+    thursday: string;
+    tuesday: string;
+    wednesday: string;
+    yesterday: string;
+}
 
 // @public (undocumented)
 export interface MessageThreadStylesProps extends BaseCustomStylesProps {

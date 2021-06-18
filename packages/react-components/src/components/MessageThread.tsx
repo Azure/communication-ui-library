@@ -32,7 +32,7 @@ import { MessageStatusIndicator, MessageStatusIndicatorProps } from './MessageSt
 import { memoizeFnAll, MessageStatus } from 'acs-ui-common';
 import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from './SystemMessage';
 import { Parser } from 'html-to-react';
-import { ILocaleKeys, useLocale } from '../localization';
+import { useLocale } from '../localization';
 
 const NEW_MESSAGES = 'New Messages';
 
@@ -139,6 +139,28 @@ export interface MessageThreadStylesProps extends BaseCustomStylesProps {
   systemMessageContainer?: ComponentSlotStyle;
   /** Styles for message status indicator container. */
   messageStatusContainer?: (mine: boolean) => IStyle;
+}
+
+/**
+ * Localizable strings for MessageThread
+ */
+export interface MessageThreadStrings {
+  /** String for Sunday */
+  sunday: string;
+  /** String for Monday */
+  monday: string;
+  /** String for Tuesday */
+  tuesday: string;
+  /** String for Wednesday */
+  wednesday: string;
+  /** String for Thursday */
+  thursday: string;
+  /** String for Friday */
+  friday: string;
+  /** String for Saturday */
+  saturday: string;
+  /** String for Yesterday */
+  yesterday: string;
 }
 
 export interface JumpToNewMessageButtonProps {
@@ -263,7 +285,7 @@ const memoizeAllMessages = memoizeFnAll(
       | ((messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null)
       | undefined,
     defaultChatMessageRenderer: (message: MessageProps) => JSX.Element,
-    dateStrings: ILocaleKeys,
+    dateStrings: MessageThreadStrings,
     _attached?: boolean | string,
     statusToRender?: MessageStatus,
     onRenderMessage?: (message: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element
@@ -439,16 +461,7 @@ export type MessageThreadProps = {
   /**
    * Optional localized strings to use for message dates
    */
-  dateStrings?: {
-    sunday: string;
-    monday: string;
-    tuesday: string;
-    wednesday: string;
-    thursday: string;
-    friday: string;
-    saturday: string;
-    yesterday: string;
-  };
+  strings?: MessageThreadStrings;
 };
 
 /**
@@ -462,7 +475,7 @@ export type MessageProps = {
   /**
    * Localized strings to use for message dates
    */
-  dateStrings: ILocaleKeys;
+  dateStrings: MessageThreadStrings;
   /**
    * Custom CSS styles for chat message container.
    */
@@ -712,8 +725,21 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     [new Date().toDateString()]
   );
 
-  const { strings } = useLocale();
-  const dateStrings = props.dateStrings ?? strings;
+  const { localeStrings } = useLocale();
+  const dateStrings = useMemo<MessageThreadStrings>(() => {
+    return (
+      props.strings ?? {
+        sunday: localeStrings.sunday,
+        monday: localeStrings.monday,
+        tuesday: localeStrings.tuesday,
+        wednesday: localeStrings.wednesday,
+        thursday: localeStrings.thursday,
+        friday: localeStrings.friday,
+        saturday: localeStrings.saturday,
+        yesterday: localeStrings.yesterday
+      }
+    );
+  }, [props.strings, localeStrings]);
 
   const messagesToDisplay = useMemo(
     () =>

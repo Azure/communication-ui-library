@@ -14,14 +14,14 @@ export type ILocaleKeys = Record<string, string>;
  */
 export interface ILocale {
   /** Set of strings for components */
-  strings: ILocaleKeys;
+  localeStrings: ILocaleKeys;
 }
 
 /**
  * Context for providing localized strings to components
  */
 export const LocaleContext = createContext<ILocale>({
-  strings: en_US
+  localeStrings: en_US
 });
 
 /**

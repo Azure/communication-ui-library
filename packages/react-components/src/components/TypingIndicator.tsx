@@ -96,7 +96,7 @@ const getIndicatorComponents = (
  */
 export const TypingIndicator = (props: TypingIndicatorProps): JSX.Element => {
   const { typingUsers, onRenderUsers, styles } = props;
-  const { strings } = useLocale();
+  const { localeStrings } = useLocale();
 
   const typingUsersToRender = onRenderUsers
     ? typingUsers
@@ -104,7 +104,7 @@ export const TypingIndicator = (props: TypingIndicatorProps): JSX.Element => {
 
   return (
     <Stack className={mergeStyles(typingIndicatorContainerStyle, styles?.root)}>
-      {getIndicatorComponents(typingUsersToRender, strings, onRenderUsers, styles)}
+      {getIndicatorComponents(typingUsersToRender, localeStrings, onRenderUsers, styles)}
     </Stack>
   );
 };

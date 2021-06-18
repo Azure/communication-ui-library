@@ -17,6 +17,7 @@ export { MessageThread } from './MessageThread';
 export type {
   MessageProps,
   MessageThreadProps,
+  MessageThreadStrings,
   MessageThreadStylesProps,
   JumpToNewMessageButtonProps,
   DefaultMessageRendererType

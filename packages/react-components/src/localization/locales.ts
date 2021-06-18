@@ -9,21 +9,21 @@ import { ILocale } from './LocalizationProvider';
 export const locales: Record<string, { locale: ILocale; englishName: string; displayName: string }> = {
   'en-US': {
     locale: {
-      strings: en_US
+      localeStrings: en_US
     },
     englishName: 'English (US)',
     displayName: 'English (US)'
   },
   de: {
     locale: {
-      strings: de
+      localeStrings: de
     },
     englishName: 'German',
     displayName: 'Deutsche'
   },
   ar: {
     locale: {
-      strings: ar
+      localeStrings: ar
     },
     englishName: 'Arabic',
     displayName: 'عربى'

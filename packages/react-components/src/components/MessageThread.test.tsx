@@ -19,7 +19,7 @@ const twentyFourHoursAgo = (): Date => {
 
 describe('Message date should be formatted correctly', () => {
   test('Should locale string for "Yesterday"', async () => {
-    const strings = {
+    const localeStrings = {
       yesterday: Math.random().toString()
     };
     const sampleMessage: ChatMessage = {
@@ -37,9 +37,9 @@ describe('Message date should be formatted correctly', () => {
     };
     const component = mountWithLocalization(
       <MessageThread userId="user1" messages={[sampleMessage]} showMessageDate={true} />,
-      { strings }
+      { localeStrings }
     );
     await act(async () => component);
-    expect(component.text()).toContain(strings.yesterday);
+    expect(component.text()).toContain(localeStrings.yesterday);
   });
 });

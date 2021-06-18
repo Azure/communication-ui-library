@@ -75,10 +75,10 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
   const [menuHidden, setMenuHidden] = useState<boolean>(true);
   const containerRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
-  const { strings } = useLocale();
+  const { localeStrings } = useLocale();
 
-  const isMeText = props.isMeText ?? strings.participant_item_me_text;
-  const menuTitle = props.menuTitle ?? strings.participant_item_menu_title;
+  const isMeText = props?.isMeText ?? localeStrings.participant_item_me_text;
+  const menuTitle = props?.menuTitle ?? localeStrings.participant_item_menu_title;
 
   const avatarToUse = (
     <Persona

@@ -12,12 +12,12 @@ Enzyme.configure({ adapter: new Adapter() });
 
 describe('ParticipantItem should work with localization', () => {
   test('Should use localized string', async () => {
-    const strings = {
+    const localeStrings = {
       participant_item_me_text: Math.random().toString()
     };
-    const component = mountWithLocalization(<ParticipantItem displayName="Mark" me={true} />, { strings });
+    const component = mountWithLocalization(<ParticipantItem displayName="Mark" me={true} />, { localeStrings });
     await act(async () => component);
     component.update();
-    expect(component.text()).toContain(strings.participant_item_me_text);
+    expect(component.text()).toContain(localeStrings.participant_item_me_text);
   });
 });
