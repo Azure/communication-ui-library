@@ -26,7 +26,6 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
 
   useEffect(() => {
     (async () => {
-      console.log('creating adapter');
       const adapter = await createAzureCommunicationCallAdapter(
         userId,
         token,
