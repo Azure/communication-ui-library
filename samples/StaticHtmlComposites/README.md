@@ -1,13 +1,15 @@
-# Basic sample for using CallComposite and ChatComposite
+# Basic sample for using CallComposite and ChatComposite on a plain HTML page
 
-This sample is the bare minimum to embed Calling or Chat in your web app without needing to set up React. It consists of the following files:
+This sample shows how to embed the ready-to-use Calling and Chat composite components on your plain HTML page with a `<script>` tag. This is for you if your web app is not a React application but you still want to use our React components. The React parts are being hidden away behind helper functions inside a JavaScript bundle. The sample consists of the following files:
 
 - `composites.js` exports two basic helper functions that use React to render the `CallComposite` or `ChatComposite` into a container HTML element.
 - `services.js` are helpers to create a user and a token, as well as to create a chat thread and add the user to the thread. This sample makes requests to the `samples/Server`. In real-life you have to write your own minimal authenticated server.
 - `webpack.config.js` bundles the scripts so that they can be included on your web page.
 - `index.html` loads the script bundle, and instantiates the composites with the helper functions.
 
-## Prerequistes
+> *Note:* As for all Azure Communication Services applications, you will still need to write your own production service for secure [management of users and tokens](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-javascript).
+
+## Prerequisites
 
 - An [Azure subscription](https://azure.microsoft.com/free/).
 - An existing Communication Services resource, or [create one](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/create-communication-resource).

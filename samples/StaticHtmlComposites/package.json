@@ -1,5 +1,5 @@
 {
-  "name": "basic-sample-composites",
+  "name": "sample-static-html-composites",
   "version": "1.0.0",
   "description": "Basic bundle for communication react composites and usage on a static HTML page.",
   "private": true,
@@ -7,6 +7,7 @@
     "build": "webpack",
     "start": "concurrently \"cd ../Server && rushx start:dev\" \"rushx start:app\"",
     "start:app": "http-server -p 3000",
+    "test": "echo skip",
     "lint": "echo skip",
     "lint:fix": "echo skip"
   },
