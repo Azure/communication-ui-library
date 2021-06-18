@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Spinner } from '@fluentui/react';
 import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CallAdapter, CallComposite, createAzureCommunicationCallAdapter } from '@azure/communication-react';
@@ -21,6 +21,7 @@ export interface CallScreenProps {
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const { token, userId, callLocator, displayName, onCallEnded, onCallError } = props;
   const [adapter, setAdapter] = useState<CallAdapter>();
+  const adapterRef = useRef<CallAdapter>();
   const { currentTheme } = useSwitchableFluentTheme();
 
   useEffect(() => {
@@ -41,7 +42,12 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         onCallError(e);
       });
       setAdapter(adapter);
+      adapterRef.current = adapter;
     })();
+
+    return () => {
+      adapterRef?.current?.dispose();
+    };
   }, [callLocator, displayName, token, userId, onCallEnded, onCallError]);
 
   if (!adapter) {
