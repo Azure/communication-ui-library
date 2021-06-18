@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { DefaultButton, PrimaryButton, Stack } from '@fluentui/react';
+import { DefaultButton, PrimaryButton, Stack, Link } from '@fluentui/react';
 import { VideoCameraEmphasisIcon } from '@fluentui/react-icons-northstar';
 import {
   endCallContainerStyle,
@@ -13,24 +13,25 @@ import {
   upperStackTokens,
   videoCameraIconStyle,
   bottomStackFooterStyle
-} from './styles/EndCall.styles';
+} from '../styles/EndCall.styles';
 
-export interface CallErrorProps {
+export interface EndCallProps {
   rejoinHandler(): void;
   homeHandler(): void;
-  title?: string;
-  reason?: string;
 }
 
-export default function CallError(props: CallErrorProps): JSX.Element {
-  const title = props.title ?? 'Error joining the Call';
-  const goHomePage = 'Go to Homepage';
-  const rejoinCall = 'Retry Call';
+export const EndCall = (props: EndCallProps): JSX.Element => {
+  const leftCall = 'You left the call';
+  const goHomePage = 'Go to homepage';
+  const rejoinCall = 'Rejoin call';
+
+  const feedbackLink =
+    'https://docs.microsoft.com/en-us/answers/search.html?c=&includeChildren=&f=&type=question+OR+idea+OR+kbentry+OR+answer+OR+topic+OR+user&redirect=search%2Fsearch&sort=relevance&q=azure-communication-services';
 
   return (
     <Stack verticalAlign="center" tokens={mainStackTokens} className={endCallContainerStyle}>
       <Stack tokens={upperStackTokens}>
-        <div className={endCallTitleStyle}>{title}</div>
+        <div className={endCallTitleStyle}>{leftCall}</div>
         <Stack horizontal tokens={buttonsStackTokens}>
           <PrimaryButton className={buttonStyle} onClick={props.rejoinHandler}>
             <VideoCameraEmphasisIcon className={videoCameraIconStyle} size="medium" />
@@ -41,19 +42,9 @@ export default function CallError(props: CallErrorProps): JSX.Element {
           </DefaultButton>
         </Stack>
         <div className={bottomStackFooterStyle}>
-          {props.reason ? (
-            props.reason
-          ) : (
-            <>
-              Common reasons for this error:
-              <ul>
-                <li>Incorrect Teams Meeting URL</li>
-                <li>Incorrect Group Call ID</li>
-              </ul>
-            </>
-          )}
+          <Link href={feedbackLink}>Give Feedback</Link>&nbsp;on this sample app at Microsoft Q&amp;A
         </div>
       </Stack>
     </Stack>
   );
-}
+};
