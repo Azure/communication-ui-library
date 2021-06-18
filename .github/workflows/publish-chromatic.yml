@@ -20,28 +20,34 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      - name: Use Node.js 14.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: 14.x
+      # - name: Use Node.js 14.x
+      #   uses: actions/setup-node@v1
+      #   with:
+      #     node-version: 14.x
 
-      - name: Install Rush
-        run: npm install -g @microsoft/rush@5.47.0
+      # - name: Install Rush
+      #   run: npm install -g @microsoft/rush@5.47.0
 
-      - name: Install Dependencies
-        run: rush install
+      # - name: Install Dependencies
+      #   run: rush install
 
-      - name: Publish Chromatic
-        id: publish_chromatic
-        uses: chromaui/action@v1
-        with:
-          workingDir: ./packages/storybook
-          buildScriptName: build
-          token: ${{ secrets.GITHUB_TOKEN }}
-          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+      # - name: Publish Chromatic
+      #   id: publish_chromatic
+      #   uses: chromaui/action@v1
+      #   with:
+      #     workingDir: ./packages/storybook
+      #     buildScriptName: build
+      #     token: ${{ secrets.GITHUB_TOKEN }}
+      #     projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+
+      - name: Debuggin
+        run: echo {{ github.event_name }}
+
+      - name: Debuggin2
+        run: echo {{ github.event }}
 
       - name: Add Storybook URL as Issue Comment
-        if: github.event.action == github.event.pull_request
+        if: github.event_name == "pull_request"
         uses: actions/github-script@v3
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
