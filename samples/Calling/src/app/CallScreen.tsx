@@ -48,7 +48,7 @@ const localVideoViewOption = {
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const [selectedPane, setSelectedPane] = useState(CommandPanelTypes.None);
-  const { callInvitationURL, callLocator, screenWidth, endCallHandler, isMicrophoneOn } = props;
+  const { callInvitationURL, callLocator, endCallHandler, isMicrophoneOn } = props;
 
   const call = useCall();
   const callClient: StatefulCallClient = useCallClient();
@@ -113,7 +113,6 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
               selectedPane={selectedPane}
               setSelectedPane={setSelectedPane}
               endCallHandler={endCallHandler}
-              screenWidth={screenWidth}
               callInvitationURL={callInvitationURL}
             />
           </Stack.Item>

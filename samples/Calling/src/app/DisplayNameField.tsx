@@ -2,12 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import {
-  TextFieldStyleProps,
-  inputBoxStyle,
-  inputBoxTextStyle,
-  inputBoxWarningStyle
-} from './styles/DisplayNameField.styles';
+import { TextFieldStyleProps, inputBoxStyle, inputBoxTextStyle } from './styles/DisplayNameField.styles';
 import { TextField } from '@fluentui/react';
 import { ENTER_KEY, MAXIMUM_LENGTH_OF_NAME } from './utils/constants';
 
@@ -50,7 +45,7 @@ export const DisplayNameField = (props: DisplayNameFieldProps): JSX.Element => {
       defaultValue={defaultName}
       inputClassName={inputBoxTextStyle}
       ariaLabel="Choose your name"
-      className={isEmpty || isNameLengthExceedLimit ? inputBoxWarningStyle : inputBoxStyle}
+      className={inputBoxStyle}
       onChange={onNameTextChange}
       id="displayName"
       placeholder="Enter a name"

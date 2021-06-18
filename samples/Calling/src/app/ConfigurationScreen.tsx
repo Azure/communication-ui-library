@@ -8,7 +8,7 @@ import { useCallingSelector as useSelector, getCallingSelector } from 'calling-c
 import { useAzureCommunicationHandlers } from './hooks/useAzureCommunicationHandlers';
 import { devicePermissionSelector } from './selectors/devicePermissionSelector';
 import { OptionsButton } from 'react-components';
-import { containerGapStyle, buttonStyle } from './styles/ConfiguratonScreen.styles';
+import { buttonStyle } from './styles/ConfiguratonScreen.styles';
 import { PrimaryButton } from '@fluentui/react';
 
 export type CallJoinType = 'newCall' | 'joinCall' | 'teamsCall';
