@@ -11,9 +11,9 @@ There are two categories of errors, and they are handled differently.
 
 1. ACS backend errors: Errors returned by the REST calls to ACS backend services.
 
-   1. These can be transient or permanent (special case: permission error).
+   1. These can be transient or permanent (special case: permission error from REST API).
 
-2. UI errors: Programming errors in the UI library / errors returned from other browser APIs
+2. UI errors: Programming errors in the UI library / errors returned from other browser APIs. This is a catch-all for all errors not generated from the ACS SDK libraries.
 
 ## ACS backend errors
 
@@ -80,10 +80,14 @@ The ACS UI library includes an error bar component and corresponding react compo
 
 ### Composite
 
-Composites surface errors to the UI using the error bar component.
+Adapters contain all the state and business logic required for the composite UI. Also, the adapter API can technically be implemented without the ACS backend (or stateful libraries). Thus, error reporting must not be coupled with the stateful types, and must handle errors in operations not implemented via the stateful backend. Adapters extend the strategy for how state is handled currently to error reporting:
 
-Adapters generate an event on each error. The surrounding application may subscribe to this event to act on errors.
-Additionally, adapters store the last few errors in the adapter state. Unlike the stateful clients, the number of recent errors stored is not configurable (for now).
+* All errors are teed to an `errors` field, with similar semantics to the stateful client described above.
+  * In case of the ACS implementation of the adapter API, the `errors` field is a generated from the statefule `errors` fields. Additional errors not generated from ACS backend are added.
+  * An adaptedSelector is used to transform the error back into the correct shape for the `ErrorBar` and other components.
+* Additionally, the error is reported to the surrounding application via an `on('error')` event.
+
+Composites surface errors to the UI using the error bar component.
 
 ### Error flow diagram
 
