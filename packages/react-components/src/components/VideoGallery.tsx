@@ -14,6 +14,8 @@ import { StreamMedia } from './StreamMedia';
 import { floatingLocalVideoModalStyle, floatingLocalVideoTileStyle, gridStyle } from './styles/VideoGallery.styles';
 import { VideoTile, PlaceholderProps, VideoTileStylesProps } from './VideoTile';
 
+const emptyStyles = {};
+
 /**
  * Props for component `VideoGallery`
  */
@@ -200,13 +202,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         <Modal isOpen={true} isModeless={true} dragOptions={DRAG_OPTIONS} styles={floatingLocalVideoModalStyle}>
           {localParticipant && defaultOnRenderLocalVideoTile}
         </Modal>
-        <GridLayout styles={styles as any}>{defaultOnRenderRemoteParticipants}</GridLayout>
+        <GridLayout styles={styles ?? emptyStyles}>{defaultOnRenderRemoteParticipants}</GridLayout>
       </>
     );
   }
 
   return (
-    <GridLayout styles={styles as any}>
+    <GridLayout styles={styles ?? emptyStyles}>
       <Stack horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
         {localParticipant && defaultOnRenderLocalVideoTile}
       </Stack>
