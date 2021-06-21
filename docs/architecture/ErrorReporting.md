@@ -27,8 +27,10 @@ But in both cases, all ACS backend API calls are mediated by the (chat and calli
 ```ts
 interface CallClientState {
     // ... other fields ...
-    errors: ErrorState[];
+    errors: { [key: SdkClientMethod]: ErrorState[];
 }
+
+type SdkClientMethod = 'CallClient.createCallAgent' | 'CallClient.getDeviceManager'; // ... and many more
 
 interface ErrorState {
     /**
@@ -36,16 +38,32 @@ interface ErrorState {
      * Allows for de-duplicating similar errors from repeated API calls.
      */
     id: string;
-    sdkClientMethod: 'CallClient.createCallAgent' | 'CallClient.getDeviceManager'; // ... and many more.
     error: Error;
 }
 ```
 
 Stateful client API method calls continue to return errors (e.g. as a failed promise). So they can be handled directly as well.
 
-The stateful clients stores the most recent errors, evicting older errors if necessary. The number of errors stored can be configured, or set to -1 to disable deletion of older errors. e.g., the composites disable error eviction in the stateful client and delete older errors themselves.
+The stateful clients stores the most recent errors per method, evicting older errors if necessary. The number of errors stored can be configured, or set to -1 to disable deletion of older errors. e.g., the composites disable error eviction in the stateful client and delete older errors themselves. By default, only the most recent error is stored.
 
 The errors in the state enables UI library components that act on some errors (e.g., disabling `SendBox` in case no messages can be sent), components that surface UI errors, and adapters that generate error events for the surrounding application.
+
+### Clearing errors
+
+Errors in the state are cleared in one of two ways:
+
+* Application clears the errors via a new Stateful client method.
+
+  ```ts
+  interface StatefulChatClient {
+      // ... Other methods
+      clearErrors(method: SdkClientMethod): void;
+  }
+  ```
+
+* If a previously failed method is retried and succeeds, the stateful client clears the errors on that (and sometimes related) method.
+
+In both cases, all errors on relevant methods are cleared.
 
 ### Surfacing errors to UI
 
