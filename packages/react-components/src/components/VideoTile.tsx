@@ -59,7 +59,7 @@ export interface VideoTileProps extends PlaceholderProps {
   /**
    * Whether to display a mute icon beside the user's display name.
    */
-  showMuteIndicator?: boolean | undefined;
+  showMuteIndicator?: boolean;
   /**
    * Whether the video is muted or not.
    */
@@ -68,11 +68,11 @@ export interface VideoTileProps extends PlaceholderProps {
 
 export interface PlaceholderProps {
   /** user id for the VideoTile placeholder. */
-  userId?: string | undefined;
+  userId?: string;
   /** Optional participant display name for the VideoTile default placeholder. */
-  displayName?: string | undefined;
+  displayName?: string;
   /** Optional property to set the aria label of the video tile if there is no available stream. */
-  noVideoAvailableAriaLabel?: string | undefined;
+  noVideoAvailableAriaLabel?: string;
 }
 
 const DefaultPlaceholder = (props: PlaceholderProps): JSX.Element => {
