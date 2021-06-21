@@ -53,11 +53,6 @@ export interface VideoGalleryProps {
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
 
   /**
-   * Whether to display the user's name in video tile.
-   * @defaultValue `true`
-   */
-  showDisplayName?: boolean;
-  /**
    * Whether to display a mute icon beside the user's display name.
    * @defaultValue `true`
    */
@@ -115,7 +110,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     styles,
     layout,
     onRenderAvatar,
-    showDisplayName,
     showMuteIndicator
   } = props;
   const [sortedRemoteParticipants, setSortedRemoteParticipants] = useState<VideoGalleryRemoteParticipant[]>([]);
@@ -154,7 +148,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         styles={localVideoTileStyles}
         onRenderPlaceholder={onRenderAvatar}
         isMuted={localParticipant.isMuted}
-        showDisplayName={showDisplayName}
         showMuteIndicator={showMuteIndicator}
       />
     );
@@ -186,7 +179,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             displayName={participant.displayName}
             remoteVideoViewOption={remoteVideoViewOption}
             onRenderAvatar={onRenderAvatar}
-            showDisplayName={showDisplayName}
             showMuteIndicator={showMuteIndicator}
           />
         );
@@ -199,7 +191,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onDisposeRemoteStreamView,
     remoteVideoViewOption,
     onRenderAvatar,
-    showDisplayName,
     showMuteIndicator
   ]);
 
@@ -209,13 +200,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         <Modal isOpen={true} isModeless={true} dragOptions={DRAG_OPTIONS} styles={floatingLocalVideoModalStyle}>
           {localParticipant && defaultOnRenderLocalVideoTile}
         </Modal>
-        <GridLayout styles={styles ?? {}}>{defaultOnRenderRemoteParticipants}</GridLayout>
+        <GridLayout styles={styles as any}>{defaultOnRenderRemoteParticipants}</GridLayout>
       </>
     );
   }
 
   return (
-    <GridLayout styles={styles ?? {}}>
+    <GridLayout styles={styles as any}>
       <Stack horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
         {localParticipant && defaultOnRenderLocalVideoTile}
       </Stack>
@@ -240,7 +231,6 @@ const RemoteVideoTile = React.memo(
     onRenderAvatar?:
       | ((props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element)
       | undefined;
-    showDisplayName?: boolean | undefined;
     showMuteIndicator?: boolean | undefined;
   }) => {
     const {
@@ -253,7 +243,6 @@ const RemoteVideoTile = React.memo(
       userId,
       displayName,
       onRenderAvatar,
-      showDisplayName,
       showMuteIndicator
     } = props;
 
@@ -299,7 +288,6 @@ const RemoteVideoTile = React.memo(
           displayName={displayName}
           onRenderPlaceholder={onRenderAvatar}
           isMuted={isMuted}
-          showDisplayName={showDisplayName}
           showMuteIndicator={showMuteIndicator}
         />
       </Stack>

@@ -14,6 +14,7 @@ import {
 import React from 'react';
 import {
   disabledVideoHint,
+  displayNameStyle,
   overlayContainerStyles,
   rootStyles,
   videoContainerStyles,
@@ -55,12 +56,6 @@ export interface VideoTileProps extends PlaceholderProps {
   onRenderPlaceholder?:
     | ((props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element | null)
     | undefined;
-  /**
-   * Whether the displayName is displayed or not.
-   *
-   * @defaultValue `true`
-   */
-  showDisplayName?: boolean | undefined;
   /**
    * Whether to display a mute icon beside the user's display name.
    */
@@ -106,7 +101,6 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     isVideoReady,
     onRenderPlaceholder,
     renderElement,
-    showDisplayName = true,
     showMuteIndicator = true,
     styles,
     userId,
@@ -150,19 +144,17 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
         )}
       >
         <Stack.Item>
-          {displayName && showDisplayName && (
+          {displayName && (
             <Text
-              style={{
-                fontSize: '12px',
-                fontWeight: 600,
+              className={mergeStyles(displayNameStyle, {
                 color: isVideoReady ? palette.neutralPrimary : theme.palette.neutralPrimary
-              }}
+              })}
             >
               {displayName}
             </Text>
           )}
         </Stack.Item>
-        <Stack.Item style={{ paddingLeft: '4px' }}>
+        <Stack.Item>
           {showMuteIndicator && isMuted !== undefined ? (
             isMuted ? (
               <MicOffIcon size="small" />

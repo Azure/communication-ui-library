@@ -38,8 +38,6 @@ export const disabledVideoHint = mergeStyles({
   left: '0.5rem',
   overflow: 'hidden',
   position: 'absolute',
-  padding: '0.25rem',
-  lineHeight: '1rem',
   whiteSpace: 'nowrap',
   maxWidth: '95%',
   borderRadius: theme.effects.roundedCorner4
@@ -48,3 +46,9 @@ export const disabledVideoHint = mergeStyles({
 export const videoHint = mergeStyles(disabledVideoHint, {
   backgroundColor: 'rgba(255, 255, 255, 0.8)'
 });
+
+export const displayNameStyle: IStyle = {
+  padding: '0.25rem',
+  fontSize: '0.75rem',
+  fontWeight: 600
+};
