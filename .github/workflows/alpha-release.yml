@@ -5,8 +5,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  build_and_test:
-    name: Build and Test
+  build_test_release:
+    name: Release alpha package
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
 
     steps:
