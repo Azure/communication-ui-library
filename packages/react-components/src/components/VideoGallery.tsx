@@ -221,19 +221,18 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 const RemoteVideoTile = React.memo(
   (props: {
     userId: string;
-    onCreateRemoteStreamView?:
-      | ((userId: string, options?: VideoStreamOptions | undefined) => Promise<void>)
-      | undefined;
-    onDisposeRemoteStreamView?: ((userId: string) => Promise<void>) | undefined;
-    isAvailable?: boolean | undefined;
-    isMuted?: boolean | undefined;
-    renderElement?: HTMLElement | undefined;
-    displayName?: string | undefined;
-    remoteVideoViewOption?: VideoStreamOptions | undefined;
-    onRenderAvatar?:
-      | ((props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element)
-      | undefined;
-    showMuteIndicator?: boolean | undefined;
+    onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
+    onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
+    isAvailable?: boolean;
+    isMuted?: boolean;
+    renderElement?: HTMLElement;
+    displayName?: string;
+    remoteVideoViewOption?: VideoStreamOptions;
+    onRenderAvatar?: (
+      props: PlaceholderProps,
+      defaultOnRender: (props: PlaceholderProps) => JSX.Element
+    ) => JSX.Element;
+    showMuteIndicator?: boolean;
   }) => {
     const {
       isAvailable,
