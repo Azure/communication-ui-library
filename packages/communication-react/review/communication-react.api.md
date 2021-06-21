@@ -1127,9 +1127,9 @@ export type ParticipantsRemovedListener = (event: {
 
 // @public (undocumented)
 export interface PlaceholderProps {
-    displayName?: string | undefined;
-    noVideoAvailableAriaLabel?: string | undefined;
-    userId?: string | undefined;
+    displayName?: string;
+    noVideoAvailableAriaLabel?: string;
+    userId?: string;
 }
 
 // @public
@@ -1463,11 +1463,11 @@ export const VideoTile: (props: VideoTileProps) => JSX.Element;
 export interface VideoTileProps extends PlaceholderProps {
     children?: React_2.ReactNode;
     isMirrored?: boolean;
-    isMuted?: boolean | undefined;
-    isVideoReady?: boolean | undefined;
-    onRenderPlaceholder?: ((props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element | null) | undefined;
-    renderElement?: JSX.Element | null | undefined;
-    showMuteIndicator?: boolean | undefined;
+    isMuted?: boolean;
+    isVideoReady?: boolean;
+    onRenderPlaceholder?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element | null;
+    renderElement?: JSX.Element | null;
+    showMuteIndicator?: boolean;
     styles?: VideoTileStylesProps;
 }
 

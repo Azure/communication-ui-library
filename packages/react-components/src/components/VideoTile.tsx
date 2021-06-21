@@ -47,15 +47,16 @@ export interface VideoTileProps extends PlaceholderProps {
    */
   styles?: VideoTileStylesProps;
   /** Determines if the static image or video stream should be rendered. */
-  isVideoReady?: boolean | undefined;
+  isVideoReady?: boolean;
   /** Component with the video stream. */
-  renderElement?: JSX.Element | null | undefined;
+  renderElement?: JSX.Element | null;
   /** Determines if the video is mirrored or not. */
   isMirrored?: boolean;
   /** Custom render Component function for no video is available. Render a Persona Icon if undefined. */
-  onRenderPlaceholder?:
-    | ((props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element | null)
-    | undefined;
+  onRenderPlaceholder?: (
+    props: PlaceholderProps,
+    defaultOnRender: (props: PlaceholderProps) => JSX.Element
+  ) => JSX.Element | null;
   /**
    * Whether to display a mute icon beside the user's display name.
    */
@@ -63,7 +64,7 @@ export interface VideoTileProps extends PlaceholderProps {
   /**
    * Whether the video is muted or not.
    */
-  isMuted?: boolean | undefined;
+  isMuted?: boolean;
 }
 
 export interface PlaceholderProps {

@@ -279,7 +279,8 @@ const RemoteVideoTile = React.memo(
       }
 
       return <StreamMedia videoStreamElement={renderElement} />;
-    }, [renderElement]);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [renderElement, renderElement?.childElementCount]);
 
     return (
       <Stack className={gridStyle} key={userId} grow>
