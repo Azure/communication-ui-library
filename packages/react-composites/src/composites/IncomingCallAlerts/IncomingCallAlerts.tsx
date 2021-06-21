@@ -12,7 +12,7 @@ import {
   useTheme
 } from '@fluentui/react';
 import { CallEndIcon, CallIcon, CallVideoIcon, CallVideoOffIcon } from '@fluentui/react-northstar';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   incomingCallAcceptButtonStyle,
   incomingCallRejectButtonStyle,
@@ -21,7 +21,6 @@ import {
   incomingCallModalLocalPreviewStyle,
   incomingCallModalContainerStyle
 } from './styles/IncomingCallAlerts.styles';
-import { useBoolean } from '@uifabric/react-hooks';
 import { StreamMedia, VideoTile } from 'react-components';
 
 export type IncomingCallToastProps = {
@@ -107,7 +106,7 @@ export const IncomingCallModal = (props: IncomingCallModalProps): JSX.Element =>
   } = props;
   const theme = useTheme();
   const palette = theme.palette;
-  const [hideDialog, { toggle: toggleHideDialog }] = useBoolean(false);
+  const [dialogHidden, setDialogHidden] = useState<boolean>(false);
   const dialogContentProps = { type: DialogType.normal, title: alertText ?? 'Incoming Video Call' };
 
   const mediaGalleryLocalParticipant: JSX.Element = (
@@ -122,8 +121,8 @@ export const IncomingCallModal = (props: IncomingCallModalProps): JSX.Element =>
   return (
     <>
       <Dialog
-        hidden={hideDialog}
-        onDismiss={toggleHideDialog}
+        hidden={dialogHidden}
+        onDismiss={() => setDialogHidden(true)}
         dialogContentProps={dialogContentProps}
         modalProps={{
           isBlocking: true,

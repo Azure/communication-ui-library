@@ -32,7 +32,6 @@
     "@fluentui/react-northstar": "^0.51.2",
     "@microsoft/applicationinsights-react-js": "~3.0.5",
     "@microsoft/applicationinsights-web": "~2.6.2",
-    "@uifabric/react-hooks": "~7.13.11",
     "classnames": "^2.2.6",
     "copy-to-clipboard": "~3.3.1",
     "history": "~5.0.0",
