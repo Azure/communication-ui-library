@@ -1394,7 +1394,6 @@ export interface VideoGalleryProps {
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoViewOption?: VideoStreamOptions;
-    showDisplayName?: boolean;
     showMuteIndicator?: boolean;
     styles?: BaseCustomStylesProps;
 }
@@ -1468,7 +1467,6 @@ export interface VideoTileProps extends PlaceholderProps {
     isVideoReady?: boolean | undefined;
     onRenderPlaceholder?: ((props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element | null) | undefined;
     renderElement?: JSX.Element | null | undefined;
-    showDisplayName?: boolean | undefined;
     showMuteIndicator?: boolean | undefined;
     styles?: VideoTileStylesProps;
 }

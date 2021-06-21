@@ -155,13 +155,9 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           )}
         </Stack.Item>
         <Stack.Item>
-          {showMuteIndicator && isMuted !== undefined ? (
-            isMuted ? (
-              <MicOffIcon size="small" />
-            ) : (
-              <MicIcon size="small" />
-            )
-          ) : null}
+          {showMuteIndicator &&
+            isMuted !== undefined &&
+            (isMuted ? <MicOffIcon size="small" /> : <MicIcon size="small" />)}
         </Stack.Item>
       </Stack>
 
