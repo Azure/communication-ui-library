@@ -18,6 +18,14 @@ module.exports = {
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
   moduleNameMapper: {
+    '@azure/communication-react': '<rootDir>/../communication-react/src/index.ts',
+    'react-components': '<rootDir>/../react-components/src/index.ts',
+    'react-composites': '<rootDir>/../react-composites/src/index.ts',
+    'chat-stateful-client': '<rootDir>/../chat-stateful-client/src/index.ts',
+    'chat-component-bindings': '<rootDir>/../chat-component-bindings/src/index.ts',
+    'calling-stateful-client': '<rootDir>/../calling-stateful-client/src/index.ts',
+    'calling-component-bindings': '<rootDir>/../calling-component-bindings/src/index.ts',
+    'acs-ui-common': '<rootDir>/../acs-ui-common/src/index.ts',
     // Jest is unable to perform the raw load of snippet files, instead stub out these imports.
     // More information: https://stackoverflow.com/questions/63226101/handle-webpack-loader-syntax-with-jest-testing-exclamation-raw-loader
     '^!!raw-loader!.*': '<rootDir>/jest/snippetStub.txt'

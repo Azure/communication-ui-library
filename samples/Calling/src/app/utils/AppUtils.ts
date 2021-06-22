@@ -1,9 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallState as CallStatus } from '@azure/communication-calling';
-import preval from 'preval.macro';
-import { LocalStorageKeys } from './constants';
+import { GroupLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
+import { v1 as generateGUID } from 'uuid';
 
 /**
  * Get ACS user token from the Contoso server.
@@ -17,13 +16,8 @@ export const fetchTokenResponse = async (): Promise<any> => {
       return responseAsJson;
     }
   }
-  throw new Error('Invalid token response');
+  throw 'Invalid token response';
 };
-
-/**
- * Quick helper function to map a call state to an isInCall boolean
- */
-export const isInCall = (callStatus: CallStatus): boolean => !!(callStatus !== 'None' && callStatus !== 'Disconnected');
 
 /**
  * Generate a random user name.
@@ -32,24 +26,23 @@ export const isInCall = (callStatus: CallStatus): boolean => !!(callStatus !== '
 export const createRandomDisplayName = (): string => 'user' + Math.ceil(Math.random() * 1000);
 
 /**
- * Get display name from local storage.
- */
-export const getDisplayNameFromLocalStorage = (): string | null =>
-  window.localStorage.getItem(LocalStorageKeys.DisplayName);
-
-/**
- * Save display name into local storage.
- */
-export const saveDisplayNameToLocalStorage = (displayName: string): void =>
-  window.localStorage.setItem(LocalStorageKeys.DisplayName, displayName);
-
-/**
  * Get group id from the url's query params.
- * @return groupId string or null
  */
-export const getGroupIdFromUrl = (): string | null => {
+export const getGroupIdFromUrl = (): GroupLocator | undefined => {
   const urlParams = new URLSearchParams(window.location.search);
-  return urlParams.get('groupId');
+  const gid = urlParams.get('groupId');
+  return gid ? { groupId: gid } : undefined;
+};
+
+export const createGroupId = (): GroupLocator => ({ groupId: generateGUID() });
+
+/**
+ * Get teams meeting link from the url's query params.
+ */
+export const getTeamsLinkFromUrl = (): TeamsMeetingLinkLocator | undefined => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const teamsLink = urlParams.get('teamsLink');
+  return teamsLink ? { meetingLink: teamsLink } : undefined;
 };
 
 /*
@@ -63,9 +56,17 @@ export const isOnIphoneAndNotSafari = (): boolean => {
   return userAgent.includes('iPhone') && (userAgent.includes('FxiOS') || userAgent.includes('CriOS'));
 };
 
+export const isMobileSession = (): boolean =>
+  !!window.navigator.userAgent.match(/(iPad|iPhone|iPod|Android|webOS|BlackBerry|Windows Phone)/g);
+
 export const isSmallScreen = (): boolean => window.innerWidth < 700 || window.innerHeight < 400;
 
-export const getBuildTime = (): string => {
-  const dateTimeStamp = preval`module.exports = new Date().toLocaleString();`;
-  return dateTimeStamp;
+export const navigateToHomePage = (): void => {
+  window.location.href = window.location.href.split('?')[0];
 };
+
+declare let __BUILDTIME__: string; // Injected by webpack
+export const buildTime = __BUILDTIME__;
+
+declare let __CALLINGVERSION__: string; // Injected by webpack
+export const callingSDKVersion = __CALLINGVERSION__;

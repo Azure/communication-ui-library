@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Stack, Modal, IDragOptions, ContextualMenu } from '@fluentui/react';
-import React, { useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   BaseCustomStylesProps,
   VideoGalleryLocalParticipant,
@@ -11,13 +11,10 @@ import {
 } from '../types';
 import { GridLayout } from './GridLayout';
 import { StreamMedia } from './StreamMedia';
-import {
-  floatingLocalVideoModalStyle,
-  floatingLocalVideoTileStyle,
-  gridStyle,
-  videoTileStyle
-} from './styles/VideoGallery.styles';
+import { floatingLocalVideoModalStyle, floatingLocalVideoTileStyle, gridStyle } from './styles/VideoGallery.styles';
 import { VideoTile, PlaceholderProps, VideoTileStylesProps } from './VideoTile';
+
+const emptyStyles = {};
 
 /**
  * Props for component `VideoGallery`
@@ -56,6 +53,12 @@ export interface VideoGalleryProps {
   onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
   /** Callback to render a particpant avatar */
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+
+  /**
+   * Whether to display a mute icon beside the user's display name.
+   * @defaultValue `true`
+   */
+  showMuteIndicator?: boolean;
 }
 
 const DRAG_OPTIONS: IDragOptions = {
@@ -63,6 +66,28 @@ const DRAG_OPTIONS: IDragOptions = {
   closeMenuItemText: 'Close',
   menu: ContextualMenu,
   keepInBounds: true
+};
+
+const sortParticipants = (
+  participants: VideoGalleryRemoteParticipant[] | undefined
+): VideoGalleryRemoteParticipant[] => {
+  if (!participants) {
+    return [];
+  }
+
+  return participants.sort((p1, p2) => {
+    if (!p1?.videoStream?.renderElement?.childElementCount && !p2?.videoStream?.renderElement?.childElementCount) {
+      return 0;
+    }
+    if (!p1?.videoStream?.renderElement?.childElementCount) {
+      return 1;
+    }
+    if (!p2?.videoStream?.renderElement?.childElementCount) {
+      return -1;
+    }
+
+    return 0;
+  });
 };
 
 /**
@@ -86,17 +111,18 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onDisposeRemoteStreamView,
     styles,
     layout,
-    onRenderAvatar
+    onRenderAvatar,
+    showMuteIndicator
   } = props;
+  const [sortedRemoteParticipants, setSortedRemoteParticipants] = useState<VideoGalleryRemoteParticipant[]>([]);
 
-  let localVideoTileStyles: VideoTileStylesProps = videoTileStyle;
+  useEffect(() => {
+    setSortedRemoteParticipants(sortParticipants(remoteParticipants));
+  }, [remoteParticipants]);
 
-  const shouldFloatLocalVideo = (): boolean =>
-    !!(layout === 'floatingLocalVideo' && remoteParticipants && remoteParticipants.length > 0);
-
-  if (shouldFloatLocalVideo()) {
-    localVideoTileStyles = floatingLocalVideoTileStyle;
-  }
+  const shouldFloatLocalVideo = useCallback((): boolean => {
+    return !!(layout === 'floatingLocalVideo' && remoteParticipants && remoteParticipants.length > 0);
+  }, [layout, remoteParticipants]);
 
   /**
    * Utility function for memoized rendering of LocalParticipant.
@@ -106,6 +132,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     const isLocalVideoReady = localVideoStream?.isAvailable;
 
     if (onRenderLocalVideoTile) return onRenderLocalVideoTile(localParticipant);
+
+    let localVideoTileStyles: VideoTileStylesProps = {};
+    if (shouldFloatLocalVideo()) {
+      localVideoTileStyles = floatingLocalVideoTileStyle;
+    }
 
     if (localVideoStream && !localVideoStream.renderElement) {
       onCreateLocalStreamView && onCreateLocalStreamView(localVideoViewOption);
@@ -118,24 +149,24 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         displayName={localParticipant?.displayName}
         styles={localVideoTileStyles}
         onRenderPlaceholder={onRenderAvatar}
+        isMuted={localParticipant.isMuted}
+        showMuteIndicator={showMuteIndicator}
       />
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [localParticipant, localParticipant.videoStream, onCreateLocalStreamView]);
+  }, [localParticipant, localParticipant.videoStream, onCreateLocalStreamView, onRenderLocalVideoTile, onRenderAvatar]);
 
   /**
    * Utility function for memoized rendering of RemoteParticipants.
    */
   const defaultOnRenderRemoteParticipants = useMemo(() => {
-    if (!remoteParticipants) return null;
-
     // If user provided a custom onRender function return that function.
     if (onRenderRemoteVideoTile) {
-      return remoteParticipants.map((participant) => onRenderRemoteVideoTile(participant));
+      return sortedRemoteParticipants.map((participant) => onRenderRemoteVideoTile(participant));
     }
 
     // Else return Remote Stream Video Tiles
-    return remoteParticipants.map(
+    return sortedRemoteParticipants.map(
       (participant): JSX.Element => {
         const remoteVideoStream = participant.videoStream;
         return (
@@ -145,21 +176,24 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             onCreateRemoteStreamView={onCreateRemoteStreamView}
             onDisposeRemoteStreamView={onDisposeRemoteStreamView}
             isAvailable={remoteVideoStream?.isAvailable}
+            isMuted={participant.isMuted}
             renderElement={remoteVideoStream?.renderElement}
             displayName={participant.displayName}
             remoteVideoViewOption={remoteVideoViewOption}
             onRenderAvatar={onRenderAvatar}
+            showMuteIndicator={showMuteIndicator}
           />
         );
       }
     );
   }, [
-    remoteParticipants,
+    sortedRemoteParticipants,
     onRenderRemoteVideoTile,
     onCreateRemoteStreamView,
     onDisposeRemoteStreamView,
     remoteVideoViewOption,
-    onRenderAvatar
+    onRenderAvatar,
+    showMuteIndicator
   ]);
 
   if (shouldFloatLocalVideo()) {
@@ -168,13 +202,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         <Modal isOpen={true} isModeless={true} dragOptions={DRAG_OPTIONS} styles={floatingLocalVideoModalStyle}>
           {localParticipant && defaultOnRenderLocalVideoTile}
         </Modal>
-        <GridLayout styles={styles}>{defaultOnRenderRemoteParticipants}</GridLayout>
+        <GridLayout styles={styles ?? emptyStyles}>{defaultOnRenderRemoteParticipants}</GridLayout>
       </>
     );
   }
 
   return (
-    <GridLayout styles={styles}>
+    <GridLayout styles={styles ?? emptyStyles}>
       <Stack horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
         {localParticipant && defaultOnRenderLocalVideoTile}
       </Stack>
@@ -187,9 +221,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 const RemoteVideoTile = React.memo(
   (props: {
     userId: string;
-    onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions | undefined) => Promise<void>;
+    onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
     isAvailable?: boolean;
+    isMuted?: boolean;
     renderElement?: HTMLElement;
     displayName?: string;
     remoteVideoViewOption?: VideoStreamOptions;
@@ -197,17 +232,21 @@ const RemoteVideoTile = React.memo(
       props: PlaceholderProps,
       defaultOnRender: (props: PlaceholderProps) => JSX.Element
     ) => JSX.Element;
+    showMuteIndicator?: boolean;
   }) => {
     const {
       isAvailable,
+      isMuted,
       onCreateRemoteStreamView,
       onDisposeRemoteStreamView,
       remoteVideoViewOption,
       renderElement,
       userId,
       displayName,
-      onRenderAvatar
+      onRenderAvatar,
+      showMuteIndicator
     } = props;
+
     useEffect(() => {
       if (isAvailable && !renderElement) {
         onCreateRemoteStreamView && onCreateRemoteStreamView(userId, remoteVideoViewOption);
@@ -230,15 +269,28 @@ const RemoteVideoTile = React.memo(
       };
     }, [onDisposeRemoteStreamView, userId]);
 
+    const renderVideoStreamElement = useMemo(() => {
+      // Checking if renderElement is well defined or not as calling SDK has a number of video streams limitation which
+      // implies that, after their threshold, all streams have no child (blank video)
+      if (!renderElement || !renderElement.childElementCount) {
+        // Returning `undefined` results in the placeholder with avatar being shown
+        return undefined;
+      }
+
+      return <StreamMedia videoStreamElement={renderElement} />;
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [renderElement, renderElement?.childElementCount]);
+
     return (
       <Stack className={gridStyle} key={userId} grow>
         <VideoTile
           userId={userId}
           isVideoReady={isAvailable}
-          renderElement={<StreamMedia videoStreamElement={renderElement ?? null} />}
+          renderElement={renderVideoStreamElement}
           displayName={displayName}
-          styles={videoTileStyle}
           onRenderPlaceholder={onRenderAvatar}
+          isMuted={isMuted}
+          showMuteIndicator={showMuteIndicator}
         />
       </Stack>
     );

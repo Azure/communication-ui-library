@@ -15,12 +15,6 @@ export const gridStyle = mergeStyles(videoBaseStyle, {
   height: '100%'
 });
 
-export const videoTileStyle = {
-  root: {
-    borderRadius: theme.effects.roundedCorner4
-  }
-};
-
 export const floatingLocalVideoModalStyle: IStyleFunctionOrObject<IModalStyleProps, IModalStyles> = {
   root: {
     width: '100%',

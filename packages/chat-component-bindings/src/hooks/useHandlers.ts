@@ -6,9 +6,6 @@ import { ChatClientContext } from '../providers/ChatClientProvider';
 import { ChatThreadClientContext } from '../providers/ChatThreadClientProvider';
 import { ReactElement, useContext } from 'react';
 import { Common } from 'acs-ui-common';
-// @ts-ignore
-import { CommonProperties } from 'acs-ui-common';
-// @ts-ignore
 import { DefaultChatHandlers } from '../handlers/createHandlers';
 
 export const useHandlers = <PropsT>(

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Replace maps with objects in CallClientState",
+  "packageName": "calling-stateful-client",
+  "email": "prprabhu@microsoft.com",
+  "dependentChangeType": "patch"
+}

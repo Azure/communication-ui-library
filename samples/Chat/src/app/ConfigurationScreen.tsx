@@ -2,8 +2,7 @@
 // Licensed under the MIT license.
 
 import { CAT, FOX, KOALA, MONKEY, MOUSE, OCTOPUS } from './utils/utils';
-import { FocusZone, FocusZoneDirection } from 'office-ui-fabric-react/lib/FocusZone';
-import { PrimaryButton, Spinner, Stack } from '@fluentui/react';
+import { FocusZone, FocusZoneDirection, PrimaryButton, Spinner, Stack } from '@fluentui/react';
 import React, { useCallback, useEffect, useState } from 'react';
 import { buttonStyle, chatIconStyle, mainContainerStyle } from './styles/ConfigurationScreen.styles';
 import {
@@ -22,9 +21,9 @@ import {
 import { ChatIcon } from '@fluentui/react-icons-northstar';
 import { DisplayNameField } from './DisplayNameField';
 import { sendEmojiRequest } from './utils/setEmoji';
-import { getToken } from 'app/utils/getToken';
+import { getToken } from './utils/getToken';
 import { getThreadId } from './utils/getThreadId';
-import { joinThread } from 'app/utils/joinThread';
+import { joinThread } from './utils/joinThread';
 import { getEndpointUrl } from './utils/getEndpointUrl';
 import { checkThreadValid } from './utils/checkThreadValid';
 

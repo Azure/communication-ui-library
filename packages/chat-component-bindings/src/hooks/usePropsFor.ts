@@ -7,10 +7,7 @@ import { useSelector } from './useSelector';
 import { sendBoxSelector } from '../sendBoxSelector';
 import { chatThreadSelector } from '../chatThreadSelector';
 import { typingIndicatorSelector } from '../typingIndicatorSelector';
-import { AreEqual, Common } from 'acs-ui-common';
-// @ts-ignore
-import { CommonProperties } from 'acs-ui-common';
-// @ts-ignore
+import { Common, AreEqual } from 'acs-ui-common';
 import { DefaultChatHandlers } from '../handlers/createHandlers';
 import { chatParticipantListSelector } from '../chatParticipantListSelector';
 

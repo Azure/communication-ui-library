@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update references to threads object",
+  "packageName": "chat-component-bindings",
+  "email": "prprabhu@microsoft.com",
+  "dependentChangeType": "patch"
+}

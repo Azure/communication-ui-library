@@ -1,10 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-// @ts-ignore
-import { ChatClientState } from 'chat-stateful-client';
-// @ts-ignore
-import { ChatBaseSelectorProps } from './baseSelectors';
 import { getUserId, getDisplayName, getParticipants } from './baseSelectors';
 import * as reselect from 'reselect';
 import { toFlatCommunicationIdentifier } from 'acs-ui-common';
@@ -31,8 +27,8 @@ const moderatorIndex = (participants: CommunicationParticipant[]): number => {
 
 export const chatParticipantListSelector = reselect.createSelector(
   [getUserId, getParticipants, getDisplayName],
-  (userId, chatParticipants: Map<string, ChatParticipant>, displayName) => {
-    let participants = convertChatParticipantsToCommunicationParticipants(Array.from(chatParticipants.values()));
+  (userId, chatParticipants: { [key: string]: ChatParticipant }, displayName) => {
+    let participants = convertChatParticipantsToCommunicationParticipants(Object.values(chatParticipants));
     if (0 !== participants.length) {
       const moderatorIdx = moderatorIndex(participants);
 

@@ -13,6 +13,7 @@ export type ContainerProps = {
   groupId: string;
   displayName: string;
   avatarInitials: string;
+  callInvitationURL?: string;
 };
 
 export const CustomDataModelExampleContainer = (props: ContainerProps): JSX.Element => {
@@ -54,5 +55,11 @@ export const CustomDataModelExampleContainer = (props: ContainerProps): JSX.Elem
     [props.avatarInitials]
   );
 
-  return <>{adapter && <CallComposite adapter={adapter} onRenderAvatar={onRenderAvatar} />}</>;
+  return (
+    <>
+      {adapter && (
+        <CallComposite adapter={adapter} onRenderAvatar={onRenderAvatar} callInvitationURL={props?.callInvitationURL} />
+      )}
+    </>
+  );
 };

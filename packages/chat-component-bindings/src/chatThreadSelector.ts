@@ -10,23 +10,9 @@ import {
 } from './baseSelectors';
 import { toFlatCommunicationIdentifier } from 'acs-ui-common';
 import { ChatMessageWithStatus } from 'chat-stateful-client';
-// The following need explicitly imported to avoid api-extractor issues.
-// These can be removed once https://github.com/microsoft/rushstack/pull/1916 is fixed.
-// @ts-ignore
-import * as reselect from 'reselect';
-// @ts-ignore
-import { ChatMessageContent, ChatParticipant } from '@azure/communication-chat';
-// @ts-ignore
-import { ChatClientState } from 'chat-stateful-client';
-// @ts-ignore
-import { ChatBaseSelectorProps } from './baseSelectors';
-// @ts-ignore
 import { memoizeFnAll } from 'acs-ui-common';
-// @ts-ignore
-import { ChatMessage, MessageAttachedStatus, Message, MessageTypes } from 'react-components';
-// @ts-ignore
+import { ChatMessage, MessageAttachedStatus } from 'react-components';
 import { createSelector } from 'reselect';
-// @ts-ignore
 import { compareMessages } from './utils/compareMessages';
 
 const memoizedAllConvertChatMessage = memoizeFnAll(
@@ -56,7 +42,7 @@ export const chatThreadSelector = createSelector(
   (userId, chatMessages, latestReadTime, isLargeGroup) => {
     // A function takes parameter above and generate return value
     const convertedMessages = memoizedAllConvertChatMessage((memoizedFn) =>
-      Array.from(chatMessages.values())
+      Object.values(chatMessages)
         .filter(
           (message) =>
             message.type.toLowerCase() === 'text' ||
