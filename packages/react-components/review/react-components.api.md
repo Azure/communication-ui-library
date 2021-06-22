@@ -50,7 +50,7 @@ export interface CameraButtonProps extends IButtonProps {
     localVideoViewOption?: VideoStreamOptions;
     onToggleCamera?: (options?: VideoStreamOptions) => Promise<void>;
     showLabel?: boolean;
-    strings?: CameraButtonStrings;
+    strings?: Partial<CameraButtonStrings>;
 }
 
 // @public
@@ -204,7 +204,7 @@ export type MessageProps = {
     message: ChatMessage | SystemMessage | CustomMessage;
     messageContainerStyle?: ComponentSlotStyle;
     showDate?: boolean;
-    strings?: MessageThreadStrings;
+    strings?: Partial<MessageThreadStrings>;
 };
 
 // @public
@@ -239,7 +239,7 @@ export type MessageThreadProps = {
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
-    strings?: MessageThreadStrings;
+    strings?: Partial<MessageThreadStrings>;
 };
 
 // @public
@@ -274,7 +274,7 @@ export const MicrophoneButton: (props: MicrophoneButtonProps) => JSX.Element;
 export interface MicrophoneButtonProps extends IButtonProps {
     onToggleMicrophone?: () => Promise<void>;
     showLabel?: boolean;
-    strings?: MicrophoneButtonStrings;
+    strings?: Partial<MicrophoneButtonStrings>;
 }
 
 // @public

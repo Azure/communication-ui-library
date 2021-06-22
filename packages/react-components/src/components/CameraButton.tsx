@@ -47,7 +47,7 @@ export interface CameraButtonProps extends IButtonProps {
   /**
    * Optional strings to override in component
    */
-  strings?: CameraButtonStrings;
+  strings?: Partial<CameraButtonStrings>;
 }
 
 /**

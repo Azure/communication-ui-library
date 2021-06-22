@@ -289,7 +289,7 @@ const memoizeAllMessages = memoizeFnAll(
       | ((messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null)
       | undefined,
     defaultChatMessageRenderer: (message: MessageProps) => JSX.Element,
-    strings?: MessageThreadStrings,
+    strings?: Partial<MessageThreadStrings>,
     _attached?: boolean | string,
     statusToRender?: MessageStatus,
     onRenderMessage?: (message: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element
@@ -465,7 +465,7 @@ export type MessageThreadProps = {
   /**
    * Optional strings to override in component
    */
-  strings?: MessageThreadStrings;
+  strings?: Partial<MessageThreadStrings>;
 };
 
 /**
@@ -489,7 +489,7 @@ export type MessageProps = {
   /**
    * Strings of component that can be overridden
    */
-  strings?: MessageThreadStrings;
+  strings?: Partial<MessageThreadStrings>;
 };
 
 /**

@@ -36,7 +36,7 @@ export interface MicrophoneButtonProps extends IButtonProps {
   /**
    * Optional strings to override in component
    */
-  strings?: MicrophoneButtonStrings;
+  strings?: Partial<MicrophoneButtonStrings>;
 }
 
 /**
