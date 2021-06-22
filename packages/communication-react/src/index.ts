@@ -4,8 +4,56 @@
 export { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '../../acs-ui-common/src';
 export type { AreEqual, CommonProperties, MessageStatus, Common } from '../../acs-ui-common/src';
 
-export * from '../../calling-component-bindings/src';
-export * from '../../chat-component-bindings/src';
+// Not to export chat/calling specific hook from binding package
+export type {
+  CallClientProviderProps,
+  CallAgentProviderProps,
+  CallProviderProps,
+  GetCallingSelector,
+  DefaultCallingHandlers,
+  CallingBaseSelectorProps
+} from '../../calling-component-bindings/src';
+export type {
+  ChatClientProviderProps,
+  ChatThreadClientProviderProps,
+  GetChatSelector,
+  DefaultChatHandlers,
+  ChatBaseSelectorProps
+} from '../../chat-component-bindings/src';
+
+export {
+  CallClientProvider,
+  CallAgentProvider,
+  CallProvider,
+  useCallClient,
+  useCallAgent,
+  useCall,
+  useDeviceManager,
+  getCallingSelector,
+  screenShareButtonSelector,
+  cameraButtonSelector,
+  videoGallerySelector,
+  optionsButtonSelector,
+  emptySelector,
+  participantListSelector,
+  microphoneButtonSelector,
+  participantsButtonSelector,
+  createDefaultCallingHandlers
+} from '../../calling-component-bindings/src';
+
+export {
+  ChatClientProvider,
+  ChatThreadClientProvider,
+  useChatClient,
+  useChatThreadClient,
+  getChatSelector,
+  chatThreadSelector,
+  chatParticipantListSelector,
+  sendBoxSelector,
+  typingIndicatorSelector,
+  createDefaultChatHandlers
+} from '../../chat-component-bindings/src';
+
 export * from '../../calling-stateful-client/src';
 export * from '../../chat-stateful-client/src';
 export * from '../../react-components/src';

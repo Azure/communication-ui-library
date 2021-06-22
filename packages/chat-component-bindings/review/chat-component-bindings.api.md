@@ -15,6 +15,7 @@ import { Message } from 'react-components';
 import { MessageThread } from 'react-components';
 import { OutputParametricSelector } from 'reselect';
 import { OutputSelector } from 'reselect';
+import { ParticipantList } from 'react-components';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
 import * as reselect from 'reselect';

@@ -43,7 +43,6 @@ import { PersonaPresence } from '@fluentui/react';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { PhoneNumberKind } from '@azure/communication-common';
 import { default as React_2 } from 'react';
-import { ReactElement } from 'react';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
 import * as reselect from 'reselect';
@@ -273,14 +272,6 @@ export type CallAdapterUiState = {
 };
 
 // @public (undocumented)
-export const CallAgentContext: React_2.Context<CallAgentContextType | undefined>;
-
-// @public (undocumented)
-export type CallAgentContextType = {
-    callAgent: CallAgent | undefined;
-};
-
-// @public (undocumented)
 export const CallAgentProvider: (props: CallAgentProviderProps) => JSX.Element;
 
 // @public (undocumented)
@@ -295,15 +286,6 @@ export interface CallAgentProviderProps {
 export interface CallAgentState {
     displayName?: string;
 }
-
-// @public (undocumented)
-export const CallClientContext: React_2.Context<CallClientContextType | undefined>;
-
-// @public (undocumented)
-export type CallClientContextType = {
-    callClient: StatefulCallClient;
-    deviceManager: StatefulDeviceManager | undefined;
-};
 
 // @public (undocumented)
 export const CallClientProvider: (props: CallClientProviderProps) => JSX.Element;
@@ -343,14 +325,6 @@ export type CallCompositeProps = {
     fluentTheme?: PartialTheme | Theme;
     callInvitationURL?: string;
     onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
-};
-
-// @public (undocumented)
-export const CallContext: React_2.Context<CallContextType | undefined>;
-
-// @public (undocumented)
-export type CallContextType = {
-    call: Call | undefined;
 };
 
 // @public (undocumented)
@@ -689,14 +663,8 @@ export const createDefaultCallingHandlers: (callClient: StatefulCallClient, call
     onDisposeLocalStreamView: () => Promise<void>;
 };
 
-// @public
-export const createDefaultCallingHandlersForComponent: <Props>(callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, _Component: (props: Props) => ReactElement | null) => Pick<DefaultCallingHandlers, CommonProperties<DefaultCallingHandlers, Props>>;
-
 // @public (undocumented)
 export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => DefaultChatHandlers;
-
-// @public (undocumented)
-export const createDefaultChatHandlersForComponent: <Props>(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, Props>>;
 
 // @public
 export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: StatefulCallClientOptions | undefined) => StatefulCallClient;
@@ -793,44 +761,16 @@ export interface FluentThemeProviderProps {
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
 // @public (undocumented)
-export const getCall: (state: CallClientState, props: CallingBaseSelectorProps) => CallState | undefined;
-
-// @public (undocumented)
-export type GetCallingSelector<Component> = AreEqual<Component, typeof VideoGallery> extends true ? typeof videoGallerySelector : AreEqual<Component, typeof OptionsButton> extends true ? typeof optionsButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? typeof microphoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? typeof cameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? typeof screenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof participantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? typeof participantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? typeof emptySelector : never;
+export type GetCallingSelector<Component> = AreEqual<Component, typeof VideoGallery> extends true ? typeof videoGallerySelector : AreEqual<Component, typeof OptionsButton> extends true ? typeof optionsButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? typeof microphoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? typeof cameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? typeof screenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof participantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? typeof participantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? typeof emptySelector : undefined;
 
 // @public (undocumented)
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
-
-// @public (undocumented)
-export const getCalls: (state: CallClientState) => {
-    [key: string]: CallState;
-};
-
-// @public (undocumented)
-export const getCallsEnded: (state: CallClientState) => CallState[];
 
 // @public (undocumented)
 export type GetChatSelector<Component> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof chatThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof chatParticipantListSelector : undefined;
 
 // @public (undocumented)
 export const getChatSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetChatSelector<Component>;
-
-// @public (undocumented)
-export const getDeviceManager: (state: CallClientState) => DeviceManagerState;
-
-// @public (undocumented)
-export const getDisplayName: (state: CallClientState) => string | undefined;
-
-// @public (undocumented)
-export const getIdentifier: (state: CallClientState) => string;
-
-// @public (undocumented)
-export const getIncomingCalls: (state: CallClientState) => {
-    [key: string]: IncomingCallState;
-};
-
-// @public (undocumented)
-export const getIncomingCallsEnded: (state: CallClientState) => IncomingCallState[];
 
 // @public (undocumented)
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;
@@ -1359,25 +1299,7 @@ export const useCallAgent: () => CallAgent | undefined;
 export const useCallClient: () => StatefulCallClient;
 
 // @public (undocumented)
-export const useCallingHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Pick<DefaultCallingHandlers, CommonProperties<DefaultCallingHandlers, PropsT>> | undefined;
-
-// @public (undocumented)
-export const useCallingPropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => GetCallingSelector<Component> extends (props: any) => any ? ReturnType<GetCallingSelector<Component>> & Pick<DefaultCallingHandlers, CommonProperties<DefaultCallingHandlers, Parameters<Component>[0]>> : undefined;
-
-// @public (undocumented)
-export const useCallingSelector: <SelectorT extends (state: CallClientState, props: any) => any, ParamT extends SelectorT | undefined>(selector: ParamT, selectorProps?: Parameters<SelectorT>[1] | undefined) => ParamT extends SelectorT ? ReturnType<SelectorT> : undefined;
-
-// @public (undocumented)
 export const useChatClient: () => StatefulChatClient;
-
-// @public (undocumented)
-export const useChatHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, PropsT>> | undefined;
-
-// @public (undocumented)
-export const useChatPropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => GetChatSelector<Component> extends (props: any) => any ? ReturnType<GetChatSelector<Component>> & Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, Parameters<Component>[0]>> : undefined;
-
-// @public (undocumented)
-export const useChatSelector: <SelectorT extends (state: ChatClientState, props: any) => any, ParamT extends SelectorT | undefined>(selector: ParamT, selectorProps?: Parameters<SelectorT>[1] | undefined) => ParamT extends SelectorT ? ReturnType<SelectorT> : undefined;
 
 // @public (undocumented)
 export const useChatThreadClient: () => ChatThreadClient;
