@@ -11,7 +11,7 @@ export const typingIndicatorContainerStyle = mergeStyles({
 
 export const typingIndicatorStringStyle = mergeStyles({
   fontWeight: 400,
-  whiteSpace: 'nowrap',
+  whiteSpace: 'pre',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   paddingRight: '0.1875rem'

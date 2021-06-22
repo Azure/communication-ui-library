@@ -141,7 +141,7 @@ const getIndicatorComponents = (
       {typingUsersMentioned.join(', ')}
     </Stack>
   );
-  let variables = {};
+  let variables: Record<string, JSX.Element> = {};
   let typingString = '';
   if (typingUsers.length === 1) {
     typingString = strings.singleUser;
@@ -162,7 +162,7 @@ const getIndicatorComponents = (
     typingString = strings.multipleUsersAbbreviateMany;
     variables = {
       users: usersElement,
-      numOthers: <>`${countOfUsersNotMentioned}`</>
+      numOthers: <>{countOfUsersNotMentioned}</>
     };
   }
 
