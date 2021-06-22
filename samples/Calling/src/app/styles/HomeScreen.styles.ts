@@ -1,12 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStackTokens, getTheme, mergeStyles } from '@fluentui/react';
+import { IStackTokens, mergeStyles } from '@fluentui/react';
 
-const palette = getTheme().palette;
 export const imgStyle = mergeStyles({
-  width: '27.25rem',
-  height: '20.125rem',
+  width: '16rem',
   selectors: {
     '@media (max-width: 67.1875rem)': {
       display: 'none'
@@ -14,13 +12,7 @@ export const imgStyle = mergeStyles({
   }
 });
 export const containerTokens: IStackTokens = {
-  childrenGap: '3.4375rem'
-};
-export const upperStackTokens: IStackTokens = {
-  childrenGap: '2.625rem'
-};
-export const nestedStackTokens: IStackTokens = {
-  childrenGap: '0.75rem'
+  childrenGap: '5rem'
 };
 export const listStyle = mergeStyles({
   listStyleType: 'none',
@@ -29,35 +21,25 @@ export const listStyle = mergeStyles({
   padding: 0,
   listStylePosition: 'outside'
 });
-export const iconStyle = mergeStyles({
-  marginRight: '0.4375rem',
-  color: palette.themePrimary
-});
 export const headerStyle = mergeStyles({
   fontWeight: 600,
-  fontSize: '2.25rem', // 36px
-  maxWidth: '23.188rem'
+  fontSize: '1.25rem', // 20px
+  lineHeight: '1.75rem', // 28px
+  width: '20rem',
+  marginBottom: '1.5rem'
 });
-export const videoCameraIconStyle = mergeStyles({
-  marginRight: '0.375rem',
-  fontSize: '1.375rem'
+export const bodyItemStyle = mergeStyles({
+  marginTop: '1.25rem'
+});
+export const teamsItemStyle = mergeStyles({
+  marginTop: '0.75rem'
 });
 export const buttonStyle = mergeStyles({
   fontWeight: 600,
   fontSize: '0.875rem', // 14px
-  width: '7.75rem',
+  width: '100%',
   height: '2.5rem',
   borderRadius: 3,
-  padding: '0.625rem'
-});
-export const upperStackStyle = mergeStyles({
-  selectors: {
-    '@media (max-width: 53.4375rem)': {
-      padding: '0.625rem'
-    }
-  }
-});
-export const listItemStyle = mergeStyles({
-  paddingLeft: '2em',
-  textIndent: '-1em'
+  padding: '0.625rem',
+  marginTop: '1.25rem'
 });
