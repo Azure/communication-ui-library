@@ -1,26 +1,26 @@
 {
-  "participantItemStrings": {
+  "participantItem": {
     "isMeText": "(أنت)",
     "menuTitle": "المزيد من الخيارات"
   },
-  "typingIndicatorStrings": {
+  "typingIndicator": {
     "singleUser": "... ج يكتب  {user}",
     "multipleUsers": "... يكتبون  {users}",
     "multipleUsersAbbreviateOne": "... ج وشخص آخر يكتبون  {users}",
     "multipleUsersAbbreviateMany": "... آخرون يكتبون {numOthers} ج و  {users}"
   },
-  "endCallButtonStrings": {
+  "endCallButton": {
     "text": "غادر"
   },
-  "cameraButtonStrings": {
+  "cameraButton": {
     "onText": "طفئه",
     "offText": "شغله"
   },
-  "microphoneButtonStrings": {
+  "microphoneButton": {
     "onText": "صامت",
     "offText": "شغله"
   },
-  "messageThreadStrings": {
+  "messageThread": {
     "yesterday": "أمس",
     "sunday": "الأحد",
     "monday": "الاثنين",

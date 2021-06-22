@@ -47,9 +47,9 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   const { showLabel = false, styles, onRenderIcon, onRenderText } = props;
   const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
 
-  const { microphoneButtonStrings } = useLocale();
-  const onText = props.strings?.onText ?? microphoneButtonStrings.onText;
-  const offText = props.strings?.offText ?? microphoneButtonStrings.offText;
+  const { strings } = useLocale();
+  const onText = props.strings?.onText ?? strings.microphoneButton.onText;
+  const offText = props.strings?.offText ?? strings.microphoneButton.offText;
 
   const defaultRenderIcon = (props?: IButtonProps): JSX.Element => {
     return props?.checked ? <MicIcon key={'microphoneIconKey'} /> : <MicOffIcon key={'microphoneOffIconKey'} />;

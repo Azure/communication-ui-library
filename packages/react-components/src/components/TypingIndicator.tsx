@@ -177,8 +177,8 @@ const getIndicatorComponents = (
  * Typing Indicator is used to notify users if there are any other users typing in the thread.
  */
 export const TypingIndicator = (props: TypingIndicatorProps): JSX.Element => {
-  const { typingUsers, onRenderUsers, styles, strings } = props;
-  const { typingIndicatorStrings } = useLocale();
+  const { typingUsers, onRenderUsers, styles } = props;
+  const { strings } = useLocale();
 
   const typingUsersToRender = onRenderUsers
     ? typingUsers
@@ -186,7 +186,12 @@ export const TypingIndicator = (props: TypingIndicatorProps): JSX.Element => {
 
   return (
     <Stack className={mergeStyles(typingIndicatorContainerStyle, styles?.root)}>
-      {getIndicatorComponents(typingUsersToRender, { ...typingIndicatorStrings, ...strings }, onRenderUsers, styles)}
+      {getIndicatorComponents(
+        typingUsersToRender,
+        { ...strings.typingIndicator, ...props.strings },
+        onRenderUsers,
+        styles
+      )}
     </Stack>
   );
 };

@@ -11,27 +11,35 @@ import { TypingIndicatorStrings } from '../components/TypingIndicator';
 import en_US from './translated/en-US.json';
 
 /**
- * Locale information to change strings in components
+ * Data structure for localization
  */
 export interface Locale {
+  /** Strings for components */
+  strings: ComponentStrings;
+}
+
+/**
+ * Strings for components
+ */
+export interface ComponentStrings {
   /** Strings for MessageThread */
-  messageThreadStrings: MessageThreadStrings;
+  messageThread: MessageThreadStrings;
   /** Strings for ParticipantItem */
-  participantItemStrings: ParticipantItemStrings;
+  participantItem: ParticipantItemStrings;
   /** Strings for CameraButton */
-  cameraButtonStrings: CameraButtonStrings;
+  cameraButton: CameraButtonStrings;
   /** Strings for MicrophoneButton */
-  microphoneButtonStrings: MicrophoneButtonStrings;
+  microphoneButton: MicrophoneButtonStrings;
   /** Strings for EndCallButton */
-  endCallButtonStrings: EndCallButtonStrings;
+  endCallButton: EndCallButtonStrings;
   /** Strings for TypingIndicator */
-  typingIndicatorStrings: TypingIndicatorStrings;
+  typingIndicator: TypingIndicatorStrings;
 }
 
 /**
  * Context for providing localized strings to components
  */
-export const LocaleContext = createContext<Locale>(en_US);
+export const LocaleContext = createContext<Locale>({ strings: en_US });
 
 /**
  * Props to LocalizationProvider

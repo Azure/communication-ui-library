@@ -1,26 +1,26 @@
 {
-  "participantItemStrings": {
+  "participantItem": {
     "isMeText": "(you)",
     "menuTitle": "More Options"
   },
-  "typingIndicatorStrings": {
+  "typingIndicator": {
     "singleUser": "{user} is typing ...",
     "multipleUsers": "{users} are typing ...",
     "multipleUsersAbbreviateOne": "{users} and 1 other are typing ...",
     "multipleUsersAbbreviateMany": "{users} and {numOthers} others are typing ..."
   },
-  "endCallButtonStrings": {
+  "endCallButton": {
     "text": "Leave"
   },
-  "cameraButtonStrings": {
+  "cameraButton": {
     "onText": "Turn off",
     "offText": "Turn on"
   },
-  "microphoneButtonStrings": {
+  "microphoneButton": {
     "onText": "Mute",
     "offText": "Unmute"
   },
-  "messageThreadStrings": {
+  "messageThread": {
     "yesterday": "Yesterday",
     "sunday": "Sunday",
     "monday": "Monday",

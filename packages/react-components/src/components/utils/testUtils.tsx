@@ -21,5 +21,5 @@ export const shallowWithLocalization = (node: React.ReactElement, locale: Locale
 };
 
 export const createTestLocale = (testStrings: any): Locale => {
-  return { ...en_US, ...testStrings };
+  return { strings: { ...en_US, ...testStrings } };
 };

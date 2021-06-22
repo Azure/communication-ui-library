@@ -65,9 +65,9 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
     return props?.checked ? <CallVideoIcon key={'videoIconKey'} /> : <CallVideoOffIcon key={'videoOffIconKey'} />;
   };
 
-  const { cameraButtonStrings } = useLocale();
-  const onText = props.strings?.onText ?? cameraButtonStrings.onText;
-  const offText = props.strings?.offText ?? cameraButtonStrings.offText;
+  const { strings } = useLocale();
+  const onText = props.strings?.onText ?? strings.cameraButton.onText;
+  const offText = props.strings?.offText ?? strings.cameraButton.offText;
 
   const defaultRenderText = useCallback(
     (props?: IButtonProps): JSX.Element => {

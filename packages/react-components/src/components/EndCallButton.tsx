@@ -51,8 +51,8 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
   const { showLabel = false, styles, onRenderIcon, onRenderText } = props;
 
   const isDarkTheme = isDarkThemed(useTheme());
-  const { endCallButtonStrings } = useLocale();
-  const text = props.text ?? props.strings?.text ?? endCallButtonStrings.text;
+  const { strings } = useLocale();
+  const text = props.text ?? props.strings?.text ?? strings.endCallButton.text;
 
   const componentStyles = concatStyleSets(
     endCallControlButtonStyles,

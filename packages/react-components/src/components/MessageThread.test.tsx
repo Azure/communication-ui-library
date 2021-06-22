@@ -19,7 +19,7 @@ const twentyFourHoursAgo = (): Date => {
 
 describe('Message date should be formatted correctly', () => {
   test('Should locale string for "Yesterday"', async () => {
-    const testLocale = createTestLocale({ messageThreadStrings: { yesterday: Math.random().toString() } });
+    const testLocale = createTestLocale({ messageThread: { yesterday: Math.random().toString() } });
     const sampleMessage: ChatMessage = {
       type: 'chat',
       payload: {
@@ -38,6 +38,6 @@ describe('Message date should be formatted correctly', () => {
       testLocale
     );
     await act(async () => component);
-    expect(component.text()).toContain(testLocale.messageThreadStrings.yesterday);
+    expect(component.text()).toContain(testLocale.strings.messageThread.yesterday);
   });
 });

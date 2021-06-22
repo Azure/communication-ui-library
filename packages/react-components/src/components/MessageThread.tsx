@@ -250,7 +250,7 @@ const generateMessageContent = (payload: ChatMessagePayload): JSX.Element => {
 };
 
 const DefaultChatMessageRenderer: DefaultMessageRendererType = (props: MessageProps) => {
-  const { messageThreadStrings } = useLocale();
+  const { strings } = useLocale();
   if (props.message.type === 'chat') {
     const payload: ChatMessagePayload = props.message.payload;
     const messageContentItem = generateMessageContent(payload);
@@ -264,7 +264,7 @@ const DefaultChatMessageRenderer: DefaultMessageRendererType = (props: MessagePr
           payload.createdOn
             ? props.showDate
               ? formatTimestampForChatMessage(payload.createdOn, new Date(), {
-                  ...messageThreadStrings,
+                  ...strings.messageThread,
                   ...props.strings
                 })
               : formatTimeForChatMessage(payload.createdOn)

@@ -646,6 +646,16 @@ export type CommunicationParticipant = {
 };
 
 // @public
+export interface ComponentStrings {
+    cameraButton: CameraButtonStrings;
+    endCallButton: EndCallButtonStrings;
+    messageThread: MessageThreadStrings;
+    microphoneButton: MicrophoneButtonStrings;
+    participantItem: ParticipantItemStrings;
+    typingIndicator: TypingIndicatorStrings;
+}
+
+// @public
 export const ControlBar: (props: ControlBarProps) => JSX.Element;
 
 // @public (undocumented)
@@ -894,12 +904,7 @@ export const lightTheme: PartialTheme & CallingTheme;
 
 // @public
 export interface Locale {
-    cameraButtonStrings: CameraButtonStrings;
-    endCallButtonStrings: EndCallButtonStrings;
-    messageThreadStrings: MessageThreadStrings;
-    microphoneButtonStrings: MicrophoneButtonStrings;
-    participantItemStrings: ParticipantItemStrings;
-    typingIndicatorStrings: TypingIndicatorStrings;
+    strings: ComponentStrings;
 }
 
 // @public

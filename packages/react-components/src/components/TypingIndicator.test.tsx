@@ -13,7 +13,7 @@ Enzyme.configure({ adapter: new Adapter() });
 describe('TypingIndicator should format string correctly', () => {
   test('One user case', async () => {
     const randomText = Math.random().toString();
-    const testLocale = createTestLocale({ typingIndicatorStrings: { singleUser: '{user} ' + randomText } });
+    const testLocale = createTestLocale({ typingIndicator: { singleUser: '{user} ' + randomText } });
     const component = mountWithLocalization(
       <TypingIndicator typingUsers={[{ userId: 'user2', displayName: 'Claire' }]} />,
       testLocale

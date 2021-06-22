@@ -8,17 +8,23 @@ import { Locale } from './LocalizationProvider';
 
 export const locales: Record<string, { locale: Locale; englishName: string; displayName: string }> = {
   'en-US': {
-    locale: en_US,
+    locale: {
+      strings: en_US
+    },
     englishName: 'English (US)',
     displayName: 'English (US)'
   },
   de: {
-    locale: de,
+    locale: {
+      strings: de
+    },
     englishName: 'German',
     displayName: 'Deutsche'
   },
   ar: {
-    locale: ar,
+    locale: {
+      strings: ar
+    },
     englishName: 'Arabic',
     displayName: 'عربى'
   }
