@@ -9,7 +9,7 @@ Different error handling strategies are employed when using the composites or th
 
 ## Components library
 
-An application built using the components library uses the stateful clients to make REST calls to the Azure Communication Services backends. It uses the pure UI components and the component bindings package to  connect the UI components to the stateful clients.
+An application built using the components library uses the stateful clients to make REST calls to the Azure Communication Services backends. It uses the pure UI components and the component bindings package to connect the UI components to the stateful clients.
 
 * Errors generated from REST calls to the Azure Communication Services backend or the underlying SDK are caught by the stateful client. The next section describes this mechanism in detail.
 * Errors generated within the UI library packages are _unexpected_ (i.e., they are the result of a programming error in the UI library). Neither the end-user nor the surrounding application is expected to act on the errors. Thus, they aren't handled in the library. The recommended way to handle these errors is to use React `ErrorBoundary`.
