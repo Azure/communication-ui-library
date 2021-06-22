@@ -22,62 +22,69 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
 export interface TypingIndicatorStrings {
   /**
    * String template to use when one user is typing. Placeholders: [user].
-   * 
-   * Example: 
-   * ```typescript
-   *  <TypingIndicator
-        strings={{ multipleUsersAbbreviateOne: '{users} is typing...' }}
-        typingUsers={[{ userId: 'user1', displayName: 'Claire' }]}
-      />
-    ```
-   *  would be 'Claire is typing...'
    */
+  /*
+  Example: 
+  ```typescript
+  <TypingIndicator
+    strings={{ multipleUsersAbbreviateOne: '{users} is typing...' }}
+    typingUsers={[{ userId: 'user1', displayName: 'Claire' }]}
+  />
+  ```
+  would be 'Claire is typing...'
+  */
   singleUser: string;
   /**
    * String template to use when multiple users are typing. Placeholders: [users].
-   * Example:
-   * ```typescript
-   *  <TypingIndicator
-        strings={{ multipleUsers: '{users} are typing...' }}
-        typingUsers={[
-          { userId: 'user1', displayName: 'Claire' },
-          { userId: 'user2', displayName: 'Chris' }
-        ]}
-      />
-      ```
-   *  would be 'Claire, Chris are typing...'
    */
+  /*
+  Example:
+  ```typescript
+  <TypingIndicator
+    strings={{ multipleUsers: '{users} are typing...' }}
+    typingUsers={[
+      { userId: 'user1', displayName: 'Claire' },
+      { userId: 'user2', displayName: 'Chris' }
+    ]}
+  />
+  ```
+  would be 'Claire, Chris are typing...'
+  */
   multipleUsers: string;
   /**
    * String template to use when multiple users are typing with one other user abbreviated. Placeholders: [users].
-   * Example:
-   * ```typescript
-   * <TypingIndicator
-        strings={{ multipleUsersAbbreviateOne: '{users} and 1 other are typing...' }}
-        typingUsers={[
-          { userId: 'user1', displayName: 'Claire Romanov' },
-          { userId: 'user2', displayName: 'Chris Rutherford' }
-        ]}
-      />
-      ```
-   *  would be 'Claire Romanov and 1 other are typing...'
    */
+  /*
+  Example:
+  ```typescript
+  <TypingIndicator
+    strings={{ multipleUsersAbbreviateOne: '{users} and 1 other are typing...' }}
+    typingUsers={[
+      { userId: 'user1', displayName: 'Claire Romanov' },
+      { userId: 'user2', displayName: 'Chris Rutherford' }
+    ]}
+  />
+  ```
+  would be 'Claire Romanov and 1 other are typing...'
+  */
   multipleUsersAbbreviateOne: string;
   /**
    * String template to use when multiple users are typing with one other user abbreviated. Placeholders: [users].
-   * Example:
-   * ```typescript
-   * <TypingIndicator
-        strings={{ multipleUsersAbbreviateMany: '{users} and {numOthers} others are typing...' }}
-        typingUsers={[
-          { userId: 'user1', displayName: 'Claire Romanov' },
-          { userId: 'user2', displayName: 'Chris Rutherford' },
-          { userId: 'user3', displayName: 'Jill Vernblom' }
-        ]}
-      />
-      ```
-   *  would be 'Claire Romanov and 2 others are typing...'
    */
+  /*
+  Example:
+  ```typescript
+  <TypingIndicator
+    strings={{ multipleUsersAbbreviateMany: '{users} and {numOthers} others are typing...' }}
+    typingUsers={[
+      { userId: 'user1', displayName: 'Claire Romanov' },
+      { userId: 'user2', displayName: 'Chris Rutherford' },
+      { userId: 'user3', displayName: 'Jill Vernblom' }
+    ]}
+  />
+  ```
+  would be 'Claire Romanov and 2 others are typing...'
+  */
   multipleUsersAbbreviateMany: string;
 }
 
