@@ -4,10 +4,10 @@
     "menuTitle": "More Options"
   },
   "typingIndicatorStrings": {
-    "singular": "{users} is typing ...",
-    "plural": "{users} are typing ...",
-    "shortenedPlural": "{users} and 1 other are typing ...",
-    "shortenedPlural2": "{users} and {numOthers} others are typing ..."
+    "singleUser": "{user} is typing ...",
+    "multipleUsers": "{users} are typing ...",
+    "multipleUsersAbbreviateOne": "{users} and 1 other are typing ...",
+    "multipleUsersAbbreviateMany": "{users} and {numOthers} others are typing ..."
   },
   "endCallButtonStrings": {
     "text": "Leave"

@@ -1384,7 +1384,7 @@ export const TypingIndicator: (props: TypingIndicatorProps) => JSX.Element;
 // @public
 export interface TypingIndicatorProps {
     onRenderUsers?: (users: CommunicationParticipant[]) => JSX.Element;
-    strings?: TypingIndicatorStrings;
+    strings?: Partial<TypingIndicatorStrings>;
     styles?: TypingIndicatorStylesProps;
     typingUsers: CommunicationParticipant[];
 }
@@ -1400,10 +1400,10 @@ export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClie
 
 // @public
 export interface TypingIndicatorStrings {
-    plural: string;
-    shortenedPlural: string;
-    shortenedPlural2: string;
-    singular: string;
+    multipleUsers: string;
+    multipleUsersAbbreviateMany: string;
+    multipleUsersAbbreviateOne: string;
+    singleUser: string;
 }
 
 // @public (undocumented)

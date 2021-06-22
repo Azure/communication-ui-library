@@ -20,14 +20,65 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
  * Strings of TypingIndicator that can be overridden
  */
 export interface TypingIndicatorStrings {
-  /** String to use when one user is typing */
-  singular: string;
-  /** String to use when multiple users are typing */
-  plural: string;
-  /** String to use when multiple users are typing with one other user abbreviated */
-  shortenedPlural: string;
-  /** String to use when multiple users are typing with multiple other users abbreviated */
-  shortenedPlural2: string;
+  /**
+   * String template to use when one user is typing. Placeholders: [user].
+   * 
+   * Example: 
+   * ```typescript
+   *  <TypingIndicator
+        strings={{ multipleUsersAbbreviateOne: '{users} is typing...' }}
+        typingUsers={[{ userId: 'user1', displayName: 'Claire' }]}
+      />
+    ```
+   *  would be 'Claire is typing...'
+   */
+  singleUser: string;
+  /**
+   * String template to use when multiple users are typing. Placeholders: [users].
+   * Example:
+   * ```typescript
+   *  <TypingIndicator
+        strings={{ multipleUsers: '{users} are typing...' }}
+        typingUsers={[
+          { userId: 'user1', displayName: 'Claire' },
+          { userId: 'user2', displayName: 'Chris' }
+        ]}
+      />
+      ```
+   *  would be 'Claire, Chris are typing...'
+   */
+  multipleUsers: string;
+  /**
+   * String template to use when multiple users are typing with one other user abbreviated. Placeholders: [users].
+   * Example:
+   * ```typescript
+   * <TypingIndicator
+        strings={{ multipleUsersAbbreviateOne: '{users} and 1 other are typing...' }}
+        typingUsers={[
+          { userId: 'user1', displayName: 'Claire Romanov' },
+          { userId: 'user2', displayName: 'Chris Rutherford' }
+        ]}
+      />
+      ```
+   *  would be 'Claire Romanov and 1 other are typing...'
+   */
+  multipleUsersAbbreviateOne: string;
+  /**
+   * String template to use when multiple users are typing with one other user abbreviated. Placeholders: [users].
+   * Example:
+   * ```typescript
+   * <TypingIndicator
+        strings={{ multipleUsersAbbreviateMany: '{users} and {numOthers} others are typing...' }}
+        typingUsers={[
+          { userId: 'user1', displayName: 'Claire Romanov' },
+          { userId: 'user2', displayName: 'Chris Rutherford' },
+          { userId: 'user3', displayName: 'Jill Vernblom' }
+        ]}
+      />
+      ```
+   *  would be 'Claire Romanov and 2 others are typing...'
+   */
+  multipleUsersAbbreviateMany: string;
 }
 
 /**
@@ -50,7 +101,7 @@ export interface TypingIndicatorProps {
   /**
    * Optional strings to override in component
    */
-  strings?: TypingIndicatorStrings;
+  strings?: Partial<TypingIndicatorStrings>;
 }
 
 const MAXIMUM_LENGTH_OF_TYPING_USERS = 35;
@@ -83,29 +134,41 @@ const getIndicatorComponents = (
 
   const countOfUsersNotMentioned = typingUsers.length - typingUsersMentioned.length;
 
+  const usersElement = onRenderUsers ? (
+    onRenderUsers(typingUsers)
+  ) : (
+    <Stack className={mergeStyles(typingIndicatorStringStyle, styles?.typingUserDisplayName)}>
+      {typingUsersMentioned.join(', ')}
+    </Stack>
+  );
+  let variables = {};
   let typingString = '';
   if (typingUsers.length === 1) {
-    typingString = strings.singular;
+    typingString = strings.singleUser;
+    variables = {
+      user: usersElement
+    };
   } else if (typingUsers.length > 1 && countOfUsersNotMentioned === 0) {
-    typingString = strings.plural;
+    typingString = strings.multipleUsers;
+    variables = {
+      users: usersElement
+    };
   } else if (typingUsers.length > 1 && countOfUsersNotMentioned === 1) {
-    typingString = strings.shortenedPlural;
+    typingString = strings.multipleUsersAbbreviateOne;
+    variables = {
+      users: usersElement
+    };
   } else if (typingUsers.length > 1 && countOfUsersNotMentioned > 1) {
-    typingString = strings.shortenedPlural2;
+    typingString = strings.multipleUsersAbbreviateMany;
+    variables = {
+      users: usersElement,
+      numOthers: <>`${countOfUsersNotMentioned}`</>
+    };
   }
 
   return (
     <Stack horizontal className={mergeStyles(typingIndicatorStringStyle, styles?.typingString)} key="typingStringKey">
-      {formatElements(typingString, {
-        users: onRenderUsers ? (
-          onRenderUsers(typingUsers)
-        ) : (
-          <Stack className={mergeStyles(typingIndicatorStringStyle, styles?.typingUserDisplayName)}>
-            {typingUsersMentioned.join(', ')}
-          </Stack>
-        ),
-        numOthers: <>`${countOfUsersNotMentioned}`</>
-      })}
+      {formatElements(typingString, variables)}
     </Stack>
   );
 };
@@ -123,7 +186,7 @@ export const TypingIndicator = (props: TypingIndicatorProps): JSX.Element => {
 
   return (
     <Stack className={mergeStyles(typingIndicatorContainerStyle, styles?.root)}>
-      {getIndicatorComponents(typingUsersToRender, strings ?? typingIndicatorStrings, onRenderUsers, styles)}
+      {getIndicatorComponents(typingUsersToRender, { ...typingIndicatorStrings, ...strings }, onRenderUsers, styles)}
     </Stack>
   );
 };

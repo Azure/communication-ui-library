@@ -4,10 +4,10 @@
     "menuTitle": "المزيد من الخيارات"
   },
   "typingIndicatorStrings": {
-    "singular": "... ج يكتب  {users}",
-    "plural": "... يكتبون  {users}",
-    "shortenedPlural": "... ج وشخص آخر يكتبون  {users}",
-    "shortenedPlural2": "... آخرون يكتبون {numOthers} ج و  {users}"
+    "singleUser": "... ج يكتب  {user}",
+    "multipleUsers": "... يكتبون  {users}",
+    "multipleUsersAbbreviateOne": "... ج وشخص آخر يكتبون  {users}",
+    "multipleUsersAbbreviateMany": "... آخرون يكتبون {numOthers} ج و  {users}"
   },
   "endCallButtonStrings": {
     "text": "غادر"

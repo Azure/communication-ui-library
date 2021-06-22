@@ -4,10 +4,10 @@
     "menuTitle": "Mehr Optionen"
   },
   "typingIndicatorStrings": {
-    "singular": "{users} tippt ...",
-    "plural": "{users} tippen gerade ...",
-    "shortenedPlural": "{users} und 1 anderer tippen gerade ...",
-    "shortenedPlural2": "{users} und {numOthers} andere tippen gerade ..."
+    "singleUser": "{user} tippt ...",
+    "multipleUsers": "{users} tippen gerade ...",
+    "multipleUsersAbbreviateOne": "{users} und 1 anderer tippen gerade ...",
+    "multipleUsersAbbreviateMany": "{users} und {numOthers} andere tippen gerade ..."
   },
   "endCallButtonStrings": {
     "text": "Verlassen"
