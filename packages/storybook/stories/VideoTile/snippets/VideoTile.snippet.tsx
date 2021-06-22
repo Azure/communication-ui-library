@@ -12,6 +12,8 @@ export const VideoTileExample: () => JSX.Element = () => {
       <VideoTile
         styles={videoTileStyles}
         displayName={'Maximus Aurelius'}
+        showMuteIndicator={true}
+        isMuted={true}
         renderElement={
           // NOTE: Replace with your own video provider. (An html element with video stream)
           <StreamMedia videoStreamElement={videoStreamElement} />
