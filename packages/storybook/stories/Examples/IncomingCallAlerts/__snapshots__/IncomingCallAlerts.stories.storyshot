@@ -260,6 +260,9 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
                                   John Doe
                                 </span>
                               </div>
+                              <div
+                                className="ms-StackItem css-55"
+                              />
                             </div>
                           </div>
                         </div>

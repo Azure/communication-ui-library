@@ -75,6 +75,9 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts One To One Call La
                 Holly
               </span>
             </div>
+            <div
+              className="ms-StackItem css-28"
+            />
           </div>
           <div
             className="ms-Stack css-30"
@@ -110,7 +113,11 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts One To One Call La
               </div>
               <div
                 className="ms-Stack css-80 css-27"
-              />
+              >
+                <div
+                  className="ms-StackItem css-28"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -202,6 +209,9 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layou
                         Michael
                       </span>
                     </div>
+                    <div
+                      className="ms-StackItem css-34"
+                    />
                   </div>
                 </div>
               </div>
@@ -253,6 +263,9 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layou
                         Jim
                       </span>
                     </div>
+                    <div
+                      className="ms-StackItem css-34"
+                    />
                   </div>
                 </div>
               </div>
@@ -304,6 +317,9 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layou
                         Pam
                       </span>
                     </div>
+                    <div
+                      className="ms-StackItem css-34"
+                    />
                   </div>
                 </div>
               </div>
@@ -355,6 +371,9 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layou
                         Dwight
                       </span>
                     </div>
+                    <div
+                      className="ms-StackItem css-34"
+                    />
                   </div>
                 </div>
               </div>
@@ -406,6 +425,9 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layou
                         Kelly
                       </span>
                     </div>
+                    <div
+                      className="ms-StackItem css-34"
+                    />
                   </div>
                 </div>
               </div>
@@ -457,6 +479,9 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layou
                         Ryan
                       </span>
                     </div>
+                    <div
+                      className="ms-StackItem css-34"
+                    />
                   </div>
                 </div>
               </div>
@@ -508,6 +533,9 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layou
                         Andy
                       </span>
                     </div>
+                    <div
+                      className="ms-StackItem css-34"
+                    />
                   </div>
                 </div>
               </div>
@@ -535,7 +563,11 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layou
             </div>
             <div
               className="ms-Stack css-80 css-33"
-            />
+            >
+              <div
+                className="ms-StackItem css-34"
+              />
+            </div>
             <div
               className="ms-Stack css-46"
             >
@@ -570,7 +602,11 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layou
                 </div>
                 <div
                   className="ms-Stack css-80 css-33"
-                />
+                >
+                  <div
+                    className="ms-StackItem css-34"
+                  />
+                </div>
               </div>
             </div>
           </div>

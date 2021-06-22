@@ -317,6 +317,9 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         Michael
                       </span>
                     </div>
+                    <div
+                      className="ms-StackItem css-5"
+                    />
                   </div>
                 </div>
               </div>
