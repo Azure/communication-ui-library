@@ -57,3 +57,5 @@ export type { ScreenShareButtonProps } from './ScreenShareButton';
 
 export { VideoTile } from './VideoTile';
 export type { VideoTileProps, VideoTileStylesProps, PlaceholderProps } from './VideoTile';
+
+export { controlButtonStyles as defaultControlButtonStyle } from './styles/ControlBar.styles';

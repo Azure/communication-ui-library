@@ -12,6 +12,7 @@ import { PlaceholderProps } from 'react-components';
 import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
 import { FluentThemeProvider } from 'react-components';
+import { OverridableCallControlButton } from './CallControls';
 
 export type CallCompositeProps = {
   adapter: CallAdapter;
@@ -23,15 +24,22 @@ export type CallCompositeProps = {
   fluentTheme?: PartialTheme | Theme;
   callInvitationURL?: string;
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+  onRenderCallControlButtons?: (defaultButtons: OverridableCallControlButton[]) => JSX.Element[];
 };
 
 type MainScreenProps = {
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+  onRenderCallControlButtons?: (defaultButtons: OverridableCallControlButton[]) => JSX.Element[];
   screenWidth: number;
   callInvitationURL?: string;
 };
 
-const MainScreen = ({ screenWidth, callInvitationURL, onRenderAvatar }: MainScreenProps): JSX.Element => {
+const MainScreen = ({
+  screenWidth,
+  callInvitationURL,
+  onRenderAvatar,
+  onRenderCallControlButtons
+}: MainScreenProps): JSX.Element => {
   const page = useSelector(getPage);
   const adapter = useAdapter();
   switch (page) {
@@ -65,6 +73,7 @@ const MainScreen = ({ screenWidth, callInvitationURL, onRenderAvatar }: MainScre
             customPage ? adapter.setPage(customPage) : adapter.setPage('error');
           }}
           onRenderAvatar={onRenderAvatar}
+          onRenderCallControlButtons={onRenderCallControlButtons}
           screenWidth={screenWidth}
           showParticipants={true}
           callInvitationURL={callInvitationURL}
@@ -105,6 +114,7 @@ export const Call = (props: CallCompositeProps): JSX.Element => {
           <MainScreen
             screenWidth={screenWidth}
             onRenderAvatar={props.onRenderAvatar}
+            onRenderCallControlButtons={props.onRenderCallControlButtons}
             callInvitationURL={callInvitationURL}
           />
         </Stack>

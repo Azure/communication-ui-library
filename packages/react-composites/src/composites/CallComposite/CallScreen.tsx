@@ -21,7 +21,7 @@ import { callStatusSelector } from './selectors/callStatusSelector';
 import { mediaGallerySelector } from './selectors/mediaGallerySelector';
 import { useHandlers } from './hooks/useHandlers';
 import { PlaceholderProps, VideoStreamOptions } from 'react-components';
-import { CallControls } from './CallControls';
+import { CallControls, OverridableCallControlButton } from './CallControls';
 import { ComplianceBanner } from './ComplianceBanner';
 import { lobbySelector } from './selectors/lobbySelector';
 import { Lobby } from './Lobby';
@@ -40,12 +40,21 @@ export interface CallScreenProps {
   endCallHandler(): void;
   callErrorHandler(customPage?: CallCompositePage): void;
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+  onRenderCallControlButtons?: (defaultButtons: OverridableCallControlButton[]) => JSX.Element[];
 }
 
 const spinnerLabel = 'Initializing call client...';
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
-  const { callInvitationURL, screenWidth, showParticipants, endCallHandler, callErrorHandler, onRenderAvatar } = props;
+  const {
+    callInvitationURL,
+    screenWidth,
+    showParticipants,
+    endCallHandler,
+    callErrorHandler,
+    onRenderAvatar,
+    onRenderCallControlButtons
+  } = props;
 
   const [joinedCall, setJoinedCall] = useState<boolean>(false);
 
@@ -155,6 +164,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
                 compressedMode={screenWidth <= MINI_HEADER_WINDOW_WIDTH}
                 showParticipants={showParticipants}
                 callInvitationURL={callInvitationURL}
+                onRenderCallControlButtons={onRenderCallControlButtons}
               />
             </Stack>
           </Stack.Item>
