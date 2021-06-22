@@ -5,24 +5,25 @@
 
 This document describes how errors are handled within the ACS UI library and how they are reported to the surrounding application.
 
-## Error sources
+Different error handling strategies are employed when using the composites or the components library. Let's look at each in turn.
 
-There are two categories of errors, and they are handled differently.
+## Components library
 
-1. ACS backend errors: Errors returned by the REST calls to ACS backend services.
+An application built using the components library uses the stateful clients to make REST calls to the Azure Communication Services backends. It uses the pure UI components and the component bindings package to  connect the UI components to the stateful clients.
 
-   1. These can be transient or permanent (special case: permission error from REST API).
+* Errors generated from REST calls to the Azure Communication Services backend or the underlying SDK are caught by the stateful client. The next section describes this mechanism in detail.
+* Errors generated within the UI library packages are _unexpected_ (i.e., they are the result of a programming error in the UI library). Neither the end-user nor the surrounding application is expected to act on the errors. Thus, they aren't handled in the library. The recommended way to handle these errors is to use React `ErrorBoundary`.
 
-2. UI errors: Programming errors in the UI library / errors returned from other browser APIs. This is a catch-all for all errors not generated from the ACS SDK libraries.
+      **TODO: Add storybook example of using ErrorBoundary**
 
-## ACS backend errors
+### Error handling in stateful clients
 
-Handling ACS backend errors is challenging when using either the composites or the pure components with the react bindings provided by the ACS UI library:
+Handling Azure Communication Services backend errors is challenging because:
 
-* ACS backend API calls are asynchronous
-* ACS backend API calls are often initiated outside of the React component lifecycle methods (e.g on interaction handler callbacks or `useEffect` blocks).
+* Backend API calls are asynchronous
+* Backend API calls are often initiated outside of the React component lifecycle methods (e.g on interaction handler callbacks or `useEffect` blocks).
 
-But in both cases, all ACS backend API calls are mediated by the (chat and calling) stateful clients. Thus, the stateful client tees errors to a special field in the state:
+But in both cases, all backend API calls are mediated by the (chat and calling) stateful clients. The stateful client tees errors to a special field in the state:
 
 ```ts
 interface CallClientState {
@@ -46,9 +47,9 @@ Stateful client API method calls continue to return errors (e.g. as a failed pro
 
 The stateful clients stores the most recent errors per method, evicting older errors if necessary. The number of errors stored can be configured, or set to -1 to disable deletion of older errors. e.g., the composites disable error eviction in the stateful client and delete older errors themselves. By default, only the most recent error is stored.
 
-The errors in the state enables UI library components that act on some errors (e.g., disabling `SendBox` in case no messages can be sent), components that surface UI errors, and adapters that generate error events for the surrounding application.
+The errors in the state enables UI library components that act on some errors (e.g., disabling `SendBox` in case no messages can be sent), components that surface UI errors, and adapter implementations that generate error events for the surrounding application.
 
-### Clearing errors
+#### Clearing errors
 
 Errors in the state are cleared in one of two ways:
 
@@ -78,20 +79,21 @@ The ACS UI library includes an error bar component and corresponding react compo
   * Permission error when connecting to ACS backend.
   * Permission error in using local devices (microphone, speaker, camera).
 
-### Composite
+## Composites library
 
-Adapters contain all the state and business logic required for the composite UI. Also, the adapter API can technically be implemented without the ACS backend (or stateful libraries). Thus, error reporting must not be coupled with the stateful types, and must handle errors in operations not implemented via the stateful backend. Adapters extend the strategy for how state is handled currently to error reporting:
+In the composites library, the Adapter API provides an abstraction for all the state and business logic required for the UI. The adapter API is decoupled from the components library, but the default implementation uses the UI component and stateful packages.
 
-* All errors are teed to an `errors` field, with similar semantics to the stateful client described above.
-  * In case of the ACS implementation of the adapter API, the `errors` field is a generated from the statefule `errors` fields. Additional errors not generated from ACS backend are added.
-  * An adaptedSelector is used to transform the error back into the correct shape for the `ErrorBar` and other components.
-* Additionally, the error is reported to the surrounding application via an `on('error')` event.
+Error handling in the composites library follows the same principles as the components library but is decoupled from the exact types.
 
-Composites surface errors to the UI using the error bar component.
+* The adapter API includes an `errors` field, with similar semantics to the stateful client described above. The expectation is that all errors generated in the implementation of the adapter are teed to the `errors` field. The adapter API also reports the error to the surrounding application via an `on('error')` event.
+  * In the default implementation of the adapter API, the `errors` field is a generated from the stateful `errors` fields. Additional errors not generated in the stateful client may be added. An `adaptedSelector` is used to transform the error back into the correct shape for the `ErrorBar` and other components.
+* Errors generated in the UI components are not handled. The recommended way to handle these errors is to use React `ErrorBoundary`.
 
-### Error flow diagram
+Composites surface errors to the UI using the `ErrorBar` component from the components library.
 
-The following diagram describes how en error in sending a message flows throw an application. The application uses the `ChatComposite`, which includes the `SendBox` and `ErrorBar` components.
+## Error flow diagram
+
+The following diagram describes how en error in sending a message flows throw an application for the default implementation of `ChatComposite`. The application uses the `ChatComposite`, which includes the `SendBox` and `ErrorBar` components.
 
     Application                     ChatComposite                        StatefulChatClient                  Chat backend
     ===========                     =============                        ==================                  ============
@@ -129,16 +131,16 @@ The following diagram describes how en error in sending a message flows throw an
   * The `ErrorBar` gets updated based on the state update.
   * The `ChatComposite` also updates its own internal state and triggers an event that the application acts on.
 
-## UI errors
+## Browser compatibility
 
-These errors are _unexpected_ in that the UI library has a bug or is unable to handle an error from the browser. Neither the end-user, nor the surrounding application, is expected to act on the errors. As such, they aren't handled via the mechanism used for ACS backend errors.
+A special case of errors are errors due to browser incompatibility.
 
-The recommended way to handle these errors is to use React `ErrorBoundary`.
+* The Azure Communication Services SDKs only support some OS platform and browser configurations. Thus, the components library may not work correctly on other browser (versions).
+* Default implementation of the adapter API in the composite library has the same limitation.
+* A custom implementation of the adapter API might have it's own browser support limitations.
 
-    TODO: Add storybook example of using `ErrorBoundary`
+The surrounding application may have a more restrictive browser support matrix due to other dependencies and its own way to notify the user of supported browsers. The application may even use polyfills to prevent the errors. Thus, the UI library does not determine browser compatibility at runtime.
 
-### Browser compatibility
-
-A special case of UI errors are errors due to browser incompatibility. The UI library does not determine browser compatibility at runtime. Any errors arising on unsupported browser (versions) are considered UI errors. The surrounding application can decide how to handle browser compatibility - e.g. by checking and warning end-users about browser versions or using polyfills where applicable. e.g. The samples included in this repository include a browser compatibility check.
+e.g., the samples included in this repository are built atop the Azure Communication Services SDKs and include a browser compatibility check.
 
     TODO: Actually add the browser compatibility check in the sample apps.
