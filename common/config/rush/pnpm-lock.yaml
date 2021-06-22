@@ -31,13 +31,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-jjkAcO+dFKl6fjdI62mgImF7VJ48vRs6PfR5TfuswZQ758k1bHxnJfi8T1jS8F5JcBJGEzoUsaFCQD8Ae2eFgg==
-  /@azure/communication-calling/1.1.0-beta.1:
+  /@azure/communication-calling/1.1.0-beta.2:
     dependencies:
       '@azure/communication-common': 1.0.0
       '@azure/logger': 1.0.2
     dev: false
     resolution:
-      integrity: sha512-jaAhfQK7+YNhXYpieurt9VH4KayR7EUc0NF3LCUeHs6seeqDJWYh6y3SVrhH2z08f4dY0ZyqK+vX7Rg/Hq6SNg==
+      integrity: sha512-Gjt2Ym8S/WrlL5e6Qe/gAbDa5d9acmOnOm8jPDaRZVn7oS6j8AfSYMvCdx+ILKGjjzThXdN+1/v1ReZfEjzE+A==
   /@azure/communication-chat/1.0.0:
     dependencies:
       '@azure/abort-controller': 1.0.4
@@ -20730,7 +20730,7 @@ packages:
     version: 0.0.0
   file:projects/calling-component-bindings.tgz:
     dependencies:
-      '@azure/communication-calling': 1.1.0-beta.1
+      '@azure/communication-calling': 1.1.0-beta.2
       '@azure/communication-common': 1.0.0
       '@microsoft/api-documenter': 7.12.22
       '@types/jest': 26.0.23
@@ -20754,12 +20754,12 @@ packages:
     dev: false
     name: '@rush-temp/calling-component-bindings'
     resolution:
-      integrity: sha512-kTWld+LbF+Eg3dfi32sFv5lpE5mYOwin9ajdFJG2+MwpXz7dOhl86ODV4NlVlMsQ3c0h3yHnM77IJzkgMMObKg==
+      integrity: sha512-xpWw0lHNs3mBXEXptCIv21P7jH30x+WtT3lBC/ULYY2zkwpNXg5usqQi7ttySDTU9asMuQQolU3ykH7qd7j0vA==
       tarball: file:projects/calling-component-bindings.tgz
     version: 0.0.0
   file:projects/calling-stateful-client.tgz:
     dependencies:
-      '@azure/communication-calling': 1.1.0-beta.1
+      '@azure/communication-calling': 1.1.0-beta.2
       '@azure/communication-common': 1.0.0
       '@microsoft/api-documenter': 7.12.22
       '@types/jest': 26.0.23
@@ -20782,12 +20782,12 @@ packages:
     dev: false
     name: '@rush-temp/calling-stateful-client'
     resolution:
-      integrity: sha512-Xh+qcQQrcMlHZ0pO3vK9WEQnefZOl9bHsvXhcUlnlNM2sX9S2j0pKjs9XyHxftRXA5/DLG8311+FtETLM55C4w==
+      integrity: sha512-r9emSu196PTH/dB5z6RVNIUnH+2JsRDnoin1cSv76ThC4jS+dIZ+QPqzJv3VKfnCADMj/sNQNSbuhLVt0Cm+Mg==
       tarball: file:projects/calling-stateful-client.tgz
     version: 0.0.0
   file:projects/calling.tgz:
     dependencies:
-      '@azure/communication-calling': 1.1.0-beta.1
+      '@azure/communication-calling': 1.1.0-beta.2
       '@azure/communication-common': 1.0.0
       '@azure/communication-identity': 1.0.0
       '@azure/core-http': 1.2.5
@@ -20850,7 +20850,7 @@ packages:
     dev: false
     name: '@rush-temp/calling'
     resolution:
-      integrity: sha512-Bf09rdLQKzO86tyE8xmBAio+2QStU8bnrvAvmb7EXIHZjUHSVC90VpnP6YArLKiD5r1UynJbuXIem0FJSuh16g==
+      integrity: sha512-RU5ktt9xBI7dHIhcsdektme9DrYevTZ9Lg0/E8dpv0h1RrLDjKVZogLCEXIXzv1BEPK+7YGXGASQ/6K3eTYANw==
       tarball: file:projects/calling.tgz
     version: 0.0.0
   file:projects/chat-component-bindings.tgz:
@@ -20975,7 +20975,7 @@ packages:
     version: 0.0.0
   file:projects/communication-react.tgz:
     dependencies:
-      '@azure/communication-calling': 1.0.1-beta.1
+      '@azure/communication-calling': 1.1.0-beta.2
       '@azure/communication-chat': 1.0.0
       '@azure/communication-common': 1.0.0
       '@azure/communication-signaling': 1.0.0-beta.5
@@ -21040,7 +21040,7 @@ packages:
     dev: false
     name: '@rush-temp/communication-react'
     resolution:
-      integrity: sha512-4ZI+yxBXE5UodsQYQXkGFqcRPd0wWvLNQiagex/v6pCCTRgmeCtY+3bFbEnbjzKIHGapZphzKY8N/z3FnwdVfg==
+      integrity: sha512-Hc9eY5dGqwvj1JdDOzWSH0V9OrIlepuVpvN//ZiOgDNiSUOjmwbAAOY4hTouxFBcE7sh8o3eeQ2IO9ElghfBTw==
       tarball: file:projects/communication-react.tgz
     version: 0.0.0
   file:projects/react-components.tgz:
@@ -21114,7 +21114,7 @@ packages:
     version: 0.0.0
   file:projects/react-composites.tgz:
     dependencies:
-      '@azure/communication-calling': 1.1.0-beta.1
+      '@azure/communication-calling': 1.1.0-beta.2
       '@azure/communication-chat': 1.0.0
       '@azure/communication-common': 1.0.0
       '@azure/communication-signaling': 1.0.0-beta.5
@@ -21185,7 +21185,7 @@ packages:
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-rPGVH30Okh+XW3VNJCz59YcxAON5xBnh/4Yqr1ZURVSPefxmQdRRqqK7h5T7L2mLARMOR1Ir7lAjPEUN3SLqvw==
+      integrity: sha512-VnOzAHjaa1TMdRedlhVSm0CNr/IlgcmA94YrZ08ubm4IrFMGvfVYUf8BlwHyY0YCm45yTrt0TQnmkaRIuE3ibA==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/sample-static-html-composites.tgz:
