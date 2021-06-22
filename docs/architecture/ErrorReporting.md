@@ -28,7 +28,7 @@ But in both cases, all backend API calls are mediated by the (chat and calling) 
 ```ts
 interface CallClientState {
     // ... other fields ...
-    errors: { [key: SdkClientMethod]: ErrorState[];
+    errors: { [key: SdkClientMethod]: ErrorState[] };
 }
 
 type SdkClientMethod = 'CallClient.createCallAgent' | 'CallClient.getDeviceManager'; // ... and many more
