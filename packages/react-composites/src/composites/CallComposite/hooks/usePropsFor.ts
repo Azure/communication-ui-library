@@ -13,7 +13,7 @@ export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component
 ): GetCallingSelector<Component> extends Selector
   ? ReturnType<GetCallingSelector<Component>> & Common<DefaultCallingHandlers, Parameters<Component>[0]>
-  : {} => {
+  : Record<string, never> => {
   const selector = getCallingSelector(component);
   if (!selector) {
     throw new Error("Can't find the selector for component, please check supported component list");

@@ -13,7 +13,7 @@ export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component
 ): GetChatSelector<Component> extends Selector
   ? ReturnType<GetChatSelector<Component>> & Common<DefaultChatHandlers, Parameters<Component>[0]>
-  : {} => {
+  : Record<string, never> => {
   const selector = getChatSelector(component);
   if (!selector) {
     throw new Error("Can't find the selector for component, please check supported component list");
