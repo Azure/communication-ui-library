@@ -401,6 +401,7 @@ export interface VideoGalleryProps {
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoViewOption?: VideoStreamOptions;
+    showMuteIndicator?: boolean;
     styles?: BaseCustomStylesProps;
 }
 
@@ -431,10 +432,11 @@ export const VideoTile: (props: VideoTileProps) => JSX.Element;
 export interface VideoTileProps extends PlaceholderProps {
     children?: React_2.ReactNode;
     isMirrored?: boolean;
+    isMuted?: boolean;
     isVideoReady?: boolean;
     onRenderPlaceholder?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element | null;
     renderElement?: JSX.Element | null;
-    showDisplayName?: boolean;
+    showMuteIndicator?: boolean;
     styles?: VideoTileStylesProps;
 }
 
