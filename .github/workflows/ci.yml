@@ -31,7 +31,7 @@ jobs:
           path: |
             common/temp/pnpm-store
             common/temp/node_modules
-          key: ${{ hashFiles('common\config\rush\pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       # Install dependencies
       - name: Install rush
         run: npm install -g @microsoft/rush@5.47.0
@@ -84,7 +84,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: common/temp/pnpm-store
-          key: ${{ hashFiles('common\config\rush\pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
@@ -110,7 +110,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: common/temp/pnpm-store
-          key: ${{ hashFiles('common\config\rush\pnpm-lock.yaml') }}
+          key: ${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
@@ -135,7 +135,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: common/temp/pnpm-store
-          key: ${{ hashFiles('common\config\rush\pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
