@@ -51,9 +51,11 @@ const webpackConfig = (sampleAppDir, env) => ({
     new webpack.DefinePlugin({
       'process.env.PRODUCTION': env.production || !env.development,
       'process.env.NAME': JSON.stringify(require(path.resolve(sampleAppDir, 'package.json')).name),
-      'process.env.VERSION': JSON.stringify(require(path.resolve(sampleAppDir, 'package.json')).version)
+      'process.env.VERSION': JSON.stringify(require(path.resolve(sampleAppDir, 'package.json')).version),
+      __CALLINGVERSION__: JSON.stringify(require(path.resolve(sampleAppDir, 'package.json')).dependencies['@azure/communication-calling']),
+      __CHATVERSION__: JSON.stringify(require(path.resolve(sampleAppDir, 'package.json')).dependencies['@azure/communication-chat']),
+      __BUILDTIME__: JSON.stringify(new Date().toLocaleString())
     }),
-    new webpack.DefinePlugin({ __BUILDTIME__: JSON.stringify(new Date().toLocaleString()) })
   ],
   devServer: {
     port: 3000,

@@ -7,6 +7,9 @@ on:
       - packages/storybook/**
       - packages/react-components/**
       - packages/react-composites/**
+      - packages/communication-react/**
+  push:
+    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -43,6 +46,7 @@ jobs:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
 
       - name: Add Storybook URL as Issue Comment
+        if: github.event_name == 'pull_request'
         uses: actions/github-script@v3
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
