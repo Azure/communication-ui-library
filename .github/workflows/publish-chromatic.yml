@@ -7,6 +7,9 @@ on:
       - packages/storybook/**
       - packages/react-components/**
       - packages/react-composites/**
+      - packages/communication-react/**
+  push:
+    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -27,9 +30,6 @@ jobs:
       - name: Install Dependencies
         run: rush install
 
-      - name: Build Storybook dependencies
-        run: rush build -T storybook
-
       - name: Publish Chromatic
         id: publish_chromatic
         uses: chromaui/action@v1
@@ -40,6 +40,7 @@ jobs:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
 
       - name: Add Storybook URL as Issue Comment
+        if: github.event_name == 'pull_request'
         uses: actions/github-script@v3
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}

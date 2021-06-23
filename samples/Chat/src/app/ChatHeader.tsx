@@ -17,7 +17,7 @@ import {
 } from './styles/ChatHeader.styles';
 import { SidePanelTypes } from './SidePanel';
 import { copyIconStyle } from './styles/InviteFooter.styles';
-import { CommunicationParticipant } from 'react-components';
+import { CommunicationParticipant } from '@azure/communication-react';
 
 export type ChatHeaderProps = {
   myUserId: string;

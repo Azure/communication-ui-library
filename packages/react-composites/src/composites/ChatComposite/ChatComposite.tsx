@@ -6,7 +6,12 @@ import { ChatScreen } from './ChatScreen';
 import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
 import { ChatAdapter } from './adapter/ChatAdapter';
 import { Theme, PartialTheme } from '@fluentui/react';
-import { FluentThemeProvider } from 'react-components';
+import {
+  CommunicationParticipant,
+  DefaultMessageRendererType,
+  FluentThemeProvider,
+  MessageProps
+} from 'react-components';
 
 export type ChatCompositeProps = {
   adapter: ChatAdapter;
@@ -16,7 +21,9 @@ export type ChatCompositeProps = {
    * Defaults to a light theme if undefined.
    */
   fluentTheme?: PartialTheme | Theme;
-  onRenderAvatar?: (userId: string) => JSX.Element;
+  onRenderAvatar?: (userId: string, avatarType?: 'chatThread' | 'participantList') => JSX.Element;
+  onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+  onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
   options?: ChatOptions;
 };
 
@@ -27,13 +34,18 @@ export type ChatOptions = {
 };
 
 export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
-  const { adapter, fluentTheme, options, onRenderAvatar } = props;
+  const { adapter, fluentTheme, options, onRenderAvatar, onRenderTypingIndicator, onRenderMessage } = props;
 
   return (
     <FluentThemeProvider fluentTheme={fluentTheme}>
       <ChatAdapterProvider adapter={adapter}>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
-        <ChatScreen sendBoxMaxLength={options?.sendBoxMaxLength} onRenderAvatar={onRenderAvatar} />
+        <ChatScreen
+          sendBoxMaxLength={options?.sendBoxMaxLength}
+          onRenderAvatar={onRenderAvatar}
+          onRenderTypingIndicator={onRenderTypingIndicator}
+          onRenderMessage={onRenderMessage}
+        />
       </ChatAdapterProvider>
     </FluentThemeProvider>
   );

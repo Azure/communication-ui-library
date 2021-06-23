@@ -172,7 +172,7 @@ const DefaultSystemMessageRenderer: DefaultMessageRendererType = (props: Message
 };
 
 // https://stackoverflow.com/questions/28899298/extract-the-text-out-of-html-string-using-javascript
-function extractContent(s): string {
+function extractContent(s: string): string {
   const span = document.createElement('span');
   span.innerHTML = s;
   return span.textContent || span.innerText;
@@ -184,7 +184,7 @@ const generateRichTextHTMLMessageContent = (payload: ChatMessagePayload): JSX.El
   return (
     <div>
       <LiveMessage
-        message={`${payload.mine ? '' : liveAuthor} ${extractContent(payload.content)}`}
+        message={`${payload.mine ? '' : liveAuthor} ${extractContent(payload.content || '')}`}
         aria-live="polite"
       />
       {htmlToReactParser.parse(payload.content)}
