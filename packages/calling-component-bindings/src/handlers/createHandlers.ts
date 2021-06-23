@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-// @ts-ignore
 import {
   AudioDeviceInfo,
   Call,
@@ -16,9 +15,6 @@ import { DeviceManagerState, StatefulCallClient, StatefulDeviceManager } from 'c
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
 import { VideoStreamOptions } from 'react-components';
-
-// @ts-ignore
-import { CommonProperties } from 'acs-ui-common';
 
 export type DefaultCallingHandlers = {
   onStartLocalVideo: () => Promise<void>;
@@ -96,9 +92,9 @@ export const createDefaultCallingHandlers = memoizeOne(
             // TODO: we need to remember which LocalVideoStream was used for LocalPreview and dispose that one. For now
             // assume any unparented view is a LocalPreview and stop all since those are only used for LocalPreview
             // currently.
-            for (const stream of callClient.getState().deviceManager.unparentedViews.keys()) {
-              await callClient.disposeView(undefined, undefined, stream);
-            }
+            callClient.getState().deviceManager.unparentedViews.forEach(async (view) => {
+              await callClient.disposeView(undefined, undefined, view);
+            });
           } else {
             await callClient.createView(
               undefined,
@@ -188,7 +184,7 @@ export const createDefaultCallingHandlers = memoizeOne(
         return;
       }
 
-      const callState = callClient.getState().calls.get(call.id);
+      const callState = callClient.getState().calls[call.id];
       if (!callState) {
         return;
       }
@@ -203,10 +199,10 @@ export const createDefaultCallingHandlers = memoizeOne(
 
     const onCreateRemoteStreamView = async (userId: string, options?: VideoStreamOptions): Promise<void> => {
       if (!call) return;
-      const callState = callClient.getState().calls.get(call.id);
+      const callState = callClient.getState().calls[call.id];
       if (!callState) throw new Error(`Call Not Found: ${call.id}`);
 
-      const participant = Array.from(callState.remoteParticipants.values()).find(
+      const participant = Object.values(callState.remoteParticipants).find(
         (participant) => toFlatCommunicationIdentifier(participant.identifier) === userId
       );
 
@@ -214,10 +210,8 @@ export const createDefaultCallingHandlers = memoizeOne(
         return;
       }
 
-      const remoteVideoStream = Array.from(participant.videoStreams.values()).find(
-        (i) => i.mediaStreamType === 'Video'
-      );
-      const screenShareStream = Array.from(participant.videoStreams.values()).find(
+      const remoteVideoStream = Object.values(participant.videoStreams).find((i) => i.mediaStreamType === 'Video');
+      const screenShareStream = Object.values(participant.videoStreams).find(
         (i) => i.mediaStreamType === 'ScreenSharing'
       );
 
@@ -232,10 +226,10 @@ export const createDefaultCallingHandlers = memoizeOne(
 
     const onDisposeRemoteStreamView = async (userId: string): Promise<void> => {
       if (!call) return;
-      const callState = callClient.getState().calls.get(call.id);
+      const callState = callClient.getState().calls[call.id];
       if (!callState) throw new Error(`Call Not Found: ${call.id}`);
 
-      const participant = Array.from(callState.remoteParticipants.values()).find(
+      const participant = Object.values(callState.remoteParticipants).find(
         (participant) => toFlatCommunicationIdentifier(participant.identifier) === userId
       );
 
@@ -243,10 +237,8 @@ export const createDefaultCallingHandlers = memoizeOne(
         return;
       }
 
-      const remoteVideoStream = Array.from(participant.videoStreams.values()).find(
-        (i) => i.mediaStreamType === 'Video'
-      );
-      const screenShareStream = Array.from(participant.videoStreams.values()).find(
+      const remoteVideoStream = Object.values(participant.videoStreams).find((i) => i.mediaStreamType === 'Video');
+      const screenShareStream = Object.values(participant.videoStreams).find(
         (i) => i.mediaStreamType === 'ScreenSharing'
       );
 
@@ -266,9 +258,9 @@ export const createDefaultCallingHandlers = memoizeOne(
         // TODO: we need to remember which LocalVideoStream was used for LocalPreview and dispose that one. For now
         // assume any unparented view is a LocalPreview and stop all since those are only used for LocalPreview
         // currently.
-        for (const stream of callClient.getState().deviceManager.unparentedViews.keys()) {
-          await callClient.disposeView(undefined, undefined, stream);
-        }
+        callClient.getState().deviceManager.unparentedViews.forEach(async (view) => {
+          await callClient.disposeView(undefined, undefined, view);
+        });
       }
     };
 
@@ -301,7 +293,7 @@ export const createDefaultCallingHandlers = memoizeOne(
 const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
   // TODO: we should take in a LocalVideoStream that developer wants to use as their 'Preview' view. We should also
   // handle cases where 'Preview' view is in progress and not necessary completed.
-  return deviceManager.unparentedViews.values().next().value?.view !== undefined;
+  return deviceManager.unparentedViews.length > 0 && deviceManager.unparentedViews[0].view !== undefined;
 };
 
 /**

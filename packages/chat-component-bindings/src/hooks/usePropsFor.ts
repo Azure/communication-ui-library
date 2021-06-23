@@ -7,18 +7,22 @@ import { useSelector } from './useSelector';
 import { sendBoxSelector } from '../sendBoxSelector';
 import { chatThreadSelector } from '../chatThreadSelector';
 import { typingIndicatorSelector } from '../typingIndicatorSelector';
-import { Common } from 'acs-ui-common';
-// @ts-ignore
-import { CommonProperties, AreEqual } from 'acs-ui-common';
-// @ts-ignore
+import { Common, AreEqual } from 'acs-ui-common';
 import { DefaultChatHandlers } from '../handlers/createHandlers';
 import { chatParticipantListSelector } from '../chatParticipantListSelector';
 
 export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component
-): ReturnType<GetSelector<Component>> & Common<DefaultChatHandlers, Parameters<Component>[0]> => {
+): GetSelector<Component> extends (props: any) => any
+  ? ReturnType<GetSelector<Component>> & Common<DefaultChatHandlers, Parameters<Component>[0]>
+  : undefined => {
   const selector = getSelector(component);
-  return { ...useSelector(selector), ...useHandlers<Parameters<Component>[0]>(component) };
+  const props = useSelector(selector);
+  const handlers = useHandlers<Parameters<Component>[0]>(component);
+  if (props !== undefined) {
+    return { ...props, ...handlers } as any;
+  }
+  return undefined as any;
 };
 
 export type GetSelector<Component> = AreEqual<Component, typeof SendBox> extends true
@@ -27,7 +31,9 @@ export type GetSelector<Component> = AreEqual<Component, typeof SendBox> extends
   ? typeof chatThreadSelector
   : AreEqual<Component, typeof TypingIndicator> extends true
   ? typeof typingIndicatorSelector
-  : never;
+  : AreEqual<Component, typeof ParticipantList> extends true
+  ? typeof chatParticipantListSelector
+  : undefined;
 
 export const getSelector = <Component extends (props: any) => JSX.Element | undefined>(
   component: Component
@@ -46,5 +52,5 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
     case ParticipantList:
       return chatParticipantListSelector;
   }
-  throw 'Can\'t find corresponding selector for this component. Please check the supported components from Azure Communication UI Feature Component List.';
+  return undefined;
 };

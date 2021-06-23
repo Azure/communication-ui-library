@@ -199,10 +199,10 @@ export interface RemoteParticipantState {
    */
   callEndReason?: CallEndReason;
   /**
-   * Proxy of {@Link @azure/communication-calling#RemoteParticipant.videoStreams} as a map of
-   * {@Link @azure/communication-calling#RemoteVideoStream.id} to {@Link RemoteVideoStream}.
+   * Proxy of {@Link @azure/communication-calling#RemoteParticipant.videoStreams} as an object with
+   * {@Link RemoteVideoStream} fields keyed by {@Link @azure/communication-calling#RemoteVideoStream.id}.
    */
-  videoStreams: Map<number, RemoteVideoStreamState>;
+  videoStreams: { [key: number]: RemoteVideoStreamState };
   /**
    * Proxy of {@Link @azure/communication-calling#RemoteParticipant.isMuted}.
    */
@@ -251,17 +251,19 @@ export interface CallState {
    */
   localVideoStreams: LocalVideoStreamState[];
   /**
-   * Proxy of {@Link @azure/communication-calling#Call.remoteParticipants}. Map of flattened
-   * {@Link RemoteParticipantState.identifier} to {@Link RemoteParticipant}. To obtain a flattened
-   * {@Link RemoteParticipantState.identifier}, use {@Link @azure/communication-react#toFlatCommunicationIdentifier}.
+   * Proxy of {@Link @azure/communication-calling#Call.remoteParticipants}.
+   * Object with {@Link RemoteParticipant} fields keyed by flattened {@Link RemoteParticipantState.identifier}.
+   * To obtain a flattened {@Link RemoteParticipantState.identifier}, use
+   * {@Link @azure/communication-react#toFlatCommunicationIdentifier}.
    */
-  remoteParticipants: Map<string, RemoteParticipantState>;
+  remoteParticipants: { [keys: string]: RemoteParticipantState };
   /**
-   * Stores remote participants that have left the call so that the callEndReason could be retrieved. Map of flattened
-   * {@Link RemoteParticipantState.identifier} to {@Link RemoteParticipant}. To obtain a flattened
-   * {@Link RemoteParticipantState.identifier}, use {@Link @azure/communication-react#toFlatCommunicationIdentifier}.
+   * Stores remote participants that have left the call so that the callEndReason could be retrieved.
+   * Object with {@Link RemoteParticipant} fields keyed by flattened {@Link RemoteParticipantState.identifier}.
+   * To obtain a flattened {@Link RemoteParticipantState.identifier}, use
+   * {@Link @azure/communication-react#toFlatCommunicationIdentifier}.
    */
-  remoteParticipantsEnded: Map<string, RemoteParticipantState>;
+  remoteParticipantsEnded: { [keys: string]: RemoteParticipantState };
   /**
    * Proxy of {@Link @azure/communication-calling#TranscriptionCallFeature}.
    */
@@ -277,7 +279,7 @@ export interface CallState {
   transfer: TransferCallFeature;
   /**
    * Stores the currently active screenshare participant's key. If there is no screenshare active, then this will be
-   * undefined. You can use this key to access the remoteParticipant data in {@Link CallState.remoteParticipants} map.
+   * undefined. You can use this key to access the remoteParticipant data in {@Link CallState.remoteParticipants} object.
    *
    * Note this only applies to ScreenShare in RemoteParticipant. A local ScreenShare being active will not affect this
    * property.
@@ -372,12 +374,12 @@ export type DeviceManagerState = {
   deviceAccess?: DeviceAccess;
   /**
    * Stores created views that are not associated with any CallState (when {@Link StatefulCallClient.createView} is
-   * called with undefined callId, undefined participantId, and defined LocalVideoStream). The key in this map will be
-   * the original reference that {@Link StatefulCallClient.createView} is called with. The value will be a new
-   * LocalVideoStream different than the one used. The value in the map will contain the rendered view. The value in the
-   * map is also considered immutable.
+   * called with undefined callId, undefined participantId, and defined LocalVideoStream).
+   *
+   * The values in this array are generated internally when {@Link StatefulCallClient.createView} is called and are
+   * considered immutable.
    */
-  unparentedViews: Map<LocalVideoStreamState, LocalVideoStreamState>;
+  unparentedViews: LocalVideoStreamState[];
 };
 
 /**
@@ -388,12 +390,12 @@ export type DeviceManagerState = {
  */
 export interface CallClientState {
   /**
-   * Proxy of {@Link @azure/communication-calling#CallAgent.calls} as a map of CallState {@Link CallState}. It is keyed
-   * by {@Link @azure/communication-calling#Call.id}. Please note that {@Link @azure/communication-calling#Call.id}
-   * could change. You should not cache the id itself but the entire {@Link @azure/communication-calling#Call} and then
-   * use the id contained to look up data in this map.
+   * Proxy of {@Link @azure/communication-calling#CallAgent.calls} as an object with CallState {@Link CallState} fields.
+   * It is keyed by {@Link @azure/communication-calling#Call.id}. Please note that
+   * {@Link @azure/communication-calling#Call.id} could change. You should not cache the id itself but the entire
+   * {@Link @azure/communication-calling#Call} and then use the id contained to look up data in this map.
    */
-  calls: Map<string, CallState>;
+  calls: { [key: string]: CallState };
   /**
    * Calls that have ended are stored here so the callEndReason could be checked. It is an array of CallState
    * {@Link CallState}. Calls are pushed on to the array as they end, meaning this is sorted by endTime ascending. Only
@@ -402,11 +404,10 @@ export interface CallClientState {
    */
   callsEnded: CallState[];
   /**
-   * Proxy of {@Link @azure/communication-calling#IncomingCall} as a map of IncomingCall {@Link IncomingCall} received
-   * in the event 'incomingCall' emitted by {@Link @azure/communication-calling#CallAgent}. It is keyed by
-   * {@Link @azure/communication-calling#IncomingCall.id}.
+   * Proxy of {@Link @azure/communication-calling#IncomingCall} as an object with IncomingCall {@Link IncomingCall} fields.
+   * It is keyed by {@Link @azure/communication-calling#IncomingCall.id}.
    */
-  incomingCalls: Map<string, IncomingCallState>;
+  incomingCalls: { [key: string]: IncomingCallState };
   /**
    * Incoming Calls that have ended are stored here so the callEndReason could be checked. It is a array of IncomingCall
    * {@Link IncomingCall} received in the event 'incomingCall' emitted by

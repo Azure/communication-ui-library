@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { RemoteVideoStream } from '@azure/communication-calling';
+import { RemoteVideoStreamState } from './CallClientState';
 import { CallContext } from './CallContext';
 import { CallIdRef } from './CallIdRef';
 
@@ -33,8 +34,8 @@ export class RemoteVideoStreamSubscriber {
     this._remoteVideoStream.off('isAvailableChanged', this.isAvailableChanged);
   };
 
-  private includesActiveScreenShareStream = (streams): boolean => {
-    for (const [_, stream] of streams.entries()) {
+  private includesActiveScreenShareStream = (streams: { [key: number]: RemoteVideoStreamState }): boolean => {
+    for (const stream of Object.values(streams)) {
       if (stream.mediaStreamType === 'ScreenSharing' && stream.isAvailable) {
         return true;
       }
@@ -58,8 +59,7 @@ export class RemoteVideoStreamSubscriber {
       return;
     }
 
-    const existingScreenShare = this._context.getState().calls.get(this._callIdRef.callId)
-      ?.screenShareRemoteParticipant;
+    const existingScreenShare = this._context.getState().calls[this._callIdRef.callId]?.screenShareRemoteParticipant;
 
     // If somehow we end up with an event where a RemoteParticipant's ScreenShare stream is set to
     // unavailable but there exists already another different participant actively sharing, and they are still
@@ -69,10 +69,8 @@ export class RemoteVideoStreamSubscriber {
       return;
     }
 
-    const streams = this._context
-      .getState()
-      .calls.get(this._callIdRef.callId)
-      ?.remoteParticipants.get(existingScreenShare)?.videoStreams;
+    const streams = this._context.getState().calls[this._callIdRef.callId]?.remoteParticipants[existingScreenShare]
+      ?.videoStreams;
 
     if (!streams) {
       this._context.setCallScreenShareParticipant(this._callIdRef.callId, undefined);

@@ -9,16 +9,28 @@ import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 export type ChatClientState = {
   userId: CommunicationIdentifierKind;
   displayName: string;
-  threads: Map<string, ChatThreadClientState>;
+  /**
+   * Chat threads joined by the current user.
+   * Object with {@Link ChatThreadClientState} fields, keyed by {@Link ChatThreadClientState.threadId}.
+   */
+  threads: { [key: string]: ChatThreadClientState };
 };
 
 export type ChatThreadClientState = {
-  chatMessages: Map<string, ChatMessageWithStatus>;
-  // Keys are stringified CommunicationIdentifier objects.
-  //
-  // TODO: Consider replacing this Map with Array:
-  // - Redux and other data stores can't store objects that contain Map.
-  participants: Map<string, ChatParticipant>;
+  /**
+   * Messages in this thread.
+   * Object with {@Link ChatMessageWithStatus} entries
+   * Local messages are keyed by keyed by {@Link ChatMessageWithStatus.clientMessageId}.
+   * Remote messages are keyed by {@Link @azure/communication-chat#ChatMessage.id}.
+   */
+  chatMessages: { [key: string]: ChatMessageWithStatus };
+  /**
+   * Participants of this chat thread.
+   *
+   * Object with {@Link @azure/communication-chat#ChatParticipant} fields,
+   * keyed by {@Link @azure/communication-chat#ChatParticipant.id}.
+   */
+  participants: { [key: string]: ChatParticipant };
   threadId: string;
   properties?: ChatThreadProperties;
   readReceipts: ChatMessageReadReceipt[];

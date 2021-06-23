@@ -2,14 +2,9 @@
 // Licensed under the MIT license.
 
 import { toFlatCommunicationIdentifier } from 'acs-ui-common';
-// @ts-ignore
-import { CallState, CallClientState, RemoteParticipantState, RemoteVideoStreamState } from 'calling-stateful-client';
-// @ts-ignore
+import { CallState, RemoteParticipantState, RemoteVideoStreamState } from 'calling-stateful-client';
 import { createSelector } from 'reselect';
-// @ts-ignore
-import * as reselect from 'reselect';
-// @ts-ignore
-import { getCall, CallingBaseSelectorProps, getDisplayName, getIdentifier, getCallId } from './baseSelectors';
+import { getCall, getDisplayName, getIdentifier } from './baseSelectors';
 import { memoizeFnAll } from 'acs-ui-common';
 import { VideoGalleryRemoteParticipant, VideoGalleryStream } from 'react-components';
 
@@ -26,10 +21,10 @@ const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   userId: string,
   isMuted: boolean,
   isSpeaking: boolean,
-  videoStreams: Map<number, RemoteVideoStreamState>,
+  videoStreams: { [key: number]: RemoteVideoStreamState },
   displayName?: string
 ): VideoGalleryRemoteParticipant => {
-  const rawVideoStreamsArray = Array.from(videoStreams.values());
+  const rawVideoStreamsArray = Object.values(videoStreams);
   let videoStream: VideoGalleryStream | undefined = undefined;
   let screenShareStream: VideoGalleryStream | undefined = undefined;
 
@@ -65,7 +60,7 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     userId: string,
     isMuted: boolean,
     isSpeaking: boolean,
-    videoStreams: Map<number, RemoteVideoStreamState>,
+    videoStreams: { [key: number]: RemoteVideoStreamState },
     displayName?: string
   ): VideoGalleryRemoteParticipant => {
     return convertRemoteParticipantToVideoGalleryRemoteParticipant(
@@ -81,7 +76,7 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
 const videoGalleryRemoteParticipantsFromCall = (call: CallState | undefined): VideoGalleryRemoteParticipant[] => {
   if (!call || !call.remoteParticipants) return [];
   return memoizedAllConvertRemoteParticipant((memoizedFn) => {
-    return Array.from(call.remoteParticipants.values()).map((participant: RemoteParticipantState) => {
+    return Object.values(call.remoteParticipants).map((participant: RemoteParticipantState) => {
       return memoizedFn(
         toFlatCommunicationIdentifier(participant.identifier),
         participant.isMuted,
@@ -97,7 +92,7 @@ export const videoGallerySelector = createSelector(
   [getCall, getDisplayName, getIdentifier],
   (call: CallState | undefined, displayName: string | undefined, identifier: string) => {
     const screenShareRemoteParticipant = call?.screenShareRemoteParticipant
-      ? call.remoteParticipants.get(call.screenShareRemoteParticipant)
+      ? call.remoteParticipants[call.screenShareRemoteParticipant]
       : undefined;
     const localVideoStream = call?.localVideoStreams.find((i) => i.mediaStreamType === 'Video');
     return {

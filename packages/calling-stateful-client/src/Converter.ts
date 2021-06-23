@@ -48,9 +48,9 @@ export function convertSdkRemoteStreamToDeclarativeRemoteStream(
 export function convertSdkParticipantToDeclarativeParticipant(
   participant: SdkRemoteParticipant
 ): DeclarativeRemoteParticipant {
-  const declarativeVideoStreams = new Map<number, DeclarativeRemoteVideoStream>();
+  const declarativeVideoStreams = {};
   for (const videoStream of participant.videoStreams) {
-    declarativeVideoStreams.set(videoStream.id, convertSdkRemoteStreamToDeclarativeRemoteStream(videoStream));
+    declarativeVideoStreams[videoStream.id] = convertSdkRemoteStreamToDeclarativeRemoteStream(videoStream);
   }
   return {
     identifier: participant.identifier,
@@ -65,12 +65,11 @@ export function convertSdkParticipantToDeclarativeParticipant(
 
 // Note at the time of writing only one LocalVideoStream is supported by the SDK.
 export function convertSdkCallToDeclarativeCall(call: SdkCall): CallState {
-  const declarativeRemoteParticipants = new Map<string, DeclarativeRemoteParticipant>();
+  const declarativeRemoteParticipants = {};
   call.remoteParticipants.forEach((participant: SdkRemoteParticipant) => {
-    declarativeRemoteParticipants.set(
-      toFlatCommunicationIdentifier(participant.identifier),
-      convertSdkParticipantToDeclarativeParticipant(participant)
-    );
+    declarativeRemoteParticipants[
+      toFlatCommunicationIdentifier(participant.identifier)
+    ] = convertSdkParticipantToDeclarativeParticipant(participant);
   });
   return {
     id: call.id,
@@ -82,7 +81,7 @@ export function convertSdkCallToDeclarativeCall(call: SdkCall): CallState {
     isScreenSharingOn: call.isScreenSharingOn,
     localVideoStreams: call.localVideoStreams.map(convertSdkLocalStreamToDeclarativeLocalStream),
     remoteParticipants: declarativeRemoteParticipants,
-    remoteParticipantsEnded: new Map<string, DeclarativeRemoteParticipant>(),
+    remoteParticipantsEnded: {},
     recording: { isRecordingActive: false },
     transcription: { isTranscriptionActive: false },
     transfer: { receivedTransferRequests: [], requestedTransfers: [] },

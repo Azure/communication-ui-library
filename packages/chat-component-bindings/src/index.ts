@@ -6,6 +6,7 @@ export { ChatClientProvider, useChatClient } from './providers/ChatClientProvide
 export { ChatThreadClientProvider, useChatThreadClient } from './providers/ChatThreadClientProvider';
 export { usePropsFor as useChatPropsFor, getSelector as getChatSelector } from './hooks/usePropsFor';
 export { useSelector as useChatSelector } from './hooks/useSelector';
+export { useHandlers as useChatHandlers } from './hooks/useHandlers';
 
 // -- TODO: these exports should be removed in favor of useSelector -- //
 export { chatThreadSelector } from './chatThreadSelector';

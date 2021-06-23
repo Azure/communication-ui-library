@@ -22,24 +22,22 @@ import { participantsButtonSelector } from '../participantsButtonSelector';
 import { useHandlers } from './useHandlers';
 import { useSelector } from './useSelector';
 import { Common } from 'acs-ui-common';
-// @ts-ignore
-import { CommonProperties, AreEqual } from 'acs-ui-common';
-// @ts-ignore
+import { AreEqual } from 'acs-ui-common';
 import { DefaultCallingHandlers } from '../handlers/createHandlers';
-// @ts-ignore
-import { AudioDeviceInfo, StartCallOptions, Call, VideoDeviceInfo } from '@azure/communication-calling';
-// @ts-ignore
-import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
-// @ts-ignore
-import { VideoStreamOptions, CallParticipant, VideoGalleryRemoteParticipant } from 'react-components';
 import { ParticipantsButton } from 'react-components';
 
-// @ts-ignore
 export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component
-): ReturnType<GetSelector<Component>> & Common<DefaultCallingHandlers, Parameters<Component>[0]> => {
+): GetSelector<Component> extends (props: any) => any
+  ? ReturnType<GetSelector<Component>> & Common<DefaultCallingHandlers, Parameters<Component>[0]>
+  : undefined => {
   const selector = getSelector(component);
-  return { ...useSelector(selector), ...useHandlers<Parameters<Component>[0]>(component) };
+  const props = useSelector(selector);
+  const handlers = useHandlers<Parameters<Component>[0]>(component);
+  if (props !== undefined) {
+    return { ...props, ...handlers } as any;
+  }
+  return undefined as any;
 };
 
 export const emptySelector = (): Record<string, never> => ({});
@@ -60,7 +58,7 @@ export type GetSelector<Component> = AreEqual<Component, typeof VideoGallery> ex
   ? typeof participantsButtonSelector
   : AreEqual<Component, typeof EndCallButton> extends true
   ? typeof emptySelector
-  : never;
+  : undefined;
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const getSelector = <Component extends (props: any) => JSX.Element | undefined>(
@@ -88,5 +86,5 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
     case EndCallButton:
       return emptySelector;
   }
-  throw 'Can\'t find corresponding selector for this component. Please check the supported components from Azure Communication UI Feature Component List.';
+  return undefined;
 };
