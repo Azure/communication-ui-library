@@ -64,7 +64,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   const onRenderParticipantAvatar = useMemo(
     () =>
-      onRenderAvatar && ((participant: CommunicationParticipant) => onRenderAvatar(participant.userId, 'chatThread')),
+      onRenderAvatar &&
+      ((participant: CommunicationParticipant) => onRenderAvatar(participant.userId, 'participantList')),
     [onRenderAvatar]
   );
 
