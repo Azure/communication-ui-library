@@ -71,7 +71,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common\config\rush\pnpm-lock.yaml') }}
+          key: ${{ hashFiles('common\config\rush\pnpm-lock.yaml') }}
 
       # Install dependencies
       - name: Install rush
