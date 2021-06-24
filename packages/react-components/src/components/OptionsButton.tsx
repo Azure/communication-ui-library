@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
+import { MoreHorizontal20Filled } from '@fluentui/react-icons';
 import {
   DefaultButton,
   IButtonProps,
@@ -11,7 +12,6 @@ import {
   mergeStyles,
   ContextualMenuItemType
 } from '@fluentui/react';
-import { SettingsIcon } from '@fluentui/react-northstar';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 
 /**
@@ -190,7 +190,7 @@ export const OptionsButton = (props: OptionsButtonProps): JSX.Element => {
   const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
 
   const defaultRenderIcon = (): JSX.Element => {
-    return <SettingsIcon key="optionsIconKey" />;
+    return <MoreHorizontal20Filled primaryFill="currentColor" key={'optionsIconKey'} />;
   };
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {

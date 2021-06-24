@@ -21,7 +21,7 @@ import {
   videoHint
 } from './styles/VideoTile.styles';
 import { BaseCustomStylesProps } from '../types';
-import { MicIcon, MicOffIcon } from '@fluentui/react-northstar';
+import { MicOn16Filled, MicOff16Filled } from '@fluentui/react-icons';
 
 export interface VideoTileStylesProps extends BaseCustomStylesProps {
   /** Styles for video container. */
@@ -158,7 +158,11 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
         <Stack.Item>
           {showMuteIndicator &&
             isMuted !== undefined &&
-            (isMuted ? <MicOffIcon size="small" /> : <MicIcon size="small" />)}
+            (isMuted ? (
+              <MicOff16Filled style={{ height: '0.75rem' }} primaryFill="currentColor" key={'microphoneOffIconKey'} />
+            ) : (
+              <MicOn16Filled style={{ height: '0.75rem' }} primaryFill="currentColor" key={'microphoneIconKey'} />
+            ))}
         </Stack.Item>
       </Stack>
 

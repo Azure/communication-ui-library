@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { DefaultButton, IButtonProps, Label, concatStyleSets, mergeStyles } from '@fluentui/react';
-import { MicIcon, MicOffIcon } from '@fluentui/react-northstar';
+import { MicOn20Filled, MicOff20Filled } from '@fluentui/react-icons';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 
 /**
@@ -32,7 +32,11 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
 
   const defaultRenderIcon = (props?: IButtonProps): JSX.Element => {
-    return props?.checked ? <MicIcon key={'microphoneIconKey'} /> : <MicOffIcon key={'microphoneOffIconKey'} />;
+    return props?.checked ? (
+      <MicOn20Filled primaryFill="currentColor" key={'microphoneIconKey'} />
+    ) : (
+      <MicOff20Filled primaryFill="currentColor" key={'microphoneOffIconKey'} />
+    );
   };
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {
