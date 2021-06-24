@@ -120,7 +120,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const [sortedRemoteParticipants, setSortedRemoteParticipants] = useState<VideoGalleryRemoteParticipant[]>([]);
 
   useEffect(() => {
-    console.log(`VideoGallery useEffect`);
     setSortedRemoteParticipants(sortParticipants(remoteParticipants));
   }, [remoteParticipants]);
 
