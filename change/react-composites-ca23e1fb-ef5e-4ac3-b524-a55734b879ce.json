@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Limiting remote video streams in composite to 1",
+  "packageName": "react-composites",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}
