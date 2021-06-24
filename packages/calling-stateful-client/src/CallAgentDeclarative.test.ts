@@ -167,7 +167,7 @@ describe('declarative call agent', () => {
     mockCallAgent.calls = [mockCall];
     const internalContext = new InternalCallContext();
     callAgentDeclaratify(mockCallAgent, context, internalContext);
-    expect(context.getState().calls.size).toBe(1);
+    expect(Object.keys(context.getState().calls).length).toBe(1);
     expect(mockCall.emitter.eventNames().length).not.toBe(0);
   });
 
@@ -181,7 +181,7 @@ describe('declarative call agent', () => {
     await declarativeCallAgent.dispose();
     expect(mockCall.emitter.eventNames().length).toBe(0);
     expect(mockCallAgent.emitter.eventNames().length).toBe(0);
-    expect(context.getState().calls.size).toBe(1);
+    expect(Object.keys(context.getState().calls).length).toBe(1);
   });
 
   test('should clear state if newly created agent and if there is old existing state', async () => {
@@ -194,10 +194,10 @@ describe('declarative call agent', () => {
     await declarativeCallAgent.dispose();
     expect(mockCall.emitter.eventNames().length).toBe(0);
     expect(mockCallAgent.emitter.eventNames().length).toBe(0);
-    expect(context.getState().calls.size).toBe(1);
+    expect(Object.keys(context.getState().calls).length).toBe(1);
     mockCallAgent.calls = [];
     callAgentDeclaratify(mockCallAgent, context, internalContext);
-    expect(context.getState().calls.size).toBe(0);
+    expect(Object.keys(context.getState().calls).length).toBe(0);
     expect(internalContext.getRemoteRenderInfos().size).toBe(0);
   });
 
@@ -205,36 +205,36 @@ describe('declarative call agent', () => {
     const mockCallAgent = new MockCallAgent();
     const context = new CallContext({ kind: 'communicationUser', communicationUserId: '' });
     const internalContext = new InternalCallContext();
-    expect(context.getState().calls.size).toBe(0);
+    expect(Object.keys(context.getState().calls).length).toBe(0);
     const declarativeCallAgent = callAgentDeclaratify(mockCallAgent, context, internalContext);
     declarativeCallAgent.startCall([]);
-    expect(context.getState().calls.size).toBe(1);
+    expect(Object.keys(context.getState().calls).length).toBe(1);
   });
 
   test('should update state with new call when join is invoked', () => {
     const mockCallAgent = new MockCallAgent();
     const context = new CallContext({ kind: 'communicationUser', communicationUserId: '' });
     const internalContext = new InternalCallContext();
-    expect(context.getState().calls.size).toBe(0);
+    expect(Object.keys(context.getState().calls).length).toBe(0);
     const declarativeCallAgent = callAgentDeclaratify(mockCallAgent, context, internalContext);
     declarativeCallAgent.join({ meetingLink: '' });
-    expect(context.getState().calls.size).toBe(1);
+    expect(Object.keys(context.getState().calls).length).toBe(1);
   });
 
   test('should move call to callEnded when call is removed and add endTime', async () => {
     const mockCallAgent = new MockCallAgent();
     const context = new CallContext({ kind: 'communicationUser', communicationUserId: '' });
     const internalContext = new InternalCallContext();
-    expect(context.getState().calls.size).toBe(0);
+    expect(Object.keys(context.getState().calls).length).toBe(0);
     callAgentDeclaratify(mockCallAgent, context, internalContext);
 
     const mockCall = createMockCall(mockCallId);
     mockCallAgent.calls = [mockCall];
     mockCallAgent.emit('callsUpdated', { added: [mockCall], removed: [] });
 
-    await waitWithBreakCondition(() => context.getState().calls.size !== 0);
+    await waitWithBreakCondition(() => Object.keys(context.getState().calls).length !== 0);
 
-    expect(context.getState().calls.size).toBe(1);
+    expect(Object.keys(context.getState().calls).length).toBe(1);
 
     mockCall.callEndReason = { code: 1 };
     mockCallAgent.calls = [];
@@ -242,7 +242,7 @@ describe('declarative call agent', () => {
 
     await waitWithBreakCondition(() => context.getState().callsEnded.length !== 0);
 
-    expect(context.getState().calls.size).toBe(0);
+    expect(Object.keys(context.getState().calls).length).toBe(0);
     expect(context.getState().callsEnded.length).toBe(1);
     expect(context.getState().callsEnded[0].callEndReason?.code).toBe(1);
     expect(context.getState().callsEnded[0].endTime).toBeTruthy();
@@ -252,21 +252,21 @@ describe('declarative call agent', () => {
     const mockCallAgent = new MockCallAgent();
     const context = new CallContext({ kind: 'communicationUser', communicationUserId: '' });
     const internalContext = new InternalCallContext();
-    expect(context.getState().calls.size).toBe(0);
+    expect(Object.keys(context.getState().calls).length).toBe(0);
     callAgentDeclaratify(mockCallAgent, context, internalContext);
 
     const mockIncomingCall = createMockIncomingCall(mockCallId);
     mockCallAgent.emit('incomingCall', { incomingCall: mockIncomingCall });
 
-    await waitWithBreakCondition(() => context.getState().incomingCalls.size !== 0);
+    await waitWithBreakCondition(() => Object.keys(context.getState().incomingCalls).length !== 0);
 
-    expect(context.getState().incomingCalls.size).toBe(1);
+    expect(Object.keys(context.getState().incomingCalls).length).toBe(1);
 
     mockIncomingCall.emit('callEnded', { callEndReason: { code: 1 } });
 
     await waitWithBreakCondition(() => context.getState().incomingCallsEnded.length !== 0);
 
-    expect(context.getState().incomingCalls.size).toBe(0);
+    expect(Object.keys(context.getState().incomingCalls).length).toBe(0);
     expect(context.getState().incomingCallsEnded.length).toBe(1);
     expect(context.getState().incomingCallsEnded[0].callEndReason?.code).toBe(1);
     expect(context.getState().incomingCallsEnded[0].endTime).toBeTruthy();
@@ -287,11 +287,11 @@ describe('declarative call agent', () => {
     mockCallAgent.calls = mockCalls;
     mockCallAgent.emit('callsUpdated', { added: mockCalls, removed: [] });
 
-    await waitWithBreakCondition(() => context.getState().calls.size === numberOfCalls);
+    await waitWithBreakCondition(() => Object.keys(context.getState().calls).length === numberOfCalls);
 
     mockCallAgent.emit('callsUpdated', { added: [], removed: mockCalls });
 
-    await waitWithBreakCondition(() => context.getState().calls.size === 0);
+    await waitWithBreakCondition(() => Object.keys(context.getState().calls).length === 0);
 
     expect(context.getState().callsEnded.length).toBe(MAX_CALL_HISTORY_LENGTH);
   });
@@ -310,13 +310,13 @@ describe('declarative call agent', () => {
       mockCallAgent.emit('incomingCall', { incomingCall: mockIncomingCall });
     }
 
-    await waitWithBreakCondition(() => context.getState().incomingCalls.size === numberOfCalls);
+    await waitWithBreakCondition(() => Object.keys(context.getState().incomingCalls).length === numberOfCalls);
 
     for (const mockIncomingCall of mockIncomingCalls) {
       mockIncomingCall.emit('callEnded', { callEndReason: { code: 1 } });
     }
 
-    await waitWithBreakCondition(() => context.getState().incomingCalls.size === 0);
+    await waitWithBreakCondition(() => Object.keys(context.getState().incomingCalls).length === 0);
 
     expect(context.getState().incomingCallsEnded.length).toBe(MAX_CALL_HISTORY_LENGTH);
   });
@@ -329,7 +329,7 @@ describe('declarative call agent', () => {
     const internalContext = new InternalCallContext();
     const declarativeCallAgent = callAgentDeclaratify(mockCallAgent, context, internalContext);
 
-    expect(declarativeCallAgent.calls.length).toBe(2);
+    expect(Object.keys(declarativeCallAgent.calls).length).toBe(2);
     expect((declarativeCallAgent.calls[0] as DeclarativeCall).unsubscribe).toBeDefined();
     expect((declarativeCallAgent.calls[1] as DeclarativeCall).unsubscribe).toBeDefined();
 

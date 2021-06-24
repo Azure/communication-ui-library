@@ -1,0 +1,59 @@
+name: 'Publish Chromatic'
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - packages/storybook/**
+      - packages/react-components/**
+      - packages/react-composites/**
+      - packages/communication-react/**
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  chromatic_deployment:
+    name: Publish Chromatic
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: Restore node_modules from cache
+        uses: actions/cache@v2
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+
+      - name: Install Rush
+        run: npm install -g @microsoft/rush@5.47.0
+
+      - name: Install Dependencies
+        run: rush install
+
+      - name: Publish Chromatic
+        id: publish_chromatic
+        uses: chromaui/action@v1
+        with:
+          workingDir: ./packages/storybook
+          buildScriptName: build
+          token: ${{ secrets.GITHUB_TOKEN }}
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+
+      - name: Add Storybook URL as Issue Comment
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Storybook URL ${{ steps.publish_chromatic.outputs.storybookUrl }}'
+            })

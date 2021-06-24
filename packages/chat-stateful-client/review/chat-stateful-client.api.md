@@ -18,7 +18,9 @@ import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 export type ChatClientState = {
     userId: CommunicationIdentifierKind;
     displayName: string;
-    threads: Map<string, ChatThreadClientState>;
+    threads: {
+        [key: string]: ChatThreadClientState;
+    };
 };
 
 // @public (undocumented)
@@ -32,7 +34,9 @@ export type ChatThreadClientState = {
     chatMessages: {
         [key: string]: ChatMessageWithStatus;
     };
-    participants: Map<string, ChatParticipant>;
+    participants: {
+        [key: string]: ChatParticipant;
+    };
     threadId: string;
     properties?: ChatThreadProperties;
     readReceipts: ChatMessageReadReceipt[];

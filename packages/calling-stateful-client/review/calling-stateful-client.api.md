@@ -36,10 +36,14 @@ export interface CallAgentState {
 // @public
 export interface CallClientState {
     callAgent: CallAgentState | undefined;
-    calls: Map<string, CallState>;
+    calls: {
+        [key: string]: CallState;
+    };
     callsEnded: CallState[];
     deviceManager: DeviceManagerState;
-    incomingCalls: Map<string, IncomingCallState>;
+    incomingCalls: {
+        [key: string]: IncomingCallState;
+    };
     incomingCallsEnded: IncomingCallState[];
     userId: CommunicationUserKind;
 }
@@ -55,8 +59,12 @@ export interface CallState {
     isScreenSharingOn: boolean;
     localVideoStreams: LocalVideoStreamState[];
     recording: RecordingCallFeature;
-    remoteParticipants: Map<string, RemoteParticipantState>;
-    remoteParticipantsEnded: Map<string, RemoteParticipantState>;
+    remoteParticipants: {
+        [keys: string]: RemoteParticipantState;
+    };
+    remoteParticipantsEnded: {
+        [keys: string]: RemoteParticipantState;
+    };
     screenShareRemoteParticipant: string | undefined;
     startTime: Date;
     state: CallState_2;
@@ -77,7 +85,7 @@ export type DeviceManagerState = {
     microphones: AudioDeviceInfo[];
     speakers: AudioDeviceInfo[];
     deviceAccess?: DeviceAccess;
-    unparentedViews: Map<LocalVideoStreamState, LocalVideoStreamState>;
+    unparentedViews: LocalVideoStreamState[];
 };
 
 // @public
@@ -109,7 +117,9 @@ export interface RemoteParticipantState {
     isMuted: boolean;
     isSpeaking: boolean;
     state: RemoteParticipantState_2;
-    videoStreams: Map<number, RemoteVideoStreamState>;
+    videoStreams: {
+        [key: number]: RemoteVideoStreamState;
+    };
 }
 
 // @public

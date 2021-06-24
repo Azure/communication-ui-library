@@ -239,34 +239,45 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
                           className="ms-Stack css-121 css-47"
                         >
                           <div
-                            className="ms-Stack css-51"
+                            className="ms-Stack css-52"
                           >
                             <div
-                              className="ms-Stack css-52"
+                              className="ms-Stack css-53"
                             >
                               <div
                                 className="css-71"
                               />
                             </div>
-                            <span
-                              className="css-81 css-53"
+                            <div
+                              className="ms-Stack css-81 css-54"
                             >
-                              John Doe
-                            </span>
+                              <div
+                                className="ms-StackItem css-55"
+                              >
+                                <span
+                                  className="css-56"
+                                >
+                                  John Doe
+                                </span>
+                              </div>
+                              <div
+                                className="ms-StackItem css-55"
+                              />
+                            </div>
                           </div>
                         </div>
                       </div>
                       <div
-                        className="ms-Dialog-actions actions-54"
+                        className="ms-Dialog-actions actions-57"
                       >
                         <div
-                          className="ms-Dialog-actionsRight actionsRight-56"
+                          className="ms-Dialog-actionsRight actionsRight-59"
                         >
                           <span
-                            className="ms-Dialog-action action-55"
+                            className="ms-Dialog-action action-58"
                           >
                             <button
-                              className="ms-Button ms-Button--default root-57"
+                              className="ms-Button ms-Button--default root-60"
                               data-is-focusable={true}
                               onClick={[Function]}
                               onKeyDown={[Function]}
@@ -309,10 +320,10 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
                             </button>
                           </span>
                           <span
-                            className="ms-Dialog-action action-55"
+                            className="ms-Dialog-action action-58"
                           >
                             <button
-                              className="ms-Button ms-Button--default root-57"
+                              className="ms-Button ms-Button--default root-60"
                               data-is-focusable={true}
                               onClick={[Function]}
                               onKeyDown={[Function]}
@@ -336,7 +347,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
                                   className="ms-Button-textContainer textContainer-22"
                                 >
                                   <span
-                                    className="ms-Button-label label-58"
+                                    className="ms-Button-label label-61"
                                     id="id__8"
                                   >
                                     Accept
@@ -346,10 +357,10 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
                             </button>
                           </span>
                           <span
-                            className="ms-Dialog-action action-55"
+                            className="ms-Dialog-action action-58"
                           >
                             <button
-                              className="ms-Button ms-Button--default root-57"
+                              className="ms-Button ms-Button--default root-60"
                               data-is-focusable={true}
                               onClick={[Function]}
                               onKeyDown={[Function]}
@@ -373,7 +384,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
                                   className="ms-Button-textContainer textContainer-22"
                                 >
                                   <span
-                                    className="ms-Button-label label-58"
+                                    className="ms-Button-label label-61"
                                     id="id__11"
                                   >
                                     Decline

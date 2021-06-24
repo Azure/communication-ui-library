@@ -7,6 +7,7 @@ import {
   ControlBar,
   EndCallButton,
   MicrophoneButton,
+  OptionsButton,
   ParticipantsButton,
   ScreenShareButton
 } from 'react-components';
@@ -27,6 +28,7 @@ export const CallControls = (props: GroupCallControlsProps): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
   const screenShareButtonProps = usePropsFor(ScreenShareButton);
   const participantsButtonProps = usePropsFor(ParticipantsButton);
+  const optionsButtonProps = usePropsFor(OptionsButton);
   const hangUpButtonProps = usePropsFor(EndCallButton);
   const onHangUp = useCallback(async () => {
     await hangUpButtonProps.onHangUp();
@@ -45,6 +47,7 @@ export const CallControls = (props: GroupCallControlsProps): JSX.Element => {
           callInvitationURL={callInvitationURL}
         />
       )}
+      <OptionsButton {...optionsButtonProps} showLabel={!compressedMode} />
       <EndCallButton
         {...hangUpButtonProps}
         onHangUp={onHangUp}

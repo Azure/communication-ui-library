@@ -1,37 +1,22 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatClientState } from 'chat-stateful-client';
-import {
-  chatThreadSelector,
-  chatParticipantListSelector,
-  sendBoxSelector,
-  typingIndicatorSelector
-} from 'chat-component-bindings';
-import { MessageThread, ParticipantList, SendBox, TypingIndicator } from 'react-components';
+import { getChatSelector, DefaultChatHandlers, GetChatSelector } from 'chat-component-bindings';
 
-import React from 'react';
 import { useHandlers } from './useHandlers';
 import { useAdaptedSelector } from './useAdaptedSelector';
+import { Common } from 'acs-ui-common';
 
-type Selector = (state: ChatClientState, props: any) => any;
-export const usePropsFor = <SelectorT extends (state: ChatClientState, props: any) => any>(
-  component: React.FunctionComponent<any>
-): ReturnType<SelectorT> => {
-  const selector = getSelector(component);
-  return { ...useAdaptedSelector(selector), ...useHandlers(component) };
-};
+type Selector = (state: any, props: any) => any;
 
-export const getSelector = (component: React.FunctionComponent<any>): Selector => {
-  switch (component) {
-    case MessageThread:
-      return chatThreadSelector;
-    case ParticipantList:
-      return chatParticipantListSelector;
-    case SendBox:
-      return sendBoxSelector;
-    case TypingIndicator:
-      return typingIndicatorSelector;
+export const usePropsFor = <Component extends (props: any) => JSX.Element>(
+  component: Component
+): GetChatSelector<Component> extends Selector
+  ? ReturnType<GetChatSelector<Component>> & Common<DefaultChatHandlers, Parameters<Component>[0]>
+  : Record<string, never> => {
+  const selector = getChatSelector(component);
+  if (!selector) {
+    throw new Error("Can't find the selector for component, please check supported component list");
   }
-  throw 'Can\'t find corresponding selector for this component. Please check the supported components from Azure Communication UI Feature Component List.';
+  return { ...useAdaptedSelector(selector as Selector), ...useHandlers(component) };
 };

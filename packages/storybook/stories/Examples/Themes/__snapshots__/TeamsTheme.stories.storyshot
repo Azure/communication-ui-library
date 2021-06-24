@@ -225,28 +225,29 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                 }
               >
                 <div
-                  className="ms-Stack css-22"
+                  className="ms-Stack css-23"
                 >
                   <div
-                    className="ms-Stack css-23"
+                    className="ms-Stack css-24"
                   >
                     <div
-                      className="ms-Stack css-25"
+                      className="ms-Stack css-26"
                     >
                       <div
-                        className="ms-Persona ms-Persona--size100 root-26"
+                        aria-label=""
+                        className="ms-Persona ms-Persona--size100 root-27"
                       >
                         <div
-                          className="ms-Persona-coin ms-Persona--size100 coin-33"
+                          className="ms-Persona-coin ms-Persona--size100 coin-34"
                           role="presentation"
                         >
                           <div
-                            className="ms-Persona-imageArea imageArea-35"
+                            className="ms-Persona-imageArea imageArea-36"
                             role="presentation"
                           >
                             <div
                               aria-hidden="true"
-                              className="ms-Persona-initials initials-38"
+                              className="ms-Persona-initials initials-39"
                             >
                               <span>
                                 M
@@ -257,11 +258,22 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                       </div>
                     </div>
                   </div>
-                  <span
-                    className="css-80 css-41"
+                  <div
+                    className="ms-Stack css-80 css-42"
                   >
-                    Michael
-                  </span>
+                    <div
+                      className="ms-StackItem css-5"
+                    >
+                      <span
+                        className="css-43"
+                      >
+                        Michael
+                      </span>
+                    </div>
+                    <div
+                      className="ms-StackItem css-5"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
