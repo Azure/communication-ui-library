@@ -110,9 +110,11 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 >
                   <span
                     aria-hidden={true}
+                    className="root-span"
                     primaryFill="currentColor"
                   >
                     <svg
+                      className="svg"
                       fill="currentColor"
                       height={20}
                       viewBox="0 0 20 20"
@@ -151,9 +153,11 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 >
                   <span
                     aria-hidden={true}
+                    className="root-span"
                     primaryFill="currentColor"
                   >
                     <svg
+                      className="svg"
                       fill="currentColor"
                       height={20}
                       viewBox="0 0 20 20"
@@ -192,9 +196,11 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 >
                   <span
                     aria-hidden={true}
+                    className="root-span"
                     primaryFill="currentColor"
                   >
                     <svg
+                      className="svg"
                       fill="currentColor"
                       height={20}
                       viewBox="0 0 20 20"
@@ -255,9 +261,11 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 >
                   <span
                     aria-hidden={true}
+                    className="root-span"
                     primaryFill="currentColor"
                   >
                     <svg
+                      className="svg"
                       fill="currentColor"
                       height={20}
                       viewBox="0 0 20 20"
