@@ -13,7 +13,6 @@ import { MessageStatus } from 'acs-ui-common';
 import { PartialTheme } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
 import { default as React_2 } from 'react';
-import { SizeValue } from '@fluentui/react-northstar';
 import { Theme } from '@fluentui/react';
 
 // @public
@@ -173,7 +172,6 @@ export interface MessageStatusIndicatorProps {
     failedToSendTooltipText?: string;
     seenTooltipText?: string;
     sendingTooltipText?: string;
-    size?: SizeValue;
     status?: MessageStatus;
     styles?: BaseCustomStylesProps;
 }
@@ -402,6 +400,7 @@ export interface VideoGalleryProps {
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoStreamLimitation?: number;
     remoteVideoViewOption?: VideoStreamOptions;
+    showMuteIndicator?: boolean;
     styles?: BaseCustomStylesProps;
 }
 
@@ -432,10 +431,11 @@ export const VideoTile: (props: VideoTileProps) => JSX.Element;
 export interface VideoTileProps extends PlaceholderProps {
     children?: React_2.ReactNode;
     isMirrored?: boolean;
+    isMuted?: boolean;
     isVideoReady?: boolean;
     onRenderPlaceholder?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element | null;
     renderElement?: JSX.Element | null;
-    showDisplayName?: boolean;
+    showMuteIndicator?: boolean;
     styles?: VideoTileStylesProps;
 }
 

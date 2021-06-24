@@ -58,7 +58,7 @@ export class ChatContext {
           chatMessages: {},
           threadId: threadId,
           properties: properties,
-          participants: new Map(),
+          participants: {},
           readReceipts: [],
           typingIndicators: [],
           latestReadTime: new Date(0)
@@ -187,7 +187,7 @@ export class ChatContext {
       produce(this._state, (draft: ChatClientState) => {
         const participants = draft.threads[threadId]?.participants;
         if (participants) {
-          participants.set(toFlatCommunicationIdentifier(participant.id), participant);
+          participants[toFlatCommunicationIdentifier(participant.id)] = participant;
         }
       })
     );
@@ -199,7 +199,7 @@ export class ChatContext {
         const participantsMap = draft.threads[threadId]?.participants;
         if (participantsMap) {
           for (const participant of participants) {
-            participantsMap.set(toFlatCommunicationIdentifier(participant.id), participant);
+            participantsMap[toFlatCommunicationIdentifier(participant.id)] = participant;
           }
         }
       })
@@ -212,7 +212,7 @@ export class ChatContext {
         const participants = draft.threads[threadId]?.participants;
         if (participants) {
           participantIds.forEach((id) => {
-            participants.delete(toFlatCommunicationIdentifier(id));
+            delete participants[toFlatCommunicationIdentifier(id)];
           });
         }
       })
@@ -223,7 +223,9 @@ export class ChatContext {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         const participants = draft.threads[threadId]?.participants;
-        participants?.delete(toFlatCommunicationIdentifier(participantId));
+        if (participants) {
+          delete participants[toFlatCommunicationIdentifier(participantId)];
+        }
       })
     );
   }

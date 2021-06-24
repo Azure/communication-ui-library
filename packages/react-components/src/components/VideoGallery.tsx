@@ -14,6 +14,8 @@ import { StreamMedia } from './StreamMedia';
 import { floatingLocalVideoModalStyle, floatingLocalVideoTileStyle, gridStyle } from './styles/VideoGallery.styles';
 import { VideoTile, PlaceholderProps, VideoTileStylesProps } from './VideoTile';
 
+const emptyStyles = {};
+
 /**
  * Props for component `VideoGallery`
  */
@@ -53,6 +55,12 @@ export interface VideoGalleryProps {
   onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
   /** Callback to render a particpant avatar */
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+
+  /**
+   * Whether to display a mute icon beside the user's display name.
+   * @defaultValue `true`
+   */
+  showMuteIndicator?: boolean;
 }
 
 const DRAG_OPTIONS: IDragOptions = {
@@ -62,7 +70,9 @@ const DRAG_OPTIONS: IDragOptions = {
   keepInBounds: true
 };
 
-const sortParticipants = (participants: VideoGalleryRemoteParticipant[] | undefined) => {
+const sortParticipants = (
+  participants: VideoGalleryRemoteParticipant[] | undefined
+): VideoGalleryRemoteParticipant[] => {
   if (!participants) {
     return [];
   }
@@ -104,7 +114,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onDisposeRemoteStreamView,
     styles,
     layout,
-    onRenderAvatar
+    onRenderAvatar,
+    showMuteIndicator
   } = props;
   const [sortedRemoteParticipants, setSortedRemoteParticipants] = useState<VideoGalleryRemoteParticipant[]>([]);
 
@@ -142,6 +153,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         displayName={localParticipant?.displayName}
         styles={localVideoTileStyles}
         onRenderPlaceholder={onRenderAvatar}
+        isMuted={localParticipant.isMuted}
+        showMuteIndicator={showMuteIndicator}
       />
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -172,9 +185,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
                 ? remoteVideoStream?.renderElement
                 : undefined
             }
+            isMuted={participant.isMuted}
             displayName={participant.displayName}
             remoteVideoViewOption={remoteVideoViewOption}
             onRenderAvatar={onRenderAvatar}
+            showMuteIndicator={showMuteIndicator}
           />
         );
       }
@@ -185,7 +200,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onCreateRemoteStreamView,
     onDisposeRemoteStreamView,
     remoteVideoViewOption,
-    onRenderAvatar
+    onRenderAvatar,
+    showMuteIndicator
   ]);
 
   if (shouldFloatLocalVideo()) {
@@ -194,13 +210,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         <Modal isOpen={true} isModeless={true} dragOptions={DRAG_OPTIONS} styles={floatingLocalVideoModalStyle}>
           {localParticipant && defaultOnRenderLocalVideoTile}
         </Modal>
-        <GridLayout styles={styles}>{defaultOnRenderRemoteParticipants}</GridLayout>
+        <GridLayout styles={styles ?? emptyStyles}>{defaultOnRenderRemoteParticipants}</GridLayout>
       </>
     );
   }
 
   return (
-    <GridLayout styles={styles}>
+    <GridLayout styles={styles ?? emptyStyles}>
       <Stack horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
         {localParticipant && defaultOnRenderLocalVideoTile}
       </Stack>
@@ -213,9 +229,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 const RemoteVideoTile = React.memo(
   (props: {
     userId: string;
-    onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions | undefined) => Promise<void>;
+    onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
     isAvailable?: boolean;
+    isMuted?: boolean;
     renderElement?: HTMLElement;
     displayName?: string;
     remoteVideoViewOption?: VideoStreamOptions;
@@ -223,17 +240,21 @@ const RemoteVideoTile = React.memo(
       props: PlaceholderProps,
       defaultOnRender: (props: PlaceholderProps) => JSX.Element
     ) => JSX.Element;
+    showMuteIndicator?: boolean;
   }) => {
     const {
       isAvailable,
+      isMuted,
       onCreateRemoteStreamView,
       onDisposeRemoteStreamView,
       remoteVideoViewOption,
       renderElement,
       userId,
       displayName,
-      onRenderAvatar
+      onRenderAvatar,
+      showMuteIndicator
     } = props;
+
     useEffect(() => {
       if (isAvailable && !renderElement) {
         onCreateRemoteStreamView && onCreateRemoteStreamView(userId, remoteVideoViewOption);
@@ -265,6 +286,7 @@ const RemoteVideoTile = React.memo(
       }
 
       return <StreamMedia videoStreamElement={renderElement} />;
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [renderElement, renderElement?.childElementCount]);
 
     return (
@@ -275,6 +297,8 @@ const RemoteVideoTile = React.memo(
           renderElement={renderVideoStreamElement}
           displayName={displayName}
           onRenderPlaceholder={onRenderAvatar}
+          isMuted={isMuted}
+          showMuteIndicator={showMuteIndicator}
         />
       </Stack>
     );

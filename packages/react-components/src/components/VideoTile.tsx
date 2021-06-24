@@ -14,12 +14,14 @@ import {
 import React from 'react';
 import {
   disabledVideoHint,
+  displayNameStyle,
   overlayContainerStyles,
   rootStyles,
   videoContainerStyles,
   videoHint
 } from './styles/VideoTile.styles';
 import { BaseCustomStylesProps } from '../types';
+import { MicOn16Filled, MicOff16Filled } from '@fluentui/react-icons';
 
 export interface VideoTileStylesProps extends BaseCustomStylesProps {
   /** Styles for video container. */
@@ -56,11 +58,13 @@ export interface VideoTileProps extends PlaceholderProps {
     defaultOnRender: (props: PlaceholderProps) => JSX.Element
   ) => JSX.Element | null;
   /**
-   * Whether the displayName is displayed or not.
-   *
-   * @defaultValue `true`
+   * Whether to display a mute icon beside the user's display name.
    */
-  showDisplayName?: boolean;
+  showMuteIndicator?: boolean;
+  /**
+   * Whether the video is muted or not.
+   */
+  isMuted?: boolean;
 }
 
 export interface PlaceholderProps {
@@ -81,9 +85,9 @@ const DefaultPlaceholder = (props: PlaceholderProps): JSX.Element => {
         styles={personaStyles}
         size={PersonaSize.size100}
         hidePersonaDetails={true}
-        text={displayName}
+        text={displayName ?? ''}
         initialsTextColor="white"
-        aria-label={noVideoAvailableAriaLabel}
+        aria-label={noVideoAvailableAriaLabel ?? ''}
       />
     </Stack>
   );
@@ -94,10 +98,11 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     children,
     displayName,
     isMirrored,
+    isMuted,
     isVideoReady,
     onRenderPlaceholder,
     renderElement,
-    showDisplayName = true,
+    showMuteIndicator = true,
     styles,
     userId,
     noVideoAvailableAriaLabel
@@ -130,18 +135,38 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           )}
         </Stack>
       )}
-      {displayName && showDisplayName && (
-        <Text
-          className={mergeStyles(
-            displayVideo ? videoHint : disabledVideoHint,
-            // when video is on, the displayName has a grey-ish background, so no use of theme
-            { color: displayVideo ? palette.neutralPrimary : theme.palette.neutralPrimary },
-            styles?.displayNameContainer
+
+      <Stack
+        horizontal
+        className={mergeStyles(
+          isVideoReady ? videoHint : disabledVideoHint,
+          // when video is on, the displayName has a grey-ish background, so no use of theme
+          { color: isVideoReady ? palette.neutralPrimary : theme.palette.neutralPrimary },
+          styles?.displayNameContainer
+        )}
+      >
+        <Stack.Item>
+          {displayName && (
+            <Text
+              className={mergeStyles(displayNameStyle, {
+                color: isVideoReady ? palette.neutralPrimary : theme.palette.neutralPrimary
+              })}
+            >
+              {displayName}
+            </Text>
           )}
-        >
-          {displayName}
-        </Text>
-      )}
+        </Stack.Item>
+        <Stack.Item>
+          {showMuteIndicator &&
+            isMuted !== undefined &&
+            (isMuted ? (
+              <MicOff16Filled style={{ height: '0.75rem' }} primaryFill="currentColor" key={'microphoneOffIconKey'} />
+            ) : (
+              <MicOn16Filled style={{ height: '0.75rem' }} primaryFill="currentColor" key={'microphoneIconKey'} />
+            ))}
+        </Stack.Item>
+      </Stack>
+
       {children && <Stack className={mergeStyles(overlayContainerStyles, styles?.overlayContainer)}>{children}</Stack>}
     </Stack>
   );

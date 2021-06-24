@@ -5,7 +5,7 @@ import {
   FluentThemeProvider,
   MicrophoneButton
 } from '@azure/communication-react';
-import { CallEndIcon } from '@fluentui/react-northstar';
+import { CallEnd20Filled } from '@fluentui/react-icons';
 import React from 'react';
 
 export const CustomButtonsExample: () => JSX.Element = () => {
@@ -28,7 +28,7 @@ export const CustomButtonsExample: () => JSX.Element = () => {
       <EndCallButton
         styles={customStyles}
         showLabel={true}
-        onRenderIcon={() => <CallEndIcon key={'hangupBtnIconKey'} />}
+        onRenderIcon={() => <CallEnd20Filled primaryFill="currentColor" key={'hangupBtnIconKey'} />}
         onRenderText={() => (
           <span key={'hangupBtnTextKey'} style={{ marginLeft: '0.5rem' }}>
             End Call

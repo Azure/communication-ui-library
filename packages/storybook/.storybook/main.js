@@ -31,6 +31,7 @@ module.exports = {
     config.resolve.alias = {
       ...(config.resolve.alias || {}),
       '@azure/communication-react': path.resolve(__dirname, '../../communication-react/src'),
+      'react-components': path.resolve(__dirname, '../../react-components/src'),
       'react-composites': path.resolve(__dirname, '../../react-composites/src'),
       'chat-stateful-client': path.resolve(__dirname, '../../chat-stateful-client/src'),
       'chat-component-bindings': path.resolve(__dirname, '../../chat-component-bindings/src'),
@@ -40,5 +41,20 @@ module.exports = {
     };
 
     return config;
-  }
+  },
+  managerWebpack: async (config, options) => {
+    config.resolve.alias = {
+      ...(config.resolve.alias || {}),
+      '@azure/communication-react': path.resolve(__dirname, '../../communication-react/src'),
+      'react-components': path.resolve(__dirname, '../../react-components/src'),
+      'react-composites': path.resolve(__dirname, '../../react-composites/src'),
+      'chat-stateful-client': path.resolve(__dirname, '../../chat-stateful-client/src'),
+      'chat-component-bindings': path.resolve(__dirname, '../../chat-component-bindings/src'),
+      'calling-stateful-client': path.resolve(__dirname, '../../calling-stateful-client/src'),
+      'calling-component-bindings': path.resolve(__dirname, '../../calling-component-bindings/src'),
+      'acs-ui-common': path.resolve(__dirname, '../../acs-ui-common/src')
+    };
+
+    return config;
+  },
 };
