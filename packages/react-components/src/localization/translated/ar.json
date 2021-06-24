@@ -8,7 +8,7 @@
     "multipleUsers": "... يكتبون  {users}",
     "multipleUsersAbbreviateOne": "... و شخص آخر يكتبون {users}",
     "multipleUsersAbbreviateMany": "... وآخرون يكتبون {users}",
-    "comma": "و"
+    "delimiter": "و "
   },
   "endCallButton": {
     "label": "غادر"

@@ -87,13 +87,13 @@ export interface TypingIndicatorStrings {
   */
   multipleUsersAbbreviateMany: string;
   /**
-   * String to use as a comma to separate multiple users.
+   * String to use as delimiter to separate multiple users.
    */
   /*
   Example:
   ```typescript
   <TypingIndicator
-    strings={{ comma: '+' }}
+    strings={{ delimiter: ' + ' }}
     typingUsers={[
       { userId: 'user1', displayName: 'Claire' },
       { userId: 'user2', displayName: 'Chris' },
@@ -103,7 +103,7 @@ export interface TypingIndicatorStrings {
   ```
   would be 'Claire + Chris + Jill are typing...'
   */
-  comma: string;
+  delimiter: string;
 }
 
 /**
@@ -162,7 +162,7 @@ const getIndicatorComponents = (
   const userElements: JSX.Element[] = [];
   typingUsersMentioned.forEach((user, index) => {
     userElements.push(onRenderUser ? onRenderUser(user) : <span key={`user-${index}`}>{user.displayName}</span>);
-    userElements.push(<span key={`comma-${index}`}>{`${strings.comma} `}</span>);
+    userElements.push(<span key={`comma-${index}`}>{`${strings.delimiter}`}</span>);
   });
   // pop last comma
   userElements.pop();
@@ -171,6 +171,7 @@ const getIndicatorComponents = (
       {userElements}
     </Stack>
   );
+
   let variables: Record<string, JSX.Element> = {};
   let typingString = '';
   if (typingUsers.length === 1) {

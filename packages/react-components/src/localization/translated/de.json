@@ -8,7 +8,7 @@
     "multipleUsers": "{users} tippen gerade ...",
     "multipleUsersAbbreviateOne": "{users} und 1 anderer tippen gerade ...",
     "multipleUsersAbbreviateMany": "{users} und {numOthers} andere tippen gerade ...",
-    "comma": ","
+    "delimiter": ", "
   },
   "endCallButton": {
     "label": "Verlassen"
