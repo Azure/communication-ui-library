@@ -10,8 +10,6 @@ export const typingIndicatorContainerStyle = mergeStyles({
 export const typingIndicatorStringStyle = mergeStyles({
   fontWeight: 400,
   whiteSpace: 'pre',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
   display: 'flex',
   alignItems: 'center'
 });
