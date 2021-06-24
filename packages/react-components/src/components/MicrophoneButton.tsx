@@ -12,9 +12,9 @@ import { useLocale } from '../localization';
  */
 export interface MicrophoneButtonStrings {
   /** Label when button is on. */
-  onText: string;
+  onLabel: string;
   /** Label when button is off. */
-  offText: string;
+  offLabel: string;
 }
 
 /**
@@ -48,8 +48,8 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
 
   const { strings } = useLocale();
-  const onText = props.strings?.onText ?? strings.microphoneButton.onText;
-  const offText = props.strings?.offText ?? strings.microphoneButton.offText;
+  const onLabel = props.strings?.onLabel ?? strings.microphoneButton.onLabel;
+  const offLabel = props.strings?.offLabel ?? strings.microphoneButton.offLabel;
 
   const defaultRenderIcon = (props?: IButtonProps): JSX.Element => {
     return props?.checked ? <MicIcon key={'microphoneIconKey'} /> : <MicOffIcon key={'microphoneOffIconKey'} />;
@@ -59,11 +59,11 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
     (props?: IButtonProps): JSX.Element => {
       return (
         <Label key={'microphoneLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
-          {props?.checked ? onText : offText}
+          {props?.checked ? onLabel : offLabel}
         </Label>
       );
     },
-    [onText, offText]
+    [onLabel, offLabel]
   );
 
   return (

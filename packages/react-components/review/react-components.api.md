@@ -55,8 +55,8 @@ export interface CameraButtonProps extends IButtonProps {
 
 // @public
 export interface CameraButtonStrings {
-    offText: string;
-    onText: string;
+    offLabel: string;
+    onLabel: string;
 }
 
 // @public (undocumented)
@@ -132,7 +132,7 @@ export interface EndCallButtonProps extends IButtonProps {
 
 // @public
 export interface EndCallButtonStrings {
-    text: string;
+    label: string;
 }
 
 // @public
@@ -284,8 +284,8 @@ export interface MicrophoneButtonProps extends IButtonProps {
 
 // @public
 export interface MicrophoneButtonStrings {
-    offText: string;
-    onText: string;
+    offLabel: string;
+    onLabel: string;
 }
 
 // @public
@@ -322,7 +322,7 @@ export interface ParticipantItemProps {
     onRenderAvatar?: (props?: ParticipantItemProps) => JSX.Element | null;
     onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
     presence?: PersonaPresence;
-    strings?: ParticipantItemStrings;
+    strings?: Partial<ParticipantItemStrings>;
     styles?: ParticipantItemStylesProps;
 }
 

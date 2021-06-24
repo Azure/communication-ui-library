@@ -11,15 +11,15 @@
     "comma": ","
   },
   "endCallButton": {
-    "text": "Verlassen"
+    "label": "Verlassen"
   },
   "cameraButton": {
-    "onText": "Ausschalten",
-    "offText": "Einschalten"
+    "onLabel": "Ausschalten",
+    "offLabel": "Einschalten"
   },
   "microphoneButton": {
-    "onText": "Stumm",
-    "offText": "Einschalten"
+    "onLabel": "Stumm",
+    "offLabel": "Einschalten"
   },
   "messageThread": {
     "yesterday": "Gestern",

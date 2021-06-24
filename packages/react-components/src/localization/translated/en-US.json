@@ -11,15 +11,15 @@
     "comma": ","
   },
   "endCallButton": {
-    "text": "Leave"
+    "label": "Leave"
   },
   "cameraButton": {
-    "onText": "Turn off",
-    "offText": "Turn on"
+    "onLabel": "Turn off",
+    "offLabel": "Turn on"
   },
   "microphoneButton": {
-    "onText": "Mute",
-    "offText": "Unmute"
+    "onLabel": "Mute",
+    "offLabel": "Unmute"
   },
   "messageThread": {
     "yesterday": "Yesterday",

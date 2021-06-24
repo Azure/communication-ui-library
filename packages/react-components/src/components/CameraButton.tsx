@@ -18,9 +18,9 @@ const defaultLocalVideoViewOption = {
  */
 export interface CameraButtonStrings {
   /** Label when button is on. */
-  onText: string;
+  onLabel: string;
   /** Label when button is off. */
-  offText: string;
+  offLabel: string;
 }
 
 /**
@@ -66,18 +66,18 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   };
 
   const { strings } = useLocale();
-  const onText = props.strings?.onText ?? strings.cameraButton.onText;
-  const offText = props.strings?.offText ?? strings.cameraButton.offText;
+  const onLabel = props.strings?.onLabel ?? strings.cameraButton.onLabel;
+  const offLabel = props.strings?.offLabel ?? strings.cameraButton.offLabel;
 
   const defaultRenderText = useCallback(
     (props?: IButtonProps): JSX.Element => {
       return (
         <Label key={'videoLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
-          {props?.checked ? onText : offText}
+          {props?.checked ? onLabel : offLabel}
         </Label>
       );
     },
-    [onText, offText]
+    [onLabel, offLabel]
   );
 
   const onToggleClick = useCallback(async () => {

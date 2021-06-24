@@ -67,7 +67,7 @@ export interface ParticipantItemProps {
   /**
    * Optional strings to override in component
    */
-  strings?: ParticipantItemStrings;
+  strings?: Partial<ParticipantItemStrings>;
 }
 
 /**

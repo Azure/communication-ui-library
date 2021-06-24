@@ -11,15 +11,15 @@
     "comma": "و"
   },
   "endCallButton": {
-    "text": "غادر"
+    "label": "غادر"
   },
   "cameraButton": {
-    "onText": "طفئه",
-    "offText": "شغله"
+    "onLabel": "طفئه",
+    "offLabel": "شغله"
   },
   "microphoneButton": {
-    "onText": "صامت",
-    "offText": "شغله"
+    "onLabel": "صامت",
+    "offLabel": "شغله"
   },
   "messageThread": {
     "yesterday": "أمس",

@@ -16,7 +16,7 @@ export interface EndCallButtonStrings {
   /**
    * Label of button
    */
-  text: string;
+  label: string;
 }
 
 /**
@@ -52,7 +52,7 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
 
   const isDarkTheme = isDarkThemed(useTheme());
   const { strings } = useLocale();
-  const text = props.text ?? props.strings?.text ?? strings.endCallButton.text;
+  const label = props.text ?? props.strings?.label ?? strings.endCallButton.label;
 
   const componentStyles = concatStyleSets(
     endCallControlButtonStyles,
@@ -78,11 +78,11 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
     (props?: IButtonProps): JSX.Element => {
       return (
         <Label key={'callEndLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
-          {text}
+          {label}
         </Label>
       );
     },
-    [text]
+    [label]
   );
 
   return (
