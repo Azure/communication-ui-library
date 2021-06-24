@@ -434,7 +434,7 @@ export const TypingIndicator: (props: TypingIndicatorProps) => JSX.Element;
 
 // @public
 export interface TypingIndicatorProps {
-    onRenderUsers?: (users: CommunicationParticipant[]) => JSX.Element;
+    onRenderUser?: (users: CommunicationParticipant) => JSX.Element;
     strings?: Partial<TypingIndicatorStrings>;
     styles?: TypingIndicatorStylesProps;
     typingUsers: CommunicationParticipant[];
@@ -442,6 +442,7 @@ export interface TypingIndicatorProps {
 
 // @public
 export interface TypingIndicatorStrings {
+    comma: string;
     multipleUsers: string;
     multipleUsersAbbreviateMany: string;
     multipleUsersAbbreviateOne: string;

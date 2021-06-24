@@ -7,7 +7,8 @@
     "singleUser": "{user} tippt ...",
     "multipleUsers": "{users} tippen gerade ...",
     "multipleUsersAbbreviateOne": "{users} und 1 anderer tippen gerade ...",
-    "multipleUsersAbbreviateMany": "{users} und {numOthers} andere tippen gerade ..."
+    "multipleUsersAbbreviateMany": "{users} und {numOthers} andere tippen gerade ...",
+    "comma": ","
   },
   "endCallButton": {
     "text": "Verlassen"

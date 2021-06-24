@@ -4,10 +4,11 @@
     "menuTitle": "المزيد من الخيارات"
   },
   "typingIndicator": {
-    "singleUser": "... ج يكتب  {user}",
+    "singleUser": "... يكتب {user}",
     "multipleUsers": "... يكتبون  {users}",
-    "multipleUsersAbbreviateOne": "... ج وشخص آخر يكتبون  {users}",
-    "multipleUsersAbbreviateMany": "... آخرون يكتبون {numOthers} ج و  {users}"
+    "multipleUsersAbbreviateOne": "... و شخص آخر يكتبون {users}",
+    "multipleUsersAbbreviateMany": "... وآخرون يكتبون {users}",
+    "comma": "و"
   },
   "endCallButton": {
     "text": "غادر"

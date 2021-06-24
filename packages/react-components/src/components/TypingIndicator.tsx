@@ -69,7 +69,7 @@ export interface TypingIndicatorStrings {
   */
   multipleUsersAbbreviateOne: string;
   /**
-   * String template to use when multiple users are typing with one other user abbreviated. Placeholders: [users].
+   * String template to use when multiple users are typing with one other user abbreviated. Placeholders: [users, numOthers].
    */
   /*
   Example:
@@ -86,6 +86,24 @@ export interface TypingIndicatorStrings {
   would be 'Claire Romanov and 2 others are typing...'
   */
   multipleUsersAbbreviateMany: string;
+  /**
+   * String to use as a comma to separate multiple users.
+   */
+  /*
+  Example:
+  ```typescript
+  <TypingIndicator
+    strings={{ comma: '+' }}
+    typingUsers={[
+      { userId: 'user1', displayName: 'Claire' },
+      { userId: 'user2', displayName: 'Chris' },
+      { userId: 'user3', displayName: 'Jill' }
+    ]}
+  />
+  ```
+  would be 'Claire + Chris + Jill are typing...'
+  */
+  comma: string;
 }
 
 /**
@@ -95,7 +113,7 @@ export interface TypingIndicatorProps {
   /** List of the typing users. */
   typingUsers: CommunicationParticipant[];
   /** Callback to render typing users */
-  onRenderUsers?: (users: CommunicationParticipant[]) => JSX.Element;
+  onRenderUser?: (users: CommunicationParticipant) => JSX.Element;
   /**
    * Allows users to pass in an object contains custom CSS styles.
    * @Example
@@ -116,10 +134,10 @@ const MAXIMUM_LENGTH_OF_TYPING_USERS = 35;
 const getIndicatorComponents = (
   typingUsers: CommunicationParticipant[],
   strings: TypingIndicatorStrings,
-  onRenderUsers?: (users: CommunicationParticipant[]) => JSX.Element,
+  onRenderUser?: (users: CommunicationParticipant) => JSX.Element,
   styles?: TypingIndicatorStylesProps
 ): JSX.Element => {
-  const typingUsersMentioned: string[] = [];
+  const typingUsersMentioned: CommunicationParticipant[] = [];
   let countOfUsersMentioned = 0;
   let totalCharacterCount = 0;
 
@@ -130,7 +148,7 @@ const getIndicatorComponents = (
       2 * (countOfUsersMentioned - 1) + (typingUser.displayName ? typingUser.displayName.length : 0);
     if (totalCharacterCount + additionalCharCount <= MAXIMUM_LENGTH_OF_TYPING_USERS || countOfUsersMentioned === 1) {
       if (typingUser.displayName) {
-        typingUsersMentioned.push(typingUser.displayName);
+        typingUsersMentioned.push(typingUser);
       }
       totalCharacterCount += additionalCharCount;
       countOfUsersMentioned += 1;
@@ -141,11 +159,16 @@ const getIndicatorComponents = (
 
   const countOfUsersNotMentioned = typingUsers.length - typingUsersMentioned.length;
 
-  const usersElement = onRenderUsers ? (
-    onRenderUsers(typingUsers)
-  ) : (
-    <Stack className={mergeStyles(typingIndicatorStringStyle, styles?.typingUserDisplayName)}>
-      {typingUsersMentioned.join(', ')}
+  const userElements: JSX.Element[] = [];
+  typingUsersMentioned.forEach((user, index) => {
+    userElements.push(onRenderUser ? onRenderUser(user) : <span key={`user-${index}`}>{user.displayName}</span>);
+    userElements.push(<span key={`comma-${index}`}>{`${strings.comma} `}</span>);
+  });
+  // pop last comma
+  userElements.pop();
+  const usersElement = (
+    <Stack horizontal className={mergeStyles(typingIndicatorStringStyle, styles?.typingUserDisplayName)}>
+      {userElements}
     </Stack>
   );
   let variables: Record<string, JSX.Element> = {};
@@ -184,19 +207,17 @@ const getIndicatorComponents = (
  * Typing Indicator is used to notify users if there are any other users typing in the thread.
  */
 export const TypingIndicator = (props: TypingIndicatorProps): JSX.Element => {
-  const { typingUsers, onRenderUsers, styles } = props;
+  const { typingUsers, onRenderUser, styles } = props;
   const { strings } = useLocale();
 
-  const typingUsersToRender = onRenderUsers
-    ? typingUsers
-    : typingUsers.filter((typingUser) => typingUser.displayName !== undefined);
+  const typingUsersToRender = typingUsers.filter((typingUser) => typingUser.displayName !== undefined);
 
   return (
     <Stack className={mergeStyles(typingIndicatorContainerStyle, styles?.root)}>
       {getIndicatorComponents(
         typingUsersToRender,
         { ...strings.typingIndicator, ...props.strings },
-        onRenderUsers,
+        onRenderUser,
         styles
       )}
     </Stack>

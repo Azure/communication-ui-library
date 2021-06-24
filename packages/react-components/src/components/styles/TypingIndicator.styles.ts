@@ -4,9 +4,7 @@
 import { mergeStyles } from '@fluentui/react';
 
 export const typingIndicatorContainerStyle = mergeStyles({
-  height: '2.125rem',
-  display: 'flex',
-  alignItems: 'center'
+  height: '2.125rem'
 });
 
 export const typingIndicatorStringStyle = mergeStyles({
@@ -14,7 +12,8 @@ export const typingIndicatorStringStyle = mergeStyles({
   whiteSpace: 'pre',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
-  paddingRight: '0.1875rem'
+  display: 'flex',
+  alignItems: 'center'
 });
 
 export const typingIndicatorPrefixImageStyle = mergeStyles({
