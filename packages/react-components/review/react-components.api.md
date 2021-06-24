@@ -442,7 +442,7 @@ export interface TypingIndicatorProps {
 
 // @public
 export interface TypingIndicatorStrings {
-    comma: string;
+    delimiter: string;
     multipleUsers: string;
     multipleUsersAbbreviateMany: string;
     multipleUsersAbbreviateOne: string;

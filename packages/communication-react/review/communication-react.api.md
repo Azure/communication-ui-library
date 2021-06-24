@@ -1360,7 +1360,7 @@ export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClie
 
 // @public
 export interface TypingIndicatorStrings {
-    comma: string;
+    delimiter: string;
     multipleUsers: string;
     multipleUsersAbbreviateMany: string;
     multipleUsersAbbreviateOne: string;
