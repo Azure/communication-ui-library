@@ -49,7 +49,8 @@ module.exports = {
         '@typescript-eslint/ban-ts-comment': 'off'
       },
       env: {
-        jest: true
+        jest: true,
+        'jest/globals': true
       }
     },
     {

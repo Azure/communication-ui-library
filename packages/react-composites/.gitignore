@@ -9,3 +9,9 @@ SDK/cached-package.json
 
 # Output files
 *.tgz
+
+# Test dirs and files
+.env
+tests/browser/app/dist
+tests/browser/screenshots
+tests/browser/app/config.js
