@@ -9,14 +9,14 @@ import { lightTheme, darkTheme } from '../theming/themes';
 import { isDarkThemed } from '../theming/themeUtils';
 import { useLocale } from '../localization';
 
-/*
+/**
  * Strings of EndCallButton that can be overridden
  */
 export interface EndCallButtonStrings {
   /**
    * Label of button
    */
-  text?: string;
+  text: string;
 }
 
 /**

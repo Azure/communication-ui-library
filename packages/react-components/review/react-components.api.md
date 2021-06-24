@@ -130,9 +130,9 @@ export interface EndCallButtonProps extends IButtonProps {
     strings?: EndCallButtonStrings;
 }
 
-// @public (undocumented)
+// @public
 export interface EndCallButtonStrings {
-    text?: string;
+    text: string;
 }
 
 // @public
