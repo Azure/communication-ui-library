@@ -50,7 +50,9 @@ const getDefaultComponents = (
   let countOfUsersMentioned = 0;
   let totalCharacterCount = 0;
 
-  for (const typingUser of typingUsers) {
+  const typingUsersToRender = typingUsers.filter((typingUser) => typingUser.displayName !== undefined);
+
+  for (const typingUser of typingUsersToRender) {
     // The typing users above will be separated by ', '. We account for that additional length and with this length in
     // mind we generate the final string.
     const additionalCharCount =
@@ -70,12 +72,12 @@ const getDefaultComponents = (
         className={mergeStyles(typingIndicatorListStyle, styles?.typingUserDisplayName)}
         key={`typing indicator display string ${index}`}
       >
-        {index < typingUsers.length - 1 ? typingUser.displayName + ', ' : typingUser.displayName}
+        {index < typingUsersToRender.length - 1 ? typingUser.displayName + ', ' : typingUser.displayName}
       </span>
     );
   });
 
-  const countOfUsersNotMentioned = typingUsers.length - typingUsersMentioned.length;
+  const countOfUsersNotMentioned = typingUsersToRender.length - typingUsersMentioned.length;
   if (countOfUsersNotMentioned > 0) {
     displayComponents.push(
       <span className={mergeStyles(typingIndicatorVerbStyle, styles?.typingString)} key={'UsersCountKey'}>
@@ -88,7 +90,8 @@ const getDefaultComponents = (
 };
 
 const defaultTypingString = (typingUsers: CommunicationParticipant[]): string => {
-  return typingUsers.length > 0 ? (typingUsers.length > 1 ? ' are typing...' : ' is typing...') : '';
+  const typingUsersToRender = typingUsers.filter((typingUser) => typingUser.displayName !== undefined);
+  return typingUsersToRender.length > 0 ? (typingUsersToRender.length > 1 ? ' are typing...' : ' is typing...') : '';
 };
 
 /**
@@ -97,15 +100,11 @@ const defaultTypingString = (typingUsers: CommunicationParticipant[]): string =>
 export const TypingIndicator = (props: TypingIndicatorProps): JSX.Element => {
   const { typingUsers, typingString, onRenderUsers, styles } = props;
 
-  const typingUsersToRender = onRenderUsers
-    ? typingUsers
-    : typingUsers.filter((typingUser) => typingUser.displayName !== undefined);
-
   return (
     <Stack horizontal className={mergeStyles(typingIndicatorContainerStyle, styles?.root)}>
-      {onRenderUsers ? onRenderUsers(typingUsersToRender) : getDefaultComponents(typingUsersToRender, styles)}
+      {onRenderUsers ? onRenderUsers(typingUsers) : getDefaultComponents(typingUsers, styles)}
       <span className={mergeStyles(typingIndicatorVerbStyle, styles?.typingString)} key={'TypingStringKey'}>
-        {typingString ?? defaultTypingString(typingUsersToRender)}
+        {typingString ?? defaultTypingString(typingUsers)}
       </span>
     </Stack>
   );
