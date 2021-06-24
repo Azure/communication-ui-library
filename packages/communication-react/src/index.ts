@@ -2,7 +2,14 @@
 // Licensed under the MIT license.
 
 export { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '../../acs-ui-common/src';
-export type { AreEqual, CommonProperties, MessageStatus, Common } from '../../acs-ui-common/src';
+export type {
+  AreEqual,
+  CommonProperties,
+  MessageStatus,
+  Common,
+  AreTypeEqual,
+  AreParamEqual
+} from '../../acs-ui-common/src';
 
 // Not to export chat/calling specific hook from binding package
 export type {

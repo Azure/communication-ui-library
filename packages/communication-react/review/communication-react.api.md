@@ -59,7 +59,13 @@ import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 
 // @public (undocumented)
-export type AreEqual<A extends (props: any) => JSX.Element | undefined, B extends (props: any) => JSX.Element | undefined> = AreTypeEqual<A, B> & AreParamEqual<A, B> extends true ? true : false;
+export type AreEqual<A extends (props: any) => JSX.Element | undefined, B extends (props: any) => JSX.Element | undefined> = true extends AreTypeEqual<A, B> & AreParamEqual<A, B> ? true : false;
+
+// @public (undocumented)
+export type AreParamEqual<A extends (props: any) => JSX.Element | undefined, B extends (props: any) => JSX.Element | undefined> = AreTypeEqual<Required<Parameters<A>[0]>, Required<Parameters<B>[0]>>;
+
+// @public (undocumented)
+export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
 // @public (undocumented)
 export class AzureCommunicationCallAdapter implements CallAdapter {
@@ -763,13 +769,13 @@ export interface FluentThemeProviderProps {
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
 // @public (undocumented)
-export type GetCallingSelector<Component> = AreEqual<Component, typeof VideoGallery> extends true ? typeof videoGallerySelector : AreEqual<Component, typeof OptionsButton> extends true ? typeof optionsButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? typeof microphoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? typeof cameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? typeof screenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof participantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? typeof participantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? typeof emptySelector : undefined;
+export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? typeof videoGallerySelector : AreEqual<Component, typeof OptionsButton> extends true ? typeof optionsButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? typeof microphoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? typeof cameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? typeof screenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof participantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? typeof participantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? typeof emptySelector : undefined;
 
 // @public (undocumented)
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
 
 // @public (undocumented)
-export type GetChatSelector<Component> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof chatThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof chatParticipantListSelector : undefined;
+export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof chatThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof chatParticipantListSelector : undefined;
 
 // @public (undocumented)
 export const getChatSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetChatSelector<Component>;
