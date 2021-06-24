@@ -1,16 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { toFlatCommunicationIdentifier } from 'acs-ui-common';
-import { ChatClientState } from 'chat-stateful-client';
-import { ChatBaseSelectorProps } from 'chat-component-bindings';
+import { ChatClientState, ChatBaseSelectorProps, toFlatCommunicationIdentifier } from '@azure/communication-react';
 import { ChatParticipant } from '@azure/communication-chat';
 
 export const getUserId = (state: ChatClientState): string => toFlatCommunicationIdentifier(state.userId);
 
 export const getTopicName = (state: ChatClientState, props: ChatBaseSelectorProps): string => {
-  return state.threads.get(props.threadId)?.properties?.topic || '';
+  return state.threads[props.threadId]?.properties?.topic || '';
 };
 
-export const getParticipants = (state: ChatClientState, props: ChatBaseSelectorProps): Map<string, ChatParticipant> =>
-  (props.threadId && state.threads.get(props.threadId)?.participants) || new Map();
+export const getParticipants = (
+  state: ChatClientState,
+  props: ChatBaseSelectorProps
+): { [key: string]: ChatParticipant } => (props.threadId && state.threads[props.threadId]?.participants) || {};

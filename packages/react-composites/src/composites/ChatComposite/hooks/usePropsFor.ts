@@ -7,9 +7,16 @@ import { useHandlers } from './useHandlers';
 import { useAdaptedSelector } from './useAdaptedSelector';
 import { Common } from 'acs-ui-common';
 
+type Selector = (state: any, props: any) => any;
+
 export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component
-): ReturnType<GetChatSelector<Component>> & Common<DefaultChatHandlers, Parameters<Component>[0]> => {
+): GetChatSelector<Component> extends Selector
+  ? ReturnType<GetChatSelector<Component>> & Common<DefaultChatHandlers, Parameters<Component>[0]>
+  : Record<string, never> => {
   const selector = getChatSelector(component);
-  return { ...useAdaptedSelector(selector), ...useHandlers(component) };
+  if (!selector) {
+    throw new Error("Can't find the selector for component, please check supported component list");
+  }
+  return { ...useAdaptedSelector(selector as Selector), ...useHandlers(component) };
 };

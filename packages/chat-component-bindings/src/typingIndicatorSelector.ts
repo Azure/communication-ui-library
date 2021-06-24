@@ -1,10 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-// @ts-ignore
-import { ChatClientState } from 'chat-stateful-client';
-// @ts-ignore
-import { ChatBaseSelectorProps } from './baseSelectors';
 import { getTypingIndicators, getParticipants, getUserId } from './baseSelectors';
 import * as reselect from 'reselect';
 import { ChatParticipant } from '@azure/communication-chat';
@@ -39,19 +35,23 @@ const filterTypingIndicators = (
 
 const convertSdkTypingIndicatorsToCommunicationParticipants = (
   typingIndicators: TypingIndicatorReceivedEvent[],
-  participants: Map<string, ChatParticipant>
+  participants: { [key: string]: ChatParticipant }
 ): CommunicationParticipant[] => {
   return typingIndicators.map((typingIndicator) => ({
     userId: toFlatCommunicationIdentifier(typingIndicator.sender),
-    displayName: participants.get(toFlatCommunicationIdentifier(typingIndicator.sender))?.displayName
+    displayName: participants[toFlatCommunicationIdentifier(typingIndicator.sender)]?.displayName
   }));
 };
 
 export const typingIndicatorSelector = reselect.createSelector(
   [getTypingIndicators, getParticipants, getUserId],
-  (typingIndicators: TypingIndicatorReceivedEvent[], participants: Map<string, ChatParticipant>, userId: string) => {
+  (
+    typingIndicators: TypingIndicatorReceivedEvent[],
+    participants: { [key: string]: ChatParticipant },
+    userId: string
+  ) => {
     // if the participant size reaches the threshold then return no typing users
-    if (participants.size >= PARTICIPANTS_THRESHOLD) {
+    if (Object.values(participants).length >= PARTICIPANTS_THRESHOLD) {
       return { typingUsers: [] };
     }
 

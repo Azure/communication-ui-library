@@ -6,10 +6,17 @@ import { DefaultCallingHandlers, getCallingSelector, GetCallingSelector } from '
 import { useAdaptedSelector } from './useAdaptedSelector';
 import { useHandlers } from './useHandlers';
 
+type Selector = (state: any, props: any) => any;
+
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
 export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component
-): ReturnType<GetCallingSelector<Component>> & Common<DefaultCallingHandlers, Parameters<Component>[0]> => {
+): GetCallingSelector<Component> extends Selector
+  ? ReturnType<GetCallingSelector<Component>> & Common<DefaultCallingHandlers, Parameters<Component>[0]>
+  : Record<string, never> => {
   const selector = getCallingSelector(component);
-  return { ...useAdaptedSelector(selector), ...useHandlers(component) };
+  if (!selector) {
+    throw new Error("Can't find the selector for component, please check supported component list");
+  }
+  return { ...useAdaptedSelector(selector as Selector), ...useHandlers(component) };
 };

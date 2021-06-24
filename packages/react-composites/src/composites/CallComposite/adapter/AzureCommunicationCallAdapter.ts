@@ -95,7 +95,7 @@ class CallContext {
   }
 
   public updateClientState(clientState: CallClientState): void {
-    const call = clientState.calls.get(this.callId ?? '');
+    const call = this.callId ? clientState.calls[this.callId] : undefined;
     const endedCall =
       clientState.callsEnded.length > 0 ? clientState.callsEnded[clientState.callsEnded.length - 1] : undefined;
     this.setState({
@@ -428,7 +428,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
   // TODO: we should take in a LocalVideoStream that developer wants to use as their 'Preview' view. We should also
   // handle cases where 'Preview' view is in progress and not necessary completed.
-  return deviceManager.unparentedViews.values().next().value?.view !== undefined;
+  return deviceManager.unparentedViews.length > 0 && deviceManager.unparentedViews[0].view !== undefined;
 };
 
 export const createAzureCommunicationCallAdapter = async (
