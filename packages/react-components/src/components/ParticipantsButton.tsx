@@ -13,7 +13,7 @@ import {
   concatStyleSets,
   mergeStyles
 } from '@fluentui/react';
-import { UserFriendsIcon } from '@fluentui/react-northstar';
+import { People20Filled } from '@fluentui/react-icons';
 import copy from 'copy-to-clipboard';
 import React, { useCallback, useMemo } from 'react';
 import { ParticipantList, ParticipantListProps } from './ParticipantList';
@@ -178,7 +178,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
   const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
 
   const defaultRenderIcon = (): JSX.Element => {
-    return <UserFriendsIcon key={'participantsIconKey'} />;
+    return <People20Filled key={'participantsIconKey'} primaryFill="currentColor" />;
   };
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {

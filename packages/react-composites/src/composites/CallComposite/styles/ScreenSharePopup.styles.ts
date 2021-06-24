@@ -35,7 +35,10 @@ export const getScreenSharePopupModalButtonStyles = (theme: Theme): IButtonStyle
       padding: '0.375rem 0.75rem',
       border: '0rem',
       boxShadow: theme.effects.elevation4,
-      borderRadius: theme.effects.roundedCorner4
+      borderRadius: theme.effects.roundedCorner4,
+      svg: {
+        verticalAlign: 'text-top'
+      }
     }
   };
 };
