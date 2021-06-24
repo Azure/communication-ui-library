@@ -24,7 +24,10 @@ export const dropDownStyles = (theme: Theme): Partial<IDropdownStyles> => ({
   dropdown: {
     height: '2.5rem',
     maxWidth: '20.75rem',
-    minWidth: '12.5rem'
+    minWidth: '12.5rem',
+    svg: {
+      verticalAlign: 'top'
+    }
   },
   title: {
     fontSize: '0.875rem',
