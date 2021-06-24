@@ -12,7 +12,7 @@ import { PlaceholderProps } from 'react-components';
 import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
 import { FluentThemeProvider } from 'react-components';
-import { OverridableCallControlButton } from './CallControls';
+import { CallControlButtonCollection } from './CallControls';
 
 export type CallCompositeProps = {
   adapter: CallAdapter;
@@ -24,12 +24,12 @@ export type CallCompositeProps = {
   fluentTheme?: PartialTheme | Theme;
   callInvitationURL?: string;
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
-  onRenderCallControlButtons?: (defaultButtons: OverridableCallControlButton[]) => JSX.Element[];
+  overrideCallControlButtons?: (defaultButtons: CallControlButtonCollection) => CallControlButtonCollection;
 };
 
 type MainScreenProps = {
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
-  onRenderCallControlButtons?: (defaultButtons: OverridableCallControlButton[]) => JSX.Element[];
+  overrideCallControlButtons?: (defaultButtons: CallControlButtonCollection) => CallControlButtonCollection;
   screenWidth: number;
   callInvitationURL?: string;
 };
@@ -38,7 +38,7 @@ const MainScreen = ({
   screenWidth,
   callInvitationURL,
   onRenderAvatar,
-  onRenderCallControlButtons
+  overrideCallControlButtons
 }: MainScreenProps): JSX.Element => {
   const page = useSelector(getPage);
   const adapter = useAdapter();
@@ -73,7 +73,7 @@ const MainScreen = ({
             customPage ? adapter.setPage(customPage) : adapter.setPage('error');
           }}
           onRenderAvatar={onRenderAvatar}
-          onRenderCallControlButtons={onRenderCallControlButtons}
+          overrideCallControlButtons={overrideCallControlButtons}
           screenWidth={screenWidth}
           showParticipants={true}
           callInvitationURL={callInvitationURL}
@@ -114,7 +114,7 @@ export const Call = (props: CallCompositeProps): JSX.Element => {
           <MainScreen
             screenWidth={screenWidth}
             onRenderAvatar={props.onRenderAvatar}
-            onRenderCallControlButtons={props.onRenderCallControlButtons}
+            overrideCallControlButtons={props.overrideCallControlButtons}
             callInvitationURL={callInvitationURL}
           />
         </Stack>

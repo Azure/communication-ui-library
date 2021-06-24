@@ -5,6 +5,8 @@ import React, { useCallback } from 'react';
 import {
   CameraButton,
   ControlBar,
+  ControlBarButton,
+  ControlBarButtonProps,
   EndCallButton,
   MicrophoneButton,
   ParticipantsButton,
@@ -13,18 +15,31 @@ import {
 import { groupCallLeaveButtonCompressedStyle, groupCallLeaveButtonStyle } from './styles/CallControls.styles';
 import { usePropsFor } from './hooks/usePropsFor';
 
-export type OverridableCallControlButton = {
-  buttonType: 'microphone' | 'camera' | 'screenShare' | 'participants' | 'options' | 'leave';
-  defaultRender: () => JSX.Element;
-};
+export type DefaultCallControlButton = 'microphone' | 'camera' | 'screenShare' | 'participants' | 'leave';
+
+export interface CustomCallControlButton extends ControlBarButtonProps {
+  key?: string;
+}
+
+export type CallControlButton = DefaultCallControlButton | CustomCallControlButton;
+
+export type CallControlButtonCollection = CallControlButton[];
 
 export type GroupCallControlsProps = {
   onEndCallClick(): void;
   compressedMode: boolean;
   showParticipants?: boolean;
   callInvitationURL?: string;
-  onRenderCallControlButtons?: (defaultButtons: OverridableCallControlButton[]) => JSX.Element[];
+  overrideCallControlButtons?: (defaultButtons: CallControlButtonCollection) => CallControlButtonCollection;
 };
+
+const defaultCallControlButtons: CallControlButtonCollection = [
+  'microphone',
+  'camera',
+  'screenShare',
+  'participants',
+  'leave'
+];
 
 export const CallControls = (props: GroupCallControlsProps): JSX.Element => {
   const {
@@ -32,7 +47,7 @@ export const CallControls = (props: GroupCallControlsProps): JSX.Element => {
     compressedMode,
     showParticipants = false,
     onEndCallClick,
-    onRenderCallControlButtons
+    overrideCallControlButtons
   } = props;
 
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
@@ -45,27 +60,20 @@ export const CallControls = (props: GroupCallControlsProps): JSX.Element => {
     onEndCallClick();
   }, [hangUpButtonProps, onEndCallClick]);
 
-  const defaultCallControlButtons: OverridableCallControlButton[] = [
-    {
-      buttonType: 'camera',
-      defaultRender: () => <CameraButton key={'camera'} {...cameraButtonProps} showLabel={!compressedMode} />
-    },
-    {
-      buttonType: 'microphone',
-      defaultRender: () => (
-        <MicrophoneButton key={'microphone'} {...microphoneButtonProps} showLabel={!compressedMode} />
-      )
-    },
-    {
-      buttonType: 'screenShare',
-      defaultRender: () => (
-        <ScreenShareButton key={'screenshare'} {...screenShareButtonProps} showLabel={!compressedMode} />
-      )
-    },
-    {
-      buttonType: 'participants',
-      defaultRender: () =>
-        showParticipants ? (
+  const buttonsToRender = overrideCallControlButtons
+    ? overrideCallControlButtons(defaultCallControlButtons)
+    : defaultCallControlButtons;
+
+  const buttons = buttonsToRender.map((button) => {
+    switch (button) {
+      case 'camera':
+        return <CameraButton key={'camera'} {...cameraButtonProps} showLabel={!compressedMode} />;
+      case 'microphone':
+        return <MicrophoneButton key={'microphone'} {...microphoneButtonProps} showLabel={!compressedMode} />;
+      case 'screenShare':
+        return <ScreenShareButton key={'screenshare'} {...screenShareButtonProps} showLabel={!compressedMode} />;
+      case 'participants':
+        return showParticipants ? (
           <ParticipantsButton
             key={'participants'}
             {...participantsButtonProps}
@@ -74,27 +82,22 @@ export const CallControls = (props: GroupCallControlsProps): JSX.Element => {
           />
         ) : (
           <></>
-        )
-    },
-    {
-      buttonType: 'leave',
-      defaultRender: () => (
-        <EndCallButton
-          key="leave"
-          {...hangUpButtonProps}
-          onHangUp={onHangUp}
-          styles={!compressedMode ? groupCallLeaveButtonStyle : groupCallLeaveButtonCompressedStyle}
-          showLabel={!compressedMode}
-        />
-      )
+        );
+      case 'leave':
+        return (
+          <EndCallButton
+            key="leave"
+            {...hangUpButtonProps}
+            onHangUp={onHangUp}
+            styles={!compressedMode ? groupCallLeaveButtonStyle : groupCallLeaveButtonCompressedStyle}
+            showLabel={!compressedMode}
+          />
+        );
+      default: {
+        return <ControlBarButton showLabel={!compressedMode} {...button} />;
+      }
     }
-  ];
+  });
 
-  return (
-    <ControlBar layout="dockedBottom">
-      {onRenderCallControlButtons
-        ? onRenderCallControlButtons(defaultCallControlButtons)
-        : defaultCallControlButtons.map((button) => button.defaultRender())}
-    </ControlBar>
-  );
+  return <ControlBar layout="dockedBottom">{...buttons}</ControlBar>;
 };

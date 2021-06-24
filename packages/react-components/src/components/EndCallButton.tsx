@@ -2,16 +2,17 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { DefaultButton, IButtonProps, Label, concatStyleSets, mergeStyles, useTheme } from '@fluentui/react';
+import { concatStyleSets, useTheme } from '@fluentui/react';
 import { CallEndIcon } from '@fluentui/react-northstar';
-import { controlButtonLabelStyles, endCallControlButtonStyles } from './styles/ControlBar.styles';
+import { endCallControlButtonStyles } from './styles/ControlBar.styles';
 import { lightTheme, darkTheme } from '../theming/themes';
 import { isDarkThemed } from '../theming/themeUtils';
+import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 
 /**
  * Props for EndCallButton component
  */
-export interface EndCallButtonProps extends IButtonProps {
+export interface EndCallButtonProps extends ControlBarButtonProps {
   /**
    * Whether the label is displayed or not.
    *
@@ -32,7 +33,7 @@ export interface EndCallButtonProps extends IButtonProps {
  * @param props - of type EndCallButtonProps
  */
 export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
-  const { showLabel = false, styles, onRenderIcon, onRenderText } = props;
+  const { styles } = props;
 
   const isDarkTheme = isDarkThemed(useTheme());
 
@@ -52,25 +53,13 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
     styles ?? {}
   );
 
-  const defaultRenderIcon = (): JSX.Element => {
-    return <CallEndIcon key={'callEndIconKey'} />;
-  };
-
-  const defaultRenderText = (props?: IButtonProps): JSX.Element => {
-    return (
-      <Label key={'callEndLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
-        Leave
-      </Label>
-    );
-  };
-
   return (
-    <DefaultButton
+    <ControlBarButton
       {...props}
       onClick={props.onHangUp ?? props.onClick}
       styles={componentStyles}
-      onRenderIcon={onRenderIcon ?? defaultRenderIcon}
-      onRenderText={showLabel ? onRenderText ?? defaultRenderText : undefined}
+      icon={<CallEndIcon key={'callEndIconKey'} />}
+      labelText={'leave'}
     />
   );
 };

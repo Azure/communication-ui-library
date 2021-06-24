@@ -14,6 +14,7 @@ import type { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClientState } from 'chat-stateful-client';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import type { CommunicationUserKind } from '@azure/communication-common';
+import { ControlBarButtonProps } from 'react-components';
 import { DeviceManagerState } from 'calling-stateful-client';
 import { GroupCallLocator } from '@azure/communication-calling';
 import type { MicrosoftTeamsUserKind } from '@azure/communication-common';
@@ -244,7 +245,14 @@ export type CallCompositeProps = {
     fluentTheme?: PartialTheme | Theme;
     callInvitationURL?: string;
     onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+    overrideCallControlButtons?: (defaultButtons: CallControlButtonCollection) => CallControlButtonCollection;
 };
+
+// @public (undocumented)
+export type CallControlButton = DefaultCallControlButton | CustomCallControlButton;
+
+// @public (undocumented)
+export type CallControlButtonCollection = CallControlButton[];
 
 // @public (undocumented)
 export type CallEndedListener = (event: {
@@ -349,6 +357,15 @@ export const createAzureCommunicationCallAdapter: (userId: CommunicationUserIden
 
 // @public (undocumented)
 export const createAzureCommunicationChatAdapter: (userId: CommunicationUserIdentifier, token: string, endpointUrl: string, threadId: string, displayName: string, refreshTokenCallback?: (() => Promise<string>) | undefined) => Promise<ChatAdapter>;
+
+// @public (undocumented)
+export interface CustomCallControlButton extends ControlBarButtonProps {
+    // (undocumented)
+    newProp: string;
+}
+
+// @public (undocumented)
+export type DefaultCallControlButton = 'microphone' | 'camera' | 'screenShare' | 'participants' | 'leave';
 
 // @public (undocumented)
 export type DisplayNameChangedListener = (event: {

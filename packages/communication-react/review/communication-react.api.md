@@ -325,7 +325,14 @@ export type CallCompositeProps = {
     fluentTheme?: PartialTheme | Theme;
     callInvitationURL?: string;
     onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+    overrideCallControlButtons?: (defaultButtons: CallControlButtonCollection) => CallControlButtonCollection;
 };
+
+// @public (undocumented)
+export type CallControlButton = DefaultCallControlButton | CustomCallControlButton;
+
+// @public (undocumented)
+export type CallControlButtonCollection = CallControlButton[];
 
 // @public (undocumented)
 export type CallEndedListener = (event: {
@@ -627,6 +634,18 @@ export type CommunicationParticipant = {
 // @public
 export const ControlBar: (props: ControlBarProps) => JSX.Element;
 
+// @public
+export const ControlBarButton: (props: ControlBarButtonProps) => JSX.Element;
+
+// @public
+export interface ControlBarButtonProps extends IButtonProps {
+    icon?: JSX.Element;
+    labelText?: string;
+    showLabel?: boolean;
+    toggledIcon?: JSX.Element;
+    toggledLabelText?: string;
+}
+
 // @public (undocumented)
 export type ControlBarLayoutType = 'horizontal' | 'vertical' | 'dockedTop' | 'dockedBottom' | 'dockedLeft' | 'dockedRight' | 'floatingTop' | 'floatingBottom' | 'floatingLeft' | 'floatingRight';
 
@@ -673,6 +692,12 @@ export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: 
 export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions | undefined) => StatefulChatClient;
 
 // @public (undocumented)
+export interface CustomCallControlButton extends ControlBarButtonProps {
+    // (undocumented)
+    newProp: string;
+}
+
+// @public (undocumented)
 export type CustomMessage = Message<'custom'>;
 
 // @public (undocumented)
@@ -683,6 +708,9 @@ export type CustomMessagePayload = {
 
 // @public
 export const darkTheme: PartialTheme & CallingTheme;
+
+// @public (undocumented)
+export type DefaultCallControlButton = 'microphone' | 'camera' | 'screenShare' | 'participants' | 'leave';
 
 // @public (undocumented)
 export type DefaultCallingHandlers = {
@@ -715,6 +743,9 @@ export type DefaultChatHandlers = {
 };
 
 // @public (undocumented)
+export const defaultControlButtonStyle: IButtonStyles;
+
+// @public (undocumented)
 export type DefaultMessageRendererType = (props: MessageProps) => JSX.Element;
 
 // @public
@@ -743,7 +774,7 @@ export const emptySelector: () => Record<string, never>;
 export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
 
 // @public
-export interface EndCallButtonProps extends IButtonProps {
+export interface EndCallButtonProps extends ControlBarButtonProps {
     onHangUp?: () => Promise<void>;
     showLabel?: boolean;
 }

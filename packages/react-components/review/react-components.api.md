@@ -78,6 +78,18 @@ export type CommunicationParticipant = {
 // @public
 export const ControlBar: (props: ControlBarProps) => JSX.Element;
 
+// @public
+export const ControlBarButton: (props: ControlBarButtonProps) => JSX.Element;
+
+// @public
+export interface ControlBarButtonProps extends IButtonProps {
+    icon?: JSX.Element;
+    labelText?: string;
+    showLabel?: boolean;
+    toggledIcon?: JSX.Element;
+    toggledLabelText?: string;
+}
+
 // @public (undocumented)
 export type ControlBarLayoutType = 'horizontal' | 'vertical' | 'dockedTop' | 'dockedBottom' | 'dockedLeft' | 'dockedRight' | 'floatingTop' | 'floatingBottom' | 'floatingLeft' | 'floatingRight';
 
@@ -101,13 +113,16 @@ export type CustomMessagePayload = {
 export const darkTheme: PartialTheme & CallingTheme;
 
 // @public (undocumented)
+export const defaultControlButtonStyle: IButtonStyles;
+
+// @public (undocumented)
 export type DefaultMessageRendererType = (props: MessageProps) => JSX.Element;
 
 // @public
 export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
 
 // @public
-export interface EndCallButtonProps extends IButtonProps {
+export interface EndCallButtonProps extends ControlBarButtonProps {
     onHangUp?: () => Promise<void>;
     showLabel?: boolean;
 }

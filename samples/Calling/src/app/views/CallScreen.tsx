@@ -2,14 +2,15 @@
 // Licensed under the MIT license.
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Spinner, DefaultButton } from '@fluentui/react';
+import { Spinner } from '@fluentui/react';
 import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import {
   CallAdapter,
   CallComposite,
   createAzureCommunicationCallAdapter,
-  OverridableCallControlButton,
-  defaultControlButtonStyle
+  CustomCallControlButton,
+  CallControlButtonCollection,
+  ControlBarButton
 } from '@azure/communication-react';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { refreshTokenAsync } from '../utils/refreshToken';
@@ -30,6 +31,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const [adapter, setAdapter] = useState<CallAdapter>();
   const adapterRef = useRef<CallAdapter>();
   const { currentTheme } = useSwitchableFluentTheme();
+  const [chatOpen, setChatOpen] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -60,20 +62,19 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;
   }
 
-  const chatButton = (
-    <DefaultButton
-      key={'chat'}
-      styles={defaultControlButtonStyle}
-      onRenderText={() => <>Chat</>}
-      onRenderIcon={() => <ChatIcon key="chatIcon" />}
-    />
-  );
+  const overrideCallControlButtons = (defaultButtons: CallControlButtonCollection): CallControlButtonCollection => {
+    // remove camera button
+    const newButtons = defaultButtons.filter((button) => button !== 'camera');
 
-  const onRenderCallControlButtons = (defaultButtons: OverridableCallControlButton[]): JSX.Element[] => {
-    const newButtons = defaultButtons
-      .filter((button) => button.buttonType !== 'leave')
-      .map((button) => button.defaultRender());
-    newButtons.push(chatButton);
+    // add custom chat button
+    newButtons.push({
+      labelText: 'chat',
+      toggledLabelText: 'chat open!',
+      icon: <ChatIcon outline={!!chatOpen} key="chatIcon" />,
+      toggledIcon: <ChatIcon outline={!chatOpen} key="toggledChatIcon" />,
+      onClick: () => setChatOpen(!chatOpen),
+      key: 'chat'
+    });
     return newButtons;
   };
 
@@ -82,7 +83,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       adapter={adapter}
       fluentTheme={currentTheme.theme}
       callInvitationURL={window.location.href}
-      onRenderCallControlButtons={onRenderCallControlButtons}
+      overrideCallControlButtons={overrideCallControlButtons}
     />
   );
 };
