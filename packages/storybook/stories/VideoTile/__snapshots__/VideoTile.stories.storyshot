@@ -72,20 +72,25 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Tile Video Tile
               aria-hidden={true}
               className="root-span"
               primaryFill="currentColor"
+              style={
+                Object {
+                  "height": "0.75rem",
+                }
+              }
             >
               <svg
                 className="svg"
                 fill="currentColor"
-                height={20}
-                viewBox="0 0 20 20"
-                width={20}
+                height={16}
+                viewBox="0 0 16 16"
+                width={16}
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="M5.5 10a.5.5 0 00-1 0 5.5 5.5 0 005 5.48v2.02a.5.5 0 001 0v-2.02c2.8-.26 5-2.61 5-5.48a.5.5 0 00-1 0 4.5 4.5 0 11-9 0z"
+                  d="M8 2a2.5 2.5 0 00-2.5 2.5V8a2.5 2.5 0 005 0V4.5A2.5 2.5 0 008 2z"
                 />
                 <path
-                  d="M13 10a3 3 0 01-6 0V5a3 3 0 016 0v5z"
+                  d="M4 7.5c.28 0 .5.22.5.5a3.5 3.5 0 107 0 .5.5 0 011 0 4.5 4.5 0 01-4 4.47v1.03a.5.5 0 01-1 0v-1.03A4.5 4.5 0 013.5 8c0-.28.22-.5.5-.5z"
                 />
               </svg>
             </span>

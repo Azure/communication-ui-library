@@ -84,23 +84,28 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                   aria-hidden={true}
                   className="root-span"
                   primaryFill="currentColor"
+                  style={
+                    Object {
+                      "height": "0.75rem",
+                    }
+                  }
                 >
                   <svg
                     className="svg"
                     fill="currentColor"
-                    height={20}
-                    viewBox="0 0 20 20"
-                    width={20}
+                    height={16}
+                    viewBox="0 0 16 16"
+                    width={16}
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M13 10a3 3 0 01-.1.78L7 4.88A3 3 0 0113 5v5z"
+                      d="M10.8 11.52l3.35 3.33a.5.5 0 00.7-.7l-13-13a.5.5 0 10-.7.7L5.5 6.21V8a2.5 2.5 0 003.88 2.09l.72.71A3.5 3.5 0 014.5 8a.5.5 0 10-1 0 4.5 4.5 0 004 4.47v1.03a.5.5 0 101 0v-1.03c.87-.1 1.66-.44 2.3-.95z"
                     />
                     <path
-                      d="M7 7.7V10a3 3 0 004.74 2.45l1.07 1.07A4.5 4.5 0 015.5 10a.5.5 0 00-1.01 0 5.5 5.5 0 005 5.48v2.02a.5.5 0 001 0v-2.02a5.48 5.48 0 003.02-1.25l3.63 3.62a.5.5 0 00.7-.7l-15-15a.5.5 0 10-.7.7L7 7.71z"
+                      d="M12.06 9.94l-.76-.76c.13-.37.2-.77.2-1.18a.5.5 0 011 0c0 .7-.16 1.35-.44 1.94z"
                     />
                     <path
-                      d="M14.8 12.68c.45-.8.7-1.7.7-2.68a.5.5 0 00-1 0c0 .7-.16 1.35-.44 1.94l.74.74z"
+                      d="M10.48 8.35l-4.8-4.79a2.5 2.5 0 014.82.94V8c0 .12 0 .24-.02.35z"
                     />
                   </svg>
                 </span>
