@@ -40,7 +40,7 @@ export interface VideoGalleryProps {
   /** Remote videos view options */
   remoteVideoViewOption?: VideoStreamOptions;
   /** Limitation on number of remote video stream to display */
-  remoteVideoStreamLimitation?: number;
+  maxRemoteVideoStreams?: number;
   /** Callback to create the local video stream view */
   onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void>;
   /** Callback to dispose of the local video stream view */
@@ -106,7 +106,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     remoteParticipants,
     localVideoViewOption,
     remoteVideoViewOption,
-    remoteVideoStreamLimitation,
+    maxRemoteVideoStreams,
     onRenderLocalVideoTile,
     onRenderRemoteVideoTile,
     onCreateLocalStreamView,
@@ -180,9 +180,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             onDisposeRemoteStreamView={onDisposeRemoteStreamView}
             isAvailable={remoteVideoStream?.isAvailable}
             renderElement={
-              !remoteVideoStreamLimitation || index < remoteVideoStreamLimitation
-                ? remoteVideoStream?.renderElement
-                : undefined
+              !maxRemoteVideoStreams || index < maxRemoteVideoStreams ? remoteVideoStream?.renderElement : undefined
             }
             isMuted={participant.isMuted}
             displayName={participant.displayName}
@@ -200,7 +198,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onDisposeRemoteStreamView,
     remoteVideoViewOption,
     onRenderAvatar,
-    showMuteIndicator
+    showMuteIndicator,
+    maxRemoteVideoStreams
   ]);
 
   if (shouldFloatLocalVideo()) {

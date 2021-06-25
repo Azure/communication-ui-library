@@ -52,7 +52,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         {...videoGalleryProps}
         localVideoViewOption={localVideoViewOption}
         remoteVideoViewOption={remoteVideoViewOption}
-        remoteVideoStreamLimitation={1}
+        maxRemoteVideoStreams={1}
         styles={VideoGalleryStyles}
         layout="floatingLocalVideo"
         onRenderAvatar={props.onRenderAvatar}
