@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import { IStyle, ITextField, mergeStyles, Stack, TextField, concatStyleSets, useTheme } from '@fluentui/react';
-import { Send28Regular, Send28Filled } from '@fluentui/react-icons';
+import { Send20Regular, Send20Filled } from '@fluentui/react-icons';
 import {
   textFieldStyle,
   sendBoxStyle,
@@ -189,9 +189,9 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           {onRenderIcon ? (
             onRenderIcon(props, isMouseOverSendIcon)
           ) : isMouseOverSendIcon ? (
-            <Send28Filled className={mergedSendIconStyle} primaryFill="currentColor" />
+            <Send20Filled className={mergedSendIconStyle} primaryFill="currentColor" />
           ) : (
-            <Send28Regular className={mergedSendIconStyle} primaryFill="currentColor" />
+            <Send20Regular className={mergedSendIconStyle} primaryFill="currentColor" />
           )}
         </div>
       </div>
