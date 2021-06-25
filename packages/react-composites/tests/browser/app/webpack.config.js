@@ -11,7 +11,10 @@ module.exports = {
   devtool: 'eval-source-map',
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
-    alias: {}
+    alias: {
+      // reference internal packlets src directly for hot reloading when developing
+      'react-components': path.resolve(__dirname, '../../../../react-components/src')
+    }
   },
   output: {
     path: path.join(__dirname, 'dist'),

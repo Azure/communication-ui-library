@@ -15,7 +15,7 @@
     "build:watch": "rushx build",
     "test": "jest",
     "test:coverage": "npm run test -- --coverage",
-    "test:browser": "webpack-cli serve --config ./tests/browser/app/webpack.config.js --mode=development --env development",
+    "test:browser": "npm run build:testapp && jest browser",
     "build:testapp": "webpack-cli build --config ./tests/browser/app/webpack.config.js --mode=production --env production",
     "snapshot:update": "npm run test -- --update-snapshot",
     "api-extractor": "tsc && api-extractor run --local",
