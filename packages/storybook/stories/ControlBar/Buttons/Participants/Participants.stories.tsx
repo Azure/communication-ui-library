@@ -18,15 +18,15 @@ import { ParticipantsButtonWithUserExcludeFromListExample } from './snippets/Wit
 
 const ParticipantsButtonDefaultExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
 const ParticipantsButtonWithCallLinkExampleText = require('!!raw-loader!./snippets/WithCallLink.snippet.tsx').default;
-const ParticipantsButtonWithCustomRenderExampleText = require('!!raw-loader!./snippets/WithCustomRender.snippet.tsx')
-  .default;
-const ParticipantsButtonWithCustomStylesExampleText = require('!!raw-loader!./snippets/WithCustomStyles.snippet.tsx')
-  .default;
+const ParticipantsButtonWithCustomRenderExampleText =
+  require('!!raw-loader!./snippets/WithCustomRender.snippet.tsx').default;
+const ParticipantsButtonWithCustomStylesExampleText =
+  require('!!raw-loader!./snippets/WithCustomStyles.snippet.tsx').default;
 const ParticipantsButtonWithLabelExampleText = require('!!raw-loader!./snippets/WithLabel.snippet.tsx').default;
-const ParticipantsButtonWithMuteAllOptionExampleText = require('!!raw-loader!./snippets/WithMuteAllOption.snippet.tsx')
-  .default;
-const ParticipantsButtonWithUserExcludeFromListExampleText = require('!!raw-loader!./snippets/WithUserExcludeFromList.snippet.tsx')
-  .default;
+const ParticipantsButtonWithMuteAllOptionExampleText =
+  require('!!raw-loader!./snippets/WithMuteAllOption.snippet.tsx').default;
+const ParticipantsButtonWithUserExcludeFromListExampleText =
+  require('!!raw-loader!./snippets/WithUserExcludeFromList.snippet.tsx').default;
 
 const importStatement = `
 import { ParticipantsButton } from '@azure/communication-react';

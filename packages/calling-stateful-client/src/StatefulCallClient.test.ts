@@ -598,9 +598,10 @@ describe('Stateful call client', () => {
       () => testData.mockStatefulCallClient.getState().calls[mockCallId]?.localVideoStreams.length !== 0
     );
 
-    const remoteVideoStream = testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants[
-      toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier)
-    ]?.videoStreams[1];
+    const remoteVideoStream =
+      testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants[
+        toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier)
+      ]?.videoStreams[1];
     if (!remoteVideoStream) {
       expect(remoteVideoStream).toBeDefined();
     } else {
@@ -667,9 +668,10 @@ describe('Stateful call client', () => {
       () => testData.mockStatefulCallClient.getState().calls[mockCallId]?.localVideoStreams.length !== 0
     );
 
-    const remoteVideoStream = testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants[
-      toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier)
-    ]?.videoStreams[1];
+    const remoteVideoStream =
+      testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants[
+        toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier)
+      ]?.videoStreams[1];
     if (!remoteVideoStream) {
       expect(remoteVideoStream).toBeDefined();
       return;
@@ -764,9 +766,10 @@ describe('Stateful call client', () => {
       () => testData.mockStatefulCallClient.getState().calls[mockCallId]?.localVideoStreams.length !== 0
     );
 
-    const remoteVideoStream = testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants[
-      toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier)
-    ]?.videoStreams[1];
+    const remoteVideoStream =
+      testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants[
+        toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier)
+      ]?.videoStreams[1];
     if (!remoteVideoStream) {
       expect(remoteVideoStream).toBeDefined();
       return;

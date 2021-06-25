@@ -10,7 +10,9 @@ export const sendEmojiRequest = async (emoji: string): Promise<void> => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ Emoji: emoji })
     };
-    await (await fetch('/userConfig/' + (await getToken()).identity, postTokenRequestOptions)).json;
+    await (
+      await fetch('/userConfig/' + (await getToken()).identity, postTokenRequestOptions)
+    ).json;
   } catch (error) {
     console.error('Failed at setting emoji, Error: ', error);
   }
