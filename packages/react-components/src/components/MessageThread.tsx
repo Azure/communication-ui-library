@@ -541,8 +541,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const isAllChatMessagesLoadedRef = useRef(isAllChatMessagesLoaded);
   isAllChatMessagesLoadedRef.current = isAllChatMessagesLoaded;
 
-  const chatScrollDivRef: any = useRef();
-  const chatThreadRef: any = useRef();
+  const chatScrollDivRef = useRef<HTMLElement>(null);
+  const chatThreadRef = useRef<HTMLElement>(null);
   const isLoadingChatMessagesRef = useRef(false);
 
   const messagesRef = useRef(messages);
@@ -604,13 +604,19 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   }, [showMessageStatus, onMessageSeen, chatMessageIdJustSeen]);
 
   const scrollToBottom = useCallback((): void => {
-    chatScrollDivRef.current.scrollTop = chatScrollDivRef.current.scrollHeight;
+    if (chatScrollDivRef.current) {
+      chatScrollDivRef.current.scrollTop = chatScrollDivRef?.current.scrollHeight;
+    }
     setExistsNewChatMessage(false);
     setIsAtBottomOfScrollRef(true);
     sendMessageStatusIfAtBottom();
   }, [sendMessageStatusIfAtBottom]);
 
   const handleScroll = (): void => {
+    if (chatScrollDivRef.current === undefined) {
+      return;
+    }
+
     const atBottom =
       Math.floor(chatScrollDivRef.current.scrollTop) >=
       chatScrollDivRef.current.scrollHeight - chatScrollDivRef.current.clientHeight;
@@ -625,11 +631,13 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     setIsAtTopOfScrollRef(atTop);
 
     // Make sure we do not stuck at the top if more messages are being fetched.
-    if (chatScrollDivRef.current.scrollTop === 0 && !isAllChatMessagesLoadedRef.current)
+    if (chatScrollDivRef.current && chatScrollDivRef.current.scrollTop === 0 && !isAllChatMessagesLoadedRef.current) {
       chatScrollDivRef.current.scrollTop = 5;
+    }
 
     (async () => {
       if (
+        chatScrollDivRef.current &&
         chatScrollDivRef.current.scrollTop <= 200 &&
         !isAllChatMessagesLoadedRef.current &&
         !isLoadingChatMessagesRef.current
@@ -650,12 +658,12 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   useEffect(() => {
     window && window.addEventListener('click', sendMessageStatusIfAtBottom);
     window && window.addEventListener('focus', sendMessageStatusIfAtBottom);
-    chatScrollDivRef.current && chatScrollDivRef.current.addEventListener('scroll', handleScroll);
+    chatScrollDivRef.current?.addEventListener('scroll', handleScroll);
     const chatScrollDiv = chatScrollDivRef.current;
     return () => {
       window && window.removeEventListener('click', sendMessageStatusIfAtBottom);
       window && window.removeEventListener('focus', sendMessageStatusIfAtBottom);
-      chatScrollDiv && chatScrollDiv.removeEventListener('scroll', handleScroll);
+      chatScrollDiv?.removeEventListener('scroll', handleScroll);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -712,7 +720,11 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   useEffect(() => {
     (async () => {
       if (onLoadPreviousChatMessages) {
-        while (chatScrollDivRef.current.scrollTop <= 200 && !isAllChatMessagesLoadedRef.current) {
+        while (
+          chatScrollDivRef.current &&
+          chatScrollDivRef.current.scrollTop <= 200 &&
+          !isAllChatMessagesLoadedRef.current
+        ) {
           setIsAllChatMessagesLoaded(await onLoadPreviousChatMessages(numberOfChatMessagesToReload));
           // Release CPU resources for 200 milliseconds between each loop.
           await delay(200);
