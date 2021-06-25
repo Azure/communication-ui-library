@@ -5,6 +5,7 @@ import { ChatMessageReadReceipt, ChatParticipant } from '@azure/communication-ch
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
+import { ErrorTargets } from './ObjectMethodNames';
 
 export type ChatClientState = {
   userId: CommunicationIdentifierKind;
@@ -14,6 +15,7 @@ export type ChatClientState = {
    * Object with {@Link ChatThreadClientState} fields, keyed by {@Link ChatThreadClientState.threadId}.
    */
   threads: { [key: string]: ChatThreadClientState };
+  errors: ChatErrors;
 };
 
 export type ChatThreadClientState = {
@@ -44,4 +46,8 @@ export type ChatThreadClientState = {
 // that helps us hide the different types used by underlying API.
 export type ChatThreadProperties = {
   topic?: string;
+};
+
+export type ChatErrors = {
+  [target in ErrorTargets]: Error[];
 };

@@ -23,3 +23,5 @@ shrinkwrap.json
 
 # Storybook intermediate files
 storybook-static/
+# TODO: Upgrade to Prettier >=2.2.0 to correctly handle string template types.
+./ObjectMethodNames.ts

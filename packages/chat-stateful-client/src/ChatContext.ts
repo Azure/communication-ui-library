@@ -3,7 +3,7 @@
 
 import EventEmitter from 'events';
 import produce from 'immer';
-import { ChatClientState, ChatThreadClientState, ChatThreadProperties } from './ChatClientState';
+import { ChatClientState, ChatErrors, ChatThreadClientState, ChatThreadProperties } from './ChatClientState';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 import { enableMapSet } from 'immer';
 import { ChatMessageReadReceipt, ChatParticipant } from '@azure/communication-chat';
@@ -19,7 +19,8 @@ export class ChatContext {
   private _state: ChatClientState = {
     userId: <UnknownIdentifierKind>{ id: '' },
     displayName: '',
-    threads: {}
+    threads: {},
+    errors: {} as ChatErrors
   };
   private _batchMode = false;
   private _emitter: EventEmitter;
