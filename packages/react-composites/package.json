@@ -25,14 +25,14 @@
     "lint:quiet": "npm run lint -- --quiet"
   },
   "dependencies": {
-    "acs-ui-common": "~1.0.0-beta.1",
+    "acs-ui-common": "1.0.0-beta.1",
     "calling-stateful-client": "~1.0.0-beta.1",
     "calling-component-bindings": "~1.0.0-beta.1",
     "@azure/communication-calling": "1.1.0-beta.2",
     "@azure/communication-chat": "1.0.0",
     "@azure/communication-common": "1.0.0",
     "@azure/communication-signaling": "1.0.0-beta.5",
-    "@azure/core-http": "^1.2.3",
+    "@azure/core-http": "1.2.4",
     "@fluentui/react": "~8.17.2",
     "@fluentui/react-icons": "~1.1.134",
     "@uifabric/react-hooks": "~7.13.11",
@@ -54,14 +54,14 @@
     "react-dom": ">=16.8.0 <18.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.7",
+    "@babel/core": "7.13.10",
     "@babel/preset-env": "7.13.10",
     "@mdx-js/react": "^1.6.22",
     "@microsoft/api-documenter": "~7.12.11",
     "@microsoft/api-extractor": "7.16.1-pr1916.1.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react-hooks": "^3.4.2",
-    "@types/jest": "^26.0.20",
+    "@types/jest": "~26.0.22",
     "@types/json-stringify-safe": "^5.0.0",
     "@types/node": "^14.14.10",
     "@types/react-aria-live": "^2.0.0",
