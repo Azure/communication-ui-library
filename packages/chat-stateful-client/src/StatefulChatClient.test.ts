@@ -448,7 +448,7 @@ class StateChangeListener {
     client.onStateChange(this.onChange.bind(this));
   }
 
-  private onChange(newState: ChatClientState) {
+  private onChange(newState: ChatClientState): void {
     this.onChangeCalled = true;
     this.state = newState;
   }

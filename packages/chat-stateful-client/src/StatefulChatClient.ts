@@ -65,12 +65,13 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
       }
       case 'startRealtimeNotifications': {
         return async function (...args: Parameters<ChatClient['startRealtimeNotifications']>) {
-          const ret = await chatClient.startRealtimeNotifications(...args);
-          if (!receiver.eventSubscriber) {
-            receiver.eventSubscriber = new EventSubscriber(chatClient, context);
-          }
-
-          return ret;
+          return context.teeAsyncError('ChatClient.startRealtimeNotifications', async () => {
+            const ret = await chatClient.startRealtimeNotifications(...args);
+            if (!receiver.eventSubscriber) {
+              receiver.eventSubscriber = new EventSubscriber(chatClient, context);
+            }
+            return ret;
+          });
         };
       }
       case 'stopRealtimeNotifications': {

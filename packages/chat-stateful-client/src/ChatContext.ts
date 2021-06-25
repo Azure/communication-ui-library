@@ -3,7 +3,13 @@
 
 import EventEmitter from 'events';
 import produce from 'immer';
-import { ChatClientState, ChatErrors, ChatThreadClientState, ChatThreadProperties } from './ChatClientState';
+import {
+  ChatClientState,
+  ChatErrors,
+  ChatThreadClientState,
+  ChatThreadProperties,
+  ErrorTargets
+} from './ChatClientState';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 import { enableMapSet } from 'immer';
 import { ChatMessageReadReceipt, ChatParticipant } from '@azure/communication-chat';
@@ -315,6 +321,21 @@ export class ChatContext {
           }
         })
       );
+    }
+  }
+
+  public async teeAsyncError<T>(target: ErrorTargets, f: () => Promise<T>): Promise<T> {
+    try {
+      return await f();
+    } catch (error) {
+      this.setState(
+        produce(this._state, (draft: ChatClientState) => {
+          // FIXME: Clearly flawed.
+          draft.errors[target] = [];
+          draft.errors[target].push(error);
+        })
+      );
+      throw error;
     }
   }
 
