@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 import { ChatClient } from '@azure/communication-chat';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-identity';

@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 import puppeteer, { Browser, Page } from 'puppeteer';
 import { startServer, stopServer } from './app/server';
 

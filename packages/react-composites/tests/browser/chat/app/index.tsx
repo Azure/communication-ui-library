@@ -4,18 +4,18 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
-import { ChatAdapter, createAzureCommunicationChatAdapter, ChatComposite } from '../../../src';
+import { ChatAdapter, createAzureCommunicationChatAdapter, ChatComposite } from '../../../../src';
 
 import { createUserAndThread } from './identity';
 
 const connectionString = process.env.CONNECTION_STRING;
 
 function App(): JSX.Element {
-  const [displayName, setDisplayName] = useState('John Doe');
+  const displayName = 'John Doe';
   const [chatAdapter, setChatAdapter] = useState<ChatAdapter | undefined>(undefined);
 
   useEffect(() => {
-    const initialize = async () => {
+    const initialize = async (): Promise<void> => {
       const data = await createUserAndThread(connectionString, 'Test Chat', [displayName]);
       setChatAdapter(
         await createAzureCommunicationChatAdapter(
@@ -29,6 +29,7 @@ function App(): JSX.Element {
     };
 
     initialize();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <>{chatAdapter && <ChatComposite adapter={chatAdapter} />}</>;
