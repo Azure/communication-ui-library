@@ -15,7 +15,7 @@ import {
   ReadReceiptReceivedEvent,
   TypingIndicatorReceivedEvent
 } from '@azure/communication-signaling';
-import { createStatefulChatClient, StatefulChatClient } from './StatefulChatClient';
+import { createStatefulChatClientWithDeps, StatefulChatClient, StatefulChatClientArgs } from './StatefulChatClient';
 import { ChatClientState } from './ChatClientState';
 import { Constants } from './Constants';
 import { createMockChatThreadClient } from './mocks/createMockChatThreadClient';
@@ -90,29 +90,15 @@ function createMockChatClient(): ChatClient {
   return mockChatClient;
 }
 
-jest.mock('@azure/communication-chat', () => {
-  return {
-    ...jest.requireActual('@azure/communication-chat'),
-    ChatClient: jest.fn().mockImplementation(() => {
-      return createMockChatClient();
-    })
-  };
-});
-
 type StatefulChatClientWithEventTrigger = StatefulChatClient & {
   triggerEvent: (eventName: string, e: any) => Promise<void>;
 };
 
-function createStatefulChatClientMock(): StatefulChatClientWithEventTrigger {
+const createStatefulChatClientMock = (): StatefulChatClientWithEventTrigger => {
   mockEventHandlersRef.value = {};
-  const declarativeClient = createStatefulChatClient({
-    displayName: '',
-    userId: { kind: 'communicationUser', communicationUserId: 'userId1' },
-    endpoint: '',
-    credential: new MockCommunicationUserCredential()
-  });
+  const client = createStatefulChatClientWithDeps(createMockChatClient(), defaultClientArgs);
 
-  Object.defineProperty(declarativeClient, 'triggerEvent', {
+  Object.defineProperty(client, 'triggerEvent', {
     value: async (eventName: string, e: any): Promise<void> => {
       const handler = mockEventHandlersRef.value[eventName];
       if (handler !== undefined) {
@@ -121,8 +107,15 @@ function createStatefulChatClientMock(): StatefulChatClientWithEventTrigger {
     }
   });
 
-  return declarativeClient as StatefulChatClientWithEventTrigger;
-}
+  return client as StatefulChatClientWithEventTrigger;
+};
+
+const defaultClientArgs: StatefulChatClientArgs = {
+  displayName: '',
+  userId: { kind: 'communicationUser', communicationUserId: 'userId1' },
+  endpoint: '',
+  credential: new MockCommunicationUserCredential()
+};
 
 describe('declarative chatThread list iterators', () => {
   test('declarative listChatThreads should proxy listChatThreads iterator and store it in internal state', async () => {
@@ -429,3 +422,11 @@ describe('declarative chatClient onStateChange', () => {
     expect(onChangeCalledTimes).toBe(1);
   });
 });
+
+/*
+describe('stateful chatClient tees errors to state', () => {
+  test('when createChatThread fails', async () => {
+    const client = createStatefulChatClientMock();
+  });
+});
+*/

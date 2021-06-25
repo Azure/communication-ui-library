@@ -124,7 +124,23 @@ export const createStatefulChatClient = (
   args: StatefulChatClientArgs,
   options?: StatefulChatClientOptions
 ): StatefulChatClient => {
-  const chatClient = new ChatClient(args.endpoint, args.credential, options?.chatClientOptions);
+  return createStatefulChatClientWithDeps(
+    new ChatClient(args.endpoint, args.credential, options?.chatClientOptions),
+    args,
+    options
+  );
+};
+
+/**
+ * Internal implementation of {@Link createStatefulChatClient} for dependency injection.
+ *
+ * Used by tests. Should not be exported out of this package.
+ */
+export const createStatefulChatClientWithDeps = (
+  chatClient: ChatClient,
+  args: StatefulChatClientArgs,
+  options?: StatefulChatClientOptions
+): StatefulChatClient => {
   const context = new ChatContext(options?.maxStateChangeListeners);
   let eventSubscriber: EventSubscriber;
 
