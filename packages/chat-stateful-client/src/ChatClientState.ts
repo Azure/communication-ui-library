@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatMessageReadReceipt, ChatParticipant } from '@azure/communication-chat';
+import { ChatClient, ChatMessageReadReceipt, ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
-import { ErrorTargets } from './ObjectMethodNames';
 
 export type ChatClientState = {
   userId: CommunicationIdentifierKind;
@@ -51,3 +50,15 @@ export type ChatThreadProperties = {
 export type ChatErrors = {
   [target in ErrorTargets]: Error[];
 };
+
+export type ObjectMethodNames<TName extends string, T> = {
+  [K in keyof T]: `${TName}.${MethodName<T, K>}`;
+}[keyof T];
+
+// eslint complains on all uses of `Function`. Using it as a type constraint is legitimate.
+// eslint-disable-next-line @typescript-eslint/ban-types
+export type MethodName<T, K extends keyof T> = T[K] extends Function ? (K extends string ? K : never) : never;
+
+export type ErrorTargets =
+  | ObjectMethodNames<'ChatClient', ChatClient>
+  | ObjectMethodNames<'ChatThreadClient', ChatThreadClient>;
