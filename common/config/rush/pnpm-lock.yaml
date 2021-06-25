@@ -5687,6 +5687,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-KfRL3PuHmqQLOG+2tGpRO26Ctg+Cq1E01D2DMriKEATHgWLfeNDmq9e29Q9WIky0dQ3NPkd1mzYH8Lm936Z9qw==
+  /@types/puppeteer/5.4.3:
+    dependencies:
+      '@types/node': 15.12.4
+    dev: false
+    resolution:
+      integrity: sha512-3nE8YgR9DIsgttLW+eJf6mnXxq8Ge+27m5SU3knWmrlfl6+KOG0Bf9f7Ua7K+C4BnaTMAh3/UpySqdAYvrsvjg==
   /@types/qs/6.9.6:
     dev: false
     resolution:
@@ -21612,9 +21618,11 @@ packages:
       '@microsoft/api-documenter': 7.12.22
       '@testing-library/jest-dom': 5.14.1
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
+      '@types/express': 4.17.12
       '@types/jest': 26.0.23
       '@types/json-stringify-safe': 5.0.0
       '@types/node': 14.17.3
+      '@types/puppeteer': 5.4.3
       '@types/react': 16.14.8
       '@types/react-aria-live': 2.0.0
       '@types/react-dom': 16.9.13
@@ -21641,6 +21649,7 @@ packages:
       eslint-plugin-react: 7.24.0_eslint@7.29.0
       eslint-plugin-react-hooks: 4.2.0_eslint@7.29.0
       events: 3.3.0
+      express: 4.16.4
       html-webpack-plugin: 5.3.1_webpack@5.38.1
       husky: 4.3.8
       jest: 26.6.0_ts-node@9.1.1
@@ -21676,7 +21685,7 @@ packages:
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-kvSWNQRpD0Oi8CZ9sZfh/0JkPaqy5m8hz0YAfjepublguSjZazGLbTqNcw85NQD7XZeT0s5SNHk5yl0YDjxqUA==
+      integrity: sha512-rFxG3/wTTECFIBiBJNUPfgza3sx+VCmi80VWbTpE5/Voc6Qj98/qCzApeVgh5aELVgBtsHH27ix8hdvjEFHRyw==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/sample-static-html-composites.tgz:
