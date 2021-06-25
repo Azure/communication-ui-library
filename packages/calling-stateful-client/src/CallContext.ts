@@ -574,7 +574,7 @@ export class CallContext {
          * camera permissions are granted. So selectedCamera will have this value before the actual cameras are obtained. Therefore we should reset
          * selectedCamera to the first camera when there are cameras AND when current selectedCamera does not exist in the new array of cameras **/
         if (cameras.length > 0 && !cameras.some((camera) => camera.id === draft.deviceManager.selectedCamera?.id)) {
-          this.setDeviceManagerSelectedCamera(cameras[0]);
+          draft.deviceManager.selectedCamera = cameras[0];
         }
         draft.deviceManager.cameras = cameras;
       })
