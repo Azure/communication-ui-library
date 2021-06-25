@@ -233,29 +233,29 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                 }
               >
                 <div
-                  className="ms-Stack css-23"
+                  className="ms-Stack css-24"
                 >
                   <div
-                    className="ms-Stack css-24"
+                    className="ms-Stack css-25"
                   >
                     <div
-                      className="ms-Stack css-26"
+                      className="ms-Stack css-27"
                     >
                       <div
                         aria-label=""
-                        className="ms-Persona ms-Persona--size100 root-27"
+                        className="ms-Persona ms-Persona--size100 root-28"
                       >
                         <div
-                          className="ms-Persona-coin ms-Persona--size100 coin-34"
+                          className="ms-Persona-coin ms-Persona--size100 coin-35"
                           role="presentation"
                         >
                           <div
-                            className="ms-Persona-imageArea imageArea-36"
+                            className="ms-Persona-imageArea imageArea-37"
                             role="presentation"
                           >
                             <div
                               aria-hidden="true"
-                              className="ms-Persona-initials initials-39"
+                              className="ms-Persona-initials initials-40"
                             >
                               <span>
                                 M
@@ -267,19 +267,19 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                     </div>
                   </div>
                   <div
-                    className="ms-Stack css-80 css-42"
+                    className="ms-Stack css-80 css-43"
                   >
                     <div
-                      className="ms-StackItem css-5"
+                      className="ms-Stack css-3"
                     >
                       <span
-                        className="css-43"
+                        className="css-44"
                       >
                         Michael
                       </span>
                     </div>
                     <div
-                      className="ms-StackItem css-5"
+                      className="ms-Stack css-45"
                     />
                   </div>
                 </div>
