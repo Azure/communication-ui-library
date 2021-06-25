@@ -694,7 +694,7 @@ export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: 
 // @public (undocumented)
 export interface CustomCallControlButton extends ControlBarButtonProps {
     // (undocumented)
-    newProp: string;
+    key?: string;
 }
 
 // @public (undocumented)

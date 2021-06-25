@@ -361,7 +361,7 @@ export const createAzureCommunicationChatAdapter: (userId: CommunicationUserIden
 // @public (undocumented)
 export interface CustomCallControlButton extends ControlBarButtonProps {
     // (undocumented)
-    newProp: string;
+    key?: string;
 }
 
 // @public (undocumented)
