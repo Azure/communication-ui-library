@@ -70,7 +70,7 @@ export const sendButtonStyle = mergeStyles({
   display: 'flex',
   justifyContent: 'center',
   position: 'absolute',
-  top: '0.875rem'
+  top: '0.75rem'
 });
 
 export const sendIconStyle = mergeStyles({
