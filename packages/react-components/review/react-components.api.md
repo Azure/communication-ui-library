@@ -389,6 +389,7 @@ export interface VideoGalleryProps {
     layout?: 'default' | 'floatingLocalVideo';
     localParticipant: VideoGalleryLocalParticipant;
     localVideoViewOption?: VideoStreamOptions;
+    maxRemoteVideoStreams?: number;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void>;
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
     onDisposeLocalStreamView?: () => void;
@@ -398,7 +399,6 @@ export interface VideoGalleryProps {
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
-    remoteVideoStreamLimitation?: number;
     remoteVideoViewOption?: VideoStreamOptions;
     showMuteIndicator?: boolean;
     styles?: BaseCustomStylesProps;
