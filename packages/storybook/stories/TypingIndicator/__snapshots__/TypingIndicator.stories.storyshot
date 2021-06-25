@@ -27,9 +27,17 @@ exports[`storybook snapshot tests Storyshots UI Components/Typing Indicator Typi
         >
           <span>
             <div
-              className="ms-Stack css-54 css-1"
+              className="ms-Stack css-54 css-2"
             >
-              User1, User2
+              <span>
+                User1
+              </span>
+              <span>
+                , 
+              </span>
+              <span>
+                User2
+              </span>
             </div>
           </span>
           <span>

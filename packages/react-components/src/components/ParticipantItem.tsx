@@ -16,8 +16,8 @@ import {
 } from '@fluentui/react';
 import React, { useRef, useState } from 'react';
 import { BaseCustomStylesProps } from '../types';
-import { MoreIcon } from '@fluentui/react-icons-northstar';
 import { useLocale } from '../localization/LocalizationProvider';
+import { MoreHorizontal20Filled, MoreHorizontal20Regular } from '@fluentui/react-icons';
 
 export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
   /** Styles for the avatar. */
@@ -127,7 +127,11 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
               className={menuButtonContainerStyle}
               onClick={() => setMenuHidden(false)}
             >
-              <MoreIcon outline={!menuButtonHovered} />
+              {!menuButtonHovered ? (
+                <MoreHorizontal20Regular primaryFill="currentColor" />
+              ) : (
+                <MoreHorizontal20Filled primaryFill="currentColor" />
+              )}
             </div>
           ) : (
             onRenderIcon(props)

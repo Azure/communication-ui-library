@@ -13,7 +13,6 @@ import { MessageStatus } from 'acs-ui-common';
 import { PartialTheme } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
 import { default as React_2 } from 'react';
-import { SizeValue } from '@fluentui/react-northstar';
 import { Theme } from '@fluentui/react';
 
 // @public
@@ -221,7 +220,6 @@ export interface MessageStatusIndicatorProps {
     failedToSendTooltipText?: string;
     seenTooltipText?: string;
     sendingTooltipText?: string;
-    size?: SizeValue;
     status?: MessageStatus;
     styles?: BaseCustomStylesProps;
 }

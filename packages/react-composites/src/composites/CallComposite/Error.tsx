@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { PrimaryButton, Stack } from '@fluentui/react';
-import { VideoCameraEmphasisIcon } from '@fluentui/react-icons-northstar';
+import { Video20Filled } from '@fluentui/react-icons';
 import {
   endCallContainerStyle,
   endCallTitleStyle,
@@ -31,7 +31,7 @@ export function Error(props: ErrorProps): JSX.Element {
         <div className={endCallTitleStyle}>{title}</div>
         <Stack horizontal tokens={buttonsStackTokens}>
           <PrimaryButton className={buttonStyle} onClick={props.rejoinHandler}>
-            <VideoCameraEmphasisIcon className={videoCameraIconStyle} size="medium" />
+            <Video20Filled primaryFill="currentColor" className={videoCameraIconStyle} />
             {rejoinCall}
           </PrimaryButton>
         </Stack>

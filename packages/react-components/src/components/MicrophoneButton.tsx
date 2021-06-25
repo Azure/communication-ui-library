@@ -3,7 +3,7 @@
 
 import React, { useCallback } from 'react';
 import { DefaultButton, IButtonProps, Label, concatStyleSets, mergeStyles } from '@fluentui/react';
-import { MicIcon, MicOffIcon } from '@fluentui/react-northstar';
+import { MicOn20Filled, MicOff20Filled } from '@fluentui/react-icons';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 import { useLocale } from '../localization';
 
@@ -52,7 +52,11 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   const offLabel = props.strings?.offLabel ?? strings.microphoneButton.offLabel;
 
   const defaultRenderIcon = (props?: IButtonProps): JSX.Element => {
-    return props?.checked ? <MicIcon key={'microphoneIconKey'} /> : <MicOffIcon key={'microphoneOffIconKey'} />;
+    return props?.checked ? (
+      <MicOn20Filled primaryFill="currentColor" key={'microphoneIconKey'} />
+    ) : (
+      <MicOff20Filled primaryFill="currentColor" key={'microphoneOffIconKey'} />
+    );
   };
 
   const defaultRenderText = useCallback(

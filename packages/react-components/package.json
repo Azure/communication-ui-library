@@ -26,8 +26,7 @@
   },
   "dependencies": {
     "@fluentui/react": "~8.17.2",
-    "@fluentui/react-icons": "^0.3.9",
-    "@fluentui/react-icons-northstar": "^0.51.2",
+    "@fluentui/react-icons": "~1.1.134",
     "@fluentui/react-northstar": "^0.51.2",
     "@uifabric/react-hooks": "~7.13.11",
     "copy-to-clipboard": "~3.3.1",
