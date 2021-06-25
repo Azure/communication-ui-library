@@ -613,7 +613,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   }, [sendMessageStatusIfAtBottom]);
 
   const handleScroll = (): void => {
-    if (chatScrollDivRef.current === undefined) {
+    if (!chatScrollDivRef.current) {
       return;
     }
 
