@@ -1,0 +1,34 @@
+{
+  "participantItem": {
+    "isMeText": "(أنت)",
+    "menuTitle": "المزيد من الخيارات"
+  },
+  "typingIndicator": {
+    "singleUser": "... يكتب {user}",
+    "multipleUsers": "... يكتبون  {users}",
+    "multipleUsersAbbreviateOne": "... و شخص آخر يكتبون {users}",
+    "multipleUsersAbbreviateMany": "... وآخرون يكتبون {users}",
+    "delimiter": "و "
+  },
+  "endCallButton": {
+    "label": "غادر"
+  },
+  "cameraButton": {
+    "onLabel": "طفئه",
+    "offLabel": "شغله"
+  },
+  "microphoneButton": {
+    "onLabel": "صامت",
+    "offLabel": "شغله"
+  },
+  "messageThread": {
+    "yesterday": "أمس",
+    "sunday": "الأحد",
+    "monday": "الاثنين",
+    "tuesday": "يوم الثلاثاء",
+    "wednesday": "الأربعاء",
+    "thursday": "يوم الخميس",
+    "friday": "جمعة",
+    "saturday": "السبت"
+  }
+}

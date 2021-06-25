@@ -16,6 +16,7 @@ import {
 } from '@fluentui/react';
 import React, { useRef, useState } from 'react';
 import { BaseCustomStylesProps } from '../types';
+import { useLocale } from '../localization/LocalizationProvider';
 import { MoreHorizontal20Filled, MoreHorizontal20Regular } from '@fluentui/react-icons';
 
 export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
@@ -27,6 +28,16 @@ export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
   iconContainer?: IStyle;
   /** Styles for the menu. */
   menu?: IStyle;
+}
+
+/**
+ * Strings of ParticipantItem that can be overridden
+ */
+export interface ParticipantItemStrings {
+  /** String shown when participant is me */
+  isMeText: string;
+  /** String shown when hovering over menu button */
+  menuTitle: string;
 }
 
 /**
@@ -53,6 +64,10 @@ export interface ParticipantItemProps {
    * ```
    */
   styles?: ParticipantItemStylesProps;
+  /**
+   * Optional strings to override in component
+   */
+  strings?: Partial<ParticipantItemStrings>;
 }
 
 /**
@@ -66,6 +81,10 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
   const [menuHidden, setMenuHidden] = useState<boolean>(true);
   const containerRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
+  const { strings } = useLocale();
+
+  const isMeText = props.strings?.isMeText ?? strings.participantItem.isMeText;
+  const menuTitle = props.strings?.menuTitle ?? strings.participantItem.menuTitle;
 
   const avatarToUse = (
     <Persona
@@ -97,14 +116,14 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
       onMouseLeave={() => setItemHovered(false)}
     >
       {avatarToUse}
-      {me && <Stack className={meTextStyle}>{`(you)`}</Stack>}
+      {me && <Stack className={meTextStyle}>{isMeText}</Stack>}
       {onRenderIcon && (
         <Stack horizontal={true} className={mergeStyles(iconContainerStyle, styles?.iconContainer)}>
           {menuItems && menuItems.length > 0 && (itemHovered || !menuHidden) ? (
             <div
               onMouseEnter={() => setMenuButtonHovered(true)}
               onMouseLeave={() => setMenuButtonHovered(false)}
-              title="More options"
+              title={menuTitle}
               className={menuButtonContainerStyle}
               onClick={() => setMenuHidden(false)}
             >

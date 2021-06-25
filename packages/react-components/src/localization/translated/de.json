@@ -1,0 +1,34 @@
+{
+  "participantItem": {
+    "isMeText": "(Sie)",
+    "menuTitle": "Mehr Optionen"
+  },
+  "typingIndicator": {
+    "singleUser": "{user} tippt ...",
+    "multipleUsers": "{users} tippen gerade ...",
+    "multipleUsersAbbreviateOne": "{users} und 1 anderer tippen gerade ...",
+    "multipleUsersAbbreviateMany": "{users} und {numOthers} andere tippen gerade ...",
+    "delimiter": ", "
+  },
+  "endCallButton": {
+    "label": "Verlassen"
+  },
+  "cameraButton": {
+    "onLabel": "Ausschalten",
+    "offLabel": "Einschalten"
+  },
+  "microphoneButton": {
+    "onLabel": "Stumm",
+    "offLabel": "Einschalten"
+  },
+  "messageThread": {
+    "yesterday": "Gestern",
+    "sunday": "Sonntag",
+    "monday": "Montag",
+    "tuesday": "Dienstag",
+    "wednesday": "Mittwoch",
+    "thursday": "Donnerstag",
+    "friday": "Freitag",
+    "saturday": "Samstag"
+  }
+}
