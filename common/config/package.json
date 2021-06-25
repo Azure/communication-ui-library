@@ -8,8 +8,8 @@
     "lint:fix": "",
     "build": "",
     "test": "",
-		"prettier": "",
-		"prettier:check": ""
+    "prettier": "",
+    "prettier:check": ""
   },
   "devDependencies": {
     "@octokit/rest": "~18.0.6",
