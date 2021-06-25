@@ -12,6 +12,5 @@ SDK/cached-package.json
 
 # Test dirs and files
 .env
-tests/browser/app/dist
-tests/browser/screenshots
-tests/browser/app/config.js
+tests/browser/chat/app/dist
+tests/browser/chat/screenshots
