@@ -41,8 +41,15 @@ The basic app is accessible on http://localhost:3000.
 
 >  This sample uses the `@azure/communication-react` package from within this repo, which can slightly diverge from the `latest` package on npm. If you copy this sample to bootstrap your own app and use the public npm package, you might need to fix the call signatures in `composites.js` file. Alternatively, you can install the `dev` tagged package from npm which is updated daily and should likely match the in-repo version.
 
+
+## Generate composite js bundles
+```
+rushx build
+```
+Then get your own bundle according to the need:
+dist/chatComposite.js
+dist/callComposite.js
+
 ## Basic app
 
 ![Basic app screenshot](./app.png)
-
-
