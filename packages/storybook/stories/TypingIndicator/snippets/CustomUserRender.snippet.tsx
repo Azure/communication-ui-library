@@ -15,19 +15,12 @@ export const CustomUserRenderSnippet: () => JSX.Element = () => {
   const verticallyCenterStyle = mergeStyles({ display: 'flex', alignItems: 'center' });
   const spanStyle = mergeStyles({ whiteSpace: 'nowrap', paddingRight: '3px' });
 
-  const onRenderUsers = (users: CommunicationParticipant[]): JSX.Element => {
+  const onRenderUser = (user: CommunicationParticipant): JSX.Element => {
     return (
-      <>
-        {users.map((user, index) => (
-          <div key={`${user.displayName}UserKey`} className={verticallyCenterStyle}>
-            <img src={imageMap[user.userId]} width="32px" height="32px" style={avatarStyle} />
-            <span className={spanStyle}>
-              {user.displayName}
-              {index < users.length - 1 && ', '}
-            </span>
-          </div>
-        ))}
-      </>
+      <div key={`${user.displayName}UserKey`} className={verticallyCenterStyle}>
+        <img src={imageMap[user.userId]} width="32px" height="32px" style={avatarStyle} />
+        <span className={spanStyle}>{user.displayName}</span>
+      </div>
     );
   };
 
@@ -36,5 +29,5 @@ export const CustomUserRenderSnippet: () => JSX.Element = () => {
     { userId: '2', displayName: 'Ted Randall' }
   ];
 
-  return <TypingIndicator typingUsers={twoTypingUsers} onRenderUsers={onRenderUsers} />;
+  return <TypingIndicator typingUsers={twoTypingUsers} onRenderUser={onRenderUser} />;
 };

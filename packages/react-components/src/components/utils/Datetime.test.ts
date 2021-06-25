@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { formatDateForChatMessage, formatTimeForChatMessage, formatTimestampForChatMessage } from './Datetime';
+import defaultStrings from '../../localization/translated/en-US.json';
 
 const createMockDate = (datetime: {
   year?: number;
@@ -61,7 +62,8 @@ describe('datetime tests', () => {
     expect(
       formatTimestampForChatMessage(
         createMockDate({ year: 2000, month: 10, day: 1, hour: 4, min: 0 }),
-        createMockDate({ year: 2000, month: 10, day: 1, hour: 5, min: 0 })
+        createMockDate({ year: 2000, month: 10, day: 1, hour: 5, min: 0 }),
+        defaultStrings.messageThread
       )
     ).toEqual('4:00 a.m.');
   });
@@ -70,7 +72,8 @@ describe('datetime tests', () => {
     expect(
       formatTimestampForChatMessage(
         createMockDate({ year: 2000, month: 10, day: 9, hour: 4, min: 0 }),
-        createMockDate({ year: 2000, month: 10, day: 10, hour: 5, min: 0 })
+        createMockDate({ year: 2000, month: 10, day: 10, hour: 5, min: 0 }),
+        defaultStrings.messageThread
       )
     ).toEqual('Yesterday 4:00 a.m.');
   });
@@ -79,7 +82,8 @@ describe('datetime tests', () => {
     expect(
       formatTimestampForChatMessage(
         createMockDate({ year: 2000, month: 10, day: 8, hour: 4, min: 0 }),
-        createMockDate({ year: 2000, month: 10, day: 10, hour: 5, min: 0 })
+        createMockDate({ year: 2000, month: 10, day: 10, hour: 5, min: 0 }),
+        defaultStrings.messageThread
       )
     ).toEqual('Wednesday 4:00 a.m.');
   });
@@ -88,7 +92,8 @@ describe('datetime tests', () => {
     expect(
       formatTimestampForChatMessage(
         createMockDate({ year: 1999, month: 10, day: 8, hour: 4, min: 0 }),
-        createMockDate({ year: 2000, month: 10, day: 10, hour: 5, min: 0 })
+        createMockDate({ year: 2000, month: 10, day: 10, hour: 5, min: 0 }),
+        defaultStrings.messageThread
       )
     ).toEqual('1999-11-08 4:00 a.m.');
   });
