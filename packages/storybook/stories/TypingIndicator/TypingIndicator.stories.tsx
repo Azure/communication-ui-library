@@ -3,7 +3,7 @@
 
 import { TypingIndicator as TypingIndicatorComponent } from '@azure/communication-react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
-import { object, text, boolean } from '@storybook/addon-knobs';
+import { object } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
@@ -68,9 +68,7 @@ const TypingIndicatorStory: () => JSX.Element = () => {
       displayName: 'User2'
     }
   ]);
-  const overrideTypingString = boolean('Override typing string?', false);
-  const typingString = overrideTypingString ? text('Typing String', ' are typing away...') : undefined;
-  return <TypingIndicatorComponent typingUsers={typingUsers} typingString={typingString} />;
+  return <TypingIndicatorComponent typingUsers={typingUsers} />;
 };
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
