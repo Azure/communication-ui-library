@@ -423,10 +423,33 @@ describe('declarative chatClient onStateChange', () => {
   });
 });
 
-/*
 describe('stateful chatClient tees errors to state', () => {
-  test('when createChatThread fails', async () => {
-    const client = createStatefulChatClientMock();
+  test('when startRealtimeNotifications fails', async () => {
+    const baseClient = createMockChatClient();
+    baseClient.startRealtimeNotifications = async () => {
+      throw Error('injected error');
+    };
+    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    const listener = new StateChangeListener(client);
+    await expect(client.startRealtimeNotifications()).rejects.toThrow();
+    expect(listener.onChangeCalled).toBe(true);
+    const errors = listener.state.errors['ChatClient.startRealtimeNotifications'];
+    expect(errors).toBeDefined();
+    expect(errors.length).toBe(1);
   });
 });
-*/
+
+class StateChangeListener {
+  state: ChatClientState;
+  onChangeCalled = false;
+
+  constructor(client: StatefulChatClient) {
+    this.state = client.getState();
+    client.onStateChange(this.onChange.bind(this));
+  }
+
+  private onChange(newState: ChatClientState) {
+    this.onChangeCalled = true;
+    this.state = newState;
+  }
+}
