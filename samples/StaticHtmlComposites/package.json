@@ -4,9 +4,9 @@
   "description": "Basic bundle for communication react composites and usage on a static HTML page.",
   "private": true,
   "scripts": {
-    "build": "webpack",
+    "build": "webpack --config webpack.build.config.js",
     "start": "concurrently \"cd ../Server && rushx start:dev\" \"rushx start:app\"",
-    "start:app": "http-server -p 3000",
+    "start:app": "webpack && http-server -p 3000",
     "lint": "echo skip",
     "lint:fix": "echo skip"
   },
