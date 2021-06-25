@@ -29,7 +29,13 @@ export type ScreenShareProps = {
 };
 
 const memoizeAllRemoteParticipants = memoizeFnAll(
-  (userId: string, isAvailable?: boolean, renderElement?: HTMLElement, displayName?: string): JSX.Element => {
+  (
+    userId: string,
+    isAvailable?: boolean,
+    isMuted?: boolean,
+    renderElement?: HTMLElement,
+    displayName?: string
+  ): JSX.Element => {
     return (
       <Stack horizontalAlign="center" verticalAlign="center" className={aspectRatioBoxStyle} key={userId}>
         <Stack className={aspectRatioBoxContentStyle}>
@@ -38,6 +44,7 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
             isVideoReady={isAvailable}
             renderElement={<StreamMedia videoStreamElement={renderElement ?? null} />}
             displayName={displayName}
+            isMuted={isMuted}
           />
         </Stack>
       </Stack>
@@ -89,6 +96,7 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
       <VideoTile
         displayName={screenShareParticipant?.displayName}
         isVideoReady={screenShareStream?.isAvailable}
+        isMuted={screenShareParticipant?.isMuted}
         renderElement={<StreamMedia videoStreamElement={screenShareStream?.renderElement ?? null} />}
         onRenderPlaceholder={onRenderPlaceholder}
         styles={{
@@ -117,6 +125,7 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
     return (
       <VideoTile
         isVideoReady={isLocalVideoReady}
+        isMuted={localParticipant?.isMuted}
         renderElement={<StreamMedia videoStreamElement={localVideoStream?.renderElement ?? null} />}
         displayName={localParticipant?.displayName}
       />
@@ -140,6 +149,7 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
               return memoizedRemoteParticipantFn(
                 participant.userId,
                 remoteVideoStream?.isAvailable,
+                participant.isMuted,
                 remoteVideoStream?.renderElement,
                 participant.displayName
               );

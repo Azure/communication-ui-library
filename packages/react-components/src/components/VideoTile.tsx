@@ -15,6 +15,7 @@ import React from 'react';
 import {
   disabledVideoHint,
   displayNameStyle,
+  iconContainerStyle,
   overlayContainerStyles,
   rootStyles,
   videoContainerStyles,
@@ -145,7 +146,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           styles?.displayNameContainer
         )}
       >
-        <Stack.Item>
+        <Stack>
           {displayName && (
             <Text
               className={mergeStyles(displayNameStyle, {
@@ -155,16 +156,16 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
               {displayName}
             </Text>
           )}
-        </Stack.Item>
-        <Stack.Item>
+        </Stack>
+        <Stack className={mergeStyles(iconContainerStyle)}>
           {showMuteIndicator &&
             isMuted !== undefined &&
             (isMuted ? (
-              <MicOff16Filled style={{ height: '0.75rem' }} primaryFill="currentColor" key={'microphoneOffIconKey'} />
+              <MicOff16Filled primaryFill="currentColor" key={'microphoneOffIconKey'} />
             ) : (
-              <MicOn16Filled style={{ height: '0.75rem' }} primaryFill="currentColor" key={'microphoneIconKey'} />
+              <MicOn16Filled primaryFill="currentColor" key={'microphoneIconKey'} />
             ))}
-        </Stack.Item>
+        </Stack>
       </Stack>
 
       {children && <Stack className={mergeStyles(overlayContainerStyles, styles?.overlayContainer)}>{children}</Stack>}
