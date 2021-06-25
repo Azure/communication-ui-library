@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "upgrading version of calling to 1.1.0-beta.2",
+  "packageName": "react-composites",
+  "email": "alkwa@microsoft.com",
+  "dependentChangeType": "patch"
+}

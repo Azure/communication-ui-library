@@ -7,7 +7,7 @@ import {
   FluentThemeProvider
 } from '@azure/communication-react';
 import { Stack, mergeStyles, Text, useTheme } from '@fluentui/react';
-import { CallVideoOffIcon } from '@fluentui/react-northstar';
+import { VideoOff20Filled } from '@fluentui/react-icons';
 import React, { useCallback, useState } from 'react';
 import { useVideoStreams } from '../../../utils';
 
@@ -54,7 +54,7 @@ export const LocalPreviewExample = ({
     () => (
       <Stack style={{ width: '100\u0025', height: '100\u0025' }} verticalAlign="center">
         <Stack.Item align="center">
-          <CallVideoOffIcon />
+          <VideoOff20Filled primaryFill="currentColor" />
         </Stack.Item>
         <Stack.Item align="center">
           <Text className={cameraOffLabelStyle}>Your camera is turned off</Text>

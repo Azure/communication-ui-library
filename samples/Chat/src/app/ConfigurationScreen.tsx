@@ -18,7 +18,7 @@ import {
   startChatButtonTextStyle
 } from './styles/ConfigurationScreen.styles';
 
-import { ChatIcon } from '@fluentui/react-icons-northstar';
+import { Chat20Filled } from '@fluentui/react-icons';
 import { DisplayNameField } from './DisplayNameField';
 import { sendEmojiRequest } from './utils/setEmoji';
 import { getToken } from './utils/getToken';
@@ -191,7 +191,7 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
             />
             <div>
               <PrimaryButton disabled={disableJoinChatButton} className={buttonStyle} onClick={validateName}>
-                <ChatIcon className={chatIconStyle} size="medium" />
+                <Chat20Filled className={chatIconStyle} primaryFill="currentColor" />
                 <div className={startChatButtonTextStyle}>Join chat</div>
               </PrimaryButton>
             </div>
