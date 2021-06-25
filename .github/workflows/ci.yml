@@ -41,6 +41,9 @@ jobs:
       # Perform lint check
       - name: Run linter
         run: rush lint
+      # Perform formatting check
+      - name: Run prettifier
+        run: rush prettifier:check
       # Builds
       - name: Build Packages
         run: rush build -t @azure/communication-react
