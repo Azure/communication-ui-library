@@ -52,9 +52,14 @@ export const SettingsManagementComponent = (props: SettingsManagementProps): JSX
     }
   };
 
-  const onChangeTopicName = (event: any): void => {
-    setEditedTopicName(event.target.value);
-    validateTopic(event.target.value);
+  const onChangeTopicName = (
+    event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
+    newValue?: string
+  ): void => {
+    if (newValue !== undefined) {
+      setEditedTopicName(newValue);
+      validateTopic(newValue);
+    }
   };
 
   const onSubmitTopicName = async (): Promise<void> => {
