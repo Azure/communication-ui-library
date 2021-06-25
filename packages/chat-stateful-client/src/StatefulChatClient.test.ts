@@ -432,16 +432,40 @@ describe('stateful chatClient tees errors to state', () => {
     const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
     const listener = new StateChangeListener(client);
     await expect(client.startRealtimeNotifications()).rejects.toThrow();
-    expect(listener.onChangeCalled).toBe(true);
+    expect(listener.onChangeCalledCount).toBe(1);
     const errors = listener.state.errors['ChatClient.startRealtimeNotifications'];
     expect(errors).toBeDefined();
     expect(errors.length).toBe(1);
   });
 });
 
+describe('complex error handling for startRealtimeNotifications', () => {
+  test('multiple errors are stored in state', async () => {
+    const baseClient = createMockChatClient();
+    baseClient.startRealtimeNotifications = async () => {
+      throw Error('injected error');
+    };
+    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    const listener = new StateChangeListener(client);
+
+    // Generate two errors.
+    await expect(client.startRealtimeNotifications()).rejects.toThrow();
+    await expect(client.startRealtimeNotifications()).rejects.toThrow();
+
+    expect(listener.onChangeCalledCount).toBe(2);
+    const errors = listener.state.errors['ChatClient.startRealtimeNotifications'];
+    expect(errors).toBeDefined();
+    expect(errors.length).toBe(2);
+  });
+});
+
+// Test for clearing all errors.
+
+// Test for clearing error on success.
+
 class StateChangeListener {
   state: ChatClientState;
-  onChangeCalled = false;
+  onChangeCalledCount = 0;
 
   constructor(client: StatefulChatClient) {
     this.state = client.getState();
@@ -449,7 +473,7 @@ class StateChangeListener {
   }
 
   private onChange(newState: ChatClientState): void {
-    this.onChangeCalled = true;
+    this.onChangeCalledCount++;
     this.state = newState;
   }
 }

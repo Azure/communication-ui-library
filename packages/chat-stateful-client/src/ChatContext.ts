@@ -330,8 +330,10 @@ export class ChatContext {
     } catch (error) {
       this.setState(
         produce(this._state, (draft: ChatClientState) => {
-          // FIXME: Clearly flawed.
-          draft.errors[target] = [];
+          // Errors are infrequent. Lazily define fields to keep object small.
+          if (draft.errors[target] === undefined) {
+            draft.errors[target] = [];
+          }
           draft.errors[target].push(error);
         })
       );
