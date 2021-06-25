@@ -46,9 +46,11 @@ The basic app is accessible on http://localhost:3000.
 ```
 rushx build
 ```
-Then get your own bundle according to the need:
+Get your own bundle according to the need:
 dist/chatComposite.js
 dist/callComposite.js
+
+Please check index.html for sample code for these 2 composites
 
 ## Basic app
 

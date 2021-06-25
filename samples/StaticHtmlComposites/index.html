@@ -12,6 +12,7 @@
   <script src="./dist/service.js"></script>
   <script type="module">
     const { user, token } = await service.createUserWithToken();
+    // Call composite sample code starts here
     const displayName = 'Bob';
 
     const callAdapter = await callComposite.loadCallComposite({
@@ -26,6 +27,7 @@
     await service.addChatUser(threadId, user, displayName);
     const endpointUrl = await service.getEndpointUrl();
 
+    // Chat composite sample code starts here
     const chatAdapter = await chatComposite.loadChatComposite({
       containerId: 'chat',
       displayName: displayName,
