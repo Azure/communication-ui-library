@@ -18,8 +18,10 @@ import EventEmitter from 'events';
 import { createAzureCommunicationUserCredential } from '../../../utils';
 import {
   ChatAdapter,
+  ChatAdapterErrors,
   ChatEvent,
   ChatState,
+  ErrorListener,
   MessageReadListener,
   MessageReceivedListener,
   ParticipantsAddedListener,
@@ -40,7 +42,8 @@ class ChatContext {
     this.state = {
       userId: toFlatCommunicationIdentifier(clientState.userId),
       displayName: clientState.displayName,
-      thread
+      thread,
+      errors: clientState.errors
     };
   }
 
@@ -52,9 +55,29 @@ class ChatContext {
     this.emitter.off('stateChanged', handler);
   }
 
+  public on(event: 'error', listener: ErrorListener): void {
+    this.emitter.on('error', listener);
+  }
+
+  public off(event: 'error', listener: ErrorListener): void {
+    this.emitter.off('error', listener);
+  }
+
   public setState(state: ChatState): void {
+    const oldState = this.state;
     this.state = state;
+    this.emitNewErrors(oldState);
     this.emitter.emit('stateChanged', this.state);
+  }
+
+  private emitNewErrors(oldState: ChatState): void {
+    const newErrors = diffErrors(oldState, this.state);
+    if (newErrors) {
+      Object.entries(newErrors).forEach((entry) => {
+        const [operation, error] = entry;
+        this.emitter.emit('error', { operation, error });
+      });
+    }
   }
 
   public getState(): ChatState {
@@ -71,10 +94,16 @@ class ChatContext {
     this.setState({
       userId: toFlatCommunicationIdentifier(clientState.userId),
       displayName: clientState.displayName,
-      thread
+      thread,
+      errors: clientState.errors
     });
   }
 }
+
+const diffErrors = (oldState: ChatState, newState: ChatState): ChatAdapterErrors | undefined => {
+  // FIXME
+  return undefined;
+};
 
 export class AzureCommunicationChatAdapter implements ChatAdapter {
   private chatClient: StatefulChatClient;
@@ -213,8 +242,12 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   on(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
   on(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
   on(event: 'topicChanged', listener: TopicChangedListener): void;
-  on(event: 'error', listener: (e: Error) => void): void;
+  on(event: 'error', listener: ErrorListener): void;
   on(event: ChatEvent, listener: (e: any) => void): void {
+    if (event === 'error') {
+      this.context.on(event, listener);
+      return;
+    }
     this.emitter.on(event, listener);
   }
 
@@ -224,8 +257,12 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   off(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
   off(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
   off(event: 'topicChanged', listener: TopicChangedListener): void;
-  off(event: 'error', listener: (e: Error) => void): void;
+  off(event: 'error', listener: ErrorListener): void;
   off(event: ChatEvent, listener: (e: any) => void): void {
+    if (event === 'error') {
+      this.context.off(event, listener);
+      return;
+    }
     this.emitter.off(event, listener);
   }
 }

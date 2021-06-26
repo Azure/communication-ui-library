@@ -6,6 +6,7 @@ import type { ChatMessage, ChatParticipant } from '@azure/communication-chat';
 import type { CommunicationUserKind } from '@azure/communication-common';
 
 export type ChatUIState = {
+  // FIXME(Delete?)
   // Self-contained state for composite
   error?: Error;
 };
@@ -15,7 +16,16 @@ export type ChatCompositeClientState = {
   userId: string;
   displayName: string;
   thread: ChatThreadClientState;
+  /**
+   * FIXME(Documentation)
+   */
+  errors: ChatAdapterErrors;
 };
+
+/**
+ * FIXME(Documentation)
+ */
+export type ChatAdapterErrors = { [key: string]: Error[] };
 
 export type ChatState = ChatUIState & ChatCompositeClientState;
 
@@ -42,7 +52,7 @@ export interface ChatAdapter {
   on(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
   on(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
   on(event: 'topicChanged', listener: TopicChangedListener): void;
-  on(event: 'error', listener: (e: Error) => void): void;
+  on(event: 'error', listener: ErrorListener): void;
 
   off(event: 'messageReceived', listener: MessageReceivedListener): void;
   off(event: 'messageSent', listener: MessageSentListener): void;
@@ -50,7 +60,7 @@ export interface ChatAdapter {
   off(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
   off(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
   off(event: 'topicChanged', listener: TopicChangedListener): void;
-  off(event: 'error', listener: (e: Error) => void): void;
+  off(event: 'error', listener: ErrorListener): void;
 }
 
 export type MessageReceivedListener = (event: { message: ChatMessage }) => void;
@@ -64,6 +74,10 @@ export type ParticipantsRemovedListener = (event: {
   participantsRemoved: ChatParticipant[];
   removedBy: ChatParticipant;
 }) => void;
+/**
+ * FIXME(Documentation)
+ */
+export type ErrorListener = (event: { operation: string; error: Error }) => void;
 export type TopicChangedListener = (event: { topic: string }) => void;
 export type ChatEvent =
   | 'messageReceived'

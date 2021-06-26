@@ -14,6 +14,9 @@ export type ChatClientState = {
    * Object with {@Link ChatThreadClientState} fields, keyed by {@Link ChatThreadClientState.threadId}.
    */
   threads: { [key: string]: ChatThreadClientState };
+  /**
+   * FIXME(Documentation)
+   */
   errors: ChatErrors;
 };
 
@@ -47,6 +50,9 @@ export type ChatThreadProperties = {
   topic?: string;
 };
 
+/**
+ * FIXME(Documentation)
+ */
 export type ChatErrors = {
   [target in ErrorTargets]: Error[];
 };

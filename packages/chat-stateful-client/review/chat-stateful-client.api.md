@@ -25,7 +25,7 @@ export type ChatClientState = {
     errors: ChatErrors;
 };
 
-// @public (undocumented)
+// @public
 export type ChatErrors = {
     [target in ErrorTargets]: Error[];
 };
