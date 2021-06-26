@@ -114,7 +114,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
     newValue?: string | undefined
   ): void => {
-    if (newValue) {
+    if (newValue !== undefined) {
       if (newValue.length > MAXIMUM_LENGTH_OF_MESSAGE) {
         setTextValueOverflow(true);
       } else {

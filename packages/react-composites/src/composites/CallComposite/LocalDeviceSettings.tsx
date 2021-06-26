@@ -20,14 +20,13 @@ type iconType = 'Camera' | 'Microphone' | 'Speaker';
 
 const getDropDownList = (list: Array<VideoDeviceInfo | AudioDeviceInfo>): IDropdownOption[] => {
   // Remove duplicates
-  const noDuplicates = new Map();
+  const noDuplicates = new Map<string, VideoDeviceInfo | AudioDeviceInfo>();
   for (const item of list) {
     noDuplicates.set(item.id, item);
   }
-  const dropdownList: any[] = [];
+  const dropdownList: IDropdownOption[] = [];
   for (const item of noDuplicates.values()) {
     dropdownList.push({
-      val: item,
       key: item.id,
       text: item.name === '' ? item.deviceType : item.name
     });

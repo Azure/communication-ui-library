@@ -1,14 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-export function createSpyObj<T>(baseName: string, methodNames: (keyof T)[]): jest.Mocked<T> {
-  const obj: any = {};
-  for (const methodName of methodNames) {
-    obj[methodName] = jest.fn().mockName(String(methodName));
-  }
-  return obj;
-}
-
 function waitMilliseconds(duration: number): Promise<void> {
   return new Promise((resolve) => {
     setTimeout(() => {

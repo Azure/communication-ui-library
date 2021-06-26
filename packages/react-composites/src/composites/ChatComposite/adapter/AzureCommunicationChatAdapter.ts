@@ -214,6 +214,8 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   on(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
   on(event: 'topicChanged', listener: TopicChangedListener): void;
   on(event: 'error', listener: (e: Error) => void): void;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   on(event: ChatEvent, listener: (e: any) => void): void {
     this.emitter.on(event, listener);
   }
@@ -225,6 +227,8 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   off(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
   off(event: 'topicChanged', listener: TopicChangedListener): void;
   off(event: 'error', listener: (e: Error) => void): void;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   off(event: ChatEvent, listener: (e: any) => void): void {
     this.emitter.off(event, listener);
   }
