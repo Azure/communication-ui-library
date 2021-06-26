@@ -31,9 +31,9 @@ export const DisplayNameField = (props: DisplayNameFieldProps): JSX.Element => {
 
   const onNameTextChange = (
     event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
-    newValue?: string | undefined
+    newValue?: string
   ): void => {
-    if (newValue) {
+    if (newValue !== undefined) {
       setName(newValue);
       if (setEmptyWarning && !newValue) {
         setEmptyWarning(true);
