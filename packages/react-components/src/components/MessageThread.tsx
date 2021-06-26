@@ -605,7 +605,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
 
   const scrollToBottom = useCallback((): void => {
     if (chatScrollDivRef.current) {
-      chatScrollDivRef.current.scrollTop = chatScrollDivRef?.current.scrollHeight;
+      chatScrollDivRef.current.scrollTop = chatScrollDivRef.current.scrollHeight;
     }
     setExistsNewChatMessage(false);
     setIsAtBottomOfScrollRef(true);
@@ -631,7 +631,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     setIsAtTopOfScrollRef(atTop);
 
     // Make sure we do not stuck at the top if more messages are being fetched.
-    if (chatScrollDivRef.current && chatScrollDivRef.current.scrollTop === 0 && !isAllChatMessagesLoadedRef.current) {
+    if (chatScrollDivRef.current.scrollTop === 0 && !isAllChatMessagesLoadedRef.current) {
       chatScrollDivRef.current.scrollTop = 5;
     }
 
