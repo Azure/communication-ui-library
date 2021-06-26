@@ -10,9 +10,9 @@
     "test": "jest",
     "prettier": "prettier --write --config .prettierrc src/**/*",
     "prettier:check": "prettier --check --config .prettierrc src/**/*",
-    "lint": "eslint src src --ext .ts",
-    "lint:fix": "eslint src src --ext .ts --fix",
-    "lint:quiet": "eslint src src --ext .ts --quiet"
+    "lint": "eslint */**/*.{ts,tsx}",
+    "lint:fix": "eslint */**/*.{ts,tsx} --fix",
+    "lint:quiet": "eslint */**/*.{ts,tsx} --quiet"
   },
   "dependencies": {
     "@azure/communication-chat": "1.0.0",
