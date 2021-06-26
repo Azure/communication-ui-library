@@ -32,7 +32,6 @@ console.debug(`Express server started (http://localhost:${port}).`);
 /**
  * Normalize a port into a number, string, or false.
  */
-
 function normalizePort(val: string): number | string | false {
   const port = parseInt(val, 10);
 
@@ -52,7 +51,6 @@ function normalizePort(val: string): number | string | false {
 /**
  * Event listener for HTTP server "error" event.
  */
-
 function onError(error: { syscall: string; code: string }): void {
   if (error.syscall !== 'listen') {
     throw error;
@@ -78,7 +76,6 @@ function onError(error: { syscall: string; code: string }): void {
 /**
  * Event listener for HTTP server "listening" event.
  */
-
 function onListening(): void {
   const addr = server.address();
   const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
