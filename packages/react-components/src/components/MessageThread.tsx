@@ -32,6 +32,7 @@ import { MessageStatusIndicator, MessageStatusIndicatorProps } from './MessageSt
 import { memoizeFnAll, MessageStatus } from 'acs-ui-common';
 import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from './SystemMessage';
 import { Parser } from 'html-to-react';
+import { useLocale } from '../localization';
 
 const NEW_MESSAGES = 'New Messages';
 
@@ -140,6 +141,28 @@ export interface MessageThreadStylesProps extends BaseCustomStylesProps {
   messageStatusContainer?: (mine: boolean) => IStyle;
 }
 
+/**
+ * Strings of MessageThread that can be overridden
+ */
+export interface MessageThreadStrings {
+  /** String for Sunday */
+  sunday: string;
+  /** String for Monday */
+  monday: string;
+  /** String for Tuesday */
+  tuesday: string;
+  /** String for Wednesday */
+  wednesday: string;
+  /** String for Thursday */
+  thursday: string;
+  /** String for Friday */
+  friday: string;
+  /** String for Saturday */
+  saturday: string;
+  /** String for Yesterday */
+  yesterday: string;
+}
+
 export interface JumpToNewMessageButtonProps {
   onClick: () => void;
 }
@@ -212,7 +235,7 @@ const generateTextMessageContent = (payload: ChatMessagePayload): JSX.Element =>
   );
 };
 
-const generateMessageContent = (payload: ChatMessagePayload) => {
+const generateMessageContent = (payload: ChatMessagePayload): JSX.Element => {
   switch (payload.type) {
     case 'text':
       return generateTextMessageContent(payload);
@@ -227,6 +250,7 @@ const generateMessageContent = (payload: ChatMessagePayload) => {
 };
 
 const DefaultChatMessageRenderer: DefaultMessageRendererType = (props: MessageProps) => {
+  const { strings } = useLocale();
   if (props.message.type === 'chat') {
     const payload: ChatMessagePayload = props.message.payload;
     const messageContentItem = generateMessageContent(payload);
@@ -239,7 +263,10 @@ const DefaultChatMessageRenderer: DefaultMessageRendererType = (props: MessagePr
         timestamp={
           payload.createdOn
             ? props.showDate
-              ? formatTimestampForChatMessage(payload.createdOn, new Date())
+              ? formatTimestampForChatMessage(payload.createdOn, new Date(), {
+                  ...strings.messageThread,
+                  ...props.strings
+                })
               : formatTimeForChatMessage(payload.createdOn)
             : undefined
         }
@@ -262,13 +289,15 @@ const memoizeAllMessages = memoizeFnAll(
       | ((messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null)
       | undefined,
     defaultChatMessageRenderer: (message: MessageProps) => JSX.Element,
+    strings?: Partial<MessageThreadStrings>,
     _attached?: boolean | string,
     statusToRender?: MessageStatus,
     onRenderMessage?: (message: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element
   ): ShorthandValue<ChatItemProps> => {
     const messageProps: MessageProps = {
       message: message,
-      showDate: showMessageDate
+      showDate: showMessageDate,
+      strings: strings
     };
 
     if (message.type === 'chat') {
@@ -433,6 +462,10 @@ export type MessageThreadProps = {
    * `defaultOnRender` is not provided for `CustomMessage` and thus only available for `ChatMessage` and `SystemMessage`.
    */
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+  /**
+   * Optional strings to override in component
+   */
+  strings?: Partial<MessageThreadStrings>;
 };
 
 /**
@@ -453,6 +486,10 @@ export type MessageProps = {
    * @defaultValue `false`
    */
   showDate?: boolean;
+  /**
+   * Strings of component that can be overridden
+   */
+  strings?: Partial<MessageThreadStrings>;
 };
 
 /**
@@ -478,7 +515,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onRenderAvatar,
     onLoadPreviousChatMessages,
     onRenderJumpToNewMessageButton,
-    onRenderMessage
+    onRenderMessage,
+    strings
   } = props;
 
   const [messages, setMessages] = useState<(ChatMessage | SystemMessage | CustomMessage)[]>([]);
@@ -732,6 +770,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
               styles,
               onRenderMessageStatus,
               defaultChatMessageRenderer,
+              strings,
               // Temporary solution to make sure we re-render if attach attribute is changed.
               // The proper fix should be in selector.
               message.type === 'chat' ? message.payload.attached : undefined,
@@ -752,7 +791,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       lastSeenChatMessage,
       lastSendingChatMessage,
       lastDeliveredChatMessage,
-      onRenderMessage
+      onRenderMessage,
+      strings
     ]
   );
 

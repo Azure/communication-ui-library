@@ -1,10 +1,21 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
+import React, { useCallback } from 'react';
 import { DefaultButton, IButtonProps, Label, concatStyleSets, mergeStyles } from '@fluentui/react';
 import { MicOn20Filled, MicOff20Filled } from '@fluentui/react-icons';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
+import { useLocale } from '../localization';
+
+/**
+ * Strings of MicrophoneButton that can be overridden
+ */
+export interface MicrophoneButtonStrings {
+  /** Label when button is on. */
+  onLabel: string;
+  /** Label when button is off. */
+  offLabel: string;
+}
 
 /**
  * Props for MicrophoneButton component
@@ -21,6 +32,11 @@ export interface MicrophoneButtonProps extends IButtonProps {
    * Maps directly to the `onClick` property.
    */
   onToggleMicrophone?: () => Promise<void>;
+
+  /**
+   * Optional strings to override in component
+   */
+  strings?: Partial<MicrophoneButtonStrings>;
 }
 
 /**
@@ -31,6 +47,10 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   const { showLabel = false, styles, onRenderIcon, onRenderText } = props;
   const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
 
+  const { strings } = useLocale();
+  const onLabel = props.strings?.onLabel ?? strings.microphoneButton.onLabel;
+  const offLabel = props.strings?.offLabel ?? strings.microphoneButton.offLabel;
+
   const defaultRenderIcon = (props?: IButtonProps): JSX.Element => {
     return props?.checked ? (
       <MicOn20Filled primaryFill="currentColor" key={'microphoneIconKey'} />
@@ -39,13 +59,16 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
     );
   };
 
-  const defaultRenderText = (props?: IButtonProps): JSX.Element => {
-    return (
-      <Label key={'microphoneLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
-        {props?.checked ? 'Mute' : 'Unmute'}
-      </Label>
-    );
-  };
+  const defaultRenderText = useCallback(
+    (props?: IButtonProps): JSX.Element => {
+      return (
+        <Label key={'microphoneLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
+          {props?.checked ? onLabel : offLabel}
+        </Label>
+      );
+    },
+    [onLabel, offLabel]
+  );
 
   return (
     <DefaultButton
