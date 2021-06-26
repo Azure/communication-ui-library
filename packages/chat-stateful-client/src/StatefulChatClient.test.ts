@@ -482,10 +482,6 @@ describe('complex error handling for startRealtimeNotifications', () => {
   });
 });
 
-// Test for clearing all errors.
-
-// Test for clearing error on success.
-
 class StateChangeListener {
   state: ChatClientState;
   onChangeCalledCount = 0;
