@@ -29,6 +29,7 @@ module.exports = {
     'header/header': ['error', 'line', ' Copyright (c) Microsoft Corporation.\n Licensed under the MIT license.'],
     'react/display-name': 'off',
 
+    '@typescript-eslint/no-explicit-any': 'error',
     // Allow unused vars for routing funtions
     '@typescript-eslint/no-unused-vars': ['off']
   },

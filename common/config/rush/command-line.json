@@ -38,7 +38,7 @@
       "summary": "Run linting in each project.",
       "description": "Run lint in each project.",
       "enableParallelism": true,
-      "allowWarningsInSuccessfulBuild": true,
+      "allowWarningsInSuccessfulBuild": false,
       "ignoreDependencyOrder": true,
       "incremental": false,
       "safeForSimultaneousRushProcesses": true
