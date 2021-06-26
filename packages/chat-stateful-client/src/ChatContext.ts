@@ -326,19 +326,33 @@ export class ChatContext {
 
   public async teeAsyncError<T>(target: ErrorTargets, f: () => Promise<T>): Promise<T> {
     try {
-      return await f();
+      const ret = await f();
+      this.clearError(target);
+      return ret;
     } catch (error) {
-      this.setState(
-        produce(this._state, (draft: ChatClientState) => {
-          // Errors are infrequent. Lazily define fields to keep object small.
-          if (draft.errors[target] === undefined) {
-            draft.errors[target] = [];
-          }
-          draft.errors[target].push(error);
-        })
-      );
+      this.setError(target, error);
       throw error;
     }
+  }
+
+  private setError(target: ErrorTargets, error: Error): void {
+    this.setState(
+      produce(this._state, (draft: ChatClientState) => {
+        // Errors are infrequent. Lazily define fields to keep object small.
+        if (draft.errors[target] === undefined) {
+          draft.errors[target] = [];
+        }
+        draft.errors[target].push(error);
+      })
+    );
+  }
+
+  private clearError(target: ErrorTargets): void {
+    this.setState(
+      produce(this._state, (draft: ChatClientState) => {
+        delete draft.errors[target];
+      })
+    );
   }
 
   // This is a mutating function, only use it inside of a produce() function
