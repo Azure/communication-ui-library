@@ -61,11 +61,11 @@ export const createDefaultChatHandlers = memoizeOne(
 );
 
 // These could be shared functions between Chat and Calling
-export const defaultHandlerCreator = (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => <Props>(
-  _: (props: Props) => ReactElement | null
-): Common<DefaultChatHandlers, Props> => {
-  return createDefaultChatHandlers(chatClient, chatThreadClient);
-};
+export const defaultHandlerCreator =
+  (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) =>
+  <Props>(_: (props: Props) => ReactElement | null): Common<DefaultChatHandlers, Props> => {
+    return createDefaultChatHandlers(chatClient, chatThreadClient);
+  };
 
 export const createDefaultChatHandlersForComponent = <Props>(
   chatClient: StatefulChatClient,
