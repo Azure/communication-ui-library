@@ -324,10 +324,30 @@ export class ChatContext {
     }
   }
 
-  public async teeAsyncError<T>(target: ChatErrorTargets, f: () => Promise<T>): Promise<T> {
+  /**
+   * Tees any errors encountered in an async function to the state.
+   *
+   * If the function succeeds, clearers associated errors from the state.
+   *
+   * @param f Async function to execute.
+   * @param target The error target to tee error to.
+   * @param clearTargets The error targets to clear errors for if the function succeeds. By default, clears errors for `target.
+   * @returns Result of calling `f`. Also re-raises any exceptions thrown from `f`.
+   */
+  public async asyncTeeErrorToState<T>(
+    f: () => Promise<T>,
+    target: ChatErrorTargets,
+    clearTargets?: ChatErrorTargets[]
+  ): Promise<T> {
     try {
       const ret = await f();
-      this.clearError(target);
+
+      if (clearTargets !== undefined) {
+        clearTargets.forEach((target) => this.clearError(target));
+      } else {
+        this.clearError(target);
+      }
+
       return ret;
     } catch (error) {
       this.setLatestError(target, error);
