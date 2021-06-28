@@ -533,9 +533,7 @@ export type ChatCompositeProps = {
 // @public
 export class ChatError extends Error {
     constructor(target: ChatErrorTargets, inner: Error);
-    // (undocumented)
     inner: Error;
-    // (undocumented)
     target: ChatErrorTargets;
 }
 

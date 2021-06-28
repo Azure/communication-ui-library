@@ -71,7 +71,13 @@ export type ChatErrors = {
  * Error thrown from failed stateful API methods.
  */
 export class ChatError extends Error {
+  /**
+   * The API method target that failed.
+   */
   public target: ChatErrorTargets;
+  /**
+   * Error thrown by the failed SDK method.
+   */
   public inner: Error;
 
   constructor(target: ChatErrorTargets, inner: Error) {
