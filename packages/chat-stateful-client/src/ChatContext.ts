@@ -8,7 +8,8 @@ import {
   ChatErrors,
   ChatThreadClientState,
   ChatThreadProperties,
-  ChatErrorTargets
+  ChatErrorTargets,
+  ChatError
 } from './ChatClientState';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 import { enableMapSet } from 'immer';
@@ -327,12 +328,13 @@ export class ChatContext {
   /**
    * Tees any errors encountered in an async function to the state.
    *
-   * If the function succeeds, clearers associated errors from the state.
+   * If the function succeeds, clears associated errors from the state.
    *
    * @param f Async function to execute.
    * @param target The error target to tee error to.
    * @param clearTargets The error targets to clear errors for if the function succeeds. By default, clears errors for `target.
    * @returns Result of calling `f`. Also re-raises any exceptions thrown from `f`.
+   * @throws ChatError. Exceptions thrown from `f` are tagged with the failed `target.
    */
   public async asyncTeeErrorToState<T>(
     f: () => Promise<T>,
@@ -351,7 +353,7 @@ export class ChatContext {
       return ret;
     } catch (error) {
       this.setLatestError(target, error);
-      throw error;
+      throw new ChatError(target, error);
     }
   }
 

@@ -68,6 +68,22 @@ export type ChatErrors = {
 };
 
 /**
+ * Error thrown from failed stateful API methods.
+ */
+export class ChatError extends Error {
+  public target: ChatErrorTargets;
+  public inner: Error;
+
+  constructor(target: ChatErrorTargets, inner: Error) {
+    super();
+    this.target = target;
+    this.inner = inner;
+    this.name = 'ChatError';
+    this.message = `${this.target}: ${this.inner.message}`;
+  }
+}
+
+/**
  * String literal type for all permissible keys in {@Link ChatErrors}.
  */
 export type ChatErrorTargets =

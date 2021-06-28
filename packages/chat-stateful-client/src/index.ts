@@ -7,6 +7,7 @@ export type { StatefulChatClient, StatefulChatClientArgs, StatefulChatClientOpti
 export type { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 export type {
   ChatClientState,
+  ChatError,
   ChatErrors,
   ChatThreadClientState,
   ChatThreadProperties,

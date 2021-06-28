@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { createStatefulChatClient, ChatClientState, StatefulChatClient } from 'chat-stateful-client';
+import { createStatefulChatClient, ChatClientState, ChatError, StatefulChatClient } from 'chat-stateful-client';
 import { DefaultChatHandlers, createDefaultChatHandlers } from 'chat-component-bindings';
 import { ChatMessage, ChatThreadClient } from '@azure/communication-chat';
 
@@ -164,7 +164,9 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   };
 
   setTopic = async (topicName: string): Promise<void> => {
-    await this.handlers.updateThreadTopicName(topicName);
+    this.asyncTeeErrorToEventEmitter(async () => {
+      await this.handlers.updateThreadTopicName(topicName);
+    });
   };
 
   loadPreviousChatMessages = async (messagesToLoad: number): Promise<boolean> => {
@@ -246,6 +248,17 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
       return;
     }
     this.emitter.off(event, listener);
+  }
+
+  private async asyncTeeErrorToEventEmitter<T>(f: () => Promise<T>): Promise<T> {
+    try {
+      return await f();
+    } catch (error) {
+      // Stateful chat client wraps all relevant errors as `ChatError`.
+      const e = error as ChatError;
+      this.emitter.emit('error', { operation: e.target, error: e.inner });
+      throw error;
+    }
   }
 }
 

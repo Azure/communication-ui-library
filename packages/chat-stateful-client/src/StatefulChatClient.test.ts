@@ -16,7 +16,7 @@ import {
   TypingIndicatorReceivedEvent
 } from '@azure/communication-signaling';
 import { createStatefulChatClientWithDeps, StatefulChatClient, StatefulChatClientArgs } from './StatefulChatClient';
-import { ChatClientState } from './ChatClientState';
+import { ChatClientState, ChatError } from './ChatClientState';
 import { Constants } from './Constants';
 import { createMockChatThreadClient } from './mocks/createMockChatThreadClient';
 import { createMockIterator } from './mocks/createMockIterator';
@@ -420,6 +420,19 @@ describe('declarative chatClient onStateChange', () => {
     client.offStateChange(callback);
     await client.createChatThread({ topic: 'topic' });
     expect(onChangeCalledTimes).toBe(1);
+  });
+});
+
+describe('stateful wraps thrown error', () => {
+  test('when startRealtimeNotifications fails', async () => {
+    const baseClient = createMockChatClient();
+    baseClient.startRealtimeNotifications = async () => {
+      throw Error('injected error');
+    };
+    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    await expect(client.startRealtimeNotifications()).rejects.toThrow(
+      new ChatError('ChatClient.startRealtimeNotifications', new Error('injected error'))
+    );
   });
 });
 

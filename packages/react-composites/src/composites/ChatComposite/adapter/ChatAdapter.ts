@@ -79,10 +79,9 @@ export type ParticipantsRemovedListener = (event: {
 /**
  * Listener for error events.
  *
- * ChatAdapter tees errors that occur behing the adapter API to the state.
- * Additionally, each new error trigger an 'error' event.
- *
- * `operation` is a ChatAdapter defined string for each unique operation performed by the adapter.
+ * Each failed operation in the {@Link ChatAdapter} triggers an 'error' event.
+ * `operation` is a {@Link ChatAdapter} defined string for each unique operation performed
+ * by the adapter.
  */
 export type ChatErrorListener = (event: { operation: string; error: Error }) => void;
 export type TopicChangedListener = (event: { topic: string }) => void;

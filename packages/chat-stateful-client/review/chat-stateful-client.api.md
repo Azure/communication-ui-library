@@ -26,6 +26,15 @@ export type ChatClientState = {
 };
 
 // @public
+export class ChatError extends Error {
+    constructor(target: ChatErrorTargets, inner: Error);
+    // (undocumented)
+    inner: Error;
+    // (undocumented)
+    target: ChatErrorTargets;
+}
+
+// @public
 export type ChatErrors = {
     [target in ChatErrorTargets]: Error;
 };
