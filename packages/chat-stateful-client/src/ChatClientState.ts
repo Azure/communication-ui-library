@@ -51,23 +51,41 @@ export type ChatThreadProperties = {
 };
 
 /**
- * FIXME(Documentation)
+ * Errors teed from API calls to the Chat SDK.
+ *
+ * Each property in the object stores the errors for a particular SDK API method.
+ * For each method, errors are appended as they occur.
+ *
+ * Errors from this object can be cleared by calling the TODO(implement me) {@Link clearErrors} method.
+ * Additionally, errors are automatically cleared when:
+ * - The state is cleared.
+ * - The corresponding API method or a related method succeeds on subsequent attempts.
+ *   See documentation of individual stateful client methods for details on when errors may be automatically cleared.
  */
 export type ChatErrors = {
   [target in ChatErrorTargets]: Error[];
 };
 
+/**
+ * String literal type for all permissible keys in {@Link ChatErrors}.
+ */
+export type ChatErrorTargets =
+  | ChatObjectMethodNames<'ChatClient', ChatClient>
+  | ChatObjectMethodNames<'ChatThreadClient', ChatThreadClient>;
+
+/**
+ * Helper type to build a string literal type containing methods of an object.
+ */
 export type ChatObjectMethodNames<TName extends string, T> = {
   [K in keyof T]: `${TName}.${ChatMethodName<T, K>}`;
 }[keyof T];
 
+/**
+ * Helper type to build a string literal type containing methods of an object.
+ */
 // eslint complains on all uses of `Function`. Using it as a type constraint is legitimate.
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type ChatMethodName<T, K extends keyof T> = T[K] extends Function ? (K extends string ? K : never) : never;
-
-export type ChatErrorTargets =
-  | ChatObjectMethodNames<'ChatClient', ChatClient>
-  | ChatObjectMethodNames<'ChatThreadClient', ChatThreadClient>;
 
 /**
  * Method to decide at runtime if a string is an error target.

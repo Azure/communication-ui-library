@@ -318,7 +318,7 @@ export interface ChatAdapter {
 
 // @public
 export type ChatAdapterErrors = {
-    [key: string]: Error[];
+    [operation: string]: Error[];
 };
 
 // @public (undocumented)

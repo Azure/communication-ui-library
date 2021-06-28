@@ -17,15 +17,17 @@ export type ChatCompositeClientState = {
   displayName: string;
   thread: ChatThreadClientState;
   /**
-   * FIXME(Documentation)
+   * Errors teed from failed adapter operations.
    */
   errors: ChatAdapterErrors;
 };
 
 /**
- * FIXME(Documentation)
+ * ChatAdapter tees errors that occur behing the adapter API to the state.
+ *
+ * `operation` is a ChatAdapter defined string for each unique operation performed by the adapter.
  */
-export type ChatAdapterErrors = { [key: string]: Error[] };
+export type ChatAdapterErrors = { [operation: string]: Error[] };
 
 export type ChatState = ChatUIState & ChatCompositeClientState;
 
@@ -75,7 +77,12 @@ export type ParticipantsRemovedListener = (event: {
   removedBy: ChatParticipant;
 }) => void;
 /**
- * FIXME(Documentation)
+ * Listener for error events.
+ *
+ * ChatAdapter tees errors that occur behing the adapter API to the state.
+ * Additionally, each new error trigger an 'error' event.
+ *
+ * `operation` is a ChatAdapter defined string for each unique operation performed by the adapter.
  */
 export type ChatErrorListener = (event: { operation: string; error: Error }) => void;
 export type TopicChangedListener = (event: { topic: string }) => void;

@@ -30,7 +30,7 @@ export type ChatErrors = {
     [target in ChatErrorTargets]: Error[];
 };
 
-// @public (undocumented)
+// @public
 export type ChatErrorTargets = ChatObjectMethodNames<'ChatClient', ChatClient> | ChatObjectMethodNames<'ChatThreadClient', ChatThreadClient>;
 
 // @public (undocumented)
@@ -39,10 +39,10 @@ export type ChatMessageWithStatus = ChatMessage & {
     status: MessageStatus;
 };
 
-// @public (undocumented)
+// @public
 export type ChatMethodName<T, K extends keyof T> = T[K] extends Function ? (K extends string ? K : never) : never;
 
-// @public (undocumented)
+// @public
 export type ChatObjectMethodNames<TName extends string, T> = {
     [K in keyof T]: `${TName}.${ChatMethodName<T, K>}`;
 }[keyof T];

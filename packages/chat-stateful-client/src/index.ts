@@ -12,6 +12,6 @@ export type {
   ChatThreadProperties,
   ChatErrorTargets,
   ChatMethodName,
-  ChatObjectMethodNames,
-  isChatErrorTarget
+  ChatObjectMethodNames
 } from './ChatClientState';
+export { isChatErrorTarget } from './ChatClientState';
