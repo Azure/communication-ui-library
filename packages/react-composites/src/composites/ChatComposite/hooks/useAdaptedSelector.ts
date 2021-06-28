@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatClientState, ChatThreadClientState } from 'chat-stateful-client';
+import { ChatClientState, ChatErrors, ChatThreadClientState, isChatErrorTarget } from 'chat-stateful-client';
 import { useState, useEffect, useRef, useMemo } from 'react';
-import { ChatState } from '../adapter/ChatAdapter';
+import { ChatAdapterErrors, ChatState } from '../adapter/ChatAdapter';
 import { useAdapter } from '../adapter/ChatAdapterProvider';
 import memoizeOne from 'memoize-one';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
@@ -69,12 +69,24 @@ export const useSelectorWithAdaptation = <
 };
 
 const memoizeState = memoizeOne(
-  (userId: CommunicationIdentifierKind, displayName: string, threads: { [key: string]: ChatThreadClientState }) => ({
+  (
+    userId: CommunicationIdentifierKind,
+    displayName: string,
+    threads: { [key: string]: ChatThreadClientState },
+    errors: ChatErrors
+  ) => ({
     userId,
     displayName,
-    threads
+    threads,
+    errors
   })
 );
+
+const memoizeErrors = memoizeOne((errors: ChatAdapterErrors) => toStatefulErrors(errors));
+
+const toStatefulErrors = (errors: ChatAdapterErrors): ChatErrors => {
+  return Object.fromEntries(Object.entries(errors).filter(([key, _]) => isChatErrorTarget(key))) as ChatErrors;
+};
 
 const memoizeThreads = memoizeOne((thread: ChatThreadClientState) => ({ [thread.threadId]: thread }));
 
@@ -82,6 +94,7 @@ const adaptCompositeState = (compositeState: ChatState): ChatClientState => {
   return memoizeState(
     { kind: 'communicationUser', communicationUserId: compositeState.userId },
     compositeState.displayName,
-    memoizeThreads(compositeState.thread)
+    memoizeThreads(compositeState.thread),
+    memoizeErrors(compositeState.errors)
   );
 };

@@ -285,7 +285,7 @@ export interface ChatAdapter {
     // (undocumented)
     off(event: 'topicChanged', listener: TopicChangedListener): void;
     // (undocumented)
-    off(event: 'error', listener: (e: Error) => void): void;
+    off(event: 'error', listener: ChatErrorListener): void;
     // (undocumented)
     offStateChange(handler: (state: ChatState) => void): void;
     // (undocumented)
@@ -301,7 +301,7 @@ export interface ChatAdapter {
     // (undocumented)
     on(event: 'topicChanged', listener: TopicChangedListener): void;
     // (undocumented)
-    on(event: 'error', listener: (e: Error) => void): void;
+    on(event: 'error', listener: ChatErrorListener): void;
     // (undocumented)
     onStateChange(handler: (state: ChatState) => void): void;
     // (undocumented)
@@ -316,6 +316,11 @@ export interface ChatAdapter {
     setTopic(topicName: string): Promise<void>;
 }
 
+// @public
+export type ChatAdapterErrors = {
+    [key: string]: Error[];
+};
+
 // @public (undocumented)
 export const ChatComposite: (props: ChatCompositeProps) => JSX.Element;
 
@@ -324,6 +329,7 @@ export type ChatCompositeClientState = {
     userId: string;
     displayName: string;
     thread: ChatThreadClientState;
+    errors: ChatAdapterErrors;
 };
 
 // @public (undocumented)
@@ -335,6 +341,12 @@ export type ChatCompositeProps = {
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
     options?: ChatOptions;
 };
+
+// @public
+export type ChatErrorListener = (event: {
+    operation: string;
+    error: Error;
+}) => void;
 
 // @public (undocumented)
 export type ChatOptions = {

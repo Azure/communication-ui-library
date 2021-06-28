@@ -8,7 +8,7 @@ import {
   ChatErrors,
   ChatThreadClientState,
   ChatThreadProperties,
-  ErrorTargets
+  ChatErrorTargets
 } from './ChatClientState';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 import { enableMapSet } from 'immer';
@@ -324,7 +324,7 @@ export class ChatContext {
     }
   }
 
-  public async teeAsyncError<T>(target: ErrorTargets, f: () => Promise<T>): Promise<T> {
+  public async teeAsyncError<T>(target: ChatErrorTargets, f: () => Promise<T>): Promise<T> {
     try {
       const ret = await f();
       this.clearError(target);
@@ -335,7 +335,7 @@ export class ChatContext {
     }
   }
 
-  private setError(target: ErrorTargets, error: Error): void {
+  private setError(target: ChatErrorTargets, error: Error): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         // Errors are infrequent. Lazily define fields to keep object small.
@@ -347,7 +347,7 @@ export class ChatContext {
     );
   }
 
-  private clearError(target: ErrorTargets): void {
+  private clearError(target: ChatErrorTargets): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         delete draft.errors[target];

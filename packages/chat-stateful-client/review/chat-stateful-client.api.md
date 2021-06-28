@@ -27,14 +27,25 @@ export type ChatClientState = {
 
 // @public
 export type ChatErrors = {
-    [target in ErrorTargets]: Error[];
+    [target in ChatErrorTargets]: Error[];
 };
+
+// @public (undocumented)
+export type ChatErrorTargets = ChatObjectMethodNames<'ChatClient', ChatClient> | ChatObjectMethodNames<'ChatThreadClient', ChatThreadClient>;
 
 // @public (undocumented)
 export type ChatMessageWithStatus = ChatMessage & {
     clientMessageId?: string;
     status: MessageStatus;
 };
+
+// @public (undocumented)
+export type ChatMethodName<T, K extends keyof T> = T[K] extends Function ? (K extends string ? K : never) : never;
+
+// @public (undocumented)
+export type ChatObjectMethodNames<TName extends string, T> = {
+    [K in keyof T]: `${TName}.${ChatMethodName<T, K>}`;
+}[keyof T];
 
 // @public (undocumented)
 export type ChatThreadClientState = {
@@ -59,16 +70,8 @@ export type ChatThreadProperties = {
 // @public
 export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions | undefined) => StatefulChatClient;
 
-// @public (undocumented)
-export type ErrorTargets = ObjectMethodNames<'ChatClient', ChatClient> | ObjectMethodNames<'ChatThreadClient', ChatThreadClient>;
-
-// @public (undocumented)
-export type MethodName<T, K extends keyof T> = T[K] extends Function ? (K extends string ? K : never) : never;
-
-// @public (undocumented)
-export type ObjectMethodNames<TName extends string, T> = {
-    [K in keyof T]: `${TName}.${MethodName<T, K>}`;
-}[keyof T];
+// @public
+export const isChatErrorTarget: (target: string) => boolean;
 
 // @public (undocumented)
 export interface StatefulChatClient extends ChatClient {

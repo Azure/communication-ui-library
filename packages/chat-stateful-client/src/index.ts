@@ -10,7 +10,8 @@ export type {
   ChatErrors,
   ChatThreadClientState,
   ChatThreadProperties,
-  ErrorTargets,
-  MethodName,
-  ObjectMethodNames
+  ChatErrorTargets,
+  ChatMethodName,
+  ChatObjectMethodNames,
+  isChatErrorTarget
 } from './ChatClientState';

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { createStatefulChatClient, ChatClientState, StatefulChatClient } from 'chat-stateful-client';
+import { createStatefulChatClient, ChatClientState, StatefulChatClient, ChatErrors } from 'chat-stateful-client';
 import { DefaultChatHandlers, createDefaultChatHandlers } from 'chat-component-bindings';
 import { ChatMessage, ChatThreadClient } from '@azure/communication-chat';
 
@@ -21,7 +21,7 @@ import {
   ChatAdapterErrors,
   ChatEvent,
   ChatState,
-  ErrorListener,
+  ChatErrorListener,
   MessageReadListener,
   MessageReceivedListener,
   ParticipantsAddedListener,
@@ -43,7 +43,7 @@ class ChatContext {
       userId: toFlatCommunicationIdentifier(clientState.userId),
       displayName: clientState.displayName,
       thread,
-      errors: clientState.errors
+      errors: clipErrors(clientState.errors)
     };
   }
 
@@ -55,11 +55,11 @@ class ChatContext {
     this.emitter.off('stateChanged', handler);
   }
 
-  public on(event: 'error', listener: ErrorListener): void {
+  public on(event: 'error', listener: ChatErrorListener): void {
     this.emitter.on('error', listener);
   }
 
-  public off(event: 'error', listener: ErrorListener): void {
+  public off(event: 'error', listener: ChatErrorListener): void {
     this.emitter.off('error', listener);
   }
 
@@ -99,6 +99,11 @@ class ChatContext {
     });
   }
 }
+
+const clipErrors = (errors: ChatErrors): ChatErrors => {
+  // FIXME
+  return errors;
+};
 
 const diffErrors = (oldState: ChatState, newState: ChatState): ChatAdapterErrors | undefined => {
   // FIXME
@@ -242,7 +247,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   on(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
   on(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
   on(event: 'topicChanged', listener: TopicChangedListener): void;
-  on(event: 'error', listener: ErrorListener): void;
+  on(event: 'error', listener: ChatErrorListener): void;
   on(event: ChatEvent, listener: (e: any) => void): void {
     if (event === 'error') {
       this.context.on(event, listener);
@@ -257,7 +262,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   off(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
   off(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
   off(event: 'topicChanged', listener: TopicChangedListener): void;
-  off(event: 'error', listener: ErrorListener): void;
+  off(event: 'error', listener: ChatErrorListener): void;
   off(event: ChatEvent, listener: (e: any) => void): void {
     if (event === 'error') {
       this.context.off(event, listener);

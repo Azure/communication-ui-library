@@ -52,7 +52,7 @@ export interface ChatAdapter {
   on(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
   on(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
   on(event: 'topicChanged', listener: TopicChangedListener): void;
-  on(event: 'error', listener: ErrorListener): void;
+  on(event: 'error', listener: ChatErrorListener): void;
 
   off(event: 'messageReceived', listener: MessageReceivedListener): void;
   off(event: 'messageSent', listener: MessageSentListener): void;
@@ -60,7 +60,7 @@ export interface ChatAdapter {
   off(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
   off(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
   off(event: 'topicChanged', listener: TopicChangedListener): void;
-  off(event: 'error', listener: ErrorListener): void;
+  off(event: 'error', listener: ChatErrorListener): void;
 }
 
 export type MessageReceivedListener = (event: { message: ChatMessage }) => void;
@@ -77,7 +77,7 @@ export type ParticipantsRemovedListener = (event: {
 /**
  * FIXME(Documentation)
  */
-export type ErrorListener = (event: { operation: string; error: Error }) => void;
+export type ChatErrorListener = (event: { operation: string; error: Error }) => void;
 export type TopicChangedListener = (event: { topic: string }) => void;
 export type ChatEvent =
   | 'messageReceived'

@@ -54,17 +54,38 @@ export type ChatThreadProperties = {
  * FIXME(Documentation)
  */
 export type ChatErrors = {
-  [target in ErrorTargets]: Error[];
+  [target in ChatErrorTargets]: Error[];
 };
 
-export type ObjectMethodNames<TName extends string, T> = {
-  [K in keyof T]: `${TName}.${MethodName<T, K>}`;
+export type ChatObjectMethodNames<TName extends string, T> = {
+  [K in keyof T]: `${TName}.${ChatMethodName<T, K>}`;
 }[keyof T];
 
 // eslint complains on all uses of `Function`. Using it as a type constraint is legitimate.
 // eslint-disable-next-line @typescript-eslint/ban-types
-export type MethodName<T, K extends keyof T> = T[K] extends Function ? (K extends string ? K : never) : never;
+export type ChatMethodName<T, K extends keyof T> = T[K] extends Function ? (K extends string ? K : never) : never;
 
-export type ErrorTargets =
-  | ObjectMethodNames<'ChatClient', ChatClient>
-  | ObjectMethodNames<'ChatThreadClient', ChatThreadClient>;
+export type ChatErrorTargets =
+  | ChatObjectMethodNames<'ChatClient', ChatClient>
+  | ChatObjectMethodNames<'ChatThreadClient', ChatThreadClient>;
+
+/**
+ * Method to decide at runtime if a string is an error target.
+ */
+export const isChatErrorTarget = (target: string): boolean => {
+  for (const targetPrefix in ChatErrorTargetPrefixes) {
+    const [prefix, obj] = targetPrefix;
+    if (target.startsWith(prefix)) {
+      target = target.substring(prefix.length);
+      if (obj[target] !== undefined && typeof obj[target] === 'function') {
+        return true;
+      }
+    }
+  }
+  return false;
+};
+
+const ChatErrorTargetPrefixes = [
+  ['ChatClient.', ChatClient],
+  ['ChatThreadClient.', ChatThreadClient]
+];
