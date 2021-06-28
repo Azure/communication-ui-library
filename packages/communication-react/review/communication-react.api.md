@@ -482,7 +482,7 @@ export interface ChatAdapter {
 
 // @public
 export type ChatAdapterErrors = {
-    [operation: string]: Error[];
+    [operation: string]: Error;
 };
 
 // @public (undocumented)
@@ -506,7 +506,7 @@ export type ChatClientState = {
     threads: {
         [key: string]: ChatThreadClientState;
     };
-    errors: ChatErrors;
+    latestErrors: ChatErrors;
 };
 
 // @public (undocumented)
@@ -517,7 +517,7 @@ export type ChatCompositeClientState = {
     userId: string;
     displayName: string;
     thread: ChatThreadClientState;
-    errors: ChatAdapterErrors;
+    latestErrors: ChatAdapterErrors;
 };
 
 // @public (undocumented)
@@ -538,7 +538,7 @@ export type ChatErrorListener = (event: {
 
 // @public
 export type ChatErrors = {
-    [target in ChatErrorTargets]: Error[];
+    [target in ChatErrorTargets]: Error;
 };
 
 // @public

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { createStatefulChatClient, ChatClientState, StatefulChatClient, ChatErrors } from 'chat-stateful-client';
+import { createStatefulChatClient, ChatClientState, StatefulChatClient } from 'chat-stateful-client';
 import { DefaultChatHandlers, createDefaultChatHandlers } from 'chat-component-bindings';
 import { ChatMessage, ChatThreadClient } from '@azure/communication-chat';
 
@@ -18,7 +18,6 @@ import EventEmitter from 'events';
 import { createAzureCommunicationUserCredential } from '../../../utils';
 import {
   ChatAdapter,
-  ChatAdapterErrors,
   ChatEvent,
   ChatState,
   ChatErrorListener,
@@ -43,7 +42,7 @@ class ChatContext {
       userId: toFlatCommunicationIdentifier(clientState.userId),
       displayName: clientState.displayName,
       thread,
-      errors: clipErrors(clientState.errors)
+      latestErrors: clientState.latestErrors
     };
   }
 
@@ -64,20 +63,8 @@ class ChatContext {
   }
 
   public setState(state: ChatState): void {
-    const oldState = this.state;
     this.state = state;
-    this.emitNewErrors(oldState);
     this.emitter.emit('stateChanged', this.state);
-  }
-
-  private emitNewErrors(oldState: ChatState): void {
-    const newErrors = diffErrors(oldState, this.state);
-    if (newErrors) {
-      Object.entries(newErrors).forEach((entry) => {
-        const [operation, error] = entry;
-        this.emitter.emit('error', { operation, error });
-      });
-    }
   }
 
   public getState(): ChatState {
@@ -95,20 +82,10 @@ class ChatContext {
       userId: toFlatCommunicationIdentifier(clientState.userId),
       displayName: clientState.displayName,
       thread,
-      errors: clientState.errors
+      latestErrors: clientState.latestErrors
     });
   }
 }
-
-const clipErrors = (errors: ChatErrors): ChatErrors => {
-  // FIXME
-  return errors;
-};
-
-const diffErrors = (oldState: ChatState, newState: ChatState): ChatAdapterErrors | undefined => {
-  // FIXME
-  return undefined;
-};
 
 export class AzureCommunicationChatAdapter implements ChatAdapter {
   private chatClient: StatefulChatClient;

@@ -73,12 +73,12 @@ const memoizeState = memoizeOne(
     userId: CommunicationIdentifierKind,
     displayName: string,
     threads: { [key: string]: ChatThreadClientState },
-    errors: ChatErrors
+    latestErrors: ChatErrors
   ) => ({
     userId,
     displayName,
     threads,
-    errors
+    latestErrors
   })
 );
 
@@ -95,6 +95,6 @@ const adaptCompositeState = (compositeState: ChatState): ChatClientState => {
     { kind: 'communicationUser', communicationUserId: compositeState.userId },
     compositeState.displayName,
     memoizeThreads(compositeState.thread),
-    memoizeErrors(compositeState.errors)
+    memoizeErrors(compositeState.latestErrors)
   );
 };

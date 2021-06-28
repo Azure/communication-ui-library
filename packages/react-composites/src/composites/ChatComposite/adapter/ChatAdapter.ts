@@ -17,17 +17,17 @@ export type ChatCompositeClientState = {
   displayName: string;
   thread: ChatThreadClientState;
   /**
-   * Errors teed from failed adapter operations.
+   * Latest error encountered for each operation performed via the adapter.
    */
-  errors: ChatAdapterErrors;
+  latestErrors: ChatAdapterErrors;
 };
 
 /**
- * ChatAdapter tees errors that occur behing the adapter API to the state.
+ * ChatAdapter stores the latest error for each operation in the state.
  *
  * `operation` is a ChatAdapter defined string for each unique operation performed by the adapter.
  */
-export type ChatAdapterErrors = { [operation: string]: Error[] };
+export type ChatAdapterErrors = { [operation: string]: Error };
 
 export type ChatState = ChatUIState & ChatCompositeClientState;
 

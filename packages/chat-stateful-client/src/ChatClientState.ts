@@ -15,9 +15,11 @@ export type ChatClientState = {
    */
   threads: { [key: string]: ChatThreadClientState };
   /**
-   * FIXME(Documentation)
+   * Stores the latest error for each API method.
+   *
+   * See documentation of {@Link ChatErrors} for details.
    */
-  errors: ChatErrors;
+  latestErrors: ChatErrors;
 };
 
 export type ChatThreadClientState = {
@@ -53,17 +55,16 @@ export type ChatThreadProperties = {
 /**
  * Errors teed from API calls to the Chat SDK.
  *
- * Each property in the object stores the errors for a particular SDK API method.
- * For each method, errors are appended as they occur.
+ * Each property in the object stores the latest error for a particular SDK API method.
  *
- * Errors from this object can be cleared by calling the TODO(implement me) {@Link clearErrors} method.
+ * Errors from this object can be cleared by calling the TODO(implement me) {@Link clearError} method.
  * Additionally, errors are automatically cleared when:
  * - The state is cleared.
- * - The corresponding API method or a related method succeeds on subsequent attempts.
+ * - Subsequent calls to related API methods succeed.
  *   See documentation of individual stateful client methods for details on when errors may be automatically cleared.
  */
 export type ChatErrors = {
-  [target in ChatErrorTargets]: Error[];
+  [target in ChatErrorTargets]: Error;
 };
 
 /**

@@ -318,7 +318,7 @@ export interface ChatAdapter {
 
 // @public
 export type ChatAdapterErrors = {
-    [operation: string]: Error[];
+    [operation: string]: Error;
 };
 
 // @public (undocumented)
@@ -329,7 +329,7 @@ export type ChatCompositeClientState = {
     userId: string;
     displayName: string;
     thread: ChatThreadClientState;
-    errors: ChatAdapterErrors;
+    latestErrors: ChatAdapterErrors;
 };
 
 // @public (undocumented)

@@ -22,12 +22,12 @@ export type ChatClientState = {
     threads: {
         [key: string]: ChatThreadClientState;
     };
-    errors: ChatErrors;
+    latestErrors: ChatErrors;
 };
 
 // @public
 export type ChatErrors = {
-    [target in ChatErrorTargets]: Error[];
+    [target in ChatErrorTargets]: Error;
 };
 
 // @public

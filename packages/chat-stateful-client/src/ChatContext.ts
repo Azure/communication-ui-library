@@ -26,7 +26,7 @@ export class ChatContext {
     userId: <UnknownIdentifierKind>{ id: '' },
     displayName: '',
     threads: {},
-    errors: {} as ChatErrors
+    latestErrors: {} as ChatErrors
   };
   private _batchMode = false;
   private _emitter: EventEmitter;
@@ -330,19 +330,15 @@ export class ChatContext {
       this.clearError(target);
       return ret;
     } catch (error) {
-      this.setError(target, error);
+      this.setLatestError(target, error);
       throw error;
     }
   }
 
-  private setError(target: ChatErrorTargets, error: Error): void {
+  private setLatestError(target: ChatErrorTargets, error: Error): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
-        // Errors are infrequent. Lazily define fields to keep object small.
-        if (draft.errors[target] === undefined) {
-          draft.errors[target] = [];
-        }
-        draft.errors[target].push(error);
+        draft.latestErrors[target] = error;
       })
     );
   }
@@ -350,7 +346,7 @@ export class ChatContext {
   private clearError(target: ChatErrorTargets): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
-        delete draft.errors[target];
+        delete draft.latestErrors[target];
       })
     );
   }

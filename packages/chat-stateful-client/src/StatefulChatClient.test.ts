@@ -433,17 +433,18 @@ describe('stateful chatClient tees errors to state', () => {
     const listener = new StateChangeListener(client);
     await expect(client.startRealtimeNotifications()).rejects.toThrow();
     expect(listener.onChangeCalledCount).toBe(1);
-    const errors = listener.state.errors['ChatClient.startRealtimeNotifications'];
-    expect(errors).toBeDefined();
-    expect(errors.length).toBe(1);
+    const latestError = listener.state.latestErrors['ChatClient.startRealtimeNotifications'];
+    expect(latestError).toBeDefined();
   });
 });
 
 describe('complex error handling for startRealtimeNotifications', () => {
-  test('multiple errors are stored in state', async () => {
+  test('latest error is stored in state', async () => {
     const baseClient = createMockChatClient();
+    let errorCount = 0;
     baseClient.startRealtimeNotifications = async () => {
-      throw Error('injected error');
+      errorCount++;
+      throw Error(`injected error #${errorCount}`);
     };
     const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
     const listener = new StateChangeListener(client);
@@ -453,9 +454,9 @@ describe('complex error handling for startRealtimeNotifications', () => {
     await expect(client.startRealtimeNotifications()).rejects.toThrow();
 
     expect(listener.onChangeCalledCount).toBe(2);
-    const errors = listener.state.errors['ChatClient.startRealtimeNotifications'];
-    expect(errors).toBeDefined();
-    expect(errors.length).toBe(2);
+    const latestError = listener.state.latestErrors['ChatClient.startRealtimeNotifications'];
+    expect(latestError).toBeDefined();
+    expect(latestError.message).toBe('injected error #2');
   });
 
   test('errors are cleared on successful method call', async () => {
@@ -477,8 +478,8 @@ describe('complex error handling for startRealtimeNotifications', () => {
     await client.startRealtimeNotifications();
 
     expect(listener.onChangeCalledCount).toBe(2);
-    const errors = listener.state.errors['ChatClient.startRealtimeNotifications'];
-    expect(errors).toBeUndefined();
+    const latestError = listener.state.latestErrors['ChatClient.startRealtimeNotifications'];
+    expect(latestError).toBeUndefined();
   });
 });
 
