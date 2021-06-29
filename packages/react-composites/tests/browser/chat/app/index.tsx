@@ -29,6 +29,8 @@ function App(): JSX.Element {
     };
 
     initialize();
+
+    return () => chatAdapter && chatAdapter.dispose();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

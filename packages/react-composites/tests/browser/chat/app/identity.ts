@@ -1,14 +1,22 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { ChatClient } from '@azure/communication-chat';
-import { AzureCommunicationTokenCredential } from '@azure/communication-common';
+import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-identity';
+
+type IdentityType = {
+  userId: CommunicationUserIdentifier;
+  token: string;
+  endpointUrl: string;
+  displayName: string;
+  threadId: string;
+};
 
 export const createUserAndThread = async (
   resourceConnectionString: string,
   topic: string,
   displayNames: string[]
-): Promise<Array<any>> => {
+): Promise<Array<IdentityType>> => {
   const endpointUrl = new URL(resourceConnectionString.replace('endpoint=', '').split(';')[0]).toString();
   const tokenClient = new CommunicationIdentityClient(resourceConnectionString);
   const userAndTokens: CommunicationUserToken[] = [];
