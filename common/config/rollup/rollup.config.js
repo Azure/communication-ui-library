@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import commonjs from '@rollup/plugin-commonjs';
+import json from '@rollup/plugin-json';
 import sourcemaps from 'rollup-plugin-sourcemaps';
 import svg from 'rollup-plugin-svg';
 
@@ -17,5 +18,5 @@ export default (packageJson) => ({
     format: 'cjs',
     sourcemap: true
   },
-  plugins: [commonjs(), sourcemaps(), svg()]
+  plugins: [commonjs(), sourcemaps(), svg(), json({ compact: true })]
 });

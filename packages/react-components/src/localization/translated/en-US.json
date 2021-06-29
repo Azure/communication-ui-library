@@ -1,0 +1,34 @@
+{
+  "participantItem": {
+    "isMeText": "(you)",
+    "menuTitle": "More Options"
+  },
+  "typingIndicator": {
+    "singleUser": "{user} is typing ...",
+    "multipleUsers": "{users} are typing ...",
+    "multipleUsersAbbreviateOne": "{users} and 1 other are typing ...",
+    "multipleUsersAbbreviateMany": "{users} and {numOthers} others are typing ...",
+    "delimiter": ", "
+  },
+  "endCallButton": {
+    "label": "Leave"
+  },
+  "cameraButton": {
+    "onLabel": "Turn off",
+    "offLabel": "Turn on"
+  },
+  "microphoneButton": {
+    "onLabel": "Mute",
+    "offLabel": "Unmute"
+  },
+  "messageThread": {
+    "yesterday": "Yesterday",
+    "sunday": "Sunday",
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday"
+  }
+}

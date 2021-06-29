@@ -11,7 +11,7 @@ import {
   Stack,
   useTheme
 } from '@fluentui/react';
-import { CallControlPresentNewIcon, CallControlStopPresentingNewIcon } from '@fluentui/react-icons-northstar';
+import { ShareScreenStart20Filled, ShareScreenStop20Filled } from '@fluentui/react-icons';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   getScreenSharePopupModalButtonStyles,
@@ -23,7 +23,7 @@ import {
 const STOP_SCREENSHARE_BUTTON_TEXT = 'Stop presenting';
 const STOP_SCREENSHARE_LABEL_TEXT = "You're presenting your screen.";
 const onRenderStopScreenShareIcon = (): JSX.Element => {
-  return <CallControlStopPresentingNewIcon />;
+  return <ShareScreenStop20Filled primaryFill="currentColor" />;
 };
 
 const DRAG_OPTIONS: IDragOptions = {
@@ -76,7 +76,7 @@ export const ScreenSharePopup = (props: ScreenSharePopupProps): JSX.Element => {
       <Modal isOpen={true} isModeless={true} dragOptions={DRAG_OPTIONS} styles={screenSharePopupModalStylesThemed}>
         <Stack style={screenSharePopupModalStackStyles} horizontalAlign={'center'}>
           <Stack verticalFill={true} verticalAlign={'center'} horizontalAlign={'center'}>
-            <CallControlPresentNewIcon disabled={true} size={'larger'} />
+            <ShareScreenStart20Filled primaryFill="disabled" />
             <Label style={screenSharePopupModalLabelStyles}>{STOP_SCREENSHARE_LABEL_TEXT}</Label>
           </Stack>
           <DefaultButton

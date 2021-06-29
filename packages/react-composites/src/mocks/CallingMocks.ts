@@ -11,19 +11,19 @@ import {
 import { MockCall, MockCallAgent, MockRemoteVideoStream } from './CallingTypeMocks';
 
 type MockCallProps = {
-  muteExecutedCallback: jest.Mock<any, any>;
-  unmuteExecutedCallback: jest.Mock<any, any>;
+  muteExecutedCallback: jest.Mock<unknown, unknown[]>;
+  unmuteExecutedCallback: jest.Mock<unknown, unknown[]>;
   isMicrophoneMuted: boolean;
-  isStartScreenSharingExecuted: jest.Mock<any, any>;
-  isStopScreenSharingExecuted: jest.Mock<any, any>;
+  isStartScreenSharingExecuted: jest.Mock<unknown, unknown[]>;
+  isStopScreenSharingExecuted: jest.Mock<unknown, unknown[]>;
   isScreenSharingOn: boolean;
-  acceptExecutedCallback: jest.Mock<any, any>;
-  rejectExecutedCallback: jest.Mock<any, any>;
-  hangUpExecutedCallback: jest.Mock<any, any>;
-  outgoingCallExecutedCallback: jest.Mock<any, any>;
-  joinExecutedCallback: jest.Mock<any, any>;
-  startVideo?: jest.Mock<any, any>;
-  stopVideo?: jest.Mock<any, any>;
+  acceptExecutedCallback: jest.Mock<unknown, unknown[]>;
+  rejectExecutedCallback: jest.Mock<unknown, unknown[]>;
+  hangUpExecutedCallback: jest.Mock<unknown, unknown[]>;
+  outgoingCallExecutedCallback: jest.Mock<unknown, unknown[]>;
+  joinExecutedCallback: jest.Mock<unknown, unknown[]>;
+  startVideo?: jest.Mock<unknown, unknown[]>;
+  stopVideo?: jest.Mock<unknown, unknown[]>;
   localVideoStreams?: Array<LocalVideoStream>;
   isIncoming: boolean;
 };

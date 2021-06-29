@@ -10,8 +10,8 @@ import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 
-const DefaultMessageStatusIndicatorsExampleText = require('!!raw-loader!./snippets/AllDefaultIndicators.snippet.tsx')
-  .default;
+const DefaultMessageStatusIndicatorsExampleText =
+  require('!!raw-loader!./snippets/AllDefaultIndicators.snippet.tsx').default;
 
 const importStatement = `import { MessageStatus, MessageStatusIndicator } from '@azure/communication-react';`;
 

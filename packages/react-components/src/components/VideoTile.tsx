@@ -15,13 +15,14 @@ import React from 'react';
 import {
   disabledVideoHint,
   displayNameStyle,
+  iconContainerStyle,
   overlayContainerStyles,
   rootStyles,
   videoContainerStyles,
   videoHint
 } from './styles/VideoTile.styles';
 import { BaseCustomStylesProps } from '../types';
-import { MicIcon, MicOffIcon } from '@fluentui/react-northstar';
+import { MicOn16Filled, MicOff16Filled } from '@fluentui/react-icons';
 
 export interface VideoTileStylesProps extends BaseCustomStylesProps {
   /** Styles for video container. */
@@ -144,7 +145,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           styles?.displayNameContainer
         )}
       >
-        <Stack.Item>
+        <Stack>
           {displayName && (
             <Text
               className={mergeStyles(displayNameStyle, {
@@ -154,12 +155,16 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
               {displayName}
             </Text>
           )}
-        </Stack.Item>
-        <Stack.Item>
+        </Stack>
+        <Stack className={mergeStyles(iconContainerStyle)}>
           {showMuteIndicator &&
             isMuted !== undefined &&
-            (isMuted ? <MicOffIcon size="small" /> : <MicIcon size="small" />)}
-        </Stack.Item>
+            (isMuted ? (
+              <MicOff16Filled primaryFill="currentColor" key={'microphoneOffIconKey'} />
+            ) : (
+              <MicOn16Filled primaryFill="currentColor" key={'microphoneIconKey'} />
+            ))}
+        </Stack>
       </Stack>
 
       {children && <Stack className={mergeStyles(overlayContainerStyles, styles?.overlayContainer)}>{children}</Stack>}

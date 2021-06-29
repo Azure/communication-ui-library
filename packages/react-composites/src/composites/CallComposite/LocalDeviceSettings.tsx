@@ -7,11 +7,12 @@ import {
   dropDownStyles,
   dropDownTitleIconStyles,
   localSettingsContainer,
-  mainStackTokens
+  mainStackTokens,
+  optionIconStyles
 } from './styles/LocalDeviceSettings.styles';
 import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
+import { Video20Filled, MicOn20Filled, Speaker220Filled } from '@fluentui/react-icons';
 import { VideoStreamOptions } from 'react-components';
-import { CallVideoIcon, MicIcon, VolumeUpIcon } from '@fluentui/react-icons-northstar';
 
 const cameraPermissionDeniedText = 'Your browser is blocking access to your camera.';
 const microphonePermissionDeniedText = 'Your browser is blocking access to your microphone.';
@@ -19,14 +20,13 @@ type iconType = 'Camera' | 'Microphone' | 'Speaker';
 
 const getDropDownList = (list: Array<VideoDeviceInfo | AudioDeviceInfo>): IDropdownOption[] => {
   // Remove duplicates
-  const noDuplicates = new Map();
+  const noDuplicates = new Map<string, VideoDeviceInfo | AudioDeviceInfo>();
   for (const item of list) {
     noDuplicates.set(item.id, item);
   }
-  const dropdownList: any[] = [];
+  const dropdownList: IDropdownOption[] = [];
   for (const item of noDuplicates.values()) {
     dropdownList.push({
-      val: item,
       key: item.id,
       text: item.name === '' ? item.deviceType : item.name
     });
@@ -35,14 +35,12 @@ const getDropDownList = (list: Array<VideoDeviceInfo | AudioDeviceInfo>): IDropd
 };
 
 const getOptionIcon = (type: iconType): JSX.Element | undefined => {
-  const iconStyles = { marginRight: '8px' };
-
   if (type === 'Camera') {
-    return <CallVideoIcon style={iconStyles} key={'videoIconKey'} />;
+    return <Video20Filled primaryFill="currentColor" className={optionIconStyles} key={'videoIconKey'} />;
   } else if (type === 'Microphone') {
-    return <MicIcon style={iconStyles} key={'microphoneIconKey'} />;
+    return <MicOn20Filled primaryFill="currentColor" className={optionIconStyles} key={'microphoneIconKey'} />;
   } else if (type === 'Speaker') {
-    return <VolumeUpIcon style={iconStyles} key={'speakerIconKey'} />;
+    return <Speaker220Filled primaryFill="currentColor" className={optionIconStyles} key={'speakerIconKey'} />;
   } else {
     return undefined;
   }

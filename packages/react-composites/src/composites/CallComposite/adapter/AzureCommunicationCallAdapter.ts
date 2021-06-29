@@ -338,6 +338,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   on(event: 'callEnded', listener: CallEndedListener): void;
   on(event: 'error', errorHandler: (e: Error) => void): void;
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public on(event: CallEvent, listener: (e: any) => void): void {
     this.emitter.on(event, listener);
   }
@@ -420,6 +421,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   off(event: 'callEnded', listener: CallEndedListener): void;
   off(event: 'error', errorHandler: (e: Error) => void): void;
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public off(event: CallEvent, listener: (e: any) => void): void {
     this.emitter.off(event, listener);
   }

@@ -47,7 +47,6 @@ import type { RemoteParticipant } from '@azure/communication-calling';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
 import * as reselect from 'reselect';
 import { ScalingMode } from '@azure/communication-calling';
-import { SizeValue } from '@fluentui/react-northstar';
 import { StartCallOptions } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
@@ -415,6 +414,7 @@ export interface CameraButtonProps extends IButtonProps {
     localVideoViewOption?: VideoStreamOptions;
     onToggleCamera?: (options?: VideoStreamOptions) => Promise<void>;
     showLabel?: boolean;
+    strings?: Partial<CameraButtonStrings>;
 }
 
 // @public (undocumented)
@@ -425,6 +425,12 @@ export const cameraButtonSelector: reselect.OutputParametricSelector<CallClientS
     disabled: boolean;
     checked: boolean;
 }>;
+
+// @public
+export interface CameraButtonStrings {
+    offLabel: string;
+    onLabel: string;
+}
 
 // @public (undocumented)
 export interface ChatAdapter {
@@ -633,6 +639,16 @@ export type CommunicationParticipant = {
 };
 
 // @public
+export interface ComponentStrings {
+    cameraButton: CameraButtonStrings;
+    endCallButton: EndCallButtonStrings;
+    messageThread: MessageThreadStrings;
+    microphoneButton: MicrophoneButtonStrings;
+    participantItem: ParticipantItemStrings;
+    typingIndicator: TypingIndicatorStrings;
+}
+
+// @public
 export const ControlBar: (props: ControlBarProps) => JSX.Element;
 
 // @public (undocumented)
@@ -754,6 +770,12 @@ export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
 export interface EndCallButtonProps extends IButtonProps {
     onHangUp?: () => Promise<void>;
     showLabel?: boolean;
+    strings?: EndCallButtonStrings;
+}
+
+// @public
+export interface EndCallButtonStrings {
+    label: string;
 }
 
 // @public
@@ -840,6 +862,30 @@ export interface JumpToNewMessageButtonProps {
 export const lightTheme: PartialTheme & CallingTheme;
 
 // @public
+export interface Locale {
+    strings: ComponentStrings;
+}
+
+// @public
+export const LocaleContext: React_2.Context<Locale>;
+
+// @public (undocumented)
+export const locales: Record<string, {
+    locale: Locale;
+    englishName: string;
+    displayName: string;
+}>;
+
+// @public
+export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
+
+// @public
+export type LocalizationProviderProps = {
+    locale: Locale;
+    children: React_2.ReactNode;
+};
+
+// @public
 export interface LocalVideoStreamState {
     mediaStreamType: MediaStreamType;
     source: VideoDeviceInfo;
@@ -863,6 +909,7 @@ export type MessageProps = {
     message: ChatMessage | SystemMessage | CustomMessage;
     messageContainerStyle?: ComponentSlotStyle;
     showDate?: boolean;
+    strings?: Partial<MessageThreadStrings>;
 };
 
 // @public (undocumented)
@@ -891,7 +938,6 @@ export interface MessageStatusIndicatorProps {
     failedToSendTooltipText?: string;
     seenTooltipText?: string;
     sendingTooltipText?: string;
-    size?: SizeValue;
     status?: MessageStatus;
     styles?: BaseCustomStylesProps;
 }
@@ -914,7 +960,20 @@ export type MessageThreadProps = {
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+    strings?: Partial<MessageThreadStrings>;
 };
+
+// @public
+export interface MessageThreadStrings {
+    friday: string;
+    monday: string;
+    saturday: string;
+    sunday: string;
+    thursday: string;
+    tuesday: string;
+    wednesday: string;
+    yesterday: string;
+}
 
 // @public (undocumented)
 export interface MessageThreadStylesProps extends BaseCustomStylesProps {
@@ -936,6 +995,7 @@ export const MicrophoneButton: (props: MicrophoneButtonProps) => JSX.Element;
 export interface MicrophoneButtonProps extends IButtonProps {
     onToggleMicrophone?: () => Promise<void>;
     showLabel?: boolean;
+    strings?: Partial<MicrophoneButtonStrings>;
 }
 
 // @public (undocumented)
@@ -948,15 +1008,21 @@ export const microphoneButtonSelector: reselect.OutputParametricSelector<CallCli
 }>;
 
 // @public
+export interface MicrophoneButtonStrings {
+    offLabel: string;
+    onLabel: string;
+}
+
+// @public
 export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
 
 // @public
 export interface OptionsButtonProps extends IButtonProps {
     cameras?: OptionsDevice[];
     microphones?: OptionsDevice[];
-    onSelectCamera?: (device: any) => Promise<void>;
-    onSelectMicrophone?: (device: any) => Promise<void>;
-    onSelectSpeaker?: (device: any) => Promise<void>;
+    onSelectCamera?: (device: OptionsDevice) => Promise<void>;
+    onSelectMicrophone?: (device: OptionsDevice) => Promise<void>;
+    onSelectSpeaker?: (device: OptionsDevice) => Promise<void>;
     selectedCamera?: OptionsDevice;
     selectedMicrophone?: OptionsDevice;
     selectedSpeaker?: OptionsDevice;
@@ -998,7 +1064,14 @@ export interface ParticipantItemProps {
     onRenderAvatar?: (props?: ParticipantItemProps) => JSX.Element | null;
     onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
     presence?: PersonaPresence;
+    strings?: Partial<ParticipantItemStrings>;
     styles?: ParticipantItemStylesProps;
+}
+
+// @public
+export interface ParticipantItemStrings {
+    isMeText: string;
+    menuTitle: string;
 }
 
 // @public (undocumented)
@@ -1276,9 +1349,9 @@ export const TypingIndicator: (props: TypingIndicatorProps) => JSX.Element;
 
 // @public
 export interface TypingIndicatorProps {
-    onRenderUsers?: (users: CommunicationParticipant[]) => JSX.Element;
+    onRenderUser?: (users: CommunicationParticipant) => JSX.Element;
+    strings?: Partial<TypingIndicatorStrings>;
     styles?: TypingIndicatorStylesProps;
-    typingString?: string;
     typingUsers: CommunicationParticipant[];
 }
 
@@ -1290,6 +1363,15 @@ export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClie
 }, res3: string) => {
     typingUsers: CommunicationParticipant[];
 }>;
+
+// @public
+export interface TypingIndicatorStrings {
+    delimiter: string;
+    multipleUsers: string;
+    multipleUsersAbbreviateMany: string;
+    multipleUsersAbbreviateOne: string;
+    singleUser: string;
+}
 
 // @public (undocumented)
 export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
@@ -1314,6 +1396,9 @@ export const useChatThreadClient: () => ChatThreadClient;
 
 // @public (undocumented)
 export const useDeviceManager: () => StatefulDeviceManager | undefined;
+
+// @public (undocumented)
+export const useLocale: () => Locale;
 
 // @public (undocumented)
 export const usePropsFor: <Component extends (props: any) => JSX.Element>(component: Component, type?: "chat" | "calling" | undefined) => ChatReturnProps<Component> extends never ? CallingReturnProps<Component> extends never ? undefined : CallingReturnProps<Component> : ChatReturnProps<Component>;

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Remove @fluentui/react-northstar-icons, use only @fluentui/react-icons",
+  "packageName": "react-composites",
+  "email": "mail@jamesburnside.com",
+  "dependentChangeType": "patch"
+}

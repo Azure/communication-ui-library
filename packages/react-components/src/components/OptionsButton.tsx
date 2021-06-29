@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
+import { MoreHorizontal20Filled } from '@fluentui/react-icons';
 import {
   DefaultButton,
   IButtonProps,
@@ -11,7 +12,6 @@ import {
   mergeStyles,
   ContextualMenuItemType
 } from '@fluentui/react';
-import { SettingsIcon } from '@fluentui/react-northstar';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 
 /**
@@ -64,15 +64,15 @@ export interface OptionsButtonProps extends IButtonProps {
   /**
    * Callback when a camera is selected
    */
-  onSelectCamera?: (device: any) => Promise<void>;
+  onSelectCamera?: (device: OptionsDevice) => Promise<void>;
   /**
    * Callback when a microphone is selected
    */
-  onSelectMicrophone?: (device: any) => Promise<void>;
+  onSelectMicrophone?: (device: OptionsDevice) => Promise<void>;
   /**
    * Speaker when a speaker is selected
    */
-  onSelectSpeaker?: (device: any) => Promise<void>;
+  onSelectSpeaker?: (device: OptionsDevice) => Promise<void>;
 }
 
 /**
@@ -127,16 +127,16 @@ const generateDefaultMenuProps = (props: OptionsButtonProps): { items: IContextu
       itemType: ContextualMenuItemType.Section,
       sectionProps: {
         title: 'Microphone',
-        items: microphones.map((micophone) => ({
-          key: micophone.id,
-          text: micophone.name,
-          title: micophone.name,
+        items: microphones.map((microphone) => ({
+          key: microphone.id,
+          text: microphone.name,
+          title: microphone.name,
           iconProps: { iconName: 'Microphone' },
           canCheck: true,
-          isChecked: micophone.id === selectedMicrophone?.id,
+          isChecked: microphone.id === selectedMicrophone?.id,
           onClick: () => {
-            if (micophone.id !== selectedMicrophone?.id) {
-              onSelectMicrophone(micophone);
+            if (microphone.id !== selectedMicrophone?.id) {
+              onSelectMicrophone(microphone);
             }
           }
         }))
@@ -190,7 +190,7 @@ export const OptionsButton = (props: OptionsButtonProps): JSX.Element => {
   const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
 
   const defaultRenderIcon = (): JSX.Element => {
-    return <SettingsIcon key="optionsIconKey" />;
+    return <MoreHorizontal20Filled primaryFill="currentColor" key={'optionsIconKey'} />;
   };
 
   const defaultRenderText = (props?: IButtonProps): JSX.Element => {
