@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import { IStyle, ITextField, mergeStyles, Stack, TextField, concatStyleSets, useTheme } from '@fluentui/react';
-import { Send28Regular, Send28Filled } from '@fluentui/react-icons';
+import { Send20Regular, Send20Filled } from '@fluentui/react-icons';
 import {
   textFieldStyle,
   sendBoxStyle,
@@ -110,13 +110,18 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     }
     sendTextFieldRef.current?.focus();
   };
-  const setText = (e: any): void => {
-    if (e.target.value.length > MAXIMUM_LENGTH_OF_MESSAGE) {
+  const setText = (
+    event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
+    newValue?: string | undefined
+  ): void => {
+    if (newValue === undefined) return;
+
+    if (newValue.length > MAXIMUM_LENGTH_OF_MESSAGE) {
       setTextValueOverflow(true);
     } else {
       setTextValueOverflow(false);
     }
-    setTextValue(e.target.value);
+    setTextValue(newValue);
   };
 
   const textTooLongMessage = textValueOverflow ? TEXT_EXCEEDS_LIMIT : undefined;
@@ -189,9 +194,9 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           {onRenderIcon ? (
             onRenderIcon(props, isMouseOverSendIcon)
           ) : isMouseOverSendIcon ? (
-            <Send28Filled className={mergedSendIconStyle} primaryFill="currentColor" />
+            <Send20Filled className={mergedSendIconStyle} primaryFill="currentColor" />
           ) : (
-            <Send28Regular className={mergedSendIconStyle} primaryFill="currentColor" />
+            <Send20Regular className={mergedSendIconStyle} primaryFill="currentColor" />
           )}
         </div>
       </div>

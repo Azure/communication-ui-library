@@ -18,7 +18,7 @@ export const TypingIndicatorSnippet: () => JSX.Element = () => {
       <TypingIndicator typingUsers={oneTypingUsers} />
       <TypingIndicator typingUsers={twoTypingUsers} />
       <TypingIndicator typingUsers={twentyUsers} />
-      <TypingIndicator typingUsers={oneTypingUsers} typingString={' is composing a message...'} />
+      <TypingIndicator typingUsers={oneTypingUsers} />
     </>
   );
 };

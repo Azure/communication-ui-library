@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Automated browser test setup for Chat Composite",
+  "packageName": "react-composites",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}

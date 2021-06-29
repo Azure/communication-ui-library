@@ -70,7 +70,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   );
 
   return (
-    <Stack className={chatContainer} grow>
+    <Stack id="chat-composite" className={chatContainer} grow>
       <ChatHeader {...headerProps} />
       <Stack className={chatArea} horizontal grow>
         <Stack className={chatWrapper} grow>

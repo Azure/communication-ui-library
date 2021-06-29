@@ -29,11 +29,16 @@ export const DisplayNameField = (props: DisplayNameFieldProps): JSX.Element => {
     validateName
   } = props;
 
-  const onNameTextChange = (event: any): void => {
-    setName(event.target.value);
-    if (setEmptyWarning && !event.target.value) {
+  const onNameTextChange = (
+    event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
+    newValue?: string
+  ): void => {
+    if (newValue === undefined) return;
+
+    setName(newValue);
+    if (setEmptyWarning && !newValue) {
       setEmptyWarning(true);
-    } else if (setNameLengthExceedLimit && event.target.value.length > MAXIMUM_LENGTH_OF_NAME) {
+    } else if (setNameLengthExceedLimit && newValue.length > MAXIMUM_LENGTH_OF_NAME) {
       setNameLengthExceedLimit(true);
     } else {
       setEmptyWarning && setEmptyWarning(false);

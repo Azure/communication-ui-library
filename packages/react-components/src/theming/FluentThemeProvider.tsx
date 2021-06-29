@@ -42,6 +42,7 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
   const { fluentTheme, children } = props;
   // if fluentTheme is not provided, default to light theme
   const fluentUITheme = fluentTheme ?? lightTheme;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [fluentNorthstarTheme, setFluentNorthstarTheme] = useState<ThemeInput<any>>(initialFluentNorthstarTheme);
 
   useEffect(() => {

@@ -4,6 +4,7 @@
 import { concatStyleSets, DefaultButton, IButtonProps, Label, mergeStyles } from '@fluentui/react';
 import { Video20Filled, VideoOff20Filled } from '@fluentui/react-icons';
 import React, { useCallback, useState } from 'react';
+import { useLocale } from '../localization';
 import { VideoStreamOptions } from '../types';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 
@@ -11,6 +12,16 @@ const defaultLocalVideoViewOption = {
   scalingMode: 'Crop',
   isMirrored: true
 } as VideoStreamOptions;
+
+/**
+ * Strings of CameraButton that can be overridden
+ */
+export interface CameraButtonStrings {
+  /** Label when button is on. */
+  onLabel: string;
+  /** Label when button is off. */
+  offLabel: string;
+}
 
 /**
  * Props for CameraButton component
@@ -32,6 +43,11 @@ export interface CameraButtonProps extends IButtonProps {
    * Options for rendering local video view.
    */
   localVideoViewOption?: VideoStreamOptions;
+
+  /**
+   * Optional strings to override in component
+   */
+  strings?: Partial<CameraButtonStrings>;
 }
 
 /**
@@ -53,13 +69,20 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
     );
   };
 
-  const defaultRenderText = (props?: IButtonProps): JSX.Element => {
-    return (
-      <Label key={'videoLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
-        {props?.checked ? 'Turn off' : 'Turn on'}
-      </Label>
-    );
-  };
+  const { strings } = useLocale();
+  const onLabel = props.strings?.onLabel ?? strings.cameraButton.onLabel;
+  const offLabel = props.strings?.offLabel ?? strings.cameraButton.offLabel;
+
+  const defaultRenderText = useCallback(
+    (props?: IButtonProps): JSX.Element => {
+      return (
+        <Label key={'videoLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
+          {props?.checked ? onLabel : offLabel}
+        </Label>
+      );
+    },
+    [onLabel, offLabel]
+  );
 
   const onToggleClick = useCallback(async () => {
     // Throttle click on camera, need to await onToggleCamera then allow another click
