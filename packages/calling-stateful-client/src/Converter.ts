@@ -67,9 +67,8 @@ export function convertSdkParticipantToDeclarativeParticipant(
 export function convertSdkCallToDeclarativeCall(call: SdkCall): CallState {
   const declarativeRemoteParticipants = {};
   call.remoteParticipants.forEach((participant: SdkRemoteParticipant) => {
-    declarativeRemoteParticipants[
-      toFlatCommunicationIdentifier(participant.identifier)
-    ] = convertSdkParticipantToDeclarativeParticipant(participant);
+    declarativeRemoteParticipants[toFlatCommunicationIdentifier(participant.identifier)] =
+      convertSdkParticipantToDeclarativeParticipant(participant);
   });
   return {
     id: call.id,

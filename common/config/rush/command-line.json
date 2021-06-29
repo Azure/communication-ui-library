@@ -59,6 +59,17 @@
       "summary": "Trigger incremental build with watch command.",
       "enableParallelism": false,
       "watchForChanges": true
+    },
+    {
+      "commandKind": "bulk",
+      "name": "prettier:check",
+      "summary": "Check prettier formatting in each project.",
+      "description": "Check prettier formatting in each project.",
+      "enableParallelism": true,
+      "allowWarningsInSuccessfulBuild": true,
+      "ignoreDependencyOrder": true,
+      "incremental": false,
+      "safeForSimultaneousRushProcesses": true
     }
   ],
   "parameters": []
