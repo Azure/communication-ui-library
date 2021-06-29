@@ -8,8 +8,8 @@ import React from 'react';
 import { COMPOSITE_FOLDER_PREFIX } from '../constants';
 
 const containerText = require('!!raw-loader!./snippets/Container.snippet.tsx').default;
-const customDataModelExampleContainerText = require('!!raw-loader!./snippets/CustomDataModelExampleContainer.snippet.tsx')
-  .default;
+const customDataModelExampleContainerText =
+  require('!!raw-loader!./snippets/CustomDataModelExampleContainer.snippet.tsx').default;
 const customBehaviorExampleText = require('!!raw-loader!./snippets/CustomizeBehavior.snippet.tsx').default;
 const serverText = require('!!raw-loader!./snippets/Server.snippet.tsx').default;
 

@@ -166,26 +166,24 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     }
 
     // Else return Remote Stream Video Tiles
-    return sortedRemoteParticipants.map(
-      (participant): JSX.Element => {
-        const remoteVideoStream = participant.videoStream;
-        return (
-          <RemoteVideoTile
-            key={participant.userId}
-            userId={participant.userId}
-            onCreateRemoteStreamView={onCreateRemoteStreamView}
-            onDisposeRemoteStreamView={onDisposeRemoteStreamView}
-            isAvailable={remoteVideoStream?.isAvailable}
-            isMuted={participant.isMuted}
-            renderElement={remoteVideoStream?.renderElement}
-            displayName={participant.displayName}
-            remoteVideoViewOption={remoteVideoViewOption}
-            onRenderAvatar={onRenderAvatar}
-            showMuteIndicator={showMuteIndicator}
-          />
-        );
-      }
-    );
+    return sortedRemoteParticipants.map((participant): JSX.Element => {
+      const remoteVideoStream = participant.videoStream;
+      return (
+        <RemoteVideoTile
+          key={participant.userId}
+          userId={participant.userId}
+          onCreateRemoteStreamView={onCreateRemoteStreamView}
+          onDisposeRemoteStreamView={onDisposeRemoteStreamView}
+          isAvailable={remoteVideoStream?.isAvailable}
+          isMuted={participant.isMuted}
+          renderElement={remoteVideoStream?.renderElement}
+          displayName={participant.displayName}
+          remoteVideoViewOption={remoteVideoViewOption}
+          onRenderAvatar={onRenderAvatar}
+          showMuteIndicator={showMuteIndicator}
+        />
+      );
+    });
   }, [
     sortedRemoteParticipants,
     onRenderRemoteVideoTile,

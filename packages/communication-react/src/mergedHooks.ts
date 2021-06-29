@@ -76,5 +76,5 @@ export const usePropsFor = <Component extends (props: any) => JSX.Element>(
     return { ...callProps, ...callingHandlers } as any;
   }
 
-  throw 'Can\'t find corresponding selector for this component. Please check the supported components from Azure Communication UI Feature Component List.';
+  throw "Can't find corresponding selector for this component. Please check the supported components from Azure Communication UI Feature Component List.";
 };

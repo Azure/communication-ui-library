@@ -18,8 +18,8 @@
     "snapshot:update": "npm run test -- --update-snapshot",
     "api-extractor": "tsc && api-extractor run --local",
     "generate-doc": "api-documenter markdown -i temp -o docGen",
-    "prettier": "prettier --write --config ../../.prettierrc \"**/*.js\" \"**/*.ts\"",
-    "prettier:check": "prettier --check --config ../../.prettierrc \"**/*.js\" \"**/*.ts\"",
+    "prettier": "prettier --no-error-on-unmatched-pattern --write --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
+    "prettier:check": "prettier --no-error-on-unmatched-pattern --check --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "lint": "eslint \"*/**/*.{ts,tsx}\"",
     "lint:fix": "npm run lint -- --fix",
     "lint:quiet": "npm run lint -- --quiet"
@@ -42,7 +42,7 @@
     "react-dom": ">=16.8.0 <18.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.7",
+    "@babel/core": "7.13.10",
     "@babel/preset-env": "7.13.10",
     "@mdx-js/react": "^1.6.22",
     "@microsoft/api-documenter": "~7.12.11",
@@ -50,7 +50,7 @@
     "@rollup/plugin-json": "~4.1.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react-hooks": "^3.4.2",
-    "@types/jest": "^26.0.20",
+    "@types/jest": "~26.0.22",
     "@types/json-stringify-safe": "^5.0.0",
     "@types/node": "^14.14.10",
     "@types/react-aria-live": "^2.0.0",
@@ -83,7 +83,7 @@
     "json-stringify-safe": "^5.0.1",
     "nan": "^2.14.1",
     "node-forge": "0.10.0",
-    "prettier": "2.0.5",
+    "prettier": "2.3.1",
     "pretty-quick": "^3.1.0",
     "react-dom": "16.13.1",
     "react-is": "~17.0.1",

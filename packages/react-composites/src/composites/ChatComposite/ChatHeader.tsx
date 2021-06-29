@@ -28,9 +28,6 @@ export const getTopicName = (state: ChatClientState, props: ChatBaseSelectorProp
   return state.threads[props.threadId]?.properties?.topic || '';
 };
 
-export const getHeaderProps = reselect.createSelector(
-  [getTopicName],
-  (topic): HeaderProps => {
-    return { topic: topic };
-  }
-);
+export const getHeaderProps = reselect.createSelector([getTopicName], (topic): HeaderProps => {
+  return { topic: topic };
+});
