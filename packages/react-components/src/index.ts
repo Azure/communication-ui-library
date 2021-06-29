@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 export * from './components';
+export * from './localization';
 export * from './theming';
 
 export type {
