@@ -255,9 +255,8 @@ describe('stateful chatThreadClient tees errors to state', () => {
 // Creates a mock stateful chat client that returns the given thread client for all thread IDs.
 const createMockChatClientWithChatThreadClient = (chatThreadClient: ChatThreadClient): StatefulChatClient => {
   const client = createMockChatClient();
-  const context = new ChatContext();
   client.getChatThreadClient = () => {
-    return chatThreadClientDeclaratify(chatThreadClient, context);
+    return chatThreadClient;
   };
   return createStatefulChatClientWithDeps(client, defaultClientArgs);
 };
