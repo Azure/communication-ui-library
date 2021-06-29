@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
+import React, { useCallback } from 'react';
 import { MoreHorizontal20Filled } from '@fluentui/react-icons';
 import {
   DefaultButton,
@@ -12,6 +12,7 @@ import {
   mergeStyles,
   ContextualMenuItemType
 } from '@fluentui/react';
+import { useLocale } from '../localization';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 
 /**
@@ -26,6 +27,40 @@ export interface OptionsDevice {
    * Device name
    */
   name: string;
+}
+
+/**
+ * Strings of OptionsButton that can be overridden
+ */
+export interface OptionsButtonStrings {
+  /**
+   * Label of button
+   */
+  label: string;
+  /**
+   * Title of camera menu
+   */
+  cameraMenuTitle: string;
+  /**
+   * Title of microphone menu
+   */
+  microphoneMenuTitle: string;
+  /**
+   * Title of speaker menu
+   */
+  speakerMenuTitle: string;
+  /**
+   * Tooltip of camera menu
+   */
+  cameraMenuTooltip: string;
+  /**
+   * Tooltip of microphone menu
+   */
+  microphoneMenuTooltip: string;
+  /**
+   * Tooltip of speaker menu
+   */
+  speakerMenuTooltip: string;
 }
 
 /**
@@ -73,6 +108,10 @@ export interface OptionsButtonProps extends IButtonProps {
    * Speaker when a speaker is selected
    */
   onSelectSpeaker?: (device: any) => Promise<void>;
+  /**
+   * Optional strings to override in component
+   */
+  strings?: Partial<OptionsButtonStrings>;
 }
 
 /**
@@ -81,7 +120,10 @@ export interface OptionsButtonProps extends IButtonProps {
  * @param props OptionsButtonProps
  * @returns MenuProps
  */
-const generateDefaultMenuProps = (props: OptionsButtonProps): { items: IContextualMenuItem[] } | undefined => {
+const generateDefaultMenuProps = (
+  props: OptionsButtonProps,
+  strings: OptionsButtonStrings
+): { items: IContextualMenuItem[] } | undefined => {
   const {
     microphones,
     speakers,
@@ -99,10 +141,10 @@ const generateDefaultMenuProps = (props: OptionsButtonProps): { items: IContextu
   if (cameras && selectedCamera && onSelectCamera) {
     defaultMenuProps.items.push({
       key: 'sectionCamera',
-      title: 'Choose Camera',
+      title: strings.cameraMenuTooltip,
       itemType: ContextualMenuItemType.Section,
       sectionProps: {
-        title: 'Camera',
+        title: strings.cameraMenuTitle,
         items: cameras.map((camera) => ({
           key: camera.id,
           text: camera.name,
@@ -123,10 +165,10 @@ const generateDefaultMenuProps = (props: OptionsButtonProps): { items: IContextu
   if (microphones && selectedMicrophone && onSelectMicrophone) {
     defaultMenuProps.items.push({
       key: 'sectionMicrophone',
-      title: 'Choose Microphone',
+      title: strings.microphoneMenuTooltip,
       itemType: ContextualMenuItemType.Section,
       sectionProps: {
-        title: 'Microphone',
+        title: strings.microphoneMenuTitle,
         items: microphones.map((micophone) => ({
           key: micophone.id,
           text: micophone.name,
@@ -147,10 +189,10 @@ const generateDefaultMenuProps = (props: OptionsButtonProps): { items: IContextu
   if (speakers && selectedSpeaker && onSelectSpeaker) {
     defaultMenuProps.items.push({
       key: 'sectionSpeaker',
-      title: 'Choose Speaker',
+      title: strings.speakerMenuTooltip,
       itemType: ContextualMenuItemType.Section,
       sectionProps: {
-        title: 'Speaker',
+        title: strings.speakerMenuTitle,
         items: speakers.map((speaker) => ({
           key: speaker.id,
           text: speaker.name,
@@ -185,7 +227,10 @@ const generateDefaultMenuProps = (props: OptionsButtonProps): { items: IContextu
 export const OptionsButton = (props: OptionsButtonProps): JSX.Element => {
   const { showLabel = false, styles, onRenderIcon, onRenderText } = props;
 
-  const defaultMenuProps = generateDefaultMenuProps(props);
+  const localeStrings = useLocale().strings.optionsButton;
+  const strings = { ...localeStrings, ...props.strings };
+
+  const defaultMenuProps = generateDefaultMenuProps(props, strings);
 
   const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
 
@@ -193,13 +238,16 @@ export const OptionsButton = (props: OptionsButtonProps): JSX.Element => {
     return <MoreHorizontal20Filled primaryFill="currentColor" key={'optionsIconKey'} />;
   };
 
-  const defaultRenderText = (props?: IButtonProps): JSX.Element => {
-    return (
-      <Label key={'optionsLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
-        {'Options'}
-      </Label>
-    );
-  };
+  const defaultRenderText = useCallback(
+    (props?: IButtonProps): JSX.Element => {
+      return (
+        <Label key={'optionsLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
+          {strings.label}
+        </Label>
+      );
+    },
+    [strings.label]
+  );
 
   return (
     <DefaultButton

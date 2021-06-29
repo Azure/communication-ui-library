@@ -87,7 +87,10 @@ export interface ComponentStrings {
     endCallButton: EndCallButtonStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
+    optionsButton: OptionsButtonStrings;
     participantItem: ParticipantItemStrings;
+    participantsButton: ParticipantsButtonStrings;
+    screenShareButton: ScreenShareButtonStrings;
     typingIndicator: TypingIndicatorStrings;
 }
 
@@ -301,6 +304,18 @@ export interface OptionsButtonProps extends IButtonProps {
     selectedSpeaker?: OptionsDevice;
     showLabel?: boolean;
     speakers?: OptionsDevice[];
+    strings?: Partial<OptionsButtonStrings>;
+}
+
+// @public
+export interface OptionsButtonStrings {
+    cameraMenuTitle: string;
+    cameraMenuTooltip: string;
+    label: string;
+    microphoneMenuTitle: string;
+    microphoneMenuTooltip: string;
+    speakerMenuTitle: string;
+    speakerMenuTooltip: string;
 }
 
 // @public
@@ -360,7 +375,17 @@ export interface ParticipantsButtonProps extends IButtonProps {
     onMuteAll?: () => void;
     participantListProps: ParticipantListProps;
     showLabel?: boolean;
+    strings?: Partial<ParticipantsButtonStrings>;
     styles?: ParticipantsButtonStylesProps;
+}
+
+// @public
+export interface ParticipantsButtonStrings {
+    copyInviteLinkButtonLabel: string;
+    label: string;
+    menuHeader: string;
+    muteAllButtonLabel: string;
+    participantsListButtonLabel: string;
 }
 
 // @public
@@ -382,6 +407,13 @@ export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
 export interface ScreenShareButtonProps extends IButtonProps {
     onToggleScreenShare?: () => Promise<void>;
     showLabel?: boolean;
+    strings?: Partial<ScreenShareButtonStrings>;
+}
+
+// @public
+export interface ScreenShareButtonStrings {
+    offLabel: string;
+    onLabel: string;
 }
 
 // @public

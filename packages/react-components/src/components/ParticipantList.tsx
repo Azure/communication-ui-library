@@ -37,7 +37,7 @@ const onRenderParticipantsDefault = (
   onParticipantRemove?: (userId: string) => void,
   onRenderAvatar?: (remoteParticipant: CommunicationParticipant) => JSX.Element | null
 ): (JSX.Element | null)[] => {
-  return participants.map((participant: CommunicationParticipant, index: number) => {
+  return participants.map((participant: CommunicationParticipant) => {
     // Try to consider CommunicationParticipant as CallParticipant
     const callingParticipant = participant as CallParticipant;
 
