@@ -2,11 +2,12 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { mount, shallow, ShallowWrapper } from 'enzyme';
-import { LocalizationProvider, Locale } from '../../localization/LocalizationProvider';
+import { mount, ReactWrapper, shallow, ShallowWrapper } from 'enzyme';
+import { LocalizationProvider, Locale, ComponentStrings } from '../../localization/LocalizationProvider';
 import en_US from '../../localization/translated/en-US.json';
+import { PartialDeep } from 'type-fest';
 
-export const mountWithLocalization = (node: React.ReactElement, locale: Locale): ShallowWrapper => {
+export const mountWithLocalization = (node: React.ReactElement, locale: Locale): ReactWrapper => {
   return mount(node, {
     wrappingComponent: LocalizationProvider,
     wrappingComponentProps: { locale }
@@ -20,6 +21,10 @@ export const shallowWithLocalization = (node: React.ReactElement, locale: Locale
   });
 };
 
-export const createTestLocale = (testStrings: any): Locale => {
-  return { strings: { ...en_US, ...testStrings } };
+export const createTestLocale = (testStrings: PartialDeep<ComponentStrings>): Locale => {
+  const strings: ComponentStrings = en_US;
+  Object.keys(testStrings).forEach((key: string) => {
+    strings[key] = { ...strings[key], ...testStrings[key] };
+  });
+  return { strings };
 };
