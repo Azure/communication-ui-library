@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { ChatClientState, ChatThreadClientState } from 'chat-stateful-client';
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { ChatState } from '../adapter/ChatAdapter';
