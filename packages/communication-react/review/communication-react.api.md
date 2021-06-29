@@ -1014,9 +1014,9 @@ export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
 export interface OptionsButtonProps extends IButtonProps {
     cameras?: OptionsDevice[];
     microphones?: OptionsDevice[];
-    onSelectCamera?: (device: any) => Promise<void>;
-    onSelectMicrophone?: (device: any) => Promise<void>;
-    onSelectSpeaker?: (device: any) => Promise<void>;
+    onSelectCamera?: (device: OptionsDevice) => Promise<void>;
+    onSelectMicrophone?: (device: OptionsDevice) => Promise<void>;
+    onSelectSpeaker?: (device: OptionsDevice) => Promise<void>;
     selectedCamera?: OptionsDevice;
     selectedMicrophone?: OptionsDevice;
     selectedSpeaker?: OptionsDevice;
