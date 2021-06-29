@@ -33,16 +33,16 @@ export const DisplayNameField = (props: DisplayNameFieldProps): JSX.Element => {
     event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
     newValue?: string
   ): void => {
-    if (newValue !== undefined) {
-      setName(newValue);
-      if (setEmptyWarning && !newValue) {
-        setEmptyWarning(true);
-      } else if (setNameLengthExceedLimit && newValue.length > MAXIMUM_LENGTH_OF_NAME) {
-        setNameLengthExceedLimit(true);
-      } else {
-        setEmptyWarning && setEmptyWarning(false);
-        setNameLengthExceedLimit && setNameLengthExceedLimit(false);
-      }
+    if (newValue === undefined) return;
+
+    setName(newValue);
+    if (setEmptyWarning && !newValue) {
+      setEmptyWarning(true);
+    } else if (setNameLengthExceedLimit && newValue.length > MAXIMUM_LENGTH_OF_NAME) {
+      setNameLengthExceedLimit(true);
+    } else {
+      setEmptyWarning && setEmptyWarning(false);
+      setNameLengthExceedLimit && setNameLengthExceedLimit(false);
     }
   };
 

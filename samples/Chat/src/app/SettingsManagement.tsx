@@ -56,10 +56,10 @@ export const SettingsManagementComponent = (props: SettingsManagementProps): JSX
     event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
     newValue?: string
   ): void => {
-    if (newValue !== undefined) {
-      setEditedTopicName(newValue);
-      validateTopic(newValue);
-    }
+    if (newValue === undefined) return;
+
+    setEditedTopicName(newValue);
+    validateTopic(newValue);
   };
 
   const onSubmitTopicName = async (): Promise<void> => {
