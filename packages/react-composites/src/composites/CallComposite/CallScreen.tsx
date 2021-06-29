@@ -37,15 +37,26 @@ export interface CallScreenProps {
   callInvitationURL?: string;
   screenWidth: number;
   showParticipants?: boolean;
+  showPane?: boolean;
   endCallHandler(): void;
   callErrorHandler(customPage?: CallCompositePage): void;
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+  onRenderPane?: () => JSX.Element;
 }
 
 const spinnerLabel = 'Initializing call client...';
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
-  const { callInvitationURL, screenWidth, showParticipants, endCallHandler, callErrorHandler, onRenderAvatar } = props;
+  const {
+    callInvitationURL,
+    screenWidth,
+    showParticipants,
+    showPane,
+    endCallHandler,
+    callErrorHandler,
+    onRenderAvatar,
+    onRenderPane
+  } = props;
 
   const [joinedCall, setJoinedCall] = useState<boolean>(false);
 
@@ -118,7 +129,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   return (
     <>
       {isInCall(callStatus ?? 'None') ? (
-        <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow>
+        <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles}>
           <Stack.Item style={{ width: '100%' }}>
             <ComplianceBanner {...complianceBannerProps} />
           </Stack.Item>
@@ -131,19 +142,22 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
           <Stack.Item styles={subContainerStyles} grow>
             {callStatus === 'Connected' && (
               <>
-                <Stack styles={containerStyles} grow>
-                  <Stack.Item grow styles={activeContainerClassName}>
+                <Stack styles={containerStyles} horizontal={true}>
+                  <Stack.Item grow={3} styles={activeContainerClassName} style={{ textAlign: 'left', width: '70%' }}>
                     <MediaGallery {...mediaGalleryProps} {...mediaGalleryHandlers} onRenderAvatar={onRenderAvatar} />
                   </Stack.Item>
+                  {showPane && onRenderPane && (
+                    <Stack.Item style={{ textAlign: 'right', width: '30%', borderLeft: '1px solid #333' }} grow={1}>
+                      {onRenderPane()}
+                    </Stack.Item>
+                  )}
                 </Stack>
-                {isScreenShareOn ? (
+                {isScreenShareOn && (
                   <ScreenSharePopup
                     onStopScreenShare={() => {
                       return adapter.stopScreenShare();
                     }}
                   />
-                ) : (
-                  <></>
                 )}
               </>
             )}

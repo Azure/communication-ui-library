@@ -22,16 +22,26 @@ export type CallCompositeProps = {
    */
   fluentTheme?: PartialTheme | Theme;
   callInvitationURL?: string;
+  showCallScreenPane?: boolean;
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+  onRenderPane?: () => JSX.Element;
 };
 
 type MainScreenProps = {
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+  onRenderPane?: () => JSX.Element;
+  showPane: boolean;
   screenWidth: number;
   callInvitationURL?: string;
 };
 
-const MainScreen = ({ screenWidth, callInvitationURL, onRenderAvatar }: MainScreenProps): JSX.Element => {
+const MainScreen = ({
+  screenWidth,
+  callInvitationURL,
+  onRenderAvatar,
+  onRenderPane,
+  showPane
+}: MainScreenProps): JSX.Element => {
   const page = useSelector(getPage);
   const adapter = useAdapter();
   switch (page) {
@@ -65,6 +75,8 @@ const MainScreen = ({ screenWidth, callInvitationURL, onRenderAvatar }: MainScre
             customPage ? adapter.setPage(customPage) : adapter.setPage('error');
           }}
           onRenderAvatar={onRenderAvatar}
+          onRenderPane={onRenderPane}
+          showPane={showPane}
           screenWidth={screenWidth}
           showParticipants={true}
           callInvitationURL={callInvitationURL}
@@ -87,7 +99,7 @@ export const Call = (props: CallCompositeProps): JSX.Element => {
     return () => window.removeEventListener('resize', setWindowWidth);
   }, []);
 
-  const { adapter, callInvitationURL, fluentTheme } = props;
+  const { adapter, callInvitationURL, fluentTheme, showCallScreenPane, onRenderPane } = props;
 
   useEffect(() => {
     (async () => {
@@ -105,6 +117,8 @@ export const Call = (props: CallCompositeProps): JSX.Element => {
           <MainScreen
             screenWidth={screenWidth}
             onRenderAvatar={props.onRenderAvatar}
+            onRenderPane={onRenderPane}
+            showPane={showCallScreenPane ?? false}
             callInvitationURL={callInvitationURL}
           />
         </Stack>

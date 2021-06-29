@@ -19,6 +19,7 @@ export const createUserCredentials = async (resourceConnectionString: string, di
   return {
     userId: user,
     token,
+    displayName,
     endpointUrl,
     locator: createGUID(), // calling GUID
     threadId // chat GUID

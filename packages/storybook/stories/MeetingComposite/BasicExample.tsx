@@ -20,6 +20,7 @@ export const BasicExample: () => JSX.Element = () => {
     const fetchToken = async (): Promise<void> => {
       if (knobs.current.connectionString && knobs.current.displayName) {
         const newProps = await createUserCredentials(knobs.current.connectionString, knobs.current.displayName);
+        console.log(newProps);
         setMeetingProps(newProps);
       }
     };

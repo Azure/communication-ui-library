@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { PartialTheme, Theme, Stack } from '@fluentui/react';
+import { PartialTheme, Theme } from '@fluentui/react';
 import { CallComposite, CallAdapter } from '../CallComposite';
 import { ChatComposite, ChatAdapter } from '../ChatComposite';
 
@@ -17,13 +17,29 @@ export type MeetingCompositeProps = {
   fluentTheme?: PartialTheme | Theme;
 };
 
+let cachedChatComposite: null | JSX.Element = null;
+const getChatComposite = (chatAdapter: ChatAdapter, fluentTheme?: PartialTheme | Theme): JSX.Element => {
+  if (!cachedChatComposite) {
+    cachedChatComposite = (
+      <ChatComposite
+        adapter={chatAdapter}
+        fluentTheme={fluentTheme}
+        options={{ hideParticipants: true, hideGroupTopic: true }}
+      />
+    );
+  }
+  return cachedChatComposite;
+};
+
 export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
   const { callAdapter, chatAdapter, fluentTheme } = props;
 
   return (
-    <Stack>
-      <CallComposite adapter={callAdapter} fluentTheme={fluentTheme} />
-      <ChatComposite adapter={chatAdapter} fluentTheme={fluentTheme} />
-    </Stack>
+    <CallComposite
+      adapter={callAdapter}
+      fluentTheme={fluentTheme}
+      showCallScreenPane={true}
+      onRenderPane={() => getChatComposite(chatAdapter, fluentTheme)}
+    />
   );
 };
