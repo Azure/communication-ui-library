@@ -52,7 +52,7 @@ beforeEach(() => {
   mockEventHandlersRef.value = {};
 });
 
-function createMockChatClient(): ChatClient {
+export function createMockChatClient(): ChatClient {
   const mockChatClient: ChatClient = {} as any;
 
   mockChatClient.createChatThread = async (request) => {
@@ -110,7 +110,7 @@ const createStatefulChatClientMock = (): StatefulChatClientWithEventTrigger => {
   return client as StatefulChatClientWithEventTrigger;
 };
 
-const defaultClientArgs: StatefulChatClientArgs = {
+export const defaultClientArgs: StatefulChatClientArgs = {
   displayName: '',
   userId: { kind: 'communicationUser', communicationUserId: 'userId1' },
   endpoint: '',
@@ -496,7 +496,7 @@ describe('complex error handling for startRealtimeNotifications', () => {
   });
 });
 
-class StateChangeListener {
+export class StateChangeListener {
   state: ChatClientState;
   onChangeCalledCount = 0;
 
