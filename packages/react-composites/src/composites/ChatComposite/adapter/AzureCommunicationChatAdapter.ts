@@ -106,7 +106,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.unsubscribeAllEvents();
   }
 
-  fetchInitialData = async (): Promise<void> => {
+  public async fetchInitialData(): Promise<void> {
     try {
       await this.chatThreadClient.getProperties();
     } catch (e) {
@@ -122,45 +122,45 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     } catch (e) {
       console.log(e);
     }
-  };
+  }
 
-  public getState = (): ChatState => {
+  public getState(): ChatState {
     return this.context.getState();
-  };
+  }
 
-  public onStateChange = (handler: (state: ChatState) => void): void => {
+  public onStateChange(handler: (state: ChatState) => void): void {
     this.context.onStateChange(handler);
-  };
+  }
 
-  public offStateChange = (handler: (state: ChatState) => void): void => {
+  public offStateChange(handler: (state: ChatState) => void): void {
     this.context.offStateChange(handler);
-  };
+  }
 
-  sendMessage = async (content: string): Promise<void> => {
+  public async sendMessage(content: string): Promise<void> {
     await this.handlers.onSendMessage(content);
-  };
+  }
 
-  sendReadReceipt = async (chatMessageId: string): Promise<void> => {
+  public async sendReadReceipt(chatMessageId: string): Promise<void> {
     await this.handlers.onMessageSeen(chatMessageId);
-  };
+  }
 
-  sendTypingIndicator = async (): Promise<void> => {
+  public async sendTypingIndicator(): Promise<void> {
     await this.handlers.onTyping();
-  };
+  }
 
-  removeParticipant = async (userId: string): Promise<void> => {
+  public async removeParticipant(userId: string): Promise<void> {
     await this.handlers.onParticipantRemove(userId);
-  };
+  }
 
-  setTopic = async (topicName: string): Promise<void> => {
+  public async setTopic(topicName: string): Promise<void> {
     await this.handlers.updateThreadTopicName(topicName);
-  };
+  }
 
-  loadPreviousChatMessages = async (messagesToLoad: number): Promise<boolean> => {
+  public async loadPreviousChatMessages(messagesToLoad: number): Promise<boolean> {
     return await this.handlers.onLoadPreviousChatMessages(messagesToLoad);
-  };
+  }
 
-  messageReceivedListener = (event: ChatMessageReceivedEvent): void => {
+  public messageReceivedListener(event: ChatMessageReceivedEvent): void {
     const message = convertEventToChatMessage(event);
     this.emitter.emit('messageReceived', { message });
 
@@ -168,44 +168,44 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     if (message?.sender && toFlatCommunicationIdentifier(message.sender) === currentUserId) {
       this.emitter.emit('messageSent', { message });
     }
-  };
+  }
 
-  messageReadListener = ({ chatMessageId, recipient }: ReadReceiptReceivedEvent): void => {
+  public messageReadListener({ chatMessageId, recipient }: ReadReceiptReceivedEvent): void {
     const message = this.getState().thread.chatMessages[chatMessageId];
     if (message) {
       this.emitter.emit('messageRead', { message, readBy: recipient });
     }
-  };
+  }
 
-  participantsAddedListener = ({ addedBy, participantsAdded }: ParticipantsAddedEvent): void => {
+  public participantsAddedListener({ addedBy, participantsAdded }: ParticipantsAddedEvent): void {
     this.emitter.emit('participantsAdded', { addedBy, participantsAdded });
-  };
+  }
 
-  participantsRemovedListener = ({ removedBy, participantsRemoved }: ParticipantsRemovedEvent): void => {
+  public participantsRemovedListener({ removedBy, participantsRemoved }: ParticipantsRemovedEvent): void {
     this.emitter.emit('participantsRemoved', { removedBy, participantsRemoved });
-  };
+  }
 
-  chatThreadPropertiesUpdatedListener = (event: ChatThreadPropertiesUpdatedEvent): void => {
+  public chatThreadPropertiesUpdatedListener(event: ChatThreadPropertiesUpdatedEvent): void {
     this.emitter.emit('topicChanged', { topic: event.properties.topic });
-  };
+  }
 
-  subscribeAllEvents = (): void => {
+  public subscribeAllEvents(): void {
     this.chatClient.on('chatThreadPropertiesUpdated', this.chatThreadPropertiesUpdatedListener);
     this.chatClient.on('participantsAdded', this.participantsAddedListener);
     this.chatClient.on('participantsRemoved', this.participantsRemovedListener);
     this.chatClient.on('chatMessageReceived', this.messageReceivedListener);
     this.chatClient.on('readReceiptReceived', this.messageReadListener);
     this.chatClient.on('participantsRemoved', this.participantsRemovedListener);
-  };
+  }
 
-  unsubscribeAllEvents = (): void => {
+  public unsubscribeAllEvents(): void {
     this.chatClient.off('chatThreadPropertiesUpdated', this.chatThreadPropertiesUpdatedListener);
     this.chatClient.off('participantsAdded', this.participantsAddedListener);
     this.chatClient.off('participantsRemoved', this.participantsRemovedListener);
     this.chatClient.off('chatMessageReceived', this.messageReceivedListener);
     this.chatClient.off('readReceiptReceived', this.messageReadListener);
     this.chatClient.off('participantsRemoved', this.participantsRemovedListener);
-  };
+  }
 
   on(event: 'messageReceived', listener: MessageReceivedListener): void;
   on(event: 'messageSent', listener: MessageReceivedListener): void;
