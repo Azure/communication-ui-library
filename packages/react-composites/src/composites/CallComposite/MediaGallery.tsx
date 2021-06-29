@@ -8,6 +8,8 @@ import { usePropsFor } from './hooks/usePropsFor';
 import { ScreenShare } from './ScreenShare';
 import { getIsPreviewCameraOn } from './selectors/baseSelectors';
 
+const maxRemoteVideoStreams = 1;
+
 const VideoGalleryStyles = {
   root: {
     height: 'auto'
@@ -52,7 +54,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         {...videoGalleryProps}
         localVideoViewOption={localVideoViewOption}
         remoteVideoViewOption={remoteVideoViewOption}
-        maxRemoteVideoStreams={1}
+        maxRemoteVideoStreams={maxRemoteVideoStreams}
         styles={VideoGalleryStyles}
         layout="floatingLocalVideo"
         onRenderAvatar={props.onRenderAvatar}
