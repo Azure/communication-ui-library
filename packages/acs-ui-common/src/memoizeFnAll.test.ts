@@ -3,9 +3,7 @@
 
 import { memoizeFnAll } from './memoizeFnAll';
 
-function* genArray(
-  n: number
-): Generator<
+function* genArray(n: number): Generator<
   {
     value: number;
   },

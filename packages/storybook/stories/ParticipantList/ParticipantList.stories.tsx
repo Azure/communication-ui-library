@@ -16,10 +16,10 @@ import { ParticipantListWithExcludedUserExample } from './snippets/WithExcludedU
 
 const DefaultCallParticipantListExampleText = require('!!raw-loader!./snippets/DefaultCall.snippet.tsx').default;
 const DefaultChatParticipantListExampleText = require('!!raw-loader!./snippets/DefaultChat.snippet.tsx').default;
-const InteractiveCallParticipantListExampleText = require('!!raw-loader!./snippets/InteractiveCall.snippet.tsx')
-  .default;
-const ParticipantListWithExcludedUserExampleText = require('!!raw-loader!./snippets/WithExcludedUser.snippet.tsx')
-  .default;
+const InteractiveCallParticipantListExampleText =
+  require('!!raw-loader!./snippets/InteractiveCall.snippet.tsx').default;
+const ParticipantListWithExcludedUserExampleText =
+  require('!!raw-loader!./snippets/WithExcludedUser.snippet.tsx').default;
 
 const getDocs: () => JSX.Element = () => {
   return (

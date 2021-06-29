@@ -8,7 +8,9 @@
     "start": "concurrently \"cd ../Server && rushx start:dev\" \"rushx start:app\"",
     "start:app": "http-server -p 3000",
     "lint": "echo skip",
-    "lint:fix": "echo skip"
+    "lint:fix": "echo skip",
+		"prettier": "",
+		"prettier:check": ""
   },
   "license": "MIT",
   "dependencies": {
