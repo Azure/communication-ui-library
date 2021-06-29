@@ -10,7 +10,6 @@ app.use(express.static(__dirname + '/dist'));
 export const startServer = (): Promise<void> =>
   new Promise((resolve, reject) => {
     server = app.listen(3000, () => {
-      console.log('App listening on 3000');
       resolve();
     });
   });
