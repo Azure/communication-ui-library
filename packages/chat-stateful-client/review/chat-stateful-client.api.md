@@ -77,9 +77,6 @@ export type ChatThreadProperties = {
 // @public
 export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions | undefined) => StatefulChatClient;
 
-// @public
-export const isChatErrorTarget: (target: string) => boolean;
-
 // @public (undocumented)
 export interface StatefulChatClient extends ChatClient {
     // (undocumented)

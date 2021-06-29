@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatClientState, ChatErrors, ChatThreadClientState, isChatErrorTarget } from 'chat-stateful-client';
+import { ChatClient, ChatThreadClient } from '@azure/communication-chat';
+import { ChatClientState, ChatErrors, ChatThreadClientState } from 'chat-stateful-client';
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { ChatAdapterErrors, ChatState } from '../adapter/ChatAdapter';
 import { useAdapter } from '../adapter/ChatAdapterProvider';
@@ -98,3 +99,26 @@ const adaptCompositeState = (compositeState: ChatState): ChatClientState => {
     memoizeErrors(compositeState.latestErrors)
   );
 };
+
+// Determine if a string is a valid error target for the chat stateful client.
+//
+// This effectively checks at runtime if a string belongs to the type {@Link chat-stateful-client/ChatErrorTargets}.
+//
+// Warning: Must be kept in-sync with the definition of {@Link chat-stateful-client/ChatErrorTargets}.
+const isChatErrorTarget = (target: string): boolean => {
+  for (const targetPrefix in ChatErrorTargetPrefixes) {
+    const [prefix, obj] = targetPrefix;
+    if (target.startsWith(prefix)) {
+      target = target.substring(prefix.length);
+      if (obj[target] !== undefined && typeof obj[target] === 'function') {
+        return true;
+      }
+    }
+  }
+  return false;
+};
+
+const ChatErrorTargetPrefixes = [
+  ['ChatClient.', ChatClient],
+  ['ChatThreadClient.', ChatThreadClient]
+];

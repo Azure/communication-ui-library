@@ -15,4 +15,3 @@ export type {
   ChatMethodName,
   ChatObjectMethodNames
 } from './ChatClientState';
-export { isChatErrorTarget } from './ChatClientState';

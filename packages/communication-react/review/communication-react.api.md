@@ -865,9 +865,6 @@ export interface IncomingCallState {
     startTime: Date;
 }
 
-// @public
-export const isChatErrorTarget: (target: string) => boolean;
-
 // @public (undocumented)
 export type IsMuteChangedListener = (event: {
     identifier: CallIdentifierKinds;
