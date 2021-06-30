@@ -61,7 +61,7 @@ export type ChatThreadProperties = {
  * Additionally, errors are automatically cleared when:
  * - The state is cleared.
  * - Subsequent calls to related API methods succeed.
- *   See documentation of individual stateful client methods for details on when errors may be automatically cleared.
+ * See documentation of individual stateful client methods for details on when errors may be automatically cleared.
  */
 export type ChatErrors = {
   [target in ChatErrorTargets]: Error;
