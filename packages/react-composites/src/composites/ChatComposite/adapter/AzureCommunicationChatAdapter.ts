@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { createStatefulChatClient, ChatClientState, StatefulChatClient } from 'chat-stateful-client';
+import { createStatefulChatClient, ChatClientState, ChatError, StatefulChatClient } from 'chat-stateful-client';
 import { DefaultChatHandlers, createDefaultChatHandlers } from 'chat-component-bindings';
 import { ChatMessage, ChatThreadClient } from '@azure/communication-chat';
 
@@ -20,6 +20,7 @@ import {
   ChatAdapter,
   ChatEvent,
   ChatState,
+  ChatErrorListener,
   MessageReadListener,
   MessageReceivedListener,
   ParticipantsAddedListener,
@@ -40,7 +41,8 @@ class ChatContext {
     this.state = {
       userId: toFlatCommunicationIdentifier(clientState.userId),
       displayName: clientState.displayName,
-      thread
+      thread,
+      latestErrors: clientState.latestErrors
     };
   }
 
@@ -71,7 +73,8 @@ class ChatContext {
     this.setState({
       userId: toFlatCommunicationIdentifier(clientState.userId),
       displayName: clientState.displayName,
-      thread
+      thread,
+      latestErrors: clientState.latestErrors
     });
   }
 }
@@ -153,7 +156,9 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   async setTopic(topicName: string): Promise<void> {
-    await this.handlers.updateThreadTopicName(topicName);
+    await this.asyncTeeErrorToEventEmitter(async () => {
+      await this.handlers.updateThreadTopicName(topicName);
+    });
   }
 
   async loadPreviousChatMessages(messagesToLoad: number): Promise<boolean> {
@@ -213,7 +218,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   on(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
   on(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
   on(event: 'topicChanged', listener: TopicChangedListener): void;
-  on(event: 'error', listener: (e: Error) => void): void;
+  on(event: 'error', listener: ChatErrorListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   on(event: ChatEvent, listener: (e: any) => void): void {
@@ -226,11 +231,22 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   off(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
   off(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
   off(event: 'topicChanged', listener: TopicChangedListener): void;
-  off(event: 'error', listener: (e: Error) => void): void;
+  off(event: 'error', listener: ChatErrorListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   off(event: ChatEvent, listener: (e: any) => void): void {
     this.emitter.off(event, listener);
+  }
+
+  private async asyncTeeErrorToEventEmitter<T>(f: () => Promise<T>): Promise<T> {
+    try {
+      return await f();
+    } catch (error) {
+      // Stateful chat client wraps all relevant errors as `ChatError`.
+      const e = error as ChatError;
+      this.emitter.emit('error', { operation: e.target, error: e.inner });
+      throw error;
+    }
   }
 }
 

@@ -35,6 +35,7 @@
     "@azure/communication-common": "1.0.0",
     "@azure/communication-signaling": "1.0.0-beta.5",
     "@azure/core-http": "1.2.4",
+    "@azure/core-paging": "~1.1.3",
     "@fluentui/react": "~8.17.2",
     "@fluentui/react-icons": "~1.1.134",
     "@uifabric/react-hooks": "~7.13.11",
