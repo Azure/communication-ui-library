@@ -13,6 +13,7 @@ import {
 } from './styles/SendBox.styles';
 import { BaseCustomStylesProps } from '../types';
 import { isDarkThemed } from '../theming/themeUtils';
+import { COMPONENT_UI_IDS } from './identifiers';
 
 const EMPTY_MESSAGE_REGEX = /^\s*$/;
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
@@ -151,6 +152,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     <Stack className={mergedRootStyle}>
       <div style={{ position: 'relative', padding: '0.1875rem' }}>
         <TextField
+          data-ui-id={COMPONENT_UI_IDS.sendboxTextfield}
           multiline
           autoAdjustHeight
           multiple={false}

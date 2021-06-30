@@ -7,6 +7,7 @@ import * as reselect from 'reselect';
 import { ChatClientState } from 'chat-stateful-client';
 import { ChatBaseSelectorProps } from 'chat-component-bindings';
 import { chatHeaderContainerStyle, topicNameLabelStyle } from './styles/Chat.styles';
+import { CHAT_UI_IDS } from './identifiers';
 
 export type HeaderProps = {
   topic: string;
@@ -14,9 +15,11 @@ export type HeaderProps = {
 
 export const ChatHeader = (props: HeaderProps): JSX.Element => {
   return (
-    <Stack className={chatHeaderContainerStyle} horizontal>
+    <Stack data-ui-id={CHAT_UI_IDS.chatHeader} className={chatHeaderContainerStyle} horizontal>
       <Stack.Item align="center" style={{ minWidth: '12.5rem' }}>
-        <div className={topicNameLabelStyle}>{props.topic}</div>
+        <div data-ui-id={CHAT_UI_IDS.chatHeaderTopic} className={topicNameLabelStyle}>
+          {props.topic}
+        </div>
       </Stack.Item>
     </Stack>
   );

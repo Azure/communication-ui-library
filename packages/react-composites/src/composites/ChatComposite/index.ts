@@ -19,3 +19,5 @@ export type {
   ParticipantsRemovedListener,
   TopicChangedListener
 } from './adapter/ChatAdapter';
+
+export { CHAT_UI_IDS } from './identifiers';

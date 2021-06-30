@@ -8,10 +8,5 @@ const path = require('path');
 
 module.exports = {
   ...commonConfig,
-  roots: [
-    path.join(__dirname, 'src')
-    // Removing the `tests` dir from jest tests directories to prevent these tests
-    // from running with the command `npm test` | `rushx test`
-    // path.join(__dirname, 'tests')
-  ]
+  roots: [path.join(__dirname, 'src'), path.join(__dirname, 'tests')]
 };

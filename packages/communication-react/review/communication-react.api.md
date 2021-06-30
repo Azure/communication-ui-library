@@ -427,6 +427,14 @@ export interface CameraButtonStrings {
 }
 
 // @public (undocumented)
+export const CHAT_UI_IDS: {
+    chatHeader: string;
+    chatHeaderTopic: string;
+    chatScreen: string;
+    messageThread: string;
+};
+
+// @public (undocumented)
 export interface ChatAdapter {
     // (undocumented)
     dispose(): void;
@@ -630,6 +638,11 @@ export type CommonProperties<A, B> = {
 export type CommunicationParticipant = {
     userId: string;
     displayName?: string;
+};
+
+// @public (undocumented)
+export const COMPONENT_UI_IDS: {
+    sendboxTextfield: string;
 };
 
 // @public
