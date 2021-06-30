@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { CallAdapterState } from '../adapter/CallAdapter';
 import { useSelectorWithAdaptation } from './useAdaptedSelector';
 

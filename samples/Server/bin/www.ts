@@ -1,6 +1,5 @@
-/**
- * Module dependencies.
- */
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 import app from '../src/app';
 import http from 'http';
@@ -33,8 +32,7 @@ console.debug(`Express server started (http://localhost:${port}).`);
 /**
  * Normalize a port into a number, string, or false.
  */
-
-function normalizePort(val: string) {
+function normalizePort(val: string): number | string | false {
   const port = parseInt(val, 10);
 
   if (isNaN(port)) {
@@ -53,8 +51,7 @@ function normalizePort(val: string) {
 /**
  * Event listener for HTTP server "error" event.
  */
-
-function onError(error: { syscall: string; code: any }) {
+function onError(error: { syscall: string; code: string }): void {
   if (error.syscall !== 'listen') {
     throw error;
   }
@@ -79,8 +76,7 @@ function onError(error: { syscall: string; code: any }) {
 /**
  * Event listener for HTTP server "listening" event.
  */
-
-function onListening() {
+function onListening(): void {
   const addr = server.address();
   const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
   debug('Listening on ' + bind);

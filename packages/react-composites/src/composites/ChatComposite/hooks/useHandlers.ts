@@ -20,11 +20,11 @@ export const useHandlers = <PropsT>(
 
 const createCompositeHandlers = memoizeOne(
   (adapter: ChatAdapter): DefaultChatHandlers => ({
-    onSendMessage: adapter.sendMessage,
-    onLoadPreviousChatMessages: adapter.loadPreviousChatMessages,
-    onMessageSeen: adapter.sendReadReceipt,
-    onTyping: adapter.sendTypingIndicator,
-    onParticipantRemove: adapter.removeParticipant,
-    updateThreadTopicName: adapter.setTopic
+    onSendMessage: adapter.sendMessage.bind(adapter),
+    onLoadPreviousChatMessages: adapter.loadPreviousChatMessages.bind(adapter),
+    onMessageSeen: adapter.sendReadReceipt.bind(adapter),
+    onTyping: adapter.sendTypingIndicator.bind(adapter),
+    onParticipantRemove: adapter.removeParticipant.bind(adapter),
+    updateThreadTopicName: adapter.setTopic.bind(adapter)
   })
 );

@@ -10,9 +10,9 @@
     "test": "jest",
     "prettier": "prettier --no-error-on-unmatched-pattern --write --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "prettier:check": "prettier --no-error-on-unmatched-pattern --check --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
-    "lint": "eslint src src --ext .ts",
-    "lint:fix": "eslint src src --ext .ts --fix",
-    "lint:quiet": "eslint src src --ext .ts --quiet"
+    "lint": "eslint */**/*.{ts,tsx}",
+    "lint:fix": "eslint */**/*.{ts,tsx} --fix",
+    "lint:quiet": "eslint */**/*.{ts,tsx} --quiet"
   },
   "dependencies": {
     "@azure/communication-chat": "1.0.0",
@@ -33,7 +33,7 @@
     "@types/copy-webpack-plugin": "^6.4.0",
     "@types/express": "^4.17.8",
     "@types/http-errors": "^1.8.0",
-    "@types/jest": "^26.0.20",
+    "@types/jest": "~26.0.22",
     "@types/morgan": "^1.9.2",
     "@types/node": "^14.14.10",
     "@types/supertest": "^2.0.10",

@@ -8,3 +8,4 @@
 dist/dist-esm/mocks/
 **/*.test.*
 **/*.spec.*
+tests

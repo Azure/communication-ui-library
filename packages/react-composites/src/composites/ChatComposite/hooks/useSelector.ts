@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { ChatState } from '../adapter/ChatAdapter';
 import { useSelectorWithAdaptation } from './useAdaptedSelector';
 

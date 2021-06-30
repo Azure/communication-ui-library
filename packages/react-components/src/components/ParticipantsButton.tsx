@@ -167,6 +167,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     }
 
     return menuProps;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     participantListProps,
     participantListProps.participants,
