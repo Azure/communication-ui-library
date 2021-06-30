@@ -3,8 +3,6 @@
 
 import {
   AddChatParticipantsResult,
-  AddParticipantsOptions,
-  AddParticipantsRequest,
   ChatClient,
   ChatMessage,
   ChatMessageReadReceipt,
@@ -12,32 +10,14 @@ import {
   ChatThreadClient,
   ChatThreadItem,
   ChatThreadProperties,
-  CreateChatThreadOptions,
-  CreateChatThreadRequest,
   CreateChatThreadResult,
-  DeleteChatThreadOptions,
-  DeleteMessageOptions,
-  GetMessageOptions,
-  GetPropertiesOptions,
-  ListChatThreadsOptions,
-  ListMessagesOptions,
-  ListReadReceiptsOptions,
-  ListParticipantsOptions,
-  RemoveParticipantOptions,
-  SendChatMessageResult,
-  SendMessageOptions,
-  SendMessageRequest,
-  SendReadReceiptOptions,
-  SendReadReceiptRequest,
-  SendTypingNotificationOptions,
-  UpdateMessageOptions,
-  UpdateTopicOptions
+  SendChatMessageResult
 } from '@azure/communication-chat';
-import { CommunicationIdentifier } from '@azure/communication-common';
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 
 type PublicInterface<T> = { [K in keyof T]: T[K] };
 
+// A public interface compatible stub for ChatClient.
 export class StubChatClient implements PublicInterface<ChatClient> {
   private threadClient;
 
@@ -49,22 +29,19 @@ export class StubChatClient implements PublicInterface<ChatClient> {
     this.threadClient = threadClient;
   }
 
-  getChatThreadClient(threadId: string): ChatThreadClient {
+  getChatThreadClient(): ChatThreadClient {
     if (this.threadClient === undefined) {
       throw Error('stub method not implemented');
     }
     return this.threadClient;
   }
-  createChatThread(
-    request: CreateChatThreadRequest,
-    options?: CreateChatThreadOptions
-  ): Promise<CreateChatThreadResult> {
+  createChatThread(): Promise<CreateChatThreadResult> {
     return Promise.resolve({});
   }
-  listChatThreads(options?: ListChatThreadsOptions): PagedAsyncIterableIterator<ChatThreadItem> {
+  listChatThreads(): PagedAsyncIterableIterator<ChatThreadItem> {
     return pagedAsyncIterator([]);
   }
-  deleteChatThread(threadId: string, options?: DeleteChatThreadOptions): Promise<void> {
+  deleteChatThread(): Promise<void> {
     return Promise.resolve();
   }
   startRealtimeNotifications(): Promise<void> {
@@ -73,64 +50,64 @@ export class StubChatClient implements PublicInterface<ChatClient> {
   stopRealtimeNotifications(): Promise<void> {
     return Promise.resolve();
   }
-  on(event: string, listener: (e: any) => void): void {
+  on(): void {
     return;
   }
-  off(event: string, listener: (e: any) => void): void {
+  off(): void {
     return;
   }
 }
 
+// A public interface compatible stub for ChatThreadClient.
 export class StubChatThreadClient implements PublicInterface<ChatThreadClient> {
   readonly threadId: string;
 
   constructor(threadId?: string) {
     this.threadId = threadId ?? '';
   }
-  getProperties(options?: GetPropertiesOptions): Promise<ChatThreadProperties> {
+  getProperties(): Promise<ChatThreadProperties> {
     return Promise.resolve({ id: '', topic: '', createdOn: new Date(0) });
   }
-  updateTopic(topic: string, options?: UpdateTopicOptions): Promise<void> {
+  updateTopic(): Promise<void> {
     return Promise.resolve();
   }
-  sendMessage(request: SendMessageRequest, options?: SendMessageOptions): Promise<SendChatMessageResult> {
+  sendMessage(): Promise<SendChatMessageResult> {
     return Promise.resolve({ id: '' });
   }
-  getMessage(messageId: string, options?: GetMessageOptions): Promise<ChatMessage> {
+  getMessage(): Promise<ChatMessage> {
     return Promise.resolve({ id: '', type: 'text', sequenceId: '', version: '', createdOn: new Date(0) });
   }
-  listMessages(options?: ListMessagesOptions): PagedAsyncIterableIterator<ChatMessage> {
+  listMessages(): PagedAsyncIterableIterator<ChatMessage> {
     return pagedAsyncIterator([]);
   }
-  deleteMessage(messageId: string, options?: DeleteMessageOptions): Promise<void> {
+  deleteMessage(): Promise<void> {
     return Promise.resolve();
   }
-  updateMessage(messageId: string, options?: UpdateMessageOptions): Promise<void> {
+  updateMessage(): Promise<void> {
     return Promise.resolve();
   }
-  addParticipants(
-    request: AddParticipantsRequest,
-    options?: AddParticipantsOptions
-  ): Promise<AddChatParticipantsResult> {
+  addParticipants(): Promise<AddChatParticipantsResult> {
     return Promise.resolve({});
   }
-  listParticipants(options?: ListParticipantsOptions): PagedAsyncIterableIterator<ChatParticipant> {
+  listParticipants(): PagedAsyncIterableIterator<ChatParticipant> {
     return pagedAsyncIterator([]);
   }
-  removeParticipant(participant: CommunicationIdentifier, options?: RemoveParticipantOptions): Promise<void> {
+  removeParticipant(): Promise<void> {
     return Promise.resolve();
   }
-  sendTypingNotification(options?: SendTypingNotificationOptions): Promise<boolean> {
+  sendTypingNotification(): Promise<boolean> {
     return Promise.resolve(false);
   }
-  sendReadReceipt(request: SendReadReceiptRequest, options?: SendReadReceiptOptions): Promise<void> {
+  sendReadReceipt(): Promise<void> {
     return Promise.resolve();
   }
-  listReadReceipts(options?: ListReadReceiptsOptions): PagedAsyncIterableIterator<ChatMessageReadReceipt> {
+  listReadReceipts(): PagedAsyncIterableIterator<ChatMessageReadReceipt> {
     return pagedAsyncIterator([]);
   }
 }
 
+// A paged async operator that asynchronously iterates over values in an array.
+// In paging mode, the whole array is returned as a single page, ignoring all page size options.
 export const pagedAsyncIterator = <T>(values: T[]): PagedAsyncIterableIterator<T, T[]> => {
   async function* listAll(values: T[]): AsyncIterableIterator<T> {
     yield* values;

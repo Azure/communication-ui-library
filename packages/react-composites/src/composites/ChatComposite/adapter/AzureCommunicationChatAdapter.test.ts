@@ -33,7 +33,7 @@ describe('Error is reflected in state and events', () => {
 
 export const createChatAdapterWithStubs = async (chatClient: StubChatClient): Promise<ChatAdapter> => {
   // ChatClient constructor must return a ChatClient. StubChatClient only implements the
-  // public interface of ChatClient. So we must lose typing here.
+  // public interface of ChatClient. So we are forced to lose some type information here.
   ChatClientMock.mockImplementation((): ChatClient => {
     return chatClient as any;
   });
