@@ -1,10 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatClient, ChatThreadClient } from '@azure/communication-chat';
 import { ChatClientState, ChatErrors, ChatThreadClientState } from 'chat-stateful-client';
 import { useState, useEffect, useRef, useMemo } from 'react';
-import { ChatAdapterErrors, ChatState } from '../adapter/ChatAdapter';
+import { ChatState } from '../adapter/ChatAdapter';
 import { useAdapter } from '../adapter/ChatAdapterProvider';
 import memoizeOne from 'memoize-one';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
@@ -91,17 +90,17 @@ const adaptCompositeState = (compositeState: ChatState): ChatClientState => {
     compositeState.displayName,
     memoizeThreads(compositeState.thread),
     // This is an unsafe type expansion.
-    // compositeState.latestErrors can contain keys that are not valid keys in ChatErrors.
+    // compositeState.latestErrors can contain properties that are not valid in ChatErrors.
     //
-    // But there is no way to check for valid keys at runtime:
-    // - The set of valid keys is built from types in the @azure/communication-chat.
+    // But there is no way to check for valid property names at runtime:
+    // - The set of valid property names is built from types in the @azure/communication-chat.
     //   Thus we don't have a literal array of allowed strings at runtime.
     // - Due to minification / uglification, the property names from the objects at runtime can't be used
     //   to compare against permissible values inferred from the types.
     //
-    // This is not a huge problem -- this simply means that our adapted selector will include some extra operations
-    // that are unknown to the bindings and component UI libraries. Generic UI processing of the errors (e.g.,
-    // just displaying them in some UI surface) will continue to work for these operations. Special handling of
+    // This is not a huge problem -- it simply means that our adapted selector will include some extra operations
+    // that are unknown to the UI component and data binding libraries. Generic handling of the errors (e.g.,
+    // just displaying them in some UI surface) will continue to work for these operations. Handling of
     // specific operations (e.g., acting on errors related to permission issues) will ignore these operations.
     compositeState.latestErrors as ChatErrors
   );
