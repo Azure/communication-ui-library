@@ -83,12 +83,6 @@ const memoizeState = memoizeOne(
   })
 );
 
-const memoizeErrors = memoizeOne((errors: ChatAdapterErrors) => toStatefulErrors(errors));
-
-const toStatefulErrors = (errors: ChatAdapterErrors): ChatErrors => {
-  return Object.fromEntries(Object.entries(errors).filter(([key, _]) => isChatErrorTarget(key))) as ChatErrors;
-};
-
 const memoizeThreads = memoizeOne((thread: ChatThreadClientState) => ({ [thread.threadId]: thread }));
 
 const adaptCompositeState = (compositeState: ChatState): ChatClientState => {
@@ -96,29 +90,19 @@ const adaptCompositeState = (compositeState: ChatState): ChatClientState => {
     { kind: 'communicationUser', communicationUserId: compositeState.userId },
     compositeState.displayName,
     memoizeThreads(compositeState.thread),
-    memoizeErrors(compositeState.latestErrors)
+    // This is an unsafe type expansion.
+    // compositeState.latestErrors can contain keys that are not valid keys in ChatErrors.
+    //
+    // But there is no way to check for valid keys at runtime:
+    // - The set of valid keys is built from types in the @azure/communication-chat.
+    //   Thus we don't have a literal array of allowed strings at runtime.
+    // - Due to minification / uglification, the property names from the objects at runtime can't be used
+    //   to compare against permissible values inferred from the types.
+    //
+    // This is not a huge problem -- this simply means that our adapted selector will include some extra operations
+    // that are unknown to the bindings and component UI libraries. Generic UI processing of the errors (e.g.,
+    // just displaying them in some UI surface) will continue to work for these operations. Special handling of
+    // specific operations (e.g., acting on errors related to permission issues) will ignore these operations.
+    compositeState.latestErrors as ChatErrors
   );
 };
-
-// Determine if a string is a valid error target for the chat stateful client.
-//
-// This effectively checks at runtime if a string belongs to the type {@Link chat-stateful-client/ChatErrorTargets}.
-//
-// Warning: Must be kept in-sync with the definition of {@Link chat-stateful-client/ChatErrorTargets}.
-const isChatErrorTarget = (target: string): boolean => {
-  for (const targetPrefix in ChatErrorTargetPrefixes) {
-    const [prefix, obj] = targetPrefix;
-    if (target.startsWith(prefix)) {
-      target = target.substring(prefix.length);
-      if (obj[target] !== undefined && typeof obj[target] === 'function') {
-        return true;
-      }
-    }
-  }
-  return false;
-};
-
-const ChatErrorTargetPrefixes = [
-  ['ChatClient.', ChatClient],
-  ['ChatThreadClient.', ChatThreadClient]
-];
