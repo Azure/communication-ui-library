@@ -11,6 +11,8 @@ import {
   mockParticipants,
   mockReadReceipts
 } from './mocks/createMockChatThreadClient';
+import { createMockChatClient, defaultClientArgs, StateChangeListener } from './StatefulChatClient.test';
+import { createStatefulChatClientWithDeps, StatefulChatClient } from './StatefulChatClient';
 
 const threadId = '1';
 
@@ -230,3 +232,33 @@ describe('declarative chatThreadClient basic api functions', () => {
     expect(Object.values(chatMessages ?? {}).length).toBe(0);
   });
 });
+
+describe('stateful chatThreadClient tees errors to state', () => {
+  test('when updateTopic fails', async () => {
+    const chatThreadClient = createMockChatThreadClient('threadId');
+    chatThreadClient.updateTopic = async (): Promise<void> => {
+      throw Error('inejected error');
+    };
+    const client = createMockChatClientWithChatThreadClient(chatThreadClient);
+
+    // Ignore state changes as a side-effect of thread creation on first call to getChatThreadClient().
+    client.getChatThreadClient('threadId');
+
+    const listener = new StateChangeListener(client);
+
+    await expect(client.getChatThreadClient('threadId').updateTopic('topic')).rejects.toThrow();
+
+    expect(listener.onChangeCalledCount).toBe(1);
+    const latestError = listener.state.latestErrors['ChatThreadClient.updateTopic'];
+    expect(latestError).toBeDefined();
+  });
+});
+
+// Creates a mock stateful chat client that returns the given thread client for all thread IDs.
+const createMockChatClientWithChatThreadClient = (chatThreadClient: ChatThreadClient): StatefulChatClient => {
+  const client = createMockChatClient();
+  client.getChatThreadClient = () => {
+    return chatThreadClient;
+  };
+  return createStatefulChatClientWithDeps(client, defaultClientArgs);
+};

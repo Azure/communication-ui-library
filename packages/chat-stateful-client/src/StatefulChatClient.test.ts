@@ -15,8 +15,8 @@ import {
   ReadReceiptReceivedEvent,
   TypingIndicatorReceivedEvent
 } from '@azure/communication-signaling';
-import { createStatefulChatClient, StatefulChatClient } from './StatefulChatClient';
-import { ChatClientState } from './ChatClientState';
+import { createStatefulChatClientWithDeps, StatefulChatClient, StatefulChatClientArgs } from './StatefulChatClient';
+import { ChatClientState, ChatError } from './ChatClientState';
 import { Constants } from './Constants';
 import { createMockChatThreadClient } from './mocks/createMockChatThreadClient';
 import { createMockIterator } from './mocks/createMockIterator';
@@ -52,7 +52,7 @@ beforeEach(() => {
   mockEventHandlersRef.value = {};
 });
 
-function createMockChatClient(): ChatClient {
+export function createMockChatClient(): ChatClient {
   const mockChatClient: ChatClient = {} as any;
 
   mockChatClient.createChatThread = async (request) => {
@@ -90,29 +90,15 @@ function createMockChatClient(): ChatClient {
   return mockChatClient;
 }
 
-jest.mock('@azure/communication-chat', () => {
-  return {
-    ...jest.requireActual('@azure/communication-chat'),
-    ChatClient: jest.fn().mockImplementation(() => {
-      return createMockChatClient();
-    })
-  };
-});
-
 type StatefulChatClientWithEventTrigger = StatefulChatClient & {
   triggerEvent: (eventName: string, e: any) => Promise<void>;
 };
 
-function createStatefulChatClientMock(): StatefulChatClientWithEventTrigger {
+const createStatefulChatClientMock = (): StatefulChatClientWithEventTrigger => {
   mockEventHandlersRef.value = {};
-  const declarativeClient = createStatefulChatClient({
-    displayName: '',
-    userId: { kind: 'communicationUser', communicationUserId: 'userId1' },
-    endpoint: '',
-    credential: new MockCommunicationUserCredential()
-  });
+  const client = createStatefulChatClientWithDeps(createMockChatClient(), defaultClientArgs);
 
-  Object.defineProperty(declarativeClient, 'triggerEvent', {
+  Object.defineProperty(client, 'triggerEvent', {
     value: async (eventName: string, e: any): Promise<void> => {
       const handler = mockEventHandlersRef.value[eventName];
       if (handler !== undefined) {
@@ -121,8 +107,15 @@ function createStatefulChatClientMock(): StatefulChatClientWithEventTrigger {
     }
   });
 
-  return declarativeClient as StatefulChatClientWithEventTrigger;
-}
+  return client as StatefulChatClientWithEventTrigger;
+};
+
+export const defaultClientArgs: StatefulChatClientArgs = {
+  displayName: '',
+  userId: { kind: 'communicationUser', communicationUserId: 'userId1' },
+  endpoint: '',
+  credential: new MockCommunicationUserCredential()
+};
 
 describe('declarative chatThread list iterators', () => {
   test('declarative listChatThreads should proxy listChatThreads iterator and store it in internal state', async () => {
@@ -429,3 +422,91 @@ describe('declarative chatClient onStateChange', () => {
     expect(onChangeCalledTimes).toBe(1);
   });
 });
+
+describe('stateful wraps thrown error', () => {
+  test('when startRealtimeNotifications fails', async () => {
+    const baseClient = createMockChatClient();
+    baseClient.startRealtimeNotifications = async () => {
+      throw Error('injected error');
+    };
+    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    await expect(client.startRealtimeNotifications()).rejects.toThrow(
+      new ChatError('ChatClient.startRealtimeNotifications', new Error('injected error'))
+    );
+  });
+});
+
+describe('stateful chatClient tees errors to state', () => {
+  test('when startRealtimeNotifications fails', async () => {
+    const baseClient = createMockChatClient();
+    baseClient.startRealtimeNotifications = async () => {
+      throw Error('injected error');
+    };
+    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    const listener = new StateChangeListener(client);
+    await expect(client.startRealtimeNotifications()).rejects.toThrow();
+    expect(listener.onChangeCalledCount).toBe(1);
+    const latestError = listener.state.latestErrors['ChatClient.startRealtimeNotifications'];
+    expect(latestError).toBeDefined();
+  });
+});
+
+describe('complex error handling for startRealtimeNotifications', () => {
+  test('latest error is stored in state', async () => {
+    const baseClient = createMockChatClient();
+    let errorCount = 0;
+    baseClient.startRealtimeNotifications = async () => {
+      errorCount++;
+      throw Error(`injected error #${errorCount}`);
+    };
+    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    const listener = new StateChangeListener(client);
+
+    // Generate two errors.
+    await expect(client.startRealtimeNotifications()).rejects.toThrow();
+    await expect(client.startRealtimeNotifications()).rejects.toThrow();
+
+    expect(listener.onChangeCalledCount).toBe(2);
+    const latestError = listener.state.latestErrors['ChatClient.startRealtimeNotifications'];
+    expect(latestError).toBeDefined();
+    expect(latestError.message).toBe('injected error #2');
+  });
+
+  test('errors are cleared on successful method call', async () => {
+    const baseClient = createMockChatClient();
+
+    let hasFailedOnce = false;
+    baseClient.startRealtimeNotifications = async () => {
+      if (!hasFailedOnce) {
+        hasFailedOnce = true;
+        throw Error('injected error');
+      }
+    };
+    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    const listener = new StateChangeListener(client);
+
+    // Generates error.
+    await expect(client.startRealtimeNotifications()).rejects.toThrow();
+    // Succeeds, should clear errors in state.
+    await client.startRealtimeNotifications();
+
+    expect(listener.onChangeCalledCount).toBe(2);
+    const latestError = listener.state.latestErrors['ChatClient.startRealtimeNotifications'];
+    expect(latestError).toBeUndefined();
+  });
+});
+
+export class StateChangeListener {
+  state: ChatClientState;
+  onChangeCalledCount = 0;
+
+  constructor(client: StatefulChatClient) {
+    this.state = client.getState();
+    client.onStateChange(this.onChange.bind(this));
+  }
+
+  private onChange(newState: ChatClientState): void {
+    this.onChangeCalledCount++;
+    this.state = newState;
+  }
+}

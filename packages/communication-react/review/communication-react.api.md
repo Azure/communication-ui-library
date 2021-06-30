@@ -457,7 +457,7 @@ export interface ChatAdapter {
     // (undocumented)
     off(event: 'topicChanged', listener: TopicChangedListener): void;
     // (undocumented)
-    off(event: 'error', listener: (e: Error) => void): void;
+    off(event: 'error', listener: ChatErrorListener): void;
     // (undocumented)
     offStateChange(handler: (state: ChatState) => void): void;
     // (undocumented)
@@ -473,7 +473,7 @@ export interface ChatAdapter {
     // (undocumented)
     on(event: 'topicChanged', listener: TopicChangedListener): void;
     // (undocumented)
-    on(event: 'error', listener: (e: Error) => void): void;
+    on(event: 'error', listener: ChatErrorListener): void;
     // (undocumented)
     onStateChange(handler: (state: ChatState) => void): void;
     // (undocumented)
@@ -487,6 +487,11 @@ export interface ChatAdapter {
     // (undocumented)
     setTopic(topicName: string): Promise<void>;
 }
+
+// @public
+export type ChatAdapterErrors = {
+    [operation: string]: Error;
+};
 
 // @public (undocumented)
 export type ChatBaseSelectorProps = {
@@ -509,6 +514,7 @@ export type ChatClientState = {
     threads: {
         [key: string]: ChatThreadClientState;
     };
+    latestErrors: ChatErrors;
 };
 
 // @public (undocumented)
@@ -519,6 +525,7 @@ export type ChatCompositeClientState = {
     userId: string;
     displayName: string;
     thread: ChatThreadClientState;
+    latestErrors: ChatAdapterErrors;
 };
 
 // @public (undocumented)
@@ -530,6 +537,27 @@ export type ChatCompositeProps = {
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
     options?: ChatOptions;
 };
+
+// @public
+export class ChatError extends Error {
+    constructor(target: ChatErrorTargets, inner: Error);
+    inner: Error;
+    target: ChatErrorTargets;
+}
+
+// @public
+export type ChatErrorListener = (event: {
+    operation: string;
+    error: Error;
+}) => void;
+
+// @public
+export type ChatErrors = {
+    [target in ChatErrorTargets]: Error;
+};
+
+// @public
+export type ChatErrorTargets = ChatObjectMethodNames<'ChatClient', ChatClient> | ChatObjectMethodNames<'ChatThreadClient', ChatThreadClient>;
 
 // @public (undocumented)
 export type ChatMessage = Message<'chat'>;
@@ -553,6 +581,14 @@ export type ChatMessageWithStatus = ChatMessage_2 & {
     clientMessageId?: string;
     status: MessageStatus;
 };
+
+// @public
+export type ChatMethodName<T, K extends keyof T> = T[K] extends Function ? (K extends string ? K : never) : never;
+
+// @public
+export type ChatObjectMethodNames<TName extends string, T> = {
+    [K in keyof T]: `${TName}.${ChatMethodName<T, K>}`;
+}[keyof T];
 
 // @public (undocumented)
 export type ChatOptions = {
