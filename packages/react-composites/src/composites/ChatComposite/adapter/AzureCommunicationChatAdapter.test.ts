@@ -35,7 +35,7 @@ export const createChatAdapterWithStubs = async (chatClient: StubChatClient): Pr
   // ChatClient constructor must return a ChatClient. StubChatClient only implements the
   // public interface of ChatClient. So we are forced to lose some type information here.
   ChatClientMock.mockImplementation((): ChatClient => {
-    return chatClient as any;
+    return chatClient as unknown as ChatClient;
   });
   return await createAzureCommunicationChatAdapter(
     { communicationUserId: 'stubUserId' },
