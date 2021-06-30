@@ -236,7 +236,7 @@ describe('declarative chatThreadClient basic api functions', () => {
 describe('stateful chatThreadClient tees errors to state', () => {
   test('when updateTopic fails', async () => {
     const chatThreadClient = createMockChatThreadClient('threadId');
-    chatThreadClient.updateTopic = async (): Promise<any> => {
+    chatThreadClient.updateTopic = async (): Promise<void> => {
       throw Error('inejected error');
     };
     const client = createMockChatClientWithChatThreadClient(chatThreadClient);
@@ -245,7 +245,9 @@ describe('stateful chatThreadClient tees errors to state', () => {
     client.getChatThreadClient('threadId');
 
     const listener = new StateChangeListener(client);
+
     await expect(client.getChatThreadClient('threadId').updateTopic('topic')).rejects.toThrow();
+
     expect(listener.onChangeCalledCount).toBe(1);
     const latestError = listener.state.latestErrors['ChatThreadClient.updateTopic'];
     expect(latestError).toBeDefined();

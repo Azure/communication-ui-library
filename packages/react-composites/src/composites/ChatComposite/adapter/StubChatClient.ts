@@ -59,25 +59,25 @@ export class StubChatClient implements PublicInterface<ChatClient> {
     request: CreateChatThreadRequest,
     options?: CreateChatThreadOptions
   ): Promise<CreateChatThreadResult> {
-    throw Error('stub method not implemented');
+    return Promise.resolve({});
   }
   listChatThreads(options?: ListChatThreadsOptions): PagedAsyncIterableIterator<ChatThreadItem> {
-    throw Error('stub method not implemented');
+    return pagedAsyncIterator([]);
   }
   deleteChatThread(threadId: string, options?: DeleteChatThreadOptions): Promise<void> {
-    throw Error('stub method not implemented');
+    return Promise.resolve();
   }
   startRealtimeNotifications(): Promise<void> {
-    throw Error('stub method not implemented');
+    return Promise.resolve();
   }
   stopRealtimeNotifications(): Promise<void> {
-    throw Error('stub method not implemented');
+    return Promise.resolve();
   }
   on(event: string, listener: (e: any) => void): void {
-    throw Error('stub method not implemented');
+    return;
   }
   off(event: string, listener: (e: any) => void): void {
-    throw Error('stub method not implemented');
+    return;
   }
 }
 
@@ -88,45 +88,69 @@ export class StubChatThreadClient implements PublicInterface<ChatThreadClient> {
     this.threadId = threadId ?? '';
   }
   getProperties(options?: GetPropertiesOptions): Promise<ChatThreadProperties> {
-    throw Error('stub method not implemented');
+    return Promise.resolve({ id: '', topic: '', createdOn: new Date(0) });
   }
   updateTopic(topic: string, options?: UpdateTopicOptions): Promise<void> {
-    throw Error('stub method not implemented');
+    return Promise.resolve();
   }
   sendMessage(request: SendMessageRequest, options?: SendMessageOptions): Promise<SendChatMessageResult> {
-    throw Error('stub method not implemented');
+    return Promise.resolve({ id: '' });
   }
   getMessage(messageId: string, options?: GetMessageOptions): Promise<ChatMessage> {
-    throw Error('stub method not implemented');
+    return Promise.resolve({ id: '', type: 'text', sequenceId: '', version: '', createdOn: new Date(0) });
   }
   listMessages(options?: ListMessagesOptions): PagedAsyncIterableIterator<ChatMessage> {
-    throw Error('stub method not implemented');
+    return pagedAsyncIterator([]);
   }
   deleteMessage(messageId: string, options?: DeleteMessageOptions): Promise<void> {
-    throw Error('stub method not implemented');
+    return Promise.resolve();
   }
   updateMessage(messageId: string, options?: UpdateMessageOptions): Promise<void> {
-    throw Error('stub method not implemented');
+    return Promise.resolve();
   }
   addParticipants(
     request: AddParticipantsRequest,
     options?: AddParticipantsOptions
   ): Promise<AddChatParticipantsResult> {
-    throw Error('stub method not implemented');
+    return Promise.resolve({});
   }
   listParticipants(options?: ListParticipantsOptions): PagedAsyncIterableIterator<ChatParticipant> {
-    throw Error('stub method not implemented');
+    return pagedAsyncIterator([]);
   }
   removeParticipant(participant: CommunicationIdentifier, options?: RemoveParticipantOptions): Promise<void> {
-    throw Error('stub method not implemented');
+    return Promise.resolve();
   }
   sendTypingNotification(options?: SendTypingNotificationOptions): Promise<boolean> {
-    throw Error('stub method not implemented');
+    return Promise.resolve(false);
   }
   sendReadReceipt(request: SendReadReceiptRequest, options?: SendReadReceiptOptions): Promise<void> {
-    throw Error('stub method not implemented');
+    return Promise.resolve();
   }
   listReadReceipts(options?: ListReadReceiptsOptions): PagedAsyncIterableIterator<ChatMessageReadReceipt> {
-    throw Error('stub method not implemented');
+    return pagedAsyncIterator([]);
   }
 }
+
+export const pagedAsyncIterator = <T>(values: T[]): PagedAsyncIterableIterator<T, T[]> => {
+  async function* listAll(values: T[]): AsyncIterableIterator<T> {
+    yield* values;
+  }
+
+  async function* listByPage(): AsyncIterableIterator<T[]> {
+    yield* [values];
+  }
+
+  const iter = listAll(values);
+
+  return {
+    next(): Promise<IteratorResult<T, T>> {
+      return iter.next();
+    },
+    [Symbol.asyncIterator]() {
+      return this;
+    },
+    byPage: () => {
+      return listByPage();
+    }
+  };
+};
