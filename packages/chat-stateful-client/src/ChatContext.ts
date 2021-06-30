@@ -3,7 +3,14 @@
 
 import EventEmitter from 'events';
 import produce from 'immer';
-import { ChatClientState, ChatThreadClientState, ChatThreadProperties } from './ChatClientState';
+import {
+  ChatClientState,
+  ChatErrors,
+  ChatThreadClientState,
+  ChatThreadProperties,
+  ChatErrorTargets,
+  ChatError
+} from './ChatClientState';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 import { enableMapSet } from 'immer';
 import { ChatMessageReadReceipt, ChatParticipant } from '@azure/communication-chat';
@@ -19,7 +26,8 @@ export class ChatContext {
   private _state: ChatClientState = {
     userId: <UnknownIdentifierKind>{ id: '' },
     displayName: '',
-    threads: {}
+    threads: {},
+    latestErrors: {} as ChatErrors
   };
   private _batchMode = false;
   private _emitter: EventEmitter;
@@ -315,6 +323,54 @@ export class ChatContext {
         })
       );
     }
+  }
+
+  /**
+   * Tees any errors encountered in an async function to the state.
+   *
+   * If the function succeeds, clears associated errors from the state.
+   *
+   * @param f Async function to execute.
+   * @param target The error target to tee error to.
+   * @param clearTargets The error targets to clear errors for if the function succeeds. By default, clears errors for `target.
+   * @returns Result of calling `f`. Also re-raises any exceptions thrown from `f`.
+   * @throws ChatError. Exceptions thrown from `f` are tagged with the failed `target.
+   */
+  public async asyncTeeErrorToState<T>(
+    f: () => Promise<T>,
+    target: ChatErrorTargets,
+    clearTargets?: ChatErrorTargets[]
+  ): Promise<T> {
+    try {
+      const ret = await f();
+
+      if (clearTargets !== undefined) {
+        clearTargets.forEach((target) => this.clearError(target));
+      } else {
+        this.clearError(target);
+      }
+
+      return ret;
+    } catch (error) {
+      this.setLatestError(target, error);
+      throw new ChatError(target, error);
+    }
+  }
+
+  private setLatestError(target: ChatErrorTargets, error: Error): void {
+    this.setState(
+      produce(this._state, (draft: ChatClientState) => {
+        draft.latestErrors[target] = error;
+      })
+    );
+  }
+
+  private clearError(target: ChatErrorTargets): void {
+    this.setState(
+      produce(this._state, (draft: ChatClientState) => {
+        delete draft.latestErrors[target];
+      })
+    );
   }
 
   // This is a mutating function, only use it inside of a produce() function
