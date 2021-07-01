@@ -8,48 +8,63 @@ import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/a
 If you are using React Component from our communication-react components, usePropsFor is the go-to hook.
 It provides all the required props to power a feature component.
 It subscribes to state changes of stateful clients, gets props designed for your component, and triggers a re-render whenever the props change.
-`UsePropsFor` comes in two flavors: `UseCallPropsFor` and `UseChatPropsFor`.
 
 To see a full end-to-end example using usePropsFor, see [Getting Started with StatefulClient](/?path=/docs/quickstarts-statefulclient--page)
 
-## _useCallPropsFor_ Example
+## _usePropsFor_ Calling App Example
 
 ```tsx
 import React from 'react';
-import { VideoGallery } from '@azure/communication-react';
-import { useCallPropsFor } from '@azure/communication-react';
+import { VideoGallery, usePropsFor } from '@azure/communication-react';
 
 export const ChatScreen = () => {
-  const props = useCallPropsFor(VideoGallery);
+  const props = usePropsFor(VideoGallery);
   return <VideoGallery {...props} />;
 };
 ```
 
-`useCallPropsFor` supports the following call components:
-
-- [ControlBar Buttons](/?path=/docs/ui-components-controlbar--control-bar)
-- [VideoGallery](/?path=/docs/ui-components-videogallery--video-gallery)
-- [ParticipantList](/?path=/docs/ui-components-participantlist--participant-list)
-
-## _useChatPropsFor_ Example
+## _usePropsFor_ Chat App Example
 
 ```tsx
 import React from 'react';
-import { MessageThread } from '@azure/acs-chat-component';
-import { useChatPropsFor } from 'chat-component-bindings';
+import { MessageThread, usePropsFor } from '@azure/communication-react';
 
 export const ChatScreen = () => {
-  const props = useChatPropsFor(MessageThread);
+  const props = usePropsFor(MessageThread);
   return <MessageThread {...props} />;
 };
 ```
 
-`useChatPropsFor` supports the following chat components:
+`usePropsFor` supports the following components:
+
+_Chat_
 
 - [MessageThread](/?path=/docs/ui-components-messagethread--message-thread)
 - [SendBox](/?path=/docs/ui-components-sendbox--send-box)
 - [TypingIndicator](/?path=/docs/ui-components-typingindicator--typing-indicator)
 - [ParticipantList](/?path=/docs/ui-components-participantlist--participant-list)
+
+_Calling_
+
+- [VideoGallery](/?path=/docs/ui-components-videogallery--video-gallery)
+- [ParticipantList](/?path=/docs/ui-components-participantlist--participant-list)
+- [CameraButton](/?path=/docs/ui-components-controlbar-buttons-camera--camera)
+- [EndCallButton](/?path=/docs/ui-components-controlbar-buttons-endcall--end-call)
+- [MicrophoneButton](/?path=/docs/ui-components-controlbar-buttons-microphone--microphone)
+- [OptionsButton](/?path=/docs/ui-components-controlbar-buttons-options--options)
+- [ScreenShareButton](/?path=/docs/ui-components-controlbar-buttons-screenshare--screen-share)
+
+## Choose your flavors
+
+usePropsFor() is context-awared so no need to worry which Provider you are using, there is only one exception:
+If usePropsFor() is under both ChatClientProvider and CallingClientProvider, and you are getting ParicipantList props -
+Since ParticipantList is a shared component between calling and chat, usePropsFor can't determine which side of data you want to collect.
+You need to pass the flavor parameter to usePropsFor() when it happens:
+
+```
+const chatPariticipantProps = usePropsFor(ParticipantList, 'chat');
+const callingPariticipantProps = usePropsFor(ParticipantList, 'calling');
+```
 
 ## Under the Hood of usePropsFor
 
