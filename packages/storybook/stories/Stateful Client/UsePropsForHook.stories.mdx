@@ -61,9 +61,21 @@ If usePropsFor() is under both ChatClientProvider and CallingClientProvider, and
 Since ParticipantList is a shared component between calling and chat, usePropsFor can't determine which side of data you want to collect.
 You need to pass the flavor parameter to usePropsFor() when it happens:
 
-```
-const chatPariticipantProps = usePropsFor(ParticipantList, 'chat');
-const callingPariticipantProps = usePropsFor(ParticipantList, 'calling');
+```tsx
+import React from 'react';
+import { ParticipantList, usePropsFor } from '@azure/communication-react';
+
+// This will show 2 different participantLists in parallel
+export const ParicipantLists = () => {
+  const chatPariticipantProps = usePropsFor(ParticipantList, 'chat');
+  const callingPariticipantProps = usePropsFor(ParticipantList, 'calling');
+  return (
+    <>
+      <ParticipantList {...chatPariticipantProps} />
+      <ParticipantList {...callingPariticipantProps} />
+    </>
+  );
+};
 ```
 
 ## Under the Hood of usePropsFor
