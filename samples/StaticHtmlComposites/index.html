@@ -4,26 +4,31 @@
   <title>Basic example for CallComposite and ChatComposite</title>
 </head>
 <body>
-  <div id="video-call"></div>
-  <div id="chat"></div>
-  <script src="./dist/bundle.js"></script>
+  <!-- height need to be set for composite to fit the layout -->
+  <div id="video-call" style="height: 500px"></div>
+  <div id="chat" style="height: 500px"></div>
+  <script src="./dist/chatComposite.js"></script>
+  <script src="./dist/callComposite.js"></script>
+  <script src="./dist/service.js"></script>
   <script type="module">
-    const { user, token } = await app.createUserWithToken();
+    const { user, token } = await service.createUserWithToken();
+    // Call composite sample code starts here
     const displayName = 'Bob';
 
-    const callAdapter = await app.loadCallComposite({
+    const callAdapter = await callComposite.loadCallComposite({
       containerId: 'video-call',
-      groupId: '6e606975-7004-4c03-be37-e0851ed1850b', // any GUID
+      groupId: '', // Provide any GUID to join a group
       displayName: displayName,
       userId: user,
       token: token
     });
 
-    const threadId = await app.createChatThread();
-    await app.addChatUser(threadId, user, displayName);
-    const endpointUrl = await app.getEndpointUrl();
+    const threadId = await service.createChatThread();
+    await service.addChatUser(threadId, user, displayName);
+    const endpointUrl = await service.getEndpointUrl();
 
-    const chatAdapter = await app.loadChatComposite({
+    // Chat composite sample code starts here
+    const chatAdapter = await chatComposite.loadChatComposite({
       containerId: 'chat',
       displayName: displayName,
       threadId: threadId,

@@ -9,9 +9,11 @@ export type { ChatCompositeProps, ChatOptions } from './ChatComposite';
 
 export type {
   ChatAdapter,
+  ChatAdapterErrors,
   ChatCompositeClientState,
   ChatState,
   ChatUIState,
+  ChatErrorListener,
   MessageReadListener,
   MessageReceivedListener,
   MessageSentListener,

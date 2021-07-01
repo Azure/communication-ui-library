@@ -65,12 +65,13 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
       }
       case 'startRealtimeNotifications': {
         return async function (...args: Parameters<ChatClient['startRealtimeNotifications']>) {
-          const ret = await chatClient.startRealtimeNotifications(...args);
-          if (!receiver.eventSubscriber) {
-            receiver.eventSubscriber = new EventSubscriber(chatClient, context);
-          }
-
-          return ret;
+          return context.asyncTeeErrorToState(async () => {
+            const ret = await chatClient.startRealtimeNotifications(...args);
+            if (!receiver.eventSubscriber) {
+              receiver.eventSubscriber = new EventSubscriber(chatClient, context);
+            }
+            return ret;
+          }, 'ChatClient.startRealtimeNotifications');
         };
       }
       case 'stopRealtimeNotifications': {
@@ -124,7 +125,23 @@ export const createStatefulChatClient = (
   args: StatefulChatClientArgs,
   options?: StatefulChatClientOptions
 ): StatefulChatClient => {
-  const chatClient = new ChatClient(args.endpoint, args.credential, options?.chatClientOptions);
+  return createStatefulChatClientWithDeps(
+    new ChatClient(args.endpoint, args.credential, options?.chatClientOptions),
+    args,
+    options
+  );
+};
+
+/**
+ * Internal implementation of {@Link createStatefulChatClient} for dependency injection.
+ *
+ * Used by tests. Should not be exported out of this package.
+ */
+export const createStatefulChatClientWithDeps = (
+  chatClient: ChatClient,
+  args: StatefulChatClientArgs,
+  options?: StatefulChatClientOptions
+): StatefulChatClient => {
   const context = new ChatContext(options?.maxStateChangeListeners);
   let eventSubscriber: EventSubscriber;
 
