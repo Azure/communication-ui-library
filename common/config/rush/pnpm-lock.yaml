@@ -5377,6 +5377,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-TbH79tcyi9FHwbyboOKeRachRq63mSuWYXOflsNO9ZyE5ClQ/JaozNKl+aWUq87qPNsXasXxi2AbgfwIJ+8GQw==
+  /@types/cheerio/0.22.29:
+    dependencies:
+      '@types/node': 15.12.4
+    dev: false
+    resolution:
+      integrity: sha512-rNX1PsrDPxiNiyLnRKiW2NXHJFHqx0Fl3J2WsZq0MTBspa/FgwlqhXJE2crIcc+/2IglLHtSWw7g053oUR8fOg==
   /@types/classnames/2.3.1:
     dependencies:
       classnames: 2.3.1
@@ -5420,6 +5426,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-C7srjHiVG3Ey1nR6d511dtDkCEjxuN9W1HWAEjGq8kpcwmNM6JJkpC0xvabM7BXTG2wDq8Eu33iH9aQKa7IvLQ==
+  /@types/enzyme/3.10.8:
+    dependencies:
+      '@types/cheerio': 0.22.29
+      '@types/react': 16.14.8
+    dev: false
+    resolution:
+      integrity: sha512-vlOuzqsTHxog6PV79+tvOHFb6hq4QZKMq1lLD9MaWD1oec2lHTKndn76XOpSwCA0oFTaIbKVPrgM3k78Jjd16g==
   /@types/eslint-scope/3.7.0:
     dependencies:
       '@types/eslint': 7.2.13
@@ -16682,12 +16695,14 @@ packages:
     resolution:
       integrity: sha1-nsYfeQSYdXB9aUFFlv2Qek1xHnM=
   /querystring/0.2.0:
+    deprecated: The
     dev: false
     engines:
       node: '>=0.4.x'
     resolution:
       integrity: sha1-sgmEkgO7Jd+CDadW50cAWHhSFiA=
   /querystring/0.2.1:
+    deprecated: The
     dev: false
     engines:
       node: '>=0.4.x'
@@ -19685,6 +19700,12 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-4dbzIzqvjtgiM5rw1k5rEHtBANKmdudhGyBEajN01fEyhaAIhsoKNy6y7+IN93IfpFtwY9iqi7kD+xwKhQsNJA==
+  /type-fest/1.2.1:
+    dev: false
+    engines:
+      node: '>=10'
+    resolution:
+      integrity: sha512-SbmIRuXhJs8KTneu77Ecylt9zuqL683tuiLYpTRil4H++eIhqCmx6ko6KAFem9dty8sOdnEiX7j4K1nRE628fQ==
   /type-is/1.6.18:
     dependencies:
       media-typer: 0.3.0
@@ -21356,6 +21377,7 @@ packages:
       '@rollup/plugin-json': 4.1.0_rollup@2.42.4
       '@testing-library/jest-dom': 5.14.1
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
+      '@types/enzyme': 3.10.8
       '@types/jest': 26.0.23
       '@types/json-stringify-safe': 5.0.0
       '@types/node': 14.17.4
@@ -21406,13 +21428,14 @@ packages:
       styled-components: 5.2.3_2c10db6bed9aaf10b28f0c8606f7c0c7
       ts-jest: 26.5.6_jest@26.6.0+typescript@4.1.5
       ts-node: 9.1.1_typescript@4.1.5
+      type-fest: 1.2.1
       typescript: 4.1.5
       uuid: 8.3.2
       webpack: 5.38.1
     dev: false
     name: '@rush-temp/react-components'
     resolution:
-      integrity: sha512-b1MtzmoSCk3vnmXFFrqdJV2psU846jlC/whut7Eb8MQtQdVuqURuwI4pMkIUMgduBZQ1daI6A/RIHNAg4v464g==
+      integrity: sha512-BCeKacNW2eoWC+747mSM6VcmDpZObJJnkdLetHBX08K8BnyxD9jb47D8FiUUvmrNG4RuiRugYsR4GKuzT9x8WA==
       tarball: file:projects/react-components.tgz
     version: 0.0.0
   file:projects/react-composites.tgz:
